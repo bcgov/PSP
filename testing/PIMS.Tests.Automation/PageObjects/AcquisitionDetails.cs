@@ -6,7 +6,7 @@ using PIMS.Tests.Automation.Classes;
 
 namespace PIMS.Tests.Automation.PageObjects
 {
-    public class AcquisitionFilesDetails : PageObjectBase
+    public class AcquisitionDetails : PageObjectBase
     {
         //Acquisition Files Menu Elements
         private By menuAcquisitionButton = By.CssSelector("div[data-testid='nav-tooltip-acquisition'] a");
@@ -120,7 +120,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private SharedModals sharedModals;
         private SharedSearchProperties sharedSearchProperties;
 
-        public AcquisitionFilesDetails(IWebDriver webDriver) : base(webDriver)
+        public AcquisitionDetails(IWebDriver webDriver) : base(webDriver)
         {
             sharedSelectContact = new SharedSelectContact(webDriver);
             sharedModals = new SharedModals(webDriver);
@@ -226,7 +226,7 @@ namespace PIMS.Tests.Automation.PageObjects
             {
                 for (var i = 0; i < acquisition.AcquisitionTeam.Count; i++)
                 {
-                    AddTeamMembers(acquisition.AcquisitionTeam[i].TeamRole, acquisition.AcquisitionTeam[i].ContactName);
+                    AddTeamMembers(acquisition.AcquisitionTeam[i]);
                 }
             }
 
@@ -361,7 +361,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
                 for (var i = 0; i < acquisition.AcquisitionTeam.Count; i++)
                 {
-                    AddTeamMembers(acquisition.AcquisitionTeam[i].TeamRole, acquisition.AcquisitionTeam[i].ContactName);
+                    AddTeamMembers(acquisition.AcquisitionTeam[i]);
                 }
             }
 
@@ -555,8 +555,8 @@ namespace PIMS.Tests.Automation.PageObjects
                 for(var i = 0;  i < acquisition.AcquisitionTeam.Count; i++)
                 {
                     var index = i + 1;
-                    AssertTrueContentEquals(By.XPath("//h2/div/div[contains(text(),'Acquisition Team')]/parent::div/parent::h2/following-sibling::div/div[" + index + "]/div/label"), acquisition.AcquisitionTeam[i].TeamRole + ":");
-                    AssertTrueContentEquals(By.XPath("//h2/div/div[contains(text(),'Acquisition Team')]/parent::div/parent::h2/following-sibling::div/div[" + index + "]/div/a"), acquisition.AcquisitionTeam[i].ContactName);
+                    AssertTrueContentEquals(By.XPath("//h2/div/div[contains(text(),'Acquisition Team')]/parent::div/parent::h2/following-sibling::div/div[" + index + "]/div/label"), acquisition.AcquisitionTeam[i].TeamMemberRole + ":");
+                    AssertTrueContentEquals(By.XPath("//h2/div/div[contains(text(),'Acquisition Team')]/parent::div/parent::h2/following-sibling::div/div[" + index + "]/div/a"), acquisition.AcquisitionTeam[i].TeamMemberPrimaryContact);
                 }
             }
 
@@ -671,7 +671,7 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(acquisitionFileOwnerCommentTextArea);
         }
 
-        private void AddTeamMembers(string teamRole, string contactName)
+        private void AddTeamMembers(AcquisitionTeamMember teamMember)
         {
             WaitUntilClickable(acquisitionFileAddAnotherMemberLink);
             FocusAndClick(acquisitionFileAddAnotherMemberLink);
@@ -681,9 +681,13 @@ namespace PIMS.Tests.Automation.PageObjects
             var teamMemberCount = webDriver.FindElements(acquisitionFileTeamMembersGroup).Count();
 
             WaitUntilVisible(By.CssSelector("select[id='input-team."+ teamMemberIndex +".contactTypeCode']"));
-            ChooseSpecificSelectOption(By.CssSelector("select[id='input-team."+ teamMemberIndex +".contactTypeCode']"), teamRole);
+            ChooseSpecificSelectOption(By.CssSelector("select[id='input-team."+ teamMemberIndex +".contactTypeCode']"), teamMember.TeamMemberRole);
             FocusAndClick(By.CssSelector("div[class='collapse show'] div[class='py-3 row']:nth-child("+ teamMemberCount +") div[class='pl-0 col-auto'] button"));
-            sharedSelectContact.SelectContact(contactName, "");
+            sharedSelectContact.SelectContact(teamMember.TeamMemberContactName, teamMember.TeamMemberContactType);
+
+            Wait();
+            if(webDriver.FindElements(By.Id("input-team."+ teamMemberIndex +".primaryContactId")).Count > 0)
+                ChooseSpecificSelectOption(By.Id("input-team."+ teamMemberIndex +".primaryContactId"), teamMember.TeamMemberPrimaryContact);
         }
 
         private void AddOwners(AcquisitionOwner owner, int ownerIndex)
