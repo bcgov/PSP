@@ -9,8 +9,10 @@ import { YesNoSelect } from '@/components/common/form/YesNoSelect';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { DispositionSaleFormModel } from '@/features/mapSideBar/disposition/models/DispositionSaleFormModel';
+import { useModalContext } from '@/hooks/useModalContext';
+import { SystemConstants, useSystemConstants } from '@/store/slices/systemConstants';
+import { getCurrencyCleanValue, stringToBoolean } from '@/utils/formUtils';
 
-import { useCalculateDispositionSaleGst } from '../hooks/useCalculateDispositionSaleGst';
 import { useCalculateNetProceeds } from '../hooks/useCalculateNetProceedsBeforeSPP';
 import DispositionSalePurchaserSubForm from './DispositionSalePurchasersSubForm';
 
@@ -22,13 +24,63 @@ const DispositionSaleForm: React.FunctionComponent<
   React.PropsWithChildren<IDispositionSaleFormProps>
 > = ({ dispostionSaleId }) => {
   const formikProps = useFormikContext<DispositionSaleFormModel>();
+  const { setModalContent, setDisplayModal } = useModalContext();
 
   const isGstRequired = getIn(formikProps.values, 'isGstRequired');
   const dispositionPurchaserAgent = getIn(formikProps.values, 'dispositionPurchaserAgent');
   const dispositionPurchaserSolicitor = getIn(formikProps.values, 'dispositionPurchaserSolicitor');
 
-  useCalculateDispositionSaleGst(isGstRequired);
+  const { getSystemConstant } = useSystemConstants();
+  const gstConstant = getSystemConstant(SystemConstants.GST);
+  const gstDecimal = gstConstant !== undefined ? parseFloat(gstConstant.value) / 100 : undefined;
+
   useCalculateNetProceeds(isGstRequired);
+
+  // Functions
+  const onFinalSaleAmountUpdated = (newValue: string): void => {
+    const isGstRequired = getIn(formikProps.values, 'isGstRequired');
+    const cleanValue = getCurrencyCleanValue(newValue);
+
+    setGSTDerivedAmountFields(isGstRequired, cleanValue);
+  };
+
+  const onUpdateGstApplicable = (gstOption: string): void => {
+    const isGstRequired = stringToBoolean(gstOption);
+    const taxCollectedAmountValue = getIn(formikProps.values, 'gstCollectedAmount');
+
+    if (!isGstRequired) {
+      setModalContent({
+        variant: 'warning',
+        title: 'Confirm Change',
+        message: 'The GST, if provided, will be cleared. Do you wish to proceed?',
+        okButtonText: 'Yes',
+        cancelButtonText: 'No',
+        handleOk: () => {
+          formikProps.setFieldValue(`isGstRequired`, false);
+          setGSTDerivedAmountFields(isGstRequired, formikProps.values.finalSaleAmount ?? 0);
+          setDisplayModal(false);
+        },
+        handleCancel: () => {
+          formikProps.setFieldValue(`isGstRequired`, true);
+          formikProps.setFieldValue(`gstCollectedAmount`, taxCollectedAmountValue);
+          setDisplayModal(false);
+        },
+      });
+      setDisplayModal(true);
+    } else {
+      formikProps.setFieldValue(`isGstRequired`, gstOption);
+      setGSTDerivedAmountFields(isGstRequired, formikProps.values.finalSaleAmount ?? 0);
+    }
+  };
+
+  const setGSTDerivedAmountFields = (gstRequired: boolean, salesAmount: number): void => {
+    if (gstRequired && gstDecimal) {
+      const taxAmount = salesAmount * gstDecimal;
+      formikProps.setFieldValue(`gstCollectedAmount`, taxAmount);
+    } else {
+      formikProps.setFieldValue(`gstCollectedAmount`, '');
+    }
+  };
 
   return (
     <Section header="Sales Details">
@@ -84,14 +136,29 @@ const DispositionSaleForm: React.FunctionComponent<
         <FastDateYearPicker field="saleFiscalYear" formikProps={formikProps} />
       </SectionField>
       <SectionField label="Final sale price ($)" labelWidth="5" contentWidth="5">
-        <FastCurrencyInput formikProps={formikProps} field="finalSaleAmount" />
+        <FastCurrencyInput
+          formikProps={formikProps}
+          field="finalSaleAmount"
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            onFinalSaleAmountUpdated(e.target.value);
+          }}
+        />
       </SectionField>
       <SectionField label=" Realtor commission ($)" labelWidth="5" contentWidth="5">
         <FastCurrencyInput formikProps={formikProps} field="realtorCommissionAmount" />
       </SectionField>
 
       <SectionField label="GST required" labelWidth="5" contentWidth="5">
-        <YesNoSelect field="isGstRequired" notNullable={true}></YesNoSelect>
+        <YesNoSelect
+          field="isGstRequired"
+          notNullable={true}
+          onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+            const selectedValue = [].slice
+              .call(e.target.selectedOptions)
+              .map((option: HTMLOptionElement & number) => option.value)[0];
+            onUpdateGstApplicable(selectedValue);
+          }}
+        ></YesNoSelect>
       </SectionField>
       {isGstRequired && (
         <SectionField

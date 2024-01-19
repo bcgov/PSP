@@ -160,19 +160,17 @@ describe('DispositionSaleForm  component', () => {
     expect(getFinalSaleAmountTextbox()).toHaveValue('');
     expect(getGSTCollectedAmountTextbox()).toBeNull();
 
-    act(() => {
-      fillInput(container, 'isGstRequired', 'true', 'select');
-    });
-    await waitForEffects();
-
-    expect(getGSTCollectedAmountTextbox()).toBeVisible();
-
     await act(async () => {
       fireEvent.change(getFinalSaleAmountTextbox(), { target: { value: '$1,000,000.00' } });
     });
-    fireEvent.blur(getFinalSaleAmountTextbox());
-    await waitForEffects();
+    waitForEffects();
 
+    act(() => {
+      fillInput(container, 'isGstRequired', 'true', 'select');
+    });
+    waitForEffects();
+
+    expect(getGSTCollectedAmountTextbox()).toBeVisible();
     expect(getGSTCollectedAmountTextbox()).toHaveValue('$50,000.00');
   });
 
@@ -266,6 +264,64 @@ describe('DispositionSaleForm  component', () => {
       fireEvent.change(getTotalCostSaleAmountTextbox(), { target: { value: '$100.00' } });
     });
     fireEvent.blur(getTotalCostSaleAmountTextbox());
+    await waitForEffects();
+
+    await act(async () => {
+      fireEvent.change(getNetBookAmountTextbox(), { target: { value: '$300.00' } });
+    });
+    fireEvent.blur(getNetBookAmountTextbox());
+    await waitForEffects();
+
+    expect(getNetProceedsBeforeSPPAmountTextbox()).toHaveValue('$9,500.00');
+    expect(getNetProceedsAfterSPPAmountTextbox()).toHaveValue('$9,500.00');
+
+    await act(async () => {
+      fireEvent.change(getSPPAmountTextbox(), { target: { value: '$500.00' } });
+    });
+    fireEvent.blur(getSPPAmountTextbox());
+    await waitForEffects();
+
+    expect(getNetProceedsBeforeSPPAmountTextbox()).toHaveValue('$9,500.00');
+    expect(getNetProceedsAfterSPPAmountTextbox()).toHaveValue('$9,000.00');
+
+    act(() => {
+      fillInput(container, 'isGstRequired', 'true', 'select');
+    });
+    fireEvent.blur(getGSTCollectedAmountTextbox());
+    await waitForEffects();
+
+    expect(getGSTCollectedAmountTextbox()).toBeVisible();
+    expect(getGSTCollectedAmountTextbox()).toHaveValue('$500.00');
+
+    expect(getNetProceedsBeforeSPPAmountTextbox()).toHaveValue('$9,000.00');
+    expect(getNetProceedsAfterSPPAmountTextbox()).toHaveValue('$8,500.00');
+  });
+
+  it('Displays Warning when removing the GST is required', async () => {
+    const {
+      container,
+      getFinalSaleAmountTextbox,
+      getRealtorCommissionAmountTextbox,
+      getTotalCostSaleAmountTextbox,
+      getNetBookAmountTextbox,
+      getGSTCollectedAmountTextbox,
+      getNetProceedsBeforeSPPAmountTextbox,
+      getSPPAmountTextbox,
+      getNetProceedsAfterSPPAmountTextbox,
+    } = await setup({
+      props: { dispostionSaleId: null },
+    });
+
+    expect(getFinalSaleAmountTextbox()).toBeVisible();
+    expect(getFinalSaleAmountTextbox()).toHaveValue('');
+    expect(getGSTCollectedAmountTextbox()).toBeNull();
+
+    await act(async () => {
+      fireEvent.change(getFinalSaleAmountTextbox(), { target: { value: '$10,000.00' } });
+      fireEvent.change(getRealtorCommissionAmountTextbox(), { target: { value: '$100.00' } });
+      fireEvent.change(getTotalCostSaleAmountTextbox(), { target: { value: '$100.00' } });
+    });
+    fireEvent.blur(getFinalSaleAmountTextbox());
     await waitForEffects();
 
     await act(async () => {
