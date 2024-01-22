@@ -947,7 +947,7 @@ namespace Pims.Api.Test.Services
             coordinateService.Setup(x => x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>())).Returns(new Coordinate(924046.3314288399, 1088892.9140135897));
 
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
-            propertyService.Setup(x => x.PopulateNewProperty(It.IsAny<PimsProperty>(), It.IsAny<Boolean>())).Returns(new PimsProperty()
+            propertyService.Setup(x => x.PopulateNewProperty(It.IsAny<PimsProperty>(), It.IsAny<Boolean>(), It.IsAny<Boolean>())).Returns(new PimsProperty()
             {
                 PropertyClassificationTypeCode = "UNKNOWN",
                 PropertyDataSourceEffectiveDate = DateOnly.FromDateTime(System.DateTime.Now),
