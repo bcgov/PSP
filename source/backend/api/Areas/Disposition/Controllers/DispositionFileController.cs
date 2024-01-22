@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Areas.Acquisition.Controllers;
 using Pims.Api.Models.Concepts.DispositionFile;
-using Pims.Api.Models.Concepts.DispositionFile;
 using Pims.Api.Policies;
 using Pims.Api.Services;
 using Pims.Core.Exceptions;

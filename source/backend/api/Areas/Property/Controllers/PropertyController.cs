@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Pims.Api.Areas.Property.Models.Property;
 using Pims.Api.Models.Concepts.Property;
 using Pims.Api.Policies;
 using Pims.Api.Services;
@@ -55,13 +54,13 @@ namespace Pims.Api.Areas.Property.Controllers
         [HttpGet("{id}/associations")]
         [HasPermission(Permissions.PropertyView)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(PropertyAssociationModel), 200)]
+        [ProducesResponseType(typeof(PropertyAssociationsModel), 200)]
         [SwaggerOperation(Tags = new[] { "property" })]
         public IActionResult GetPropertyAssociationsWithId(long id)
         {
             var property = _propertyRepository.GetAllAssociationsById(id);
 
-            return new JsonResult(_mapper.Map<PropertyAssociationModel>(property));
+            return new JsonResult(_mapper.Map<PropertyAssociationsModel>(property));
         }
 
         #endregion
