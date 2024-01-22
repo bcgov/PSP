@@ -1,9 +1,10 @@
 import { IAddress } from '@/interfaces';
-import { Api_Address } from '@/models/api/Address';
-import { Api_PropertyManagement } from '@/models/api/Property';
+import { ApiGen_Concepts_Address } from '@/models/api/generated/ApiGen_Concepts_Address';
+import { ApiGen_Concepts_PropertyManagement } from '@/models/api/generated/ApiGen_Concepts_PropertyManagement';
 import { IBcAssessmentSummary } from '@/models/layers/bcAssesment';
 
 import { prettyFormatDate } from './dateUtils';
+import { exists } from './utils';
 
 /**
  * The pidFormatter is used to format the specified PID value
@@ -30,7 +31,7 @@ export const pidParser = (pid?: string | number | null): number | undefined => {
   if (typeof pid === 'number') {
     return pid;
   }
-  if (pid !== undefined && pid !== null) {
+  if (exists(pid)) {
     const regex = /(\d\d\d)[\s-]?(\d\d\d)[\s-]?(\d\d\d)/;
     const format = pid.match(regex);
     if (format !== null && format.length === 4) {
@@ -47,7 +48,7 @@ export const pidParser = (pid?: string | number | null): number | undefined => {
  * @param address Address object from property.
  * @returns Civic address string value.
  */
-export const formatApiAddress = (address?: Api_Address) => {
+export const formatApiAddress = (address: ApiGen_Concepts_Address | null | undefined) => {
   const values = [
     address?.streetAddress1 ?? '',
     address?.streetAddress2 ?? '',
@@ -96,7 +97,9 @@ export const formatBcaAddress = (address?: IBcAssessmentSummary['ADDRESSES'][0])
     .filter(a => !!a)
     .join(' ');
 
-export function formatApiPropertyManagementLease(base?: Api_PropertyManagement | null): string {
+export function formatApiPropertyManagementLease(
+  base: ApiGen_Concepts_PropertyManagement | undefined | null,
+): string {
   const count = base?.relatedLeases || 0;
   switch (count) {
     case 0:

@@ -170,6 +170,15 @@ export const getPage = <T>(pageIndex: number, pageSize: number, data: T[]) => {
 };
 
 /**
+ * Meant to be used as the function passed during a conditional statement to remove null or undefined entries.
+ * example. myArray.filter(exists);
+ *          if(exists(a?.b?.c)){}
+ */
+export function exists<T>(value: T | null | undefined): value is T {
+  return value === (value ?? !value);
+}
+
+/**
  * Add a simple retry wrapper to help avoid chunk errors in deployed pims application, recursively calls promise based on attemptsLeft parameter.
  * @param lazyComponent
  * @param attemptsLeft

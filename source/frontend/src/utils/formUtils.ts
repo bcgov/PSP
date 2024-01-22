@@ -1,6 +1,13 @@
 import { SelectOption } from '@/components/common/form';
-import Api_TypeCode from '@/models/api/TypeCode';
+import { ApiGen_Base_CodeType } from '@/models/api/generated/ApiGen_Base_CodeType';
+import { ApiGen_Concepts_CodeType } from '@/models/api/generated/ApiGen_Concepts_CodeType';
+import { ApiGen_Concepts_FinancialCode } from '@/models/api/generated/ApiGen_Concepts_FinancialCode';
+import { ApiGen_Concepts_FinancialCodeTypes } from '@/models/api/generated/ApiGen_Concepts_FinancialCodeTypes';
+import { EpochISODateTimeString } from '@/models/api/UtcIsoDateTime';
+import { getEmptyBaseAudit } from '@/models/default_initializers';
 import { NumberFieldValue } from '@/typings/NumberFieldValue';
+
+import { exists } from './utils';
 
 /**
  * append the passed name and index to the existing namespace, ideal for nesting forms within formik.
@@ -16,7 +23,7 @@ export const withNameSpace: Function = (nameSpace?: string, name?: string, index
  * The phoneFormatter is used to format the specified phone number value
  * @param {string} phoneNumber This is the target phone number to be formatted
  */
-export const phoneFormatter = (phoneNumber?: string) => {
+export const phoneFormatter = (phoneNumber: string | null | undefined) => {
   if (!!phoneNumber) {
     let result = phoneNumber;
     const regex =
@@ -39,19 +46,42 @@ export function emptyStringtoNullable(value: string | null): string | null {
   return value;
 }
 
-export function stringToUndefined(value: any) {
+export function stringToUndefined<T extends string | number>(
+  value: T | null | undefined,
+): T | undefined {
   return emptyStringToUndefined(value, value);
 }
 
-export function emptyStringToUndefined(value: any, originalValue: any) {
+export function emptyStringToUndefined<T extends string | number>(
+  value: T | null | undefined,
+  originalValue: T | null | undefined,
+) {
   if (typeof originalValue === 'string' && originalValue === '') {
     return undefined;
   }
-  return value;
+  return exists(value) ? value : undefined;
 }
 
-export function stringToNull(value: any) {
+export function stringToNull<T extends string>(value: T | null | undefined): T | null {
   return emptyStringToNull(value, value);
+}
+
+export function stringToNumber<T extends string | number>(value: T | null | undefined): number {
+  if (typeof value === 'string' && value === '') {
+    value = emptyStringToNull(value, value);
+  }
+
+  return exists(value) ? Number(value) : 0;
+}
+
+export function stringToNumberOrNull<T extends string | number>(
+  value: T | null | undefined,
+): number | null {
+  if (typeof value === 'string' && value === '') {
+    value = emptyStringToNull(value, value);
+  }
+
+  return exists(value) ? Number(value) : null;
 }
 
 export function emptyStringToNull(value: any, originalValue: any) {
@@ -61,20 +91,46 @@ export function emptyStringToNull(value: any, originalValue: any) {
   return value;
 }
 
-export function toTypeCode<T = string>(value?: T | null): Api_TypeCode<T> | undefined {
-  return !!value ? { id: value } : undefined;
-}
-
-export function toTypeCodeNullable<T = string>(value?: T | null): Api_TypeCode<T> | null {
-  return !!value ? { id: value } : null;
-}
-
-export function fromTypeCode<T = string>(value?: Api_TypeCode<T> | null): T | undefined {
-  return value?.id;
-}
-
-export function fromTypeCodeNullable<T = string>(value?: Api_TypeCode<T> | null): T | null {
+export function fromTypeCode<T = string>(
+  value: ApiGen_Base_CodeType<T> | null | undefined,
+): T | null {
   return value?.id ?? null;
+}
+
+export function fromTypeCodeNullable<T = string>(value?: ApiGen_Base_CodeType<T> | null): T | null {
+  return value?.id ?? null;
+}
+
+export function toTypeCodeNullable<T = string>(
+  value: T | null | undefined,
+): ApiGen_Base_CodeType<T> | null {
+  return !!value ? toTypeCode(value) : null;
+}
+
+export function toTypeCode<T = string>(value: T): ApiGen_Base_CodeType<T> {
+  return { id: value, description: null, displayOrder: null, isDisabled: false };
+}
+
+export function toFinancialCode(
+  id: number,
+  code: ApiGen_Concepts_FinancialCodeTypes,
+): ApiGen_Concepts_FinancialCode {
+  return {
+    id: id,
+    type: code,
+    code: null,
+    effectiveDate: EpochISODateTimeString,
+    expiryDate: null,
+    description: null,
+    displayOrder: null,
+    ...getEmptyBaseAudit(),
+  };
+}
+
+export function toTypeCodeConcept(
+  value: number | null | undefined,
+): ApiGen_Concepts_CodeType | null {
+  return !!value ? { id: value, code: null, description: null, displayOrder: null } : null;
 }
 
 export function stringToBoolean(value: string | boolean): boolean {
@@ -137,7 +193,7 @@ export function numberFieldToRequiredNumber(value: NumberFieldValue) {
   return Number(value);
 }
 
-export function toRequiredTypeCode<T>(value?: Api_TypeCode<T>): Api_TypeCode<T> {
+export function toRequiredTypeCode<T>(value?: ApiGen_Base_CodeType<T>): ApiGen_Base_CodeType<T> {
   if (!value) {
     throw new Error('TypeCode is required, cannot be empty');
   }
