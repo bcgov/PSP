@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Constants;
 using Pims.Api.Helpers.Exceptions;
+using Pims.Api.Helpers.Extensions;
 using Pims.Api.Models.CodeTypes;
 using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
@@ -24,6 +25,7 @@ namespace Pims.Api.Services
     {
         private readonly ClaimsPrincipal _user;
         private readonly ILogger _logger;
+        private readonly IUserRepository _userRepository;
         private readonly IDispositionFileRepository _dispositionFileRepository;
         private readonly IDispositionFilePropertyRepository _dispositionFilePropertyRepository;
         private readonly ICoordinateTransformService _coordinateService;
@@ -41,7 +43,8 @@ namespace Pims.Api.Services
             IPropertyRepository propertyRepository,
             IPropertyService propertyService,
             ILookupRepository lookupRepository,
-            IDispositionFileChecklistRepository checklistRepository)
+            IDispositionFileChecklistRepository checklistRepository,
+            IUserRepository userRepository)
         {
             _user = user;
             _logger = logger;
@@ -52,12 +55,14 @@ namespace Pims.Api.Services
             _propertyService = propertyService;
             _lookupRepository = lookupRepository;
             _checklistRepository = checklistRepository;
+            _userRepository = userRepository;
         }
 
         public PimsDispositionFile Add(PimsDispositionFile dispositionFile, IEnumerable<UserOverrideCode> userOverrides)
         {
             _logger.LogInformation("Creating Disposition File {dispositionFile}", dispositionFile);
             _user.ThrowIfNotAuthorized(Permissions.DispositionAdd);
+            dispositionFile.ThrowMissingContractorInTeam(_user, _userRepository);
 
             dispositionFile.DispositionStatusTypeCode ??= EnumDispositionStatusTypeCode.UNKNOWN.ToString();
             dispositionFile.DispositionFileStatusTypeCode ??= EnumDispositionFileStatusTypeCode.ACTIVE.ToString();
@@ -76,6 +81,7 @@ namespace Pims.Api.Services
         {
             _logger.LogInformation("Getting disposition file with id {id}", id);
             _user.ThrowIfNotAuthorized(Permissions.DispositionView);
+            _user.ThrowInvalidAccessToDispositionFile(_userRepository, _dispositionFileRepository, id);
 
             var dispositionFile = _dispositionFileRepository.GetById(id);
 
@@ -88,6 +94,7 @@ namespace Pims.Api.Services
 
             _logger.LogInformation("Updating acquisition file with id {id}", id);
             _user.ThrowIfNotAuthorized(Permissions.DispositionEdit);
+            _user.ThrowInvalidAccessToDispositionFile(_userRepository, _dispositionFileRepository, id);
 
             if (id != dispositionFile.DispositionFileId)
             {
@@ -130,7 +137,10 @@ namespace Pims.Api.Services
             _logger.LogDebug("Disposition file search with filter: {filter}", filter);
             _user.ThrowIfNotAuthorized(Permissions.DispositionView);
 
-            return _dispositionFileRepository.GetPageDeep(filter);
+            var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
+            long? contractorPersonId = (pimsUser != null && pimsUser.IsContractor) ? pimsUser.PersonId : null;
+
+            return _dispositionFileRepository.GetPageDeep(filter, contractorPersonId);
         }
 
         public IEnumerable<PimsDispositionFileProperty> GetProperties(long id)

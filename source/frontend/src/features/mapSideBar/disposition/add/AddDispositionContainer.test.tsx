@@ -1,9 +1,13 @@
+import { FormikHelpers, FormikProps } from 'formik';
 import { createMemoryHistory } from 'history';
+import { createRef } from 'react';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
-import { act, renderAsync, RenderOptions } from '@/utils/test-utils';
+import { UserOverrideCode } from '@/models/api/UserOverrideCode';
+import { act, createAxiosError, renderAsync, RenderOptions } from '@/utils/test-utils';
 
+import { DispositionFormModel } from '../models/DispositionFormModel';
 import AddDispositionContainer, { IAddDispositionContainerProps } from './AddDispositionContainer';
 import { IAddDispositionContainerViewProps } from './AddDispositionContainerView';
 
@@ -19,12 +23,28 @@ const TestView: React.FC<IAddDispositionContainerViewProps> = props => {
   return <span>Content Rendered</span>;
 };
 
-describe('Add Form8 Container component', () => {
+const mockCreateDispositionFile = {
+  error: undefined,
+  response: undefined,
+  execute: jest.fn(),
+  loading: false,
+};
+
+jest.mock('@/hooks/repositories/useDispositionProvider', () => ({
+  useDispositionProvider: () => {
+    return {
+      addDispositionFileApi: mockCreateDispositionFile,
+    };
+  },
+}));
+
+describe('Add Disposition Container component', () => {
   const setup = async (
     renderOptions: RenderOptions & {
       props?: Partial<IAddDispositionContainerProps>;
     } = {},
   ) => {
+    const ref = createRef<FormikProps<DispositionFormModel>>();
     const component = await renderAsync(
       <AddDispositionContainer View={TestView} onClose={onClose} />,
       {
@@ -37,6 +57,7 @@ describe('Add Form8 Container component', () => {
 
     return {
       ...component,
+      getFormikRef: () => ref,
     };
   };
 
@@ -63,5 +84,32 @@ describe('Add Form8 Container component', () => {
     });
 
     expect(onClose).toHaveBeenCalled();
+  });
+
+  it(`triggers the modal for contractor not in team`, async () => {
+    mockCreateDispositionFile.execute.mockRejectedValue(
+      createAxiosError(
+        409,
+        `As a Contractor your user contact information should be assigned to the Disposition File's team`,
+        {
+          errorCode: UserOverrideCode.CONTRACTOR_NOT_IN_TEAM,
+        },
+      ),
+    );
+    const mockDispositionValues = new DispositionFormModel(1, 'NUMBER', 1);
+
+    const { getFormikRef, findByText } = await setup();
+    const formikHelpers: Partial<FormikHelpers<DispositionFormModel>> = {
+      setSubmitting: jest.fn(),
+    };
+
+    await act(async () => {
+      return viewProps?.onSubmit(mockDispositionValues, formikHelpers.setSubmitting!!, []);
+    });
+
+    await act(async () => getFormikRef().current?.submitForm());
+
+    const popup = await findByText(/As a contractor, you must add yourself as a team member/i);
+    expect(popup).toBeVisible();
   });
 });

@@ -25,6 +25,11 @@ namespace Pims.Dal.Exceptions
             get { return new UserOverrideCode("PROPERTY_OF_INTEREST_TO_INVENTORY"); }
         }
 
+        public static UserOverrideCode ContractorNotInTeam
+        {
+            get { return new UserOverrideCode("CONTRACTOR_NOT_IN_TEAM"); }
+        }
+
         public static UserOverrideCode ContractorSelfRemoved
         {
             get { return new UserOverrideCode("CONTRACTOR_SELFREMOVED"); }
@@ -53,6 +58,7 @@ namespace Pims.Dal.Exceptions
             UserOverrideCode.AddLocationToProperty,
             UserOverrideCode.UpdateRegion,
             UserOverrideCode.PoiToInventory,
+            UserOverrideCode.ContractorNotInTeam,
             UserOverrideCode.ContractorSelfRemoved,
             UserOverrideCode.ProductReuse,
             UserOverrideCode.DisposingPropertyNotInventoried,

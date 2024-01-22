@@ -70,59 +70,75 @@ export const useApiUserOverride = <
   );
 
   useEffect(() => {
-    if (
-      state?.userOverrideCode &&
-      state.userOverrideCode !== UserOverrideCode.CONTRACTOR_SELFREMOVED
-    ) {
-      setModalContent({
-        variant: 'warning',
-        title: 'User Override Required',
-        message: state?.message,
-        handleOk: async () => {
-          if (state?.userOverrideCode && overridenApiFunction.current) {
-            setState({
-              ...state,
-              previousUserOverrideCodes: [
-                ...state.previousUserOverrideCodes,
-                state?.userOverrideCode,
-              ],
-            });
-            await apiCallWithOverride(overridenApiFunction.current, [
-              ...state.previousUserOverrideCodes,
-              state?.userOverrideCode,
-            ]);
-          }
-        },
-        handleCancel: () => {
-          setState({
-            previousUserOverrideCodes: [...state.previousUserOverrideCodes],
-            userOverrideCode: null,
-            message: null,
+    if (state?.userOverrideCode) {
+      switch (state.userOverrideCode) {
+        case UserOverrideCode.CONTRACTOR_NOT_IN_TEAM:
+          setModalContent({
+            title: 'Contractor missing',
+            variant: 'warning',
+            message:
+              'As a contractor, you must add yourself as a team member to the file in order to create or save changes.',
+            handleOk: async () => {
+              setState({
+                previousUserOverrideCodes: [...state.previousUserOverrideCodes],
+                userOverrideCode: null,
+                message: null,
+              });
+              setDisplayModal(false);
+            },
+            okButtonText: 'Close',
           });
-          setDisplayModal(false);
-        },
-        okButtonText: 'Yes',
-        okButtonVariant: 'warning',
-        cancelButtonText: 'No',
-      });
-    } else if (
-      state?.userOverrideCode &&
-      state.userOverrideCode === UserOverrideCode.CONTRACTOR_SELFREMOVED
-    ) {
-      setModalContent({
-        title: 'Note',
-        variant: 'info',
-        message: RemoveSelfContractorContent(),
-        handleOk: async () => {
-          setState({
-            previousUserOverrideCodes: [...state.previousUserOverrideCodes],
-            userOverrideCode: null,
-            message: null,
+          break;
+        case UserOverrideCode.CONTRACTOR_SELFREMOVED:
+          setModalContent({
+            title: 'Note',
+            variant: 'info',
+            message: RemoveSelfContractorContent(),
+            handleOk: async () => {
+              setState({
+                previousUserOverrideCodes: [...state.previousUserOverrideCodes],
+                userOverrideCode: null,
+                message: null,
+              });
+              setDisplayModal(false);
+            },
+            okButtonText: 'Close',
           });
-          setDisplayModal(false);
-        },
-        okButtonText: 'Close',
-      });
+          break;
+        default: {
+          setModalContent({
+            variant: 'warning',
+            title: 'User Override Required',
+            message: state?.message,
+            handleOk: async () => {
+              if (state?.userOverrideCode && overridenApiFunction.current) {
+                setState({
+                  ...state,
+                  previousUserOverrideCodes: [
+                    ...state.previousUserOverrideCodes,
+                    state?.userOverrideCode,
+                  ],
+                });
+                await apiCallWithOverride(overridenApiFunction.current, [
+                  ...state.previousUserOverrideCodes,
+                  state?.userOverrideCode,
+                ]);
+              }
+            },
+            handleCancel: () => {
+              setState({
+                previousUserOverrideCodes: [...state.previousUserOverrideCodes],
+                userOverrideCode: null,
+                message: null,
+              });
+              setDisplayModal(false);
+            },
+            okButtonText: 'Yes',
+            okButtonVariant: 'warning',
+            cancelButtonText: 'No',
+          });
+        }
+      }
     }
   }, [
     apiCallWithOverride,
