@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using Pims.Api.Models.Base;
 using Pims.Api.Models.Concepts.File;
-using Pims.Api.Models.Concepts.DispositionFile;
 
 /*
 * Frontend model
@@ -82,7 +81,7 @@ namespace Pims.Api.Models.Concepts.DispositionFile
         /// <summary>
         /// get/set - A list of disposition property relationships.
         /// </summary>
-        public IList<DispositionFilePropertyModel> FileProperties { get; set; }
+        public new IList<DispositionFilePropertyModel> FileProperties { get; set; }
 
         /// <summary>
         /// get/set - A list of disposition file team relationships.
@@ -103,6 +102,7 @@ namespace Pims.Api.Models.Concepts.DispositionFile
         /// get/set - A list of disposition file sales.
         /// </summary>
         public DispositionFileAppraisalModel DispositionAppraisal { get; set; }
+
         #endregion
     }
 }

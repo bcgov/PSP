@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using Mapster;
 using Pims.Api.Models.Base;
 using Pims.Core.Extensions;
@@ -57,7 +58,7 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
                 .Map(dest => dest.AcqPhysFileStatusTypeCode, src => src.AcquisitionPhysFileStatusTypeCode.Id)
                 .Map(dest => dest.AcquisitionTypeCode, src => src.AcquisitionTypeCode.Id)
                 .Map(dest => dest.RegionCode, src => src.RegionCode.Id)
-                .Map(dest => dest.PimsPropertyAcquisitionFiles, src => src.FileProperties)
+                .Map(dest => dest.PimsPropertyAcquisitionFiles, src => src.FileProperties.ToImmutableList())
                 .Map(dest => dest.PimsAcquisitionFileTeams, src => src.AcquisitionTeam)
                 .Map(dest => dest.PimsAcquisitionOwners, src => src.AcquisitionFileOwners)
                 .Map(dest => dest.PimsInterestHolders, src => src.AcquisitionFileInterestHolders)

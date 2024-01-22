@@ -4,6 +4,7 @@
  */
 import { ApiGen_Base_BaseAudit } from './ApiGen_Base_BaseAudit';
 import { ApiGen_Base_CodeType } from './ApiGen_Base_CodeType';
+import { ApiGen_Concepts_FileProperty } from './ApiGen_Concepts_FileProperty';
 
 // LINK: @backend/apimodels/Models/Concepts/File/FileModel.cs
 export interface ApiGen_Concepts_File extends ApiGen_Base_BaseAudit {
@@ -11,4 +12,5 @@ export interface ApiGen_Concepts_File extends ApiGen_Base_BaseAudit {
   fileName: string | null;
   fileNumber: string | null;
   fileStatusTypeCode: ApiGen_Base_CodeType<string> | null;
+  fileProperties: ApiGen_Concepts_FileProperty[] | null;
 }

@@ -1,6 +1,6 @@
+using System.Collections.Immutable;
 using Mapster;
 using Pims.Api.Models.Base;
-using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 
 namespace Pims.Api.Models.Concepts.ResearchFile
@@ -38,7 +38,7 @@ namespace Pims.Api.Models.Concepts.ResearchFile
                 .Map(dest => dest.RoadAlias, src => src.RoadAlias)
                 .Map(dest => dest.RoadName, src => src.RoadName)
                 .Map(dest => dest.ResearchFileStatusTypeCode, src => src.FileStatusTypeCode.Id)
-                .Map(dest => dest.PimsPropertyResearchFiles, src => src.FileProperties)
+                .Map(dest => dest.PimsPropertyResearchFiles, src => src.FileProperties.ToImmutableList())
                 .Map(dest => dest.RequestDate, src => src.RequestDate)
                 .Map(dest => dest.RequestDescription, src => src.RequestDescription)
                 .Map(dest => dest.RequestSourceDescription, src => src.RequestSourceDescription)

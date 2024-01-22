@@ -1,8 +1,7 @@
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using Mapster;
-using Pims.Api.Models.Concepts.DispositionFile;
-using Pims.Dal.Entities;
 using Entity = Pims.Dal.Entities;
 
 namespace Pims.Api.Models.Concepts.DispositionFile
@@ -59,7 +58,7 @@ namespace Pims.Api.Models.Concepts.DispositionFile
                 .Map(dest => dest.PimsDispositionFileTeams, src => src.DispositionTeam)
                 .Map(dest => dest.PimsDispositionOffers, src => src.DispositionOffers)
                 .Map(dest => dest.PimsDispositionSales, src => src.DispositionSale == null ? null : new List<DispositionFileSaleModel> { src.DispositionSale })
-                .Map(dest => dest.PimsDispositionFileProperties, src => src.FileProperties)
+                .Map(dest => dest.PimsDispositionFileProperties, src => src.FileProperties.ToImmutableList())
                 .Map(dest => dest.PimsDispositionChecklistItems, src => src.FileChecklistItems);
         }
     }
