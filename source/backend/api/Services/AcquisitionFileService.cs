@@ -662,7 +662,7 @@ namespace Pims.Api.Services
             short currentRegion = _acqFileRepository.GetRegion(acqFileId);
             if (currentRegion != updatedRegion)
             {
-                throw new UserOverrideException(UserOverrideCode.UpdateRegion, "The Ministry region has been changed, this will result in a change to the file's prefix. This requires user confirmation.");
+                throw new UserOverrideException(UserOverrideCode.UpdateRegion, "The selected Ministry region is different from that associated to one or more selected properties\n\nDo you want to proceed?");
             }
         }
 
