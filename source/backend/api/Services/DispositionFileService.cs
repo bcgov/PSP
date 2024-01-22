@@ -457,7 +457,7 @@ namespace Pims.Api.Services
                         if (overrideCodes.Contains(UserOverrideCode.DisposingPropertyNotInventoried))
                         {
                             _logger.LogDebug("Adding new property with pid:{pid}", pid);
-                            dispProperty.Property = _propertyService.PopulateNewProperty(dispProperty.Property);
+                            dispProperty.Property = _propertyService.PopulateNewProperty(dispProperty.Property, true, false);
                         }
                         else
                         {
@@ -480,7 +480,7 @@ namespace Pims.Api.Services
                         if (overrideCodes.Contains(UserOverrideCode.DisposingPropertyNotInventoried))
                         {
                             _logger.LogDebug("Adding new property with pin:{pin}", pin);
-                            dispProperty.Property = _propertyService.PopulateNewProperty(dispProperty.Property);
+                            dispProperty.Property = _propertyService.PopulateNewProperty(dispProperty.Property, true, false);
                         }
                         else
                         {
@@ -493,7 +493,7 @@ namespace Pims.Api.Services
                     if (overrideCodes.Contains(UserOverrideCode.DisposingPropertyNotInventoried))
                     {
                         _logger.LogDebug("Adding new property without a pid");
-                        dispProperty.Property = _propertyService.PopulateNewProperty(dispProperty.Property);
+                        dispProperty.Property = _propertyService.PopulateNewProperty(dispProperty.Property, true, false);
                     }
                     else
                     {
