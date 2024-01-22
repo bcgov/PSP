@@ -1,6 +1,6 @@
 using System;
 
-namespace Pims.Api.Areas.Property.Models.Property
+namespace Pims.Api.Models.Concepts.Property
 {
     public class AssociationModel
     {
