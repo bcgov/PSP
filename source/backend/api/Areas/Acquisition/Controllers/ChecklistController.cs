@@ -63,15 +63,15 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         /// Update the acquisition file checklist.
         /// </summary>
         /// <returns>The updated checklist items.</returns>
-        [HttpPut("{id:long}/checklist")]
+        [HttpPut("{acquisitionFileId:long}/checklist")]
         [HasPermission(Permissions.AcquisitionFileEdit)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(AcquisitionFileModel), 200)]
         [SwaggerOperation(Tags = new[] { "acquisitionfile" })]
-        public IActionResult UpdateAcquisitionFileChecklist([FromBody] AcquisitionFileModel acquisitionFileModel)
+        public IActionResult UpdateAcquisitionFileChecklist(long acquisitionFileId, [FromBody] IList<FileChecklistItemModel> checklistItems)
         {
-            var acquisitionFileEntity = _mapper.Map<Dal.Entities.PimsAcquisitionFile>(acquisitionFileModel);
-            var acquisitionFile = _acquisitionService.UpdateChecklistItems(acquisitionFileEntity);
+            var checklistItemEntities = _mapper.Map<IList<Dal.Entities.PimsAcquisitionChecklistItem>>(checklistItems);
+            var acquisitionFile = _acquisitionService.UpdateChecklistItems(acquisitionFileId, checklistItemEntities);
             return new JsonResult(_mapper.Map<AcquisitionFileModel>(acquisitionFile));
         }
 

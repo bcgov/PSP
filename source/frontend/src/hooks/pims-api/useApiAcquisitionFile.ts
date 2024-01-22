@@ -1,19 +1,20 @@
 import queryString from 'query-string';
 import React from 'react';
 
-import { Api_AcquisitionFilter } from '@/features/acquisition/list/interfaces';
+import { ApiGen_Concepts_AcquisitionFilter } from '@/features/acquisition/list/interfaces';
 import { IPagedItems } from '@/interfaces';
-import {
-  Api_AcquisitionFile,
-  Api_AcquisitionFileOwner,
-  Api_AcquisitionFileProperty,
-  Api_AcquisitionFileTeam,
-} from '@/models/api/AcquisitionFile';
-import { Api_CompensationFinancial } from '@/models/api/CompensationFinancial';
-import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
-import { Api_ExpropriationPayment } from '@/models/api/ExpropriationPayment';
-import { Api_FileChecklistItem, Api_FileWithChecklist, Api_LastUpdatedBy } from '@/models/api/File';
-import { Api_Product, Api_Project } from '@/models/api/Project';
+import { Api_LastUpdatedBy } from '@/models/api/File';
+import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
+import { ApiGen_Concepts_AcquisitionFileOwner } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileOwner';
+import { ApiGen_Concepts_AcquisitionFileProperty } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileProperty';
+import { ApiGen_Concepts_AcquisitionFileTeam } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileTeam';
+import { ApiGen_Concepts_CompensationFinancial } from '@/models/api/generated/ApiGen_Concepts_CompensationFinancial';
+import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
+import { ApiGen_Concepts_ExpropriationPayment } from '@/models/api/generated/ApiGen_Concepts_ExpropriationPayment';
+import { ApiGen_Concepts_FileChecklistItem } from '@/models/api/generated/ApiGen_Concepts_FileChecklistItem';
+import { ApiGen_Concepts_FileWithChecklist } from '@/models/api/generated/ApiGen_Concepts_FileWithChecklist';
+import { ApiGen_Concepts_Product } from '@/models/api/generated/ApiGen_Concepts_Product';
+import { ApiGen_Concepts_Project } from '@/models/api/generated/ApiGen_Concepts_Project';
 import { Api_ExportProjectFilter } from '@/models/api/ProjectFilter';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 
@@ -30,11 +31,11 @@ export const useApiAcquisitionFile = () => {
   return React.useMemo(
     () => ({
       getAcquisitionFiles: (params: IPaginateAcquisition | null) =>
-        api.get<IPagedItems<Api_AcquisitionFile>>(
+        api.get<IPagedItems<ApiGen_Concepts_AcquisitionFile>>(
           `/acquisitionfiles/search?${params ? queryString.stringify(params) : ''}`,
         ),
       getAcquisitionFile: (acqFileId: number) =>
-        api.get<Api_AcquisitionFile>(`/acquisitionfiles/${acqFileId}`),
+        api.get<ApiGen_Concepts_AcquisitionFile>(`/acquisitionfiles/${acqFileId}`),
       getLastUpdatedByApi: (acqFileId: number) =>
         api.get<Api_LastUpdatedBy>(`/acquisitionfiles/${acqFileId}/updateInfo`),
       getAgreementReport: (filter: Api_ExportProjectFilter) =>
@@ -62,69 +63,74 @@ export const useApiAcquisitionFile = () => {
           },
         ),
       postAcquisitionFile: (
-        acqFile: Api_AcquisitionFile,
+        acqFile: ApiGen_Concepts_AcquisitionFile,
         userOverrideCodes: UserOverrideCode[] = [],
       ) =>
-        api.post<Api_AcquisitionFile>(
+        api.post<ApiGen_Concepts_AcquisitionFile>(
           `/acquisitionfiles?${userOverrideCodes.map(o => `userOverrideCodes=${o}`).join('&')}`,
           acqFile,
         ),
       putAcquisitionFile: (
-        acqFile: Api_AcquisitionFile,
+        acqFile: ApiGen_Concepts_AcquisitionFile,
         userOverrideCodes: UserOverrideCode[] = [],
       ) =>
-        api.put<Api_AcquisitionFile>(
+        api.put<ApiGen_Concepts_AcquisitionFile>(
           `/acquisitionfiles/${acqFile.id}?${userOverrideCodes
             .map(o => `userOverrideCodes=${o}`)
             .join('&')}`,
           acqFile,
         ),
       putAcquisitionFileProperties: (
-        acqFile: Api_AcquisitionFile,
+        acqFile: ApiGen_Concepts_AcquisitionFile,
         userOverrideCodes: UserOverrideCode[] = [],
       ) =>
-        api.put<Api_AcquisitionFile>(
+        api.put<ApiGen_Concepts_AcquisitionFile>(
           `/acquisitionfiles/${acqFile?.id}/properties?${userOverrideCodes
             .map(o => `userOverrideCodes=${o}`)
             .join('&')}`,
           acqFile,
         ),
       getAcquisitionFileProperties: (acqFileId: number) =>
-        api.get<Api_AcquisitionFileProperty[]>(`/acquisitionfiles/${acqFileId}/properties`),
+        api.get<ApiGen_Concepts_AcquisitionFileProperty[]>(
+          `/acquisitionfiles/${acqFileId}/properties`,
+        ),
       getAcquisitionFileOwners: (acqFileId: number) =>
-        api.get<Api_AcquisitionFileOwner[]>(`/acquisitionfiles/${acqFileId}/owners`),
+        api.get<ApiGen_Concepts_AcquisitionFileOwner[]>(`/acquisitionfiles/${acqFileId}/owners`),
       getAllAcquisitionFileTeamMembers: () =>
-        api.get<Api_AcquisitionFileTeam[]>(`/acquisitionfiles/team-members`),
+        api.get<ApiGen_Concepts_AcquisitionFileTeam[]>(`/acquisitionfiles/team-members`),
       getAcquisitionFileProject: (acqFileId: number) =>
-        api.get<Api_Project>(`/acquisitionfiles/${acqFileId}/project`),
+        api.get<ApiGen_Concepts_Project>(`/acquisitionfiles/${acqFileId}/project`),
       getAcquisitionFileProduct: (acqFileId: number) =>
-        api.get<Api_Product>(`/acquisitionfiles/${acqFileId}/product`),
+        api.get<ApiGen_Concepts_Product>(`/acquisitionfiles/${acqFileId}/product`),
       getAcquisitionFileChecklist: (acqFileId: number) =>
-        api.get<Api_FileChecklistItem[]>(`/acquisitionfiles/${acqFileId}/checklist`),
-      putAcquisitionFileChecklist: (acqFile: Api_FileWithChecklist) =>
-        api.put<Api_AcquisitionFile>(`/acquisitionfiles/${acqFile?.id}/checklist`, acqFile),
+        api.get<ApiGen_Concepts_FileChecklistItem[]>(`/acquisitionfiles/${acqFileId}/checklist`),
+      putAcquisitionFileChecklist: (acqFile: ApiGen_Concepts_FileWithChecklist) =>
+        api.put<ApiGen_Concepts_AcquisitionFile>(
+          `/acquisitionfiles/${acqFile?.id}/checklist`,
+          acqFile.fileChecklistItems,
+        ),
       getFileCompensationRequisitions: (acqFileId: number) =>
-        api.get<Api_CompensationRequisition[]>(
+        api.get<ApiGen_Concepts_CompensationRequisition[]>(
           `/acquisitionfiles/${acqFileId}/compensation-requisitions`,
         ),
       getFileCompReqH120s: (acqFileId: number, finalOnly?: boolean) =>
-        api.get<Api_CompensationFinancial[]>(
+        api.get<ApiGen_Concepts_CompensationFinancial[]>(
           `/acquisitionfiles/${acqFileId}/comp-req-h120s?finalOnly=${!!finalOnly}`,
         ),
       postFileCompensationRequisition: (
         acqFileId: number,
-        compensationRequisition: Api_CompensationRequisition,
+        compensationRequisition: ApiGen_Concepts_CompensationRequisition,
       ) =>
-        api.post<Api_CompensationRequisition>(
+        api.post<ApiGen_Concepts_CompensationRequisition>(
           `/acquisitionfiles/${acqFileId}/compensation-requisitions`,
           compensationRequisition,
         ),
       getAcquisitionFileForm8s: (acqFileId: number) =>
-        api.get<Api_ExpropriationPayment[]>(
+        api.get<ApiGen_Concepts_ExpropriationPayment[]>(
           `/acquisitionfiles/${acqFileId}/expropriation-payments`,
         ),
-      postFileForm8: (acqFileId: number, form8: Api_ExpropriationPayment) =>
-        api.post<Api_ExpropriationPayment>(
+      postFileForm8: (acqFileId: number, form8: ApiGen_Concepts_ExpropriationPayment) =>
+        api.post<ApiGen_Concepts_ExpropriationPayment>(
           `/acquisitionfiles/${acqFileId}/expropriation-payments`,
           form8,
         ),
@@ -133,4 +139,4 @@ export const useApiAcquisitionFile = () => {
   );
 };
 
-export type IPaginateAcquisition = IPaginateRequest<Api_AcquisitionFilter>;
+export type IPaginateAcquisition = IPaginateRequest<ApiGen_Concepts_AcquisitionFilter>;

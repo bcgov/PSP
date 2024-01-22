@@ -68,10 +68,10 @@ namespace Pims.Api.Areas.Disposition.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(DispositionFileModel), 200)]
         [SwaggerOperation(Tags = new[] { "dispositionfile" })]
-        public IActionResult UpdateDispositionFileChecklist([FromBody] DispositionFileModel dispositionFileModel)
+        public IActionResult UpdateDispositionFileChecklist(long id, [FromBody] IList<FileChecklistItemModel> checklistItems)
         {
-            var dispositionFileEntity = _mapper.Map<Dal.Entities.PimsDispositionFile>(dispositionFileModel);
-            var dispositionFile = _dispositionService.UpdateChecklistItems(dispositionFileEntity);
+            var checklistItemEntities = _mapper.Map<IList<Dal.Entities.PimsDispositionChecklistItem>>(checklistItems);
+            var dispositionFile = _dispositionService.UpdateChecklistItems(id, checklistItemEntities);
             return new JsonResult(_mapper.Map<DispositionFileModel>(dispositionFile));
         }
 
