@@ -7,6 +7,9 @@ using Pims.Api.Models.Mayan;
 using TypeGen.Core.Extensions;
 using TypeGen.Core.SpecGeneration;
 using TypeGen.Core.SpecGeneration.Builders;
+using Pims.Api.Models.Concepts.File;
+using Pims.Api.Models.Concepts.ResearchFile;
+using Pims.Api.Models.Concepts.DispositionFile;
 
 namespace Pims.Tools.TsModelGenerator.Specifications
 {
@@ -18,10 +21,22 @@ namespace Pims.Tools.TsModelGenerator.Specifications
             ProcessInterface(typeof(BaseAuditModel));
             ProcessInterface(typeof(BaseConcurrentModel));
 
-            var genericTypeModel = typeof(CodeTypeModel<string>).GetGenericTypeDefinition();
+            var genericTypeModel = typeof(CodeTypeModel<>);
             ProcessInterface(genericTypeModel);
 
             var modelsAssembly = Assembly.Load("Pims.Api.Models");
+
+            var genericFileModel = typeof(FileModel);
+            ProcessInterface(genericFileModel);
+
+
+            var dispositionFileModel3 = typeof(FilePropertyModel);
+            ProcessInterface(dispositionFileModel3);
+
+            var dispositionFileModel5 = typeof(FileWithChecklistModel);
+            ProcessInterface(dispositionFileModel5);
+            var dispositionFileModel2 = typeof(ResearchFileModel);
+            ProcessInterface(dispositionFileModel2);
 
             // Get the types only from the specified namespace
             IEnumerable<Type> conceptTypes = modelsAssembly.GetLoadableTypes()
@@ -58,7 +73,14 @@ namespace Pims.Tools.TsModelGenerator.Specifications
             {
                 if (type.FullName.EndsWith("Model"))
                 {
-                    ProcessInterface(type);
+                    if (type.IsGenericType)
+                    {
+                        ProcessInterface(type.GetGenericTypeDefinition());
+                    }
+                    else
+                    {
+                        ProcessInterface(type);
+                    }
                 }
             }
 
