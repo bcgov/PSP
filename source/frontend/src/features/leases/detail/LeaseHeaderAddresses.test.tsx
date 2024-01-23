@@ -4,8 +4,8 @@ import { createMemoryHistory } from 'history';
 
 import { IProperty } from '@/interfaces';
 import { mockLookups } from '@/mocks/lookups.mock';
-import { getMockProperties } from '@/mocks/properties.mock';
-import { Api_Property } from '@/models/api/Property';
+import { getEmptyPropertyLease, getMockProperties } from '@/mocks/properties.mock';
+import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
@@ -41,11 +41,9 @@ describe('LeaseHeaderAddresses component', () => {
   it('renders 2 addresses by default', async () => {
     const { getAllByText, getByText } = setup({
       propertyLeases: getMockProperties().map(p => ({
-        leaseId: 1,
+        ...getEmptyPropertyLease(),
+        fileId: 1,
         property: p as any,
-        lease: null,
-        leaseArea: null,
-        areaUnitType: null,
       })),
     });
 
@@ -57,39 +55,64 @@ describe('LeaseHeaderAddresses component', () => {
     const { getByText, getAllByText } = setup({
       propertyLeases: [
         {
-          leaseId: 1,
-          property: noStreetOrMunicipality as Api_Property,
-          lease: null,
+          fileId: 1,
+          property: noStreetOrMunicipality as unknown as ApiGen_Concepts_Property,
+          file: null,
           leaseArea: null,
           areaUnitType: null,
+          displayOrder: null,
+          id: 0,
+          propertyId: 0,
+          propertyName: null,
+          rowVersion: null,
         },
         {
-          leaseId: 1,
-          property: streetNoMunicipality as Api_Property,
-          lease: null,
+          fileId: 1,
+          property: streetNoMunicipality as unknown as ApiGen_Concepts_Property,
+          file: null,
           leaseArea: null,
           areaUnitType: null,
+          displayOrder: null,
+          id: 0,
+          propertyId: 0,
+          propertyName: null,
+          rowVersion: null,
         },
         {
-          leaseId: 1,
-          property: noStreetButMunicipality as Api_Property,
-          lease: null,
+          fileId: 1,
+          property: noStreetButMunicipality as unknown as ApiGen_Concepts_Property,
+          file: null,
           leaseArea: null,
           areaUnitType: null,
+          displayOrder: null,
+          id: 0,
+          propertyId: 0,
+          propertyName: null,
+          rowVersion: null,
         },
         {
-          leaseId: 1,
-          property: streetAndMunicipality as Api_Property,
-          lease: null,
+          fileId: 1,
+          property: streetAndMunicipality as unknown as ApiGen_Concepts_Property,
+          file: null,
           leaseArea: null,
           areaUnitType: null,
+          displayOrder: null,
+          id: 0,
+          propertyId: 0,
+          propertyName: null,
+          rowVersion: null,
         },
         {
-          leaseId: 1,
-          property: undefinedAddress as Api_Property,
-          lease: null,
+          fileId: 1,
+          property: undefinedAddress as unknown as ApiGen_Concepts_Property,
+          file: null,
           leaseArea: null,
           areaUnitType: null,
+          displayOrder: null,
+          id: 0,
+          propertyId: 0,
+          propertyName: null,
+          rowVersion: null,
         },
       ],
     });

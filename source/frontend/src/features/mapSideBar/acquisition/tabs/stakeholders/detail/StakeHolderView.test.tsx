@@ -5,6 +5,7 @@ import { getMockApiInterestHolders } from '@/mocks/interestHolders.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { render, RenderOptions } from '@/utils/test-utils';
+import { exists } from '@/utils/utils';
 
 import { InterestHolderViewForm, InterestHolderViewRow } from '../update/models';
 import StakeholderOrganizer from './stakeholderOrganizer';
@@ -55,10 +56,12 @@ describe('StakeHolderView component', () => {
 
     const groupedInterestProperties = getMockApiInterestHolders()
       .flatMap(i => i.interestHolderProperties)
+      .filter(exists)
       .map(i => InterestHolderViewForm.fromApi(i));
 
     const groupedNonInterestProperties = getMockApiInterestHolders()
       .flatMap(i => i.interestHolderProperties)
+      .filter(exists)
       .map(i => InterestHolderViewForm.fromApi(i));
 
     organizerMock.getInterestProperties.mockReturnValue(groupedInterestProperties);
@@ -95,7 +98,7 @@ describe('StakeHolderView component', () => {
 
   it('displays table with grouped property values', () => {
     const model = InterestHolderViewForm.fromApi(
-      getMockApiInterestHolders()[0].interestHolderProperties[0],
+      getMockApiInterestHolders()![0].interestHolderProperties![0],
     );
 
     organizerMock.getInterestProperties.mockReturnValue([model]);
@@ -110,10 +113,10 @@ describe('StakeHolderView component', () => {
 
   it('displays table with grouped property values where there are multiple interest type codes', () => {
     const interestHolder = getMockApiInterestHolders()[0];
-    const interestHolderProperty = interestHolder.interestHolderProperties[0];
+    const interestHolderProperty = interestHolder.interestHolderProperties![0];
     interestHolderProperty.propertyInterestTypes = [
-      { id: 'O', description: 'Ordinal' },
-      { id: 'R', description: 'Registered' },
+      { id: 'O', description: 'Ordinal', displayOrder: null, isDisabled: false },
+      { id: 'R', description: 'Registered', displayOrder: null, isDisabled: false },
     ];
     const model = InterestHolderViewForm.fromApi(interestHolderProperty);
     model.identifier = 'PID: 025-196-375';
@@ -121,10 +124,14 @@ describe('StakeHolderView component', () => {
       InterestHolderViewRow.fromApi(interestHolderProperty, interestHolder, {
         id: 'O',
         description: 'Ordinal',
+        displayOrder: null,
+        isDisabled: false,
       }),
       InterestHolderViewRow.fromApi(interestHolderProperty, interestHolder, {
         id: 'R',
         description: 'Registered',
+        displayOrder: null,
+        isDisabled: false,
       }),
     ];
 
@@ -141,7 +148,7 @@ describe('StakeHolderView component', () => {
 
   it('displays table with grouped non-interest property values', () => {
     const model = InterestHolderViewForm.fromApi(
-      getMockApiInterestHolders()[0].interestHolderProperties[0],
+      getMockApiInterestHolders()![0].interestHolderProperties![0],
     );
 
     organizerMock.getInterestProperties.mockReturnValue([model]);

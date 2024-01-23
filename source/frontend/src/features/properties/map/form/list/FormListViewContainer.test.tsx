@@ -159,7 +159,7 @@ describe('form list view container', () => {
 
     await waitFor(() => {
       expect(viewProps.forms).toStrictEqual(
-        sortBy(getMockApiFileForms(), form => form.formDocumentType.formTypeCode),
+        sortBy(getMockApiFileForms(), form => form.formDocumentType?.formTypeCode),
       );
     });
   });
@@ -182,7 +182,7 @@ describe('form list view container', () => {
     act(() => viewProps.setFormFilter({ formTypeId: 'h120' }));
 
     expect(viewProps.forms).toStrictEqual(
-      filter(getMockApiFileForms(), form => form.formDocumentType.formTypeCode === 'h120'),
+      filter(getMockApiFileForms(), form => form.formDocumentType?.formTypeCode === 'h120'),
     );
   });
 });

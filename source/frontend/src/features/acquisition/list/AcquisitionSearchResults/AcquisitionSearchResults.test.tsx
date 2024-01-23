@@ -1,7 +1,7 @@
 import { Claims } from '@/constants/claims';
-import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
-import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
-import { Api_Project } from '@/models/api/Project';
+import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
+import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
+import { ApiGen_Concepts_Project } from '@/models/api/generated/ApiGen_Concepts_Project';
 import { render, RenderOptions } from '@/utils/test-utils';
 
 import {
@@ -29,7 +29,7 @@ const setup = (
   };
 };
 
-const mockResults: Api_AcquisitionFile[] = [];
+const mockResults: ApiGen_Concepts_AcquisitionFile[] = [];
 
 describe('Acquisition Search Results Table', () => {
   beforeEach(() => {
@@ -67,8 +67,11 @@ describe('Acquisition Search Results Table', () => {
         {
           compensationRequisitions: [
             {
-              alternateProject: { description: 'alternate project', code: '1234' } as Api_Project,
-            } as Api_CompensationRequisition,
+              alternateProject: {
+                description: 'alternate project',
+                code: '1234',
+              } as ApiGen_Concepts_Project,
+            } as ApiGen_Concepts_CompensationRequisition,
           ],
         },
       ],
@@ -82,11 +85,14 @@ describe('Acquisition Search Results Table', () => {
     const { findByText, queryByText } = setup({
       results: [
         {
-          project: { description: 'project', code: '4321' } as Api_Project,
+          project: { description: 'project', code: '4321' } as ApiGen_Concepts_Project,
           compensationRequisitions: [
             {
-              alternateProject: { description: 'alternate project', code: '1234' } as Api_Project,
-            } as Api_CompensationRequisition,
+              alternateProject: {
+                description: 'alternate project',
+                code: '1234',
+              } as ApiGen_Concepts_Project,
+            } as ApiGen_Concepts_CompensationRequisition,
           ],
         },
       ],
@@ -103,11 +109,17 @@ describe('Acquisition Search Results Table', () => {
         {
           compensationRequisitions: [
             {
-              alternateProject: { description: 'alternate project 1', code: '1' } as Api_Project,
-            } as Api_CompensationRequisition,
+              alternateProject: {
+                description: 'alternate project 1',
+                code: '1',
+              } as ApiGen_Concepts_Project,
+            } as ApiGen_Concepts_CompensationRequisition,
             {
-              alternateProject: { description: 'alternate project 2', code: '2' } as Api_Project,
-            } as Api_CompensationRequisition,
+              alternateProject: {
+                description: 'alternate project 2',
+                code: '2',
+              } as ApiGen_Concepts_Project,
+            } as ApiGen_Concepts_CompensationRequisition,
           ],
         },
       ],
@@ -123,11 +135,17 @@ describe('Acquisition Search Results Table', () => {
         {
           compensationRequisitions: [
             {
-              alternateProject: { description: 'alternate project', code: '1' } as Api_Project,
-            } as Api_CompensationRequisition,
+              alternateProject: {
+                description: 'alternate project',
+                code: '1',
+              } as ApiGen_Concepts_Project,
+            } as ApiGen_Concepts_CompensationRequisition,
             {
-              alternateProject: { description: 'alternate project', code: '1' } as Api_Project,
-            } as Api_CompensationRequisition,
+              alternateProject: {
+                description: 'alternate project',
+                code: '1',
+              } as ApiGen_Concepts_Project,
+            } as ApiGen_Concepts_CompensationRequisition,
           ],
         },
       ],
@@ -164,8 +182,12 @@ describe('Acquisition Search Results Table', () => {
                 id: 'PROPANLYS',
                 description: 'Property analyst',
                 isDisabled: false,
+                displayOrder: null,
               },
               rowVersion: 1,
+              person: null,
+              personId: null,
+              primaryContact: null,
             },
           ],
         },

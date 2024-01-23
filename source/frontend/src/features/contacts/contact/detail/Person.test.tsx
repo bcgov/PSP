@@ -85,6 +85,7 @@ describe('Contact PersonView component', () => {
         id: ContactMethodTypes.PersonalEmail,
         description: 'Personal Email',
         isDisabled: false,
+        displayOrder: null,
       },
       value: 'test@bench.com',
     };
@@ -95,6 +96,7 @@ describe('Contact PersonView component', () => {
         id: ContactMethodTypes.WorkEmail,
         description: 'Work Email',
         isDisabled: false,
+        displayOrder: null,
       },
       value: 'test@bench.net',
     };
@@ -123,6 +125,7 @@ describe('Contact PersonView component', () => {
         id: ContactMethodTypes.Fax,
         description: 'Fax',
         isDisabled: false,
+        displayOrder: null,
       },
       value: '123456789',
     };
@@ -133,6 +136,7 @@ describe('Contact PersonView component', () => {
         id: ContactMethodTypes.PersonalPhone,
         description: 'Personal Phone',
         isDisabled: false,
+        displayOrder: null,
       },
       value: '800123123',
     };
@@ -143,6 +147,7 @@ describe('Contact PersonView component', () => {
         id: ContactMethodTypes.WorkPhone,
         description: 'Work Phone',
         isDisabled: false,
+        displayOrder: null,
       },
       value: '555123123',
     };
@@ -153,6 +158,7 @@ describe('Contact PersonView component', () => {
         id: ContactMethodTypes.WorkMobile,
         description: 'Work mobil',
         isDisabled: false,
+        displayOrder: null,
       },
       value: '800123123',
     };
@@ -163,6 +169,7 @@ describe('Contact PersonView component', () => {
         id: ContactMethodTypes.PersonalMobile,
         description: 'Personal Mobile',
         isDisabled: false,
+        displayOrder: null,
       },
       value: '750748789',
     };
@@ -234,6 +241,7 @@ describe('Contact PersonView component', () => {
         id: AddressTypes.Mailing,
         description: 'Mailing Address',
         isDisabled: false,
+        displayOrder: null,
       },
     };
     const residentialAddress: IContactAddress = {
@@ -252,6 +260,7 @@ describe('Contact PersonView component', () => {
         id: AddressTypes.Residential,
         description: 'Residential Address',
         isDisabled: false,
+        displayOrder: null,
       },
     };
 
@@ -293,6 +302,7 @@ describe('Contact PersonView component', () => {
         id: AddressTypes.Mailing,
         description: 'Mailing Address',
         isDisabled: false,
+        displayOrder: null,
       },
     };
 

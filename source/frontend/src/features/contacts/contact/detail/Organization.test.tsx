@@ -91,6 +91,7 @@ describe('Contact OrganizationView component', () => {
         id: ContactMethodTypes.PersonalEmail,
         description: 'Personal Email',
         isDisabled: false,
+        displayOrder: null,
       },
       value: 'test@bench.com',
     };
@@ -100,6 +101,7 @@ describe('Contact OrganizationView component', () => {
       contactMethodType: {
         id: ContactMethodTypes.WorkEmail,
         description: 'Work Email',
+        displayOrder: null,
         isDisabled: false,
       },
       value: 'test@bench.net',
@@ -128,6 +130,7 @@ describe('Contact OrganizationView component', () => {
       contactMethodType: {
         id: ContactMethodTypes.Fax,
         description: 'Fax',
+        displayOrder: null,
         isDisabled: false,
       },
       value: '123456789',
@@ -138,6 +141,7 @@ describe('Contact OrganizationView component', () => {
       contactMethodType: {
         id: ContactMethodTypes.PersonalPhone,
         description: 'Personal Phone',
+        displayOrder: null,
         isDisabled: false,
       },
       value: '800123123',
@@ -148,6 +152,7 @@ describe('Contact OrganizationView component', () => {
       contactMethodType: {
         id: ContactMethodTypes.WorkPhone,
         description: 'Work Phone',
+        displayOrder: null,
         isDisabled: false,
       },
       value: '555123123',
@@ -158,6 +163,7 @@ describe('Contact OrganizationView component', () => {
       contactMethodType: {
         id: ContactMethodTypes.WorkMobile,
         description: 'Work mobil',
+        displayOrder: null,
         isDisabled: false,
       },
       value: '800123123',
@@ -168,6 +174,7 @@ describe('Contact OrganizationView component', () => {
       contactMethodType: {
         id: ContactMethodTypes.PersonalMobile,
         description: 'Personal Mobile',
+        displayOrder: null,
         isDisabled: false,
       },
       value: '750748789',
@@ -214,6 +221,7 @@ describe('Contact OrganizationView component', () => {
       addressType: {
         id: AddressTypes.Mailing,
         description: 'Mailing Address',
+        displayOrder: null,
         isDisabled: false,
       },
     };
@@ -232,6 +240,7 @@ describe('Contact OrganizationView component', () => {
       addressType: {
         id: AddressTypes.Residential,
         description: 'Residential Address',
+        displayOrder: null,
         isDisabled: false,
       },
     };
@@ -273,6 +282,7 @@ describe('Contact OrganizationView component', () => {
       addressType: {
         id: AddressTypes.Mailing,
         description: 'Mailing Address',
+        displayOrder: null,
         isDisabled: false,
       },
     };

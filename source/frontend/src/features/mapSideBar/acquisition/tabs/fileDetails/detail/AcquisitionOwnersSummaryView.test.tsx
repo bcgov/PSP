@@ -2,7 +2,7 @@ import {
   mockAcquisitionFileOwnersResponse,
   mockAcquisitionFileResponse,
 } from '@/mocks/acquisitionFiles.mock';
-import { Api_AcquisitionFileOwner } from '@/models/api/AcquisitionFile';
+import { ApiGen_Concepts_AcquisitionFileOwner } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileOwner';
 import { render, RenderOptions } from '@/utils/test-utils';
 
 import { IAcquisitionOwnersSummaryViewProps } from './AcquisitionOwnersSummaryContainer';
@@ -13,7 +13,7 @@ jest.mock('@react-keycloak/web');
 const mockAcquisitionFile = mockAcquisitionFileResponse(1);
 
 const mockViewProps: IAcquisitionOwnersSummaryViewProps = {
-  ownersList: mockAcquisitionFile.acquisitionFileOwners,
+  ownersList: mockAcquisitionFile.acquisitionFileOwners || [],
   isLoading: false,
 };
 
@@ -86,7 +86,10 @@ describe('Acquisition File Owners View component', () => {
   });
 
   it('Display the Organization Owner data with Incorporation and NO Registration Number', () => {
-    const ownerTest = { ...ownerCorporate, registrationNumber: null } as Api_AcquisitionFileOwner;
+    const ownerTest = {
+      ...ownerCorporate,
+      registrationNumber: null,
+    } as ApiGen_Concepts_AcquisitionFileOwner;
     const { getByText, getIsPrymaryContactRadioButton } = setup({
       props: { ownersList: [ownerTest], isLoading: false },
     });
@@ -103,7 +106,10 @@ describe('Acquisition File Owners View component', () => {
   });
 
   it('Display the Organization Owner data with NO Incorporation and Registration Number', () => {
-    const ownerTest = { ...ownerCorporate, incorporationNumber: null } as Api_AcquisitionFileOwner;
+    const ownerTest = {
+      ...ownerCorporate,
+      incorporationNumber: null,
+    } as ApiGen_Concepts_AcquisitionFileOwner;
     const { getByText, getIsPrymaryContactRadioButton } = setup({
       props: { ownersList: [ownerTest], isLoading: false },
     });
@@ -127,7 +133,7 @@ describe('Acquisition File Owners View component', () => {
         country: { code: 'OTHER', description: 'Other' },
         countryOther: 'test name',
       },
-    } as Api_AcquisitionFileOwner;
+    } as ApiGen_Concepts_AcquisitionFileOwner;
     const { getByText } = setup({
       props: { ownersList: [ownerTest], isLoading: false },
     });

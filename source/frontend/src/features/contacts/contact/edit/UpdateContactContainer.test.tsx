@@ -7,6 +7,7 @@ import { usePersonDetail } from '@/features/contacts/hooks/usePersonDetail';
 import { IEditableOrganization, IEditablePerson } from '@/interfaces/editable-contact';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { toTypeCode } from '@/utils/formUtils';
 import { act, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
 import UpdateContactContainer from './UpdateContactContainer';
@@ -26,7 +27,10 @@ const mockPerson: IEditablePerson = {
   useOrganizationAddress: false,
   addresses: [],
   contactMethods: [
-    { contactMethodTypeCode: { id: ContactMethodTypes.PersonalEmail }, value: 'foo@bar.com' },
+    {
+      contactMethodTypeCode: toTypeCode(ContactMethodTypes.PersonalEmail),
+      value: 'foo@bar.com',
+    },
   ],
 };
 
@@ -40,7 +44,7 @@ const mockOrganization: IEditableOrganization = {
   persons: [],
   addresses: [],
   contactMethods: [
-    { contactMethodTypeCode: { id: ContactMethodTypes.WorkEmail }, value: 'foo@bar.com' },
+    { contactMethodTypeCode: toTypeCode(ContactMethodTypes.WorkEmail), value: 'foo@bar.com' },
   ],
 };
 

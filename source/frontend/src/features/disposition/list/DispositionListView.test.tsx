@@ -7,7 +7,8 @@ import { IPagedItems } from '@/interfaces';
 import { getMockApiAddress } from '@/mocks/address.mock';
 import { mockDispositionFileResponse } from '@/mocks/dispositionFiles.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
-import { Api_DispositionFile } from '@/models/api/DispositionFile';
+import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
+import { getEmptyProperty } from '@/models/default_initializers';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
   act,
@@ -35,8 +36,8 @@ const exportDispositionFilesFn = jest.fn();
 });
 
 const mockPagedResults = (
-  searchResults?: Api_DispositionFile[],
-): Partial<AxiosResponse<IPagedItems<Api_DispositionFile>, any>> => {
+  searchResults?: ApiGen_Concepts_DispositionFile[],
+): Partial<AxiosResponse<IPagedItems<ApiGen_Concepts_DispositionFile>, any>> => {
   const results = searchResults ?? [];
   const len = results.length;
   return {
@@ -115,10 +116,15 @@ describe('Disposition List View', () => {
             fileId: 1,
             propertyId: 1,
             property: {
+              ...getEmptyProperty(),
               id: 1,
               address: getMockApiAddress(),
               pid: 123,
             },
+            displayOrder: null,
+            file: null,
+            propertyName: null,
+            rowVersion: null,
           },
         ],
       },

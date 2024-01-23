@@ -6,9 +6,11 @@ import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineCo
 import { useUserInfoRepository } from '@/hooks/repositories/useUserInfoRepository';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
-import { Api_Lease } from '@/models/api/Lease';
+import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
+import { getEmptyBaseAudit, getEmptyLease } from '@/models/default_initializers';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { toTypeCodeNullable } from '@/utils/formUtils';
 import {
   act,
   createAxiosError,
@@ -202,18 +204,19 @@ describe('AddLeaseContainer component', () => {
   });
 });
 
-const leaseData: Api_Lease = {
+const leaseData: ApiGen_Concepts_Lease = {
+  ...getEmptyLease(),
   startDate: '2020-01-01',
   amount: 0,
-  paymentReceivableType: { id: 'RCVBL' },
-  purposeType: { id: 'BCFERRIES' },
-  statusType: { id: 'DRAFT' },
-  type: { id: 'LIOCCTTLD' },
-  region: { id: 1 },
-  programType: { id: 'BCFERRIES' },
+  paymentReceivableType: toTypeCodeNullable('RCVBL'),
+  purposeType: toTypeCodeNullable('BCFERRIES'),
+  fileStatusTypeCode: toTypeCodeNullable('DRAFT'),
+  type: toTypeCodeNullable('LIOCCTTLD'),
+  region: toTypeCodeNullable(1),
+  programType: toTypeCodeNullable('BCFERRIES'),
   returnNotes: '',
   motiName: '',
-  properties: [],
+  fileProperties: [],
   isResidential: false,
   isCommercialBuilding: false,
   isOtherImprovement: false,
@@ -233,57 +236,64 @@ const leaseData: Api_Lease = {
   documentationReference: null,
   expiryDate: '2020-01-02',
   tenants: [],
-  terms: [],
-  insurances: [],
+  //terms: [],
+  //insurances: [],
   consultations: [
     {
       id: 0,
-      consultationType: { id: '1STNATION' },
-      consultationStatusType: { id: 'UNKNOWN' },
+      consultationType: toTypeCodeNullable('1STNATION'),
+      consultationStatusType: toTypeCodeNullable('UNKNOWN'),
       parentLeaseId: 0,
       otherDescription: null,
+      ...getEmptyBaseAudit(),
     },
     {
       id: 0,
-      consultationType: { id: 'STRATRE' },
-      consultationStatusType: { id: 'UNKNOWN' },
+      consultationType: toTypeCodeNullable('STRATRE'),
+      consultationStatusType: toTypeCodeNullable('UNKNOWN'),
       parentLeaseId: 0,
       otherDescription: null,
+      ...getEmptyBaseAudit(),
     },
     {
       id: 0,
-      consultationType: { id: 'REGPLANG' },
-      consultationStatusType: { id: 'UNKNOWN' },
+      consultationType: toTypeCodeNullable('REGPLANG'),
+      consultationStatusType: toTypeCodeNullable('UNKNOWN'),
       parentLeaseId: 0,
       otherDescription: null,
+      ...getEmptyBaseAudit(),
     },
     {
       id: 0,
-      consultationType: { id: 'REGPRPSVC' },
-      consultationStatusType: { id: 'UNKNOWN' },
+      consultationType: toTypeCodeNullable('REGPRPSVC'),
+      consultationStatusType: toTypeCodeNullable('UNKNOWN'),
       parentLeaseId: 0,
       otherDescription: null,
+      ...getEmptyBaseAudit(),
     },
     {
       id: 0,
-      consultationType: { id: 'DISTRICT' },
-      consultationStatusType: { id: 'UNKNOWN' },
+      consultationType: toTypeCodeNullable('DISTRICT'),
+      consultationStatusType: toTypeCodeNullable('UNKNOWN'),
       parentLeaseId: 0,
       otherDescription: null,
+      ...getEmptyBaseAudit(),
     },
     {
       id: 0,
-      consultationType: { id: 'HQ' },
-      consultationStatusType: { id: 'UNKNOWN' },
+      consultationType: toTypeCodeNullable('HQ'),
+      consultationStatusType: toTypeCodeNullable('UNKNOWN'),
       parentLeaseId: 0,
       otherDescription: null,
+      ...getEmptyBaseAudit(),
     },
     {
       id: 0,
-      consultationType: { id: 'OTHER' },
-      consultationStatusType: { id: 'UNKNOWN' },
+      consultationType: toTypeCodeNullable('OTHER'),
+      consultationStatusType: toTypeCodeNullable('UNKNOWN'),
       parentLeaseId: 0,
       otherDescription: null,
+      ...getEmptyBaseAudit(),
     },
   ],
 };

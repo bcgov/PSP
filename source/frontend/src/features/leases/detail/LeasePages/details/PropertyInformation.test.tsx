@@ -4,7 +4,9 @@ import { noop } from 'lodash';
 
 import { mockParcel } from '@/mocks/filterData.mock';
 import { getMockApiLease } from '@/mocks/lease.mock';
-import { Api_Lease } from '@/models/api/Lease';
+import { getEmptyPropertyLease } from '@/mocks/properties.mock';
+import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
+import { toTypeCodeNullable } from '@/utils/formUtils';
 import { render, RenderOptions } from '@/utils/test-utils';
 
 import PropertyInformation, { IPropertyInformationProps } from './PropertyInformation';
@@ -13,7 +15,7 @@ const history = createMemoryHistory();
 
 describe('PropertyInformation component', () => {
   const setup = (
-    renderOptions: RenderOptions & IPropertyInformationProps & { lease?: Api_Lease } = {
+    renderOptions: RenderOptions & IPropertyInformationProps & { lease?: ApiGen_Concepts_Lease } = {
       nameSpace: 'properties',
     },
   ) => {
@@ -40,13 +42,14 @@ describe('PropertyInformation component', () => {
       nameSpace: 'properties.0',
       lease: {
         ...getMockApiLease(),
-        properties: [
+        fileProperties: [
           {
+            ...getEmptyPropertyLease(),
             ...mockParcel,
-            areaUnitType: { id: 'test' },
+            areaUnitType: toTypeCodeNullable('test'),
             leaseArea: 123,
-            leaseId: null,
-            lease: null,
+            fileId: 0,
+            file: null,
           },
         ],
       },
@@ -59,13 +62,14 @@ describe('PropertyInformation component', () => {
       nameSpace: 'properties.0',
       lease: {
         ...getMockApiLease(),
-        properties: [
+        fileProperties: [
           {
+            ...getEmptyPropertyLease(),
             ...mockParcel,
-            areaUnitType: { id: 'test' },
+            areaUnitType: toTypeCodeNullable('test'),
             leaseArea: 123,
-            leaseId: null,
-            lease: null,
+            fileId: 0,
+            file: null,
           },
         ],
         amount: 1,
@@ -87,8 +91,15 @@ describe('PropertyInformation component', () => {
       nameSpace: 'properties.0',
       lease: {
         ...getMockApiLease(),
-        properties: [
-          { ...mockParcel, leaseArea: 1, areaUnitType: { id: 'test' }, leaseId: null, lease: null },
+        fileProperties: [
+          {
+            ...getEmptyPropertyLease(),
+            ...mockParcel,
+            leaseArea: 1,
+            areaUnitType: toTypeCodeNullable('test'),
+            fileId: 0,
+            file: null,
+          },
         ],
         amount: 1,
         description: 'a test description',
@@ -109,8 +120,15 @@ describe('PropertyInformation component', () => {
       nameSpace: 'properties.0',
       lease: {
         ...getMockApiLease(),
-        properties: [
-          { ...mockParcel, leaseArea: 123, areaUnitType: null, leaseId: null, lease: null },
+        fileProperties: [
+          {
+            ...getEmptyPropertyLease(),
+            ...mockParcel,
+            leaseArea: 123,
+            areaUnitType: null,
+            fileId: 0,
+            file: null,
+          },
         ],
         amount: 1,
         description: 'a test description',

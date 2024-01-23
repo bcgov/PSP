@@ -10,12 +10,15 @@ import { LeaseFormModel } from '@/features/leases/models';
 import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
 import { useLeaseTenantRepository } from '@/hooks/repositories/useLeaseTenantRepository';
 import {
+  getEmptyPerson,
   getMockContactOrganizationWithMultiplePeople,
   getMockContactOrganizationWithOnePerson,
 } from '@/mocks/contacts.mock';
 import { getMockApiLease } from '@/mocks/lease.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
-import { Api_Lease, defaultApiLease } from '@/models/api/Lease';
+import { getEmptyOrganization } from '@/mocks/organization.mock';
+import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
+import { defaultApiLease } from '@/models/default_initializers';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { mockKeycloak, renderAsync } from '@/utils/test-utils';
 
@@ -31,7 +34,7 @@ jest.mock('@/features/leases/hooks/useUpdateLease');
 jest.mock('@/hooks/repositories/useLeaseTenantRepository');
 
 const getPersonConcept = jest.fn();
-const updateTenants = jest.fn().mockResolvedValue({ ...defaultApiLease, id: 1 });
+const updateTenants = jest.fn().mockResolvedValue({ ...defaultApiLease(), id: 1 });
 const onEdit = jest.fn();
 const onSuccess = jest.fn();
 
@@ -52,7 +55,7 @@ const View = (props: IAddLeaseTenantFormProps & IPrimaryContactWarningModalProps
 };
 
 const getLeaseTenantsObj = {
-  execute: jest.fn().mockResolvedValue(defaultApiLease.tenants),
+  execute: jest.fn().mockResolvedValue(defaultApiLease().tenants),
   loading: false,
   error: undefined,
   response: [],
@@ -60,11 +63,11 @@ const getLeaseTenantsObj = {
 
 describe('AddLeaseTenantContainer component', () => {
   const setup = async (
-    renderOptions: RenderOptions & { lease?: Api_Lease; tenants?: FormTenant[] } = {},
+    renderOptions: RenderOptions & { lease?: ApiGen_Concepts_Lease; tenants?: FormTenant[] } = {},
   ) => {
     // render component under test
     const component = await renderAsync(
-      <LeaseContextProvider initialLease={renderOptions.lease ?? { ...defaultApiLease, id: 1 }}>
+      <LeaseContextProvider initialLease={renderOptions.lease ?? { ...defaultApiLease(), id: 1 }}>
         <AddLeaseTenantContainer
           formikRef={React.createRef()}
           View={View}
@@ -130,7 +133,12 @@ describe('AddLeaseTenantContainer component', () => {
       viewProps.setSelectedTenants([
         {
           ...getMockContactOrganizationWithOnePerson(),
-          organization: { organizationPersons: [{ person: {} }] },
+          organization: {
+            ...getEmptyOrganization(),
+            organizationPersons: [
+              { person: getEmptyPerson(), organizationId: 1, personId: 2, rowVersion: null },
+            ],
+          },
         },
       ]);
       expect(getPersonConcept).not.toHaveBeenCalled();

@@ -1,6 +1,7 @@
 import { AddressTypes } from '@/constants';
 import { ContactMethodTypes } from '@/constants/contactMethodType';
-import { Api_Organization } from '@/models/api/Organization';
+import { ApiGen_Concepts_Organization } from '@/models/api/generated/ApiGen_Concepts_Organization';
+import { toTypeCodeNullable } from '@/utils/formUtils';
 
 import { getMockApiAddress } from './address.mock';
 
@@ -10,24 +11,58 @@ export const getMockOrganization = ({
 }: {
   id?: number;
   name?: string;
-} = {}): Api_Organization => ({
+} = {}): ApiGen_Concepts_Organization => ({
   id: id,
   name: name,
   isDisabled: false,
+  alias: null,
+  comment: null,
+  incorporationNumber: null,
   contactMethods: [
-    { contactMethodType: { id: ContactMethodTypes.WorkPhone }, value: '222-333-4444' },
-    { contactMethodType: { id: ContactMethodTypes.WorkMobile }, value: '555-666-7777' },
+    {
+      id: 1,
+      contactMethodType: toTypeCodeNullable(ContactMethodTypes.WorkPhone),
+      value: '222-333-4444',
+      rowVersion: null,
+    },
+    {
+      id: 2,
+      contactMethodType: toTypeCodeNullable(ContactMethodTypes.WorkMobile),
+      value: '555-666-7777',
+
+      rowVersion: null,
+    },
   ],
   organizationPersons: [
     {
       personId: 3,
+      person: null,
       organizationId: id,
-      isDisabled: false,
       rowVersion: 1,
     },
   ],
   organizationAddresses: [
-    { addressUsageType: { id: AddressTypes.Mailing }, address: getMockApiAddress() },
+    {
+      addressUsageType: toTypeCodeNullable(AddressTypes.Mailing),
+      address: getMockApiAddress(),
+      id: 1,
+      organizationId: 1,
+      rowVersion: null,
+    },
   ],
   rowVersion: 1,
 });
+export const getEmptyOrganization = (): ApiGen_Concepts_Organization => {
+  return {
+    id: 0,
+    isDisabled: false,
+    name: null,
+    alias: null,
+    incorporationNumber: null,
+    organizationPersons: null,
+    organizationAddresses: null,
+    contactMethods: null,
+    comment: null,
+    rowVersion: null,
+  };
+};

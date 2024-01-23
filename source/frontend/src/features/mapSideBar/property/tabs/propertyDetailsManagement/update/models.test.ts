@@ -1,4 +1,7 @@
-import { Api_PropertyContact } from '@/models/api/Property';
+import { getEmptyPerson } from '@/mocks/contacts.mock';
+import { getEmptyOrganization } from '@/mocks/organization.mock';
+import { ApiGen_Concepts_PropertyContact } from '@/models/api/generated/ApiGen_Concepts_PropertyContact';
+import { getEmptyBaseAudit } from '@/models/default_initializers';
 
 import { PropertyContactFormModel } from './models';
 
@@ -8,26 +11,26 @@ describe('Property Contact model tests', () => {
     stakeholderModel.contact = {
       id: '1',
       personId: 1,
-      person: { firstName: 'first' },
+      person: { ...getEmptyPerson(), firstName: 'first' },
       organizationId: 1,
-      organization: { name: 'org' },
+      organization: { ...getEmptyOrganization(), name: 'org' },
     };
     const apiModel = stakeholderModel.toApi();
     expect(apiModel.organizationId).toBeNull();
   });
 
   it('PropertyContactFormModel fromApi sets person properly if form is person that is associated to an org.', () => {
-    const apiContact: Api_PropertyContact = {
+    const apiContact: ApiGen_Concepts_PropertyContact = {
       id: 1,
       propertyId: 1,
       organizationId: 1,
-      organization: { name: 'org' },
+      organization: { ...getEmptyOrganization(), name: 'org' },
       personId: 2,
-      person: { firstName: 'first' },
+      person: { ...getEmptyPerson(), firstName: 'first' },
       primaryContactId: 3,
-      primaryContact: { firstName: 'primary' },
+      primaryContact: { ...getEmptyPerson(), firstName: 'primary' },
       purpose: 'purpose',
-      rowVersion: 1,
+      ...getEmptyBaseAudit(1),
     };
     const apiModel = PropertyContactFormModel.fromApi(apiContact);
     expect(apiModel.contact?.organization).toBeUndefined();

@@ -10,9 +10,15 @@ import {
 } from '@/constants/index';
 import { IAccessRequest, IAddress, IOrganization, IPerson, IProperty } from '@/interfaces';
 import { BillingInfo, LtsaOrders, OrderParent } from '@/interfaces/ltsaModels';
-import { Api_Person } from '@/models/api/Person';
-import { Api_User } from '@/models/api/User';
+import { ApiGen_Concepts_AccessRequest } from '@/models/api/generated/ApiGen_Concepts_AccessRequest';
+import { ApiGen_Concepts_Organization } from '@/models/api/generated/ApiGen_Concepts_Organization';
+import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_Person';
+import { ApiGen_Concepts_User } from '@/models/api/generated/ApiGen_Concepts_User';
+import { getEmptyBaseAudit } from '@/models/default_initializers';
 import { ILookupCode } from '@/store/slices/lookupCodes';
+import { toTypeCodeNullable } from '@/utils/formUtils';
+
+import { getEmptyPerson } from './contacts.mock';
 
 // TODO: PSP-4410 This needs to be removed as Administrative Areas no longer exist.
 export const mockAdministrativeAreaLookups = [
@@ -92,15 +98,35 @@ export const mockOrganization: IOrganization = {
   mobile: '5556667777',
 };
 
-export const mockUser: Api_User = {
+export const mockApiOrganization: ApiGen_Concepts_Organization = {
+  id: 1,
+  name: 'Ministry of Transportation & Infrastructure',
+  isDisabled: false,
+  alias: null,
+  incorporationNumber: null,
+  organizationPersons: null,
+  organizationAddresses: null,
+  contactMethods: null,
+  comment: null,
+  rowVersion: null,
+};
+
+export const mockUser: ApiGen_Concepts_User = {
   id: 1,
   guidIdentifierValue: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
   businessIdentifierValue: 'admin',
   position: '',
   userRegions: [],
   userRoles: [],
+  approvedById: 0,
+  userTypeCode: null,
+  note: null,
+  isDisabled: false,
+  lastLogin: null,
+  issueDate: null,
+  person: null,
+  ...getEmptyBaseAudit(1),
   appCreateTimestamp: '2021-05-04T19:07:09.6920606',
-  rowVersion: 1,
 };
 
 export const mockPerson: IPerson = {
@@ -108,11 +134,22 @@ export const mockPerson: IPerson = {
   mobile: '555-666-7777',
 };
 
-export const mockApiPerson: Api_Person = {
+export const mockApiPerson: ApiGen_Concepts_Person = {
+  ...getEmptyPerson(),
   id: 2,
   contactMethods: [
-    { contactMethodType: { id: ContactMethodTypes.WorkPhone }, value: '222-333-4444' },
-    { contactMethodType: { id: ContactMethodTypes.WorkMobile }, value: '555-666-7777' },
+    {
+      contactMethodType: toTypeCodeNullable(ContactMethodTypes.WorkPhone),
+      value: '222-333-4444',
+      id: 1,
+      rowVersion: null,
+    },
+    {
+      contactMethodType: toTypeCodeNullable(ContactMethodTypes.WorkMobile),
+      value: '555-666-7777',
+      id: 2,
+      rowVersion: null,
+    },
   ],
 };
 
@@ -671,12 +708,13 @@ export const mockAccessRequest: IAccessRequest = {
   appCreateTimestamp: '2021-05-07T00:37:06.2457303',
 };
 
-export const mockApiAccessRequest = {
+export const mockApiAccessRequest: ApiGen_Concepts_AccessRequest = {
   id: 7,
   regionCode: {
     id: 2,
     description: 'Southern Interior Region',
     isDisabled: false,
+    displayOrder: null,
   },
   note: 'a note 2',
   user: {
@@ -697,6 +735,9 @@ export const mockApiAccessRequest = {
     appLastUpdateUserGuid: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
     appCreateUserGuid: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
     rowVersion: 41,
+    note: null,
+    person: null,
+    userTypeCode: null,
   },
   userId: 5,
   role: {
@@ -712,6 +753,10 @@ export const mockApiAccessRequest = {
     appLastUpdateUserid: 'Seed Data',
     appCreateUserid: 'Seed Data',
     rowVersion: 1,
+    appCreateUserGuid: null,
+    appLastUpdateUserGuid: null,
+    keycloakGroupId: null,
+    roleClaims: null,
   },
   roleId: 14,
   appCreateTimestamp: '2022-05-28T01:30:51.633',
@@ -721,6 +766,7 @@ export const mockApiAccessRequest = {
   appLastUpdateUserGuid: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
   appCreateUserGuid: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
   rowVersion: 11,
+  accessRequestStatusTypeCode: null,
 };
 
 export const mockParcelLayerResponse = {

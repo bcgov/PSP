@@ -2,8 +2,9 @@ import {
   getMockApiPropertyManagement,
   getMockApiPropertyManagementPurpose,
 } from '@/mocks/propertyManagement.mock';
-import { Api_PropertyManagement, Api_PropertyManagementPurpose } from '@/models/api/Property';
-import Api_TypeCode from '@/models/api/TypeCode';
+import { ApiGen_Base_CodeType } from '@/models/api/generated/ApiGen_Base_CodeType';
+import { ApiGen_Concepts_PropertyManagement } from '@/models/api/generated/ApiGen_Concepts_PropertyManagement';
+import { ApiGen_Concepts_PropertyManagementPurpose } from '@/models/api/generated/ApiGen_Concepts_PropertyManagementPurpose';
 import { ILookupCode } from '@/store/slices/lookupCodes';
 
 import { ManagementPurposeModel, PropertyManagementFormModel } from './models';
@@ -22,7 +23,7 @@ describe('Property management model tests', () => {
     });
 
     it('fromApi sets values as expected from api response', () => {
-      const apiManagement: Api_PropertyManagement = {
+      const apiManagement: ApiGen_Concepts_PropertyManagement = {
         ...getMockApiPropertyManagement(),
         id: 1,
         rowVersion: 1,
@@ -46,7 +47,7 @@ describe('Property management model tests', () => {
     ])(
       'returns lease information as expected - %s',
       (_: string, leaseCount: number, expiryDate: string | null, expectedResult: string) => {
-        let apiManagement: Api_PropertyManagement = {
+        let apiManagement: ApiGen_Concepts_PropertyManagement = {
           ...getMockApiPropertyManagement(),
           relatedLeases: leaseCount,
           leaseExpiryDate: expiryDate,
@@ -76,7 +77,7 @@ describe('Property management model tests', () => {
       expect(apiManagement.isUtilitiesPayable).toBe(true);
       expect(apiManagement.isTaxesPayable).toBe(null);
       expect(apiManagement.managementPurposes).toHaveLength(1);
-      expect(apiManagement.managementPurposes[0]).toEqual(
+      expect(apiManagement.managementPurposes![0]).toEqual(
         expect.objectContaining({
           id: 1,
           rowVersion: 1,
@@ -85,7 +86,7 @@ describe('Property management model tests', () => {
             id: 'TEST',
             description: 'test description',
           },
-        } as Api_PropertyManagementPurpose),
+        } as ApiGen_Concepts_PropertyManagementPurpose),
       );
     });
   });
@@ -111,11 +112,13 @@ describe('Property management model tests', () => {
     });
 
     it('fromApi sets values as expected from api response', () => {
-      const apiPurpose: Api_PropertyManagementPurpose = {
+      const apiPurpose: ApiGen_Concepts_PropertyManagementPurpose = {
         ...getMockApiPropertyManagementPurpose(1),
         propertyPurposeTypeCode: {
           id: 'TEST',
           description: 'test description',
+          displayOrder: null,
+          isDisabled: false,
         },
       };
       const purpose = ManagementPurposeModel.fromApi(apiPurpose);
@@ -139,7 +142,7 @@ describe('Property management model tests', () => {
         expect.objectContaining({
           id: 'TEST',
           description: 'test description',
-        } as Api_TypeCode<string>),
+        } as ApiGen_Base_CodeType<string>),
       );
     });
   });

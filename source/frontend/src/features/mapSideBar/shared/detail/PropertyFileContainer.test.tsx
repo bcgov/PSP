@@ -11,6 +11,7 @@ import {
 import { mockLtsaResponse, mockWfsGetPropertyById } from '@/mocks/index.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { getMockResearchFile } from '@/mocks/researchFile.mock';
+import { getEmptyProperty } from '@/models/default_initializers';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, render, RenderOptions } from '@/utils/test-utils';
 
@@ -160,7 +161,7 @@ describe('PropertyFileContainer component', () => {
     mockAxios.onGet('properties/').reply(404);
     await setup({
       ...DEFAULT_PROPS,
-      fileProperty: { ...DEFAULT_PROPS.fileProperty, property: { id: undefined } },
+      fileProperty: { ...DEFAULT_PROPS.fileProperty, property: getEmptyProperty() },
     });
 
     expect(viewProps?.tabViews).toHaveLength(2);

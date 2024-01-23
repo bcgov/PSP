@@ -5,6 +5,7 @@ import { mockLookups } from '@/mocks/lookups.mock';
 import { getMockApiPropertyFiles } from '@/mocks/properties.mock';
 import { getMockApiTakes } from '@/mocks/takes.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { toTypeCodeNullable } from '@/utils/formUtils';
 import { act, render, RenderOptions, screen, userEvent, within } from '@/utils/test-utils';
 
 import TakesDetailView, { ITakesDetailViewProps } from './TakesDetailView';
@@ -69,8 +70,12 @@ describe('TakesDetailView component', () => {
       props: {
         loading: false,
         takes: [
-          { ...getMockApiTakes()[0], takeStatusTypeCode: { id: 'CANCELLED' }, id: 1 },
-          { ...getMockApiTakes()[0], takeStatusTypeCode: { id: 'INPROGRESS' } },
+          {
+            ...getMockApiTakes()[0],
+            takeStatusTypeCode: toTypeCodeNullable('CANCELLED'),
+            id: 1,
+          },
+          { ...getMockApiTakes()[0], takeStatusTypeCode: toTypeCodeNullable('INPROGRESS') },
         ],
         allTakesCount: 10,
       },
@@ -84,8 +89,12 @@ describe('TakesDetailView component', () => {
       props: {
         loading: false,
         takes: [
-          { ...getMockApiTakes()[0], takeStatusTypeCode: { id: 'CANCELLED' }, id: 1 },
-          { ...getMockApiTakes()[0], takeStatusTypeCode: { id: 'INPROGRESS' } },
+          {
+            ...getMockApiTakes()[0],
+            takeStatusTypeCode: toTypeCodeNullable('CANCELLED'),
+            id: 1,
+          },
+          { ...getMockApiTakes()[0], takeStatusTypeCode: toTypeCodeNullable('INPROGRESS') },
         ],
       },
     });

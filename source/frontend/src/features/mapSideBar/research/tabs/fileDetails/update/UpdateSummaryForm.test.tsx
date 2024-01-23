@@ -3,7 +3,8 @@ import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
 
 import { mockLookups } from '@/mocks/lookups.mock';
-import { Api_ResearchFile } from '@/models/api/ResearchFile';
+import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Concepts_ResearchFile';
+import { getEmptyResearchFile } from '@/models/default_initializers';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { render, RenderOptions, screen } from '@/utils/test-utils';
 import { fakeText, fillInput } from '@/utils/test-utils';
@@ -12,7 +13,9 @@ import { UpdateResearchSummaryFormModel } from './models';
 import { UpdateResearchFileYupSchema } from './UpdateResearchFileYupSchema';
 import UpdateSummaryForm from './UpdateSummaryForm';
 
-const testResearchFile: Api_ResearchFile = {
+const testResearchFile: ApiGen_Concepts_ResearchFile = {
+  ...getEmptyResearchFile(),
+
   id: 5,
   fileName: 'New research file',
   roadName: 'Test road name',
@@ -22,6 +25,7 @@ const testResearchFile: Api_ResearchFile = {
     id: 'ACTIVE',
     description: 'Active',
     isDisabled: false,
+    displayOrder: null,
   },
   fileProperties: [],
   requestDate: '2022-04-14T00:00:00',
@@ -34,6 +38,7 @@ const testResearchFile: Api_ResearchFile = {
     id: 'HQ',
     description: 'Headquarters (HQ)',
     isDisabled: false,
+    displayOrder: null,
   },
   requestorOrganization: {
     id: 3,
@@ -43,6 +48,9 @@ const testResearchFile: Api_ResearchFile = {
     organizationAddresses: [],
     contactMethods: [],
     rowVersion: 1,
+    alias: null,
+    comment: null,
+    incorporationNumber: null,
   },
   researchFilePurposes: [],
   appCreateTimestamp: '2022-04-22T19:36:45.65',
