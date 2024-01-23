@@ -4,13 +4,14 @@ import styled from 'styled-components';
 
 import { HeaderField } from '@/components/common/HeaderField/HeaderField';
 import { UserNameTooltip } from '@/components/common/UserNameTooltip';
-import { Api_DispositionFile } from '@/models/api/DispositionFile';
 import { Api_LastUpdatedBy } from '@/models/api/File';
+import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
 import { prettyFormatUTCDate } from '@/utils/dateUtils';
 import { formatMinistryProject } from '@/utils/formUtils';
 
 export interface IDispositionHeaderProps {
-  dispositionFile?: Api_DispositionFile;
+  dispositionFile?: ApiGen_Concepts_DispositionFile;
+
   lastUpdatedBy: Api_LastUpdatedBy | null;
 }
 
@@ -34,8 +35,8 @@ export const DispositionHeader: React.FunctionComponent<
           <Col>
             <HeaderField label="Ministry project:" labelWidth={leftColumnLabel} contentWidth="9">
               {formatMinistryProject(
-                dispositionFile?.project?.code,
-                dispositionFile?.project?.description,
+                '', // dispositionFile?.project?.code, TODO: disposition has no project
+                '', // dispositionFile?.project?.description,
               )}
             </HeaderField>
           </Col>
@@ -48,11 +49,11 @@ export const DispositionHeader: React.FunctionComponent<
               valueTestId={'disp-header-product-val'}
               contentWidth="9"
             >
-              {dispositionFile?.product && (
+              {/*dispositionFile?.product && (
                 <>
                   {dispositionFile.product.code} - {dispositionFile.product.description}
                 </>
-              )}
+              )*/}
             </HeaderField>
           </Col>
         </Row>

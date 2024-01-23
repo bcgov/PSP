@@ -46,7 +46,7 @@ export const isPositiveNumberOrZero = (input: string | number | undefined | null
 };
 
 export const isNullOrWhitespace = (value: string | null | undefined): boolean => {
-  return value === null || value === undefined || value.trim() === '';
+  return !exists(value) || value.trim() === '';
 };
 
 type FormikMemoProps = {
@@ -176,6 +176,15 @@ export const getPage = <T>(pageIndex: number, pageSize: number, data: T[]) => {
  */
 export function exists<T>(value: T | null | undefined): value is T {
   return value === (value ?? !value);
+}
+
+/**
+ * Returns true id an identifier belongs to an existing entry on the backend
+ * @param value the paraneter to be assessed
+ * @returns true if valid, false otherwise
+ */
+export function isValidId(value: number | null | undefined): value is number {
+  return exists(value) && !isNaN(value) && value !== 0;
 }
 
 /**

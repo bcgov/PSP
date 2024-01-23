@@ -10,14 +10,13 @@ import { SectionField } from '@/components/common/Section/SectionField';
 import { SectionListHeader } from '@/components/common/SectionListHeader';
 import { Claims } from '@/constants';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
-import {
-  Api_DispositionFile,
-  Api_DispositionFileAppraisal,
-  Api_DispositionFileOffer,
-  Api_DispositionFileSale,
-} from '@/models/api/DispositionFile';
+import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
+import { ApiGen_Concepts_DispositionFileAppraisal } from '@/models/api/generated/ApiGen_Concepts_DispositionFileAppraisal';
+import { ApiGen_Concepts_DispositionFileOffer } from '@/models/api/generated/ApiGen_Concepts_DispositionFileOffer';
+import { ApiGen_Concepts_DispositionFileSale } from '@/models/api/generated/ApiGen_Concepts_DispositionFileSale';
 import { prettyFormatDate } from '@/utils/dateUtils';
 import { formatMoney } from '@/utils/numberFormatUtils';
+import { exists } from '@/utils/utils';
 
 import {
   calculateNetProceedsAfterSppAmount,
@@ -28,10 +27,10 @@ import DispositionSaleContactDetails from './dispositionOffer/dispositionSaleCon
 
 export interface IOffersAndSaleContainerViewProps {
   loading: boolean;
-  dispositionFile: Api_DispositionFile;
-  dispositionOffers: Api_DispositionFileOffer[];
-  dispositionSale: Api_DispositionFileSale | null;
-  dispositionAppraisal: Api_DispositionFileAppraisal | null;
+  dispositionFile: ApiGen_Concepts_DispositionFile;
+  dispositionOffers: ApiGen_Concepts_DispositionFileOffer[];
+  dispositionSale: ApiGen_Concepts_DispositionFileSale | null;
+  dispositionAppraisal: ApiGen_Concepts_DispositionFileAppraisal | null;
   onDispositionOfferDeleted: (offerId: number) => void;
 }
 
@@ -47,8 +46,18 @@ const OffersAndSaleContainerView: React.FunctionComponent<IOffersAndSaleContaine
   const match = useRouteMatch();
   const keycloak = useKeycloakWrapper();
 
-  const purchaserAgent = dispositionSale?.dispositionPurchaserAgents[0] ?? null;
-  const purchaserAgentSolicitor = dispositionSale?.dispositionPurchaserSolicitors[0] ?? null;
+  // todo:the method 'exists' here should allow the compiler to validate the child property. this works correctly in typescropt 5.3 +
+  const purchaserAgent = exists(dispositionSale?.dispositionPurchaserAgents)
+    ? dispositionSale!.dispositionPurchaserAgents[0]
+    : null;
+  // todo:the method 'exists' here should allow the compiler to validate the child property. this works correctly in typescropt 5.3 +
+  const purchaserAgentSolicitor = exists(dispositionSale?.dispositionPurchaserSolicitors)
+    ? dispositionSale!.dispositionPurchaserSolicitors[0]
+    : null;
+  // todo:the method 'exists' here should allow the compiler to validate the child property. this works correctly in typescropt 5.3 +
+  const purchaserLength = exists(dispositionSale?.dispositionPurchasers)
+    ? dispositionSale!.dispositionPurchasers.length
+    : 0;
 
   return (
     <>
@@ -149,16 +158,15 @@ const OffersAndSaleContainerView: React.FunctionComponent<IOffersAndSaleContaine
               labelWidth="6"
               valueTestId="disposition-sale.purchasers"
             >
-              {dispositionSale.dispositionPurchasers.map((purchaser, index) => (
-                <React.Fragment key={`purchaser-${index}`}>
-                  <DispositionSaleContactDetails
-                    contactInformation={purchaser}
-                  ></DispositionSaleContactDetails>
-                  {index !== dispositionSale.dispositionPurchasers.length - 1 && (
-                    <StyledSpacer className="my-3" />
-                  )}
-                </React.Fragment>
-              ))}
+              {exists(dispositionSale.dispositionPurchasers) &&
+                dispositionSale.dispositionPurchasers.map((purchaser, index) => (
+                  <React.Fragment key={`purchaser-${index}`}>
+                    <DispositionSaleContactDetails
+                      contactInformation={purchaser}
+                    ></DispositionSaleContactDetails>
+                    {index !== purchaserLength - 1 && <StyledSpacer className="my-3" />}
+                  </React.Fragment>
+                ))}
             </SectionField>
             <SectionField
               label="Purchaser agent"

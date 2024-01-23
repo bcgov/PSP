@@ -9,7 +9,7 @@ import { usePimsPropertyRepository } from '@/hooks/repositories/usePimsPropertyR
 import { useQueryMapLayersByLocation } from '@/hooks/repositories/useQueryMapLayersByLocation';
 import { useLookupCodeHelpers } from '@/hooks/useLookupCodeHelpers';
 import useIsMounted from '@/hooks/util/useIsMounted';
-import { Api_Property } from '@/models/api/Property';
+import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 
 import { UpdatePropertyDetailsFormModel } from './models';
 import { UpdatePropertyDetailsForm } from './UpdatePropertyDetailsForm';
@@ -75,11 +75,21 @@ export const UpdatePropertyDetailsContainer = React.forwardRef<
   ) => {
     // default province and country to BC, Canada
     if (values.address !== undefined) {
-      values.address.province = { id: Number(provinceBC?.id) };
-      values.address.country = { id: Number(countryCA?.id) };
+      values.address.province = {
+        id: Number(provinceBC?.id),
+        code: null,
+        description: null,
+        displayOrder: null,
+      };
+      values.address.country = {
+        id: Number(countryCA?.id),
+        code: null,
+        description: null,
+        displayOrder: null,
+      };
     }
 
-    const apiProperty: Api_Property = values.toApi();
+    const apiProperty: ApiGen_Concepts_Property = values.toApi();
     const response = await updatePropertyWrapper.execute(apiProperty);
 
     formikHelpers.setSubmitting(false);

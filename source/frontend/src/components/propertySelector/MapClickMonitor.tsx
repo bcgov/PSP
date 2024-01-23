@@ -4,6 +4,7 @@ import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineCo
 import useDraftMarkerSynchronizer from '@/hooks/useDraftMarkerSynchronizer';
 import { usePrevious } from '@/hooks/usePrevious';
 import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
+import { exists } from '@/utils';
 import { featuresetToMapProperty } from '@/utils/mapPropertyUtils';
 
 import { IMapProperty } from './models';
@@ -25,8 +26,8 @@ export const MapClickMonitor: React.FunctionComponent<
     if (
       mapMachine.isSelecting &&
       mapMachine.mapLocationFeatureDataset &&
-      previous !== mapMachine.mapLocationFeatureDataset &&
-      previous !== undefined
+      exists(previous) &&
+      previous !== mapMachine.mapLocationFeatureDataset
     ) {
       addProperty(featuresetToMapProperty(mapMachine.mapLocationFeatureDataset));
     }

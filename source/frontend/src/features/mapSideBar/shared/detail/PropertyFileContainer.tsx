@@ -15,12 +15,13 @@ import { PropertyDetailsTabView } from '@/features/mapSideBar/property/tabs/prop
 import TakesDetailContainer from '@/features/mapSideBar/property/tabs/takes/detail/TakesDetailContainer';
 import TakesDetailView from '@/features/mapSideBar/property/tabs/takes/detail/TakesDetailView';
 import { PROPERTY_TYPES, useComposedProperties } from '@/hooks/repositories/useComposedProperties';
-import { Api_PropertyFile } from '@/models/api/PropertyFile';
+import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
+import { ApiGen_Concepts_ResearchFileProperty } from '@/models/api/generated/ApiGen_Concepts_ResearchFileProperty';
 
 import PropertyResearchTabView from '../../property/tabs/propertyResearch/detail/PropertyResearchTabView';
 
 export interface IPropertyFileContainerProps {
-  fileProperty: Api_PropertyFile;
+  fileProperty: ApiGen_Concepts_FileProperty;
   setEditing: () => void;
   View: React.FunctionComponent<React.PropsWithChildren<IInventoryTabsProps>>;
   customTabs: TabInventoryView[];
@@ -31,8 +32,8 @@ export interface IPropertyFileContainerProps {
 export const PropertyFileContainer: React.FunctionComponent<
   React.PropsWithChildren<IPropertyFileContainerProps>
 > = props => {
-  const pid = props.fileProperty?.property?.pid;
-  const id = props.fileProperty?.property?.id;
+  const pid = props.fileProperty?.property?.pid ?? undefined;
+  const id = props.fileProperty?.property?.id ?? undefined;
 
   const composedProperties = useComposedProperties({
     pid,
@@ -80,7 +81,10 @@ export const PropertyFileContainer: React.FunctionComponent<
   if (props.fileContext === FileTypes.Research) {
     tabViews.push({
       content: (
-        <PropertyResearchTabView researchFile={props.fileProperty} setEditMode={props.setEditing} />
+        <PropertyResearchTabView
+          researchFile={props.fileProperty as ApiGen_Concepts_ResearchFileProperty}
+          setEditMode={props.setEditing}
+        />
       ),
       key: InventoryTabNames.research,
       name: 'Property Research',

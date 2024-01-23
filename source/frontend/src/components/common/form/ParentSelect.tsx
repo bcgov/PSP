@@ -5,6 +5,8 @@ import React, { Fragment, useEffect, useState } from 'react';
 import { Highlighter, Menu, MenuItem } from 'react-bootstrap-typeahead';
 import styled from 'styled-components';
 
+import { exists } from '@/utils';
+
 import { Label } from '../Label';
 import { SelectOption, SelectOptions } from './Select';
 import { TypeaheadField } from './Typeahead';
@@ -101,7 +103,7 @@ export const ParentSelect: React.FC<React.PropsWithChildren<IParentSelect>> = ({
     if (value?.value) {
       return [value];
     }
-    if (value !== undefined && !_.isEmpty(value?.toString())) {
+    if (exists(value) && !_.isEmpty(value?.toString())) {
       /** select appropriate organization to set the field value to when present */
       const option = options.find(x => x.value === value?.toString() || x.value === value);
       return option ? [option] : [];

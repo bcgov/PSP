@@ -7,19 +7,18 @@ import ExpandableFileProperties from '@/components/common/List/ExpandableFilePro
 import { ColumnWithProps } from '@/components/Table';
 import { Claims } from '@/constants/claims';
 import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
-import { Api_DispositionFileTeam } from '@/models/api/DispositionFile';
-import { Api_Organization } from '@/models/api/Organization';
-import { Api_Person } from '@/models/api/Person';
-import Api_TypeCode from '@/models/api/TypeCode';
-import { stringToFragment } from '@/utils';
+import { ApiGen_Concepts_DispositionFileTeam } from '@/models/api/generated/ApiGen_Concepts_DispositionFileTeam';
+import { ApiGen_Concepts_Organization } from '@/models/api/generated/ApiGen_Concepts_Organization';
+import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_Person';
+import { exists, isValidId, stringToFragment } from '@/utils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
 import { DispositionSearchResultModel } from '../models';
 
 interface MemberRoleGroup {
   id: string;
-  person: Api_Person | null;
-  organization: Api_Organization | null;
+  person: ApiGen_Concepts_Person | null;
+  organization: ApiGen_Concepts_Organization | null;
   roles: string[];
 }
 
@@ -75,8 +74,6 @@ export const columns: ColumnWithProps<DispositionSearchResultModel>[] = [
     Header: 'MOTI Region',
     accessor: 'region',
     align: 'left',
-    clickable: true,
-    width: 10,
     maxWidth: 20,
   },
   {
@@ -88,37 +85,33 @@ export const columns: ColumnWithProps<DispositionSearchResultModel>[] = [
     maxWidth: 40,
     Cell: (props: CellProps<DispositionSearchResultModel>) => {
       const team = props.row.original.dispositionTeam;
-      const personsInTeam = team?.filter(x => x.personId !== undefined);
-      const organizationsInTeam = team?.filter(x => x.organizationId !== undefined);
+      const personsInTeam = team?.filter(x => isValidId(x.personId));
+      const organizationsInTeam = team?.filter(x => isValidId(x.organizationId));
 
       const personsAsString: MemberRoleGroup[] = chain(personsInTeam)
-        .groupBy((groupedTeams: Api_DispositionFileTeam) => groupedTeams.personId)
-        .map<MemberRoleGroup>(x => {
-          return {
-            id: x[0].id?.toString() || '',
-            person: x[0].person || {},
-            organization: null,
-            roles: x
-              .map(t => t.teamProfileType)
-              .filter((z): z is Api_TypeCode<string> => z !== undefined)
-              .flatMap(y => y.description || ''),
-          };
-        })
+        .groupBy((groupedTeams: ApiGen_Concepts_DispositionFileTeam) => groupedTeams.personId)
+        .map<MemberRoleGroup>(x => ({
+          id: x[0].id?.toString() || '',
+          person: x[0].person || null,
+          organization: null,
+          roles: x
+            .map(t => t.teamProfileType)
+            .filter(exists)
+            .flatMap(y => y.description || ''),
+        }))
         .value();
 
       const organizationsAsString: MemberRoleGroup[] = chain(organizationsInTeam)
-        .groupBy((groupedTeams: Api_DispositionFileTeam) => groupedTeams.organizationId)
-        .map<MemberRoleGroup>(x => {
-          return {
-            id: x[0].id?.toString() || '',
-            person: null,
-            organization: x[0].organization || {},
-            roles: x
-              .map(t => t.teamProfileType)
-              .filter((z): z is Api_TypeCode<string> => z !== undefined)
-              .flatMap(y => y.description || ''),
-          };
-        })
+        .groupBy((groupedTeams: ApiGen_Concepts_DispositionFileTeam) => groupedTeams.organizationId)
+        .map<MemberRoleGroup>(x => ({
+          id: x[0].id?.toString() || '',
+          person: null,
+          organization: x[0].organization || null,
+          roles: x
+            .map(t => t.teamProfileType)
+            .filter(exists)
+            .flatMap(y => y.description || ''),
+        }))
         .value();
 
       const teamAsString = personsAsString.concat(organizationsAsString);

@@ -2,11 +2,10 @@ import { InterestHolderType } from '@/constants/interestHolderTypes';
 import { PayeeOption } from '@/features/mapSideBar/acquisition/models/PayeeOptionModel';
 import { PayeeType } from '@/features/mapSideBar/acquisition/models/PayeeTypeModel';
 import { fromApiOrganization } from '@/interfaces';
-import {
-  Api_ExpropriationPayment,
-  Api_ExpropriationPaymentItem,
-} from '@/models/api/ExpropriationPayment';
-import { booleanToString, stringToBoolean, toTypeCode } from '@/utils/formUtils';
+import { ApiGen_Concepts_ExpropriationPayment } from '@/models/api/generated/ApiGen_Concepts_ExpropriationPayment';
+import { ApiGen_Concepts_ExpropriationPaymentItem } from '@/models/api/generated/ApiGen_Concepts_ExpropriationPaymentItem';
+import { getEmptyBaseAudit } from '@/models/default_initializers';
+import { booleanToString, stringToBoolean, toTypeCodeNullable } from '@/utils/formUtils';
 import { isNullOrWhitespace } from '@/utils/utils';
 
 import { ExpropriationAuthorityFormModel } from '../../models';
@@ -29,8 +28,8 @@ export class Form8FormModel {
     this.acquisitionFileId = acquisitionFileId;
   }
 
-  toApi(payeeOptions: PayeeOption[]): Api_ExpropriationPayment {
-    const expropriationPaymentApi = {
+  toApi(payeeOptions: PayeeOption[]): ApiGen_Concepts_ExpropriationPayment {
+    const expropriationPaymentApi: ApiGen_Concepts_ExpropriationPayment = {
       id: this.id,
       acquisitionFileId: this.acquisitionFileId,
       acquisitionOwnerId: this.acquisitionOwnerId,
@@ -41,10 +40,10 @@ export class Form8FormModel {
       expropriatingAuthority: null,
       description: this.description,
       isDisabled: this.isDisabled,
-      rowVersion: this.rowVersion,
       paymentItems: this.paymentItems
         .filter(x => !x.isEmpty())
-        .map<Api_ExpropriationPaymentItem>(x => x.toApi()),
+        .map<ApiGen_Concepts_ExpropriationPaymentItem>(x => x.toApi()),
+      ...getEmptyBaseAudit(this.rowVersion),
     };
 
     if (isNullOrWhitespace(this.payeeKey)) {
@@ -73,7 +72,7 @@ export class Form8FormModel {
     return expropriationPaymentApi;
   }
 
-  static fromApi(model: Api_ExpropriationPayment): Form8FormModel {
+  static fromApi(model: ApiGen_Concepts_ExpropriationPayment): Form8FormModel {
     const newForm = new Form8FormModel(model.id, model.acquisitionFileId);
 
     newForm.acquisitionOwnerId = model.acquisitionOwnerId;
@@ -114,7 +113,7 @@ export class Form8PaymentItemModel {
     return this.paymentItemTypeCode === '' && this.pretaxAmount === 0;
   }
 
-  static fromApi(model: Api_ExpropriationPaymentItem): Form8PaymentItemModel {
+  static fromApi(model: ApiGen_Concepts_ExpropriationPaymentItem): Form8PaymentItemModel {
     const newPaymentItem = new Form8PaymentItemModel(
       model.id ?? null,
       model.expropriationPaymentId,
@@ -131,23 +130,23 @@ export class Form8PaymentItemModel {
     return newPaymentItem;
   }
 
-  toApi(): Api_ExpropriationPaymentItem {
+  toApi(): ApiGen_Concepts_ExpropriationPaymentItem {
     return {
       id: this.id,
       expropriationPaymentId: this.expropriationPaymentId,
       paymentItemTypeCode: this.paymentItemTypeCode ?? null,
-      paymentItemType: toTypeCode(this.paymentItemTypeCode) ?? null,
+      paymentItemType: toTypeCodeNullable(this.paymentItemTypeCode) ?? null,
       isGstRequired: stringToBoolean(this.isGstRequired),
       pretaxAmount: this.pretaxAmount,
       taxAmount: this.taxAmount,
       totalAmount: this.totalAmount,
-      rowVersion: this.rowVersion ?? null,
       isDisabled: this.isDisabled,
+      ...getEmptyBaseAudit(this.rowVersion),
     };
   }
 }
 
-const getPayeeKey = (form8Api: Api_ExpropriationPayment): string => {
+const getPayeeKey = (form8Api: ApiGen_Concepts_ExpropriationPayment): string => {
   if (form8Api.acquisitionOwnerId) {
     return PayeeOption.generateKey(form8Api.acquisitionOwnerId, PayeeType.Owner);
   }

@@ -5,7 +5,7 @@ import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
 import { InventoryTabNames } from '@/features/mapSideBar/property/InventoryTabs';
 import { FileTabType } from '@/features/mapSideBar/shared/detail/FileTabs';
 import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Concepts_ResearchFile';
-import { stripTrailingSlash } from '@/utils';
+import { exists, stripTrailingSlash } from '@/utils';
 
 import UpdateResearchContainer from './tabs/fileDetails/update/UpdateSummaryContainer';
 import ResearchTabsContainer from './tabs/ResearchTabsContainer';
@@ -23,7 +23,7 @@ export interface IResearchRouterProps {
 export const ResearchRouter: React.FC<IResearchRouterProps> = props => {
   const { path, url } = useRouteMatch();
 
-  if (props.researchFile === undefined || props.researchFile === null) {
+  if (!exists(props.researchFile)) {
     return null;
   }
 

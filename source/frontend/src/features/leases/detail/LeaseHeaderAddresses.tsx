@@ -1,12 +1,12 @@
 import * as React from 'react';
 
 import ExpandableTextList from '@/components/common/ExpandableTextList';
-import { Api_Property } from '@/models/api/Property';
-import { Api_PropertyLease } from '@/models/api/PropertyLease';
+import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
+import { ApiGen_Concepts_PropertyLease } from '@/models/api/generated/ApiGen_Concepts_PropertyLease';
 import { getPropertyName } from '@/utils/mapPropertyUtils';
 
 export interface ILeaseHeaderAddressesProps {
-  propertyLeases?: Api_PropertyLease[];
+  propertyLeases?: ApiGen_Concepts_PropertyLease[];
   delimiter?: React.ReactElement | string;
   maxCollapsedLength?: number;
 }
@@ -17,19 +17,21 @@ export const LeaseHeaderAddresses: React.FC<ILeaseHeaderAddressesProps> = ({
   maxCollapsedLength = 2,
 }) => {
   return (
-    <ExpandableTextList<Api_PropertyLease>
+    <ExpandableTextList<ApiGen_Concepts_PropertyLease>
       items={propertyLeases ?? []}
-      keyFunction={(item: Api_PropertyLease, index: number) =>
+      keyFunction={(item: ApiGen_Concepts_PropertyLease, index: number) =>
         `lease-property-${item.id}-address-${item?.property?.address?.id ?? index}`
       }
-      renderFunction={(item: Api_PropertyLease) => <>{getFormattedAddress(item?.property)}</>}
+      renderFunction={(item: ApiGen_Concepts_PropertyLease) => (
+        <>{getFormattedAddress(item?.property)}</>
+      )}
       delimiter={delimiter}
       maxCollapsedLength={maxCollapsedLength}
     />
   );
 };
 
-const getFormattedAddress = (property?: Api_Property) => {
+const getFormattedAddress = (property: ApiGen_Concepts_Property | null | undefined) => {
   if (!property) {
     return '';
   }
@@ -45,8 +47,8 @@ const getFormattedAddress = (property?: Api_Property) => {
           getPropertyName({
             pid: property.pid?.toString(),
             pin: property.pin?.toString(),
-            latitude: property.latitude,
-            longitude: property.longitude,
+            latitude: property.latitude ?? undefined,
+            longitude: property.longitude ?? undefined,
           }).value
         } - Address not available in PIMS`;
   }

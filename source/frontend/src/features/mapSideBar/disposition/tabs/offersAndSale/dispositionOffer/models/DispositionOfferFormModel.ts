@@ -1,4 +1,5 @@
-import { Api_DispositionFileOffer } from '@/models/api/DispositionFile';
+import { ApiGen_Concepts_DispositionFileOffer } from '@/models/api/generated/ApiGen_Concepts_DispositionFileOffer';
+import { EpochISODateTimeString } from '@/models/api/UtcIsoDateTime';
 import { emptyStringtoNullable, toTypeCodeNullable } from '@/utils/formUtils';
 
 export class DispositionOfferFormModel {
@@ -15,7 +16,7 @@ export class DispositionOfferFormModel {
     this.dispositionFileId = dispositionFileId;
   }
 
-  static fromApi(entity: Api_DispositionFileOffer): DispositionOfferFormModel {
+  static fromApi(entity: ApiGen_Concepts_DispositionFileOffer): DispositionOfferFormModel {
     const model = new DispositionOfferFormModel(entity.id, entity.dispositionFileId);
 
     model.dispositionOfferStatusTypeCode = entity.dispositionOfferStatusTypeCode;
@@ -29,16 +30,16 @@ export class DispositionOfferFormModel {
     return model;
   }
 
-  toApi(): Api_DispositionFileOffer {
+  toApi(): ApiGen_Concepts_DispositionFileOffer {
     return {
       id: this.id,
       dispositionFileId: this.dispositionFileId,
       dispositionOfferStatusTypeCode: emptyStringtoNullable(this.dispositionOfferStatusTypeCode),
       dispositionOfferStatusType: toTypeCodeNullable(this.dispositionOfferStatusTypeCode),
       offerName: emptyStringtoNullable(this.offerName),
-      offerDate: emptyStringtoNullable(this.offerDate),
+      offerDate: this.offerDate ?? EpochISODateTimeString,
       offerExpiryDate: emptyStringtoNullable(this.offerExpiryDate),
-      offerAmount: this.offerAmount,
+      offerAmount: this.offerAmount ?? 0,
       offerNote: emptyStringtoNullable(this.offerNote),
       rowVersion: this.rowVersion ?? 0,
     };

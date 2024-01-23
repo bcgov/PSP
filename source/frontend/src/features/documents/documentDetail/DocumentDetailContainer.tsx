@@ -11,6 +11,7 @@ import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/Ap
 import { ApiGen_CodeTypes_ExternalResponseStatus } from '@/models/api/generated/ApiGen_CodeTypes_ExternalResponseStatus';
 import { ApiGen_Mayan_DocumentTypeMetadataType } from '@/models/api/generated/ApiGen_Mayan_DocumentTypeMetadataType';
 import { ApiGen_Requests_DocumentUpdateRequest } from '@/models/api/generated/ApiGen_Requests_DocumentUpdateRequest';
+import { exists } from '@/utils/utils';
 
 import { ComposedDocument, DocumentRow, DocumentUpdateFormData } from '../ComposedDocument';
 import { useDocumentProvider } from '../hooks/useDocumentProvider';
@@ -95,11 +96,7 @@ export const DocumentDetailContainer: React.FunctionComponent<
           let mayanMetadataResult = metadataResponse.payload?.results;
 
           let mayanFileId: number | undefined = undefined;
-          if (
-            mayanMetadataResult !== null &&
-            mayanMetadataResult !== undefined &&
-            mayanMetadataResult.length > 0
-          ) {
+          if (exists(mayanMetadataResult) && mayanMetadataResult.length > 0) {
             const document = mayanMetadataResult[0].document;
             mayanFileId = document?.file_latest?.id;
           }

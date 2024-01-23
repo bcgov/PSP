@@ -25,6 +25,7 @@ import { useLookupCodeHelpers } from '@/hooks/useLookupCodeHelpers';
 import { IAutocompletePrediction } from '@/interfaces';
 import { ApiGen_Concepts_OrganizationPerson } from '@/models/api/generated/ApiGen_Concepts_OrganizationPerson';
 import { ApiGen_Concepts_Product } from '@/models/api/generated/ApiGen_Concepts_Product';
+import { isValidId } from '@/utils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
 import UpdateAcquisitionOwnersSubForm from '../../../common/update/acquisitionOwners/UpdateAcquisitionOwnersSubForm';
@@ -89,7 +90,7 @@ const AcquisitionDetailSubForm: React.FC<{
   const onMinistryProjectSelected = React.useCallback(
     async (param: IAutocompletePrediction[]) => {
       if (param.length > 0) {
-        if (param[0].id !== undefined) {
+        if (isValidId(param[0].id)) {
           const result = await retrieveProjectProducts(param[0].id);
           if (result !== undefined) {
             setProjectProducts(result);

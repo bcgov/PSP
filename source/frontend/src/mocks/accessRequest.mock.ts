@@ -1,12 +1,16 @@
 import { IPagedItems } from '@/interfaces';
-import { Api_AccessRequest } from '@/models/api/AccessRequest';
+import { ApiGen_Concepts_AccessRequest } from '@/models/api/generated/ApiGen_Concepts_AccessRequest';
+import { toTypeCodeNullable } from '@/utils/formUtils';
 
-export const getMockAccessRequest = (): Api_AccessRequest => ({
+import { getEmptyPerson } from './contacts.mock';
+
+export const getMockAccessRequest = (): ApiGen_Concepts_AccessRequest => ({
   id: 8,
   regionCode: {
     id: 1,
     description: 'South Coast Region',
     isDisabled: false,
+    displayOrder: null,
   },
   note: '',
   user: {
@@ -15,7 +19,7 @@ export const getMockAccessRequest = (): Api_AccessRequest => ({
     businessIdentifierValue: 'desmith@idir',
     approvedById: 0,
     position: 'pos',
-    userTypeCode: { id: 'CONTRACT' },
+    userTypeCode: toTypeCodeNullable('CONTRACT'),
     note: '',
     isDisabled: false,
     lastLogin: '2022-06-14T16:49:27.127',
@@ -35,12 +39,16 @@ export const getMockAccessRequest = (): Api_AccessRequest => ({
             id: 'WORKEMAIL',
             description: 'Work email',
             isDisabled: false,
+            displayOrder: null,
           },
           value: 'devin.smith@gov.bc.ca',
           rowVersion: 1,
         },
       ],
       rowVersion: 1,
+      comment: null,
+      middleNames: null,
+      preferredName: null,
     },
     userRegions: [],
     appCreateTimestamp: '2022-03-24T15:52:08.46',
@@ -66,6 +74,9 @@ export const getMockAccessRequest = (): Api_AccessRequest => ({
     appLastUpdateUserid: 'Seed Data',
     appCreateUserid: 'Seed Data',
     rowVersion: 1,
+    appCreateUserGuid: null,
+    appLastUpdateUserGuid: null,
+    keycloakGroupId: null,
   },
   roleId: 11,
   appCreateTimestamp: '2022-06-14T16:49:18.51',
@@ -75,9 +86,10 @@ export const getMockAccessRequest = (): Api_AccessRequest => ({
   appLastUpdateUserGuid: 'e81274eb-a007-4f2e-ada3-2817efcdb0a6',
   appCreateUserGuid: 'e81274eb-a007-4f2e-ada3-2817efcdb0a6',
   rowVersion: 1,
+  accessRequestStatusTypeCode: null,
 });
 
-export const getMockPagedAccessRequests = (): IPagedItems<Api_AccessRequest> => ({
+export const getMockPagedAccessRequests = (): IPagedItems<ApiGen_Concepts_AccessRequest> => ({
   items: [
     {
       id: 7,
@@ -85,11 +97,13 @@ export const getMockPagedAccessRequests = (): IPagedItems<Api_AccessRequest> => 
         id: 'RECEIVED',
         description: 'Access Request confirmed received',
         isDisabled: false,
+        displayOrder: null,
       },
       regionCode: {
         id: 1,
         description: 'South Coast Region',
         isDisabled: false,
+        displayOrder: null,
       },
       note: "I'm new BA with Property Services Project and need access to PIMS",
       user: {
@@ -103,6 +117,7 @@ export const getMockPagedAccessRequests = (): IPagedItems<Api_AccessRequest> => 
         issueDate: '2022-06-08T18:54:06.33',
         userRoles: [],
         person: {
+          ...getEmptyPerson(),
           id: 41157,
           isDisabled: false,
           surname: 'Hashmi',
@@ -116,6 +131,7 @@ export const getMockPagedAccessRequests = (): IPagedItems<Api_AccessRequest> => 
                 id: 'WORKEMAIL',
                 description: 'Work email',
                 isDisabled: false,
+                displayOrder: null,
               },
               value: 'yaqoob.hashmi@gov.bc.ca',
               rowVersion: 1,
@@ -131,6 +147,8 @@ export const getMockPagedAccessRequests = (): IPagedItems<Api_AccessRequest> => 
         appLastUpdateUserGuid: 'c553c141-5273-4d3b-b604-5f7b8b665258',
         appCreateUserGuid: 'c553c141-5273-4d3b-b604-5f7b8b665258',
         rowVersion: 4,
+        note: null,
+        userTypeCode: null,
       },
       userId: 90,
       role: {
@@ -149,6 +167,7 @@ export const getMockPagedAccessRequests = (): IPagedItems<Api_AccessRequest> => 
         appCreateUserid: 'Seed Data',
         appLastUpdateUserGuid: '1b93f614-91da-4b32-b36e-bd2c6ebd12e2',
         rowVersion: 2,
+        appCreateUserGuid: null,
       },
       roleId: 7,
       appCreateTimestamp: '2022-06-08T18:57:24.42',
@@ -165,11 +184,13 @@ export const getMockPagedAccessRequests = (): IPagedItems<Api_AccessRequest> => 
         id: 'RECEIVED',
         description: 'Access Request confirmed received',
         isDisabled: false,
+        displayOrder: null,
       },
       regionCode: {
         id: 1,
         description: 'South Coast Region',
         isDisabled: false,
+        displayOrder: null,
       },
       note: '',
       user: {
@@ -184,6 +205,7 @@ export const getMockPagedAccessRequests = (): IPagedItems<Api_AccessRequest> => 
         issueDate: '2022-03-24T15:52:08.31',
         userRoles: [],
         person: {
+          ...getEmptyPerson(),
           id: 40977,
           isDisabled: false,
           surname: 'Smith',
@@ -197,6 +219,7 @@ export const getMockPagedAccessRequests = (): IPagedItems<Api_AccessRequest> => 
                 id: 'WORKEMAIL',
                 description: 'Work email',
                 isDisabled: false,
+                displayOrder: null,
               },
               value: 'devin.smith@gov.bc.ca',
               rowVersion: 1,
@@ -212,6 +235,7 @@ export const getMockPagedAccessRequests = (): IPagedItems<Api_AccessRequest> => 
         appLastUpdateUserGuid: 'e81274eb-a007-4f2e-ada3-2817efcdb0a6',
         appCreateUserGuid: 'e81274eb-a007-4f2e-ada3-2817efcdb0a6',
         rowVersion: 108,
+        userTypeCode: null,
       },
       userId: 30,
       role: {
@@ -228,6 +252,9 @@ export const getMockPagedAccessRequests = (): IPagedItems<Api_AccessRequest> => 
         appLastUpdateUserid: 'Seed Data',
         appCreateUserid: 'Seed Data',
         rowVersion: 1,
+        appCreateUserGuid: null,
+        appLastUpdateUserGuid: null,
+        keycloakGroupId: null,
       },
       roleId: 11,
       appCreateTimestamp: '2022-06-14T16:49:18.51',

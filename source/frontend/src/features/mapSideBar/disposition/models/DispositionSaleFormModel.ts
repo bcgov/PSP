@@ -1,4 +1,4 @@
-import { Api_DispositionFileSale } from '@/models/api/DispositionFile';
+import { ApiGen_Concepts_DispositionFileSale } from '@/models/api/generated/ApiGen_Concepts_DispositionFileSale';
 import { emptyStringtoNullable } from '@/utils/formUtils';
 
 export class DispositionSaleFormModel {
@@ -21,7 +21,7 @@ export class DispositionSaleFormModel {
     this.dispositionFileId = dispositionFileId;
   }
 
-  static fromApi(entity: Api_DispositionFileSale) {
+  static fromApi(entity: ApiGen_Concepts_DispositionFileSale) {
     const model = new DispositionSaleFormModel(entity.id, entity.dispositionFileId);
 
     model.finalConditionRemovalDate = entity.finalConditionRemovalDate;
@@ -40,7 +40,7 @@ export class DispositionSaleFormModel {
     model.netProceedsAfterSppAmount = calculateNetProceedsAfterSppAmount(entity);
   }
 
-  toApi(): Api_DispositionFileSale {
+  toApi(): ApiGen_Concepts_DispositionFileSale {
     return {
       id: this.id,
       dispositionFileId: this.dispositionFileId,
@@ -58,11 +58,16 @@ export class DispositionSaleFormModel {
       dispositionPurchasers: [],
       dispositionPurchaserAgents: [],
       dispositionPurchaserSolicitors: [],
+      netProceedsAfterSppAmount: null,
+      netProceedsBeforeSppAmount: null,
+      rowVersion: null,
     };
   }
 }
 
-export const calculateNetProceedsBeforeSppAmount = (apiModel: Api_DispositionFileSale | null) => {
+export const calculateNetProceedsBeforeSppAmount = (
+  apiModel: ApiGen_Concepts_DispositionFileSale | null,
+) => {
   return apiModel == null
     ? 0
     : (apiModel.finalSaleAmount ?? 0) -
@@ -72,7 +77,9 @@ export const calculateNetProceedsBeforeSppAmount = (apiModel: Api_DispositionFil
           (apiModel.netBookAmount ?? 0));
 };
 
-export const calculateNetProceedsAfterSppAmount = (apiModel: Api_DispositionFileSale | null) => {
+export const calculateNetProceedsAfterSppAmount = (
+  apiModel: ApiGen_Concepts_DispositionFileSale | null,
+) => {
   return apiModel == null
     ? 0
     : (apiModel.finalSaleAmount ?? 0) -

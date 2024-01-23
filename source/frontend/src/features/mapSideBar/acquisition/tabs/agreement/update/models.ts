@@ -1,5 +1,6 @@
-import { Api_Agreement } from '@/models/api/Agreement';
-import { stringToUndefined, toTypeCode } from '@/utils/formUtils';
+import { ApiGen_Concepts_Agreement } from '@/models/api/generated/ApiGen_Concepts_Agreement';
+import { getEmptyBaseAudit } from '@/models/default_initializers';
+import { stringToNull, stringToNumberOrNull, toTypeCodeNullable } from '@/utils/formUtils';
 
 export class SingleAgreementFormModel {
   public agreementId: number = 0;
@@ -25,12 +26,12 @@ export class SingleAgreementFormModel {
 
   public rowVersion: number | null = null;
 
-  static fromApi(apiModel: Api_Agreement): SingleAgreementFormModel {
+  static fromApi(apiModel: ApiGen_Concepts_Agreement): SingleAgreementFormModel {
     const agreement = new SingleAgreementFormModel();
 
     agreement.agreementId = apiModel.agreementId;
-    agreement.agreementTypeCode = apiModel.agreementType.id || '';
-    agreement.agreementTypeDescription = apiModel.agreementType.description || '';
+    agreement.agreementTypeCode = apiModel.agreementType?.id || '';
+    agreement.agreementTypeDescription = apiModel.agreementType?.description || '';
     agreement.agreementDate = apiModel.agreementDate || '';
     agreement.agreementStatusTypeCode = apiModel.agreementStatusType?.id || '';
     agreement.agreementStatusTypeDescription = apiModel.agreementStatusType?.description || '';
@@ -52,27 +53,38 @@ export class SingleAgreementFormModel {
     return agreement;
   }
 
-  public toApi(acquisitionFileId: number): Api_Agreement {
+  public toApi(acquisitionFileId: number): ApiGen_Concepts_Agreement {
     return {
       agreementId: this.agreementId,
       acquisitionFileId: acquisitionFileId,
-      agreementType: toTypeCode(this.agreementTypeCode) || {},
-      agreementDate: stringToUndefined(this.agreementDate),
-      agreementStatusType: toTypeCode(this.agreementStatusTypeCode) || {},
-      completionDate: stringToUndefined(this.completionDate),
-      terminationDate: stringToUndefined(this.terminationDate),
-      commencementDate: stringToUndefined(this.commencementDate),
-      possessionDate: stringToUndefined(this.possessionDate),
+      agreementType: toTypeCodeNullable(this.agreementTypeCode) || {
+        id: null,
+        description: null,
+        displayOrder: null,
+        isDisabled: false,
+      },
+      agreementDate: stringToNull(this.agreementDate),
+      agreementStatusType: toTypeCodeNullable(this.agreementStatusTypeCode) || {
+        id: null,
+        description: null,
+        displayOrder: null,
+        isDisabled: false,
+      },
+      completionDate: stringToNull(this.completionDate),
+      terminationDate: stringToNull(this.terminationDate),
+      commencementDate: stringToNull(this.commencementDate),
+      possessionDate: stringToNull(this.possessionDate),
       depositAmount: this.depositAmount !== '' ? Number(this.depositAmount) : null,
-      noLaterThanDays: stringToUndefined(this.noLaterThanDays),
-      purchasePrice: stringToUndefined(this.purchasePrice),
-      legalSurveyPlanNum: stringToUndefined(this.legalSurveyPlanNum),
-      offerDate: stringToUndefined(this.offerDate),
-      expiryDateTime: stringToUndefined(this.expiryDateTime),
-      signedDate: stringToUndefined(this.signedDate),
-      inspectionDate: stringToUndefined(this.inspectionDate),
-      rowVersion: this.rowVersion ?? undefined,
-      cancellationNote: stringToUndefined(this.cancellationNote),
+      noLaterThanDays: stringToNumberOrNull(this.noLaterThanDays),
+      purchasePrice: stringToNumberOrNull(this.purchasePrice),
+      legalSurveyPlanNum: stringToNull(this.legalSurveyPlanNum),
+      offerDate: stringToNull(this.offerDate),
+      expiryDateTime: stringToNull(this.expiryDateTime),
+      signedDate: stringToNull(this.signedDate),
+      inspectionDate: stringToNull(this.inspectionDate),
+      cancellationNote: stringToNull(this.cancellationNote),
+      isDraft: null,
+      ...getEmptyBaseAudit(this.rowVersion),
     };
   }
 }
@@ -85,13 +97,16 @@ export class AgreementsFormModel {
     this.acquisitionFileId = acquisitionFileId;
   }
 
-  static fromApi(acquisitionFileId: number, agreements: Api_Agreement[]): AgreementsFormModel {
+  static fromApi(
+    acquisitionFileId: number,
+    agreements: ApiGen_Concepts_Agreement[],
+  ): AgreementsFormModel {
     const newFormModel = new AgreementsFormModel(acquisitionFileId);
     agreements.forEach(x => newFormModel.agreements.push(SingleAgreementFormModel.fromApi(x)));
     return newFormModel;
   }
 
-  public toApi(): Api_Agreement[] {
+  public toApi(): ApiGen_Concepts_Agreement[] {
     return this.agreements.map(x => x.toApi(this.acquisitionFileId));
   }
 }

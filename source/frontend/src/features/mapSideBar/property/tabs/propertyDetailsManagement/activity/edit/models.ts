@@ -3,16 +3,16 @@ import {
   fromApiPerson,
   IContactSearchResult,
 } from '@/interfaces/IContactSearchResult';
-import { Api_Organization } from '@/models/api/Organization';
-import { Api_Person } from '@/models/api/Person';
-import {
-  Api_PropertyActivity,
-  Api_PropertyActivityInvoice,
-  Api_PropertyActivityInvolvedParty,
-  Api_PropertyActivityProperty,
-  Api_PropertyMinistryContact,
-} from '@/models/api/PropertyActivity';
-import { emptyStringtoNullable, toTypeCode } from '@/utils/formUtils';
+import { ApiGen_Concepts_Organization } from '@/models/api/generated/ApiGen_Concepts_Organization';
+import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_Person';
+import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
+import { ApiGen_Concepts_PropertyActivityInvoice } from '@/models/api/generated/ApiGen_Concepts_PropertyActivityInvoice';
+import { ApiGen_Concepts_PropertyActivityInvolvedParty } from '@/models/api/generated/ApiGen_Concepts_PropertyActivityInvolvedParty';
+import { ApiGen_Concepts_PropertyActivityProperty } from '@/models/api/generated/ApiGen_Concepts_PropertyActivityProperty';
+import { ApiGen_Concepts_PropertyMinistryContact } from '@/models/api/generated/ApiGen_Concepts_PropertyMinistryContact';
+import { getEmptyBaseAudit } from '@/models/default_initializers';
+import { exists } from '@/utils';
+import { emptyStringtoNullable, toTypeCodeNullable } from '@/utils/formUtils';
 
 export class ActivityPropertyFormModel {
   id: number = 0;
@@ -20,18 +20,20 @@ export class ActivityPropertyFormModel {
   propertyId: number = 0;
   rowVersion: number = 0;
 
-  toApi(): Api_PropertyActivityProperty {
+  toApi(): ApiGen_Concepts_PropertyActivityProperty {
     return {
       id: this.id,
       propertyActivityId: this.propertyActivityId,
-      propertyActivityModel: null,
+      propertyActivity: null,
       propertyId: this.propertyId,
       property: null,
-      rowVersion: this.rowVersion,
+      ...getEmptyBaseAudit(this.rowVersion),
     };
   }
 
-  static fromApi(model: Api_PropertyActivityProperty | undefined): ActivityPropertyFormModel {
+  static fromApi(
+    model: ApiGen_Concepts_PropertyActivityProperty | undefined,
+  ): ActivityPropertyFormModel {
     const newFormModel = new ActivityPropertyFormModel();
 
     if (model !== undefined) {
@@ -62,7 +64,7 @@ export class ActivityInvoiceFormModel {
   propertyActivity: string = '';
   rowVersion: number = 0;
 
-  toApi(propertyActivityId: number): Api_PropertyActivityInvoice {
+  toApi(propertyActivityId: number): ApiGen_Concepts_PropertyActivityInvoice {
     return {
       id: this.id,
       invoiceDateTime: this.invoiceDateTime,
@@ -76,18 +78,20 @@ export class ActivityInvoiceFormModel {
       isDisabled: this.isDisabled,
       propertyActivityId: propertyActivityId,
       propertyActivity: null,
-      rowVersion: this.rowVersion,
+      ...getEmptyBaseAudit(this.rowVersion),
     };
   }
 
-  static fromApi(model: Api_PropertyActivityInvoice | undefined): ActivityInvoiceFormModel {
+  static fromApi(
+    model: ApiGen_Concepts_PropertyActivityInvoice | undefined,
+  ): ActivityInvoiceFormModel {
     const formModel = new ActivityInvoiceFormModel();
 
-    if (model !== undefined) {
+    if (exists(model)) {
       formModel.id = model.id;
       formModel.invoiceDateTime = model.invoiceDateTime;
-      formModel.invoiceNum = model.invoiceNum;
-      formModel.description = model.description;
+      formModel.invoiceNum = model.invoiceNum || '';
+      formModel.description = model.description || '';
       formModel.pretaxAmount = model.pretaxAmount;
       formModel.gstAmount = model.gstAmount || 0;
       formModel.pstAmount = model.pstAmount || 0;
@@ -95,7 +99,6 @@ export class ActivityInvoiceFormModel {
       formModel.isPstRequired = model.isPstRequired || false;
       formModel.isDisabled = model.isDisabled || false;
       formModel.propertyActivityId = model.propertyActivityId || 0;
-      //formModel.propertyActivity = model.propertyActivity;
       formModel.rowVersion = model.rowVersion || 0;
     }
 
@@ -126,12 +129,12 @@ export class PropertyActivityFormModel {
 
   activityProperties: ActivityPropertyFormModel[] = [];
 
-  toApi(propertyId: number): Api_PropertyActivity {
-    const apiActivity: Api_PropertyActivity = {
+  toApi(propertyId: number): ApiGen_Concepts_PropertyActivity {
+    const apiActivity: ApiGen_Concepts_PropertyActivity = {
       id: this.id,
-      activityTypeCode: toTypeCode(this.activityTypeCode) || {},
-      activitySubtypeCode: toTypeCode(this.activitySubtypeCode) || {},
-      activityStatusTypeCode: toTypeCode(this.activityStatusCode) || {},
+      activityTypeCode: toTypeCodeNullable(this.activityTypeCode),
+      activitySubtypeCode: toTypeCodeNullable(this.activitySubtypeCode),
+      activityStatusTypeCode: toTypeCodeNullable(this.activityStatusCode),
       requestAddedDateOnly: this.requestedDate,
       completionDateOnly: emptyStringtoNullable(this.completionDate),
       description: this.description,
@@ -144,8 +147,8 @@ export class PropertyActivityFormModel {
       serviceProviderPerson: null,
 
       involvedParties: this.involvedParties
-        .filter((x): x is IContactSearchResult => x !== null)
-        .map<Api_PropertyActivityInvolvedParty>(x => {
+        .filter(exists)
+        .map<ApiGen_Concepts_PropertyActivityInvolvedParty>(x => {
           return {
             id: 0,
             organizationId: x.organizationId ?? null,
@@ -154,19 +157,19 @@ export class PropertyActivityFormModel {
             person: null,
             propertyActivityId: this.id,
             propertyActivity: null,
-            rowVersion: 0,
+            ...getEmptyBaseAudit(0),
           };
         }),
       ministryContacts: this.ministryContacts
-        .filter((x): x is IContactSearchResult => x !== null)
-        .map<Api_PropertyMinistryContact>(x => {
+        .filter(exists)
+        .map<ApiGen_Concepts_PropertyMinistryContact>(x => {
           return {
             id: 0,
             personId: x.personId || 0,
             person: null,
             propertyActivityId: this.id,
-            pimsPropertyActivity: null,
-            rowVersion: 0,
+            propertyActivity: null,
+            ...getEmptyBaseAudit(0),
           };
         }),
       activityProperties: [],
@@ -176,13 +179,12 @@ export class PropertyActivityFormModel {
       gstAmt: this.gstAmount,
       pstAmt: this.pstAmount,
       totalAmt: this.totalAmount,
-      rowVersion: this.rowNumber,
+      ...getEmptyBaseAudit(this.rowNumber),
     };
 
     if (this.activityProperties.length > 0) {
-      apiActivity.activityProperties = this.activityProperties.map<Api_PropertyActivityProperty>(
-        x => x.toApi(),
-      );
+      apiActivity.activityProperties =
+        this.activityProperties.map<ApiGen_Concepts_PropertyActivityProperty>(x => x.toApi());
     } else {
       const newProperty = new ActivityPropertyFormModel();
       newProperty.propertyId = propertyId;
@@ -193,24 +195,24 @@ export class PropertyActivityFormModel {
 
     return apiActivity;
   }
-  static fromApi(model: Api_PropertyActivity | undefined): PropertyActivityFormModel {
+  static fromApi(model: ApiGen_Concepts_PropertyActivity | undefined): PropertyActivityFormModel {
     const formModel = new PropertyActivityFormModel();
-    if (model !== undefined) {
+    if (exists(model)) {
       formModel.id = model.id;
-      formModel.activityTypeCode = model.activityTypeCode.id || '';
-      formModel.activitySubtypeCode = model.activitySubtypeCode.id || '';
-      formModel.activityStatusCode = model.activityStatusTypeCode.id || '';
+      formModel.activityTypeCode = model.activityTypeCode?.id || '';
+      formModel.activitySubtypeCode = model.activitySubtypeCode?.id || '';
+      formModel.activityStatusCode = model.activityStatusTypeCode?.id || '';
       formModel.requestedDate = model.requestAddedDateOnly;
       formModel.completionDate = model.completionDateOnly || '';
-      formModel.description = model.description;
+      formModel.description = model.description || '';
 
-      if (model.ministryContacts.length > 0) {
+      if (exists(model.ministryContacts) && model.ministryContacts.length > 0) {
         formModel.ministryContacts = model.ministryContacts.map(c =>
           fromApiPersonOrApiOrganization(c.person, null),
         );
       }
-      formModel.requestedSource = model.requestSource;
-      if (model.involvedParties.length > 0) {
+      formModel.requestedSource = model.requestSource || '';
+      if (exists(model.involvedParties) && model.involvedParties.length > 0) {
         formModel.involvedParties = model.involvedParties.map(c =>
           fromApiPersonOrApiOrganization(c.person, c.organization),
         );
@@ -220,23 +222,22 @@ export class PropertyActivityFormModel {
         model.serviceProviderPerson,
         model.serviceProviderOrg,
       );
-      formModel.invoices = model.invoices.map(i => ActivityInvoiceFormModel.fromApi(i));
+      formModel.invoices = model.invoices?.map(i => ActivityInvoiceFormModel.fromApi(i)) ?? [];
       formModel.pretaxAmount = model.pretaxAmt || 0;
       formModel.gstAmount = model.gstAmt || 0;
       formModel.pstAmount = model.pstAmt || 0;
       formModel.totalAmount = model.totalAmt || 0;
       formModel.rowNumber = model.rowVersion || 0;
-      formModel.activityProperties = model.activityProperties.map(p =>
-        ActivityPropertyFormModel.fromApi(p),
-      );
+      formModel.activityProperties =
+        model.activityProperties?.map(p => ActivityPropertyFormModel.fromApi(p)) ?? [];
     }
     return formModel;
   }
 }
 
 function fromApiPersonOrApiOrganization(
-  person: Api_Person | null,
-  organization: Api_Organization | null,
+  person: ApiGen_Concepts_Person | null,
+  organization: ApiGen_Concepts_Organization | null,
 ): IContactSearchResult | null {
   if (person !== null) {
     return fromApiPerson(person);

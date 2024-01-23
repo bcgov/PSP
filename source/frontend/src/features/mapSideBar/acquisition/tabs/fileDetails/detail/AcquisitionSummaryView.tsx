@@ -13,7 +13,7 @@ import { InterestHolderType } from '@/constants/interestHolderTypes';
 import { usePersonRepository } from '@/features/contacts/repositories/usePersonRepository';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
-import { prettyFormatDate } from '@/utils';
+import { exists, prettyFormatDate } from '@/utils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
 import AcquisitionOwnersSummaryContainer from './AcquisitionOwnersSummaryContainer';
@@ -35,15 +35,13 @@ const AcquisitionSummaryView: React.FC<IAcquisitionSummaryViewProps> = ({
 
   const { hasRole } = useKeycloakWrapper();
 
-  const projectName =
-    acquisitionFile?.project !== undefined
-      ? acquisitionFile?.project?.code + ' - ' + acquisitionFile?.project?.description
-      : '';
+  const projectName = exists(acquisitionFile?.project)
+    ? acquisitionFile?.project?.code + ' - ' + acquisitionFile?.project?.description
+    : '';
 
-  const productName =
-    acquisitionFile?.product !== undefined
-      ? acquisitionFile?.product?.code + ' ' + acquisitionFile?.product?.description
-      : '';
+  const productName = exists(acquisitionFile?.product)
+    ? acquisitionFile?.product?.code + ' ' + acquisitionFile?.product?.description
+    : '';
 
   const ownerSolicitor = acquisitionFile?.acquisitionFileInterestHolders?.find(
     x => x.interestHolderType?.id === InterestHolderType.OWNER_SOLICITOR,

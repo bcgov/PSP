@@ -1,5 +1,7 @@
 import { fromContact, IContactSearchResult, toContact } from '@/interfaces';
-import { Api_SecurityDeposit, Api_SecurityDepositReturn } from '@/models/api/SecurityDeposit';
+import { ApiGen_Concepts_SecurityDeposit } from '@/models/api/generated/ApiGen_Concepts_SecurityDeposit';
+import { ApiGen_Concepts_SecurityDepositReturn } from '@/models/api/generated/ApiGen_Concepts_SecurityDepositReturn';
+import { getEmptyBaseAudit } from '@/models/default_initializers';
 import { NumberFieldValue } from '@/typings/NumberFieldValue';
 import { numberFieldToRequiredNumber } from '@/utils/formUtils';
 
@@ -32,25 +34,25 @@ export class FormLeaseDepositReturn {
     this.rowVersion = 0;
   }
 
-  public static createEmpty(deposit: Api_SecurityDeposit): FormLeaseDepositReturn {
+  public static createEmpty(deposit: ApiGen_Concepts_SecurityDeposit): FormLeaseDepositReturn {
     var returnDeposit = new FormLeaseDepositReturn();
     returnDeposit.parentDepositId = deposit.id || 0;
-    returnDeposit.depositTypeCode = deposit.depositType.id;
-    returnDeposit.depositTypeDescription = deposit.depositType.description || '';
+    returnDeposit.depositTypeCode = deposit.depositType?.id ?? '';
+    returnDeposit.depositTypeDescription = deposit.depositType?.description || '';
     returnDeposit.parentDepositOtherDescription = deposit.otherTypeDescription || '';
     returnDeposit.parentDepositAmount = deposit.amountPaid;
     return returnDeposit;
   }
 
   public static fromApi(
-    baseModel: Api_SecurityDepositReturn,
-    parentDeposit: Api_SecurityDeposit,
+    baseModel: ApiGen_Concepts_SecurityDepositReturn,
+    parentDeposit: ApiGen_Concepts_SecurityDeposit,
   ): FormLeaseDepositReturn {
     let model = new FormLeaseDepositReturn();
 
     // Parent fields
-    model.depositTypeCode = parentDeposit.depositType.id;
-    model.depositTypeDescription = parentDeposit.depositType.description || '';
+    model.depositTypeCode = parentDeposit.depositType?.id ?? '';
+    model.depositTypeDescription = parentDeposit.depositType?.description || '';
     model.parentDepositOtherDescription = parentDeposit.otherTypeDescription || '';
     model.parentDepositAmount = parentDeposit.amountPaid;
 
@@ -67,7 +69,7 @@ export class FormLeaseDepositReturn {
     return model;
   }
 
-  public toApi(): Api_SecurityDepositReturn {
+  public toApi(): ApiGen_Concepts_SecurityDepositReturn {
     return {
       id: this.id ?? null,
       parentDepositId: this.parentDepositId,
@@ -77,7 +79,8 @@ export class FormLeaseDepositReturn {
       interestPaid: numberFieldToRequiredNumber(this.interestPaid),
       returnDate: this.returnDate,
       contactHolder: this.contactHolder !== undefined ? toContact(this.contactHolder) : null,
-      rowVersion: this.rowVersion,
+      depositType: null,
+      ...getEmptyBaseAudit(this.rowVersion),
     };
   }
 }

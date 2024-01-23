@@ -6,6 +6,7 @@ import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineCo
 import { Section } from '@/components/common/Section/Section';
 import { PropertyInformation } from '@/features/leases';
 import { FormLeaseProperty, LeaseFormModel } from '@/features/leases/models';
+import { exists } from '@/utils';
 import { withNameSpace } from '@/utils/formUtils';
 
 export interface IPropertiesInformationProps {
@@ -39,7 +40,7 @@ export const PropertiesInformation: React.FunctionComponent<
             return undefined;
           }
         })
-        .filter((x): x is LatLngLiteral => x !== undefined) || []
+        .filter(exists) || []
     );
   }, [properties]);
 

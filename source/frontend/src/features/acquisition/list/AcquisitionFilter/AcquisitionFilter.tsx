@@ -9,7 +9,7 @@ import { SelectInput } from '@/components/common/List/SelectInput';
 import { ACQUISITION_FILE_STATUS_TYPES } from '@/constants/API';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { ApiGen_Concepts_AcquisitionFileTeam } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileTeam';
-import { mapLookupCode } from '@/utils';
+import { exists, mapLookupCode } from '@/utils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
 import {
@@ -57,7 +57,7 @@ export const AcquisitionFilter: React.FC<React.PropsWithChildren<IAcquisitionFil
     .map(c => mapLookupCode(c));
 
   const acquisitionTeamOptions = useMemo(() => {
-    if (acquisitionTeam !== undefined) {
+    if (exists(acquisitionTeam)) {
       return acquisitionTeam?.map<MultiSelectOption>(x => ({
         id: x.personId ? `P-${x.personId}` : `O-${x.organizationId}`,
         text: x.personId ? formatApiPersonNames(x.person) : x.organization?.name ?? '',

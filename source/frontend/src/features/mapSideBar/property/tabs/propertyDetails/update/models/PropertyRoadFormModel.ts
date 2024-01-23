@@ -1,4 +1,5 @@
-import { Api_PropertyRoad } from '@/models/api/Property';
+import { ApiGen_Concepts_PropertyRoad } from '@/models/api/generated/ApiGen_Concepts_PropertyRoad';
+import { getEmptyBaseAudit } from '@/models/default_initializers';
 import { ILookupCode } from '@/store/slices/lookupCodes';
 
 export class PropertyRoadFormModel {
@@ -15,25 +16,27 @@ export class PropertyRoadFormModel {
     return newModel;
   }
 
-  static fromApi(base: Api_PropertyRoad): PropertyRoadFormModel {
+  static fromApi(base: ApiGen_Concepts_PropertyRoad): PropertyRoadFormModel {
     var newModel = new PropertyRoadFormModel();
     newModel.id = base.id;
-    newModel.rowVersion = base.rowVersion;
+    newModel.rowVersion = base.rowVersion ?? undefined;
     newModel.propertyId = base.propertyId;
-    newModel.typeCode = base.propertyRoadTypeCode?.id;
-    newModel.typeDescription = base.propertyRoadTypeCode?.description;
+    newModel.typeCode = base.propertyRoadTypeCode?.id ?? undefined;
+    newModel.typeDescription = base.propertyRoadTypeCode?.description ?? undefined;
     return newModel;
   }
 
-  toApi(): Api_PropertyRoad {
+  toApi(): ApiGen_Concepts_PropertyRoad {
     return {
-      id: this.id,
-      rowVersion: this.rowVersion,
-      propertyId: this.propertyId,
+      id: this.id ?? 0,
+      propertyId: this.propertyId ?? 0,
       propertyRoadTypeCode: {
-        id: this.typeCode,
-        description: this.typeDescription,
+        id: this.typeCode ?? null,
+        description: this.typeDescription ?? null,
+        displayOrder: null,
+        isDisabled: false,
       },
+      ...getEmptyBaseAudit(this.rowVersion),
     };
   }
 }

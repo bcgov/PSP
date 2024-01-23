@@ -11,7 +11,7 @@ import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import { ApiGen_CodeTypes_ExternalResponseStatus } from '@/models/api/generated/ApiGen_CodeTypes_ExternalResponseStatus';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { Api_GenerateLease } from '@/models/generate/lease/GenerateLease';
-import { useAxiosErrorHandler } from '@/utils';
+import { exists, useAxiosErrorHandler } from '@/utils';
 
 export const useGenerateH1005a = (lease?: ApiGen_Concepts_Lease) => {
   const { generateDocumentDownloadWrappedRequest: generate } = useDocumentGenerationRepository();
@@ -59,8 +59,10 @@ export const useGenerateH1005a = (lease?: ApiGen_Concepts_Lease) => {
           termsPromise,
           propertyLeasesPromise,
         ]);
-      if (updatedLease === null || updatedLease === undefined)
+      if (!exists(updatedLease)) {
         throw new Error('Failed to load lease, reload this page to try again.');
+      }
+
       const leaseData = new Api_GenerateLease(
         updatedLease,
         insurances ?? [],

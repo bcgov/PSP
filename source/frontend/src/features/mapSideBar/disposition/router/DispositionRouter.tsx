@@ -6,7 +6,7 @@ import Claims from '@/constants/claims';
 import { InventoryTabNames } from '@/features/mapSideBar/property/InventoryTabs';
 import { FileTabType } from '@/features/mapSideBar/shared/detail/FileTabs';
 import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
-import { stripTrailingSlash } from '@/utils';
+import { exists, stripTrailingSlash } from '@/utils';
 import AppRoute from '@/utils/AppRoute';
 
 import { UpdateChecklistForm } from '../../shared/tabs/checklist/update/UpdateChecklistForm';
@@ -32,7 +32,7 @@ export interface IDispositionRouterProps {
 export const DispositionRouter: React.FC<IDispositionRouterProps> = props => {
   const { path, url } = useRouteMatch();
 
-  if (props.dispositionFile === undefined || props.dispositionFile === null) {
+  if (!exists(props.dispositionFile)) {
     return null;
   }
 

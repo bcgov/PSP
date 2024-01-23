@@ -4,6 +4,8 @@ import moment from 'moment';
 import { SelectOption } from '@/components/common/form';
 import { ApiGen_Concepts_FinancialCode } from '@/models/api/generated/ApiGen_Concepts_FinancialCode';
 
+import { exists } from './utils';
+
 export function toDropDownOptions(
   values: ApiGen_Concepts_FinancialCode[],
   includeExpired = false,
@@ -21,11 +23,11 @@ export function toDropDownOptions(
 export function isExpiredCode(value: ApiGen_Concepts_FinancialCode): boolean {
   const now = moment();
 
-  if (value.effectiveDate !== undefined && moment(value.effectiveDate).isAfter(now)) {
+  if (exists(value.effectiveDate) && moment(value.effectiveDate).isAfter(now)) {
     return true;
   }
 
-  if (value.expiryDate !== undefined && moment(value.expiryDate).isBefore(now, 'day')) {
+  if (exists(value.expiryDate) && moment(value.expiryDate).isBefore(now, 'day')) {
     return true;
   }
 

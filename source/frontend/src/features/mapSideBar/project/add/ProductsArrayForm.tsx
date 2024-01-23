@@ -9,6 +9,7 @@ import GenericModal from '@/components/common/GenericModal';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
 import { useProductProvider } from '@/hooks/repositories/useProductProvider';
+import { exists } from '@/utils/utils';
 
 import { ProductForm, ProjectForm } from '../models';
 import ProductSubForm from './ProductSubForm';
@@ -37,7 +38,7 @@ export const ProductsArrayForm: React.FunctionComponent<IProductsArrayFormProps>
     const productId = products[index].id;
     if (!!productId) {
       const files = await retrieveProductFiles(productId);
-      if (files !== undefined && files !== null && files.length > 0) {
+      if (exists(files) && files.length > 0) {
         setShowFileModal(true);
       } else {
         showDeleteWarning(index);

@@ -12,7 +12,6 @@ export * from './IPerson';
 export * from './IProperty';
 export * from './IRole';
 export * from './ITenant';
-export * from './ITypeCode';
 export * from './IUser';
 export * from './IUserInfo';
 export * from './IUsersFilter';
