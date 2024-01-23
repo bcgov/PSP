@@ -1,11 +1,11 @@
 /* ---------------------------------------------------------------------- */
-/* Script generated with: DeZign for Databases 14.0.1                     */
+/* Script generated with: DeZign for Databases 14.1.0                     */
 /* Target DBMS:           MS SQL Server 2017                              */
-/* Project file:          PIMS S70.00.dez                                 */
-/* Project name:          PIMS S70.00                                     */
+/* Project file:          PIMS S72.00.dez                                 */
+/* Project name:          PIMS S72.00                                     */
 /* Author:                Doug Filteau                                    */
 /* Script type:           Database drop script                            */
-/* Created on:            2023-12-15 10:41                                */
+/* Created on:            2024-01-15 13:15                                */
 /* ---------------------------------------------------------------------- */
 
 
@@ -2221,14 +2221,6 @@ ALTER TABLE [dbo].[PIMS_PROPERTY] DROP CONSTRAINT [PIM_PIDSRT_PIM_PRPRTY_FK]
 GO
 
 
-ALTER TABLE [dbo].[PIMS_PROPERTY] DROP CONSTRAINT [PIM_PERSON_PIM_PRPRTY_FK]
-GO
-
-
-ALTER TABLE [dbo].[PIMS_PROPERTY] DROP CONSTRAINT [PIM_ORG_PIM_PRPRTY_FK]
-GO
-
-
 ALTER TABLE [dbo].[PIMS_PROPERTY] DROP CONSTRAINT [PIM_PPHSTT_PIM_PRPRTY_FK]
 GO
 
@@ -4137,6 +4129,10 @@ ALTER TABLE [dbo].[PIMS_PROPERTY] DROP CONSTRAINT [PRPRTY_IS_OWNED_DEF]
 GO
 
 
+ALTER TABLE [dbo].[PIMS_PROPERTY] DROP CONSTRAINT [PRPRTY_IS_DISPOSED_DEF]
+GO
+
+
 ALTER TABLE [dbo].[PIMS_PROPERTY] DROP CONSTRAINT [PRPRTY_IS_PROPERTY_OF_INTEREST_DEF]
 GO
 
@@ -4182,6 +4178,10 @@ GO
 
 
 ALTER TABLE [dbo].[PIMS_PROPERTY] DROP CONSTRAINT [PRPRTY_PK]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_PROPERTY] DROP CONSTRAINT [PRPRTY_IS_OWNED_OR_DISPOSED_TCC]
 GO
 
 
@@ -4266,6 +4266,10 @@ GO
 
 
 EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_PROPERTY', 'COLUMN', N'IS_OWNED'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_PROPERTY', 'COLUMN', N'IS_DISPOSED'
 GO
 
 
@@ -16288,32 +16292,6 @@ GO
 
 
 DROP TABLE [dbo].[PIMS_DISPOSITION_FILE_STATUS_TYPE]
-GO
-
-
-/* ---------------------------------------------------------------------- */
-/* Drop table "dbo.PIMS_PROPERTY_ACTIVITY_INVOICE_HIST"                   */
-/* ---------------------------------------------------------------------- */
-
-/* Drop constraints */
-
-ALTER TABLE [dbo].[PIMS_PROPERTY_ACTIVITY_INVOICE_HIST] DROP CONSTRAINT [DF__PIMS_PROP___PROP__6D381B7D]
-GO
-
-
-ALTER TABLE [dbo].[PIMS_PROPERTY_ACTIVITY_INVOICE_HIST] DROP CONSTRAINT [DF__PIMS_PROP__EFFEC__6E2C3FB6]
-GO
-
-
-ALTER TABLE [dbo].[PIMS_PROPERTY_ACTIVITY_INVOICE_HIST] DROP CONSTRAINT [PIMS_PRACIN_H_PK]
-GO
-
-
-ALTER TABLE [dbo].[PIMS_PROPERTY_ACTIVITY_INVOICE_HIST] DROP CONSTRAINT [PIMS_PRACIN_H_UK]
-GO
-
-
-DROP TABLE [dbo].[PIMS_PROPERTY_ACTIVITY_INVOICE_HIST]
 GO
 
 
