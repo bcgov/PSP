@@ -12997,6 +12997,8 @@ CREATE TABLE [dbo].[PIMS_PROPERTY_HIST]  (
 	[EFFECTIVE_DATE_HIST]                	datetime NOT NULL DEFAULT (getutcdate()),
 	[END_DATE_HIST]                      	datetime NULL,
 	[PROPERTY_ID]                        	bigint NOT NULL,
+	[PROPERTY_MANAGER_ID]                	bigint NULL,
+	[PROP_MGMT_ORG_ID]                   	bigint NULL,
 	[PROPERTY_TYPE_CODE]                 	nvarchar(20) NOT NULL,
 	[ADDRESS_ID]                         	bigint NULL,
 	[REGION_CODE]                        	smallint NOT NULL,
