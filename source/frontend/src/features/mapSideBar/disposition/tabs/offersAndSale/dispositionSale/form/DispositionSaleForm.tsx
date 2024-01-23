@@ -13,7 +13,7 @@ import { useModalContext } from '@/hooks/useModalContext';
 import { SystemConstants, useSystemConstants } from '@/store/slices/systemConstants';
 import { getCurrencyCleanValue, stringToBoolean } from '@/utils/formUtils';
 
-import { useCalculateNetProceeds } from '../hooks/useCalculateNetProceedsBeforeSPP';
+import { useCalculateNetProceeds } from '../hooks/useCalculateNetProceeds';
 import DispositionSalePurchaserSubForm from './DispositionSalePurchasersSubForm';
 
 export interface IDispositionSaleFormProps {

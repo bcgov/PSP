@@ -174,6 +174,47 @@ describe('DispositionSaleForm  component', () => {
     expect(getGSTCollectedAmountTextbox()).toHaveValue('$50,000.00');
   });
 
+  it('Calculates the GST and displays warning when the GST is required is set to "NO"', async () => {
+    const {
+      container,
+      getFinalSaleAmountTextbox,
+      getGSTCollectedAmountTextbox,
+      getByTitle,
+      findByText,
+    } = await setup({
+      props: { dispostionSaleId: null },
+    });
+
+    expect(getFinalSaleAmountTextbox()).toBeVisible();
+    expect(getFinalSaleAmountTextbox()).toHaveValue('');
+    expect(getGSTCollectedAmountTextbox()).toBeNull();
+
+    await act(async () => {
+      fireEvent.change(getFinalSaleAmountTextbox(), { target: { value: '$1,000,000.00' } });
+    });
+    waitForEffects();
+
+    act(() => {
+      fillInput(container, 'isGstRequired', 'true', 'select');
+    });
+    waitForEffects();
+
+    expect(getGSTCollectedAmountTextbox()).toBeVisible();
+    expect(getGSTCollectedAmountTextbox()).toHaveValue('$50,000.00');
+
+    act(() => {
+      fillInput(container, 'isGstRequired', 'false', 'select');
+    });
+    waitForEffects();
+
+    expect(
+      await findByText(/The GST, if provided, will be cleared. Do you wish to proceed/i),
+    ).toBeVisible();
+
+    await act(async () => userEvent.click(getByTitle('ok-modal')));
+    expect(getGSTCollectedAmountTextbox()).toBeNull();
+  });
+
   it('Calculates the Net Proceeds without GST', async () => {
     const {
       getFinalSaleAmountTextbox,

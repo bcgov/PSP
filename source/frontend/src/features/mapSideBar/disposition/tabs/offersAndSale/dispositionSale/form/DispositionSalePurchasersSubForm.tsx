@@ -31,7 +31,7 @@ const DispositionSalePurchaserSubForm: React.FunctionComponent<
         <>
           {values.dispositionPurchasers.map(
             (purchaser: DispositionSaleContactModel, index: number) => (
-              <React.Fragment key={`purchaser-${index}`}>
+              <React.Fragment>
                 <Row className="py-2" data-testid={`purchaserRow[${index}]`} noGutters>
                   <Col xs="auto" xl="10">
                     <ContactInputContainer
@@ -71,7 +71,7 @@ const DispositionSalePurchaserSubForm: React.FunctionComponent<
                 {purchaser.contact?.organizationId && !purchaser.contact?.personId && (
                   <Row noGutters>
                     <Col xs="auto" xl="12">
-                      <SectionField label="Primary contact" labelWidth="4" contentWidth="6">
+                      <SectionField label="Primary contact" labelWidth="5" contentWidth="6">
                         <PrimaryContactSelector
                           field={`dispositionPurchasers.${index}.primaryContactId`}
                           contactInfo={purchaser?.contact}

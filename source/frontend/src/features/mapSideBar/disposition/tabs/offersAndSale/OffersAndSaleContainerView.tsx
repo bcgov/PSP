@@ -130,7 +130,7 @@ const OffersAndSaleContainerView: React.FunctionComponent<IOffersAndSaleContaine
       >
         {dispositionOffers.map((offer, index) => (
           <DispositionOfferDetails
-            key={index}
+            key={offer.id}
             dispositionOffer={offer}
             index={index}
             onDelete={onDispositionOfferDeleted}

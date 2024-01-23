@@ -92,7 +92,7 @@ namespace Pims.Api.Models.Concepts.DispositionFile
         public DispositionSalePurchaserAgentModel DispositionPurchaserAgent { get; set; }
 
         /// <summary>
-        /// get/set - Disposition Sale Purchaser(s)'s Solicitor.
+        /// get/set - Disposition Sale Purchase Solicitor.
         /// </summary>
         public DispositionSalePurchaserSolicitorModel DispositionPurchaserSolicitor { get; set; }
     }

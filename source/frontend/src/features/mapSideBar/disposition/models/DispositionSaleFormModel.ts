@@ -1,5 +1,5 @@
 import { Api_DispositionFileSale, Api_DispositionSaleContact } from '@/models/api/DispositionFile';
-import { emptyStringtoNullable } from '@/utils/formUtils';
+import { emptyStringtoNullable, stringToBoolean } from '@/utils/formUtils';
 
 import { DispositionSaleContactModel, WithSalePurchasers } from './DispositionSaleContactModel';
 
@@ -79,7 +79,7 @@ export class DispositionSaleFormModel implements WithSalePurchasers {
       realtorCommissionAmount: this.realtorCommissionAmount
         ? parseFloat(this.realtorCommissionAmount.toString())
         : null,
-      isGstRequired: this.isGstRequired,
+      isGstRequired: stringToBoolean(this.isGstRequired),
       gstCollectedAmount: this.gstCollectedAmount
         ? parseFloat(this.gstCollectedAmount.toString())
         : null,

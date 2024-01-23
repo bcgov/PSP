@@ -410,6 +410,7 @@ export const mockDispositionFileSaleApi = (
     primaryContact: null,
     rowVersion: 1,
   },
+  rowVersion: 1,
 });
 
 export const mockDispositionAppraisalApi = (
