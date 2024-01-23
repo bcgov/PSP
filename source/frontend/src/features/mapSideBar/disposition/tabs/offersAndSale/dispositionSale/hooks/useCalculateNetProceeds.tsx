@@ -35,12 +35,12 @@ export const useCalculateNetProceeds = (isGstEligible: boolean) => {
         sppTouched) &&
       !isSubmitting
     ) {
-      if (gstDecimal && isGstEligible) {
+      if (isGstEligible) {
         let calculatedGst;
         if (gstTouched) {
           calculatedGst = gstAmount;
         } else {
-          calculatedGst = finalSaleAmount * gstDecimal;
+          calculatedGst = gstDecimal ? finalSaleAmount * gstDecimal : 0;
         }
 
         const saleCosts = calculatedGst + realtorCommissionAmount + totalCostOfSale + netBookAmount;
