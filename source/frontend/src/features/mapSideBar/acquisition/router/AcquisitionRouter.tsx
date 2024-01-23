@@ -6,7 +6,7 @@ import Claims from '@/constants/claims';
 import { InventoryTabNames } from '@/features/mapSideBar/property/InventoryTabs';
 import { FileTabType } from '@/features/mapSideBar/shared/detail/FileTabs';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
-import { stripTrailingSlash } from '@/utils';
+import { exists, stripTrailingSlash } from '@/utils';
 import AppRoute from '@/utils/AppRoute';
 
 import { UpdateChecklistForm } from '../../shared/tabs/checklist/update/UpdateChecklistForm';
@@ -35,7 +35,7 @@ export interface IAcquisitionRouterProps {
 export const AcquisitionRouter: React.FC<IAcquisitionRouterProps> = props => {
   const { path, url } = useRouteMatch();
 
-  if (props.acquisitionFile === undefined || props.acquisitionFile === null) {
+  if (!exists(props.acquisitionFile)) {
     return null;
   }
 

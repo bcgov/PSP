@@ -6,7 +6,9 @@ import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { AccessRequestStatus } from '@/constants/accessStatus';
 import { useAccessRequests } from '@/hooks/pims-api/useAccessRequests';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
-import { Api_AccessRequest } from '@/models/api/AccessRequest';
+import { ApiGen_Concepts_AccessRequest } from '@/models/api/generated/ApiGen_Concepts_AccessRequest';
+import { getEmptyBaseAudit } from '@/models/default_initializers';
+import { toTypeCodeNullable } from '@/utils/formUtils';
 
 import { AccessRequestForm as AccessRequestFormComponent } from './AccessRequestForm';
 import { FormAccessRequest } from './models';
@@ -51,12 +53,15 @@ export const AccessRequestContainer: React.FunctionComponent<
 
   const initialValues: FormAccessRequest = new FormAccessRequest({
     ...response,
-    id: response?.id,
+    id: response?.id ?? 0,
     userId: userInfo?.id,
-    accessRequestStatusTypeCode: { id: AccessRequestStatus.Received },
+    accessRequestStatusTypeCode: toTypeCodeNullable(AccessRequestStatus.Received),
     note: response?.note ?? '',
-    roleId: response?.roleId,
-    regionCode: { id: response?.regionCode?.id },
+    roleId: response?.roleId ?? null,
+    regionCode: toTypeCodeNullable(response?.regionCode?.id),
+    role: null,
+    user: null,
+    ...getEmptyBaseAudit(),
   });
   initialValues.email = keycloak.email ?? '';
 
@@ -76,7 +81,7 @@ export const AccessRequestContainer: React.FunctionComponent<
       )}
       <AccessRequestFormComponent
         initialValues={initialValues}
-        addAccessRequest={async (accessRequest: Api_AccessRequest) => {
+        addAccessRequest={async (accessRequest: ApiGen_Concepts_AccessRequest) => {
           const response = await addAccessRequest(accessRequest);
           onSave && onSave();
           return response;

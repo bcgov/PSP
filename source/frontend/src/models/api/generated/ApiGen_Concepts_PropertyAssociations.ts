@@ -6,7 +6,7 @@ import { ApiGen_Concepts_Association } from './ApiGen_Concepts_Association';
 
 // LINK: @backend/apimodels/Models/Concepts/Property/PropertyAssociationsModel.cs
 export interface ApiGen_Concepts_PropertyAssociations {
-  id: string | null;
+  id: number;
   pid: string | null;
   leaseAssociations: ApiGen_Concepts_Association[] | null;
   researchAssociations: ApiGen_Concepts_Association[] | null;

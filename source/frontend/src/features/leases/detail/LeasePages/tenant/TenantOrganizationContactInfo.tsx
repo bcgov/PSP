@@ -28,7 +28,7 @@ export const TenantOrganizationContactInfo: React.FunctionComponent<
   let primaryContact = tenant?.initialPrimaryContact;
   if (primaryContact?.id !== tenant?.primaryContactId) {
     primaryContact = tenant?.primaryContactId
-      ? getPrimaryContact(tenant?.primaryContactId, tenant)
+      ? getPrimaryContact(tenant?.primaryContactId, tenant) ?? undefined
       : undefined;
   }
   const primaryContactName = formatApiPersonNames(primaryContact);

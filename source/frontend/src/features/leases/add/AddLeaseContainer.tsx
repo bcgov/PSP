@@ -58,7 +58,7 @@ export const AddLeaseContainer: React.FunctionComponent<
     formikHelpers.setSubmitting(false);
 
     if (!!response?.id) {
-      if (leaseApi.properties?.find(p => !p.property?.address && !p.property?.id)) {
+      if (leaseApi.fileProperties?.find(p => !p.property?.address && !p.property?.id)) {
         toast.warn(
           'Address could not be retrieved for this property, it will have to be provided manually in property details tab',
           { autoClose: 15000 },
