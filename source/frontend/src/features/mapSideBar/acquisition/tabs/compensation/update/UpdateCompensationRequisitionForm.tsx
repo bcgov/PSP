@@ -26,6 +26,7 @@ import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
 import { IAutocompletePrediction } from '@/interfaces/IAutocomplete';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
+import { isValidId } from '@/utils';
 import { prettyFormatDate } from '@/utils/dateUtils';
 import { withNameSpace } from '@/utils/formUtils';
 
@@ -125,7 +126,7 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
 
   const onMinistryProjectSelected = async (param: IAutocompletePrediction[]) => {
     if (param.length > 0) {
-      if (param[0].id !== undefined && acquisitionFile.projectId === param[0].id) {
+      if (isValidId(param[0].id) && acquisitionFile.projectId === param[0].id) {
         setShowAltProjectError(true);
       }
     }

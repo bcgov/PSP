@@ -8,6 +8,7 @@ import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts
 import { ApiGen_Concepts_PropertyAssociations } from '@/models/api/generated/ApiGen_Concepts_PropertyAssociations';
 import { IBcAssessmentSummary } from '@/models/layers/bcAssesment';
 import { useTenant } from '@/tenants/useTenant';
+import { isValidId } from '@/utils';
 
 import { useGeoServer } from '../layer-api/useGeoServer';
 import { IWfsGetAllFeaturesOptions } from '../layer-api/useWfsLayer';
@@ -103,7 +104,7 @@ export const useComposedProperties = ({
   const executeGetPropertyAssociations = getPropertyAssociationsWrapper.execute;
 
   useEffect(() => {
-    if (id !== undefined && !isNaN(id)) {
+    if (isValidId(id)) {
       typeCheckWrapper(() => executeGetApiProperty(id), PROPERTY_TYPES.PIMS_API);
       typeCheckWrapper(() => executeGetPropertyWfs(id), PROPERTY_TYPES.PIMS_GEOSERVER);
       typeCheckWrapper(() => executeGetPropertyAssociations(id), PROPERTY_TYPES.ASSOCIATIONS);

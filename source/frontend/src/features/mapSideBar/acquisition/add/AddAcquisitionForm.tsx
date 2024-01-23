@@ -26,6 +26,7 @@ import { IAutocompletePrediction } from '@/interfaces/IAutocomplete';
 import { ApiGen_Concepts_OrganizationPerson } from '@/models/api/generated/ApiGen_Concepts_OrganizationPerson';
 import { ApiGen_Concepts_Product } from '@/models/api/generated/ApiGen_Concepts_Product';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
+import { isValidId } from '@/utils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
 import { AcquisitionFormModal } from '../common/modals/AcquisitionFormModal';
@@ -129,7 +130,7 @@ const AddAcquisitionDetailSubForm: React.FC<{
 
   const onMinistryProjectSelected = async (param: IAutocompletePrediction[]) => {
     if (param.length > 0) {
-      if (param[0].id !== undefined) {
+      if (isValidId(param[0].id)) {
         const result = await retrieveProjectProducts(param[0].id);
         if (result !== undefined) {
           setProjectProducts(result);

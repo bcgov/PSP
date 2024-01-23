@@ -14,6 +14,7 @@ import { useOrganizationRepository } from '@/features/contacts/repositories/useO
 import { IContactSearchResult } from '@/interfaces';
 import { ApiGen_Concepts_OrganizationPerson } from '@/models/api/generated/ApiGen_Concepts_OrganizationPerson';
 import { ApiGen_Concepts_PropertyContact } from '@/models/api/generated/ApiGen_Concepts_PropertyContact';
+import { isValidId } from '@/utils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
 import { PropertyContactFormModel } from './models';
@@ -85,7 +86,7 @@ export const PropertyContactEditForm = React.forwardRef<
             {formikProps => (
               <Section header="Contact Details">
                 <SectionField label="Contact" contentWidth="7" required>
-                  {formikProps.values.id === 0 && (
+                  {!isValidId(formikProps.values.id) && (
                     <ContactInputContainer
                       field="contact"
                       View={ContactInputView}
@@ -94,7 +95,7 @@ export const PropertyContactEditForm = React.forwardRef<
                       }}
                     />
                   )}
-                  {formikProps.values.id !== 0 && (
+                  {isValidId(formikProps.values.id) && (
                     <Input
                       field="contact"
                       value={
@@ -106,7 +107,7 @@ export const PropertyContactEditForm = React.forwardRef<
                     />
                   )}
                 </SectionField>
-                {formikProps.values.contact?.personId === undefined && (
+                {!isValidId(formikProps.values.contact?.personId) && (
                   <SectionField label="Primary contact">
                     {primaryContactOptions.length > 1 ? (
                       <Select

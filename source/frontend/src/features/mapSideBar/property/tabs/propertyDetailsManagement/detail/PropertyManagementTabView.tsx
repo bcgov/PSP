@@ -3,6 +3,7 @@ import React from 'react';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { StyledSummarySection } from '@/components/common/Section/SectionStyles';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
+import { isValidId } from '@/utils';
 
 import PropertyManagementActivitiesListContainer from '../activity/list/ManagementActivitiesListContainer';
 import ManagementActivitiesListView from '../activity/list/ManagementActivitiesListView';
@@ -24,7 +25,7 @@ export const PropertyManagementTabView: React.FunctionComponent<IPropertyManagem
   property,
   loading,
 }) => {
-  if (property.id !== undefined) {
+  if (isValidId(property.id)) {
     return (
       <StyledSummarySection>
         <LoadingBackdrop show={loading} parentScreen={true} />

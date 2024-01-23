@@ -5,6 +5,7 @@ import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvi
 import { useForm8Repository } from '@/hooks/repositories/useForm8Repository';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { ApiGen_Concepts_ExpropriationPayment } from '@/models/api/generated/ApiGen_Concepts_ExpropriationPayment';
+import { isValidId } from '@/utils/utils';
 
 import { IExpropriationTabContainerViewProps } from './ExpropriationTabContainerView';
 
@@ -49,11 +50,11 @@ export const ExpropriationTabContainer: React.FunctionComponent<
     }
   };
 
-  if (!!acquisitionFile && acquisitionFile?.id === undefined && fileLoading === false) {
+  if (!isValidId(acquisitionFile?.id) && fileLoading === false) {
     throw new Error('Unable to determine id of current file.');
   }
 
-  return !!acquisitionFile?.id ? (
+  return isValidId(acquisitionFile?.id) ? (
     <View
       loading={fileLoading || loadingForm8s || deletingForm8}
       acquisitionFile={acquisitionFile}

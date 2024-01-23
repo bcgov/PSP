@@ -5,6 +5,7 @@ import React from 'react';
 import { usePropertyContactRepository } from '@/hooks/repositories/usePropertyContactRepository';
 import { ApiGen_Concepts_PropertyContact } from '@/models/api/generated/ApiGen_Concepts_PropertyContact';
 import { getEmptyBaseAudit } from '@/models/default_initializers';
+import { isValidId } from '@/utils';
 
 import { IPropertyContactEditFormProps } from './PropertyContactEditForm';
 
@@ -42,7 +43,7 @@ export const PropertyContactEditContainer = React.forwardRef<
   } = usePropertyContactRepository();
 
   const fetchPropertyContacts = useCallback(async () => {
-    if (props.contactId !== 0) {
+    if (isValidId(props.contactId)) {
       const propertyContactResponse = await getContact(props.propertyId, props.contactId);
       if (propertyContactResponse) {
         setPropertyContact(propertyContactResponse);
@@ -56,7 +57,7 @@ export const PropertyContactEditContainer = React.forwardRef<
 
   const onSave = async (model: ApiGen_Concepts_PropertyContact) => {
     let result = undefined;
-    if (model.id !== 0) {
+    if (isValidId(model.id)) {
       result = await updateContact(props.propertyId, model.id, model);
     } else {
       result = await createContact(props.propertyId, model);

@@ -4,6 +4,7 @@ import React from 'react';
 import { IPaginateAccessRequests } from '@/constants/API';
 import { IPagedItems } from '@/interfaces';
 import { ApiGen_Concepts_AccessRequest } from '@/models/api/generated/ApiGen_Concepts_AccessRequest';
+import { isValidId } from '@/utils';
 
 import useAxiosApi from './useApi';
 
@@ -26,8 +27,8 @@ export const useApiAccessRequests = () => {
         ),
       postAccessRequest: (accessRequest: ApiGen_Concepts_AccessRequest) => {
         return api.request<ApiGen_Concepts_AccessRequest>({
-          url: `/access/requests${accessRequest.id === undefined ? '' : `/${accessRequest.id}`}`,
-          method: accessRequest.id === undefined ? 'post' : 'put',
+          url: `/access/requests${!isValidId(accessRequest.id) ? '' : `/${accessRequest.id}`}`,
+          method: !isValidId(accessRequest.id) ? 'post' : 'put',
           data: accessRequest,
         });
       },
