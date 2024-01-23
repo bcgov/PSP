@@ -893,7 +893,7 @@ exports[`DispositionSaleForm  component renders as expected 1`] = `
                 name="netProceedsBeforeSppAmount"
                 placeholder=""
                 type="text"
-                value=""
+                value="$0.00"
               />
             </div>
           </div>
@@ -1010,7 +1010,7 @@ exports[`DispositionSaleForm  component renders as expected 1`] = `
                 name="netProceedsAfterSppAmount"
                 placeholder=""
                 type="text"
-                value=""
+                value="$0.00"
               />
             </div>
           </div>

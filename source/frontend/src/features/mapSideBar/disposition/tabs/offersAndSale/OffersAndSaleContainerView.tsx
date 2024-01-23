@@ -241,14 +241,17 @@ const OffersAndSaleContainerView: React.FunctionComponent<IOffersAndSaleContaine
             >
               {dispositionSale?.isGstRequired ? 'Yes' : 'No'}
             </SectionField>
-            <SectionField
-              label="GST collected ($)"
-              labelWidth="6"
-              tooltip="GST collected is calculated based upon Final Sales Price."
-              valueTestId="disposition-sale.gstCollectedAmount"
-            >
-              {formatMoney(dispositionSale.gstCollectedAmount)}
-            </SectionField>
+            {dispositionSale?.isGstRequired && (
+              <SectionField
+                label="GST collected ($)"
+                labelWidth="6"
+                tooltip="GST collected is calculated based upon Final Sales Price."
+                valueTestId="disposition-sale.gstCollectedAmount"
+              >
+                {formatMoney(dispositionSale.gstCollectedAmount)}
+              </SectionField>
+            )}
+
             <SectionField
               label="Net Book Value ($)"
               labelWidth="6"

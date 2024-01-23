@@ -11,12 +11,7 @@ export const useCalculateNetProceeds = (isGstEligible: boolean) => {
   const gstConstant = getSystemConstant(SystemConstants.GST);
   const gstDecimal = gstConstant !== undefined ? parseFloat(gstConstant.value) / 100 : undefined;
 
-  const finalSaleAmountTouched = getIn(touched, 'finalSaleAmount');
-  const realtorCommissionTouched = getIn(touched, 'realtorCommissionAmount');
-  const totalCostOfSaleTouched = getIn(touched, 'totalCostOfSale');
-  const netBookAmountTouched = getIn(touched, 'netBookAmount');
   const gstTouched = getIn(touched, 'gstCollectedAmount');
-  const sppTouched = getIn(touched, 'sppAmount');
 
   const finalSaleAmount = getIn(values, 'finalSaleAmount');
   const gstAmount = getIn(values, 'gstCollectedAmount');
@@ -26,15 +21,7 @@ export const useCalculateNetProceeds = (isGstEligible: boolean) => {
   const sppAmount = getIn(values, 'sppAmount');
 
   useEffect(() => {
-    if (
-      (finalSaleAmountTouched ||
-        realtorCommissionTouched ||
-        totalCostOfSaleTouched ||
-        netBookAmountTouched ||
-        gstTouched ||
-        sppTouched) &&
-      !isSubmitting
-    ) {
+    if (!isSubmitting) {
       if (isGstEligible) {
         let calculatedGst;
         if (gstTouched) {
@@ -63,16 +50,11 @@ export const useCalculateNetProceeds = (isGstEligible: boolean) => {
     setFieldValue,
     isGstEligible,
     isSubmitting,
-    finalSaleAmountTouched,
     finalSaleAmount,
-    realtorCommissionTouched,
     realtorCommissionAmount,
     totalCostOfSale,
-    totalCostOfSaleTouched,
     netBookAmount,
-    netBookAmountTouched,
     gstTouched,
-    sppTouched,
     sppAmount,
     gstAmount,
   ]);

@@ -932,7 +932,7 @@ exports[`Update Disposition Sale View renders as expected 1`] = `
                     name="netProceedsBeforeSppAmount"
                     placeholder=""
                     type="text"
-                    value=""
+                    value="$0.00"
                   />
                 </div>
               </div>
@@ -1049,7 +1049,7 @@ exports[`Update Disposition Sale View renders as expected 1`] = `
                     name="netProceedsAfterSppAmount"
                     placeholder=""
                     type="text"
-                    value=""
+                    value="$0.00"
                   />
                 </div>
               </div>
@@ -1119,8 +1119,7 @@ exports[`Update Disposition Sale View renders as expected 1`] = `
           class="col-auto"
         >
           <button
-            class="c5 Button Button--disabled btn btn-primary"
-            disabled=""
+            class="c5 Button btn btn-primary"
             type="button"
           >
             <div
