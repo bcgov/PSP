@@ -1,5 +1,6 @@
 import { createMemoryHistory } from 'history';
 
+import { AcquisitionStatus } from '@/constants/acquisitionFileStatus';
 import { Claims } from '@/constants/claims';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { getMockApiPropertyFiles } from '@/mocks/properties.mock';
@@ -62,6 +63,24 @@ describe('TakesDetailView component', () => {
     const editButton = getByTitle('Edit takes');
     act(() => userEvent.click(editButton));
     expect(onEdit).toHaveBeenCalled();
+  });
+
+  it('hides the edit button when the file has been completed', () => {
+    const fileProperty = getMockApiPropertyFiles()[0];
+    const { queryByTitle, getByTestId } = setup({
+      props: {
+        loading: true,
+        fileProperty: {
+          ...fileProperty,
+          file: { ...fileProperty.file, fileStatusTypeCode: { id: AcquisitionStatus.Complete } },
+        },
+      },
+      claims: [Claims.PROPERTY_EDIT],
+    });
+    const editButton = queryByTitle('Edit takes');
+    expect(editButton).toBeNull();
+    const tooltip = getByTestId('tooltip-icon-1-summary-cannot-edit-tooltip');
+    expect(tooltip).toBeVisible();
   });
 
   it('displays the number of takes in other files', () => {

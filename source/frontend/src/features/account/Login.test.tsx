@@ -1,7 +1,6 @@
 import { useKeycloak } from '@react-keycloak/web';
 import { cleanup, fireEvent, render } from '@testing-library/react';
 import { createMemoryHistory, MemoryHistory } from 'history';
-import React from 'react';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
 import renderer from 'react-test-renderer';
@@ -9,6 +8,7 @@ import configureMockStore, { MockStoreEnhanced } from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { ThemeProvider } from 'styled-components';
 
+import { Roles } from '@/constants';
 import { ADD_ACTIVATE_USER } from '@/constants/actionTypes';
 import { mockLookups } from '@/mocks/index.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
@@ -77,17 +77,17 @@ describe('login', () => {
   it('authenticated users are redirected to the mapview', () => {
     process.env.REACT_APP_TENANT = 'MOTI';
     (useKeycloak as jest.Mock).mockReturnValue({
-      keycloak: { authenticated: true, userInfo: { client_roles: ['System Administrator'] } },
+      keycloak: { authenticated: true, userInfo: { client_roles: [Roles.SYSTEM_ADMINISTRATOR] } },
     });
     const history = createMemoryHistory();
     render(<TestLogin history={history} />);
     expect(history.location.pathname).toBe('/mapview');
   });
 
-  it('authenticated finance users are redirected to the lease list', () => {
+  it('authenticated lease functional users are redirected to the lease list', () => {
     process.env.REACT_APP_TENANT = 'MOTI';
     (useKeycloak as jest.Mock).mockReturnValue({
-      keycloak: { authenticated: true, userInfo: { client_roles: ['Finance'] } },
+      keycloak: { authenticated: true, userInfo: { client_roles: [Roles.LEASE_FUNCTIONAL] } },
     });
     const history = createMemoryHistory();
     render(<TestLogin history={history} />);
@@ -97,7 +97,7 @@ describe('login', () => {
   it('new users are sent to the guest page', () => {
     process.env.REACT_APP_TENANT = 'MOTI';
     (useKeycloak as jest.Mock).mockReturnValue({
-      keycloak: { authenticated: true, realmAccess: { client_roles: [{}] } },
+      keycloak: { authenticated: true, realmAccess: { client_roles: [] } },
     });
     const history = createMemoryHistory();
     const activatedAction: IGenericNetworkAction = {

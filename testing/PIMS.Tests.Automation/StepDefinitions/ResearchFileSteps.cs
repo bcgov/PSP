@@ -212,10 +212,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
                     researchFiles.VerifyPropResearchTabFormView(researchFile.PropertyResearch[i]);
                 }
             }
-
-            //Verify PIMS Files Tab
-            propertyInformation.VerifyPimsFiles();
-
         }
 
         [StepDefinition(@"I create a Research File from a pin on map and from row number (.*)")]

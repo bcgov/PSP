@@ -624,8 +624,8 @@ namespace PIMS.Tests.Automation.PageObjects
                 if (webDriver.FindElements(licenseDetailsConfirmationModal).Count() > 0)
                 {
                     Assert.True(sharedModals.ModalHeader().Equals("Confirm changes"));
-                    Assert.True(sharedModals.ConfirmationModalText1().Equals("If you cancel now, this Lease/License will not be saved."));
-                    Assert.True(sharedModals.ConfirmationModalText2().Equals("Are you sure you want to Cancel?"));
+                    Assert.True(sharedModals.ConfirmationModalText1().Equals("If you choose to cancel now, your changes will not be saved."));
+                    Assert.True(sharedModals.ConfirmationModalText2().Equals("Do you want to proceed?"));
 
                     sharedModals.ModalClickOKBttn();
                 }

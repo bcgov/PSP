@@ -1,0 +1,51 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+spec:
+  params:
+    - name: KEYCLOAK_SECRET_NAME
+      type: string
+    - name: TOKEN_URL
+      type: string
+    - name: MAYAN_SYNC_URL
+      type: string
+    - name: CLIENT_ID
+      type: string
+# This action is a generic mayan sync action that can be used to call any mayan sync endpoint with a valid token.
+# Block 1: get a valid token from keycloak for the backend requests.
+# Block 2: parse the token from the response of #1.
+# Block 3: call the mayan sync endpoint with the token from #2. Note this uses static data from the listed configmap.
+  steps:
+    - args:
+        - >-
+          RESPONSE=`curl --location "$(params.TOKEN_URL)" 
+          --header 'Content-Type: application/x-www-form-urlencoded' 
+          --data-urlencode "client_id=$(params.CLIENT_ID)" 
+          --data-urlencode 'grant_type=client_credentials' 
+          --data-urlencode "audience=$(params.CLIENT_ID)" 
+          --data-urlencode "client_secret=$CLIENT_SECRET"` 
+          
+          && TOKEN=`echo "$RESPONSE" | 
+          egrep -o "[^\"]*" | sed -n 4p` && echo "$DATA" 
+          
+          && curl --location --request
+          PATCH "$(params.MAYAN_SYNC_URL)" 
+          --header 'Content-Type: application/json' 
+          --header "Authorization: Bearer $TOKEN" 
+          --data "$DATA"
+      command:
+        - sh
+        - '-c'
+      env:
+        - name: CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              key: KEYCLOAK_SECRET
+              name: $(params.KEYCLOAK_SECRET_NAME)
+        - name: DATA
+          valueFrom:
+            configMapKeyRef:
+              key: data
+              name: mayan-sync-config
+      image: curlimages/curl
+      name: sync-mayan
+      resources: {}

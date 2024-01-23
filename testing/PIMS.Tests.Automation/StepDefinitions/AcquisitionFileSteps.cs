@@ -12,7 +12,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
     {
         private readonly GenericSteps genericSteps;
         private readonly LoginSteps loginSteps;
-        private readonly AcquisitionFilesDetails acquisitionFilesDetails;
+        private readonly AcquisitionDetails acquisitionFilesDetails;
         private readonly SearchAcquisitionFiles searchAcquisitionFiles;
         private readonly SharedSearchProperties sharedSearchProperties;
         private readonly SharedPagination sharedPagination;
@@ -38,7 +38,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             loginSteps = new LoginSteps(driver);
             genericSteps = new GenericSteps(driver);
 
-            acquisitionFilesDetails = new AcquisitionFilesDetails(driver.Current);
+            acquisitionFilesDetails = new AcquisitionDetails(driver.Current);
             searchAcquisitionFiles = new SearchAcquisitionFiles(driver.Current);
             sharedSearchProperties = new SharedSearchProperties(driver.Current);
             sharedPagination = new SharedPagination(driver.Current);
@@ -1143,8 +1143,10 @@ namespace PIMS.Tests.Automation.StepDefinitions
             for (int i = startRow; i < startRow + rowsCount; i++)
             {
                 AcquisitionTeamMember teamMember = new AcquisitionTeamMember();
-                teamMember.TeamRole = ExcelDataContext.ReadData(i, "TeamRole");
-                teamMember.ContactName = ExcelDataContext.ReadData(i, "ContactName");
+                teamMember.TeamMemberRole = ExcelDataContext.ReadData(i, "TeamMemberRole");
+                teamMember.TeamMemberContactName = ExcelDataContext.ReadData(i, "TeamMemberContactName");
+                teamMember.TeamMemberContactType = ExcelDataContext.ReadData(i, "TeamMemberContactType");
+                teamMember.TeamMemberPrimaryContact = ExcelDataContext.ReadData(i, "TeamMemberPrimaryContact");
 
                 acquisitionFile.AcquisitionTeam.Add(teamMember);
             }

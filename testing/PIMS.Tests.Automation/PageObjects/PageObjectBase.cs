@@ -92,6 +92,7 @@ namespace PIMS.Tests.Automation.PageObjects
             var js = (IJavaScriptExecutor)webDriver;
 
             wait.Until(ExpectedConditions.ElementExists(button));
+            wait.Until(ExpectedConditions.ElementToBeClickable(button));
             webDriver.FindElement(button).Click();
         }
 
