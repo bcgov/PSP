@@ -8,6 +8,7 @@ import {
 import { getEmptyPerson } from '@/mocks/contacts.mock';
 import { getEmptyOrganization } from '@/mocks/organization.mock';
 import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_Person';
+import { toTypeCodeNullable } from '@/utils/formUtils';
 import { act, cleanup, render, RenderOptions, userEvent, waitForEffects } from '@/utils/test-utils';
 
 import AcquisitionSummaryView, { IAcquisitionSummaryViewProps } from './AcquisitionSummaryView';
@@ -102,7 +103,7 @@ describe('AcquisitionSummaryView component', () => {
       {
         acquisitionFile: {
           ...mockAcquisitionFileResponse(),
-          fileStatusTypeCode: { id: 'COMPLETE' },
+          fileStatusTypeCode: toTypeCodeNullable('COMPLETE'),
         },
       },
       { claims: [Claims.ACQUISITION_EDIT] },

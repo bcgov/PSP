@@ -1,6 +1,6 @@
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { ApiGen_Concepts_LeaseTenant } from '@/models/api/generated/ApiGen_Concepts_LeaseTenant';
-import { EpochISODateTimeString } from '@/models/api/UtcIsoDateTime';
+import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { getEmptyBaseAudit } from '@/models/default_initializers';
 const emptyLease: ApiGen_Concepts_Lease = {
   id: 0,
@@ -18,7 +18,7 @@ const emptyLease: ApiGen_Concepts_Lease = {
   otherPurposeType: null,
   otherType: null,
   expiryDate: null,
-  startDate: EpochISODateTimeString,
+  startDate: EpochIsoDateTime,
   renewalCount: 0,
   paymentReceivableType: null,
   type: null,

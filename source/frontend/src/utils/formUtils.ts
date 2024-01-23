@@ -3,7 +3,7 @@ import { ApiGen_Base_CodeType } from '@/models/api/generated/ApiGen_Base_CodeTyp
 import { ApiGen_Concepts_CodeType } from '@/models/api/generated/ApiGen_Concepts_CodeType';
 import { ApiGen_Concepts_FinancialCode } from '@/models/api/generated/ApiGen_Concepts_FinancialCode';
 import { ApiGen_Concepts_FinancialCodeTypes } from '@/models/api/generated/ApiGen_Concepts_FinancialCodeTypes';
-import { EpochISODateTimeString } from '@/models/api/UtcIsoDateTime';
+import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { getEmptyBaseAudit } from '@/models/default_initializers';
 import { NumberFieldValue } from '@/typings/NumberFieldValue';
 
@@ -119,7 +119,7 @@ export function toFinancialCode(
     id: id,
     type: code,
     code: null,
-    effectiveDate: EpochISODateTimeString,
+    effectiveDate: EpochIsoDateTime,
     expiryDate: null,
     description: null,
     displayOrder: null,

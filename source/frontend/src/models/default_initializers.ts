@@ -7,12 +7,12 @@ import { ApiGen_Concepts_AcquisitionFile } from './api/generated/ApiGen_Concepts
 import { ApiGen_Concepts_Lease } from './api/generated/ApiGen_Concepts_Lease';
 import { ApiGen_Concepts_Property } from './api/generated/ApiGen_Concepts_Property';
 import { ApiGen_Concepts_ResearchFile } from './api/generated/ApiGen_Concepts_ResearchFile';
-import { EpochISODateTimeString } from './api/UtcIsoDateTime';
+import { EpochIsoDateTime } from './api/UtcIsoDateTime';
 
 // Note: Avoid using the initializers below as much as possible. Nullable members should be explicit when creating or filling an object.
 export const getEmptyBaseAudit = (rowVersion?: number | null): ApiGen_Base_BaseAudit => ({
-  appCreateTimestamp: EpochISODateTimeString,
-  appLastUpdateTimestamp: EpochISODateTimeString,
+  appCreateTimestamp: EpochIsoDateTime,
+  appLastUpdateTimestamp: EpochIsoDateTime,
   appLastUpdateUserid: null,
   appCreateUserid: null,
   appLastUpdateUserGuid: null,
@@ -40,7 +40,7 @@ export const getEmptyLease = (): ApiGen_Concepts_Lease => ({
   otherPurposeType: null,
   otherType: null,
   expiryDate: null,
-  startDate: EpochISODateTimeString,
+  startDate: EpochIsoDateTime,
   renewalCount: 0,
   paymentReceivableType: null,
   type: null,
@@ -117,7 +117,7 @@ export const getEmptyProperty = (): ApiGen_Concepts_Property => ({
   dataSource: null,
   region: null,
   district: null,
-  dataSourceEffectiveDateOnly: EpochISODateTimeString,
+  dataSourceEffectiveDateOnly: EpochIsoDateTime,
   latitude: null,
   longitude: null,
   name: null,
@@ -153,7 +153,7 @@ export const getEmptyProperty = (): ApiGen_Concepts_Property => ({
   notes: null,
   surplusDeclarationType: null,
   surplusDeclarationComment: null,
-  surplusDeclarationDate: EpochISODateTimeString,
+  surplusDeclarationDate: EpochIsoDateTime,
   rowVersion: null,
 });
 

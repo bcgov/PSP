@@ -2,7 +2,7 @@ import { Feature, Geometry } from 'geojson';
 
 import { ApiGen_Base_CodeType } from '@/models/api/generated/ApiGen_Base_CodeType';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
-import { EpochISODateTimeString } from '@/models/api/UtcIsoDateTime';
+import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { getEmptyProperty } from '@/models/default_initializers';
 import { EBC_ELECTORAL_DISTS_BS10_SVW_Feature_Properties } from '@/models/layers/electoralBoundaries';
 import { exists } from '@/utils';
@@ -66,7 +66,7 @@ export const defaultPropertyInfo: Partial<ApiGen_Concepts_Property> = {
   anomalies: [],
   tenures: [],
   roadTypes: [],
-  dataSourceEffectiveDateOnly: EpochISODateTimeString,
+  dataSourceEffectiveDateOnly: EpochIsoDateTime,
   isSensitive: false,
   isProvincialPublicHwy: false,
   pid: 0,

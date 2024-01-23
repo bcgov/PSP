@@ -2,7 +2,7 @@ import moment from 'moment';
 
 import { ApiGen_Concepts_FinancialCode } from '@/models/api/generated/ApiGen_Concepts_FinancialCode';
 import { ApiGen_Concepts_FinancialCodeTypes } from '@/models/api/generated/ApiGen_Concepts_FinancialCodeTypes';
-import { EpochISODateTimeString } from '@/models/api/UtcIsoDateTime';
+import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { getEmptyBaseAudit } from '@/models/default_initializers';
 import { stringToNull } from '@/utils/formUtils';
 import { exists } from '@/utils/utils';
@@ -26,7 +26,7 @@ export class FinancialCodeForm {
       code: this.code ?? null,
       description: this.description ?? null,
       displayOrder: this.displayOrder !== undefined ? Number(this.displayOrder) : null,
-      effectiveDate: this.effectiveDate ?? EpochISODateTimeString,
+      effectiveDate: this.effectiveDate ?? EpochIsoDateTime,
       expiryDate: stringToNull(this.expiryDate),
       ...getEmptyBaseAudit(this.rowVersion),
     };

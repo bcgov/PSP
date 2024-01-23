@@ -1,7 +1,7 @@
 import { ApiGen_Concepts_FinancialCode } from '@/models/api/generated/ApiGen_Concepts_FinancialCode';
 import { ApiGen_Concepts_FinancialCodeTypes } from '@/models/api/generated/ApiGen_Concepts_FinancialCodeTypes';
 import { ApiGen_Concepts_Project } from '@/models/api/generated/ApiGen_Concepts_Project';
-import { EpochISODateTimeString } from '@/models/api/UtcIsoDateTime';
+import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { getEmptyBaseAudit } from '@/models/default_initializers';
 
 const emptyFunctionCode: ApiGen_Concepts_FinancialCode = {
@@ -10,7 +10,7 @@ const emptyFunctionCode: ApiGen_Concepts_FinancialCode = {
   code: null,
   description: null,
   displayOrder: null,
-  effectiveDate: EpochISODateTimeString,
+  effectiveDate: EpochIsoDateTime,
   expiryDate: null,
   ...getEmptyBaseAudit(),
 };

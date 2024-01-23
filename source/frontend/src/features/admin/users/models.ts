@@ -6,7 +6,7 @@ import { ApiGen_Concepts_RegionUser } from '@/models/api/generated/ApiGen_Concep
 import { ApiGen_Concepts_Role } from '@/models/api/generated/ApiGen_Concepts_Role';
 import { ApiGen_Concepts_User } from '@/models/api/generated/ApiGen_Concepts_User';
 import { ApiGen_Concepts_UserRole } from '@/models/api/generated/ApiGen_Concepts_UserRole';
-import { EpochISODateTimeString, UtcIsoDateTime } from '@/models/api/UtcIsoDateTime';
+import { EpochIsoDateTime, UtcIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { getEmptyBaseAudit } from '@/models/default_initializers';
 import { NumberFieldValue } from '@/typings/NumberFieldValue';
 import { getPreferredContactMethodValue } from '@/utils/contactMethodUtil';
@@ -116,7 +116,7 @@ export class FormUser {
         rowVersion: null,
       },
       ...getEmptyBaseAudit(this.rowVersion),
-      appCreateTimestamp: this.appCreateTimestamp ?? EpochISODateTimeString,
+      appCreateTimestamp: this.appCreateTimestamp ?? EpochIsoDateTime,
     };
   }
 }

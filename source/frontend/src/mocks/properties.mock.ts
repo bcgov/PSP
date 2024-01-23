@@ -7,7 +7,7 @@ import { mockAcquisitionFileResponse, mockAddress } from '@/mocks/index.mock';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { ApiGen_Concepts_PropertyLease } from '@/models/api/generated/ApiGen_Concepts_PropertyLease';
-import { EpochISODateTimeString } from '@/models/api/UtcIsoDateTime';
+import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { toTypeCodeNullable } from '@/utils/formUtils';
 
 import { getMockApiAddress } from './address.mock';
@@ -22,7 +22,7 @@ const emptyProperty: ApiGen_Concepts_Property = {
   dataSource: null,
   region: null,
   district: null,
-  dataSourceEffectiveDateOnly: EpochISODateTimeString,
+  dataSourceEffectiveDateOnly: EpochIsoDateTime,
   latitude: null,
   longitude: null,
   name: null,
@@ -58,7 +58,7 @@ const emptyProperty: ApiGen_Concepts_Property = {
   notes: null,
   surplusDeclarationType: null,
   surplusDeclarationComment: null,
-  surplusDeclarationDate: EpochISODateTimeString,
+  surplusDeclarationDate: EpochIsoDateTime,
   rowVersion: null,
 };
 

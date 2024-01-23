@@ -5,6 +5,7 @@ import { Claims } from '@/constants/claims';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { getMockApiPropertyFiles } from '@/mocks/properties.mock';
 import { getMockApiTakes } from '@/mocks/takes.mock';
+import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { toTypeCodeNullable } from '@/utils/formUtils';
 import { act, render, RenderOptions, screen, userEvent, within } from '@/utils/test-utils';
@@ -68,12 +69,16 @@ describe('TakesDetailView component', () => {
 
   it('hides the edit button when the file has been completed', () => {
     const fileProperty = getMockApiPropertyFiles()[0];
+    const file: ApiGen_Concepts_File = fileProperty!.file as ApiGen_Concepts_File;
     const { queryByTitle, getByTestId } = setup({
       props: {
         loading: true,
         fileProperty: {
           ...fileProperty,
-          file: { ...fileProperty.file, fileStatusTypeCode: { id: AcquisitionStatus.Complete } },
+          file: {
+            ...file,
+            fileStatusTypeCode: toTypeCodeNullable(AcquisitionStatus.Complete),
+          },
         },
       },
       claims: [Claims.PROPERTY_EDIT],

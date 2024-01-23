@@ -2,7 +2,7 @@ import { ApiGen_Base_BaseAudit } from '@/models/api/generated/ApiGen_Base_BaseAu
 import { ApiGen_Concepts_FileChecklistItem } from '@/models/api/generated/ApiGen_Concepts_FileChecklistItem';
 import { ApiGen_Concepts_FileChecklistItemType } from '@/models/api/generated/ApiGen_Concepts_FileChecklistItemType';
 import { ApiGen_Concepts_FileWithChecklist } from '@/models/api/generated/ApiGen_Concepts_FileWithChecklist';
-import { EpochISODateTimeString, UtcIsoDateTime } from '@/models/api/UtcIsoDateTime';
+import { EpochIsoDateTime, UtcIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { getEmptyBaseAudit } from '@/models/default_initializers';
 import { ILookupCode } from '@/store/slices/lookupCodes';
 import { lastModifiedBy, sortByDisplayOrder } from '@/utils/fileUtils';
@@ -87,8 +87,8 @@ export class ChecklistItemFormModel implements ApiGen_Base_BaseAudit {
   itemType?: ApiGen_Concepts_FileChecklistItemType;
   statusType?: string;
   rowVersion: number | null = null;
-  appCreateTimestamp: UtcIsoDateTime = EpochISODateTimeString;
-  appLastUpdateTimestamp: UtcIsoDateTime = EpochISODateTimeString;
+  appCreateTimestamp: UtcIsoDateTime = EpochIsoDateTime;
+  appLastUpdateTimestamp: UtcIsoDateTime = EpochIsoDateTime;
   appLastUpdateUserid: string | null = null;
   appCreateUserid: string | null = null;
   appLastUpdateUserGuid: string | null = null;

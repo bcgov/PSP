@@ -4,7 +4,7 @@ import isEmpty from 'lodash/isEmpty';
 import { ApiGen_Concepts_Address } from '@/models/api/generated/ApiGen_Concepts_Address';
 import { ApiGen_Concepts_CodeType } from '@/models/api/generated/ApiGen_Concepts_CodeType';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
-import { EpochISODateTimeString } from '@/models/api/UtcIsoDateTime';
+import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import {
   booleanToString,
   fromTypeCode,
@@ -231,7 +231,7 @@ export class UpdatePropertyDetailsFormModel {
 
       boundary: null,
       dataSource: null,
-      dataSourceEffectiveDateOnly: EpochISODateTimeString,
+      dataSourceEffectiveDateOnly: EpochIsoDateTime,
       isProvincialPublicHwy: null,
       pphStatusUpdateUserid: null,
       pphStatusUpdateTimestamp: null,
@@ -242,7 +242,7 @@ export class UpdatePropertyDetailsFormModel {
       propertyContacts: null,
       surplusDeclarationType: null,
       surplusDeclarationComment: null,
-      surplusDeclarationDate: EpochISODateTimeString,
+      surplusDeclarationDate: EpochIsoDateTime,
     };
   }
 }

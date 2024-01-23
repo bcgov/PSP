@@ -1,6 +1,6 @@
 import { ApiGen_Concepts_CompensationFinancial } from '@/models/api/generated/ApiGen_Concepts_CompensationFinancial';
 import { ApiGen_Concepts_FinancialCodeTypes } from '@/models/api/generated/ApiGen_Concepts_FinancialCodeTypes';
-import { EpochISODateTimeString } from '@/models/api/UtcIsoDateTime';
+import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { getEmptyBaseAudit } from '@/models/default_initializers';
 
 export const mockCompReqH120s: () => ApiGen_Concepts_CompensationFinancial[] = () => [
@@ -17,7 +17,7 @@ export const mockCompReqH120s: () => ApiGen_Concepts_CompensationFinancial[] = (
       id: 3,
       type: ApiGen_Concepts_FinancialCodeTypes.BusinessFunction,
       displayOrder: null,
-      effectiveDate: EpochISODateTimeString,
+      effectiveDate: EpochIsoDateTime,
       expiryDate: null,
       code: null,
       description: null,
@@ -45,7 +45,7 @@ export const mockCompReqH120s: () => ApiGen_Concepts_CompensationFinancial[] = (
       id: 3,
       type: ApiGen_Concepts_FinancialCodeTypes.BusinessFunction,
       displayOrder: null,
-      effectiveDate: EpochISODateTimeString,
+      effectiveDate: EpochIsoDateTime,
       expiryDate: null,
       code: null,
       description: null,
@@ -73,7 +73,7 @@ export const mockCompReqH120s: () => ApiGen_Concepts_CompensationFinancial[] = (
       id: 4,
       type: ApiGen_Concepts_FinancialCodeTypes.BusinessFunction,
       displayOrder: null,
-      effectiveDate: EpochISODateTimeString,
+      effectiveDate: EpochIsoDateTime,
       expiryDate: null,
       code: null,
       description: null,

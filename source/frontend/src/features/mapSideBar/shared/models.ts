@@ -5,7 +5,7 @@ import { ApiGen_Concepts_Address } from '@/models/api/generated/ApiGen_Concepts_
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
-import { EpochISODateTimeString } from '@/models/api/UtcIsoDateTime';
+import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { getEmptyBaseAudit } from '@/models/default_initializers';
 import { IBcAssessmentSummary } from '@/models/layers/bcAssesment';
 import { exists, formatApiAddress, formatBcaAddress, pidParser } from '@/utils';
@@ -169,7 +169,7 @@ export class PropertyForm {
       roadTypes: null,
       status: null,
       dataSource: null,
-      dataSourceEffectiveDateOnly: EpochISODateTimeString,
+      dataSourceEffectiveDateOnly: EpochIsoDateTime,
       latitude: null,
       longitude: null,
       name: null,
@@ -197,7 +197,7 @@ export class PropertyForm {
       notes: null,
       surplusDeclarationType: null,
       surplusDeclarationComment: null,
-      surplusDeclarationDate: EpochISODateTimeString,
+      surplusDeclarationDate: EpochIsoDateTime,
     };
   }
 }

@@ -1,5 +1,5 @@
 import { ApiGen_Concepts_DispositionFileOffer } from '@/models/api/generated/ApiGen_Concepts_DispositionFileOffer';
-import { EpochISODateTimeString } from '@/models/api/UtcIsoDateTime';
+import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { emptyStringtoNullable, toTypeCodeNullable } from '@/utils/formUtils';
 
 export class DispositionOfferFormModel {
@@ -37,7 +37,7 @@ export class DispositionOfferFormModel {
       dispositionOfferStatusTypeCode: emptyStringtoNullable(this.dispositionOfferStatusTypeCode),
       dispositionOfferStatusType: toTypeCodeNullable(this.dispositionOfferStatusTypeCode),
       offerName: emptyStringtoNullable(this.offerName),
-      offerDate: this.offerDate ?? EpochISODateTimeString,
+      offerDate: this.offerDate ?? EpochIsoDateTime,
       offerExpiryDate: emptyStringtoNullable(this.offerExpiryDate),
       offerAmount: this.offerAmount ?? 0,
       offerNote: emptyStringtoNullable(this.offerNote),

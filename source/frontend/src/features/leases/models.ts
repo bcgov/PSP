@@ -5,7 +5,7 @@ import { ApiGen_Concepts_ConsultationLease } from '@/models/api/generated/ApiGen
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { ApiGen_Concepts_Project } from '@/models/api/generated/ApiGen_Concepts_Project';
 import { ApiGen_Concepts_PropertyLease } from '@/models/api/generated/ApiGen_Concepts_PropertyLease';
-import { EpochISODateTimeString } from '@/models/api/UtcIsoDateTime';
+import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { getEmptyBaseAudit } from '@/models/default_initializers';
 import { ILookupCode } from '@/store/slices/lookupCodes/interfaces/ILookupCode';
 import { NumberFieldValue } from '@/typings/NumberFieldValue';
@@ -291,8 +291,8 @@ export const getDefaultFormLease: () => LeaseFormModel = () =>
   LeaseFormModel.fromApi({
     fileProperties: [],
     tenants: [],
-    startDate: EpochISODateTimeString,
-    expiryDate: EpochISODateTimeString,
+    startDate: EpochIsoDateTime,
+    expiryDate: EpochIsoDateTime,
     lFileNo: '',
     tfaFileNumber: '',
     psFileNo: '',

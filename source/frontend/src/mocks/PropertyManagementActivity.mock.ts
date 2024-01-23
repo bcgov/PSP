@@ -1,5 +1,5 @@
 import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
-import { EpochISODateTimeString } from '@/models/api/UtcIsoDateTime';
+import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { getEmptyBaseAudit } from '@/models/default_initializers';
 
 const emptyActivity: ApiGen_Concepts_PropertyActivity = {
@@ -22,7 +22,7 @@ const emptyActivity: ApiGen_Concepts_PropertyActivity = {
     isDisabled: false,
     displayOrder: 100,
   },
-  requestAddedDateOnly: EpochISODateTimeString,
+  requestAddedDateOnly: EpochIsoDateTime,
   completionDateOnly: null,
   description: '',
   requestSource: '',

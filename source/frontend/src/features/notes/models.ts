@@ -1,5 +1,5 @@
 import { ApiGen_Concepts_Note } from '@/models/api/generated/ApiGen_Concepts_Note';
-import { EpochISODateTimeString, UtcIsoDateTime } from '@/models/api/UtcIsoDateTime';
+import { EpochIsoDateTime, UtcIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { getEmptyBaseAudit } from '@/models/default_initializers';
 
 export class NoteForm {
@@ -33,10 +33,10 @@ export class NoteForm {
       note: this.note ?? null,
       isSystemGenerated: false,
       ...getEmptyBaseAudit(this.rowVersion),
-      appCreateTimestamp: this.appCreateTimestamp ?? EpochISODateTimeString,
+      appCreateTimestamp: this.appCreateTimestamp ?? EpochIsoDateTime,
       appCreateUserGuid: this.appCreateUserGuid ?? null,
       appCreateUserid: this.appCreateUserid ?? null,
-      appLastUpdateTimestamp: this.appLastUpdateTimestamp ?? EpochISODateTimeString,
+      appLastUpdateTimestamp: this.appLastUpdateTimestamp ?? EpochIsoDateTime,
       appLastUpdateUserGuid: this.appLastUpdateUserGuid ?? null,
       appLastUpdateUserid: this.appLastUpdateUserid ?? null,
     };

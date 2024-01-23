@@ -1,7 +1,7 @@
 import { ApiGen_Concepts_CompensationFinancial } from '@/models/api/generated/ApiGen_Concepts_CompensationFinancial';
 import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
 import { ApiGen_Concepts_FinancialCodeTypes } from '@/models/api/generated/ApiGen_Concepts_FinancialCodeTypes';
-import { EpochISODateTimeString } from '@/models/api/UtcIsoDateTime';
+import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { getEmptyBaseAudit } from '@/models/default_initializers';
 
 export const emptyCompensationRequisition: ApiGen_Concepts_CompensationRequisition = {
@@ -78,7 +78,7 @@ export const getMockApiCompensationWithFinancials =
           description: 'Market',
           type: ApiGen_Concepts_FinancialCodeTypes.BusinessFunction,
           displayOrder: null,
-          effectiveDate: EpochISODateTimeString,
+          effectiveDate: EpochIsoDateTime,
           expiryDate: null,
           code: null,
           ...getEmptyBaseAudit(),
@@ -106,7 +106,7 @@ export const getMockApiCompensationWithFinancials =
           description: 'Owners Entitlements',
           type: ApiGen_Concepts_FinancialCodeTypes.BusinessFunction,
           displayOrder: null,
-          effectiveDate: EpochISODateTimeString,
+          effectiveDate: EpochIsoDateTime,
           expiryDate: null,
           code: null,
           ...getEmptyBaseAudit(),
@@ -161,7 +161,7 @@ export const getMockApiCompensationList = (): ApiGen_Concepts_CompensationRequis
           description: null,
           type: ApiGen_Concepts_FinancialCodeTypes.BusinessFunction,
           displayOrder: null,
-          effectiveDate: EpochISODateTimeString,
+          effectiveDate: EpochIsoDateTime,
           expiryDate: null,
           code: null,
           ...getEmptyBaseAudit(),
@@ -182,7 +182,7 @@ export const getMockApiCompensationList = (): ApiGen_Concepts_CompensationRequis
           id: 3,
           type: ApiGen_Concepts_FinancialCodeTypes.BusinessFunction,
           displayOrder: null,
-          effectiveDate: EpochISODateTimeString,
+          effectiveDate: EpochIsoDateTime,
           expiryDate: null,
           code: null,
           description: null,
@@ -204,7 +204,7 @@ export const getMockApiCompensationList = (): ApiGen_Concepts_CompensationRequis
           id: 1,
           type: ApiGen_Concepts_FinancialCodeTypes.BusinessFunction,
           displayOrder: null,
-          effectiveDate: EpochISODateTimeString,
+          effectiveDate: EpochIsoDateTime,
           expiryDate: null,
           code: null,
           description: null,
@@ -226,7 +226,7 @@ export const getMockApiCompensationList = (): ApiGen_Concepts_CompensationRequis
           id: 2,
           type: ApiGen_Concepts_FinancialCodeTypes.BusinessFunction,
           displayOrder: null,
-          effectiveDate: EpochISODateTimeString,
+          effectiveDate: EpochIsoDateTime,
           expiryDate: null,
           code: null,
           description: null,
@@ -272,7 +272,7 @@ export const getMockApiCompensationList = (): ApiGen_Concepts_CompensationRequis
           id: 1,
           type: ApiGen_Concepts_FinancialCodeTypes.BusinessFunction,
           displayOrder: null,
-          effectiveDate: EpochISODateTimeString,
+          effectiveDate: EpochIsoDateTime,
           expiryDate: null,
           code: null,
           description: null,
