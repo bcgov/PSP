@@ -17,7 +17,7 @@ import SidebarFooter from '@/features/mapSideBar/shared/SidebarFooter';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
 import { IApiError } from '@/interfaces/IApiError';
-import { Api_DispositionFileOffer } from '@/models/api/DispositionFile';
+import { ApiGen_Concepts_DispositionFileOffer } from '@/models/api/generated/ApiGen_Concepts_DispositionFileOffer';
 
 import { DispositionOfferFormModel } from '../models/DispositionOfferFormModel';
 import { DispositionOfferFormYupSchema } from '../models/DispositionOfferFormYupSchema';
@@ -26,7 +26,9 @@ export interface IDispositionOfferFormProps {
   initialValues: DispositionOfferFormModel | null;
   showOfferStatusError: boolean;
   loading: boolean;
-  onSave: (offer: Api_DispositionFileOffer) => Promise<Api_DispositionFileOffer | undefined>;
+  onSave: (
+    offer: ApiGen_Concepts_DispositionFileOffer,
+  ) => Promise<ApiGen_Concepts_DispositionFileOffer | undefined>;
   onCancel: () => void;
   onSuccess: () => void;
   onError: (e: AxiosError<IApiError>) => void;

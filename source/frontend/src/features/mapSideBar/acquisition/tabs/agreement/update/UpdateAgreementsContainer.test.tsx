@@ -3,7 +3,7 @@ import { createRef } from 'react';
 import { useAgreementProvider } from '@/hooks/repositories/useAgreementProvider';
 import { mockAgreementsResponse } from '@/mocks/agreements.mock';
 import { mockLookups } from '@/mocks/index.mock';
-import { Api_Agreement } from '@/models/api/Agreement';
+import { ApiGen_Concepts_Agreement } from '@/models/api/generated/ApiGen_Concepts_Agreement';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, render, RenderOptions } from '@/utils/test-utils';
 
@@ -83,7 +83,7 @@ describe('UpdateAgreementsContainer component', () => {
   it('makes request to update the agreements and returns the response', async () => {
     setup();
     mockUpdateAgreements.mockResolvedValue(mockAgreementsResponse());
-    let updatedAgreements: Api_Agreement[] | undefined;
+    let updatedAgreements: ApiGen_Concepts_Agreement[] | undefined;
 
     const testAgreementForm = new AgreementsFormModel(testAcquisitionFileId);
     const testAgreementItem = new SingleAgreementFormModel();

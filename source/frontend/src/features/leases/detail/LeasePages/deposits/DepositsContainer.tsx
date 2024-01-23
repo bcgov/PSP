@@ -8,7 +8,9 @@ import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
 import { LeaseFormModel } from '@/features/leases/models';
 import { useSecurityDepositRepository } from '@/hooks/repositories/useSecurityDepositRepository';
 import { useSecurityDepositReturnRepository } from '@/hooks/repositories/useSecurityDepositReturnRepository';
-import { Api_SecurityDeposit, Api_SecurityDepositReturn } from '@/models/api/SecurityDeposit';
+import { ApiGen_Concepts_SecurityDeposit } from '@/models/api/generated/ApiGen_Concepts_SecurityDeposit';
+import { ApiGen_Concepts_SecurityDepositReturn } from '@/models/api/generated/ApiGen_Concepts_SecurityDepositReturn';
+import { exists } from '@/utils/utils';
 
 import DepositNotes from './components/DepositNotes/DepositNotes';
 import DepositsReceivedContainer from './components/DepositsReceivedContainer/DepositsReceivedContainer';
@@ -46,12 +48,14 @@ export const DepositsContainer: React.FunctionComponent<
     deleteSecurityDepositReturn: { execute: deleteSecurityDepositReturn },
   } = useSecurityDepositReturnRepository();
 
-  const securityDeposits: Api_SecurityDeposit[] = securityDepositsResponse ?? [];
+  const securityDeposits: ApiGen_Concepts_SecurityDeposit[] = securityDepositsResponse ?? [];
   useEffect(() => {
     lease?.id && getSecurityDeposits(lease.id);
   }, [lease, getSecurityDeposits]);
-  const depositReturns: Api_SecurityDepositReturn[] =
-    securityDeposits?.flatMap((x: Api_SecurityDeposit) => x.depositReturns) ?? [];
+  const depositReturns: ApiGen_Concepts_SecurityDepositReturn[] =
+    securityDeposits
+      ?.flatMap((x: ApiGen_Concepts_SecurityDeposit) => x.depositReturns)
+      .filter(exists) ?? [];
   const [editNotes, setEditNotes] = useState<boolean>(false);
 
   const [showDepositEditModal, setShowEditModal] = useState<boolean>(false);
@@ -78,7 +82,7 @@ export const DepositsContainer: React.FunctionComponent<
   };
 
   const onEditDeposit = (id: number) => {
-    var deposit = securityDeposits.find((x: Api_SecurityDeposit) => x.id === id);
+    var deposit = securityDeposits.find((x: ApiGen_Concepts_SecurityDeposit) => x.id === id);
     if (deposit) {
       setEditDepositValue(FormLeaseDeposit.fromApi(deposit));
       setShowEditModal(true);
@@ -86,7 +90,7 @@ export const DepositsContainer: React.FunctionComponent<
   };
 
   const onDeleteDeposit = (id: number) => {
-    var deposit = securityDeposits.find((x: Api_SecurityDeposit) => x.id === id);
+    var deposit = securityDeposits.find((x: ApiGen_Concepts_SecurityDeposit) => x.id === id);
     if (deposit) {
       setDepositToDelete(FormLeaseDeposit.fromApi(deposit));
       setDeleteModalWarning(true);
@@ -94,7 +98,7 @@ export const DepositsContainer: React.FunctionComponent<
   };
 
   const onReturnDeposit = (id: number) => {
-    var deposit = securityDeposits.find((x: Api_SecurityDeposit) => x.id === id);
+    var deposit = securityDeposits.find((x: ApiGen_Concepts_SecurityDeposit) => x.id === id);
     if (deposit) {
       setEditReturnValue(FormLeaseDepositReturn.createEmpty(deposit));
       setShowReturnEditModal(true);
@@ -159,7 +163,7 @@ export const DepositsContainer: React.FunctionComponent<
     var deposit = depositReturns.find(x => x.id === id);
     if (deposit) {
       var parentDeposit = securityDeposits.find(
-        (x: Api_SecurityDeposit) => x.id === deposit?.parentDepositId,
+        (x: ApiGen_Concepts_SecurityDeposit) => x.id === deposit?.parentDepositId,
       );
       if (parentDeposit) {
         setDepositReturnToDelete(FormLeaseDepositReturn.fromApi(deposit, parentDeposit));
@@ -176,7 +180,7 @@ export const DepositsContainer: React.FunctionComponent<
    */
   const onSaveReturnDeposit = async (returnDepositForm: FormLeaseDepositReturn) => {
     if (lease && lease.id) {
-      let request: Api_SecurityDepositReturn = returnDepositForm.toApi();
+      let request: ApiGen_Concepts_SecurityDepositReturn = returnDepositForm.toApi();
       const securityDepositReturn = request?.id
         ? await updateSecurityDepositReturn(lease.id, request)
         : await addSecurityDepositReturn(lease.id, request);

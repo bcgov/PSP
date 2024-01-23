@@ -4,7 +4,7 @@ import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
 
 import { InventoryTabNames } from '@/features/mapSideBar/property/InventoryTabs';
 import { FileTabType } from '@/features/mapSideBar/shared/detail/FileTabs';
-import { Api_ResearchFile } from '@/models/api/ResearchFile';
+import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Concepts_ResearchFile';
 import { stripTrailingSlash } from '@/utils';
 
 import UpdateResearchContainer from './tabs/fileDetails/update/UpdateSummaryContainer';
@@ -12,7 +12,7 @@ import ResearchTabsContainer from './tabs/ResearchTabsContainer';
 
 export interface IResearchRouterProps {
   formikRef: React.Ref<FormikProps<any>>;
-  researchFile?: Api_ResearchFile;
+  researchFile?: ApiGen_Concepts_ResearchFile;
   isEditing: boolean;
   setIsEditing: (value: boolean) => void;
   defaultFileTab: FileTabType;

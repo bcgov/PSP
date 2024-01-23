@@ -8,7 +8,7 @@ import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvi
 import useApiUserOverride from '@/hooks/useApiUserOverride';
 import { useInitialMapSelectorProperties } from '@/hooks/useInitialMapSelectorProperties';
 import { IApiError } from '@/interfaces/IApiError';
-import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
+import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 
 import { AddAcquisitionFileYupSchema } from '../add/AddAcquisitionFileYupSchema';
@@ -16,7 +16,7 @@ import { AcquisitionForm } from '../add/models';
 
 export interface IUseAddAcquisitionFormManagementProps {
   /** Optional - callback to execute after acquisition file has been added to the datastore */
-  onSuccess?: (acquisitionFile: Api_AcquisitionFile) => Promise<void>;
+  onSuccess?: (acquisitionFile: ApiGen_Concepts_AcquisitionFile) => Promise<void>;
   initialForm?: AcquisitionForm;
   selectedFeature: LocationFeatureDataset | null;
   formikRef: React.RefObject<FormikProps<AcquisitionForm>>;

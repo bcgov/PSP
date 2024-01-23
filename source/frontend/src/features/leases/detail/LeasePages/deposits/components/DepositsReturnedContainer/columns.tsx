@@ -10,8 +10,9 @@ import { InlineFlexDiv } from '@/components/common/styles';
 import { ColumnWithProps, renderDate, renderMoney } from '@/components/Table';
 import Claims from '@/constants/claims';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
-import { Api_Contact } from '@/models/api/Contact';
-import { Api_SecurityDeposit, Api_SecurityDepositReturn } from '@/models/api/SecurityDeposit';
+import { ApiGen_Concepts_Contact } from '@/models/api/generated/ApiGen_Concepts_Contact';
+import { ApiGen_Concepts_SecurityDeposit } from '@/models/api/generated/ApiGen_Concepts_SecurityDeposit';
+import { ApiGen_Concepts_SecurityDepositReturn } from '@/models/api/generated/ApiGen_Concepts_SecurityDepositReturn';
 import { formatNames } from '@/utils/personUtils';
 
 export class ReturnListEntry {
@@ -23,14 +24,17 @@ export class ReturnListEntry {
   public returnAmount: number;
   public interestPaid: number;
   public returnDate: string;
-  public contactHolder?: Api_Contact;
+  public contactHolder?: ApiGen_Concepts_Contact;
 
-  public constructor(baseDeposit: Api_SecurityDepositReturn, parentDeposit: Api_SecurityDeposit) {
+  public constructor(
+    baseDeposit: ApiGen_Concepts_SecurityDepositReturn,
+    parentDeposit: ApiGen_Concepts_SecurityDeposit,
+  ) {
     this.id = baseDeposit.id || -1;
-    if (parentDeposit.depositType.id === 'OTHER') {
+    if (parentDeposit.depositType?.id === 'OTHER') {
       this.depositTypeDescription = (parentDeposit.otherTypeDescription || '') + ' (Other)';
     } else {
-      this.depositTypeDescription = parentDeposit.depositType.description || '';
+      this.depositTypeDescription = parentDeposit.depositType?.description || '';
     }
 
     this.terminationDate = baseDeposit.terminationDate || '';
@@ -43,7 +47,9 @@ export class ReturnListEntry {
   }
 }
 
-function renderHolder({ row: { original } }: CellProps<ReturnListEntry, Api_Contact | undefined>) {
+function renderHolder({
+  row: { original },
+}: CellProps<ReturnListEntry, ApiGen_Concepts_Contact | undefined>) {
   if (!!original.contactHolder) {
     const holder = original.contactHolder;
     if (!!holder.person) {

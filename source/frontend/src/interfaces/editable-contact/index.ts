@@ -1,8 +1,7 @@
 import { AddressTypes } from '@/constants/addressTypes';
 import { IContactPerson } from '@/interfaces/IContact';
+import { ApiGen_Base_CodeType } from '@/models/api/generated/ApiGen_Base_CodeType';
 import { NumberFieldValue } from '@/typings/NumberFieldValue';
-
-import ITypeCode from '../ITypeCode';
 
 export interface IEditablePerson {
   id?: number;
@@ -38,7 +37,7 @@ export interface IEditableOrganization {
 export interface IBaseAddress {
   id?: number;
   rowVersion?: number;
-  addressTypeId: ITypeCode<string>;
+  addressTypeId: ApiGen_Base_CodeType<string>;
   streetAddress1: string;
   streetAddress2?: string;
   streetAddress3?: string;
@@ -68,7 +67,7 @@ export interface IEditableContactMethod {
   rowVersion?: number;
   personId?: number;
   organizationId?: number;
-  contactMethodTypeCode: ITypeCode<string>;
+  contactMethodTypeCode: ApiGen_Base_CodeType<string>;
   value: string;
 }
 

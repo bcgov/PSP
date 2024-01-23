@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import { Input } from '@/components/common/form';
 import { SectionField } from '@/components/common/Section/SectionField';
-import { Api_Lease } from '@/models/api/Lease';
+import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { formatNumber, pidFormatter } from '@/utils';
 import { withNameSpace } from '@/utils/formUtils';
 
@@ -23,7 +23,7 @@ export interface IPropertyInformationProps {
 export const PropertyInformation: React.FunctionComponent<
   React.PropsWithChildren<IPropertyInformationProps & Partial<FieldArrayRenderProps>>
 > = ({ nameSpace, disabled, hideAddress }) => {
-  const formikProps = useFormikContext<Api_Lease>();
+  const formikProps = useFormikContext<ApiGen_Concepts_Lease>();
   const landArea = getIn(formikProps.values, withNameSpace(nameSpace, 'leaseArea'));
   const areaUnitType = getIn(formikProps.values, withNameSpace(nameSpace, 'areaUnitType'));
   const legalDescription = getIn(

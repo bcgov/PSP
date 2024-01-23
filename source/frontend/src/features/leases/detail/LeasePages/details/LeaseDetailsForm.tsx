@@ -4,7 +4,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
-import { defaultApiLease } from '@/models/api/Lease';
+import { defaultApiLease } from '@/models/default_initializers';
 
 import DetailAdministration from './DetailAdministration';
 import DetailConsultation from './DetailConsultation';
@@ -20,7 +20,7 @@ export const LeaseDetailsForm: React.FunctionComponent<
   const { lease } = React.useContext(LeaseStateContext);
   return (
     <Formik
-      initialValues={{ ...defaultApiLease, ...lease }}
+      initialValues={{ ...defaultApiLease(), ...lease }}
       enableReinitialize={true}
       onSubmit={noop}
     >

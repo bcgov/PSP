@@ -9,7 +9,7 @@ import { useLeaseDetail } from '@/features/leases/hooks/useLeaseDetail';
 import { useUpdateLease } from '@/features/leases/hooks/useUpdateLease';
 import { LeaseFormModel } from '@/features/leases/models';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
-import { Api_Lease } from '@/models/api/Lease';
+import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 
 import { IUpdateLeaseFormProps } from './UpdateLeaseForm';
@@ -54,7 +54,7 @@ export const UpdateLeaseContainer: React.FunctionComponent<
     }
   };
 
-  const afterSubmit = async (updatedLease?: Api_Lease) => {
+  const afterSubmit = async (updatedLease?: ApiGen_Concepts_Lease) => {
     if (!!updatedLease?.id) {
       formikRef?.current?.resetForm({ values: formikRef?.current?.values });
       await refresh();

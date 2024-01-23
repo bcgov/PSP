@@ -4,8 +4,8 @@ import { IUpdateChecklistFormProps } from '@/features/mapSideBar/shared/tabs/che
 import { useDispositionProvider } from '@/hooks/repositories/useDispositionProvider';
 import { mockDispositionFileResponse } from '@/mocks/dispositionFiles.mock';
 import { mockFileChecklistResponse, mockLookups } from '@/mocks/index.mock';
-import { Api_DispositionFile } from '@/models/api/DispositionFile';
-import { Api_FileWithChecklist } from '@/models/api/File';
+import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
+import { ApiGen_Concepts_FileWithChecklist } from '@/models/api/generated/ApiGen_Concepts_FileWithChecklist';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, createAxiosError, render, RenderOptions, screen } from '@/utils/test-utils';
 
@@ -34,7 +34,7 @@ const TestView: React.FC<IUpdateChecklistFormProps> = props => {
 };
 
 describe('UpdateDispositionChecklist container', () => {
-  let dispositionFile: Api_DispositionFile | undefined = undefined;
+  let dispositionFile: ApiGen_Concepts_DispositionFile | undefined = undefined;
   const onSuccess = jest.fn();
 
   const setup = (renderOptions: RenderOptions = {}) => {
@@ -79,9 +79,9 @@ describe('UpdateDispositionChecklist container', () => {
     setup();
     mockUpdateDispositionChecklist.mockResolvedValue(mockFileChecklistResponse());
 
-    let updatedChecklist: Api_FileWithChecklist | undefined;
+    let updatedChecklist: ApiGen_Concepts_FileWithChecklist | undefined;
     await act(async () => {
-      updatedChecklist = await viewProps?.onSave({} as Api_FileWithChecklist);
+      updatedChecklist = await viewProps?.onSave({} as ApiGen_Concepts_FileWithChecklist);
     });
 
     expect(mockUpdateDispositionChecklist).toHaveBeenCalled();
@@ -92,7 +92,7 @@ describe('UpdateDispositionChecklist container', () => {
     setup();
 
     await act(async () => {
-      viewProps?.onSuccess({} as Api_DispositionFile);
+      viewProps?.onSuccess({} as ApiGen_Concepts_DispositionFile);
     });
 
     expect(onSuccess).toHaveBeenCalled();

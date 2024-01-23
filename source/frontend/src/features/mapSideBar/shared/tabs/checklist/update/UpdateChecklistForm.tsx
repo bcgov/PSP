@@ -9,7 +9,7 @@ import { StyledSummarySection } from '@/components/common/Section/SectionStyles'
 import { UserNameTooltip } from '@/components/common/UserNameTooltip';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { IApiError } from '@/interfaces/IApiError';
-import { Api_FileWithChecklist } from '@/models/api/File';
+import { ApiGen_Concepts_FileWithChecklist } from '@/models/api/generated/ApiGen_Concepts_FileWithChecklist';
 import { prettyFormatUTCDate } from '@/utils';
 
 import { StyledSectionCentered } from '../detail/styles';
@@ -21,8 +21,10 @@ export interface IUpdateChecklistFormProps {
   sectionTypeName: string;
   statusTypeName: string;
   prefix: string;
-  onSave: (apiFile: Api_FileWithChecklist) => Promise<Api_FileWithChecklist | undefined>;
-  onSuccess: (apiFile: Api_FileWithChecklist) => Promise<void>;
+  onSave: (
+    apiFile: ApiGen_Concepts_FileWithChecklist,
+  ) => Promise<ApiGen_Concepts_FileWithChecklist | undefined>;
+  onSuccess: (apiFile: ApiGen_Concepts_FileWithChecklist) => Promise<void>;
   onError: (e: AxiosError<IApiError>) => void;
 }
 

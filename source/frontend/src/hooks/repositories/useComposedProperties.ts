@@ -4,7 +4,8 @@ import { useEffect, useMemo, useState } from 'react';
 
 import { ComposedProperty } from '@/features/mapSideBar/property/ComposedProperty';
 import { LtsaOrders } from '@/interfaces/ltsaModels';
-import { Api_Property, Api_PropertyAssociations } from '@/models/api/Property';
+import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
+import { ApiGen_Concepts_PropertyAssociations } from '@/models/api/generated/ApiGen_Concepts_PropertyAssociations';
 import { IBcAssessmentSummary } from '@/models/layers/bcAssesment';
 import { useTenant } from '@/tenants/useTenant';
 
@@ -34,9 +35,11 @@ export default interface ComposedPropertyState {
   pin?: string;
   id?: number;
   ltsaWrapper?: IResponseWrapper<(pid: string) => Promise<AxiosResponse<LtsaOrders, any>>>;
-  apiWrapper?: IResponseWrapper<(id: number) => Promise<AxiosResponse<Api_Property, any>>>;
+  apiWrapper?: IResponseWrapper<
+    (id: number) => Promise<AxiosResponse<ApiGen_Concepts_Property, any>>
+  >;
   propertyAssociationWrapper?: IResponseWrapper<
-    (id: number) => Promise<AxiosResponse<Api_PropertyAssociations, any>>
+    (id: number) => Promise<AxiosResponse<ApiGen_Concepts_PropertyAssociations, any>>
   >;
   parcelMapWrapper?: IResponseWrapper<
     (

@@ -5,8 +5,8 @@ import { toast } from 'react-toastify';
 import { useApiProperties } from '@/hooks/pims-api/useApiProperties';
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import { IApiError } from '@/interfaces/IApiError';
+import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { Api_PropertyFilterCriteria } from '@/models/api/ProjectFilterCriteria';
-import { Api_Property } from '@/models/api/Property';
 import { useAxiosErrorHandler } from '@/utils';
 
 /**
@@ -39,7 +39,7 @@ export const usePimsPropertyRepository = () => {
 
   const updatePropertyWrapper = useApiRequestWrapper({
     requestFunction: useCallback(
-      async (property: Api_Property) => await putPropertyConceptApi(property),
+      async (property: ApiGen_Concepts_Property) => await putPropertyConceptApi(property),
       [putPropertyConceptApi],
     ),
     requestName: 'updatePropertyConcept',

@@ -1,15 +1,15 @@
 import { FormikProps } from 'formik';
 import * as React from 'react';
 
-import { Api_PropertyFile } from '@/models/api/PropertyFile';
-import { Api_Take } from '@/models/api/Take';
+import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
+import { ApiGen_Concepts_Take } from '@/models/api/generated/ApiGen_Concepts_Take';
 
 import { useTakesRepository } from '../repositories/useTakesRepository';
 import { TakeModel } from './models';
 import { emptyTake, ITakesUpdateFormProps } from './TakesUpdateForm';
 
 export interface ITakesDetailContainerProps {
-  fileProperty: Api_PropertyFile;
+  fileProperty: ApiGen_Concepts_FileProperty;
   View: React.ForwardRefExoticComponent<
     ITakesUpdateFormProps & React.RefAttributes<FormikProps<any>>
   >;
@@ -18,7 +18,7 @@ export interface ITakesDetailContainerProps {
 
 export const TakesUpdateContainer = React.forwardRef<FormikProps<any>, ITakesDetailContainerProps>(
   ({ fileProperty, View, onSuccess }, ref) => {
-    const [propertyTakes, setPropertyTakes] = React.useState<Api_Take[]>([]);
+    const [propertyTakes, setPropertyTakes] = React.useState<ApiGen_Concepts_Take[]>([]);
 
     if (!fileProperty?.id) {
       throw Error('File property must have id');

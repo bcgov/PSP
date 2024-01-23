@@ -3,18 +3,16 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { StyledLink } from '@/components/maps/leaflet/LayerPopup/styles';
-import {
-  Api_DispositionSalePurchaser,
-  Api_DispositionSalePurchaserAgent,
-  Api_DispositionSalePurchaserSolicitor,
-} from '@/models/api/DispositionFile';
+import { ApiGen_Concepts_DispositionSalePurchaser } from '@/models/api/generated/ApiGen_Concepts_DispositionSalePurchaser';
+import { ApiGen_Concepts_DispositionSalePurchaserAgent } from '@/models/api/generated/ApiGen_Concepts_DispositionSalePurchaserAgent';
+import { ApiGen_Concepts_DispositionSalePurchaserSolicitor } from '@/models/api/generated/ApiGen_Concepts_DispositionSalePurchaserSolicitor';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
 export interface IDispositionSaleContactDetails {
   contactInformation:
-    | Api_DispositionSalePurchaser
-    | Api_DispositionSalePurchaserAgent
-    | Api_DispositionSalePurchaserSolicitor;
+    | ApiGen_Concepts_DispositionSalePurchaser
+    | ApiGen_Concepts_DispositionSalePurchaserAgent
+    | ApiGen_Concepts_DispositionSalePurchaserSolicitor;
   primaryContactLabel?: string | null;
 }
 

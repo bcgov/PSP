@@ -1,4 +1,4 @@
-import { Api_Project } from '@/models/api/Project';
+import { ApiGen_Concepts_Project } from '@/models/api/generated/ApiGen_Concepts_Project';
 
 export class ProjectSearchResultModel {
   id: number | null = null;
@@ -9,7 +9,7 @@ export class ProjectSearchResultModel {
   lastUpdatedBy: string | '' = '';
   lastUpdatedDate: string | '' = '';
 
-  static fromApi(base: Api_Project): ProjectSearchResultModel {
+  static fromApi(base: ApiGen_Concepts_Project): ProjectSearchResultModel {
     var newModel = new ProjectSearchResultModel();
 
     newModel.id = base.id ?? null;

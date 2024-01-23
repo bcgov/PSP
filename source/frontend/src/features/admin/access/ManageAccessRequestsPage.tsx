@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { Table } from '@/components/Table';
 import { useApiAccessRequests } from '@/hooks/pims-api/useApiAccessRequests';
 import { useSearch } from '@/hooks/useSearch';
-import { Api_AccessRequest } from '@/models/api/AccessRequest';
+import { ApiGen_Concepts_AccessRequest } from '@/models/api/generated/ApiGen_Concepts_AccessRequest';
 
 import { IAccessRequestsFilterData } from '../access-request/IAccessRequestsFilterData';
 import { FormAccessRequest } from '../access-request/models';
@@ -27,7 +27,7 @@ const ManageAccessRequestsPage = () => {
     setPageSize,
     loading,
     execute,
-  } = useSearch<Api_AccessRequest, IAccessRequestsFilterData>(
+  } = useSearch<ApiGen_Concepts_AccessRequest, IAccessRequestsFilterData>(
     defaultFilter,
     getAccessRequestsPaged,
     'No matching results can be found. Try widening your search criteria.',

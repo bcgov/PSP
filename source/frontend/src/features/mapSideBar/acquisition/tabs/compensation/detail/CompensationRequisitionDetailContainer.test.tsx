@@ -5,10 +5,11 @@ import {
   mockApiAcquisitionFileTeamPerson,
 } from '@/mocks/acquisitionFiles.mock';
 import { getMockApiDefaultCompensation } from '@/mocks/compensations.mock';
+import { getEmptyPerson } from '@/mocks/contacts.mock';
 import { emptyApiInterestHolder } from '@/mocks/interestHolder.mock';
-import { getMockOrganization } from '@/mocks/organization.mock';
-import { Api_InterestHolder } from '@/models/api/InterestHolder';
-import { Api_Person } from '@/models/api/Person';
+import { getEmptyOrganization, getMockOrganization } from '@/mocks/organization.mock';
+import { ApiGen_Concepts_InterestHolder } from '@/models/api/generated/ApiGen_Concepts_InterestHolder';
+import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_Person';
 import { render, RenderOptions, waitForEffects } from '@/utils/test-utils';
 
 import {
@@ -65,7 +66,7 @@ describe('Compensation Detail View container', () => {
         id: 1,
         firstName: 'first',
         surname: 'last',
-      } as Api_Person,
+      } as ApiGen_Concepts_Person,
     });
     getOrganizationConceptFn.mockResolvedValue({
       data: getMockOrganization(),
@@ -94,7 +95,7 @@ describe('Compensation Detail View container', () => {
       id: 1,
       firstName: 'first',
       surname: 'last',
-    } as Api_Person);
+    } as ApiGen_Concepts_Person);
   });
 
   it('makes request to get organization concept for acquisition team payee', async () => {
@@ -115,12 +116,12 @@ describe('Compensation Detail View container', () => {
   });
 
   it('makes request to get person concept for interest holder payee', async () => {
-    const ihPerson: Api_InterestHolder = {
+    const ihPerson: ApiGen_Concepts_InterestHolder = {
       ...emptyApiInterestHolder,
       interestHolderId: 1,
       acquisitionFileId: 2,
       personId: 1,
-      person: { id: 1, firstName: 'first', surname: 'last' },
+      person: { ...getEmptyPerson(), id: 1, firstName: 'first', surname: 'last' },
     };
     setup({
       props: {
@@ -138,16 +139,16 @@ describe('Compensation Detail View container', () => {
       id: 1,
       firstName: 'first',
       surname: 'last',
-    } as Api_Person);
+    } as ApiGen_Concepts_Person);
   });
 
   it('makes request to get organization concept for interest holder payee', async () => {
-    const ihOrg: Api_InterestHolder = {
+    const ihOrg: ApiGen_Concepts_InterestHolder = {
       ...emptyApiInterestHolder,
       interestHolderId: 1,
       acquisitionFileId: 2,
       organizationId: 100,
-      organization: { id: 100, name: 'ABC Inc' },
+      organization: { ...getEmptyOrganization(), id: 100, name: 'ABC Inc' },
     };
 
     setup({

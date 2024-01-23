@@ -4,7 +4,7 @@ import MockAdapter from 'axios-mock-adapter';
 import { Claims } from '@/constants/index';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { mockNoteResponse } from '@/mocks/noteResponses.mock';
-import { Api_Note } from '@/models/api/Note';
+import { ApiGen_Concepts_Note } from '@/models/api/generated/ApiGen_Concepts_Note';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
@@ -84,7 +84,7 @@ describe('NoteDetailsFormModal component', () => {
   });
 
   it(`should not display the Last Updated info for system-generated notes`, async () => {
-    const systemNote: Api_Note = {
+    const systemNote: ApiGen_Concepts_Note = {
       ...mockNoteResponse(1),
       isSystemGenerated: true,
     };

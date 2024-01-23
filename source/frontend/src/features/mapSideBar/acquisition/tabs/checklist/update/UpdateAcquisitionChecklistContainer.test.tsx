@@ -1,3 +1,4 @@
+// eslint-disable-next-line simple-import-sort/imports
 import { createRef } from 'react';
 
 import { IUpdateChecklistFormProps } from '@/features/mapSideBar/shared/tabs/checklist/update/UpdateChecklistForm';
@@ -7,12 +8,12 @@ import {
   mockFileChecklistResponse,
 } from '@/mocks/acquisitionFiles.mock';
 import { mockLookups } from '@/mocks/index.mock';
-import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
-import { Api_FileWithChecklist } from '@/models/api/File';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, createAxiosError, render, RenderOptions, screen } from '@/utils/test-utils';
 
 import { UpdateAcquisitionChecklistContainer } from './UpdateAcquisitionChecklistContainer';
+import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
+import { ApiGen_Concepts_FileWithChecklist } from '@/models/api/generated/ApiGen_Concepts_FileWithChecklist';
 
 // mock API service calls
 jest.mock('@/hooks/repositories/useAcquisitionProvider');
@@ -37,7 +38,7 @@ const TestView: React.FC<IUpdateChecklistFormProps> = props => {
 };
 
 describe('UpdateAcquisitionChecklist container', () => {
-  let acquisitionFile: Api_AcquisitionFile | undefined = undefined;
+  let acquisitionFile: ApiGen_Concepts_AcquisitionFile | undefined = undefined;
   const onSuccess = jest.fn();
 
   const setup = (renderOptions: RenderOptions = {}) => {
@@ -82,9 +83,9 @@ describe('UpdateAcquisitionChecklist container', () => {
     setup();
     mockUpdateAcquisitionChecklist.mockResolvedValue(mockFileChecklistResponse());
 
-    let updatedChecklist: Api_FileWithChecklist | undefined;
+    let updatedChecklist: ApiGen_Concepts_FileWithChecklist | undefined;
     await act(async () => {
-      updatedChecklist = await viewProps?.onSave({} as Api_FileWithChecklist);
+      updatedChecklist = await viewProps?.onSave({} as ApiGen_Concepts_FileWithChecklist);
     });
 
     expect(mockUpdateAcquisitionChecklist).toHaveBeenCalled();
@@ -95,7 +96,7 @@ describe('UpdateAcquisitionChecklist container', () => {
     setup();
 
     await act(async () => {
-      viewProps?.onSuccess({} as Api_AcquisitionFile);
+      viewProps?.onSuccess({} as ApiGen_Concepts_AcquisitionFile);
     });
 
     expect(onSuccess).toHaveBeenCalled();

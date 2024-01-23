@@ -2,10 +2,10 @@ import orderBy from 'lodash/orderBy';
 import moment from 'moment';
 
 import { SelectOption } from '@/components/common/form';
-import { Api_FinancialCode } from '@/models/api/FinancialCode';
+import { ApiGen_Concepts_FinancialCode } from '@/models/api/generated/ApiGen_Concepts_FinancialCode';
 
 export function toDropDownOptions(
-  values: Api_FinancialCode[],
+  values: ApiGen_Concepts_FinancialCode[],
   includeExpired = false,
 ): SelectOption[] {
   return orderBy(values, ['displayOrder'], ['asc'])
@@ -18,7 +18,7 @@ export function toDropDownOptions(
     });
 }
 
-export function isExpiredCode(value: Api_FinancialCode): boolean {
+export function isExpiredCode(value: ApiGen_Concepts_FinancialCode): boolean {
   const now = moment();
 
   if (value.effectiveDate !== undefined && moment(value.effectiveDate).isAfter(now)) {

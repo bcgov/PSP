@@ -11,8 +11,8 @@ import { act } from 'react-test-renderer';
 import { IAddLeaseContainerProps } from '@/features/leases/add/AddLeaseContainer';
 import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
 import { mockLookups } from '@/mocks/lookups.mock';
-import { defaultApiLease } from '@/models/api/Lease';
-import { Api_PropertyImprovement } from '@/models/api/PropertyImprovement';
+import { ApiGen_Concepts_PropertyImprovement } from '@/models/api/generated/ApiGen_Concepts_PropertyImprovement';
+import { defaultApiLease } from '@/models/default_initializers';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { fillInput, renderAsync } from '@/utils/test-utils';
 
@@ -34,14 +34,16 @@ const SaveButton = () => {
 describe('Add Improvements container component', () => {
   const setup = async (
     renderOptions: RenderOptions &
-      Partial<IAddLeaseContainerProps> & { improvements?: Api_PropertyImprovement[] } = {},
+      Partial<IAddLeaseContainerProps> & {
+        improvements?: ApiGen_Concepts_PropertyImprovement[];
+      } = {},
   ) => {
     // render component under test
     const component = await renderAsync(
       <LeaseStateContext.Provider
         value={{
           lease: {
-            ...defaultApiLease,
+            ...defaultApiLease(),
             id: 1,
             rowVersion: 1,
           },
@@ -96,15 +98,15 @@ describe('Add Improvements container component', () => {
         {
           propertyImprovementTypeCode: { id: 'COMMBLDG' },
           address: 'test address 1',
-        } as Api_PropertyImprovement,
+        } as ApiGen_Concepts_PropertyImprovement,
         {
           propertyImprovementTypeCode: { id: 'OTHER' },
           address: 'test address 2',
-        } as Api_PropertyImprovement,
+        } as ApiGen_Concepts_PropertyImprovement,
         {
           propertyImprovementTypeCode: { id: 'RTA' },
           address: 'test address 3',
-        } as Api_PropertyImprovement,
+        } as ApiGen_Concepts_PropertyImprovement,
       ],
     });
 
@@ -162,15 +164,15 @@ describe('Add Improvements container component', () => {
         {
           propertyImprovementTypeCode: { id: 'COMMBLDG' },
           address: 'test address 1',
-        } as Api_PropertyImprovement,
+        } as ApiGen_Concepts_PropertyImprovement,
         {
           propertyImprovementTypeCode: { id: 'OTHER' },
           address: 'test address 2',
-        } as Api_PropertyImprovement,
+        } as ApiGen_Concepts_PropertyImprovement,
         {
           propertyImprovementTypeCode: { id: 'RTA' },
           address: 'test address 3',
-        } as Api_PropertyImprovement,
+        } as ApiGen_Concepts_PropertyImprovement,
       ],
     });
 

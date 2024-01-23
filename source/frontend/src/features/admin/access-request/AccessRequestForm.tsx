@@ -12,7 +12,7 @@ import TooltipWrapper from '@/components/common/TooltipWrapper';
 import * as API from '@/constants/API';
 import { DISCLAIMER_URL, PRIVACY_POLICY_URL } from '@/constants/strings';
 import { useLookupCodeHelpers } from '@/hooks/useLookupCodeHelpers';
-import { Api_AccessRequest } from '@/models/api/AccessRequest';
+import { ApiGen_Concepts_AccessRequest } from '@/models/api/generated/ApiGen_Concepts_AccessRequest';
 import { mapLookupCode } from '@/utils';
 import { AccessRequestSchema } from '@/utils/YupSchema';
 
@@ -21,7 +21,9 @@ import RolesToolTip from './RolesToolTip';
 
 interface IAccessRequestFormProps {
   initialValues: AccessRequestFormModel;
-  addAccessRequest: (accessRequest: Api_AccessRequest) => Promise<Api_AccessRequest | undefined>;
+  addAccessRequest: (
+    accessRequest: ApiGen_Concepts_AccessRequest,
+  ) => Promise<ApiGen_Concepts_AccessRequest | undefined>;
   onCancel?: () => void;
 }
 

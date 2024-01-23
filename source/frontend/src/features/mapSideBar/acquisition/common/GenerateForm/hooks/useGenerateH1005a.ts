@@ -9,11 +9,11 @@ import { usePropertyLeaseRepository } from '@/hooks/repositories/usePropertyLeas
 import { useSecurityDepositRepository } from '@/hooks/repositories/useSecurityDepositRepository';
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import { ApiGen_CodeTypes_ExternalResponseStatus } from '@/models/api/generated/ApiGen_CodeTypes_ExternalResponseStatus';
-import { Api_Lease } from '@/models/api/Lease';
+import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { Api_GenerateLease } from '@/models/generate/lease/GenerateLease';
 import { useAxiosErrorHandler } from '@/utils';
 
-export const useGenerateH1005a = (lease?: Api_Lease) => {
+export const useGenerateH1005a = (lease?: ApiGen_Concepts_Lease) => {
   const { generateDocumentDownloadWrappedRequest: generate } = useDocumentGenerationRepository();
   const {
     getInsurances: { execute: getInsurances },
@@ -42,7 +42,7 @@ export const useGenerateH1005a = (lease?: Api_Lease) => {
     onError: useAxiosErrorHandler('Failed to load lease, reload this page to try again.'),
   });
 
-  const generateH1005a = async (lease: Api_Lease) => {
+  const generateH1005a = async (lease: ApiGen_Concepts_Lease) => {
     if (lease?.id) {
       const updatedLeasePromise = getLease(lease.id);
       const insurancesPromise = getInsurances(lease.id);

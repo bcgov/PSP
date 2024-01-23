@@ -5,7 +5,7 @@ import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
 import Claims from '@/constants/claims';
 import { InventoryTabNames } from '@/features/mapSideBar/property/InventoryTabs';
 import { FileTabType } from '@/features/mapSideBar/shared/detail/FileTabs';
-import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
+import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { stripTrailingSlash } from '@/utils';
 import AppRoute from '@/utils/AppRoute';
 
@@ -24,7 +24,7 @@ import { UpdateStakeHolderForm } from '../tabs/stakeholders/update/UpdateStakeHo
 
 export interface IAcquisitionRouterProps {
   formikRef: React.Ref<FormikProps<any>>;
-  acquisitionFile?: Api_AcquisitionFile;
+  acquisitionFile?: ApiGen_Concepts_AcquisitionFile;
   isEditing: boolean;
   setIsEditing: (value: boolean) => void;
   defaultFileTab: FileTabType;

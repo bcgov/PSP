@@ -12,7 +12,7 @@ import { Claims, Roles } from '@/constants';
 import { InterestHolderType } from '@/constants/interestHolderTypes';
 import { usePersonRepository } from '@/features/contacts/repositories/usePersonRepository';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
-import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
+import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { prettyFormatDate } from '@/utils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
@@ -22,7 +22,7 @@ import { DetailAcquisitionFile } from './models';
 import StatusUpdateSolver from './statusUpdateSolver';
 
 export interface IAcquisitionSummaryViewProps {
-  acquisitionFile?: Api_AcquisitionFile;
+  acquisitionFile?: ApiGen_Concepts_AcquisitionFile;
   onEdit: () => void;
 }
 

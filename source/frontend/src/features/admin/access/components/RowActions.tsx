@@ -5,6 +5,7 @@ import { Menu } from '@/components/menu/Menu';
 import { AccessRequestStatus } from '@/constants/accessStatus';
 import { FormAccessRequest } from '@/features/admin/access-request/models';
 import { useAccessRequests } from '@/hooks/pims-api/useAccessRequests';
+import { toTypeCodeNullable } from '@/utils/formUtils';
 
 export const RowActions = (props: CellProps<FormAccessRequest> & { refresh: () => void }) => {
   const accessRequest = props.row.original;
@@ -20,7 +21,7 @@ export const RowActions = (props: CellProps<FormAccessRequest> & { refresh: () =
     if (accessRequest) {
       await update({
         ...accessRequest.toApi(),
-        accessRequestStatusTypeCode: { id: AccessRequestStatus.Approved },
+        accessRequestStatusTypeCode: toTypeCodeNullable(AccessRequestStatus.Approved),
       });
       props.refresh();
     }
@@ -29,7 +30,7 @@ export const RowActions = (props: CellProps<FormAccessRequest> & { refresh: () =
     if (accessRequest) {
       await update({
         ...accessRequest.toApi(),
-        accessRequestStatusTypeCode: { id: AccessRequestStatus.Denied },
+        accessRequestStatusTypeCode: toTypeCodeNullable(AccessRequestStatus.Denied),
       });
       props.refresh();
     }
@@ -39,7 +40,7 @@ export const RowActions = (props: CellProps<FormAccessRequest> & { refresh: () =
     if (accessRequest) {
       await update({
         ...accessRequest.toApi(),
-        accessRequestStatusTypeCode: { id: AccessRequestStatus.Received },
+        accessRequestStatusTypeCode: toTypeCodeNullable(AccessRequestStatus.Received),
       });
       props.refresh();
     }
@@ -49,7 +50,7 @@ export const RowActions = (props: CellProps<FormAccessRequest> & { refresh: () =
     if (accessRequest) {
       await remove({
         ...accessRequest.toApi(),
-        accessRequestStatusTypeCode: { id: AccessRequestStatus.Denied },
+        accessRequestStatusTypeCode: toTypeCodeNullable(AccessRequestStatus.Denied),
       });
       props.refresh();
     }

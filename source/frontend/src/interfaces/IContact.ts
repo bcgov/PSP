@@ -1,4 +1,4 @@
-import ITypeCode from './ITypeCode';
+import { ApiGen_Base_CodeType } from '@/models/api/generated/ApiGen_Base_CodeType';
 
 export interface IContactCountry {
   countryId: number;
@@ -15,7 +15,7 @@ export interface IContactProvince {
 export interface IContactAddress {
   id: number;
   rowVersion: number;
-  addressType: ITypeCode<string>;
+  addressType: ApiGen_Base_CodeType<string>;
   streetAddress1?: string;
   streetAddress2?: string;
   streetAddress3?: string;
@@ -29,7 +29,7 @@ export interface IContactAddress {
 export interface IContactMethod {
   id: number;
   rowVersion: number;
-  contactMethodType: ITypeCode<string>;
+  contactMethodType: ApiGen_Base_CodeType<string>;
   value: string;
 }
 

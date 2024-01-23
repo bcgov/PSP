@@ -3,7 +3,7 @@ import { createRef } from 'react';
 
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { mockAcquisitionFileResponse, mockLookups } from '@/mocks/index.mock';
-import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
+import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
@@ -52,7 +52,7 @@ const TestView: React.FC<IUpdateAcquisitionFormProps> = props => {
 };
 
 describe('UpdateAcquisition container', () => {
-  let acquisitionFile: Api_AcquisitionFile;
+  let acquisitionFile: ApiGen_Concepts_AcquisitionFile;
   const onSuccess = jest.fn();
 
   const setup = (renderOptions: RenderOptions = {}) => {

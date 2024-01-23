@@ -4,15 +4,15 @@ import DocumentListContainer from '@/features/documents/list/DocumentListContain
 import NoteListView from '@/features/notes/list/NoteListView';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
-import { Api_Project } from '@/models/api/Project';
+import { ApiGen_Concepts_Project } from '@/models/api/generated/ApiGen_Concepts_Project';
 
 import { ProjectContainerState, ProjectPageNames } from '../ProjectContainer';
 import ProjectSummaryView from './projectDetails/detail/ProjectSummaryView';
 import { ProjectTabNames, ProjectTabs, ProjectTabView } from './ProjectTabs';
 
 export interface IProjectTabsContainerProps {
-  project?: Api_Project;
-  setProject: (project: Api_Project) => void;
+  project?: ApiGen_Concepts_Project;
+  setProject: (project: ApiGen_Concepts_Project) => void;
   setContainerState: (value: Partial<ProjectContainerState>) => void;
   onEdit?: () => {};
   activeTab?: ProjectTabNames;

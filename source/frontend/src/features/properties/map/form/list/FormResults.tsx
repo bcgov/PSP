@@ -1,15 +1,16 @@
 import { Table } from '@/components/Table';
 import { TableSort } from '@/components/Table/TableSort';
-import { Api_FormDocumentFile, Api_FormDocumentType } from '@/models/api/FormDocument';
+import { ApiGen_Concepts_FormDocumentFile } from '@/models/api/generated/ApiGen_Concepts_FormDocumentFile';
+import { ApiGen_Concepts_FormDocumentType } from '@/models/api/generated/ApiGen_Concepts_FormDocumentType';
 
 import { createFormTableColumns } from './columns';
 
 export interface IFormResultProps {
-  results: Api_FormDocumentFile[];
+  results: ApiGen_Concepts_FormDocumentFile[];
   loading?: boolean;
-  sort: TableSort<Api_FormDocumentType>;
-  setSort: (value: TableSort<Api_FormDocumentType>) => void;
-  onShowForm: (form: Api_FormDocumentFile) => void;
+  sort: TableSort<ApiGen_Concepts_FormDocumentType>;
+  setSort: (value: TableSort<ApiGen_Concepts_FormDocumentType>) => void;
+  onShowForm: (form: ApiGen_Concepts_FormDocumentFile) => void;
   onDelete: (formFileId: number) => void;
 }
 
@@ -19,7 +20,7 @@ export function FormResults(props: IFormResultProps) {
   const columns = createFormTableColumns(props.onShowForm, props.onDelete);
 
   return (
-    <Table<Api_FormDocumentFile>
+    <Table<ApiGen_Concepts_FormDocumentFile>
       name="AcquisitionFormTable"
       manualSortBy={false}
       lockPageSize={true}

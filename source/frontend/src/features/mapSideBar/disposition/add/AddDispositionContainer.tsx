@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { useInitialMapSelectorProperties } from '@/hooks/useInitialMapSelectorProperties';
-import { Api_DispositionFile } from '@/models/api/DispositionFile';
+import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
 import { featuresetToMapProperty } from '@/utils';
 
 import { PropertyForm } from '../../shared/models';
@@ -61,7 +61,7 @@ const AddDispositionContainer: React.FC<IAddDispositionContainerProps> = ({ onCl
     formikRef.current?.submitForm();
   };
 
-  const handleSuccess = async (disposition: Api_DispositionFile) => {
+  const handleSuccess = async (disposition: ApiGen_Concepts_DispositionFile) => {
     mapMachine.refreshMapProperties();
     history.replace(`/mapview/sidebar/disposition/${disposition.id}`);
   };

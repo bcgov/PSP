@@ -5,7 +5,7 @@ import { createMemoryHistory } from 'history';
 import { NoteTypes } from '@/constants/index';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { mockEntityNote } from '@/mocks/noteResponses.mock';
-import { Api_EntityNote } from '@/models/api/Note';
+import { ApiGen_Concepts_EntityNote } from '@/models/api/generated/ApiGen_Concepts_EntityNote';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
@@ -104,7 +104,7 @@ describe('AddNotesContainer component', () => {
     expect(closeModal).toBeCalled();
     expect(onSuccess).toBeCalled();
 
-    const axiosData: Api_EntityNote = JSON.parse(mockAxios.history.post[0].data);
+    const axiosData: ApiGen_Concepts_EntityNote = JSON.parse(mockAxios.history.post[0].data);
     const expectedValues = formValues.toApi();
 
     expect(mockAxios.history.post[0].url).toBe('/notes/activity');

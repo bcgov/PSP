@@ -3,14 +3,14 @@ import { useCallback } from 'react';
 
 import { useDispositionProvider } from '@/hooks/repositories/useDispositionProvider';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
-import { Api_DispositionFile } from '@/models/api/DispositionFile';
+import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 
 import { DispositionFormModel } from '../models/DispositionFormModel';
 
 export interface IUseAddDispositionFormmanagementProps {
   formikRef: React.RefObject<FormikProps<DispositionFormModel>>;
-  onSuccess?: (dispositionFile: Api_DispositionFile) => Promise<void>;
+  onSuccess?: (dispositionFile: ApiGen_Concepts_DispositionFile) => Promise<void>;
 }
 
 const useAddDispositionFormManagement = (props: IUseAddDispositionFormmanagementProps) => {

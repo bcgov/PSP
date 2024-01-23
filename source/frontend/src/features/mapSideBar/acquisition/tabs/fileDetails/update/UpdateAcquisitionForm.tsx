@@ -23,8 +23,8 @@ import { useOrganizationRepository } from '@/features/contacts/repositories/useO
 import { useProjectProvider } from '@/hooks/repositories/useProjectProvider';
 import { useLookupCodeHelpers } from '@/hooks/useLookupCodeHelpers';
 import { IAutocompletePrediction } from '@/interfaces';
-import { Api_OrganizationPerson } from '@/models/api/Organization';
-import { Api_Product } from '@/models/api/Project';
+import { ApiGen_Concepts_OrganizationPerson } from '@/models/api/generated/ApiGen_Concepts_OrganizationPerson';
+import { ApiGen_Concepts_Product } from '@/models/api/generated/ApiGen_Concepts_Product';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
 import UpdateAcquisitionOwnersSubForm from '../../../common/update/acquisitionOwners/UpdateAcquisitionOwnersSubForm';
@@ -74,9 +74,9 @@ const AcquisitionDetailSubForm: React.FC<{
     values: { fileStatusTypeCode },
   } = formikProps;
 
-  const [projectProducts, setProjectProducts] = React.useState<Api_Product[] | undefined>(
-    undefined,
-  );
+  const [projectProducts, setProjectProducts] = React.useState<
+    ApiGen_Concepts_Product[] | undefined
+  >(undefined);
   const { retrieveProjectProducts } = useProjectProvider();
   const { getOptionsByType } = useLookupCodeHelpers();
   const regionTypes = getOptionsByType(API.REGION_TYPES);
@@ -137,7 +137,7 @@ const AcquisitionDetailSubForm: React.FC<{
   }, [orgPersons, setFieldValue]);
 
   const primaryContacts: SelectOption[] =
-    orgPersons?.map((orgPerson: Api_OrganizationPerson) => {
+    orgPersons?.map((orgPerson: ApiGen_Concepts_OrganizationPerson) => {
       return {
         label: `${formatApiPersonNames(orgPerson.person)}`,
         value: orgPerson.personId ?? ' ',

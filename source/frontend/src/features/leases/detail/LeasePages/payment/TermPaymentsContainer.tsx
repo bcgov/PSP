@@ -13,8 +13,8 @@ import { LeasePageProps } from '@/features/mapSideBar/lease/LeaseContainer';
 import { useLeasePaymentRepository } from '@/hooks/repositories/useLeasePaymentRepository';
 import { useLeaseTermRepository } from '@/hooks/repositories/useLeaseTermRepository';
 import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
-import { defaultApiLease } from '@/models/api/Lease';
-import { Api_LeaseTerm } from '@/models/api/LeaseTerm';
+import { ApiGen_Concepts_LeaseTerm } from '@/models/api/generated/ApiGen_Concepts_LeaseTerm';
+import { getEmptyLease } from '@/models/default_initializers';
 import { SystemConstants, useSystemConstants } from '@/store/slices/systemConstants';
 
 import { useDeleteTermsPayments } from './hooks/useDeleteTermsPayments';
@@ -35,7 +35,7 @@ export const TermPaymentsContainer: React.FunctionComponent<
   const [editPaymentModalValues, setEditPaymentModalValues] = useState<
     FormLeasePayment | undefined
   >(undefined);
-  const [terms, setTerms] = useState<Api_LeaseTerm[]>([]);
+  const [terms, setTerms] = useState<ApiGen_Concepts_LeaseTerm[]>([]);
 
   const { updateLeaseTerm, addLeaseTerm, getLeaseTerms, deleteLeaseTerm } =
     useLeaseTermRepository();
@@ -182,7 +182,7 @@ export const TermPaymentsContainer: React.FunctionComponent<
         onGenerate={onGenerate}
         isReceivable={lease?.paymentReceivableType?.id === 'RCVBL'}
         lease={LeaseFormModel.fromApi({
-          ...defaultApiLease,
+          ...getEmptyLease(),
           terms: terms,
           type: lease?.type ?? null,
         })}

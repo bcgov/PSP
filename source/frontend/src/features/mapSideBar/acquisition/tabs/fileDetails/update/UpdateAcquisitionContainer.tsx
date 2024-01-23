@@ -8,7 +8,7 @@ import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvi
 import useApiUserOverride from '@/hooks/useApiUserOverride';
 import { useModalContext } from '@/hooks/useModalContext';
 import { IApiError } from '@/interfaces/IApiError';
-import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
+import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 
 import { UpdateAcquisitionSummaryFormModel } from './models';
@@ -16,7 +16,7 @@ import { UpdateAcquisitionFileYupSchema } from './UpdateAcquisitionFileYupSchema
 import { IUpdateAcquisitionFormProps } from './UpdateAcquisitionForm';
 
 export interface IUpdateAcquisitionContainerProps {
-  acquisitionFile: Api_AcquisitionFile;
+  acquisitionFile: ApiGen_Concepts_AcquisitionFile;
   onSuccess: () => void;
   View: React.FC<IUpdateAcquisitionFormProps>;
 }
@@ -44,7 +44,7 @@ export const UpdateAcquisitionContainer = React.forwardRef<
   } = useAcquisitionProvider();
 
   const withUserOverride = useApiUserOverride<
-    (userOverrideCodes: UserOverrideCode[]) => Promise<Api_AcquisitionFile | void>
+    (userOverrideCodes: UserOverrideCode[]) => Promise<ApiGen_Concepts_AcquisitionFile | void>
   >('Failed to update Acquisition File');
 
   const handleSubmit = async (

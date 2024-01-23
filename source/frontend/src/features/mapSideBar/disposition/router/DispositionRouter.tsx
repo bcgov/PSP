@@ -5,7 +5,7 @@ import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
 import Claims from '@/constants/claims';
 import { InventoryTabNames } from '@/features/mapSideBar/property/InventoryTabs';
 import { FileTabType } from '@/features/mapSideBar/shared/detail/FileTabs';
-import { Api_DispositionFile } from '@/models/api/DispositionFile';
+import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
 import { stripTrailingSlash } from '@/utils';
 import AppRoute from '@/utils/AppRoute';
 
@@ -21,7 +21,7 @@ import DispositionOfferForm from '../tabs/offersAndSale/dispositionOffer/form/Di
 import UpdateDispositionOfferContainer from '../tabs/offersAndSale/dispositionOffer/update/UpdateDispositionOfferContainer';
 export interface IDispositionRouterProps {
   formikRef: React.Ref<FormikProps<any>>;
-  dispositionFile?: Api_DispositionFile;
+  dispositionFile?: ApiGen_Concepts_DispositionFile;
   isEditing: boolean;
   setIsEditing: (value: boolean) => void;
   defaultFileTab: FileTabType;
