@@ -13,6 +13,7 @@ import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_C
 import { ApiGen_Concepts_Agreement } from '@/models/api/generated/ApiGen_Concepts_Agreement';
 import { ILookupCode } from '@/store/slices/lookupCodes';
 
+import { cannotEditMessage } from '../../../common/constants';
 import StatusUpdateSolver from '../../fileDetails/detail/statusUpdateSolver';
 import AgreementSubForm from './AgreementSubForm';
 import { AgreementsFormModel, SingleAgreementFormModel } from './models';
@@ -46,9 +47,6 @@ export const UpdateAgreementsForm: React.FC<IUpdateAgreementsFormProps> = ({
   };
 
   const statusSolver = new StatusUpdateSolver(acquistionFile);
-
-  const cannotEditMessage =
-    'The file you are viewing is in a non-editable state. Change the file status to active or draft to allow editing.';
 
   return (
     <StyledFormWrapper>

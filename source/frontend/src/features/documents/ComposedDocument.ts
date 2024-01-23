@@ -9,7 +9,7 @@ import { ApiGen_Mayan_DocumentMetadata } from '@/models/api/generated/ApiGen_May
 import { ApiGen_Mayan_DocumentTypeMetadataType } from '@/models/api/generated/ApiGen_Mayan_DocumentTypeMetadataType';
 import { ApiGen_Requests_DocumentUpdateRequest } from '@/models/api/generated/ApiGen_Requests_DocumentUpdateRequest';
 import { ApiGen_Requests_DocumentUploadRequest } from '@/models/api/generated/ApiGen_Requests_DocumentUploadRequest';
-import { UtcIsoDateTime } from '@/models/api/UtcIsoDateTime';
+import { EpochIsoDateTime, UtcIsoDateTime } from '@/models/api/UtcIsoDateTime';
 
 export interface ComposedDocument {
   mayanMetadata?: ApiGen_Mayan_DocumentMetadata[];
@@ -80,16 +80,16 @@ export class DocumentRow {
         fileName: document.fileName ?? null,
         rowVersion: 1,
 
-        appCreateTimestamp: '',
-        appLastUpdateTimestamp: '',
+        appCreateTimestamp: EpochIsoDateTime,
+        appLastUpdateTimestamp: EpochIsoDateTime,
         appLastUpdateUserid: null,
         appCreateUserid: null,
         appLastUpdateUserGuid: null,
         appCreateUserGuid: null,
       },
       rowVersion: 0,
-      appCreateTimestamp: '',
-      appLastUpdateTimestamp: '',
+      appCreateTimestamp: EpochIsoDateTime,
+      appLastUpdateTimestamp: EpochIsoDateTime,
       appLastUpdateUserid: null,
       appCreateUserid: null,
       appLastUpdateUserGuid: null,

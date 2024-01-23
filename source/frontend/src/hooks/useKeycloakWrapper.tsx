@@ -173,7 +173,7 @@ export function useKeycloakWrapper(): IKeycloak {
     firstName: firstName(),
     surname: surname(),
     email: email(),
-    isAdmin: hasRole(Roles.SYSTEM_ADMINISTRATOR) || hasRole(Roles.ORGANIZATION_ADMINISTRATOR),
+    isAdmin: hasRole(Roles.SYSTEM_ADMINISTRATOR),
     roles: roles(),
     organizationId: userInfo?.organizations?.find(x => x),
     hasRole: hasRole,

@@ -3,7 +3,7 @@ import { PropertyDataSourceTypes } from '@/constants/propertyDataSourceTypes';
 import { PropertyStatusTypes } from '@/constants/propertyStatusTypes';
 import { PropertyTenureTypes } from '@/constants/propertyTenureTypes';
 import { IProperty } from '@/interfaces';
-import { mockAddress } from '@/mocks/index.mock';
+import { mockAcquisitionFileResponse, mockAddress } from '@/mocks/index.mock';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { ApiGen_Concepts_PropertyLease } from '@/models/api/generated/ApiGen_Concepts_PropertyLease';
@@ -219,7 +219,7 @@ export const getMockApiPropertyFiles = (): ApiGen_Concepts_FileProperty[] => [
   {
     id: 1,
     fileId: 1,
-    file: null,
+    file: mockAcquisitionFileResponse(),
     propertyName: 'test property name',
     propertyId: 1,
     property: {
@@ -263,6 +263,8 @@ export const getMockApiPropertyFiles = (): ApiGen_Concepts_FileProperty[] => [
   {
     id: 2,
     propertyId: 2,
+    fileId: 2,
+    file: mockAcquisitionFileResponse(),
     property: {
       ...emptyProperty,
       id: 2,
@@ -299,8 +301,6 @@ export const getMockApiPropertyFiles = (): ApiGen_Concepts_FileProperty[] => [
       rowVersion: 5,
     },
     displayOrder: null,
-    fileId: 1,
-    file: null,
     propertyName: null,
     rowVersion: null,
   },

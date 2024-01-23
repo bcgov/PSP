@@ -16,6 +16,7 @@ import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_C
 import { exists, prettyFormatDate } from '@/utils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
+import { cannotEditMessage } from '../../../common/constants';
 import AcquisitionOwnersSummaryContainer from './AcquisitionOwnersSummaryContainer';
 import AcquisitionOwnersSummaryView from './AcquisitionOwnersSummaryView';
 import { DetailAcquisitionFile } from './models';
@@ -62,9 +63,6 @@ const AcquisitionSummaryView: React.FC<IAcquisitionSummaryViewProps> = ({
   );
 
   const statusSolver = new StatusUpdateSolver(acquisitionFile);
-
-  const cannotEditMessage =
-    'The file you are viewing is in a non-editable state. Change the file status to active or draft to allow editing.';
 
   const canEditDetails = () => {
     if (hasRole(Roles.SYSTEM_ADMINISTRATOR) || statusSolver.canEditDetails()) {

@@ -85,12 +85,33 @@ describe('AcquisitionSummaryView component', () => {
 
   it('does not render the edit button for users that do not have acquisition edit permissions', async () => {
     const { queryByTitle } = setup(
-      { acquisitionFile: mockAcquisitionFileResponse() },
+      {
+        acquisitionFile: {
+          ...mockAcquisitionFileResponse(),
+        },
+      },
       { claims: [] },
     );
     await waitForEffects();
     const editButton = queryByTitle('Edit acquisition file');
     expect(editButton).toBeNull();
+  });
+
+  it('does not render the edit button for non-admin users when the file is finalized', async () => {
+    const { queryByTitle, getByTestId } = setup(
+      {
+        acquisitionFile: {
+          ...mockAcquisitionFileResponse(),
+          fileStatusTypeCode: { id: 'COMPLETE' },
+        },
+      },
+      { claims: [Claims.ACQUISITION_EDIT] },
+    );
+    await waitForEffects();
+    const editButton = queryByTitle('Edit acquisition file');
+    expect(editButton).toBeNull();
+    const editWarningText = getByTestId('tooltip-icon-1-summary-cannot-edit-tooltip');
+    expect(editWarningText).toBeVisible();
   });
 
   it('renders historical file number', async () => {

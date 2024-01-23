@@ -21,6 +21,7 @@ import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_P
 import { exists, formatMoney, prettyFormatDate } from '@/utils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
+import { cannotEditMessage } from '../../../common/constants';
 import { DetailAcquisitionFileOwner } from '../../../models/DetailAcquisitionFileOwner';
 import StatusUpdateSolver from '../../fileDetails/detail/statusUpdateSolver';
 
@@ -142,9 +143,6 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
 
     return false;
   };
-
-  const cannotEditMessage =
-    'The file you are viewing is in a non-editable state. Change the file status to active or draft to allow editing.';
 
   const editButtonBlock = (
     <EditButton

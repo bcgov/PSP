@@ -8,10 +8,15 @@ import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledEditWrapper, StyledSummarySection } from '@/components/common/Section/SectionStyles';
 import { H2 } from '@/components/common/styles';
+import TooltipIcon from '@/components/common/TooltipIcon';
 import AreaContainer from '@/components/measurements/AreaContainer';
 import * as API from '@/constants/API';
 import { Claims } from '@/constants/claims';
+import Roles from '@/constants/roles';
 import { TakesStatusTypes } from '@/constants/takesStatusTypes';
+import { cannotEditMessage } from '@/features/mapSideBar/acquisition/common/constants';
+import { isAcquisitionFile } from '@/features/mapSideBar/acquisition/tabs/agreement/update/models';
+import StatusUpdateSolver from '@/features/mapSideBar/acquisition/tabs/fileDetails/detail/statusUpdateSolver';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
@@ -44,18 +49,35 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
   const takesNotInFile = allTakesCount - (takes?.length ?? 0);
 
   const { getCodeById } = useLookupCodeHelpers();
-  const { hasClaim } = useKeycloakWrapper();
+  const { hasClaim, hasRole } = useKeycloakWrapper();
+
+  const file = fileProperty.file;
+
+  const statusSolver = new StatusUpdateSolver(isAcquisitionFile(file) ? file : null);
+
+  const canEditDetails = () => {
+    if (hasRole(Roles.SYSTEM_ADMINISTRATOR) || statusSolver.canEditDetails()) {
+      return true;
+    }
+    return false;
+  };
 
   return (
     <StyledSummarySection>
       <LoadingBackdrop show={loading} parentScreen={true} />
       <StyledEditWrapper>
-        {onEdit !== undefined && hasClaim(Claims.PROPERTY_EDIT) && (
+        {onEdit !== undefined && hasClaim(Claims.PROPERTY_EDIT) && canEditDetails() ? (
           <EditButton
             title="Edit takes"
             onClick={() => {
               onEdit(true);
             }}
+          />
+        ) : null}
+        {!canEditDetails() && (
+          <TooltipIcon
+            toolTipId={`${fileProperty?.fileId || 0}-summary-cannot-edit-tooltip`}
+            toolTip={cannotEditMessage}
           />
         )}
       </StyledEditWrapper>

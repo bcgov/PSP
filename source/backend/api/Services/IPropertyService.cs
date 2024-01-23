@@ -39,7 +39,7 @@ namespace Pims.Api.Services
 
         bool DeleteActivity(long activityId);
 
-        PimsProperty PopulateNewProperty(PimsProperty property);
+        PimsProperty PopulateNewProperty(PimsProperty property, bool isOwned = false, bool isPropertyOfInterest = true);
 
         void UpdateLocation(PimsProperty acquisitionProperty, ref PimsProperty propertyToUpdate, IEnumerable<UserOverrideCode> overrideCodes);
     }

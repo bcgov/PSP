@@ -20,10 +20,8 @@ namespace Pims.Dal.Entities;
 [Index("PropertyAreaUnitTypeCode", Name = "PRPRTY_PROPERTY_AREA_UNIT_TYPE_CODE_IDX")]
 [Index("PropertyClassificationTypeCode", Name = "PRPRTY_PROPERTY_CLASSIFICATION_TYPE_CODE_IDX")]
 [Index("PropertyDataSourceTypeCode", Name = "PRPRTY_PROPERTY_DATA_SOURCE_TYPE_CODE_IDX")]
-[Index("PropertyManagerId", Name = "PRPRTY_PROPERTY_MANAGER_ID_IDX")]
 [Index("PropertyStatusTypeCode", Name = "PRPRTY_PROPERTY_STATUS_TYPE_CODE_IDX")]
 [Index("PropertyTypeCode", Name = "PRPRTY_PROPERTY_TYPE_CODE_IDX")]
-[Index("PropMgmtOrgId", Name = "PRPRTY_PROP_MGMT_ORG_ID_IDX")]
 [Index("RegionCode", Name = "PRPRTY_REGION_CODE_IDX")]
 [Index("SurplusDeclarationTypeCode", Name = "PRPRTY_SURPLUS_DECLARATION_TYPE_CODE_IDX")]
 [Index("SurveyPlanNumber", Name = "PRPRTY_SURVEY_PLAN_NUMBER_IDX")]
@@ -34,12 +32,6 @@ public partial class PimsProperty
     [Key]
     [Column("PROPERTY_ID")]
     public long PropertyId { get; set; }
-
-    [Column("PROPERTY_MANAGER_ID")]
-    public long? PropertyManagerId { get; set; }
-
-    [Column("PROP_MGMT_ORG_ID")]
-    public long? PropMgmtOrgId { get; set; }
 
     [Required]
     [Column("PROPERTY_TYPE_CODE")]
@@ -224,6 +216,12 @@ public partial class PimsProperty
     /// </summary>
     [Column("IS_OWNED")]
     public bool IsOwned { get; set; }
+
+    /// <summary>
+    /// Has the property currently in disposition status?  This infers that the property was once owned by the Ministry but has since ceased to retain ownership of the property.
+    /// </summary>
+    [Column("IS_DISPOSED")]
+    public bool IsDisposed { get; set; }
 
     /// <summary>
     /// Is this a property of interest to the Ministry?
@@ -417,10 +415,6 @@ public partial class PimsProperty
     [InverseProperty("PimsProperties")]
     public virtual PimsPphStatusType PphStatusTypeCodeNavigation { get; set; }
 
-    [ForeignKey("PropMgmtOrgId")]
-    [InverseProperty("PimsProperties")]
-    public virtual PimsOrganization PropMgmtOrg { get; set; }
-
     [ForeignKey("PropertyAreaUnitTypeCode")]
     [InverseProperty("PimsProperties")]
     public virtual PimsAreaUnitType PropertyAreaUnitTypeCodeNavigation { get; set; }
@@ -432,10 +426,6 @@ public partial class PimsProperty
     [ForeignKey("PropertyDataSourceTypeCode")]
     [InverseProperty("PimsProperties")]
     public virtual PimsDataSourceType PropertyDataSourceTypeCodeNavigation { get; set; }
-
-    [ForeignKey("PropertyManagerId")]
-    [InverseProperty("PimsProperties")]
-    public virtual PimsPerson PropertyManager { get; set; }
 
     [ForeignKey("PropertyStatusTypeCode")]
     [InverseProperty("PimsProperties")]

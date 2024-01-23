@@ -1,3 +1,4 @@
+import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { ApiGen_Concepts_Agreement } from '@/models/api/generated/ApiGen_Concepts_Agreement';
 import { getEmptyBaseAudit } from '@/models/default_initializers';
 import { stringToNull, stringToNumberOrNull, toTypeCodeNullable } from '@/utils/formUtils';
@@ -110,3 +111,6 @@ export class AgreementsFormModel {
     return this.agreements.map(x => x.toApi(this.acquisitionFileId));
   }
 }
+
+export const isAcquisitionFile = (file: unknown): file is ApiGen_Concepts_AcquisitionFile =>
+  !!file && Object.prototype.hasOwnProperty.call(file, 'acquisitionTypeCode');
