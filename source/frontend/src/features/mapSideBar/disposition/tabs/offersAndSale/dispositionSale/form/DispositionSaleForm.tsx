@@ -185,7 +185,12 @@ const DispositionSaleForm: React.FunctionComponent<
       </SectionField>
 
       <SectionField label="Net proceeds before SPP cost ($)" labelWidth="5" contentWidth="5">
-        <FastCurrencyInput formikProps={formikProps} field="netProceedsBeforeSppAmount" disabled />
+        <FastCurrencyInput
+          formikProps={formikProps}
+          field="netProceedsBeforeSppAmount"
+          allowNegative
+          disabled
+        />
       </SectionField>
       <SectionField
         label="SPP Amount ($)"
@@ -202,7 +207,12 @@ const DispositionSaleForm: React.FunctionComponent<
         contentWidth="5"
         tooltip="Net Proceeds after SPP Cost = Final Sales price, less Commissions, GST, Net Book Value, Total Cost of Sales,  and SPP Amount."
       >
-        <FastCurrencyInput formikProps={formikProps} field="netProceedsAfterSppAmount" disabled />
+        <FastCurrencyInput
+          formikProps={formikProps}
+          field="netProceedsAfterSppAmount"
+          allowNegative
+          disabled
+        />
       </SectionField>
       <SectionField label="Remediation cost ($)" labelWidth="5" contentWidth="5">
         <FastCurrencyInput formikProps={formikProps} field="remediationAmount" />

@@ -338,6 +338,37 @@ describe('DispositionSaleForm  component', () => {
     expect(getNetProceedsAfterSPPAmountTextbox()).toHaveValue('$8,500.00');
   });
 
+  it('Calculates the Net Proceeds WITH Negative Values', async () => {
+    const {
+      getFinalSaleAmountTextbox,
+      getRealtorCommissionAmountTextbox,
+      getGSTCollectedAmountTextbox,
+      getNetProceedsBeforeSPPAmountTextbox,
+      getNetProceedsAfterSPPAmountTextbox,
+    } = await setup({
+      props: { dispostionSaleId: null },
+    });
+
+    expect(getFinalSaleAmountTextbox()).toBeVisible();
+    expect(getFinalSaleAmountTextbox()).toHaveValue('');
+    expect(getGSTCollectedAmountTextbox()).toBeNull();
+
+    await act(async () => {
+      fireEvent.change(getFinalSaleAmountTextbox(), { target: { value: '$1,000.00' } });
+    });
+    fireEvent.blur(getFinalSaleAmountTextbox());
+    await waitForEffects();
+
+    await act(async () => {
+      fireEvent.change(getRealtorCommissionAmountTextbox(), { target: { value: '$1,500.00' } });
+    });
+    fireEvent.blur(getRealtorCommissionAmountTextbox());
+    await waitForEffects();
+
+    expect(getNetProceedsBeforeSPPAmountTextbox()).toHaveValue('-$500.00');
+    expect(getNetProceedsAfterSPPAmountTextbox()).toHaveValue('-$500.00');
+  });
+
   it('Displays Warning when removing the GST is required', async () => {
     const {
       container,
