@@ -4,7 +4,7 @@ import { Claims } from '@/constants/claims';
 import { DispositionSaleFormModel } from '@/features/mapSideBar/disposition/models/DispositionSaleFormModel';
 import { mockDispositionSaleApi } from '@/mocks/dispositionFiles.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
-import { Api_DispositionFileSale } from '@/models/api/DispositionFile';
+import { ApiGen_Concepts_DispositionFileSale } from '@/models/api/generated/ApiGen_Concepts_DispositionFileSale';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, render, RenderOptions, waitForEffects } from '@/utils/test-utils';
 
@@ -118,11 +118,11 @@ describe('Update Disposition Appraisal Container component', () => {
     await setup();
     await waitForEffects();
 
-    let createdSale: Api_DispositionFileSale | undefined;
+    let createdSale: ApiGen_Concepts_DispositionFileSale | undefined;
     await act(async () => {
       createdSale = await viewProps?.onSave({
         id: null,
-      } as Api_DispositionFileSale);
+      } as ApiGen_Concepts_DispositionFileSale);
     });
 
     expect(mockPostSaleApi.execute).toHaveBeenCalled();
@@ -137,9 +137,9 @@ describe('Update Disposition Appraisal Container component', () => {
     await setup({ props: { dispositionFileId: 1 } });
     await waitForEffects();
 
-    let updatedAppraisal: Api_DispositionFileSale | undefined;
+    let updatedAppraisal: ApiGen_Concepts_DispositionFileSale | undefined;
     await act(async () => {
-      updatedAppraisal = await viewProps?.onSave({ id: 1 } as Api_DispositionFileSale);
+      updatedAppraisal = await viewProps?.onSave({ id: 1 } as ApiGen_Concepts_DispositionFileSale);
     });
 
     expect(mockPutSaleApi.execute).toHaveBeenCalled();

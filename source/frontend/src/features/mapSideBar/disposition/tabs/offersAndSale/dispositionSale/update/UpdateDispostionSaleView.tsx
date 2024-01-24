@@ -7,7 +7,7 @@ import { DispositionSaleFormModel } from '@/features/mapSideBar/disposition/mode
 import SidebarFooter from '@/features/mapSideBar/shared/SidebarFooter';
 import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
 import { IApiError } from '@/interfaces/IApiError';
-import { Api_DispositionFileSale } from '@/models/api/DispositionFile';
+import { ApiGen_Concepts_DispositionFileSale } from '@/models/api/generated/ApiGen_Concepts_DispositionFileSale';
 
 import DispositionSaleForm from '../form/DispositionSaleForm';
 import { DispositionSaleFormYupSchema } from '../form/DispositionSaleFormYupSchema';
@@ -15,7 +15,9 @@ import { DispositionSaleFormYupSchema } from '../form/DispositionSaleFormYupSche
 export interface IUpdateDispositionSaleViewProps {
   initialValues: DispositionSaleFormModel;
   loading: boolean;
-  onSave: (sale: Api_DispositionFileSale) => Promise<Api_DispositionFileSale | undefined>;
+  onSave: (
+    sale: ApiGen_Concepts_DispositionFileSale,
+  ) => Promise<ApiGen_Concepts_DispositionFileSale | undefined>;
   onCancel: () => void;
   onSuccess: () => void;
   onError: (e: AxiosError<IApiError>) => void;

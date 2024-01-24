@@ -8,10 +8,10 @@ import {
   Api_DispositionFileAppraisal,
   Api_DispositionFileOffer,
   Api_DispositionFileProperty,
-  Api_DispositionFileSale,
   Api_DispositionFileTeam,
 } from '@/models/api/DispositionFile';
 import { Api_FileChecklistItem, Api_FileWithChecklist, Api_LastUpdatedBy } from '@/models/api/File';
+import { ApiGen_Concepts_DispositionFileSale } from '@/models/api/generated/ApiGen_Concepts_DispositionFileSale';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import {
   useAxiosErrorHandler,
@@ -227,7 +227,7 @@ export const useDispositionProvider = () => {
   });
 
   const getDispositionFileSaleApi = useApiRequestWrapper<
-    (dispositionFileId: number) => Promise<AxiosResponse<Api_DispositionFileSale, any>>
+    (dispositionFileId: number) => Promise<AxiosResponse<ApiGen_Concepts_DispositionFileSale, any>>
   >({
     requestFunction: useCallback(
       async (dispositionFileId: number) => await getDispositionFileSale(dispositionFileId),
@@ -240,11 +240,11 @@ export const useDispositionProvider = () => {
   const postDispositionSaleApi = useApiRequestWrapper<
     (
       dispositionFileId: number,
-      dispositionSale: Api_DispositionFileSale,
-    ) => Promise<AxiosResponse<Api_DispositionFileSale, any>>
+      dispositionSale: ApiGen_Concepts_DispositionFileSale,
+    ) => Promise<AxiosResponse<ApiGen_Concepts_DispositionFileSale, any>>
   >({
     requestFunction: useCallback(
-      async (dispositionFileId: number, dispositionSale: Api_DispositionFileSale) =>
+      async (dispositionFileId: number, dispositionSale: ApiGen_Concepts_DispositionFileSale) =>
         await postDispositionFileSale(dispositionFileId, dispositionSale),
       [postDispositionFileSale],
     ),
@@ -257,12 +257,15 @@ export const useDispositionProvider = () => {
     (
       dispositionFileId: number,
       saleId: number,
-      dispositionSale: Api_DispositionFileSale,
-    ) => Promise<AxiosResponse<Api_DispositionFileSale, any>>
+      dispositionSale: ApiGen_Concepts_DispositionFileSale,
+    ) => Promise<AxiosResponse<ApiGen_Concepts_DispositionFileSale, any>>
   >({
     requestFunction: useCallback(
-      async (dispositionFileId: number, saleId: number, dispositionSale: Api_DispositionFileSale) =>
-        await putDispositionFileSale(dispositionFileId, saleId, dispositionSale),
+      async (
+        dispositionFileId: number,
+        saleId: number,
+        dispositionSale: ApiGen_Concepts_DispositionFileSale,
+      ) => await putDispositionFileSale(dispositionFileId, saleId, dispositionSale),
       [putDispositionFileSale],
     ),
     requestName: 'PutDispositionSale',

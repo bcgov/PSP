@@ -7,11 +7,11 @@ import {
   Api_DispositionFileAppraisal,
   Api_DispositionFileOffer,
   Api_DispositionFileProperty,
-  Api_DispositionFileSale,
   Api_DispositionFileTeam,
 } from '@/models/api/DispositionFile';
 import { Api_DispositionFilter } from '@/models/api/DispositionFilter';
 import { Api_FileWithChecklist, Api_LastUpdatedBy } from '@/models/api/File';
+import { ApiGen_Concepts_DispositionFileSale } from '@/models/api/generated/ApiGen_Concepts_DispositionFileSale';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 
 import { IPaginateRequest } from './interfaces/IPaginateRequest';
@@ -87,15 +87,21 @@ export const useApiDispositionFile = () => {
       postDispositionFileOffer: (dispositionFileId: number, offer: Api_DispositionFileOffer) =>
         api.post<Api_DispositionFileOffer>(`/dispositionfiles/${dispositionFileId}/offers`, offer),
       getDispositionFileSale: (dispositionFileId: number) =>
-        api.get<Api_DispositionFileSale>(`/dispositionfiles/${dispositionFileId}/sale`),
-      postDispositionFileSale: (dispositionFileId: number, sale: Api_DispositionFileSale) =>
-        api.post<Api_DispositionFileSale>(`/dispositionfiles/${dispositionFileId}/sale`, sale),
+        api.get<ApiGen_Concepts_DispositionFileSale>(`/dispositionfiles/${dispositionFileId}/sale`),
+      postDispositionFileSale: (
+        dispositionFileId: number,
+        sale: ApiGen_Concepts_DispositionFileSale,
+      ) =>
+        api.post<ApiGen_Concepts_DispositionFileSale>(
+          `/dispositionfiles/${dispositionFileId}/sale`,
+          sale,
+        ),
       putDispositionFileSale: (
         dispositionFileId: number,
         saleId: number,
-        sale: Api_DispositionFileSale,
+        sale: ApiGen_Concepts_DispositionFileSale,
       ) =>
-        api.put<Api_DispositionFileSale>(
+        api.put<ApiGen_Concepts_DispositionFileSale>(
           `/dispositionfiles/${dispositionFileId}/sale/${saleId}`,
           sale,
         ),

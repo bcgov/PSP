@@ -257,7 +257,7 @@ namespace Pims.Api.Services
                 throw new BadRequestException("Invalid dispositionFileId.");
             }
 
-            var updatedSale = _dispositionFileRepository.UpdateDispositionFileSale(saleId, dispositionSale);
+            var updatedSale = _dispositionFileRepository.UpdateDispositionFileSale(dispositionSale);
             _dispositionFileRepository.CommitTransaction();
 
             return updatedSale;

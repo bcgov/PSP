@@ -5,7 +5,9 @@ import {
   fromApiPerson,
   IContactSearchResult,
 } from '@/interfaces/IContactSearchResult';
-import { Api_DispositionSaleContact } from '@/models/api/DispositionFile';
+import { ApiGen_Concepts_DispositionSalePurchaser } from '@/models/api/generated/ApiGen_Concepts_DispositionSalePurchaser';
+import { ApiGen_Concepts_DispositionSalePurchaserAgent } from '@/models/api/generated/ApiGen_Concepts_DispositionSalePurchaserAgent';
+import { ApiGen_Concepts_DispositionSalePurchaserSolicitor } from '@/models/api/generated/ApiGen_Concepts_DispositionSalePurchaserSolicitor';
 
 export interface WithSalePurchasers {
   dispositionPurchasers: DispositionSaleContactModel[];
@@ -27,7 +29,11 @@ export class DispositionSaleContactModel {
     this.rowVersion = rowVersion;
   }
 
-  toApi(): Api_DispositionSaleContact | null {
+  toApi():
+    | ApiGen_Concepts_DispositionSalePurchaser
+    | ApiGen_Concepts_DispositionSalePurchaserAgent
+    | ApiGen_Concepts_DispositionSalePurchaserSolicitor
+    | null {
     const personId = this.contact?.personId ?? null;
     const organizationId = !personId ? this.contact?.organizationId ?? null : null;
 
@@ -51,7 +57,13 @@ export class DispositionSaleContactModel {
     };
   }
 
-  static fromApi(model: Api_DispositionSaleContact | null): DispositionSaleContactModel {
+  static fromApi(
+    model:
+      | ApiGen_Concepts_DispositionSalePurchaser
+      | ApiGen_Concepts_DispositionSalePurchaserAgent
+      | ApiGen_Concepts_DispositionSalePurchaserSolicitor
+      | null,
+  ): DispositionSaleContactModel {
     const contact: IContactSearchResult | null = model?.person
       ? fromApiPerson(model?.person)
       : model?.organization
@@ -61,7 +73,7 @@ export class DispositionSaleContactModel {
     const newForm = new DispositionSaleContactModel(
       model?.id,
       model?.dispositionSaleId,
-      model?.rowVersion,
+      model?.rowVersion ?? 0,
       contact,
     );
 

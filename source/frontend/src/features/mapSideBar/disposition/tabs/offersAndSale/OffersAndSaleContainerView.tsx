@@ -14,8 +14,8 @@ import {
   Api_DispositionFile,
   Api_DispositionFileAppraisal,
   Api_DispositionFileOffer,
-  Api_DispositionFileSale,
 } from '@/models/api/DispositionFile';
+import { ApiGen_Concepts_DispositionFileSale } from '@/models/api/generated/ApiGen_Concepts_DispositionFileSale';
 import { prettyFormatDate } from '@/utils/dateUtils';
 import { formatMoney } from '@/utils/numberFormatUtils';
 
@@ -30,7 +30,7 @@ export interface IOffersAndSaleContainerViewProps {
   loading: boolean;
   dispositionFile: Api_DispositionFile;
   dispositionOffers: Api_DispositionFileOffer[];
-  dispositionSale: Api_DispositionFileSale | null;
+  dispositionSale: ApiGen_Concepts_DispositionFileSale | null;
   dispositionAppraisal: Api_DispositionFileAppraisal | null;
   onDispositionOfferDeleted: (offerId: number) => void;
 }
@@ -165,16 +165,18 @@ const OffersAndSaleContainerView: React.FunctionComponent<IOffersAndSaleContaine
               labelWidth="6"
               valueTestId="disposition-sale.purchasers"
             >
-              {dispositionSale.dispositionPurchasers.map((purchaser, index) => (
-                <React.Fragment key={`purchaser-${index}`}>
-                  <DispositionSaleContactDetails
-                    contactInformation={purchaser}
-                  ></DispositionSaleContactDetails>
-                  {index !== dispositionSale.dispositionPurchasers.length - 1 && (
-                    <StyledSpacer className="my-3" />
-                  )}
-                </React.Fragment>
-              ))}
+              {dispositionSale.dispositionPurchasers &&
+                dispositionSale.dispositionPurchasers.map((purchaser, index) => (
+                  <React.Fragment key={`purchaser-${index}`}>
+                    <DispositionSaleContactDetails
+                      contactInformation={purchaser}
+                    ></DispositionSaleContactDetails>
+                    {dispositionSale.dispositionPurchasers &&
+                      index !== dispositionSale.dispositionPurchasers?.length - 1 && (
+                        <StyledSpacer className="my-3" />
+                      )}
+                  </React.Fragment>
+                ))}
             </SectionField>
             <SectionField
               label="Purchaser agent"

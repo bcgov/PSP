@@ -1,4 +1,5 @@
-import { Api_DispositionFileSale, Api_DispositionSaleContact } from '@/models/api/DispositionFile';
+import { ApiGen_Concepts_DispositionFileSale } from '@/models/api/generated/ApiGen_Concepts_DispositionFileSale';
+import { ApiGen_Concepts_DispositionSalePurchaser } from '@/models/api/generated/ApiGen_Concepts_DispositionSalePurchaser';
 import { emptyStringtoNullable, stringToBoolean } from '@/utils/formUtils';
 
 import { DispositionSaleContactModel, WithSalePurchasers } from './DispositionSaleContactModel';
@@ -32,7 +33,7 @@ export class DispositionSaleFormModel implements WithSalePurchasers {
     this.rowVersion = rowVersion;
   }
 
-  static fromApi(entity: Api_DispositionFileSale): DispositionSaleFormModel {
+  static fromApi(entity: ApiGen_Concepts_DispositionFileSale): DispositionSaleFormModel {
     const model = new DispositionSaleFormModel(
       entity.id,
       entity.dispositionFileId,
@@ -68,7 +69,7 @@ export class DispositionSaleFormModel implements WithSalePurchasers {
     return model;
   }
 
-  toApi(): Api_DispositionFileSale {
+  toApi(): ApiGen_Concepts_DispositionFileSale {
     return {
       id: this.id,
       dispositionFileId: this.dispositionFileId,
@@ -92,7 +93,7 @@ export class DispositionSaleFormModel implements WithSalePurchasers {
       dispositionPurchasers: this.dispositionPurchasers
         .filter(x => !!x.contact)
         .map(x => x.toApi())
-        .filter((x): x is Api_DispositionSaleContact => x !== null),
+        .filter((x): x is ApiGen_Concepts_DispositionSalePurchaser => x !== null),
       dispositionPurchaserAgent: this.dispositionPurchaserAgent?.toApi() ?? null,
       dispositionPurchaserSolicitor: this.dispositionPurchaserSolicitor?.toApi() ?? null,
       rowVersion: this.rowVersion ?? 0,
@@ -101,7 +102,7 @@ export class DispositionSaleFormModel implements WithSalePurchasers {
 }
 
 export const calculateNetProceedsBeforeSppAmount = (
-  apiModel: Api_DispositionFileSale | null,
+  apiModel: ApiGen_Concepts_DispositionFileSale | null,
 ): number | null => {
   return apiModel == null
     ? 0
@@ -113,7 +114,7 @@ export const calculateNetProceedsBeforeSppAmount = (
 };
 
 export const calculateNetProceedsAfterSppAmount = (
-  apiModel: Api_DispositionFileSale | null,
+  apiModel: ApiGen_Concepts_DispositionFileSale | null,
 ): number | null => {
   return apiModel == null
     ? 0

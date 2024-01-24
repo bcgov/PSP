@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import { DispositionSaleFormModel } from '@/features/mapSideBar/disposition/models/DispositionSaleFormModel';
 import { useDispositionProvider } from '@/hooks/repositories/useDispositionProvider';
 import { IApiError } from '@/interfaces/IApiError';
-import { Api_DispositionFileSale } from '@/models/api/DispositionFile';
+import { ApiGen_Concepts_DispositionFileSale } from '@/models/api/generated/ApiGen_Concepts_DispositionFileSale';
 
 import { IUpdateDispositionSaleViewProps } from './UpdateDispostionSaleView';
 
@@ -53,7 +53,7 @@ const UpdateDispositionSaleContainer: React.FunctionComponent<
     history.push(backUrl);
   };
 
-  const handleSave = async (dispositionSale: Api_DispositionFileSale) => {
+  const handleSave = async (dispositionSale: ApiGen_Concepts_DispositionFileSale) => {
     if (dispositionSale.id) {
       return putDispositionSale(dispositionFileId, dispositionSale.id, dispositionSale);
     }

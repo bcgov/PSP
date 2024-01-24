@@ -9,7 +9,7 @@ import { ApiGen_Concepts_Person } from './ApiGen_Concepts_Person';
 // LINK: @backend/apimodels/Models/Concepts/DispositionFile/DispositionSalePurchaserAgentModel.cs
 export interface ApiGen_Concepts_DispositionSalePurchaserAgent extends ApiGen_Base_BaseConcurrent {
   id: number;
-  dispositionSaleId: number;
+  dispositionSaleId: number | null;
   personId: number | null;
   person: ApiGen_Concepts_Person | null;
   organizationId: number | null;

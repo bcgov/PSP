@@ -2,7 +2,8 @@ import { Api_FileWithChecklist } from '@/models/api/File';
 import Api_TypeCode from '@/models/api/TypeCode';
 
 import { Api_AuditFields } from './AuditFields';
-import { Api_ConcurrentVersion, Api_ConcurrentVersion_Null } from './ConcurrentVersion';
+import { Api_ConcurrentVersion } from './ConcurrentVersion';
+import { ApiGen_Concepts_DispositionFileSale } from './generated/ApiGen_Concepts_DispositionFileSale';
 import { Api_Organization } from './Organization';
 import { Api_Person } from './Person';
 import { Api_Product, Api_Project } from './Project';
@@ -37,7 +38,7 @@ export interface Api_DispositionFile
   // Offers
   dispositionOffers: Api_DispositionFileOffer[];
   // Sale
-  dispositionSale: Api_DispositionFileSale | null;
+  dispositionSale: ApiGen_Concepts_DispositionFileSale | null;
   dispositionAppraisal: Api_DispositionFileAppraisal | null;
 }
 
@@ -71,25 +72,6 @@ export interface Api_DispositionFileOffer extends Api_ConcurrentVersion {
   offerNote: string | null;
 }
 
-export interface Api_DispositionFileSale extends Api_ConcurrentVersion_Null {
-  id: number | null;
-  dispositionFileId: number;
-  finalConditionRemovalDate: string | null;
-  saleCompletionDate: string | null;
-  saleFiscalYear: string | null;
-  finalSaleAmount: number | null;
-  realtorCommissionAmount: number | null;
-  isGstRequired: boolean | null;
-  gstCollectedAmount: number | null;
-  netBookAmount: number | null;
-  totalCostAmount: number | null;
-  sppAmount: number | null;
-  remediationAmount: number | null;
-  dispositionPurchasers: Api_DispositionSaleContact[];
-  dispositionPurchaserAgent: Api_DispositionSaleContact | null;
-  dispositionPurchaserSolicitor: Api_DispositionSaleContact | null;
-}
-
 export interface Api_DispositionFileAppraisal extends Api_ConcurrentVersion {
   id: number | null;
   dispositionFileId: number;
@@ -107,12 +89,4 @@ export interface ContactInformation {
   organization: Api_Organization | null;
   primaryContactId: number | null;
   primaryContact: Api_Person | null;
-}
-
-export interface Api_DispositionSaleContact
-  extends ContactInformation,
-    Api_ConcurrentVersion,
-    Api_AuditFields {
-  id?: number;
-  dispositionSaleId: number | null;
 }

@@ -62,16 +62,6 @@ namespace Pims.Api.Models.Concepts.DispositionFile
         public decimal? TotalCostAmount { get; set; }
 
         /// <summary>
-        /// Disposition Sale Net Proceeds Before Spp Amount.
-        /// </summary>
-        public decimal? NetProceedsBeforeSppAmount { get; set; }
-
-        /// <summary>
-        /// Disposition Sale Net Proceeds After Spp Amount.
-        /// </summary>
-        public decimal? NetProceedsAfterSppAmount { get; set; }
-
-        /// <summary>
         /// Disposition Sale Spp Amount.
         /// </summary>
         public decimal? SppAmount { get; set; }
