@@ -39,9 +39,13 @@ const AddDispositionContainer: React.FC<IAddDispositionContainerProps> = ({ onCl
     const dispositionForm = new DispositionFormModel();
     // support creating a new disposition file from the map popup
     if (selectedFeatureDataset !== null) {
-      dispositionForm.fileProperties = [
-        PropertyForm.fromMapProperty(featuresetToMapProperty(selectedFeatureDataset)),
-      ];
+      const property = PropertyForm.fromMapProperty(
+        featuresetToMapProperty(selectedFeatureDataset),
+      );
+      dispositionForm.fileProperties = [property];
+      // auto-select file region based upon the location of the property
+      dispositionForm.regionCode =
+        property.regionName !== 'Cannot determine' ? property.region?.toString() ?? null : null;
     }
     return dispositionForm;
   }, [selectedFeatureDataset]);
