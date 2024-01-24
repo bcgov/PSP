@@ -68,6 +68,8 @@ namespace PIMS.Tests.Automation.PageObjects
         private By checklistGazetteNoticePublishedBcContent = By.XPath("//label[contains(text(),'Gazette notice published in BC Gazette')]/parent::div/following-sibling::div/div/div[2]/span");
         private By checklistSignedFormTransferLabel = By.XPath("//label[contains(text(),'Signed Form A transfer')]");
         private By checklistSignedFormTransferContent = By.XPath("//label[contains(text(),'Signed Form A transfer')]/parent::div/following-sibling::div/div/div[2]/span");
+        private By checklistSignedTransferClosedLabel = By.XPath("//label[contains(text(),'Signed Transfer Closed PPH Between Gov. Agencies')]");
+        private By checklistSignedTransferClosedContent = By.XPath("//label[contains(text(),'Signed Transfer Closed PPH Between Gov. Agencies')]/parent::div/following-sibling::div/div/div[2]/span");
 
         //Sale Information section View Elements
         private By checklistSaleInformationTitle = By.XPath("//h2/div/div[contains(text(),'Sale Information')]");
@@ -94,6 +96,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By checklistChequeSentToBctfaLabel = By.XPath("//label[contains(text(),'Cheque sent to BCTFA')]");
         private By checklistChequeSentToBctfaContent = By.XPath("//label[contains(text(),'Cheque sent to BCTFA')]/parent::div/following-sibling::div/div/div[2]/span");
 
+        // Tool tip element on checklist
         private By checklistTooltips = By.CssSelector("span[data-testid='tooltip-icon-section-field-tooltip']");
 
         //Checklist Edit Mode Elements
@@ -106,7 +109,6 @@ namespace PIMS.Tests.Automation.PageObjects
         private By checklistDispositionPreparationItem2Select = By.Id("input-checklistSections[1].items[1].statusType");
         private By checklistDispositionPreparationItem3Select = By.Id("input-checklistSections[1].items[2].statusType");
         private By checklistDispositionPreparationItem4Select = By.Id("input-checklistSections[1].items[3].statusType");
-       
 
         private By checklistReferralsAndConsultationsItem1Select = By.Id("input-checklistSections[2].items[0].statusType");
         private By checklistReferralsAndConsultationsItem2Select = By.Id("input-checklistSections[2].items[1].statusType");
@@ -124,7 +126,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By checklistDirectSaleRoadClosureItem6Select = By.Id("input-checklistSections[3].items[5].statusType");
         private By checklistDirectSaleRoadClosureItem7Select = By.Id("input-checklistSections[3].items[6].statusType");
         private By checklistDirectSaleRoadClosureItem8Select = By.Id("input-checklistSections[3].items[7].statusType");
-
+        private By checklistDirectSaleRoadClosureItem9Select = By.Id("input-checklistSections[3].items[8].statusType");
 
         private By checklistSaleInformationItem1Select = By.Id("input-checklistSections[4].items[0].statusType");
         private By checklistSaleInformationItem2Select = By.Id("input-checklistSections[4].items[1].statusType");
@@ -137,9 +139,6 @@ namespace PIMS.Tests.Automation.PageObjects
         private By checklistSaleInformationItem9Select = By.Id("input-checklistSections[4].items[8].statusType");
         private By checklistSaleInformationItem10Select = By.Id("input-checklistSections[4].items[9].statusType");
         private By checklistSaleInformationItem11Select = By.Id("input-checklistSections[4].items[10].statusType");
-       
-
-
 
         public DispositionChecklist(IWebDriver webDriver) : base(webDriver)
         { }
@@ -156,6 +155,14 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(checklistEditBttn).Click();
         }
 
+        public void SaveDispositionFileChecklist()
+        {
+            Wait();
+            ButtonElement("Save");
+
+            AssertTrueIsDisplayed(checklistEditBttn);
+        }
+
         public void VerifyChecklistInitViewForm()
         {
             Wait(2000);
@@ -170,17 +177,15 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(checklistProofOfApplicationFeeLabel);
             AssertTrueIsDisplayed(checklistProofOfApplicationFeeContent);
 
-
             AssertTrueIsDisplayed(checklistDispositionPreparationTitle);
             AssertTrueIsDisplayed(checklistAppraisalLabel);
             AssertTrueIsDisplayed(checklistAppraisalContent);
             AssertTrueIsDisplayed(checklistEnvironmentalLabel);
             AssertTrueIsDisplayed(checklistEnvironmentalContent);
             AssertTrueIsDisplayed(checklistLandUsePlanningLabel);
-            AssertTrueIsDisplayed(checklistLandUsePlanningContent);           
+            AssertTrueIsDisplayed(checklistLandUsePlanningContent);
             AssertTrueIsDisplayed(checklistLegalSurveyLabel);
             AssertTrueIsDisplayed(checklistLegalSurveyContent);
-
 
             AssertTrueIsDisplayed(checklistReferralsAndConsultationsTitle);
             AssertTrueIsDisplayed(checklistEnhancedReferralLabel);
@@ -215,7 +220,8 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(checklistGazetteNoticePublishedBcContent);
             AssertTrueIsDisplayed(checklistSignedFormTransferLabel);
             AssertTrueIsDisplayed(checklistSignedFormTransferContent);
-
+            AssertTrueIsDisplayed(checklistSignedTransferClosedLabel);
+            AssertTrueIsDisplayed(checklistSignedTransferClosedContent);
 
             AssertTrueIsDisplayed(checklistSaleInformationTitle);
             AssertTrueIsDisplayed(checklistSignedListingAgreementLabel);
@@ -240,7 +246,6 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(checklistFinancialReportingCompletedContent);
             AssertTrueIsDisplayed(checklistChequeSentToBctfaLabel);
             AssertTrueIsDisplayed(checklistChequeSentToBctfaContent);
-
         }
 
         public void VerifyChecklistEditForm()
@@ -254,7 +259,7 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(checklistFileInitiationItem3Select);
             AssertTrueIsDisplayed(checklistProofOfApplicationFeeLabel);
             AssertTrueIsDisplayed(checklistFileInitiationItem4Select);
-           
+
 
             AssertTrueIsDisplayed(checklistDispositionPreparationTitle);
             AssertTrueIsDisplayed(checklistAppraisalLabel);
@@ -265,7 +270,7 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(checklistDispositionPreparationItem3Select);
             AssertTrueIsDisplayed(checklistLegalSurveyLabel);
             AssertTrueIsDisplayed(checklistDispositionPreparationItem4Select);
-      
+
 
             AssertTrueIsDisplayed(checklistReferralsAndConsultationsTitle);
             AssertTrueIsDisplayed(checklistEnhancedReferralLabel);
@@ -300,6 +305,8 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(checklistDirectSaleRoadClosureItem7Select);
             AssertTrueIsDisplayed(checklistSignedFormTransferLabel);
             AssertTrueIsDisplayed(checklistDirectSaleRoadClosureItem8Select);
+            AssertTrueIsDisplayed(checklistSignedTransferClosedLabel);
+            AssertTrueIsDisplayed(checklistDirectSaleRoadClosureItem9Select);
 
             AssertTrueIsDisplayed(checklistSaleInformationTitle);
             AssertTrueIsDisplayed(checklistSignedListingAgreementLabel);
@@ -324,8 +331,6 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(checklistSaleInformationItem10Select);
             AssertTrueIsDisplayed(checklistChequeSentToBctfaLabel);
             AssertTrueIsDisplayed(checklistSaleInformationItem11Select);
-
- 
         }
 
         public void VerifyChecklistViewForm(DispositionFileChecklist checklist)
@@ -339,7 +344,6 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueContentEquals(checklistInitiatingDocumentContent, checklist.FileInitiationSelect3);
             AssertTrueIsDisplayed(checklistProofOfApplicationFeeLabel);
             AssertTrueContentEquals(checklistProofOfApplicationFeeContent, checklist.FileInitiationSelect4);
-          
 
             AssertTrueIsDisplayed(checklistDispositionPreparationTitle);
             AssertTrueIsDisplayed(checklistAppraisalLabel);
@@ -350,8 +354,6 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueContentEquals(checklistLandUsePlanningContent, checklist.DispositionPreparationSelect3);
             AssertTrueIsDisplayed(checklistLegalSurveyLabel);
             AssertTrueContentEquals(checklistLegalSurveyContent, checklist.DispositionPreparationSelect4);
-
-            
 
             AssertTrueIsDisplayed(checklistReferralsAndConsultationsTitle);
             AssertTrueIsDisplayed(checklistEnhancedReferralLabel);
@@ -386,7 +388,8 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueContentEquals(checklistGazetteNoticePublishedBcContent, checklist.DirectSaleRoadClosureSelect7);
             AssertTrueIsDisplayed(checklistSignedFormTransferLabel);
             AssertTrueContentEquals(checklistSignedFormTransferContent, checklist.DirectSaleRoadClosureSelect8);
-            
+            AssertTrueIsDisplayed(checklistSignedTransferClosedLabel);
+            AssertTrueContentEquals(checklistSignedTransferClosedContent, checklist.DirectSaleRoadClosureSelect9);
 
             AssertTrueIsDisplayed(checklistSaleInformationTitle);
             AssertTrueIsDisplayed(checklistSignedListingAgreementLabel);
@@ -434,7 +437,6 @@ namespace PIMS.Tests.Automation.PageObjects
                 ChooseSpecificSelectOption(checklistDispositionPreparationItem3Select, checklist.DispositionPreparationSelect3);
             if (checklist.DispositionPreparationSelect4 != "")
                 ChooseSpecificSelectOption(checklistDispositionPreparationItem4Select, checklist.DispositionPreparationSelect4);
-            
 
             if (checklist.ReferralsAndConsultationsSelect1 != "")
                 ChooseSpecificSelectOption(checklistReferralsAndConsultationsItem1Select, checklist.ReferralsAndConsultationsSelect1);
@@ -450,7 +452,6 @@ namespace PIMS.Tests.Automation.PageObjects
                 ChooseSpecificSelectOption(checklistReferralsAndConsultationsItem6Select, checklist.ReferralsAndConsultationsSelect6);
             if (checklist.ReferralsAndConsultationsSelect7 != "")
                 ChooseSpecificSelectOption(checklistReferralsAndConsultationsItem7Select, checklist.ReferralsAndConsultationsSelect7);
-
 
             if (checklist.DirectSaleRoadClosureSelect1 != "")
                 ChooseSpecificSelectOption(checklistDirectSaleRoadClosureItem1Select, checklist.DirectSaleRoadClosureSelect1);
@@ -468,7 +469,8 @@ namespace PIMS.Tests.Automation.PageObjects
                 ChooseSpecificSelectOption(checklistDirectSaleRoadClosureItem7Select, checklist.DirectSaleRoadClosureSelect7);
             if (checklist.DirectSaleRoadClosureSelect8 != "")
                 ChooseSpecificSelectOption(checklistDirectSaleRoadClosureItem8Select, checklist.DirectSaleRoadClosureSelect8);
-          
+            if (checklist.DirectSaleRoadClosureSelect9 != "")
+                ChooseSpecificSelectOption(checklistDirectSaleRoadClosureItem9Select, checklist.DirectSaleRoadClosureSelect9);
 
             if (checklist.SaleInformationSelect1 != "")
                 ChooseSpecificSelectOption(checklistSaleInformationItem1Select, checklist.SaleInformationSelect1);
@@ -492,16 +494,6 @@ namespace PIMS.Tests.Automation.PageObjects
                 ChooseSpecificSelectOption(checklistSaleInformationItem10Select, checklist.SaleInformationSelect10);
             if (checklist.SaleInformationSelect11 != "")
                 ChooseSpecificSelectOption(checklistSaleInformationItem11Select, checklist.SaleInformationSelect11);
-         
-        }
-
-        public void SaveDispositionFileChecklist()
-        {
-            Wait();
-            ButtonElement("Save");
-
-            AssertTrueIsDisplayed(checklistEditBttn);
         }
     }
-
 }

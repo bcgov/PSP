@@ -34,7 +34,6 @@ namespace PIMS.Tests.Automation.Classes
 
         public DispositionFileChecklist? DispositionFileChecklist { get; set; } = new DispositionFileChecklist();
 
-
     }
 
     public class DispositionFileChecklist
@@ -58,7 +57,6 @@ namespace PIMS.Tests.Automation.Classes
         public string? ReferralsAndConsultationsSelect6 { get; set; } = String.Empty;
         public string? ReferralsAndConsultationsSelect7 { get; set; } = String.Empty;
 
-
         public string? DirectSaleRoadClosureSelect1 { get; set; } = String.Empty;
         public string? DirectSaleRoadClosureSelect2 { get; set; } = String.Empty;
         public string? DirectSaleRoadClosureSelect3 { get; set; } = String.Empty;
@@ -67,6 +65,7 @@ namespace PIMS.Tests.Automation.Classes
         public string? DirectSaleRoadClosureSelect6 { get; set; } = String.Empty;
         public string? DirectSaleRoadClosureSelect7 { get; set; } = String.Empty;
         public string? DirectSaleRoadClosureSelect8 { get; set; } = String.Empty;
+        public string? DirectSaleRoadClosureSelect9 { get; set; } = String.Empty;
 
         public string? SaleInformationSelect1 { get; set; } = String.Empty;
         public string? SaleInformationSelect2 { get; set; } = String.Empty;
@@ -81,5 +80,4 @@ namespace PIMS.Tests.Automation.Classes
         public string? SaleInformationSelect11 { get; set; } = String.Empty;
 
     }
-
 }
