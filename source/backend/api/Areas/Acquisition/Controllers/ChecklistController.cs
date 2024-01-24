@@ -6,6 +6,7 @@ using Pims.Api.Models.Concepts.AcquisitionFile;
 using Pims.Api.Models.Concepts.File;
 using Pims.Api.Policies;
 using Pims.Api.Services;
+using Pims.Core.Json;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -53,6 +54,7 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(IEnumerable<FileChecklistItemModel>), 200)]
         [SwaggerOperation(Tags = new[] { "acquisitionfile" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetAcquisitionFileChecklist([FromRoute] long id)
         {
             var checklist = _acquisitionService.GetChecklistItems(id);
@@ -68,6 +70,7 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(AcquisitionFileModel), 200)]
         [SwaggerOperation(Tags = new[] { "acquisitionfile" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult UpdateAcquisitionFileChecklist(long acquisitionFileId, [FromBody] IList<FileChecklistItemModel> checklistItems)
         {
             var checklistItemEntities = _mapper.Map<IList<Dal.Entities.PimsAcquisitionChecklistItem>>(checklistItems);

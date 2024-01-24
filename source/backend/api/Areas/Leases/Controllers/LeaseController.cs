@@ -85,6 +85,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(Dal.Entities.Models.LastUpdatedByModel), 200)]
         [SwaggerOperation(Tags = new[] { "lease" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetLastUpdatedBy(long id)
         {
             var lastUpdated = _leaseService.GetLastUpdateInformation(id);

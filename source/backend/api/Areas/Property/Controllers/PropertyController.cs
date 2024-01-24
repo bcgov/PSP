@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Pims.Api.Models.Concepts.Property;
 using Pims.Api.Policies;
 using Pims.Api.Services;
+using Pims.Core.Json;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
@@ -56,6 +57,7 @@ namespace Pims.Api.Areas.Property.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(PropertyAssociationsModel), 200)]
         [SwaggerOperation(Tags = new[] { "property" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetPropertyAssociationsWithId(long id)
         {
             var property = _propertyRepository.GetAllAssociationsById(id);
@@ -76,6 +78,7 @@ namespace Pims.Api.Areas.Property.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(PropertyModel), 200)]
         [SwaggerOperation(Tags = new[] { "property" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetConceptPropertyWithId(long id)
         {
             var property = _propertyService.GetById(id);
@@ -91,6 +94,7 @@ namespace Pims.Api.Areas.Property.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(IEnumerable<PropertyModel>), 200)]
         [SwaggerOperation(Tags = new[] { "property" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetMultipleConceptPropertyWithId([FromQuery] long[] ids)
         {
             var property = _propertyService.GetMultipleById(new List<long>(ids));
@@ -106,6 +110,7 @@ namespace Pims.Api.Areas.Property.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(PropertyModel), 200)]
         [SwaggerOperation(Tags = new[] { "property" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult UpdateConceptProperty([FromBody] PropertyModel propertyModel)
         {
             var propertyEntity = _mapper.Map<Pims.Dal.Entities.PimsProperty>(propertyModel);

@@ -6,6 +6,7 @@ using Pims.Api.Models.Concepts.DispositionFile;
 using Pims.Api.Models.Concepts.File;
 using Pims.Api.Policies;
 using Pims.Api.Services;
+using Pims.Core.Json;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -53,6 +54,7 @@ namespace Pims.Api.Areas.Disposition.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(IEnumerable<FileChecklistItemModel>), 200)]
         [SwaggerOperation(Tags = new[] { "dispositionfile" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetDispositionFileChecklist([FromRoute] long id)
         {
             var checklist = _dispositionService.GetChecklistItems(id);
@@ -68,6 +70,7 @@ namespace Pims.Api.Areas.Disposition.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(DispositionFileModel), 200)]
         [SwaggerOperation(Tags = new[] { "dispositionfile" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult UpdateDispositionFileChecklist(long id, [FromBody] IList<FileChecklistItemModel> checklistItems)
         {
             var checklistItemEntities = _mapper.Map<IList<Dal.Entities.PimsDispositionChecklistItem>>(checklistItems);
