@@ -88,12 +88,7 @@ const DispositionSalePurchaserSubForm: React.FunctionComponent<
             data-testid="add-purchaser-button"
             className="mb-3"
             onClick={() => {
-              const purchaserContact = new DispositionSaleContactModel(
-                null,
-                dispositionSaleId,
-                0,
-                null,
-              );
+              const purchaserContact = new DispositionSaleContactModel(null, dispositionSaleId);
               arrayHelpers.push(purchaserContact);
             }}
           >

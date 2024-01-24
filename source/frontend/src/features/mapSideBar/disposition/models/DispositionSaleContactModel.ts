@@ -18,7 +18,7 @@ export class DispositionSaleContactModel {
   constructor(
     readonly id: number | null = null,
     readonly dispositionSaleId: number | null = null,
-    readonly rowVersion: number | null = null,
+    readonly rowVersion: number = 0,
     contact: IContactSearchResult | null = null,
   ) {
     this.id = id;

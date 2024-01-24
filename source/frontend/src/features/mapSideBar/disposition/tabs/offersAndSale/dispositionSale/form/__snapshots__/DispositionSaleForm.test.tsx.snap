@@ -710,7 +710,7 @@ exports[`DispositionSaleForm  component renders as expected 1`] = `
           <label
             class="c2"
           >
-             Realtor commission ($):
+            Realtor commission ($):
           </label>
         </div>
         <div

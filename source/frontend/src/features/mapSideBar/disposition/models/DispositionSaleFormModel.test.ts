@@ -39,10 +39,10 @@ describe('DispositionSaleFormModel tests', () => {
     expect(modelFromApi.dispositionPurchasers).toHaveLength(3);
 
     expect(modelFromApi.dispositionPurchaserAgent).not.toBeNull();
-    expect(modelFromApi.dispositionPurchaserAgent.id).toBe(300);
-    expect(modelFromApi.dispositionPurchaserAgent.contact).not.toBeNull();
-    expect(modelFromApi.dispositionPurchaserAgent.contact?.organizationId).toBe(3);
-    expect(modelFromApi.dispositionPurchaserAgent.primaryContactId).toBe('3');
+    expect(modelFromApi.dispositionPurchaserAgent?.id).toBe(300);
+    expect(modelFromApi.dispositionPurchaserAgent?.contact).not.toBeNull();
+    expect(modelFromApi.dispositionPurchaserAgent?.contact?.organizationId).toBe(3);
+    expect(modelFromApi.dispositionPurchaserAgent?.primaryContactId).toBe('3');
 
     expect(modelFromApi.dispositionPurchaserSolicitor).not.toBeNull();
 

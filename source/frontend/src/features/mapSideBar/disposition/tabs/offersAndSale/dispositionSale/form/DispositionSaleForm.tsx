@@ -144,7 +144,7 @@ const DispositionSaleForm: React.FunctionComponent<
           }}
         />
       </SectionField>
-      <SectionField label=" Realtor commission ($)" labelWidth="5" contentWidth="5">
+      <SectionField label="Realtor commission ($)" labelWidth="5" contentWidth="5">
         <FastCurrencyInput formikProps={formikProps} field="realtorCommissionAmount" />
       </SectionField>
 

@@ -749,7 +749,7 @@ exports[`Update Disposition Sale View renders as expected 1`] = `
               <label
                 class="c3"
               >
-                 Realtor commission ($):
+                Realtor commission ($):
               </label>
             </div>
             <div

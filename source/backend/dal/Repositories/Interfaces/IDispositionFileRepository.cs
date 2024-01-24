@@ -32,8 +32,8 @@ namespace Pims.Dal.Repositories
 
         PimsDispositionSale AddDispositionFileSale(PimsDispositionSale dispositionSale);
 
-        PimsDispositionSale UpdateDispositionFileSale(long saleId, PimsDispositionSale dispositionSale);
-        
+        PimsDispositionSale UpdateDispositionFileSale(PimsDispositionSale dispositionSale);
+
         PimsDispositionAppraisal GetDispositionFileAppraisal(long dispositionId);
 
         PimsDispositionAppraisal AddDispositionFileAppraisal(PimsDispositionAppraisal dispositionAppraisal);

@@ -18,8 +18,9 @@ export class DispositionSaleFormModel implements WithSalePurchasers {
   netProceedsAfterSppAmount: number | null = null;
   remediationAmount: number | null = null;
   dispositionPurchasers: DispositionSaleContactModel[] = [];
-  dispositionPurchaserAgent: DispositionSaleContactModel = new DispositionSaleContactModel();
-  dispositionPurchaserSolicitor: DispositionSaleContactModel = new DispositionSaleContactModel();
+  dispositionPurchaserAgent: DispositionSaleContactModel | null = new DispositionSaleContactModel();
+  dispositionPurchaserSolicitor: DispositionSaleContactModel | null =
+    new DispositionSaleContactModel();
 
   constructor(
     readonly id: number | null = null,
@@ -53,17 +54,16 @@ export class DispositionSaleFormModel implements WithSalePurchasers {
     model.netProceedsBeforeSppAmount = calculateNetProceedsBeforeSppAmount(entity);
     model.netProceedsAfterSppAmount = calculateNetProceedsAfterSppAmount(entity);
 
-    model.dispositionPurchasers = entity.dispositionPurchasers?.map(
-      x => DispositionSaleContactModel.fromApi(x) || [],
-    );
+    model.dispositionPurchasers =
+      entity.dispositionPurchasers?.map(x => DispositionSaleContactModel.fromApi(x)) || [];
 
     model.dispositionPurchaserAgent = entity.dispositionPurchaserAgent
       ? DispositionSaleContactModel.fromApi(entity.dispositionPurchaserAgent)
-      : new DispositionSaleContactModel(null, entity.id, 0, null);
+      : new DispositionSaleContactModel(null, entity.id);
 
     model.dispositionPurchaserSolicitor = entity.dispositionPurchaserSolicitor
       ? DispositionSaleContactModel.fromApi(entity.dispositionPurchaserSolicitor)
-      : new DispositionSaleContactModel(null, entity.id, 0, null);
+      : new DispositionSaleContactModel(null, entity.id);
 
     return model;
   }
@@ -93,8 +93,8 @@ export class DispositionSaleFormModel implements WithSalePurchasers {
         .filter(x => !!x.contact)
         .map(x => x.toApi())
         .filter((x): x is Api_DispositionSaleContact => x !== null),
-      dispositionPurchaserAgent: this.dispositionPurchaserAgent.toApi(),
-      dispositionPurchaserSolicitor: this.dispositionPurchaserSolicitor.toApi(),
+      dispositionPurchaserAgent: this.dispositionPurchaserAgent?.toApi() ?? null,
+      dispositionPurchaserSolicitor: this.dispositionPurchaserSolicitor?.toApi() ?? null,
       rowVersion: this.rowVersion ?? 0,
     };
   }

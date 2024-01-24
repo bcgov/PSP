@@ -332,10 +332,10 @@ namespace Pims.Dal.Repositories
             return dispositionSale;
         }
 
-        public PimsDispositionSale UpdateDispositionFileSale(long saleId, PimsDispositionSale dispositionSale)
+        public PimsDispositionSale UpdateDispositionFileSale(PimsDispositionSale dispositionSale)
         {
             var existingSale = Context.PimsDispositionSales
-                .FirstOrDefault(x => x.DispositionSaleId.Equals(saleId)) ?? throw new KeyNotFoundException();
+                .FirstOrDefault(x => x.DispositionSaleId.Equals(dispositionSale.DispositionSaleId)) ?? throw new KeyNotFoundException();
 
             Context.Entry(existingSale).CurrentValues.SetValues(dispositionSale);
             Context.UpdateChild<PimsDispositionSale, long, PimsDispositionPurchaser, long>(p => p.PimsDispositionPurchasers, dispositionSale.Internal_Id, dispositionSale.PimsDispositionPurchasers.ToArray());
