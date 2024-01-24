@@ -4,6 +4,7 @@ Alter the data in the PIMS_DSP_CHKLST_ITEM_TYPE table.
 Author        Date         Comment
 ------------  -----------  -----------------------------------------------------
 Doug Filteau  2024-Jan-10  Initial version
+Doug Filteau  2024-Jan-24  Added reordering of display orders
 ----------------------------------------------------------------------------- */
 
 SET XACT_ABORT ON
@@ -28,6 +29,12 @@ IF @@ROWCOUNT = 1
   DELETE 
   FROM  PIMS_DSP_CHKLST_ITEM_TYPE 
   WHERE DSP_CHKLST_ITEM_TYPE_CODE = @CurrCd;
+  -- Reorder the display order of the items that follow 'SGNDXFRPPH'
+  UPDATE PIMS_DSP_CHKLST_ITEM_TYPE
+  SET    DISPLAY_ORDER              = DISPLAY_ORDER - 1
+       , CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER + 1
+  WHERE  DISPLAY_ORDER                > 23
+     AND DSP_CHKLST_SECTION_TYPE_CODE = N'SALEINFO'
   END
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
