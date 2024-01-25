@@ -59,7 +59,7 @@ const UpdateDispositionSaleView: React.FC<IUpdateDispositionSaleViewProps> = ({
         onSubmit={async (values: DispositionSaleFormModel, formikHelpers) => {
           try {
             const sale = await onSave(values.toApi());
-            if (sale && sale.id) {
+            if (sale) {
               onSuccess();
             }
           } catch (e) {
