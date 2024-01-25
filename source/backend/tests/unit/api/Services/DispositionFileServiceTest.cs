@@ -279,8 +279,7 @@ namespace Pims.Api.Test.Services
             Action act = () => service.Add(dispositionFile, new List<UserOverrideCode>() { UserOverrideCode.UpdateRegion });
 
             // Assert
-            var ex = act.Should().Throw<UserOverrideException>();
-            ex.Which.UserOverride.Should().Be(UserOverrideCode.ContractorNotInTeam);
+            var ex = act.Should().Throw<ContractorNotInTeamException>();
         }
 
         [Fact]

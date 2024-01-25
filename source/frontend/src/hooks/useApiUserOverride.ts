@@ -72,23 +72,6 @@ export const useApiUserOverride = <
   useEffect(() => {
     if (state?.userOverrideCode) {
       switch (state.userOverrideCode) {
-        case UserOverrideCode.CONTRACTOR_NOT_IN_TEAM:
-          setModalContent({
-            title: 'Contractor missing',
-            variant: 'warning',
-            message:
-              'As a contractor, you must add yourself as a team member to the file in order to create or save changes.',
-            handleOk: async () => {
-              setState({
-                previousUserOverrideCodes: [...state.previousUserOverrideCodes],
-                userOverrideCode: null,
-                message: null,
-              });
-              setDisplayModal(false);
-            },
-            okButtonText: 'Close',
-          });
-          break;
         case UserOverrideCode.CONTRACTOR_SELFREMOVED:
           setModalContent({
             title: 'Note',

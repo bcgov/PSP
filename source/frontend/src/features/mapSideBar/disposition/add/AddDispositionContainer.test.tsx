@@ -4,7 +4,6 @@ import { createRef } from 'react';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
-import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { act, createAxiosError, renderAsync, RenderOptions } from '@/utils/test-utils';
 
 import { DispositionFormModel } from '../models/DispositionFormModel';
@@ -86,14 +85,11 @@ describe('Add Disposition Container component', () => {
     expect(onClose).toHaveBeenCalled();
   });
 
-  it(`triggers the modal for contractor not in team`, async () => {
+  it(`triggers the modal for contractor not in team (400 - Error)`, async () => {
     mockCreateDispositionFile.execute.mockRejectedValue(
       createAxiosError(
         409,
-        `As a Contractor your user contact information should be assigned to the Disposition File's team`,
-        {
-          errorCode: UserOverrideCode.CONTRACTOR_NOT_IN_TEAM,
-        },
+        `As a contractor, you must add yourself as a team member to the file in order to create or save changes`,
       ),
     );
     const mockDispositionValues = new DispositionFormModel(1, 'NUMBER', 1);
@@ -104,7 +100,10 @@ describe('Add Disposition Container component', () => {
     };
 
     await act(async () => {
-      return viewProps?.onSubmit(mockDispositionValues, formikHelpers.setSubmitting!!, []);
+      return viewProps?.onSubmit(
+        mockDispositionValues,
+        formikHelpers as FormikHelpers<DispositionFormModel>,
+      );
     });
 
     await act(async () => getFormikRef().current?.submitForm());
