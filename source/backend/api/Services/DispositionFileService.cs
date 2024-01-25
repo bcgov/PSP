@@ -33,6 +33,7 @@ namespace Pims.Api.Services
         private readonly IPropertyService _propertyService;
         private readonly ILookupRepository _lookupRepository;
         private readonly IDispositionFileChecklistRepository _checklistRepository;
+        private readonly IEntityNoteRepository _entityNoteRepository;
 
         public DispositionFileService(
             ClaimsPrincipal user,
@@ -44,6 +45,7 @@ namespace Pims.Api.Services
             IPropertyService propertyService,
             ILookupRepository lookupRepository,
             IDispositionFileChecklistRepository checklistRepository,
+            IEntityNoteRepository entityNoteRepository,
             IUserRepository userRepository)
         {
             _user = user;
@@ -55,6 +57,7 @@ namespace Pims.Api.Services
             _propertyService = propertyService;
             _lookupRepository = lookupRepository;
             _checklistRepository = checklistRepository;
+            _entityNoteRepository = entityNoteRepository;
             _userRepository = userRepository;
         }
 
@@ -118,6 +121,7 @@ namespace Pims.Api.Services
             }
 
             _dispositionFileRepository.Update(id, dispositionFile);
+            AddNoteIfStatusChanged(dispositionFile);
             _dispositionFileRepository.CommitTransaction();
 
             return _dispositionFileRepository.GetById(id);
@@ -390,6 +394,35 @@ namespace Pims.Api.Services
                 }).ToList();
         }
 
+        private void AddNoteIfStatusChanged(PimsDispositionFile updateDispositionFile)
+        {
+            var currentDispositionFile = _dispositionFileRepository.GetById(updateDispositionFile.Internal_Id);
+            bool statusChanged = currentDispositionFile.DispositionFileStatusTypeCode != updateDispositionFile.DispositionFileStatusTypeCode;
+            if (!statusChanged)
+            {
+                return;
+            }
+
+            var newStatus = _lookupRepository.GetAllDispositionFileStatusTypes()
+                .FirstOrDefault(x => x.DispositionFileStatusTypeCode == updateDispositionFile.DispositionFileStatusTypeCode);
+
+            PimsDispositionFileNote fileNoteInstance = new()
+            {
+                DispositionFileId = updateDispositionFile.Internal_Id,
+                AppCreateTimestamp = DateTime.Now,
+                AppCreateUserid = _user.GetUsername(),
+                Note = new PimsNote()
+                {
+                    IsSystemGenerated = true,
+                    NoteTxt = $"Disposition File status changed from {currentDispositionFile.DispositionFileStatusTypeCodeNavigation.Description} to {newStatus.Description}",
+                    AppCreateTimestamp = DateTime.Now,
+                    AppCreateUserid = this._user.GetUsername(),
+                },
+            };
+
+            _entityNoteRepository.Add(fileNoteInstance);
+        }
+
         private static decimal CalculateNetProceedsBeforeSpp(PimsDispositionSale sale)
         {
             if (sale != null)
@@ -467,7 +500,7 @@ namespace Pims.Api.Services
                         if (overrideCodes.Contains(UserOverrideCode.DisposingPropertyNotInventoried))
                         {
                             _logger.LogDebug("Adding new property with pid:{pid}", pid);
-                            dispProperty.Property = _propertyService.PopulateNewProperty(dispProperty.Property);
+                            dispProperty.Property = _propertyService.PopulateNewProperty(dispProperty.Property, true, false);
                         }
                         else
                         {
@@ -490,7 +523,7 @@ namespace Pims.Api.Services
                         if (overrideCodes.Contains(UserOverrideCode.DisposingPropertyNotInventoried))
                         {
                             _logger.LogDebug("Adding new property with pin:{pin}", pin);
-                            dispProperty.Property = _propertyService.PopulateNewProperty(dispProperty.Property);
+                            dispProperty.Property = _propertyService.PopulateNewProperty(dispProperty.Property, true, false);
                         }
                         else
                         {
@@ -503,7 +536,7 @@ namespace Pims.Api.Services
                     if (overrideCodes.Contains(UserOverrideCode.DisposingPropertyNotInventoried))
                     {
                         _logger.LogDebug("Adding new property without a pid");
-                        dispProperty.Property = _propertyService.PopulateNewProperty(dispProperty.Property);
+                        dispProperty.Property = _propertyService.PopulateNewProperty(dispProperty.Property, true, false);
                     }
                     else
                     {

@@ -174,9 +174,6 @@ public partial class PimsOrganization
     [InverseProperty("Organization")]
     public virtual ICollection<PimsPropActInvolvedParty> PimsPropActInvolvedParties { get; set; } = new List<PimsPropActInvolvedParty>();
 
-    [InverseProperty("PropMgmtOrg")]
-    public virtual ICollection<PimsProperty> PimsProperties { get; set; } = new List<PimsProperty>();
-
     [InverseProperty("ServiceProviderOrg")]
     public virtual ICollection<PimsPropertyActivity> PimsPropertyActivities { get; set; } = new List<PimsPropertyActivity>();
 
