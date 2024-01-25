@@ -89,7 +89,7 @@ export class DispositionFormModel implements WithDispositionTeam {
           rowVersion: ap.rowVersion,
           property: ap.toApi(),
           propertyId: ap.apiId,
-          acquisitionFile: { id: this.id },
+          file: { id: this.id ?? undefined },
         };
       }),
 
