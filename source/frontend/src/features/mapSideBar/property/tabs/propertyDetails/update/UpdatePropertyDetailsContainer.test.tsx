@@ -11,6 +11,8 @@ import {
 } from '@/hooks/repositories/useQueryMapLayersByLocation';
 import { getEmptyAddress } from '@/mocks/address.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
+import { ApiGen_Concepts_Address } from '@/models/api/generated/ApiGen_Concepts_Address';
+import { ApiGen_Concepts_CodeType } from '@/models/api/generated/ApiGen_Concepts_CodeType';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { getEmptyBaseAudit, getEmptyProperty } from '@/models/default_initializers';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
@@ -271,17 +273,19 @@ describe('UpdatePropertyDetailsContainer component', () => {
     expect(await findByTitle('Down by the River')).toBeInTheDocument();
     await act(async () => formikRef.current?.submitForm() as Promise<void>);
 
-    const expectedValues = expect.objectContaining<ApiGen_Concepts_Property>({
-      ...getEmptyProperty(),
-      address: expect.objectContaining({
-        ...getEmptyAddress(),
+    const expectedValues = expect.objectContaining<Partial<ApiGen_Concepts_Property>>({
+      address: expect.objectContaining<Partial<ApiGen_Concepts_Address>>({
         streetAddress1: fakeProperty.address?.streetAddress1,
         streetAddress2: fakeProperty.address?.streetAddress2,
         streetAddress3: fakeProperty.address?.streetAddress3,
         municipality: fakeProperty.address?.municipality,
         postal: fakeProperty.address?.postal,
-        country: { id: fakeProperty.address?.country?.id },
-        province: { id: fakeProperty.address?.province?.id },
+        country: expect.objectContaining<Partial<ApiGen_Concepts_CodeType>>({
+          id: fakeProperty.address!.country!.id,
+        }),
+        province: expect.objectContaining<Partial<ApiGen_Concepts_CodeType>>({
+          id: fakeProperty.address!.province!.id,
+        }),
       }),
     });
 
@@ -303,17 +307,19 @@ describe('UpdatePropertyDetailsContainer component', () => {
     });
 
     await waitFor(() => {
-      const expectedValues = expect.objectContaining<ApiGen_Concepts_Property>({
-        ...getEmptyProperty(),
-        address: expect.objectContaining({
-          ...getEmptyAddress(),
+      const expectedValues = expect.objectContaining<Partial<ApiGen_Concepts_Property>>({
+        address: expect.objectContaining<Partial<ApiGen_Concepts_Address>>({
           streetAddress1: '123 Mock St',
           streetAddress2: fakeProperty.address?.streetAddress2,
           streetAddress3: fakeProperty.address?.streetAddress3,
           municipality: fakeProperty.address?.municipality,
           postal: fakeProperty.address?.postal,
-          country: { id: fakeProperty.address?.country?.id },
-          province: { id: fakeProperty.address?.province?.id },
+          country: expect.objectContaining<Partial<ApiGen_Concepts_CodeType>>({
+            id: fakeProperty.address!.country!.id,
+          }),
+          province: expect.objectContaining<Partial<ApiGen_Concepts_CodeType>>({
+            id: fakeProperty.address!.province!.id,
+          }),
         }),
       });
       expect(updateProperty).toBeCalledWith(expectedValues);
@@ -349,8 +355,7 @@ describe('UpdatePropertyDetailsContainer component', () => {
     });
 
     await waitFor(() => {
-      const expectedValues = expect.objectContaining<ApiGen_Concepts_Property>({
-        ...getEmptyProperty(),
+      const expectedValues = expect.objectContaining<Partial<ApiGen_Concepts_Property>>({
         address: null,
       });
 

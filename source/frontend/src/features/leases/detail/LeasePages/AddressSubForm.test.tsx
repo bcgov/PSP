@@ -18,6 +18,7 @@ const defaultLeaseWithPropertyAddress = (address?: Partial<IAddress>) => {
       {
         ...mockParcel,
         areaUnitTypeCode: 'test',
+        areaUnitTypeDescription: '',
         landArea: '0',
         address: address !== undefined ? { ...mockParcel.address, ...address } : (undefined as any),
         leaseId: null,
@@ -52,7 +53,14 @@ describe('AddressSubForm component', () => {
       nameSpace: 'properties.0.address',
       lease: {
         ...new LeaseFormModel(),
-        properties: [{ ...mockParcel, areaUnitTypeCode: 'test', landArea: '0', leaseId: null }],
+        properties: [
+          {
+            ...mockParcel,
+            areaUnitTypeCode: 'test',
+            landArea: '0',
+            leaseId: null,
+          },
+        ],
       },
     });
     expect(component.asFragment()).toMatchSnapshot();

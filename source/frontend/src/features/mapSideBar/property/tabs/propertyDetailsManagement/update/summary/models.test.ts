@@ -85,6 +85,8 @@ describe('Property management model tests', () => {
           propertyPurposeTypeCode: {
             id: 'TEST',
             description: 'test description',
+            displayOrder: null,
+            isDisabled: false,
           },
         } as ApiGen_Concepts_PropertyManagementPurpose),
       );
@@ -137,7 +139,7 @@ describe('Property management model tests', () => {
       const apiPurpose = purpose.toApi();
       expect(apiPurpose.id).toBe(1);
       expect(apiPurpose.rowVersion).toBe(1);
-      expect(apiPurpose.propertyId).toBe(null);
+      expect(apiPurpose.propertyId).toBe(0);
       expect(apiPurpose.propertyPurposeTypeCode).toEqual(
         expect.objectContaining({
           id: 'TEST',

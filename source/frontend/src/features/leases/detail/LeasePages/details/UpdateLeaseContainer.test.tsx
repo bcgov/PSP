@@ -15,6 +15,7 @@ import { getMockApiLease } from '@/mocks/lease.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
+import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { defaultApiLease, getEmptyLease } from '@/models/default_initializers';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { toTypeCodeNullable } from '@/utils/formUtils';
@@ -84,7 +85,7 @@ describe('Update lease container component', () => {
       viewProps.onSubmit({ ...getDefaultFormLease(), purposeTypeCode: 'BCFERRIES' }),
     );
 
-    expect(JSON.parse(mockAxios.history.put[0].data)).toEqual(leaseData);
+    expect(JSON.parse(mockAxios.history.put[0].data)).toEqual(expectedLease);
   });
 
   it('triggers the confirm popup', async () => {
@@ -95,7 +96,7 @@ describe('Update lease container component', () => {
       viewProps.onSubmit({ ...getDefaultFormLease(), purposeTypeCode: 'BCFERRIES' }),
     );
 
-    expect(JSON.parse(mockAxios.history.put[0].data)).toEqual(leaseData);
+    expect(JSON.parse(mockAxios.history.put[0].data)).toEqual(expectedLease);
   });
 
   it('clicking on the save anyways popup saves the form', async () => {
@@ -111,13 +112,13 @@ describe('Update lease container component', () => {
     const button = await screen.findByText('Yes');
     await act(async () => userEvent.click(button));
 
-    expect(JSON.parse(mockAxios.history.put[1].data)).toEqual(leaseData);
+    expect(JSON.parse(mockAxios.history.put[1].data)).toEqual(expectedLease);
   });
 });
 
-const leaseData: ApiGen_Concepts_Lease = {
+const expectedLease: ApiGen_Concepts_Lease = {
   ...getEmptyLease(),
-  startDate: '',
+  startDate: EpochIsoDateTime,
   amount: 0,
   paymentReceivableType: toTypeCodeNullable('RCVBL'),
   purposeType: toTypeCodeNullable('BCFERRIES'),
@@ -147,7 +148,7 @@ const leaseData: ApiGen_Concepts_Lease = {
   documentationReference: null,
   expiryDate: null,
   tenants: [],
-  //terms: [],
+  terms: [],
   consultations: [],
   programName: null,
   renewalCount: 0,
@@ -158,4 +159,5 @@ const leaseData: ApiGen_Concepts_Lease = {
   isExpired: false,
   project: null,
   id: 0,
+  rowVersion: 0,
 };

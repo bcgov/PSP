@@ -8,6 +8,7 @@ import { useFormDocumentRepository } from '@/hooks/repositories/useFormDocumentR
 import { getMockApiFileForms } from '@/mocks/form.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
+import { getEmptyBaseAudit } from '@/models/default_initializers';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes/lookupCodesSlice';
 import { act, render, RenderOptions, screen, userEvent, waitFor } from '@/utils/test-utils';
 
@@ -86,19 +87,22 @@ describe('form list view container', () => {
 
   it('saveForm calls api post save', async () => {
     setup({
+      fileId: 10,
       claims: [],
     });
     viewProps.saveForm('h120');
 
     expect(mockApi.execute).toHaveBeenCalledWith('acquisition', {
-      fileId: 0,
+      fileId: 10,
       id: null,
       formDocumentType: {
         description: '',
         displayOrder: null,
         documentId: null,
         formTypeCode: 'h120',
+        ...getEmptyBaseAudit(),
       },
+      ...getEmptyBaseAudit(),
     });
   });
 

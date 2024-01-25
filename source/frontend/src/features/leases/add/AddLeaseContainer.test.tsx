@@ -206,6 +206,7 @@ describe('AddLeaseContainer component', () => {
 
 const leaseData: ApiGen_Concepts_Lease = {
   ...getEmptyLease(),
+  rowVersion: 0,
   startDate: '2020-01-01',
   amount: 0,
   paymentReceivableType: toTypeCodeNullable('RCVBL'),
@@ -236,8 +237,7 @@ const leaseData: ApiGen_Concepts_Lease = {
   documentationReference: null,
   expiryDate: '2020-01-02',
   tenants: [],
-  //terms: [],
-  //insurances: [],
+  terms: [],
   consultations: [
     {
       id: 0,

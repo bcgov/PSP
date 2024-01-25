@@ -1,10 +1,10 @@
 import { AddressTypes } from '@/constants';
 import { ContactMethodTypes } from '@/constants/contactMethodType';
 import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
-import { getMockApiAddress } from '@/mocks/address.mock';
+import { getEmptyAddress } from '@/mocks/address.mock';
 import { getMockPerson } from '@/mocks/contacts.mock';
 import { emptyApiInterestHolder, emptyInterestHolderProperty } from '@/mocks/interestHolder.mock';
-import { getMockOrganization } from '@/mocks/organization.mock';
+import { getEmptyOrganization } from '@/mocks/organization.mock';
 import { toTypeCodeNullable } from '@/utils/formUtils';
 
 import { Api_GenerateAcquisitionFile } from './GenerateAcquisitionFile';
@@ -269,14 +269,14 @@ describe('GenerateFile tests', () => {
         teamProfileTypeCode: null,
         acquisitionFileId: acqFile.id ?? 0,
         organization: {
-          ...getMockOrganization(),
+          ...getEmptyOrganization(),
           name: 'testOrg',
           organizationAddresses: [
             {
               id: 1,
               organizationId: 1,
               rowVersion: null,
-              address: { ...getMockApiAddress(), streetAddress1: 'orgaddress' },
+              address: { ...getEmptyAddress(), streetAddress1: 'orgaddress' },
               addressUsageType: toTypeCodeNullable(AddressTypes.Mailing),
             },
           ],
@@ -298,7 +298,7 @@ describe('GenerateFile tests', () => {
           ],
           personAddresses: [
             {
-              address: { ...getMockApiAddress(), streetAddress1: 'primaryaddress' },
+              address: { ...getEmptyAddress(), streetAddress1: 'primaryaddress' },
               addressUsageType: toTypeCodeNullable(AddressTypes.Mailing),
               id: 1,
               personId: 1,
@@ -339,11 +339,11 @@ describe('GenerateFile tests', () => {
         teamProfileTypeCode: null,
         acquisitionFileId: acqFile.id ?? 0,
         organization: {
-          ...getMockOrganization(),
+          ...getEmptyOrganization(),
           name: 'testOrg',
           organizationAddresses: [
             {
-              address: { ...getMockApiAddress(), streetAddress1: 'orgaddress' },
+              address: { ...getEmptyAddress(), streetAddress1: 'orgaddress' },
               addressUsageType: toTypeCodeNullable(AddressTypes.Mailing),
               id: 1,
               organizationId: 1,
@@ -374,14 +374,14 @@ describe('GenerateFile tests', () => {
         teamProfileTypeCode: null,
         acquisitionFileId: acqFile.id ?? 0,
         organization: {
-          ...getMockOrganization(),
+          ...getEmptyOrganization(),
           name: 'testOrg',
           organizationAddresses: [
             {
               id: 0,
               organizationId: 1,
               rowVersion: null,
-              address: { ...getMockApiAddress(), streetAddress1: 'orgaddress' },
+              address: { ...getEmptyAddress(), streetAddress1: 'orgaddress' },
               addressUsageType: toTypeCodeNullable(AddressTypes.Mailing),
             },
           ],
@@ -427,11 +427,11 @@ describe('GenerateFile tests', () => {
         teamProfileTypeCode: null,
         acquisitionFileId: acqFile.id ?? 0,
         organization: {
-          ...getMockOrganization(),
+          ...getEmptyOrganization(),
           name: 'testOrg',
           organizationAddresses: [
             {
-              address: { ...getMockApiAddress(), streetAddress1: 'orgaddress' },
+              address: { ...getEmptyAddress(), streetAddress1: 'orgaddress' },
               addressUsageType: toTypeCodeNullable(AddressTypes.Mailing),
               id: 1,
               organizationId: 1,
@@ -462,11 +462,11 @@ describe('GenerateFile tests', () => {
         teamProfileTypeCode: null,
         acquisitionFileId: acqFile.id ?? 0,
         organization: {
-          ...getMockOrganization(),
+          ...getEmptyOrganization(),
           name: 'testOrg',
           organizationAddresses: [
             {
-              address: { ...getMockApiAddress(), streetAddress1: 'orgaddress' },
+              address: { ...getEmptyAddress(), streetAddress1: 'orgaddress' },
               addressUsageType: toTypeCodeNullable(AddressTypes.Mailing),
               id: 1,
               organizationId: 1,
@@ -517,14 +517,14 @@ describe('GenerateFile tests', () => {
         teamProfileTypeCode: null,
         acquisitionFileId: acqFile.id ?? 0,
         organization: {
-          ...getMockOrganization(),
+          ...getEmptyOrganization(),
           name: 'testOrg',
           organizationAddresses: [
             {
               id: 0,
               organizationId: 1,
               rowVersion: null,
-              address: { ...getMockApiAddress(), streetAddress1: 'orgaddress' },
+              address: { ...getEmptyAddress(), streetAddress1: 'orgaddress' },
               addressUsageType: toTypeCodeNullable(AddressTypes.Mailing),
             },
           ],

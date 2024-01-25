@@ -109,9 +109,7 @@ describe('AddNotesContainer component', () => {
 
     expect(mockAxios.history.post[0].url).toBe('/notes/activity');
     expect(axiosData.parent).toEqual(expectedValues.parent);
-    expect({ ...axiosData.note, id: undefined, rowVersion: undefined }).toEqual(
-      expectedValues.note,
-    );
+    expect({ ...axiosData.note, id: 0, rowVersion: null }).toEqual(expectedValues.note);
   });
 
   it('should support adding notes to other entity types', async () => {

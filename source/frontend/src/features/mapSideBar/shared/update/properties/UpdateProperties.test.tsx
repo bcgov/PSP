@@ -130,7 +130,7 @@ describe('UpdateProperties component', () => {
         ],
       },
     });
-    expect(getByText(/Address: 45 - 904 Ho/)).toBeVisible();
+    expect(getByText(/45 - 904 Ho/)).toBeVisible();
   });
 
   it('save button displays modal', async () => {

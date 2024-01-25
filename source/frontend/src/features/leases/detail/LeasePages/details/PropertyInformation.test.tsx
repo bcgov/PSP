@@ -16,7 +16,7 @@ const history = createMemoryHistory();
 describe('PropertyInformation component', () => {
   const setup = (
     renderOptions: RenderOptions & IPropertyInformationProps & { lease?: ApiGen_Concepts_Lease } = {
-      nameSpace: 'properties',
+      nameSpace: 'fileProperties',
     },
   ) => {
     // render component under test
@@ -39,7 +39,7 @@ describe('PropertyInformation component', () => {
   };
   it('renders minimally as expected', () => {
     const { component } = setup({
-      nameSpace: 'properties.0',
+      nameSpace: 'fileProperties.0',
       lease: {
         ...getMockApiLease(),
         fileProperties: [
@@ -59,7 +59,7 @@ describe('PropertyInformation component', () => {
 
   it('renders a complete lease as expected', () => {
     const { component } = setup({
-      nameSpace: 'properties.0',
+      nameSpace: 'fileProperties.0',
       lease: {
         ...getMockApiLease(),
         fileProperties: [
@@ -88,7 +88,7 @@ describe('PropertyInformation component', () => {
 
   it('does not render the area if the value is not set', () => {
     const { component } = setup({
-      nameSpace: 'properties.0',
+      nameSpace: 'fileProperties.0',
       lease: {
         ...getMockApiLease(),
         fileProperties: [
@@ -117,7 +117,7 @@ describe('PropertyInformation component', () => {
 
   it('will render the land area if no area unit is set', () => {
     const { component } = setup({
-      nameSpace: 'properties.0',
+      nameSpace: 'fileProperties.0',
       lease: {
         ...getMockApiLease(),
         fileProperties: [

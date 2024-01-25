@@ -34,7 +34,8 @@ describe('StackedPidTenantFields component', () => {
         {
           ...getEmptyLeaseTenant(),
           leaseId: 1,
-          person: { ...getEmptyPerson(), firstName: 'First', surname: 'Last' },
+          personId: 1,
+          person: { ...getEmptyPerson(), id: 1, firstName: 'First', surname: 'Last' },
         },
       ],
     });
@@ -49,7 +50,13 @@ describe('StackedPidTenantFields component', () => {
         {
           ...getEmptyLeaseTenant(),
           leaseId: 1,
-          person: { ...getEmptyPerson(), firstName: 'tenantFirst', surname: 'tenantSurname' },
+          personId: 1,
+          person: {
+            ...getEmptyPerson(),
+            id: 1,
+            firstName: 'tenantFirst',
+            surname: 'tenantSurname',
+          },
         },
       ],
     });

@@ -18,7 +18,8 @@ import { getMockApiLease } from '@/mocks/lease.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { getEmptyOrganization } from '@/mocks/organization.mock';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
-import { defaultApiLease } from '@/models/default_initializers';
+import { ApiGen_Concepts_LeaseTenant } from '@/models/api/generated/ApiGen_Concepts_LeaseTenant';
+import { defaultApiLease, getEmptyBaseAudit } from '@/models/default_initializers';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { mockKeycloak, renderAsync } from '@/utils/test-utils';
 
@@ -220,15 +221,19 @@ describe('AddLeaseTenantContainer component', () => {
     await waitFor(async () => {
       expect(updateTenants).toHaveBeenCalledTimes(1);
       expect(onEdit).toHaveBeenCalledWith(false);
-      expect(updateTenants.mock.calls[0][1][0]).toStrictEqual({
+      expect(updateTenants.mock.calls[0][1][0]).toStrictEqual<ApiGen_Concepts_LeaseTenant>({
         personId: 1,
-        organizationId: undefined,
-        lessorType: undefined,
-        tenantTypeCode: undefined,
-        primaryContactId: undefined,
-        note: undefined,
-        rowVersion: undefined,
+        person: null,
+        organizationId: null,
+        organization: null,
+        lessorType: null,
+        tenantTypeCode: null,
+        primaryContactId: null,
+        note: null,
         leaseId: 0,
+        leaseTenantId: null,
+        primaryContact: null,
+        ...getEmptyBaseAudit(),
       });
     });
   });
