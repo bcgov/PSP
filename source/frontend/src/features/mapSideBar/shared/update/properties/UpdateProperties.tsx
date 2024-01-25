@@ -109,6 +109,7 @@ export const UpdateProperties: React.FunctionComponent<
       }
     }
   };
+
   return (
     <>
       <LoadingBackdrop show={bcaLoading} />

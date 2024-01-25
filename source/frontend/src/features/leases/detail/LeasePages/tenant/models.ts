@@ -111,7 +111,7 @@ export class FormTenant {
   }
 
   constructor(apiModel?: ApiGen_Concepts_LeaseTenant, selectedContactModel?: IContactSearchResult) {
-    if (!!apiModel) {
+    if (exists(apiModel)) {
       // convert an api tenant to a form tenant.
       const tenant = apiModel.person ?? apiModel.organization;
       const address = !!tenant ? getApiPersonOrOrgMailingAddress(tenant) : null;
@@ -144,7 +144,7 @@ export class FormTenant {
       this.tenantType = fromTypeCode(apiModel.tenantTypeCode) ?? undefined;
       this.primaryContactId = apiModel.primaryContactId ?? undefined;
       this.initialPrimaryContact = apiModel.primaryContact ?? undefined;
-    } else if (!!selectedContactModel) {
+    } else if (exists(selectedContactModel)) {
       // In this case, construct a tenant using a contact.
       const primaryContact = getDefaultContact(selectedContactModel.organization);
       this.id = selectedContactModel?.id;
@@ -157,7 +157,7 @@ export class FormTenant {
       this.organizationId = selectedContactModel.organizationId;
       this.landline = selectedContactModel.landline;
       this.mobile = selectedContactModel.mobile;
-      this.lessorTypeCode = !!this.personId ? toTypeCode('PER') : toTypeCode('ORG');
+      this.lessorTypeCode = isValidId(this.personId) ? toTypeCode('PER') : toTypeCode('ORG');
       this.tenantType = selectedContactModel.tenantType;
       this.organizationPersons =
         selectedContactModel?.organization?.organizationPersons ?? undefined;

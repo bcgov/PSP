@@ -7,7 +7,7 @@ import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { getEmptyBaseAudit } from '@/models/default_initializers';
 import { NumberFieldValue } from '@/typings/NumberFieldValue';
 
-import { exists } from './utils';
+import { exists, isValidId, isValidString } from './utils';
 
 /**
  * append the passed name and index to the existing namespace, ideal for nesting forms within formik.
@@ -24,7 +24,7 @@ export const withNameSpace: Function = (nameSpace?: string, name?: string, index
  * @param {string} phoneNumber This is the target phone number to be formatted
  */
 export const phoneFormatter = (phoneNumber: string | null | undefined) => {
-  if (!!phoneNumber) {
+  if (isValidString(phoneNumber)) {
     let result = phoneNumber;
     const regex =
       phoneNumber.length === 10
@@ -63,12 +63,12 @@ export function emptyStringToUndefined<T extends string | number>(
 }
 
 export function stringToNull<T extends string>(value: T | null | undefined): T | null {
-  return emptyStringToNull(value, value);
+  return emptyStringToNull(value);
 }
 
 export function stringToNumber<T extends string | number>(value: T | null | undefined): number {
   if (typeof value === 'string' && value === '') {
-    value = emptyStringToNull(value, value);
+    value = emptyStringToNull(value);
   }
 
   return exists(value) ? Number(value) : 0;
@@ -78,17 +78,19 @@ export function stringToNumberOrNull<T extends string | number>(
   value: T | null | undefined,
 ): number | null {
   if (typeof value === 'string' && value === '') {
-    value = emptyStringToNull(value, value);
+    value = emptyStringToNull(value);
   }
 
   return exists(value) ? Number(value) : null;
 }
 
-export function emptyStringToNull(value: any, originalValue: any) {
-  if (typeof originalValue === 'string' && originalValue === '') {
+export function emptyStringToNull<T extends string | number>(
+  value: T | null | undefined,
+): T | null {
+  if (typeof value === 'string' && value === '') {
     return null;
   }
-  return value;
+  return exists(value) ? value : null;
 }
 
 export function fromTypeCode<T = string>(
@@ -104,7 +106,13 @@ export function fromTypeCodeNullable<T = string>(value?: ApiGen_Base_CodeType<T>
 export function toTypeCodeNullable<T = string>(
   value: T | null | undefined,
 ): ApiGen_Base_CodeType<T> | null {
-  return !!value ? toTypeCode(value) : null;
+  if (typeof value === 'string') {
+    return isValidString(value) ? toTypeCode(value) : null;
+  }
+  if (typeof value === 'number') {
+    return isValidId(value) ? toTypeCode(value) : null;
+  }
+  return exists(value) ? toTypeCode(value) : null;
 }
 
 export function toTypeCode<T = string>(value: T): ApiGen_Base_CodeType<T> {
@@ -141,7 +149,7 @@ export function stringToBoolean(value: string | boolean): boolean {
 }
 
 export function booleanToString(value?: boolean | null): string {
-  if (typeof value === 'undefined' || value === null) {
+  if (!exists(value)) {
     return 'false';
   }
   return value.toString();
@@ -162,7 +170,7 @@ export function stringToBooleanOrNull(value: string): boolean | null {
 }
 
 export function nullableBooleanToString(value?: boolean | null): string {
-  if (typeof value === 'undefined' || value === null) {
+  if (!exists(value)) {
     return 'null';
   }
   return value.toString();

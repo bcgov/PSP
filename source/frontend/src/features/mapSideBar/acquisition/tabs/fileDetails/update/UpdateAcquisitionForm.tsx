@@ -25,7 +25,7 @@ import { useLookupCodeHelpers } from '@/hooks/useLookupCodeHelpers';
 import { IAutocompletePrediction } from '@/interfaces';
 import { ApiGen_Concepts_OrganizationPerson } from '@/models/api/generated/ApiGen_Concepts_OrganizationPerson';
 import { ApiGen_Concepts_Product } from '@/models/api/generated/ApiGen_Concepts_Product';
-import { isValidId } from '@/utils';
+import { isValidId, isValidString } from '@/utils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
 import UpdateAcquisitionOwnersSubForm from '../../../common/update/acquisitionOwners/UpdateAcquisitionOwnersSubForm';
@@ -111,7 +111,7 @@ const AcquisitionDetailSubForm: React.FC<{
 
   // clear the associated 'Completion Date' field if the corresponding File Status has its value changed from COMPLETE to something else.
   React.useEffect(() => {
-    if (!!fileStatusTypeCode && fileStatusTypeCode !== 'COMPLT') {
+    if (isValidString(fileStatusTypeCode) && fileStatusTypeCode !== 'COMPLT') {
       setFieldValue('completionDate', '');
     }
   }, [fileStatusTypeCode, setFieldValue]);
@@ -203,7 +203,7 @@ const AcquisitionDetailSubForm: React.FC<{
               const selectedValue = [].slice
                 .call(e.target.selectedOptions)
                 .map((option: HTMLOptionElement & number) => option.value)[0];
-              if (!!selectedValue && selectedValue !== 'OTHER') {
+              if (isValidString(selectedValue) && selectedValue !== 'OTHER') {
                 formikProps.setFieldValue('fundingTypeOtherDescription', '');
               }
             }}

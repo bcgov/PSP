@@ -14,7 +14,7 @@ import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_Concepts_Contact } from '@/models/api/generated/ApiGen_Concepts_Contact';
 import { ApiGen_Concepts_SecurityDeposit } from '@/models/api/generated/ApiGen_Concepts_SecurityDeposit';
 import { formatNames } from '@/utils/personUtils';
-import { exists } from '@/utils/utils';
+import { exists, isValidIsoDateTime } from '@/utils/utils';
 
 export class DepositListEntry {
   public id: number;
@@ -34,7 +34,9 @@ export class DepositListEntry {
     }
     this.depositDescription = baseDeposit.description ?? '';
     this.amountPaid = baseDeposit.amountPaid;
-    this.paidDate = baseDeposit.depositDateOnly || '';
+    this.paidDate = isValidIsoDateTime(baseDeposit.depositDateOnly)
+      ? baseDeposit.depositDateOnly
+      : '';
     this.contactHolder = baseDeposit.contactHolder || undefined;
     this.depositReturnCount = baseDeposit.depositReturns?.length ?? 0;
   }

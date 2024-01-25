@@ -17,6 +17,7 @@ import TakesDetailView from '@/features/mapSideBar/property/tabs/takes/detail/Ta
 import { PROPERTY_TYPES, useComposedProperties } from '@/hooks/repositories/useComposedProperties';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { ApiGen_Concepts_ResearchFileProperty } from '@/models/api/generated/ApiGen_Concepts_ResearchFileProperty';
+import { isValidId } from '@/utils';
 
 import PropertyResearchTabView from '../../property/tabs/propertyResearch/detail/PropertyResearchTabView';
 
@@ -93,7 +94,7 @@ export const PropertyFileContainer: React.FunctionComponent<
 
   tabViews.push(...props.customTabs);
 
-  if (!!id) {
+  if (isValidId(id)) {
     tabViews.push({
       content: (
         <PropertyDetailsTabView
@@ -105,7 +106,7 @@ export const PropertyFileContainer: React.FunctionComponent<
       name: 'Property Details',
     });
   }
-  if (!!id) {
+  if (isValidId(id)) {
     tabViews.push({
       content: (
         <PropertyAssociationTabView

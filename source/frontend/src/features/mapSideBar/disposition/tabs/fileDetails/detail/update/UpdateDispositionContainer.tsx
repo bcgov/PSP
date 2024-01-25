@@ -8,6 +8,7 @@ import { useModalContext } from '@/hooks/useModalContext';
 import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
+import { isValidId } from '@/utils';
 
 import { DispositionFormModel } from '../../../../models/DispositionFormModel';
 import { IUpdateDispositionFormProps } from './UpdateDispositionForm';
@@ -47,7 +48,7 @@ export const UpdateDispositionContainer = React.forwardRef<
           userOverrideCodes,
         );
 
-        if (!!response?.id) {
+        if (isValidId(response?.id)) {
           formikHelpers?.resetForm();
           onSuccess();
         }

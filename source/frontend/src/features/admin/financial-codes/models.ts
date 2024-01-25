@@ -4,8 +4,7 @@ import { ApiGen_Concepts_FinancialCode } from '@/models/api/generated/ApiGen_Con
 import { ApiGen_Concepts_FinancialCodeTypes } from '@/models/api/generated/ApiGen_Concepts_FinancialCodeTypes';
 import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { getEmptyBaseAudit } from '@/models/default_initializers';
-import { stringToNull } from '@/utils/formUtils';
-import { exists } from '@/utils/utils';
+import { exists, isValidIsoDateTime } from '@/utils/utils';
 
 export class FinancialCodeForm {
   id?: number;
@@ -26,8 +25,8 @@ export class FinancialCodeForm {
       code: this.code ?? null,
       description: this.description ?? null,
       displayOrder: this.displayOrder !== undefined ? Number(this.displayOrder) : null,
-      effectiveDate: this.effectiveDate ?? EpochIsoDateTime,
-      expiryDate: stringToNull(this.expiryDate),
+      effectiveDate: isValidIsoDateTime(this.effectiveDate) ? this.effectiveDate : EpochIsoDateTime,
+      expiryDate: isValidIsoDateTime(this.expiryDate) ? this.expiryDate : null,
       ...getEmptyBaseAudit(this.rowVersion),
     };
   }
@@ -40,8 +39,8 @@ export class FinancialCodeForm {
     newForm.code = model.code ?? undefined;
     newForm.description = model.description ?? undefined;
     newForm.displayOrder = model.displayOrder ?? undefined;
-    newForm.effectiveDate = model.effectiveDate ?? '';
-    newForm.expiryDate = model.expiryDate ?? '';
+    newForm.effectiveDate = isValidIsoDateTime(model.effectiveDate) ? model.effectiveDate : '';
+    newForm.expiryDate = isValidIsoDateTime(model.expiryDate) ? model.expiryDate : '';
 
     return newForm;
   }

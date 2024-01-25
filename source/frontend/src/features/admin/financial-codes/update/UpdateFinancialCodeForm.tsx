@@ -10,6 +10,7 @@ import { SectionField } from '@/components/common/Section/SectionField';
 import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
 import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_Concepts_FinancialCodeTypes } from '@/models/api/generated/ApiGen_Concepts_FinancialCodeTypes';
+import { exists, isValidId } from '@/utils';
 
 import { formatFinancialCodeType } from '../financialCodeUtils';
 import { FinancialCodeForm } from '../models';
@@ -54,7 +55,8 @@ export const UpdateFinancialCodeForm: React.FC<IUpdateFinancialCodeFormProps> = 
       onSubmit={async (values, formikHelpers) => {
         try {
           const createdCode = await onSave(values.toApi());
-          if (!!createdCode?.id) {
+          // TODO: the isValidId check is sufficient but current ts (4.3) does not see it as valid. This works correctly on 5.3
+          if (exists(createdCode) && isValidId(createdCode?.id)) {
             formikHelpers.resetForm({
               values: FinancialCodeForm.fromApi(createdCode),
             });

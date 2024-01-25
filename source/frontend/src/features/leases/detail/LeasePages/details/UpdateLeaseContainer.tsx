@@ -11,6 +11,7 @@ import { LeaseFormModel } from '@/features/leases/models';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
+import { isValidId } from '@/utils';
 
 import { IUpdateLeaseFormProps } from './UpdateLeaseForm';
 
@@ -55,7 +56,7 @@ export const UpdateLeaseContainer: React.FunctionComponent<
   };
 
   const afterSubmit = async (updatedLease?: ApiGen_Concepts_Lease) => {
-    if (!!updatedLease?.id) {
+    if (isValidId(updatedLease?.id)) {
       formikRef?.current?.resetForm({ values: formikRef?.current?.values });
       await refresh();
       mapMachine.refreshMapProperties();

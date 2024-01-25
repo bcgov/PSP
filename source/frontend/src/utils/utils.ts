@@ -5,6 +5,7 @@ import { hideLoading, showLoading } from 'react-redux-loading-bar';
 
 import { SelectOption } from '@/components/common/form';
 import { TableSort } from '@/components/Table/TableSort';
+import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { logError, logRequest, logSuccess } from '@/store/slices/network/networkSlice';
 
 /**
@@ -185,6 +186,14 @@ export function exists<T>(value: T | null | undefined): value is T {
  */
 export function isValidId(value: number | null | undefined): value is number {
   return exists(value) && !isNaN(value) && value !== 0;
+}
+
+export function isValidString(value: string | null | undefined): value is string {
+  return exists(value) && value.length > 0;
+}
+
+export function isValidIsoDateTime(value: string | null | undefined): value is string {
+  return isValidString(value) && value !== EpochIsoDateTime;
 }
 
 /**

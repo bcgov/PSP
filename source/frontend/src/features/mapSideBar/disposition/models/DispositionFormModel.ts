@@ -2,7 +2,7 @@ import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_C
 import { ApiGen_Concepts_DispositionFileProperty } from '@/models/api/generated/ApiGen_Concepts_DispositionFileProperty';
 import { getEmptyBaseAudit } from '@/models/default_initializers';
 import { emptyStringtoNullable, fromTypeCode, toTypeCodeNullable } from '@/utils/formUtils';
-import { exists } from '@/utils/utils';
+import { exists, isValidIsoDateTime } from '@/utils/utils';
 
 import { PropertyForm } from '../../shared/models';
 import { ChecklistItemFormModel } from '../../shared/tabs/checklist/update/models';
@@ -54,8 +54,10 @@ export class DispositionFormModel implements WithDispositionTeam {
       fileNumber: this.fileNumber ?? null,
       fileStatusTypeCode: toTypeCodeNullable(this.fileStatusTypeCode),
       fileReference: emptyStringtoNullable(this.referenceNumber),
-      assignedDate: this.assignedDate,
-      completionDate: this.completionDate,
+      assignedDate: isValidIsoDateTime(this.assignedDate) ? this.assignedDate : this.assignedDate,
+      completionDate: isValidIsoDateTime(this.completionDate)
+        ? this.completionDate
+        : this.completionDate,
       dispositionTypeCode: toTypeCodeNullable(this.dispositionTypeCode),
       dispositionTypeOther: this.dispositionTypeOther ? this.dispositionTypeOther : null,
       dispositionStatusTypeCode: toTypeCodeNullable(this.dispositionStatusTypeCode),
@@ -66,7 +68,9 @@ export class DispositionFormModel implements WithDispositionTeam {
       initiatingDocumentTypeOther: this.initiatingDocumentTypeOther
         ? this.initiatingDocumentTypeOther
         : null,
-      initiatingDocumentDate: this.initiatingDocumentDate,
+      initiatingDocumentDate: isValidIsoDateTime(this.initiatingDocumentDate)
+        ? this.initiatingDocumentDate
+        : null,
       regionCode: toTypeCodeNullable(Number(this.regionCode)),
       dispositionTeam: this.team
         .filter(x => !!x.contact && !!x.teamProfileTypeCode)

@@ -9,7 +9,7 @@ import GenericModal from '@/components/common/GenericModal';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
 import { useProductProvider } from '@/hooks/repositories/useProductProvider';
-import { exists } from '@/utils/utils';
+import { exists, isValidId } from '@/utils/utils';
 
 import { ProductForm, ProjectForm } from '../models';
 import ProductSubForm from './ProductSubForm';
@@ -36,7 +36,7 @@ export const ProductsArrayForm: React.FunctionComponent<IProductsArrayFormProps>
 
   const handleRemove = async (index: number) => {
     const productId = products[index].id;
-    if (!!productId) {
+    if (isValidId(productId)) {
       const files = await retrieveProductFiles(productId);
       if (exists(files) && files.length > 0) {
         setShowFileModal(true);

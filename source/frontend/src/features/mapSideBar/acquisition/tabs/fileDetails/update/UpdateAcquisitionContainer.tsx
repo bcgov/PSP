@@ -10,6 +10,7 @@ import { useModalContext } from '@/hooks/useModalContext';
 import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
+import { isValidId } from '@/utils';
 
 import { UpdateAcquisitionSummaryFormModel } from './models';
 import { UpdateAcquisitionFileYupSchema } from './UpdateAcquisitionFileYupSchema';
@@ -56,7 +57,7 @@ export const UpdateAcquisitionContainer = React.forwardRef<
       const acquisitionFile = values.toApi();
       const response = await updateAcquisitionFile(acquisitionFile, userOverrideCodes);
 
-      if (!!response?.id) {
+      if (isValidId(response?.id)) {
         if (acquisitionFile.fileProperties?.find(ap => !ap.property?.address && !ap.property?.id)) {
           toast.warn(
             'Address could not be retrieved for this property, it will have to be provided manually in property details tab',

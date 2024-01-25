@@ -7,7 +7,7 @@ import { ApiGen_Concepts_CompensationFinancial } from '@/models/api/generated/Ap
 import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
 import { ApiGen_Concepts_FinancialCode } from '@/models/api/generated/ApiGen_Concepts_FinancialCode';
 import { getEmptyBaseAudit } from '@/models/default_initializers';
-import { isValidId } from '@/utils';
+import { isValidId, isValidIsoDateTime } from '@/utils';
 import { booleanToString, stringToBoolean, stringToNull } from '@/utils/formUtils';
 
 export class CompensationRequisitionFormModel {
@@ -38,7 +38,7 @@ export class CompensationRequisitionFormModel {
     this.id = id;
     this.acquisitionFileId = acquisitionFileId;
     this.payee = new AcquisitionPayeeFormModel();
-    this.finalizedDate = finalizedDate;
+    this.finalizedDate = isValidIsoDateTime(finalizedDate) ? finalizedDate : '';
   }
 
   toApi(payeeOptions: PayeeOption[]): ApiGen_Concepts_CompensationRequisition {
@@ -64,12 +64,20 @@ export class CompensationRequisitionFormModel {
           ? Number(this.responsibilityCentre?.value)
           : null,
       responsibility: null,
-      agreementDate: stringToNull(this.agreementDateTime),
-      finalizedDate: stringToNull(this.finalizedDate),
-      expropriationNoticeServedDate: stringToNull(this.expropriationNoticeServedDateTime),
-      expropriationVestingDate: stringToNull(this.expropriationVestingDateTime),
-      advancedPaymentServedDate: stringToNull(this.advancedPaymentServedDate),
-      generationDate: stringToNull(this.generationDatetTime),
+      agreementDate: isValidIsoDateTime(this.agreementDateTime) ? this.agreementDateTime : null,
+      finalizedDate: isValidIsoDateTime(this.finalizedDate) ? this.finalizedDate : null,
+      expropriationNoticeServedDate: isValidIsoDateTime(this.expropriationNoticeServedDateTime)
+        ? this.expropriationNoticeServedDateTime
+        : null,
+      expropriationVestingDate: isValidIsoDateTime(this.expropriationVestingDateTime)
+        ? this.expropriationVestingDateTime
+        : null,
+      advancedPaymentServedDate: isValidIsoDateTime(this.advancedPaymentServedDate)
+        ? this.advancedPaymentServedDate
+        : null,
+      generationDate: isValidIsoDateTime(this.generationDatetTime)
+        ? this.generationDatetTime
+        : null,
       specialInstruction: stringToNull(this.specialInstruction),
       detailedRemarks: stringToNull(this.detailedRemarks),
       financials: this.financials

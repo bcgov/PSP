@@ -1,8 +1,10 @@
 import { fromContact, IContactSearchResult, toContact } from '@/interfaces';
 import { ApiGen_Concepts_SecurityDeposit } from '@/models/api/generated/ApiGen_Concepts_SecurityDeposit';
 import { ApiGen_Concepts_SecurityDepositReturn } from '@/models/api/generated/ApiGen_Concepts_SecurityDepositReturn';
+import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { getEmptyBaseAudit } from '@/models/default_initializers';
 import { NumberFieldValue } from '@/typings/NumberFieldValue';
+import { isValidIsoDateTime } from '@/utils';
 import { numberFieldToRequiredNumber } from '@/utils/formUtils';
 
 export class FormLeaseDepositReturn {
@@ -58,11 +60,13 @@ export class FormLeaseDepositReturn {
 
     model.id = baseModel.id ?? undefined;
     model.parentDepositId = baseModel.parentDepositId;
-    model.terminationDate = baseModel.terminationDate || '';
+    model.terminationDate = isValidIsoDateTime(baseModel.terminationDate)
+      ? baseModel.terminationDate
+      : '';
     model.claimsAgainst = baseModel.claimsAgainst || '';
     model.returnAmount = baseModel.returnAmount || '';
     model.interestPaid = baseModel.interestPaid || '';
-    model.returnDate = baseModel.returnDate || '';
+    model.returnDate = isValidIsoDateTime(baseModel.returnDate) ? baseModel.returnDate : '';
     model.contactHolder =
       baseModel.contactHolder !== null ? fromContact(baseModel.contactHolder) : undefined;
     model.rowVersion = baseModel.rowVersion || 0;
@@ -73,11 +77,13 @@ export class FormLeaseDepositReturn {
     return {
       id: this.id ?? null,
       parentDepositId: this.parentDepositId,
-      terminationDate: this.terminationDate,
+      terminationDate: isValidIsoDateTime(this.terminationDate)
+        ? this.terminationDate
+        : EpochIsoDateTime,
       claimsAgainst: numberFieldToRequiredNumber(this.claimsAgainst),
       returnAmount: numberFieldToRequiredNumber(this.returnAmount),
       interestPaid: numberFieldToRequiredNumber(this.interestPaid),
-      returnDate: this.returnDate,
+      returnDate: isValidIsoDateTime(this.returnDate) ? this.returnDate : EpochIsoDateTime,
       contactHolder: this.contactHolder !== undefined ? toContact(this.contactHolder) : null,
       depositType: null,
       ...getEmptyBaseAudit(this.rowVersion),

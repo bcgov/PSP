@@ -26,7 +26,7 @@ import { IAutocompletePrediction } from '@/interfaces/IAutocomplete';
 import { ApiGen_Concepts_OrganizationPerson } from '@/models/api/generated/ApiGen_Concepts_OrganizationPerson';
 import { ApiGen_Concepts_Product } from '@/models/api/generated/ApiGen_Concepts_Product';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
-import { isValidId } from '@/utils';
+import { isValidId, isValidString } from '@/utils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
 import { AcquisitionFormModal } from '../common/modals/AcquisitionFormModal';
@@ -205,7 +205,7 @@ const AddAcquisitionDetailSubForm: React.FC<{
                 const selectedValue = [].slice
                   .call(e.target.selectedOptions)
                   .map((option: HTMLOptionElement & number) => option.value)[0];
-                if (!!selectedValue && selectedValue !== 'OTHER') {
+                if (isValidString(selectedValue) && selectedValue !== 'OTHER') {
                   formikProps.setFieldValue('fundingTypeOtherDescription', '');
                 }
               }}

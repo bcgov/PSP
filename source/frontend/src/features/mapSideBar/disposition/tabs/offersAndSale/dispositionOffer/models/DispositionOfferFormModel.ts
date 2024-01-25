@@ -1,5 +1,6 @@
 import { ApiGen_Concepts_DispositionFileOffer } from '@/models/api/generated/ApiGen_Concepts_DispositionFileOffer';
 import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
+import { isValidIsoDateTime } from '@/utils';
 import { emptyStringtoNullable, toTypeCodeNullable } from '@/utils/formUtils';
 
 export class DispositionOfferFormModel {
@@ -21,7 +22,7 @@ export class DispositionOfferFormModel {
 
     model.dispositionOfferStatusTypeCode = entity.dispositionOfferStatusTypeCode;
     model.offerName = entity.offerName;
-    model.offerDate = entity.offerDate;
+    model.offerDate = isValidIsoDateTime(entity.offerDate) ? entity.offerDate : null;
     model.offerExpiryDate = entity.offerExpiryDate;
     model.offerAmount = entity.offerAmount;
     model.offerNote = entity.offerNote;
@@ -37,8 +38,8 @@ export class DispositionOfferFormModel {
       dispositionOfferStatusTypeCode: emptyStringtoNullable(this.dispositionOfferStatusTypeCode),
       dispositionOfferStatusType: toTypeCodeNullable(this.dispositionOfferStatusTypeCode),
       offerName: emptyStringtoNullable(this.offerName),
-      offerDate: this.offerDate ?? EpochIsoDateTime,
-      offerExpiryDate: emptyStringtoNullable(this.offerExpiryDate),
+      offerDate: isValidIsoDateTime(this.offerDate) ? this.offerDate : EpochIsoDateTime,
+      offerExpiryDate: isValidIsoDateTime(this.offerExpiryDate) ? this.offerExpiryDate : null,
       offerAmount: this.offerAmount ?? 0,
       offerNote: emptyStringtoNullable(this.offerNote),
       rowVersion: this.rowVersion ?? 0,

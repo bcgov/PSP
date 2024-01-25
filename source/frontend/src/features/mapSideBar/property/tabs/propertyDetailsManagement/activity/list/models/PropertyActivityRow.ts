@@ -1,5 +1,6 @@
 import { ApiGen_Base_CodeType } from '@/models/api/generated/ApiGen_Base_CodeType';
 import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
+import { isValidIsoDateTime } from '@/utils';
 
 export class PropertyActivityRow {
   activityType: ApiGen_Base_CodeType<string> | null = null;
@@ -19,7 +20,9 @@ export class PropertyActivityRow {
     row.activityType = model.activityTypeCode;
     row.activitySubType = model.activitySubtypeCode;
     row.activityStatusType = model.activityStatusTypeCode;
-    row.requestedAddedDate = model.requestAddedDateOnly;
+    row.requestedAddedDate = isValidIsoDateTime(model.requestAddedDateOnly)
+      ? model.requestAddedDateOnly
+      : null;
 
     return row;
   }

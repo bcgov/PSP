@@ -4,6 +4,7 @@ import { useCallback } from 'react';
 import { NoteTypes } from '@/constants/index';
 import { useNoteRepository } from '@/hooks/repositories/useNoteRepository';
 import { ApiGen_Concepts_Note } from '@/models/api/generated/ApiGen_Concepts_Note';
+import { isValidId } from '@/utils';
 
 import { NoteForm } from '../models';
 import { UpdateNoteYupSchema } from '../update/UpdateNoteYupSchema';
@@ -31,7 +32,7 @@ export function useUpdateNotesFormManagement(props: IUseUpdateNotesFormManagemen
       const response = await updateNote.execute(apiNote);
       formikHelpers?.setSubmitting(false);
 
-      if (!!response?.id) {
+      if (isValidId(response?.id)) {
         formikHelpers?.resetForm();
         if (typeof onSuccess === 'function') {
           onSuccess();

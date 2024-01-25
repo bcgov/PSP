@@ -1,6 +1,7 @@
 import { fromContact, IContactSearchResult, toContact } from '@/interfaces';
 import { ApiGen_Concepts_SecurityDeposit } from '@/models/api/generated/ApiGen_Concepts_SecurityDeposit';
 import { NumberFieldValue } from '@/typings/NumberFieldValue';
+import { isValidIsoDateTime } from '@/utils';
 import { toTypeCodeNullable } from '@/utils/formUtils';
 
 export class FormLeaseDeposit {
@@ -35,7 +36,9 @@ export class FormLeaseDeposit {
     model.id = baseModel.id ?? undefined;
     model.description = baseModel.description ?? '';
     model.amountPaid = baseModel.amountPaid;
-    model.depositDate = baseModel.depositDateOnly || '';
+    model.depositDate = isValidIsoDateTime(baseModel.depositDateOnly)
+      ? baseModel.depositDateOnly
+      : '';
     model.depositTypeCode = baseModel.depositType?.id ?? '';
     model.otherTypeDescription = baseModel.otherTypeDescription || '';
     model.contactHolder =

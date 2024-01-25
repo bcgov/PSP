@@ -7,8 +7,8 @@ import { ApiGen_Concepts_Project } from '@/models/api/generated/ApiGen_Concepts_
 import { ApiGen_Concepts_ProjectProduct } from '@/models/api/generated/ApiGen_Concepts_ProjectProduct';
 import { getEmptyBaseAudit } from '@/models/default_initializers';
 import { NumberFieldValue } from '@/typings/NumberFieldValue';
-import { stringToNull, toFinancialCode, toTypeCodeNullable } from '@/utils/formUtils';
-import { exists } from '@/utils/utils';
+import { toFinancialCode, toTypeCodeNullable } from '@/utils/formUtils';
+import { exists, isValidIsoDateTime } from '@/utils/utils';
 
 export class ProductForm {
   id: number | null = null;
@@ -28,9 +28,9 @@ export class ProductForm {
       projectProducts: [],
       code: this.code,
       description: this.description,
-      startDate: stringToNull(this.startDate),
+      startDate: isValidIsoDateTime(this.startDate) ? this.startDate : null,
       costEstimate: !!this.costEstimate ? Number(this.costEstimate) : null,
-      costEstimateDate: stringToNull(this.costEstimateDate),
+      costEstimateDate: isValidIsoDateTime(this.costEstimateDate) ? this.costEstimateDate : null,
       objective: this.objective,
       scope: this.scope,
       acquisitionFiles: [],

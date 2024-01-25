@@ -6,6 +6,7 @@ import { useCompensationRequisitionRepository } from '@/hooks/repositories/useRe
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
 import { SystemConstants, useSystemConstants } from '@/store/slices/systemConstants';
+import { isValidId } from '@/utils';
 
 import { CompensationRequisitionTrayViewProps } from './CompensationRequisitionTrayView';
 
@@ -42,7 +43,7 @@ export const CompensationRequisitionTrayContainer: React.FunctionComponent<
   } = useCompensationRequisitionRepository();
 
   const fetchCompensationReq = useCallback(async () => {
-    if (!!compensationRequisitionId) {
+    if (isValidId(compensationRequisitionId)) {
       const compensationReq = await getCompensationRequisition(compensationRequisitionId);
       if (compensationReq) {
         setLoadedCompensation(compensationReq);

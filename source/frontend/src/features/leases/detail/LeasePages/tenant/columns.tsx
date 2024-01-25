@@ -70,7 +70,7 @@ const getColumns = (tenantTypes: SelectOption[]): ColumnWithProps<FormTenant>[] 
             label: formatApiPersonNames(person),
             value: person?.id ?? 0,
           })) ?? [];
-        if (!!props?.row?.original?.personId) {
+        if (isValidId(props?.row?.original?.personId)) {
           return <p>Not applicable</p>;
         } else if (persons?.length && persons?.length > 1) {
           return (

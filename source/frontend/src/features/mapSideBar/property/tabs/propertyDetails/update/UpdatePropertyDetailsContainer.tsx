@@ -10,6 +10,7 @@ import { useQueryMapLayersByLocation } from '@/hooks/repositories/useQueryMapLay
 import { useLookupCodeHelpers } from '@/hooks/useLookupCodeHelpers';
 import useIsMounted from '@/hooks/util/useIsMounted';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
+import { isValidId } from '@/utils';
 
 import { UpdatePropertyDetailsFormModel } from './models';
 import { UpdatePropertyDetailsForm } from './UpdatePropertyDetailsForm';
@@ -46,7 +47,7 @@ export const UpdatePropertyDetailsContainer = React.forwardRef<
 
   useEffect(() => {
     async function fetchProperty() {
-      if (!!props.id) {
+      if (isValidId(props.id)) {
         const retrieved = await executeGetProperty(props.id);
         if (retrieved !== undefined && isMounted()) {
           const formValues = UpdatePropertyDetailsFormModel.fromApi(retrieved);
@@ -94,7 +95,7 @@ export const UpdatePropertyDetailsContainer = React.forwardRef<
 
     formikHelpers.setSubmitting(false);
 
-    if (!!response?.id) {
+    if (isValidId(response?.id)) {
       formikHelpers.resetForm();
       props.onSuccess();
     }

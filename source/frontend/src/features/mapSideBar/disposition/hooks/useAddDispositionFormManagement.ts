@@ -5,6 +5,7 @@ import { useDispositionProvider } from '@/hooks/repositories/useDispositionProvi
 import useApiUserOverride from '@/hooks/useApiUserOverride';
 import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
+import { exists, isValidId } from '@/utils';
 
 import { DispositionFormModel } from '../models/DispositionFormModel';
 
@@ -27,7 +28,7 @@ const useAddDispositionFormManagement = (props: IUseAddDispositionFormmanagement
       return withUserOverride(async (userOverrideCodes: UserOverrideCode[]) => {
         const dispositionFile = values.toApi();
         const response = await addDispositionFileApi.execute(dispositionFile, userOverrideCodes);
-        if (!!response?.id) {
+        if (exists(response) && isValidId(response?.id)) {
           if (typeof onSuccess === 'function') {
             await onSuccess(response);
             setSubmitting(false);

@@ -3,6 +3,7 @@ import * as React from 'react';
 import ExpandableTextList from '@/components/common/ExpandableTextList';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { ApiGen_Concepts_PropertyLease } from '@/models/api/generated/ApiGen_Concepts_PropertyLease';
+import { exists, isValidString } from '@/utils';
 import { getPropertyName } from '@/utils/mapPropertyUtils';
 
 export interface ILeaseHeaderAddressesProps {
@@ -32,17 +33,17 @@ export const LeaseHeaderAddresses: React.FC<ILeaseHeaderAddressesProps> = ({
 };
 
 const getFormattedAddress = (property: ApiGen_Concepts_Property | null | undefined) => {
-  if (!property) {
+  if (!exists(property)) {
     return '';
   }
   const address = property?.address;
-  if (!!address?.streetAddress1) {
-    return !!address?.municipality
-      ? `${address.streetAddress1}, ${address.municipality}`
-      : address.streetAddress1;
+  if (isValidString(address?.streetAddress1)) {
+    return isValidString(address?.municipality)
+      ? `${address!.streetAddress1}, ${address!.municipality}`
+      : address!.streetAddress1;
   } else {
-    return !!address?.municipality
-      ? address.municipality
+    return isValidString(address?.municipality)
+      ? address!.municipality
       : `${
           getPropertyName({
             pid: property.pid?.toString(),

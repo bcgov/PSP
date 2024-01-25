@@ -4,6 +4,7 @@ import { ApiGen_Concepts_Insurance } from '@/models/api/generated/ApiGen_Concept
 import { getEmptyBaseAudit } from '@/models/default_initializers';
 import { ILookupCode } from '@/store/slices/lookupCodes';
 import { NumberFieldValue } from '@/typings/NumberFieldValue';
+import { isValidIsoDateTime } from '@/utils';
 import { numberFieldToRequiredNumber } from '@/utils/formUtils';
 
 export interface IUpdateFormInsurance {
@@ -46,7 +47,7 @@ export class FormInsurance {
     model.otherInsuranceType = baseModel.otherInsuranceType ?? undefined;
     model.coverageDescription = baseModel.coverageDescription ?? undefined;
     model.coverageLimit = baseModel.coverageLimit || '';
-    model.expiryDate = baseModel.expiryDate ?? undefined;
+    model.expiryDate = isValidIsoDateTime(baseModel.expiryDate) ? baseModel.expiryDate : undefined;
     model.isInsuranceInPlaceRadio = baseModel.isInsuranceInPlace === true ? 'yes' : 'no';
     model.isNew = false;
     model.isShown = true;
@@ -62,7 +63,7 @@ export class FormInsurance {
       otherInsuranceType: this.otherInsuranceType ?? null,
       coverageDescription: this.coverageDescription ?? null,
       coverageLimit: this.coverageLimit === '' ? null : this.coverageLimit ?? null,
-      expiryDate: this.expiryDate === '' ? null : this.expiryDate ?? null,
+      expiryDate: !isValidIsoDateTime(this.expiryDate) ? null : this.expiryDate ?? null,
       isInsuranceInPlace: this.isInsuranceInPlaceRadio === 'yes' ? true : false,
       ...getEmptyBaseAudit(this.rowVersion),
     };

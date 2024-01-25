@@ -11,7 +11,7 @@ import { getEmptyBaseAudit } from '@/models/default_initializers';
 import { NumberFieldValue } from '@/typings/NumberFieldValue';
 import { getPreferredContactMethodValue } from '@/utils/contactMethodUtil';
 import { toTypeCodeNullable } from '@/utils/formUtils';
-import { exists } from '@/utils/utils';
+import { exists, isValidIsoDateTime } from '@/utils/utils';
 
 export class FormUser {
   id?: number;
@@ -74,8 +74,8 @@ export class FormUser {
       userTypeCode: this.userTypeCode ?? null,
       note: this.note ?? null,
       isDisabled: this.isDisabled ?? false,
-      issueDate: this.issueDate ?? null,
-      lastLogin: this.lastLogin ?? null,
+      issueDate: isValidIsoDateTime(this.issueDate) ? this.issueDate : null,
+      lastLogin: isValidIsoDateTime(this.lastLogin) ? this.lastLogin : null,
       userRoles:
         this.roles?.map<ApiGen_Concepts_UserRole>(role => ({
           userId: this.id ?? 0,

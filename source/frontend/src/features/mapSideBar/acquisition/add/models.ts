@@ -5,7 +5,7 @@ import { ApiGen_Concepts_AcquisitionFileOwner } from '@/models/api/generated/Api
 import { ApiGen_Concepts_AcquisitionFileProperty } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileProperty';
 import { getEmptyBaseAudit } from '@/models/default_initializers';
 import { fromTypeCode, stringToNumberOrNull, toTypeCodeNullable } from '@/utils/formUtils';
-import { exists, isValidId } from '@/utils/utils';
+import { exists, isValidId, isValidIsoDateTime } from '@/utils/utils';
 
 import { PropertyForm } from '../../shared/models';
 import { ChecklistItemFormModel } from '../../shared/tabs/checklist/update/models';
@@ -49,8 +49,8 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
     return {
       id: this.id ?? 0,
       fileName: this.fileName ?? null,
-      assignedDate: this.assignedDate ?? null,
-      deliveryDate: this.deliveryDate ?? null,
+      assignedDate: isValidIsoDateTime(this.assignedDate) ? this.assignedDate : null,
+      deliveryDate: isValidIsoDateTime(this.deliveryDate) ? this.deliveryDate : null,
       totalAllowableCompensation: stringToNumberOrNull(this.totalAllowableCompensation),
       legacyFileNumber: this.legacyFileNumber ?? null,
       fileStatusTypeCode: toTypeCodeNullable(this.acquisitionFileStatusType),

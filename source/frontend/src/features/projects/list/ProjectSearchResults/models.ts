@@ -1,4 +1,5 @@
 import { ApiGen_Concepts_Project } from '@/models/api/generated/ApiGen_Concepts_Project';
+import { isValidIsoDateTime } from '@/utils';
 
 export class ProjectSearchResultModel {
   id: number | null = null;
@@ -18,7 +19,9 @@ export class ProjectSearchResultModel {
     newModel.region = base.regionCode?.description ?? '';
     newModel.status = base.projectStatusTypeCode?.description ?? '';
     newModel.lastUpdatedBy = base.appLastUpdateUserid ?? '';
-    newModel.lastUpdatedDate = base.appLastUpdateTimestamp ?? '';
+    newModel.lastUpdatedDate = isValidIsoDateTime(base.appLastUpdateTimestamp)
+      ? base.appLastUpdateTimestamp
+      : '';
 
     return newModel;
   }

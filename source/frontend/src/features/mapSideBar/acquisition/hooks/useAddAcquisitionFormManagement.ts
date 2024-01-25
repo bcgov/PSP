@@ -10,6 +10,7 @@ import { useInitialMapSelectorProperties } from '@/hooks/useInitialMapSelectorPr
 import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
+import { exists, isValidId } from '@/utils';
 
 import { AddAcquisitionFileYupSchema } from '../add/AddAcquisitionFileYupSchema';
 import { AcquisitionForm } from '../add/models';
@@ -41,7 +42,7 @@ export function useAddAcquisitionFormManagement(props: IUseAddAcquisitionFormMan
         try {
           const acquisitionFile = values.toApi();
           const response = await addAcquisitionFile.execute(acquisitionFile, userOverrideCodes);
-          if (!!response?.id) {
+          if (exists(response) && isValidId(response?.id)) {
             if (typeof onSuccess === 'function') {
               await onSuccess(response);
             }

@@ -1,4 +1,5 @@
 import { ApiGen_Concepts_DispositionFileSale } from '@/models/api/generated/ApiGen_Concepts_DispositionFileSale';
+import { isValidIsoDateTime } from '@/utils';
 import { emptyStringtoNullable } from '@/utils/formUtils';
 
 export class DispositionSaleFormModel {
@@ -44,8 +45,12 @@ export class DispositionSaleFormModel {
     return {
       id: this.id,
       dispositionFileId: this.dispositionFileId,
-      finalConditionRemovalDate: emptyStringtoNullable(this.finalConditionRemovalDate),
-      saleCompletionDate: emptyStringtoNullable(this.saleCompletionDate),
+      finalConditionRemovalDate: isValidIsoDateTime(this.finalConditionRemovalDate)
+        ? this.finalConditionRemovalDate
+        : null,
+      saleCompletionDate: isValidIsoDateTime(this.saleCompletionDate)
+        ? this.finalConditionRemovalDate
+        : null,
       saleFiscalYear: emptyStringtoNullable(this.saleFiscalYear),
       finalSaleAmount: this.finalSaleAmount,
       realtorCommissionAmount: this.realtorCommissionAmount,

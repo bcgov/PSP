@@ -11,14 +11,17 @@ import {
 import { IAccessRequest, IAddress, IOrganization, IPerson, IProperty } from '@/interfaces';
 import { BillingInfo, LtsaOrders, OrderParent } from '@/interfaces/ltsaModels';
 import { ApiGen_Concepts_AccessRequest } from '@/models/api/generated/ApiGen_Concepts_AccessRequest';
+import { ApiGen_Concepts_Address } from '@/models/api/generated/ApiGen_Concepts_Address';
 import { ApiGen_Concepts_Organization } from '@/models/api/generated/ApiGen_Concepts_Organization';
 import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_Person';
+import { ApiGen_Concepts_PropertyLease } from '@/models/api/generated/ApiGen_Concepts_PropertyLease';
 import { ApiGen_Concepts_User } from '@/models/api/generated/ApiGen_Concepts_User';
-import { getEmptyBaseAudit } from '@/models/default_initializers';
+import { getEmptyBaseAudit, getEmptyProperty } from '@/models/default_initializers';
 import { ILookupCode } from '@/store/slices/lookupCodes';
-import { toTypeCodeNullable } from '@/utils/formUtils';
+import { toTypeCode, toTypeCodeNullable } from '@/utils/formUtils';
 
 import { getEmptyPerson } from './contacts.mock';
+import { getEmptyPropertyLease } from './properties.mock';
 
 // TODO: PSP-4410 This needs to be removed as Administrative Areas no longer exist.
 export const mockAdministrativeAreaLookups = [
@@ -676,6 +679,65 @@ export const mockProperties = [
 ] as IProperty[];
 
 export const mockParcel = mockProperties[0];
+
+export const mockApiAddress: ApiGen_Concepts_Address = {
+  id: 1,
+  streetAddress1: '1234 mock Street',
+  streetAddress2: 'N/A',
+  streetAddress3: null,
+  municipality: 'Victoria',
+  provinceStateId: 1,
+  province: {
+    id: 1,
+    code: 'BC',
+    description: null,
+    displayOrder: null,
+  },
+  postal: 'V1V1V1',
+  countryId: null,
+  country: null,
+  district: null,
+  region: null,
+  countryOther: null,
+  latitude: null,
+  longitude: null,
+  comment: null,
+  rowVersion: null,
+};
+
+export const mockLeaseProperty = (): ApiGen_Concepts_PropertyLease => {
+  return {
+    ...getEmptyPropertyLease(),
+    property: {
+      ...getEmptyProperty(),
+      id: 1,
+      pid: 0,
+      pin: null,
+      status: toTypeCode(PropertyStatusTypes.UnderAdmin),
+      dataSource: toTypeCode(PropertyDataSourceTypes.PAIMS),
+      dataSourceEffectiveDateOnly: '2021-08-30T17:28:17.655Z',
+      propertyType: toTypeCode(PropertyClassificationTypes.CoreOperational),
+      tenures: [
+        {
+          id: 1,
+          propertyId: 1,
+          propertyTenureTypeCode: toTypeCode(PropertyTenureTypes.HighwayRoad),
+          ...getEmptyBaseAudit(),
+        },
+      ],
+      zoning: '',
+      zoningPotential: '',
+      isSensitive: false,
+      latitude: 48,
+      longitude: 123,
+      name: 'test name',
+      description: 'test',
+      address: mockApiAddress,
+      landArea: 123,
+      landLegalDescription: 'test description',
+    },
+  };
+};
 
 export const mockParcelDetail = {
   propertyDetail: mockParcel,

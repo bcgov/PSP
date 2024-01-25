@@ -10,6 +10,7 @@ import { ApiGen_Concepts_FinancialCode } from '@/models/api/generated/ApiGen_Con
 import { ApiGen_Concepts_FinancialCodeTypes } from '@/models/api/generated/ApiGen_Concepts_FinancialCodeTypes';
 import { ApiGen_Concepts_Project } from '@/models/api/generated/ApiGen_Concepts_Project';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
+import { isValidId } from '@/utils';
 import { isExpiredCode, toDropDownOptions } from '@/utils/financialCodeUtils';
 
 import { AddProjectYupSchema } from '../../../add/AddProjectFileYupSchema';
@@ -127,7 +128,7 @@ const UpdateProjectContainer = React.forwardRef<
     const updatedProject = values.toApi();
     const response = await updateProject(updatedProject, userOverrideCodes);
 
-    if (!!response?.id) {
+    if (isValidId(response?.id)) {
       formikHelpers?.resetForm();
       if (typeof onSuccess === 'function') {
         onSuccess();

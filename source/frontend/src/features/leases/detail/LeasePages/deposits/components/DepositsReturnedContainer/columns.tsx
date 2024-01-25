@@ -13,6 +13,7 @@ import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_Concepts_Contact } from '@/models/api/generated/ApiGen_Concepts_Contact';
 import { ApiGen_Concepts_SecurityDeposit } from '@/models/api/generated/ApiGen_Concepts_SecurityDeposit';
 import { ApiGen_Concepts_SecurityDepositReturn } from '@/models/api/generated/ApiGen_Concepts_SecurityDepositReturn';
+import { isValidIsoDateTime } from '@/utils';
 import { formatNames } from '@/utils/personUtils';
 
 export class ReturnListEntry {
@@ -37,12 +38,14 @@ export class ReturnListEntry {
       this.depositTypeDescription = parentDeposit.depositType?.description || '';
     }
 
-    this.terminationDate = baseDeposit.terminationDate || '';
+    this.terminationDate = isValidIsoDateTime(baseDeposit.terminationDate)
+      ? baseDeposit.terminationDate
+      : '';
     this.depositAmount = parentDeposit.amountPaid;
     this.claimsAgainst = baseDeposit.claimsAgainst || 0;
     this.returnAmount = baseDeposit.returnAmount || 0;
     this.interestPaid = baseDeposit.interestPaid || 0;
-    this.returnDate = baseDeposit.returnDate || '';
+    this.returnDate = isValidIsoDateTime(baseDeposit.returnDate) ? baseDeposit.returnDate : '';
     this.contactHolder = baseDeposit.contactHolder || undefined;
   }
 }

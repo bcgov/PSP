@@ -1,6 +1,7 @@
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { ApiGen_Concepts_Agreement } from '@/models/api/generated/ApiGen_Concepts_Agreement';
 import { getEmptyBaseAudit } from '@/models/default_initializers';
+import { isValidIsoDateTime } from '@/utils';
 import { stringToNull, stringToNumberOrNull, toTypeCodeNullable } from '@/utils/formUtils';
 
 export class SingleAgreementFormModel {
@@ -64,25 +65,25 @@ export class SingleAgreementFormModel {
         displayOrder: null,
         isDisabled: false,
       },
-      agreementDate: stringToNull(this.agreementDate),
+      agreementDate: isValidIsoDateTime(this.agreementDate) ? this.agreementDate : null,
       agreementStatusType: toTypeCodeNullable(this.agreementStatusTypeCode) || {
         id: null,
         description: null,
         displayOrder: null,
         isDisabled: false,
       },
-      completionDate: stringToNull(this.completionDate),
-      terminationDate: stringToNull(this.terminationDate),
-      commencementDate: stringToNull(this.commencementDate),
-      possessionDate: stringToNull(this.possessionDate),
+      completionDate: isValidIsoDateTime(this.completionDate) ? this.completionDate : null,
+      terminationDate: isValidIsoDateTime(this.terminationDate) ? this.terminationDate : null,
+      commencementDate: isValidIsoDateTime(this.commencementDate) ? this.commencementDate : null,
+      possessionDate: isValidIsoDateTime(this.possessionDate) ? this.possessionDate : null,
       depositAmount: this.depositAmount !== '' ? Number(this.depositAmount) : null,
       noLaterThanDays: stringToNumberOrNull(this.noLaterThanDays),
       purchasePrice: stringToNumberOrNull(this.purchasePrice),
       legalSurveyPlanNum: stringToNull(this.legalSurveyPlanNum),
-      offerDate: stringToNull(this.offerDate),
-      expiryDateTime: stringToNull(this.expiryDateTime),
-      signedDate: stringToNull(this.signedDate),
-      inspectionDate: stringToNull(this.inspectionDate),
+      offerDate: isValidIsoDateTime(this.offerDate) ? this.offerDate : null,
+      expiryDateTime: isValidIsoDateTime(this.expiryDateTime) ? this.expiryDateTime : null,
+      signedDate: isValidIsoDateTime(this.signedDate) ? this.signedDate : null,
+      inspectionDate: isValidIsoDateTime(this.inspectionDate) ? this.inspectionDate : null,
       cancellationNote: stringToNull(this.cancellationNote),
       isDraft: null,
       ...getEmptyBaseAudit(this.rowVersion),

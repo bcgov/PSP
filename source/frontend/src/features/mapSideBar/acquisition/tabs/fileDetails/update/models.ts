@@ -5,8 +5,8 @@ import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_C
 import { ApiGen_Concepts_AcquisitionFileOwner } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileOwner';
 import { ApiGen_Concepts_InterestHolder } from '@/models/api/generated/ApiGen_Concepts_InterestHolder';
 import { getEmptyBaseAudit } from '@/models/default_initializers';
-import { fromTypeCode, stringToNull, toTypeCodeNullable } from '@/utils/formUtils';
-import { exists, isValidId } from '@/utils/utils';
+import { fromTypeCode, toTypeCodeNullable } from '@/utils/formUtils';
+import { exists, isValidId, isValidIsoDateTime } from '@/utils/utils';
 
 import {
   AcquisitionOwnerFormModel,
@@ -57,9 +57,9 @@ export class UpdateAcquisitionSummaryFormModel
       fileNumber: this.fileNumber ?? null,
       legacyFileNumber: this.legacyFileNumber ?? null,
       fileName: this.fileName ?? null,
-      assignedDate: stringToNull(this.assignedDate),
-      deliveryDate: stringToNull(this.deliveryDate),
-      completionDate: stringToNull(this.completionDate),
+      assignedDate: isValidIsoDateTime(this.assignedDate) ? this.assignedDate : null,
+      deliveryDate: isValidIsoDateTime(this.deliveryDate) ? this.deliveryDate : null,
+      completionDate: isValidIsoDateTime(this.completionDate) ? this.completionDate : null,
       fileStatusTypeCode: toTypeCodeNullable(this.fileStatusTypeCode),
       acquisitionPhysFileStatusTypeCode: toTypeCodeNullable(this.acquisitionPhysFileStatusType),
       acquisitionTypeCode: toTypeCodeNullable(this.acquisitionType),

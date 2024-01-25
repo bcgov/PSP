@@ -3,13 +3,12 @@ import { PropertyAreaUnitTypes } from '@/constants/index';
 import { IAutocompletePrediction } from '@/interfaces';
 import { ApiGen_Concepts_ConsultationLease } from '@/models/api/generated/ApiGen_Concepts_ConsultationLease';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
-import { ApiGen_Concepts_Project } from '@/models/api/generated/ApiGen_Concepts_Project';
 import { ApiGen_Concepts_PropertyLease } from '@/models/api/generated/ApiGen_Concepts_PropertyLease';
 import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { getEmptyBaseAudit } from '@/models/default_initializers';
 import { ILookupCode } from '@/store/slices/lookupCodes/interfaces/ILookupCode';
 import { NumberFieldValue } from '@/typings/NumberFieldValue';
-import { exists, isValidId } from '@/utils';
+import { exists, isValidId, isValidIsoDateTime, isValidString } from '@/utils';
 import {
   emptyStringtoNullable,
   fromTypeCode,
@@ -61,7 +60,6 @@ export class LeaseFormModel {
   hasPhysicalLicense?: boolean;
   hasDigitalLicense?: boolean;
   project?: IAutocompletePrediction;
-  apiProject: ApiGen_Concepts_Project | null = null;
   tenantNotes: string[] = [];
   properties: FormLeaseProperty[] = [];
   consultations: FormLeaseConsultation[] = [];
@@ -79,8 +77,8 @@ export class LeaseFormModel {
     leaseDetail.lFileNo = apiModel?.lFileNo || '';
     leaseDetail.psFileNo = apiModel?.psFileNo || '';
     leaseDetail.tfaFileNumber = apiModel?.tfaFileNumber || '';
-    leaseDetail.expiryDate = apiModel?.expiryDate || '';
-    leaseDetail.startDate = apiModel?.startDate || '';
+    leaseDetail.expiryDate = isValidIsoDateTime(apiModel?.expiryDate) ? apiModel!.expiryDate : '';
+    leaseDetail.startDate = isValidIsoDateTime(apiModel?.startDate) ? apiModel!.startDate : '';
     leaseDetail.responsibilityEffectiveDate = apiModel?.responsibilityEffectiveDate || '';
     leaseDetail.amount = parseFloat(apiModel?.amount?.toString() ?? '') || 0.0;
     leaseDetail.paymentReceivableTypeCode = fromTypeCode(apiModel?.paymentReceivableType) || '';
@@ -111,7 +109,6 @@ export class LeaseFormModel {
     leaseDetail.project = !!apiModel?.project
       ? { id: apiModel?.project?.id || 0, text: apiModel?.project?.description || '' }
       : undefined;
-    leaseDetail.apiProject = apiModel?.project || null;
 
     const sortedConsultations = apiModel?.consultations?.sort(
       (a, b) => (a.consultationType?.displayOrder || 0) - (b.consultationType?.displayOrder || 0),
@@ -126,14 +123,15 @@ export class LeaseFormModel {
 
   public static toApi(formLease: LeaseFormModel): ApiGen_Concepts_Lease {
     return {
-      ...getDefaultFormLease(),
       id: formLease.id ?? 0,
       lFileNo: stringToNull(formLease.lFileNo),
       psFileNo: stringToNull(formLease.psFileNo),
       tfaFileNumber: stringToNull(formLease.tfaFileNumber),
-      expiryDate: stringToNull(formLease.expiryDate),
-      startDate: formLease.startDate,
-      responsibilityEffectiveDate: stringToNull(formLease.responsibilityEffectiveDate),
+      expiryDate: isValidIsoDateTime(formLease.expiryDate) ? formLease.expiryDate : null,
+      startDate: isValidIsoDateTime(formLease.startDate) ? formLease.startDate : EpochIsoDateTime,
+      responsibilityEffectiveDate: isValidIsoDateTime(formLease.responsibilityEffectiveDate)
+        ? formLease.responsibilityEffectiveDate
+        : null,
       amount: parseFloat(formLease.amount?.toString() ?? '') || 0.0,
       paymentReceivableType: toTypeCodeNullable(formLease.paymentReceivableTypeCode) ?? null,
       categoryType: formLease.categoryTypeCode
@@ -161,9 +159,7 @@ export class LeaseFormModel {
       otherProgramType: stringToNull(formLease.otherProgramTypeDescription),
       otherPurposeType: stringToNull(formLease.otherPurposeTypeDescription),
       otherType: stringToNull(formLease.otherLeaseTypeDescription),
-      project: isValidId(formLease.project?.id)
-        ? ({ id: formLease.project?.id } as any)
-        : undefined,
+      project: isValidId(formLease.project?.id) ? ({ id: formLease.project?.id } as any) : null,
       consultations: formLease.consultations.map(x => x.toApi()),
       tenants: formLease.tenants.map(t => FormTenant.toApi(t)),
       terms: formLease.terms.map(t => FormLeaseTerm.toApi(t)),
@@ -221,7 +217,9 @@ export class FormLeaseProperty {
 
   public static toApi(formLeaseProperty: FormLeaseProperty): ApiGen_Concepts_PropertyLease {
     const landArea = stringToUndefined(formLeaseProperty.landArea);
-    const numberLeaseArea: number | undefined = exists(landArea) ? Number(landArea) : undefined;
+    const numberLeaseArea: number | undefined = isValidString(landArea)
+      ? Number(landArea)
+      : undefined;
     return {
       id: formLeaseProperty.id ?? 0,
       fileId: formLeaseProperty.leaseId ?? 0,

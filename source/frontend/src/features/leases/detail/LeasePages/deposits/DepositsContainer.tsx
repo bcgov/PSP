@@ -10,7 +10,7 @@ import { useSecurityDepositRepository } from '@/hooks/repositories/useSecurityDe
 import { useSecurityDepositReturnRepository } from '@/hooks/repositories/useSecurityDepositReturnRepository';
 import { ApiGen_Concepts_SecurityDeposit } from '@/models/api/generated/ApiGen_Concepts_SecurityDeposit';
 import { ApiGen_Concepts_SecurityDepositReturn } from '@/models/api/generated/ApiGen_Concepts_SecurityDepositReturn';
-import { exists } from '@/utils/utils';
+import { exists, isValidId } from '@/utils/utils';
 
 import DepositNotes from './components/DepositNotes/DepositNotes';
 import DepositsReceivedContainer from './components/DepositsReceivedContainer/DepositsReceivedContainer';
@@ -130,11 +130,11 @@ export const DepositsContainer: React.FunctionComponent<
    * @param depositForm
    */
   const onSaveDeposit = async (depositForm: FormLeaseDeposit) => {
-    if (lease && lease.id) {
+    if (exists(lease) && isValidId(lease.id)) {
       const updatedSecurityDeposit = depositForm.id
         ? await updateSecurityDeposit(lease.id, depositForm.toApi())
         : await addSecurityDeposit(lease.id, depositForm.toApi());
-      if (!!updatedSecurityDeposit?.id) {
+      if (isValidId(updatedSecurityDeposit?.id)) {
         setEditDepositValue(FormLeaseDeposit.createEmpty(lease.id));
         setShowEditModal(false);
         getSecurityDeposits(lease.id);
@@ -179,12 +179,12 @@ export const DepositsContainer: React.FunctionComponent<
    * @param returnDepositForm
    */
   const onSaveReturnDeposit = async (returnDepositForm: FormLeaseDepositReturn) => {
-    if (lease && lease.id) {
+    if (exists(lease) && isValidId(lease.id)) {
       let request: ApiGen_Concepts_SecurityDepositReturn = returnDepositForm.toApi();
       const securityDepositReturn = request?.id
         ? await updateSecurityDepositReturn(lease.id, request)
         : await addSecurityDepositReturn(lease.id, request);
-      if (!!securityDepositReturn?.id) {
+      if (isValidId(securityDepositReturn?.id)) {
         setDepositReturnToDelete(undefined);
         setShowReturnEditModal(false);
         getSecurityDeposits(lease.id);

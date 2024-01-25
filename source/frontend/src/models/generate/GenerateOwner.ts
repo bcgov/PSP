@@ -1,5 +1,5 @@
 import { getApiPersonOrOrgMailingAddress } from '@/features/contacts/contactUtils';
-import { exists } from '@/utils';
+import { exists, isValidString } from '@/utils';
 import { phoneFormatter } from '@/utils/formUtils';
 
 import { ApiGen_Concepts_AcquisitionFileOwner } from '../api/generated/ApiGen_Concepts_AcquisitionFileOwner';
@@ -36,7 +36,7 @@ export class Api_GenerateOwner {
     this.owner_string = this.is_corporation
       ? `${this.last_name_or_corp_name}, Inc. No. ${this.incorporation_number} (OR Reg. No. ${this.registration_number})`
       : [this.given_name, this.last_name_or_corp_name, this.formatted_other_name]
-          .filter(exists)
+          .filter(isValidString)
           .join(' ');
   }
 
@@ -54,7 +54,7 @@ export class Api_GenerateOwner {
       generateOwner.last_name_or_corp_name,
       generateOwner.other_name,
     ]
-      .filter(exists)
+      .filter(isValidString)
       .join(' ');
 
     return generateOwner;

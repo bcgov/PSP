@@ -10,7 +10,7 @@ import { UserNameTooltip } from '@/components/common/UserNameTooltip';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_Concepts_FileWithChecklist } from '@/models/api/generated/ApiGen_Concepts_FileWithChecklist';
-import { prettyFormatUTCDate } from '@/utils';
+import { exists, isValidId, prettyFormatUTCDate } from '@/utils';
 
 import { StyledSectionCentered } from '../detail/styles';
 import { ChecklistFormModel } from './models';
@@ -52,7 +52,7 @@ export const UpdateChecklistForm: React.FC<IUpdateChecklistFormProps> = ({
       onSubmit={async (values, formikHelpers) => {
         try {
           const updatedFile = await onSave(values.toApi());
-          if (!!updatedFile?.id) {
+          if (exists(updatedFile) && isValidId(updatedFile?.id)) {
             formikHelpers.resetForm({
               values: ChecklistFormModel.fromApi(updatedFile, sectionTypes),
             });

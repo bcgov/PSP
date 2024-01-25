@@ -4,14 +4,14 @@ import { ApiGen_Concepts_PropertyManagement } from '@/models/api/generated/ApiGe
 import { IBcAssessmentSummary } from '@/models/layers/bcAssesment';
 
 import { prettyFormatDate } from './dateUtils';
-import { exists } from './utils';
+import { isValidIsoDateTime, isValidString } from './utils';
 
 /**
  * The pidFormatter is used to format the specified PID value
  * @param {string} pid This is the target PID to be formatted
  */
 export const pidFormatter = (pid?: string) => {
-  if (!!pid) {
+  if (isValidString(pid)) {
     let result = pid.toString().padStart(9, '0');
     const regex = /(\d\d\d)[\s-]?(\d\d\d)[\s-]?(\d\d\d)/;
     const format = result.match(regex);
@@ -31,7 +31,7 @@ export const pidParser = (pid?: string | number | null): number | undefined => {
   if (typeof pid === 'number') {
     return pid;
   }
-  if (exists(pid)) {
+  if (isValidString(pid)) {
     const regex = /(\d\d\d)[\s-]?(\d\d\d)[\s-]?(\d\d\d)/;
     const format = pid.match(regex);
     if (format !== null && format.length === 4) {
@@ -106,7 +106,9 @@ export function formatApiPropertyManagementLease(
       return 'No';
 
     case 1:
-      const expiryDate = base?.leaseExpiryDate ? `(${prettyFormatDate(base.leaseExpiryDate)})` : '';
+      const expiryDate = isValidIsoDateTime(base?.leaseExpiryDate)
+        ? `(${prettyFormatDate(base!.leaseExpiryDate)})`
+        : '';
       return `Yes ${expiryDate}`.trim();
 
     default:

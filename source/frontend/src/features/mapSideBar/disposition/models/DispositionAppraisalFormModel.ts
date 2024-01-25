@@ -1,5 +1,6 @@
 import { ApiGen_Concepts_DispositionFileAppraisal } from '@/models/api/generated/ApiGen_Concepts_DispositionFileAppraisal';
 import { getEmptyBaseAudit } from '@/models/default_initializers';
+import { isValidIsoDateTime } from '@/utils';
 import { emptyStringtoNullable } from '@/utils/formUtils';
 
 export class DispositionAppraisalFormModel {
@@ -52,7 +53,7 @@ export class DispositionAppraisalFormModel {
       appraisedAmount: this.appraisedValueAmount
         ? parseFloat(this.appraisedValueAmount.toString())
         : null,
-      appraisalDate: emptyStringtoNullable(this.appraisalDate),
+      appraisalDate: isValidIsoDateTime(this.appraisalDate) ? this.appraisalDate : null,
       bcaValueAmount: this.bcaValueAmount ? parseFloat(this.bcaValueAmount.toString()) : null,
       bcaRollYear: emptyStringtoNullable(this.bcaRollYear),
       listPriceAmount: this.listPriceAmount ? parseFloat(this.listPriceAmount.toString()) : null,

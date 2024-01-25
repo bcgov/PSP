@@ -4,7 +4,8 @@ import { ApiGen_Concepts_LeaseTerm } from '@/models/api/generated/ApiGen_Concept
 import { ApiGen_Concepts_Payment } from '@/models/api/generated/ApiGen_Concepts_Payment';
 import { getEmptyBaseAudit } from '@/models/default_initializers';
 import { NumberFieldValue } from '@/typings/NumberFieldValue';
-import { stringToNull, stringToNumber, stringToNumberOrNull } from '@/utils/formUtils';
+import { isValidIsoDateTime } from '@/utils';
+import { stringToNumber, stringToNumberOrNull } from '@/utils/formUtils';
 
 export class FormLeaseTerm {
   id: number | null = null;
@@ -31,9 +32,9 @@ export class FormLeaseTerm {
     return {
       ...formLeaseTerm,
       leaseId: formLeaseTerm.leaseId ?? 0,
-      startDate: stringToNull(formLeaseTerm.startDate),
+      startDate: isValidIsoDateTime(formLeaseTerm.startDate) ? formLeaseTerm.startDate : null,
       renewalDate: null,
-      expiryDate: stringToNull(formLeaseTerm.expiryDate),
+      expiryDate: isValidIsoDateTime(formLeaseTerm.expiryDate) ? formLeaseTerm.expiryDate : null,
       paymentAmount: stringToNumberOrNull(formLeaseTerm.paymentAmount),
       gstAmount: stringToNumberOrNull(
         formLeaseTerm.isGstEligible && gstConstant !== undefined
@@ -54,9 +55,9 @@ export class FormLeaseTerm {
   public static fromApi(apiLeaseTerm: ApiGen_Concepts_LeaseTerm): FormLeaseTerm {
     return {
       ...apiLeaseTerm,
-      startDate: apiLeaseTerm.startDate ?? '',
-      expiryDate: apiLeaseTerm.expiryDate ?? '',
-      renewalDate: apiLeaseTerm.renewalDate ?? '',
+      startDate: isValidIsoDateTime(apiLeaseTerm.startDate) ? apiLeaseTerm.startDate : '',
+      expiryDate: isValidIsoDateTime(apiLeaseTerm.expiryDate) ? apiLeaseTerm.expiryDate : '',
+      renewalDate: isValidIsoDateTime(apiLeaseTerm.renewalDate) ? apiLeaseTerm.renewalDate : '',
       paymentAmount: apiLeaseTerm.paymentAmount ?? '',
       gstAmount: apiLeaseTerm.gstAmount ?? '',
       paymentDueDateStr: apiLeaseTerm.paymentDueDateStr ?? '',
@@ -125,7 +126,9 @@ export class FormLeasePayment {
     leasePayment.id = apiLeasePayment.id ?? undefined;
     leasePayment.leaseTermId = apiLeasePayment.leaseTermId;
     leasePayment.leasePaymentMethodType = apiLeasePayment.leasePaymentMethodType ?? null;
-    leasePayment.receivedDate = apiLeasePayment.receivedDate;
+    leasePayment.receivedDate = isValidIsoDateTime(apiLeasePayment.receivedDate)
+      ? apiLeasePayment.receivedDate
+      : '';
     leasePayment.amountPreTax = apiLeasePayment.amountPreTax;
     leasePayment.amountPst = apiLeasePayment.amountPst ?? '';
     leasePayment.amountGst = apiLeasePayment.amountGst ?? '';

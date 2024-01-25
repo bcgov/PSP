@@ -11,7 +11,7 @@ import { ApiGen_Concepts_PropertyActivityInvolvedParty } from '@/models/api/gene
 import { ApiGen_Concepts_PropertyActivityProperty } from '@/models/api/generated/ApiGen_Concepts_PropertyActivityProperty';
 import { ApiGen_Concepts_PropertyMinistryContact } from '@/models/api/generated/ApiGen_Concepts_PropertyMinistryContact';
 import { getEmptyBaseAudit } from '@/models/default_initializers';
-import { exists } from '@/utils';
+import { exists, isValidIsoDateTime } from '@/utils';
 import { emptyStringtoNullable, toTypeCodeNullable } from '@/utils/formUtils';
 
 export class ActivityPropertyFormModel {
@@ -89,7 +89,9 @@ export class ActivityInvoiceFormModel {
 
     if (exists(model)) {
       formModel.id = model.id;
-      formModel.invoiceDateTime = model.invoiceDateTime;
+      formModel.invoiceDateTime = isValidIsoDateTime(model.invoiceDateTime)
+        ? model.invoiceDateTime
+        : '';
       formModel.invoiceNum = model.invoiceNum || '';
       formModel.description = model.description || '';
       formModel.pretaxAmount = model.pretaxAmount;
@@ -202,7 +204,9 @@ export class PropertyActivityFormModel {
       formModel.activityTypeCode = model.activityTypeCode?.id || '';
       formModel.activitySubtypeCode = model.activitySubtypeCode?.id || '';
       formModel.activityStatusCode = model.activityStatusTypeCode?.id || '';
-      formModel.requestedDate = model.requestAddedDateOnly;
+      formModel.requestedDate = isValidIsoDateTime(model.requestAddedDateOnly)
+        ? model.requestAddedDateOnly
+        : '';
       formModel.completionDate = model.completionDateOnly || '';
       formModel.description = model.description || '';
 
