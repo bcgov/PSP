@@ -1482,51 +1482,6 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
-        public void AddDispositionFile_Sale_Should_Fail_Invalid_DispositionFileId()
-        {
-            // Arrange
-            var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionEdit);
-            var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
-
-            repository.Setup(x => x.GetById(1)).Returns((PimsDispositionFile)null);
-
-
-            // Act
-            Action act = () => service.AddDispositionFileSale(1, new()
-            {
-                DispositionFileId = 1,
-                DispositionSaleId = 10,
-            });
-
-            // Assert
-            act.Should().Throw<BadRequestException>();
-        }
-
-        [Fact]
-        public void AddDispositionFile_Sale_Should_Fail_Invalid_SaleId()
-        {
-            // Arrange
-            var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionEdit);
-            var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
-
-            repository.Setup(x => x.GetById(1)).Returns(new PimsDispositionFile()
-            {
-                DispositionFileId = 1,
-            });
-
-
-            // Act
-            Action act = () => service.AddDispositionFileSale(1, new()
-            {
-                DispositionFileId = 2,
-                DispositionSaleId = 10,
-            });
-
-            // Assert
-            act.Should().Throw<BadRequestException>();
-        }
-
-        [Fact]
         public void AddDispositionFile_Sale_Should_Fail_Sale_Exists()
         {
             // Arrange
@@ -1600,51 +1555,6 @@ namespace Pims.Api.Test.Services
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
-        }
-
-        [Fact]
-        public void UpdateDispositionFile_Sale_Should_Fail_Invalid_DispositionFileId()
-        {
-            // Arrange
-            var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionEdit);
-            var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
-
-            repository.Setup(x => x.GetById(1)).Returns((PimsDispositionFile)null);
-
-
-            // Act
-            Action act = () => service.UpdateDispositionFileSale(1, 10, new()
-            {
-                DispositionFileId = 1,
-                DispositionSaleId = 10,
-            });
-
-            // Assert
-            act.Should().Throw<BadRequestException>();
-        }
-
-        [Fact]
-        public void UpdateDispositionFile_Sale_Should_Fail_Invalid_SaleId()
-        {
-            // Arrange
-            var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionEdit);
-            var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
-
-            repository.Setup(x => x.GetById(1)).Returns(new PimsDispositionFile()
-            {
-                DispositionFileId = 1,
-            });
-
-
-            // Act
-            Action act = () => service.UpdateDispositionFileSale(1, 10, new()
-            {
-                DispositionFileId = 2,
-                DispositionSaleId = 10,
-            });
-
-            // Assert
-            act.Should().Throw<BadRequestException>();
         }
 
         [Fact]

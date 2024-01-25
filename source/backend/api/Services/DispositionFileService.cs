@@ -251,12 +251,6 @@ namespace Pims.Api.Services
             _logger.LogInformation("Updating disposition file Sale with DispositionFileId: {id}", dispositionFileId);
             _user.ThrowIfNotAuthorized(Permissions.DispositionEdit);
 
-            var dispositionFileParent = _dispositionFileRepository.GetById(dispositionFileId);
-            if (dispositionFileId != dispositionSale.DispositionFileId || dispositionSale.DispositionSaleId != saleId || dispositionFileParent is null)
-            {
-                throw new BadRequestException("Invalid dispositionFileId.");
-            }
-
             var updatedSale = _dispositionFileRepository.UpdateDispositionFileSale(dispositionSale);
             _dispositionFileRepository.CommitTransaction();
 
@@ -269,11 +263,6 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.DispositionEdit);
 
             var dispositionFileParent = _dispositionFileRepository.GetById(dispositionFileId);
-            if (dispositionFileId != dispositionSale.DispositionFileId || dispositionFileParent is null)
-            {
-                throw new BadRequestException("Invalid dispositionFileId.");
-            }
-
             if (dispositionFileParent.PimsDispositionSales.Count > 0)
             {
                 throw new DuplicateEntityException("Invalid Disposition Sale. A Sale has been already created for this Disposition File");

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Areas.Acquisition.Controllers;
+using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Models.Concepts.DispositionFile;
 using Pims.Api.Models.Concepts.DispositionFile;
 using Pims.Api.Policies;
@@ -365,6 +366,11 @@ namespace Pims.Api.Areas.Disposition.Controllers
 
             try
             {
+                if (id != dispositionFileSale.DispositionFileId)
+                {
+                    throw new BadRequestException("Invalid dispositionFileId.");
+                }
+
                 var dispositionSaleEntity = _mapper.Map<Dal.Entities.PimsDispositionSale>(dispositionFileSale);
                 var newDispositionSale = _dispositionService.AddDispositionFileSale(id, dispositionSaleEntity);
 
@@ -382,7 +388,7 @@ namespace Pims.Api.Areas.Disposition.Controllers
         [ProducesResponseType(typeof(DispositionFileSaleModel), 200)]
         [SwaggerOperation(Tags = new[] { "dispositionfile" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
-        public IActionResult UpdateDispositionFileSale([FromRoute] long id, [FromRoute] long saleId, [FromBody] DispositionFileSaleModel dispositionFileSale)
+        public IActionResult UpdateDispositionFileSale([FromRoute]long id, [FromRoute]long saleId, [FromBody] DispositionFileSaleModel dispositionFileSale)
         {
             _logger.LogInformation(
                 "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
@@ -392,6 +398,11 @@ namespace Pims.Api.Areas.Disposition.Controllers
                 DateTime.Now);
 
             _logger.LogInformation("Dispatching to service: {Service}", _dispositionService.GetType());
+
+            if (id != dispositionFileSale.DispositionFileId || dispositionFileSale.Id != saleId)
+            {
+                throw new BadRequestException("Invalid dispositionFileId.");
+            }
 
             var dispositionSaleEntity = _mapper.Map<Dal.Entities.PimsDispositionSale>(dispositionFileSale);
             var updatedSale = _dispositionService.UpdateDispositionFileSale(id, saleId, dispositionSaleEntity);

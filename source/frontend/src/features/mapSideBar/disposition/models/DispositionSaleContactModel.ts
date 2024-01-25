@@ -43,7 +43,7 @@ export class DispositionSaleContactModel {
 
     return {
       id: this.id ?? 0,
-      dispositionSaleId: this.dispositionSaleId,
+      dispositionSaleId: this.dispositionSaleId ?? 0,
       personId: personId,
       person: null,
       organizationId: organizationId,
