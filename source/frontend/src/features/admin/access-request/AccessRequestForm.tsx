@@ -36,6 +36,7 @@ export const AccessRequestForm: React.FunctionComponent<
     region => region.label !== 'Cannot determine',
   );
   const selectRoles = roles.map(c => mapLookupCode(c, initialValues?.roleId));
+
   return (
     <Formik<AccessRequestFormModel>
       enableReinitialize={true}

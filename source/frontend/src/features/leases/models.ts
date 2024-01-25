@@ -118,7 +118,7 @@ export class LeaseFormModel {
     );
     leaseDetail.consultations =
       sortedConsultations?.map(c => FormLeaseConsultation.fromApi(c)) || [];
-    leaseDetail.terms = [];
+    leaseDetail.terms = apiModel?.terms?.map(t => FormLeaseTerm.fromApi(t)) || [];
     leaseDetail.tenants = apiModel?.tenants?.map(t => new FormTenant(t)) || [];
 
     return leaseDetail;

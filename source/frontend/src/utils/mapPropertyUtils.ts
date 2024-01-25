@@ -83,7 +83,7 @@ export const getFilePropertyName = (
 
   if (exists(fileProperty.propertyName) && fileProperty.propertyName !== '' && skipName === false) {
     return { label: NameSourceType.NAME, value: fileProperty.propertyName ?? '' };
-  } else if (exists(fileProperty.propertyName)) {
+  } else if (exists(fileProperty.property)) {
     const property = fileProperty.property;
     return getApiPropertyName(property);
   }

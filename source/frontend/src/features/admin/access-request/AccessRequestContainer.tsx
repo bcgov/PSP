@@ -8,6 +8,7 @@ import { useAccessRequests } from '@/hooks/pims-api/useAccessRequests';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_Concepts_AccessRequest } from '@/models/api/generated/ApiGen_Concepts_AccessRequest';
 import { getEmptyBaseAudit } from '@/models/default_initializers';
+import { isValidId } from '@/utils';
 import { toTypeCodeNullable } from '@/utils/formUtils';
 
 import { AccessRequestForm as AccessRequestFormComponent } from './AccessRequestForm';
@@ -43,7 +44,7 @@ export const AccessRequestContainer: React.FunctionComponent<
   const userInfo = keycloak?.obj?.userInfo;
 
   useEffect(() => {
-    if (!accessRequestId) {
+    if (!isValidId(accessRequestId)) {
       getCurrentAccessRequest();
     } else {
       getAccessRequestById(accessRequestId);
@@ -52,6 +53,9 @@ export const AccessRequestContainer: React.FunctionComponent<
   const response = addAccessRequestResponse ?? accessRequestByIdResponse ?? accessRequestResponse;
 
   const initialValues: FormAccessRequest = new FormAccessRequest({
+    role: null,
+    user: null,
+    ...getEmptyBaseAudit(),
     ...response,
     id: response?.id ?? 0,
     userId: userInfo?.id,
@@ -59,13 +63,10 @@ export const AccessRequestContainer: React.FunctionComponent<
     note: response?.note ?? '',
     roleId: response?.roleId ?? null,
     regionCode: toTypeCodeNullable(response?.regionCode?.id),
-    role: null,
-    user: null,
-    ...getEmptyBaseAudit(),
   });
   initialValues.email = keycloak.email ?? '';
 
-  if (!accessRequestId && !response) {
+  if (!isValidId(accessRequestId) && !response) {
     initialValues.email = keycloak.email ?? '';
     initialValues.firstName = keycloak.firstName ?? '';
     initialValues.surname = keycloak.surname ?? '';
@@ -76,7 +77,7 @@ export const AccessRequestContainer: React.FunctionComponent<
   return (
     <>
       <LoadingBackdrop parentScreen show={loading || addLoading || byIdLoading} />
-      {response?.id && !asAdmin && (
+      {isValidId(response?.id) && !asAdmin && (
         <Alert variant="success">Your access request has been submitted</Alert>
       )}
       <AccessRequestFormComponent
