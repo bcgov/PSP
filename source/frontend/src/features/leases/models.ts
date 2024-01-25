@@ -20,7 +20,6 @@ import {
 import { PropertyForm } from '../mapSideBar/shared/models';
 import { FormLeaseDeposit } from './detail/LeasePages/deposits/models/FormLeaseDeposit';
 import { FormLeaseDepositReturn } from './detail/LeasePages/deposits/models/FormLeaseDepositReturn';
-import { FormInsurance } from './detail/LeasePages/insurance/edit/models';
 import { FormLeaseTerm } from './detail/LeasePages/payment/models';
 import { FormTenant } from './detail/LeasePages/tenant/models';
 
@@ -67,7 +66,6 @@ export class LeaseFormModel {
   securityDepositReturns: FormLeaseDepositReturn[] = [];
   terms: FormLeaseTerm[] = [];
   tenants: FormTenant[] = [];
-  insurances: FormInsurance[] = [];
   rowVersion: number = 0;
 
   static fromApi(apiModel?: ApiGen_Concepts_Lease): LeaseFormModel {

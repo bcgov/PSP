@@ -2,9 +2,12 @@ import { getIn, useFormikContext } from 'formik';
 import * as React from 'react';
 
 import { Form, Input } from '@/components/common/form';
+import { ApiGen_Concepts_Address } from '@/models/api/generated/ApiGen_Concepts_Address';
+import { ApiGen_Concepts_CodeType } from '@/models/api/generated/ApiGen_Concepts_CodeType';
+import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
+import { exists, isValidString } from '@/utils';
 import { withNameSpace } from '@/utils/formUtils';
 
-import { LeaseFormModel } from '../../models';
 import { FieldValue } from '../styles';
 
 export interface IAddressSubFormProps {
@@ -15,16 +18,35 @@ export interface IAddressSubFormProps {
 export const AddressSubForm: React.FunctionComponent<
   React.PropsWithChildren<IAddressSubFormProps>
 > = ({ disabled, nameSpace }) => {
-  const formikProps = useFormikContext<LeaseFormModel>();
-  const address = getIn(formikProps.values, withNameSpace(nameSpace));
-  const municipality = getIn(formikProps.values, withNameSpace(nameSpace, 'municipality'));
-  const postal = getIn(formikProps.values, withNameSpace(nameSpace, 'postal'));
-  const country = getIn(formikProps.values, withNameSpace(nameSpace, 'country'));
-  const streetAddress1 = getIn(formikProps.values, withNameSpace(nameSpace, 'streetAddress1'));
-  const streetAddress2 = getIn(formikProps.values, withNameSpace(nameSpace, 'streetAddress2'));
-  const streetAddress3 = getIn(formikProps.values, withNameSpace(nameSpace, 'streetAddress3'));
+  const formikProps = useFormikContext<ApiGen_Concepts_Lease>();
 
-  if (!address) {
+  const address: ApiGen_Concepts_Address | null = getIn(
+    formikProps.values,
+    withNameSpace(nameSpace),
+  );
+  const municipality: string | null = getIn(
+    formikProps.values,
+    withNameSpace(nameSpace, 'municipality'),
+  );
+  const postal: string | null = getIn(formikProps.values, withNameSpace(nameSpace, 'postal'));
+  const country: ApiGen_Concepts_CodeType | null = getIn(
+    formikProps.values,
+    withNameSpace(nameSpace, 'country'),
+  );
+  const streetAddress1: string | null = getIn(
+    formikProps.values,
+    withNameSpace(nameSpace, 'streetAddress1'),
+  );
+  const streetAddress2: string | null = getIn(
+    formikProps.values,
+    withNameSpace(nameSpace, 'streetAddress2'),
+  );
+  const streetAddress3: string | null = getIn(
+    formikProps.values,
+    withNameSpace(nameSpace, 'streetAddress3'),
+  );
+
+  if (!exists(address)) {
     return (
       <>
         <Form.Label>Address:</Form.Label>
@@ -35,21 +57,25 @@ export const AddressSubForm: React.FunctionComponent<
 
   return (
     <>
-      {streetAddress1 && (
+      {isValidString(streetAddress1) && (
         <Input disabled={disabled} field={withNameSpace(nameSpace, 'streetAddress1')} />
       )}
-      {streetAddress2 && (
+      {isValidString(streetAddress2) && (
         <Input disabled={disabled} field={withNameSpace(nameSpace, 'streetAddress2')} />
       )}
-      {streetAddress3 && (
+      {isValidString(streetAddress3) && (
         <Input disabled={disabled} field={withNameSpace(nameSpace, 'streetAddress3')} />
       )}
-      {municipality && (
+      {isValidString(municipality) && (
         <Input disabled={disabled} field={withNameSpace(nameSpace, 'municipality')} />
       )}
-      {postal && <Input disabled={disabled} field={withNameSpace(nameSpace, 'postal')} />}
-      <Input disabled={disabled} field={withNameSpace(nameSpace, 'province')} />
-      {country && <Input disabled={disabled} field={withNameSpace(nameSpace, 'country')} />}
+      {isValidString(postal) && (
+        <Input disabled={disabled} field={withNameSpace(nameSpace, 'postal')} />
+      )}
+      <Input disabled={disabled} field={withNameSpace(nameSpace, 'province.code')} />
+      {isValidString(country?.description) && (
+        <Input disabled={disabled} field={withNameSpace(nameSpace, 'country.description')} />
+      )}
     </>
   );
 };
