@@ -1665,7 +1665,7 @@ namespace Pims.Api.Test.Services
                     }
                 },
             });
-            repository.Setup(x => x.UpdateDispositionFileSale(10, It.IsAny<PimsDispositionSale>())).Returns(new PimsDispositionSale()
+            repository.Setup(x => x.UpdateDispositionFileSale(It.IsAny<PimsDispositionSale>())).Returns(new PimsDispositionSale()
             {
                 DispositionFileId = 1,
                 DispositionSaleId = 10,
@@ -1681,7 +1681,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             Assert.NotNull(result);
-            repository.Verify(x => x.UpdateDispositionFileSale(It.IsAny<long>(), It.IsAny<PimsDispositionSale>()), Times.Once);
+            repository.Verify(x => x.UpdateDispositionFileSale(It.IsAny<PimsDispositionSale>()), Times.Once);
         }
 
         #endregion

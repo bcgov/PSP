@@ -339,11 +339,11 @@ namespace Pims.Dal.Test.Repositories
             };
             _helper.AddAndSaveChanges(dispFile);
 
-            var sale = dispFile.PimsDispositionSales.FirstOrDefault();
-            sale.SaleFinalAmt = 3000;
+            var sale = new PimsDispositionSale();
+            sale.DispositionSaleId = 2;
 
             // Act
-            Action act = () => repository.UpdateDispositionFileSale(2, sale);
+            Action act = () => repository.UpdateDispositionFileSale(sale);
 
             // Assert
             act.Should().Throw<KeyNotFoundException>();
@@ -368,7 +368,7 @@ namespace Pims.Dal.Test.Repositories
             sale.SaleFinalAmt = 3000;
 
             // Act
-            var result = repository.UpdateDispositionFileSale(1, sale);
+            var result = repository.UpdateDispositionFileSale(sale);
 
             // Assert
             result.Should().NotBeNull();
