@@ -26,6 +26,7 @@ export const useApiUserOverride = <
     message: null,
   });
   const overridenApiFunction = useRef<FunctionType | null>(null);
+  const errorHandlerRef = useRef<((e: AxiosError<IApiError>) => void) | null>(null);
   const { setModalContent, setDisplayModal } = useModalContext();
 
   const needsUserAction = useCallback(
@@ -63,6 +64,7 @@ export const useApiUserOverride = <
         handleOverrideError(e, handleError);
       } finally {
         overridenApiFunction.current = apiFunction;
+        errorHandlerRef.current = handleError ?? null;
       }
       return Promise.resolve(undefined);
     },
