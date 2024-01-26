@@ -20,18 +20,20 @@ export const UserNameTooltip: React.FunctionComponent<IUserNameTooltipProps> = (
   const [userNameInfo, setUserNameInfo] = React.useState<string>('');
   React.useEffect(() => {
     if (userGuid) {
-      getUserInfo(userGuid).then(({ data }) => {
-        if (data && isMounted()) {
-          const firstName = data?.person?.firstName;
-          const middleNames = data?.person?.middleNames;
-          const surname = data?.person?.surname;
-          const nameArr: string[] = [];
-          if (firstName) nameArr.push(firstName);
-          if (middleNames) nameArr.push(middleNames);
-          if (surname) nameArr.push(surname);
-          setUserNameInfo(nameArr.join(' '));
-        }
-      });
+      getUserInfo(userGuid)
+        .then(({ data }) => {
+          if (data && isMounted()) {
+            const firstName = data?.person?.firstName;
+            const middleNames = data?.person?.middleNames;
+            const surname = data?.person?.surname;
+            const nameArr: string[] = [];
+            if (firstName) nameArr.push(firstName);
+            if (middleNames) nameArr.push(middleNames);
+            if (surname) nameArr.push(surname);
+            setUserNameInfo(nameArr.join(' '));
+          }
+        })
+        .catch(() => {});
     }
   }, [userGuid, isMounted, getUserInfo]);
 

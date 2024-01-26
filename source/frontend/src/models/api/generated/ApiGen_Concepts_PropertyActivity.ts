@@ -17,8 +17,8 @@ export interface ApiGen_Concepts_PropertyActivity extends ApiGen_Base_BaseAudit 
   activityTypeCode: ApiGen_Base_CodeType<string> | null;
   activitySubtypeCode: ApiGen_Base_CodeType<string> | null;
   activityStatusTypeCode: ApiGen_Base_CodeType<string> | null;
-  requestAddedDateTime: string;
-  completionDateTime: string | null;
+  requestAddedDateOnly: string;
+  completionDateOnly: string | null;
   description: string | null;
   requestSource: string | null;
   pretaxAmt: number | null;

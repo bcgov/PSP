@@ -5,8 +5,8 @@ import {
   Api_DispositionFile,
   Api_DispositionFileAppraisal,
   Api_DispositionFileOffer,
-  Api_DispositionFileSale,
 } from '@/models/api/DispositionFile';
+import { ApiGen_Concepts_DispositionFileSale } from '@/models/api/generated/ApiGen_Concepts_DispositionFileSale';
 
 import { IOffersAndSaleContainerViewProps } from './OffersAndSaleContainerView';
 
@@ -26,7 +26,8 @@ const OffersAndSaleContainer: React.FunctionComponent<IOffersAndSaleContainerPro
     deleteDispositionOffer: { execute: deleteDispositionOffer, loading: deletingOffer },
   } = useDispositionProvider();
   const [dispositionOffers, setDispositionOffers] = useState<Api_DispositionFileOffer[]>([]);
-  const [dispositionSale, setDispositionSale] = useState<Api_DispositionFileSale | null>(null);
+  const [dispositionSale, setDispositionSale] =
+    useState<ApiGen_Concepts_DispositionFileSale | null>(null);
   const [dispositionAppraisal, setdispositionAppraisal] =
     useState<Api_DispositionFileAppraisal | null>(null);
 

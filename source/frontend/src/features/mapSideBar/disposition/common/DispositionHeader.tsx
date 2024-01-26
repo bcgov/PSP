@@ -7,7 +7,6 @@ import { UserNameTooltip } from '@/components/common/UserNameTooltip';
 import { Api_DispositionFile } from '@/models/api/DispositionFile';
 import { Api_LastUpdatedBy } from '@/models/api/File';
 import { prettyFormatUTCDate } from '@/utils/dateUtils';
-import { formatMinistryProject } from '@/utils/formUtils';
 
 export interface IDispositionHeaderProps {
   dispositionFile?: Api_DispositionFile;
@@ -27,32 +26,6 @@ export const DispositionHeader: React.FunctionComponent<
           <Col>
             <HeaderField label="File:" labelWidth={leftColumnLabel} contentWidth="9">
               D-{dispositionFile?.fileNumber}
-            </HeaderField>
-          </Col>
-        </Row>
-        <Row className="no-gutters">
-          <Col>
-            <HeaderField label="Ministry project:" labelWidth={leftColumnLabel} contentWidth="9">
-              {formatMinistryProject(
-                dispositionFile?.project?.code,
-                dispositionFile?.project?.description,
-              )}
-            </HeaderField>
-          </Col>
-        </Row>
-        <Row className="no-gutters">
-          <Col>
-            <HeaderField
-              label="Ministry product:"
-              labelWidth={leftColumnLabel}
-              valueTestId={'disp-header-product-val'}
-              contentWidth="9"
-            >
-              {dispositionFile?.product && (
-                <>
-                  {dispositionFile.product.code} - {dispositionFile.product.description}
-                </>
-              )}
             </HeaderField>
           </Col>
         </Row>
