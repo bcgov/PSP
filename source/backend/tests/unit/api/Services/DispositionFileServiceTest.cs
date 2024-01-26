@@ -60,7 +60,7 @@ namespace Pims.Api.Test.Services
             var result = service.GetById(1);
 
             // Assert
-            repository.Verify(x => x.GetById(It.IsAny<long>()), Times.Once);
+            repository.Verify(x => x.GetById(It.IsAny<long>()), Times.Exactly(2));
         }
 
         [Fact]
@@ -188,13 +188,13 @@ namespace Pims.Api.Test.Services
             var dispFile = EntityHelper.CreateDispositionFile();
 
             var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
-            repository.Setup(x => x.GetPageDeep(It.IsAny<DispositionFilter>())).Returns(new Paged<PimsDispositionFile>(new[] { dispFile }));
+            repository.Setup(x => x.GetPageDeep(It.IsAny<DispositionFilter>(), null)).Returns(new Paged<PimsDispositionFile>(new[] { dispFile }));
 
             // Act
             var result = service.GetPage(new DispositionFilter());
 
             // Assert
-            repository.Verify(x => x.GetPageDeep(It.IsAny<DispositionFilter>()), Times.Once);
+            repository.Verify(x => x.GetPageDeep(It.IsAny<DispositionFilter>(), null), Times.Once);
         }
 
         [Fact]
@@ -230,6 +230,24 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
+        public void Add_ThrowIfNull()
+        {
+            // Arrange
+            var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionAdd);
+
+            var acqFile = EntityHelper.CreateDispositionFile();
+
+            var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
+
+            // Act
+            Action act = () => service.Add(null, new List<UserOverrideCode>());
+
+            // Assert
+            act.Should().Throw<ArgumentNullException>();
+            repository.Verify(x => x.Add(It.IsAny<PimsDispositionFile>()), Times.Never);
+        }
+
+        [Fact]
         public void Add_Fails_Duplicate_Team()
         {
             var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionAdd);
@@ -244,6 +262,55 @@ namespace Pims.Api.Test.Services
             // Assert
             act.Should().Throw<BadRequestException>();
         }
+
+        [Fact]
+        public void Add_ContractorNotInTeamException_Fail_IsContractor()
+        {
+            // Arrange
+            var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionAdd);
+
+            var dispositionFile = EntityHelper.CreateDispositionFile();
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            var contractorUser = EntityHelper.CreateUser(1, Guid.NewGuid(), username: "Test", isContractor: true);
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
+
+            // Act
+            Action act = () => service.Add(dispositionFile, new List<UserOverrideCode>() { UserOverrideCode.UpdateRegion });
+
+            // Assert
+            var ex = act.Should().Throw<ContractorNotInTeamException>();
+        }
+
+        [Fact]
+        public void Add_Success_IsContractor_AssignedToTeam()
+        {
+            // Arrange
+            var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionAdd);
+
+            var dispositionFile = EntityHelper.CreateDispositionFile();
+            dispositionFile.PimsDispositionFileTeams.Add(new PimsDispositionFileTeam() { PersonId = 1, DspFlTeamProfileTypeCode = "test" });
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+
+            var newGuid = Guid.NewGuid();
+            var contractorUser = EntityHelper.CreateUser(1, newGuid, username: "Test", isContractor: true);
+            contractorUser.PersonId = 1;
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
+
+            var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
+            repository.Setup(x => x.Add(It.IsAny<PimsDispositionFile>())).Returns(dispositionFile);
+
+            var lookupRepository = this._helper.GetService<Mock<ILookupRepository>>();
+            lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
+
+            // Act
+            var result = service.Add(dispositionFile, new List<UserOverrideCode>());
+
+            // Assert
+            repository.Verify(x => x.Add(It.IsAny<PimsDispositionFile>()), Times.Once);
+        }
+
         #endregion
 
         #region Update
@@ -340,6 +407,63 @@ namespace Pims.Api.Test.Services
             // Assert
             var ex = act.Should().Throw<UserOverrideException>();
             ex.Which.UserOverride.Should().Be(UserOverrideCode.DispositionFileFinalStatus);
+        }
+
+        [Fact]
+        public void Update_NotAuthorized_IsContractor()
+        {
+            // Arrange
+            var service = this.CreateDispositionServiceWithPermissions(Permissions.AcquisitionFileEdit);
+            var dispositionFile = EntityHelper.CreateDispositionFile(1);
+
+            var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
+            repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
+            repository.Setup(x => x.Update(It.IsAny<long>(),It.IsAny<PimsDispositionFile>())).Returns(dispositionFile);
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            var contractorUser = EntityHelper.CreateUser(1, Guid.NewGuid(), username: "Test", isContractor: true);
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
+
+            // Act
+            Action act = () => service.Update(1, dispositionFile, new List<UserOverrideCode>() { UserOverrideCode.UpdateRegion });
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+        }
+
+        [Fact]
+        public void Update_IsContractor_Success()
+        {
+            // Arrange
+            var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionEdit);
+            var dispositionFile = EntityHelper.CreateDispositionFile(1);
+            dispositionFile.PimsDispositionFileTeams = new List<PimsDispositionFileTeam>()
+            {
+                new PimsDispositionFileTeam()
+                {
+                    DispositionFileTeamId = 100,
+                    DispositionFileId = 1,
+                    PersonId = 20,
+                }
+            };
+
+            var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
+            repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(dispositionFile);
+            repository.Setup(x => x.Update(It.IsAny<long>(), It.IsAny<PimsDispositionFile>())).Returns(dispositionFile);
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            var contractorUser = EntityHelper.CreateUser(1, Guid.NewGuid(), username: "Test", isContractor: true);
+            contractorUser.PersonId = 20;
+
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
+
+
+            // Act
+            var result = service.Update(1, dispositionFile, new List<UserOverrideCode>() { UserOverrideCode.UpdateRegion });
+
+            // Assert
+            Assert.NotNull(result);
         }
 
         [Fact]

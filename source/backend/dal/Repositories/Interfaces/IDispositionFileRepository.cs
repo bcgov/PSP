@@ -6,7 +6,7 @@ namespace Pims.Dal.Repositories
 {
     public interface IDispositionFileRepository : IRepository
     {
-        Paged<PimsDispositionFile> GetPageDeep(DispositionFilter filter);
+        Paged<PimsDispositionFile> GetPageDeep(DispositionFilter filter, long? contractorPersonId = null);
 
         PimsDispositionFile GetById(long id);
 
