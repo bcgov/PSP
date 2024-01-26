@@ -59,6 +59,7 @@ export const DispositionFileTabs: React.FC<IDispositionFileTabsProps> = ({
         <OffersAndSaleContainer
           dispositionFile={dispositionFile}
           View={OffersAndSaleContainerView}
+          onSuccess={onChildSuccess}
         ></OffersAndSaleContainer>
       ),
       key: FileTabType.OFFERS_AND_SALE,

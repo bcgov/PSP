@@ -29,7 +29,7 @@ export interface IDispositionRouterProps {
   setIsEditing: (value: boolean) => void;
   defaultFileTab: FileTabType;
   defaultPropertyTab: InventoryTabNames;
-  onSuccess: (updateProperties?: boolean) => void;
+  onSuccess: (updateProperties?: boolean, updateFile?: boolean) => void;
 }
 
 export const DispositionRouter: React.FC<IDispositionRouterProps> = props => {
@@ -84,6 +84,7 @@ export const DispositionRouter: React.FC<IDispositionRouterProps> = props => {
             <UpdateDispositionAppraisalContainer
               dispositionFileId={props.dispositionFile?.id ?? 0}
               View={DispositionAppraisalForm}
+              onSuccess={props.onSuccess}
             ></UpdateDispositionAppraisalContainer>
           )}
           claim={Claims.DISPOSITION_EDIT}
@@ -97,6 +98,7 @@ export const DispositionRouter: React.FC<IDispositionRouterProps> = props => {
             <AddDispositionOfferContainer
               dispositionFileId={props.dispositionFile?.id ?? 0}
               View={DispositionOfferForm}
+              onSuccess={props.onSuccess}
             ></AddDispositionOfferContainer>
           )}
           claim={Claims.DISPOSITION_EDIT}
@@ -111,6 +113,7 @@ export const DispositionRouter: React.FC<IDispositionRouterProps> = props => {
               dispositionFileId={props.dispositionFile?.id ?? 0}
               dispositionOfferId={match.params.offerId}
               View={DispositionOfferForm}
+              onSuccess={props.onSuccess}
             ></UpdateDispositionOfferContainer>
           )}
           claim={Claims.DISPOSITION_EDIT}

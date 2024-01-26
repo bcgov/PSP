@@ -13,11 +13,13 @@ import { IOffersAndSaleContainerViewProps } from './OffersAndSaleContainerView';
 export interface IOffersAndSaleContainerProps {
   dispositionFile?: Api_DispositionFile;
   View: React.FC<IOffersAndSaleContainerViewProps>;
+  onSuccess: () => void;
 }
 
 const OffersAndSaleContainer: React.FunctionComponent<IOffersAndSaleContainerProps> = ({
   dispositionFile,
   View,
+  onSuccess,
 }) => {
   const {
     getDispositionFileOffers: { execute: getDispositionFileOffers, loading: loadingOffers },
@@ -67,6 +69,7 @@ const OffersAndSaleContainer: React.FunctionComponent<IOffersAndSaleContainerPro
       if (updatedOffers) {
         setDispositionOffers(updatedOffers);
       }
+      onSuccess();
     }
   };
 
