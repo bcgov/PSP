@@ -55,8 +55,8 @@ export const useApiDispositionFile = () => {
 
       getLastUpdatedByApi: (dispositionFileId: number) =>
         api.get<Api_LastUpdatedBy>(`/dispositionfiles/${dispositionFileId}/updateInfo`),
-      getDispositionFileChecklist: (acqFileId: number) =>
-        api.get<[]>(`/dispositionfiles/${acqFileId}/checklist`),
+      getDispositionFileChecklist: (dispositionFileId: number) =>
+        api.get<[]>(`/dispositionfiles/${dispositionFileId}/checklist`),
       putDispositionFileChecklist: (dispositionFile: ApiGen_Concepts_FileWithChecklist) =>
         api.put<ApiGen_Concepts_DispositionFile>(
           `/dispositionfiles/${dispositionFile?.id}/checklist`,

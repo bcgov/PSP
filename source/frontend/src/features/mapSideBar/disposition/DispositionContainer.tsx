@@ -77,7 +77,7 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
   // Retrieve disposition file from API and save it to local state and side-bar context
   const fetchDispositionFile = useCallback(async () => {
     var retrieved = await retrieveDispositionFile(dispositionFileId);
-    if (exists(retrieved)) {
+    if (!exists(retrieved)) {
       return;
     }
 
