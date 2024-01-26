@@ -35,7 +35,7 @@ namespace Pims.Api.Models.Concepts.File
         /// <summary>
         /// get/set - The relationship's acquisition file id.
         /// </summary>
-        public virtual long FileId { get; set; }
+        public long FileId { get; set; }
 
         public virtual FileModel File { get; set; }
 

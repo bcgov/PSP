@@ -10,6 +10,7 @@ namespace Pims.Api.Models.Concepts.ResearchFile
         public void Register(TypeAdapterConfig config)
         {
             config.NewConfig<PimsResearchFile, ResearchFileModel>()
+                .PreserveReference(true)
                 .Map(dest => dest.Id, src => src.ResearchFileId)
                 .Map(dest => dest.FileName, src => src.Name)
                 .Map(dest => dest.FileNumber, src => src.RfileNumber)
@@ -32,6 +33,7 @@ namespace Pims.Api.Models.Concepts.ResearchFile
                 .Inherits<IBaseAppEntity, BaseAuditModel>();
 
             config.NewConfig<ResearchFileModel, PimsResearchFile>()
+                .PreserveReference(true)
                 .Map(dest => dest.ResearchFileId, src => src.Id)
                 .Map(dest => dest.Name, src => src.FileName)
                 .Map(dest => dest.RfileNumber, src => src.FileNumber)

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Constants;
@@ -305,9 +306,15 @@ namespace Pims.Api.Services
             return checklistItems;
         }
 
-        public PimsDispositionFile UpdateChecklistItems(long dispositionFileId, IList<PimsDispositionChecklistItem> checklistItems)
+        public PimsDispositionFile UpdateChecklistItems(IList<PimsDispositionChecklistItem> checklistItems)
         {
             checklistItems.ThrowIfNull(nameof(checklistItems));
+            if (checklistItems.Count == 0)
+            {
+                throw new BadRequestException("Checklist items must be greater than zero");
+            }
+
+            var dispositionFileId = checklistItems.FirstOrDefault().DispositionFileId;
             _logger.LogInformation("Updating disposition file checklist with DispositionFile id: {id}", dispositionFileId);
             _user.ThrowIfNotAuthorized(Permissions.DispositionEdit);
 

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Models.Concepts.DispositionFile;
 using Pims.Api.Models.Concepts.File;
 using Pims.Api.Policies;
@@ -73,8 +74,17 @@ namespace Pims.Api.Areas.Disposition.Controllers
         [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult UpdateDispositionFileChecklist(long id, [FromBody] IList<FileChecklistItemModel> checklistItems)
         {
+
+            foreach (var item in checklistItems)
+            {
+                if (item.FileId != id)
+                {
+                    throw new BadRequestException("All checklist items file id must match the disposition file id");
+                }
+            }
+
             var checklistItemEntities = _mapper.Map<IList<Dal.Entities.PimsDispositionChecklistItem>>(checklistItems);
-            var dispositionFile = _dispositionService.UpdateChecklistItems(id, checklistItemEntities);
+            var dispositionFile = _dispositionService.UpdateChecklistItems(checklistItemEntities);
             return new JsonResult(_mapper.Map<DispositionFileModel>(dispositionFile));
         }
 

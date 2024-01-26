@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Models.Concepts.AcquisitionFile;
 using Pims.Api.Models.Concepts.File;
 using Pims.Api.Policies;
@@ -73,8 +74,17 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult UpdateAcquisitionFileChecklist(long acquisitionFileId, [FromBody] IList<FileChecklistItemModel> checklistItems)
         {
+
+            foreach (var item in checklistItems)
+            {
+                if (item.FileId != acquisitionFileId)
+                {
+                    throw new BadRequestException("All checklist items file id must match the acquisition file id");
+                }
+            }
+
             var checklistItemEntities = _mapper.Map<IList<Dal.Entities.PimsAcquisitionChecklistItem>>(checklistItems);
-            var acquisitionFile = _acquisitionService.UpdateChecklistItems(acquisitionFileId, checklistItemEntities);
+            var acquisitionFile = _acquisitionService.UpdateChecklistItems(checklistItemEntities);
             return new JsonResult(_mapper.Map<AcquisitionFileModel>(acquisitionFile));
         }
 

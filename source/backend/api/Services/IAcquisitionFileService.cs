@@ -27,7 +27,7 @@ namespace Pims.Api.Services
 
         IEnumerable<PimsAcquisitionChecklistItem> GetChecklistItems(long id);
 
-        PimsAcquisitionFile UpdateChecklistItems(long acquisitionFileId, IList<PimsAcquisitionChecklistItem> checklistItems);
+        PimsAcquisitionFile UpdateChecklistItems(IList<PimsAcquisitionChecklistItem> checklistItems);
 
         IEnumerable<PimsAgreement> GetAgreements(long id);
 

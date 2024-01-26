@@ -8,7 +8,6 @@ import { ApiGen_Concepts_Lease } from './ApiGen_Concepts_Lease';
 
 // LINK: @backend/apimodels/Models/Concepts/Lease/PropertyLeaseModel.cs
 export interface ApiGen_Concepts_PropertyLease extends ApiGen_Concepts_FileProperty {
-  fileId: number;
   file: ApiGen_Concepts_Lease | null;
   leaseArea: number | null;
   areaUnitType: ApiGen_Base_CodeType<string> | null;

@@ -8,6 +8,7 @@ namespace Pims.Api.Models.Concepts.Lease
         public void Register(TypeAdapterConfig config)
         {
             config.NewConfig<PimsPropertyLease, PropertyLeaseModel>()
+                .PreserveReference(true)
                 .Map(dest => dest.Property, src => src.Property)
                 .Map(dest => dest.PropertyId, src => src.PropertyId)
                 .Map(dest => dest.File, src => src.Lease)
@@ -19,6 +20,7 @@ namespace Pims.Api.Models.Concepts.Lease
                 .Map(dest => dest.Id, src => src.Internal_Id);
 
             config.NewConfig<PropertyLeaseModel, PimsPropertyLease>()
+                .PreserveReference(true)
                 .Map(dest => dest.Property, src => src.Property)
                 .Map(dest => dest.LeaseId, src => src.FileId)
                 .Map(dest => dest.AreaUnitTypeCode, src => src.AreaUnitType.Id)

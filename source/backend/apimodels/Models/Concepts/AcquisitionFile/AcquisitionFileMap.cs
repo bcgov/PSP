@@ -12,6 +12,7 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
         public void Register(TypeAdapterConfig config)
         {
             config.NewConfig<PimsAcquisitionFile, AcquisitionFileModel>()
+                .PreserveReference(true)
                 .Map(dest => dest.Id, src => src.AcquisitionFileId)
                 .Map(dest => dest.FileNo, src => src.FileNo)
                 .Map(dest => dest.FileNumber, src => src.FileNumber)
@@ -41,6 +42,7 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
                 .Inherits<IBaseAppEntity, BaseAuditModel>();
 
             config.NewConfig<AcquisitionFileModel, PimsAcquisitionFile>()
+                .PreserveReference(true)
                 .Map(dest => dest.AcquisitionFileId, src => src.Id)
                 .Map(dest => dest.FileNo, src => src.FileNo)
                 .Map(dest => dest.FileNumber, src => src.FileNumber)

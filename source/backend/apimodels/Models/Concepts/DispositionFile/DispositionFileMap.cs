@@ -11,6 +11,7 @@ namespace Pims.Api.Models.Concepts.DispositionFile
         public void Register(TypeAdapterConfig config)
         {
             config.NewConfig<Entity.PimsDispositionFile, DispositionFileModel>()
+                .PreserveReference(true)
                 .Map(dest => dest.Id, src => src.DispositionFileId)
                 .Map(dest => dest.FileNumber, src => src.FileNumber)
                 .Map(dest => dest.FileName, src => src.FileName)
@@ -37,6 +38,7 @@ namespace Pims.Api.Models.Concepts.DispositionFile
                 .Map(dest => dest.FileChecklistItems, src => src.PimsDispositionChecklistItems);
 
             config.NewConfig<DispositionFileModel, Entity.PimsDispositionFile>()
+                .PreserveReference(true)
                 .Map(dest => dest.DispositionFileId, src => src.Id)
                 .Map(dest => dest.FileNumber, src => src.FileNumber)
                 .Map(dest => dest.FileName, src => src.FileName)

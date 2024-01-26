@@ -10,6 +10,7 @@ using Moq;
 using NetTopologySuite.Geometries;
 using Pims.Api.Constants;
 using Pims.Api.Helpers.Exceptions;
+using Pims.Api.Models.CodeTypes;
 using Pims.Api.Models.Concepts;
 using Pims.Api.Services;
 using Pims.Core.Exceptions;
@@ -1696,8 +1697,9 @@ namespace Pims.Api.Test.Services
             // Arrange
             var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit);
 
+            var checklistItems = new List<PimsAcquisitionChecklistItem>() { new PimsAcquisitionChecklistItem() { Internal_Id = 1, AcqChklstItemStatusTypeCode = "COMPLT" } };
+
             var acqFile = EntityHelper.CreateAcquisitionFile();
-            acqFile.PimsAcquisitionChecklistItems = new List<PimsAcquisitionChecklistItem>() { new PimsAcquisitionChecklistItem() { Internal_Id = 1, AcqChklstItemStatusTypeCode = "COMPLT" } };
 
             var repository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
             repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
@@ -1713,12 +1715,32 @@ namespace Pims.Api.Test.Services
             solver.Setup(x => x.CanEditChecklists(It.IsAny<AcquisitionStatusTypes?>())).Returns(true);
 
             // Act
-            service.UpdateChecklistItems(acqFile);
+            service.UpdateChecklistItems(checklistItems);
 
             // Assert
             fileChecklistRepository.Verify(x => x.GetAllChecklistItemsByAcquisitionFileId(It.IsAny<long>()), Times.Once);
             fileChecklistRepository.Verify(x => x.Update(It.IsAny<PimsAcquisitionChecklistItem>()), Times.Once);
             repository.Verify(x => x.GetById(It.IsAny<long>()), Times.Exactly(3));
+        }
+
+
+        [Fact]
+        public void UpdateChecklist_NoEmptyList()
+        {
+            // Arrange
+            var service = this.CreateAcquisitionServiceWithPermissions();
+
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+
+            var repository = this._helper.GetService<Mock<IAcquisitionFileChecklistRepository>>();
+            repository.Setup(x => x.GetAllChecklistItemsByAcquisitionFileId(It.IsAny<long>())).Returns(acqFile.PimsAcquisitionChecklistItems.ToList());
+
+            // Act
+            Action act = () => service.UpdateChecklistItems(new List<PimsAcquisitionChecklistItem>());
+
+            // Assert
+            act.Should().Throw<BadRequestException>();
+            repository.Verify(x => x.GetAllChecklistItemsByAcquisitionFileId(It.IsAny<long>()), Times.Never);
         }
 
         [Fact]
@@ -1727,8 +1749,9 @@ namespace Pims.Api.Test.Services
             // Arrange
             var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit);
 
+            var checklistItems = new List<PimsAcquisitionChecklistItem>() { new PimsAcquisitionChecklistItem() { Internal_Id = 999, AcqChklstItemStatusTypeCode = "COMPLT" } };
+
             var acqFile = EntityHelper.CreateAcquisitionFile();
-            acqFile.PimsAcquisitionChecklistItems = new List<PimsAcquisitionChecklistItem>() { new PimsAcquisitionChecklistItem() { Internal_Id = 999, AcqChklstItemStatusTypeCode = "COMPLT" } };
             acqFile.AcquisitionFileStatusTypeCode = AcquisitionStatusTypes.ACTIVE.ToString();
 
             var acqRepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
@@ -1745,7 +1768,7 @@ namespace Pims.Api.Test.Services
             solver.Setup(x => x.CanEditChecklists(It.IsAny<AcquisitionStatusTypes?>())).Returns(true);
 
             // Act
-            Action act = () => service.UpdateChecklistItems(acqFile);
+            Action act = () => service.UpdateChecklistItems(checklistItems);
 
             // Assert
             act.Should().Throw<BadRequestException>();
@@ -1761,13 +1784,14 @@ namespace Pims.Api.Test.Services
             // Arrange
             var service = this.CreateAcquisitionServiceWithPermissions();
 
+            var checklistItems = new List<PimsAcquisitionChecklistItem>() { new PimsAcquisitionChecklistItem() { Internal_Id = 999, AcqChklstItemStatusTypeCode = "COMPLT" } };
             var acqFile = EntityHelper.CreateAcquisitionFile();
 
             var repository = this._helper.GetService<Mock<IAcquisitionFileChecklistRepository>>();
             repository.Setup(x => x.GetAllChecklistItemsByAcquisitionFileId(It.IsAny<long>())).Returns(acqFile.PimsAcquisitionChecklistItems.ToList());
 
             // Act
-            Action act = () => service.UpdateChecklistItems(acqFile);
+            Action act = () => service.UpdateChecklistItems(checklistItems);
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
@@ -1780,6 +1804,7 @@ namespace Pims.Api.Test.Services
             // Arrange
             var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit);
 
+            var checklistItems = new List<PimsAcquisitionChecklistItem>() { new PimsAcquisitionChecklistItem() { Internal_Id = 999, AcqChklstItemStatusTypeCode = "COMPLT" } };
             var acqFile = EntityHelper.CreateAcquisitionFile();
 
             var repository = this._helper.GetService<Mock<IAcquisitionFileChecklistRepository>>();
@@ -1793,7 +1818,7 @@ namespace Pims.Api.Test.Services
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
 
             // Act
-            Action act = () => service.UpdateChecklistItems(acqFile);
+            Action act = () => service.UpdateChecklistItems(checklistItems);
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
@@ -1806,7 +1831,7 @@ namespace Pims.Api.Test.Services
             var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit);
 
             var acqFile = EntityHelper.CreateAcquisitionFile();
-            acqFile.PimsAcquisitionChecklistItems = new List<PimsAcquisitionChecklistItem>() { new PimsAcquisitionChecklistItem() { Internal_Id = 1, AcqChklstItemStatusTypeCode = "COMPLT" } };
+            var checklistItems = new List<PimsAcquisitionChecklistItem>() { new PimsAcquisitionChecklistItem() { Internal_Id = 1, AcqChklstItemStatusTypeCode = "COMPLT" } };
 
             var repository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
             repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
@@ -1822,7 +1847,7 @@ namespace Pims.Api.Test.Services
             solver.Setup(x => x.CanEditChecklists(It.IsAny<AcquisitionStatusTypes?>())).Returns(false);
 
             // Act
-            Action act = () => service.UpdateChecklistItems(acqFile);
+            Action act = () => service.UpdateChecklistItems(checklistItems);
 
             // Assert
             act.Should().Throw<BusinessRuleViolationException>();

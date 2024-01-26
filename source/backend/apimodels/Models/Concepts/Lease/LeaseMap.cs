@@ -13,6 +13,7 @@ namespace Pims.Api.Models.Concepts.Lease
         public void Register(TypeAdapterConfig config)
         {
             config.NewConfig<PimsLease, LeaseModel>()
+                .PreserveReference(true)
                 .Map(dest => dest.Id, src => src.LeaseId)
                 .Map(dest => dest.RowVersion, src => src.ConcurrencyControlNumber)
                 .Map(dest => dest.Amount, src => src.LeaseAmount)
@@ -57,6 +58,7 @@ namespace Pims.Api.Models.Concepts.Lease
                 .Map(dest => dest.Terms, src => src.PimsLeaseTerms);
 
             config.NewConfig<LeaseModel, PimsLease>()
+                .PreserveReference(true)
                 .Map(dest => dest.LeaseId, src => src.Id)
                 .Map(dest => dest.ConcurrencyControlNumber, src => src.RowVersion)
                 .Map(dest => dest.LeaseAmount, src => src.Amount)

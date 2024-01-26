@@ -4,7 +4,6 @@ using System.Linq;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Pims.Api.Constants;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Helpers.Extensions;
 using Pims.Api.Models.CodeTypes;
@@ -347,9 +346,16 @@ namespace Pims.Api.Services
             return _acqFileRepository.GetById(acquisitionFile.Internal_Id);
         }
 
-        public PimsAcquisitionFile UpdateChecklistItems(long acquisitionFileId, IList<PimsAcquisitionChecklistItem> checklistItems)
+        public PimsAcquisitionFile UpdateChecklistItems(IList<PimsAcquisitionChecklistItem> checklistItems)
         {
             checklistItems.ThrowIfNull(nameof(checklistItems));
+            if (checklistItems.Count == 0)
+            {
+                throw new BadRequestException("Checklist items must be greater than zero");
+            }
+
+            var acquisitionFileId = checklistItems.FirstOrDefault().AcquisitionFileId;
+
             _logger.LogInformation("Updating acquisition file checklist with AcquisitionFile id: {id}", acquisitionFileId);
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileEdit);
             _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, acquisitionFileId);
