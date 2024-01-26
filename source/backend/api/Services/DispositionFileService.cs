@@ -36,7 +36,6 @@ namespace Pims.Api.Services
         private readonly ILookupRepository _lookupRepository;
         private readonly IDispositionFileChecklistRepository _checklistRepository;
         private readonly IEntityNoteRepository _entityNoteRepository;
-        private readonly IUserRepository _userRepository;
 
         public DispositionFileService(
             ClaimsPrincipal user,

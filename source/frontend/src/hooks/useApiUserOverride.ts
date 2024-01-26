@@ -104,10 +104,11 @@ export const useApiUserOverride = <
                     state?.userOverrideCode,
                   ],
                 });
-                await apiCallWithOverride(overridenApiFunction.current, [
-                  ...state.previousUserOverrideCodes,
-                  state?.userOverrideCode,
-                ]);
+                await apiCallWithOverride(
+                  overridenApiFunction.current,
+                  [...state.previousUserOverrideCodes, state?.userOverrideCode],
+                  errorHandlerRef.current ?? undefined,
+                );
               }
             },
             handleCancel: () => {

@@ -122,7 +122,7 @@ const AddDispositionContainer: React.FC<IAddDispositionContainerProps> = ({ onCl
           (axiosError: AxiosError<IApiError>) => {
             setModalContent({
               variant: 'error',
-              title: 'Warning',
+              title: 'Error',
               message: axiosError?.response?.data.error,
               okButtonText: 'Close',
             });
