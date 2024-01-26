@@ -36,6 +36,7 @@ namespace Pims.Api.Services
         private readonly ILookupRepository _lookupRepository;
         private readonly IDispositionFileChecklistRepository _checklistRepository;
         private readonly IEntityNoteRepository _entityNoteRepository;
+        private readonly IUserRepository _userRepository;
 
         public DispositionFileService(
             ClaimsPrincipal user,
@@ -75,6 +76,8 @@ namespace Pims.Api.Services
             ValidateStaff(dispositionFile);
 
             MatchProperties(dispositionFile, userOverrides);
+
+            ValidatePropertyRegions(dispositionFile);
 
             var newDispositionFile = _dispositionFileRepository.Add(dispositionFile);
             _dispositionFileRepository.CommitTransaction();
@@ -640,6 +643,18 @@ namespace Pims.Api.Services
                     {
                         throw new UserOverrideException(UserOverrideCode.DisposingPropertyNotInventoried, "You have added one or more properties to the disposition file that are not in the MoTI Inventory. Do you want to proceed?");
                     }
+                }
+            }
+        }
+
+        private void ValidatePropertyRegions(PimsDispositionFile dispositionFile)
+        {
+            var userRegions = _user.GetUserRegions(_userRepository);
+            foreach (var dispProperty in dispositionFile.PimsDispositionFileProperties)
+            {
+                if (dispProperty.Property is not null && !userRegions.Contains(dispProperty.Property.RegionCode))
+                {
+                    throw new BadRequestException("You cannot add a property that is outside of your user account region(s). Either select a different property, or get your system administrator to add the required region to your user account settings.");
                 }
             }
         }
