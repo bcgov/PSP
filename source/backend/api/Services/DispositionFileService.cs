@@ -107,6 +107,8 @@ namespace Pims.Api.Services
             ValidateStaff(dispositionFile);
             ValidateVersion(id, dispositionFile.ConcurrencyControlNumber);
 
+            dispositionFile.ThrowContractorRemovedFromTeam(_user, _userRepository);
+
             if (!userOverrides.Contains(UserOverrideCode.DispositionFileFinalStatus))
             {
                 var doNotAddToStatuses = new List<string>() { EnumDispositionFileStatusTypeCode.COMPLETE.ToString(), EnumDispositionFileStatusTypeCode.ARCHIVED.ToString() };
