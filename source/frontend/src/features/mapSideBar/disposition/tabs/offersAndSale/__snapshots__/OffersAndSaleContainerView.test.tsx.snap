@@ -189,34 +189,64 @@ exports[`Disposition Offer Detail View component renders as expected 1`] = `
   border-radius: 0.5rem;
 }
 
-.c3.required::before {
+.c4.required::before {
   content: '*';
   position: absolute;
   top: 0.75rem;
   left: 0rem;
 }
 
-.c2 {
+.c3 {
   font-weight: bold;
 }
 
-.c4 {
+.c5 {
   padding: 0 0.4rem;
   display: block;
 }
 
-.c6 {
+.c7 {
   font-size: 16px;
   padding: 0 0.5rem;
   font-style: italic;
 }
 
-.c7 {
+.c8 {
   padding: 0 0.5rem;
 }
 
-.c5 {
+.c6 {
   border-bottom: 0.1rem solid;
+}
+
+.c2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c2 label {
+  font-family: 'BCSans-Bold';
+  font-size: 2rem;
+  width: 100%;
+  text-align: left;
+  margin-bottom: 0;
+}
+
+.c2 button {
+  margin-bottom: 1rem;
 }
 
 <div
@@ -231,7 +261,13 @@ exports[`Disposition Offer Detail View component renders as expected 1`] = `
         <div
           class="col"
         >
-          Sales Details
+          <div
+            class="c2"
+          >
+            <label>
+              Sales Details
+            </label>
+          </div>
         </div>
       </div>
     </h2>
@@ -245,17 +281,17 @@ exports[`Disposition Offer Detail View component renders as expected 1`] = `
           class="pr-0 text-left col-6"
         >
           <label
-            class="c2"
+            class="c3"
           >
             Purchaser name(s):
           </label>
         </div>
         <div
-          class="c3 text-left col"
+          class="c4 text-left col"
           data-testid="disposition-sale.purchasers"
         >
           <a
-            class="c4"
+            class="c5"
             href="/contact/P12"
             rel="noopener noreferrer"
             target="_blank"
@@ -279,10 +315,10 @@ exports[`Disposition Offer Detail View component renders as expected 1`] = `
             </svg>
           </a>
           <div
-            class="c5 my-3"
+            class="c6 my-3"
           />
           <a
-            class="c4"
+            class="c5"
             href="/contact/P15"
             rel="noopener noreferrer"
             target="_blank"
@@ -306,10 +342,10 @@ exports[`Disposition Offer Detail View component renders as expected 1`] = `
             </svg>
           </a>
           <div
-            class="c5 my-3"
+            class="c6 my-3"
           />
           <a
-            class="c4"
+            class="c5"
             href="/contact/O1"
             rel="noopener noreferrer"
             target="_blank"
@@ -333,12 +369,12 @@ exports[`Disposition Offer Detail View component renders as expected 1`] = `
             </svg>
           </a>
           <label
-            class="c6"
+            class="c7"
           >
             Primary contact:
           </label>
           <a
-            class="c7"
+            class="c8"
             href="/contact/P16"
             rel="noopener noreferrer"
             target="_blank"
@@ -370,17 +406,17 @@ exports[`Disposition Offer Detail View component renders as expected 1`] = `
           class="pr-0 text-left col-6"
         >
           <label
-            class="c2"
+            class="c3"
           >
             Purchaser agent:
           </label>
         </div>
         <div
-          class="c3 text-left col"
+          class="c4 text-left col"
           data-testid="disposition-sale.purchaser-agent"
         >
           <a
-            class="c4"
+            class="c5"
             href="/contact/P1000"
             rel="noopener noreferrer"
             target="_blank"
@@ -412,17 +448,17 @@ exports[`Disposition Offer Detail View component renders as expected 1`] = `
           class="pr-0 text-left col-6"
         >
           <label
-            class="c2"
+            class="c3"
           >
             Purchaser solicitor:
           </label>
         </div>
         <div
-          class="c3 text-left col"
+          class="c4 text-left col"
           data-testid="disposition-sale.purchaser-solicitor"
         >
           <a
-            class="c4"
+            class="c5"
             href="/contact/P1001"
             rel="noopener noreferrer"
             target="_blank"
@@ -454,7 +490,7 @@ exports[`Disposition Offer Detail View component renders as expected 1`] = `
           class="pr-0 text-left col-6"
         >
           <label
-            class="c2"
+            class="c3"
           >
             Last condition removal date:
             <span
@@ -484,7 +520,7 @@ exports[`Disposition Offer Detail View component renders as expected 1`] = `
           </label>
         </div>
         <div
-          class="c3 text-left col"
+          class="c4 text-left col"
           data-testid="disposition-sale.finalConditionRemovalDate"
         >
           Jan 30, 2022
@@ -497,13 +533,13 @@ exports[`Disposition Offer Detail View component renders as expected 1`] = `
           class="pr-0 text-left col-6"
         >
           <label
-            class="c2"
+            class="c3"
           >
             Sale completion date:
           </label>
         </div>
         <div
-          class="c3 text-left col"
+          class="c4 text-left col"
           data-testid="disposition-sale.saleCompletionDate"
         >
           Jan 30, 2024
@@ -516,13 +552,13 @@ exports[`Disposition Offer Detail View component renders as expected 1`] = `
           class="pr-0 text-left col-6"
         >
           <label
-            class="c2"
+            class="c3"
           >
             Fiscal year of sale:
           </label>
         </div>
         <div
-          class="c3 text-left col"
+          class="c4 text-left col"
           data-testid="disposition-sale.saleFiscalYear"
         >
           2023
@@ -535,13 +571,13 @@ exports[`Disposition Offer Detail View component renders as expected 1`] = `
           class="pr-0 text-left col-6"
         >
           <label
-            class="c2"
+            class="c3"
           >
             Final sale price ($):
           </label>
         </div>
         <div
-          class="c3 text-left col"
+          class="c4 text-left col"
           data-testid="disposition-sale.finalSaleAmount"
         >
           $746,325.23
@@ -554,13 +590,13 @@ exports[`Disposition Offer Detail View component renders as expected 1`] = `
           class="pr-0 text-left col-6"
         >
           <label
-            class="c2"
+            class="c3"
           >
             Realtor commission ($):
           </label>
         </div>
         <div
-          class="c3 text-left col"
+          class="c4 text-left col"
           data-testid="disposition-sale.realtorCommissionAmount"
         >
           $12,500.27
@@ -573,13 +609,13 @@ exports[`Disposition Offer Detail View component renders as expected 1`] = `
           class="pr-0 text-left col-6"
         >
           <label
-            class="c2"
+            class="c3"
           >
             GST required:
           </label>
         </div>
         <div
-          class="c3 text-left col"
+          class="c4 text-left col"
           data-testid="disposition-sale.isGstRequired"
         >
           Yes
@@ -592,7 +628,7 @@ exports[`Disposition Offer Detail View component renders as expected 1`] = `
           class="pr-0 text-left col-6"
         >
           <label
-            class="c2"
+            class="c3"
           >
             GST collected ($):
             <span
@@ -622,7 +658,7 @@ exports[`Disposition Offer Detail View component renders as expected 1`] = `
           </label>
         </div>
         <div
-          class="c3 text-left col"
+          class="c4 text-left col"
           data-testid="disposition-sale.gstCollectedAmount"
         >
           $36,489.36
@@ -635,13 +671,13 @@ exports[`Disposition Offer Detail View component renders as expected 1`] = `
           class="pr-0 text-left col-6"
         >
           <label
-            class="c2"
+            class="c3"
           >
             Net Book Value ($):
           </label>
         </div>
         <div
-          class="c3 text-left col"
+          class="c4 text-left col"
           data-testid="disposition-sale.netBookAmount"
         >
           $246.20
@@ -654,7 +690,7 @@ exports[`Disposition Offer Detail View component renders as expected 1`] = `
           class="pr-0 text-left col-6"
         >
           <label
-            class="c2"
+            class="c3"
           >
             Total cost of sales ($):
             <span
@@ -684,7 +720,7 @@ exports[`Disposition Offer Detail View component renders as expected 1`] = `
           </label>
         </div>
         <div
-          class="c3 text-left col"
+          class="c4 text-left col"
           data-testid="disposition-sale.totalCostAmount"
         >
           $856,320.36
@@ -697,7 +733,7 @@ exports[`Disposition Offer Detail View component renders as expected 1`] = `
           class="pr-0 text-left col-6"
         >
           <label
-            class="c2"
+            class="c3"
           >
             Net proceeds before SPP cost ($):
             <span
@@ -727,7 +763,7 @@ exports[`Disposition Offer Detail View component renders as expected 1`] = `
           </label>
         </div>
         <div
-          class="c3 text-left col"
+          class="c4 text-left col"
           data-testid="disposition-sale.netProceedsBeforeSppAmount"
         >
           -$159,230.96
@@ -740,7 +776,7 @@ exports[`Disposition Offer Detail View component renders as expected 1`] = `
           class="pr-0 text-left col-6"
         >
           <label
-            class="c2"
+            class="c3"
           >
             SPP Amount ($):
             <span
@@ -770,7 +806,7 @@ exports[`Disposition Offer Detail View component renders as expected 1`] = `
           </label>
         </div>
         <div
-          class="c3 text-left col"
+          class="c4 text-left col"
           data-testid="disposition-sale.sppAmount"
         >
           $1,000.00
@@ -783,7 +819,7 @@ exports[`Disposition Offer Detail View component renders as expected 1`] = `
           class="pr-0 text-left col-6"
         >
           <label
-            class="c2"
+            class="c3"
           >
             Net proceeds after SPP cost ($):
             <span
@@ -813,7 +849,7 @@ exports[`Disposition Offer Detail View component renders as expected 1`] = `
           </label>
         </div>
         <div
-          class="c3 text-left col"
+          class="c4 text-left col"
           data-testid="disposition-sale.netProceedsAfterSppAmount"
         >
           -$160,230.96
@@ -826,13 +862,13 @@ exports[`Disposition Offer Detail View component renders as expected 1`] = `
           class="pr-0 text-left col-6"
         >
           <label
-            class="c2"
+            class="c3"
           >
             Remediation cost ($):
           </label>
         </div>
         <div
-          class="c3 text-left col"
+          class="c4 text-left col"
           data-testid="disposition-sale.remediationAmount"
         >
           $1.00

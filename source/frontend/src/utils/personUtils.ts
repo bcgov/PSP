@@ -1,4 +1,5 @@
 import { IEditablePerson } from '@/interfaces/editable-contact';
+import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_Person';
 import { Api_Person } from '@/models/api/Person';
 
 export function formatFullName(person?: Partial<IEditablePerson>): string {
@@ -8,7 +9,7 @@ export function formatFullName(person?: Partial<IEditablePerson>): string {
   return formatNames([person.firstName, person.middleNames, person.surname]);
 }
 
-export function formatApiPersonNames(person?: Api_Person | null): string {
+export function formatApiPersonNames(person?: Api_Person | ApiGen_Concepts_Person | null): string {
   return formatNames([person?.firstName, person?.middleNames, person?.surname]);
 }
 

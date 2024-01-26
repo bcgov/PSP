@@ -622,6 +622,8 @@ namespace Pims.Api.Test.Services
         }
         #endregion
 
+        #region Appraisal
+
         [Fact]
         public void GetDispositionAppraisal_Should_Fail_NoPermission()
         {
@@ -736,7 +738,7 @@ namespace Pims.Api.Test.Services
             repository.Setup(x => x.GetById(1)).Returns(new PimsDispositionFile()
             {
                 DispositionFileId = 1,
-                PimsDispositionOffers = new List<PimsDispositionOffer>() { },
+                PimsDispositionAppraisals = new List<PimsDispositionAppraisal>() { },
             });
             repository.Setup(x => x.AddDispositionFileAppraisal(It.IsAny<PimsDispositionAppraisal>())).Returns(new PimsDispositionAppraisal()
             {
@@ -755,6 +757,8 @@ namespace Pims.Api.Test.Services
             Assert.NotNull(result);
             repository.Verify(x => x.AddDispositionFileAppraisal(It.IsAny<PimsDispositionAppraisal>()), Times.Once);
         }
+
+        #endregion
 
         #region Offers
 
@@ -1442,6 +1446,153 @@ namespace Pims.Api.Test.Services
         }
 
         #endregion
+
+        #endregion
+
+        #region Sale
+
+        [Fact]
+        public void GetDisposition_Sale_Should_Fail_NoPermission()
+        {
+            // Arrange
+            var service = this.CreateDispositionServiceWithPermissions();
+
+            // Act
+            Action act = () => service.GetDispositionFileSale(1);
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+        }
+
+        [Fact]
+        public void AddDispositionFile_Sale_Should_Fail_NoPermission()
+        {
+            // Arrange
+            var service = this.CreateDispositionServiceWithPermissions();
+
+            // Act
+            Action act = () => service.AddDispositionFileSale(new()
+            {
+                DispositionFileId = 1,
+                DispositionSaleId = 1,
+            });
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+        }
+
+        [Fact]
+        public void AddDispositionFile_Sale_Should_Fail_Sale_Exists()
+        {
+            // Arrange
+            var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionEdit);
+            var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
+
+            repository.Setup(x => x.GetById(1)).Returns(new PimsDispositionFile()
+            {
+                DispositionFileId = 1,
+                PimsDispositionSales = new List<PimsDispositionSale>() {
+                    new PimsDispositionSale()
+                    {
+                        DispositionSaleId = 10,
+                        DispositionFileId = 1,
+                    },
+                },
+            });
+
+            // Act
+            Action act = () => service.AddDispositionFileSale(new()
+            {
+                DispositionFileId = 1,
+            });
+
+            // Assert
+            act.Should().Throw<DuplicateEntityException>();
+        }
+
+        [Fact]
+        public void AddDispositionFile_Sale_Success()
+        {
+            // Arrange
+            var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionEdit);
+            var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
+
+            repository.Setup(x => x.GetById(1)).Returns(new PimsDispositionFile()
+            {
+                DispositionFileId = 1,
+                PimsDispositionOffers = new List<PimsDispositionOffer>() { },
+            });
+            repository.Setup(x => x.AddDispositionFileSale(It.IsAny<PimsDispositionSale>())).Returns(new PimsDispositionSale()
+            {
+                DispositionFileId = 1,
+                DispositionSaleId = 100,
+            });
+
+            // Act
+            var result = service.AddDispositionFileSale(new()
+            {
+                DispositionFileId = 1,
+                DispositionSaleId = 0,
+            });
+
+            // Assert
+            Assert.NotNull(result);
+            repository.Verify(x => x.AddDispositionFileSale(It.IsAny<PimsDispositionSale>()), Times.Once);
+        }
+
+        [Fact]
+        public void UpdateDispositionFile_Sale_Should_Fail_NoPermission()
+        {
+            // Arrange
+            var service = this.CreateDispositionServiceWithPermissions();
+
+            // Act
+            Action act = () => service.UpdateDispositionFileSale(new()
+            {
+                DispositionFileId = 1,
+                DispositionSaleId = 10,
+            });
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+        }
+
+        [Fact]
+        public void UpdateDispositionFile_Sale_Success()
+        {
+            // Arrange
+            var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionEdit);
+            var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
+
+            repository.Setup(x => x.GetById(1)).Returns(new PimsDispositionFile()
+            {
+                DispositionFileId = 1,
+                PimsDispositionSales = new List<PimsDispositionSale>() {
+                    new PimsDispositionSale()
+                    {
+                        DispositionFileId = 1,
+                        DispositionSaleId = 10
+                    }
+                },
+            });
+            repository.Setup(x => x.UpdateDispositionFileSale(It.IsAny<PimsDispositionSale>())).Returns(new PimsDispositionSale()
+            {
+                DispositionFileId = 1,
+                DispositionSaleId = 10,
+            });
+
+            // Act
+            var result = service.UpdateDispositionFileSale(new()
+            {
+                DispositionFileId = 1,
+                DispositionSaleId = 10,
+                SaleFinalAmt = 2000,
+            });
+
+            // Assert
+            Assert.NotNull(result);
+            repository.Verify(x => x.UpdateDispositionFileSale(It.IsAny<PimsDispositionSale>()), Times.Once);
+        }
 
         #endregion
     }
