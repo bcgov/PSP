@@ -33,11 +33,15 @@ namespace Pims.Api.Services
 
         PimsDispositionSale GetDispositionFileSale(long dispositionFileId);
 
+        PimsDispositionSale AddDispositionFileSale(PimsDispositionSale dispositionSale);
+
+        PimsDispositionSale UpdateDispositionFileSale(PimsDispositionSale dispositionSale);
+
         PimsDispositionAppraisal GetDispositionFileAppraisal(long dispositionFileId);
 
         PimsDispositionAppraisal AddDispositionFileAppraisal(long dispositionFileId, PimsDispositionAppraisal dispositionAppraisal);
 
-        PimsDispositionAppraisal UpdateDispositionFileAppraisal(long dispositionFileId,long appraisalId, PimsDispositionAppraisal dispositionAppraisal);
+        PimsDispositionAppraisal UpdateDispositionFileAppraisal(long dispositionFileId, long appraisalId, PimsDispositionAppraisal dispositionAppraisal);
 
         IEnumerable<PimsDispositionChecklistItem> GetChecklistItems(long id);
 

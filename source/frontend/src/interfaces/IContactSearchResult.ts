@@ -1,4 +1,6 @@
 import { Api_Contact } from '@/models/api/Contact';
+import { ApiGen_Concepts_Organization } from '@/models/api/generated/ApiGen_Concepts_Organization';
+import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_Person';
 import { Api_Organization } from '@/models/api/Organization';
 import { Api_Person } from '@/models/api/Person';
 import { formatApiPersonNames } from '@/utils/personUtils';
@@ -12,10 +14,10 @@ export interface IContactSearchResult {
   leaseTenantId?: number;
   isDisabled?: boolean;
   summary?: string;
-  surname?: string;
-  firstName?: string;
-  middleNames?: string;
-  organizationName?: string;
+  surname?: string | null;
+  firstName?: string | null;
+  middleNames?: string | null;
+  organizationName?: string | null;
   email?: string;
   mailingAddress?: string;
   municipalityName?: string;
@@ -49,12 +51,14 @@ export function fromContact(baseModel: Api_Contact): IContactSearchResult {
   };
 }
 
-export function fromApiPerson(baseModel: Api_Person): IContactSearchResult {
+export function fromApiPerson(
+  baseModel: ApiGen_Concepts_Person | Api_Person,
+): IContactSearchResult {
   var personOrganizations =
     baseModel?.personOrganizations !== undefined ? baseModel.personOrganizations : undefined;
 
   var organization =
-    personOrganizations !== undefined && personOrganizations.length > 0
+    personOrganizations && personOrganizations?.length > 0
       ? personOrganizations[0].organization
       : undefined;
 
@@ -76,7 +80,9 @@ export function fromApiPerson(baseModel: Api_Person): IContactSearchResult {
   };
 }
 
-export function fromApiOrganization(baseModel: Api_Organization): IContactSearchResult {
+export function fromApiOrganization(
+  baseModel: ApiGen_Concepts_Organization | Api_Organization,
+): IContactSearchResult {
   return {
     id: 'O' + baseModel.id,
     organizationId: baseModel.id,

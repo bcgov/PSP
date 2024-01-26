@@ -144,12 +144,13 @@ describe('UpdateAgreementsForm component', () => {
 
   it('Cannot edit if not allowed', async () => {
     organizerMock.canEditOrDeleteAgreement.mockReturnValue(false);
-    setup();
+    const { getByTestId } = setup();
 
     const element: HTMLSelectElement | null = document.querySelector(
       `select[name="agreements.0.agreementStatusTypeCode"]`,
     );
 
     expect(element).toHaveAttribute('disabled');
+    expect(getByTestId('tooltip-icon-1-agreement-cannot-edit-tooltip')).toBeVisible();
   });
 });

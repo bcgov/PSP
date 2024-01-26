@@ -1,3 +1,4 @@
+import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
 import { Api_Agreement } from '@/models/api/Agreement';
 import { stringToUndefined, toTypeCode } from '@/utils/formUtils';
 
@@ -95,3 +96,6 @@ export class AgreementsFormModel {
     return this.agreements.map(x => x.toApi(this.acquisitionFileId));
   }
 }
+
+export const isAcquisitionFile = (file: unknown): file is Api_AcquisitionFile =>
+  !!file && Object.prototype.hasOwnProperty.call(file, 'acquisitionTypeCode');

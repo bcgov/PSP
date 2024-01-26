@@ -3,7 +3,7 @@ import { PropertyDataSourceTypes } from '@/constants/propertyDataSourceTypes';
 import { PropertyStatusTypes } from '@/constants/propertyStatusTypes';
 import { PropertyTenureTypes } from '@/constants/propertyTenureTypes';
 import { IProperty } from '@/interfaces';
-import { mockAddress } from '@/mocks/index.mock';
+import { mockAcquisitionFileResponse, mockAddress } from '@/mocks/index.mock';
 import { Api_Property } from '@/models/api/Property';
 
 import { Api_PropertyFile } from '../models/api/PropertyFile';
@@ -170,6 +170,7 @@ export const getMockApiPropertyFiles = (): Api_PropertyFile[] => [
   {
     id: 1,
     fileId: 1,
+    file: mockAcquisitionFileResponse(),
     propertyName: 'test property name',
     propertyId: 1,
     property: {
@@ -209,6 +210,8 @@ export const getMockApiPropertyFiles = (): Api_PropertyFile[] => [
   {
     id: 2,
     propertyId: 2,
+    fileId: 2,
+    file: mockAcquisitionFileResponse(),
     property: {
       id: 2,
       anomalies: [],

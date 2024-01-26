@@ -166,9 +166,6 @@ public partial class PimsPerson
     [InverseProperty("Person")]
     public virtual ICollection<PimsPropActMinContact> PimsPropActMinContacts { get; set; } = new List<PimsPropActMinContact>();
 
-    [InverseProperty("PropertyManager")]
-    public virtual ICollection<PimsProperty> PimsProperties { get; set; } = new List<PimsProperty>();
-
     [InverseProperty("ServiceProviderPerson")]
     public virtual ICollection<PimsPropertyActivity> PimsPropertyActivities { get; set; } = new List<PimsPropertyActivity>();
 

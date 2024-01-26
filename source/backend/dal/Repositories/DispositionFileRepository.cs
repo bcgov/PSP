@@ -198,8 +198,9 @@ namespace Pims.Dal.Repositories
         /// Note that the 'filter' will control the 'page' and 'quantity'.
         /// </summary>
         /// <param name="filter"></param>
+        /// <param name="contractorPersonId"></param>
         /// <returns></returns>
-        public Paged<PimsDispositionFile> GetPageDeep(DispositionFilter filter)
+        public Paged<PimsDispositionFile> GetPageDeep(DispositionFilter filter, long? contractorPersonId = null)
         {
             using var scope = Logger.QueryScope();
 
@@ -209,7 +210,7 @@ namespace Pims.Dal.Repositories
                 throw new ArgumentException("Argument must have a valid filter", nameof(filter));
             }
 
-            var query = GetCommonDispositionFileQueryDeep(filter);
+            var query = GetCommonDispositionFileQueryDeep(filter, contractorPersonId);
 
             var skip = (filter.Page - 1) * filter.Quantity;
             var pageItems = query.Skip(skip).Take(filter.Quantity).ToList();
@@ -325,6 +326,26 @@ namespace Pims.Dal.Repositories
                 .Where(x => x.DispositionFileId == dispositionId).FirstOrDefault();
         }
 
+        public PimsDispositionSale AddDispositionFileSale(PimsDispositionSale dispositionSale)
+        {
+            Context.PimsDispositionSales.Add(dispositionSale);
+
+            return dispositionSale;
+        }
+
+        public PimsDispositionSale UpdateDispositionFileSale(PimsDispositionSale dispositionSale)
+        {
+            var existingSale = Context.PimsDispositionSales
+                .FirstOrDefault(x => x.DispositionSaleId.Equals(dispositionSale.DispositionSaleId)) ?? throw new KeyNotFoundException();
+
+            Context.Entry(existingSale).CurrentValues.SetValues(dispositionSale);
+            Context.UpdateChild<PimsDispositionSale, long, PimsDispositionPurchaser, long>(p => p.PimsDispositionPurchasers, dispositionSale.Internal_Id, dispositionSale.PimsDispositionPurchasers.ToArray());
+            Context.UpdateChild<PimsDispositionSale, long, PimsDspPurchAgent, long>(p => p.PimsDspPurchAgents, dispositionSale.Internal_Id, dispositionSale.PimsDspPurchAgents.ToArray());
+            Context.UpdateChild<PimsDispositionSale, long, PimsDspPurchSolicitor, long>(p => p.PimsDspPurchSolicitors, dispositionSale.Internal_Id, dispositionSale.PimsDspPurchSolicitors.ToArray());
+
+            return existingSale;
+        }
+
         public PimsDispositionAppraisal GetDispositionFileAppraisal(long dispositionId)
         {
             return Context.PimsDispositionAppraisals.AsNoTracking()
@@ -371,8 +392,9 @@ namespace Pims.Dal.Repositories
         /// Generate a Common IQueryable for Disposition Files.
         /// </summary>
         /// <param name="filter">The filter to apply.</param>
+        /// <param name="contractorPersonId">Filter for Contractors.</param>
         /// <returns></returns>
-        private IQueryable<PimsDispositionFile> GetCommonDispositionFileQueryDeep(DispositionFilter filter)
+        private IQueryable<PimsDispositionFile> GetCommonDispositionFileQueryDeep(DispositionFilter filter, long? contractorPersonId = null)
         {
             var predicate = PredicateBuilder.New<PimsDispositionFile>(disp => true);
             if (!string.IsNullOrWhiteSpace(filter.Pid))
@@ -417,6 +439,11 @@ namespace Pims.Dal.Repositories
             if (!string.IsNullOrWhiteSpace(filter.DispositionTypeCode))
             {
                 predicate = predicate.And(disp => disp.DispositionTypeCode == filter.DispositionTypeCode);
+            }
+
+            if (contractorPersonId is not null)
+            {
+                predicate = predicate.And(x => x.PimsDispositionFileTeams.Any(x => x.PersonId == contractorPersonId));
             }
 
             // filter by team members
