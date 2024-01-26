@@ -115,7 +115,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By contactAddressIndMailAddressLine4 = By.XPath("//div[1]/div/span[@data-testid='contact-person-address']/div[4]");
         private By contactAddressIndMailAddressLine5 = By.XPath("//div[1]/div/span[@data-testid='contact-person-address']/div[5]");
         private By contactAddressIndMailAddressLine6 = By.XPath("//div[1]/div/span[@data-testid='contact-person-address']/div[6]");
-        private By contactAddressMailAddressRemoveBttn = By.XPath("//h3[contains(text(),'Mailing Address')]/parent::div/div/div/div/button/div/span[contains(text(),'Remove')]");
+        private By contactAddressMailAddressRemoveBttn = By.XPath("//span[contains(text(),'Mailing Address')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div/div/div/div/button/div/span[contains(text(),'Remove')]/parent::div/parent::button");
 
         private By contactAddressOrgMailCounter = By.XPath("//div[1]/div[@data-testid='contact-organization-address']/div");
         private By contactAddressOrgMailAddressLine1 = By.XPath("//div[1]/div[@data-testid='contact-organization-address']/div[1]");
@@ -124,7 +124,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By contactAddressOrgMailAddressLine4 = By.XPath("//div[1]/div[@data-testid='contact-organization-address']/div[4]");
         private By contactAddressOrgMailAddressLine5 = By.XPath("//div[1]/div[@data-testid='contact-organization-address']/div[5]");
         private By contactAddressOrgMailAddressLine6 = By.XPath("//div[1]/div[@data-testid='contact-organization-address']/div[6]");
-        private By contactAddressPropertyAddressRemoveBttn = By.XPath("//h3[contains(text(),'Property Address')]/parent::div/div/div/div/button/div/span[contains(text(),'Remove')]");
+        private By contactAddressPropertyAddressRemoveBttn = By.XPath("//div[contains(text(),'Property Address')]/parent::div/parent::h2/following-sibling::div/div/div/div/div/button/div/span[contains(text(),'Remove')]/parent::div/parent::button");
 
         private By contactAddressPropertySubtitle = By.XPath("//strong[contains(text(),'Property address')]");
         private By contactAddressIndPropertyCounter = By.XPath("//div[2]/div/span[@data-testid='contact-person-address']/div");
@@ -134,7 +134,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By contactAddressIndPropertyAddressLine4 = By.XPath("//div[2]/div/span[@data-testid='contact-person-address']/div[4]");
         private By contactAddressIndPropertyAddressLine5 = By.XPath("//div[2]/div/span[@data-testid='contact-person-address']/div[5]");
         private By contactAddressIndPropertyAddressLine6 = By.XPath("//div[2]/div/span[@data-testid='contact-person-address']/div[6]");
-        private By contactAddressBillingAddressRemoveBttn = By.XPath("//h3[contains(text(),'Billing Address')]/parent::div/div/div/div/button/div/span[contains(text(),'Remove')]");
+        private By contactAddressBillingAddressRemoveBttn = By.XPath("//div[contains(text(),'Billing Address')]/parent::div/parent::h2/following-sibling::div/div/div/div/div/button/div/span[contains(text(),'Remove')]/parent::div/parent::button");
 
         private By contactAddressOrgPropertyCounter = By.XPath("//div[2]/div[@data-testid='contact-organization-address']/div");
         private By contactAddressOrgPropertyAddressLine1 = By.XPath("//div[2]/div[@data-testid='contact-organization-address']/div[1]");
@@ -875,7 +875,7 @@ namespace PIMS.Tests.Automation.PageObjects
         // ASSERT FUNCTIONS
         public void VerifyIndividualContactView(IndividualContact contact)
         {
-            Wait(2000);
+            Wait(3000);
 
             AssertTrueIsDisplayed(contactTitle);
             AssertTrueIsDisplayed(contactEditButton);
@@ -1220,7 +1220,7 @@ namespace PIMS.Tests.Automation.PageObjects
                         AssertTrueContentEquals(contactAddressOrgBillingAddressLine4,contact.OrgBillingPostalCode);
 
                         if (contact.OrgBillingCountry == "Other")
-                            AssertTrueContentEquals(contactAddressOrgBillingAddressLine5,contact.OrgBillingOtherCountry);
+                            AssertTrueContentEquals(contactAddressOrgBillingAddressLine5, contact.OrgBillingOtherCountry);
                         else
                             AssertTrueContentEquals(contactAddressOrgBillingAddressLine5,contact.OrgBillingCountry);
                         break;

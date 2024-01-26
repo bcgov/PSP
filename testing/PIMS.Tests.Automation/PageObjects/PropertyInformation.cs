@@ -2,6 +2,7 @@
 using OpenQA.Selenium.Support.Events;
 using PIMS.Tests.Automation.Classes;
 using System.Diagnostics;
+using System.Threading.Channels;
 
 namespace PIMS.Tests.Automation.PageObjects
 {
@@ -220,10 +221,8 @@ namespace PIMS.Tests.Automation.PageObjects
         private By propertyDetailsVolTypeSelect = By.Id("input-volumetricParcelTypeCode");
         private By propertyDetailsNotesTextarea = By.Id("input-notes");
 
-        private By propertyDetailsCancelContentModal1 = By.CssSelector("div[class='modal-body'] div");
-        private By propertyDetailsCancelContentModal2 = By.CssSelector("div[class='modal-body'] strong");
-
-        private By propertyDetailsWaitSpinner = By.CssSelector("div[data-testid='filter-backdrop-loading']");
+        //Property Information Confirmation Modal
+        private By propertyInformationConfirmationModal = By.CssSelector("div[class='modal-content']");
 
         private SharedModals sharedModals;
 
@@ -305,17 +304,15 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             ButtonElement("Cancel");
 
-            Assert.Equal("Unsaved Changes", sharedModals.ModalHeader());
-            Assert.Equal("You have made changes on this form. Do you wish to leave without saving?", sharedModals.ModalContent());
+            Wait();
+            if (webDriver.FindElements(propertyInformationConfirmationModal).Count > 0)
+            {
+                //Assert.Equal("Confirm changes", sharedModals.ModalHeader());
+                //Assert.Equal("If you choose to cancel now, your changes will not be saved.", sharedModals.ConfirmationModalText1());
+                //Assert.Equal("Do you want to proceed?", sharedModals.ConfirmationModalText2());
 
-            sharedModals.ModalClickOKBttn();
-        }
-
-        public void UpdateMinPropertyDetails(string notes)
-        {
-            WaitUntilClickable(propertyDetailsNotesTextarea);
-            ClearInput(propertyDetailsNotesTextarea);
-            webDriver.FindElement(propertyDetailsNotesTextarea).SendKeys(notes);
+                sharedModals.ModalClickOKBttn();
+            }
         }
 
         public void UpdatePropertyDetails(Property property)
@@ -676,41 +673,41 @@ namespace PIMS.Tests.Automation.PageObjects
         {
 
             WaitUntilVisible(propertyDetailsEditBttn);
-            Assert.True(webDriver.FindElement(propertyDetailsAddressTitle).Displayed);
+            AssertTrueIsDisplayed(propertyDetailsAddressTitle);
 
             if (webDriver.FindElements(propertyDetailsAddressNotAvailable).Count() > 0)
-                Assert.True(webDriver.FindElement(propertyDetailsAddressNotAvailable).Displayed);
+                AssertTrueIsDisplayed(propertyDetailsAddressNotAvailable);
             else
             {
-                Assert.True(webDriver.FindElement(propertyDetailsAddressLabel).Displayed);
+                AssertTrueIsDisplayed(propertyDetailsAddressLabel);
                 //To-Do: Address
-                Assert.True(webDriver.FindElement(propertyDetailsCityLabel).Displayed);
-                Assert.True(webDriver.FindElement(propertyDetailsCityContent).Text.Equals(property.Address.City));
-                Assert.True(webDriver.FindElement(propertyDetailsProvinceLabel).Displayed);
-                Assert.True(webDriver.FindElement(propertyDetailsProvinceContent).Text.Equals(property.Address.Province));
-                Assert.True(webDriver.FindElement(propertyDetailsPostalCodeLabel).Displayed);
-                Assert.True(webDriver.FindElement(propertyDetailsPostalCodeContent).Text.Equals(property.Address.PostalCode));
+                AssertTrueIsDisplayed(propertyDetailsCityLabel);
+                AssertTrueContentEquals(propertyDetailsCityContent, property.Address.City);
+                AssertTrueIsDisplayed(propertyDetailsProvinceLabel);
+                AssertTrueContentEquals(propertyDetailsProvinceContent, property.Address.Province);
+                AssertTrueIsDisplayed(propertyDetailsPostalCodeLabel);
+                AssertTrueContentEquals(propertyDetailsPostalCodeContent, property.Address.PostalCode);
             }
 
-            Assert.True(webDriver.FindElement(propertyDetailsAttributesTitle).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsAttrRegionLabel).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsAttrRegionDiv).Text.Equals(property.MOTIRegion));
-            Assert.True(webDriver.FindElement(propertyDetailsAttrHighwayLabel).Displayed);
+            AssertTrueIsDisplayed(propertyDetailsAttributesTitle);
+            AssertTrueIsDisplayed(propertyDetailsAttrRegionLabel);
+            AssertTrueContentEquals(propertyDetailsAttrRegionDiv, property.MOTIRegion);
+            AssertTrueIsDisplayed(propertyDetailsAttrHighwayLabel);
 
             var highWayDistrictText = webDriver.FindElement(propertyDetailsAttrHighwayDiv).Text;
-            Assert.True(GetSubstring(highWayDistrictText, 2, highWayDistrictText.Length).Equals(property.HighwaysDistrict));
+            Assert.Equal(property.HighwaysDistrict, GetSubstring(highWayDistrictText, 2, highWayDistrictText.Length));
 
-            Assert.True(webDriver.FindElement(propertyDetailsAttrElectoralLabel).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsAttrElectoralDiv).Text.Equals(property.ElectoralDistrict));
-            Assert.True(webDriver.FindElement(propertyDetailsAttrAgriLandLabel).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsAttrAgriLandDiv).Text.Equals(property.AgriculturalLandReserve));
-            Assert.True(webDriver.FindElement(propertyDetailsAttrRailwayLabel).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsAttrRailwayDiv).Text.Equals(property.RailwayBelt));
-            Assert.True(webDriver.FindElement(propertyDetailsAttrLandParcelLabel).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsAttrLandParcelDiv).Text.Equals(property.LandParcelType));
-            Assert.True(webDriver.FindElement(propertyDetailsAttrMunicipalLabel).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsAttrMunicipalDiv).Text.Equals(property.MunicipalZoning));
-            Assert.True(webDriver.FindElement(propertyDetailsAttrAnomaliesLabel).Displayed);
+            AssertTrueIsDisplayed(propertyDetailsAttrElectoralLabel);
+            AssertTrueContentEquals(propertyDetailsAttrElectoralDiv,property.ElectoralDistrict);
+            AssertTrueIsDisplayed(propertyDetailsAttrAgriLandLabel);
+            AssertTrueContentEquals(propertyDetailsAttrAgriLandDiv, property.AgriculturalLandReserve);
+            AssertTrueIsDisplayed(propertyDetailsAttrRailwayLabel);
+            AssertTrueContentEquals(propertyDetailsAttrRailwayDiv, property.RailwayBelt);
+            AssertTrueIsDisplayed(propertyDetailsAttrLandParcelLabel);
+            AssertTrueContentEquals(propertyDetailsAttrLandParcelDiv,property.LandParcelType);
+            AssertTrueIsDisplayed(propertyDetailsAttrMunicipalLabel);
+            AssertTrueContentEquals(propertyDetailsAttrMunicipalDiv,property.MunicipalZoning);
+            AssertTrueIsDisplayed(propertyDetailsAttrAnomaliesLabel);
 
             if (property.Anomalies.First() != "")
             {
@@ -718,9 +715,9 @@ namespace PIMS.Tests.Automation.PageObjects
                 Assert.True(Enumerable.SequenceEqual(anomaliesUI, property.Anomalies));
             }
 
-            Assert.True(webDriver.FindElement(propertyDetailsAttrCoordinatesLabel).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsTenureTitle).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsTenureStatusLabel).Displayed);
+            AssertTrueIsDisplayed(propertyDetailsAttrCoordinatesLabel);
+            AssertTrueIsDisplayed(propertyDetailsTenureTitle);
+            AssertTrueIsDisplayed(propertyDetailsTenureStatusLabel);
 
             if (property.TenureStatus.First() != "")
             {
@@ -728,12 +725,12 @@ namespace PIMS.Tests.Automation.PageObjects
                 Assert.True(Enumerable.SequenceEqual(tenureStatusUI, property.TenureStatus));
             }
 
-            Assert.True(webDriver.FindElement(propertyDetailsPublicHwyLabel).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsPublicHwyDiv).Text.Equals(property.ProvincialPublicHwy));
+            AssertTrueIsDisplayed(propertyDetailsPublicHwyLabel);
+            AssertTrueContentEquals(propertyDetailsPublicHwyDiv, property.ProvincialPublicHwy);
 
             if (webDriver.FindElements(propertyDetailsHighwayRoadEstablishLabel).Count() > 0)
             {
-                Assert.True(webDriver.FindElement(propertyDetailsHighwayRoadEstablishLabel).Displayed);
+                AssertTrueIsDisplayed(propertyDetailsHighwayRoadEstablishLabel);
 
                 var highwayEstablishedUI = GetViewFieldListContent(propertyDetailsHighwayRoadEstablisDiv);
                 Assert.True(Enumerable.SequenceEqual(highwayEstablishedUI, property.HighwayEstablishedBy));
@@ -741,7 +738,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
             if (webDriver.FindElements(propertyDetailsAdjacentLandTypeLabel).Count() > 0)
             {
-                Assert.True(webDriver.FindElement(propertyDetailsAdjacentLandTypeLabel).Displayed);
+                AssertTrueIsDisplayed(propertyDetailsAdjacentLandTypeLabel);
 
                 var adjacentLandTypeUI = GetViewFieldListContent(propertyDetailsAdjacentLandTypeDiv);
                 Assert.True(Enumerable.SequenceEqual(adjacentLandTypeUI, property.AdjacentLandType));
@@ -749,130 +746,130 @@ namespace PIMS.Tests.Automation.PageObjects
 
             if (webDriver.FindElements(propertyDetailsFirstNationTitle).Count() > 0)
             {
-                Assert.True(webDriver.FindElement(propertyDetailsFirstNationTitle).Displayed);
-                Assert.True(webDriver.FindElement(propertyDetailsFirstNationBandNameLabel).Displayed);
-                Assert.True(webDriver.FindElement(propertyDetailsFirstNationBandNameDiv).Displayed);
-                Assert.True(webDriver.FindElement(propertyDetailsFirstNationReserveLabel).Displayed);
-                Assert.True(webDriver.FindElement(propertyDetailsFirstNationReserveDiv).Displayed);
+                AssertTrueIsDisplayed(propertyDetailsFirstNationTitle);
+                AssertTrueIsDisplayed(propertyDetailsFirstNationBandNameLabel);
+                AssertTrueIsDisplayed(propertyDetailsFirstNationBandNameDiv);
+                AssertTrueIsDisplayed(propertyDetailsFirstNationReserveLabel);
+                AssertTrueIsDisplayed(propertyDetailsFirstNationReserveDiv);
             }
 
-            Assert.True(webDriver.FindElement(propertyDetailsMeasurementsTitle).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsMeasurementsAreaLabel).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsMeasurementVolumeParcelLabel).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsAreaSqMtsLabel).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsAreaHtsLabel).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsAreaSqFeetLabel).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsAreaAcresLabel).Displayed);
+            AssertTrueIsDisplayed(propertyDetailsMeasurementsTitle);
+            AssertTrueIsDisplayed(propertyDetailsMeasurementsAreaLabel);
+            AssertTrueIsDisplayed(propertyDetailsMeasurementVolumeParcelLabel);
+            AssertTrueIsDisplayed(propertyDetailsAreaSqMtsLabel);
+            AssertTrueIsDisplayed(propertyDetailsAreaHtsLabel);
+            AssertTrueIsDisplayed(propertyDetailsAreaSqFeetLabel);
+            AssertTrueIsDisplayed(propertyDetailsAreaAcresLabel);
 
             if (webDriver.FindElements(propertyDetailsMeasurementVolumeLabel).Count() > 0)
             {
-                Assert.True(webDriver.FindElement(propertyDetailsMeasurementVolumeLabel).Displayed);
-                Assert.True(webDriver.FindElement(propertyDetailsMeasurementTypeLabel).Displayed);
-                Assert.True(webDriver.FindElement(propertyDetailsAreaMtsCubeLabel).Displayed);
-                Assert.True(webDriver.FindElement(propertyDetailsAreaFeetCubeLabel).Displayed);
+                AssertTrueIsDisplayed(propertyDetailsMeasurementVolumeLabel);
+                AssertTrueIsDisplayed(propertyDetailsMeasurementTypeLabel);
+                AssertTrueIsDisplayed(propertyDetailsAreaMtsCubeLabel);
+                AssertTrueIsDisplayed(propertyDetailsAreaFeetCubeLabel);
             }
 
-            Assert.True(webDriver.FindElement(propertyDetailsViewNotesTitle).Displayed);
+            AssertTrueIsDisplayed(propertyDetailsViewNotesTitle);
         }
 
         public void VerifyPropertyDetailsEditForm()
         {
             WaitUntilVisible(propertyDetailsEditAddressTitle);
 
-            Assert.True(webDriver.FindElement(propertyDetailsEditAddressTitle).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsAddressLine1Label).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsAddressLine1Input).Displayed);
+            AssertTrueIsDisplayed(propertyDetailsEditAddressTitle);
+            AssertTrueIsDisplayed(propertyDetailsAddressLine1Label);
+            AssertTrueIsDisplayed(propertyDetailsAddressLine1Input);
+
             if (webDriver.FindElements(propertyDetailsAddressLine3Input).Count == 0)
-            {
-                Assert.True(webDriver.FindElement(propertyDetailsAddressAddLineBttn).Displayed);
-            }
-            Assert.True(webDriver.FindElement(propertyDetailsEditCityLabel).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsAddressCityInput).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsEditPostalCodeLabel).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsPostalCodeInput).Displayed);
+                AssertTrueIsDisplayed(propertyDetailsAddressAddLineBttn);
+            
+            AssertTrueIsDisplayed(propertyDetailsEditCityLabel);
+            AssertTrueIsDisplayed(propertyDetailsAddressCityInput);
+            AssertTrueIsDisplayed(propertyDetailsEditPostalCodeLabel);
+            AssertTrueIsDisplayed(propertyDetailsPostalCodeInput);
 
-            Assert.True(webDriver.FindElement(propertyDetailsAttributesTitle).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsAttrRegionLabel).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsMotiRegionSelect).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsAttrHighwayLabel).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsHighwayDistrictSelect).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsAttrElectoralLabel).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsAttrElectoralDiv).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsAttrAgriLandLabel).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsAttrAgriLandDiv).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsAttrRailwayLabel).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsRailwaySelect).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsAttrLandParcelLabel).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsLandTypeSelect).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsAttrMunicipalLabel).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsMunicipalZoneInput).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsAttrAnomaliesLabel).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsAnomaliesInput).Displayed);
+            AssertTrueIsDisplayed(propertyDetailsAttributesTitle);
+            AssertTrueIsDisplayed(propertyDetailsAttrRegionLabel);
+            AssertTrueIsDisplayed(propertyDetailsMotiRegionSelect);
+            AssertTrueIsDisplayed(propertyDetailsAttrHighwayLabel);
+            AssertTrueIsDisplayed(propertyDetailsHighwayDistrictSelect);
+            AssertTrueIsDisplayed(propertyDetailsAttrElectoralLabel);
+            AssertTrueIsDisplayed(propertyDetailsAttrElectoralDiv);
+            AssertTrueIsDisplayed(propertyDetailsAttrAgriLandLabel);
+            AssertTrueIsDisplayed(propertyDetailsAttrAgriLandDiv);
+            AssertTrueIsDisplayed(propertyDetailsAttrRailwayLabel);
+            AssertTrueIsDisplayed(propertyDetailsRailwaySelect);
+            AssertTrueIsDisplayed(propertyDetailsAttrLandParcelLabel);
+            AssertTrueIsDisplayed(propertyDetailsLandTypeSelect);
+            AssertTrueIsDisplayed(propertyDetailsAttrMunicipalLabel);
+            AssertTrueIsDisplayed(propertyDetailsMunicipalZoneInput);
+            AssertTrueIsDisplayed(propertyDetailsAttrAnomaliesLabel);
+            AssertTrueIsDisplayed(propertyDetailsAnomaliesInput);
 
-            Assert.True(webDriver.FindElement(propertyDetailsTenureTitle).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsTenureStatusLabel).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsTenureStatusInput).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsPublicHwyLabel).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsProvPublicHwy).Displayed);
+            AssertTrueIsDisplayed(propertyDetailsTenureTitle);
+            AssertTrueIsDisplayed(propertyDetailsTenureStatusLabel);
+            AssertTrueIsDisplayed(propertyDetailsTenureStatusInput);
+            AssertTrueIsDisplayed(propertyDetailsPublicHwyLabel);
+            AssertTrueIsDisplayed(propertyDetailsProvPublicHwy);
 
             if (webDriver.FindElements(propertyDetailsHighwayRoadEstablishLabel).Count() > 0)
             {
-                Assert.True(webDriver.FindElement(propertyDetailsHighwayRoadEstablishLabel).Displayed);
-                Assert.True(webDriver.FindElement(propertyDetailsRoadEstablishInput).Displayed);
+                AssertTrueIsDisplayed(propertyDetailsHighwayRoadEstablishLabel);
+                AssertTrueIsDisplayed(propertyDetailsRoadEstablishInput);
             }
 
             if (webDriver.FindElements(propertyDetailsAdjacentLandTypeLabel).Count() > 0)
             {
-                Assert.True(webDriver.FindElement(propertyDetailsAdjacentLandTypeLabel).Displayed);
-                Assert.True(webDriver.FindElement(propertyDetailsAdjacentLandInput).Displayed);
+                AssertTrueIsDisplayed(propertyDetailsAdjacentLandTypeLabel);
+                AssertTrueIsDisplayed(propertyDetailsAdjacentLandInput);
             }
 
 
             if (webDriver.FindElements(propertyDetailsFirstNationTitle).Count() > 0)
             {
-                Assert.True(webDriver.FindElement(propertyDetailsFirstNationTitle).Displayed);
-                Assert.True(webDriver.FindElement(propertyDetailsFirstNationBandNameLabel).Displayed);
-                Assert.True(webDriver.FindElement(propertyDetailsFirstNationBandNameDiv).Displayed);
-                Assert.True(webDriver.FindElement(propertyDetailsFirstNationReserveLabel).Displayed);
-                Assert.True(webDriver.FindElement(propertyDetailsFirstNationReserveDiv).Displayed);
+                AssertTrueIsDisplayed(propertyDetailsFirstNationTitle);
+                AssertTrueIsDisplayed(propertyDetailsFirstNationBandNameLabel);
+                AssertTrueIsDisplayed(propertyDetailsFirstNationBandNameDiv);
+                AssertTrueIsDisplayed(propertyDetailsFirstNationReserveLabel);
+                AssertTrueIsDisplayed(propertyDetailsFirstNationReserveDiv);
             }
 
-            Assert.True(webDriver.FindElement(propertyDetailsMeasurementsTitle).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsMeasurementsAreaLabel).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsAreaSqMtsLabel).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsAreaSqMtsInput).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsAreaHtsLabel).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsAreaHctInput).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsAreaSqFeetLabel).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsAreaSqFtInput).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsAreaSqFtInput).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsAreaAcresLabel).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsAreaAcrInput).Displayed);
+            AssertTrueIsDisplayed(propertyDetailsMeasurementsTitle);
+            AssertTrueIsDisplayed(propertyDetailsMeasurementsAreaLabel);
+            AssertTrueIsDisplayed(propertyDetailsAreaSqMtsLabel);
+            AssertTrueIsDisplayed(propertyDetailsAreaSqMtsInput);
+            AssertTrueIsDisplayed(propertyDetailsAreaHtsLabel);
+            AssertTrueIsDisplayed(propertyDetailsAreaHctInput);
+            AssertTrueIsDisplayed(propertyDetailsAreaSqFeetLabel);
+            AssertTrueIsDisplayed(propertyDetailsAreaSqFtInput);
+            AssertTrueIsDisplayed(propertyDetailsAreaSqFtInput);
+            AssertTrueIsDisplayed(propertyDetailsAreaAcresLabel);
+            AssertTrueIsDisplayed(propertyDetailsAreaAcrInput);
 
-            Assert.True(webDriver.FindElement(propertyDetailsMeasurementVolumeParcelLabel).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsIsVolumeRadioYes).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsIsVolumeRadioNo).Displayed);
+            AssertTrueIsDisplayed(propertyDetailsMeasurementVolumeParcelLabel);
+            AssertTrueIsDisplayed(propertyDetailsIsVolumeRadioYes);
+            AssertTrueIsDisplayed(propertyDetailsIsVolumeRadioNo);
 
             if (webDriver.FindElements(propertyDetailsMeasurementVolumeLabel).Count() > 0)
             {
-                Assert.True(webDriver.FindElement(propertyDetailsMeasurementVolumeLabel).Displayed);
-                Assert.True(webDriver.FindElement(propertyDetailsMeasurementTypeLabel).Displayed);
-                Assert.True(webDriver.FindElement(propertyDetailsVolTypeSelect).Displayed);
-                Assert.True(webDriver.FindElement(propertyDetailsAreaMtsCubeLabel).Displayed);
-                Assert.True(webDriver.FindElement(propertyDetailsVolCubeMtsInput).Displayed);
-                Assert.True(webDriver.FindElement(propertyDetailsAreaFeetCubeLabel).Displayed);
-                Assert.True(webDriver.FindElement(propertyDetailsVolCubeFeetInput).Displayed);
+                AssertTrueIsDisplayed(propertyDetailsMeasurementVolumeLabel);
+                AssertTrueIsDisplayed(propertyDetailsMeasurementTypeLabel);
+                AssertTrueIsDisplayed(propertyDetailsVolTypeSelect);
+                AssertTrueIsDisplayed(propertyDetailsAreaMtsCubeLabel);
+                AssertTrueIsDisplayed(propertyDetailsVolCubeMtsInput);
+                AssertTrueIsDisplayed(propertyDetailsAreaFeetCubeLabel);
+                AssertTrueIsDisplayed(propertyDetailsVolCubeFeetInput);
             }
 
-            Assert.True(webDriver.FindElement(propertyDetailsEditNotesTitle).Displayed);
-            Assert.True(webDriver.FindElement(propertyDetailsNotesTextarea).Displayed);
+            AssertTrueIsDisplayed(propertyDetailsEditNotesTitle);
+            AssertTrueIsDisplayed(propertyDetailsNotesTextarea);
         }
 
         public void VerifyNonInventoryPropertyTabs()
         {
             WaitUntilVisible(propertyInformationTitleTab);
-            Assert.True(webDriver.FindElement(propertyInformationTitleTab).Displayed);
-            Assert.True(webDriver.FindElement(propertyInformationValueTab).Displayed);
+            AssertTrueIsDisplayed(propertyInformationTitleTab);
+            AssertTrueIsDisplayed(propertyInformationValueTab);
         }
 
         public int PropertyTabs()

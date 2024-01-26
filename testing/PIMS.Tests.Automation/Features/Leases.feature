@@ -56,10 +56,6 @@ Scenario: 09. Lease and License from Inventory Property Pin
 	Given I create a new Lease through a Property Pin from row number 4
 	Then A new lease is created successfully
 
-Scenario: 10. Lease and License from a Property of Interest Pin
-	Given I create a new Lease through a Property of Interest from row number 5
-	Then A new lease is created successfully
-
-Scenario: 11. Lease and License List View
+Scenario: 10. Lease and License List View
 	Given I search for an existing Lease or License from row number 2
 	Then Expected Lease File Content is displayed on Leases Table

@@ -19,11 +19,10 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             this.webDriver = webDriver;
             wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(120));
-            //wait.PollingInterval = TimeSpan.FromMilliseconds(100);
             wait.IgnoreExceptionTypes(typeof(NoSuchElementException), typeof(StaleElementReferenceException), typeof(ElementClickInterceptedException));
         }
 
-        protected virtual void Wait(int milliseconds = 1000) => Thread.Sleep(milliseconds);
+        protected virtual void Wait(int milliseconds = 3000) => Thread.Sleep(milliseconds);
 
         protected void WaitUntilSpinnerDisappear()
         {
@@ -77,13 +76,13 @@ namespace PIMS.Tests.Automation.PageObjects
             {
                 wait.Until(ExpectedConditions.ElementExists(saveButton));
                 wait.Until(ExpectedConditions.ElementToBeClickable(saveButton));
-                FocusAndClick(saveButton);
+                webDriver.FindElement(saveButton).Click();
             }
             else
             {
                 wait.Until(ExpectedConditions.ElementExists(cancelButton));
                 wait.Until(ExpectedConditions.ElementToBeClickable(cancelButton));
-                FocusAndClick(cancelButton);
+                webDriver.FindElement(cancelButton).Click();
             }
         }
 
@@ -123,8 +122,10 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait(2000);
 
             var js = (IJavaScriptExecutor)webDriver;
-
+            
             var selectElement = webDriver.FindElement(parentElement);
+            wait.Until(ExpectedConditions.VisibilityOfAllElementsLocatedBy(selectElement.FindElements(By.TagName("option"))));
+
             var childrenElements = selectElement.FindElements(By.TagName("option"));
             var selectedOption = childrenElements.Should().ContainSingle(b => b.Text.Equals(option)).Subject;
 
@@ -198,13 +199,13 @@ namespace PIMS.Tests.Automation.PageObjects
         protected void AssertTrueContentEquals(By elementBy, string text)
         {
             WaitUntilVisible(elementBy);
-            Assert.True(webDriver.FindElement(elementBy).Text.Equals(text));
+            Assert.Equal(text, webDriver.FindElement(elementBy).Text);
         }
 
         protected void AssertTrueElementValueEquals(By elementBy, string text)
         {
             WaitUntilVisible(elementBy);
-            Assert.True(webDriver.FindElement(elementBy).GetAttribute("Value").Equals(text));
+            Assert.Equal(text, webDriver.FindElement(elementBy).GetAttribute("Value"));
         }
 
         protected void AssertTrueDoublesEquals(By elementBy, double number2)
@@ -225,7 +226,7 @@ namespace PIMS.Tests.Automation.PageObjects
         protected void AssertTrueElementContains(By elementBy, string text)
         {
             WaitUntilVisible(elementBy);
-            Assert.True(webDriver.FindElement(elementBy).Text.Contains(text));
+            Assert.Contains(text, webDriver.FindElement(elementBy).Text);
         }
 
         protected string TransformDateFormat(string date)

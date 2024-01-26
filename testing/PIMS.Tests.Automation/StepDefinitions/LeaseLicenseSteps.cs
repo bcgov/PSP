@@ -21,7 +21,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly SearchLease searchLease;
         private readonly SearchProperties searchProperties;
         private readonly PropertyInformation propertyInformation;
-        private readonly SharedSearchProperties sharedSearchProperties;
+        private readonly SharedFileProperties sharedSearchProperties;
 
         private readonly string userName = "TRANPSP1";
 
@@ -41,7 +41,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchLease = new SearchLease(driver.Current);
             searchProperties = new SearchProperties(driver.Current);
             propertyInformation = new PropertyInformation(driver.Current);
-            sharedSearchProperties = new SharedSearchProperties(driver.Current);
+            sharedSearchProperties = new SharedFileProperties(driver.Current);
         }
 
         [StepDefinition(@"I create a new minimum Lease from row number (.*)")]
@@ -85,42 +85,42 @@ namespace PIMS.Tests.Automation.StepDefinitions
             if (lease.SearchProperties.PID != "")
             {
                 sharedSearchProperties.SelectPropertyByPID(lease.SearchProperties.PID);
-                sharedSearchProperties.SelectFirstOption();
+                sharedSearchProperties.SelectFirstOptionFromSearch();
             }
 
             //Search for a property by PIN
             if (lease.SearchProperties.PIN != "")
             {
                 sharedSearchProperties.SelectPropertyByPIN(lease.SearchProperties.PIN);
-                sharedSearchProperties.SelectFirstOption();
+                sharedSearchProperties.SelectFirstOptionFromSearch();
             }
 
             //Search for a property by Plan
             if (lease.SearchProperties.PlanNumber != "")
             {
                 sharedSearchProperties.SelectPropertyByPlan(lease.SearchProperties.PlanNumber);
-                sharedSearchProperties.SelectFirstOption();
+                sharedSearchProperties.SelectFirstOptionFromSearch();
             }
 
             //Search for a property by Address
             if (lease.SearchProperties.Address != "")
             {
                 sharedSearchProperties.SelectPropertyByAddress(lease.SearchProperties.Address);
-                sharedSearchProperties.SelectFirstOption();
+                sharedSearchProperties.SelectFirstOptionFromSearch();
             }
 
             //Search for a property by Legal Description
             if (lease.SearchProperties.LegalDescription != "")
             {
                 sharedSearchProperties.SelectPropertyByLegalDescription(lease.SearchProperties.LegalDescription);
-                sharedSearchProperties.SelectFirstOption();
+                sharedSearchProperties.SelectFirstOptionFromSearch();
             }
 
             //Search for a duplicate property
             if (lease.SearchProperties.PID != "")
             {
                 sharedSearchProperties.SelectPropertyByPID(lease.SearchProperties.PID);
-                sharedSearchProperties.SelectFirstOption();
+                sharedSearchProperties.SelectFirstOptionFromSearch();
             }
 
             //Save the new license details
@@ -153,8 +153,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Verify Properties section
             sharedSearchProperties.VerifyLocateOnMapFeature();
 
-            //Delete 1st property
-            sharedSearchProperties.DeleteProperty();
+            //Delete last property
+            sharedSearchProperties.DeleteLastPropertyFromFile();
 
             //Save the new license details
             leaseDetails.SaveLicense();
@@ -725,7 +725,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             lease.LISNumber = ExcelDataContext.ReadData(rowNumber, "LISNumber");
             lease.PSNumber = ExcelDataContext.ReadData(rowNumber, "PSNumber");
             lease.LeaseNotes = ExcelDataContext.ReadData(rowNumber, "LeaseNotes");
-            lease.SearchPropertiesIndex = int.Parse(ExcelDataContext.ReadData(rowNumber, "SearchPropertiesIndex"));
+            lease.SearchPropertiesIndex = int.Parse(ExcelDataContext.ReadData(rowNumber, "LeaseSearchPropertiesIndex"));
 
             if (lease.SearchPropertiesIndex > 0)
             {

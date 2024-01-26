@@ -1,11 +1,9 @@
-﻿
+﻿using OpenQA.Selenium;
 
-using OpenQA.Selenium;
-using PIMS.Tests.Automation.Classes;
 
 namespace PIMS.Tests.Automation.PageObjects
 {
-    public class SharedSearchProperties : PageObjectBase
+    public class SharedFileProperties : PageObjectBase
     {
         //Search Properties Section Elements
         private By searchSectionTitle = By.XPath("//div[contains(text(),'Properties to include in this file')]");
@@ -61,9 +59,16 @@ namespace PIMS.Tests.Automation.PageObjects
         private By searchPropertiesSelectedDescriptiveNameHeader = By.XPath("//div[@class='collapse show']/div/div[contains(text(),'Provide a descriptive name for this land')]");
         private By searchPropertiesSelectedToolTipIcon = By.CssSelector("span[data-testid='tooltip-icon-property-selector-tooltip']");
         private By searchPropertiesSelectedDefault = By.XPath("//span[contains(text(),'No Properties selected')]");
-        private By searchPropertiesSelectedPropertiesTotal = By.CssSelector("div[class='align-items-center mb-3 no-gutters row']");
-        private By searchPropertiesName1stPropInput = By.Id("input-properties.0.name");
-        private By searchPropertiesDelete1stPropBttn = By.XPath("(//span[contains(text(),'Remove')]/parent::div/parent::button)[1]");
+        private By searchPropertiesPropertiesInFileTotal = By.CssSelector("div[class='align-items-center mb-3 no-gutters row']");
+
+        //File - Edit Properties button
+        private By fileEditPropertiesBttn = By.CssSelector("button[title='Change properties']");
+
+        //File - Properties Elements
+        private By acquisitionProperty1stPropLink = By.CssSelector("div[data-testid='menu-item-row-1'] div:nth-child(3)");
+
+        //File Confirmation Modal Elements
+        private By propertiesFileConfirmationModal = By.CssSelector("div[class='modal-content']");
 
         //Toast Element
         private By duplicatePropToast = By.CssSelector("div[id='duplicate-property'] div[class='Toastify__toast-body']");
@@ -73,8 +78,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         private SharedModals sharedModals;
 
-
-        public SharedSearchProperties(IWebDriver webDriver) : base(webDriver)
+        public SharedFileProperties(IWebDriver webDriver) : base(webDriver)
         {
             sharedModals = new SharedModals(webDriver);
         }
@@ -162,36 +166,13 @@ namespace PIMS.Tests.Automation.PageObjects
             FocusAndClick(searchByButton);
         }
 
-        public void AddNameSelectedProperty(string name)
+        public void AddNameSelectedProperty(string name, int index)
         {
-            WaitUntilVisible(searchPropertiesName1stPropInput);
-            webDriver.FindElement(searchPropertiesName1stPropInput).SendKeys(name);
+            WaitUntilVisible(By.Id("input-properties."+ index +".name"));
+            webDriver.FindElement(By.Id("input-properties."+ index +".name")).SendKeys(name);
         }
 
-        public void DeleteProperty()
-        {
-            Wait(2000);
-            var PropertiesTotal = webDriver.FindElements(searchPropertiesSelectedPropertiesTotal).Count();
-
-            WaitUntilSpinnerDisappear();
-            webDriver.FindElement(searchPropertiesDelete1stPropBttn).Click();
-
-            Wait(2000);
-            if (webDriver.FindElements(searchPropertiesModal).Count > 0)
-            {
-                Assert.True(sharedModals.ModalHeader() == "Removing Property from form");
-                Assert.True(sharedModals.ModalContent() == "Are you sure you want to remove this property from this lease/license?");
-
-                sharedModals.ModalClickOKBttn();
-            }
-
-            Wait(2000);
-            var PropertiesLeft = webDriver.FindElements(searchPropertiesSelectedPropertiesTotal).Count();
-
-            Assert.True(PropertiesTotal - PropertiesLeft == 1);
-        }
-
-        public void SelectFirstOption()
+        public void SelectFirstOptionFromSearch()
         {
             Wait(2000);
             FocusAndClick(searchProperties1stResultPropCheckbox);
@@ -215,7 +196,7 @@ namespace PIMS.Tests.Automation.PageObjects
             }
         }
 
-        public string noRowsResultsMessage()
+        public string noRowsResultsMessageFromSearch()
         {
             WaitUntilDisappear(tableLoadingSpinner);
             return webDriver.FindElement(searchPropertiesNoRowsResult).Text;
@@ -274,6 +255,70 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(searchPropResultsAddressHeader);
             //AssertTrueIsDisplayed(searchPropResultsLegalDescriptHeader);
         }
-        
+
+        public void NavigateToAddPropertiesToFile()
+        {
+            WaitUntilVisible(fileEditPropertiesBttn);
+            webDriver.FindElement(fileEditPropertiesBttn).Click();
+        }
+
+        public void SelectFirstPropertyOptionFromFile()
+        {
+            WaitUntilClickable(acquisitionProperty1stPropLink);
+            webDriver.FindElement(acquisitionProperty1stPropLink).Click();
+        }
+
+        public void SelectNthPropertyOptionFromFile(int index)
+        {
+            var elementOrder = index++;
+            By chosenProperty = By.CssSelector("div[data-testid='menu-item-row-"+ elementOrder +"'] div:nth-child(3)");
+
+            WaitUntilClickable(chosenProperty);
+            webDriver.FindElement(chosenProperty).Click();
+        }
+
+        public void DeleteLastPropertyFromFile()
+        {
+            Wait();
+            var propertyIndex = webDriver.FindElements(searchPropertiesPropertiesInFileTotal).Count();
+
+            WaitUntilClickable(By.XPath("//h2/div/div[contains(text(),'Selected properties')]/parent::div/parent::h2/following-sibling::div/div["+ propertyIndex +"]/div[3]/button"));
+            webDriver.FindElement(By.XPath("//h2/div/div[contains(text(),'Selected properties')]/parent::div/parent::h2/following-sibling::div/div["+ propertyIndex +"]/div[3]/button")).Click();
+
+            Wait(2000);
+            if (webDriver.FindElements(searchPropertiesModal).Count > 0)
+            {
+                Assert.True(sharedModals.ModalHeader() == "Removing Property from form");
+                Assert.True(sharedModals.ModalContent() == "Are you sure you want to remove this property from this lease/license?");
+
+                sharedModals.ModalClickOKBttn();
+            }
+
+            Wait();
+            var propertiesAfterRemove = webDriver.FindElements(searchPropertiesPropertiesInFileTotal).Count();
+            Assert.True(propertiesAfterRemove == propertyIndex - 1);
+
+        }
+
+        public void SaveFileProperties()
+        {
+            Wait();
+            ButtonElement("Save");
+
+            Assert.Equal("Confirm changes", sharedModals.ModalHeader());
+            Assert.Equal("You have made changes to the properties in this file.", sharedModals.ConfirmationModalText1());
+            Assert.Equal("Do you want to save these changes?", sharedModals.ConfirmationModalText2());
+
+            sharedModals.ModalClickOKBttn();
+
+            Wait();
+            if (webDriver.FindElements(propertiesFileConfirmationModal).Count() > 1)
+            {
+                Assert.Equal("User Override Required", sharedModals.SecondaryModalHeader());
+                Assert.Contains("The selected property already exists in the system's inventory. However, the record is missing spatial details.", sharedModals.SecondaryModalContent());
+                Assert.Contains("To add the property, the spatial details for this property will need to be updated. The system will attempt to update the property record with spatial information from the current selection.", sharedModals.SecondaryModalContent());
+                sharedModals.SecondaryModalClickOKBttn();
+            }
+        }
     }
 }
