@@ -150,6 +150,47 @@ namespace Pims.Api.Test.Controllers
         }
 
         /// <summary>
+        /// Make a successful request to POST a disposition file Sale to the Disposition File.
+        /// </summary>
+        [Fact]
+        public void AddDispositionFileSale_Success()
+        {
+            // Arrange
+            var dispFileSale = new PimsDispositionSale();
+            dispFileSale.DispositionFileId = 1;
+
+            this._service.Setup(m => m.AddDispositionFileSale(It.IsAny<PimsDispositionSale>())).Returns(dispFileSale);
+
+            // Act
+            var model = _mapper.Map<DispositionFileSaleModel>(dispFileSale);
+            var result = this._controller.AddDispositionFileSale(1, model);
+
+            // Assert
+            this._service.Verify(m => m.AddDispositionFileSale(It.IsAny<PimsDispositionSale>()), Times.Once());
+        }
+
+        /// <summary>
+        /// Make a successful request to PUT a disposition file Sale.
+        /// </summary>
+        [Fact]
+        public void UpdateDispositionFileSale_Success()
+        {
+            // Arrange
+            var dispFileSale = new PimsDispositionSale();
+            dispFileSale.DispositionFileId = 1;
+            dispFileSale.DispositionSaleId = 10;
+
+            this._service.Setup(m => m.UpdateDispositionFileSale(It.IsAny<PimsDispositionSale>())).Returns(dispFileSale);
+
+            // Act
+            var model = _mapper.Map<DispositionFileSaleModel>(dispFileSale);
+            var result = this._controller.UpdateDispositionFileSale(1, 10, model);
+
+            // Assert
+            this._service.Verify(m => m.UpdateDispositionFileSale(It.IsAny<PimsDispositionSale>()), Times.Once());
+        }
+        
+        /// <summary>
         /// Get All Offers by Disposition File's Id.
         /// </summary>
         [Fact]

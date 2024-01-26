@@ -30,6 +30,10 @@ namespace Pims.Dal.Repositories
 
         PimsDispositionSale GetDispositionFileSale(long dispositionId);
 
+        PimsDispositionSale AddDispositionFileSale(PimsDispositionSale dispositionSale);
+
+        PimsDispositionSale UpdateDispositionFileSale(PimsDispositionSale dispositionSale);
+
         PimsDispositionAppraisal GetDispositionFileAppraisal(long dispositionId);
 
         PimsDispositionAppraisal AddDispositionFileAppraisal(PimsDispositionAppraisal dispositionAppraisal);

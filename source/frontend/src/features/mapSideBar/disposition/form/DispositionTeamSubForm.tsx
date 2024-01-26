@@ -78,7 +78,7 @@ const DispositionTeamSubForm: React.FunctionComponent<
                 </Col>
               </Row>
               {teamMember.contact?.organizationId && !teamMember.contact?.personId && (
-                <SectionField label="Primary contact" labelWidth="5" noGutters>
+                <SectionField label="Primary contact" labelWidth="6" noGutters>
                   <PrimaryContactSelector
                     field={`team.${index}.primaryContactId`}
                     contactInfo={teamMember?.contact}
