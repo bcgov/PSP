@@ -246,9 +246,9 @@ namespace Pims.Api.Services
             return _dispositionFileRepository.GetDispositionFileSale(dispositionFileId);
         }
 
-        public PimsDispositionSale UpdateDispositionFileSale(long dispositionFileId, long saleId, PimsDispositionSale dispositionSale)
+        public PimsDispositionSale UpdateDispositionFileSale(PimsDispositionSale dispositionSale)
         {
-            _logger.LogInformation("Updating disposition file Sale with DispositionFileId: {id}", dispositionFileId);
+            _logger.LogInformation("Updating disposition file Sale with DispositionFileId: {id}", dispositionSale.DispositionSaleId);
             _user.ThrowIfNotAuthorized(Permissions.DispositionEdit);
 
             var updatedSale = _dispositionFileRepository.UpdateDispositionFileSale(dispositionSale);
@@ -257,12 +257,12 @@ namespace Pims.Api.Services
             return updatedSale;
         }
 
-        public PimsDispositionSale AddDispositionFileSale(long dispositionFileId, PimsDispositionSale dispositionSale)
+        public PimsDispositionSale AddDispositionFileSale(PimsDispositionSale dispositionSale)
         {
-            _logger.LogInformation("Adding disposition file Sale to Disposition File with Id: {id}", dispositionFileId);
+            _logger.LogInformation("Adding disposition file Sale to Disposition File with Id: {id}", dispositionSale.DispositionFileId);
             _user.ThrowIfNotAuthorized(Permissions.DispositionEdit);
 
-            var dispositionFileParent = _dispositionFileRepository.GetById(dispositionFileId);
+            var dispositionFileParent = _dispositionFileRepository.GetById(dispositionSale.DispositionFileId);
             if (dispositionFileParent.PimsDispositionSales.Count > 0)
             {
                 throw new DuplicateEntityException("Invalid Disposition Sale. A Sale has been already created for this Disposition File");

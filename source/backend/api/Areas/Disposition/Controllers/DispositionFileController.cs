@@ -372,7 +372,7 @@ namespace Pims.Api.Areas.Disposition.Controllers
                 }
 
                 var dispositionSaleEntity = _mapper.Map<Dal.Entities.PimsDispositionSale>(dispositionFileSale);
-                var newDispositionSale = _dispositionService.AddDispositionFileSale(id, dispositionSaleEntity);
+                var newDispositionSale = _dispositionService.AddDispositionFileSale(dispositionSaleEntity);
 
                 return new JsonResult(_mapper.Map<DispositionFileSaleModel>(newDispositionSale));
             }
@@ -405,7 +405,7 @@ namespace Pims.Api.Areas.Disposition.Controllers
             }
 
             var dispositionSaleEntity = _mapper.Map<Dal.Entities.PimsDispositionSale>(dispositionFileSale);
-            var updatedSale = _dispositionService.UpdateDispositionFileSale(id, saleId, dispositionSaleEntity);
+            var updatedSale = _dispositionService.UpdateDispositionFileSale(dispositionSaleEntity);
 
             return new JsonResult(_mapper.Map<DispositionFileSaleModel>(updatedSale));
         }

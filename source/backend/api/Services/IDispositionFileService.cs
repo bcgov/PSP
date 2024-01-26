@@ -33,9 +33,9 @@ namespace Pims.Api.Services
 
         PimsDispositionSale GetDispositionFileSale(long dispositionFileId);
 
-        PimsDispositionSale AddDispositionFileSale(long dispositionFileId, PimsDispositionSale dispositionSale);
+        PimsDispositionSale AddDispositionFileSale(PimsDispositionSale dispositionSale);
 
-        PimsDispositionSale UpdateDispositionFileSale(long dispositionFileId, long saleId, PimsDispositionSale dispositionSale);
+        PimsDispositionSale UpdateDispositionFileSale(PimsDispositionSale dispositionSale);
 
         PimsDispositionAppraisal GetDispositionFileAppraisal(long dispositionFileId);
 

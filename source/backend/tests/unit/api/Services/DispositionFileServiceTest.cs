@@ -1471,7 +1471,7 @@ namespace Pims.Api.Test.Services
             var service = this.CreateDispositionServiceWithPermissions();
 
             // Act
-            Action act = () => service.AddDispositionFileSale(1, new()
+            Action act = () => service.AddDispositionFileSale(new()
             {
                 DispositionFileId = 1,
                 DispositionSaleId = 1,
@@ -1501,7 +1501,7 @@ namespace Pims.Api.Test.Services
             });
 
             // Act
-            Action act = () => service.AddDispositionFileSale(1, new()
+            Action act = () => service.AddDispositionFileSale(new()
             {
                 DispositionFileId = 1,
             });
@@ -1529,7 +1529,7 @@ namespace Pims.Api.Test.Services
             });
 
             // Act
-            var result = service.AddDispositionFileSale(1, new()
+            var result = service.AddDispositionFileSale(new()
             {
                 DispositionFileId = 1,
                 DispositionSaleId = 0,
@@ -1547,7 +1547,7 @@ namespace Pims.Api.Test.Services
             var service = this.CreateDispositionServiceWithPermissions();
 
             // Act
-            Action act = () => service.UpdateDispositionFileSale(1, 10, new()
+            Action act = () => service.UpdateDispositionFileSale(new()
             {
                 DispositionFileId = 1,
                 DispositionSaleId = 10,
@@ -1582,7 +1582,7 @@ namespace Pims.Api.Test.Services
             });
 
             // Act
-            var result = service.UpdateDispositionFileSale(1, 10, new()
+            var result = service.UpdateDispositionFileSale(new()
             {
                 DispositionFileId = 1,
                 DispositionSaleId = 10,
