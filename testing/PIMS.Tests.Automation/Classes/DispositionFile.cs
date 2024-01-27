@@ -32,4 +32,18 @@ namespace PIMS.Tests.Automation.Classes
 
 
     }
+    public class DispositionOfferAndSale
+    {
+        public string AppraisalAndAssessmentAppraisalValue { get; set; } = String.Empty;
+        public string? AppraisalAndAssessmentAppraisalDate { get; set; } = String.Empty;
+        public string AppraisalAndAssessmentBcAssessmentValue { get; set; } = String.Empty;
+        public string? AppraisalAndAssessmentBcAssessmentRollYear { get; set; } = String.Empty;
+        public string? AppraisalAndAssessmentListPrice { get; set; } = String.Empty;
+        public string? OfferOfferStatus { get; set; } = String.Empty;
+        public string? OfferOfferName{ get; set; } = null!;
+        public string? OfferOfferDate { get; set; } = null!;
+        public string? OfferOfferExpiryDate { get; set; } = String.Empty;
+        public string? OfferPrice { get; set; } = null!;
+        public string? OfferNotes { get; set; } = String.Empty;
+    }
 }
