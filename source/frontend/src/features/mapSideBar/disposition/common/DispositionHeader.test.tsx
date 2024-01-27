@@ -1,13 +1,11 @@
-import axios from 'axios';
-import MockAdapter from 'axios-mock-adapter';
-
 import { mockDispositionFileResponse } from '@/mocks/dispositionFiles.mock';
+import { rest, server } from '@/mocks/msw/server';
+import { getUserMock } from '@/mocks/user.mock';
+import { Api_DispositionFile } from '@/models/api/DispositionFile';
 import { prettyFormatUTCDate } from '@/utils/dateUtils';
 import { render, RenderOptions } from '@/utils/test-utils';
 
 import DispositionHeader, { IDispositionHeaderProps } from './DispositionHeader';
-
-const mockAxios = new MockAdapter(axios);
 
 describe('DispositionHeader component', () => {
   // render component under test
@@ -26,11 +24,14 @@ describe('DispositionHeader component', () => {
   };
 
   beforeEach(() => {
-    mockAxios.onGet(new RegExp('users/info/*')).reply(200, {});
+    server.use(
+      rest.get('/api/users/info/*', (req, res, ctx) =>
+        res(ctx.delay(500), ctx.status(200), ctx.json(getUserMock())),
+      ),
+    );
   });
 
   afterEach(() => {
-    mockAxios.reset();
     jest.clearAllMocks();
   });
 
@@ -39,7 +40,7 @@ describe('DispositionHeader component', () => {
     expect(asFragment()).toMatchSnapshot();
   });
 
-  it('renders as expected when an acquisition file is provided', async () => {
+  it('renders as expected when a disposition file is provided', async () => {
     const testDispositionFile = mockDispositionFileResponse();
     const { getByText } = setup({
       dispositionFile: testDispositionFile,
@@ -51,7 +52,7 @@ describe('DispositionHeader component', () => {
       },
     });
 
-    expect(getByText(/FILE_NUMBER 3A8F46B/g)).toBeVisible();
+    expect(getByText(/FILE_NUMBER 3A8F46B/)).toBeVisible();
     expect(getByText(prettyFormatUTCDate(testDispositionFile.appCreateTimestamp))).toBeVisible();
     expect(
       getByText(prettyFormatUTCDate(testDispositionFile.appLastUpdateTimestamp)),
@@ -63,7 +64,7 @@ describe('DispositionHeader component', () => {
     const { getByText } = setup({ dispositionFile: testDispositionFile, lastUpdatedBy: null });
 
     expect(getByText('File:')).toBeVisible();
-    expect(getByText(/FILE_NUMBER 3A8F46B/g)).toBeVisible();
+    expect(getByText(/FILE_NUMBER 3A8F46B/)).toBeVisible();
   });
 
   it('renders the last-update-time when provided', async () => {
@@ -79,8 +80,19 @@ describe('DispositionHeader component', () => {
       },
     });
 
-    expect(getByText(/FILE_NUMBER 3A8F46B/g)).toBeVisible();
+    expect(getByText(/FILE_NUMBER 3A8F46B/)).toBeVisible();
     expect(getByText(prettyFormatUTCDate(testDispositionFile.appCreateTimestamp))).toBeVisible();
     expect(getByText(prettyFormatUTCDate(testDate))).toBeVisible();
+  });
+
+  it('renders the file status when provided', async () => {
+    const testDispositionFile: Api_DispositionFile = {
+      ...mockDispositionFileResponse(),
+      fileStatusTypeCode: { id: 'TEST', description: 'mock file status' },
+    };
+    const { getByText } = setup({ dispositionFile: testDispositionFile, lastUpdatedBy: null });
+
+    expect(getByText('Status:')).toBeVisible();
+    expect(getByText(/mock file status/i)).toBeVisible();
   });
 });

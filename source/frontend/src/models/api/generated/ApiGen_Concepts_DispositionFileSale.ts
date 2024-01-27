@@ -20,11 +20,9 @@ export interface ApiGen_Concepts_DispositionFileSale extends ApiGen_Base_BaseCon
   gstCollectedAmount: number | null;
   netBookAmount: number | null;
   totalCostAmount: number | null;
-  netProceedsBeforeSppAmount: number | null;
-  netProceedsAfterSppAmount: number | null;
   sppAmount: number | null;
   remediationAmount: number | null;
   dispositionPurchasers: ApiGen_Concepts_DispositionSalePurchaser[] | null;
-  dispositionPurchaserAgents: ApiGen_Concepts_DispositionSalePurchaserAgent[] | null;
-  dispositionPurchaserSolicitors: ApiGen_Concepts_DispositionSalePurchaserSolicitor[] | null;
+  dispositionPurchaserAgent: ApiGen_Concepts_DispositionSalePurchaserAgent | null;
+  dispositionPurchaserSolicitor: ApiGen_Concepts_DispositionSalePurchaserSolicitor | null;
 }
