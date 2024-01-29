@@ -159,7 +159,7 @@ describe('DispositionContainer component', () => {
     expect(history.location.pathname).toBe('/property/1');
     const params = new URLSearchParams(history.location.search);
     expect(params.has('edit')).toBe(true);
-    const warning = getByText('Unsaved Changes');
+    const warning = getByText(/Confirm Changes/i);
     expect(warning).toBeVisible();
   });
 
