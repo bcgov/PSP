@@ -22,12 +22,12 @@ namespace Pims.Core.Extensions
             }
         }
 
-        public static void ThrowInvalidAccessToDispositionFile(this ClaimsPrincipal principal, IUserRepository userRepository, IDispositionFileRepository dispositionFileRepository, long dispostionFileId)
+        public static void ThrowInvalidAccessToDispositionFile(this ClaimsPrincipal principal, IUserRepository userRepository, IDispositionFileRepository dispositionFileRepository, long dispositionFileId)
         {
             ArgumentNullException.ThrowIfNull(principal);
 
             var pimsUser = userRepository.GetUserInfoByKeycloakUserId(principal.GetUserKey());
-            PimsDispositionFile dispostionFile = dispositionFileRepository.GetById(dispostionFileId);
+            PimsDispositionFile dispostionFile = dispositionFileRepository.GetById(dispositionFileId);
 
             if (pimsUser?.IsContractor == true && !dispostionFile.PimsDispositionFileTeams.Any(x => x.PersonId == pimsUser.PersonId))
             {
