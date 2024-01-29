@@ -38,10 +38,11 @@ export const ContactTypeSelector: React.FunctionComponent<
 
 const StyledInlineFlex = styled(InlineFlexDiv)`
   gap: 5rem;
-  background-color: ${props => props.theme.css.filterBackgroundColor};
-  padding: 0.5rem 3rem;
+  background-color: white;
   border-radius: 0.5rem;
-  margin-right: 2.5rem;
+  margin: 1.5rem;
+  margin-right: 3rem;
+  padding: 1.5rem;
   .form-check {
     display: flex;
     align-items: center;

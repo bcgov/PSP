@@ -70,59 +70,58 @@ export const useApiUserOverride = <
   );
 
   useEffect(() => {
-    if (
-      state?.userOverrideCode &&
-      state.userOverrideCode !== UserOverrideCode.CONTRACTOR_SELFREMOVED
-    ) {
-      setModalContent({
-        variant: 'warning',
-        title: 'User Override Required',
-        message: state?.message,
-        handleOk: async () => {
-          if (state?.userOverrideCode && overridenApiFunction.current) {
-            setState({
-              ...state,
-              previousUserOverrideCodes: [
-                ...state.previousUserOverrideCodes,
-                state?.userOverrideCode,
-              ],
-            });
-            await apiCallWithOverride(overridenApiFunction.current, [
-              ...state.previousUserOverrideCodes,
-              state?.userOverrideCode,
-            ]);
-          }
-        },
-        handleCancel: () => {
-          setState({
-            previousUserOverrideCodes: [...state.previousUserOverrideCodes],
-            userOverrideCode: null,
-            message: null,
+    if (state?.userOverrideCode) {
+      switch (state.userOverrideCode) {
+        case UserOverrideCode.CONTRACTOR_SELFREMOVED:
+          setModalContent({
+            title: 'Note',
+            variant: 'info',
+            message: RemoveSelfContractorContent(),
+            handleOk: async () => {
+              setState({
+                previousUserOverrideCodes: [...state.previousUserOverrideCodes],
+                userOverrideCode: null,
+                message: null,
+              });
+              setDisplayModal(false);
+            },
+            okButtonText: 'Close',
           });
-          setDisplayModal(false);
-        },
-        okButtonText: 'Acknowledge & Continue',
-        okButtonVariant: 'warning',
-        cancelButtonText: 'Cancel Update',
-      });
-    } else if (
-      state?.userOverrideCode &&
-      state.userOverrideCode === UserOverrideCode.CONTRACTOR_SELFREMOVED
-    ) {
-      setModalContent({
-        title: 'Note',
-        variant: 'info',
-        message: RemoveSelfContractorContent(),
-        handleOk: async () => {
-          setState({
-            previousUserOverrideCodes: [...state.previousUserOverrideCodes],
-            userOverrideCode: null,
-            message: null,
+          break;
+        default: {
+          setModalContent({
+            variant: 'warning',
+            title: 'User Override Required',
+            message: state?.message,
+            handleOk: async () => {
+              if (state?.userOverrideCode && overridenApiFunction.current) {
+                setState({
+                  ...state,
+                  previousUserOverrideCodes: [
+                    ...state.previousUserOverrideCodes,
+                    state?.userOverrideCode,
+                  ],
+                });
+                await apiCallWithOverride(overridenApiFunction.current, [
+                  ...state.previousUserOverrideCodes,
+                  state?.userOverrideCode,
+                ]);
+              }
+            },
+            handleCancel: () => {
+              setState({
+                previousUserOverrideCodes: [...state.previousUserOverrideCodes],
+                userOverrideCode: null,
+                message: null,
+              });
+              setDisplayModal(false);
+            },
+            okButtonText: 'Yes',
+            okButtonVariant: 'warning',
+            cancelButtonText: 'No',
           });
-          setDisplayModal(false);
-        },
-        okButtonText: 'Close',
-      });
+        }
+      }
     }
   }, [
     apiCallWithOverride,

@@ -423,6 +423,21 @@ namespace Pims.Dal.Repositories
             return Context.PimsDispositionOfferStatusTypes.AsNoTracking().ToArray();
         }
 
+        public IEnumerable<PimsDspChklstItemStatusType> GetAllDispositionChecklistItemStatusTypes()
+        {
+            return Context.PimsDspChklstItemStatusTypes.AsNoTracking().ToArray();
+        }
+
+        public IEnumerable<PimsDspChklstItemType> GetAllDispositionChecklistItemTypes()
+        {
+            return Context.PimsDspChklstItemTypes.AsNoTracking().ToArray();
+        }
+
+        public IEnumerable<PimsDspChklstSectionType> GetAllDispositionChecklistSectionTypes()
+        {
+            return Context.PimsDspChklstSectionTypes.AsNoTracking().ToArray();
+        }
+
         #endregion
     }
 }

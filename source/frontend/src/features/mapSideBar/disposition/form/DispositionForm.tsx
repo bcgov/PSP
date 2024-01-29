@@ -1,4 +1,4 @@
-import { Formik, FormikProps } from 'formik';
+import { Formik, FormikHelpers, FormikProps } from 'formik';
 import React from 'react';
 import styled from 'styled-components';
 
@@ -10,7 +10,6 @@ import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import * as API from '@/constants/API';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
-import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 
 import { AddDispositionFormYupSchema } from '../models/AddDispositionFormYupSchema';
 import { DispositionFormModel } from '../models/DispositionFormModel';
@@ -21,8 +20,7 @@ export interface IDispositionFormProps {
   initialValues: DispositionFormModel;
   onSubmit: (
     values: DispositionFormModel,
-    setSubmitting: (isSubmitting: boolean) => void,
-    userOverrides: UserOverrideCode[],
+    formikHelpers: FormikHelpers<DispositionFormModel>,
   ) => void | Promise<any>;
 }
 
@@ -50,9 +48,7 @@ const DispositionForm = React.forwardRef<FormikProps<DispositionFormModel>, IDis
         innerRef={ref}
         initialValues={initialValues}
         validationSchema={AddDispositionFormYupSchema}
-        onSubmit={async (values, formikHelpers) => {
-          onSubmit(values, formikHelpers.setSubmitting, []);
-        }}
+        onSubmit={onSubmit}
       >
         {formikProps => {
           return (

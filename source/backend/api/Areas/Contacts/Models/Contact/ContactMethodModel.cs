@@ -22,7 +22,7 @@ namespace Pims.Api.Areas.Contact.Models.Contact
         /// <summary>
         /// get/set - The contact method type.
         /// </summary>
-        public TypeModel<string> ContactMethodType { get; set; }
+        public CodeTypeModel<string> ContactMethodType { get; set; }
 
         /// <summary>
         /// get/set - The contact method value.

@@ -13,7 +13,7 @@ import {
 } from '@/interfaces/editable-contact';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { act, fillInput, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
+import { act, fillInput, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import UpdatePersonForm from './UpdatePersonForm';
 
@@ -128,8 +128,7 @@ describe('UpdatePersonForm', () => {
 
   it('renders as expected', async () => {
     const { asFragment } = setup();
-    const fragment = await waitFor(() => asFragment());
-    expect(fragment).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it('renders 2 address lines if provided', async () => {
@@ -158,8 +157,8 @@ describe('UpdatePersonForm', () => {
     it('should cancel the form and navigate to Contacts Details view', async () => {
       const { getCancelButton } = setup();
       const cancel = getCancelButton();
-      act(() => userEvent.click(cancel));
-      await act(async () => expect(history.location.pathname).toBe(`/contact/P${mockPerson.id}`));
+      await act(async () => userEvent.click(cancel));
+      expect(history.location.pathname).toBe(`/contact/P${mockPerson.id}`);
     });
   });
 

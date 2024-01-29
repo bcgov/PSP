@@ -7,9 +7,9 @@ using Microsoft.Extensions.Logging;
 using NetTopologySuite.Geometries;
 using Pims.Api.Constants;
 using Pims.Api.Helpers.Exceptions;
+using Pims.Api.Models.CodeTypes;
 using Pims.Api.Models.Concepts.Property;
 using Pims.Core.Extensions;
-using Pims.Dal.Constants;
 using Pims.Dal.Entities;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Helpers;
@@ -280,7 +280,7 @@ namespace Pims.Api.Services
             return success;
         }
 
-        public PimsProperty PopulateNewProperty(PimsProperty property)
+        public PimsProperty PopulateNewProperty(PimsProperty property, bool isOwned = false, bool isPropertyOfInterest = true)
         {
             property.PropertyClassificationTypeCode = "UNKNOWN";
             property.PropertyDataSourceEffectiveDate = DateOnly.FromDateTime(System.DateTime.Now);
@@ -291,7 +291,8 @@ namespace Pims.Api.Services
             property.PropertyStatusTypeCode = "UNKNOWN";
             property.SurplusDeclarationTypeCode = "UNKNOWN";
 
-            property.IsPropertyOfInterest = true;
+            property.IsPropertyOfInterest = isPropertyOfInterest;
+            property.IsOwned = isOwned;
 
             if (property.Address != null)
             {

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Pims.Api.Models.Base;
 
-namespace Pims.Api.Models.Models.Concepts.DispositionFile
+namespace Pims.Api.Models.Concepts.DispositionFile
 {
     public class DispositionFileSaleModel : BaseConcurrentModel
     {
@@ -62,16 +62,6 @@ namespace Pims.Api.Models.Models.Concepts.DispositionFile
         public decimal? TotalCostAmount { get; set; }
 
         /// <summary>
-        /// Disposition Sale Net Proceeds Before Spp Amount.
-        /// </summary>
-        public decimal? NetProceedsBeforeSppAmount { get; set; }
-
-        /// <summary>
-        /// Disposition Sale Net Proceeds After Spp Amount.
-        /// </summary>
-        public decimal? NetProceedsAfterSppAmount { get; set; }
-
-        /// <summary>
         /// Disposition Sale Spp Amount.
         /// </summary>
         public decimal? SppAmount { get; set; }
@@ -87,13 +77,13 @@ namespace Pims.Api.Models.Models.Concepts.DispositionFile
         public IList<DispositionSalePurchaserModel> DispositionPurchasers { get; set; }
 
         /// <summary>
-        /// get/set - A list of disposition Sale Purchaser(s) Agents.
+        /// get/set - Disposition Sale Purchaser(s)'s Agents.
         /// </summary>
-        public IList<DispositionSalePurchaserAgentModel> DispositionPurchaserAgents { get; set; }
+        public DispositionSalePurchaserAgentModel DispositionPurchaserAgent { get; set; }
 
         /// <summary>
-        /// get/set - A list of disposition Sale Purchaser(s) Solicitors.
+        /// get/set - Disposition Sale Purchase Solicitor.
         /// </summary>
-        public IList<DispositionSalePurchaserSolicitorModel> DispositionPurchaserSolicitors { get; set; }
+        public DispositionSalePurchaserSolicitorModel DispositionPurchaserSolicitor { get; set; }
     }
 }

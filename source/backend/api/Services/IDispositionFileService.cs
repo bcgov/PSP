@@ -13,6 +13,8 @@ namespace Pims.Api.Services
 
         PimsDispositionFile Add(PimsDispositionFile dispositionFile, IEnumerable<UserOverrideCode> userOverrides);
 
+        PimsDispositionFile Update(long id, PimsDispositionFile dispositionFile, IEnumerable<UserOverrideCode> userOverrides);
+
         LastUpdatedByModel GetLastUpdateInformation(long dispositionFileId);
 
         IEnumerable<PimsDispositionFileProperty> GetProperties(long id);
@@ -30,5 +32,21 @@ namespace Pims.Api.Services
         bool DeleteDispositionFileOffer(long dispositionFileId, long offerId);
 
         PimsDispositionSale GetDispositionFileSale(long dispositionFileId);
+
+        PimsDispositionSale AddDispositionFileSale(PimsDispositionSale dispositionSale);
+
+        PimsDispositionSale UpdateDispositionFileSale(PimsDispositionSale dispositionSale);
+
+        PimsDispositionAppraisal GetDispositionFileAppraisal(long dispositionFileId);
+
+        PimsDispositionAppraisal AddDispositionFileAppraisal(long dispositionFileId, PimsDispositionAppraisal dispositionAppraisal);
+
+        PimsDispositionAppraisal UpdateDispositionFileAppraisal(long dispositionFileId, long appraisalId, PimsDispositionAppraisal dispositionAppraisal);
+
+        IEnumerable<PimsDispositionChecklistItem> GetChecklistItems(long id);
+
+        List<DispositionFileExportModel> GetDispositionFileExport(DispositionFilter filter);
+
+        PimsDispositionFile UpdateChecklistItems(PimsDispositionFile dispositionFile);
     }
 }

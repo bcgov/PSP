@@ -6,11 +6,13 @@ namespace Pims.Dal.Repositories
 {
     public interface IDispositionFileRepository : IRepository
     {
-        Paged<PimsDispositionFile> GetPageDeep(DispositionFilter filter);
+        Paged<PimsDispositionFile> GetPageDeep(DispositionFilter filter, long? contractorPersonId = null);
 
         PimsDispositionFile GetById(long id);
 
         PimsDispositionFile Add(PimsDispositionFile disposition);
+
+        PimsDispositionFile Update(long dispositionFileId, PimsDispositionFile dispositionFile);
 
         LastUpdatedByModel GetLastUpdateBy(long id);
 
@@ -28,6 +30,20 @@ namespace Pims.Dal.Repositories
 
         PimsDispositionSale GetDispositionFileSale(long dispositionId);
 
+        PimsDispositionSale AddDispositionFileSale(PimsDispositionSale dispositionSale);
+
+        PimsDispositionSale UpdateDispositionFileSale(PimsDispositionSale dispositionSale);
+
+        PimsDispositionAppraisal GetDispositionFileAppraisal(long dispositionId);
+
+        PimsDispositionAppraisal AddDispositionFileAppraisal(PimsDispositionAppraisal dispositionAppraisal);
+
+        PimsDispositionAppraisal UpdateDispositionFileAppraisal(long id, PimsDispositionAppraisal dispositionAppraisal);
+
         long GetRowVersion(long id);
+
+        short GetRegion(long id);
+
+        List<PimsDispositionFile> GetDispositionFileExportDeep(DispositionFilter filter);
     }
 }

@@ -6,6 +6,7 @@ using Pims.Dal.Constants;
 using Pims.Dal.Entities;
 using Pims.Dal.Helpers;
 using Entity = Pims.Dal.Entities;
+using Pims.Api.Models.CodeTypes;
 
 namespace Pims.Core.Test
 {
@@ -44,6 +45,7 @@ namespace Pims.Core.Test
             lease.LeaseProgramTypeCode = "testProgramType";
             lease.LeasePurposeTypeCodeNavigation = pimsLeasePurposeType ?? new Entity.PimsLeasePurposeType() { Id = "testPurposeType", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "desc" };
             lease.LeasePurposeTypeCode = "testPurposeType";
+            lease.LeaseStatusTypeCode = "testStatusType";
             lease.LeaseStatusTypeCodeNavigation = pimsLeaseStatusType ?? new Entity.PimsLeaseStatusType() { Id = "testStatusType", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "desc" };
             lease.LeasePayRvblTypeCodeNavigation = pimsLeasePayRvblType ?? new Entity.PimsLeasePayRvblType() { Id = "testRvblType", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "desc" };
             lease.LeaseCategoryTypeCodeNavigation = pimsLeaseCategoryType ?? new Entity.PimsLeaseCategoryType() { Id = "testCategoryType", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "desc" };

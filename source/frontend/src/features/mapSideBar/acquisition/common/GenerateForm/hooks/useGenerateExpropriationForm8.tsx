@@ -4,7 +4,7 @@ import { showFile } from '@/features/documents/DownloadDocumentButton';
 import { useDocumentGenerationRepository } from '@/features/documents/hooks/useDocumentGenerationRepository';
 import { FormTemplateTypes } from '@/features/mapSideBar/shared/content/models';
 import { useForm8Repository } from '@/hooks/repositories/useForm8Repository';
-import { ExternalResultStatus } from '@/models/api/ExternalResult';
+import { ApiGen_CodeTypes_ExternalResponseStatus } from '@/models/api/generated/ApiGen_CodeTypes_ExternalResponseStatus';
 import { Api_GenerateExpropriationForm8 } from '@/models/generate/acquisition/GenerateExpropriationForm8';
 import { stringDate } from '@/models/layers/alcAgriculturalReserve';
 
@@ -25,7 +25,10 @@ export const useGenerateExpropriationForm8 = () => {
         convertToType: null,
       });
 
-      if (generatedFile?.status === ExternalResultStatus.Success && generatedFile?.payload) {
+      if (
+        generatedFile?.status === ApiGen_CodeTypes_ExternalResponseStatus.Success &&
+        generatedFile?.payload
+      ) {
         const fileExt = generatedFile?.payload?.fileNameExtension ?? 'docx';
         const fileName = `Form 8-${acquisitionFileNumber}-${moment().format(
           'yyyyMMDD_hhmmss',

@@ -177,13 +177,30 @@ namespace Pims.Dal.Repositories
             return lastUpdatedByAggregate.OrderByDescending(x => x.AppLastUpdateTimestamp).FirstOrDefault();
         }
 
+        public PimsDispositionFile Update(long dispositionFileId, PimsDispositionFile dispositionFile)
+        {
+            using var scope = Logger.QueryScope();
+            dispositionFile.ThrowIfNull(nameof(dispositionFile));
+
+            var existingFile = Context.PimsDispositionFiles
+                .FirstOrDefault(x => x.DispositionFileId == dispositionFileId) ?? throw new KeyNotFoundException();
+
+            dispositionFile.FileNumber = existingFile.FileNumber;
+
+            Context.Entry(existingFile).CurrentValues.SetValues(dispositionFile);
+            Context.UpdateChild<PimsDispositionFile, long, PimsDispositionFileTeam, long>(p => p.PimsDispositionFileTeams, dispositionFile.Internal_Id, dispositionFile.PimsDispositionFileTeams.ToArray());
+
+            return existingFile;
+        }
+
         /// <summary>
         /// Retrieves a page with an array of disposition files within the specified filters.
         /// Note that the 'filter' will control the 'page' and 'quantity'.
         /// </summary>
         /// <param name="filter"></param>
+        /// <param name="contractorPersonId"></param>
         /// <returns></returns>
-        public Paged<PimsDispositionFile> GetPageDeep(DispositionFilter filter)
+        public Paged<PimsDispositionFile> GetPageDeep(DispositionFilter filter, long? contractorPersonId = null)
         {
             using var scope = Logger.QueryScope();
 
@@ -193,12 +210,27 @@ namespace Pims.Dal.Repositories
                 throw new ArgumentException("Argument must have a valid filter", nameof(filter));
             }
 
-            var query = GetCommonDispositionFileQueryDeep(filter);
+            var query = GetCommonDispositionFileQueryDeep(filter, contractorPersonId);
 
             var skip = (filter.Page - 1) * filter.Quantity;
             var pageItems = query.Skip(skip).Take(filter.Quantity).ToList();
 
             return new Paged<PimsDispositionFile>(pageItems, filter.Page, filter.Quantity, query.Count());
+        }
+
+        /// <summary>
+        /// Retrieves the region of the disposition file with the specified id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>The file region.</returns>
+        public short GetRegion(long id)
+        {
+            using var scope = Logger.QueryScope();
+
+            return this.Context.PimsDispositionFiles.AsNoTracking()
+                .Where(p => p.DispositionFileId == id)?
+                .Select(p => p.RegionCode)?
+                .FirstOrDefault() ?? throw new KeyNotFoundException();
         }
 
         /// <summary>
@@ -294,12 +326,75 @@ namespace Pims.Dal.Repositories
                 .Where(x => x.DispositionFileId == dispositionId).FirstOrDefault();
         }
 
+        public PimsDispositionSale AddDispositionFileSale(PimsDispositionSale dispositionSale)
+        {
+            Context.PimsDispositionSales.Add(dispositionSale);
+
+            return dispositionSale;
+        }
+
+        public PimsDispositionSale UpdateDispositionFileSale(PimsDispositionSale dispositionSale)
+        {
+            var existingSale = Context.PimsDispositionSales
+                .FirstOrDefault(x => x.DispositionSaleId.Equals(dispositionSale.DispositionSaleId)) ?? throw new KeyNotFoundException();
+
+            Context.Entry(existingSale).CurrentValues.SetValues(dispositionSale);
+            Context.UpdateChild<PimsDispositionSale, long, PimsDispositionPurchaser, long>(p => p.PimsDispositionPurchasers, dispositionSale.Internal_Id, dispositionSale.PimsDispositionPurchasers.ToArray());
+            Context.UpdateChild<PimsDispositionSale, long, PimsDspPurchAgent, long>(p => p.PimsDspPurchAgents, dispositionSale.Internal_Id, dispositionSale.PimsDspPurchAgents.ToArray());
+            Context.UpdateChild<PimsDispositionSale, long, PimsDspPurchSolicitor, long>(p => p.PimsDspPurchSolicitors, dispositionSale.Internal_Id, dispositionSale.PimsDspPurchSolicitors.ToArray());
+
+            return existingSale;
+        }
+
+        public PimsDispositionAppraisal GetDispositionFileAppraisal(long dispositionId)
+        {
+            return Context.PimsDispositionAppraisals.AsNoTracking()
+                    .Where(x => x.DispositionFileId == dispositionId).FirstOrDefault();
+        }
+
+        public PimsDispositionAppraisal AddDispositionFileAppraisal(PimsDispositionAppraisal dispositionAppraisal)
+        {
+            Context.PimsDispositionAppraisals.Add(dispositionAppraisal);
+
+            return dispositionAppraisal;
+        }
+
+        public PimsDispositionAppraisal UpdateDispositionFileAppraisal(long id, PimsDispositionAppraisal dispositionAppraisal)
+        {
+            var existingAppraisal = Context.PimsDispositionAppraisals
+                .FirstOrDefault(x => x.DispositionAppraisalId.Equals(id)) ?? throw new KeyNotFoundException();
+
+            Context.Entry(existingAppraisal).CurrentValues.SetValues(dispositionAppraisal);
+
+            return existingAppraisal;
+        }
+
+        /// <summary>
+        /// Get Disposition Files for Export.
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        public List<PimsDispositionFile> GetDispositionFileExportDeep(DispositionFilter filter)
+        {
+            // RECOMMENDED - use a log scope to group all potential SQL statements generated by EF for this method call
+            using var scope = Logger.QueryScope();
+
+            filter.ThrowIfNull(nameof(filter));
+            if (!filter.IsValid())
+            {
+                throw new ArgumentException("Argument must have a valid filter", nameof(filter));
+            }
+
+            return GetCommonDispositionFileQueryDeep(filter).ToList();
+        }
+
         /// <summary>
         /// Generate a Common IQueryable for Disposition Files.
         /// </summary>
         /// <param name="filter">The filter to apply.</param>
+        /// <param name="contractorPersonId">Filter for Contractors.</param>
         /// <returns></returns>
-        private IQueryable<PimsDispositionFile> GetCommonDispositionFileQueryDeep(DispositionFilter filter)
+        private IQueryable<PimsDispositionFile> GetCommonDispositionFileQueryDeep(DispositionFilter filter, long? contractorPersonId = null)
         {
             var predicate = PredicateBuilder.New<PimsDispositionFile>(disp => true);
             if (!string.IsNullOrWhiteSpace(filter.Pid))
@@ -346,6 +441,11 @@ namespace Pims.Dal.Repositories
                 predicate = predicate.And(disp => disp.DispositionTypeCode == filter.DispositionTypeCode);
             }
 
+            if (contractorPersonId is not null)
+            {
+                predicate = predicate.And(x => x.PimsDispositionFileTeams.Any(x => x.PersonId == contractorPersonId));
+            }
+
             // filter by team members
             if (filter.TeamMemberPersonId.HasValue)
             {
@@ -363,10 +463,25 @@ namespace Pims.Dal.Repositories
                 .Include(d => d.DispositionFileStatusTypeCodeNavigation)
                 .Include(d => d.DispositionStatusTypeCodeNavigation)
                 .Include(d => d.DispositionTypeCodeNavigation)
+                .Include(d => d.DispositionFundingTypeCodeNavigation)
+                .Include(d => d.DispositionInitiatingDocTypeCodeNavigation)
+                .Include(d => d.PimsDispositionAppraisals)
+                .Include(d => d.PimsDispositionOffers)
+                .Include(d => d.PimsDispositionSales)
+                    .ThenInclude(s => s.PimsDispositionPurchasers)
+                        .ThenInclude(p => p.Person)
+                .Include(d => d.PimsDispositionSales)
+                    .ThenInclude(s => s.PimsDispositionPurchasers)
+                        .ThenInclude(p => p.Organization)
+                .Include(d => d.PimsDispositionSales)
+                    .ThenInclude(s => s.PimsDispositionPurchasers)
+                        .ThenInclude(p => p.PrimaryContact)
                 .Include(d => d.PimsDispositionFileTeams)
                     .ThenInclude(c => c.Person)
                 .Include(d => d.PimsDispositionFileTeams)
                     .ThenInclude(c => c.Organization)
+                .Include(d => d.PimsDispositionFileTeams)
+                    .ThenInclude(c => c.PrimaryContact)
                 .Include(tm => tm.PimsDispositionFileTeams)
                     .ThenInclude(c => c.DspFlTeamProfileTypeCodeNavigation)
                 .Include(fp => fp.PimsDispositionFileProperties)
@@ -380,7 +495,6 @@ namespace Pims.Dal.Repositories
 
             return query;
         }
-
         #endregion
     }
 }

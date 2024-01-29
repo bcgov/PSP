@@ -13,15 +13,9 @@ namespace Pims.Api.Helpers.Extensions
     {
         public static void ThrowMissingContractorInTeam(this PimsAcquisitionFile acquisitionFile, ClaimsPrincipal principal, IUserRepository userRepository)
         {
-            if (acquisitionFile is null)
-            {
-                throw new ArgumentNullException(nameof(acquisitionFile));
-            }
+            ArgumentNullException.ThrowIfNull(acquisitionFile);
 
-            if (principal is null)
-            {
-                throw new ArgumentNullException(nameof(principal));
-            }
+            ArgumentNullException.ThrowIfNull(principal);
 
             var pimsUser = userRepository.GetUserInfoByKeycloakUserId(principal.GetUserKey());
 
@@ -33,15 +27,9 @@ namespace Pims.Api.Helpers.Extensions
 
         public static void ThrowContractorRemovedFromTeam(this PimsAcquisitionFile acquisitionFile, ClaimsPrincipal principal, IUserRepository userRepository)
         {
-            if (acquisitionFile is null)
-            {
-                throw new ArgumentNullException(nameof(acquisitionFile));
-            }
+            ArgumentNullException.ThrowIfNull(acquisitionFile);
 
-            if (principal is null)
-            {
-                throw new ArgumentNullException(nameof(principal));
-            }
+            ArgumentNullException.ThrowIfNull(principal);
 
             var pimsUser = userRepository.GetUserInfoByKeycloakUserId(principal.GetUserKey());
 

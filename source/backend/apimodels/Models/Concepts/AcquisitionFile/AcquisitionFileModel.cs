@@ -9,7 +9,7 @@ using Pims.Api.Models.Concepts.Project;
 
 namespace Pims.Api.Models.Concepts.AcquisitionFile
 {
-    public class AcquisitionFileModel : FileModel
+    public class AcquisitionFileModel : FileWithChecklistModel
     {
         #region Properties
 
@@ -41,12 +41,12 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
         /// <summary>
         /// get/set - The acquisition physical file status type.
         /// </summary>
-        public TypeModel<string> AcquisitionPhysFileStatusTypeCode { get; set; }
+        public CodeTypeModel<string> AcquisitionPhysFileStatusTypeCode { get; set; }
 
         /// <summary>
         /// get/set - The acquisition type.
         /// </summary>
-        public TypeModel<string> AcquisitionTypeCode { get; set; }
+        public CodeTypeModel<string> AcquisitionTypeCode { get; set; }
 
         /// <summary>
         /// get/set - The acquisition product's id.
@@ -66,7 +66,7 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
         /// <summary>
         /// get/set - The funding type.
         /// </summary>
-        public TypeModel<string> FundingTypeCode { get; set; }
+        public CodeTypeModel<string> FundingTypeCode { get; set; }
 
         /// <summary>
         /// get/set - Description of funding type if Other.
@@ -86,7 +86,7 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
         /// <summary>
         /// get/set - The MOTI region that this acquisition file falls under.
         /// </summary>
-        public TypeModel<short> RegionCode { get; set; }
+        public CodeTypeModel<short> RegionCode { get; set; }
 
         /// <summary>
         /// get/set - List of Legacy Stakeholders.
@@ -112,11 +112,6 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
         /// get/set - A list of acquisition file interest holder relationships.
         /// </summary>
         public IList<InterestHolderModel> AcquisitionFileInterestHolders { get; set; }
-
-        /// <summary>
-        /// get/set - A list of acquisition file checklist items.
-        /// </summary>
-        public IList<AcquisitionFileChecklistItemModel> AcquisitionFileChecklist { get; set; }
 
         /// <summary>
         /// get/set - A list of compensation requisitions related to the acquisition file.

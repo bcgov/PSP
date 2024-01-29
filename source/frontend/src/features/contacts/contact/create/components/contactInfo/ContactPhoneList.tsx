@@ -39,7 +39,7 @@ export const ContactPhoneList: React.FunctionComponent<
             />
           ))}
           <LinkButton onClick={() => arrayHelpers.push({ ...emptyContactMethod })}>
-            + Add another phone number
+            + Add phone number
           </LinkButton>
         </>
       )}

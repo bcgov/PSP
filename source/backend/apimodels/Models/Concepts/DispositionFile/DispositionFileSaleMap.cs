@@ -1,7 +1,9 @@
+using System.Collections.Generic;
+using System.Linq;
 using Mapster;
 using Entity = Pims.Dal.Entities;
 
-namespace Pims.Api.Models.Models.Concepts.DispositionFile
+namespace Pims.Api.Models.Concepts.DispositionFile
 {
     public class DispositionFileSaleMap : IRegister
     {
@@ -22,8 +24,8 @@ namespace Pims.Api.Models.Models.Concepts.DispositionFile
                 .Map(dest => dest.SppAmount, src => src.SppAmt)
                 .Map(dest => dest.RemediationAmount, src => src.RemediationAmt)
                 .Map(dest => dest.DispositionPurchasers, src => src.PimsDispositionPurchasers)
-                .Map(dest => dest.DispositionPurchaserAgents, src => src.PimsDspPurchAgents)
-                .Map(dest => dest.DispositionPurchaserSolicitors, src => src.PimsDspPurchSolicitors);
+                .Map(dest => dest.DispositionPurchaserAgent, src => src.PimsDspPurchAgents.FirstOrDefault())
+                .Map(dest => dest.DispositionPurchaserSolicitor, src => src.PimsDspPurchSolicitors.FirstOrDefault());
 
             config.NewConfig<DispositionFileSaleModel, Entity.PimsDispositionSale>()
                 .Map(dest => dest.DispositionSaleId, src => src.Id)
@@ -40,8 +42,8 @@ namespace Pims.Api.Models.Models.Concepts.DispositionFile
                 .Map(dest => dest.SppAmt, src => src.SppAmount)
                 .Map(dest => dest.RemediationAmt, src => src.RemediationAmount)
                 .Map(dest => dest.PimsDispositionPurchasers, src => src.DispositionPurchasers)
-                .Map(dest => dest.PimsDspPurchAgents, src => src.DispositionPurchaserAgents)
-                .Map(dest => dest.PimsDspPurchSolicitors, src => src.DispositionPurchaserSolicitors);
+                .Map(dest => dest.PimsDspPurchAgents, src => src.DispositionPurchaserAgent == null ? null : new List<DispositionSalePurchaserAgentModel> { src.DispositionPurchaserAgent })
+                .Map(dest => dest.PimsDspPurchSolicitors, src => src.DispositionPurchaserSolicitor == null ? null : new List<DispositionSalePurchaserSolicitorModel> { src.DispositionPurchaserSolicitor });
         }
     }
 }

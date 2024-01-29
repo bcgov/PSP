@@ -21,7 +21,7 @@ namespace Pims.Api.Models.Concepts.Lease
 
         public double? LeaseArea { get; set; }
 
-        public TypeModel<string> AreaUnitType { get; set; }
+        public CodeTypeModel<string> AreaUnitType { get; set; }
 
         #endregion
     }

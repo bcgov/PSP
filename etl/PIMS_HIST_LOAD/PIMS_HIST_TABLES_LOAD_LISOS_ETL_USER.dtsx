@@ -1,0 +1,184 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="1/18/2024 1:35:34 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="ARIMA-DELL"
+  DTS:CreatorName="ARIMA-DELL\smart"
+  DTS:DTSID="{3331E02E-958E-4D7C-9414-04A8B589625D}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5270.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Package1"
+  DTS:PackageType="5"
+  DTS:ProtectionLevel="0"
+  DTS:VersionBuild="8"
+  DTS:VersionGUID="{5A077E85-6779-406F-A57C-83565FE1589D}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[PIMS]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{AE7797E2-7C5D-4D8F-AF85-207E5F6D785C}"
+      DTS:ObjectName="PIMS">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=localhost,5433;User ID=admin;Initial Catalog=pims;Provider=SQLOLEDB.1;Persist Security Info=True;Application Name=SSIS-Package1-{AE7797E2-7C5D-4D8F-AF85-207E5F6D785C}localhost,5433.pims.admin;Auto Translate=False;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"></DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\LOAD PIMS_INSURANCE_HIST"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{000300e1-c204-4f0c-89bc-da4b2a625a06}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="LOAD PIMS_INSURANCE_HIST"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{AE7797E2-7C5D-4D8F-AF85-207E5F6D785C}"
+          SQLTask:BypassPrepare="False"
+          SQLTask:SqlStatementSource="insert into PIMS_INSURANCE_HIST ([INSURANCE_ID], [LEASE_ID], [INSURANCE_TYPE_CODE], [OTHER_INSURANCE_TYPE], [COVERAGE_DESCRIPTION], [COVERAGE_LIMIT], [IS_INSURANCE_IN_PLACE], [EXPIRY_DATE], [CONCURRENCY_CONTROL_NUMBER], [APP_CREATE_TIMESTAMP], [APP_CREATE_USERID], [APP_CREATE_USER_GUID], [APP_CREATE_USER_DIRECTORY], [APP_LAST_UPDATE_TIMESTAMP], [APP_LAST_UPDATE_USERID], [APP_LAST_UPDATE_USER_GUID], [APP_LAST_UPDATE_USER_DIRECTORY], [DB_CREATE_TIMESTAMP], [DB_CREATE_USERID], [DB_LAST_UPDATE_TIMESTAMP], [DB_LAST_UPDATE_USERID], _INSURANCE_HIST_ID, END_DATE_HIST, EFFECTIVE_DATE_HIST)&#xA;            select [INSURANCE_ID], [LEASE_ID], [INSURANCE_TYPE_CODE], [OTHER_INSURANCE_TYPE], [COVERAGE_DESCRIPTION], [COVERAGE_LIMIT], [IS_INSURANCE_IN_PLACE], [EXPIRY_DATE], [CONCURRENCY_CONTROL_NUMBER], [APP_CREATE_TIMESTAMP], &#xA;&#x9;  [APP_CREATE_USERID], [APP_CREATE_USER_GUID], [APP_CREATE_USER_DIRECTORY], [APP_LAST_UPDATE_TIMESTAMP], [APP_LAST_UPDATE_USERID], [APP_LAST_UPDATE_USER_GUID], &#xA;&#x9;  [APP_LAST_UPDATE_USER_DIRECTORY], [DB_CREATE_TIMESTAMP], [DB_CREATE_USERID], [DB_LAST_UPDATE_TIMESTAMP], [DB_LAST_UPDATE_USERID],&#xA;&#x9;  (next value for [dbo].[PIMS_INSURANCE_H_ID_SEQ]) as [_INSURANCE_HIST_ID], null as [END_DATE_HIST], &#xA;&#x9; getutcdate()  as [EFFECTIVE_DATE_HIST]&#xA;&#x9;  from PIMS_INSURANCE&#xA;&#x9;  WHERE   [APP_LAST_UPDATE_USERID] IN ( 'LISOS_ETL_USER') AND NOT EXISTS (&#xA;    SELECT 1 &#xA;    FROM PIMS_INSURANCE_HIST&#xA;    WHERE [APP_LAST_UPDATE_USERID] IN ( 'LISOS_ETL_USER') AND (PIMS_INSURANCE_HIST.[INSURANCE_ID] = PIMS_INSURANCE.[INSURANCE_ID])&#xA;);" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\LOAD PIMS_LEASE_TENANT_HIST"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{1d2fb7df-2f65-4da5-b011-18ff6efb1c8d}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="LOAD PIMS_LEASE_TENANT_HIST"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{AE7797E2-7C5D-4D8F-AF85-207E5F6D785C}"
+          SQLTask:BypassPrepare="False"
+          SQLTask:SqlStatementSource=" insert into PIMS_LEASE_TENANT_HIST ([LEASE_TENANT_ID], [LEASE_ID], [PERSON_ID], [ORGANIZATION_ID], [PRIMARY_CONTACT_ID], [LESSOR_TYPE_CODE], [TENANT_TYPE_CODE], [NOTE], [CONCURRENCY_CONTROL_NUMBER], [APP_CREATE_TIMESTAMP], [APP_CREATE_USERID], [APP_CREATE_USER_GUID], [APP_CREATE_USER_DIRECTORY], [APP_LAST_UPDATE_TIMESTAMP], [APP_LAST_UPDATE_USERID], [APP_LAST_UPDATE_USER_GUID], [APP_LAST_UPDATE_USER_DIRECTORY], [DB_CREATE_TIMESTAMP], [DB_CREATE_USERID], [DB_LAST_UPDATE_TIMESTAMP], [DB_LAST_UPDATE_USERID], _LEASE_TENANT_HIST_ID, END_DATE_HIST, EFFECTIVE_DATE_HIST)&#xA;      select [LEASE_TENANT_ID], [LEASE_ID], [PERSON_ID], [ORGANIZATION_ID], [PRIMARY_CONTACT_ID], [LESSOR_TYPE_CODE], [TENANT_TYPE_CODE], [NOTE], [CONCURRENCY_CONTROL_NUMBER], [APP_CREATE_TIMESTAMP], [APP_CREATE_USERID], [APP_CREATE_USER_GUID], [APP_CREATE_USER_DIRECTORY], &#xA;&#x9;  [APP_LAST_UPDATE_TIMESTAMP], [APP_LAST_UPDATE_USERID], [APP_LAST_UPDATE_USER_GUID], [APP_LAST_UPDATE_USER_DIRECTORY], [DB_CREATE_TIMESTAMP], [DB_CREATE_USERID], [DB_LAST_UPDATE_TIMESTAMP], [DB_LAST_UPDATE_USERID], &#xA;&#x9;  (next value for [dbo].[PIMS_LEASE_TENANT_H_ID_SEQ]) as [_LEASE_TENANT_HIST_ID], &#xA;&#x9;  null as [END_DATE_HIST], &#xA;&#x9;  getutcdate() as [EFFECTIVE_DATE_HIST] &#xA;&#x9;  from PIMS_LEASE_TENANT&#xA;&#x9;  WHERE   [APP_LAST_UPDATE_USERID] = 'LISOS_ETL_USER' AND NOT EXISTS (&#xA;    SELECT 1 &#xA;    FROM PIMS_LEASE_TENANT_HIST&#xA;    WHERE [APP_LAST_UPDATE_USERID] = 'LISOS_ETL_USER' AND (PIMS_LEASE_TENANT_HIST.[LEASE_TENANT_ID] = PIMS_LEASE_TENANT.[LEASE_TENANT_ID])&#xA;);" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\LOAD PIMS_PROPERTY_LEASE_HIST"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{e456727c-f7c7-49be-9464-de99d93125c7}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="LOAD PIMS_PROPERTY_LEASE_HIST"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{AE7797E2-7C5D-4D8F-AF85-207E5F6D785C}"
+          SQLTask:BypassPrepare="False"
+          SQLTask:SqlStatementSource="   insert into PIMS_PROPERTY_LEASE_HIST ([PROPERTY_LEASE_ID], [PROPERTY_ID], [LEASE_ID], [AREA_UNIT_TYPE_CODE], [NAME], [LEASE_AREA], [CONCURRENCY_CONTROL_NUMBER], [APP_CREATE_TIMESTAMP], [APP_CREATE_USERID], [APP_CREATE_USER_GUID], [APP_CREATE_USER_DIRECTORY], [APP_LAST_UPDATE_TIMESTAMP], [APP_LAST_UPDATE_USERID], [APP_LAST_UPDATE_USER_GUID], [APP_LAST_UPDATE_USER_DIRECTORY], [DB_CREATE_TIMESTAMP], [DB_CREATE_USERID], [DB_LAST_UPDATE_TIMESTAMP], [DB_LAST_UPDATE_USERID], _PROPERTY_LEASE_HIST_ID, END_DATE_HIST, EFFECTIVE_DATE_HIST)&#xA;      select [PROPERTY_LEASE_ID], [PROPERTY_ID], [LEASE_ID], [AREA_UNIT_TYPE_CODE], [NAME], [LEASE_AREA], [CONCURRENCY_CONTROL_NUMBER], [APP_CREATE_TIMESTAMP], [APP_CREATE_USERID], [APP_CREATE_USER_GUID], [APP_CREATE_USER_DIRECTORY], [APP_LAST_UPDATE_TIMESTAMP], [APP_LAST_UPDATE_USERID], &#xA;&#x9;  [APP_LAST_UPDATE_USER_GUID], [APP_LAST_UPDATE_USER_DIRECTORY], [DB_CREATE_TIMESTAMP], [DB_CREATE_USERID], [DB_LAST_UPDATE_TIMESTAMP], [DB_LAST_UPDATE_USERID], &#xA;&#x9;  (next value for [dbo].[PIMS_PROPERTY_LEASE_H_ID_SEQ]) as [_PROPERTY_LEASE_HIST_ID], &#xA;&#x9;  null as [END_DATE_HIST], &#xA;&#x9;  getutcdate() as [EFFECTIVE_DATE_HIST] &#xA;&#x9;  from &#xA;&#x9;  PIMS_PROPERTY_LEASE&#xA;&#x9;  &#xA;&#x9;  WHERE   [APP_LAST_UPDATE_USERID] IN ( 'LISOS_ETL_USER' ) AND NOT EXISTS (&#xA;    SELECT 1 &#xA;    FROM PIMS_PROPERTY_LEASE_HIST&#xA;    WHERE [APP_LAST_UPDATE_USERID] IN ( 'LISOS_ETL_USER' ) AND (PIMS_PROPERTY_LEASE_HIST.[PROPERTY_LEASE_ID] = PIMS_PROPERTY_LEASE.[PROPERTY_LEASE_ID])&#xA;);" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{69A03C94-B8E0-4243-BEC4-5EFC3A9A87D1}"
+      DTS:From="Package\LOAD PIMS_INSURANCE_HIST"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\LOAD PIMS_LEASE_TENANT_HIST" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{E579E7D4-5CC0-4E42-8EFE-18FDDC92F6EA}"
+      DTS:From="Package\LOAD PIMS_LEASE_TENANT_HIST"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\LOAD PIMS_PROPERTY_LEASE_HIST" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="236,42.6666666666667"
+          Id="Package\LOAD PIMS_INSURANCE_HIST"
+          TopLeft="343.124995781109,231.736845337783" />
+        <NodeLayout
+          Size="256,42.6666666666667"
+          Id="Package\LOAD PIMS_LEASE_TENANT_HIST"
+          TopLeft="700.624990453944,234.508773282074" />
+        <NodeLayout
+          Size="272,42.6666666666667"
+          Id="Package\LOAD PIMS_PROPERTY_LEASE_HIST"
+          TopLeft="1121.24998418614,235.912280147976" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="579.124995781109,254.456142643262">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="121.499994672835,0"
+              Start="0,0"
+              End="113.999994672835,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="113.999994672835,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="956.624990453944,256.543860048358">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="164.624993732199,0"
+              Start="0,0"
+              End="157.124993732199,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="157.124993732199,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

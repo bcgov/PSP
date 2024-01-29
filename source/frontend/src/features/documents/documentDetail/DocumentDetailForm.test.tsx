@@ -3,10 +3,12 @@ import { createMemoryHistory } from 'history';
 import { Claims } from '@/constants/claims';
 import { mockDocumentTypesResponse } from '@/mocks/documents.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
-import {
-  Api_Storage_DocumentMetadata,
-  Api_Storage_MetadataType,
-} from '@/models/api/DocumentStorage';
+import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
+import { ApiGen_Mayan_DocumentMetadata } from '@/models/api/generated/ApiGen_Mayan_DocumentMetadata';
+import { ApiGen_Mayan_DocumentType } from '@/models/api/generated/ApiGen_Mayan_DocumentType';
+import { ApiGen_Mayan_DocumentTypeMetadataType } from '@/models/api/generated/ApiGen_Mayan_DocumentTypeMetadataType';
+import { ApiGen_Mayan_MetadataType } from '@/models/api/generated/ApiGen_Mayan_MetadataType';
+import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { mockKeycloak, render, RenderOptions } from '@/utils/test-utils';
 
@@ -18,11 +20,46 @@ jest.mock('@react-keycloak/web');
 
 const history = createMemoryHistory();
 
-const metadataTypes: Api_Storage_MetadataType[] = [
-  { id: 1, label: 'Tag Foo', name: 'tag-foo' },
-  { id: 2, label: 'Tag Bar', name: 'tag-bar' },
+const documentTypes: ApiGen_Mayan_DocumentType[] = [
+  {
+    id: 1,
+    label: 'BC Assessment Search',
+
+    delete_time_period: null,
+    delete_time_unit: null,
+    trash_time_period: null,
+    trash_time_unit: null,
+  },
 ];
-const documentTypeMetadata: Api_Storage_DocumentMetadata[] = [
+
+const metadataTypes: ApiGen_Mayan_MetadataType[] = [
+  {
+    id: 1,
+    label: 'Tag Foo',
+    name: 'tag-foo',
+    default: null,
+    lookup: null,
+    parser: null,
+    parser_arguments: null,
+    url: null,
+    validation: null,
+    validation_arguments: null,
+  },
+  {
+    id: 2,
+    label: 'Tag Bar',
+    name: 'tag-bar',
+    default: null,
+    lookup: null,
+    parser: null,
+    parser_arguments: null,
+    url: null,
+    validation: null,
+    validation_arguments: null,
+  },
+];
+
+const documentMetadata: ApiGen_Mayan_DocumentMetadata[] = [
   {
     document: {
       label: '',
@@ -30,16 +67,18 @@ const documentTypeMetadata: Api_Storage_DocumentMetadata[] = [
       description: '',
       file_latest: {
         id: 2,
-        document_id: 1,
+
         comment: '',
         encoding: '',
-        fileName: '',
+
         mimetype: '',
         size: 12,
-        timeStamp: '',
+
+        filename: null,
+        timestamp: '',
       },
       id: 1,
-      document_type: { id: 1, label: 'BC Assessment Search' },
+      document_type: documentTypes[0],
     },
     id: 1,
     metadata_type: metadataTypes[0],
@@ -47,18 +86,49 @@ const documentTypeMetadata: Api_Storage_DocumentMetadata[] = [
     value: 'Tag1234',
   },
 ];
+
+const documentTypeMetadataType: ApiGen_Mayan_DocumentTypeMetadataType[] = [
+  {
+    id: 2,
+    document_type: documentTypes[0],
+    metadata_type: metadataTypes[0],
+    url: '',
+    required: false,
+  },
+];
+
 const mockDocument: ComposedDocument = {
-  mayanMetadata: documentTypeMetadata,
+  mayanMetadata: documentMetadata,
   pimsDocumentRelationship: {
     id: 1,
     document: {
       mayanDocumentId: 15,
       documentType: mockDocumentTypesResponse()[0],
-      statusTypeCode: { id: 'AMEND', description: 'Amended' },
+      statusTypeCode: {
+        id: 'AMEND',
+        description: 'Amended',
+        isDisabled: false,
+        displayOrder: null,
+      },
       fileName: 'NewFile.doc',
+      id: 0,
+      rowVersion: 1,
+      appCreateTimestamp: EpochIsoDateTime,
+      appLastUpdateTimestamp: EpochIsoDateTime,
+      appLastUpdateUserid: null,
+      appCreateUserid: null,
+      appLastUpdateUserGuid: null,
+      appCreateUserGuid: null,
     },
     parentId: null,
-    relationshipType: null,
+    relationshipType: ApiGen_CodeTypes_DocumentRelationType.AcquisitionFiles,
+    appCreateTimestamp: EpochIsoDateTime,
+    appLastUpdateTimestamp: EpochIsoDateTime,
+    appLastUpdateUserid: null,
+    appCreateUserid: null,
+    appLastUpdateUserGuid: null,
+    appCreateUserGuid: null,
+    rowVersion: null,
   },
   mayanFileId: 2,
 };
@@ -70,7 +140,7 @@ describe('DocumentDetailForm component', () => {
         onUpdate={jest.fn()}
         document={mockDocument}
         isLoading={false}
-        mayanMetadataTypes={documentTypeMetadata}
+        mayanMetadataTypes={documentTypeMetadataType}
         onCancel={jest.fn()}
         formikRef={{ current: { submitForm: jest.fn() } } as any}
       />,

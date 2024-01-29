@@ -17,7 +17,7 @@ namespace Pims.Api.Models.Contact
         /// <summary>
         /// get/set - Foreign key to the address type.
         /// </summary>
-        public TypeModel<string> AddressTypeId { get; set; }
+        public CodeTypeModel<string> AddressTypeId { get; set; }
 
         /// <summary>
         /// get/set - The street address.

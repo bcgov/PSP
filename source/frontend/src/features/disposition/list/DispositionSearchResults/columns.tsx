@@ -37,7 +37,7 @@ export const columns: ColumnWithProps<DispositionSearchResultModel>[] = [
       if (hasClaim(Claims.DISPOSITION_VIEW)) {
         return (
           <Link to={`/mapview/sidebar/disposition/${props.row.original.id}`}>
-            {props.row.original.fileNumber}
+            D-{props.row.original.fileNumber}
           </Link>
         );
       }

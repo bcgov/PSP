@@ -149,15 +149,15 @@ export const MotiInventoryContainer: React.FunctionComponent<
           title={'Confirm changes'}
           message={
             <>
-              <div>If you cancel now, this property information will not be saved.</div>
+              <div>If you choose to cancel now, your changes will not be saved.</div>
               <br />
-              <strong>Are you sure you want to Cancel?</strong>
+              <strong>Do you want to proceed?</strong>
             </>
           }
           handleOk={handleCancelConfirm}
           handleCancel={() => setShowCancelConfirmModal(false)}
-          okButtonText="Ok"
-          cancelButtonText="Resume editing"
+          okButtonText="Yes"
+          cancelButtonText="No"
           show
         />
       </>

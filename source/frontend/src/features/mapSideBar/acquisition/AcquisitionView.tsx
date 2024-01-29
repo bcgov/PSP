@@ -73,7 +73,9 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
   const history = useHistory();
   const match = useRouteMatch();
   const { file, lastUpdatedBy } = useContext(SideBarContext);
-  const acquisitionFile: Api_AcquisitionFile = file as Api_AcquisitionFile;
+  const acquisitionFile: Api_AcquisitionFile = {
+    ...file,
+  } as Api_AcquisitionFile;
 
   // match for property menu routes - eg /property/1/ltsa
   const fileMatch = matchPath<Record<string, string>>(location.pathname, `${match.path}/:tab`);

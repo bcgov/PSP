@@ -4,13 +4,13 @@ import { AiOutlineExclamationCircle } from 'react-icons/ai';
 import { useHistory } from 'react-router-dom';
 
 import { Button } from '@/components/common/buttons/Button';
-import { FormSection } from '@/components/common/form/styles';
+import { TextArea } from '@/components/common/form';
 import { UnsavedChangesPrompt } from '@/components/common/form/UnsavedChangesPrompt';
+import { Section } from '@/components/common/Section/Section';
 import { FlexBox } from '@/components/common/styles';
 import {
   Address,
   CancelConfirmationModal,
-  CommentNotes,
   DuplicateContactModal,
   useAddressHelpers,
 } from '@/features/contacts/contact/create/components';
@@ -150,28 +150,20 @@ const CreateOrganizationComponent: React.FC<FormikProps<IEditableOrganizationFor
 
       <Styled.CreateFormLayout>
         <Styled.Form id="createForm" placeholder={undefined}>
-          <FlexBox column gap="1.6rem">
+          <FlexBox column>
             <OrganizationSubForm isContactMethodInvalid={isContactMethodInvalid} />
-
-            <FormSection>
-              <Styled.H2>Address</Styled.H2>
-              <Styled.H3>Mailing Address</Styled.H3>
+            <Section header="Mailing Address" isCollapsable initiallyExpanded>
               <Address namespace="mailingAddress" />
-            </FormSection>
-
-            <FormSection>
-              <Styled.H3>Property Address</Styled.H3>
+            </Section>
+            <Section header="Property Address" isCollapsable initiallyExpanded>
               <Address namespace="propertyAddress" />
-            </FormSection>
-
-            <FormSection>
-              <Styled.H3>Billing Address</Styled.H3>
+            </Section>
+            <Section header="Billing Address" isCollapsable initiallyExpanded>
               <Address namespace="billingAddress" />
-            </FormSection>
-
-            <FormSection>
-              <CommentNotes />
-            </FormSection>
+            </Section>
+            <Section header="Comments">
+              <TextArea rows={5} field="comment" />
+            </Section>
           </FlexBox>
         </Styled.Form>
       </Styled.CreateFormLayout>

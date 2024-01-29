@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Pims.Api.Constants;
-using Pims.Api.Models.Concepts.Document.Upload;
-using Pims.Api.Models.Concepts.Http;
+using Pims.Api.Models.Requests.Document.Upload;
+using Pims.Api.Models.Requests.Http;
 using Pims.Dal.Entities;
 
 namespace Pims.Api.Services
@@ -27,16 +27,17 @@ namespace Pims.Api.Services
 
         Task<DocumentUploadRelationshipResponse> UploadDispositionDocumentAsync(long dispositionFileId, DocumentUploadRequest uploadRequest);
 
-        Task<ExternalResult<string>> DeleteResearchDocumentAsync(PimsResearchFileDocument researchFileDocument);
+        Task<ExternalResponse<string>> DeleteResearchDocumentAsync(PimsResearchFileDocument researchFileDocument);
 
-        Task<ExternalResult<string>> DeleteAcquisitionDocumentAsync(PimsAcquisitionFileDocument acquisitionFileDocument);
+        Task<ExternalResponse<string>> DeleteAcquisitionDocumentAsync(PimsAcquisitionFileDocument acquisitionFileDocument);
 
-        Task<ExternalResult<string>> DeleteProjectDocumentAsync(PimsProjectDocument projectDocument);
+        Task<ExternalResponse<string>> DeleteProjectDocumentAsync(PimsProjectDocument projectDocument);
 
-        Task<ExternalResult<string>> DeleteLeaseDocumentAsync(PimsLeaseDocument leaseDocument);
+        Task<ExternalResponse<string>> DeleteLeaseDocumentAsync(PimsLeaseDocument leaseDocument);
 
-        Task<ExternalResult<string>> DeletePropertyActivityDocumentAsync(PimsPropertyActivityDocument propertyActivityDocument);
+        Task<ExternalResponse<string>> DeletePropertyActivityDocumentAsync(PimsPropertyActivityDocument propertyActivityDocument);
 
-        Task<ExternalResult<string>> DeleteDispositionDocumentAsync(PimsDispositionFileDocument dispositionFileDocument);
+        Task<ExternalResponse<string>> DeleteDispositionDocumentAsync(PimsDispositionFileDocument dispositionFileDocument);
+
     }
 }

@@ -473,45 +473,87 @@ exports[`AccessRequestForm component renders as expected 1`] = `
             </option>
             <option
               class="option"
+              data-testid="select-option-3"
+              value="3"
+            >
+              Acquisition functional
+            </option>
+            <option
+              class="option"
+              data-testid="select-option-4"
+              value="4"
+            >
+              Acquisition read-only
+            </option>
+            <option
+              class="option"
+              data-testid="select-option-25"
+              value="25"
+            >
+              Disposition functional
+            </option>
+            <option
+              class="option"
+              data-testid="select-option-26"
+              value="26"
+            >
+              Disposition read-only
+            </option>
+            <option
+              class="option"
+              data-testid="select-option-5"
+              value="5"
+            >
+              Lease/License functional
+            </option>
+            <option
+              class="option"
               data-testid="select-option-6"
               value="6"
             >
-              Finance
-            </option>
-            <option
-              class="option"
-              data-testid="select-option-7"
-              value="7"
-            >
-              Functional
-            </option>
-            <option
-              class="option"
-              data-testid="select-option-8"
-              value="8"
-            >
-              Functional (Restricted)
-            </option>
-            <option
-              class="option"
-              data-testid="select-option-10"
-              value="10"
-            >
-              Management functional
+              Lease/License read-only
             </option>
             <option
               class="option"
               data-testid="select-option-11"
               value="11"
             >
+              Management functional
+            </option>
+            <option
+              class="option"
+              data-testid="select-option-12"
+              value="12"
+            >
               Management read-only
+            </option>
+            <option
+              class="option"
+              data-testid="select-option-7"
+              value="7"
+            >
+              Project functional
+            </option>
+            <option
+              class="option"
+              data-testid="select-option-8"
+              value="8"
+            >
+              Project read-only
             </option>
             <option
               class="option"
               data-testid="select-option-9"
               value="9"
             >
-              Read Only
+              Research functional
+            </option>
+            <option
+              class="option"
+              data-testid="select-option-10"
+              value="10"
+            >
+              Research read-only
             </option>
           </select>
         </div>

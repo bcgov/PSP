@@ -7,9 +7,9 @@ using Microsoft.Extensions.Logging;
 using Pims.Api.Constants;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Helpers.Extensions;
+using Pims.Api.Models.CodeTypes;
 using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
-using Pims.Dal.Constants;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Extensions;
 using Pims.Dal.Entities.Models;
@@ -87,7 +87,7 @@ namespace Pims.Api.Services
         public Paged<PimsAcquisitionFile> GetPage(AcquisitionFilter filter)
         {
             _logger.LogInformation("Searching for acquisition files...");
-            _logger.LogDebug("Acquisition file search with filter", filter);
+            _logger.LogDebug("Acquisition file search with filter: {filter}", filter);
 
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
 
@@ -496,7 +496,7 @@ namespace Pims.Api.Services
 
         public IList<PimsCompensationRequisition> GetAcquisitionCompensations(long acquisitionFileId)
         {
-            _logger.LogInformation("Getting compensations for acquisition file id ...", acquisitionFileId);
+            _logger.LogInformation("Getting compensations for acquisition file id: {acquisitionFileId}", acquisitionFileId);
             _user.ThrowIfNotAuthorized(Permissions.CompensationRequisitionView, Permissions.AcquisitionFileView);
             _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, acquisitionFileId);
 
@@ -505,7 +505,7 @@ namespace Pims.Api.Services
 
         public PimsCompensationRequisition AddCompensationRequisition(long acquisitionFileId, PimsCompensationRequisition compensationRequisition)
         {
-            _logger.LogInformation("Adding compensation requisition for acquisition file id ...", acquisitionFileId);
+            _logger.LogInformation("Adding compensation requisition for acquisition file id: {acquisitionFileId}", acquisitionFileId);
 
             _user.ThrowIfNotAuthorized(Permissions.CompensationRequisitionAdd);
             _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, acquisitionFileId);
@@ -529,7 +529,7 @@ namespace Pims.Api.Services
 
         public PimsExpropriationPayment AddExpropriationPayment(long acquisitionFileId, PimsExpropriationPayment expPayment)
         {
-            _logger.LogInformation("Adding Expropiation Payment for acquisition file id ...", acquisitionFileId);
+            _logger.LogInformation("Adding Expropiation Payment for acquisition file id: {acquisitionFileId}", acquisitionFileId);
 
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileEdit);
             _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, acquisitionFileId);
@@ -551,7 +551,7 @@ namespace Pims.Api.Services
         public IList<PimsExpropriationPayment> GetAcquisitionExpropriationPayments(long acquisitionFileId)
         {
 
-            _logger.LogInformation("Getting Expropiation Payments for acquisition file id ...", acquisitionFileId);
+            _logger.LogInformation("Getting Expropiation Payments for acquisition file id: {acquisitionFileId}", acquisitionFileId);
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
             _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, acquisitionFileId);
 
@@ -662,7 +662,7 @@ namespace Pims.Api.Services
             short currentRegion = _acqFileRepository.GetRegion(acqFileId);
             if (currentRegion != updatedRegion)
             {
-                throw new UserOverrideException(UserOverrideCode.UpdateRegion, "The Ministry region has been changed, this will result in a change to the file's prefix. This requires user confirmation.");
+                throw new UserOverrideException(UserOverrideCode.UpdateRegion, "The selected Ministry region is different from that associated to one or more selected properties\n\nDo you want to proceed?");
             }
         }
 
@@ -792,7 +792,7 @@ namespace Pims.Api.Services
         private void AppendToAcquisitionChecklist(PimsAcquisitionFile acquisitionFile, ref List<PimsAcquisitionChecklistItem> pimsAcquisitionChecklistItems)
         {
             var doNotAddToStatuses = new List<string>() { "COMPLT", "CANCEL", "ARCHIV" };
-            if (doNotAddToStatuses.Contains(acquisitionFile.AcqPhysFileStatusTypeCode))
+            if (doNotAddToStatuses.Contains(acquisitionFile.AcquisitionFileStatusTypeCode))
             {
                 return;
             }

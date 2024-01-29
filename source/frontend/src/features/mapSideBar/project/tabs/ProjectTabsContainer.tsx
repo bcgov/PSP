@@ -1,9 +1,9 @@
 import Claims from '@/constants/claims';
-import { DocumentRelationshipType } from '@/constants/documentRelationshipType';
 import { NoteTypes } from '@/constants/noteTypes';
 import DocumentListContainer from '@/features/documents/list/DocumentListContainer';
 import NoteListView from '@/features/notes/list/NoteListView';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
 import { Api_Project } from '@/models/api/Project';
 
 import { ProjectContainerState, ProjectPageNames } from '../ProjectContainer';
@@ -56,7 +56,7 @@ const ProjectTabsContainer: React.FC<IProjectTabsContainerProps> = ({
       content: (
         <DocumentListContainer
           parentId={project?.id.toString()}
-          relationshipType={DocumentRelationshipType.PROJECTS}
+          relationshipType={ApiGen_CodeTypes_DocumentRelationType.Projects}
         />
       ),
       key: ProjectTabNames.documents,

@@ -38,6 +38,11 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
       loading: loadingDispositionFileProperties,
       response: dispositionFileProperties,
     },
+    getDispositionChecklist: {
+      execute: retrieveDispositionFileChecklist,
+      loading: loadingDispositionFileChecklist,
+      response: dispositionFileChecklist,
+    },
     getLastUpdatedBy: { execute: getLastUpdatedBy, loading: loadingGetLastUpdatedBy },
   } = useDispositionProvider();
 
@@ -78,8 +83,14 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
 
     // retrieve related entities (ie properties items) in parallel
     const dispositionPropertiesTask = retrieveDispositionFileProperties(dispositionFileId);
-    await dispositionPropertiesTask;
-  }, [dispositionFileId, retrieveDispositionFileProperties, retrieveDispositionFile]);
+    const dispositionChecklistTask = retrieveDispositionFileChecklist(dispositionFileId);
+    await Promise.all([dispositionPropertiesTask, dispositionChecklistTask]);
+  }, [
+    dispositionFileId,
+    retrieveDispositionFileProperties,
+    retrieveDispositionFile,
+    retrieveDispositionFileChecklist,
+  ]);
 
   const fetchLastUpdatedBy = React.useCallback(async () => {
     var retrieved = await getLastUpdatedBy(dispositionFileId);
@@ -101,10 +112,14 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
   }, [fetchLastUpdatedBy, lastUpdatedBy, dispositionFileId, staleLastUpdatedBy]);
 
   useEffect(() => {
-    if (dispositionFileId === undefined || dispositionFileId !== dispositionFile?.id || staleFile) {
+    if (
+      dispositionFileId === undefined ||
+      (dispositionFileId !== dispositionFile?.id && !loadingDispositionFile) ||
+      staleFile
+    ) {
       fetchDispositionFile();
     }
-  }, [dispositionFile, fetchDispositionFile, dispositionFileId, staleFile]);
+  }, [dispositionFile, fetchDispositionFile, dispositionFileId, staleFile, loadingDispositionFile]);
 
   const close = useCallback(() => onClose && onClose(), [onClose]);
 
@@ -169,11 +184,13 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
     setIsEditing(false);
   };
 
-  const onSuccess = () => {
+  const onSuccess = (refreshProperties?: boolean) => {
     fetchDispositionFile();
-    fetchLastUpdatedBy();
-    mapMachine.refreshMapProperties();
     setIsEditing(false);
+    fetchLastUpdatedBy();
+    if (refreshProperties) {
+      mapMachine.refreshMapProperties();
+    }
   };
 
   const canRemove = async (propertyId: number) => {
@@ -185,6 +202,7 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
     loadingDispositionFile ||
     loadingGetLastUpdatedBy ||
     (loadingDispositionFileProperties && !isPropertySelector) ||
+    loadingDispositionFileChecklist ||
     !dispositionFile;
 
   return (
@@ -205,7 +223,11 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
         error={error}
         dispositionFile={
           !loading && !!dispositionFile
-            ? { ...dispositionFile, fileProperties: dispositionFileProperties }
+            ? {
+                ...dispositionFile,
+                fileProperties: dispositionFileProperties,
+                fileChecklistItems: dispositionFileChecklist ?? [],
+              }
             : undefined
         }
         isEditing={isEditing}

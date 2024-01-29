@@ -435,9 +435,7 @@ exports[`AgreementView component renders as expected 1`] = `
           </div>
           <div
             class="c9 text-left col"
-          >
-            $0.00
-          </div>
+          />
         </div>
         <div
           class="pb-2 row"
@@ -493,9 +491,7 @@ exports[`AgreementView component renders as expected 1`] = `
           </div>
           <div
             class="c9 text-left col"
-          >
-            $0.00
-          </div>
+          />
         </div>
       </div>
     </div>

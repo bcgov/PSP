@@ -137,7 +137,7 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
 
     if (retrieved) {
       retrieved.fileProperties = acquisitionProperties;
-      retrieved.acquisitionFileChecklist = acquisitionChecklist;
+      retrieved.fileChecklistItems = acquisitionChecklist ?? [];
       setFile({ ...retrieved, fileType: FileTypes.Acquisition });
       setStaleFile(false);
     }
@@ -266,7 +266,10 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
     // The backend does not update the product or project so its safe to send nulls even if there might be data for those fields.
     return withUserOverride((userOverrideCodes: UserOverrideCode[]) => {
       return updateAcquisitionProperties
-        .execute({ ...file, productId: null, projectId: null }, userOverrideCodes)
+        .execute(
+          { ...file, productId: null, projectId: null, fileChecklistItems: [] },
+          userOverrideCodes,
+        )
         .then(response => {
           onSuccess();
           return response;

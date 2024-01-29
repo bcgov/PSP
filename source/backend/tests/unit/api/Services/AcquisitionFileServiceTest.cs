@@ -947,7 +947,7 @@ namespace Pims.Api.Test.Services
             coordinateService.Setup(x => x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>())).Returns(new Coordinate(924046.3314288399, 1088892.9140135897));
 
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
-            propertyService.Setup(x => x.PopulateNewProperty(It.IsAny<PimsProperty>())).Returns(new PimsProperty()
+            propertyService.Setup(x => x.PopulateNewProperty(It.IsAny<PimsProperty>(), It.IsAny<Boolean>(), It.IsAny<Boolean>())).Returns(new PimsProperty()
             {
                 PropertyClassificationTypeCode = "UNKNOWN",
                 PropertyDataSourceEffectiveDate = DateOnly.FromDateTime(System.DateTime.Now),
@@ -1614,7 +1614,7 @@ namespace Pims.Api.Test.Services
             var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileView);
 
             var acqFile = EntityHelper.CreateAcquisitionFile(1);
-            acqFile.AcqPhysFileStatusTypeCode = "COMPLT";
+            acqFile.AcquisitionFileStatusTypeCode = "COMPLT";
 
             var repository = this._helper.GetService<Mock<IAcquisitionFileChecklistRepository>>();
             var acquisitionRepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();

@@ -1,19 +1,17 @@
 import { Formik, FormikHelpers, FormikProps, getIn } from 'formik';
 import React, { useMemo, useState } from 'react';
-import { Col } from 'react-bootstrap';
 import { AiOutlineExclamationCircle } from 'react-icons/ai';
 import { Link, useHistory } from 'react-router-dom';
 
 import { Button } from '@/components/common/buttons/Button';
-import { Select } from '@/components/common/form';
-import { FormSection } from '@/components/common/form/styles';
+import { Select, TextArea } from '@/components/common/form';
 import { UnsavedChangesPrompt } from '@/components/common/form/UnsavedChangesPrompt';
+import { Section } from '@/components/common/Section/Section';
+import { SectionField } from '@/components/common/Section/SectionField';
 import { FlexBox } from '@/components/common/styles';
-import TooltipIcon from '@/components/common/TooltipIcon';
 import {
   Address,
   CancelConfirmationModal,
-  CommentNotes,
   useAddressHelpers,
 } from '@/features/contacts/contact/create/components';
 import * as Styled from '@/features/contacts/contact/edit/styles';
@@ -153,75 +151,57 @@ const UpdateOrganization: React.FC<FormikProps<IEditableOrganizationForm>> = ({
 
       <Styled.ScrollingFormLayout>
         <Styled.Form id="updateForm" placeholder={undefined}>
-          <FlexBox column gap="1.6rem">
-            <FormSection className="py-2">
-              <Styled.RowAligned className="align-items-center">
-                <Col className="d-flex">
-                  <span>Organization</span>
-                </Col>
-                <Col md="auto" className="d-flex ml-auto">
-                  <Select
-                    className="mb-0"
-                    field="isDisabled"
-                    options={[
-                      { label: 'Inactive', value: 'true' },
-                      { label: 'Active', value: 'false' },
-                    ]}
-                  ></Select>
-                </Col>
-              </Styled.RowAligned>
-            </FormSection>
-
+          <FlexBox column>
+            <Section className="py-2">
+              <SectionField
+                label="Organization"
+                contentWidth="auto"
+                className="py-3"
+                valueClassName="ml-auto"
+              >
+                <Select
+                  className="mb-0"
+                  field="isDisabled"
+                  options={[
+                    { label: 'Inactive', value: 'true' },
+                    { label: 'Active', value: 'false' },
+                  ]}
+                ></Select>
+              </SectionField>
+            </Section>
             <OrganizationSubForm isContactMethodInvalid={isContactMethodInvalid} />
-
-            <FormSection className="position-relative">
-              <Styled.TopRightCorner>
-                <TooltipIcon
-                  placement="left"
-                  toolTipId="individual-contacts"
-                  toolTip="To unlink a contact from this organization, or edit a contact's information, click on the name and unlink from the individual contact page."
-                />
-              </Styled.TopRightCorner>
-              <Styled.H2>Individual Contacts</Styled.H2>
-              <Styled.H3>Connected to this organization:</Styled.H3>
-              <Styled.RowAligned>
-                <Col>
-                  {persons &&
-                    persons.map((person, index: number) => (
-                      <>
-                        <Link
-                          to={'/contact/P' + person.id}
-                          data-testid={`contact-organization-person-${index}`}
-                          key={`org-person-${index}`}
-                        >
-                          {person.fullName}
-                        </Link>
-                        <br />
-                      </>
-                    ))}
-                </Col>
-              </Styled.RowAligned>
-            </FormSection>
-
-            <FormSection>
-              <Styled.H2>Address</Styled.H2>
-              <Styled.H3>Mailing Address</Styled.H3>
+            <Section header="Individual Contacts">
+              <SectionField
+                label="Connected to this organization"
+                tooltip="To unlink a contact from this organization, or edit a contact's information, click on the name and unlink from the individual contact page."
+              >
+                {persons &&
+                  persons.map((person, index: number) => (
+                    <>
+                      <Link
+                        to={'/contact/P' + person.id}
+                        data-testid={`contact-organization-person-${index}`}
+                        key={`org-person-${index}`}
+                        className="d-block"
+                      >
+                        {person.fullName}
+                      </Link>
+                    </>
+                  ))}
+              </SectionField>
+            </Section>
+            <Section header="Mailing Address" isCollapsable initiallyExpanded>
               <Address namespace="mailingAddress" />
-            </FormSection>
-
-            <FormSection>
-              <Styled.H3>Property Address</Styled.H3>
+            </Section>
+            <Section header="Property Address" isCollapsable initiallyExpanded>
               <Address namespace="propertyAddress" />
-            </FormSection>
-
-            <FormSection>
-              <Styled.H3>Billing Address</Styled.H3>
+            </Section>
+            <Section header="Billing Address" isCollapsable initiallyExpanded>
               <Address namespace="billingAddress" />
-            </FormSection>
-
-            <FormSection>
-              <CommentNotes />
-            </FormSection>
+            </Section>
+            <Section header="Comments">
+              <TextArea rows={5} field="comment" />
+            </Section>
           </FlexBox>
         </Styled.Form>
       </Styled.ScrollingFormLayout>

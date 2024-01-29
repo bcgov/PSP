@@ -171,12 +171,10 @@ namespace Pims.Api.Helpers.Middleware
             }
             else if (ex is ContractorNotInTeamException)
             {
-                var exception = ex as ContractorNotInTeamException;
-                code = HttpStatusCode.Conflict;
-                message = exception.Message;
-                errorCode = null;
+                code = HttpStatusCode.BadRequest;
+                message = ex.Message;
 
-                _logger.LogError(ex, "Contractor User missing as a team member on the creation of Acquisition File");
+                _logger.LogError(ex, ex.Message);
             }
             else if (ex is ApiHttpRequestException)
             {

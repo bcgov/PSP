@@ -1,9 +1,8 @@
-import { FormikProps } from 'formik';
+import { FormikHelpers, FormikProps } from 'formik';
 import { MdAirlineStops } from 'react-icons/md';
 import styled from 'styled-components';
 
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
-import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 
 import MapSideBarLayout from '../../layout/MapSideBarLayout';
 import SidebarFooter from '../../shared/SidebarFooter';
@@ -17,8 +16,7 @@ export interface IAddDispositionContainerViewProps {
   displayFormInvalid: boolean;
   onSubmit: (
     values: DispositionFormModel,
-    setSubmitting: (isSubmitting: boolean) => void,
-    userOverrides: UserOverrideCode[],
+    formikHelpers: FormikHelpers<DispositionFormModel>,
   ) => void | Promise<any>;
   onCancel: () => void;
   onSave: () => void;

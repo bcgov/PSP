@@ -6,8 +6,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Areas.Acquisition.Controllers;
+using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Models.Concepts.DispositionFile;
-using Pims.Api.Models.Models.Concepts.DispositionFile;
+using Pims.Api.Models.Concepts.DispositionFile;
 using Pims.Api.Policies;
 using Pims.Api.Services;
 using Pims.Core.Exceptions;
@@ -94,7 +95,7 @@ namespace Pims.Api.Areas.Disposition.Controllers
         {
             _logger.LogInformation(
                 "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
-                nameof(AcquisitionFileController),
+                nameof(DispositionFileController),
                 nameof(AddDispositionFile),
                 User.GetUsername(),
                 DateTime.Now);
@@ -103,6 +104,29 @@ namespace Pims.Api.Areas.Disposition.Controllers
 
             var dispositionFileEntity = _mapper.Map<Dal.Entities.PimsDispositionFile>(model);
             var dispositionFile = _dispositionService.Add(dispositionFileEntity, userOverrideCodes.Select(oc => UserOverrideCode.Parse(oc)));
+
+            return new JsonResult(_mapper.Map<DispositionFileModel>(dispositionFile));
+        }
+
+        [HttpPut("{id:long}")]
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        [HasPermission(Permissions.DispositionEdit)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(DispositionFileModel), 200)]
+        [SwaggerOperation(Tags = new[] { "dispositionfile" })]
+        public IActionResult UpdateDispositionFile([FromRoute]long id, [FromBody] DispositionFileModel model, [FromQuery] string[] userOverrideCodes)
+        {
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(DispositionFileController),
+                nameof(UpdateDispositionFile),
+                User.GetUsername(),
+                DateTime.Now);
+
+            _logger.LogInformation("Dispatching to service: {Service}", _dispositionService.GetType());
+
+            var dispositionFileEntity = _mapper.Map<Dal.Entities.PimsDispositionFile>(model);
+            var dispositionFile = _dispositionService.Update(id, dispositionFileEntity, userOverrideCodes.Select(oc => UserOverrideCode.Parse(oc)));
 
             return new JsonResult(_mapper.Map<DispositionFileModel>(dispositionFile));
         }
@@ -321,6 +345,143 @@ namespace Pims.Api.Areas.Disposition.Controllers
 
             var dispositionSale = _dispositionService.GetDispositionFileSale(id);
             return new JsonResult(_mapper.Map<DispositionFileSaleModel>(dispositionSale));
+        }
+
+        [HttpPost("{id:long}/sale")]
+        [HasPermission(Permissions.DispositionEdit)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(DispositionFileSaleModel), 201)]
+        [SwaggerOperation(Tags = new[] { "dispositionfile" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult AddDispositionFileSale([FromRoute] long id, [FromBody] DispositionFileSaleModel dispositionFileSale)
+        {
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(DispositionFileController),
+                nameof(AddDispositionFileSale),
+                User.GetUsername(),
+                DateTime.Now);
+
+            _logger.LogInformation("Dispatching to service: {Service}", _dispositionService.GetType());
+
+            try
+            {
+                if (id != dispositionFileSale.DispositionFileId)
+                {
+                    throw new BadRequestException("Invalid dispositionFileId.");
+                }
+
+                var dispositionSaleEntity = _mapper.Map<Dal.Entities.PimsDispositionSale>(dispositionFileSale);
+                var newDispositionSale = _dispositionService.AddDispositionFileSale(dispositionSaleEntity);
+
+                return new JsonResult(_mapper.Map<DispositionFileSaleModel>(newDispositionSale));
+            }
+            catch (DuplicateEntityException e)
+            {
+                return Conflict(e.Message);
+            }
+        }
+
+        [HttpPut("{id:long}/sale/{saleId:long}")]
+        [HasPermission(Permissions.DispositionEdit)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(DispositionFileSaleModel), 200)]
+        [SwaggerOperation(Tags = new[] { "dispositionfile" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult UpdateDispositionFileSale([FromRoute]long id, [FromRoute]long saleId, [FromBody] DispositionFileSaleModel dispositionFileSale)
+        {
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(DispositionFileController),
+                nameof(UpdateDispositionFileSale),
+                User.GetUsername(),
+                DateTime.Now);
+
+            _logger.LogInformation("Dispatching to service: {Service}", _dispositionService.GetType());
+
+            if (id != dispositionFileSale.DispositionFileId || dispositionFileSale.Id != saleId)
+            {
+                throw new BadRequestException("Invalid dispositionFileId.");
+            }
+
+            var dispositionSaleEntity = _mapper.Map<Dal.Entities.PimsDispositionSale>(dispositionFileSale);
+            var updatedSale = _dispositionService.UpdateDispositionFileSale(dispositionSaleEntity);
+
+            return new JsonResult(_mapper.Map<DispositionFileSaleModel>(updatedSale));
+        }
+
+        [HttpGet("{id:long}/appraisal")]
+        [HasPermission(Permissions.DispositionView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(DispositionFileAppraisalModel), 200)]
+        [SwaggerOperation(Tags = new[] { "dispositionfile" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult GetDispositionFileAppraisal([FromRoute] long id)
+        {
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(DispositionFileController),
+                nameof(GetDispositionFileAppraisal),
+                User.GetUsername(),
+                DateTime.Now);
+
+            _logger.LogInformation("Dispatching to service: {Service}", _dispositionService.GetType());
+
+            var dispositionSale = _dispositionService.GetDispositionFileAppraisal(id);
+            return new JsonResult(_mapper.Map<DispositionFileAppraisalModel>(dispositionSale));
+        }
+
+        [HttpPost("{id:long}/appraisal")]
+        [HasPermission(Permissions.DispositionEdit)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(DispositionFileAppraisalModel), 201)]
+        [SwaggerOperation(Tags = new[] { "dispositionfile" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult AddDispositionFileAppraisal([FromRoute] long id, [FromBody] DispositionFileAppraisalModel dispositionFileAppraisal)
+        {
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(DispositionFileController),
+                nameof(AddDispositionFileAppraisal),
+                User.GetUsername(),
+                DateTime.Now);
+
+            _logger.LogInformation("Dispatching to service: {Service}", _dispositionService.GetType());
+
+            try
+            {
+                var dispositionAppraisalEntity = _mapper.Map<Dal.Entities.PimsDispositionAppraisal>(dispositionFileAppraisal);
+                var newDispositionAppraisal = _dispositionService.AddDispositionFileAppraisal(id, dispositionAppraisalEntity);
+
+                return new JsonResult(_mapper.Map<DispositionFileAppraisalModel>(newDispositionAppraisal));
+            }
+            catch (DuplicateEntityException e)
+            {
+                return Conflict(e.Message);
+            }
+        }
+
+        [HttpPut("{id:long}/appraisal/{appraisalId:long}")]
+        [HasPermission(Permissions.DispositionEdit)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(DispositionFileAppraisalModel), 200)]
+        [SwaggerOperation(Tags = new[] { "dispositionfile" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult UpdateDispositionFileAppraisal([FromRoute] long id, [FromRoute] long appraisalId, [FromBody] DispositionFileAppraisalModel dispositionFileAppraisal)
+        {
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(DispositionFileController),
+                nameof(UpdateDispositionFileAppraisal),
+                User.GetUsername(),
+                DateTime.Now);
+
+            _logger.LogInformation("Dispatching to service: {Service}", _dispositionService.GetType());
+
+            var dispositionAppraisalEntity = _mapper.Map<Dal.Entities.PimsDispositionAppraisal>(dispositionFileAppraisal);
+            var updatedOffer = _dispositionService.UpdateDispositionFileAppraisal(id, appraisalId, dispositionAppraisalEntity);
+
+            return new JsonResult(_mapper.Map<DispositionFileAppraisalModel>(updatedOffer));
         }
 
         #endregion
