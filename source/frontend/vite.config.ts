@@ -3,6 +3,7 @@ import path from 'path';
 import { defineConfig } from 'vite';
 import svgr from 'vite-plugin-svgr';
 import viteTsconfigPaths from 'vite-tsconfig-paths';
+import eslint from 'vite-plugin-eslint';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -18,6 +19,7 @@ export default defineConfig({
   },
   plugins: [
     react(),
+    eslint(),
     viteTsconfigPaths(),
     svgr({
       include: '**/*.svg?react',
