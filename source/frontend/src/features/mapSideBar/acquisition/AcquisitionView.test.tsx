@@ -10,7 +10,7 @@ import {
   mockAcquisitionFileOwnersResponse,
   mockAcquisitionFileResponse,
 } from '@/mocks/acquisitionFiles.mock';
-import { mockApiPerson, mockPerson } from '@/mocks/filterData.mock';
+import { mockApiPerson } from '@/mocks/filterData.mock';
 import { getMockApiInterestHolders } from '@/mocks/interestHolders.mock';
 import { mockLastUpdatedBy } from '@/mocks/lastUpdatedBy.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
