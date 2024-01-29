@@ -13,7 +13,10 @@ namespace PIMS.Tests.Automation.PageObjects
         private By dispositionFileSummaryBttn = By.XPath("//div[contains(text(),'File Summary')]");
         private By dispositionFileDetailsTab = By.XPath("//a[contains(text(),'File details')]");
 
-        //Disposition File Details View Form Elements
+        //Disposition Edit Details button
+        private By dispositionFileEditButton = By.CssSelector("button[title='Edit disposition file']");
+
+        //Disposition File Details View and Create Forms Elements
         private By dispositionFileViewTitle = By.XPath("//h1[contains(text(),'Disposition File')]");
 
         private By dispositionFileCreateTitle = By.XPath("//h1[contains(text(),'Create Disposition File')]");
@@ -56,65 +59,65 @@ namespace PIMS.Tests.Automation.PageObjects
         private By dispositionFileScheduleCompletedDateContent = By.XPath("//label[contains(text(),'sition completed date')]/parent::div/following-sibling::div");
 
         private By dispositionFileDetailsSubtitle = By.XPath("//div[contains(text(),'Disposition Details')]");
+
         private By dispositionFileDetailsNameLabel = By.XPath("//label[contains(text(),'Disposition file name')]");
         private By dispositionFileDetailsNameContent = By.XPath("//label[contains(text(),'Disposition file name')]/parent::div/following-sibling::div");
+        private By dispositionFileDetailsNameInput = By.Id("input-fileName");
+
         private By dispositionFileDetailsReferenceNumberLabel = By.XPath("//label[contains(text(),'Reference number')]");
+        private By dispositionFileDetailsReferenceNumberTooltip = By.XPath("//label[contains(text(),'Reference number')]/span/span[@data-testid='tooltip-icon-section-field-tooltip']");
         private By dispositionFileDetailsReferenceNumberContent = By.XPath("//label[contains(text(),'Reference number')]/parent::div/following-sibling::div");
         private By dispositionFileDetailsReferenceNumberInput = By.Id("input-referenceNumber");
-        private By dispositionFileDetailsDispositionStatusLabel = By.XPath("//label[contains(text(),'Disposition status')]");
-        private By dispositionFileDetailsDispositionStatusContent = By.XPath("//label[contains(text(),'Disposition status')]/parent::div/following-sibling::div");
-        private By dispositionFileDetailsDispositionStatusSelect = By.Id("input-dispositionStatusTypeCode");
-        private By dispositionFileDetailsDispositionTypeLabel = By.XPath("//label[contains(text(),'Disposition type')]");
-        private By dispositionFileDetailsDispositionTypeContent = By.XPath("//label[contains(text(),'Disposition type')]/parent::div/following-sibling::div");
-        private By dispositionFileDetailsDispositionTypeSelect = By.Id("input-dispositionTypeCode");
+       
+        private By dispositionFileDetailsStatusLabel = By.XPath("//label[contains(text(),'Disposition status')]");
+        private By dispositionFileDetailsStatusContent = By.XPath("//label[contains(text(),'Disposition status')]/parent::div/following-sibling::div");
+        private By dispositionFileDetailsStatusSelect = By.Id("input-dispositionStatusTypeCode");
+        
+        private By dispositionFileDetailsTypeLabel = By.XPath("//label[contains(text(),'Disposition type')]");
+        private By dispositionFileDetailsTypeContent = By.XPath("//label[contains(text(),'Disposition type')]/parent::div/following-sibling::div");
+        private By dispositionFileDetailsTypeSelect = By.Id("input-dispositionTypeCode");
+
         private By dispositionFileDetailsOtherTransferTypeLabel = By.XPath("//label[contains(text(),'Other (disposition type)')]");
         private By dispositionFileDetailsOtherTransferTypeContent = By.XPath("//label[contains(text(),'Other (disposition type)')]/parent::div/following-sibling::div");
         private By dispositionFileDetailsOtherTransferTypeInput = By.Id("input-dispositionTypeOther");
+
         private By dispositionFileDetailsInitiatingDocumentLabel = By.XPath("//label[contains(text(),'Initiating document')]");
         private By dispositionFileDetailsInitiatingDocumentContent = By.XPath("(//label[contains(text(),'Initiating document')]/parent::div/following-sibling::div)[1]");
         private By dispositionFileDetailsInitiatingDocumentSelect = By.Id("input-initiatingDocumentTypeCode");
+
         private By dispositionFileDetailsOtherInitiatingDocumentLabel = By.XPath("//label[contains(text(),'Other (initiating document)')]");
+        private By dispositionFileDetailsInitiatingDocumentTooltip = By.XPath("(//label[contains(text(),'Initiating document')]/span/span[@data-testid='tooltip-icon-section-field-tooltip'])[1]");
         private By dispositionFileDetailsOtherInitiatingDocumentContent = By.XPath("//label[contains(text(),'Other (initiating document)')]/parent::div/following-sibling::div");
         private By dispositionFileDetailsOtherInitiatingDocumentInput = By.Id("input-initiatingDocumentTypeOther");
+
         private By dispositionFileDetailsInitiatingDocumentDateLabel = By.XPath("//label[contains(text(),'Initiating document date')]");
         private By dispositionFileDetailsInitiatingDocumentDateContent = By.XPath("//label[contains(text(),'Initiating document date')]/parent::div/following-sibling::div");
         private By dispositionFileDetailsInitiatingDocumentDateInput = By.Id("datepicker-initiatingDocumentDate");
+
         private By dispositionFileDetailsPhysicalFileLabel = By.XPath("//label[contains(text(),'Physical file status')]");
         private By dispositionFileDetailsPhysicalFileContent = By.XPath("//label[contains(text(),'Physical file status')]/parent::div/following-sibling::div");
         private By dispositionFileDetailsPhysicalFileSelect = By.Id("input-physicalFileStatusTypeCode");
+
         private By dispositionFileDetailsInitiatingBranchLabel = By.XPath("//label[contains(text(),'Initiating branch')]");
         private By dispositionFileDetailsInitiatingBranchContent = By.XPath("//label[contains(text(),'initiating branch')]/parent::div/following-sibling::div");
         private By dispositionFileDetailsInitiatingBranchSelect = By.Id("input-initiatingBranchTypeCode");
+
         private By dispositionFileDetailsMOTIRegionLabel = By.XPath("//label[contains(text(),'Ministry region')]");
         private By dispositionFileDetailsMOTIRegionContent = By.XPath("//label[contains(text(),'Ministry region')]/parent::div/following-sibling::div");
-        private By dispositionFIleDetailsMOTIRegionSelect = By.Id("input-regionCode");
+        private By dispositionFileDetailsMOTIRegionSelect = By.Id("input-regionCode");
 
-        private By dispositionFileTeamSubtitle = By.XPath("//div[contains(text(),'Disposition Team')]");
-
-        //Disposition File Main Form Input Elements
-        private By dispositionFileMainFormDiv = By.XPath("//h1[contains(text(),'Create Disposition File')]/parent::div/parent::div/parent::div/parent::div");
-
-        private By dispositionFileNameInput = By.Id("input-fileName");
+        //Invalid Error messages elements
         private By dispositionFileNameInvalidMessage = By.XPath("//div[contains(text(),'Disposition file name must be at most 200 characters')]");
-        private By dispositionFileReferenceNumberInput = By.Id("input-referenceNumber");
         private By dispositionFileReferenceNumberInvalidMessage = By.XPath("//div[contains(text(),'Disposition reference number must be at most 200 characters')]");
-        private By dispositionFileReferenceNumberTooltip = By.XPath("//label[contains(text(),'Reference number')]/span/span[@data-testid='tooltip-icon-section-field-tooltip']");
-        private By dispositionFileDispositionStatusSelect = By.Id("input-dispositionStatusTypeCode");
-        private By dispositionFileDispositionTypeSelect = By.Id("input-dispositionTypeCode");
-        private By dispositionFileInitiatingDocumentSelect = By.Id("input-initiatingDocumentTypeCode");
-        private By dispositionFileInitiatingDocumentTooltip = By.XPath("(//label[contains(text(),'Initiating document')]/span/span[@data-testid='tooltip-icon-section-field-tooltip'])[1]");
-        private By dispositionFileInitiatingDocumentDateInput = By.Id("datepicker-initiatingDocumentDate");
-        private By dispositionFilePhysicalStatusSelect = By.Id("input-physicalFileStatusTypeCode");
-        private By dispositionFileInitiatingBranchSelect = By.Id("input-initiatingBranchTypeCode");
-        private By dispositionFileDetailsRegionSelect = By.Id("input-regionCode");
+
+        //Team members static elements
+        private By dispositionFileTeamSubtitle = By.XPath("//div[contains(text(),'Disposition Team')]");
 
         private By dispositionFileAddAnotherMemberLink = By.CssSelector("button[data-testid='add-team-member']");
         private By dispositionFileTeamMembersGroup = By.XPath("//div[contains(text(),'Disposition Team')]/parent::div/parent::h2/following-sibling::div/div[@class='py-3 row']");
         private By dispositionFileTeamFirstMemberDeleteBttn = By.XPath("//div[contains(text(),'Disposition Team')]/parent::div/parent::h2/following-sibling::div/div[@class='py-3 row'][1]/div[3]/button");
         private By dispositionFileTeamInvalidTeamMemberMessage = By.XPath("//div[contains(text(),'Select a team member')]");
         private By dispositionFileTeamInvalidProfileMessage = By.XPath("//div[contains(text(),'Select a profile')]");
-
-        private By dispositionFileEditButton = By.CssSelector("button[title='Edit disposition file']");
 
         //Acquisition File Confirmation Modal Elements
         private By dispositionFileConfirmationModal = By.CssSelector("div[class='modal-content']");
@@ -159,14 +162,14 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             Wait();
 
-            webDriver.FindElement(dispositionFileNameInput).SendKeys(disposition.DispositionFileName);
-            ChooseSpecificSelectOption(dispositionFileDispositionStatusSelect, disposition.DispositionStatus);
-            ChooseSpecificSelectOption(dispositionFileDispositionTypeSelect, disposition.DispositionType);
+            webDriver.FindElement(dispositionFileDetailsNameInput).SendKeys(disposition.DispositionFileName);
+            ChooseSpecificSelectOption(dispositionFileDetailsStatusSelect, disposition.DispositionStatus);
+            ChooseSpecificSelectOption(dispositionFileDetailsTypeSelect, disposition.DispositionType);
 
             if(disposition.DispositionType.Equals("Other Transfer"))
                 webDriver.FindElement(dispositionFileDetailsOtherTransferTypeInput).SendKeys(disposition.DispositionOtherTransferType);
 
-            ChooseSpecificSelectOption(dispositionFileDetailsRegionSelect, disposition.DispositionMOTIRegion);
+            ChooseSpecificSelectOption(dispositionFileDetailsMOTIRegionSelect, disposition.DispositionMOTIRegion);
         }
 
         public void AddAdditionalInformation(DispositionFile disposition)
@@ -228,10 +231,10 @@ namespace PIMS.Tests.Automation.PageObjects
             }
 
             if (disposition.DispositionStatus != "")
-                ChooseSpecificSelectOption(dispositionFileDetailsDispositionStatusSelect, disposition.DispositionStatus);
+                ChooseSpecificSelectOption(dispositionFileDetailsStatusSelect, disposition.DispositionStatus);
 
             if (disposition.DispositionType != "")
-                ChooseSpecificSelectOption(dispositionFileDetailsDispositionTypeSelect, disposition.DispositionType);
+                ChooseSpecificSelectOption(dispositionFileDetailsTypeSelect, disposition.DispositionType);
 
             if (disposition.DispositionOtherTransferType != "")
             {
@@ -273,12 +276,14 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void UpdateDispositionFile(DispositionFile disposition)
         {
-            if (disposition.DispositionStatus != "")
+            //Status
+            if (disposition.DispositionFileStatus != "")
             {
                 WaitUntilClickable(dispositionFileStatusSelect);
-                ChooseSpecificSelectOption(dispositionFileStatusSelect, disposition.DispositionStatus);
+                ChooseSpecificSelectOption(dispositionFileStatusSelect, disposition.DispositionFileStatus);
             }
 
+            //Project
             if (disposition.DispositionProjFunding != "")
                 ChooseSpecificSelectOption(dispositionFileProjectFundingInput, disposition.DispositionProjFunding);
 
@@ -287,16 +292,26 @@ namespace PIMS.Tests.Automation.PageObjects
             //    webDriver.FindElement(acquisitionFileProjectOtherFundingInput).SendKeys(acquisition.AcquisitionFundingOther);
             //}
 
+            //Schedule
             if (disposition.DispositionAssignedDate != "")
             {
+                ClearInput(dispositionFileAssignedDateInput);
                 webDriver.FindElement(dispositionFileAssignedDateInput).SendKeys(disposition.DispositionAssignedDate);
                 webDriver.FindElement(dispositionFileAssignedDateInput).SendKeys(Keys.Enter);
             }
 
             if (disposition.DispositionCompletedDate != "")
             {
+                ClearInput(dispositionFileCompletedDateLabelInput);
                 webDriver.FindElement(dispositionFileCompletedDateLabelInput).SendKeys(disposition.DispositionCompletedDate);
                 webDriver.FindElement(dispositionFileCompletedDateLabelInput).SendKeys(Keys.Enter);
+            }
+
+            //Disposition Details
+            if (disposition.DispositionFileName!= "")
+            {
+                ClearInput(dispositionFileDetailsNameInput);
+                webDriver.FindElement(dispositionFileDetailsNameInput).SendKeys(disposition.DispositionFileName);
             }
 
             if (disposition.DispositionReferenceNumber != "")
@@ -306,10 +321,10 @@ namespace PIMS.Tests.Automation.PageObjects
             }
 
             if (disposition.DispositionStatus != "")
-                ChooseSpecificSelectOption(dispositionFileDetailsDispositionStatusSelect, disposition.DispositionStatus);
+                ChooseSpecificSelectOption(dispositionFileDetailsStatusSelect, disposition.DispositionStatus);
 
             if (disposition.DispositionType != "")
-                ChooseSpecificSelectOption(dispositionFileDetailsDispositionTypeSelect, disposition.DispositionType);
+                ChooseSpecificSelectOption(dispositionFileDetailsTypeSelect, disposition.DispositionType);
 
             if (disposition.InitiatingDocument != "")
                 ChooseSpecificSelectOption(dispositionFileDetailsInitiatingDocumentSelect, disposition.InitiatingDocument);
@@ -322,6 +337,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
             if (disposition.InitiatingDocumentDate != "")
             {
+                ClearInput(dispositionFileDetailsInitiatingDocumentDateInput);
                 webDriver.FindElement(dispositionFileDetailsInitiatingDocumentDateInput).SendKeys(disposition.InitiatingDocumentDate);
                 webDriver.FindElement(dispositionFileDetailsInitiatingDocumentDateInput).SendKeys(Keys.Enter);
             }
@@ -333,7 +349,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 ChooseSpecificSelectOption(dispositionFileDetailsInitiatingBranchSelect, disposition.InitiatingBranch);
 
             if (disposition.DispositionMOTIRegion != "")
-                ChooseSpecificSelectOption(dispositionFIleDetailsMOTIRegionSelect, disposition.DispositionMOTIRegion);
+                ChooseSpecificSelectOption(dispositionFileDetailsMOTIRegionSelect, disposition.DispositionMOTIRegion);
 
             //Disposition File Team Members
             if (disposition.DispositionTeam.Count > 0)
@@ -352,6 +368,23 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             Wait();
             ButtonElement("Save");
+
+            Wait();
+            if (webDriver.FindElements(dispositionFileConfirmationModal).Count() > 0)
+            {
+                Assert.Equal("User Override Required", sharedModals.ModalHeader());
+                Assert.Equal("You are changing this file to a non-editable state. Only system administrators can edit the file when set to Archived, Cancelled or Completed state). Do you wish to continue?", sharedModals.ModalContent());
+                sharedModals.ModalClickOKBttn();
+            }
+
+            Wait();
+            if (webDriver.FindElements(dispositionFileConfirmationModal).Count() > 0)
+            {
+                Assert.Equal("User Override Required", sharedModals.ModalHeader());
+                Assert.Equal("The Ministry region has been changed, this will result in a change to the file's prefix. This requires user confirmation.", sharedModals.ModalContent());
+                sharedModals.ModalClickOKBttn();
+            }
+
             AssertTrueIsDisplayed(dispositionFileEditButton);
         }
 
@@ -373,7 +406,8 @@ namespace PIMS.Tests.Automation.PageObjects
             WaitUntilVisible(dispositionFileHeaderCodeContent);
 
             var totalFileName = webDriver.FindElement(dispositionFileHeaderCodeContent).Text;
-            return Regex.Match(totalFileName, "^[^ ]+").Value;
+            //return Regex.Match(totalFileName, "^[^ ]+").Value;
+            return Regex.Match(totalFileName, "(?<=D-).*").Value;
         }
 
         public void VerifyDispositionFileCreate()
@@ -398,25 +432,25 @@ namespace PIMS.Tests.Automation.PageObjects
             //Disposition Details
             AssertTrueIsDisplayed(dispositionFileDetailsSubtitle);
             AssertTrueIsDisplayed(dispositionFileDetailsNameLabel);
-            AssertTrueIsDisplayed(dispositionFileNameInput);
+            AssertTrueIsDisplayed(dispositionFileDetailsNameInput);
             AssertTrueIsDisplayed(dispositionFileDetailsReferenceNumberLabel);
-            AssertTrueIsDisplayed(dispositionFileReferenceNumberTooltip);
-            AssertTrueIsDisplayed(dispositionFileReferenceNumberInput);
-            AssertTrueIsDisplayed(dispositionFileDetailsDispositionStatusLabel);
-            AssertTrueIsDisplayed(dispositionFileDispositionStatusSelect);
-            AssertTrueIsDisplayed(dispositionFileDetailsDispositionTypeLabel);
-            AssertTrueIsDisplayed(dispositionFileDispositionTypeSelect);
+            AssertTrueIsDisplayed(dispositionFileDetailsReferenceNumberTooltip);
+            AssertTrueIsDisplayed(dispositionFileDetailsReferenceNumberInput);
+            AssertTrueIsDisplayed(dispositionFileDetailsStatusLabel);
+            AssertTrueIsDisplayed(dispositionFileDetailsStatusSelect);
+            AssertTrueIsDisplayed(dispositionFileDetailsTypeLabel);
+            AssertTrueIsDisplayed(dispositionFileDetailsTypeSelect);
             AssertTrueIsDisplayed(dispositionFileDetailsInitiatingDocumentLabel);
-            AssertTrueIsDisplayed(dispositionFileInitiatingDocumentTooltip);
-            AssertTrueIsDisplayed(dispositionFileInitiatingDocumentSelect);
+            AssertTrueIsDisplayed(dispositionFileDetailsInitiatingDocumentTooltip);
+            AssertTrueIsDisplayed(dispositionFileDetailsInitiatingDocumentSelect);
             AssertTrueIsDisplayed(dispositionFileDetailsInitiatingDocumentDateLabel);
-            AssertTrueIsDisplayed(dispositionFileInitiatingDocumentDateInput);
+            AssertTrueIsDisplayed(dispositionFileDetailsInitiatingDocumentDateInput);
             AssertTrueIsDisplayed(dispositionFileDetailsPhysicalFileLabel);
-            AssertTrueIsDisplayed(dispositionFilePhysicalStatusSelect);
+            AssertTrueIsDisplayed(dispositionFileDetailsPhysicalFileSelect);
             AssertTrueIsDisplayed(dispositionFileDetailsInitiatingBranchLabel);
-            AssertTrueIsDisplayed(dispositionFileInitiatingBranchSelect);
+            AssertTrueIsDisplayed(dispositionFileDetailsInitiatingBranchSelect);
             AssertTrueIsDisplayed(dispositionFileDetailsMOTIRegionLabel);
-            AssertTrueIsDisplayed(dispositionFileDetailsRegionSelect);
+            AssertTrueIsDisplayed(dispositionFileDetailsMOTIRegionSelect);
 
             VerifyMaximumFields();
 
@@ -490,16 +524,16 @@ namespace PIMS.Tests.Automation.PageObjects
                 AssertTrueContentEquals(dispositionFileDetailsReferenceNumberContent, disposition.DispositionReferenceNumber);
 
             //Disposition Status
-            AssertTrueIsDisplayed(dispositionFileDetailsDispositionStatusLabel);
+            AssertTrueIsDisplayed(dispositionFileDetailsStatusLabel);
 
             if (disposition.DispositionStatus != "")
-                AssertTrueContentEquals(dispositionFileDetailsDispositionStatusContent, disposition.DispositionStatus);
+                AssertTrueContentEquals(dispositionFileDetailsStatusContent, disposition.DispositionStatus);
 
             //Disposition Type
-            AssertTrueIsDisplayed(dispositionFileDetailsDispositionTypeLabel);
+            AssertTrueIsDisplayed(dispositionFileDetailsTypeLabel);
 
             if (disposition.DispositionType != "")
-                AssertTrueContentEquals(dispositionFileDetailsDispositionTypeContent, disposition.DispositionType);
+                AssertTrueContentEquals(dispositionFileDetailsTypeContent, disposition.DispositionType);
 
             if (disposition.DispositionOtherTransferType != "")
             {
@@ -580,16 +614,16 @@ namespace PIMS.Tests.Automation.PageObjects
         private void VerifyMaximumFields()
         {
             //Verify File Name Input
-            webDriver.FindElement(dispositionFileNameInput).SendKeys("Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus");
+            webDriver.FindElement(dispositionFileDetailsNameInput).SendKeys("Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus");
             webDriver.FindElement(dispositionFileDetailsNameLabel).Click();
             AssertTrueIsDisplayed(dispositionFileNameInvalidMessage);
-            ClearInput(dispositionFileNameInput);
+            ClearInput(dispositionFileDetailsNameInput);
 
             //Verify Reference File Number Input
-            webDriver.FindElement(dispositionFileReferenceNumberInput).SendKeys("Test Reference numberTest Reference numberTest Reference numberTest Reference numberTest Reference numberTest Reference numberTest Reference numberTest Reference numberTest Reference numberTest Referen");
+            webDriver.FindElement(dispositionFileDetailsReferenceNumberInput).SendKeys("Test Reference numberTest Reference numberTest Reference numberTest Reference numberTest Reference numberTest Reference numberTest Reference numberTest Reference numberTest Reference numberTest Referen");
             webDriver.FindElement(dispositionFileDetailsReferenceNumberLabel).Click();
             AssertTrueIsDisplayed(dispositionFileReferenceNumberInvalidMessage);
-            ClearInput(dispositionFileReferenceNumberInput);
+            ClearInput(dispositionFileDetailsReferenceNumberInput);
         }
 
         private void AddTeamMembers(TeamMember teamMember)

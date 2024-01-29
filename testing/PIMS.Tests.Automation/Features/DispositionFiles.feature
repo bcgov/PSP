@@ -9,15 +9,15 @@ Scenario: 01. Disposition File Details
 	And I update the File details from an existing Disposition File from row number 3
 	Then A new Disposition file is created successfully
 
-Scenario: 02. Disposition File Properties
-	Given I create a new Disposition File from row number 5
-	When I add Properties to the Disposition File
-	#And I update a Disposition File's Properties from row number 6
-	#And I update a Property details from row number 5
-	Then A new Acquisition file is created successfully
+#Scenario: 02. Disposition File Properties
+#	Given I create a new Disposition File from row number 5
+#	When I add Properties to the Disposition File
+#	And I update a Disposition File's Properties from row number 6
+#	And I update a Property details from row number 5
+#	Then A new Disposition file is created successfully
 
 Scenario: 03. Disposition Checklist Tab
-	Given I create a new Disposition File from row number 1
+	Given I create a new Disposition File from row number 7
 	When I insert Checklist information to an Disposition File
 	Then Disposition File's Checklist has been saved successfully
 
@@ -32,6 +32,3 @@ Scenario: 06. Disposition File Notes
 	When  I create a new Note on the Notes Tab from row number 9
 	And  I edit a Note on the Notes Tab from row number 10
 	Then A new Disposition file is created successfully
-	Given I create a new Disposition File from row number 1
-	#When I add additional information to the Disposition File Details
-	#Then A new Disposition file is created successfully

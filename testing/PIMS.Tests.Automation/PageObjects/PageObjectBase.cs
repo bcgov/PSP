@@ -19,7 +19,7 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             this.webDriver = webDriver;
             wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(120));
-            wait.IgnoreExceptionTypes(typeof(NoSuchElementException), typeof(StaleElementReferenceException), typeof(ElementClickInterceptedException));
+            //wait.IgnoreExceptionTypes(typeof(NoSuchElementException), typeof(StaleElementReferenceException), typeof(ElementClickInterceptedException));
         }
 
         protected virtual void Wait(int milliseconds = 3000) => Thread.Sleep(milliseconds);
@@ -44,7 +44,7 @@ namespace PIMS.Tests.Automation.PageObjects
         protected void WaitUntilDisappear(By element)
         {
             wait.Until(ExpectedConditions.InvisibilityOfElementLocated(element));
-            Wait();
+            //Wait();
         }
 
         protected void WaitUntilVisible(By element)

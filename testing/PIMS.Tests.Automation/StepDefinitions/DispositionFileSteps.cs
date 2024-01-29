@@ -14,7 +14,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly SharedFileProperties sharedFileProperties;
         private readonly PropertyInformation propertyInformation;
         private readonly Notes notes;
-        public readonly DispositionFileDetails dispositionFileDetails;
         private readonly DispositionChecklist checklist;
 
         private readonly string userName = "TRANPSP1";
@@ -238,11 +237,11 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"A new Disposition file is created successfully")]
         public void NewDispositionFileCreated()
         {
-
             searchDispositionFiles.NavigateToSearchDispositionFile();
             searchDispositionFiles.SearchDispositionFileByDFile(dispositionFileCode);
 
             Assert.True(searchDispositionFiles.SearchFoundResults());
+            //searchDispositionFiles.VerifyAcquisitionFileTableContent(dispositionFile);
         }
 
         [StepDefinition(@"Disposition File's Checklist has been saved successfully")]

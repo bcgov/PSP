@@ -245,10 +245,8 @@ namespace PIMS.Tests.Automation.PageObjects
         //Document Modal Elements
         private By documentModalCloseIcon = By.CssSelector("div[class='modal-close-btn']");
         private By documentEditBttn = By.XPath("//div[@class='modal-body']/div/div/div/div/button");
-        //private By documentSaveButton = By.CssSelector("button[data-testid='save']");
-        //private By documentCancelButton = By.CssSelector("button[data-testid='cancel']");
-        private By documentSaveEditBttn = By.XPath("//div[@class='modal-body']/div/div[2]/div/div/div[5]/div/button[@type='submit']");
-        private By documentCancelEditBttn = By.XPath("//div[@class='modal-body']/div/div[2]/div/div/div[5]/div[1]/button");
+        private By documentCancelEditButton = By.XPath("//div[@class='modal-body']/div/div[2]/div/div/div/div/button/div[contains(text(),'No')]/parent::button");
+        private By documentSaveEditButton = By.XPath("//div[@class='modal-body']/div/div[2]/div/div/div/div/button/div[contains(text(),'Yes')]/parent::button");
 
         //Toast Element
         private By documentGeneralToastBody = By.CssSelector("div[class='Toastify__toast-body']");
@@ -538,8 +536,8 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void SaveEditDigitalDocument()
         {
-            WaitUntilClickable(documentSaveEditBttn);
-            webDriver.FindElement(documentSaveEditBttn).Click();
+            WaitUntilClickable(documentSaveEditButton);
+            webDriver.FindElement(documentSaveEditButton).Click();
 
             WaitUntilSpinnerDisappear();
         }
@@ -548,7 +546,7 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             sharedModals.ModalClickCancelBttn();
 
-            Wait(2000);
+            Wait();
             if (webDriver.FindElements(documentConfirmationModal).Count() > 0)
             {
                 AssertTrueContentEquals(documentConfirmationContent, "You have made changes on this form. Do you wish to leave without saving?");
@@ -558,8 +556,8 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void CancelEditDigitalDocument()
         {
-            WaitUntilVisible(documentCancelEditBttn);
-            webDriver.FindElement(documentCancelEditBttn).Click();
+            Wait();
+            FocusAndClick(documentCancelEditButton);
 
             WaitUntilVisible(documentConfirmationModal);
             if (webDriver.FindElements(documentConfirmationModal).Count() > 0)
@@ -571,7 +569,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void CloseDigitalDocumentViewDetails()
         {
-            WaitUntilVisible(documentModalCloseIcon);
+            Wait();
             webDriver.FindElement(documentModalCloseIcon).Click();
         }
 

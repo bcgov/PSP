@@ -131,8 +131,8 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void SelectFirstOption()
         {
-            WaitUntilClickable(searchDispositionFile1stResult);
-            webDriver.FindElement(searchDispositionFile1stResult).Click();
+            WaitUntilClickable(searchDispositionFile1stResultLink);
+            webDriver.FindElement(searchDispositionFile1stResultLink).Click();
 
             WaitUntilClickable(searchDispositionFileHeaderCode);
             AssertTrueIsDisplayed(searchDispositionFileHeaderCode);
