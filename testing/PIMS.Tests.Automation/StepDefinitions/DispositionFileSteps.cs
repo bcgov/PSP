@@ -12,6 +12,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly LoginSteps loginSteps;
         public readonly DispositionFileDetails dispositionFileDetails;
         private readonly DispositionChecklist checklist;
+        private readonly DispositionOfferSale offerSale;
 
         private readonly string userName = "TRANPSP1";
         private DispositionFile dispositionFile;
@@ -21,6 +22,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             loginSteps = new LoginSteps(driver);
             dispositionFileDetails = new DispositionFileDetails(driver.Current);
             checklist = new DispositionChecklist(driver.Current);
+            offerSale = new DispositionOfferSale(driver.Current);
         }
 
         [StepDefinition(@"I create a new Disposition File from row number (.*)")]
@@ -75,6 +77,72 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Verify Checklist Content after update
             checklist.VerifyChecklistViewForm(dispositionFile.DispositionFileChecklist);
+        }
+
+        [StepDefinition(@"I create Appraisal and Assessment section within Disposition File")]
+        public void CreateOfferAndSalesAppraisalAndAssessment()
+        {
+            /* TEST COVERAGE:  */
+
+            //Navigate to Offers and sale Tab
+            offerSale.NavigateoffersAndSaleTab();
+
+            //verify Inital screen of Offers and sale Tab
+            offerSale.VerifyInitOffersAndSaleTab();
+
+            // Create AppraisalAndAssessment section by clicking edit button
+             offerSale.EditAppraisalAndAssessmentButton();
+             offerSale.CreateNewAppraisalAndAssessment(dispositionFile);
+
+            //Save the AppraisalAndAssessment section from
+            offerSale.SaveDispositionFileOffersAndSale();
+
+        }
+
+        [StepDefinition(@"I update Appraisal and Assessment and Offers section within Disposition File from row number (.*)")]
+        public void UpdateOfferAndSalesAppraisalAndAssessment(int rowNumber)
+        {
+            /* TEST COVERAGE:  */
+
+            
+            PopulateDispositionFile(rowNumber);
+
+            //Search for an existing Disposition File
+            //Sue created this function
+
+            //Navigate to Offers and sale Tab
+            offerSale.NavigateoffersAndSaleTab();
+
+            //verify Inital screen of Offers and sale Tab
+            offerSale.VerifyInitOffersAndSaleTab();
+
+            // Create AppraisalAndAssessment section by clicking edit button
+            offerSale.EditAppraisalAndAssessmentButton();
+            offerSale.UpdateAppraisalAndAssessment(dispositionFile);
+
+            //Save the AppraisalAndAssessment section from
+            offerSale.SaveDispositionFileOffersAndSale();
+
+        }
+
+        [StepDefinition(@"I create Offers section within Disposition File")]
+        public void CreateOfferAndSalesOffers()
+        {
+            /* TEST COVERAGE:  */
+
+            //Navigate to Offers and sale Tab
+            offerSale.NavigateoffersAndSaleTab();
+
+            //verify Inital screen of Offers and sale Tab
+            offerSale.VerifyInitOffersAndSaleTab();
+
+            // Create AppraisalAndAssessment section by clicking edit button
+            // offerSale.EditAppraisalAndAssessmentButton();
+            //offerSale.CreateNewAppraisalAndAssessment(appraisalandassessment);
+
+            //Save the AppraisalAndAssessment section from
+            //offerSale.SaveDispositionFileOffersAndSale();
+
         }
 
         private void PopulateDispositionFile(int rowNumber)
@@ -161,6 +229,33 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 dispositionFile.DispositionFileChecklist.SaleInformationSelect10 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "SaleInformationSelect10");
                 dispositionFile.DispositionFileChecklist.SaleInformationSelect11 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "SaleInformationSelect11");
             }
+
+            // Disposition Offer and sales
+
+            // Offers and sales Appraisal and assessment section
+            dispositionFile.AppraisalAndAssessmentAppraisalValue = ExcelDataContext.ReadData(rowNumber, "AppraisalAndAssessmentAppraisalValue");
+            dispositionFile.AppraisalAndAssessmentAppraisalDate = ExcelDataContext.ReadData(rowNumber, "AppraisalAndAssessmentAppraisalDate");
+            dispositionFile.AppraisalAndAssessmentBcAssessmentValue = ExcelDataContext.ReadData(rowNumber, "AppraisalAndAssessmentBcAssessmentValue");
+            dispositionFile.AppraisalAndAssessmentBcAssessmentRollYear = ExcelDataContext.ReadData(rowNumber, "AppraisalAndAssessmentBcAssessmentRollYear");
+            dispositionFile.AppraisalAndAssessmentListPrice = ExcelDataContext.ReadData(rowNumber, "AppraisalAndAssessmentListPrice");
+
+            dispositionFile.OfferSaleStartRow = int.Parse(ExcelDataContext.ReadData(rowNumber, "OfferSaleStartRow"));
+            dispositionFile.OfferSaleTotalCount = int.Parse(ExcelDataContext.ReadData(rowNumber, "OfferSaleTotalCount"));
+            if (dispositionFile.OfferSaleStartRow > 0)
+            {
+
+                DataTable OfferSaleSheet = ExcelDataContext.GetInstance().Sheets["DispositionOfferSale"];
+                ExcelDataContext.PopulateInCollection(OfferSaleSheet);
+
+                // Offers and sales Offers section
+                dispositionFile.DispositionOfferAndSale.OfferOfferName = ExcelDataContext.ReadData(rowNumber, "OfferOfferName");
+                dispositionFile.DispositionOfferAndSale.OfferOfferDate = ExcelDataContext.ReadData(rowNumber, "OfferOfferDate");
+                dispositionFile.DispositionOfferAndSale.OfferOfferExpiryDate = ExcelDataContext.ReadData(rowNumber, "OfferOfferExpiryDate");
+                dispositionFile.DispositionOfferAndSale.OfferPrice = ExcelDataContext.ReadData(rowNumber, "OfferPrice");
+                dispositionFile.DispositionOfferAndSale.OfferNotes = ExcelDataContext.ReadData(rowNumber, "OfferNotes");
+
+            }
+       
 
         }
     }

@@ -34,6 +34,18 @@ namespace PIMS.Tests.Automation.Classes
 
         public DispositionFileChecklist? DispositionFileChecklist { get; set; } = new DispositionFileChecklist();
 
+        public string AppraisalAndAssessmentAppraisalValue { get; set; } = String.Empty;
+        public string? AppraisalAndAssessmentAppraisalDate { get; set; } = String.Empty;
+        public string AppraisalAndAssessmentBcAssessmentValue { get; set; } = String.Empty;
+        public string? AppraisalAndAssessmentBcAssessmentRollYear { get; set; } = String.Empty;
+        public string? AppraisalAndAssessmentListPrice { get; set; } = String.Empty;
+
+        public int OfferSaleStartRow { get; set; } = 0;
+
+        public int OfferSaleTotalCount { get; set; } = 0;
+
+        public DispositionOfferAndSale? DispositionOfferAndSale { get; set; } = new DispositionOfferAndSale();
+
     }
 
     public class DispositionFileChecklist
@@ -82,11 +94,7 @@ namespace PIMS.Tests.Automation.Classes
     }
     public class DispositionOfferAndSale
     {
-        public string AppraisalAndAssessmentAppraisalValue { get; set; } = String.Empty;
-        public string? AppraisalAndAssessmentAppraisalDate { get; set; } = String.Empty;
-        public string AppraisalAndAssessmentBcAssessmentValue { get; set; } = String.Empty;
-        public string? AppraisalAndAssessmentBcAssessmentRollYear { get; set; } = String.Empty;
-        public string? AppraisalAndAssessmentListPrice { get; set; } = String.Empty;
+
         public string? OfferOfferStatus { get; set; } = String.Empty;
         public string? OfferOfferName{ get; set; } = null!;
         public string? OfferOfferDate { get; set; } = null!;

@@ -45,7 +45,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By dispositionOfferNotesTooltip = By.XPath("//label[contains(text(),'Notes')]/span/span[@data-testid='tooltip-icon-section-field-tooltip']");
 
         //Sales Details section view elements
-        private By offersAndSaleSalesDetailsSubtitle = By.XPath("//div[contains(text(), 'Sales Details')]");
+        private By offersAndSaleSalesDetailsSubtitle = By.XPath("//label[contains(text(), 'Sales Details')]");
         private By dispositionSalesDetailsMessage = By.XPath("//p[contains(text(),'There are no sale details indicated with this disposition file.')]");
 
         //Disposition File Confirmation Modal Elements
@@ -101,7 +101,7 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(dispositionAppraisalEditButton);
         }
 
-        public void CreateNewAppraisalAndAssessment(DispositionOfferAndSale appraisalandassessment)
+        public void CreateNewAppraisalAndAssessment(DispositionFile appraisalandassessment)
         {
             Wait();
 
@@ -124,6 +124,98 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(dispositionListPriceInput).SendKeys(appraisalandassessment.AppraisalAndAssessmentListPrice);
 
         }
+
+        public void CreateNewOffer(DispositionOfferAndSale offer)
+        {
+            Wait();
+
+            ChooseSpecificSelectOption(dispositionOfferStatusInput, offer.OfferOfferStatus);
+            if (offer.OfferOfferName != "")
+            {
+                webDriver.FindElement(dispositionOfferNameInput).SendKeys(offer.OfferOfferName);
+            }
+
+            if (offer.OfferOfferDate != "")
+            {
+                webDriver.FindElement(dispositionOfferDateInput).SendKeys(offer.OfferOfferDate);
+                webDriver.FindElement(dispositionOfferDateInput).SendKeys(Keys.Enter);
+            }
+            if (offer.OfferOfferExpiryDate != "")
+            {
+                webDriver.FindElement(dispositionOfferExpiryDateInput).SendKeys(offer.OfferOfferExpiryDate);
+                webDriver.FindElement(dispositionOfferExpiryDateInput).SendKeys(Keys.Enter);
+            }
+            if (offer.OfferPrice != "")
+            {
+                webDriver.FindElement(dispositionOfferPriceInput).SendKeys(offer.OfferPrice);
+                webDriver.FindElement(dispositionOfferPriceInput).SendKeys(Keys.Enter);
+            }
+            if (offer.OfferNotes != "")
+            {
+                webDriver.FindElement(dispositionOfferNotesInput).SendKeys(offer.OfferNotes);
+                webDriver.FindElement(dispositionOfferNotesInput).SendKeys(Keys.Enter);
+            }
+        }
+
+        public void UpdateAppraisalAndAssessment(DispositionFile appraisalandassessmentUpdate)
+        {
+            Wait();
+            webDriver.FindElement(dispositionAppraisalValueInput).SendKeys(appraisalandassessmentUpdate.AppraisalAndAssessmentAppraisalValue);
+
+            if (appraisalandassessmentUpdate.AppraisalAndAssessmentAppraisalDate != "")
+            {
+                ClearInput(dispositionAppraisalDateInput);
+                webDriver.FindElement(dispositionAppraisalDateInput).SendKeys(appraisalandassessmentUpdate.AppraisalAndAssessmentAppraisalDate);
+                webDriver.FindElement(dispositionAppraisalDateInput).SendKeys(Keys.Enter);
+            }
+
+            ClearInput(dispositionBcAssessmentValueInput);
+            webDriver.FindElement(dispositionBcAssessmentValueInput).SendKeys(appraisalandassessmentUpdate.AppraisalAndAssessmentBcAssessmentValue);
+
+            if (appraisalandassessmentUpdate.AppraisalAndAssessmentBcAssessmentRollYear != "")
+            {
+                ClearInput(dispositionBcAssessmentRollYearInput);
+                webDriver.FindElement(dispositionBcAssessmentRollYearInput).SendKeys(appraisalandassessmentUpdate.AppraisalAndAssessmentBcAssessmentRollYear);
+                webDriver.FindElement(dispositionBcAssessmentRollYearInput).SendKeys(Keys.Enter);
+            }
+            ClearInput(dispositionListPriceInput);
+            webDriver.FindElement(dispositionListPriceInput).SendKeys(appraisalandassessmentUpdate.AppraisalAndAssessmentListPrice);
+
+        }
+        public void UpdateOffers(DispositionOfferAndSale offerUpdate) {
+            ChooseSpecificSelectOption(By.XPath("//label[contains(text(),'Offer status')]"), offerUpdate.OfferOfferStatus);
+            if (offerUpdate.OfferOfferName != "")
+            {
+                ClearInput(By.Id("input-offerName"));
+                webDriver.FindElement(By.Id("input-offerName")).SendKeys(offerUpdate.OfferOfferName);
+            }
+
+            if (offerUpdate.OfferOfferDate != "")
+            {
+                ClearInput(dispositionOfferDateInput);
+                webDriver.FindElement(dispositionOfferDateInput).SendKeys(offerUpdate.OfferOfferDate);
+                webDriver.FindElement(dispositionOfferDateInput).SendKeys(Keys.Enter);
+            }
+            if (offerUpdate.OfferOfferExpiryDate != "")
+            {
+                ClearInput(dispositionOfferExpiryDateInput);
+                webDriver.FindElement(dispositionOfferExpiryDateInput).SendKeys(offerUpdate.OfferOfferExpiryDate);
+                webDriver.FindElement(dispositionOfferExpiryDateInput).SendKeys(Keys.Enter);
+            }
+            if (offerUpdate.OfferPrice != "")
+            {
+                ClearInput(dispositionOfferPriceInput);
+                webDriver.FindElement(dispositionOfferPriceInput).SendKeys(offerUpdate.OfferPrice);
+                webDriver.FindElement(dispositionOfferPriceInput).SendKeys(Keys.Enter);
+            }
+            if (offerUpdate.OfferNotes != "")
+            {
+                ClearInput(dispositionOfferNotesInput);
+                webDriver.FindElement(dispositionOfferNotesInput).SendKeys(offerUpdate.OfferNotes);
+                webDriver.FindElement(dispositionOfferNotesInput).SendKeys(Keys.Enter);
+            }
+        }
+       
 
     }
 }
