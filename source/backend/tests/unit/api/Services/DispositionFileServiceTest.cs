@@ -432,6 +432,42 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
+        public void Update_IsContractor_SelfRemoved_ShouldFail()
+        {
+            // Arrange
+            var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionEdit);
+            var dispositionFile = EntityHelper.CreateDispositionFile(1);
+            dispositionFile.PimsDispositionFileTeams = new List<PimsDispositionFileTeam>()
+            {
+                new PimsDispositionFileTeam()
+                {
+                    DispositionFileTeamId = 100,
+                    DispositionFileId = 1,
+                    PersonId = 20,
+                }
+            };
+
+            var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
+            repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(dispositionFile);
+            repository.Setup(x => x.Update(It.IsAny<long>(), It.IsAny<PimsDispositionFile>())).Returns(dispositionFile);
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            var contractorUser = EntityHelper.CreateUser(1, Guid.NewGuid(), username: "Test", isContractor: true);
+            contractorUser.PersonId = 20;
+
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
+
+            var updateDispositionFile = EntityHelper.CreateDispositionFile(1);
+
+            // Act
+            Action act = () => service.Update(1, updateDispositionFile, new List<UserOverrideCode>() { UserOverrideCode.UpdateRegion });
+
+            // Assert
+            var ex = act.Should().Throw<ContractorNotInTeamException>();
+        }
+
+        [Fact]
         public void Update_IsContractor_Success()
         {
             // Arrange
