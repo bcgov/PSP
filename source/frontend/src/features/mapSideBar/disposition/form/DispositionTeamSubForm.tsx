@@ -63,7 +63,8 @@ const DispositionTeamSubForm: React.FunctionComponent<
                         ...getDeleteModalProps(),
                         title: 'Remove Team Member',
                         message: 'Do you wish to remove this team member?',
-                        okButtonText: 'Remove',
+                        okButtonText: 'Yes',
+                        cancelButtonText: 'No',
                         handleOk: async () => {
                           arrayHelpers.remove(index);
                           setDisplayModal(false);

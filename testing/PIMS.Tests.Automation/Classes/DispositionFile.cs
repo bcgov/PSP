@@ -24,8 +24,15 @@
         public SearchProperty? DispositionSearchProperties { get; set; } = new SearchProperty();
         public int DispositionFileChecklistIndex { get; set; } = 0;
         public DispositionFileChecklist? DispositionFileChecklist { get; set; } = new DispositionFileChecklist();
+        public string? AppraisalAndAssessmentAppraisalValue { get; set; } = String.Empty;
+        public string? AppraisalAndAssessmentAppraisalDate { get; set; } = String.Empty;
+        public string? AppraisalAndAssessmentBcAssessmentValue { get; set; } = String.Empty;
+        public string? AppraisalAndAssessmentBcAssessmentRollYear { get; set; } = String.Empty;
+        public string? AppraisalAndAssessmentListPrice { get; set; } = String.Empty;
+        public int OfferSaleStartRow { get; set; } = 0;
+        public int OfferSaleTotalCount { get; set; } = 0;
+        public List<DispositionOfferAndSale>? DispositionOfferAndSale { get; set; } = new List<DispositionOfferAndSale>();
     }
-
     public class DispositionFileChecklist
     {
         public string? FileInitiationSelect1 { get; set; } = String.Empty;
@@ -67,5 +74,14 @@
         public string? SaleInformationSelect9 { get; set; } = String.Empty;
         public string? SaleInformationSelect10 { get; set; } = String.Empty;
         public string? SaleInformationSelect11 { get; set; } = String.Empty;
+    }
+    public class DispositionOfferAndSale
+    {
+        public string? OfferOfferStatus { get; set; } = String.Empty;
+        public string? OfferOfferName{ get; set; } = null!;
+        public string? OfferOfferDate { get; set; } = null!;
+        public string? OfferOfferExpiryDate { get; set; } = String.Empty;
+        public string? OfferPrice { get; set; } = null!;
+        public string? OfferNotes { get; set; } = String.Empty;
     }
 }

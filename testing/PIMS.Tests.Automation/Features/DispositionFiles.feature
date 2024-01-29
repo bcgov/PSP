@@ -21,14 +21,20 @@ Scenario: 03. Disposition Checklist Tab
 	When I insert Checklist information to an Disposition File
 	Then Disposition File's Checklist has been saved successfully
 
-Scenario: 05. Disposition Files Digital Documents
+Scenario: 04. Disposition Offers and Sale Tab
 	Given I create a new Disposition File from row number 8
+	When I create Appraisal and Assessment section within Disposition File
+	And I update Appraisal and Assessment and Offers section within Disposition File from row number 9
+	Then A new Disposition file is created successfully
+
+Scenario: 05. Disposition Files Digital Documents
+	Given I create a new Disposition File from row number 10
 	When I create Digital Documents for a "Disposition File" row number 12
 	And  I edit a Digital Document for a "Disposition File" from row number 13
 	Then A new Disposition file is created successfully
 
 Scenario: 06. Disposition File Notes
-	Given I create a new Disposition File from row number 9
+	Given I create a new Disposition File from row number 11
 	When  I create a new Note on the Notes Tab from row number 9
 	And  I edit a Note on the Notes Tab from row number 10
 	Then A new Disposition file is created successfully
