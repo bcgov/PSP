@@ -23,9 +23,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By documentUploadDragDropArea = By.XPath("//div[contains(text(),'Drag files here to attach or')]");
         private By documentUploadDocInput = By.Id("uploadInput");
         private By documentUploadDocInfoSubtitle = By.XPath("//h2/div/div[contains(text(),'Document Information')]");
-        private By documentUploadDocInfoSubtitle2 = By.XPath("//h2/div/div[contains(text(),'Document information')]");
         private By documentUploadStatusLabel = By.XPath("//div[contains(text(),'Document Information')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Status')]");
-        private By documentUploadViewStatusLabel = By.XPath("//div[contains(text(),'Document information')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Status')]");
         private By documentUploadStatusSelect = By.Id("input-documentStatusCode");
         private By documentUploadDetailsSubtitle = By.XPath("//h3[contains(text(),'Details')]");
 
@@ -191,7 +189,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By documentViewFileNameContent = By.XPath("//div[@class='modal-body']/div/div/div/div/label[contains(text(),'File name')]/parent::div/following-sibling::div");
         private By documentViewDownloadButton = By.CssSelector("button[data-testid='document-download-button']");
         private By documentViewDocumentInfoTooltip = By.CssSelector("span[data-testid='tooltip-icon-documentInfoToolTip']");
-        private By documentViewStatusContent = By.XPath("//div[contains(text(),'Document information')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Status')]/parent::div/following-sibling::div");
+        private By documentViewStatusContent = By.XPath("//div[contains(text(),'Document Information')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Status')]/parent::div/following-sibling::div");
 
         private By documentViewCanadaLandSurveyContent = By.XPath("//label[contains(text(),'Canada land survey')]/parent::div/following-sibling::div");
         private By documentViewCivicAddressContent = By.XPath("//label[contains(text(),'Civic address')]/parent::div/following-sibling::div");
@@ -247,10 +245,8 @@ namespace PIMS.Tests.Automation.PageObjects
         //Document Modal Elements
         private By documentModalCloseIcon = By.CssSelector("div[class='modal-close-btn']");
         private By documentEditBttn = By.XPath("//div[@class='modal-body']/div/div/div/div/button");
-        //private By documentSaveButton = By.CssSelector("button[data-testid='save']");
-        //private By documentCancelButton = By.CssSelector("button[data-testid='cancel']");
-        private By documentSaveEditBttn = By.XPath("//div[@class='modal-body']/div/div[2]/div/div/div[5]/div/button[@type='submit']");
-        private By documentCancelEditBttn = By.XPath("//div[@class='modal-body']/div/div[2]/div/div/div[5]/div[1]/button");
+        private By documentCancelEditButton = By.XPath("//div[@class='modal-body']/div/div[2]/div/div/div/div/button/div[contains(text(),'No')]/parent::button");
+        private By documentSaveEditButton = By.XPath("//div[@class='modal-body']/div/div[2]/div/div/div/div/button/div[contains(text(),'Yes')]/parent::button");
 
         //Toast Element
         private By documentGeneralToastBody = By.CssSelector("div[class='Toastify__toast-body']");
@@ -540,8 +536,8 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void SaveEditDigitalDocument()
         {
-            WaitUntilClickable(documentSaveEditBttn);
-            webDriver.FindElement(documentSaveEditBttn).Click();
+            WaitUntilClickable(documentSaveEditButton);
+            webDriver.FindElement(documentSaveEditButton).Click();
 
             WaitUntilSpinnerDisappear();
         }
@@ -550,7 +546,7 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             sharedModals.ModalClickCancelBttn();
 
-            Wait(2000);
+            Wait();
             if (webDriver.FindElements(documentConfirmationModal).Count() > 0)
             {
                 AssertTrueContentEquals(documentConfirmationContent, "You have made changes on this form. Do you wish to leave without saving?");
@@ -560,8 +556,8 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void CancelEditDigitalDocument()
         {
-            WaitUntilVisible(documentCancelEditBttn);
-            webDriver.FindElement(documentCancelEditBttn).Click();
+            Wait();
+            FocusAndClick(documentCancelEditButton);
 
             WaitUntilVisible(documentConfirmationModal);
             if (webDriver.FindElements(documentConfirmationModal).Count() > 0)
@@ -573,7 +569,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void CloseDigitalDocumentViewDetails()
         {
-            WaitUntilVisible(documentModalCloseIcon);
+            Wait();
             webDriver.FindElement(documentModalCloseIcon).Click();
         }
 
@@ -1020,10 +1016,10 @@ namespace PIMS.Tests.Automation.PageObjects
             //AssertTrueIsDisplayed(documentViewDownloadButton);
 
             //Document Information
-            AssertTrueIsDisplayed(documentUploadDocInfoSubtitle2);
+            AssertTrueIsDisplayed(documentUploadDocInfoSubtitle);
             AssertTrueIsDisplayed(documentViewDocumentInfoTooltip);
             AssertTrueIsDisplayed(documentEditBttn);
-            AssertTrueIsDisplayed(documentUploadViewStatusLabel);
+            AssertTrueIsDisplayed(documentUploadStatusLabel);
             AssertTrueContentEquals(documentViewStatusContent, document.DocumentStatus);
 
             //Document Details
@@ -1184,10 +1180,10 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(documentViewDownloadButton);
 
             //Document Information
-            AssertTrueIsDisplayed(documentUploadDocInfoSubtitle2);
+            AssertTrueIsDisplayed(documentUploadDocInfoSubtitle);
             AssertTrueIsDisplayed(documentViewDocumentInfoTooltip);
             AssertTrueIsDisplayed(documentEditBttn);
-            AssertTrueIsDisplayed(documentUploadViewStatusLabel);
+            AssertTrueIsDisplayed(documentUploadStatusLabel);
             AssertTrueContentEquals(documentViewStatusContent, document.DocumentStatus);
 
             //Document Details

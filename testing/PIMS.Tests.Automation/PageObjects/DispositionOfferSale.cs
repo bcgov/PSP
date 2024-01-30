@@ -1,36 +1,39 @@
 ﻿using OpenQA.Selenium;
 using PIMS.Tests.Automation.Classes;
-using System;
-using System.Diagnostics;
 
 namespace PIMS.Tests.Automation.PageObjects
 {
     public class DispositionOfferSale : PageObjectBase
-
     {
         private By offersAndSaleTab = By.XPath("//a[contains(text(),'Offers & Sale')]");
 
         //Appraisal and Assessment section view elements 
         private By offersAndSaleAppraisalAndAssessmentSubtitle = By.XPath("//h2/div/div/div/label[contains(text(), 'Appraisal and Assessment')]");
         private By dispositionAppraisalEditButton = By.CssSelector("button[title='Edit Appraisal']");
-        private By dispositionAppraisalAndAssessmentMessage = By.XPath("//p[contains(text(),'There are no value details indicated with this disposition file.')]");
+        private By dispositionAppraisalAndAssessmentMessage = By.XPath("//p[contains(text(),'There are no Appraisal and Assessment details indicated with this disposition file.')]");
         private By dispositionAppraisalValueLabel = By.XPath("//label[contains(text(),'Appraisal value ($)')]");
+        private By dispositionAppraisalValueContent = By.XPath("//label[contains(text(),'Appraisal value ($)')]/parent::div/following-sibling::div");
         private By dispositionAppraisalValueInput = By.Id("input-appraisedValueAmount");
         private By dispositionAppraisalDateLabel = By.XPath("//label[contains(text(),'Appraisal date')]");
+        private By dispositionAppraisalDateContent = By.XPath("//label[contains(text(),'Appraisal date')]/parent::div/following-sibling::div");
         private By dispositionAppraisalDateInput = By.Id("datepicker-appraisalDate");
         private By dispositionBcAssessmentValueLabel = By.XPath("//label[contains(text(),'BC assessment value ($)')]");
+        private By dispositionBcAssessmentValueContent = By.XPath("//label[contains(text(),'BC assessment value ($)')]/parent::div/following-sibling::div");
         private By dispositionBcAssessmentValueInput = By.Id("input-bcaValueAmount");
         private By dispositionBcAssessmentRollYearLabel = By.XPath("//label[contains(text(),'BC assessment roll year')]");
+        private By dispositionBcAssessmentRollYearContent = By.XPath("//label[contains(text(),'BC assessment roll year')]/parent::div/following-sibling::div");
         private By dispositionBcAssessmentRollYearInput = By.Id("datepicker-bcaRollYear");
         private By dispositionListPriceLabel = By.XPath("//label[contains(text(),'List price ($)')]");
+        private By dispositionListPriceContent = By.XPath("//label[contains(text(),'List price ($)')]/parent::div/following-sibling::div");
         private By dispositionListPriceInput = By.Id("input-listPriceAmount");
 
         //Offers section view elements
         private By offersAndSaleOffersSubtitle = By.XPath("//div[contains(text(), 'Offers')]");
         private By addOffersButton = By.XPath("//div[contains(text(),'Offers')]/following-sibling::div/button");
         private By dispositionOffersMessage = By.XPath("//p[contains(text(),'There are no offers indicated with this disposition file.')]");
+
         private By dispositionOfferStatusLabel = By.XPath("//label[contains(text(),'Offer status')]");
-        private By dispositionOfferStatusInput = By.Id("input-dispositionOfferStatusTypeCode");
+        private By dispositionOfferStatusSelect = By.Id("input-dispositionOfferStatusTypeCode");
         private By dispositionOfferStatusTooltip = By.XPath("//label[contains(text(),'Offer status')]/span/span[@data-testid='tooltip-icon-section-field-tooltip']");
         private By dispositionOfferNameLabel = By.XPath("//label[contains(text(),'Offer name(s)')]");
         private By dispositionOfferNameInput = By.Id("input-offerName");
@@ -57,19 +60,11 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             sharedModals = new SharedModals(webDriver);
         }
+
         public void NavigateoffersAndSaleTab()
         {
             WaitUntilClickable(offersAndSaleTab);
             webDriver.FindElement(offersAndSaleTab).Click();
-        }
-        public void VerifyInitOffersAndSaleTab()
-        {
-            AssertTrueIsDisplayed(offersAndSaleAppraisalAndAssessmentSubtitle);
-            AssertTrueIsDisplayed(dispositionAppraisalAndAssessmentMessage);
-            AssertTrueIsDisplayed(offersAndSaleOffersSubtitle);
-            AssertTrueIsDisplayed(dispositionOffersMessage);
-            AssertTrueIsDisplayed(offersAndSaleSalesDetailsSubtitle);
-            AssertTrueIsDisplayed(dispositionSalesDetailsMessage);
         }
 
         public void EditAppraisalAndAssessmentButton()
@@ -82,7 +77,22 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             Wait();
             ButtonElement("Save");
+        }
 
+        public void DeleteOffer(int index)
+        {
+            Wait();
+            webDriver.FindElement(By.CssSelector("button[data-testid='Offer["+ index +"].delete-btn']")).Click();
+
+            Wait();
+            if (webDriver.FindElements(dispositionFileConfirmationModal).Count() > 0)
+            {
+                Assert.Equal("Delete Offer", sharedModals.ModalHeader());
+                Assert.Contains("You have selected to delete this offer.", sharedModals.ModalContent());
+                Assert.Contains("Do you want to proceed?", sharedModals.ModalContent());
+
+                sharedModals.ModalClickOKBttn();
+            }
         }
 
         public void CancelDispositionFileOffersAndSale()
@@ -105,11 +115,11 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             Wait();
 
-            webDriver.FindElement(dispositionAppraisalValueInput).SendKeys(appraisalandassessment.AppraisalAndAssessmentAppraisalValue);
+            webDriver.FindElement(dispositionAppraisalValueInput).SendKeys(appraisalandassessment.AppraisalAndAssessmentValue);
 
-            if (appraisalandassessment.AppraisalAndAssessmentAppraisalDate != "")
+            if (appraisalandassessment.AppraisalAndAssessmentDate != "")
             {
-                webDriver.FindElement(dispositionAppraisalDateInput).SendKeys(appraisalandassessment.AppraisalAndAssessmentAppraisalDate);
+                webDriver.FindElement(dispositionAppraisalDateInput).SendKeys(appraisalandassessment.AppraisalAndAssessmentDate);
                 webDriver.FindElement(dispositionAppraisalDateInput).SendKeys(Keys.Enter);
             }
 
@@ -128,28 +138,33 @@ namespace PIMS.Tests.Automation.PageObjects
         public void CreateNewOffer(DispositionOfferAndSale offer)
         {
             Wait();
+            webDriver.FindElement(addOffersButton).Click();
 
-            ChooseSpecificSelectOption(dispositionOfferStatusInput, offer.OfferOfferStatus);
+            Wait();
+            if(offer.OfferOfferStatus != "")
+                ChooseSpecificSelectOption(dispositionOfferStatusSelect, offer.OfferOfferStatus);
+
             if (offer.OfferOfferName != "")
-            {
                 webDriver.FindElement(dispositionOfferNameInput).SendKeys(offer.OfferOfferName);
-            }
 
             if (offer.OfferOfferDate != "")
             {
                 webDriver.FindElement(dispositionOfferDateInput).SendKeys(offer.OfferOfferDate);
                 webDriver.FindElement(dispositionOfferDateInput).SendKeys(Keys.Enter);
             }
+
             if (offer.OfferOfferExpiryDate != "")
             {
                 webDriver.FindElement(dispositionOfferExpiryDateInput).SendKeys(offer.OfferOfferExpiryDate);
                 webDriver.FindElement(dispositionOfferExpiryDateInput).SendKeys(Keys.Enter);
             }
+
             if (offer.OfferPrice != "")
             {
                 webDriver.FindElement(dispositionOfferPriceInput).SendKeys(offer.OfferPrice);
                 webDriver.FindElement(dispositionOfferPriceInput).SendKeys(Keys.Enter);
             }
+
             if (offer.OfferNotes != "")
             {
                 webDriver.FindElement(dispositionOfferNotesInput).SendKeys(offer.OfferNotes);
@@ -160,12 +175,12 @@ namespace PIMS.Tests.Automation.PageObjects
         public void UpdateAppraisalAndAssessment(DispositionFile appraisalandassessmentUpdate)
         {
             Wait();
-            webDriver.FindElement(dispositionAppraisalValueInput).SendKeys(appraisalandassessmentUpdate.AppraisalAndAssessmentAppraisalValue);
+            webDriver.FindElement(dispositionAppraisalValueInput).SendKeys(appraisalandassessmentUpdate.AppraisalAndAssessmentValue);
 
-            if (appraisalandassessmentUpdate.AppraisalAndAssessmentAppraisalDate != "")
+            if (appraisalandassessmentUpdate.AppraisalAndAssessmentDate != "")
             {
                 ClearInput(dispositionAppraisalDateInput);
-                webDriver.FindElement(dispositionAppraisalDateInput).SendKeys(appraisalandassessmentUpdate.AppraisalAndAssessmentAppraisalDate);
+                webDriver.FindElement(dispositionAppraisalDateInput).SendKeys(appraisalandassessmentUpdate.AppraisalAndAssessmentDate);
                 webDriver.FindElement(dispositionAppraisalDateInput).SendKeys(Keys.Enter);
             }
 
@@ -182,8 +197,16 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(dispositionListPriceInput).SendKeys(appraisalandassessmentUpdate.AppraisalAndAssessmentListPrice);
 
         }
-        public void UpdateOffers(DispositionOfferAndSale offerUpdate) {
-            ChooseSpecificSelectOption(By.XPath("//label[contains(text(),'Offer status')]"), offerUpdate.OfferOfferStatus);
+
+        public void UpdateOffers(DispositionOfferAndSale offerUpdate, int index) {
+
+            Wait();
+            webDriver.FindElement(By.CssSelector("button[data-testid='Offer["+ index +"].edit-btn']")).Click();
+
+            Wait();
+            if(offerUpdate.OfferOfferStatus != "")
+                ChooseSpecificSelectOption(dispositionOfferStatusSelect, offerUpdate.OfferOfferStatus);
+
             if (offerUpdate.OfferOfferName != "")
             {
                 ClearInput(By.Id("input-offerName"));
@@ -215,7 +238,68 @@ namespace PIMS.Tests.Automation.PageObjects
                 webDriver.FindElement(dispositionOfferNotesInput).SendKeys(Keys.Enter);
             }
         }
-       
 
+        public void VerifyInitOffersAndSaleTab()
+        {
+            AssertTrueIsDisplayed(offersAndSaleAppraisalAndAssessmentSubtitle);
+            AssertTrueIsDisplayed(dispositionAppraisalAndAssessmentMessage);
+            AssertTrueIsDisplayed(offersAndSaleOffersSubtitle);
+            AssertTrueIsDisplayed(dispositionOffersMessage);
+            AssertTrueIsDisplayed(offersAndSaleSalesDetailsSubtitle);
+            AssertTrueIsDisplayed(dispositionSalesDetailsMessage);
+        }
+
+        public void VerifyCreatedAppraisalAndAssessment(DispositionFile disposition)
+        {
+            AssertTrueIsDisplayed(offersAndSaleAppraisalAndAssessmentSubtitle);
+
+            AssertTrueIsDisplayed(dispositionAppraisalValueLabel);
+            if(disposition.AppraisalAndAssessmentValue != "")
+                AssertTrueContentEquals(dispositionAppraisalValueContent, TransformCurrencyFormat(disposition.AppraisalAndAssessmentValue));
+
+            AssertTrueIsDisplayed(dispositionAppraisalDateLabel);
+            if(disposition.AppraisalAndAssessmentDate != "")
+                AssertTrueContentEquals(dispositionAppraisalDateContent, TransformDateFormat(disposition.AppraisalAndAssessmentDate));
+
+            AssertTrueIsDisplayed(dispositionBcAssessmentValueLabel);
+            if(disposition.AppraisalAndAssessmentBcAssessmentValue != "")
+                AssertTrueContentEquals(dispositionBcAssessmentValueContent, TransformCurrencyFormat(disposition.AppraisalAndAssessmentBcAssessmentValue));
+
+            AssertTrueIsDisplayed(dispositionBcAssessmentRollYearLabel);
+            AssertTrueContentEquals(dispositionBcAssessmentRollYearContent, disposition.AppraisalAndAssessmentBcAssessmentRollYear);
+
+            AssertTrueIsDisplayed(dispositionListPriceLabel);
+            if(disposition.AppraisalAndAssessmentListPrice != "")
+                AssertTrueContentEquals(dispositionListPriceContent, TransformCurrencyFormat(disposition.AppraisalAndAssessmentListPrice));
+        }
+
+        public void VerifyCreatedOffer(DispositionOfferAndSale offer, int index)
+        {
+            Wait();
+            var totalOffers = index + 1;
+
+            AssertTrueIsDisplayed(By.XPath("//div[contains(text(),'Offers')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ totalOffers +"]/div/div/label[contains(text(),'Offer status')]"));
+            if(offer.OfferOfferStatus != "")
+                AssertTrueContentEquals(By.CssSelector("div[data-testid='offer["+ index +"].offerStatusTypeCode']"), offer.OfferOfferStatus);
+
+            AssertTrueIsDisplayed(By.XPath("//div[contains(text(),'Offers')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ totalOffers +"]/div/div/label[contains(text(),'Offer name(s)')]"));
+            AssertTrueContentEquals(By.CssSelector("div[data-testid='offer["+ index +"].offerName']"), offer.OfferOfferName);
+
+            AssertTrueIsDisplayed(By.XPath("//div[contains(text(),'Offers')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ totalOffers +"]/div/div/label[contains(text(),'Offer date')]"));
+            AssertTrueContentEquals(By.CssSelector("div[data-testid='offer["+ index +"].offerDate']"), TransformDateFormat(offer.OfferOfferDate));
+
+            AssertTrueIsDisplayed(By.XPath("//div[contains(text(),'Offers')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ totalOffers +"]/div/div/label[contains(text(),'Offer expiry date')]"));
+            if(offer.OfferOfferExpiryDate != "")
+                AssertTrueContentEquals(By.CssSelector("div[data-testid='offer["+ index +"].offerExpiryDate']"), TransformDateFormat(offer.OfferOfferExpiryDate));
+
+            AssertTrueIsDisplayed(By.XPath("//div[contains(text(),'Offers')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ totalOffers +"]/div/div/label[contains(text(),'Offer price ($)')]"));
+            AssertTrueContentEquals(By.CssSelector("div[data-testid='offer["+ index +"].offerPrice']"), TransformCurrencyFormat(offer.OfferPrice));
+
+            AssertTrueIsDisplayed(By.XPath("//div[contains(text(),'Offers')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ totalOffers +"]/div/div/label[contains(text(),'Notes')]"));
+            if(offer.OfferNotes != "")
+                AssertTrueContentEquals(By.CssSelector("div[data-testid='offer["+ index +"].notes']"), offer.OfferNotes);
+
+
+        }
     }
 }

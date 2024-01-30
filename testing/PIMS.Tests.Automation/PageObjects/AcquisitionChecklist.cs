@@ -190,7 +190,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyChecklistInitViewForm()
         {
-            Wait(2000);
+            Wait();
 
             AssertTrueIsDisplayed(checklistFileInitiationTitle);
             AssertTrueIsDisplayed(checklistPreAcquisitionTitleLabel);
