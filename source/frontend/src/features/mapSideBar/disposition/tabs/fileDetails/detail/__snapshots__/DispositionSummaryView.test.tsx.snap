@@ -426,7 +426,7 @@ exports[`DispositionSummaryView component matches snapshot 1`] = `
             <label
               class="c3"
             >
-              initiating branch:
+              Initiating branch:
             </label>
           </div>
           <div
