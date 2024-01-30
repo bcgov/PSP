@@ -63,7 +63,7 @@ describe('Disposition search results table', () => {
 
   it('displays disposition file number', async () => {
     setup({ results: mockResults.map(a => DispositionSearchResultModel.fromApi(a)) });
-    const text = await screen.findByText(mockResults[0].fileNumber!);
+    const text = await screen.findByText(`D-${mockResults[0].fileNumber!}`);
     expect(text).toBeVisible();
   });
 
