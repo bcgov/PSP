@@ -62,7 +62,7 @@ jobs:
           openshift_server_url: ${{ env.OPENSHIFT_SERVER }}
           openshift_token: ${{ env.OPENSHIFT_TOKEN }}
           insecure_skip_tls_verify: true
-          namespace: 3cd915-test
+          namespace: 3cd915-tools
       - name: create all PSP build configurations for branch
         shell: bash
         run: |
