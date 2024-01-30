@@ -188,12 +188,12 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             PopulateDispositionFile(rowNumber);
 
-            //Search for an existing Acquisition File
+            //Search for an existing Disposition File
             searchDispositionFiles.NavigateToSearchDispositionFile();
             searchDispositionFiles.SearchDispositionFileByDFile(dispositionFileCode);
             searchDispositionFiles.SelectFirstOption();
 
-            //Navigate to Edit Acquisition File's Properties
+            //Navigate to Edit Disposition File's Properties
             sharedFileProperties.NavigateToAddPropertiesToFile();
 
             //Search for a property by PIN
@@ -229,11 +229,98 @@ namespace PIMS.Tests.Automation.StepDefinitions
             checklist.VerifyChecklistEditForm();
 
             //Update Checklist Form
-
             checklist.UpdateChecklist(dispositionFile.DispositionFileChecklist);
 
             //Save changes
             checklist.SaveDispositionFileChecklist();
+        }
+
+        [StepDefinition(@"I create Appraisal, Assessment and Offers within a Disposition File")]
+        public void CreateOfferAndSalesAppraisalAndAssessment()
+        {
+            /* TEST COVERAGE:  */
+
+            //Navigate to Offers and sale Tab
+            offerSale.NavigateoffersAndSaleTab();
+
+            //verify Inital screen of Offers and sale Tab
+            offerSale.VerifyInitOffersAndSaleTab();
+
+            // Create AppraisalAndAssessment section by clicking edit button
+             offerSale.EditAppraisalAndAssessmentButton();
+             offerSale.CreateNewAppraisalAndAssessment(dispositionFile);
+
+            //Save the AppraisalAndAssessment section from
+            offerSale.SaveDispositionFileOffersAndSale();
+
+            //Verify Created Appraisal and Assessment form
+            offerSale.VerifyCreatedAppraisalAndAssessment(dispositionFile);
+
+            //Add and verify Offers
+            if (dispositionFile.DispositionOfferAndSale.Count > 0)
+            {
+                for(var i = 0; i < dispositionFile.DispositionOfferAndSale.Count; i++)
+                {
+                    offerSale.CreateNewOffer(dispositionFile.DispositionOfferAndSale[i]);
+                    offerSale.SaveDispositionFileOffersAndSale();
+
+                    offerSale.VerifyCreatedOffer(dispositionFile.DispositionOfferAndSale[i], i);
+                }     
+            }
+        }
+
+        [StepDefinition(@"I update Appraisal, Assessment and Offers section within Disposition File from row number (.*)")]
+        public void UpdateOfferAndSalesAppraisalAndAssessment(int rowNumber)
+        {
+            /* TEST COVERAGE:  */
+
+            PopulateDispositionFile(rowNumber);
+
+            //Search for an existing Disposition File
+            searchDispositionFiles.NavigateToSearchDispositionFile();
+            searchDispositionFiles.SearchDispositionFileByDFile(dispositionFileCode);
+            searchDispositionFiles.SelectFirstOption();
+
+            //Navigate to Offers and sale Tab
+            offerSale.NavigateoffersAndSaleTab();
+
+            // Create AppraisalAndAssessment section by clicking edit button
+            offerSale.EditAppraisalAndAssessmentButton();
+            offerSale.UpdateAppraisalAndAssessment(dispositionFile);
+
+            //Cancel Appraisal changes
+            offerSale.CancelDispositionFileOffersAndSale();
+
+            // Create AppraisalAndAssessment section by clicking edit button
+            offerSale.EditAppraisalAndAssessmentButton();
+            offerSale.UpdateAppraisalAndAssessment(dispositionFile);
+
+            //Save the AppraisalAndAssessment section from
+            offerSale.SaveDispositionFileOffersAndSale();
+
+            //Verify Created Appraisal and Assessment form
+            offerSale.VerifyCreatedAppraisalAndAssessment(dispositionFile);
+
+            //Update first existing offer
+            if (dispositionFile.DispositionOfferAndSale.Count > 0)
+            {
+                offerSale.UpdateOffers(dispositionFile.DispositionOfferAndSale[0], 0);
+
+                //Cancel Offer changes
+                offerSale.CancelDispositionFileOffersAndSale();
+
+                //Update first existing offer
+                offerSale.UpdateOffers(dispositionFile.DispositionOfferAndSale[0], 0);
+
+                //Save changes on offer
+                offerSale.SaveDispositionFileOffersAndSale();
+
+                //Verify updated offer
+                offerSale.VerifyCreatedOffer(dispositionFile.DispositionOfferAndSale[0], 0);
+            }
+
+            //Delete Offer
+            offerSale.DeleteOffer(0);
         }
 
         [StepDefinition(@"A new Disposition file is created successfully")]
@@ -253,72 +340,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Verify Checklist Content after update
             checklist.VerifyChecklistViewForm(dispositionFile.DispositionFileChecklist);
-        }
-
-        [StepDefinition(@"I create Appraisal and Assessment section within Disposition File")]
-        public void CreateOfferAndSalesAppraisalAndAssessment()
-        {
-            /* TEST COVERAGE:  */
-
-            //Navigate to Offers and sale Tab
-            offerSale.NavigateoffersAndSaleTab();
-
-            //verify Inital screen of Offers and sale Tab
-            offerSale.VerifyInitOffersAndSaleTab();
-
-            // Create AppraisalAndAssessment section by clicking edit button
-             offerSale.EditAppraisalAndAssessmentButton();
-             offerSale.CreateNewAppraisalAndAssessment(dispositionFile);
-
-            //Save the AppraisalAndAssessment section from
-            offerSale.SaveDispositionFileOffersAndSale();
-
-        }
-
-        [StepDefinition(@"I update Appraisal and Assessment and Offers section within Disposition File from row number (.*)")]
-        public void UpdateOfferAndSalesAppraisalAndAssessment(int rowNumber)
-        {
-            /* TEST COVERAGE:  */
-
-            
-            PopulateDispositionFile(rowNumber);
-
-            //Search for an existing Disposition File
-            //Sue created this function
-
-            //Navigate to Offers and sale Tab
-            offerSale.NavigateoffersAndSaleTab();
-
-            //verify Inital screen of Offers and sale Tab
-            offerSale.VerifyInitOffersAndSaleTab();
-
-            // Create AppraisalAndAssessment section by clicking edit button
-            offerSale.EditAppraisalAndAssessmentButton();
-            offerSale.UpdateAppraisalAndAssessment(dispositionFile);
-
-            //Save the AppraisalAndAssessment section from
-            offerSale.SaveDispositionFileOffersAndSale();
-
-        }
-
-        [StepDefinition(@"I create Offers section within Disposition File")]
-        public void CreateOfferAndSalesOffers()
-        {
-            /* TEST COVERAGE:  */
-
-            //Navigate to Offers and sale Tab
-            offerSale.NavigateoffersAndSaleTab();
-
-            //verify Inital screen of Offers and sale Tab
-            offerSale.VerifyInitOffersAndSaleTab();
-
-            // Create AppraisalAndAssessment section by clicking edit button
-            // offerSale.EditAppraisalAndAssessmentButton();
-            //offerSale.CreateNewAppraisalAndAssessment(appraisalandassessment);
-
-            //Save the AppraisalAndAssessment section from
-            //offerSale.SaveDispositionFileOffersAndSale();
-
         }
 
         private void PopulateDispositionFile(int rowNumber)
@@ -421,26 +442,16 @@ namespace PIMS.Tests.Automation.StepDefinitions
             }
 
             // Disposition Offer and sales
-            dispositionFile.AppraisalAndAssessmentAppraisalValue = ExcelDataContext.ReadData(rowNumber, "AppraisalAndAssessmentAppraisalValue");
-            dispositionFile.AppraisalAndAssessmentAppraisalDate = ExcelDataContext.ReadData(rowNumber, "AppraisalAndAssessmentAppraisalDate");
+            dispositionFile.AppraisalAndAssessmentValue = ExcelDataContext.ReadData(rowNumber, "AppraisalAndAssessmentAppraisalValue");
+            dispositionFile.AppraisalAndAssessmentDate = ExcelDataContext.ReadData(rowNumber, "AppraisalAndAssessmentAppraisalDate");
             dispositionFile.AppraisalAndAssessmentBcAssessmentValue = ExcelDataContext.ReadData(rowNumber, "AppraisalAndAssessmentBcAssessmentValue");
             dispositionFile.AppraisalAndAssessmentBcAssessmentRollYear = ExcelDataContext.ReadData(rowNumber, "AppraisalAndAssessmentBcAssessmentRollYear");
             dispositionFile.AppraisalAndAssessmentListPrice = ExcelDataContext.ReadData(rowNumber, "AppraisalAndAssessmentListPrice");
 
             dispositionFile.OfferSaleStartRow = int.Parse(ExcelDataContext.ReadData(rowNumber, "OfferSaleStartRow"));
             dispositionFile.OfferSaleTotalCount = int.Parse(ExcelDataContext.ReadData(rowNumber, "OfferSaleTotalCount"));
-            if (dispositionFile.OfferSaleStartRow > 0)
-            {
-                DataTable OfferSaleSheet = ExcelDataContext.GetInstance().Sheets["DispositionOfferSale"];
-                ExcelDataContext.PopulateInCollection(OfferSaleSheet);
-
-                // Offers and sales Offers section
-                dispositionFile.DispositionOfferAndSale.OfferOfferName = ExcelDataContext.ReadData(rowNumber, "OfferOfferName");
-                dispositionFile.DispositionOfferAndSale.OfferOfferDate = ExcelDataContext.ReadData(rowNumber, "OfferOfferDate");
-                dispositionFile.DispositionOfferAndSale.OfferOfferExpiryDate = ExcelDataContext.ReadData(rowNumber, "OfferOfferExpiryDate");
-                dispositionFile.DispositionOfferAndSale.OfferPrice = ExcelDataContext.ReadData(rowNumber, "OfferPrice");
-                dispositionFile.DispositionOfferAndSale.OfferNotes = ExcelDataContext.ReadData(rowNumber, "OfferNotes");
-            }
+            if (dispositionFile.OfferSaleStartRow > 0 && dispositionFile.OfferSaleTotalCount > 0)
+                PopulateOfferSaleCollection(dispositionFile.OfferSaleStartRow, dispositionFile.OfferSaleTotalCount);
         }
 
         private void PopulateTeamsCollection(int startRow, int rowsCount)
@@ -457,6 +468,25 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 teamMember.TeamMemberPrimaryContact = ExcelDataContext.ReadData(i, "TeamMemberPrimaryContact");
 
                 dispositionFile.DispositionTeam.Add(teamMember);
+            }
+        }
+
+        private void PopulateOfferSaleCollection(int startRow, int rowsCount)
+        {
+            DataTable OfferSaleSheet = ExcelDataContext.GetInstance().Sheets["DispositionOfferSale"];
+            ExcelDataContext.PopulateInCollection(OfferSaleSheet);
+
+            for (int i = startRow; i < startRow + rowsCount; i++)
+            {
+                DispositionOfferAndSale offerAndSale = new DispositionOfferAndSale();
+                offerAndSale.OfferOfferStatus = ExcelDataContext.ReadData(i, "OfferOfferStatus");
+                offerAndSale.OfferOfferName = ExcelDataContext.ReadData(i, "OfferOfferName");
+                offerAndSale.OfferOfferDate = ExcelDataContext.ReadData(i, "OfferOfferDate");
+                offerAndSale.OfferOfferExpiryDate = ExcelDataContext.ReadData(i, "OfferOfferExpiryDate");
+                offerAndSale.OfferPrice = ExcelDataContext.ReadData(i, "OfferPrice");
+                offerAndSale.OfferNotes = ExcelDataContext.ReadData(i, "OfferNotes");
+
+                dispositionFile.DispositionOfferAndSale.Add(offerAndSale);
             }
         }
     }

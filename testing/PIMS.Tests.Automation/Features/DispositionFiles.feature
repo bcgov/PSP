@@ -23,8 +23,8 @@ Scenario: 03. Disposition Checklist Tab
 
 Scenario: 04. Disposition Offers and Sale Tab
 	Given I create a new Disposition File from row number 8
-	When I create Appraisal and Assessment section within Disposition File
-	And I update Appraisal and Assessment and Offers section within Disposition File from row number 9
+	When I create Appraisal, Assessment and Offers within a Disposition File
+	And I update Appraisal, Assessment and Offers section within Disposition File from row number 9
 	Then A new Disposition file is created successfully
 
 Scenario: 05. Disposition Files Digital Documents

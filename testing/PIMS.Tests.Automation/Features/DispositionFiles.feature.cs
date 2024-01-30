@@ -147,26 +147,16 @@ this.ScenarioInitialize(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="05. Disposition Files Digital Documents")]
+        [Xunit.SkippableFactAttribute(DisplayName="04. Disposition Offers and Sale Tab")]
         [Xunit.TraitAttribute("FeatureTitle", "DispositionFiles")]
-        [Xunit.TraitAttribute("Description", "05. Disposition Files Digital Documents")]
-        public void _05_DispositionFilesDigitalDocuments()
+        [Xunit.TraitAttribute("Description", "04. Disposition Offers and Sale Tab")]
+        public void _04_DispositionOffersAndSaleTab()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("05. Disposition Files Digital Documents", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("04. Disposition Offers and Sale Tab", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 24
 this.ScenarioInitialize(scenarioInfo);
-        [Xunit.SkippableFactAttribute(DisplayName="03. Disposition OffersAndSale Tab")]
-        [Xunit.TraitAttribute("FeatureTitle", "DispositionFiles")]
-        [Xunit.TraitAttribute("Description", "03. Disposition OffersAndSale Tab")]
-        public void _03_DispositionOffersAndSaleTab()
-        {
-            string[] tagsOfScenario = ((string[])(null));
-            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("03. Disposition OffersAndSale Tab", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 16
- this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
             {
@@ -179,12 +169,47 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.Given("I create a new Disposition File from row number 8", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 26
- testRunner.When("I create Digital Documents for a \"Disposition File\" row number 12", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("I create Appraisal, Assessment and Offers within a Disposition File", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 27
- testRunner.And("I edit a Digital Document for a \"Disposition File\" from row number 13", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I update Appraisal, Assessment and Offers section within Disposition File from ro" +
+                        "w number 9", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 28
+ testRunner.Then("A new Disposition file is created successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="05. Disposition Files Digital Documents")]
+        [Xunit.TraitAttribute("FeatureTitle", "DispositionFiles")]
+        [Xunit.TraitAttribute("Description", "05. Disposition Files Digital Documents")]
+        public void _05_DispositionFilesDigitalDocuments()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("05. Disposition Files Digital Documents", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 30
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 31
+ testRunner.Given("I create a new Disposition File from row number 10", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 32
+ testRunner.When("I create Digital Documents for a \"Disposition File\" row number 12", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 33
+ testRunner.And("I edit a Digital Document for a \"Disposition File\" from row number 13", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 34
  testRunner.Then("A new Disposition file is created successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
@@ -199,7 +224,7 @@ this.ScenarioInitialize(scenarioInfo);
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("06. Disposition File Notes", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 30
+#line 36
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -209,29 +234,17 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 31
- testRunner.Given("I create a new Disposition File from row number 9", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 37
+ testRunner.Given("I create a new Disposition File from row number 11", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 32
+#line 38
  testRunner.When("I create a new Note on the Notes Tab from row number 9", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 33
+#line 39
  testRunner.And("I edit a Note on the Notes Tab from row number 10", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 34
+#line 40
  testRunner.Then("A new Disposition file is created successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-#line 35
- testRunner.Given("I create a new Disposition File from row number 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 17
- testRunner.Given("I create a new Disposition File from row number 5", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line hidden
-#line 18
- testRunner.When("I create Appraisal and Assessment section within Disposition File", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 19
- testRunner.And("I update Appraisal and Assessment and Offers section within Disposition File from" +
-                        " row number 6", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             }
             this.ScenarioCleanup();

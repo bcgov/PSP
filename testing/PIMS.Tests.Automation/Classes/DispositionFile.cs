@@ -24,8 +24,8 @@
         public SearchProperty? DispositionSearchProperties { get; set; } = new SearchProperty();
         public int DispositionFileChecklistIndex { get; set; } = 0;
         public DispositionFileChecklist? DispositionFileChecklist { get; set; } = new DispositionFileChecklist();
-        public string? AppraisalAndAssessmentAppraisalValue { get; set; } = String.Empty;
-        public string? AppraisalAndAssessmentAppraisalDate { get; set; } = String.Empty;
+        public string? AppraisalAndAssessmentValue { get; set; } = String.Empty;
+        public string? AppraisalAndAssessmentDate { get; set; } = String.Empty;
         public string? AppraisalAndAssessmentBcAssessmentValue { get; set; } = String.Empty;
         public string? AppraisalAndAssessmentBcAssessmentRollYear { get; set; } = String.Empty;
         public string? AppraisalAndAssessmentListPrice { get; set; } = String.Empty;
