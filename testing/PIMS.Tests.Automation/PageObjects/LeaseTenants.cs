@@ -81,20 +81,7 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(tenantAddTenantsBttn).Click();
 
             Wait(3000);
-            //webDriver.FindElement(tenantSearchInput).SendKeys(tenant.Summary);
-            //webDriver.FindElement(tenantIndividualRadioBttn).Click();
-            //webDriver.FindElement(tenantSearchBttn).Click();
-
-            //WaitUntilClickable(tenantSearchInput);
-            //ScrollToElement(tenantSearchInput);
-
-            //WaitUntilClickable(tenantFirstResultRadioBttn);
-            //webDriver.FindElement(tenantFirstResultRadioBttn).Click();
-
-            //WaitUntilClickable(tenantsAddSelectedButton);
-            //webDriver.FindElement(tenantsAddSelectedButton).Click();
             sharedSelectContact.SelectContact(tenant.Summary, "Individual");
-
 
             //Choose tenant type
             WaitUntilClickable(tenantType1stSelect);
