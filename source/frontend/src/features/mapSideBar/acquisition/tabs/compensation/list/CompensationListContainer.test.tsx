@@ -124,8 +124,7 @@ describe('compensation list view container', () => {
     expect(modal).toBeVisible();
   });
 
-  //TODO: correct with unit test for disposition
-  xit('confirming delete modal sends delete call', async () => {
+  it('confirming delete modal sends delete call', async () => {
     setup({
       claims: [],
     });
@@ -164,7 +163,7 @@ describe('compensation list view container', () => {
     expect(mockPutApi.execute).toHaveBeenCalledWith({ totalAllowableCompensation: 1000 }, []);
   });
 
-  it('displays a toast and throws an error if the api call fails', async () => {
+  it('displays an error modal and throws an error if the api call fails', async () => {
     mockPutApi.execute.mockRejectedValue(createAxiosError(400, 'total allowable update error'));
 
     await setup({});
