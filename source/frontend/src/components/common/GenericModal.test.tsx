@@ -37,7 +37,7 @@ it('calls custom ok on click', async () => {
   expect(mockOk).toHaveBeenCalledTimes(1);
 });
 
-it('calls custom cancel funciton on click', async () => {
+it('calls custom cancel function on click', async () => {
   const mockCancel = jest.fn();
   const { getByText } = render(
     <GenericModal handleCancel={mockCancel} cancelButtonText="Cancel Button" variant="info" />,
