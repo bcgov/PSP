@@ -4,7 +4,7 @@ import React from 'react';
 
 import { usePropertyContactRepository } from '@/hooks/repositories/usePropertyContactRepository';
 import { ApiGen_Concepts_PropertyContact } from '@/models/api/generated/ApiGen_Concepts_PropertyContact';
-import { getEmptyBaseAudit } from '@/models/default_initializers';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { isValidId } from '@/utils';
 
 import { IPropertyContactEditFormProps } from './PropertyContactEditForm';

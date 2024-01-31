@@ -6,7 +6,7 @@ import * as API from '@/constants/API';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { ApiGen_Concepts_ConsultationLease } from '@/models/api/generated/ApiGen_Concepts_ConsultationLease';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
-import { getEmptyBaseAudit } from '@/models/default_initializers';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { exists } from '@/utils/utils';
 
 export interface IDetailConsultationProps {

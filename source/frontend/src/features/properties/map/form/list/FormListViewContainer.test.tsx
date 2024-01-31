@@ -8,7 +8,7 @@ import { useFormDocumentRepository } from '@/hooks/repositories/useFormDocumentR
 import { getMockApiFileForms } from '@/mocks/form.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
-import { getEmptyBaseAudit } from '@/models/default_initializers';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes/lookupCodesSlice';
 import { act, render, RenderOptions, screen, userEvent, waitFor } from '@/utils/test-utils';
 

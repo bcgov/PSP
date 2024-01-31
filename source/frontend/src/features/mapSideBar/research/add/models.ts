@@ -1,6 +1,6 @@
 import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Concepts_ResearchFile';
 import { ApiGen_Concepts_ResearchFileProperty } from '@/models/api/generated/ApiGen_Concepts_ResearchFileProperty';
-import { getEmptyBaseAudit } from '@/models/default_initializers';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 
 import { PropertyForm } from '../../shared/models';
 import { ResearchFileProjectFormModel } from '../common/models';

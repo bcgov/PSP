@@ -1,6 +1,6 @@
 import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
 import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
-import { getEmptyBaseAudit } from '@/models/default_initializers';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 
 const emptyActivity: ApiGen_Concepts_PropertyActivity = {
   id: 0,

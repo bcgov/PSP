@@ -7,7 +7,7 @@ import {
 } from '@/interfaces';
 import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Concepts_ResearchFile';
 import { ApiGen_Concepts_ResearchFilePurpose } from '@/models/api/generated/ApiGen_Concepts_ResearchFilePurpose';
-import { getEmptyBaseAudit } from '@/models/default_initializers';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { exists } from '@/utils';
 import { stringToNumber, toTypeCodeNullable } from '@/utils/formUtils';
 

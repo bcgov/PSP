@@ -9,7 +9,7 @@ import { mockLookups } from '@/mocks/lookups.mock';
 import { mockProjectPostResponse } from '@/mocks/projects.mock';
 import { getUserMock } from '@/mocks/user.mock';
 import { ApiGen_Concepts_Project } from '@/models/api/generated/ApiGen_Concepts_Project';
-import { getEmptyBaseAudit } from '@/models/default_initializers';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { toTypeCodeNullable } from '@/utils/formUtils';
 import { act, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';

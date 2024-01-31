@@ -1,5 +1,5 @@
 import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Concepts_ResearchFile';
-import { getEmptyResearchFile } from '@/models/default_initializers';
+import { getEmptyResearchFile } from '@/models/defaultInitializers';
 import { prettyFormatUTCDate } from '@/utils';
 import { render, RenderOptions } from '@/utils/test-utils';
 

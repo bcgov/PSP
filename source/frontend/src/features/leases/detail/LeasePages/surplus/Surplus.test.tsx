@@ -6,7 +6,7 @@ import { usePropertyLeaseRepository } from '@/hooks/repositories/usePropertyLeas
 import { getMockApiProperty } from '@/mocks/properties.mock';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
-import { defaultApiLease } from '@/models/default_initializers';
+import { defaultApiLease } from '@/models/defaultInitializers';
 import { prettyFormatDate } from '@/utils';
 import { render, RenderOptions, RenderResult, waitFor } from '@/utils/test-utils';
 

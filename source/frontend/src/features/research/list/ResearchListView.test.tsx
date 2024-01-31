@@ -6,7 +6,7 @@ import { IResearchSearchResult } from '@/interfaces/IResearchSearchResult';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { getMockApiProperty } from '@/mocks/properties.mock';
 import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Concepts_ResearchFile';
-import { getEmptyBaseAudit } from '@/models/default_initializers';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
   act,

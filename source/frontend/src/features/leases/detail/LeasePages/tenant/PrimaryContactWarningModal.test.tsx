@@ -4,7 +4,7 @@ import { noop } from 'lodash';
 import { LeaseFormModel } from '@/features/leases/models';
 import { mockApiOrganization, mockApiPerson } from '@/mocks/filterData.mock';
 import { getEmptyLeaseTenant, getMockApiLease } from '@/mocks/lease.mock';
-import { defaultApiLease } from '@/models/default_initializers';
+import { defaultApiLease } from '@/models/defaultInitializers';
 import { render, RenderOptions, screen, userEvent } from '@/utils/test-utils';
 
 import { FormTenant } from './models';

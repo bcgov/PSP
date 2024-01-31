@@ -3,7 +3,7 @@ import { Feature, Geometry } from 'geojson';
 import { ApiGen_Base_CodeType } from '@/models/api/generated/ApiGen_Base_CodeType';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
-import { getEmptyProperty } from '@/models/default_initializers';
+import { getEmptyProperty } from '@/models/defaultInitializers';
 import { EBC_ELECTORAL_DISTS_BS10_SVW_Feature_Properties } from '@/models/layers/electoralBoundaries';
 import { exists } from '@/utils';
 import { booleanToString } from '@/utils/formUtils';

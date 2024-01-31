@@ -3,7 +3,7 @@ import { IAutocompletePrediction } from '@/interfaces';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { ApiGen_Concepts_AcquisitionFileOwner } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileOwner';
 import { ApiGen_Concepts_AcquisitionFileProperty } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileProperty';
-import { getEmptyBaseAudit } from '@/models/default_initializers';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { fromTypeCode, stringToNumberOrNull, toTypeCodeNullable } from '@/utils/formUtils';
 import { exists, isValidId, isValidIsoDateTime } from '@/utils/utils';
 

@@ -4,7 +4,7 @@ import { PayeeType } from '@/features/mapSideBar/acquisition/models/PayeeTypeMod
 import { fromApiOrganization } from '@/interfaces';
 import { ApiGen_Concepts_ExpropriationPayment } from '@/models/api/generated/ApiGen_Concepts_ExpropriationPayment';
 import { ApiGen_Concepts_ExpropriationPaymentItem } from '@/models/api/generated/ApiGen_Concepts_ExpropriationPaymentItem';
-import { getEmptyBaseAudit } from '@/models/default_initializers';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { booleanToString, stringToBoolean, toTypeCodeNullable } from '@/utils/formUtils';
 import { isNullOrWhitespace } from '@/utils/utils';
 

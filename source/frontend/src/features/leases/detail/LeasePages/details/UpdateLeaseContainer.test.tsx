@@ -16,7 +16,7 @@ import { mockLookups } from '@/mocks/lookups.mock';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
-import { defaultApiLease, getEmptyLease } from '@/models/default_initializers';
+import { defaultApiLease, getEmptyLease } from '@/models/defaultInitializers';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { toTypeCodeNullable } from '@/utils/formUtils';
 import { renderAsync, screen } from '@/utils/test-utils';

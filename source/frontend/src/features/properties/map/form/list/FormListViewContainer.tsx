@@ -8,7 +8,7 @@ import { useFormDocumentRepository } from '@/hooks/repositories/useFormDocumentR
 import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
 import { defaultFormFilter, IFormFilter } from '@/interfaces/IFormResults';
 import { ApiGen_Concepts_FormDocumentFile } from '@/models/api/generated/ApiGen_Concepts_FormDocumentFile';
-import { getEmptyBaseAudit } from '@/models/default_initializers';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 
 import { IFormListViewProps } from './FormListView';
 

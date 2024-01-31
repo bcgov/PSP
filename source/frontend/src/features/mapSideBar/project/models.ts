@@ -5,7 +5,7 @@ import { ApiGen_Concepts_FinancialCodeTypes } from '@/models/api/generated/ApiGe
 import { ApiGen_Concepts_Product } from '@/models/api/generated/ApiGen_Concepts_Product';
 import { ApiGen_Concepts_Project } from '@/models/api/generated/ApiGen_Concepts_Project';
 import { ApiGen_Concepts_ProjectProduct } from '@/models/api/generated/ApiGen_Concepts_ProjectProduct';
-import { getEmptyBaseAudit } from '@/models/default_initializers';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { NumberFieldValue } from '@/typings/NumberFieldValue';
 import { toFinancialCode, toTypeCodeNullable } from '@/utils/formUtils';
 import { exists, isValidIsoDateTime } from '@/utils/utils';

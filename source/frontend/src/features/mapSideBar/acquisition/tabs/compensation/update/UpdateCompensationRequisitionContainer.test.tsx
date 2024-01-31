@@ -10,7 +10,7 @@ import { getMockApiDefaultCompensation } from '@/mocks/compensations.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { ApiGen_Concepts_FinancialCode } from '@/models/api/generated/ApiGen_Concepts_FinancialCode';
 import { ApiGen_Concepts_FinancialCodeTypes } from '@/models/api/generated/ApiGen_Concepts_FinancialCodeTypes';
-import { getEmptyBaseAudit } from '@/models/default_initializers';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { systemConstantsSlice } from '@/store/slices/systemConstants/systemConstantsSlice';
 import { act, render, RenderOptions, waitFor, waitForEffects } from '@/utils/test-utils';

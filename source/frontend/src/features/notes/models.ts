@@ -1,10 +1,11 @@
 import { ApiGen_Concepts_Note } from '@/models/api/generated/ApiGen_Concepts_Note';
 import { EpochIsoDateTime, UtcIsoDateTime } from '@/models/api/UtcIsoDateTime';
-import { getEmptyBaseAudit } from '@/models/default_initializers';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 
 export class NoteForm {
   id?: number;
   note?: string = '';
+  isSystemGenerated: boolean = false;
   rowVersion?: number;
   appCreateTimestamp?: UtcIsoDateTime;
   appLastUpdateTimestamp?: UtcIsoDateTime;
@@ -17,6 +18,7 @@ export class NoteForm {
     var model = new NoteForm();
     model.id = base.id;
     model.note = base.note ?? undefined;
+    model.isSystemGenerated = base.isSystemGenerated;
     model.rowVersion = base.rowVersion ?? undefined;
     model.appCreateTimestamp = base.appCreateTimestamp;
     model.appCreateUserGuid = base.appCreateUserGuid ?? undefined;
@@ -31,7 +33,7 @@ export class NoteForm {
     return {
       id: this.id ?? 0,
       note: this.note ?? null,
-      isSystemGenerated: false,
+      isSystemGenerated: this.isSystemGenerated,
       ...getEmptyBaseAudit(this.rowVersion),
       appCreateTimestamp: this.appCreateTimestamp ?? EpochIsoDateTime,
       appCreateUserGuid: this.appCreateUserGuid ?? null,

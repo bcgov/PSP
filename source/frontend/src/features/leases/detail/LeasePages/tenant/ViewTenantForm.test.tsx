@@ -4,7 +4,7 @@ import { LeaseContextProvider } from '@/features/leases/context/LeaseContext';
 import { mockApiOrganization, mockApiPerson, mockOrganization } from '@/mocks/filterData.mock';
 import { getEmptyLeaseTenant, getMockApiLease } from '@/mocks/lease.mock';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
-import { defaultApiLease } from '@/models/default_initializers';
+import { defaultApiLease } from '@/models/defaultInitializers';
 import { render, RenderOptions } from '@/utils/test-utils';
 
 import { FormTenant } from './models';

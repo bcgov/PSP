@@ -16,7 +16,7 @@ import { ApiGen_Concepts_Organization } from '@/models/api/generated/ApiGen_Conc
 import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_Person';
 import { ApiGen_Concepts_PropertyLease } from '@/models/api/generated/ApiGen_Concepts_PropertyLease';
 import { ApiGen_Concepts_User } from '@/models/api/generated/ApiGen_Concepts_User';
-import { getEmptyBaseAudit, getEmptyProperty } from '@/models/default_initializers';
+import { getEmptyBaseAudit, getEmptyProperty } from '@/models/defaultInitializers';
 import { ILookupCode } from '@/store/slices/lookupCodes';
 import { toTypeCode, toTypeCodeNullable } from '@/utils/formUtils';
 

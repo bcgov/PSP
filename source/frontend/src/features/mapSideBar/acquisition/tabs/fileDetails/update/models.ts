@@ -4,7 +4,7 @@ import { IAutocompletePrediction } from '@/interfaces';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { ApiGen_Concepts_AcquisitionFileOwner } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileOwner';
 import { ApiGen_Concepts_InterestHolder } from '@/models/api/generated/ApiGen_Concepts_InterestHolder';
-import { getEmptyBaseAudit } from '@/models/default_initializers';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { fromTypeCode, toTypeCodeNullable } from '@/utils/formUtils';
 import { exists, isValidId, isValidIsoDateTime } from '@/utils/utils';
 

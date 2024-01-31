@@ -14,7 +14,7 @@ import { useLeasePaymentRepository } from '@/hooks/repositories/useLeasePaymentR
 import { useLeaseTermRepository } from '@/hooks/repositories/useLeaseTermRepository';
 import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
 import { ApiGen_Concepts_LeaseTerm } from '@/models/api/generated/ApiGen_Concepts_LeaseTerm';
-import { getEmptyLease } from '@/models/default_initializers';
+import { getEmptyLease } from '@/models/defaultInitializers';
 import { SystemConstants, useSystemConstants } from '@/store/slices/systemConstants';
 import { exists, isValidId, isValidIsoDateTime } from '@/utils';
 

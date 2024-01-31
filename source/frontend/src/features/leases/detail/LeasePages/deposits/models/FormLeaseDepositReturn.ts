@@ -2,7 +2,7 @@ import { fromContact, IContactSearchResult, toContact } from '@/interfaces';
 import { ApiGen_Concepts_SecurityDeposit } from '@/models/api/generated/ApiGen_Concepts_SecurityDeposit';
 import { ApiGen_Concepts_SecurityDepositReturn } from '@/models/api/generated/ApiGen_Concepts_SecurityDepositReturn';
 import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
-import { getEmptyBaseAudit } from '@/models/default_initializers';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { NumberFieldValue } from '@/typings/NumberFieldValue';
 import { isValidIsoDateTime } from '@/utils';
 import { numberFieldToRequiredNumber } from '@/utils/formUtils';

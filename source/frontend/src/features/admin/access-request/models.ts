@@ -2,7 +2,7 @@ import { ContactMethodTypes } from '@/constants/contactMethodType';
 import { UserTypes } from '@/constants/index';
 import { ApiGen_Concepts_AccessRequest } from '@/models/api/generated/ApiGen_Concepts_AccessRequest';
 import { UtcIsoDateTime } from '@/models/api/UtcIsoDateTime';
-import { getEmptyBaseAudit } from '@/models/default_initializers';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { NumberFieldValue } from '@/typings/NumberFieldValue';
 import { getPreferredContactMethodValue } from '@/utils/contactMethodUtil';
 import {

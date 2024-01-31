@@ -1,5 +1,5 @@
 import { ApiGen_Concepts_PropertyTenure } from '@/models/api/generated/ApiGen_Concepts_PropertyTenure';
-import { getEmptyBaseAudit } from '@/models/default_initializers';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { ILookupCode } from '@/store/slices/lookupCodes';
 
 export class PropertyTenureFormModel {

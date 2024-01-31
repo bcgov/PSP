@@ -8,7 +8,7 @@ import { getMockApiAddress } from '@/mocks/address.mock';
 import { mockDispositionFileResponse } from '@/mocks/dispositionFiles.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
-import { getEmptyProperty } from '@/models/default_initializers';
+import { getEmptyProperty } from '@/models/defaultInitializers';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
   act,

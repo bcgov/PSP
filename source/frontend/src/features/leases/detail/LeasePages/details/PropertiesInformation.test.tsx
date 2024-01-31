@@ -6,7 +6,7 @@ import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineCo
 import { mockLeaseProperty } from '@/mocks/filterData.mock';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
-import { getEmptyLease } from '@/models/default_initializers';
+import { getEmptyLease } from '@/models/defaultInitializers';
 import { toTypeCode } from '@/utils/formUtils';
 import { render, RenderOptions } from '@/utils/test-utils';
 

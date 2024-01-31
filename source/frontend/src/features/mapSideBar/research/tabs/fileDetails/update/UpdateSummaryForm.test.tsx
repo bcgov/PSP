@@ -4,7 +4,7 @@ import { noop } from 'lodash';
 
 import { mockLookups } from '@/mocks/lookups.mock';
 import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Concepts_ResearchFile';
-import { getEmptyResearchFile } from '@/models/default_initializers';
+import { getEmptyResearchFile } from '@/models/defaultInitializers';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { render, RenderOptions, screen } from '@/utils/test-utils';
 import { fakeText, fillInput } from '@/utils/test-utils';

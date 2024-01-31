@@ -2,6 +2,7 @@ import { AddressTypes } from '@/constants/addressTypes';
 import { ContactInfoField } from '@/features/contacts/interfaces';
 import { Dictionary } from '@/interfaces/Dictionary';
 import { IContactAddress, IContactMethod } from '@/interfaces/IContact';
+import { exists } from '@/utils';
 
 // the order of this array corresponds to the expected display order
 const addressSortOrder = [AddressTypes.Mailing, AddressTypes.Residential, AddressTypes.Billing];
@@ -28,10 +29,13 @@ export function getContactInfo(
   // Get only the valid types
   let filteredFields = contactMethods.reduce(
     (accumulator: ContactInfoField[], method: IContactMethod) => {
-      if (Object.keys(validTypes).includes(method.contactMethodType?.id ?? '')) {
+      if (
+        exists(method.contactMethodType?.id) &&
+        Object.keys(validTypes).includes(method.contactMethodType!.id)
+      ) {
         accumulator.push({
           info: method.value,
-          label: validTypes[method.contactMethodType?.id ?? ''],
+          label: validTypes[method.contactMethodType!.id],
         });
       }
       return accumulator;

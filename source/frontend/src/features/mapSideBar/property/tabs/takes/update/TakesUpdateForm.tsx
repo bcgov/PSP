@@ -9,7 +9,7 @@ import { StyledSummarySection } from '@/components/common/Section/SectionStyles'
 import { AreaUnitTypes } from '@/constants/areaUnitTypes';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { ApiGen_Concepts_Take } from '@/models/api/generated/ApiGen_Concepts_Take';
-import { getEmptyBaseAudit } from '@/models/default_initializers';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { toTypeCode } from '@/utils/formUtils';
 import { getApiPropertyName } from '@/utils/mapPropertyUtils';
 

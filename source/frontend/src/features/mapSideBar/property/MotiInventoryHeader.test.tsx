@@ -1,5 +1,5 @@
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
-import { getEmptyProperty } from '@/models/default_initializers';
+import { getEmptyProperty } from '@/models/defaultInitializers';
 import { render, RenderOptions, RenderResult, userEvent } from '@/utils/test-utils';
 
 import { ComposedProperty } from './ComposedProperty';

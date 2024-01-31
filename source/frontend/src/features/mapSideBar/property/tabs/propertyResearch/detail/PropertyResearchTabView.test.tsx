@@ -2,7 +2,7 @@ import { createMemoryHistory } from 'history';
 
 import { Claims } from '@/constants/index';
 import { ApiGen_Concepts_ResearchFileProperty } from '@/models/api/generated/ApiGen_Concepts_ResearchFileProperty';
-import { getEmptyProperty, getEmptyResearchFile } from '@/models/default_initializers';
+import { getEmptyProperty, getEmptyResearchFile } from '@/models/defaultInitializers';
 import { render, RenderOptions } from '@/utils/test-utils';
 
 import PropertyResearchTabView, { IPropertyResearchTabViewProps } from './PropertyResearchTabView';

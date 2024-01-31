@@ -1,7 +1,7 @@
 import { getEmptyPerson } from '@/mocks/contacts.mock';
 import { getEmptyOrganization } from '@/mocks/organization.mock';
 import { ApiGen_Concepts_PropertyContact } from '@/models/api/generated/ApiGen_Concepts_PropertyContact';
-import { getEmptyBaseAudit } from '@/models/default_initializers';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 
 import { PropertyContactFormModel } from './models';
 

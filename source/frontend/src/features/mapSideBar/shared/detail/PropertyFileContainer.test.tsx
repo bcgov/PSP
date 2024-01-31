@@ -11,7 +11,7 @@ import {
 import { mockLtsaResponse, mockWfsGetPropertyById } from '@/mocks/index.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { getMockResearchFile } from '@/mocks/researchFile.mock';
-import { getEmptyProperty } from '@/models/default_initializers';
+import { getEmptyProperty } from '@/models/defaultInitializers';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, render, RenderOptions } from '@/utils/test-utils';
 

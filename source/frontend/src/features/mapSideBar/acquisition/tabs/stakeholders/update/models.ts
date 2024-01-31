@@ -7,7 +7,7 @@ import { ApiGen_Concepts_InterestHolder } from '@/models/api/generated/ApiGen_Co
 import { ApiGen_Concepts_InterestHolderProperty } from '@/models/api/generated/ApiGen_Concepts_InterestHolderProperty';
 import { ApiGen_Concepts_Organization } from '@/models/api/generated/ApiGen_Concepts_Organization';
 import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_Person';
-import { getEmptyBaseAudit } from '@/models/default_initializers';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { toTypeCodeNullable } from '@/utils/formUtils';
 import { getFilePropertyName } from '@/utils/mapPropertyUtils';
 import { exists } from '@/utils/utils';

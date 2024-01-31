@@ -60,7 +60,7 @@ describe('useAddNotesFormManagement hook', () => {
     expect(initialValues).toEqual(
       expect.objectContaining({
         parentId: 1,
-        note: { note: '' },
+        note: { note: '', isSystemGenerated: false },
       }),
     );
   });

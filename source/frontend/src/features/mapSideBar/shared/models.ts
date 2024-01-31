@@ -6,7 +6,7 @@ import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_Fil
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
-import { getEmptyBaseAudit } from '@/models/default_initializers';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { IBcAssessmentSummary } from '@/models/layers/bcAssesment';
 import { exists, formatApiAddress, formatBcaAddress, pidParser } from '@/utils';
 import { toTypeCodeNullable } from '@/utils/formUtils';

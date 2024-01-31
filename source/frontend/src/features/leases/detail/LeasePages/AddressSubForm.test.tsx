@@ -6,7 +6,7 @@ import { getEmptyAddress } from '@/mocks/address.mock';
 import { mockLeaseProperty } from '@/mocks/filterData.mock';
 import { ApiGen_Concepts_Address } from '@/models/api/generated/ApiGen_Concepts_Address';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
-import { getEmptyLease, getEmptyProperty } from '@/models/default_initializers';
+import { getEmptyLease, getEmptyProperty } from '@/models/defaultInitializers';
 import { toTypeCode, toTypeCodeConcept } from '@/utils/formUtils';
 import { render, RenderOptions } from '@/utils/test-utils';
 

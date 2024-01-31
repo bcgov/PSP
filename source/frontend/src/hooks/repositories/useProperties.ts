@@ -12,7 +12,7 @@ import { useGeoServer } from '@/hooks/layer-api/useGeoServer';
 import { useApiProperties } from '@/hooks/pims-api/useApiProperties';
 import { IPagedItems, IProperty } from '@/interfaces';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
-import { getEmptyProperty } from '@/models/default_initializers';
+import { getEmptyProperty } from '@/models/defaultInitializers';
 import { logRequest, logSuccess } from '@/store/slices/network/networkSlice';
 
 import { useApiRequestWrapper } from '../util/useApiRequestWrapper';

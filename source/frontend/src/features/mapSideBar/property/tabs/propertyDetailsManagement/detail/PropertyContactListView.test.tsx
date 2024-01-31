@@ -5,7 +5,7 @@ import { Claims } from '@/constants/index';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { getEmptyOrganization } from '@/mocks/organization.mock';
 import { ApiGen_Concepts_PropertyContact } from '@/models/api/generated/ApiGen_Concepts_PropertyContact';
-import { getEmptyBaseAudit } from '@/models/default_initializers';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { render, RenderOptions } from '@/utils/test-utils';
 

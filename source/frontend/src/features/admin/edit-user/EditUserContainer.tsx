@@ -5,7 +5,7 @@ import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { UserTypes } from '@/constants/index';
 import useIsMounted from '@/hooks/util/useIsMounted';
 import { ApiGen_Concepts_User } from '@/models/api/generated/ApiGen_Concepts_User';
-import { toTypeCodeNullable } from '@/utils/formUtils';
+import { toTypeCode } from '@/utils/formUtils';
 
 import { useUsers } from '../users/hooks/useUsers';
 import { FormUser } from '../users/models';
@@ -51,7 +51,7 @@ const EditUserContainer: React.FunctionComponent<IEditUserContainerProps> = ({ u
     regions: [],
     note: '',
     position: '',
-    userTypeCode: toTypeCodeNullable(UserTypes.Contractor) ?? undefined,
+    userTypeCode: toTypeCode(UserTypes.Contractor),
     lastLogin: '',
     toApi: () => ({} as ApiGen_Concepts_User),
   };

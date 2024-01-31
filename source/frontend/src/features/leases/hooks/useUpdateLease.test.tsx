@@ -7,7 +7,7 @@ import configureMockStore, { MockStoreEnhanced } from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
 import * as MOCK from '@/mocks/data.mock';
-import { defaultApiLease } from '@/models/default_initializers';
+import { defaultApiLease } from '@/models/defaultInitializers';
 
 import { useUpdateLease } from './useUpdateLease';
 

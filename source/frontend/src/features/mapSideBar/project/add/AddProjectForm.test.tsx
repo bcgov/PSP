@@ -8,7 +8,7 @@ import { useUserInfoRepository } from '@/hooks/repositories/useUserInfoRepositor
 import { getMockLookUpsByType, mockLookups } from '@/mocks/lookups.mock';
 import { mockProjectGetResponse } from '@/mocks/projects.mock';
 import { getUserMock } from '@/mocks/user.mock';
-import { getEmptyBaseAudit } from '@/models/default_initializers';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { toTypeCodeNullable } from '@/utils/formUtils';
 import { act, fakeText, fillInput, render, RenderOptions, userEvent } from '@/utils/test-utils';

@@ -12,7 +12,7 @@ import { LeaseFormModel } from '@/features/leases/models';
 import { LeasePageProps } from '@/features/mapSideBar/lease/LeaseContainer';
 import { useLeaseTermRepository } from '@/hooks/repositories/useLeaseTermRepository';
 import { mockLookups } from '@/mocks/lookups.mock';
-import { defaultApiLease } from '@/models/default_initializers';
+import { defaultApiLease } from '@/models/defaultInitializers';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes/lookupCodesSlice';
 import { toTypeCodeNullable } from '@/utils/formUtils';
 import {

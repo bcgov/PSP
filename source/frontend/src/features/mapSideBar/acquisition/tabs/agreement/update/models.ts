@@ -1,6 +1,6 @@
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { ApiGen_Concepts_Agreement } from '@/models/api/generated/ApiGen_Concepts_Agreement';
-import { getEmptyBaseAudit } from '@/models/default_initializers';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { isValidIsoDateTime } from '@/utils';
 import { stringToNull, stringToNumberOrNull, toTypeCodeNullable } from '@/utils/formUtils';
 

@@ -7,7 +7,7 @@ import { ApiGen_Concepts_Role } from '@/models/api/generated/ApiGen_Concepts_Rol
 import { ApiGen_Concepts_User } from '@/models/api/generated/ApiGen_Concepts_User';
 import { ApiGen_Concepts_UserRole } from '@/models/api/generated/ApiGen_Concepts_UserRole';
 import { EpochIsoDateTime, UtcIsoDateTime } from '@/models/api/UtcIsoDateTime';
-import { getEmptyBaseAudit } from '@/models/default_initializers';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { NumberFieldValue } from '@/typings/NumberFieldValue';
 import { getPreferredContactMethodValue } from '@/utils/contactMethodUtil';
 import { toTypeCodeNullable } from '@/utils/formUtils';

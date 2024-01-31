@@ -1,7 +1,7 @@
 import { TypeCodeUtils } from '@/interfaces/ITypeCode';
 import { ApiGen_Base_CodeType } from '@/models/api/generated/ApiGen_Base_CodeType';
 import { ApiGen_Concepts_Insurance } from '@/models/api/generated/ApiGen_Concepts_Insurance';
-import { getEmptyBaseAudit } from '@/models/default_initializers';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { ILookupCode } from '@/store/slices/lookupCodes';
 import { NumberFieldValue } from '@/typings/NumberFieldValue';
 import { isValidIsoDateTime } from '@/utils';

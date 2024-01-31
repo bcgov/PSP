@@ -12,7 +12,7 @@ import { IAddLeaseContainerProps } from '@/features/leases/add/AddLeaseContainer
 import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { ApiGen_Concepts_PropertyImprovement } from '@/models/api/generated/ApiGen_Concepts_PropertyImprovement';
-import { defaultApiLease } from '@/models/default_initializers';
+import { defaultApiLease } from '@/models/defaultInitializers';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { fillInput, renderAsync } from '@/utils/test-utils';
 

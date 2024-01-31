@@ -1,5 +1,5 @@
 import { ApiGen_Concepts_H120Category } from '@/models/api/generated/ApiGen_Concepts_H120Category';
-import { getEmptyBaseAudit } from '@/models/default_initializers';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 
 const emptyH120Category: ApiGen_Concepts_H120Category = {
   id: null,

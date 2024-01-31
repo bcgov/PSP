@@ -19,7 +19,7 @@ import { mockLookups } from '@/mocks/lookups.mock';
 import { getEmptyOrganization } from '@/mocks/organization.mock';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { ApiGen_Concepts_LeaseTenant } from '@/models/api/generated/ApiGen_Concepts_LeaseTenant';
-import { defaultApiLease, getEmptyBaseAudit } from '@/models/default_initializers';
+import { defaultApiLease, getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { mockKeycloak, renderAsync } from '@/utils/test-utils';
 

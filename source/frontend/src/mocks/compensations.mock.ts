@@ -2,7 +2,7 @@ import { ApiGen_Concepts_CompensationFinancial } from '@/models/api/generated/Ap
 import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
 import { ApiGen_Concepts_FinancialCodeTypes } from '@/models/api/generated/ApiGen_Concepts_FinancialCodeTypes';
 import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
-import { getEmptyBaseAudit } from '@/models/default_initializers';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 
 export const emptyCompensationRequisition: ApiGen_Concepts_CompensationRequisition = {
   id: null,

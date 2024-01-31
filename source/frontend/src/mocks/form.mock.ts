@@ -1,6 +1,6 @@
 import { ApiGen_Concepts_FormDocumentFile } from '@/models/api/generated/ApiGen_Concepts_FormDocumentFile';
 import { ApiGen_Concepts_FormDocumentType } from '@/models/api/generated/ApiGen_Concepts_FormDocumentType';
-import { getEmptyBaseAudit } from '@/models/default_initializers';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 export const getMockApiFormDocumentType = (): ApiGen_Concepts_FormDocumentType => ({
   formTypeCode: 'H120',
   documentId: null,

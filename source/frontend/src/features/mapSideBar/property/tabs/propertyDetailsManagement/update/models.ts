@@ -1,6 +1,6 @@
 import { fromApiOrganization, fromApiPerson, IContactSearchResult } from '@/interfaces';
 import { ApiGen_Concepts_PropertyContact } from '@/models/api/generated/ApiGen_Concepts_PropertyContact';
-import { getEmptyBaseAudit } from '@/models/default_initializers';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { stringToNull } from '@/utils/formUtils';
 
 export class PropertyContactFormModel {

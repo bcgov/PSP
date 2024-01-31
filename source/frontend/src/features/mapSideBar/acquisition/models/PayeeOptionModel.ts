@@ -3,7 +3,7 @@ import { ApiGen_Concepts_AcquisitionFileOwner } from '@/models/api/generated/Api
 import { ApiGen_Concepts_AcquisitionFileTeam } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileTeam';
 import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
 import { ApiGen_Concepts_InterestHolder } from '@/models/api/generated/ApiGen_Concepts_InterestHolder';
-import { getEmptyBaseAudit } from '@/models/default_initializers';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { exists, isNullOrWhitespace } from '@/utils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 

@@ -3,7 +3,7 @@ import { ApiGen_Concepts_FileChecklistItem } from '@/models/api/generated/ApiGen
 import { ApiGen_Concepts_FileChecklistItemType } from '@/models/api/generated/ApiGen_Concepts_FileChecklistItemType';
 import { ApiGen_Concepts_FileWithChecklist } from '@/models/api/generated/ApiGen_Concepts_FileWithChecklist';
 import { EpochIsoDateTime, UtcIsoDateTime } from '@/models/api/UtcIsoDateTime';
-import { getEmptyBaseAudit } from '@/models/default_initializers';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { ILookupCode } from '@/store/slices/lookupCodes';
 import { lastModifiedBy, sortByDisplayOrder } from '@/utils/fileUtils';
 import { fromTypeCode, toTypeCodeNullable } from '@/utils/formUtils';

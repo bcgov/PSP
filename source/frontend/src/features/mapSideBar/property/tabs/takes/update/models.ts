@@ -2,7 +2,7 @@ import * as Yup from 'yup';
 
 import { AreaUnitTypes } from '@/constants/areaUnitTypes';
 import { ApiGen_Concepts_Take } from '@/models/api/generated/ApiGen_Concepts_Take';
-import { getEmptyBaseAudit } from '@/models/default_initializers';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { convertArea } from '@/utils/convertUtils';
 import { fromTypeCodeNullable, stringToNull, toTypeCodeNullable } from '@/utils/formUtils';
 

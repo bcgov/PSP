@@ -7,7 +7,7 @@ import { AccessRequestStatus } from '@/constants/accessStatus';
 import { useAccessRequests } from '@/hooks/pims-api/useAccessRequests';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_Concepts_AccessRequest } from '@/models/api/generated/ApiGen_Concepts_AccessRequest';
-import { getEmptyBaseAudit } from '@/models/default_initializers';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { isValidId } from '@/utils';
 import { toTypeCodeNullable } from '@/utils/formUtils';
 

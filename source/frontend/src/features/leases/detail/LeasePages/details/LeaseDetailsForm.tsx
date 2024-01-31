@@ -4,7 +4,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
-import { defaultApiLease } from '@/models/default_initializers';
+import { defaultApiLease } from '@/models/defaultInitializers';
 
 import DetailAdministration from './DetailAdministration';
 import DetailConsultation from './DetailConsultation';

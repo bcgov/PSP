@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 
 import { usePropertyManagementRepository } from '@/hooks/repositories/usePropertyManagementRepository';
 import { ApiGen_Concepts_PropertyManagement } from '@/models/api/generated/ApiGen_Concepts_PropertyManagement';
-import { getEmptyBaseAudit } from '@/models/default_initializers';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 
 import { PropertyManagementFormModel } from './models';
 import { IPropertyManagementUpdateFormProps } from './PropertyManagementUpdateForm';
