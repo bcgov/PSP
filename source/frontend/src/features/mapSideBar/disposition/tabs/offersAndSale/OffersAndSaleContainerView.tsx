@@ -109,7 +109,7 @@ const OffersAndSaleContainerView: React.FunctionComponent<IOffersAndSaleContaine
             </SectionField>
           </>
         ) : (
-          <p>There are no value details indicated with this disposition file.</p>
+          <p>There are no Appraisal and Assessment details indicated with this disposition file.</p>
         )}
       </Section>
 

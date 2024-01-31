@@ -3,6 +3,7 @@ using SeleniumExtras.WaitHelpers;
 using OpenQA.Selenium.Support.UI;
 using System.Text.RegularExpressions;
 using PIMS.Tests.Automation.Classes;
+using System;
 
 namespace PIMS.Tests.Automation.PageObjects
 {
@@ -91,6 +92,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         private By acquisitionFileAddAnotherMemberLink = By.CssSelector("button[data-testid='add-team-member']");
         private By acquisitionFileTeamMembersGroup = By.XPath("//div[contains(text(),'Acquisition Team')]/parent::div/parent::h2/following-sibling::div/div[@class='py-3 row']");
+        private By acquisitionFileViewTeamMembersGroup = By.XPath("//div[contains(text(),'Acquisition Team')]/parent::div/parent::h2/following-sibling::div/div");
         private By acquisitionFileTeamFirstMemberDeleteBttn = By.XPath("//div[contains(text(),'Acquisition Team')]/parent::div/parent::h2/following-sibling::div/div[@class='py-3 row'][1]/div[3]/button");
         private By acquisitionFileTeamInvalidTeamMemberMessage = By.XPath("//div[contains(text(),'Select a team member')]");
         private By acquisitionFileTeamInvalidProfileMessage = By.XPath("//div[contains(text(),'Select a profile')]");
@@ -118,18 +120,18 @@ namespace PIMS.Tests.Automation.PageObjects
 
         private SharedSelectContact sharedSelectContact;
         private SharedModals sharedModals;
-        private SharedSearchProperties sharedSearchProperties;
+        private SharedFileProperties sharedSearchProperties;
 
         public AcquisitionDetails(IWebDriver webDriver) : base(webDriver)
         {
             sharedSelectContact = new SharedSelectContact(webDriver);
             sharedModals = new SharedModals(webDriver);
-            sharedSearchProperties = new SharedSearchProperties(webDriver);
+            sharedSearchProperties = new SharedFileProperties(webDriver);
         }
 
         public void NavigateToCreateNewAcquisitionFile()
         {
-            Wait(3000);
+            Wait();
             FocusAndClick(menuAcquisitionButton);
 
             WaitUntilVisible(createAcquisitionFileButton);
@@ -150,7 +152,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void CreateMinimumAcquisitionFile(AcquisitionFile acquisition)
         {
-            Wait(2000);
+            Wait();
 
             webDriver.FindElement(acquisitionFileNameInput).SendKeys(acquisition.AcquisitionFileName);
             webDriver.FindElement(acquisitionFileDetailsTypeSelect);
@@ -184,7 +186,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 Wait();
                 webDriver.FindElement(acquisitionFileProjectInput).SendKeys(Keys.Backspace);
 
-                Wait(2000);
+                Wait();
                 FocusAndClick(acquisitionFileProject1stOption); 
             }
 
@@ -254,7 +256,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
             if (acquisition.OwnerComment != "")
             {
-                Wait(2000);
+                Wait();
                 webDriver.FindElement(acquisitionFileOwnerCommentTextArea).Click();
                 webDriver.FindElement(acquisitionFileOwnerCommentTextArea).SendKeys(acquisition.OwnerComment);
             }
@@ -277,7 +279,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 webDriver.FindElement(acquisitionFileProjectInput).SendKeys(Keys.Space);
                 webDriver.FindElement(acquisitionFileProjectInput).SendKeys(Keys.Backspace);
 
-                Wait(2000);
+                Wait();
                 webDriver.FindElement(acquisitionFileProject1stOption).Click();
             }
 
@@ -392,7 +394,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
             if (acquisition.OwnerComment != "")
             {
-                Wait(2000);
+                Wait();
                 
                 ClearInput(acquisitionFileOwnerCommentTextArea);
                 webDriver.FindElement(acquisitionFileOwnerCommentTextArea).SendKeys(acquisition.OwnerComment);
@@ -407,18 +409,19 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
             if (webDriver.FindElements(acquisitionFileConfirmationModal).Count() > 0)
             {
-                if (sharedModals.ModalHeader().Equals("User Override Required"))
-                {
-                    Assert.Contains("The Ministry region has been changed, this will result in a change to the file's prefix. This requires user confirmation.", sharedModals.ModalContent());
+                Assert.Equal("User Override Required", sharedModals.ModalHeader());
 
-                    //Assert.Contains("The selected property already exists in the system's inventory. However, the record is missing spatial details.", sharedModals.ModalContent());
-                    //Assert.Contains("To add the property, the spatial details for this property will need to be updated. The system will attempt to update the property record with spatial information from the current selection.", sharedModals.ModalContent());
+                if (sharedModals.ModalContent().Contains("The selected Ministry region is different from that associated to one or more selected properties"))
+                {
+                    Assert.Contains("The selected Ministry region is different from that associated to one or more selected properties", sharedModals.ModalContent());
+                    Assert.Contains("Do you want to proceed?", sharedModals.ModalContent());
                 }
                 else
                 {
-                    Assert.True(sharedModals.ModalHeader().Equals("Different Ministry region"));
-                    Assert.True(sharedModals.ModalContent().Equals("Selected Ministry region is different from that of one or more selected properties. Do you wish to continue?"));
+                    Assert.Contains("The selected property already exists in the system's inventory. However, the record is missing spatial details.", sharedModals.ModalContent());
+                    Assert.Contains("To add the property, the spatial details for this property will need to be updated. The system will attempt to update the property record with spatial information from the current selection.", sharedModals.ModalContent());
                 }
+
                 sharedModals.ModalClickOKBttn();
             }
 
@@ -480,7 +483,7 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(acquisitionFileHeaderProjectLabel);
 
             if(acquisition.AcquisitionProject != "")
-                Assert.True(webDriver.FindElement(acquisitionFileHeaderProjectContent).Text.Equals(acquisition.AcquisitionProjCode + " - "  + acquisition.AcquisitionProject));
+                AssertTrueContentEquals(acquisitionFileHeaderProjectContent, acquisition.AcquisitionProjCode + " - "  + acquisition.AcquisitionProject);
 
             AssertTrueIsDisplayed(acquisitionFileHeaderCreatedDateLabel);
             AssertTrueContentNotEquals(acquisitionFileHeaderCreatedDateContent, "");
@@ -552,11 +555,20 @@ namespace PIMS.Tests.Automation.PageObjects
 
             if (acquisition.AcquisitionTeam.Count > 0)
             {
-                for(var i = 0;  i < acquisition.AcquisitionTeam.Count; i++)
+                var index = 1;
+
+                for (var i = 0; i < acquisition.AcquisitionTeam.Count; i++)
                 {
-                    var index = i + 1;
-                    AssertTrueContentEquals(By.XPath("//h2/div/div[contains(text(),'Acquisition Team')]/parent::div/parent::h2/following-sibling::div/div[" + index + "]/div/label"), acquisition.AcquisitionTeam[i].TeamMemberRole + ":");
-                    AssertTrueContentEquals(By.XPath("//h2/div/div[contains(text(),'Acquisition Team')]/parent::div/parent::h2/following-sibling::div/div[" + index + "]/div/a"), acquisition.AcquisitionTeam[i].TeamMemberPrimaryContact);
+                     AssertTrueContentEquals(By.XPath("//h2/div/div[contains(text(),'Acquisition Team')]/parent::div/parent::h2/following-sibling::div/div[" + index + "]/div/label"), acquisition.AcquisitionTeam[i].TeamMemberRole + ":");
+                     AssertTrueContentEquals(By.XPath("//h2/div/div[contains(text(),'Acquisition Team')]/parent::div/parent::h2/following-sibling::div/div[" + index + "]/div/a"), acquisition.AcquisitionTeam[i].TeamMemberContactName);
+
+                    if (acquisition.AcquisitionTeam[i].TeamMemberPrimaryContact != "")
+                    {
+                        index ++;
+                        AssertTrueContentEquals(By.XPath("//h2/div/div[contains(text(),'Acquisition Team')]/parent::div/parent::h2/following-sibling::div/div[" + index + "]/div/a"), acquisition.AcquisitionTeam[i].TeamMemberPrimaryContact);
+                    }
+
+                    index++;
                 }
             }
 
@@ -671,18 +683,18 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(acquisitionFileOwnerCommentTextArea);
         }
 
-        private void AddTeamMembers(AcquisitionTeamMember teamMember)
+        private void AddTeamMembers(TeamMember teamMember)
         {
             WaitUntilClickable(acquisitionFileAddAnotherMemberLink);
             FocusAndClick(acquisitionFileAddAnotherMemberLink);
 
             Wait();
             var teamMemberIndex = webDriver.FindElements(acquisitionFileTeamMembersGroup).Count() -1;
-            var teamMemberCount = webDriver.FindElements(acquisitionFileTeamMembersGroup).Count();
+            //var teamMemberCount = webDriver.FindElements(acquisitionFileTeamMembersGroup).Count();
 
             WaitUntilVisible(By.CssSelector("select[id='input-team."+ teamMemberIndex +".contactTypeCode']"));
             ChooseSpecificSelectOption(By.CssSelector("select[id='input-team."+ teamMemberIndex +".contactTypeCode']"), teamMember.TeamMemberRole);
-            FocusAndClick(By.CssSelector("div[class='collapse show'] div[class='py-3 row']:nth-child("+ teamMemberCount +") div[class='pl-0 col-auto'] button"));
+            FocusAndClick(By.CssSelector("div[data-testid='teamMemberRow["+ teamMemberIndex +"]'] div[data-testid='contact-input'] button[title='Select Contact']"));
             sharedSelectContact.SelectContact(teamMember.TeamMemberContactName, teamMember.TeamMemberContactType);
 
             Wait();

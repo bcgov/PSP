@@ -82,7 +82,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void NavigateToExpropriationTab()
         {
-            Wait(2000);
+            Wait();
             webDriver.FindElement(expropriationTab).Click();
         }
 
@@ -111,8 +111,8 @@ namespace PIMS.Tests.Automation.PageObjects
 
             if (webDriver.FindElements(acquisitionFileConfirmationModal).Count() > 0)
             {
-                Assert.True(sharedModals.ModalHeader().Equals("Remove Form 8"));
-                Assert.True(sharedModals.ModalContent().Equals("Do you wish to remove this Form 8?"));
+                Assert.Equal("Remove Form 8", sharedModals.ModalHeader());
+                Assert.Equal("Do you wish to remove this Form 8?", sharedModals.ModalContent());
                 sharedModals.ModalClickOKBttn();
             }
         }
@@ -125,8 +125,8 @@ namespace PIMS.Tests.Automation.PageObjects
 
             if (webDriver.FindElements(acquisitionFileConfirmationModal).Count() > 0)
             {
-                Assert.True(sharedModals.ModalHeader().Equals("Remove Payment Item"));
-                Assert.True(sharedModals.ModalContent().Equals("Do you wish to remove this payment item?"));
+                Assert.Equal("Remove Payment Item", sharedModals.ModalHeader());
+                Assert.Equal("Do you wish to remove this payment item?", sharedModals.ModalContent());
                 sharedModals.ModalClickOKBttn();
             }
         }
@@ -144,8 +144,8 @@ namespace PIMS.Tests.Automation.PageObjects
 
             if (webDriver.FindElements(acquisitionFileConfirmationModal).Count() > 0)
             {
-                Assert.True(sharedModals.ModalHeader().Equals("Unsaved Changes"));
-                Assert.True(sharedModals.ModalContent().Equals("You have made changes on this form. Do you wish to leave without saving?"));
+                Assert.Equal("Unsaved Changes", sharedModals.ModalHeader());
+                Assert.Equal("You have made changes on this form. Do you wish to leave without saving?", sharedModals.ModalContent());
                 sharedModals.ModalClickOKBttn();
             }
 
@@ -153,7 +153,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void CreateForm8(AcquisitionExpropriationForm8 expropriation)
         {
-            Wait(2000);
+            Wait();
 
             ChooseSpecificSelectOption(form8PayeeSelect, expropriation.Form8Payee);
 
@@ -214,7 +214,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifySection3InitExpropriationTab()
         {
-            Wait(2000);
+            Wait();
 
             //Form 8
             AssertTrueIsDisplayed(form8Title);
@@ -223,7 +223,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifySection6InitExpropriationTab()
         {
-            Wait(2000);
+            Wait();
 
             //Form 1
             AssertTrueIsDisplayed(form1Title);
@@ -275,7 +275,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyInitCreateForm8()
         {
-            Wait(2000);
+            Wait();
 
             AssertTrueIsDisplayed(form8CreateTitle);
             AssertTrueIsDisplayed(form8PayeeLabel);

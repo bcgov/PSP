@@ -76,7 +76,7 @@ exports[`Disposition Offer Detail View component renders as expected 1`] = `
       class="collapse show"
     >
       <p>
-        There are no value details indicated with this disposition file.
+        There are no Appraisal and Assessment details indicated with this disposition file.
       </p>
     </div>
   </div>

@@ -28,13 +28,13 @@ namespace PIMS.Tests.Automation.PageObjects
 
         private By contactEmailInput1 = By.Id("input-emailContactMethods.0.value");
         private By contactEmailSelect1 = By.Id("input-emailContactMethods.0.contactMethodTypeCode");
-        private By contactEmailAddBttn = By.XPath("//div[contains(text(), '+ Add another email address')]");
+        private By contactEmailAddBttn = By.XPath("//div[contains(text(), '+ Add email address')]");
         private By contactEmailInput2 = By.Id("input-emailContactMethods.1.value");
         private By contactEmailSelect2 = By.Id("input-emailContactMethods.1.contactMethodTypeCode");
 
         private By contactPhoneInput1 = By.Id("input-phoneContactMethods.0.value");
         private By contactPhoneSelect1 = By.Id("input-phoneContactMethods.0.contactMethodTypeCode");
-        private By contactPhoneAddBttn = By.XPath("//div[contains(text(), '+ Add another phone number')]");
+        private By contactPhoneAddBttn = By.XPath("//div[contains(text(), '+ Add phone number')]");
         private By contactPhoneInput2 = By.Id("input-phoneContactMethods.1.value");
         private By contactPhoneSelect2 = By.Id("input-phoneContactMethods.1.contactMethodTypeCode");
 
@@ -46,7 +46,9 @@ namespace PIMS.Tests.Automation.PageObjects
         private By contactMailCityInput = By.Id("input-mailingAddress.municipality");
         private By contactMailProvinceSelect = By.Id("input-mailingAddress.provinceId");
         private By contactMailPostalCodeInput = By.Id("input-mailingAddress.postal");
-        private By contactMailAddAddressLineBttn = By.XPath("//h3[contains(text(),'Mailing Address')]/following-sibling::div/div/button");
+        private By contactIndMailAddAddressLineBttn = By.XPath("//span[contains(text(),'Mailing Address')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div/div/div/div/button/div[contains(text(),'+ Add an address line')]");
+        private By contactOrgMailAddAddressLineBttn = By.XPath("//div[contains(text(),'Mailing Address')]/parent::div/parent::h2/following-sibling::div/div/div/div/div/button/div[contains(text(),'+ Add an address line')]");
+
 
         private By contactPropertyAddressLine1Input = By.Id("input-propertyAddress.streetAddress1");
         private By contactPropertyAddressLine2Input = By.Id("input-propertyAddress.streetAddress2");
@@ -56,7 +58,9 @@ namespace PIMS.Tests.Automation.PageObjects
         private By contactPropertyCityInput = By.Id("input-propertyAddress.municipality");
         private By contactPropertyProvinceSelect = By.Id("input-propertyAddress.provinceId");
         private By contactPropertyPostalCodeInput = By.Id("input-propertyAddress.postal");
-        private By contactPropertyAddAddressLineBttn = By.XPath("//h3[contains(text(),'Property Address')]/following-sibling::div[2]/div/button");
+        //private By contactIndPropertyAddAddressLineBttn = By.XPath("//span[contains(text(),'Property Address')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div/div/div/div/button/div[contains(text(),'+ Add an address line')]");
+        private By contactPropertyAddAddressLineBttn = By.XPath("//div[contains(text(),'Property Address')]/parent::div/parent::h2/following-sibling::div/div/div/div/div/button/div[contains(text(),'+ Add an address line')]");
+
 
         private By contactBillingAddressLine1Input = By.Id("input-billingAddress.streetAddress1");
         private By contactBillingAddressLine2Input = By.Id("input-billingAddress.streetAddress2");
@@ -66,7 +70,9 @@ namespace PIMS.Tests.Automation.PageObjects
         private By contactBillingOtherCountryInput = By.Id("input-billingAddress.countryOther");
         private By contactBillingProvinceSelect = By.Id("input-billingAddress.provinceId");
         private By contactBillingPostalCodeInput = By.Id("input-billingAddress.postal");
-        private By contactBillingAddAddressLineBttn = By.XPath("//h3[contains(text(),'Billing Address')]/following-sibling::div[2]/div/button");
+        //private By contactIndBillingAddAddressLineBttn = By.XPath("//span[contains(text(),'Billing Address')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div/div/div/div/button/div[contains(text(),'+ Add an address line')]");
+        private By contactBillingAddAddressLineBttn = By.XPath("//div[contains(text(),'Billing Address')]/parent::div/parent::h2/following-sibling::div/div/div/div/div/button/div[contains(text(),'+ Add an address line')]");
+
 
         private By contactCommentTextarea = By.CssSelector("textarea[name='comment']");
 
@@ -109,7 +115,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By contactAddressIndMailAddressLine4 = By.XPath("//div[1]/div/span[@data-testid='contact-person-address']/div[4]");
         private By contactAddressIndMailAddressLine5 = By.XPath("//div[1]/div/span[@data-testid='contact-person-address']/div[5]");
         private By contactAddressIndMailAddressLine6 = By.XPath("//div[1]/div/span[@data-testid='contact-person-address']/div[6]");
-        private By contactAddressMailAddressRemoveBttn = By.XPath("//h3[contains(text(),'Mailing Address')]/parent::div/div/div/div/button/div/span[contains(text(),'Remove')]");
+        private By contactAddressMailAddressRemoveBttn = By.XPath("//span[contains(text(),'Mailing Address')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div/div/div/div/button/div/span[contains(text(),'Remove')]/parent::div/parent::button");
 
         private By contactAddressOrgMailCounter = By.XPath("//div[1]/div[@data-testid='contact-organization-address']/div");
         private By contactAddressOrgMailAddressLine1 = By.XPath("//div[1]/div[@data-testid='contact-organization-address']/div[1]");
@@ -118,7 +124,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By contactAddressOrgMailAddressLine4 = By.XPath("//div[1]/div[@data-testid='contact-organization-address']/div[4]");
         private By contactAddressOrgMailAddressLine5 = By.XPath("//div[1]/div[@data-testid='contact-organization-address']/div[5]");
         private By contactAddressOrgMailAddressLine6 = By.XPath("//div[1]/div[@data-testid='contact-organization-address']/div[6]");
-        private By contactAddressPropertyAddressRemoveBttn = By.XPath("//h3[contains(text(),'Property Address')]/parent::div/div/div/div/button/div/span[contains(text(),'Remove')]");
+        private By contactAddressPropertyAddressRemoveBttn = By.XPath("//div[contains(text(),'Property Address')]/parent::div/parent::h2/following-sibling::div/div/div/div/div/button/div/span[contains(text(),'Remove')]/parent::div/parent::button");
 
         private By contactAddressPropertySubtitle = By.XPath("//strong[contains(text(),'Property address')]");
         private By contactAddressIndPropertyCounter = By.XPath("//div[2]/div/span[@data-testid='contact-person-address']/div");
@@ -128,7 +134,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By contactAddressIndPropertyAddressLine4 = By.XPath("//div[2]/div/span[@data-testid='contact-person-address']/div[4]");
         private By contactAddressIndPropertyAddressLine5 = By.XPath("//div[2]/div/span[@data-testid='contact-person-address']/div[5]");
         private By contactAddressIndPropertyAddressLine6 = By.XPath("//div[2]/div/span[@data-testid='contact-person-address']/div[6]");
-        private By contactAddressBillingAddressRemoveBttn = By.XPath("//h3[contains(text(),'Billing Address')]/parent::div/div/div/div/button/div/span[contains(text(),'Remove')]");
+        private By contactAddressBillingAddressRemoveBttn = By.XPath("//div[contains(text(),'Billing Address')]/parent::div/parent::h2/following-sibling::div/div/div/div/div/button/div/span[contains(text(),'Remove')]/parent::div/parent::button");
 
         private By contactAddressOrgPropertyCounter = By.XPath("//div[2]/div[@data-testid='contact-organization-address']/div");
         private By contactAddressOrgPropertyAddressLine1 = By.XPath("//div[2]/div[@data-testid='contact-organization-address']/div[1]");
@@ -163,11 +169,11 @@ namespace PIMS.Tests.Automation.PageObjects
         private By commentsOrganizationContent = By.CssSelector("div[data-testid='contact-organization-comment']");
 
         //Contact Modal Element
-        private By contactDuplicateModal = By.CssSelector("div[class='modal-content']");
+        private By contactModal = By.CssSelector("div[class='modal-content']");
 
         private By contactsSearchTable = By.CssSelector("div[data-testid='contactsTable']");
         private By contactModalContinueSaveBttn = By.XPath("//button/div[contains(text(),'Continue Save')]");
-        private By contactConfirmCancelBttn = By.XPath("//button/div[contains(text(),'Confirm')]");
+        //private By contactConfirmCancelBttn = By.XPath("//button/div[contains(text(),'Confirm')]");
 
         private SharedModals sharedModals;
 
@@ -245,12 +251,12 @@ namespace PIMS.Tests.Automation.PageObjects
                 webDriver.FindElement(contactMailAddressLine1Input).SendKeys(contact.IndMailAddressLine1);
                 if (contact.IndMailAddressLine2 != "")
                 {
-                    webDriver.FindElement(contactMailAddAddressLineBttn).Click();
+                    webDriver.FindElement(contactIndMailAddAddressLineBttn).Click();
                     webDriver.FindElement(contactMailAddressLine2Input).SendKeys(contact.IndMailAddressLine2);
                 }
                 if (contact.IndMailAddressLine3 != "")
                 {
-                    webDriver.FindElement(contactMailAddAddressLineBttn).Click();
+                    webDriver.FindElement(contactIndMailAddAddressLineBttn).Click();
                     webDriver.FindElement(contactMailAddressLine3Input).SendKeys(contact.IndMailAddressLine3);
                 }
 
@@ -375,12 +381,12 @@ namespace PIMS.Tests.Automation.PageObjects
                 webDriver.FindElement(contactMailAddressLine1Input).SendKeys(contact.OrgMailAddressLine1);
                 if (contact.OrgMailAddressLine2 != "")
                 {
-                    webDriver.FindElement(contactMailAddAddressLineBttn).Click();
+                    webDriver.FindElement(contactOrgMailAddAddressLineBttn).Click();
                     webDriver.FindElement(contactMailAddressLine2Input).SendKeys(contact.OrgMailAddressLine2);
                 }
                 if (contact.OrgMailAddressLine3 != "")
                 {
-                    webDriver.FindElement(contactMailAddAddressLineBttn).Click();
+                    webDriver.FindElement(contactOrgMailAddAddressLineBttn).Click();
                     webDriver.FindElement(contactMailAddressLine3Input).SendKeys(contact.OrgMailAddressLine3);
                 }
 
@@ -519,12 +525,12 @@ namespace PIMS.Tests.Automation.PageObjects
 
                 if (contact.OrgMailAddressLine2 != "")
                 {
-                    webDriver.FindElement(contactMailAddAddressLineBttn).Click();
+                    webDriver.FindElement(contactIndMailAddAddressLineBttn).Click();
                     webDriver.FindElement(contactMailAddressLine2Input).SendKeys(contact.OrgMailAddressLine2);
                 }
                 if (contact.OrgMailAddressLine3 != "")
                 {
-                    webDriver.FindElement(contactMailAddAddressLineBttn).Click();
+                    webDriver.FindElement(contactIndMailAddAddressLineBttn).Click();
                     webDriver.FindElement(contactMailAddressLine3Input).SendKeys(contact.OrgMailAddressLine3);
                 }
                 if(contact.OrgMailCountry != "")
@@ -711,12 +717,12 @@ namespace PIMS.Tests.Automation.PageObjects
 
                 if (contact.IndMailAddressLine2 != "")
                 {
-                    webDriver.FindElement(contactMailAddAddressLineBttn).Click();
+                    webDriver.FindElement(contactIndMailAddAddressLineBttn).Click();
                     webDriver.FindElement(contactMailAddressLine2Input).SendKeys(contact.IndMailAddressLine2);
                 }
                 if (contact.IndMailAddressLine3 != "")
                 {
-                    webDriver.FindElement(contactMailAddAddressLineBttn).Click();
+                    webDriver.FindElement(contactIndMailAddAddressLineBttn).Click();
                     webDriver.FindElement(contactMailAddressLine3Input).SendKeys(contact.IndMailAddressLine3);
                 }
                 if (contact.IndMailCountry != "")
@@ -834,40 +840,42 @@ namespace PIMS.Tests.Automation.PageObjects
         //Saves Contact
         public void SaveContact()
         {
-
-            //Save
             ButtonElement("Save");
 
             Wait();
-            if (webDriver.FindElements(contactDuplicateModal).Count > 0)
+            if (webDriver.FindElements(contactModal).Count > 0)
             {
-                Assert.True(sharedModals.ModalHeader().Equals("Duplicate Contact"));
-                Assert.True(sharedModals.ModalContent().Equals("A contact matching this information already exists in the system."));
-                webDriver.FindElement(contactModalContinueSaveBttn).Click();
+                Assert.Equal("Duplicate Contact", sharedModals.ModalHeader());
+                Assert.Equal("A contact matching this information already exists in the system.", sharedModals.ModalContent());
+
+                sharedModals.ModalClickOKBttn();
             }
 
-            WaitUntilVisible(contactEditButton);
-            Assert.True(webDriver.FindElement(contactEditButton).Displayed);
-
+            AssertTrueIsDisplayed(contactEditButton);
         }
 
         //Cancel Contact
         public void CancelContact()
         {
-
             ButtonElement("Cancel");
 
-            ButtonElement(contactConfirmCancelBttn);
+            Wait();
+            if (webDriver.FindElements(contactModal).Count > 0)
+            {
+                Assert.Equal("Unsaved Changes", sharedModals.ModalHeader());
+                Assert.Equal("If you choose to cancel now, your changes will not be saved.", sharedModals.ConfirmationModalText1());
+                Assert.Equal("Do you want to proceed?", sharedModals.ConfirmationModalText2());
 
-            WaitUntilVisible(contactsSearchTable);
-            var contactTableElement = webDriver.FindElement(contactsSearchTable);
-            Assert.True(contactTableElement.Displayed);
+                sharedModals.ModalClickOKBttn();
+            }
+
+            AssertTrueIsDisplayed(contactsSearchTable);
         }
 
         // ASSERT FUNCTIONS
         public void VerifyIndividualContactView(IndividualContact contact)
         {
-            Wait(2000);
+            Wait(3000);
 
             AssertTrueIsDisplayed(contactTitle);
             AssertTrueIsDisplayed(contactEditButton);
@@ -1212,7 +1220,7 @@ namespace PIMS.Tests.Automation.PageObjects
                         AssertTrueContentEquals(contactAddressOrgBillingAddressLine4,contact.OrgBillingPostalCode);
 
                         if (contact.OrgBillingCountry == "Other")
-                            AssertTrueContentEquals(contactAddressOrgBillingAddressLine5,contact.OrgBillingOtherCountry);
+                            AssertTrueContentEquals(contactAddressOrgBillingAddressLine5, contact.OrgBillingOtherCountry);
                         else
                             AssertTrueContentEquals(contactAddressOrgBillingAddressLine5,contact.OrgBillingCountry);
                         break;

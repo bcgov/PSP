@@ -89,7 +89,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void NavigatePropertyListView()
         {
-            WaitUntilClickable(searchPropertyListViewIcon);
+            Wait(2000);
             webDriver.FindElement(searchPropertyListViewIcon).Click();
         }
 
