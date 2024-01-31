@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.IO.Compression;
 using FluentAssertions;
 using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -147,6 +148,203 @@ namespace Pims.Api.Test.Controllers
             // Assert
             this._service.Verify(m => m.Update(It.IsAny<long>(), It.IsAny<PimsDispositionFile>(), It.IsAny<IEnumerable<UserOverrideCode>>()), Times.Once());
         }
+
+        /// <summary>
+        /// Make a successful request to POST a disposition file Sale to the Disposition File.
+        /// </summary>
+        [Fact]
+        public void AddDispositionFileSale_Success()
+        {
+            // Arrange
+            var dispFileSale = new PimsDispositionSale();
+            dispFileSale.DispositionFileId = 1;
+
+            this._service.Setup(m => m.AddDispositionFileSale(It.IsAny<PimsDispositionSale>())).Returns(dispFileSale);
+
+            // Act
+            var model = _mapper.Map<DispositionFileSaleModel>(dispFileSale);
+            var result = this._controller.AddDispositionFileSale(1, model);
+
+            // Assert
+            this._service.Verify(m => m.AddDispositionFileSale(It.IsAny<PimsDispositionSale>()), Times.Once());
+        }
+
+        /// <summary>
+        /// Make a successful request to PUT a disposition file Sale.
+        /// </summary>
+        [Fact]
+        public void UpdateDispositionFileSale_Success()
+        {
+            // Arrange
+            var dispFileSale = new PimsDispositionSale();
+            dispFileSale.DispositionFileId = 1;
+            dispFileSale.DispositionSaleId = 10;
+
+            this._service.Setup(m => m.UpdateDispositionFileSale(It.IsAny<PimsDispositionSale>())).Returns(dispFileSale);
+
+            // Act
+            var model = _mapper.Map<DispositionFileSaleModel>(dispFileSale);
+            var result = this._controller.UpdateDispositionFileSale(1, 10, model);
+
+            // Assert
+            this._service.Verify(m => m.UpdateDispositionFileSale(It.IsAny<PimsDispositionSale>()), Times.Once());
+        }
+        
+        /// <summary>
+        /// Get All Offers by Disposition File's Id.
+        /// </summary>
+        [Fact]
+        public void GetDispositionFileOffers_Success()
+        {
+            // Arrange
+            this._service.Setup(m => m.GetOffers(It.IsAny<long>())).Returns(new List<PimsDispositionOffer>());
+
+            // Act
+            var result = this._controller.GetDispositionFileOffers(1);
+
+            // Assert
+            this._service.Verify(m => m.GetOffers(It.IsAny<long>()), Times.Once());
+        }
+
+        /// <summary>
+        /// Get Offer by Id.
+        /// </summary>
+        [Fact]
+        public void GetDispositionFileOfferById_Success()
+        {
+            // Arrange
+            this._service.Setup(m => m.GetDispositionOfferById(It.IsAny<long>(), It.IsAny<long>())).Returns(new PimsDispositionOffer());
+
+            // Act
+            var result = this._controller.GetDispositionFileOfferById(1, 10);
+
+            // Assert
+            this._service.Verify(m => m.GetDispositionOfferById(It.IsAny<long>(), It.IsAny<long>()), Times.Once());
+        }
+
+        /// <summary>
+        /// Add Disposition Offer to Disposition File.
+        /// </summary>
+        [Fact]
+        public void AddDispositionFileOffer_Success()
+        {
+            // Arrange
+            this._service.Setup(m => m.AddDispositionFileOffer(It.IsAny<long>(), It.IsAny<PimsDispositionOffer>())).Returns(new PimsDispositionOffer());
+            var dispositionFileOffer = new PimsDispositionOffer();
+
+            // Act
+            var model = _mapper.Map<DispositionFileOfferModel>(dispositionFileOffer);
+            var result = this._controller.AddDispositionFileOffer(1, model);
+
+            // Assert
+            this._service.Verify(m => m.AddDispositionFileOffer(It.IsAny<long>(), It.IsAny<PimsDispositionOffer>()), Times.Once());
+        }
+
+        /// <summary>
+        /// Update Disposition Offer to Disposition File.
+        /// </summary>
+        [Fact]
+        public void UpdateDispositionFileOffer_Success()
+        {
+            // Arrange
+            this._service.Setup(m => m.UpdateDispositionFileOffer(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<PimsDispositionOffer>())).Returns(new PimsDispositionOffer());
+            var dispositionFileOffer = new PimsDispositionOffer();
+            dispositionFileOffer.DispositionOfferId = 10;
+            dispositionFileOffer.DispositionFileId = 1;
+
+            // Act
+            var model = _mapper.Map<DispositionFileOfferModel>(dispositionFileOffer);
+            var result = this._controller.UpdateDispositionFileOffer(1, 10, model);
+
+            // Assert
+            this._service.Verify(m => m.UpdateDispositionFileOffer(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<PimsDispositionOffer>()), Times.Once());
+        }
+
+
+        /// <summary>
+        /// Delete Disposition Offer to Disposition File.
+        /// </summary>
+        [Fact]
+        public void DeleteDispositionFileOffer_Success()
+        {
+            // Arrange
+            this._service.Setup(m => m.DeleteDispositionFileOffer(It.IsAny<long>(), It.IsAny<long>())).Returns(true);
+
+            // Act
+            var result = this._controller.DeleteDispositionFileOffer(1, 10);
+
+            // Assert
+            this._service.Verify(m => m.DeleteDispositionFileOffer(It.IsAny<long>(), It.IsAny<long>()), Times.Once());
+        }
+
+        /// <summary>
+        /// Get DispositionFile's Sale by Id.
+        /// </summary>
+        [Fact]
+        public void GetDispositionFileSales_Success()
+        {
+            // Arrange
+            this._service.Setup(m => m.GetDispositionFileSale(It.IsAny<long>())).Returns(new PimsDispositionSale());
+
+            // Act
+            var result = this._controller.GetDispositionFileSales(1);
+
+            // Assert
+            this._service.Verify(m => m.GetDispositionFileSale(It.IsAny<long>()), Times.Once());
+        }
+
+        /// <summary>
+        /// Get DispositionFile's Appraisal by Id.
+        /// </summary>
+        [Fact]
+        public void GetDispositionFileAppraisal_Success()
+        {
+            // Arrange
+            this._service.Setup(m => m.GetDispositionFileAppraisal(It.IsAny<long>())).Returns(new PimsDispositionAppraisal());
+
+            // Act
+            var result = this._controller.GetDispositionFileAppraisal(1);
+
+            // Assert
+            this._service.Verify(m => m.GetDispositionFileAppraisal(It.IsAny<long>()), Times.Once());
+        }
+
+        /// <summary>
+        /// Add DispositionFile's Appraisal.
+        /// </summary>
+        [Fact]
+        public void AddDispositionFileAppraisal_Success()
+        {
+            // Arrange
+            PimsDispositionAppraisal appraisal = new PimsDispositionAppraisal();
+            this._service.Setup(m => m.AddDispositionFileAppraisal(It.IsAny<long>(), It.IsAny<PimsDispositionAppraisal>())).Returns(new PimsDispositionAppraisal());
+
+            // Act
+            var model = _mapper.Map<DispositionFileAppraisalModel>(appraisal);
+            var result = this._controller.AddDispositionFileAppraisal(1, model);
+
+            // Assert
+            this._service.Verify(m => m.AddDispositionFileAppraisal(It.IsAny<long>(), It.IsAny<PimsDispositionAppraisal>()), Times.Once());
+        }
+
+        /// <summary>
+        /// Update DispositionFile's Appraisal.
+        /// </summary>
+        [Fact]
+        public void UpdateDispositionFileAppraisal_Success()
+        {
+            // Arrange
+            PimsDispositionAppraisal appraisal = new PimsDispositionAppraisal();
+            this._service.Setup(m => m.AddDispositionFileAppraisal(It.IsAny<long>(), It.IsAny<PimsDispositionAppraisal>())).Returns(new PimsDispositionAppraisal());
+
+            // Act
+            var model = _mapper.Map<DispositionFileAppraisalModel>(appraisal);
+            var result = this._controller.UpdateDispositionFileAppraisal(1, 10, model);
+
+            // Assert
+            this._service.Verify(m => m.UpdateDispositionFileAppraisal(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<PimsDispositionAppraisal>()), Times.Once());
+        }
+
         #endregion
     }
 }

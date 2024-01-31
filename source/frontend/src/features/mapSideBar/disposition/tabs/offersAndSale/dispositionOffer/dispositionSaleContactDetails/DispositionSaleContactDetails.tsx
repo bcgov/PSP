@@ -8,18 +8,17 @@ import { ApiGen_Concepts_DispositionSalePurchaserAgent } from '@/models/api/gene
 import { ApiGen_Concepts_DispositionSalePurchaserSolicitor } from '@/models/api/generated/ApiGen_Concepts_DispositionSalePurchaserSolicitor';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
-export interface IDispositionSaleContactDetails {
+export interface IDispositionSaleContactDetailsProps {
   contactInformation:
     | ApiGen_Concepts_DispositionSalePurchaser
-    | ApiGen_Concepts_DispositionSalePurchaserAgent
-    | ApiGen_Concepts_DispositionSalePurchaserSolicitor;
+    | ApiGen_Concepts_DispositionSalePurchaserSolicitor
+    | ApiGen_Concepts_DispositionSalePurchaserAgent;
   primaryContactLabel?: string | null;
 }
 
-const DispositionSaleContactDetails: React.FunctionComponent<IDispositionSaleContactDetails> = ({
-  contactInformation,
-  primaryContactLabel,
-}) => {
+const DispositionSaleContactDetails: React.FunctionComponent<
+  IDispositionSaleContactDetailsProps
+> = ({ contactInformation, primaryContactLabel }) => {
   const labelValue = primaryContactLabel ? primaryContactLabel : 'Primary contact';
   const primaryContact = contactInformation.primaryContact ?? null;
 

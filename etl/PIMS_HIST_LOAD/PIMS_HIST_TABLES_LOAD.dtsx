@@ -12,8 +12,8 @@
   DTS:ObjectName="Package"
   DTS:PackageType="5"
   DTS:ProtectionLevel="0"
-  DTS:VersionBuild="19"
-  DTS:VersionGUID="{EE6A3C2B-A061-4AE9-8B47-149A98DE2963}">
+  DTS:VersionBuild="22"
+  DTS:VersionGUID="{1A317677-9676-4D7C-AB1A-FB28E74DC0B8}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -26,11 +26,7 @@
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="1"
           DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=localhost,5433;User ID=admin;Initial Catalog=pims;Provider=SQLOLEDB.1;Persist Security Info=True;Application Name=SSIS-Package-{871BCBE7-D6A1-4459-AEA3-052A22C56D27}localhost,5433.pims.admin;Auto Translate=False;">
-          <DTS:Password
-            DTS:Name="Password"
-            Sensitive="1"></DTS:Password>
-        </DTS:ConnectionManager>
+          DTS:ConnectionString="Data Source=localhost,5433;User ID=admin;Initial Catalog=pims;Provider=SQLOLEDB.1;Persist Security Info=True;Application Name=SSIS-Package-{871BCBE7-D6A1-4459-AEA3-052A22C56D27}localhost,5433.pims.admin;Auto Translate=False;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
   </DTS:ConnectionManagers>
@@ -73,7 +69,7 @@
           DTS:LocaleID="-1"
           DTS:ObjectName="LOAD PIMS_ACQUISITION_OWNER"
           DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
-          DTS:ThreadHint="2">
+          DTS:ThreadHint="1">
           <DTS:Variables />
           <DTS:ObjectData>
             <SQLTask:SqlTaskData
@@ -91,7 +87,7 @@
           DTS:LocaleID="-1"
           DTS:ObjectName="LOAD PIMS_COMP_REQ_FINANCIAL_HIST"
           DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
-          DTS:ThreadHint="3">
+          DTS:ThreadHint="2">
           <DTS:Variables />
           <DTS:ObjectData>
             <SQLTask:SqlTaskData
@@ -109,7 +105,7 @@
           DTS:LocaleID="-1"
           DTS:ObjectName="LOAD PIMS_EXPROPRIATION_PAYMENT"
           DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
-          DTS:ThreadHint="1">
+          DTS:ThreadHint="3">
           <DTS:Variables />
           <DTS:ObjectData>
             <SQLTask:SqlTaskData
@@ -157,7 +153,7 @@
           DTS:LocaleID="-1"
           DTS:ObjectName="LOAD PIMS_INSURANCE_HIST"
           DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
-          DTS:ThreadHint="0">
+          DTS:ThreadHint="3">
           <DTS:Variables />
           <DTS:ObjectData>
             <SQLTask:SqlTaskData
@@ -192,7 +188,7 @@
           DTS:LocaleID="-1"
           DTS:ObjectName="LOAD PIMS_LEASE_NOTE_HIST"
           DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
-          DTS:ThreadHint="2">
+          DTS:ThreadHint="0">
           <DTS:Variables />
           <DTS:ObjectData>
             <SQLTask:SqlTaskData
@@ -210,7 +206,7 @@
           DTS:LocaleID="-1"
           DTS:ObjectName="LOAD PIMS_LEASE_PAYMENT_HIST"
           DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
-          DTS:ThreadHint="3">
+          DTS:ThreadHint="2">
           <DTS:Variables />
           <DTS:ObjectData>
             <SQLTask:SqlTaskData
@@ -437,7 +433,7 @@
         <NodeLayout
           Size="272,42.6666666666667"
           Id="Package\Sequence Container - Batch #3\LOAD PIMS_PROPERTY_LEASE_HIST"
-          TopLeft="25.666645134489,95.1228132250128" />
+          TopLeft="25.0416451438023,96.4912343034015" />
         <NodeLayout
           Size="280,42.6666666666667"
           Id="Package\Sequence Container - Batch #3\LOAD PIMS_SECURITY_DEPOSIT_HIST"
@@ -449,8 +445,8 @@
         <ContainerLayout
           HeaderHeight="43"
           IsExpanded="True"
-          PanelSize="363.333333333334,289.333333333334"
-          Size="363.333333333334,332"
+          PanelSize="363.333333333334,290"
+          Size="363.333333333334,332.666666666667"
           Id="Package\Sequence Container - Batch #3"
           TopLeft="1163.74998265877,264.052635532667" />
         <EdgeLayout
@@ -477,18 +473,18 @@
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 1]"
-          TopLeft="1059.74998981133,431.342109674067">
+          TopLeft="1059.74998981133,431.508776340733">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="103.999992847444,0"
+              EndConnector="103.999992847439,0"
               Start="0,0"
-              End="96.4999928474435,0">
+              End="96.499992847439,0">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="96.4999928474435,0" />
+                    End="96.499992847439,0" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>

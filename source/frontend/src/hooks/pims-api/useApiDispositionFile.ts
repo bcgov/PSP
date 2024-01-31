@@ -104,6 +104,23 @@ export const useApiDispositionFile = () => {
         ),
       getDispositionFileSale: (dispositionFileId: number) =>
         api.get<ApiGen_Concepts_DispositionFileSale>(`/dispositionfiles/${dispositionFileId}/sale`),
+      postDispositionFileSale: (
+        dispositionFileId: number,
+        sale: ApiGen_Concepts_DispositionFileSale,
+      ) =>
+        api.post<ApiGen_Concepts_DispositionFileSale>(
+          `/dispositionfiles/${dispositionFileId}/sale`,
+          sale,
+        ),
+      putDispositionFileSale: (
+        dispositionFileId: number,
+        saleId: number,
+        sale: ApiGen_Concepts_DispositionFileSale,
+      ) =>
+        api.put<ApiGen_Concepts_DispositionFileSale>(
+          `/dispositionfiles/${dispositionFileId}/sale/${saleId}`,
+          sale,
+        ),
       getDispositionFileOffer: (dispositionFileId: number, offferId: number) =>
         api.get<ApiGen_Concepts_DispositionFileOffer>(
           `/dispositionfiles/${dispositionFileId}/offers/${offferId}`,

@@ -1,14 +1,20 @@
-import { FormikProps } from 'formik';
+import { AxiosError } from 'axios';
+import { FormikHelpers, FormikProps } from 'formik';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
+import { useDispositionProvider } from '@/hooks/repositories/useDispositionProvider';
+import useApiUserOverride from '@/hooks/useApiUserOverride';
 import { useInitialMapSelectorProperties } from '@/hooks/useInitialMapSelectorProperties';
+import { useModalContext } from '@/hooks/useModalContext';
+import { IApiError } from '@/interfaces/IApiError';
+import { Api_DispositionFile } from '@/models/api/DispositionFile';
 import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
+import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { featuresetToMapProperty } from '@/utils';
 
 import { PropertyForm } from '../../shared/models';
-import useAddDispositionFormManagement from '../hooks/useAddDispositionFormManagement';
 import { DispositionFormModel } from '../models/DispositionFormModel';
 import { IAddDispositionContainerViewProps } from './AddDispositionContainerView';
 
@@ -23,6 +29,12 @@ const AddDispositionContainer: React.FC<IAddDispositionContainerProps> = ({ onCl
   const history = useHistory();
   const mapMachine = useMapStateMachine();
   const selectedFeatureDataset = mapMachine.selectedFeatureDataset;
+
+  const { setModalContent, setDisplayModal } = useModalContext();
+
+  const {
+    addDispositionFileApi: { execute: addDispositionFileApi, loading },
+  } = useDispositionProvider();
 
   const initialForm = useMemo(() => {
     const dispositionForm = new DispositionFormModel();
@@ -61,25 +73,60 @@ const AddDispositionContainer: React.FC<IAddDispositionContainerProps> = ({ onCl
     formikRef.current?.submitForm();
   };
 
+  const withUserOverride = useApiUserOverride<
+    (userOverrideCodes: UserOverrideCode[]) => Promise<Api_DispositionFile | void>
+  >('Failed to create Disposition File');
+
   const handleSuccess = async (disposition: ApiGen_Concepts_DispositionFile) => {
     mapMachine.refreshMapProperties();
     history.replace(`/mapview/sidebar/disposition/${disposition.id}`);
   };
 
-  const helper = useAddDispositionFormManagement({
-    onSuccess: handleSuccess,
-    formikRef,
-  });
+  const handleSubmit = async (
+    values: DispositionFormModel,
+    formikHelpers: FormikHelpers<DispositionFormModel>,
+    userOverrideCodes: UserOverrideCode[],
+  ) => {
+    try {
+      const dispositionFile = values.toApi();
+      const response = await addDispositionFileApi(dispositionFile, userOverrideCodes);
+
+      if (!!response?.id) {
+        formikHelpers?.resetForm();
+        handleSuccess(response);
+      }
+    } finally {
+      formikHelpers?.setSubmitting(false);
+    }
+  };
 
   return (
     <View
       formikRef={formikRef}
       dispositionInitialValues={initialForm}
-      loading={helper.loading || bcaLoading}
+      loading={loading || bcaLoading}
       displayFormInvalid={!isFormValid}
       onSave={handleSave}
       onCancel={handleCancel}
-      onSubmit={helper.handleSubmit}
+      onSubmit={(
+        values: DispositionFormModel,
+        formikHelpers: FormikHelpers<DispositionFormModel>,
+      ) =>
+        withUserOverride(
+          (userOverrideCodes: UserOverrideCode[]) =>
+            handleSubmit(values, formikHelpers, userOverrideCodes),
+          [],
+          (axiosError: AxiosError<IApiError>) => {
+            setModalContent({
+              variant: 'error',
+              title: 'Warning',
+              message: axiosError?.response?.data.error,
+              okButtonText: 'Close',
+            });
+            setDisplayModal(true);
+          },
+        )
+      }
     ></View>
   );
 };

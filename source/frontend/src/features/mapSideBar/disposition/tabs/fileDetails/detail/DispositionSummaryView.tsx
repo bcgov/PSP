@@ -94,7 +94,7 @@ export const DispositionSummaryView: React.FunctionComponent<IDispositionSummary
         <SectionField label="Physical file status" labelWidth="5">
           {dispositionFile?.physicalFileStatusTypeCode?.description}
         </SectionField>
-        <SectionField label="initiating branch" labelWidth="5">
+        <SectionField label="Initiating branch" labelWidth="5">
           {dispositionFile?.initiatingBranchTypeCode?.description}
         </SectionField>
         <SectionField label="Ministry region" labelWidth="5">

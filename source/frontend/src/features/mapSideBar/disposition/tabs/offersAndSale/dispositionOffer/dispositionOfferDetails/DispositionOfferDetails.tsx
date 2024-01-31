@@ -40,7 +40,7 @@ const DispositionOfferDetails: React.FunctionComponent<IDispositionOfferDetailsP
               onClick={() => history.push(`${match.url}/offers/${dispositionOffer.id}/update`)}
             />
             <StyledRemoveLinkButton
-              title="Delete Form 8"
+              title="Delete Offer"
               data-testid={`Offer[${index}].delete-btn`}
               variant="light"
               onClick={() => {

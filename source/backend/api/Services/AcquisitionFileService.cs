@@ -86,7 +86,7 @@ namespace Pims.Api.Services
         public Paged<PimsAcquisitionFile> GetPage(AcquisitionFilter filter)
         {
             _logger.LogInformation("Searching for acquisition files...");
-            _logger.LogDebug("Acquisition file search with filter", filter);
+            _logger.LogDebug("Acquisition file search with filter: {filter}", filter);
 
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
 
@@ -502,7 +502,7 @@ namespace Pims.Api.Services
 
         public IList<PimsCompensationRequisition> GetAcquisitionCompensations(long acquisitionFileId)
         {
-            _logger.LogInformation("Getting compensations for acquisition file id ...", acquisitionFileId);
+            _logger.LogInformation("Getting compensations for acquisition file id: {acquisitionFileId}", acquisitionFileId);
             _user.ThrowIfNotAuthorized(Permissions.CompensationRequisitionView, Permissions.AcquisitionFileView);
             _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, acquisitionFileId);
 
@@ -511,7 +511,7 @@ namespace Pims.Api.Services
 
         public PimsCompensationRequisition AddCompensationRequisition(long acquisitionFileId, PimsCompensationRequisition compensationRequisition)
         {
-            _logger.LogInformation("Adding compensation requisition for acquisition file id ...", acquisitionFileId);
+            _logger.LogInformation("Adding compensation requisition for acquisition file id: {acquisitionFileId}", acquisitionFileId);
 
             _user.ThrowIfNotAuthorized(Permissions.CompensationRequisitionAdd);
             _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, acquisitionFileId);
@@ -535,7 +535,7 @@ namespace Pims.Api.Services
 
         public PimsExpropriationPayment AddExpropriationPayment(long acquisitionFileId, PimsExpropriationPayment expPayment)
         {
-            _logger.LogInformation("Adding Expropiation Payment for acquisition file id ...", acquisitionFileId);
+            _logger.LogInformation("Adding Expropiation Payment for acquisition file id: {acquisitionFileId}", acquisitionFileId);
 
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileEdit);
             _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, acquisitionFileId);
@@ -557,7 +557,7 @@ namespace Pims.Api.Services
         public IList<PimsExpropriationPayment> GetAcquisitionExpropriationPayments(long acquisitionFileId)
         {
 
-            _logger.LogInformation("Getting Expropiation Payments for acquisition file id ...", acquisitionFileId);
+            _logger.LogInformation("Getting Expropiation Payments for acquisition file id: {acquisitionFileId}", acquisitionFileId);
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
             _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, acquisitionFileId);
 

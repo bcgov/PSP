@@ -46,18 +46,8 @@ const OffersAndSaleContainerView: React.FunctionComponent<IOffersAndSaleContaine
   const match = useRouteMatch();
   const keycloak = useKeycloakWrapper();
 
-  // todo:the method 'exists' here should allow the compiler to validate the child property. this works correctly in typescropt 5.3 +
-  const purchaserAgent = exists(dispositionSale?.dispositionPurchaserAgents)
-    ? dispositionSale!.dispositionPurchaserAgents[0]
-    : null;
-  // todo:the method 'exists' here should allow the compiler to validate the child property. this works correctly in typescropt 5.3 +
-  const purchaserAgentSolicitor = exists(dispositionSale?.dispositionPurchaserSolicitors)
-    ? dispositionSale!.dispositionPurchaserSolicitors[0]
-    : null;
-  // todo:the method 'exists' here should allow the compiler to validate the child property. this works correctly in typescropt 5.3 +
-  const purchaserLength = exists(dispositionSale?.dispositionPurchasers)
-    ? dispositionSale!.dispositionPurchasers.length
-    : 0;
+  const purchaserAgent = dispositionSale?.dispositionPurchaserAgent;
+  const purchaserAgentSolicitor = dispositionSale?.dispositionPurchaserSolicitor;
 
   return (
     <>
@@ -118,7 +108,7 @@ const OffersAndSaleContainerView: React.FunctionComponent<IOffersAndSaleContaine
             </SectionField>
           </>
         ) : (
-          <p>There are no value details indicated with this disposition file.</p>
+          <p>There are no Appraisal and Assessment details indicated with this disposition file.</p>
         )}
       </Section>
 
@@ -139,7 +129,7 @@ const OffersAndSaleContainerView: React.FunctionComponent<IOffersAndSaleContaine
       >
         {dispositionOffers.map((offer, index) => (
           <DispositionOfferDetails
-            key={index}
+            key={offer.id}
             dispositionOffer={offer}
             index={index}
             onDelete={onDispositionOfferDeleted}
@@ -150,7 +140,23 @@ const OffersAndSaleContainerView: React.FunctionComponent<IOffersAndSaleContaine
         )}
       </Section>
 
-      <Section header="Sales Details">
+      <Section
+        isCollapsable={false}
+        header={
+          <StyledSubHeader>
+            <label>Sales Details</label>
+            {keycloak.hasClaim(Claims.DISPOSITION_EDIT) && (
+              <EditButton
+                title="Edit Sale"
+                dataTestId={`sale-edit-btn`}
+                onClick={() => {
+                  history.push(`${match.url}/sale/update`);
+                }}
+              />
+            )}
+          </StyledSubHeader>
+        }
+      >
         {(dispositionSale && (
           <>
             <SectionField
@@ -164,7 +170,9 @@ const OffersAndSaleContainerView: React.FunctionComponent<IOffersAndSaleContaine
                     <DispositionSaleContactDetails
                       contactInformation={purchaser}
                     ></DispositionSaleContactDetails>
-                    {index !== purchaserLength - 1 && <StyledSpacer className="my-3" />}
+                    {index !== dispositionSale.dispositionPurchasers!.length - 1 && (
+                      <StyledSpacer className="my-3" />
+                    )}
                   </React.Fragment>
                 ))}
             </SectionField>
@@ -233,14 +241,17 @@ const OffersAndSaleContainerView: React.FunctionComponent<IOffersAndSaleContaine
             >
               {dispositionSale?.isGstRequired ? 'Yes' : 'No'}
             </SectionField>
-            <SectionField
-              label="GST collected ($)"
-              labelWidth="6"
-              tooltip="GST collected is calculated based upon Final Sales Price."
-              valueTestId="disposition-sale.gstCollectedAmount"
-            >
-              {formatMoney(dispositionSale.gstCollectedAmount)}
-            </SectionField>
+            {dispositionSale?.isGstRequired && (
+              <SectionField
+                label="GST collected ($)"
+                labelWidth="6"
+                tooltip="GST collected is calculated based upon Final Sales Price."
+                valueTestId="disposition-sale.gstCollectedAmount"
+              >
+                {formatMoney(dispositionSale.gstCollectedAmount)}
+              </SectionField>
+            )}
+
             <SectionField
               label="Net Book Value ($)"
               labelWidth="6"

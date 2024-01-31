@@ -2,6 +2,7 @@ import { AxiosError } from 'axios';
 import { FormikHelpers, FormikProps } from 'formik';
 import React from 'react';
 
+import { ModalSize } from '@/components/common/GenericModal';
 import { useDispositionProvider } from '@/hooks/repositories/useDispositionProvider';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
 import { useModalContext } from '@/hooks/useModalContext';
@@ -58,6 +59,41 @@ export const UpdateDispositionContainer = React.forwardRef<
     }
   };
 
+  const RemoveSelfContractorModalContent = (): React.ReactNode => {
+    return (
+      <>
+        <p>
+          Contractors cannot remove themselves from a Disposition file. <br />
+          Please contact the admin at <a href="mailto: pims@gov.bc.ca">pims@gov.bc.ca</a>
+        </p>
+      </>
+    );
+  };
+
+  const handleError = async (axiosError: AxiosError<IApiError>): Promise<void> => {
+    switch (axiosError?.response?.data.type) {
+      case 'ContractorNotInTeamException':
+        setModalContent({
+          variant: 'error',
+          title: 'Error',
+          modalSize: ModalSize.LARGE,
+          message: RemoveSelfContractorModalContent(),
+          okButtonText: 'Close',
+        });
+        setDisplayModal(true);
+        break;
+      default: {
+        setModalContent({
+          variant: 'warning',
+          title: 'Warning',
+          message: axiosError?.response?.data.error,
+          okButtonText: 'Close',
+        });
+        setDisplayModal(true);
+      }
+    }
+  };
+
   return (
     <View
       formikRef={formikRef}
@@ -71,13 +107,7 @@ export const UpdateDispositionContainer = React.forwardRef<
             handleSubmit(values, formikHelpers, userOverrideCodes),
           [],
           (axiosError: AxiosError<IApiError>) => {
-            setModalContent({
-              variant: 'warning',
-              title: 'Warning',
-              message: axiosError?.response?.data.error,
-              okButtonText: 'Close',
-            });
-            setDisplayModal(true);
+            handleError(axiosError);
           },
         )
       }

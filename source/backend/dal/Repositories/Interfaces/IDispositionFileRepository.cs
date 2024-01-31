@@ -6,7 +6,7 @@ namespace Pims.Dal.Repositories
 {
     public interface IDispositionFileRepository : IRepository
     {
-        Paged<PimsDispositionFile> GetPageDeep(DispositionFilter filter);
+        Paged<PimsDispositionFile> GetPageDeep(DispositionFilter filter, long? contractorPersonId = null);
 
         PimsDispositionFile GetById(long id);
 
@@ -29,6 +29,10 @@ namespace Pims.Dal.Repositories
         bool TryDeleteDispositionOffer(long dispositionId, long dispositionOfferId);
 
         PimsDispositionSale GetDispositionFileSale(long dispositionId);
+
+        PimsDispositionSale AddDispositionFileSale(PimsDispositionSale dispositionSale);
+
+        PimsDispositionSale UpdateDispositionFileSale(PimsDispositionSale dispositionSale);
 
         PimsDispositionAppraisal GetDispositionFileAppraisal(long dispositionId);
 

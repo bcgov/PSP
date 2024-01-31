@@ -13,10 +13,10 @@ export interface IContactSearchResult {
   leaseTenantId?: number;
   isDisabled?: boolean;
   summary?: string;
-  surname?: string;
-  firstName?: string;
-  middleNames?: string;
-  organizationName?: string;
+  surname?: string | null;
+  firstName?: string | null;
+  middleNames?: string | null;
+  organizationName?: string | null;
   email?: string;
   mailingAddress?: string;
   municipalityName?: string;

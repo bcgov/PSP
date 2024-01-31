@@ -238,6 +238,28 @@ describe('UpdateDisposition container', () => {
     expect(onSuccess).toHaveBeenCalled();
   });
 
+  it(`displays Contactor cannot remove itself from Team`, async () => {
+    mockUpdateDispositionFile.mockRejectedValue(
+      createAxiosError(
+        400,
+        'test error',
+        {
+          errorCode: UserOverrideCode.PROPERTY_OF_INTEREST_TO_INVENTORY,
+        },
+        'ContractorNotInTeamException',
+      ),
+    );
+    const { formikRef } = setup();
+
+    expect(formikRef.current).not.toBeNull();
+    await act(async () => formikRef.current?.submitForm());
+
+    const popup = await screen.findByText(
+      /Contractors cannot remove themselves from a Disposition file./i,
+    );
+    expect(popup).toBeVisible();
+  });
+
   it(`displays custom 400 errors in a modal`, async () => {
     mockUpdateDispositionFile.mockRejectedValue(
       createAxiosError(400, 'test error', {

@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 using System.Security.Claims;
-using Pims.Dal.Entities.Models;
+using Pims.Dal.Entities;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Repositories;
 
@@ -11,17 +11,27 @@ namespace Pims.Core.Extensions
     {
         public static void ThrowInvalidAccessToAcquisitionFile(this ClaimsPrincipal principal, IUserRepository userRepository, IAcquisitionFileRepository acquisitionFileRepository, long acquisitionFileId)
         {
-            if (principal is null)
-            {
-                throw new ArgumentNullException(nameof(principal));
-            }
+            ArgumentNullException.ThrowIfNull(principal);
 
             var pimsUser = userRepository.GetUserInfoByKeycloakUserId(principal.GetUserKey());
-            var acquisitionFile = acquisitionFileRepository.GetById(acquisitionFileId);
+            PimsAcquisitionFile acquisitionFile = acquisitionFileRepository.GetById(acquisitionFileId);
 
             if (pimsUser?.IsContractor == true && !acquisitionFile.PimsAcquisitionFileTeams.Any(x => x.PersonId == pimsUser.PersonId))
             {
                 throw new NotAuthorizedException("Contractor is not assigned to the Acquisition File's team");
+            }
+        }
+
+        public static void ThrowInvalidAccessToDispositionFile(this ClaimsPrincipal principal, IUserRepository userRepository, IDispositionFileRepository dispositionFileRepository, long dispositionFileId)
+        {
+            ArgumentNullException.ThrowIfNull(principal);
+
+            var pimsUser = userRepository.GetUserInfoByKeycloakUserId(principal.GetUserKey());
+            PimsDispositionFile dispostionFile = dispositionFileRepository.GetById(dispositionFileId);
+
+            if (pimsUser?.IsContractor == true && !dispostionFile.PimsDispositionFileTeams.Any(x => x.PersonId == pimsUser.PersonId))
+            {
+                throw new NotAuthorizedException("Contractor is not assigned to the Disposition File's team");
             }
         }
     }

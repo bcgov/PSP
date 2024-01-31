@@ -173,6 +173,7 @@ export function createAxiosError(
   status: number = 500,
   message: string = 'Internal Server Error',
   data: any = {},
+  type?: string,
 ): AxiosError<IApiError> {
   return {
     isAxiosError: true,
@@ -184,6 +185,7 @@ export function createAxiosError(
       status,
       data: {
         ...data,
+        type: type,
         error: message,
       },
     } as AxiosResponse<IApiError>,

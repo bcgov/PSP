@@ -68,21 +68,21 @@ namespace PIMS.Tests.Automation.PageObjects
         public void VerifyCDOGSListView()
         {
             WaitUntilVisible(CDOGSAddTemplateBttn);
-            Assert.True(webDriver.FindElement(CDOGSDocumentsTitle).Displayed);
-            Assert.True(webDriver.FindElement(CDOGSAddTemplateBttn).Displayed);
+            AssertTrueIsDisplayed(CDOGSDocumentsTitle);
+            AssertTrueIsDisplayed(CDOGSAddTemplateBttn);
 
-            Assert.True(webDriver.FindElement(CDOGSFilterTypeSelect).Displayed);
-            Assert.True(webDriver.FindElement(CDOGSFilterStatusSelect).Displayed);
-            Assert.True(webDriver.FindElement(CDOGSFilterNameInput).Displayed);
-            Assert.True(webDriver.FindElement(CDOGSFilterSearchBttn).Displayed);
-            Assert.True(webDriver.FindElement(CDOGSFilterResetBttn).Displayed);
+            AssertTrueIsDisplayed(CDOGSFilterTypeSelect);
+            AssertTrueIsDisplayed(CDOGSFilterStatusSelect);
+            AssertTrueIsDisplayed(CDOGSFilterNameInput);
+            AssertTrueIsDisplayed(CDOGSFilterSearchBttn);
+            AssertTrueIsDisplayed(CDOGSFilterResetBttn);
 
-            Assert.True(webDriver.FindElement(CDOGSTableResults).Displayed);
-            Assert.True(webDriver.FindElement(CDOGSTableTypeColumn).Displayed);
-            Assert.True(webDriver.FindElement(CDOGSTableNameColumn).Displayed);
-            Assert.True(webDriver.FindElement(CDOGSTableDateColumn).Displayed);
-            Assert.True(webDriver.FindElement(CDOGSTableStatusColumn).Displayed);
-            Assert.True(webDriver.FindElement(CDOGSTableActionsColumn).Displayed);
+            AssertTrueIsDisplayed(CDOGSTableResults);
+            AssertTrueIsDisplayed(CDOGSTableTypeColumn);
+            AssertTrueIsDisplayed(CDOGSTableNameColumn);
+            AssertTrueIsDisplayed(CDOGSTableDateColumn);
+            AssertTrueIsDisplayed(CDOGSTableStatusColumn);
+            AssertTrueIsDisplayed(CDOGSTableActionsColumn);
         }
 
         public void Delete1stTemplate()
@@ -91,10 +91,10 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(CDOGSTableResults1stDeleteBttn).Click();
             
             WaitUntilVisible(documentDeleteHeader);
-            Assert.True(webDriver.FindElement(documentDeleteHeader).Text.Equals("Delete a document"));
-            Assert.True(webDriver.FindElement(documentDeleteContent1).Text.Equals("You have chosen to delete this document."));
-            Assert.True(webDriver.FindElement(documentDeteleContent2).Text.Equals("If the document is linked to other files or entities in PIMS it will still be accessible from there, however if this the only instance then the file will be removed from the document store completely."));
-            Assert.True(webDriver.FindElement(documentDeleteContent3).Text.Equals("Do you wish to continue deleting this document?"));
+            Assert.Equal("Delete a document", webDriver.FindElement(documentDeleteHeader).Text);
+            Assert.Equal("You have chosen to delete this document.", webDriver.FindElement(documentDeleteContent1).Text);
+            Assert.Equal("If the document is linked to other files or entities in PIMS it will still be accessible from there, however if this the only instance then the file will be removed from the document store completely.", webDriver.FindElement(documentDeteleContent2).Text);
+            Assert.Equal("Do you wish to continue deleting this document?", webDriver.FindElement(documentDeleteContent3).Text);
 
             webDriver.FindElement(documentDeleteOkBttn).Click();
         }
