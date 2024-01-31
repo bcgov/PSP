@@ -18,13 +18,6 @@ export const AddressSubForm: React.FunctionComponent<
 > = ({ disabled, nameSpace }) => {
   const formikProps = useFormikContext<Api_Lease>();
   const address = getIn(formikProps.values, withNameSpace(nameSpace)) as Api_Address;
-  const municipality = address.municipality;
-  const postal = address.postal;
-  const country = address.country?.description;
-  const province = address.province?.description;
-  const streetAddress1 = address.streetAddress1;
-  const streetAddress2 = address.streetAddress2;
-  const streetAddress3 = address.streetAddress3;
 
   if (!address) {
     return (
@@ -34,6 +27,14 @@ export const AddressSubForm: React.FunctionComponent<
       </>
     );
   }
+
+  const municipality = address.municipality;
+  const postal = address.postal;
+  const country = address.country?.description;
+  const province = address.province?.description;
+  const streetAddress1 = address.streetAddress1;
+  const streetAddress2 = address.streetAddress2;
+  const streetAddress3 = address.streetAddress3;
 
   return (
     <>
