@@ -398,9 +398,7 @@ exports[`Compensation Requisition UpdateForm component renders as expected 1`] =
             <div
               class="c4 text-left col-4"
               data-testid="compensation-finalized-date"
-            >
-              Invalid date
-            </div>
+            />
           </div>
           <div
             class="pb-2 row"

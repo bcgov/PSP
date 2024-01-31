@@ -16,8 +16,8 @@ export const getCurrentFiscalYear = (): number => {
  * @returns A string representing the input date in the supplied date/time format
  */
 export const prettyFormatDate = (date?: string | Date | Moment | null) => {
-  if (typeof date === 'string' && isValidIsoDateTime(date)) {
-    return moment(date).format('MMM D, YYYY');
+  if (typeof date === 'string') {
+    return isValidIsoDateTime(date) ? moment(date).format('MMM D, YYYY') : '';
   }
   return exists(date) ? moment(date).format('MMM D, YYYY') : '';
 };

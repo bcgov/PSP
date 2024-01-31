@@ -388,9 +388,7 @@ exports[`LeaseHeader component renders as expected when no data is provided 1`] 
               <div
                 class="pl-1 text-left col-3"
               >
-                <strong>
-                  Jan 1, 1970
-                </strong>
+                <strong />
               </div>
               <div
                 class="pr-0 text-left col-auto"
