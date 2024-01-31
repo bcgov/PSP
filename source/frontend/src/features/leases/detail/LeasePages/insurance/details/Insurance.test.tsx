@@ -3,9 +3,9 @@ import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
 
-import { TypeCodeUtils } from '@/interfaces';
+import { TypeCodeUtils } from '@/interfaces/ITypeCode';
 import { getMockInsurance } from '@/mocks/insurance.mock';
-import { Api_Insurance } from '@/models/api/Insurance';
+import { ApiGen_Concepts_Insurance } from '@/models/api/generated/ApiGen_Concepts_Insurance';
 import { ILookupCode, lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { render, RenderOptions, RenderResult } from '@/utils/test-utils';
 
@@ -32,7 +32,7 @@ const history = createMemoryHistory();
 describe('Lease Insurance', () => {
   const setup = (
     renderOptions: RenderOptions & {
-      insuranceList: Api_Insurance[];
+      insuranceList: ApiGen_Concepts_Insurance[];
       insuranceTypes: ILookupCode[];
     } = {
       store: storeState,
@@ -68,7 +68,7 @@ describe('Lease Insurance', () => {
   });
 
   it('Insurance count is correct', () => {
-    const testInsurance: Api_Insurance = { ...getMockInsurance() };
+    const testInsurance: ApiGen_Concepts_Insurance = { ...getMockInsurance() };
     testInsurance.insuranceType = TypeCodeUtils.createFromLookup(mockInsuranceTypeCar);
 
     const result = setup({

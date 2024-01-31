@@ -9,6 +9,7 @@ import { FastDatePicker, Input, Select, SelectOption } from '@/components/common
 import { SectionField } from '@/components/common/Section/SectionField';
 import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
 import { IApiError } from '@/interfaces/IApiError';
+import { exists, isValidId } from '@/utils';
 
 import { formatAsSelectOptions } from '../financialCodeUtils';
 import { FinancialCodeForm } from '../models';
@@ -52,7 +53,8 @@ export const AddFinancialCodeForm: React.FC<IAddFinancialCodeFormProps> = ({
       onSubmit={async (values, formikHelpers) => {
         try {
           const createdCode = await onSave(values.toApi());
-          if (!!createdCode?.id) {
+          // TODO: the isValidId check is sufficient but current ts (4.3) does not see it as valid. This works correctly on 5.3
+          if (exists(createdCode) && isValidId(createdCode?.id)) {
             formikHelpers.resetForm({
               values: FinancialCodeForm.fromApi(createdCode),
             });

@@ -1,4 +1,5 @@
-import { Api_PropertyAnomaly } from '@/models/api/Property';
+import { ApiGen_Concepts_PropertyAnomaly } from '@/models/api/generated/ApiGen_Concepts_PropertyAnomaly';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { ILookupCode } from '@/store/slices/lookupCodes';
 
 export class PropertyAnomalyFormModel {
@@ -15,25 +16,27 @@ export class PropertyAnomalyFormModel {
     return newModel;
   }
 
-  static fromApi(base: Api_PropertyAnomaly): PropertyAnomalyFormModel {
+  static fromApi(base: ApiGen_Concepts_PropertyAnomaly): PropertyAnomalyFormModel {
     var newModel = new PropertyAnomalyFormModel();
     newModel.id = base.id;
-    newModel.rowVersion = base.rowVersion;
+    newModel.rowVersion = base.rowVersion ?? undefined;
     newModel.propertyId = base.propertyId;
-    newModel.typeCode = base.propertyAnomalyTypeCode?.id;
-    newModel.typeDescription = base.propertyAnomalyTypeCode?.description;
+    newModel.typeCode = base.propertyAnomalyTypeCode?.id ?? undefined;
+    newModel.typeDescription = base.propertyAnomalyTypeCode?.description ?? undefined;
     return newModel;
   }
 
-  toApi(): Api_PropertyAnomaly {
+  toApi(): ApiGen_Concepts_PropertyAnomaly {
     return {
-      id: this.id,
-      rowVersion: this.rowVersion,
-      propertyId: this.propertyId,
+      id: this.id ?? 0,
+      propertyId: this.propertyId ?? 0,
       propertyAnomalyTypeCode: {
-        id: this.typeCode,
-        description: this.typeDescription,
+        id: this.typeCode ?? null,
+        description: this.typeDescription ?? null,
+        displayOrder: null,
+        isDisabled: false,
       },
+      ...getEmptyBaseAudit(this.rowVersion),
     };
   }
 }

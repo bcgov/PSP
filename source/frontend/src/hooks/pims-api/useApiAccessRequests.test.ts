@@ -4,6 +4,7 @@ import MockAdapter from 'axios-mock-adapter';
 
 import { IPagedItems } from '@/interfaces';
 import { mockApiAccessRequest } from '@/mocks/filterData.mock';
+import { ApiGen_Concepts_AccessRequest } from '@/models/api/generated/ApiGen_Concepts_AccessRequest';
 
 import { useApiAccessRequests } from './useApiAccessRequests';
 
@@ -64,7 +65,7 @@ describe('useApiAccessRequests api hook', () => {
   });
 
   it('Posts a new access request', async () => {
-    const newAccessRequest = { ...mockApiAccessRequest, id: undefined };
+    const newAccessRequest: ApiGen_Concepts_AccessRequest = { ...mockApiAccessRequest, id: 0 };
     mockAxios.onPost(`/access/requests`).reply(201, newAccessRequest);
     const { postAccessRequest } = setup();
     const response = await postAccessRequest(newAccessRequest);

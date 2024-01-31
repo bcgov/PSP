@@ -1,4 +1,4 @@
-import { Api_LeaseTenant } from '@/models/api/LeaseTenant';
+import { ApiGen_Concepts_LeaseTenant } from '@/models/api/generated/ApiGen_Concepts_LeaseTenant';
 
 import { Api_GenerateOrganization } from '../GenerateOrganization';
 import { Api_GeneratePerson } from '../GeneratePerson';
@@ -10,7 +10,7 @@ export class Api_GenerateTenant {
   name: string;
   address_string: string;
   email: string;
-  constructor(leaseTenant: Api_LeaseTenant) {
+  constructor(leaseTenant: ApiGen_Concepts_LeaseTenant) {
     this.person = leaseTenant.person ? new Api_GeneratePerson(leaseTenant.person) : null;
     this.organization = leaseTenant.organization
       ? new Api_GenerateOrganization(leaseTenant.organization)

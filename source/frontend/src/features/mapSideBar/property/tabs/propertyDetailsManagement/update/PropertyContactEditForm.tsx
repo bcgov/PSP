@@ -12,8 +12,9 @@ import { StyledSummarySection } from '@/components/common/Section/SectionStyles'
 import { formatContactSearchResult } from '@/features/contacts/contactUtils';
 import { useOrganizationRepository } from '@/features/contacts/repositories/useOrganizationRepository';
 import { IContactSearchResult } from '@/interfaces';
-import { Api_OrganizationPerson } from '@/models/api/Organization';
-import { Api_PropertyContact } from '@/models/api/Property';
+import { ApiGen_Concepts_OrganizationPerson } from '@/models/api/generated/ApiGen_Concepts_OrganizationPerson';
+import { ApiGen_Concepts_PropertyContact } from '@/models/api/generated/ApiGen_Concepts_PropertyContact';
+import { isValidId } from '@/utils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
 import { PropertyContactFormModel } from './models';
@@ -21,8 +22,8 @@ import { PropertyContactEditFormYupSchema } from './validation';
 
 export interface IPropertyContactEditFormProps {
   isLoading: boolean;
-  propertyContact: Api_PropertyContact;
-  onSave: (apiModel: Api_PropertyContact) => void;
+  propertyContact: ApiGen_Concepts_PropertyContact;
+  onSave: (apiModel: ApiGen_Concepts_PropertyContact) => void;
 }
 
 export const PropertyContactEditForm = React.forwardRef<
@@ -54,7 +55,7 @@ export const PropertyContactEditForm = React.forwardRef<
   const primaryContactOptions: SelectOption[] = useMemo(() => {
     if (contact?.organizationId) {
       return (
-        organization?.organizationPersons?.map((orgPerson: Api_OrganizationPerson) => {
+        organization?.organizationPersons?.map((orgPerson: ApiGen_Concepts_OrganizationPerson) => {
           return {
             label: `${formatApiPersonNames(orgPerson.person)}`,
             value: orgPerson.personId ?? '',
@@ -85,7 +86,7 @@ export const PropertyContactEditForm = React.forwardRef<
             {formikProps => (
               <Section header="Contact Details">
                 <SectionField label="Contact" contentWidth="7" required>
-                  {formikProps.values.id === 0 && (
+                  {!isValidId(formikProps.values.id) && (
                     <ContactInputContainer
                       field="contact"
                       View={ContactInputView}
@@ -94,7 +95,7 @@ export const PropertyContactEditForm = React.forwardRef<
                       }}
                     />
                   )}
-                  {formikProps.values.id !== 0 && (
+                  {isValidId(formikProps.values.id) && (
                     <Input
                       field="contact"
                       value={
@@ -106,7 +107,7 @@ export const PropertyContactEditForm = React.forwardRef<
                     />
                   )}
                 </SectionField>
-                {formikProps.values.contact?.personId === undefined && (
+                {!isValidId(formikProps.values.contact?.personId) && (
                   <SectionField label="Primary contact">
                     {primaryContactOptions.length > 1 ? (
                       <Select

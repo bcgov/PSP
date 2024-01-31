@@ -3,11 +3,11 @@ import { MdClose } from 'react-icons/md';
 
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { CloseButton, TrayContent, TrayHeader } from '@/components/common/styles';
-import { Api_FormDocumentFile } from '@/models/api/FormDocument';
+import { ApiGen_Concepts_FormDocumentFile } from '@/models/api/generated/ApiGen_Concepts_FormDocumentFile';
 
 export interface IFormViewProps {
   loading: boolean;
-  formFile?: Api_FormDocumentFile;
+  formFile?: ApiGen_Concepts_FormDocumentFile;
   onClose: () => void;
 }
 

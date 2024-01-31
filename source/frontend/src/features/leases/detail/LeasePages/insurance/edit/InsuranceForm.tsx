@@ -4,7 +4,7 @@ import { Col, Row } from 'react-bootstrap';
 import { FastCurrencyInput, FastDatePicker, Input, TextArea } from '@/components/common/form';
 import { RadioGroup } from '@/components/common/form/RadioGroup';
 import { FormSection } from '@/components/common/form/styles';
-import ITypeCode from '@/interfaces/ITypeCode';
+import { ApiGen_Base_CodeType } from '@/models/api/generated/ApiGen_Base_CodeType';
 import { withNameSpace } from '@/utils/formUtils';
 
 import { FormInsurance } from './models';
@@ -18,7 +18,7 @@ const InsuranceForm: React.FunctionComponent<React.PropsWithChildren<IInsuranceR
   nameSpace,
 }) => {
   const formikProps = useFormikContext<FormInsurance>();
-  const insuranceType: ITypeCode<string> = getIn(
+  const insuranceType: ApiGen_Base_CodeType<string> = getIn(
     formikProps.values,
     `${withNameSpace(nameSpace, 'insuranceType')}`,
   );

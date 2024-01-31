@@ -1,6 +1,6 @@
-import { Api_Agreement } from '@/models/api/Agreement';
+import { ApiGen_Concepts_Agreement } from '@/models/api/generated/ApiGen_Concepts_Agreement';
 
-export const mockAgreementsResponse = (): Api_Agreement[] => [
+export const mockAgreementsResponse = (): ApiGen_Concepts_Agreement[] => [
   {
     agreementId: 1,
     acquisitionFileId: 1,
@@ -30,6 +30,9 @@ export const mockAgreementsResponse = (): Api_Agreement[] => [
     appLastUpdateUserid: 'dbo',
     appCreateUserid: 'dbo',
     rowVersion: 1,
+    appCreateUserGuid: null,
+    appLastUpdateUserGuid: null,
+    isDraft: null,
   },
   {
     agreementId: 2,
@@ -60,5 +63,8 @@ export const mockAgreementsResponse = (): Api_Agreement[] => [
     appLastUpdateUserid: 'dbo',
     appCreateUserid: 'dbo',
     rowVersion: 1,
+    appCreateUserGuid: null,
+    appLastUpdateUserGuid: null,
+    isDraft: null,
   },
 ];

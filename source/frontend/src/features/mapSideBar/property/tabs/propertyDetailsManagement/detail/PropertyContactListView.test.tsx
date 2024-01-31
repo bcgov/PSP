@@ -3,7 +3,9 @@ import { noop } from 'lodash';
 
 import { Claims } from '@/constants/index';
 import { mockLookups } from '@/mocks/lookups.mock';
-import { Api_PropertyContact } from '@/models/api/Property';
+import { getEmptyOrganization } from '@/mocks/organization.mock';
+import { ApiGen_Concepts_PropertyContact } from '@/models/api/generated/ApiGen_Concepts_PropertyContact';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { render, RenderOptions } from '@/utils/test-utils';
 
@@ -20,7 +22,7 @@ jest.mock('@react-keycloak/web');
 describe('PropertyContactListView component', () => {
   // render component under test
   const setup = (
-    renderOptions: RenderOptions & { propertyContacts: Api_PropertyContact[] } = {
+    renderOptions: RenderOptions & { propertyContacts: ApiGen_Concepts_PropertyContact[] } = {
       propertyContacts: mockPropertyContacts,
     },
   ) => {
@@ -50,7 +52,7 @@ describe('PropertyContactListView component', () => {
   });
 
   it('Shows primary contact message if contact is a person', () => {
-    const testContacts: Api_PropertyContact[] = [
+    const testContacts: ApiGen_Concepts_PropertyContact[] = [
       { ...mockPropertyContacts[0], primaryContact: null },
     ];
     const { getByText } = setup({ propertyContacts: testContacts });
@@ -59,11 +61,11 @@ describe('PropertyContactListView component', () => {
   });
 
   it('Shows primary contact message if contact is an organization', () => {
-    const testContacts: Api_PropertyContact[] = [
+    const testContacts: ApiGen_Concepts_PropertyContact[] = [
       {
         ...emptyPropertyContact,
         person: null,
-        organization: { id: 1, name: 'Org name' },
+        organization: { ...getEmptyOrganization(), id: 1, name: 'Org name' },
         primaryContact: null,
       },
     ];
@@ -73,7 +75,7 @@ describe('PropertyContactListView component', () => {
   });
 });
 
-const emptyPropertyContact: Api_PropertyContact = {
+const emptyPropertyContact: ApiGen_Concepts_PropertyContact = {
   id: 0,
   propertyId: 0,
   organizationId: null,
@@ -83,10 +85,10 @@ const emptyPropertyContact: Api_PropertyContact = {
   primaryContactId: null,
   primaryContact: null,
   purpose: null,
-  rowVersion: 0,
+  ...getEmptyBaseAudit(0),
 };
 
-const mockPropertyContacts: Api_PropertyContact[] = [
+const mockPropertyContacts: ApiGen_Concepts_PropertyContact[] = [
   {
     ...emptyPropertyContact,
     id: 1,

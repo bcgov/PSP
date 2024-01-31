@@ -24,6 +24,7 @@
     },    
   ],
   "settings": {
-    "dotnet.defaultSolution": "backend/Pims.sln"
+    "dotnet.defaultSolution": "backend/Pims.sln",
+    "typescript.tsdk": "frontend\\node_modules\\typescript\\lib"
   }
 }

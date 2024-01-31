@@ -2,10 +2,12 @@ using System.Collections.Generic;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Models.Concepts.DispositionFile;
 using Pims.Api.Models.Concepts.File;
 using Pims.Api.Policies;
 using Pims.Api.Services;
+using Pims.Core.Json;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -53,6 +55,7 @@ namespace Pims.Api.Areas.Disposition.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(IEnumerable<FileChecklistItemModel>), 200)]
         [SwaggerOperation(Tags = new[] { "dispositionfile" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetDispositionFileChecklist([FromRoute] long id)
         {
             var checklist = _dispositionService.GetChecklistItems(id);
@@ -68,10 +71,20 @@ namespace Pims.Api.Areas.Disposition.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(DispositionFileModel), 200)]
         [SwaggerOperation(Tags = new[] { "dispositionfile" })]
-        public IActionResult UpdateDispositionFileChecklist([FromBody] DispositionFileModel dispositionFileModel)
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult UpdateDispositionFileChecklist(long id, [FromBody] IList<FileChecklistItemModel> checklistItems)
         {
-            var dispositionFileEntity = _mapper.Map<Dal.Entities.PimsDispositionFile>(dispositionFileModel);
-            var dispositionFile = _dispositionService.UpdateChecklistItems(dispositionFileEntity);
+
+            foreach (var item in checklistItems)
+            {
+                if (item.FileId != id)
+                {
+                    throw new BadRequestException("All checklist items file id must match the disposition file id");
+                }
+            }
+
+            var checklistItemEntities = _mapper.Map<IList<Dal.Entities.PimsDispositionChecklistItem>>(checklistItems);
+            var dispositionFile = _dispositionService.UpdateChecklistItems(checklistItemEntities);
             return new JsonResult(_mapper.Map<DispositionFileModel>(dispositionFile));
         }
 

@@ -8,12 +8,12 @@ import { StyledEditWrapper, StyledSummarySection } from '@/components/common/Sec
 import { StyledLink } from '@/components/maps/leaflet/LayerPopup/styles';
 import { Claims } from '@/constants';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
-import { Api_DispositionFile } from '@/models/api/DispositionFile';
+import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
 import { prettyFormatDate } from '@/utils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
 export interface IDispositionSummaryViewProps {
-  dispositionFile?: Api_DispositionFile;
+  dispositionFile?: ApiGen_Concepts_DispositionFile;
   onEdit: () => void;
 }
 
@@ -94,7 +94,7 @@ export const DispositionSummaryView: React.FunctionComponent<IDispositionSummary
         <SectionField label="Physical file status" labelWidth="5">
           {dispositionFile?.physicalFileStatusTypeCode?.description}
         </SectionField>
-        <SectionField label="initiating branch" labelWidth="5">
+        <SectionField label="Initiating branch" labelWidth="5">
           {dispositionFile?.initiatingBranchTypeCode?.description}
         </SectionField>
         <SectionField label="Ministry region" labelWidth="5">
@@ -102,7 +102,7 @@ export const DispositionSummaryView: React.FunctionComponent<IDispositionSummary
         </SectionField>
       </Section>
       <Section header="Disposition Team">
-        {dispositionFile?.dispositionTeam.map((teamMember, index) => (
+        {dispositionFile?.dispositionTeam?.map((teamMember, index) => (
           <React.Fragment key={`disp-team-${index}`}>
             <SectionField label={teamMember?.teamProfileType?.description || ''} labelWidth="5">
               <StyledLink

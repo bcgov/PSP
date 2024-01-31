@@ -1,17 +1,15 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import { useDispositionProvider } from '@/hooks/repositories/useDispositionProvider';
-import {
-  Api_DispositionFile,
-  Api_DispositionFileAppraisal,
-  Api_DispositionFileOffer,
-} from '@/models/api/DispositionFile';
+import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
+import { ApiGen_Concepts_DispositionFileAppraisal } from '@/models/api/generated/ApiGen_Concepts_DispositionFileAppraisal';
+import { ApiGen_Concepts_DispositionFileOffer } from '@/models/api/generated/ApiGen_Concepts_DispositionFileOffer';
 import { ApiGen_Concepts_DispositionFileSale } from '@/models/api/generated/ApiGen_Concepts_DispositionFileSale';
 
 import { IOffersAndSaleContainerViewProps } from './OffersAndSaleContainerView';
 
 export interface IOffersAndSaleContainerProps {
-  dispositionFile?: Api_DispositionFile;
+  dispositionFile?: ApiGen_Concepts_DispositionFile;
   View: React.FC<IOffersAndSaleContainerViewProps>;
 }
 
@@ -25,11 +23,13 @@ const OffersAndSaleContainer: React.FunctionComponent<IOffersAndSaleContainerPro
     getDispositionAppraisal: { execute: getDispositionAppraisal, loading: loadingAppraisal },
     deleteDispositionOffer: { execute: deleteDispositionOffer, loading: deletingOffer },
   } = useDispositionProvider();
-  const [dispositionOffers, setDispositionOffers] = useState<Api_DispositionFileOffer[]>([]);
+  const [dispositionOffers, setDispositionOffers] = useState<
+    ApiGen_Concepts_DispositionFileOffer[]
+  >([]);
   const [dispositionSale, setDispositionSale] =
     useState<ApiGen_Concepts_DispositionFileSale | null>(null);
   const [dispositionAppraisal, setdispositionAppraisal] =
-    useState<Api_DispositionFileAppraisal | null>(null);
+    useState<ApiGen_Concepts_DispositionFileAppraisal | null>(null);
 
   const fetchDispositionInformation = useCallback(async () => {
     if (dispositionFile?.id) {

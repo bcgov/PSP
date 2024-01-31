@@ -1,7 +1,6 @@
 import { AxiosResponse } from 'axios';
 import { useCallback, useMemo } from 'react';
 
-import { FinancialCodeTypes } from '@/constants/index';
 import {
   getChartOfAccountsCodes,
   getFinancialActivitiesCodes,
@@ -14,7 +13,8 @@ import {
   putFinancialCode,
 } from '@/hooks/pims-api/useApiFinancialCodes';
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
-import { Api_FinancialCode } from '@/models/api/FinancialCode';
+import { ApiGen_Concepts_FinancialCode } from '@/models/api/generated/ApiGen_Concepts_FinancialCode';
+import { ApiGen_Concepts_FinancialCodeTypes } from '@/models/api/generated/ApiGen_Concepts_FinancialCodeTypes';
 import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils';
 
 const ignoreErrorCodes = [409];
@@ -24,7 +24,7 @@ const ignoreErrorCodes = [409];
  */
 export const useFinancialCodeRepository = () => {
   const getAllFinancialCodesApi = useApiRequestWrapper<
-    () => Promise<AxiosResponse<Api_FinancialCode[], any>>
+    () => Promise<AxiosResponse<ApiGen_Concepts_FinancialCode[], any>>
   >({
     requestFunction: useCallback(async () => await getFinancialCodes(), []),
     requestName: 'GetFinancialCodes',
@@ -33,10 +33,13 @@ export const useFinancialCodeRepository = () => {
   });
 
   const getFinancialCodesByTypeApi = useApiRequestWrapper<
-    (codeType: FinancialCodeTypes) => Promise<AxiosResponse<Api_FinancialCode[], any>>
+    (
+      codeType: ApiGen_Concepts_FinancialCodeTypes,
+    ) => Promise<AxiosResponse<ApiGen_Concepts_FinancialCode[], any>>
   >({
     requestFunction: useCallback(
-      async (codeType: FinancialCodeTypes) => await getFinancialCodesByType(codeType),
+      async (codeType: ApiGen_Concepts_FinancialCodeTypes) =>
+        await getFinancialCodesByType(codeType),
       [],
     ),
     requestName: 'GetFinancialCodesByType',
@@ -45,7 +48,7 @@ export const useFinancialCodeRepository = () => {
   });
 
   const getFinancialActivityCodesApi = useApiRequestWrapper<
-    () => Promise<AxiosResponse<Api_FinancialCode[], any>>
+    () => Promise<AxiosResponse<ApiGen_Concepts_FinancialCode[], any>>
   >({
     requestFunction: useCallback(async () => await getFinancialActivitiesCodes(), []),
     requestName: 'GetFinancialActivityCodes',
@@ -54,7 +57,7 @@ export const useFinancialCodeRepository = () => {
   });
 
   const getChartOfAccountsCodesApi = useApiRequestWrapper<
-    () => Promise<AxiosResponse<Api_FinancialCode[], any>>
+    () => Promise<AxiosResponse<ApiGen_Concepts_FinancialCode[], any>>
   >({
     requestFunction: useCallback(async () => await getChartOfAccountsCodes(), []),
     requestName: 'GetChartOfAccountsCodes',
@@ -63,7 +66,7 @@ export const useFinancialCodeRepository = () => {
   });
 
   const getResponsibilityCodesApi = useApiRequestWrapper<
-    () => Promise<AxiosResponse<Api_FinancialCode[], any>>
+    () => Promise<AxiosResponse<ApiGen_Concepts_FinancialCode[], any>>
   >({
     requestFunction: useCallback(async () => await getResponsibilityCodes(), []),
     requestName: 'GetResponsiblityCodes',
@@ -72,7 +75,7 @@ export const useFinancialCodeRepository = () => {
   });
 
   const getYearlyFinancialsCodesApi = useApiRequestWrapper<
-    () => Promise<AxiosResponse<Api_FinancialCode[], any>>
+    () => Promise<AxiosResponse<ApiGen_Concepts_FinancialCode[], any>>
   >({
     requestFunction: useCallback(async () => await getYearlyFinancialCodes(), []),
     requestName: 'GetYearlyFinancialCodes',
@@ -81,10 +84,14 @@ export const useFinancialCodeRepository = () => {
   });
 
   const getFinancialCodeByIdApi = useApiRequestWrapper<
-    (codeType: FinancialCodeTypes, id: number) => Promise<AxiosResponse<Api_FinancialCode, any>>
+    (
+      codeType: ApiGen_Concepts_FinancialCodeTypes,
+      id: number,
+    ) => Promise<AxiosResponse<ApiGen_Concepts_FinancialCode, any>>
   >({
     requestFunction: useCallback(
-      async (codeType: FinancialCodeTypes, id: number) => await getFinancialCode(codeType, id),
+      async (codeType: ApiGen_Concepts_FinancialCodeTypes, id: number) =>
+        await getFinancialCode(codeType, id),
       [],
     ),
     requestName: 'GetFinancialCodeById',
@@ -94,13 +101,15 @@ export const useFinancialCodeRepository = () => {
 
   const addFinancialCodeApi = useApiRequestWrapper<
     (
-      codeType: FinancialCodeTypes,
-      financialCode: Api_FinancialCode,
-    ) => Promise<AxiosResponse<Api_FinancialCode, any>>
+      codeType: ApiGen_Concepts_FinancialCodeTypes,
+      financialCode: ApiGen_Concepts_FinancialCode,
+    ) => Promise<AxiosResponse<ApiGen_Concepts_FinancialCode, any>>
   >({
     requestFunction: useCallback(
-      async (codeType: FinancialCodeTypes, financialCode: Api_FinancialCode) =>
-        await postFinancialCode(codeType, financialCode),
+      async (
+        codeType: ApiGen_Concepts_FinancialCodeTypes,
+        financialCode: ApiGen_Concepts_FinancialCode,
+      ) => await postFinancialCode(codeType, financialCode),
       [],
     ),
     requestName: 'AddFinancialCodes',
@@ -109,10 +118,12 @@ export const useFinancialCodeRepository = () => {
   });
 
   const updateFinancialCodeApi = useApiRequestWrapper<
-    (financialCode: Api_FinancialCode) => Promise<AxiosResponse<Api_FinancialCode, any>>
+    (
+      financialCode: ApiGen_Concepts_FinancialCode,
+    ) => Promise<AxiosResponse<ApiGen_Concepts_FinancialCode, any>>
   >({
     requestFunction: useCallback(
-      async (financialCode: Api_FinancialCode) => await putFinancialCode(financialCode),
+      async (financialCode: ApiGen_Concepts_FinancialCode) => await putFinancialCode(financialCode),
       [],
     ),
     requestName: 'UpdateFinancialCodes',

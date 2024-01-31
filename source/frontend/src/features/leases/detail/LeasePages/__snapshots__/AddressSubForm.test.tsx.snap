@@ -11,8 +11,8 @@ exports[`AddressSubForm component renders minimally as expected 1`] = `
   >
     <input
       class="form-control"
-      id="input-properties.0.address.streetAddress1"
-      name="properties.0.address.streetAddress1"
+      id="input-fileProperties.0.property.address.streetAddress1"
+      name="fileProperties.0.property.address.streetAddress1"
       title="1234 mock Street"
       value="1234 mock Street"
     />
@@ -22,8 +22,8 @@ exports[`AddressSubForm component renders minimally as expected 1`] = `
   >
     <input
       class="form-control"
-      id="input-properties.0.address.streetAddress2"
-      name="properties.0.address.streetAddress2"
+      id="input-fileProperties.0.property.address.streetAddress2"
+      name="fileProperties.0.property.address.streetAddress2"
       title="N/A"
       value="N/A"
     />
@@ -33,8 +33,8 @@ exports[`AddressSubForm component renders minimally as expected 1`] = `
   >
     <input
       class="form-control"
-      id="input-properties.0.address.municipality"
-      name="properties.0.address.municipality"
+      id="input-fileProperties.0.property.address.municipality"
+      name="fileProperties.0.property.address.municipality"
       title="Victoria"
       value="Victoria"
     />
@@ -44,8 +44,8 @@ exports[`AddressSubForm component renders minimally as expected 1`] = `
   >
     <input
       class="form-control"
-      id="input-properties.0.address.postal"
-      name="properties.0.address.postal"
+      id="input-fileProperties.0.property.address.postal"
+      name="fileProperties.0.property.address.postal"
       title="V1V1V1"
       value="V1V1V1"
     />
@@ -55,10 +55,21 @@ exports[`AddressSubForm component renders minimally as expected 1`] = `
   >
     <input
       class="form-control"
-      id="input-properties.0.address.province"
-      name="properties.0.address.province"
+      id="input-fileProperties.0.property.address.province.code"
+      name="fileProperties.0.property.address.province.code"
       title="BC"
       value="BC"
+    />
+  </div>
+  <div
+    class="input form-group"
+  >
+    <input
+      class="form-control"
+      id="input-fileProperties.0.property.address.country.description"
+      name="fileProperties.0.property.address.country.description"
+      title="Canada"
+      value="Canada"
     />
   </div>
 </DocumentFragment>

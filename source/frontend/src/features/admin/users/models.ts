@@ -1,12 +1,17 @@
 import { ContactMethodTypes } from '@/constants/contactMethodType';
 import { UserTypes } from '@/constants/userTypes';
-import { Api_Person } from '@/models/api/Person';
-import { Api_Role } from '@/models/api/Role';
-import Api_TypeCode from '@/models/api/TypeCode';
-import { Api_User } from '@/models/api/User';
-import { UtcIsoDateTime } from '@/models/api/UtcIsoDateTime';
+import { ApiGen_Base_CodeType } from '@/models/api/generated/ApiGen_Base_CodeType';
+import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_Person';
+import { ApiGen_Concepts_RegionUser } from '@/models/api/generated/ApiGen_Concepts_RegionUser';
+import { ApiGen_Concepts_Role } from '@/models/api/generated/ApiGen_Concepts_Role';
+import { ApiGen_Concepts_User } from '@/models/api/generated/ApiGen_Concepts_User';
+import { ApiGen_Concepts_UserRole } from '@/models/api/generated/ApiGen_Concepts_UserRole';
+import { EpochIsoDateTime, UtcIsoDateTime } from '@/models/api/UtcIsoDateTime';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { NumberFieldValue } from '@/typings/NumberFieldValue';
 import { getPreferredContactMethodValue } from '@/utils/contactMethodUtil';
+import { toTypeCodeNullable } from '@/utils/formUtils';
+import { exists, isValidIsoDateTime } from '@/utils/utils';
 
 export class FormUser {
   id?: number;
@@ -18,17 +23,17 @@ export class FormUser {
   surname?: string;
   isDisabled?: boolean;
   position?: string;
-  userTypeCode?: Api_TypeCode<string>;
+  userTypeCode?: ApiGen_Base_CodeType<string>;
   lastLogin?: string;
   appCreateTimestamp?: UtcIsoDateTime;
   issueDate?: string;
-  rowVersion?: NumberFieldValue;
+  rowVersion?: number;
   note?: string;
-  person?: Api_Person;
-  regions?: Api_TypeCode<number>[];
-  roles?: (Api_Role | undefined)[];
+  person?: ApiGen_Concepts_Person;
+  regions?: ApiGen_Base_CodeType<number>[];
+  roles?: ApiGen_Concepts_Role[];
 
-  constructor(user: Api_User) {
+  constructor(user: ApiGen_Concepts_User) {
     this.id = user.id;
     this.keycloakUserId = user.guidIdentifierValue;
     this.email =
@@ -39,7 +44,7 @@ export class FormUser {
           ContactMethodTypes.PersonalEmail,
         )) ??
       '';
-    this.businessIdentifierValue = user.businessIdentifierValue;
+    this.businessIdentifierValue = user.businessIdentifierValue ?? undefined;
     this.firstName = user?.person?.firstName ?? '';
     this.surname = user?.person?.surname ?? '';
     this.isDisabled = user.isDisabled;
@@ -47,49 +52,71 @@ export class FormUser {
     this.userTypeCode = {
       id: user?.userTypeCode?.id ?? UserTypes.Contractor,
       description: user?.userTypeCode?.description ?? '',
+      displayOrder: null,
+      isDisabled: false,
     };
-    this.lastLogin = user.lastLogin;
+    this.lastLogin = user.lastLogin ?? undefined;
     this.appCreateTimestamp = user.appCreateTimestamp;
-    this.note = user.note;
-    this.roles = user?.userRoles?.map(userRole => userRole?.role) ?? [];
-    this.regions = user?.userRegions?.map(userRegion => userRegion?.region) ?? [];
-    this.person = user.person;
-    this.rowVersion = user.rowVersion;
+    this.note = user.note ?? undefined;
+    this.roles = user?.userRoles?.map(userRole => userRole?.role).filter(exists) ?? [];
+    this.regions = user?.userRegions?.map(userRegion => userRegion?.region).filter(exists) ?? [];
+    this.person = user.person ?? undefined;
+    this.rowVersion = user.rowVersion ?? undefined;
   }
 
-  public toApi(): Api_User {
+  public toApi(): ApiGen_Concepts_User {
     return {
-      id: this.id,
-      businessIdentifierValue: this.businessIdentifierValue,
-      guidIdentifierValue: this.keycloakUserId,
-      approvedById: this.approvedById ? this.approvedById : undefined,
-      position: this.position,
-      userTypeCode: this.userTypeCode,
-      note: this.note,
-      isDisabled: this.isDisabled,
-      issueDate: this.issueDate,
-      lastLogin: this.lastLogin,
-      appCreateTimestamp: this.appCreateTimestamp,
+      id: this.id ?? 0,
+      businessIdentifierValue: this.businessIdentifierValue ?? null,
+      guidIdentifierValue: this.keycloakUserId ?? '',
+      approvedById: this.approvedById ? this.approvedById : 0,
+      position: this.position ?? null,
+      userTypeCode: this.userTypeCode ?? null,
+      note: this.note ?? null,
+      isDisabled: this.isDisabled ?? false,
+      issueDate: isValidIsoDateTime(this.issueDate) ? this.issueDate : null,
+      lastLogin: isValidIsoDateTime(this.lastLogin) ? this.lastLogin : null,
       userRoles:
-        this.roles?.map(role => ({
-          userId: this.id,
-          roleId: role?.id,
+        this.roles?.map<ApiGen_Concepts_UserRole>(role => ({
+          userId: this.id ?? 0,
+          roleId: role?.id ?? 0,
+          id: 0,
+          role: null,
+          user: null,
+          ...getEmptyBaseAudit(),
         })) ?? [],
       userRegions:
-        this.regions?.map(region => ({
-          userId: this.id,
-          regionCode: region.id,
-          region: { id: region.id },
+        this.regions?.map<ApiGen_Concepts_RegionUser>(region => ({
+          userId: this.id ?? 0,
+          regionCode: region.id ?? 0,
+          region: toTypeCodeNullable(region.id),
+          id: 0,
+          user: null,
+          ...getEmptyBaseAudit(),
         })) ?? [],
       person: {
         ...this.person,
-        firstName: this.firstName,
-        surname: this.surname,
+        firstName: this.firstName ?? '',
+        surname: this.surname ?? '',
         contactMethods: [
-          { contactMethodType: { id: ContactMethodTypes.WorkEmail }, value: this.email },
+          {
+            contactMethodType: toTypeCodeNullable(ContactMethodTypes.WorkEmail),
+            value: this.email ?? null,
+            id: 0,
+            rowVersion: null,
+          },
         ],
+        comment: null,
+        id: 0,
+        isDisabled: false,
+        middleNames: null,
+        personAddresses: null,
+        personOrganizations: null,
+        preferredName: null,
+        rowVersion: null,
       },
-      rowVersion: this.rowVersion ? this.rowVersion : undefined,
+      ...getEmptyBaseAudit(this.rowVersion),
+      appCreateTimestamp: this.appCreateTimestamp ?? EpochIsoDateTime,
     };
   }
 }

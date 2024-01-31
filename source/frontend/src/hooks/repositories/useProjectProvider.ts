@@ -6,7 +6,8 @@ import { ProjectStateContext } from '@/features/projects/context/ProjectContext'
 import { useApiProjects } from '@/hooks/pims-api/useApiProjects';
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import { IApiError } from '@/interfaces/IApiError';
-import { Api_Product, Api_Project } from '@/models/api/Project';
+import { ApiGen_Concepts_Product } from '@/models/api/generated/ApiGen_Concepts_Product';
+import { ApiGen_Concepts_Project } from '@/models/api/generated/ApiGen_Concepts_Project';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils';
 
@@ -19,7 +20,9 @@ export const useProjectProvider = () => {
   const { project, setProject } = useContext(ProjectStateContext);
 
   const { execute: retrieveProjectProducts, loading: retrieveProjectProductsLoading } =
-    useApiRequestWrapper<(projectId: number) => Promise<AxiosResponse<Api_Product[], any>>>({
+    useApiRequestWrapper<
+      (projectId: number) => Promise<AxiosResponse<ApiGen_Concepts_Product[], any>>
+    >({
       requestFunction: useCallback(
         async (projectId: number) => await getProjectProducts(projectId),
         [getProjectProducts],
@@ -37,12 +40,12 @@ export const useProjectProvider = () => {
 
   const addProjectApi = useApiRequestWrapper<
     (
-      project: Api_Project,
+      project: ApiGen_Concepts_Project,
       userOverrideCodes: UserOverrideCode[],
-    ) => Promise<AxiosResponse<Api_Project, any>>
+    ) => Promise<AxiosResponse<ApiGen_Concepts_Project, any>>
   >({
     requestFunction: useCallback(
-      async (project: Api_Project, userOverrideCodes: UserOverrideCode[]) =>
+      async (project: ApiGen_Concepts_Project, userOverrideCodes: UserOverrideCode[]) =>
         await postProject(project, userOverrideCodes),
       [postProject],
     ),
@@ -59,7 +62,7 @@ export const useProjectProvider = () => {
   });
 
   const getProjectApi = useApiRequestWrapper<
-    (projectId: number) => Promise<AxiosResponse<Api_Project, any>>
+    (projectId: number) => Promise<AxiosResponse<ApiGen_Concepts_Project, any>>
   >({
     requestFunction: useCallback(
       async (projectId: number) => await getProject(projectId),
@@ -69,7 +72,9 @@ export const useProjectProvider = () => {
     onError: useAxiosErrorHandler('Failed to load Project'),
   });
 
-  const getAllProjectsApi = useApiRequestWrapper<() => Promise<AxiosResponse<Api_Project[], any>>>({
+  const getAllProjectsApi = useApiRequestWrapper<
+    () => Promise<AxiosResponse<ApiGen_Concepts_Project[], any>>
+  >({
     requestFunction: useCallback(async () => await getAllProjects(), [getAllProjects]),
     requestName: 'RetrieveAllProjects',
     onError: useAxiosErrorHandler('Failed to load Projects'),
@@ -77,12 +82,12 @@ export const useProjectProvider = () => {
 
   const updateProject = useApiRequestWrapper<
     (
-      project: Api_Project,
+      project: ApiGen_Concepts_Project,
       userOverrideCodes: UserOverrideCode[],
-    ) => Promise<AxiosResponse<Api_Project, any>>
+    ) => Promise<AxiosResponse<ApiGen_Concepts_Project, any>>
   >({
     requestFunction: useCallback(
-      async (project: Api_Project, userOverrideCodes: UserOverrideCode[]) =>
+      async (project: ApiGen_Concepts_Project, userOverrideCodes: UserOverrideCode[]) =>
         await putProject(project, userOverrideCodes),
       [putProject],
     ),

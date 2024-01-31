@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import { usePropertyContactRepository } from '@/hooks/repositories/usePropertyContactRepository';
-import { Api_PropertyContact } from '@/models/api/Property';
+import { ApiGen_Concepts_PropertyContact } from '@/models/api/generated/ApiGen_Concepts_PropertyContact';
 
 import { IPropertyContactListViewProps } from './PropertyContactListView';
 
@@ -13,7 +13,7 @@ interface IPropertyContactListContainerProps {
 export const PropertyContactListContainer: React.FunctionComponent<
   IPropertyContactListContainerProps
 > = ({ propertyId, View }) => {
-  const [propertyContacts, setPropertyContacts] = useState<Api_PropertyContact[]>([]);
+  const [propertyContacts, setPropertyContacts] = useState<ApiGen_Concepts_PropertyContact[]>([]);
 
   const {
     getPropertyContacts: { execute: getContacts, loading },

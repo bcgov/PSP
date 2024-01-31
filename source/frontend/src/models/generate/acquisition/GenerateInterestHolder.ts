@@ -1,5 +1,5 @@
 import { getApiPersonOrOrgMailingAddress } from '@/features/contacts/contactUtils';
-import { Api_InterestHolder } from '@/models/api/InterestHolder';
+import { ApiGen_Concepts_InterestHolder } from '@/models/api/generated/ApiGen_Concepts_InterestHolder';
 import { formatNames } from '@/utils/personUtils';
 
 import { Api_GenerateAddress } from '../GenerateAddress';
@@ -11,7 +11,7 @@ export class Api_GenerateInterestHolder {
   address: Api_GenerateAddress | null;
   primary_contact: Api_GeneratePerson | null;
 
-  constructor(interestHolder: Api_InterestHolder | null) {
+  constructor(interestHolder: ApiGen_Concepts_InterestHolder | null) {
     this.is_organization = !!interestHolder?.organization ?? false;
     this.full_name_string = this.is_organization
       ? `${interestHolder?.organization?.name ?? ''} (Inc. No. ${

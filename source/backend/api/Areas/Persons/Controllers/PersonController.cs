@@ -6,6 +6,7 @@ using Pims.Api.Models.Concepts.Person;
 using Pims.Api.Policies;
 using Pims.Api.Services;
 using Pims.Core.Exceptions;
+using Pims.Core.Json;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
@@ -71,6 +72,7 @@ namespace Pims.Api.Areas.Persons.Controllers
         [HasPermission(Permissions.ContactView)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(PersonModel), 200)]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         [SwaggerOperation(Tags = new[] { "person" })]
         public IActionResult GetPersonConcept(int id)
         {

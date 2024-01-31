@@ -1,5 +1,8 @@
-import { Api_ResearchFile } from '@/models/api/ResearchFile';
-export const getMockResearchFile = (): Api_ResearchFile => ({
+import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Concepts_ResearchFile';
+
+import { getMockApiProperty } from './properties.mock';
+
+export const getMockResearchFile = (): ApiGen_Concepts_ResearchFile => ({
   id: 109,
   fileName: 'fsdgsdf',
   fileNumber: 'R-109',
@@ -9,26 +12,29 @@ export const getMockResearchFile = (): Api_ResearchFile => ({
     id: 'ACTIVE',
     description: 'Active',
     isDisabled: false,
+    displayOrder: null,
   },
   fileProperties: [
     {
       id: 55,
       propertyId: 495,
       property: {
+        ...getMockApiProperty(),
         id: 495,
         anomalies: [],
         tenures: [],
         roadTypes: [],
-        adjacentLands: [],
         region: {
           id: 1,
           description: 'South Coast Region',
           isDisabled: false,
+          displayOrder: null,
         },
         district: {
           id: 1,
           description: 'Lower Mainland District',
           isDisabled: false,
+          displayOrder: null,
         },
         dataSourceEffectiveDateOnly: '2022-09-02T00:00:00',
         latitude: 49.27720127104871,
@@ -49,6 +55,15 @@ export const getMockResearchFile = (): Api_ResearchFile => ({
         rowVersion: 1,
       },
       rowVersion: 1,
+      displayOrder: null,
+      fileId: 1,
+      isLegalOpinionRequired: null,
+      propertyName: null,
+      purposeTypes: null,
+      researchSummary: null,
+      documentReference: null,
+      isLegalOpinionObtained: null,
+      file: null,
     },
   ],
   requestDate: '2022-04-14T00:00:00',
@@ -61,6 +76,7 @@ export const getMockResearchFile = (): Api_ResearchFile => ({
     id: 'HQ',
     description: 'Headquarters (HQ)',
     isDisabled: false,
+    displayOrder: null,
   },
   requestorOrganization: {
     id: 3,
@@ -70,12 +86,14 @@ export const getMockResearchFile = (): Api_ResearchFile => ({
     organizationAddresses: [],
     contactMethods: [],
     rowVersion: 1,
+    alias: null,
+    comment: null,
+    incorporationNumber: null,
   },
   researchFilePurposes: [],
   researchFileProjects: [
     {
       id: 1,
-      isDisabled: false,
       project: {
         id: 1,
         code: '00048',
@@ -92,10 +110,13 @@ export const getMockResearchFile = (): Api_ResearchFile => ({
         appLastUpdateUserid: 'dbo',
         appCreateUserid: 'dbo',
         rowVersion: 1,
+        appCreateUserGuid: null,
+        appLastUpdateUserGuid: null,
       },
       projectId: 1,
       fileId: 109,
       rowVersion: 1,
+      file: null,
     },
   ],
   appCreateTimestamp: '2022-09-02T19:29:50.397',
@@ -105,4 +126,6 @@ export const getMockResearchFile = (): Api_ResearchFile => ({
   appLastUpdateUserGuid: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
   appCreateUserGuid: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
   rowVersion: 1,
+  requestorPerson: null,
+  requestSourceDescription: null,
 });

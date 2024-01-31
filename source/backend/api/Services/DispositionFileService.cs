@@ -2,10 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Constants;
 using Pims.Api.Helpers.Exceptions;
+using Pims.Api.Helpers.Extensions;
 using Pims.Api.Models.CodeTypes;
 using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
@@ -24,6 +26,7 @@ namespace Pims.Api.Services
     {
         private readonly ClaimsPrincipal _user;
         private readonly ILogger _logger;
+        private readonly IUserRepository _userRepository;
         private readonly IDispositionFileRepository _dispositionFileRepository;
         private readonly IDispositionFilePropertyRepository _dispositionFilePropertyRepository;
         private readonly ICoordinateTransformService _coordinateService;
@@ -43,7 +46,8 @@ namespace Pims.Api.Services
             IPropertyService propertyService,
             ILookupRepository lookupRepository,
             IDispositionFileChecklistRepository checklistRepository,
-            IEntityNoteRepository entityNoteRepository)
+            IEntityNoteRepository entityNoteRepository,
+            IUserRepository userRepository)
         {
             _user = user;
             _logger = logger;
@@ -55,12 +59,14 @@ namespace Pims.Api.Services
             _lookupRepository = lookupRepository;
             _checklistRepository = checklistRepository;
             _entityNoteRepository = entityNoteRepository;
+            _userRepository = userRepository;
         }
 
         public PimsDispositionFile Add(PimsDispositionFile dispositionFile, IEnumerable<UserOverrideCode> userOverrides)
         {
             _logger.LogInformation("Creating Disposition File {dispositionFile}", dispositionFile);
             _user.ThrowIfNotAuthorized(Permissions.DispositionAdd);
+            dispositionFile.ThrowMissingContractorInTeam(_user, _userRepository);
 
             dispositionFile.DispositionStatusTypeCode ??= EnumDispositionStatusTypeCode.UNKNOWN.ToString();
             dispositionFile.DispositionFileStatusTypeCode ??= EnumDispositionFileStatusTypeCode.ACTIVE.ToString();
@@ -79,6 +85,7 @@ namespace Pims.Api.Services
         {
             _logger.LogInformation("Getting disposition file with id {id}", id);
             _user.ThrowIfNotAuthorized(Permissions.DispositionView);
+            _user.ThrowInvalidAccessToDispositionFile(_userRepository, _dispositionFileRepository, id);
 
             var dispositionFile = _dispositionFileRepository.GetById(id);
 
@@ -91,6 +98,7 @@ namespace Pims.Api.Services
 
             _logger.LogInformation("Updating acquisition file with id {id}", id);
             _user.ThrowIfNotAuthorized(Permissions.DispositionEdit);
+            _user.ThrowInvalidAccessToDispositionFile(_userRepository, _dispositionFileRepository, id);
 
             if (id != dispositionFile.DispositionFileId)
             {
@@ -100,12 +108,14 @@ namespace Pims.Api.Services
             ValidateStaff(dispositionFile);
             ValidateVersion(id, dispositionFile.ConcurrencyControlNumber);
 
+            dispositionFile.ThrowContractorRemovedFromTeam(_user, _userRepository);
+
             if (!userOverrides.Contains(UserOverrideCode.DispositionFileFinalStatus))
             {
                 var doNotAddToStatuses = new List<string>() { EnumDispositionFileStatusTypeCode.COMPLETE.ToString(), EnumDispositionFileStatusTypeCode.ARCHIVED.ToString() };
                 if (doNotAddToStatuses.Contains(dispositionFile.DispositionFileStatusTypeCode))
                 {
-                    throw new UserOverrideException(UserOverrideCode.DispositionFileFinalStatus, "You are changing this file to a non-editable state. Only system administrators can edit the file when set to Archived, Cancelled or Completed state). Do you wish to continue?");
+                    throw new UserOverrideException(UserOverrideCode.DispositionFileFinalStatus, "You are changing this file to a non-editable state. (Only system administrators can edit the file when set to Archived, Cancelled or Completed state). Do you wish to continue?");
                 }
             }
             if (!userOverrides.Contains(UserOverrideCode.UpdateRegion))
@@ -134,7 +144,10 @@ namespace Pims.Api.Services
             _logger.LogDebug("Disposition file search with filter: {filter}", filter);
             _user.ThrowIfNotAuthorized(Permissions.DispositionView);
 
-            return _dispositionFileRepository.GetPageDeep(filter);
+            var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
+            long? contractorPersonId = (pimsUser != null && pimsUser.IsContractor) ? pimsUser.PersonId : null;
+
+            return _dispositionFileRepository.GetPageDeep(filter, contractorPersonId);
         }
 
         public IEnumerable<PimsDispositionFileProperty> GetProperties(long id)
@@ -333,16 +346,22 @@ namespace Pims.Api.Services
             return checklistItems;
         }
 
-        public PimsDispositionFile UpdateChecklistItems(PimsDispositionFile dispositionFile)
+        public PimsDispositionFile UpdateChecklistItems(IList<PimsDispositionChecklistItem> checklistItems)
         {
-            dispositionFile.ThrowIfNull(nameof(dispositionFile));
-            _logger.LogInformation("Updating disposition file checklist with DispositionFile id: {id}", dispositionFile.Internal_Id);
+            checklistItems.ThrowIfNull(nameof(checklistItems));
+            if (checklistItems.Count == 0)
+            {
+                throw new BadRequestException("Checklist items must be greater than zero");
+            }
+
+            var dispositionFileId = checklistItems.FirstOrDefault().DispositionFileId;
+            _logger.LogInformation("Updating disposition file checklist with DispositionFile id: {id}", dispositionFileId);
             _user.ThrowIfNotAuthorized(Permissions.DispositionEdit);
 
             // Get the current checklist items for this disposition file.
-            var currentItems = _checklistRepository.GetAllChecklistItemsByDispositionFileId(dispositionFile.Internal_Id).ToDictionary(ci => ci.Internal_Id);
+            var currentItems = _checklistRepository.GetAllChecklistItemsByDispositionFileId(dispositionFileId).ToDictionary(ci => ci.Internal_Id);
 
-            foreach (var incomingItem in dispositionFile.PimsDispositionChecklistItems)
+            foreach (var incomingItem in checklistItems)
             {
                 if (!currentItems.TryGetValue(incomingItem.Internal_Id, out var existingItem) && incomingItem.Internal_Id != 0)
                 {
@@ -361,7 +380,7 @@ namespace Pims.Api.Services
             }
 
             _checklistRepository.CommitTransaction();
-            return _dispositionFileRepository.GetById(dispositionFile.Internal_Id);
+            return _dispositionFileRepository.GetById(dispositionFileId);
         }
 
         public List<DispositionFileExportModel> GetDispositionFileExport(DispositionFilter filter)

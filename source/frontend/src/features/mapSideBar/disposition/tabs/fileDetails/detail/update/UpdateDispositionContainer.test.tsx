@@ -5,7 +5,7 @@ import { DispositionFormModel } from '@/features/mapSideBar/disposition/models/D
 import { useDispositionProvider } from '@/hooks/repositories/useDispositionProvider';
 import { mockDispositionFileResponse } from '@/mocks/dispositionFiles.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
-import { Api_DispositionFile } from '@/models/api/DispositionFile';
+import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
@@ -53,7 +53,7 @@ const TestView: React.FC<IUpdateDispositionFormProps> = props => {
 };
 
 describe('UpdateDisposition container', () => {
-  let dispositionFile: Api_DispositionFile;
+  let dispositionFile: ApiGen_Concepts_DispositionFile;
   const onSuccess = jest.fn();
 
   const setup = (renderOptions: RenderOptions = {}) => {
@@ -236,6 +236,28 @@ describe('UpdateDisposition container', () => {
       'PROPERTY_OF_INTEREST_TO_INVENTORY',
     ]);
     expect(onSuccess).toHaveBeenCalled();
+  });
+
+  it(`displays Contactor cannot remove itself from Team`, async () => {
+    mockUpdateDispositionFile.mockRejectedValue(
+      createAxiosError(
+        400,
+        'test error',
+        {
+          errorCode: UserOverrideCode.PROPERTY_OF_INTEREST_TO_INVENTORY,
+        },
+        'ContractorNotInTeamException',
+      ),
+    );
+    const { formikRef } = setup();
+
+    expect(formikRef.current).not.toBeNull();
+    await act(async () => formikRef.current?.submitForm());
+
+    const popup = await screen.findByText(
+      /Contractors cannot remove themselves from a Disposition file./i,
+    );
+    expect(popup).toBeVisible();
   });
 
   it(`displays custom 400 errors in a modal`, async () => {

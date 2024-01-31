@@ -1,7 +1,7 @@
 import { mockDispositionFileResponse } from '@/mocks/dispositionFiles.mock';
 import { rest, server } from '@/mocks/msw/server';
 import { getUserMock } from '@/mocks/user.mock';
-import { Api_DispositionFile } from '@/models/api/DispositionFile';
+import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
 import { prettyFormatUTCDate } from '@/utils/dateUtils';
 import { render, RenderOptions } from '@/utils/test-utils';
 
@@ -86,9 +86,14 @@ describe('DispositionHeader component', () => {
   });
 
   it('renders the file status when provided', async () => {
-    const testDispositionFile: Api_DispositionFile = {
+    const testDispositionFile: ApiGen_Concepts_DispositionFile = {
       ...mockDispositionFileResponse(),
-      fileStatusTypeCode: { id: 'TEST', description: 'mock file status' },
+      fileStatusTypeCode: {
+        id: 'TEST',
+        description: 'mock file status',
+        displayOrder: null,
+        isDisabled: false,
+      },
     };
     const { getByText } = setup({ dispositionFile: testDispositionFile, lastUpdatedBy: null });
 

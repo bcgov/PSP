@@ -516,7 +516,7 @@ exports[`DispositionFileTabs component matches snapshot 1`] = `
                   <label
                     class="c5"
                   >
-                    initiating branch:
+                    Initiating branch:
                   </label>
                 </div>
                 <div

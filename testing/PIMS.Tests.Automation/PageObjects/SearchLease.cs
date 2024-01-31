@@ -137,7 +137,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public Boolean SearchFoundResults()
         {
-            Wait();
+            Wait(2000);
             return webDriver.FindElements(searchLicenseResultsTable1stResult).Count > 0;
         }
 
@@ -146,49 +146,49 @@ namespace PIMS.Tests.Automation.PageObjects
             WaitUntilVisible(searchBySelect);
 
             //Search Leases Title
-            Assert.True(webDriver.FindElement(searchLicenseTitle).Displayed);
+            AssertTrueIsDisplayed(searchLicenseTitle);
 
             //Search Leases Filters
-            Assert.True(webDriver.FindElement(searchBySelect).Displayed);
-            Assert.True(webDriver.FindElement(searchLicensePIDInput).Displayed);
-            Assert.True(webDriver.FindElement(searchLicenseStatusInput).Displayed);
-            Assert.True(webDriver.FindElement(searchLicenseProgramInput).Displayed);
-            Assert.True(webDriver.FindElement(searchLicenceTenantInput).Displayed);
-            Assert.True(webDriver.FindElement(searchLicenceFromDateInput).Displayed);
-            Assert.True(webDriver.FindElement(searchLicenseToDateInput).Displayed);
-            Assert.True(webDriver.FindElement(searchLicenseRegionsSelect).Displayed);
-            Assert.True(webDriver.FindElement(searchLicenseKeywordInput).Displayed);
-            Assert.True(webDriver.FindElement(searchLicenseKeywordTooltip).Displayed);
-            Assert.True(webDriver.FindElement(searchLicenceExportExcelBttn).Displayed);
-            Assert.True(webDriver.FindElement(searchLicenseExportCsvIcon).Displayed);
-            Assert.True(webDriver.FindElement(searchLicenseSearchButton).Displayed);
-            Assert.True(webDriver.FindElement(searchLicenseResetButton).Displayed);
-            Assert.True(webDriver.FindElement(searchLicenceCreateNewBttn).Displayed);
+            AssertTrueIsDisplayed(searchBySelect);
+            AssertTrueIsDisplayed(searchLicensePIDInput);
+            AssertTrueIsDisplayed(searchLicenseStatusInput);
+            AssertTrueIsDisplayed(searchLicenseProgramInput);
+            AssertTrueIsDisplayed(searchLicenceTenantInput);
+            AssertTrueIsDisplayed(searchLicenceFromDateInput);
+            AssertTrueIsDisplayed(searchLicenseToDateInput);
+            AssertTrueIsDisplayed(searchLicenseRegionsSelect);
+            AssertTrueIsDisplayed(searchLicenseKeywordInput);
+            AssertTrueIsDisplayed(searchLicenseKeywordTooltip);
+            AssertTrueIsDisplayed(searchLicenceExportExcelBttn);
+            AssertTrueIsDisplayed(searchLicenseExportCsvIcon);
+            AssertTrueIsDisplayed(searchLicenseSearchButton);
+            AssertTrueIsDisplayed(searchLicenseResetButton);
+            AssertTrueIsDisplayed(searchLicenceCreateNewBttn);
 
             //Search Leases Table Results
-            Assert.True(webDriver.FindElement(searchLicenceLFileColumnHeader).Displayed);
-            Assert.True(webDriver.FindElement(searchLicenceExpiryDateColumnHeader).Displayed);
-            Assert.True(webDriver.FindElement(searchLicenceProgramNameColumnHeader).Displayed);
-            Assert.True(webDriver.FindElement(searchLicenceTenantNameColumnHeader).Displayed);
-            Assert.True(webDriver.FindElement(searchLicencePropertiesColumnHeader).Displayed);
-            Assert.True(webDriver.FindElement(searchLicenceStatusColumnHeader).Displayed);
-            Assert.True(webDriver.FindElement(searchLicenseResultsTable).Displayed);
+            AssertTrueIsDisplayed(searchLicenceLFileColumnHeader);
+            AssertTrueIsDisplayed(searchLicenceExpiryDateColumnHeader);
+            AssertTrueIsDisplayed(searchLicenceProgramNameColumnHeader);
+            AssertTrueIsDisplayed(searchLicenceTenantNameColumnHeader);
+            AssertTrueIsDisplayed(searchLicencePropertiesColumnHeader);
+            AssertTrueIsDisplayed(searchLicenceStatusColumnHeader);
+            AssertTrueIsDisplayed(searchLicenseResultsTable);
 
             //Search Leases Pagination
-            Assert.True(webDriver.FindElement(searchLeasesPaginationMenu).Displayed);
-            Assert.True(webDriver.FindElement(searchLeasesPaginationList).Displayed);
+            AssertTrueIsDisplayed(searchLeasesPaginationMenu);
+            AssertTrueIsDisplayed(searchLeasesPaginationList);
         }
 
         public void VerifyLeaseTableContent(string expiryDate, string program, string status)
         {
             WaitUntilVisibleText(searchLicense1stResultExpiryDateContent, webDriver.FindElement(searchLicense1stResultExpiryDateContent).Text);
 
-            Assert.True(webDriver.FindElement(searchLicense1stResultLink).Displayed);
-            Assert.True(webDriver.FindElement(searchLicense1stResultExpiryDateContent).Text.Equals(TransformDateFormat(expiryDate)));
-            Assert.True(webDriver.FindElement(searchLicense1stResultProgramContent).Text.Equals(program));
-            Assert.True(webDriver.FindElements(searchLicense1stResultTenantsContent).Count.Equals(0));
+            AssertTrueIsDisplayed(searchLicense1stResultLink);
+            AssertTrueContentEquals(searchLicense1stResultExpiryDateContent, TransformDateFormat(expiryDate));
+            AssertTrueContentEquals(searchLicense1stResultProgramContent, program);
+            Assert.Equal(0, webDriver.FindElements(searchLicense1stResultTenantsContent).Count);
             Assert.True(webDriver.FindElements(searchLicense1stResultPropertiesContent).Count > 0);
-            Assert.True(webDriver.FindElement(searchLicense1stResultStatusContent).Text.Equals(status));
+            AssertTrueContentEquals(searchLicense1stResultStatusContent, status);
         }
     }
 }

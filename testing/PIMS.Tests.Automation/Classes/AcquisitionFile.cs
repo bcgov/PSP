@@ -19,15 +19,15 @@
         public string AcquisitionMOTIRegion { get; set; } = null!;
         public int AcquisitionTeamStartRow { get; set; } = 0;
         public int AcquisitionTeamCount { get; set; } = 0;
-        public List<AcquisitionTeamMember>? AcquisitionTeam { get; set; } = new List<AcquisitionTeamMember>();
+        public List<TeamMember>? AcquisitionTeam { get; set; } = new List<TeamMember>();
         public int OwnerStartRow { get; set; } = 0; 
         public int OwnerCount { get; set; } = 0;
         public List<AcquisitionOwner>? AcquisitionOwners { get; set; } = new List<AcquisitionOwner>();
         public string? OwnerSolicitor { get; set; } = String.Empty;
         public string? OwnerRepresentative { get; set; } = String.Empty;
         public string? OwnerComment { get; set; } = String.Empty;
-        public int SearchPropertiesIndex { get; set; } = 0;
-        public SearchProperty? SearchProperties { get; set; } = new SearchProperty();
+        public int AcquisitionSearchPropertiesIndex { get; set; } = 0;
+        public SearchProperty? AcquisitionSearchProperties { get; set; } = new SearchProperty();
         public int TakesStartRow { get; set; } = 0;
         public int TakesCount { get; set; } = 0;
         public List<Take>? AcquisitionTakes { get; set; } = new List<Take>();
@@ -48,7 +48,7 @@
         public List<AcquisitionExpropriationForm8>? AcquisitionExpropriationForm8s { get; set; } = new List<AcquisitionExpropriationForm8>();
     }
 
-    public class AcquisitionTeamMember
+    public class TeamMember
     {
         public string TeamMemberRole { get; set; } = null!;
         public string TeamMemberContactName { get; set; } = null!;

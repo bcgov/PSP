@@ -1,10 +1,19 @@
 import { isEmpty, isNumber } from 'lodash';
 
 import { fromApiOrganization, fromApiPerson, IContactSearchResult } from '@/interfaces';
-import { Api_AcquisitionFileOwner, Api_AcquisitionFileTeam } from '@/models/api/AcquisitionFile';
-import { Api_Address } from '@/models/api/Address';
+import { ApiGen_Concepts_AcquisitionFileOwner } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileOwner';
+import { ApiGen_Concepts_AcquisitionFileTeam } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileTeam';
+import { ApiGen_Concepts_Address } from '@/models/api/generated/ApiGen_Concepts_Address';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { NumberFieldValue } from '@/typings/NumberFieldValue';
-import { fromTypeCode, stringToBoolean, stringToUndefined, toTypeCode } from '@/utils/formUtils';
+import {
+  fromTypeCode,
+  stringToBoolean,
+  stringToNull,
+  toTypeCodeConcept,
+  toTypeCodeNullable,
+} from '@/utils/formUtils';
+import { exists, isValidId } from '@/utils/utils';
 
 export interface WithAcquisitionTeam {
   team: AcquisitionTeamFormModel[];
@@ -27,37 +36,38 @@ export class AcquisitionTeamFormModel {
     this.contact = contact;
   }
 
-  toApi(acquisitionFileId: number): Api_AcquisitionFileTeam | null {
+  toApi(acquisitionFileId: number): ApiGen_Concepts_AcquisitionFileTeam | null {
     const personId = this.contact?.personId ?? null;
     const organizationId = !personId ? this.contact?.organizationId ?? null : null;
-    if (personId === null && organizationId === null) {
+    if (!isValidId(personId) && !isValidId(organizationId)) {
       return null;
     }
 
     return {
-      id: this.id,
-      rowVersion: this.rowVersion,
+      id: this.id ?? 0,
       acquisitionFileId: acquisitionFileId,
-      personId: personId ?? undefined,
-      person: undefined,
-      organizationId: organizationId ?? undefined,
-      organization: undefined,
+      personId: personId ?? null,
+      person: null,
+      organizationId: organizationId ?? null,
+      organization: null,
       primaryContactId:
         !!this.primaryContactId && isNumber(+this.primaryContactId)
           ? Number(this.primaryContactId)
-          : undefined,
-      teamProfileType: toTypeCode(this.contactTypeCode),
+          : null,
+      teamProfileType: toTypeCodeNullable(this.contactTypeCode),
       teamProfileTypeCode: this.contactTypeCode,
+      primaryContact: null,
+      ...getEmptyBaseAudit(this.rowVersion),
     };
   }
 
-  static fromApi(model: Api_AcquisitionFileTeam | null): AcquisitionTeamFormModel {
-    const contact: IContactSearchResult | undefined =
-      model?.person !== undefined && model?.person !== null
-        ? fromApiPerson(model.person)
-        : model?.organization !== undefined && model?.organization !== null
-        ? fromApiOrganization(model.organization)
-        : undefined;
+  static fromApi(model: ApiGen_Concepts_AcquisitionFileTeam | null): AcquisitionTeamFormModel {
+    // todo:the method 'exists' here should allow the compiler to validate the child property. this works correctly in typescropt 5.3 +
+    const contact: IContactSearchResult | undefined = exists(model?.person)
+      ? fromApiPerson(model!.person)
+      : exists(model?.organization)
+      ? fromApiOrganization(model!.organization)
+      : undefined;
 
     const newForm = new AcquisitionTeamFormModel(
       fromTypeCode(model?.teamProfileType) || '',
@@ -107,11 +117,10 @@ export class AcquisitionOwnerFormModel {
     }
   }
 
-  toApi(): Api_AcquisitionFileOwner {
+  toApi(): ApiGen_Concepts_AcquisitionFileOwner {
     return {
-      id: this.id,
-      rowVersion: this.rowVersion,
-      acquisitionFileId: this.acquisitionFileId,
+      id: this.id ?? 0,
+      acquisitionFileId: this.acquisitionFileId ?? 0,
       isPrimaryContact: stringToBoolean(this.isPrimaryContact),
       isOrganization: this.isOrganization === 'true' ? true : false,
       lastNameAndCorpName:
@@ -140,13 +149,14 @@ export class AcquisitionOwnerFormModel {
       contactPhoneNum:
         this.contactPhoneNumber.trim() === '' ? null : this.contactPhoneNumber.trim(),
       address: OwnerAddressFormModel.toApi(this.address),
+      ...getEmptyBaseAudit(this.rowVersion),
     };
   }
 
-  static fromApi(model: Api_AcquisitionFileOwner): AcquisitionOwnerFormModel {
+  static fromApi(model: ApiGen_Concepts_AcquisitionFileOwner): AcquisitionOwnerFormModel {
     const newForm = new AcquisitionOwnerFormModel();
     newForm.id = model.id;
-    newForm.rowVersion = model.rowVersion;
+    newForm.rowVersion = model.rowVersion ?? undefined;
     newForm.acquisitionFileId = model.acquisitionFileId;
     newForm.isPrimaryContact = model.isPrimaryContact ? 'true' : '';
     newForm.isOrganization = model.isOrganization ? 'true' : 'false';
@@ -193,23 +203,23 @@ export class OwnerAddressFormModel {
     return 1;
   }
 
-  static fromApi(apiAddress: Api_Address): OwnerAddressFormModel {
+  static fromApi(apiAddress: ApiGen_Concepts_Address): OwnerAddressFormModel {
     const model = new OwnerAddressFormModel();
-    model.id = apiAddress.id;
-    model.rowVersion = apiAddress.rowVersion;
-    model.streetAddress1 = apiAddress.streetAddress1;
-    model.streetAddress2 = apiAddress.streetAddress2;
-    model.streetAddress3 = apiAddress.streetAddress3;
-    model.municipality = apiAddress.municipality;
-    model.postal = apiAddress.postal;
-    model.provinceId = apiAddress.provinceStateId;
-    model.countryId = apiAddress.countryId;
-    model.countryOther = apiAddress.countryOther;
+    model.id = apiAddress.id ?? undefined;
+    model.rowVersion = apiAddress.rowVersion ?? undefined;
+    model.streetAddress1 = apiAddress.streetAddress1 ?? undefined;
+    model.streetAddress2 = apiAddress.streetAddress2 ?? undefined;
+    model.streetAddress3 = apiAddress.streetAddress3 ?? undefined;
+    model.municipality = apiAddress.municipality ?? undefined;
+    model.postal = apiAddress.postal ?? undefined;
+    model.provinceId = apiAddress.provinceStateId ?? undefined;
+    model.countryId = apiAddress.countryId ?? undefined;
+    model.countryOther = apiAddress.countryOther ?? undefined;
 
     return model;
   }
 
-  static toApi(model: OwnerAddressFormModel | undefined): Api_Address | null {
+  static toApi(model: OwnerAddressFormModel | undefined): ApiGen_Concepts_Address | null {
     if (
       !model ||
       (isEmpty(model.streetAddress1) && isEmpty(model.municipality) && isEmpty(model.postal))
@@ -218,18 +228,23 @@ export class OwnerAddressFormModel {
     }
 
     return {
-      id: model.id,
-      rowVersion: model.rowVersion,
-      streetAddress1: model.streetAddress1,
-      streetAddress2: stringToUndefined(model.streetAddress2),
-      streetAddress3: stringToUndefined(model.streetAddress3),
-      municipality: model.municipality,
-      postal: model.postal,
-      provinceStateId: isEmpty(model.provinceId) ? undefined : Number(model.provinceId),
-      province: isEmpty(model.provinceId) ? undefined : toTypeCode(Number(model.provinceId)),
+      id: model.id ?? null,
+      rowVersion: model.rowVersion ?? null,
+      streetAddress1: model.streetAddress1 ?? null,
+      streetAddress2: stringToNull(model.streetAddress2),
+      streetAddress3: stringToNull(model.streetAddress3),
+      municipality: model.municipality ?? null,
+      postal: model.postal ?? null,
+      provinceStateId: isEmpty(model.provinceId) ? null : Number(model.provinceId),
+      province: isEmpty(model.provinceId) ? null : toTypeCodeConcept(Number(model.provinceId)),
       countryId: Number(model.countryId),
-      country: toTypeCode(Number(model.countryId)),
-      countryOther: model.countryOther,
+      country: toTypeCodeConcept(Number(model.countryId)),
+      countryOther: model.countryOther ?? null,
+      comment: null,
+      district: null,
+      latitude: null,
+      longitude: null,
+      region: null,
     };
   }
 }

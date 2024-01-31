@@ -4,10 +4,63 @@ import { PropertyStatusTypes } from '@/constants/propertyStatusTypes';
 import { PropertyTenureTypes } from '@/constants/propertyTenureTypes';
 import { IProperty } from '@/interfaces';
 import { mockAcquisitionFileResponse, mockAddress } from '@/mocks/index.mock';
-import { Api_Property } from '@/models/api/Property';
+import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
+import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
+import { ApiGen_Concepts_PropertyLease } from '@/models/api/generated/ApiGen_Concepts_PropertyLease';
+import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
+import { toTypeCodeNullable } from '@/utils/formUtils';
 
-import { Api_PropertyFile } from '../models/api/PropertyFile';
 import { getMockApiAddress } from './address.mock';
+
+const emptyProperty: ApiGen_Concepts_Property = {
+  id: 0,
+  propertyType: null,
+  anomalies: null,
+  tenures: null,
+  roadTypes: null,
+  status: null,
+  dataSource: null,
+  region: null,
+  district: null,
+  dataSourceEffectiveDateOnly: EpochIsoDateTime,
+  latitude: null,
+  longitude: null,
+  name: null,
+  description: null,
+  isSensitive: false,
+  isProvincialPublicHwy: null,
+  pphStatusUpdateUserid: null,
+  pphStatusUpdateTimestamp: null,
+  pphStatusUpdateUserGuid: null,
+  isRwyBeltDomPatent: null,
+  pphStatusTypeCode: null,
+  address: null,
+  pid: null,
+  pin: null,
+  planNumber: null,
+  isOwned: false,
+  isPropertyOfInterest: false,
+  isVisibleToOtherAgencies: false,
+  areaUnit: null,
+  landArea: null,
+  isVolumetricParcel: null,
+  volumetricMeasurement: null,
+  volumetricUnit: null,
+  volumetricType: null,
+  landLegalDescription: null,
+  municipalZoning: null,
+  zoning: null,
+  zoningPotential: null,
+  location: null,
+  boundary: null,
+  generalLocation: null,
+  propertyContacts: null,
+  notes: null,
+  surplusDeclarationType: null,
+  surplusDeclarationComment: null,
+  surplusDeclarationDate: EpochIsoDateTime,
+  rowVersion: null,
+};
 
 export const getMockProperties: () => IProperty[] = () => [
   {
@@ -78,10 +131,11 @@ export const getMockProperties: () => IProperty[] = () => [
   },
 ];
 
-export const getMockApiProperty: () => Api_Property = () => ({
+export const getMockApiProperty: () => ApiGen_Concepts_Property = () => ({
+  ...emptyProperty,
   id: 1,
   pid: 0,
-  status: { id: PropertyStatusTypes.UnderAdmin },
+  status: toTypeCodeNullable(PropertyStatusTypes.UnderAdmin),
   dataSourceId: PropertyDataSourceTypes.PAIMS,
   dataSourceEffectiveDateOnly: '2021-08-30T17:28:17.655Z',
   classificationId: PropertyClassificationTypes.CoreOperational,
@@ -100,53 +154,48 @@ export const getMockApiProperty: () => Api_Property = () => ({
   landLegalDescription: 'test description',
 });
 
-export const getMockApiProperties: () => Api_Property[] = () => [
+export const getMockApiProperties: () => ApiGen_Concepts_Property[] = () => [
   {
+    ...emptyProperty,
     id: 1,
     pid: 0,
-    status: { id: PropertyStatusTypes.UnderAdmin },
-    dataSourceId: PropertyDataSourceTypes.PAIMS,
+    status: toTypeCodeNullable(PropertyStatusTypes.UnderAdmin),
+    dataSource: toTypeCodeNullable(PropertyDataSourceTypes.PAIMS),
     dataSourceEffectiveDateOnly: '2021-08-30T17:28:17.655Z',
-    classificationId: PropertyClassificationTypes.CoreOperational,
-    tenureId: PropertyTenureTypes.HighwayRoad,
     zoning: '',
     zoningPotential: '',
-    encumbranceReason: '',
     isSensitive: false,
     latitude: 48,
     longitude: 123,
     name: 'test name',
     description: 'test',
-    addressId: getMockApiAddress().id,
     address: { ...getMockApiAddress() },
     landArea: 123,
     landLegalDescription: 'test description',
   },
   {
+    ...emptyProperty,
     id: 2,
     pid: 1,
-    status: { id: PropertyStatusTypes.UnderAdmin },
-    dataSourceId: PropertyDataSourceTypes.PAIMS,
+    status: toTypeCodeNullable(PropertyStatusTypes.UnderAdmin),
+    dataSource: toTypeCodeNullable(PropertyDataSourceTypes.PAIMS),
     dataSourceEffectiveDateOnly: '2021-08-30T18:14:13.170Z',
-    classificationId: PropertyClassificationTypes.CoreOperational,
-    tenureId: PropertyTenureTypes.HighwayRoad,
     zoning: '',
     zoningPotential: '',
-    encumbranceReason: '',
     isSensitive: false,
     latitude: 49,
     longitude: 123,
     name: 'test name',
     description: 'test',
-    addressId: getMockApiAddress().id,
     address: { ...getMockApiAddress() },
     landArea: 123,
     landLegalDescription: 'test description',
   },
   {
+    ...emptyProperty,
     id: 100,
     pid: 2,
-    status: { id: PropertyStatusTypes.UnderAdmin },
+    status: toTypeCodeNullable(PropertyStatusTypes.UnderAdmin),
     dataSourceId: PropertyDataSourceTypes.PAIMS,
     dataSourceEffectiveDateOnly: '2021-08-30T18:14:13.170Z',
     classificationId: PropertyClassificationTypes.CoreOperational,
@@ -166,7 +215,7 @@ export const getMockApiProperties: () => Api_Property[] = () => [
   },
 ];
 
-export const getMockApiPropertyFiles = (): Api_PropertyFile[] => [
+export const getMockApiPropertyFiles = (): ApiGen_Concepts_FileProperty[] => [
   {
     id: 1,
     fileId: 1,
@@ -174,20 +223,22 @@ export const getMockApiPropertyFiles = (): Api_PropertyFile[] => [
     propertyName: 'test property name',
     propertyId: 1,
     property: {
+      ...emptyProperty,
       id: 1,
       anomalies: [],
       tenures: [],
       roadTypes: [],
-      adjacentLands: [],
       region: {
         id: 1,
         description: 'South Coast Region',
         isDisabled: false,
+        displayOrder: null,
       },
       district: {
         id: 1,
         description: 'Lower Mainland District',
         isDisabled: false,
+        displayOrder: null,
       },
       dataSourceEffectiveDateOnly: '2021-08-31T00:00:00',
       latitude: 54.794202998379006,
@@ -206,6 +257,8 @@ export const getMockApiPropertyFiles = (): Api_PropertyFile[] => [
       },
       rowVersion: 3,
     },
+    displayOrder: null,
+    rowVersion: null,
   },
   {
     id: 2,
@@ -213,20 +266,22 @@ export const getMockApiPropertyFiles = (): Api_PropertyFile[] => [
     fileId: 2,
     file: mockAcquisitionFileResponse(),
     property: {
+      ...emptyProperty,
       id: 2,
       anomalies: [],
       tenures: [],
       roadTypes: [],
-      adjacentLands: [],
       region: {
         id: 1,
         description: 'South Coast Region',
         isDisabled: false,
+        displayOrder: null,
       },
       district: {
         id: 1,
         description: 'Lower Mainland District',
         isDisabled: false,
+        displayOrder: null,
       },
       dataSourceEffectiveDateOnly: '2021-08-31T00:00:00',
       latitude: 54.54882129837095,
@@ -245,5 +300,23 @@ export const getMockApiPropertyFiles = (): Api_PropertyFile[] => [
       },
       rowVersion: 5,
     },
+    displayOrder: null,
+    propertyName: null,
+    rowVersion: null,
   },
 ];
+
+export const getEmptyPropertyLease = (): ApiGen_Concepts_PropertyLease => {
+  return {
+    fileId: 0,
+    file: null,
+    leaseArea: null,
+    areaUnitType: null,
+    id: 0,
+    propertyName: null,
+    displayOrder: null,
+    property: null,
+    propertyId: 0,
+    rowVersion: null,
+  };
+};

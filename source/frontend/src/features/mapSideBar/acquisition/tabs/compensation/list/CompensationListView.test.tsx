@@ -8,8 +8,9 @@ import {
   getMockApiCompensationList,
 } from '@/mocks/compensations.mock';
 import { mockAcquisitionFileResponse, mockLookups } from '@/mocks/index.mock';
-import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
+import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { toTypeCodeNullable } from '@/utils/formUtils';
 import { act, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
 import CompensationListView, { ICompensationListViewProps } from './CompensationListView';
@@ -72,7 +73,7 @@ describe('compensation list view', () => {
   });
 
   it('displays the calculated total for the entire file excluding drafts', async () => {
-    const mockList: Api_CompensationRequisition[] = [
+    const mockList: ApiGen_Concepts_CompensationRequisition[] = [
       {
         ...emptyCompensationRequisition,
         isDraft: true,
@@ -116,7 +117,7 @@ describe('compensation list view', () => {
     const { findAllByTitle } = setup({
       acquisitionFile: {
         ...mockAcquisitionFileResponse(),
-        fileStatusTypeCode: { id: AcquisitionStatus.Active },
+        fileStatusTypeCode: toTypeCodeNullable(AcquisitionStatus.Active),
       },
       compensations: compensations,
       claims: [Claims.COMPENSATION_REQUISITION_DELETE],

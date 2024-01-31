@@ -7,7 +7,7 @@ import configureMockStore, { MockStoreEnhanced } from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
 import * as MOCK from '@/mocks/data.mock';
-import { defaultApiLease } from '@/models/api/Lease';
+import { defaultApiLease } from '@/models/defaultInitializers';
 
 import { useUpdateLease } from './useUpdateLease';
 
@@ -33,7 +33,7 @@ const setup = (values?: any) => {
   const { result } = renderHook(useUpdateLease, { wrapper: getWrapper(getStore(values)) });
   return result.current;
 };
-const defaultLeaseWithId = { ...defaultApiLease, id: 1 };
+const defaultLeaseWithId = { ...defaultApiLease(), id: 1 };
 
 describe('useUpdateLease functions', () => {
   afterAll(() => {

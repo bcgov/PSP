@@ -10,7 +10,7 @@ import { RestrictContactType } from '@/components/contact/ContactManagerView/Con
 import { PayeeOption } from '@/features/mapSideBar/acquisition/models/PayeeOptionModel';
 import SidebarFooter from '@/features/mapSideBar/shared/SidebarFooter';
 import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
-import { Api_ExpropriationPayment } from '@/models/api/ExpropriationPayment';
+import { ApiGen_Concepts_ExpropriationPayment } from '@/models/api/generated/ApiGen_Concepts_ExpropriationPayment';
 
 import Form8PaymentItemsSubForm from './Form8PaymentItemsSubForm';
 import { Form8FormModel } from './models/Form8FormModel';
@@ -20,7 +20,9 @@ export interface IForm8FormProps {
   initialValues: Form8FormModel | null;
   gstConstant: number;
   payeeOptions: PayeeOption[];
-  onSave: (form8: Api_ExpropriationPayment) => Promise<Api_ExpropriationPayment | undefined>;
+  onSave: (
+    form8: ApiGen_Concepts_ExpropriationPayment,
+  ) => Promise<ApiGen_Concepts_ExpropriationPayment | undefined>;
   onCancel: () => void;
   onSuccess: () => void;
 }

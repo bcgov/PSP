@@ -1,7 +1,10 @@
 import moment from 'moment';
 
-import { Api_FinancialCode } from '@/models/api/FinancialCode';
-import { stringToUndefined } from '@/utils/formUtils';
+import { ApiGen_Concepts_FinancialCode } from '@/models/api/generated/ApiGen_Concepts_FinancialCode';
+import { ApiGen_Concepts_FinancialCodeTypes } from '@/models/api/generated/ApiGen_Concepts_FinancialCodeTypes';
+import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
+import { exists, isValidIsoDateTime } from '@/utils/utils';
 
 export class FinancialCodeForm {
   id?: number;
@@ -13,29 +16,31 @@ export class FinancialCodeForm {
   effectiveDate?: string = moment().format('YYYY-MM-DD');
   expiryDate?: string;
 
-  toApi(): Api_FinancialCode {
+  toApi(): ApiGen_Concepts_FinancialCode {
     return {
-      id: this.id,
-      rowVersion: this.rowVersion,
-      type: this.type,
-      code: this.code,
-      description: this.description,
-      displayOrder: this.displayOrder !== undefined ? Number(this.displayOrder) : undefined,
-      effectiveDate: this.effectiveDate,
-      expiryDate: stringToUndefined(this.expiryDate),
+      id: this.id ?? 0,
+      type: exists(this.type)
+        ? (this.type as ApiGen_Concepts_FinancialCodeTypes)
+        : ApiGen_Concepts_FinancialCodeTypes.BusinessFunction,
+      code: this.code ?? null,
+      description: this.description ?? null,
+      displayOrder: this.displayOrder !== undefined ? Number(this.displayOrder) : null,
+      effectiveDate: isValidIsoDateTime(this.effectiveDate) ? this.effectiveDate : EpochIsoDateTime,
+      expiryDate: isValidIsoDateTime(this.expiryDate) ? this.expiryDate : null,
+      ...getEmptyBaseAudit(this.rowVersion),
     };
   }
 
-  static fromApi(model: Api_FinancialCode): FinancialCodeForm {
+  static fromApi(model: ApiGen_Concepts_FinancialCode): FinancialCodeForm {
     const newForm = new FinancialCodeForm();
     newForm.id = model.id;
-    newForm.rowVersion = model.rowVersion;
+    newForm.rowVersion = model.rowVersion ?? undefined;
     newForm.type = model.type;
-    newForm.code = model.code;
-    newForm.description = model.description;
-    newForm.displayOrder = model.displayOrder;
-    newForm.effectiveDate = model.effectiveDate ?? '';
-    newForm.expiryDate = model.expiryDate ?? '';
+    newForm.code = model.code ?? undefined;
+    newForm.description = model.description ?? undefined;
+    newForm.displayOrder = model.displayOrder ?? undefined;
+    newForm.effectiveDate = isValidIsoDateTime(model.effectiveDate) ? model.effectiveDate : '';
+    newForm.expiryDate = isValidIsoDateTime(model.expiryDate) ? model.expiryDate : '';
 
     return newForm;
   }

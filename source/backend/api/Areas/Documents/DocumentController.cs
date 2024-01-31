@@ -11,6 +11,7 @@ using Pims.Api.Models.Requests.Document.UpdateMetadata;
 using Pims.Api.Models.Requests.Http;
 using Pims.Api.Policies;
 using Pims.Api.Services;
+using Pims.Core.Json;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -56,6 +57,7 @@ namespace Pims.Api.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(List<Models.Concepts.Document.DocumentTypeModel>), 200)]
         [SwaggerOperation(Tags = new[] { "document-types" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetDocumentTypes()
         {
             var documentTypes = _documentService.GetPimsDocumentTypes();
@@ -74,6 +76,7 @@ namespace Pims.Api.Controllers
         [HasPermission(Permissions.DocumentEdit)]
         [ProducesResponseType(typeof(DocumentUpdateResponse), 200)]
         [SwaggerOperation(Tags = new[] { "documents" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public async Task<IActionResult> UpdateDocumentMetadata(
             long documentId,
             [FromBody] DocumentUpdateRequest updateRequest)
@@ -94,6 +97,7 @@ namespace Pims.Api.Controllers
         [HasPermission(Permissions.DocumentView)]
         [ProducesResponseType(typeof(ExternalResponse<FileDownloadResponse>), 200)]
         [SwaggerOperation(Tags = new[] { "storage-documents" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public async Task<IActionResult> DownloadWrappedFile(long mayanDocumentId, long mayanFileId)
         {
             var result = await _documentService.DownloadFileAsync(mayanDocumentId, mayanFileId);
@@ -128,6 +132,7 @@ namespace Pims.Api.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(ExternalResponse<QueryResponse<DocumentDetailModel>>), 200)]
         [SwaggerOperation(Tags = new[] { "storage-documents" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetDocumentList()
         {
             var result = _documentService.GetStorageDocumentList();
@@ -141,6 +146,7 @@ namespace Pims.Api.Controllers
         [HasPermission(Permissions.DocumentView)]
         [ProducesResponseType(typeof(ExternalResponse<QueryResponse<Models.Mayan.Document.DocumentTypeModel>>), 200)]
         [SwaggerOperation(Tags = new[] { "storage-documents" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetDocumentStorageTypes()
         {
             var result = _documentService.GetStorageDocumentTypes();
@@ -154,6 +160,7 @@ namespace Pims.Api.Controllers
         [HasPermission(Permissions.DocumentAdd)]
         [ProducesResponseType(typeof(ExternalResponse<QueryResponse<DocumentTypeMetadataTypeModel>>), 200)]
         [SwaggerOperation(Tags = new[] { "storage-documents" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public async Task<IActionResult> GetDocumentStorageTypeMetadata(long mayanDocumentTypeId)
         {
             var result = await _documentService.GetDocumentTypeMetadataType(mayanDocumentTypeId);
@@ -167,6 +174,7 @@ namespace Pims.Api.Controllers
         [HasPermission(Permissions.DocumentView)]
         [ProducesResponseType(typeof(ExternalResponse<DocumentDetailModel>), 200)]
         [SwaggerOperation(Tags = new[] { "storage-documents" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public async Task<IActionResult> GetDocumentStorageTypeDetail(long mayanDocumentId)
         {
             var result = await _documentService.GetStorageDocumentDetail(mayanDocumentId);
@@ -180,6 +188,7 @@ namespace Pims.Api.Controllers
         [HasPermission(Permissions.DocumentView)]
         [ProducesResponseType(typeof(ExternalResponse<FileDownloadResponse>), 200)]
         [SwaggerOperation(Tags = new[] { "storage-documents" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public async Task<IActionResult> DownloadWrappedFile(long mayanDocumentId)
         {
             var result = await _documentService.DownloadFileLatestAsync(mayanDocumentId);
@@ -197,6 +206,7 @@ namespace Pims.Api.Controllers
         [HasPermission(Permissions.DocumentView)]
         [ProducesResponseType(typeof(FileContentResult), 200)]
         [SwaggerOperation(Tags = new[] { "storage-documents" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public async Task<IActionResult> DownloadFile(long mayanDocumentId)
         {
             var result = await _documentService.DownloadFileLatestAsync(mayanDocumentId);
@@ -216,6 +226,7 @@ namespace Pims.Api.Controllers
         [HasPermission(Permissions.DocumentView)]
         [ProducesResponseType(typeof(ExternalResponse<QueryResponse<DocumentMetadataModel>>), 200)]
         [SwaggerOperation(Tags = new[] { "storage-documents" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public async Task<IActionResult> GetDocumentMetadata(long mayanDocumentId)
         {
             var result = await _documentService.GetStorageDocumentMetadata(mayanDocumentId);

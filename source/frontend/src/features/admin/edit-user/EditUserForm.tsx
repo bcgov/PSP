@@ -11,8 +11,8 @@ import { SectionField } from '@/components/common/Section/SectionField';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
 import * as API from '@/constants/API';
 import { useLookupCodeHelpers } from '@/hooks/useLookupCodeHelpers';
-import Api_TypeCode from '@/models/api/TypeCode';
-import { Api_User } from '@/models/api/User';
+import { ApiGen_Base_CodeType } from '@/models/api/generated/ApiGen_Base_CodeType';
+import { ApiGen_Concepts_User } from '@/models/api/generated/ApiGen_Concepts_User';
 import { ILookupCode } from '@/store/slices/lookupCodes';
 import { UserUpdateSchema } from '@/utils/YupSchema';
 
@@ -20,7 +20,7 @@ import RolesToolTip from '../access-request/RolesToolTip';
 import { FormUser, userTypeCodeValues } from '../users/models';
 
 interface IEditUserFormProps {
-  updateUserDetail: (user: Api_User) => void;
+  updateUserDetail: (user: ApiGen_Concepts_User) => void;
   formUser: FormUser;
   onCancel: () => void;
 }
@@ -115,7 +115,7 @@ const EditUserForm: React.FunctionComponent<React.PropsWithChildren<IEditUserFor
           </SectionField>
 
           <SectionField label="MoTI Region(s)" required labelWidth="2">
-            <Multiselect<ILookupCode, Api_TypeCode<number>>
+            <Multiselect<ILookupCode, ApiGen_Base_CodeType<number>>
               placeholder=""
               field="regions"
               options={regions}

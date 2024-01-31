@@ -8,7 +8,8 @@ import { Claims } from '@/constants/claims';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { IFormFilter } from '@/interfaces/IFormResults';
-import { Api_FormDocumentFile, Api_FormDocumentType } from '@/models/api/FormDocument';
+import { ApiGen_Concepts_FormDocumentFile } from '@/models/api/generated/ApiGen_Concepts_FormDocumentFile';
+import { ApiGen_Concepts_FormDocumentType } from '@/models/api/generated/ApiGen_Concepts_FormDocumentType';
 
 import { AddForm } from './AddForm';
 import { FormFilter } from './FormFilter';
@@ -18,9 +19,9 @@ export interface IFormListViewProps {
   saveForm: (formTypeId: string) => void;
   formFilter?: IFormFilter;
   setFormFilter: (filterValues: IFormFilter) => void;
-  sort: TableSort<Api_FormDocumentType>;
-  setSort: (value: TableSort<Api_FormDocumentFile>) => void;
-  forms: Api_FormDocumentFile[];
+  sort: TableSort<ApiGen_Concepts_FormDocumentType>;
+  setSort: (value: TableSort<ApiGen_Concepts_FormDocumentFile>) => void;
+  forms: ApiGen_Concepts_FormDocumentFile[];
   onDelete: (formFileId: number) => void;
 }
 
@@ -55,7 +56,7 @@ export const FormListView: React.FunctionComponent<IFormListViewProps> = ({
         loading={false}
         sort={sort}
         setSort={setSort}
-        onShowForm={(form: Api_FormDocumentFile) => {
+        onShowForm={(form: ApiGen_Concepts_FormDocumentFile) => {
           history.push(`${match.url}/popup/form/${form?.id}`);
         }}
         onDelete={onDelete}

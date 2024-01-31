@@ -8,14 +8,15 @@ import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvi
 import { useCompensationRequisitionRepository } from '@/hooks/repositories/useRequisitionCompensationRepository';
 import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
 import { IApiError } from '@/interfaces/IApiError';
-import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
-import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
+import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
+import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 
 import { ICompensationListViewProps } from './CompensationListView';
 
 export interface ICompensationListContainerProps {
   fileId: number;
-  file: Api_AcquisitionFile;
+  file: ApiGen_Concepts_AcquisitionFile;
   View: React.FunctionComponent<React.PropsWithChildren<ICompensationListViewProps>>;
 }
 
@@ -48,9 +49,9 @@ export const CompensationListContainer: React.FunctionComponent<
     totalAllowableCompensation: number | null,
   ): Promise<number | null> => {
     if (file) {
-      const updatedFile = {
+      const updatedFile: ApiGen_Concepts_AcquisitionFile = {
         ...file,
-        totalAllowableCompensation: totalAllowableCompensation ?? undefined,
+        totalAllowableCompensation: totalAllowableCompensation ?? null,
       };
       try {
         const response = await putAcquisitionFile(updatedFile, []);
@@ -76,7 +77,7 @@ export const CompensationListContainer: React.FunctionComponent<
   };
 
   const onAddCompensationRequisition = (fileId: number) => {
-    const defaultCompensationRequisition: Api_CompensationRequisition = {
+    const defaultCompensationRequisition: ApiGen_Concepts_CompensationRequisition = {
       id: null,
       acquisitionFileId: fileId,
       alternateProjectId: null,
@@ -108,6 +109,7 @@ export const CompensationListContainer: React.FunctionComponent<
       legacyPayee: null,
       isPaymentInTrust: null,
       gstNumber: null,
+      ...getEmptyBaseAudit(),
     };
 
     postAcquisitionCompensationRequisition(fileId, defaultCompensationRequisition).then(

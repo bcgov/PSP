@@ -5,7 +5,10 @@ import {
   mockAcquisitionFileOwnersResponse,
   mockAcquisitionFileResponse,
 } from '@/mocks/acquisitionFiles.mock';
-import { Api_Person } from '@/models/api/Person';
+import { getEmptyPerson } from '@/mocks/contacts.mock';
+import { getEmptyOrganization } from '@/mocks/organization.mock';
+import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_Person';
+import { toTypeCodeNullable } from '@/utils/formUtils';
 import { act, cleanup, render, RenderOptions, userEvent, waitForEffects } from '@/utils/test-utils';
 
 import AcquisitionSummaryView, { IAcquisitionSummaryViewProps } from './AcquisitionSummaryView';
@@ -51,7 +54,7 @@ describe('AcquisitionSummaryView component', () => {
         firstName: 'Foo',
         middleNames: 'Bar',
         surname: 'Baz',
-      } as Api_Person,
+      } as ApiGen_Concepts_Person,
     });
     getAcquisitionFileOwnersFn.mockResolvedValue({
       data: mockAcquisitionFileOwnersResponse(1),
@@ -100,7 +103,7 @@ describe('AcquisitionSummaryView component', () => {
       {
         acquisitionFile: {
           ...mockAcquisitionFileResponse(),
-          fileStatusTypeCode: { id: 'COMPLETE' },
+          fileStatusTypeCode: toTypeCodeNullable('COMPLETE'),
         },
       },
       { claims: [Claims.ACQUISITION_EDIT] },
@@ -147,6 +150,7 @@ describe('AcquisitionSummaryView component', () => {
               id: 1,
               acquisitionFileId: 1,
               person: {
+                ...getEmptyPerson(),
                 id: 1,
                 surname: 'Smith',
                 firstName: 'Bob',
@@ -160,8 +164,15 @@ describe('AcquisitionSummaryView component', () => {
                 id: 'NEGOTAGENT',
                 description: 'Negotiation agent',
                 isDisabled: false,
+                displayOrder: null,
               },
               rowVersion: 2,
+              organization: null,
+              organizationId: null,
+              personId: null,
+              primaryContact: null,
+              primaryContactId: null,
+              teamProfileTypeCode: null,
             },
           ],
         },
@@ -185,6 +196,7 @@ describe('AcquisitionSummaryView component', () => {
               acquisitionFileId: 1,
               organizationId: 1,
               organization: {
+                ...getEmptyOrganization(),
                 id: 1,
                 name: 'Test Organization',
                 alias: 'ABC Inc',
@@ -195,8 +207,15 @@ describe('AcquisitionSummaryView component', () => {
                 id: 'NEGOTAGENT',
                 description: 'Negotiation agent',
                 isDisabled: false,
+                displayOrder: null,
               },
               rowVersion: 2,
+
+              person: null,
+              personId: null,
+              primaryContact: null,
+              primaryContactId: null,
+              teamProfileTypeCode: null,
             },
           ],
         },
@@ -222,6 +241,7 @@ describe('AcquisitionSummaryView component', () => {
               acquisitionFileId: 1,
               organizationId: 1,
               organization: {
+                ...getEmptyOrganization(),
                 id: 1,
                 name: 'Test Organization',
                 alias: 'ABC Inc',
@@ -238,13 +258,20 @@ describe('AcquisitionSummaryView component', () => {
                 personAddresses: [],
                 contactMethods: [],
                 rowVersion: 2,
+                comment: null,
+                isDisabled: false,
+                preferredName: null,
               },
               teamProfileType: {
                 id: 'NEGOTAGENT',
                 description: 'Negotiation agent',
                 isDisabled: false,
+                displayOrder: null,
               },
               rowVersion: 2,
+              person: null,
+              personId: null,
+              teamProfileTypeCode: null,
             },
           ],
         },

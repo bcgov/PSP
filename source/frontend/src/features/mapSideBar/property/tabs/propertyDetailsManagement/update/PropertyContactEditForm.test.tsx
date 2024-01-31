@@ -3,7 +3,8 @@ import { noop } from 'lodash';
 
 import { Claims } from '@/constants/index';
 import { mockLookups } from '@/mocks/lookups.mock';
-import { Api_PropertyContact } from '@/models/api/Property';
+import { ApiGen_Concepts_PropertyContact } from '@/models/api/generated/ApiGen_Concepts_PropertyContact';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { render, RenderOptions } from '@/utils/test-utils';
 
@@ -20,7 +21,7 @@ jest.mock('@react-keycloak/web');
 describe('PropertyContactEditForm component', () => {
   // render component under test
   const setup = (
-    renderOptions: RenderOptions & { propertyContact: Api_PropertyContact } = {
+    renderOptions: RenderOptions & { propertyContact: ApiGen_Concepts_PropertyContact } = {
       propertyContact: mockPropertyContact,
     },
   ) => {
@@ -50,7 +51,7 @@ describe('PropertyContactEditForm component', () => {
   });
 });
 
-const emptyPropertyContact: Api_PropertyContact = {
+const emptyPropertyContact: ApiGen_Concepts_PropertyContact = {
   id: 0,
   propertyId: 0,
   organizationId: null,
@@ -60,10 +61,10 @@ const emptyPropertyContact: Api_PropertyContact = {
   primaryContactId: null,
   primaryContact: null,
   purpose: null,
-  rowVersion: 0,
+  ...getEmptyBaseAudit(0),
 };
 
-const mockPropertyContact: Api_PropertyContact = {
+const mockPropertyContact: ApiGen_Concepts_PropertyContact = {
   ...emptyPropertyContact,
   id: 1,
   person: {

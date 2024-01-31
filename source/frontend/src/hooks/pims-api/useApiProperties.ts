@@ -4,8 +4,9 @@ import React from 'react';
 import { IPaginateProperties } from '@/constants/API';
 import { IPropertyFilter } from '@/features/properties/filter/IPropertyFilter';
 import { IPagedItems, IProperty } from '@/interfaces';
+import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
+import { ApiGen_Concepts_PropertyAssociations } from '@/models/api/generated/ApiGen_Concepts_PropertyAssociations';
 import { Api_PropertyFilterCriteria } from '@/models/api/ProjectFilterCriteria';
-import { Api_Property, Api_PropertyAssociations } from '@/models/api/Property';
 
 import useAxiosApi from './useApi';
 
@@ -25,7 +26,7 @@ export const useApiProperties = () => {
       getMatchingPropertiesApi: (params: Api_PropertyFilterCriteria) =>
         api.post<number[]>(`/properties/search/advanced-filter`, params),
       getPropertyAssociationsApi: (id: number) =>
-        api.get<Api_PropertyAssociations>(`/properties/${id}/associations`),
+        api.get<ApiGen_Concepts_PropertyAssociations>(`/properties/${id}/associations`),
       exportPropertiesApi: (filter: IPaginateProperties, outputFormat: 'csv' | 'excel' = 'excel') =>
         api.get<Blob>(
           `/reports/properties?${filter ? queryString.stringify({ ...filter, all: true }) : ''}`,
@@ -37,10 +38,11 @@ export const useApiProperties = () => {
           },
         ),
       getPropertiesApi: (ids: number[]) =>
-        api.get<Api_Property[]>(`/properties?${ids.map(x => `ids=${x}`).join('&')}`),
-      getPropertyConceptWithIdApi: (id: number) => api.get<Api_Property>(`/properties/${id}`),
-      putPropertyConceptApi: (property: Api_Property) =>
-        api.put<Api_Property>(`/properties/${property.id}`, property),
+        api.get<ApiGen_Concepts_Property[]>(`/properties?${ids.map(x => `ids=${x}`).join('&')}`),
+      getPropertyConceptWithIdApi: (id: number) =>
+        api.get<ApiGen_Concepts_Property>(`/properties/${id}`),
+      putPropertyConceptApi: (property: ApiGen_Concepts_Property) =>
+        api.put<ApiGen_Concepts_Property>(`/properties/${property.id}`, property),
     }),
     [api],
   );

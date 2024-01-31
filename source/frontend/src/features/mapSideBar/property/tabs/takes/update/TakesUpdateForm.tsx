@@ -7,15 +7,17 @@ import { Button } from '@/components/common/buttons/Button';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { StyledSummarySection } from '@/components/common/Section/SectionStyles';
 import { AreaUnitTypes } from '@/constants/areaUnitTypes';
-import { Api_PropertyFile } from '@/models/api/PropertyFile';
-import { Api_Take } from '@/models/api/Take';
+import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
+import { ApiGen_Concepts_Take } from '@/models/api/generated/ApiGen_Concepts_Take';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
+import { toTypeCode } from '@/utils/formUtils';
 import { getApiPropertyName } from '@/utils/mapPropertyUtils';
 
 import { TakeModel, TakesYupSchema } from './models';
 import TakeSubForm from './TakeSubForm';
 
 export interface ITakesUpdateFormProps {
-  fileProperty: Api_PropertyFile;
+  fileProperty: ApiGen_Concepts_FileProperty;
   takes: TakeModel[];
   loading: boolean;
   onSubmit: (model: TakesForm, formikHelpers: FormikHelpers<TakesForm>) => Promise<void>;
@@ -96,11 +98,11 @@ const StyledStickyWrapper = styled.div`
   background-color: ${({ theme }) => theme.css.filterBackgroundColor};
 `;
 
-export const emptyTake: Api_Take = {
+export const emptyTake: ApiGen_Concepts_Take = {
   id: 0,
   description: '',
   newHighwayDedicationArea: null,
-  areaUnitTypeCode: { id: AreaUnitTypes.SquareMeters.toString() },
+  areaUnitTypeCode: toTypeCode(AreaUnitTypes.SquareMeters.toString()),
   isAcquiredForInventory: null,
   isThereSurplus: null,
   isNewLicenseToConstruct: null,
@@ -118,8 +120,9 @@ export const emptyTake: Api_Take = {
   surplusArea: null,
   takeSiteContamTypeCode: null,
   takeTypeCode: null,
-  takeStatusTypeCode: { id: 'INPROGRESS' },
+  takeStatusTypeCode: toTypeCode('INPROGRESS'),
   landActTypeCode: null,
+  ...getEmptyBaseAudit(),
 };
 
 export default TakesUpdateForm;

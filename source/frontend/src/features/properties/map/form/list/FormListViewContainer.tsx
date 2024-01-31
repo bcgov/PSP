@@ -7,7 +7,8 @@ import { SideBarContext } from '@/features/mapSideBar/context/sidebarContext';
 import { useFormDocumentRepository } from '@/hooks/repositories/useFormDocumentRepository';
 import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
 import { defaultFormFilter, IFormFilter } from '@/interfaces/IFormResults';
-import { Api_FormDocumentFile } from '@/models/api/FormDocument';
+import { ApiGen_Concepts_FormDocumentFile } from '@/models/api/generated/ApiGen_Concepts_FormDocumentFile';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 
 import { IFormListViewProps } from './FormListView';
 
@@ -30,7 +31,7 @@ export const FormListViewContainer: React.FunctionComponent<
     deleteFileForm: { execute: deleteForm },
   } = useFormDocumentRepository();
   const [formFilter, setFormFilter] = React.useState<IFormFilter>(defaultFormFilter);
-  const [sort, setSort] = React.useState<TableSort<Api_FormDocumentFile>>({});
+  const [sort, setSort] = React.useState<TableSort<ApiGen_Concepts_FormDocumentFile>>({});
   const { staleFile, setStaleFile } = useContext(SideBarContext);
   const { setModalContent, setDisplayModal } = useModalContext();
 
@@ -58,7 +59,7 @@ export const FormListViewContainer: React.FunctionComponent<
       if (sort) {
         const sortFields = Object.keys(sort);
         if (sortFields?.length > 0) {
-          const keyName = sortFields[0] as keyof Api_FormDocumentFile;
+          const keyName = sortFields[0] as keyof ApiGen_Concepts_FormDocumentFile;
           const sortDirection = sort[keyName];
 
           let sortBy: string;
@@ -82,7 +83,7 @@ export const FormListViewContainer: React.FunctionComponent<
   }, [forms, sort, formFilter]);
 
   const saveForm = async (formTypeId: string) => {
-    const fileForm: Api_FormDocumentFile = {
+    const fileForm: ApiGen_Concepts_FormDocumentFile = {
       id: null,
       fileId: fileId,
       formDocumentType: {
@@ -90,7 +91,9 @@ export const FormListViewContainer: React.FunctionComponent<
         description: '',
         displayOrder: null,
         documentId: null,
+        ...getEmptyBaseAudit(),
       },
+      ...getEmptyBaseAudit(),
     };
     await addForm(FileTypes.Acquisition, fileForm);
     setStaleFile(true);

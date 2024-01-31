@@ -304,25 +304,25 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Filter Financial Codes by Cost Types
             financialCodes.FilterFinancialCodeByType("Business function");
-            Assert.Equal(financialCodes.FirstFinancialCodeType(), "Business function");
+            Assert.Equal("Business function", financialCodes.FirstFinancialCodeType());
 
             financialCodes.FilterFinancialCodeByType("Cost types");
-            Assert.Equal(financialCodes.FirstFinancialCodeType(), "Cost types");
+            Assert.Equal("Cost types", financialCodes.FirstFinancialCodeType());
 
             financialCodes.FilterFinancialCodeByType("Work activity");
-            Assert.Equal(financialCodes.FirstFinancialCodeType(), "Work activity");
+            Assert.Equal("Work activity", financialCodes.FirstFinancialCodeType());
 
             financialCodes.FilterFinancialCodeByType("Chart of accounts");
-            Assert.Equal(financialCodes.FirstFinancialCodeType(), "Chart of accounts");
+            Assert.Equal("Chart of accounts", financialCodes.FirstFinancialCodeType());
 
             financialCodes.FilterFinancialCodeByType("Financial activity");
-            Assert.Equal(financialCodes.FirstFinancialCodeType(), "Financial activity");
+            Assert.Equal("Financial activity", financialCodes.FirstFinancialCodeType());
 
             financialCodes.FilterFinancialCodeByType("Responsibility");
-            Assert.Equal(financialCodes.FirstFinancialCodeType(), "Responsibility");
+            Assert.Equal("Responsibility", financialCodes.FirstFinancialCodeType());
 
             financialCodes.FilterFinancialCodeByType("Yearly financial");
-            Assert.Equal(financialCodes.FirstFinancialCodeType(), "Yearly financial");
+            Assert.Equal("Yearly financial", financialCodes.FirstFinancialCodeType());
 
             //Filter by Code Value
             financialCodes.FilterFinancialCode(financialCode.FinnCodeValue);

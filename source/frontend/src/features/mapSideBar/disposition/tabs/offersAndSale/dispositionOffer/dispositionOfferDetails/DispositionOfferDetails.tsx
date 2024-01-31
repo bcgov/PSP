@@ -8,13 +8,13 @@ import { SectionField } from '@/components/common/Section/SectionField';
 import { Claims } from '@/constants';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
-import { Api_DispositionFileOffer } from '@/models/api/DispositionFile';
+import { ApiGen_Concepts_DispositionFileOffer } from '@/models/api/generated/ApiGen_Concepts_DispositionFileOffer';
 import { prettyFormatDate } from '@/utils/dateUtils';
 import { formatMoney } from '@/utils/numberFormatUtils';
 
 export interface IDispositionOfferDetailsProps {
   index: number;
-  dispositionOffer: Api_DispositionFileOffer;
+  dispositionOffer: ApiGen_Concepts_DispositionFileOffer;
   onDelete: (offerId: number) => void;
 }
 
@@ -40,7 +40,7 @@ const DispositionOfferDetails: React.FunctionComponent<IDispositionOfferDetailsP
               onClick={() => history.push(`${match.url}/offers/${dispositionOffer.id}/update`)}
             />
             <StyledRemoveLinkButton
-              title="Delete Form 8"
+              title="Delete Offer"
               data-testid={`Offer[${index}].delete-btn`}
               variant="light"
               onClick={() => {

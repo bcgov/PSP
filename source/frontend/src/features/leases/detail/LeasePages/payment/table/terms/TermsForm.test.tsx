@@ -82,7 +82,12 @@ describe('TermsForm component', () => {
         terms: [
           {
             ...defaultTestFormLeaseTerm,
-            leasePmtFreqTypeCode: { id: frequency, description: frequency },
+            leasePmtFreqTypeCode: {
+              id: frequency,
+              description: frequency,
+              displayOrder: null,
+              isDisabled: false,
+            },
             isGstEligible: true,
             gstAmount: 50,
           },
@@ -140,7 +145,12 @@ describe('TermsForm component', () => {
           {
             ...defaultTestFormLeaseTerm,
             expiryDate: undefined as any,
-            leasePmtFreqTypeCode: { id: 'MONTHLY', description: 'MONTHLY' },
+            leasePmtFreqTypeCode: {
+              id: 'MONTHLY',
+              description: 'MONTHLY',
+              displayOrder: null,
+              isDisabled: false,
+            },
           },
         ],
       },
@@ -159,7 +169,12 @@ describe('TermsForm component', () => {
         terms: [
           {
             ...defaultTestFormLeaseTerm,
-            leasePmtFreqTypeCode: { id: 'MONTHLY', description: 'MONTHLY' },
+            leasePmtFreqTypeCode: {
+              id: 'MONTHLY',
+              description: 'MONTHLY',
+              displayOrder: null,
+              isDisabled: false,
+            },
           },
         ],
       },
@@ -180,7 +195,12 @@ describe('TermsForm component', () => {
         terms: [
           {
             ...defaultTestFormLeaseTerm,
-            leasePmtFreqTypeCode: { id: 'MONTHLY', description: 'MONTHLY' },
+            leasePmtFreqTypeCode: {
+              id: 'MONTHLY',
+              description: 'MONTHLY',
+              displayOrder: null,
+              isDisabled: false,
+            },
             paymentAmount: undefined as any,
           },
         ],
@@ -202,7 +222,12 @@ describe('TermsForm component', () => {
         terms: [
           {
             ...defaultTestFormLeaseTerm,
-            leasePmtFreqTypeCode: { id: 'MONTHLY', description: 'MONTHLY' },
+            leasePmtFreqTypeCode: {
+              id: 'MONTHLY',
+              description: 'MONTHLY',
+              displayOrder: null,
+              isDisabled: false,
+            },
             isGstEligible: false,
           },
         ],
@@ -225,7 +250,12 @@ describe('TermsForm component', () => {
         terms: [
           {
             ...defaultTestFormLeaseTerm,
-            leasePmtFreqTypeCode: { id: 'MONTHLY', description: 'MONTHLY' },
+            leasePmtFreqTypeCode: {
+              id: 'MONTHLY',
+              description: 'MONTHLY',
+              displayOrder: null,
+              isDisabled: false,
+            },
             isTermExercised: false,
           },
         ],
@@ -330,7 +360,12 @@ describe('TermsForm component', () => {
           {
             ...defaultTestFormLeaseTerm,
             isTermExercised: true,
-            statusTypeCode: { id: LeaseTermStatusTypes.EXERCISED },
+            statusTypeCode: {
+              id: LeaseTermStatusTypes.EXERCISED,
+              description: null,
+              displayOrder: null,
+              isDisabled: false,
+            },
             payments: [] as FormLeasePayment[],
           },
         ],

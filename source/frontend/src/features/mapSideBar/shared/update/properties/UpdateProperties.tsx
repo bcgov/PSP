@@ -14,7 +14,7 @@ import SelectedPropertyRow from '@/components/propertySelector/selectedPropertyL
 import { SideBarContext } from '@/features/mapSideBar/context/sidebarContext';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
 import { useBcaAddress } from '@/features/properties/map/hooks/useBcaAddress';
-import { Api_File } from '@/models/api/File';
+import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 
 import { AddressForm, FileForm, PropertyForm } from '../../models';
@@ -22,13 +22,13 @@ import SidebarFooter from '../../SidebarFooter';
 import { UpdatePropertiesYupSchema } from './UpdatePropertiesYupSchema';
 
 export interface IUpdatePropertiesProps {
-  file: Api_File;
+  file: ApiGen_Concepts_File;
   setIsShowingPropertySelector: (isShowing: boolean) => void;
   onSuccess: () => void;
   updateFileProperties: (
-    file: Api_File,
+    file: ApiGen_Concepts_File,
     userOverrideCodes: UserOverrideCode[],
-  ) => Promise<Api_File | undefined>;
+  ) => Promise<ApiGen_Concepts_File | undefined>;
   canRemove: (propertyId: number) => Promise<boolean>;
   formikRef?: React.RefObject<FormikProps<any>>;
 }
@@ -87,7 +87,7 @@ export const UpdateProperties: React.FunctionComponent<
     props.setIsShowingPropertySelector(false);
   };
 
-  const saveFile = async (file: Api_File) => {
+  const saveFile = async (file: ApiGen_Concepts_File) => {
     try {
       const response = await props.updateFileProperties(file, []);
 
@@ -109,6 +109,7 @@ export const UpdateProperties: React.FunctionComponent<
       }
     }
   };
+
   return (
     <>
       <LoadingBackdrop show={bcaLoading} />
@@ -129,7 +130,7 @@ export const UpdateProperties: React.FunctionComponent<
           initialValues={formFile}
           validationSchema={UpdatePropertiesYupSchema}
           onSubmit={async (values: FileForm) => {
-            const file: Api_File = values.toApi();
+            const file: ApiGen_Concepts_File = values.toApi();
             await saveFile(file);
           }}
         >

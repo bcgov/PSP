@@ -3,6 +3,7 @@ import { CellProps } from 'react-table';
 
 import { ColumnWithProps } from '@/components/Table';
 import { IContactSearchResult } from '@/interfaces';
+import { isValidId } from '@/utils';
 
 const summaryColumns: ColumnWithProps<IContactSearchResult>[] = [
   {
@@ -12,7 +13,7 @@ const summaryColumns: ColumnWithProps<IContactSearchResult>[] = [
     width: 20,
     maxWidth: 20,
     Cell: (props: CellProps<IContactSearchResult>) =>
-      props.row.original.personId !== undefined ? (
+      isValidId(props.row.original.personId) ? (
         <FaRegUser size={20} />
       ) : (
         <FaRegBuilding size={20} />
@@ -27,7 +28,7 @@ const summaryColumns: ColumnWithProps<IContactSearchResult>[] = [
     width: 80,
     maxWidth: 120,
     Cell: (props: CellProps<IContactSearchResult>) =>
-      props.row.original.personId !== undefined ? (
+      isValidId(props.row.original.personId) ? (
         <strong>{props.row.original.firstName + ' ' + props.row.original.surname}</strong>
       ) : (
         <span></span>

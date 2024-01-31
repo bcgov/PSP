@@ -1,6 +1,4 @@
-﻿
-
-using PIMS.Tests.Automation.Classes;
+﻿using PIMS.Tests.Automation.Classes;
 using PIMS.Tests.Automation.Data;
 using System.Data;
 
@@ -11,7 +9,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
     {
         private readonly LoginSteps loginSteps;
         private readonly ResearchFiles researchFiles;
-        private readonly SharedSearchProperties sharedSearchProperties;
+        private readonly SharedFileProperties sharedFileProperties;
         private readonly SearchResearchFiles searchResearchFile;
         private readonly PropertyInformation propertyInformation;
         private readonly SearchProperties searchProperties;
@@ -27,7 +25,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         {
             loginSteps = new LoginSteps(driver);
             researchFiles = new ResearchFiles(driver.Current);
-            sharedSearchProperties = new SharedSearchProperties(driver.Current);
+            sharedFileProperties = new SharedFileProperties(driver.Current);
             searchResearchFile = new SearchResearchFiles(driver.Current);
             propertyInformation = new PropertyInformation(driver.Current);
             searchProperties = new SearchProperties(driver.Current);
@@ -109,32 +107,32 @@ namespace PIMS.Tests.Automation.StepDefinitions
             researchFiles.NavigateToAddPropertiesReseachFile();
 
             //Verify UI/ UX from Search By Component
-            sharedSearchProperties.NavigateToSearchTab();
-            sharedSearchProperties.VerifySearchPropertiesFeature();
+            sharedFileProperties.NavigateToSearchTab();
+            sharedFileProperties.VerifySearchPropertiesFeature();
 
             //Search for a property by PID
             if (researchFile.SearchProperties.PID != "")
             {
-                sharedSearchProperties.SelectPropertyByPID(researchFile.SearchProperties.PID);
-                sharedSearchProperties.SelectFirstOption();
+                sharedFileProperties.SelectPropertyByPID(researchFile.SearchProperties.PID);
+                sharedFileProperties.SelectFirstOptionFromSearch();
             }
             //Search for a property by PIN
             if (researchFile.SearchProperties.PIN != "")
             {
-                sharedSearchProperties.SelectPropertyByPIN(researchFile.SearchProperties.PIN);
-                sharedSearchProperties.SelectFirstOption();
+                sharedFileProperties.SelectPropertyByPIN(researchFile.SearchProperties.PIN);
+                sharedFileProperties.SelectFirstOptionFromSearch();
             }
             //Search for a property by Plan
             if (researchFile.SearchProperties.PlanNumber != "")
             {
-                sharedSearchProperties.SelectPropertyByPlan(researchFile.SearchProperties.PlanNumber);
-                sharedSearchProperties.SelectFirstOption();
+                sharedFileProperties.SelectPropertyByPlan(researchFile.SearchProperties.PlanNumber);
+                sharedFileProperties.SelectFirstOptionFromSearch();
             }
             //Search for a property by Address
             if (researchFile.SearchProperties.Address != "")
             {
-                sharedSearchProperties.SelectPropertyByAddress(researchFile.SearchProperties.Address);
-                sharedSearchProperties.SelectFirstOption();
+                sharedFileProperties.SelectPropertyByAddress(researchFile.SearchProperties.Address);
+                sharedFileProperties.SelectFirstOptionFromSearch();
             }
             //Search for a property by Legal Description
             //if (researchFile.SearchProperties.LegalDescription != "")
@@ -171,17 +169,17 @@ namespace PIMS.Tests.Automation.StepDefinitions
             researchFiles.NavigateToAddPropertiesReseachFile();
 
             //Add existing property again
-            sharedSearchProperties.NavigateToSearchTab();
+            sharedFileProperties.NavigateToSearchTab();
 
-            sharedSearchProperties.VerifySearchPropertiesFeature();
-            sharedSearchProperties.SelectPropertyByPID(researchFile.SearchProperties.PID);
-            sharedSearchProperties.SelectFirstOption();
+            sharedFileProperties.VerifySearchPropertiesFeature();
+            sharedFileProperties.SelectPropertyByPID(researchFile.SearchProperties.PID);
+            sharedFileProperties.SelectFirstOptionFromSearch();
 
             //Search for a property by PIN
-            sharedSearchProperties.SelectPropertyByPIN(researchFile.SearchProperties.PIN);
+            sharedFileProperties.SelectPropertyByPIN(researchFile.SearchProperties.PIN);
 
             //Verify PID doesn't exist
-            Assert.True(sharedSearchProperties.noRowsResultsMessage().Equals("No results found for your search criteria."));
+            Assert.Equal("No results found for your search criteria.", sharedFileProperties.noRowsResultsMessageFromSearch());
 
             //Search for a property by Legal Description
             //sharedSearchProperties.SelectPropertyByLegalDescription(researchFile.SearchProperties.LegalDescription);
@@ -190,11 +188,11 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Assert.True(sharedSearchProperties.noRowsResultsMessage().Equals("Too many results (more than 15) match this criteria. Please refine your search."));
 
             //Cancel changes on a Property Detail on Research File
-            researchFiles.CancelResearchFileProps();
+            researchFiles.CancelResearchFile();
 
-            //Delete first property
+            //Delete last property
             researchFiles.NavigateToAddPropertiesReseachFile();
-            sharedSearchProperties.DeleteProperty();
+            sharedFileProperties.DeleteLastPropertyFromFile();
 
             //Save changes
             researchFiles.SaveResearchFileProperties();
@@ -240,7 +238,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             researchFiles.CreateResearchFile(researchFile);
 
             //Fill name to selected property
-            sharedSearchProperties.AddNameSelectedProperty("Automated Property from Pin");
+            sharedFileProperties.AddNameSelectedProperty("Automated Property from Pin", 1);
 
             //Save Research File
             researchFiles.SaveResearchFile();
@@ -318,7 +316,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             researchFile.Expropriation = bool.Parse(ExcelDataContext.ReadData(rowNumber, "Expropriation"));
             researchFile.ExpropriationNotes = ExcelDataContext.ReadData(rowNumber, "ExpropriationNotes");
 
-            researchFile.SearchPropertiesIndex = int.Parse(ExcelDataContext.ReadData(rowNumber, "SearchPropertiesIndex"));
+            researchFile.SearchPropertiesIndex = int.Parse(ExcelDataContext.ReadData(rowNumber, "ResSearchPropertiesIndex"));
             researchFile.PropertyResearchRowStart = int.Parse(ExcelDataContext.ReadData(rowNumber, "PropertyReasearchRowStart"));
             researchFile.PropertyResearchRowCount = int.Parse(ExcelDataContext.ReadData(rowNumber, "PropertyResearchRowCount"));
 

@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 
 import { useApiProperties } from '@/hooks/pims-api/useApiProperties';
 import { IApiError } from '@/interfaces/IApiError';
-import { Api_PropertyAssociations } from '@/models/api/Property';
+import { ApiGen_Concepts_PropertyAssociations } from '@/models/api/generated/ApiGen_Concepts_PropertyAssociations';
 
 import { useApiRequestWrapper } from '../util/useApiRequestWrapper';
 
@@ -12,7 +12,7 @@ export const usePropertyAssociations = () => {
   const { getPropertyAssociationsApi } = useApiProperties();
 
   const getPropertyAssociationsWrapper = useApiRequestWrapper<
-    (id: number) => Promise<AxiosResponse<Api_PropertyAssociations>>
+    (id: number) => Promise<AxiosResponse<ApiGen_Concepts_PropertyAssociations>>
   >({
     requestFunction: useCallback(
       async (id: number) => await getPropertyAssociationsApi(id),

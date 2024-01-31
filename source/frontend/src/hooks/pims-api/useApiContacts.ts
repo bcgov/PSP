@@ -5,8 +5,8 @@ import { IContactFilter } from '@/components/contact/ContactManagerView/IContact
 import { IContactSearchResult, IPagedItems } from '@/interfaces';
 import { IEditableOrganization, IEditablePerson } from '@/interfaces/editable-contact';
 import { IContact } from '@/interfaces/IContact';
-import { Api_Organization } from '@/models/api/Organization';
-import { Api_Person } from '@/models/api/Person';
+import { ApiGen_Concepts_Organization } from '@/models/api/generated/ApiGen_Concepts_Organization';
+import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_Person';
 
 import { IPaginateRequest } from './interfaces/IPaginateRequest';
 import useAxiosApi from './useApi';
@@ -28,14 +28,14 @@ export const useApiContacts = () => {
       getContact: (id: string) => api.get<IContact>(`/contacts/${id}`),
       // This is different than getContact above. This endpoints returns person data that can be edited in a form
       getPerson: (id: number) => api.get<IEditablePerson>(`/persons/${id}`),
-      getPersonConcept: (id: number) => api.get<Api_Person>(`/persons/concept/${id}`),
+      getPersonConcept: (id: number) => api.get<ApiGen_Concepts_Person>(`/persons/concept/${id}`),
       postPerson: (person: IEditablePerson, userOverride: boolean) =>
         api.post<IEditablePerson>(`/persons?userOverride=${userOverride}`, person),
       putPerson: (person: IEditablePerson) =>
         api.put<IEditablePerson>(`/persons/${person.id}`, person),
       getOrganization: (id: number) => api.get<IEditableOrganization>(`/organizations/${id}`),
       getOrganizationConcept: (id: number) =>
-        api.get<Api_Organization>(`/organizations/concept/${id}`),
+        api.get<ApiGen_Concepts_Organization>(`/organizations/concept/${id}`),
       postOrganization: (organization: IEditableOrganization, userOverride: boolean) =>
         api.post<IEditableOrganization>(
           `/organizations?userOverride=${userOverride}`,

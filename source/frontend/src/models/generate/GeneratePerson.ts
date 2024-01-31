@@ -1,10 +1,11 @@
 import { ContactMethodTypes } from '@/constants/contactMethodType';
 import { getApiPersonOrOrgMailingAddress } from '@/features/contacts/contactUtils';
-import { Api_Person } from '@/models/api/Person';
 import { phoneFormatter } from '@/utils/formUtils';
 import { formatNames } from '@/utils/personUtils';
 
+import { ApiGen_Concepts_Person } from '../api/generated/ApiGen_Concepts_Person';
 import { Api_GenerateAddress } from './GenerateAddress';
+
 export class Api_GeneratePerson {
   given_name: string;
   middle_names: string;
@@ -15,7 +16,7 @@ export class Api_GeneratePerson {
   address: Api_GenerateAddress | null;
   phone: string;
 
-  constructor(person: Api_Person | null | undefined) {
+  constructor(person: ApiGen_Concepts_Person | null | undefined) {
     this.given_name = person?.firstName ?? '';
     this.middle_names = person?.middleNames ?? '';
     this.last_name = person?.surname ?? '';

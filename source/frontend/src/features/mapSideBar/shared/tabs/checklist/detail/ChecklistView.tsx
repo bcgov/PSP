@@ -11,18 +11,14 @@ import { UserNameTooltip } from '@/components/common/UserNameTooltip';
 import { Claims } from '@/constants/index';
 import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
 import { useLookupCodeHelpers } from '@/hooks/useLookupCodeHelpers';
-import {
-  Api_FileWithChecklist,
-  isDefaultState,
-  lastModifiedBy,
-  sortByDisplayOrder,
-} from '@/models/api/File';
+import { ApiGen_Concepts_FileWithChecklist } from '@/models/api/generated/ApiGen_Concepts_FileWithChecklist';
 import { prettyFormatUTCDate } from '@/utils';
+import { isDefaultState, lastModifiedBy, sortByDisplayOrder } from '@/utils/fileUtils';
 
 import { StyledChecklistItemStatus, StyledSectionCentered } from './styles';
 
 export interface IChecklistViewProps {
-  apiFile?: Api_FileWithChecklist;
+  apiFile?: ApiGen_Concepts_FileWithChecklist;
   onEdit: () => void;
   prefix?: string;
   sectionTypeName: string;
@@ -117,7 +113,7 @@ export const ChecklistView: React.FC<IChecklistViewProps> = ({
   );
 };
 
-function mapStatusToColor(status?: string): string | undefined {
+function mapStatusToColor(status: string | null | undefined): string | undefined {
   switch (status) {
     case 'COMPLT':
       return '#2E8540';
@@ -128,7 +124,7 @@ function mapStatusToColor(status?: string): string | undefined {
   }
 }
 
-const StatusIcon: React.FC<{ status?: string }> = ({ status }) => {
+const StatusIcon: React.FC<{ status: string | null | undefined }> = ({ status }) => {
   const color = mapStatusToColor(status);
   switch (status) {
     case 'INCOMP':

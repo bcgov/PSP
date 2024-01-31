@@ -1,9 +1,9 @@
-import { Api_AcquisitionFileTeam } from '@/models/api/AcquisitionFile';
+import { ApiGen_Concepts_AcquisitionFileTeam } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileTeam';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
 type IdSelector = 'O' | 'P';
 
-export interface Api_AcquisitionFilter {
+export interface ApiGen_Concepts_AcquisitionFilter {
   acquisitionFileStatusTypeCode: string;
   acquisitionFileNameOrNumber: string;
   acquisitionTeamMemberPersonId: string;
@@ -25,7 +25,7 @@ export class AcquisitionFilterModel {
   pid: string = '';
   address: string = '';
 
-  toApi(): Api_AcquisitionFilter {
+  toApi(): ApiGen_Concepts_AcquisitionFilter {
     return {
       acquisitionFileStatusTypeCode: this.acquisitionFileStatusTypeCode,
       acquisitionFileNameOrNumber: this.acquisitionFileNameOrNumber,
@@ -43,8 +43,8 @@ export class AcquisitionFilterModel {
   }
 
   static fromApi(
-    model: Api_AcquisitionFilter,
-    teamMembers: Api_AcquisitionFileTeam[],
+    model: ApiGen_Concepts_AcquisitionFilter,
+    teamMembers: ApiGen_Concepts_AcquisitionFileTeam[],
   ): AcquisitionFilterModel {
     const newModel = new AcquisitionFilterModel();
     newModel.acquisitionFileStatusTypeCode = model.acquisitionFileStatusTypeCode;

@@ -13,17 +13,17 @@ import { useInterestHolderRepository } from '@/hooks/repositories/useInterestHol
 import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
 import { getMockApiDefaultCompensation } from '@/mocks/compensations.mock';
 import { emptyApiInterestHolder } from '@/mocks/interestHolder.mock';
-import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
-import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
 import { ApiGen_CodeTypes_ExternalResponseStatus } from '@/models/api/generated/ApiGen_CodeTypes_ExternalResponseStatus';
-import { Api_InterestHolder } from '@/models/api/InterestHolder';
+import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
+import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
+import { ApiGen_Concepts_InterestHolder } from '@/models/api/generated/ApiGen_Concepts_InterestHolder';
 
 import { useGenerateH120 } from './useGenerateH120';
 
 const generateFn = jest
   .fn()
   .mockResolvedValue({ status: ApiGen_CodeTypes_ExternalResponseStatus.Success, payload: {} });
-const getAcquisitionFileFn = jest.fn<Promise<Api_AcquisitionFile | undefined>, any[]>();
+const getAcquisitionFileFn = jest.fn<Promise<ApiGen_Concepts_AcquisitionFile | undefined>, any[]>();
 const getAcquisitionPropertiesFn = jest.fn();
 const getAcquisitionCompReqH120s = jest.fn();
 const getH120sCategoryFn = jest.fn();
@@ -76,7 +76,10 @@ const getWrapper =
   ({ children }: any) =>
     <Provider store={store}>{children}</Provider>;
 
-const setup = (params?: { storeValues?: any; acquisitionResponse?: Api_AcquisitionFile }) => {
+const setup = (params?: {
+  storeValues?: any;
+  acquisitionResponse?: ApiGen_Concepts_AcquisitionFile;
+}) => {
   var acquisitionResponse = mockAcquisitionFileResponse();
   if (params?.acquisitionResponse !== undefined) {
     acquisitionResponse = params.acquisitionResponse;
@@ -106,7 +109,7 @@ describe('useGenerateH120 functions', () => {
   });
 
   it('makes request to get person concept for compensation payee', async () => {
-    const apiCompensation: Api_CompensationRequisition = {
+    const apiCompensation: ApiGen_Concepts_CompensationRequisition = {
       ...getMockApiDefaultCompensation(),
       acquisitionFileTeam: {
         id: 101,
@@ -114,6 +117,12 @@ describe('useGenerateH120 functions', () => {
         personId: 8,
         teamProfileTypeCode: 'MOTILAWYER',
         rowVersion: 1,
+        organization: null,
+        person: null,
+        primaryContact: null,
+        primaryContactId: null,
+        teamProfileType: null,
+        organizationId: null,
       },
     };
     const generate = setup();
@@ -122,7 +131,7 @@ describe('useGenerateH120 functions', () => {
   });
 
   it('makes request to get organization concept for compensation payee', async () => {
-    const apiCompensation: Api_CompensationRequisition = {
+    const apiCompensation: ApiGen_Concepts_CompensationRequisition = {
       ...getMockApiDefaultCompensation(),
       acquisitionFileTeam: {
         id: 101,
@@ -130,6 +139,12 @@ describe('useGenerateH120 functions', () => {
         organizationId: 8,
         teamProfileTypeCode: 'MOTILAWYER',
         rowVersion: 1,
+        organization: null,
+        person: null,
+        personId: null,
+        primaryContact: null,
+        primaryContactId: null,
+        teamProfileType: null,
       },
     };
     const generate = setup();
@@ -138,11 +153,11 @@ describe('useGenerateH120 functions', () => {
   });
 
   it('searches interest holder array for compensation payee ', async () => {
-    const apiCompensationWithInterestHolder: Api_CompensationRequisition = {
+    const apiCompensationWithInterestHolder: ApiGen_Concepts_CompensationRequisition = {
       ...getMockApiDefaultCompensation(),
       interestHolderId: 14,
     };
-    const apiInterestHolder: Api_InterestHolder = {
+    const apiInterestHolder: ApiGen_Concepts_InterestHolder = {
       ...emptyApiInterestHolder,
       interestHolderId: 14,
       acquisitionFileId: 2,
@@ -156,6 +171,9 @@ describe('useGenerateH120 functions', () => {
         personAddresses: [],
         contactMethods: [],
         rowVersion: 1,
+        comment: null,
+        middleNames: null,
+        preferredName: null,
       },
       rowVersion: 1,
     };

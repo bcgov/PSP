@@ -1,5 +1,6 @@
-import { Api_InterestHolder } from '@/models/api/InterestHolder';
-export const getMockApiInterestHolders = (): Api_InterestHolder[] => [
+import { ApiGen_Concepts_InterestHolder } from '@/models/api/generated/ApiGen_Concepts_InterestHolder';
+
+export const getMockApiInterestHolders = (): ApiGen_Concepts_InterestHolder[] => [
   {
     interestHolderId: 14,
     acquisitionFileId: 1,
@@ -13,11 +14,14 @@ export const getMockApiInterestHolders = (): Api_InterestHolder[] => [
       personAddresses: [],
       contactMethods: [],
       rowVersion: 1,
+      comment: null,
+      middleNames: null,
+      preferredName: null,
     },
     organizationId: null,
     organization: null,
     isDisabled: false,
-    interestHolderType: { id: 'INTHLDR' },
+    interestHolderType: { id: 'INTHLDR', description: null, displayOrder: null, isDisabled: false },
     interestHolderProperties: [
       {
         interestHolderId: 14,
@@ -29,6 +33,7 @@ export const getMockApiInterestHolders = (): Api_InterestHolder[] => [
             id: 'AC',
             description: 'Agriculture Credit Act',
             isDisabled: false,
+            displayOrder: null,
           },
         ],
         appCreateTimestamp: '2023-06-01T20:41:47.8',
@@ -49,6 +54,7 @@ export const getMockApiInterestHolders = (): Api_InterestHolder[] => [
             id: 'AC',
             description: 'Agriculture Credit Act',
             isDisabled: false,
+            displayOrder: null,
           },
         ],
         appCreateTimestamp: '2023-06-01T20:41:47.8',
@@ -73,7 +79,7 @@ export const getMockApiInterestHolders = (): Api_InterestHolder[] => [
   },
   {
     interestHolderId: 51,
-    interestHolderType: { id: 'INTHLDR' },
+    interestHolderType: { id: 'INTHLDR', description: null, displayOrder: null, isDisabled: false },
     acquisitionFileId: 1,
     personId: 9,
     person: {
@@ -85,6 +91,9 @@ export const getMockApiInterestHolders = (): Api_InterestHolder[] => [
       personAddresses: [],
       contactMethods: [],
       rowVersion: 1,
+      comment: null,
+      middleNames: null,
+      preferredName: null,
     },
     organizationId: null,
     organization: null,
@@ -100,6 +109,7 @@ export const getMockApiInterestHolders = (): Api_InterestHolder[] => [
             id: 'AC',
             description: 'Agriculture Credit Act',
             isDisabled: false,
+            displayOrder: null,
           },
         ],
         appCreateTimestamp: '2023-06-01T20:41:47.797',
@@ -120,6 +130,7 @@ export const getMockApiInterestHolders = (): Api_InterestHolder[] => [
             id: 'AC',
             description: 'Agriculture Credit Act',
             isDisabled: false,
+            displayOrder: null,
           },
         ],
         appCreateTimestamp: '2023-06-01T20:41:47.8',

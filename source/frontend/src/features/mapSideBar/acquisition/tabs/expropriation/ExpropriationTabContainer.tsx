@@ -3,13 +3,14 @@ import { useCallback, useContext, useEffect, useState } from 'react';
 import { SideBarContext } from '@/features/mapSideBar/context/sidebarContext';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { useForm8Repository } from '@/hooks/repositories/useForm8Repository';
-import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
-import { Api_ExpropriationPayment } from '@/models/api/ExpropriationPayment';
+import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
+import { ApiGen_Concepts_ExpropriationPayment } from '@/models/api/generated/ApiGen_Concepts_ExpropriationPayment';
+import { isValidId } from '@/utils/utils';
 
 import { IExpropriationTabContainerViewProps } from './ExpropriationTabContainerView';
 
 export interface IExpropriationTabContainerProps {
-  acquisitionFile: Api_AcquisitionFile;
+  acquisitionFile: ApiGen_Concepts_AcquisitionFile;
   View: React.FunctionComponent<IExpropriationTabContainerViewProps>;
 }
 
@@ -17,7 +18,7 @@ export const ExpropriationTabContainer: React.FunctionComponent<
   React.PropsWithChildren<IExpropriationTabContainerProps>
 > = ({ View, acquisitionFile }) => {
   const { fileLoading, setStaleLastUpdatedBy } = useContext(SideBarContext);
-  const [form8s, setForm8s] = useState<Api_ExpropriationPayment[]>([]);
+  const [form8s, setForm8s] = useState<ApiGen_Concepts_ExpropriationPayment[]>([]);
 
   const {
     getAcquisitionFileForm8s: { execute: getAcquisitionFileForm8s, loading: loadingForm8s },
@@ -49,11 +50,11 @@ export const ExpropriationTabContainer: React.FunctionComponent<
     }
   };
 
-  if (!!acquisitionFile && acquisitionFile?.id === undefined && fileLoading === false) {
+  if (!isValidId(acquisitionFile?.id) && fileLoading === false) {
     throw new Error('Unable to determine id of current file.');
   }
 
-  return !!acquisitionFile?.id ? (
+  return isValidId(acquisitionFile?.id) ? (
     <View
       loading={fileLoading || loadingForm8s || deletingForm8}
       acquisitionFile={acquisitionFile}

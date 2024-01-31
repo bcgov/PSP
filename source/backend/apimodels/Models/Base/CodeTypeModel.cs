@@ -5,6 +5,7 @@ namespace Pims.Api.Models.Base
     /// </summary>
     /// <typeparam name="T">The actual type of this TypeModel.</typeparam>
     public class CodeTypeModel<T>
+        where T : notnull
     {
         /// <summary>
         /// get/set - Primary key to identify type.

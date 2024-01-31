@@ -21,6 +21,7 @@ import {
   defaultCreateOrganization,
   IEditableOrganizationForm,
 } from '@/interfaces/editable-contact';
+import { isValidId } from '@/utils';
 
 import OrganizationSubForm from '../../Organization/OrganizationSubForm';
 import { onValidateOrganization } from '../../utils/contactUtils';
@@ -54,7 +55,7 @@ export const CreateOrganizationForm: React.FunctionComponent<unknown> = () => {
         allowDuplicate,
       );
 
-      if (!!organizationResponse?.id) {
+      if (isValidId(organizationResponse?.id)) {
         history.push(`/contact/O${organizationResponse?.id}`);
       }
     } finally {

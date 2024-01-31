@@ -1,7 +1,11 @@
 import { AddressTypes } from '@/constants';
 import { ContactMethodTypes } from '@/constants/contactMethodType';
 import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
+import { getEmptyAddress } from '@/mocks/address.mock';
+import { getMockPerson } from '@/mocks/contacts.mock';
 import { emptyApiInterestHolder, emptyInterestHolderProperty } from '@/mocks/interestHolder.mock';
+import { getEmptyOrganization } from '@/mocks/organization.mock';
+import { toTypeCodeNullable } from '@/utils/formUtils';
 
 import { Api_GenerateAcquisitionFile } from './GenerateAcquisitionFile';
 
@@ -67,11 +71,25 @@ describe('GenerateFile tests', () => {
           ...emptyApiInterestHolder,
           interestHolderId: 1,
           acquisitionFileId: acqFile.id ?? null,
-          person: { firstName: 'first', middleNames: 'middle', surname: 'last' },
+          person: {
+            firstName: 'first',
+            middleNames: 'middle',
+            surname: 'last',
+            comment: null,
+            contactMethods: null,
+            id: 1,
+            isDisabled: false,
+            personAddresses: null,
+            personOrganizations: null,
+            preferredName: null,
+            rowVersion: null,
+          },
           interestHolderProperties: [
             {
               ...emptyInterestHolderProperty,
-              propertyInterestTypes: [{ description: 'interest' }],
+              propertyInterestTypes: [
+                { description: 'interest', displayOrder: null, id: 'test', isDisabled: false },
+              ],
               interestHolderId: 1,
               acquisitionFilePropertyId: 1,
             },
@@ -91,11 +109,25 @@ describe('GenerateFile tests', () => {
           ...emptyApiInterestHolder,
           interestHolderId: 1,
           acquisitionFileId: acqFile.id ?? null,
-          person: { firstName: 'first', middleNames: 'middle', surname: 'last' },
+          person: {
+            firstName: 'first',
+            middleNames: 'middle',
+            surname: 'last',
+            comment: null,
+            contactMethods: null,
+            id: 1,
+            isDisabled: false,
+            personAddresses: null,
+            personOrganizations: null,
+            preferredName: null,
+            rowVersion: null,
+          },
           interestHolderProperties: [
             {
               ...emptyInterestHolderProperty,
-              propertyInterestTypes: [{ description: 'interest' }],
+              propertyInterestTypes: [
+                { description: 'interest', displayOrder: null, id: 'test', isDisabled: false },
+              ],
               interestHolderId: 1,
               acquisitionFilePropertyId: 1,
             },
@@ -105,11 +137,25 @@ describe('GenerateFile tests', () => {
           ...emptyApiInterestHolder,
           interestHolderId: 2,
           acquisitionFileId: acqFile.id ?? null,
-          person: { firstName: 'another', middleNames: 'middle', surname: 'person' },
+          person: {
+            firstName: 'another',
+            middleNames: 'middle',
+            surname: 'person',
+            comment: null,
+            contactMethods: null,
+            id: 1,
+            isDisabled: false,
+            personAddresses: null,
+            personOrganizations: null,
+            preferredName: null,
+            rowVersion: null,
+          },
           interestHolderProperties: [
             {
               ...emptyInterestHolderProperty,
-              propertyInterestTypes: [{ description: 'interest 2' }],
+              propertyInterestTypes: [
+                { description: 'interest 2', displayOrder: null, id: 'test', isDisabled: false },
+              ],
               interestHolderId: 2,
               acquisitionFilePropertyId: 1,
             },
@@ -131,17 +177,33 @@ describe('GenerateFile tests', () => {
           ...emptyApiInterestHolder,
           interestHolderId: 1,
           acquisitionFileId: acqFile.id ?? null,
-          person: { firstName: 'first', middleNames: 'middle', surname: 'last' },
+          person: {
+            firstName: 'first',
+            middleNames: 'middle',
+            surname: 'last',
+            comment: null,
+            contactMethods: null,
+            id: 1,
+            isDisabled: false,
+            personAddresses: null,
+            personOrganizations: null,
+            preferredName: null,
+            rowVersion: null,
+          },
           interestHolderProperties: [
             {
               ...emptyInterestHolderProperty,
-              propertyInterestTypes: [{ description: 'interest' }],
+              propertyInterestTypes: [
+                { description: 'interest', displayOrder: null, id: 'test', isDisabled: false },
+              ],
               interestHolderId: 1,
               acquisitionFilePropertyId: 1,
             },
             {
               ...emptyInterestHolderProperty,
-              propertyInterestTypes: [{ description: 'interest 2' }],
+              propertyInterestTypes: [
+                { description: 'interest 2', displayOrder: null, id: 'test2', isDisabled: false },
+              ],
               interestHolderId: 1,
               acquisitionFilePropertyId: 1,
             },
@@ -163,11 +225,25 @@ describe('GenerateFile tests', () => {
           ...emptyApiInterestHolder,
           interestHolderId: 1,
           acquisitionFileId: acqFile.id ?? null,
-          person: { firstName: 'first', middleNames: 'middle', surname: 'last' },
+          person: {
+            firstName: 'first',
+            middleNames: 'middle',
+            surname: 'last',
+            comment: null,
+            contactMethods: null,
+            id: 1,
+            isDisabled: false,
+            personAddresses: null,
+            personOrganizations: null,
+            preferredName: null,
+            rowVersion: null,
+          },
           interestHolderProperties: [
             {
               ...emptyInterestHolderProperty,
-              propertyInterestTypes: [{ description: 'interest', id: 'NIP' }],
+              propertyInterestTypes: [
+                { description: 'interest', id: 'NIP', displayOrder: null, isDisabled: false },
+              ],
               interestHolderId: 1,
               acquisitionFilePropertyId: 1,
             },
@@ -183,27 +259,61 @@ describe('GenerateFile tests', () => {
     const file = new Api_GenerateAcquisitionFile({
       file: acqFile,
       negotiatingAgent: {
+        id: 0,
+        organizationId: null,
+        person: null,
+        personId: null,
+        primaryContactId: null,
+        rowVersion: null,
+        teamProfileType: null,
+        teamProfileTypeCode: null,
         acquisitionFileId: acqFile.id ?? 0,
         organization: {
+          ...getEmptyOrganization(),
           name: 'testOrg',
           organizationAddresses: [
             {
-              address: { streetAddress1: 'orgaddress' },
-              addressUsageType: { id: AddressTypes.Mailing },
+              id: 1,
+              organizationId: 1,
+              rowVersion: null,
+              address: { ...getEmptyAddress(), streetAddress1: 'orgaddress' },
+              addressUsageType: toTypeCodeNullable(AddressTypes.Mailing),
             },
           ],
         },
         primaryContact: {
           contactMethods: [
-            { contactMethodType: { id: ContactMethodTypes.WorkEmail }, value: 'primaryworkemail' },
-            { contactMethodType: { id: ContactMethodTypes.WorkPhone }, value: 'primaryworkphone' },
+            {
+              contactMethodType: toTypeCodeNullable(ContactMethodTypes.WorkEmail),
+              value: 'primaryworkemail',
+              id: 1,
+              rowVersion: null,
+            },
+            {
+              contactMethodType: toTypeCodeNullable(ContactMethodTypes.WorkPhone),
+              value: 'primaryworkphone',
+              id: 2,
+              rowVersion: null,
+            },
           ],
           personAddresses: [
             {
-              address: { streetAddress1: 'primaryaddress' },
-              addressUsageType: { id: AddressTypes.Mailing },
+              address: { ...getEmptyAddress(), streetAddress1: 'primaryaddress' },
+              addressUsageType: toTypeCodeNullable(AddressTypes.Mailing),
+              id: 1,
+              personId: 1,
+              rowVersion: null,
             },
           ],
+          comment: null,
+          firstName: null,
+          middleNames: null,
+          surname: null,
+          personOrganizations: [],
+          preferredName: null,
+          id: 1,
+          isDisabled: false,
+          rowVersion: null,
         },
       },
     });
@@ -218,13 +328,26 @@ describe('GenerateFile tests', () => {
     const file = new Api_GenerateAcquisitionFile({
       file: acqFile,
       negotiatingAgent: {
+        id: 1,
+        organizationId: null,
+        person: null,
+        personId: null,
+        primaryContact: null,
+        primaryContactId: null,
+        rowVersion: null,
+        teamProfileType: null,
+        teamProfileTypeCode: null,
         acquisitionFileId: acqFile.id ?? 0,
         organization: {
+          ...getEmptyOrganization(),
           name: 'testOrg',
           organizationAddresses: [
             {
-              address: { streetAddress1: 'orgaddress' },
-              addressUsageType: { id: AddressTypes.Mailing },
+              address: { ...getEmptyAddress(), streetAddress1: 'orgaddress' },
+              addressUsageType: toTypeCodeNullable(AddressTypes.Mailing),
+              id: 1,
+              organizationId: 1,
+              rowVersion: null,
             },
           ],
         },
@@ -241,20 +364,43 @@ describe('GenerateFile tests', () => {
     const file = new Api_GenerateAcquisitionFile({
       file: acqFile,
       coordinatorContact: {
+        id: 0,
+        organizationId: null,
+        person: null,
+        personId: null,
+        primaryContactId: null,
+        rowVersion: null,
+        teamProfileType: null,
+        teamProfileTypeCode: null,
         acquisitionFileId: acqFile.id ?? 0,
         organization: {
+          ...getEmptyOrganization(),
           name: 'testOrg',
           organizationAddresses: [
             {
-              address: { streetAddress1: 'orgaddress' },
-              addressUsageType: { id: AddressTypes.Mailing },
+              id: 0,
+              organizationId: 1,
+              rowVersion: null,
+              address: { ...getEmptyAddress(), streetAddress1: 'orgaddress' },
+              addressUsageType: toTypeCodeNullable(AddressTypes.Mailing),
             },
           ],
         },
         primaryContact: {
+          ...getMockPerson({ firstName: '', id: 0, surname: '' }),
           contactMethods: [
-            { contactMethodType: { id: ContactMethodTypes.WorkEmail }, value: 'workemail' },
-            { contactMethodType: { id: ContactMethodTypes.WorkPhone }, value: 'workphone' },
+            {
+              contactMethodType: toTypeCodeNullable(ContactMethodTypes.WorkEmail),
+              value: 'workemail',
+              id: 1,
+              rowVersion: null,
+            },
+            {
+              contactMethodType: toTypeCodeNullable(ContactMethodTypes.WorkPhone),
+              value: 'workphone',
+              id: 2,
+              rowVersion: null,
+            },
           ],
         },
       },
@@ -270,13 +416,26 @@ describe('GenerateFile tests', () => {
     const file = new Api_GenerateAcquisitionFile({
       file: acqFile,
       coordinatorContact: {
+        id: 0,
+        organizationId: null,
+        person: null,
+        personId: null,
+        primaryContact: null,
+        primaryContactId: null,
+        rowVersion: null,
+        teamProfileType: null,
+        teamProfileTypeCode: null,
         acquisitionFileId: acqFile.id ?? 0,
         organization: {
+          ...getEmptyOrganization(),
           name: 'testOrg',
           organizationAddresses: [
             {
-              address: { streetAddress1: 'orgaddress' },
-              addressUsageType: { id: AddressTypes.Mailing },
+              address: { ...getEmptyAddress(), streetAddress1: 'orgaddress' },
+              addressUsageType: toTypeCodeNullable(AddressTypes.Mailing),
+              id: 1,
+              organizationId: 1,
+              rowVersion: null,
             },
           ],
         },
@@ -293,21 +452,44 @@ describe('GenerateFile tests', () => {
     const file = new Api_GenerateAcquisitionFile({
       file: acqFile,
       provincialSolicitor: {
+        id: 0,
+        organizationId: 1,
+        person: null,
+        personId: 1,
+        primaryContactId: null,
+        rowVersion: null,
+        teamProfileType: null,
+        teamProfileTypeCode: null,
         acquisitionFileId: acqFile.id ?? 0,
         organization: {
+          ...getEmptyOrganization(),
           name: 'testOrg',
           organizationAddresses: [
             {
-              address: { streetAddress1: 'orgaddress' },
-              addressUsageType: { id: AddressTypes.Mailing },
+              address: { ...getEmptyAddress(), streetAddress1: 'orgaddress' },
+              addressUsageType: toTypeCodeNullable(AddressTypes.Mailing),
+              id: 1,
+              organizationId: 1,
+              rowVersion: null,
             },
           ],
         },
         primaryContact: {
+          ...getMockPerson({ firstName: '', id: 0, surname: '' }),
           firstName: 'testfirst',
           contactMethods: [
-            { contactMethodType: { id: ContactMethodTypes.WorkEmail }, value: 'workemail' },
-            { contactMethodType: { id: ContactMethodTypes.WorkPhone }, value: 'workphone' },
+            {
+              contactMethodType: toTypeCodeNullable(ContactMethodTypes.WorkEmail),
+              value: 'workemail',
+              id: 1,
+              rowVersion: null,
+            },
+            {
+              contactMethodType: toTypeCodeNullable(ContactMethodTypes.WorkPhone),
+              value: 'workphone',
+              id: 1,
+              rowVersion: null,
+            },
           ],
         },
       },
@@ -324,13 +506,26 @@ describe('GenerateFile tests', () => {
     const file = new Api_GenerateAcquisitionFile({
       file: acqFile,
       provincialSolicitor: {
+        id: 1,
+        organizationId: null,
+        person: null,
+        personId: null,
+        primaryContact: null,
+        primaryContactId: null,
+        rowVersion: null,
+        teamProfileType: null,
+        teamProfileTypeCode: null,
         acquisitionFileId: acqFile.id ?? 0,
         organization: {
+          ...getEmptyOrganization(),
           name: 'testOrg',
           organizationAddresses: [
             {
-              address: { streetAddress1: 'orgaddress' },
-              addressUsageType: { id: AddressTypes.Mailing },
+              id: 0,
+              organizationId: 1,
+              rowVersion: null,
+              address: { ...getEmptyAddress(), streetAddress1: 'orgaddress' },
+              addressUsageType: toTypeCodeNullable(AddressTypes.Mailing),
             },
           ],
         },

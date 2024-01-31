@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import { useDispositionProvider } from '@/hooks/repositories/useDispositionProvider';
 import { useModalContext } from '@/hooks/useModalContext';
 import { IApiError } from '@/interfaces/IApiError';
-import { Api_DispositionFileOffer } from '@/models/api/DispositionFile';
+import { ApiGen_Concepts_DispositionFileOffer } from '@/models/api/generated/ApiGen_Concepts_DispositionFileOffer';
 
 import { IDispositionOfferFormProps } from '../form/DispositionOfferForm';
 import { DispositionOfferFormModel } from '../models/DispositionOfferFormModel';
@@ -31,7 +31,7 @@ const AddDispositionOfferContainer: React.FunctionComponent<
   } = useDispositionProvider();
   const initialValues = new DispositionOfferFormModel(null, dispositionFileId);
 
-  const handleSave = async (newOffer: Api_DispositionFileOffer) => {
+  const handleSave = async (newOffer: ApiGen_Concepts_DispositionFileOffer) => {
     setOfferStatusError(false);
     return postDispositionOffer(dispositionFileId, newOffer);
   };

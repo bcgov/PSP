@@ -16,8 +16,12 @@ namespace PIMS.Tests.Automation.PageObjects
         private By searchAcquisitionFileSearchBySelect = By.Id("input-searchBy");
         private By searchAcquisitionFileSearchByAddressInput = By.Id("input-address");
         private By searchAcquisitionFileSearchByPIDInput = By.Id("input-pid");
-        private By searchAcquisitionFileStatusSelect = By.Id("input-acquisitionFileStatusTypeCode");
+        private By searchAcquisitionFileSearchByPINInput = By.Id("input-pin");
         private By searchAcquisitionFileNameInput = By.Id("input-acquisitionFileNameOrNumber");
+        private By searchAcquisitionFileTeamMemberSelect = By.Id("multiselect-acquisitionTeamMembers");
+        private By searchAcquisitionFileTeamMemberOptions = By.CssSelector("div[id='multiselect-acquisitionTeamMembers'] ul[class='optionContainer']");
+        private By searchAcquisitionFileTeamMember1stOption = By.CssSelector("div[id='multiselect-acquisitionTeamMembers'] ul[class='optionContainer'] li:nth-child(1)");
+        private By searchAcquisitionFileStatusSelect = By.Id("input-acquisitionFileStatusTypeCode");
         private By searchAcquisitionFileProjectInput = By.Id("input-projectNameOrNumber");
         private By searchAcquisitionFileSearchButton = By.Id("search-button");
         private By searchAcquisitionFileResetButton = By.Id("reset-button");
@@ -41,8 +45,6 @@ namespace PIMS.Tests.Automation.PageObjects
         private By searchAcquisitionPaginationList = By.CssSelector("ul[class='pagination']");
 
         //Acquisition File Sort and 1st Result Elements
-        private By searchAcquisitionFileSortByAFileBttn = By.CssSelector("div[data-testid='sort-column-fileNumber']");
-
         private By searchAcquisitionFile1stResult = By.CssSelector("div[data-testid='acquisitionFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1)");
         private By searchAcquisitionFile1stResultLink = By.CssSelector("div[data-testid='acquisitionFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td clickable'] a");
         private By searchAcquisitionFile1stResultHistoricalFile = By.CssSelector("div[data-testid='acquisitionFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td clickable']:nth-child(2)");
@@ -90,11 +92,11 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(searchAcquisitionFileNameInput).SendKeys("Automated");
             webDriver.FindElement(searchAcquisitionFileSearchButton).Click();
 
-            WaitUntilClickable(searchAcquisitionFileSortByAFileBttn);
-            webDriver.FindElement(searchAcquisitionFileSortByAFileBttn).Click();
+            WaitUntilClickable(searchAcquisitionOrderFileNumberBttn);
+            webDriver.FindElement(searchAcquisitionOrderFileNumberBttn).Click();
 
             Wait();
-            webDriver.FindElement(searchAcquisitionFileSortByAFileBttn).Click();
+            webDriver.FindElement(searchAcquisitionOrderFileNumberBttn).Click();
         }
 
         public void OrderByAcquisitionFileNumber()
@@ -124,16 +126,44 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(webDriver.FindElement(searchAcquisitionFileHeaderCode).Displayed);
         }
 
-        public void FilterAcquisitionFiles(string pid, string name, string status)
+        public void FilterAcquisitionFiles(string pid = "", string pin = "", string address = "", string name = "", string teamMember = "", string status = "", string project = "")
         {
             Wait(10000);
             webDriver.FindElement(searchAcquisitionFileResetButton).Click();
 
             Wait();
-            ChooseSpecificSelectOption(searchAcquisitionFileSearchBySelect, "PID");
-            webDriver.FindElement(searchAcquisitionFileSearchByPIDInput).SendKeys(pid);
-            ChooseSpecificSelectOption(searchAcquisitionFileStatusSelect, status);
-            webDriver.FindElement(searchAcquisitionFileNameInput).SendKeys(name);
+            if (pid != "")
+            {
+                ChooseSpecificSelectOption(searchAcquisitionFileSearchBySelect, "PID");
+                webDriver.FindElement(searchAcquisitionFileSearchByPIDInput).SendKeys(pid);
+            }
+
+            if (pin != "")
+            {
+                ChooseSpecificSelectOption(searchAcquisitionFileSearchBySelect, "PIN");
+                webDriver.FindElement(searchAcquisitionFileSearchByPINInput).SendKeys(pin);
+            }
+
+            if (address != "")
+            {
+                ChooseSpecificSelectOption(searchAcquisitionFileSearchBySelect, "Address");
+                webDriver.FindElement(searchAcquisitionFileSearchByAddressInput).SendKeys(address);
+            }
+            if (name != "")
+                webDriver.FindElement(searchAcquisitionFileNameInput).SendKeys(name);
+
+            if (teamMember != "")
+            {
+                webDriver.FindElement(searchAcquisitionFileTeamMemberSelect).SendKeys(teamMember);
+                WaitUntilVisible(searchAcquisitionFileTeamMemberOptions);
+                webDriver.FindElement(searchAcquisitionFileTeamMember1stOption).Click();
+            }
+
+            if(status != "")
+                ChooseSpecificSelectOption(searchAcquisitionFileStatusSelect, status);
+
+            if (project != "")
+                webDriver.FindElement(searchAcquisitionFileProjectInput).SendKeys(project);
 
             webDriver.FindElement(searchAcquisitionFileSearchButton).Click();
         }
@@ -206,11 +236,19 @@ namespace PIMS.Tests.Automation.PageObjects
         public void VerifyAcquisitionFileTableContent(AcquisitionFile acquisition)
         {
             AssertTrueIsDisplayed(searchAcquisitionFile1stResultLink);
-            AssertTrueContentEquals(searchAcquisitionFile1stResultHistoricalFile, acquisition.HistoricalFileNumber);
+
+            if(acquisition.HistoricalFileNumber != "")
+                AssertTrueContentEquals(searchAcquisitionFile1stResultHistoricalFile, acquisition.HistoricalFileNumber);
+
             AssertTrueContentEquals(searchAcquisitionFile1stResultName, acquisition.AcquisitionFileName);
             AssertTrueContentEquals(searchAcquisitionFile1stResultMOTIRegion, acquisition.AcquisitionMOTIRegion);
-            AssertTrueContentEquals(searchAcquisitionFile1stResultProject, acquisition.AcquisitionProjCode + " " + acquisition.AcquisitionProject);
-            Assert.True(webDriver.FindElements(searchAcquisitionFile1stResultAddress).Count().Equals(0));
+
+            if(acquisition.AcquisitionProjCode != "")
+                AssertTrueContentEquals(searchAcquisitionFile1stResultProject, acquisition.AcquisitionProjCode + " " + acquisition.AcquisitionProject);
+
+            if(acquisition.AcquisitionSearchPropertiesIndex != 0)
+                Assert.NotEqual(0, webDriver.FindElements(searchAcquisitionFile1stResultAddress).Count());
+
             AssertTrueContentEquals(searchAcquisitionFile1stResultStatus, acquisition.AcquisitionStatus);
         }
     }

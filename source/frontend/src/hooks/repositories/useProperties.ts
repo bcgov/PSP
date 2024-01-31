@@ -11,7 +11,8 @@ import { IPropertyFilter } from '@/features/properties/filter/IPropertyFilter';
 import { useGeoServer } from '@/hooks/layer-api/useGeoServer';
 import { useApiProperties } from '@/hooks/pims-api/useApiProperties';
 import { IPagedItems, IProperty } from '@/interfaces';
-import { Api_Property } from '@/models/api/Property';
+import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
+import { getEmptyProperty } from '@/models/defaultInitializers';
 import { logRequest, logSuccess } from '@/store/slices/network/networkSlice';
 
 import { useApiRequestWrapper } from '../util/useApiRequestWrapper';
@@ -42,7 +43,7 @@ export const useProperties = () => {
   });
 
   const { execute: getPropertyWrapped, loading: getPropertyLoading } = useApiRequestWrapper<
-    (id: number) => Promise<AxiosResponse<Api_Property>>
+    (id: number) => Promise<AxiosResponse<ApiGen_Concepts_Property>>
   >({
     requestFunction: useCallback(
       async (id: number) => await getPropertyConceptWithIdApi(id),
@@ -54,7 +55,7 @@ export const useProperties = () => {
   });
 
   const getProperties = useApiRequestWrapper<
-    (propertyIds: number[]) => Promise<AxiosResponse<Api_Property[]>>
+    (propertyIds: number[]) => Promise<AxiosResponse<ApiGen_Concepts_Property[]>>
   >({
     requestFunction: useCallback(
       async (propertyIds: number[]) => await getPropertiesApi(propertyIds),
@@ -70,14 +71,15 @@ export const useProperties = () => {
    * @param params Id of the property
    */
   const fetchPropertyWithId = useCallback(
-    async (id: number): Promise<Api_Property> => {
+    async (id: number): Promise<ApiGen_Concepts_Property> => {
       // Due to spatial information being stored in BC Albers in the database, we need to make TWO requests here:
       //   1. to the REST API to fetch property field attributes (e.g. address, etc)
       //   2. to GeoServer to fetch latitude/longitude in expected web mercator projection (EPSG:4326)
       return Promise.all([getPropertyWrapped(id), getPropertyWfs(id)]).then(
         ([propertyResponse, wfsResponse]) => {
           const [longitude, latitude] = wfsResponse?.geometry?.coordinates || [];
-          const property: Api_Property = {
+          const property: ApiGen_Concepts_Property = {
+            ...getEmptyProperty(),
             ...propertyResponse,
             latitude,
             longitude,

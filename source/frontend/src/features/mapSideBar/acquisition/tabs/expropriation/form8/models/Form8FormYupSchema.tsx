@@ -1,4 +1,6 @@
 import * as yup from 'yup';
+
+import { exists } from '@/utils/utils';
 /* eslint-disable no-template-curly-in-string */
 
 declare module 'yup' {
@@ -26,9 +28,7 @@ export const Form8FormModelYupSchema = yup.object().shape({
     .of(
       yup.object().shape({
         paymentItemTypeCode: yup.string().required('Type is required'),
-        pretaxAmount: yup
-          .number()
-          .transform(value => (isNaN(value) || value === null || value === undefined ? 0 : value)),
+        pretaxAmount: yup.number().transform(value => (isNaN(value) || !exists(value) ? 0 : value)),
       }),
     )
     .unique(

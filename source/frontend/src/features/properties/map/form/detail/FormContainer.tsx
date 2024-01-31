@@ -4,6 +4,7 @@ import { useCallback, useContext, useEffect } from 'react';
 import { FileTypes } from '@/constants';
 import { SideBarContext } from '@/features/mapSideBar/context/sidebarContext';
 import { useFormDocumentRepository } from '@/hooks/repositories/useFormDocumentRepository';
+import { exists, isValidId } from '@/utils';
 
 import { IFormViewProps } from './FormView';
 
@@ -23,7 +24,7 @@ export const FormContainer: React.FunctionComponent<
   const { file, fileLoading } = useContext(SideBarContext);
 
   const fetchForm = useCallback(async () => {
-    if (!!formFileId) {
+    if (isValidId(formFileId)) {
       return await getForm(fileType, formFileId);
     }
   }, [formFileId, getForm, fileType]);
@@ -31,11 +32,11 @@ export const FormContainer: React.FunctionComponent<
     fetchForm();
   }, [fetchForm]);
 
-  if (!!file && file?.id === undefined && fileLoading === false) {
+  if (!exists(file) && fileLoading === false) {
     throw new Error('Unable to determine id of current file.');
   }
 
-  return !!file?.id ? (
+  return isValidId(file?.id) ? (
     <>
       <View loading={loading} formFile={response} onClose={onClose}></View>
     </>

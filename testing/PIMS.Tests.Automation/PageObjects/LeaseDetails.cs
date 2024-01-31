@@ -180,12 +180,12 @@ namespace PIMS.Tests.Automation.PageObjects
         private By licenseDetailsConfirmationModal = By.CssSelector("div[class='modal-content']");
         //private By licenseDetailsAcknowledgeContinueBttn = By.XPath("//button/div[contains(text(),'Acknowledge & Continue')]");
 
-        private SharedSearchProperties sharedSearchProperties;
+        private SharedFileProperties sharedSearchProperties;
         private SharedModals sharedModals;
 
         public LeaseDetails(IWebDriver webDriver) : base(webDriver)
         {
-            sharedSearchProperties = new SharedSearchProperties(webDriver);
+            sharedSearchProperties = new SharedFileProperties(webDriver);
             sharedModals = new SharedModals(webDriver);
         }
 
@@ -599,7 +599,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 Wait(5000);
                 if (webDriver.FindElements(licenseDetailsConfirmationModal).Count() > 0)
                 {
-                    Assert.True(sharedModals.ModalHeader().Equals("User Override Required"));
+                    Assert.Equal("User Override Required", sharedModals.ModalHeader());
                     Assert.Contains("The selected property already exists in the system's inventory. However, the record is missing spatial details.", sharedModals.ModalContent());
                     Assert.Contains("To add the property, the spatial details for this property will need to be updated. The system will attempt to update the property record with spatial information from the current selection.", sharedModals.ModalContent());
                     sharedModals.SecondaryModalClickOKBttn();
@@ -623,9 +623,9 @@ namespace PIMS.Tests.Automation.PageObjects
             {
                 if (webDriver.FindElements(licenseDetailsConfirmationModal).Count() > 0)
                 {
-                    Assert.True(sharedModals.ModalHeader().Equals("Confirm changes"));
-                    Assert.True(sharedModals.ConfirmationModalText1().Equals("If you choose to cancel now, your changes will not be saved."));
-                    Assert.True(sharedModals.ConfirmationModalText2().Equals("Do you want to proceed?"));
+                    Assert.Equal("Confirm changes", sharedModals.ModalHeader());
+                    Assert.Equal("If you choose to cancel now, your changes will not be saved.", sharedModals.ConfirmationModalText1());
+                    Assert.Equal("Do you want to proceed?", sharedModals.ConfirmationModalText2());
 
                     sharedModals.ModalClickOKBttn();
                 }
@@ -918,7 +918,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 IWebElement physicalDocumentation = webDriver.FindElement(licenseDetailsPhysicalLeaseExistSelector);
                 SelectElement selectedValue = new SelectElement(physicalDocumentation);
                 string selectedText = selectedValue.SelectedOption.Text;
-                Assert.True(selectedText.Equals(lease.PhysicalLeaseExist));
+                Assert.Equal(lease.PhysicalLeaseExist, selectedText);
             }
 
             AssertTrueIsDisplayed(licenseDetailsDigitalLeaseExistViewLabel);
@@ -928,7 +928,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 IWebElement digitalDocumentation = webDriver.FindElement(licenseDetailsDigitalLeaseExistSelector);
                 SelectElement selectedValue = new SelectElement(digitalDocumentation);
                 string selectedText = selectedValue.SelectedOption.Text;
-                Assert.True(selectedText.Equals(lease.DigitalLeaseExist));
+                Assert.Equal(lease.DigitalLeaseExist, selectedText);
             }
                 
             AssertTrueIsDisplayed(licenseDetailsLocationDocsLabel);
