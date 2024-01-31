@@ -5,6 +5,8 @@ env:
   OPENSHIFT_TOKEN: ${{ secrets.OPENSHIFT_TOKEN }}
   OPENSHIFT_TOOLS_NAMESPACE: "3cd915-tools"
   MS_TEAMS_WEBHOOK_BUILD_CHANNEL: ${{ secrets.MS_TEAMS_WEBHOOK_URI_BUILD_CHANNEL }}
+  sync-directory: ./tools/keycloak/sync
+  ASPNETCORE_ENVIRONMENT: "prod"
 
   APP_PORT: 8080
   DESTINATION: "prod"
@@ -70,3 +72,74 @@ jobs:
           [[ -z ${{github.event.inputs.OVERRIDE_VERSION}} ]] && RELEASE_VERSION=${{steps.previoustag.outputs.tag}}-master || RELEASE_VERSION=${{github.event.inputs.OVERRIDE_VERSION}}-master
           RELEASE_TAG=$RELEASE_VERSION ./openshift/4.0/player.sh deploy api $DESTINATION -apply
           RELEASE_TAG=$RELEASE_VERSION ./openshift/4.0/player.sh deploy app $DESTINATION -apply
+  
+  # the command:
+  # 1) creates an openshift job with generated name to avoid name conflict, substituting the variables in the template.
+  # 2) greps the generated name from the previous step.
+  # 3) waits for the job to complete using the generated name.
+  database-upgrade:
+    name: Upgrade database
+    needs: [deploy]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v3
+      - name: Login to OpenShift
+        uses: redhat-actions/oc-login@v1
+        with:
+          openshift_server_url: ${{ env.OPENSHIFT_SERVER }}
+          openshift_token: ${{ env.OPENSHIFT_TOKEN }}
+          insecure_skip_tls_verify: true
+          namespace: 3cd915-prod
+      - name: call scripts to upgrade database
+        shell: bash
+        run: |
+          oc process -f ./openshift/4.0/templates/jobs/db-deploy.yaml -p DB_SECRET_NAME=pims-database -p GIT_BRANCH=master -p SERVER_NAME=sqlprd.th.gov.bc.ca -p DB_NAME=PIMS_PRD -p NAMESPACE=3cd915-prod | oc create -f - | grep -oP "(?<=job\.batch/)[^\s]*" | (read JOB_NAME; oc wait --for=condition=complete job/$JOB_NAME --timeout=120s)
+
+  ## Call the mayan sync task three times, once for each mayan sync endpoint. The task will wait for the job to complete before exiting.
+  ## Note: this depends on the mayan-sync configmap for the target namespace being up to date.
+  mayan-sync:
+    name: sync mayan
+    needs: database-upgrade
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v3
+      - name: Login to OpenShift
+        uses: redhat-actions/oc-login@v1
+        with:
+          openshift_server_url: ${{ env.OPENSHIFT_SERVER }}
+          openshift_token: ${{ env.OPENSHIFT_TOKEN }}
+          insecure_skip_tls_verify: true
+          namespace: 3cd915-prod
+      - name: call scripts to sync mayan
+        shell: bash
+        run: |
+          oc process -f ./openshift/4.0/templates/jobs/mayan-sync.yaml -p NAMESPACE=3cd915-prod -p TOKEN_URL=https://loginproxy.gov.bc.ca:443/auth/realms/standard/protocol/openid-connect/token -p CLIENT_ID=property-services-project-api-4380 -p MAYAN_SYNC_URL=https://https://pims.th.gov.bc.ca/:443/api/documents/sync/mayan/metadatatype -p KEYCLOAK_SECRET_NAME=pims-api-sso | oc create -f - | grep -oP "(?<=\/)[^\s]*" | (read TASK_NAME; oc wait --for=condition=succeeded taskruns/$TASK_NAME --timeout=80s)
+          oc process -f ./openshift/4.0/templates/jobs/mayan-sync.yaml -p NAMESPACE=3cd915-prod -p TOKEN_URL=https://loginproxy.gov.bc.ca:443/auth/realms/standard/protocol/openid-connect/token -p CLIENT_ID=property-services-project-api-4380 -p MAYAN_SYNC_URL=https://https://pims.th.gov.bc.ca/:443/api/documents/sync/documenttype -p KEYCLOAK_SECRET_NAME=pims-api-sso | oc create -f - | grep -oP "(?<=\/)[^\s]*" | (read TASK_NAME; oc wait --for=condition=succeeded taskruns/$TASK_NAME --timeout=80s)
+          oc process -f ./openshift/4.0/templates/jobs/mayan-sync.yaml -p NAMESPACE=3cd915-prod -p TOKEN_URL=https://loginproxy.gov.bc.ca:443/auth/realms/standard/protocol/openid-connect/token -p CLIENT_ID=property-services-project-api-4380 -p MAYAN_SYNC_URL=https://https://pims.th.gov.bc.ca/:443/api/documents/sync/mayan -p KEYCLOAK_SECRET_NAME=pims-api-sso | oc create -f - | grep -oP "(?<=\/)[^\s]*" | (read TASK_NAME; oc wait --for=condition=succeeded taskruns/$TASK_NAME --timeout=80s)
+
+  sync-keycloak:
+    name: Sync Keycloak
+    needs: database-upgrade
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v3
+
+      - name: Setup .NET 8
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: "8.0.x"
+
+      - name: Install dependencies for keycloak sync
+        run: dotnet restore
+        working-directory: ${{env.sync-directory}}
+
+      - name: Build keycloak sync
+        run: dotnet build
+        working-directory: ${{env.sync-directory}}
+
+      - name: Start keycloak sync
+        run: dotnet run
+        working-directory: ${{env.sync-directory}}

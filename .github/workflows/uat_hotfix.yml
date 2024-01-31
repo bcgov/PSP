@@ -1,11 +1,11 @@
-name: CI-CD Release Test to UAT
+name: UAT Hotfix
 env:
   OPENSHIFT_SERVER: ${{ secrets.OPENSHIFT_SERVER }}
   # service account: gitaction
   OPENSHIFT_TOKEN: ${{ secrets.OPENSHIFT_TOKEN }}
   OPENSHIFT_TOOLS_NAMESPACE: "3cd915-tools"
   MS_TEAMS_WEBHOOK_BUILD_CHANNEL: ${{ secrets.MS_TEAMS_WEBHOOK_URI_BUILD_CHANNEL }}
-  AUTH__KEYCLOAK__SECRET: ${{ secrets.KEYCLOAK_SECRET_UAT }}
+  AUTH__KEYCLOAK__SECRET: ${{ secrets.KEYCLOAK_SECRET }}
   AUTH__KEYCLOAK__SERVICEACCOUNT__SECRET: ${{ secrets.KEYCLOAK_SERVICEACCOUNT_SECRET }}
   sync-directory: ./tools/keycloak/sync
   ASPNETCORE_ENVIRONMENT: "uat"
@@ -13,9 +13,9 @@ env:
   ## variables for scripts under git\openshift\4.0\scripts\oc-*.sh
   APP_PORT: 8080
   DESTINATION: "uat"
-  OC_JOB_NAME: "uat"
+  OC_JOB_NAME: "test"
   GIT_URL: "${{github.server_url}}/${{github.repository}}"
-  GIT_BRANCH: "${{github.ref}}"
+  GIT_BRANCH: "test"
   APP_NAME: "pims"
   PROJ_PREFIX: "3cd915"
   PROJ_TOOLS: "3cd915-tools"
@@ -27,9 +27,9 @@ env:
   TAG_PROD: "prod"
   INSTANCE: "-uat"
   NAMESPACE_OVERRIDE: "3cd915-test"
-  RELEASE_TAG: "test"
 
-on: workflow_dispatch
+on:
+  workflow_dispatch:
 
 jobs:
   ci-cd-start-notification:
@@ -41,13 +41,50 @@ jobs:
         with:
           github-token: ${{ github.token }}
           ms-teams-webhook-uri: ${{ env.MS_TEAMS_WEBHOOK_BUILD_CHANNEL }}
-          notification-summary: PIMS Release DEV to TST Started
+          notification-summary: PIMS UAT Hotfix started.
           notification-color: 17a2b8
           timezone: America/Los_Angeles
 
-  deploy:
-    name: Retag/Deploy frontend and api to OpenShift
+  build-frontend:
+    name: Build frontend
     needs: ci-cd-start-notification
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v3
+      - name: Login to OpenShift
+        uses: redhat-actions/oc-login@v1
+        with:
+          openshift_server_url: ${{ env.OPENSHIFT_SERVER }}
+          openshift_token: ${{ env.OPENSHIFT_TOKEN }}
+          insecure_skip_tls_verify: true
+          namespace: ${{ env.OPENSHIFT_TOOLS_NAMESPACE }}
+      - name: Call script to build frontend (pims-app and pims-app-base)
+        run: |
+          ./openshift/4.0/player.sh build app-base -apply
+          ./openshift/4.0/player.sh build app -apply
+
+  build-api:
+    name: Build api
+    needs: ci-cd-start-notification
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v3
+      - name: Login to OpenShift
+        uses: redhat-actions/oc-login@v1
+        with:
+          openshift_server_url: ${{ env.OPENSHIFT_SERVER }}
+          openshift_token: ${{ env.OPENSHIFT_TOKEN }}
+          insecure_skip_tls_verify: true
+          namespace: ${{ env.OPENSHIFT_TOOLS_NAMESPACE }}
+      - name: Call script to build backend (pims-api)
+        run: |
+          ./openshift/4.0/player.sh build api -apply
+
+  deploy:
+    name: Deploy frontend and api to OpenShift
+    needs: [build-frontend, build-api]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Source Code
@@ -63,7 +100,7 @@ jobs:
         run: |
           ./openshift/4.0/player.sh deploy api $DESTINATION -apply
           ./openshift/4.0/player.sh deploy app $DESTINATION -apply
-      
+
   # the command:
   # 1) creates an openshift job with generated name to avoid name conflict, substituting the variables in the template.
   # 2) greps the generated name from the previous step.
@@ -87,8 +124,8 @@ jobs:
         run: |
           oc process -f ./openshift/4.0/templates/jobs/db-deploy.yaml -p DB_SECRET_NAME=pims-database-uat -p GIT_BRANCH=test -p SERVER_NAME=sqlprd.th.gov.bc.ca -p DB_NAME=PIMS_UAT -p NAMESPACE=3cd915-test | oc create -f - | grep -oP "(?<=job\.batch/)[^\s]*" | (read JOB_NAME; oc wait --for=condition=complete job/$JOB_NAME --timeout=120s)
 
-  ## Call the mayan sync task three times, once for each mayan sync endpoint. The task will wait for the job to complete before exiting.
-  ## Note: this depends on the mayan-sync configmap for the target namespace being up to date.
+## Call the mayan sync task three times, once for each mayan sync endpoint. The task will wait for the job to complete before exiting.
+## Note: this depends on the mayan-sync configmap for the target namespace being up to date.
   mayan-sync:
     name: sync mayan
     needs: database-upgrade
@@ -112,7 +149,6 @@ jobs:
 
   sync-keycloak:
     name: Sync Keycloak
-    needs: database-upgrade
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Source Code
@@ -133,13 +169,13 @@ jobs:
 
       - name: Start keycloak sync
         run: dotnet run
-        working-directory: ${{env.sync-directory}}  
+        working-directory: ${{env.sync-directory}}
 
   ci-cd-end-notification:
+    if: always()
     name: CI-CD End Notification to Teams Channel
     runs-on: ubuntu-latest
-    needs: [sync-keycloak, mayan-sync]
-    if: always()
+    needs: [mayan-sync, sync-keycloak]
     steps:
       - name: check workflow status
         uses: martialonline/workflow-status@v4
@@ -149,6 +185,6 @@ jobs:
         with:
           github-token: ${{ github.token }}
           ms-teams-webhook-uri: ${{ env.MS_TEAMS_WEBHOOK_BUILD_CHANNEL }}
-          notification-summary: PIMS Release TEST to UAT COMPLETED with status ${{ steps.check.outputs.status }}
+          notification-summary: PIMS UAT Hotfix complete with status ${{ steps.check.outputs.status }}
           notification-color: 17a2b8
           timezone: America/Los_Angeles

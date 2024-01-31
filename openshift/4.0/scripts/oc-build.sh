@@ -34,7 +34,11 @@ SHORTNAME=${1:-}
 
 # E.g. pims-api.dev
 #
-BUILD_NAME="${APP_NAME}-${SHORTNAME}.${OC_JOB_NAME}"
+if [ ! -z ${OVERRIDE_APP_NAME:-} ]; then
+  BUILD_NAME="${SHORTNAME}.${OC_JOB_NAME}"
+else
+  BUILD_NAME="${APP_NAME}-${SHORTNAME}.${OC_JOB_NAME}"
+fi
 
 # Cancel non complete builds and start a new build (apply or don't run)
 #
