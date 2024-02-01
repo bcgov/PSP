@@ -120,7 +120,7 @@ const UpdateDispositionForm: React.FC<IUpdateDispositionFormProps> = ({
                   />
                 </SectionField>
                 {formikProps.values?.dispositionTypeCode === 'OTHER' && (
-                  <SectionField label="Other (Disposition Type)" required>
+                  <SectionField label="Other (disposition type)" required>
                     <Input field="dispositionTypeOther" required />
                   </SectionField>
                 )}
@@ -137,7 +137,7 @@ const UpdateDispositionForm: React.FC<IUpdateDispositionFormProps> = ({
                   />
                 </SectionField>
                 {formikProps.values?.initiatingDocumentTypeCode === 'OTHER' && (
-                  <SectionField label="Other (Initiating Document)" required>
+                  <SectionField label="Other (initiating document)" required>
                     <Input field="initiatingDocumentTypeOther" required />
                   </SectionField>
                 )}
