@@ -2,7 +2,6 @@ import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
 
-import { IAddress } from '@/interfaces/IAddress';
 import { mockParcel } from '@/mocks/filterData.mock';
 import { Api_Address } from '@/models/api/Address';
 import { render, RenderOptions } from '@/utils/test-utils';
