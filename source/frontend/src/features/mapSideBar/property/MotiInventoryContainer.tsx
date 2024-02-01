@@ -4,7 +4,6 @@ import { generatePath, useHistory, useRouteMatch } from 'react-router-dom';
 import styled from 'styled-components';
 
 import LotSvg from '@/assets/images/icon-lot.svg?react';
-import GenericModal from '@/components/common/GenericModal';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { PROPERTY_TYPES, useComposedProperties } from '@/hooks/repositories/useComposedProperties';
 import { useQuery } from '@/hooks/use-query';
