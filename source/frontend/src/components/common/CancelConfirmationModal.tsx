@@ -7,9 +7,14 @@ export const CancelConfirmationModal: React.FC<
 > = props => {
   const {
     variant = 'info',
-    title = 'Unsaved Changes',
-    message = 'You have made changes on this form. Do you wish to leave without saving?',
-    okButtonText = 'Confirm',
+    title = 'Confirm Changes',
+    message = (
+      <>
+        <p>If you choose to cancel now, your changes will not be saved.</p>
+        <p>Do you want to proceed?</p>
+      </>
+    ),
+    okButtonText = 'Yes',
     cancelButtonText = 'No',
     ...rest
   } = props;

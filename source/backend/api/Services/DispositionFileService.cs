@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Constants;
 using Pims.Api.Helpers.Exceptions;
+using Pims.Api.Helpers.Extensions;
 using Pims.Api.Models.CodeTypes;
 using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
@@ -24,6 +25,7 @@ namespace Pims.Api.Services
     {
         private readonly ClaimsPrincipal _user;
         private readonly ILogger _logger;
+        private readonly IUserRepository _userRepository;
         private readonly IDispositionFileRepository _dispositionFileRepository;
         private readonly IDispositionFilePropertyRepository _dispositionFilePropertyRepository;
         private readonly ICoordinateTransformService _coordinateService;
@@ -43,7 +45,8 @@ namespace Pims.Api.Services
             IPropertyService propertyService,
             ILookupRepository lookupRepository,
             IDispositionFileChecklistRepository checklistRepository,
-            IEntityNoteRepository entityNoteRepository)
+            IEntityNoteRepository entityNoteRepository,
+            IUserRepository userRepository)
         {
             _user = user;
             _logger = logger;
@@ -55,12 +58,14 @@ namespace Pims.Api.Services
             _lookupRepository = lookupRepository;
             _checklistRepository = checklistRepository;
             _entityNoteRepository = entityNoteRepository;
+            _userRepository = userRepository;
         }
 
         public PimsDispositionFile Add(PimsDispositionFile dispositionFile, IEnumerable<UserOverrideCode> userOverrides)
         {
             _logger.LogInformation("Creating Disposition File {dispositionFile}", dispositionFile);
             _user.ThrowIfNotAuthorized(Permissions.DispositionAdd);
+            dispositionFile.ThrowMissingContractorInTeam(_user, _userRepository);
 
             dispositionFile.DispositionStatusTypeCode ??= EnumDispositionStatusTypeCode.UNKNOWN.ToString();
             dispositionFile.DispositionFileStatusTypeCode ??= EnumDispositionFileStatusTypeCode.ACTIVE.ToString();
@@ -79,6 +84,7 @@ namespace Pims.Api.Services
         {
             _logger.LogInformation("Getting disposition file with id {id}", id);
             _user.ThrowIfNotAuthorized(Permissions.DispositionView);
+            _user.ThrowInvalidAccessToDispositionFile(_userRepository, _dispositionFileRepository, id);
 
             var dispositionFile = _dispositionFileRepository.GetById(id);
 
@@ -91,6 +97,7 @@ namespace Pims.Api.Services
 
             _logger.LogInformation("Updating acquisition file with id {id}", id);
             _user.ThrowIfNotAuthorized(Permissions.DispositionEdit);
+            _user.ThrowInvalidAccessToDispositionFile(_userRepository, _dispositionFileRepository, id);
 
             if (id != dispositionFile.DispositionFileId)
             {
@@ -100,12 +107,14 @@ namespace Pims.Api.Services
             ValidateStaff(dispositionFile);
             ValidateVersion(id, dispositionFile.ConcurrencyControlNumber);
 
+            dispositionFile.ThrowContractorRemovedFromTeam(_user, _userRepository);
+
             if (!userOverrides.Contains(UserOverrideCode.DispositionFileFinalStatus))
             {
                 var doNotAddToStatuses = new List<string>() { EnumDispositionFileStatusTypeCode.COMPLETE.ToString(), EnumDispositionFileStatusTypeCode.ARCHIVED.ToString() };
-                if(doNotAddToStatuses.Contains(dispositionFile.DispositionFileStatusTypeCode))
+                if (doNotAddToStatuses.Contains(dispositionFile.DispositionFileStatusTypeCode))
                 {
-                    throw new UserOverrideException(UserOverrideCode.DispositionFileFinalStatus, "You are changing this file to a non-editable state. Only system administrators can edit the file when set to Archived, Cancelled or Completed state). Do you wish to continue?");
+                    throw new UserOverrideException(UserOverrideCode.DispositionFileFinalStatus, "You are changing this file to a non-editable state. (Only system administrators can edit the file when set to Archived, Cancelled or Completed state). Do you wish to continue?");
                 }
             }
             if (!userOverrides.Contains(UserOverrideCode.UpdateRegion))
@@ -134,7 +143,10 @@ namespace Pims.Api.Services
             _logger.LogDebug("Disposition file search with filter: {filter}", filter);
             _user.ThrowIfNotAuthorized(Permissions.DispositionView);
 
-            return _dispositionFileRepository.GetPageDeep(filter);
+            var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
+            long? contractorPersonId = (pimsUser != null && pimsUser.IsContractor) ? pimsUser.PersonId : null;
+
+            return _dispositionFileRepository.GetPageDeep(filter, contractorPersonId);
         }
 
         public IEnumerable<PimsDispositionFileProperty> GetProperties(long id)
@@ -246,6 +258,34 @@ namespace Pims.Api.Services
             return _dispositionFileRepository.GetDispositionFileSale(dispositionFileId);
         }
 
+        public PimsDispositionSale UpdateDispositionFileSale(PimsDispositionSale dispositionSale)
+        {
+            _logger.LogInformation("Updating disposition file Sale with DispositionFileId: {id}", dispositionSale.DispositionSaleId);
+            _user.ThrowIfNotAuthorized(Permissions.DispositionEdit);
+
+            var updatedSale = _dispositionFileRepository.UpdateDispositionFileSale(dispositionSale);
+            _dispositionFileRepository.CommitTransaction();
+
+            return updatedSale;
+        }
+
+        public PimsDispositionSale AddDispositionFileSale(PimsDispositionSale dispositionSale)
+        {
+            _logger.LogInformation("Adding disposition file Sale to Disposition File with Id: {id}", dispositionSale.DispositionFileId);
+            _user.ThrowIfNotAuthorized(Permissions.DispositionEdit);
+
+            var dispositionFileParent = _dispositionFileRepository.GetById(dispositionSale.DispositionFileId);
+            if (dispositionFileParent.PimsDispositionSales.Count > 0)
+            {
+                throw new DuplicateEntityException("Invalid Disposition Sale. A Sale has been already created for this Disposition File");
+            }
+
+            _dispositionFileRepository.AddDispositionFileSale(dispositionSale);
+            _dispositionFileRepository.CommitTransaction();
+
+            return dispositionSale;
+        }
+
         public PimsDispositionAppraisal GetDispositionFileAppraisal(long dispositionFileId)
         {
             _logger.LogInformation("Getting disposition file appraisal with DispositionFileId: {id}", dispositionFileId);
@@ -265,7 +305,7 @@ namespace Pims.Api.Services
                 throw new BadRequestException("Invalid dispositionFileId.");
             }
 
-            if(dispositionFileParent.PimsDispositionAppraisals.Count > 0)
+            if (dispositionFileParent.PimsDispositionAppraisals.Count > 0)
             {
                 throw new DuplicateEntityException("Invalid Disposition Appraisal. An Appraisal has been already created for this Disposition File");
             }

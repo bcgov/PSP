@@ -130,8 +130,8 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
             if (webDriver.FindElements(financialCodeModal).Count() > 0)
             {
-                Assert.True(sharedModals.ModalHeader().Equals("Unsaved Changes"));
-                Assert.True(sharedModals.ModalContent().Equals("You have made changes on this form. Do you wish to leave without saving?"));
+                Assert.Equal("Unsaved Changes", sharedModals.ModalHeader());
+                Assert.Equal("You have made changes on this form. Do you wish to leave without saving?", sharedModals.ModalContent());
 
                 sharedModals.ModalClickOKBttn();
             }

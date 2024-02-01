@@ -67,6 +67,7 @@ namespace Pims.Dal.Repositories
 
             var query = Context.PimsAgreements
                 .Include(a => a.AgreementTypeCodeNavigation)
+                .Include(a => a.AgreementStatusTypeCodeNavigation)
                 .Include(a => a.AcquisitionFile)
                     .ThenInclude(a => a.PimsAcquisitionFileTeams)
                     .ThenInclude(afp => afp.Person)

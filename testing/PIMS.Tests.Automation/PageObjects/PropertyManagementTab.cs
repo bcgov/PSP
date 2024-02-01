@@ -364,9 +364,9 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             ButtonElement("Cancel");
 
-            Assert.Equal(sharedModals.ModalHeader(), "Confirm changes");
-            Assert.Equal(sharedModals.ConfirmationModalText1(), "If you cancel now, this property information will not be saved.");
-            Assert.Equal(sharedModals.ConfirmationModalText2(), "Are you sure you want to Cancel?");
+            Assert.Equal("Confirm changes", sharedModals.ModalHeader());
+            Assert.Equal("If you cancel now, this property information will not be saved.", sharedModals.ConfirmationModalText1());
+            Assert.Equal("Are you sure you want to Cancel?", sharedModals.ConfirmationModalText2());
 
             sharedModals.ModalClickOKBttn();
         }

@@ -217,7 +217,7 @@ exports[`UpdateNoteContainer component renders as expected 1`] = `
 }
 
 .c0 .modal-m {
-  max-width: 50rem;
+  max-width: 60rem;
 }
 
 .c0 .modal-s {
@@ -280,7 +280,7 @@ exports[`UpdateNoteContainer component renders as expected 1`] = `
     tabindex="-1"
   >
     <div
-      class="modal-dialog c1 info-variant"
+      class="modal-dialog modal-m c1 info-variant"
     >
       <div
         class="modal-content"
