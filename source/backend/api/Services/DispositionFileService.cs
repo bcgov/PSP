@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Constants;
@@ -345,16 +346,22 @@ namespace Pims.Api.Services
             return checklistItems;
         }
 
-        public PimsDispositionFile UpdateChecklistItems(PimsDispositionFile dispositionFile)
+        public PimsDispositionFile UpdateChecklistItems(IList<PimsDispositionChecklistItem> checklistItems)
         {
-            dispositionFile.ThrowIfNull(nameof(dispositionFile));
-            _logger.LogInformation("Updating disposition file checklist with DispositionFile id: {id}", dispositionFile.Internal_Id);
+            checklistItems.ThrowIfNull(nameof(checklistItems));
+            if (checklistItems.Count == 0)
+            {
+                throw new BadRequestException("Checklist items must be greater than zero");
+            }
+
+            var dispositionFileId = checklistItems.FirstOrDefault().DispositionFileId;
+            _logger.LogInformation("Updating disposition file checklist with DispositionFile id: {id}", dispositionFileId);
             _user.ThrowIfNotAuthorized(Permissions.DispositionEdit);
 
             // Get the current checklist items for this disposition file.
-            var currentItems = _checklistRepository.GetAllChecklistItemsByDispositionFileId(dispositionFile.Internal_Id).ToDictionary(ci => ci.Internal_Id);
+            var currentItems = _checklistRepository.GetAllChecklistItemsByDispositionFileId(dispositionFileId).ToDictionary(ci => ci.Internal_Id);
 
-            foreach (var incomingItem in dispositionFile.PimsDispositionChecklistItems)
+            foreach (var incomingItem in checklistItems)
             {
                 if (!currentItems.TryGetValue(incomingItem.Internal_Id, out var existingItem) && incomingItem.Internal_Id != 0)
                 {
@@ -373,7 +380,7 @@ namespace Pims.Api.Services
             }
 
             _checklistRepository.CommitTransaction();
-            return _dispositionFileRepository.GetById(dispositionFile.Internal_Id);
+            return _dispositionFileRepository.GetById(dispositionFileId);
         }
 
         public List<DispositionFileExportModel> GetDispositionFileExport(DispositionFilter filter)

@@ -5,7 +5,8 @@ import { IResearchFilter } from '@/features/research/interfaces';
 import { IPagedItems } from '@/interfaces';
 import { IResearchSearchResult } from '@/interfaces/IResearchSearchResult';
 import { Api_LastUpdatedBy } from '@/models/api/File';
-import { Api_ResearchFile, Api_ResearchFileProperty } from '@/models/api/ResearchFile';
+import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Concepts_ResearchFile';
+import { ApiGen_Concepts_ResearchFileProperty } from '@/models/api/generated/ApiGen_Concepts_ResearchFileProperty';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 
 import { IPaginateRequest } from './interfaces/IPaginateRequest';
@@ -25,36 +26,38 @@ export const useApiResearchFile = () => {
           `/researchFiles/search?${params ? queryString.stringify(params) : ''}`,
         ),
       getResearchFile: (researchFileId: number) =>
-        api.get<Api_ResearchFile>(`/researchFiles/${researchFileId}`),
+        api.get<ApiGen_Concepts_ResearchFile>(`/researchFiles/${researchFileId}`),
       postResearchFile: (
-        researchFile: Api_ResearchFile,
+        researchFile: ApiGen_Concepts_ResearchFile,
         userOverrideCodes: UserOverrideCode[] = [],
       ) =>
-        api.post<Api_ResearchFile>(
+        api.post<ApiGen_Concepts_ResearchFile>(
           `/researchFiles?${userOverrideCodes.map(o => `userOverrideCodes=${o}`).join('&')}`,
           researchFile,
         ),
-      putResearchFile: (researchFile: Api_ResearchFile) =>
-        api.put<Api_ResearchFile>(`/researchFiles/${researchFile.id}`, researchFile),
+      putResearchFile: (researchFile: ApiGen_Concepts_ResearchFile) =>
+        api.put<ApiGen_Concepts_ResearchFile>(`/researchFiles/${researchFile.id}`, researchFile),
       getLastUpdatedByApi: (researchFileId: number) =>
         api.get<Api_LastUpdatedBy>(`/researchFiles/${researchFileId}/updateInfo`),
       putResearchFileProperties: (
-        researchFile: Api_ResearchFile,
+        researchFile: ApiGen_Concepts_ResearchFile,
         userOverrideCodes: UserOverrideCode[] = [],
       ) =>
-        api.put<Api_ResearchFile>(
+        api.put<ApiGen_Concepts_ResearchFile>(
           `/researchFiles/${researchFile?.id}/properties?${userOverrideCodes
             .map(o => `userOverrideCodes=${o}`)
             .join('&')}`,
           researchFile,
         ),
-      putPropertyResearchFile: (propertyResearchFile: Api_ResearchFileProperty) =>
-        api.put<Api_ResearchFile>(
-          `/researchFiles/${propertyResearchFile?.file?.id}/properties/${propertyResearchFile.id}`,
+      putPropertyResearchFile: (propertyResearchFile: ApiGen_Concepts_ResearchFileProperty) =>
+        api.put<ApiGen_Concepts_ResearchFile>(
+          `/researchFiles/${propertyResearchFile?.fileId}/properties/${propertyResearchFile.id}`,
           propertyResearchFile,
         ),
       getResearchFileProperties: (researchFileId: number) =>
-        api.get<Api_ResearchFileProperty[]>(`/researchFiles/${researchFileId}/properties`),
+        api.get<ApiGen_Concepts_ResearchFileProperty[]>(
+          `/researchFiles/${researchFileId}/properties`,
+        ),
     }),
     [api],
   );

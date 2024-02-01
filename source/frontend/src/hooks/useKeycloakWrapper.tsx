@@ -4,6 +4,7 @@ import * as API from '@/constants/API';
 import { Claims } from '@/constants/claims';
 import { Roles } from '@/constants/roles';
 import { IProperty } from '@/interfaces';
+import { exists } from '@/utils';
 
 import useLookupCodeHelpers from './useLookupCodeHelpers';
 
@@ -64,8 +65,7 @@ export function useKeycloakWrapper(): IKeycloak {
    */
   const hasClaim = (claim?: string | Array<string>): boolean => {
     return (
-      claim !== undefined &&
-      claim !== null &&
+      exists(claim) &&
       (typeof claim === 'string'
         ? userInfo?.client_roles?.includes(claim)
         : claim.some(c => userInfo?.client_roles?.includes(c)))
@@ -78,8 +78,7 @@ export function useKeycloakWrapper(): IKeycloak {
    */
   const hasRole = (role?: string | Array<string>): boolean => {
     return (
-      role !== undefined &&
-      role !== null &&
+      exists(role) &&
       (typeof role === 'string'
         ? userInfo?.client_roles?.includes(role)
         : role.some(r => userInfo?.client_roles?.includes(r)))
@@ -91,11 +90,7 @@ export function useKeycloakWrapper(): IKeycloak {
    * @param organization - The organization name
    */
   const hasOrganization = (organization?: number): boolean => {
-    return (
-      organization !== undefined &&
-      organization !== null &&
-      userInfo?.organizations?.includes(organization)
-    );
+    return exists(organization) && userInfo?.organizations?.includes(organization);
   };
 
   /**

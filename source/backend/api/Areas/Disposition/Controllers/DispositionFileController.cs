@@ -5,9 +5,7 @@ using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Pims.Api.Areas.Acquisition.Controllers;
 using Pims.Api.Helpers.Exceptions;
-using Pims.Api.Models.Concepts.DispositionFile;
 using Pims.Api.Models.Concepts.DispositionFile;
 using Pims.Api.Policies;
 using Pims.Api.Services;
@@ -91,6 +89,7 @@ namespace Pims.Api.Areas.Disposition.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(DispositionFileModel), 200)]
         [SwaggerOperation(Tags = new[] { "dispositionfile" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult AddDispositionFile([FromBody] DispositionFileModel model, [FromQuery] string[] userOverrideCodes)
         {
             _logger.LogInformation(
@@ -114,6 +113,7 @@ namespace Pims.Api.Areas.Disposition.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(DispositionFileModel), 200)]
         [SwaggerOperation(Tags = new[] { "dispositionfile" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult UpdateDispositionFile([FromRoute]long id, [FromBody] DispositionFileModel model, [FromQuery] string[] userOverrideCodes)
         {
             _logger.LogInformation(
@@ -188,6 +188,7 @@ namespace Pims.Api.Areas.Disposition.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(IEnumerable<DispositionFileTeamModel>), 200)]
         [SwaggerOperation(Tags = new[] { "dispositionfile" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetDispositionTeamMembers()
         {
             _logger.LogInformation(

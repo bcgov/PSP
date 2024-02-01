@@ -35,7 +35,14 @@ describe('DetailAdministration component', () => {
     const { component } = setup({
       lease: {
         ...new LeaseFormModel(),
-        properties: [{ ...mockParcel, areaUnitTypeCode: 'test', landArea: '123', leaseId: null }],
+        properties: [
+          {
+            ...mockParcel,
+            areaUnitTypeCode: 'test',
+            landArea: '123',
+            leaseId: null,
+          },
+        ],
       },
     });
     expect(component.asFragment()).toMatchSnapshot();
@@ -45,7 +52,14 @@ describe('DetailAdministration component', () => {
     const { component } = setup({
       lease: {
         ...new LeaseFormModel(),
-        properties: [{ ...mockParcel, areaUnitTypeCode: 'test', landArea: '123', leaseId: null }],
+        properties: [
+          {
+            ...mockParcel,
+            areaUnitTypeCode: 'test',
+            landArea: '123',
+            leaseId: null,
+          },
+        ],
         amount: 1,
         description: 'a test description',
         programName: 'A program',

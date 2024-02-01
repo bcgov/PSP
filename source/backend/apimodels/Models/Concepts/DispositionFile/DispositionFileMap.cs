@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using Mapster;
 using Entity = Pims.Dal.Entities;
@@ -10,6 +11,7 @@ namespace Pims.Api.Models.Concepts.DispositionFile
         public void Register(TypeAdapterConfig config)
         {
             config.NewConfig<Entity.PimsDispositionFile, DispositionFileModel>()
+                .PreserveReference(true)
                 .Map(dest => dest.Id, src => src.DispositionFileId)
                 .Map(dest => dest.FileNumber, src => src.FileNumber)
                 .Map(dest => dest.FileName, src => src.FileName)
@@ -36,6 +38,7 @@ namespace Pims.Api.Models.Concepts.DispositionFile
                 .Map(dest => dest.FileChecklistItems, src => src.PimsDispositionChecklistItems);
 
             config.NewConfig<DispositionFileModel, Entity.PimsDispositionFile>()
+                .PreserveReference(true)
                 .Map(dest => dest.DispositionFileId, src => src.Id)
                 .Map(dest => dest.FileNumber, src => src.FileNumber)
                 .Map(dest => dest.FileName, src => src.FileName)
@@ -57,7 +60,7 @@ namespace Pims.Api.Models.Concepts.DispositionFile
                 .Map(dest => dest.PimsDispositionFileTeams, src => src.DispositionTeam)
                 .Map(dest => dest.PimsDispositionOffers, src => src.DispositionOffers)
                 .Map(dest => dest.PimsDispositionSales, src => src.DispositionSale == null ? null : new List<DispositionFileSaleModel> { src.DispositionSale })
-                .Map(dest => dest.PimsDispositionFileProperties, src => src.FileProperties)
+                .Map(dest => dest.PimsDispositionFileProperties, src => src.FileProperties.ToImmutableList())
                 .Map(dest => dest.PimsDispositionChecklistItems, src => src.FileChecklistItems);
         }
     }

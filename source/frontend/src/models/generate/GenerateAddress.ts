@@ -1,4 +1,4 @@
-import { Api_Address } from '@/models/api/Address';
+import { ApiGen_Concepts_Address } from '../api/generated/ApiGen_Concepts_Address';
 export class Api_GenerateAddress {
   line_1: string;
   line_2: string;
@@ -11,7 +11,7 @@ export class Api_GenerateAddress {
   address_string_multiline_compressed: string;
   address_single_line_string: string;
 
-  constructor(address: Api_Address | null) {
+  constructor(address: ApiGen_Concepts_Address | null) {
     this.line_1 = address?.streetAddress1 ?? '';
     this.line_2 = address?.streetAddress2 ?? '';
     this.line_3 = address?.streetAddress3 ?? '';

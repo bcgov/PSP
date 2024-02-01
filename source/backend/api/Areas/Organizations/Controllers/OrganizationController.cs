@@ -6,6 +6,7 @@ using Pims.Api.Models.Concepts.Organization;
 using Pims.Api.Policies;
 using Pims.Api.Services;
 using Pims.Core.Exceptions;
+using Pims.Core.Json;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
@@ -72,6 +73,7 @@ namespace Pims.Api.Areas.Organizations.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(OrganizationModel), 200)]
         [SwaggerOperation(Tags = new[] { "organization" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetOrganizationConcept(int id)
         {
             var organization = _organizationService.GetOrganization(id);

@@ -34,7 +34,12 @@ const mockOrganization: IEditableOrganization = {
       organizationAddressRowVersion: 2,
       organizationId: 200,
       id: 1,
-      addressTypeId: { id: AddressTypes.Mailing },
+      addressTypeId: {
+        id: AddressTypes.Mailing,
+        description: null,
+        isDisabled: false,
+        displayOrder: null,
+      },
       streetAddress1: '3000 Main Ave',
       streetAddress2: '',
       streetAddress3: '',
@@ -47,7 +52,12 @@ const mockOrganization: IEditableOrganization = {
   ],
   contactMethods: [
     {
-      contactMethodTypeCode: { id: ContactMethodTypes.WorkEmail },
+      contactMethodTypeCode: {
+        id: ContactMethodTypes.WorkEmail,
+        description: null,
+        isDisabled: false,
+        displayOrder: null,
+      },
       value: 'foo@bar.com',
     },
   ],
@@ -69,6 +79,9 @@ const mockPerson: IEditablePerson = {
 const mockContactMethod: IEditableContactMethod = {
   contactMethodTypeCode: {
     id: 'WORKEMAIL',
+    description: null,
+    isDisabled: false,
+    displayOrder: null,
   },
   value: 'test@test.com',
 };
@@ -82,7 +95,12 @@ const mockAddress: IEditablePersonAddress = {
   countryId: 4,
   countryOther: 'Netherlands',
   postal: '123456',
-  addressTypeId: { id: AddressTypes.Mailing },
+  addressTypeId: {
+    id: AddressTypes.Mailing,
+    description: null,
+    isDisabled: false,
+    displayOrder: null,
+  },
 };
 
 // Mock API service calls

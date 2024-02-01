@@ -1,4 +1,4 @@
-import ITypeCode from './ITypeCode';
+import { ApiGen_Base_CodeType } from '@/models/api/generated/ApiGen_Base_CodeType';
 
 export interface ILeaseSearchResult {
   id: number;
@@ -7,7 +7,7 @@ export interface ILeaseSearchResult {
   programName?: string;
   tenantNames: string[];
   properties: ILeaseProperty[];
-  statusType?: ITypeCode<string>;
+  statusType?: ApiGen_Base_CodeType<string>;
 }
 
 export interface ILeaseProperty {

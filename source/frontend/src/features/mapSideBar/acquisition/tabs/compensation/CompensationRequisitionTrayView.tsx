@@ -6,8 +6,8 @@ import styled from 'styled-components';
 
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import * as Styled from '@/components/common/styles';
-import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
-import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
+import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
+import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
 
 import { CompensationRequisitionDetailContainer } from './detail/CompensationRequisitionDetailContainer';
 import CompensationRequisitionDetailView from './detail/CompensationRequisitionDetailView';
@@ -15,8 +15,8 @@ import UpdateCompensationRequisitionContainer from './update/UpdateCompensationR
 import UpdateCompensationRequisitionForm from './update/UpdateCompensationRequisitionForm';
 
 export interface CompensationRequisitionTrayViewProps {
-  compensation?: Api_CompensationRequisition;
-  acquisitionFile: Api_AcquisitionFile;
+  compensation?: ApiGen_Concepts_CompensationRequisition;
+  acquisitionFile: ApiGen_Concepts_AcquisitionFile;
   clientConstant: string;
   gstConstant: number | undefined;
   onClose: () => void;

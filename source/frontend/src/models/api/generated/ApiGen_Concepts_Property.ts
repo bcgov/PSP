@@ -23,7 +23,7 @@ export interface ApiGen_Concepts_Property extends ApiGen_Base_BaseConcurrent {
   dataSource: ApiGen_Base_CodeType<string> | null;
   region: ApiGen_Base_CodeType<number> | null;
   district: ApiGen_Base_CodeType<number> | null;
-  dataSourceEffectiveDate: string;
+  dataSourceEffectiveDateOnly: string;
   latitude: number | null;
   longitude: number | null;
   name: string | null;

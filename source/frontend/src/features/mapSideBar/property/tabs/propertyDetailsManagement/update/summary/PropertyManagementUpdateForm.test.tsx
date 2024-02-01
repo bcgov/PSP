@@ -7,7 +7,7 @@ import {
   getMockApiPropertyManagement,
   getMockApiPropertyManagementPurpose,
 } from '@/mocks/propertyManagement.mock';
-import { Api_PropertyManagementPurpose } from '@/models/api/Property';
+import { ApiGen_Concepts_PropertyManagementPurpose } from '@/models/api/generated/ApiGen_Concepts_PropertyManagementPurpose';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { fakeText, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
@@ -96,11 +96,13 @@ describe('PropertyManagementUpdateForm component', () => {
   });
 
   it('should validate required field Additional Details when purpose type is Other', async () => {
-    const otherPurpose: Api_PropertyManagementPurpose = {
+    const otherPurpose: ApiGen_Concepts_PropertyManagementPurpose = {
       ...getMockApiPropertyManagementPurpose(),
       propertyPurposeTypeCode: {
         id: 'OTHER',
         description: 'test',
+        displayOrder: null,
+        isDisabled: false,
       },
     };
     const { getFormikRef, findByText, getAdditionalDetailsTextArea } = setup({
@@ -124,7 +126,7 @@ describe('PropertyManagementUpdateForm component', () => {
   });
 
   it('should validate character limits', async () => {
-    const otherPurpose: Api_PropertyManagementPurpose = {
+    const otherPurpose: ApiGen_Concepts_PropertyManagementPurpose = {
       ...getMockApiPropertyManagementPurpose(),
     };
     const { getFormikRef, findByText, getAdditionalDetailsTextArea } = setup({

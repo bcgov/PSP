@@ -10,14 +10,14 @@ import FormItem from '@/components/common/form/FormItem';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { RestrictContactType } from '@/components/contact/ContactManagerView/ContactFilterComponent/ContactFilterComponent';
 import FilePropertiesTable from '@/components/filePropertiesTable/FilePropertiesTable';
-import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
-import { Api_PropertyFile } from '@/models/api/PropertyFile';
+import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
+import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 
 import { ExpropriationForm5Model } from '../models';
 import { ExpropriationForm5YupSchema } from './ExpropriationForm5YupSchema';
 
 export interface IExpropriationForm5Props {
-  acquisitionFile: Api_AcquisitionFile;
+  acquisitionFile: ApiGen_Concepts_AcquisitionFile;
   onGenerate: (acquisitionFileId: number, values: ExpropriationForm5Model) => Promise<void>;
   onError?: (e: Error) => void;
 }
@@ -80,7 +80,7 @@ export const ExpropriationForm5: React.FC<IExpropriationForm5Props> = ({
                 disabledSelection={false}
                 fileProperties={acquisitionFile.fileProperties ?? []}
                 selectedFileProperties={formikProps.values.impactedProperties}
-                setSelectedFileProperties={(fileProperties: Api_PropertyFile[]) => {
+                setSelectedFileProperties={(fileProperties: ApiGen_Concepts_FileProperty[]) => {
                   formikProps.setFieldValue('impactedProperties', fileProperties);
                 }}
               ></FilePropertiesTable>

@@ -7,14 +7,15 @@ import { useDispositionProvider } from '@/hooks/repositories/useDispositionProvi
 import useApiUserOverride from '@/hooks/useApiUserOverride';
 import { useModalContext } from '@/hooks/useModalContext';
 import { IApiError } from '@/interfaces/IApiError';
-import { Api_DispositionFile } from '@/models/api/DispositionFile';
+import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
+import { isValidId } from '@/utils';
 
 import { DispositionFormModel } from '../../../../models/DispositionFormModel';
 import { IUpdateDispositionFormProps } from './UpdateDispositionForm';
 
 export interface IUpdateDispositionContainerProps {
-  dispositionFile: Api_DispositionFile;
+  dispositionFile: ApiGen_Concepts_DispositionFile;
   onSuccess: () => void;
   View: React.FC<IUpdateDispositionFormProps>;
 }
@@ -31,7 +32,7 @@ export const UpdateDispositionContainer = React.forwardRef<
   } = useDispositionProvider();
 
   const withUserOverride = useApiUserOverride<
-    (userOverrideCodes: UserOverrideCode[]) => Promise<Api_DispositionFile | void>
+    (userOverrideCodes: UserOverrideCode[]) => Promise<ApiGen_Concepts_DispositionFile | void>
   >('Failed to update Disposition File');
 
   const handleSubmit = async (
@@ -48,7 +49,7 @@ export const UpdateDispositionContainer = React.forwardRef<
           userOverrideCodes,
         );
 
-        if (!!response?.id) {
+        if (isValidId(response?.id)) {
           formikHelpers?.resetForm();
           onSuccess();
         }

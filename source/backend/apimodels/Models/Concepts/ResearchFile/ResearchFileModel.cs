@@ -18,7 +18,7 @@ namespace Pims.Api.Models.Concepts.ResearchFile
         /// <summary>
         /// get/set - A list of research property relationships.
         /// </summary>
-        public IList<ResearchFilePropertyModel> FileProperties { get; set; }
+        public new IList<ResearchFilePropertyModel> FileProperties { get; set; }
 
         public DateOnly? RequestDate { get; set; }
 

@@ -411,7 +411,7 @@ exports[`Disposition search results table matches snapshot 1`] = `
             Road Closure
           </div>
           <div
-            class="td clickable"
+            class="td"
             role="cell"
             style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
             title=""

@@ -9,14 +9,14 @@ import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
 import { IMapProperty } from '@/components/propertySelector/models';
 import { ComposedProperty } from '@/features/mapSideBar/property/ComposedProperty';
-import { Api_Property } from '@/models/api/Property';
-import { formatApiAddress, pidFormatter } from '@/utils';
+import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
+import { exists, formatApiAddress, pidFormatter } from '@/utils';
 import { mapFeatureToProperty } from '@/utils/mapPropertyUtils';
 
 export interface IMotiInventoryHeaderProps {
   isLoading: boolean;
   composedProperty: ComposedProperty;
-  onZoom?: (apiProperty?: Api_Property | undefined) => void;
+  onZoom?: (apiProperty?: ApiGen_Concepts_Property | undefined) => void;
 }
 
 export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderProps> = props => {
@@ -38,7 +38,7 @@ export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderPr
           <Row className="no-gutters">
             <Col xs="8">
               <HeaderField label="Civic Address:" labelWidth={'3'} contentWidth="9">
-                {apiProperty?.address !== undefined ? formatApiAddress(apiProperty?.address) : '-'}
+                {exists(apiProperty?.address) ? formatApiAddress(apiProperty!.address) : '-'}
               </HeaderField>
             </Col>
             <Col>

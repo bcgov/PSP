@@ -16,7 +16,7 @@ import { ILeaseSearchResult, IPagedItems, IProperty } from './interfaces';
 import { IResearchSearchResult } from './interfaces/IResearchSearchResult';
 import { mockLookups } from './mocks/lookups.mock';
 import { getMockPagedUsers, getUserMock } from './mocks/user.mock';
-import { Api_AcquisitionFile } from './models/api/AcquisitionFile';
+import { ApiGen_Concepts_AcquisitionFile } from './models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { lookupCodesSlice } from './store/slices/lookupCodes';
 import { networkSlice } from './store/slices/network/networkSlice';
 import { tenantsSlice } from './store/slices/tenants';
@@ -108,7 +108,7 @@ jest.mock('./hooks/pims-api/useApiAcquisitionFile');
 (useApiAcquisitionFile as jest.MockedFunction<typeof useApiAcquisitionFile>).mockReturnValue({
   getAcquisitionFiles: jest
     .fn()
-    .mockResolvedValue({ data: {} as IPagedItems<Api_AcquisitionFile> }),
+    .mockResolvedValue({ data: {} as IPagedItems<ApiGen_Concepts_AcquisitionFile> }),
   getAcquisitionFile: jest.fn(),
   getLastUpdatedByApi: jest.fn(),
   getAgreementReport: jest.fn(),

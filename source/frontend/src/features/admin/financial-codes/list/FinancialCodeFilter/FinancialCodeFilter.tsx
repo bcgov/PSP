@@ -6,12 +6,12 @@ import styled from 'styled-components';
 import { ResetButton, SearchButton } from '@/components/common/buttons';
 import { Form, Input, Select } from '@/components/common/form';
 import ActiveFilterCheck from '@/components/common/form/ActiveFilterCheck';
-import { FinancialCodeTypes } from '@/constants/financialCodeTypes';
+import { ApiGen_Concepts_FinancialCodeTypes } from '@/models/api/generated/ApiGen_Concepts_FinancialCodeTypes';
 
 import { formatAsSelectOptions } from '../../financialCodeUtils';
 
 export interface IFinancialCodeFilter {
-  financialCodeType?: FinancialCodeTypes;
+  financialCodeType?: ApiGen_Concepts_FinancialCodeTypes;
   codeValueOrDescription: string;
   showExpiredCodes: boolean;
 }

@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 
-namespace Pims.Api.Areas.Property.Models.Property
+namespace Pims.Api.Models.Concepts.Property
 {
-    public class PropertyAssociationModel
+    public class PropertyAssociationsModel
     {
-        public string Id { get; set; }
+        public long Id { get; set; }
 
         public string Pid { get; set; }
 

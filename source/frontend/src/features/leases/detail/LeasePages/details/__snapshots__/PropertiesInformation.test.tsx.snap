@@ -36,14 +36,6 @@ exports[`PropertiesInformation component renders as expected 1`] = `
   font-weight: bold;
 }
 
-.c6 {
-  grid-column: controls;
-  border-left: 1px solid black !important;
-  padding: 0.6rem 1.2rem;
-  color: #495057;
-  font-family: 'BCSans-Bold';
-}
-
 .c3 {
   margin-top: 4rem;
 }
@@ -131,8 +123,8 @@ exports[`PropertiesInformation component renders as expected 1`] = `
             >
               <input
                 class="form-control"
-                id="input-properties.0.propertyName"
-                name="properties.0.propertyName"
+                id="input-fileProperties.0.propertyName"
+                name="fileProperties.0.propertyName"
                 value=""
               />
             </div>
@@ -153,7 +145,7 @@ exports[`PropertiesInformation component renders as expected 1`] = `
           <div
             class="c5 text-left col"
           >
-            NaN m
+            123.00 m
             <sup>
               2
             </sup>
@@ -174,16 +166,72 @@ exports[`PropertiesInformation component renders as expected 1`] = `
           <div
             class="c5 text-left col"
           >
-            <label
-              class="form-label"
+            <div
+              class="input form-group"
             >
-              Address:
-            </label>
-            <p
-              class="c6"
+              <input
+                class="form-control"
+                id="input-fileProperties.0.property.address.streetAddress1"
+                name="fileProperties.0.property.address.streetAddress1"
+                title="1234 mock Street"
+                value="1234 mock Street"
+              />
+            </div>
+            <div
+              class="input form-group"
             >
-              Address not available in PIMS
-            </p>
+              <input
+                class="form-control"
+                id="input-fileProperties.0.property.address.streetAddress2"
+                name="fileProperties.0.property.address.streetAddress2"
+                title="N/A"
+                value="N/A"
+              />
+            </div>
+            <div
+              class="input form-group"
+            >
+              <input
+                class="form-control"
+                id="input-fileProperties.0.property.address.municipality"
+                name="fileProperties.0.property.address.municipality"
+                title="Victoria"
+                value="Victoria"
+              />
+            </div>
+            <div
+              class="input form-group"
+            >
+              <input
+                class="form-control"
+                id="input-fileProperties.0.property.address.postal"
+                name="fileProperties.0.property.address.postal"
+                title="V1V1V1"
+                value="V1V1V1"
+              />
+            </div>
+            <div
+              class="input form-group"
+            >
+              <input
+                class="form-control"
+                id="input-fileProperties.0.property.address.province.code"
+                name="fileProperties.0.property.address.province.code"
+                title="BC"
+                value="BC"
+              />
+            </div>
+            <div
+              class="input form-group"
+            >
+              <input
+                class="form-control"
+                id="input-fileProperties.0.property.address.country.description"
+                name="fileProperties.0.property.address.country.description"
+                title="Canada"
+                value="Canada"
+              />
+            </div>
           </div>
         </div>
         <div
@@ -200,7 +248,9 @@ exports[`PropertiesInformation component renders as expected 1`] = `
           </div>
           <div
             class="c5 text-left col"
-          />
+          >
+            test description
+          </div>
         </div>
         <hr />
       </div>

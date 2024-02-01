@@ -9,7 +9,7 @@ import { useUserInfoRepository } from '@/hooks/repositories/useUserInfoRepositor
 import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
-import { Api_User } from '@/models/api/User';
+import { ApiGen_Concepts_User } from '@/models/api/generated/ApiGen_Concepts_User';
 import { emptyRegion } from '@/models/layers/motRegionalBoundary';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, renderAsync, RenderOptions, screen, userEvent } from '@/utils/test-utils';
@@ -57,7 +57,7 @@ jest.mock('@/hooks/repositories/useUserInfoRepository');
         region: { id: 2 },
       },
     ],
-  } as Api_User,
+  } as ApiGen_Concepts_User,
 });
 
 // Mock API service calls

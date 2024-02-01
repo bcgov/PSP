@@ -1,8 +1,8 @@
 import { createMemoryHistory } from 'history';
 
-import { FinancialCodeTypes } from '@/constants/index';
 import { mockFinancialCode } from '@/mocks/index.mock';
-import { Api_FinancialCode } from '@/models/api/FinancialCode';
+import { ApiGen_Concepts_FinancialCode } from '@/models/api/generated/ApiGen_Concepts_FinancialCode';
+import { ApiGen_Concepts_FinancialCodeTypes } from '@/models/api/generated/ApiGen_Concepts_FinancialCodeTypes';
 import { act, createAxiosError, render, RenderOptions, screen } from '@/utils/test-utils';
 
 import UpdateFinancialCodeContainer, {
@@ -45,7 +45,7 @@ describe('UpdateFinancialCode container', () => {
   const setup = (renderOptions: RenderOptions = {}) => {
     const utils = render(
       <UpdateFinancialCodeContainer
-        type={FinancialCodeTypes.BusinessFunction}
+        type={ApiGen_Concepts_FinancialCodeTypes.BusinessFunction}
         id={1}
         View={TestView}
       />,
@@ -94,9 +94,9 @@ describe('UpdateFinancialCode container', () => {
     setup();
     mockUpdateApi.execute.mockResolvedValue(mockFinancialCode());
 
-    let createdCode: Api_FinancialCode | undefined;
+    let createdCode: ApiGen_Concepts_FinancialCode | undefined;
     await act(async () => {
-      createdCode = await viewProps?.onSave({} as Api_FinancialCode);
+      createdCode = await viewProps?.onSave({} as ApiGen_Concepts_FinancialCode);
     });
 
     expect(mockUpdateApi.execute).toHaveBeenCalled();
@@ -114,7 +114,7 @@ describe('UpdateFinancialCode container', () => {
   it('navigates back to financial codes list and displays a toast when code is saved', async () => {
     setup();
     await act(async () => {
-      await viewProps?.onSuccess({} as Api_FinancialCode);
+      await viewProps?.onSuccess({} as ApiGen_Concepts_FinancialCode);
     });
     expect(history.location.pathname).toBe(`/admin/financial-code/list`);
     expect(await screen.findByText(/Financial code saved/)).toBeVisible();

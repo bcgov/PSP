@@ -3,9 +3,11 @@ import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
-import { LeaseFormModel } from '@/features/leases/models';
-import { mockParcel } from '@/mocks/filterData.mock';
+import { mockLeaseProperty } from '@/mocks/filterData.mock';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
+import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
+import { getEmptyLease } from '@/models/defaultInitializers';
+import { toTypeCode } from '@/utils/formUtils';
 import { render, RenderOptions } from '@/utils/test-utils';
 
 import PropertiesInformation, { IPropertiesInformationProps } from './PropertiesInformation';
@@ -16,11 +18,12 @@ jest.mock('@/components/common/mapFSM/MapStateMachineContext');
 
 describe('PropertiesInformation component', () => {
   const setup = (
-    renderOptions: RenderOptions & IPropertiesInformationProps & { lease?: LeaseFormModel } = {},
+    renderOptions: RenderOptions &
+      IPropertiesInformationProps & { lease?: ApiGen_Concepts_Lease } = {},
   ) => {
     // render component under test
     const component = render(
-      <Formik onSubmit={noop} initialValues={renderOptions.lease ?? new LeaseFormModel()}>
+      <Formik onSubmit={noop} initialValues={renderOptions.lease ?? getEmptyLease()}>
         <PropertiesInformation nameSpace={renderOptions.nameSpace} />
       </Formik>,
       {
@@ -42,8 +45,16 @@ describe('PropertiesInformation component', () => {
   it('renders as expected', () => {
     const { component } = setup({
       lease: {
-        ...new LeaseFormModel(),
-        properties: [{ ...mockParcel, areaUnitTypeCode: 'test', landArea: '123', leaseId: null }],
+        ...getEmptyLease(),
+        fileProperties: [
+          {
+            ...mockLeaseProperty(),
+            areaUnitType: toTypeCode('test'),
+            leaseArea: 123,
+            file: null,
+            fileId: 0,
+          },
+        ],
       },
     });
     expect(component.asFragment()).toMatchSnapshot();
@@ -51,10 +62,22 @@ describe('PropertiesInformation component', () => {
   it('renders one Property Information section per property', () => {
     const { component } = setup({
       lease: {
-        ...new LeaseFormModel(),
-        properties: [
-          { ...mockParcel, areaUnitTypeCode: 'test', landArea: '123', leaseId: null },
-          { ...mockParcel, areaUnitTypeCode: 'test', landArea: '123', leaseId: null },
+        ...getEmptyLease(),
+        fileProperties: [
+          {
+            ...mockLeaseProperty(),
+            areaUnitType: toTypeCode('test'),
+            leaseArea: 123,
+            file: null,
+            fileId: 0,
+          },
+          {
+            ...mockLeaseProperty(),
+            areaUnitType: toTypeCode('test'),
+            leaseArea: 123,
+            file: null,
+            fileId: 0,
+          },
         ],
       },
     });
@@ -66,7 +89,7 @@ describe('PropertiesInformation component', () => {
 
   it('renders no property information section if there are no properties', () => {
     const { component } = setup({
-      lease: { ...new LeaseFormModel(), properties: [] },
+      lease: { ...getEmptyLease(), fileProperties: [] },
     });
     const { queryByText } = component;
     const propertyHeader = queryByText('Property Information');

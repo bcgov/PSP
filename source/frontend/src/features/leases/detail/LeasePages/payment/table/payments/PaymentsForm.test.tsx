@@ -6,6 +6,7 @@ import { noop } from 'lodash';
 
 import { Claims, LeaseTermStatusTypes } from '@/constants';
 import { LeaseFormModel } from '@/features/leases/models';
+import { toTypeCodeNullable } from '@/utils/formUtils';
 import { act, fillInput, renderAsync, RenderOptions, screen, userEvent } from '@/utils/test-utils';
 import { getAllByRole as getAllByRoleBase } from '@/utils/test-utils';
 
@@ -17,8 +18,8 @@ const history = createMemoryHistory();
 const mockAxios = new MockAdapter(axios);
 export const defaultTestFormLeasePayment: FormLeasePayment = {
   ...defaultFormLeasePayment,
-  leasePaymentMethodType: { id: 'Cheque' },
-  leasePaymentStatusTypeCode: { id: 'Paid' },
+  leasePaymentMethodType: toTypeCodeNullable('Cheque'),
+  leasePaymentStatusTypeCode: toTypeCodeNullable('Paid') ?? undefined,
   amountTotal: 1200,
   amountGst: 100,
   amountPreTax: 1100,
@@ -32,7 +33,7 @@ const defaultLeaseWithTermsPayments: LeaseFormModel = {
   terms: [
     {
       ...defaultFormLeaseTerm,
-      statusTypeCode: { id: LeaseTermStatusTypes.EXERCISED },
+      statusTypeCode: toTypeCodeNullable(LeaseTermStatusTypes.EXERCISED),
       payments: [{ ...defaultTestFormLeasePayment }],
     },
   ],

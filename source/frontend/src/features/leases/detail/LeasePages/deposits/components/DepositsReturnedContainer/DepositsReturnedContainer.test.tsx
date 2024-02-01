@@ -1,6 +1,8 @@
 import { useKeycloak } from '@react-keycloak/web';
 
+import { getEmptyPerson } from '@/mocks/contacts.mock';
 import { getMockDepositReturns, getMockDeposits } from '@/mocks/deposits.mock';
+import { getEmptyOrganization } from '@/mocks/organization.mock';
 import { formatMoney, prettyFormatDate } from '@/utils';
 import { getAllByRole as getAllByRoleBase, render, RenderOptions } from '@/utils/test-utils';
 
@@ -82,7 +84,7 @@ describe('DepositsReturnedContainer component', () => {
 
     expect(dataRow).not.toBeNull();
     expect(findCell(dataRow, 0)?.textContent).toBe(
-      getMockDeposits()[0].depositType.description ?? '',
+      getMockDeposits()[0].depositType?.description ?? '',
     );
     expect(findCell(dataRow, 1)?.textContent).toBe(prettyFormatDate(depositReturn.terminationDate));
     expect(findCell(dataRow, 2)?.textContent).toBe(formatMoney(getMockDeposits()[1].amountPaid));
@@ -102,11 +104,19 @@ describe('DepositsReturnedContainer component', () => {
       depositReturns: [
         {
           ...depositReturn,
-          contactHolder: { id: 'O1', organization: { name: 'test organization' } },
+          contactHolder: {
+            id: 'O1',
+            organization: { ...getEmptyOrganization(), name: 'test organization' },
+            person: null,
+          },
         },
         {
           ...depositReturn,
-          contactHolder: { id: 'P1', person: { firstName: 'test', surname: 'person' } },
+          contactHolder: {
+            id: 'P1',
+            person: { ...getEmptyPerson(), firstName: 'test', surname: 'person' },
+            organization: null,
+          },
         },
       ],
       onEdit: mockCallback,

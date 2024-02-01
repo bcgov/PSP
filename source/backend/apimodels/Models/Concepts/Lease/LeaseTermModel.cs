@@ -22,11 +22,6 @@ namespace Pims.Api.Models.Concepts.Lease
         public long LeaseId { get; set; }
 
         /// <summary>
-        /// get/set - The Rowversion on the parent lease, must be up to date to allow lease add/update operations.
-        /// </summary>
-        public long LeaseRowVersion { get; set; }
-
-        /// <summary>
         /// get/set - The stored calculated gst amount based on the total payment and the system gst constant.
         /// </summary>
         public decimal? GstAmount { get; set; }

@@ -1,10 +1,11 @@
-import { Api_Person } from '@/models/api/Person';
+import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_Person';
 
 import { IOrganization } from '.';
+
 export interface ITenant {
   id?: string;
   leaseId?: number;
-  person?: Api_Person;
+  person?: ApiGen_Concepts_Person;
   personId?: number;
   organization?: IOrganization;
   organizationId?: number;

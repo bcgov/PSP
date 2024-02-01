@@ -26,6 +26,7 @@ import {
   IEditableOrganizationForm,
 } from '@/interfaces/editable-contact';
 import { IContactPerson } from '@/interfaces/IContact';
+import { isValidId } from '@/utils';
 
 import { OrganizationSubForm } from '../../Organization/OrganizationSubForm';
 import { onValidateOrganization } from '../../utils/contactUtils';
@@ -47,7 +48,7 @@ export const UpdateOrganizationForm: React.FC<{ id: number }> = ({ id }) => {
       const organizationResponse = await updateOrganization(apiOrganization);
       const organizationId = organizationResponse?.id;
 
-      if (!!organizationId) {
+      if (isValidId(organizationId)) {
         history.push(`/contact/O${organizationId}`);
       }
     } finally {

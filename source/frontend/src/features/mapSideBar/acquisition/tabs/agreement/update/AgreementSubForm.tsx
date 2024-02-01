@@ -13,7 +13,7 @@ import { SectionField, StyledFieldLabel } from '@/components/common/Section/Sect
 import * as API from '@/constants/API';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { useModalContext } from '@/hooks/useModalContext';
-import { AgreementStatusTypes } from '@/models/api/Agreement';
+import { ApiGen_CodeTypes_AgreementStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_AgreementStatusTypes';
 import { ILookupCode } from '@/store/slices/lookupCodes';
 import { mapLookupCode } from '@/utils';
 import { withNameSpace } from '@/utils/formUtils';
@@ -46,7 +46,7 @@ export const AgreementSubForm: React.FunctionComponent<IAgreementSubFormProps> =
   const setFieldValue = formikProps.setFieldValue;
   useEffect(() => {
     if (
-      agreement.agreementStatusTypeCode !== AgreementStatusTypes.CANCELLED &&
+      agreement.agreementStatusTypeCode !== ApiGen_CodeTypes_AgreementStatusTypes.CANCELLED &&
       !!agreement.cancellationNote
     ) {
       setModalContent({
@@ -59,7 +59,7 @@ export const AgreementSubForm: React.FunctionComponent<IAgreementSubFormProps> =
         handleCancel: () => {
           setFieldValue(
             withNameSpace(nameSpace, 'agreementStatusTypeCode'),
-            AgreementStatusTypes.CANCELLED,
+            ApiGen_CodeTypes_AgreementStatusTypes.CANCELLED,
           );
           setDisplayModal(false);
         },
@@ -82,7 +82,7 @@ export const AgreementSubForm: React.FunctionComponent<IAgreementSubFormProps> =
           disabled={isDisabled}
         />
       </SectionField>
-      {agreement.agreementStatusTypeCode === AgreementStatusTypes.CANCELLED && (
+      {agreement.agreementStatusTypeCode === ApiGen_CodeTypes_AgreementStatusTypes.CANCELLED && (
         <SectionField labelWidth="5" label="Cancellation reason">
           <Input field={withNameSpace(nameSpace, 'cancellationNote')} disabled={isDisabled} />
         </SectionField>

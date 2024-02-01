@@ -14,7 +14,7 @@ import { useApiAcquisitionFile } from '@/hooks/pims-api/useApiAcquisitionFile';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { useSearch } from '@/hooks/useSearch';
-import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
+import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { toFilteredApiPaginateParams } from '@/utils/CommonFunctions';
 import { generateMultiSortCriteria } from '@/utils/utils';
 
@@ -22,7 +22,7 @@ import { useAcquisitionFileExport } from '../hooks/useAcquisitionFileExport';
 import { AcquisitionFilter } from './AcquisitionFilter/AcquisitionFilter';
 import { AcquisitionSearchResults } from './AcquisitionSearchResults/AcquisitionSearchResults';
 import { AcquisitionSearchResultModel } from './AcquisitionSearchResults/models';
-import { AcquisitionFilterModel, Api_AcquisitionFilter } from './interfaces';
+import { AcquisitionFilterModel, ApiGen_Concepts_AcquisitionFilter } from './interfaces';
 import * as Styled from './styles';
 
 /**
@@ -48,7 +48,7 @@ export const AcquisitionListView: React.FunctionComponent<
     setCurrentPage,
     setPageSize,
     loading,
-  } = useSearch<Api_AcquisitionFile, Api_AcquisitionFilter>(
+  } = useSearch<ApiGen_Concepts_AcquisitionFile, ApiGen_Concepts_AcquisitionFilter>(
     new AcquisitionFilterModel().toApi(),
     getAcquisitionFiles,
     'No matching results can be found. Try widening your search criteria.',
@@ -61,7 +61,7 @@ export const AcquisitionListView: React.FunctionComponent<
    */
   const fetch = (accept: 'excel') => {
     // Call API with appropriate search parameters
-    const query = toFilteredApiPaginateParams<Api_AcquisitionFilter>(
+    const query = toFilteredApiPaginateParams<ApiGen_Concepts_AcquisitionFilter>(
       currentPage,
       pageSize,
       sort && !isEmpty(sort) ? generateMultiSortCriteria(sort) : undefined,
@@ -73,7 +73,7 @@ export const AcquisitionListView: React.FunctionComponent<
 
   // update internal state whenever the filter bar changes
   const changeFilter = useCallback(
-    (filter: Api_AcquisitionFilter) => {
+    (filter: ApiGen_Concepts_AcquisitionFilter) => {
       setFilter(filter);
     },
     [setFilter],

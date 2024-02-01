@@ -1,44 +1,43 @@
-import {
-  Api_DispositionFile,
-  Api_DispositionFileAppraisal,
-  Api_DispositionFileOffer,
-} from '@/models/api/DispositionFile';
+import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
+import { ApiGen_Concepts_DispositionFileAppraisal } from '@/models/api/generated/ApiGen_Concepts_DispositionFileAppraisal';
+import { ApiGen_Concepts_DispositionFileOffer } from '@/models/api/generated/ApiGen_Concepts_DispositionFileOffer';
 import { ApiGen_Concepts_DispositionFileSale } from '@/models/api/generated/ApiGen_Concepts_DispositionFileSale';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 
 export const mockDispositionFileResponse = (
   id = 1,
   name = 'Test Disposition File',
   rowVersion = 1,
-): Api_DispositionFile => ({
+): ApiGen_Concepts_DispositionFile => ({
   fileReference: 'FILE_REFERENCE 8128827 3EAD56A',
   initiatingDocumentDate: '1917-06-29T00:00:00',
   assignedDate: '2025-04-26T00:00:00',
   completionDate: '1956-05-28T00:00:00',
-  project: null,
-  projectId: null,
-  product: null,
-  productId: null,
   dispositionTypeCode: {
     id: 'CLOSURE',
     description: 'Road Closure',
     isDisabled: false,
+    displayOrder: null,
   },
   dispositionStatusTypeCode: null,
   initiatingBranchTypeCode: {
     id: 'PLMB',
     description: 'PLMB',
     isDisabled: false,
+    displayOrder: null,
   },
   physicalFileStatusTypeCode: {
     id: 'PENDING',
     description: 'Pending Litigation',
     isDisabled: false,
+    displayOrder: null,
   },
   fundingTypeCode: null,
   initiatingDocumentTypeCode: {
     id: 'SURPLUS',
     description: 'Surplus Declaration',
     isDisabled: false,
+    displayOrder: null,
   },
   dispositionTypeOther: null,
   initiatingDocumentTypeOther: null,
@@ -46,6 +45,7 @@ export const mockDispositionFileResponse = (
     id: 4,
     description: 'Cannot determine',
     isDisabled: false,
+    displayOrder: null,
   },
   fileProperties: [],
   dispositionTeam: [
@@ -62,14 +62,22 @@ export const mockDispositionFileResponse = (
         personAddresses: [],
         contactMethods: [],
         rowVersion: 1,
+        comment: null,
+        middleNames: null,
+        preferredName: null,
       },
       teamProfileTypeCode: 'MOTILAWYER',
       teamProfileType: {
         id: 'MOTILAWYER',
         description: 'MoTI Solicitor',
         isDisabled: false,
+        displayOrder: null,
       },
       rowVersion: 1,
+      organization: null,
+      organizationId: null,
+      primaryContact: null,
+      primaryContactId: null,
     },
     {
       id: 10,
@@ -84,14 +92,22 @@ export const mockDispositionFileResponse = (
         personAddresses: [],
         contactMethods: [],
         rowVersion: 1,
+        comment: null,
+        middleNames: null,
+        preferredName: null,
       },
       teamProfileTypeCode: 'NEGOTAGENT',
       teamProfileType: {
         id: 'NEGOTAGENT',
         description: 'Negotiation agent',
         isDisabled: false,
+        displayOrder: null,
       },
       rowVersion: 1,
+      organization: null,
+      organizationId: null,
+      primaryContact: null,
+      primaryContactId: null,
     },
   ],
   id: id,
@@ -101,6 +117,7 @@ export const mockDispositionFileResponse = (
     id: 'CANCELLED',
     description: 'Cancelled',
     isDisabled: false,
+    displayOrder: null,
   },
   dispositionAppraisal: {
     id: 250,
@@ -110,6 +127,7 @@ export const mockDispositionFileResponse = (
     bcaValueAmount: 600000,
     bcaRollYear: '2023',
     listPriceAmount: 590000,
+    ...getEmptyBaseAudit(),
   },
   dispositionOffers: [],
   dispositionSale: null,
@@ -249,7 +267,7 @@ export const mockDispositionFilePropertyResponse = () => [
 export const mockDispositionFileOfferApi = (
   id: number = 0,
   dispositionFileId: number = 1,
-): Api_DispositionFileOffer => ({
+): ApiGen_Concepts_DispositionFileOffer => ({
   id: id,
   dispositionFileId: dispositionFileId,
   dispositionOfferStatusTypeCode: 'OPEN',
@@ -257,12 +275,14 @@ export const mockDispositionFileOfferApi = (
     id: 'OPEN',
     description: 'Open',
     isDisabled: false,
+    displayOrder: null,
   },
   offerName: 'TEST OFFER NAME',
   offerDate: '2023-12-25T00:00:00',
   offerExpiryDate: '2024-12-25T00:00:00',
   offerAmount: 1500000.99,
   offerNote: 'MY OFFER NOTES',
+  rowVersion: 0,
 });
 
 export const mockDispositionFileSaleApi = (
@@ -416,7 +436,7 @@ export const mockDispositionFileSaleApi = (
 export const mockDispositionAppraisalApi = (
   id: number = 10,
   dispositionFileId: number = 1,
-): Api_DispositionFileAppraisal => ({
+): ApiGen_Concepts_DispositionFileAppraisal => ({
   id: id,
   dispositionFileId: dispositionFileId,
   appraisedAmount: 20000.0,

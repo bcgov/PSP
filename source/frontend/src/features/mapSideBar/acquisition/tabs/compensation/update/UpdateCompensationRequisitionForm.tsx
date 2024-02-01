@@ -24,8 +24,9 @@ import { PayeeOption } from '@/features/mapSideBar/acquisition/models/PayeeOptio
 import SidebarFooter from '@/features/mapSideBar/shared/SidebarFooter';
 import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
 import { IAutocompletePrediction } from '@/interfaces/IAutocomplete';
-import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
-import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
+import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
+import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
+import { isValidId } from '@/utils';
 import { prettyFormatDate } from '@/utils/dateUtils';
 import { withNameSpace } from '@/utils/formUtils';
 
@@ -35,7 +36,7 @@ import { CompensationRequisitionFormModel } from './models';
 
 export interface CompensationRequisitionFormProps {
   isLoading: boolean;
-  acquisitionFile: Api_AcquisitionFile;
+  acquisitionFile: ApiGen_Concepts_AcquisitionFile;
   payeeOptions: PayeeOption[];
   initialValues: CompensationRequisitionFormModel;
   gstConstant: number;
@@ -45,7 +46,7 @@ export interface CompensationRequisitionFormProps {
   yearlyFinancialOptions: SelectOption[];
   onSave: (
     compensation: CompensationRequisitionFormModel,
-  ) => Promise<Api_CompensationRequisition | undefined>;
+  ) => Promise<ApiGen_Concepts_CompensationRequisition | undefined>;
   onCancel: () => void;
   showAltProjectError: boolean;
   setShowAltProjectError: React.Dispatch<React.SetStateAction<boolean>>;
@@ -125,7 +126,7 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
 
   const onMinistryProjectSelected = async (param: IAutocompletePrediction[]) => {
     if (param.length > 0) {
-      if (param[0].id !== undefined && acquisitionFile.projectId === param[0].id) {
+      if (isValidId(param[0].id) && acquisitionFile.projectId === param[0].id) {
         setShowAltProjectError(true);
       }
     }

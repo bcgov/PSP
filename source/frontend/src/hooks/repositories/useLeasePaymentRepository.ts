@@ -1,7 +1,7 @@
 import { AxiosResponse } from 'axios';
 import { useCallback, useMemo } from 'react';
 
-import { Api_LeasePayment } from '@/models/api/LeasePayment';
+import { ApiGen_Concepts_Payment } from '@/models/api/generated/ApiGen_Concepts_Payment';
 import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils';
 
 import {
@@ -16,10 +16,14 @@ import { useApiRequestWrapper } from '../util/useApiRequestWrapper';
  */
 export const useLeasePaymentRepository = () => {
   const updateLeasePaymentApi = useApiRequestWrapper<
-    (leaseId: number, payment: Api_LeasePayment) => Promise<AxiosResponse<Api_LeasePayment, any>>
+    (
+      leaseId: number,
+      payment: ApiGen_Concepts_Payment,
+    ) => Promise<AxiosResponse<ApiGen_Concepts_Payment, any>>
   >({
     requestFunction: useCallback(
-      async (leaseId: number, payment: Api_LeasePayment) => await putLeasePayment(leaseId, payment),
+      async (leaseId: number, payment: ApiGen_Concepts_Payment) =>
+        await putLeasePayment(leaseId, payment),
       [],
     ),
     requestName: 'putLeasePayment',
@@ -28,10 +32,13 @@ export const useLeasePaymentRepository = () => {
   });
 
   const addLeasePaymentApi = useApiRequestWrapper<
-    (leaseId: number, payment: Api_LeasePayment) => Promise<AxiosResponse<Api_LeasePayment, any>>
+    (
+      leaseId: number,
+      payment: ApiGen_Concepts_Payment,
+    ) => Promise<AxiosResponse<ApiGen_Concepts_Payment, any>>
   >({
     requestFunction: useCallback(
-      async (leaseId: number, payment: Api_LeasePayment) =>
+      async (leaseId: number, payment: ApiGen_Concepts_Payment) =>
         await postLeasePayment(leaseId, payment),
       [],
     ),
@@ -41,10 +48,10 @@ export const useLeasePaymentRepository = () => {
   });
 
   const deleteLeasePaymentApi = useApiRequestWrapper<
-    (leaseId: number, payment: Api_LeasePayment) => Promise<AxiosResponse<boolean, any>>
+    (leaseId: number, payment: ApiGen_Concepts_Payment) => Promise<AxiosResponse<boolean, any>>
   >({
     requestFunction: useCallback(
-      async (leaseId: number, payment: Api_LeasePayment) =>
+      async (leaseId: number, payment: ApiGen_Concepts_Payment) =>
         await deleteLeasePayment(leaseId, payment),
       [],
     ),

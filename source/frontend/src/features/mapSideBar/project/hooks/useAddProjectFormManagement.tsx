@@ -4,14 +4,15 @@ import { useCallback } from 'react';
 import * as API from '@/constants/API';
 import { useProjectProvider } from '@/hooks/repositories/useProjectProvider';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
-import { Api_Project } from '@/models/api/Project';
+import { ApiGen_Concepts_Project } from '@/models/api/generated/ApiGen_Concepts_Project';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
+import { exists, isValidId } from '@/utils';
 
 import { AddProjectYupSchema } from '../add/AddProjectFileYupSchema';
 import { ProjectForm } from '../models';
 
 export interface IUseAddProjectFormProps {
-  onSuccess?: (project: Api_Project) => void;
+  onSuccess?: (project: ApiGen_Concepts_Project) => void;
   initialForm?: ProjectForm;
 }
 
@@ -38,7 +39,7 @@ export function useAddProjectForm(props: IUseAddProjectFormProps) {
       const project = values.toApi();
       const response = await addProject.execute(project, userOverrideCodes);
 
-      if (!!response?.id) {
+      if (exists(response) && isValidId(response?.id)) {
         formikHelpers.resetForm();
         if (typeof onSuccess === 'function') {
           onSuccess(response);

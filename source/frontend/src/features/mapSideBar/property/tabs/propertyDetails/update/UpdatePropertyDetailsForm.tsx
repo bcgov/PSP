@@ -70,9 +70,6 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<
 
   // show/hide conditionals
   const isHighwayRoad = tenureStatus?.some(obj => obj.typeCode === PropertyTenureTypes.HighwayRoad);
-  const isAdjacentLand = tenureStatus?.some(
-    obj => obj.typeCode === PropertyTenureTypes.AdjacentLand,
-  );
 
   const isIndianReserve = tenureStatus?.some(
     obj => obj.typeCode === PropertyTenureTypes.IndianReserve,
@@ -101,10 +98,7 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<
     if (!isHighwayRoad) {
       setFieldValue('roadTypes', []);
     }
-    if (!isAdjacentLand) {
-      setFieldValue('adjacentLands', []);
-    }
-  }, [isAdjacentLand, isHighwayRoad, setFieldValue]);
+  }, [isHighwayRoad, setFieldValue]);
 
   const cannotDetermineInfoText =
     'This means the property is out of bounds or there was an error at the time of determining this value. If needed, edit property details and pick the appropriate  value to update it.';

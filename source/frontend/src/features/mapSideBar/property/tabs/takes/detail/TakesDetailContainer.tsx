@@ -2,13 +2,13 @@ import orderBy from 'lodash/orderBy';
 import moment from 'moment';
 import * as React from 'react';
 
-import { Api_PropertyFile } from '@/models/api/PropertyFile';
+import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 
 import { useTakesRepository } from '../repositories/useTakesRepository';
 import { ITakesDetailViewProps } from './TakesDetailView';
 
 interface ITakesDetailContainerProps {
-  fileProperty: Api_PropertyFile;
+  fileProperty: ApiGen_Concepts_FileProperty;
   onEdit: (edit: boolean) => void;
   View: React.FunctionComponent<React.PropsWithChildren<ITakesDetailViewProps>>;
 }

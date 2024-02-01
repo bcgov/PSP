@@ -134,7 +134,17 @@ const expectedFormData: IEditableOrganization = {
   comment: '',
   persons: undefined,
   addresses: [],
-  contactMethods: [{ contactMethodTypeCode: { id: 'WORKEMAIL' }, value: 'foo@bar.com' }],
+  contactMethods: [
+    {
+      contactMethodTypeCode: {
+        id: 'WORKEMAIL',
+        description: null,
+        isDisabled: false,
+        displayOrder: null,
+      },
+      value: 'foo@bar.com',
+    },
+  ],
 };
 
 const mockAddress: IEditableOrganizationAddress = {
@@ -146,5 +156,10 @@ const mockAddress: IEditableOrganizationAddress = {
   countryId: 4,
   countryOther: 'Netherlands',
   postal: '123456',
-  addressTypeId: { id: AddressTypes.Mailing },
+  addressTypeId: {
+    id: AddressTypes.Mailing,
+    description: null,
+    isDisabled: false,
+    displayOrder: null,
+  },
 };

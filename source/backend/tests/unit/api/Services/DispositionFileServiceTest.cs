@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Threading.Channels;
 using DocumentFormat.OpenXml.Office2010.Excel;
 using FluentAssertions;
 using MapsterMapper;
@@ -716,8 +717,8 @@ namespace Pims.Api.Test.Services
             // Arrange
             var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionEdit);
 
+            var checklistItems = new List<PimsDispositionChecklistItem>() { new PimsDispositionChecklistItem() { Internal_Id = 1, DspChklstItemStatusTypeCode = "COMPLT" } };
             var acqFile = EntityHelper.CreateDispositionFile();
-            acqFile.PimsDispositionChecklistItems = new List<PimsDispositionChecklistItem>() { new PimsDispositionChecklistItem() { Internal_Id = 1, DspChklstItemStatusTypeCode = "COMPLT" } };
 
             var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
             repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
@@ -727,7 +728,7 @@ namespace Pims.Api.Test.Services
                 .Returns(new List<PimsDispositionChecklistItem>() { new PimsDispositionChecklistItem() { Internal_Id = 1, DspChklstItemStatusTypeCode = "INCOMP" } });
 
             // Act
-            service.UpdateChecklistItems(acqFile);
+            service.UpdateChecklistItems(checklistItems);
 
             // Assert
             fileChecklistRepository.Verify(x => x.GetAllChecklistItemsByDispositionFileId(It.IsAny<long>()), Times.Once);
@@ -736,13 +737,12 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
-        public void UpdateChecklist_ItemNotFound()
+        public void UpdateChecklist_NoEmptyList()
         {
             // Arrange
             var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionEdit);
 
             var acqFile = EntityHelper.CreateDispositionFile();
-            acqFile.PimsDispositionChecklistItems = new List<PimsDispositionChecklistItem>() { new PimsDispositionChecklistItem() { Internal_Id = 999, DspChklstItemStatusTypeCode = "COMPLT" } };
             acqFile.DispositionFileStatusTypeCode = "ACTIV";
 
             var acqRepository = this._helper.GetService<Mock<IDispositionFileRepository>>();
@@ -753,7 +753,34 @@ namespace Pims.Api.Test.Services
                 .Returns(new List<PimsDispositionChecklistItem>() { new PimsDispositionChecklistItem() { Internal_Id = 1, DspChklstItemStatusTypeCode = "INCOMP" } });
 
             // Act
-            Action act = () => service.UpdateChecklistItems(acqFile);
+            Action act = () => service.UpdateChecklistItems(new List<PimsDispositionChecklistItem>());
+
+            // Assert
+            act.Should().Throw<BadRequestException>();
+
+            fileChecklistRepository.Verify(x => x.GetAllChecklistItemsByDispositionFileId(It.IsAny<long>()), Times.Never);
+            fileChecklistRepository.Verify(x => x.Update(It.IsAny<PimsDispositionChecklistItem>()), Times.Never);
+        }
+
+        [Fact]
+        public void UpdateChecklist_ItemNotFound()
+        {
+            // Arrange
+            var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionEdit);
+
+            var checklistItems = new List<PimsDispositionChecklistItem>() { new PimsDispositionChecklistItem() { Internal_Id = 999, DspChklstItemStatusTypeCode = "COMPLT" } };
+            var acqFile = EntityHelper.CreateDispositionFile();
+            acqFile.DispositionFileStatusTypeCode = "ACTIV";
+
+            var acqRepository = this._helper.GetService<Mock<IDispositionFileRepository>>();
+            acqRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
+
+            var fileChecklistRepository = this._helper.GetService<Mock<IDispositionFileChecklistRepository>>();
+            fileChecklistRepository.Setup(x => x.GetAllChecklistItemsByDispositionFileId(It.IsAny<long>()))
+                .Returns(new List<PimsDispositionChecklistItem>() { new PimsDispositionChecklistItem() { Internal_Id = 1, DspChklstItemStatusTypeCode = "INCOMP" } });
+
+            // Act
+            Action act = () => service.UpdateChecklistItems(checklistItems);
 
             // Assert
             act.Should().Throw<BadRequestException>();
@@ -768,13 +795,14 @@ namespace Pims.Api.Test.Services
             // Arrange
             var service = this.CreateDispositionServiceWithPermissions();
 
+            var checklistItems = new List<PimsDispositionChecklistItem>() { new PimsDispositionChecklistItem() { Internal_Id = 1, DspChklstItemStatusTypeCode = "COMPLT" } };
             var acqFile = EntityHelper.CreateDispositionFile();
 
             var repository = this._helper.GetService<Mock<IDispositionFileChecklistRepository>>();
             repository.Setup(x => x.GetAllChecklistItemsByDispositionFileId(It.IsAny<long>())).Returns(acqFile.PimsDispositionChecklistItems.ToList());
 
             // Act
-            Action act = () => service.UpdateChecklistItems(acqFile);
+            Action act = () => service.UpdateChecklistItems(checklistItems);
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();

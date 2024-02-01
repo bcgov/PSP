@@ -3,7 +3,7 @@ import { useCallback, useMemo } from 'react';
 
 import { useApiTakes } from '@/hooks/pims-api/useApiTakes';
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
-import { Api_Take } from '@/models/api/Take';
+import { ApiGen_Concepts_Take } from '@/models/api/generated/ApiGen_Concepts_Take';
 import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils';
 
 /**
@@ -18,7 +18,7 @@ export const useTakesRepository = () => {
   } = useApiTakes();
 
   const getTakesByFileIdApi = useApiRequestWrapper<
-    (fileId: number) => Promise<AxiosResponse<Api_Take[], any>>
+    (fileId: number) => Promise<AxiosResponse<ApiGen_Concepts_Take[], any>>
   >({
     requestFunction: useCallback(
       async (fileId: number) => await getTakesByAcqFileId(fileId),
@@ -30,7 +30,7 @@ export const useTakesRepository = () => {
   });
 
   const getTakesByPropertyApi = useApiRequestWrapper<
-    (fileId: number, propertyId: number) => Promise<AxiosResponse<Api_Take[], any>>
+    (fileId: number, propertyId: number) => Promise<AxiosResponse<ApiGen_Concepts_Take[], any>>
   >({
     requestFunction: useCallback(
       async (fileId: number, propertyId: number) => await getTakesByPropertyId(fileId, propertyId),
@@ -54,10 +54,13 @@ export const useTakesRepository = () => {
   });
 
   const updateTakesByAcquisitionPropertyIdApi = useApiRequestWrapper<
-    (acquisitionFilePropertyId: number, takes: Api_Take[]) => Promise<AxiosResponse<number, any>>
+    (
+      acquisitionFilePropertyId: number,
+      takes: ApiGen_Concepts_Take[],
+    ) => Promise<AxiosResponse<number, any>>
   >({
     requestFunction: useCallback(
-      async (acquisitionFilePropertyId: number, takes: Api_Take[]) =>
+      async (acquisitionFilePropertyId: number, takes: ApiGen_Concepts_Take[]) =>
         await updateTakesCountByPropertyId(acquisitionFilePropertyId, takes),
       [updateTakesCountByPropertyId],
     ),

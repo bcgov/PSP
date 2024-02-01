@@ -7,6 +7,7 @@ import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvi
 import { useInterestHolderRepository } from '@/hooks/repositories/useInterestHolderRepository';
 import { useModalManagement } from '@/hooks/useModalManagement';
 import { Api_GenerateOwner } from '@/models/generate/GenerateOwner';
+import { exists } from '@/utils/utils';
 
 import { IGenerateFormViewProps } from './GenerateFormView';
 import { useGenerateH0443 } from './hooks/useGenerateH0443';
@@ -55,8 +56,8 @@ const GenerateFormContainer: React.FunctionComponent<
       interestHoldersFetchCall,
     ]);
 
-    if (fileOwners) {
-      fileOwners?.map(owner =>
+    if (exists(fileOwners)) {
+      fileOwners.map(owner =>
         generateRecipientsList.push(
           new LetterRecipientModel(owner.id!, 'OWNR', new Api_GenerateOwner(owner), owner),
         ),

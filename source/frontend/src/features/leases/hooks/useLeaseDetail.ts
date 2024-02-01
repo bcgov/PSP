@@ -8,7 +8,7 @@ import { useLeaseTermRepository } from '@/hooks/repositories/useLeaseTermReposit
 import { usePropertyLeaseRepository } from '@/hooks/repositories/usePropertyLeaseRepository';
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
-import { Api_Lease } from '@/models/api/Lease';
+import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { useAxiosErrorHandler } from '@/utils';
 
 import { LeaseStateContext } from './../context/LeaseContext';
@@ -55,10 +55,10 @@ export function useLeaseDetail(leaseId?: number) {
         leaseTermsPromise,
       ]);
       if (!!lease) {
-        const mergedLeases: Api_Lease = {
+        const mergedLeases: ApiGen_Concepts_Lease = {
           ...lease,
           tenants: leaseTenants ?? [],
-          properties: propertyLeases ?? [],
+          fileProperties: propertyLeases ?? [],
           terms: leaseTerms ?? [],
         };
         setLease(mergedLeases);

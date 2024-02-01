@@ -8,8 +8,8 @@ import { FileTabs, FileTabType, TabFileView } from '@/features/mapSideBar/shared
 import DocumentsTab from '@/features/mapSideBar/shared/tabs/DocumentsTab';
 import NoteListView from '@/features/notes/list/NoteListView';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
-import { Api_DispositionFile } from '@/models/api/DispositionFile';
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
+import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
 
 import { SideBarContext } from '../../context/sidebarContext';
 import { ChecklistView } from '../../shared/tabs/checklist/detail/ChecklistView';
@@ -18,7 +18,7 @@ import OffersAndSaleContainer from './offersAndSale/OffersAndSaleContainer';
 import OffersAndSaleContainerView from './offersAndSale/OffersAndSaleContainerView';
 
 export interface IDispositionFileTabsProps {
-  dispositionFile?: Api_DispositionFile;
+  dispositionFile?: ApiGen_Concepts_DispositionFile;
   defaultTab: FileTabType;
   setIsEditing: (value: boolean) => void;
 }

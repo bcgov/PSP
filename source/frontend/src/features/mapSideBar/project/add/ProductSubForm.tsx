@@ -5,6 +5,7 @@ import styled from 'styled-components';
 
 import { FastCurrencyInput, FastDatePicker, Input, TextArea } from '@/components/common/form';
 import { SectionField } from '@/components/common/Section/SectionField';
+import { isValidId } from '@/utils';
 import { withNameSpace } from '@/utils/formUtils';
 
 import { ProjectForm } from '../models';
@@ -21,7 +22,7 @@ export const ProductSubForm: React.FunctionComponent<IProductSubFormProps> = ({
   formikProps,
 }) => {
   const productId = formikProps.values.products[index].id;
-  const isExistingProduct = productId !== 0 && productId !== null;
+  const isExistingProduct = isValidId(productId);
   const costEstimate = formikProps.values.products[index].costEstimate;
   return (
     <>

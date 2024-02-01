@@ -3,8 +3,8 @@ import * as React from 'react';
 
 import { Select, SelectOption } from '@/components/common/form';
 import { SectionField } from '@/components/common/Section/SectionField';
-import { Api_AcquisitionFileTeam } from '@/models/api/AcquisitionFile';
-import { Api_Project } from '@/models/api/Project';
+import { ApiGen_Concepts_AcquisitionFileTeam } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileTeam';
+import { ApiGen_Concepts_Project } from '@/models/api/generated/ApiGen_Concepts_Project';
 import { Api_ExportProjectFilter } from '@/models/api/ProjectFilter';
 
 import { ExportProjectModel, ProjectExportTypes } from './models';
@@ -13,8 +13,8 @@ import { ProjectExportFormContent } from './ProjectExportFormContent';
 export interface IProjectExportFormProps {
   onExportTypeSelected: () => void;
   onExport: (filter: Api_ExportProjectFilter) => Promise<void>;
-  projects: Api_Project[];
-  teamMembers: Api_AcquisitionFileTeam[];
+  projects: ApiGen_Concepts_Project[];
+  teamMembers: ApiGen_Concepts_AcquisitionFileTeam[];
   loading: boolean;
 }
 

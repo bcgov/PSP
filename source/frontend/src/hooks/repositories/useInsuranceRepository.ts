@@ -1,7 +1,7 @@
 import { AxiosResponse } from 'axios';
 import { useCallback, useMemo } from 'react';
 
-import { Api_Insurance } from '@/models/api/Insurance';
+import { ApiGen_Concepts_Insurance } from '@/models/api/generated/ApiGen_Concepts_Insurance';
 import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils';
 
 import { getLeaseInsurances, updateLeaseInsurances } from '../pims-api/useApiInsurances';
@@ -12,7 +12,7 @@ import { useApiRequestWrapper } from '../util/useApiRequestWrapper';
  */
 export const useInsurancesRepository = () => {
   const getInsurancesApi = useApiRequestWrapper<
-    (leaseId: number) => Promise<AxiosResponse<Api_Insurance[], any>>
+    (leaseId: number) => Promise<AxiosResponse<ApiGen_Concepts_Insurance[], any>>
   >({
     requestFunction: useCallback(async (leaseId: number) => await getLeaseInsurances(leaseId), []),
     requestName: 'getLeaseInsurances',
@@ -21,10 +21,13 @@ export const useInsurancesRepository = () => {
   });
 
   const updateInsurancesApi = useApiRequestWrapper<
-    (leaseId: number, insurances: Api_Insurance[]) => Promise<AxiosResponse<Api_Insurance[], any>>
+    (
+      leaseId: number,
+      insurances: ApiGen_Concepts_Insurance[],
+    ) => Promise<AxiosResponse<ApiGen_Concepts_Insurance[], any>>
   >({
     requestFunction: useCallback(
-      async (leaseId: number, insurances: Api_Insurance[]) =>
+      async (leaseId: number, insurances: ApiGen_Concepts_Insurance[]) =>
         await updateLeaseInsurances(leaseId, insurances),
       [],
     ),

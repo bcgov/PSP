@@ -5,7 +5,7 @@ import { Input } from '@/components/common/form';
 import { YesNoSelect } from '@/components/common/form/YesNoSelect';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
-import { LeaseFormModel } from '@/features/leases/models';
+import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { withNameSpace } from '@/utils/formUtils';
 
 export interface IDetailDocumentationProps {
@@ -20,7 +20,7 @@ export interface IDetailDocumentationProps {
 export const DetailDocumentation: React.FunctionComponent<
   React.PropsWithChildren<IDetailDocumentationProps>
 > = ({ nameSpace, disabled }) => {
-  const formikProps = useFormikContext<LeaseFormModel>();
+  const formikProps = useFormikContext<ApiGen_Concepts_Lease>();
   const note = getIn(formikProps.values, withNameSpace(nameSpace, 'note'));
   const documentationReference = getIn(
     formikProps.values,

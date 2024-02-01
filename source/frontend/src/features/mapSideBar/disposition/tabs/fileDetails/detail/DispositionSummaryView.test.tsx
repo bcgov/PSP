@@ -1,5 +1,7 @@
 import Claims from '@/constants/claims';
+import { getEmptyPerson } from '@/mocks/contacts.mock';
 import { mockDispositionFileResponse } from '@/mocks/dispositionFiles.mock';
+import { toTypeCodeNullable } from '@/utils/formUtils';
 import { act, cleanup, render, RenderOptions, userEvent, waitForEffects } from '@/utils/test-utils';
 
 import DispositionSummaryView, { IDispositionSummaryViewProps } from './DispositionSummaryView';
@@ -73,7 +75,7 @@ describe('DispositionSummaryView component', () => {
       {
         dispositionFile: {
           ...mockDispositionFileResponse(),
-          initiatingDocumentTypeCode: { id: 'OTHER' },
+          initiatingDocumentTypeCode: toTypeCodeNullable('OTHER'),
         },
       },
       { claims: [] },
@@ -87,7 +89,7 @@ describe('DispositionSummaryView component', () => {
       {
         dispositionFile: {
           ...mockDispositionFileResponse(),
-          dispositionTypeCode: { id: 'OTHER' },
+          dispositionTypeCode: toTypeCodeNullable('OTHER'),
         },
       },
       { claims: [] },
@@ -108,6 +110,7 @@ describe('DispositionSummaryView component', () => {
               dispositionFileId: 1,
               personId: 1,
               person: {
+                ...getEmptyPerson(),
                 id: 1,
                 surname: 'Smith',
                 firstName: 'Bob',
@@ -121,8 +124,14 @@ describe('DispositionSummaryView component', () => {
                 id: 'NEGOTAGENT',
                 description: 'Negotiation agent',
                 isDisabled: false,
+                displayOrder: null,
               },
               rowVersion: 2,
+              organization: null,
+              organizationId: null,
+              primaryContact: null,
+              primaryContactId: null,
+              teamProfileTypeCode: null,
             },
           ],
         },
@@ -151,13 +160,24 @@ describe('DispositionSummaryView component', () => {
                 alias: 'ABC Inc',
                 incorporationNumber: '1234',
                 comment: '',
+                contactMethods: null,
+                isDisabled: false,
+                organizationAddresses: null,
+                organizationPersons: null,
+                rowVersion: null,
               },
               teamProfileType: {
                 id: 'NEGOTAGENT',
                 description: 'Negotiation agent',
                 isDisabled: false,
+                displayOrder: null,
               },
               rowVersion: 2,
+              person: null,
+              personId: null,
+              primaryContact: null,
+              primaryContactId: null,
+              teamProfileTypeCode: null,
             },
           ],
         },
@@ -187,6 +207,11 @@ describe('DispositionSummaryView component', () => {
                 alias: 'ABC Inc',
                 incorporationNumber: '1234',
                 comment: '',
+                contactMethods: null,
+                isDisabled: false,
+                organizationAddresses: null,
+                organizationPersons: null,
+                rowVersion: null,
               },
               primaryContactId: 1,
               primaryContact: {
@@ -198,13 +223,20 @@ describe('DispositionSummaryView component', () => {
                 personAddresses: [],
                 contactMethods: [],
                 rowVersion: 2,
+                comment: null,
+                isDisabled: false,
+                preferredName: null,
               },
               teamProfileType: {
                 id: 'NEGOTAGENT',
                 description: 'Negotiation agent',
                 isDisabled: false,
+                displayOrder: null,
               },
               rowVersion: 2,
+              person: null,
+              personId: null,
+              teamProfileTypeCode: null,
             },
           ],
         },

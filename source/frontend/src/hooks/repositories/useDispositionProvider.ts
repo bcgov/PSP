@@ -3,15 +3,15 @@ import { useCallback, useMemo } from 'react';
 
 import { useApiDispositionFile } from '@/hooks/pims-api/useApiDispositionFile';
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
-import {
-  Api_DispositionFile,
-  Api_DispositionFileAppraisal,
-  Api_DispositionFileOffer,
-  Api_DispositionFileProperty,
-  Api_DispositionFileTeam,
-} from '@/models/api/DispositionFile';
-import { Api_FileChecklistItem, Api_FileWithChecklist, Api_LastUpdatedBy } from '@/models/api/File';
+import { Api_LastUpdatedBy } from '@/models/api/File';
+import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
+import { ApiGen_Concepts_DispositionFileAppraisal } from '@/models/api/generated/ApiGen_Concepts_DispositionFileAppraisal';
+import { ApiGen_Concepts_DispositionFileOffer } from '@/models/api/generated/ApiGen_Concepts_DispositionFileOffer';
+import { ApiGen_Concepts_DispositionFileProperty } from '@/models/api/generated/ApiGen_Concepts_DispositionFileProperty';
 import { ApiGen_Concepts_DispositionFileSale } from '@/models/api/generated/ApiGen_Concepts_DispositionFileSale';
+import { ApiGen_Concepts_DispositionFileTeam } from '@/models/api/generated/ApiGen_Concepts_DispositionFileTeam';
+import { ApiGen_Concepts_FileChecklistItem } from '@/models/api/generated/ApiGen_Concepts_FileChecklistItem';
+import { ApiGen_Concepts_FileWithChecklist } from '@/models/api/generated/ApiGen_Concepts_FileWithChecklist';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import {
   useAxiosErrorHandler,
@@ -49,13 +49,15 @@ export const useDispositionProvider = () => {
 
   const addDispositionFileApi = useApiRequestWrapper<
     (
-      dispositionFile: Api_DispositionFile,
+      dispositionFile: ApiGen_Concepts_DispositionFile,
       userOverrideCodes: UserOverrideCode[],
-    ) => Promise<AxiosResponse<Api_DispositionFile, any>>
+    ) => Promise<AxiosResponse<ApiGen_Concepts_DispositionFile, any>>
   >({
     requestFunction: useCallback(
-      async (dispositionFile: Api_DispositionFile, useOverride: UserOverrideCode[] = []) =>
-        await postDispositionFileApi(dispositionFile, useOverride),
+      async (
+        dispositionFile: ApiGen_Concepts_DispositionFile,
+        useOverride: UserOverrideCode[] = [],
+      ) => await postDispositionFileApi(dispositionFile, useOverride),
       [postDispositionFileApi],
     ),
     requestName: 'AddDispositionFile',
@@ -65,7 +67,7 @@ export const useDispositionProvider = () => {
   });
 
   const getDispositionFileApi = useApiRequestWrapper<
-    (dispositionFileId: number) => Promise<AxiosResponse<Api_DispositionFile, any>>
+    (dispositionFileId: number) => Promise<AxiosResponse<ApiGen_Concepts_DispositionFile, any>>
   >({
     requestFunction: useCallback(
       async (dispositionFileId: number) => await getDispositionFile(dispositionFileId),
@@ -78,14 +80,14 @@ export const useDispositionProvider = () => {
   const updateDispositionFileApi = useApiRequestWrapper<
     (
       dispositionFileId: number,
-      dispositionFile: Api_DispositionFile,
+      dispositionFile: ApiGen_Concepts_DispositionFile,
       userOverrideCodes: UserOverrideCode[],
-    ) => Promise<AxiosResponse<Api_DispositionFile, any>>
+    ) => Promise<AxiosResponse<ApiGen_Concepts_DispositionFile, any>>
   >({
     requestFunction: useCallback(
       async (
         dispositionFileId: number,
-        dispositionFile: Api_DispositionFile,
+        dispositionFile: ApiGen_Concepts_DispositionFile,
         useOverride: UserOverrideCode[] = [],
       ) => await putDispositionFileApi(dispositionFileId, dispositionFile, useOverride),
       [putDispositionFileApi],
@@ -108,7 +110,9 @@ export const useDispositionProvider = () => {
   });
 
   const getDispositionPropertiesApi = useApiRequestWrapper<
-    (dispositionFileId: number) => Promise<AxiosResponse<Api_DispositionFileProperty[], any>>
+    (
+      dispositionFileId: number,
+    ) => Promise<AxiosResponse<ApiGen_Concepts_DispositionFileProperty[], any>>
   >({
     requestFunction: useCallback(
       async (dispositionFileId: number) => await getDispositionFileProperties(dispositionFileId),
@@ -119,7 +123,7 @@ export const useDispositionProvider = () => {
   });
 
   const getDispositionChecklistApi = useApiRequestWrapper<
-    (acqFileId: number) => Promise<AxiosResponse<Api_FileChecklistItem[], any>>
+    (acqFileId: number) => Promise<AxiosResponse<ApiGen_Concepts_FileChecklistItem[], any>>
   >({
     requestFunction: useCallback(
       async (acqFileId: number) => await getDispositionFileChecklist(acqFileId),
@@ -130,10 +134,13 @@ export const useDispositionProvider = () => {
   });
 
   const updateDispositionChecklistApi = useApiRequestWrapper<
-    (acqFile: Api_FileWithChecklist) => Promise<AxiosResponse<Api_DispositionFile, any>>
+    (
+      acqFile: ApiGen_Concepts_FileWithChecklist,
+    ) => Promise<AxiosResponse<ApiGen_Concepts_DispositionFile, any>>
   >({
     requestFunction: useCallback(
-      async (acqFile: Api_FileWithChecklist) => await putDispositionFileChecklist(acqFile),
+      async (acqFile: ApiGen_Concepts_FileWithChecklist) =>
+        await putDispositionFileChecklist(acqFile),
       [putDispositionFileChecklist],
     ),
     requestName: 'UpdateDispositionFileChecklist',
@@ -142,7 +149,7 @@ export const useDispositionProvider = () => {
   });
 
   const getAllDispositionTeamMembersApi = useApiRequestWrapper<
-    () => Promise<AxiosResponse<Api_DispositionFileTeam[], any>>
+    () => Promise<AxiosResponse<ApiGen_Concepts_DispositionFileTeam[], any>>
   >({
     requestFunction: useCallback(
       async () => await getAllDispositionFileTeamMembers(),
@@ -153,7 +160,9 @@ export const useDispositionProvider = () => {
   });
 
   const getDispositionAppraisalApi = useApiRequestWrapper<
-    (dispositionFileId: number) => Promise<AxiosResponse<Api_DispositionFileAppraisal, any>>
+    (
+      dispositionFileId: number,
+    ) => Promise<AxiosResponse<ApiGen_Concepts_DispositionFileAppraisal, any>>
   >({
     requestFunction: useCallback(
       async (dispositionFileId: number) => await getDispositionFileAppraisal(dispositionFileId),
@@ -166,12 +175,14 @@ export const useDispositionProvider = () => {
   const postDispositionAppraisalApi = useApiRequestWrapper<
     (
       dispositionFileId: number,
-      dispositionAppraisal: Api_DispositionFileAppraisal,
-    ) => Promise<AxiosResponse<Api_DispositionFileAppraisal, any>>
+      dispositionAppraisal: ApiGen_Concepts_DispositionFileAppraisal,
+    ) => Promise<AxiosResponse<ApiGen_Concepts_DispositionFileAppraisal, any>>
   >({
     requestFunction: useCallback(
-      async (dispositionFileId: number, dispositionAppraisal: Api_DispositionFileAppraisal) =>
-        await postDispositionFileAppraisal(dispositionFileId, dispositionAppraisal),
+      async (
+        dispositionFileId: number,
+        dispositionAppraisal: ApiGen_Concepts_DispositionFileAppraisal,
+      ) => await postDispositionFileAppraisal(dispositionFileId, dispositionAppraisal),
       [postDispositionFileAppraisal],
     ),
     requestName: 'PostDispositionAppraisal',
@@ -183,14 +194,14 @@ export const useDispositionProvider = () => {
     (
       dispositionFileId: number,
       appraisalId: number,
-      dispositionAppraisal: Api_DispositionFileAppraisal,
-    ) => Promise<AxiosResponse<Api_DispositionFileAppraisal, any>>
+      dispositionAppraisal: ApiGen_Concepts_DispositionFileAppraisal,
+    ) => Promise<AxiosResponse<ApiGen_Concepts_DispositionFileAppraisal, any>>
   >({
     requestFunction: useCallback(
       async (
         dispositionFileId: number,
         appraisalId: number,
-        dispositionAppraisal: Api_DispositionFileAppraisal,
+        dispositionAppraisal: ApiGen_Concepts_DispositionFileAppraisal,
       ) => await putDispositionFileAppraisal(dispositionFileId, appraisalId, dispositionAppraisal),
       [putDispositionFileAppraisal],
     ),
@@ -200,7 +211,9 @@ export const useDispositionProvider = () => {
   });
 
   const getAllDispositionOffersApi = useApiRequestWrapper<
-    (dispositionFileId: number) => Promise<AxiosResponse<Api_DispositionFileOffer[], any>>
+    (
+      dispositionFileId: number,
+    ) => Promise<AxiosResponse<ApiGen_Concepts_DispositionFileOffer[], any>>
   >({
     requestFunction: useCallback(
       async (dispositionFileId: number) => await getDispositionFileOffers(dispositionFileId),
@@ -213,11 +226,11 @@ export const useDispositionProvider = () => {
   const postDispositionOfferApi = useApiRequestWrapper<
     (
       dispositionFileId: number,
-      dispositionOffer: Api_DispositionFileOffer,
-    ) => Promise<AxiosResponse<Api_DispositionFileOffer, any>>
+      dispositionOffer: ApiGen_Concepts_DispositionFileOffer,
+    ) => Promise<AxiosResponse<ApiGen_Concepts_DispositionFileOffer, any>>
   >({
     requestFunction: useCallback(
-      async (dispositionFileId: number, dispositionOffer: Api_DispositionFileOffer) =>
+      async (dispositionFileId: number, dispositionOffer: ApiGen_Concepts_DispositionFileOffer) =>
         await postDispositionFileOffer(dispositionFileId, dispositionOffer),
       [postDispositionFileOffer],
     ),
@@ -276,7 +289,7 @@ export const useDispositionProvider = () => {
     (
       dispositionFileId: number,
       offerId: number,
-    ) => Promise<AxiosResponse<Api_DispositionFileOffer, any>>
+    ) => Promise<AxiosResponse<ApiGen_Concepts_DispositionFileOffer, any>>
   >({
     requestFunction: useCallback(
       async (dispositionFileId: number, offerId: number) =>
@@ -291,14 +304,14 @@ export const useDispositionProvider = () => {
     (
       dispositionFileId: number,
       offerId: number,
-      dispositionOffer: Api_DispositionFileOffer,
-    ) => Promise<AxiosResponse<Api_DispositionFileOffer, any>>
+      dispositionOffer: ApiGen_Concepts_DispositionFileOffer,
+    ) => Promise<AxiosResponse<ApiGen_Concepts_DispositionFileOffer, any>>
   >({
     requestFunction: useCallback(
       async (
         dispositionFileId: number,
         offerId: number,
-        dispositionOffer: Api_DispositionFileOffer,
+        dispositionOffer: ApiGen_Concepts_DispositionFileOffer,
       ) => await putDispositionFileOffer(dispositionFileId, offerId, dispositionOffer),
       [putDispositionFileOffer],
     ),

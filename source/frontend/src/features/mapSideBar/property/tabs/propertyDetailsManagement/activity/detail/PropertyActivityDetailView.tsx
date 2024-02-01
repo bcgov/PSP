@@ -16,14 +16,15 @@ import { Claims } from '@/constants/index';
 import DocumentListContainer from '@/features/documents/list/DocumentListContainer';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
-import { Api_PropertyActivity, Api_PropertyActivityInvoice } from '@/models/api/PropertyActivity';
+import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
+import { ApiGen_Concepts_PropertyActivityInvoice } from '@/models/api/generated/ApiGen_Concepts_PropertyActivityInvoice';
 import { formatMoney, prettyFormatDate } from '@/utils';
 
 import { InvoiceView } from './InvoiceView';
 
 export interface IPropertyActivityDetailViewProps {
   propertyId: number;
-  activity: Api_PropertyActivity | null;
+  activity: ApiGen_Concepts_PropertyActivity | null;
   onClose: () => void;
   loading: boolean;
   show: boolean;
@@ -42,7 +43,7 @@ export const PropertyActivityDetailView: React.FunctionComponent<
   const history = useHistory();
 
   if (props.activity !== null) {
-    const invoices: Api_PropertyActivityInvoice[] = props.activity.invoices ?? [];
+    const invoices: ApiGen_Concepts_PropertyActivityInvoice[] = props.activity.invoices ?? [];
     return (
       <ReactVisibilitySensor
         onChange={(isVisible: boolean) => {
@@ -125,7 +126,7 @@ export const PropertyActivityDetailView: React.FunctionComponent<
                     </>
                   </SectionField>
                 </Section>
-                {invoices.map((x: Api_PropertyActivityInvoice, index: number) => (
+                {invoices.map((x: ApiGen_Concepts_PropertyActivityInvoice, index: number) => (
                   <InvoiceView
                     key={`activity-${x.propertyActivityId}-invoice-${x.id}`}
                     activityInvoice={x}

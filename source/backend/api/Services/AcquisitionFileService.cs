@@ -4,7 +4,6 @@ using System.Linq;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Pims.Api.Constants;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Helpers.Extensions;
 using Pims.Api.Models.CodeTypes;
@@ -347,23 +346,30 @@ namespace Pims.Api.Services
             return _acqFileRepository.GetById(acquisitionFile.Internal_Id);
         }
 
-        public PimsAcquisitionFile UpdateChecklistItems(PimsAcquisitionFile acquisitionFile)
+        public PimsAcquisitionFile UpdateChecklistItems(IList<PimsAcquisitionChecklistItem> checklistItems)
         {
-            acquisitionFile.ThrowIfNull(nameof(acquisitionFile));
-            _logger.LogInformation("Updating acquisition file checklist with AcquisitionFile id: {id}", acquisitionFile.Internal_Id);
-            _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileEdit);
-            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, acquisitionFile.Internal_Id);
+            checklistItems.ThrowIfNull(nameof(checklistItems));
+            if (checklistItems.Count == 0)
+            {
+                throw new BadRequestException("Checklist items must be greater than zero");
+            }
 
-            var currentAcquisitionStatus = GetCurrentAcquisitionStatus(acquisitionFile.Internal_Id);
+            var acquisitionFileId = checklistItems.FirstOrDefault().AcquisitionFileId;
+
+            _logger.LogInformation("Updating acquisition file checklist with AcquisitionFile id: {id}", acquisitionFileId);
+            _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileEdit);
+            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, acquisitionFileId);
+
+            var currentAcquisitionStatus = GetCurrentAcquisitionStatus(acquisitionFileId);
             if (!_statusSolver.CanEditChecklists(currentAcquisitionStatus) && !_user.HasPermission(Permissions.SystemAdmin))
             {
                 throw new BusinessRuleViolationException("The file you are editing is not active or draft, so you cannot save changes. Refresh your browser to see file state.");
             }
 
             // Get the current checklist items for this acquisition file.
-            var currentItems = _checklistRepository.GetAllChecklistItemsByAcquisitionFileId(acquisitionFile.Internal_Id).ToDictionary(ci => ci.Internal_Id);
+            var currentItems = _checklistRepository.GetAllChecklistItemsByAcquisitionFileId(acquisitionFileId).ToDictionary(ci => ci.Internal_Id);
 
-            foreach (var incomingItem in acquisitionFile.PimsAcquisitionChecklistItems)
+            foreach (var incomingItem in checklistItems)
             {
                 if (!currentItems.TryGetValue(incomingItem.Internal_Id, out var existingItem) && incomingItem.Internal_Id != 0)
                 {
@@ -382,7 +388,7 @@ namespace Pims.Api.Services
             }
 
             _checklistRepository.CommitTransaction();
-            return _acqFileRepository.GetById(acquisitionFile.Internal_Id);
+            return _acqFileRepository.GetById(acquisitionFileId);
         }
 
         public IEnumerable<PimsAgreement> GetAgreements(long id)

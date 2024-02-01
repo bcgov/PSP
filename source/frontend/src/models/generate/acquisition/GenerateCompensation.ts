@@ -1,9 +1,9 @@
 import { chain } from 'lodash';
 import moment from 'moment';
 
-import { Api_CompensationFinancial } from '@/models/api/CompensationFinancial';
-import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
-import { Api_H120Category } from '@/models/api/H120Category';
+import { ApiGen_Concepts_CompensationFinancial } from '@/models/api/generated/ApiGen_Concepts_CompensationFinancial';
+import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
+import { ApiGen_Concepts_H120Category } from '@/models/api/generated/ApiGen_Concepts_H120Category';
 import { formatMoney } from '@/utils';
 
 import { Api_GenerateProject } from '../GenerateProject';
@@ -31,10 +31,10 @@ export class Api_GenerateCompensation {
   alternate_project: Api_GenerateProject | null;
 
   constructor(
-    compensation: Api_CompensationRequisition | null,
+    compensation: ApiGen_Concepts_CompensationRequisition | null,
     file: Api_GenerateAcquisitionFile | null,
-    h120Categories: Api_H120Category[],
-    finalFileFinancials: Api_CompensationFinancial[],
+    h120Categories: ApiGen_Concepts_H120Category[],
+    finalFileFinancials: ApiGen_Concepts_CompensationFinancial[],
     client: string = '',
   ) {
     this.file = file;

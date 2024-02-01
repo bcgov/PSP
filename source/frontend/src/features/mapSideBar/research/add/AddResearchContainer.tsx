@@ -10,7 +10,7 @@ import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineCo
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
 import { useInitialMapSelectorProperties } from '@/hooks/useInitialMapSelectorProperties';
-import { Api_ResearchFile } from '@/models/api/ResearchFile';
+import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Concepts_ResearchFile';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { featuresetToMapProperty } from '@/utils/mapPropertyUtils';
 
@@ -59,7 +59,7 @@ export const AddResearchContainer: React.FunctionComponent<
   }, [initialForm]);
 
   const saveResearchFile = async (
-    researchFile: Api_ResearchFile,
+    researchFile: ApiGen_Concepts_ResearchFile,
     userOverrideCodes: UserOverrideCode[],
   ) => {
     formikRef.current?.setSubmitting(true);
@@ -95,7 +95,7 @@ export const AddResearchContainer: React.FunctionComponent<
       innerRef={formikRef}
       initialValues={initialForm}
       onSubmit={async (values: ResearchForm, formikHelpers: FormikHelpers<ResearchForm>) => {
-        const researchFile: Api_ResearchFile = values.toApi();
+        const researchFile: ApiGen_Concepts_ResearchFile = values.toApi();
         return withUserOverride((userOverrideCodes: UserOverrideCode[]) =>
           saveResearchFile(researchFile, userOverrideCodes),
         );

@@ -8,14 +8,14 @@ import { InlineFlexDiv } from '@/components/common/styles';
 import { ColumnWithProps } from '@/components/Table';
 import Claims from '@/constants/claims';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
-import { Api_FormDocumentFile } from '@/models/api/FormDocument';
+import { ApiGen_Concepts_FormDocumentFile } from '@/models/api/generated/ApiGen_Concepts_FormDocumentFile';
 import { stringToFragment } from '@/utils';
 
 export function createFormTableColumns(
-  onShowForm: (form: Api_FormDocumentFile) => void,
+  onShowForm: (form: ApiGen_Concepts_FormDocumentFile) => void,
   onDelete: (formFileId: number) => void,
 ) {
-  const columns: ColumnWithProps<Api_FormDocumentFile>[] = [
+  const columns: ColumnWithProps<ApiGen_Concepts_FormDocumentFile>[] = [
     {
       Header: 'Form type',
       accessor: 'formDocumentType',
@@ -23,7 +23,7 @@ export function createFormTableColumns(
       sortable: true,
       minWidth: 40,
       maxWidth: 50,
-      Cell: (cellProps: CellProps<Api_FormDocumentFile>) => {
+      Cell: (cellProps: CellProps<ApiGen_Concepts_FormDocumentFile>) => {
         const { hasClaim } = useKeycloakWrapper();
         return hasClaim(Claims.FORM_VIEW) ? (
           <LinkButton onClick={() => onShowForm(cellProps.row.original)}>
@@ -40,7 +40,7 @@ export function createFormTableColumns(
       sortable: false,
       width: 20,
       maxWidth: 20,
-      Cell: (cellProps: CellProps<Api_FormDocumentFile>) => {
+      Cell: (cellProps: CellProps<ApiGen_Concepts_FormDocumentFile>) => {
         const { hasClaim } = useKeycloakWrapper();
         return (
           <StyledDiv>

@@ -5,7 +5,7 @@ import { Claims } from '@/constants/claims';
 import { DispositionAppraisalFormModel } from '@/features/mapSideBar/disposition/models/DispositionAppraisalFormModel';
 import { mockDispositionAppraisalApi } from '@/mocks/dispositionFiles.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
-import { Api_DispositionFileAppraisal } from '@/models/api/DispositionFile';
+import { ApiGen_Concepts_DispositionFileAppraisal } from '@/models/api/generated/ApiGen_Concepts_DispositionFileAppraisal';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { render, RenderOptions, waitForEffects } from '@/utils/test-utils';
 
@@ -119,7 +119,7 @@ describe('Update Disposition Appraisal Container component', () => {
     await setup();
     await waitForEffects();
 
-    let createdAppraisal: Api_DispositionFileAppraisal | undefined;
+    let createdAppraisal: ApiGen_Concepts_DispositionFileAppraisal | undefined;
     await act(async () => {
       createdAppraisal = await viewProps?.onSave({
         id: null,
@@ -129,7 +129,7 @@ describe('Update Disposition Appraisal Container component', () => {
         bcaValueAmount: 350000.0,
         bcaRollYear: '2024',
         listPriceAmount: 500000.0,
-      } as Api_DispositionFileAppraisal);
+      } as ApiGen_Concepts_DispositionFileAppraisal);
     });
 
     expect(mockPostAppraisalApi.execute).toHaveBeenCalled();
@@ -144,9 +144,9 @@ describe('Update Disposition Appraisal Container component', () => {
     await setup({ props: { dispositionFileId: 1 } });
     await waitForEffects();
 
-    let updatedAppraisal: Api_DispositionFileAppraisal | undefined;
+    let updatedAppraisal: ApiGen_Concepts_DispositionFileAppraisal | undefined;
     await act(async () => {
-      updatedAppraisal = await viewProps?.onSave({} as Api_DispositionFileAppraisal);
+      updatedAppraisal = await viewProps?.onSave({} as ApiGen_Concepts_DispositionFileAppraisal);
     });
 
     expect(mockPutAppraisalApi.execute).toHaveBeenCalled();

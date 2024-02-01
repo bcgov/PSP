@@ -8,6 +8,7 @@ import { useUpdateContact } from '@/features/contacts/hooks/useUpdateContact';
 import { IEditableOrganization, IEditableOrganizationAddress } from '@/interfaces/editable-contact';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { toTypeCode } from '@/utils/formUtils';
 import { act, fillInput, render, RenderOptions } from '@/utils/test-utils';
 
 import UpdateOrganizationForm from './UpdateOrganizationForm';
@@ -27,7 +28,7 @@ const mockOrganization: IEditableOrganization = {
   persons: undefined,
   addresses: [],
   contactMethods: [
-    { contactMethodTypeCode: { id: ContactMethodTypes.WorkEmail }, value: 'foo@bar.com' },
+    { contactMethodTypeCode: toTypeCode(ContactMethodTypes.WorkEmail), value: 'foo@bar.com' },
   ],
 };
 
@@ -40,7 +41,7 @@ const mockAddress: IEditableOrganizationAddress = {
   countryId: 4,
   countryOther: 'Netherlands',
   postal: '123456',
-  addressTypeId: { id: AddressTypes.Mailing },
+  addressTypeId: toTypeCode(AddressTypes.Mailing),
 };
 
 // Mock API service calls
@@ -105,7 +106,7 @@ describe('UpdateOrganizationForm', () => {
         name: 'RandomName Property Management',
         contactMethods: [
           {
-            contactMethodTypeCode: { id: ContactMethodTypes.PersonalEmail },
+            contactMethodTypeCode: toTypeCode(ContactMethodTypes.PersonalEmail),
             value: 'test@test.com',
           },
         ],

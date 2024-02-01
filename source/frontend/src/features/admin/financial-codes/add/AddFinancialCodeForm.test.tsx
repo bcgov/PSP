@@ -1,8 +1,8 @@
 import * as Yup from 'yup';
 
-import { FinancialCodeTypes } from '@/constants/index';
 import { mockFinancialCode } from '@/mocks/index.mock';
-import { Api_FinancialCode } from '@/models/api/FinancialCode';
+import { ApiGen_Concepts_FinancialCode } from '@/models/api/generated/ApiGen_Concepts_FinancialCode';
+import { ApiGen_Concepts_FinancialCodeTypes } from '@/models/api/generated/ApiGen_Concepts_FinancialCodeTypes';
 import {
   act,
   createAxiosError,
@@ -121,13 +121,15 @@ describe('AddFinancialCode form', () => {
     const codeType = document.querySelector(`select[name="type"]`) as HTMLSelectElement;
     const description = document.querySelector(`input[name="description"]`) as HTMLInputElement;
     const saveButton = screen.getByText('Save');
-    await act(async () => userEvent.selectOptions(codeType, FinancialCodeTypes.BusinessFunction));
+    await act(async () =>
+      userEvent.selectOptions(codeType, ApiGen_Concepts_FinancialCodeTypes.BusinessFunction),
+    );
     await act(async () => userEvent.paste(description, `another description`));
     await act(async () => userEvent.click(saveButton));
 
     expect(mockProps.onSave).toHaveBeenCalledWith(
-      expect.objectContaining<Partial<Api_FinancialCode>>({
-        type: FinancialCodeTypes.BusinessFunction,
+      expect.objectContaining<Partial<ApiGen_Concepts_FinancialCode>>({
+        type: ApiGen_Concepts_FinancialCodeTypes.BusinessFunction,
         description: `another description`,
       }),
     );
@@ -141,7 +143,9 @@ describe('AddFinancialCode form', () => {
     const codeType = document.querySelector(`select[name="type"]`) as HTMLSelectElement;
     const description = document.querySelector(`input[name="description"]`) as HTMLInputElement;
     const saveButton = screen.getByText('Save');
-    await act(async () => userEvent.selectOptions(codeType, FinancialCodeTypes.BusinessFunction));
+    await act(async () =>
+      userEvent.selectOptions(codeType, ApiGen_Concepts_FinancialCodeTypes.BusinessFunction),
+    );
     await act(async () => userEvent.paste(description, `another description`));
     await act(async () => userEvent.click(saveButton));
 

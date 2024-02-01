@@ -25,7 +25,7 @@ namespace Pims.Api.Models.Concepts.Property
                 .Map(dest => dest.GeneralLocation, src => src.GeneralLocation)
 
                 .Map(dest => dest.DataSource, src => src.PropertyDataSourceTypeCodeNavigation)
-                .Map(dest => dest.DataSourceEffectiveDate, src => src.PropertyDataSourceEffectiveDate)
+                .Map(dest => dest.DataSourceEffectiveDateOnly, src => src.PropertyDataSourceEffectiveDate)
 
                 .Map(dest => dest.Name, src => src.Name)
                 .Map(dest => dest.Description, src => src.Description)

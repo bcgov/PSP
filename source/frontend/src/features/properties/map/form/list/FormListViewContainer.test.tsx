@@ -8,6 +8,7 @@ import { useFormDocumentRepository } from '@/hooks/repositories/useFormDocumentR
 import { getMockApiFileForms } from '@/mocks/form.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes/lookupCodesSlice';
 import { act, render, RenderOptions, screen, userEvent, waitFor } from '@/utils/test-utils';
 
@@ -86,19 +87,22 @@ describe('form list view container', () => {
 
   it('saveForm calls api post save', async () => {
     setup({
+      fileId: 10,
       claims: [],
     });
     viewProps.saveForm('h120');
 
     expect(mockApi.execute).toHaveBeenCalledWith('acquisition', {
-      fileId: 0,
+      fileId: 10,
       id: null,
       formDocumentType: {
         description: '',
         displayOrder: null,
         documentId: null,
         formTypeCode: 'h120',
+        ...getEmptyBaseAudit(),
       },
+      ...getEmptyBaseAudit(),
     });
   });
 
@@ -159,7 +163,7 @@ describe('form list view container', () => {
 
     await waitFor(() => {
       expect(viewProps.forms).toStrictEqual(
-        sortBy(getMockApiFileForms(), form => form.formDocumentType.formTypeCode),
+        sortBy(getMockApiFileForms(), form => form.formDocumentType?.formTypeCode),
       );
     });
   });
@@ -182,7 +186,7 @@ describe('form list view container', () => {
     act(() => viewProps.setFormFilter({ formTypeId: 'h120' }));
 
     expect(viewProps.forms).toStrictEqual(
-      filter(getMockApiFileForms(), form => form.formDocumentType.formTypeCode === 'h120'),
+      filter(getMockApiFileForms(), form => form.formDocumentType?.formTypeCode === 'h120'),
     );
   });
 });

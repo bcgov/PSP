@@ -23,8 +23,9 @@ import { useOrganizationRepository } from '@/features/contacts/repositories/useO
 import { useProjectProvider } from '@/hooks/repositories/useProjectProvider';
 import { useLookupCodeHelpers } from '@/hooks/useLookupCodeHelpers';
 import { IAutocompletePrediction } from '@/interfaces';
-import { Api_OrganizationPerson } from '@/models/api/Organization';
-import { Api_Product } from '@/models/api/Project';
+import { ApiGen_Concepts_OrganizationPerson } from '@/models/api/generated/ApiGen_Concepts_OrganizationPerson';
+import { ApiGen_Concepts_Product } from '@/models/api/generated/ApiGen_Concepts_Product';
+import { isValidId, isValidString } from '@/utils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
 import UpdateAcquisitionOwnersSubForm from '../../../common/update/acquisitionOwners/UpdateAcquisitionOwnersSubForm';
@@ -74,9 +75,9 @@ const AcquisitionDetailSubForm: React.FC<{
     values: { fileStatusTypeCode },
   } = formikProps;
 
-  const [projectProducts, setProjectProducts] = React.useState<Api_Product[] | undefined>(
-    undefined,
-  );
+  const [projectProducts, setProjectProducts] = React.useState<
+    ApiGen_Concepts_Product[] | undefined
+  >(undefined);
   const { retrieveProjectProducts } = useProjectProvider();
   const { getOptionsByType } = useLookupCodeHelpers();
   const regionTypes = getOptionsByType(API.REGION_TYPES);
@@ -89,7 +90,7 @@ const AcquisitionDetailSubForm: React.FC<{
   const onMinistryProjectSelected = React.useCallback(
     async (param: IAutocompletePrediction[]) => {
       if (param.length > 0) {
-        if (param[0].id !== undefined) {
+        if (isValidId(param[0].id)) {
           const result = await retrieveProjectProducts(param[0].id);
           if (result !== undefined) {
             setProjectProducts(result);
@@ -110,7 +111,7 @@ const AcquisitionDetailSubForm: React.FC<{
 
   // clear the associated 'Completion Date' field if the corresponding File Status has its value changed from COMPLETE to something else.
   React.useEffect(() => {
-    if (!!fileStatusTypeCode && fileStatusTypeCode !== 'COMPLT') {
+    if (isValidString(fileStatusTypeCode) && fileStatusTypeCode !== 'COMPLT') {
       setFieldValue('completionDate', '');
     }
   }, [fileStatusTypeCode, setFieldValue]);
@@ -137,7 +138,7 @@ const AcquisitionDetailSubForm: React.FC<{
   }, [orgPersons, setFieldValue]);
 
   const primaryContacts: SelectOption[] =
-    orgPersons?.map((orgPerson: Api_OrganizationPerson) => {
+    orgPersons?.map((orgPerson: ApiGen_Concepts_OrganizationPerson) => {
       return {
         label: `${formatApiPersonNames(orgPerson.person)}`,
         value: orgPerson.personId ?? ' ',
@@ -202,7 +203,7 @@ const AcquisitionDetailSubForm: React.FC<{
               const selectedValue = [].slice
                 .call(e.target.selectedOptions)
                 .map((option: HTMLOptionElement & number) => option.value)[0];
-              if (!!selectedValue && selectedValue !== 'OTHER') {
+              if (isValidString(selectedValue) && selectedValue !== 'OTHER') {
                 formikProps.setFieldValue('fundingTypeOtherDescription', '');
               }
             }}

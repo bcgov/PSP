@@ -11,14 +11,14 @@ import { useProperties } from '@/hooks/repositories/useProperties';
 import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
 import { getMockPerson } from '@/mocks/contacts.mock';
 import { getMockOrganization } from '@/mocks/organization.mock';
-import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
-import { Api_Property } from '@/models/api/Property';
+import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
+import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 
 import { useGenerateH0443 } from './useGenerateH0443';
 
-const getPropertiesFn = jest.fn<Api_Property[], any[]>();
+const getPropertiesFn = jest.fn<ApiGen_Concepts_Property[], any[]>();
 const generateFn = jest.fn();
-const getAcquisitionFileFn = jest.fn<Api_AcquisitionFile | undefined, any[]>();
+const getAcquisitionFileFn = jest.fn<ApiGen_Concepts_AcquisitionFile | undefined, any[]>();
 const getPersonConceptFn = jest.fn();
 const getOrganizationConceptFn = jest.fn();
 
@@ -54,7 +54,10 @@ const getWrapper =
   ({ children }: any) =>
     <Provider store={store}>{children}</Provider>;
 
-const setup = (params?: { storeValues?: any; acquisitionResponse?: Api_AcquisitionFile }) => {
+const setup = (params?: {
+  storeValues?: any;
+  acquisitionResponse?: ApiGen_Concepts_AcquisitionFile;
+}) => {
   var acquisitionResponse = mockAcquisitionFileResponse();
   if (params?.acquisitionResponse !== undefined) {
     acquisitionResponse = params.acquisitionResponse;
@@ -80,7 +83,7 @@ describe('useGenerateH0443 functions', () => {
     const organizationPersonMock = getMockPerson({ id: 3, firstName: 'JONH', surname: 'Doe' });
     getPersonConceptFn.mockResolvedValue(Promise.resolve({ data: organizationPersonMock }));
 
-    const responseWithTeam: Api_AcquisitionFile = {
+    const responseWithTeam: ApiGen_Concepts_AcquisitionFile = {
       ...mockAcquisitionFileResponse(),
       acquisitionTeam: [
         {
@@ -89,6 +92,12 @@ describe('useGenerateH0443 functions', () => {
           personId: 1,
           teamProfileTypeCode: 'PROPCOORD',
           rowVersion: 2,
+          person: null,
+          organizationId: null,
+          organization: null,
+          primaryContactId: null,
+          primaryContact: null,
+          teamProfileType: null,
         },
         {
           id: 2,
@@ -96,6 +105,12 @@ describe('useGenerateH0443 functions', () => {
           personId: 2,
           teamProfileTypeCode: 'PROPAGENT',
           rowVersion: 2,
+          person: null,
+          organizationId: null,
+          organization: null,
+          primaryContactId: null,
+          primaryContact: null,
+          teamProfileType: null,
         },
       ],
     };
@@ -114,7 +129,7 @@ describe('useGenerateH0443 functions', () => {
     const organizationMock = getMockOrganization();
     getOrganizationConceptFn.mockResolvedValue({ data: organizationMock });
 
-    const responseWithTeam: Api_AcquisitionFile = {
+    const responseWithTeam: ApiGen_Concepts_AcquisitionFile = {
       ...mockAcquisitionFileResponse(),
       acquisitionTeam: [
         {
@@ -124,6 +139,11 @@ describe('useGenerateH0443 functions', () => {
           rowVersion: 2,
           organizationId: 100,
           primaryContactId: 3,
+          person: null,
+          organization: null,
+          primaryContact: null,
+          teamProfileType: null,
+          personId: null,
         },
       ],
     };
@@ -143,7 +163,7 @@ describe('useGenerateH0443 functions', () => {
     const organizationMock = getMockOrganization();
     getOrganizationConceptFn.mockResolvedValue(Promise.resolve({ data: organizationMock }));
 
-    const responseWithTeam: Api_AcquisitionFile = {
+    const responseWithTeam: ApiGen_Concepts_AcquisitionFile = {
       ...mockAcquisitionFileResponse(),
       acquisitionTeam: [
         {
@@ -152,6 +172,12 @@ describe('useGenerateH0443 functions', () => {
           teamProfileTypeCode: 'PROPCOORD',
           rowVersion: 2,
           organizationId: 100,
+          person: null,
+          organization: null,
+          primaryContactId: null,
+          primaryContact: null,
+          teamProfileType: null,
+          personId: null,
         },
       ],
     };
@@ -170,7 +196,7 @@ describe('useGenerateH0443 functions', () => {
     getOrganizationConceptFn.mockResolvedValue(Promise.resolve({ data: organizationMock }));
     getPersonConceptFn.mockResolvedValue(Promise.resolve({ data: organizationPersonMock }));
 
-    const responseWithTeam: Api_AcquisitionFile = {
+    const responseWithTeam: ApiGen_Concepts_AcquisitionFile = {
       ...mockAcquisitionFileResponse(),
       acquisitionTeam: [
         {
@@ -180,6 +206,11 @@ describe('useGenerateH0443 functions', () => {
           organizationId: 2,
           primaryContactId: 3,
           rowVersion: 2,
+          person: null,
+          organization: null,
+          primaryContact: null,
+          teamProfileType: null,
+          personId: null,
         },
       ],
     };
@@ -198,7 +229,7 @@ describe('useGenerateH0443 functions', () => {
     getOrganizationConceptFn.mockResolvedValue(Promise.resolve({ data: organizationMock }));
     getPersonConceptFn.mockResolvedValue(Promise.resolve({ data: organizationPersonMock }));
 
-    const responseWithTeam: Api_AcquisitionFile = {
+    const responseWithTeam: ApiGen_Concepts_AcquisitionFile = {
       ...mockAcquisitionFileResponse(),
       acquisitionTeam: [
         {
@@ -207,6 +238,12 @@ describe('useGenerateH0443 functions', () => {
           teamProfileTypeCode: 'PROPAGENT',
           organizationId: 2,
           rowVersion: 2,
+          person: null,
+          organization: null,
+          primaryContactId: null,
+          primaryContact: null,
+          teamProfileType: null,
+          personId: null,
         },
       ],
     };
@@ -220,14 +257,28 @@ describe('useGenerateH0443 functions', () => {
   });
 
   it('makes requests to expected api endpoints if there are properties', async () => {
-    const responseWithTeam: Api_AcquisitionFile = {
+    const responseWithTeam: ApiGen_Concepts_AcquisitionFile = {
       ...mockAcquisitionFileResponse(),
       fileProperties: [
         {
           propertyId: 1,
+          displayOrder: null,
+          file: null,
+          fileId: 0,
+          id: 0,
+          property: null,
+          propertyName: null,
+          rowVersion: null,
         },
         {
           propertyId: 2,
+          displayOrder: null,
+          file: null,
+          fileId: 0,
+          id: 0,
+          property: null,
+          propertyName: null,
+          rowVersion: null,
         },
       ],
     };

@@ -11,6 +11,7 @@ import styled from 'styled-components';
 import { Button } from '@/components/common/buttons/Button';
 import { Input } from '@/components/common/form';
 import { IContactSearchResult } from '@/interfaces';
+import { isValidId } from '@/utils';
 import { formatNames } from '@/utils/personUtils';
 
 import { LinkButton } from '../buttons';
@@ -48,9 +49,9 @@ export const ContactInput: React.FC<React.PropsWithChildren<ContactInputProps>> 
   var text = 'Select from contacts';
 
   if (contactInfo !== undefined) {
-    if (contactInfo.personId !== undefined) {
+    if (isValidId(contactInfo.personId)) {
       text = formatNames([contactInfo.firstName, contactInfo.middleNames, contactInfo.surname]);
-    } else if (contactInfo.organizationId !== undefined) {
+    } else if (isValidId(contactInfo.organizationId)) {
       text = contactInfo.organizationName || '';
     }
   }

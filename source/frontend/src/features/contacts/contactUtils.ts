@@ -19,12 +19,18 @@ import {
   IEditablePersonForm,
 } from '@/interfaces/editable-contact';
 import { IContactPerson } from '@/interfaces/IContact';
-import { Api_Organization, Api_OrganizationPerson } from '@/models/api/Organization';
-import { fromTypeCode, stringToBoolean, stringToUndefined, toTypeCode } from '@/utils/formUtils';
+import { ApiGen_Concepts_Address } from '@/models/api/generated/ApiGen_Concepts_Address';
+import { ApiGen_Concepts_Organization } from '@/models/api/generated/ApiGen_Concepts_Organization';
+import { ApiGen_Concepts_OrganizationPerson } from '@/models/api/generated/ApiGen_Concepts_OrganizationPerson';
+import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_Person';
+import { isValidId } from '@/utils';
+import {
+  fromTypeCode,
+  stringToBoolean,
+  stringToUndefined,
+  toTypeCodeNullable,
+} from '@/utils/formUtils';
 import { formatFullName, formatNames } from '@/utils/personUtils';
-
-import { Api_Address } from './../../models/api/Address';
-import { Api_Person } from './../../models/api/Person';
 
 export function formPersonToApiPerson(formValues: IEditablePersonForm): IEditablePerson {
   // exclude form-specific fields from API payload object
@@ -168,17 +174,20 @@ export function getApiMailingAddress(
 }
 
 export function getApiPersonOrOrgMailingAddress(
-  contact: Api_Person | Api_Organization,
-): Api_Address | undefined {
-  if (!contact) return undefined;
+  contact: ApiGen_Concepts_Person | ApiGen_Concepts_Organization,
+): ApiGen_Concepts_Address | null {
+  if (!contact) {
+    return null;
+  }
 
   return (
-    (contact as Api_Person).personAddresses?.find(
+    (contact as ApiGen_Concepts_Person).personAddresses?.find(
       addr => addr?.addressUsageType?.id === AddressTypes.Mailing && addr.address,
     )?.address ??
-    (contact as Api_Organization).organizationAddresses?.find(
+    (contact as ApiGen_Concepts_Organization).organizationAddresses?.find(
       addr => addr?.addressUsageType?.id === AddressTypes.Mailing,
-    )?.address
+    )?.address ??
+    null
   );
 }
 
@@ -213,7 +222,7 @@ export function formAddressToApiAddress(
     provinceId: isEmpty(formAddress?.provinceId.toString())
       ? undefined
       : parseInt(formAddress?.provinceId.toString()),
-    addressTypeId: toTypeCode(formAddress?.addressTypeId),
+    addressTypeId: toTypeCodeNullable(formAddress?.addressTypeId),
   } as IEditablePersonAddress | IEditableOrganizationAddress;
 }
 
@@ -230,7 +239,7 @@ function formContactMethodToApiContactMethod(formContactMethod: IEditableContact
   return {
     ...formContactMethod,
     value: stringToUndefined(formContactMethod.value),
-    contactMethodTypeCode: toTypeCode(formContactMethod.contactMethodTypeCode),
+    contactMethodTypeCode: toTypeCodeNullable(formContactMethod.contactMethodTypeCode),
   } as IEditableContactMethod;
 }
 
@@ -258,21 +267,23 @@ function isPhone(contactMethod?: IEditableContactMethodForm): boolean {
 }
 
 export const getDefaultContact = (organization?: {
-  organizationPersons?: Api_OrganizationPerson[];
-}): Api_Person | undefined => {
+  organizationPersons: ApiGen_Concepts_OrganizationPerson[] | null;
+}): ApiGen_Concepts_Person | null => {
   if (organization?.organizationPersons?.length === 1) {
-    return organization?.organizationPersons[0]?.person;
+    return organization.organizationPersons[0].person;
   }
-  return undefined;
+  return null;
 };
 
 export const getPrimaryContact = (
   primaryContactId: number,
   organization?: {
-    organizationPersons?: Api_OrganizationPerson[];
+    organizationPersons?: ApiGen_Concepts_OrganizationPerson[];
   },
-): Api_Person | undefined => {
-  return organization?.organizationPersons?.find(op => op.personId === primaryContactId)?.person;
+): ApiGen_Concepts_Person | null => {
+  return (
+    organization?.organizationPersons?.find(op => op.personId === primaryContactId)?.person ?? null
+  );
 };
 
 export function formatContactSearchResult(
@@ -280,9 +291,9 @@ export function formatContactSearchResult(
   defaultText: string = '',
 ): string {
   let text = defaultText;
-  if (contact?.personId !== undefined) {
+  if (isValidId(contact?.personId)) {
     text = formatNames([contact.firstName, contact.middleNames, contact.surname]);
-  } else if (contact?.organizationId !== undefined) {
+  } else if (isValidId(contact?.organizationId)) {
     text = contact.organizationName || '';
   }
   return text;

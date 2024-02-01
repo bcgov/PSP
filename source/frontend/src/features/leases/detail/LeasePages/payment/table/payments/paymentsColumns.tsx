@@ -11,7 +11,7 @@ import TooltipIcon from '@/components/common/TooltipIcon';
 import { ColumnWithProps, renderDate, renderMoney, renderTypeCode } from '@/components/Table';
 import { Claims } from '@/constants';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
-import { Api_LeasePayment } from '@/models/api/LeasePayment';
+import { ApiGen_Concepts_Payment } from '@/models/api/generated/ApiGen_Concepts_Payment';
 import { NumberFieldValue } from '@/typings/NumberFieldValue';
 import { formatMoney, stringToFragment } from '@/utils';
 import { withNameSpace } from '@/utils/formUtils';
@@ -69,7 +69,7 @@ export const getActualsColumns = ({
       maxWidth: 70,
       accessor: 'receivedDate',
       Cell: renderDate,
-      Footer: ({ properties }: { properties: Api_LeasePayment[] }) => (
+      Footer: ({ properties }: { properties: ApiGen_Concepts_Payment[] }) => (
         <span>
           <MdReceipt /> Payment Summary
         </span>
@@ -81,7 +81,7 @@ export const getActualsColumns = ({
       align: 'left',
       maxWidth: 60,
       Cell: renderTypeCode,
-      Footer: ({ properties }: { properties: Api_LeasePayment[] }) => (
+      Footer: ({ properties }: { properties: ApiGen_Concepts_Payment[] }) => (
         <>({properties?.length}) payments</>
       ),
     },
@@ -98,7 +98,7 @@ export const getActualsColumns = ({
       accessor: 'amountPreTax',
       align: 'right',
       Cell: renderMoney,
-      Footer: ({ properties }: { properties: Api_LeasePayment[] }) =>
+      Footer: ({ properties }: { properties: ApiGen_Concepts_Payment[] }) =>
         formatMoney(properties.reduce((total, current) => total + current.amountPreTax, 0)),
     },
     {
@@ -117,7 +117,7 @@ export const getActualsColumns = ({
       Cell: ({ value, row }: CellProps<FormLeasePayment, NumberFieldValue>) => {
         return stringToFragment(isGstEligible ? formatMoney(value) : '-');
       },
-      Footer: ({ properties }: { properties: Api_LeasePayment[] }) =>
+      Footer: ({ properties }: { properties: ApiGen_Concepts_Payment[] }) =>
         isGstEligible
           ? formatMoney(properties.reduce((total, current) => total + (current?.amountGst ?? 0), 0))
           : '-',
@@ -135,7 +135,7 @@ export const getActualsColumns = ({
       accessor: 'amountTotal',
       align: 'right',
       Cell: renderMoney,
-      Footer: ({ properties }: { properties: Api_LeasePayment[] }) =>
+      Footer: ({ properties }: { properties: ApiGen_Concepts_Payment[] }) =>
         formatMoney(properties.reduce((total, current) => total + (current?.amountTotal ?? 0), 0)),
     },
     {

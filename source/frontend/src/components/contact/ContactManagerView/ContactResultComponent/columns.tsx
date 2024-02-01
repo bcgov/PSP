@@ -13,7 +13,7 @@ import { ColumnWithProps } from '@/components/Table';
 import { Claims } from '@/constants/claims';
 import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
 import { IContactSearchResult } from '@/interfaces';
-import { stringToFragment } from '@/utils';
+import { isValidId, stringToFragment } from '@/utils';
 
 const columns: ColumnWithProps<IContactSearchResult>[] = [
   {
@@ -33,7 +33,7 @@ const columns: ColumnWithProps<IContactSearchResult>[] = [
     width: 20,
     maxWidth: 20,
     Cell: (props: CellProps<IContactSearchResult>) =>
-      props.row.original.personId !== undefined ? (
+      isValidId(props.row.original.personId) ? (
         <FaRegUser size={20} />
       ) : (
         <FaRegBuilding size={20} />

@@ -13,8 +13,8 @@ import { Claims } from '@/constants';
 import { DetailAcquisitionFileOwner } from '@/features/mapSideBar/acquisition/models/DetailAcquisitionFileOwner';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
-import { Api_ExpropriationPayment } from '@/models/api/ExpropriationPayment';
-import { Api_InterestHolder } from '@/models/api/InterestHolder';
+import { ApiGen_Concepts_ExpropriationPayment } from '@/models/api/generated/ApiGen_Concepts_ExpropriationPayment';
+import { ApiGen_Concepts_InterestHolder } from '@/models/api/generated/ApiGen_Concepts_InterestHolder';
 import { formatMoney } from '@/utils/numberFormatUtils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
@@ -22,7 +22,7 @@ import ExpropriationPaymentItemsTable from './ExpropriationPaymentItemsTable';
 
 export interface IExpropriationForm8DetailsProps {
   form8Index: number;
-  form8: Api_ExpropriationPayment;
+  form8: ApiGen_Concepts_ExpropriationPayment;
   acquisitionFileNumber: string;
   onDelete: (form8Id: number) => void;
   onGenerate: (form8Id: number, acquisitionFileNumber: string) => void;
@@ -201,7 +201,9 @@ const StyledForm8Summary = styled.div`
   font-weight: 600;
 `;
 
-const getInterestHolderLink = (interestHolder: Api_InterestHolder | null): string | null => {
+const getInterestHolderLink = (
+  interestHolder: ApiGen_Concepts_InterestHolder | null,
+): string | null => {
   if (!interestHolder) {
     return null;
   }
@@ -213,7 +215,9 @@ const getInterestHolderLink = (interestHolder: Api_InterestHolder | null): strin
   return 'O' + interestHolder.organization?.id;
 };
 
-const getInterestHolderDisplayName = (interestHolder: Api_InterestHolder | null): string | null => {
+const getInterestHolderDisplayName = (
+  interestHolder: ApiGen_Concepts_InterestHolder | null,
+): string | null => {
   if (!interestHolder) {
     return null;
   }
