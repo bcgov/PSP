@@ -108,7 +108,7 @@ export const GenericModal = (props: Omit<BsModalProps, 'onHide'> & ModalProps) =
     cancelButtonText,
     closeButton,
     hideFooter,
-    modalSize,
+    modalSize = ModalSize.MEDIUM,
     variant,
     className,
     headerIcon,
@@ -340,7 +340,7 @@ const StyledModal = styled(Modal)`
   }
 
   .modal-m {
-    max-width: 50rem;
+    max-width: 60rem;
   }
 
   .modal-s {

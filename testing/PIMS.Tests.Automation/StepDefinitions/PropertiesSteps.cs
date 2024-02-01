@@ -318,27 +318,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
             pimsFiles.VerifyPimsFiles();
         }
 
-        //[StepDefinition(@"LTSA Pop-up Information validation is successful")]
-        //public void ValidateLTSAPopUp()
-        //{
-        //    /* TEST COVERAGE: PSP-3186 */
-
-        //    //Select found property on Map
-        //    searchProperties.SelectFoundPin();
-
-        //    //Validate LTSA Pop-up
-        //    propertyInformation.VerifyPropertyMapPopUpView();
-
-        //    //Close Property Details Form
-        //    propertyInformation.ClosePropertyInfoModal();
-
-        //    //Reset Map
-        //    searchProperties.SearchPropertyReset();
-
-        //    //Close LTSA Pop-up
-        //    propertyInformation.CloseLTSAPopUp();
-        //}
-
         [StepDefinition(@"No Properties were found")]
         public void NonPropertyFound()
         {

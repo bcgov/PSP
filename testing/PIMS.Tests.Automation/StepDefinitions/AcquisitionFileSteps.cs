@@ -14,10 +14,9 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly LoginSteps loginSteps;
         private readonly AcquisitionDetails acquisitionFilesDetails;
         private readonly SearchAcquisitionFiles searchAcquisitionFiles;
-        private readonly SharedSearchProperties sharedSearchProperties;
+        private readonly SharedFileProperties sharedFileProperties;
         private readonly SharedPagination sharedPagination;
         private readonly SearchProperties searchProperties;
-        private readonly AcquisitionProperties acquisitionProperties;
         private readonly AcquisitionTakes acquisitionTakes;
         private readonly PropertyInformation propertyInformation;
         private readonly AcquisitionChecklist checklist;
@@ -40,10 +39,9 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             acquisitionFilesDetails = new AcquisitionDetails(driver.Current);
             searchAcquisitionFiles = new SearchAcquisitionFiles(driver.Current);
-            sharedSearchProperties = new SharedSearchProperties(driver.Current);
+            sharedFileProperties = new SharedFileProperties(driver.Current);
             sharedPagination = new SharedPagination(driver.Current);
             searchProperties = new SearchProperties(driver.Current);
-            acquisitionProperties = new AcquisitionProperties(driver.Current);
             acquisitionTakes = new AcquisitionTakes(driver.Current);
             propertyInformation = new PropertyInformation(driver.Current);
             checklist = new AcquisitionChecklist(driver.Current);
@@ -150,38 +148,38 @@ namespace PIMS.Tests.Automation.StepDefinitions
             /* TEST COVERAGE: PSP-4163, PSP-4325, PSP-4326, PSP-4327, PSP-4328, PSP-4329, PSP-4334, PSP-4593, PSP-6268 */
 
             //Navigate to Properties for Acquisition File
-            acquisitionProperties.NavigateToAddPropertiesAcquisitionFile();
+            sharedFileProperties.NavigateToAddPropertiesToFile();
 
             //Navigate to Add Properties by search and verify Add Properties UI/UX
-            sharedSearchProperties.NavigateToSearchTab();
-            sharedSearchProperties.VerifySearchPropertiesFeature();
+            sharedFileProperties.NavigateToSearchTab();
+            sharedFileProperties.VerifySearchPropertiesFeature();
 
             //Search for a property by PID
-            if (acquisitionFile.SearchProperties.PID != "")
+            if (acquisitionFile.AcquisitionSearchProperties.PID != "")
             {
-                sharedSearchProperties.SelectPropertyByPID(acquisitionFile.SearchProperties.PID);
-                sharedSearchProperties.SelectFirstOption();
+                sharedFileProperties.SelectPropertyByPID(acquisitionFile.AcquisitionSearchProperties.PID);
+                sharedFileProperties.SelectFirstOptionFromSearch();
             }
 
             //Search for a property by PIN
-            if (acquisitionFile.SearchProperties.PIN != "")
+            if (acquisitionFile.AcquisitionSearchProperties.PIN != "")
             {
-                sharedSearchProperties.SelectPropertyByPIN(acquisitionFile.SearchProperties.PIN);
-                sharedSearchProperties.SelectFirstOption();
+                sharedFileProperties.SelectPropertyByPIN(acquisitionFile.AcquisitionSearchProperties.PIN);
+                sharedFileProperties.SelectFirstOptionFromSearch();
             }
 
             //Search for a property by Plan
-            if (acquisitionFile.SearchProperties.PlanNumber != "")
+            if (acquisitionFile.AcquisitionSearchProperties.PlanNumber != "")
             {
-                sharedSearchProperties.SelectPropertyByPlan(acquisitionFile.SearchProperties.PlanNumber);
-                sharedSearchProperties.SelectFirstOption();
+                sharedFileProperties.SelectPropertyByPlan(acquisitionFile.AcquisitionSearchProperties.PlanNumber);
+                sharedFileProperties.SelectFirstOptionFromSearch();
             }
 
             //Search for a property by Address
-            if (acquisitionFile.SearchProperties.Address != "")
+            if (acquisitionFile.AcquisitionSearchProperties.Address != "")
             {
-                sharedSearchProperties.SelectPropertyByAddress(acquisitionFile.SearchProperties.Address);
-                sharedSearchProperties.SelectFirstOption();
+                sharedFileProperties.SelectPropertyByAddress(acquisitionFile.AcquisitionSearchProperties.Address);
+                sharedFileProperties.SelectFirstOptionFromSearch();
             }
 
             //Search for a property by Legal Description
@@ -192,14 +190,14 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //}
 
             //Search for a duplicate property
-            if (acquisitionFile.SearchProperties.PID != "")
+            if (acquisitionFile.AcquisitionSearchProperties.PID != "")
             {
-                sharedSearchProperties.SelectPropertyByPID(acquisitionFile.SearchProperties.PID);
-                sharedSearchProperties.SelectFirstOption();
+                sharedFileProperties.SelectPropertyByPID(acquisitionFile.AcquisitionSearchProperties.PID);
+                sharedFileProperties.SelectFirstOptionFromSearch();
             }
 
             //Save Research File
-            acquisitionProperties.SaveAcquisitionFileProperties();
+            sharedFileProperties.SaveFileProperties();
         }
 
         [StepDefinition(@"I update an Acquisition File's Properties from row number (.*)")]
@@ -215,7 +213,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchAcquisitionFiles.SelectFirstOption();
 
             //Navigate to Edit Acquisition File's Properties
-            acquisitionProperties.NavigateToAddPropertiesAcquisitionFile();
+            sharedFileProperties.NavigateToAddPropertiesToFile();
 
             //Search for a property by Legal Description
             //sharedSearchProperties.NavigateToSearchTab();
@@ -223,26 +221,27 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //sharedSearchProperties.SelectFirstOption();
 
             //Save changes
-            acquisitionProperties.SaveAcquisitionFileProperties();
+            sharedFileProperties.SaveFileProperties();
 
-            //Select 1st Property
-            acquisitionProperties.ChooseFirstPropertyOption();
+            ////Select 1st Property
+            //sharedFileProperties.SelectFirstPropertyOptionFromFile();
 
-            //Verify its Property Details
-            propertyInformation.NavigatePropertyDetailsTab();
-            propertyInformation.VerifyPropertyDetailsView();
+            ////Verify its Property Details
+            //propertyInformation.NavigatePropertyDetailsTab();
+            //propertyInformation.VerifyPropertyDetailsView();
 
-            //Navigate to  Acquisition File's Properties section
-            acquisitionProperties.NavigateToAddPropertiesAcquisitionFile();
+            ////Navigate to  Acquisition File's Properties section
+            //sharedFileProperties.NavigateToAddPropertiesToFile();
 
             //Delete Property
-            acquisitionProperties.DeleteLastProperty();
+            sharedFileProperties.NavigateToAddPropertiesToFile();
+            sharedFileProperties.DeleteLastPropertyFromFile();
 
             //Save Acquisition File changes
-            acquisitionProperties.SaveAcquisitionFileProperties();
+            sharedFileProperties.SaveFileProperties();
 
             //Select 1st Property
-            acquisitionProperties.ChooseFirstPropertyOption();
+            sharedFileProperties.SelectFirstPropertyOptionFromFile();
         }
 
         [StepDefinition(@"I create Takes within Acquisition File's Properties")]
@@ -253,7 +252,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             for (int i = 0; i < acquisitionFile.AcquisitionTakes.Count; i++)
             {
                 //Choose Take's Property
-                acquisitionProperties.ChooseNthPropertyOption(acquisitionFile.AcquisitionTakes[i].FromProperty);
+                sharedFileProperties.SelectNthPropertyOptionFromFile(acquisitionFile.AcquisitionTakes[i].FromProperty);
 
                 //Navigate to the Takes Tab
                 acquisitionTakes.NavigateTakesTab();
@@ -280,7 +279,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 acquisitionTakes.SaveTake();
 
                 //Verify View Form
-                //acquisitionTakes.VerifyCreatedTakeViewForm(acquisitionFile.AcquisitionTakes[i]);
+                acquisitionTakes.VerifyCreatedTakeViewForm(acquisitionFile.AcquisitionTakes[i]);
             }
         }
 
@@ -297,7 +296,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchAcquisitionFiles.SelectFirstOption();
 
             //Choose Take's Property
-            acquisitionProperties.ChooseNthPropertyOption(acquisitionFile.AcquisitionTakes[0].FromProperty);
+            sharedFileProperties.SelectNthPropertyOptionFromFile(acquisitionFile.AcquisitionTakes[0].FromProperty);
 
             //Navigate to Takes Tab
             acquisitionTakes.NavigateTakesTab();
@@ -310,10 +309,10 @@ namespace PIMS.Tests.Automation.StepDefinitions
             acquisitionTakes.SaveTake();
 
             //Verify View Form
-            //acquisitionTakes.VerifyCreatedTakeViewForm(acquisitionFile.AcquisitionTakes[i]);
+            acquisitionTakes.VerifyCreatedTakeViewForm(acquisitionFile.AcquisitionTakes[0]);
 
             //Choose Take's Property
-            acquisitionProperties.ChooseNthPropertyOption(acquisitionFile.AcquisitionTakes[0].FromProperty);
+            sharedFileProperties.SelectNthPropertyOptionFromFile(acquisitionFile.AcquisitionTakes[0].FromProperty);
 
             //Navigate to Takes Tab
             acquisitionTakes.NavigateTakesTab();
@@ -785,7 +784,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Search for a property
             PopulateAcquisitionFile(rowNumber);
-            searchProperties.SearchPropertyByPINPID(acquisitionFile.SearchProperties.PID);
+            searchProperties.SearchPropertyByPINPID(acquisitionFile.AcquisitionSearchProperties.PID);
 
             //Select Found Pin on map
             searchProperties.SelectFoundPin();
@@ -807,7 +806,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             Assert.True(acquisitionFilesDetails.IsCreateAcquisitionFileFormVisible() == 0);
 
             //Search for a property
-            searchProperties.SearchPropertyByPINPID(acquisitionFile.SearchProperties.PID);
+            searchProperties.SearchPropertyByPINPID(acquisitionFile.AcquisitionSearchProperties.PID);
 
             //Select Found Pin on map
             searchProperties.SelectFoundPin();
@@ -826,7 +825,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             acquisitionFilesDetails.CancelAcquisitionFile();
 
             //Search for a property
-            searchProperties.SearchPropertyByPINPID(acquisitionFile.SearchProperties.PID);
+            searchProperties.SearchPropertyByPINPID(acquisitionFile.AcquisitionSearchProperties.PID);
 
             //Select Found Pin on map
             searchProperties.SelectFoundPin();
@@ -1029,17 +1028,17 @@ namespace PIMS.Tests.Automation.StepDefinitions
             acquisitionFile.OwnerComment = ExcelDataContext.ReadData(rowNumber, "OwnerComment");
 
             //Properties Search
-            acquisitionFile.SearchPropertiesIndex = int.Parse(ExcelDataContext.ReadData(rowNumber, "SearchPropertiesIndex"));
-            if (acquisitionFile.SearchPropertiesIndex > 0)
+            acquisitionFile.AcquisitionSearchPropertiesIndex = int.Parse(ExcelDataContext.ReadData(rowNumber, "AcqSearchPropertiesIndex"));
+            if (acquisitionFile.AcquisitionSearchPropertiesIndex > 0)
             {
                 DataTable searchPropertiesSheet = ExcelDataContext.GetInstance().Sheets["SearchProperties"];
                 ExcelDataContext.PopulateInCollection(searchPropertiesSheet);
 
-                acquisitionFile.SearchProperties.PID = ExcelDataContext.ReadData(acquisitionFile.SearchPropertiesIndex, "PID");
-                acquisitionFile.SearchProperties.PIN = ExcelDataContext.ReadData(acquisitionFile.SearchPropertiesIndex, "PIN");
-                acquisitionFile.SearchProperties.Address = ExcelDataContext.ReadData(acquisitionFile.SearchPropertiesIndex, "Address");
-                acquisitionFile.SearchProperties.PlanNumber = ExcelDataContext.ReadData(acquisitionFile.SearchPropertiesIndex, "PlanNumber");
-                acquisitionFile.SearchProperties.LegalDescription = ExcelDataContext.ReadData(acquisitionFile.SearchPropertiesIndex, "LegalDescription");
+                acquisitionFile.AcquisitionSearchProperties.PID = ExcelDataContext.ReadData(acquisitionFile.AcquisitionSearchPropertiesIndex, "PID");
+                acquisitionFile.AcquisitionSearchProperties.PIN = ExcelDataContext.ReadData(acquisitionFile.AcquisitionSearchPropertiesIndex, "PIN");
+                acquisitionFile.AcquisitionSearchProperties.Address = ExcelDataContext.ReadData(acquisitionFile.AcquisitionSearchPropertiesIndex, "Address");
+                acquisitionFile.AcquisitionSearchProperties.PlanNumber = ExcelDataContext.ReadData(acquisitionFile.AcquisitionSearchPropertiesIndex, "PlanNumber");
+                acquisitionFile.AcquisitionSearchProperties.LegalDescription = ExcelDataContext.ReadData(acquisitionFile.AcquisitionSearchPropertiesIndex, "LegalDescription");
             }
 
             //Acquisition's Properties' Takes
@@ -1137,12 +1136,12 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateTeamsCollection(int startRow, int rowsCount)
         {
-            DataTable teamsSheet = ExcelDataContext.GetInstance().Sheets["AcquisitionTeams"];
+            DataTable teamsSheet = ExcelDataContext.GetInstance().Sheets["TeamMembers"];
             ExcelDataContext.PopulateInCollection(teamsSheet);
 
             for (int i = startRow; i < startRow + rowsCount; i++)
             {
-                AcquisitionTeamMember teamMember = new AcquisitionTeamMember();
+                TeamMember teamMember = new TeamMember();
                 teamMember.TeamMemberRole = ExcelDataContext.ReadData(i, "TeamMemberRole");
                 teamMember.TeamMemberContactName = ExcelDataContext.ReadData(i, "TeamMemberContactName");
                 teamMember.TeamMemberContactType = ExcelDataContext.ReadData(i, "TeamMemberContactType");

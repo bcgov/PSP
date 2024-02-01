@@ -98,12 +98,11 @@ const ProjectContainerView: React.FC<IProjectContainerViewProps> = ({
         <GenericModal
           variant="info"
           display={showConfirmModal}
-          title={'Confirm changes'}
+          title={'Confirm Changes'}
           message={
             <>
-              <div>If you choose to cancel now, your changes will not be saved.</div>
-              <br />
-              <strong>Do you want to proceed?</strong>
+              <p>If you choose to cancel now, your changes will not be saved.</p>
+              <p>Do you want to proceed?</p>
             </>
           }
           handleOk={handleCancelConfirm}

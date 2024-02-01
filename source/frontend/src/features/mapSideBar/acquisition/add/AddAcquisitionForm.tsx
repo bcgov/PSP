@@ -321,7 +321,7 @@ const AddAcquisitionDetailSubForm: React.FC<{
       />
 
       <AcquisitionFormModal
-        message="Selected Ministry region is different from that of one or more selected properties. Do you wish to continue?"
+        message="The selected Ministry region is different from that associated to one or more selected properties.\n\nDo you want to proceed?"
         title="Different Ministry region"
         display={showDiffMinistryRegionModal}
         handleOk={() => {

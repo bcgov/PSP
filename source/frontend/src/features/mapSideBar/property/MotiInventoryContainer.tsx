@@ -8,6 +8,7 @@ import GenericModal from '@/components/common/GenericModal';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { PROPERTY_TYPES, useComposedProperties } from '@/hooks/repositories/useComposedProperties';
 import { useQuery } from '@/hooks/use-query';
+import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
 import { Api_Property } from '@/models/api/Property';
 
 import MapSideBarLayout from '../layout/MapSideBarLayout';
@@ -27,8 +28,6 @@ export interface IMotiInventoryContainerProps {
 export const MotiInventoryContainer: React.FunctionComponent<
   React.PropsWithChildren<IMotiInventoryContainerProps>
 > = props => {
-  const [showCancelConfirmModal, setShowCancelConfirmModal] = useState<boolean>(false);
-
   const query = useQuery();
   const { push } = useHistory();
   const match = useRouteMatch();
@@ -36,6 +35,7 @@ export const MotiInventoryContainer: React.FunctionComponent<
   const isEditing = query.get('edit') === 'true';
   const [isValid, setIsValid] = useState<boolean>(true);
 
+  const { setModalContent, setDisplayModal } = useModalContext();
   const mapMachine = useMapStateMachine();
 
   const formikRef = useRef<FormikProps<any>>(null);
@@ -73,7 +73,15 @@ export const MotiInventoryContainer: React.FunctionComponent<
   const handleCancelClick = () => {
     if (formikRef !== undefined) {
       if (formikRef.current?.dirty) {
-        setShowCancelConfirmModal(true);
+        setModalContent({
+          ...getCancelModalProps(),
+          handleOk: () => {
+            handleCancelConfirm();
+            setDisplayModal(false);
+          },
+          handleCancel: () => setDisplayModal(false),
+        });
+        setDisplayModal(true);
       } else {
         handleCancelConfirm();
       }
@@ -86,9 +94,7 @@ export const MotiInventoryContainer: React.FunctionComponent<
     if (formikRef !== undefined) {
       formikRef.current?.resetForm();
     }
-
     stripEditFromPath();
-    setShowCancelConfirmModal(false);
   };
 
   const stripEditFromPath = () => {
@@ -137,30 +143,11 @@ export const MotiInventoryContainer: React.FunctionComponent<
       showCloseButton
       onClose={props.onClose}
     >
-      <>
-        <PropertyRouter
-          composedPropertyState={composedPropertyState}
-          onSuccess={onSuccess}
-          ref={formikRef}
-        />
-        <GenericModal
-          variant="info"
-          display={showCancelConfirmModal}
-          title={'Confirm changes'}
-          message={
-            <>
-              <div>If you choose to cancel now, your changes will not be saved.</div>
-              <br />
-              <strong>Do you want to proceed?</strong>
-            </>
-          }
-          handleOk={handleCancelConfirm}
-          handleCancel={() => setShowCancelConfirmModal(false)}
-          okButtonText="Yes"
-          cancelButtonText="No"
-          show
-        />
-      </>
+      <PropertyRouter
+        composedPropertyState={composedPropertyState}
+        onSuccess={onSuccess}
+        ref={formikRef}
+      />
     </MapSideBarLayout>
   );
 };
