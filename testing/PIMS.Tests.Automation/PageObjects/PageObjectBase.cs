@@ -244,8 +244,15 @@ namespace PIMS.Tests.Automation.PageObjects
 
         protected string TransformCurrencyFormat(string amount)
         {
-            decimal value = decimal.Parse(amount);
-            return "$" + value.ToString("#,##0.00");
+            if (amount == "")
+            {
+                return "";
+            }
+            else
+            {
+                decimal value = decimal.Parse(amount);
+                return "$" + value.ToString("#,##0.00");
+            }
         }
 
         protected string TransformProjectFormat(string project)
