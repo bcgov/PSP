@@ -8,8 +8,8 @@ export interface IConfiguration {
 
 export const useConfiguration = (): IConfiguration => {
   const isTest: boolean = import.meta.env.NODE_ENV === 'test';
-  const isDevelopment: boolean = import.meta.env.NODE_ENV === 'development';
-  const isProduction: boolean = import.meta.env.NODE_ENV === 'production';
+  const isDevelopment: boolean = import.meta.env.DEV;
+  const isProduction: boolean = import.meta.env.PROD;
 
   return {
     siteMinderLogoutUrl: import.meta.env.VITE_SITEMINDER_LOGOUT_URL,

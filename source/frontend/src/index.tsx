@@ -26,9 +26,9 @@ import App from './App';
 import * as serviceWorker from './serviceWorker.ignore';
 
 function prepare() {
-  if (import.meta.env.NODE_ENV === 'development') {
-    const { worker } = require('./mocks/msw/browser');
-    return worker.start({ onUnhandledRequest: 'bypass' });
+  if (import.meta.env.DEV) {
+    // const { worker } = require('./mocks/msw/browser');
+    // return worker.start({ onUnhandledRequest: 'bypass' });
   }
   return Promise.resolve();
 }

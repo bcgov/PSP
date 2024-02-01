@@ -14,8 +14,8 @@ import {
 
 // parcel icon (green)
 export const parcelIcon = L.icon({
-  iconUrl: require('@/assets/images/pins/land-reg.png') ?? 'assets/images/pins/land-reg.png',
-  shadowUrl: require('@/assets/images/pins/marker-shadow.png') ?? 'marker-shadow.png',
+  iconUrl: 'assets/images/pins/land-reg.png',
+  shadowUrl: 'assets/images/pins/marker-shadow.png',
   iconSize: [25, 41],
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],
@@ -24,10 +24,8 @@ export const parcelIcon = L.icon({
 
 // parcel icon (green) highlighted
 export const parcelIconSelect = L.icon({
-  iconUrl:
-    require('@/assets/images/pins/land-reg-highlight.png') ??
-    'assets/images/pins/land-reg-highlight.png',
-  shadowUrl: require('@/assets/images/pins/marker-shadow.png') ?? 'marker-shadow.png',
+  iconUrl: 'assets/images/pins/land-reg-highlight.png',
+  shadowUrl: 'assets/images/pins/marker-shadow.png',
   iconSize: [25, 41],
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],
@@ -36,8 +34,8 @@ export const parcelIconSelect = L.icon({
 
 // property of interest icon (blue) highlighted
 export const propertyOfInterestIcon = L.icon({
-  iconUrl: require('@/assets/images/pins/land-poi.png') ?? 'assets/images/pins/land-poi.png',
-  shadowUrl: require('@/assets/images/pins/marker-shadow.png') ?? 'marker-shadow.png',
+  iconUrl: 'assets/images/pins/land-poi.png',
+  shadowUrl: 'assets/images/pins/marker-shadow.png',
   iconSize: [25, 41],
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],
@@ -46,10 +44,8 @@ export const propertyOfInterestIcon = L.icon({
 
 // property of interest icon (blue) highlighted
 export const propertyOfInterestIconSelect = L.icon({
-  iconUrl:
-    require('@/assets/images/pins/land-poi-highlight.png') ??
-    'assets/images/pins/land-poi-highlight.png',
-  shadowUrl: require('@/assets/images/pins/marker-shadow.png') ?? 'marker-shadow.png',
+  iconUrl: 'assets/images/pins/land-poi-highlight.png',
+  shadowUrl: 'assets/images/pins/marker-shadow.png',
   iconSize: [25, 41],
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],
@@ -58,9 +54,8 @@ export const propertyOfInterestIconSelect = L.icon({
 
 // other interest icon (purple)
 export const otherInterestIcon = L.icon({
-  iconUrl:
-    require('@/assets/images/pins/other-interest.png') ?? 'assets/images/pins/other-interest.png',
-  shadowUrl: require('@/assets/images/pins/marker-shadow.png') ?? 'marker-shadow.png',
+  iconUrl: 'assets/images/pins/other-interest.png',
+  shadowUrl: 'assets/images/pins/marker-shadow.png',
   iconSize: [25, 41],
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],
@@ -69,10 +64,8 @@ export const otherInterestIcon = L.icon({
 
 // other interest icon (purple) highlighted
 export const otherInterestIconSelect = L.icon({
-  iconUrl:
-    require('@/assets/images/pins/other-interest-highlight.png') ??
-    'assets/images/pins/other-interest-highlight.png',
-  shadowUrl: require('@/assets/images/pins/marker-shadow.png') ?? 'marker-shadow.png',
+  iconUrl: 'assets/images/pins/other-interest-highlight.png',
+  shadowUrl: 'assets/images/pins/marker-shadow.png',
   iconSize: [25, 41],
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],
@@ -81,10 +74,8 @@ export const otherInterestIconSelect = L.icon({
 
 // not owned property icon (orange)
 export const notOwnedPropertyIcon = L.icon({
-  iconUrl:
-    require('@/assets/images/pins/marker-info-orange.png') ??
-    'assets/images/pins/marker-info-orange.png',
-  shadowUrl: require('@/assets/images/pins/marker-shadow.png') ?? 'marker-shadow.png',
+  iconUrl: 'assets/images/pins/marker-info-orange.png',
+  shadowUrl: 'assets/images/pins/marker-shadow.png',
   iconSize: [25, 41],
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],
@@ -93,10 +84,8 @@ export const notOwnedPropertyIcon = L.icon({
 
 // not owned property icon (orange) highlighted
 export const notOwnedPropertyIconSelect = L.icon({
-  iconUrl:
-    require('@/assets/images/pins/marker-info-orange-highlight.png') ??
-    'assets/images/pins/marker-info-orange-highlight.png',
-  shadowUrl: require('@/assets/images/pins/marker-shadow.png') ?? 'marker-shadow.png',
+  iconUrl: 'assets/images/pins/marker-info-orange-highlight.png',
+  shadowUrl: 'assets/images/pins/marker-shadow.png',
   iconSize: [25, 41],
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],

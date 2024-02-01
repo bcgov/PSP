@@ -5,7 +5,7 @@ import MockAdapter from 'axios-mock-adapter';
 import { config, TenantProvider, useTenant } from '.';
 import defaultTenant from './config/defaultTenant';
 
-const origEnv = process.env;
+const origEnv = import.meta.env;
 
 const mockAxios = new MockAdapter(axios);
 
