@@ -901,7 +901,7 @@ exports[`DispositionView component renders as expected 1`] = `
                             <label
                               class="c16"
                             >
-                              initiating branch:
+                              Initiating branch:
                             </label>
                           </div>
                           <div

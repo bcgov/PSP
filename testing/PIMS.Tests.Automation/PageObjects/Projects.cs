@@ -286,8 +286,8 @@ namespace PIMS.Tests.Automation.PageObjects
             if (webDriver.FindElements(productDeleteModal).Count > 0)
             {
                 Wait();
-                Assert.True(sharedModals.ModalHeader().Equals("Remove Product"));
-                Assert.True(sharedModals.ModalContent().Equals("Deleting this product will remove it from all \"Product\" dropdowns. Are you certain you wish to proceed?"));
+                Assert.Equal("Remove Product", sharedModals.ModalHeader());
+                Assert.Equal("Deleting this product will remove it from all \"Product\" dropdowns. Are you certain you wish to proceed?", sharedModals.ModalContent());
                 sharedModals.ModalClickOKBttn();
             }
         }
@@ -379,36 +379,36 @@ namespace PIMS.Tests.Automation.PageObjects
             WaitUntilVisible(projectHeaderProjectNameContent);
 
             //Header
-            Assert.True(webDriver.FindElement(projectViewTitle).Displayed);
-            Assert.True(webDriver.FindElement(projectHeaderProjectNameLabel).Displayed);
-            Assert.True(webDriver.FindElement(projectHeaderProjectNameContent).Text.Equals(project.CodeName));
-            Assert.True(webDriver.FindElement(projectHeaderMoTIRegionLabel).Displayed);
-            Assert.True(webDriver.FindElement(projectHeaderMoTIRegionContent).Text.Equals(project.ProjectMOTIRegion));
-            Assert.True(webDriver.FindElement(projectHeaderCreatedLabel).Displayed);
-            Assert.True(webDriver.FindElement(projectHeaderCreatedContent).Text.Equals(today));
-            Assert.True(webDriver.FindElement(projectHeaderCreatedBy).Text.Equals(project.CreatedBy));
-            Assert.True(webDriver.FindElement(projectHeaderLastUpdatedLabel).Displayed);
-            Assert.True(webDriver.FindElement(projectHeaderLastUpdatedContent).Text.Equals(today));
-            Assert.True(webDriver.FindElement(projectHeaderLastUpdatedBy).Text.Equals(project.UpdatedBy));
-            Assert.True(webDriver.FindElement(projectHeaderStatusLabel).Displayed);
-            Assert.True(webDriver.FindElement(projectHeaderStatusContent).Text.Equals(project.ProjectStatus));
+            AssertTrueIsDisplayed(projectViewTitle);
+            AssertTrueIsDisplayed(projectHeaderProjectNameLabel);
+            AssertTrueContentEquals(projectHeaderProjectNameContent,project.CodeName);
+            AssertTrueIsDisplayed(projectHeaderMoTIRegionLabel);
+            AssertTrueContentEquals(projectHeaderMoTIRegionContent,project.ProjectMOTIRegion);
+            AssertTrueIsDisplayed(projectHeaderCreatedLabel);
+            AssertTrueContentEquals(projectHeaderCreatedContent,today);
+            AssertTrueContentEquals(projectHeaderCreatedBy,project.CreatedBy);
+            AssertTrueIsDisplayed(projectHeaderLastUpdatedLabel);
+            AssertTrueContentEquals(projectHeaderLastUpdatedContent,today);
+            AssertTrueContentEquals(projectHeaderLastUpdatedBy,project.UpdatedBy);
+            AssertTrueIsDisplayed(projectHeaderStatusLabel);
+            AssertTrueContentEquals(projectHeaderStatusContent,project.ProjectStatus);
 
             //Edit Button
-            Assert.True(webDriver.FindElement(projectEditButton).Displayed);
+            AssertTrueIsDisplayed(projectEditButton);
 
             //Project Details
-            Assert.True(webDriver.FindElement(projectDetailsSubtitle).Displayed);
-            Assert.True(webDriver.FindElement(projectSummaryLabel).Displayed);
-            Assert.True(webDriver.FindElement(projectDetailsSummaryContent).Text.Equals(project.Summary));
+            AssertTrueIsDisplayed(projectDetailsSubtitle);
+            AssertTrueIsDisplayed(projectSummaryLabel);
+            AssertTrueContentEquals(projectDetailsSummaryContent, project.Summary);
 
             //Associated Codes
-            Assert.True(webDriver.FindElement(projectCodesSubtitle).Displayed);
-            Assert.True(webDriver.FindElement(projectCostTypeLabel).Displayed);
-            Assert.True(webDriver.FindElement(projectCodesCostTypeContent).Displayed);
-            Assert.True(webDriver.FindElement(projectWorkActivityLabel).Displayed);
-            Assert.True(webDriver.FindElement(projectCodesWorkActivityContent).Displayed);
-            Assert.True(webDriver.FindElement(projectBusinessFunctionLabel).Displayed);
-            Assert.True(webDriver.FindElement(projectCodesBusinessFunctionContent).Displayed);
+            AssertTrueIsDisplayed(projectCodesSubtitle);
+            AssertTrueIsDisplayed(projectCostTypeLabel);
+            AssertTrueIsDisplayed(projectCodesCostTypeContent);
+            AssertTrueIsDisplayed(projectWorkActivityLabel);
+            AssertTrueIsDisplayed(projectCodesWorkActivityContent);
+            AssertTrueIsDisplayed(projectBusinessFunctionLabel);
+            AssertTrueIsDisplayed(projectCodesBusinessFunctionContent);
         }
 
         public void VerifyProductViewForm(Product product, int index, string validationType)

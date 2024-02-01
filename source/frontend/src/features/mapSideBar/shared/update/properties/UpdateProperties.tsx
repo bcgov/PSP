@@ -14,6 +14,7 @@ import SelectedPropertyRow from '@/components/propertySelector/selectedPropertyL
 import { SideBarContext } from '@/features/mapSideBar/context/sidebarContext';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
 import { useBcaAddress } from '@/features/properties/map/hooks/useBcaAddress';
+import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
 import { Api_File } from '@/models/api/File';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 
@@ -41,10 +42,10 @@ export const UpdateProperties: React.FunctionComponent<
   const formFile = FileForm.fromApi(props.file);
 
   const [showSaveConfirmModal, setShowSaveConfirmModal] = useState<boolean>(false);
-  const [showCancelConfirmModal, setShowCancelConfirmModal] = useState<boolean>(false);
   const [showAssociatedEntityWarning, setShowAssociatedEntityWarning] = useState<boolean>(false);
   const [isValid, setIsValid] = useState<boolean>(true);
 
+  const { setModalContent, setDisplayModal } = useModalContext();
   const { resetFilePropertyLocations } = useContext(SideBarContext);
 
   const { getPrimaryAddressByPid, bcaLoading } = useBcaAddress();
@@ -62,7 +63,15 @@ export const UpdateProperties: React.FunctionComponent<
   const handleCancelClick = () => {
     if (formikRef !== undefined) {
       if (formikRef.current?.dirty) {
-        setShowCancelConfirmModal(true);
+        setModalContent({
+          ...getCancelModalProps(),
+          handleOk: () => {
+            handleCancelConfirm();
+            setDisplayModal(false);
+          },
+          handleCancel: () => setDisplayModal(false),
+        });
+        setDisplayModal(true);
       } else {
         handleCancelConfirm();
       }
@@ -83,7 +92,6 @@ export const UpdateProperties: React.FunctionComponent<
       formikRef.current?.resetForm();
     }
     resetFilePropertyLocations();
-    setShowCancelConfirmModal(false);
     props.setIsShowingPropertySelector(false);
   };
 
@@ -217,24 +225,6 @@ export const UpdateProperties: React.FunctionComponent<
         }
         handleOk={() => setShowAssociatedEntityWarning(false)}
         okButtonText="Close"
-        show
-      />
-
-      <GenericModal
-        variant="info"
-        display={showCancelConfirmModal}
-        title={'Confirm changes'}
-        message={
-          <>
-            <div>If you choose to cancel now, your changes will not be saved.</div>
-            <br />
-            <strong>Do you want to proceed?</strong>
-          </>
-        }
-        handleOk={handleCancelConfirm}
-        handleCancel={() => setShowCancelConfirmModal(false)}
-        okButtonText="Yes"
-        cancelButtonText="No"
         show
       />
     </>

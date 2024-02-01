@@ -73,7 +73,7 @@ describe('UpdateFinancialCode form', () => {
     await act(async () => userEvent.paste(description, `another description`));
     await act(async () => userEvent.click(cancelButton));
 
-    expect(screen.getByText('Unsaved Changes')).toBeVisible();
+    expect(screen.getByText(/Confirm Changes/i)).toBeVisible();
     expect(await screen.findByDisplayValue('another description')).toBeVisible();
   });
 
@@ -85,7 +85,7 @@ describe('UpdateFinancialCode form', () => {
     await act(async () => userEvent.clear(description));
     await act(async () => userEvent.paste(description, `another description`));
     await act(async () => userEvent.click(cancelButton));
-    expect(screen.getByText('Unsaved Changes')).toBeVisible();
+    expect(screen.getByText(/Confirm Changes/i)).toBeVisible();
     const confirmButton = screen.getByText('Yes');
     await act(async () => userEvent.click(confirmButton));
 
@@ -101,7 +101,7 @@ describe('UpdateFinancialCode form', () => {
     await act(async () => userEvent.clear(description));
     await act(async () => userEvent.paste(description, `another description`));
     await act(async () => userEvent.click(cancelButton));
-    expect(screen.getByText('Unsaved Changes')).toBeVisible();
+    expect(screen.getByText(/Confirm Changes/i)).toBeVisible();
     const noButton = screen.getByText('No');
     await act(async () => userEvent.click(noButton));
 
