@@ -138,6 +138,9 @@ public partial class PimsPropertyHist
     [Column("IS_OWNED")]
     public bool IsOwned { get; set; }
 
+    [Column("IS_DISPOSED")]
+    public bool IsDisposed { get; set; }
+
     [Column("IS_PROPERTY_OF_INTEREST")]
     public bool IsPropertyOfInterest { get; set; }
 

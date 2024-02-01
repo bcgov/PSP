@@ -14,8 +14,8 @@ import {
   Api_DispositionFile,
   Api_DispositionFileAppraisal,
   Api_DispositionFileOffer,
-  Api_DispositionFileSale,
 } from '@/models/api/DispositionFile';
+import { ApiGen_Concepts_DispositionFileSale } from '@/models/api/generated/ApiGen_Concepts_DispositionFileSale';
 import { prettyFormatDate } from '@/utils/dateUtils';
 import { formatMoney } from '@/utils/numberFormatUtils';
 
@@ -30,7 +30,7 @@ export interface IOffersAndSaleContainerViewProps {
   loading: boolean;
   dispositionFile: Api_DispositionFile;
   dispositionOffers: Api_DispositionFileOffer[];
-  dispositionSale: Api_DispositionFileSale | null;
+  dispositionSale: ApiGen_Concepts_DispositionFileSale | null;
   dispositionAppraisal: Api_DispositionFileAppraisal | null;
   onDispositionOfferDeleted: (offerId: number) => void;
 }
@@ -47,8 +47,8 @@ const OffersAndSaleContainerView: React.FunctionComponent<IOffersAndSaleContaine
   const match = useRouteMatch();
   const keycloak = useKeycloakWrapper();
 
-  const purchaserAgent = dispositionSale?.dispositionPurchaserAgents[0] ?? null;
-  const purchaserAgentSolicitor = dispositionSale?.dispositionPurchaserSolicitors[0] ?? null;
+  const purchaserAgent = dispositionSale?.dispositionPurchaserAgent;
+  const purchaserAgentSolicitor = dispositionSale?.dispositionPurchaserSolicitor;
 
   return (
     <>
@@ -109,7 +109,7 @@ const OffersAndSaleContainerView: React.FunctionComponent<IOffersAndSaleContaine
             </SectionField>
           </>
         ) : (
-          <p>There are no value details indicated with this disposition file.</p>
+          <p>There are no Appraisal and Assessment details indicated with this disposition file.</p>
         )}
       </Section>
 
@@ -130,7 +130,7 @@ const OffersAndSaleContainerView: React.FunctionComponent<IOffersAndSaleContaine
       >
         {dispositionOffers.map((offer, index) => (
           <DispositionOfferDetails
-            key={index}
+            key={offer.id}
             dispositionOffer={offer}
             index={index}
             onDelete={onDispositionOfferDeleted}
@@ -141,7 +141,23 @@ const OffersAndSaleContainerView: React.FunctionComponent<IOffersAndSaleContaine
         )}
       </Section>
 
-      <Section header="Sales Details">
+      <Section
+        isCollapsable={false}
+        header={
+          <StyledSubHeader>
+            <label>Sales Details</label>
+            {keycloak.hasClaim(Claims.DISPOSITION_EDIT) && (
+              <EditButton
+                title="Edit Sale"
+                dataTestId={`sale-edit-btn`}
+                onClick={() => {
+                  history.push(`${match.url}/sale/update`);
+                }}
+              />
+            )}
+          </StyledSubHeader>
+        }
+      >
         {(dispositionSale && (
           <>
             <SectionField
@@ -149,16 +165,18 @@ const OffersAndSaleContainerView: React.FunctionComponent<IOffersAndSaleContaine
               labelWidth="6"
               valueTestId="disposition-sale.purchasers"
             >
-              {dispositionSale.dispositionPurchasers.map((purchaser, index) => (
-                <React.Fragment key={`purchaser-${index}`}>
-                  <DispositionSaleContactDetails
-                    contactInformation={purchaser}
-                  ></DispositionSaleContactDetails>
-                  {index !== dispositionSale.dispositionPurchasers.length - 1 && (
-                    <StyledSpacer className="my-3" />
-                  )}
-                </React.Fragment>
-              ))}
+              {dispositionSale.dispositionPurchasers &&
+                dispositionSale.dispositionPurchasers.map((purchaser, index) => (
+                  <React.Fragment key={`purchaser-${index}`}>
+                    <DispositionSaleContactDetails
+                      contactInformation={purchaser}
+                    ></DispositionSaleContactDetails>
+                    {dispositionSale.dispositionPurchasers &&
+                      index !== dispositionSale.dispositionPurchasers?.length - 1 && (
+                        <StyledSpacer className="my-3" />
+                      )}
+                  </React.Fragment>
+                ))}
             </SectionField>
             <SectionField
               label="Purchaser agent"
@@ -225,14 +243,17 @@ const OffersAndSaleContainerView: React.FunctionComponent<IOffersAndSaleContaine
             >
               {dispositionSale?.isGstRequired ? 'Yes' : 'No'}
             </SectionField>
-            <SectionField
-              label="GST collected ($)"
-              labelWidth="6"
-              tooltip="GST collected is calculated based upon Final Sales Price."
-              valueTestId="disposition-sale.gstCollectedAmount"
-            >
-              {formatMoney(dispositionSale.gstCollectedAmount)}
-            </SectionField>
+            {dispositionSale?.isGstRequired && (
+              <SectionField
+                label="GST collected ($)"
+                labelWidth="6"
+                tooltip="GST collected is calculated based upon Final Sales Price."
+                valueTestId="disposition-sale.gstCollectedAmount"
+              >
+                {formatMoney(dispositionSale.gstCollectedAmount)}
+              </SectionField>
+            )}
+
             <SectionField
               label="Net Book Value ($)"
               labelWidth="6"

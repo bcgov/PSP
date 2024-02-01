@@ -5598,6 +5598,7 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.FileNumber).HasComment("The (ARCS/ORCS) number identifying the Property File.");
             entity.Property(e => e.FileNumberSuffix).HasComment("A suffix to distinguish between Property Files with the same number.");
             entity.Property(e => e.GeneralLocation).HasComment("Descriptive location of the property, primarily for H120 activities.");
+            entity.Property(e => e.IsDisposed).HasComment("Has the property currently in disposition status?  This infers that the property was once owned by the Ministry but has since ceased to retain ownership of the property.");
             entity.Property(e => e.IsOwned)
                 .HasDefaultValue(true)
                 .HasComment("Is the property currently owned?");
@@ -5642,8 +5643,6 @@ public partial class PimsBaseContext : DbContext
 
             entity.HasOne(d => d.PphStatusTypeCodeNavigation).WithMany(p => p.PimsProperties).HasConstraintName("PIM_PPHSTT_PIM_PRPRTY_FK");
 
-            entity.HasOne(d => d.PropMgmtOrg).WithMany(p => p.PimsProperties).HasConstraintName("PIM_ORG_PIM_PRPRTY_FK");
-
             entity.HasOne(d => d.PropertyAreaUnitTypeCodeNavigation).WithMany(p => p.PimsProperties).HasConstraintName("PIM_ARUNIT_PIM_PRPRTY_FK");
 
             entity.HasOne(d => d.PropertyClassificationTypeCodeNavigation).WithMany(p => p.PimsProperties)
@@ -5653,8 +5652,6 @@ public partial class PimsBaseContext : DbContext
             entity.HasOne(d => d.PropertyDataSourceTypeCodeNavigation).WithMany(p => p.PimsProperties)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("PIM_PIDSRT_PIM_PRPRTY_FK");
-
-            entity.HasOne(d => d.PropertyManager).WithMany(p => p.PimsProperties).HasConstraintName("PIM_PERSON_PIM_PRPRTY_FK");
 
             entity.HasOne(d => d.PropertyStatusTypeCodeNavigation).WithMany(p => p.PimsProperties)
                 .OnDelete(DeleteBehavior.ClientSetNull)

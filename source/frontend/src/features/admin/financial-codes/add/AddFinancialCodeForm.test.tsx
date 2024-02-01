@@ -80,7 +80,7 @@ describe('AddFinancialCode form', () => {
     await act(async () => userEvent.paste(description, `another description`));
     await act(async () => userEvent.click(cancelButton));
 
-    expect(screen.getByText('Unsaved Changes')).toBeVisible();
+    expect(screen.getByText(/Confirm Changes/i)).toBeVisible();
     expect(await screen.findByDisplayValue('another description')).toBeVisible();
   });
 
@@ -91,7 +91,7 @@ describe('AddFinancialCode form', () => {
     const cancelButton = screen.getByText('Cancel');
     await act(async () => userEvent.paste(description, `another description`));
     await act(async () => userEvent.click(cancelButton));
-    expect(screen.getByText('Unsaved Changes')).toBeVisible();
+    expect(screen.getByText(/Confirm Changes/i)).toBeVisible();
     const confirmButton = screen.getByText('Yes');
     await act(async () => userEvent.click(confirmButton));
 
@@ -106,7 +106,7 @@ describe('AddFinancialCode form', () => {
     const cancelButton = screen.getByText('Cancel');
     await act(async () => userEvent.paste(textbox, `another description`));
     await act(async () => userEvent.click(cancelButton));
-    expect(screen.getByText('Unsaved Changes')).toBeVisible();
+    expect(screen.getByText(/Confirm Changes/i)).toBeVisible();
     const noButton = screen.getByText('No');
     await act(async () => userEvent.click(noButton));
 
