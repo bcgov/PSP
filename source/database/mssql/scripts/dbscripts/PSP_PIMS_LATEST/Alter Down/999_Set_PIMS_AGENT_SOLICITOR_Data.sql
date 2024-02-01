@@ -1,0 +1,183 @@
+/*******************************************************************************
+Copy the current rows from TMP_PIMS_DISPOSITION_SALE to PIMS_DSP_PURCH_AGENT and 
+PIMS_DSP_PURCH_SOLICITOR post-Alter_Up.
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Author        Date         Comment
+------------  -----------  -----------------------------------------------------
+Doug Filteau  2024-Jan-29  Original version.
+*******************************************************************************/
+
+SET XACT_ABORT ON
+GO
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+GO
+BEGIN TRANSACTION
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Update PIMS_DSP_PURCH_AGENT
+UPDATE agnt
+SET    agnt.DISPOSITION_SALE_ID        = temp.DISPOSITION_SALE_ID
+     , agnt.CONCURRENCY_CONTROL_NUMBER = agnt.CONCURRENCY_CONTROL_NUMBER + 1
+FROM   PIMS_DSP_PURCH_AGENT      agnt JOIN
+       TMP_PIMS_DISPOSITION_SALE temp ON temp.DSP_PURCH_AGENT_ID = agnt.DSP_PURCH_AGENT_ID
+WHERE  temp.DSP_PURCH_AGENT_ID IS NOT NULL
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Update PIMS_DSP_PURCH_SOLICITOR
+UPDATE solr
+SET    solr.DISPOSITION_SALE_ID        = temp.DISPOSITION_SALE_ID
+     , solr.CONCURRENCY_CONTROL_NUMBER = solr.CONCURRENCY_CONTROL_NUMBER + 1
+FROM   PIMS_DSP_PURCH_SOLICITOR  solr JOIN
+       TMP_PIMS_DISPOSITION_SALE temp ON temp.DSP_PURCH_SOLICITOR_ID = solr.DSP_PURCH_SOLICITOR_ID
+WHERE  temp.DSP_PURCH_SOLICITOR_ID IS NOT NULL
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Drop the existing temporary table TMP_PIMS_DSP_PURCH_SOLICITOR
+DROP TABLE IF EXISTS TMP_PIMS_DISPOSITION_SALE
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Create foreign key constraint dbo.PIM_DSPSAL_PIM_DSPPAG_FK
+PRINT N'Create foreign key constraint dbo.PIM_DSPSAL_PIM_DSPPAG_FK'
+GO
+ALTER TABLE [dbo].[PIMS_DSP_PURCH_AGENT]
+	ADD CONSTRAINT [PIM_DSPSAL_PIM_DSPPAG_FK]
+	FOREIGN KEY([DISPOSITION_SALE_ID])
+	REFERENCES [dbo].[PIMS_DISPOSITION_SALE]([DISPOSITION_SALE_ID])
+	ON DELETE NO ACTION 
+	ON UPDATE NO ACTION 
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Create foreign key constraint dbo.PIM_DSPSAL_PIM_DSPPSL_FK
+PRINT N'Create foreign key constraint dbo.PIM_DSPSAL_PIM_DSPPSL_FK'
+GO
+ALTER TABLE [dbo].[PIMS_DSP_PURCH_SOLICITOR]
+	ADD CONSTRAINT [PIM_DSPSAL_PIM_DSPPSL_FK]
+	FOREIGN KEY([DISPOSITION_SALE_ID])
+	REFERENCES [dbo].[PIMS_DISPOSITION_SALE]([DISPOSITION_SALE_ID])
+	ON DELETE NO ACTION 
+	ON UPDATE NO ACTION 
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Clear out any rows in the Purchasing Agent table with NULL DISPOSITION_SALE_ID
+-- values.  This is a result of test data randomness and will not affect Prod
+PRINT N'Clear out PIMS_DSP_PURCH_AGENT rows with null Disposition IDs'
+GO
+DELETE 
+FROM   PIMS_DSP_PURCH_AGENT
+WHERE  DISPOSITION_SALE_ID IS NULL 
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Alter table dbo.PIMS_DSP_PURCH_AGENT
+PRINT N'Alter table dbo.PIMS_DSP_PURCH_AGENT'
+GO
+ALTER TABLE [dbo].[PIMS_DSP_PURCH_AGENT]
+	ALTER COLUMN [DISPOSITION_SALE_ID] bigint NOT NULL 
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Clear out any rows in the Purchasing Solicitor table with NULL DISPOSITION_SALE_ID
+-- values.  This is a result of test data randomness and will not affect Prod
+PRINT N'Clear out PIMS_DSP_PURCH_SOLICITOR rows with null Disposition IDs'
+GO
+DELETE 
+FROM   PIMS_DSP_PURCH_SOLICITOR
+WHERE  DISPOSITION_SALE_ID IS NULL 
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Alter table dbo.PIMS_DSP_PURCH_SOLICITOR
+PRINT N'Alter table dbo.PIMS_DSP_PURCH_SOLICITOR'
+GO
+ALTER TABLE [dbo].[PIMS_DSP_PURCH_SOLICITOR]
+	ALTER COLUMN [DISPOSITION_SALE_ID] bigint NOT NULL 
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Clear out any rows in the Purchasing Agent history table with NULL DISPOSITION_SALE_ID
+-- values.  This is a result of test data randomness and will not affect Prod
+PRINT N'Clear out PIMS_DSP_PURCH_AGENT_HIST rows with null Disposition IDs'
+GO
+DELETE 
+FROM   PIMS_DSP_PURCH_AGENT_HIST
+WHERE  DISPOSITION_SALE_ID IS NULL 
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Alter table dbo.PIMS_DSP_PURCH_AGENT_HIST
+PRINT N'Alter table dbo.PIMS_DSP_PURCH_AGENT_HIST'
+GO
+ALTER TABLE [dbo].[PIMS_DSP_PURCH_AGENT_HIST]
+	ALTER COLUMN [DISPOSITION_SALE_ID] bigint NOT NULL 
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Clear out any rows in the Purchasing Solicitor history table with NULL DISPOSITION_SALE_ID
+-- values.  This is a result of test data randomness and will not affect Prod
+PRINT N'Clear out PIMS_DSP_PURCH_SOLICITOR_HIST rows with null Disposition IDs'
+GO
+DELETE 
+FROM   PIMS_DSP_PURCH_SOLICITOR_HIST
+WHERE  DISPOSITION_SALE_ID IS NULL 
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Alter table dbo.PIMS_DSP_PURCH_SOLICITOR_HIST
+PRINT N'Alter table dbo.PIMS_DSP_PURCH_SOLICITOR_HIST'
+GO
+ALTER TABLE [dbo].[PIMS_DSP_PURCH_SOLICITOR_HIST]
+	ALTER COLUMN [DISPOSITION_SALE_ID] bigint NOT NULL 
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Create index dbo.DSPPAG_DISPOSITION_SALE_ID_IDX
+PRINT N'Create index dbo.DSPPAG_DISPOSITION_SALE_ID_IDX'
+GO
+CREATE NONCLUSTERED INDEX [DSPPAG_DISPOSITION_SALE_ID_IDX]
+	ON [dbo].[PIMS_DSP_PURCH_AGENT]([DISPOSITION_SALE_ID])
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Create index dbo.DSPPSL_DISPOSITION_SALE_ID_IDX
+PRINT N'Create index dbo.DSPPSL_DISPOSITION_SALE_ID_IDX'
+GO
+CREATE NONCLUSTERED INDEX [DSPPSL_DISPOSITION_SALE_ID_IDX]
+	ON [dbo].[PIMS_DSP_PURCH_SOLICITOR]([DISPOSITION_SALE_ID])
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+COMMIT TRANSACTION
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+DECLARE @Success AS BIT
+SET @Success = 1
+SET NOEXEC OFF
+IF (@Success = 1) PRINT 'The database update succeeded'
+ELSE BEGIN
+   IF @@TRANCOUNT > 0 ROLLBACK TRANSACTION
+   PRINT 'The database update failed'
+END
+GO
