@@ -4,6 +4,7 @@ import { noop } from 'lodash';
 
 import { IAddress } from '@/interfaces/IAddress';
 import { mockParcel } from '@/mocks/filterData.mock';
+import { Api_Address } from '@/models/api/Address';
 import { render, RenderOptions } from '@/utils/test-utils';
 
 import { LeaseFormModel } from '../../models';
@@ -11,7 +12,7 @@ import AddressSubForm, { IAddressSubFormProps } from './AddressSubForm';
 
 const history = createMemoryHistory();
 
-const defaultLeaseWithPropertyAddress = (address?: Partial<IAddress>) => {
+const defaultLeaseWithPropertyAddress = (address?: Partial<Api_Address>) => {
   return {
     ...new LeaseFormModel(),
     properties: [
@@ -183,10 +184,12 @@ describe('AddressSubForm component', () => {
   it('does not render the country field if not present', () => {
     const { component } = setup({
       nameSpace: 'properties.0.address',
-      lease: defaultLeaseWithPropertyAddress({ country: '' }),
+      lease: defaultLeaseWithPropertyAddress({ country: { description: '' } }),
     });
     const { container } = component;
-    const country = container.querySelector(`input[name="properties.0.address.country"]`);
+    const country = container.querySelector(
+      `input[name="properties.0.address.country.description"]`,
+    );
 
     expect(country).toBeNull();
   });
@@ -194,10 +197,12 @@ describe('AddressSubForm component', () => {
   it('renders the country field if present', () => {
     const { component } = setup({
       nameSpace: 'properties.0.address',
-      lease: defaultLeaseWithPropertyAddress({ country: 'country' }),
+      lease: defaultLeaseWithPropertyAddress({ country: { description: 'country' } }),
     });
     const { container } = component;
-    const country = container.querySelector(`input[name="properties.0.address.country"]`);
+    const country = container.querySelector(
+      `input[name="properties.0.address.country.description"]`,
+    );
 
     expect(country).toBeVisible();
   });
