@@ -146,7 +146,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
             if (address != "")
             {
-                ChooseSpecificSelectOption(searchAcquisitionFileSearchBySelect, "Address");
+                ChooseSpecificSelectOption(searchAcquisitionFileSearchBySelect, "Civic Address");
                 webDriver.FindElement(searchAcquisitionFileSearchByAddressInput).SendKeys(address);
             }
             if (name != "")
@@ -247,7 +247,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 AssertTrueContentEquals(searchAcquisitionFile1stResultProject, acquisition.AcquisitionProjCode + " " + acquisition.AcquisitionProject);
 
             if(acquisition.AcquisitionSearchPropertiesIndex != 0)
-                Assert.NotEqual(0, webDriver.FindElements(searchAcquisitionFile1stResultAddress).Count());
+                Assert.NotEmpty(webDriver.FindElements(searchAcquisitionFile1stResultAddress));
 
             AssertTrueContentEquals(searchAcquisitionFile1stResultStatus, acquisition.AcquisitionStatus);
         }

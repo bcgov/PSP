@@ -619,7 +619,7 @@ namespace PIMS.Tests.Automation.PageObjects
                     webDriver.SwitchTo().Alert().Accept();
                 }
             }
-            catch (WebDriverTimeoutException e)
+            catch (WebDriverTimeoutException)
             {
                 if (webDriver.FindElements(licenseDetailsConfirmationModal).Count() > 0)
                 {
