@@ -72,7 +72,7 @@ describe('Disposition Offer Detail View component', () => {
       props: { dispositionFile: mockDisposition, dispositionOffers: [] },
     });
     expect(
-      getByText(/There are no value details indicated with this disposition file/i),
+      getByText(/There are no sale details indicated with this disposition file/i),
     ).toBeVisible();
   });
 

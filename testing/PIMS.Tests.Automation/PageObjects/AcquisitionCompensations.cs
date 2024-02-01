@@ -167,7 +167,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void UpdateTotalAllowableCompensation(string allowableAmount)
         {
-            Wait(2000);
+            Wait();
             FocusAndClick(compensationTotalAllowableEdiBttn);
 
             WaitUntilVisible(compensationTotalAllowableInput);
@@ -187,7 +187,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void OpenCompensationDetails(int index)
         {
-            Wait(2000);
+            Wait();
 
             WaitUntilClickable(By.CssSelector("div[data-testid='AcquisitionCompensationTable'] div[class='tbody'] div[class='tr-wrapper'] div button div svg[data-testid='compensation-view-"+ index +"']"));
             webDriver.FindElement(By.CssSelector("div[data-testid='AcquisitionCompensationTable'] div[class='tbody'] div[class='tr-wrapper'] div button div svg[data-testid='compensation-view-"+ index +"']")).Click();
@@ -195,14 +195,14 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void DeleteCompensationRequisition(int index)
         {
-            Wait(2000);
+            Wait();
             //WaitUntilVisible(compensationH120Table);
             FocusAndClick(By.CssSelector("div[data-testid='AcquisitionCompensationTable'] div[class='tbody'] div[class='tr-wrapper'] div button[data-testid='compensation-delete-"+ index +"']"));
 
             if (webDriver.FindElements(acquisitionFileConfirmationModal).Count() > 0)
             {
-                Assert.True(sharedModals.ModalHeader().Equals("Confirm Delete"));
-                Assert.True(sharedModals.ModalContent().Equals("Are you sure you want to delete this item?"));
+                Assert.Equal("Confirm Delete", sharedModals.ModalHeader());
+                Assert.Equal("Are you sure you want to delete this item?", sharedModals.ModalContent());
                 sharedModals.ModalClickOKBttn();
             }
 
@@ -216,10 +216,10 @@ namespace PIMS.Tests.Automation.PageObjects
 
             if (webDriver.FindElements(acquisitionFileConfirmationModal).Count() > 0)
             {
-                Assert.True(sharedModals.ModalHeader().Equals("Confirm status change"));
-                Assert.True(sharedModals.ModalContent().Contains("You have selected to change the status from DRAFT to FINAL."));
-                Assert.True(sharedModals.ModalContent().Contains("We recommend that you only make this change status (draft to final) when printing the final version"));
-                Assert.True(sharedModals.ModalContent().Contains("without system administrator privileges. The compensation requisition cannot be changed again once it is saved as final."));
+                Assert.Equal("Confirm status change", sharedModals.ModalHeader());
+                Assert.Contains("You have selected to change the status from DRAFT to FINAL.", sharedModals.ModalContent());
+                Assert.Contains("We recommend that you only make this change status (draft to final) when printing the final version", sharedModals.ModalContent());
+                Assert.Contains("without system administrator privileges. The compensation requisition cannot be changed again once it is saved as final.", sharedModals.ModalContent());
                 
                 sharedModals.ModalClickOKBttn();
             }
@@ -234,8 +234,8 @@ namespace PIMS.Tests.Automation.PageObjects
 
             if (webDriver.FindElements(acquisitionFileConfirmationModal).Count() > 0)
             {
-                Assert.True(sharedModals.ModalHeader().Equals("Unsaved Changes"));
-                Assert.True(sharedModals.ModalContent().Equals("You have made changes on this form. Do you wish to leave without saving?"));
+                Assert.Equal("Unsaved Changes", sharedModals.ModalHeader());
+                Assert.Equal("You have made changes on this form. Do you wish to leave without saving?", sharedModals.ModalContent());
                 sharedModals.ModalClickOKBttn();
             }
 
@@ -244,7 +244,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public string GetCompensationFileNumber(int compFileNbr)
         {
-            Wait(2000);
+            Wait();
             WaitUntilVisible(By.CssSelector("div[data-testid='AcquisitionCompensationTable'] div[class='tr-wrapper']:nth-child("+ compFileNbr +") div:nth-child(2) div"));
 
             return webDriver.FindElement(By.CssSelector("div[data-testid='AcquisitionCompensationTable'] div[class='tr-wrapper']:nth-child("+ compFileNbr +") div:nth-child(2) div")).Text;
@@ -256,8 +256,8 @@ namespace PIMS.Tests.Automation.PageObjects
 
             if (webDriver.FindElements(acquisitionFileConfirmationModal).Count() > 0)
             {
-                Assert.True(sharedModals.ModalHeader().Equals("Remove financial activity"));
-                Assert.True(sharedModals.ModalContent().Equals("Are you sure you want to remove this financial activity?"));
+                Assert.Equal("Remove financial activity", sharedModals.ModalHeader());
+                Assert.Equal("Are you sure you want to remove this financial activity?", sharedModals.ModalContent());
                 sharedModals.ModalClickOKBttn();
             }
         }
@@ -285,7 +285,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 Wait();
                 webDriver.FindElement(requisitionAltProjectInput).SendKeys(Keys.Backspace);
 
-                Wait(2000);
+                Wait();
                 webDriver.FindElement(requisitionAltProject1stOption).Click();
             }
 
@@ -406,7 +406,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public int TotalCompensationCount()
         {
-            Wait(2000);
+            Wait();
             return webDriver.FindElements(compensationH120TotalCount).Count();
         }
 

@@ -63,7 +63,8 @@ const DispositionTeamSubForm: React.FunctionComponent<
                         ...getDeleteModalProps(),
                         title: 'Remove Team Member',
                         message: 'Do you wish to remove this team member?',
-                        okButtonText: 'Remove',
+                        okButtonText: 'Yes',
+                        cancelButtonText: 'No',
                         handleOk: async () => {
                           arrayHelpers.remove(index);
                           setDisplayModal(false);
@@ -78,7 +79,7 @@ const DispositionTeamSubForm: React.FunctionComponent<
                 </Col>
               </Row>
               {teamMember.contact?.organizationId && !teamMember.contact?.personId && (
-                <SectionField label="Primary contact" labelWidth="5" noGutters>
+                <SectionField label="Primary contact" labelWidth="6" noGutters>
                   <PrimaryContactSelector
                     field={`team.${index}.primaryContactId`}
                     contactInfo={teamMember?.contact}

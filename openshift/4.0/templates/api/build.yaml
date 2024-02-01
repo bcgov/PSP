@@ -2,7 +2,7 @@
 # It will build a new image from the specified source control repo
 # that will run your application.
 kind: Template
-apiVersion: v1
+apiVersion: template.openshift.io/v1
 metadata:
   name: pims-api-build
   annotations:
@@ -115,6 +115,7 @@ objects:
         role: ${ROLE_NAME}
         env: ${ENV_NAME}
         branch: ${GIT_REF}
+        ci_cd: "true"
     spec:
       triggers:
         - type: ImageChange

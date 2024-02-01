@@ -53,9 +53,9 @@ export class AcquisitionTeamFormModel {
 
   static fromApi(model: Api_AcquisitionFileTeam | null): AcquisitionTeamFormModel {
     const contact: IContactSearchResult | undefined =
-      model?.person !== undefined
+      model?.person !== undefined && model?.person !== null
         ? fromApiPerson(model.person)
-        : model?.organization !== undefined
+        : model?.organization !== undefined && model?.organization !== null
         ? fromApiOrganization(model.organization)
         : undefined;
 
