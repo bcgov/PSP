@@ -50,6 +50,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
             h120 = new AcquisitionCompensations(driver.Current);
             expropriation = new AcquisitionExpropriation(driver.Current);
             notes = new Notes(driver.Current);
+
+            acquisitionFile = new AcquisitionFile();
         }
 
         [StepDefinition(@"I create a new Acquisition File from row number (.*)")]
@@ -222,16 +224,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Save changes
             sharedFileProperties.SaveFileProperties();
-
-            ////Select 1st Property
-            //sharedFileProperties.SelectFirstPropertyOptionFromFile();
-
-            ////Verify its Property Details
-            //propertyInformation.NavigatePropertyDetailsTab();
-            //propertyInformation.VerifyPropertyDetailsView();
-
-            ////Navigate to  Acquisition File's Properties section
-            //sharedFileProperties.NavigateToAddPropertiesToFile();
 
             //Delete Property
             sharedFileProperties.NavigateToAddPropertiesToFile();
@@ -856,28 +848,28 @@ namespace PIMS.Tests.Automation.StepDefinitions
             acquisitionFilesDetails.SaveAcquisitionFileDetails();
         }
 
-        [StepDefinition(@"I search for an existing acquisition file")]
-        public void SearchLastCreatedAcquisitionFile()
-        {
-            //Login to PIMS
-            loginSteps.Idir(userName);
+        //[StepDefinition(@"I search for an existing acquisition file")]
+        //public void SearchLastCreatedAcquisitionFile()
+        //{
+        //    //Login to PIMS
+        //    loginSteps.Idir(userName);
 
-            //Navigate to Manage Acquisition Files
-            searchAcquisitionFiles.NavigateToSearchAcquisitionFile();
+        //    //Navigate to Manage Acquisition Files
+        //    searchAcquisitionFiles.NavigateToSearchAcquisitionFile();
 
-            //Look for the last acquisition file
-            searchAcquisitionFiles.SearchLastAcquisitionFile();
+        //    //Look for the last acquisition file
+        //    searchAcquisitionFiles.SearchLastAcquisitionFile();
 
-            //Select 1st option from search
-            searchAcquisitionFiles.SelectFirstOption();
-        }
+        //    //Select 1st option from search
+        //    searchAcquisitionFiles.SelectFirstOption();
+        //}
 
-        [StepDefinition(@"I navigate back to the Acquisition File Summary")]
-        public void NavigateMainResearchFileSection()
-        {
-            //Navigate back to File Summary
-            acquisitionFilesDetails.NavigateToFileSummary();
-        }
+        //[StepDefinition(@"I navigate back to the Acquisition File Summary")]
+        //public void NavigateMainResearchFileSection()
+        //{
+        //    //Navigate back to File Summary
+        //    acquisitionFilesDetails.NavigateToFileSummary();
+        //}
 
         [StepDefinition(@"I search for an existing Acquisition File from row number (.*)")]
         public void SearchExistingAcquisitionFile(int rowNumber)
@@ -979,7 +971,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateAcquisitionFile(int rowNumber)
         {
-            DataTable acquisitionSheet = ExcelDataContext.GetInstance().Sheets["AcquisitionFiles"];
+            DataTable acquisitionSheet = ExcelDataContext.GetInstance().Sheets["AcquisitionFiles"]!;
             ExcelDataContext.PopulateInCollection(acquisitionSheet);
             acquisitionFile = new AcquisitionFile();
 
@@ -1031,7 +1023,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             acquisitionFile.AcquisitionSearchPropertiesIndex = int.Parse(ExcelDataContext.ReadData(rowNumber, "AcqSearchPropertiesIndex"));
             if (acquisitionFile.AcquisitionSearchPropertiesIndex > 0)
             {
-                DataTable searchPropertiesSheet = ExcelDataContext.GetInstance().Sheets["SearchProperties"];
+                DataTable searchPropertiesSheet = ExcelDataContext.GetInstance().Sheets["SearchProperties"]!;
                 ExcelDataContext.PopulateInCollection(searchPropertiesSheet);
 
                 acquisitionFile.AcquisitionSearchProperties.PID = ExcelDataContext.ReadData(acquisitionFile.AcquisitionSearchPropertiesIndex, "PID");
@@ -1051,7 +1043,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             acquisitionFile.AcquisitionFileChecklistIndex = int.Parse(ExcelDataContext.ReadData(rowNumber, "AcquisitionFileChecklistIndex"));
             if (acquisitionFile.AcquisitionFileChecklistIndex > 0)
             {
-                DataTable acquisitionFileChecklistSheet = ExcelDataContext.GetInstance().Sheets["AcquisitionChecklist"];
+                DataTable acquisitionFileChecklistSheet = ExcelDataContext.GetInstance().Sheets["AcquisitionChecklist"]!;
                 ExcelDataContext.PopulateInCollection(acquisitionFileChecklistSheet);
 
                 acquisitionFile.AcquisitionFileChecklist.FileInitiationSelect1 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "FileInitiationSelect1");
@@ -1136,7 +1128,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateTeamsCollection(int startRow, int rowsCount)
         {
-            DataTable teamsSheet = ExcelDataContext.GetInstance().Sheets["TeamMembers"];
+            DataTable teamsSheet = ExcelDataContext.GetInstance().Sheets["TeamMembers"]!;
             ExcelDataContext.PopulateInCollection(teamsSheet);
 
             for (int i = startRow; i < startRow + rowsCount; i++)
@@ -1153,7 +1145,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateOwnersCollection(int startRow, int rowsCount)
         {
-            DataTable ownersSheet = ExcelDataContext.GetInstance().Sheets["AcquisitionOwners"];
+            DataTable ownersSheet = ExcelDataContext.GetInstance().Sheets["AcquisitionOwners"]!;
             ExcelDataContext.PopulateInCollection(ownersSheet);
 
             for (int i = startRow; i < startRow + rowsCount; i++)
@@ -1184,7 +1176,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateTakesCollection(int startRow, int rowsCount)
         {
-            DataTable takeSheet = ExcelDataContext.GetInstance().Sheets["Takes"];
+            DataTable takeSheet = ExcelDataContext.GetInstance().Sheets["Takes"]!;
             ExcelDataContext.PopulateInCollection(takeSheet);
 
             for (int i = startRow; i < startRow + rowsCount; i++)
@@ -1224,7 +1216,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateAgreementsCollection(int startRow, int rowsCount)
         {
-            DataTable agreementSheet = ExcelDataContext.GetInstance().Sheets["AcquisitionAgreement"];
+            DataTable agreementSheet = ExcelDataContext.GetInstance().Sheets["AcquisitionAgreement"]!;
             ExcelDataContext.PopulateInCollection(agreementSheet);
 
             for (int i = startRow; i < startRow + rowsCount; i++)
@@ -1248,7 +1240,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateStakeholdersCollection(int startRow, int rowsCount)
         {
-            DataTable stakeholderSheet = ExcelDataContext.GetInstance().Sheets["AcquisitionStakeholder"];
+            DataTable stakeholderSheet = ExcelDataContext.GetInstance().Sheets["AcquisitionStakeholder"]!;
             ExcelDataContext.PopulateInCollection(stakeholderSheet);
 
             for (int i = startRow; i < startRow + rowsCount; i++)
@@ -1269,7 +1261,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateCompensationsCollection(int startRow, int rowsCount)
         {
-            DataTable compensationSheet = ExcelDataContext.GetInstance().Sheets["AcquisitionCompensation"];
+            DataTable compensationSheet = ExcelDataContext.GetInstance().Sheets["AcquisitionCompensation"]!;
             ExcelDataContext.PopulateInCollection(compensationSheet);
 
             for (int i = startRow; i < startRow + rowsCount; i++)
@@ -1309,7 +1301,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateActivitiesCollection(int startRow, int rowsCount, List<CompensationActivity> activities)
         {
-            DataTable activitiesSheet = ExcelDataContext.GetInstance().Sheets["CompensationActivities"];
+            DataTable activitiesSheet = ExcelDataContext.GetInstance().Sheets["CompensationActivities"]!;
             ExcelDataContext.PopulateInCollection(activitiesSheet);
 
             for (int i = startRow; i < startRow + rowsCount; i++)
@@ -1328,7 +1320,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateExpropriationCollection(int startRow, int rowsCount)
         {
-            DataTable expropriationSheet = ExcelDataContext.GetInstance().Sheets["AcquisitionExpropriationForm8"];
+            DataTable expropriationSheet = ExcelDataContext.GetInstance().Sheets["AcquisitionExpropriationForm8"]!;
             ExcelDataContext.PopulateInCollection(expropriationSheet);
 
             for (int i = startRow; i < startRow + rowsCount; i++)
@@ -1353,7 +1345,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateExpropPaymentsCollection(int startRow, int rowsCount, List<ExpropriationPayment> payments)
         {
-            DataTable paymentsSheet = ExcelDataContext.GetInstance().Sheets["ExpropriationPayment"];
+            DataTable paymentsSheet = ExcelDataContext.GetInstance().Sheets["ExpropriationPayment"]!;
             ExcelDataContext.PopulateInCollection(paymentsSheet);
 
             for (int i = startRow; i < startRow + rowsCount; i++)

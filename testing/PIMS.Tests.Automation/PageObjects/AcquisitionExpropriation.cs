@@ -148,7 +148,6 @@ namespace PIMS.Tests.Automation.PageObjects
                 Assert.Equal("You have made changes on this form. Do you wish to leave without saving?", sharedModals.ModalContent());
                 sharedModals.ModalClickOKBttn();
             }
-
         }
 
         public void CreateForm8(AcquisitionExpropriationForm8 expropriation)
@@ -158,7 +157,7 @@ namespace PIMS.Tests.Automation.PageObjects
             ChooseSpecificSelectOption(form8PayeeSelect, expropriation.Form8Payee);
 
             webDriver.FindElement(form8ExpAuthorityContactBttn).Click();
-            sharedSelectContact.SelectContact(expropriation.Form8ExpropriationAuthority, "");
+            sharedSelectContact.SelectContact(expropriation.Form8ExpropriationAuthority!, "");
 
             if (expropriation.Form8Description != "")
             {
@@ -181,7 +180,7 @@ namespace PIMS.Tests.Automation.PageObjects
             ChooseSpecificSelectOption(form8PayeeSelect, expropriation.Form8Payee);
 
             webDriver.FindElement(form8ExpAuthorityContactBttn).Click();
-            sharedSelectContact.SelectContact(expropriation.Form8ExpropriationAuthority, null);
+            sharedSelectContact.SelectContact(expropriation.Form8ExpropriationAuthority, "");
 
             if (expropriation.Form8Description != "")
             {

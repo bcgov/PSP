@@ -266,20 +266,20 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(searchDispositionFile1stResult);
 
             if(disposition.DispositionReferenceNumber != "")
-                AssertTrueContentEquals(searchDispositionFile1stResultReference, disposition.DispositionReferenceNumber);
+                AssertTrueContentEquals(searchDispositionFile1stResultReference, disposition.DispositionReferenceNumber!);
 
-            AssertTrueContentEquals(searchDispositionFile1stResultName, disposition.DispositionFileName);
-            AssertTrueContentEquals(searchDispositionFile1stResultType, disposition.DispositionType);
+            AssertTrueContentEquals(searchDispositionFile1stResultName, disposition.DispositionFileName!);
+            AssertTrueContentEquals(searchDispositionFile1stResultType, disposition.DispositionType!);
             AssertTrueContentEquals(searchDispositionFile1stResultMOTIRegion, disposition.DispositionMOTIRegion);
 
             if(disposition.DispositionTeam.Count > 0)
-                Assert.NotEqual(0, webDriver.FindElements(searchDispositionFile1stResultTeamMember).Count());
+                Assert.NotEmpty(webDriver.FindElements(searchDispositionFile1stResultTeamMember));
 
             if (disposition.DispositionSearchPropertiesIndex != 0)
-                Assert.NotEqual(0, webDriver.FindElements(searchDispositionFile1stResultAddress).Count());
+                Assert.NotEmpty(webDriver.FindElements(searchDispositionFile1stResultAddress));
 
-            AssertTrueContentEquals(searchDispositionFile1stResultStatus, disposition.DispositionStatus);
-            AssertTrueContentEquals(searchDispositionFile1stResultStatusFile, disposition.DispositionFileStatus);
+            AssertTrueContentEquals(searchDispositionFile1stResultStatus, disposition.DispositionStatus!);
+            AssertTrueContentEquals(searchDispositionFile1stResultStatusFile, disposition.DispositionFileStatus!);
         }
     }
 }
