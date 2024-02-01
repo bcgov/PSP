@@ -2,8 +2,8 @@ import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
 
-import { mockParcel } from '@/mocks/filterData.mock';
 import { getMockApiLease } from '@/mocks/lease.mock';
+import { getMockApiProperty } from '@/mocks/properties.mock';
 import { Api_Lease } from '@/models/api/Lease';
 import { render, RenderOptions } from '@/utils/test-utils';
 
@@ -42,7 +42,7 @@ describe('PropertyInformation component', () => {
         ...getMockApiLease(),
         properties: [
           {
-            ...mockParcel,
+            ...getMockApiProperty(),
             areaUnitType: { id: 'test' },
             leaseArea: 123,
             leaseId: null,
@@ -61,7 +61,7 @@ describe('PropertyInformation component', () => {
         ...getMockApiLease(),
         properties: [
           {
-            ...mockParcel,
+            ...getMockApiProperty(),
             areaUnitType: { id: 'test' },
             leaseArea: 123,
             leaseId: null,
@@ -88,7 +88,13 @@ describe('PropertyInformation component', () => {
       lease: {
         ...getMockApiLease(),
         properties: [
-          { ...mockParcel, leaseArea: 1, areaUnitType: { id: 'test' }, leaseId: null, lease: null },
+          {
+            ...getMockApiProperty(),
+            leaseArea: 1,
+            areaUnitType: { id: 'test' },
+            leaseId: null,
+            lease: null,
+          },
         ],
         amount: 1,
         description: 'a test description',
@@ -110,7 +116,13 @@ describe('PropertyInformation component', () => {
       lease: {
         ...getMockApiLease(),
         properties: [
-          { ...mockParcel, leaseArea: 123, areaUnitType: null, leaseId: null, lease: null },
+          {
+            ...getMockApiProperty(),
+            leaseArea: 123,
+            areaUnitType: null,
+            leaseId: null,
+            lease: null,
+          },
         ],
         amount: 1,
         description: 'a test description',
