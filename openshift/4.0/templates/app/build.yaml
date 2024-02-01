@@ -1,5 +1,5 @@
 kind: Template
-apiVersion: v1
+apiVersion: template.openshift.io/v1
 metadata:
   name: pims-app-build
   annotations:
@@ -35,7 +35,7 @@ parameters:
   - name: BUILDIMAGE_TAG
     displayName: "Source Image Tag"
     description: "The s2i image tag which is used to build the code."
-    value: "1-1"
+    value: "1-5"
 
   - name: RUNTIMEIMAGE_NAME
     displayName: "Source Image Name"
@@ -85,11 +85,11 @@ objects:
       namespace: ${PROJECT_NAMESPACE}-${ENV_NAME}
       annotations:
         description: Keeps track of changes to the intermediate frontend artifacts image
-    labels:
-      name: ${APP_NAME}-${ROLE_NAME}-base
-      app: ${APP_NAME}
-      role: ${ROLE_NAME}
-      env: ${ENV_NAME}
+      labels:
+        name: ${APP_NAME}-${ROLE_NAME}-base
+        app: ${APP_NAME}
+        role: ${ROLE_NAME}
+        env: ${ENV_NAME}
 
   # The build config that will be created and be named for the branch you created it for.
   - kind: BuildConfig
@@ -99,17 +99,15 @@ objects:
       namespace: ${PROJECT_NAMESPACE}-${ENV_NAME}
       annotations:
         description: Intermediate build that generates the frontend artifacts (html, javascript, images, etc)
-    labels:
-      name: ${APP_NAME}-${ROLE_NAME}-base.${GIT_REF}
-      app: ${APP_NAME}
-      role: ${ROLE_NAME}
-      env: ${ENV_NAME}
+      labels:
+        name: ${APP_NAME}-${ROLE_NAME}-base.${GIT_REF}
+        app: ${APP_NAME}
+        role: ${ROLE_NAME}
+        env: ${ENV_NAME}
+        ci_cd: "true"
     spec:
       runPolicy: Parallel
       completionDeadlineSeconds: 1800
-      triggers:
-        - type: ImageChange
-        - type: ConfigChange
       source:
         type: Git
         git:
@@ -140,11 +138,11 @@ objects:
       namespace: ${PROJECT_NAMESPACE}-${ENV_NAME}
       annotations:
         description: Keeps track of changes to the final frontend image (embedded in nginx)
-    labels:
-      name: ${APP_NAME}-${ROLE_NAME}
-      app: ${APP_NAME}
-      role: ${ROLE_NAME}
-      env: ${ENV_NAME}
+      labels:
+        name: ${APP_NAME}-${ROLE_NAME}
+        app: ${APP_NAME}
+        role: ${ROLE_NAME}
+        env: ${ENV_NAME}
 
   # The build config that will be created and be named for the branch you created it for.
   - kind: BuildConfig
@@ -154,17 +152,15 @@ objects:
       namespace: ${PROJECT_NAMESPACE}-${ENV_NAME}
       annotations:
         description: This (final) build takes the generated frontend artifacts and serves them through a static web server (nginx)
-    labels:
-      name: ${APP_NAME}-${ROLE_NAME}.${GIT_REF}
-      app: ${APP_NAME}
-      role: ${ROLE_NAME}
-      env: ${ENV_NAME}
+      labels:
+        name: ${APP_NAME}-${ROLE_NAME}.${GIT_REF}
+        app: ${APP_NAME}
+        role: ${ROLE_NAME}
+        env: ${ENV_NAME}
+        ci_cd: "true"
     spec:
       runPolicy: Parallel
       completionDeadlineSeconds: 1800
-      triggers:
-        - type: ImageChange
-        - type: ConfigChange
       source:
         dockerfile: |-
           FROM ${APP_NAME}-${ROLE_NAME}-base:${OUTPUT_IMAGE_TAG}
