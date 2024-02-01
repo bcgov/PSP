@@ -5,7 +5,6 @@ import { MdTopic } from 'react-icons/md';
 import { matchPath, useHistory, useRouteMatch } from 'react-router-dom';
 import styled from 'styled-components';
 
-import GenericModal from '@/components/common/GenericModal';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { FileTypes } from '@/constants/fileTypes';
@@ -14,6 +13,7 @@ import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
 import { useResearchRepository } from '@/hooks/repositories/useResearchRepository';
 import { useQuery } from '@/hooks/use-query';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
+import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Concepts_ResearchFile';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
@@ -64,12 +64,10 @@ export const ResearchContainer: React.FunctionComponent<
   } = React.useContext(SideBarContext);
 
   const [isValid, setIsValid] = useState<boolean>(true);
-
   const [isShowingPropertySelector, setIsShowingPropertySelector] = useState<boolean>(false);
+  const { setModalContent, setDisplayModal } = useModalContext();
 
   const formikRef = useRef<FormikProps<any>>(null);
-
-  const [showConfirmModal, setShowConfirmModal] = useState<boolean>(false);
 
   const history = useHistory();
   const match = useRouteMatch();
@@ -189,7 +187,15 @@ export const ResearchContainer: React.FunctionComponent<
   const handleCancelClick = () => {
     if (formikRef !== undefined) {
       if (formikRef.current?.dirty) {
-        setShowConfirmModal(true);
+        setModalContent({
+          ...getCancelModalProps(),
+          handleOk: () => {
+            handleCancelConfirm();
+            setDisplayModal(false);
+          },
+          handleCancel: () => setDisplayModal(false),
+        });
+        setDisplayModal(true);
       } else {
         handleCancelConfirm();
       }
@@ -202,7 +208,6 @@ export const ResearchContainer: React.FunctionComponent<
     if (formikRef !== undefined) {
       formikRef.current?.resetForm();
     }
-    setShowConfirmModal(false);
     setIsEditing(false);
   };
 
@@ -278,32 +283,13 @@ export const ResearchContainer: React.FunctionComponent<
           }
           bodyComponent={
             <StyledFormWrapper>
-              <>
-                <GenericModal
-                  variant="info"
-                  display={showConfirmModal}
-                  title={'Confirm changes'}
-                  message={
-                    <>
-                      <div>If you choose to cancel now, your changes will not be saved.</div>
-                      <br />
-                      <strong>Do you want to proceed?</strong>
-                    </>
-                  }
-                  handleOk={handleCancelConfirm}
-                  handleCancel={() => setShowConfirmModal(false)}
-                  okButtonText="Yes"
-                  cancelButtonText="No"
-                  show
-                />
-                <ResearchView
-                  researchFile={researchFile as unknown as ApiGen_Concepts_ResearchFile | undefined} //todo : clean the forced upcasting
-                  onSuccess={onSuccess}
-                  setEditMode={setIsEditing}
-                  ref={formikRef}
-                  isEditing={isEditing}
-                />
-              </>
+              <ResearchView
+                researchFile={researchFile as unknown as ApiGen_Concepts_ResearchFile}
+                onSuccess={onSuccess}
+                setEditMode={setIsEditing}
+                ref={formikRef}
+                isEditing={isEditing}
+              />
             </StyledFormWrapper>
           }
         ></FileLayout>

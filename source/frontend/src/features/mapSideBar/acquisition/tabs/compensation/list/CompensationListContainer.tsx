@@ -1,6 +1,5 @@
 import axios, { AxiosError } from 'axios';
 import React, { useCallback, useContext } from 'react';
-import { toast } from 'react-toastify';
 
 import { FileTypes } from '@/constants';
 import { SideBarContext } from '@/features/mapSideBar/context/sidebarContext';
@@ -23,9 +22,11 @@ export interface ICompensationListContainerProps {
 /**
  * Page that displays compensation list information.
  */
-export const CompensationListContainer: React.FunctionComponent<
-  React.PropsWithChildren<ICompensationListContainerProps>
-> = ({ fileId, file, View }: ICompensationListContainerProps) => {
+export const CompensationListContainer: React.FC<ICompensationListContainerProps> = ({
+  fileId,
+  file,
+  View,
+}: ICompensationListContainerProps) => {
   const {
     getAcquisitionCompensationRequisitions: {
       execute: getAcquisitionCompensationRequisitions,
@@ -68,8 +69,14 @@ export const CompensationListContainer: React.FunctionComponent<
       } catch (e) {
         if (axios.isAxiosError(e)) {
           const axiosError = e as AxiosError<IApiError>;
-          toast.error(axiosError.response?.data.error, { autoClose: 20000 });
-          throw Error(axiosError.response?.data.error);
+          setModalContent({
+            variant: 'error',
+            title: 'Invalid value',
+            message: axiosError?.response?.data?.error,
+            okButtonText: 'Close',
+          });
+          setDisplayModal(true);
+          throw Error(axiosError.response?.data?.error);
         }
       }
     }
