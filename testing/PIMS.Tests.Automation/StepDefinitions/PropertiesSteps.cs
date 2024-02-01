@@ -30,6 +30,10 @@ namespace PIMS.Tests.Automation.StepDefinitions
             propertyManagementTab = new PropertyManagementTab(driver.Current);
             pimsFiles = new PropertyPIMSFiles(driver.Current);
             genericSteps = new GenericSteps(driver);
+
+            property = new Property();
+            searchProperty = new SearchProperty();
+            propertyManagement = new PropertyManagement();
         }
 
         [StepDefinition(@"I search for a Property in the Inventory by different filters from row number (.*)")]
@@ -367,7 +371,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateProperty(int rowNumber)
         {
-            DataTable propertiesSheet = ExcelDataContext.GetInstance().Sheets["Properties"];
+            DataTable propertiesSheet = ExcelDataContext.GetInstance().Sheets["Properties"]!;
             ExcelDataContext.PopulateInCollection(propertiesSheet);
 
             property = new Property();
@@ -401,7 +405,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateSearchProperty(int rowNumber)
         {
-            DataTable searchPropertiesSheet = ExcelDataContext.GetInstance().Sheets["SearchProperties"];
+            DataTable searchPropertiesSheet = ExcelDataContext.GetInstance().Sheets["SearchProperties"]!;
             ExcelDataContext.PopulateInCollection(searchPropertiesSheet);
 
             searchProperty = new SearchProperty();
@@ -415,7 +419,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateManagementProperty(int rowNumber)
         {
-            DataTable propertyManagementSheet = ExcelDataContext.GetInstance().Sheets["PropertyManagement"];
+            DataTable propertyManagementSheet = ExcelDataContext.GetInstance().Sheets["PropertyManagement"]!;
             ExcelDataContext.PopulateInCollection(propertyManagementSheet);
 
             propertyManagement = new PropertyManagement();
@@ -438,7 +442,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateManagementContactsCollection(int startRow, int rowsCount)
         {
-            DataTable managementContactsSheet = ExcelDataContext.GetInstance().Sheets["PropertyManagementContact"];
+            DataTable managementContactsSheet = ExcelDataContext.GetInstance().Sheets["PropertyManagementContact"]!;
             ExcelDataContext.PopulateInCollection(managementContactsSheet);
 
             for (int i = startRow; i < startRow + rowsCount; i++)
@@ -455,7 +459,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateManagementActivitiesCollection(int startRow, int rowsCount)
         {
-            DataTable managementActivitesSheet = ExcelDataContext.GetInstance().Sheets["PropertyManagementActivity"];
+            DataTable managementActivitesSheet = ExcelDataContext.GetInstance().Sheets["PropertyManagementActivity"]!;
             ExcelDataContext.PopulateInCollection(managementActivitesSheet);
 
             for (int i = startRow; i < startRow + rowsCount; i++)
@@ -487,7 +491,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateManagementActivitiesInvoiceCollection(int startRow, int rowsCount, List<ManagementPropertyActivityInvoice> invoices)
         {
-            DataTable invoicesSheet = ExcelDataContext.GetInstance().Sheets["ManagementPropActivityInvoice"];
+            DataTable invoicesSheet = ExcelDataContext.GetInstance().Sheets["ManagementPropActivityInvoice"]!;
             ExcelDataContext.PopulateInCollection(invoicesSheet);
 
             for (int i = startRow; i < startRow + rowsCount; i++)
