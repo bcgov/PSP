@@ -2,12 +2,15 @@
 
 .legend-control {
   &.card {
+    font-family: 'BCSans', Fallback, sans-serif;
+    font-size: 1.6rem;
     min-width: 20rem;
     .card-header {
+      font-family: 'BCSans-Bold';
+      font-size: 1.8rem;
       margin-bottom: 0;
       border-bottom: none;
       background-color: #fff;
-      font-weight: 900;
       color: $text-color;
     }
     .card-body {

@@ -373,7 +373,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateFinancialCode(int rowNumber)
         {
-            DataTable financialCodesSheet = ExcelDataContext.GetInstance().Sheets["FinancialCodes"];
+            DataTable financialCodesSheet = ExcelDataContext.GetInstance().Sheets["FinancialCodes"]!;
             ExcelDataContext.PopulateInCollection(financialCodesSheet);
 
             financialCode.FinnCodeType = ExcelDataContext.ReadData(rowNumber, "FinnCodeType");
