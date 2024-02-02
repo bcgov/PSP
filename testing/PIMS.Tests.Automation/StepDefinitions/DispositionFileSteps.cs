@@ -267,6 +267,15 @@ namespace PIMS.Tests.Automation.StepDefinitions
                     offerSale.VerifyCreatedOffer(dispositionFile.DispositionOfferAndSale[i], i);
                 }     
             }
+            // Create Sales Details section by clicking edit button
+            offerSale.EditSalesDetailsButton();
+            offerSale.CreateNewSalesDetails(dispositionFile);
+
+            //Save the  Sales Detailssection from
+            offerSale.SaveDispositionFileOffersAndSale();
+
+            //Verify Created  Sales Details form
+            offerSale.VerifyCreatedSalesDetails(dispositionFile);
         }
 
         [StepDefinition(@"I update Appraisal, Assessment and Offers section within Disposition File from row number (.*)")]
@@ -452,6 +461,19 @@ namespace PIMS.Tests.Automation.StepDefinitions
             dispositionFile.OfferSaleTotalCount = int.Parse(ExcelDataContext.ReadData(rowNumber, "OfferSaleTotalCount"));
             if (dispositionFile.OfferSaleStartRow > 0 && dispositionFile.OfferSaleTotalCount > 0)
                 PopulateOfferSaleCollection(dispositionFile.OfferSaleStartRow, dispositionFile.OfferSaleTotalCount);
+
+
+            dispositionFile.LastConditionRemovalDate = ExcelDataContext.ReadData(rowNumber, "LastConditionRemovalDate");
+            dispositionFile.SaleCompletionDate = ExcelDataContext.ReadData(rowNumber, "SaleCompletionDate");
+            dispositionFile.FiscalYearOfSale = ExcelDataContext.ReadData(rowNumber, "FiscalYearOfSale");
+            dispositionFile.FinalSalePrice = ExcelDataContext.ReadData(rowNumber, "FinalSalePrice");
+            dispositionFile.RealtorCommission = ExcelDataContext.ReadData(rowNumber, "RealtorCommission");
+            dispositionFile.GSTRequired = ExcelDataContext.ReadData(rowNumber, "GSTRequired");
+            dispositionFile.NetBookValue = ExcelDataContext.ReadData(rowNumber, "NetBookValue");
+            dispositionFile.TotalCostOfSales = ExcelDataContext.ReadData(rowNumber, "TotalCostOfSales");
+            dispositionFile.SPPAmount = ExcelDataContext.ReadData(rowNumber, "SPPAmount");
+            dispositionFile.RemediationCost = ExcelDataContext.ReadData(rowNumber, "RemediationCost");
+
         }
 
         private void PopulateTeamsCollection(int startRow, int rowsCount)

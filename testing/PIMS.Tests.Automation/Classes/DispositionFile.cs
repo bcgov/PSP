@@ -32,6 +32,17 @@
         public int OfferSaleStartRow { get; set; } = 0;
         public int OfferSaleTotalCount { get; set; } = 0;
         public List<DispositionOfferAndSale>? DispositionOfferAndSale { get; set; } = new List<DispositionOfferAndSale>();
+        public string? LastConditionRemovalDate { get; set; } = String.Empty;
+        public string? SaleCompletionDate { get; set; } = String.Empty;
+        public string? FiscalYearOfSale { get; set; } = String.Empty;
+        public string? FinalSalePrice { get; set; } = String.Empty;
+        public string? RealtorCommission { get; set; } = String.Empty;
+        public string? GSTRequired { get; set; } = String.Empty;
+        public string? NetBookValue { get; set; } = String.Empty;
+        public string? TotalCostOfSales { get; set; } = String.Empty;
+        public string? SPPAmount { get; set; } = String.Empty;
+        public string? RemediationCost { get; set; } = String.Empty;
+
     }
     public class DispositionFileChecklist
     {
