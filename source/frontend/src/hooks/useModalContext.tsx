@@ -1,8 +1,7 @@
-import { useEffect } from 'react';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 
-import { ModalContent } from './../components/common/GenericModal';
-import { ModalContext } from './../contexts/modalContext';
+import { ModalContent } from '../components/common/GenericModal';
+import { ModalContext } from '../contexts/modalContext';
 
 export const useModalContext = (newModalContent?: ModalContent, isVisible?: boolean) => {
   const { modalProps, setModalContent, setDisplayModal } = useContext(ModalContext);
@@ -26,8 +25,13 @@ export const useModalContext = (newModalContent?: ModalContent, isVisible?: bool
 };
 
 export const getCancelModalProps = (): ModalContent => ({
-  title: 'Unsaved Changes',
-  message: 'You have made changes on this form. Do you wish to leave without saving?',
+  title: 'Confirm Changes',
+  message: (
+    <>
+      <p>If you choose to cancel now, your changes will not be saved.</p>
+      <p>Do you want to proceed?</p>
+    </>
+  ),
   okButtonText: 'Yes',
   cancelButtonText: 'No',
   variant: 'info',

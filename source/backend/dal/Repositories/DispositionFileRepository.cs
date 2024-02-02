@@ -129,8 +129,12 @@ namespace Pims.Dal.Repositories
 
             // Disposition Deleted Team
             // This is needed to get the disposition team last-updated-by when deleted
-            var teamHistLastUpdatedBy = this.Context.PimsDispositionFileTeamHists.AsNoTracking()
-              .Where(dph => dph.DispositionFileId == id)
+            var deletedTeams = this.Context.PimsDispositionFileTeamHists.AsNoTracking()
+               .Where(aph => aph.DispositionFileId == id)
+               .GroupBy(aph => aph.DispositionFileTeamId)
+               .Select(gaph => gaph.OrderByDescending(a => a.EffectiveDateHist).FirstOrDefault()).ToList();
+
+            var teamHistLastUpdatedBy = deletedTeams
               .Select(dph => new LastUpdatedByModel()
               {
                   ParentId = id,
@@ -160,8 +164,12 @@ namespace Pims.Dal.Repositories
 
             // Disposition Deleted Properties
             // This is needed to get the notes last-updated-by from the notes that where deleted
-            var propertiesHistoryLastUpdatedBy = Context.PimsDispositionFilePropertyHists.AsNoTracking()
-            .Where(dph => dph.DispositionFileId == id)
+            var deletedProperties = this.Context.PimsDispositionFilePropertyHists.AsNoTracking()
+               .Where(aph => aph.DispositionFileId == id)
+               .GroupBy(aph => aph.DispositionFilePropertyId)
+               .Select(gaph => gaph.OrderByDescending(a => a.EffectiveDateHist).FirstOrDefault()).ToList();
+
+            var propertiesHistoryLastUpdatedBy = deletedProperties
             .Select(dph => new LastUpdatedByModel()
             {
                 ParentId = id,

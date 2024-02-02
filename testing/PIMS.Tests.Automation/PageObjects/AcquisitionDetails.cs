@@ -224,7 +224,7 @@ namespace PIMS.Tests.Automation.PageObjects
             if(acquisition.PhysicalFileStatus != "")
                 ChooseSpecificSelectOption(acquisitionFilePhysicalStatusSelect, acquisition.PhysicalFileStatus);
 
-            if (acquisition.AcquisitionTeam.Count > 0)
+            if (acquisition.AcquisitionTeam!.Count > 0)
             {
                 for (var i = 0; i < acquisition.AcquisitionTeam.Count; i++)
                 {
@@ -232,7 +232,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 }
             }
 
-            if (acquisition.AcquisitionOwners.Count > 0)
+            if (acquisition.AcquisitionOwners!.Count > 0)
             {
                 for (var i = 0; i < acquisition.AcquisitionOwners.Count; i++)
                 {
@@ -356,7 +356,7 @@ namespace PIMS.Tests.Automation.PageObjects
             if (acquisition.PhysicalFileStatus != "") 
                 ChooseSpecificSelectOption(acquisitionFilePhysicalStatusSelect, acquisition.PhysicalFileStatus);
 
-            if (acquisition.AcquisitionTeam.Count > 0)
+            if (acquisition.AcquisitionTeam!.Count > 0)
             {
                 while (webDriver.FindElements(acquisitionFileTeamMembersGroup).Count > 0)
                     DeleteFirstStaffMember();
@@ -367,7 +367,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 }
             }
 
-            if (acquisition.AcquisitionOwners.Count > 0)
+            if (acquisition.AcquisitionOwners!.Count > 0)
             {
                 while (webDriver.FindElements(acquisitionFileOwnersGroup).Count > 0)
                     DeleteOwner();
@@ -449,7 +449,7 @@ namespace PIMS.Tests.Automation.PageObjects
                     webDriver.SwitchTo().Alert().Accept();
                 }
             }
-            catch (WebDriverTimeoutException e)
+            catch (WebDriverTimeoutException)
             {
                 if (webDriver.FindElements(acquisitionFileConfirmationModal).Count() > 0)
                 {
@@ -553,7 +553,7 @@ namespace PIMS.Tests.Automation.PageObjects
             //Team members
             AssertTrueIsDisplayed(acquisitionFileTeamSubtitle);
 
-            if (acquisition.AcquisitionTeam.Count > 0)
+            if (acquisition.AcquisitionTeam!.Count > 0)
             {
                 var index = 1;
 
@@ -575,7 +575,7 @@ namespace PIMS.Tests.Automation.PageObjects
             //Owners
             AssertTrueIsDisplayed(acquisitionFileOwnerSubtitle);
 
-            if (acquisition.AcquisitionOwners.Count > 0)
+            if (acquisition.AcquisitionOwners!.Count > 0)
             {
                 for (var i = 0; i < acquisition.AcquisitionOwners.Count; i++)
                 {

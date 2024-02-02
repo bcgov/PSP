@@ -31,6 +31,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
             notes = new Notes(driver.Current);
             checklist = new DispositionChecklist(driver.Current);
             offerSale = new DispositionOfferSale(driver.Current);
+
+            dispositionFile = new DispositionFile();
         }
 
         [StepDefinition(@"I create a new Disposition File from row number (.*)")]
@@ -353,7 +355,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateDispositionFile(int rowNumber)
         {
-            DataTable dispositionSheet = ExcelDataContext.GetInstance().Sheets["DispositionFiles"];
+            DataTable dispositionSheet = ExcelDataContext.GetInstance().Sheets["DispositionFiles"]!;
             ExcelDataContext.PopulateInCollection(dispositionSheet);
             dispositionFile = new DispositionFile();
 
@@ -391,7 +393,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             dispositionFile.DispositionSearchPropertiesIndex = int.Parse(ExcelDataContext.ReadData(rowNumber, "DisSearchPropertiesIndex"));
             if (dispositionFile.DispositionSearchPropertiesIndex > 0)
             {
-                DataTable searchPropertiesSheet = ExcelDataContext.GetInstance().Sheets["SearchProperties"];
+                DataTable searchPropertiesSheet = ExcelDataContext.GetInstance().Sheets["SearchProperties"]!;
                 ExcelDataContext.PopulateInCollection(searchPropertiesSheet);
 
                 dispositionFile.DispositionSearchProperties.PID = ExcelDataContext.ReadData(dispositionFile.DispositionSearchPropertiesIndex, "PID");
@@ -405,7 +407,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             dispositionFile.DispositionFileChecklistIndex = int.Parse(ExcelDataContext.ReadData(rowNumber, "DispositionFileChecklistIndex"));
             if (dispositionFile.DispositionFileChecklistIndex > 0)
             {
-                DataTable dispositionFileChecklistSheet = ExcelDataContext.GetInstance().Sheets["DispositionChecklist"];
+                DataTable dispositionFileChecklistSheet = ExcelDataContext.GetInstance().Sheets["DispositionChecklist"]!;
                 ExcelDataContext.PopulateInCollection(dispositionFileChecklistSheet);
 
                 dispositionFile.DispositionFileChecklist.FileInitiationSelect1 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "FileInitiationSelect1");
@@ -478,7 +480,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateTeamsCollection(int startRow, int rowsCount)
         {
-            DataTable teamsSheet = ExcelDataContext.GetInstance().Sheets["TeamMembers"];
+            DataTable teamsSheet = ExcelDataContext.GetInstance().Sheets["TeamMembers"]!;
             ExcelDataContext.PopulateInCollection(teamsSheet);
 
             for (int i = startRow; i < startRow + rowsCount; i++)
@@ -495,7 +497,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateOfferSaleCollection(int startRow, int rowsCount)
         {
-            DataTable OfferSaleSheet = ExcelDataContext.GetInstance().Sheets["DispositionOfferSale"];
+            DataTable OfferSaleSheet = ExcelDataContext.GetInstance().Sheets["DispositionOfferSale"]!;
             ExcelDataContext.PopulateInCollection(OfferSaleSheet);
 
             for (int i = startRow; i < startRow + rowsCount; i++)
