@@ -2,9 +2,10 @@ import queryString from 'query-string';
 import React from 'react';
 
 import { IContactFilter } from '@/components/contact/ContactManagerView/IContactFilter';
-import { IContactSearchResult, IPagedItems } from '@/interfaces';
+import { IContactSearchResult } from '@/interfaces';
 import { IEditableOrganization, IEditablePerson } from '@/interfaces/editable-contact';
 import { IContact } from '@/interfaces/IContact';
+import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
 import { ApiGen_Concepts_Organization } from '@/models/api/generated/ApiGen_Concepts_Organization';
 import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_Person';
 
@@ -21,7 +22,7 @@ export const useApiContacts = () => {
   return React.useMemo(
     () => ({
       getContacts: (params: IPaginateContacts | null) =>
-        api.get<IPagedItems<IContactSearchResult>>(
+        api.get<ApiGen_Base_Page<IContactSearchResult>>(
           `/contacts/search?${params ? queryString.stringify(params) : ''}`,
         ),
       // This endpoint returns contact data in read-only form, including formatting some fields; e.g. full name = first + middle + last

@@ -1,9 +1,9 @@
 import queryString from 'query-string';
 import React from 'react';
 
-import { IPagedItems } from '@/interfaces';
 import { Api_DispositionFilter } from '@/models/api/DispositionFilter';
 import { Api_LastUpdatedBy } from '@/models/api/File';
+import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
 import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
 import { ApiGen_Concepts_DispositionFileAppraisal } from '@/models/api/generated/ApiGen_Concepts_DispositionFileAppraisal';
 import { ApiGen_Concepts_DispositionFileOffer } from '@/models/api/generated/ApiGen_Concepts_DispositionFileOffer';
@@ -28,7 +28,7 @@ export const useApiDispositionFile = () => {
   return React.useMemo(
     () => ({
       getDispositionFilesPagedApi: (params: IPaginateDisposition | null) =>
-        api.get<IPagedItems<ApiGen_Concepts_DispositionFile>>(
+        api.get<ApiGen_Base_Page<ApiGen_Concepts_DispositionFile>>(
           `/dispositionfiles/search?${params ? queryString.stringify(params) : ''}`,
         ),
       postDispositionFileApi: (

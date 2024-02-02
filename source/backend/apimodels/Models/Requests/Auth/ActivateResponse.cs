@@ -1,12 +1,12 @@
 using System;
 using Entity = Pims.Dal.Entities;
 
-namespace Pims.Api.Models.Auth
+namespace Pims.Api.Models.Requests.Auth
 {
     /// <summary>
-    /// UserModel class, provides a model to represent a user.
+    /// ActivateResponse class, provides a model to represent a activation user response.
     /// </summary>
-    public class UserModel
+    public class ActivateResponse
     {
         #region Properties
 
@@ -29,19 +29,19 @@ namespace Pims.Api.Models.Auth
         #region Constructors
 
         /// <summary>
-        /// Creates a new instance of a UserModel object.
+        /// Creates a new instance of a ActivateResponse object.
         /// </summary>
-        public UserModel()
+        public ActivateResponse()
         {
         }
 
         /// <summary>
-        /// Creates a new instance of a UserModel object, initializes it with specified arguments.
+        /// Creates a new instance of a ActivateResponse object, initializes it with specified arguments.
         /// </summary>
         /// <param name="id"></param>
         /// <param name="key"></param>
         /// <param name="hasValidClaims"></param>
-        public UserModel(long id, Guid key, bool hasValidClaims)
+        public ActivateResponse(long id, Guid key, bool hasValidClaims)
         {
             this.Id = id;
             this.Key = key;
@@ -49,10 +49,10 @@ namespace Pims.Api.Models.Auth
         }
 
         /// <summary>
-        /// Creates a new instance of a UserModel object, initializes it with specified arguments.
+        /// Creates a new instance of a ActivateResponse object, initializes it with specified arguments.
         /// </summary>
         /// <param name="user"></param>
-        public UserModel(Entity.PimsUser user)
+        public ActivateResponse(Entity.PimsUser user)
         {
             this.Id = user.Internal_Id;
             this.Key = user.GuidIdentifierValue.Value;

@@ -3,9 +3,8 @@ import L, { DivIcon, GeoJSON, LatLngExpression, Layer, Map, Marker } from 'leafl
 import ReactDOMServer from 'react-dom/server';
 import Supercluster from 'supercluster';
 
-import { ICluster, PointFeature } from '@/components/maps/types';
+import { ICluster } from '@/components/maps/types';
 import { DraftCircleNumber } from '@/components/propertySelector/selectedPropertyList/DraftCircleNumber';
-import { IProperty } from '@/interfaces';
 import { PMBC_Feature_Properties } from '@/models/layers/parcelMapBC';
 import {
   PIMS_Property_Boundary_View,
@@ -102,27 +101,6 @@ export const notOwnedPropertyIconSelect = L.icon({
   popupAnchor: [1, -34],
   shadowSize: [41, 41],
 });
-
-/**
- * Creates map points (in GeoJSON format) for further clustering by `supercluster`
- * @param properties
- */
-// TODO:is this necessary?
-export const createPoints = (properties: IProperty[], type: string = 'Point') =>
-  properties.map(x => {
-    return {
-      type: 'Feature',
-      properties: {
-        ...x,
-        cluster: false,
-        PROPERTY_ID: x.id,
-      },
-      geometry: {
-        type: type,
-        coordinates: [x.longitude, x.latitude],
-      },
-    } as PointFeature;
-  });
 
 type MarkerFeature =
   | PIMS_Property_Location_View

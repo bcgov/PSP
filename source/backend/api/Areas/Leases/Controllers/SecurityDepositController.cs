@@ -4,7 +4,6 @@ using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Pims.Api.Areas.Leases.Models.Lease;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Models.Concepts.Deposit;
 using Pims.Api.Policies;
@@ -185,7 +184,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         [ProducesResponseType(typeof(void), 200)]
         [SwaggerOperation(Tags = new[] { "lease" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
-        public void UpdateDepositNote(long leaseId, [FromBody] DepositNoteModel depositNoteModel)
+        public void UpdateDepositNote(long leaseId, [FromBody] string depositNoteModel)
         {
             _logger.LogInformation(
                 "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
@@ -194,7 +193,7 @@ namespace Pims.Api.Areas.Lease.Controllers
                 User.GetUsername(),
                 DateTime.Now);
 
-            _securityDepositService.UpdateLeaseDepositNote(leaseId, depositNoteModel.Note);
+            _securityDepositService.UpdateLeaseDepositNote(leaseId, depositNoteModel);
         }
         #endregion
     }

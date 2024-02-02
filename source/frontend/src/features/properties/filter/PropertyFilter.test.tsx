@@ -6,7 +6,8 @@ import thunk from 'redux-thunk';
 
 import * as API from '@/constants/API';
 import { useApiGeocoder } from '@/hooks/pims-api/useApiGeocoder';
-import { IPagedItems, IProperty } from '@/interfaces';
+import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
+import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import filterSlice from '@/store/slices/filter/filterSlice';
 import { ILookupCode, lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, cleanup, fireEvent, render, waitFor } from '@/utils/test-utils';
@@ -22,7 +23,10 @@ jest.mock('axios');
 jest.mock('@react-keycloak/web');
 jest.mock('@/hooks/pims-api/useApiGeocoder');
 
-const mockApiGetSitePidsApi = jest.fn<Promise<AxiosResponse<IPagedItems<IProperty>>>, any>();
+const mockApiGetSitePidsApi = jest.fn<
+  Promise<AxiosResponse<ApiGen_Base_Page<ApiGen_Concepts_Property>>>,
+  any
+>();
 (useApiGeocoder as unknown as jest.Mock<Partial<typeof useApiGeocoder>>).mockReturnValue({
   getSitePidsApi: mockApiGetSitePidsApi,
 });

@@ -8,20 +8,23 @@ import {
   PropertyStatusTypes,
   PropertyTenureTypes,
 } from '@/constants/index';
-import { IAccessRequest, IAddress, IOrganization, IPerson, IProperty } from '@/interfaces';
+import { IAddress, IOrganization, IPerson, IProperty } from '@/interfaces';
 import { BillingInfo, LtsaOrders, OrderParent } from '@/interfaces/ltsaModels';
 import { ApiGen_Concepts_AccessRequest } from '@/models/api/generated/ApiGen_Concepts_AccessRequest';
 import { ApiGen_Concepts_Address } from '@/models/api/generated/ApiGen_Concepts_Address';
 import { ApiGen_Concepts_Organization } from '@/models/api/generated/ApiGen_Concepts_Organization';
 import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_Person';
+import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { ApiGen_Concepts_PropertyLease } from '@/models/api/generated/ApiGen_Concepts_PropertyLease';
 import { ApiGen_Concepts_User } from '@/models/api/generated/ApiGen_Concepts_User';
 import { getEmptyBaseAudit, getEmptyProperty } from '@/models/defaultInitializers';
 import { ILookupCode } from '@/store/slices/lookupCodes';
 import { toTypeCode, toTypeCodeNullable } from '@/utils/formUtils';
 
-import { getEmptyPerson } from './contacts.mock';
+import { getEmptyContactMethod, getEmptyPerson } from './contacts.mock';
 import { getEmptyPropertyLease } from './properties.mock';
+import { getEmptyRole } from './role.mock';
+import { getEmptyUser } from './user.mock';
 
 // TODO: PSP-4410 This needs to be removed as Administrative Areas no longer exist.
 export const mockAdministrativeAreaLookups = [
@@ -609,7 +612,7 @@ export const mockLtsaResponse: LtsaOrders = {
   ],
 };
 
-export const mockProperties = [
+export const mockProperties2 = [
   {
     id: 1,
     pid: '000-000-000',
@@ -678,7 +681,7 @@ export const mockProperties = [
   },
 ] as IProperty[];
 
-export const mockParcel = mockProperties[0];
+export const mockParcel2 = mockProperties2[0];
 
 export const mockApiAddress: ApiGen_Concepts_Address = {
   id: 1,
@@ -710,68 +713,74 @@ export const mockApiAddress: ApiGen_Concepts_Address = {
   rowVersion: null,
 };
 
+export const mockApiProperty: ApiGen_Concepts_Property = {
+  ...getEmptyProperty(),
+  id: 1,
+  pid: 0,
+  pin: null,
+  status: toTypeCode(PropertyStatusTypes.UnderAdmin),
+  dataSource: toTypeCode(PropertyDataSourceTypes.PAIMS),
+  dataSourceEffectiveDateOnly: '2021-08-30T17:28:17.655Z',
+  propertyType: toTypeCode(PropertyClassificationTypes.CoreOperational),
+  tenures: [
+    {
+      id: 1,
+      propertyId: 1,
+      propertyTenureTypeCode: toTypeCode(PropertyTenureTypes.HighwayRoad),
+      ...getEmptyBaseAudit(),
+    },
+  ],
+  zoning: '',
+  zoningPotential: '',
+  isSensitive: false,
+  latitude: 48,
+  longitude: 123,
+  name: 'test name',
+  description: 'test',
+  address: mockApiAddress,
+  landArea: 123,
+  landLegalDescription: 'test description',
+};
+
 export const mockLeaseProperty = (): ApiGen_Concepts_PropertyLease => {
   return {
     ...getEmptyPropertyLease(),
     property: {
-      ...getEmptyProperty(),
-      id: 1,
-      pid: 0,
-      pin: null,
-      status: toTypeCode(PropertyStatusTypes.UnderAdmin),
-      dataSource: toTypeCode(PropertyDataSourceTypes.PAIMS),
-      dataSourceEffectiveDateOnly: '2021-08-30T17:28:17.655Z',
-      propertyType: toTypeCode(PropertyClassificationTypes.CoreOperational),
-      tenures: [
-        {
-          id: 1,
-          propertyId: 1,
-          propertyTenureTypeCode: toTypeCode(PropertyTenureTypes.HighwayRoad),
-          ...getEmptyBaseAudit(),
-        },
-      ],
-      zoning: '',
-      zoningPotential: '',
-      isSensitive: false,
-      latitude: 48,
-      longitude: 123,
-      name: 'test name',
-      description: 'test',
-      address: mockApiAddress,
-      landArea: 123,
-      landLegalDescription: 'test description',
+      ...mockApiProperty,
     },
   };
 };
 
-export const mockParcelDetail = {
-  propertyDetail: mockParcel,
+export const mockParcelDetail2 = {
+  propertyDetail: mockParcel2,
 };
 
-export const mockAccessRequest: IAccessRequest = {
+export const mockAccessRequest: ApiGen_Concepts_AccessRequest = {
   id: 2,
   userId: 1,
-  status: AccessRequestStatus.Received,
+  accessRequestStatusTypeCode: toTypeCode(AccessRequestStatus.Received),
   note: '',
   user: {
+    ...getEmptyUser(),
     id: 1,
-    keycloakUserId: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
-    displayName: 'User, Admin',
-    firstName: 'Admin',
-    surname: 'User',
-    email: 'admin@pims.gov.bc.ca',
+    person: {
+      ...getEmptyPerson(),
+      firstName: 'Admin',
+      surname: 'User',
+      contactMethods: [{ ...getEmptyContactMethod(), value: 'admin@pims.gov.bc.ca' }],
+    },
     businessIdentifierValue: 'admin',
     position: '',
     appCreateTimestamp: '2021-05-04T19:07:09.6920606',
-    hasValidClaims: true,
   },
-  organizationId: mockOrganization.id,
-  organization: mockOrganization,
+  roleId: 1,
   role: {
+    ...getEmptyRole(),
     id: 1,
     name: 'Real Estate Manager',
   },
-
+  regionCode: null,
+  ...getEmptyBaseAudit(),
   appCreateTimestamp: '2021-05-07T00:37:06.2457303',
 };
 

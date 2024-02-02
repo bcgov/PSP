@@ -20,6 +20,7 @@ namespace Pims.Tools.TsModelGenerator.Specifications
 
             ProcessInterface(typeof(BaseAuditModel));
             ProcessInterface(typeof(BaseConcurrentModel));
+            ProcessInterface(typeof(PageModel<>));
 
             var genericTypeModel = typeof(CodeTypeModel<>);
             ProcessInterface(genericTypeModel);

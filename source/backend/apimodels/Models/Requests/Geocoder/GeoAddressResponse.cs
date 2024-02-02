@@ -1,6 +1,6 @@
-namespace Pims.Api.Areas.Tools.Models.Geocoder
+namespace Pims.Api.Models.Requests.Geocoder
 {
-    public class AddressModel
+    public class GeoAddressResponse
     {
         #region Properties
         public string SiteId { get; set; }

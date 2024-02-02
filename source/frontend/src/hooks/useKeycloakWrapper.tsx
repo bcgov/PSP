@@ -1,9 +1,6 @@
 import { useKeycloak } from '@react-keycloak/web';
 
 import * as API from '@/constants/API';
-import { Claims } from '@/constants/claims';
-import { Roles } from '@/constants/roles';
-import { IProperty } from '@/interfaces';
 import { exists } from '@/utils';
 
 import useLookupCodeHelpers from './useLookupCodeHelpers';
@@ -40,15 +37,8 @@ export interface IKeycloak {
   surname?: string;
   email?: string;
   roles: string[];
-  organizationId?: number;
-  isAdmin: boolean;
   hasRole(role?: string | Array<string>): boolean;
   hasClaim(claim?: string | Array<string>): boolean;
-  hasOrganization(organization?: number): boolean;
-  organizationIds: number[];
-  canUserEditProperty: (property: IProperty | null) => boolean;
-  canUserViewProperty: (property: IProperty | null) => boolean;
-  canUserDeleteProperty: (property: IProperty | null) => boolean;
 }
 
 /**
@@ -83,14 +73,6 @@ export function useKeycloakWrapper(): IKeycloak {
         ? userInfo?.client_roles?.includes(role)
         : role.some(r => userInfo?.client_roles?.includes(r)))
     );
-  };
-
-  /**
-   * Determine if the user belongs to the specified 'organization'
-   * @param organization - The organization name
-   */
-  const hasOrganization = (organization?: number): boolean => {
-    return exists(organization) && userInfo?.organizations?.includes(organization);
   };
 
   /**
@@ -138,34 +120,6 @@ export function useKeycloakWrapper(): IKeycloak {
     return userInfo?.email;
   };
 
-  const isAdmin = hasClaim(Claims.ADMIN_PROPERTIES);
-  const canEdit = hasClaim(Claims.PROPERTY_EDIT);
-  const canDelete = hasClaim(Claims.PROPERTY_DELETE);
-
-  /**
-   * Return true if the user has permissions to edit this property
-   * NOTE: this function will be true for MOST of PIMS, but there may be exceptions for certain cases.
-   */
-  const canUserEditProperty = (property: IProperty | null): boolean => {
-    return !!property && (isAdmin || canEdit);
-  };
-
-  /**
-   * Return true if the user has permissions to delete this property
-   * NOTE: this function will be true for MOST of PIMS, but there may be exceptions for certain cases.
-   */
-  const canUserDeleteProperty = (property: IProperty | null): boolean => {
-    return !!property && (isAdmin || canDelete);
-  };
-
-  /**
-   * Return true if the user has permissions to edit this property
-   * NOTE: this function will be true for MOST of PIMS, but there may be exceptions for certain cases.
-   */
-  const canUserViewProperty = (property: IProperty | null): boolean => {
-    return (!!property && hasClaim(Claims.ADMIN_PROPERTIES)) || hasClaim(Claims.PROPERTY_VIEW);
-  };
-
   return {
     obj: keycloak,
     businessIdentifierValue: businessIdentifier(),
@@ -173,16 +127,9 @@ export function useKeycloakWrapper(): IKeycloak {
     firstName: firstName(),
     surname: surname(),
     email: email(),
-    isAdmin: hasRole(Roles.SYSTEM_ADMINISTRATOR),
     roles: roles(),
-    organizationId: userInfo?.organizations?.find(x => x),
     hasRole: hasRole,
     hasClaim: hasClaim,
-    hasOrganization: hasOrganization,
-    organizationIds: userInfo?.organizations,
-    canUserEditProperty,
-    canUserDeleteProperty,
-    canUserViewProperty,
   };
 }
 

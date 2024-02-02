@@ -9,6 +9,7 @@ using Pims.Api.Areas.Lease.Models.Search;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Helpers.Extensions;
 using Pims.Api.Models.Base;
+using Pims.Api.Models.Concepts.Lease;
 using Pims.Api.Policies;
 using Pims.Api.Services;
 using Pims.Core.Extensions;

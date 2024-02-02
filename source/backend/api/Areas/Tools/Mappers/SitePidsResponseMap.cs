@@ -1,19 +1,19 @@
 using System;
 using System.Collections.Generic;
 using Mapster;
-using GModel = Pims.Geocoder.Models;
-using Model = Pims.Api.Areas.Tools.Models.Geocoder;
+using Pims.Api.Models.Requests.Geocoder;
+using Pims.Geocoder.Models;
 
-namespace Pims.Api.Areas.Tools.Mapping.Geocoder
+namespace Pims.Api.Areas.Tools.Mappers
 {
     /// <summary>
     /// PidsMap class, maps the model properties.
     /// </summary>
-    public class PidsMap : IRegister
+    public class SitePidsResponseMap : IRegister
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<GModel.SitePidsResponseModel, Model.SitePidsResponseModel>()
+            config.NewConfig<SitePidsResponseModel, SitePidsResponse>()
                 .Map(dest => dest.SiteId, src => src.SiteID)
                 .Map(dest => dest.Pids, src => StringToList(src.Pids));
         }

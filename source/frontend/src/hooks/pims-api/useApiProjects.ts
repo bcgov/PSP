@@ -2,7 +2,7 @@ import queryString from 'query-string';
 import React from 'react';
 
 import { IProjectFilter } from '@/features/projects';
-import { IPagedItems } from '@/interfaces';
+import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
 import { ApiGen_Concepts_Product } from '@/models/api/generated/ApiGen_Concepts_Product';
 import { ApiGen_Concepts_Project } from '@/models/api/generated/ApiGen_Concepts_Project';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
@@ -27,7 +27,7 @@ export const useApiProjects = () => {
       searchProject: (query: string, top: number = 5) =>
         api.get<ApiGen_Concepts_Project[]>(`/projects/search=${query}&top=${top}`),
       searchProjects: (params: IPaginateProjects | null) =>
-        api.get<IPagedItems<ApiGen_Concepts_Project>>(
+        api.get<ApiGen_Base_Page<ApiGen_Concepts_Project>>(
           `/projects/search?${params ? queryString.stringify(params) : ''}`,
         ),
       getAllProjects: () => api.get<ApiGen_Concepts_Project[]>(`/projects`),

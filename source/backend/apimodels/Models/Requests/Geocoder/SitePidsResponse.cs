@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 
-namespace Pims.Api.Areas.Tools.Models.Geocoder
+namespace Pims.Api.Models.Requests.Geocoder
 {
-    public class SitePidsResponseModel
+    public class SitePidsResponse
     {
         #region Properties
         public Guid SiteId { get; set; }

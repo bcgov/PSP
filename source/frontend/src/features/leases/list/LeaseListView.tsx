@@ -12,7 +12,7 @@ import Claims from '@/constants/claims';
 import { useApiLeases } from '@/hooks/pims-api/useApiLeases';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { useSearch } from '@/hooks/useSearch';
-import { ILeaseSearchResult } from '@/interfaces';
+import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { generateMultiSortCriteria } from '@/utils';
 import { toFilteredApiPaginateParams } from '@/utils/CommonFunctions';
 
@@ -43,7 +43,7 @@ export const LeaseListView: React.FunctionComponent<React.PropsWithChildren<unkn
     setCurrentPage,
     setPageSize,
     loading,
-  } = useSearch<ILeaseSearchResult, ILeaseFilter>(defaultFilter, getLeases);
+  } = useSearch<ApiGen_Concepts_Lease, ILeaseFilter>(defaultFilter, getLeases);
 
   const { exportLeases } = useLeaseExport();
 

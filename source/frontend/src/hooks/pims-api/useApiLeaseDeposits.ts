@@ -25,7 +25,7 @@ export const useApiLeaseDeposits = () => {
           securityDeposit,
         ),
       putLeaseDepositNote: (leaseId: number, note: string) =>
-        api.put<void>(`/leases/${leaseId}/deposits/note`, { note: note }),
+        api.put<void>(`/leases/${leaseId}/deposits/note`, note),
       postLeaseDeposit: (leaseId: number, securityDeposit: ApiGen_Concepts_SecurityDeposit) =>
         api.post<ApiGen_Concepts_SecurityDeposit>(`/leases/${leaseId}/deposits`, securityDeposit),
     }),

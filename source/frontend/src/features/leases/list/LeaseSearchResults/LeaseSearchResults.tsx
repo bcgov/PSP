@@ -9,15 +9,16 @@ import styled from 'styled-components';
 import TooltipIcon from '@/components/common/TooltipIcon';
 import { ColumnWithProps, renderTypeCode, Table } from '@/components/Table';
 import { TableSort } from '@/components/Table/TableSort';
-import { ILeaseSearchResult } from '@/interfaces';
-import { prettyFormatDate } from '@/utils';
+import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
+import { exists, prettyFormatDate } from '@/utils';
+import { formatApiPersonNames } from '@/utils/personUtils';
 
 import LeaseProperties from './LeaseProperties';
 import LeaseTenants from './LeaseTenants';
 
 const maxPropertyDisplayCount = 2;
 
-const columns: ColumnWithProps<ILeaseSearchResult>[] = [
+const columns: ColumnWithProps<ApiGen_Concepts_Lease>[] = [
   {
     Header: 'L-File Number',
     accessor: 'lFileNo',
@@ -26,7 +27,7 @@ const columns: ColumnWithProps<ILeaseSearchResult>[] = [
     sortable: true,
     width: 10,
     maxWidth: 20,
-    Cell: (props: CellProps<ILeaseSearchResult>) => (
+    Cell: (props: CellProps<ApiGen_Concepts_Lease>) => (
       <Link to={`/mapview/sidebar/lease/${props.row.original.id}`}>
         {props.row.original.lFileNo}
       </Link>
@@ -38,7 +39,7 @@ const columns: ColumnWithProps<ILeaseSearchResult>[] = [
     align: 'left',
     sortable: true,
     width: 40,
-    Cell: (props: CellProps<ILeaseSearchResult>) => {
+    Cell: (props: CellProps<ApiGen_Concepts_Lease>) => {
       const expiryDate = props.row.original.expiryDate;
       const isExpired = moment().isAfter(moment(expiryDate, 'YYYY-MM-DD'), 'day');
 
@@ -77,14 +78,17 @@ const columns: ColumnWithProps<ILeaseSearchResult>[] = [
   },
   {
     Header: 'Tenant Names',
-    accessor: 'tenantNames',
     align: 'left',
     width: 40,
     maxWidth: 100,
-    Cell: (props: CellProps<ILeaseSearchResult>) => {
+    Cell: (props: CellProps<ApiGen_Concepts_Lease>) => {
       return (
         <LeaseTenants
-          tenantNames={props.row.original.tenantNames}
+          tenantNames={
+            props.row.original.tenants?.map<string>(t =>
+              exists(t.person) ? formatApiPersonNames(t.person) : t.organization?.name ?? '',
+            ) ?? []
+          }
           maxDisplayCount={maxPropertyDisplayCount}
         ></LeaseTenants>
       );
@@ -92,13 +96,14 @@ const columns: ColumnWithProps<ILeaseSearchResult>[] = [
   },
   {
     Header: 'Properties',
-    accessor: 'properties',
     align: 'left',
 
-    Cell: (props: CellProps<ILeaseSearchResult>) => {
+    Cell: (props: CellProps<ApiGen_Concepts_Lease>) => {
       return (
         <LeaseProperties
-          properties={props.row.original.properties}
+          properties={
+            props.row.original.fileProperties?.map(lp => lp.property).filter(exists) ?? []
+          }
           maxDisplayCount={maxPropertyDisplayCount}
         ></LeaseProperties>
       );
@@ -106,7 +111,6 @@ const columns: ColumnWithProps<ILeaseSearchResult>[] = [
   },
   {
     Header: 'Status',
-    accessor: 'statusType',
     align: 'left',
     sortable: true,
     width: 20,
@@ -116,13 +120,13 @@ const columns: ColumnWithProps<ILeaseSearchResult>[] = [
 ];
 
 export interface ILeaseSearchResultsProps {
-  results: ILeaseSearchResult[];
+  results: ApiGen_Concepts_Lease[];
   totalItems?: number;
   pageCount?: number;
   pageSize?: number;
   pageIndex?: number;
-  sort?: TableSort<ILeaseSearchResult>;
-  setSort: (value: TableSort<ILeaseSearchResult>) => void;
+  sort?: TableSort<ApiGen_Concepts_Lease>;
+  setSort: (value: TableSort<ApiGen_Concepts_Lease>) => void;
   setPageSize?: (value: number) => void;
   setPageIndex?: (value: number) => void;
   loading?: boolean;
@@ -138,7 +142,7 @@ export function LeaseSearchResults(props: ILeaseSearchResultsProps) {
   );
 
   return (
-    <Table<ILeaseSearchResult>
+    <Table<ApiGen_Concepts_Lease>
       name="leasesTable"
       columns={columns}
       data={results ?? []}

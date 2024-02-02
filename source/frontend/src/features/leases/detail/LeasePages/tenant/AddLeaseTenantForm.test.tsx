@@ -3,7 +3,7 @@ import { createMemoryHistory } from 'history';
 import React from 'react';
 
 import { Claims } from '@/constants/claims';
-import { IContactSearchResult, IPagedItems } from '@/interfaces';
+import { IContactSearchResult } from '@/interfaces';
 import {
   getEmptyPerson,
   getMockContactOrganizationWithOnePerson,
@@ -11,6 +11,8 @@ import {
 } from '@/mocks/contacts.mock';
 import { mockLookups } from '@/mocks/index.mock';
 import { getEmptyOrganization } from '@/mocks/organization.mock';
+import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
+import { ApiGen_Concepts_Contact } from '@/models/api/generated/ApiGen_Concepts_Contact';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { mockKeycloak, renderAsync, RenderOptions, userEvent } from '@/utils/test-utils';
 
@@ -21,7 +23,9 @@ const history = createMemoryHistory();
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
-const mockGetContactsFn = jest.fn().mockResolvedValue({ data: {} as IPagedItems });
+const mockGetContactsFn = jest
+  .fn()
+  .mockResolvedValue({ data: {} as ApiGen_Base_Page<ApiGen_Concepts_Contact> });
 jest.mock('@react-keycloak/web');
 jest.mock('@/hooks/pims-api/useApiContacts', () => ({
   useApiContacts: () => {

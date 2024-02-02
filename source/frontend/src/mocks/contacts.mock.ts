@@ -1,4 +1,5 @@
 import { IContactSearchResult } from '@/interfaces/IContactSearchResult';
+import { ApiGen_Concepts_ContactMethod } from '@/models/api/generated/ApiGen_Concepts_ContactMethod';
 import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_Person';
 
 export const getMockContactOrganizationWithOnePerson = (): IContactSearchResult => ({
@@ -262,4 +263,14 @@ export const getEmptyPerson = (): ApiGen_Concepts_Person => {
     comment: null,
     rowVersion: null,
   };
+};
+
+export const getEmptyContactMethod = (): ApiGen_Concepts_ContactMethod => {
+  var a: ApiGen_Concepts_ContactMethod = {
+    id: 0,
+    contactMethodType: null,
+    value: null,
+    rowVersion: null,
+  };
+  return a;
 };

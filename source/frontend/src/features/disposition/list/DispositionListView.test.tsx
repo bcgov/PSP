@@ -3,10 +3,10 @@ import { createMemoryHistory } from 'history';
 
 import { Claims } from '@/constants/index';
 import { useApiDispositionFile } from '@/hooks/pims-api/useApiDispositionFile';
-import { IPagedItems } from '@/interfaces';
 import { getMockApiAddress } from '@/mocks/address.mock';
 import { mockDispositionFileResponse } from '@/mocks/dispositionFiles.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
+import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
 import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
 import { getEmptyProperty } from '@/models/defaultInitializers';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
@@ -37,7 +37,7 @@ const exportDispositionFilesFn = jest.fn();
 
 const mockPagedResults = (
   searchResults?: ApiGen_Concepts_DispositionFile[],
-): Partial<AxiosResponse<IPagedItems<ApiGen_Concepts_DispositionFile>, any>> => {
+): Partial<AxiosResponse<ApiGen_Base_Page<ApiGen_Concepts_DispositionFile>, any>> => {
   const results = searchResults ?? [];
   const len = results.length;
   return {
@@ -46,7 +46,6 @@ const mockPagedResults = (
       quantity: len,
       total: len,
       page: 1,
-      pageIndex: 0,
     },
   };
 };

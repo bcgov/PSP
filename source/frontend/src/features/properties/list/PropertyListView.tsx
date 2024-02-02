@@ -18,7 +18,7 @@ import { useProperties } from '@/hooks/repositories/useProperties';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { useRouterFilter } from '@/hooks/useRouterFilter';
 import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
-import { IProperty } from '@/interfaces';
+import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { generateMultiSortCriteria } from '@/utils';
 import { toFilteredApiPaginateParams } from '@/utils/CommonFunctions';
 
@@ -39,14 +39,16 @@ const defaultFilterValues: IPropertyFilter = {
 
 const PropertyListView: React.FC<React.PropsWithChildren<unknown>> = () => {
   const { getByType } = useLookupCodeHelpers();
-  const tableFormRef = useRef<FormikProps<{ properties: IProperty[] }> | undefined>();
+  const tableFormRef = useRef<
+    FormikProps<{ properties: ApiGen_Concepts_Property[] }> | undefined
+  >();
 
   const municipalities = useMemo(() => getByType(API.ADMINISTRATIVE_AREA_TYPES), [getByType]);
 
   const columns = useMemo(() => columnDefinitions({ municipalities }), [municipalities]);
 
   // We'll start our table without any data
-  const [data, setData] = useState<IProperty[] | undefined>();
+  const [data, setData] = useState<ApiGen_Concepts_Property[] | undefined>();
 
   // Filtering and pagination state
   const [filter, setFilter] = useState<IPropertyFilter>(defaultFilterValues);
@@ -55,7 +57,7 @@ const PropertyListView: React.FC<React.PropsWithChildren<unknown>> = () => {
   const [pageIndex, setPageIndex] = useState(0);
   const [pageCount, setPageCount] = useState(0);
   const [totalItems, setTotalItems] = useState(0);
-  const [sort, setSort] = useState<TableSort<IProperty>>({});
+  const [sort, setSort] = useState<TableSort<ApiGen_Concepts_Property>>({});
 
   const fetchIdRef = useRef(0);
 
@@ -99,7 +101,7 @@ const PropertyListView: React.FC<React.PropsWithChildren<unknown>> = () => {
       pageIndex: number;
       pageSize: number;
       filter: IPropertyFilter;
-      sort: TableSort<IProperty>;
+      sort: TableSort<ApiGen_Concepts_Property>;
     }) => {
       // Give this fetch an ID
       const fetchId = ++fetchIdRef.current;
@@ -180,7 +182,7 @@ const PropertyListView: React.FC<React.PropsWithChildren<unknown>> = () => {
           </TooltipWrapper>
         </Container>
 
-        <Table<IProperty>
+        <Table<ApiGen_Concepts_Property>
           name="propertiesTable"
           columns={columns}
           data={data || []}

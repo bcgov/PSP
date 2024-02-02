@@ -1,18 +1,18 @@
 using System.Text;
 using Mapster;
+using Pims.Api.Models.Requests.Geocoder;
 using GModel = Pims.Geocoder.Models;
-using Model = Pims.Api.Areas.Tools.Models.Geocoder;
 
-namespace Pims.Api.Areas.Tools.Mapping.Geocoder
+namespace Pims.Api.Areas.Tools.Mappers
 {
     /// <summary>
     /// AddressMap class, maps the model properties.
     /// </summary>
-    public class AddressMap : IRegister
+    public class GeoAddressResponseMap : IRegister
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<GModel.FeatureModel, Model.AddressModel>()
+            config.NewConfig<GModel.FeatureModel, GeoAddressResponse>()
                 .Map(dest => dest.SiteId, src => src.Properties.SiteID)
                 .Map(dest => dest.FullAddress, src => src.Properties.FullAddress)
                 .Map(dest => dest.Address1, src => GetAddress1(src.Properties))

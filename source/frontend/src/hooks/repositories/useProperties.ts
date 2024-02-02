@@ -10,7 +10,7 @@ import { catchAxiosError } from '@/customAxios';
 import { IPropertyFilter } from '@/features/properties/filter/IPropertyFilter';
 import { useGeoServer } from '@/hooks/layer-api/useGeoServer';
 import { useApiProperties } from '@/hooks/pims-api/useApiProperties';
-import { IPagedItems, IProperty } from '@/interfaces';
+import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { getEmptyProperty } from '@/models/defaultInitializers';
 import { logRequest, logSuccess } from '@/store/slices/network/networkSlice';
@@ -31,7 +31,9 @@ export const useProperties = () => {
   const { getPropertyWfs } = useGeoServer();
 
   const fetchProperties = useApiRequestWrapper<
-    (propertyBounds: IPropertyFilter | null) => Promise<AxiosResponse<IPagedItems<IProperty>>>
+    (
+      propertyBounds: IPropertyFilter | null,
+    ) => Promise<AxiosResponse<ApiGen_Base_Page<ApiGen_Concepts_Property>>>
   >({
     requestFunction: useCallback(
       async (propertyBounds: IPropertyFilter | null) => await getPropertiesPagedApi(propertyBounds),
