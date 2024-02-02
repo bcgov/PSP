@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
@@ -399,18 +400,18 @@ namespace Pims.Api.Services
                     DispositionStatusTypeCode = file.DispositionStatusTypeCodeNavigation?.Description ?? string.Empty,
                     DispositionFileStatusTypeCode = file.DispositionFileStatusTypeCodeNavigation?.Description ?? string.Empty,
                     FileFunding = file.DispositionFundingTypeCodeNavigation is not null ? file.DispositionFundingTypeCodeNavigation.Description : string.Empty,
-                    FileAssignedDate = file.AssignedDt.HasValue ? file.AssignedDt.Value.ToString("dd-MMM-yyyy") : string.Empty,
-                    DispositionCompleted = file.CompletedDt.HasValue ? file.CompletedDt.Value.ToString("dd-MMM-yyyy") : string.Empty,
+                    FileAssignedDate = file.AssignedDt.HasValue ? file.AssignedDt.Value.ToString("dd-MMM-yyyy", CultureInfo.InvariantCulture) : string.Empty,
+                    DispositionCompleted = file.CompletedDt.HasValue ? file.CompletedDt.Value.ToString("dd-MMM-yyyy", CultureInfo.InvariantCulture) : string.Empty,
                     InitiatingDocument = file.DispositionInitiatingDocTypeCode == "OTHER" ? $"Other - {file.OtherInitiatingDocType ?? string.Empty}" : file.DispositionInitiatingDocTypeCodeNavigation?.Description ?? string.Empty,
-                    InitiatingDocumentDate = file.InitiatingDocumentDt.HasValue ? file.InitiatingDocumentDt.Value.ToString("dd-MMM-yyyy") : string.Empty,
+                    InitiatingDocumentDate = file.InitiatingDocumentDt.HasValue ? file.InitiatingDocumentDt.Value.ToString("dd-MMM-yyyy", CultureInfo.InvariantCulture) : string.Empty,
                     PhysicalFileStatus = file.DspPhysFileStatusTypeCodeNavigation?.Description ?? string.Empty,
                     AppraisalValue = file.PimsDispositionAppraisals?.FirstOrDefault()?.AppraisedAmt ?? 0,
-                    AppraisalDate = file.PimsDispositionAppraisals?.FirstOrDefault()?.AppraisalDt != null ? file.PimsDispositionAppraisals?.FirstOrDefault()?.AppraisalDt.Value.ToString("dd-MMM-yyyy") : string.Empty,
+                    AppraisalDate = file.PimsDispositionAppraisals?.FirstOrDefault()?.AppraisalDt != null ? file.PimsDispositionAppraisals?.FirstOrDefault()?.AppraisalDt.Value.ToString("dd-MMM-yyyy", CultureInfo.InvariantCulture) : string.Empty,
                     AssessmentValue = file.PimsDispositionAppraisals?.FirstOrDefault()?.BcaValueAmt ?? 0,
                     RollYear = file.PimsDispositionAppraisals?.FirstOrDefault()?.BcaRollYear?.ToString() ?? string.Empty,
                     ListPrice = file.PimsDispositionAppraisals?.FirstOrDefault()?.ListPriceAmt ?? 0,
                     PurchaserNames = string.Join("|", file.PimsDispositionSales?.FirstOrDefault()?.PimsDispositionPurchasers.Select(x => (x.PersonId.HasValue ? x.Person.GetFullName(true) : x.Organization.Name + $" (Primary: {x.PrimaryContact?.GetFullName(true) ?? "N/A"})")) ?? Array.Empty<string>()),
-                    SaleCompletionDate = file.PimsDispositionSales?.FirstOrDefault()?.SaleCompletionDt != null ? file.PimsDispositionSales?.FirstOrDefault()?.SaleCompletionDt.Value.ToString("dd-MMM-yyyy") : string.Empty,
+                    SaleCompletionDate = file.PimsDispositionSales?.FirstOrDefault()?.SaleCompletionDt != null ? file.PimsDispositionSales?.FirstOrDefault()?.SaleCompletionDt.Value.ToString("dd-MMM-yyyy", CultureInfo.InvariantCulture) : string.Empty,
                     FiscalYearOfSale = file.PimsDispositionSales?.FirstOrDefault()?.SaleFiscalYear?.ToString() ?? string.Empty,
                     FinalSalePrice = file.PimsDispositionSales?.FirstOrDefault()?.SaleFinalAmt ?? 0,
                     RealtorCommission = file.PimsDispositionSales?.FirstOrDefault()?.RealtorCommissionAmt ?? 0,
