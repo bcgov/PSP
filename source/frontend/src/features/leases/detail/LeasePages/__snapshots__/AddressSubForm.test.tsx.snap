@@ -50,16 +50,5 @@ exports[`AddressSubForm component renders minimally as expected 1`] = `
       value="V1V1V1"
     />
   </div>
-  <div
-    class="input form-group"
-  >
-    <input
-      class="form-control"
-      id="input-properties.0.address.province"
-      name="properties.0.address.province"
-      title="BC"
-      value="BC"
-    />
-  </div>
 </DocumentFragment>
 `;
