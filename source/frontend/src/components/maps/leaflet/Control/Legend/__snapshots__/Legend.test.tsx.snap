@@ -28,7 +28,7 @@ exports[`Map Legend View renders correctly 1`] = `
         <div
           class="label col"
         >
-          Parcel
+          Core Inventory
         </div>
       </div>
       <div
@@ -65,6 +65,24 @@ exports[`Map Legend View renders correctly 1`] = `
           class="label col"
         >
           Other Interest
+        </div>
+      </div>
+      <div
+        class="row"
+      >
+        <div
+          class="col-2"
+        >
+          <img
+            class=""
+            height="25"
+            src="disposed.png"
+          />
+        </div>
+        <div
+          class="label col"
+        >
+          Disposed
         </div>
       </div>
       <div
