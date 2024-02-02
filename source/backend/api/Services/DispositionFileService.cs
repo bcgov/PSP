@@ -425,35 +425,6 @@ namespace Pims.Api.Services
                 }).ToList();
         }
 
-        private void AddNoteIfStatusChanged(PimsDispositionFile updateDispositionFile)
-        {
-            var currentDispositionFile = _dispositionFileRepository.GetById(updateDispositionFile.Internal_Id);
-            bool statusChanged = currentDispositionFile.DispositionFileStatusTypeCode != updateDispositionFile.DispositionFileStatusTypeCode;
-            if (!statusChanged)
-            {
-                return;
-            }
-
-            var newStatus = _lookupRepository.GetAllDispositionFileStatusTypes()
-                .FirstOrDefault(x => x.DispositionFileStatusTypeCode == updateDispositionFile.DispositionFileStatusTypeCode);
-
-            PimsDispositionFileNote fileNoteInstance = new()
-            {
-                DispositionFileId = updateDispositionFile.Internal_Id,
-                AppCreateTimestamp = DateTime.Now,
-                AppCreateUserid = _user.GetUsername(),
-                Note = new PimsNote()
-                {
-                    IsSystemGenerated = true,
-                    NoteTxt = $"Disposition File status changed from {currentDispositionFile.DispositionFileStatusTypeCodeNavigation.Description} to {newStatus.Description}",
-                    AppCreateTimestamp = DateTime.Now,
-                    AppCreateUserid = this._user.GetUsername(),
-                },
-            };
-
-            _entityNoteRepository.Add(fileNoteInstance);
-        }
-
         private static decimal CalculateNetProceedsBeforeSpp(PimsDispositionSale sale)
         {
             if (sale != null)
@@ -488,6 +459,35 @@ namespace Pims.Api.Services
             {
                 throw new DuplicateEntityException("Invalid Disposition Offer, an Offer has been already accepted for this Disposition File");
             }
+        }
+
+        private void AddNoteIfStatusChanged(PimsDispositionFile updateDispositionFile)
+        {
+            var currentDispositionFile = _dispositionFileRepository.GetById(updateDispositionFile.Internal_Id);
+            bool statusChanged = currentDispositionFile.DispositionFileStatusTypeCode != updateDispositionFile.DispositionFileStatusTypeCode;
+            if (!statusChanged)
+            {
+                return;
+            }
+
+            var newStatus = _lookupRepository.GetAllDispositionFileStatusTypes()
+                .FirstOrDefault(x => x.DispositionFileStatusTypeCode == updateDispositionFile.DispositionFileStatusTypeCode);
+
+            PimsDispositionFileNote fileNoteInstance = new()
+            {
+                DispositionFileId = updateDispositionFile.Internal_Id,
+                AppCreateTimestamp = DateTime.Now,
+                AppCreateUserid = _user.GetUsername(),
+                Note = new PimsNote()
+                {
+                    IsSystemGenerated = true,
+                    NoteTxt = $"Disposition File status changed from {currentDispositionFile.DispositionFileStatusTypeCodeNavigation.Description} to {newStatus.Description}",
+                    AppCreateTimestamp = DateTime.Now,
+                    AppCreateUserid = this._user.GetUsername(),
+                },
+            };
+
+            _entityNoteRepository.Add(fileNoteInstance);
         }
 
         private void ValidateMinistryRegion(long dispositionFileId, short updatedRegion)
