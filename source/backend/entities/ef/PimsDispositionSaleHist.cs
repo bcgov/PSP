@@ -26,6 +26,12 @@ public partial class PimsDispositionSaleHist
     [Column("DISPOSITION_FILE_ID")]
     public long DispositionFileId { get; set; }
 
+    [Column("DSP_PURCH_AGENT_ID")]
+    public long? DspPurchAgentId { get; set; }
+
+    [Column("DSP_PURCH_SOLICITOR_ID")]
+    public long? DspPurchSolicitorId { get; set; }
+
     [Column("FINAL_CONDITION_REMOVAL_DT")]
     public DateOnly? FinalConditionRemovalDt { get; set; }
 
