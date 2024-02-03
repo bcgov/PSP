@@ -10,7 +10,6 @@ namespace Pims.Dal.Entities;
 /// Describes the agent associated with the sale of the disposition.  The agent may be an organizations or an individual.  If an organization is the agent, a primary contact person must be provided.
 /// </summary>
 [Table("PIMS_DSP_PURCH_AGENT")]
-[Index("DispositionSaleId", Name = "DSPPAG_DISPOSITION_SALE_ID_IDX")]
 [Index("OrganizationId", Name = "DSPPAG_ORGANIZATION_ID_IDX")]
 [Index("PersonId", Name = "DSPPAG_PERSON_ID_IDX")]
 [Index("PrimaryContactId", Name = "DSPPAG_PRIMARY_CONTACT_ID_IDX")]
@@ -22,12 +21,6 @@ public partial class PimsDspPurchAgent
     [Key]
     [Column("DSP_PURCH_AGENT_ID")]
     public long DspPurchAgentId { get; set; }
-
-    /// <summary>
-    /// Foreign key of the dispostion sale.
-    /// </summary>
-    [Column("DISPOSITION_SALE_ID")]
-    public long DispositionSaleId { get; set; }
 
     /// <summary>
     /// Foreign key of the individual agent for the disposition file.
@@ -143,10 +136,6 @@ public partial class PimsDspPurchAgent
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
 
-    [ForeignKey("DispositionSaleId")]
-    [InverseProperty("PimsDspPurchAgents")]
-    public virtual PimsDispositionSale DispositionSale { get; set; }
-
     [ForeignKey("OrganizationId")]
     [InverseProperty("PimsDspPurchAgents")]
     public virtual PimsOrganization Organization { get; set; }
@@ -154,6 +143,9 @@ public partial class PimsDspPurchAgent
     [ForeignKey("PersonId")]
     [InverseProperty("PimsDspPurchAgentPeople")]
     public virtual PimsPerson Person { get; set; }
+
+    [InverseProperty("DspPurchAgent")]
+    public virtual ICollection<PimsDispositionSale> PimsDispositionSales { get; set; } = new List<PimsDispositionSale>();
 
     [ForeignKey("PrimaryContactId")]
     [InverseProperty("PimsDspPurchAgentPrimaryContacts")]
