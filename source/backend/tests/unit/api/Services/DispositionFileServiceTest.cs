@@ -387,14 +387,23 @@ namespace Pims.Api.Test.Services
             ex.Which.UserOverride.Should().Be(UserOverrideCode.UpdateRegion);
         }
 
-        [Fact]
-        public void Update_UserOverride_Final_Validation()
+        public static IEnumerable<object[]> UpdateFinalValidationUserOverrideParameters =>
+            new List<object[]>
+            {
+                new object[] { EnumDispositionFileStatusTypeCode.COMPLETE },
+                new object[] { EnumDispositionFileStatusTypeCode.ARCHIVED },
+                new object[] { EnumDispositionFileStatusTypeCode.CANCELLED },
+            };
+
+        [Theory]
+        [MemberData(nameof(UpdateFinalValidationUserOverrideParameters))]
+        public void Update_Final_Validation_UserOverride(EnumDispositionFileStatusTypeCode fileStatus)
         {
             // Arrange
             var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionEdit);
             var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
             var dispFile = EntityHelper.CreateDispositionFile(1);
-            dispFile.DispositionFileStatusTypeCode = EnumDispositionFileStatusTypeCode.COMPLETE.ToString();
+            dispFile.DispositionFileStatusTypeCode = fileStatus.ToString();
 
             repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
             repository.Setup(x => x.GetRegion(It.IsAny<long>())).Returns(1);
@@ -409,6 +418,36 @@ namespace Pims.Api.Test.Services
             ex.Which.UserOverride.Should().Be(UserOverrideCode.DispositionFileFinalStatus);
         }
 
+        public static IEnumerable<object[]> UpdateFinalValidationSuccessParameters =>
+            new List<object[]>
+            {
+                new object[] { EnumDispositionFileStatusTypeCode.ACTIVE },
+                new object[] { EnumDispositionFileStatusTypeCode.DRAFT },
+                new object[] { EnumDispositionFileStatusTypeCode.HOLD },
+            };
+
+        [Theory]
+        [MemberData(nameof(UpdateFinalValidationSuccessParameters))]
+        public void Update_Final_Validation_Success(EnumDispositionFileStatusTypeCode fileStatus)
+        {
+            // Arrange
+            var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionEdit);
+            var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
+            var dispFile = EntityHelper.CreateDispositionFile(1);
+            dispFile.DispositionFileStatusTypeCode = fileStatus.ToString();
+
+            repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
+            repository.Setup(x => x.GetRegion(It.IsAny<long>())).Returns(1);
+            repository.Setup(x => x.Update(It.IsAny<long>(), It.IsAny<PimsDispositionFile>())).Returns(dispFile);
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(dispFile);
+
+            // Act
+            var result = service.Update(1, dispFile, new List<UserOverrideCode>());
+
+            // Assert
+            result.Should().NotBeNull();
+            repository.Verify(x => x.Update(It.IsAny<long>(), It.IsAny<PimsDispositionFile>()), Times.Once);
+        }
         [Fact]
         public void Update_NotAuthorized_IsContractor()
         {
@@ -418,7 +457,7 @@ namespace Pims.Api.Test.Services
 
             var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
             repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
-            repository.Setup(x => x.Update(It.IsAny<long>(),It.IsAny<PimsDispositionFile>())).Returns(dispositionFile);
+            repository.Setup(x => x.Update(It.IsAny<long>(), It.IsAny<PimsDispositionFile>())).Returns(dispositionFile);
 
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
             var contractorUser = EntityHelper.CreateUser(1, Guid.NewGuid(), username: "Test", isContractor: true);
