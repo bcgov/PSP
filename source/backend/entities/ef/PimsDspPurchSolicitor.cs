@@ -10,7 +10,6 @@ namespace Pims.Dal.Entities;
 /// Describes the solicitor associated with the sale of the disposition.  The solicitor may be an organizations or an individual.  If an organization is the solicitor, a primary contact person must be provided.
 /// </summary>
 [Table("PIMS_DSP_PURCH_SOLICITOR")]
-[Index("DispositionSaleId", Name = "DSPPSL_DISPOSITION_SALE_ID_IDX")]
 [Index("OrganizationId", Name = "DSPPSL_ORGANIZATION_ID_IDX")]
 [Index("PersonId", Name = "DSPPSL_PERSON_ID_IDX")]
 [Index("PrimaryContactId", Name = "DSPPSL_PRIMARY_CONTACT_ID_IDX")]
@@ -22,12 +21,6 @@ public partial class PimsDspPurchSolicitor
     [Key]
     [Column("DSP_PURCH_SOLICITOR_ID")]
     public long DspPurchSolicitorId { get; set; }
-
-    /// <summary>
-    /// Foreign key of the dispostion sale.
-    /// </summary>
-    [Column("DISPOSITION_SALE_ID")]
-    public long DispositionSaleId { get; set; }
 
     /// <summary>
     /// Foreign key of the individual solicitor for the disposition file.
@@ -143,10 +136,6 @@ public partial class PimsDspPurchSolicitor
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
 
-    [ForeignKey("DispositionSaleId")]
-    [InverseProperty("PimsDspPurchSolicitors")]
-    public virtual PimsDispositionSale DispositionSale { get; set; }
-
     [ForeignKey("OrganizationId")]
     [InverseProperty("PimsDspPurchSolicitors")]
     public virtual PimsOrganization Organization { get; set; }
@@ -154,6 +143,9 @@ public partial class PimsDspPurchSolicitor
     [ForeignKey("PersonId")]
     [InverseProperty("PimsDspPurchSolicitorPeople")]
     public virtual PimsPerson Person { get; set; }
+
+    [InverseProperty("DspPurchSolicitor")]
+    public virtual ICollection<PimsDispositionSale> PimsDispositionSales { get; set; } = new List<PimsDispositionSale>();
 
     [ForeignKey("PrimaryContactId")]
     [InverseProperty("PimsDspPurchSolicitorPrimaryContacts")]
