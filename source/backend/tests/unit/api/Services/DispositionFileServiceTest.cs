@@ -604,7 +604,7 @@ namespace Pims.Api.Test.Services
         public void UpdateProperties_Success()
         {
             // Arrange
-            var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionEdit, Permissions.DispositionAdd, Permissions.DispositionView);
+            var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionEdit, Permissions.PropertyAdd, Permissions.PropertyView);
 
             var dspFile = EntityHelper.CreateDispositionFile();
             dspFile.ConcurrencyControlNumber = 1;
@@ -630,7 +630,7 @@ namespace Pims.Api.Test.Services
         public void UpdateProperties_MatchProperties_Success()
         {
             // Arrange
-            var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionEdit);
+            var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionEdit, Permissions.PropertyAdd, Permissions.PropertyView);
 
             var dspFile = EntityHelper.CreateDispositionFile();
             dspFile.ConcurrencyControlNumber = 1;
@@ -662,7 +662,7 @@ namespace Pims.Api.Test.Services
         public void UpdateProperties_MatchProperties_NewProperty_UserOverride()
         {
             // Arrange
-            var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionEdit);
+            var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionEdit, Permissions.PropertyAdd, Permissions.PropertyView);
 
             var dspFile = EntityHelper.CreateDispositionFile();
             dspFile.ConcurrencyControlNumber = 1;
@@ -712,7 +712,7 @@ namespace Pims.Api.Test.Services
         public void UpdateProperties_MatchProperties_NewProperty_Success()
         {
             // Arrange
-            var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionEdit);
+            var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionEdit, Permissions.PropertyAdd, Permissions.PropertyView);
 
             var dspFile = EntityHelper.CreateDispositionFile();
             dspFile.ConcurrencyControlNumber = 1;
@@ -771,7 +771,7 @@ namespace Pims.Api.Test.Services
         public void UpdateProperties_UpdatePropertyFile_Success()
         {
             // Arrange
-            var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionEdit);
+            var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionEdit, Permissions.PropertyAdd, Permissions.PropertyView);
 
             var property = EntityHelper.CreateProperty(12345);
 
@@ -803,7 +803,7 @@ namespace Pims.Api.Test.Services
         public void UpdateProperties_RemovePropertyFile_Success()
         {
             // Arrange
-            var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionEdit);
+            var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionEdit, Permissions.PropertyAdd, Permissions.PropertyView);
 
             var dspFile = EntityHelper.CreateDispositionFile();
             dspFile.ConcurrencyControlNumber = 1;
@@ -834,7 +834,7 @@ namespace Pims.Api.Test.Services
         public void UpdateProperties_RemoveProperty_Success()
         {
             // Arrange
-            var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionEdit);
+            var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionEdit, Permissions.PropertyAdd, Permissions.PropertyView);
 
             var dspFile = EntityHelper.CreateDispositionFile();
             dspFile.ConcurrencyControlNumber = 1;
