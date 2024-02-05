@@ -230,6 +230,12 @@ public partial class PimsProperty
     public bool IsPropertyOfInterest { get; set; }
 
     /// <summary>
+    /// Is this a property of other interest to the Ministry?
+    /// </summary>
+    [Column("IS_OTHER_INTEREST")]
+    public bool IsOtherInterest { get; set; }
+
+    /// <summary>
     /// Is the property visible to other agencies?
     /// </summary>
     [Column("IS_VISIBLE_TO_OTHER_AGENCIES")]

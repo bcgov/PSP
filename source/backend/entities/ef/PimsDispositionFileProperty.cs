@@ -35,6 +35,13 @@ public partial class PimsDispositionFileProperty
     public long PropertyId { get; set; }
 
     /// <summary>
+    /// Descriptive reference for the property associated with the disposition file.
+    /// </summary>
+    [Column("PROPERTY_NAME")]
+    [StringLength(500)]
+    public string PropertyName { get; set; }
+
+    /// <summary>
     /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update.  If this is done then the update will succeed, provided that the row was not updated by any
     /// </summary>
     [Column("CONCURRENCY_CONTROL_NUMBER")]

@@ -57,6 +57,12 @@ public partial class PimsDispositionFileHist
     [Column("REGION_CODE")]
     public short RegionCode { get; set; }
 
+    [Column("PROJECT_ID")]
+    public long? ProjectId { get; set; }
+
+    [Column("PRODUCT_ID")]
+    public long? ProductId { get; set; }
+
     [Column("FILE_NUMBER")]
     [StringLength(20)]
     public string FileNumber { get; set; }
