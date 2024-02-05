@@ -236,6 +236,7 @@ namespace PIMS.Tests.Automation.PageObjects
         public void CreateNewSalesDetails(DispositionFile salesdetails)
         {
             Wait();
+
             if (salesdetails.PurchaserNames!.Count > 0)
             {
                 for (var i = 0; i < salesdetails.PurchaserNames.Count; i++)
