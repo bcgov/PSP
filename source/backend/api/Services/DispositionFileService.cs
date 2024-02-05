@@ -434,7 +434,7 @@ namespace Pims.Api.Services
         public PimsDispositionFile UpdateProperties(PimsDispositionFile dispositionFile, IEnumerable<UserOverrideCode> userOverrides)
         {
             _logger.LogInformation("Updating disposition file properties...");
-            _user.ThrowIfNotAuthorized(Permissions.DispositionEdit, Permissions.PropertyView, Permissions.PropertyAdd);
+            _user.ThrowIfNotAllAuthorized(Permissions.DispositionEdit, Permissions.PropertyView, Permissions.PropertyAdd);
             _user.ThrowInvalidAccessToDispositionFile(_userRepository, _dispositionFileRepository, dispositionFile.Internal_Id);
 
             ValidateVersion(dispositionFile.Internal_Id, dispositionFile.ConcurrencyControlNumber);
@@ -468,7 +468,6 @@ namespace Pims.Api.Services
             List<PimsDispositionFileProperty> differenceSet = currentProperties.Where(x => !dispositionFile.PimsDispositionFileProperties.Any(y => y.Internal_Id == x.Internal_Id)).ToList();
             foreach (var deletedProperty in differenceSet)
             {
-                _dispositionFilePropertyRepository.GetPropertiesByDispositionFileId(dispositionFile.Internal_Id).FirstOrDefault(ap => ap.PropertyId == deletedProperty.PropertyId);
                 _dispositionFilePropertyRepository.Delete(deletedProperty);
                 if (deletedProperty.Property.IsPropertyOfInterest)
                 {

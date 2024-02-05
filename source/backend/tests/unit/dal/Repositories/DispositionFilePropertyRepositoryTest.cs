@@ -30,8 +30,8 @@ namespace Pims.Dal.Test.Repositories
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.DispositionView);
 
-            var acqFile = EntityHelper.CreateDispositionFile();
-            var pimsDispositionFileProperty = new PimsDispositionFileProperty() { DispositionFileId = acqFile.DispositionFileId, Property = EntityHelper.CreateProperty(1) };
+            var dspFile = EntityHelper.CreateDispositionFile();
+            var pimsDispositionFileProperty = new PimsDispositionFileProperty() { DispositionFileId = dspFile.DispositionFileId, Property = EntityHelper.CreateProperty(1) };
 
             var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(pimsDispositionFileProperty);
             var repository = helper.CreateRepository<DispositionFilePropertyRepository>(user);
@@ -73,9 +73,9 @@ namespace Pims.Dal.Test.Repositories
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.DispositionView);
 
-            var acqFile = EntityHelper.CreateDispositionFile();
-            var pimsDispositionFileProperty = new PimsDispositionFileProperty() { DispositionFileId = acqFile.DispositionFileId, Property = EntityHelper.CreateProperty(1) };
-            var pimsDispositionFileProperty2 = new PimsDispositionFileProperty() { DispositionFileId = acqFile.DispositionFileId, Property = EntityHelper.CreateProperty(2) };
+            var dspFile = EntityHelper.CreateDispositionFile();
+            var pimsDispositionFileProperty = new PimsDispositionFileProperty() { DispositionFileId = dspFile.DispositionFileId, Property = EntityHelper.CreateProperty(1) };
+            var pimsDispositionFileProperty2 = new PimsDispositionFileProperty() { DispositionFileId = dspFile.DispositionFileId, Property = EntityHelper.CreateProperty(2) };
 
             var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(pimsDispositionFileProperty);
             var repository = helper.CreateRepository<DispositionFilePropertyRepository>(user);
