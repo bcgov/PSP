@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
@@ -111,7 +112,13 @@ namespace Pims.Api.Services
 
             if (!userOverrides.Contains(UserOverrideCode.DispositionFileFinalStatus))
             {
-                var doNotAddToStatuses = new List<string>() { EnumDispositionFileStatusTypeCode.COMPLETE.ToString(), EnumDispositionFileStatusTypeCode.ARCHIVED.ToString() };
+                var doNotAddToStatuses = new List<string>()
+                {
+                    EnumDispositionFileStatusTypeCode.COMPLETE.ToString(),
+                    EnumDispositionFileStatusTypeCode.ARCHIVED.ToString(),
+                    EnumDispositionFileStatusTypeCode.CANCELLED.ToString(),
+                };
+
                 if (doNotAddToStatuses.Contains(dispositionFile.DispositionFileStatusTypeCode))
                 {
                     throw new UserOverrideException(UserOverrideCode.DispositionFileFinalStatus, "You are changing this file to a non-editable state. (Only system administrators can edit the file when set to Archived, Cancelled or Completed state). Do you wish to continue?");
@@ -399,18 +406,18 @@ namespace Pims.Api.Services
                     DispositionStatusTypeCode = file.DispositionStatusTypeCodeNavigation?.Description ?? string.Empty,
                     DispositionFileStatusTypeCode = file.DispositionFileStatusTypeCodeNavigation?.Description ?? string.Empty,
                     FileFunding = file.DispositionFundingTypeCodeNavigation is not null ? file.DispositionFundingTypeCodeNavigation.Description : string.Empty,
-                    FileAssignedDate = file.AssignedDt.HasValue ? file.AssignedDt.Value.ToString("dd-MMM-yyyy") : string.Empty,
-                    DispositionCompleted = file.CompletedDt.HasValue ? file.CompletedDt.Value.ToString("dd-MMM-yyyy") : string.Empty,
+                    FileAssignedDate = file.AssignedDt.HasValue ? file.AssignedDt.Value.ToString("dd-MMM-yyyy", CultureInfo.InvariantCulture) : string.Empty,
+                    DispositionCompleted = file.CompletedDt.HasValue ? file.CompletedDt.Value.ToString("dd-MMM-yyyy", CultureInfo.InvariantCulture) : string.Empty,
                     InitiatingDocument = file.DispositionInitiatingDocTypeCode == "OTHER" ? $"Other - {file.OtherInitiatingDocType ?? string.Empty}" : file.DispositionInitiatingDocTypeCodeNavigation?.Description ?? string.Empty,
-                    InitiatingDocumentDate = file.InitiatingDocumentDt.HasValue ? file.InitiatingDocumentDt.Value.ToString("dd-MMM-yyyy") : string.Empty,
+                    InitiatingDocumentDate = file.InitiatingDocumentDt.HasValue ? file.InitiatingDocumentDt.Value.ToString("dd-MMM-yyyy", CultureInfo.InvariantCulture) : string.Empty,
                     PhysicalFileStatus = file.DspPhysFileStatusTypeCodeNavigation?.Description ?? string.Empty,
                     AppraisalValue = file.PimsDispositionAppraisals?.FirstOrDefault()?.AppraisedAmt ?? 0,
-                    AppraisalDate = file.PimsDispositionAppraisals?.FirstOrDefault()?.AppraisalDt != null ? file.PimsDispositionAppraisals?.FirstOrDefault()?.AppraisalDt.Value.ToString("dd-MMM-yyyy") : string.Empty,
+                    AppraisalDate = file.PimsDispositionAppraisals?.FirstOrDefault()?.AppraisalDt != null ? file.PimsDispositionAppraisals?.FirstOrDefault()?.AppraisalDt.Value.ToString("dd-MMM-yyyy", CultureInfo.InvariantCulture) : string.Empty,
                     AssessmentValue = file.PimsDispositionAppraisals?.FirstOrDefault()?.BcaValueAmt ?? 0,
                     RollYear = file.PimsDispositionAppraisals?.FirstOrDefault()?.BcaRollYear?.ToString() ?? string.Empty,
                     ListPrice = file.PimsDispositionAppraisals?.FirstOrDefault()?.ListPriceAmt ?? 0,
                     PurchaserNames = string.Join("|", file.PimsDispositionSales?.FirstOrDefault()?.PimsDispositionPurchasers.Select(x => (x.PersonId.HasValue ? x.Person.GetFullName(true) : x.Organization.Name + $" (Primary: {x.PrimaryContact?.GetFullName(true) ?? "N/A"})")) ?? Array.Empty<string>()),
-                    SaleCompletionDate = file.PimsDispositionSales?.FirstOrDefault()?.SaleCompletionDt != null ? file.PimsDispositionSales?.FirstOrDefault()?.SaleCompletionDt.Value.ToString("dd-MMM-yyyy") : string.Empty,
+                    SaleCompletionDate = file.PimsDispositionSales?.FirstOrDefault()?.SaleCompletionDt != null ? file.PimsDispositionSales?.FirstOrDefault()?.SaleCompletionDt.Value.ToString("dd-MMM-yyyy", CultureInfo.InvariantCulture) : string.Empty,
                     FiscalYearOfSale = file.PimsDispositionSales?.FirstOrDefault()?.SaleFiscalYear?.ToString() ?? string.Empty,
                     FinalSalePrice = file.PimsDispositionSales?.FirstOrDefault()?.SaleFinalAmt ?? 0,
                     RealtorCommission = file.PimsDispositionSales?.FirstOrDefault()?.RealtorCommissionAmt ?? 0,
@@ -422,35 +429,6 @@ namespace Pims.Api.Services
                     NetBeforeSpp = CalculateNetProceedsBeforeSpp(file.PimsDispositionSales?.FirstOrDefault()),
                     NetAfterSpp = CalculateNetProceedsAfterSpp(file.PimsDispositionSales?.FirstOrDefault()),
                 }).ToList();
-        }
-
-        private void AddNoteIfStatusChanged(PimsDispositionFile updateDispositionFile)
-        {
-            var currentDispositionFile = _dispositionFileRepository.GetById(updateDispositionFile.Internal_Id);
-            bool statusChanged = currentDispositionFile.DispositionFileStatusTypeCode != updateDispositionFile.DispositionFileStatusTypeCode;
-            if (!statusChanged)
-            {
-                return;
-            }
-
-            var newStatus = _lookupRepository.GetAllDispositionFileStatusTypes()
-                .FirstOrDefault(x => x.DispositionFileStatusTypeCode == updateDispositionFile.DispositionFileStatusTypeCode);
-
-            PimsDispositionFileNote fileNoteInstance = new()
-            {
-                DispositionFileId = updateDispositionFile.Internal_Id,
-                AppCreateTimestamp = DateTime.Now,
-                AppCreateUserid = _user.GetUsername(),
-                Note = new PimsNote()
-                {
-                    IsSystemGenerated = true,
-                    NoteTxt = $"Disposition File status changed from {currentDispositionFile.DispositionFileStatusTypeCodeNavigation.Description} to {newStatus.Description}",
-                    AppCreateTimestamp = DateTime.Now,
-                    AppCreateUserid = this._user.GetUsername(),
-                },
-            };
-
-            _entityNoteRepository.Add(fileNoteInstance);
         }
 
         private static decimal CalculateNetProceedsBeforeSpp(PimsDispositionSale sale)
@@ -487,6 +465,35 @@ namespace Pims.Api.Services
             {
                 throw new DuplicateEntityException("Invalid Disposition Offer, an Offer has been already accepted for this Disposition File");
             }
+        }
+
+        private void AddNoteIfStatusChanged(PimsDispositionFile updateDispositionFile)
+        {
+            var currentDispositionFile = _dispositionFileRepository.GetById(updateDispositionFile.Internal_Id);
+            bool statusChanged = currentDispositionFile.DispositionFileStatusTypeCode != updateDispositionFile.DispositionFileStatusTypeCode;
+            if (!statusChanged)
+            {
+                return;
+            }
+
+            var newStatus = _lookupRepository.GetAllDispositionFileStatusTypes()
+                .FirstOrDefault(x => x.DispositionFileStatusTypeCode == updateDispositionFile.DispositionFileStatusTypeCode);
+
+            PimsDispositionFileNote fileNoteInstance = new()
+            {
+                DispositionFileId = updateDispositionFile.Internal_Id,
+                AppCreateTimestamp = DateTime.Now,
+                AppCreateUserid = _user.GetUsername(),
+                Note = new PimsNote()
+                {
+                    IsSystemGenerated = true,
+                    NoteTxt = $"Disposition File status changed from {currentDispositionFile.DispositionFileStatusTypeCodeNavigation.Description} to {newStatus.Description}",
+                    AppCreateTimestamp = DateTime.Now,
+                    AppCreateUserid = this._user.GetUsername(),
+                },
+            };
+
+            _entityNoteRepository.Add(fileNoteInstance);
         }
 
         private void ValidateMinistryRegion(long dispositionFileId, short updatedRegion)
