@@ -1,8 +1,4 @@
-<<<<<<<< Updated upstream:source/backend/apimodels/Models/Requests/Geocoder/GeoAddressResponse.cs
 namespace Pims.Api.Models.Requests.Geocoder
-========
-namespace Pims.Api.Models.Requests.Geoserver
->>>>>>>> Stashed changes:source/backend/apimodels/Models/Requests/Geoserver/GeoAddressResponse.cs
 {
     public class GeoAddressResponse
     {
