@@ -1,5 +1,6 @@
 ﻿using OpenQA.Selenium;
 using PIMS.Tests.Automation.Classes;
+using System;
 
 namespace PIMS.Tests.Automation.PageObjects
 {
@@ -56,8 +57,10 @@ namespace PIMS.Tests.Automation.PageObjects
         private By dispositionSalesDetailsPurchaserNameLink = By.XPath("//button/div[contains(text(),'+ Add another purchaser')]");
         private By dispositionSalesDetailsPurchaserNameInput = By.XPath("input-dispositionPurchasers.0.contact.id");
         private By dispositionSalesDetailsPurchaserAgentLabel = By.XPath("//label[contains(text(),'Purchaser agent')]");
+        private By dispositionSalesDetailsPurchaserAgentButton = By.XPath("//label[contains(text(),'Purchaser agent')]/parent::div/following-sibling::div/div/div/div/button[@title='Select Contact']");
         private By dispositionSalesDetailsPurchaserAgentInput = By.XPath("//div/input[@id='input-dispositionPurchaserAgent.contact.id']/parent::div/parent::div");
         private By dispositionSalesDetailsPurchaserSolicitorLabel = By.XPath("//label[contains(text(),'Purchaser solicitor')]");
+        private By dispositionSalesDetailsPurchaserSolicitorButton = By.XPath("//label[contains(text(),'Purchaser solicitor')]/parent::div/following-sibling::div/div/div/div/button[@title='Select Contact']");
         private By dispositionSalesDetailsPurchaserSolicitorInput = By.XPath("//div/input[@id='input-dispositionPurchaserSolicitor.contact.id']/parent::div/parent::div");
         private By dispositionSalesDetailsRemovalDateLabel = By.XPath("//label[contains(text(),'Last condition removal date')]");
         private By dispositionSalesDetailsRemovalDateContent = By.XPath("//label[contains(text(),'Last condition removal date')]/parent::div/following-sibling::div");
@@ -68,7 +71,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By dispositionSalesDetailsCompletionDateInput = By.Id("datepicker-saleCompletionDate");
         private By dispositionSalesDetailsFiscalYearLabel = By.XPath("//label[contains(text(),'Fiscal year of sale')]");
         private By dispositionSalesDetailsFiscalYearContent = By.XPath("//label[contains(text(),'Fiscal year of sale')]/parent::div/following-sibling::div");
-        private By dispositionSalesDetailsFiscalYearInput = By.Id("input-finalSaleAmount");
+        private By dispositionSalesDetailsFiscalYearInput = By.Id("datepicker-saleFiscalYear");
         private By dispositionSalesDetailsSalePriceLabel = By.XPath("//label[contains(text(),'Final sale price ($)')]");
         private By dispositionSalesDetailsSalePriceContent = By.XPath("//label[contains(text(),'Final sale price ($)')]/parent::div/following-sibling::div");
         private By dispositionSalesDetailsSalePriceInput = By.Id("input-finalSaleAmount");
@@ -83,7 +86,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By dispositionSalesDetailsNetBookValueInput = By.Id("input-netBookAmount");
         private By dispositionSalesDetailsTotalCostSaleLabel = By.XPath("//label[contains(text(),'Total cost of sales ($)')]");
         private By dispositionSalesDetailsTotalCostSaleContent = By.XPath("//label[contains(text(),'Total cost of sales ($)')]/parent::div/following-sibling::div");
-        private By dispositionSalesDetailsTotalCostSaleInput = By.Id("input-totalCostAmount");
+        private By dispositionSalesDetailsTotalCostSaleInput = By.Id("input-totalCostAmount"); 
         private By dispositionSalesDetailsTotalCostSaleTooltip = By.XPath("//label[contains(text(),'Total cost of sales ($)')]/span/span[@data-testid='tooltip-icon-section-field-tooltip']");
         private By dispositionSalesDetailsBeforeSppLabel = By.XPath("//label[contains(text(),'Net proceeds before SPP cost ($)')]");
         private By dispositionSalesDetailsBeforeSppContent = By.XPath("//label[contains(text(),'Net proceeds before SPP cost ($)')]/parent::div/following-sibling::div");
@@ -100,20 +103,17 @@ namespace PIMS.Tests.Automation.PageObjects
         private By dispositionSalesDetailsRemediationCostContent = By.XPath("//label[contains(text(),'Remediation cost ($)')]/parent::div/following-sibling::div");
         private By dispositionSalesDetailsRemediationCostInput = By.Id("input-remediationAmount");
 
-
-
-
-
-
-
         //Disposition File Confirmation Modal Elements
         private By dispositionFileConfirmationModal = By.CssSelector("div[class='modal-content']");
 
+        private SharedSelectContact sharedSelectContact;
         private SharedModals sharedModals;
+
 
         public DispositionOfferSale(IWebDriver webDriver) : base(webDriver)
         {
             sharedModals = new SharedModals(webDriver);
+            sharedSelectContact = new SharedSelectContact(webDriver);
         }
 
         public void NavigateoffersAndSaleTab()
@@ -236,6 +236,27 @@ namespace PIMS.Tests.Automation.PageObjects
         public void CreateNewSalesDetails(DispositionFile salesdetails)
         {
             Wait();
+            if (salesdetails.PurchaserNames!.Count > 0)
+            {
+                for (var i = 0; i < salesdetails.PurchaserNames.Count; i++)
+                {
+                    AddPurchaseMembers(salesdetails.PurchaserNames[i]);
+                }
+            }
+
+            if (salesdetails.PurchaserAgent != "")
+            {
+                WaitUntilVisible(dispositionSalesDetailsPurchaserAgentButton);
+                webDriver.FindElement(dispositionSalesDetailsPurchaserAgentButton).Click();
+                sharedSelectContact.SelectContact(salesdetails.PurchaserAgent, "persons");
+            }
+
+            if (salesdetails.PurchaserSolicitor != "")
+            {
+                WaitUntilVisible(dispositionSalesDetailsPurchaserSolicitorButton);
+                webDriver.FindElement(dispositionSalesDetailsPurchaserSolicitorButton).Click();
+                sharedSelectContact.SelectContact(salesdetails.PurchaserSolicitor, "persons");
+            }
 
             if (salesdetails.LastConditionRemovalDate != "")
             {
@@ -253,19 +274,19 @@ namespace PIMS.Tests.Automation.PageObjects
                 webDriver.FindElement(dispositionSalesDetailsFiscalYearInput).SendKeys(Keys.Enter);
             }
 
-            webDriver.FindElement(dispositionBcAssessmentValueInput).SendKeys(salesdetails.FinalSalePrice);
+            webDriver.FindElement(dispositionSalesDetailsSalePriceInput).SendKeys(salesdetails.FinalSalePrice);
 
-            webDriver.FindElement(dispositionListPriceInput).SendKeys(salesdetails.RealtorCommission);
+            webDriver.FindElement(dispositionSalesDetailsRealtorCommissionInput).SendKeys(salesdetails.RealtorCommission);
 
             ChooseSpecificSelectOption(dispositionSalesDetailsGSTSelect, salesdetails.GSTRequired);
 
-            webDriver.FindElement(dispositionBcAssessmentValueInput).SendKeys(salesdetails.NetBookValue);
+            webDriver.FindElement(dispositionSalesDetailsNetBookValueInput).SendKeys(salesdetails.NetBookValue);
 
-            webDriver.FindElement(dispositionListPriceInput).SendKeys(salesdetails.TotalCostOfSales);
+            webDriver.FindElement(dispositionSalesDetailsTotalCostSaleInput).SendKeys(salesdetails.TotalCostOfSales);
 
-            webDriver.FindElement(dispositionBcAssessmentValueInput).SendKeys(salesdetails.SPPAmount);
+            webDriver.FindElement(dispositionSalesDetailsSppAmountInput).SendKeys(salesdetails.SPPAmount);
 
-            webDriver.FindElement(dispositionListPriceInput).SendKeys(salesdetails.RemediationCost);
+            webDriver.FindElement(dispositionSalesDetailsRemediationCostInput).SendKeys(salesdetails.RemediationCost);
         }
 
         public void UpdateAppraisalAndAssessment(DispositionFile appraisalandassessmentUpdate)
@@ -402,24 +423,49 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             AssertTrueIsDisplayed(offersAndSaleSalesDetailsSubtitle);
 
+            AssertTrueIsDisplayed(dispositionSalesDetailsRemovalDateLabel);
+            if (disposition.LastConditionRemovalDate != "")
+                AssertTrueContentEquals(dispositionSalesDetailsRemovalDateContent, TransformDateFormat(disposition.LastConditionRemovalDate));
+
+            AssertTrueIsDisplayed(dispositionSalesDetailsCompletionDateLabel);
+            if (disposition.SaleCompletionDate != "")
+                AssertTrueContentEquals(dispositionSalesDetailsCompletionDateContent, TransformDateFormat(disposition.SaleCompletionDate));
+
             AssertTrueIsDisplayed(dispositionSalesDetailsSalePriceLabel);
             if (disposition.FinalSalePrice != "")
                 AssertTrueContentEquals(dispositionSalesDetailsSalePriceContent, TransformCurrencyFormat(disposition.FinalSalePrice));
 
-            AssertTrueIsDisplayed(dispositionAppraisalDateLabel);
-            if (disposition.AppraisalAndAssessmentDate != "")
-                AssertTrueContentEquals(dispositionAppraisalDateContent, TransformDateFormat(disposition.AppraisalAndAssessmentDate));
+            AssertTrueIsDisplayed(dispositionSalesDetailsRealtorCommissionLabel);
+            if (disposition.RealtorCommission != "")
+                AssertTrueContentEquals(dispositionSalesDetailsRealtorCommissionContent, TransformCurrencyFormat(disposition.RealtorCommission));
 
-            AssertTrueIsDisplayed(dispositionBcAssessmentValueLabel);
-            if (disposition.AppraisalAndAssessmentBcAssessmentValue != "")
-                AssertTrueContentEquals(dispositionBcAssessmentValueContent, TransformCurrencyFormat(disposition.AppraisalAndAssessmentBcAssessmentValue));
+            AssertTrueIsDisplayed(dispositionSalesDetailsNetBookValueLabel);
+            if (disposition.NetBookValue != "")
+                AssertTrueContentEquals(dispositionSalesDetailsNetBookValueContent, TransformCurrencyFormat(disposition.NetBookValue));
 
-            AssertTrueIsDisplayed(dispositionBcAssessmentRollYearLabel);
-            AssertTrueContentEquals(dispositionBcAssessmentRollYearContent, disposition.AppraisalAndAssessmentBcAssessmentRollYear);
+            AssertTrueIsDisplayed(dispositionSalesDetailsFiscalYearLabel);
+            AssertTrueContentEquals(dispositionSalesDetailsFiscalYearContent, disposition.FiscalYearOfSale);
 
-            AssertTrueIsDisplayed(dispositionListPriceLabel);
-            if (disposition.AppraisalAndAssessmentListPrice != "")
-                AssertTrueContentEquals(dispositionListPriceContent, TransformCurrencyFormat(disposition.AppraisalAndAssessmentListPrice));
+            AssertTrueIsDisplayed(dispositionSalesDetailsTotalCostSaleLabel);
+            if (disposition.TotalCostOfSales != "")
+                AssertTrueContentEquals(dispositionSalesDetailsTotalCostSaleContent, TransformCurrencyFormat(disposition.TotalCostOfSales));
+
+            AssertTrueIsDisplayed(dispositionSalesDetailsSppAmountLabel);
+            if (disposition.SPPAmount != "")
+                AssertTrueContentEquals(dispositionSalesDetailsSppAmountContent, TransformCurrencyFormat(disposition.SPPAmount));
+
+            AssertTrueIsDisplayed(dispositionSalesDetailsRemediationCostLabel);
+            if (disposition.RemediationCost != "")
+                AssertTrueContentEquals(dispositionSalesDetailsRemediationCostContent, TransformCurrencyFormat(disposition.RemediationCost));
+        }
+
+
+        private void AddPurchaseMembers(PurchaseMember purchaseMember)
+        {
+            Wait();
+            FocusAndClick(dispositionSalesDetailsPurchaserNameLink);
+            FocusAndClick(By.CssSelector("div[data-testid='purchaserRow[+ Index + ]'] button[title='Select Contact']"));
+            sharedSelectContact.SelectContact(purchaseMember.PurchaserName, purchaseMember.PurchaseMemberContactType);
         }
     }
 }

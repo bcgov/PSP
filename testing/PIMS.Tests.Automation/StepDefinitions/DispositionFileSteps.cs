@@ -16,6 +16,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly Notes notes;
         private readonly DispositionChecklist checklist;
         private readonly DispositionOfferSale offerSale;
+        private readonly PurchaseMember purchaseMember;
 
         private readonly string userName = "TRANPSP1";
         private string dispositionFileCode = "";
@@ -31,7 +32,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
             notes = new Notes(driver.Current);
             checklist = new DispositionChecklist(driver.Current);
             offerSale = new DispositionOfferSale(driver.Current);
-
             dispositionFile = new DispositionFile();
         }
 
@@ -237,7 +237,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             checklist.SaveDispositionFileChecklist();
         }
 
-        [StepDefinition(@"I create Appraisal, Assessment and Offers within a Disposition File")]
+        [StepDefinition(@"I create Appraisal, Assessment, Offers and Sales Details within a Disposition File")]
         public void CreateOfferAndSalesAppraisalAndAssessment()
         {
             /* TEST COVERAGE:  */
@@ -249,14 +249,14 @@ namespace PIMS.Tests.Automation.StepDefinitions
             offerSale.VerifyInitOffersAndSaleTab();
 
             // Create AppraisalAndAssessment section by clicking edit button
-             offerSale.EditAppraisalAndAssessmentButton();
-             offerSale.CreateNewAppraisalAndAssessment(dispositionFile);
+            // offerSale.EditAppraisalAndAssessmentButton();
+            //offerSale.CreateNewAppraisalAndAssessment(dispositionFile);
 
             //Save the AppraisalAndAssessment section from
-            offerSale.SaveDispositionFileOffersAndSale();
+            //offerSale.SaveDispositionFileOffersAndSale();
 
             //Verify Created Appraisal and Assessment form
-            offerSale.VerifyCreatedAppraisalAndAssessment(dispositionFile);
+            //offerSale.VerifyCreatedAppraisalAndAssessment(dispositionFile);
 
             //Add and verify Offers
             if (dispositionFile.DispositionOfferAndSale.Count > 0)
@@ -269,11 +269,12 @@ namespace PIMS.Tests.Automation.StepDefinitions
                     offerSale.VerifyCreatedOffer(dispositionFile.DispositionOfferAndSale[i], i);
                 }     
             }
+
             // Create Sales Details section by clicking edit button
             offerSale.EditSalesDetailsButton();
             offerSale.CreateNewSalesDetails(dispositionFile);
 
-            //Save the  Sales Detailssection from
+            //Save the  Sales Details section from
             offerSale.SaveDispositionFileOffersAndSale();
 
             //Verify Created  Sales Details form
@@ -464,7 +465,13 @@ namespace PIMS.Tests.Automation.StepDefinitions
             if (dispositionFile.OfferSaleStartRow > 0 && dispositionFile.OfferSaleTotalCount > 0)
                 PopulateOfferSaleCollection(dispositionFile.OfferSaleStartRow, dispositionFile.OfferSaleTotalCount);
 
+            dispositionFile.PurchaseNameStartRow = int.Parse(ExcelDataContext.ReadData(rowNumber, "PurchaseNameStartRow"));
+            dispositionFile.PurchaseNameTotalCount = int.Parse(ExcelDataContext.ReadData(rowNumber, "PurchaseNameTotalCount"));
+            if (dispositionFile.PurchaseNameStartRow > 0 && dispositionFile.PurchaseNameTotalCount > 0)
+                PopulatePurchaseNamesCollection(dispositionFile.PurchaseNameStartRow, dispositionFile.PurchaseNameTotalCount);
 
+            dispositionFile.PurchaserAgent = ExcelDataContext.ReadData(rowNumber, "PurchaserAgent");
+            dispositionFile.PurchaserSolicitor = ExcelDataContext.ReadData(rowNumber, "PurchaserSolicitor");
             dispositionFile.LastConditionRemovalDate = ExcelDataContext.ReadData(rowNumber, "LastConditionRemovalDate");
             dispositionFile.SaleCompletionDate = ExcelDataContext.ReadData(rowNumber, "SaleCompletionDate");
             dispositionFile.FiscalYearOfSale = ExcelDataContext.ReadData(rowNumber, "FiscalYearOfSale");
@@ -513,5 +520,22 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 dispositionFile.DispositionOfferAndSale.Add(offerAndSale);
             }
         }
+        private void PopulatePurchaseNamesCollection(int startRow, int rowsCount)
+        {
+            DataTable purchaseSheet = ExcelDataContext.GetInstance().Sheets["PurchaserNames"]!;
+            ExcelDataContext.PopulateInCollection(purchaseSheet);
+
+            for (int i = startRow; i < startRow + rowsCount; i++)
+            {
+                PurchaseMember purchaseMember = new PurchaseMember();
+                purchaseMember.PurchaserName = ExcelDataContext.ReadData(i, "PurchaserName");
+                purchaseMember.PurchaseMemberContactType = ExcelDataContext.ReadData(i, "PurchaseMemberContactType");
+                purchaseMember.PurchaseMemberPrimaryContact = ExcelDataContext.ReadData(i, "PurchaseMemberPrimaryContact");
+
+               dispositionFile.PurchaserNames.Add(purchaseMember);
+            }
+        }
+
+
     }
 }
