@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Areas.Acquisition.Controllers;
 using Pims.Api.Helpers.Exceptions;
+using Pims.Api.Models.Concepts.AcquisitionFile;
 using Pims.Api.Models.Concepts.DispositionFile;
 using Pims.Api.Models.Concepts.DispositionFile;
 using Pims.Api.Policies;
@@ -482,6 +483,22 @@ namespace Pims.Api.Areas.Disposition.Controllers
             var updatedOffer = _dispositionService.UpdateDispositionFileAppraisal(id, appraisalId, dispositionAppraisalEntity);
 
             return new JsonResult(_mapper.Map<DispositionFileAppraisalModel>(updatedOffer));
+        }
+
+        /// <summary>
+        /// Update the disposition file properties.
+        /// </summary>
+        /// <returns></returns>
+        [HttpPut("{id:long}/properties")]
+        [HasPermission(Permissions.DispositionEdit)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(DispositionFileModel), 200)]
+        [SwaggerOperation(Tags = new[] { "dispositionfile" })]
+        public IActionResult UpdateDispositionFileProperties([FromBody] DispositionFileModel dispositionFileModel, [FromQuery] string[] userOverrideCodes)
+        {
+            var dispositionFileEntity = _mapper.Map<Dal.Entities.PimsDispositionFile>(dispositionFileModel);
+            var dispositionFile = _dispositionService.UpdateProperties(dispositionFileEntity, userOverrideCodes.Select(oc => UserOverrideCode.Parse(oc)));
+            return new JsonResult(_mapper.Map<DispositionFileModel>(dispositionFile));
         }
 
         #endregion
