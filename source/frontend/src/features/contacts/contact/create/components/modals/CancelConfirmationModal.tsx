@@ -10,7 +10,7 @@ export const CancelConfirmationModal = (props: ICancelConfirmationModalProps) =>
     title="Confirm Changes"
     message={
       <>
-        <p>If you asdasd choose to cancel now, your changes will not be saved.</p>
+        <p>If you choose to cancel now, your changes will not be saved.</p>
         <p>Do you want to proceed?</p>
       </>
     }
