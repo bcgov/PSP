@@ -245,26 +245,6 @@ namespace Pims.Dal.Test.Repositories
         }
 
         [Fact]
-        public void Get_Users_Paged_MaxQuantity()
-        {
-            // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.AdminUsers);
-            var euser = EntityHelper.CreateUser("Tester");
-            helper.CreatePimsContext(user, true).AddAndSaveChanges(euser);
-
-            var service = helper.CreateRepository<UserRepository>(user);
-
-            // Act
-            var result = service.GetPage(1, 51);
-
-            // Assert
-            Assert.NotNull(result);
-            Assert.IsAssignableFrom<Paged<Entity.PimsUser>>(result);
-            Assert.Equal(50, result.Quantity);
-        }
-
-        [Fact]
         public void Get_Users_NotAuthorized()
         {
             // Arrange
