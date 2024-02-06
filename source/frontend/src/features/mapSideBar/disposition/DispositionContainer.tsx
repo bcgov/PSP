@@ -122,6 +122,7 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
       (!error && dispositionFileId !== dispositionFile?.id && !loadingDispositionFile) ||
       staleFile
     ) {
+      debugger;
       fetchDispositionFile();
     }
   }, [
@@ -269,7 +270,7 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
         isFormValid={isValid}
         error={error}
         dispositionFile={
-          !loading && !!dispositionFile
+          dispositionFile?.id === dispositionFileId
             ? {
                 ...dispositionFile,
                 fileProperties: dispositionFileProperties,
