@@ -151,7 +151,7 @@ namespace Pims.Api.Services
             _logger.LogDebug("Disposition file search with filter: {filter}", filter);
             _user.ThrowIfNotAuthorized(Permissions.DispositionView);
 
-            filter.FileNameOrNumberOrReference = Regex.Replace(filter.FileNameOrNumberOrReference, @"^[d,D]-", string.Empty);
+            filter.FileNameOrNumberOrReference = Regex.Replace(filter.FileNameOrNumberOrReference ?? "", @"^[d,D]-", string.Empty);
 
             var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
             long? contractorPersonId = (pimsUser != null && pimsUser.IsContractor) ? pimsUser.PersonId : null;
