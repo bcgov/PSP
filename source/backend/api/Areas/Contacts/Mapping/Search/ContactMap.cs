@@ -11,6 +11,7 @@ namespace Pims.Api.Areas.Contact.Mapping.Search
             config.NewConfig<Entity.PimsContactMgrVw, Model.ContactSummaryModel>()
                 .Map(dest => dest.Id, src => src.Id)
                 .Map(dest => dest.PersonId, src => src.PersonId)
+                .Map(dest => dest.Person, src => src.Person)
                 .Map(dest => dest.OrganizationId, src => src.OrganizationId)
                 .Map(dest => dest.Organization, src => src.Organization)
                 .Map(dest => dest.Summary, src => src.Summary)
