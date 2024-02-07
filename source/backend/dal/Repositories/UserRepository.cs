@@ -216,11 +216,6 @@ namespace Pims.Dal.Repositories
                     filter.Quantity = 1;
                 }
 
-                if (filter.Quantity > 50)
-                {
-                    filter.Quantity = 50;
-                }
-
                 if (filter.Sort == null)
                 {
                     filter.Sort = Array.Empty<string>();
