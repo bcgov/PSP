@@ -795,7 +795,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             acquisitionFilesDetails.CancelAcquisitionFile();
 
             //Verify Form is no longer visible
-            Assert.True(acquisitionFilesDetails.IsCreateAcquisitionFileFormVisible() == 0);
+            Assert.Equal(0, acquisitionFilesDetails.IsCreateAcquisitionFileFormVisible());
 
             //Search for a property
             searchProperties.SearchPropertyByPINPID(acquisitionFile.AcquisitionSearchProperties.PID);
@@ -847,29 +847,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Save Acquisition File
             acquisitionFilesDetails.SaveAcquisitionFileDetails();
         }
-
-        //[StepDefinition(@"I search for an existing acquisition file")]
-        //public void SearchLastCreatedAcquisitionFile()
-        //{
-        //    //Login to PIMS
-        //    loginSteps.Idir(userName);
-
-        //    //Navigate to Manage Acquisition Files
-        //    searchAcquisitionFiles.NavigateToSearchAcquisitionFile();
-
-        //    //Look for the last acquisition file
-        //    searchAcquisitionFiles.SearchLastAcquisitionFile();
-
-        //    //Select 1st option from search
-        //    searchAcquisitionFiles.SelectFirstOption();
-        //}
-
-        //[StepDefinition(@"I navigate back to the Acquisition File Summary")]
-        //public void NavigateMainResearchFileSection()
-        //{
-        //    //Navigate back to File Summary
-        //    acquisitionFilesDetails.NavigateToFileSummary();
-        //}
 
         [StepDefinition(@"I search for an existing Acquisition File from row number (.*)")]
         public void SearchExistingAcquisitionFile(int rowNumber)
@@ -927,11 +904,11 @@ namespace PIMS.Tests.Automation.StepDefinitions
             Assert.NotEqual(firstFileNameDescResult, firstFileNameAscResult);
 
             //Filter research Files
-            searchAcquisitionFiles.FilterAcquisitionFiles("003-549-551", "Acquisition from Jonathan Doe", "Cancelled");
+            searchAcquisitionFiles.FilterAcquisitionFiles("003-549-551", "", "", "Acquisition from Jonathan Doe", "", "Cancelled", "");
             Assert.False(searchAcquisitionFiles.SearchFoundResults());
 
             //Look for the last created research file
-            searchAcquisitionFiles.FilterAcquisitionFiles("", acquisitionFile.AcquisitionFileName, acquisitionFile.AcquisitionStatus);
+            searchAcquisitionFiles.FilterAcquisitionFiles("", "", "", acquisitionFile.AcquisitionFileName, "", acquisitionFile.AcquisitionStatus, "");
         }
 
         [StepDefinition(@"A new Acquisition file is created successfully")]

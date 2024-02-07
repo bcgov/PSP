@@ -12,6 +12,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly DispositionFileDetails dispositionFileDetails;
         private readonly SearchDispositionFiles searchDispositionFiles;
         private readonly SharedFileProperties sharedFileProperties;
+        private readonly SearchProperties searchProperties;
         private readonly PropertyInformation propertyInformation;
         private readonly Notes notes;
         private readonly DispositionChecklist checklist;
@@ -27,6 +28,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             dispositionFileDetails = new DispositionFileDetails(driver.Current);
             searchDispositionFiles = new SearchDispositionFiles(driver.Current);
             sharedFileProperties = new SharedFileProperties(driver.Current);
+            searchProperties = new SearchProperties(driver.Current);
             propertyInformation = new PropertyInformation(driver.Current);
             notes = new Notes(driver.Current);
             checklist = new DispositionChecklist(driver.Current);
@@ -323,6 +325,88 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Delete Offer
             offerSale.DeleteOffer(0);
+        }
+
+        [StepDefinition(@"I create a Disposition File from a pin on map from row number (.*)")]
+        public void CreateAcquisitionFileFromPin(int rowNumber)
+        {
+            /* TEST COVERAGE:   */
+
+            //Login to PIMS
+            loginSteps.Idir(userName);
+
+            //Search for a property
+            PopulateDispositionFile(rowNumber);
+            searchProperties.SearchPropertyByPINPID(dispositionFile.DispositionSearchProperties.PID);
+
+            //Select Found Pin on map
+            searchProperties.SelectFoundPin();
+
+            //Close Property Information Modal
+            propertyInformation.ClosePropertyInfoModal();
+
+            //Open elipsis option
+            propertyInformation.OpenMoreOptionsPopUp();
+            propertyInformation.ChooseCreationOptionFromPin("Disposition File - Create new");
+
+            //Validate Acquisition File Details Create Form
+            dispositionFileDetails.VerifyDispositionFileCreate();
+
+            //Cancel empty acquisition file
+            dispositionFileDetails.CancelDispositionFile();
+
+            //Verify Form is no longer visible
+            Assert.Equal(0, dispositionFileDetails.IsCreateDispositionFileFormVisible());
+
+            //Search for a property
+            searchProperties.SearchPropertyByPINPID(dispositionFile.DispositionSearchProperties.PID);
+
+            //Select Found Pin on map
+            searchProperties.SelectFoundPin();
+
+            //Close Property Information Modal
+            propertyInformation.ClosePropertyInfoModal();
+
+            //Open elipsis option
+            propertyInformation.OpenMoreOptionsPopUp();
+            propertyInformation.ChooseCreationOptionFromPin("Acquisition File - Create new");
+
+            //Fill basic Acquisition File information
+            dispositionFileDetails.CreateMinimumDispositionFile(dispositionFile);
+
+            //Cancel Creation
+            dispositionFileDetails.CancelDispositionFile();
+
+            //Search for a property
+            searchProperties.SearchPropertyByPINPID(dispositionFile.DispositionSearchProperties.PID);
+
+            //Select Found Pin on map
+            searchProperties.SelectFoundPin();
+
+            //Close Property Information Modal
+            propertyInformation.ClosePropertyInfoModal();
+
+            //Open elipsis option
+            propertyInformation.OpenMoreOptionsPopUp();
+            propertyInformation.ChooseCreationOptionFromPin("Acquisition File - Create new");
+
+            //Fill basic Acquisition File information
+            dispositionFileDetails.CreateMinimumDispositionFile(dispositionFile);
+
+            //Save Acquisition File
+            dispositionFileDetails.SaveDispositionFileDetails();
+
+            //Get Research File code
+            dispositionFileCode = dispositionFileDetails.GetDispositionFileCode();
+
+            //Edit Acquisition File
+            dispositionFileDetails.EditDispositionFileBttn();
+
+            //Add additional information
+            dispositionFileDetails.AddAdditionalInformation(dispositionFile);
+
+            //Save Acquisition File
+            dispositionFileDetails.SaveDispositionFileDetails();
         }
 
         [StepDefinition(@"A new Disposition file is created successfully")]

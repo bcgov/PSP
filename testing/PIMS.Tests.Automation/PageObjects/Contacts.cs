@@ -185,7 +185,7 @@ namespace PIMS.Tests.Automation.PageObjects
         //Navigates to Create a new Contact
         public void NavigateToCreateNewContact()
         {
-            Wait(3000);
+            Wait();
 
             WaitUntilClickable(menuContactsButton);
             FocusAndClick(menuContactsButton);
@@ -857,14 +857,15 @@ namespace PIMS.Tests.Automation.PageObjects
             ButtonElement("Cancel");
 
             Wait();
-            if (webDriver.FindElements(contactModal).Count > 0)
-            {
-                Assert.Equal("Unsaved Changes", sharedModals.ModalHeader());
-                Assert.Equal("If you choose to cancel now, your changes will not be saved.", sharedModals.ConfirmationModalText1());
-                Assert.Equal("Do you want to proceed?", sharedModals.ConfirmationModalText2());
+            //if (webDriver.FindElements(contactModal).Count > 0)
+            //{
+            //    Assert.Equal("Confirm Changes", sharedModals.ModalHeader());
+            //    Assert.Equal("If you choose to cancel now, your changes will not be saved.", sharedModals.ConfirmationModalText1());
+            //    Assert.Equal("Do you want to proceed?", sharedModals.ConfirmationModalText2());
 
-                sharedModals.ModalClickOKBttn();
-            }
+            //    sharedModals.ModalClickOKBttn();
+            //}
+            sharedModals.CancelActionModal();
 
             AssertTrueIsDisplayed(contactsSearchTable);
         }

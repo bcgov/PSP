@@ -18,6 +18,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         //Disposition File Details View and Create Forms Elements
         private By dispositionFileViewTitle = By.XPath("//h1[contains(text(),'Disposition File')]");
+        private By dispositionFileMainFormDiv = By.XPath("//h1[contains(text(),'Create Disposition File')]/parent::div/parent::div/parent::div/parent::div");
 
         private By dispositionFileCreateTitle = By.XPath("//h1[contains(text(),'Create Disposition File')]");
         private By dispositionFileHeaderCodeLabel = By.XPath("//label[contains(text(), 'File:')]");
@@ -99,7 +100,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By dispositionFileDetailsPhysicalFileSelect = By.Id("input-physicalFileStatusTypeCode");
 
         private By dispositionFileDetailsInitiatingBranchLabel = By.XPath("//label[contains(text(),'Initiating branch')]");
-        private By dispositionFileDetailsInitiatingBranchContent = By.XPath("//label[contains(text(),'initiating branch')]/parent::div/following-sibling::div");
+        private By dispositionFileDetailsInitiatingBranchContent = By.XPath("//label[contains(text(),'Initiating branch')]/parent::div/following-sibling::div");
         private By dispositionFileDetailsInitiatingBranchSelect = By.Id("input-initiatingBranchTypeCode");
 
         private By dispositionFileDetailsMOTIRegionLabel = By.XPath("//label[contains(text(),'Ministry region')]");
@@ -373,7 +374,7 @@ namespace PIMS.Tests.Automation.PageObjects
             if (webDriver.FindElements(dispositionFileConfirmationModal).Count() > 0)
             {
                 Assert.Equal("User Override Required", sharedModals.ModalHeader());
-                Assert.Equal("You are changing this file to a non-editable state. Only system administrators can edit the file when set to Archived, Cancelled or Completed state). Do you wish to continue?", sharedModals.ModalContent());
+                Assert.Equal("You are changing this file to a non-editable state. (Only system administrators can edit the file when set to Archived, Cancelled or Completed state). Do you wish to continue?", sharedModals.ModalContent());
                 sharedModals.ModalClickOKBttn();
             }
 
@@ -395,10 +396,16 @@ namespace PIMS.Tests.Automation.PageObjects
             
             if (webDriver.FindElements(dispositionFileConfirmationModal).Count() > 0)
             {
-                Assert.Equal("Unsaved Changes", sharedModals.ModalHeader());
-                Assert.Equal("You have made changes on this form. Do you wish to leave without saving?", sharedModals.ModalContent());
+                Assert.Equal("Confirm Changes", sharedModals.ModalHeader());
+                Assert.Contains("If you choose to cancel now, your changes will not be saved.", sharedModals.ModalContent());
+                Assert.Contains("Do you want to proceed?", sharedModals.ModalContent());
                 sharedModals.ModalClickOKBttn();
             }
+        }
+
+        public int IsCreateDispositionFileFormVisible()
+        {
+            return webDriver.FindElements(dispositionFileMainFormDiv).Count();
         }
 
         public string GetDispositionFileCode()
