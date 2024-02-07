@@ -3,12 +3,12 @@ import { createMemoryHistory } from 'history';
 import { Claims } from '@/constants';
 import { mockDispositionFileResponse } from '@/mocks/dispositionFiles.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
+import { Api_DispositionFile } from '@/models/api/DispositionFile';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes/lookupCodesSlice';
 import { render, RenderOptions } from '@/utils/test-utils';
 
 import OffersAndSaleContainer, { IOffersAndSaleContainerProps } from './OffersAndSaleContainer';
 import { IOffersAndSaleContainerViewProps } from './OffersAndSaleContainerView';
-import { Api_DispositionFile } from '@/models/api/DispositionFile';
 
 const history = createMemoryHistory();
 

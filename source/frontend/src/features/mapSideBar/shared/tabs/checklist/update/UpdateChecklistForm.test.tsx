@@ -5,13 +5,13 @@ import * as API from '@/constants/API';
 import { useApiUsers } from '@/hooks/pims-api/useApiUsers';
 import { mockDispositionFileResponse } from '@/mocks/dispositionFiles.mock';
 import { mockFileChecklistResponse, mockLookups } from '@/mocks/index.mock';
+import { Api_FileWithChecklist } from '@/models/api/File';
+import { ApiGen_Concepts_FileChecklistItem } from '@/models/api/generated/ApiGen_Concepts_FileChecklistItem';
 import { ILookupCode, lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, createAxiosError, render, RenderOptions } from '@/utils/test-utils';
 
 import { ChecklistFormModel } from './models';
 import { IUpdateChecklistFormProps, UpdateChecklistForm } from './UpdateChecklistForm';
-import { Api_FileWithChecklist } from '@/models/api/File';
-import { ApiGen_Concepts_FileChecklistItem } from '@/models/api/generated/ApiGen_Concepts_FileChecklistItem';
 
 // mock API service calls
 jest.mock('@/hooks/pims-api/useApiUsers');

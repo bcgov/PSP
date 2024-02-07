@@ -4,11 +4,11 @@ import { useApiUsers } from '@/hooks/pims-api/useApiUsers';
 import { mockFileChecklistResponse } from '@/mocks/acquisitionFiles.mock';
 import { mockDispositionFileResponse } from '@/mocks/dispositionFiles.mock';
 import { mockLookups } from '@/mocks/index.mock';
+import { Api_FileWithChecklist } from '@/models/api/File';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import { ChecklistView, IChecklistViewProps } from './ChecklistView';
-import { Api_FileWithChecklist } from '@/models/api/File';
 
 // mock auth library
 jest.mock('@react-keycloak/web');
