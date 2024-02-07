@@ -11,6 +11,8 @@ namespace Pims.Dal.Entities;
 /// </summary>
 [Table("PIMS_DISPOSITION_SALE")]
 [Index("DispositionFileId", Name = "DSPSAL_DISPOSITION_FILE_ID_IDX")]
+[Index("DspPurchAgentId", Name = "DSPSAL_DSP_PURCH_AGENT_ID_IDX")]
+[Index("DspPurchSolicitorId", Name = "DSPSAL_DSP_PURCH_SOLICITOR_ID_IDX")]
 public partial class PimsDispositionSale
 {
     /// <summary>
@@ -25,6 +27,18 @@ public partial class PimsDispositionSale
     /// </summary>
     [Column("DISPOSITION_FILE_ID")]
     public long DispositionFileId { get; set; }
+
+    /// <summary>
+    /// Foreign key to the agent associated with the sale of the disposition.
+    /// </summary>
+    [Column("DSP_PURCH_AGENT_ID")]
+    public long? DspPurchAgentId { get; set; }
+
+    /// <summary>
+    /// Foreign key to the solicitor associated with the sale of the disposition.
+    /// </summary>
+    [Column("DSP_PURCH_SOLICITOR_ID")]
+    public long? DspPurchSolicitorId { get; set; }
 
     /// <summary>
     /// For general sales, provide the date when the last condition(s) are to be removed. For road closures enter the condition precedent date.
@@ -186,12 +200,14 @@ public partial class PimsDispositionSale
     [InverseProperty("PimsDispositionSales")]
     public virtual PimsDispositionFile DispositionFile { get; set; }
 
+    [ForeignKey("DspPurchAgentId")]
+    [InverseProperty("PimsDispositionSales")]
+    public virtual PimsDspPurchAgent DspPurchAgent { get; set; }
+
+    [ForeignKey("DspPurchSolicitorId")]
+    [InverseProperty("PimsDispositionSales")]
+    public virtual PimsDspPurchSolicitor DspPurchSolicitor { get; set; }
+
     [InverseProperty("DispositionSale")]
     public virtual ICollection<PimsDispositionPurchaser> PimsDispositionPurchasers { get; set; } = new List<PimsDispositionPurchaser>();
-
-    [InverseProperty("DispositionSale")]
-    public virtual ICollection<PimsDspPurchAgent> PimsDspPurchAgents { get; set; } = new List<PimsDspPurchAgent>();
-
-    [InverseProperty("DispositionSale")]
-    public virtual ICollection<PimsDspPurchSolicitor> PimsDspPurchSolicitors { get; set; } = new List<PimsDspPurchSolicitor>();
 }

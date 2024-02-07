@@ -129,8 +129,12 @@ namespace Pims.Dal.Repositories
 
             // Disposition Deleted Team
             // This is needed to get the disposition team last-updated-by when deleted
-            var teamHistLastUpdatedBy = this.Context.PimsDispositionFileTeamHists.AsNoTracking()
-              .Where(dph => dph.DispositionFileId == id)
+            var deletedTeams = this.Context.PimsDispositionFileTeamHists.AsNoTracking()
+               .Where(aph => aph.DispositionFileId == id)
+               .GroupBy(aph => aph.DispositionFileTeamId)
+               .Select(gaph => gaph.OrderByDescending(a => a.EffectiveDateHist).FirstOrDefault()).ToList();
+
+            var teamHistLastUpdatedBy = deletedTeams
               .Select(dph => new LastUpdatedByModel()
               {
                   ParentId = id,
@@ -160,8 +164,12 @@ namespace Pims.Dal.Repositories
 
             // Disposition Deleted Properties
             // This is needed to get the notes last-updated-by from the notes that where deleted
-            var propertiesHistoryLastUpdatedBy = Context.PimsDispositionFilePropertyHists.AsNoTracking()
-            .Where(dph => dph.DispositionFileId == id)
+            var deletedProperties = this.Context.PimsDispositionFilePropertyHists.AsNoTracking()
+               .Where(aph => aph.DispositionFileId == id)
+               .GroupBy(aph => aph.DispositionFilePropertyId)
+               .Select(gaph => gaph.OrderByDescending(a => a.EffectiveDateHist).FirstOrDefault()).ToList();
+
+            var propertiesHistoryLastUpdatedBy = deletedProperties
             .Select(dph => new LastUpdatedByModel()
             {
                 ParentId = id,
@@ -311,17 +319,17 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(y => y.Organization)
                 .Include(x => x.PimsDispositionPurchasers)
                     .ThenInclude(y => y.PrimaryContact)
-                .Include(x => x.PimsDspPurchAgents)
+                .Include(x => x.DspPurchAgent)
                     .ThenInclude(y => y.Person)
-                .Include(x => x.PimsDspPurchAgents)
+                .Include(x => x.DspPurchAgent)
                     .ThenInclude(y => y.Organization)
-                .Include(x => x.PimsDspPurchAgents)
+                .Include(x => x.DspPurchAgent)
                     .ThenInclude(y => y.PrimaryContact)
-                .Include(x => x.PimsDspPurchSolicitors)
+                .Include(x => x.DspPurchSolicitor)
                     .ThenInclude(y => y.Person)
-                .Include(x => x.PimsDspPurchSolicitors)
+                .Include(x => x.DspPurchSolicitor)
                     .ThenInclude(y => y.Organization)
-                .Include(x => x.PimsDspPurchSolicitors)
+                .Include(x => x.DspPurchSolicitor)
                     .ThenInclude(y => y.PrimaryContact)
                 .Where(x => x.DispositionFileId == dispositionId).FirstOrDefault();
         }
@@ -340,8 +348,8 @@ namespace Pims.Dal.Repositories
 
             Context.Entry(existingSale).CurrentValues.SetValues(dispositionSale);
             Context.UpdateChild<PimsDispositionSale, long, PimsDispositionPurchaser, long>(p => p.PimsDispositionPurchasers, dispositionSale.Internal_Id, dispositionSale.PimsDispositionPurchasers.ToArray());
-            Context.UpdateChild<PimsDispositionSale, long, PimsDspPurchAgent, long>(p => p.PimsDspPurchAgents, dispositionSale.Internal_Id, dispositionSale.PimsDspPurchAgents.ToArray());
-            Context.UpdateChild<PimsDispositionSale, long, PimsDspPurchSolicitor, long>(p => p.PimsDspPurchSolicitors, dispositionSale.Internal_Id, dispositionSale.PimsDspPurchSolicitors.ToArray());
+            // Context.UpdateChild<PimsDispositionSale, long, PimsDspPurchAgent, long>(p => p.PimsDspPurchAgents, dispositionSale.Internal_Id, dispositionSale.PimsDspPurchAgents.ToArray()); TODO: Fix agent update
+            //Context.UpdateChild<PimsDispositionSale, long, PimsDspPurchSolicitor, long>(p => p.PimsDspPurchSolicitors, dispositionSale.Internal_Id, dispositionSale.PimsDspPurchSolicitors.ToArray());
 
             return existingSale;
         }
