@@ -96,7 +96,7 @@ namespace Pims.Api.Services
         {
             dispositionFile.ThrowIfNull(nameof(dispositionFile));
 
-            _logger.LogInformation("Updating acquisition file with id {id}", id);
+            _logger.LogInformation("Updating disposition file with id {id}", id);
             _user.ThrowIfNotAuthorized(Permissions.DispositionEdit);
             _user.ThrowInvalidAccessToDispositionFile(_userRepository, _dispositionFileRepository, id);
 
@@ -431,6 +431,63 @@ namespace Pims.Api.Services
                 }).ToList();
         }
 
+        public PimsDispositionFile UpdateProperties(PimsDispositionFile dispositionFile, IEnumerable<UserOverrideCode> userOverrides)
+        {
+            _logger.LogInformation("Updating disposition file properties...");
+            _user.ThrowIfNotAllAuthorized(Permissions.DispositionEdit, Permissions.PropertyView, Permissions.PropertyAdd);
+            _user.ThrowInvalidAccessToDispositionFile(_userRepository, _dispositionFileRepository, dispositionFile.Internal_Id);
+
+            ValidateVersion(dispositionFile.Internal_Id, dispositionFile.ConcurrencyControlNumber);
+
+            MatchProperties(dispositionFile, userOverrides);
+
+            // Get the current properties in the research file
+            var currentProperties = _dispositionFilePropertyRepository.GetPropertiesByDispositionFileId(dispositionFile.Internal_Id);
+
+            // Check if the property is new or if it is being updated
+            foreach (var incomingDispositionProperty in dispositionFile.PimsDispositionFileProperties)
+            {
+                // If the property is not new, check if the name has been updated.
+                if (incomingDispositionProperty.Internal_Id != 0)
+                {
+                    PimsDispositionFileProperty existingProperty = currentProperties.FirstOrDefault(x => x.Internal_Id == incomingDispositionProperty.Internal_Id);
+                    if (existingProperty.PropertyName != incomingDispositionProperty.PropertyName)
+                    {
+                        existingProperty.PropertyName = incomingDispositionProperty.PropertyName;
+                        _dispositionFilePropertyRepository.Update(existingProperty);
+                    }
+                }
+                else
+                {
+                    // New property needs to be added
+                    _dispositionFilePropertyRepository.Add(incomingDispositionProperty);
+                }
+            }
+
+            // The ones not on the new set should be deleted
+            List<PimsDispositionFileProperty> differenceSet = currentProperties.Where(x => !dispositionFile.PimsDispositionFileProperties.Any(y => y.Internal_Id == x.Internal_Id)).ToList();
+            foreach (var deletedProperty in differenceSet)
+            {
+                _dispositionFilePropertyRepository.Delete(deletedProperty);
+                if (deletedProperty.Property.IsPropertyOfInterest)
+                {
+                    PimsProperty propertyWithAssociations = _propertyRepository.GetAllAssociationsById(deletedProperty.PropertyId);
+                    var leaseAssociationCount = propertyWithAssociations.PimsPropertyLeases.Count;
+                    var researchAssociationCount = propertyWithAssociations.PimsPropertyResearchFiles.Count;
+                    var acquisitionAssociationCount = propertyWithAssociations.PimsPropertyAcquisitionFiles.Count;
+                    var dispositionAssociationCount = propertyWithAssociations.PimsDispositionFileProperties.Count;
+                    if (leaseAssociationCount + researchAssociationCount + acquisitionAssociationCount == 0 && dispositionAssociationCount <= 1 && deletedProperty?.Property?.IsPropertyOfInterest == true)
+                    {
+                        _dispositionFileRepository.CommitTransaction(); // TODO: this can only be removed if cascade deletes are implemented. EF executes deletes in alphabetic order.
+                        _propertyRepository.Delete(deletedProperty.Property);
+                    }
+                }
+            }
+
+            _dispositionFileRepository.CommitTransaction();
+            return _dispositionFileRepository.GetById(dispositionFile.Internal_Id);
+        }
+
         private static decimal CalculateNetProceedsBeforeSpp(PimsDispositionSale sale)
         {
             if (sale != null)
@@ -614,7 +671,7 @@ namespace Pims.Api.Services
             long currentRowVersion = _dispositionFileRepository.GetRowVersion(dispositionFileId);
             if (currentRowVersion != dispositionFileVersion)
             {
-                throw new DbUpdateConcurrencyException("You are working with an older version of this acquisition file, please refresh the application and retry.");
+                throw new DbUpdateConcurrencyException("You are working with an older version of this disposition file, please refresh the application and retry.");
             }
         }
     }
