@@ -134,6 +134,19 @@ describe('DispositionContainer component', () => {
     expect(spinner).not.toBeVisible();
   });
 
+  it('should call the onUpdateProperty when related function is called', async () => {
+    const { getByTestId } = setup(undefined, { claims: [] });
+
+    const spinner = getByTestId('filter-backdrop-loading');
+    await waitForElementToBeRemoved(spinner);
+
+    await act(async () => viewProps.onUpdateProperties(mockDispositionFileResponse()));
+    expect(spinner).not.toBeVisible();
+    expect(
+      mockAxios.history.get.filter(x => x.url === '/dispositionfiles/1/properties'),
+    ).toHaveLength(1);
+  });
+
   it('should change menu index when not editing', async () => {
     const { getByTestId } = setup(undefined, { claims: [] });
 

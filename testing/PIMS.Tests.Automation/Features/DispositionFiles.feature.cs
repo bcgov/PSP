@@ -169,7 +169,8 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.Given("I create a new Disposition File from row number 8", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 26
- testRunner.When("I create Appraisal, Assessment and Offers within a Disposition File", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("I create Appraisal, Assessment, Offers and Sales Details within a Disposition Fil" +
+                        "e", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 27
  testRunner.And("I update Appraisal, Assessment and Offers section within Disposition File from ro" +
