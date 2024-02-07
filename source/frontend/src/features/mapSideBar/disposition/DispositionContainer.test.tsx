@@ -26,6 +26,7 @@ import {
 import { SideBarContextProvider } from '../context/sidebarContext';
 import DispositionContainer, { IDispositionContainerProps } from './DispositionContainer';
 import { IDispositionViewProps } from './DispositionView';
+import { Api_DispositionFile } from '@/models/api/DispositionFile';
 
 const history = createMemoryHistory();
 const mockAxios = new MockAdapter(axios);
@@ -140,7 +141,9 @@ describe('DispositionContainer component', () => {
     const spinner = getByTestId('filter-backdrop-loading');
     await waitForElementToBeRemoved(spinner);
 
-    await act(async () => viewProps.onUpdateProperties(mockDispositionFileResponse()));
+    await act(async () =>
+      viewProps.onUpdateProperties(mockDispositionFileResponse() as unknown as Api_DispositionFile),
+    );
     expect(spinner).not.toBeVisible();
     expect(
       mockAxios.history.get.filter(x => x.url === '/dispositionfiles/1/properties'),
