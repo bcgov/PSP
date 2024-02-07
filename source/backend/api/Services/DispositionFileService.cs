@@ -271,6 +271,7 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.DispositionEdit);
 
             var updatedSale = _dispositionFileRepository.UpdateDispositionFileSale(dispositionSale);
+
             _dispositionFileRepository.CommitTransaction();
 
             return updatedSale;

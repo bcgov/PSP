@@ -19,7 +19,9 @@ export class DispositionSaleFormModel implements WithSalePurchasers {
   netProceedsAfterSppAmount: number | null = null;
   remediationAmount: number | null = null;
   dispositionPurchasers: DispositionSaleContactModel[] = [];
+  purchaserAgentId: number | null = null;
   dispositionPurchaserAgent: DispositionSaleContactModel | null = new DispositionSaleContactModel();
+  purchaserSolicitorId: number | null = null;
   dispositionPurchaserSolicitor: DispositionSaleContactModel | null =
     new DispositionSaleContactModel();
 
@@ -58,13 +60,15 @@ export class DispositionSaleFormModel implements WithSalePurchasers {
     model.dispositionPurchasers =
       entity.dispositionPurchasers?.map(x => DispositionSaleContactModel.fromApi(x)) || [];
 
+    model.purchaserAgentId = entity.purchaserAgentId;
     model.dispositionPurchaserAgent = entity.dispositionPurchaserAgent
       ? DispositionSaleContactModel.fromApi(entity.dispositionPurchaserAgent)
-      : new DispositionSaleContactModel(null, entity.id);
+      : new DispositionSaleContactModel(null);
 
+    model.purchaserSolicitorId = entity.purchaserSolicitorId;
     model.dispositionPurchaserSolicitor = entity.dispositionPurchaserSolicitor
       ? DispositionSaleContactModel.fromApi(entity.dispositionPurchaserSolicitor)
-      : new DispositionSaleContactModel(null, entity.id);
+      : new DispositionSaleContactModel(null);
 
     return model;
   }
@@ -95,7 +99,11 @@ export class DispositionSaleFormModel implements WithSalePurchasers {
         .map(x => x.toApi())
         .filter((x): x is ApiGen_Concepts_DispositionSalePurchaser => x !== null),
       dispositionPurchaserAgent: this.dispositionPurchaserAgent?.toApi() ?? null,
+      purchaserAgentId:
+        this.dispositionPurchaserAgent?.toApi() === null ? null : this.purchaserAgentId,
       dispositionPurchaserSolicitor: this.dispositionPurchaserSolicitor?.toApi() ?? null,
+      purchaserSolicitorId:
+        this.dispositionPurchaserSolicitor?.toApi() === null ? null : this.purchaserSolicitorId,
       rowVersion: this.rowVersion ?? 0,
     };
   }

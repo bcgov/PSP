@@ -10,6 +10,8 @@ import { act, createAxiosError, render, RenderOptions } from '@/utils/test-utils
 
 import { ChecklistFormModel } from './models';
 import { IUpdateChecklistFormProps, UpdateChecklistForm } from './UpdateChecklistForm';
+import { Api_FileWithChecklist } from '@/models/api/File';
+import { ApiGen_Concepts_FileChecklistItem } from '@/models/api/generated/ApiGen_Concepts_FileChecklistItem';
 
 // mock API service calls
 jest.mock('@/hooks/pims-api/useApiUsers');
@@ -65,9 +67,13 @@ describe('UpdateChecklist form', () => {
 
   beforeEach(() => {
     const apiDispositionFile = mockDispositionFileResponse();
-    apiDispositionFile.fileChecklistItems = mockFileChecklistResponse();
+    apiDispositionFile.fileChecklistItems =
+      mockFileChecklistResponse() as ApiGen_Concepts_FileChecklistItem[];
 
-    mockViewProps.initialValues = ChecklistFormModel.fromApi(apiDispositionFile, sectionTypes);
+    mockViewProps.initialValues = ChecklistFormModel.fromApi(
+      apiDispositionFile as unknown as Api_FileWithChecklist,
+      sectionTypes,
+    );
   });
 
   afterEach(() => {

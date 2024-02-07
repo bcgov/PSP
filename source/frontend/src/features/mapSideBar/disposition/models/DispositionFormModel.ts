@@ -1,3 +1,4 @@
+import { IAutocompletePrediction } from '@/interfaces/IAutocomplete';
 import {
   Api_DispositionFile,
   Api_DispositionFileProperty,
@@ -28,6 +29,8 @@ export class DispositionFormModel implements WithDispositionTeam {
   dispositionStatusTypeCode: string | null = null;
   initiatingBranchTypeCode: string | null = null;
   physicalFileStatusTypeCode: string | null = null;
+  project: IAutocompletePrediction | null = null;
+  productId: string | null = null;
   fundingTypeCode: string | null = null;
   initiatingDocumentTypeCode: string | null = null;
   initiatingDocumentTypeOther: string | null = '';
@@ -67,6 +70,10 @@ export class DispositionFormModel implements WithDispositionTeam {
       dispositionStatusTypeCode: toTypeCodeNullable(this.dispositionStatusTypeCode),
       initiatingBranchTypeCode: toTypeCode(this.initiatingBranchTypeCode),
       physicalFileStatusTypeCode: toTypeCode(this.physicalFileStatusTypeCode),
+      project: null,
+      projectId: this.project?.id !== undefined && this.project?.id !== 0 ? this.project?.id : null,
+      product: null,
+      productId: this.productId ? Number(this.productId) : null,
       fundingTypeCode: toTypeCodeNullable(this.fundingTypeCode),
       initiatingDocumentTypeCode: toTypeCode(this.initiatingDocumentTypeCode),
       initiatingDocumentTypeOther: this.initiatingDocumentTypeOther
@@ -92,10 +99,6 @@ export class DispositionFormModel implements WithDispositionTeam {
 
       dispositionOffers: this.offers.map(x => x.toApi()),
       dispositionSale: this.sale ? this.sale.toApi() : null,
-      project: null,
-      projectId: null,
-      product: null,
-      productId: null,
       dispositionAppraisal: this.appraisal ? this.appraisal.toApi() : null,
       fileChecklistItems: this.fileChecklist.map(x => x.toApi()),
       rowVersion: this.rowVersion ?? 0,
@@ -111,6 +114,10 @@ export class DispositionFormModel implements WithDispositionTeam {
       model.dispositionStatusTypeCode?.id,
     );
 
+    dispositionForm.project = model.project
+      ? { id: model.project?.id || 0, text: model.project?.description || '' }
+      : null;
+    dispositionForm.productId = model.product?.id?.toString() ?? '';
     dispositionForm.fundingTypeCode = fromTypeCode(model.fundingTypeCode) ?? '';
     dispositionForm.fileName = model.fileName ?? '';
     dispositionForm.referenceNumber = model.fileReference;

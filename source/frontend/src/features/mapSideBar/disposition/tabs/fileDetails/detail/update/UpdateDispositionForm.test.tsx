@@ -6,8 +6,9 @@ import { createRef } from 'react';
 import { DispositionFormModel } from '@/features/mapSideBar/disposition/models/DispositionFormModel';
 import { mockDispositionFileResponse } from '@/mocks/dispositionFiles.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
+import { Api_DispositionFile } from '@/models/api/DispositionFile';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { act, render, RenderOptions, userEvent } from '@/utils/test-utils';
+import { act, render, RenderOptions, userEvent, waitFor, waitForEffects } from '@/utils/test-utils';
 
 import UpdateDispositionForm, { IUpdateDispositionFormProps } from './UpdateDispositionForm';
 
@@ -55,13 +56,21 @@ describe('UpdateDispositionForm component', () => {
         utils.container.querySelector(
           `select[name="team.${index}.teamProfileTypeCode"]`,
         ) as HTMLSelectElement,
+      getRemoveProjectButton: () =>
+        utils.container.querySelector(
+          `div[data-testid="typeahead-project"] button`,
+        ) as HTMLSelectElement,
+      getProductDropDownList: (index: number = 0) =>
+        utils.container.querySelector(`select[name="productId"]`) as HTMLSelectElement,
     };
   };
 
   let initialValues: DispositionFormModel;
 
   beforeEach(() => {
-    initialValues = DispositionFormModel.fromApi(mockDispositionFileResponse());
+    initialValues = DispositionFormModel.fromApi(
+      mockDispositionFileResponse() as unknown as Api_DispositionFile,
+    );
   });
 
   afterEach(() => {
@@ -100,5 +109,19 @@ describe('UpdateDispositionForm component', () => {
     });
 
     expect(queryByTestId(/team-profile-dup-error/i)).toBeNull();
+  });
+
+  it('it clears the product field when a project is removed', async () => {
+    const { getRemoveProjectButton, getProductDropDownList } = setup({
+      initialValues,
+      loading: false,
+      formikRef: ref,
+      onSubmit,
+    });
+
+    await waitFor(() => userEvent.click(getRemoveProjectButton()));
+    await waitForEffects();
+
+    expect(getProductDropDownList()).toBeNull();
   });
 });

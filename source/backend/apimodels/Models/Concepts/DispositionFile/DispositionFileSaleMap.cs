@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Linq;
 using Mapster;
 using Entity = Pims.Dal.Entities;
 
@@ -24,8 +22,10 @@ namespace Pims.Api.Models.Concepts.DispositionFile
                 .Map(dest => dest.SppAmount, src => src.SppAmt)
                 .Map(dest => dest.RemediationAmount, src => src.RemediationAmt)
                 .Map(dest => dest.DispositionPurchasers, src => src.PimsDispositionPurchasers)
+                .Map(dest => dest.PurchaserAgentId, src => src.DspPurchAgentId)
                 .Map(dest => dest.DispositionPurchaserAgent, src => src.DspPurchAgent)
-                .Map(dest => dest.DispositionPurchaserSolicitor, src => src.DspPurchAgent);
+                .Map(dest => dest.PurchaserSolicitorId, src => src.DspPurchSolicitorId)
+                .Map(dest => dest.DispositionPurchaserSolicitor, src => src.DspPurchSolicitor);
 
             config.NewConfig<DispositionFileSaleModel, Entity.PimsDispositionSale>()
                 .Map(dest => dest.DispositionSaleId, src => src.Id)
@@ -42,7 +42,9 @@ namespace Pims.Api.Models.Concepts.DispositionFile
                 .Map(dest => dest.SppAmt, src => src.SppAmount)
                 .Map(dest => dest.RemediationAmt, src => src.RemediationAmount)
                 .Map(dest => dest.PimsDispositionPurchasers, src => src.DispositionPurchasers)
+                .Map(dest => dest.DspPurchAgentId, src => src.PurchaserAgentId)
                 .Map(dest => dest.DspPurchAgent, src => src.DispositionPurchaserAgent)
+                .Map(dest => dest.DspPurchSolicitorId, src => src.PurchaserSolicitorId)
                 .Map(dest => dest.DspPurchSolicitor, src => src.DispositionPurchaserSolicitor);
         }
     }

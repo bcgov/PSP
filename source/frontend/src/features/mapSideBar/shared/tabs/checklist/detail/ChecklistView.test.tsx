@@ -8,6 +8,7 @@ import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import { ChecklistView, IChecklistViewProps } from './ChecklistView';
+import { Api_FileWithChecklist } from '@/models/api/File';
 
 // mock auth library
 jest.mock('@react-keycloak/web');
@@ -51,7 +52,7 @@ describe('ChecklistView component', () => {
   };
 
   beforeEach(() => {
-    mockViewProps.apiFile = mockDispositionFileResponse();
+    mockViewProps.apiFile = mockDispositionFileResponse() as unknown as Api_FileWithChecklist;
     mockViewProps.apiFile.fileChecklistItems = mockFileChecklistResponse();
   });
 

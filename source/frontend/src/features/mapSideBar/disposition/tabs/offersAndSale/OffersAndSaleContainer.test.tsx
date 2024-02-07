@@ -8,6 +8,7 @@ import { render, RenderOptions } from '@/utils/test-utils';
 
 import OffersAndSaleContainer, { IOffersAndSaleContainerProps } from './OffersAndSaleContainer';
 import { IOffersAndSaleContainerViewProps } from './OffersAndSaleContainerView';
+import { Api_DispositionFile } from '@/models/api/DispositionFile';
 
 const history = createMemoryHistory();
 
@@ -39,7 +40,7 @@ const mockDeleteDispositionFileOfferApi = {
   loading: false,
 };
 
-const mockGetDispositionFileApi = mockDispositionFileResponse(1);
+const mockGetDispositionFileApi = mockDispositionFileResponse(1) as unknown as Api_DispositionFile;
 
 jest.mock('@/hooks/repositories/useDispositionProvider', () => ({
   useDispositionProvider: () => {

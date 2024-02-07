@@ -1,15 +1,18 @@
 import { Formik, FormikHelpers, FormikProps } from 'formik';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import { Select } from '@/components/common/form';
+import { ProjectSelector, Select, SelectOption } from '@/components/common/form';
 import { FastDatePicker } from '@/components/common/form/FastDatePicker';
 import { Input } from '@/components/common/form/Input';
 import { UserRegionSelectContainer } from '@/components/common/form/UserRegionSelect/UserRegionSelectContainer';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import * as API from '@/constants/API';
+import { useProjectProvider } from '@/hooks/repositories/useProjectProvider';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
+import { IAutocompletePrediction } from '@/interfaces/IAutocomplete';
+import { ApiGen_Concepts_Product } from '@/models/api/generated/ApiGen_Concepts_Product';
 
 import { AddDispositionFormYupSchema } from '../models/AddDispositionFormYupSchema';
 import { DispositionFormModel } from '../models/DispositionFormModel';
@@ -27,7 +30,13 @@ export interface IDispositionFormProps {
 const DispositionForm = React.forwardRef<FormikProps<DispositionFormModel>, IDispositionFormProps>(
   (props, ref) => {
     const { initialValues, onSubmit } = props;
+
+    const [projectProducts, setProjectProducts] = useState<ApiGen_Concepts_Product[] | undefined>(
+      undefined,
+    );
+
     const { getOptionsByType } = useLookupCodeHelpers();
+    const { retrieveProjectProducts } = useProjectProvider();
 
     const dispositionFundingTypes = getOptionsByType(API.DISPOSITION_FUNDING_TYPES);
     const dispositionStatusTypesOptions = getOptionsByType(API.DISPOSITION_STATUS_TYPES);
@@ -42,6 +51,29 @@ const DispositionForm = React.forwardRef<FormikProps<DispositionFormModel>, IDis
       API.DISPOSITION_PHYSICAL_STATUS_TYPES,
     );
 
+    const onMinistryProjectSelected = React.useCallback(
+      async (param: IAutocompletePrediction[]) => {
+        if (param.length > 0) {
+          if (param[0].id) {
+            const result = await retrieveProjectProducts(param[0].id);
+            if (result) {
+              setProjectProducts(result as unknown as ApiGen_Concepts_Product[]);
+            }
+          }
+        } else {
+          setProjectProducts(undefined);
+        }
+      },
+      [retrieveProjectProducts],
+    );
+
+    useEffect(() => {
+      console.log(initialValues.project);
+      if (initialValues.project) {
+        onMinistryProjectSelected([initialValues.project]);
+      }
+    }, [initialValues, onMinistryProjectSelected]);
+
     return (
       <Formik<DispositionFormModel>
         enableReinitialize
@@ -55,8 +87,28 @@ const DispositionForm = React.forwardRef<FormikProps<DispositionFormModel>, IDis
             <>
               <Container>
                 <Section header="Project">
-                  <SectionField label="Ministry project"></SectionField>
-                  <SectionField label="Product"></SectionField>
+                  <SectionField label="Ministry project">
+                    <ProjectSelector
+                      field="project"
+                      onChange={(vals: IAutocompletePrediction[]) => {
+                        onMinistryProjectSelected(vals);
+                        if (vals.length === 0) {
+                          formikProps.setFieldValue('project', 0);
+                        }
+                      }}
+                    />
+                  </SectionField>
+                  {projectProducts !== undefined && (
+                    <SectionField label="Product">
+                      <Select
+                        field="productId"
+                        options={projectProducts.map<SelectOption>(x => {
+                          return { label: x.code + ' ' + x.description || '', value: x.id || 0 };
+                        })}
+                        placeholder="Select..."
+                      />
+                    </SectionField>
+                  )}
                   <SectionField label="Funding">
                     <Select
                       field="fundingTypeCode"
