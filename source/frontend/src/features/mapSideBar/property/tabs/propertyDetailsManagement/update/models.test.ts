@@ -11,9 +11,36 @@ describe('Property Contact model tests', () => {
     stakeholderModel.contact = {
       id: '1',
       personId: 1,
-      person: { ...getEmptyPerson(), firstName: 'first' },
-      organizationId: 1,
-      organization: { ...getEmptyOrganization(), name: 'org' },
+      person: {
+        firstName: 'first',
+        surname: 'last',
+        middleNames: 'middle',
+        isDisabled: false,
+        id: 1,
+        preferredName: '',
+        comment: '',
+        contactMethods: [],
+        personAddresses: [],
+        rowVersion: 0,
+        personOrganizations: [
+          {
+            personId: 1,
+            organization: {
+              id: 1,
+              name: 'org',
+              isDisabled: false,
+              alias: '',
+              incorporationNumber: '',
+              comment: '',
+              rowVersion: 0,
+              organizationPersons: [],
+              organizationAddresses: [],
+              contactMethods: [],
+            },
+            rowVersion: 0,
+          },
+        ],
+      },
     };
     const apiModel = stakeholderModel.toApi();
     expect(apiModel.organizationId).toBeNull();
