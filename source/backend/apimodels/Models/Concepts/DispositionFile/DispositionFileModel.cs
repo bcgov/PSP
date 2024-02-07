@@ -61,7 +61,7 @@ namespace Pims.Api.Models.Concepts.DispositionFile
         public long? ProjectId { get; set; }
 
         /// <summary>
-        /// get/set - The acquisition project.
+        /// get/set - The disposition project.
         /// </summary>
         public ProjectModel Project { get; set; }
 

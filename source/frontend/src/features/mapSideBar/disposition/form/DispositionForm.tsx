@@ -68,7 +68,6 @@ const DispositionForm = React.forwardRef<FormikProps<DispositionFormModel>, IDis
     );
 
     useEffect(() => {
-      console.log(initialValues.project);
       if (initialValues.project) {
         onMinistryProjectSelected([initialValues.project]);
       }
@@ -93,7 +92,7 @@ const DispositionForm = React.forwardRef<FormikProps<DispositionFormModel>, IDis
                       onChange={(vals: IAutocompletePrediction[]) => {
                         onMinistryProjectSelected(vals);
                         if (vals.length === 0) {
-                          formikProps.setFieldValue('project', 0);
+                          formikProps.setFieldValue('product', 0);
                         }
                       }}
                     />
