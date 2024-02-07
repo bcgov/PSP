@@ -72,7 +72,6 @@ const UpdateDispositionForm: React.FC<IUpdateDispositionFormProps> = ({
   );
 
   useEffect(() => {
-    console.log(initialValues.project);
     if (initialValues.project) {
       onMinistryProjectSelected([initialValues.project]);
     }
