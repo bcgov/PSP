@@ -296,6 +296,12 @@ namespace Pims.Api.Services
 
             MatchProperties(acquisitionFile, userOverrides);
 
+            AcquisitionStatusTypes? currentAcquisitionStatus = GetCurrentAcquisitionStatus(acquisitionFile.Internal_Id);
+            if (!_statusSolver.CanEditProperties(currentAcquisitionStatus) && !_user.HasPermission(Permissions.SystemAdmin))
+            {
+                throw new BusinessRuleViolationException("The file you are editing is not active or draft, so you cannot save changes. Refresh your browser to see file state.");
+            }
+
             // Get the current properties in the research file
             var currentProperties = _acquisitionFilePropertyRepository.GetPropertiesByAcquisitionFileId(acquisitionFile.Internal_Id);
 

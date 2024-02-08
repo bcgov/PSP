@@ -201,7 +201,7 @@ exports[`DispositionView component renders as expected 1`] = `
                 class="pl-1 text-left col-auto"
               >
                 <strong>
-                  Cancelled
+                  Draft
                 </strong>
               </div>
             </div>
@@ -546,7 +546,7 @@ exports[`DispositionView component renders as expected 1`] = `
                           <div
                             class="c17 text-left col"
                           >
-                            Cancelled
+                            Draft
                           </div>
                         </div>
                       </div>

@@ -28,15 +28,19 @@ export const AddDispositionFormYupSchema = yup
       otherwise: yup.string().nullable(),
     }),
     initiatingDocumentTypeCode: yup.string().nullable(),
-    initiatingDocumentTypeOther: yup.string().when('initiatingDocumentTypeCode', {
-      is: (initiatingDocumentTypeCode: string) =>
-        initiatingDocumentTypeCode && initiatingDocumentTypeCode === 'OTHER',
-      then: yup
-        .string()
-        .required('Other Iniating Document type is required')
-        .max(200, 'Other Iniating Document type must be at most ${max} characters'),
-      otherwise: yup.string().nullable(),
-    }),
+    initiatingDocumentTypeOther: yup
+      .string()
+      .nullable()
+      .when('initiatingDocumentTypeCode', {
+        is: (initiatingDocumentTypeCode: string) =>
+          initiatingDocumentTypeCode && initiatingDocumentTypeCode === 'OTHER',
+        then: yup
+          .string()
+          .nullable()
+          .required('Other Iniating Document type is required')
+          .max(200, 'Other Iniating Document type must be at most ${max} characters'),
+        otherwise: yup.string().nullable(),
+      }),
     regionCode: yup.string().nullable().required('Ministry region is required'),
   })
   .concat(DispositionTeamYupSchema);
@@ -45,5 +49,12 @@ export const UpdateDispositionFormYupSchema = yup
   .object()
   .shape({
     dispositionStatusTypeCode: yup.string().required('Disposition status is required'),
+    completionDate: yup.date().when('fileStatusTypeCode', {
+      is: (fileStatusTypeCode: string) => fileStatusTypeCode && fileStatusTypeCode === 'COMPLETE',
+      then: yup
+        .date()
+        .required(`Disposition completed date is required when file status is set to "Complete"`),
+      otherwise: yup.date().nullable(),
+    }),
   })
   .concat(AddDispositionFormYupSchema);

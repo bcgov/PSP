@@ -61,6 +61,7 @@ namespace Pims.Dal.Repositories
                 .Include(d => d.DspPhysFileStatusTypeCodeNavigation)
                 .Include(d => d.PimsDispositionSales)
                 .Include(d => d.PimsDispositionAppraisals)
+                .Include(d => d.PimsDispositionFileProperties)
                 .Include(d => d.PimsDispositionOffers)
                     .ThenInclude(o => o.DispositionOfferStatusTypeCodeNavigation)
                 .Include(d => d.PimsDispositionFileTeams)

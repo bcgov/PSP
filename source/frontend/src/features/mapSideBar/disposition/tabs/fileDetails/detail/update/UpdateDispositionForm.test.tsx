@@ -57,6 +57,9 @@ describe('UpdateDispositionForm component', () => {
         utils.container.querySelector(
           `select[name="team.${index}.teamProfileTypeCode"]`,
         ) as HTMLSelectElement,
+      getDispositionFileStatusDropDownList: (index: number = 0) =>
+        utils.container.querySelector(`select[name="fileStatusTypeCode"]`) as HTMLSelectElement,
+      getCompletionDate: () => utils.container.querySelector(`input[name="completionDate"]`),
       getRemoveProjectButton: () =>
         utils.container.querySelector(
           `div[data-testid="typeahead-project"] button`,
@@ -131,5 +134,23 @@ describe('UpdateDispositionForm component', () => {
     await waitFor(() => getFormikRef().current?.submitForm());
 
     expect(onSubmit).toHaveBeenLastCalledWith(initialValues, expect.anything());
+  });
+
+  it('it enables and makes required the file completion date when status set to complete', async () => {
+    const { getDispositionFileStatusDropDownList, getCompletionDate } = setup({
+      initialValues,
+      loading: false,
+      formikRef: ref,
+      onSubmit,
+    });
+
+    expect(getCompletionDate()).toBeDisabled();
+
+    // Set duplicate should fail
+    await act(async () => {
+      userEvent.selectOptions(getDispositionFileStatusDropDownList(0), 'COMPLETE');
+    });
+
+    expect(getCompletionDate()).toBeEnabled();
   });
 });

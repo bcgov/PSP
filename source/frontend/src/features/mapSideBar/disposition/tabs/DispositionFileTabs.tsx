@@ -15,7 +15,7 @@ import { SideBarContext } from '../../context/sidebarContext';
 import { ChecklistView } from '../../shared/tabs/checklist/detail/ChecklistView';
 import DispositionSummaryView from './fileDetails/detail/DispositionSummaryView';
 import OffersAndSaleContainer from './offersAndSale/OffersAndSaleContainer';
-import OffersAndSaleContainerView from './offersAndSale/OffersAndSaleContainerView';
+import OffersAndSaleView from './offersAndSale/OffersAndSaleView';
 
 export interface IDispositionFileTabsProps {
   dispositionFile?: Api_DispositionFile;
@@ -58,7 +58,7 @@ export const DispositionFileTabs: React.FC<IDispositionFileTabsProps> = ({
       content: (
         <OffersAndSaleContainer
           dispositionFile={dispositionFile}
-          View={OffersAndSaleContainerView}
+          View={OffersAndSaleView}
           onSuccess={onChildSuccess}
         ></OffersAndSaleContainer>
       ),

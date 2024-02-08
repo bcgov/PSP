@@ -142,7 +142,7 @@ export const DispositionView: React.FunctionComponent<IDispositionViewProps> = (
             leftComponent={
               <>
                 <DispositionMenu
-                  dispositionFileId={dispositionFile?.id || 0}
+                  dispositionFile={dispositionFile}
                   items={menuItems}
                   selectedIndex={selectedMenuIndex}
                   onChange={onMenuChange}
