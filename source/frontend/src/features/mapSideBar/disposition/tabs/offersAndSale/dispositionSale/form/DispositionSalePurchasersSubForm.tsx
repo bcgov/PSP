@@ -9,9 +9,9 @@ import ContactInputView from '@/components/common/form/ContactInput/ContactInput
 import { PrimaryContactSelector } from '@/components/common/form/PrimaryContactSelector/PrimaryContactSelector';
 import { SectionField } from '@/components/common/Section/SectionField';
 import {
-  DispositionSaleContactModel,
+  DispositionSalePurchaserContactModel,
   WithSalePurchasers,
-} from '@/features/mapSideBar/disposition/models/DispositionSaleContactModel';
+} from '@/features/mapSideBar/disposition/models/DispositionSalePurchaserContactModel';
 import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
 
 export interface IDispositionSalePurchasersSubFormProps {
@@ -30,7 +30,7 @@ const DispositionSalePurchaserSubForm: React.FunctionComponent<
       render={arrayHelpers => (
         <>
           {values.dispositionPurchasers.map(
-            (purchaser: DispositionSaleContactModel, index: number) => (
+            (purchaser: DispositionSalePurchaserContactModel, index: number) => (
               <React.Fragment>
                 <Row className="py-2" data-testid={`purchaserRow[${index}]`} noGutters>
                   <Col xs="auto" xl="10">
@@ -88,7 +88,10 @@ const DispositionSalePurchaserSubForm: React.FunctionComponent<
             data-testid="add-purchaser-button"
             className="mb-3"
             onClick={() => {
-              const purchaserContact = new DispositionSaleContactModel(null, dispositionSaleId);
+              const purchaserContact = new DispositionSalePurchaserContactModel(
+                null,
+                dispositionSaleId,
+              );
               arrayHelpers.push(purchaserContact);
             }}
           >

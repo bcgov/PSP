@@ -5,6 +5,8 @@ import * as API from '@/constants/API';
 import { useApiUsers } from '@/hooks/pims-api/useApiUsers';
 import { mockDispositionFileResponse } from '@/mocks/dispositionFiles.mock';
 import { mockFileChecklistResponse, mockLookups } from '@/mocks/index.mock';
+import { Api_FileWithChecklist } from '@/models/api/File';
+import { ApiGen_Concepts_FileChecklistItem } from '@/models/api/generated/ApiGen_Concepts_FileChecklistItem';
 import { ILookupCode, lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, createAxiosError, render, RenderOptions } from '@/utils/test-utils';
 
@@ -65,9 +67,13 @@ describe('UpdateChecklist form', () => {
 
   beforeEach(() => {
     const apiDispositionFile = mockDispositionFileResponse();
-    apiDispositionFile.fileChecklistItems = mockFileChecklistResponse();
+    apiDispositionFile.fileChecklistItems =
+      mockFileChecklistResponse() as ApiGen_Concepts_FileChecklistItem[];
 
-    mockViewProps.initialValues = ChecklistFormModel.fromApi(apiDispositionFile, sectionTypes);
+    mockViewProps.initialValues = ChecklistFormModel.fromApi(
+      apiDispositionFile as unknown as Api_FileWithChecklist,
+      sectionTypes,
+    );
   });
 
   afterEach(() => {

@@ -72,6 +72,16 @@ namespace Pims.Api.Models.Concepts.DispositionFile
         public decimal? RemediationAmount { get; set; }
 
         /// <summary>
+        /// Purchaser Agent FK.
+        /// </summary>
+        public long? PurchaserAgentId { get; set; }
+
+        /// <summary>
+        /// Purchaser Solicitor FK.
+        /// </summary>
+        public long? PurchaserSolicitorId { get; set; }
+
+        /// <summary>
         /// get/set - A list of disposition Sale Purchaser(s).
         /// </summary>
         public IList<DispositionSalePurchaserModel> DispositionPurchasers { get; set; }

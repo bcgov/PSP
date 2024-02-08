@@ -50,6 +50,8 @@ namespace Pims.Dal.Repositories
 
             return this.Context.PimsDispositionFiles.AsNoTracking()
                 .Include(d => d.DispositionFileStatusTypeCodeNavigation)
+                .Include(d => d.Project)
+                .Include(d => d.Product)
                 .Include(d => d.DispositionFundingTypeCodeNavigation)
                 .Include(d => d.DispositionInitiatingDocTypeCodeNavigation)
                 .Include(d => d.DispositionStatusTypeCodeNavigation)
@@ -344,12 +346,47 @@ namespace Pims.Dal.Repositories
         public PimsDispositionSale UpdateDispositionFileSale(PimsDispositionSale dispositionSale)
         {
             var existingSale = Context.PimsDispositionSales
+                .Include(x => x.PimsDispositionPurchasers)
+                .Include(x => x.DspPurchAgent)
+                .Include(x => x.DspPurchSolicitor)
                 .FirstOrDefault(x => x.DispositionSaleId.Equals(dispositionSale.DispositionSaleId)) ?? throw new KeyNotFoundException();
+
+            if (existingSale.DspPurchAgent != null && dispositionSale.DspPurchAgent == null)
+            {
+                Context.Remove(existingSale.DspPurchAgent);
+                dispositionSale.DspPurchAgentId = null;
+            }
+            else if (existingSale.DspPurchAgent != null && dispositionSale.DspPurchAgentId.HasValue && dispositionSale.DspPurchAgent != null)
+            {
+                Context.Entry(existingSale.DspPurchAgent).CurrentValues.SetValues(dispositionSale.DspPurchAgent);
+            }
+            else if (existingSale.DspPurchAgent == null && dispositionSale.DspPurchAgent != null)
+            {
+                Context.PimsDspPurchAgents.Add(dispositionSale.DspPurchAgent);
+                Context.SaveChanges();
+
+                dispositionSale.DspPurchAgentId = dispositionSale.DspPurchAgent.DspPurchAgentId;
+            }
+
+            if (existingSale.DspPurchSolicitor != null && dispositionSale.DspPurchSolicitor == null)
+            {
+                Context.Remove(existingSale.DspPurchSolicitor);
+                dispositionSale.DspPurchSolicitorId = null;
+            }
+            else if (existingSale.DspPurchSolicitor != null && dispositionSale.DspPurchSolicitorId.HasValue && dispositionSale.DspPurchSolicitor != null)
+            {
+                Context.Entry(existingSale.DspPurchSolicitor).CurrentValues.SetValues(dispositionSale.DspPurchSolicitor);
+            }
+            else if (existingSale.DspPurchSolicitor == null && dispositionSale.DspPurchSolicitor != null)
+            {
+                Context.PimsDspPurchSolicitors.Add(dispositionSale.DspPurchSolicitor);
+                Context.SaveChanges();
+
+                dispositionSale.DspPurchSolicitorId = dispositionSale.DspPurchSolicitor.DspPurchSolicitorId;
+            }
 
             Context.Entry(existingSale).CurrentValues.SetValues(dispositionSale);
             Context.UpdateChild<PimsDispositionSale, long, PimsDispositionPurchaser, long>(p => p.PimsDispositionPurchasers, dispositionSale.Internal_Id, dispositionSale.PimsDispositionPurchasers.ToArray());
-            // Context.UpdateChild<PimsDispositionSale, long, PimsDspPurchAgent, long>(p => p.PimsDspPurchAgents, dispositionSale.Internal_Id, dispositionSale.PimsDspPurchAgents.ToArray()); TODO: Fix agent update
-            //Context.UpdateChild<PimsDispositionSale, long, PimsDspPurchSolicitor, long>(p => p.PimsDspPurchSolicitors, dispositionSale.Internal_Id, dispositionSale.PimsDspPurchSolicitors.ToArray());
 
             return existingSale;
         }

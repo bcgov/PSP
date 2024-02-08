@@ -12,6 +12,7 @@ import {
 import { mockLastUpdatedBy } from '@/mocks/lastUpdatedBy.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
+import { Api_DispositionFile } from '@/models/api/DispositionFile';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
   act,
@@ -29,6 +30,7 @@ import { IDispositionViewProps } from './DispositionView';
 
 const history = createMemoryHistory();
 const mockAxios = new MockAdapter(axios);
+const mockDispositionFileApi = mockDispositionFileResponse() as unknown as Api_DispositionFile;
 
 // mock auth library
 jest.mock('@react-keycloak/web');
@@ -99,7 +101,7 @@ describe('DispositionContainer component', () => {
       .onPut(new RegExp('dispositionfiles/1/properties'))
       .reply(200, mockDispositionFilePropertyResponse());
     mockAxios.onGet(new RegExp('dispositionfiles/1/updateInfo')).reply(200, mockLastUpdatedBy(1));
-    mockAxios.onGet(new RegExp('dispositionfiles/1')).reply(200, mockDispositionFileResponse());
+    mockAxios.onGet(new RegExp('dispositionfiles/1')).reply(200, mockDispositionFileApi);
   });
 
   afterEach(() => {
@@ -143,7 +145,7 @@ describe('DispositionContainer component', () => {
     const spinner = getByTestId('filter-backdrop-loading');
     await waitForElementToBeRemoved(spinner);
 
-    await act(async () => viewProps.onUpdateProperties(mockDispositionFileResponse()));
+    await act(async () => viewProps.onUpdateProperties(mockDispositionFileApi));
     expect(spinner).not.toBeVisible();
     expect(
       mockAxios.history.put.filter(x => x.url === '/dispositionfiles/1/properties?'),
@@ -161,7 +163,7 @@ describe('DispositionContainer component', () => {
       .onPut(new RegExp('dispositionfiles/1/properties'))
       .reply(400, { error: errorMessage });
 
-    await act(async () => viewProps.onUpdateProperties(mockDispositionFileResponse()));
+    await act(async () => viewProps.onUpdateProperties(mockDispositionFileApi));
     expect(spinner).not.toBeVisible();
     expect(await screen.findByText(errorMessage)).toBeVisible();
   });

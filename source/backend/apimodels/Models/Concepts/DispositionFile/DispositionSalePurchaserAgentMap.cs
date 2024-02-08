@@ -10,7 +10,6 @@ namespace Pims.Api.Models.Concepts.DispositionFile
         {
             config.NewConfig<Entity.PimsDspPurchAgent, DispositionSalePurchaserAgentModel>()
                 .Map(dest => dest.Id, src => src.DspPurchAgentId)
-                // .Map(dest => dest.DispositionSaleId, src => src.DispositionSaleId) TODO: Fix mapping
                 .Map(dest => dest.Person, src => src.Person)
                 .Map(dest => dest.PersonId, src => src.PersonId)
                 .Map(dest => dest.Organization, src => src.Organization)
@@ -21,7 +20,6 @@ namespace Pims.Api.Models.Concepts.DispositionFile
 
             config.NewConfig<DispositionSalePurchaserAgentModel, Entity.PimsDspPurchAgent>()
                 .Map(dest => dest.DspPurchAgentId, src => src.Id)
-                // .Map(dest => dest.DispositionSaleId, src => src.DispositionSaleId)
                 .Map(dest => dest.PersonId, src => src.PersonId)
                 .Map(dest => dest.OrganizationId, src => src.OrganizationId)
                 .Map(dest => dest.PrimaryContactId, src => src.PrimaryContactId)
