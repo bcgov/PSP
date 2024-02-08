@@ -4,6 +4,7 @@ import { FormikProps } from 'formik';
 import { createRef } from 'react';
 
 import { DispositionFormModel } from '@/features/mapSideBar/disposition/models/DispositionFormModel';
+import { IAutocompletePrediction } from '@/interfaces/IAutocomplete';
 import { mockDispositionFileResponse } from '@/mocks/dispositionFiles.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { Api_DispositionFile } from '@/models/api/DispositionFile';
@@ -112,7 +113,7 @@ describe('UpdateDispositionForm component', () => {
   });
 
   it('it clears the product field when a project is removed', async () => {
-    const { getRemoveProjectButton, getProductDropDownList } = setup({
+    const { getRemoveProjectButton, getProductDropDownList, getFormikRef } = setup({
       initialValues,
       loading: false,
       formikRef: ref,
@@ -122,6 +123,13 @@ describe('UpdateDispositionForm component', () => {
     await waitFor(() => userEvent.click(getRemoveProjectButton()));
     await waitForEffects();
 
+    initialValues.productId = '';
+    initialValues.project = '' as unknown as IAutocompletePrediction;
+
     expect(getProductDropDownList()).toBeNull();
+
+    await waitFor(() => getFormikRef().current?.submitForm());
+
+    expect(onSubmit).toHaveBeenLastCalledWith(initialValues, expect.anything());
   });
 });
