@@ -76,6 +76,8 @@ namespace Pims.Api.Services
 
             MatchProperties(dispositionFile, userOverrides);
 
+            ValidatePropertyRegions(dispositionFile);
+
             var newDispositionFile = _dispositionFileRepository.Add(dispositionFile);
             _dispositionFileRepository.CommitTransaction();
 
@@ -446,6 +448,8 @@ namespace Pims.Api.Services
 
             MatchProperties(dispositionFile, userOverrides);
 
+            ValidatePropertyRegions(dispositionFile);
+
             // Get the current properties in the research file
             var currentProperties = _dispositionFilePropertyRepository.GetPropertiesByDispositionFileId(dispositionFile.Internal_Id);
 
@@ -641,6 +645,19 @@ namespace Pims.Api.Services
                     {
                         throw new UserOverrideException(UserOverrideCode.DisposingPropertyNotInventoried, "You have added one or more properties to the disposition file that are not in the MoTI Inventory. Do you want to proceed?");
                     }
+                }
+            }
+        }
+
+        private void ValidatePropertyRegions(PimsDispositionFile dispositionFile)
+        {
+            var userRegions = _user.GetUserRegions(_userRepository);
+            foreach (var dispProperty in dispositionFile.PimsDispositionFileProperties)
+            {
+                var propertyRegion = dispProperty.Property?.RegionCode ?? _propertyRepository.GetPropertyRegion(dispProperty.PropertyId);
+                if (!userRegions.Contains(propertyRegion))
+                {
+                    throw new BadRequestException("You cannot add a property that is outside of your user account region(s). Either select a different property, or get your system administrator to add the required region to your user account settings.");
                 }
             }
         }

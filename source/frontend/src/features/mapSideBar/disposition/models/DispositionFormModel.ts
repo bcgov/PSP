@@ -35,7 +35,7 @@ export class DispositionFormModel implements WithDispositionTeam {
   initiatingDocumentTypeCode: string | null = null;
   initiatingDocumentTypeOther: string | null = '';
   initiatingDocumentDate: string | null = null;
-  regionCode: string | null = '';
+  regionCode: string | null = null;
   fileProperties: PropertyForm[] = [];
   team: DispositionTeamSubFormModel[] = [];
   offers: DispositionOfferFormModel[] = [];
@@ -80,7 +80,10 @@ export class DispositionFormModel implements WithDispositionTeam {
         ? this.initiatingDocumentTypeOther
         : null,
       initiatingDocumentDate: this.initiatingDocumentDate,
-      regionCode: toTypeCodeNullable(Number(this.regionCode)),
+      regionCode:
+        this.regionCode !== null && this.regionCode !== undefined
+          ? toTypeCodeNullable(Number(this.regionCode))
+          : null,
       dispositionTeam: this.team
         .filter(x => !!x.contact && !!x.teamProfileTypeCode)
         .map(x => x.toApi(this.id || 0))
@@ -93,7 +96,7 @@ export class DispositionFormModel implements WithDispositionTeam {
           rowVersion: ap.rowVersion,
           property: ap.toApi(),
           propertyId: ap.apiId,
-          acquisitionFile: { id: this.id },
+          file: { id: this.id ?? undefined },
         };
       }),
 

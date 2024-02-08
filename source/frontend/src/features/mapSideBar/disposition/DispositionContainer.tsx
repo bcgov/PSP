@@ -1,3 +1,4 @@
+import { AxiosError } from 'axios';
 import { FormikProps } from 'formik';
 import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { matchPath, useHistory, useLocation, useRouteMatch } from 'react-router-dom';
@@ -8,6 +9,7 @@ import { useDispositionProvider } from '@/hooks/repositories/useDispositionProvi
 import { useQuery } from '@/hooks/use-query';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
 import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
+import { IApiError } from '@/interfaces/IApiError';
 import { Api_File } from '@/models/api/File';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { stripTrailingSlash } from '@/utils';
@@ -207,37 +209,49 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
 
   const onUpdateProperties = (file: Api_File): Promise<Api_File | undefined> => {
     // The backend does not update the product or project so its safe to send nulls even if there might be data for those fields.
-    return withUserOverride((userOverrideCodes: UserOverrideCode[]) => {
-      return updateDispositionProperties
-        .execute(
-          {
-            ...file,
-            productId: null,
-            projectId: null,
-            fileChecklistItems: [],
-            fileReference: null,
-            assignedDate: null,
-            completionDate: null,
-            initiatingDocumentDate: null,
-            dispositionTypeOther: null,
-            initiatingDocumentTypeOther: null,
-            dispositionStatusTypeCode: null,
-            dispositionTypeCode: null,
-            regionCode: null,
-            project: null,
-            product: null,
-            dispositionTeam: [],
-            dispositionAppraisal: null,
-            dispositionSale: null,
-            dispositionOffers: [],
-          },
-          userOverrideCodes,
-        )
-        .then(response => {
-          onSuccess();
-          return response;
+    return withUserOverride(
+      (userOverrideCodes: UserOverrideCode[]) => {
+        return updateDispositionProperties
+          .execute(
+            {
+              ...file,
+              productId: null,
+              projectId: null,
+              fileChecklistItems: [],
+              fileReference: null,
+              assignedDate: null,
+              completionDate: null,
+              initiatingDocumentDate: null,
+              dispositionTypeOther: null,
+              initiatingDocumentTypeOther: null,
+              dispositionStatusTypeCode: null,
+              dispositionTypeCode: null,
+              regionCode: null,
+              project: null,
+              product: null,
+              dispositionTeam: [],
+              dispositionAppraisal: null,
+              dispositionSale: null,
+              dispositionOffers: [],
+            },
+            userOverrideCodes,
+          )
+          .then(response => {
+            onSuccess();
+            return response;
+          });
+      },
+      [],
+      (axiosError: AxiosError<IApiError>) => {
+        setModalContent({
+          variant: 'error',
+          title: 'Error',
+          message: axiosError?.response?.data.error,
+          okButtonText: 'Close',
         });
-    });
+        setDisplayModal(true);
+      },
+    );
   };
 
   const canRemove = async (propertyId: number) => {

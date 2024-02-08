@@ -96,6 +96,9 @@ describe('DispositionContainer component', () => {
     mockAxios
       .onGet(new RegExp('dispositionfiles/1/properties'))
       .reply(200, mockDispositionFilePropertyResponse());
+    mockAxios
+      .onPut(new RegExp('dispositionfiles/1/properties'))
+      .reply(200, mockDispositionFilePropertyResponse());
     mockAxios.onGet(new RegExp('dispositionfiles/1/updateInfo')).reply(200, mockLastUpdatedBy(1));
     mockAxios.onGet(new RegExp('dispositionfiles/1')).reply(200, mockDispositionFileResponse());
   });
@@ -146,8 +149,24 @@ describe('DispositionContainer component', () => {
     );
     expect(spinner).not.toBeVisible();
     expect(
-      mockAxios.history.get.filter(x => x.url === '/dispositionfiles/1/properties'),
+      mockAxios.history.put.filter(x => x.url === '/dispositionfiles/1/properties?'),
     ).toHaveLength(1);
+  });
+
+  it('should show error popup when user adds a property outside of the user account regions', async () => {
+    const { getByTestId } = setup(undefined, { claims: [] });
+
+    const spinner = getByTestId('filter-backdrop-loading');
+    await waitForElementToBeRemoved(spinner);
+
+    const errorMessage = 'You cannot add a property that is outside of your user account region';
+    mockAxios
+      .onPut(new RegExp('dispositionfiles/1/properties'))
+      .reply(400, { error: errorMessage });
+
+    await act(async () => viewProps.onUpdateProperties(mockDispositionFileResponse()));
+    expect(spinner).not.toBeVisible();
+    expect(await screen.findByText(errorMessage)).toBeVisible();
   });
 
   it('should change menu index when not editing', async () => {
