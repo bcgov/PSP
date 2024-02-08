@@ -282,8 +282,8 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
             var propertyIndex = webDriver.FindElements(searchPropertiesPropertiesInFileTotal).Count();
 
-            WaitUntilClickable(By.XPath("//h2/div/div[contains(text(),'Selected properties')]/parent::div/parent::h2/following-sibling::div/div["+ propertyIndex +"]/div[3]/button"));
-            webDriver.FindElement(By.XPath("//h2/div/div[contains(text(),'Selected properties')]/parent::div/parent::h2/following-sibling::div/div["+ propertyIndex +"]/div[3]/button")).Click();
+            WaitUntilClickable(By.XPath("//h2/div/div[contains(text(),'Selected properties')]/parent::div/parent::h2/following-sibling::div/div[@class='align-items-center mb-3 no-gutters row']["+ propertyIndex +"]/div[3]/button"));
+            webDriver.FindElement(By.XPath("//h2/div/div[contains(text(),'Selected properties')]/parent::div/parent::h2/following-sibling::div/div[@class='align-items-center mb-3 no-gutters row']["+ propertyIndex +"]/div[3]/button")).Click();
 
             Wait(2000);
             if (webDriver.FindElements(searchPropertiesModal).Count > 0)

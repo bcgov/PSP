@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
+using System.Text.RegularExpressions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Constants;
@@ -149,6 +150,8 @@ namespace Pims.Api.Services
             _logger.LogInformation("Searching for disposition files...");
             _logger.LogDebug("Disposition file search with filter: {filter}", filter);
             _user.ThrowIfNotAuthorized(Permissions.DispositionView);
+
+            filter.FileNameOrNumberOrReference = Regex.Replace(filter.FileNameOrNumberOrReference ?? string.Empty, @"^[d,D]-", string.Empty);
 
             var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
             long? contractorPersonId = (pimsUser != null && pimsUser.IsContractor) ? pimsUser.PersonId : null;
@@ -429,6 +432,7 @@ namespace Pims.Api.Services
                     RemediationCost = file.PimsDispositionSales?.FirstOrDefault()?.RemediationAmt ?? 0,
                     NetBeforeSpp = CalculateNetProceedsBeforeSpp(file.PimsDispositionSales?.FirstOrDefault()),
                     NetAfterSpp = CalculateNetProceedsAfterSpp(file.PimsDispositionSales?.FirstOrDefault()),
+                    Project = file?.Project?.Description is not null ? $"{file.Project.Code} {file.Project.Description}" : string.Empty,
                 }).ToList();
         }
 

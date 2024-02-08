@@ -1,7 +1,6 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
-using Sprache;
 
 namespace PIMS.Tests.Automation.PageObjects
 {

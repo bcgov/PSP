@@ -1666,6 +1666,32 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
+        public void GetDispositionFileExport_Success_Project()
+        {
+            // Arrange
+            var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionView);
+            var dispFilerepository = this._helper.GetService<Mock<IDispositionFileRepository>>();
+
+            var filter = new DispositionFilter();
+            var dispositionFile = EntityHelper.CreateDispositionFile(1);
+            dispositionFile.Project = EntityHelper.CreateProject(2, "TEST", "Test");
+            dispFilerepository.Setup(x => x.GetDispositionFileExportDeep(It.IsAny<DispositionFilter>()))
+                        .Returns(new List<PimsDispositionFile>()
+                        {
+                            dispositionFile,
+                        });
+
+            // Act
+            var result = service.GetDispositionFileExport(filter);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(1, result.Count());
+            dispFilerepository.Verify(x => x.GetDispositionFileExportDeep(It.IsAny<DispositionFilter>()), Times.Once);
+            result.FirstOrDefault().Project.Should().Be("TEST Test");
+        }
+
+        [Fact]
         public void GetDispositionFileExport_Success_Properties()
         {
             // Arrange

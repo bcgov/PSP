@@ -533,6 +533,7 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(prop => prop.Property)
                     .ThenInclude(ad => ad.Address)
                     .ThenInclude(x => x.ProvinceState)
+                .Include(p => p.Project)
                 .Where(predicate);
 
             // As per Confluence - default sort to show chronological, newest first; based upon File Assigned Date
