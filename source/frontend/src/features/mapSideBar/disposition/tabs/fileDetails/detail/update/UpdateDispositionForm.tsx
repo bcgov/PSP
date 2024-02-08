@@ -109,7 +109,7 @@ const UpdateDispositionForm: React.FC<IUpdateDispositionFormProps> = ({
                     onChange={(vals: IAutocompletePrediction[]) => {
                       onMinistryProjectSelected(vals);
                       if (vals.length === 0) {
-                        formikProps.setFieldValue('product', 0);
+                        formikProps.setFieldValue('productId', '');
                       }
                     }}
                   />

@@ -346,6 +346,7 @@ namespace Pims.Dal.Repositories
         public PimsDispositionSale UpdateDispositionFileSale(PimsDispositionSale dispositionSale)
         {
             var existingSale = Context.PimsDispositionSales
+                .Include(x => x.PimsDispositionPurchasers)
                 .Include(x => x.DspPurchAgent)
                 .Include(x => x.DspPurchSolicitor)
                 .FirstOrDefault(x => x.DispositionSaleId.Equals(dispositionSale.DispositionSaleId)) ?? throw new KeyNotFoundException();
