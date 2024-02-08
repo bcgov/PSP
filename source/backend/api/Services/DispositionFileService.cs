@@ -431,6 +431,7 @@ namespace Pims.Api.Services
                     RemediationCost = file.PimsDispositionSales?.FirstOrDefault()?.RemediationAmt ?? 0,
                     NetBeforeSpp = CalculateNetProceedsBeforeSpp(file.PimsDispositionSales?.FirstOrDefault()),
                     NetAfterSpp = CalculateNetProceedsAfterSpp(file.PimsDispositionSales?.FirstOrDefault()),
+                    Project = file?.Project?.Description is not null ? $"{file.Project.Code} {file.Project.Description}" : string.Empty,
                 }).ToList();
         }
 
