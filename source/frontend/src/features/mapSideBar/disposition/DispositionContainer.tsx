@@ -122,7 +122,6 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
       (!error && dispositionFileId !== dispositionFile?.id && !loadingDispositionFile) ||
       staleFile
     ) {
-      debugger;
       fetchDispositionFile();
     }
   }, [
