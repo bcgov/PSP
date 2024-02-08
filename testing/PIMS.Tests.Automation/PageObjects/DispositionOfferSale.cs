@@ -163,8 +163,9 @@ namespace PIMS.Tests.Automation.PageObjects
 
             if (webDriver.FindElements(dispositionFileConfirmationModal).Count() > 0)
             {
-                Assert.Equal("Unsaved Changes", sharedModals.ModalHeader());
-                Assert.Equal("You have made changes on this form. Do you wish to leave without saving?", sharedModals.ModalContent());
+                Assert.Equal("Confirm Changes", sharedModals.ModalHeader());
+                Assert.Contains("If you choose to cancel now, your changes will not be saved.", sharedModals.ModalContent());
+                Assert.Contains("Do you want to proceed?", sharedModals.ModalContent());
 
                 sharedModals.ModalClickOKBttn();
             }
@@ -293,7 +294,11 @@ namespace PIMS.Tests.Automation.PageObjects
         public void UpdateAppraisalAndAssessment(DispositionFile appraisalandassessmentUpdate)
         {
             Wait();
-            webDriver.FindElement(dispositionAppraisalValueInput).SendKeys(appraisalandassessmentUpdate.AppraisalAndAssessmentValue);
+            if (appraisalandassessmentUpdate.AppraisalAndAssessmentValue != "")
+            {
+                ClearInput(dispositionAppraisalValueInput);
+                webDriver.FindElement(dispositionAppraisalValueInput).SendKeys(appraisalandassessmentUpdate.AppraisalAndAssessmentValue);
+            }
 
             if (appraisalandassessmentUpdate.AppraisalAndAssessmentDate != "")
             {
@@ -302,8 +307,11 @@ namespace PIMS.Tests.Automation.PageObjects
                 webDriver.FindElement(dispositionAppraisalDateInput).SendKeys(Keys.Enter);
             }
 
-            ClearInput(dispositionBcAssessmentValueInput);
-            webDriver.FindElement(dispositionBcAssessmentValueInput).SendKeys(appraisalandassessmentUpdate.AppraisalAndAssessmentBcAssessmentValue);
+            if (appraisalandassessmentUpdate.AppraisalAndAssessmentBcAssessmentValue != "")
+            {
+                ClearInput(dispositionBcAssessmentValueInput);
+                webDriver.FindElement(dispositionBcAssessmentValueInput).SendKeys(appraisalandassessmentUpdate.AppraisalAndAssessmentBcAssessmentValue);
+            }
 
             if (appraisalandassessmentUpdate.AppraisalAndAssessmentBcAssessmentRollYear != "")
             {
@@ -311,9 +319,12 @@ namespace PIMS.Tests.Automation.PageObjects
                 webDriver.FindElement(dispositionBcAssessmentRollYearInput).SendKeys(appraisalandassessmentUpdate.AppraisalAndAssessmentBcAssessmentRollYear);
                 webDriver.FindElement(dispositionBcAssessmentRollYearInput).SendKeys(Keys.Enter);
             }
-            ClearInput(dispositionListPriceInput);
-            webDriver.FindElement(dispositionListPriceInput).SendKeys(appraisalandassessmentUpdate.AppraisalAndAssessmentListPrice);
 
+            if (appraisalandassessmentUpdate.AppraisalAndAssessmentListPrice != "")
+            {
+                ClearInput(dispositionListPriceInput);
+                webDriver.FindElement(dispositionListPriceInput).SendKeys(appraisalandassessmentUpdate.AppraisalAndAssessmentListPrice);
+            }
         }
 
         public void UpdateOffers(DispositionOfferAndSale offerUpdate, int index) {
@@ -384,7 +395,8 @@ namespace PIMS.Tests.Automation.PageObjects
                 AssertTrueContentEquals(dispositionBcAssessmentValueContent, TransformCurrencyFormat(disposition.AppraisalAndAssessmentBcAssessmentValue));
 
             AssertTrueIsDisplayed(dispositionBcAssessmentRollYearLabel);
-            AssertTrueContentEquals(dispositionBcAssessmentRollYearContent, disposition.AppraisalAndAssessmentBcAssessmentRollYear);
+            if(disposition.AppraisalAndAssessmentBcAssessmentRollYear != "")
+                AssertTrueContentEquals(dispositionBcAssessmentRollYearContent, disposition.AppraisalAndAssessmentBcAssessmentRollYear);
 
             AssertTrueIsDisplayed(dispositionListPriceLabel);
             if(disposition.AppraisalAndAssessmentListPrice != "")

@@ -39,7 +39,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I search for a Property in the Inventory by different filters from row number (.*)")]
         public void SearchInventoryPropertyOnMap(int rowNumber)
         {
-            /* TEST COVERAGE:  PSP-1546, PSP-5090, PSP-5091, PSP-5092 */
+            /* TEST COVERAGE:  PSP-1546, PSP-5090, PSP-5091, PSP-5092, PSP-6693 */
 
             //Login to PIMS
             loginSteps.Idir(userName);
@@ -52,22 +52,25 @@ namespace PIMS.Tests.Automation.StepDefinitions
             Assert.True(searchProperties.PropertiesFoundCount() == 1);
 
             //Search for a valid PIN in Inventory
+            searchProperties.SearchPropertyReset();
             searchProperties.SearchPropertyByPINPID(searchProperty.PIN);
 
             //Validate that the result gives only one pin
             Assert.True(searchProperties.PropertiesFoundCount() == 1);
 
             //Search for a valid PID in Inventory
+            searchProperties.SearchPropertyReset();
             searchProperties.SearchPropertyByPINPID(searchProperty.PID);
 
             //Validate that the result gives only one pin
             Assert.True(searchProperties.PropertiesFoundCount() == 1);
 
             //Search for a valid Plan in Inventory
-            searchProperties.SearchPropertyByPINPID(searchProperty.PlanNumber);
+            searchProperties.SearchPropertyReset();
+            searchProperties.SearchPropertyByPlan(searchProperty.PlanNumber);
 
             //Validate that the result gives only one pin
-            Assert.True(searchProperties.PropertiesFoundCount() == 1);
+            Assert.True(searchProperties.PropertiesClustersFoundCount() == 1);
 
         }
 
@@ -360,7 +363,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             Assert.True(pimsFiles.GetResearchFilesCount() > 0);
             Assert.True(pimsFiles.GetAcquisitionFilesCount() > 0);
             Assert.True(pimsFiles.GetLeasesCount() > 0);
-            Assert.True(pimsFiles.GetDispositionFilesCount() == 0);
+            Assert.True(pimsFiles.GetDispositionFilesCount() > 0);
         }
 
         [StepDefinition(@"Properties filters works successfully")]
