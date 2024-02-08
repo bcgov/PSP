@@ -485,6 +485,13 @@ namespace Pims.Dal.Repositories
                 .ToHashSet();
         }
 
+        public short GetPropertyRegion(long id)
+        {
+            var property = Context.PimsProperties.AsNoTracking()
+                .FirstOrDefault(p => p.PropertyId == id) ?? throw new KeyNotFoundException();
+            return property.RegionCode;
+        }
+
         #endregion
     }
 }
