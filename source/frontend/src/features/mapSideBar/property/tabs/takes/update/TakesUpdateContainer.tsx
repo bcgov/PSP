@@ -68,7 +68,7 @@ export const TakesUpdateContainer = React.forwardRef<FormikProps<any>, ITakesDet
           propertyTakes?.length
             ? orderBy(
                 propertyTakes?.map(t => new TakeModel(t)),
-                t => moment(t.id),
+                t => t.id,
                 'desc',
               )
             : [new TakeModel(emptyTake)]
