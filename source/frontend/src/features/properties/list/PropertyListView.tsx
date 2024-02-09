@@ -58,7 +58,7 @@ const PropertyListView: React.FC<React.PropsWithChildren<unknown>> = () => {
   const [pageIndex, setPageIndex] = useState(0);
   const [pageCount, setPageCount] = useState(0);
   const [totalItems, setTotalItems] = useState(0);
-  const [sort, setSort] = useState<TableSort<any>>({});
+  const [sort, setSort] = useState<TableSort<Api_Property>>({});
 
   const fetchIdRef = useRef(0);
 
@@ -102,7 +102,7 @@ const PropertyListView: React.FC<React.PropsWithChildren<unknown>> = () => {
       pageIndex: number;
       pageSize: number;
       filter: IPropertyFilter;
-      sort: TableSort<any>;
+      sort: TableSort<Api_Property>;
     }) => {
       // Give this fetch an ID
       const fetchId = ++fetchIdRef.current;
