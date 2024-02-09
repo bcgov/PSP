@@ -16,6 +16,8 @@ export interface IPropertyFilter {
   longitude: number | string | undefined;
   /** The plan number of the property. */
   planNumber?: string;
+  /** The property ownership types */
+  ownership: string;
 }
 
 export const defaultPropertyFilter: IPropertyFilter = {
@@ -27,4 +29,5 @@ export const defaultPropertyFilter: IPropertyFilter = {
   longitude: '',
   page: undefined,
   quantity: undefined,
+  ownership: 'isCoreInventory,isPropertyOfInterest,isOtherInterest,isDisposed',
 };

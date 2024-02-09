@@ -875,7 +875,7 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(fp => fp.AlternateProject)
                 .Where(predicate);
 
-            query = (filter.Sort?.Any() == true) ? query.OrderByProperty(filter.Sort) : query.OrderBy(acq => acq.AcquisitionFileId);
+            query = (filter.Sort?.Any() == true) ? query.OrderByProperty(true, filter.Sort) : query.OrderBy(acq => acq.AcquisitionFileId);
 
             return query;
         }

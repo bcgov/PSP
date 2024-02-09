@@ -499,7 +499,7 @@ namespace Pims.Dal.Repositories
                 .Where(predicate);
 
             // As per Confluence - default sort to show chronological, newest first; based upon File Assigned Date
-            query = (filter.Sort?.Any() == true) ? query.OrderByProperty(filter.Sort) : query.OrderByDescending(disp => disp.AssignedDt ?? DateOnly.FromDateTime(DateTime.MinValue));
+            query = (filter.Sort?.Any() == true) ? query.OrderByProperty(true, filter.Sort) : query.OrderByDescending(disp => disp.AssignedDt ?? DateOnly.FromDateTime(DateTime.MinValue));
 
             return query;
         }

@@ -140,27 +140,56 @@ exports[`Property list view matches snapshot 1`] = `
   margin-right: 0;
 }
 
-.c8.c8.btn {
+.c10.c10.btn {
   background-color: unset;
   border: none;
 }
 
-.c8.c8.btn:hover,
-.c8.c8.btn:focus,
-.c8.c8.btn:active {
+.c10.c10.btn:hover,
+.c10.c10.btn:focus,
+.c10.c10.btn:active {
   background-color: unset;
   outline: none;
   box-shadow: none;
 }
 
-.c8.c8.btn svg {
+.c10.c10.btn svg {
   -webkit-transition: all 0.3s ease-out;
   transition: all 0.3s ease-out;
 }
 
-.c8.c8.btn svg:hover {
+.c10.c10.btn svg:hover {
   -webkit-transition: all 0.3s ease-in;
   transition: all 0.3s ease-in;
+}
+
+.c11 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  margin-left: 0.5rem;
+}
+
+.c13 {
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+.c12 {
+  width: 1.6rem;
+  height: 1.6rem;
 }
 
 .c5 {
@@ -239,6 +268,10 @@ exports[`Property list view matches snapshot 1`] = `
   border-bottom-left-radius: 0;
 }
 
+.c8 {
+  text-align: left;
+}
+
 .c0 {
   -webkit-transition: margin 1s;
   transition: margin 1s;
@@ -283,6 +316,10 @@ exports[`Property list view matches snapshot 1`] = `
 
 .c0 .form-group {
   margin-bottom: 0;
+}
+
+.c9 {
+  border-radius: 0.5rem;
 }
 
 <div
@@ -453,64 +490,232 @@ exports[`Property list view matches snapshot 1`] = `
       </div>
     </div>
     <div
+      class="mt-5 mx-5"
+    >
+      <h3
+        class="c8"
+      >
+        Search Results
+      </h3>
+      <div
+        class="row"
+      >
+        <div
+          class="col-10"
+        >
+          <div
+            class="c9 p-3"
+          >
+            <div
+              class="row"
+            >
+              <div
+                class="col-xl-1"
+              >
+                <strong>
+                  View by:
+                </strong>
+              </div>
+              <div
+                class="col-auto"
+              >
+                <div>
+                  <div
+                    class="multiselect-container multiSelectContainer  "
+                    id="properties-selector"
+                    style="width: auto; color: black;"
+                  >
+                    <div
+                      class="search-wrapper searchWrapper "
+                      style="background: white; border: 1px solid #606060;"
+                    >
+                      <span
+                        class="chip  false false"
+                        style="background: rgb(242, 242, 242); border-radius: 4px; color: black; font-size: 16px; margin-right: 1em; white-space: normal;"
+                      >
+                        Core Inventory
+                        <i
+                          class="custom-close"
+                        >
+                          <svg
+                            class="ml-3"
+                            fill="currentColor"
+                            height="18px"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 352 512"
+                            width="18px"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
+                            />
+                          </svg>
+                        </i>
+                      </span>
+                      <span
+                        class="chip  false false"
+                        style="background: rgb(242, 242, 242); border-radius: 4px; color: black; font-size: 16px; margin-right: 1em; white-space: normal;"
+                      >
+                        Property Of Interest
+                        <i
+                          class="custom-close"
+                        >
+                          <svg
+                            class="ml-3"
+                            fill="currentColor"
+                            height="18px"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 352 512"
+                            width="18px"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
+                            />
+                          </svg>
+                        </i>
+                      </span>
+                      <span
+                        class="chip  false false"
+                        style="background: rgb(242, 242, 242); border-radius: 4px; color: black; font-size: 16px; margin-right: 1em; white-space: normal;"
+                      >
+                        Other Interest
+                        <i
+                          class="custom-close"
+                        >
+                          <svg
+                            class="ml-3"
+                            fill="currentColor"
+                            height="18px"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 352 512"
+                            width="18px"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
+                            />
+                          </svg>
+                        </i>
+                      </span>
+                      <span
+                        class="chip  false false"
+                        style="background: rgb(242, 242, 242); border-radius: 4px; color: black; font-size: 16px; margin-right: 1em; white-space: normal;"
+                      >
+                        Disposed
+                        <i
+                          class="custom-close"
+                        >
+                          <svg
+                            class="ml-3"
+                            fill="currentColor"
+                            height="18px"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 352 512"
+                            width="18px"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
+                            />
+                          </svg>
+                        </i>
+                      </span>
+                      <input
+                        autocomplete="off"
+                        class="searchBox "
+                        id="properties-selector_input"
+                        name="search_name_input"
+                        placeholder=""
+                        type="text"
+                        value=""
+                      />
+                    </div>
+                    <div
+                      class="optionListContainer displayNone"
+                    >
+                      <ul
+                        class="optionContainer"
+                      >
+                        <span
+                          class="notFound"
+                        >
+                          No Options Available
+                        </span>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="col"
+        >
+          <div
+            class="TableToolbar px-0 container-fluid"
+          >
+            <div
+              class="menu"
+            />
+            <button
+              class="c4 Button c10 btn btn-primary"
+              type="button"
+            >
+              <div
+                class="Button__value"
+              >
+                <svg
+                  data-testid="excel-icon"
+                  fill="currentColor"
+                  height="36"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 384 512"
+                  width="36"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M224 136V0H24C10.7 0 0 10.7 0 24v464c0 13.3 10.7 24 24 24h336c13.3 0 24-10.7 24-24V160H248c-13.2 0-24-10.8-24-24zm60.1 106.5L224 336l60.1 93.5c5.1 8-.6 18.5-10.1 18.5h-34.9c-4.4 0-8.5-2.4-10.6-6.3C208.9 405.5 192 373 192 373c-6.4 14.8-10 20-36.6 68.8-2.1 3.9-6.1 6.3-10.5 6.3H110c-9.5 0-15.2-10.5-10.1-18.5l60.3-93.5-60.3-93.5c-5.2-8 .6-18.5 10.1-18.5h34.8c4.4 0 8.5 2.4 10.6 6.3 26.1 48.8 20 33.6 36.6 68.5 0 0 6.1-11.7 36.6-68.5 2.1-3.9 6.2-6.3 10.6-6.3H274c9.5-.1 15.2 10.4 10.1 18.4zM384 121.9v6.1H256V0h6.1c6.4 0 12.5 2.5 17 7l97.9 98c4.5 4.5 7 10.6 7 16.9z"
+                  />
+                </svg>
+              </div>
+            </button>
+            <button
+              class="c4 Button c10 btn btn-primary"
+              type="button"
+            >
+              <div
+                class="Button__value"
+              >
+                <svg
+                  data-testid="csv-icon"
+                  fill="currentColor"
+                  height="36"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 384 512"
+                  width="36"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M224 136V0H24C10.7 0 0 10.7 0 24v464c0 13.3 10.7 24 24 24h336c13.3 0 24-10.7 24-24V160H248c-13.2 0-24-10.8-24-24zm64 236c0 6.6-5.4 12-12 12H108c-6.6 0-12-5.4-12-12v-8c0-6.6 5.4-12 12-12h168c6.6 0 12 5.4 12 12v8zm0-64c0 6.6-5.4 12-12 12H108c-6.6 0-12-5.4-12-12v-8c0-6.6 5.4-12 12-12h168c6.6 0 12 5.4 12 12v8zm0-72v8c0 6.6-5.4 12-12 12H108c-6.6 0-12-5.4-12-12v-8c0-6.6 5.4-12 12-12h168c6.6 0 12 5.4 12 12zm96-114.1v6.1H256V0h6.1c6.4 0 12.5 2.5 17 7l97.9 98c4.5 4.5 7 10.6 7 16.9z"
+                  />
+                </svg>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
       class="ScrollContainer"
     >
-      <div
-        class="TableToolbar px-0 container-fluid"
-      >
-        <h3>
-          Property Information
-        </h3>
-        <div
-          class="menu"
-        />
-        <button
-          class="c4 Button c8 btn btn-primary"
-          type="button"
-        >
-          <div
-            class="Button__value"
-          >
-            <svg
-              data-testid="excel-icon"
-              fill="currentColor"
-              height="36"
-              stroke="currentColor"
-              stroke-width="0"
-              viewBox="0 0 384 512"
-              width="36"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M224 136V0H24C10.7 0 0 10.7 0 24v464c0 13.3 10.7 24 24 24h336c13.3 0 24-10.7 24-24V160H248c-13.2 0-24-10.8-24-24zm60.1 106.5L224 336l60.1 93.5c5.1 8-.6 18.5-10.1 18.5h-34.9c-4.4 0-8.5-2.4-10.6-6.3C208.9 405.5 192 373 192 373c-6.4 14.8-10 20-36.6 68.8-2.1 3.9-6.1 6.3-10.5 6.3H110c-9.5 0-15.2-10.5-10.1-18.5l60.3-93.5-60.3-93.5c-5.2-8 .6-18.5 10.1-18.5h34.8c4.4 0 8.5 2.4 10.6 6.3 26.1 48.8 20 33.6 36.6 68.5 0 0 6.1-11.7 36.6-68.5 2.1-3.9 6.2-6.3 10.6-6.3H274c9.5-.1 15.2 10.4 10.1 18.4zM384 121.9v6.1H256V0h6.1c6.4 0 12.5 2.5 17 7l97.9 98c4.5 4.5 7 10.6 7 16.9z"
-              />
-            </svg>
-          </div>
-        </button>
-        <button
-          class="c4 Button c8 btn btn-primary"
-          type="button"
-        >
-          <div
-            class="Button__value"
-          >
-            <svg
-              data-testid="csv-icon"
-              fill="currentColor"
-              height="36"
-              stroke="currentColor"
-              stroke-width="0"
-              viewBox="0 0 384 512"
-              width="36"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M224 136V0H24C10.7 0 0 10.7 0 24v464c0 13.3 10.7 24 24 24h336c13.3 0 24-10.7 24-24V160H248c-13.2 0-24-10.8-24-24zm64 236c0 6.6-5.4 12-12 12H108c-6.6 0-12-5.4-12-12v-8c0-6.6 5.4-12 12-12h168c6.6 0 12 5.4 12 12v8zm0-64c0 6.6-5.4 12-12 12H108c-6.6 0-12-5.4-12-12v-8c0-6.6 5.4-12 12-12h168c6.6 0 12 5.4 12 12v8zm0-72v8c0 6.6-5.4 12-12 12H108c-6.6 0-12-5.4-12-12v-8c0-6.6 5.4-12 12-12h168c6.6 0 12 5.4 12 12zm96-114.1v6.1H256V0h6.1c6.4 0 12.5 2.5 17 7l97.9 98c4.5 4.5 7 10.6 7 16.9z"
-              />
-            </svg>
-          </div>
-        </button>
-      </div>
       <div
         class="table"
         data-testid="propertiesTable"
@@ -522,7 +727,7 @@ exports[`Property list view matches snapshot 1`] = `
           <div
             class="tr"
             role="row"
-            style="display: flex; flex: 1 0 auto; min-width: 250px;"
+            style="display: flex; flex: 1 0 auto; min-width: 280px;"
           >
             <div
               class="th"
@@ -570,6 +775,40 @@ exports[`Property list view matches snapshot 1`] = `
                 class="sortable-column"
               >
                 Location
+                <div
+                  class="c11"
+                  data-testid="sort-column-Location"
+                >
+                  <svg
+                    class="c12"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    style="margin-bottom: -8px;"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M128 320l128-128 128 128z"
+                    />
+                  </svg>
+                  <svg
+                    class="c13"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M128 192l128 128 128-128z"
+                    />
+                  </svg>
+                </div>
               </div>
             </div>
             <div
@@ -582,6 +821,40 @@ exports[`Property list view matches snapshot 1`] = `
                 class="sortable-column"
               >
                 Lot Size (in ha)
+                <div
+                  class="c11"
+                  data-testid="sort-column-landArea"
+                >
+                  <svg
+                    class="c12"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    style="margin-bottom: -8px;"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M128 320l128-128 128 128z"
+                    />
+                  </svg>
+                  <svg
+                    class="c13"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M128 192l128 128 128-128z"
+                    />
+                  </svg>
+                </div>
               </div>
             </div>
             <div
@@ -592,7 +865,55 @@ exports[`Property list view matches snapshot 1`] = `
             >
               <div
                 class="sortable-column"
-              />
+              >
+                Ownership
+                <div
+                  class="c11"
+                  data-testid="sort-column-Ownership"
+                >
+                  <svg
+                    class="c12"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    style="margin-bottom: -8px;"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M128 320l128-128 128 128z"
+                    />
+                  </svg>
+                  <svg
+                    class="c13"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M128 192l128 128 128-128z"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+            <div
+              class="th"
+              colspan="1"
+              role="columnheader"
+              style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+            >
+              <div
+                class="sortable-column"
+              >
+                Actions
+              </div>
             </div>
           </div>
         </div>

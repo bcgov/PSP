@@ -10,9 +10,9 @@ import { InlineFlexDiv } from '@/components/common/styles';
 import { ColumnWithProps } from '@/components/Table';
 import { Claims } from '@/constants/index';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
-import { IProperty } from '@/interfaces';
+import { Api_Property } from '@/models/api/Property';
 import { ILookupCode } from '@/store/slices/lookupCodes';
-import { formatNumber, formatStreetAddress, mapLookupCode, stringToFragment } from '@/utils';
+import { formatApiAddress, formatNumber, mapLookupCode, stringToFragment } from '@/utils';
 
 export const ColumnDiv = styled.div`
   display: flex;
@@ -20,14 +20,14 @@ export const ColumnDiv = styled.div`
   padding-right: 0.5rem;
 `;
 
-const NumberCell = ({ cell: { value } }: CellProps<IProperty, number | undefined>) =>
+const NumberCell = ({ cell: { value } }: CellProps<Api_Property, number | undefined>) =>
   stringToFragment(formatNumber(value ?? 0));
 
 type Props = {
   municipalities: ILookupCode[];
 };
 
-export const columns = ({ municipalities }: Props): ColumnWithProps<IProperty>[] => [
+export const columns = ({ municipalities }: Props): ColumnWithProps<Api_Property>[] => [
   {
     Header: 'PID',
     accessor: 'pid',
@@ -42,7 +42,7 @@ export const columns = ({ municipalities }: Props): ColumnWithProps<IProperty>[]
   },
   {
     Header: 'Civic Address',
-    accessor: p => formatStreetAddress(p.address),
+    accessor: p => formatApiAddress(p.address),
     align: 'left',
     minWidth: 100,
     width: 150,
@@ -52,6 +52,7 @@ export const columns = ({ municipalities }: Props): ColumnWithProps<IProperty>[]
     accessor: p => p.address?.municipality,
     align: 'left',
     width: 50,
+    sortable: true,
     filter: {
       component: TypeaheadField,
       props: {
@@ -70,6 +71,7 @@ export const columns = ({ municipalities }: Props): ColumnWithProps<IProperty>[]
     Cell: NumberCell,
     align: 'right',
     width: 20,
+    sortable: true,
     filter: {
       component: Input,
       props: {
@@ -82,12 +84,40 @@ export const columns = ({ municipalities }: Props): ColumnWithProps<IProperty>[]
     },
   },
   {
-    Header: '',
+    Header: 'Ownership',
+    align: 'right',
+    sortable: true,
+    width: 20,
+    Cell: (cellProps: CellProps<Api_Property>) => {
+      const { hasClaim } = useKeycloakWrapper();
+
+      const ownershipText = cellProps.row.original.isOwned
+        ? 'Core Inventory'
+        : cellProps.row.original.isPropertyOfInterest
+        ? 'Property of Interest'
+        : cellProps.row.original.isOtherInterest
+        ? 'Other Interest'
+        : cellProps.row.original.isDisposed
+        ? 'Disposed'
+        : '';
+      return (
+        <StyledDiv>
+          {hasClaim(Claims.PROPERTY_VIEW) && (
+            <>
+              <span> {ownershipText}</span>
+            </>
+          )}
+        </StyledDiv>
+      );
+    },
+  },
+  {
+    Header: 'Actions',
     accessor: 'controls' as any, // this column is not part of the data model
     align: 'right',
     sortable: false,
     width: 20,
-    Cell: (cellProps: CellProps<IProperty, number>) => {
+    Cell: (cellProps: CellProps<Api_Property, number>) => {
       const { hasClaim } = useKeycloakWrapper();
 
       return (
@@ -99,9 +129,7 @@ export const columns = ({ municipalities }: Props): ColumnWithProps<IProperty>[]
               variant="light"
             >
               <Link
-                to={`/mapview/sidebar/property/${
-                  cellProps.row.original.id
-                }?pid=${cellProps.row.original.pid?.replace(/-/g, '')}`}
+                to={`/mapview/sidebar/property/${cellProps.row.original.id}?pid=${cellProps.row.original.pid}`}
               >
                 <FaEye />
               </Link>
@@ -111,9 +139,7 @@ export const columns = ({ municipalities }: Props): ColumnWithProps<IProperty>[]
           {hasClaim(Claims.PROPERTY_VIEW) && (
             <StyledIconButton data-testid="view-prop-ext" title="View Property" variant="light">
               <Link
-                to={`/mapview/sidebar/property/${
-                  cellProps.row.original.id
-                }?pid=${cellProps.row.original.pid?.replace(/-/g, '')}`}
+                to={`/mapview/sidebar/property/${cellProps.row.original.id}?pid=${cellProps.row.original.pid}`}
                 target="_blank"
                 rel="noopener noreferrer"
               >
