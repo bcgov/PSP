@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using Pims.Dal.Entities;
@@ -33,6 +34,15 @@ namespace Pims.Core.Extensions
             {
                 throw new NotAuthorizedException("Contractor is not assigned to the Disposition File's team");
             }
+        }
+
+        public static HashSet<short> GetUserRegions(this ClaimsPrincipal principal, IUserRepository userRepository)
+        {
+            ArgumentNullException.ThrowIfNull(principal);
+            ArgumentNullException.ThrowIfNull(userRepository);
+
+            var pimsUser = userRepository.GetUserInfoByKeycloakUserId(principal.GetUserKey());
+            return pimsUser.PimsRegionUsers.Select(r => r.RegionCode).ToHashSet();
         }
     }
 }

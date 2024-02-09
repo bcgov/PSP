@@ -10,7 +10,6 @@ import { ApiGen_Concepts_Person } from './ApiGen_Concepts_Person';
 export interface ApiGen_Concepts_DispositionSalePurchaserSolicitor
   extends ApiGen_Base_BaseConcurrent {
   id: number;
-  dispositionSaleId: number;
   personId: number | null;
   person: ApiGen_Concepts_Person | null;
   organizationId: number | null;

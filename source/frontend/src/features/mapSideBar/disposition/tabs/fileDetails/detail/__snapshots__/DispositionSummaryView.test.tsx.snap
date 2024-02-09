@@ -109,7 +109,10 @@ exports[`DispositionSummaryView component matches snapshot 1`] = `
           </div>
           <div
             class="c4 text-left col"
-          />
+            data-testid="dsp-project"
+          >
+            00048 - CLAIMS
+          </div>
         </div>
         <div
           class="pb-2 row"
@@ -125,7 +128,10 @@ exports[`DispositionSummaryView component matches snapshot 1`] = `
           </div>
           <div
             class="c4 text-left col"
-          />
+            data-testid="dsp-product"
+          >
+            00055 AVALANCHE  &  PROGRAM REVIEW
+          </div>
         </div>
         <div
           class="pb-2 row"

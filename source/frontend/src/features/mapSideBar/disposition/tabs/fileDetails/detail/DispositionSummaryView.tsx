@@ -23,6 +23,14 @@ export const DispositionSummaryView: React.FunctionComponent<IDispositionSummary
 }) => {
   const keycloak = useKeycloakWrapper();
 
+  const projectName = dispositionFile?.project
+    ? dispositionFile?.project?.code + ' - ' + dispositionFile?.project?.description
+    : '';
+
+  const productName = dispositionFile?.product
+    ? dispositionFile?.product?.code + ' ' + dispositionFile?.product?.description
+    : '';
+
   return (
     <StyledSummarySection>
       <StyledEditWrapper className="mr-3 my-1">
@@ -36,8 +44,12 @@ export const DispositionSummaryView: React.FunctionComponent<IDispositionSummary
         </SectionField>
       </Section>
       <Section header="Project">
-        <SectionField label="Ministry project" labelWidth="5"></SectionField>
-        <SectionField label="Product" labelWidth="5"></SectionField>
+        <SectionField label="Ministry project" labelWidth="5" valueTestId="dsp-project">
+          {projectName}
+        </SectionField>
+        <SectionField label="Product" labelWidth="5" valueTestId="dsp-product">
+          {productName}
+        </SectionField>
         <SectionField label="Funding" labelWidth="5">
           {dispositionFile?.fundingTypeCode?.description}
         </SectionField>

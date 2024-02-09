@@ -23,7 +23,7 @@ namespace Pims.Core.Test
         /// <param name="areaUnit"></param>
         /// <param name="dataSource"></param>
         /// <returns></returns>
-        public static Entity.PimsProperty CreateProperty(int pid, int? pin = null, Entity.PimsPropertyType type = null, Entity.PimsPropertyClassificationType classification = null, Entity.PimsAddress address = null, Entity.PimsPropertyTenureType tenure = null, Entity.PimsAreaUnitType areaUnit = null, Entity.PimsDataSourceType dataSource = null, Entity.PimsPropertyStatusType status = null, Entity.PimsLease lease = null)
+        public static Entity.PimsProperty CreateProperty(int pid, int? pin = null, Entity.PimsPropertyType type = null, Entity.PimsPropertyClassificationType classification = null, Entity.PimsAddress address = null, Entity.PimsPropertyTenureType tenure = null, Entity.PimsAreaUnitType areaUnit = null, Entity.PimsDataSourceType dataSource = null, Entity.PimsPropertyStatusType status = null, Entity.PimsLease lease = null, short? regionCode = null)
         {
             type ??= EntityHelper.CreatePropertyType("Land");
             classification ??= EntityHelper.CreatePropertyClassificationType("Class");
@@ -44,6 +44,10 @@ namespace Pims.Core.Test
             if (lease != null)
             {
                 lease.PimsPropertyLeases.Add(new Entity.PimsPropertyLease() { Property = property, Lease = lease });
+            }
+            if (regionCode.HasValue)
+            {
+                property.RegionCode = regionCode.Value;
             }
             return property;
         }

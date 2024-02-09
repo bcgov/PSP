@@ -207,7 +207,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
             //Acquisition File Search Filters
             AssertTrueIsDisplayed(searchAcquisitionFileSearchBySelect);
-            AssertTrueIsDisplayed(searchAcquisitionFileSearchByPIDInput);
+            AssertTrueIsDisplayed(searchAcquisitionFileSearchByAddressInput);
             AssertTrueIsDisplayed(searchAcquisitionFileStatusSelect);
             AssertTrueIsDisplayed(searchAcquisitionFileNameInput);
             AssertTrueIsDisplayed(searchAcquisitionFileProjectInput);

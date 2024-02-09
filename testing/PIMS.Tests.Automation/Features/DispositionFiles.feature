@@ -38,3 +38,7 @@ Scenario: 06. Disposition File Notes
 	When  I create a new Note on the Notes Tab from row number 9
 	And  I edit a Note on the Notes Tab from row number 10
 	Then A new Disposition file is created successfully
+
+Scenario: 07. Disposition File from PIN
+	Given I create a new Disposition File from row number 12
+	Then A new Disposition file is created successfully

@@ -96,6 +96,17 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(generalToastBody);
         }
 
+        public void CancelActionModal()
+        {
+            if (webDriver.FindElements(generalModalContent).Count() > 0)
+            {
+                Assert.Equal("Confirm Changes", ModalHeader());
+                Assert.Contains("If you choose to cancel now, your changes will not be saved.", ModalContent());
+                Assert.Contains("Do you want to proceed?", ModalContent());
+                ModalClickOKBttn();
+            }
+        }
+
         public void SiteMinderModal()
         {
             Wait();

@@ -5,6 +5,7 @@ import {
   mockDispositionFileResponse,
   mockDispositionFileSaleApi,
 } from '@/mocks/dispositionFiles.mock';
+import { Api_DispositionFile } from '@/models/api/DispositionFile';
 import { render, RenderOptions, waitFor, waitForEffects } from '@/utils/test-utils';
 
 import OffersAndSaleContainerView, {
@@ -14,7 +15,7 @@ import OffersAndSaleContainerView, {
 const history = createMemoryHistory();
 jest.mock('@react-keycloak/web');
 
-const mockDispositionFileApi = mockDispositionFileResponse(1);
+const mockDispositionFileApi = mockDispositionFileResponse(1) as unknown as Api_DispositionFile;
 const mockDispositionSaleApi = mockDispositionFileSaleApi(1);
 
 const onDelete = jest.fn();
@@ -77,7 +78,7 @@ describe('Disposition Offer Detail View component', () => {
   });
 
   it('displays the Disposition Appraisal and Value when available', async () => {
-    const mockDisposition = mockDispositionFileResponse(1);
+    const mockDisposition = mockDispositionFileResponse(1) as unknown as Api_DispositionFile;
 
     const { queryByTestId } = await setup({
       props: {
@@ -96,7 +97,7 @@ describe('Disposition Offer Detail View component', () => {
 
   it('hides the edit button for Appraisal for users without permissions', async () => {
     const { queryByTitle } = await setup({
-      props: { dispositionFile: mockDispositionFileResponse() },
+      props: { dispositionFile: mockDispositionFileResponse() as unknown as Api_DispositionFile },
       claims: [Claims.DISPOSITION_VIEW],
     });
     await waitForEffects();
@@ -108,7 +109,7 @@ describe('Disposition Offer Detail View component', () => {
 
   it('renders the edit button for Appraisal for users with disposition edit permissions', async () => {
     const { getByTitle } = await setup({
-      props: { dispositionFile: mockDispositionFileResponse() },
+      props: { dispositionFile: mockDispositionFileResponse() as unknown as Api_DispositionFile },
       claims: [Claims.DISPOSITION_EDIT],
     });
     await waitForEffects();
