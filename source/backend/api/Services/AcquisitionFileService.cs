@@ -335,7 +335,7 @@ namespace Pims.Api.Services
                     throw new BusinessRuleViolationException("You must remove all takes and interest holders from an acquisition file property before removing that property from an acquisition file");
                 }
                 _acquisitionFilePropertyRepository.Delete(deletedProperty);
-                if (deletedProperty.Property.IsPropertyOfInterest == true)
+                if (deletedProperty.Property.IsPropertyOfInterest)
                 {
                     PimsProperty propertyWithAssociations = _propertyRepository.GetAllAssociationsById(deletedProperty.PropertyId);
                     var leaseAssociationCount = propertyWithAssociations.PimsPropertyLeases.Count;
@@ -715,6 +715,7 @@ namespace Pims.Api.Services
                     || t.IsNewInterestInSrw
                     || t.IsNewLicenseToConstruct) && activeTakes.Any());
                 var isPropertyOfInterest = false;
+                var isOtherInterest = !isOwned;
 
                 // Override for dedication psp-7048.
                 var doNotAcquire = takes.All(t =>
@@ -724,14 +725,14 @@ namespace Pims.Api.Services
                 {
                     isOwned = false;
                     isPropertyOfInterest = true;
+                    isOtherInterest = false;
                 }
 
-                if (!userOverride && (isOwned || (!isOwned && !isPropertyOfInterest)))
+                if (!userOverride && (isOwned || isOtherInterest))
                 {
                     throw new UserOverrideException(UserOverrideCode.PoiToInventory, "You have one or more take(s) that will be added to MoTI Inventory. Do you want to acknowledge and proceed?");
                 }
-
-                _propertyRepository.TransferFileProperty(property, isOwned, isPropertyOfInterest);
+                _propertyRepository.TransferFileProperty(property, isOwned, isPropertyOfInterest, isOtherInterest);
             }
 
             foreach (var acqFileProperty in propertiesAccounted)

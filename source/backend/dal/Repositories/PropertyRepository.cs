@@ -386,7 +386,7 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="property">The property to update.</param>
         /// <returns>The updated property.</returns>
-        public PimsProperty TransferFileProperty(PimsProperty property, bool isOwned, bool isPropertyOfInterest = false, bool isDisposed = false)
+        public PimsProperty TransferFileProperty(PimsProperty property, bool isOwned, bool isPropertyOfInterest = false, bool isDisposed = false, bool isOtherInterest = false)
         {
             property.ThrowIfNull(nameof(property));
 
@@ -396,6 +396,7 @@ namespace Pims.Dal.Repositories
             existingProperty.IsPropertyOfInterest = isPropertyOfInterest;
             existingProperty.IsOwned = isOwned;
             existingProperty.IsDisposed = isDisposed;
+            existingProperty.IsOtherInterest = isOtherInterest;
 
             if (isOwned)
             {
