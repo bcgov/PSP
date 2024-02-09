@@ -62,7 +62,7 @@ describe('DispositionSummaryView component', () => {
 
   it('does not render the edit button for users that do not have disposition edit permissions', async () => {
     const { queryByTitle, queryByTestId } = setup(
-      { dispositionFile: mockDispositionFileResponse() },
+      { dispositionFile: mockDispositionFileResponse() as unknown as Api_DispositionFile },
       { claims: [] },
     );
     await waitForEffects();
@@ -76,7 +76,7 @@ describe('DispositionSummaryView component', () => {
     const { queryByTitle, queryByTestId } = setup(
       {
         dispositionFile: {
-          ...mockDispositionFileResponse(),
+          ...(mockDispositionFileResponse() as unknown as Api_DispositionFile),
           fileStatusTypeCode: { id: DispositionFileStatus.Complete },
         },
       },
@@ -93,7 +93,7 @@ describe('DispositionSummaryView component', () => {
     const { queryByTitle, queryByTestId } = setup(
       {
         dispositionFile: {
-          ...mockDispositionFileResponse(),
+          ...(mockDispositionFileResponse() as unknown as Api_DispositionFile),
           fileStatusTypeCode: { id: DispositionFileStatus.Complete },
         },
       },
