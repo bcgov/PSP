@@ -69,7 +69,10 @@ describe('OffersAndSale Container component', () => {
   ) => {
     const component = render(
       <OffersAndSaleContainer
-        dispositionFile={renderOptions?.props?.dispositionFile ?? mockGetDispositionFileApi}
+        dispositionFile={
+          renderOptions?.props?.dispositionFile ??
+          (mockDispositionFileResponse() as unknown as Api_DispositionFile)
+        }
         View={TestView}
         onSuccess={onSuccess}
       />,
