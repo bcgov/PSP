@@ -481,6 +481,12 @@ namespace Pims.Dal.Repositories
                     p.PimsPropPropAnomalyTypes.Any(at => filter.AnomalyIds.Contains(at.PropertyAnomalyTypeCode)));
             }
 
+            // Property ownership filters
+            predicate.And(p => (p.IsOwned && filter.IsCoreInventory) ||
+                (p.IsPropertyOfInterest && filter.IsPropertyOfInterest) ||
+                (p.IsOtherInterest && filter.IsOtherInterest) ||
+                (p.IsDisposed && filter.IsDisposed));
+
             return Context.PimsProperties.AsNoTracking()
                 .Where(predicate)
                 .Select(x => x.PropertyId)
