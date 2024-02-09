@@ -1,5 +1,6 @@
 import Claims from '@/constants/claims';
 import { mockDispositionFileResponse } from '@/mocks/dispositionFiles.mock';
+import { Api_DispositionFile } from '@/models/api/DispositionFile';
 import { act, cleanup, render, RenderOptions, userEvent, waitForEffects } from '@/utils/test-utils';
 
 import DispositionSummaryView, { IDispositionSummaryViewProps } from './DispositionSummaryView';
@@ -8,6 +9,8 @@ import DispositionSummaryView, { IDispositionSummaryViewProps } from './Disposit
 jest.mock('@react-keycloak/web');
 
 const onEdit = jest.fn();
+
+const mockDispositionFileApi = mockDispositionFileResponse() as unknown as Api_DispositionFile;
 
 describe('DispositionSummaryView component', () => {
   // render component under test
@@ -34,14 +37,16 @@ describe('DispositionSummaryView component', () => {
   });
 
   it('matches snapshot', async () => {
-    const { asFragment } = setup({ dispositionFile: mockDispositionFileResponse() });
+    const { asFragment } = setup({
+      dispositionFile: mockDispositionFileApi,
+    });
     await waitForEffects();
     expect(asFragment()).toMatchSnapshot();
   });
 
   it('renders the edit button for users with disposition edit permissions', async () => {
     const { getByTitle } = setup(
-      { dispositionFile: mockDispositionFileResponse() },
+      { dispositionFile: mockDispositionFileApi },
       { claims: [Claims.DISPOSITION_EDIT] },
     );
     await waitForEffects();
@@ -52,17 +57,14 @@ describe('DispositionSummaryView component', () => {
   });
 
   it('does not render the edit button for users that do not have disposition edit permissions', async () => {
-    const { queryByTitle } = setup(
-      { dispositionFile: mockDispositionFileResponse() },
-      { claims: [] },
-    );
+    const { queryByTitle } = setup({ dispositionFile: mockDispositionFileApi }, { claims: [] });
     await waitForEffects();
     const editButton = queryByTitle('Edit disposition file');
     expect(editButton).toBeNull();
   });
 
   it('renders historical file number', async () => {
-    const mockResponse = mockDispositionFileResponse();
+    const mockResponse = mockDispositionFileApi;
     const { getByText } = setup({ dispositionFile: mockResponse }, { claims: [] });
     await waitForEffects();
     expect(getByText('FILE_REFERENCE 8128827 3EAD56A')).toBeVisible();
@@ -72,7 +74,7 @@ describe('DispositionSummaryView component', () => {
     const { getByText } = setup(
       {
         dispositionFile: {
-          ...mockDispositionFileResponse(),
+          ...mockDispositionFileApi,
           initiatingDocumentTypeCode: { id: 'OTHER' },
         },
       },
@@ -86,7 +88,7 @@ describe('DispositionSummaryView component', () => {
     const { getByText } = setup(
       {
         dispositionFile: {
-          ...mockDispositionFileResponse(),
+          ...mockDispositionFileApi,
           dispositionTypeCode: { id: 'OTHER' },
         },
       },
@@ -97,7 +99,7 @@ describe('DispositionSummaryView component', () => {
   });
 
   it('renders disposition team member person', async () => {
-    const apiMock = mockDispositionFileResponse();
+    const apiMock = mockDispositionFileResponse() as unknown as Api_DispositionFile;
     const { findByText } = setup(
       {
         dispositionFile: {
@@ -135,7 +137,7 @@ describe('DispositionSummaryView component', () => {
   });
 
   it('renders disposition team member organization', async () => {
-    const apiMock = mockDispositionFileResponse();
+    const apiMock = mockDispositionFileApi;
     const { findByText } = setup(
       {
         dispositionFile: {
@@ -171,7 +173,7 @@ describe('DispositionSummaryView component', () => {
   });
 
   it('renders disposition team member organization and primary contact', async () => {
-    const apiMock = mockDispositionFileResponse();
+    const apiMock = mockDispositionFileApi;
     const { findByText } = setup(
       {
         dispositionFile: {
@@ -216,5 +218,15 @@ describe('DispositionSummaryView component', () => {
     expect(await findByText(/Test Organization/)).toBeVisible();
     expect(await findByText(/Primary contact/)).toBeVisible();
     expect(await findByText(/Bob Billy Smith/)).toBeVisible();
+  });
+
+  it('renders the project and product', async () => {
+    const { queryByTestId } = setup({
+      dispositionFile: mockDispositionFileApi,
+    });
+
+    await waitForEffects();
+    expect(queryByTestId('dsp-project')).toHaveTextContent('00048 - CLAIMS');
+    expect(queryByTestId('dsp-product')).toHaveTextContent('00055 AVALANCHE & PROGRAM REVIEW');
   });
 });

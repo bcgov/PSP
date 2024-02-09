@@ -7,6 +7,7 @@ import { FileTabType } from '@/features/mapSideBar/shared/detail/FileTabs';
 import { useApiNotes } from '@/hooks/pims-api/useApiNotes';
 import { useNoteRepository } from '@/hooks/repositories/useNoteRepository';
 import { mockDispositionFileResponse } from '@/mocks/dispositionFiles.mock';
+import { Api_DispositionFile } from '@/models/api/DispositionFile';
 import { render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import DispositionFileTabs, { IDispositionFileTabsProps } from './DispositionFileTabs';
@@ -90,6 +91,9 @@ jest.mock('@/hooks/repositories/useDispositionProvider', () => ({
 const history = createMemoryHistory();
 const setIsEditing = jest.fn();
 
+const mockDispositionFileResponseApi =
+  mockDispositionFileResponse() as unknown as Api_DispositionFile;
+
 describe('DispositionFileTabs component', () => {
   // render component under test
   const setup = (
@@ -121,7 +125,7 @@ describe('DispositionFileTabs component', () => {
   it('matches snapshot', () => {
     const { asFragment } = setup(
       {
-        dispositionFile: mockDispositionFileResponse(),
+        dispositionFile: mockDispositionFileResponseApi,
         defaultTab: FileTabType.FILE_DETAILS,
       },
       { claims: [Claims.DOCUMENT_VIEW] },
@@ -132,7 +136,7 @@ describe('DispositionFileTabs component', () => {
   it('has a documents tab', () => {
     const { getByText } = setup(
       {
-        dispositionFile: mockDispositionFileResponse(),
+        dispositionFile: mockDispositionFileResponseApi,
         defaultTab: FileTabType.FILE_DETAILS,
       },
       { claims: [Claims.DOCUMENT_VIEW] },
@@ -145,7 +149,7 @@ describe('DispositionFileTabs component', () => {
   it('documents tab can be changed to', async () => {
     const { getByText } = setup(
       {
-        dispositionFile: mockDispositionFileResponse(),
+        dispositionFile: mockDispositionFileResponseApi,
         defaultTab: FileTabType.FILE_DETAILS,
       },
       { claims: [Claims.DOCUMENT_VIEW] },
@@ -161,7 +165,7 @@ describe('DispositionFileTabs component', () => {
   it('has an offers tab', () => {
     const { getByText } = setup(
       {
-        dispositionFile: mockDispositionFileResponse(),
+        dispositionFile: mockDispositionFileResponseApi,
         defaultTab: FileTabType.OFFERS_AND_SALE,
       },
       { claims: [] },
@@ -174,7 +178,7 @@ describe('DispositionFileTabs component', () => {
   it('offers tab can be changed to', async () => {
     const { getByText } = setup(
       {
-        dispositionFile: mockDispositionFileResponse(),
+        dispositionFile: mockDispositionFileResponseApi,
         defaultTab: FileTabType.OFFERS_AND_SALE,
       },
       { claims: [] },
@@ -190,7 +194,7 @@ describe('DispositionFileTabs component', () => {
   it('has a notes tab', () => {
     const { getAllByText } = setup(
       {
-        dispositionFile: mockDispositionFileResponse(),
+        dispositionFile: mockDispositionFileResponseApi,
         defaultTab: FileTabType.FILE_DETAILS,
       },
       { claims: [Claims.NOTE_VIEW] },
@@ -203,7 +207,7 @@ describe('DispositionFileTabs component', () => {
   it('notes tab can be changed to', async () => {
     const { getAllByText } = setup(
       {
-        dispositionFile: mockDispositionFileResponse(),
+        dispositionFile: mockDispositionFileResponseApi,
         defaultTab: FileTabType.FILE_DETAILS,
       },
       { claims: [Claims.NOTE_VIEW] },
@@ -219,7 +223,7 @@ describe('DispositionFileTabs component', () => {
   it('has a checklist tab', () => {
     const { getByText } = setup(
       {
-        dispositionFile: mockDispositionFileResponse(),
+        dispositionFile: mockDispositionFileResponseApi,
         defaultTab: FileTabType.FILE_DETAILS,
       },
       { claims: [] },
@@ -232,7 +236,7 @@ describe('DispositionFileTabs component', () => {
   it('checklist tab can be changed to', async () => {
     const { getByText } = setup(
       {
-        dispositionFile: mockDispositionFileResponse(),
+        dispositionFile: mockDispositionFileResponseApi,
         defaultTab: FileTabType.FILE_DETAILS,
       },
       { claims: [] },

@@ -343,6 +343,7 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
       manualSortBy: manualSortBy,
       pageCount,
       autoResetSelectedRows: false,
+      autoResetPage: false,
     },
     useFlexLayout,
     useSortBy,

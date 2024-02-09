@@ -13,11 +13,6 @@ namespace Pims.Api.Models.Concepts.DispositionFile
         public long Id { get; set; }
 
         /// <summary>
-        /// Parent Disposition Sale.
-        /// </summary>
-        public long DispositionSaleId { get; set; }
-
-        /// <summary>
         /// get/set - The Id of the person(s) associated with a disposition Sale as Purchaser.
         /// </summary>
         public long? PersonId { get; set; }
