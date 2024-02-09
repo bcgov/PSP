@@ -276,7 +276,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             // Create Sales Details section by clicking edit button
             offerSale.EditSalesDetailsButton();
             offerSale.VerifyInitSalesDetailsForm();
-            offerSale.UpdateSalesDetails(dispositionFile);
+            offerSale.InsertSalesDetails(dispositionFile);
 
             //Save the  Sales Details section from
             offerSale.SaveDispositionFileOffersAndSale();
@@ -340,12 +340,12 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Update Sales Details and cancel changes
             offerSale.EditSalesDetailsButton();
-            offerSale.UpdateSalesDetails(dispositionFile);
+            offerSale.InsertSalesDetails(dispositionFile);
             offerSale.CancelDispositionFileOffersAndSale();
 
             //Update Sales Details and save changes
             offerSale.EditSalesDetailsButton();
-            offerSale.UpdateSalesDetails(dispositionFile);
+            offerSale.InsertSalesDetails(dispositionFile);
             offerSale.SaveDispositionFileOffersAndSale();
 
             //Verify Sales Details

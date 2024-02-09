@@ -260,75 +260,6 @@ namespace PIMS.Tests.Automation.PageObjects
             }
         }
 
-        //public void CreateSalesDetails(DispositionFile dispositionFile)
-        //{
-        //    Wait();
-
-        //    if (dispositionFile.PurchaserNames!.Count > 0)
-        //    {
-        //        for (var i = 0; i < dispositionFile.PurchaserNames.Count; i++)
-        //        {
-        //            AddPurchaseNames(dispositionFile.PurchaserNames[i], i);
-        //        }
-        //    }
-
-        //    if (dispositionFile.PurchaserAgent != "")
-        //    {
-        //        WaitUntilVisible(dispositionSalesDetailsPurchaserAgentButton);
-        //        webDriver.FindElement(dispositionSalesDetailsPurchaserAgentButton).Click();
-        //        sharedSelectContact.SelectContact(dispositionFile.PurchaserAgent, dispositionFile.Purcha);
-        //    }
-
-        //    if (dispositionFile.PurchaserSolicitor != "")
-        //    {
-        //        WaitUntilVisible(dispositionSalesDetails1stPurchaserNameButton);
-        //        webDriver.FindElement(dispositionSalesDetails1stPurchaserNameButton).Click();
-        //        sharedSelectContact.SelectContact(dispositionFile.PurchaserSolicitor, "persons");
-        //    }
-
-        //    if (dispositionFile.LastConditionRemovalDate != "")
-        //    {
-        //        webDriver.FindElement(dispositionSalesDetailsRemovalDateInput).SendKeys(dispositionFile.LastConditionRemovalDate);
-        //        webDriver.FindElement(dispositionSalesDetailsRemovalDateInput).SendKeys(Keys.Enter);
-        //    }
-        //    if (dispositionFile.SaleCompletionDate != "")
-        //    {
-        //        webDriver.FindElement(dispositionSalesDetailsCompletionDateInput).SendKeys(dispositionFile.SaleCompletionDate);
-        //        webDriver.FindElement(dispositionSalesDetailsCompletionDateInput).SendKeys(Keys.Enter);
-        //    }
-        //    if (dispositionFile.FiscalYearOfSale != "")
-        //    {
-        //        webDriver.FindElement(dispositionSalesDetailsFiscalYearInput).SendKeys(dispositionFile.FiscalYearOfSale);
-        //        webDriver.FindElement(dispositionSalesDetailsFiscalYearInput).SendKeys(Keys.Enter);
-        //    }
-
-        //    if(dispositionFile.FinalSalePrice != "")
-        //        webDriver.FindElement(dispositionSalesDetailsSalePriceInput).SendKeys(dispositionFile.FinalSalePrice);
-
-        //    if(dispositionFile.RealtorCommission != "")
-        //        webDriver.FindElement(dispositionSalesDetailsRealtorCommissionInput).SendKeys(dispositionFile.RealtorCommission);
-
-        //    ChooseSpecificSelectOption(dispositionSalesDetailsGSTSelect, dispositionFile.GSTRequired);
-
-        //    if (dispositionFile.GSTRequired.Equals("Yes"))
-        //    {
-        //        AssertTrueIsDisplayed(dispositionSalesDetailsGSTCollectedLabel);
-        //        AssertTrueIsDisplayed(dispositionSalesDetailsGSTCollectedInput);
-        //    }
-
-        //    if (dispositionFile.NetBookValue != "")
-        //        webDriver.FindElement(dispositionSalesDetailsNetBookValueInput).SendKeys(dispositionFile.NetBookValue);
-
-        //    if(dispositionFile.TotalCostOfSales != "")
-        //        webDriver.FindElement(dispositionSalesDetailsTotalCostSaleInput).SendKeys(dispositionFile.TotalCostOfSales);
-
-        //    if(dispositionFile.SPPAmount != "")
-        //        webDriver.FindElement(dispositionSalesDetailsSppAmountInput).SendKeys(dispositionFile.SPPAmount);
-
-        //    if(dispositionFile.RemediationCost != "")
-        //        webDriver.FindElement(dispositionSalesDetailsRemediationCostInput).SendKeys(dispositionFile.RemediationCost);
-        //}
-
         public void UpdateAppraisalAndAssessment(DispositionFile dispositionFile)
         {
             Wait();
@@ -406,7 +337,7 @@ namespace PIMS.Tests.Automation.PageObjects
             }
         }
 
-        public void UpdateSalesDetails(DispositionFile dispositionFile)
+        public void InsertSalesDetails(DispositionFile dispositionFile)
         {
             Wait();
             while (webDriver.FindElements(dispositionSalesDetails1stPurchaserNameDeleteBttn).Count > 0)
