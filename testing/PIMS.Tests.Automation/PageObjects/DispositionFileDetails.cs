@@ -259,8 +259,8 @@ namespace PIMS.Tests.Automation.PageObjects
                 webDriver.FindElement(dispositionFileDetailsInitiatingDocumentDateInput).SendKeys(Keys.Enter);
             }
 
-            if (disposition.PhysicalFileStatus != "")
-                ChooseSpecificSelectOption(dispositionFileDetailsPhysicalFileSelect, disposition.PhysicalFileStatus);
+            if (disposition.DispositionPhysicalFileStatus != "")
+                ChooseSpecificSelectOption(dispositionFileDetailsPhysicalFileSelect, disposition.DispositionPhysicalFileStatus);
 
             if (disposition.InitiatingBranch != "")
                 ChooseSpecificSelectOption(dispositionFileDetailsInitiatingBranchSelect, disposition.InitiatingBranch);
@@ -343,8 +343,8 @@ namespace PIMS.Tests.Automation.PageObjects
                 webDriver.FindElement(dispositionFileDetailsInitiatingDocumentDateInput).SendKeys(Keys.Enter);
             }
 
-            if (disposition.PhysicalFileStatus != "")
-                ChooseSpecificSelectOption(dispositionFileDetailsPhysicalFileSelect, disposition.PhysicalFileStatus);
+            if (disposition.DispositionPhysicalFileStatus != "")
+                ChooseSpecificSelectOption(dispositionFileDetailsPhysicalFileSelect, disposition.DispositionPhysicalFileStatus);
 
             if (disposition.InitiatingBranch != "")
                 ChooseSpecificSelectOption(dispositionFileDetailsInitiatingBranchSelect, disposition.InitiatingBranch);
@@ -569,8 +569,8 @@ namespace PIMS.Tests.Automation.PageObjects
             //Physical File Status
             AssertTrueIsDisplayed(dispositionFileDetailsPhysicalFileLabel);
 
-            if (disposition.PhysicalFileStatus != "")
-                AssertTrueContentEquals(dispositionFileDetailsPhysicalFileContent, disposition.PhysicalFileStatus);
+            if (disposition.DispositionPhysicalFileStatus != "")
+                AssertTrueContentEquals(dispositionFileDetailsPhysicalFileContent, disposition.DispositionPhysicalFileStatus);
 
             //Initiating Branch
             //AssertTrueIsDisplayed(dispositionFileDetailsInitiatingBranchLabel);
