@@ -859,7 +859,7 @@ namespace Pims.Api.Test.Services
         public void UpdateProperties_Success_Final_SystemAdmin()
         {
             // Arrange
-            var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit, Permissions.AcquisitionFileAdd, Permissions.AcquisitionFileView, Permissions.SystemAdmin);
+            var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit, Permissions.AcquisitionFileAdd, Permissions.AcquisitionFileView, Permissions.SystemAdmin, Permissions.PropertyView, Permissions.PropertyAdd);
 
             var acqFile = EntityHelper.CreateAcquisitionFile();
             acqFile.ConcurrencyControlNumber = 1;
@@ -1241,7 +1241,7 @@ namespace Pims.Api.Test.Services
         public void UpdateProperties_Final()
         {
             // Arrange
-            var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit, Permissions.AcquisitionFileAdd, Permissions.AcquisitionFileView);
+            var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit, Permissions.AcquisitionFileAdd, Permissions.AcquisitionFileView, Permissions.PropertyAdd, Permissions.PropertyView);
 
             var acqFile = EntityHelper.CreateAcquisitionFile();
             acqFile.ConcurrencyControlNumber = 1;

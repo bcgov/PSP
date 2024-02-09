@@ -407,10 +407,19 @@ namespace Pims.Api.Test.Services
 
         [Theory]
         [MemberData(nameof(UpdateFinalValidationUserOverrideParameters))]
-        public void Update_Final_Validation_UserOverride(EnumDispositionFileStatusTypeCode fileStatus)
+        public void Update_Final_Validation_UserOverride(EnumDispositionFileStatusTypeCode fileStatus) {
+            // Arrange
+            var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionEdit);
+            var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
+
+            var dispFile = EntityHelper.CreateDispositionFile(1);
+
             var updateDispFile = EntityHelper.CreateDispositionFile(2);
             updateDispFile.DispositionFileStatusTypeCode = EnumDispositionFileStatusTypeCode.COMPLETE.ToString();
             updateDispFile.PimsDispositionSales = new List<PimsDispositionSale>() { new PimsDispositionSale() }; // this file has no sale amount, and will fail validation
+
+            var statusMock = this._helper.GetService<Mock<IDispositionStatusSolver>>();
+            statusMock.Setup(x => x.CanEditDetails(It.IsAny<DispositionStatusTypes>())).Returns(true);
 
             repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
             repository.Setup(x => x.GetRegion(It.IsAny<long>())).Returns(1);
@@ -418,7 +427,7 @@ namespace Pims.Api.Test.Services
             repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(dispFile);
 
             // Act
-            Action act = () => service.Update(2, updateDispFile, new List<UserOverrideCode>());
+            Action act = () => service.Update(2, updateDispFile, new List<UserOverrideCode>() { UserOverrideCode.DispositionFileFinalStatus });
 
             // Assert
             var ex = act.Should().Throw<BusinessRuleViolationException>();
@@ -446,7 +455,7 @@ namespace Pims.Api.Test.Services
             repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(dispFile);
 
             // Act
-            Action act = () => service.Update(2, updateDispFile, new List<UserOverrideCode>());
+            Action act = () => service.Update(2, updateDispFile, new List<UserOverrideCode>() { UserOverrideCode.DispositionFileFinalStatus });
 
             // Assert
             var ex = act.Should().Throw<BusinessRuleViolationException>();
@@ -468,7 +477,7 @@ namespace Pims.Api.Test.Services
             dispFile.PimsDispositionFileProperties = new List<PimsDispositionFileProperty>() { new PimsDispositionFileProperty() };
             var updateDispFile = EntityHelper.CreateDispositionFile(2);
             updateDispFile.DispositionFileStatusTypeCode = EnumDispositionFileStatusTypeCode.COMPLETE.ToString();
-            updateDispFile.PimsDispositionSales = new List<PimsDispositionSale>() { new PimsDispositionSale() { SaleFinalAmt = 1 } };
+            dispFile.PimsDispositionSales = new List<PimsDispositionSale>() { new PimsDispositionSale() { SaleFinalAmt = 1 } };
 
             repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
             repository.Setup(x => x.GetRegion(It.IsAny<long>())).Returns(1);
@@ -481,15 +490,16 @@ namespace Pims.Api.Test.Services
             dispositionFilePropertyRepository.Setup(x => x.GetPropertiesByDispositionFileId(It.IsAny<long>())).Returns(new List<PimsDispositionFileProperty>() { new PimsDispositionFileProperty() { Property = nonInventoryProperty } });
 
             // Act
-            Action act = () => service.Update(2, updateDispFile, new List<UserOverrideCode>());
+            Action act = () => service.Update(2, updateDispFile, new List<UserOverrideCode>() { UserOverrideCode.DispositionFileFinalStatus });
 
             // Assert
             var ex = act.Should().Throw<BusinessRuleViolationException>();
             ex.WithMessage("You have one or more properties attached to this Disposition file that is NOT in the \"Core Inventory\" (i.e. owned by BCTFA and/or HMK). To complete this file you must either, remove these non \"Non-Core Inventory\" properties, OR make sure the property is added to the PIMS inventory first.");
         }
 
-        [Fact]
-        public void Update_Should_Fail_Final()
+        [Theory]
+        [MemberData(nameof(UpdateFinalValidationUserOverrideParameters))]
+        public void Update_Should_Fail_Final(EnumDispositionFileStatusTypeCode fileStatus)
         {
             // Arrange
             var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionEdit);
@@ -529,7 +539,7 @@ namespace Pims.Api.Test.Services
             dispFile.PimsDispositionFileProperties = new List<PimsDispositionFileProperty>() { new PimsDispositionFileProperty() };
             var updateDispFile = EntityHelper.CreateDispositionFile(2);
             updateDispFile.DispositionFileStatusTypeCode = EnumDispositionFileStatusTypeCode.COMPLETE.ToString();
-            updateDispFile.PimsDispositionSales = new List<PimsDispositionSale>() { new PimsDispositionSale() { SaleFinalAmt = 1 } };
+            dispFile.PimsDispositionSales = new List<PimsDispositionSale>() { new PimsDispositionSale() { SaleFinalAmt = 1 } };
 
             repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
             repository.Setup(x => x.GetRegion(It.IsAny<long>())).Returns(1);
@@ -542,7 +552,7 @@ namespace Pims.Api.Test.Services
             dispositionFilePropertyRepository.Setup(x => x.GetPropertiesByDispositionFileId(It.IsAny<long>())).Returns(new List<PimsDispositionFileProperty>() { new PimsDispositionFileProperty() { Property = inventoryProperty } });
 
             // Act
-            Action act = () => service.Update(2, updateDispFile, new List<UserOverrideCode>());
+            Action act = () => service.Update(2, updateDispFile, new List<UserOverrideCode>() { UserOverrideCode.DispositionFileFinalStatus });
 
             // Assert
             var ex = act.Should().Throw<UserOverrideException>();
@@ -560,8 +570,10 @@ namespace Pims.Api.Test.Services
             statusMock.Setup(x => x.CanEditDetails(It.IsAny<DispositionStatusTypes>())).Returns(true);
 
             var dispFile = EntityHelper.CreateDispositionFile(1);
-            dispFile.DispositionFileStatusTypeCode = EnumDispositionFileStatusTypeCode.ARCHIVED.ToString();
             dispFile.PimsDispositionSales = new List<PimsDispositionSale>() { new PimsDispositionSale() { SaleFinalAmt = 1 } };
+
+            var updatedDispFile = EntityHelper.CreateDispositionFile(1);
+            updatedDispFile.DispositionFileStatusTypeCode = EnumDispositionFileStatusTypeCode.ARCHIVED.ToString();
 
             repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
             repository.Setup(x => x.GetRegion(It.IsAny<long>())).Returns(1);
@@ -569,7 +581,7 @@ namespace Pims.Api.Test.Services
             repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(dispFile);
 
             // Act
-            Action act = () => service.Update(1, dispFile, new List<UserOverrideCode>());
+            Action act = () => service.Update(1, updatedDispFile, new List<UserOverrideCode>());
 
             // Assert
             var ex = act.Should().Throw<UserOverrideException>();
@@ -593,6 +605,9 @@ namespace Pims.Api.Test.Services
             var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
             var dispFile = EntityHelper.CreateDispositionFile(1);
             dispFile.DispositionFileStatusTypeCode = fileStatus.ToString();
+
+            var statusMock = this._helper.GetService<Mock<IDispositionStatusSolver>>();
+            statusMock.Setup(x => x.CanEditDetails(It.IsAny<DispositionStatusTypes>())).Returns(true);
 
             repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
             repository.Setup(x => x.GetRegion(It.IsAny<long>())).Returns(1);
@@ -646,6 +661,9 @@ namespace Pims.Api.Test.Services
                 }
             };
 
+            var statusMock = this._helper.GetService<Mock<IDispositionStatusSolver>>();
+            statusMock.Setup(x => x.CanEditDetails(It.IsAny<DispositionStatusTypes>())).Returns(true);
+
             var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
             repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
             repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(dispositionFile);
@@ -681,6 +699,9 @@ namespace Pims.Api.Test.Services
                     PersonId = 20,
                 }
             };
+
+            var statusMock = this._helper.GetService<Mock<IDispositionStatusSolver>>();
+            statusMock.Setup(x => x.CanEditDetails(It.IsAny<DispositionStatusTypes>())).Returns(true);
 
             var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
             repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);

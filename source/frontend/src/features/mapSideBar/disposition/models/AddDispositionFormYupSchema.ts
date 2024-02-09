@@ -53,6 +53,7 @@ export const UpdateDispositionFormYupSchema = yup
       is: (fileStatusTypeCode: string) => fileStatusTypeCode && fileStatusTypeCode === 'COMPLETE',
       then: yup
         .date()
+        .nullable()
         .required(`Disposition completed date is required when file status is set to "Complete"`),
       otherwise: yup.date().nullable(),
     }),

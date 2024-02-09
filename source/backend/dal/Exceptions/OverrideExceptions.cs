@@ -62,6 +62,7 @@ namespace Pims.Dal.Exceptions
             UserOverrideCode.ProductReuse,
             UserOverrideCode.DisposingPropertyNotInventoried,
             UserOverrideCode.DispositionFileFinalStatus,
+            UserOverrideCode.DisposeOfProperties,
         };
 
         private UserOverrideCode(string code)

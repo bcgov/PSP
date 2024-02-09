@@ -139,7 +139,7 @@ namespace Pims.Api.Services
                 }
                 else if (currentDispositionFile.PimsDispositionFileProperties.Count > 0)
                 {
-                    DisposeOfProperties(dispositionFile);
+                    DisposeOfProperties(dispositionFile, userOverrides);
                 }
             }
 
@@ -560,10 +560,10 @@ namespace Pims.Api.Services
         /// Attempt to dispose of any properties if all business rules are met.
         /// </summary>
         /// <param name="dispositionFile"></param>
-        private void DisposeOfProperties(PimsDispositionFile dispositionFile)
+        private void DisposeOfProperties(PimsDispositionFile dispositionFile, IEnumerable<UserOverrideCode> userOverrides)
         {
             var currentProperties = _dispositionFilePropertyRepository.GetPropertiesByDispositionFileId(dispositionFile.Internal_Id);
-            if (currentProperties.All(p => p.Property.IsOwned))
+            if (currentProperties.Any(p => p.Property.IsOwned) && !userOverrides.Contains(UserOverrideCode.DisposeOfProperties))
             {
                 throw new UserOverrideException(UserOverrideCode.DisposeOfProperties, "You are completing this Disposition File with owned PIMS inventory properties. All properties will be removed from the PIMS inventory (any Other Interests will remain). Do you wish to proceed?");
             }
@@ -575,7 +575,7 @@ namespace Pims.Api.Services
             // Get the current properties in the research file
             var ownedProperties = currentProperties.Where(p => p.Property.IsOwned);
 
-            // PSP-6111 Business rule: Transfer properties of interest to core inventory when acquisition file is completed
+            // PSP-7275 Business rule: Transfer properties of interest to disposed when disposition file is completed
             foreach (var dispositionProperty in ownedProperties)
             {
                 var property = dispositionProperty.Property;

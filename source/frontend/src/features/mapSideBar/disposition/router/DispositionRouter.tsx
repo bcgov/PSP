@@ -35,10 +35,6 @@ export interface IDispositionRouterProps {
 export const DispositionRouter: React.FC<IDispositionRouterProps> = props => {
   const { path, url } = useRouteMatch();
 
-  if (props.dispositionFile === undefined || props.dispositionFile === null) {
-    return null;
-  }
-
   // render edit forms
   if (props.isEditing) {
     return (
