@@ -29,5 +29,5 @@ export const defaultPropertyFilter: IPropertyFilter = {
   longitude: '',
   page: undefined,
   quantity: undefined,
-  ownership: 'isCoreInventory,isPropertyOfInterest,isOtherInterest,isDisposed',
+  ownership: 'isCoreInventory,isPropertyOfInterest,isOtherInterest',
 };
