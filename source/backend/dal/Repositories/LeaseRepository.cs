@@ -993,7 +993,7 @@ namespace Pims.Dal.Repositories
                 MapSortField("StatusType", "LeaseStatusTypeCodeNavigation.Description", filter.Sort);
                 MapSortField("ProgramName", "LeaseProgramTypeCodeNavigation.Description", filter.Sort);
 
-                query = query.OrderByProperty(filter.Sort);
+                query = query.OrderByProperty(true, filter.Sort);
             }
             else
             {

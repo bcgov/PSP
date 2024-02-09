@@ -410,7 +410,7 @@ namespace Pims.Dal.Repositories
 
         public HashSet<long> GetMatchingIds(PropertyFilterCriteria filter)
         {
-            var predicate = PredicateBuilder.New<PimsProperty>(acq => true);
+            var predicate = PredicateBuilder.New<PimsProperty>(p => true);
 
             // Project filters
             if (filter.ProjectId.HasValue)

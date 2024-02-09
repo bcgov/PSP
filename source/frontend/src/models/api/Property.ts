@@ -56,6 +56,8 @@ export interface Api_Property extends Api_ConcurrentVersion, Api_AuditFields {
   isProvincialPublicHwy?: boolean;
   isOwned?: boolean;
   isPropertyOfInterest?: boolean;
+  isOtherInterest?: boolean;
+  isDisposed?: boolean;
   pphStatusTypeCode?: string;
   isRwyBeltDomPatent?: boolean;
   pphStatusUpdateTimestamp?: Date;

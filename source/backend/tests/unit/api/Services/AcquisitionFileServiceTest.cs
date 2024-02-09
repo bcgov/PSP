@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using DocumentFormat.OpenXml.Office2010.Excel;
 using FluentAssertions;
 using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
