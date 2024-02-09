@@ -1,6 +1,5 @@
 import { FormikProps } from 'formik';
 import orderBy from 'lodash/orderBy';
-import moment from 'moment';
 import * as React from 'react';
 
 import { Api_PropertyFile } from '@/models/api/PropertyFile';
