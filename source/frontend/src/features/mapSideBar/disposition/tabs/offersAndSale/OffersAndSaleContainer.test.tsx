@@ -41,7 +41,6 @@ const mockDeleteDispositionFileOfferApi = {
 };
 
 const onSuccess = jest.fn();
-const mockGetDispositionFileApi = mockDispositionFileResponse(1);
 
 jest.mock('@/hooks/repositories/useDispositionProvider', () => ({
   useDispositionProvider: () => {
