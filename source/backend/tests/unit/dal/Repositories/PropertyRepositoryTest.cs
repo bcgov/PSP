@@ -29,11 +29,13 @@ namespace Pims.Dal.Test.Repositories
         public static IEnumerable<object[]> AllPropertyFilters =>
             new List<object[]>
             {
-                new object[] { new PropertyFilter() { PinOrPid = "111-111-111" }, 1 },
-                new object[] { new PropertyFilter() { PinOrPid = "111" }, 2 },
-                new object[] { new PropertyFilter() { Address = "12342 Test Street" }, 6 },
-                new object[] { new PropertyFilter() { Page = 1, Quantity = 10 }, 6 },
+                new object[] { new PropertyFilter() { PinOrPid = "111-111-111" , Ownership = new List<string>()}, 1 },
+                new object[] { new PropertyFilter() { PinOrPid = "111"  , Ownership = new List<string>()}, 2 },
+                new object[] { new PropertyFilter() { Address = "12342 Test Street"  , Ownership = new List<string>()}, 6 },
+                new object[] { new PropertyFilter() { Page = 1, Quantity = 10 , Ownership = new List<string>() }, 6 },
                 new object[] { new PropertyFilter(), 6 },
+                new object[] { new PropertyFilter(){ Ownership = new List<string>(){"isCoreInventory", "isPropertyOfInterest"}}, 4 },
+                new object[] { new PropertyFilter(){ Ownership = new List<string>(){"isCoreInventory"}}, 3 },
             };
         #endregion
 
@@ -94,12 +96,19 @@ namespace Pims.Dal.Test.Repositories
 
             using var init = helper.InitializeDatabase(user);
 
-            init.CreateProperty(2);
-            init.CreateProperty(3, pin: 111);
-            init.CreateProperty(4, address: init.PimsAddresses.FirstOrDefault());
-            init.CreateProperty(5, classification: init.PimsPropertyClassificationTypes.FirstOrDefault(c => c.PropertyClassificationTypeCode == "Core Operational"));
-            init.CreateProperty(6, location: new NetTopologySuite.Geometries.Point(-123.720810, 48.529338));
-            init.CreateProperty(111111111);
+            PimsProperty testProperty = null;
+            testProperty = init.CreateProperty(2);
+            testProperty.IsOwned = true;
+            testProperty = init.CreateProperty(3, pin: 111);
+            testProperty.IsPropertyOfInterest = true;
+            testProperty = init.CreateProperty(4, address: init.PimsAddresses.FirstOrDefault());
+            testProperty.IsOtherInterest = true;
+            testProperty = init.CreateProperty(5, classification: init.PimsPropertyClassificationTypes.FirstOrDefault(c => c.PropertyClassificationTypeCode == "Core Operational"));
+            testProperty.IsDisposed = true;
+            testProperty = init.CreateProperty(6, location: new NetTopologySuite.Geometries.Point(-123.720810, 48.529338));
+            testProperty.IsOwned = true;
+            testProperty = init.CreateProperty(111111111);
+            testProperty.IsOwned = true;
 
             init.SaveChanges();
 

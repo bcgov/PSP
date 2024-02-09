@@ -37,7 +37,7 @@ const emptyFilter = {
   planNumber: '',
   quantity: undefined,
   searchBy: 'address',
-  ownership: 'isCoreInventory,isPropertyOfInterest,isOtherInterest,isDisposed',
+  ownership: 'isCoreInventory,isPropertyOfInterest,isOtherInterest',
 };
 
 const defaultFilter = {

@@ -39,6 +39,7 @@ namespace Pims.Dal.Entities.Models
         /// </summary>
         public PropertyFilter()
         {
+            Ownership = new List<string>();
         }
 
         /// <summary>
