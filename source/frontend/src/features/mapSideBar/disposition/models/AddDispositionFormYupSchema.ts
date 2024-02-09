@@ -37,7 +37,7 @@ export const AddDispositionFormYupSchema = yup
         .max(200, 'Other Iniating Document type must be at most ${max} characters'),
       otherwise: yup.string().nullable(),
     }),
-    regionCode: yup.string().required('Ministry region is required'),
+    regionCode: yup.string().nullable().required('Ministry region is required'),
   })
   .concat(DispositionTeamYupSchema);
 

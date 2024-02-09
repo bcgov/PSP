@@ -34,5 +34,7 @@ namespace Pims.Dal.Repositories
         PimsProperty TransferFileProperty(PimsProperty property, bool isOwned, bool isPropertyOfInterest = false);
 
         HashSet<long> GetMatchingIds(PropertyFilterCriteria filter);
+
+        short GetPropertyRegion(long id);
     }
 }

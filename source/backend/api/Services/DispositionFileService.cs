@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
+using System.Text.RegularExpressions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Constants;
@@ -74,6 +75,8 @@ namespace Pims.Api.Services
             ValidateStaff(dispositionFile);
 
             MatchProperties(dispositionFile, userOverrides);
+
+            ValidatePropertyRegions(dispositionFile);
 
             var newDispositionFile = _dispositionFileRepository.Add(dispositionFile);
             _dispositionFileRepository.CommitTransaction();
@@ -149,6 +152,8 @@ namespace Pims.Api.Services
             _logger.LogInformation("Searching for disposition files...");
             _logger.LogDebug("Disposition file search with filter: {filter}", filter);
             _user.ThrowIfNotAuthorized(Permissions.DispositionView);
+
+            filter.FileNameOrNumberOrReference = Regex.Replace(filter.FileNameOrNumberOrReference ?? string.Empty, @"^[d,D]-", string.Empty);
 
             var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
             long? contractorPersonId = (pimsUser != null && pimsUser.IsContractor) ? pimsUser.PersonId : null;
@@ -271,6 +276,7 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.DispositionEdit);
 
             var updatedSale = _dispositionFileRepository.UpdateDispositionFileSale(dispositionSale);
+
             _dispositionFileRepository.CommitTransaction();
 
             return updatedSale;
@@ -428,6 +434,7 @@ namespace Pims.Api.Services
                     RemediationCost = file.PimsDispositionSales?.FirstOrDefault()?.RemediationAmt ?? 0,
                     NetBeforeSpp = CalculateNetProceedsBeforeSpp(file.PimsDispositionSales?.FirstOrDefault()),
                     NetAfterSpp = CalculateNetProceedsAfterSpp(file.PimsDispositionSales?.FirstOrDefault()),
+                    Project = file?.Project?.Description is not null ? $"{file.Project.Code} {file.Project.Description}" : string.Empty,
                 }).ToList();
         }
 
@@ -440,6 +447,8 @@ namespace Pims.Api.Services
             ValidateVersion(dispositionFile.Internal_Id, dispositionFile.ConcurrencyControlNumber);
 
             MatchProperties(dispositionFile, userOverrides);
+
+            ValidatePropertyRegions(dispositionFile);
 
             // Get the current properties in the research file
             var currentProperties = _dispositionFilePropertyRepository.GetPropertiesByDispositionFileId(dispositionFile.Internal_Id);
@@ -636,6 +645,19 @@ namespace Pims.Api.Services
                     {
                         throw new UserOverrideException(UserOverrideCode.DisposingPropertyNotInventoried, "You have added one or more properties to the disposition file that are not in the MoTI Inventory. Do you want to proceed?");
                     }
+                }
+            }
+        }
+
+        private void ValidatePropertyRegions(PimsDispositionFile dispositionFile)
+        {
+            var userRegions = _user.GetUserRegions(_userRepository);
+            foreach (var dispProperty in dispositionFile.PimsDispositionFileProperties)
+            {
+                var propertyRegion = dispProperty.Property?.RegionCode ?? _propertyRepository.GetPropertyRegion(dispProperty.PropertyId);
+                if (!userRegions.Contains(propertyRegion))
+                {
+                    throw new BadRequestException("You cannot add a property that is outside of your user account region(s). Either select a different property, or get your system administrator to add the required region to your user account settings.");
                 }
             }
         }
