@@ -40,7 +40,7 @@ const mockDeleteDispositionFileOfferApi = {
   loading: false,
 };
 
-const mockGetDispositionFileApi = mockDispositionFileResponse(1) as unknown as Api_DispositionFile;
+const onSuccess = jest.fn();
 
 jest.mock('@/hooks/repositories/useDispositionProvider', () => ({
   useDispositionProvider: () => {
@@ -68,8 +68,12 @@ describe('OffersAndSale Container component', () => {
   ) => {
     const component = render(
       <OffersAndSaleContainer
-        dispositionFile={renderOptions?.props?.dispositionFile ?? mockGetDispositionFileApi}
+        dispositionFile={
+          renderOptions?.props?.dispositionFile ??
+          (mockDispositionFileResponse() as unknown as Api_DispositionFile)
+        }
         View={TestView}
+        onSuccess={onSuccess}
       />,
       {
         history,

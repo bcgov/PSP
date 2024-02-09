@@ -299,7 +299,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyCreatedTakeViewForm(Take take)
         {
-            var index = 0;
+            var index = take.TakeCounter;
 
             //Take Details
             AssertTrueIsDisplayed(By.XPath("//div[@data-testid='take-"+ index +"']/div/div/div/label[contains(text(),'Take added on')]"));

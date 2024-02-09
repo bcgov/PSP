@@ -198,10 +198,12 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
     setIsEditing(false);
   };
 
-  const onSuccess = (refreshProperties?: boolean) => {
-    fetchDispositionFile();
+  const onSuccess = (refreshProperties?: boolean, refreshFile?: boolean) => {
     setIsEditing(false);
     fetchLastUpdatedBy();
+    if (refreshFile) {
+      fetchDispositionFile();
+    }
     if (refreshProperties) {
       mapMachine.refreshMapProperties();
     }

@@ -238,7 +238,7 @@ describe('DispositionContainer component', () => {
     const spinner = getByTestId('filter-backdrop-loading');
     await waitForElementToBeRemoved(spinner);
 
-    await act(async () => viewProps.onSuccess());
+    await act(async () => viewProps.onSuccess(true, true));
 
     expect(mockAxios.history.get.filter(x => x.url === '/dispositionfiles/1')).toHaveLength(2);
   });

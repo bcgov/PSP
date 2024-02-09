@@ -14,7 +14,7 @@
         public string InitiatingDocument { get; set; } = null!;
         public string OtherInitiatingDocument { get; set; } = null!;
         public string InitiatingDocumentDate { get; set; } = null!;
-        public string PhysicalFileStatus { get; set; } = null!;
+        public string DispositionPhysicalFileStatus { get; set; } = null!;
         public string InitiatingBranch { get; set; } = null!;
         public string DispositionMOTIRegion { get; set; } = null!;
         public int DispositionTeamStartRow { get; set; } = 0;
@@ -36,16 +36,23 @@
         public int PurchaseNameTotalCount { get; set; } = 0;
         public List<PurchaseMember> PurchaserNames { get; set; } = new List<PurchaseMember>();
         public string PurchaserAgent { get; set; } = null!;
+        public string PurchaserAgentType { get; set; } = null!;
+        public string PurchaserAgentPrimaryContact { get; set; } = null!;
         public string PurchaserSolicitor { get; set; } = null!;
+        public string PurchaserSolicitorType { get; set; } = null!;
+        public string PurchaserSolicitorPrimaryContact { get; set; } = null!;
         public string LastConditionRemovalDate { get; set; } = null!;
         public string SaleCompletionDate { get; set; } = null!;
         public string FiscalYearOfSale { get; set; } = null!;
         public string FinalSalePrice { get; set; } = null!;
         public string RealtorCommission { get; set; } = null!;
         public string GSTRequired { get; set; } = null!;
+        public string GSTCollected { get; set; } = null!;
         public string NetBookValue { get; set; } = null!;
         public string TotalCostOfSales { get; set; } = null!;
+        public string NetProceedsBeforeSPP { get; set; } = null!;
         public string SPPAmount { get; set; } = null!;
+        public string NetProceedsAfterSPP { get; set; } = null!;
         public string RemediationCost { get; set; } = null!;
 
     }

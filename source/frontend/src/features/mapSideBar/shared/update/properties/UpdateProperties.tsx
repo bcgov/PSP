@@ -25,7 +25,7 @@ import { UpdatePropertiesYupSchema } from './UpdatePropertiesYupSchema';
 export interface IUpdatePropertiesProps {
   file: Api_File;
   setIsShowingPropertySelector: (isShowing: boolean) => void;
-  onSuccess: () => void;
+  onSuccess: (refreshProperties?: boolean) => void;
   updateFileProperties: (
     file: Api_File,
     userOverrideCodes: UserOverrideCode[],
@@ -109,7 +109,7 @@ export const UpdateProperties: React.FunctionComponent<
         }
         formikRef.current?.resetForm();
         props.setIsShowingPropertySelector(false);
-        props.onSuccess();
+        props.onSuccess(true);
       }
     } catch (e) {
       if (axios.isAxiosError(e) && (e as AxiosError).code === '409') {
