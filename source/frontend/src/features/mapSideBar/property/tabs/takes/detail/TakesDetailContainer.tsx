@@ -47,7 +47,7 @@ const TakesDetailContainer: React.FunctionComponent<ITakesDetailContainerProps> 
   return (
     <View
       onEdit={onEdit}
-      takes={orderBy(takes, t => moment(t.appCreateTimestamp), 'desc') ?? []}
+      takes={orderBy(takes, t => moment(t.id), 'desc') ?? []}
       loading={takesByFileLoading && takesCountLoading}
       allTakesCount={takesCount ?? 0}
       fileProperty={fileProperty}
