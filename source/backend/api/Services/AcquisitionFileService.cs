@@ -696,8 +696,6 @@ namespace Pims.Api.Services
             // Get the current properties in the research file
             var currentProperties = _acquisitionFilePropertyRepository.GetPropertiesByAcquisitionFileId(acquisitionFile.Internal_Id);
             var propertiesOfInterest = currentProperties.Where(p => p.Property.IsPropertyOfInterest);
-            var propertiesAccounted = currentProperties.Where(x => x.Property.IsPropertyOfInterest
-                                            && x.Property.IsOwned);
 
             // PSP-6111 Business rule: Transfer properties of interest to core inventory when acquisition file is completed
             foreach (var acquisitionProperty in propertiesOfInterest)
@@ -713,7 +711,7 @@ namespace Pims.Api.Services
                 // see psp-6589 for business rules.
                 var isOwned = !(activeTakes.All(t => (t.IsNewLandAct && COREINVENTORYINTERESTCODES.Contains(t.LandActTypeCode))
                     || t.IsNewInterestInSrw
-                    || t.IsNewLicenseToConstruct) && activeTakes.Any());
+                    || t.IsNewLicenseToConstruct) && activeTakes.Any()) || activeTakes.Any(x => x.IsThereSurplus);
                 var isPropertyOfInterest = false;
                 var isOtherInterest = !isOwned;
 
@@ -733,20 +731,6 @@ namespace Pims.Api.Services
                     throw new UserOverrideException(UserOverrideCode.PoiToInventory, "You have one or more take(s) that will be added to MoTI Inventory. Do you want to acknowledge and proceed?");
                 }
                 _propertyRepository.TransferFileProperty(property, isOwned, isPropertyOfInterest, isOtherInterest);
-            }
-
-            foreach (var acqFileProperty in propertiesAccounted)
-            {
-                var property = acqFileProperty.Property;
-                if (!userOverride)
-                {
-                    throw new UserOverrideException(UserOverrideCode.PoiToInventory, "The properties of interest will be added to the inventory as acquired properties.");
-                }
-
-                var takes = _takeRepository.GetAllByPropertyAcquisitionFileId(acqFileProperty.Internal_Id);
-                var isOwned = takes.Any(x => x.IsThereSurplus);
-
-                _propertyRepository.TransferFileProperty(property, isOwned);
             }
         }
 
