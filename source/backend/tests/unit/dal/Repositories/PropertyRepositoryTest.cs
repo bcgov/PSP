@@ -215,7 +215,7 @@ namespace Pims.Dal.Test.Repositories
         {
             // Arrange
             var repository = CreateRepositoryWithPermissions(Permissions.PropertyView);
-            var property = EntityHelper.CreateProperty(100);
+            var property = EntityHelper.CreateProperty(100, isCoreInventory: true);
             var lease = EntityHelper.CreateLease(1, addProperty: false);
             lease.OrigExpiryDate = DateTime.Now.AddDays(1);
             property.PimsPropertyLeases.Add(new PimsPropertyLease() { PropertyId = property.Internal_Id, LeaseId = lease.Internal_Id, Lease = lease });
@@ -234,7 +234,7 @@ namespace Pims.Dal.Test.Repositories
         {
             // Arrange
             var repository = CreateRepositoryWithPermissions(Permissions.PropertyView);
-            var property = EntityHelper.CreateProperty(100);
+            var property = EntityHelper.CreateProperty(100, isCoreInventory: true);
             var lease = EntityHelper.CreateLease(1, addProperty: false);
             lease.OrigExpiryDate = null;
             property.PimsPropertyLeases.Add(new PimsPropertyLease() { PropertyId = property.Internal_Id, LeaseId = lease.Internal_Id, Lease = lease });
@@ -272,7 +272,7 @@ namespace Pims.Dal.Test.Repositories
         {
             // Arrange
             var repository = CreateRepositoryWithPermissions(Permissions.PropertyView);
-            var property = EntityHelper.CreateProperty(100);
+            var property = EntityHelper.CreateProperty(100, isCoreInventory: true);
             var lease = EntityHelper.CreateLease(1, addProperty: false);
             lease.OrigExpiryDate = DateTime.Now.AddDays(10);
             lease.PimsLeaseTerms = new List<PimsLeaseTerm>()
@@ -298,7 +298,7 @@ namespace Pims.Dal.Test.Repositories
         {
             // Arrange
             var repository = CreateRepositoryWithPermissions(Permissions.PropertyView);
-            var property = EntityHelper.CreateProperty(100);
+            var property = EntityHelper.CreateProperty(100, isCoreInventory: true);
             var lease = EntityHelper.CreateLease(1, addProperty: false);
             lease.OrigExpiryDate = DateTime.Now.AddDays(10);
             lease.PimsLeaseTerms = new List<PimsLeaseTerm>()
@@ -325,7 +325,7 @@ namespace Pims.Dal.Test.Repositories
         {
             // Arrange
             var repository = CreateRepositoryWithPermissions(Permissions.PropertyView);
-            var property = EntityHelper.CreateProperty(100);
+            var property = EntityHelper.CreateProperty(100, isCoreInventory: true);
             var lease = EntityHelper.CreateLease(1, pimsLeaseStatusType: new PimsLeaseStatusType() { Id = "test2", Description = "Active", DbCreateUserid = "test", DbLastUpdateUserid = "test" }, addProperty: false);
             property.PimsPropertyLeases.Add(new PimsPropertyLease() { PropertyId = property.Internal_Id, LeaseId = lease.Internal_Id, Lease = lease });
             _helper.AddAndSaveChanges(property);
@@ -343,7 +343,7 @@ namespace Pims.Dal.Test.Repositories
         {
             // Arrange
             var repository = CreateRepositoryWithPermissions(Permissions.PropertyView);
-            var property = EntityHelper.CreateProperty(100);
+            var property = EntityHelper.CreateProperty(100, isCoreInventory: true);
             var lease = EntityHelper.CreateLease(1, pimsLeaseLicenseType: new PimsLeaseLicenseType() { Id = "test", Description = "Active", DbCreateUserid = "test", DbLastUpdateUserid = "test" }, addProperty: false);
             property.PimsPropertyLeases.Add(new PimsPropertyLease() { PropertyId = property.Internal_Id, LeaseId = lease.Internal_Id, Lease = lease });
             _helper.AddAndSaveChanges(property);
@@ -361,7 +361,7 @@ namespace Pims.Dal.Test.Repositories
         {
             // Arrange
             var repository = CreateRepositoryWithPermissions(Permissions.PropertyView);
-            var property = EntityHelper.CreateProperty(100);
+            var property = EntityHelper.CreateProperty(100, isCoreInventory: true);
             var lease = EntityHelper.CreateLease(1, pimsLeasePurposeType: new PimsLeasePurposeType() { Id = "test", Description = "Active", DbCreateUserid = "test", DbLastUpdateUserid = "test" }, addProperty: false);
             property.PimsPropertyLeases.Add(new PimsPropertyLease() { PropertyId = property.Internal_Id, LeaseId = lease.Internal_Id, Lease = lease });
             _helper.AddAndSaveChanges(property);
@@ -379,7 +379,7 @@ namespace Pims.Dal.Test.Repositories
         {
             // Arrange
             var repository = CreateRepositoryWithPermissions(Permissions.PropertyView);
-            var property = EntityHelper.CreateProperty(100);
+            var property = EntityHelper.CreateProperty(100, isCoreInventory: true);
             property.PimsPropPropAnomalyTypes.Add(new PimsPropPropAnomalyType() { PropertyAnomalyTypeCode = "test" });
             _helper.AddAndSaveChanges(property);
 
@@ -396,7 +396,7 @@ namespace Pims.Dal.Test.Repositories
         {
             // Arrange
             var repository = CreateRepositoryWithPermissions(Permissions.PropertyView);
-            var property = EntityHelper.CreateProperty(100);
+            var property = EntityHelper.CreateProperty(100, isCoreInventory: true);
             var file = EntityHelper.CreateAcquisitionFile(1);
             file.ProjectId = 1;
             property.PimsPropertyAcquisitionFiles.Add(new PimsPropertyAcquisitionFile() { AcquisitionFile = file });
@@ -415,7 +415,7 @@ namespace Pims.Dal.Test.Repositories
         {
             // Arrange
             var repository = CreateRepositoryWithPermissions(Permissions.PropertyView);
-            var property = EntityHelper.CreateProperty(100);
+            var property = EntityHelper.CreateProperty(100, isCoreInventory: true);
             property.PimsPropPropTenureTypes.Add(new PimsPropPropTenureType() { PropertyTenureTypeCode = "test" });
             _helper.AddAndSaveChanges(property);
 
@@ -432,7 +432,7 @@ namespace Pims.Dal.Test.Repositories
         {
             // Arrange
             var repository = CreateRepositoryWithPermissions(Permissions.PropertyView);
-            var property = EntityHelper.CreateProperty(100);
+            var property = EntityHelper.CreateProperty(100, isCoreInventory: true);
             property.PimsPropPropRoadTypes.Add(new PimsPropPropRoadType() { PropertyRoadTypeCode = "test" });
             _helper.AddAndSaveChanges(property);
 
@@ -449,7 +449,7 @@ namespace Pims.Dal.Test.Repositories
         {
             // Arrange
             var repository = CreateRepositoryWithPermissions(Permissions.PropertyView);
-            var property = EntityHelper.CreateProperty(100);
+            var property = EntityHelper.CreateProperty(100, isCoreInventory: true);
             property.PphStatusTypeCode = "test";
             _helper.AddAndSaveChanges(property);
 
