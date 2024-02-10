@@ -79,6 +79,28 @@ export const otherInterestIconSelect = L.icon({
   shadowSize: [41, 41],
 });
 
+// disposed icon (grey)
+export const disposedIcon = L.icon({
+  iconUrl: require('@/assets/images/pins/disposed.png') ?? 'assets/images/pins/disposed.png',
+  shadowUrl: require('@/assets/images/pins/marker-shadow.png') ?? 'marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41],
+});
+
+// disposed icon (grey) highlighted
+export const disposedIconSelect = L.icon({
+  iconUrl:
+    require('@/assets/images/pins/disposed-highlight.png') ??
+    'assets/images/pins/disposed-highlight.png',
+  shadowUrl: require('@/assets/images/pins/marker-shadow.png') ?? 'marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41],
+});
+
 // not owned property icon (orange)
 export const notOwnedPropertyIcon = L.icon({
   iconUrl:
@@ -155,7 +177,16 @@ export function pointToLayer<P extends MarkerFeature, C extends Supercluster.Clu
 export function getMarkerIcon(
   feature: Supercluster.PointFeature<PIMS_Property_Location_View | PIMS_Property_Boundary_View>,
   selected: boolean,
+  showDisposed: boolean = false,
 ): L.Icon<L.IconOptions> {
+  if (showDisposed && feature.properties.IS_DISPOSED) {
+    if (selected) {
+      return disposedIconSelect;
+    } else {
+      return disposedIcon;
+    }
+  }
+
   if (feature.properties.IS_PROPERTY_OF_INTEREST) {
     if (selected) {
       return propertyOfInterestIconSelect;
