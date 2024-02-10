@@ -8,11 +8,11 @@ import {
 } from '@/models/api/DispositionFile';
 import { ApiGen_Concepts_DispositionFileSale } from '@/models/api/generated/ApiGen_Concepts_DispositionFileSale';
 
-import { IOffersAndSaleContainerViewProps } from './OffersAndSaleContainerView';
+import { IOffersAndSaleViewProps } from './OffersAndSaleView';
 
 export interface IOffersAndSaleContainerProps {
   dispositionFile?: Api_DispositionFile;
-  View: React.FC<IOffersAndSaleContainerViewProps>;
+  View: React.FC<IOffersAndSaleViewProps>;
   onSuccess: () => void;
 }
 

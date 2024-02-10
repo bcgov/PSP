@@ -161,7 +161,7 @@ exports[`DispositionFileTabs component matches snapshot 1`] = `
                 <div
                   class="c6 text-left col"
                 >
-                  Cancelled
+                  Draft
                 </div>
               </div>
             </div>

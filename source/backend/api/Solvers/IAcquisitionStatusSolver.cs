@@ -6,6 +6,8 @@ namespace Pims.Api.Services
     {
         bool CanEditDetails(AcquisitionStatusTypes? acquisitionStatus);
 
+        bool CanEditProperties(AcquisitionStatusTypes? acquisitionStatus);
+
         bool CanEditTakes(AcquisitionStatusTypes? acquisitionStatus);
 
         bool CanEditOrDeleteCompensation(AcquisitionStatusTypes? acquisitionStatus, bool? isDraftCompensation);

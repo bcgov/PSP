@@ -31,7 +31,7 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
   const [isValid, setIsValid] = useState<boolean>(true);
   const withUserOverride = useApiUserOverride<
     (userOverrideCodes: UserOverrideCode[]) => Promise<any | void>
-  >('Failed to update Disposition File');
+  >('Failed to update Disposition File Properties');
 
   const {
     getDispositionFile: {
@@ -239,6 +239,7 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
             userOverrideCodes,
           )
           .then(response => {
+            history.push(`${stripTrailingSlash(match.url)}`);
             onSuccess();
             return response;
           });

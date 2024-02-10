@@ -140,8 +140,15 @@ const UpdateDispositionForm: React.FC<IUpdateDispositionFormProps> = ({
                 <SectionField label="Assigned date">
                   <FastDatePicker field="assignedDate" formikProps={formikProps} />
                 </SectionField>
-                <SectionField label="Disposition completed date">
-                  <FastDatePicker field="completionDate" formikProps={formikProps} />
+                <SectionField
+                  label="Disposition completed date"
+                  required={formikProps.values?.fileStatusTypeCode === 'COMPLETE'}
+                >
+                  <FastDatePicker
+                    field="completionDate"
+                    formikProps={formikProps}
+                    disabled={formikProps.values?.fileStatusTypeCode !== 'COMPLETE'}
+                  />
                 </SectionField>
               </Section>
 

@@ -5,14 +5,18 @@ import styled from 'styled-components';
 
 import { ReactComponent as EditMapMarker } from '@/assets/images/edit-map-marker.svg';
 import EditButton from '@/components/common/EditButton';
-import { Claims } from '@/constants/index';
+import TooltipIcon from '@/components/common/TooltipIcon';
+import { Claims, Roles } from '@/constants/index';
 import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
+import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
 
+import StatusUpdateSolver from '../tabs/fileDetails/detail/statusUpdateSolver';
+import { cannotEditMessage } from './constants';
 import GenerateFormContainer from './GenerateForm/GenerateFormContainer';
 import GenerateFormView from './GenerateForm/GenerateFormView';
 
 export interface IAcquisitionMenuProps {
-  acquisitionFileId: number;
+  acquisitionFile: Api_AcquisitionFile;
   items: string[];
   selectedIndex: number;
   onChange: (index: number) => void;
@@ -22,9 +26,16 @@ export interface IAcquisitionMenuProps {
 const AcquisitionMenu: React.FunctionComponent<
   React.PropsWithChildren<IAcquisitionMenuProps>
 > = props => {
-  const { hasClaim } = useKeycloakWrapper();
+  const { hasClaim, hasRole } = useKeycloakWrapper();
   const handleClick = (index: number) => {
     props.onChange(index);
+  };
+  const statusSolver = new StatusUpdateSolver(props.acquisitionFile);
+  const canEditDetails = () => {
+    if (hasRole(Roles.SYSTEM_ADMINISTRATOR) || statusSolver.canEditProperties()) {
+      return true;
+    }
+    return false;
   };
   return (
     <>
@@ -43,11 +54,17 @@ const AcquisitionMenu: React.FunctionComponent<
                 </Col>
                 <StyledMenuHeaderWrapper>
                   <StyledMenuHeader>Properties</StyledMenuHeader>
-                  {hasClaim(Claims.ACQUISITION_EDIT) && (
+                  {hasClaim(Claims.ACQUISITION_EDIT) && canEditDetails() && (
                     <EditButton
                       title="Change properties"
                       icon={<EditMapMarker width="2.4rem" height="2.4rem" />}
                       onClick={props.onShowPropertySelector}
+                    />
+                  )}
+                  {hasClaim(Claims.ACQUISITION_EDIT) && !canEditDetails() && (
+                    <TooltipIcon
+                      toolTipId={`${props?.acquisitionFile?.id || 0}-summary-cannot-edit-tooltip`}
+                      toolTip={cannotEditMessage}
                     />
                   )}
                 </StyledMenuHeaderWrapper>
@@ -73,7 +90,12 @@ const AcquisitionMenu: React.FunctionComponent<
           }
         })}
       </StyledMenuWrapper>
-      <GenerateFormContainer acquisitionFileId={props.acquisitionFileId} View={GenerateFormView} />
+      {props.acquisitionFile?.id && (
+        <GenerateFormContainer
+          acquisitionFileId={props.acquisitionFile.id}
+          View={GenerateFormView}
+        />
+      )}
     </>
   );
 };

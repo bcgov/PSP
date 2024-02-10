@@ -71,7 +71,7 @@ exports[`DispositionSummaryView component matches snapshot 1`] = `
           <div
             class="c4 text-left col"
           >
-            Cancelled
+            Draft
           </div>
         </div>
       </div>

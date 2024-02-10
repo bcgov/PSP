@@ -15,7 +15,7 @@ import { DispositionFormModel } from '../../../../models/DispositionFormModel';
 import { IUpdateDispositionFormProps } from './UpdateDispositionForm';
 
 export interface IUpdateDispositionContainerProps {
-  dispositionFile: Api_DispositionFile;
+  dispositionFile?: Api_DispositionFile;
   onSuccess: (updateProperties?: boolean, updateFile?: boolean) => void;
   View: React.FC<IUpdateDispositionFormProps>;
 }
@@ -103,6 +103,10 @@ export const UpdateDispositionContainer = React.forwardRef<
       }
     }
   };
+
+  if (!dispositionFile) {
+    return null;
+  }
 
   return (
     <View

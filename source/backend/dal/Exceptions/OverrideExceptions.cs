@@ -45,6 +45,11 @@ namespace Pims.Dal.Exceptions
             get { return new UserOverrideCode("DISPOSITION_FILE_FINAL_STATUS"); }
         }
 
+        public static UserOverrideCode DisposeOfProperties
+        {
+            get { return new UserOverrideCode("DISPOSE_OF_PROPERTIES"); }
+        }
+
         public string Code { get; private set; }
 
         private static List<UserOverrideCode> UserOverrideCodes => new List<UserOverrideCode>()
@@ -57,6 +62,7 @@ namespace Pims.Dal.Exceptions
             UserOverrideCode.ProductReuse,
             UserOverrideCode.DisposingPropertyNotInventoried,
             UserOverrideCode.DispositionFileFinalStatus,
+            UserOverrideCode.DisposeOfProperties,
         };
 
         private UserOverrideCode(string code)
