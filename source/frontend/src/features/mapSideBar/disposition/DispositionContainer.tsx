@@ -240,7 +240,7 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
           )
           .then(response => {
             history.push(`${stripTrailingSlash(match.url)}`);
-            onSuccess();
+            onSuccess(true);
             return response;
           });
       },
