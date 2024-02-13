@@ -85,7 +85,7 @@ export const DispositionRouter: React.FC<IDispositionRouterProps> = props => {
           )}
           claim={Claims.DISPOSITION_EDIT}
           key={'disposition'}
-          title={'Updpate Appraisal'}
+          title={'Update Appraisal'}
         />
         <AppRoute
           exact
