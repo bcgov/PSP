@@ -23,9 +23,9 @@ import { TenantConsumer, TenantProvider } from '@/tenants';
 import getKeycloakEventHandler from '@/utils/getKeycloakEventHandler';
 
 import App from './App';
-import * as serviceWorker from './serviceWorker.ignore';
 import { ITenantConfig2 } from './hooks/pims-api/interfaces/ITenantConfig';
 import { useRefreshSiteminder } from './hooks/useRefreshSiteminder';
+import * as serviceWorker from './serviceWorker.ignore';
 
 function prepare() {
   if (process.env.NODE_ENV === 'development') {
@@ -46,7 +46,7 @@ const Index = () => {
 };
 
 const InnerComponent = ({ tenant }: { tenant: ITenantConfig2 }) => {
-  const { refresh } = useRefreshSiteminder();
+  const refresh = useRefreshSiteminder();
   return (
     <ThemeProvider theme={{ tenant, css }}>
       <ReactKeycloakProvider

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useCallback, useMemo } from 'react';
+import { useCallback } from 'react';
 
 import { useTenant } from '@/tenants';
 
@@ -13,10 +13,5 @@ export const useRefreshSiteminder = () => {
     );
   }, [parcelsLayerUrl]);
 
-  return useMemo(
-    () => ({
-      refresh,
-    }),
-    [refresh],
-  );
+  return refresh;
 };
