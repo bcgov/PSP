@@ -1,6 +1,5 @@
 import { Formik, FormikHelpers, FormikProps } from 'formik';
 import React from 'react';
-import { Prompt } from 'react-router-dom';
 import styled from 'styled-components';
 
 import {
@@ -308,17 +307,6 @@ const AddAcquisitionDetailSubForm: React.FC<{
           </SectionField>
         </Section>
       </Container>
-
-      <Prompt
-        when={
-          (formikProps.dirty ||
-            (formikProps.values.properties !== initialValues.properties &&
-              formikProps.submitCount === 0) ||
-            (!formikProps.values.id && formikProps.values.properties.length > 0)) &&
-          !formikProps.isSubmitting
-        }
-        message="You have made changes on this form. Do you wish to leave without saving?"
-      />
 
       <AcquisitionFormModal
         message="The selected Ministry region is different from that associated to one or more selected properties.\n\nDo you want to proceed?"

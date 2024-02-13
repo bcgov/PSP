@@ -1,7 +1,6 @@
 import { Formik, FormikProps } from 'formik';
 import moment from 'moment';
 import { useEffect, useRef, useState } from 'react';
-import { Prompt } from 'react-router-dom';
 import styled from 'styled-components';
 
 import {
@@ -15,7 +14,6 @@ import {
   TextArea,
 } from '@/components/common/form';
 import { TypeaheadSelect } from '@/components/common/form/TypeaheadSelect';
-import { UnsavedChangesPrompt } from '@/components/common/form/UnsavedChangesPrompt';
 import GenericModal from '@/components/common/GenericModal';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
@@ -144,7 +142,6 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
         return (
           <StyledFormWrapper>
             <LoadingBackdrop show={isLoading}></LoadingBackdrop>
-            <UnsavedChangesPrompt />
 
             <StyledContent>
               <Section header="Requisition Details">
@@ -301,11 +298,6 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
                 </SectionField>
               </Section>
             </StyledContent>
-
-            <Prompt
-              when={formikProps.dirty}
-              message="You have made changes on this form. Do you wish to leave without saving?"
-            />
 
             <StyledFooter>
               <SidebarFooter

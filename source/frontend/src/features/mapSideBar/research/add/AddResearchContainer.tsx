@@ -2,7 +2,7 @@ import { Formik, FormikHelpers, FormikProps } from 'formik';
 import * as React from 'react';
 import { useEffect, useMemo, useRef } from 'react';
 import { MdTopic } from 'react-icons/md';
-import { Prompt, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
 
@@ -10,6 +10,7 @@ import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineCo
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
 import { useInitialMapSelectorProperties } from '@/hooks/useInitialMapSelectorProperties';
+import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
 import { Api_ResearchFile } from '@/models/api/ResearchFile';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { featuresetToMapProperty } from '@/utils/mapPropertyUtils';
@@ -28,10 +29,13 @@ export interface IAddResearchContainerProps {
 export const AddResearchContainer: React.FunctionComponent<
   React.PropsWithChildren<IAddResearchContainerProps>
 > = props => {
+  const { onClose } = props;
+
   const history = useHistory();
   const formikRef = useRef<FormikProps<ResearchForm>>(null);
   const mapMachine = useMapStateMachine();
   const selectedFeatureDataset = mapMachine.selectedFeatureDataset;
+  const { setModalContent, setDisplayModal } = useModalContext();
 
   const initialForm = useMemo(() => {
     const researchForm = new ResearchForm();
@@ -86,8 +90,21 @@ export const AddResearchContainer: React.FunctionComponent<
     return formikRef.current?.submitForm() ?? Promise.resolve();
   };
 
-  const handleCancel = () => {
-    props.onClose();
+  const cancelFunc = (resetForm: () => void, dirty: boolean) => {
+    if (!dirty) {
+      resetForm();
+      onClose();
+    } else {
+      setModalContent({
+        ...getCancelModalProps(),
+        handleOk: () => {
+          resetForm();
+          setDisplayModal(false);
+          onClose();
+        },
+      });
+      setDisplayModal(true);
+    }
   };
 
   return (
@@ -110,26 +127,15 @@ export const AddResearchContainer: React.FunctionComponent<
             <SidebarFooter
               isOkDisabled={formikProps?.isSubmitting || bcaLoading}
               onSave={handleSave}
-              onCancel={handleCancel}
+              onCancel={() => cancelFunc(formikProps.resetForm, formikProps.dirty)}
               displayRequiredFieldError={!formikProps.isValid && !!formikProps.submitCount}
             />
           }
           showCloseButton
-          onClose={handleCancel}
+          onClose={() => cancelFunc(formikProps.resetForm, formikProps.dirty)}
         >
           <StyledFormWrapper>
             <AddResearchForm />
-
-            <Prompt
-              when={
-                (formikProps.dirty ||
-                  (formikProps.values.properties !== initialForm.properties &&
-                    formikProps.submitCount === 0) ||
-                  (!formikProps.values.id && formikProps.values.properties.length > 0)) &&
-                !formikProps.isSubmitting
-              }
-              message="You have made changes on this form. Do you wish to leave without saving?"
-            />
           </StyledFormWrapper>
         </MapSideBarLayout>
       )}

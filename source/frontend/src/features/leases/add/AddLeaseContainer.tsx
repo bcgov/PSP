@@ -11,6 +11,7 @@ import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
 import SidebarFooter from '@/features/mapSideBar/shared/SidebarFooter';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
 import { useInitialMapSelectorProperties } from '@/hooks/useInitialMapSelectorProperties';
+import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { featuresetToMapProperty } from '@/utils/mapPropertyUtils';
 
@@ -25,9 +26,11 @@ export interface IAddLeaseContainerProps {
 export const AddLeaseContainer: React.FunctionComponent<
   React.PropsWithChildren<IAddLeaseContainerProps>
 > = props => {
+  const { onClose } = props;
   const history = useHistory();
   const formikRef = useRef<FormikProps<LeaseFormModel>>(null);
   const mapMachine = useMapStateMachine();
+  const { setModalContent, setDisplayModal } = useModalContext();
 
   const selectedFeatureDataset = mapMachine.selectedFeatureDataset;
 
@@ -84,7 +87,20 @@ export const AddLeaseContainer: React.FunctionComponent<
   };
 
   const handleCancel = () => {
-    props.onClose();
+    if (!formikRef.current?.dirty) {
+      formikRef.current?.resetForm();
+      onClose();
+    } else {
+      setModalContent({
+        ...getCancelModalProps(),
+        handleOk: () => {
+          formikRef.current?.resetForm();
+          setDisplayModal(false);
+          onClose();
+        },
+      });
+      setDisplayModal(true);
+    }
   };
 
   return (

@@ -5,7 +5,6 @@ import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import { Button } from '@/components/common/buttons/Button';
-import { UnsavedChangesPrompt } from '@/components/common/form/UnsavedChangesPrompt';
 import { FlexBox } from '@/components/common/styles';
 import { AddressTypes } from '@/constants/addressTypes';
 import {
@@ -167,9 +166,6 @@ const CreatePersonComponent: React.FC<FormikProps<IEditablePersonForm>> = ({
 
   return (
     <>
-      {/* Router-based confirmation popup when user tries to navigate away and form has unsaved changes */}
-      <UnsavedChangesPrompt />
-
       {/* Confirmation popup when Cancel button is clicked */}
       <CancelConfirmationModal
         variant="info"

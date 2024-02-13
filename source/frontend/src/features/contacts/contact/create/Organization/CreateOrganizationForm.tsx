@@ -5,7 +5,6 @@ import { useHistory } from 'react-router-dom';
 
 import { Button } from '@/components/common/buttons/Button';
 import { TextArea } from '@/components/common/form';
-import { UnsavedChangesPrompt } from '@/components/common/form/UnsavedChangesPrompt';
 import { Section } from '@/components/common/Section/Section';
 import { FlexBox } from '@/components/common/styles';
 import {
@@ -132,9 +131,6 @@ const CreateOrganizationComponent: React.FC<FormikProps<IEditableOrganizationFor
 
   return (
     <>
-      {/* Router-based confirmation popup when user tries to navigate away and form has unsaved changes */}
-      <UnsavedChangesPrompt />
-
       {/* Confirmation popup when Cancel button is clicked */}
       <CancelConfirmationModal
         variant="info"
