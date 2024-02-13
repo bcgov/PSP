@@ -13,7 +13,7 @@ import {
   act,
   createAxiosError,
   fillInput,
-  render,
+  renderAsync,
   RenderOptions,
   screen,
   selectOptions,
@@ -88,7 +88,7 @@ const onClose = jest.fn();
 describe('AddLeaseContainer component', () => {
   const setup = async (renderOptions: RenderOptions & Partial<IAddLeaseContainerProps> = {}) => {
     // render component under test
-    const utils = render(<AddLeaseContainer onClose={onClose} />, {
+    const utils = await renderAsync(<AddLeaseContainer onClose={onClose} />, {
       ...renderOptions,
       store: storeState,
       history,
