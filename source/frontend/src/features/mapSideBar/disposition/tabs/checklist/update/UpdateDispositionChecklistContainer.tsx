@@ -15,7 +15,7 @@ import { Api_FileWithChecklist } from '@/models/api/File';
 export interface IDispositionChecklistContainerProps {
   formikRef: React.Ref<FormikProps<ChecklistFormModel>>;
   dispositionFile?: Api_DispositionFile;
-  onSuccess: () => void;
+  onSuccess: (updateProperties?: boolean, updateFile?: boolean) => void;
   View: React.FC<IUpdateChecklistFormProps>;
 }
 
@@ -42,7 +42,7 @@ export const UpdateDispositionChecklistContainer: React.FC<IDispositionChecklist
   };
 
   const onUpdateSuccess = async (apiDispositionFile: Api_FileWithChecklist) => {
-    onSuccess && onSuccess();
+    onSuccess && onSuccess(false, true);
   };
 
   // generic error handler.

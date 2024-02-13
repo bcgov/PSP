@@ -25,7 +25,7 @@ import { UpdatePropertiesYupSchema } from './UpdatePropertiesYupSchema';
 export interface IUpdatePropertiesProps {
   file: Api_File;
   setIsShowingPropertySelector: (isShowing: boolean) => void;
-  onSuccess: (refreshProperties?: boolean) => void;
+  onSuccess: (updateProperties?: boolean, updateFile?: boolean) => void;
   updateFileProperties: (
     file: Api_File,
     userOverrideCodes: UserOverrideCode[],
