@@ -3,6 +3,7 @@ import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
 
 import { mockLookups } from '@/mocks/lookups.mock';
+import { getEmptyOrganization } from '@/mocks/organization.mock';
 import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Concepts_ResearchFile';
 import { getEmptyResearchFile } from '@/models/defaultInitializers';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
@@ -41,6 +42,7 @@ const testResearchFile: ApiGen_Concepts_ResearchFile = {
     displayOrder: null,
   },
   requestorOrganization: {
+    ...getEmptyOrganization(),
     id: 3,
     isDisabled: false,
     name: 'Dairy Queen Forever! Property Management',

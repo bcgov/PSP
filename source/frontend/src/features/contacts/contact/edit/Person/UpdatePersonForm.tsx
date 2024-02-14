@@ -18,20 +18,13 @@ import {
 } from '@/features/contacts/contact/create/components';
 import * as Styled from '@/features/contacts/contact/edit/styles';
 import {
-  apiAddressToFormAddress,
-  apiPersonToFormPerson,
-  formPersonToApiPerson,
-  getApiMailingAddress,
-} from '@/features/contacts/contactUtils';
+  IEditableOrganizationAddressForm,
+  IEditablePersonForm,
+} from '@/features/contacts/formModels';
 import { usePersonDetail } from '@/features/contacts/hooks/usePersonDetail';
 import useUpdateContact from '@/features/contacts/hooks/useUpdateContact';
 import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
 import { usePrevious } from '@/hooks/usePrevious';
-import {
-  defaultCreatePerson,
-  getDefaultAddress,
-  IEditablePersonForm,
-} from '@/interfaces/editable-contact';
 import { isValidId } from '@/utils';
 
 import PersonSubForm from '../../Person/PersonSubForm';
@@ -46,7 +39,7 @@ export const UpdatePersonForm: React.FC<{ id: number }> = ({ id }) => {
 
   // fetch person details from API for the supplied person's Id
   const { person } = usePersonDetail(id);
-  const formPerson = useMemo(() => apiPersonToFormPerson(person), [person]);
+  const formPerson = useMemo(() => IEditablePersonForm.apiPersonToFormPerson(person), [person]);
 
   // validation needs to be adjusted when country == OTHER
   const { otherCountryId } = useAddressHelpers();
@@ -56,7 +49,7 @@ export const UpdatePersonForm: React.FC<{ id: number }> = ({ id }) => {
     { setSubmitting }: FormikHelpers<IEditablePersonForm>,
   ) => {
     try {
-      let apiPerson = formPersonToApiPerson(formPerson);
+      let apiPerson = formPerson.formPersonToApiPerson();
       const personResponse = await updatePerson(apiPerson);
       const personId = personResponse?.id;
 
@@ -71,26 +64,7 @@ export const UpdatePersonForm: React.FC<{ id: number }> = ({ id }) => {
   return (
     <Formik
       component={UpdatePersonComponent}
-      initialValues={
-        !!formPerson
-          ? {
-              ...defaultCreatePerson,
-              ...formPerson,
-              mailingAddress: {
-                ...defaultCreatePerson.mailingAddress,
-                ...formPerson.mailingAddress,
-              },
-              propertyAddress: {
-                ...defaultCreatePerson.propertyAddress,
-                ...formPerson.propertyAddress,
-              },
-              billingAddress: {
-                ...defaultCreatePerson.billingAddress,
-                ...formPerson.billingAddress,
-              },
-            }
-          : defaultCreatePerson
-      }
+      initialValues={!!formPerson ? formPerson : new IEditablePersonForm()}
       enableReinitialize
       validate={(values: IEditablePersonForm) => onValidatePerson(values, otherCountryId)}
       onSubmit={onSubmit}
@@ -138,11 +112,19 @@ const UpdatePersonComponent: React.FC<
     if (useOrganizationAddress === true && organizationId) {
       getOrganization(organizationId)
         .then(({ data }) => {
-          const mailing = getApiMailingAddress(data);
-          setFieldValue('mailingAddress', apiAddressToFormAddress(mailing));
+          const mailing = data.organizationAddresses?.find(
+            a => a.addressUsageType?.id === AddressTypes.Mailing,
+          );
+          setFieldValue(
+            'mailingAddress',
+            IEditableOrganizationAddressForm.apiAddressToFormAddress(mailing),
+          );
         })
         .catch(() => {
-          setFieldValue('mailingAddress', getDefaultAddress(AddressTypes.Mailing));
+          setFieldValue(
+            'mailingAddress',
+            new IEditableOrganizationAddressForm(AddressTypes.Mailing),
+          );
           toast.error('Failed to get organization address.');
         });
     }
@@ -151,7 +133,7 @@ const UpdatePersonComponent: React.FC<
   // toggle is off - clear out existing values
   useEffect(() => {
     if (previousUseOrganizationAddress === true && useOrganizationAddress === false) {
-      setFieldValue('mailingAddress', getDefaultAddress(AddressTypes.Mailing));
+      setFieldValue('mailingAddress', new IEditableOrganizationAddressForm(AddressTypes.Mailing));
     }
   }, [previousUseOrganizationAddress, useOrganizationAddress, setFieldValue]);
 

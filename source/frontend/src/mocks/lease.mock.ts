@@ -2,6 +2,10 @@ import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Le
 import { ApiGen_Concepts_LeaseTenant } from '@/models/api/generated/ApiGen_Concepts_LeaseTenant';
 import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
+
+import { getEmptyPerson } from './contacts.mock';
+import { getEmptyOrganization } from './organization.mock';
+
 const emptyLease: ApiGen_Concepts_Lease = {
   id: 0,
   amount: null,
@@ -83,6 +87,7 @@ export const getMockApiLease: () => ApiGen_Concepts_Lease = () => ({
       leaseId: 1,
       organizationId: 2,
       organization: {
+        ...getEmptyOrganization(),
         id: 2,
         isDisabled: false,
         name: 'French Mouse Property Management',
@@ -90,7 +95,10 @@ export const getMockApiLease: () => ApiGen_Concepts_Lease = () => ({
         incorporationNumber: '',
         organizationPersons: [
           {
+            id: 1,
+            organization: null,
             person: {
+              ...getEmptyPerson(),
               id: 1,
               isDisabled: false,
               surname: 'Smith',
@@ -99,7 +107,10 @@ export const getMockApiLease: () => ApiGen_Concepts_Lease = () => ({
               preferredName: 'Tester McTest',
               personOrganizations: [
                 {
+                  id: 1,
                   personId: 1,
+                  person: null,
+                  organizationId: null,
                   rowVersion: 3,
                   organization: null,
                 },
@@ -114,7 +125,10 @@ export const getMockApiLease: () => ApiGen_Concepts_Lease = () => ({
             rowVersion: 3,
           },
           {
+            id: 1,
+            organization: null,
             person: {
+              ...getEmptyPerson(),
               id: 4,
               isDisabled: false,
               surname: 'Mouse',
@@ -122,8 +136,11 @@ export const getMockApiLease: () => ApiGen_Concepts_Lease = () => ({
               middleNames: 'Nacho Cheese',
               personOrganizations: [
                 {
+                  id: 1,
                   personId: 4,
+                  person: null,
                   rowVersion: 1,
+                  organizationId: null,
                   organization: null,
                 },
               ],
@@ -145,6 +162,7 @@ export const getMockApiLease: () => ApiGen_Concepts_Lease = () => ({
       },
       note: 'a note',
       primaryContact: {
+        ...getEmptyPerson(),
         id: 1,
         isDisabled: false,
         surname: 'Smith',
@@ -153,8 +171,11 @@ export const getMockApiLease: () => ApiGen_Concepts_Lease = () => ({
         preferredName: 'Tester McTest',
         personOrganizations: [
           {
+            id: 1,
             personId: 1,
+            organizationId: 2,
             organization: {
+              ...getEmptyOrganization(),
               id: 2,
               isDisabled: false,
               name: 'French Mouse Property Management',
@@ -162,13 +183,18 @@ export const getMockApiLease: () => ApiGen_Concepts_Lease = () => ({
               incorporationNumber: '',
               organizationPersons: [
                 {
+                  id: 1,
                   personId: 1,
                   organizationId: 2,
                   rowVersion: 3,
                   person: null,
+                  organization: null,
                 },
                 {
+                  id: 1,
+                  organization: null,
                   person: {
+                    ...getEmptyPerson(),
                     id: 4,
                     isDisabled: false,
                     surname: 'Mouse',
@@ -176,9 +202,12 @@ export const getMockApiLease: () => ApiGen_Concepts_Lease = () => ({
                     middleNames: 'Nacho Cheese',
                     personOrganizations: [
                       {
+                        id: 1,
                         personId: 4,
                         rowVersion: 1,
+                        organizationId: null,
                         organization: null,
+                        person: null,
                       },
                     ],
                     personAddresses: [],
@@ -197,6 +226,7 @@ export const getMockApiLease: () => ApiGen_Concepts_Lease = () => ({
               comment: '',
               rowVersion: 2,
             },
+            person: null,
             rowVersion: 3,
           },
         ],
@@ -228,12 +258,16 @@ export const getMockApiLease: () => ApiGen_Concepts_Lease = () => ({
       organizationId: 3,
       tenantTypeCode: { id: 'REP', description: null, displayOrder: null, isDisabled: false },
       organization: {
+        ...getEmptyOrganization(),
         id: 3,
         isDisabled: false,
         name: 'Dairy Queen Forever! Property Management',
         organizationPersons: [
           {
+            id: 1,
+            organization: null,
             person: {
+              ...getEmptyPerson(),
               id: 3,
               isDisabled: false,
               surname: 'Cheese',
@@ -241,9 +275,12 @@ export const getMockApiLease: () => ApiGen_Concepts_Lease = () => ({
               middleNames: '',
               personOrganizations: [
                 {
+                  id: 1,
                   personId: 3,
                   rowVersion: 1,
+                  organizationId: null,
                   organization: null,
+                  person: null,
                 },
               ],
               personAddresses: [],
@@ -289,6 +326,7 @@ export const getMockApiLease: () => ApiGen_Concepts_Lease = () => ({
       organizationId: 4,
       tenantTypeCode: { id: 'PMGR', description: null, displayOrder: null, isDisabled: false },
       organization: {
+        ...getEmptyOrganization(),
         id: 4,
         isDisabled: false,
         name: 'Pussycat Property Management',

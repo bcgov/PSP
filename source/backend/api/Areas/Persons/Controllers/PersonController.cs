@@ -56,12 +56,12 @@ namespace Pims.Api.Areas.Persons.Controllers
         [HttpGet("{id:long}")]
         [HasPermission(Permissions.ContactView)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(Models.Person.PersonModel), 200)]
+        [ProducesResponseType(typeof(PersonModel), 200)]
         [SwaggerOperation(Tags = new[] { "person" })]
         public IActionResult GetPerson(int id)
         {
             var person = _personService.GetPerson(id);
-            return new JsonResult(_mapper.Map<Models.Person.PersonModel>(person));
+            return new JsonResult(_mapper.Map<PersonModel>(person));
         }
 
         /// <summary>
@@ -90,15 +90,15 @@ namespace Pims.Api.Areas.Persons.Controllers
         [ProducesResponseType(typeof(Areas.Contact.Models.Contact.ContactModel), 201)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "person" })]
-        public IActionResult AddPerson([FromBody] Models.Person.PersonModel model, bool userOverride = false)
+        public IActionResult AddPerson([FromBody] PersonModel model, bool userOverride = false)
         {
             // Business rule - support country free-form value if country code is "Other". Ignore field otherwise.
             var otherCountry = _lookupRepository.GetAllCountries().FirstOrDefault(x => x.Code == Dal.Entities.CountryCodes.Other);
-            foreach (var address in model?.Addresses)
+            foreach (var personAddress in model?.PersonAddresses)
             {
-                if (otherCountry != null && address != null && address.CountryId != otherCountry.CountryId)
+                if (otherCountry != null && personAddress != null && personAddress.Address.CountryId != otherCountry.CountryId)
                 {
-                    address.CountryOther = null;
+                    personAddress.Address.CountryOther = null;
                 }
             }
 
@@ -124,14 +124,14 @@ namespace Pims.Api.Areas.Persons.Controllers
         [HttpPut("{id:long}")]
         [HasPermission(Permissions.ContactEdit)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(Models.Person.PersonModel), 200)]
+        [ProducesResponseType(typeof(PersonModel), 200)]
         [SwaggerOperation(Tags = new[] { "person" })]
-        public IActionResult UpdatePerson([FromBody] Models.Person.PersonModel personModel)
+        public IActionResult UpdatePerson([FromBody] PersonModel personModel)
         {
             var personEntity = _mapper.Map<Pims.Dal.Entities.PimsPerson>(personModel);
             var updatedPerson = _personService.UpdatePerson(personEntity, personModel.RowVersion);
 
-            return new JsonResult(_mapper.Map<Models.Person.PersonModel>(updatedPerson));
+            return new JsonResult(_mapper.Map<PersonModel>(updatedPerson));
         }
         #endregion
     }

@@ -250,6 +250,7 @@ describe('AcquisitionSummaryView component', () => {
               },
               primaryContactId: 1,
               primaryContact: {
+                ...getEmptyPerson(),
                 id: 1,
                 surname: 'Smith',
                 firstName: 'Bob',

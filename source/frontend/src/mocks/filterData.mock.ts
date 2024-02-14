@@ -115,6 +115,14 @@ export const mockApiOrganization: ApiGen_Concepts_Organization = {
   contactMethods: null,
   comment: null,
   rowVersion: null,
+  parentOrganizationId: null,
+  regionCode: null,
+  districtCode: null,
+  organizationTypeCode: null,
+  identifierTypeCode: null,
+  organizationIdentifier: null,
+  website: null,
+  parentOrganization: null,
 };
 
 export const mockUser: ApiGen_Concepts_User = {
@@ -148,12 +156,16 @@ export const mockApiPerson: ApiGen_Concepts_Person = {
       contactMethodType: toTypeCodeNullable(ContactMethodTypes.WorkPhone),
       value: '222-333-4444',
       id: 1,
+      personId: 0,
+      organizationId: null,
       rowVersion: null,
     },
     {
       contactMethodType: toTypeCodeNullable(ContactMethodTypes.WorkMobile),
       value: '555-666-7777',
       id: 2,
+      personId: 0,
+      organizationId: null,
       rowVersion: null,
     },
   ],
@@ -697,7 +709,7 @@ export const mockApiAddress: ApiGen_Concepts_Address = {
     displayOrder: 10,
   },
   postal: 'V1V1V1',
-  countryId: null,
+  countryId: 1,
   country: {
     id: 1,
     code: 'CA',
@@ -711,6 +723,8 @@ export const mockApiAddress: ApiGen_Concepts_Address = {
   longitude: null,
   comment: null,
   rowVersion: null,
+  districtCode: null,
+  regionCode: null,
 };
 
 export const mockApiProperty: ApiGen_Concepts_Property = {

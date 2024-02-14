@@ -15,7 +15,7 @@ import { useOrganizationRepository } from '@/features/contacts/repositories/useO
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
-import { ApiGen_Concepts_OrganizationPerson } from '@/models/api/generated/ApiGen_Concepts_OrganizationPerson';
+import { ApiGen_Concepts_PersonOrganization } from '@/models/api/generated/ApiGen_Concepts_PersonOrganization';
 import { exists } from '@/utils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
@@ -63,7 +63,7 @@ export const InterestHolderSubForm: React.FunctionComponent<IInterestHolderProps
   }, [orgPersons, setFieldValue, index]);
 
   const primaryContacts: SelectOption[] =
-    orgPersons?.map((orgPerson: ApiGen_Concepts_OrganizationPerson) => {
+    orgPersons?.map((orgPerson: ApiGen_Concepts_PersonOrganization) => {
       return {
         label: `${formatApiPersonNames(orgPerson.person)}`,
         value: orgPerson.personId ?? '',

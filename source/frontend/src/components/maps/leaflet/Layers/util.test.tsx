@@ -15,6 +15,7 @@ import {
   PIMS_Property_Location_View,
 } from '@/models/layers/pimsPropertyLocationView';
 
+import { createPoints } from '../../MapView.test';
 import { ICluster } from '../../types';
 import {
   createClusterMarker,
@@ -131,6 +132,68 @@ describe('mapUtils tests', () => {
         longitude: 2,
         isSensitive: false,
       };
+      it('converts properties to point features', () => {
+        expect(createPoints([property, property])).toEqual([
+          {
+            geometry: { coordinates: [2, 1], type: 'Point' },
+            properties: {
+              PROPERTY_ID: 1,
+              address: {
+                streetAddress1: '1243 St',
+                provinceId: 1,
+                municipality: '',
+                postal: '',
+              },
+              areaUnitId: PropertyAreaUnitTypes.Hectare,
+              classificationId: PropertyClassificationTypes.CoreOperational,
+              dataSourceId: PropertyDataSourceTypes.PAIMS,
+              dataSourceEffectiveDate: property.dataSourceEffectiveDate,
+              districtId: 1,
+              cluster: false,
+              id: 1,
+              isSensitive: false,
+              latitude: 1,
+              longitude: 2,
+              tenureId: PropertyTenureTypes.HighwayRoad,
+              statusId: PropertyStatusTypes.UnderAdmin,
+              regionId: 1,
+              landArea: 0,
+              landLegalDescription: '',
+              pid: '000-000-001',
+            },
+            type: 'Feature',
+          },
+          {
+            geometry: { coordinates: [2, 1], type: 'Point' },
+            properties: {
+              PROPERTY_ID: 1,
+              address: {
+                streetAddress1: '1243 St',
+                provinceId: 1,
+                municipality: '',
+                postal: '',
+              },
+              areaUnitId: PropertyAreaUnitTypes.Hectare,
+              classificationId: PropertyClassificationTypes.CoreOperational,
+              dataSourceId: PropertyDataSourceTypes.PAIMS,
+              dataSourceEffectiveDate: property.dataSourceEffectiveDate,
+              districtId: 1,
+              cluster: false,
+              id: 1,
+              isSensitive: false,
+              latitude: 1,
+              longitude: 2,
+              tenureId: PropertyTenureTypes.HighwayRoad,
+              statusId: PropertyStatusTypes.UnderAdmin,
+              regionId: 1,
+              landArea: 0,
+              landLegalDescription: '',
+              pid: '000-000-001',
+            },
+            type: 'Feature',
+          },
+        ]);
+      });
     });
   });
 

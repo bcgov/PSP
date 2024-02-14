@@ -9,8 +9,8 @@ import { SectionField } from '@/components/common/Section/SectionField';
 import TooltipIcon from '@/components/common/TooltipIcon';
 import * as Styled from '@/features/contacts/contact/edit/styles';
 import { usePersonOrganizationTypeahead } from '@/features/contacts/hooks/usePersonOrganizationTypeahead';
-import { IEditablePersonForm } from '@/interfaces/editable-contact';
 
+import { IEditablePersonForm } from '../../formModels';
 import { Address, ContactEmailList, ContactPhoneList } from '../create/components';
 
 interface IPersonSubFormProps {

@@ -1,4 +1,5 @@
 import { Claims } from '@/constants/claims';
+import { getEmptyOrganization } from '@/mocks/organization.mock';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
 import { ApiGen_Concepts_Project } from '@/models/api/generated/ApiGen_Concepts_Project';
@@ -165,6 +166,7 @@ describe('Acquisition Search Results Table', () => {
               acquisitionFileId: 5,
               organizationId: 6,
               organization: {
+                ...getEmptyOrganization(),
                 id: 6,
                 isDisabled: false,
                 name: 'FORTIS BC',

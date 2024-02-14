@@ -4,6 +4,9 @@ import { ApiGen_Concepts_DispositionFileOffer } from '@/models/api/generated/Api
 import { ApiGen_Concepts_DispositionFileSale } from '@/models/api/generated/ApiGen_Concepts_DispositionFileSale';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 
+import { getEmptyPerson } from './contacts.mock';
+import { getEmptyOrganization } from './organization.mock';
+
 export const mockDispositionFileResponse = (
   id = 1,
   name = 'Test Disposition File',
@@ -54,6 +57,7 @@ export const mockDispositionFileResponse = (
       dispositionFileId: 120,
       personId: 6,
       person: {
+        ...getEmptyPerson(),
         id: 6,
         isDisabled: false,
         surname: 'Sanchez',
@@ -84,6 +88,7 @@ export const mockDispositionFileResponse = (
       dispositionFileId: 120,
       personId: 9,
       person: {
+        ...getEmptyPerson(),
         id: 9,
         isDisabled: false,
         surname: 'Monga',
@@ -307,6 +312,7 @@ export const mockDispositionFileSaleApi = (
     dispositionSaleId: 1,
     personId: 1000,
     person: {
+      ...getEmptyPerson(),
       id: 1000,
       isDisabled: false,
       surname: 'DOE',
@@ -331,6 +337,7 @@ export const mockDispositionFileSaleApi = (
       dispositionSaleId: 1,
       personId: 12,
       person: {
+        ...getEmptyPerson(),
         id: 12,
         isDisabled: false,
         surname: 'Cheese',
@@ -354,6 +361,7 @@ export const mockDispositionFileSaleApi = (
       dispositionSaleId: 1,
       personId: 15,
       person: {
+        ...getEmptyPerson(),
         id: 15,
         isDisabled: false,
         surname: 'Sanchez',
@@ -379,6 +387,7 @@ export const mockDispositionFileSaleApi = (
       person: null,
       organizationId: 1,
       organization: {
+        ...getEmptyOrganization(),
         id: 1,
         isDisabled: false,
         name: 'Ministry of Transportation and Infrastructure',
@@ -392,6 +401,7 @@ export const mockDispositionFileSaleApi = (
       },
       primaryContactId: 16,
       primaryContact: {
+        ...getEmptyPerson(),
         id: 16,
         isDisabled: false,
         surname: 'Rodriguez',
@@ -412,6 +422,7 @@ export const mockDispositionFileSaleApi = (
     dispositionSaleId: 1,
     personId: 1001,
     person: {
+      ...getEmptyPerson(),
       id: 1001,
       isDisabled: false,
       surname: 'DOE',
@@ -472,6 +483,7 @@ export const mockDispositionSaleApi = (
       person: null,
       organizationId: 2,
       organization: {
+        ...getEmptyOrganization(),
         id: 2,
         isDisabled: false,
         incorporationNumber: '123456',
@@ -485,6 +497,7 @@ export const mockDispositionSaleApi = (
       },
       primaryContactId: 2,
       primaryContact: {
+        ...getEmptyPerson(),
         id: 2,
         isDisabled: false,
         surname: 'Wilson',
@@ -506,6 +519,7 @@ export const mockDispositionSaleApi = (
       person: null,
       organizationId: 3,
       organization: {
+        ...getEmptyOrganization(),
         id: 3,
         isDisabled: false,
         incorporationNumber: '123456',
@@ -519,6 +533,7 @@ export const mockDispositionSaleApi = (
       },
       primaryContactId: 3,
       primaryContact: {
+        ...getEmptyPerson(),
         id: 3,
         isDisabled: false,
         surname: 'Cheese',
@@ -538,6 +553,7 @@ export const mockDispositionSaleApi = (
       dispositionSaleId: id,
       personId: 15,
       person: {
+        ...getEmptyPerson(),
         id: 15,
         isDisabled: false,
         surname: 'Sanchez',
@@ -564,6 +580,7 @@ export const mockDispositionSaleApi = (
     person: null,
     organizationId: 3,
     organization: {
+      ...getEmptyOrganization(),
       id: 3,
       isDisabled: false,
       incorporationNumber: '123456',
@@ -577,6 +594,7 @@ export const mockDispositionSaleApi = (
     },
     primaryContactId: 3,
     primaryContact: {
+      ...getEmptyPerson(),
       id: 3,
       isDisabled: false,
       surname: 'Cheese',
@@ -598,6 +616,7 @@ export const mockDispositionSaleApi = (
     person: null,
     organizationId: 2,
     organization: {
+      ...getEmptyOrganization(),
       id: 2,
       isDisabled: false,
       incorporationNumber: '5678',
@@ -611,6 +630,7 @@ export const mockDispositionSaleApi = (
     },
     primaryContactId: 2,
     primaryContact: {
+      ...getEmptyPerson(),
       id: 2,
       isDisabled: false,
       surname: 'Wilson',

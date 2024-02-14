@@ -4,8 +4,11 @@ import { createMemoryHistory } from 'history';
 import { ContactMethodTypes } from '@/constants/contactMethodType';
 import { AddressTypes } from '@/constants/index';
 import useAddContact from '@/features/contacts/hooks/useAddContact';
-import { IEditableOrganization, IEditableOrganizationAddress } from '@/interfaces/editable-contact';
+import { getEmptyAddress } from '@/mocks/address.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
+import { getEmptyOrganization } from '@/mocks/organization.mock';
+import { ApiGen_Concepts_Organization } from '@/models/api/generated/ApiGen_Concepts_Organization';
+import { ApiGen_Concepts_OrganizationAddress } from '@/models/api/generated/ApiGen_Concepts_OrganizationAddress';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, fillInput, render, RenderOptions, waitFor } from '@/utils/test-utils';
 
@@ -66,7 +69,7 @@ describe('CreateOrganizationForm', () => {
 
   describe('when Save button is clicked', () => {
     it('should save the form with minimal data', async () => {
-      addOrganization.mockResolvedValue({ id: 1 } as IEditableOrganization);
+      addOrganization.mockResolvedValue({ id: 1 } as ApiGen_Concepts_Organization);
       const { getSaveButton, container } = setup();
       // provide required fields
       await act(async () => {
@@ -88,7 +91,7 @@ describe('CreateOrganizationForm', () => {
     });
 
     it(`should save the form with address information when 'Other' country selected and no province is supplied`, async () => {
-      addOrganization.mockResolvedValue({ id: 1 } as IEditableOrganization);
+      addOrganization.mockResolvedValue({ id: 1 } as ApiGen_Concepts_Organization);
       const { getSaveButton, container } = setup();
       // provide required fields
       await act(async () => {
@@ -100,24 +103,36 @@ describe('CreateOrganizationForm', () => {
           ContactMethodTypes.WorkEmail,
           'select',
         );
-        await fillInput(container, 'mailingAddress.streetAddress1', mockAddress.streetAddress1);
-        await fillInput(container, 'mailingAddress.municipality', mockAddress.municipality);
+        await fillInput(
+          container,
+          'mailingAddress.streetAddress1',
+          mockAddress.address?.streetAddress1,
+        );
+        await fillInput(
+          container,
+          'mailingAddress.municipality',
+          mockAddress.address?.municipality,
+        );
       });
 
       // wait for re-render upon changing country to OTHER
       await act(async () => fillInput(container, 'mailingAddress.countryId', 4, 'select'));
 
       await act(async () => {
-        await fillInput(container, 'mailingAddress.countryOther', mockAddress.countryOther);
-        await fillInput(container, 'mailingAddress.postal', mockAddress.postal);
+        await fillInput(
+          container,
+          'mailingAddress.countryOther',
+          mockAddress.address?.countryOther,
+        );
+        await fillInput(container, 'mailingAddress.postal', mockAddress.address?.postal);
       });
 
       const save = getSaveButton();
       await act(async () => userEvent.click(save));
 
-      const formDataWithAddress: IEditableOrganization = {
+      const formDataWithAddress: ApiGen_Concepts_Organization = {
         ...expectedFormData,
-        addresses: [mockAddress],
+        organizationAddresses: [mockAddress],
       };
 
       expect(addOrganization).toBeCalledWith(formDataWithAddress, expect.anything(), false);
@@ -126,40 +141,53 @@ describe('CreateOrganizationForm', () => {
   });
 });
 
-const expectedFormData: IEditableOrganization = {
+const expectedFormData: ApiGen_Concepts_Organization = {
+  ...getEmptyOrganization(),
+  id: 0,
+  rowVersion: null,
   isDisabled: false,
   name: 'FooBarBaz Property Management',
   alias: '',
   incorporationNumber: '',
   comment: '',
-  persons: undefined,
-  addresses: [],
+  organizationPersons: null,
+  organizationAddresses: null,
   contactMethods: [
     {
-      contactMethodTypeCode: {
+      id: 0,
+      rowVersion: null,
+      contactMethodType: {
         id: 'WORKEMAIL',
         description: null,
         isDisabled: false,
         displayOrder: null,
       },
       value: 'foo@bar.com',
+      personId: null,
+      organizationId: null,
     },
   ],
 };
 
-const mockAddress: IEditableOrganizationAddress = {
-  streetAddress1: 'Test Street',
-  streetAddress2: '',
-  streetAddress3: '',
-  municipality: 'Amsterdam',
-  provinceId: undefined,
-  countryId: 4,
-  countryOther: 'Netherlands',
-  postal: '123456',
-  addressTypeId: {
+const mockAddress: ApiGen_Concepts_OrganizationAddress = {
+  id: 0,
+  organizationId: 0,
+  rowVersion: null,
+  addressUsageType: {
     id: AddressTypes.Mailing,
     description: null,
     isDisabled: false,
     displayOrder: null,
+  },
+  address: {
+    ...getEmptyAddress(),
+    streetAddress1: 'Test Street',
+    streetAddress2: '',
+    streetAddress3: '',
+    municipality: 'Amsterdam',
+    provinceStateId: null,
+    countryId: 4,
+    countryOther: 'Netherlands',
+    postal: '123456',
   },
 };

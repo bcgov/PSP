@@ -1,4 +1,4 @@
-import { Formik, FormikHelpers, FormikProps, getIn } from 'formik';
+import * as formik from 'formik';
 import { useMemo, useRef, useState } from 'react';
 import { AiOutlineExclamationCircle } from 'react-icons/ai';
 import { useHistory } from 'react-router-dom';
@@ -15,12 +15,8 @@ import {
   useAddressHelpers,
 } from '@/features/contacts/contact/create/components';
 import * as Styled from '@/features/contacts/contact/create/styles';
-import { formOrganizationToApiOrganization } from '@/features/contacts/contactUtils';
+import { IEditableOrganizationForm } from '@/features/contacts/formModels';
 import useAddContact from '@/features/contacts/hooks/useAddContact';
-import {
-  defaultCreateOrganization,
-  IEditableOrganizationForm,
-} from '@/interfaces/editable-contact';
 import { isValidId } from '@/utils';
 
 import OrganizationSubForm from '../../Organization/OrganizationSubForm';
@@ -39,15 +35,15 @@ export const CreateOrganizationForm: React.FunctionComponent<unknown> = () => {
   // validation needs to be adjusted when country == OTHER
   const { otherCountryId } = useAddressHelpers();
 
-  const formikRef = useRef<FormikProps<IEditableOrganizationForm>>(null);
+  const formikRef = useRef<formik.FormikProps<IEditableOrganizationForm>>(null);
 
   const onSubmit = async (
     formOrganization: IEditableOrganizationForm,
-    { setSubmitting }: FormikHelpers<IEditableOrganizationForm>,
+    { setSubmitting }: formik.FormikHelpers<IEditableOrganizationForm>,
   ) => {
     try {
       setShowDuplicateModal(false);
-      let newOrganization = formOrganizationToApiOrganization(formOrganization);
+      let newOrganization = formOrganization.formOrganizationToApiOrganization();
 
       const organizationResponse = await addOrganization(
         newOrganization,
@@ -72,9 +68,9 @@ export const CreateOrganizationForm: React.FunctionComponent<unknown> = () => {
 
   return (
     <>
-      <Formik
+      <formik.Formik
         component={CreateOrganizationComponent}
-        initialValues={defaultCreateOrganization}
+        initialValues={new IEditableOrganizationForm()}
         validate={(values: IEditableOrganizationForm) =>
           onValidateOrganization(values, otherCountryId)
         }
@@ -100,8 +96,7 @@ export default CreateOrganizationForm;
 /**
  * Sub-component that is wrapped by Formik
  */
-const CreateOrganizationComponent: React.FC<FormikProps<IEditableOrganizationForm>> = ({
-  values,
+const CreateOrganizationComponent: React.FC<formik.FormikProps<IEditableOrganizationForm>> = ({
   errors,
   touched,
   dirty,
@@ -127,7 +122,7 @@ const CreateOrganizationComponent: React.FC<FormikProps<IEditableOrganizationFor
       (!!touched.mailingAddress?.streetAddress1 ||
         !!touched.propertyAddress?.streetAddress1 ||
         !!touched.billingAddress?.streetAddress1) &&
-      getIn(errors, 'needsContactMethod')
+      formik.getIn(errors, 'needsContactMethod')
     );
   }, [touched, errors]);
 

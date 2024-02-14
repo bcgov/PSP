@@ -137,7 +137,14 @@ describe('AddLeaseTenantContainer component', () => {
           organization: {
             ...getEmptyOrganization(),
             organizationPersons: [
-              { person: getEmptyPerson(), organizationId: 1, personId: 2, rowVersion: null },
+              {
+                id: 1,
+                organization: null,
+                person: getEmptyPerson(),
+                organizationId: 1,
+                personId: 2,
+                rowVersion: null,
+              },
             ],
           },
         },

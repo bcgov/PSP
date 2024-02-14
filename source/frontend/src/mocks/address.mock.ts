@@ -17,6 +17,8 @@ export const getEmptyAddress: () => ApiGen_Concepts_Address = () => ({
   latitude: null,
   longitude: null,
   comment: null,
+  regionCode: null,
+  districtCode: null,
   rowVersion: null,
 });
 

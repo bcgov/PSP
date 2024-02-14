@@ -2,6 +2,7 @@ import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
 
 import { Claims } from '@/constants/index';
+import { getEmptyPerson } from '@/mocks/contacts.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { ApiGen_Concepts_PropertyContact } from '@/models/api/generated/ApiGen_Concepts_PropertyContact';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
@@ -68,6 +69,7 @@ const mockPropertyContact: ApiGen_Concepts_PropertyContact = {
   ...emptyPropertyContact,
   id: 1,
   person: {
+    ...getEmptyPerson(),
     id: 1,
     isDisabled: false,
     surname: 'Doe',

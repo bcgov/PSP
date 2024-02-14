@@ -40,7 +40,6 @@ describe('useApiAccessRequests api hook', () => {
     expect(response.status).toBe(200);
     expect(response.data).toStrictEqual({
       items: [mockApiAccessRequest],
-      pageIndex: 1,
       page: 1,
       quantity: 5,
       total: 10,

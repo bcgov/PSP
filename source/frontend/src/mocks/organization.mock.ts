@@ -12,6 +12,7 @@ export const getMockOrganization = ({
   id?: number;
   name?: string;
 } = {}): ApiGen_Concepts_Organization => ({
+  ...getEmptyOrganization(),
   id: id,
   name: name,
   isDisabled: false,
@@ -23,21 +24,26 @@ export const getMockOrganization = ({
       id: 1,
       contactMethodType: toTypeCodeNullable(ContactMethodTypes.WorkPhone),
       value: '222-333-4444',
+      personId: null,
+      organizationId: 0,
       rowVersion: null,
     },
     {
       id: 2,
       contactMethodType: toTypeCodeNullable(ContactMethodTypes.WorkMobile),
       value: '555-666-7777',
-
+      personId: null,
+      organizationId: 0,
       rowVersion: null,
     },
   ],
   organizationPersons: [
     {
+      id: 1,
       personId: 3,
       person: null,
       organizationId: id,
+      organization: null,
       rowVersion: 1,
     },
   ],
@@ -64,5 +70,13 @@ export const getEmptyOrganization = (): ApiGen_Concepts_Organization => {
     contactMethods: null,
     comment: null,
     rowVersion: null,
+    parentOrganizationId: null,
+    regionCode: null,
+    districtCode: null,
+    organizationTypeCode: null,
+    identifierTypeCode: null,
+    organizationIdentifier: null,
+    website: null,
+    parentOrganization: null,
   };
 };

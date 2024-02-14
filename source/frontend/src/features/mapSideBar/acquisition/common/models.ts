@@ -245,6 +245,8 @@ export class OwnerAddressFormModel {
       latitude: null,
       longitude: null,
       region: null,
+      districtCode: null,
+      regionCode: null,
     };
   }
 }

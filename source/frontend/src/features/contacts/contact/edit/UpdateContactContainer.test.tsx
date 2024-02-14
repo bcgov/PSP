@@ -4,8 +4,11 @@ import { Route } from 'react-router-dom';
 import { ContactMethodTypes } from '@/constants/contactMethodType';
 import { useOrganizationDetail } from '@/features/contacts/hooks/useOrganizationDetail';
 import { usePersonDetail } from '@/features/contacts/hooks/usePersonDetail';
-import { IEditableOrganization, IEditablePerson } from '@/interfaces/editable-contact';
+import { getEmptyPerson } from '@/mocks/contacts.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
+import { getEmptyOrganization } from '@/mocks/organization.mock';
+import { ApiGen_Concepts_Organization } from '@/models/api/generated/ApiGen_Concepts_Organization';
+import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_Person';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { toTypeCode } from '@/utils/formUtils';
 import { act, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
@@ -17,34 +20,45 @@ const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
 
-const mockPerson: IEditablePerson = {
+const mockPerson: ApiGen_Concepts_Person = {
+  ...getEmptyPerson(),
   id: 1,
   isDisabled: false,
   firstName: 'Chester',
   surname: 'Tester',
   comment: 'I got comments for you',
-  organization: null,
-  useOrganizationAddress: false,
-  addresses: [],
+  personAddresses: [],
   contactMethods: [
     {
-      contactMethodTypeCode: toTypeCode(ContactMethodTypes.PersonalEmail),
+      id: 1,
+      rowVersion: null,
+      contactMethodType: toTypeCode(ContactMethodTypes.PersonalEmail),
       value: 'foo@bar.com',
+      personId: 1,
+      organizationId: null,
     },
   ],
 };
 
-const mockOrganization: IEditableOrganization = {
+const mockOrganization: ApiGen_Concepts_Organization = {
+  ...getEmptyOrganization(),
   id: 1,
   isDisabled: false,
   name: 'FooBarBaz Property Management',
   alias: '',
   incorporationNumber: 'BC123456789',
   comment: 'I got comments for you',
-  persons: [],
-  addresses: [],
+  organizationPersons: [],
+  organizationAddresses: [],
   contactMethods: [
-    { contactMethodTypeCode: toTypeCode(ContactMethodTypes.WorkEmail), value: 'foo@bar.com' },
+    {
+      rowVersion: null,
+      id: 1,
+      contactMethodType: toTypeCode(ContactMethodTypes.WorkEmail),
+      value: 'foo@bar.com',
+      personId: null,
+      organizationId: 1,
+    },
   ],
 };
 

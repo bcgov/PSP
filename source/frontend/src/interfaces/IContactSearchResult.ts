@@ -125,6 +125,11 @@ export function toPerson(baseModel?: IContactSearchResult): ApiGen_Concepts_Pers
     contactMethods: null,
     personAddresses: null,
     personOrganizations: null,
+    addressComment: null,
+    birthDate: null,
+    nameSuffix: null,
+    propertyActivityId: null,
+    useOrganizationAddress: null,
   };
 }
 
@@ -134,6 +139,7 @@ export function toOrganization(
   if (baseModel === undefined || baseModel.id.startsWith('P')) {
     return null;
   }
+
   return {
     id: baseModel.organizationId || 0,
     name: baseModel.organizationName || '',
@@ -145,5 +151,13 @@ export function toOrganization(
     contactMethods: null,
     organizationAddresses: null,
     organizationPersons: null,
+    districtCode: null,
+    identifierTypeCode: null,
+    organizationIdentifier: null,
+    organizationTypeCode: null,
+    parentOrganization: null,
+    parentOrganizationId: null,
+    regionCode: null,
+    website: null,
   };
 }

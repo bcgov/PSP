@@ -216,6 +216,8 @@ describe('AddLeaseTenantForm component', () => {
         ...getEmptyOrganization(),
         organizationPersons: [
           {
+            id: 1,
+            organization: null,
             personId: 3,
             organizationId: 3,
             rowVersion: 1,
@@ -241,12 +243,16 @@ describe('AddLeaseTenantForm component', () => {
         ...getEmptyOrganization(),
         organizationPersons: [
           {
+            id: 1,
+            organization: null,
             personId: 3,
             organizationId: 3,
             rowVersion: 1,
             person: { ...getEmptyPerson(), firstName: 'test', surname: 'testerson' },
           },
           {
+            id: 2,
+            organization: null,
             personId: 2,
             organizationId: 3,
             rowVersion: 1,
