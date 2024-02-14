@@ -128,7 +128,7 @@ namespace Pims.Api.Services
             if (!userOverrides.Contains(UserOverrideCode.DispositionFileFinalStatus) && !doNotAddToStatuses.Contains(currentDispositionFile.DispositionFileStatusTypeCode)
                 && doNotAddToStatuses.Contains(dispositionFile.DispositionFileStatusTypeCode))
             {
-                throw new UserOverrideException(UserOverrideCode.DispositionFileFinalStatus, "You are changing this file to a non-editable state. Only system administrators can edit the file when set to Archived, Cancelled or Completed state). Do you wish to continue?");
+                throw new UserOverrideException(UserOverrideCode.DispositionFileFinalStatus, "You are changing this file to a non-editable state. (Only system administrators can edit the file when set to Archived, Cancelled or Completed state). Do you wish to continue?");
             }
             else if (currentDispositionFile.DispositionFileStatusTypeCode != EnumDispositionFileStatusTypeCode.COMPLETE.ToString()
                 && dispositionFile.DispositionFileStatusTypeCode == EnumDispositionFileStatusTypeCode.COMPLETE.ToString())
