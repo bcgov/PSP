@@ -36,6 +36,7 @@ export interface PIMS_Property_Location_View {
   readonly IS_OWNED: string | null;
   readonly IS_PROPERTY_OF_INTEREST: string | null;
   readonly IS_DISPOSED: string | null;
+  readonly IS_OTHER_INTEREST: string | null;
   readonly IS_VISIBLE_TO_OTHER_AGENCIES: string | null;
   readonly ZONING: string | null;
   readonly ZONING_POTENTIAL: string | null;
@@ -76,6 +77,7 @@ export const EmptyPropertyLocation: PIMS_Property_Location_View = {
   IS_OWNED: null,
   IS_PROPERTY_OF_INTEREST: null,
   IS_DISPOSED: null,
+  IS_OTHER_INTEREST: null,
   IS_VISIBLE_TO_OTHER_AGENCIES: null,
   ZONING: null,
   ZONING_POTENTIAL: null,
@@ -119,6 +121,7 @@ export interface PIMS_Property_Boundary_View {
   readonly IS_OWNED: string | null;
   readonly IS_PROPERTY_OF_INTEREST: string | null;
   readonly IS_DISPOSED: string | null;
+  readonly IS_OTHER_INTEREST: string | null;
   readonly IS_VISIBLE_TO_OTHER_AGENCIES: string | null;
   readonly ZONING: string | null;
   readonly ZONING_POTENTIAL: string | null;
