@@ -8,6 +8,7 @@ using Pims.Api.Areas.Property.Models.Search;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Helpers.Extensions;
 using Pims.Api.Models.Base;
+using Pims.Api.Models.Concepts.Property;
 using Pims.Api.Policies;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Repositories;
@@ -57,7 +58,7 @@ namespace Pims.Api.Areas.Property.Controllers
         [HttpGet]
         [HasPermission(Permissions.PropertyView)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(PageModel<Models.Search.PropertyModel>), 200)]
+        [ProducesResponseType(typeof(PageModel<PropertyModel>), 200)]
         [SwaggerOperation(Tags = new[] { "property" })]
         public IActionResult GetProperties()
         {
@@ -74,7 +75,7 @@ namespace Pims.Api.Areas.Property.Controllers
         [HttpPost("filter")]
         [HasPermission(Permissions.PropertyView)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(PageModel<Models.Search.PropertyModel>), 200)]
+        [ProducesResponseType(typeof(PageModel<PropertyModel>), 200)]
         [SwaggerOperation(Tags = new[] { "property" })]
         public IActionResult GetProperties([FromBody] PropertyFilterModel filter)
         {
@@ -85,7 +86,7 @@ namespace Pims.Api.Areas.Property.Controllers
             }
 
             var page = _propertyRepository.GetPage((PropertyFilter)filter);
-            var result = _mapper.Map<PageModel<Models.Search.PropertyModel>>(page);
+            var result = _mapper.Map<PageModel<PropertyModel>>(page);
             return new JsonResult(result);
         }
 

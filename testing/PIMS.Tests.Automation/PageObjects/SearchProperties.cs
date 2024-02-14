@@ -10,6 +10,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By searchPropertyTypeSelect = By.Id("input-searchBy");
         private By searchPropertyByPIDPINInput = By.Id("input-pinOrPid");
         private By searchPropertyByAddressInput = By.Id("input-address");
+        private By searchPropertyByPlanInput = By.Id("input-planNumber");
         private By searchPropertyAddressSuggestionsGroup = By.CssSelector("div[class='suggestionList']");
         private By searchPropertyAddressSuggestions1stOption = By.CssSelector("div[class='suggestionList'] option:nth-child(1)");
         private By searchPropertySearchBttn = By.Id("search-button");
@@ -46,7 +47,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void SearchPropertyByPINPID(string PID)
         {
-            Wait(3000);
+            Wait();
 
             WaitUntilClickable(searchPropertyTypeSelect);
             ChooseSpecificSelectOption(searchPropertyTypeSelect, "PID/PIN");
@@ -57,24 +58,39 @@ namespace PIMS.Tests.Automation.PageObjects
             WaitUntilSpinnerDisappear();
         }
 
-        public void SearchPropertyByAddress(string Address)
+        public void SearchPropertyByAddress(string address)
         {
             Wait(3000);
 
             WaitUntilClickable(searchPropertyTypeSelect);
             ChooseSpecificSelectOption(searchPropertyTypeSelect, "Address");
-            webDriver.FindElement(searchPropertyByAddressInput).SendKeys(Address);
+            webDriver.FindElement(searchPropertyByAddressInput).SendKeys(address);
 
             WaitUntilVisible(searchPropertyAddressSuggestionsGroup);
             FocusAndClick(searchPropertyAddressSuggestions1stOption);
             
             webDriver.FindElement(searchPropertySearchBttn).Click();
+            WaitUntilSpinnerDisappear();
+        }
+
+        public void SearchPropertyByPlan(string plan)
+        {
+            Wait();
+
+            WaitUntilClickable(searchPropertyTypeSelect);
+            ChooseSpecificSelectOption(searchPropertyTypeSelect, "Plan #");
+            webDriver.FindElement(searchPropertyByPlanInput).SendKeys(plan);
+
+            FocusAndClick(searchPropertySearchBttn);
+            WaitUntilSpinnerDisappear();
         }
 
         public void SearchPropertyReset()
         {
             WaitUntilClickable(searchPropertyResetBttn);
             webDriver.FindElement(searchPropertyResetBttn).Click();
+
+            WaitUntilSpinnerDisappear();
         }
 
         public void SelectFoundPin()
@@ -125,5 +141,13 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait(2000);
             return webDriver.FindElements(searchPropertyFoundPin).Count();
         }
+
+        public int PropertiesClustersFoundCount()
+        {
+            Wait(2000);
+            return webDriver.FindElements(searchPropertyFoundCluster).Count();
+        }
+
+        
     }
 }

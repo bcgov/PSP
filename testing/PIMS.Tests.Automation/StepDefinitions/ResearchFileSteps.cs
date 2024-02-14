@@ -240,7 +240,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             researchFiles.CreateResearchFile(researchFile);
 
             //Fill name to selected property
-            sharedFileProperties.AddNameSelectedProperty("Automated Property from Pin", 1);
+            sharedFileProperties.AddNameSelectedProperty("Automated Property from Pin", 0);
 
             //Save Research File
             researchFiles.SaveResearchFile();

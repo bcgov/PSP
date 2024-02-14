@@ -451,12 +451,7 @@ namespace PIMS.Tests.Automation.PageObjects
             }
             catch (WebDriverTimeoutException)
             {
-                if (webDriver.FindElements(acquisitionFileConfirmationModal).Count() > 0)
-                {
-                    Assert.Equal("Unsaved Changes", sharedModals.ModalHeader());
-                    Assert.Equal("You have made changes on this form. Do you wish to leave without saving?", sharedModals.ModalContent());
-                    sharedModals.ModalClickOKBttn();
-                }
+                sharedModals.CancelActionModal();
             }
         }
 
@@ -610,8 +605,8 @@ namespace PIMS.Tests.Automation.PageObjects
                         AssertTrueElementContains(By.XPath("//span[@data-testid='owner["+ i +"]']/div[4]/div[2]"), acquisition.AcquisitionOwners[i].MailCity);
                     if (acquisition.AcquisitionOwners[i].MailProvince != "")
                         AssertTrueElementContains(By.XPath("//span[@data-testid='owner["+ i +"]']/div[4]/div[2]"), acquisition.AcquisitionOwners[i].MailProvince);
-                    //if (acquisition.AcquisitionOwners[i].MailOtherCountry != "")
-                        //AssertTrueElementContains(By.XPath("//span[@data-testid='owner["+ i +"]']/div[4]/div[2]"), acquisition.AcquisitionOwners[i].MailOtherCountry);
+                    if (acquisition.AcquisitionOwners[i].MailOtherCountry != "")
+                        AssertTrueElementContains(By.XPath("//span[@data-testid='owner["+ i +"]']/div[4]/div[2]"), "Other - " + acquisition.AcquisitionOwners[i].MailOtherCountry);
                     if (acquisition.AcquisitionOwners[i].MailPostalCode != "")
                         AssertTrueElementContains(By.XPath("//span[@data-testid='owner["+ i +"]']/div[4]/div[2]"), acquisition.AcquisitionOwners[i].MailPostalCode);
                 }

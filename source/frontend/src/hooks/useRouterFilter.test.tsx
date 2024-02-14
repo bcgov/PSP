@@ -37,6 +37,7 @@ const emptyFilter = {
   planNumber: '',
   quantity: undefined,
   searchBy: 'address',
+  ownership: 'isCoreInventory,isPropertyOfInterest,isOtherInterest',
 };
 
 const defaultFilter = {
@@ -61,6 +62,7 @@ const defaultFilter = {
   name: '',
   latitude: '',
   longitude: '',
+  ownership: 'isCoreInventory,isPropertyOfInterest,isOtherInterest,isDisposed',
 };
 
 let filter: any = defaultFilter;

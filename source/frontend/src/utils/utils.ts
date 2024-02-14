@@ -1,6 +1,6 @@
 import { AxiosError, AxiosResponse } from 'axios';
 import { FormikProps, getIn } from 'formik';
-import { isEmpty, isNull, isUndefined, keys, lowerFirst, startCase } from 'lodash';
+import { isEmpty, isNull, isUndefined, lowerFirst, startCase } from 'lodash';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
 
 import { SelectOption } from '@/components/common/form';
@@ -136,7 +136,7 @@ export const generateMultiSortCriteria = (sort: TableSort<any>) => {
     return '';
   }
 
-  return keys(sort).map(key => `${startCase(key).replaceAll(' ', '')} ${sort[key]}`);
+  return Object.keys(sort).map(key => `${startCase(key).replaceAll(' ', '')} ${sort[key]}`);
 };
 
 /**

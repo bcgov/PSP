@@ -1,7 +1,6 @@
 using Mapster;
 using Pims.Api.Models.Base;
 using Pims.Core.Extensions;
-using System;
 using Entity = Pims.Dal.Entities;
 
 namespace Pims.Api.Models.Concepts.Property
@@ -39,6 +38,8 @@ namespace Pims.Api.Models.Concepts.Property
                 .Map(dest => dest.Notes, src => src.Notes)
                 .Map(dest => dest.IsOwned, src => src.IsOwned)
                 .Map(dest => dest.IsPropertyOfInterest, src => src.IsPropertyOfInterest)
+                .Map(dest => dest.IsOtherInterest, src => src.IsOtherInterest)
+                .Map(dest => dest.IsDisposed, src => src.IsDisposed)
                 .Map(dest => dest.IsVisibleToOtherAgencies, src => src.IsVisibleToOtherAgencies)
 
                 // multi-selects
@@ -92,6 +93,9 @@ namespace Pims.Api.Models.Concepts.Property
 
                 .Map(dest => dest.Notes, src => src.Notes)
                 .Map(dest => dest.IsOwned, src => src.IsOwned)
+                .Map(dest => dest.IsPropertyOfInterest, src => src.IsPropertyOfInterest)
+                .Map(dest => dest.IsOtherInterest, src => src.IsOtherInterest)
+                .Map(dest => dest.IsDisposed, src => src.IsDisposed)
                 .Map(dest => dest.IsVisibleToOtherAgencies, src => src.IsVisibleToOtherAgencies)
 
                 // multi-selects

@@ -3,11 +3,12 @@ import { createMemoryHistory } from 'history';
 import { Claims } from '@/constants';
 import { mockDispositionFileResponse } from '@/mocks/dispositionFiles.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
+import { Api_DispositionFile } from '@/models/api/DispositionFile';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes/lookupCodesSlice';
 import { render, RenderOptions } from '@/utils/test-utils';
 
 import OffersAndSaleContainer, { IOffersAndSaleContainerProps } from './OffersAndSaleContainer';
-import { IOffersAndSaleContainerViewProps } from './OffersAndSaleContainerView';
+import { IOffersAndSaleViewProps } from './OffersAndSaleView';
 
 const history = createMemoryHistory();
 
@@ -39,7 +40,7 @@ const mockDeleteDispositionFileOfferApi = {
   loading: false,
 };
 
-const mockGetDispositionFileApi = mockDispositionFileResponse(1);
+const onSuccess = jest.fn();
 
 jest.mock('@/hooks/repositories/useDispositionProvider', () => ({
   useDispositionProvider: () => {
@@ -53,8 +54,8 @@ jest.mock('@/hooks/repositories/useDispositionProvider', () => ({
 }));
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-let viewProps: IOffersAndSaleContainerViewProps | undefined;
-const TestView: React.FC<IOffersAndSaleContainerViewProps> = props => {
+let viewProps: IOffersAndSaleViewProps | undefined;
+const TestView: React.FC<IOffersAndSaleViewProps> = props => {
   viewProps = props;
   return <span>Content Rendered</span>;
 };
@@ -67,8 +68,12 @@ describe('OffersAndSale Container component', () => {
   ) => {
     const component = render(
       <OffersAndSaleContainer
-        dispositionFile={renderOptions?.props?.dispositionFile ?? mockGetDispositionFileApi}
+        dispositionFile={
+          renderOptions?.props?.dispositionFile ??
+          (mockDispositionFileResponse() as unknown as Api_DispositionFile)
+        }
         View={TestView}
+        onSuccess={onSuccess}
       />,
       {
         history,

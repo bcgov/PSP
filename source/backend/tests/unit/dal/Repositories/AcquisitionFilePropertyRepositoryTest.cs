@@ -142,7 +142,7 @@ namespace Pims.Dal.Test.Repositories
         }
         #endregion
 
-        #region Add
+        #region Update
         [Fact]
         public void Update_Success()
         {

@@ -1,8 +1,8 @@
 import { Formik, FormikHelpers, FormikProps } from 'formik';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import { Select } from '@/components/common/form';
+import { ProjectSelector, Select, SelectOption } from '@/components/common/form';
 import { FastDatePicker } from '@/components/common/form/FastDatePicker';
 import { Input } from '@/components/common/form/Input';
 import { UserRegionSelectContainer } from '@/components/common/form/UserRegionSelect/UserRegionSelectContainer';
@@ -13,7 +13,10 @@ import * as API from '@/constants/API';
 import DispositionTeamSubForm from '@/features/mapSideBar/disposition/form/DispositionTeamSubForm';
 import { UpdateDispositionFormYupSchema } from '@/features/mapSideBar/disposition/models/AddDispositionFormYupSchema';
 import { DispositionFormModel } from '@/features/mapSideBar/disposition/models/DispositionFormModel';
+import { useProjectProvider } from '@/hooks/repositories/useProjectProvider';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
+import { IAutocompletePrediction } from '@/interfaces/IAutocomplete';
+import { ApiGen_Concepts_Product } from '@/models/api/generated/ApiGen_Concepts_Product';
 
 export interface IUpdateDispositionFormProps {
   formikRef: React.Ref<FormikProps<DispositionFormModel>>;
@@ -31,7 +34,12 @@ const UpdateDispositionForm: React.FC<IUpdateDispositionFormProps> = ({
   onSubmit,
   loading,
 }) => {
+  const [projectProducts, setProjectProducts] = useState<ApiGen_Concepts_Product[] | undefined>(
+    undefined,
+  );
+
   const { getOptionsByType } = useLookupCodeHelpers();
+  const { retrieveProjectProducts } = useProjectProvider();
 
   const dispositionFundingTypes = getOptionsByType(API.DISPOSITION_FUNDING_TYPES);
   const dispositionStatusTypesOptions = getOptionsByType(API.DISPOSITION_STATUS_TYPES);
@@ -46,6 +54,28 @@ const UpdateDispositionForm: React.FC<IUpdateDispositionFormProps> = ({
   const dispositionPhysicalFileStatusOptions = getOptionsByType(
     API.DISPOSITION_PHYSICAL_STATUS_TYPES,
   );
+
+  const onMinistryProjectSelected = React.useCallback(
+    async (param: IAutocompletePrediction[]) => {
+      if (param.length > 0) {
+        if (param[0].id) {
+          const result = await retrieveProjectProducts(param[0].id);
+          if (result) {
+            setProjectProducts(result as unknown as ApiGen_Concepts_Product[]);
+          }
+        }
+      } else {
+        setProjectProducts(undefined);
+      }
+    },
+    [retrieveProjectProducts],
+  );
+
+  useEffect(() => {
+    if (initialValues.project) {
+      onMinistryProjectSelected([initialValues.project]);
+    }
+  }, [initialValues, onMinistryProjectSelected]);
 
   return (
     <Formik<DispositionFormModel>
@@ -73,8 +103,30 @@ const UpdateDispositionForm: React.FC<IUpdateDispositionFormProps> = ({
                 </SectionField>
               </Section>
               <Section header="Project">
-                <SectionField label="Ministry project"></SectionField>
-                <SectionField label="Product"></SectionField>
+                <SectionField label="Ministry project">
+                  <ProjectSelector
+                    field="project"
+                    onChange={(vals: IAutocompletePrediction[]) => {
+                      onMinistryProjectSelected(vals);
+                      if (vals.length === 0) {
+                        formikProps.setFieldValue('productId', '');
+                      }
+                    }}
+                  />
+                </SectionField>
+
+                {projectProducts && (
+                  <SectionField label="Product">
+                    <Select
+                      field="productId"
+                      options={projectProducts.map<SelectOption>(x => {
+                        return { label: x.code + ' ' + x.description || '', value: x.id || 0 };
+                      })}
+                      placeholder="Select..."
+                    />
+                  </SectionField>
+                )}
+
                 <SectionField label="Funding">
                   <Select
                     field="fundingTypeCode"
@@ -88,8 +140,15 @@ const UpdateDispositionForm: React.FC<IUpdateDispositionFormProps> = ({
                 <SectionField label="Assigned date">
                   <FastDatePicker field="assignedDate" formikProps={formikProps} />
                 </SectionField>
-                <SectionField label="Disposition completed date">
-                  <FastDatePicker field="completionDate" formikProps={formikProps} />
+                <SectionField
+                  label="Disposition completed date"
+                  required={formikProps.values?.fileStatusTypeCode === 'COMPLETE'}
+                >
+                  <FastDatePicker
+                    field="completionDate"
+                    formikProps={formikProps}
+                    disabled={formikProps.values?.fileStatusTypeCode !== 'COMPLETE'}
+                  />
                 </SectionField>
               </Section>
 

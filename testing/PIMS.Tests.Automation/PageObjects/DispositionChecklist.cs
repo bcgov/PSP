@@ -140,8 +140,12 @@ namespace PIMS.Tests.Automation.PageObjects
         private By checklistSaleInformationItem10Select = By.Id("input-checklistSections[4].items[9].statusType");
         private By checklistSaleInformationItem11Select = By.Id("input-checklistSections[4].items[10].statusType");
 
+        private SharedModals sharedModals;
+
         public DispositionChecklist(IWebDriver webDriver) : base(webDriver)
-        { }
+        {
+            sharedModals = new SharedModals(webDriver);
+        }
 
         public void NavigateChecklistTab()
         {
@@ -161,6 +165,14 @@ namespace PIMS.Tests.Automation.PageObjects
             ButtonElement("Save");
 
             AssertTrueIsDisplayed(checklistEditBttn);
+        }
+
+        public void CancelDispositionFileChecklist()
+        {
+            Wait();
+            ButtonElement("Cancel");
+
+            sharedModals.CancelActionModal();
         }
 
         public void VerifyChecklistInitViewForm()

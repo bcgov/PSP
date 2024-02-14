@@ -1,8 +1,9 @@
 import { AxiosError } from 'axios';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
+import { SideBarContext } from '@/features/mapSideBar/context/sidebarContext';
 import { DispositionSaleFormModel } from '@/features/mapSideBar/disposition/models/DispositionSaleFormModel';
 import { useDispositionProvider } from '@/hooks/repositories/useDispositionProvider';
 import { IApiError } from '@/interfaces/IApiError';
@@ -21,6 +22,7 @@ const UpdateDispositionSaleContainer: React.FunctionComponent<
   const history = useHistory();
   const location = useLocation();
   const backUrl = location.pathname.split(`/sale/update`)[0];
+  const { setStaleLastUpdatedBy } = useContext(SideBarContext);
 
   const initialValues = new DispositionSaleFormModel(null, dispositionFileId, null);
   const [dispositionSale, setDispositionSale] = useState<DispositionSaleFormModel>(initialValues);
@@ -51,6 +53,7 @@ const UpdateDispositionSaleContainer: React.FunctionComponent<
 
   const handleSucces = async () => {
     history.push(backUrl);
+    setStaleLastUpdatedBy(true);
   };
 
   const handleSave = async (dispositionSale: ApiGen_Concepts_DispositionFileSale) => {

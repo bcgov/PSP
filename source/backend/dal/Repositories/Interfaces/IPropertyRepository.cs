@@ -31,8 +31,10 @@ namespace Pims.Dal.Repositories
 
         void Delete(PimsProperty property);
 
-        PimsProperty TransferFileProperty(PimsProperty property, bool isOwned, bool isPropertyOfInterest = false);
+        PimsProperty TransferFileProperty(PimsProperty property, bool isOwned, bool isPropertyOfInterest = false, bool isDisposed = false, bool isOtherInterest = false);
 
         HashSet<long> GetMatchingIds(PropertyFilterCriteria filter);
+
+        short GetPropertyRegion(long id);
     }
 }
