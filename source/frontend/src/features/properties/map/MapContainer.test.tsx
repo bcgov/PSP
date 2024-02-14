@@ -78,7 +78,7 @@ interface ParcelSeed {
   pid?: string;
 }
 
-const largeMockParcels: ParcelSeed[] = [
+export const largeMockParcels: ParcelSeed[] = [
   { id: 1, latitude: 53.917061, longitude: -122.749672 },
   { id: 2, latitude: 53.917062, longitude: -122.749692 },
   { id: 3, latitude: 53.917063, longitude: -122.749682 },
@@ -92,14 +92,14 @@ const largeMockParcels: ParcelSeed[] = [
   { id: 11, latitude: 53.918172, longitude: -122.749772 },
 ];
 
-const distantMockParcels: ParcelSeed[] = [
+export const distantMockParcels: ParcelSeed[] = [
   { id: 1, latitude: 53.917061, longitude: -122.749672, propertyId: '1' },
   { id: 2, latitude: 54.917062, longitude: -123.749692, propertyId: '2' },
   { id: 3, latitude: 55.917063, longitude: -124.749682, propertyId: '3' },
   { id: 4, latitude: 56.917064, longitude: -125.749672, propertyId: '4' },
 ];
 
-const createPimsFeatures = (
+export const createPimsFeatures = (
   parcelSeed: ParcelSeed[],
 ): FeatureCollection<Point, PIMS_Property_Location_View> => {
   return {
