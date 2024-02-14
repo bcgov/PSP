@@ -31,7 +31,7 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
   const [isValid, setIsValid] = useState<boolean>(true);
   const withUserOverride = useApiUserOverride<
     (userOverrideCodes: UserOverrideCode[]) => Promise<any | void>
-  >('Failed to update Disposition File');
+  >('Failed to update Disposition File Properties');
 
   const {
     getDispositionFile: {
@@ -198,10 +198,12 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
     setIsEditing(false);
   };
 
-  const onSuccess = (refreshProperties?: boolean) => {
-    fetchDispositionFile();
+  const onSuccess = (refreshProperties?: boolean, refreshFile?: boolean) => {
     setIsEditing(false);
     fetchLastUpdatedBy();
+    if (refreshFile) {
+      fetchDispositionFile();
+    }
     if (refreshProperties) {
       mapMachine.refreshMapProperties();
     }
@@ -237,7 +239,8 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
             userOverrideCodes,
           )
           .then(response => {
-            onSuccess();
+            history.push(`${stripTrailingSlash(match.url)}`);
+            onSuccess(true);
             return response;
           });
       },

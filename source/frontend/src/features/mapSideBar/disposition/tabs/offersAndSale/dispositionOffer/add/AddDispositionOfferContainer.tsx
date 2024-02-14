@@ -14,11 +14,12 @@ import { DispositionOfferFormModel } from '../models/DispositionOfferFormModel';
 export interface IAddDispositionOfferContainerProps {
   dispositionFileId: number;
   View: React.FC<IDispositionOfferFormProps>;
+  onSuccess: () => void;
 }
 
 const AddDispositionOfferContainer: React.FunctionComponent<
   React.PropsWithChildren<IAddDispositionOfferContainerProps>
-> = ({ dispositionFileId, View }) => {
+> = ({ dispositionFileId, View, onSuccess }) => {
   const history = useHistory();
   const location = useLocation();
 
@@ -37,6 +38,7 @@ const AddDispositionOfferContainer: React.FunctionComponent<
   };
 
   const handleSuccess = async () => {
+    onSuccess();
     history.push(backUrl);
   };
 

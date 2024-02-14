@@ -584,6 +584,7 @@ exports[`UpdateDispositionForm component renders as expected 1`] = `
                   <input
                     autocomplete="off"
                     class="c7 form-control date-picker"
+                    disabled=""
                     id="datepicker-completionDate"
                     name="completionDate"
                     placeholder="MMM DD, YYYY"

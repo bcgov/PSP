@@ -5,12 +5,16 @@ import EditButton from '@/components/common/EditButton';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledEditWrapper, StyledSummarySection } from '@/components/common/Section/SectionStyles';
+import TooltipIcon from '@/components/common/TooltipIcon';
 import { StyledLink } from '@/components/maps/leaflet/LayerPopup/styles';
-import { Claims } from '@/constants';
+import { Claims, Roles } from '@/constants';
+import { cannotEditMessage } from '@/features/mapSideBar/acquisition/common/constants';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { Api_DispositionFile } from '@/models/api/DispositionFile';
 import { prettyFormatDate } from '@/utils';
 import { formatApiPersonNames } from '@/utils/personUtils';
+
+import DispositionStatusUpdateSolver from './DispositionStatusUpdateSolver';
 
 export interface IDispositionSummaryViewProps {
   dispositionFile?: Api_DispositionFile;
@@ -22,6 +26,13 @@ export const DispositionSummaryView: React.FunctionComponent<IDispositionSummary
   onEdit,
 }) => {
   const keycloak = useKeycloakWrapper();
+  const statusSolver = new DispositionStatusUpdateSolver(dispositionFile);
+  const canEditDetails = () => {
+    if (keycloak.hasRole(Roles.SYSTEM_ADMINISTRATOR) || statusSolver.canEditProperties()) {
+      return true;
+    }
+    return false;
+  };
 
   const projectName = dispositionFile?.project
     ? dispositionFile?.project?.code + ' - ' + dispositionFile?.project?.description
@@ -34,8 +45,18 @@ export const DispositionSummaryView: React.FunctionComponent<IDispositionSummary
   return (
     <StyledSummarySection>
       <StyledEditWrapper className="mr-3 my-1">
-        {keycloak.hasClaim(Claims.DISPOSITION_EDIT) && dispositionFile !== undefined ? (
+        {keycloak.hasClaim(Claims.DISPOSITION_EDIT) &&
+        dispositionFile !== undefined &&
+        canEditDetails() ? (
           <EditButton title="Edit disposition file" onClick={onEdit} />
+        ) : null}
+        {keycloak.hasClaim(Claims.DISPOSITION_EDIT) &&
+        dispositionFile !== undefined &&
+        !canEditDetails() ? (
+          <TooltipIcon
+            toolTipId={`${dispositionFile?.id || 0}-summary-cannot-edit-tooltip`}
+            toolTip={cannotEditMessage}
+          />
         ) : null}
       </StyledEditWrapper>
       <Section>

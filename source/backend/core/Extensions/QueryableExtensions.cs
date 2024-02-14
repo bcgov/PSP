@@ -13,7 +13,9 @@ namespace Pims.Core.Extensions
         #region Variables
         private static readonly string[] _orderByDescending = new[] { "desc", "descending" };
         private static readonly MethodInfo OrderByMethod = typeof(Queryable).GetMethods().Single(method => method.Name == "OrderBy" && method.GetParameters().Length == 2);
+        private static readonly MethodInfo ThenByMethod = typeof(Queryable).GetMethods().Single(method => method.Name == "ThenBy" && method.GetParameters().Length == 2);
         private static readonly MethodInfo OrderByDescendingMethod = typeof(Queryable).GetMethods().Single(method => method.Name == "OrderByDescending" && method.GetParameters().Length == 2);
+        private static readonly MethodInfo ThenByDescendingMethod = typeof(Queryable).GetMethods().Single(method => method.Name == "ThenByDescending" && method.GetParameters().Length == 2);
         private static readonly MethodInfo GeneratePropertyPathLambdaMethod = typeof(QueryableExtensions).GetMethod(nameof(GeneratePropertyPathLambda), BindingFlags.NonPublic | BindingFlags.Static);
 
         /// <summary>
@@ -22,9 +24,10 @@ namespace Pims.Core.Extensions
         /// </summary>
         /// <typeparam name="T">The type of the property being used for this order by.</typeparam>
         /// <param name="source"></param>
+        /// <param name="isFirstOrderBy"></param>
         /// <param name="propertyName"></param>
         /// <returns></returns>
-        public static IQueryable<T> OrderByProperty<T>(this IQueryable<T> source, params string[] propertyName)
+        public static IQueryable<T> OrderByProperty<T>(this IQueryable<T> source, bool isFirstOrderBy, params string[] propertyName)
         {
             if (propertyName == null)
             {
@@ -43,16 +46,17 @@ namespace Pims.Core.Extensions
 
                 if (parts.Length == 2 && _orderByDescending.Contains(parts[1].ToLower()))
                 {
-                    query = query.OrderByPropertyDescending(parts[0]);
+                    query = query.OrderByPropertyDescending(isFirstOrderBy, parts[0]);
                 }
                 else
                 {
                     var rType = GetPropertyPathType<T>(parts[0]) ?? throw new InvalidOperationException($"The property path '{typeof(T).Name}.{parts[0]}' did not return a type.");
                     var convertMethod = GeneratePropertyPathLambdaMethod.MakeGenericMethod(new[] { typeof(T), rType });
                     var orderExpression = convertMethod.Invoke(null, new[] { parts[0] });
+                    var orderMethod = isFirstOrderBy ? OrderByMethod : ThenByMethod;
                     if (orderExpression != null)
                     {
-                        var genericMethod = OrderByMethod.MakeGenericMethod(typeof(T), rType);
+                        var genericMethod = orderMethod.MakeGenericMethod(typeof(T), rType);
                         query = (IQueryable<T>)genericMethod.Invoke(null, new[] { query, orderExpression });
                     }
                     else
@@ -65,10 +69,11 @@ namespace Pims.Core.Extensions
                         ParameterExpression parameterExpression = Expression.Parameter(typeof(T));
                         Expression orderByProperty = Expression.Property(parameterExpression, parts[0]);
                         LambdaExpression lambda = Expression.Lambda(orderByProperty, parameterExpression);
-                        MethodInfo genericMethod = OrderByMethod.MakeGenericMethod(typeof(T), orderByProperty.Type);
+                        MethodInfo genericMethod = orderMethod.MakeGenericMethod(typeof(T), orderByProperty.Type);
                         query = (IQueryable<T>)genericMethod.Invoke(null, new object[] { query, lambda });
                     }
                 }
+                isFirstOrderBy = false;
             }
             return query;
         }
@@ -81,7 +86,7 @@ namespace Pims.Core.Extensions
         /// <param name="source"></param>
         /// <param name="propertyName"></param>
         /// <returns></returns>
-        public static IQueryable<T> OrderByPropertyDescending<T>(this IQueryable<T> source, params string[] propertyName)
+        private static IQueryable<T> OrderByPropertyDescending<T>(this IQueryable<T> source, bool isFirstOrderBy, params string[] propertyName)
         {
             if (propertyName == null)
             {
@@ -94,9 +99,10 @@ namespace Pims.Core.Extensions
                 var rType = GetPropertyPathType<T>(prop);
                 var convertMethod = GeneratePropertyPathLambdaMethod.MakeGenericMethod(new[] { typeof(T), rType });
                 var orderExpression = convertMethod.Invoke(null, new[] { prop });
+                var orderMethod = isFirstOrderBy ? OrderByDescendingMethod : ThenByDescendingMethod;
                 if (orderExpression != null)
                 {
-                    var genericMethod = OrderByDescendingMethod.MakeGenericMethod(typeof(T), rType);
+                    var genericMethod = orderMethod.MakeGenericMethod(typeof(T), rType);
                     query = (IQueryable<T>)genericMethod.Invoke(null, new[] { query, orderExpression });
                 }
                 else
@@ -109,7 +115,7 @@ namespace Pims.Core.Extensions
                     ParameterExpression parameterExpression = Expression.Parameter(typeof(T));
                     Expression orderByProperty = Expression.Property(parameterExpression, prop);
                     LambdaExpression lambda = Expression.Lambda(orderByProperty, parameterExpression);
-                    MethodInfo genericMethod = OrderByDescendingMethod.MakeGenericMethod(typeof(T), orderByProperty.Type);
+                    MethodInfo genericMethod = orderMethod.MakeGenericMethod(typeof(T), orderByProperty.Type);
                     query = (IQueryable<T>)genericMethod.Invoke(null, new object[] { query, lambda });
                 }
             }
@@ -154,7 +160,7 @@ namespace Pims.Core.Extensions
             var type = typeof(T);
             foreach (var part in path.Split('.'))
             {
-                var prop = type.GetCachedProperties().FirstOrDefault(p => p.Name == part) ?? throw new ArgumentException($"Property path '{type.Name}.{path}' is invalid.", nameof(path));
+                var prop = type.GetCachedProperties().FirstOrDefault(p => p.Name.ToLower() == part.ToLower()) ?? throw new ArgumentException($"Property path '{type.Name}.{path}' is invalid.", nameof(path));
                 type = prop.PropertyType.IsEnumerable() && prop.PropertyType != typeof(string) ? prop.PropertyType.GetItemType() : prop.PropertyType;
             }
 

@@ -3,6 +3,7 @@ import { FormikHelpers, FormikProps } from 'formik';
 import React from 'react';
 
 import { ModalSize } from '@/components/common/GenericModal';
+import { DispositionFileStatus } from '@/constants/dispositionFileStatus';
 import { useDispositionProvider } from '@/hooks/repositories/useDispositionProvider';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
 import { useModalContext } from '@/hooks/useModalContext';
@@ -14,8 +15,8 @@ import { DispositionFormModel } from '../../../../models/DispositionFormModel';
 import { IUpdateDispositionFormProps } from './UpdateDispositionForm';
 
 export interface IUpdateDispositionContainerProps {
-  dispositionFile: Api_DispositionFile;
-  onSuccess: () => void;
+  dispositionFile?: Api_DispositionFile;
+  onSuccess: (updateProperties?: boolean, updateFile?: boolean) => void;
   View: React.FC<IUpdateDispositionFormProps>;
 }
 
@@ -50,7 +51,17 @@ export const UpdateDispositionContainer = React.forwardRef<
 
         if (!!response?.id) {
           formikHelpers?.resetForm();
-          onSuccess();
+          const activeTypeCodes = [
+            DispositionFileStatus.Active.toString(),
+            DispositionFileStatus.Draft.toString(),
+            DispositionFileStatus.Hold.toString(),
+          ];
+          //refresh the map properties if this disposition file was set to a final state.
+          onSuccess(
+            !!dispositionFile.fileStatusTypeCode?.id &&
+              !activeTypeCodes.includes(dispositionFile.fileStatusTypeCode.id),
+            true,
+          );
         }
       }
     } finally {
@@ -92,6 +103,10 @@ export const UpdateDispositionContainer = React.forwardRef<
       }
     }
   };
+
+  if (!dispositionFile) {
+    return null;
+  }
 
   return (
     <View

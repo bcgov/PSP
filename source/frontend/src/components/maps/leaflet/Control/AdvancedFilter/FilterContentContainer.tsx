@@ -16,7 +16,7 @@ export const FilterContentContainer: React.FC<
 > = ({ View }) => {
   const mapMachine = useMapStateMachine();
 
-  const setVisiblePimsProperties = mapMachine.setVisiblePimsProperties;
+  const { setVisiblePimsProperties, setShowDisposed } = mapMachine;
 
   const { getMatchingProperties } = usePimsPropertyRepository();
 
@@ -36,8 +36,9 @@ export const FilterContentContainer: React.FC<
   const onChange = useCallback(
     (model: PropertyFilterFormModel) => {
       filterProperties(model.toApi());
+      setShowDisposed(model.isDisposed);
     },
-    [filterProperties],
+    [filterProperties, setShowDisposed],
   );
 
   return <View onChange={onChange} isLoading={getMatchingProperties.loading} />;

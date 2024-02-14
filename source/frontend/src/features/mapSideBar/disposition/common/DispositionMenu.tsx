@@ -5,11 +5,16 @@ import styled from 'styled-components';
 
 import { ReactComponent as EditMapMarker } from '@/assets/images/edit-map-marker.svg';
 import EditButton from '@/components/common/EditButton';
-import { Claims } from '@/constants/index';
+import TooltipIcon from '@/components/common/TooltipIcon';
+import { Claims, Roles } from '@/constants/index';
 import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
+import { Api_DispositionFile } from '@/models/api/DispositionFile';
+
+import { cannotEditMessage } from '../../acquisition/common/constants';
+import DispositionStatusUpdateSolver from '../tabs/fileDetails/detail/DispositionStatusUpdateSolver';
 
 export interface IDispositionMenuProps {
-  dispositionFileId: number;
+  dispositionFile?: Api_DispositionFile;
   items: string[];
   selectedIndex: number;
   onChange: (index: number) => void;
@@ -19,10 +24,18 @@ export interface IDispositionMenuProps {
 const DispositionMenu: React.FunctionComponent<
   React.PropsWithChildren<IDispositionMenuProps>
 > = props => {
-  const { hasClaim } = useKeycloakWrapper();
+  const { hasClaim, hasRole } = useKeycloakWrapper();
   const handleClick = (index: number) => {
     props.onChange(index);
   };
+  const statusSolver = new DispositionStatusUpdateSolver(props.dispositionFile);
+  const canEditDetails = () => {
+    if (hasRole(Roles.SYSTEM_ADMINISTRATOR) || statusSolver.canEditProperties()) {
+      return true;
+    }
+    return false;
+  };
+
   return (
     <>
       <StyledMenuWrapper>
@@ -40,11 +53,17 @@ const DispositionMenu: React.FunctionComponent<
                 </Col>
                 <StyledMenuHeaderWrapper>
                   <StyledMenuHeader>Properties</StyledMenuHeader>
-                  {hasClaim(Claims.DISPOSITION_EDIT) && (
+                  {hasClaim(Claims.DISPOSITION_EDIT) && canEditDetails() && (
                     <EditButton
                       title="Change properties"
                       icon={<EditMapMarker width="2.4rem" height="2.4rem" />}
                       onClick={props.onShowPropertySelector}
+                    />
+                  )}
+                  {hasClaim(Claims.DISPOSITION_EDIT) && !canEditDetails() && (
+                    <TooltipIcon
+                      toolTipId={`${props?.dispositionFile?.id || 0}-summary-cannot-edit-tooltip`}
+                      toolTip={cannotEditMessage}
                     />
                   )}
                 </StyledMenuHeaderWrapper>

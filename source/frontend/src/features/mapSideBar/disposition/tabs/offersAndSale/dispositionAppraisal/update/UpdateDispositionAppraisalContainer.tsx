@@ -13,11 +13,12 @@ import { IDispositionAppraisalFormProps } from '../form/DispositionAppraisalForm
 export interface IUpdateDispositionAppraisalContainerProps {
   dispositionFileId: number;
   View: React.FC<IDispositionAppraisalFormProps>;
+  onSuccess: () => void;
 }
 
 const UpdateDispositionAppraisalContainer: React.FunctionComponent<
   React.PropsWithChildren<IUpdateDispositionAppraisalContainerProps>
-> = ({ dispositionFileId, View }) => {
+> = ({ dispositionFileId, View, onSuccess }) => {
   const history = useHistory();
   const location = useLocation();
   const backUrl = location.pathname.split(`/appraisal`)[0];
@@ -51,7 +52,8 @@ const UpdateDispositionAppraisalContainer: React.FunctionComponent<
     }
   };
 
-  const handleSucces = async () => {
+  const handleSuccess = async () => {
+    onSuccess();
     history.push(backUrl);
   };
 
@@ -73,7 +75,7 @@ const UpdateDispositionAppraisalContainer: React.FunctionComponent<
       initialValues={dispositionAppraisal}
       loading={loadingAppraisal || creatingAppraisal || updatingAppraisal}
       onSave={handleSave}
-      onSuccess={handleSucces}
+      onSuccess={handleSuccess}
       onCancel={() => history.push(backUrl)}
       onError={onError}
     ></View>
