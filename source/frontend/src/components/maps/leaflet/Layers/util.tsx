@@ -178,8 +178,8 @@ export function getMarkerIcon(
   feature: Supercluster.PointFeature<PIMS_Property_Location_View | PIMS_Property_Boundary_View>,
   selected: boolean,
   showDisposed: boolean = false,
-): L.Icon<L.IconOptions> {
-  if (showDisposed && feature.properties.IS_DISPOSED) {
+): L.Icon<L.IconOptions> | null {
+  if (showDisposed && feature?.properties?.IS_DISPOSED) {
     if (selected) {
       return disposedIconSelect;
     } else {
@@ -187,7 +187,7 @@ export function getMarkerIcon(
     }
   }
 
-  if (feature.properties.IS_PROPERTY_OF_INTEREST) {
+  if (feature?.properties?.IS_PROPERTY_OF_INTEREST) {
     if (selected) {
       return propertyOfInterestIconSelect;
     } else {
@@ -195,18 +195,22 @@ export function getMarkerIcon(
     }
   }
 
-  if (feature.properties.IS_OWNED) {
+  if (feature?.properties?.IS_OWNED) {
     if (selected) {
       return parcelIconSelect;
     }
     return parcelIcon;
   }
 
-  if (selected) {
-    return otherInterestIconSelect;
-  } else {
-    return otherInterestIcon;
+  if (feature?.properties?.IS_OTHER_INTEREST) {
+    if (selected) {
+      return otherInterestIconSelect;
+    } else {
+      return otherInterestIcon;
+    }
   }
+
+  return null;
 }
 
 /**
@@ -243,7 +247,7 @@ export const createSingleMarker = <P extends MarkerFeature>(
 
   if (isOwned) {
     const icon = getMarkerIcon(feature, false);
-    return new Marker(latlng, { icon });
+    return icon ? new Marker(latlng, { icon }) : (null as unknown as Layer);
   } else {
     const icon = getNotOwnerMarkerIcon(false);
     return new Marker(latlng, { icon });
