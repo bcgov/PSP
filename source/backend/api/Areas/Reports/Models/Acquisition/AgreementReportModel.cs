@@ -85,7 +85,7 @@ namespace Pims.Api.Areas.Reports.Models.Agreement
             FileCreatedDate = GetNullableDate(agreement.AcquisitionFile?.AppCreateTimestamp);
             FileStatus = agreement.AcquisitionFile?.AcquisitionFileStatusTypeCodeNavigation?.Description;
 
-            // AgreementStatus = !agreement.IsDraft.HasValue || agreement.IsDraft.Value ? "Draft" : "Final"; TODO: Fix this
+            AgreementStatus = agreement.AgreementStatusTypeCodeNavigation?.Description ?? string.Empty;
             LegalSurveyPlan = agreement.LegalSurveyPlanNum;
             AgreementType = agreement.AgreementTypeCodeNavigation?.Description ?? string.Empty;
             AgreementDate = GetNullableDate(agreement.AgreementDate);
