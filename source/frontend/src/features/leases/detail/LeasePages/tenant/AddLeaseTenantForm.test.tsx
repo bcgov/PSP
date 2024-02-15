@@ -168,6 +168,11 @@ describe('AddLeaseTenantForm component', () => {
     const organization: IContactSearchResult = {
       ...getMockContactOrganizationWithOnePerson(),
       organization: { ...getEmptyOrganization(), organizationPersons: [] },
+      personId: undefined,
+      person: undefined,
+      surname: undefined,
+      firstName: undefined,
+      middleNames: undefined,
     };
 
     await setup({
@@ -183,6 +188,11 @@ describe('AddLeaseTenantForm component', () => {
     const organization: IContactSearchResult = {
       ...getMockContactOrganizationWithOnePerson(),
       organization: { ...getEmptyOrganization(), organizationPersons: [] },
+      personId: undefined,
+      person: undefined,
+      surname: undefined,
+      firstName: undefined,
+      middleNames: undefined,
     };
 
     await setup({
@@ -198,6 +208,11 @@ describe('AddLeaseTenantForm component', () => {
     const organization: IContactSearchResult = {
       ...getMockContactOrganizationWithOnePerson(),
       organization: { ...getEmptyOrganization(), organizationPersons: [] },
+      personId: undefined,
+      person: undefined,
+      surname: undefined,
+      firstName: undefined,
+      middleNames: undefined,
     };
 
     await setup({
@@ -225,6 +240,11 @@ describe('AddLeaseTenantForm component', () => {
           },
         ],
       },
+      personId: undefined,
+      person: undefined,
+      surname: undefined,
+      firstName: undefined,
+      middleNames: undefined,
     };
 
     await setup({
@@ -260,6 +280,11 @@ describe('AddLeaseTenantForm component', () => {
           },
         ],
       },
+      personId: undefined,
+      person: undefined,
+      surname: undefined,
+      firstName: undefined,
+      middleNames: undefined,
     };
 
     await setup({
