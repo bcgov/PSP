@@ -179,7 +179,7 @@ export function getMarkerIcon(
   selected: boolean,
   showDisposed: boolean = false,
 ): L.Icon<L.IconOptions> | null {
-  if (showDisposed && feature?.properties?.IS_DISPOSED) {
+  if (showDisposed && feature?.properties?.IS_DISPOSED === true) {
     if (selected) {
       return disposedIconSelect;
     } else {
@@ -187,7 +187,7 @@ export function getMarkerIcon(
     }
   }
 
-  if (feature?.properties?.IS_PROPERTY_OF_INTEREST) {
+  if (feature?.properties?.IS_PROPERTY_OF_INTEREST === true) {
     if (selected) {
       return propertyOfInterestIconSelect;
     } else {
@@ -195,14 +195,14 @@ export function getMarkerIcon(
     }
   }
 
-  if (feature?.properties?.IS_OWNED) {
+  if (feature?.properties?.IS_OWNED === true) {
     if (selected) {
       return parcelIconSelect;
     }
     return parcelIcon;
   }
 
-  if (feature?.properties?.IS_OTHER_INTEREST) {
+  if (feature?.properties?.IS_OTHER_INTEREST === true) {
     if (selected) {
       return otherInterestIconSelect;
     } else {
