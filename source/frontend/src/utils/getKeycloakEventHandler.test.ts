@@ -1,4 +1,5 @@
 import { KeycloakInstance } from 'keycloak-js';
+import { noop } from 'lodash';
 
 import { clearJwt, saveJwt } from '@/store/slices/jwt/JwtSlice';
 import { setKeycloakReady } from '@/store/slices/keycloakReady/keycloakReadySlice';
@@ -25,7 +26,7 @@ const keycloak = {
   },
   token: '123456789',
 } as any as KeycloakInstance;
-const keyclockEventHandler = getKeycloakEventHandler(keycloak);
+const keyclockEventHandler = getKeycloakEventHandler(keycloak, noop);
 describe('KeycloakEventHandler ', () => {
   beforeEach(() => {
     jest.clearAllMocks();
