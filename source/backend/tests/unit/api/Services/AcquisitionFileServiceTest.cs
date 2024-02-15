@@ -741,7 +741,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             repository.Verify(x => x.Update(It.IsAny<PimsAcquisitionFile>()), Times.Once);
-            propertyRepository.Verify(x => x.TransferFileProperty(It.IsAny<PimsProperty>(), new PropertyOwnershipState() { isPropertyOfInterest = isPropertyOfInterest, isOwned = isOwned }), Times.Once);
+            propertyRepository.Verify(x => x.TransferFileProperty(It.IsAny<PimsProperty>(), It.Is<PropertyOwnershipState>(s => s.isPropertyOfInterest == isPropertyOfInterest && s.isOwned == isOwned)), Times.Once);
         }
 
         [Fact]
