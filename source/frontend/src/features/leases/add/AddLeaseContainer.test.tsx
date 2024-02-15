@@ -194,7 +194,7 @@ describe('AddLeaseContainer component', () => {
     addLease.mockResolvedValue({ ...leaseData, id: 1 });
 
     await act(async () => {
-      userEvent.click(await screen.findByText('Acknowledge & Continue'));
+      userEvent.click((await screen.findAllByText('Yes'))[2]);
     });
 
     expect(addLease).toBeCalledWith(leaseData, []);

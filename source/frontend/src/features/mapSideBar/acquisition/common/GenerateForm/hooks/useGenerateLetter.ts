@@ -3,7 +3,7 @@ import { showFile } from '@/features/documents/DownloadDocumentButton';
 import { useDocumentGenerationRepository } from '@/features/documents/hooks/useDocumentGenerationRepository';
 import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
-import { ExternalResultStatus } from '@/models/api/ExternalResult';
+import { ApiGen_CodeTypes_ExternalResponseStatus } from '@/models/api/generated/ApiGen_CodeTypes_ExternalResponseStatus';
 import { Api_GenerateLetter } from '@/models/generate/GenerateLetter';
 import { Api_GenerateOwner } from '@/models/generate/GenerateOwner';
 
@@ -38,7 +38,7 @@ export const useGenerateLetter = () => {
         templateData: letterData,
         convertToType: null,
       });
-      generatedFile?.status === ExternalResultStatus.Success!! &&
+      generatedFile?.status === ApiGen_CodeTypes_ExternalResponseStatus.Success!! &&
         generatedFile?.payload &&
         showFile(generatedFile?.payload);
     }

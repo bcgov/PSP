@@ -32,17 +32,17 @@ namespace Pims.Api.Models.Concepts.CompensationRequisition
 
         public FinancialCodeModel Responsibility { get; set; }
 
-        public DateTime? FinalizedDate { get; set; }
+        public DateOnly? FinalizedDate { get; set; }
 
-        public DateTime? AgreementDate { get; set; }
+        public DateOnly? AgreementDate { get; set; }
 
-        public DateTime? ExpropriationNoticeServedDate { get; set; }
+        public DateOnly? ExpropriationNoticeServedDate { get; set; }
 
-        public DateTime? ExpropriationVestingDate { get; set; }
+        public DateOnly? ExpropriationVestingDate { get; set; }
 
-        public DateTime? AdvancedPaymentServedDate { get; set; }
+        public DateOnly? AdvancedPaymentServedDate { get; set; }
 
-        public DateTime? GenerationDate { get; set; }
+        public DateOnly? GenerationDate { get; set; }
 
         public List<CompensationFinancialModel> Financials { get; set; }
 

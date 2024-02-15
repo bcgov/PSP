@@ -51,7 +51,6 @@ namespace PIMS.Tests.Automation.PageObjects
 
         //Research File Confirmation Modal
         private By researchFileConfirmationModal = By.CssSelector("div[class='modal-content']");
-        private By researchFileConfirmationOkButton = By.XPath("//button[@title='ok-modal']/div[contains(text(),'Save')]/ancestor::button");
 
         //Research File View Form Elements
         //Header
@@ -115,6 +114,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By researchPropertyResearchEditBttn = By.XPath("(//button[@class='btn btn-link'])[2]");
         private By researchPropertyNameInput = By.Id("input-propertyName");
         private By researchPropertyPurposeSelect = By.Id("purpose-selector_input");
+        private By researchPropertyPurposeInput = By.XPath("//input[@id='purpose-selector_input']/parent::div");
         private By researchPropertyPurposeDiv = By.XPath("//input[@id='purpose-selector_input']/parent::div");
         private By researchPropertyPurposeOptions = By.CssSelector("ul[class='optionContainer']");
         private By researchPropertyLegalOpinionReqSelect = By.Id("input-isLegalOpinionRequired");
@@ -132,6 +132,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By researchPropertyPurposeLabel = By.XPath("//label[contains(text(),'Purpose')]");
         private By researchPropertyPurposeViewInput = By.XPath("//label[contains(text(),'Purpose')]/parent::div/following-sibling::div");
         private By researchProperty1stPurposeDeleteLink = By.CssSelector("div[id='purpose-selector'] div span:nth-child(1) i");
+        private By researchPropertyPurposeDeleteLinks = By.CssSelector("div[id='purpose-selector'] div span i");
         private By researchPropertyLegalReqLabel = By.XPath("//label[contains(text(),'Legal opinion req')]");
         private By researchPropertyLegalReqViewInput = By.XPath("//label[contains(text(),'Legal opinion req')]/parent::div/following-sibling::div");
         private By researchPropertyLegalObtLabel = By.XPath("//label[contains(text(),'Legal opinion obtained')]");
@@ -145,7 +146,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         private SharedSelectContact sharedSelectContact;
         private SharedModals sharedModals;
-        private SharedSearchProperties sharedSearchProperties;
+        private SharedFileProperties sharedSearchProperties;
 
         private int totalAssociatedProps = 0;
 
@@ -153,7 +154,7 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             sharedSelectContact = new SharedSelectContact(webDriver);
             sharedModals = new SharedModals(webDriver);
-            sharedSearchProperties = new SharedSearchProperties(webDriver);
+            sharedSearchProperties = new SharedFileProperties(webDriver);
         }
         public void NavigateToCreateNewResearchFile()
         {
@@ -469,13 +470,23 @@ namespace PIMS.Tests.Automation.PageObjects
                 ClearInput(researchPropertyNameInput);
                 webDriver.FindElement(researchPropertyNameInput).SendKeys(propertyResearch.DescriptiveName);
             }
-            if (propertyResearch.PropertyResearchPurpose.Count > 0)
+            if (propertyResearch.PropertyResearchPurpose.First() != "")
             {
-                for (int i = 0; i < propertyResearch.PropertyResearchPurpose.Count; i++)
+                //Delete Purposes previously selected if any
+                if (webDriver.FindElements(researchPropertyPurposeDeleteLinks).Count > 0)
                 {
-                    ClearMultiSelectInput(researchPropertyPurposeDiv);
-                    webDriver.FindElement(researchPropertyPurposeSelect).Click();
-                    ChooseMultiSelectSpecificOption(researchPropertyPurposeOptions, propertyResearch.PropertyResearchPurpose[i]);
+                    FocusAndClick(researchPropertyPurposeDiv);
+                    while (webDriver.FindElements(researchPropertyPurposeDeleteLinks).Count > 0)
+                    {
+                        webDriver.FindElements(researchPropertyPurposeDeleteLinks)[0].Click();
+                    }
+                }
+                foreach (string purpose in propertyResearch.PropertyResearchPurpose)
+                {
+                    FocusAndClick(researchPropertyPurposeInput);
+
+                    WaitUntilClickable(researchPropertyPurposeOptions);
+                    ChooseMultiSelectSpecificOption(researchPropertyPurposeOptions, purpose);
                 }
             }
             if (propertyResearch.LegalOpinionRequest != "")
@@ -508,19 +519,19 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
             ButtonElement("Save");
 
-            Assert.True(sharedModals.ModalHeader().Equals("Confirm changes"));
-            Assert.True(sharedModals.ConfirmationModalText1().Equals("You have made changes to the properties in this file."));
-            Assert.True(sharedModals.ConfirmationModalText2().Equals("Do you want to save these changes?"));
+            Assert.Equal("Confirm changes", sharedModals.ModalHeader());
+            Assert.Equal("You have made changes to the properties in this file.", sharedModals.ConfirmationModalText1());
+            Assert.Equal("Do you want to save these changes?", sharedModals.ConfirmationModalText2());
 
             sharedModals.ModalClickOKBttn();
 
             Wait();
-            if (webDriver.FindElements(researchFileConfirmationModal).Count() > 1)
+            if (webDriver.FindElements(researchFileConfirmationModal).Count() > 0)
             {
-                Assert.True(sharedModals.SecondaryModalHeader().Equals("User Override Required"));
-                Assert.Contains("The selected property already exists in the system's inventory. However, the record is missing spatial details.", sharedModals.SecondaryModalContent());
-                Assert.Contains("To add the property, the spatial details for this property will need to be updated. The system will attempt to update the property record with spatial information from the current selection.", sharedModals.SecondaryModalContent());
-                sharedModals.SecondaryModalClickOKBttn();
+                Assert.Equal("User Override Required", sharedModals.SecondaryModalHeader());
+                Assert.Contains("The selected property already exists in the system's inventory. However, the record is missing spatial details.", sharedModals.ModalContent());
+                Assert.Contains("To add the property, the spatial details for this property will need to be updated. The system will attempt to update the property record with spatial information from the current selection.", sharedModals.ModalContent());
+                sharedModals.ModalClickOKBttn();
             }
         }
 
@@ -534,39 +545,17 @@ namespace PIMS.Tests.Automation.PageObjects
                 {
                     webDriver.SwitchTo().Alert().Accept();
                 }
-            } catch (WebDriverTimeoutException e)
+            } catch (WebDriverTimeoutException)
             {
                 if (webDriver.FindElements(researchFileConfirmationModal).Count() > 0)
                 {
-                    Assert.True(sharedModals.ModalHeader().Equals("Confirm changes"));
-                    Assert.True(sharedModals.ConfirmationModalText1().Equals("If you cancel now, this research file will not be saved."));
-                    Assert.True(sharedModals.ConfirmationModalText2().Equals("Are you sure you want to Cancel?"));
+                    Assert.Equal("Confirm Changes", sharedModals.ModalHeader());
+                    Assert.Contains("If you choose to cancel now, your changes will not be saved.", sharedModals.ModalContent());
+                    Assert.Contains("Do you want to proceed?", sharedModals.ModalContent());
 
                     sharedModals.ModalClickOKBttn();
                 }
             }
-        }
-
-        public void CancelResearchFileProps()
-        {
-            ButtonElement("Cancel");
-
-            Assert.True(sharedModals.ModalHeader().Equals("Confirm changes"));
-            Assert.True(sharedModals.ConfirmationModalText1().Equals("If you cancel now, this file will not be saved."));
-            Assert.True(sharedModals.ConfirmationModalText2().Equals("Are you sure you want to Cancel?"));
-
-            sharedModals.ModalClickOKBttn();
-        }
-
-        public void CancelResearchFilePropertyDetails()
-        {
-            ButtonElement("Cancel");
-
-            Assert.True(sharedModals.ModalHeader().Equals("Confirm changes"));
-            Assert.True(sharedModals.ConfirmationModalText1().Equals("If you cancel now, this research file will not be saved."));
-            Assert.True(sharedModals.ConfirmationModalText2().Equals("Are you sure you want to Cancel?"));
-
-            sharedModals.ModalClickOKBttn();
         }
 
         //Get the research file number

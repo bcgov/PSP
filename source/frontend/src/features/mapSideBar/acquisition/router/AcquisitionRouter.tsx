@@ -9,11 +9,11 @@ import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
 import { stripTrailingSlash } from '@/utils';
 import AppRoute from '@/utils/AppRoute';
 
+import { UpdateChecklistForm } from '../../shared/tabs/checklist/update/UpdateChecklistForm';
 import { AcquisitionFileTabs } from '../tabs/AcquisitionFileTabs';
 import { UpdateAgreementsContainer } from '../tabs/agreement/update/UpdateAgreementsContainer';
 import { UpdateAgreementsForm } from '../tabs/agreement/update/UpdateAgreementsForm';
 import { UpdateAcquisitionChecklistContainer } from '../tabs/checklist/update/UpdateAcquisitionChecklistContainer';
-import { UpdateAcquisitionChecklistForm } from '../tabs/checklist/update/UpdateAcquisitionChecklistForm';
 import AddForm8Container from '../tabs/expropriation/form8/add/AddForm8Container';
 import { UpdateForm8Container } from '../tabs/expropriation/form8/update/UpdateForm8Container';
 import UpdateForm8Form from '../tabs/expropriation/form8/UpdateForm8Form';
@@ -56,7 +56,7 @@ export const AcquisitionRouter: React.FC<IAcquisitionRouterProps> = props => {
             formikRef={props.formikRef}
             acquisitionFile={props.acquisitionFile}
             onSuccess={props.onSuccess}
-            View={UpdateAcquisitionChecklistForm}
+            View={UpdateChecklistForm}
           />
         </Route>
         <Route exact path={`${stripTrailingSlash(path)}/${FileTabType.AGREEMENTS}`}>

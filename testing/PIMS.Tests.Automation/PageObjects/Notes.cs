@@ -19,7 +19,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By notesTabTableBody = By.XPath("//div[@data-testid='notesTable']/div[@class='tbody']");
         private By notesTabTableContentTotal = By.XPath("//div[@data-testid='notesTable']/div[@class='tbody']/div[@class='tr-wrapper']");
 
-        private By notesTab1stResultViewBttn = By.XPath("//div[@data-testid='notesTable']/div[@class='tbody']/div[@class='tr-wrapper'][2]/div/div[4]/div/button[@title='View Note']");
+        private By notesTab2ndResultViewBttn = By.XPath("//div[@data-testid='notesTable']/div[@class='tbody']/div[@class='tr-wrapper'][2]/div/div[4]/div/button[@title='View Note']");
         private By notesTab1stResultDeleteBttn = By.XPath("//div[@data-testid='notesTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[4]/div/button[@title='Delete Note']");
 
         //Notes 1st result Elements
@@ -47,10 +47,10 @@ namespace PIMS.Tests.Automation.PageObjects
         private By noteEditTextarea = By.Id("input-note");
 
         //Notes Cancel pop-up Elements
-        private By notesCancelPopupContent = By.XPath("//div[contains(text(),'Unsaved Changes')]/parent::div/parent::div");
-        private By notesCancelPopupHeader = By.XPath("//div[contains(text(),'Unsaved Changes')]");
-        private By notesCancelPopupBody = By.XPath("//div[contains(text(),'Unsaved Changes')]/parent::div/following-sibling::div[@class='modal-body']");
-        private By notesCancelOkBttn = By.XPath("//div[contains(text(),'Unsaved Changes')]/parent::div/parent::div/div/div[@class='button-wrap']/button[@title='ok-modal']");
+        private By notesCancelPopupContent = By.XPath("//div[contains(text(),'Confirm Changes')]/parent::div/parent::div");
+        private By notesCancelPopupHeader = By.XPath("//div[contains(text(),'Confirm Changes')]");
+        private By notesCancelPopupBody = By.XPath("//div[contains(text(),'Confirm Changes')]/parent::div/following-sibling::div[@class='modal-body']");
+        private By notesCancelOkBttn = By.XPath("//div[contains(text(),'Confirm Changes')]/parent::div/parent::div/div/div[@class='button-wrap']/button[@title='ok-modal']");
 
         //Notes Delete pop-up Elements
         private By notesDeletePopupHeader = By.CssSelector("div[class='modal-header'] div");
@@ -84,10 +84,10 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(notesAddDetailsTextarea).SendKeys(note);
         }
 
-        public void ViewSecondLastNoteDetails()
+        public void ViewSecondNoteDetails()
         {
-            Wait(2000);
-            webDriver.FindElement(notesTab1stResultViewBttn).Click();
+            Wait();
+            webDriver.FindElement(notesTab2ndResultViewBttn).Click();
         }
 
         public void EditNote(string note)
@@ -101,7 +101,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void SaveNote()
         {
-            WaitUntilClickable(notesAddDetailsSaveBttn);
+            Wait();
             webDriver.FindElement(notesAddDetailsSaveBttn).Click();
         }
 
@@ -111,14 +111,16 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(notesAddDetailsCancelBttn).Click();
 
             Wait();
-            if (webDriver.FindElements(notesCancelPopupContent).Count() > 0)
-            {
-                AssertTrueIsDisplayed(notesCancelPopupHeader);
-                Assert.Equal("You have made changes on this form. Do you wish to leave without saving?", webDriver.FindElement(notesCancelPopupBody).Text);
+            //if (webDriver.FindElements(notesCancelPopupContent).Count() > 0)
+            //{
+            //    AssertTrueIsDisplayed(notesCancelPopupHeader);
+            //    Assert.Contains("If you choose to cancel now, your changes will not be saved.", webDriver.FindElement(notesCancelPopupBody).Text);
+            //    Assert.Contains("Do you want to proceed?", webDriver.FindElement(notesCancelPopupBody).Text);
 
-                Wait(2000);
-                webDriver.FindElement(notesCancelOkBttn).Click();
-            }
+            //    Wait(2000);
+            //    webDriver.FindElement(notesCancelOkBttn).Click();
+            //}
+            sharedModals.CancelActionModal();
         }
 
         public void DeleteLastSecondNote()
@@ -182,6 +184,8 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyAutomaticNotes(string fileType, string fromStatus, string toStatus)
         {
+            WaitUntilTableSpinnerDisappear();
+
             WaitUntilVisibleText(note1stNoteContent, webDriver.FindElement(note1stNoteContent).Text);
             AssertTrueContentEquals(note1stNoteContent, fileType + " status changed from "+ fromStatus +" to " + toStatus);
         }

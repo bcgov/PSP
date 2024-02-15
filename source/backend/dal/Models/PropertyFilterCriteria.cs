@@ -54,6 +54,26 @@ namespace Pims.Dal.Entities.Models
         /// </summary>
         public List<string> AnomalyIds { get; set; }
 
+        /// <summary>
+        /// get/set - Whether or not to show core inventory properties.
+        /// </summary>
+        public bool IsCoreInventory { get; set; } = true;
+
+        /// <summary>
+        /// get/set - Whether or not to show properties of interest.
+        /// </summary>
+        public bool IsPropertyOfInterest { get; set; } = true;
+
+        /// <summary>
+        /// get/set - Whether or not to show other interest properties.
+        /// </summary>
+        public bool IsOtherInterest { get; set; } = true;
+
+        /// <summary>
+        /// get/set - Whether or not to show disposed properties.
+        /// </summary>
+        public bool IsDisposed { get; set; } = false;
+
         #endregion
     }
 }

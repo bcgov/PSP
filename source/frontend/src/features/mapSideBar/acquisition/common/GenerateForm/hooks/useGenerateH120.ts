@@ -10,7 +10,7 @@ import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvi
 import { useH120CategoryRepository } from '@/hooks/repositories/useH120CategoryRepository';
 import { useInterestHolderRepository } from '@/hooks/repositories/useInterestHolderRepository';
 import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
-import { ExternalResultStatus } from '@/models/api/ExternalResult';
+import { ApiGen_CodeTypes_ExternalResponseStatus } from '@/models/api/generated/ApiGen_CodeTypes_ExternalResponseStatus';
 import { Api_GenerateAcquisitionFile } from '@/models/generate/acquisition/GenerateAcquisitionFile';
 import { Api_GenerateCompensation } from '@/models/generate/acquisition/GenerateCompensation';
 import { Api_GenerateH120Property } from '@/models/generate/acquisition/GenerateH120Property';
@@ -126,7 +126,10 @@ export const useGenerateH120 = () => {
       templateData: compensationData,
       convertToType: ConvertToTypes.PDF,
     });
-    if (generatedFile?.status === ExternalResultStatus.Success!! && generatedFile?.payload) {
+    if (
+      generatedFile?.status === ApiGen_CodeTypes_ExternalResponseStatus.Success!! &&
+      generatedFile?.payload
+    ) {
       showFile(generatedFile?.payload);
     } else {
       throw Error('Failed to generate file');

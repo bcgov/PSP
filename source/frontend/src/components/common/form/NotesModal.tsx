@@ -50,10 +50,11 @@ export const NotesModal: React.FunctionComponent<React.PropsWithChildren<INotesM
           <>
             {notesLabel}
             <TextArea field={fieldWithNameSpace} data-testid="note-field"></TextArea>
+            Would you like to save thse notes?
           </>
         }
-        okButtonText="Save"
-        cancelButtonText="Cancel"
+        okButtonText="Yes"
+        cancelButtonText="No"
         handleOk={() => {
           if (!error) {
             onSave && onSave(values);

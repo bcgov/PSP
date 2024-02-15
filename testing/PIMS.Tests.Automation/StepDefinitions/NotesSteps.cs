@@ -62,7 +62,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Edit note
             PopulateNotes(rowNumber);
-            notes.ViewSecondLastNoteDetails();
+            notes.ViewSecondNoteDetails();
             notes.VerifyNotesEditForm();
             notes.EditNote(notesData[0]);
 
@@ -70,7 +70,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             notes.CancelNote();
 
             //Edit note
-            notes.ViewSecondLastNoteDetails();
+            notes.ViewSecondNoteDetails();
             notes.EditNote(notesData[0]);
 
             //Save changes
@@ -90,7 +90,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateNotes(int rowNumber)
         {
-            DataTable notesSheet = ExcelDataContext.GetInstance().Sheets["Notes"];
+            DataTable notesSheet = ExcelDataContext.GetInstance().Sheets["Notes"]!;
             ExcelDataContext.PopulateInCollection(notesSheet);
 
             notesData = genericSteps.PopulateLists(ExcelDataContext.ReadData(rowNumber, "Notes"));

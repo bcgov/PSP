@@ -62,8 +62,8 @@ namespace Pims.Dal.Test.Repositories
             eResearch.RoadAlias = "a road name or alias";
             eResearch.RoadName = "a road name or alias";
             eResearch.Name = "research file name";
-            eResearch.ResearchFileStatusTypeCodeNavigation = new Entity.PimsResearchFileStatusType() { Id = "Active" };
-            eResearch.PimsPropertyResearchFiles = new List<PimsPropertyResearchFile>() { new PimsPropertyResearchFile() { Property = new PimsProperty() { RegionCode = 1 } } };
+            eResearch.ResearchFileStatusTypeCodeNavigation = new Entity.PimsResearchFileStatusType() { Id = "Active", Description = "Active", DbCreateUserid = "test", DbLastUpdateUserid = "test" };
+            eResearch.PimsPropertyResearchFiles = new List<PimsPropertyResearchFile>() { new PimsPropertyResearchFile() { Property = EntityHelper.CreateProperty(1) } };
 
             var context = helper.CreatePimsContext(user, true);
             context.AddAndSaveChanges(eResearch);
@@ -123,8 +123,8 @@ namespace Pims.Dal.Test.Repositories
             eResearch.RoadAlias = "a road name or alias";
             eResearch.RoadName = "a road name or alias";
             eResearch.Name = "research file name";
-            eResearch.ResearchFileStatusTypeCodeNavigation = new Entity.PimsResearchFileStatusType() { Id = "Active" };
-            eResearch.PimsPropertyResearchFiles = new List<PimsPropertyResearchFile>() { new PimsPropertyResearchFile() { Property = new PimsProperty() { RegionCode = 1 } } };
+            eResearch.ResearchFileStatusTypeCodeNavigation = new Entity.PimsResearchFileStatusType() { Id = "Active", Description = "Active", DbCreateUserid = "test", DbLastUpdateUserid = "test" };
+            eResearch.PimsPropertyResearchFiles = new List<PimsPropertyResearchFile>() { new PimsPropertyResearchFile() { Property = EntityHelper.CreateProperty(1) } };
 
             var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(eResearch);
             var repository = helper.CreateRepository<ResearchFileRepository>(user);
@@ -156,8 +156,31 @@ namespace Pims.Dal.Test.Repositories
         }
         #endregion
 
+        #region GetLastUpdateBy
+        [Fact]
+        public void GetLastUpdateBy_Success()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.ResearchFileView);
+
+            var eResearch = EntityHelper.CreateResearchFile(rfileNumber: "100-000-000");
+
+            var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(eResearch);
+            var repository = helper.CreateRepository<ResearchFileRepository>(user);
+
+            // Act
+            var result = repository.GetLastUpdateBy(1);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.AppLastUpdateTimestamp.Should().BeWithin(TimeSpan.FromMilliseconds(100));
+            result.AppLastUpdateUserid.Should().Be("service");
+        }
+        #endregion
+
         #region Add
-        [Fact(Skip = "Seq execution error")]
+        [Fact]
         public void Add_Success()
         {
             // Arrange
@@ -167,8 +190,8 @@ namespace Pims.Dal.Test.Repositories
             eResearch.RoadAlias = "a road name or alias";
             eResearch.RoadName = "a road name or alias";
             eResearch.Name = "research file name";
-            eResearch.ResearchFileStatusTypeCodeNavigation = new Entity.PimsResearchFileStatusType() { Id = "Active" };
-            eResearch.PimsPropertyResearchFiles = new List<PimsPropertyResearchFile>() { new PimsPropertyResearchFile() { Property = new PimsProperty() { RegionCode = 1 } } };
+            eResearch.ResearchFileStatusTypeCodeNavigation = new Entity.PimsResearchFileStatusType() { Id = "Active", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "Active" };
+            eResearch.PimsPropertyResearchFiles = new List<PimsPropertyResearchFile>() { new PimsPropertyResearchFile() { Property = EntityHelper.CreateProperty(1) } };
 
             var context = helper.CreatePimsContext(user, true);
             context.AddAndSaveChanges(eResearch);
@@ -182,7 +205,7 @@ namespace Pims.Dal.Test.Repositories
             result.Should().NotBeNull();
             result.Should().BeAssignableTo<PimsResearchFile>();
             result.Name.Should().Be("research file name");
-            result.RfileNumber.Should().Be("100-000-000");
+            result.RfileNumber.Should().Be("R-0");
         }
 
         [Fact]

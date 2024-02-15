@@ -15,7 +15,7 @@ namespace Pims.Core.Test
         /// <returns></returns>
         public static Entity.PimsPropertyClassificationType CreatePropertyClassificationType(string id)
         {
-            return new Entity.PimsPropertyClassificationType(id) { ConcurrencyControlNumber = 1 };
+            return new Entity.PimsPropertyClassificationType(id) { ConcurrencyControlNumber = 1, DbCreateUserid = "test", DbLastUpdateUserid = "test", DbLastUpdateTimestamp = System.DateTime.Now, Description = "desc" };
         }
 
         /// <summary>
@@ -26,13 +26,13 @@ namespace Pims.Core.Test
         {
             return new List<Entity.PimsPropertyClassificationType>()
             {
-                new Entity.PimsPropertyClassificationType("Core Operational") { ConcurrencyControlNumber = 1 },
-                new Entity.PimsPropertyClassificationType("Core Strategic") { ConcurrencyControlNumber = 1 },
-                new Entity.PimsPropertyClassificationType("Surplus Active") { ConcurrencyControlNumber = 1 },
-                new Entity.PimsPropertyClassificationType("Surplus Encumbered") { ConcurrencyControlNumber = 1 },
-                new Entity.PimsPropertyClassificationType("Disposed") { ConcurrencyControlNumber = 1 },
-                new Entity.PimsPropertyClassificationType("Demolished") { ConcurrencyControlNumber = 1 },
-                new Entity.PimsPropertyClassificationType("Subdivided") { ConcurrencyControlNumber = 1 },
+                new Entity.PimsPropertyClassificationType("Core Operational") { ConcurrencyControlNumber = 1, DbCreateUserid = "test", DbLastUpdateUserid = "test", DbLastUpdateTimestamp = System.DateTime.Now, Description = "desc" },
+                new Entity.PimsPropertyClassificationType("Core Strategic") { ConcurrencyControlNumber = 1, DbCreateUserid = "test", DbLastUpdateUserid = "test", DbLastUpdateTimestamp = System.DateTime.Now, Description = "desc" },
+                new Entity.PimsPropertyClassificationType("Surplus Active") { ConcurrencyControlNumber = 1, DbCreateUserid = "test", DbLastUpdateUserid = "test", DbLastUpdateTimestamp = System.DateTime.Now, Description = "desc" },
+                new Entity.PimsPropertyClassificationType("Surplus Encumbered") { ConcurrencyControlNumber = 1, DbCreateUserid = "test", DbLastUpdateUserid = "test", DbLastUpdateTimestamp = System.DateTime.Now, Description = "desc" },
+                new Entity.PimsPropertyClassificationType("Disposed") { ConcurrencyControlNumber = 1, DbCreateUserid = "test", DbLastUpdateUserid = "test", DbLastUpdateTimestamp = System.DateTime.Now, Description = "desc" },
+                new Entity.PimsPropertyClassificationType("Demolished") { ConcurrencyControlNumber = 1, DbCreateUserid = "test", DbLastUpdateUserid = "test", DbLastUpdateTimestamp = System.DateTime.Now, Description = "desc" },
+                new Entity.PimsPropertyClassificationType("Subdivided") { ConcurrencyControlNumber = 1, DbCreateUserid = "test", DbLastUpdateUserid = "test", DbLastUpdateTimestamp = System.DateTime.Now, Description = "desc" },
             };
         }
     }

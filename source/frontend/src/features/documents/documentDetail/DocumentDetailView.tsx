@@ -39,7 +39,7 @@ export const DocumentDetailView: React.FunctionComponent<
             noPadding
             header={
               <>
-                Document information
+                Document Information
                 <TooltipIcon
                   toolTipId="documentInfoToolTip"
                   innerClassName="documentInfoToolTip"
@@ -71,8 +71,8 @@ export const DocumentDetailView: React.FunctionComponent<
               {props.document.mayanMetadata?.map(value => (
                 <SectionField
                   labelWidth="4"
-                  key={`document-${value.document.id}-metadata-${value.id}`}
-                  label={value.metadata_type.label || ''}
+                  key={`document-${value.document?.id || 'DOC_ID'}-metadata-${value.id}`}
+                  label={value.metadata_type?.label || ''}
                 >
                   {value.value}
                 </SectionField>

@@ -8,7 +8,7 @@ namespace Pims.Dal.Entities
     /// <summary>
     /// User class, provides an entity for the datamodel to manage users.
     /// </summary>
-    public partial class PimsUser : StandardIdentityBaseAppEntity<long>, IDisableBaseAppEntity
+    public partial class PimsUser : StandardIdentityBaseAppEntity<long>, IDisableBaseAppEntity<bool?>
     {
         #region Properties
 
@@ -55,6 +55,10 @@ namespace Pims.Dal.Entities
             this.GuidIdentifierValue = keycloakUserId;
             this.Person = person ?? throw new ArgumentNullException(nameof(person));
             this.PersonId = person.PersonId;
+        }
+
+        public PimsUser()
+        {
         }
         #endregion
     }

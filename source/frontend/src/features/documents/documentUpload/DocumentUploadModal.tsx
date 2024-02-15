@@ -2,13 +2,13 @@ import { createRef, useState } from 'react';
 import { FaUpload } from 'react-icons/fa';
 
 import GenericModal, { ModalSize } from '@/components/common/GenericModal';
-import { DocumentRelationshipType } from '@/constants/documentRelationshipType';
+import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
 
 import DocumentUploadContainer, { IDocumentUploadContainerRef } from './DocumentUploadContainer';
 
 export interface IDocumentUploadModalProps {
   parentId: string;
-  relationshipType: DocumentRelationshipType;
+  relationshipType: ApiGen_CodeTypes_DocumentRelationType;
   display?: boolean;
   setDisplay?: (display: boolean) => void;
   onUploadSuccess: () => void;
@@ -32,7 +32,6 @@ export const DocumentUploadModal: React.FunctionComponent<
   return (
     <GenericModal
       variant="info"
-      className=""
       display={props.display}
       setDisplay={props.setDisplay}
       closeButton={false}

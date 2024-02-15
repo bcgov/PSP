@@ -1,6 +1,6 @@
 import { AxiosError } from 'axios';
 import { uniq } from 'lodash';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useRef } from 'react';
 
 import { RemoveSelfContractorContent } from '@/features/mapSideBar/acquisition/tabs/fileDetails/update/UpdateAcquisitionContainer';
 import { IApiError } from '@/interfaces/IApiError';
@@ -20,28 +20,26 @@ export const useApiUserOverride = <
 >(
   genericErrorMessage: string,
 ) => {
-  const [state, setState] = useState<IUserOverrideModalState>({
-    previousUserOverrideCodes: [],
-    userOverrideCode: null,
-    message: null,
-  });
   const overridenApiFunction = useRef<FunctionType | null>(null);
+  const errorHandlerRef = useRef<((e: AxiosError<IApiError>) => void) | null>(null);
   const { setModalContent, setDisplayModal } = useModalContext();
 
   const needsUserAction = useCallback(
-    (userOverrideCode: UserOverrideCode | null, message: string | null) => {
+    (
+      userOverrideCode: UserOverrideCode | null,
+      message: string | null,
+      previousUserOverrideCodes: UserOverrideCode[],
+    ) => {
       if (userOverrideCode) {
-        setState(oldState => {
-          return {
-            previousUserOverrideCodes: [...oldState.previousUserOverrideCodes],
-            userOverrideCode: userOverrideCode,
-            message: message,
-          };
+        showUserOverrideModal({
+          previousUserOverrideCodes: [...previousUserOverrideCodes],
+          userOverrideCode: userOverrideCode,
+          message: message,
         });
-        setDisplayModal(true);
       }
     },
-    [setDisplayModal],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [],
   );
 
   const handleOverrideError = useAxiosErrorHandlerWithConfirmation(
@@ -60,78 +58,60 @@ export const useApiUserOverride = <
         setDisplayModal(false);
         return response;
       } catch (e) {
-        handleOverrideError(e, handleError);
+        handleOverrideError(e, handleError, userOverrideCodes);
       } finally {
         overridenApiFunction.current = apiFunction;
+        errorHandlerRef.current = handleError ?? null;
       }
       return Promise.resolve(undefined);
     },
     [handleOverrideError, setDisplayModal],
   );
 
-  useEffect(() => {
-    if (
-      state?.userOverrideCode &&
-      state.userOverrideCode !== UserOverrideCode.CONTRACTOR_SELFREMOVED
-    ) {
-      setModalContent({
-        variant: 'warning',
-        title: 'User Override Required',
-        message: state?.message,
-        handleOk: async () => {
-          if (state?.userOverrideCode && overridenApiFunction.current) {
-            setState({
-              ...state,
-              previousUserOverrideCodes: [
-                ...state.previousUserOverrideCodes,
-                state?.userOverrideCode,
-              ],
+  const showUserOverrideModal = useCallback(
+    (modalState: IUserOverrideModalState) => {
+      if (modalState?.userOverrideCode) {
+        switch (modalState.userOverrideCode) {
+          case UserOverrideCode.CONTRACTOR_SELFREMOVED:
+            setModalContent({
+              title: 'Note',
+              variant: 'info',
+              message: RemoveSelfContractorContent(),
+              handleOk: async () => {
+                setDisplayModal(false);
+              },
+              okButtonText: 'Close',
             });
-            await apiCallWithOverride(overridenApiFunction.current, [
-              ...state.previousUserOverrideCodes,
-              state?.userOverrideCode,
-            ]);
+            break;
+          default: {
+            setModalContent({
+              variant: 'warning',
+              title: 'User Override Required',
+              message: modalState?.message,
+              handleOk: async () => {
+                if (modalState?.userOverrideCode && overridenApiFunction.current) {
+                  const overrideCode = modalState.userOverrideCode;
+                  await apiCallWithOverride(
+                    overridenApiFunction.current,
+                    [...modalState.previousUserOverrideCodes, overrideCode],
+                    errorHandlerRef.current ?? undefined,
+                  );
+                }
+              },
+              handleCancel: () => {
+                setDisplayModal(false);
+              },
+              okButtonText: 'Yes',
+              okButtonVariant: 'warning',
+              cancelButtonText: 'No',
+            });
           }
-        },
-        handleCancel: () => {
-          setState({
-            previousUserOverrideCodes: [...state.previousUserOverrideCodes],
-            userOverrideCode: null,
-            message: null,
-          });
-          setDisplayModal(false);
-        },
-        okButtonText: 'Acknowledge & Continue',
-        okButtonVariant: 'warning',
-        cancelButtonText: 'Cancel Update',
-      });
-    } else if (
-      state?.userOverrideCode &&
-      state.userOverrideCode === UserOverrideCode.CONTRACTOR_SELFREMOVED
-    ) {
-      setModalContent({
-        title: 'Note',
-        variant: 'info',
-        message: RemoveSelfContractorContent(),
-        handleOk: async () => {
-          setState({
-            previousUserOverrideCodes: [...state.previousUserOverrideCodes],
-            userOverrideCode: null,
-            message: null,
-          });
-          setDisplayModal(false);
-        },
-        okButtonText: 'Close',
-      });
-    }
-  }, [
-    apiCallWithOverride,
-    overridenApiFunction,
-    setDisplayModal,
-    setModalContent,
-    state,
-    state.previousUserOverrideCodes,
-  ]);
+        }
+        setDisplayModal(true);
+      }
+    },
+    [apiCallWithOverride, overridenApiFunction, setDisplayModal, setModalContent],
+  );
 
   return apiCallWithOverride;
 };

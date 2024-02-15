@@ -36,13 +36,13 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void EditAgreementButton()
         {
-            Wait(2000);
+            Wait();
             webDriver.FindElement(agreementsEditBttn).Click();
         }
 
         public void CreateNewAgreementBttn()
         {
-            Wait(2000);
+            Wait();
 
             WaitUntilClickable(agreementsCreateNewAgreementBttn);
             webDriver.FindElement(agreementsCreateNewAgreementBttn).Click();
@@ -61,13 +61,7 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
             ButtonElement("Cancel");
            
-            if (webDriver.FindElements(acquisitionFileConfirmationModal).Count() > 0)
-            {
-                Assert.True(sharedModals.ModalHeader().Equals("Confirm changes"));
-                Assert.True(sharedModals.ConfirmationModalText1().Equals("If you cancel now, this form will not be saved."));
-                Assert.True(sharedModals.ConfirmationModalText2().Equals("Are you sure you want to Cancel?"));
-                sharedModals.ModalClickOKBttn();
-            }
+            sharedModals.CancelActionModal();
 
             AssertTrueIsDisplayed(agreementsEditBttn);
         }
@@ -183,8 +177,8 @@ namespace PIMS.Tests.Automation.PageObjects
 
             if (webDriver.FindElements(acquisitionFileConfirmationModal).Count() > 0)
             {
-                Assert.True(sharedModals.ModalHeader().Equals("Confirm Delete"));
-                Assert.True(sharedModals.ModalContent().Equals("Are you sure you want to delete this item?"));
+                Assert.Equal("Confirm Delete", sharedModals.ModalHeader());
+                Assert.Equal("Are you sure you want to delete this item?", sharedModals.ModalContent());
                 sharedModals.ModalClickOKBttn();
             }
 

@@ -39,32 +39,32 @@ namespace Pims.Api.Models.Concepts.Lease
         /// <summary>
         /// get/set - The status of this term, generally indicating if the term has been exercised.
         /// </summary>
-        public TypeModel<string> StatusTypeCode { get; set; }
+        public CodeTypeModel<string> StatusTypeCode { get; set; }
 
         /// <summary>
         /// get/set - The payment frequency associated to this term, such as monthly, annually.
         /// </summary>
-        public TypeModel<string> LeasePmtFreqTypeCode { get; set; }
+        public CodeTypeModel<string> LeasePmtFreqTypeCode { get; set; }
 
         /// <summary>
         /// get/set - the start date of this term.
         /// </summary>
-        public DateTime? StartDate { get; set; }
+        public DateOnly? StartDate { get; set; }
 
         /// <summary>
         /// get/set - The date this term expires.
         /// </summary>
-        public DateTime? ExpiryDate { get; set; }
+        public DateOnly? ExpiryDate { get; set; }
 
         /// <summary>
         /// get/set - The date this term was renewed.
         /// </summary>
-        public DateTime? RenewalDate { get; set; }
+        public DateOnly? RenewalDate { get; set; }
 
         /// <summary>
         /// get/set - Free text related to the date the payment for this term is normally due.
         /// </summary>
-        public string PaymentDueDate { get; set; }
+        public string PaymentDueDateStr { get; set; }
 
         /// <summary>
         /// get/set - The date the payment for this term is normally due, freetext.

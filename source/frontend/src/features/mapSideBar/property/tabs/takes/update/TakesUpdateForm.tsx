@@ -55,7 +55,7 @@ export const TakesUpdateForm = React.forwardRef<FormikProps<any>, ITakesUpdateFo
                 <>
                   {values.takes.map((t, index) => (
                     <TakeSubForm
-                      key={`take-${index}`}
+                      key={`take-${t.id ?? index}`}
                       nameSpace={`takes.${index}`}
                       takeIndex={index}
                       onRemove={(index: number) => arrayHelpers.remove(index)}

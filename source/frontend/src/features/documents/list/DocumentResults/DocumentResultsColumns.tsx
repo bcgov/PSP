@@ -6,16 +6,17 @@ import styled from 'styled-components';
 import { StyledRemoveLinkButton } from '@/components/common/buttons';
 import { Button } from '@/components/common/buttons/Button';
 import TooltipIcon from '@/components/common/TooltipIcon';
-import { ColumnWithProps, renderTypeCode } from '@/components/Table';
+import { ColumnWithProps, renderGenTypeCode } from '@/components/Table';
 import { Claims } from '@/constants/index';
 import { DocumentRow } from '@/features/documents/ComposedDocument';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
-import { Api_DocumentRelationship, Api_DocumentType } from '@/models/api/Document';
+import { ApiGen_Concepts_DocumentRelationship } from '@/models/api/generated/ApiGen_Concepts_DocumentRelationship';
+import { ApiGen_Concepts_DocumentType } from '@/models/api/generated/ApiGen_Concepts_DocumentType';
 import { prettyFormatUTCDate, stringToFragment } from '@/utils';
 
 export interface IDocumentColumnProps {
-  onViewDetails: (values: Api_DocumentRelationship) => void;
-  onDelete: (values: Api_DocumentRelationship) => void;
+  onViewDetails: (values: ApiGen_Concepts_DocumentRelationship) => void;
+  onDelete: (values: ApiGen_Concepts_DocumentRelationship) => void;
 }
 
 export const getDocumentColumns = ({
@@ -46,7 +47,7 @@ export const getDocumentColumns = ({
       Header: 'Status',
       accessor: 'statusTypeCode',
       sortable: true,
-      Cell: renderTypeCode,
+      Cell: renderGenTypeCode,
     },
     {
       Header: 'Actions',
@@ -56,11 +57,13 @@ export const getDocumentColumns = ({
   ];
 };
 
-function renderDocumentType({ value }: CellProps<DocumentRow, Api_DocumentType | undefined>) {
+function renderDocumentType({
+  value,
+}: CellProps<DocumentRow, ApiGen_Concepts_DocumentType | undefined>) {
   return stringToFragment(value?.documentTypeDescription ?? '');
 }
 
-const renderFileName = (onViewDetails: (values: Api_DocumentRelationship) => void) => {
+const renderFileName = (onViewDetails: (values: ApiGen_Concepts_DocumentRelationship) => void) => {
   return function (cell: CellProps<DocumentRow, string | undefined>) {
     const { hasClaim } = useKeycloakWrapper();
     return (
@@ -101,8 +104,8 @@ function renderUploaded(cell: CellProps<DocumentRow, string | undefined>) {
 }
 
 const renderActions = (
-  onViewDetails: (values: Api_DocumentRelationship) => void,
-  onDelete: (values: Api_DocumentRelationship) => void,
+  onViewDetails: (values: ApiGen_Concepts_DocumentRelationship) => void,
+  onDelete: (values: ApiGen_Concepts_DocumentRelationship) => void,
 ) => {
   return function ({ row: { original, index } }: CellProps<DocumentRow, string>) {
     const { hasClaim } = useKeycloakWrapper();

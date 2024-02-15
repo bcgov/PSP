@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using DocumentFormat.OpenXml.Office2010.Excel;
 using FluentAssertions;
 using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
@@ -563,13 +562,16 @@ namespace Pims.Api.Test.Services
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
             var takeRepository = this._helper.GetService<Mock<ITakeRepository>>();
-            takeRepository.Setup(x => x.GetAllByPropertyAcquisitionFileId(It.IsAny<long>())).Returns(new List<PimsTake>() { new PimsTake() { IsNewHighwayDedication = true } });
+            takeRepository.Setup(x => x.GetAllByPropertyAcquisitionFileId(It.IsAny<long>())).Returns(new List<PimsTake>() { new PimsTake() { IsNewHighwayDedication = true, IsAcquiredForInventory = true } });
 
             var agreementRepository = this._helper.GetService<Mock<IAgreementRepository>>();
             agreementRepository.Setup(x => x.GetAgreementsByAcquisitionFile(It.IsAny<long>())).Returns(new List<PimsAgreement>());
 
             var compensationRequisitionRepository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
             compensationRequisitionRepository.Setup(x => x.GetAllByAcquisitionFileId(It.IsAny<long>())).Returns(new List<PimsCompensationRequisition>());
+
+            var lookupRepository = this._helper.GetService<Mock<ILookupRepository>>();
+            lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
 
             var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
             solver.Setup(x => x.CanEditDetails(It.IsAny<AcquisitionStatusTypes?>())).Returns(true);
@@ -653,7 +655,7 @@ namespace Pims.Api.Test.Services
             filePropertyRepository.Setup(x => x.GetPropertiesByAcquisitionFileId(It.IsAny<long>())).Returns(acqFile.PimsPropertyAcquisitionFiles.ToList());
 
             var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
-            propertyRepository.Setup(x => x.TransferFileProperty(It.IsAny<PimsProperty>(), It.IsAny<Boolean>(), It.IsAny<Boolean>()));
+            propertyRepository.Setup(x => x.TransferFileProperty(It.IsAny<PimsProperty>(), It.IsAny<Boolean>(), It.IsAny<Boolean>(), It.IsAny<Boolean>(), It.IsAny<Boolean>()));
 
             var lookupRepository = this._helper.GetService<Mock<ILookupRepository>>();
             lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
@@ -675,15 +677,15 @@ namespace Pims.Api.Test.Services
 
             // Assert
             repository.Verify(x => x.Update(It.IsAny<PimsAcquisitionFile>()), Times.Once);
-            propertyRepository.Verify(x => x.TransferFileProperty(It.IsAny<PimsProperty>(), It.IsAny<Boolean>(), It.IsAny<Boolean>()), Times.Once);
+            propertyRepository.Verify(x => x.TransferFileProperty(It.IsAny<PimsProperty>(), It.IsAny<Boolean>(), It.IsAny<Boolean>(), It.IsAny<Boolean>(), It.IsAny<Boolean>()), Times.Once);
         }
 
         public static IEnumerable<object[]> takesTestParameters = new List<object[]>() {
             new object[] { new List<PimsTake>() { new PimsTake() { IsNewHighwayDedication = true }, new PimsTake() { IsNewLicenseToConstruct = true } }, true, false },
             new object[] { new List<PimsTake>() { new PimsTake() { IsNewLandAct = true }, new PimsTake() { IsNewLicenseToConstruct = true } }, true, false }, // core inventory takes priority over other interest
-            new object[] { new List<PimsTake>() { new PimsTake() { IsNewLandAct = true, LandActEndDt = DateTime.UtcNow.AddDays(-1) }, new PimsTake() { IsNewLicenseToConstruct = true } }, false, false }, // should ignore any expired takes
+            new object[] { new List<PimsTake>() { new PimsTake() { IsNewLandAct = true, LandActEndDt = DateOnly.FromDateTime(DateTime.Now.AddDays(-1)) }, new PimsTake() { IsNewLicenseToConstruct = true } }, false, false }, // should ignore any expired takes
             new object[] { new List<PimsTake>(), false, true }, // No takes should be core inventory
-            new object[] { new List<PimsTake>() { new PimsTake() { IsNewLandAct = true, LandActEndDt = DateTime.UtcNow.AddDays(-1) } }, true, false }, // only expired takes is the same as no takes
+            new object[] { new List<PimsTake>() { new PimsTake() { IsNewLandAct = true, LandActEndDt = DateOnly.FromDateTime(DateTime.Now.AddDays(-1)) } }, true, false }, // only expired takes is the same as no takes
             new object[] { new List<PimsTake>() { new PimsTake() { IsNewHighwayDedication = true }, new PimsTake() { IsNewLicenseToConstruct = true } }, true, false },
             new object[] { new List<PimsTake>() { new PimsTake() { IsNewHighwayDedication = true }, new PimsTake() { IsNewLicenseToConstruct = true } }, true, false },
             new object[] { new List<PimsTake>() { new PimsTake() { IsNewHighwayDedication = true }, new PimsTake() { IsNewLicenseToConstruct = true } }, true, false },
@@ -696,7 +698,7 @@ namespace Pims.Api.Test.Services
             new object[] { new List<PimsTake>() { new PimsTake() { IsNewInterestInSrw = true } }, false, false },
             new object[] { new List<PimsTake>() { new PimsTake() { IsNewLicenseToConstruct = true } }, false, false },
             new object[] { new List<PimsTake>() { new PimsTake() { IsThereSurplus = true } }, true, false },
-            new object[] { new List<PimsTake>() { new PimsTake() { IsNewHighwayDedication = true } }, true, false },
+            new object[] { new List<PimsTake>() { new PimsTake() { IsNewHighwayDedication = true } }, false, true },
             new object[] { new List<PimsTake>() { new PimsTake() { IsNewHighwayDedication = true, IsAcquiredForInventory = false } }, false, true },
             new object[] { new List<PimsTake>() { new PimsTake() { IsNewHighwayDedication = false, IsAcquiredForInventory = true } }, true, false },
             new object[] { new List<PimsTake>() { new PimsTake() { IsNewLandAct = true, LandActTypeCode = "Section 16", IsNewHighwayDedication = true, IsAcquiredForInventory = false } }, false, true },
@@ -722,7 +724,7 @@ namespace Pims.Api.Test.Services
             var captureProperty = new PimsProperty();
 
             var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
-            propertyRepository.Setup(x => x.TransferFileProperty(captureProperty, It.IsAny<Boolean>(), It.IsAny<Boolean>()));
+            propertyRepository.Setup(x => x.TransferFileProperty(captureProperty, It.IsAny<Boolean>(), It.IsAny<Boolean>(), It.IsAny<Boolean>(), It.IsAny<Boolean>()));
 
             var takeRepository = this._helper.GetService<Mock<ITakeRepository>>();
             takeRepository.Setup(x => x.GetAllByPropertyAcquisitionFileId(It.IsAny<long>())).Returns(takes);
@@ -738,7 +740,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             repository.Verify(x => x.Update(It.IsAny<PimsAcquisitionFile>()), Times.Once);
-            propertyRepository.Verify(x => x.TransferFileProperty(It.IsAny<PimsProperty>(), isOwned, isPropertyOfInterest), Times.Once);
+            propertyRepository.Verify(x => x.TransferFileProperty(It.IsAny<PimsProperty>(), isOwned, isPropertyOfInterest, It.IsAny<Boolean>(), It.IsAny<Boolean>()), Times.Once);
         }
 
         [Fact]
@@ -828,10 +830,40 @@ namespace Pims.Api.Test.Services
         public void UpdateProperties_Success()
         {
             // Arrange
-            var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit, Permissions.AcquisitionFileAdd, Permissions.AcquisitionFileView);
+            var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit, Permissions.PropertyAdd, Permissions.PropertyView);
 
             var acqFile = EntityHelper.CreateAcquisitionFile();
             acqFile.ConcurrencyControlNumber = 1;
+
+            var repository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
+            repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
+
+            var filePropertyRepository = this._helper.GetService<Mock<IAcquisitionFilePropertyRepository>>();
+            filePropertyRepository.Setup(x => x.GetPropertiesByAcquisitionFileId(It.IsAny<long>())).Returns(acqFile.PimsPropertyAcquisitionFiles.ToList());
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+
+            var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
+            solver.Setup(x => x.CanEditProperties(It.IsAny<AcquisitionStatusTypes?>())).Returns(true);
+
+            // Act
+            service.UpdateProperties(acqFile, new List<UserOverrideCode>());
+
+            // Assert
+            filePropertyRepository.Verify(x => x.GetPropertiesByAcquisitionFileId(It.IsAny<long>()), Times.Once);
+        }
+
+        [Fact]
+        public void UpdateProperties_Success_Final_SystemAdmin()
+        {
+            // Arrange
+            var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit, Permissions.AcquisitionFileAdd, Permissions.AcquisitionFileView, Permissions.SystemAdmin, Permissions.PropertyView, Permissions.PropertyAdd);
+
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+            acqFile.ConcurrencyControlNumber = 1;
+            acqFile.AcquisitionFileStatusTypeCode = AcquisitionStatusTypes.COMPLT.ToString();
 
             var repository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
             repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
@@ -854,7 +886,7 @@ namespace Pims.Api.Test.Services
         public void UpdateProperties_Takes_Violation()
         {
             // Arrange
-            var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit, Permissions.AcquisitionFileAdd, Permissions.AcquisitionFileView);
+            var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit, Permissions.PropertyAdd, Permissions.PropertyView);
 
             var acqFile = EntityHelper.CreateAcquisitionFile();
             acqFile.ConcurrencyControlNumber = 1;
@@ -888,7 +920,7 @@ namespace Pims.Api.Test.Services
         public void UpdateProperties_MatchProperties_Success()
         {
             // Arrange
-            var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit);
+            var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit, Permissions.PropertyAdd, Permissions.PropertyView);
 
             var acqFile = EntityHelper.CreateAcquisitionFile();
             acqFile.ConcurrencyControlNumber = 1;
@@ -909,6 +941,9 @@ namespace Pims.Api.Test.Services
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
+            var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
+            solver.Setup(x => x.CanEditProperties(It.IsAny<AcquisitionStatusTypes?>())).Returns(true);
+
             // Act
             service.UpdateProperties(acqFile, new List<UserOverrideCode>() { UserOverrideCode.AddLocationToProperty });
 
@@ -920,7 +955,7 @@ namespace Pims.Api.Test.Services
         public void UpdateProperties_MatchProperties_NewProperty_Success()
         {
             // Arrange
-            var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit);
+            var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit, Permissions.PropertyAdd, Permissions.PropertyView);
 
             var acqFile = EntityHelper.CreateAcquisitionFile();
             acqFile.ConcurrencyControlNumber = 1;
@@ -943,8 +978,23 @@ namespace Pims.Api.Test.Services
             var coordinateService = this._helper.GetService<Mock<ICoordinateTransformService>>();
             coordinateService.Setup(x => x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>())).Returns(new Coordinate(924046.3314288399, 1088892.9140135897));
 
+            var propertyService = this._helper.GetService<Mock<IPropertyService>>();
+            propertyService.Setup(x => x.PopulateNewProperty(It.IsAny<PimsProperty>(), It.IsAny<Boolean>(), It.IsAny<Boolean>())).Returns(new PimsProperty()
+            {
+                PropertyClassificationTypeCode = "UNKNOWN",
+                PropertyDataSourceEffectiveDate = DateOnly.FromDateTime(System.DateTime.Now),
+                PropertyDataSourceTypeCode = "PMBC",
+                PropertyTypeCode = "UNKNOWN",
+                PropertyStatusTypeCode = "UNKNOWN",
+                SurplusDeclarationTypeCode = "UNKNOWN",
+                IsPropertyOfInterest = true,
+            });
+
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+
+            var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
+            solver.Setup(x => x.CanEditProperties(It.IsAny<AcquisitionStatusTypes?>())).Returns(true);
 
             // Act
             service.UpdateProperties(acqFile, new List<UserOverrideCode>());
@@ -956,19 +1006,18 @@ namespace Pims.Api.Test.Services
             updatedProperty.PropertyTypeCode.Should().Be("UNKNOWN");
             updatedProperty.PropertyStatusTypeCode.Should().Be("UNKNOWN");
             updatedProperty.SurplusDeclarationTypeCode.Should().Be("UNKNOWN");
-            updatedProperty.PropertyDataSourceEffectiveDate.Should().BeCloseTo(System.DateTime.Now, 500);
+            updatedProperty.PropertyDataSourceEffectiveDate.Should().Be(DateOnly.FromDateTime(DateTime.Now));
             updatedProperty.PropertyDataSourceTypeCode.Should().Be("PMBC");
             updatedProperty.IsPropertyOfInterest.Should().Be(true);
 
             filePropertyRepository.Verify(x => x.GetPropertiesByAcquisitionFileId(It.IsAny<long>()), Times.Once);
-            coordinateService.Verify(x => x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>()));
         }
 
         [Fact]
         public void UpdateProperties_UpdatePropertyFile_Success()
         {
             // Arrange
-            var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit);
+            var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit, Permissions.PropertyAdd, Permissions.PropertyView);
 
             var property = EntityHelper.CreateProperty(12345);
 
@@ -989,6 +1038,9 @@ namespace Pims.Api.Test.Services
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
+            var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
+            solver.Setup(x => x.CanEditProperties(It.IsAny<AcquisitionStatusTypes?>())).Returns(true);
+
             // Act
             service.UpdateProperties(acqFile, new List<UserOverrideCode>());
 
@@ -1000,7 +1052,7 @@ namespace Pims.Api.Test.Services
         public void UpdateProperties_RemovePropertyFile_Success()
         {
             // Arrange
-            var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit);
+            var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit, Permissions.PropertyAdd, Permissions.PropertyView);
 
             var acqFile = EntityHelper.CreateAcquisitionFile();
             acqFile.ConcurrencyControlNumber = 1;
@@ -1020,6 +1072,9 @@ namespace Pims.Api.Test.Services
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
+            var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
+            solver.Setup(x => x.CanEditProperties(It.IsAny<AcquisitionStatusTypes?>())).Returns(true);
+
             // Act
             service.UpdateProperties(acqFile, new List<UserOverrideCode>());
 
@@ -1031,7 +1086,7 @@ namespace Pims.Api.Test.Services
         public void UpdateProperties_RemoveProperty_Success()
         {
             // Arrange
-            var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit);
+            var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit, Permissions.PropertyAdd, Permissions.PropertyView);
 
             var acqFile = EntityHelper.CreateAcquisitionFile();
             acqFile.ConcurrencyControlNumber = 1;
@@ -1056,6 +1111,9 @@ namespace Pims.Api.Test.Services
 
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+
+            var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
+            solver.Setup(x => x.CanEditProperties(It.IsAny<AcquisitionStatusTypes?>())).Returns(true);
 
             // Act
             service.UpdateProperties(acqFile, new List<UserOverrideCode>());
@@ -1115,7 +1173,7 @@ namespace Pims.Api.Test.Services
         public void UpdateProperties_ExistingTakes()
         {
             // Arrange
-            var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit);
+            var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit, Permissions.PropertyAdd, Permissions.PropertyView);
 
             var acqFile = EntityHelper.CreateAcquisitionFile();
             acqFile.ConcurrencyControlNumber = 1;
@@ -1149,7 +1207,7 @@ namespace Pims.Api.Test.Services
         public void UpdateProperties_ExistingInterestHolders()
         {
             // Arrange
-            var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit);
+            var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit, Permissions.PropertyAdd, Permissions.PropertyView);
 
             var acqFile = EntityHelper.CreateAcquisitionFile();
             acqFile.ConcurrencyControlNumber = 1;
@@ -1177,6 +1235,34 @@ namespace Pims.Api.Test.Services
 
             // Assert
             act.Should().Throw<BusinessRuleViolationException>();
+        }
+
+        [Fact]
+        public void UpdateProperties_Final()
+        {
+            // Arrange
+            var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit, Permissions.AcquisitionFileAdd, Permissions.AcquisitionFileView, Permissions.PropertyAdd, Permissions.PropertyView);
+
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+            acqFile.ConcurrencyControlNumber = 1;
+            acqFile.AcquisitionFileStatusTypeCode = AcquisitionStatusTypes.COMPLT.ToString();
+
+            var repository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
+            repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
+
+            var filePropertyRepository = this._helper.GetService<Mock<IAcquisitionFilePropertyRepository>>();
+            filePropertyRepository.Setup(x => x.GetPropertiesByAcquisitionFileId(It.IsAny<long>())).Returns(acqFile.PimsPropertyAcquisitionFiles.ToList());
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+
+            // Act
+            Action act = ()=> service.UpdateProperties(acqFile, new List<UserOverrideCode>());
+
+            // Assert
+            var exception = act.Should().Throw<BusinessRuleViolationException>();
+            exception.WithMessage("The file you are editing is not active or draft, so you cannot save changes. Refresh your browser to see file state.");
         }
 
         [Fact]
@@ -1600,7 +1686,7 @@ namespace Pims.Api.Test.Services
             var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileView);
 
             var acqFile = EntityHelper.CreateAcquisitionFile(1);
-            acqFile.AcqPhysFileStatusTypeCode = "COMPLT";
+            acqFile.AcquisitionFileStatusTypeCode = "COMPLT";
 
             var repository = this._helper.GetService<Mock<IAcquisitionFileChecklistRepository>>();
             var acquisitionRepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
@@ -1628,7 +1714,7 @@ namespace Pims.Api.Test.Services
             var repository = this._helper.GetService<Mock<IAcquisitionFileChecklistRepository>>();
             var acquisitionRepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
             repository.Setup(x => x.GetAllChecklistItemsByAcquisitionFileId(It.IsAny<long>())).Returns(new List<PimsAcquisitionChecklistItem>());
-            repository.Setup(x => x.GetAllChecklistItemTypes()).Returns(new List<PimsAcqChklstItemType>() { new PimsAcqChklstItemType() { AcqChklstItemTypeCode = "TEST", EffectiveDate = new DateTime(2024, 1, 1) } });
+            repository.Setup(x => x.GetAllChecklistItemTypes()).Returns(new List<PimsAcqChklstItemType>() { new PimsAcqChklstItemType() { AcqChklstItemTypeCode = "TEST", EffectiveDate = new DateOnly(2024, 1, 1) } });
             acquisitionRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
 
             // Act
@@ -2594,7 +2680,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             Assert.NotNull(result);
-            Assert.Equal(1, result.Count);
+            Assert.Equal(1, result.Count());
             acqFilerepository.Verify(x => x.GetAcquisitionFileExportDeep(It.IsAny<AcquisitionFilter>(), It.IsAny<HashSet<short>>(), It.IsAny<long?>()), Times.Once);
         }
 
@@ -2646,7 +2732,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             Assert.NotNull(result);
-            Assert.Equal(2, result.Count);
+            Assert.Equal(2, result.Count());
             Assert.Equal("10-25-2023", result[0].FileNumber);
             Assert.Equal("10-25-2023", result[1].FileNumber);
             Assert.Equal("8000", result[0].Pid);

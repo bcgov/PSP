@@ -2,7 +2,7 @@
 # It will build a new image from the specified source control repo
 # that will run your application.
 kind: Template
-apiVersion: v1
+apiVersion: template.openshift.io/v1
 metadata:
   name: pims-api-build
   annotations:
@@ -38,11 +38,11 @@ parameters:
   - name: BUILDIMAGE_NAME
     displayName: "Source Image Name"
     description: "The image to use as the Builder Image."
-    value: "dotnet-60"
+    value: "dotnet-80"
   - name: BUILDIMAGE_TAG
     displayName: "Source Image Tag"
     description: "The s2i image tag which is used to build the code."
-    value: "6.0"
+    value: "8.0"
 
   - name: GIT_URL
     displayName: Git Repository URL
@@ -115,6 +115,7 @@ objects:
         role: ${ROLE_NAME}
         env: ${ENV_NAME}
         branch: ${GIT_REF}
+        ci_cd: "true"
     spec:
       triggers:
         - type: ImageChange

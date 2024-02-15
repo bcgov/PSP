@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using Pims.Api.Models.Base;
-using Pims.Api.Models.Concepts.Contact.ContactMethod;
+using Pims.Api.Models.Concepts.ContactMethod;
 
 namespace Pims.Api.Models.Concepts.Organization
 {

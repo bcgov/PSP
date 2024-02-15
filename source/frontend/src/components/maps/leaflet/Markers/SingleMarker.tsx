@@ -37,7 +37,7 @@ const SinglePropertyMarker: React.FC<React.PropsWithChildren<SinglePropertyMarke
 
   const getIcon = () => {
     if (isOwned) {
-      return getMarkerIcon(pointFeature, isSelected);
+      return getMarkerIcon(pointFeature, isSelected, mapMachine.showDisposed);
     } else {
       return getNotOwnerMarkerIcon(isSelected);
     }

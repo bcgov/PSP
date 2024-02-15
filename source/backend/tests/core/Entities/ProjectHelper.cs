@@ -22,7 +22,7 @@ namespace Pims.Core.Test
                 Code = code,
                 Description = description,
                 ConcurrencyControlNumber = 1,
-                ProjectStatusTypeCodeNavigation = new Entity.PimsProjectStatusType { Id = "ACTIVE", Description = "Active" },
+                ProjectStatusTypeCodeNavigation = new Entity.PimsProjectStatusType { Id = "ACTIVE", Description = "Active", DbCreateUserid = "test", DbLastUpdateUserid = "test" },
             };
         }
     }

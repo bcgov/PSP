@@ -106,7 +106,7 @@ describe('Update lease container component', () => {
     await act(async () =>
       viewProps.onSubmit({ ...getDefaultFormLease(), purposeTypeCode: 'BCFERRIES' }),
     );
-    const button = await screen.findByText('Acknowledge & Continue');
+    const button = await screen.findByText('Yes');
     await act(async () => userEvent.click(button));
 
     expect(JSON.parse(mockAxios.history.put[1].data)).toEqual(leaseData);

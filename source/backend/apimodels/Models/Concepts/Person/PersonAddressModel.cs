@@ -25,7 +25,7 @@ namespace Pims.Api.Models.Concepts.Person
         /// <summary>
         /// get/set - The address usage type.
         /// </summary>
-        public TypeModel<string> AddressUsageType { get; set; }
+        public CodeTypeModel<string> AddressUsageType { get; set; }
         #endregion
     }
 }

@@ -94,6 +94,7 @@ describe('AcquisitionHeader component', () => {
         product: undefined,
         productId: null,
         projectId: null,
+        fileChecklistItems: [],
       },
       lastUpdatedBy: null,
     });

@@ -19,7 +19,7 @@ export class PropertyActivityRow {
     row.activityType = model.activityTypeCode;
     row.activitySubType = model.activitySubtypeCode;
     row.activityStatusType = model.activityStatusTypeCode;
-    row.requestedAddedDate = model.requestAddedDateTime;
+    row.requestedAddedDate = model.requestAddedDateOnly;
 
     return row;
   }

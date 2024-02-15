@@ -270,6 +270,9 @@ namespace Pims.Dal.Repositories
                 .Include(p => p.PimsPropertyAcquisitionFiles)
                     .ThenInclude(pa => pa.AcquisitionFile)
                     .ThenInclude(a => a.AcquisitionFileStatusTypeCodeNavigation)
+                .Include(p => p.PimsDispositionFileProperties)
+                    .ThenInclude(pa => pa.DispositionFile)
+                    .ThenInclude(a => a.DispositionFileStatusTypeCodeNavigation)
                 .FirstOrDefault(p => p.PropertyId == id);
 
             return property;
@@ -383,7 +386,7 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="property">The property to update.</param>
         /// <returns>The updated property.</returns>
-        public PimsProperty TransferFileProperty(PimsProperty property, bool isOwned, bool isPropertyOfInterest = false)
+        public PimsProperty TransferFileProperty(PimsProperty property, bool isOwned, bool isPropertyOfInterest = false, bool isDisposed = false, bool isOtherInterest = false)
         {
             property.ThrowIfNull(nameof(property));
 
@@ -392,6 +395,8 @@ namespace Pims.Dal.Repositories
 
             existingProperty.IsPropertyOfInterest = isPropertyOfInterest;
             existingProperty.IsOwned = isOwned;
+            existingProperty.IsDisposed = isDisposed;
+            existingProperty.IsOtherInterest = isOtherInterest;
 
             if (isOwned)
             {
@@ -407,7 +412,7 @@ namespace Pims.Dal.Repositories
 
         public HashSet<long> GetMatchingIds(PropertyFilterCriteria filter)
         {
-            var predicate = PredicateBuilder.New<PimsProperty>(acq => true);
+            var predicate = PredicateBuilder.New<PimsProperty>(p => true);
 
             // Project filters
             if (filter.ProjectId.HasValue)
@@ -476,10 +481,23 @@ namespace Pims.Dal.Repositories
                     p.PimsPropPropAnomalyTypes.Any(at => filter.AnomalyIds.Contains(at.PropertyAnomalyTypeCode)));
             }
 
+            // Property ownership filters
+            predicate.And(p => (p.IsOwned && filter.IsCoreInventory) ||
+                (p.IsPropertyOfInterest && filter.IsPropertyOfInterest) ||
+                (p.IsOtherInterest && filter.IsOtherInterest) ||
+                (p.IsDisposed && filter.IsDisposed));
+
             return Context.PimsProperties.AsNoTracking()
                 .Where(predicate)
                 .Select(x => x.PropertyId)
                 .ToHashSet();
+        }
+
+        public short GetPropertyRegion(long id)
+        {
+            var property = Context.PimsProperties.AsNoTracking()
+                .FirstOrDefault(p => p.PropertyId == id) ?? throw new KeyNotFoundException();
+            return property.RegionCode;
         }
 
         #endregion

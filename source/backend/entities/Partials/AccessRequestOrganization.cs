@@ -5,7 +5,7 @@ namespace Pims.Dal.Entities
     /// <summary>
     /// AccessRequestOrganization class, provides an entity for the datamodel to manage access request organizations.
     /// </summary>
-    public partial class PimsAccessRequestOrganization : IDisableBaseAppEntity
+    public partial class PimsAccessRequestOrganization : IDisableBaseAppEntity<bool?>
     {
         #region Constructors
 

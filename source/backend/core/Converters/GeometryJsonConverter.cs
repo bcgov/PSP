@@ -70,7 +70,7 @@ namespace Pims.Core.Converters
         /// <param name="type"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        private static Geometry Create(Type type, string value)
+        private static Point Create(Type type, string value)
         {
             if (string.IsNullOrWhiteSpace(value))
             {

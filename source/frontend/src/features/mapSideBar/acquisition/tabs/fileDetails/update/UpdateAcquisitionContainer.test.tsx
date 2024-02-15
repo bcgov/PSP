@@ -193,7 +193,7 @@ describe('UpdateAcquisition container', () => {
 
     mockUpdateAcquisitionFile.mockResolvedValue(mockAcquisitionFileResponse());
 
-    await act(async () => userEvent.click(await screen.findByText('Acknowledge & Continue')));
+    await act(async () => userEvent.click(await screen.findByText('Yes')));
 
     const fileData = viewProps?.initialValues.toApi();
     expect(mockUpdateAcquisitionFile).toHaveBeenCalledTimes(2);
@@ -204,7 +204,7 @@ describe('UpdateAcquisition container', () => {
     expect(onSuccess).toHaveBeenCalled();
   });
 
-  it(`dismisses the region popup when clicking 'Cancel Update'`, async () => {
+  it(`dismisses the region popup when clicking 'No'`, async () => {
     mockUpdateAcquisitionFile.mockRejectedValue(
       createAxiosError(409, 'The Ministry region has been changed', {
         errorCode: UserOverrideCode.PROPERTY_OF_INTEREST_TO_INVENTORY,
@@ -217,7 +217,7 @@ describe('UpdateAcquisition container', () => {
 
     expect(await screen.findByText(/The Ministry region has been changed/i)).toBeVisible();
 
-    await act(async () => userEvent.click(await screen.findByText('Cancel Update')));
+    await act(async () => userEvent.click(await screen.findByText('No')));
 
     await waitFor(() =>
       expect(screen.queryByText(/The Ministry region has been changed/i)).toBeNull(),
@@ -266,7 +266,7 @@ describe('UpdateAcquisition container', () => {
 
     mockUpdateAcquisitionFile.mockResolvedValue(mockAcquisitionFileResponse());
 
-    await act(async () => userEvent.click(await screen.findByText('Acknowledge & Continue')));
+    await act(async () => userEvent.click(await screen.findByText('Yes')));
 
     const fileData = viewProps?.initialValues.toApi();
     expect(mockUpdateAcquisitionFile).toHaveBeenCalledTimes(2);
@@ -292,7 +292,7 @@ describe('UpdateAcquisition container', () => {
     expect(popup).toBeVisible();
   });
 
-  it(`dismisses the properties popup when clicking 'Cancel Update'`, async () => {
+  it(`dismisses the properties popup when clicking 'No'`, async () => {
     mockUpdateAcquisitionFile.mockRejectedValue(
       createAxiosError(
         409,
@@ -313,7 +313,7 @@ describe('UpdateAcquisition container', () => {
       ),
     ).toBeVisible();
 
-    await act(async () => userEvent.click(await screen.findByText('Cancel Update')));
+    await act(async () => userEvent.click(await screen.findByText('No')));
 
     await waitFor(() =>
       expect(

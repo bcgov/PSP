@@ -156,7 +156,7 @@ describe('TermsPaymentsContainer component', () => {
       });
 
       await fillInput(document.body, 'startDate', '2020-01-01', 'datepicker');
-      const saveButton = getByText('Save term');
+      const saveButton = getByText('Yes');
       await act(async () => userEvent.click(saveButton));
       await waitFor(async () => {
         expect(useLeaseTermRepository().addLeaseTerm.execute).toHaveBeenCalled();
@@ -178,7 +178,7 @@ describe('TermsPaymentsContainer component', () => {
       });
 
       await fillInput(document.body, 'startDate', '2020-01-01', 'datepicker');
-      const saveButton = getByText('Save term');
+      const saveButton = getByText('Yes');
       await act(async () => userEvent.click(saveButton));
       expect(useLeaseTermRepository().updateLeaseTerm.execute).toHaveBeenCalled();
     });

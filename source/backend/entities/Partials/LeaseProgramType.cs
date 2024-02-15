@@ -27,6 +27,10 @@ namespace Pims.Dal.Entities
         {
             Id = id;
         }
+
+        public PimsLeaseProgramType()
+        {
+        }
         #endregion
     }
 }

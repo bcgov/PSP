@@ -8,7 +8,7 @@ using Moq;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Models;
 using Pims.Api.Models.Concepts;
-using Pims.Api.Models.Download;
+
 using Pims.Api.Models.Mayan;
 using Pims.Api.Models.Mayan.Document;
 using Pims.Api.Repositories.Mayan;
@@ -20,12 +20,14 @@ using Pims.Dal.Exceptions;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Xunit;
-using Pims.Api.Models.Concepts.Http;
-using Pims.Api.Concepts.CodeTypes;
-using Pims.Api.Models.Concepts.Document.UpdateMetadata;
+
 using Pims.Api.Models.Concepts.Document;
-using Pims.Api.Models.Concepts.Document.Upload;
 using Pims.Api.Models.Mayan.Metadata;
+using Pims.Api.Models.Requests.Http;
+using Pims.Api.Models.CodeTypes;
+using Pims.Api.Models.Requests.Document.Upload;
+using Pims.Api.Models.Requests.Document.UpdateMetadata;
+using Pims.Api.Constants;
 
 namespace Pims.Api.Test.Services
 {
@@ -36,6 +38,17 @@ namespace Pims.Api.Test.Services
     public class DocumentServiceTest
     {
         private TestHelper _helper;
+
+        public static IEnumerable<object[]> GetPimsDocumentTypesParameters =>
+            new List<object[]>
+            {
+                new object[] {DocumentRelationType.ResearchFiles, "RESEARCH"},
+                new object[] {DocumentRelationType.AcquisitionFiles, "ACQUIRE"},
+                new object[] {DocumentRelationType.Leases, "LEASLIC"},
+                new object[] {DocumentRelationType.Projects, "PROJECT"},
+                new object[] {DocumentRelationType.ManagementFiles, "MANAGEMENT"},
+                new object[] {DocumentRelationType.DispositionFiles, "DISPOSE"},
+            };
 
         public DocumentServiceTest()
         {
@@ -78,6 +91,22 @@ namespace Pims.Api.Test.Services
             documentTypeRepository.Verify(x => x.GetAll(), Times.Once);
         }
 
+        [Theory]
+        [MemberData(nameof(GetPimsDocumentTypesParameters))]
+        public void GetPimsDocumentTypes_ByRelationshipType_Success(DocumentRelationType relationshipType, string category)
+        {
+            // Arrange
+            var service = this.CreateDocumentServiceWithPermissions(Permissions.DocumentView);
+            var documentTypeRepository = this._helper.GetService<Mock<IDocumentTypeRepository>>();
+
+            documentTypeRepository.Setup(x => x.GetByCategory(It.IsAny<string>())).Returns(new List<PimsDocumentTyp>());
+
+            // Act
+            var result = service.GetPimsDocumentTypes(relationshipType);
+
+            // Assert
+            documentTypeRepository.Verify(x => x.GetByCategory(category), Times.Once);
+        }
         [Fact]
         public void UploadDocumentAsync_UploadRequest_ShouldThrowException_NotAuthorized()
         {
@@ -91,7 +120,7 @@ namespace Pims.Api.Test.Services
             Func<Task> sut = async () => await service.UploadDocumentAsync(uploadRequest);
 
             // Assert
-            sut.Should().Throw<NotAuthorizedException>();
+            sut.Should().ThrowAsync<NotAuthorizedException>();
             documentTypeRepository.Verify(x => x.GetAll(), Times.Never);
         }
 
@@ -106,11 +135,11 @@ namespace Pims.Api.Test.Services
             avService.Setup(x => x.ScanAsync(It.IsAny<IFormFile>())).Returns(Task.CompletedTask);
 
             documentStorageRepository.Setup(x => x.TryUploadDocumentAsync(It.IsAny<long>(), It.IsAny<IFormFile>()))
-                .ReturnsAsync(new ExternalResult<DocumentDetail>()
+                .ReturnsAsync(new ExternalResponse<DocumentDetailModel>()
                 {
-                    Status = ExternalResultStatus.Success,
+                    Status = ExternalResponseStatus.Success,
                     HttpStatusCode = System.Net.HttpStatusCode.OK,
-                    Payload = new DocumentDetail(),
+                    Payload = new DocumentDetailModel(),
                 });
 
             // Act
@@ -141,11 +170,11 @@ namespace Pims.Api.Test.Services
             avService.Setup(x => x.ScanAsync(It.IsAny<IFormFile>())).Returns(Task.CompletedTask);
 
             documentStorageRepository.Setup(x => x.TryUploadDocumentAsync(It.IsAny<long>(), It.IsAny<IFormFile>()))
-                .ReturnsAsync(new ExternalResult<DocumentDetail>()
+                .ReturnsAsync(new ExternalResponse<DocumentDetailModel>()
                 {
-                    Status = ExternalResultStatus.Success,
+                    Status = ExternalResponseStatus.Success,
                     HttpStatusCode = System.Net.HttpStatusCode.OK,
-                    Payload = new DocumentDetail(),
+                    Payload = new DocumentDetailModel(),
                 });
 
             // Act
@@ -190,7 +219,7 @@ namespace Pims.Api.Test.Services
             Func<Task> act = async () => await service.UpdateDocumentAsync(updateRequest);
 
             // Assert
-            act.Should().Throw<NotAuthorizedException>();
+            act.Should().ThrowAsync<NotAuthorizedException>();
             documentRepository.Verify(x => x.Add(It.IsAny<PimsDocument>()), Times.Never);
         }
 
@@ -216,7 +245,7 @@ namespace Pims.Api.Test.Services
             Func<Task> act = async () => await service.UpdateDocumentAsync(updateRequest);
 
             // Assert
-            act.Should().Throw<BadRequestException>();
+            act.Should().ThrowAsync<BadRequestException>();
             documentRepository.Verify(x => x.TryGet(It.IsAny<long>()), Times.Once);
         }
 
@@ -235,18 +264,18 @@ namespace Pims.Api.Test.Services
                 .Returns(new PimsDocument());
 
             documentStorageRepository.Setup(x => x.TryGetDocumentMetadataAsync(It.IsAny<long>(), It.IsAny<string>(), It.IsAny<int?>(), It.IsAny<int?>()))
-                .ReturnsAsync(new ExternalResult<QueryResult<DocumentMetadata>>()
+                .ReturnsAsync(new ExternalResponse<QueryResponse<DocumentMetadataModel>>()
                 {
                     HttpStatusCode = System.Net.HttpStatusCode.OK,
-                    Status = ExternalResultStatus.Success,
-                    Payload = new QueryResult<DocumentMetadata>()
+                    Status = ExternalResponseStatus.Success,
+                    Payload = new QueryResponse<DocumentMetadataModel>()
                     {
                         Count = 1,
-                        Results = new List<DocumentMetadata>()
+                        Results = new List<DocumentMetadataModel>()
                             {
                                 new() {
                                     Id = 1,
-                                    MetadataType= new MetadataType()
+                                    MetadataType= new MetadataTypeModel()
                                     {
                                         Id= 100,
                                     },
@@ -257,11 +286,11 @@ namespace Pims.Api.Test.Services
                 });
 
             documentStorageRepository.Setup(x => x.TryUpdateDocumentMetadataAsync(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<string>()))
-                .ReturnsAsync(new ExternalResult<DocumentMetadata>()
+                .ReturnsAsync(new ExternalResponse<DocumentMetadataModel>()
                 {
                     HttpStatusCode = System.Net.HttpStatusCode.OK,
-                    Status = ExternalResultStatus.Success,
-                    Payload = new DocumentMetadata(),
+                    Status = ExternalResponseStatus.Success,
+                    Payload = new DocumentMetadataModel(),
                 });
 
             DocumentUpdateRequest updateRequest = new()
@@ -298,27 +327,27 @@ namespace Pims.Api.Test.Services
                 .Returns(new PimsDocument());
 
             documentStorageRepository.Setup(x => x.TryGetDocumentMetadataAsync(It.IsAny<long>(), It.IsAny<string>(), It.IsAny<int?>(), It.IsAny<int?>()))
-                .ReturnsAsync(new ExternalResult<QueryResult<DocumentMetadata>>()
+                .ReturnsAsync(new ExternalResponse<QueryResponse<DocumentMetadataModel>>()
                 {
                     HttpStatusCode = System.Net.HttpStatusCode.OK,
-                    Status = ExternalResultStatus.Success,
-                    Payload = new QueryResult<DocumentMetadata>()
+                    Status = ExternalResponseStatus.Success,
+                    Payload = new QueryResponse<DocumentMetadataModel>()
                     {
                         Count = 0,
-                        Results = new List<DocumentMetadata>() { },
+                        Results = new List<DocumentMetadataModel>() { },
                     },
                 });
 
             documentStorageRepository.Setup(x => x.TryCreateDocumentMetadataAsync(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<string>()))
-                .ReturnsAsync(new ExternalResult<DocumentMetadata>()
+                .ReturnsAsync(new ExternalResponse<DocumentMetadataModel>()
                 {
                     HttpStatusCode = System.Net.HttpStatusCode.OK,
-                    Status = ExternalResultStatus.Success,
-                    Payload = new DocumentMetadata()
+                    Status = ExternalResponseStatus.Success,
+                    Payload = new DocumentMetadataModel()
                     {
                         Id = 1,
                         Value = "test_value",
-                        MetadataType = new MetadataType()
+                        MetadataType = new MetadataTypeModel()
                         {
                             Id = 1,
                         },
@@ -359,18 +388,18 @@ namespace Pims.Api.Test.Services
                 .Returns(new PimsDocument());
 
             documentStorageRepository.Setup(x => x.TryGetDocumentMetadataAsync(It.IsAny<long>(), It.IsAny<string>(), It.IsAny<int?>(), It.IsAny<int?>()))
-                .ReturnsAsync(new ExternalResult<QueryResult<DocumentMetadata>>()
+                .ReturnsAsync(new ExternalResponse<QueryResponse<DocumentMetadataModel>>()
                 {
                     HttpStatusCode = System.Net.HttpStatusCode.OK,
-                    Status = ExternalResultStatus.Success,
-                    Payload = new QueryResult<DocumentMetadata>()
+                    Status = ExternalResponseStatus.Success,
+                    Payload = new QueryResponse<DocumentMetadataModel>()
                     {
                         Count = 1,
-                        Results = new List<DocumentMetadata>()
+                        Results = new List<DocumentMetadataModel>()
                             {
                                 new() {
                                     Id = 1,
-                                    MetadataType= new MetadataType()
+                                    MetadataType= new MetadataTypeModel()
                                     {
                                         Id= 100,
                                     },
@@ -381,11 +410,11 @@ namespace Pims.Api.Test.Services
                 });
 
             documentStorageRepository.Setup(x => x.TryDeleteDocumentMetadataAsync(It.IsAny<long>(), It.IsAny<long>()))
-                .ReturnsAsync(new ExternalResult<string>()
+                .ReturnsAsync(new ExternalResponse<string>()
                 {
 
                     HttpStatusCode = System.Net.HttpStatusCode.OK,
-                    Status = ExternalResultStatus.Success,
+                    Status = ExternalResponseStatus.Success,
                     Message = "Ok",
                 });
 
@@ -429,7 +458,7 @@ namespace Pims.Api.Test.Services
             Func<Task> act = async () => await service.DeleteDocumentAsync(doc);
 
             // Assert
-            act.Should().Throw<NotAuthorizedException>();
+            act.Should().ThrowAsync<NotAuthorizedException>();
             documentRepository.Verify(x => x.TryGet(It.IsAny<long>()), Times.Never);
         }
 
@@ -441,9 +470,9 @@ namespace Pims.Api.Test.Services
             var documentStorageRepository = this._helper.GetService<Mock<IEdmsDocumentRepository>>();
 
             documentStorageRepository.Setup(x => x.TryDeleteDocument(It.IsAny<long>()))
-                .ReturnsAsync(new ExternalResult<string>()
+                .ReturnsAsync(new ExternalResponse<string>()
                 {
-                    Status = ExternalResultStatus.Success,
+                    Status = ExternalResponseStatus.Success,
                 });
 
             PimsDocument doc = new()
@@ -467,7 +496,7 @@ namespace Pims.Api.Test.Services
             var documentStorageRepository = this._helper.GetService<Mock<IEdmsDocumentRepository>>();
 
             documentStorageRepository.Setup(x => x.TryDeleteDocument(It.IsAny<long>()))
-                .ReturnsAsync(new ExternalResult<string>()
+                .ReturnsAsync(new ExternalResponse<string>()
                 {
                     HttpStatusCode = System.Net.HttpStatusCode.NotFound,
                 });
@@ -496,7 +525,7 @@ namespace Pims.Api.Test.Services
             Func<Task> act = async () => await service.GetStorageDocumentTypes(null, page: 1, pageSize: 10);
 
             // Assert
-            act.Should().Throw<NotAuthorizedException>();
+            act.Should().ThrowAsync<NotAuthorizedException>();
             documentStorageRepository.Verify(x => x.TryDeleteDocument(It.IsAny<long>()), Times.Never);
         }
 
@@ -508,14 +537,14 @@ namespace Pims.Api.Test.Services
             var documentStorageRepository = this._helper.GetService<Mock<IEdmsDocumentRepository>>();
 
             documentStorageRepository.Setup(x => x.TryGetDocumentTypesAsync(null, It.IsAny<int>(), It.IsAny<int>()))
-                .ReturnsAsync(new ExternalResult<QueryResult<DocumentType>>()
+                .ReturnsAsync(new ExternalResponse<QueryResponse<Models.Mayan.Document.DocumentTypeModel>>()
                 {
                     HttpStatusCode = System.Net.HttpStatusCode.OK,
-                    Status = ExternalResultStatus.Success,
-                    Payload = new QueryResult<DocumentType>()
+                    Status = ExternalResponseStatus.Success,
+                    Payload = new QueryResponse<Models.Mayan.Document.DocumentTypeModel>()
                     {
                         Count = 1,
-                        Results = new List<DocumentType>(),
+                        Results = new List<Models.Mayan.Document.DocumentTypeModel>(),
                     },
                 });
 
@@ -536,7 +565,7 @@ namespace Pims.Api.Test.Services
             Func<Task> act = async () => await service.GetStorageDocumentList(null, page: 1, pageSize: 10);
 
             // Assert
-            act.Should().Throw<NotAuthorizedException>();
+            act.Should().ThrowAsync<NotAuthorizedException>();
         }
 
         [Fact]
@@ -546,14 +575,14 @@ namespace Pims.Api.Test.Services
             var documentStorageRepository = this._helper.GetService<Mock<IEdmsDocumentRepository>>();
 
             documentStorageRepository.Setup(x => x.TryGetDocumentsListAsync(null, It.IsAny<int>(), It.IsAny<int>()))
-                .ReturnsAsync(new ExternalResult<QueryResult<DocumentDetail>>()
+                .ReturnsAsync(new ExternalResponse<QueryResponse<DocumentDetailModel>>()
                 {
                     HttpStatusCode = System.Net.HttpStatusCode.OK,
-                    Status = ExternalResultStatus.Success,
-                    Payload = new QueryResult<DocumentDetail>()
+                    Status = ExternalResponseStatus.Success,
+                    Payload = new QueryResponse<DocumentDetailModel>()
                     {
                         Count = 1,
-                        Results = new List<DocumentDetail>(),
+                        Results = new List<DocumentDetailModel>(),
                     },
                 });
 
@@ -572,11 +601,11 @@ namespace Pims.Api.Test.Services
             var documentStorageRepository = this._helper.GetService<Mock<IEdmsDocumentRepository>>();
 
             documentStorageRepository.Setup(x => x.TryGetDocumentTypeMetadataTypesAsync(It.IsAny<long>(), It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()))
-                .ReturnsAsync(new ExternalResult<QueryResult<DocumentTypeMetadataType>>()
+                .ReturnsAsync(new ExternalResponse<QueryResponse<DocumentTypeMetadataTypeModel>>()
                 {
                     HttpStatusCode = System.Net.HttpStatusCode.OK,
-                    Status = ExternalResultStatus.Success,
-                    Payload = new QueryResult<DocumentTypeMetadataType>(),
+                    Status = ExternalResponseStatus.Success,
+                    Payload = new QueryResponse<DocumentTypeMetadataTypeModel>(),
                 });
 
             // Act
@@ -596,7 +625,7 @@ namespace Pims.Api.Test.Services
             Func<Task> act = async () => await service.GetStorageDocumentMetadata(1, string.Empty, 1, 10);
 
             // Assert
-            act.Should().Throw<NotAuthorizedException>();
+            act.Should().ThrowAsync<NotAuthorizedException>();
         }
 
         [Fact]
@@ -607,14 +636,14 @@ namespace Pims.Api.Test.Services
             var documentStorageRepository = this._helper.GetService<Mock<IEdmsDocumentRepository>>();
 
             documentStorageRepository.Setup(x => x.TryGetDocumentMetadataAsync(It.IsAny<long>(), It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>()))
-                .ReturnsAsync(new ExternalResult<QueryResult<DocumentMetadata>>()
+                .ReturnsAsync(new ExternalResponse<QueryResponse<DocumentMetadataModel>>()
                 {
                     HttpStatusCode = System.Net.HttpStatusCode.OK,
-                    Status = ExternalResultStatus.Success,
-                    Payload = new QueryResult<DocumentMetadata>()
+                    Status = ExternalResponseStatus.Success,
+                    Payload = new QueryResponse<DocumentMetadataModel>()
                     {
                         Count = 1,
-                        Results = new List<DocumentMetadata>(),
+                        Results = new List<DocumentMetadataModel>(),
                     },
                 });
 
@@ -635,7 +664,7 @@ namespace Pims.Api.Test.Services
             Func<Task> act = async () => await service.DownloadFileAsync(1, 2);
 
             // Assert
-            act.Should().Throw<NotAuthorizedException>();
+            act.Should().ThrowAsync<NotAuthorizedException>();
         }
 
         [Fact]
@@ -646,11 +675,11 @@ namespace Pims.Api.Test.Services
             var documentStorageRepository = this._helper.GetService<Mock<IEdmsDocumentRepository>>();
 
             documentStorageRepository.Setup(x => x.TryDownloadFileAsync(It.IsAny<long>(), It.IsAny<long>()))
-                .ReturnsAsync(new ExternalResult<FileDownload>()
+                .ReturnsAsync(new ExternalResponse<FileDownloadResponse>()
                 {
                     HttpStatusCode = System.Net.HttpStatusCode.OK,
-                    Status = ExternalResultStatus.Success,
-                    Payload = new FileDownload()
+                    Status = ExternalResponseStatus.Success,
+                    Payload = new FileDownloadResponse()
                     {
                         FileName = "Test",
                     },
@@ -673,7 +702,7 @@ namespace Pims.Api.Test.Services
             Func<Task> sut = async () => await service.DownloadFileLatestAsync(1);
 
             // Assert
-            sut.Should().Throw<NotAuthorizedException>();
+            sut.Should().ThrowAsync<NotAuthorizedException>();
         }
 
         [Fact]
@@ -684,11 +713,11 @@ namespace Pims.Api.Test.Services
             var documentStorageRepository = this._helper.GetService<Mock<IEdmsDocumentRepository>>();
 
             documentStorageRepository.Setup(x => x.TryGetDocumentAsync(It.IsAny<long>()))
-                .ReturnsAsync(new ExternalResult<DocumentDetail>()
+                .ReturnsAsync(new ExternalResponse<DocumentDetailModel>()
                 {
                     HttpStatusCode = System.Net.HttpStatusCode.NotFound,
                     Message = "ERROR",
-                    Status = ExternalResultStatus.Error,
+                    Status = ExternalResponseStatus.Error,
                 });
 
             // Act
@@ -706,11 +735,11 @@ namespace Pims.Api.Test.Services
             var documentStorageRepository = this._helper.GetService<Mock<IEdmsDocumentRepository>>();
 
             documentStorageRepository.Setup(x => x.TryGetDocumentAsync(It.IsAny<long>()))
-                .ReturnsAsync(new ExternalResult<DocumentDetail>()
+                .ReturnsAsync(new ExternalResponse<DocumentDetailModel>()
                 {
                     HttpStatusCode = System.Net.HttpStatusCode.OK,
                     Message = "Ok",
-                    Status = ExternalResultStatus.Success,
+                    Status = ExternalResponseStatus.Success,
                     Payload = null,
                 });
 
@@ -729,15 +758,15 @@ namespace Pims.Api.Test.Services
             var documentStorageRepository = this._helper.GetService<Mock<IEdmsDocumentRepository>>();
 
             documentStorageRepository.Setup(x => x.TryGetDocumentAsync(It.IsAny<long>()))
-                .ReturnsAsync(new ExternalResult<DocumentDetail>()
+                .ReturnsAsync(new ExternalResponse<DocumentDetailModel>()
                 {
                     HttpStatusCode = System.Net.HttpStatusCode.OK,
                     Message = "Ok",
-                    Status = ExternalResultStatus.Success,
+                    Status = ExternalResponseStatus.Success,
                     Payload = new()
                     {
                         Id = 12,
-                        FileLatest = new FileLatest()
+                        FileLatest = new FileLatestModel()
                         {
                             Id = 2,
                             Size = 1,
@@ -752,7 +781,7 @@ namespace Pims.Api.Test.Services
             // Assert
             documentStorageRepository.Verify(x => x.TryGetDocumentAsync(It.IsAny<long>()), Times.Once);
             documentStorageRepository.Verify(x => x.TryDownloadFileAsync(It.IsAny<long>(), It.IsAny<long>()), Times.Never);
-            Assert.Equal(ExternalResultStatus.Error, result.Status);
+            Assert.Equal(ExternalResponseStatus.Error, result.Status);
         }
 
         [Fact]
@@ -763,15 +792,15 @@ namespace Pims.Api.Test.Services
             var documentStorageRepository = this._helper.GetService<Mock<IEdmsDocumentRepository>>();
 
             documentStorageRepository.Setup(x => x.TryGetDocumentAsync(It.IsAny<long>()))
-                .ReturnsAsync(new ExternalResult<DocumentDetail>()
+                .ReturnsAsync(new ExternalResponse<DocumentDetailModel>()
                 {
                     HttpStatusCode = System.Net.HttpStatusCode.OK,
                     Message = "Ok",
-                    Status = ExternalResultStatus.Success,
+                    Status = ExternalResponseStatus.Success,
                     Payload = new()
                     {
                         Id = 12,
-                        FileLatest = new FileLatest()
+                        FileLatest = new FileLatestModel()
                         {
                             Id = 2,
                             Size = 1,
@@ -796,24 +825,24 @@ namespace Pims.Api.Test.Services
             var documentStorageRepository = this._helper.GetService<Mock<IEdmsDocumentRepository>>();
 
             documentStorageRepository.Setup(x => x.TryGetDocumentAsync(It.IsAny<long>()))
-                .ReturnsAsync(new ExternalResult<DocumentDetail>()
+                .ReturnsAsync(new ExternalResponse<DocumentDetailModel>()
                 {
                     HttpStatusCode = System.Net.HttpStatusCode.OK,
                     Message = "Ok",
-                    Status = ExternalResultStatus.Success,
-                    Payload = new DocumentDetail()
+                    Status = ExternalResponseStatus.Success,
+                    Payload = new DocumentDetailModel()
                     {
                         Id = 1,
-                        FileLatest = new FileLatest() { Id = 2, FileName = "MyFile.pdf" },
+                        FileLatest = new FileLatestModel() { Id = 2, FileName = "MyFile.pdf" },
                     },
                 });
 
             documentStorageRepository.Setup(x => x.TryDownloadFileAsync(It.IsAny<long>(), It.IsAny<long>()))
-                .ReturnsAsync(new ExternalResult<FileDownload>()
+                .ReturnsAsync(new ExternalResponse<FileDownloadResponse>()
                 {
                     HttpStatusCode = System.Net.HttpStatusCode.OK,
                     Message = "Ok",
-                    Status = ExternalResultStatus.Success,
+                    Status = ExternalResponseStatus.Success,
                     Payload = new()
                     {
                         FilePayload = "156165165156asdasdasd==",
@@ -838,11 +867,11 @@ namespace Pims.Api.Test.Services
             var documentStorageRepository = this._helper.GetService<Mock<IEdmsDocumentRepository>>();
 
             documentStorageRepository.Setup(x => x.TryDownloadFileAsync(It.IsAny<long>(), It.IsAny<long>()))
-                .ReturnsAsync(new ExternalResult<FileDownload>()
+                .ReturnsAsync(new ExternalResponse<FileDownloadResponse>()
                 {
                     HttpStatusCode = System.Net.HttpStatusCode.OK,
-                    Status = ExternalResultStatus.Success,
-                    Payload = new FileDownload()
+                    Status = ExternalResponseStatus.Success,
+                    Payload = new FileDownloadResponse()
                     {
                         FileName = "Test.exe",
                         FileNameExtension = "exe",
@@ -856,7 +885,7 @@ namespace Pims.Api.Test.Services
             // Assert
             documentStorageRepository.Verify(x => x.TryDownloadFileAsync(It.IsAny<long>(), It.IsAny<long>()), Times.Once);
 
-            Assert.Equal(ExternalResultStatus.Error, result.Status);
+            Assert.Equal(ExternalResponseStatus.Error, result.Status);
         }
     }
 }

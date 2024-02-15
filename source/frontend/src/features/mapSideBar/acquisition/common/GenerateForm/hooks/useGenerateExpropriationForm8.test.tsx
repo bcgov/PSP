@@ -7,13 +7,13 @@ import { useDocumentGenerationRepository } from '@/features/documents/hooks/useD
 import { useForm8Repository } from '@/hooks/repositories/useForm8Repository';
 import { mockGetExpropriationPaymentApi } from '@/mocks/ExpropriationPayment.mock';
 import { Api_ExpropriationPayment } from '@/models/api/ExpropriationPayment';
-import { ExternalResultStatus } from '@/models/api/ExternalResult';
+import { ApiGen_CodeTypes_ExternalResponseStatus } from '@/models/api/generated/ApiGen_CodeTypes_ExternalResponseStatus';
 
 import { useGenerateExpropriationForm8 } from './useGenerateExpropriationForm8';
 
 const generateFn = jest
   .fn()
-  .mockResolvedValue({ status: ExternalResultStatus.Success, payload: {} });
+  .mockResolvedValue({ status: ApiGen_CodeTypes_ExternalResponseStatus.Success, payload: {} });
 
 const getExpropriationPaymentApi = jest.fn<Promise<Api_ExpropriationPayment | undefined>, any[]>();
 
@@ -65,7 +65,10 @@ describe('useGenerateExpropriationForm8 functions', () => {
   });
 
   it('throws an error if generation api call is unsuccessful', async () => {
-    generateFn.mockResolvedValue({ status: ExternalResultStatus.Error, payload: null });
+    generateFn.mockResolvedValue({
+      status: ApiGen_CodeTypes_ExternalResponseStatus.Error,
+      payload: null,
+    });
     const generate = setup();
     await expect(generate(1, '01-123')).rejects.toThrow('Failed to generate file');
   });

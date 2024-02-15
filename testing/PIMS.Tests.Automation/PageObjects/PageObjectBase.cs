@@ -18,11 +18,9 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             this.webDriver = webDriver;
             wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(120));
-            wait.PollingInterval = TimeSpan.FromMilliseconds(100);
-            wait.IgnoreExceptionTypes(typeof(NoSuchElementException), typeof(StaleElementReferenceException), typeof(ElementClickInterceptedException));
         }
 
-        protected virtual void Wait(int milliseconds = 1000) => Thread.Sleep(milliseconds);
+        protected virtual void Wait(int milliseconds = 3000) => Thread.Sleep(milliseconds);
 
         protected void WaitUntilSpinnerDisappear()
         {
@@ -36,26 +34,15 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
         }
 
-        protected void WaitUntilStale(By element)
-        {
-            wait.Until(ExpectedConditions.StalenessOf(webDriver.FindElement(element)));
-        }
+        protected void WaitUntilStale(By element) => wait.Until(ExpectedConditions.StalenessOf(webDriver.FindElement(element)));
 
-        protected void WaitUntilDisappear(By element)
-        {
-            wait.Until(ExpectedConditions.InvisibilityOfElementLocated(element));
-            Wait();
-        }
+        protected void WaitUntilDisappear(By element) => wait.Until(ExpectedConditions.InvisibilityOfElementLocated(element));
 
-        protected void WaitUntilVisible(By element)
-        {
-            wait.Until(ExpectedConditions.ElementIsVisible(element));
-        }
+        protected void WaitUntilVisible(By element) => wait.Until(ExpectedConditions.ElementIsVisible(element));
 
-        protected void WaitUntilClickable(By element)
-        {
-            wait.Until(ExpectedConditions.ElementToBeClickable(element));
-        }
+        protected void WaitUntilExist(By element) => wait.Until(ExpectedConditions.ElementExists(element));
+
+        protected void WaitUntilClickable(By element) => wait.Until(ExpectedConditions.ElementToBeClickable(element));
 
         public void WaitUntilVisibleText(By element, string text)
         {
@@ -70,12 +57,14 @@ namespace PIMS.Tests.Automation.PageObjects
             if (buttonName == "Save")
             {
                 wait.Until(ExpectedConditions.ElementExists(saveButton));
-                FocusAndClick(saveButton);
+                wait.Until(ExpectedConditions.ElementToBeClickable(saveButton));
+                webDriver.FindElement(saveButton).Click();
             }
             else
             {
                 wait.Until(ExpectedConditions.ElementExists(cancelButton));
-                FocusAndClick(cancelButton);
+                wait.Until(ExpectedConditions.ElementToBeClickable(cancelButton));
+                webDriver.FindElement(cancelButton).Click();
             }
         }
 
@@ -86,6 +75,7 @@ namespace PIMS.Tests.Automation.PageObjects
             var js = (IJavaScriptExecutor)webDriver;
 
             wait.Until(ExpectedConditions.ElementExists(button));
+            wait.Until(ExpectedConditions.ElementToBeClickable(button));
             webDriver.FindElement(button).Click();
         }
 
@@ -111,11 +101,13 @@ namespace PIMS.Tests.Automation.PageObjects
 
         protected void ChooseSpecificSelectOption(By parentElement, string option)
         {
-            Wait();
+            Wait(2000);
 
             var js = (IJavaScriptExecutor)webDriver;
-
+            
             var selectElement = webDriver.FindElement(parentElement);
+            wait.Until(ExpectedConditions.VisibilityOfAllElementsLocatedBy(selectElement.FindElements(By.TagName("option"))));
+
             var childrenElements = selectElement.FindElements(By.TagName("option"));
             var selectedOption = childrenElements.Should().ContainSingle(b => b.Text.Equals(option)).Subject;
 
@@ -169,10 +161,12 @@ namespace PIMS.Tests.Automation.PageObjects
 
         protected void ClearMultiSelectInput(By elementBy)
         {
-            var parentElement = webDriver.FindElement(elementBy);
-            var childrenElement = parentElement.FindElements(By.TagName("span"));
+            WaitUntilVisible(elementBy);
 
-            foreach (var element in childrenElement)
+            var parentElement = webDriver.FindElement(elementBy);
+            var childrenElements = parentElement.FindElements(By.TagName("span"));
+
+            foreach (var element in childrenElements)
             {
                 element.FindElement(By.TagName("i")).Click();
             }
@@ -187,13 +181,13 @@ namespace PIMS.Tests.Automation.PageObjects
         protected void AssertTrueContentEquals(By elementBy, string text)
         {
             WaitUntilVisible(elementBy);
-            Assert.True(webDriver.FindElement(elementBy).Text.Equals(text));
+            Assert.Equal(text, webDriver.FindElement(elementBy).Text);
         }
 
         protected void AssertTrueElementValueEquals(By elementBy, string text)
         {
             WaitUntilVisible(elementBy);
-            Assert.True(webDriver.FindElement(elementBy).GetAttribute("Value").Equals(text));
+            Assert.Equal(text, webDriver.FindElement(elementBy).GetAttribute("Value"));
         }
 
         protected void AssertTrueDoublesEquals(By elementBy, double number2)
@@ -214,7 +208,7 @@ namespace PIMS.Tests.Automation.PageObjects
         protected void AssertTrueElementContains(By elementBy, string text)
         {
             WaitUntilVisible(elementBy);
-            Assert.True(webDriver.FindElement(elementBy).Text.Contains(text));
+            Assert.Contains(text, webDriver.FindElement(elementBy).Text);
         }
 
         protected string TransformDateFormat(string date)
@@ -232,8 +226,21 @@ namespace PIMS.Tests.Automation.PageObjects
 
         protected string TransformCurrencyFormat(string amount)
         {
-            decimal value = decimal.Parse(amount);
-            return "$" + value.ToString("#,##0.00");
+            if (amount == "")
+            {
+                return "";
+            }
+            else
+            {
+                decimal value = decimal.Parse(amount);
+                return "$" + value.ToString("#,##0.00");
+            }
+        }
+
+        protected string TransformProjectFormat(string project)
+        {
+            var splittedProject = project.Split(' ', 2);
+            return splittedProject[0] + " - " + splittedProject[1];
         }
 
         protected string TransformListToText(List<string> list)

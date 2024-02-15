@@ -21,7 +21,7 @@ namespace Pims.Api.Models.Concepts.Lease
         /// <summary>
         /// get/set - The insurance's type.
         /// </summary>
-        public TypeModel<string> InsuranceType { get; set; }
+        public CodeTypeModel<string> InsuranceType { get; set; }
 
         /// <summary>
         /// get/set - The insurance's other insurance type.
@@ -41,7 +41,7 @@ namespace Pims.Api.Models.Concepts.Lease
         /// <summary>
         /// get/set - The insurance's expiry date.
         /// </summary>
-        public DateTime? ExpiryDate { get; set; }
+        public DateOnly? ExpiryDate { get; set; }
 
         /// <summary>
         /// get/set - The insurance's is in place flag indicator.

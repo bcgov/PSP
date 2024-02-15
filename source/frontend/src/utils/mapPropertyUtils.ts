@@ -31,7 +31,7 @@ export enum NameSourceType {
   ADDRESS = 'Address',
 }
 
-interface PropertyName {
+export interface PropertyName {
   label: NameSourceType;
   value: string;
 }
@@ -81,6 +81,7 @@ export const getFilePropertyName = (
 
   if (
     fileProperty.propertyName !== undefined &&
+    fileProperty.propertyName !== null &&
     fileProperty.propertyName !== '' &&
     skipName === false
   ) {
@@ -183,7 +184,7 @@ export function featuresetToMapProperty(
   const regionFeature = featureSet.regionFeature;
   const districtFeature = featureSet.districtFeature;
 
-  const propertyId = pimsFeature?.properties.PROPERTY_ID;
+  const propertyId = pimsFeature?.properties?.PROPERTY_ID;
   const pid = pidFromFeatureSet(featureSet);
   const pin = pinFromFeatureSet(featureSet);
   return {
@@ -193,40 +194,31 @@ export function featuresetToMapProperty(
     latitude: featureSet.location.lat,
     longitude: featureSet.location.lng,
     polygon:
-      parcelFeature?.geometry.type === 'Polygon' ? (parcelFeature.geometry as Polygon) : undefined,
-    planNumber: parcelFeature?.properties.PLAN_NUMBER?.toString() ?? undefined,
+      parcelFeature?.geometry?.type === 'Polygon' ? (parcelFeature.geometry as Polygon) : undefined,
+    planNumber: parcelFeature?.properties?.PLAN_NUMBER?.toString() ?? undefined,
     address: address,
-    region: isNumber(regionFeature?.properties.REGION_NUMBER)
-      ? regionFeature?.properties.REGION_NUMBER
+    region: isNumber(regionFeature?.properties?.REGION_NUMBER)
+      ? regionFeature?.properties?.REGION_NUMBER
       : RegionCodes.Unknown,
-    regionName: regionFeature?.properties.REGION_NAME ?? 'Cannot determine',
-    district: isNumber(districtFeature?.properties.DISTRICT_NUMBER)
-      ? districtFeature?.properties.DISTRICT_NUMBER
+    regionName: regionFeature?.properties?.REGION_NAME ?? 'Cannot determine',
+    district: isNumber(districtFeature?.properties?.DISTRICT_NUMBER)
+      ? districtFeature?.properties?.DISTRICT_NUMBER
       : DistrictCodes.Unknown,
-    districtName: districtFeature?.properties.DISTRICT_NAME ?? 'Cannot determine',
-    name: pimsFeature?.properties.NAME ?? undefined,
+    districtName: districtFeature?.properties?.DISTRICT_NAME ?? 'Cannot determine',
+    name: pimsFeature?.properties?.NAME ?? undefined,
   };
 }
 
 export function pidFromFeatureSet(featureset: LocationFeatureDataset): string | null {
-  if (featureset.pimsFeature !== null) {
-    return featureset.pimsFeature.properties.PID;
-  } else if (featureset.parcelFeature !== null) {
-    return featureset.parcelFeature.properties.PID;
-  } else {
-    return null;
-  }
+  return (
+    featureset.pimsFeature?.properties?.PID ?? featureset.parcelFeature?.properties?.PID ?? null
+  );
 }
 
 export function pinFromFeatureSet(featureset: LocationFeatureDataset): string | null {
-  if (featureset.pimsFeature !== null) {
-    return featureset.pimsFeature.properties.PIN;
-  } else if (
-    featureset.parcelFeature !== null &&
-    featureset.parcelFeature.properties.PIN !== null
-  ) {
-    return featureset.parcelFeature.properties.PIN.toString();
-  } else {
-    return null;
-  }
+  return (
+    featureset.pimsFeature?.properties?.PIN ??
+    featureset.parcelFeature?.properties?.PIN?.toString() ??
+    null
+  );
 }

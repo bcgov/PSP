@@ -21,7 +21,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By tenantOrganizationRadioBttn = By.Id("input-organizations");
         private By tenantSearchInput = By.Id("input-summary");
         private By tenantSearchBttn = By.Id("search-button");
-        private By tenantFirstResultRadioBttn = By.CssSelector("div[class='tr-wrapper']:nth-child(1) div:nth-child(1) input");
+        private By tenantFirstResultRadioBttn = By.CssSelector("div[data-testid='contactsTable'] div[class='tr-wrapper']:nth-child(1) div:nth-child(1) input");
         private By tenantsAddSelectedButton = By.XPath("//div[contains(text(), 'Select')]/parent::button[@title='ok-modal']");
 
         //Selected tenants
@@ -52,10 +52,12 @@ namespace PIMS.Tests.Automation.PageObjects
         private By tenantsTotalSelected = By.CssSelector("div[data-testid='selected-items'] div[class='tr-wrapper']");
 
         SharedModals sharedModals;
+        SharedSelectContact sharedSelectContact;
 
         public LeaseTenants(IWebDriver webDriver) : base(webDriver)
         {
             sharedModals = new SharedModals(webDriver);
+            sharedSelectContact = new SharedSelectContact(webDriver);
         }
 
         //Navigates to Tenants Section
@@ -79,25 +81,14 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(tenantAddTenantsBttn).Click();
 
             Wait(3000);
-            webDriver.FindElement(tenantSearchInput).SendKeys(tenant.Summary);
-            webDriver.FindElement(tenantIndividualRadioBttn).Click();
-            webDriver.FindElement(tenantSearchBttn).Click();
-
-            WaitUntilClickable(tenantSearchInput);
-            ScrollToElement(tenantSearchInput);
-
-            WaitUntilClickable(tenantFirstResultRadioBttn);
-            webDriver.FindElement(tenantFirstResultRadioBttn).Click();
-
-            WaitUntilClickable(tenantsAddSelectedButton);
-            webDriver.FindElement(tenantsAddSelectedButton).Click();
+            sharedSelectContact.SelectContact(tenant.Summary, "Individual");
 
             //Choose tenant type
             WaitUntilClickable(tenantType1stSelect);
             ChooseSpecificSelectOption(tenantType1stSelect, tenant.TenantType);
 
             //Verify that the Primary Contact displays "Not applicable"
-            Assert.True(webDriver.FindElement(tenantPrimaryContact1stCell).Text.Equals("Not applicable"));
+            Assert.Equal("Not applicable", webDriver.FindElement(tenantPrimaryContact1stCell).Text);
         }
 
         public void AddOrganizationTenant(Tenant tenant)

@@ -39,7 +39,7 @@ export const ProjectExportForm: React.FunctionComponent<IProjectExportFormProps>
         await onExport(values.toApi());
       }}
     >
-      <Form>
+      <Form placeholder={undefined}>
         <SectionField label="Export Type">
           <Select
             field="exportType"

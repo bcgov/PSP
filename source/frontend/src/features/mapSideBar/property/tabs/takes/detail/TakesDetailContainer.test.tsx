@@ -92,13 +92,13 @@ describe('TakesDetailContainer component', () => {
     });
   });
 
-  it('returns the takes sorted by the created date', async () => {
+  it('returns the takes sorted by the id', async () => {
     (useTakesRepository as jest.Mock).mockReturnValue({
       getTakesByPropertyId: {
         ...mockGetApi,
         response: [
-          { ...getMockApiTakes(), appCreateTimestamp: '2020-01-01' },
-          { ...getMockApiTakes(), appCreateTimestamp: '2020-01-02' },
+          { ...getMockApiTakes(), id: '1' },
+          { ...getMockApiTakes(), id: '2' },
         ],
       },
       getTakesCountByPropertyId: mockCountsApi,
@@ -106,7 +106,7 @@ describe('TakesDetailContainer component', () => {
     setup({});
 
     await waitFor(() => {
-      expect(viewProps.takes[0].appCreateTimestamp).toBe('2020-01-02');
+      expect(viewProps.takes[0].id).toBe('2');
     });
   });
 

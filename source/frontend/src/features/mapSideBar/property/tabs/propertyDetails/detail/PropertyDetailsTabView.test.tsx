@@ -186,7 +186,7 @@ export const mockPropertyInfo: Api_Property = {
     description: 'Property Acquisition and Inventory Management System (PAIMS)',
     isDisabled: false,
   },
-  dataSourceEffectiveDate: '2021-08-31T00:00:00',
+  dataSourceEffectiveDateOnly: '2021-08-31T00:00:00',
   latitude: 1088851.4995,
   longitude: 924033.5004,
   isSensitive: false,

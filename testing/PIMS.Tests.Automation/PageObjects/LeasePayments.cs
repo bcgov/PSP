@@ -62,15 +62,14 @@ namespace PIMS.Tests.Automation.PageObjects
         private By licensePaymentTermAgreedPaymentLabel = By.XPath("//label[contains(text(),'Agreed payment ($)')]");
         private By licensePaymentTermAgreedPaymentInput = By.Id("input-paymentAmount");
         private By licensePaymentTermDueLabel = By.XPath("//label[contains(text(),'Payments due')]");
-        private By licensePaymentTermDueTooltip = By.Id("paymentDueDate-tooltip");
-        private By licensePaymentTermDueInput = By.Id("input-paymentDueDate");
+        private By licensePaymentTermDueTooltip = By.Id("paymentDueDateStr-tooltip");
+        private By licensePaymentTermDueInput = By.Id("input-paymentDueDateStr");
         private By licensePaymentTermGSTLabel = By.XPath("//label[contains(text(),'Subject to GST?')]");
         private By licensePaymentTermGSTRadioBttns = By.Name("isGstEligible");
         private By licencePyamentTermGSTTrueRadioBttn = By.Id("input-isGstEligible");
         private By licencePyamentTermGSTFalseRadioBttn = By.Id("input-isGstEligible-2");
         private By licensePaymentTermLabel = By.XPath("//label[contains(text(),'Term Status')]");
         private By licensePaymentTermSelect = By.Id("input-statusTypeCode.id");
-        private By licenseSaveTermButton = By.XPath("//button/div[contains(text(),'Save term')]");
 
         //Create Payment Elements
         private By licensePaymentSendDateLabel = By.XPath("//label[contains(text(),'Sent date')]");
@@ -153,7 +152,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
             ChooseSpecificSelectOption(licensePaymentTermSelect, term.TermStatus);
 
-            ButtonElement(licenseSaveTermButton);
+            sharedModals.ModalClickOKBttn();
 
             Wait();
             totalTermsInLease = webDriver.FindElements(licenseTermsTotal).Count;
@@ -234,6 +233,8 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyPaymentsInitForm()
         {
+            Wait(2000);
+
             AssertTrueIsDisplayed(licencePaymentsSubtitle);
             AssertTrueIsDisplayed(licencePaymentAddBttn);
             AssertTrueIsDisplayed(licencePaymentColumnStartEndDate);

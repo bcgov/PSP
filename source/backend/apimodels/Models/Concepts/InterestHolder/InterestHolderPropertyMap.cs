@@ -24,7 +24,7 @@ namespace Pims.Api.Models.Concepts.InterestHolder
                 .Map(dest => dest.PimsPropInthldrInterestTypes, src => src.PropertyInterestTypes)
                 .Inherits<BaseAuditModel, Entity.IBaseAppEntity>();
 
-            config.NewConfig<TypeModel<string>, Entity.PimsPropInthldrInterestType>()
+            config.NewConfig<CodeTypeModel<string>, Entity.PimsPropInthldrInterestType>()
                 .Map(dest => dest.InterestHolderInterestTypeCode, src => src.Id);
         }
     }

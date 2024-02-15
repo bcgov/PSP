@@ -6,8 +6,8 @@ import { useApiDocumentGeneration } from '@/hooks/pims-api/useApiDocumentGenerat
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import { IApiError } from '@/interfaces/IApiError';
 import { DocumentGenerationRequest } from '@/models/api/DocumentGenerationRequest';
-import { Api_FileDownload } from '@/models/api/DocumentStorage';
-import { ExternalResult } from '@/models/api/ExternalResult';
+import { ApiGen_Requests_ExternalResponse } from '@/models/api/generated/ApiGen_Requests_ExternalResponse';
+import { ApiGen_Requests_FileDownloadResponse } from '@/models/api/generated/ApiGen_Requests_FileDownloadResponse';
 
 /**
  * repository for document generation
@@ -23,7 +23,9 @@ export const useDocumentGenerationRepository = () => {
   } = useApiRequestWrapper<
     (
       generateRequest: DocumentGenerationRequest,
-    ) => Promise<AxiosResponse<ExternalResult<Api_FileDownload>, any>>
+    ) => Promise<
+      AxiosResponse<ApiGen_Requests_ExternalResponse<ApiGen_Requests_FileDownloadResponse>, any>
+    >
   >({
     requestFunction: useCallback(
       async (generateRequest: DocumentGenerationRequest) => await generate(generateRequest),

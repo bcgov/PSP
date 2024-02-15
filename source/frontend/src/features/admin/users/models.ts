@@ -4,6 +4,7 @@ import { Api_Person } from '@/models/api/Person';
 import { Api_Role } from '@/models/api/Role';
 import Api_TypeCode from '@/models/api/TypeCode';
 import { Api_User } from '@/models/api/User';
+import { UtcIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { NumberFieldValue } from '@/typings/NumberFieldValue';
 import { getPreferredContactMethodValue } from '@/utils/contactMethodUtil';
 
@@ -19,7 +20,7 @@ export class FormUser {
   position?: string;
   userTypeCode?: Api_TypeCode<string>;
   lastLogin?: string;
-  appCreateTimestamp?: string;
+  appCreateTimestamp?: UtcIsoDateTime;
   issueDate?: string;
   rowVersion?: NumberFieldValue;
   note?: string;

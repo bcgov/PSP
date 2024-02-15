@@ -6,6 +6,7 @@ import {
 import { Api_AuditFields } from './AuditFields';
 import { Api_CompensationFinancial } from './CompensationFinancial';
 import { Api_ConcurrentVersion } from './ConcurrentVersion';
+import { DateOnly } from './DateOnly';
 import { Api_FinancialCode } from './FinancialCode';
 import { Api_InterestHolder } from './InterestHolder';
 import { Api_Project } from './Project';
@@ -24,12 +25,12 @@ export interface Api_CompensationRequisition extends Api_ConcurrentVersion, Api_
   chartOfAccounts: Api_FinancialCode | null;
   responsibilityId: number | null;
   responsibility: Api_FinancialCode | null;
-  finalizedDate: string | null;
-  agreementDate: string | null;
-  expropriationNoticeServedDate: string | null;
-  expropriationVestingDate: string | null;
-  advancedPaymentServedDate: string | null;
-  generationDate: string | null;
+  finalizedDate: DateOnly | null;
+  agreementDate: DateOnly | null;
+  expropriationNoticeServedDate: DateOnly | null;
+  expropriationVestingDate: DateOnly | null;
+  advancedPaymentServedDate: DateOnly | null;
+  generationDate: DateOnly | null;
   financials: Api_CompensationFinancial[];
   acquisitionOwnerId: number | null;
   acquisitionOwner: Api_AcquisitionFileOwner | null;

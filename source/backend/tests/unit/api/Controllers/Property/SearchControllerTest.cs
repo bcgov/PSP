@@ -18,7 +18,9 @@ using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Xunit;
 using Entity = Pims.Dal.Entities;
-using SModel = Pims.Api.Areas.Property.Models.Search;
+
+using Pims.Api.Models.Concepts.Property;
+using Pims.Api.Areas.Property.Models.Search;
 
 namespace Pims.Api.Test.Controllers.Property
 {
@@ -31,9 +33,9 @@ namespace Pims.Api.Test.Controllers.Property
         #region Variables
         public readonly static IEnumerable<object[]> PropertyFilters = new List<object[]>()
         {
-            new object [] { new SModel.PropertyFilterModel() },
-            new object [] { new SModel.PropertyFilterModel() { Address = "Address" } },
-            new object [] { new SModel.PropertyFilterModel() { PinOrPid = "999999" } },
+            new object [] { new PropertyFilterModel() },
+            new object [] { new PropertyFilterModel() { Address = "Address" } },
+            new object [] { new PropertyFilterModel() { PinOrPid = "999999" } },
         };
 
         public readonly static IEnumerable<object[]> PropertyQueryFilters = new List<object[]>()
@@ -58,7 +60,7 @@ namespace Pims.Api.Test.Controllers.Property
         /// </summary>
         [Theory]
         [MemberData(nameof(PropertyFilters))]
-        public void GetProperties_All_Success(SModel.PropertyFilterModel filter)
+        public void GetProperties_All_Success(PropertyFilterModel filter)
         {
             // Arrange
             var controller = this._helper.CreateController<SearchController>(Permissions.PropertyView);
@@ -76,8 +78,8 @@ namespace Pims.Api.Test.Controllers.Property
 
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
-            var actualResult = Assert.IsType<PageModel<SModel.PropertyModel>>(actionResult.Value);
-            var expectedResult = mapper.Map<SModel.PropertyModel[]>(properties);
+            var actualResult = Assert.IsType<PageModel<PropertyModel>>(actionResult.Value);
+            var expectedResult = mapper.Map<PropertyModel[]>(properties);
             expectedResult.Should().BeEquivalentTo(actualResult.Items);
             repository.Verify(m => m.GetPage(It.IsAny<PropertyFilter>()), Times.Once());
         }

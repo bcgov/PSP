@@ -1,7 +1,11 @@
 namespace Pims.Dal.Entities
 {
-    public interface IDisableBaseAppEntity : IBaseAppEntity
+    public interface IDisableBaseAppEntity<T_IsDisabled> : IBaseAppEntity
     {
-        bool? IsDisabled { get; set; }
+        T_IsDisabled IsDisabled { get; set; }
+    }
+
+    public interface IDisableBaseAppEntity : IDisableBaseAppEntity<bool>
+    {
     }
 }

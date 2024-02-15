@@ -77,8 +77,7 @@ namespace Pims.Dal.Repositories
             if (!userOverride)
             {
                 List<PimsPerson> existingPersons = this.Context.PimsPeople.Where(
-                    p => EF.Functions.Collate(p.FirstName, SqlCollation.LATINGENERALCASEINSENSITIVE) == person.FirstName &&
-                        EF.Functions.Collate(p.Surname, SqlCollation.LATINGENERALCASEINSENSITIVE) == person.Surname)
+                    p => p.FirstName == person.FirstName && p.Surname == person.Surname)
                 .Include(p => p.PimsContactMethods).ToList();
 
                 var isDuplicate = existingPersons.Any(

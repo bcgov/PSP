@@ -21,7 +21,7 @@ namespace Pims.Api.Areas.Lease.Models.Search
         /// <summary>
         /// get/set - The expiry date time.
         /// </summary>
-        public DateTime? ExpiryDate { get; set; }
+        public DateOnly? ExpiryDate { get; set; }
 
         /// <summary>
         /// get/set - The value of the program name.
@@ -41,7 +41,7 @@ namespace Pims.Api.Areas.Lease.Models.Search
         /// <summary>
         /// get/set - The status of this lease.
         /// </summary>
-        public TypeModel<string> StatusType { get; set; }
+        public CodeTypeModel<string> StatusType { get; set; }
         #endregion
     }
 }

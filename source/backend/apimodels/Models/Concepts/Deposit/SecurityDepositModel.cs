@@ -30,12 +30,12 @@ namespace Pims.Api.Models.Concepts.Deposit
         /// <summary>
         /// get/set - Security deposit date.
         /// </summary>
-        public DateTime? DepositDate { get; set; }
+        public DateOnly DepositDateOnly { get; set; }
 
         /// <summary>
         /// get/set - Security deposit type.
         /// </summary>
-        public TypeModel<string> DepositType { get; set; }
+        public CodeTypeModel<string> DepositType { get; set; }
 
         /// <summary>
         /// get/set - Other type description.

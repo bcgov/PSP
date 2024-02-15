@@ -28,24 +28,24 @@ describe('CreateContactContainer component', () => {
 
   it('should render as expected', async () => {
     const { asFragment } = setup();
-    await act(async () => expect(asFragment()).toMatchSnapshot());
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it('should display contact selector', async () => {
     const { getByLabelText } = setup();
-    await act(async () => expect(getByLabelText('Individual')).toBeVisible());
+    expect(getByLabelText('Individual')).toBeVisible();
   });
 
   it('should render Create Person form by default', async () => {
-    const { queryByLabelText } = setup();
-    await act(async () => expect(queryByLabelText('First Name')).not.toBeNull());
+    const { getByText } = setup();
+    expect(getByText(/First name/i)).toBeVisible();
   });
 
   describe('when contact selector is changed', () => {
     it('should render the correct form', async () => {
-      const { getByLabelText, queryByLabelText } = setup();
+      const { getByLabelText, getByText } = setup();
       await act(async () => userEvent.click(getByLabelText('Organization')));
-      await waitFor(() => expect(queryByLabelText('Organization Name')).not.toBeNull());
+      expect(getByText(/Organization name/i)).toBeVisible();
     });
   });
 
