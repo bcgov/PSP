@@ -2,6 +2,7 @@ import * as Yup from 'yup';
 
 import { AreaUnitTypes } from '@/constants/areaUnitTypes';
 import { Api_Take } from '@/models/api/Take';
+import { UtcIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { convertArea } from '@/utils/convertUtils';
 import { fromTypeCodeNullable, stringToUndefined, toTypeCodeNullable } from '@/utils/formUtils';
 
@@ -62,6 +63,7 @@ export class TakeModel {
   newHighwayDedicationArea: number;
   newHighwayDedicationAreaUnitTypeCode: string;
   rowVersion?: number;
+  appCreateTimestamp: UtcIsoDateTime | null;
 
   constructor(base: Api_Take) {
     this.id = base.id;
@@ -100,6 +102,7 @@ export class TakeModel {
     this.newHighwayDedicationArea = base.newHighwayDedicationArea ?? 0;
     this.newHighwayDedicationAreaUnitTypeCode =
       fromTypeCodeNullable(base.areaUnitTypeCode) ?? AreaUnitTypes.SquareMeters.toString();
+    this.appCreateTimestamp = base.appCreateTimestamp ?? null;
   }
 
   toApi(): Api_Take {

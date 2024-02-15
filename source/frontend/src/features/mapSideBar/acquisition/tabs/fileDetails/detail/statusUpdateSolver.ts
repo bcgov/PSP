@@ -76,7 +76,7 @@ class StatusUpdateSolver {
     switch (statusCode) {
       case AcquisitionStatus.Active:
       case AcquisitionStatus.Draft:
-        canEdit = true;
+        canEdit = isDraftCompensation ?? true;
         break;
       case AcquisitionStatus.Archived:
       case AcquisitionStatus.Cancelled:
@@ -228,13 +228,14 @@ class StatusUpdateSolver {
     switch (statusCode) {
       case AcquisitionStatus.Active:
       case AcquisitionStatus.Draft:
+        canEdit = true;
+        break;
       case AcquisitionStatus.Archived:
       case AcquisitionStatus.Cancelled:
       case AcquisitionStatus.Closed:
       case AcquisitionStatus.Complete:
       case AcquisitionStatus.Hold:
-      default:
-        canEdit = true;
+        canEdit = false;
         break;
     }
 

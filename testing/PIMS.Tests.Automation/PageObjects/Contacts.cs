@@ -185,7 +185,7 @@ namespace PIMS.Tests.Automation.PageObjects
         //Navigates to Create a new Contact
         public void NavigateToCreateNewContact()
         {
-            Wait(3000);
+            Wait();
 
             WaitUntilClickable(menuContactsButton);
             FocusAndClick(menuContactsButton);
@@ -246,86 +246,86 @@ namespace PIMS.Tests.Automation.PageObjects
             }
 
             //Inserting contact mail address
-            if (contact.IndMailAddressLine1 != "")
+            if (contact.IndMailAddress.AddressLine1 != "")
             {
-                webDriver.FindElement(contactMailAddressLine1Input).SendKeys(contact.IndMailAddressLine1);
-                if (contact.IndMailAddressLine2 != "")
+                webDriver.FindElement(contactMailAddressLine1Input).SendKeys(contact.IndMailAddress.AddressLine1);
+                if (contact.IndMailAddress.AddressLine2 != "")
                 {
                     webDriver.FindElement(contactIndMailAddAddressLineBttn).Click();
-                    webDriver.FindElement(contactMailAddressLine2Input).SendKeys(contact.IndMailAddressLine2);
+                    webDriver.FindElement(contactMailAddressLine2Input).SendKeys(contact.IndMailAddress.AddressLine2);
                 }
-                if (contact.IndMailAddressLine3 != "")
+                if (contact.IndMailAddress.AddressLine3 != "")
                 {
                     webDriver.FindElement(contactIndMailAddAddressLineBttn).Click();
-                    webDriver.FindElement(contactMailAddressLine3Input).SendKeys(contact.IndMailAddressLine3);
+                    webDriver.FindElement(contactMailAddressLine3Input).SendKeys(contact.IndMailAddress.AddressLine3);
                 }
 
-                ChooseSpecificSelectOption(contactMailCountrySelect, contact.IndMailCountry);
-                if (contact.IndMailCountry == "Other")
+                ChooseSpecificSelectOption(contactMailCountrySelect, contact.IndMailAddress.Country);
+                if (contact.IndMailAddress.Country == "Other")
                 {
-                    webDriver.FindElement(contactMailOtherCountryInput).SendKeys(contact.IndMailOtherCountry);
+                    webDriver.FindElement(contactMailOtherCountryInput).SendKeys(contact.IndMailAddress.OtherCountry);
                 }
                 else
                 {
-                    ChooseSpecificSelectOption(contactMailProvinceSelect, contact.IndMailProvince);
+                    ChooseSpecificSelectOption(contactMailProvinceSelect, contact.IndMailAddress.Province);
                 }
-                webDriver.FindElement(contactMailCityInput).SendKeys(contact.IndMailCity);
-                webDriver.FindElement(contactMailPostalCodeInput).SendKeys(contact.IndMailPostalCode);
+                webDriver.FindElement(contactMailCityInput).SendKeys(contact.IndMailAddress.City);
+                webDriver.FindElement(contactMailPostalCodeInput).SendKeys(contact.IndMailAddress.PostalCode);
             }
 
             //Inserting contact property address
-            if (contact.IndPropertyAddressLine1 != "")
+            if (contact.IndPropertyAddress.AddressLine1 != "")
             {
-                webDriver.FindElement(contactPropertyAddressLine1Input).SendKeys(contact.IndPropertyAddressLine1);
-                if (contact.IndPropertyAddressLine2 != "")
+                webDriver.FindElement(contactPropertyAddressLine1Input).SendKeys(contact.IndPropertyAddress.AddressLine1);
+                if (contact.IndPropertyAddress.AddressLine2 != "")
                 {
                     webDriver.FindElement(contactPropertyAddAddressLineBttn).Click();
-                    webDriver.FindElement(contactPropertyAddressLine2Input).SendKeys(contact.IndPropertyAddressLine2);
+                    webDriver.FindElement(contactPropertyAddressLine2Input).SendKeys(contact.IndPropertyAddress.AddressLine2);
                 }
-                if (contact.IndPropertyAddressLine3 != "")
+                if (contact.IndPropertyAddress.AddressLine3 != "")
                 {
                     webDriver.FindElement(contactPropertyAddAddressLineBttn).Click();
-                    webDriver.FindElement(contactPropertyAddressLine3Input).SendKeys(contact.IndPropertyAddressLine3);
+                    webDriver.FindElement(contactPropertyAddressLine3Input).SendKeys(contact.IndPropertyAddress.AddressLine3);
                 }
 
-                ChooseSpecificSelectOption(contactPropertyCountrySelect, contact.IndPropertyCountry);
-                if (contact.IndPropertyCountry == "Other")
+                ChooseSpecificSelectOption(contactPropertyCountrySelect, contact.IndPropertyAddress.Country);
+                if (contact.IndPropertyAddress.Country == "Other")
                 {
-                    webDriver.FindElement(contactPropertyOtherCountryInput).SendKeys(contact.IndPropertyOtherCountry);
+                    webDriver.FindElement(contactPropertyOtherCountryInput).SendKeys(contact.IndPropertyAddress.OtherCountry);
                 }
                 else
                 {
-                    ChooseSpecificSelectOption(contactPropertyProvinceSelect, contact.IndPropertyProvince);
+                    ChooseSpecificSelectOption(contactPropertyProvinceSelect, contact.IndPropertyAddress.Province);
                 }
-                webDriver.FindElement(contactPropertyCityInput).SendKeys(contact.IndPropertyCity);
-                webDriver.FindElement(contactPropertyPostalCodeInput).SendKeys(contact.IndPropertyPostalCode);
+                webDriver.FindElement(contactPropertyCityInput).SendKeys(contact.IndPropertyAddress.City);
+                webDriver.FindElement(contactPropertyPostalCodeInput).SendKeys(contact.IndPropertyAddress.PostalCode);
             }
 
             //Inserting contact billing address
-            if (contact.IndBillingAddressLine1 != "")
+            if (contact.IndBillingAddress.AddressLine1 != "")
             {
-                webDriver.FindElement(contactBillingAddressLine1Input).SendKeys(contact.IndBillingAddressLine1);
-                if (contact.IndBillingAddressLine2 != "")
+                webDriver.FindElement(contactBillingAddressLine1Input).SendKeys(contact.IndBillingAddress.AddressLine1);
+                if (contact.IndBillingAddress.AddressLine2 != "")
                 {
                     webDriver.FindElement(contactBillingAddAddressLineBttn).Click();
-                    webDriver.FindElement(contactBillingAddressLine2Input).SendKeys(contact.IndBillingAddressLine2);
+                    webDriver.FindElement(contactBillingAddressLine2Input).SendKeys(contact.IndBillingAddress.AddressLine2);
                 }
-                if (contact.IndBillingAddressLine3 != "")
+                if (contact.IndBillingAddress.AddressLine3 != "")
                 {
                     webDriver.FindElement(contactBillingAddAddressLineBttn).Click();
-                    webDriver.FindElement(contactBillingAddressLine3Input).SendKeys(contact.IndBillingAddressLine3);
+                    webDriver.FindElement(contactBillingAddressLine3Input).SendKeys(contact.IndBillingAddress.AddressLine3);
                 }
-                ChooseSpecificSelectOption(contactBillingCountrySelect, contact.IndBillingCountry);
-                if (contact.IndBillingCountry == "Other")
+                ChooseSpecificSelectOption(contactBillingCountrySelect, contact.IndBillingAddress.Country);
+                if (contact.IndBillingAddress.Country == "Other")
                 {
-                    webDriver.FindElement(contactBillingOtherCountryInput).SendKeys(contact.IndBillingOtherCountry);
+                    webDriver.FindElement(contactBillingOtherCountryInput).SendKeys(contact.IndBillingAddress.OtherCountry);
                 }
                 else
                 {
-                    ChooseSpecificSelectOption(contactBillingProvinceSelect, contact.IndBillingProvince);
+                    ChooseSpecificSelectOption(contactBillingProvinceSelect, contact.IndBillingAddress.Province);
                 }
-                webDriver.FindElement(contactBillingCityInput).SendKeys(contact.IndBillingCity);
-                webDriver.FindElement(contactBillingPostalCodeInput).SendKeys(contact.IndBillingPostalCode);
+                webDriver.FindElement(contactBillingCityInput).SendKeys(contact.IndBillingAddress.City);
+                webDriver.FindElement(contactBillingPostalCodeInput).SendKeys(contact.IndBillingAddress.PostalCode);
             }
 
             //Inserting comments
@@ -376,86 +376,86 @@ namespace PIMS.Tests.Automation.PageObjects
             }
 
             //Inserting contact mail address
-            if (contact.OrgMailAddressLine1 != "")
+            if (contact.OrgMailAddress.AddressLine1 != "")
             {
-                webDriver.FindElement(contactMailAddressLine1Input).SendKeys(contact.OrgMailAddressLine1);
-                if (contact.OrgMailAddressLine2 != "")
+                webDriver.FindElement(contactMailAddressLine1Input).SendKeys(contact.OrgMailAddress.AddressLine1);
+                if (contact.OrgMailAddress.AddressLine2 != "")
                 {
                     webDriver.FindElement(contactOrgMailAddAddressLineBttn).Click();
-                    webDriver.FindElement(contactMailAddressLine2Input).SendKeys(contact.OrgMailAddressLine2);
+                    webDriver.FindElement(contactMailAddressLine2Input).SendKeys(contact.OrgMailAddress.AddressLine2);
                 }
-                if (contact.OrgMailAddressLine3 != "")
+                if (contact.OrgMailAddress.AddressLine3 != "")
                 {
                     webDriver.FindElement(contactOrgMailAddAddressLineBttn).Click();
-                    webDriver.FindElement(contactMailAddressLine3Input).SendKeys(contact.OrgMailAddressLine3);
+                    webDriver.FindElement(contactMailAddressLine3Input).SendKeys(contact.OrgMailAddress.AddressLine3);
                 }
 
-                ChooseSpecificSelectOption(contactMailCountrySelect, contact.OrgMailCountry);
-                if (contact.OrgMailCountry == "Other")
+                ChooseSpecificSelectOption(contactMailCountrySelect, contact.OrgMailAddress.Country);
+                if (contact.OrgMailAddress.Country == "Other")
                 {
-                    webDriver.FindElement(contactMailOtherCountryInput).SendKeys(contact.OrgMailOtherCountry);
+                    webDriver.FindElement(contactMailOtherCountryInput).SendKeys(contact.OrgMailAddress.OtherCountry);
                 }
                 else
                 {
-                    ChooseSpecificSelectOption(contactMailProvinceSelect, contact.OrgMailProvince);
+                    ChooseSpecificSelectOption(contactMailProvinceSelect, contact.OrgMailAddress.Province);
                 }
-                webDriver.FindElement(contactMailCityInput).SendKeys(contact.OrgMailCity);
-                webDriver.FindElement(contactMailPostalCodeInput).SendKeys(contact.OrgMailPostalCode);
+                webDriver.FindElement(contactMailCityInput).SendKeys(contact.OrgMailAddress.City);
+                webDriver.FindElement(contactMailPostalCodeInput).SendKeys(contact.OrgMailAddress.PostalCode);
             }
 
             //Inserting contact property address
-            if (contact.OrgPropertyAddressLine1 != "")
+            if (contact.OrgPropertyAddress.AddressLine1 != "")
             {
-                webDriver.FindElement(contactPropertyAddressLine1Input).SendKeys(contact.OrgPropertyAddressLine1);
-                if (contact.OrgPropertyAddressLine2 != "")
+                webDriver.FindElement(contactPropertyAddressLine1Input).SendKeys(contact.OrgPropertyAddress.AddressLine1);
+                if (contact.OrgPropertyAddress.AddressLine2 != "")
                 {
                     webDriver.FindElement(contactPropertyAddAddressLineBttn).Click();
-                    webDriver.FindElement(contactPropertyAddressLine2Input).SendKeys(contact.OrgPropertyAddressLine2);
+                    webDriver.FindElement(contactPropertyAddressLine2Input).SendKeys(contact.OrgPropertyAddress.AddressLine2);
                 }
-                if (contact.OrgPropertyAddressLine3 != "")
+                if (contact.OrgPropertyAddress.AddressLine3 != "")
                 {
                     webDriver.FindElement(contactPropertyAddAddressLineBttn).Click();
-                    webDriver.FindElement(contactPropertyAddressLine3Input).SendKeys(contact.OrgPropertyAddressLine3);
+                    webDriver.FindElement(contactPropertyAddressLine3Input).SendKeys(contact.OrgPropertyAddress.AddressLine3);
                 }
 
-                ChooseSpecificSelectOption(contactPropertyCountrySelect, contact.OrgPropertyCountry);
-                if (contact.OrgPropertyCountry == "Other")
+                ChooseSpecificSelectOption(contactPropertyCountrySelect, contact.OrgPropertyAddress.Country);
+                if (contact.OrgPropertyAddress.Country == "Other")
                 {
-                    webDriver.FindElement(contactPropertyOtherCountryInput).SendKeys(contact.OrgPropertyOtherCountry);
+                    webDriver.FindElement(contactPropertyOtherCountryInput).SendKeys(contact.OrgPropertyAddress.Country);
                 }
                 else
                 {
-                    ChooseSpecificSelectOption(contactPropertyProvinceSelect, contact.OrgPropertyProvince);
+                    ChooseSpecificSelectOption(contactPropertyProvinceSelect, contact.OrgPropertyAddress.Province);
                 }
-                webDriver.FindElement(contactPropertyCityInput).SendKeys(contact.OrgPropertyCity);
-                webDriver.FindElement(contactPropertyPostalCodeInput).SendKeys(contact.OrgPropertyPostalCode);
+                webDriver.FindElement(contactPropertyCityInput).SendKeys(contact.OrgPropertyAddress.City);
+                webDriver.FindElement(contactPropertyPostalCodeInput).SendKeys(contact.OrgPropertyAddress.PostalCode);
             }
 
             //Inserting contact billing address
-            if (contact.OrgBillingAddressLine1 != "")
+            if (contact.OrgBillingAddress.AddressLine1 != "")
             {
-                webDriver.FindElement(contactBillingAddressLine1Input).SendKeys(contact.OrgBillingAddressLine1);
-                if (contact.OrgBillingAddressLine2 != "")
+                webDriver.FindElement(contactBillingAddressLine1Input).SendKeys(contact.OrgBillingAddress.AddressLine1);
+                if (contact.OrgBillingAddress.AddressLine2 != "")
                 {
                     webDriver.FindElement(contactBillingAddAddressLineBttn).Click();
-                    webDriver.FindElement(contactBillingAddressLine2Input).SendKeys(contact.OrgBillingAddressLine2);
+                    webDriver.FindElement(contactBillingAddressLine2Input).SendKeys(contact.OrgBillingAddress.AddressLine2);
                 }
-                if (contact.OrgBillingAddressLine3 != "")
+                if (contact.OrgBillingAddress.AddressLine3 != "")
                 {
                     webDriver.FindElement(contactBillingAddAddressLineBttn).Click();
-                    webDriver.FindElement(contactBillingAddressLine3Input).SendKeys(contact.OrgBillingAddressLine3);
+                    webDriver.FindElement(contactBillingAddressLine3Input).SendKeys(contact.OrgBillingAddress.AddressLine3);
                 }
-                ChooseSpecificSelectOption(contactBillingCountrySelect, contact.OrgBillingCountry);
-                if (contact.OrgBillingCountry == "Other")
+                ChooseSpecificSelectOption(contactBillingCountrySelect, contact.OrgBillingAddress.Country);
+                if (contact.OrgBillingAddress.Country == "Other")
                 {
-                    webDriver.FindElement(contactBillingOtherCountryInput).SendKeys(contact.OrgBillingOtherCountry);
+                    webDriver.FindElement(contactBillingOtherCountryInput).SendKeys(contact.OrgBillingAddress.OtherCountry);
                 }
                 else
                 {
-                    ChooseSpecificSelectOption(contactBillingProvinceSelect, contact.OrgBillingProvince);
+                    ChooseSpecificSelectOption(contactBillingProvinceSelect, contact.OrgBillingAddress.Province);
                 }
-                webDriver.FindElement(contactBillingCityInput).SendKeys(contact.OrgBillingCity);
-                webDriver.FindElement(contactBillingPostalCodeInput).SendKeys(contact.OrgBillingPostalCode);
+                webDriver.FindElement(contactBillingCityInput).SendKeys(contact.OrgBillingAddress.City);
+                webDriver.FindElement(contactBillingPostalCodeInput).SendKeys(contact.OrgBillingAddress.PostalCode);
             }
 
             //Inserting comments
@@ -513,7 +513,7 @@ namespace PIMS.Tests.Automation.PageObjects
             }
 
             //Updating contact mail address
-            if (contact.OrgMailAddressLine1 != "")
+            if (contact.OrgMailAddress.AddressLine1 != "")
             {
                 while (webDriver.FindElements(contactAddressMailAddressRemoveBttn).Count > 0)
                 {
@@ -521,43 +521,43 @@ namespace PIMS.Tests.Automation.PageObjects
                 }
                 ClearInput(contactMailAddressLine1Input);
 
-                webDriver.FindElement(contactMailAddressLine1Input).SendKeys(contact.OrgMailAddressLine1);
+                webDriver.FindElement(contactMailAddressLine1Input).SendKeys(contact.OrgMailAddress.AddressLine1);
 
-                if (contact.OrgMailAddressLine2 != "")
+                if (contact.OrgMailAddress.AddressLine2 != "")
                 {
                     webDriver.FindElement(contactIndMailAddAddressLineBttn).Click();
-                    webDriver.FindElement(contactMailAddressLine2Input).SendKeys(contact.OrgMailAddressLine2);
+                    webDriver.FindElement(contactMailAddressLine2Input).SendKeys(contact.OrgMailAddress.AddressLine2);
                 }
-                if (contact.OrgMailAddressLine3 != "")
+                if (contact.OrgMailAddress.AddressLine3 != "")
                 {
                     webDriver.FindElement(contactIndMailAddAddressLineBttn).Click();
-                    webDriver.FindElement(contactMailAddressLine3Input).SendKeys(contact.OrgMailAddressLine3);
+                    webDriver.FindElement(contactMailAddressLine3Input).SendKeys(contact.OrgMailAddress.AddressLine3);
                 }
-                if(contact.OrgMailCountry != "")
-                    ChooseSpecificSelectOption(contactMailCountrySelect, contact.OrgMailCountry);
-                if (contact.OrgMailCountry == "Other")
+                if(contact.OrgMailAddress.Country != "")
+                    ChooseSpecificSelectOption(contactMailCountrySelect, contact.OrgMailAddress.Country);
+                if (contact.OrgMailAddress.Country == "Other")
                 {
                     ClearInput(contactMailOtherCountryInput);
-                    webDriver.FindElement(contactMailOtherCountryInput).SendKeys(contact.OrgMailOtherCountry);
+                    webDriver.FindElement(contactMailOtherCountryInput).SendKeys(contact.OrgMailAddress.OtherCountry);
                 }
-                if(contact.OrgMailProvince != "")
+                if(contact.OrgMailAddress.Province != "")
                 {
-                    ChooseSpecificSelectOption(contactMailProvinceSelect, contact.OrgMailProvince);
+                    ChooseSpecificSelectOption(contactMailProvinceSelect, contact.OrgMailAddress.Province);
                 }
-                if (contact.OrgMailCity != "")
+                if (contact.OrgMailAddress.City != "")
                 {
                     ClearInput(contactMailCityInput);
-                    webDriver.FindElement(contactMailCityInput).SendKeys(contact.OrgMailCity);
+                    webDriver.FindElement(contactMailCityInput).SendKeys(contact.OrgMailAddress.City);
                 }
-                if (contact.OrgMailPostalCode != "")
+                if (contact.OrgMailAddress.PostalCode != "")
                 {
                     ClearInput(contactMailPostalCodeInput);
-                    webDriver.FindElement(contactMailPostalCodeInput).SendKeys(contact.OrgMailPostalCode);
+                    webDriver.FindElement(contactMailPostalCodeInput).SendKeys(contact.OrgMailAddress.PostalCode);
                 }
             }
 
             //Updating contact property address
-            if (contact.OrgPropertyAddressLine1 != "")
+            if (contact.OrgPropertyAddress.AddressLine1 != "")
             {
                 while (webDriver.FindElements(contactAddressPropertyAddressRemoveBttn).Count > 0)
                 {
@@ -565,41 +565,41 @@ namespace PIMS.Tests.Automation.PageObjects
                 }
                 ClearInput(contactPropertyAddressLine1Input);
 
-                webDriver.FindElement(contactPropertyAddressLine1Input).SendKeys(contact.OrgPropertyAddressLine1);
-                if (contact.OrgPropertyAddressLine2 != "")
+                webDriver.FindElement(contactPropertyAddressLine1Input).SendKeys(contact.OrgPropertyAddress.AddressLine1);
+                if (contact.OrgPropertyAddress.AddressLine2 != "")
                 {
                     webDriver.FindElement(contactPropertyAddAddressLineBttn).Click();
-                    webDriver.FindElement(contactPropertyAddressLine2Input).SendKeys(contact.OrgPropertyAddressLine2);
+                    webDriver.FindElement(contactPropertyAddressLine2Input).SendKeys(contact.OrgPropertyAddress.AddressLine2);
                 }
-                if (contact.OrgPropertyAddressLine3 != "")
+                if (contact.OrgPropertyAddress.AddressLine3 != "")
                 {
                     webDriver.FindElement(contactPropertyAddAddressLineBttn).Click();
-                    webDriver.FindElement(contactPropertyAddressLine3Input).SendKeys(contact.OrgPropertyAddressLine3);
+                    webDriver.FindElement(contactPropertyAddressLine3Input).SendKeys(contact.OrgPropertyAddress.AddressLine3);
                 }
-                if(contact.OrgPropertyCountry != "")
-                    ChooseSpecificSelectOption(contactPropertyCountrySelect, contact.OrgPropertyCountry);
-                if (contact.OrgPropertyCountry == "Other")
+                if(contact.OrgPropertyAddress.Country != "")
+                    ChooseSpecificSelectOption(contactPropertyCountrySelect, contact.OrgPropertyAddress.Country);
+                if (contact.OrgPropertyAddress.Country == "Other")
                 {
                     ClearInput(contactPropertyOtherCountryInput);
-                    webDriver.FindElement(contactPropertyOtherCountryInput).SendKeys(contact.OrgPropertyOtherCountry);
+                    webDriver.FindElement(contactPropertyOtherCountryInput).SendKeys(contact.OrgPropertyAddress.OtherCountry);
                 }
-                if(contact.OrgPropertyProvince != "")
-                    ChooseSpecificSelectOption(contactPropertyProvinceSelect, contact.OrgPropertyProvince);
+                if(contact.OrgPropertyAddress.Province != "")
+                    ChooseSpecificSelectOption(contactPropertyProvinceSelect, contact.OrgPropertyAddress.Province);
 
-                if (contact.OrgPropertyCity != "")
+                if (contact.OrgPropertyAddress.City != "")
                 {
                     ClearInput(contactPropertyCityInput);
-                    webDriver.FindElement(contactPropertyCityInput).SendKeys(contact.OrgPropertyCity);
+                    webDriver.FindElement(contactPropertyCityInput).SendKeys(contact.OrgPropertyAddress.City);
                 }
-                if (contact.OrgPropertyPostalCode != "")
+                if (contact.OrgPropertyAddress.PostalCode != "")
                 {
                     ClearInput(contactPropertyPostalCodeInput);
-                    webDriver.FindElement(contactPropertyPostalCodeInput).SendKeys(contact.OrgPropertyPostalCode);
+                    webDriver.FindElement(contactPropertyPostalCodeInput).SendKeys(contact.OrgPropertyAddress.PostalCode);
                 }
             }
 
             //Updating contact billing address
-            if (contact.OrgBillingAddressLine1 != "")
+            if (contact.OrgBillingAddress.AddressLine1 != "")
             {
                 while (webDriver.FindElements(contactAddressBillingAddressRemoveBttn).Count > 0)
                 {
@@ -607,39 +607,39 @@ namespace PIMS.Tests.Automation.PageObjects
                 }
                 ClearInput(contactBillingAddressLine1Input);
 
-                webDriver.FindElement(contactBillingAddressLine1Input).SendKeys(contact.OrgBillingAddressLine1);
-                if (contact.OrgBillingAddressLine2 != "")
+                webDriver.FindElement(contactBillingAddressLine1Input).SendKeys(contact.OrgBillingAddress.AddressLine1);
+                if (contact.OrgBillingAddress.AddressLine2 != "")
                 {
                     webDriver.FindElement(contactBillingAddAddressLineBttn).Click();
-                    webDriver.FindElement(contactBillingAddressLine2Input).SendKeys(contact.OrgBillingAddressLine2);
+                    webDriver.FindElement(contactBillingAddressLine2Input).SendKeys(contact.OrgBillingAddress.AddressLine2);
                 }
-                if (contact.OrgBillingAddressLine3 != "")
+                if (contact.OrgBillingAddress.AddressLine3 != "")
                 {
                     webDriver.FindElement(contactBillingAddAddressLineBttn).Click();
-                    webDriver.FindElement(contactBillingAddressLine3Input).SendKeys(contact.OrgBillingAddressLine3);
+                    webDriver.FindElement(contactBillingAddressLine3Input).SendKeys(contact.OrgBillingAddress.AddressLine3);
                 }
-                if(contact.OrgBillingCountry != "")
-                    ChooseSpecificSelectOption(contactBillingCountrySelect, contact.OrgBillingCountry);
-                if (contact.OrgBillingCountry == "Other")
+                if(contact.OrgBillingAddress.Country != "")
+                    ChooseSpecificSelectOption(contactBillingCountrySelect, contact.OrgBillingAddress.Country);
+                if (contact.OrgBillingAddress.Country == "Other")
                 {
                     ClearInput(contactBillingOtherCountryInput);
-                    webDriver.FindElement(contactBillingOtherCountryInput).SendKeys(contact.OrgBillingOtherCountry);
+                    webDriver.FindElement(contactBillingOtherCountryInput).SendKeys(contact.OrgBillingAddress.OtherCountry);
                 }
-                if(contact.OrgBillingProvince != "")
+                if(contact.OrgBillingAddress.Province != "")
                 {
-                    ChooseSpecificSelectOption(contactBillingProvinceSelect, contact.OrgBillingProvince);
+                    ChooseSpecificSelectOption(contactBillingProvinceSelect, contact.OrgBillingAddress.Province);
                 }
-                if (contact.OrgBillingCity != "")
+                if (contact.OrgBillingAddress.City != "")
                 {
                     Wait();
                     ClearInput(contactBillingCityInput);
-                    webDriver.FindElement(contactBillingCityInput).SendKeys(contact.OrgBillingCity);
+                    webDriver.FindElement(contactBillingCityInput).SendKeys(contact.OrgBillingAddress.City);
                 }
-                if (contact.OrgBillingPostalCode != "")
+                if (contact.OrgBillingAddress.PostalCode != "")
                 {
                     Wait();
                     ClearInput(contactBillingPostalCodeInput);
-                    webDriver.FindElement(contactBillingPostalCodeInput).SendKeys(contact.OrgBillingPostalCode);
+                    webDriver.FindElement(contactBillingPostalCodeInput).SendKeys(contact.OrgBillingAddress.PostalCode);
                 }
             }
 
@@ -705,7 +705,7 @@ namespace PIMS.Tests.Automation.PageObjects
             }
 
             //Updating contact mail address
-            if (contact.IndMailAddressLine1 != "")
+            if (contact.IndMailAddress.AddressLine1 != "")
             {
                 while (webDriver.FindElements(contactAddressMailAddressRemoveBttn).Count > 0)
                 {
@@ -713,122 +713,119 @@ namespace PIMS.Tests.Automation.PageObjects
                 }
                 ClearInput(contactMailAddressLine1Input);
 
-                webDriver.FindElement(contactMailAddressLine1Input).SendKeys(contact.IndMailAddressLine1);
+                webDriver.FindElement(contactMailAddressLine1Input).SendKeys(contact.IndMailAddress.AddressLine1);
 
-                if (contact.IndMailAddressLine2 != "")
+                if (contact.IndMailAddress.AddressLine2 != "")
                 {
                     webDriver.FindElement(contactIndMailAddAddressLineBttn).Click();
-                    webDriver.FindElement(contactMailAddressLine2Input).SendKeys(contact.IndMailAddressLine2);
+                    webDriver.FindElement(contactMailAddressLine2Input).SendKeys(contact.IndMailAddress.AddressLine2);
                 }
-                if (contact.IndMailAddressLine3 != "")
+                if (contact.IndMailAddress.AddressLine3 != "")
                 {
                     webDriver.FindElement(contactIndMailAddAddressLineBttn).Click();
-                    webDriver.FindElement(contactMailAddressLine3Input).SendKeys(contact.IndMailAddressLine3);
+                    webDriver.FindElement(contactMailAddressLine3Input).SendKeys(contact.IndMailAddress.AddressLine3);
                 }
-                if (contact.IndMailCountry != "")
-                    ChooseSpecificSelectOption(contactMailCountrySelect, contact.IndMailCountry);
-                if (contact.IndMailCountry == "Other")
+                if (contact.IndMailAddress.Country != "")
+                    ChooseSpecificSelectOption(contactMailCountrySelect, contact.IndMailAddress.Country);
+                if (contact.IndMailAddress.Country == "Other")
                 {
                     ClearInput(contactMailOtherCountryInput);
-                    webDriver.FindElement(contactMailOtherCountryInput).SendKeys(contact.IndMailOtherCountry);
+                    webDriver.FindElement(contactMailOtherCountryInput).SendKeys(contact.IndMailAddress.OtherCountry);
                 }
-                if (contact.IndMailProvince != "")
-                {
-                    ChooseSpecificSelectOption(contactMailProvinceSelect, contact.IndMailProvince);
-                }
-                if (contact.IndMailCity != "")
+                if (contact.IndMailAddress.Province != "")
+                    ChooseSpecificSelectOption(contactMailProvinceSelect, contact.IndMailAddress.Province);
+                
+                if (contact.IndMailAddress.City != "")
                 {
                     ClearInput(contactMailCityInput);
-                    webDriver.FindElement(contactMailCityInput).SendKeys(contact.IndMailCity);
+                    webDriver.FindElement(contactMailCityInput).SendKeys(contact.IndMailAddress.City);
                 }
-                if (contact.IndMailPostalCode != "")
+                if (contact.IndMailAddress.PostalCode != "")
                 {
                     ClearInput(contactMailPostalCodeInput);
-                    webDriver.FindElement(contactMailPostalCodeInput).SendKeys(contact.IndMailPostalCode);
+                    webDriver.FindElement(contactMailPostalCodeInput).SendKeys(contact.IndMailAddress.PostalCode);
                 }
             }
 
             //Updating contact property address
-            if (contact.IndPropertyAddressLine1 != "")
+            if (contact.IndPropertyAddress.AddressLine1 != "")
             {
                 while (webDriver.FindElements(contactAddressPropertyAddressRemoveBttn).Count > 0)
-                {
                     FocusAndClick(contactAddressPropertyAddressRemoveBttn);
-                }
+                
                 ClearInput(contactPropertyAddressLine1Input);
+                webDriver.FindElement(contactPropertyAddressLine1Input).SendKeys(contact.IndPropertyAddress.AddressLine1);
 
-                webDriver.FindElement(contactPropertyAddressLine1Input).SendKeys(contact.IndPropertyAddressLine1);
-                if (contact.IndPropertyAddressLine2 != "")
+                if (contact.IndPropertyAddress.AddressLine2 != "")
                 {
                     webDriver.FindElement(contactPropertyAddAddressLineBttn).Click();
-                    webDriver.FindElement(contactPropertyAddressLine2Input).SendKeys(contact.IndPropertyAddressLine2);
+                    webDriver.FindElement(contactPropertyAddressLine2Input).SendKeys(contact.IndPropertyAddress.AddressLine2);
                 }
-                if (contact.IndPropertyAddressLine3 != "")
+                if (contact.IndPropertyAddress.AddressLine3 != "")
                 {
                     webDriver.FindElement(contactPropertyAddAddressLineBttn).Click();
-                    webDriver.FindElement(contactPropertyAddressLine3Input).SendKeys(contact.IndPropertyAddressLine3);
+                    webDriver.FindElement(contactPropertyAddressLine3Input).SendKeys(contact.IndPropertyAddress.AddressLine3);
                 }
-                if (contact.IndPropertyCountry != "")
-                    ChooseSpecificSelectOption(contactPropertyCountrySelect, contact.IndPropertyCountry);
-                if (contact.IndPropertyCountry == "Other")
+                if (contact.IndPropertyAddress.Country != "")
+                    ChooseSpecificSelectOption(contactPropertyCountrySelect, contact.IndPropertyAddress.Country);
+                if (contact.IndPropertyAddress.Country == "Other")
                 {
                     ClearInput(contactPropertyOtherCountryInput);
-                    webDriver.FindElement(contactPropertyOtherCountryInput).SendKeys(contact.IndPropertyOtherCountry);
+                    webDriver.FindElement(contactPropertyOtherCountryInput).SendKeys(contact.IndPropertyAddress.OtherCountry);
                 }
-                if (contact.IndPropertyProvince != "")
-                    ChooseSpecificSelectOption(contactPropertyProvinceSelect, contact.IndPropertyProvince);
-                if (contact.IndPropertyCity != "")
+                if (contact.IndPropertyAddress.Province != "")
+                    ChooseSpecificSelectOption(contactPropertyProvinceSelect, contact.IndPropertyAddress.Province);
+                if (contact.IndPropertyAddress.City != "")
                 {
                     ClearInput(contactPropertyCityInput);
-                    webDriver.FindElement(contactPropertyCityInput).SendKeys(contact.IndPropertyCity);
+                    webDriver.FindElement(contactPropertyCityInput).SendKeys(contact.IndPropertyAddress.City);
                 }
-                if (contact.IndPropertyPostalCode != "")
+                if (contact.IndPropertyAddress.PostalCode != "")
                 {
                     ClearInput(contactPropertyPostalCodeInput);
-                    webDriver.FindElement(contactPropertyPostalCodeInput).SendKeys(contact.IndPropertyPostalCode);
+                    webDriver.FindElement(contactPropertyPostalCodeInput).SendKeys(contact.IndPropertyAddress.PostalCode);
                 }
             }
 
             //Updating contact billing address
-            if (contact.IndBillingAddressLine1 != "")
+            if (contact.IndBillingAddress.AddressLine1 != "")
             {
                 while (webDriver.FindElements(contactAddressBillingAddressRemoveBttn).Count > 0)
-                {
                     FocusAndClick(contactAddressBillingAddressRemoveBttn);
-                }
+                
                 ClearInput(contactBillingAddressLine1Input);
+                webDriver.FindElement(contactBillingAddressLine1Input).SendKeys(contact.IndBillingAddress.AddressLine1);
 
-                webDriver.FindElement(contactBillingAddressLine1Input).SendKeys(contact.IndBillingAddressLine1);
-                if (contact.IndBillingAddressLine2 != "")
+                if (contact.IndBillingAddress.AddressLine2 != "")
                 {
                     webDriver.FindElement(contactBillingAddAddressLineBttn).Click();
-                    webDriver.FindElement(contactBillingAddressLine2Input).SendKeys(contact.IndBillingAddressLine2);
+                    webDriver.FindElement(contactBillingAddressLine2Input).SendKeys(contact.IndBillingAddress.AddressLine2);
                 }
-                if (contact.IndBillingAddressLine3 != "")
+                if (contact.IndBillingAddress.AddressLine3 != "")
                 {
                     webDriver.FindElement(contactBillingAddAddressLineBttn).Click();
-                    webDriver.FindElement(contactBillingAddressLine3Input).SendKeys(contact.IndBillingAddressLine3);
+                    webDriver.FindElement(contactBillingAddressLine3Input).SendKeys(contact.IndBillingAddress.AddressLine3);
                 }
-                if (contact.IndBillingCountry != "")
-                    ChooseSpecificSelectOption(contactBillingCountrySelect, contact.IndBillingCountry);
-                if (contact.IndBillingCountry == "Other")
+                if (contact.IndBillingAddress.Country != "")
+                    ChooseSpecificSelectOption(contactBillingCountrySelect, contact.IndBillingAddress.Country);
+                if (contact.IndBillingAddress.Country == "Other")
                 {
                     ClearInput(contactBillingOtherCountryInput);
-                    webDriver.FindElement(contactBillingOtherCountryInput).SendKeys(contact.IndBillingOtherCountry);
+                    webDriver.FindElement(contactBillingOtherCountryInput).SendKeys(contact.IndBillingAddress.OtherCountry);
                 }
-                if (contact.IndBillingProvince != "")
+                if (contact.IndBillingAddress.Province != "")
                 {
-                    ChooseSpecificSelectOption(contactBillingProvinceSelect, contact.IndBillingProvince);
+                    ChooseSpecificSelectOption(contactBillingProvinceSelect, contact.IndBillingAddress.Province);
                 }
-                if (contact.IndBillingCity != "")
+                if (contact.IndBillingAddress.City != "")
                 {
                     ClearInput(contactBillingCityInput);
-                    webDriver.FindElement(contactBillingCityInput).SendKeys(contact.IndBillingCity);
+                    webDriver.FindElement(contactBillingCityInput).SendKeys(contact.IndBillingAddress.City);
                 }
-                if (contact.IndBillingPostalCode != "")
+                if (contact.IndBillingAddress.PostalCode != "")
                 {
                     ClearInput(contactBillingPostalCodeInput);
-                    webDriver.FindElement(contactBillingPostalCodeInput).SendKeys(contact.IndBillingPostalCode);
+                    webDriver.FindElement(contactBillingPostalCodeInput).SendKeys(contact.IndBillingAddress.PostalCode);
                 }
             }
 
@@ -860,14 +857,15 @@ namespace PIMS.Tests.Automation.PageObjects
             ButtonElement("Cancel");
 
             Wait();
-            if (webDriver.FindElements(contactModal).Count > 0)
-            {
-                Assert.Equal("Unsaved Changes", sharedModals.ModalHeader());
-                Assert.Equal("If you choose to cancel now, your changes will not be saved.", sharedModals.ConfirmationModalText1());
-                Assert.Equal("Do you want to proceed?", sharedModals.ConfirmationModalText2());
+            //if (webDriver.FindElements(contactModal).Count > 0)
+            //{
+            //    Assert.Equal("Confirm Changes", sharedModals.ModalHeader());
+            //    Assert.Equal("If you choose to cancel now, your changes will not be saved.", sharedModals.ConfirmationModalText1());
+            //    Assert.Equal("Do you want to proceed?", sharedModals.ConfirmationModalText2());
 
-                sharedModals.ModalClickOKBttn();
-            }
+            //    sharedModals.ModalClickOKBttn();
+            //}
+            sharedModals.CancelActionModal();
 
             AssertTrueIsDisplayed(contactsSearchTable);
         }
@@ -923,7 +921,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
             AssertTrueIsDisplayed(contactAddressSubtitle);
 
-            if (contact.IndMailAddressLine1 != "")
+            if (contact.IndMailAddress.AddressLine1 != "")
             {
                 AssertTrueIsDisplayed(contactAddressMailSubtitle);
 
@@ -931,43 +929,43 @@ namespace PIMS.Tests.Automation.PageObjects
                 switch (mailAddressTotalLines)
                 {
                     case 4:
-                        AssertTrueContentEquals(contactAddressIndMailAddressLine1, contact.IndMailAddressLine1);
-                        AssertTrueContentEquals(contactAddressIndMailAddressLine2, contact.IndMailCityProvinceView);
-                        AssertTrueContentEquals(contactAddressIndMailAddressLine3, contact.IndMailPostalCode);
+                        AssertTrueContentEquals(contactAddressIndMailAddressLine1, contact.IndMailAddress.AddressLine1);
+                        AssertTrueContentEquals(contactAddressIndMailAddressLine2, contact.IndMailAddress.CityProvinceView);
+                        AssertTrueContentEquals(contactAddressIndMailAddressLine3, contact.IndMailAddress.PostalCode);
 
-                        if (contact.IndMailCountry == "Other")
-                            AssertTrueContentEquals(contactAddressIndMailAddressLine4, contact.IndMailOtherCountry);
+                        if (contact.IndMailAddress.Country == "Other")
+                            AssertTrueContentEquals(contactAddressIndMailAddressLine4, contact.IndMailAddress.OtherCountry);
                         else
-                            AssertTrueContentEquals(contactAddressIndMailAddressLine4, contact.IndMailCountry);
+                            AssertTrueContentEquals(contactAddressIndMailAddressLine4, contact.IndMailAddress.Country);
                         break;
 
                     case 5:
-                        AssertTrueContentEquals(contactAddressIndMailAddressLine1, contact.IndMailAddressLine1);
-                        AssertTrueContentEquals(contactAddressIndMailAddressLine2, contact.IndMailAddressLine2);
-                        AssertTrueContentEquals(contactAddressIndMailAddressLine3, contact.IndMailCityProvinceView);
-                        AssertTrueContentEquals(contactAddressIndMailAddressLine4, contact.IndMailPostalCode);
+                        AssertTrueContentEquals(contactAddressIndMailAddressLine1, contact.IndMailAddress.AddressLine1);
+                        AssertTrueContentEquals(contactAddressIndMailAddressLine2, contact.IndMailAddress.AddressLine2);
+                        AssertTrueContentEquals(contactAddressIndMailAddressLine3, contact.IndMailAddress.CityProvinceView);
+                        AssertTrueContentEquals(contactAddressIndMailAddressLine4, contact.IndMailAddress.PostalCode);
 
-                        if (contact.IndMailCountry == "Other")
-                            AssertTrueContentEquals(contactAddressIndMailAddressLine5, contact.IndMailOtherCountry);
+                        if (contact.IndMailAddress.Country == "Other")
+                            AssertTrueContentEquals(contactAddressIndMailAddressLine5, contact.IndMailAddress.OtherCountry);
                         else
-                            AssertTrueContentEquals(contactAddressIndMailAddressLine5, contact.IndMailCountry);
+                            AssertTrueContentEquals(contactAddressIndMailAddressLine5, contact.IndMailAddress.Country);
                         break;
 
                     case 6:
-                        AssertTrueContentEquals(contactAddressIndMailAddressLine1,contact.IndMailAddressLine1);
-                        AssertTrueContentEquals(contactAddressIndMailAddressLine2,contact.IndMailAddressLine2);
-                        AssertTrueContentEquals(contactAddressIndMailAddressLine3,contact.IndMailAddressLine3);
-                        AssertTrueContentEquals(contactAddressIndMailAddressLine4,contact.IndMailCityProvinceView);
-                        AssertTrueContentEquals(contactAddressIndMailAddressLine5,contact.IndMailPostalCode);
+                        AssertTrueContentEquals(contactAddressIndMailAddressLine1,contact.IndMailAddress.AddressLine1);
+                        AssertTrueContentEquals(contactAddressIndMailAddressLine2,contact.IndMailAddress.AddressLine2);
+                        AssertTrueContentEquals(contactAddressIndMailAddressLine3,contact.IndMailAddress.AddressLine3);
+                        AssertTrueContentEquals(contactAddressIndMailAddressLine4,contact.IndMailAddress.CityProvinceView);
+                        AssertTrueContentEquals(contactAddressIndMailAddressLine5,contact.IndMailAddress.PostalCode);
 
-                        if (contact.IndMailCountry == "Other")
-                            AssertTrueContentEquals(contactAddressIndMailAddressLine6,contact.IndMailOtherCountry);
+                        if (contact.IndMailAddress.Country == "Other")
+                            AssertTrueContentEquals(contactAddressIndMailAddressLine6,contact.IndMailAddress.OtherCountry);
                         else
-                            AssertTrueContentEquals(contactAddressIndMailAddressLine6,contact.IndMailCountry);
+                            AssertTrueContentEquals(contactAddressIndMailAddressLine6,contact.IndMailAddress.Country);
                         break;
                 }
             }
-            if (contact.IndPropertyAddressLine1 != "")
+            if (contact.IndPropertyAddress.AddressLine1 != "")
             {
                 AssertTrueIsDisplayed(contactAddressPropertySubtitle);
 
@@ -975,43 +973,43 @@ namespace PIMS.Tests.Automation.PageObjects
                 switch (propertyAddressTotalLines)
                 {
                     case 4:
-                        AssertTrueContentEquals(contactAddressIndPropertyAddressLine1,contact.IndPropertyAddressLine1);
-                        AssertTrueContentEquals(contactAddressIndPropertyAddressLine2,contact.IndPropertyCityProvinceView);
-                        AssertTrueContentEquals(contactAddressIndPropertyAddressLine3,contact.IndPropertyPostalCode);
+                        AssertTrueContentEquals(contactAddressIndPropertyAddressLine1,contact.IndPropertyAddress.AddressLine1);
+                        AssertTrueContentEquals(contactAddressIndPropertyAddressLine2,contact.IndPropertyAddress.CityProvinceView);
+                        AssertTrueContentEquals(contactAddressIndPropertyAddressLine3,contact.IndPropertyAddress.PostalCode);
 
-                        if (contact.IndPropertyCountry == "Other")
-                            AssertTrueContentEquals(contactAddressIndPropertyAddressLine4, contact.IndPropertyOtherCountry);
+                        if (contact.IndPropertyAddress.Country == "Other")
+                            AssertTrueContentEquals(contactAddressIndPropertyAddressLine4, contact.IndPropertyAddress.OtherCountry);
                         else
-                            AssertTrueContentEquals(contactAddressIndPropertyAddressLine4, contact.IndPropertyCountry);
+                            AssertTrueContentEquals(contactAddressIndPropertyAddressLine4, contact.IndPropertyAddress.Country);
                         break;
 
                     case 5:
-                        AssertTrueContentEquals(contactAddressIndPropertyAddressLine1, contact.IndPropertyAddressLine1);
-                        AssertTrueContentEquals(contactAddressIndPropertyAddressLine2, contact.IndPropertyAddressLine2);
-                        AssertTrueContentEquals(contactAddressIndPropertyAddressLine3, contact.IndPropertyCityProvinceView);
-                        AssertTrueContentEquals(contactAddressIndPropertyAddressLine4, contact.IndPropertyPostalCode);
+                        AssertTrueContentEquals(contactAddressIndPropertyAddressLine1, contact.IndPropertyAddress.AddressLine1);
+                        AssertTrueContentEquals(contactAddressIndPropertyAddressLine2, contact.IndPropertyAddress.AddressLine2);
+                        AssertTrueContentEquals(contactAddressIndPropertyAddressLine3, contact.IndPropertyAddress.CityProvinceView);
+                        AssertTrueContentEquals(contactAddressIndPropertyAddressLine4, contact.IndPropertyAddress.PostalCode);
 
-                        if (contact.IndPropertyCountry == "Other")
-                            AssertTrueContentEquals(contactAddressIndPropertyAddressLine5, contact.IndPropertyOtherCountry);
+                        if (contact.IndPropertyAddress.Country == "Other")
+                            AssertTrueContentEquals(contactAddressIndPropertyAddressLine5, contact.IndPropertyAddress.OtherCountry);
                         else
-                            AssertTrueContentEquals(contactAddressIndPropertyAddressLine5, contact.IndPropertyCountry);
+                            AssertTrueContentEquals(contactAddressIndPropertyAddressLine5, contact.IndPropertyAddress.Country);
                         break;
 
                     case 6:
-                        AssertTrueContentEquals(contactAddressIndPropertyAddressLine1, contact.IndPropertyAddressLine1);
-                        AssertTrueContentEquals(contactAddressIndPropertyAddressLine2, contact.IndPropertyAddressLine2);
-                        AssertTrueContentEquals(contactAddressIndPropertyAddressLine3, contact.IndPropertyAddressLine3);
-                        AssertTrueContentEquals(contactAddressIndPropertyAddressLine4, contact.IndPropertyCityProvinceView);
-                        AssertTrueContentEquals(contactAddressIndPropertyAddressLine5, contact.IndPropertyPostalCode);
+                        AssertTrueContentEquals(contactAddressIndPropertyAddressLine1, contact.IndPropertyAddress.AddressLine1);
+                        AssertTrueContentEquals(contactAddressIndPropertyAddressLine2, contact.IndPropertyAddress.AddressLine2);
+                        AssertTrueContentEquals(contactAddressIndPropertyAddressLine3, contact.IndPropertyAddress.AddressLine3);
+                        AssertTrueContentEquals(contactAddressIndPropertyAddressLine4, contact.IndPropertyAddress.CityProvinceView);
+                        AssertTrueContentEquals(contactAddressIndPropertyAddressLine5, contact.IndPropertyAddress.PostalCode);
 
-                        if (contact.IndPropertyCountry == "Other")
-                            AssertTrueContentEquals(contactAddressIndPropertyAddressLine6, contact.IndPropertyOtherCountry);
+                        if (contact.IndPropertyAddress.Country == "Other")
+                            AssertTrueContentEquals(contactAddressIndPropertyAddressLine6, contact.IndPropertyAddress.OtherCountry);
                         else
-                            AssertTrueContentEquals(contactAddressIndPropertyAddressLine6, contact.IndPropertyCountry);
+                            AssertTrueContentEquals(contactAddressIndPropertyAddressLine6, contact.IndPropertyAddress.Country);
                         break;
                 }
             }
-            if (contact.IndBillingAddressLine1 != "")
+            if (contact.IndBillingAddress.AddressLine1 != "")
             {
                 AssertTrueIsDisplayed(contactAddressBillingSubtitle);
 
@@ -1019,39 +1017,39 @@ namespace PIMS.Tests.Automation.PageObjects
                 switch (propertyAddressTotalLines)
                 {
                     case 4:
-                        AssertTrueContentEquals(contactAddressIndBillingAddressLine1, contact.IndBillingAddressLine1);
-                        AssertTrueContentEquals(contactAddressIndBillingAddressLine2, contact.IndBillingCityProvinceView);
-                        AssertTrueContentEquals(contactAddressIndBillingAddressLine3, contact.IndBillingPostalCode);
+                        AssertTrueContentEquals(contactAddressIndBillingAddressLine1, contact.IndBillingAddress.AddressLine1);
+                        AssertTrueContentEquals(contactAddressIndBillingAddressLine2, contact.IndBillingAddress.CityProvinceView);
+                        AssertTrueContentEquals(contactAddressIndBillingAddressLine3, contact.IndBillingAddress.PostalCode);
 
-                        if (contact.IndBillingCountry == "Other")
-                            AssertTrueContentEquals(contactAddressIndBillingAddressLine4, contact.IndBillingOtherCountry);
+                        if (contact.IndBillingAddress.Country == "Other")
+                            AssertTrueContentEquals(contactAddressIndBillingAddressLine4, contact.IndBillingAddress.OtherCountry);
                         else
-                            AssertTrueContentEquals(contactAddressIndBillingAddressLine4, contact.IndBillingCountry);
+                            AssertTrueContentEquals(contactAddressIndBillingAddressLine4, contact.IndBillingAddress.Country);
                         break;
 
                     case 5:
-                        AssertTrueContentEquals(contactAddressIndBillingAddressLine1, contact.IndBillingAddressLine1);
-                        AssertTrueContentEquals(contactAddressIndBillingAddressLine2, contact.IndBillingAddressLine2);
-                        AssertTrueContentEquals(contactAddressIndBillingAddressLine3, contact.IndBillingCityProvinceView);
-                        AssertTrueContentEquals(contactAddressIndBillingAddressLine4, contact.IndBillingPostalCode);
+                        AssertTrueContentEquals(contactAddressIndBillingAddressLine1, contact.IndBillingAddress.AddressLine1);
+                        AssertTrueContentEquals(contactAddressIndBillingAddressLine2, contact.IndBillingAddress.AddressLine2);
+                        AssertTrueContentEquals(contactAddressIndBillingAddressLine3, contact.IndBillingAddress.CityProvinceView);
+                        AssertTrueContentEquals(contactAddressIndBillingAddressLine4, contact.IndBillingAddress.PostalCode);
 
-                        if (contact.IndBillingCountry == "Other")
-                            AssertTrueContentEquals(contactAddressIndBillingAddressLine5, contact.IndBillingOtherCountry);
+                        if (contact.IndBillingAddress.Country == "Other")
+                            AssertTrueContentEquals(contactAddressIndBillingAddressLine5, contact.IndBillingAddress.OtherCountry);
                         else
-                            AssertTrueContentEquals(contactAddressIndBillingAddressLine5, contact.IndBillingCountry);
+                            AssertTrueContentEquals(contactAddressIndBillingAddressLine5, contact.IndBillingAddress.Country);
                         break;
 
                     case 6:
-                        AssertTrueContentEquals(contactAddressIndBillingAddressLine1, contact.IndBillingAddressLine1);
-                        AssertTrueContentEquals(contactAddressIndBillingAddressLine2, contact.IndBillingAddressLine2);
-                        AssertTrueContentEquals(contactAddressIndBillingAddressLine3, contact.IndBillingAddressLine3);
-                        AssertTrueContentEquals(contactAddressIndBillingAddressLine4, contact.IndBillingCityProvinceView);
-                        AssertTrueContentEquals(contactAddressIndBillingAddressLine5, contact.IndBillingPostalCode);
+                        AssertTrueContentEquals(contactAddressIndBillingAddressLine1, contact.IndBillingAddress.AddressLine1);
+                        AssertTrueContentEquals(contactAddressIndBillingAddressLine2, contact.IndBillingAddress.AddressLine2);
+                        AssertTrueContentEquals(contactAddressIndBillingAddressLine3, contact.IndBillingAddress.AddressLine3);
+                        AssertTrueContentEquals(contactAddressIndBillingAddressLine4, contact.IndBillingAddress.CityProvinceView);
+                        AssertTrueContentEquals(contactAddressIndBillingAddressLine5, contact.IndBillingAddress.PostalCode);
 
-                        if (contact.IndBillingCountry == "Other")
-                            AssertTrueContentEquals(contactAddressIndBillingAddressLine6, contact.IndBillingOtherCountry);
+                        if (contact.IndBillingAddress.Country == "Other")
+                            AssertTrueContentEquals(contactAddressIndBillingAddressLine6, contact.IndBillingAddress.OtherCountry);
                         else
-                            AssertTrueContentEquals(contactAddressIndBillingAddressLine6, contact.IndBillingCountry);
+                            AssertTrueContentEquals(contactAddressIndBillingAddressLine6, contact.IndBillingAddress.Country);
                         break;
                 }
             }
@@ -1104,7 +1102,7 @@ namespace PIMS.Tests.Automation.PageObjects
             }
 
             AssertTrueIsDisplayed(contactAddressSubtitle);
-            if (contact.OrgMailAddressLine1 != "")
+            if (contact.OrgMailAddress.AddressLine1 != "")
             {
                 AssertTrueIsDisplayed(contactAddressMailSubtitle);
 
@@ -1112,43 +1110,43 @@ namespace PIMS.Tests.Automation.PageObjects
                 switch (mailAddressTotalLines)
                 {
                     case 4:
-                        AssertTrueContentEquals(contactAddressOrgMailAddressLine1, contact.OrgMailAddressLine1);
-                        AssertTrueContentEquals(contactAddressOrgMailAddressLine2, contact.OrgMailCityProvinceView);
-                        AssertTrueContentEquals(contactAddressOrgMailAddressLine3, contact.OrgMailPostalCode);
+                        AssertTrueContentEquals(contactAddressOrgMailAddressLine1, contact.OrgMailAddress.AddressLine1);
+                        AssertTrueContentEquals(contactAddressOrgMailAddressLine2, contact.OrgMailAddress.CityProvinceView);
+                        AssertTrueContentEquals(contactAddressOrgMailAddressLine3, contact.OrgMailAddress.PostalCode);
 
-                        if (contact.OrgMailCountry == "Other")
-                            AssertTrueContentEquals(contactAddressOrgMailAddressLine4, contact.OrgMailOtherCountry);
+                        if (contact.OrgMailAddress.Country == "Other")
+                            AssertTrueContentEquals(contactAddressOrgMailAddressLine4, contact.OrgMailAddress.OtherCountry);
                         else
-                            AssertTrueContentEquals(contactAddressOrgMailAddressLine4, contact.OrgMailCountry);
+                            AssertTrueContentEquals(contactAddressOrgMailAddressLine4, contact.OrgMailAddress.Country);
                         break;
 
                     case 5:
-                        AssertTrueContentEquals(contactAddressOrgMailAddressLine1, contact.OrgMailAddressLine1);
-                        AssertTrueContentEquals(contactAddressOrgMailAddressLine2, contact.OrgMailAddressLine2);
-                        AssertTrueContentEquals(contactAddressOrgMailAddressLine3, contact.OrgMailCityProvinceView);
-                        AssertTrueContentEquals(contactAddressOrgMailAddressLine4, contact.OrgMailPostalCode);
+                        AssertTrueContentEquals(contactAddressOrgMailAddressLine1, contact.OrgMailAddress.AddressLine1);
+                        AssertTrueContentEquals(contactAddressOrgMailAddressLine2, contact.OrgMailAddress.AddressLine2);
+                        AssertTrueContentEquals(contactAddressOrgMailAddressLine3, contact.OrgMailAddress.CityProvinceView);
+                        AssertTrueContentEquals(contactAddressOrgMailAddressLine4, contact.OrgMailAddress.PostalCode);
 
-                        if (contact.OrgMailCountry == "Other")
-                            AssertTrueContentEquals(contactAddressOrgMailAddressLine5, contact.OrgMailOtherCountry);
+                        if (contact.OrgMailAddress.Country == "Other")
+                            AssertTrueContentEquals(contactAddressOrgMailAddressLine5, contact.OrgMailAddress.OtherCountry);
                         else
-                            AssertTrueContentEquals(contactAddressOrgMailAddressLine5, contact.OrgMailCountry);
+                            AssertTrueContentEquals(contactAddressOrgMailAddressLine5, contact.OrgMailAddress.Country);
                         break;
 
                     case 6:
-                        AssertTrueContentEquals(contactAddressOrgMailAddressLine1, contact.OrgMailAddressLine1);
-                        AssertTrueContentEquals(contactAddressOrgMailAddressLine2, contact.OrgMailAddressLine2);
-                        AssertTrueContentEquals(contactAddressOrgMailAddressLine3, contact.OrgMailAddressLine3);
-                        AssertTrueContentEquals(contactAddressOrgMailAddressLine4, contact.OrgMailCityProvinceView);
-                        AssertTrueContentEquals(contactAddressOrgMailAddressLine5, contact.OrgMailPostalCode);
+                        AssertTrueContentEquals(contactAddressOrgMailAddressLine1, contact.OrgMailAddress.AddressLine1);
+                        AssertTrueContentEquals(contactAddressOrgMailAddressLine2, contact.OrgMailAddress.AddressLine2);
+                        AssertTrueContentEquals(contactAddressOrgMailAddressLine3, contact.OrgMailAddress.AddressLine3);
+                        AssertTrueContentEquals(contactAddressOrgMailAddressLine4, contact.OrgMailAddress.CityProvinceView);
+                        AssertTrueContentEquals(contactAddressOrgMailAddressLine5, contact.OrgMailAddress.PostalCode);
 
-                        if (contact.OrgMailCountry == "Other")
-                            AssertTrueContentEquals(contactAddressOrgMailAddressLine6, contact.OrgMailOtherCountry);
+                        if (contact.OrgMailAddress.Country == "Other")
+                            AssertTrueContentEquals(contactAddressOrgMailAddressLine6, contact.OrgMailAddress.OtherCountry);
                         else
-                            AssertTrueContentEquals(contactAddressOrgMailAddressLine6, contact.OrgMailCountry);
+                            AssertTrueContentEquals(contactAddressOrgMailAddressLine6, contact.OrgMailAddress.Country);
                         break;
                 }
             }
-            if (contact.OrgPropertyAddressLine1 != "")
+            if (contact.OrgPropertyAddress.AddressLine1 != "")
             {
                 AssertTrueIsDisplayed(contactAddressPropertySubtitle);
 
@@ -1156,47 +1154,47 @@ namespace PIMS.Tests.Automation.PageObjects
                 switch (propertyAddressTotalLines)
                 {
                     case 4:
-                        AssertTrueContentEquals(contactAddressOrgPropertyAddressLine1, contact.OrgPropertyAddressLine1);
-                        AssertTrueContentEquals(contactAddressOrgPropertyAddressLine2, contact.OrgPropertyCityProvinceView);
-                        AssertTrueContentEquals(contactAddressOrgPropertyAddressLine3, contact.OrgPropertyPostalCode);
+                        AssertTrueContentEquals(contactAddressOrgPropertyAddressLine1, contact.OrgPropertyAddress.AddressLine1);
+                        AssertTrueContentEquals(contactAddressOrgPropertyAddressLine2, contact.OrgPropertyAddress.CityProvinceView);
+                        AssertTrueContentEquals(contactAddressOrgPropertyAddressLine3, contact.OrgPropertyAddress.PostalCode);
 
-                        if (contact.OrgPropertyCountry == "Other")
-                            AssertTrueContentEquals(contactAddressOrgPropertyAddressLine4, contact.OrgPropertyOtherCountry);
+                        if (contact.OrgPropertyAddress.Country == "Other")
+                            AssertTrueContentEquals(contactAddressOrgPropertyAddressLine4, contact.OrgPropertyAddress.OtherCountry);
                         else  
-                            AssertTrueContentEquals(contactAddressOrgPropertyAddressLine4, contact.OrgPropertyCountry);
+                            AssertTrueContentEquals(contactAddressOrgPropertyAddressLine4, contact.OrgPropertyAddress.Country);
                         break;
 
                     case 5:
-                        AssertTrueContentEquals(contactAddressOrgPropertyAddressLine1,contact.OrgPropertyAddressLine1);
-                        AssertTrueContentEquals(contactAddressOrgPropertyAddressLine2,contact.OrgPropertyAddressLine2);
-                        AssertTrueContentEquals(contactAddressOrgPropertyAddressLine3,contact.OrgPropertyCityProvinceView);
-                        AssertTrueContentEquals(contactAddressOrgPropertyAddressLine4,contact.OrgPropertyPostalCode);
+                        AssertTrueContentEquals(contactAddressOrgPropertyAddressLine1,contact.OrgPropertyAddress.AddressLine1);
+                        AssertTrueContentEquals(contactAddressOrgPropertyAddressLine2,contact.OrgPropertyAddress.AddressLine2);
+                        AssertTrueContentEquals(contactAddressOrgPropertyAddressLine3,contact.OrgPropertyAddress.CityProvinceView);
+                        AssertTrueContentEquals(contactAddressOrgPropertyAddressLine4,contact.OrgPropertyAddress.PostalCode);
 
-                        if (contact.OrgPropertyCountry == "Other")
+                        if (contact.OrgPropertyAddress.Country == "Other")
                         {
-                            AssertTrueContentEquals(contactAddressOrgPropertyAddressLine5,contact.OrgPropertyOtherCountry);
+                            AssertTrueContentEquals(contactAddressOrgPropertyAddressLine5,contact.OrgPropertyAddress.OtherCountry);
                         }
                         else
                         {
-                            AssertTrueContentEquals(contactAddressOrgPropertyAddressLine5,contact.OrgPropertyCountry);
+                            AssertTrueContentEquals(contactAddressOrgPropertyAddressLine5,contact.OrgPropertyAddress.Country);
                         }
                         break;
 
                     case 6:
-                        AssertTrueContentEquals(contactAddressOrgPropertyAddressLine1,contact.OrgPropertyAddressLine1);
-                        AssertTrueContentEquals(contactAddressOrgPropertyAddressLine2,contact.OrgPropertyAddressLine2);
-                        AssertTrueContentEquals(contactAddressOrgPropertyAddressLine3,contact.OrgPropertyAddressLine3);
-                        AssertTrueContentEquals(contactAddressOrgPropertyAddressLine4,contact.OrgPropertyCityProvinceView);
-                        AssertTrueContentEquals(contactAddressOrgPropertyAddressLine5,contact.OrgPropertyPostalCode);
+                        AssertTrueContentEquals(contactAddressOrgPropertyAddressLine1,contact.OrgPropertyAddress.AddressLine1);
+                        AssertTrueContentEquals(contactAddressOrgPropertyAddressLine2,contact.OrgPropertyAddress.AddressLine2);
+                        AssertTrueContentEquals(contactAddressOrgPropertyAddressLine3,contact.OrgPropertyAddress.AddressLine3);
+                        AssertTrueContentEquals(contactAddressOrgPropertyAddressLine4,contact.OrgPropertyAddress.CityProvinceView);
+                        AssertTrueContentEquals(contactAddressOrgPropertyAddressLine5,contact.OrgPropertyAddress.PostalCode);
 
-                        if (contact.OrgPropertyCountry == "Other")
-                            AssertTrueContentEquals(contactAddressOrgPropertyAddressLine6,contact.OrgPropertyOtherCountry);
+                        if (contact.OrgPropertyAddress.Country == "Other")
+                            AssertTrueContentEquals(contactAddressOrgPropertyAddressLine6,contact.OrgPropertyAddress.OtherCountry);
                         else
-                            AssertTrueContentEquals(contactAddressOrgPropertyAddressLine6,contact.OrgPropertyCountry);
+                            AssertTrueContentEquals(contactAddressOrgPropertyAddressLine6,contact.OrgPropertyAddress.Country);
                         break;
                 }
             }
-            if (contact.OrgBillingAddressLine1 != "")
+            if (contact.OrgBillingAddress.AddressLine1 != "")
             {
                 AssertTrueIsDisplayed(contactAddressBillingSubtitle);
 
@@ -1204,38 +1202,38 @@ namespace PIMS.Tests.Automation.PageObjects
                 switch (propertyAddressTotalLines)
                 {
                     case 4:
-                        AssertTrueContentEquals(contactAddressOrgBillingAddressLine1,contact.OrgBillingAddressLine1);
-                        AssertTrueContentEquals(contactAddressOrgBillingAddressLine2,contact.OrgBillingCityProvinceView);
-                        AssertTrueContentEquals(contactAddressOrgBillingAddressLine3,contact.OrgBillingPostalCode);
-                        if (contact.OrgBillingCountry == "Other")
-                            AssertTrueContentEquals(contactAddressOrgBillingAddressLine4,contact.OrgBillingOtherCountry);
+                        AssertTrueContentEquals(contactAddressOrgBillingAddressLine1,contact.OrgBillingAddress.AddressLine1);
+                        AssertTrueContentEquals(contactAddressOrgBillingAddressLine2,contact.OrgBillingAddress.CityProvinceView);
+                        AssertTrueContentEquals(contactAddressOrgBillingAddressLine3,contact.OrgBillingAddress.PostalCode);
+                        if (contact.OrgBillingAddress.Country == "Other")
+                            AssertTrueContentEquals(contactAddressOrgBillingAddressLine4,contact.OrgBillingAddress.OtherCountry);
                         else
-                            AssertTrueContentEquals(contactAddressOrgBillingAddressLine4,contact.OrgBillingCountry);
+                            AssertTrueContentEquals(contactAddressOrgBillingAddressLine4,contact.OrgBillingAddress.Country);
                         break;
 
                     case 5:
-                        AssertTrueContentEquals(contactAddressOrgBillingAddressLine1,contact.OrgBillingAddressLine1);
-                        AssertTrueContentEquals(contactAddressOrgBillingAddressLine2,contact.OrgBillingAddressLine2);
-                        AssertTrueContentEquals(contactAddressOrgBillingAddressLine3,contact.OrgBillingCityProvinceView);
-                        AssertTrueContentEquals(contactAddressOrgBillingAddressLine4,contact.OrgBillingPostalCode);
+                        AssertTrueContentEquals(contactAddressOrgBillingAddressLine1,contact.OrgBillingAddress.AddressLine1);
+                        AssertTrueContentEquals(contactAddressOrgBillingAddressLine2,contact.OrgBillingAddress.AddressLine2);
+                        AssertTrueContentEquals(contactAddressOrgBillingAddressLine3,contact.OrgBillingAddress.CityProvinceView);
+                        AssertTrueContentEquals(contactAddressOrgBillingAddressLine4,contact.OrgBillingAddress.PostalCode);
 
-                        if (contact.OrgBillingCountry == "Other")
-                            AssertTrueContentEquals(contactAddressOrgBillingAddressLine5, contact.OrgBillingOtherCountry);
+                        if (contact.OrgBillingAddress.Country == "Other")
+                            AssertTrueContentEquals(contactAddressOrgBillingAddressLine5, contact.OrgBillingAddress.OtherCountry);
                         else
-                            AssertTrueContentEquals(contactAddressOrgBillingAddressLine5,contact.OrgBillingCountry);
+                            AssertTrueContentEquals(contactAddressOrgBillingAddressLine5,contact.OrgBillingAddress.Country);
                         break;
 
                     case 6:
-                        AssertTrueContentEquals(contactAddressOrgBillingAddressLine1,contact.OrgBillingAddressLine1);
-                        AssertTrueContentEquals(contactAddressOrgBillingAddressLine2,contact.OrgBillingAddressLine2);
-                        AssertTrueContentEquals(contactAddressOrgBillingAddressLine3,contact.OrgBillingAddressLine3);
-                        AssertTrueContentEquals(contactAddressOrgBillingAddressLine4,contact.OrgBillingCityProvinceView);
-                        AssertTrueContentEquals(contactAddressOrgBillingAddressLine5,contact.OrgBillingPostalCode);
+                        AssertTrueContentEquals(contactAddressOrgBillingAddressLine1,contact.OrgBillingAddress.AddressLine1);
+                        AssertTrueContentEquals(contactAddressOrgBillingAddressLine2,contact.OrgBillingAddress.AddressLine2);
+                        AssertTrueContentEquals(contactAddressOrgBillingAddressLine3,contact.OrgBillingAddress.AddressLine3);
+                        AssertTrueContentEquals(contactAddressOrgBillingAddressLine4,contact.OrgBillingAddress.CityProvinceView);
+                        AssertTrueContentEquals(contactAddressOrgBillingAddressLine5,contact.OrgBillingAddress.PostalCode);
 
-                        if (contact.OrgBillingCountry == "Other")
-                            AssertTrueContentEquals(contactAddressOrgBillingAddressLine6,contact.OrgBillingOtherCountry);
+                        if (contact.OrgBillingAddress.Country == "Other")
+                            AssertTrueContentEquals(contactAddressOrgBillingAddressLine6,contact.OrgBillingAddress.OtherCountry);
                         else
-                            AssertTrueContentEquals(contactAddressOrgBillingAddressLine6,contact.OrgBillingCountry);
+                            AssertTrueContentEquals(contactAddressOrgBillingAddressLine6,contact.OrgBillingAddress.Country);
                         break;
                 }
             }

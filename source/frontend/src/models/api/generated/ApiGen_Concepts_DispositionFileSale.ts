@@ -23,6 +23,8 @@ export interface ApiGen_Concepts_DispositionFileSale extends ApiGen_Base_BaseCon
   sppAmount: number | null;
   remediationAmount: number | null;
   dispositionPurchasers: ApiGen_Concepts_DispositionSalePurchaser[] | null;
+  purchaserAgentId: number | null;
   dispositionPurchaserAgent: ApiGen_Concepts_DispositionSalePurchaserAgent | null;
+  purchaserSolicitorId: number | null;
   dispositionPurchaserSolicitor: ApiGen_Concepts_DispositionSalePurchaserSolicitor | null;
 }

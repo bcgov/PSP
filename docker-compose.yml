@@ -97,7 +97,7 @@ services:
 ####################### Networks Definition #######################
 networks:
   psp:
-    name: psp-net
+    name: psp
     driver: bridge
 
 ####################### Volumes Definition #######################

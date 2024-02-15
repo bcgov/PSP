@@ -38,6 +38,8 @@ const mockPostAppraisalApi = {
   loading: false,
 };
 
+const onSuccess = jest.fn();
+
 jest.mock('@/hooks/repositories/useDispositionProvider', () => ({
   useDispositionProvider: () => {
     return {
@@ -62,7 +64,11 @@ describe('Update Disposition Appraisal Container component', () => {
     } = {},
   ) => {
     const component = render(
-      <UpdateDispositionAppraisalContainer dispositionFileId={1} View={TestView} />,
+      <UpdateDispositionAppraisalContainer
+        dispositionFileId={1}
+        View={TestView}
+        onSuccess={onSuccess}
+      />,
       {
         history,
         store: {

@@ -30,6 +30,7 @@ const mockGetOfferApi = {
   execute: jest.fn().mockResolvedValue(mockDispositionOfferApi),
   loading: false,
 };
+const onSuccess = jest.fn();
 
 jest.mock('@/hooks/repositories/useDispositionProvider', () => ({
   useDispositionProvider: () => {
@@ -58,6 +59,7 @@ describe('Update Disposition Offer Container component', () => {
         dispositionFileId={1}
         dispositionOfferId={10}
         View={TestView}
+        onSuccess={onSuccess}
       />,
       {
         history,

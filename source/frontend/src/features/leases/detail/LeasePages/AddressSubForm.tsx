@@ -2,9 +2,10 @@ import { getIn, useFormikContext } from 'formik';
 import * as React from 'react';
 
 import { Form, Input } from '@/components/common/form';
+import { Api_Address } from '@/models/api/Address';
+import { Api_Lease } from '@/models/api/Lease';
 import { withNameSpace } from '@/utils/formUtils';
 
-import { LeaseFormModel } from '../../models';
 import { FieldValue } from '../styles';
 
 export interface IAddressSubFormProps {
@@ -15,14 +16,8 @@ export interface IAddressSubFormProps {
 export const AddressSubForm: React.FunctionComponent<
   React.PropsWithChildren<IAddressSubFormProps>
 > = ({ disabled, nameSpace }) => {
-  const formikProps = useFormikContext<LeaseFormModel>();
-  const address = getIn(formikProps.values, withNameSpace(nameSpace));
-  const municipality = getIn(formikProps.values, withNameSpace(nameSpace, 'municipality'));
-  const postal = getIn(formikProps.values, withNameSpace(nameSpace, 'postal'));
-  const country = getIn(formikProps.values, withNameSpace(nameSpace, 'country'));
-  const streetAddress1 = getIn(formikProps.values, withNameSpace(nameSpace, 'streetAddress1'));
-  const streetAddress2 = getIn(formikProps.values, withNameSpace(nameSpace, 'streetAddress2'));
-  const streetAddress3 = getIn(formikProps.values, withNameSpace(nameSpace, 'streetAddress3'));
+  const formikProps = useFormikContext<Api_Lease>();
+  const address = getIn(formikProps.values, withNameSpace(nameSpace)) as Api_Address;
 
   if (!address) {
     return (
@@ -32,6 +27,14 @@ export const AddressSubForm: React.FunctionComponent<
       </>
     );
   }
+
+  const municipality = address.municipality;
+  const postal = address.postal;
+  const country = address.country?.description;
+  const province = address.province?.description;
+  const streetAddress1 = address.streetAddress1;
+  const streetAddress2 = address.streetAddress2;
+  const streetAddress3 = address.streetAddress3;
 
   return (
     <>
@@ -48,8 +51,12 @@ export const AddressSubForm: React.FunctionComponent<
         <Input disabled={disabled} field={withNameSpace(nameSpace, 'municipality')} />
       )}
       {postal && <Input disabled={disabled} field={withNameSpace(nameSpace, 'postal')} />}
-      <Input disabled={disabled} field={withNameSpace(nameSpace, 'province')} />
-      {country && <Input disabled={disabled} field={withNameSpace(nameSpace, 'country')} />}
+      {province && (
+        <Input disabled={disabled} field={withNameSpace(nameSpace, 'province.description')} />
+      )}
+      {country && (
+        <Input disabled={disabled} field={withNameSpace(nameSpace, 'country.description')} />
+      )}
     </>
   );
 };

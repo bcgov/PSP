@@ -9,6 +9,7 @@ import { Form, Input, Select } from '@/components/common/form';
 import { TableSort } from '@/components/Table/TableSort';
 import { useGeocoderRepository } from '@/hooks/useGeocoderRepository';
 import { useRouterFilter } from '@/hooks/useRouterFilter';
+import { Api_Property } from '@/models/api/Property';
 import { FilterBarSchema } from '@/utils/YupSchema';
 
 import { GeocoderAutoComplete } from '../components/GeocoderAutoComplete';
@@ -24,9 +25,9 @@ export interface IPropertyFilterProps {
   /** Callback event when the filter is changed during Mount. */
   onChange: (filter: IPropertyFilter) => void;
   /** Comma separated list of column names to sort by. */
-  sort?: TableSort<any>;
+  sort?: TableSort<Api_Property>;
   /** Event fire when sorting changes. */
-  onSorting?: (sort: TableSort<any>) => void;
+  onSorting?: (sort: TableSort<Api_Property>) => void;
   /** Which toggle view is currently active */
   toggle?: SearchToggleOption;
   /** Which toggle view is currently active */

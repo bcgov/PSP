@@ -11,7 +11,7 @@ export const Legend = () => {
     return [
       {
         pin: require('@/assets/images/pins/land-reg.png'),
-        label: 'Parcel',
+        label: 'Core Inventory',
       },
       {
         pin: require('@/assets/images/pins/land-poi.png'),
@@ -20,6 +20,10 @@ export const Legend = () => {
       {
         pin: require('@/assets/images/pins/other-interest.png'),
         label: 'Other Interest',
+      },
+      {
+        pin: require('@/assets/images/pins/disposed.png'),
+        label: 'Disposed',
       },
       {
         pin: require('@/assets/images/pins/marker-info-orange.png'),

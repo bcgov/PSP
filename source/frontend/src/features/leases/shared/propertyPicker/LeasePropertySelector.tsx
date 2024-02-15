@@ -14,7 +14,7 @@ import { useBcaAddress } from '@/features/properties/map/hooks/useBcaAddress';
 import { useProperties } from '@/hooks/repositories/useProperties';
 import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
 import useDeepCompareMemo from '@/hooks/util/useDeepCompareMemo';
-import { IProperty } from '@/interfaces';
+import { Api_Property } from '@/models/api/Property';
 
 import { FormLeaseProperty, LeaseFormModel } from '../../models';
 import SelectedPropertyHeaderRow from './selectedPropertyList/SelectedPropertyHeaderRow';
@@ -51,7 +51,7 @@ export const LeasePropertySelector: React.FunctionComponent<LeasePropertySelecto
     [arrayHelpersRef],
   );
 
-  const searchProperty = async (newProperty: IMapProperty): Promise<IProperty[] | undefined> => {
+  const searchProperty = async (newProperty: IMapProperty): Promise<Api_Property[] | undefined> => {
     const params: IPropertyFilter = {
       pinOrPid: (newProperty.pid || newProperty.pin || '')?.toString(),
       searchBy: 'pinOrPid',
@@ -60,6 +60,7 @@ export const LeasePropertySelector: React.FunctionComponent<LeasePropertySelecto
       quantity: undefined,
       latitude: undefined,
       longitude: undefined,
+      ownership: '',
     };
 
     const result = await getProperties.execute(params);

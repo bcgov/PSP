@@ -6,7 +6,7 @@ exports[`UpdateDispositionForm component renders as expected 1`] = `
     class="Toastify"
   />
   <div />
-  .c8.btn {
+  .c9.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -36,49 +36,49 @@ exports[`UpdateDispositionForm component renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c8.btn:hover {
+.c9.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c8.btn:focus {
+.c9.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c8.btn.btn-primary {
+.c9.btn.btn-primary {
   border: none;
 }
 
-.c8.btn.btn-secondary {
+.c9.btn.btn-secondary {
   background: none;
 }
 
-.c8.btn.btn-info {
+.c9.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c8.btn.btn-info:hover,
-.c8.btn.btn-info:active,
-.c8.btn.btn-info:focus {
+.c9.btn.btn-info:hover,
+.c9.btn.btn-info:active,
+.c9.btn.btn-info:focus {
   background: none;
 }
 
-.c8.btn.btn-light {
+.c9.btn.btn-light {
   border: none;
 }
 
-.c8.btn.btn-dark {
+.c9.btn.btn-dark {
   border: none;
 }
 
-.c8.btn.btn-link {
+.c9.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -99,9 +99,9 @@ exports[`UpdateDispositionForm component renders as expected 1`] = `
   padding: 0;
 }
 
-.c8.btn.btn-link:hover,
-.c8.btn.btn-link:active,
-.c8.btn.btn-link:focus {
+.c9.btn.btn-link:hover,
+.c9.btn.btn-link:active,
+.c9.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -110,14 +110,14 @@ exports[`UpdateDispositionForm component renders as expected 1`] = `
   outline: none;
 }
 
-.c8.btn.btn-link:disabled,
-.c8.btn.btn-link.disabled {
+.c9.btn.btn-link:disabled,
+.c9.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c8.btn:disabled,
-.c8.btn:disabled:hover {
+.c9.btn:disabled,
+.c9.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -128,19 +128,23 @@ exports[`UpdateDispositionForm component renders as expected 1`] = `
   opacity: 0.65;
 }
 
-.c8.Button .Button__icon {
+.c9.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c8.Button--icon-only:focus {
+.c9.Button--icon-only:focus {
   outline: none;
 }
 
-.c8.Button--icon-only .Button__icon {
+.c9.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c5 .react-datepicker__calendar-icon {
+.c5 button.close {
+  font-size: 2.4rem;
+}
+
+.c6 .react-datepicker__calendar-icon {
   width: 3rem;
   height: 3rem;
   margin-top: 0.5rem;
@@ -148,36 +152,36 @@ exports[`UpdateDispositionForm component renders as expected 1`] = `
   pointer-events: none;
 }
 
-.c5 .react-datepicker__view-calendar-icon input {
+.c6 .react-datepicker__view-calendar-icon input {
   padding: 0.6rem 1rem 0.5rem 0.6rem;
 }
 
-.c5 .react-datepicker-wrapper {
+.c6 .react-datepicker-wrapper {
   max-width: 16rem;
 }
 
-.c6.c6.form-control.is-valid {
+.c7.c7.form-control.is-valid {
   background-image: none;
 }
 
-.c6.c6.form-control.is-invalid {
+.c7.c7.form-control.is-invalid {
   border-color: #d8292f !important;
 }
 
-.c10.c10.btn {
+.c11.c11.btn {
   color: #aaaaaa;
   -webkit-text-decoration: none;
   text-decoration: none;
   line-height: unset;
 }
 
-.c10.c10.btn .text {
+.c11.c11.btn .text {
   display: none;
 }
 
-.c10.c10.btn:hover,
-.c10.c10.btn:active,
-.c10.c10.btn:focus {
+.c11.c11.btn:hover,
+.c11.c11.btn:active,
+.c11.c11.btn:focus {
   color: #d8292f;
   -webkit-text-decoration: none;
   text-decoration: none;
@@ -191,9 +195,9 @@ exports[`UpdateDispositionForm component renders as expected 1`] = `
   flex-direction: row;
 }
 
-.c10.c10.btn:hover .text,
-.c10.c10.btn:active .text,
-.c10.c10.btn:focus .text {
+.c11.c11.btn:hover .text,
+.c11.c11.btn:active .text,
+.c11.c11.btn:focus .text {
   display: inline;
   line-height: 2rem;
 }
@@ -223,7 +227,7 @@ exports[`UpdateDispositionForm component renders as expected 1`] = `
   font-weight: bold;
 }
 
-.c7 {
+.c8 {
   background: none;
   position: relative;
   border-radius: 0.3rem;
@@ -232,11 +236,11 @@ exports[`UpdateDispositionForm component renders as expected 1`] = `
   border: solid 0.1rem;
 }
 
-.c7.is-invalid {
+.c8.is-invalid {
   border: solid 0.1rem;
 }
 
-.c9.c9.btn {
+.c10.c10.btn {
   position: absolute;
   top: calc(50% - 1.4rem);
   right: 0.4rem;
@@ -245,13 +249,13 @@ exports[`UpdateDispositionForm component renders as expected 1`] = `
   line-height: unset;
 }
 
-.c9.c9.btn .text {
+.c10.c10.btn .text {
   display: none;
 }
 
-.c9.c9.btn:hover,
-.c9.c9.btn:active,
-.c9.c9.btn:focus {
+.c10.c10.btn:hover,
+.c10.c10.btn:active,
+.c10.c10.btn:focus {
   -webkit-text-decoration: none;
   text-decoration: none;
   opacity: unset;
@@ -385,23 +389,64 @@ exports[`UpdateDispositionForm component renders as expected 1`] = `
           </div>
           <div
             class="c3 text-left col"
-          />
-        </div>
-        <div
-          class="pb-2 row"
-        >
-          <div
-            class="pr-0 text-left col-4"
           >
-            <label
-              class="c2"
+            <div
+              class="c5 form-group"
+              data-testid="typeahead-project"
             >
-              Product:
-            </label>
+              <div
+                class="rbt has-aux"
+                style="outline: none; position: relative;"
+                tabindex="-1"
+              >
+                <div
+                  style="display: flex; flex: 1; height: 100%; position: relative;"
+                >
+                  <input
+                    aria-autocomplete="both"
+                    aria-expanded="false"
+                    aria-haspopup="listbox"
+                    autocomplete="off"
+                    class="rbt-input-main form-control rbt-input"
+                    id="typeahead-project"
+                    name="typeahead-project"
+                    placeholder="Type to search for a Project"
+                    role="combobox"
+                    type="text"
+                    value="CLAIMS"
+                  />
+                  <input
+                    aria-hidden="true"
+                    class="rbt-input-hint"
+                    readonly=""
+                    style="background-color: transparent; border-color: transparent; box-shadow: none; color: rgba(0, 0, 0, 0.35); left: 0px; pointer-events: none; position: absolute; top: 0px; width: 100%; border-style: inset inset inset inset; border-width: 2px 2px 2px 2px; line-height: normal; padding: 1px 1px 1px 1px;"
+                    tabindex="-1"
+                    value=""
+                  />
+                </div>
+                <div
+                  class="rbt-aux"
+                >
+                  <button
+                    aria-label="Clear"
+                    class="close rbt-close"
+                    type="button"
+                  >
+                    <span
+                      aria-hidden="true"
+                    >
+                      ×
+                    </span>
+                    <span
+                      class="sr-only"
+                    >
+                      Clear
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
-          <div
-            class="c3 text-left col"
-          />
         </div>
         <div
           class="pb-2 row"
@@ -472,7 +517,7 @@ exports[`UpdateDispositionForm component renders as expected 1`] = `
             class="c3 text-left col"
           >
             <div
-              class="c5 form-group"
+              class="c6 form-group"
             >
               <div
                 class="react-datepicker-wrapper d-block"
@@ -491,7 +536,7 @@ exports[`UpdateDispositionForm component renders as expected 1`] = `
                   </svg>
                   <input
                     autocomplete="off"
-                    class="c6 form-control date-picker"
+                    class="c7 form-control date-picker"
                     id="datepicker-assignedDate"
                     name="assignedDate"
                     placeholder="MMM DD, YYYY"
@@ -519,7 +564,7 @@ exports[`UpdateDispositionForm component renders as expected 1`] = `
             class="c3 text-left col"
           >
             <div
-              class="c5 form-group"
+              class="c6 form-group"
             >
               <div
                 class="react-datepicker-wrapper d-block"
@@ -538,7 +583,8 @@ exports[`UpdateDispositionForm component renders as expected 1`] = `
                   </svg>
                   <input
                     autocomplete="off"
-                    class="c6 form-control date-picker"
+                    class="c7 form-control date-picker"
+                    disabled=""
                     id="datepicker-completionDate"
                     name="completionDate"
                     placeholder="MMM DD, YYYY"
@@ -907,7 +953,7 @@ exports[`UpdateDispositionForm component renders as expected 1`] = `
             class="c3 text-left col"
           >
             <div
-              class="c5 form-group"
+              class="c6 form-group"
             >
               <div
                 class="react-datepicker-wrapper d-block"
@@ -926,7 +972,7 @@ exports[`UpdateDispositionForm component renders as expected 1`] = `
                   </svg>
                   <input
                     autocomplete="off"
-                    class="c6 form-control date-picker"
+                    class="c7 form-control date-picker"
                     id="datepicker-initiatingDocumentDate"
                     name="initiatingDocumentDate"
                     placeholder="MMM DD, YYYY"
@@ -1219,11 +1265,11 @@ exports[`UpdateDispositionForm component renders as expected 1`] = `
                   class="col"
                 >
                   <div
-                    class="c7"
+                    class="c8"
                   >
                     Alejandro Sanchez
                     <button
-                      class="c8 Button c9 btn btn-link"
+                      class="c9 Button c10 btn btn-link"
                       title="remove"
                       type="button"
                     >
@@ -1267,7 +1313,7 @@ exports[`UpdateDispositionForm component renders as expected 1`] = `
                   class="pl-0 col-auto"
                 >
                   <button
-                    class="c8 Button Button--icon-only px-2 btn btn-primary"
+                    class="c9 Button Button--icon-only px-2 btn btn-primary"
                     title="Select Contact"
                     type="button"
                   >
@@ -1298,7 +1344,7 @@ exports[`UpdateDispositionForm component renders as expected 1`] = `
             class="pl-0 mt-2 col-xl-2 col-auto"
           >
             <button
-              class="c8 Button c10 btn btn-link"
+              class="c9 Button c11 btn btn-link"
               type="button"
             >
               <div
@@ -1422,11 +1468,11 @@ exports[`UpdateDispositionForm component renders as expected 1`] = `
                   class="col"
                 >
                   <div
-                    class="c7"
+                    class="c8"
                   >
                     Aman Monga
                     <button
-                      class="c8 Button c9 btn btn-link"
+                      class="c9 Button c10 btn btn-link"
                       title="remove"
                       type="button"
                     >
@@ -1470,7 +1516,7 @@ exports[`UpdateDispositionForm component renders as expected 1`] = `
                   class="pl-0 col-auto"
                 >
                   <button
-                    class="c8 Button Button--icon-only px-2 btn btn-primary"
+                    class="c9 Button Button--icon-only px-2 btn btn-primary"
                     title="Select Contact"
                     type="button"
                   >
@@ -1501,7 +1547,7 @@ exports[`UpdateDispositionForm component renders as expected 1`] = `
             class="pl-0 mt-2 col-xl-2 col-auto"
           >
             <button
-              class="c8 Button c10 btn btn-link"
+              class="c9 Button c11 btn btn-link"
               type="button"
             >
               <div
@@ -1539,7 +1585,7 @@ exports[`UpdateDispositionForm component renders as expected 1`] = `
           </div>
         </div>
         <button
-          class="c8 Button btn btn-link"
+          class="c9 Button btn btn-link"
           data-testid="add-team-member"
           type="button"
         >
