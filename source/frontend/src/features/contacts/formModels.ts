@@ -139,13 +139,13 @@ export class IEditablePersonForm {
       this.organization?.id,
     )
       ? {
-        id: this.personOrganizationId ?? 0,
-        organization: null,
-        organizationId: this.organization?.id ?? null,
-        personId: this.id ?? null,
-        rowVersion: this.personOrganizationRowVersion ?? null,
-        person: null,
-      }
+          id: this.personOrganizationId ?? 0,
+          organization: null,
+          organizationId: this.organization?.id ?? null,
+          personId: this.id ?? null,
+          rowVersion: this.personOrganizationRowVersion ?? null,
+          person: null,
+        }
       : null;
 
     const apiPerson: ApiGen_Concepts_Person = {
