@@ -85,7 +85,7 @@ export const columns = ({ municipalities }: Props): ColumnWithProps<Api_Property
   },
   {
     Header: 'Ownership',
-    align: 'right',
+    align: 'left',
     sortable: true,
     width: 20,
     Cell: (cellProps: CellProps<Api_Property>) => {

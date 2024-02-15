@@ -50,6 +50,7 @@ const featureViewStates = {
       on: {
         TOGGLE_FILTER: {
           target: 'browsing',
+          actions: assign({ showDisposed: () => false }),
         },
         TOGGLE_LAYERS: {
           target: 'layerControl',

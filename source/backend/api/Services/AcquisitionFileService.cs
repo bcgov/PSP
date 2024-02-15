@@ -16,6 +16,7 @@ using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Helpers;
 using Pims.Dal.Helpers.Extensions;
+using Pims.Dal.Models;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 
@@ -730,7 +731,9 @@ namespace Pims.Api.Services
                 {
                     throw new UserOverrideException(UserOverrideCode.PoiToInventory, "You have one or more take(s) that will be added to MoTI Inventory. Do you want to acknowledge and proceed?");
                 }
-                _propertyRepository.TransferFileProperty(property, isOwned, isPropertyOfInterest, isOtherInterest);
+
+                PropertyOwnershipState ownership = new() { isOwned = isOwned, isPropertyOfInterest = isPropertyOfInterest, isOtherInterest = isOtherInterest, isDisposed = false };
+                _propertyRepository.TransferFileProperty(property, ownership);
             }
         }
 

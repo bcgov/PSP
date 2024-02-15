@@ -11,6 +11,7 @@ using Pims.Core.Helpers;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Helpers.Extensions;
+using Pims.Dal.Models;
 using Pims.Dal.Security;
 
 namespace Pims.Dal.Repositories
@@ -386,19 +387,19 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="property">The property to update.</param>
         /// <returns>The updated property.</returns>
-        public PimsProperty TransferFileProperty(PimsProperty property, bool isOwned, bool isPropertyOfInterest = false, bool isDisposed = false, bool isOtherInterest = false)
+        public PimsProperty TransferFileProperty(PimsProperty property, PropertyOwnershipState state)
         {
             property.ThrowIfNull(nameof(property));
 
             var existingProperty = Context.PimsProperties
                 .FirstOrDefault(p => p.PropertyId == property.Internal_Id) ?? throw new KeyNotFoundException();
 
-            existingProperty.IsPropertyOfInterest = isPropertyOfInterest;
-            existingProperty.IsOwned = isOwned;
-            existingProperty.IsDisposed = isDisposed;
-            existingProperty.IsOtherInterest = isOtherInterest;
+            existingProperty.IsPropertyOfInterest = state.isPropertyOfInterest;
+            existingProperty.IsOwned = state.isOwned;
+            existingProperty.IsDisposed = state.isDisposed;
+            existingProperty.IsOtherInterest = state.isOtherInterest;
 
-            if (isOwned)
+            if (state.isOwned)
             {
                 existingProperty.PropertyClassificationTypeCode = "COREOPER";
             }
