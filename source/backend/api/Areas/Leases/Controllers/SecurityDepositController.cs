@@ -184,7 +184,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         [ProducesResponseType(typeof(void), 200)]
         [SwaggerOperation(Tags = new[] { "lease" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
-        public void UpdateDepositNote(long leaseId, [FromBody] string depositNoteText)
+        public void UpdateDepositNote(long leaseId, [FromForm] string noteText)
         {
             _logger.LogInformation(
                 "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
@@ -193,7 +193,7 @@ namespace Pims.Api.Areas.Lease.Controllers
                 User.GetUsername(),
                 DateTime.Now);
 
-            _securityDepositService.UpdateLeaseDepositNote(leaseId, depositNoteText);
+            _securityDepositService.UpdateLeaseDepositNote(leaseId, noteText);
         }
         #endregion
     }
