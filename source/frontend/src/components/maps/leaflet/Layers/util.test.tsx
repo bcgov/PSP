@@ -19,10 +19,12 @@ import { ICluster } from '../../types';
 import {
   createClusterMarker,
   createPoints,
+  disposedIcon,
   getMarkerIcon,
   otherInterestIcon,
-  otherInterestIconSelect,
+  parcelIcon,
   pointToLayer,
+  propertyOfInterestIcon,
 } from './util';
 describe('mapUtils tests', () => {
   describe('pointToLayer function', () => {
@@ -34,7 +36,7 @@ describe('mapUtils tests', () => {
           type: 'Point',
           coordinates: [1, 2],
         },
-        properties: { ...EmptyPropertyLocation, PROPERTY_ID: '1' },
+        properties: { ...EmptyPropertyLocation, PROPERTY_ID: '1', IS_OTHER_INTEREST: true },
       };
       const latlng: LatLngExpression = { lat: 1, lng: 2 };
 
@@ -68,6 +70,7 @@ describe('mapUtils tests', () => {
       expect(pointToLayer(feature, latlng)).toEqual(new Marker(latlng, { icon }));
     });
   });
+
   describe('createClusterMarker function', () => {
     it('returns null when passed a feature that is not a cluster', () => {
       const feature: ICluster = {
@@ -83,7 +86,8 @@ describe('mapUtils tests', () => {
       expect(createClusterMarker(feature, latlng)).toBeNull();
     });
   });
-  describe('getMarkericon function', () => {
+
+  describe('getMarkerIcon function', () => {
     const feature: ICluster = {
       id: 1,
       type: 'Feature',
@@ -96,106 +100,163 @@ describe('mapUtils tests', () => {
         point_count_abbreviated: 100,
       },
     };
-    it('returns a default parcel icon', () => {
+    it(`returns a valid map pin icon for 'Core Inventory'`, () => {
       expect(
         getMarkerIcon(
           {
             ...feature,
-            properties: { ...EmptyPropertyLocation, PROPERTY_ID: '1' },
+            properties: { ...EmptyPropertyLocation, PROPERTY_ID: '1', IS_OWNED: true },
+          },
+          false,
+        ),
+      ).toEqual(parcelIcon);
+    });
+    it(`returns a valid map pin icon for 'Property of Interest'`, () => {
+      expect(
+        getMarkerIcon(
+          {
+            ...feature,
+            properties: {
+              ...EmptyPropertyLocation,
+              PROPERTY_ID: '1',
+              IS_PROPERTY_OF_INTEREST: true,
+            },
+          },
+          false,
+        ),
+      ).toEqual(propertyOfInterestIcon);
+    });
+    it(`returns a valid map pin icon for 'Other Interest'`, () => {
+      expect(
+        getMarkerIcon(
+          {
+            ...feature,
+            properties: { ...EmptyPropertyLocation, PROPERTY_ID: '1', IS_OTHER_INTEREST: true },
+          },
+          false,
+        ),
+      ).toEqual(otherInterestIcon);
+    });
+    it(`returns a valid map pin icon for 'Disposed'`, () => {
+      expect(
+        getMarkerIcon(
+          {
+            ...feature,
+            properties: { ...EmptyPropertyLocation, PROPERTY_ID: '1', IS_DISPOSED: true },
+          },
+          false,
+          true,
+        ),
+      ).toEqual(disposedIcon);
+    });
+    it(`returns null when passed feature is not one of: 'Core Inventory', 'Property of Interest', 'Other Interest' or 'Disposed'`, () => {
+      expect(
+        getMarkerIcon(
+          {
+            ...feature,
+            properties: {
+              ...EmptyPropertyLocation,
+              PROPERTY_ID: '1',
+              IS_OWNED: null,
+              IS_PROPERTY_OF_INTEREST: null,
+              IS_OTHER_INTEREST: null,
+              IS_DISPOSED: null,
+            },
           },
           true,
         ),
-      ).toEqual(otherInterestIconSelect);
-    });
-
-    describe('create points function', () => {
-      const property: IProperty = {
-        id: 1,
-        pid: '000-000-001',
-        statusId: PropertyStatusTypes.UnderAdmin,
-        classificationId: PropertyClassificationTypes.CoreOperational,
-        tenureId: PropertyTenureTypes.HighwayRoad,
-        dataSourceId: PropertyDataSourceTypes.PAIMS,
-        dataSourceEffectiveDate: '2021-08-30T18:11:13.883Z',
-        address: {
-          streetAddress1: '1243 St',
-          provinceId: 1,
-          municipality: '',
-          postal: '',
-        },
-        regionId: 1,
-        districtId: 1,
-        areaUnitId: PropertyAreaUnitTypes.Hectare,
-        landArea: 0,
-        landLegalDescription: '',
-        latitude: 1,
-        longitude: 2,
-        isSensitive: false,
-      };
-      it('converts properties to point features', () => {
-        expect(createPoints([property, property])).toEqual([
-          {
-            geometry: { coordinates: [2, 1], type: 'Point' },
-            properties: {
-              PROPERTY_ID: 1,
-              address: {
-                streetAddress1: '1243 St',
-                provinceId: 1,
-                municipality: '',
-                postal: '',
-              },
-              areaUnitId: PropertyAreaUnitTypes.Hectare,
-              classificationId: PropertyClassificationTypes.CoreOperational,
-              dataSourceId: PropertyDataSourceTypes.PAIMS,
-              dataSourceEffectiveDate: property.dataSourceEffectiveDate,
-              districtId: 1,
-              cluster: false,
-              id: 1,
-              isSensitive: false,
-              latitude: 1,
-              longitude: 2,
-              tenureId: PropertyTenureTypes.HighwayRoad,
-              statusId: PropertyStatusTypes.UnderAdmin,
-              regionId: 1,
-              landArea: 0,
-              landLegalDescription: '',
-              pid: '000-000-001',
-            },
-            type: 'Feature',
-          },
-          {
-            geometry: { coordinates: [2, 1], type: 'Point' },
-            properties: {
-              PROPERTY_ID: 1,
-              address: {
-                streetAddress1: '1243 St',
-                provinceId: 1,
-                municipality: '',
-                postal: '',
-              },
-              areaUnitId: PropertyAreaUnitTypes.Hectare,
-              classificationId: PropertyClassificationTypes.CoreOperational,
-              dataSourceId: PropertyDataSourceTypes.PAIMS,
-              dataSourceEffectiveDate: property.dataSourceEffectiveDate,
-              districtId: 1,
-              cluster: false,
-              id: 1,
-              isSensitive: false,
-              latitude: 1,
-              longitude: 2,
-              tenureId: PropertyTenureTypes.HighwayRoad,
-              statusId: PropertyStatusTypes.UnderAdmin,
-              regionId: 1,
-              landArea: 0,
-              landLegalDescription: '',
-              pid: '000-000-001',
-            },
-            type: 'Feature',
-          },
-        ]);
-      });
+      ).toBeNull();
     });
   });
+
+  describe('create points function', () => {
+    const property: IProperty = {
+      id: 1,
+      pid: '000-000-001',
+      statusId: PropertyStatusTypes.UnderAdmin,
+      classificationId: PropertyClassificationTypes.CoreOperational,
+      tenureId: PropertyTenureTypes.HighwayRoad,
+      dataSourceId: PropertyDataSourceTypes.PAIMS,
+      dataSourceEffectiveDate: '2021-08-30T18:11:13.883Z',
+      address: {
+        streetAddress1: '1243 St',
+        provinceId: 1,
+        municipality: '',
+        postal: '',
+      },
+      regionId: 1,
+      districtId: 1,
+      areaUnitId: PropertyAreaUnitTypes.Hectare,
+      landArea: 0,
+      landLegalDescription: '',
+      latitude: 1,
+      longitude: 2,
+      isSensitive: false,
+    };
+    it('converts properties to point features', () => {
+      expect(createPoints([property, property])).toEqual([
+        {
+          geometry: { coordinates: [2, 1], type: 'Point' },
+          properties: {
+            PROPERTY_ID: 1,
+            address: {
+              streetAddress1: '1243 St',
+              provinceId: 1,
+              municipality: '',
+              postal: '',
+            },
+            areaUnitId: PropertyAreaUnitTypes.Hectare,
+            classificationId: PropertyClassificationTypes.CoreOperational,
+            dataSourceId: PropertyDataSourceTypes.PAIMS,
+            dataSourceEffectiveDate: property.dataSourceEffectiveDate,
+            districtId: 1,
+            cluster: false,
+            id: 1,
+            isSensitive: false,
+            latitude: 1,
+            longitude: 2,
+            tenureId: PropertyTenureTypes.HighwayRoad,
+            statusId: PropertyStatusTypes.UnderAdmin,
+            regionId: 1,
+            landArea: 0,
+            landLegalDescription: '',
+            pid: '000-000-001',
+          },
+          type: 'Feature',
+        },
+        {
+          geometry: { coordinates: [2, 1], type: 'Point' },
+          properties: {
+            PROPERTY_ID: 1,
+            address: {
+              streetAddress1: '1243 St',
+              provinceId: 1,
+              municipality: '',
+              postal: '',
+            },
+            areaUnitId: PropertyAreaUnitTypes.Hectare,
+            classificationId: PropertyClassificationTypes.CoreOperational,
+            dataSourceId: PropertyDataSourceTypes.PAIMS,
+            dataSourceEffectiveDate: property.dataSourceEffectiveDate,
+            districtId: 1,
+            cluster: false,
+            id: 1,
+            isSensitive: false,
+            latitude: 1,
+            longitude: 2,
+            tenureId: PropertyTenureTypes.HighwayRoad,
+            statusId: PropertyStatusTypes.UnderAdmin,
+            regionId: 1,
+            landArea: 0,
+            landLegalDescription: '',
+            pid: '000-000-001',
+          },
+          type: 'Feature',
+        },
+      ]);
+    });
+  });
+
   describe('toCqlFilter function', () => {
     it('by default, joins multiple filters with and and inserts ilike', () => {
       const cql = toCqlFilterValue({ PID: '12345678', PIN: '54321' });
