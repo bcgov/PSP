@@ -579,7 +579,7 @@ namespace Pims.Api.Services
             foreach (var dispositionProperty in ownedProperties)
             {
                 var property = dispositionProperty.Property;
-                _propertyRepository.TransferFileProperty(property, false, false, true);
+                _propertyRepository.TransferFileProperty(property, new Dal.Models.PropertyOwnershipState() { isDisposed = true, isPropertyOfInterest = false, isOtherInterest = false, isOwned = false});
             }
         }
 
