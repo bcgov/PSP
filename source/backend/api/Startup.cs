@@ -229,9 +229,13 @@ namespace Pims.Api
                 x.MultipartBodyLengthLimit = maxFileSize; // In case of multipart
             });
 
+            // Export metrics from all HTTP clients registered in services
+            services.UseHttpClientMetrics();
+
             services.AddHealthChecks()
                 .AddCheck("liveliness", () => HealthCheckResult.Healthy())
-                .AddSqlServer(csBuilder.ConnectionString, tags: new[] { "services" });
+                .AddSqlServer(csBuilder.ConnectionString, tags: new[] { "services" })
+                .ForwardToPrometheus(); // Report health check results in the metrics output.
 
             services.AddHealthChecks()
                 .AddCheck(
@@ -339,10 +343,14 @@ namespace Pims.Api
             app.UseMiddleware<ResponseTimeMiddleware>();
             app.UseMiddleware<LogRequestMiddleware>();
             app.UseMiddleware<LogResponseMiddleware>();
-            app.UseMiddleware<ErrorHandlingMiddleware>();
 
             app.UseRouting();
             app.UseCors();
+
+            // Exception handler middleware that changes HTTP response codes must be registered after UseHttpMetrics()
+            // in order to ensure that prometheus-net reports the correct HTTP response status code.
+            app.UseHttpMetrics();
+            app.UseMiddleware<ErrorHandlingMiddleware>();
 
             // Set responses secure headers.
             ConfigureSecureHeaders(app, Configuration);
@@ -367,6 +375,9 @@ namespace Pims.Api
             app.UseEndpoints(config =>
             {
                 config.MapControllers();
+
+                // Enable the /metrics page to export Prometheus metrics
+                config.MapMetrics();
             });
         }
 
