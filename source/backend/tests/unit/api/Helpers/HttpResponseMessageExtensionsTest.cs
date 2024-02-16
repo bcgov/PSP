@@ -49,7 +49,7 @@ namespace Pims.Api.Test.Helpers
             // Arrange
             var helper = new TestHelper();
             var mapper = helper.GetMapper();
-            var model = mapper.Map<                               PropertyModel>(EntityHelper.CreateProperty(1));
+            var model = mapper.Map<PropertyModel>(EntityHelper.CreateProperty(1));
             var json = System.Text.Json.JsonSerializer.Serialize(model);
             var response = new HttpResponseMessage
             {
@@ -63,7 +63,7 @@ namespace Pims.Api.Test.Helpers
             // Assert
             var jsonResult = Assert.IsType<JsonResult>(actionResult);
             Assert.Equal((int)code, jsonResult.StatusCode);
-            var actualResult = Assert.IsType<                     PropertyModel>(jsonResult.Value);
+            var actualResult = Assert.IsType<PropertyModel>(jsonResult.Value);
             model.Should().BeEquivalentTo(actualResult);
         }
 
