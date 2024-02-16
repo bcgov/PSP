@@ -60,6 +60,7 @@ export const PropertiesInformation: React.FunctionComponent<
               nameSpace={withNameSpace(nameSpace, `fileProperties.${index}`)}
               disabled={disabled}
               hideAddress={hideAddress}
+              key={`property-${property.id ?? index}`}
             />
           ))
         }

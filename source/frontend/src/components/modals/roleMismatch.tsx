@@ -20,7 +20,7 @@ export const RoleMismatchModal: React.FunctionComponent<IRoleMismatchModalProps>
       message={
         <>
           <p>
-            There seems to be a mismatch of claims for this user's role. The claims in the
+            There seems to be a mismatch of claims for this user&apos;s role. The claims in the
             authentication service do not match the claims in PIMS.
           </p>
           <p>

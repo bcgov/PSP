@@ -90,7 +90,7 @@ const AddDispositionContainer: React.FC<IAddDispositionContainerProps> = ({ onCl
       const dispositionFile = values.toApi();
       const response = await addDispositionFileApi(dispositionFile, userOverrideCodes);
 
-      if (!!response?.id) {
+      if (response?.id) {
         formikHelpers?.resetForm();
         handleSuccess(response);
       }

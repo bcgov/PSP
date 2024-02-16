@@ -79,7 +79,7 @@ describe('UpdatePropertyForm component', () => {
   });
 
   it('renders as expected when provided no research file', () => {
-    var initialValues = UpdatePropertyFormModel.fromApi(testResearchFile);
+    const initialValues = UpdatePropertyFormModel.fromApi(testResearchFile);
     const { component } = setup({ initialValues });
     expect(component.asFragment()).toMatchSnapshot();
   });

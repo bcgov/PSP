@@ -24,9 +24,7 @@ import ProjectContainerView from '../project/ProjectContainerView';
 import AddResearchContainer from '../research/add/AddResearchContainer';
 import ResearchContainer from '../research/ResearchContainer';
 
-interface IMapRouterProps {}
-
-export const MapRouter: React.FunctionComponent<IMapRouterProps> = memo(props => {
+export const MapRouter: React.FunctionComponent = memo(() => {
   const location = useLocation();
   const history = useHistory();
 

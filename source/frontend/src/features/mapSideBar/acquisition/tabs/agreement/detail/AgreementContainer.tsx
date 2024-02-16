@@ -35,7 +35,7 @@ export const AgreementContainer: React.FunctionComponent<
     fetchAgreements();
   }, [fetchAgreements]);
 
-  return !!file?.id ? (
+  return file?.id ? (
     <>
       <View
         loading={loading}

@@ -26,7 +26,7 @@ export const UpdatePropertyResearchContainer = React.forwardRef<
       throw Error('unexpected ref prop');
     }
     formikRef.current?.setSubmitting(false);
-    if (!!response?.fileName) {
+    if (response?.fileName) {
       formikRef.current?.resetForm();
       props.onSuccess();
     }

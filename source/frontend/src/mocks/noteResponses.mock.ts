@@ -40,7 +40,7 @@ export const mockNotesResponse = (): ApiGen_Concepts_Note[] => {
 };
 
 export const mockEntityNote = (
-  id: number = 0,
+  id = 0,
   parentId = 1,
   note = 'Test Note',
 ): ApiGen_Concepts_EntityNote => ({

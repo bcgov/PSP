@@ -22,7 +22,7 @@ const sectionTypes = mockLookups.filter(
   c => c.type === API.ACQUISITION_CHECKLIST_SECTION_TYPES && c.isDisabled !== true,
 ) as ILookupCode[];
 
-let mockViewProps: IUpdateChecklistFormProps = {
+const mockViewProps: IUpdateChecklistFormProps = {
   formikRef: null as any,
   initialValues: new ChecklistFormModel(),
   onSave: jest.fn(),

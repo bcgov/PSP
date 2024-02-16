@@ -53,7 +53,7 @@ const DispositionOfferDetails: React.FunctionComponent<IDispositionOfferDetailsP
                   okButtonText: 'Yes',
                   cancelButtonText: 'No',
                   handleOk: async () => {
-                    onDelete(dispositionOffer.id!);
+                    dispositionOffer?.id && onDelete(dispositionOffer.id);
                     setDisplayModal(false);
                   },
                   handleCancel: () => {

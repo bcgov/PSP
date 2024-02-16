@@ -36,7 +36,6 @@ export interface IOffersAndSaleContainerViewProps {
 
 const OffersAndSaleContainerView: React.FunctionComponent<IOffersAndSaleContainerViewProps> = ({
   loading,
-  dispositionFile,
   dispositionOffers,
   dispositionSale,
   dispositionAppraisal,

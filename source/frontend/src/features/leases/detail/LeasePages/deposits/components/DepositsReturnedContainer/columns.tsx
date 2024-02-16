@@ -1,4 +1,3 @@
-import React from 'react';
 import { FaTrash } from 'react-icons/fa';
 import { MdEdit } from 'react-icons/md';
 import { Link } from 'react-router-dom';
@@ -53,15 +52,15 @@ export class ReturnListEntry {
 function renderHolder({
   row: { original },
 }: CellProps<ReturnListEntry, ApiGen_Concepts_Contact | undefined>) {
-  if (!!original.contactHolder) {
+  if (original.contactHolder) {
     const holder = original.contactHolder;
-    if (!!holder.person) {
+    if (holder.person) {
       return (
         <Link to={`/contact/${holder.id}`}>
           {formatNames([holder.person.firstName, holder.person.middleNames, holder.person.surname])}
         </Link>
       );
-    } else if (!!holder.organization) {
+    } else if (holder.organization) {
       return <Link to={`/contact/${holder.id}`}>{holder.organization.name}</Link>;
     }
   }

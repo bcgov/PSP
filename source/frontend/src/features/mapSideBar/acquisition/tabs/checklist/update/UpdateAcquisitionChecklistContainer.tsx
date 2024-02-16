@@ -41,7 +41,7 @@ export const UpdateAcquisitionChecklistContainer: React.FC<IAcquisitionChecklist
     return updateAcquisitionChecklist(apiAcquisitionFile);
   };
 
-  const onUpdateSuccess = async (apiAcquisitionFile: ApiGen_Concepts_FileWithChecklist) => {
+  const onUpdateSuccess = async () => {
     onSuccess && onSuccess();
   };
 

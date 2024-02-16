@@ -6,7 +6,7 @@ import { NoteForm } from '../models';
 export class EntityNoteForm {
   id?: number;
   note: NoteForm = new NoteForm();
-  parentId: number = 0;
+  parentId = 0;
   rowVersion?: number;
 
   toApi(): ApiGen_Concepts_EntityNote {

@@ -94,7 +94,9 @@ describe('useGenerateH10005a functions', () => {
 
   it('makes requests to expected api endpoints', async () => {
     const generate = setup();
-    await act(async () => generate(getMockApiLease()));
+    await act(async () => {
+      generate(getMockApiLease());
+    });
     expect(generateFn).toHaveBeenCalled();
     expect(getLeaseTenantsFn).toHaveBeenCalled();
     expect(getInsurancesFn).toHaveBeenCalled();

@@ -53,7 +53,7 @@ export class PayeeOption {
       }
     }
 
-    if (!!apiModel.legacyPayee) {
+    if (apiModel.legacyPayee) {
       return PayeeOption.generateKey(apiModel.id, PayeeType.LegacyPayee);
     }
 
@@ -135,7 +135,7 @@ export class PayeeOption {
   }
 
   public static createOwner(model: ApiGen_Concepts_AcquisitionFileOwner): PayeeOption {
-    let name = model.isOrganization
+    const name = model.isOrganization
       ? `${model.lastNameAndCorpName}, Inc. No. ${model.incorporationNumber} (OR Reg. No. ${model.registrationNumber})`
       : [model.givenName, model.lastNameAndCorpName, model.otherName].filter(x => !!x).join(' ');
     return new PayeeOption(
@@ -164,7 +164,7 @@ export class PayeeOption {
   }
 
   public static createOwnerRepresentative(model: ApiGen_Concepts_InterestHolder): PayeeOption {
-    let name = formatApiPersonNames(model.person);
+    const name = formatApiPersonNames(model.person);
     return new PayeeOption(
       model.interestHolderId || 0,
       name,

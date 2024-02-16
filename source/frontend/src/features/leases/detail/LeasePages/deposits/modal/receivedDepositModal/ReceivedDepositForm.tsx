@@ -55,7 +55,7 @@ export const ReceivedDepositForm: React.FunctionComponent<
                   placeholder="Select..."
                   options={depositTypeOptions}
                   onChange={() => {
-                    let depositTypeCode = formikProps.values?.depositTypeCode;
+                    const depositTypeCode = formikProps.values?.depositTypeCode;
                     if (isValidString(depositTypeCode) && depositTypeCode !== 'OTHER') {
                       formikProps.setFieldValue('otherTypeDescription', '');
                     }

@@ -1,4 +1,4 @@
-import { Formik, FormikHelpers, FormikProps } from 'formik';
+import { Formik, FormikProps } from 'formik';
 import * as React from 'react';
 import { useEffect, useMemo, useRef } from 'react';
 import { MdTopic } from 'react-icons/md';
@@ -35,7 +35,7 @@ export const AddResearchContainer: React.FunctionComponent<
 
   const initialForm = useMemo(() => {
     const researchForm = new ResearchForm();
-    if (!!selectedFeatureDataset) {
+    if (selectedFeatureDataset) {
       researchForm.properties = [
         PropertyForm.fromMapProperty(featuresetToMapProperty(selectedFeatureDataset)),
       ];
@@ -66,7 +66,7 @@ export const AddResearchContainer: React.FunctionComponent<
     try {
       const response = await addResearchFile(researchFile, userOverrideCodes);
 
-      if (!!response?.fileName) {
+      if (response?.fileName) {
         if (researchFile.fileProperties?.find(fp => !fp.property?.address && !fp.property?.id)) {
           toast.warn(
             'Address could not be retrieved for this property, it will have to be provided manually in property details tab',
@@ -94,7 +94,7 @@ export const AddResearchContainer: React.FunctionComponent<
     <Formik<ResearchForm>
       innerRef={formikRef}
       initialValues={initialForm}
-      onSubmit={async (values: ResearchForm, formikHelpers: FormikHelpers<ResearchForm>) => {
+      onSubmit={async (values: ResearchForm) => {
         const researchFile: ApiGen_Concepts_ResearchFile = values.toApi();
         return withUserOverride((userOverrideCodes: UserOverrideCode[]) =>
           saveResearchFile(researchFile, userOverrideCodes),

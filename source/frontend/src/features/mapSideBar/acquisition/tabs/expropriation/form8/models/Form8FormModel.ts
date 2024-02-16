@@ -21,7 +21,7 @@ export class Form8FormModel {
   paymentItems: Form8PaymentItemModel[] = [];
   isDisabled: boolean | null = false;
   rowVersion: number | null = null;
-  payeeKey: string = '';
+  payeeKey = '';
 
   constructor(readonly id: number | null = null, acquisitionFileId: number) {
     this.id = id;
@@ -36,7 +36,7 @@ export class Form8FormModel {
       acquisitionOwner: null,
       interestHolderId: this.interestHolderId,
       interestHolder: null,
-      expropriatingAuthorityId: this.expropriationAuthority?.contact?.organizationId!,
+      expropriatingAuthorityId: this.expropriationAuthority?.contact?.organizationId ?? null,
       expropriatingAuthority: null,
       description: this.description,
       isDisabled: this.isDisabled,
@@ -96,11 +96,11 @@ export class Form8FormModel {
 }
 
 export class Form8PaymentItemModel {
-  paymentItemTypeCode: string = '';
-  isGstRequired: string = 'false';
-  pretaxAmount: number = 0;
-  taxAmount: number = 0;
-  totalAmount: number = 0;
+  paymentItemTypeCode = '';
+  isGstRequired = 'false';
+  pretaxAmount = 0;
+  taxAmount = 0;
+  totalAmount = 0;
   rowVersion: number | null = null;
   isDisabled: boolean | null = null;
 

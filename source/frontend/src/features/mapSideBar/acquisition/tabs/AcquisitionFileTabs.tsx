@@ -165,7 +165,7 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
   }
 
   const onSetActiveTab = (tab: FileTabType) => {
-    let previousTab = activeTab;
+    const previousTab = activeTab;
     if (previousTab === FileTabType.COMPENSATIONS) {
       const backUrl = location.pathname.split('/compensation-requisition')[0];
       history.push(backUrl);

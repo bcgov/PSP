@@ -82,7 +82,7 @@ export const DepositsContainer: React.FunctionComponent<
   };
 
   const onEditDeposit = (id: number) => {
-    var deposit = securityDeposits.find((x: ApiGen_Concepts_SecurityDeposit) => x.id === id);
+    const deposit = securityDeposits.find((x: ApiGen_Concepts_SecurityDeposit) => x.id === id);
     if (deposit) {
       setEditDepositValue(FormLeaseDeposit.fromApi(deposit));
       setShowEditModal(true);
@@ -90,7 +90,7 @@ export const DepositsContainer: React.FunctionComponent<
   };
 
   const onDeleteDeposit = (id: number) => {
-    var deposit = securityDeposits.find((x: ApiGen_Concepts_SecurityDeposit) => x.id === id);
+    const deposit = securityDeposits.find((x: ApiGen_Concepts_SecurityDeposit) => x.id === id);
     if (deposit) {
       setDepositToDelete(FormLeaseDeposit.fromApi(deposit));
       setDeleteModalWarning(true);
@@ -98,7 +98,7 @@ export const DepositsContainer: React.FunctionComponent<
   };
 
   const onReturnDeposit = (id: number) => {
-    var deposit = securityDeposits.find((x: ApiGen_Concepts_SecurityDeposit) => x.id === id);
+    const deposit = securityDeposits.find((x: ApiGen_Concepts_SecurityDeposit) => x.id === id);
     if (deposit) {
       setEditReturnValue(FormLeaseDepositReturn.createEmpty(deposit));
       setShowReturnEditModal(true);
@@ -146,9 +146,9 @@ export const DepositsContainer: React.FunctionComponent<
   };
 
   const onEditReturnDeposit = (id: number) => {
-    var deposit = depositReturns.find(x => x.id === id);
+    const deposit = depositReturns.find(x => x.id === id);
     if (deposit) {
-      var parentDeposit = securityDeposits.find(x => x.id === deposit?.parentDepositId);
+      const parentDeposit = securityDeposits.find(x => x.id === deposit?.parentDepositId);
       if (parentDeposit) {
         setEditReturnValue(FormLeaseDepositReturn.fromApi(deposit, parentDeposit));
         setShowReturnEditModal(true);
@@ -160,9 +160,9 @@ export const DepositsContainer: React.FunctionComponent<
   };
 
   const onDeleteDepositReturn = (id: number) => {
-    var deposit = depositReturns.find(x => x.id === id);
+    const deposit = depositReturns.find(x => x.id === id);
     if (deposit) {
-      var parentDeposit = securityDeposits.find(
+      const parentDeposit = securityDeposits.find(
         (x: ApiGen_Concepts_SecurityDeposit) => x.id === deposit?.parentDepositId,
       );
       if (parentDeposit) {
@@ -180,7 +180,7 @@ export const DepositsContainer: React.FunctionComponent<
    */
   const onSaveReturnDeposit = async (returnDepositForm: FormLeaseDepositReturn) => {
     if (exists(lease) && isValidId(lease.id)) {
-      let request: ApiGen_Concepts_SecurityDepositReturn = returnDepositForm.toApi();
+      const request: ApiGen_Concepts_SecurityDepositReturn = returnDepositForm.toApi();
       const securityDepositReturn = request?.id
         ? await updateSecurityDepositReturn(lease.id, request)
         : await addSecurityDepositReturn(lease.id, request);

@@ -45,14 +45,14 @@ export const useGenerateAgreement = () => {
       ? getPersonConcept(coordinator?.personId).then(p => (coordinator.person = p?.data))
       : coordinator?.organizationId
       ? getOrganizationConcept(coordinator?.organizationId).then(o =>
-          !!coordinator ? setOrganization(coordinator, o?.data) : null,
+          coordinator ? setOrganization(coordinator, o?.data) : null,
         )
       : Promise.resolve();
     const negotiatingAgentPromise = negotiatingAgent?.personId
       ? getPersonConcept(negotiatingAgent?.personId).then(p => (negotiatingAgent.person = p?.data))
       : negotiatingAgent?.organizationId
       ? getOrganizationConcept(negotiatingAgent?.organizationId).then(o =>
-          !!negotiatingAgent ? setOrganization(negotiatingAgent, o?.data) : null,
+          negotiatingAgent ? setOrganization(negotiatingAgent, o?.data) : null,
         )
       : Promise.resolve();
     const provincialSolicitorPromise = provincialSolicitor?.personId
@@ -61,7 +61,7 @@ export const useGenerateAgreement = () => {
         )
       : provincialSolicitor?.organizationId
       ? getOrganizationConcept(provincialSolicitor?.organizationId).then(o =>
-          !!provincialSolicitor ? setOrganization(provincialSolicitor, o?.data) : null,
+          provincialSolicitor ? setOrganization(provincialSolicitor, o?.data) : null,
         )
       : Promise.resolve();
 
@@ -102,7 +102,7 @@ export const useGenerateAgreement = () => {
       templateData: agreementData,
       convertToType: null,
     });
-    generatedFile?.status === ApiGen_CodeTypes_ExternalResponseStatus.Success!! &&
+    generatedFile?.status === ApiGen_CodeTypes_ExternalResponseStatus.Success &&
       generatedFile?.payload &&
       showFile(generatedFile?.payload);
   };
@@ -134,7 +134,7 @@ const setOrganization = (
   team: ApiGen_Concepts_AcquisitionFileTeam,
   organization: ApiGen_Concepts_Organization,
 ) => {
-  if (!!team) {
+  if (team) {
     team.organization = organization;
     team.primaryContact =
       organization?.organizationPersons?.find(op => op.personId === team.primaryContactId)

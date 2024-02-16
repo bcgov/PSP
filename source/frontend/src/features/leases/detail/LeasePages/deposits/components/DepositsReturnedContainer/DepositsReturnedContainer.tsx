@@ -18,7 +18,7 @@ const DepositsReturnedContainer: React.FC<
   const columns = getColumns({ onEdit, onDelete });
   const dataSource = depositReturns.reduce(
     (accumulator: ReturnListEntry[], returnDeposit: ApiGen_Concepts_SecurityDepositReturn) => {
-      var parentDeposit = securityDeposits.find(r => r?.id === returnDeposit?.parentDepositId);
+      const parentDeposit = securityDeposits.find(r => r?.id === returnDeposit?.parentDepositId);
       if (parentDeposit) {
         accumulator.push(new ReturnListEntry(returnDeposit, parentDeposit));
       }

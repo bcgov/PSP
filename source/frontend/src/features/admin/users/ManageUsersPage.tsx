@@ -56,7 +56,7 @@ export const ManageUsersPage = () => {
   );
 
   const columns = useMemo(() => getUserColumns(execute), [execute]);
-  let userList = results.map((u: ApiGen_Concepts_User): FormUser => new FormUser(u));
+  const userList = results.map((u: ApiGen_Concepts_User): FormUser => new FormUser(u));
 
   /**
    * @param {'csv' | 'excel'} accept Whether the fetch is for type of CSV or EXCEL

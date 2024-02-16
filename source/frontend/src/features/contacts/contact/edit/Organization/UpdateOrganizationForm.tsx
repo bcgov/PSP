@@ -63,7 +63,7 @@ export const UpdateOrganizationForm: React.FC<{ id: number }> = ({ id }) => {
     [organization],
   );
 
-  const initialValues = !!formOrganization
+  const initialValues = formOrganization
     ? {
         ...defaultCreateOrganization,
         ...formOrganization,

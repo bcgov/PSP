@@ -10,6 +10,7 @@ import { withNameSpace } from '@/utils/formUtils';
 import { FormTenant } from './models';
 import TenantOrganizationContactInfo from './TenantOrganizationContactInfo';
 import TenantPersonContactInfo from './TenantPersonContactInfo';
+import noop from 'lodash/noop';
 
 export interface ITenantProps {
   nameSpace?: string;
@@ -30,7 +31,7 @@ export const ViewTenantForm: React.FunctionComponent<React.PropsWithChildren<ITe
     <FormSectionOne>
       <Formik
         initialValues={{ ...new LeaseFormModel(), tenants: tenants }}
-        onSubmit={() => {}}
+        onSubmit={noop}
         enableReinitialize
       >
         <>

@@ -118,7 +118,7 @@ describe('Multiselect component', () => {
 
 // simulate scrolling down using the keyboard arrows
 function focusOption(container: HTMLElement, option: Option, options: readonly Option[]) {
-  let indexOfSelectedOption = options.findIndex(o => o.id === option.id);
+  const indexOfSelectedOption = options.findIndex(o => o.id === option.id);
   for (let i = 0; i < indexOfSelectedOption; i++) {
     act(() => {
       userEvent.keyboard('{ArrowDown}');

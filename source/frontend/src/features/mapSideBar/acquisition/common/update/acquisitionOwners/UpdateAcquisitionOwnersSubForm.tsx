@@ -16,9 +16,7 @@ import {
   WithAcquisitionOwners,
 } from '../../models';
 
-interface IUpdateAcquisitionOwnersSubFormProps {}
-
-const UpdateAcquisitionOwnersSubForm: React.FC<IUpdateAcquisitionOwnersSubFormProps> = () => {
+const UpdateAcquisitionOwnersSubForm: React.FC = () => {
   const { values, setFieldValue, handleChange } = useFormikContext<WithAcquisitionOwners>();
   const [removeIndex, setRemoveIndex] = useState<number>(-1);
   const [showRemoveModal, setShowRemoveModal] = useState<boolean>(false);

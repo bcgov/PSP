@@ -24,7 +24,7 @@ export class AcquisitionSearchResultModel {
   compensationRequisitions?: ApiGen_Concepts_CompensationRequisition[];
 
   static fromApi(base: ApiGen_Concepts_AcquisitionFile): AcquisitionSearchResultModel {
-    var newModel = new AcquisitionSearchResultModel();
+    const newModel = new AcquisitionSearchResultModel();
     newModel.id = base.id;
     newModel.fileName = base.fileName ?? undefined;
     newModel.fileNumber = base.fileNumber ?? undefined;

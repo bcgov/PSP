@@ -76,7 +76,7 @@ export const ExpropriationForm8Details: React.FunctionComponent<
                     message: 'Do you wish to remove this Form 8?',
                     okButtonText: 'Remove',
                     handleOk: async () => {
-                      onDelete(form8.id!);
+                      form8?.id && onDelete(form8.id);
                       setDisplayModal(false);
                     },
                     handleCancel: () => {

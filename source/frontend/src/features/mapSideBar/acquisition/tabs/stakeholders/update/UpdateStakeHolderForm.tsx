@@ -75,6 +75,7 @@ export const UpdateStakeHolderForm: React.FunctionComponent<IUpdateStakeHolderFo
                     )}
                     {values.interestHolders.map((interestHolder, index) => (
                       <InterestHolderSubForm
+                        key={`interest-holder-${interestHolder?.interestHolderId ?? index}`}
                         index={index}
                         errors={errors}
                         arrayHelpers={arrayHelpers}

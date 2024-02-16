@@ -25,7 +25,7 @@ export const Improvements: React.FunctionComponent<IImprovementsProps> = ({
   formImprovements.sort(
     (improvementOne: ILeaseImprovementForm, improvementTwo: ILeaseImprovementForm) => {
       const findDisplayOrder = (x: ILeaseImprovementForm): number => {
-        for (let typeCode of improvementTypeCodes) {
+        for (const typeCode of improvementTypeCodes) {
           if (x.propertyImprovementTypeId === typeCode.id) {
             return typeCode.displayOrder;
           }
@@ -39,8 +39,8 @@ export const Improvements: React.FunctionComponent<IImprovementsProps> = ({
   return (
     <Styled.ImprovementsContainer className="improvements">
       <LoadingBackdrop show={loading} parentScreen />
-      {formImprovements.map((improvement: ILeaseImprovementForm, index) => (
-        <Improvement improvement={improvement} />
+      {formImprovements.map((improvement: ILeaseImprovementForm) => (
+        <Improvement improvement={improvement} key={`improvement-${improvement?.id}`} />
       ))}
     </Styled.ImprovementsContainer>
   );

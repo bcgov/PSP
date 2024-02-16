@@ -95,6 +95,7 @@ export const formikFieldMemo = (
  * @param axiosPromise The result of an axios.get, .put, ..., call.
  */
 export const handleAxiosResponse = <ResponseType>(
+  // eslint-disable-next-line @typescript-eslint/ban-types
   dispatch: Function,
   actionType: string,
   axiosPromise: Promise<AxiosResponse<ResponseType>>,
@@ -144,7 +145,9 @@ export const generateMultiSortCriteria = (sort: TableSort<any>) => {
  * Convert sort query string to TableSort config
  * ['Name desc'] = {name: 'desc'}
  */
-export const resolveSortCriteriaFromUrl = (input: string[]): TableSort<any> | {} => {
+export const resolveSortCriteriaFromUrl = (
+  input: string[],
+): TableSort<any> | Record<string, never> => {
   if (isEmpty(input)) {
     return {};
   }

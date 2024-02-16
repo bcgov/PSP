@@ -63,7 +63,7 @@ export const UserProfile: React.FC<React.PropsWithChildren<unknown>> = () => {
     <>
       <StyledUserAvatar size="24px" />
       <StyleDropDown className="px-0" title={displayName} id="user-dropdown" alignRight>
-        {!!keycloak.roles.length && (
+        {!(keycloak.roles.length === 0) && (
           <RolesBox>
             <p style={{ margin: 5 }}>
               <b>

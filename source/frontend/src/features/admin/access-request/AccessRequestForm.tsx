@@ -45,8 +45,9 @@ export const AccessRequestForm: React.FunctionComponent<
       onSubmit={async (values, { setSubmitting }) => {
         try {
           await addAccessRequest(values.toApi());
-        } catch (error) {}
-        setSubmitting(false);
+        } finally {
+          setSubmitting(false);
+        }
       }}
     >
       <Form className="userInfo">
@@ -111,7 +112,7 @@ export const AccessRequestForm: React.FunctionComponent<
           <Col xs={2}></Col>
           <Col>
             <p>
-              By clicking "Submit" to request access, you agree to our{' '}
+              By clicking &quot;Submit&quot; to request access, you agree to our{' '}
               <a target="_blank" rel="noopener noreferrer" href={DISCLAIMER_URL}>
                 Terms and Conditions
               </a>{' '}

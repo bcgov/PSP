@@ -13,10 +13,10 @@ import { exists, isValidIsoDateTime } from '@/utils/utils';
 export class ProductForm {
   id: number | null = null;
 
-  code: string = '';
-  description: string = '';
+  code = '';
+  description = '';
   startDate: string | '' = '';
-  costEstimate: string = '';
+  costEstimate = '';
   costEstimateDate: string | '' = '';
   objective: string | '' = '';
   scope: string | '' = '';
@@ -29,7 +29,7 @@ export class ProductForm {
       code: this.code,
       description: this.description,
       startDate: isValidIsoDateTime(this.startDate) ? this.startDate : null,
-      costEstimate: !!this.costEstimate ? Number(this.costEstimate) : null,
+      costEstimate: this.costEstimate ? Number(this.costEstimate) : null,
       costEstimateDate: isValidIsoDateTime(this.costEstimateDate) ? this.costEstimateDate : null,
       objective: this.objective,
       scope: this.scope,

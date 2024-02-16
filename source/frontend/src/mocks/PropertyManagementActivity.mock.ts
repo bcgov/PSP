@@ -42,8 +42,8 @@ const emptyActivity: ApiGen_Concepts_PropertyActivity = {
   ...getEmptyBaseAudit(0),
 };
 export const mockGetPropertyManagementActivity = (
-  id: number = 1,
-  propertyId: number = 1,
+  id = 1,
+  propertyId = 1,
 ): ApiGen_Concepts_PropertyActivity => ({
   ...emptyActivity,
   id: id,
@@ -80,8 +80,8 @@ export const mockGetPropertyManagementActivity = (
 });
 
 export const mockGetPropertyManagementActivityNotStarted = (
-  id: number = 1,
-  propertyId: number = 1,
+  id = 1,
+  propertyId = 1,
 ): ApiGen_Concepts_PropertyActivity => ({
   ...emptyActivity,
   id: id,

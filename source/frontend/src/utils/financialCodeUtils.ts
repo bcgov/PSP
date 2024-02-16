@@ -15,7 +15,7 @@ export function toDropDownOptions(
     .map<SelectOption>(c => {
       return {
         label: `${c.code} - ${c.description}`,
-        value: c.id!,
+        value: c.id ?? 0,
       };
     });
 }

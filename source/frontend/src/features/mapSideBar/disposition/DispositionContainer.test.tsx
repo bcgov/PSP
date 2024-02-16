@@ -130,7 +130,9 @@ describe('DispositionContainer component', () => {
 
     mockAxios.onGet(new RegExp('dispositionfiles/1/properties')).timeout();
     await act(async () => viewProps.onShowPropertySelector());
-    await act(async () => viewProps.canRemove(1));
+    await act(async () => {
+      viewProps.canRemove(1);
+    });
     expect(spinner).not.toBeVisible();
   });
 
@@ -178,7 +180,9 @@ describe('DispositionContainer component', () => {
     expect(history.location.pathname).toBe('/property/1');
 
     const yesButton = getByText('Yes');
-    await act(async () => fireEvent.click(yesButton));
+    await act(async () => {
+      fireEvent.click(yesButton);
+    });
     const params = new URLSearchParams(history.location.search);
     await waitFor(async () => expect(params.has('edit')).toBe(false));
   });

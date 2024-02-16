@@ -98,7 +98,7 @@ export const PropertyActivityDetailView: React.FunctionComponent<
                   </SectionField>
 
                   <SectionField label="Ministry contacts" contentWidth="7">
-                    {props.activity.ministryContacts?.map((contact, index) => (
+                    {props.activity.ministryContacts?.map(contact => (
                       <>{contact.person !== null && <ContactLink person={contact.person} />}</>
                     ))}
                   </SectionField>
@@ -106,7 +106,7 @@ export const PropertyActivityDetailView: React.FunctionComponent<
                     {props.activity.requestSource}
                   </SectionField>
                   <SectionField label="Involved parties" contentWidth="8">
-                    {props.activity.involvedParties?.map((contact, index) => (
+                    {props.activity.involvedParties?.map(contact => (
                       <>
                         {contact.person !== null && <ContactLink person={contact.person} />}
                         {contact.organization !== null && (

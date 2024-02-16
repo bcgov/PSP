@@ -9,11 +9,11 @@ export class ILeaseImprovementsForm {
 export class ILeaseImprovementForm {
   id?: number;
   leaseId?: number;
-  propertyImprovementTypeId: string = '';
-  propertyImprovementType: string = '';
-  description: string = '';
-  structureSize: string = '';
-  address: string = '';
+  propertyImprovementTypeId = '';
+  propertyImprovementType = '';
+  description = '';
+  structureSize = '';
+  address = '';
   rowVersion?: number;
 
   public static fromApi(improvement: ApiGen_Concepts_PropertyImprovement) {

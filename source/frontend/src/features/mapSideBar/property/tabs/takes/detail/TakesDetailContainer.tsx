@@ -40,7 +40,7 @@ const TakesDetailContainer: React.FunctionComponent<ITakesDetailContainerProps> 
   } = useTakesRepository();
 
   React.useEffect(() => {
-    fileId && executeTakesByFileProperty(fileId, propertyId!);
+    fileId && propertyId && executeTakesByFileProperty(fileId, propertyId);
     propertyId && executeTakesCount(propertyId);
   }, [executeTakesByFileProperty, executeTakesCount, fileId, propertyId]);
 

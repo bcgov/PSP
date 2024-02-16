@@ -18,7 +18,7 @@ export interface ILeaseTabsContainerProps {
   setLease: (lease: ApiGen_Concepts_Lease) => void;
   setContainerState: (value: Partial<LeaseContainerState>) => void;
   isEditing: boolean;
-  onEdit?: () => {};
+  onEdit?: () => object;
   activeTab?: LeaseFileTabNames;
   formikRef: React.RefObject<FormikProps<LeaseFormModel>>;
   onSuccess: () => void;
@@ -161,7 +161,7 @@ export const LeaseTabsContainer: React.FC<ILeaseTabsContainerProps> = ({
     });
   }
 
-  var defaultTab = LeaseFileTabNames.fileDetails;
+  const defaultTab = LeaseFileTabNames.fileDetails;
 
   return (
     <LeaseFileTabs

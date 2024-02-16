@@ -39,7 +39,7 @@ interface IParentSelect {
   /** check to see whether reset button has been called to clear multiple selected */
   clearSelected?: boolean;
   /** reset state of clear selected via this component */
-  setClearSelected?: Function;
+  setClearSelected?: (clearSelected: boolean) => void;
   /** Event occurs when the selection changes. */
   onChange?: (vals: any) => void;
   /** get the component to select the item with closest label match to the input provided */
@@ -154,10 +154,10 @@ export const ParentSelect: React.FC<React.PropsWithChildren<IParentSelect>> = ({
           results = results.map(x => {
             return {
               ...x,
-              parentId: !!childless.find(c => Number(c.value) === Number(x.value))
+              parentId: childless.find(c => Number(c.value) === Number(x.value))
                 ? CHILDLESS_PARENT_ID
                 : x.parentId,
-              parent: !!childless.find(c => Number(c.value) === Number(x.value))
+              parent: childless.find(c => Number(c.value) === Number(x.value))
                 ? 'Childless'
                 : x.parent,
             };

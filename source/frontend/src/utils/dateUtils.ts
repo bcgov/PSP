@@ -49,7 +49,7 @@ export const prettyFormatDateTime = (date?: string | Date | Moment | null) => {
  */
 export const formatUTCDateTime = (
   date?: string | Date | Moment | null,
-  format: string = 'YYYY-MM-DD hh:mm a',
+  format = 'YYYY-MM-DD hh:mm a',
 ) => {
   if (typeof date === 'string' && isValidIsoDateTime(date)) {
     return moment.utc(date).local().format(format);

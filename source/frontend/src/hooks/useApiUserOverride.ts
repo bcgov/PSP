@@ -56,7 +56,7 @@ export const useApiUserOverride = <
       handleError?: (e: AxiosError<IApiError>) => void,
     ) => {
       try {
-        var response = await apiFunction(uniq(userOverrideCodes));
+        const response = await apiFunction(uniq(userOverrideCodes));
         setDisplayModal(false);
         return response;
       } catch (e) {

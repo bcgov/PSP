@@ -108,7 +108,7 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<
       <Section header="Property Address">
         <StyledSubtleText>
           This is the address stored in PIMS application for this property and will be used wherever
-          this property's address is needed.
+          this property&apos;s address is needed.
         </StyledSubtleText>
         <SectionField label="Address (line 1)">
           <Row>

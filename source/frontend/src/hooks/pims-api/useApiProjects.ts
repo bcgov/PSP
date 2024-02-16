@@ -24,7 +24,7 @@ export const useApiProjects = () => {
           `/projects?${userOverrideCodes.map(o => `userOverrideCodes=${o}`).join('&')}`,
           project,
         ),
-      searchProject: (query: string, top: number = 5) =>
+      searchProject: (query: string, top = 5) =>
         api.get<ApiGen_Concepts_Project[]>(`/projects/search=${query}&top=${top}`),
       searchProjects: (params: IPaginateProjects | null) =>
         api.get<IPagedItems<ApiGen_Concepts_Project>>(

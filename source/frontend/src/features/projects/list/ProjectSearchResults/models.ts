@@ -11,7 +11,7 @@ export class ProjectSearchResultModel {
   lastUpdatedDate: string | '' = '';
 
   static fromApi(base: ApiGen_Concepts_Project): ProjectSearchResultModel {
-    var newModel = new ProjectSearchResultModel();
+    const newModel = new ProjectSearchResultModel();
 
     newModel.id = base.id ?? null;
     newModel.code = base.code?.toString() ?? '';

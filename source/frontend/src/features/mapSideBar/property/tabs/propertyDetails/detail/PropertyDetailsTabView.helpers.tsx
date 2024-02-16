@@ -8,24 +8,23 @@ import { EBC_ELECTORAL_DISTS_BS10_SVW_Feature_Properties } from '@/models/layers
 import { exists } from '@/utils';
 import { booleanToString } from '@/utils/formUtils';
 
-export interface IPropertyDetailsForm
-  extends ExtendOverride<
-    ApiGen_Concepts_Property,
-    {
-      electoralDistrict:
-        | Feature<Geometry, EBC_ELECTORAL_DISTS_BS10_SVW_Feature_Properties>
-        | undefined;
-      isALR?: boolean;
-      firstNations?: {
-        bandName: string;
-        reserveName: string;
-      };
-      isVolumetricParcel: string; // radio buttons only support string values, not booleans
-      anomalies: ApiGen_Base_CodeType<string>[];
-      tenures: ApiGen_Base_CodeType<string>[];
-      roadTypes: ApiGen_Base_CodeType<string>[];
-    }
-  > {}
+export type IPropertyDetailsForm = ExtendOverride<
+  ApiGen_Concepts_Property,
+  {
+    electoralDistrict:
+      | Feature<Geometry, EBC_ELECTORAL_DISTS_BS10_SVW_Feature_Properties>
+      | undefined;
+    isALR?: boolean;
+    firstNations?: {
+      bandName: string;
+      reserveName: string;
+    };
+    isVolumetricParcel: string; // radio buttons only support string values, not booleans
+    anomalies: ApiGen_Base_CodeType<string>[];
+    tenures: ApiGen_Base_CodeType<string>[];
+    roadTypes: ApiGen_Base_CodeType<string>[];
+  }
+>;
 
 export function toFormValues(apiData?: ApiGen_Concepts_Property): IPropertyDetailsForm {
   return {

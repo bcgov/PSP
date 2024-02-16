@@ -26,10 +26,8 @@ export class FormInsurance {
   public expiryDate?: string;
   private rowVersion!: number;
 
-  private constructor() {}
-
   public static createEmpty(typeCode: ILookupCode, leaseId: number): FormInsurance {
-    let model = new FormInsurance();
+    const model = new FormInsurance();
     model.leaseId = leaseId;
     model.insuranceType = TypeCodeUtils.createFromLookup(typeCode);
     model.coverageLimit = '';
@@ -40,7 +38,7 @@ export class FormInsurance {
   }
 
   public static createFromModel(baseModel: ApiGen_Concepts_Insurance): FormInsurance {
-    let model = new FormInsurance();
+    const model = new FormInsurance();
     model.id = baseModel.id;
     model.leaseId = baseModel.leaseId;
     model.insuranceType = baseModel.insuranceType;

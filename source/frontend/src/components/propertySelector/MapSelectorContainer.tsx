@@ -45,7 +45,7 @@ export const MapSelectorContainer: React.FunctionComponent<IMapSelectorContainer
             }}
             selectedProperties={modifiedMapProperties}
             lastSelectedProperty={
-              !!lastSelectedProperty
+              lastSelectedProperty
                 ? modifiedMapProperties.find(
                     p => getPropertyName(p).value === getPropertyName(lastSelectedProperty).value,
                   )

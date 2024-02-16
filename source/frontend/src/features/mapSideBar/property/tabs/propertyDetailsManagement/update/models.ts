@@ -4,12 +4,12 @@ import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { stringToNull } from '@/utils/formUtils';
 
 export class PropertyContactFormModel {
-  public id: number = 0;
-  public propertyId: number = 0;
+  public id = 0;
+  public propertyId = 0;
   public contact: IContactSearchResult | undefined = undefined;
-  public primaryContactId: string = '';
-  public purposeDescription: string = '';
-  public rowVersion: number = 0;
+  public primaryContactId = '';
+  public purposeDescription = '';
+  public rowVersion = 0;
 
   public toApi(): ApiGen_Concepts_PropertyContact {
     return {

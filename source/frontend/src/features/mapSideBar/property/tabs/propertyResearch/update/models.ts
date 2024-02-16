@@ -12,7 +12,7 @@ export class PropertyResearchFilePurposeFormModel {
   public static fromApi(
     base: ApiGen_Concepts_PropertyPurpose,
   ): PropertyResearchFilePurposeFormModel {
-    var newModel = new PropertyResearchFilePurposeFormModel();
+    const newModel = new PropertyResearchFilePurposeFormModel();
     newModel.id = base.id;
     newModel.propertyPurposeTypeCode = base.propertyPurposeType?.id ?? undefined;
     newModel.propertyPurposeTypeDescription = base.propertyPurposeType?.description ?? undefined;
@@ -51,7 +51,7 @@ export class UpdatePropertyFormModel {
   public researchFile: ApiGen_Concepts_ResearchFile | null = null;
 
   public static fromApi(base: ApiGen_Concepts_ResearchFileProperty): UpdatePropertyFormModel {
-    var model = new UpdatePropertyFormModel();
+    const model = new UpdatePropertyFormModel();
     model.id = base.id;
     model.propertyName = base.propertyName ?? undefined;
     model.displayOrder = base.displayOrder ?? undefined;

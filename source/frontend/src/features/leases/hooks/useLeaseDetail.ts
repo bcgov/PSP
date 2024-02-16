@@ -54,7 +54,7 @@ export function useLeaseDetail(leaseId?: number) {
         propertyLeasesPromise,
         leaseTermsPromise,
       ]);
-      if (!!lease) {
+      if (lease) {
         const mergedLeases: ApiGen_Concepts_Lease = {
           ...lease,
           tenants: leaseTenants ?? [],
@@ -70,7 +70,7 @@ export function useLeaseDetail(leaseId?: number) {
 
   const fetchLastUpdatedBy = useCallback(async () => {
     if (leaseId) {
-      var retrieved = await getLastUpdatedBy(leaseId);
+      const retrieved = await getLastUpdatedBy(leaseId);
       if (retrieved !== undefined) {
         setLastUpdatedBy(retrieved);
       } else {

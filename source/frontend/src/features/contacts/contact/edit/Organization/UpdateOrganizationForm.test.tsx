@@ -147,7 +147,7 @@ describe('UpdateOrganizationForm', () => {
       await fillInput(container, 'mailingAddress.municipality', mockAddress.municipality);
 
       // wait for re-render upon changing country to OTHER
-      await act(async () => fillInput(container, 'mailingAddress.countryId', 4, 'select'));
+      fillInput(container, 'mailingAddress.countryId', 4, 'select');
 
       await fillInput(container, 'mailingAddress.countryOther', mockAddress.countryOther);
       await fillInput(container, 'mailingAddress.postal', mockAddress.postal);

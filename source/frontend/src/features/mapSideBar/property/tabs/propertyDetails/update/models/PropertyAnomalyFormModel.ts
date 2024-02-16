@@ -10,14 +10,14 @@ export class PropertyAnomalyFormModel {
   typeDescription?: string;
 
   static fromLookup(base: ILookupCode): PropertyAnomalyFormModel {
-    var newModel = new PropertyAnomalyFormModel();
+    const newModel = new PropertyAnomalyFormModel();
     newModel.typeCode = base.id.toString();
     newModel.typeDescription = base.name;
     return newModel;
   }
 
   static fromApi(base: ApiGen_Concepts_PropertyAnomaly): PropertyAnomalyFormModel {
-    var newModel = new PropertyAnomalyFormModel();
+    const newModel = new PropertyAnomalyFormModel();
     newModel.id = base.id;
     newModel.rowVersion = base.rowVersion ?? undefined;
     newModel.propertyId = base.propertyId;

@@ -39,7 +39,7 @@ export const useGenerateLetter = () => {
         templateData: letterData,
         convertToType: null,
       });
-      generatedFile?.status === ApiGen_CodeTypes_ExternalResponseStatus.Success!! &&
+      generatedFile?.status === ApiGen_CodeTypes_ExternalResponseStatus.Success &&
         generatedFile?.payload &&
         showFile(generatedFile?.payload);
     }

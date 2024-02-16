@@ -25,16 +25,17 @@ import getKeycloakEventHandler from '@/utils/getKeycloakEventHandler';
 import App from './App';
 import { ITenantConfig2 } from './hooks/pims-api/interfaces/ITenantConfig';
 import { useRefreshSiteminder } from './hooks/useRefreshSiteminder';
-import * as serviceWorker from './serviceWorker.ignore';
 
 function prepare() {
   if (process.env.NODE_ENV === 'development') {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
     const { worker } = require('./mocks/msw/browser');
     return worker.start({ onUnhandledRequest: 'bypass' });
   }
   return Promise.resolve();
 }
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-ignore
 const keycloak: KeycloakInstance = new Keycloak('/keycloak.json');
 const Index = () => {
@@ -77,8 +78,3 @@ prepare().then(() => {
   const root = createRoot(document.getElementById('root') as Element);
   root.render(<Index />);
 });
-
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();

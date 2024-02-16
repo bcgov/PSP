@@ -40,7 +40,7 @@ const EditUserForm: React.FunctionComponent<React.PropsWithChildren<IEditUserFor
       enableReinitialize
       initialValues={formUser}
       validationSchema={UserUpdateSchema}
-      onSubmit={async (values, { setSubmitting, setValues }) => {
+      onSubmit={async (values, { setSubmitting }) => {
         await updateUserDetail(values.toApi());
         setSubmitting(false);
         onCancel();

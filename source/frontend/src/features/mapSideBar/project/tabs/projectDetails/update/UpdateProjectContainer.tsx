@@ -76,8 +76,8 @@ const UpdateProjectContainer = React.forwardRef<
     const options = toDropDownOptions(businessFunctions);
     if (businessFunctionCode !== null && isExpiredCode(businessFunctionCode)) {
       options.push({
-        label: businessFunctionCode.description!,
-        value: businessFunctionCode.id!,
+        label: businessFunctionCode.description ?? '',
+        value: businessFunctionCode.id ?? '',
       });
     }
     return options;
@@ -87,8 +87,8 @@ const UpdateProjectContainer = React.forwardRef<
     const options = toDropDownOptions(costTypes);
     if (costTypeCode !== null && isExpiredCode(costTypeCode)) {
       options.push({
-        label: costTypeCode.description!,
-        value: costTypeCode.id!,
+        label: costTypeCode.description ?? '',
+        value: costTypeCode.id ?? '',
       });
     }
     return options;
@@ -98,8 +98,8 @@ const UpdateProjectContainer = React.forwardRef<
     const options = toDropDownOptions(workActivities);
     if (workActivityCode !== null && isExpiredCode(workActivityCode)) {
       options.push({
-        label: workActivityCode.description!,
-        value: workActivityCode.id!,
+        label: workActivityCode.description ?? '',
+        value: workActivityCode.id ?? '',
       });
     }
     return options;

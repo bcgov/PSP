@@ -17,11 +17,7 @@ import {
   WithDispositionTeam,
 } from '../models/DispositionTeamSubFormModel';
 
-interface IDispositionTeamSubForm {}
-
-const DispositionTeamSubForm: React.FunctionComponent<
-  React.PropsWithChildren<IDispositionTeamSubForm>
-> = () => {
+const DispositionTeamSubForm: React.FunctionComponent<React.PropsWithChildren<unknown>> = () => {
   const { values, setFieldTouched, errors } = useFormikContext<WithDispositionTeam>();
   const { getOptionsByType } = useLookupCodeHelpers();
   const { setModalContent, setDisplayModal } = useModalContext();

@@ -130,7 +130,7 @@ describe('DocumentUploadView component', () => {
 
     const save = await getByTestId('save');
     // get the upload button
-    let uploader = getByTestId('upload-input');
+    const uploader = getByTestId('upload-input');
 
     // simulate upload event and wait until finish
     await waitFor(() =>

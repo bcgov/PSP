@@ -15,8 +15,8 @@ export interface WithDispositionTeam {
 
 export class DispositionTeamSubFormModel {
   contact: IContactSearchResult | null = null;
-  teamProfileTypeCode: string = '';
-  primaryContactId: string = '';
+  teamProfileTypeCode = '';
+  primaryContactId = '';
 
   constructor(
     readonly id: number | null = null,

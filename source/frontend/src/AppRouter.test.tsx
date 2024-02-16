@@ -151,7 +151,7 @@ jest.mock('./hooks/pims-api/useApiGeocoder');
 });
 
 describe('PSP routing', () => {
-  const setup = (url: string = '/', renderOptions: RenderOptions = {}) => {
+  const setup = (url = '/', renderOptions: RenderOptions = {}) => {
     history.replace(url);
     const utils = render(
       <AuthStateContext.Provider value={{ ready: true }}>

@@ -19,7 +19,7 @@ export interface IDetailConsultationProps {
  */
 export const DetailConsultation: React.FunctionComponent<
   React.PropsWithChildren<IDetailConsultationProps>
-> = ({ nameSpace }) => {
+> = () => {
   const { values, setFieldValue } = useFormikContext<ApiGen_Concepts_Lease>();
 
   const { getByType } = useLookupCodeHelpers();
@@ -50,7 +50,7 @@ export const DetailConsultation: React.FunctionComponent<
       };
 
       // If there is a consultation with the type, set the status to the existing one
-      let existingConsultation = values.consultations?.find(
+      const existingConsultation = values.consultations?.find(
         consultation => consultation.consultationType?.id === consultationType.id,
       );
       if (existingConsultation !== undefined) {
@@ -64,7 +64,7 @@ export const DetailConsultation: React.FunctionComponent<
   }
 
   const generateLabel = (consultation: ApiGen_Concepts_ConsultationLease): string => {
-    var label = consultation.consultationType?.description || '';
+    let label = consultation.consultationType?.description || '';
     if (exists(consultation.otherDescription)) {
       label += ' | ' + consultation.otherDescription;
     }
@@ -74,7 +74,7 @@ export const DetailConsultation: React.FunctionComponent<
 
   return (
     <Section header="Consultation" initiallyExpanded isCollapsable>
-      {values.consultations?.map((consultation, index) => (
+      {values.consultations?.map(consultation => (
         <SectionField
           key={`consultations-${consultation.consultationType?.id}`}
           label={generateLabel(consultation)}

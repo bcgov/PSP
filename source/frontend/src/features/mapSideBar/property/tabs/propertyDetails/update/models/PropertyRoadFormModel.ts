@@ -10,14 +10,14 @@ export class PropertyRoadFormModel {
   typeDescription?: string;
 
   static fromLookup(base: ILookupCode): PropertyRoadFormModel {
-    var newModel = new PropertyRoadFormModel();
+    const newModel = new PropertyRoadFormModel();
     newModel.typeCode = base.id.toString();
     newModel.typeDescription = base.name;
     return newModel;
   }
 
   static fromApi(base: ApiGen_Concepts_PropertyRoad): PropertyRoadFormModel {
-    var newModel = new PropertyRoadFormModel();
+    const newModel = new PropertyRoadFormModel();
     newModel.id = base.id;
     newModel.rowVersion = base.rowVersion ?? undefined;
     newModel.propertyId = base.propertyId;

@@ -112,7 +112,7 @@ export const useGenerateH0443 = () => {
         templateData: h0443Data,
         convertToType: null,
       });
-      generatedFile?.status === ApiGen_CodeTypes_ExternalResponseStatus.Success!! &&
+      generatedFile?.status === ApiGen_CodeTypes_ExternalResponseStatus.Success &&
         generatedFile?.payload &&
         showFile(generatedFile?.payload);
     }
@@ -122,7 +122,7 @@ export const useGenerateH0443 = () => {
 
 function getOwnerName(owner: ApiGen_Concepts_AcquisitionFileOwner): string {
   if (owner.isOrganization) {
-    var corpName: string = owner.lastNameAndCorpName || '';
+    let corpName: string = owner.lastNameAndCorpName || '';
     if (owner.incorporationNumber) {
       corpName += ` (Inc. No. ${owner.incorporationNumber})`;
     } else {
@@ -130,7 +130,7 @@ function getOwnerName(owner: ApiGen_Concepts_AcquisitionFileOwner): string {
     }
     return corpName;
   } else {
-    var personName: string = `${owner.givenName} ${owner.lastNameAndCorpName}`;
+    const personName = `${owner.givenName} ${owner.lastNameAndCorpName}`;
     return personName;
   }
 }

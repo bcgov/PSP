@@ -52,7 +52,7 @@ describe('Contact PersonView component', () => {
       },
     });
 
-    var statusElement = component.getByTestId('contact-person-status');
+    const statusElement = component.getByTestId('contact-person-status');
     expect(statusElement.textContent).toBe('INACTIVE');
   });
 
@@ -67,13 +67,13 @@ describe('Contact PersonView component', () => {
       },
     });
 
-    var statusElement = component.getByTestId('contact-person-status');
+    const statusElement = component.getByTestId('contact-person-status');
     expect(statusElement.textContent).toBe('ACTIVE');
 
-    var nameElement = component.getByTestId('contact-person-fullname');
+    const nameElement = component.getByTestId('contact-person-fullname');
     expect(nameElement.textContent).toBe(testName);
 
-    var preferredElement = component.getByTestId('contact-person-preferred');
+    const preferredElement = component.getByTestId('contact-person-preferred');
     expect(preferredElement.textContent).toBe(preferredName);
   });
 
@@ -109,7 +109,7 @@ describe('Contact PersonView component', () => {
       },
     });
 
-    var emailValueElements = component.getAllByTestId('email-value');
+    const emailValueElements = component.getAllByTestId('email-value');
     expect(emailValueElements.length).toBe(2);
 
     // Verify that the display is in the correct order
@@ -188,7 +188,7 @@ describe('Contact PersonView component', () => {
       },
     });
 
-    var phoneValueElements = component.getAllByTestId('phone-value');
+    const phoneValueElements = component.getAllByTestId('phone-value');
     expect(phoneValueElements.length).toBe(5);
 
     // Verify that the display is in the correct order
@@ -217,7 +217,7 @@ describe('Contact PersonView component', () => {
       },
     });
 
-    var organizationElements = component.getAllByTestId('contact-person-organization');
+    const organizationElements = component.getAllByTestId('contact-person-organization');
     expect(organizationElements.length).toBe(1);
 
     // Verify that the display is in the correct order
@@ -272,7 +272,7 @@ describe('Contact PersonView component', () => {
       },
     });
 
-    var addressElements = component.getAllByTestId('contact-person-address');
+    const addressElements = component.getAllByTestId('contact-person-address');
     expect(addressElements.length).toBe(2);
 
     // Verify that the display is in the correct order
@@ -314,7 +314,7 @@ describe('Contact PersonView component', () => {
       },
     });
 
-    var addressElement = component.getByTestId('contact-person-address');
+    const addressElement = component.getByTestId('contact-person-address');
 
     // Verify that the display is in the correct order
     expect(addressElement.textContent).toBe(
@@ -323,7 +323,7 @@ describe('Contact PersonView component', () => {
   });
 
   it('Shows comment information', () => {
-    const testComment: string = 'A test comment :)';
+    const testComment = 'A test comment :)';
     const { component } = setup({
       person: {
         ...fakePerson,
@@ -331,7 +331,7 @@ describe('Contact PersonView component', () => {
       },
     });
 
-    var commentElement = component.getByTestId('contact-person-comment');
+    const commentElement = component.getByTestId('contact-person-comment');
     expect(commentElement.textContent).toBe(testComment);
   });
 
@@ -343,7 +343,7 @@ describe('Contact PersonView component', () => {
       },
     });
 
-    var addressElements = component.getAllByTestId('contact-person-address');
+    const addressElements = component.getAllByTestId('contact-person-address');
     expect(addressElements.length).toBe(3);
 
     expect(addressElements[0].children[0]).toHaveTextContent('Mailing address');
