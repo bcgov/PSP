@@ -65,7 +65,7 @@ describe('TakesUpdateForm component', () => {
     const createButton = getByText('Create a Take');
     await act(async () => userEvent.click(createButton));
 
-    const takeTwo = getByText('Take 2');
+    const takeTwo = getByText('New Take');
     expect(takeTwo).toBeVisible();
   });
 

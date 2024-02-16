@@ -25,7 +25,7 @@ import { UpdatePropertiesYupSchema } from './UpdatePropertiesYupSchema';
 export interface IUpdatePropertiesProps {
   file: Api_File;
   setIsShowingPropertySelector: (isShowing: boolean) => void;
-  onSuccess: () => void;
+  onSuccess: (updateProperties?: boolean, updateFile?: boolean) => void;
   updateFileProperties: (
     file: Api_File,
     userOverrideCodes: UserOverrideCode[],
@@ -100,7 +100,7 @@ export const UpdateProperties: React.FunctionComponent<
       const response = await props.updateFileProperties(file, []);
 
       formikRef.current?.setSubmitting(false);
-      if (!!response?.fileName) {
+      if (!!response?.id) {
         if (file.fileProperties?.find(fp => !fp.property?.address && !fp.property?.id)) {
           toast.warn(
             'Address could not be retrieved for this property, it will have to be provided manually in property details tab',
@@ -109,7 +109,7 @@ export const UpdateProperties: React.FunctionComponent<
         }
         formikRef.current?.resetForm();
         props.setIsShowingPropertySelector(false);
-        props.onSuccess();
+        props.onSuccess(true);
       }
     } catch (e) {
       if (axios.isAxiosError(e) && (e as AxiosError).code === '409') {

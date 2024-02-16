@@ -83,7 +83,7 @@ describe('UpdateDisposition container', () => {
 
   beforeEach(() => {
     viewProps = undefined;
-    dispositionFile = mockDispositionFileResponse();
+    dispositionFile = mockDispositionFileResponse() as unknown as Api_DispositionFile;
   });
 
   afterEach(() => {

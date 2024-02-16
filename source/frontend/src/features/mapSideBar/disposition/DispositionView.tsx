@@ -38,7 +38,7 @@ export interface IDispositionViewProps {
   onCancel: () => void;
   onMenuChange: (selectedIndex: number) => void;
   onShowPropertySelector: () => void;
-  onSuccess: (updateProperties?: boolean) => void;
+  onSuccess: (updateProperties?: boolean, updateFile?: boolean) => void;
   onUpdateProperties: (file: Api_File) => Promise<Api_File | undefined>;
   canRemove: (propertyId: number) => Promise<boolean>;
   isEditing: boolean;
@@ -142,7 +142,7 @@ export const DispositionView: React.FunctionComponent<IDispositionViewProps> = (
             leftComponent={
               <>
                 <DispositionMenu
-                  dispositionFileId={dispositionFile?.id || 0}
+                  dispositionFile={dispositionFile}
                   items={menuItems}
                   selectedIndex={selectedMenuIndex}
                   onChange={onMenuChange}

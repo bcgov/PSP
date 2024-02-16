@@ -15,7 +15,9 @@ import {
 jest.mock('@react-keycloak/web');
 
 const setSort = jest.fn();
-const mockResults: Api_DispositionFile[] = [mockDispositionFileResponse(1, 'test disposition')];
+const mockResults: Api_DispositionFile[] = [
+  mockDispositionFileResponse(1, 'test disposition') as unknown as Api_DispositionFile,
+];
 
 describe('Disposition search results table', () => {
   const getTableRows = () => document.querySelectorAll('.table .tbody .tr-wrapper');
@@ -77,7 +79,7 @@ describe('Disposition search results table', () => {
     setup({
       results: [
         DispositionSearchResultModel.fromApi({
-          ...mockDispositionFileResponse(),
+          ...(mockDispositionFileResponse() as unknown as Api_DispositionFile),
           fileProperties: [
             {
               id: 100,
@@ -104,14 +106,14 @@ describe('Disposition search results table', () => {
 
     const addresses = screen.getAllByText('1234 mock Street', { exact: false });
     expect(addresses).toHaveLength(2);
-    expect(screen.getByText('[+1 more...]')).toBeVisible();
+    expect(screen.getAllByText('[+1 more...]')).toHaveLength(2);
   });
 
   it('displays a team member organization', () => {
     setup({
       results: [
         DispositionSearchResultModel.fromApi({
-          ...mockDispositionFileResponse(),
+          ...(mockDispositionFileResponse() as unknown as Api_DispositionFile),
           dispositionTeam: [
             {
               id: 1,
@@ -147,7 +149,7 @@ describe('Disposition search results table', () => {
     setup({
       results: [
         DispositionSearchResultModel.fromApi({
-          ...mockDispositionFileResponse(),
+          ...(mockDispositionFileResponse() as unknown as Api_DispositionFile),
           dispositionTeam: [
             {
               id: 1,
@@ -178,7 +180,7 @@ describe('Disposition search results table', () => {
     setup({
       results: [
         DispositionSearchResultModel.fromApi({
-          ...mockDispositionFileResponse(),
+          ...(mockDispositionFileResponse() as unknown as Api_DispositionFile),
           dispositionTeam: [
             {
               id: 1,

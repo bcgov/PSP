@@ -24,6 +24,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
             projects = new Projects(driver.Current);
             searchProjects = new SearchProjects(driver.Current);
             sharedPagination = new SharedPagination(driver.Current);
+
+            project = new Project();
         }
 
         [StepDefinition(@"I create a new Project from row number (.*)")]
@@ -226,7 +228,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateProjectData(int rowNumber)
         {
-            DataTable projectsSheet = ExcelDataContext.GetInstance().Sheets["Projects"];
+            DataTable projectsSheet = ExcelDataContext.GetInstance().Sheets["Projects"]!;
             ExcelDataContext.PopulateInCollection(projectsSheet);
 
             project = new Project();
@@ -253,7 +255,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
  
         private void PopulateProductCollection(int startRow, int rowsCount)
         {
-            DataTable projectProductsSheet = ExcelDataContext.GetInstance().Sheets["ProjectsProducts"];
+            DataTable projectProductsSheet = ExcelDataContext.GetInstance().Sheets["ProjectsProducts"]!;
             ExcelDataContext.PopulateInCollection(projectProductsSheet);
 
             for (int i = startRow; i <= startRow + rowsCount; i++)

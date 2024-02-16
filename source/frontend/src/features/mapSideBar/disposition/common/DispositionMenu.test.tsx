@@ -1,4 +1,7 @@
-import { Claims } from '@/constants/index';
+import { DispositionFileStatus } from '@/constants/dispositionFileStatus';
+import { Claims, Roles } from '@/constants/index';
+import { mockDispositionFileResponse } from '@/mocks/dispositionFiles.mock';
+import { Api_DispositionFile } from '@/models/api/DispositionFile';
 import { render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import DispositionMenu, { IDispositionMenuProps } from './DispositionMenu';
@@ -19,7 +22,7 @@ describe('DispositionMenu component', () => {
   ) => {
     const utils = render(
       <DispositionMenu
-        dispositionFileId={props.dispositionFileId}
+        dispositionFile={props.dispositionFile}
         selectedIndex={props.selectedIndex}
         items={props.items}
         onChange={onChange}
@@ -41,7 +44,7 @@ describe('DispositionMenu component', () => {
 
   it('matches snapshot', () => {
     const { asFragment } = setup({
-      dispositionFileId: 1,
+      dispositionFile: mockDispositionFileResponse() as unknown as Api_DispositionFile,
       items: testData,
       selectedIndex: 0,
     });
@@ -50,7 +53,7 @@ describe('DispositionMenu component', () => {
 
   it('renders the items ', () => {
     const { getByText } = setup({
-      dispositionFileId: 1,
+      dispositionFile: mockDispositionFileResponse() as unknown as Api_DispositionFile,
       items: testData,
       selectedIndex: 0,
     });
@@ -62,7 +65,7 @@ describe('DispositionMenu component', () => {
 
   it('renders selected item with different style', () => {
     const { getByTestId } = setup({
-      dispositionFileId: 1,
+      dispositionFile: mockDispositionFileResponse() as unknown as Api_DispositionFile,
       items: testData,
       selectedIndex: 1,
     });
@@ -74,7 +77,7 @@ describe('DispositionMenu component', () => {
 
   it('allows the selected item to be changed', () => {
     const { getByText } = setup({
-      dispositionFileId: 1,
+      dispositionFile: mockDispositionFileResponse() as unknown as Api_DispositionFile,
       items: testData,
       selectedIndex: 1,
     });
@@ -86,9 +89,9 @@ describe('DispositionMenu component', () => {
   });
 
   it(`renders the edit button for users with property edit permissions`, () => {
-    const { getByTitle } = setup(
+    const { getByTitle, queryByTestId } = setup(
       {
-        dispositionFileId: 1,
+        dispositionFile: mockDispositionFileResponse() as unknown as Api_DispositionFile,
         items: testData,
         selectedIndex: 1,
       },
@@ -100,13 +103,15 @@ describe('DispositionMenu component', () => {
 
     userEvent.click(button);
 
+    const icon = queryByTestId('tooltip-icon-1-summary-cannot-edit-tooltip');
     expect(onShowPropertySelector).toHaveBeenCalled();
+    expect(icon).toBeNull();
   });
 
   it(`doesn't render the edit button for users without edit permissions`, () => {
-    const { queryByTitle } = setup(
+    const { queryByTitle, queryByTestId } = setup(
       {
-        dispositionFileId: 1,
+        dispositionFile: mockDispositionFileResponse() as unknown as Api_DispositionFile,
         items: testData,
         selectedIndex: 1,
       },
@@ -114,6 +119,46 @@ describe('DispositionMenu component', () => {
     );
 
     const button = queryByTitle('Change properties');
+    const icon = queryByTestId('tooltip-icon-1-summary-cannot-edit-tooltip');
     expect(button).toBeNull();
+    expect(icon).toBeNull();
+  });
+
+  it(`renders the warning icon instead of the edit button for users`, () => {
+    const { queryByTitle, queryByTestId } = setup(
+      {
+        dispositionFile: {
+          ...(mockDispositionFileResponse() as unknown as Api_DispositionFile),
+          fileStatusTypeCode: { id: DispositionFileStatus.Complete },
+        },
+        items: testData,
+        selectedIndex: 1,
+      },
+      { claims: [Claims.DISPOSITION_EDIT] },
+    );
+
+    const button = queryByTitle('Change properties');
+    const icon = queryByTestId('tooltip-icon-1-summary-cannot-edit-tooltip');
+    expect(button).toBeNull();
+    expect(icon).toBeVisible();
+  });
+
+  it(`it does not render the warning icon instead of the edit button for system admins`, () => {
+    const { queryByTitle, queryByTestId } = setup(
+      {
+        dispositionFile: {
+          ...(mockDispositionFileResponse() as unknown as Api_DispositionFile),
+          fileStatusTypeCode: { id: DispositionFileStatus.Complete },
+        },
+        items: testData,
+        selectedIndex: 1,
+      },
+      { claims: [Claims.DISPOSITION_EDIT], roles: [Roles.SYSTEM_ADMINISTRATOR] },
+    );
+
+    const button = queryByTitle('Change properties');
+    const icon = queryByTestId('tooltip-icon-1-summary-cannot-edit-tooltip');
+    expect(button).toBeVisible();
+    expect(icon).toBeNull();
   });
 });

@@ -23,9 +23,6 @@ public partial class PimsDspPurchAgentHist
     [Column("DSP_PURCH_AGENT_ID")]
     public long DspPurchAgentId { get; set; }
 
-    [Column("DISPOSITION_SALE_ID")]
-    public long DispositionSaleId { get; set; }
-
     [Column("PERSON_ID")]
     public long? PersonId { get; set; }
 

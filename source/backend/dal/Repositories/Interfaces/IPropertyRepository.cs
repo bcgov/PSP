@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
+using Pims.Dal.Models;
 
 namespace Pims.Dal.Repositories
 {
@@ -31,8 +32,10 @@ namespace Pims.Dal.Repositories
 
         void Delete(PimsProperty property);
 
-        PimsProperty TransferFileProperty(PimsProperty property, bool isOwned, bool isPropertyOfInterest = false);
+        PimsProperty TransferFileProperty(PimsProperty property, PropertyOwnershipState state);
 
         HashSet<long> GetMatchingIds(PropertyFilterCriteria filter);
+
+        short GetPropertyRegion(long id);
     }
 }

@@ -22,6 +22,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
             documentFiles = UploadFileDocuments();
             documentsRowStart = 0;
             documentsRowsQuantity = 0;
+
+            digitalDocumentList = new List<DigitalDocument>();
         }
 
         [StepDefinition(@"I create Digital Documents for a ""(.*)"" row number (.*)")]
@@ -232,7 +234,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateDigitalDocumentIndex(int rowNumber)
         {
-            DataTable documentsIndexSheet = ExcelDataContext.GetInstance().Sheets["DocumentsIndex"];
+            DataTable documentsIndexSheet = ExcelDataContext.GetInstance().Sheets["DocumentsIndex"]!;
             ExcelDataContext.PopulateInCollection(documentsIndexSheet);
 
             digitalDocumentList = new List<DigitalDocument>();
@@ -248,7 +250,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateDigitalDocumentsDetails(int rowNumber)
         {
-            DataTable documentDetailsSheet = ExcelDataContext.GetInstance().Sheets["DocumentsDetails"];
+            DataTable documentDetailsSheet = ExcelDataContext.GetInstance().Sheets["DocumentsDetails"]!;
             ExcelDataContext.PopulateInCollection(documentDetailsSheet);
 
             DigitalDocument digitalDocument = new DigitalDocument();

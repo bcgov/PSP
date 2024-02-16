@@ -224,7 +224,7 @@ namespace PIMS.Tests.Automation.PageObjects
             if(acquisition.PhysicalFileStatus != "")
                 ChooseSpecificSelectOption(acquisitionFilePhysicalStatusSelect, acquisition.PhysicalFileStatus);
 
-            if (acquisition.AcquisitionTeam.Count > 0)
+            if (acquisition.AcquisitionTeam!.Count > 0)
             {
                 for (var i = 0; i < acquisition.AcquisitionTeam.Count; i++)
                 {
@@ -232,7 +232,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 }
             }
 
-            if (acquisition.AcquisitionOwners.Count > 0)
+            if (acquisition.AcquisitionOwners!.Count > 0)
             {
                 for (var i = 0; i < acquisition.AcquisitionOwners.Count; i++)
                 {
@@ -356,7 +356,7 @@ namespace PIMS.Tests.Automation.PageObjects
             if (acquisition.PhysicalFileStatus != "") 
                 ChooseSpecificSelectOption(acquisitionFilePhysicalStatusSelect, acquisition.PhysicalFileStatus);
 
-            if (acquisition.AcquisitionTeam.Count > 0)
+            if (acquisition.AcquisitionTeam!.Count > 0)
             {
                 while (webDriver.FindElements(acquisitionFileTeamMembersGroup).Count > 0)
                     DeleteFirstStaffMember();
@@ -367,7 +367,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 }
             }
 
-            if (acquisition.AcquisitionOwners.Count > 0)
+            if (acquisition.AcquisitionOwners!.Count > 0)
             {
                 while (webDriver.FindElements(acquisitionFileOwnersGroup).Count > 0)
                     DeleteOwner();
@@ -449,14 +449,9 @@ namespace PIMS.Tests.Automation.PageObjects
                     webDriver.SwitchTo().Alert().Accept();
                 }
             }
-            catch (WebDriverTimeoutException e)
+            catch (WebDriverTimeoutException)
             {
-                if (webDriver.FindElements(acquisitionFileConfirmationModal).Count() > 0)
-                {
-                    Assert.Equal("Unsaved Changes", sharedModals.ModalHeader());
-                    Assert.Equal("You have made changes on this form. Do you wish to leave without saving?", sharedModals.ModalContent());
-                    sharedModals.ModalClickOKBttn();
-                }
+                sharedModals.CancelActionModal();
             }
         }
 
@@ -553,7 +548,7 @@ namespace PIMS.Tests.Automation.PageObjects
             //Team members
             AssertTrueIsDisplayed(acquisitionFileTeamSubtitle);
 
-            if (acquisition.AcquisitionTeam.Count > 0)
+            if (acquisition.AcquisitionTeam!.Count > 0)
             {
                 var index = 1;
 
@@ -575,7 +570,7 @@ namespace PIMS.Tests.Automation.PageObjects
             //Owners
             AssertTrueIsDisplayed(acquisitionFileOwnerSubtitle);
 
-            if (acquisition.AcquisitionOwners.Count > 0)
+            if (acquisition.AcquisitionOwners!.Count > 0)
             {
                 for (var i = 0; i < acquisition.AcquisitionOwners.Count; i++)
                 {
@@ -610,8 +605,8 @@ namespace PIMS.Tests.Automation.PageObjects
                         AssertTrueElementContains(By.XPath("//span[@data-testid='owner["+ i +"]']/div[4]/div[2]"), acquisition.AcquisitionOwners[i].MailCity);
                     if (acquisition.AcquisitionOwners[i].MailProvince != "")
                         AssertTrueElementContains(By.XPath("//span[@data-testid='owner["+ i +"]']/div[4]/div[2]"), acquisition.AcquisitionOwners[i].MailProvince);
-                    //if (acquisition.AcquisitionOwners[i].MailOtherCountry != "")
-                        //AssertTrueElementContains(By.XPath("//span[@data-testid='owner["+ i +"]']/div[4]/div[2]"), acquisition.AcquisitionOwners[i].MailOtherCountry);
+                    if (acquisition.AcquisitionOwners[i].MailOtherCountry != "")
+                        AssertTrueElementContains(By.XPath("//span[@data-testid='owner["+ i +"]']/div[4]/div[2]"), "Other - " + acquisition.AcquisitionOwners[i].MailOtherCountry);
                     if (acquisition.AcquisitionOwners[i].MailPostalCode != "")
                         AssertTrueElementContains(By.XPath("//span[@data-testid='owner["+ i +"]']/div[4]/div[2]"), acquisition.AcquisitionOwners[i].MailPostalCode);
                 }

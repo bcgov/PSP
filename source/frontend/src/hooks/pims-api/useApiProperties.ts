@@ -3,7 +3,7 @@ import React from 'react';
 
 import { IPaginateProperties } from '@/constants/API';
 import { IPropertyFilter } from '@/features/properties/filter/IPropertyFilter';
-import { IPagedItems, IProperty } from '@/interfaces';
+import { IPagedItems } from '@/interfaces';
 import { Api_PropertyFilterCriteria } from '@/models/api/ProjectFilterCriteria';
 import { Api_Property, Api_PropertyAssociations } from '@/models/api/Property';
 
@@ -19,7 +19,7 @@ export const useApiProperties = () => {
   return React.useMemo(
     () => ({
       getPropertiesPagedApi: (params: IPropertyFilter | null) =>
-        api.get<IPagedItems<IProperty>>(
+        api.get<IPagedItems<Api_Property>>(
           `/properties/search?${params ? queryString.stringify(params) : ''}`,
         ),
       getMatchingPropertiesApi: (params: Api_PropertyFilterCriteria) =>
