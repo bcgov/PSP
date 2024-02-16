@@ -8,7 +8,7 @@ import {
   PropertyStatusTypes,
   PropertyTenureTypes,
 } from '@/constants/index';
-import { IAddress, IOrganization, IPerson, IProperty } from '@/interfaces';
+import { IAddress, IOrganization, IPerson } from '@/interfaces';
 import { BillingInfo, LtsaOrders, OrderParent } from '@/interfaces/ltsaModels';
 import { ApiGen_Concepts_AccessRequest } from '@/models/api/generated/ApiGen_Concepts_AccessRequest';
 import { ApiGen_Concepts_Address } from '@/models/api/generated/ApiGen_Concepts_Address';
