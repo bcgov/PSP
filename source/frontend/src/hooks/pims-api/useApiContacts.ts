@@ -26,8 +26,6 @@ export const useApiContacts = () => {
         ),
       // This endpoint returns contact data in read-only form, including formatting some fields; e.g. full name = first + middle + last
       getContact: (id: string) => api.get<IContact>(`/contacts/${id}`),
-      // This is different than getContact above. This endpoints returns person data that can be edited in a form
-      // getPerson: (id: number) => api.get<IEditablePerson>(`/persons/${id}`),
       getPersonConcept: (id: number) => api.get<ApiGen_Concepts_Person>(`/persons/concept/${id}`),
       postPerson: (person: ApiGen_Concepts_Person, userOverride: boolean) =>
         api.post<ApiGen_Concepts_Person>(`/persons?userOverride=${userOverride}`, person),

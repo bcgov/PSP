@@ -7,7 +7,8 @@ import { Claims } from '@/constants/claims';
 import { useApiGeocoder } from '@/hooks/pims-api/useApiGeocoder';
 import { useApiProperties } from '@/hooks/pims-api/useApiProperties';
 import { IProperty } from '@/interfaces';
-import { mockParcel2 } from '@/mocks/filterData.mock';
+import { mockApiProperty } from '@/mocks/filterData.mock';
+import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { cleanup, deferred, render, RenderOptions, waitFor } from '@/utils/test-utils';
 
@@ -30,7 +31,7 @@ jest.mock('@/hooks/pims-api/useApiProperties');
 // This will spoof the active parcel (the one that will populate the popup details)
 const mockDetails = {
   propertyDetail: {
-    ...mockParcel2,
+    ...mockApiProperty,
     latitude: 48,
     longitude: -123,
   },
@@ -83,7 +84,7 @@ const baseMapLayers = {
 
 interface TestProps {
   properties: IProperty[];
-  selectedProperty: IProperty | null;
+  selectedProperty: ApiGen_Concepts_Property | null;
   disableMapFilterBar: boolean;
   zoom?: number;
   done?: () => void;
