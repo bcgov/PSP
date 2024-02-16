@@ -112,16 +112,8 @@ export const useRouterFilter = <T extends object>({
       }
       setLoaded(true);
     }
-  }, [
-    exactPath,
-    filter,
-    history.location.pathname,
-    history.location.search,
-    key,
-    savedFilter,
-    setFilter,
-    setSorting,
-  ]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [history.location.pathname]);
 
   // If the 'filter' changes save it to redux store and update the URL.
   useEffect(() => {

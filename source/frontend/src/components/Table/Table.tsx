@@ -80,7 +80,7 @@ const getStyles = <T extends object>(
   hideHeaders?: boolean,
 ) => {
   // override column width when percentage value is provided - react-table deals with pixel values
-  const colSize = !!column?.responsive
+  const colSize = column?.responsive
     ? {
         width: `${column?.width}%`,
       }
@@ -115,7 +115,7 @@ interface ExternalSort<T extends object> {
   setSort: (sort: TableSort<T>) => void;
 }
 
-export interface TableProps<T extends object = {}, TFilter extends object = {}>
+export interface TableProps<T extends object = object, TFilter extends object = object>
   extends TableOptions<T> {
   name: string;
   showSelectedRowCount?: boolean;
@@ -133,7 +133,7 @@ export interface TableProps<T extends object = {}, TFilter extends object = {}>
   externalSort?: ExternalSort<T>;
   noRowsMessage?: string;
   selectedRows?: T[];
-  setSelectedRows?: Function;
+  setSelectedRows?: (rows: T[]) => void;
   lockPageSize?: boolean;
   detailsPanel?: DetailsOptions<T>;
   footer?: boolean;
@@ -200,7 +200,7 @@ const IndeterminateCheckbox = React.forwardRef(
 
     const onChainedChange = (e: any) => {
       rest.onChange && !allDataRef && rest.onChange(e);
-      const currentSelected = selectedRef?.current ? [...selectedRef?.current] : [];
+      const currentSelected = selectedRef?.current ? [...(selectedRef?.current ?? [])] : [];
       if (isHeaderCheck) {
         if (e.target.checked && !indeterminate) {
           currentSelected.push(...(allDataRef?.current ?? []));
@@ -234,7 +234,7 @@ export interface IIdentifiedObject {
   id?: number | string | null;
 }
 
-const validateProps = <T extends IIdentifiedObject, TFilter extends object = {}>(
+const validateProps = <T extends IIdentifiedObject, TFilter extends object = object>(
   props: React.PropsWithChildren<TableProps<T, TFilter>>,
 ) => {
   if (props.hideToolbar === true && props.manualPagination === false) {
@@ -254,7 +254,7 @@ const validateProps = <T extends IIdentifiedObject, TFilter extends object = {}>
  * A table component. Supports sorting, filtering and paging.
  * Uses `react-table` to handle table logic.
  */
-export const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
+export const Table = <T extends IIdentifiedObject, TFilter extends object = object>(
   props: PropsWithChildren<TableProps<T, TFilter>>,
 ): ReactElement => {
   const filterFormRef = useRef<FormikProps<any>>();
@@ -315,7 +315,7 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
   }, [filterFormRef, props.filter]);
 
   const sortBy = useMemo(() => {
-    return !!externalSort?.sort
+    return externalSort?.sort
       ? keys(externalSort.sort).map(key => ({
           id: key,
           desc: (externalSort.sort as any)[key] === 'desc',
@@ -470,7 +470,7 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
             const next = getNextSortDirection(column);
             !!externalSort &&
               handleSortChange(column.id, next, externalSort.sort, externalSort.setSort);
-            if (!!next) {
+            if (next) {
               toggleSortBy(column.id, next === 'desc', true);
             } else {
               column.clearSortBy();
@@ -503,7 +503,7 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
                   }
 
                   actions.resetForm(nextState);
-                  if (!!props.onFilterChange) {
+                  if (props.onFilterChange) {
                     props.onFilterChange(nextState);
                   }
                 }}
@@ -523,6 +523,7 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
               'th',
               columnProps.isSorted ? (columnProps.isSortedDesc ? 'sort-desc' : 'sort-asc') : '',
             )}
+            key={`th-header-${columnProps.id}`}
           >
             {renderHeaderCell(columnProps)}
           </div>
@@ -591,10 +592,18 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
     return (
       <div className="tfoot tfoot-light">
         {footerGroups.map(footerGroup => (
-          <div {...footerGroup.getHeaderGroupProps()} className="tr">
+          <div
+            {...footerGroup.getHeaderGroupProps()}
+            className="tr"
+            key={`tr-footer-${footerGroup.id}`}
+          >
             {footerGroup.headers.map(
-              (column: ColumnInstanceWithProps<T> & { Footer?: Function }) => (
-                <div {...column.getHeaderProps(headerPropsGetter)} className="th">
+              (column: ColumnInstanceWithProps<T> & { Footer?: React.FC<{ properties: T[] }> }) => (
+                <div
+                  {...column.getHeaderProps(headerPropsGetter)}
+                  className="th"
+                  key={`th-footer-${footerGroup.id}`}
+                >
                   {column.Footer ? <column.Footer properties={map(page, 'original')} /> : null}
                 </div>
               ),
@@ -675,6 +684,7 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
                   onClick={() =>
                     props.onRowClick && cell.column.clickable && props.onRowClick(row.original)
                   }
+                  key={`td-cell-${cell.column.id}`}
                 >
                   {cell.render('Cell')}
                 </div>
@@ -701,7 +711,7 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
       </div>
     );
 
-    return !!renderBodyComponent ? renderBodyComponent({ body }) : body;
+    return renderBodyComponent ? renderBodyComponent({ body }) : body;
   }, [
     props.loading,
     props.detailsPanel,
@@ -720,9 +730,9 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
     pageIndex,
   ]);
 
-  var canShowTotals: boolean = false;
-  var initialCount: number = -1;
-  var finalCount: number = -1;
+  let canShowTotals = false;
+  let initialCount = -1;
+  let finalCount = -1;
   if (totalItems !== undefined && pageSize !== undefined && pageIndex !== undefined) {
     canShowTotals = true;
     initialCount = pageSize * pageIndex + 1;
@@ -739,12 +749,16 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = {}>(
       >
         <div className="thead thead-light">
           {headerGroups.map(headerGroup => (
-            <div {...headerGroup.getHeaderGroupProps()} className="tr">
+            <div
+              {...headerGroup.getHeaderGroupProps()}
+              className="tr"
+              key={`tr-head-${headerGroup.id}`}
+            >
               {filterable ? (
                 <Formik
                   initialValues={props.filter || {}}
                   onSubmit={values => {
-                    if (!!props.onFilterChange) {
+                    if (props.onFilterChange) {
                       props.onFilterChange(values);
                     }
                   }}
