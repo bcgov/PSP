@@ -229,6 +229,8 @@ namespace Pims.Api.Services
 
             acquisitionFile.AcquisitionFileStatusTypeCode = "ACTIVE";
             MatchProperties(acquisitionFile, userOverrides);
+            ValidatePropertyRegions(acquisitionFile);
+
             PopulateAcquisitionChecklist(acquisitionFile);
 
             var newAcqFile = _acqFileRepository.Add(acquisitionFile);
@@ -295,6 +297,8 @@ namespace Pims.Api.Services
             ValidateVersion(acquisitionFile.Internal_Id, acquisitionFile.ConcurrencyControlNumber);
 
             MatchProperties(acquisitionFile, userOverrides);
+
+            ValidatePropertyRegions(acquisitionFile);
 
             AcquisitionStatusTypes? currentAcquisitionStatus = GetCurrentAcquisitionStatus(acquisitionFile.Internal_Id);
             if (!_statusSolver.CanEditProperties(currentAcquisitionStatus) && !_user.HasPermission(Permissions.SystemAdmin))
@@ -871,6 +875,19 @@ namespace Pims.Api.Services
                     && currentAcquisitionFile.PimsInterestHolders.Any(x => x.Internal_Id.Equals(compReq.InterestHolderId)))
                 {
                     throw new ForeignKeyDependencyException("Acquisition File Interest Holder can not be removed since it's assigned as a payee for a compensation requisition");
+                }
+            }
+        }
+
+        private void ValidatePropertyRegions(PimsAcquisitionFile acquisitionFile)
+        {
+            var userRegions = _user.GetUserRegions(_userRepository);
+            foreach (var acquisitionProperty in acquisitionFile.PimsPropertyAcquisitionFiles)
+            {
+                var propertyRegion = acquisitionProperty.Property?.RegionCode ?? _propertyRepository.GetPropertyRegion(acquisitionProperty.PropertyId);
+                if (!userRegions.Contains(propertyRegion))
+                {
+                    throw new BadRequestException("<p>You cannot add a property that is outside of your user account region(s).</p><p>Please select a different property or contact admin at pims@gov.bc.ca to add the required region to your user account settings.</p>");
                 }
             }
         }
