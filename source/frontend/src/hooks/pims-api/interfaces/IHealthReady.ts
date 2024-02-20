@@ -6,7 +6,7 @@ export interface IHealthReady {
   // Dictionary of health information.
   entries: {
     sqlserver: {
-      data: {};
+      data: object;
       // Length of time this service has been healthy.
       duration: Date;
       // Status of the liveness service.

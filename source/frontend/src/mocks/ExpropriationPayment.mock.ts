@@ -2,8 +2,8 @@ import { ApiGen_Concepts_ExpropriationPayment } from '@/models/api/generated/Api
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 
 export const mockGetExpropriationPaymentApi = (
-  id: number = 1,
-  acquisitionFileId: number = 1,
+  id = 1,
+  acquisitionFileId = 1,
 ): ApiGen_Concepts_ExpropriationPayment => ({
   id,
   acquisitionFileId,

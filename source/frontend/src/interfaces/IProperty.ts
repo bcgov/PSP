@@ -64,13 +64,12 @@ export interface IProperty {
   rowVersion?: number;
 }
 
-export interface IFormProperty
-  extends ExtendOverride<
-    IProperty,
-    {
-      address?: IAddress;
-      landArea?: number;
-      landLegalDescription?: string;
-      coordinates?: string;
-    }
-  > {}
+export type IFormProperty = ExtendOverride<
+  IProperty,
+  {
+    address?: IAddress;
+    landArea?: number;
+    landLegalDescription?: string;
+    coordinates?: string;
+  }
+>;

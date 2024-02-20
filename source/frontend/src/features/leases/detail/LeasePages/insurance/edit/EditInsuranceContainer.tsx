@@ -25,7 +25,7 @@ const InsuranceEditContainer: React.FunctionComponent<
 > = ({ leaseId, insuranceList, insuranceTypes, onSave, formikRef }) => {
   const handleOnChange = (e: any, codeType: any, arrayHelpers: any) => {
     if (formikRef.current) {
-      let found = initialInsurances.findIndex(x => x.insuranceType?.id === codeType.id);
+      const found = initialInsurances.findIndex(x => x.insuranceType?.id === codeType.id);
 
       if (e.target.checked) {
         arrayHelpers.push(codeType.id);
@@ -39,7 +39,7 @@ const InsuranceEditContainer: React.FunctionComponent<
   };
 
   const initialInsurances = insuranceTypes.map<FormInsurance>(x => {
-    let foundInsurance = insuranceList.find(i => i.insuranceType?.id === x.id);
+    const foundInsurance = insuranceList.find(i => i.insuranceType?.id === x.id);
     if (foundInsurance) {
       return FormInsurance.createFromModel(foundInsurance);
     } else {

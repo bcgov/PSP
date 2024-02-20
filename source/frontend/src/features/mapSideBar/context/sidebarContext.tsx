@@ -40,40 +40,40 @@ export interface ISideBarContext {
 
 export const SideBarContext = React.createContext<ISideBarContext>({
   file: undefined,
-  setFile: (file?: TypedFile) => {
+  setFile: () => {
     throw Error('setFile function not defined');
   },
   fileLoading: false,
-  setFileLoading: (loading: boolean) => {
+  setFileLoading: () => {
     throw Error('setFileLoading function not defined');
   },
   resetFilePropertyLocations: () => {
     throw Error('resetFilePropertyLocations function not defined');
   },
   staleFile: false,
-  setStaleFile: (stale: boolean) => {
+  setStaleFile: () => {
     throw Error('setStaleFile function not defined');
   },
-  getFilePropertyIndexById: (filePropertyId: number) => {
+  getFilePropertyIndexById: () => {
     throw Error('setStaleFile function not defined');
   },
   fullWidth: false,
-  setFullWidth: (fullWidth: boolean) => {
+  setFullWidth: () => {
     throw Error('setFullWidth function not defined');
   },
-  setProject: (project?: ApiGen_Concepts_Project) => {
+  setProject: () => {
     throw Error('setProject function not defined');
   },
   projectLoading: false,
-  setProjectLoading: (loading: boolean) => {
+  setProjectLoading: () => {
     throw Error('setProjectLoading function not defined');
   },
   lastUpdatedBy: null,
-  setLastUpdatedBy: (lastUpdatedBy: Api_LastUpdatedBy | null) => {
+  setLastUpdatedBy: () => {
     throw Error('setLastUpdatedBy function not defined');
   },
   staleLastUpdatedBy: false,
-  setStaleLastUpdatedBy: (loading: boolean) => {
+  setStaleLastUpdatedBy: () => {
     throw Error('setStaleLastUpdatedBy function not defined');
   },
 });

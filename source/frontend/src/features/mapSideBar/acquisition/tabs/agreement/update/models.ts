@@ -5,26 +5,26 @@ import { isValidIsoDateTime } from '@/utils';
 import { stringToNull, stringToNumberOrNull, toTypeCodeNullable } from '@/utils/formUtils';
 
 export class SingleAgreementFormModel {
-  public agreementId: number = 0;
+  public agreementId = 0;
 
-  public agreementTypeCode: string = '';
-  public agreementTypeDescription: string = '';
-  public agreementDate: string = '';
-  public completionDate: string = '';
-  public terminationDate: string = '';
-  public commencementDate: string = '';
-  public possessionDate: string = '';
-  public depositAmount: string = '';
-  public noLaterThanDays: string = '';
-  public purchasePrice: string = '';
-  public legalSurveyPlanNum: string = '';
-  public offerDate: string = '';
-  public expiryDateTime: string = '';
-  public signedDate: string = '';
-  public inspectionDate: string = '';
-  public agreementStatusTypeCode: string = 'DRAFT';
-  public agreementStatusTypeDescription: string = '';
-  public cancellationNote: string = '';
+  public agreementTypeCode = '';
+  public agreementTypeDescription = '';
+  public agreementDate = '';
+  public completionDate = '';
+  public terminationDate = '';
+  public commencementDate = '';
+  public possessionDate = '';
+  public depositAmount = '';
+  public noLaterThanDays = '';
+  public purchasePrice = '';
+  public legalSurveyPlanNum = '';
+  public offerDate = '';
+  public expiryDateTime = '';
+  public signedDate = '';
+  public inspectionDate = '';
+  public agreementStatusTypeCode = 'DRAFT';
+  public agreementStatusTypeDescription = '';
+  public cancellationNote = '';
 
   public rowVersion: number | null = null;
 

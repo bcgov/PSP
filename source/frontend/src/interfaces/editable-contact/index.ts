@@ -76,46 +76,44 @@ export interface IOrganizationLink {
   text: string;
 }
 
-export interface IEditablePersonForm
-  extends ExtendOverride<
-    IEditablePerson,
-    {
-      isDisabled: string | boolean;
-      emailContactMethods: IEditableContactMethodForm[];
-      phoneContactMethods: IEditableContactMethodForm[];
-      mailingAddress: IEditablePersonAddressForm;
-      propertyAddress: IEditablePersonAddressForm;
-      billingAddress: IEditablePersonAddressForm;
-    }
-  > {}
+export type IEditablePersonForm = ExtendOverride<
+  IEditablePerson,
+  {
+    isDisabled: string | boolean;
+    emailContactMethods: IEditableContactMethodForm[];
+    phoneContactMethods: IEditableContactMethodForm[];
+    mailingAddress: IEditablePersonAddressForm;
+    propertyAddress: IEditablePersonAddressForm;
+    billingAddress: IEditablePersonAddressForm;
+  }
+>;
 
-export interface IEditableOrganizationForm
-  extends ExtendOverride<
-    IEditableOrganization,
-    {
-      persons: Partial<IContactPerson>[];
-      emailContactMethods: IEditableContactMethodForm[];
-      phoneContactMethods: IEditableContactMethodForm[];
-      mailingAddress: IEditableOrganizationAddressForm;
-      propertyAddress: IEditableOrganizationAddressForm;
-      billingAddress: IEditableOrganizationAddressForm;
-    }
-  > {}
+export type IEditableOrganizationForm = ExtendOverride<
+  IEditableOrganization,
+  {
+    persons: Partial<IContactPerson>[];
+    emailContactMethods: IEditableContactMethodForm[];
+    phoneContactMethods: IEditableContactMethodForm[];
+    mailingAddress: IEditableOrganizationAddressForm;
+    propertyAddress: IEditableOrganizationAddressForm;
+    billingAddress: IEditableOrganizationAddressForm;
+  }
+>;
 
-export interface IEditableContactMethodForm
-  extends ExtendOverride<IEditableContactMethod, { contactMethodTypeCode: string }> {}
+export type IEditableContactMethodForm = ExtendOverride<
+  IEditableContactMethod,
+  { contactMethodTypeCode: string }
+>;
 
-export interface IEditablePersonAddressForm
-  extends ExtendOverride<
-    IEditablePersonAddress,
-    { countryId: NumberFieldValue; provinceId: NumberFieldValue; addressTypeId: string }
-  > {}
+export type IEditablePersonAddressForm = ExtendOverride<
+  IEditablePersonAddress,
+  { countryId: NumberFieldValue; provinceId: NumberFieldValue; addressTypeId: string }
+>;
 
-export interface IEditableOrganizationAddressForm
-  extends ExtendOverride<
-    IEditableOrganizationAddress,
-    { countryId: NumberFieldValue; provinceId: NumberFieldValue; addressTypeId: string }
-  > {}
+export type IEditableOrganizationAddressForm = ExtendOverride<
+  IEditableOrganizationAddress,
+  { countryId: NumberFieldValue; provinceId: NumberFieldValue; addressTypeId: string }
+>;
 
 export const getDefaultAddress = (addressType: AddressTypes) =>
   ({

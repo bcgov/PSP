@@ -65,7 +65,7 @@ export const PropertyContainer: React.FunctionComponent<
     name: 'Value',
   });
 
-  var defaultTab = InventoryTabNames.title;
+  let defaultTab = InventoryTabNames.title;
 
   // TODO: PSP-4406 this should have a loading flag
   const propertyViewForm = usePropertyDetails(composedPropertyState.apiWrapper?.response);

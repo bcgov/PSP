@@ -101,7 +101,7 @@ export const columns = ({ municipalities }: Props): ColumnWithProps<IProperty>[]
               <Link
                 to={`/mapview/sidebar/property/${
                   cellProps.row.original.id
-                }?pid=${cellProps.row.original.pid?.replace(/-/g, '')}`}
+                }?pid=${cellProps.row.original.pid?.toString().replace(/-/g, '')}`}
               >
                 <FaEye />
               </Link>
@@ -113,7 +113,7 @@ export const columns = ({ municipalities }: Props): ColumnWithProps<IProperty>[]
               <Link
                 to={`/mapview/sidebar/property/${
                   cellProps.row.original.id
-                }?pid=${cellProps.row.original.pid?.replace(/-/g, '')}`}
+                }?pid=${cellProps.row.original.pid?.toString().replace(/-/g, '')}`}
                 target="_blank"
                 rel="noopener noreferrer"
               >

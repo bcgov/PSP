@@ -13,7 +13,7 @@ interface HelpRequestFormProps {
   /** Form values that should overwrite the default form values */
   formValues: IHelpForm;
   /** Call this function whenever the form fields are updated to keep the mailto in sync with this form */
-  setMailto: Function;
+  setMailto: (mailto: { subject: string; body: string; email: string }) => void;
 }
 
 interface IHelpRequestForm extends IHelpForm {
@@ -46,6 +46,7 @@ const HelpRequestForm: React.FunctionComponent<React.PropsWithChildren<HelpReque
           const mailto = {
             subject: `Help Desk Request - ${formValues.page}`,
             body: values.description,
+            email: values.email,
           };
           setMailto(mailto);
         }}

@@ -108,8 +108,12 @@ describe('TypeaheadSelect component', () => {
 
     const input = await findInput();
     await act(async () => input.focus());
-    await act(async () => userEvent.keyboard('{arrowdown}'));
-    await act(async () => userEvent.keyboard('{Enter}'));
+    await act(async () => {
+      userEvent.keyboard('{arrowdown}');
+    });
+    await act(async () => {
+      userEvent.keyboard('{Enter}');
+    });
 
     expect(onChange).toHaveBeenCalledTimes(1);
     expect(getFormikRef().current?.values?.country).toBe(countries[0]);

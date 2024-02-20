@@ -55,13 +55,13 @@ export const mockProjects = (): ApiGen_Concepts_Project[] => [
 ];
 
 export const mockProjectPostResponse = (
-  id: number = 1,
-  rowVersion: number = 1,
-  description: string = 'TRANS-CANADA HWY - 10',
+  id = 1,
+  rowVersion = 1,
+  description = 'TRANS-CANADA HWY - 10',
   code: string,
-  regionCodeId: number = 1,
-  statusCode: string = 'AC',
-  summary: string = 'NEW PROJECT',
+  regionCodeId = 1,
+  statusCode = 'AC',
+  summary = 'NEW PROJECT',
 ): ApiGen_Concepts_Project => ({
   id: id,
   rowVersion: rowVersion,

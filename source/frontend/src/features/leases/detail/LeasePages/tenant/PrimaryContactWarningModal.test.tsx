@@ -14,7 +14,7 @@ const history = createMemoryHistory();
 
 describe('PrimaryContactWarningModal component', () => {
   const setup = (
-    renderOptions: RenderOptions & { tenants?: FormTenant[]; saveCallback?: Function } = {},
+    renderOptions: RenderOptions & { tenants?: FormTenant[]; saveCallback?: () => void } = {},
   ) => {
     // render component under test
     const component = render(

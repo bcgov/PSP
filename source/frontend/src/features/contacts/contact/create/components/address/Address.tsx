@@ -35,9 +35,9 @@ export const Address: React.FunctionComponent<React.PropsWithChildren<IAddressPr
   const { setFieldValue, values } = useFormikContext();
   const countryId = getIn(values, withNameSpace(namespace, 'countryId'));
 
-  const line1Count = !!getIn(values, withNameSpace(namespace, 'streetAddress1')) ? 1 : 0;
-  const line2Count = !!getIn(values, withNameSpace(namespace, 'streetAddress2')) ? 1 : 0;
-  const line3Count = !!getIn(values, withNameSpace(namespace, 'streetAddress3')) ? 1 : 0;
+  const line1Count = getIn(values, withNameSpace(namespace, 'streetAddress1')) ? 1 : 0;
+  const line2Count = getIn(values, withNameSpace(namespace, 'streetAddress2')) ? 1 : 0;
+  const line3Count = getIn(values, withNameSpace(namespace, 'streetAddress3')) ? 1 : 0;
 
   addressLines = addressLines ?? line1Count + line2Count + line3Count;
 
@@ -46,13 +46,10 @@ export const Address: React.FunctionComponent<React.PropsWithChildren<IAddressPr
   }, [countryId, namespace, setFieldValue, setSelectedCountryId]);
 
   // clear associated fields (province, other country name) whenever country value is changed
-  const onCountryChanged = useCallback(
-    (e: React.ChangeEvent<HTMLSelectElement>) => {
-      setFieldValue(withNameSpace(namespace, 'provinceId'), '');
-      setFieldValue(withNameSpace(namespace, 'countryOther'), '');
-    },
-    [namespace, setFieldValue],
-  );
+  const onCountryChanged = useCallback(() => {
+    setFieldValue(withNameSpace(namespace, 'provinceId'), '');
+    setFieldValue(withNameSpace(namespace, 'countryOther'), '');
+  }, [namespace, setFieldValue]);
 
   // this counter determines how many address lines we render in the form; e.g. street1, street2, etc
   const { count, increment, decrement } = useCounter({

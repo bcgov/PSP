@@ -93,7 +93,7 @@ export const DocumentDetailContainer: React.FunctionComponent<
           detailResponse?.status === ApiGen_CodeTypes_ExternalResponseStatus.Success &&
           isMounted()
         ) {
-          let mayanMetadataResult = metadataResponse.payload?.results;
+          const mayanMetadataResult = metadataResponse.payload?.results;
 
           let mayanFileId: number | undefined = undefined;
           if (exists(mayanMetadataResult) && mayanMetadataResult.length > 0) {
@@ -129,7 +129,7 @@ export const DocumentDetailContainer: React.FunctionComponent<
             axiosResponse?.data.status === ApiGen_CodeTypes_ExternalResponseStatus.Success &&
             isMounted()
           ) {
-            let results = axiosResponse?.data.payload?.results;
+            const results = axiosResponse?.data.payload?.results;
             setDocumentTypeMetadataTypes(results || []);
           }
         }
@@ -145,7 +145,7 @@ export const DocumentDetailContainer: React.FunctionComponent<
 
   const onUpdateDocument = async (updateRequest: ApiGen_Requests_DocumentUpdateRequest) => {
     if (props.pimsDocument.id) {
-      let result = await updateDocument(props.pimsDocument.id, updateRequest);
+      const result = await updateDocument(props.pimsDocument.id, updateRequest);
       result && props.onUpdateSuccess();
     }
   };

@@ -1,4 +1,3 @@
-import React from 'react';
 import { FaRegBuilding, FaRegUser } from 'react-icons/fa';
 import { MdContactMail, MdEdit } from 'react-icons/md';
 import { Link, useHistory } from 'react-router-dom';

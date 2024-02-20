@@ -15,6 +15,7 @@ import { exists, isValidId, isValidString } from './utils';
  * @param name the name to append to the namespace, may either be a field name or an object within the form (if passing the namespace to a subform).
  * @param index optional index to append to the namespace and name, used for formik arrays.
  */
+// eslint-disable-next-line @typescript-eslint/ban-types
 export const withNameSpace: Function = (nameSpace?: string, name?: string, index?: number) => {
   return [nameSpace ?? '', `${index ?? ''}`, name].filter(x => x).join('.');
 };
@@ -138,7 +139,7 @@ export function toFinancialCode(
 export function toTypeCodeConcept(
   value: number | null | undefined,
 ): ApiGen_Concepts_CodeType | null {
-  return !!value ? { id: value, code: null, description: null, displayOrder: null } : null;
+  return value ? { id: value, code: null, description: null, displayOrder: null } : null;
 }
 
 export function stringToBoolean(value: string | boolean): boolean {

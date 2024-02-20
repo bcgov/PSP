@@ -105,13 +105,14 @@ export function formatApiPropertyManagementLease(
     case 0:
       return 'No';
 
-    case 1:
+    case 1: {
       const expiryDate = isValidIsoDateTime(base?.leaseExpiryDate)
         ? `(${prettyFormatDate(base!.leaseExpiryDate)})`
         : '';
       return `Yes ${expiryDate}`.trim();
-
-    default:
+    }
+    default: {
       return 'Multiple';
+    }
   }
 }

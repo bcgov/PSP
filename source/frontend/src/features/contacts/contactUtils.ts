@@ -201,8 +201,8 @@ function hasContactMethod(formContactMethod?: IEditableContactMethodForm): boole
 function hasAddress(formAddress?: IEditablePersonAddressForm): boolean {
   if (!formAddress) return false;
 
-  let { streetAddress1, addressTypeId, countryId, municipality, postal } = formAddress;
-  countryId = parseInt(countryId.toString()) || 0;
+  const { streetAddress1, addressTypeId, municipality, postal } = formAddress;
+  const countryId = parseInt(formAddress.countryId.toString()) || 0;
 
   return (
     streetAddress1 !== '' &&
@@ -286,10 +286,7 @@ export const getPrimaryContact = (
   );
 };
 
-export function formatContactSearchResult(
-  contact: IContactSearchResult,
-  defaultText: string = '',
-): string {
+export function formatContactSearchResult(contact: IContactSearchResult, defaultText = ''): string {
   let text = defaultText;
   if (isValidId(contact?.personId)) {
     text = formatNames([contact.firstName, contact.middleNames, contact.surname]);

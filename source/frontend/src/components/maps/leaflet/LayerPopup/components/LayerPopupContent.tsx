@@ -33,7 +33,9 @@ export const LayerPopupContent: React.FC<React.PropsWithChildren<IPopupContentPr
 
   return (
     <ListGroup>
-      {!rows.length && <b>No layer information at this location</b>}
+      {rows === undefined || rows.length === 0 ? (
+        <b>No layer information at this location</b>
+      ) : null}
       {rows.map(key => (
         <ListGroup.Item key={key}>
           <b>{config[key].label}</b> {config[key].display(data ?? {})}

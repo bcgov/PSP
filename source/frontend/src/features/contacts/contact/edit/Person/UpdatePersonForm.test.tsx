@@ -273,7 +273,7 @@ describe('UpdatePersonForm', () => {
       });
 
       // wait for re-render upon changing country to OTHER
-      await act(async () => fillInput(container, 'mailingAddress.countryId', 4, 'select'));
+      fillInput(container, 'mailingAddress.countryId', 4, 'select');
 
       await act(async () => {
         await fillInput(container, 'mailingAddress.countryOther', mockAddress.countryOther);
@@ -283,7 +283,7 @@ describe('UpdatePersonForm', () => {
       const save = getSaveButton();
       await act(async () => userEvent.click(save));
 
-      expect(updatePerson).toBeCalledWith(newValues);
+      expect(updatePerson).toHaveBeenCalledWith(newValues);
     });
   });
 });

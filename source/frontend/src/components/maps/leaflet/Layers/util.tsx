@@ -108,7 +108,7 @@ export const notOwnedPropertyIconSelect = L.icon({
  * @param properties
  */
 // TODO:is this necessary?
-export const createPoints = (properties: IProperty[], type: string = 'Point') =>
+export const createPoints = (properties: IProperty[], type = 'Point') =>
   properties.map(x => {
     return {
       type: 'Feature',
@@ -268,7 +268,6 @@ export function createClusterMarker<P extends GeoJsonProperties>(
   }
 
   const size = count < 100 ? 'small' : count < 1000 ? 'medium' : 'large';
-  let icon: DivIcon;
 
   if (!iconsCache[count]) {
     iconsCache[count] = new DivIcon({
@@ -278,7 +277,7 @@ export function createClusterMarker<P extends GeoJsonProperties>(
     });
   }
 
-  icon = iconsCache[count];
+  const icon = iconsCache[count];
   return new Marker(latlng, { icon });
 }
 

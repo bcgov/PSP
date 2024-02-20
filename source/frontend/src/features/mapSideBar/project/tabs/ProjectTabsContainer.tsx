@@ -14,7 +14,7 @@ export interface IProjectTabsContainerProps {
   project?: ApiGen_Concepts_Project;
   setProject: (project: ApiGen_Concepts_Project) => void;
   setContainerState: (value: Partial<ProjectContainerState>) => void;
-  onEdit?: () => {};
+  onEdit?: () => object;
   activeTab?: ProjectTabNames;
 }
 
@@ -72,7 +72,7 @@ const ProjectTabsContainer: React.FC<IProjectTabsContainerProps> = ({
     });
   }
 
-  var defaultTab = ProjectTabNames.projectDetails;
+  const defaultTab = ProjectTabNames.projectDetails;
 
   return (
     <ProjectTabs

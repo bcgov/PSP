@@ -15,10 +15,10 @@ import { exists, isValidIsoDateTime } from '@/utils';
 import { emptyStringtoNullable, toTypeCodeNullable } from '@/utils/formUtils';
 
 export class ActivityPropertyFormModel {
-  id: number = 0;
-  propertyActivityId: number = 0;
-  propertyId: number = 0;
-  rowVersion: number = 0;
+  id = 0;
+  propertyActivityId = 0;
+  propertyId = 0;
+  rowVersion = 0;
 
   toApi(): ApiGen_Concepts_PropertyActivityProperty {
     return {
@@ -48,21 +48,21 @@ export class ActivityPropertyFormModel {
 }
 
 export class ActivityInvoiceFormModel {
-  id: number = 0;
-  invoiceDateTime: string = '';
-  invoiceNum: string = '';
-  description: string = '';
+  id = 0;
+  invoiceDateTime = '';
+  invoiceNum = '';
+  description = '';
 
-  pretaxAmount: number = 0;
-  gstAmount: number = 0;
-  pstAmount: number = 0;
-  totalAmount: number = 0;
-  isPstRequired: boolean = false;
+  pretaxAmount = 0;
+  gstAmount = 0;
+  pstAmount = 0;
+  totalAmount = 0;
+  isPstRequired = false;
 
-  isDisabled: boolean = false;
-  propertyActivityId: number = 0;
-  propertyActivity: string = '';
-  rowVersion: number = 0;
+  isDisabled = false;
+  propertyActivityId = 0;
+  propertyActivity = '';
+  rowVersion = 0;
 
   toApi(propertyActivityId: number): ApiGen_Concepts_PropertyActivityInvoice {
     return {
@@ -109,25 +109,25 @@ export class ActivityInvoiceFormModel {
 }
 
 export class PropertyActivityFormModel {
-  id: number = 0;
-  activityTypeCode: string = '';
-  activitySubtypeCode: string = '';
-  activityStatusCode: string = '';
-  requestedDate: string = '';
-  completionDate: string = '';
-  description: string = '';
+  id = 0;
+  activityTypeCode = '';
+  activitySubtypeCode = '';
+  activityStatusCode = '';
+  requestedDate = '';
+  completionDate = '';
+  description = '';
   ministryContacts: (IContactSearchResult | null)[] = [null];
-  requestedSource: string = '';
+  requestedSource = '';
   involvedParties: (IContactSearchResult | null)[] = [null];
   serviceProvider: IContactSearchResult | null = null;
   invoices: ActivityInvoiceFormModel[] = [];
 
-  pretaxAmount: number = 0;
-  gstAmount: number = 0;
-  pstAmount: number = 0;
-  totalAmount: number = 0;
+  pretaxAmount = 0;
+  gstAmount = 0;
+  pstAmount = 0;
+  totalAmount = 0;
 
-  rowNumber: number = 0;
+  rowNumber = 0;
 
   activityProperties: ActivityPropertyFormModel[] = [];
 

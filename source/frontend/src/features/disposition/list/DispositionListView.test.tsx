@@ -107,7 +107,7 @@ describe('Disposition List View', () => {
   });
 
   it('searches by pid', async () => {
-    let results = mockPagedResults([
+    const results = mockPagedResults([
       {
         ...mockDispositionFileResponse(),
         fileProperties: [
@@ -160,7 +160,7 @@ describe('Disposition List View', () => {
   });
 
   it(`renders the 'add disposition' button when user has permissions`, async () => {
-    let results = mockPagedResults([]);
+    const results = mockPagedResults([]);
     getDispositionFilesPagedApiFn.mockResolvedValue(results);
     setup({ claims: [Claims.DISPOSITION_VIEW, Claims.DISPOSITION_ADD] });
     await waitForElementToBeRemoved(screen.getByTitle('table-loading'));
@@ -169,7 +169,7 @@ describe('Disposition List View', () => {
   });
 
   it(`hides the 'add disposition' button when user has no permissions`, async () => {
-    let results = mockPagedResults([]);
+    const results = mockPagedResults([]);
     getDispositionFilesPagedApiFn.mockResolvedValue(results);
     setup({ claims: [Claims.DISPOSITION_VIEW] });
     await waitForElementToBeRemoved(screen.getByTitle('table-loading'));
@@ -178,7 +178,7 @@ describe('Disposition List View', () => {
   });
 
   it('navigates to create disposition route when user clicks add button', async () => {
-    let results = mockPagedResults([]);
+    const results = mockPagedResults([]);
     getDispositionFilesPagedApiFn.mockResolvedValue(results);
     setup({ claims: [Claims.DISPOSITION_VIEW, Claims.DISPOSITION_ADD] });
     await waitForElementToBeRemoved(screen.getByTitle('table-loading'));
@@ -189,7 +189,7 @@ describe('Disposition List View', () => {
   });
 
   it('calls export function when export button clicked', async () => {
-    let results = mockPagedResults([]);
+    const results = mockPagedResults([]);
     getDispositionFilesPagedApiFn.mockResolvedValue(results);
     setup({ claims: [Claims.DISPOSITION_VIEW, Claims.DISPOSITION_ADD] });
     await waitForElementToBeRemoved(screen.getByTitle('table-loading'));

@@ -100,7 +100,7 @@ export const UpdateProperties: React.FunctionComponent<
       const response = await props.updateFileProperties(file, []);
 
       formikRef.current?.setSubmitting(false);
-      if (!!response?.fileName) {
+      if (response?.fileName) {
         if (file.fileProperties?.find(fp => !fp.property?.address && !fp.property?.id)) {
           toast.warn(
             'Address could not be retrieved for this property, it will have to be provided manually in property details tab',

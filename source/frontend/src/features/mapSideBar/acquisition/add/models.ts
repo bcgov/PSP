@@ -36,9 +36,9 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
   fileCheckList: ChecklistItemFormModel[] = [];
 
   project?: IAutocompletePrediction;
-  product: string = '';
+  product = '';
   fundingTypeCode?: string;
-  fundingTypeOtherDescription: string = '';
+  fundingTypeOtherDescription = '';
   ownerSolicitor: InterestHolderForm = new InterestHolderForm(InterestHolderType.OWNER_SOLICITOR);
   ownerRepresentative: InterestHolderForm = new InterestHolderForm(
     InterestHolderType.OWNER_REPRESENTATIVE,

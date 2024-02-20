@@ -45,7 +45,7 @@ const setup = (params?: {
   storeValues?: any;
   expropriationPaymentResponse?: ApiGen_Concepts_ExpropriationPayment;
 }) => {
-  var expropriationPaymentResponse = mockGetExpropriationPaymentApi();
+  let expropriationPaymentResponse = mockGetExpropriationPaymentApi();
   if (params?.expropriationPaymentResponse !== undefined) {
     expropriationPaymentResponse = params.expropriationPaymentResponse;
   }

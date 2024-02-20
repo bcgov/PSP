@@ -1,0 +1,33 @@
+{
+  "root": true,
+  "extends": [
+    "react-app",
+    "plugin:prettier/recommended",
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react/recommended",
+    "plugin:react/jsx-runtime"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint", "unused-imports", "eslint-plugin-react"],
+  "rules": {
+    "@typescript-eslint/strict-boolean-expressions": "off",
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "prefer-rest-params": "off",
+    "unused-imports/no-unused-imports": "error",
+    "unused-imports/no-unused-vars": [
+      "warn",
+      { "vars": "all", "varsIgnorePattern": "^_", "args": "after-used", "argsIgnorePattern": "^_" }
+    ],
+    "react/display-name": "off",
+    "react/prop-types": "off",
+    "no-prototype-builtins": "off"
+  },
+  "ignorePatterns": ["src/**/*.test.ts", "src/**/*.test.tsx"],
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  }
+}

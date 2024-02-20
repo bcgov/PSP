@@ -26,7 +26,7 @@ export const ExpropriationTabContainer: React.FunctionComponent<
 
   const fetchForms = useCallback(async () => {
     if (acquisitionFile.id) {
-      var retrieved = await getAcquisitionFileForm8s(acquisitionFile.id);
+      const retrieved = await getAcquisitionFileForm8s(acquisitionFile.id);
       if (retrieved) {
         setForm8s(retrieved);
       }
@@ -44,7 +44,10 @@ export const ExpropriationTabContainer: React.FunctionComponent<
   const handleForm8Deleted = async (form8Id: number) => {
     await deleteForm8(form8Id);
     setStaleLastUpdatedBy(true);
-    var updatedForms = await getAcquisitionFileForm8s(acquisitionFile.id!);
+    const updatedForms =
+      acquisitionFile?.id !== undefined &&
+      acquisitionFile.id >= 0 &&
+      (await getAcquisitionFileForm8s(acquisitionFile.id));
     if (updatedForms) {
       setForm8s(updatedForms);
     }

@@ -59,7 +59,7 @@ const GenerateFormContainer: React.FunctionComponent<
     if (exists(fileOwners)) {
       fileOwners.map(owner =>
         generateRecipientsList.push(
-          new LetterRecipientModel(owner.id!, 'OWNR', new Api_GenerateOwner(owner), owner),
+          new LetterRecipientModel(owner.id ?? 0, 'OWNR', new Api_GenerateOwner(owner), owner),
         ),
       );
     }
@@ -72,7 +72,7 @@ const GenerateFormContainer: React.FunctionComponent<
             if (person) {
               generateRecipientsList.push(
                 new LetterRecipientModel(
-                  holder.interestHolderId!,
+                  holder.interestHolderId ?? 0,
                   getInterestTypeString(holder.interestHolderType?.id ?? ''),
                   Api_GenerateOwner.fromApiPerson(person),
                   holder,
@@ -84,7 +84,7 @@ const GenerateFormContainer: React.FunctionComponent<
             if (org) {
               generateRecipientsList.push(
                 new LetterRecipientModel(
-                  holder.interestHolderId!,
+                  holder.interestHolderId ?? 0,
                   getInterestTypeString(holder.interestHolderType?.id ?? ''),
                   Api_GenerateOwner.fromApiOrganization(org),
                   holder,

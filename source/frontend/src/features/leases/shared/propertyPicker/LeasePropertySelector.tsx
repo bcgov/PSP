@@ -45,7 +45,7 @@ export const LeasePropertySelector: React.FunctionComponent<LeasePropertySelecto
     (properties: FormLeaseProperty[]) => {
       if (arrayHelpersRef.current !== null && properties.length > 0) {
         properties.forEach(property => {
-          arrayHelpersRef.current!.push(property);
+          arrayHelpersRef.current && arrayHelpersRef.current.push(property);
         });
       }
     },
@@ -101,7 +101,7 @@ export const LeasePropertySelector: React.FunctionComponent<LeasePropertySelecto
     let needsWarning = false;
     const newFormProperties: FormLeaseProperty[] = [];
 
-    await newProperties.reduce(async (promise, property, i) => {
+    await newProperties.reduce(async (promise, property) => {
       return promise.then(async () => {
         const formProperty = FormLeaseProperty.fromMapProperty(property);
 

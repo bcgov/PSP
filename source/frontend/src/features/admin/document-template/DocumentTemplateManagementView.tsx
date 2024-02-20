@@ -20,7 +20,7 @@ export const DocumentTemplateManagementView: React.FunctionComponent<
   React.PropsWithChildren<IDocumentTemplateManagementViewProp>
 > = props => {
   const onSelectChange = (selectedType: React.ChangeEvent<HTMLInputElement>) => {
-    var formDocumentTypeCode = selectedType.target.value;
+    const formDocumentTypeCode = selectedType.target.value;
     props.setSelectedFormDocumentTypeCode(formDocumentTypeCode);
   };
 

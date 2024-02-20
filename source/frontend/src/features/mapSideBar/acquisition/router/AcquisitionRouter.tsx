@@ -96,13 +96,15 @@ export const AcquisitionRouter: React.FC<IAcquisitionRouterProps> = props => {
         <AppRoute
           exact
           path={`${stripTrailingSlash(path)}/${FileTabType.EXPROPRIATION}/add`}
-          customRender={() => (
-            <AddForm8Container
-              acquisitionFileId={props.acquisitionFile?.id!}
-              View={UpdateForm8Form}
-              onSuccess={props.onSuccess}
-            />
-          )}
+          customRender={() =>
+            props.acquisitionFile?.id ? (
+              <AddForm8Container
+                acquisitionFileId={props.acquisitionFile?.id}
+                View={UpdateForm8Form}
+                onSuccess={props.onSuccess}
+              />
+            ) : null
+          }
           claim={Claims.ACQUISITION_EDIT}
           key={'expropriation'}
           title={'Add Expropriation'}

@@ -31,7 +31,7 @@ export const TermPaymentsContainer: React.FunctionComponent<
   React.PropsWithChildren<LeasePageProps>
 > = ({ formikRef, onSuccess }) => {
   const { lease } = useContext(LeaseStateContext);
-  const generateH1005a = useGenerateH1005a(lease);
+  const generateH1005a = useGenerateH1005a();
   const [editModalValues, setEditModalValues] = useState<FormLeaseTerm | undefined>(undefined);
   const [editPaymentModalValues, setEditPaymentModalValues] = useState<
     FormLeasePayment | undefined

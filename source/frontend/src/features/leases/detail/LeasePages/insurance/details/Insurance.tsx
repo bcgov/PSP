@@ -17,7 +17,7 @@ const InsuranceDetailsView: React.FunctionComponent<
 > = ({ insuranceList, insuranceTypes }) => {
   const sortedInsuranceList = useMemo(
     () =>
-      !!insuranceList?.length
+      insuranceList?.length
         ? insuranceList.sort((a, b) => {
             return (
               insuranceTypes.findIndex(i => i.id === a.insuranceType?.displayOrder) -
@@ -27,7 +27,7 @@ const InsuranceDetailsView: React.FunctionComponent<
         : [],
     [insuranceList, insuranceTypes],
   );
-  return !!sortedInsuranceList.length ? (
+  return sortedInsuranceList.length > 0 ? (
     <div data-testid="insurance-section">
       <Section header="Required insurance">
         <InsuranceTypeList>

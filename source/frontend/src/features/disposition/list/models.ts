@@ -7,15 +7,15 @@ import { ApiGen_Concepts_DispositionFileProperty } from '@/models/api/generated/
 import { ApiGen_Concepts_DispositionFileTeam } from '@/models/api/generated/ApiGen_Concepts_DispositionFileTeam';
 
 export class DispositionFilterModel {
-  searchBy: string = 'address';
-  pin: string = '';
-  pid: string = '';
-  address: string = '';
+  searchBy = 'address';
+  pin = '';
+  pid = '';
+  address = '';
   dispositionTeamMember: SelectOption | null = null;
-  fileNameOrNumberOrReference: string = '';
-  dispositionFileStatusCode: string = '';
-  dispositionStatusCode: string = '';
-  dispositionTypeCode: string = '';
+  fileNameOrNumberOrReference = '';
+  dispositionFileStatusCode = '';
+  dispositionStatusCode = '';
+  dispositionTypeCode = '';
 
   toApi(): Api_DispositionFilter {
     const personMemberId =
@@ -69,18 +69,18 @@ export class DispositionFilterModel {
 
 export class DispositionSearchResultModel {
   id: number | null = null;
-  fileNumber: string = '';
-  fileName: string = '';
-  fileReference: string = '';
-  region: string = '';
-  dispositionTypeCode: string = '';
-  dispositionStatusTypeCode: string = '';
-  dispositionFileStatusTypeCode: string = '';
+  fileNumber = '';
+  fileName = '';
+  fileReference = '';
+  region = '';
+  dispositionTypeCode = '';
+  dispositionStatusTypeCode = '';
+  dispositionFileStatusTypeCode = '';
   dispositionTeam: ApiGen_Concepts_DispositionFileTeam[] = [];
   fileProperties?: ApiGen_Concepts_DispositionFileProperty[] = [];
 
   static fromApi(base: ApiGen_Concepts_DispositionFile): DispositionSearchResultModel {
-    var newModel = new DispositionSearchResultModel();
+    const newModel = new DispositionSearchResultModel();
     newModel.id = base.id ?? null;
     newModel.fileNumber = base.fileNumber ?? '';
     newModel.fileName = base.fileName ?? '';

@@ -14,8 +14,8 @@ class ExpropriationBaseModel {
 
 export class ExpropriationForm1Model extends ExpropriationBaseModel {
   impactedProperties: ApiGen_Concepts_AcquisitionFileProperty[] = [];
-  landInterest: string = '';
-  purpose: string = '';
+  landInterest = '';
+  purpose = '';
 }
 
 export class ExpropriationForm5Model extends ExpropriationBaseModel {
@@ -24,5 +24,5 @@ export class ExpropriationForm5Model extends ExpropriationBaseModel {
 
 export class ExpropriationForm9Model extends ExpropriationBaseModel {
   impactedProperties: ApiGen_Concepts_AcquisitionFileProperty[] = [];
-  registeredPlanNumbers: string = '';
+  registeredPlanNumbers = '';
 }

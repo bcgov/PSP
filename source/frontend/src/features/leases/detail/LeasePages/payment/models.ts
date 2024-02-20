@@ -12,14 +12,14 @@ export class FormLeaseTerm {
   leaseId: number | null = null;
   statusTypeCode: ApiGen_Base_CodeType<string> | null = null;
   leasePmtFreqTypeCode: ApiGen_Base_CodeType<string> | null = null;
-  startDate: string = '';
+  startDate = '';
   effectiveDateHist: string | null = null;
-  expiryDate: string = '';
-  renewalDate: string = '';
+  expiryDate = '';
+  renewalDate = '';
   paymentAmount: NumberFieldValue = '';
   gstAmount: NumberFieldValue = '';
-  paymentDueDateStr: string = '';
-  paymentNote: string = '';
+  paymentDueDateStr = '';
+  paymentNote = '';
   isGstEligible?: boolean;
   isTermExercised?: boolean;
   payments: FormLeasePayment[] = [];
@@ -93,9 +93,9 @@ export const defaultFormLeaseTerm: FormLeaseTerm = {
 };
 export class FormLeasePayment {
   id?: number;
-  leaseTermId: number = 0;
+  leaseTermId = 0;
   leasePaymentMethodType: ApiGen_Base_CodeType<string> | null = null;
-  receivedDate: string = '';
+  receivedDate = '';
   note?: string;
   leasePaymentStatusTypeCode?: ApiGen_Base_CodeType<string>;
   amountPreTax: NumberFieldValue = '';

@@ -6,10 +6,10 @@ import { formatApiPropertyManagementLease } from '@/utils';
 import { stringToNull } from '@/utils/formUtils';
 
 export class PropertyManagementFormModel {
-  id: number = 0;
-  rowVersion: number = 0;
+  id = 0;
+  rowVersion = 0;
   managementPurposes: ManagementPurposeModel[] = [];
-  additionalDetails: string = '';
+  additionalDetails = '';
   isUtilitiesPayable: boolean | null = null;
   isTaxesPayable: boolean | null = null;
   formattedLeaseInformation: string | null = null;
@@ -46,21 +46,21 @@ export class PropertyManagementFormModel {
 }
 
 export class ManagementPurposeModel {
-  id: number = 0;
-  rowVersion: number = 0;
+  id = 0;
+  rowVersion = 0;
   propertyId: number | null = null;
-  typeCode: string = '';
-  typeDescription: string = '';
+  typeCode = '';
+  typeDescription = '';
 
   static fromLookup(base: ILookupCode): ManagementPurposeModel {
-    var newModel = new ManagementPurposeModel();
+    const newModel = new ManagementPurposeModel();
     newModel.typeCode = base.id.toString();
     newModel.typeDescription = base.name;
     return newModel;
   }
 
   static fromApi(base: ApiGen_Concepts_PropertyManagementPurpose | null): ManagementPurposeModel {
-    var newModel = new ManagementPurposeModel();
+    const newModel = new ManagementPurposeModel();
     newModel.id = base?.id || 0;
     newModel.rowVersion = base?.rowVersion || 0;
     newModel.propertyId = base?.propertyId ?? null;

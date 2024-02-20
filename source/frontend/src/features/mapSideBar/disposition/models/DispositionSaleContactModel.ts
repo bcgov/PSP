@@ -15,7 +15,7 @@ export interface WithSalePurchasers {
 
 export class DispositionSaleContactModel {
   contact: IContactSearchResult | null = null;
-  primaryContactId: string = '';
+  primaryContactId = '';
 
   constructor(
     readonly id: number | null = null,

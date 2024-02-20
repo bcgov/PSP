@@ -37,7 +37,7 @@ export class FormLeaseDepositReturn {
   }
 
   public static createEmpty(deposit: ApiGen_Concepts_SecurityDeposit): FormLeaseDepositReturn {
-    var returnDeposit = new FormLeaseDepositReturn();
+    const returnDeposit = new FormLeaseDepositReturn();
     returnDeposit.parentDepositId = deposit.id || 0;
     returnDeposit.depositTypeCode = deposit.depositType?.id ?? '';
     returnDeposit.depositTypeDescription = deposit.depositType?.description || '';
@@ -50,7 +50,7 @@ export class FormLeaseDepositReturn {
     baseModel: ApiGen_Concepts_SecurityDepositReturn,
     parentDeposit: ApiGen_Concepts_SecurityDeposit,
   ): FormLeaseDepositReturn {
-    let model = new FormLeaseDepositReturn();
+    const model = new FormLeaseDepositReturn();
 
     // Parent fields
     model.depositTypeCode = parentDeposit.depositType?.id ?? '';

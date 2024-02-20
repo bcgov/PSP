@@ -12,11 +12,7 @@ import DetailDocumentation from './DetailDocumentation';
 import DetailTermInformation from './DetailTermInformation';
 import PropertiesInformation from './PropertiesInformation';
 
-export interface IDetailsProps {}
-
-export const LeaseDetailsForm: React.FunctionComponent<
-  React.PropsWithChildren<IDetailsProps>
-> = () => {
+export const LeaseDetailsForm: React.FunctionComponent<React.PropsWithChildren<unknown>> = () => {
   const { lease } = React.useContext(LeaseStateContext);
   return (
     <Formik

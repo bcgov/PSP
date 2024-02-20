@@ -31,7 +31,7 @@ const DispositionSalePurchaserSubForm: React.FunctionComponent<
         <>
           {values.dispositionPurchasers.map(
             (purchaser: DispositionSaleContactModel, index: number) => (
-              <React.Fragment>
+              <React.Fragment key={`purchaser-${purchaser?.id}`}>
                 <Row className="py-2" data-testid={`purchaserRow[${index}]`} noGutters>
                   <Col xs="auto" xl="10">
                     <ContactInputContainer

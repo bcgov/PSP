@@ -99,9 +99,9 @@ export class StakeHolderForm {
 }
 
 export class InterestHolderPropertyFormModel {
-  interestHolderPropertyId: string = '';
-  acquisitionFilePropertyId: string = '';
-  propertyInterestType: string = '';
+  interestHolderPropertyId = '';
+  acquisitionFilePropertyId = '';
+  propertyInterestType = '';
 
   static fromApi(model: ApiGen_Concepts_InterestHolderProperty): InterestHolderPropertyFormModel[] {
     return (
@@ -120,15 +120,15 @@ export class InterestHolderPropertyFormModel {
 
 export class InterestHolderForm {
   interestHolderId: number | null = null;
-  personId: string = '';
-  organizationId: string = '';
+  personId = '';
+  organizationId = '';
   contact: IContactSearchResult | null = null;
   primaryContactId?: number | null = null;
   impactedProperties: InterestHolderPropertyForm[] = [];
-  interestTypeCode: string = '';
-  propertyInterestTypeCode: string = '';
+  interestTypeCode = '';
+  propertyInterestTypeCode = '';
   acquisitionFileId: number | null = null;
-  isDisabled: boolean = false;
+  isDisabled = false;
   rowVersion: number | null = null;
   comment: string | null = null;
 
@@ -237,7 +237,7 @@ export class InterestHolderPropertyForm {
 
 export class InterestHolderViewForm {
   id: number | null = null;
-  identifier: string = '';
+  identifier = '';
   groupedPropertyInterests: InterestHolderViewRow[] = [];
 
   static fromApi(apiModel: ApiGen_Concepts_InterestHolderProperty) {

@@ -47,7 +47,7 @@ export const CreateOrganizationForm: React.FunctionComponent<unknown> = () => {
   ) => {
     try {
       setShowDuplicateModal(false);
-      let newOrganization = formOrganizationToApiOrganization(formOrganization);
+      const newOrganization = formOrganizationToApiOrganization(formOrganization);
 
       const organizationResponse = await addOrganization(
         newOrganization,
@@ -101,7 +101,6 @@ export default CreateOrganizationForm;
  * Sub-component that is wrapped by Formik
  */
 const CreateOrganizationComponent: React.FC<FormikProps<IEditableOrganizationForm>> = ({
-  values,
   errors,
   touched,
   dirty,

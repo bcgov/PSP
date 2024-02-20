@@ -104,10 +104,7 @@ export class Api_GenerateAcquisitionFile {
     this.all_owners_string_and = this.owners.map(owner => owner.owner_string).join(' And ');
   }
 
-  getTeam = (
-    team: ApiGen_Concepts_AcquisitionFileTeam | null,
-    overrideOrgAddress: boolean = false,
-  ) => {
+  getTeam = (team: ApiGen_Concepts_AcquisitionFileTeam | null, overrideOrgAddress = false) => {
     if (!team) return undefined;
 
     if (team.person) {

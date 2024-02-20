@@ -10,14 +10,14 @@ export class PropertyTenureFormModel {
   typeDescription?: string;
 
   static fromLookup(base: ILookupCode): PropertyTenureFormModel {
-    var newModel = new PropertyTenureFormModel();
+    const newModel = new PropertyTenureFormModel();
     newModel.typeCode = base.id.toString();
     newModel.typeDescription = base.name;
     return newModel;
   }
 
   static fromApi(base: ApiGen_Concepts_PropertyTenure): PropertyTenureFormModel {
-    var newModel = new PropertyTenureFormModel();
+    const newModel = new PropertyTenureFormModel();
     newModel.id = base.id;
     newModel.rowVersion = base.rowVersion ?? undefined;
     newModel.propertyId = base.propertyId;

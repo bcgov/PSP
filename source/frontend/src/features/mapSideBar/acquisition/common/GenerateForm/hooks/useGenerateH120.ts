@@ -128,7 +128,7 @@ export const useGenerateH120 = () => {
       convertToType: ConvertToTypes.PDF,
     });
     if (
-      generatedFile?.status === ApiGen_CodeTypes_ExternalResponseStatus.Success!! &&
+      generatedFile?.status === ApiGen_CodeTypes_ExternalResponseStatus.Success &&
       generatedFile?.payload
     ) {
       showFile(generatedFile?.payload);

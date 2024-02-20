@@ -18,7 +18,7 @@ const useAddContact = () => {
   const addPerson = async (
     person: IEditablePerson,
     needsUserAction: (needsAction: boolean) => void,
-    userOverride: boolean = false,
+    userOverride = false,
   ) => {
     try {
       dispatch(showLoading());
@@ -53,7 +53,7 @@ const useAddContact = () => {
   const addOrganization = async (
     organization: IEditableOrganization,
     needsUserAction: (needsAction: boolean) => void,
-    userOverride: boolean = false,
+    userOverride = false,
   ) => {
     try {
       dispatch(showLoading());

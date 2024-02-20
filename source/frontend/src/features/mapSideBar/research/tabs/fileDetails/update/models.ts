@@ -19,7 +19,7 @@ export class ResearchFilePurposeFormModel {
   public researchPurposeTypeDescription?: string;
 
   public static fromApi(base: ApiGen_Concepts_ResearchFilePurpose): ResearchFilePurposeFormModel {
-    var newModel = new ResearchFilePurposeFormModel();
+    const newModel = new ResearchFilePurposeFormModel();
     newModel.id = base.id.toString() ?? undefined;
     newModel.researchPurposeTypeCode = base.researchPurposeTypeCode?.id ?? undefined;
     newModel.researchPurposeTypeDescription =
@@ -64,7 +64,7 @@ export class UpdateResearchSummaryFormModel {
   public rowVersion?: number;
 
   public static fromApi(base: ApiGen_Concepts_ResearchFile): UpdateResearchSummaryFormModel {
-    var model = new UpdateResearchSummaryFormModel();
+    const model = new UpdateResearchSummaryFormModel();
     model.id = base.id;
     model.name = base.fileName ?? undefined;
     model.roadName = base.roadName ?? undefined;

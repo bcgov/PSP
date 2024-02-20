@@ -87,9 +87,9 @@ export const ResearchContainer: React.FunctionComponent<
   );
 
   const fetchResearchFile = React.useCallback(async () => {
-    var retrieved = await getResearchFile(props.researchFileId);
+    const retrieved = await getResearchFile(props.researchFileId);
     if (exists(retrieved)) {
-      var researchProperties = await getResearchFileProperties(props.researchFileId);
+      const researchProperties = await getResearchFileProperties(props.researchFileId);
       retrieved.fileProperties?.forEach(async fp => {
         fp.property = researchProperties?.find(ap => fp.id === ap.id)?.property ?? null;
       });
@@ -100,7 +100,7 @@ export const ResearchContainer: React.FunctionComponent<
   }, [getResearchFile, getResearchFileProperties, props.researchFileId, setFile]);
 
   const fetchLastUpdatedBy = React.useCallback(async () => {
-    var retrieved = await getLastUpdatedBy(props.researchFileId);
+    const retrieved = await getLastUpdatedBy(props.researchFileId);
     if (retrieved !== undefined) {
       setLastUpdatedBy(retrieved);
     } else {

@@ -38,8 +38,8 @@ export class DispositionFormModel implements WithDispositionTeam {
     readonly id: number | null = null,
     readonly fileNumber: string | null = null,
     readonly rowVersion: number | null = null,
-    dispositionFileStatus: string = 'ACTIVE',
-    dispositionStatus: string = 'UNKNOWN',
+    dispositionFileStatus = 'ACTIVE',
+    dispositionStatus = 'UNKNOWN',
   ) {
     this.id = id;
     this.fileNumber = fileNumber;

@@ -26,7 +26,7 @@ function isRenderRoute(route: RenderRoute | ComponentRoute): route is RenderRout
 const AppRoute: React.FC<React.PropsWithChildren<IAppRouteProps>> = props => {
   document.title = props.title;
 
-  if (!!props.protected) {
+  if (props.protected) {
     if (isRenderRoute(props)) {
       return (
         <PrivateRoute

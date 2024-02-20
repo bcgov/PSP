@@ -30,7 +30,7 @@ const TenantContainer: React.FunctionComponent<React.PropsWithChildren<LeasePage
 
   const formTenants = tenants?.map((t: ApiGen_Concepts_LeaseTenant) => new FormTenant(t)) ?? [];
 
-  return !!isEditing ? (
+  return isEditing ? (
     <ProtectedComponent claims={[Claims.LEASE_EDIT]}>
       <AddLeaseTenantContainer
         formikRef={formikRef as React.RefObject<FormikProps<LeaseFormModel>>}

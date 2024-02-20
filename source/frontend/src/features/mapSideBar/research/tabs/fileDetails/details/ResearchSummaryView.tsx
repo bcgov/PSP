@@ -57,8 +57,8 @@ const ResearchSummaryView: React.FunctionComponent<IResearchSummaryViewProps> = 
   // todo:the method 'exists' here should allow the compiler to validate the child property. this works correctly in typescropt 5.3 +
   if (exists(props.researchFile?.requestorPerson)) {
     detail.requestorName = formatApiPersonNames(props.researchFile!.requestorPerson);
-    var personOrganizations = props.researchFile!.requestorPerson.personOrganizations;
-    var organization =
+    const personOrganizations = props.researchFile!.requestorPerson.personOrganizations;
+    const organization =
       exists(personOrganizations) && personOrganizations.length > 0
         ? personOrganizations[0].organization
         : undefined;

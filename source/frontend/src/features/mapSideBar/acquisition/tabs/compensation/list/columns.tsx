@@ -47,7 +47,7 @@ export function createCompensationTableColumns(
             {cellProps.row.original.id}
           </LinkButton>
         ) : (
-          stringToFragment(cellProps.row.original.id!)
+          stringToFragment(cellProps.row.original.id ?? undefined)
         );
       },
     },

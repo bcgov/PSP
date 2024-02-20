@@ -37,7 +37,7 @@ export const UpdateLeaseContainer: React.FunctionComponent<
   useEffect(() => {
     const exec = async () => {
       if (leaseId) {
-        var lease = await getCompleteLease();
+        const lease = await getCompleteLease();
         formikRef?.current?.resetForm({ values: LeaseFormModel.fromApi(lease) });
       }
     };

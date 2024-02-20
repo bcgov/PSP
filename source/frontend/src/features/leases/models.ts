@@ -25,37 +25,37 @@ import { FormTenant } from './detail/LeasePages/tenant/models';
 
 export class LeaseFormModel {
   id?: number;
-  lFileNo: string = '';
-  psFileNo: string = '';
-  tfaFileNumber: string = '';
-  expiryDate: string = '';
-  renewalDate: string = '';
-  startDate: string = '';
-  responsibilityEffectiveDate: string = '';
-  paymentReceivableTypeCode: string = '';
-  categoryTypeCode: string = '';
-  purposeTypeCode: string = '';
-  responsibilityTypeCode: string = '';
-  initiatorTypeCode: string = '';
-  leaseTypeCode: string = '';
-  statusTypeCode: string = '';
-  regionId: string = '';
-  programTypeCode: string = '';
-  otherLeaseTypeDescription: string = '';
-  otherProgramTypeDescription: string = '';
-  otherCategoryTypeDescription: string = '';
-  otherPurposeTypeDescription: string = '';
-  note: string = '';
-  programName: string = '';
-  motiName: string = '';
+  lFileNo = '';
+  psFileNo = '';
+  tfaFileNumber = '';
+  expiryDate = '';
+  renewalDate = '';
+  startDate = '';
+  responsibilityEffectiveDate = '';
+  paymentReceivableTypeCode = '';
+  categoryTypeCode = '';
+  purposeTypeCode = '';
+  responsibilityTypeCode = '';
+  initiatorTypeCode = '';
+  leaseTypeCode = '';
+  statusTypeCode = '';
+  regionId = '';
+  programTypeCode = '';
+  otherLeaseTypeDescription = '';
+  otherProgramTypeDescription = '';
+  otherCategoryTypeDescription = '';
+  otherPurposeTypeDescription = '';
+  note = '';
+  programName = '';
+  motiName = '';
   amount: NumberFieldValue = '';
   renewalCount: NumberFieldValue = '';
-  description: string = '';
-  isResidential: boolean = false;
-  isCommercialBuilding: boolean = false;
-  isOtherImprovement: boolean = false;
-  returnNotes: string = ''; // security deposit notes (free form text)
-  documentationReference: string = '';
+  description = '';
+  isResidential = false;
+  isCommercialBuilding = false;
+  isOtherImprovement = false;
+  returnNotes = ''; // security deposit notes (free form text)
+  documentationReference = '';
   hasPhysicalLicense?: boolean;
   hasDigitalLicense?: boolean;
   project?: IAutocompletePrediction;
@@ -66,7 +66,7 @@ export class LeaseFormModel {
   securityDepositReturns: FormLeaseDepositReturn[] = [];
   terms: FormLeaseTerm[] = [];
   tenants: FormTenant[] = [];
-  rowVersion: number = 0;
+  rowVersion = 0;
 
   static fromApi(apiModel?: ApiGen_Concepts_Lease): LeaseFormModel {
     const leaseDetail = new LeaseFormModel();
@@ -104,7 +104,7 @@ export class LeaseFormModel {
     leaseDetail.otherProgramTypeDescription = apiModel?.otherProgramType || '';
     leaseDetail.otherPurposeTypeDescription = apiModel?.otherPurposeType || '';
     leaseDetail.otherLeaseTypeDescription = apiModel?.otherType || '';
-    leaseDetail.project = !!apiModel?.project
+    leaseDetail.project = apiModel?.project
       ? { id: apiModel?.project?.id || 0, text: apiModel?.project?.description || '' }
       : undefined;
 
@@ -237,13 +237,13 @@ export class FormLeaseProperty {
 }
 
 export class FormLeaseConsultation {
-  public id: number = 0;
-  public consultationType: string = '';
-  public consultationTypeDescription: string = '';
-  public consultationStatusType: string = '';
-  public consultationStatusTypeDescription: string = '';
-  public consultationTypeOtherDescription: string = '';
-  public parentLeaseId: number = 0;
+  public id = 0;
+  public consultationType = '';
+  public consultationTypeDescription = '';
+  public consultationStatusType = '';
+  public consultationStatusTypeDescription = '';
+  public consultationTypeOtherDescription = '';
+  public parentLeaseId = 0;
   public rowVersion: number | undefined = undefined;
 
   static fromApi(apiModel: ApiGen_Concepts_ConsultationLease): FormLeaseConsultation {

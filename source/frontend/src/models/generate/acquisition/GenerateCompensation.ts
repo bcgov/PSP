@@ -35,7 +35,7 @@ export class Api_GenerateCompensation {
     file: Api_GenerateAcquisitionFile | null,
     h120Categories: ApiGen_Concepts_H120Category[],
     finalFileFinancials: ApiGen_Concepts_CompensationFinancial[],
-    client: string = '',
+    client = '',
   ) {
     this.file = file;
     this.generated_date = moment().format('MMM DD, YYYY') ?? '';

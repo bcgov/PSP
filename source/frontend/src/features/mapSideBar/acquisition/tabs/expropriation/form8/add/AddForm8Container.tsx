@@ -48,7 +48,7 @@ export const AddForm8Container: React.FunctionComponent<
 
     await Promise.all([acquisitionOwnersCall, interestHoldersCall]).then(
       ([acquisitionOwners, interestHolders]) => {
-        let options = [];
+        const options = [];
 
         if (acquisitionOwners !== undefined) {
           const ownersOptions: PayeeOption[] = acquisitionOwners.map(x =>

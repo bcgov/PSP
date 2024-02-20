@@ -41,7 +41,7 @@ export const UpdateDispositionChecklistContainer: React.FC<IDispositionChecklist
     return updateDispositionChecklist(apiDispositionFile);
   };
 
-  const onUpdateSuccess = async (apiDispositionFile: ApiGen_Concepts_FileWithChecklist) => {
+  const onUpdateSuccess = async () => {
     onSuccess && onSuccess();
   };
 

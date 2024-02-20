@@ -51,7 +51,7 @@ export const useDeleteTermsPayments = (
    */
   const isValidForDelete = useCallback(
     (leaseTerm: FormLeaseTerm) => {
-      if (leaseTerm.payments.length) {
+      if (leaseTerm.payments.length > 0) {
         setDeleteModalWarning({ title: 'Delete Term', message: deleteWithPayments });
         return false;
       } else if (

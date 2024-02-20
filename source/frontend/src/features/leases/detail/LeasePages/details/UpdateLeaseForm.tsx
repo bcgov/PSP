@@ -19,7 +19,7 @@ export interface IUpdateLeaseFormProps {
 
 export const UpdateLeaseForm: React.FunctionComponent<
   React.PropsWithChildren<IUpdateLeaseFormProps>
-> = ({ onSubmit, initialValues, formikRef }) => {
+> = ({ onSubmit, formikRef }) => {
   return (
     <StyledFormWrapper>
       <Formik<LeaseFormModel>

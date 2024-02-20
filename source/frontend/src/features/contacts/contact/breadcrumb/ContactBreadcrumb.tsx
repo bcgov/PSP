@@ -4,15 +4,7 @@ import { Link } from 'react-router-dom';
 
 import * as CommonStyled from '@/components/common/styles';
 
-interface IContactAndLicenseBreadCrumbProps {}
-
-/**
- * breadcrumb navigation for Contacts pages.
- * @param {IContactAndLicenseBreadCrumbProps} param0
- */
-export const ContactBreadcrumb: React.FunctionComponent<
-  React.PropsWithChildren<IContactAndLicenseBreadCrumbProps>
-> = props => {
+export const ContactBreadcrumb: React.FunctionComponent<React.PropsWithChildren<unknown>> = () => {
   return (
     <CommonStyled.Breadcrumb>
       <Breadcrumb.Item linkAs={Link} linkProps={{ to: '/contact/list' }}>

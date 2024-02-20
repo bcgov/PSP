@@ -285,15 +285,17 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
               </Section>
 
               <Section header="Activities" isCollapsable initiallyExpanded>
-                <FinancialActivitiesSubForm
-                  financialActivityOptions={financialActivityOptions}
-                  compensationRequisitionId={initialValues.id!}
-                  formikProps={formikProps}
-                  gstConstantPercentage={gstConstant}
-                  activitiesUpdated={() => {
-                    setActivitiesUpdated(true);
-                  }}
-                ></FinancialActivitiesSubForm>
+                {initialValues?.id !== null && initialValues.id >= 0 && (
+                  <FinancialActivitiesSubForm
+                    financialActivityOptions={financialActivityOptions}
+                    compensationRequisitionId={initialValues.id}
+                    formikProps={formikProps}
+                    gstConstantPercentage={gstConstant}
+                    activitiesUpdated={() => {
+                      setActivitiesUpdated(true);
+                    }}
+                  ></FinancialActivitiesSubForm>
+                )}
               </Section>
 
               <Section>
@@ -333,13 +335,14 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
                 `You have selected to change the status from DRAFT to FINAL.
 
                 We recommend that you only make this change status (draft to final) when printing the final version, as `,
+                // eslint-disable-next-line react/jsx-key
                 <strong>you will not be able to roll back to draft status </strong>,
                 `without system administrator privileges. The compensation requisition cannot be changed again once it is saved as final.`,
               ]}
               okButtonText="Proceed"
               cancelButtonText="Cancel"
               handleOk={async () => {
-                await onSave(formikRef.current?.values!);
+                formikRef.current?.values && (await onSave(formikRef.current?.values));
                 setShowModal(false);
               }}
               handleCancel={() => {
@@ -374,8 +377,8 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
 export default UpdateCompensationRequisitionForm;
 
 const generateFiscalYearOptions = () => {
-  let sysdate = moment();
-  let pivotYear = sysdate.month() >= 4 ? moment().year() : moment().subtract(1, 'years').year();
+  const sysdate = moment();
+  const pivotYear = sysdate.month() >= 4 ? moment().year() : moment().subtract(1, 'years').year();
 
   const options: SelectOption[] = [];
 

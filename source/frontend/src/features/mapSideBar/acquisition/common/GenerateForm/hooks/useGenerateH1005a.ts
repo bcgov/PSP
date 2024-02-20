@@ -13,7 +13,7 @@ import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Le
 import { Api_GenerateLease } from '@/models/generate/lease/GenerateLease';
 import { exists, useAxiosErrorHandler } from '@/utils';
 
-export const useGenerateH1005a = (lease?: ApiGen_Concepts_Lease) => {
+export const useGenerateH1005a = () => {
   const { generateDocumentDownloadWrappedRequest: generate } = useDocumentGenerationRepository();
   const {
     getInsurances: { execute: getInsurances },
@@ -78,7 +78,7 @@ export const useGenerateH1005a = (lease?: ApiGen_Concepts_Lease) => {
         convertToType: null,
       });
       if (
-        generatedFile?.status === ApiGen_CodeTypes_ExternalResponseStatus.Success!! &&
+        generatedFile?.status === ApiGen_CodeTypes_ExternalResponseStatus.Success &&
         generatedFile?.payload
       ) {
         showFile(generatedFile?.payload);
