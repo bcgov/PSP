@@ -6,13 +6,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
-[Table("PIMS_PROPERTY_ACTIVITY_HIST")]
-[Index("PropertyActivityHistId", "EndDateHist", Name = "PIMS_PRPACT_H_UK", IsUnique = true)]
-public partial class PimsPropertyActivityHist
+[Table("PIMS_PROPERTY_OPERATION_HIST")]
+[Index("PropertyOperationHistId", "EndDateHist", Name = "PIMS_PROPOP_H_UK", IsUnique = true)]
+public partial class PimsPropertyOperationHist
 {
     [Key]
-    [Column("_PROPERTY_ACTIVITY_HIST_ID")]
-    public long PropertyActivityHistId { get; set; }
+    [Column("_PROPERTY_OPERATION_HIST_ID")]
+    public long PropertyOperationHistId { get; set; }
 
     [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
     public DateTime EffectiveDateHist { get; set; }
@@ -20,43 +20,24 @@ public partial class PimsPropertyActivityHist
     [Column("END_DATE_HIST", TypeName = "datetime")]
     public DateTime? EndDateHist { get; set; }
 
-    [Column("PIMS_PROPERTY_ACTIVITY_ID")]
-    public long PimsPropertyActivityId { get; set; }
+    [Column("PROPERTY_OPERATION_ID")]
+    public long PropertyOperationId { get; set; }
 
-    [Required]
-    [Column("PROP_MGMT_ACTIVITY_TYPE_CODE")]
+    [Column("SOURCE_PROPERTY_ID")]
+    public long SourcePropertyId { get; set; }
+
+    [Column("DESTINATION_PROPERTY_ID")]
+    public long DestinationPropertyId { get; set; }
+
+    [Column("PROPERTY_OPERATION_TYPE_CODE")]
     [StringLength(20)]
-    public string PropMgmtActivityTypeCode { get; set; }
+    public string PropertyOperationTypeCode { get; set; }
 
-    [Required]
-    [Column("PROP_MGMT_ACTIVITY_SUBTYPE_CODE")]
-    [StringLength(20)]
-    public string PropMgmtActivitySubtypeCode { get; set; }
+    [Column("PROPERTY_OPERATION_NO")]
+    public long PropertyOperationNo { get; set; }
 
-    [Required]
-    [Column("PROP_MGMT_ACTIVITY_STATUS_TYPE_CODE")]
-    [StringLength(20)]
-    public string PropMgmtActivityStatusTypeCode { get; set; }
-
-    [Column("SERVICE_PROVIDER_PERSON_ID")]
-    public long? ServiceProviderPersonId { get; set; }
-
-    [Column("SERVICE_PROVIDER_ORG_ID")]
-    public long? ServiceProviderOrgId { get; set; }
-
-    [Column("REQUEST_ADDED_DT")]
-    public DateOnly RequestAddedDt { get; set; }
-
-    [Column("COMPLETION_DT")]
-    public DateOnly? CompletionDt { get; set; }
-
-    [Column("DESCRIPTION")]
-    [StringLength(2000)]
-    public string Description { get; set; }
-
-    [Column("REQUEST_SOURCE")]
-    [StringLength(2000)]
-    public string RequestSource { get; set; }
+    [Column("OPERATION_DT", TypeName = "datetime")]
+    public DateTime? OperationDt { get; set; }
 
     [Column("IS_DISABLED")]
     public bool? IsDisabled { get; set; }
