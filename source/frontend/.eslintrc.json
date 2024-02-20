@@ -9,7 +9,6 @@
     "plugin:react/jsx-runtime"
   ],
   "parser": "@typescript-eslint/parser",
-  "parserOptions": { "project": ["./tsconfig.json"] },
   "plugins": ["@typescript-eslint", "unused-imports", "eslint-plugin-react"],
   "rules": {
     "@typescript-eslint/strict-boolean-expressions": "off",
