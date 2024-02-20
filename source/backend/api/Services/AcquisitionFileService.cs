@@ -887,7 +887,7 @@ namespace Pims.Api.Services
                 var propertyRegion = acquisitionProperty.Property?.RegionCode ?? _propertyRepository.GetPropertyRegion(acquisitionProperty.PropertyId);
                 if (!userRegions.Contains(propertyRegion))
                 {
-                    throw new BadRequestException("<p>You cannot add a property that is outside of your user account region(s).</p><p>Please select a different property or contact admin at pims@gov.bc.ca to add the required region to your user account settings.</p>");
+                    throw new BadRequestException("You cannot add a property that is outside of your user account region(s).\n\nPlease select a different property or contact admin at pims@gov.bc.ca to add the required region to your user account settings.");
                 }
             }
         }
