@@ -84,30 +84,6 @@ public partial class PimsPropertyActivity
     public string RequestSource { get; set; }
 
     /// <summary>
-    /// Subtotal of the management activity cost.
-    /// </summary>
-    [Column("PRETAX_AMT", TypeName = "money")]
-    public decimal? PretaxAmt { get; set; }
-
-    /// <summary>
-    /// GST on the management activity.
-    /// </summary>
-    [Column("GST_AMT", TypeName = "money")]
-    public decimal? GstAmt { get; set; }
-
-    /// <summary>
-    /// PST on the management activity.
-    /// </summary>
-    [Column("PST_AMT", TypeName = "money")]
-    public decimal? PstAmt { get; set; }
-
-    /// <summary>
-    /// Total cost of the management activity.
-    /// </summary>
-    [Column("TOTAL_AMT", TypeName = "money")]
-    public decimal? TotalAmt { get; set; }
-
-    /// <summary>
     /// Indicates if the code is disabled.
     /// </summary>
     [Column("IS_DISABLED")]
