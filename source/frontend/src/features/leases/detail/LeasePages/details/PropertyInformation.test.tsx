@@ -3,10 +3,10 @@ import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
 
 import { mockApiProperty } from '@/mocks/filterData.mock';
-import { getMockApiLease } from '@/mocks/lease.mock';
 import { getEmptyPropertyLease } from '@/mocks/properties.mock';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { toTypeCodeNullable } from '@/utils/formUtils';
+import { getMockApiLease } from '@/mocks/lease.mock';
 import { render, RenderOptions } from '@/utils/test-utils';
 
 import PropertyInformation, { IPropertyInformationProps } from './PropertyInformation';

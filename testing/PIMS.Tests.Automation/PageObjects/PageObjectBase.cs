@@ -1,7 +1,6 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
-using Sprache;
 
 namespace PIMS.Tests.Automation.PageObjects
 {
@@ -19,7 +18,6 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             this.webDriver = webDriver;
             wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(120));
-            //wait.IgnoreExceptionTypes(typeof(NoSuchElementException), typeof(StaleElementReferenceException), typeof(ElementClickInterceptedException));
         }
 
         protected virtual void Wait(int milliseconds = 3000) => Thread.Sleep(milliseconds);
@@ -36,31 +34,15 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
         }
 
-        protected void WaitUntilStale(By element)
-        {
-            wait.Until(ExpectedConditions.StalenessOf(webDriver.FindElement(element)));
-        }
+        protected void WaitUntilStale(By element) => wait.Until(ExpectedConditions.StalenessOf(webDriver.FindElement(element)));
 
-        protected void WaitUntilDisappear(By element)
-        {
-            wait.Until(ExpectedConditions.InvisibilityOfElementLocated(element));
-            //Wait();
-        }
+        protected void WaitUntilDisappear(By element) => wait.Until(ExpectedConditions.InvisibilityOfElementLocated(element));
 
-        protected void WaitUntilVisible(By element)
-        {
-            wait.Until(ExpectedConditions.ElementIsVisible(element));
-        }
+        protected void WaitUntilVisible(By element) => wait.Until(ExpectedConditions.ElementIsVisible(element));
 
-        protected void WaitUntilExist(By element)
-        {
-            wait.Until(ExpectedConditions.ElementExists(element));
-        }
+        protected void WaitUntilExist(By element) => wait.Until(ExpectedConditions.ElementExists(element));
 
-        protected void WaitUntilClickable(By element)
-        {
-            wait.Until(ExpectedConditions.ElementToBeClickable(element));
-        }
+        protected void WaitUntilClickable(By element) => wait.Until(ExpectedConditions.ElementToBeClickable(element));
 
         public void WaitUntilVisibleText(By element, string text)
         {
@@ -244,8 +226,15 @@ namespace PIMS.Tests.Automation.PageObjects
 
         protected string TransformCurrencyFormat(string amount)
         {
-            decimal value = decimal.Parse(amount);
-            return "$" + value.ToString("#,##0.00");
+            if (amount == "")
+            {
+                return "";
+            }
+            else
+            {
+                decimal value = decimal.Parse(amount);
+                return "$" + value.ToString("#,##0.00");
+            }
         }
 
         protected string TransformProjectFormat(string project)

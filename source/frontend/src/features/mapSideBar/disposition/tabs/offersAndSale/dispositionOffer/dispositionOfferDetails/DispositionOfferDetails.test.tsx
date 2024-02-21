@@ -1,7 +1,13 @@
 import { createMemoryHistory } from 'history';
 
 import Claims from '@/constants/claims';
-import { mockDispositionFileOfferApi } from '@/mocks/dispositionFiles.mock';
+import { DispositionFileStatus } from '@/constants/dispositionFileStatus';
+import Roles from '@/constants/roles';
+import {
+  mockDispositionFileOfferApi,
+  mockDispositionFileResponse,
+} from '@/mocks/dispositionFiles.mock';
+import { Api_DispositionFile } from '@/models/api/DispositionFile';
 import { act, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
 import DispositionOfferDetails, { IDispositionOfferDetailsProps } from './DispositionOfferDetails';
@@ -23,6 +29,10 @@ describe('Disposition Offer Detail View component', () => {
         index={0}
         dispositionOffer={renderOptions.props?.dispositionOffer ?? mockDispositionOffer}
         onDelete={onDelete}
+        dispositionFile={
+          renderOptions.props?.dispositionFile ??
+          (mockDispositionFileResponse() as unknown as Api_DispositionFile as unknown as Api_DispositionFile)
+        }
       />,
       {
         ...renderOptions,
@@ -67,8 +77,48 @@ describe('Disposition Offer Detail View component', () => {
   it('does not renders the edit and delete button for users with view permissions', async () => {
     const { queryByTestId } = await setup({ claims: [Claims.DISPOSITION_VIEW] });
 
+    const icon = queryByTestId('tooltip-icon-1-summary-cannot-edit-tooltip');
+
     expect(queryByTestId('Offer[0].edit-btn')).not.toBeInTheDocument();
     expect(queryByTestId('Offer[0].delete-btn')).not.toBeInTheDocument();
+    expect(icon).toBeNull();
+  });
+
+  it('it only renders warning icon when file is in non-editable state', async () => {
+    const { queryByTestId } = await setup({
+      claims: [Claims.DISPOSITION_EDIT],
+      props: {
+        dispositionFile: {
+          ...(mockDispositionFileResponse() as unknown as Api_DispositionFile),
+          fileStatusTypeCode: { id: DispositionFileStatus.Complete },
+        },
+      },
+    });
+
+    const icon = queryByTestId('tooltip-icon-1-summary-cannot-edit-tooltip');
+
+    expect(queryByTestId('Offer[0].edit-btn')).not.toBeInTheDocument();
+    expect(queryByTestId('Offer[0].delete-btn')).not.toBeInTheDocument();
+    expect(icon).toBeVisible();
+  });
+
+  it('it does not render warning icon when file is in non-editable state and user is system admin', async () => {
+    const { queryByTestId } = await setup({
+      claims: [Claims.DISPOSITION_EDIT],
+      roles: [Roles.SYSTEM_ADMINISTRATOR],
+      props: {
+        dispositionFile: {
+          ...(mockDispositionFileResponse() as unknown as Api_DispositionFile),
+          fileStatusTypeCode: { id: DispositionFileStatus.Complete },
+        },
+      },
+    });
+
+    const icon = queryByTestId('tooltip-icon-1-summary-cannot-edit-tooltip');
+
+    expect(queryByTestId('Offer[0].edit-btn')).toBeVisible();
+    expect(queryByTestId('Offer[0].delete-btn')).toBeVisible();
+    expect(icon).toBeNull();
   });
 
   it('calls the delete for the offer', async () => {

@@ -201,7 +201,7 @@ exports[`DispositionView component renders as expected 1`] = `
                 class="pl-1 text-left col-auto"
               >
                 <strong>
-                  Cancelled
+                  Draft
                 </strong>
               </div>
             </div>
@@ -546,7 +546,7 @@ exports[`DispositionView component renders as expected 1`] = `
                           <div
                             class="c17 text-left col"
                           >
-                            Cancelled
+                            Draft
                           </div>
                         </div>
                       </div>
@@ -584,7 +584,10 @@ exports[`DispositionView component renders as expected 1`] = `
                           </div>
                           <div
                             class="c17 text-left col"
-                          />
+                            data-testid="dsp-project"
+                          >
+                            00048 - CLAIMS
+                          </div>
                         </div>
                         <div
                           class="pb-2 row"
@@ -600,7 +603,10 @@ exports[`DispositionView component renders as expected 1`] = `
                           </div>
                           <div
                             class="c17 text-left col"
-                          />
+                            data-testid="dsp-product"
+                          >
+                            00055 AVALANCHE  &  PROGRAM REVIEW
+                          </div>
                         </div>
                         <div
                           class="pb-2 row"

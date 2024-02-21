@@ -9,17 +9,17 @@ namespace Pims.Api.Constants
         [EnumMember(Value = "ACTIVE")]
         ACTIVE,
 
-        [EnumMember(Value = "ARCHIV")]
-        ARCHIV,
+        [EnumMember(Value = "ARCHIVED")]
+        ARCHIVED,
 
-        [EnumMember(Value = "CANCEL")]
-        CANCEL,
+        [EnumMember(Value = "CANCELLED")]
+        CANCELLED,
 
         [EnumMember(Value = "CLOSED")]
         CLOSED,
 
-        [EnumMember(Value = "COMPLT")]
-        COMPLT,
+        [EnumMember(Value = "COMPLETE")]
+        COMPLETE,
 
         [EnumMember(Value = "DRAFT")]
         DRAFT,

@@ -12,7 +12,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         public LoginSteps(BrowserDriver driver)
         {
             login = new Login(driver.Current);
-            idirUsers = driver.Configuration.GetSection("Users").Get<IEnumerable<IdirUser>>();
+            idirUsers = driver.Configuration.GetSection("Users").Get<IEnumerable<IdirUser>>()!;
         }
 
         [StepDefinition(@"I log in with IDIR credentials (.*)")]

@@ -22,6 +22,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
             loginSteps = new LoginSteps(driver);
             contacts = new Contacts(driver.Current);
             searchContacts = new SearchContacts(driver.Current);
+            individualContact = new IndividualContact();
+            organizationContact = new OrganizationContact();
         }
 
         [StepDefinition(@"I create a new Individual Contact from row number (.*)")]
@@ -194,17 +196,17 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             if (contactType == "Individual")
             {
-                searchContacts.VerifyContactTableContent(individualContact.FullName, individualContact.FirstName, individualContact.LastName, individualContact.Organization, individualContact.IndEmail1, individualContact.IndMailAddressLine1, individualContact.IndMailCity, individualContact.IndMailProvDisplay, individualContact.IndMailCountry);
+                searchContacts.VerifyContactTableContent(individualContact.FullName, individualContact.FirstName, individualContact.LastName, individualContact.Organization, individualContact.IndEmail1, individualContact.IndMailAddress.AddressLine1, individualContact.IndMailAddress.City, individualContact.IndMailAddress.ProvinceView, individualContact.IndMailAddress.Country);
             }
             else
             {
-                searchContacts.VerifyContactTableContent(organizationContact.OrganizationName, "", "", organizationContact.OrganizationName, organizationContact.OrgEmail1, organizationContact.OrgMailAddressLine1, organizationContact.OrgMailCity, organizationContact.OrgMailProvDisplay, organizationContact.OrgMailCountry);
+                searchContacts.VerifyContactTableContent(organizationContact.OrganizationName, "", "", organizationContact.OrganizationName, organizationContact.OrgEmail1, organizationContact.OrgMailAddress.AddressLine1, organizationContact.OrgMailAddress.City, organizationContact.OrgMailAddress.ProvinceView, organizationContact.OrgMailAddress.Country);
             }
         }
 
         private void PopulateIndividualContact(int rowNumber)
         {
-            DataTable individualContactSheet = ExcelDataContext.GetInstance().Sheets["IndividualContacts"];
+            DataTable individualContactSheet = ExcelDataContext.GetInstance().Sheets["IndividualContacts"]!;
             ExcelDataContext.PopulateInCollection(individualContactSheet);
 
             individualContact = new IndividualContact();
@@ -229,43 +231,43 @@ namespace PIMS.Tests.Automation.StepDefinitions
             individualContact.IndPhoneType2 = ExcelDataContext.ReadData(rowNumber, "IndPhoneType2");
             individualContact.IndPhoneTypeDisplay2 = ExcelDataContext.ReadData(rowNumber, "IndPhoneTypeDisplay2");
 
-            individualContact.IndMailAddressLine1 = ExcelDataContext.ReadData(rowNumber, "IndMailAddressLine1");
-            individualContact.IndMailAddressLine2 = ExcelDataContext.ReadData(rowNumber, "IndMailAddressLine2");
-            individualContact.IndMailAddressLine3 = ExcelDataContext.ReadData(rowNumber, "IndMailAddressLine3");
-            individualContact.IndMailCity = ExcelDataContext.ReadData(rowNumber, "IndMailCity");
-            individualContact.IndMailProvince = ExcelDataContext.ReadData(rowNumber, "IndMailProvince");
-            individualContact.IndMailProvDisplay = ExcelDataContext.ReadData(rowNumber, "IndMailProvDisplay");
-            individualContact.IndMailCityProvinceView = ExcelDataContext.ReadData(rowNumber, "IndMailCityProvinceView");
-            individualContact.IndMailCountry = ExcelDataContext.ReadData(rowNumber, "IndMailCountry");
-            individualContact.IndMailOtherCountry = ExcelDataContext.ReadData(rowNumber, "IndMailOtherCountry");
-            individualContact.IndMailPostalCode = ExcelDataContext.ReadData(rowNumber, "IndMailPostalCode");
+            individualContact.IndMailAddress.AddressLine1 = ExcelDataContext.ReadData(rowNumber, "IndMailAddressLine1");
+            individualContact.IndMailAddress.AddressLine2 = ExcelDataContext.ReadData(rowNumber, "IndMailAddressLine2");
+            individualContact.IndMailAddress.AddressLine3 = ExcelDataContext.ReadData(rowNumber, "IndMailAddressLine3");
+            individualContact.IndMailAddress.City = ExcelDataContext.ReadData(rowNumber, "IndMailCity");
+            individualContact.IndMailAddress.Province = ExcelDataContext.ReadData(rowNumber, "IndMailProvince");
+            individualContact.IndMailAddress.ProvinceView = ExcelDataContext.ReadData(rowNumber, "IndMailProvDisplay");
+            individualContact.IndMailAddress.CityProvinceView = ExcelDataContext.ReadData(rowNumber, "IndMailCityProvinceView");
+            individualContact.IndMailAddress.Country = ExcelDataContext.ReadData(rowNumber, "IndMailCountry");
+            individualContact.IndMailAddress.OtherCountry = ExcelDataContext.ReadData(rowNumber, "IndMailOtherCountry");
+            individualContact.IndMailAddress.PostalCode = ExcelDataContext.ReadData(rowNumber, "IndMailPostalCode");
 
-            individualContact.IndPropertyAddressLine1 = ExcelDataContext.ReadData(rowNumber, "IndPropertyAddressLine1");
-            individualContact.IndPropertyAddressLine2 = ExcelDataContext.ReadData(rowNumber, "IndPropertyAddressLine2");
-            individualContact.IndPropertyAddressLine3 = ExcelDataContext.ReadData(rowNumber, "IndPropertyAddressLine3");
-            individualContact.IndPropertyCity = ExcelDataContext.ReadData(rowNumber, "IndPropertyCity");
-            individualContact.IndPropertyProvince = ExcelDataContext.ReadData(rowNumber, "IndPropertyProvince");
-            individualContact.IndPropertyCityProvinceView = ExcelDataContext.ReadData(rowNumber, "IndPropertyCityProvinceView");
-            individualContact.IndPropertyCountry = ExcelDataContext.ReadData(rowNumber, "IndPropertyCountry");
-            individualContact.IndPropertyOtherCountry = ExcelDataContext.ReadData(rowNumber, "IndPropertyOtherCountry");
-            individualContact.IndPropertyPostalCode = ExcelDataContext.ReadData(rowNumber, "IndPropertyPostalCode");
+            individualContact.IndPropertyAddress.AddressLine1 = ExcelDataContext.ReadData(rowNumber, "IndPropertyAddressLine1");
+            individualContact.IndPropertyAddress.AddressLine2 = ExcelDataContext.ReadData(rowNumber, "IndPropertyAddressLine2");
+            individualContact.IndPropertyAddress.AddressLine3 = ExcelDataContext.ReadData(rowNumber, "IndPropertyAddressLine3");
+            individualContact.IndPropertyAddress.City = ExcelDataContext.ReadData(rowNumber, "IndPropertyCity");
+            individualContact.IndPropertyAddress.Province = ExcelDataContext.ReadData(rowNumber, "IndPropertyProvince");
+            individualContact.IndPropertyAddress.CityProvinceView = ExcelDataContext.ReadData(rowNumber, "IndPropertyCityProvinceView");
+            individualContact.IndPropertyAddress.Country = ExcelDataContext.ReadData(rowNumber, "IndPropertyCountry");
+            individualContact.IndPropertyAddress.OtherCountry = ExcelDataContext.ReadData(rowNumber, "IndPropertyOtherCountry");
+            individualContact.IndPropertyAddress.PostalCode = ExcelDataContext.ReadData(rowNumber, "IndPropertyPostalCode");
 
-            individualContact.IndBillingAddressLine1 = ExcelDataContext.ReadData(rowNumber, "IndBillingAddressLine1");
-            individualContact.IndBillingAddressLine2 = ExcelDataContext.ReadData(rowNumber, "IndBillingAddressLine2");
-            individualContact.IndBillingAddressLine3 = ExcelDataContext.ReadData(rowNumber, "IndBillingAddressLine3");
-            individualContact.IndBillingCity = ExcelDataContext.ReadData(rowNumber, "IndBillingCity");
-            individualContact.IndBillingProvince = ExcelDataContext.ReadData(rowNumber, "IndBillingProvince");
-            individualContact.IndBillingCityProvinceView = ExcelDataContext.ReadData(rowNumber, "IndBillingCityProvinceView");
-            individualContact.IndBillingCountry = ExcelDataContext.ReadData(rowNumber, "IndBillingCountry");
-            individualContact.IndBillingOtherCountry = ExcelDataContext.ReadData(rowNumber, "IndBillingOtherCountry");
-            individualContact.IndBillingPostalCode = ExcelDataContext.ReadData(rowNumber, "IndBillingPostalCode");
+            individualContact.IndBillingAddress.AddressLine1 = ExcelDataContext.ReadData(rowNumber, "IndBillingAddressLine1");
+            individualContact.IndBillingAddress.AddressLine2 = ExcelDataContext.ReadData(rowNumber, "IndBillingAddressLine2");
+            individualContact.IndBillingAddress.AddressLine3 = ExcelDataContext.ReadData(rowNumber, "IndBillingAddressLine3");
+            individualContact.IndBillingAddress.City = ExcelDataContext.ReadData(rowNumber, "IndBillingCity");
+            individualContact.IndBillingAddress.Province = ExcelDataContext.ReadData(rowNumber, "IndBillingProvince");
+            individualContact.IndBillingAddress.CityProvinceView = ExcelDataContext.ReadData(rowNumber, "IndBillingCityProvinceView");
+            individualContact.IndBillingAddress.Country = ExcelDataContext.ReadData(rowNumber, "IndBillingCountry");
+            individualContact.IndBillingAddress.OtherCountry = ExcelDataContext.ReadData(rowNumber, "IndBillingOtherCountry");
+            individualContact.IndBillingAddress.PostalCode = ExcelDataContext.ReadData(rowNumber, "IndBillingPostalCode");
 
             individualContact.IndComments = ExcelDataContext.ReadData(rowNumber, "IndComments");
         }
 
         private void PopulateOrganizationContact(int rowNumber)
         {
-            DataTable organizationContactSheet = ExcelDataContext.GetInstance().Sheets["OrganizationContacts"];
+            DataTable organizationContactSheet = ExcelDataContext.GetInstance().Sheets["OrganizationContacts"]!;
             ExcelDataContext.PopulateInCollection(organizationContactSheet);
 
             organizationContact = new OrganizationContact();
@@ -287,36 +289,36 @@ namespace PIMS.Tests.Automation.StepDefinitions
             organizationContact.OrgPhoneType2 = ExcelDataContext.ReadData(rowNumber, "OrgPhoneType2");
             organizationContact.OrgPhoneTypeDisplay2 = ExcelDataContext.ReadData(rowNumber, "OrgPhoneTypeDisplay2");
 
-            organizationContact.OrgMailAddressLine1 = ExcelDataContext.ReadData(rowNumber, "OrgMailAddressLine1");
-            organizationContact.OrgMailAddressLine2 = ExcelDataContext.ReadData(rowNumber, "OrgMailAddressLine2");
-            organizationContact.OrgMailAddressLine3 = ExcelDataContext.ReadData(rowNumber, "OrgMailAddressLine3");
-            organizationContact.OrgMailCity = ExcelDataContext.ReadData(rowNumber, "OrgMailCity");
-            organizationContact.OrgMailProvince = ExcelDataContext.ReadData(rowNumber, "OrgMailProvince");
-            organizationContact.OrgMailProvDisplay = ExcelDataContext.ReadData(rowNumber, "OrgMailProvDisplay");
-            organizationContact.OrgMailCityProvinceView = ExcelDataContext.ReadData(rowNumber, "OrgMailCityProvinceView");
-            organizationContact.OrgMailCountry = ExcelDataContext.ReadData(rowNumber, "OrgMailCountry");
-            organizationContact.OrgMailOtherCountry = ExcelDataContext.ReadData(rowNumber, "OrgMailOtherCountry");
-            organizationContact.OrgMailPostalCode = ExcelDataContext.ReadData(rowNumber, "OrgMailPostalCode");
+            organizationContact.OrgMailAddress.AddressLine1 = ExcelDataContext.ReadData(rowNumber, "OrgMailAddressLine1");
+            organizationContact.OrgMailAddress.AddressLine2 = ExcelDataContext.ReadData(rowNumber, "OrgMailAddressLine2");
+            organizationContact.OrgMailAddress.AddressLine3 = ExcelDataContext.ReadData(rowNumber, "OrgMailAddressLine3");
+            organizationContact.OrgMailAddress.City = ExcelDataContext.ReadData(rowNumber, "OrgMailCity");
+            organizationContact.OrgMailAddress.Province = ExcelDataContext.ReadData(rowNumber, "OrgMailProvince");
+            organizationContact.OrgMailAddress.ProvinceView = ExcelDataContext.ReadData(rowNumber, "OrgMailProvDisplay");
+            organizationContact.OrgMailAddress.CityProvinceView = ExcelDataContext.ReadData(rowNumber, "OrgMailCityProvinceView");
+            organizationContact.OrgMailAddress.Country = ExcelDataContext.ReadData(rowNumber, "OrgMailCountry");
+            organizationContact.OrgMailAddress.OtherCountry = ExcelDataContext.ReadData(rowNumber, "OrgMailOtherCountry");
+            organizationContact.OrgMailAddress.PostalCode = ExcelDataContext.ReadData(rowNumber, "OrgMailPostalCode");
 
-            organizationContact.OrgPropertyAddressLine1 = ExcelDataContext.ReadData(rowNumber, "OrgPropertyAddressLine1");
-            organizationContact.OrgPropertyAddressLine2 = ExcelDataContext.ReadData(rowNumber, "OrgPropertyAddressLine2");
-            organizationContact.OrgPropertyAddressLine3 = ExcelDataContext.ReadData(rowNumber, "OrgPropertyAddressLine3");
-            organizationContact.OrgPropertyCity = ExcelDataContext.ReadData(rowNumber, "OrgPropertyCity");
-            organizationContact.OrgPropertyProvince = ExcelDataContext.ReadData(rowNumber, "OrgPropertyProvince");
-            organizationContact.OrgPropertyCityProvinceView = ExcelDataContext.ReadData(rowNumber, "OrgPropertyCityProvinceView");
-            organizationContact.OrgPropertyCountry = ExcelDataContext.ReadData(rowNumber, "OrgPropertyCountry");
-            organizationContact.OrgPropertyOtherCountry = ExcelDataContext.ReadData(rowNumber, "OrgPropertyOtherCountry");
-            organizationContact.OrgPropertyPostalCode = ExcelDataContext.ReadData(rowNumber, "OrgPropertyPostalCode");
+            organizationContact.OrgPropertyAddress.AddressLine1 = ExcelDataContext.ReadData(rowNumber, "OrgPropertyAddressLine1");
+            organizationContact.OrgPropertyAddress.AddressLine2 = ExcelDataContext.ReadData(rowNumber, "OrgPropertyAddressLine2");
+            organizationContact.OrgPropertyAddress.AddressLine3 = ExcelDataContext.ReadData(rowNumber, "OrgPropertyAddressLine3");
+            organizationContact.OrgPropertyAddress.City = ExcelDataContext.ReadData(rowNumber, "OrgPropertyCity");
+            organizationContact.OrgPropertyAddress.Province = ExcelDataContext.ReadData(rowNumber, "OrgPropertyProvince");
+            organizationContact.OrgPropertyAddress.CityProvinceView = ExcelDataContext.ReadData(rowNumber, "OrgPropertyCityProvinceView");
+            organizationContact.OrgPropertyAddress.Country = ExcelDataContext.ReadData(rowNumber, "OrgPropertyCountry");
+            organizationContact.OrgPropertyAddress.OtherCountry = ExcelDataContext.ReadData(rowNumber, "OrgPropertyOtherCountry");
+            organizationContact.OrgPropertyAddress.PostalCode = ExcelDataContext.ReadData(rowNumber, "OrgPropertyPostalCode");
 
-            organizationContact.OrgBillingAddressLine1 = ExcelDataContext.ReadData(rowNumber, "OrgBillingAddressLine1");
-            organizationContact.OrgBillingAddressLine2 = ExcelDataContext.ReadData(rowNumber, "OrgBillingAddressLine2");
-            organizationContact.OrgBillingAddressLine3 = ExcelDataContext.ReadData(rowNumber, "OrgBillingAddressLine3");
-            organizationContact.OrgBillingCity = ExcelDataContext.ReadData(rowNumber, "OrgBillingCity");
-            organizationContact.OrgBillingProvince = ExcelDataContext.ReadData(rowNumber, "OrgBillingProvince");
-            organizationContact.OrgBillingCityProvinceView = ExcelDataContext.ReadData(rowNumber, "OrgBillingCityProvinceView");
-            organizationContact.OrgBillingCountry = ExcelDataContext.ReadData(rowNumber, "OrgBillingCountry");
-            organizationContact.OrgBillingOtherCountry = ExcelDataContext.ReadData(rowNumber, "OrgBillingOtherCountry");
-            organizationContact.OrgBillingPostalCode = ExcelDataContext.ReadData(rowNumber, "OrgBillingPostalCode");
+            organizationContact.OrgBillingAddress.AddressLine1 = ExcelDataContext.ReadData(rowNumber, "OrgBillingAddressLine1");
+            organizationContact.OrgBillingAddress.AddressLine2 = ExcelDataContext.ReadData(rowNumber, "OrgBillingAddressLine2");
+            organizationContact.OrgBillingAddress.AddressLine3 = ExcelDataContext.ReadData(rowNumber, "OrgBillingAddressLine3");
+            organizationContact.OrgBillingAddress.City = ExcelDataContext.ReadData(rowNumber, "OrgBillingCity");
+            organizationContact.OrgBillingAddress.Province = ExcelDataContext.ReadData(rowNumber, "OrgBillingProvince");
+            organizationContact.OrgBillingAddress.CityProvinceView = ExcelDataContext.ReadData(rowNumber, "OrgBillingCityProvinceView");
+            organizationContact.OrgBillingAddress.Country = ExcelDataContext.ReadData(rowNumber, "OrgBillingCountry");
+            organizationContact.OrgBillingAddress.OtherCountry = ExcelDataContext.ReadData(rowNumber, "OrgBillingOtherCountry");
+            organizationContact.OrgBillingAddress.PostalCode = ExcelDataContext.ReadData(rowNumber, "OrgBillingPostalCode");
 
             organizationContact.OrgComments = ExcelDataContext.ReadData(rowNumber, "OrgComments");
         }

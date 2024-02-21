@@ -186,7 +186,7 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(searchLicense1stResultLink);
             AssertTrueContentEquals(searchLicense1stResultExpiryDateContent, TransformDateFormat(expiryDate));
             AssertTrueContentEquals(searchLicense1stResultProgramContent, program);
-            Assert.Equal(0, webDriver.FindElements(searchLicense1stResultTenantsContent).Count);
+            Assert.NotEmpty(webDriver.FindElements(searchLicense1stResultTenantsContent));
             Assert.True(webDriver.FindElements(searchLicense1stResultPropertiesContent).Count > 0);
             AssertTrueContentEquals(searchLicense1stResultStatusContent, status);
         }

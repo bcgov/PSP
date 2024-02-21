@@ -1,4 +1,6 @@
 using Pims.Api.Models.Concepts.File;
+using Pims.Api.Models.Base;
+using Pims.Api.Models.Concepts.Property;
 
 namespace Pims.Api.Models.Concepts.DispositionFile
 {

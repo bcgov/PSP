@@ -32,6 +32,7 @@ import { AcquisitionContainerState } from './AcquisitionContainer';
 import AcquisitionHeader from './common/AcquisitionHeader';
 import AcquisitionMenu from './common/AcquisitionMenu';
 import { AcquisitionRouter } from './router/AcquisitionRouter';
+import { isAcquisitionFile } from './tabs/agreement/update/models';
 
 export interface IAcquisitionViewProps {
   onClose: (() => void) | undefined;
@@ -147,13 +148,15 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
           <FileLayout
             leftComponent={
               <>
-                <AcquisitionMenu
-                  acquisitionFileId={file?.id || 0}
-                  items={menuItems}
-                  selectedIndex={selectedMenuIndex}
-                  onChange={onMenuChange}
-                  onShowPropertySelector={onShowPropertySelector}
-                />
+                {isAcquisitionFile(file) && (
+                  <AcquisitionMenu
+                    acquisitionFile={file}
+                    items={menuItems}
+                    selectedIndex={selectedMenuIndex}
+                    onChange={onMenuChange}
+                    onShowPropertySelector={onShowPropertySelector}
+                  />
+                )}
               </>
             }
             bodyComponent={

@@ -33,11 +33,16 @@ const SinglePropertyMarker: React.FC<React.PropsWithChildren<SinglePropertyMarke
 }) => {
   const mapMachine = useMapStateMachine();
 
-  const isOwned = isPimsFeature(pointFeature);
-
-  const getIcon = () => {
+  const getIcon = (
+    feature: PointFeature<
+      PIMS_Property_Location_View | PIMS_Property_Boundary_View | PMBC_Feature_Properties
+    >,
+    isSelected: boolean,
+    showDisposed: boolean,
+  ): L.Icon<L.IconOptions> | null => {
+    const isOwned = isPimsFeature(feature);
     if (isOwned) {
-      return getMarkerIcon(pointFeature, isSelected);
+      return getMarkerIcon(feature, isSelected, showDisposed);
     } else {
       return getNotOwnerMarkerIcon(isSelected);
     }
@@ -75,19 +80,21 @@ const SinglePropertyMarker: React.FC<React.PropsWithChildren<SinglePropertyMarke
     }
   };
 
-  return (
-    // render single marker, not in a cluster
+  const icon = getIcon(pointFeature, isSelected, mapMachine.showDisposed);
+
+  // render single marker, not in a cluster
+  return icon ? (
     <Marker
       {...pointFeature.properties}
       position={markerPosition}
-      icon={getIcon()}
+      icon={icon}
       eventHandlers={{
         click: () => {
           onMarkerClicked();
         },
       }}
     />
-  );
+  ) : null;
 };
 
 export default SinglePropertyMarker;

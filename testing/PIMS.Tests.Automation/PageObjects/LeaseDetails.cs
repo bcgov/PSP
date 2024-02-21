@@ -619,16 +619,17 @@ namespace PIMS.Tests.Automation.PageObjects
                     webDriver.SwitchTo().Alert().Accept();
                 }
             }
-            catch (WebDriverTimeoutException e)
+            catch (WebDriverTimeoutException)
             {
-                if (webDriver.FindElements(licenseDetailsConfirmationModal).Count() > 0)
-                {
-                    Assert.Equal("Confirm changes", sharedModals.ModalHeader());
-                    Assert.Equal("If you choose to cancel now, your changes will not be saved.", sharedModals.ConfirmationModalText1());
-                    Assert.Equal("Do you want to proceed?", sharedModals.ConfirmationModalText2());
+                //if (webDriver.FindElements(licenseDetailsConfirmationModal).Count() > 0)
+                //{
+                //    Assert.Equal("Confirm Changes", sharedModals.ModalHeader());
+                //    Assert.Contains("If you choose to cancel now, your changes will not be saved.", sharedModals.ModalContent());
+                //    Assert.Contains("Do you want to proceed?", sharedModals.ModalContent());
 
-                    sharedModals.ModalClickOKBttn();
-                }
+                //    sharedModals.ModalClickOKBttn();
+                //}
+                sharedModals.CancelActionModal();
             }
         }
 

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities.Models;
 
@@ -27,6 +28,11 @@ namespace Pims.Api.Areas.Property.Models.Search
         /// </summary>
         public string PlanNumber { get; set; }
 
+        /// <summary>
+        /// get/set - The property ownership status.
+        /// </summary>
+        public IList<string> Ownership { get; set; }
+
         #endregion
 
         #region Constructors
@@ -49,10 +55,32 @@ namespace Pims.Api.Areas.Property.Models.Search
             var filter = new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>(query, StringComparer.OrdinalIgnoreCase);
 
             this.Sort = filter.GetStringArrayValue(nameof(this.Sort));
+            var tempSort = this.Sort.ToList();
+
+            // Convert sort to db format
+            for (int i = 0; i < this.Sort.Length; i++)
+            {
+                if (tempSort[i].StartsWith("Location"))
+                {
+                    tempSort[i] = tempSort[i].Replace("Location", "Address.MunicipalityName");
+                }
+                if (tempSort[i].StartsWith("Ownership"))
+                {
+                    // The order will affect the display in the frontend. For now in alphabetical order.
+                    // i.e. [Core Inventory, Disposed, Other Interest, Property of Interest]
+                    var direction = this.Sort[i].Split(' ')[1];
+                    tempSort[i] = this.Sort[i].Replace("Ownership", "IsOwned");
+                    tempSort.Add($"IsDisposed {direction}");
+                    tempSort.Add($"IsOtherInterest {direction}");
+                    tempSort.Add($"IsPropertyOfInterest {direction}");
+                }
+            }
+            this.Sort = tempSort.ToArray();
 
             this.PinOrPid = filter.GetStringValue(nameof(this.PinOrPid));
             this.Address = filter.GetStringValue(nameof(this.Address));
             this.PlanNumber = filter.GetStringValue(nameof(this.PlanNumber));
+            this.Ownership = filter.GetStringArrayValue(nameof(this.Ownership));
         }
         #endregion
 
@@ -73,6 +101,7 @@ namespace Pims.Api.Areas.Property.Models.Search
                 PinOrPid = model.PinOrPid,
                 Address = model.Address,
                 PlanNumber = model.PlanNumber,
+                Ownership = model.Ownership,
             };
 
             return filter;

@@ -24,6 +24,12 @@ export class PropertyFilterFormModel {
   // Anomaly filters
   public anomalies: CodeTypeSelectOption[] = [];
 
+  // Ownership filters
+  public isCoreInventory = true;
+  public isPropertyOfInterest = true;
+  public isOtherInterest = true;
+  public isDisposed = false;
+
   public toApi(): Api_PropertyFilterCriteria {
     return {
       projectId: this.projectPrediction !== null ? this.projectPrediction.id : null,
@@ -38,6 +44,11 @@ export class PropertyFilterFormModel {
       leasePurposes: this.leasePurposes.map(lp => lp.codeType),
 
       anomalyIds: this.anomalies.map(a => a.codeType),
+
+      isCoreInventory: this.isCoreInventory,
+      isPropertyOfInterest: this.isPropertyOfInterest,
+      isOtherInterest: this.isOtherInterest,
+      isDisposed: this.isDisposed,
     };
   }
 }

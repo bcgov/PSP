@@ -78,6 +78,28 @@ export const otherInterestIconSelect = L.icon({
   shadowSize: [41, 41],
 });
 
+// disposed icon (grey)
+export const disposedIcon = L.icon({
+  iconUrl: require('@/assets/images/pins/disposed.png') ?? 'assets/images/pins/disposed.png',
+  shadowUrl: require('@/assets/images/pins/marker-shadow.png') ?? 'marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41],
+});
+
+// disposed icon (grey) highlighted
+export const disposedIconSelect = L.icon({
+  iconUrl:
+    require('@/assets/images/pins/disposed-highlight.png') ??
+    'assets/images/pins/disposed-highlight.png',
+  shadowUrl: require('@/assets/images/pins/marker-shadow.png') ?? 'marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41],
+});
+
 // not owned property icon (orange)
 export const notOwnedPropertyIcon = L.icon({
   iconUrl:
@@ -133,8 +155,17 @@ export function pointToLayer<P extends MarkerFeature, C extends Supercluster.Clu
 export function getMarkerIcon(
   feature: Supercluster.PointFeature<PIMS_Property_Location_View | PIMS_Property_Boundary_View>,
   selected: boolean,
-): L.Icon<L.IconOptions> {
-  if (feature.properties.IS_PROPERTY_OF_INTEREST) {
+  showDisposed: boolean = false,
+): L.Icon<L.IconOptions> | null {
+  if (showDisposed && feature?.properties?.IS_DISPOSED === true) {
+    if (selected) {
+      return disposedIconSelect;
+    } else {
+      return disposedIcon;
+    }
+  }
+
+  if (feature?.properties?.IS_PROPERTY_OF_INTEREST === true) {
     if (selected) {
       return propertyOfInterestIconSelect;
     } else {
@@ -142,18 +173,22 @@ export function getMarkerIcon(
     }
   }
 
-  if (feature.properties.IS_OWNED) {
+  if (feature?.properties?.IS_OWNED === true) {
     if (selected) {
       return parcelIconSelect;
     }
     return parcelIcon;
   }
 
-  if (selected) {
-    return otherInterestIconSelect;
-  } else {
-    return otherInterestIcon;
+  if (feature?.properties?.IS_OTHER_INTEREST === true) {
+    if (selected) {
+      return otherInterestIconSelect;
+    } else {
+      return otherInterestIcon;
+    }
   }
+
+  return null;
 }
 
 /**
@@ -190,7 +225,7 @@ export const createSingleMarker = <P extends MarkerFeature>(
 
   if (isOwned) {
     const icon = getMarkerIcon(feature, false);
-    return new Marker(latlng, { icon });
+    return icon ? new Marker(latlng, { icon }) : (null as unknown as Layer);
   } else {
     const icon = getNotOwnerMarkerIcon(false);
     return new Marker(latlng, { icon });

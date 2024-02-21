@@ -17,6 +17,8 @@ namespace Pims.Dal.Entities;
 [Index("DispositionTypeCode", Name = "DISPFL_DISPOSITION_TYPE_CODE_IDX")]
 [Index("DspInitiatingBranchTypeCode", Name = "DISPFL_DSP_INITIATING_BRANCH_TYPE_CODE_IDX")]
 [Index("DspPhysFileStatusTypeCode", Name = "DISPFL_DSP_PHYS_FILE_STATUS_TYPE_CODE_IDX")]
+[Index("ProductId", Name = "DISPFL_PRODUCT_ID_IDX")]
+[Index("ProjectId", Name = "DISPFL_PROJECT_ID_IDX")]
 [Index("RegionCode", Name = "DISPFL_REGION_CODE_IDX")]
 public partial class PimsDispositionFile
 {
@@ -84,6 +86,18 @@ public partial class PimsDispositionFile
     /// </summary>
     [Column("REGION_CODE")]
     public short RegionCode { get; set; }
+
+    /// <summary>
+    /// Foreign key reference to the project table.
+    /// </summary>
+    [Column("PROJECT_ID")]
+    public long? ProjectId { get; set; }
+
+    /// <summary>
+    /// Foreign key reference to the product table.
+    /// </summary>
+    [Column("PRODUCT_ID")]
+    public long? ProductId { get; set; }
 
     /// <summary>
     /// The formatted disposition file number, seeded from the PIMS_DISPOSITION_FILE_NO_SEQ sequence.  Sample formats are D-1, D-2, D-3, etc.
@@ -279,6 +293,14 @@ public partial class PimsDispositionFile
 
     [InverseProperty("DispositionFile")]
     public virtual ICollection<PimsDispositionSale> PimsDispositionSales { get; set; } = new List<PimsDispositionSale>();
+
+    [ForeignKey("ProductId")]
+    [InverseProperty("PimsDispositionFiles")]
+    public virtual PimsProduct Product { get; set; }
+
+    [ForeignKey("ProjectId")]
+    [InverseProperty("PimsDispositionFiles")]
+    public virtual PimsProject Project { get; set; }
 
     [ForeignKey("RegionCode")]
     [InverseProperty("PimsDispositionFiles")]

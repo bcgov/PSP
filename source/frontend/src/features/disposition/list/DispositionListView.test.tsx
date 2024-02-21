@@ -73,7 +73,9 @@ describe('Disposition List View', () => {
   });
 
   it('matches snapshot', async () => {
-    const results = mockPagedResults([mockDispositionFileResponse()]);
+    const results = mockPagedResults([
+      mockDispositionFileResponse() as unknown as Api_DispositionFile,
+    ]);
     getDispositionFilesPagedApiFn.mockResolvedValue(results);
     const { asFragment } = setup();
     await waitForElementToBeRemoved(screen.getByTitle('table-loading'));
@@ -88,7 +90,9 @@ describe('Disposition List View', () => {
     await waitForElementToBeRemoved(screen.getByTitle('table-loading'));
     expect(await screen.queryByText(/test disposition/i)).toBeNull();
 
-    results = mockPagedResults([mockDispositionFileResponse(1, 'test disposition')]);
+    results = mockPagedResults([
+      mockDispositionFileResponse(1, 'test disposition') as unknown as Api_DispositionFile,
+    ]);
     getDispositionFilesPagedApiFn.mockResolvedValue(results);
 
     const input = getByName('fileNameOrNumberOrReference');
@@ -108,7 +112,7 @@ describe('Disposition List View', () => {
   it('searches by pid', async () => {
     const results = mockPagedResults([
       {
-        ...mockDispositionFileResponse(),
+        ...(mockDispositionFileResponse() as unknown as Api_DispositionFile),
         fileProperties: [
           {
             id: 12,

@@ -1,8 +1,9 @@
 import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
 import { ApiGen_Concepts_DispositionFileProperty } from '@/models/api/generated/ApiGen_Concepts_DispositionFileProperty';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
-import { emptyStringtoNullable, fromTypeCode, toTypeCodeNullable } from '@/utils/formUtils';
 import { exists, isValidIsoDateTime } from '@/utils/utils';
+import { IAutocompletePrediction } from '@/interfaces/IAutocomplete';
+import { emptyStringtoNullable, fromTypeCode, toTypeCodeNullable } from '@/utils/formUtils';
 
 import { PropertyForm } from '../../shared/models';
 import { ChecklistItemFormModel } from '../../shared/tabs/checklist/update/models';
@@ -22,11 +23,13 @@ export class DispositionFormModel implements WithDispositionTeam {
   dispositionStatusTypeCode: string | null = null;
   initiatingBranchTypeCode: string | null = null;
   physicalFileStatusTypeCode: string | null = null;
+  project: IAutocompletePrediction | null = null;
+  productId: string | null = null;
   fundingTypeCode: string | null = null;
   initiatingDocumentTypeCode: string | null = null;
   initiatingDocumentTypeOther: string | null = '';
   initiatingDocumentDate: string | null = null;
-  regionCode: string | null = '';
+  regionCode: string | null = null;
   fileProperties: PropertyForm[] = [];
   team: DispositionTeamSubFormModel[] = [];
   offers: DispositionOfferFormModel[] = [];
@@ -63,6 +66,10 @@ export class DispositionFormModel implements WithDispositionTeam {
       dispositionStatusTypeCode: toTypeCodeNullable(this.dispositionStatusTypeCode),
       initiatingBranchTypeCode: toTypeCodeNullable(this.initiatingBranchTypeCode),
       physicalFileStatusTypeCode: toTypeCodeNullable(this.physicalFileStatusTypeCode),
+      project: null,
+      projectId: this.project?.id !== undefined && this.project?.id !== 0 ? this.project?.id : null,
+      product: null,
+      productId: this.productId ? Number(this.productId) : null,
       fundingTypeCode: toTypeCodeNullable(this.fundingTypeCode),
       initiatingDocumentTypeCode: toTypeCodeNullable(this.initiatingDocumentTypeCode),
       initiatingDocumentTypeOther: this.initiatingDocumentTypeOther
@@ -71,7 +78,7 @@ export class DispositionFormModel implements WithDispositionTeam {
       initiatingDocumentDate: isValidIsoDateTime(this.initiatingDocumentDate)
         ? this.initiatingDocumentDate
         : null,
-      regionCode: toTypeCodeNullable(Number(this.regionCode)),
+      regionCode: exists(this.regionCode) ? toTypeCodeNullable(Number(this.regionCode)) : null,
       dispositionTeam: this.team
         .filter(x => !!x.contact && !!x.teamProfileTypeCode)
         .map(x => x.toApi(this.id || 0))
@@ -104,6 +111,10 @@ export class DispositionFormModel implements WithDispositionTeam {
       model.dispositionStatusTypeCode?.id ?? undefined,
     );
 
+    dispositionForm.project = model.project
+      ? { id: model.project?.id || 0, text: model.project?.description || '' }
+      : null;
+    dispositionForm.productId = model.product?.id?.toString() ?? '';
     dispositionForm.fundingTypeCode = fromTypeCode(model.fundingTypeCode) ?? '';
     dispositionForm.fileName = model.fileName ?? '';
     dispositionForm.referenceNumber = model.fileReference;

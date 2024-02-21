@@ -153,6 +153,7 @@ describe('MapFilterBar', () => {
       quantity: undefined,
       latitude: '',
       longitude: '',
+      ownership: 'isCoreInventory,isPropertyOfInterest,isOtherInterest',
     });
   });
 });
