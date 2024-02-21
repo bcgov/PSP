@@ -259,7 +259,7 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
     );
   };
 
-  const canRemove = async (propertyId: number) => {
+  const canRemove = async () => {
     return true;
   };
 

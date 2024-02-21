@@ -155,7 +155,7 @@ export function pointToLayer<P extends MarkerFeature, C extends Supercluster.Clu
 export function getMarkerIcon(
   feature: Supercluster.PointFeature<PIMS_Property_Location_View | PIMS_Property_Boundary_View>,
   selected: boolean,
-  showDisposed: boolean = false,
+  showDisposed = false,
 ): L.Icon<L.IconOptions> | null {
   if (showDisposed && feature?.properties?.IS_DISPOSED === true) {
     if (selected) {

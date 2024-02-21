@@ -3,8 +3,8 @@
  * Do not manually modify, changes made to this file will be lost when this file is regenerated.
  */
 import { ApiGen_Base_BaseConcurrent } from './ApiGen_Base_BaseConcurrent';
-import { ApiGen_Concepts_File } from './ApiGen_Concepts_File';
 import { ApiGen_Concepts_Property } from './ApiGen_Concepts_Property';
+import { ApiGen_Concepts_File } from './ApiGen_Concepts_File';
 
 // LINK: @backend/apimodels/Models/Concepts/File/FilePropertyModel.cs
 export interface ApiGen_Concepts_FileProperty extends ApiGen_Base_BaseConcurrent {

@@ -475,7 +475,7 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = obje
               toggleSortBy(column.id, next === 'desc', true);
             } else {
               // Todo: this is throwing sometimes. Most likely, the type is incorrect and does not have the clearSortBy method.
-              if (!!column.clearSortBy) {
+              if (column.clearSortBy) {
                 column.clearSortBy();
               }
             }

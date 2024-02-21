@@ -3,8 +3,8 @@
  * Do not manually modify, changes made to this file will be lost when this file is regenerated.
  */
 import { ApiGen_Base_BaseAudit } from './ApiGen_Base_BaseAudit';
-import { ApiGen_Concepts_AcquisitionFile } from './ApiGen_Concepts_AcquisitionFile';
 import { ApiGen_Concepts_ProjectProduct } from './ApiGen_Concepts_ProjectProduct';
+import { ApiGen_Concepts_AcquisitionFile } from './ApiGen_Concepts_AcquisitionFile';
 
 // LINK: @backend/apimodels/Models/Concepts/Product/ProductModel.cs
 export interface ApiGen_Concepts_Product extends ApiGen_Base_BaseAudit {

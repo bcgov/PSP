@@ -4,8 +4,8 @@
  */
 import { ApiGen_Base_BaseAudit } from './ApiGen_Base_BaseAudit';
 import { ApiGen_Base_CodeType } from './ApiGen_Base_CodeType';
-import { ApiGen_Concepts_Role } from './ApiGen_Concepts_Role';
 import { ApiGen_Concepts_User } from './ApiGen_Concepts_User';
+import { ApiGen_Concepts_Role } from './ApiGen_Concepts_Role';
 
 // LINK: @backend/apimodels/Models/Concepts/AccessRequest/AccessRequestModel.cs
 export interface ApiGen_Concepts_AccessRequest extends ApiGen_Base_BaseAudit {

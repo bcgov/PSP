@@ -3,8 +3,8 @@
  * Do not manually modify, changes made to this file will be lost when this file is regenerated.
  */
 import { ApiGen_Base_BaseAudit } from './ApiGen_Base_BaseAudit';
-import { ApiGen_CodeTypes_DocumentRelationType } from './ApiGen_CodeTypes_DocumentRelationType';
 import { ApiGen_Concepts_Document } from './ApiGen_Concepts_Document';
+import { ApiGen_CodeTypes_DocumentRelationType } from './ApiGen_CodeTypes_DocumentRelationType';
 
 // LINK: @backend/apimodels/Models/Concepts/Document/DocumentRelationshipModel.cs
 export interface ApiGen_Concepts_DocumentRelationship extends ApiGen_Base_BaseAudit {

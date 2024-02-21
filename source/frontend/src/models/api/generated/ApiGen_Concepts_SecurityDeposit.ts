@@ -4,8 +4,8 @@
  */
 import { ApiGen_Base_BaseConcurrent } from './ApiGen_Base_BaseConcurrent';
 import { ApiGen_Base_CodeType } from './ApiGen_Base_CodeType';
-import { ApiGen_Concepts_Contact } from './ApiGen_Concepts_Contact';
 import { ApiGen_Concepts_SecurityDepositReturn } from './ApiGen_Concepts_SecurityDepositReturn';
+import { ApiGen_Concepts_Contact } from './ApiGen_Concepts_Contact';
 
 // LINK: @backend/apimodels/Models/Concepts/Deposit/SecurityDepositModel.cs
 export interface ApiGen_Concepts_SecurityDeposit extends ApiGen_Base_BaseConcurrent {

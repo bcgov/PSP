@@ -3,10 +3,10 @@
  * Do not manually modify, changes made to this file will be lost when this file is regenerated.
  */
 import { ApiGen_Base_BaseAudit } from './ApiGen_Base_BaseAudit';
-import { ApiGen_Base_CodeType } from './ApiGen_Base_CodeType';
-import { ApiGen_Concepts_InterestHolderProperty } from './ApiGen_Concepts_InterestHolderProperty';
-import { ApiGen_Concepts_Organization } from './ApiGen_Concepts_Organization';
 import { ApiGen_Concepts_Person } from './ApiGen_Concepts_Person';
+import { ApiGen_Concepts_Organization } from './ApiGen_Concepts_Organization';
+import { ApiGen_Concepts_InterestHolderProperty } from './ApiGen_Concepts_InterestHolderProperty';
+import { ApiGen_Base_CodeType } from './ApiGen_Base_CodeType';
 
 // LINK: @backend/apimodels/Models/Concepts/InterestHolder/InterestHolderModel.cs
 export interface ApiGen_Concepts_InterestHolder extends ApiGen_Base_BaseAudit {

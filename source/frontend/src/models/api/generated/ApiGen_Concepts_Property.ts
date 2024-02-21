@@ -4,13 +4,13 @@
  */
 import { ApiGen_Base_BaseConcurrent } from './ApiGen_Base_BaseConcurrent';
 import { ApiGen_Base_CodeType } from './ApiGen_Base_CodeType';
+import { ApiGen_Concepts_PropertyAnomaly } from './ApiGen_Concepts_PropertyAnomaly';
+import { ApiGen_Concepts_PropertyTenure } from './ApiGen_Concepts_PropertyTenure';
+import { ApiGen_Concepts_PropertyRoad } from './ApiGen_Concepts_PropertyRoad';
 import { ApiGen_Concepts_Address } from './ApiGen_Concepts_Address';
 import { ApiGen_Concepts_Geometry } from './ApiGen_Concepts_Geometry';
 import { ApiGen_Concepts_Polygon } from './ApiGen_Concepts_Polygon';
-import { ApiGen_Concepts_PropertyAnomaly } from './ApiGen_Concepts_PropertyAnomaly';
 import { ApiGen_Concepts_PropertyContact } from './ApiGen_Concepts_PropertyContact';
-import { ApiGen_Concepts_PropertyRoad } from './ApiGen_Concepts_PropertyRoad';
-import { ApiGen_Concepts_PropertyTenure } from './ApiGen_Concepts_PropertyTenure';
 
 // LINK: @backend/apimodels/Models/Concepts/Property/PropertyModel.cs
 export interface ApiGen_Concepts_Property extends ApiGen_Base_BaseConcurrent {
@@ -41,6 +41,8 @@ export interface ApiGen_Concepts_Property extends ApiGen_Base_BaseConcurrent {
   planNumber: string | null;
   isOwned: boolean;
   isPropertyOfInterest: boolean;
+  isOtherInterest: boolean;
+  isDisposed: boolean;
   isVisibleToOtherAgencies: boolean;
   areaUnit: ApiGen_Base_CodeType<string> | null;
   landArea: number | null;
