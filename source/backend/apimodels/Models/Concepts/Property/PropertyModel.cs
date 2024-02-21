@@ -61,7 +61,7 @@ namespace Pims.Api.Models.Concepts.Property
         /// <summary>
         /// get/set - The data source effective date.
         /// </summary>
-        public DateOnly DataSourceEffectiveDate { get; set; }
+        public DateOnly DataSourceEffectiveDateOnly { get; set; }
 
         /// <summary>
         /// get/set - The GIS latitude location of the property.

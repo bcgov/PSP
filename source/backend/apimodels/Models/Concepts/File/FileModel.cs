@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Pims.Api.Models.Base;
 
 namespace Pims.Api.Models.Concepts.File
@@ -25,6 +26,11 @@ namespace Pims.Api.Models.Concepts.File
         /// get/set - The file status type.
         /// </summary>
         public CodeTypeModel<string> FileStatusTypeCode { get; set; }
+
+        /// <summary>
+        /// get/set - A list of file property releationships.
+        /// </summary>
+        public virtual List<FilePropertyModel> FileProperties { get; set; }
 
         #endregion
     }

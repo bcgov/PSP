@@ -1,9 +1,10 @@
 import { getApiPersonOrOrgMailingAddress } from '@/features/contacts/contactUtils';
-import { Api_AcquisitionFileOwner } from '@/models/api/AcquisitionFile';
+import { exists, isValidString } from '@/utils';
 import { phoneFormatter } from '@/utils/formUtils';
 
-import { Api_Organization } from '../api/Organization';
-import { Api_Person } from '../api/Person';
+import { ApiGen_Concepts_AcquisitionFileOwner } from '../api/generated/ApiGen_Concepts_AcquisitionFileOwner';
+import { ApiGen_Concepts_Organization } from '../api/generated/ApiGen_Concepts_Organization';
+import { ApiGen_Concepts_Person } from '../api/generated/ApiGen_Concepts_Person';
 import { Api_GenerateAddress } from './GenerateAddress';
 
 export class Api_GenerateOwner {
@@ -20,7 +21,7 @@ export class Api_GenerateOwner {
   phone: string;
   is_primary_contact: boolean;
 
-  constructor(owner: Api_AcquisitionFileOwner | null) {
+  constructor(owner: ApiGen_Concepts_AcquisitionFileOwner | null) {
     this.given_name = owner?.givenName ?? '';
     this.last_name_or_corp_name = owner?.lastNameAndCorpName ?? '';
     this.other_name = owner?.otherName ?? '';
@@ -30,20 +31,17 @@ export class Api_GenerateOwner {
     this.address = new Api_GenerateAddress(owner?.address ?? null);
     this.is_corporation = owner?.isOrganization ?? false;
     this.email = owner?.contactEmailAddr ?? '';
-    this.phone =
-      owner?.contactPhoneNum !== undefined && owner?.contactPhoneNum !== null
-        ? phoneFormatter(owner.contactPhoneNum)
-        : '';
+    this.phone = exists(owner?.contactPhoneNum) ? phoneFormatter(owner!.contactPhoneNum) : '';
     this.is_primary_contact = this.is_primary_contact = owner?.isPrimaryContact ?? false;
     this.owner_string = this.is_corporation
       ? `${this.last_name_or_corp_name}, Inc. No. ${this.incorporation_number} (OR Reg. No. ${this.registration_number})`
       : [this.given_name, this.last_name_or_corp_name, this.formatted_other_name]
-          .filter(x => !!x)
+          .filter(isValidString)
           .join(' ');
   }
 
-  static fromApiPerson(model: Api_Person): Api_GenerateOwner {
-    let generateOwner = new Api_GenerateOwner(null);
+  static fromApiPerson(model: ApiGen_Concepts_Person): Api_GenerateOwner {
+    const generateOwner = new Api_GenerateOwner(null);
     generateOwner.given_name = model.firstName ?? '';
     generateOwner.last_name_or_corp_name = model.surname ?? '';
     generateOwner.other_name = model.middleNames ?? '';
@@ -56,14 +54,14 @@ export class Api_GenerateOwner {
       generateOwner.last_name_or_corp_name,
       generateOwner.other_name,
     ]
-      .filter(x => !!x)
+      .filter(isValidString)
       .join(' ');
 
     return generateOwner;
   }
 
-  static fromApiOrganization(model: Api_Organization): Api_GenerateOwner {
-    let generateOwner = new Api_GenerateOwner(null);
+  static fromApiOrganization(model: ApiGen_Concepts_Organization): Api_GenerateOwner {
+    const generateOwner = new Api_GenerateOwner(null);
 
     generateOwner.given_name = '';
     generateOwner.last_name_or_corp_name = model.name ?? '';

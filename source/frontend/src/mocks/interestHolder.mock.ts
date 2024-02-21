@@ -1,6 +1,8 @@
-import { Api_InterestHolder, Api_InterestHolderProperty } from '@/models/api/InterestHolder';
+import { ApiGen_Concepts_InterestHolder } from '@/models/api/generated/ApiGen_Concepts_InterestHolder';
+import { ApiGen_Concepts_InterestHolderProperty } from '@/models/api/generated/ApiGen_Concepts_InterestHolderProperty';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 
-export const emptyApiInterestHolder: Api_InterestHolder = {
+export const emptyApiInterestHolder: ApiGen_Concepts_InterestHolder = {
   interestHolderId: null,
   acquisitionFileId: null,
   person: null,
@@ -12,14 +14,15 @@ export const emptyApiInterestHolder: Api_InterestHolder = {
   primaryContactId: null,
   primaryContact: null,
   comment: null,
-  interestHolderType: {},
+  interestHolderType: null,
+  ...getEmptyBaseAudit(),
 };
 
-export const emptyInterestHolderProperty: Api_InterestHolderProperty = {
+export const emptyInterestHolderProperty: ApiGen_Concepts_InterestHolderProperty = {
   interestHolderId: null,
   propertyInterestTypes: [],
   interestHolderPropertyId: null,
   acquisitionFileProperty: null,
   acquisitionFilePropertyId: null,
-  rowVersion: 0,
+  ...getEmptyBaseAudit(),
 };

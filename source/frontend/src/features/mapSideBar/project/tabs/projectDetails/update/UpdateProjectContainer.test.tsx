@@ -85,7 +85,7 @@ describe('UpdateProjectContainer', () => {
     expect(getByText(/Content Rendered/)).toBeVisible();
   });
 
-  it('Maps the Api_Project values to the form passed to the view', () => {
+  it('Maps the ApiGen_Concepts_Project values to the form passed to the view', () => {
     expect(formValues.id).toEqual(mockProject.id);
     expect(formValues.rowVersion).toEqual(mockProject.rowVersion);
     expect(formValues.projectName).toEqual(mockProject.description);

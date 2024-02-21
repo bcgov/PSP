@@ -7,7 +7,7 @@ import { FileTabType } from '@/features/mapSideBar/shared/detail/FileTabs';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { useForm8Repository } from '@/hooks/repositories/useForm8Repository';
 import { useInterestHolderRepository } from '@/hooks/repositories/useInterestHolderRepository';
-import { Api_ExpropriationPayment } from '@/models/api/ExpropriationPayment';
+import { ApiGen_Concepts_ExpropriationPayment } from '@/models/api/generated/ApiGen_Concepts_ExpropriationPayment';
 import { SystemConstants, useSystemConstants } from '@/store/slices/systemConstants';
 
 import { Form8FormModel } from '../models/Form8FormModel';
@@ -82,7 +82,7 @@ export const UpdateForm8Container: React.FunctionComponent<
     }
   }, [fetchInterestHolders, form8Id, getForm8, retrieveAcquisitionOwners]);
 
-  const handleSave = async (form8: Api_ExpropriationPayment) => {
+  const handleSave = async (form8: ApiGen_Concepts_ExpropriationPayment) => {
     return updateForm8(form8);
   };
 

@@ -11,7 +11,7 @@ import { DispositionAppraisalFormModel } from '@/features/mapSideBar/disposition
 import SidebarFooter from '@/features/mapSideBar/shared/SidebarFooter';
 import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
 import { IApiError } from '@/interfaces/IApiError';
-import { Api_DispositionFileAppraisal } from '@/models/api/DispositionFile';
+import { ApiGen_Concepts_DispositionFileAppraisal } from '@/models/api/generated/ApiGen_Concepts_DispositionFileAppraisal';
 
 import { DispositionAppraisalFormYupSchema } from './DispostionAppraisalFormYupSchema';
 
@@ -19,8 +19,8 @@ export interface IDispositionAppraisalFormProps {
   initialValues: DispositionAppraisalFormModel;
   loading: boolean;
   onSave: (
-    appraisal: Api_DispositionFileAppraisal,
-  ) => Promise<Api_DispositionFileAppraisal | undefined>;
+    appraisal: ApiGen_Concepts_DispositionFileAppraisal,
+  ) => Promise<ApiGen_Concepts_DispositionFileAppraisal | undefined>;
   onCancel: () => void;
   onSuccess: () => void;
   onError: (e: AxiosError<IApiError>) => void;

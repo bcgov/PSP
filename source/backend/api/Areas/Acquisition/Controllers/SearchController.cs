@@ -15,6 +15,7 @@ namespace Pims.Api.Areas.Acquisition.Controllers
     using Pims.Api.Policies;
     using Pims.Api.Services;
     using Pims.Core.Extensions;
+    using Pims.Core.Json;
     using Pims.Dal.Entities.Models;
     using Pims.Dal.Security;
     using Swashbuckle.AspNetCore.Annotations;
@@ -66,6 +67,7 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         [ProducesResponseType(typeof(IEnumerable<AcquisitionFileModel>), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "acquisitionfile" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetAcquisitionFiles()
         {
             var uri = new Uri(this.Request.GetDisplayUrl());
@@ -83,6 +85,7 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         [ProducesResponseType(typeof(IEnumerable<AcquisitionFileModel>), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "acquisitionfile" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetAcquisitionFiles([FromBody] AcquisitionFilterModel filter)
         {
             // RECOMMENDED - Add valuable metadata to logs

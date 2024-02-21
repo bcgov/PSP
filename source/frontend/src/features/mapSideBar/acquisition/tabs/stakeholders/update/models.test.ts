@@ -1,6 +1,7 @@
 import { InterestHolderType } from '@/constants/interestHolderTypes';
 import { emptyApiInterestHolder, emptyInterestHolderProperty } from '@/mocks/interestHolder.mock';
-import { Api_InterestHolder } from '@/models/api/InterestHolder';
+import { ApiGen_Concepts_InterestHolder } from '@/models/api/generated/ApiGen_Concepts_InterestHolder';
+import { toTypeCodeNullable } from '@/utils/formUtils';
 
 import { InterestHolderForm, StakeHolderForm } from './models';
 
@@ -21,19 +22,23 @@ const emptyInterestHolderForm: InterestHolderForm = {
 
 describe('Interest Holder model tests', () => {
   it('StakeHolderForm fromApi splits a single InterestHolder into interests and non-interests', () => {
-    const apiInterestHolders: Api_InterestHolder = {
+    const apiInterestHolders: ApiGen_Concepts_InterestHolder = {
       ...emptyApiInterestHolder,
       interestHolderId: 1,
-      interestHolderType: { id: InterestHolderType.INTEREST_HOLDER },
+      interestHolderType: toTypeCodeNullable(InterestHolderType.INTEREST_HOLDER),
       interestHolderProperties: [
         {
           ...emptyInterestHolderProperty,
-          propertyInterestTypes: [{ id: 'NIP' }],
+          propertyInterestTypes: [
+            { id: 'NIP', description: null, displayOrder: null, isDisabled: false },
+          ],
           interestHolderId: 1,
         },
         {
           ...emptyInterestHolderProperty,
-          propertyInterestTypes: [{ id: 'IP' }],
+          propertyInterestTypes: [
+            { id: 'IP', description: null, displayOrder: null, isDisabled: false },
+          ],
           interestHolderId: 1,
         },
       ],
@@ -44,19 +49,28 @@ describe('Interest Holder model tests', () => {
   });
 
   it('StakeHolderForm fromApi splits a single InterestHolder into multiple if an interest holder has multiple properties of different types', () => {
-    const apiInterestHolders: Api_InterestHolder = {
+    const apiInterestHolders: ApiGen_Concepts_InterestHolder = {
       ...emptyApiInterestHolder,
       interestHolderId: 1,
-      interestHolderType: { id: InterestHolderType.INTEREST_HOLDER },
+      interestHolderType: {
+        id: InterestHolderType.INTEREST_HOLDER,
+        description: null,
+        displayOrder: null,
+        isDisabled: false,
+      },
       interestHolderProperties: [
         {
           ...emptyInterestHolderProperty,
-          propertyInterestTypes: [{ id: 'PI' }],
+          propertyInterestTypes: [
+            { id: 'PI', description: null, displayOrder: null, isDisabled: false },
+          ],
           interestHolderId: 1,
         },
         {
           ...emptyInterestHolderProperty,
-          propertyInterestTypes: [{ id: 'IP' }],
+          propertyInterestTypes: [
+            { id: 'IP', description: null, displayOrder: null, isDisabled: false },
+          ],
           interestHolderId: 1,
         },
       ],
@@ -66,16 +80,23 @@ describe('Interest Holder model tests', () => {
   });
 
   it('StakeHolderForm fromApi does not combine multiple stakeholders even if they have the same type', () => {
-    const apiInterestHolders: Api_InterestHolder[] = [
+    const apiInterestHolders: ApiGen_Concepts_InterestHolder[] = [
       {
         ...emptyApiInterestHolder,
         interestHolderId: 1,
-        interestHolderType: { id: InterestHolderType.INTEREST_HOLDER },
+        interestHolderType: {
+          id: InterestHolderType.INTEREST_HOLDER,
+          description: null,
+          displayOrder: null,
+          isDisabled: false,
+        },
         personId: 2,
         interestHolderProperties: [
           {
             ...emptyInterestHolderProperty,
-            propertyInterestTypes: [{ id: 'ip' }],
+            propertyInterestTypes: [
+              { id: 'ip', description: null, displayOrder: null, isDisabled: false },
+            ],
             interestHolderId: 1,
           },
         ],
@@ -83,12 +104,19 @@ describe('Interest Holder model tests', () => {
       {
         ...emptyApiInterestHolder,
         interestHolderId: 2,
-        interestHolderType: { id: InterestHolderType.INTEREST_HOLDER },
+        interestHolderType: {
+          id: InterestHolderType.INTEREST_HOLDER,
+          description: null,
+          displayOrder: null,
+          isDisabled: false,
+        },
         personId: 1,
         interestHolderProperties: [
           {
             ...emptyInterestHolderProperty,
-            propertyInterestTypes: [{ id: 'ip' }],
+            propertyInterestTypes: [
+              { id: 'ip', description: null, displayOrder: null, isDisabled: false },
+            ],
             interestHolderId: 2,
           },
         ],
@@ -99,21 +127,30 @@ describe('Interest Holder model tests', () => {
   });
 
   it('StakeHolderForm fromApi does not split an interest holder with multiple properties if the properties have the same type', () => {
-    const apiInterestHolders: Api_InterestHolder[] = [
+    const apiInterestHolders: ApiGen_Concepts_InterestHolder[] = [
       {
         ...emptyApiInterestHolder,
         interestHolderId: 1,
-        interestHolderType: { id: InterestHolderType.INTEREST_HOLDER },
+        interestHolderType: {
+          id: InterestHolderType.INTEREST_HOLDER,
+          description: null,
+          displayOrder: null,
+          isDisabled: false,
+        },
         personId: 2,
         interestHolderProperties: [
           {
             ...emptyInterestHolderProperty,
-            propertyInterestTypes: [{ id: 'ip' }],
+            propertyInterestTypes: [
+              { id: 'ip', description: null, displayOrder: null, isDisabled: false },
+            ],
             interestHolderId: 1,
           },
           {
             ...emptyInterestHolderProperty,
-            propertyInterestTypes: [{ id: 'ip' }],
+            propertyInterestTypes: [
+              { id: 'ip', description: null, displayOrder: null, isDisabled: false },
+            ],
             interestHolderId: 1,
           },
         ],
@@ -124,21 +161,30 @@ describe('Interest Holder model tests', () => {
   });
 
   it('StakeHolderForm fromApi does split an interest holder with multiple properties if the properties have different types', () => {
-    const apiInterestHolders: Api_InterestHolder[] = [
+    const apiInterestHolders: ApiGen_Concepts_InterestHolder[] = [
       {
         ...emptyApiInterestHolder,
         interestHolderId: 1,
-        interestHolderType: { id: InterestHolderType.INTEREST_HOLDER },
+        interestHolderType: {
+          id: InterestHolderType.INTEREST_HOLDER,
+          description: null,
+          displayOrder: null,
+          isDisabled: false,
+        },
         personId: 2,
         interestHolderProperties: [
           {
             ...emptyInterestHolderProperty,
-            propertyInterestTypes: [{ id: 'ip' }],
+            propertyInterestTypes: [
+              { id: 'ip', description: null, displayOrder: null, isDisabled: false },
+            ],
             interestHolderId: 1,
           },
           {
             ...emptyInterestHolderProperty,
-            propertyInterestTypes: [{ id: 'ip2' }],
+            propertyInterestTypes: [
+              { id: 'ip2', description: null, displayOrder: null, isDisabled: false },
+            ],
             interestHolderId: 1,
           },
         ],
@@ -149,37 +195,55 @@ describe('Interest Holder model tests', () => {
   });
 
   it('StakeHolderForm fromApi splits multiple InterestHolders into interests and non-interests', () => {
-    const apiInterestHolders: Api_InterestHolder[] = [
+    const apiInterestHolders: ApiGen_Concepts_InterestHolder[] = [
       {
         ...emptyApiInterestHolder,
-        interestHolderType: { id: InterestHolderType.INTEREST_HOLDER },
+        interestHolderType: {
+          id: InterestHolderType.INTEREST_HOLDER,
+          description: null,
+          displayOrder: null,
+          isDisabled: false,
+        },
         interestHolderId: 1,
         interestHolderProperties: [
           {
             ...emptyInterestHolderProperty,
-            propertyInterestTypes: [{ id: 'NIP' }],
+            propertyInterestTypes: [
+              { id: 'NIP', description: null, displayOrder: null, isDisabled: false },
+            ],
             interestHolderId: 1,
           },
           {
             ...emptyInterestHolderProperty,
-            propertyInterestTypes: [{ id: 'IP' }],
+            propertyInterestTypes: [
+              { id: 'IP', description: null, displayOrder: null, isDisabled: false },
+            ],
             interestHolderId: 1,
           },
         ],
       },
       {
         ...emptyApiInterestHolder,
-        interestHolderType: { id: InterestHolderType.INTEREST_HOLDER },
+        interestHolderType: {
+          id: InterestHolderType.INTEREST_HOLDER,
+          description: null,
+          displayOrder: null,
+          isDisabled: false,
+        },
         interestHolderId: 2,
         interestHolderProperties: [
           {
             ...emptyInterestHolderProperty,
-            propertyInterestTypes: [{ id: 'NIP' }],
+            propertyInterestTypes: [
+              { id: 'NIP', description: null, displayOrder: null, isDisabled: false },
+            ],
             interestHolderId: 2,
           },
           {
             ...emptyInterestHolderProperty,
-            propertyInterestTypes: [{ id: 'PI' }],
+            propertyInterestTypes: [
+              { id: 'PI', description: null, displayOrder: null, isDisabled: false },
+            ],
             interestHolderId: 2,
           },
         ],
@@ -329,11 +393,16 @@ describe('Interest Holder model tests', () => {
     const apiInterestHolders = StakeHolderForm.toApi(model);
     expect(apiInterestHolders).toHaveLength(1);
     expect(apiInterestHolders[0].interestHolderProperties).toHaveLength(1);
-    expect(apiInterestHolders[0].interestHolderProperties[0].propertyInterestTypes).toHaveLength(2);
+    expect(apiInterestHolders[0].interestHolderProperties![0].propertyInterestTypes).toHaveLength(
+      2,
+    );
   });
 
   it('InterestHolderForm sets contact based on api response', () => {
-    const apiInterestHolder: Api_InterestHolder = { ...emptyApiInterestHolder, personId: 1 };
+    const apiInterestHolder: ApiGen_Concepts_InterestHolder = {
+      ...emptyApiInterestHolder,
+      personId: 1,
+    };
 
     const interestHolderModel = InterestHolderForm.fromApi(
       apiInterestHolder,

@@ -38,13 +38,19 @@ describe('LandMeasurementTable component', () => {
   it('renders as expected', () => {
     const { asFragment } = setup({
       onChange: () => {},
+      area: undefined,
+      areaUnitTypeCode: undefined,
     });
     expect(asFragment()).toMatchSnapshot();
   });
 
   it('calls onChange callback when values are changed', async () => {
     const onChange = jest.fn();
-    const { container } = setup({ onChange });
+    const { container } = setup({
+      onChange,
+      area: undefined,
+      areaUnitTypeCode: undefined,
+    });
     await fillInput(container, 'area-sq-meters', 15000);
     await waitFor(() => expect(onChange).toBeCalledWith(15000, AreaUnitTypes.SquareMeters));
   });
@@ -52,6 +58,8 @@ describe('LandMeasurementTable component', () => {
   it('performs unit conversions when values are changed', async () => {
     const { container, getSqFeetInput, getHectaresInput, getAcresInput } = setup({
       onChange: () => {},
+      area: undefined,
+      areaUnitTypeCode: undefined,
     });
     await fillInput(container, 'area-sq-meters', 15000);
     // assert

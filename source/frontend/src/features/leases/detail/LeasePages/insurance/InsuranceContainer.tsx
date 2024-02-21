@@ -11,7 +11,8 @@ import { LeasePageProps } from '@/features/mapSideBar/lease/LeaseContainer';
 import { useInsurancesRepository } from '@/hooks/repositories/useInsuranceRepository';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
-import { Api_Insurance } from '@/models/api/Insurance';
+import { ApiGen_Concepts_Insurance } from '@/models/api/generated/ApiGen_Concepts_Insurance';
+import { isValidId } from '@/utils';
 
 import InsuranceDetailsView from './details/Insurance';
 import InsuranceEditContainer from './edit/EditInsuranceContainer';
@@ -30,7 +31,7 @@ const InsuranceContainer: React.FunctionComponent<React.PropsWithChildren<LeaseP
   } = useInsurancesRepository();
 
   const { lease } = useContext(LeaseStateContext);
-  const insuranceList = orderBy(insurances, i => i.insuranceType.displayOrder) ?? [];
+  const insuranceList = orderBy(insurances, i => i.insuranceType?.displayOrder) ?? [];
   const leaseId = lease?.id;
   useEffect(() => {
     leaseId && getInsurances(leaseId);
@@ -44,8 +45,8 @@ const InsuranceContainer: React.FunctionComponent<React.PropsWithChildren<LeaseP
   const history = useHistory();
 
   const onSave = useCallback(
-    async (insurances: Api_Insurance[]) => {
-      if (leaseId !== undefined && leaseId !== null) {
+    async (insurances: ApiGen_Concepts_Insurance[]) => {
+      if (isValidId(leaseId)) {
         const updatedInsurance = await updateInsurances(leaseId, insurances);
         if (updatedInsurance) {
           leaseId && (await getInsurances(leaseId));
@@ -63,19 +64,15 @@ const InsuranceContainer: React.FunctionComponent<React.PropsWithChildren<LeaseP
       {!isEditing && (
         <InsuranceDetailsView insuranceList={insuranceList} insuranceTypes={insuranceTypes} />
       )}
-      {isEditing &&
-        leaseId !== null &&
-        leaseId !== undefined &&
-        !loading &&
-        hasClaim(Claims.LEASE_EDIT) && (
-          <InsuranceEditContainer
-            formikRef={formikRef}
-            leaseId={leaseId}
-            insuranceList={insuranceList}
-            insuranceTypes={insuranceTypes}
-            onSave={onSave}
-          />
-        )}
+      {isEditing && isValidId(leaseId) && !loading && hasClaim(Claims.LEASE_EDIT) && (
+        <InsuranceEditContainer
+          formikRef={formikRef}
+          leaseId={leaseId}
+          insuranceList={insuranceList}
+          insuranceTypes={insuranceTypes}
+          onSave={onSave}
+        />
+      )}
       <CancelConfirmationModal
         display={showCancelModal}
         setDisplay={setShowCancelModal}

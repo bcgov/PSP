@@ -209,7 +209,7 @@ describe('AcquisitionView component', () => {
   });
 
   it('should display the File Details tab by default', async () => {
-    const { getByRole } = await act(() => setup());
+    const { getByRole } = await setup();
     const tab = getByRole('tab', { name: /File details/i });
     expect(tab).toBeVisible();
     expect(tab).toHaveClass('active');
@@ -217,7 +217,7 @@ describe('AcquisitionView component', () => {
 
   it(`should show a toast and redirect to the File Details page when accessing a non-existing property index`, async () => {
     history.replace(`/mapview/sidebar/acquisition/1/property/99999`);
-    const { getByRole, findByText } = await act(() => setup());
+    const { getByRole, findByText } = await setup();
     const tab = getByRole('tab', { name: /File details/i });
     expect(tab).toBeVisible();
     expect(tab).toHaveClass('active');
@@ -227,7 +227,7 @@ describe('AcquisitionView component', () => {
 
   it('should display the Property Selector according to routing', async () => {
     history.replace(`/mapview/sidebar/acquisition/1/property/selector`);
-    const { getByRole } = await act(() => setup());
+    const { getByRole } = await setup();
     const tab = getByRole('tab', { name: /Locate on Map/i });
     expect(tab).toBeVisible();
     expect(tab).toHaveClass('active');
@@ -235,7 +235,7 @@ describe('AcquisitionView component', () => {
 
   it('should display the Property Details tab according to routing', async () => {
     history.replace(`/mapview/sidebar/acquisition/1/property/1`);
-    const { getByRole } = await act(() => setup());
+    const { getByRole } = await setup();
     const tab = getByRole('tab', { name: /Property Details/i });
     expect(tab).toBeVisible();
     expect(tab).toHaveClass('active');
@@ -243,7 +243,7 @@ describe('AcquisitionView component', () => {
 
   it(`should display the File Details tab when we are editing and the path doesn't match any route`, async () => {
     history.replace(`/mapview/sidebar/acquisition/1/blahblahtab?edit=true`);
-    const { getByRole } = await act(() => setup());
+    const { getByRole } = await setup();
     const tab = getByRole('tab', { name: /File details/i });
     expect(tab).toBeVisible();
     expect(tab).toHaveClass('active');
@@ -251,14 +251,14 @@ describe('AcquisitionView component', () => {
 
   it(`should display the Property Details tab when we are editing and the path doesn't match any route`, async () => {
     history.replace(`/mapview/sidebar/acquisition/1/property/1/unknownTabWhatIsThis?edit=true`);
-    const { getByRole } = await act(() => setup());
+    const { getByRole } = await setup();
     const tab = getByRole('tab', { name: /Property Details/i });
     expect(tab).toBeVisible();
     expect(tab).toHaveClass('active');
   });
 
   it(`should display an error message when the error prop is set.`, async () => {
-    const { getByText } = await act(() => setup({ ...DEFAULT_PROPS, error: {} } as any));
+    const { getByText } = await setup({ ...DEFAULT_PROPS, error: {} } as any);
     expect(
       getByText(
         'Failed to load Acquisition File. Check the detailed error in the top right for more details.',

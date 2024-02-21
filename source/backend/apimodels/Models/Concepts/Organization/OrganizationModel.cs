@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Pims.Api.Models.Base;
 using Pims.Api.Models.Concepts.ContactMethod;
+using Pims.Api.Models.Concepts.Person;
 
 namespace Pims.Api.Models.Concepts.Organization
 {
@@ -17,9 +18,34 @@ namespace Pims.Api.Models.Concepts.Organization
         public long Id { get; set; }
 
         /// <summary>
-        /// get/set - The organization's disabled status flag.
+        /// get/set - The organization's parent organization id.
         /// </summary>
-        public bool IsDisabled { get; set; }
+        public long? ParentOrganizationId { get; set; }
+
+        /// <summary>
+        /// get/set - The organization's reion code.
+        /// </summary>
+        public short? RegionCode { get; set; }
+
+        /// <summary>
+        /// get/set - The organization's district code.
+        /// </summary>
+        public short? DistrictCode { get; set; }
+
+        /// <summary>
+        /// get/set - The organization's type code.
+        /// </summary>
+        public string OrganizationTypeCode { get; set; }
+
+        /// <summary>
+        /// get/set - The organization's identifier code.
+        /// </summary>
+        public string IdentifierTypeCode { get; set; }
+
+        /// <summary>
+        /// get/set - The organization's identifier.
+        /// </summary>
+        public string OrganizationIdentifier { get; set; }
 
         /// <summary>
         /// get/set - The organization's name.
@@ -37,14 +63,19 @@ namespace Pims.Api.Models.Concepts.Organization
         public string IncorporationNumber { get; set; }
 
         /// <summary>
-        /// get/set - The organization and person relationships.
+        /// get/set - The organization's website.
         /// </summary>
-        public IList<OrganizationPersonModel> OrganizationPersons { get; set; }
+        public string Website { get; set; }
 
         /// <summary>
-        /// get/set - The organization's addresses.
+        /// get/set - The organization's Comment.
         /// </summary>
-        public IList<OrganizationAddressModel> OrganizationAddresses { get; set; }
+        public string Comment { get; set; }
+
+        /// <summary>
+        /// get/set - The organization's disabled status flag.
+        /// </summary>
+        public bool IsDisabled { get; set; }
 
         /// <summary>
         /// get/set - The organization's contact methods.
@@ -52,9 +83,20 @@ namespace Pims.Api.Models.Concepts.Organization
         public IList<ContactMethodModel> ContactMethods { get; set; }
 
         /// <summary>
-        /// get/set - The organization's Comment.
+        /// get/set - The organization's addresses.
         /// </summary>
-        public string Comment { get; set; }
+        public IList<OrganizationAddressModel> OrganizationAddresses { get; set; }
+
+        /// <summary>
+        /// get/set - The organization and person relationships.
+        /// </summary>
+        public IList<PersonOrganizationModel> OrganizationPersons { get; set; }
+
+        /// <summary>
+        /// get/set - The organization's parent organization.
+        /// </summary>
+        public OrganizationModel ParentOrganization { get; set; }
+
         #endregion
     }
 }

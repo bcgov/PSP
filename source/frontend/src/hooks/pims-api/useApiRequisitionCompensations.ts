@@ -1,14 +1,16 @@
 import { ENVIRONMENT } from '@/constants/environment';
 import CustomAxios from '@/customAxios';
-import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
+import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
 
 export const getCompensationRequisitionApi = (compensationId: number) =>
-  CustomAxios({ baseURL: ENVIRONMENT.apiUrl }).get<Api_CompensationRequisition>(
+  CustomAxios({ baseURL: ENVIRONMENT.apiUrl }).get<ApiGen_Concepts_CompensationRequisition>(
     `/compensation-requisitions/${compensationId}`,
   );
 
-export const putCompensationRequisitionApi = (compensation: Api_CompensationRequisition) =>
-  CustomAxios({ baseURL: ENVIRONMENT.apiUrl }).put<Api_CompensationRequisition>(
+export const putCompensationRequisitionApi = (
+  compensation: ApiGen_Concepts_CompensationRequisition,
+) =>
+  CustomAxios({ baseURL: ENVIRONMENT.apiUrl }).put<ApiGen_Concepts_CompensationRequisition>(
     `/compensation-requisitions/${compensation.id}`,
     compensation,
   );

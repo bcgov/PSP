@@ -10,7 +10,6 @@ import { ApiGen_Concepts_Payment } from './ApiGen_Concepts_Payment';
 export interface ApiGen_Concepts_LeaseTerm extends ApiGen_Base_BaseAudit {
   id: number | null;
   leaseId: number;
-  leaseRowVersion: number;
   gstAmount: number | null;
   paymentAmount: number | null;
   statusTypeCode: ApiGen_Base_CodeType<string> | null;

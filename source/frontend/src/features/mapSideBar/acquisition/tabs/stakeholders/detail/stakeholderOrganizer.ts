@@ -1,16 +1,18 @@
-import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
-import { Api_InterestHolder, Api_InterestHolderProperty } from '@/models/api/InterestHolder';
-import Api_TypeCode from '@/models/api/TypeCode';
+import { ApiGen_Base_CodeType } from '@/models/api/generated/ApiGen_Base_CodeType';
+import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
+import { ApiGen_Concepts_InterestHolder } from '@/models/api/generated/ApiGen_Concepts_InterestHolder';
+import { ApiGen_Concepts_InterestHolderProperty } from '@/models/api/generated/ApiGen_Concepts_InterestHolderProperty';
+import { exists } from '@/utils';
 
 import { InterestHolderViewForm, InterestHolderViewRow } from '../update/models';
 
 class StakeholderOrganizer {
-  private readonly acquisitionFile: Api_AcquisitionFile;
-  private readonly interestHolders: Api_InterestHolder[] | undefined;
+  private readonly acquisitionFile: ApiGen_Concepts_AcquisitionFile;
+  private readonly interestHolders: ApiGen_Concepts_InterestHolder[] | undefined;
 
   constructor(
-    acquisitionFile: Api_AcquisitionFile,
-    interestHolders: Api_InterestHolder[] | undefined,
+    acquisitionFile: ApiGen_Concepts_AcquisitionFile,
+    interestHolders: ApiGen_Concepts_InterestHolder[] | undefined,
   ) {
     this.acquisitionFile = acquisitionFile;
     this.interestHolders = interestHolders;
@@ -18,13 +20,18 @@ class StakeholderOrganizer {
 
   getInterestProperties() {
     const allInterestProperties =
-      this.interestHolders?.flatMap(interestHolder => interestHolder.interestHolderProperties) ??
-      [];
+      this.interestHolders
+        ?.flatMap(interestHolder => interestHolder.interestHolderProperties)
+        .filter(exists) ?? [];
 
     const interestProperties = allInterestProperties
-      .filter(ip => ip.propertyInterestTypes.some(pit => pit?.id !== 'NIP'))
-      .map(ip => {
-        const filteredTypes = ip.propertyInterestTypes.filter(pit => pit?.id !== 'NIP');
+      .filter(
+        ip =>
+          ip.propertyInterestTypes != null &&
+          ip.propertyInterestTypes.some(pit => pit?.id !== 'NIP'),
+      )
+      .map<ApiGen_Concepts_InterestHolderProperty>(ip => {
+        const filteredTypes = ip.propertyInterestTypes?.filter(pit => pit?.id !== 'NIP') ?? null;
         return { ...ip, propertyInterestTypes: filteredTypes };
       });
 
@@ -33,22 +40,23 @@ class StakeholderOrganizer {
 
   getNonInterestProperties() {
     const allInterestProperties =
-      this.interestHolders?.flatMap(interestHolder => interestHolder.interestHolderProperties) ??
-      [];
+      this.interestHolders
+        ?.flatMap(interestHolder => interestHolder.interestHolderProperties)
+        .filter(exists) ?? [];
 
     const nonInterestProperties = allInterestProperties
-      .filter(ip => ip.propertyInterestTypes.some(pit => pit?.id === 'NIP'))
-      .map(ip => {
-        const filteredTypes = ip.propertyInterestTypes.filter(pit => pit?.id === 'NIP');
+      .filter(ip => ip.propertyInterestTypes?.some(pit => pit?.id === 'NIP'))
+      .map<ApiGen_Concepts_InterestHolderProperty>(ip => {
+        const filteredTypes = ip.propertyInterestTypes?.filter(pit => pit?.id === 'NIP') ?? null;
         return { ...ip, propertyInterestTypes: filteredTypes };
       });
 
     return this.generateFormFromProperties(nonInterestProperties);
   }
 
-  private generateFormFromProperties(interestProperties: Api_InterestHolderProperty[]) {
+  private generateFormFromProperties(interestProperties: ApiGen_Concepts_InterestHolderProperty[]) {
     const groupedInterestProperties: InterestHolderViewForm[] = [];
-    interestProperties.forEach((interestHolderProperty: Api_InterestHolderProperty) => {
+    interestProperties.forEach((interestHolderProperty: ApiGen_Concepts_InterestHolderProperty) => {
       const matchingGroup = groupedInterestProperties.find(
         gip => gip.id === interestHolderProperty.acquisitionFilePropertyId,
       );
@@ -64,13 +72,13 @@ class StakeholderOrganizer {
 
       if (!matchingGroup) {
         const newGroup = InterestHolderViewForm.fromApi(interestHolderProperty);
-        newGroup.groupedPropertyInterests = interestHolderProperty.propertyInterestTypes.map(
-          (itc: Api_TypeCode<string>) =>
+        newGroup.groupedPropertyInterests =
+          interestHolderProperty.propertyInterestTypes?.map((itc: ApiGen_Base_CodeType<string>) =>
             InterestHolderViewRow.fromApi(interestHolderProperty, interestHolder, itc),
-        );
+          ) ?? [];
         groupedInterestProperties.push(newGroup);
       } else {
-        interestHolderProperty.propertyInterestTypes.forEach((itc: Api_TypeCode<string>) =>
+        interestHolderProperty.propertyInterestTypes?.forEach((itc: ApiGen_Base_CodeType<string>) =>
           matchingGroup.groupedPropertyInterests.push(
             InterestHolderViewRow.fromApi(interestHolderProperty, interestHolder, itc),
           ),

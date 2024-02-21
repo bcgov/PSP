@@ -2,9 +2,9 @@ import queryString from 'query-string';
 import React from 'react';
 
 import { ILeaseFilter } from '@/features/leases';
-import { ILeaseSearchResult, IPagedItems } from '@/interfaces';
 import { Api_LastUpdatedBy } from '@/models/api/File';
-import { Api_Lease } from '@/models/api/Lease';
+import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
+import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 
 import { IPaginateRequest } from './interfaces/IPaginateRequest';
@@ -20,18 +20,18 @@ export const useApiLeases = () => {
   return React.useMemo(
     () => ({
       getLeases: (params: IPaginateLeases | null) =>
-        api.get<IPagedItems<ILeaseSearchResult>>(
+        api.get<ApiGen_Base_Page<ApiGen_Concepts_Lease>>(
           `/leases/search?${params ? queryString.stringify(params) : ''}`,
         ),
-      getApiLease: (id: number) => api.get<Api_Lease>(`/leases/${id}`),
+      getApiLease: (id: number) => api.get<ApiGen_Concepts_Lease>(`/leases/${id}`),
       getLastUpdatedByApi: (id: number) => api.get<Api_LastUpdatedBy>(`/leases/${id}/updateInfo`),
-      postLease: (lease: Api_Lease, userOverrideCodes: UserOverrideCode[]) =>
-        api.post<Api_Lease>(
+      postLease: (lease: ApiGen_Concepts_Lease, userOverrideCodes: UserOverrideCode[]) =>
+        api.post<ApiGen_Concepts_Lease>(
           `/leases?${userOverrideCodes.map(o => `userOverrideCodes=${o}`).join('&')}`,
           lease,
         ),
-      putApiLease: (lease: Api_Lease, userOverrideCodes: UserOverrideCode[] = []) =>
-        api.put<Api_Lease>(
+      putApiLease: (lease: ApiGen_Concepts_Lease, userOverrideCodes: UserOverrideCode[] = []) =>
+        api.put<ApiGen_Concepts_Lease>(
           `/leases/${lease.id}?${userOverrideCodes.map(o => `userOverrideCodes=${o}`).join('&')}`,
           lease,
         ),

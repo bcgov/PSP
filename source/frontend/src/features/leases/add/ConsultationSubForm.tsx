@@ -31,7 +31,7 @@ const ConsultationSubForm: React.FunctionComponent<
       const newConsultation = FormLeaseConsultation.fromApiLookup(values.id || 0, consultationType);
 
       // If there is a consultation with the type, set the status to the existing one
-      let existingConsultation = consultations.find(
+      const existingConsultation = consultations.find(
         consultation => consultation.consultationType === consultationType.id,
       );
       if (existingConsultation !== undefined) {

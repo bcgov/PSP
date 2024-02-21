@@ -5,7 +5,8 @@ import { Check, FastCurrencyInput, FastDatePicker, Input, Select } from '@/compo
 import { LeaseTermStatusTypes } from '@/constants';
 import * as API from '@/constants/API';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
-import { Api_Lease } from '@/models/api/Lease';
+import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
+import { toTypeCodeNullable } from '@/utils/formUtils';
 
 import { defaultFormLeaseTerm, FormLeaseTerm } from '../../models';
 import { StyledFormBody } from '../../styles';
@@ -15,7 +16,7 @@ export interface ITermFormProps {
   formikRef: React.Ref<FormikProps<FormLeaseTerm>>;
   onSave: (values: FormLeaseTerm) => void;
   initialValues?: FormLeaseTerm;
-  lease: Api_Lease | undefined;
+  lease: ApiGen_Concepts_Lease | undefined;
 }
 
 /**
@@ -46,7 +47,7 @@ export const TermForm: React.FunctionComponent<React.PropsWithChildren<ITermForm
         leaseId: lease?.id ?? 0,
         statusTypeCode: initialValues?.statusTypeCode?.id
           ? initialValues?.statusTypeCode
-          : { id: LeaseTermStatusTypes.NOT_EXERCISED },
+          : toTypeCodeNullable(LeaseTermStatusTypes.NOT_EXERCISED),
       }}
     >
       {formikProps => (

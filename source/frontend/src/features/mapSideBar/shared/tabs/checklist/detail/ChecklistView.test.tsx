@@ -4,7 +4,7 @@ import { useApiUsers } from '@/hooks/pims-api/useApiUsers';
 import { mockFileChecklistResponse } from '@/mocks/acquisitionFiles.mock';
 import { mockDispositionFileResponse } from '@/mocks/dispositionFiles.mock';
 import { mockLookups } from '@/mocks/index.mock';
-import { Api_FileWithChecklist } from '@/models/api/File';
+import { ApiGen_Concepts_FileWithChecklist } from '@/models/api/generated/ApiGen_Concepts_FileWithChecklist';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { render, RenderOptions, userEvent } from '@/utils/test-utils';
 
@@ -52,7 +52,7 @@ describe('ChecklistView component', () => {
   };
 
   beforeEach(() => {
-    mockViewProps.apiFile = mockDispositionFileResponse() as unknown as Api_FileWithChecklist;
+    mockViewProps.apiFile = mockDispositionFileResponse() as unknown as ApiGen_Concepts_FileWithChecklist;
     mockViewProps.apiFile.fileChecklistItems = mockFileChecklistResponse();
   });
 

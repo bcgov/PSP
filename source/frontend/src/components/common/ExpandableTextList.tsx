@@ -1,5 +1,7 @@
 import { ReactElement, useState } from 'react';
 
+import { exists } from '@/utils/utils';
+
 import { LinkButton } from './buttons';
 
 export interface IExpandableTextListProps<T> {
@@ -32,13 +34,11 @@ export function ExpandableTextList<T>({
           {index < items.length - 1 && delimiter}
         </span>
       ))}
-      {maxCollapsedLength !== undefined &&
-        maxCollapsedLength !== null &&
-        maxCollapsedLength < items.length && (
-          <LinkButton data-testid="expand" onClick={() => setIsExpanded(collapse => !collapse)}>
-            {isExpanded ? 'hide' : `[+${items.length - displayedItemsLength} more...]`}
-          </LinkButton>
-        )}
+      {exists(maxCollapsedLength) && maxCollapsedLength < items.length && (
+        <LinkButton data-testid="expand" onClick={() => setIsExpanded(collapse => !collapse)}>
+          {isExpanded ? 'hide' : `[+${items.length - displayedItemsLength} more...]`}
+        </LinkButton>
+      )}
     </div>
   );
 }

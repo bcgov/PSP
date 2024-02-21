@@ -13,6 +13,7 @@ using Pims.Api.Models.Concepts.DispositionFile;
 using Pims.Api.Policies;
 using Pims.Api.Services;
 using Pims.Core.Extensions;
+using Pims.Core.Json;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
@@ -65,6 +66,7 @@ namespace Pims.Api.Areas.Disposition.Controllers
         [ProducesResponseType(typeof(IEnumerable<DispositionFileModel>), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "dispositionfile" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetDispositionFiles()
         {
             var uri = new Uri(Request.GetDisplayUrl());
@@ -82,6 +84,7 @@ namespace Pims.Api.Areas.Disposition.Controllers
         [ProducesResponseType(typeof(IEnumerable<DispositionFileModel>), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "dispositionfile" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetDispositionFiles([FromBody] DispositionFilterModel filter)
         {
             _logger.LogInformation(

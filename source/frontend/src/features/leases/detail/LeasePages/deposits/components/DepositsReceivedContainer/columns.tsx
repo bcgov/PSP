@@ -1,4 +1,3 @@
-import React from 'react';
 import { FaTrash } from 'react-icons/fa';
 import { MdEdit, MdUndo } from 'react-icons/md';
 import { Link } from 'react-router-dom';
@@ -11,9 +10,10 @@ import TooltipIcon from '@/components/common/TooltipIcon';
 import { ColumnWithProps, renderDate, renderMoney } from '@/components/Table';
 import Claims from '@/constants/claims';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
-import { Api_Contact } from '@/models/api/Contact';
-import { Api_SecurityDeposit } from '@/models/api/SecurityDeposit';
+import { ApiGen_Concepts_Contact } from '@/models/api/generated/ApiGen_Concepts_Contact';
+import { ApiGen_Concepts_SecurityDeposit } from '@/models/api/generated/ApiGen_Concepts_SecurityDeposit';
 import { formatNames } from '@/utils/personUtils';
+import { exists, isValidIsoDateTime } from '@/utils/utils';
 
 export class DepositListEntry {
   public id: number;
@@ -21,34 +21,38 @@ export class DepositListEntry {
   public depositDescription: string;
   public amountPaid: number;
   public paidDate: string;
-  public contactHolder?: Api_Contact;
+  public contactHolder?: ApiGen_Concepts_Contact;
   public depositReturnCount: number;
 
-  public constructor(baseDeposit: Api_SecurityDeposit) {
+  public constructor(baseDeposit: ApiGen_Concepts_SecurityDeposit) {
     this.id = baseDeposit.id || -1;
-    if (baseDeposit.depositType.id === 'OTHER') {
+    if (baseDeposit.depositType?.id === 'OTHER') {
       this.depositTypeDescription = (baseDeposit.otherTypeDescription || '') + ' (Other)';
     } else {
-      this.depositTypeDescription = baseDeposit.depositType.description || '';
+      this.depositTypeDescription = baseDeposit.depositType?.description || '';
     }
-    this.depositDescription = baseDeposit.description;
+    this.depositDescription = baseDeposit.description ?? '';
     this.amountPaid = baseDeposit.amountPaid;
-    this.paidDate = baseDeposit.depositDateOnly || '';
+    this.paidDate = isValidIsoDateTime(baseDeposit.depositDateOnly)
+      ? baseDeposit.depositDateOnly
+      : '';
     this.contactHolder = baseDeposit.contactHolder || undefined;
-    this.depositReturnCount = baseDeposit.depositReturns.length;
+    this.depositReturnCount = baseDeposit.depositReturns?.length ?? 0;
   }
 }
 
-function renderHolder({ row: { original } }: CellProps<DepositListEntry, Api_Contact | undefined>) {
-  if (original.contactHolder !== undefined && original.contactHolder !== null) {
+function renderHolder({
+  row: { original },
+}: CellProps<DepositListEntry, ApiGen_Concepts_Contact | undefined>) {
+  if (exists(original.contactHolder)) {
     const holder = original.contactHolder;
-    if (holder.person !== undefined && holder.person !== null) {
+    if (exists(holder.person)) {
       return (
         <Link to={`/contact/${holder.id}`}>
           {formatNames([holder.person.firstName, holder.person.middleNames, holder.person.surname])}
         </Link>
       );
-    } else if (holder.organization !== undefined && holder.organization !== null) {
+    } else if (exists(holder.organization)) {
       return <Link to={`/contact/${holder.id}`}>{holder.organization.name}</Link>;
     }
   }

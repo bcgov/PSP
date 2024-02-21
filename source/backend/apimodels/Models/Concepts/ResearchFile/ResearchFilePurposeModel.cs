@@ -9,7 +9,7 @@ namespace Pims.Api.Models.Concepts.ResearchFile
         /// <summary>
         /// get/set - Research file purpose id.
         /// </summary>
-        public string Id { get; set; }
+        public long Id { get; set; }
 
         /// <summary>
         /// get/set - Purpose type code.

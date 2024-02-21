@@ -1,2 +1,2 @@
-interface PreserveAliasName extends String {}
+type PreserveAliasName = string;
 export type DateOnly = string & PreserveAliasName;

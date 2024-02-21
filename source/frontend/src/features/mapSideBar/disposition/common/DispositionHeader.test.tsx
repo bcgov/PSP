@@ -1,7 +1,7 @@
 import { mockDispositionFileResponse } from '@/mocks/dispositionFiles.mock';
 import { rest, server } from '@/mocks/msw/server';
 import { getUserMock } from '@/mocks/user.mock';
-import { Api_DispositionFile } from '@/models/api/DispositionFile';
+import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
 import { prettyFormatUTCDate } from '@/utils/dateUtils';
 import { render, RenderOptions } from '@/utils/test-utils';
 
@@ -43,7 +43,7 @@ describe('DispositionHeader component', () => {
   it('renders as expected when a disposition file is provided', async () => {
     const testDispositionFile = mockDispositionFileResponse();
     const { getByText } = setup({
-      dispositionFile: testDispositionFile as unknown as Api_DispositionFile,
+      dispositionFile: testDispositionFile as unknown as ApiGen_Concepts_DispositionFile,
       lastUpdatedBy: {
         parentId: testDispositionFile.id || 0,
         appLastUpdateUserid: testDispositionFile.appLastUpdateUserid || '',
@@ -60,7 +60,8 @@ describe('DispositionHeader component', () => {
   });
 
   it('renders the file number and name concatenated', async () => {
-    const testDispositionFile = mockDispositionFileResponse() as unknown as Api_DispositionFile;
+    const testDispositionFile =
+      mockDispositionFileResponse();
     const { getByText } = setup({ dispositionFile: testDispositionFile, lastUpdatedBy: null });
 
     expect(getByText('File:')).toBeVisible();
@@ -69,7 +70,8 @@ describe('DispositionHeader component', () => {
 
   it('renders the last-update-time when provided', async () => {
     const testDate = new Date().toISOString();
-    const testDispositionFile = mockDispositionFileResponse() as unknown as Api_DispositionFile;
+    const testDispositionFile =
+      mockDispositionFileResponse();
     const { getByText } = setup({
       dispositionFile: testDispositionFile,
       lastUpdatedBy: {
@@ -86,9 +88,14 @@ describe('DispositionHeader component', () => {
   });
 
   it('renders the file status when provided', async () => {
-    const testDispositionFile: Api_DispositionFile = {
-      ...(mockDispositionFileResponse() as unknown as Api_DispositionFile),
-      fileStatusTypeCode: { id: 'TEST', description: 'mock file status' },
+    const testDispositionFile: ApiGen_Concepts_DispositionFile = {
+      ...mockDispositionFileResponse(),
+      fileStatusTypeCode: {
+        id: 'TEST',
+        description: 'mock file status',
+        displayOrder: null,
+        isDisabled: false,
+      },
     };
     const { getByText } = setup({ dispositionFile: testDispositionFile, lastUpdatedBy: null });
 

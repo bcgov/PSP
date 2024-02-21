@@ -7,7 +7,6 @@ import { FileTabType } from '@/features/mapSideBar/shared/detail/FileTabs';
 import { useApiNotes } from '@/hooks/pims-api/useApiNotes';
 import { useNoteRepository } from '@/hooks/repositories/useNoteRepository';
 import { mockDispositionFileResponse } from '@/mocks/dispositionFiles.mock';
-import { Api_DispositionFile } from '@/models/api/DispositionFile';
 import { render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import DispositionFileTabs, { IDispositionFileTabsProps } from './DispositionFileTabs';
@@ -92,7 +91,7 @@ const history = createMemoryHistory();
 const setIsEditing = jest.fn();
 
 const mockDispositionFileResponseApi =
-  mockDispositionFileResponse() as unknown as Api_DispositionFile;
+  mockDispositionFileResponse();
 
 describe('DispositionFileTabs component', () => {
   // render component under test

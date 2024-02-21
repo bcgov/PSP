@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Api_SecurityDepositReturn } from '@/models/api/SecurityDeposit';
+import { ApiGen_Concepts_SecurityDepositReturn } from '@/models/api/generated/ApiGen_Concepts_SecurityDepositReturn';
 
 import useAxiosApi from './useApi';
 
@@ -13,17 +13,17 @@ export const useApiLeaseDepositReturns = () => {
 
   return React.useMemo(
     () => ({
-      deleteLeaseDepositReturn: (leaseId: number, request: Api_SecurityDepositReturn) =>
+      deleteLeaseDepositReturn: (leaseId: number, request: ApiGen_Concepts_SecurityDepositReturn) =>
         api.delete<void>(`/leases/${leaseId}/deposits/${request.parentDepositId}/returns`, {
           data: request,
         }),
-      putLeaseDepositReturn: (leaseId: number, request: Api_SecurityDepositReturn) =>
-        api.put<Api_SecurityDepositReturn>(
+      putLeaseDepositReturn: (leaseId: number, request: ApiGen_Concepts_SecurityDepositReturn) =>
+        api.put<ApiGen_Concepts_SecurityDepositReturn>(
           `/leases/${leaseId}/deposits/${request.parentDepositId}/returns/${request.id}`,
           request,
         ),
-      postLeaseDepositReturn: (leaseId: number, request: Api_SecurityDepositReturn) =>
-        api.post<Api_SecurityDepositReturn>(
+      postLeaseDepositReturn: (leaseId: number, request: ApiGen_Concepts_SecurityDepositReturn) =>
+        api.post<ApiGen_Concepts_SecurityDepositReturn>(
           `/leases/${leaseId}/deposits/${request.parentDepositId}/returns`,
           request,
         ),

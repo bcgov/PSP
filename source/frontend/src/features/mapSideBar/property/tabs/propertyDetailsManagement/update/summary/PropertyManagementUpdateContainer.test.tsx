@@ -4,7 +4,7 @@ import { forwardRef } from 'react';
 
 import { mockLookups } from '@/mocks/lookups.mock';
 import { getMockApiPropertyManagement } from '@/mocks/propertyManagement.mock';
-import { Api_PropertyManagement } from '@/models/api/Property';
+import { ApiGen_Concepts_PropertyManagement } from '@/models/api/generated/ApiGen_Concepts_PropertyManagement';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { render, RenderOptions } from '@/utils/test-utils';
 
@@ -86,7 +86,7 @@ describe('PropertyManagementUpdateContainer component', () => {
   });
 
   it('calls onSuccess when onSave method is called', async () => {
-    mockUpdateApi.execute.mockResolvedValue({ id: 1 } as Api_PropertyManagement);
+    mockUpdateApi.execute.mockResolvedValue({ id: 1 } as ApiGen_Concepts_PropertyManagement);
     setup();
     await viewProps.onSave(getMockApiPropertyManagement());
     expect(mockUpdateApi.execute).toHaveBeenCalled();

@@ -64,13 +64,13 @@ declare module 'react-table' {
       UseRowSelectOptions<D>,
       UseSortByOptions<D> {}
 
-  export interface Hooks<D extends object = {}>
+  export interface Hooks<D extends object = object>
     extends UseExpandedHooks<D>,
       UseGroupByHooks<D>,
       UseRowSelectHooks<D>,
       UseSortByHooks<D> {}
 
-  export interface TableInstance<D extends object = {}>
+  export interface TableInstance<D extends object = object>
     extends UseColumnOrderInstanceProps<D>,
       UseExpandedInstanceProps<D>,
       UseFiltersInstanceProps<D>,
@@ -82,7 +82,7 @@ declare module 'react-table' {
       UsePaginationInstanceProps<D>,
       UseSortByInstanceProps<D> {}
 
-  export interface TableState<D extends object = {}>
+  export interface TableState<D extends object = object>
     extends UseColumnOrderState<D>,
       UseExpandedState<D>,
       UseFiltersState<D>,
@@ -95,7 +95,7 @@ declare module 'react-table' {
     rowCount: number;
   }
 
-  export interface Column<D extends object = {}>
+  export interface Column<D extends object = object>
     extends UseFiltersColumnOptions<D>,
       UseGroupByColumnOptions<D>,
       UseResizeColumnsColumnOptions<D>,
@@ -103,16 +103,16 @@ declare module 'react-table' {
     align?: string;
   }
 
-  export interface ColumnInstance<D extends object = {}>
+  export interface ColumnInstance<D extends object = object>
     extends UseFiltersColumnProps<D>,
       UseGroupByColumnProps<D>,
       UseResizeColumnsColumnProps<D>,
       UseFlexLayoutColumnProps<D>,
       UseSortByColumnProps<D> {}
 
-  export interface Cell<D extends object = {}> extends UseGroupByCellProps<D> {}
+  export type Cell<D extends object = object> = UseGroupByCellProps<D>;
 
-  export interface Row<D extends object = {}>
+  export interface Row<D extends object = object>
     extends UseExpandedRowProps<D>,
       UseGroupByRowProps<D>,
       UseRowSelectRowProps<D> {}

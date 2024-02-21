@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Pims.Api.Models.Base;
-using Pims.Api.Models.Concepts.Deposit;
+using Pims.Api.Models.Concepts.File;
 using Pims.Api.Models.Concepts.Project;
 
 namespace Pims.Api.Models.Concepts.Lease
@@ -9,24 +9,14 @@ namespace Pims.Api.Models.Concepts.Lease
     /// <summary>
     /// Provides a lease-oriented model.
     /// </summary>
-    public class LeaseModel : BaseAuditModel
+    public class LeaseModel : FileModel
     {
         #region Properties
-
-        /// <summary>
-        /// get/set - The primary key to identify the lease.
-        /// </summary>
-        public long Id { get; set; }
 
         /// <summary>
         /// get/set - The lease amount.
         /// </summary>
         public decimal? Amount { get; set; }
-
-        /// <summary>
-        /// get/set - The value of the tenant name.
-        /// </summary>
-        public string TenantName { get; set; }
 
         /// <summary>
         /// get/set - The value of the moti resource assigned to this lease.
@@ -52,11 +42,6 @@ namespace Pims.Api.Models.Concepts.Lease
         /// get/set - The lease description.
         /// </summary>
         public string Description { get; set; }
-
-        /// <summary>
-        /// get/set - The string value of the street address.
-        /// </summary>
-        public string Address { get; set; }
 
         /// <summary>
         /// get/set - The LIS L File #.
@@ -104,11 +89,6 @@ namespace Pims.Api.Models.Concepts.Lease
         public DateOnly StartDate { get; set; }
 
         /// <summary>
-        /// get/set - The most recent renewal date on the lease.
-        /// </summary>
-        public DateOnly? RenewalDate { get; set; }
-
-        /// <summary>
         /// get/set - The lease renewal count.
         /// </summary>
         public int RenewalCount { get; set; }
@@ -144,11 +124,6 @@ namespace Pims.Api.Models.Concepts.Lease
         public CodeTypeModel<string> PurposeType { get; set; }
 
         /// <summary>
-        /// get/set - The status of this lease within PIMS, Draft by default.
-        /// </summary>
-        public CodeTypeModel<string> StatusType { get; set; }
-
-        /// <summary>
         /// get/set - The region of this lease within PIMS.
         /// </summary>
         public CodeTypeModel<short> Region { get; set; }
@@ -171,12 +146,7 @@ namespace Pims.Api.Models.Concepts.Lease
         /// <summary>
         /// get/set - A list of properties associated with this lease.
         /// </summary>
-        public IEnumerable<PropertyLeaseModel> Properties { get; set; }
-
-        /// <summary>
-        /// get/set - A collection of Security Deposits associated to this Lease.
-        /// </summary>
-        public IEnumerable<SecurityDepositModel> SecurityDeposits { get; set; }
+        public new IList<PropertyLeaseModel> FileProperties { get; set; }
 
         /// <summary>
         /// get/set - A collection the consultations for this lease.
@@ -187,6 +157,11 @@ namespace Pims.Api.Models.Concepts.Lease
         /// get/set - A collection of the tenants for this lease.
         /// </summary>
         public IEnumerable<LeaseTenantModel> Tenants { get; set; }
+
+         /// <summary>
+        /// get/set - A collection of the terms for this lease.
+        /// </summary>
+        public IEnumerable<LeaseTermModel> Terms { get; set; }
 
         /// <summary>
         /// get/set - Whether this improvement contains a building that is subject to RTA (Residential Tenancy Act).

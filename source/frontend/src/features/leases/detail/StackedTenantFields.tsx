@@ -3,11 +3,12 @@ import styled from 'styled-components';
 
 import OverflowTip from '@/components/common/OverflowTip';
 import { InlineFlexDiv } from '@/components/common/styles';
-import { Api_LeaseTenant } from '@/models/api/LeaseTenant';
+import { ApiGen_Concepts_LeaseTenant } from '@/models/api/generated/ApiGen_Concepts_LeaseTenant';
 
 import { getAllNames } from '../leaseUtils';
+
 export interface IStackedTenantFieldsProps {
-  tenants?: Api_LeaseTenant[];
+  tenants?: ApiGen_Concepts_LeaseTenant[];
 }
 
 /**

@@ -1,6 +1,7 @@
 import { AcquisitionStatus } from '@/constants/acquisitionFileStatus';
 import { Claims, Roles } from '@/constants/index';
 import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
+import { toTypeCode } from '@/utils/formUtils';
 import { render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import AcquisitionMenu, { IAcquisitionMenuProps } from './AcquisitionMenu';
@@ -128,7 +129,7 @@ describe('AcquisitionMenu component', () => {
       {
         acquisitionFile: {
           ...mockAcquisitionFileResponse(),
-          fileStatusTypeCode: { id: AcquisitionStatus.Complete },
+          fileStatusTypeCode: toTypeCode(AcquisitionStatus.Complete),
         },
         items: testData,
         selectedIndex: 1,
@@ -147,7 +148,7 @@ describe('AcquisitionMenu component', () => {
       {
         acquisitionFile: {
           ...mockAcquisitionFileResponse(),
-          fileStatusTypeCode: { id: AcquisitionStatus.Complete },
+          fileStatusTypeCode: toTypeCode(AcquisitionStatus.Complete),
         },
         items: testData,
         selectedIndex: 1,

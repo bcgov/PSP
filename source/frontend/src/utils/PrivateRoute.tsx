@@ -29,9 +29,9 @@ function isRenderRoute(route: RenderRoute | ComponentRoute): route is RenderRout
 const PrivateRoute: React.FC<React.PropsWithChildren<IPrivateRouteProps>> = props => {
   const location = useLocation();
   const keycloak = useKeycloakWrapper();
-  let { ...rest } = props;
+  const { ...rest } = props;
 
-  if (!!keycloak.obj?.authenticated) {
+  if (keycloak.obj?.authenticated) {
     if (
       (!rest.role && !rest.claim) ||
       keycloak.hasRole(rest.role) ||

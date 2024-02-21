@@ -6,7 +6,9 @@ import { toast } from 'react-toastify';
 import { FileTypes } from '@/constants';
 import { InventoryTabNames, InventoryTabs } from '@/features/mapSideBar/property/InventoryTabs';
 import { FileTabType } from '@/features/mapSideBar/shared/detail/FileTabs';
-import { Api_File } from '@/models/api/File';
+import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
+import { ApiGen_Concepts_ResearchFileProperty } from '@/models/api/generated/ApiGen_Concepts_ResearchFileProperty';
+import { exists, isValidId } from '@/utils';
 
 import { SideBarContext } from '../context/sidebarContext';
 import { UpdatePropertyDetailsContainer } from '../property/tabs/propertyDetails/update/UpdatePropertyDetailsContainer';
@@ -17,7 +19,7 @@ import { PropertyFileContainer } from '../shared/detail/PropertyFileContainer';
 
 export interface IFilePropertyRouterProps {
   formikRef: React.Ref<FormikProps<any>>;
-  file?: Api_File;
+  file?: ApiGen_Concepts_File;
   fileType: FileTypes;
   isEditing: boolean;
   setIsEditing: (value: boolean) => void;
@@ -37,7 +39,7 @@ export const FilePropertyRouter: React.FC<IFilePropertyRouterProps> = props => {
     setStaleLastUpdatedBy(true);
   };
 
-  if (props.file === undefined || props.file === null) {
+  if (!exists(props.file)) {
     return null;
   }
 
@@ -55,12 +57,12 @@ export const FilePropertyRouter: React.FC<IFilePropertyRouterProps> = props => {
       <Switch>
         <Route exact path={`${path}/${InventoryTabNames.property}`}>
           {(() => {
-            if (fileProperty?.property?.id === undefined) {
+            if (!isValidId(fileProperty?.property?.id)) {
               throw Error('Cannot edit property without a valid id');
             }
             return (
               <UpdatePropertyDetailsContainer
-                id={fileProperty?.property?.id}
+                id={fileProperty!.property!.id}
                 onSuccess={props.onSuccess}
                 ref={props.formikRef}
               />
@@ -77,7 +79,7 @@ export const FilePropertyRouter: React.FC<IFilePropertyRouterProps> = props => {
         </Route>
         <Route exact path={`${path}/${InventoryTabNames.research}`}>
           <UpdatePropertyResearchContainer
-            researchFileProperty={fileProperty}
+            researchFileProperty={fileProperty as ApiGen_Concepts_ResearchFileProperty}
             onSuccess={props.onSuccess}
             ref={props.formikRef}
           />
@@ -109,7 +111,7 @@ export const FilePropertyRouter: React.FC<IFilePropertyRouterProps> = props => {
   }
 };
 
-const getFileProperty = (file: Api_File, selectedMenuIndex: number) => {
+const getFileProperty = (file: ApiGen_Concepts_File, selectedMenuIndex: number) => {
   const properties = file?.fileProperties || [];
   const selectedPropertyIndex = selectedMenuIndex - 1;
 
@@ -118,7 +120,7 @@ const getFileProperty = (file: Api_File, selectedMenuIndex: number) => {
   }
 
   const fileProperty = properties[selectedPropertyIndex];
-  if (!!fileProperty) {
+  if (exists(fileProperty)) {
     fileProperty.file = file;
   }
   return fileProperty;

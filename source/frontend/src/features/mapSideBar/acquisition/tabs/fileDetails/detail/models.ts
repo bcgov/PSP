@@ -1,4 +1,5 @@
-import { Api_AcquisitionFile, Api_AcquisitionFileTeam } from '@/models/api/AcquisitionFile';
+import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
+import { ApiGen_Concepts_AcquisitionFileTeam } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileTeam';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
 export class DetailAcquisitionFile {
@@ -12,17 +13,17 @@ export class DetailAcquisitionFile {
   regionDescription?: string;
   acquisitionTeam: DetailAcquisitionFileTeam[] = [];
 
-  static fromApi(model?: Api_AcquisitionFile): DetailAcquisitionFile {
+  static fromApi(model?: ApiGen_Concepts_AcquisitionFile): DetailAcquisitionFile {
     const detail = new DetailAcquisitionFile();
-    detail.fileName = model?.fileName;
-    detail.legacyFileNumber = model?.legacyFileNumber;
-    detail.assignedDate = model?.assignedDate;
-    detail.deliveryDate = model?.deliveryDate;
-    detail.completionDate = model?.completionDate;
+    detail.fileName = model?.fileName ?? undefined;
+    detail.legacyFileNumber = model?.legacyFileNumber ?? undefined;
+    detail.assignedDate = model?.assignedDate ?? undefined;
+    detail.deliveryDate = model?.deliveryDate ?? undefined;
+    detail.completionDate = model?.completionDate ?? undefined;
     detail.acquisitionPhysFileStatusTypeDescription =
-      model?.acquisitionPhysFileStatusTypeCode?.description;
-    detail.acquisitionTypeDescription = model?.acquisitionTypeCode?.description;
-    detail.regionDescription = model?.regionCode?.description;
+      model?.acquisitionPhysFileStatusTypeCode?.description ?? undefined;
+    detail.acquisitionTypeDescription = model?.acquisitionTypeCode?.description ?? undefined;
+    detail.regionDescription = model?.regionCode?.description ?? undefined;
     detail.acquisitionTeam =
       model?.acquisitionTeam?.map(x => DetailAcquisitionFileTeam.fromApi(x)) || [];
 
@@ -38,12 +39,12 @@ export class DetailAcquisitionFileTeam {
   primaryContactName?: string;
   teamProfileTypeCodeDescription?: string;
 
-  static fromApi(model: Api_AcquisitionFileTeam): DetailAcquisitionFileTeam {
+  static fromApi(model: ApiGen_Concepts_AcquisitionFileTeam): DetailAcquisitionFileTeam {
     const teamDetail = new DetailAcquisitionFileTeam();
     teamDetail.personId = model?.person?.id;
     teamDetail.organizationId = model?.organization?.id;
     teamDetail.primaryContactId = model?.primaryContact?.id;
-    teamDetail.teamProfileTypeCodeDescription = model?.teamProfileType?.description;
+    teamDetail.teamProfileTypeCodeDescription = model?.teamProfileType?.description ?? undefined;
 
     teamDetail.teamName = model?.person
       ? formatApiPersonNames(model?.person)

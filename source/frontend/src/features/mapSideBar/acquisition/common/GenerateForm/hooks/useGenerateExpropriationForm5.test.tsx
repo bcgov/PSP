@@ -10,9 +10,9 @@ import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvi
 import { useInterestHolderRepository } from '@/hooks/repositories/useInterestHolderRepository';
 import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
 import { getMockContactOrganizationWithOnePerson } from '@/mocks/contacts.mock';
-import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
 import { ApiGen_CodeTypes_ExternalResponseStatus } from '@/models/api/generated/ApiGen_CodeTypes_ExternalResponseStatus';
-import { Api_Property } from '@/models/api/Property';
+import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
+import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 
 import { ExpropriationForm5Model } from '../../../tabs/expropriation/models';
 import { useGenerateExpropriationForm5 } from './useGenerateExpropriationForm5';
@@ -20,8 +20,11 @@ import { useGenerateExpropriationForm5 } from './useGenerateExpropriationForm5';
 const generateFn = jest
   .fn()
   .mockResolvedValue({ status: ApiGen_CodeTypes_ExternalResponseStatus.Success, payload: {} });
-const getAcquisitionFileFn = jest.fn<Promise<Api_AcquisitionFile | undefined>, any[]>();
-const getAcquisitionFilePropertiesFn = jest.fn<Promise<Api_Property[] | undefined>, any[]>();
+const getAcquisitionFileFn = jest.fn<Promise<ApiGen_Concepts_AcquisitionFile | undefined>, any[]>();
+const getAcquisitionFilePropertiesFn = jest.fn<
+  Promise<ApiGen_Concepts_Property[] | undefined>,
+  any[]
+>();
 const getOrganizationConceptFn = jest.fn();
 const getInterestHoldersFn = jest.fn();
 
@@ -57,7 +60,10 @@ const getWrapper =
   ({ children }: any) =>
     <Provider store={store}>{children}</Provider>;
 
-const setup = (params?: { storeValues?: any; acquisitionResponse?: Api_AcquisitionFile }) => {
+const setup = (params?: {
+  storeValues?: any;
+  acquisitionResponse?: ApiGen_Concepts_AcquisitionFile;
+}) => {
   var acquisitionResponse = mockAcquisitionFileResponse();
   if (params?.acquisitionResponse !== undefined) {
     acquisitionResponse = params.acquisitionResponse;

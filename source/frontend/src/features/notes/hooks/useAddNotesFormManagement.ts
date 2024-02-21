@@ -3,6 +3,7 @@ import { useCallback } from 'react';
 
 import { NoteTypes } from '@/constants/index';
 import { useNoteRepository } from '@/hooks/repositories/useNoteRepository';
+import { isValidId } from '@/utils';
 
 import { AddNotesYupSchema } from '../add/AddNotesYupSchema';
 import { EntityNoteForm } from '../add/models';
@@ -30,7 +31,7 @@ export function useAddNotesFormManagement(props: IUseAddNotesFormManagementProps
       const response = await addNote.execute(type, apiNote);
       formikHelpers?.setSubmitting(false);
 
-      if (!!response?.id) {
+      if (isValidId(response?.id)) {
         formikHelpers?.resetForm();
         if (typeof onSuccess === 'function') {
           onSuccess();

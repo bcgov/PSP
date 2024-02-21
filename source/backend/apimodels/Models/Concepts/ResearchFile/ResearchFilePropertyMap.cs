@@ -25,7 +25,7 @@ namespace Pims.Api.Models.Concepts.ResearchFile
                 .Map(dest => dest.PropertyResearchFileId, src => src.Id)
                 .Map(dest => dest.Property, src => src.Property)
                 .Map(dest => dest.PropertyId, src => src.Property.Id)
-                .Map(dest => dest.ResearchFileId, src => src.File.Id)
+                .Map(dest => dest.ResearchFileId, src => src.FileId)
                 .Map(dest => dest.PropertyName, src => src.PropertyName)
                 .Map(dest => dest.DisplayOrder, src => src.DisplayOrder)
                 .Map(dest => dest.IsLegalOpinionRequired, src => src.IsLegalOpinionRequired)

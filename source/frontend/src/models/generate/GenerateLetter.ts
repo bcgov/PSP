@@ -1,13 +1,14 @@
 import moment from 'moment';
 
-import { Api_AcquisitionFile, Api_AcquisitionFileTeam } from '@/models/api/AcquisitionFile';
+import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 
+import { ApiGen_Concepts_AcquisitionFileTeam } from '../api/generated/ApiGen_Concepts_AcquisitionFileTeam';
 import { Api_GenerateAcquisitionFile } from './acquisition/GenerateAcquisitionFile';
 export class Api_GenerateLetter extends Api_GenerateAcquisitionFile {
   date_generated: string;
   constructor(
-    file: Api_AcquisitionFile,
-    coordinatorContact: Api_AcquisitionFileTeam | null | undefined,
+    file: ApiGen_Concepts_AcquisitionFile,
+    coordinatorContact: ApiGen_Concepts_AcquisitionFileTeam | null | undefined,
   ) {
     super({
       file,

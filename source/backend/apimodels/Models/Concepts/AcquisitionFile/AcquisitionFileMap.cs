@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using Mapster;
 using Pims.Api.Models.Base;
 using Pims.Core.Extensions;
@@ -11,6 +12,7 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
         public void Register(TypeAdapterConfig config)
         {
             config.NewConfig<PimsAcquisitionFile, AcquisitionFileModel>()
+                .PreserveReference(true)
                 .Map(dest => dest.Id, src => src.AcquisitionFileId)
                 .Map(dest => dest.FileNo, src => src.FileNo)
                 .Map(dest => dest.FileNumber, src => src.FileNumber)
@@ -40,6 +42,7 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
                 .Inherits<IBaseAppEntity, BaseAuditModel>();
 
             config.NewConfig<AcquisitionFileModel, PimsAcquisitionFile>()
+                .PreserveReference(true)
                 .Map(dest => dest.AcquisitionFileId, src => src.Id)
                 .Map(dest => dest.FileNo, src => src.FileNo)
                 .Map(dest => dest.FileNumber, src => src.FileNumber)
@@ -57,7 +60,7 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
                 .Map(dest => dest.AcqPhysFileStatusTypeCode, src => src.AcquisitionPhysFileStatusTypeCode.Id)
                 .Map(dest => dest.AcquisitionTypeCode, src => src.AcquisitionTypeCode.Id)
                 .Map(dest => dest.RegionCode, src => src.RegionCode.Id)
-                .Map(dest => dest.PimsPropertyAcquisitionFiles, src => src.FileProperties)
+                .Map(dest => dest.PimsPropertyAcquisitionFiles, src => src.FileProperties.ToImmutableList())
                 .Map(dest => dest.PimsAcquisitionFileTeams, src => src.AcquisitionTeam)
                 .Map(dest => dest.PimsAcquisitionOwners, src => src.AcquisitionFileOwners)
                 .Map(dest => dest.PimsInterestHolders, src => src.AcquisitionFileInterestHolders)

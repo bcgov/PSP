@@ -8,7 +8,7 @@ import EditButton from '@/components/common/EditButton';
 import TooltipIcon from '@/components/common/TooltipIcon';
 import { Claims, Roles } from '@/constants/index';
 import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
-import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
+import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 
 import StatusUpdateSolver from '../tabs/fileDetails/detail/statusUpdateSolver';
 import { cannotEditMessage } from './constants';
@@ -16,7 +16,7 @@ import GenerateFormContainer from './GenerateForm/GenerateFormContainer';
 import GenerateFormView from './GenerateForm/GenerateFormView';
 
 export interface IAcquisitionMenuProps {
-  acquisitionFile: Api_AcquisitionFile;
+  acquisitionFile: ApiGen_Concepts_AcquisitionFile;
   items: string[];
   selectedIndex: number;
   onChange: (index: number) => void;
