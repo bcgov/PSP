@@ -6,7 +6,7 @@ import { toTypeCodeNullable } from '@/utils/formUtils';
 import { getEmptyPerson } from './contacts.mock';
 
 export const getEmptyUser = (): ApiGen_Concepts_User => {
-  var a: ApiGen_Concepts_User = {
+  return {
     id: 0,
     guidIdentifierValue: '',
     businessIdentifierValue: null,
@@ -22,7 +22,6 @@ export const getEmptyUser = (): ApiGen_Concepts_User => {
     userRegions: null,
     ...getEmptyBaseAudit(),
   };
-  return a;
 };
 
 export const getUserMock = (): ApiGen_Concepts_User => ({

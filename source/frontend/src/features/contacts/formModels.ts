@@ -25,13 +25,13 @@ export interface IOrganizationLink {
 export class IEditablePersonForm {
   id?: number;
   rowVersion?: number;
-  surname: string = '';
+  surname = '';
   firstName: string;
   middleNames?: string;
   preferredName?: string;
   comment?: string;
   organization: IOrganizationLink | null = null;
-  useOrganizationAddress: boolean = false;
+  useOrganizationAddress = false;
   personOrganizationId?: number;
   personOrganizationRowVersion?: number;
   isDisabled: string | boolean = false;
@@ -345,7 +345,7 @@ export class IEditableContactMethodForm {
 export class IEditablePersonAddressForm {
   id?: number | undefined;
   rowVersion?: number | undefined;
-  streetAddress1: string = '';
+  streetAddress1 = '';
   streetAddress2?: string | undefined;
   streetAddress3?: string | undefined;
   municipality?: string | undefined;
@@ -355,7 +355,7 @@ export class IEditablePersonAddressForm {
   postal?: string | undefined;
   countryId: NumberFieldValue = '';
   provinceId: NumberFieldValue = '';
-  addressTypeId: string = '';
+  addressTypeId = '';
   personId?: number;
   personAddressId?: number;
   personAddressRowVersion?: number;
@@ -381,7 +381,8 @@ export class IEditablePersonAddressForm {
     }
 
     const addressUsageTypeCode = orgAddress.addressUsageType?.id;
-    var addressType: AddressTypes = AddressTypes[addressUsageTypeCode as keyof typeof AddressTypes];
+    const addressType: AddressTypes =
+      AddressTypes[addressUsageTypeCode as keyof typeof AddressTypes];
 
     const newForm = new IEditablePersonAddressForm(addressType);
     newForm.addressTypeId = fromTypeCode(orgAddress?.addressUsageType) ?? '';
@@ -409,7 +410,8 @@ export class IEditablePersonAddressForm {
     }
 
     const addressUsageTypeCode = personAddress.addressUsageType?.id;
-    var addressType: AddressTypes = AddressTypes[addressUsageTypeCode as keyof typeof AddressTypes];
+    const addressType: AddressTypes =
+      AddressTypes[addressUsageTypeCode as keyof typeof AddressTypes];
 
     const newForm = new IEditablePersonAddressForm(addressType);
     newForm.addressTypeId = fromTypeCode(personAddress?.addressUsageType) ?? '';
@@ -465,7 +467,7 @@ export class IEditablePersonAddressForm {
 export class IEditableOrganizationAddressForm {
   id?: number | undefined;
   rowVersion?: number | undefined;
-  streetAddress1: string = '';
+  streetAddress1 = '';
   streetAddress2?: string | undefined;
   streetAddress3?: string | undefined;
   municipality?: string | undefined;
@@ -475,7 +477,7 @@ export class IEditableOrganizationAddressForm {
   postal?: string | undefined;
   countryId: NumberFieldValue = '';
   provinceId: NumberFieldValue = '';
-  addressTypeId: string = '';
+  addressTypeId = '';
   organizationId?: number;
   organizationAddressId?: number;
   organizationAddressRowVersion?: number;
@@ -498,7 +500,8 @@ export class IEditableOrganizationAddressForm {
     }
 
     const addressUsageTypeCode = orgAddress.addressUsageType?.id;
-    var addressType: AddressTypes = AddressTypes[addressUsageTypeCode as keyof typeof AddressTypes];
+    const addressType: AddressTypes =
+      AddressTypes[addressUsageTypeCode as keyof typeof AddressTypes];
 
     const newForm = new IEditableOrganizationAddressForm(addressType);
     newForm.addressTypeId = fromTypeCode(orgAddress?.addressUsageType) ?? '';
@@ -567,15 +570,15 @@ function hasAddress<T extends IEditablePersonAddressForm | IEditableOrganization
     return false;
   }
 
-  let { streetAddress1, addressTypeId, countryId, municipality, postal } = formAddress;
-  countryId = parseInt(countryId.toString()) || 0;
+  const { streetAddress1, addressTypeId, countryId, municipality, postal } = formAddress;
+  const parsedCountryId = parseInt(countryId.toString()) || 0;
 
   return (
     streetAddress1 !== '' &&
     addressTypeId !== '' &&
     municipality !== '' &&
     postal !== '' &&
-    countryId > 0
+    parsedCountryId > 0
   );
 }
 
