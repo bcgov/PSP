@@ -95,7 +95,7 @@ describe('UpdateDispositionChecklist container', () => {
       viewProps?.onSuccess({} as ApiGen_Concepts_DispositionFile);
     });
 
-    expect(onSuccess).toHaveBeenCalled();
+    expect(onSuccess).toHaveBeenCalledWith(false, true);
   });
 
   it('displays a toast with server-returned error responses', async () => {

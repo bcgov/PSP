@@ -34,6 +34,35 @@ namespace Pims.Api.Services
             return canEdit;
         }
 
+        public bool CanEditProperties(AcquisitionStatusTypes? acquisitionStatus)
+        {
+            if (acquisitionStatus == null)
+            {
+                return false;
+            }
+
+            bool canEdit;
+            switch (acquisitionStatus)
+            {
+                case AcquisitionStatusTypes.ACTIVE:
+                case AcquisitionStatusTypes.DRAFT:
+                    canEdit = true;
+                    break;
+                case AcquisitionStatusTypes.ARCHIV:
+                case AcquisitionStatusTypes.CANCEL:
+                case AcquisitionStatusTypes.CLOSED:
+                case AcquisitionStatusTypes.COMPLT:
+                case AcquisitionStatusTypes.HOLD:
+                    canEdit = false;
+                    break;
+                default:
+                    canEdit = false;
+                    break;
+            }
+
+            return canEdit;
+        }
+
         public bool CanEditTakes(AcquisitionStatusTypes? acquisitionStatus)
         {
             if (acquisitionStatus == null)

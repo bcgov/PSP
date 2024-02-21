@@ -40,7 +40,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyPimsFiles()
         {
-            //Wait(2000);
+            Wait();
 
             WaitUntilClickable(propertyPimsFilesLinkTab);
             webDriver.FindElement(propertyPimsFilesLinkTab).Click();
@@ -60,7 +60,7 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(propertyAcquisitionFileSubtitle);
             AssertTrueIsDisplayed(propertyAcquisitionCountLabel);
 
-            Wait(2000);
+            Wait();
             webDriver.FindElement(propertyAcquisitionExpandTableBttn).Click();
 
             AssertTrueIsDisplayed(propertyAcquisitionTable);

@@ -108,7 +108,7 @@ describe('Disposition List View', () => {
   it('searches by pid', async () => {
     const results = mockPagedResults([
       {
-        ...mockDispositionFileResponse(),
+        ...(mockDispositionFileResponse()),
         fileProperties: [
           {
             id: 12,

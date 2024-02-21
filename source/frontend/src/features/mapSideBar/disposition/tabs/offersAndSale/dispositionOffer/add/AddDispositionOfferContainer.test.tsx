@@ -21,6 +21,7 @@ const mockPostApi = {
   execute: jest.fn(),
   loading: false,
 };
+const onSuccess = jest.fn();
 
 jest.mock('@/hooks/repositories/useDispositionProvider', () => ({
   useDispositionProvider: () => {
@@ -44,7 +45,7 @@ describe('Add Disposition Offer Container component', () => {
     } = {},
   ) => {
     const component = render(
-      <AddDispositionOfferContainer dispositionFileId={1} View={TestView} />,
+      <AddDispositionOfferContainer dispositionFileId={1} View={TestView} onSuccess={onSuccess} />,
       {
         history,
         store: {

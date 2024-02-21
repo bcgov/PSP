@@ -100,7 +100,7 @@ namespace Pims.Dal.Helpers.Extensions
                 {
                     filter.Sort[sortRFileNumberIndex] = filter.Sort[sortRFileNumberIndex].Replace("RfileNumber", "ResearchFileId");
                 }
-                query = query.OrderByProperty(filter.Sort);
+                query = query.OrderByProperty(true, filter.Sort);
             }
             else
             {

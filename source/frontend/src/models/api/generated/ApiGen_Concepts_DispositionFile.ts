@@ -9,6 +9,8 @@ import { ApiGen_Concepts_DispositionFileProperty } from './ApiGen_Concepts_Dispo
 import { ApiGen_Concepts_DispositionFileSale } from './ApiGen_Concepts_DispositionFileSale';
 import { ApiGen_Concepts_DispositionFileTeam } from './ApiGen_Concepts_DispositionFileTeam';
 import { ApiGen_Concepts_FileWithChecklist } from './ApiGen_Concepts_FileWithChecklist';
+import { ApiGen_Concepts_Product } from './ApiGen_Concepts_Product';
+import { ApiGen_Concepts_Project } from './ApiGen_Concepts_Project';
 
 // LINK: @backend/apimodels/Models/Concepts/DispositionFile/DispositionFileModel.cs
 export interface ApiGen_Concepts_DispositionFile extends ApiGen_Concepts_FileWithChecklist {
@@ -20,6 +22,10 @@ export interface ApiGen_Concepts_DispositionFile extends ApiGen_Concepts_FileWit
   dispositionStatusTypeCode: ApiGen_Base_CodeType<string> | null;
   initiatingBranchTypeCode: ApiGen_Base_CodeType<string> | null;
   physicalFileStatusTypeCode: ApiGen_Base_CodeType<string> | null;
+  projectId: number | null;
+  project: ApiGen_Concepts_Project | null;
+  productId: number | null;
+  product: ApiGen_Concepts_Product | null;
   fundingTypeCode: ApiGen_Base_CodeType<string> | null;
   initiatingDocumentTypeCode: ApiGen_Base_CodeType<string> | null;
   dispositionTypeOther: string | null;

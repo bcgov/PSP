@@ -258,7 +258,7 @@ namespace Pims.Dal.Repositories
                 }
                 else
                 {
-                    query = query.OrderByProperty(filter.Sort);
+                    query = query.OrderByProperty(true, filter.Sort);
                 }
             }
             else

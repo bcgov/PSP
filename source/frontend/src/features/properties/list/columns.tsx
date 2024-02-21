@@ -20,8 +20,8 @@ export const ColumnDiv = styled.div`
   padding-right: 0.5rem;
 `;
 
-const NumberCell = (cell: CellProps<ApiGen_Concepts_Property, number | undefined>) =>
-  stringToFragment(formatNumber(cell.row.original.landArea ?? 0));
+const NumberCell = ({ cell: { value } }: CellProps<ApiGen_Concepts_Property, number | undefined>) =>
+  stringToFragment(formatNumber(value ?? 0));
 
 type Props = {
   municipalities: ILookupCode[];
@@ -52,6 +52,7 @@ export const columns = ({ municipalities }: Props): ColumnWithProps<ApiGen_Conce
     accessor: p => p.address?.municipality,
     align: 'left',
     width: 50,
+    sortable: true,
     filter: {
       component: TypeaheadField,
       props: {
@@ -69,6 +70,7 @@ export const columns = ({ municipalities }: Props): ColumnWithProps<ApiGen_Conce
     Cell: NumberCell,
     align: 'right',
     width: 20,
+    sortable: true,
     filter: {
       component: Input,
       props: {
@@ -81,7 +83,35 @@ export const columns = ({ municipalities }: Props): ColumnWithProps<ApiGen_Conce
     },
   },
   {
-    Header: '',
+    Header: 'Ownership',
+    align: 'left',
+    sortable: true,
+    width: 20,
+    Cell: (cellProps: CellProps<ApiGen_Concepts_Property>) => {
+      const { hasClaim } = useKeycloakWrapper();
+
+      const ownershipText = cellProps.row.original.isOwned
+        ? 'Core Inventory'
+        : cellProps.row.original.isPropertyOfInterest
+        ? 'Property of Interest'
+        : cellProps.row.original.isOtherInterest
+        ? 'Other Interest'
+        : cellProps.row.original.isDisposed
+        ? 'Disposed'
+        : '';
+      return (
+        <StyledDiv>
+          {hasClaim(Claims.PROPERTY_VIEW) && (
+            <>
+              <span> {ownershipText}</span>
+            </>
+          )}
+        </StyledDiv>
+      );
+    },
+  },
+  {
+    Header: 'Actions',
     accessor: 'controls' as any, // this column is not part of the data model
     align: 'right',
     sortable: false,

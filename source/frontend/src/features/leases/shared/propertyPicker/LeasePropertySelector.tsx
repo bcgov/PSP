@@ -63,6 +63,7 @@ export const LeasePropertySelector: React.FunctionComponent<LeasePropertySelecto
       quantity: undefined,
       latitude: undefined,
       longitude: undefined,
+      ownership: '',
     };
 
     const result = await getProperties.execute(params);

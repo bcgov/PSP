@@ -11,4 +11,9 @@ export interface Api_PropertyFilterCriteria {
   leasePurposes: string[];
 
   anomalyIds: string[];
+
+  isCoreInventory: boolean;
+  isPropertyOfInterest: boolean;
+  isOtherInterest: boolean;
+  isDisposed: boolean;
 }

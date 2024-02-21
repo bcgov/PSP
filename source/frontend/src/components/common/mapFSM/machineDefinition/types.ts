@@ -34,6 +34,7 @@ export type MachineContext = {
   requestedFlyTo: RequestedFlyTo;
   filePropertyLocations: LatLngLiteral[];
   activePimsPropertyIds: number[];
+  showDisposed: boolean;
 };
 
 // Possible state machine states

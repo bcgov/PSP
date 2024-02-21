@@ -343,6 +343,7 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = obje
       manualSortBy: manualSortBy,
       pageCount,
       autoResetSelectedRows: false,
+      autoResetPage: false,
     },
     useFlexLayout,
     useSortBy,
@@ -473,7 +474,10 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = obje
             if (next) {
               toggleSortBy(column.id, next === 'desc', true);
             } else {
-              column.clearSortBy();
+              // Todo: this is throwing sometimes. Most likely, the type is incorrect and does not have the clearSortBy method.
+              if (column.clearSortBy) {
+                column.clearSortBy();
+              }
             }
           }}
           column={column}

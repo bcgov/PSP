@@ -1,5 +1,6 @@
 import clsx from 'classnames';
 import React, { useState } from 'react';
+import { MapContainerProps } from 'react-leaflet';
 import styled from 'styled-components';
 
 import DraftSvg from '@/assets/images/pins/icon-draft.svg';
@@ -13,7 +14,6 @@ import { SideBarContextProvider } from '@/features/mapSideBar/context/sidebarCon
 import MapSideBar from '@/features/mapSideBar/MapSideBar';
 import CompensationRequisitionRouter from '@/features/mapSideBar/router/CompensationRequisitionRouter';
 import PropertyActivityRouter from '@/features/mapSideBar/router/PropertyActivityRouter';
-import { MapContainerProps } from 'react-leaflet';
 
 enum MapCursors {
   DRAFT = 'draft-cursor',

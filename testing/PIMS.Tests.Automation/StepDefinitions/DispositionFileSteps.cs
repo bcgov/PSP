@@ -12,10 +12,12 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly DispositionFileDetails dispositionFileDetails;
         private readonly SearchDispositionFiles searchDispositionFiles;
         private readonly SharedFileProperties sharedFileProperties;
+        private readonly SearchProperties searchProperties;
         private readonly PropertyInformation propertyInformation;
         private readonly Notes notes;
         private readonly DispositionChecklist checklist;
         private readonly DispositionOfferSale offerSale;
+        private readonly PurchaseMember purchaseMember;
 
         private readonly string userName = "TRANPSP1";
         private string dispositionFileCode = "";
@@ -27,10 +29,12 @@ namespace PIMS.Tests.Automation.StepDefinitions
             dispositionFileDetails = new DispositionFileDetails(driver.Current);
             searchDispositionFiles = new SearchDispositionFiles(driver.Current);
             sharedFileProperties = new SharedFileProperties(driver.Current);
+            searchProperties = new SearchProperties(driver.Current);
             propertyInformation = new PropertyInformation(driver.Current);
             notes = new Notes(driver.Current);
             checklist = new DispositionChecklist(driver.Current);
             offerSale = new DispositionOfferSale(driver.Current);
+            dispositionFile = new DispositionFile();
         }
 
         [StepDefinition(@"I create a new Disposition File from row number (.*)")]
@@ -235,7 +239,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             checklist.SaveDispositionFileChecklist();
         }
 
-        [StepDefinition(@"I create Appraisal, Assessment and Offers within a Disposition File")]
+        [StepDefinition(@"I create Appraisal, Assessment, Offers and Sales Details within a Disposition File")]
         public void CreateOfferAndSalesAppraisalAndAssessment()
         {
             /* TEST COVERAGE:  */
@@ -247,8 +251,9 @@ namespace PIMS.Tests.Automation.StepDefinitions
             offerSale.VerifyInitOffersAndSaleTab();
 
             // Create AppraisalAndAssessment section by clicking edit button
-             offerSale.EditAppraisalAndAssessmentButton();
-             offerSale.CreateNewAppraisalAndAssessment(dispositionFile);
+            offerSale.EditAppraisalAndAssessmentButton();
+            offerSale.VerifyInitAppraisalAndAssessmentForm();
+            offerSale.CreateNewAppraisalAndAssessment(dispositionFile);
 
             //Save the AppraisalAndAssessment section from
             offerSale.SaveDispositionFileOffersAndSale();
@@ -267,6 +272,17 @@ namespace PIMS.Tests.Automation.StepDefinitions
                     offerSale.VerifyCreatedOffer(dispositionFile.DispositionOfferAndSale[i], i);
                 }     
             }
+
+            // Create Sales Details section by clicking edit button
+            offerSale.EditSalesDetailsButton();
+            offerSale.VerifyInitSalesDetailsForm();
+            offerSale.InsertSalesDetails(dispositionFile);
+
+            //Save the  Sales Details section from
+            offerSale.SaveDispositionFileOffersAndSale();
+
+            //Verify Created  Sales Details form
+            offerSale.VerifyCreatedSalesDetails(dispositionFile);
         }
 
         [StepDefinition(@"I update Appraisal, Assessment and Offers section within Disposition File from row number (.*)")]
@@ -321,6 +337,101 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Delete Offer
             offerSale.DeleteOffer(0);
+
+            //Update Sales Details and cancel changes
+            offerSale.EditSalesDetailsButton();
+            offerSale.InsertSalesDetails(dispositionFile);
+            offerSale.CancelDispositionFileOffersAndSale();
+
+            //Update Sales Details and save changes
+            offerSale.EditSalesDetailsButton();
+            offerSale.InsertSalesDetails(dispositionFile);
+            offerSale.SaveDispositionFileOffersAndSale();
+
+            //Verify Sales Details
+            offerSale.VerifyCreatedSalesDetails(dispositionFile);
+        }
+
+        [StepDefinition(@"I create a Disposition File from a pin on map from row number (.*)")]
+        public void CreateAcquisitionFileFromPin(int rowNumber)
+        {
+            /* TEST COVERAGE:   */
+
+            //Login to PIMS
+            loginSteps.Idir(userName);
+
+            //Search for a property
+            PopulateDispositionFile(rowNumber);
+            searchProperties.SearchPropertyByPINPID(dispositionFile.DispositionSearchProperties.PID);
+
+            //Select Found Pin on map
+            searchProperties.SelectFoundPin();
+
+            //Close Property Information Modal
+            propertyInformation.ClosePropertyInfoModal();
+
+            //Open elipsis option
+            propertyInformation.OpenMoreOptionsPopUp();
+            propertyInformation.ChooseCreationOptionFromPin("Disposition File - Create new");
+
+            //Validate Acquisition File Details Create Form
+            dispositionFileDetails.VerifyDispositionFileCreate();
+
+            //Cancel empty acquisition file
+            dispositionFileDetails.CancelDispositionFile();
+
+            //Verify Form is no longer visible
+            Assert.Equal(0, dispositionFileDetails.IsCreateDispositionFileFormVisible());
+
+            //Search for a property
+            searchProperties.SearchPropertyByPINPID(dispositionFile.DispositionSearchProperties.PID);
+
+            //Select Found Pin on map
+            searchProperties.SelectFoundPin();
+
+            //Close Property Information Modal
+            propertyInformation.ClosePropertyInfoModal();
+
+            //Open elipsis option
+            propertyInformation.OpenMoreOptionsPopUp();
+            propertyInformation.ChooseCreationOptionFromPin("Acquisition File - Create new");
+
+            //Fill basic Acquisition File information
+            dispositionFileDetails.CreateMinimumDispositionFile(dispositionFile);
+
+            //Cancel Creation
+            dispositionFileDetails.CancelDispositionFile();
+
+            //Search for a property
+            searchProperties.SearchPropertyByPINPID(dispositionFile.DispositionSearchProperties.PID);
+
+            //Select Found Pin on map
+            searchProperties.SelectFoundPin();
+
+            //Close Property Information Modal
+            propertyInformation.ClosePropertyInfoModal();
+
+            //Open elipsis option
+            propertyInformation.OpenMoreOptionsPopUp();
+            propertyInformation.ChooseCreationOptionFromPin("Acquisition File - Create new");
+
+            //Fill basic Acquisition File information
+            dispositionFileDetails.CreateMinimumDispositionFile(dispositionFile);
+
+            //Save Acquisition File
+            dispositionFileDetails.SaveDispositionFileDetails();
+
+            //Get Research File code
+            dispositionFileCode = dispositionFileDetails.GetDispositionFileCode();
+
+            //Edit Acquisition File
+            dispositionFileDetails.EditDispositionFileBttn();
+
+            //Add additional information
+            dispositionFileDetails.AddAdditionalInformation(dispositionFile);
+
+            //Save Acquisition File
+            dispositionFileDetails.SaveDispositionFileDetails();
         }
 
         [StepDefinition(@"A new Disposition file is created successfully")]
@@ -344,7 +455,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateDispositionFile(int rowNumber)
         {
-            DataTable dispositionSheet = ExcelDataContext.GetInstance().Sheets["DispositionFiles"];
+            DataTable dispositionSheet = ExcelDataContext.GetInstance().Sheets["DispositionFiles"]!;
             ExcelDataContext.PopulateInCollection(dispositionSheet);
             dispositionFile = new DispositionFile();
 
@@ -355,7 +466,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             dispositionFile.DispositionProjFunding = ExcelDataContext.ReadData(rowNumber, "DispositionProjFunding");
 
             //Schedule
-            dispositionFile.DispositionAssignedDate = ExcelDataContext.ReadData(rowNumber, "AssignedDate");
+            dispositionFile.DispositionAssignedDate = ExcelDataContext.ReadData(rowNumber, "DispositionAssignedDate");
             dispositionFile.DispositionCompletedDate = ExcelDataContext.ReadData(rowNumber, "DispositionCompletedDate");
 
             //Disposition DetailsDisposition
@@ -367,7 +478,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             dispositionFile.InitiatingDocument = ExcelDataContext.ReadData(rowNumber, "InitiatingDocument");
             dispositionFile.OtherInitiatingDocument = ExcelDataContext.ReadData(rowNumber, "OtherInitiatingDocument");
             dispositionFile.InitiatingDocumentDate = ExcelDataContext.ReadData(rowNumber, "InitiatingDocumentDate");
-            dispositionFile.PhysicalFileStatus = ExcelDataContext.ReadData(rowNumber, "PhysicalFileStatus");
+            dispositionFile.DispositionPhysicalFileStatus = ExcelDataContext.ReadData(rowNumber, "DispositionPhysicalFileStatus");
             dispositionFile.InitiatingBranch = ExcelDataContext.ReadData(rowNumber, "InitiatingBranch");
             dispositionFile.DispositionMOTIRegion = ExcelDataContext.ReadData(rowNumber, "DispositionMOTIRegion");
 
@@ -379,10 +490,10 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 PopulateTeamsCollection(dispositionFile.DispositionTeamStartRow, dispositionFile.DispositionTeamCount);
 
             //Properties Search
-            dispositionFile.DispositionSearchPropertiesIndex = int.Parse(ExcelDataContext.ReadData(rowNumber, "DisSearchPropertiesIndex"));
+            dispositionFile.DispositionSearchPropertiesIndex = int.Parse(ExcelDataContext.ReadData(rowNumber, "DispositionSearchPropertiesIndex"));
             if (dispositionFile.DispositionSearchPropertiesIndex > 0)
             {
-                DataTable searchPropertiesSheet = ExcelDataContext.GetInstance().Sheets["SearchProperties"];
+                DataTable searchPropertiesSheet = ExcelDataContext.GetInstance().Sheets["SearchProperties"]!;
                 ExcelDataContext.PopulateInCollection(searchPropertiesSheet);
 
                 dispositionFile.DispositionSearchProperties.PID = ExcelDataContext.ReadData(dispositionFile.DispositionSearchPropertiesIndex, "PID");
@@ -396,7 +507,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             dispositionFile.DispositionFileChecklistIndex = int.Parse(ExcelDataContext.ReadData(rowNumber, "DispositionFileChecklistIndex"));
             if (dispositionFile.DispositionFileChecklistIndex > 0)
             {
-                DataTable dispositionFileChecklistSheet = ExcelDataContext.GetInstance().Sheets["DispositionChecklist"];
+                DataTable dispositionFileChecklistSheet = ExcelDataContext.GetInstance().Sheets["DispositionChecklist"]!;
                 ExcelDataContext.PopulateInCollection(dispositionFileChecklistSheet);
 
                 dispositionFile.DispositionFileChecklist.FileInitiationSelect1 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "FileInitiationSelect1");
@@ -441,22 +552,50 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 dispositionFile.DispositionFileChecklist.SaleInformationSelect11 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "SaleInformationSelect11");
             }
 
-            // Disposition Offer and sales
-            dispositionFile.AppraisalAndAssessmentValue = ExcelDataContext.ReadData(rowNumber, "AppraisalAndAssessmentAppraisalValue");
-            dispositionFile.AppraisalAndAssessmentDate = ExcelDataContext.ReadData(rowNumber, "AppraisalAndAssessmentAppraisalDate");
+            // Disposition Offer and Sales - Appraisal & Assessment
+            dispositionFile.AppraisalAndAssessmentValue = ExcelDataContext.ReadData(rowNumber, "AppraisalAndAssessmentValue");
+            dispositionFile.AppraisalAndAssessmentDate = ExcelDataContext.ReadData(rowNumber, "AppraisalAndAssessmentDate");
             dispositionFile.AppraisalAndAssessmentBcAssessmentValue = ExcelDataContext.ReadData(rowNumber, "AppraisalAndAssessmentBcAssessmentValue");
             dispositionFile.AppraisalAndAssessmentBcAssessmentRollYear = ExcelDataContext.ReadData(rowNumber, "AppraisalAndAssessmentBcAssessmentRollYear");
             dispositionFile.AppraisalAndAssessmentListPrice = ExcelDataContext.ReadData(rowNumber, "AppraisalAndAssessmentListPrice");
 
+            // Disposition Offer and Sales - Offers
             dispositionFile.OfferSaleStartRow = int.Parse(ExcelDataContext.ReadData(rowNumber, "OfferSaleStartRow"));
             dispositionFile.OfferSaleTotalCount = int.Parse(ExcelDataContext.ReadData(rowNumber, "OfferSaleTotalCount"));
             if (dispositionFile.OfferSaleStartRow > 0 && dispositionFile.OfferSaleTotalCount > 0)
                 PopulateOfferSaleCollection(dispositionFile.OfferSaleStartRow, dispositionFile.OfferSaleTotalCount);
+
+            // Disposition Offer and Sales - Sales Details
+            dispositionFile.PurchaseNameStartRow = int.Parse(ExcelDataContext.ReadData(rowNumber, "PurchaseNameStartRow"));
+            dispositionFile.PurchaseNameTotalCount = int.Parse(ExcelDataContext.ReadData(rowNumber, "PurchaseNameTotalCount"));
+            if (dispositionFile.PurchaseNameStartRow > 0 && dispositionFile.PurchaseNameTotalCount > 0)
+                PopulatePurchaseNamesCollection(dispositionFile.PurchaseNameStartRow, dispositionFile.PurchaseNameTotalCount);
+
+            dispositionFile.PurchaserAgent = ExcelDataContext.ReadData(rowNumber, "PurchaserAgent");
+            dispositionFile.PurchaserAgentType = ExcelDataContext.ReadData(rowNumber, "PurchaserAgentType");
+            dispositionFile.PurchaserAgentPrimaryContact = ExcelDataContext.ReadData(rowNumber, "PurchaserAgentPrimaryContact");
+            dispositionFile.PurchaserSolicitor = ExcelDataContext.ReadData(rowNumber, "PurchaserSolicitor");
+            dispositionFile.PurchaserSolicitorType = ExcelDataContext.ReadData(rowNumber, "PurchaserSolicitorType");
+            dispositionFile.PurchaserSolicitorPrimaryContact = ExcelDataContext.ReadData(rowNumber, "PurchaserSolicitorPrimaryContact");
+            dispositionFile.LastConditionRemovalDate = ExcelDataContext.ReadData(rowNumber, "LastConditionRemovalDate");
+            dispositionFile.SaleCompletionDate = ExcelDataContext.ReadData(rowNumber, "SaleCompletionDate");
+            dispositionFile.FiscalYearOfSale = ExcelDataContext.ReadData(rowNumber, "FiscalYearOfSale");
+            dispositionFile.FinalSalePrice = ExcelDataContext.ReadData(rowNumber, "FinalSalePrice");
+            dispositionFile.RealtorCommission = ExcelDataContext.ReadData(rowNumber, "RealtorCommission");
+            dispositionFile.GSTRequired = ExcelDataContext.ReadData(rowNumber, "GSTRequired");
+            dispositionFile.GSTCollected = ExcelDataContext.ReadData(rowNumber, "GSTCollected");
+            dispositionFile.NetBookValue = ExcelDataContext.ReadData(rowNumber, "NetBookValue");
+            dispositionFile.TotalCostOfSales = ExcelDataContext.ReadData(rowNumber, "TotalCostOfSales");
+            dispositionFile.NetProceedsBeforeSPP = ExcelDataContext.ReadData(rowNumber, "NetProceedsBeforeSPP");
+            dispositionFile.SPPAmount = ExcelDataContext.ReadData(rowNumber, "SPPAmount");
+            dispositionFile.NetProceedsAfterSPP = ExcelDataContext.ReadData(rowNumber, "NetProceedsAfterSPP");
+            dispositionFile.RemediationCost = ExcelDataContext.ReadData(rowNumber, "RemediationCost");
+
         }
 
         private void PopulateTeamsCollection(int startRow, int rowsCount)
         {
-            DataTable teamsSheet = ExcelDataContext.GetInstance().Sheets["TeamMembers"];
+            DataTable teamsSheet = ExcelDataContext.GetInstance().Sheets["TeamMembers"]!;
             ExcelDataContext.PopulateInCollection(teamsSheet);
 
             for (int i = startRow; i < startRow + rowsCount; i++)
@@ -473,7 +612,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateOfferSaleCollection(int startRow, int rowsCount)
         {
-            DataTable OfferSaleSheet = ExcelDataContext.GetInstance().Sheets["DispositionOfferSale"];
+            DataTable OfferSaleSheet = ExcelDataContext.GetInstance().Sheets["DispositionOfferSale"]!;
             ExcelDataContext.PopulateInCollection(OfferSaleSheet);
 
             for (int i = startRow; i < startRow + rowsCount; i++)
@@ -489,5 +628,23 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 dispositionFile.DispositionOfferAndSale.Add(offerAndSale);
             }
         }
+
+        private void PopulatePurchaseNamesCollection(int startRow, int rowsCount)
+        {
+            DataTable purchaseSheet = ExcelDataContext.GetInstance().Sheets["PurchaserNames"]!;
+            ExcelDataContext.PopulateInCollection(purchaseSheet);
+
+            for (int i = startRow; i < startRow + rowsCount; i++)
+            {
+                PurchaseMember purchaseMember = new PurchaseMember();
+                purchaseMember.PurchaserName = ExcelDataContext.ReadData(i, "PurchaserName");
+                purchaseMember.PurchaseMemberContactType = ExcelDataContext.ReadData(i, "PurchaseMemberContactType");
+                purchaseMember.PurchaseMemberPrimaryContact = ExcelDataContext.ReadData(i, "PurchaseMemberPrimaryContact");
+
+               dispositionFile.PurchaserNames.Add(purchaseMember);
+            }
+        }
+
+
     }
 }

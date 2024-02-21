@@ -15,11 +15,12 @@ export interface IUpdateDispositionOfferContainerProps {
   dispositionFileId: number;
   dispositionOfferId: number;
   View: React.FC<IDispositionOfferFormProps>;
+  onSuccess: () => void;
 }
 
 const UpdateDispositionOfferContainer: React.FunctionComponent<
   React.PropsWithChildren<IUpdateDispositionOfferContainerProps>
-> = ({ dispositionFileId, dispositionOfferId, View }) => {
+> = ({ dispositionFileId, dispositionOfferId, View, onSuccess }) => {
   const history = useHistory();
   const location = useLocation();
   const backUrl = location.pathname.split(`/offers/${dispositionOfferId}/update`)[0];
@@ -47,6 +48,7 @@ const UpdateDispositionOfferContainer: React.FunctionComponent<
   };
 
   const handleSucces = async () => {
+    onSuccess();
     history.push(backUrl);
   };
 

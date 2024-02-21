@@ -3,6 +3,7 @@ import queryString from 'query-string';
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+
 import { TableSort } from '@/components/Table/TableSort';
 import { defaultPropertyFilter } from '@/features/properties/filter/IPropertyFilter';
 import { useAppSelector } from '@/store/hooks';
