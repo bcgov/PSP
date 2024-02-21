@@ -14,7 +14,6 @@ import { mockLookups } from '@/mocks/lookups.mock';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { rest, server } from '@/mocks/msw/server';
 import { getUserMock } from '@/mocks/user.mock';
-import { Api_DispositionFile } from '@/models/api/DispositionFile';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { prettyFormatUTCDate } from '@/utils';
 import { act, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
@@ -78,7 +77,7 @@ describe('DispositionView component', () => {
           {...{
             ...props,
             dispositionFile: {
-              ...(mockDispositionFileResponse() as unknown as Api_DispositionFile),
+              ...(mockDispositionFileResponse()),
               fileProperties: mockDispositionFilePropertyResponse() as any,
             },
           }}

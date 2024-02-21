@@ -5,13 +5,13 @@ import * as API from '@/constants/API';
 import { useApiUsers } from '@/hooks/pims-api/useApiUsers';
 import { mockDispositionFileResponse } from '@/mocks/dispositionFiles.mock';
 import { mockFileChecklistResponse, mockLookups } from '@/mocks/index.mock';
-import { Api_FileWithChecklist } from '@/models/api/File';
 import { ApiGen_Concepts_FileChecklistItem } from '@/models/api/generated/ApiGen_Concepts_FileChecklistItem';
 import { ILookupCode, lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, createAxiosError, render, RenderOptions } from '@/utils/test-utils';
 
 import { ChecklistFormModel } from './models';
 import { IUpdateChecklistFormProps, UpdateChecklistForm } from './UpdateChecklistForm';
+import { ApiGen_Concepts_FileWithChecklist } from '@/models/api/generated/ApiGen_Concepts_FileWithChecklist';
 
 // mock API service calls
 jest.mock('@/hooks/pims-api/useApiUsers');
@@ -71,7 +71,7 @@ describe('UpdateChecklist form', () => {
       mockFileChecklistResponse() as ApiGen_Concepts_FileChecklistItem[];
 
     mockViewProps.initialValues = ChecklistFormModel.fromApi(
-      apiDispositionFile as unknown as Api_FileWithChecklist,
+      apiDispositionFile as unknown as ApiGen_Concepts_FileWithChecklist,
       sectionTypes,
     );
   });

@@ -101,12 +101,12 @@ export const useDispositionProvider = () => {
 
   const updateDispositionPropertiesApi = useApiRequestWrapper<
     (
-      acqFile: Api_DispositionFile,
+      acqFile: ApiGen_Concepts_DispositionFile,
       userOverrideCodes: UserOverrideCode[],
-    ) => Promise<AxiosResponse<Api_DispositionFile, any>>
+    ) => Promise<AxiosResponse<ApiGen_Concepts_DispositionFile, any>>
   >({
     requestFunction: useCallback(
-      async (acqFile: Api_DispositionFile, userOverrideCodes: UserOverrideCode[]) =>
+      async (acqFile: ApiGen_Concepts_DispositionFile, userOverrideCodes: UserOverrideCode[]) =>
         await putDispositionFileProperties(acqFile, userOverrideCodes),
       [putDispositionFileProperties],
     ),

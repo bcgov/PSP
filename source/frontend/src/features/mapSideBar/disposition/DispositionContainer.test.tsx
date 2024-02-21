@@ -12,7 +12,6 @@ import {
 import { mockLastUpdatedBy } from '@/mocks/lastUpdatedBy.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
-import { Api_DispositionFile } from '@/models/api/DispositionFile';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
   act,
@@ -27,10 +26,11 @@ import {
 import { SideBarContextProvider } from '../context/sidebarContext';
 import DispositionContainer, { IDispositionContainerProps } from './DispositionContainer';
 import { IDispositionViewProps } from './DispositionView';
+import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 
 const history = createMemoryHistory();
 const mockAxios = new MockAdapter(axios);
-const mockDispositionFileApi = mockDispositionFileResponse() as unknown as Api_DispositionFile;
+const mockDispositionFileApi = mockDispositionFileResponse();
 
 // mock auth library
 jest.mock('@react-keycloak/web');
@@ -48,7 +48,7 @@ jest.mock('react-visibility-sensor', () => {
   });
 });
 
-let viewProps: IDispositionViewProps = {} as any;
+let viewProps!: IDispositionViewProps;
 const DispositionContainerView = (props: IDispositionViewProps) => {
   viewProps = props;
   return (
@@ -147,11 +147,12 @@ describe('DispositionContainer component', () => {
     const spinner = getByTestId('filter-backdrop-loading');
     await waitForElementToBeRemoved(spinner);
 
-    await act(async () => viewProps.onUpdateProperties(mockDispositionFileApi));
+    await viewProps.onUpdateProperties(mockDispositionFileApi);
     expect(spinner).not.toBeVisible();
     expect(
       mockAxios.history.put.filter(x => x.url === '/dispositionfiles/1/properties?'),
     ).toHaveLength(1);
+
   });
 
   it('should show error popup when user adds a property outside of the user account regions', async () => {
@@ -165,7 +166,7 @@ describe('DispositionContainer component', () => {
       .onPut(new RegExp('dispositionfiles/1/properties'))
       .reply(400, { error: errorMessage });
 
-    await act(async () => viewProps.onUpdateProperties(mockDispositionFileApi));
+    await viewProps.onUpdateProperties(mockDispositionFileApi);
     expect(spinner).not.toBeVisible();
     expect(await screen.findByText(errorMessage)).toBeVisible();
   });

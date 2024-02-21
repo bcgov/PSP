@@ -1,10 +1,10 @@
 import { DispositionFileStatus } from '@/constants/dispositionFileStatus';
-import { Api_DispositionFile } from '@/models/api/DispositionFile';
+import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
 
 class DispositionStatusUpdateSolver {
-  private readonly dispositionFile: Api_DispositionFile | null;
+  private readonly dispositionFile: ApiGen_Concepts_DispositionFile | null;
 
-  constructor(apiModel: Api_DispositionFile | undefined | null) {
+  constructor(apiModel: ApiGen_Concepts_DispositionFile | undefined | null) {
     this.dispositionFile = apiModel ?? null;
   }
 

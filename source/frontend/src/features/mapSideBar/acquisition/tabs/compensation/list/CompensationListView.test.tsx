@@ -11,7 +11,7 @@ import {
 import { mockAcquisitionFileResponse, mockLookups } from '@/mocks/index.mock';
 import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { toTypeCodeNullable } from '@/utils/formUtils';
+import { toTypeCode, toTypeCodeNullable } from '@/utils/formUtils';
 import { act, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
 import CompensationListView, { ICompensationListViewProps } from './CompensationListView';
@@ -136,7 +136,7 @@ describe('compensation list view', () => {
     const { queryByTestId } = setup({
       acquisitionFile: {
         ...mockAcquisitionFileResponse(),
-        fileStatusTypeCode: { id: AcquisitionStatus.Active },
+        fileStatusTypeCode: toTypeCode(AcquisitionStatus.Active),
       },
       compensations: compensations,
       claims: [Claims.COMPENSATION_REQUISITION_DELETE],
@@ -151,7 +151,7 @@ describe('compensation list view', () => {
     const { queryByTestId } = setup({
       acquisitionFile: {
         ...mockAcquisitionFileResponse(),
-        fileStatusTypeCode: { id: AcquisitionStatus.Active },
+        fileStatusTypeCode: toTypeCode(AcquisitionStatus.Active),
       },
       compensations: compensations,
       claims: [Claims.COMPENSATION_REQUISITION_DELETE],

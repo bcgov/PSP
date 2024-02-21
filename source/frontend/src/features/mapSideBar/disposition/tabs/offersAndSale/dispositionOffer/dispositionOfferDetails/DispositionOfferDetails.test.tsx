@@ -7,10 +7,10 @@ import {
   mockDispositionFileOfferApi,
   mockDispositionFileResponse,
 } from '@/mocks/dispositionFiles.mock';
-import { Api_DispositionFile } from '@/models/api/DispositionFile';
 import { act, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
 import DispositionOfferDetails, { IDispositionOfferDetailsProps } from './DispositionOfferDetails';
+import { toTypeCode } from '@/utils/formUtils';
 
 const history = createMemoryHistory();
 jest.mock('@react-keycloak/web');
@@ -31,7 +31,7 @@ describe('Disposition Offer Detail View component', () => {
         onDelete={onDelete}
         dispositionFile={
           renderOptions.props?.dispositionFile ??
-          (mockDispositionFileResponse() as unknown as Api_DispositionFile as unknown as Api_DispositionFile)
+          (mockDispositionFileResponse())
         }
       />,
       {
@@ -89,8 +89,8 @@ describe('Disposition Offer Detail View component', () => {
       claims: [Claims.DISPOSITION_EDIT],
       props: {
         dispositionFile: {
-          ...(mockDispositionFileResponse() as unknown as Api_DispositionFile),
-          fileStatusTypeCode: { id: DispositionFileStatus.Complete },
+          ...(mockDispositionFileResponse()),
+          fileStatusTypeCode: toTypeCode(DispositionFileStatus.Complete),
         },
       },
     });
@@ -108,8 +108,8 @@ describe('Disposition Offer Detail View component', () => {
       roles: [Roles.SYSTEM_ADMINISTRATOR],
       props: {
         dispositionFile: {
-          ...(mockDispositionFileResponse() as unknown as Api_DispositionFile),
-          fileStatusTypeCode: { id: DispositionFileStatus.Complete },
+          ...(mockDispositionFileResponse()),
+          fileStatusTypeCode: toTypeCode(DispositionFileStatus.Complete),
         },
       },
     });

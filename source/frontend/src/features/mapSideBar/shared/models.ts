@@ -78,6 +78,8 @@ export class PropertyForm {
   public address?: AddressForm;
   public displayOrder?: number;
   public isOwned?: boolean;
+  public isDisposed?: boolean;
+  public isOtherInterest?: boolean;
 
   private constructor(baseModel?: Partial<PropertyForm>) {
     Object.assign(this, baseModel);
@@ -132,6 +134,8 @@ export class PropertyForm {
     newForm.propertyRowVersion = model.property?.rowVersion ?? undefined;
     newForm.displayOrder = model.displayOrder ?? undefined;
     newForm.isOwned = model.property?.isOwned;
+    newForm.isDisposed = model.property?.isDisposed;
+    newForm.isOtherInterest = model.property?.isOtherInterest;
     newForm.formattedAddress = exists(model.property?.address)
       ? formatApiAddress(model.property?.address)
       : '';
@@ -161,6 +165,8 @@ export class PropertyForm {
       district: toTypeCodeNullable(this.district),
       rowVersion: this.propertyRowVersion ?? null,
       isOwned: this.isOwned ?? false,
+      isDisposed: this.isDisposed ?? false,
+      isOtherInterest: this.isOtherInterest ?? false,
       address: this.address?.toApi() ?? null,
       landLegalDescription: this.legalDescription ?? null,
       propertyType: null,

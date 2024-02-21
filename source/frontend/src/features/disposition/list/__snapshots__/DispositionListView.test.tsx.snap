@@ -1108,19 +1108,8 @@ exports[`Disposition List View matches snapshot 1`] = `
                     Alejandro Sanchez (MoTI Solicitor), 
                   </span>
                   <span>
-                    Aman Monga (Negotiation agent), 
+                    Aman Monga (Negotiation agent)
                   </span>
-                  <button
-                    class="c10 Button btn btn-link"
-                    data-testid="expand"
-                    type="button"
-                  >
-                    <div
-                      class="Button__value"
-                    >
-                      [+1 more...]
-                    </div>
-                  </button>
                 </div>
               </div>
               <div

@@ -8,7 +8,6 @@ import { mockDispositionFileResponse } from '@/mocks/dispositionFiles.mock';
 import { act, cleanup, render, RenderOptions, userEvent, waitForEffects } from '@/utils/test-utils';
 
 import DispositionSummaryView, { IDispositionSummaryViewProps } from './DispositionSummaryView';
-import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
 
 // mock auth library
 jest.mock('@react-keycloak/web');
@@ -16,7 +15,7 @@ jest.mock('@react-keycloak/web');
 const onEdit = jest.fn();
 
 const mockDispositionFileApi =
-  mockDispositionFileResponse() as unknown as ApiGen_Concepts_DispositionFile;
+  mockDispositionFileResponse();
 
 describe('DispositionSummaryView component', () => {
   // render component under test
@@ -68,7 +67,7 @@ describe('DispositionSummaryView component', () => {
     const { queryByTitle, queryByTestId } = setup(
       {
         dispositionFile:
-          mockDispositionFileResponse() as unknown as ApiGen_Concepts_DispositionFile,
+          mockDispositionFileResponse(),
       },
       { claims: [] },
     );
@@ -83,7 +82,7 @@ describe('DispositionSummaryView component', () => {
     const { queryByTitle, queryByTestId } = setup(
       {
         dispositionFile: {
-          ...(mockDispositionFileResponse() as unknown as ApiGen_Concepts_DispositionFile),
+          ...(mockDispositionFileResponse()),
           fileStatusTypeCode: toTypeCode(DispositionFileStatus.Complete),
         },
       },
@@ -100,7 +99,7 @@ describe('DispositionSummaryView component', () => {
     const { queryByTitle, queryByTestId } = setup(
       {
         dispositionFile: {
-          ...(mockDispositionFileResponse() as unknown as ApiGen_Concepts_DispositionFile),
+          ...(mockDispositionFileResponse()),
           fileStatusTypeCode: toTypeCode(DispositionFileStatus.Complete),
         },
       },
@@ -149,7 +148,7 @@ describe('DispositionSummaryView component', () => {
   });
 
   it('renders disposition team member person', async () => {
-    const apiMock = mockDispositionFileResponse() as unknown as ApiGen_Concepts_DispositionFile;
+    const apiMock = mockDispositionFileResponse();
     const { findByText } = setup(
       {
         dispositionFile: {

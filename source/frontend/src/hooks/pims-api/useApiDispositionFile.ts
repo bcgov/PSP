@@ -32,10 +32,10 @@ export const useApiDispositionFile = () => {
           `/dispositionfiles/search?${params ? queryString.stringify(params) : ''}`,
         ),
       putDispositionFileProperties: (
-        dspFile: Api_DispositionFile,
+        dspFile: ApiGen_Concepts_DispositionFile,
         userOverrideCodes: UserOverrideCode[] = [],
       ) =>
-        api.put<Api_DispositionFile>(
+        api.put<ApiGen_Concepts_DispositionFile>(
           `/dispositionfiles/${dspFile?.id}/properties?${userOverrideCodes
             .map(o => `userOverrideCodes=${o}`)
             .join('&')}`,

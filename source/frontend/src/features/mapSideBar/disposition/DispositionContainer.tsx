@@ -10,6 +10,7 @@ import { useQuery } from '@/hooks/use-query';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
 import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
 import { IApiError } from '@/interfaces/IApiError';
+import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { exists, stripTrailingSlash } from '@/utils';
@@ -218,7 +219,7 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
         return updateDispositionProperties
           .execute(
             {
-              ...file,
+              ...(file as ApiGen_Concepts_DispositionFile),
               productId: null,
               projectId: null,
               fileChecklistItems: [],
@@ -237,6 +238,10 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
               dispositionAppraisal: null,
               dispositionSale: null,
               dispositionOffers: [],
+              initiatingBranchTypeCode: null,
+              physicalFileStatusTypeCode: null,
+              fundingTypeCode: null,
+              initiatingDocumentTypeCode: null,
             },
             userOverrideCodes,
           )

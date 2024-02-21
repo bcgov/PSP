@@ -62,7 +62,7 @@ describe('UpdateDispositionChecklist container', () => {
 
   beforeEach(() => {
     viewProps = undefined;
-    dispositionFile = mockDispositionFileResponse() as unknown as Api_DispositionFile;
+    dispositionFile = mockDispositionFileResponse();
     dispositionFile.fileChecklistItems = mockFileChecklistResponse();
   });
 

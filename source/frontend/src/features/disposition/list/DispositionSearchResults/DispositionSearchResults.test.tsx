@@ -81,7 +81,7 @@ describe('Disposition search results table', () => {
     setup({
       results: [
         DispositionSearchResultModel.fromApi({
-          ...(mockDispositionFileResponse() as unknown as ApiGen_Concepts_DispositionFile),
+          ...(mockDispositionFileResponse()),
           fileProperties: [
             {
               id: 100,
@@ -120,14 +120,14 @@ describe('Disposition search results table', () => {
 
     const addresses = screen.getAllByText('1234 mock Street', { exact: false });
     expect(addresses).toHaveLength(2);
-    expect(screen.getAllByText('[+1 more...]')).toHaveLength(2);
+    expect(screen.getAllByText('[+1 more...]')).toHaveLength(1);
   });
 
   it('displays a team member organization', () => {
     setup({
       results: [
         DispositionSearchResultModel.fromApi({
-          ...(mockDispositionFileResponse() as unknown as ApiGen_Concepts_DispositionFile),
+          ...(mockDispositionFileResponse()),
           dispositionTeam: [
             {
               id: 1,
@@ -171,7 +171,7 @@ describe('Disposition search results table', () => {
     setup({
       results: [
         DispositionSearchResultModel.fromApi({
-          ...(mockDispositionFileResponse() as unknown as ApiGen_Concepts_DispositionFile),
+          ...(mockDispositionFileResponse()),
           dispositionTeam: [
             {
               id: 1,
@@ -216,7 +216,7 @@ describe('Disposition search results table', () => {
     setup({
       results: [
         DispositionSearchResultModel.fromApi({
-          ...(mockDispositionFileResponse() as unknown as ApiGen_Concepts_DispositionFile),
+          ...(mockDispositionFileResponse()),
           dispositionTeam: [
             {
               id: 1,

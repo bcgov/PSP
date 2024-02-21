@@ -39,6 +39,7 @@ export interface IOffersAndSaleViewProps {
 
 const OffersAndSaleView: React.FunctionComponent<IOffersAndSaleViewProps> = ({
   loading,
+  dispositionFile,
   dispositionOffers,
   dispositionSale,
   dispositionAppraisal,
