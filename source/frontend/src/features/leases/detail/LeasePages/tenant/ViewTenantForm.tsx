@@ -1,4 +1,5 @@
 import { Formik } from 'formik';
+import noop from 'lodash/noop';
 import styled from 'styled-components';
 
 import { FormSection } from '@/components/common/form/styles';
@@ -10,7 +11,6 @@ import { withNameSpace } from '@/utils/formUtils';
 import { FormTenant } from './models';
 import TenantOrganizationContactInfo from './TenantOrganizationContactInfo';
 import TenantPersonContactInfo from './TenantPersonContactInfo';
-import noop from 'lodash/noop';
 
 export interface ITenantProps {
   nameSpace?: string;

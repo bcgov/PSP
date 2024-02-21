@@ -3,8 +3,8 @@
  * Do not manually modify, changes made to this file will be lost when this file is regenerated.
  */
 import { ApiGen_Concepts_FileProperty } from './ApiGen_Concepts_FileProperty';
-import { ApiGen_Concepts_ResearchFile } from './ApiGen_Concepts_ResearchFile';
 import { ApiGen_Concepts_PropertyPurpose } from './ApiGen_Concepts_PropertyPurpose';
+import { ApiGen_Concepts_ResearchFile } from './ApiGen_Concepts_ResearchFile';
 
 // LINK: @backend/apimodels/Models/Concepts/ResearchFile/ResearchFilePropertyModel.cs
 export interface ApiGen_Concepts_ResearchFileProperty extends ApiGen_Concepts_FileProperty {

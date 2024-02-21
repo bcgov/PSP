@@ -1,9 +1,9 @@
+import { IAutocompletePrediction } from '@/interfaces/IAutocomplete';
 import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
 import { ApiGen_Concepts_DispositionFileProperty } from '@/models/api/generated/ApiGen_Concepts_DispositionFileProperty';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
-import { exists, isValidIsoDateTime } from '@/utils/utils';
-import { IAutocompletePrediction } from '@/interfaces/IAutocomplete';
 import { emptyStringtoNullable, fromTypeCode, toTypeCodeNullable } from '@/utils/formUtils';
+import { exists, isValidIsoDateTime } from '@/utils/utils';
 
 import { PropertyForm } from '../../shared/models';
 import { ChecklistItemFormModel } from '../../shared/tabs/checklist/update/models';

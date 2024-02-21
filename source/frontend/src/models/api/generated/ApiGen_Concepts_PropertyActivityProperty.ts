@@ -3,8 +3,8 @@
  * Do not manually modify, changes made to this file will be lost when this file is regenerated.
  */
 import { ApiGen_Base_BaseAudit } from './ApiGen_Base_BaseAudit';
-import { ApiGen_Concepts_PropertyActivity } from './ApiGen_Concepts_PropertyActivity';
 import { ApiGen_Concepts_Property } from './ApiGen_Concepts_Property';
+import { ApiGen_Concepts_PropertyActivity } from './ApiGen_Concepts_PropertyActivity';
 
 // LINK: @backend/apimodels/Models/Concepts/Property/PropertyActivityPropertyModel.cs
 export interface ApiGen_Concepts_PropertyActivityProperty extends ApiGen_Base_BaseAudit {

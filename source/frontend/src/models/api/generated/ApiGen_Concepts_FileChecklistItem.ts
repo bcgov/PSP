@@ -3,8 +3,8 @@
  * Do not manually modify, changes made to this file will be lost when this file is regenerated.
  */
 import { ApiGen_Base_BaseAudit } from './ApiGen_Base_BaseAudit';
-import { ApiGen_Concepts_FileChecklistItemType } from './ApiGen_Concepts_FileChecklistItemType';
 import { ApiGen_Base_CodeType } from './ApiGen_Base_CodeType';
+import { ApiGen_Concepts_FileChecklistItemType } from './ApiGen_Concepts_FileChecklistItemType';
 
 // LINK: @backend/apimodels/Models/Concepts/File/FileChecklistItemModel.cs
 export interface ApiGen_Concepts_FileChecklistItem extends ApiGen_Base_BaseAudit {

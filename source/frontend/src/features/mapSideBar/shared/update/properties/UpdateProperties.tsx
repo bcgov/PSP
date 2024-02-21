@@ -17,11 +17,11 @@ import { useBcaAddress } from '@/features/properties/map/hooks/useBcaAddress';
 import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
+import { isValidId } from '@/utils';
 
 import { AddressForm, FileForm, PropertyForm } from '../../models';
 import SidebarFooter from '../../SidebarFooter';
 import { UpdatePropertiesYupSchema } from './UpdatePropertiesYupSchema';
-import { isValidId } from '@/utils';
 
 export interface IUpdatePropertiesProps {
   file: ApiGen_Concepts_File;

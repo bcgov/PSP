@@ -15,7 +15,8 @@ jest.mock('@react-keycloak/web');
 
 const onEdit = jest.fn();
 
-const mockDispositionFileApi = mockDispositionFileResponse() as unknown as ApiGen_Concepts_DispositionFile;
+const mockDispositionFileApi =
+  mockDispositionFileResponse() as unknown as ApiGen_Concepts_DispositionFile;
 
 describe('DispositionSummaryView component', () => {
   // render component under test
@@ -65,7 +66,10 @@ describe('DispositionSummaryView component', () => {
 
   it('does not render the edit button for users that do not have disposition edit permissions', async () => {
     const { queryByTitle, queryByTestId } = setup(
-      { dispositionFile: mockDispositionFileResponse() as unknown as ApiGen_Concepts_DispositionFile },
+      {
+        dispositionFile:
+          mockDispositionFileResponse() as unknown as ApiGen_Concepts_DispositionFile,
+      },
       { claims: [] },
     );
     await waitForEffects();
@@ -97,7 +101,7 @@ describe('DispositionSummaryView component', () => {
       {
         dispositionFile: {
           ...(mockDispositionFileResponse() as unknown as ApiGen_Concepts_DispositionFile),
-          fileStatusTypeCode: toTypeCode(DispositionFileStatus.Complete ),
+          fileStatusTypeCode: toTypeCode(DispositionFileStatus.Complete),
         },
       },
       { claims: [Claims.DISPOSITION_EDIT], roles: [Roles.SYSTEM_ADMINISTRATOR] },

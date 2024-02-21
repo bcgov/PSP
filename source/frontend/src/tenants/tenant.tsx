@@ -1,11 +1,11 @@
 import axios from 'axios';
+import { noop } from 'lodash';
 import React from 'react';
 
 import ITenantConfig, { ITenantConfig2 } from '@/hooks/pims-api/interfaces/ITenantConfig';
 
 import { config } from './config';
 import defaultTenant from './config/defaultTenant';
-import { noop } from 'lodash';
 
 export interface ITenantContext {
   // The tenant configuration.

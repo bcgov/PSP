@@ -3,8 +3,8 @@
  * Do not manually modify, changes made to this file will be lost when this file is regenerated.
  */
 import { ApiGen_Base_BaseAudit } from './ApiGen_Base_BaseAudit';
-import { ApiGen_Concepts_Role } from './ApiGen_Concepts_Role';
 import { ApiGen_Concepts_Claim } from './ApiGen_Concepts_Claim';
+import { ApiGen_Concepts_Role } from './ApiGen_Concepts_Role';
 
 // LINK: @backend/apimodels/Models/Concepts/Role/RoleClaimModel.cs
 export interface ApiGen_Concepts_RoleClaim extends ApiGen_Base_BaseAudit {

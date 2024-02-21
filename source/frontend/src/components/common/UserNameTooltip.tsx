@@ -1,10 +1,10 @@
+import noop from 'lodash/noop';
 import * as React from 'react';
 
 import { useApiUsers } from '@/hooks/pims-api/useApiUsers';
 import useIsMounted from '@/hooks/util/useIsMounted';
 
 import TooltipIcon from './TooltipIcon';
-import noop from 'lodash/noop';
 
 export interface IUserNameTooltipProps {
   userGuid?: string | null;

@@ -6,10 +6,10 @@ import { ApiGen_Base_BaseAudit } from './ApiGen_Base_BaseAudit';
 import { ApiGen_Base_CodeType } from './ApiGen_Base_CodeType';
 import { ApiGen_Concepts_Organization } from './ApiGen_Concepts_Organization';
 import { ApiGen_Concepts_Person } from './ApiGen_Concepts_Person';
-import { ApiGen_Concepts_PropertyActivityInvolvedParty } from './ApiGen_Concepts_PropertyActivityInvolvedParty';
-import { ApiGen_Concepts_PropertyMinistryContact } from './ApiGen_Concepts_PropertyMinistryContact';
-import { ApiGen_Concepts_PropertyActivityProperty } from './ApiGen_Concepts_PropertyActivityProperty';
 import { ApiGen_Concepts_PropertyActivityInvoice } from './ApiGen_Concepts_PropertyActivityInvoice';
+import { ApiGen_Concepts_PropertyActivityInvolvedParty } from './ApiGen_Concepts_PropertyActivityInvolvedParty';
+import { ApiGen_Concepts_PropertyActivityProperty } from './ApiGen_Concepts_PropertyActivityProperty';
+import { ApiGen_Concepts_PropertyMinistryContact } from './ApiGen_Concepts_PropertyMinistryContact';
 
 // LINK: @backend/apimodels/Models/Concepts/Property/PropertyActivityModel.cs
 export interface ApiGen_Concepts_PropertyActivity extends ApiGen_Base_BaseAudit {

@@ -60,7 +60,8 @@ describe('DispositionHeader component', () => {
   });
 
   it('renders the file number and name concatenated', async () => {
-    const testDispositionFile = mockDispositionFileResponse() as unknown as ApiGen_Concepts_DispositionFile;
+    const testDispositionFile =
+      mockDispositionFileResponse() as unknown as ApiGen_Concepts_DispositionFile;
     const { getByText } = setup({ dispositionFile: testDispositionFile, lastUpdatedBy: null });
 
     expect(getByText('File:')).toBeVisible();
@@ -69,7 +70,8 @@ describe('DispositionHeader component', () => {
 
   it('renders the last-update-time when provided', async () => {
     const testDate = new Date().toISOString();
-    const testDispositionFile = mockDispositionFileResponse() as unknown as ApiGen_Concepts_DispositionFile
+    const testDispositionFile =
+      mockDispositionFileResponse() as unknown as ApiGen_Concepts_DispositionFile;
     const { getByText } = setup({
       dispositionFile: testDispositionFile,
       lastUpdatedBy: {

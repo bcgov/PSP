@@ -3,8 +3,8 @@
  * Do not manually modify, changes made to this file will be lost when this file is regenerated.
  */
 import { ApiGen_Base_BaseAudit } from './ApiGen_Base_BaseAudit';
-import { ApiGen_Concepts_AcquisitionFileProperty } from './ApiGen_Concepts_AcquisitionFileProperty';
 import { ApiGen_Base_CodeType } from './ApiGen_Base_CodeType';
+import { ApiGen_Concepts_AcquisitionFileProperty } from './ApiGen_Concepts_AcquisitionFileProperty';
 
 // LINK: @backend/apimodels/Models/Concepts/InterestHolder/InterestHolderPropertyModel.cs
 export interface ApiGen_Concepts_InterestHolderProperty extends ApiGen_Base_BaseAudit {

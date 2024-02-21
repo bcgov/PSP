@@ -3,9 +3,9 @@
  * Do not manually modify, changes made to this file will be lost when this file is regenerated.
  */
 import { ApiGen_Concepts_Document } from './ApiGen_Concepts_Document';
-import { ApiGen_Requests_ExternalResponse } from './ApiGen_Requests_ExternalResponse';
 import { ApiGen_Mayan_DocumentDetail } from './ApiGen_Mayan_DocumentDetail';
 import { ApiGen_Mayan_DocumentMetadata } from './ApiGen_Mayan_DocumentMetadata';
+import { ApiGen_Requests_ExternalResponse } from './ApiGen_Requests_ExternalResponse';
 
 // LINK: @backend/apimodels/Models/Requests/Document/Upload/DocumentUploadResponse.cs
 export interface ApiGen_Requests_DocumentUploadResponse {

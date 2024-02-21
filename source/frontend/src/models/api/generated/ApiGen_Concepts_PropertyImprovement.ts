@@ -3,8 +3,8 @@
  * Do not manually modify, changes made to this file will be lost when this file is regenerated.
  */
 import { ApiGen_Base_BaseAudit } from './ApiGen_Base_BaseAudit';
-import { ApiGen_Concepts_Lease } from './ApiGen_Concepts_Lease';
 import { ApiGen_Base_CodeType } from './ApiGen_Base_CodeType';
+import { ApiGen_Concepts_Lease } from './ApiGen_Concepts_Lease';
 
 // LINK: @backend/apimodels/Models/Concepts/Lease/PropertyImprovementModel.cs
 export interface ApiGen_Concepts_PropertyImprovement extends ApiGen_Base_BaseAudit {
