@@ -15,12 +15,8 @@ import {
   useAddressHelpers,
 } from '@/features/contacts/contact/create/components';
 import * as Styled from '@/features/contacts/contact/create/styles';
-import { formOrganizationToApiOrganization } from '@/features/contacts/contactUtils';
+import { IEditableOrganizationForm } from '@/features/contacts/formModels';
 import useAddContact from '@/features/contacts/hooks/useAddContact';
-import {
-  defaultCreateOrganization,
-  IEditableOrganizationForm,
-} from '@/interfaces/editable-contact';
 import { isValidId } from '@/utils';
 
 import OrganizationSubForm from '../../Organization/OrganizationSubForm';
@@ -47,8 +43,8 @@ export const CreateOrganizationForm: React.FunctionComponent<unknown> = () => {
   ) => {
     try {
       setShowDuplicateModal(false);
-      const newOrganization = formOrganizationToApiOrganization(formOrganization);
 
+      const newOrganization = formOrganization.formOrganizationToApiOrganization();
       const organizationResponse = await addOrganization(
         newOrganization,
         setShowDuplicateModal,
@@ -74,7 +70,7 @@ export const CreateOrganizationForm: React.FunctionComponent<unknown> = () => {
     <>
       <Formik
         component={CreateOrganizationComponent}
-        initialValues={defaultCreateOrganization}
+        initialValues={new IEditableOrganizationForm()}
         validate={(values: IEditableOrganizationForm) =>
           onValidateOrganization(values, otherCountryId)
         }

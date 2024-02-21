@@ -461,7 +461,6 @@ exports[`DetailDocumentation component renders minimally as expected 1`] = `
               class="form-control"
               id="input-tfaFileNumber"
               name="tfaFileNumber"
-              title=""
               value=""
             />
           </div>
@@ -489,7 +488,6 @@ exports[`DetailDocumentation component renders minimally as expected 1`] = `
               class="form-control"
               id="input-psFileNo"
               name="psFileNo"
-              title=""
               value=""
             />
           </div>

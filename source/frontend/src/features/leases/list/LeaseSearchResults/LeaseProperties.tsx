@@ -3,14 +3,15 @@ import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
 import { LinkButton } from '@/components/common/buttons';
-import { ILeaseProperty } from '@/interfaces';
+import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
+import { formatApiAddress } from '@/utils';
 
 const PropertyRow = styled(Row)`
   border-radius: 0.4rem;
 `;
 
 export interface ILeasePropertiesProps {
-  properties: ILeaseProperty[];
+  properties: ApiGen_Concepts_Property[];
   maxDisplayCount: number;
 }
 
@@ -22,7 +23,7 @@ const LeaseProperties: React.FunctionComponent<
   const properties = props.properties;
   const maxDisplayCount = props.maxDisplayCount;
 
-  let displayProperties: ILeaseProperty[] = [];
+  let displayProperties: ApiGen_Concepts_Property[] = [];
   if (!isExpanded) {
     displayProperties = properties.slice(0, maxDisplayCount);
   } else {
@@ -34,7 +35,7 @@ const LeaseProperties: React.FunctionComponent<
       <PropertyRow key={index + property.id} className="mx-0 my-2 border border-secondary">
         <Col md="12">
           <strong className="pr-2">Address:</strong>
-          {property.address}
+          {formatApiAddress(property.address)}
         </Col>
         {property.pid && (
           <Col md="auto">

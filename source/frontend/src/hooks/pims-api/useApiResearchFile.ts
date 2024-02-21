@@ -2,9 +2,9 @@ import queryString from 'query-string';
 import React from 'react';
 
 import { IResearchFilter } from '@/features/research/interfaces';
-import { IPagedItems } from '@/interfaces';
 import { IResearchSearchResult } from '@/interfaces/IResearchSearchResult';
 import { Api_LastUpdatedBy } from '@/models/api/File';
+import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
 import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Concepts_ResearchFile';
 import { ApiGen_Concepts_ResearchFileProperty } from '@/models/api/generated/ApiGen_Concepts_ResearchFileProperty';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
@@ -22,7 +22,7 @@ export const useApiResearchFile = () => {
   return React.useMemo(
     () => ({
       getResearchFiles: (params: IPaginateResearch | null) =>
-        api.get<IPagedItems<IResearchSearchResult>>(
+        api.get<ApiGen_Base_Page<IResearchSearchResult>>(
           `/researchFiles/search?${params ? queryString.stringify(params) : ''}`,
         ),
       getResearchFile: (researchFileId: number) =>

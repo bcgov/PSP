@@ -8,7 +8,8 @@ import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { toTypeCodeNullable } from '@/utils/formUtils';
 
 import { getMockApiAddress } from './address.mock';
-import { getMockPerson } from './contacts.mock';
+import { getEmptyPerson, getMockPerson } from './contacts.mock';
+import { getEmptyOrganization } from './organization.mock';
 import { getMockApiProperty } from './properties.mock';
 
 export const mockAcquisitionFileResponse = (
@@ -163,6 +164,7 @@ export const mockAcquisitionFileResponse = (
       acquisitionFileId: 1,
       personId: 1,
       person: {
+        ...getEmptyPerson(),
         id: 1,
         isDisabled: false,
         surname: 'Smith',
@@ -193,6 +195,7 @@ export const mockAcquisitionFileResponse = (
       acquisitionFileId: 1,
       personId: 3,
       person: {
+        ...getEmptyPerson(),
         id: 3,
         isDisabled: false,
         surname: 'Cheese',
@@ -295,6 +298,7 @@ export const mockAcquisitionFileResponse = (
       person: null,
       organizationId: 1,
       organization: {
+        ...getEmptyOrganization(),
         id: 1,
         name: 'Millennium Inc',
         alias: 'M Inc',
@@ -309,6 +313,7 @@ export const mockAcquisitionFileResponse = (
       interestHolderProperties: [],
       primaryContactId: 1,
       primaryContact: {
+        ...getEmptyPerson(),
         id: 1,
         firstName: 'Luke',
         surname: 'Skywalker',
@@ -402,6 +407,8 @@ export const mockAcquisitionFileOwnersResponse = (
       latitude: null,
       longitude: null,
       region: null,
+      regionCode: null,
+      districtCode: null,
     },
     appCreateTimestamp: '0001-01-01T00:00:00',
     appLastUpdateTimestamp: '0001-01-01T00:00:00',
@@ -441,6 +448,8 @@ export const mockAcquisitionFileOwnersResponse = (
       latitude: null,
       longitude: null,
       region: null,
+      districtCode: null,
+      regionCode: null,
     },
     appCreateTimestamp: '0001-01-01T00:00:00',
     appLastUpdateTimestamp: '0001-01-01T00:00:00',
@@ -456,6 +465,7 @@ export const mockApiAcquisitionFileTeamPerson = (): ApiGen_Concepts_AcquisitionF
   acquisitionFileId: 1,
   personId: 1,
   person: {
+    ...getEmptyPerson(),
     id: 1,
     isDisabled: false,
     surname: 'last',
@@ -487,6 +497,7 @@ export const mockApiAcquisitionFileTeamOrganization = (): ApiGen_Concepts_Acquis
   acquisitionFileId: 1,
   organizationId: 2,
   organization: {
+    ...getEmptyOrganization(),
     id: 2,
     isDisabled: false,
     name: 'ABC Inc',

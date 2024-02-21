@@ -12,6 +12,7 @@ import { useH120CategoryRepository } from '@/hooks/repositories/useH120CategoryR
 import { useInterestHolderRepository } from '@/hooks/repositories/useInterestHolderRepository';
 import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
 import { getMockApiDefaultCompensation } from '@/mocks/compensations.mock';
+import { getEmptyPerson } from '@/mocks/contacts.mock';
 import { emptyApiInterestHolder } from '@/mocks/interestHolder.mock';
 import { ApiGen_CodeTypes_ExternalResponseStatus } from '@/models/api/generated/ApiGen_CodeTypes_ExternalResponseStatus';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
@@ -163,6 +164,7 @@ describe('useGenerateH120 functions', () => {
       acquisitionFileId: 2,
       personId: 8,
       person: {
+        ...getEmptyPerson(),
         id: 8,
         isDisabled: false,
         surname: 'Smith',

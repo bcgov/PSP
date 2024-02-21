@@ -4,8 +4,9 @@ import { hideLoading, showLoading } from 'react-redux-loading-bar';
 import { toast } from 'react-toastify';
 
 import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
-import { IEditableOrganization, IEditablePerson } from '@/interfaces/editable-contact';
 import { IApiError } from '@/interfaces/IApiError';
+import { ApiGen_Concepts_Organization } from '@/models/api/generated/ApiGen_Concepts_Organization';
+import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_Person';
 import { logError } from '@/store/slices/network/networkSlice';
 
 /**
@@ -16,7 +17,7 @@ const useAddContact = () => {
   const dispatch = useDispatch();
 
   const addPerson = async (
-    person: IEditablePerson,
+    person: ApiGen_Concepts_Person,
     needsUserAction: (needsAction: boolean) => void,
     userOverride = false,
   ) => {
@@ -51,7 +52,7 @@ const useAddContact = () => {
   };
 
   const addOrganization = async (
-    organization: IEditableOrganization,
+    organization: ApiGen_Concepts_Organization,
     needsUserAction: (needsAction: boolean) => void,
     userOverride = false,
   ) => {

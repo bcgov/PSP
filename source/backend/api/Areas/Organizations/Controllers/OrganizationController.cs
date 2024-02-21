@@ -56,12 +56,12 @@ namespace Pims.Api.Areas.Organizations.Controllers
         [HttpGet("{id:long}")]
         [HasPermission(Permissions.ContactView)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(Models.Organization.OrganizationModel), 200)]
+        [ProducesResponseType(typeof(OrganizationModel), 200)]
         [SwaggerOperation(Tags = new[] { "organization" })]
         public IActionResult GetOrganization(int id)
         {
             var organization = _organizationService.GetOrganization(id);
-            return new JsonResult(_mapper.Map<Models.Organization.OrganizationModel>(organization));
+            return new JsonResult(_mapper.Map<OrganizationModel>(organization));
         }
 
         /// <summary>
@@ -90,15 +90,15 @@ namespace Pims.Api.Areas.Organizations.Controllers
         [ProducesResponseType(typeof(Areas.Contact.Models.Contact.ContactModel), 201)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "organization" })]
-        public IActionResult AddOrganization([FromBody] Models.Organization.OrganizationModel model, bool userOverride = false)
+        public IActionResult AddOrganization([FromBody] OrganizationModel model, bool userOverride = false)
         {
             // Business rule - support country free-form value if country code is "Other". Ignore field otherwise.
             var otherCountry = _lookupRepository.GetAllCountries().FirstOrDefault(x => x.Code == Dal.Entities.CountryCodes.Other);
-            foreach (var address in model?.Addresses)
+            foreach (var organizationAddress in model?.OrganizationAddresses)
             {
-                if (otherCountry != null && address != null && address.CountryId != otherCountry.CountryId)
+                if (otherCountry != null && organizationAddress?.Address != null && organizationAddress.Address.CountryId != otherCountry.CountryId)
                 {
-                    address.CountryOther = null;
+                    organizationAddress.Address.CountryOther = null;
                 }
             }
 
@@ -123,14 +123,14 @@ namespace Pims.Api.Areas.Organizations.Controllers
         [HttpPut("{id:long}")]
         [HasPermission(Permissions.ContactEdit)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(Models.Organization.OrganizationModel), 200)]
+        [ProducesResponseType(typeof(OrganizationModel), 200)]
         [SwaggerOperation(Tags = new[] { "person" })]
-        public IActionResult UpdateOrganization([FromBody] Models.Organization.OrganizationModel organizationModel)
+        public IActionResult UpdateOrganization([FromBody] OrganizationModel organizationModel)
         {
             var orgEntity = _mapper.Map<Pims.Dal.Entities.PimsOrganization>(organizationModel);
             var updatedOrganization = _organizationService.UpdateOrganization(orgEntity, organizationModel.RowVersion);
 
-            return new JsonResult(_mapper.Map<Models.Organization.OrganizationModel>(updatedOrganization));
+            return new JsonResult(_mapper.Map<OrganizationModel>(updatedOrganization));
         }
         #endregion
     }

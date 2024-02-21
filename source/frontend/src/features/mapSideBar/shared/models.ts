@@ -256,6 +256,8 @@ export class AddressForm {
       province: null,
       provinceStateId: null,
       region: null,
+      regionCode: null,
+      districtCode: null,
     };
   }
 }

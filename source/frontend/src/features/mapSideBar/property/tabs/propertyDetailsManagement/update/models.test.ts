@@ -1,3 +1,4 @@
+import { IContactSearchResult } from '@/interfaces';
 import { getEmptyPerson } from '@/mocks/contacts.mock';
 import { getEmptyOrganization } from '@/mocks/organization.mock';
 import { ApiGen_Concepts_PropertyContact } from '@/models/api/generated/ApiGen_Concepts_PropertyContact';
@@ -8,7 +9,7 @@ import { PropertyContactFormModel } from './models';
 describe('Property Contact model tests', () => {
   it('PropertyContactFormModel toApi sets person properly if form is person that is associated to an org.', () => {
     const stakeholderModel = new PropertyContactFormModel();
-    stakeholderModel.contact = {
+    const contactResult: IContactSearchResult = {
       id: '1',
       personId: 1,
       person: {
@@ -24,6 +25,9 @@ describe('Property Contact model tests', () => {
         rowVersion: 0,
         personOrganizations: [
           {
+            id: 1,
+            organizationId: 1,
+            person: null,
             personId: 1,
             organization: {
               id: 1,
@@ -36,12 +40,27 @@ describe('Property Contact model tests', () => {
               organizationPersons: [],
               organizationAddresses: [],
               contactMethods: [],
+              districtCode: null,
+              identifierTypeCode: null,
+              organizationIdentifier: null,
+              organizationTypeCode: null,
+              parentOrganization: null,
+              parentOrganizationId: null,
+              regionCode: null,
+              website: null,
             },
+
             rowVersion: 0,
           },
         ],
+        addressComment: null,
+        birthDate: null,
+        nameSuffix: null,
+        propertyActivityId: null,
+        useOrganizationAddress: null,
       },
     };
+    stakeholderModel.contact = contactResult;
     const apiModel = stakeholderModel.toApi();
     expect(apiModel.organizationId).toBeNull();
   });

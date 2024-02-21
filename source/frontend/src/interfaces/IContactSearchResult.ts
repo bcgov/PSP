@@ -161,9 +161,14 @@ export function toPerson(baseModel?: IContactSearchResult): ApiGen_Concepts_Pers
     isDisabled: !!baseModel.isDisabled,
     comment: '',
     rowVersion: 0,
-    personOrganizations: baseModel.person?.personOrganizations || [],
-    personAddresses: baseModel.person?.personAddresses || [],
-    contactMethods: baseModel.person?.contactMethods || [],
+    personOrganizations: baseModel.person?.personOrganizations ?? null,
+    personAddresses: baseModel.person?.personAddresses ?? null,
+    contactMethods: baseModel.person?.contactMethods ?? null,
+    addressComment: null,
+    birthDate: null,
+    nameSuffix: null,
+    propertyActivityId: null,
+    useOrganizationAddress: null,
   };
 }
 
@@ -173,6 +178,7 @@ export function toOrganization(
   if (baseModel === undefined || isPersonResult(baseModel)) {
     return undefined;
   }
+
   return {
     id: baseModel.organizationId || 0,
     name: baseModel.organizationName || '',
@@ -181,8 +187,16 @@ export function toOrganization(
     comment: '',
     incorporationNumber: '',
     rowVersion: 0,
-    organizationPersons: baseModel.organization?.organizationPersons || [],
-    organizationAddresses: baseModel.organization?.organizationAddresses || [],
-    contactMethods: baseModel.organization?.contactMethods || [],
+    organizationPersons: baseModel.organization?.organizationPersons ?? null,
+    organizationAddresses: baseModel.organization?.organizationAddresses ?? null,
+    contactMethods: baseModel.organization?.contactMethods ?? null,
+    districtCode: null,
+    identifierTypeCode: null,
+    organizationIdentifier: null,
+    organizationTypeCode: null,
+    parentOrganization: null,
+    parentOrganizationId: null,
+    regionCode: null,
+    website: null,
   };
 }

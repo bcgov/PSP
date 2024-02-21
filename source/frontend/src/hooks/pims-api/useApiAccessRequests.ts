@@ -2,7 +2,7 @@ import queryString from 'query-string';
 import React from 'react';
 
 import { IPaginateAccessRequests } from '@/constants/API';
-import { IPagedItems } from '@/interfaces';
+import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
 import { ApiGen_Concepts_AccessRequest } from '@/models/api/generated/ApiGen_Concepts_AccessRequest';
 import { isValidId } from '@/utils';
 
@@ -22,7 +22,7 @@ export const useApiAccessRequests = () => {
       getAccessRequestById: (accessRequestId: number) =>
         api.get<ApiGen_Concepts_AccessRequest>(`/admin/access/requests/${accessRequestId}`),
       getAccessRequestsPaged: (params: IPaginateAccessRequests) =>
-        api.get<IPagedItems<ApiGen_Concepts_AccessRequest>>(
+        api.get<ApiGen_Base_Page<ApiGen_Concepts_AccessRequest>>(
           `/admin/access/requests?${queryString.stringify(params)}`,
         ),
       postAccessRequest: (accessRequest: ApiGen_Concepts_AccessRequest) => {

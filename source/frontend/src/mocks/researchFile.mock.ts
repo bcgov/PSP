@@ -1,5 +1,6 @@
 import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Concepts_ResearchFile';
 
+import { getEmptyOrganization } from './organization.mock';
 import { getMockApiProperty } from './properties.mock';
 
 export const getMockResearchFile = (): ApiGen_Concepts_ResearchFile => ({
@@ -79,6 +80,7 @@ export const getMockResearchFile = (): ApiGen_Concepts_ResearchFile => ({
     displayOrder: null,
   },
   requestorOrganization: {
+    ...getEmptyOrganization(),
     id: 3,
     isDisabled: false,
     name: 'Dairy Queen Forever! Property Management',

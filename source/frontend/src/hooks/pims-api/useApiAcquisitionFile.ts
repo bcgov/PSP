@@ -2,8 +2,8 @@ import queryString from 'query-string';
 import React from 'react';
 
 import { ApiGen_Concepts_AcquisitionFilter } from '@/features/acquisition/list/interfaces';
-import { IPagedItems } from '@/interfaces';
 import { Api_LastUpdatedBy } from '@/models/api/File';
+import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { ApiGen_Concepts_AcquisitionFileOwner } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileOwner';
 import { ApiGen_Concepts_AcquisitionFileProperty } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileProperty';
@@ -31,7 +31,7 @@ export const useApiAcquisitionFile = () => {
   return React.useMemo(
     () => ({
       getAcquisitionFiles: (params: IPaginateAcquisition | null) =>
-        api.get<IPagedItems<ApiGen_Concepts_AcquisitionFile>>(
+        api.get<ApiGen_Base_Page<ApiGen_Concepts_AcquisitionFile>>(
           `/acquisitionfiles/search?${params ? queryString.stringify(params) : ''}`,
         ),
       getAcquisitionFile: (acqFileId: number) =>

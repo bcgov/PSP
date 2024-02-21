@@ -1,11 +1,14 @@
 import { ApiGen_Concepts_InterestHolder } from '@/models/api/generated/ApiGen_Concepts_InterestHolder';
 
+import { getEmptyPerson } from './contacts.mock';
+
 export const getMockApiInterestHolders = (): ApiGen_Concepts_InterestHolder[] => [
   {
     interestHolderId: 14,
     acquisitionFileId: 1,
     personId: 5,
     person: {
+      ...getEmptyPerson(),
       id: 5,
       isDisabled: false,
       surname: 'Smith',
@@ -83,6 +86,7 @@ export const getMockApiInterestHolders = (): ApiGen_Concepts_InterestHolder[] =>
     acquisitionFileId: 1,
     personId: 9,
     person: {
+      ...getEmptyPerson(),
       id: 9,
       isDisabled: false,
       surname: 'Monga',

@@ -2,7 +2,7 @@ import { AddressTypes } from '@/constants';
 import { ContactMethodTypes } from '@/constants/contactMethodType';
 import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
 import { getEmptyAddress } from '@/mocks/address.mock';
-import { getMockPerson } from '@/mocks/contacts.mock';
+import { getEmptyPerson, getMockPerson } from '@/mocks/contacts.mock';
 import { emptyApiInterestHolder, emptyInterestHolderProperty } from '@/mocks/interestHolder.mock';
 import { getEmptyOrganization } from '@/mocks/organization.mock';
 import { toTypeCodeNullable } from '@/utils/formUtils';
@@ -82,6 +82,11 @@ describe('GenerateFile tests', () => {
             personAddresses: null,
             personOrganizations: null,
             preferredName: null,
+            addressComment: null,
+            birthDate: null,
+            nameSuffix: null,
+            propertyActivityId: null,
+            useOrganizationAddress: null,
             rowVersion: null,
           },
           interestHolderProperties: [
@@ -120,6 +125,11 @@ describe('GenerateFile tests', () => {
             personAddresses: null,
             personOrganizations: null,
             preferredName: null,
+            addressComment: null,
+            birthDate: null,
+            nameSuffix: null,
+            propertyActivityId: null,
+            useOrganizationAddress: null,
             rowVersion: null,
           },
           interestHolderProperties: [
@@ -148,6 +158,11 @@ describe('GenerateFile tests', () => {
             personAddresses: null,
             personOrganizations: null,
             preferredName: null,
+            addressComment: null,
+            birthDate: null,
+            nameSuffix: null,
+            propertyActivityId: null,
+            useOrganizationAddress: null,
             rowVersion: null,
           },
           interestHolderProperties: [
@@ -188,6 +203,11 @@ describe('GenerateFile tests', () => {
             personAddresses: null,
             personOrganizations: null,
             preferredName: null,
+            addressComment: null,
+            birthDate: null,
+            nameSuffix: null,
+            propertyActivityId: null,
+            useOrganizationAddress: null,
             rowVersion: null,
           },
           interestHolderProperties: [
@@ -236,6 +256,11 @@ describe('GenerateFile tests', () => {
             personAddresses: null,
             personOrganizations: null,
             preferredName: null,
+            addressComment: null,
+            birthDate: null,
+            nameSuffix: null,
+            propertyActivityId: null,
+            useOrganizationAddress: null,
             rowVersion: null,
           },
           interestHolderProperties: [
@@ -282,17 +307,22 @@ describe('GenerateFile tests', () => {
           ],
         },
         primaryContact: {
+          ...getEmptyPerson(),
           contactMethods: [
             {
               contactMethodType: toTypeCodeNullable(ContactMethodTypes.WorkEmail),
               value: 'primaryworkemail',
               id: 1,
+              personId: 0,
+              organizationId: null,
               rowVersion: null,
             },
             {
               contactMethodType: toTypeCodeNullable(ContactMethodTypes.WorkPhone),
               value: 'primaryworkphone',
               id: 2,
+              personId: 0,
+              organizationId: null,
               rowVersion: null,
             },
           ],
@@ -393,12 +423,16 @@ describe('GenerateFile tests', () => {
               contactMethodType: toTypeCodeNullable(ContactMethodTypes.WorkEmail),
               value: 'workemail',
               id: 1,
+              personId: 0,
+              organizationId: null,
               rowVersion: null,
             },
             {
               contactMethodType: toTypeCodeNullable(ContactMethodTypes.WorkPhone),
               value: 'workphone',
               id: 2,
+              personId: 0,
+              organizationId: null,
               rowVersion: null,
             },
           ],
@@ -482,12 +516,16 @@ describe('GenerateFile tests', () => {
               contactMethodType: toTypeCodeNullable(ContactMethodTypes.WorkEmail),
               value: 'workemail',
               id: 1,
+              personId: 0,
+              organizationId: null,
               rowVersion: null,
             },
             {
               contactMethodType: toTypeCodeNullable(ContactMethodTypes.WorkPhone),
               value: 'workphone',
               id: 1,
+              personId: 0,
+              organizationId: null,
               rowVersion: null,
             },
           ],

@@ -1,5 +1,5 @@
 import { GeoJsonProperties } from 'geojson';
-import isEmpty from 'lodash/isEmpty';
+import { isEmpty } from 'lodash';
 
 import { ApiGen_Concepts_Address } from '@/models/api/generated/ApiGen_Concepts_Address';
 import { ApiGen_Concepts_CodeType } from '@/models/api/generated/ApiGen_Concepts_CodeType';
@@ -66,6 +66,8 @@ export class AddressFormModel {
       longitude: null,
       provinceStateId: null,
       region: null,
+      regionCode: null,
+      districtCode: null,
     };
   }
 

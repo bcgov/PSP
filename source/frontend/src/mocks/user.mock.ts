@@ -1,8 +1,28 @@
-import { IPagedItems } from '@/interfaces';
+import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
 import { ApiGen_Concepts_User } from '@/models/api/generated/ApiGen_Concepts_User';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { toTypeCodeNullable } from '@/utils/formUtils';
 
 import { getEmptyPerson } from './contacts.mock';
+
+export const getEmptyUser = (): ApiGen_Concepts_User => {
+  return {
+    id: 0,
+    guidIdentifierValue: '',
+    businessIdentifierValue: null,
+    approvedById: 0,
+    position: null,
+    userTypeCode: null,
+    note: null,
+    isDisabled: false,
+    lastLogin: null,
+    issueDate: null,
+    userRoles: null,
+    person: null,
+    userRegions: null,
+    ...getEmptyBaseAudit(),
+  };
+};
 
 export const getUserMock = (): ApiGen_Concepts_User => ({
   id: 30,
@@ -96,6 +116,8 @@ export const getUserMock = (): ApiGen_Concepts_User => ({
           isDisabled: false,
           displayOrder: null,
         },
+        personId: 0,
+        organizationId: null,
         value: 'devin.smith@gov.bc.ca',
         rowVersion: 1,
       },
@@ -160,7 +182,7 @@ export const getUserMock = (): ApiGen_Concepts_User => ({
   rowVersion: 107,
 });
 
-export const getMockPagedUsers = (): IPagedItems<ApiGen_Concepts_User> => ({
+export const getMockPagedUsers = (): ApiGen_Base_Page<ApiGen_Concepts_User> => ({
   items: [
     {
       id: 30,
@@ -253,6 +275,8 @@ export const getMockPagedUsers = (): IPagedItems<ApiGen_Concepts_User> => ({
               isDisabled: false,
               displayOrder: null,
             },
+            personId: 0,
+            organizationId: null,
             value: 'devin.smith@gov.bc.ca',
             rowVersion: 1,
           },
@@ -360,6 +384,8 @@ export const getMockPagedUsers = (): IPagedItems<ApiGen_Concepts_User> => ({
               isDisabled: false,
               displayOrder: null,
             },
+            personId: 0,
+            organizationId: null,
             value: 'manuel.1.rodriguez@gov.bc.ca',
             rowVersion: 1,
           },
@@ -468,6 +494,8 @@ export const getMockPagedUsers = (): IPagedItems<ApiGen_Concepts_User> => ({
               isDisabled: false,
               displayOrder: null,
             },
+            personId: 0,
+            organizationId: null,
             value: '7780000001',
             rowVersion: 1,
           },
@@ -479,6 +507,8 @@ export const getMockPagedUsers = (): IPagedItems<ApiGen_Concepts_User> => ({
               isDisabled: false,
               displayOrder: null,
             },
+            personId: 0,
+            organizationId: null,
             value: 'devashish.bhargava@gov.bc.ca',
             rowVersion: 1,
           },
@@ -521,6 +551,8 @@ export const getMockPagedUsers = (): IPagedItems<ApiGen_Concepts_User> => ({
               isDisabled: false,
               displayOrder: null,
             },
+            personId: 0,
+            organizationId: null,
             value: 'brennan.neitz@gov.bc.ca',
             rowVersion: 1,
           },
@@ -566,6 +598,8 @@ export const getMockPagedUsers = (): IPagedItems<ApiGen_Concepts_User> => ({
               isDisabled: false,
               displayOrder: null,
             },
+            personId: 0,
+            organizationId: null,
             value: 'alejandro.sanchez@gov.bc.ca',
             rowVersion: 1,
           },
@@ -586,7 +620,6 @@ export const getMockPagedUsers = (): IPagedItems<ApiGen_Concepts_User> => ({
     },
   ],
   page: 1,
-  pageIndex: 0,
   quantity: 5,
   total: 42,
 });

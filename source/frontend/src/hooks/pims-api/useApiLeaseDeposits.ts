@@ -24,8 +24,11 @@ export const useApiLeaseDeposits = () => {
           `/leases/${leaseId}/deposits/${securityDeposit.id}`,
           securityDeposit,
         ),
-      putLeaseDepositNote: (leaseId: number, note: string) =>
-        api.put<void>(`/leases/${leaseId}/deposits/note`, { note: note }),
+      putLeaseDepositNote: (leaseId: number, note: string) => {
+        const formData = new FormData();
+        formData.append('noteText', note);
+        return api.put<void>(`/leases/${leaseId}/deposits/note`, formData);
+      },
       postLeaseDeposit: (leaseId: number, securityDeposit: ApiGen_Concepts_SecurityDeposit) =>
         api.post<ApiGen_Concepts_SecurityDeposit>(`/leases/${leaseId}/deposits`, securityDeposit),
     }),

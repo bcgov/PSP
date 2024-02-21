@@ -1,6 +1,7 @@
 import Claims from '@/constants/claims';
 import { getEmptyPerson } from '@/mocks/contacts.mock';
 import { mockDispositionFileResponse } from '@/mocks/dispositionFiles.mock';
+import { getEmptyOrganization } from '@/mocks/organization.mock';
 import { toTypeCodeNullable } from '@/utils/formUtils';
 import { act, cleanup, render, RenderOptions, userEvent, waitForEffects } from '@/utils/test-utils';
 
@@ -155,6 +156,7 @@ describe('DispositionSummaryView component', () => {
               dispositionFileId: 1,
               organizationId: 1,
               organization: {
+                ...getEmptyOrganization(),
                 id: 1,
                 name: 'Test Organization',
                 alias: 'ABC Inc',
@@ -202,6 +204,7 @@ describe('DispositionSummaryView component', () => {
               dispositionFileId: 1,
               organizationId: 1,
               organization: {
+                ...getEmptyOrganization(),
                 id: 1,
                 name: 'Test Organization',
                 alias: 'ABC Inc',
@@ -215,6 +218,7 @@ describe('DispositionSummaryView component', () => {
               },
               primaryContactId: 1,
               primaryContact: {
+                ...getEmptyPerson(),
                 id: 1,
                 surname: 'Smith',
                 firstName: 'Bob',

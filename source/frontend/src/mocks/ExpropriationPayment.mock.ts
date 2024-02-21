@@ -1,6 +1,8 @@
 import { ApiGen_Concepts_ExpropriationPayment } from '@/models/api/generated/ApiGen_Concepts_ExpropriationPayment';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 
+import { getEmptyOrganization } from './organization.mock';
+
 export const mockGetExpropriationPaymentApi = (
   id = 1,
   acquisitionFileId = 1,
@@ -39,6 +41,8 @@ export const mockGetExpropriationPaymentApi = (
       longitude: null,
       province: null,
       region: null,
+      districtCode: null,
+      regionCode: null,
     },
     appCreateTimestamp: '2023-02-06T22:27:22.01',
     appLastUpdateTimestamp: '2023-02-06T22:27:22.01',
@@ -51,6 +55,7 @@ export const mockGetExpropriationPaymentApi = (
   interestHolder: null,
   expropriatingAuthorityId: 1,
   expropriatingAuthority: {
+    ...getEmptyOrganization(),
     id: 100,
     isDisabled: false,
     name: 'FORTIS BC',
@@ -88,6 +93,8 @@ export const mockGetExpropriationPaymentApi = (
           latitude: null,
           longitude: null,
           region: null,
+          regionCode: null,
+          districtCode: null,
         },
         addressUsageType: {
           id: 'MAILING',

@@ -3,16 +3,12 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using MapsterMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Pims.Api.Areas.Property.Controllers;
-using Pims.Api.Helpers.Exceptions;
-using Pims.Api.Models;
 using Pims.Api.Models.Base;
-using Pims.Api.Services;
+using Pims.Api.Models.Concepts.Property;
 using Pims.Core.Test;
-using Pims.Dal;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
@@ -76,8 +72,8 @@ namespace Pims.Api.Test.Controllers.Property
 
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
-            var actualResult = Assert.IsType<PageModel<SModel.PropertyModel>>(actionResult.Value);
-            var expectedResult = mapper.Map<SModel.PropertyModel[]>(properties);
+            var actualResult = Assert.IsType<PageModel<PropertyModel>>(actionResult.Value);
+            var expectedResult = mapper.Map<PropertyModel[]>(properties);
             expectedResult.Should().BeEquivalentTo(actualResult.Items);
             repository.Verify(m => m.GetPage(It.IsAny<PropertyFilter>()), Times.Once());
         }

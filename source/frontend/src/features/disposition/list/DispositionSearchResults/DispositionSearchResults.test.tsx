@@ -1,6 +1,8 @@
 import { Claims } from '@/constants/claims';
+import { getEmptyPerson } from '@/mocks/contacts.mock';
 import { mockDispositionFileResponse } from '@/mocks/dispositionFiles.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
+import { getEmptyOrganization } from '@/mocks/organization.mock';
 import { getMockApiProperty } from '@/mocks/properties.mock';
 import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
@@ -132,6 +134,7 @@ describe('Disposition search results table', () => {
               dispositionFileId: 1,
               organizationId: 6,
               organization: {
+                ...getEmptyOrganization(),
                 id: 6,
                 isDisabled: false,
                 name: 'FORTIS BC',
@@ -175,6 +178,7 @@ describe('Disposition search results table', () => {
               dispositionFileId: 1,
               personId: 6,
               person: {
+                ...getEmptyPerson(),
                 id: 6,
                 isDisabled: false,
                 rowVersion: 1,
@@ -219,6 +223,7 @@ describe('Disposition search results table', () => {
               dispositionFileId: 1,
               organizationId: 6,
               organization: {
+                ...getEmptyOrganization(),
                 id: 6,
                 isDisabled: false,
                 name: 'FORTIS BC',
@@ -248,6 +253,7 @@ describe('Disposition search results table', () => {
               dispositionFileId: 1,
               personId: 6,
               person: {
+                ...getEmptyPerson(),
                 id: 6,
                 isDisabled: false,
                 rowVersion: 1,
@@ -278,6 +284,7 @@ describe('Disposition search results table', () => {
               dispositionFileId: 1,
               personId: 7,
               person: {
+                ...getEmptyPerson(),
                 id: 7,
                 isDisabled: false,
                 rowVersion: 1,

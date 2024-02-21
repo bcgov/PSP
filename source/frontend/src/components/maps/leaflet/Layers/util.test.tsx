@@ -15,10 +15,10 @@ import {
   PIMS_Property_Location_View,
 } from '@/models/layers/pimsPropertyLocationView';
 
+import { createPoints } from '../../MapView.test';
 import { ICluster } from '../../types';
 import {
   createClusterMarker,
-  createPoints,
   getMarkerIcon,
   otherInterestIcon,
   otherInterestIconSelect,
@@ -196,6 +196,7 @@ describe('mapUtils tests', () => {
       });
     });
   });
+
   describe('toCqlFilter function', () => {
     it('by default, joins multiple filters with and and inserts ilike', () => {
       const cql = toCqlFilterValue({ PID: '12345678', PIN: '54321' });

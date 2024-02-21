@@ -23,7 +23,7 @@ import { useOrganizationRepository } from '@/features/contacts/repositories/useO
 import { useProjectProvider } from '@/hooks/repositories/useProjectProvider';
 import { useLookupCodeHelpers } from '@/hooks/useLookupCodeHelpers';
 import { IAutocompletePrediction } from '@/interfaces/IAutocomplete';
-import { ApiGen_Concepts_OrganizationPerson } from '@/models/api/generated/ApiGen_Concepts_OrganizationPerson';
+import { ApiGen_Concepts_PersonOrganization } from '@/models/api/generated/ApiGen_Concepts_PersonOrganization';
 import { ApiGen_Concepts_Product } from '@/models/api/generated/ApiGen_Concepts_Product';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { isValidId, isValidString } from '@/utils';
@@ -163,7 +163,7 @@ const AddAcquisitionDetailSubForm: React.FC<{
   }, [orgPersons, setFieldValue]);
 
   const primaryContacts: SelectOption[] =
-    orgPersons?.map((orgPerson: ApiGen_Concepts_OrganizationPerson) => {
+    orgPersons?.map((orgPerson: ApiGen_Concepts_PersonOrganization) => {
       return {
         label: `${formatApiPersonNames(orgPerson.person)}`,
         value: orgPerson.personId ?? ' ',

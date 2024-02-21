@@ -1,4 +1,4 @@
-import { IPagedItems } from '@/interfaces';
+import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
 import { ApiGen_Concepts_AccessRequest } from '@/models/api/generated/ApiGen_Concepts_AccessRequest';
 import { toTypeCodeNullable } from '@/utils/formUtils';
 
@@ -26,6 +26,7 @@ export const getMockAccessRequest = (): ApiGen_Concepts_AccessRequest => ({
     issueDate: '2022-03-24T15:52:08.31',
     userRoles: [],
     person: {
+      ...getEmptyPerson(),
       id: 40977,
       isDisabled: false,
       surname: 'Smith',
@@ -42,6 +43,8 @@ export const getMockAccessRequest = (): ApiGen_Concepts_AccessRequest => ({
             displayOrder: null,
           },
           value: 'devin.smith@gov.bc.ca',
+          personId: 0,
+          organizationId: null,
           rowVersion: 1,
         },
       ],
@@ -89,7 +92,7 @@ export const getMockAccessRequest = (): ApiGen_Concepts_AccessRequest => ({
   accessRequestStatusTypeCode: null,
 });
 
-export const getMockPagedAccessRequests = (): IPagedItems<ApiGen_Concepts_AccessRequest> => ({
+export const getMockPagedAccessRequests = (): ApiGen_Base_Page<ApiGen_Concepts_AccessRequest> => ({
   items: [
     {
       id: 7,
@@ -133,6 +136,8 @@ export const getMockPagedAccessRequests = (): IPagedItems<ApiGen_Concepts_Access
                 isDisabled: false,
                 displayOrder: null,
               },
+              personId: 0,
+              organizationId: null,
               value: 'yaqoob.hashmi@gov.bc.ca',
               rowVersion: 1,
             },
@@ -221,6 +226,8 @@ export const getMockPagedAccessRequests = (): IPagedItems<ApiGen_Concepts_Access
                 isDisabled: false,
                 displayOrder: null,
               },
+              personId: 0,
+              organizationId: null,
               value: 'devin.smith@gov.bc.ca',
               rowVersion: 1,
             },
@@ -266,7 +273,6 @@ export const getMockPagedAccessRequests = (): IPagedItems<ApiGen_Concepts_Access
       rowVersion: 4,
     },
   ],
-  pageIndex: 0,
   page: 1,
   quantity: 10,
   total: 2,

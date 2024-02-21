@@ -12,7 +12,7 @@ import { StyledSummarySection } from '@/components/common/Section/SectionStyles'
 import { formatContactSearchResult } from '@/features/contacts/contactUtils';
 import { useOrganizationRepository } from '@/features/contacts/repositories/useOrganizationRepository';
 import { IContactSearchResult } from '@/interfaces';
-import { ApiGen_Concepts_OrganizationPerson } from '@/models/api/generated/ApiGen_Concepts_OrganizationPerson';
+import { ApiGen_Concepts_PersonOrganization } from '@/models/api/generated/ApiGen_Concepts_PersonOrganization';
 import { ApiGen_Concepts_PropertyContact } from '@/models/api/generated/ApiGen_Concepts_PropertyContact';
 import { isValidId } from '@/utils';
 import { formatApiPersonNames } from '@/utils/personUtils';
@@ -55,7 +55,7 @@ export const PropertyContactEditForm = React.forwardRef<
   const primaryContactOptions: SelectOption[] = useMemo(() => {
     if (contact?.organizationId) {
       return (
-        organization?.organizationPersons?.map((orgPerson: ApiGen_Concepts_OrganizationPerson) => {
+        organization?.organizationPersons?.map((orgPerson: ApiGen_Concepts_PersonOrganization) => {
           return {
             label: `${formatApiPersonNames(orgPerson.person)}`,
             value: orgPerson.personId ?? '',

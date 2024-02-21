@@ -2,7 +2,7 @@ import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
 
-import { mockParcel } from '@/mocks/filterData.mock';
+import { mockApiProperty } from '@/mocks/filterData.mock';
 import { getMockApiLease } from '@/mocks/lease.mock';
 import { getEmptyPropertyLease } from '@/mocks/properties.mock';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
@@ -45,7 +45,7 @@ describe('PropertyInformation component', () => {
         fileProperties: [
           {
             ...getEmptyPropertyLease(),
-            ...mockParcel,
+            ...mockApiProperty,
             areaUnitType: toTypeCodeNullable('test'),
             leaseArea: 123,
             fileId: 0,
@@ -65,7 +65,7 @@ describe('PropertyInformation component', () => {
         fileProperties: [
           {
             ...getEmptyPropertyLease(),
-            ...mockParcel,
+            ...mockApiProperty,
             areaUnitType: toTypeCodeNullable('test'),
             leaseArea: 123,
             fileId: 0,
@@ -94,7 +94,7 @@ describe('PropertyInformation component', () => {
         fileProperties: [
           {
             ...getEmptyPropertyLease(),
-            ...mockParcel,
+            ...mockApiProperty,
             leaseArea: 1,
             areaUnitType: toTypeCodeNullable('test'),
             fileId: 0,
@@ -123,7 +123,7 @@ describe('PropertyInformation component', () => {
         fileProperties: [
           {
             ...getEmptyPropertyLease(),
-            ...mockParcel,
+            ...mockApiProperty,
             leaseArea: 123,
             areaUnitType: null,
             fileId: 0,

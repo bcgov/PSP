@@ -1,10 +1,14 @@
 import { IContactSearchResult } from '@/interfaces/IContactSearchResult';
+import { ApiGen_Concepts_ContactMethod } from '@/models/api/generated/ApiGen_Concepts_ContactMethod';
 import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_Person';
+
+import { getEmptyOrganization } from './organization.mock';
 
 export const getMockContactOrganizationWithOnePerson = (): IContactSearchResult => ({
   id: 'O3',
   organizationId: 3,
   organization: {
+    ...getEmptyOrganization(),
     id: 3,
     isDisabled: false,
     name: 'Dairy Queen Forever! Property Management',
@@ -12,9 +16,11 @@ export const getMockContactOrganizationWithOnePerson = (): IContactSearchResult 
     incorporationNumber: '56789',
     organizationPersons: [
       {
+        id: 1,
         personId: 3,
         person: null,
         organizationId: 3,
+        organization: null,
         rowVersion: 1,
       },
     ],
@@ -51,6 +57,8 @@ export const getMockContactOrganizationWithOnePerson = (): IContactSearchResult 
           longitude: null,
           provinceStateId: null,
           region: null,
+          districtCode: null,
+          regionCode: null,
         },
         addressUsageType: {
           id: 'MAILING',
@@ -74,20 +82,25 @@ export const getMockContactOrganizationWithMultiplePeople = (): IContactSearchRe
   id: 'O2',
   organizationId: 2,
   organization: {
+    ...getEmptyOrganization(),
     id: 2,
     isDisabled: false,
     name: 'French Mouse Property Management',
     organizationPersons: [
       {
+        id: 1,
         personId: 1,
         person: null,
         organizationId: 2,
+        organization: null,
         rowVersion: 1,
       },
       {
+        id: 2,
         personId: 3,
         person: null,
         organizationId: 2,
+        organization: null,
         rowVersion: 1,
       },
     ],
@@ -118,6 +131,7 @@ export const getMockPerson = ({
   surname: string;
   firstName: string;
 }): ApiGen_Concepts_Person => ({
+  ...getEmptyPerson(),
   id: id,
   isDisabled: false,
   surname: surname,
@@ -127,16 +141,20 @@ export const getMockPerson = ({
   preferredName: null,
   personOrganizations: [
     {
+      person: null,
       personId: 3,
       organization: {
+        ...getEmptyOrganization(),
         id: 3,
         isDisabled: false,
         name: 'Dairy Queen Forever! Property Management',
         organizationPersons: [
           {
+            id: 1,
             personId: 3,
             person: null,
             organizationId: 3,
+            organization: null,
             rowVersion: 1,
           },
         ],
@@ -148,6 +166,8 @@ export const getMockPerson = ({
         incorporationNumber: null,
       },
       rowVersion: 1,
+      id: 0,
+      organizationId: null,
     },
   ],
   personAddresses: [
@@ -182,6 +202,8 @@ export const getMockPerson = ({
         longitude: null,
         provinceStateId: null,
         region: null,
+        regionCode: null,
+        districtCode: null,
       },
       addressUsageType: {
         id: 'MAILADDR',
@@ -222,6 +244,8 @@ export const getMockPerson = ({
         longitude: null,
         provinceStateId: null,
         region: null,
+        districtCode: null,
+        regionCode: null,
       },
       addressUsageType: {
         id: 'MAILING',
@@ -241,6 +265,8 @@ export const getMockPerson = ({
         isDisabled: false,
         displayOrder: null,
       },
+      personId: 2,
+      organizationId: null,
       value: '6049983251',
       rowVersion: 1,
     },
@@ -251,15 +277,31 @@ export const getMockPerson = ({
 export const getEmptyPerson = (): ApiGen_Concepts_Person => {
   return {
     id: 0,
-    isDisabled: false,
     surname: null,
     firstName: null,
     middleNames: null,
+    nameSuffix: null,
     preferredName: null,
-    personOrganizations: null,
-    personAddresses: null,
-    contactMethods: null,
+    birthDate: null,
     comment: null,
+    addressComment: null,
+    useOrganizationAddress: null,
+    isDisabled: false,
+    propertyActivityId: null,
+    contactMethods: null,
+    personAddresses: null,
+    personOrganizations: null,
     rowVersion: null,
+  };
+};
+
+export const getEmptyContactMethod = (): ApiGen_Concepts_ContactMethod => {
+  return {
+    id: 0,
+    contactMethodType: null,
+    value: null,
+    rowVersion: null,
+    personId: null,
+    organizationId: null,
   };
 };

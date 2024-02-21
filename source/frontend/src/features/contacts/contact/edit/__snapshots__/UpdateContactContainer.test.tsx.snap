@@ -558,7 +558,6 @@ exports[`UpdateContactContainer renders as expected 1`] = `
                         class="form-control"
                         id="input-middleNames"
                         name="middleNames"
-                        title=""
                         value=""
                       />
                     </div>
@@ -614,7 +613,6 @@ exports[`UpdateContactContainer renders as expected 1`] = `
                         class="form-control"
                         id="input-preferredName"
                         name="preferredName"
-                        title=""
                         value=""
                       />
                     </div>

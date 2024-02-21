@@ -7,8 +7,8 @@ import { IAddress, IContactSearchResult } from '@/interfaces';
 import { ApiGen_Base_CodeType } from '@/models/api/generated/ApiGen_Base_CodeType';
 import { ApiGen_Concepts_Address } from '@/models/api/generated/ApiGen_Concepts_Address';
 import { ApiGen_Concepts_LeaseTenant } from '@/models/api/generated/ApiGen_Concepts_LeaseTenant';
-import { ApiGen_Concepts_OrganizationPerson } from '@/models/api/generated/ApiGen_Concepts_OrganizationPerson';
 import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_Person';
+import { ApiGen_Concepts_PersonOrganization } from '@/models/api/generated/ApiGen_Concepts_PersonOrganization';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { getPreferredContactMethodValue } from '@/utils/contactMethodUtil';
 import { fromTypeCode, toTypeCode, toTypeCodeNullable } from '@/utils/formUtils';
@@ -50,7 +50,7 @@ export class FormTenant {
   public readonly landline?: string;
   public readonly mobile?: string;
   public readonly isDisabled?: boolean;
-  public readonly organizationPersons?: ApiGen_Concepts_OrganizationPerson[];
+  public readonly organizationPersons?: ApiGen_Concepts_PersonOrganization[];
   public readonly primaryContactId?: number;
   public readonly initialPrimaryContact?: ApiGen_Concepts_Person;
   public readonly lessorTypeCode?: ApiGen_Base_CodeType<string>;

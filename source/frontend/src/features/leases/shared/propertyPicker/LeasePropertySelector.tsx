@@ -14,7 +14,7 @@ import { useBcaAddress } from '@/features/properties/map/hooks/useBcaAddress';
 import { useProperties } from '@/hooks/repositories/useProperties';
 import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
 import useDeepCompareMemo from '@/hooks/util/useDeepCompareMemo';
-import { IProperty } from '@/interfaces';
+import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { isValidId } from '@/utils';
 
 import { FormLeaseProperty, LeaseFormModel } from '../../models';
@@ -52,7 +52,9 @@ export const LeasePropertySelector: React.FunctionComponent<LeasePropertySelecto
     [arrayHelpersRef],
   );
 
-  const searchProperty = async (newProperty: IMapProperty): Promise<IProperty[] | undefined> => {
+  const searchProperty = async (
+    newProperty: IMapProperty,
+  ): Promise<ApiGen_Concepts_Property[] | undefined> => {
     const params: IPropertyFilter = {
       pinOrPid: (newProperty.pid || newProperty.pin || '')?.toString(),
       searchBy: 'pinOrPid',
@@ -64,7 +66,7 @@ export const LeasePropertySelector: React.FunctionComponent<LeasePropertySelecto
     };
 
     const result = await getProperties.execute(params);
-    return result?.items;
+    return result?.items ?? undefined;
   };
 
   const confirmAdd = useCallback(() => {
