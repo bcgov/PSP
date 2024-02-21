@@ -9,9 +9,10 @@ import moment from 'moment-timezone';
 import { MockedRequest } from 'msw';
 
 import { server } from '@/mocks/msw/server';
+import noop from 'lodash/noop';
 
-var localStorageMock = (function () {
-  var store: any = {};
+const localStorageMock = (function () {
+  let store: any = {};
 
   return {
     getKeys: function () {
@@ -36,11 +37,11 @@ Object.defineProperty(window, 'localStorage', {
 });
 
 // workaround to allow polyline and other svg map renderers to function correctly in tests.
-var createElementNSOrig = (global as any).document.createElementNS;
+const createElementNSOrig = (global as any).document.createElementNS;
 (global as any).document.createElementNS = function (namespaceURI: any, qualifiedName: any) {
   if (namespaceURI === 'http://www.w3.org/2000/svg' && qualifiedName === 'svg') {
-    var element = createElementNSOrig.apply(this, arguments);
-    element.createSVGRect = function () {};
+    const element = createElementNSOrig.apply(this, arguments);
+    element.createSVGRect = noop;
     return element;
   }
   return createElementNSOrig.apply(this, arguments);

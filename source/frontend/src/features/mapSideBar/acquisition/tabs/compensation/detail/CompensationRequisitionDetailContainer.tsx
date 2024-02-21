@@ -55,7 +55,7 @@ export const CompensationRequisitionDetailContainer: React.FunctionComponent<
             );
             setPayeeOrganization(organization);
           }
-        } else if (!!compensation.interestHolder) {
+        } else if (compensation.interestHolder) {
           if (isValidId(compensation.interestHolder.personId)) {
             const person = await getPerson(compensation.interestHolder.personId);
             setPayeePerson(person);

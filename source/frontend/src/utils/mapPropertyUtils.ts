@@ -48,7 +48,7 @@ export const getPropertyName = (property: IMapProperty): PropertyName => {
       label: NameSourceType.LOCATION,
       value: compact([property.longitude?.toFixed(6), property.latitude?.toFixed(6)]).join(', '),
     };
-  } else if (!!property.address) {
+  } else if (property.address) {
     return {
       label: NameSourceType.ADDRESS,
       value: property.address,
@@ -75,7 +75,7 @@ export const getLatLng = (
 
 export const getFilePropertyName = (
   fileProperty: ApiGen_Concepts_FileProperty | undefined | null,
-  skipName: boolean = false,
+  skipName = false,
 ): PropertyName => {
   if (!exists(fileProperty)) {
     return { label: NameSourceType.NONE, value: '' };
@@ -97,7 +97,7 @@ export const getApiPropertyName = (
     return { label: NameSourceType.NONE, value: '' };
   }
 
-  let mapProperty: IMapProperty = {
+  const mapProperty: IMapProperty = {
     pin: property.pin?.toString(),
     pid: property.pid?.toString(),
     latitude: property.latitude ?? undefined,
@@ -176,7 +176,7 @@ function toMapProperty(
 
 export function featuresetToMapProperty(
   featureSet: LocationFeatureDataset,
-  address: string = 'unknown',
+  address = 'unknown',
 ): IMapProperty {
   const pimsFeature = featureSet.pimsFeature;
   const parcelFeature = featureSet.parcelFeature;

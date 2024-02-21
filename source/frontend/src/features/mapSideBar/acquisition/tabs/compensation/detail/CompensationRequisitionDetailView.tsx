@@ -69,7 +69,7 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
       return;
     }
 
-    let payeeDetail: PayeeViewDetails = {
+    const payeeDetail: PayeeViewDetails = {
       contactEnabled: false,
       isPaymentInTrust: compensation?.isPaymentInTrust || false,
       isGstApplicable: false,
@@ -77,7 +77,7 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
       displayName: '',
     };
 
-    if (!!compensation.acquisitionOwner) {
+    if (compensation.acquisitionOwner) {
       const ownerDetail = DetailAcquisitionFileOwner.fromApi(compensation.acquisitionOwner);
       payeeDetail.displayName = ownerDetail.ownerName ?? '';
     } else if (compensation.interestHolderId) {
@@ -100,11 +100,11 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
         payeeDetail.contactString = 'O' + compensationContactOrganization.id;
         payeeDetail.contactEnabled = true;
       }
-    } else if (!!compensation.legacyPayee) {
+    } else if (compensation.legacyPayee) {
       payeeDetail.displayName = `${compensation.legacyPayee}`;
     }
 
-    var results =
+    const results =
       compensation.financials?.filter(el => {
         return el.isGstRequired === true;
       }) || [];

@@ -44,7 +44,7 @@ export const CreatePersonForm: React.FunctionComponent<React.PropsWithChildren<u
   ) => {
     try {
       setShowDuplicateModal(false);
-      let newPerson = formPerson.formPersonToApiPerson();
+      const newPerson = formPerson.formPersonToApiPerson();
       const personResponse = await addPerson(newPerson, setShowDuplicateModal, allowDuplicate);
 
       if (isValidId(personResponse?.id)) {

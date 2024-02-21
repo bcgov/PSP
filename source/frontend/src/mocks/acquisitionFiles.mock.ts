@@ -374,7 +374,7 @@ export const getMockExpropriationFile = (
 };
 
 export const mockAcquisitionFileOwnersResponse = (
-  acquisitionFileId: number = 1,
+  acquisitionFileId = 1,
 ): ApiGen_Concepts_AcquisitionFileOwner[] => [
   {
     id: 1,
@@ -523,9 +523,7 @@ export const mockApiAcquisitionFileTeamOrganization = (): ApiGen_Concepts_Acquis
   teamProfileTypeCode: null,
 });
 
-export const mockFileChecklistResponse = (
-  fileId: number = 1,
-): ApiGen_Concepts_FileChecklistItem[] => [
+export const mockFileChecklistResponse = (fileId = 1): ApiGen_Concepts_FileChecklistItem[] => [
   {
     id: 51,
     fileId,

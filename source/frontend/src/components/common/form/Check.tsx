@@ -84,13 +84,15 @@ export const Check: React.FC<React.PropsWithChildren<CheckProps>> = ({
   return (
     <Form.Group
       controlId={`input-${field}`}
-      className={classNames(!!required ? 'required' : '', className)}
+      className={classNames(required ? 'required' : '', className)}
     >
       <div className="check-field">
         {!!label && (
           <Form.Label>
             {label}
-            {!!toolTip && <TooltipIcon toolTipId={toolTipId!} toolTip={toolTip} />}
+            {!!toolTip && toolTipId !== undefined && toolTipId !== null && (
+              <TooltipIcon toolTipId={toolTipId} toolTip={toolTip} />
+            )}
           </Form.Label>
         )}
         <>
@@ -133,7 +135,7 @@ export const Check: React.FC<React.PropsWithChildren<CheckProps>> = ({
               value={(checked === false) as any}
               placeholder={placeholder}
               checked={checked === false}
-              onChange={(e: any) => {
+              onChange={() => {
                 setFieldValue(field, false);
               }}
               onBlur={handleBlur}

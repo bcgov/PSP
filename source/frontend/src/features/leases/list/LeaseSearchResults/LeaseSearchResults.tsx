@@ -43,12 +43,12 @@ const columns: ColumnWithProps<ApiGen_Concepts_Lease>[] = [
       const expiryDate = props.row.original.expiryDate;
       const isExpired = moment().isAfter(moment(expiryDate, 'YYYY-MM-DD'), 'day');
 
-      var icon = (
+      const icon = (
         <ExpiredIcon className="mx-2">
           <AiOutlineExclamationCircle size={16} />
         </ExpiredIcon>
       );
-      var overlay = (
+      const overlay = (
         <ExpiredOverlay>
           <strong>EXPIRED</strong>
         </ExpiredOverlay>

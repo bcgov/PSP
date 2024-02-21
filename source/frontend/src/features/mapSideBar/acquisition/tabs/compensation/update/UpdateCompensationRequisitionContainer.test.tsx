@@ -185,7 +185,7 @@ describe('UpdateCompensationRequisition Container component', () => {
     mockCompensationUpdate.detailedRemarks = 'my update';
     mockUpdateCompensation.mockResolvedValue(mockCompensationUpdate);
 
-    let updatedCompensationModel = new CompensationRequisitionFormModel(
+    const updatedCompensationModel = new CompensationRequisitionFormModel(
       mockCompensation.id,
       mockCompensation.acquisitionFileId,
       '',
@@ -198,7 +198,9 @@ describe('UpdateCompensationRequisition Container component', () => {
 
     updatedCompensationModel.payee.payeeKey = testPayeeOption.value;
 
-    await act(async () => viewProps?.onSave(updatedCompensationModel));
+    await act(async () => {
+      viewProps?.onSave(updatedCompensationModel);
+    });
 
     expect(mockUpdateCompensation).toHaveBeenCalledWith(
       updatedCompensationModel.toApi([testPayeeOption]),

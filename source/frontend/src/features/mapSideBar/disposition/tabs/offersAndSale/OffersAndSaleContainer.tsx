@@ -63,7 +63,7 @@ const OffersAndSaleContainer: React.FunctionComponent<IOffersAndSaleContainerPro
   const handleOfferDeleted = async (offerId: number) => {
     if (dispositionFile?.id) {
       await deleteDispositionOffer(dispositionFile?.id, offerId);
-      var updatedOffers = await getDispositionFileOffers(dispositionFile?.id);
+      const updatedOffers = await getDispositionFileOffers(dispositionFile?.id);
       if (updatedOffers) {
         setDispositionOffers(updatedOffers);
       }

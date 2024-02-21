@@ -49,7 +49,7 @@ export const UpdatePersonForm: React.FC<{ id: number }> = ({ id }) => {
     { setSubmitting }: FormikHelpers<IEditablePersonForm>,
   ) => {
     try {
-      let apiPerson = formPerson.formPersonToApiPerson();
+      const apiPerson = formPerson.formPersonToApiPerson();
       const personResponse = await updatePerson(apiPerson);
       const personId = personResponse?.id;
 
@@ -64,7 +64,7 @@ export const UpdatePersonForm: React.FC<{ id: number }> = ({ id }) => {
   return (
     <Formik
       component={UpdatePersonComponent}
-      initialValues={!!formPerson ? formPerson : new IEditablePersonForm()}
+      initialValues={formPerson ? formPerson : new IEditablePersonForm()}
       enableReinitialize
       validate={(values: IEditablePersonForm) => onValidatePerson(values, otherCountryId)}
       onSubmit={onSubmit}

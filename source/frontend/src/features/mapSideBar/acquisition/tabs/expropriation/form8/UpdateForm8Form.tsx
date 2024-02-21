@@ -100,7 +100,7 @@ export const UpdateForm8Form: React.FC<IForm8FormProps> = ({
 
                   <Section header="Payment details" isCollapsable initiallyExpanded>
                     <Form8PaymentItemsSubForm
-                      form8Id={initialValues.id!}
+                      form8Id={initialValues.id}
                       formikProps={formikProps}
                       gstConstantPercentage={gstConstant}
                     ></Form8PaymentItemsSubForm>

@@ -117,7 +117,7 @@ const UpdateCompensationRequisitionContainer: React.FC<
               .map(x => PayeeOption.createTeamMember(x)) || [];
           options.push(...teamMemberOptions);
 
-          if (!!compensation.legacyPayee) {
+          if (compensation.legacyPayee) {
             options.push(PayeeOption.createLegacyPayee(compensation));
           }
 
@@ -157,7 +157,7 @@ const UpdateCompensationRequisitionContainer: React.FC<
           ?.map(item => {
             return {
               label: `${item.code} - ${item.description}`,
-              value: item.id!,
+              value: item.id ?? 0,
             };
           }) ?? [];
 
@@ -171,7 +171,7 @@ const UpdateCompensationRequisitionContainer: React.FC<
           ?.map(item => {
             return {
               label: `${item.code} - ${item.description}`,
-              value: item.id!,
+              value: item.id ?? 0,
             };
           }) ?? [];
 
@@ -185,7 +185,7 @@ const UpdateCompensationRequisitionContainer: React.FC<
           ?.map(item => {
             return {
               label: `${item.code} - ${item.description}`,
-              value: item.id!,
+              value: item.id ?? 0,
             };
           }) ?? [];
 
@@ -199,7 +199,7 @@ const UpdateCompensationRequisitionContainer: React.FC<
           ?.map(item => {
             return {
               label: `${item.code} - ${item.description}`,
-              value: item.id!,
+              value: item.id ?? 0,
             };
           }) ?? [];
 

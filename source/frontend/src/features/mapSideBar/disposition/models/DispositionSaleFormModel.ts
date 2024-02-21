@@ -11,7 +11,7 @@ export class DispositionSaleFormModel implements WithSalePurchasers {
   saleFiscalYear: string | null = null;
   finalSaleAmount: number | null = null;
   realtorCommissionAmount: number | null = null;
-  isGstRequired: boolean = false;
+  isGstRequired = false;
   gstCollectedAmount: number | null = null;
   netBookAmount: number | null = null;
   totalCostAmount: number | null = null;

@@ -22,7 +22,7 @@ export const ContactTypeSelector: React.FunctionComponent<
         label="Individual"
         disabled={disabled}
         checked={contactType === ContactTypes.INDIVIDUAL}
-        onChange={(e: React.SyntheticEvent) => setContactType(ContactTypes.INDIVIDUAL)}
+        onChange={() => setContactType(ContactTypes.INDIVIDUAL)}
       ></Form.Check>
       <Form.Check
         id="contact-organization"
@@ -30,7 +30,7 @@ export const ContactTypeSelector: React.FunctionComponent<
         type="radio"
         disabled={disabled}
         checked={contactType === ContactTypes.ORGANIZATION}
-        onChange={(e: React.SyntheticEvent) => setContactType(ContactTypes.ORGANIZATION)}
+        onChange={() => setContactType(ContactTypes.ORGANIZATION)}
       ></Form.Check>
     </StyledInlineFlex>
   );

@@ -214,8 +214,6 @@ export class AddressForm {
   public municipality?: string;
   public postalCode?: string;
 
-  private constructor() {}
-
   public static fromBcaAddress(model: IBcAssessmentSummary['ADDRESSES'][0]): AddressForm {
     const newForm = new AddressForm();
     newForm.streetAddress1 = formatBcaAddress(model);

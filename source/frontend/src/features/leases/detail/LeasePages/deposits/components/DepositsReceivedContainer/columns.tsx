@@ -1,4 +1,3 @@
-import React from 'react';
 import { FaTrash } from 'react-icons/fa';
 import { MdEdit, MdUndo } from 'react-icons/md';
 import { Link } from 'react-router-dom';

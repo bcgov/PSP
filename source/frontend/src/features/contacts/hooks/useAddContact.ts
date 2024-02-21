@@ -19,7 +19,7 @@ const useAddContact = () => {
   const addPerson = async (
     person: ApiGen_Concepts_Person,
     needsUserAction: (needsAction: boolean) => void,
-    userOverride: boolean = false,
+    userOverride = false,
   ) => {
     try {
       dispatch(showLoading());
@@ -54,7 +54,7 @@ const useAddContact = () => {
   const addOrganization = async (
     organization: ApiGen_Concepts_Organization,
     needsUserAction: (needsAction: boolean) => void,
-    userOverride: boolean = false,
+    userOverride = false,
   ) => {
     try {
       dispatch(showLoading());

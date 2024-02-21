@@ -246,7 +246,6 @@ export function createClusterMarker<P extends GeoJsonProperties>(
   }
 
   const size = count < 100 ? 'small' : count < 1000 ? 'medium' : 'large';
-  let icon: DivIcon;
 
   if (!iconsCache[count]) {
     iconsCache[count] = new DivIcon({
@@ -256,7 +255,7 @@ export function createClusterMarker<P extends GeoJsonProperties>(
     });
   }
 
-  icon = iconsCache[count];
+  const icon = iconsCache[count];
   return new Marker(latlng, { icon });
 }
 

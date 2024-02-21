@@ -66,7 +66,7 @@ const GenerateLetterRecipientsModal: React.FunctionComponent<
               <StyledDiv>
                 <FieldArray
                   name={withNameSpace('recipients')}
-                  render={arrayHelpers => (
+                  render={() => (
                     <Form.Group>
                       {recipientList.map((rec: LetterRecipientModel, index: number) => (
                         <Form.Check

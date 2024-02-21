@@ -63,7 +63,7 @@ const Surplus: React.FunctionComponent<React.PropsWithChildren<unknown>> = () =>
     lease?.id && getPropertyLeases(lease.id);
   }, [lease, getPropertyLeases]);
 
-  let declarations: IDeclaration[] = (properties ?? []).map<IDeclaration>(x => {
+  const declarations: IDeclaration[] = (properties ?? []).map<IDeclaration>(x => {
     return {
       id: x.id,
       identifier: x?.property?.pid?.toString() ?? '',

@@ -25,19 +25,18 @@ export interface IAddress {
   rowVersion?: number;
 }
 
-export interface IFormAddress
-  extends ExtendOverride<
-    IAddress,
-    {
-      regionId?: NumberFieldValue;
-      districtId?: NumberFieldValue;
-      provinceId: NumberFieldValue;
-      countryId?: NumberFieldValue;
-      latitude?: NumberFieldValue;
-      longitude?: NumberFieldValue;
-      rowVersion?: NumberFieldValue;
-    }
-  > {}
+export type IFormAddress = ExtendOverride<
+  IAddress,
+  {
+    regionId?: NumberFieldValue;
+    districtId?: NumberFieldValue;
+    provinceId: NumberFieldValue;
+    countryId?: NumberFieldValue;
+    latitude?: NumberFieldValue;
+    longitude?: NumberFieldValue;
+    rowVersion?: NumberFieldValue;
+  }
+>;
 
 export const defaultAddress: IFormAddress = {
   addressType: '',

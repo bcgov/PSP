@@ -27,7 +27,7 @@ export function getContactInfo(
     return [];
   }
   // Get only the valid types
-  let filteredFields = contactMethods.reduce(
+  const filteredFields = contactMethods.reduce(
     (accumulator: ContactInfoField[], method: IContactMethod) => {
       if (
         exists(method.contactMethodType?.id) &&

@@ -45,10 +45,7 @@ export const getPrimaryContact = (
   );
 };
 
-export function formatContactSearchResult(
-  contact: IContactSearchResult,
-  defaultText: string = '',
-): string {
+export function formatContactSearchResult(contact: IContactSearchResult, defaultText = ''): string {
   let text = defaultText;
   if (isValidId(contact?.personId)) {
     text = formatNames([contact.firstName, contact.middleNames, contact.surname]);

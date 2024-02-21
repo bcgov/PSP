@@ -31,7 +31,7 @@ export class FormLeaseDeposit {
   }
 
   public static fromApi(baseModel: ApiGen_Concepts_SecurityDeposit): FormLeaseDeposit {
-    let model = new FormLeaseDeposit();
+    const model = new FormLeaseDeposit();
     model.leaseId = baseModel.leaseId ?? undefined;
     model.id = baseModel.id ?? undefined;
     model.description = baseModel.description ?? '';

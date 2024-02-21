@@ -24,7 +24,7 @@ const ExpandableFileProperties: React.FunctionComponent<IExpandableFilePropertie
     displayProperties = fileProperties;
   }
 
-  let rowItems = displayProperties.map((property, index) => {
+  const rowItems = displayProperties.map((property, index) => {
     return (
       <PropertyRow key={index} className="mx-0 my-2 border border-secondary">
         <Col md="12">

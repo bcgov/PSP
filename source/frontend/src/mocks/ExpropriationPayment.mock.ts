@@ -4,8 +4,8 @@ import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { getEmptyOrganization } from './organization.mock';
 
 export const mockGetExpropriationPaymentApi = (
-  id: number = 1,
-  acquisitionFileId: number = 1,
+  id = 1,
+  acquisitionFileId = 1,
 ): ApiGen_Concepts_ExpropriationPayment => ({
   id,
   acquisitionFileId,

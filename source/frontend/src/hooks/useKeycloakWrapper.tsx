@@ -81,7 +81,7 @@ export function useKeycloakWrapper(): IKeycloak {
   const roles = (): Array<string> => {
     const pimsRoleNames = getByType(API.ROLE_TYPES).map(r => r.name);
     return userInfo?.client_roles
-      ? [...userInfo?.client_roles.filter(r => pimsRoleNames.includes(r))]
+      ? [...(userInfo?.client_roles.filter(r => pimsRoleNames.includes(r)) ?? [])]
       : [];
   };
 

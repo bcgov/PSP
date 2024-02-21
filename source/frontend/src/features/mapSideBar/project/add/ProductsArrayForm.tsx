@@ -70,7 +70,7 @@ export const ProductsArrayForm: React.FunctionComponent<IProductsArrayFormProps>
             arrayHelpersRef.current = arrayHelpers;
             return (
               <>
-                {products.map((product, index, array) => (
+                {products.map((product, index) => (
                   <div key={`product-create-${index}`}>
                     <Row className="align-items-end pb-4">
                       <Col />

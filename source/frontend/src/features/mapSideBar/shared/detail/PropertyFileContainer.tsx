@@ -134,10 +134,10 @@ export const PropertyFileContainer: React.FunctionComponent<
   }
 
   const InventoryTabsView = props.View;
-  let activeTab: InventoryTabNames;
 
   const params = useParams<{ tab?: string }>();
-  activeTab = Object.values(InventoryTabNames).find(t => t === params.tab) ?? props.defaultTab;
+  const activeTab =
+    Object.values(InventoryTabNames).find(t => t === params.tab) ?? props.defaultTab;
 
   return (
     <InventoryTabsView

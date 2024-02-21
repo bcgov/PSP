@@ -82,7 +82,7 @@ const SinglePropertyMarker: React.FC<React.PropsWithChildren<SinglePropertyMarke
       position={markerPosition}
       icon={getIcon()}
       eventHandlers={{
-        click: e => {
+        click: () => {
           onMarkerClicked();
         },
       }}

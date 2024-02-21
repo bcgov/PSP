@@ -18,6 +18,8 @@ jest.mock('@/store/store', () => ({
   },
 }));
 
+const onRefresh = jest.fn();
+
 const keycloak = {
   subject: 'test',
   userInfo: {
@@ -26,7 +28,7 @@ const keycloak = {
   },
   token: '123456789',
 } as any as KeycloakInstance;
-const keyclockEventHandler = getKeycloakEventHandler(keycloak, noop);
+const keyclockEventHandler = getKeycloakEventHandler(keycloak, onRefresh);
 describe('KeycloakEventHandler ', () => {
   beforeEach(() => {
     jest.clearAllMocks();

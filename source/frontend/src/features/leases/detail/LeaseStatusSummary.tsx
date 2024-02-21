@@ -14,7 +14,7 @@ export interface ILeaseStatusSummaryProps {
 export const LeaseStatusSummary: React.FunctionComponent<
   React.PropsWithChildren<ILeaseStatusSummaryProps>
 > = ({ lease }) => {
-  return !!lease ? (
+  return lease ? (
     <StyledLeaseStatusSummary className={lease?.fileStatusTypeCode?.id?.toLowerCase()}>
       <b>{lease?.fileStatusTypeCode?.description}</b>
       <b>{lease?.lFileNo ?? ''}</b>

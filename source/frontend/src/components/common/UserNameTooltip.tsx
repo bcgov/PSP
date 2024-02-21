@@ -4,6 +4,7 @@ import { useApiUsers } from '@/hooks/pims-api/useApiUsers';
 import useIsMounted from '@/hooks/util/useIsMounted';
 
 import TooltipIcon from './TooltipIcon';
+import noop from 'lodash/noop';
 
 export interface IUserNameTooltipProps {
   userGuid?: string | null;
@@ -33,7 +34,7 @@ export const UserNameTooltip: React.FunctionComponent<IUserNameTooltipProps> = (
             setUserNameInfo(nameArr.join(' '));
           }
         })
-        .catch(() => {});
+        .catch(noop);
     }
   }, [userGuid, isMounted, getUserInfo]);
 

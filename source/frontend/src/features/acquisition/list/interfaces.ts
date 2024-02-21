@@ -16,14 +16,14 @@ export interface ApiGen_Concepts_AcquisitionFilter {
 }
 
 export class AcquisitionFilterModel {
-  acquisitionFileStatusTypeCode: string = 'ACTIVE';
-  acquisitionFileNameOrNumber: string = '';
+  acquisitionFileStatusTypeCode = 'ACTIVE';
+  acquisitionFileNameOrNumber = '';
   acquisitionTeamMembers: MultiSelectOption[] = [];
-  projectNameOrNumber: string = '';
-  searchBy: string = 'address';
-  pin: string = '';
-  pid: string = '';
-  address: string = '';
+  projectNameOrNumber = '';
+  searchBy = 'address';
+  pin = '';
+  pid = '';
+  address = '';
 
   toApi(): ApiGen_Concepts_AcquisitionFilter {
     return {
@@ -94,12 +94,12 @@ const getParameterIdFromOptions = (
   options: MultiSelectOption[],
   selector: IdSelector = 'P',
 ): string => {
-  if (!options.length) {
+  if (options.length === 0) {
     return '';
   }
 
-  var filterOrgItems = options.filter(option => String(option.id).startsWith(selector));
-  if (!filterOrgItems.length) {
+  const filterOrgItems = options.filter(option => String(option.id).startsWith(selector));
+  if (filterOrgItems.length === 0) {
     return '';
   }
 

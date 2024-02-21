@@ -56,7 +56,7 @@ export const UpdateOrganizationForm: React.FC<{ id: number }> = ({ id }) => {
     [organization],
   );
 
-  const initialValues = !!formOrganization ? formOrganization : new IEditableOrganizationForm();
+  const initialValues = formOrganization ? formOrganization : new IEditableOrganizationForm();
 
   return (
     <Formik

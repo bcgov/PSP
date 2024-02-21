@@ -48,7 +48,7 @@ const DocumentListContainer: React.FunctionComponent<IDocumentListContainerProps
     documentRelationship: ApiGen_Concepts_DocumentRelationship,
   ): Promise<boolean | undefined> => {
     if (documentRelationship.relationshipType !== null) {
-      let result = await deleteDocumentRelationship(
+      const result = await deleteDocumentRelationship(
         documentRelationship.relationshipType,
         documentRelationship,
       );

@@ -5,6 +5,7 @@ import ITenantConfig, { ITenantConfig2 } from '@/hooks/pims-api/interfaces/ITena
 
 import { config } from './config';
 import defaultTenant from './config/defaultTenant';
+import { noop } from 'lodash';
 
 export interface ITenantContext {
   // The tenant configuration.
@@ -18,7 +19,7 @@ export interface ITenantContext {
  */
 export const TenantContext = React.createContext<ITenantContext>({
   tenant: defaultTenant,
-  setTenant: () => {},
+  setTenant: noop,
 });
 export const { Consumer: TenantConsumer } = TenantContext;
 

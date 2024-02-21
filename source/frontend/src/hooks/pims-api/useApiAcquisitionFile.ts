@@ -52,7 +52,7 @@ export const useApiAcquisitionFile = () => {
             Accept: 'application/vnd.ms-excel',
           },
         }),
-      exportAcquisitionFiles: (filter: IPaginateAcquisition, outputFormat: 'excel' = 'excel') =>
+      exportAcquisitionFiles: (filter: IPaginateAcquisition) =>
         api.get<Blob>(
           `/reports/acquisition?${filter ? queryString.stringify({ ...filter, all: true }) : ''}`,
           {

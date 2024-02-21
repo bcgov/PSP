@@ -159,9 +159,9 @@ const AcquisitionSummaryView: React.FC<IAcquisitionSummaryViewProps> = ({
         ))}
       </Section>
       <Section header="Owner Information">
-        {acquisitionFile !== undefined && (
+        {acquisitionFile?.id !== undefined && (
           <AcquisitionOwnersSummaryContainer
-            acquisitionFileId={acquisitionFile.id!}
+            acquisitionFileId={acquisitionFile.id}
             View={AcquisitionOwnersSummaryView}
           ></AcquisitionOwnersSummaryContainer>
         )}

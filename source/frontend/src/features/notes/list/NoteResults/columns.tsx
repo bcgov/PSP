@@ -1,4 +1,3 @@
-import React from 'react';
 import { FaTrash } from 'react-icons/fa';
 import { ImFileText2 } from 'react-icons/im';
 import { CellProps } from 'react-table';

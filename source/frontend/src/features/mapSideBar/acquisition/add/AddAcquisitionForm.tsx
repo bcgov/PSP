@@ -59,7 +59,7 @@ export const AddAcquisitionForm = React.forwardRef<
   const isMinistryRegionDiff = (values: AcquisitionForm): boolean => {
     const selectedPropRegions = values.properties.map(x => x.region);
     return (
-      (selectedPropRegions.length &&
+      (selectedPropRegions.length > 0 &&
         (selectedPropRegions.indexOf(Number(values.region)) === -1 ||
           !selectedPropRegions.every(e => e === selectedPropRegions[0]))) ||
       false

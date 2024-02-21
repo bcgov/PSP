@@ -125,7 +125,7 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
 
   // Retrieve acquisition file from API and save it to local state and side-bar context
   const fetchAcquisitionFile = useCallback(async () => {
-    var retrieved = await retrieveAcquisitionFile(acquisitionFileId);
+    const retrieved = await retrieveAcquisitionFile(acquisitionFileId);
     if (!exists(retrieved)) {
       return;
     }
@@ -150,7 +150,7 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
   ]);
 
   const fetchLastUpdatedBy = React.useCallback(async () => {
-    var retrieved = await getLastUpdatedBy(acquisitionFileId);
+    const retrieved = await getLastUpdatedBy(acquisitionFileId);
     if (retrieved !== undefined) {
       setLastUpdatedBy(retrieved);
     } else {
@@ -257,7 +257,7 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
     setIsEditing(false);
   };
 
-  const canRemove = async (propertyId: number) => {
+  const canRemove = async () => {
     return true;
   };
 

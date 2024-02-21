@@ -76,7 +76,7 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
 
   // Retrieve disposition file from API and save it to local state and side-bar context
   const fetchDispositionFile = useCallback(async () => {
-    var retrieved = await retrieveDispositionFile(dispositionFileId);
+    const retrieved = await retrieveDispositionFile(dispositionFileId);
     if (!exists(retrieved)) {
       return;
     }
@@ -93,7 +93,7 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
   ]);
 
   const fetchLastUpdatedBy = React.useCallback(async () => {
-    var retrieved = await getLastUpdatedBy(dispositionFileId);
+    const retrieved = await getLastUpdatedBy(dispositionFileId);
     if (retrieved !== undefined) {
       setLastUpdatedBy(retrieved);
     } else {
@@ -193,12 +193,12 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
     }
   };
 
-  const canRemove = async (propertyId: number) => {
+  const canRemove = async () => {
     return true;
   };
 
   // UI components
-  var loading =
+  const loading =
     loadingDispositionFile ||
     loadingGetLastUpdatedBy ||
     (loadingDispositionFileProperties && !isPropertySelector) ||

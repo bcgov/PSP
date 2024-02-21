@@ -43,8 +43,8 @@ export const CreateOrganizationForm: React.FunctionComponent<unknown> = () => {
   ) => {
     try {
       setShowDuplicateModal(false);
-      let newOrganization = formOrganization.formOrganizationToApiOrganization();
 
+      const newOrganization = formOrganization.formOrganizationToApiOrganization();
       const organizationResponse = await addOrganization(
         newOrganization,
         setShowDuplicateModal,

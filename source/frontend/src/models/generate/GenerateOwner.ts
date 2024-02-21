@@ -41,7 +41,7 @@ export class Api_GenerateOwner {
   }
 
   static fromApiPerson(model: ApiGen_Concepts_Person): Api_GenerateOwner {
-    let generateOwner = new Api_GenerateOwner(null);
+    const generateOwner = new Api_GenerateOwner(null);
     generateOwner.given_name = model.firstName ?? '';
     generateOwner.last_name_or_corp_name = model.surname ?? '';
     generateOwner.other_name = model.middleNames ?? '';
@@ -61,7 +61,7 @@ export class Api_GenerateOwner {
   }
 
   static fromApiOrganization(model: ApiGen_Concepts_Organization): Api_GenerateOwner {
-    let generateOwner = new Api_GenerateOwner(null);
+    const generateOwner = new Api_GenerateOwner(null);
 
     generateOwner.given_name = '';
     generateOwner.last_name_or_corp_name = model.name ?? '';

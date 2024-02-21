@@ -13,8 +13,8 @@ import { booleanToString, stringToBoolean, stringToNull } from '@/utils/formUtil
 export class CompensationRequisitionFormModel {
   id: number | null;
   acquisitionFileId: number;
-  status: string = '';
-  fiscalYear: string = '';
+  status = '';
+  fiscalYear = '';
   stob: SelectOption | null = null;
   yearlyFinancial: ApiGen_Concepts_FinancialCode | null = null;
   serviceLine: SelectOption | null = null;
@@ -22,19 +22,19 @@ export class CompensationRequisitionFormModel {
   responsibilityCentre: SelectOption | null = null;
   responsibility: ApiGen_Concepts_FinancialCode | null = null;
   readonly finalizedDate: string;
-  agreementDateTime: string = '';
-  expropriationNoticeServedDateTime: string = '';
-  expropriationVestingDateTime: string = '';
-  advancedPaymentServedDate: string = '';
-  generationDatetTime: string = '';
-  specialInstruction: string = '';
-  detailedRemarks: string = '';
+  agreementDateTime = '';
+  expropriationNoticeServedDateTime = '';
+  expropriationVestingDateTime = '';
+  advancedPaymentServedDate = '';
+  generationDatetTime = '';
+  specialInstruction = '';
+  detailedRemarks = '';
   financials: FinancialActivityFormModel[] = [];
   payee: AcquisitionPayeeFormModel;
   alternateProject: IAutocompletePrediction | null = null;
   rowVersion: number | null = null;
 
-  constructor(id: number | null, acquisitionFileId: number = 0, finalizedDate: string) {
+  constructor(id: number | null, acquisitionFileId = 0, finalizedDate: string) {
     this.id = id;
     this.acquisitionFileId = acquisitionFileId;
     this.payee = new AcquisitionPayeeFormModel();
@@ -42,7 +42,7 @@ export class CompensationRequisitionFormModel {
   }
 
   toApi(payeeOptions: PayeeOption[]): ApiGen_Concepts_CompensationRequisition {
-    let modelWithPayeeInformation = this.payee.toApi(payeeOptions);
+    const modelWithPayeeInformation = this.payee.toApi(payeeOptions);
 
     return {
       ...modelWithPayeeInformation,
@@ -165,12 +165,12 @@ export class FinancialActivityFormModel {
 
   financialActivityCodeId: SelectOption | null = null;
   financialActivityCode: ApiGen_Concepts_FinancialCode | null = null;
-  pretaxAmount: number = 0;
-  isGstRequired: string = '';
-  taxAmount: number = 0;
-  totalAmount: number = 0;
+  pretaxAmount = 0;
+  isGstRequired = '';
+  taxAmount = 0;
+  totalAmount = 0;
   rowVersion: number | null = null;
-  isDisabled: string = '';
+  isDisabled = '';
 
   constructor(id: number | null = null, compensationRequisitionId: number) {
     this._id = id;
@@ -222,14 +222,14 @@ export class FinancialActivityFormModel {
 }
 
 export class AcquisitionPayeeFormModel {
-  payeeKey: string = '';
-  gstNumber: string = '';
-  legacyPayee: string = '';
-  isPaymentInTrust: boolean = false;
+  payeeKey = '';
+  gstNumber = '';
+  legacyPayee = '';
+  isPaymentInTrust = false;
 
-  pretaxAmount: number = 0;
-  taxAmount: number = 0;
-  totalAmount: number = 0;
+  pretaxAmount = 0;
+  taxAmount = 0;
+  totalAmount = 0;
 
   static fromApi(apiModel: ApiGen_Concepts_CompensationRequisition): AcquisitionPayeeFormModel {
     const payeeModel = new AcquisitionPayeeFormModel();
@@ -243,7 +243,7 @@ export class AcquisitionPayeeFormModel {
   }
 
   toApi(payeeOptions: PayeeOption[]): ApiGen_Concepts_CompensationRequisition {
-    let modelWithPayeeInformation: ApiGen_Concepts_CompensationRequisition = PayeeOption.toApi(
+    const modelWithPayeeInformation: ApiGen_Concepts_CompensationRequisition = PayeeOption.toApi(
       this.payeeKey,
       payeeOptions,
     );

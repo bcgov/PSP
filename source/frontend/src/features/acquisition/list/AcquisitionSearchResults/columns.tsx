@@ -90,7 +90,7 @@ export const columns: ColumnWithProps<AcquisitionSearchResultModel>[] = [
           {[project?.code, project?.description].filter(Boolean).join(' ')}
           <ExpandableTextList<ApiGen_Concepts_Project | undefined>
             keyFunction={p => p?.id?.toString() ?? '0'}
-            renderFunction={(p, index) => (
+            renderFunction={p => (
               <>{['Alt Project:', p?.code, p?.description].filter(Boolean).join(' ')}</>
             )}
             items={uniqBy(altProjects, project => project?.code)}

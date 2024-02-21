@@ -5,7 +5,7 @@ import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 export class NoteForm {
   id?: number;
   note?: string = '';
-  isSystemGenerated: boolean = false;
+  isSystemGenerated = false;
   rowVersion?: number;
   appCreateTimestamp?: UtcIsoDateTime;
   appLastUpdateTimestamp?: UtcIsoDateTime;
@@ -15,7 +15,7 @@ export class NoteForm {
   appCreateUserGuid?: string;
 
   static fromApi(base: ApiGen_Concepts_Note): NoteForm {
-    var model = new NoteForm();
+    const model = new NoteForm();
     model.id = base.id;
     model.note = base.note ?? undefined;
     model.isSystemGenerated = base.isSystemGenerated;

@@ -101,7 +101,7 @@ export const ExpropriationTabContainerView: React.FunctionComponent<
             form8Index={index}
             acquisitionFileNumber={acquisitionFile.fileNumber ?? ''}
             onGenerate={onGenerateForm8}
-            onDelete={() => onForm8Deleted(form.id!)}
+            onDelete={() => form?.id && onForm8Deleted(form.id)}
           ></ExpropriationForm8Details>
         ))}
       </Section>

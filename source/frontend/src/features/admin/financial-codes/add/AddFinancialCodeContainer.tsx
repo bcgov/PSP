@@ -47,7 +47,7 @@ export const AddFinancialCodeContainer: React.FC<IAddFinancialCodeContainerProps
     history.replace(`/admin/financial-code/list`);
   };
 
-  const onCreateSuccess = async (financialCode: ApiGen_Concepts_FinancialCode) => {
+  const onCreateSuccess = async () => {
     toast.success(`Financial code saved`);
     history.replace(`/admin/financial-code/list`);
   };

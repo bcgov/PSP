@@ -270,8 +270,8 @@ export const mockDispositionFilePropertyResponse = () => [
 ];
 
 export const mockDispositionFileOfferApi = (
-  id: number = 0,
-  dispositionFileId: number = 1,
+  id = 0,
+  dispositionFileId = 1,
 ): ApiGen_Concepts_DispositionFileOffer => ({
   id: id,
   dispositionFileId: dispositionFileId,
@@ -291,8 +291,8 @@ export const mockDispositionFileOfferApi = (
 });
 
 export const mockDispositionFileSaleApi = (
-  id: number = 0,
-  dispositionFileId: number = 1,
+  id = 0,
+  dispositionFileId = 1,
 ): ApiGen_Concepts_DispositionFileSale => ({
   id: id,
   dispositionFileId: dispositionFileId,
@@ -445,8 +445,8 @@ export const mockDispositionFileSaleApi = (
 });
 
 export const mockDispositionAppraisalApi = (
-  id: number = 10,
-  dispositionFileId: number = 1,
+  id = 10,
+  dispositionFileId = 1,
 ): ApiGen_Concepts_DispositionFileAppraisal => ({
   id: id,
   dispositionFileId: dispositionFileId,
@@ -459,8 +459,8 @@ export const mockDispositionAppraisalApi = (
 });
 
 export const mockDispositionSaleApi = (
-  id: number = 10,
-  dispositionFileId: number = 1,
+  id = 10,
+  dispositionFileId = 1,
 ): ApiGen_Concepts_DispositionFileSale => ({
   id: id,
   dispositionFileId: dispositionFileId,

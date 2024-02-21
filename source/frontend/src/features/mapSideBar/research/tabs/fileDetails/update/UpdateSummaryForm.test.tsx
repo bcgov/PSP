@@ -95,7 +95,7 @@ describe('UpdateResearchForm component', () => {
   });
 
   it('renders as expected when provided no research file', () => {
-    var initialValues = UpdateResearchSummaryFormModel.fromApi(testResearchFile);
+    const initialValues = UpdateResearchSummaryFormModel.fromApi(testResearchFile);
     const { asFragment } = setup({ initialValues });
     expect(asFragment()).toMatchSnapshot();
   });

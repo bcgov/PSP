@@ -160,8 +160,8 @@ export class Spiderfier<P> {
     const markers: SpiderMarker<P>[] = [];
     const lines: SpiderLine[] = [];
     for (let i = 0; i < points.length; i++) {
-      let newPos: LatLng = this.map.layerPointToLatLng(positions[i]);
-      let geojson: PointFeature<P> = points[i];
+      const newPos: LatLng = this.map.layerPointToLatLng(positions[i]);
+      const geojson: PointFeature<P> = points[i];
       markers.push({ ...geojson, position: newPos });
       lines.push({ coords: [centerLatLng, newPos], options: legOptions });
     }

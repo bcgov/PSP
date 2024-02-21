@@ -88,7 +88,7 @@ const ProjectContainer: React.FunctionComponent<
 
   // Retrieve acquisition file from API and save it to local state and side-bar context
   const fetchProject = useCallback(async () => {
-    var retrieved = await getProject(projectId);
+    const retrieved = await getProject(projectId);
     setProjectInstance(retrieved);
   }, [projectId, getProject]);
 

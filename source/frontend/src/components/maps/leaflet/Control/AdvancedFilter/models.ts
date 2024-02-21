@@ -12,12 +12,12 @@ export class PropertyFilterFormModel {
 
   // Tenure Filters
   public tenureStatuses: CodeTypeSelectOption[] = [];
-  public tenurePPH: string = '';
+  public tenurePPH = '';
   public tenureRoadTypes: CodeTypeSelectOption[] = [];
 
   // Lease filters
-  public leaseStatus: string = '';
-  public leasePayRcvblType: string = '';
+  public leaseStatus = '';
+  public leasePayRcvblType = '';
   public leaseTypes: CodeTypeSelectOption[] = [];
   public leasePurposes: CodeTypeSelectOption[] = [];
 

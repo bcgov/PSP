@@ -55,7 +55,7 @@ export const CompensationRequisitionTrayContainer: React.FunctionComponent<
 
   const fetchProject = useCallback(async () => {
     if (file?.projectId) {
-      var retrieved = await getProject(file?.projectId);
+      const retrieved = await getProject(file?.projectId);
       setProject(retrieved);
     }
   }, [file?.projectId, getProject, setProject]);

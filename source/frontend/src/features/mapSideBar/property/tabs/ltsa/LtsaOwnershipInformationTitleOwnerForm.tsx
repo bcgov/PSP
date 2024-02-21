@@ -31,7 +31,7 @@ export const LtsaOwnershipInformationTitleOwnerForm: React.FunctionComponent<
     <React.Fragment key={`title-owners-info-main-row-${nameSpace}`}>
       <FieldArray
         name={withNameSpace(nameSpace, 'titleOwners')}
-        render={({ push, remove, name }) => (
+        render={() => (
           <React.Fragment key={`title-owner-info-row-${nameSpace}`}>
             {titleOwners.map((titleOwner: TitleOwner, index: number) => {
               const innerNameSpace = withNameSpace(nameSpace, `titleOwners.${index}`);

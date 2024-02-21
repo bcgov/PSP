@@ -85,7 +85,7 @@ const AddProjectContainer: React.FC<React.PropsWithChildren<IAddProjectContainer
   const close = useCallback(() => onClose && onClose(), [onClose]);
 
   const handleSave = async () => {
-    var result = await (formikRef.current?.submitForm() ?? Promise.resolve());
+    const result = await (formikRef.current?.submitForm() ?? Promise.resolve());
     setIsValid(formikRef.current?.isValid ?? false);
     return result;
   };

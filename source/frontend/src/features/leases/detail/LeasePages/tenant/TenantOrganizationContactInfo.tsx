@@ -22,7 +22,7 @@ export interface ITenantOrganizationContactInfoProps {
  */
 export const TenantOrganizationContactInfo: React.FunctionComponent<
   React.PropsWithChildren<ITenantOrganizationContactInfoProps & Partial<FieldArrayRenderProps>>
-> = ({ nameSpace, disabled }) => {
+> = ({ nameSpace }) => {
   const { values } = useFormikContext<LeaseFormModel>();
   const tenant: FormTenant = getIn(values, nameSpace);
   let primaryContact = tenant?.initialPrimaryContact;

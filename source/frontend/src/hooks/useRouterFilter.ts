@@ -3,13 +3,11 @@ import queryString from 'query-string';
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-
 import { TableSort } from '@/components/Table/TableSort';
 import { defaultPropertyFilter } from '@/features/properties/filter/IPropertyFilter';
 import { useAppSelector } from '@/store/hooks';
 import { saveFilter } from '@/store/slices/filter/filterSlice';
 import { generateMultiSortCriteria, resolveSortCriteriaFromUrl } from '@/utils';
-
 /**
  * Extract the specified properties from the source object.
  * Does not extract 'undefined' property values.
@@ -20,7 +18,7 @@ import { generateMultiSortCriteria, resolveSortCriteriaFromUrl } from '@/utils';
  * @returns A new object composed of the extracted properties.
  */
 const extractProps = (props: string[], source: any): any => {
-  var dest = {} as any;
+  const dest = {} as any;
   props.forEach(p => {
     if (source[p] !== undefined) {
       if (source[p] === 'true') {
@@ -34,7 +32,6 @@ const extractProps = (props: string[], source: any): any => {
   });
   return dest;
 };
-
 const parseAndSanitize = (urlPath: string) => {
   const params = queryString.parse(urlPath);
   for (const [key, value] of Object.entries(params)) {
@@ -46,7 +43,6 @@ const parseAndSanitize = (urlPath: string) => {
   }
   return params;
 };
-
 /**
  * RouterFilter hook properties.
  */
@@ -62,7 +58,6 @@ export interface IRouterFilterProps<T> {
   /** if specified, changes will be ignored unless the current path matches this path exactly. */
   exactPath?: string;
 }
-
 /**
  * A generic hook that will extract the query parameters from the URL, store them in a redux store
  * and update the URL any time the specified 'filter' is updated.
@@ -84,7 +79,6 @@ export const useRouterFilter = <T extends object>({
   const [savedFilter] = useState(reduxSearch);
   const dispatch = useDispatch();
   const [loaded, setLoaded] = useState(false);
-
   // Extract the query parameters to initialize the filter.
   // This will only occur the first time the component loads to ensure the URL query parameters are applied.
   useEffect(() => {
@@ -94,12 +88,12 @@ export const useRouterFilter = <T extends object>({
       // Check if query contains filter params.
       const filterProps = Object.keys(filter);
       if (_.intersection(Object.keys(params), filterProps).length) {
-        let merged = { ...defaultPropertyFilter, ...extractProps(filterProps, params) };
+        const merged = { ...defaultPropertyFilter, ...extractProps(filterProps, params) };
         // Perform a callback to always, even if there is no actual change.
         // This is needed to confirm that the hook has processed the URL.
         setFilter(merged);
       } else if (savedFilter?.hasOwnProperty(key)) {
-        let merged = { ...defaultPropertyFilter, ...extractProps(filterProps, savedFilter[key]) };
+        const merged = { ...defaultPropertyFilter, ...extractProps(filterProps, savedFilter[key]) };
         // Only change state if the saved filter is different than the default filter.
         if (!_.isEqual(merged, filter)) {
           setFilter(merged);
@@ -108,7 +102,6 @@ export const useRouterFilter = <T extends object>({
         // If the filter does not match the expected shape and is not stored, set the default.
         setFilter({ ...(defaultPropertyFilter as any) });
       }
-
       if (params.sorting && setSorting) {
         const urlSort = resolveSortCriteriaFromUrl(
           typeof params.sorting === 'string' ? [params.sorting] : params.sorting,
@@ -126,7 +119,7 @@ export const useRouterFilter = <T extends object>({
   useEffect(() => {
     if (loaded) {
       const filterParams = new URLSearchParams(filter as any);
-      const sorting = generateMultiSortCriteria(sort!);
+      const sorting = sort && generateMultiSortCriteria(sort);
       const allParams = {
         ...parseAndSanitize(history.location.search),
         ...parseAndSanitize(filterParams.toString()),
@@ -140,11 +133,10 @@ export const useRouterFilter = <T extends object>({
       dispatch(saveFilter({ ...savedFilter, ...keyedFilter }));
     }
   }, [history, key, filter, savedFilter, dispatch, sort, loaded]);
-
   const updateSearch = useCallback(
     (newFilter: T) => {
       const filterParams = new URLSearchParams(newFilter as any);
-      const sorting = generateMultiSortCriteria(sort!);
+      const sorting = sort && generateMultiSortCriteria(sort);
       const allParams = {
         ...parseAndSanitize(history.location.search),
         ...parseAndSanitize(filterParams.toString()),
@@ -159,7 +151,6 @@ export const useRouterFilter = <T extends object>({
     },
     [history, key, savedFilter, dispatch, sort],
   );
-
   return {
     updateSearch,
   };

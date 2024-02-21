@@ -39,7 +39,7 @@ export const AddLeaseTenantContainer: React.FunctionComponent<
     tenants.map(t => FormTenant.toContactSearchResult(t)) || [],
   );
   const [showContactManager, setShowContactManager] = React.useState<boolean>(false);
-  const [handleSubmit, setHandleSubmit] = useState<Function | undefined>(undefined);
+  const [handleSubmit, setHandleSubmit] = useState<(() => void) | undefined>(undefined);
 
   const {
     updateLeaseTenants,
@@ -91,7 +91,7 @@ export const AddLeaseTenantContainer: React.FunctionComponent<
       newTenants?.map(tenant => {
         tenant?.organization?.organizationPersons?.forEach(op => {
           const matchingPerson = find(allPersons, p => p?.id === op.personId);
-          if (!!matchingPerson) {
+          if (matchingPerson) {
             op.person = matchingPerson;
           }
         });
@@ -109,7 +109,7 @@ export const AddLeaseTenantContainer: React.FunctionComponent<
           leaseToUpdate.id,
           leaseToUpdate.tenants ?? [],
         );
-        if (!!updatedTenants) {
+        if (updatedTenants) {
           formikRef?.current?.resetForm({
             values: LeaseFormModel.fromApi({
               ...leaseToUpdate,

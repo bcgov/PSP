@@ -28,7 +28,7 @@ export class AcquisitionTeamFormModel {
   rowVersion?: number;
   contact?: IContactSearchResult;
   contactTypeCode: string;
-  primaryContactId: string = '';
+  primaryContactId = '';
 
   constructor(contactTypeCode: string, id?: number, contact?: IContactSearchResult) {
     this.id = id;
@@ -89,8 +89,8 @@ export class AcquisitionOwnerFormModel {
   id?: number;
   rowVersion?: number;
   acquisitionFileId?: number;
-  isPrimaryContact: string = 'false';
-  isOrganization: string = 'false';
+  isPrimaryContact = 'false';
+  isOrganization = 'false';
   lastNameAndCorpName: string | '' = '';
   otherName: string | '' = '';
   givenName: string | '' = '';
@@ -168,7 +168,7 @@ export class AcquisitionOwnerFormModel {
     newForm.contactEmailAddress = model.contactEmailAddr || '';
     newForm.contactPhoneNumber = model.contactPhoneNum || '';
     newForm.address = model.address
-      ? OwnerAddressFormModel.fromApi(model.address!)
+      ? OwnerAddressFormModel.fromApi(model.address)
       : new OwnerAddressFormModel();
 
     return newForm;

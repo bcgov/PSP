@@ -66,7 +66,6 @@ const filterBy = () => true;
  */
 function AsyncTypeaheadInner<T extends TypeaheadModel>(
   {
-    id,
     multiple,
     field,
     options,
@@ -139,7 +138,7 @@ function AsyncTypeaheadInner<T extends TypeaheadModel>(
         >
           {/* hide the search icon when user is interacting with typeahead control */}
           {({ selected, isMenuShown }: TypeaheadManagerChildProps) =>
-            isLoading || isMenuShown || selected.length ? null : (
+            isLoading || isMenuShown || selected.length > 0 ? null : (
               <div className="rbt-aux">
                 <FaSearch size="2.5rem" color="#bcbec5" />
               </div>
@@ -162,6 +161,7 @@ const StyledFormGroup = styled(Form.Group)`
 // React.forwardRef allows to pass a "ref" to the wrapped AsyncTypeahead to invoke methods on the inner typeahead - e.g. ref.clear(), ref.blur() etc
 // See https://www.carlrippon.com/react-forwardref-typescript/
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 export const AsyncTypeahead = React.forwardRef(AsyncTypeaheadInner) as <T extends TypeaheadModel>(
   props: ITypeaheadFieldProps<T> & { ref?: React.ForwardedRef<BaseAsyncTypeahead<T>> },

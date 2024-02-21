@@ -131,7 +131,7 @@ export const useComposedProperties = ({
         () => executeBcAssessmentSummary(retrievedPid ?? ''),
         PROPERTY_TYPES.BC_ASSESSMENT,
       );
-    } else if (!!retrievedPin) {
+    } else if (retrievedPin) {
       typeCheckWrapper(() => findByPin(retrievedPin, true), PROPERTY_TYPES.PARCEL_MAP);
     }
   }, [

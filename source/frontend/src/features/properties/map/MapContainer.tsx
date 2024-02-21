@@ -13,13 +13,12 @@ import { SideBarContextProvider } from '@/features/mapSideBar/context/sidebarCon
 import MapSideBar from '@/features/mapSideBar/MapSideBar';
 import CompensationRequisitionRouter from '@/features/mapSideBar/router/CompensationRequisitionRouter';
 import PropertyActivityRouter from '@/features/mapSideBar/router/PropertyActivityRouter';
+import { MapContainerProps } from 'react-leaflet';
 
 enum MapCursors {
   DRAFT = 'draft-cursor',
   DEFAULT = 'default',
 }
-
-interface MapContainerProps {}
 
 const MapContainer: React.FC<React.PropsWithChildren<MapContainerProps>> = () => {
   const [showActionBar, setShowActionBar] = useState(false);

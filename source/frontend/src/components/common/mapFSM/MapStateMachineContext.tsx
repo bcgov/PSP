@@ -81,7 +81,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
 
   const service = useInterpret(mapMachine, {
     actions: {
-      navigateToProperty: (context, event: any) => {
+      navigateToProperty: context => {
         const selectedFeatureData = context.mapLocationFeatureDataset;
         if (selectedFeatureData?.pimsFeature?.properties?.PROPERTY_ID) {
           const pimsFeature = selectedFeatureData.pimsFeature;

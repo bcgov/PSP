@@ -27,7 +27,7 @@ export class ResearchSearchResultModel {
   fileProperties?: ApiGen_Concepts_ResearchFileProperty[];
 
   static fromApi(base: IResearchSearchResult): ResearchSearchResultModel {
-    var newModel = new ResearchSearchResultModel();
+    const newModel = new ResearchSearchResultModel();
     newModel.id = base.id;
     newModel.name = base.fileName;
     newModel.rfileNumber = base.fileNumber;

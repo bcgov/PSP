@@ -80,7 +80,7 @@ export const PropertyDetailsTabView: React.FunctionComponent<IPropertyDetailsTab
           <>
             <StyledSubtleText>
               This is the address stored in PIMS application for this property and will be used
-              wherever this property's address is needed.
+              wherever this property&apos;s address is needed.
             </StyledSubtleText>
             <SectionField label="Address">
               {address?.streetAddress1 && <div>{address?.streetAddress1}</div>}

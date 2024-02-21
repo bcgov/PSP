@@ -45,7 +45,7 @@ export const CompensationRequisitionTrayView: React.FunctionComponent<
   onClose,
   onUpdate,
 }) => {
-  let detailViewContent =
+  const detailViewContent =
     !editMode && compensation ? (
       <HalfHeightDiv>
         {!!compensation?.id && acquisitionFile && (
@@ -61,7 +61,7 @@ export const CompensationRequisitionTrayView: React.FunctionComponent<
       </HalfHeightDiv>
     ) : undefined;
 
-  let updateViewConent =
+  const updateViewConent =
     editMode && compensation ? (
       <HalfHeightDiv>
         <UpdateCompensationRequisitionContainer

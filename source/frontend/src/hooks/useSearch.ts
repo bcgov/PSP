@@ -164,7 +164,7 @@ export function useSearch<ISearchResult extends object, IFilter extends object>(
 }
 
 // results sort handler
-export const handleSortChange = <Result extends Object>(
+export const handleSortChange = <Result extends object>(
   column: string,
   nextSortDirection: SortDirection,
   sort: TableSort<Result>,

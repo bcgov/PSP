@@ -136,7 +136,7 @@ export const useApiDispositionFile = () => {
         ),
       deleteDispositionFileOffer: (dispositionFileId: number, offferId: number) =>
         api.delete<boolean>(`/dispositionfiles/${dispositionFileId}/offers/${offferId}`),
-      exportDispositionFiles: (filter: IPaginateDisposition, outputFormat: 'excel' = 'excel') =>
+      exportDispositionFiles: (filter: IPaginateDisposition) =>
         api.get<Blob>(
           `/reports/disposition?${filter ? queryString.stringify({ ...filter, all: true }) : ''}`,
           {

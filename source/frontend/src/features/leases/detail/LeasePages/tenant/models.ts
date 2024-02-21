@@ -110,7 +110,7 @@ export class FormTenant {
     if (exists(apiModel)) {
       // convert an api tenant to a form tenant.
       const tenant = apiModel.person ?? apiModel.organization;
-      const address = !!tenant ? getApiPersonOrOrgMailingAddress(tenant) : null;
+      const address = tenant ? getApiPersonOrOrgMailingAddress(tenant) : null;
       this.id =
         apiModel.lessorType?.id === 'PER' ? `P${apiModel.personId}` : `O${apiModel.organizationId}`;
       this.personId = apiModel.personId ?? undefined;

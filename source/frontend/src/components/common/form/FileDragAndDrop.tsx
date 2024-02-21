@@ -21,7 +21,7 @@ const FileDragAndDrop: FunctionComponent<React.PropsWithChildren<IFileDragAndDro
   const handleFileInput = (changeEvent: ChangeEvent<HTMLInputElement>) => {
     // handle validations
     if (changeEvent.target !== null) {
-      var target = changeEvent.target;
+      const target = changeEvent.target;
       if (target.files !== null && target.files.length > 0) {
         onSelectFile(target.files[0]);
       }
@@ -53,7 +53,7 @@ const FileDragAndDrop: FunctionComponent<React.PropsWithChildren<IFileDragAndDro
     event.preventDefault();
     event.stopPropagation();
 
-    let files = [...event.dataTransfer.files];
+    const files = [...event.dataTransfer.files];
 
     if (files && files.length > 0) {
       onSelectFile(files[0]);
@@ -63,7 +63,7 @@ const FileDragAndDrop: FunctionComponent<React.PropsWithChildren<IFileDragAndDro
     setIsDragging(false);
   };
 
-  const shortenString = (text: string, maxLength: number, terminator: string = '...'): string => {
+  const shortenString = (text: string, maxLength: number, terminator = '...'): string => {
     if (text.length > maxLength) {
       return text.substring(0, maxLength - terminator.length) + terminator;
     }

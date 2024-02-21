@@ -42,7 +42,7 @@ const ResearchView = React.forwardRef<FormikProps<any>, IViewSelectorProps>((pro
       />
       <Route
         path={`${stripTrailingSlash(match.path)}/property/:menuIndex`}
-        render={({ match }) => (
+        render={() => (
           <FilePropertyRouter
             formikRef={formikRef}
             selectedMenuIndex={selectedMenuIndex}

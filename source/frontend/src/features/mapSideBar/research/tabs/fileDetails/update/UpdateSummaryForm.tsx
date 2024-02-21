@@ -63,8 +63,8 @@ const UpdateSummaryForm: React.FunctionComponent<IUpdateSummaryFormProps> = prop
 
   function onSelectedPurposeChange(selectedList: MultiSelectOption[]) {
     setSelectedPurposes(selectedList);
-    var mapped = selectedList.map<ResearchFilePurposeFormModel>(x => {
-      var purposeType = new ResearchFilePurposeFormModel();
+    const mapped = selectedList.map<ResearchFilePurposeFormModel>(x => {
+      const purposeType = new ResearchFilePurposeFormModel();
       purposeType.researchPurposeTypeCode = x.id;
       purposeType.researchPurposeTypeDescription = x.text;
       return purposeType;
@@ -73,7 +73,7 @@ const UpdateSummaryForm: React.FunctionComponent<IUpdateSummaryFormProps> = prop
   }
 
   function handleRequesterSelected() {
-    var selectedContact = selectedContacts[0];
+    const selectedContact = selectedContacts[0];
     props.formikProps.setFieldValue('requestor', selectedContact);
     setShowContactManager(false);
   }
