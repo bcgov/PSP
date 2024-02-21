@@ -1,5 +1,5 @@
 kind: Template
-apiVersion: v1
+apiVersion: template.openshift.io/v1
 metadata:
   name: nginx-runtime
 parameters:
@@ -42,19 +42,31 @@ parameters:
     description: The tag of the nginx base image [e.g "mainline" or "latest"].
     required: true
     value: mainline
+  - name: PROJECT_NAMESPACE
+    displayName: "OpenShift Project Namespace"
+    description: "The namespace of the OpenShift project containing the application."
+    required: true
+    value: "3cd915"
+  - name: ENV_NAME
+    displayName: "Environment name"
+    description: "The name for this environment [dev, test, prod, tools]"
+    required: true
+    value: "tools"
 objects:
   - kind: ImageStream
     apiVersion: v1
     metadata:
       name: ${NAME}
+      namespace: ${PROJECT_NAMESPACE}-${ENV_NAME}
   - kind: BuildConfig
     apiVersion: v1
     metadata:
       name: ${NAME}.${GIT_REF}
       labels:
         app: ${NAME}
+        ci_cd: "true"
     spec:
-      runPolicy: Serial
+      runPolicy: Parallel
       source:
         type: Git
         git:

@@ -17,6 +17,7 @@ import { useBcaAddress } from '@/features/properties/map/hooks/useBcaAddress';
 import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
+import { isValidId } from '@/utils';
 
 import { AddressForm, FileForm, PropertyForm } from '../../models';
 import SidebarFooter from '../../SidebarFooter';
@@ -25,7 +26,7 @@ import { UpdatePropertiesYupSchema } from './UpdatePropertiesYupSchema';
 export interface IUpdatePropertiesProps {
   file: ApiGen_Concepts_File;
   setIsShowingPropertySelector: (isShowing: boolean) => void;
-  onSuccess: () => void;
+  onSuccess: (updateProperties?: boolean, updateFile?: boolean) => void;
   updateFileProperties: (
     file: ApiGen_Concepts_File,
     userOverrideCodes: UserOverrideCode[],
@@ -100,7 +101,7 @@ export const UpdateProperties: React.FunctionComponent<
       const response = await props.updateFileProperties(file, []);
 
       formikRef.current?.setSubmitting(false);
-      if (response?.fileName) {
+      if (isValidId(response?.id)) {
         if (file.fileProperties?.find(fp => !fp.property?.address && !fp.property?.id)) {
           toast.warn(
             'Address could not be retrieved for this property, it will have to be provided manually in property details tab',
@@ -109,7 +110,7 @@ export const UpdateProperties: React.FunctionComponent<
         }
         formikRef.current?.resetForm();
         props.setIsShowingPropertySelector(false);
-        props.onSuccess();
+        props.onSuccess(true);
       }
     } catch (e) {
       if (axios.isAxiosError(e) && (e as AxiosError).code === '409') {

@@ -50,12 +50,16 @@ const featureViewStates = {
       on: {
         TOGGLE_FILTER: {
           target: 'browsing',
+          actions: assign({ showDisposed: () => false }),
         },
         TOGGLE_LAYERS: {
           target: 'layerControl',
         },
         SET_VISIBLE_PROPERTIES: {
           actions: assign({ activePimsPropertyIds: (_, event: any) => event.propertyIds }),
+        },
+        SET_SHOW_DISPOSED: {
+          actions: assign({ showDisposed: (_, event: any) => event.show }),
         },
       },
     },
@@ -319,6 +323,7 @@ export const mapMachine = createMachine<MachineContext>({
     mapFeatureData: emptyFeatureData,
     filePropertyLocations: [],
     activePimsPropertyIds: [],
+    showDisposed: false,
   },
 
   // State definitions

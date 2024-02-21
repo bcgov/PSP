@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using Pims.Api.Models.Base;
 using Pims.Api.Models.Concepts.File;
+using Pims.Api.Models.Concepts.Product;
+using Pims.Api.Models.Concepts.Project;
 
 /*
 * Frontend model
@@ -52,6 +54,26 @@ namespace Pims.Api.Models.Concepts.DispositionFile
         /// get/set - The initiating document type.
         /// </summary>
         public CodeTypeModel<string> PhysicalFileStatusTypeCode { get; set; }
+
+        /// <summary>
+        /// get/set - The project's id.
+        /// </summary>
+        public long? ProjectId { get; set; }
+
+        /// <summary>
+        /// get/set - The disposition project.
+        /// </summary>
+        public ProjectModel Project { get; set; }
+
+        /// <summary>
+        /// get/set - The product's id.
+        /// </summary>
+        public long? ProductId { get; set; }
+
+        /// <summary>
+        /// get/set - The product.
+        /// </summary>
+        public ProductModel Product { get; set; }
 
         /// <summary>
         /// get/set - The funding type.

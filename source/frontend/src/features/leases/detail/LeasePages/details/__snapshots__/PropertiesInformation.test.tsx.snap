@@ -215,10 +215,10 @@ exports[`PropertiesInformation component renders as expected 1`] = `
             >
               <input
                 class="form-control"
-                id="input-fileProperties.0.property.address.province.code"
-                name="fileProperties.0.property.address.province.code"
-                title="BC"
-                value="BC"
+                id="input-fileProperties.0.property.address.province.description"
+                name="fileProperties.0.property.address.province.description"
+                title="British Columbia"
+                value="British Columbia"
               />
             </div>
             <div

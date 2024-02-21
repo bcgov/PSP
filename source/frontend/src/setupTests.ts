@@ -5,11 +5,11 @@
 import '@testing-library/jest-dom';
 import 'jest-styled-components';
 
+import noop from 'lodash/noop';
 import moment from 'moment-timezone';
 import { MockedRequest } from 'msw';
 
 import { server } from '@/mocks/msw/server';
-import noop from 'lodash/noop';
 
 const localStorageMock = (function () {
   let store: any = {};

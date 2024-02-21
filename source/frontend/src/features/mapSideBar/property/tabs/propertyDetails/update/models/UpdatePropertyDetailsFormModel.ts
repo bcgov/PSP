@@ -239,6 +239,8 @@ export class UpdatePropertyDetailsFormModel {
       pphStatusUpdateTimestamp: null,
       pphStatusUpdateUserGuid: null,
       isOwned: false,
+      isOtherInterest: false,
+      isDisposed: false,
       isPropertyOfInterest: false,
       isVisibleToOtherAgencies: false,
       propertyContacts: null,

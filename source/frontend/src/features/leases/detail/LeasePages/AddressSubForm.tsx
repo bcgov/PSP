@@ -3,7 +3,6 @@ import * as React from 'react';
 
 import { Form, Input } from '@/components/common/form';
 import { ApiGen_Concepts_Address } from '@/models/api/generated/ApiGen_Concepts_Address';
-import { ApiGen_Concepts_CodeType } from '@/models/api/generated/ApiGen_Concepts_CodeType';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { exists, isValidString } from '@/utils';
 import { withNameSpace } from '@/utils/formUtils';
@@ -24,27 +23,6 @@ export const AddressSubForm: React.FunctionComponent<
     formikProps.values,
     withNameSpace(nameSpace),
   );
-  const municipality: string | null = getIn(
-    formikProps.values,
-    withNameSpace(nameSpace, 'municipality'),
-  );
-  const postal: string | null = getIn(formikProps.values, withNameSpace(nameSpace, 'postal'));
-  const country: ApiGen_Concepts_CodeType | null = getIn(
-    formikProps.values,
-    withNameSpace(nameSpace, 'country'),
-  );
-  const streetAddress1: string | null = getIn(
-    formikProps.values,
-    withNameSpace(nameSpace, 'streetAddress1'),
-  );
-  const streetAddress2: string | null = getIn(
-    formikProps.values,
-    withNameSpace(nameSpace, 'streetAddress2'),
-  );
-  const streetAddress3: string | null = getIn(
-    formikProps.values,
-    withNameSpace(nameSpace, 'streetAddress3'),
-  );
 
   if (!exists(address)) {
     return (
@@ -54,6 +32,14 @@ export const AddressSubForm: React.FunctionComponent<
       </>
     );
   }
+
+  const municipality = address.municipality;
+  const postal = address.postal;
+  const country = address.country?.description;
+  const province = address.province?.description;
+  const streetAddress1 = address.streetAddress1;
+  const streetAddress2 = address.streetAddress2;
+  const streetAddress3 = address.streetAddress3;
 
   return (
     <>
@@ -72,8 +58,10 @@ export const AddressSubForm: React.FunctionComponent<
       {isValidString(postal) && (
         <Input disabled={disabled} field={withNameSpace(nameSpace, 'postal')} />
       )}
-      <Input disabled={disabled} field={withNameSpace(nameSpace, 'province.code')} />
-      {isValidString(country?.description) && (
+      {province && (
+        <Input disabled={disabled} field={withNameSpace(nameSpace, 'province.description')} />
+      )}
+      {country && (
         <Input disabled={disabled} field={withNameSpace(nameSpace, 'country.description')} />
       )}
     </>

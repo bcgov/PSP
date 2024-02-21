@@ -73,7 +73,7 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({
   return (
     <Section
       className="position-relative"
-      header={`Take ${takeIndex + 1}`}
+      header={currentTake?.id ? `Take ${takeIndex + 1}` : 'New Take'}
       isCollapsable={true}
       initiallyExpanded={true}
     >

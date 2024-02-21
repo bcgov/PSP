@@ -29,6 +29,7 @@ export const useDispositionProvider = () => {
     postDispositionFileApi,
     getDispositionFile,
     putDispositionFileApi,
+    putDispositionFileProperties,
     getDispositionFileProperties,
     getLastUpdatedByApi,
     getDispositionFileChecklist,
@@ -94,6 +95,23 @@ export const useDispositionProvider = () => {
     ),
     requestName: 'UpdateDispositionFile',
     onSuccess: useAxiosSuccessHandler('Disposition File saved'),
+    skipErrorLogCodes: ignoreErrorCodes,
+    throwError: true,
+  });
+
+  const updateDispositionPropertiesApi = useApiRequestWrapper<
+    (
+      acqFile: ApiGen_Concepts_DispositionFile,
+      userOverrideCodes: UserOverrideCode[],
+    ) => Promise<AxiosResponse<ApiGen_Concepts_DispositionFile, any>>
+  >({
+    requestFunction: useCallback(
+      async (acqFile: ApiGen_Concepts_DispositionFile, userOverrideCodes: UserOverrideCode[]) =>
+        await putDispositionFileProperties(acqFile, userOverrideCodes),
+      [putDispositionFileProperties],
+    ),
+    requestName: 'UpdateDispositionFileProperties',
+    onSuccess: useAxiosSuccessHandler('Disposition File Properties updated'),
     skipErrorLogCodes: ignoreErrorCodes,
     throwError: true,
   });
@@ -338,6 +356,7 @@ export const useDispositionProvider = () => {
       getDispositionFile: getDispositionFileApi,
       putDispositionFile: updateDispositionFileApi,
       getLastUpdatedBy,
+      updateDispositionProperties: updateDispositionPropertiesApi,
       getDispositionProperties: getDispositionPropertiesApi,
       getDispositionChecklist: getDispositionChecklistApi,
       putDispositionChecklist: updateDispositionChecklistApi,
@@ -374,6 +393,7 @@ export const useDispositionProvider = () => {
       getDispositionOfferApi,
       putDispositionOfferApi,
       deleteDispositionOfferApi,
+      updateDispositionPropertiesApi,
     ],
   );
 };

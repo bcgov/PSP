@@ -1,4 +1,5 @@
 import { FormikProps } from 'formik';
+import orderBy from 'lodash/orderBy';
 import * as React from 'react';
 
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
@@ -64,7 +65,11 @@ export const TakesUpdateContainer = React.forwardRef<FormikProps<any>, ITakesDet
         loading={takesByFileLoading}
         takes={
           propertyTakes?.length
-            ? propertyTakes?.map(t => new TakeModel(t))
+            ? orderBy(
+                propertyTakes?.map(t => new TakeModel(t)),
+                t => t.id,
+                'desc',
+              )
             : [new TakeModel(emptyTake)]
         }
         fileProperty={fileProperty}

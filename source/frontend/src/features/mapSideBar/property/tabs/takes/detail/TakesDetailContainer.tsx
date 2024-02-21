@@ -1,5 +1,4 @@
 import orderBy from 'lodash/orderBy';
-import moment from 'moment';
 import * as React from 'react';
 
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
@@ -47,7 +46,7 @@ const TakesDetailContainer: React.FunctionComponent<ITakesDetailContainerProps> 
   return (
     <View
       onEdit={onEdit}
-      takes={orderBy(takes, t => moment(t.appCreateTimestamp), 'desc') ?? []}
+      takes={orderBy(takes, t => t.id, 'desc') ?? []}
       loading={takesByFileLoading && takesCountLoading}
       allTakesCount={takesCount ?? 0}
       fileProperty={fileProperty}

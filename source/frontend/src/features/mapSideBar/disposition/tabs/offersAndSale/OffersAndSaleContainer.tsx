@@ -6,16 +6,18 @@ import { ApiGen_Concepts_DispositionFileAppraisal } from '@/models/api/generated
 import { ApiGen_Concepts_DispositionFileOffer } from '@/models/api/generated/ApiGen_Concepts_DispositionFileOffer';
 import { ApiGen_Concepts_DispositionFileSale } from '@/models/api/generated/ApiGen_Concepts_DispositionFileSale';
 
-import { IOffersAndSaleContainerViewProps } from './OffersAndSaleContainerView';
+import { IOffersAndSaleViewProps } from './OffersAndSaleView';
 
 export interface IOffersAndSaleContainerProps {
   dispositionFile?: ApiGen_Concepts_DispositionFile;
-  View: React.FC<IOffersAndSaleContainerViewProps>;
+  View: React.FC<IOffersAndSaleViewProps>;
+  onSuccess: () => void;
 }
 
 const OffersAndSaleContainer: React.FunctionComponent<IOffersAndSaleContainerProps> = ({
   dispositionFile,
   View,
+  onSuccess,
 }) => {
   const {
     getDispositionFileOffers: { execute: getDispositionFileOffers, loading: loadingOffers },
@@ -67,6 +69,7 @@ const OffersAndSaleContainer: React.FunctionComponent<IOffersAndSaleContainerPro
       if (updatedOffers) {
         setDispositionOffers(updatedOffers);
       }
+      onSuccess();
     }
   };
 

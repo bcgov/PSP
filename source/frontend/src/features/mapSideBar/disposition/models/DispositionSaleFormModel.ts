@@ -3,7 +3,11 @@ import { ApiGen_Concepts_DispositionSalePurchaser } from '@/models/api/generated
 import { exists, isValidIsoDateTime } from '@/utils';
 import { emptyStringtoNullable, stringToBoolean } from '@/utils/formUtils';
 
-import { DispositionSaleContactModel, WithSalePurchasers } from './DispositionSaleContactModel';
+import { DispositionSaleContactModel } from './DispositionSaleContactModel';
+import {
+  DispositionSalePurchaserContactModel,
+  WithSalePurchasers,
+} from './DispositionSalePurchaserContactModel';
 
 export class DispositionSaleFormModel implements WithSalePurchasers {
   finalConditionRemovalDate: string | null = null;
@@ -19,8 +23,10 @@ export class DispositionSaleFormModel implements WithSalePurchasers {
   sppAmount: number | null = null;
   netProceedsAfterSppAmount: number | null = null;
   remediationAmount: number | null = null;
-  dispositionPurchasers: DispositionSaleContactModel[] = [];
+  dispositionPurchasers: DispositionSalePurchaserContactModel[] = [];
+  purchaserAgentId: number | null = null;
   dispositionPurchaserAgent: DispositionSaleContactModel | null = new DispositionSaleContactModel();
+  purchaserSolicitorId: number | null = null;
   dispositionPurchaserSolicitor: DispositionSaleContactModel | null =
     new DispositionSaleContactModel();
 
@@ -57,15 +63,17 @@ export class DispositionSaleFormModel implements WithSalePurchasers {
     model.netProceedsAfterSppAmount = calculateNetProceedsAfterSppAmount(entity);
 
     model.dispositionPurchasers =
-      entity.dispositionPurchasers?.map(x => DispositionSaleContactModel.fromApi(x)) || [];
+      entity.dispositionPurchasers?.map(x => DispositionSalePurchaserContactModel.fromApi(x)) || [];
 
+    model.purchaserAgentId = entity.purchaserAgentId;
     model.dispositionPurchaserAgent = entity.dispositionPurchaserAgent
       ? DispositionSaleContactModel.fromApi(entity.dispositionPurchaserAgent)
-      : new DispositionSaleContactModel(null, entity.id);
+      : new DispositionSaleContactModel(null);
 
+    model.purchaserSolicitorId = entity.purchaserSolicitorId;
     model.dispositionPurchaserSolicitor = entity.dispositionPurchaserSolicitor
       ? DispositionSaleContactModel.fromApi(entity.dispositionPurchaserSolicitor)
-      : new DispositionSaleContactModel(null, entity.id);
+      : new DispositionSaleContactModel(null);
 
     return model;
   }
@@ -100,7 +108,11 @@ export class DispositionSaleFormModel implements WithSalePurchasers {
         .map(x => x.toApi())
         .filter((x): x is ApiGen_Concepts_DispositionSalePurchaser => x !== null),
       dispositionPurchaserAgent: this.dispositionPurchaserAgent?.toApi() ?? null,
+      purchaserAgentId:
+        this.dispositionPurchaserAgent?.toApi() === null ? null : this.purchaserAgentId,
       dispositionPurchaserSolicitor: this.dispositionPurchaserSolicitor?.toApi() ?? null,
+      purchaserSolicitorId:
+        this.dispositionPurchaserSolicitor?.toApi() === null ? null : this.purchaserSolicitorId,
       rowVersion: this.rowVersion ?? 0,
     };
   }

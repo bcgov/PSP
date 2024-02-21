@@ -2,6 +2,7 @@ import { createMemoryHistory } from 'history';
 
 import { AcquisitionStatus } from '@/constants/acquisitionFileStatus';
 import Claims from '@/constants/claims';
+import Roles from '@/constants/roles';
 import {
   emptyCompensationFinancial,
   emptyCompensationRequisition,
@@ -10,7 +11,7 @@ import {
 import { mockAcquisitionFileResponse, mockLookups } from '@/mocks/index.mock';
 import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { toTypeCodeNullable } from '@/utils/formUtils';
+import { toTypeCode, toTypeCodeNullable } from '@/utils/formUtils';
 import { act, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
 import CompensationListView, { ICompensationListViewProps } from './CompensationListView';
@@ -126,8 +127,39 @@ describe('compensation list view', () => {
     const deleteButton = (await findAllByTitle('Delete Compensation'))[0];
     act(() => userEvent.click(deleteButton));
     await waitFor(() => {
-      expect(onDelete).toHaveBeenCalledWith(compensations[0].id);
+      expect(onDelete).toHaveBeenCalledWith(compensations[3].id);
     });
+  });
+
+  it('displays warning icon if compensation in final state', async () => {
+    const compensations = getMockApiCompensationList();
+    const { queryByTestId } = setup({
+      acquisitionFile: {
+        ...mockAcquisitionFileResponse(),
+        fileStatusTypeCode: toTypeCode(AcquisitionStatus.Active),
+      },
+      compensations: compensations,
+      claims: [Claims.COMPENSATION_REQUISITION_DELETE],
+    });
+
+    const icon = queryByTestId('tooltip-icon-1-summary-cannot-edit-tooltip');
+    expect(icon).toBeVisible();
+  });
+
+  it('does not display warning icon if compensation in final state and user is admin', async () => {
+    const compensations = getMockApiCompensationList();
+    const { queryByTestId } = setup({
+      acquisitionFile: {
+        ...mockAcquisitionFileResponse(),
+        fileStatusTypeCode: toTypeCode(AcquisitionStatus.Active),
+      },
+      compensations: compensations,
+      claims: [Claims.COMPENSATION_REQUISITION_DELETE],
+      roles: [Roles.SYSTEM_ADMINISTRATOR],
+    });
+
+    const icon = queryByTestId('tooltip-icon-1-summary-cannot-edit-tooltip');
+    expect(icon).toBeNull();
   });
 
   it('delete action hidden if delete claim missing', async () => {

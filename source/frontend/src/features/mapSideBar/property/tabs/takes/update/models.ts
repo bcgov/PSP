@@ -2,6 +2,7 @@ import * as Yup from 'yup';
 
 import { AreaUnitTypes } from '@/constants/areaUnitTypes';
 import { ApiGen_Concepts_Take } from '@/models/api/generated/ApiGen_Concepts_Take';
+import { UtcIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { convertArea } from '@/utils/convertUtils';
 import { fromTypeCodeNullable, stringToNull, toTypeCodeNullable } from '@/utils/formUtils';
@@ -63,6 +64,7 @@ export class TakeModel {
   newHighwayDedicationArea: number;
   newHighwayDedicationAreaUnitTypeCode: string;
   rowVersion?: number;
+  appCreateTimestamp: UtcIsoDateTime | null;
 
   constructor(base: ApiGen_Concepts_Take) {
     this.id = base.id;
@@ -101,6 +103,7 @@ export class TakeModel {
     this.newHighwayDedicationArea = base.newHighwayDedicationArea ?? 0;
     this.newHighwayDedicationAreaUnitTypeCode =
       fromTypeCodeNullable(base.areaUnitTypeCode) ?? AreaUnitTypes.SquareMeters.toString();
+    this.appCreateTimestamp = base.appCreateTimestamp ?? null;
   }
 
   toApi(): ApiGen_Concepts_Take {

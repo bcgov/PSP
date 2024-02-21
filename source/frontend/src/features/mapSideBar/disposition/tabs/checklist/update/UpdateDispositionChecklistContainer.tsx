@@ -15,7 +15,7 @@ import { ApiGen_Concepts_FileWithChecklist } from '@/models/api/generated/ApiGen
 export interface IDispositionChecklistContainerProps {
   formikRef: React.Ref<FormikProps<ChecklistFormModel>>;
   dispositionFile?: ApiGen_Concepts_DispositionFile;
-  onSuccess: () => void;
+  onSuccess: (updateProperties?: boolean, updateFile?: boolean) => void;
   View: React.FC<IUpdateChecklistFormProps>;
 }
 
@@ -42,7 +42,7 @@ export const UpdateDispositionChecklistContainer: React.FC<IDispositionChecklist
   };
 
   const onUpdateSuccess = async () => {
-    onSuccess && onSuccess();
+    onSuccess && onSuccess(false, true);
   };
 
   // generic error handler.

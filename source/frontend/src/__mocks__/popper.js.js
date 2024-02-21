@@ -1,7 +1,7 @@
 // __mocks__/popper.js.js
 
-import PopperJs from 'popper.js';
 import noop from 'lodash/noop';
+import PopperJs from 'popper.js';
 
 export default class Popper {
   constructor() {

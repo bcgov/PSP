@@ -142,13 +142,15 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
             ButtonElement("Cancel");
 
-            if (webDriver.FindElements(acquisitionFileConfirmationModal).Count() > 0)
-            {
-                Assert.Equal("Unsaved Changes", sharedModals.ModalHeader());
-                Assert.Equal("You have made changes on this form. Do you wish to leave without saving?", sharedModals.ModalContent());
-                sharedModals.ModalClickOKBttn();
-            }
+            //if (webDriver.FindElements(acquisitionFileConfirmationModal).Count() > 0)
+            //{
+            //    Assert.Equal("Confirm Changes", sharedModals.ModalHeader());
+            //    Assert.Contains("If you choose to cancel now, your changes will not be saved.", sharedModals.ModalContent());
+            //    Assert.Contains("Do you want to proceed?", sharedModals.ModalContent());
 
+            //    sharedModals.ModalClickOKBttn();
+            //}
+            sharedModals.CancelActionModal();
         }
 
         public void CreateForm8(AcquisitionExpropriationForm8 expropriation)
@@ -158,7 +160,7 @@ namespace PIMS.Tests.Automation.PageObjects
             ChooseSpecificSelectOption(form8PayeeSelect, expropriation.Form8Payee);
 
             webDriver.FindElement(form8ExpAuthorityContactBttn).Click();
-            sharedSelectContact.SelectContact(expropriation.Form8ExpropriationAuthority, "");
+            sharedSelectContact.SelectContact(expropriation.Form8ExpropriationAuthority!, "");
 
             if (expropriation.Form8Description != "")
             {
@@ -181,7 +183,7 @@ namespace PIMS.Tests.Automation.PageObjects
             ChooseSpecificSelectOption(form8PayeeSelect, expropriation.Form8Payee);
 
             webDriver.FindElement(form8ExpAuthorityContactBttn).Click();
-            sharedSelectContact.SelectContact(expropriation.Form8ExpropriationAuthority, null);
+            sharedSelectContact.SelectContact(expropriation.Form8ExpropriationAuthority, "");
 
             if (expropriation.Form8Description != "")
             {

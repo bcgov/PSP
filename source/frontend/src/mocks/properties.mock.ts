@@ -59,6 +59,8 @@ const emptyProperty: ApiGen_Concepts_Property = {
   surplusDeclarationType: null,
   surplusDeclarationComment: null,
   surplusDeclarationDate: EpochIsoDateTime,
+  isOtherInterest: false,
+  isDisposed: false,
   rowVersion: null,
 };
 
