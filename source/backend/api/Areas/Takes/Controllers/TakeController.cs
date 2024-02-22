@@ -8,6 +8,7 @@ using Pims.Api.Models.Concepts.Take;
 using Pims.Api.Policies;
 using Pims.Api.Services;
 using Pims.Core.Extensions;
+using Pims.Core.Json;
 using Pims.Dal.Entities;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
@@ -57,8 +58,9 @@ namespace Pims.Api.Areas.Takes.Controllers
         [HttpGet("acquisition/{fileId:long}")]
         [HasPermission(Permissions.AcquisitionFileView, Permissions.PropertyView)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(TakeModel), 200)]
+        [ProducesResponseType(typeof(IEnumerable<TakeModel>), 200)]
         [SwaggerOperation(Tags = new[] { "take" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetTakesByAcquisitionFileId(long fileId)
         {
             _logger.LogInformation(
@@ -83,8 +85,9 @@ namespace Pims.Api.Areas.Takes.Controllers
         [HttpGet("acquisition/{fileId:long}/property/{acquisitionFilePropertyId:long}")]
         [HasPermission(Permissions.AcquisitionFileView, Permissions.PropertyView)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(TakeModel), 200)]
+        [ProducesResponseType(typeof(IEnumerable<TakeModel>), 200)]
         [SwaggerOperation(Tags = new[] { "take" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetTakesByPropertyId([FromRoute] long fileId, [FromRoute] long acquisitionFilePropertyId)
         {
             _logger.LogInformation(
@@ -107,8 +110,9 @@ namespace Pims.Api.Areas.Takes.Controllers
         [HttpPut("acquisition/property/{acquisitionFilePropertyId:long}")]
         [HasPermission(Permissions.AcquisitionFileEdit, Permissions.PropertyEdit)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(TakeModel), 200)]
+        [ProducesResponseType(typeof(IEnumerable<TakeModel>), 200)]
         [SwaggerOperation(Tags = new[] { "take" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult UpdateAcquisitionPropertyTakes(long acquisitionFilePropertyId, [FromBody] IEnumerable<TakeModel> takes)
         {
             _logger.LogInformation(
@@ -131,7 +135,7 @@ namespace Pims.Api.Areas.Takes.Controllers
         [HttpGet("property/{propertyId:long}/count")]
         [HasPermission(Permissions.AcquisitionFileView, Permissions.PropertyView)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(TakeModel), 200)]
+        [ProducesResponseType(typeof(int), 200)]
         [SwaggerOperation(Tags = new[] { "take" })]
         public IActionResult GetTakesCountByPropertyId([FromRoute] long propertyId)
         {

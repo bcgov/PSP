@@ -7,16 +7,18 @@ import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvi
 import { useFinancialCodeRepository } from '@/hooks/repositories/useFinancialCodeRepository';
 import { useInterestHolderRepository } from '@/hooks/repositories/useInterestHolderRepository';
 import { useCompensationRequisitionRepository } from '@/hooks/repositories/useRequisitionCompensationRepository';
-import { Api_AcquisitionFile, Api_AcquisitionFileTeam } from '@/models/api/AcquisitionFile';
-import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
+import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
+import { ApiGen_Concepts_AcquisitionFileTeam } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileTeam';
+import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
 import { SystemConstants, useSystemConstants } from '@/store/slices/systemConstants';
+import { exists } from '@/utils';
 
 import { CompensationRequisitionFormModel } from './models';
 import { CompensationRequisitionFormProps } from './UpdateCompensationRequisitionForm';
 
 export interface UpdateCompensationRequisitionContainerProps {
-  compensation: Api_CompensationRequisition;
-  acquisitionFile: Api_AcquisitionFile;
+  compensation: ApiGen_Concepts_CompensationRequisition;
+  acquisitionFile: ApiGen_Concepts_AcquisitionFile;
   onSuccess: () => void;
   onCancel: () => void;
   View: React.FC<CompensationRequisitionFormProps>;
@@ -109,12 +111,13 @@ const UpdateCompensationRequisitionContainer: React.FC<
           const teamMemberOptions: PayeeOption[] =
             acquisitionFile.acquisitionTeam
               ?.filter(
-                (x): x is Api_AcquisitionFileTeam => !!x && x.teamProfileTypeCode === 'MOTILAWYER',
+                (x): x is ApiGen_Concepts_AcquisitionFileTeam =>
+                  exists(x) && x.teamProfileTypeCode === 'MOTILAWYER',
               )
               .map(x => PayeeOption.createTeamMember(x)) || [];
           options.push(...teamMemberOptions);
 
-          if (!!compensation.legacyPayee) {
+          if (compensation.legacyPayee) {
             options.push(PayeeOption.createLegacyPayee(compensation));
           }
 
@@ -154,7 +157,7 @@ const UpdateCompensationRequisitionContainer: React.FC<
           ?.map(item => {
             return {
               label: `${item.code} - ${item.description}`,
-              value: item.id!,
+              value: item.id ?? 0,
             };
           }) ?? [];
 
@@ -168,7 +171,7 @@ const UpdateCompensationRequisitionContainer: React.FC<
           ?.map(item => {
             return {
               label: `${item.code} - ${item.description}`,
-              value: item.id!,
+              value: item.id ?? 0,
             };
           }) ?? [];
 
@@ -182,7 +185,7 @@ const UpdateCompensationRequisitionContainer: React.FC<
           ?.map(item => {
             return {
               label: `${item.code} - ${item.description}`,
-              value: item.id!,
+              value: item.id ?? 0,
             };
           }) ?? [];
 
@@ -196,7 +199,7 @@ const UpdateCompensationRequisitionContainer: React.FC<
           ?.map(item => {
             return {
               label: `${item.code} - ${item.description}`,
-              value: item.id!,
+              value: item.id ?? 0,
             };
           }) ?? [];
 

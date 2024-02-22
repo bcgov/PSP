@@ -2,8 +2,9 @@ import queryString from 'query-string';
 import React from 'react';
 
 import { IProjectFilter } from '@/features/projects';
-import { IPagedItems } from '@/interfaces';
-import { Api_Product, Api_Project } from '@/models/api/Project';
+import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
+import { ApiGen_Concepts_Product } from '@/models/api/generated/ApiGen_Concepts_Product';
+import { ApiGen_Concepts_Project } from '@/models/api/generated/ApiGen_Concepts_Project';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 
 import { IPaginateRequest } from './interfaces/IPaginateRequest';
@@ -18,26 +19,27 @@ export const useApiProjects = () => {
 
   return React.useMemo(
     () => ({
-      postProject: (project: Api_Project, userOverrideCodes: UserOverrideCode[]) =>
-        api.post<Api_Project>(
+      postProject: (project: ApiGen_Concepts_Project, userOverrideCodes: UserOverrideCode[]) =>
+        api.post<ApiGen_Concepts_Project>(
           `/projects?${userOverrideCodes.map(o => `userOverrideCodes=${o}`).join('&')}`,
           project,
         ),
-      searchProject: (query: string, top: number = 5) =>
-        api.get<Api_Project[]>(`/projects/search=${query}&top=${top}`),
+      searchProject: (query: string, top = 5) =>
+        api.get<ApiGen_Concepts_Project[]>(`/projects/search=${query}&top=${top}`),
       searchProjects: (params: IPaginateProjects | null) =>
-        api.get<IPagedItems<Api_Project>>(
+        api.get<ApiGen_Base_Page<ApiGen_Concepts_Project>>(
           `/projects/search?${params ? queryString.stringify(params) : ''}`,
         ),
-      getAllProjects: () => api.get<Api_Project[]>(`/projects`),
-      getProject: (id: number) => api.get<Api_Project>(`/projects/${id}`),
-      putProject: (project: Api_Project, userOverrideCodes: UserOverrideCode[]) =>
-        api.put<Api_Project>(
+      getAllProjects: () => api.get<ApiGen_Concepts_Project[]>(`/projects`),
+      getProject: (id: number) => api.get<ApiGen_Concepts_Project>(`/projects/${id}`),
+      putProject: (project: ApiGen_Concepts_Project, userOverrideCodes: UserOverrideCode[]) =>
+        api.put<ApiGen_Concepts_Project>(
           `/projects/${project.id}
         ?${userOverrideCodes.map(o => `userOverrideCodes=${o}`).join('&')}`,
           project,
         ),
-      getProjectProducts: (id: number) => api.get<Api_Product[]>(`/projects/${id}/products`),
+      getProjectProducts: (id: number) =>
+        api.get<ApiGen_Concepts_Product[]>(`/projects/${id}/products`),
     }),
     [api],
   );

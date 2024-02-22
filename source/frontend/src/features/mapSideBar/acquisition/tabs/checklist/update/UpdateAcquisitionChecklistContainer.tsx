@@ -9,12 +9,12 @@ import { IUpdateChecklistFormProps } from '@/features/mapSideBar/shared/tabs/che
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { useLookupCodeHelpers } from '@/hooks/useLookupCodeHelpers';
 import { IApiError } from '@/interfaces/IApiError';
-import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
-import { Api_FileWithChecklist } from '@/models/api/File';
+import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
+import { ApiGen_Concepts_FileWithChecklist } from '@/models/api/generated/ApiGen_Concepts_FileWithChecklist';
 
 export interface IAcquisitionChecklistContainerProps {
   formikRef: React.Ref<FormikProps<ChecklistFormModel>>;
-  acquisitionFile?: Api_AcquisitionFile;
+  acquisitionFile?: ApiGen_Concepts_AcquisitionFile;
   onSuccess: () => void;
   View: React.FC<IUpdateChecklistFormProps>;
 }
@@ -37,11 +37,11 @@ export const UpdateAcquisitionChecklistContainer: React.FC<IAcquisitionChecklist
       ? ChecklistFormModel.fromApi(acquisitionFile, sectionTypes)
       : new ChecklistFormModel();
 
-  const saveChecklist = async (apiAcquisitionFile: Api_FileWithChecklist) => {
+  const saveChecklist = async (apiAcquisitionFile: ApiGen_Concepts_FileWithChecklist) => {
     return updateAcquisitionChecklist(apiAcquisitionFile);
   };
 
-  const onUpdateSuccess = async (apiAcquisitionFile: Api_FileWithChecklist) => {
+  const onUpdateSuccess = async () => {
     onSuccess && onSuccess();
   };
 

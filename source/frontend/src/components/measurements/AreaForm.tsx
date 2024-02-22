@@ -7,8 +7,8 @@ import { convertArea, round } from '@/utils';
 import { StyledGreenCol, StyledGreenGrey, StyledInput } from './styles';
 
 export interface IAreaFormProps {
-  area?: number;
-  areaUnitTypeCode?: string;
+  area: number | undefined;
+  areaUnitTypeCode: string | undefined;
   onChange: (landArea: number, areaUnitTypeCode: string) => void;
 }
 

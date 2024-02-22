@@ -27,17 +27,17 @@ const getParameterIdFromOptions = (
   options: CodeTypeSelectOption[],
   selector: IdSelector = 'P',
 ): number[] => {
-  if (!options.length) {
+  if (options.length === 0) {
     return [];
   }
 
-  var filteredItems = options.filter(option => String(option.codeType).startsWith(selector));
-  if (!filteredItems.length) {
+  const filteredItems = options.filter(option => String(option.codeType).startsWith(selector));
+  if (filteredItems.length === 0) {
     return [];
   }
 
   return filteredItems.map(x => {
-    var number = x.codeType.split('-').pop() ?? '';
+    const number = x.codeType.split('-').pop() ?? '';
     return parseInt(number) ?? 0;
   });
 };

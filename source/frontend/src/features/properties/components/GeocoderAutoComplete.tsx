@@ -116,7 +116,7 @@ export const GeocoderAutoComplete: React.FC<
       <ClickAwayListener onClickAway={() => setOptions([])}>
         <Form.Group
           controlId={`input-${field}`}
-          className={classNames(!!required ? 'required' : '', outerClassName)}
+          className={classNames(required ? 'required' : '', outerClassName)}
         >
           <TooltipWrapper tooltipId={`${field}-error-tooltip}`} tooltip={errorTooltip}>
             <InputControl

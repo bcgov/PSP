@@ -5,7 +5,7 @@ import { ApiGen_Mayan_DocumentTypeMetadataType } from '@/models/api/generated/Ap
 export const getDocumentMetadataYupSchema = (
   mayanMetadata: ApiGen_Mayan_DocumentTypeMetadataType[],
 ) => {
-  let metadataSchema: Record<string, Yup.StringSchema> = {};
+  const metadataSchema: Record<string, Yup.StringSchema> = {};
   for (const data of mayanMetadata) {
     if (data.metadata_type?.id && data.required) {
       metadataSchema[`${data.metadata_type?.id}`] = Yup.string().required(

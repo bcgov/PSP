@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 import { SortDirection, TableSort } from '@/components/Table/TableSort';
 import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
 import useIsMounted from '@/hooks/util/useIsMounted';
-import { IPagedItems } from '@/interfaces';
+import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
 
 import { IPaginateRequest } from './pims-api/interfaces/IPaginateRequest';
 import { useFetcher } from './useFetcher';
@@ -45,7 +45,7 @@ export function useSearch<ISearchResult extends object, IFilter extends object>(
   initialFilter: IFilter,
   apiCall: (
     params: IPaginateRequest<IFilter>,
-  ) => Promise<AxiosResponse<IPagedItems<ISearchResult>>>,
+  ) => Promise<AxiosResponse<ApiGen_Base_Page<ISearchResult>>>,
   noResultsWarning?: string,
   initialSort: TableSort<ISearchResult> = {},
   initialPage = 0,
@@ -78,7 +78,7 @@ export function useSearch<ISearchResult extends object, IFilter extends object>(
   const dispatch = useDispatch();
 
   const setSearchOutput = useCallback(
-    (apiResponse?: IPagedItems<ISearchResult>, pageSize = 10) => {
+    (apiResponse?: ApiGen_Base_Page<ISearchResult>, pageSize = 10) => {
       if (apiResponse?.items) {
         setState({
           results: apiResponse.items,
@@ -164,7 +164,7 @@ export function useSearch<ISearchResult extends object, IFilter extends object>(
 }
 
 // results sort handler
-export const handleSortChange = <Result extends Object>(
+export const handleSortChange = <Result extends object>(
   column: string,
   nextSortDirection: SortDirection,
   sort: TableSort<Result>,

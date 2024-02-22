@@ -175,7 +175,7 @@ const selectedFeatureLoaderStates = {
             assign({
               isLoading: () => true,
               mapLocationSelected: (_, event: any) => event.latlng,
-              mapFeatureSelected: (_, event: any) => null,
+              mapFeatureSelected: () => null,
               mapLocationFeatureDataset: () => null,
             }),
           ],
@@ -185,7 +185,7 @@ const selectedFeatureLoaderStates = {
           actions: [
             assign({
               isLoading: () => true,
-              mapLocationSelected: (_, event: any) => null,
+              mapLocationSelected: () => null,
               mapFeatureSelected: (_, event: any) => event.featureSelected,
               mapLocationFeatureDataset: () => null,
             }),
@@ -336,7 +336,7 @@ export const mapMachine = createMachine<MachineContext>({
             target: 'mapVisible',
           },
           {
-            cond: (context: MachineContext, event: any) => context.searchCriteria === null,
+            cond: (context: MachineContext) => context.searchCriteria === null,
             actions: assign({ searchCriteria: () => defaultPropertyFilter }),
             target: ['mapVisible.sideBar.sidebarOpen', 'mapVisible.featureDataLoader.loading'],
           },
@@ -346,7 +346,7 @@ export const mapMachine = createMachine<MachineContext>({
         ],
         OPEN_SIDEBAR: [
           {
-            cond: (context: MachineContext, event: any) => context.searchCriteria === null,
+            cond: (context: MachineContext) => context.searchCriteria === null,
             actions: assign({ searchCriteria: () => defaultPropertyFilter }),
             target: ['mapVisible.sideBar.sidebarOpen', 'mapVisible.featureDataLoader.loading'],
           },

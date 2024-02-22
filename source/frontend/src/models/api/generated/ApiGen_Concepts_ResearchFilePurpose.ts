@@ -7,6 +7,6 @@ import { ApiGen_Base_CodeType } from './ApiGen_Base_CodeType';
 
 // LINK: @backend/apimodels/Models/Concepts/ResearchFile/ResearchFilePurposeModel.cs
 export interface ApiGen_Concepts_ResearchFilePurpose extends ApiGen_Base_BaseAudit {
-  id: string | null;
+  id: number;
   researchPurposeTypeCode: ApiGen_Base_CodeType<string> | null;
 }

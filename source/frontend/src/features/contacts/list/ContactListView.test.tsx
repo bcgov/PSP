@@ -40,13 +40,13 @@ const setupMockSearch = (searchResults?: IContactSearchResult[]) => {
   });
 };
 
-const defaultSearchResult: IContactSearchResult = {
+const defaultPersonSearchResult: IContactSearchResult = {
   id: '1',
   summary: 'summary',
   mailingAddress: '123 mock st',
+  personId: 1,
   surname: 'last',
   firstName: 'first',
-  organizationName: 'organizationName',
   email: 'email',
   municipalityName: 'city',
   provinceState: 'province',
@@ -76,7 +76,7 @@ describe('Contact List View', () => {
   });
 
   it('searches by summary', async () => {
-    setupMockSearch([defaultSearchResult]);
+    setupMockSearch([defaultPersonSearchResult]);
     const { container, searchButton, findByText } = setup();
 
     fillInput(container, 'summary', 'asummary');
@@ -93,7 +93,7 @@ describe('Contact List View', () => {
   });
 
   it('searches by city/municipality', async () => {
-    setupMockSearch([{ ...defaultSearchResult, municipalityName: 'victoria' }]);
+    setupMockSearch([{ ...defaultPersonSearchResult, municipalityName: 'victoria' }]);
     const { container, searchButton, findByText } = setup({});
     fillInput(container, 'municipality', 'victoria');
     await act(async () => userEvent.click(searchButton));
@@ -106,7 +106,7 @@ describe('Contact List View', () => {
   });
 
   it('searches all by default', async () => {
-    setupMockSearch([defaultSearchResult]);
+    setupMockSearch([defaultPersonSearchResult]);
     const { container, searchButton } = setup({});
     const allButton = container.querySelector(`#input-all`);
     allButton && userEvent.click(allButton);
@@ -120,7 +120,7 @@ describe('Contact List View', () => {
   });
 
   it('searches organizations if radio option selected', async () => {
-    setupMockSearch([defaultSearchResult]);
+    setupMockSearch([defaultPersonSearchResult]);
     const { container, searchButton } = setup({});
     const organizationsButton = container.querySelector(`#input-organizations`);
     organizationsButton && userEvent.click(organizationsButton);
@@ -134,7 +134,7 @@ describe('Contact List View', () => {
   });
 
   it('searches persons if radio option selected', async () => {
-    setupMockSearch([defaultSearchResult]);
+    setupMockSearch([defaultPersonSearchResult]);
     const { container, searchButton } = setup({});
     const personButton = container.querySelector(`#input-persons`);
     personButton && userEvent.click(personButton);
@@ -148,7 +148,7 @@ describe('Contact List View', () => {
   });
 
   it('searches for active contacts by default', async () => {
-    setupMockSearch([defaultSearchResult]);
+    setupMockSearch([defaultPersonSearchResult]);
     const { container, searchButton } = setup({});
     const activeCheck = container.querySelector(`#input-activeContactsOnly`);
     await act(async () => userEvent.click(searchButton));
@@ -159,7 +159,7 @@ describe('Contact List View', () => {
   });
 
   it('searches for inactive contacts if checkbox unchecked', async () => {
-    setupMockSearch([defaultSearchResult]);
+    setupMockSearch([defaultPersonSearchResult]);
     const { container } = setup({});
     const activeCheck = container.querySelector(`#input-activeContactsOnly`);
     expect(activeCheck).not.toBeNull();

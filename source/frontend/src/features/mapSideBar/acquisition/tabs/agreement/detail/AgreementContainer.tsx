@@ -3,6 +3,7 @@ import { useCallback, useContext, useEffect } from 'react';
 
 import { SideBarContext } from '@/features/mapSideBar/context/sidebarContext';
 import { useAgreementProvider } from '@/hooks/repositories/useAgreementProvider';
+import { isValidId } from '@/utils';
 
 import { useGenerateAgreement } from '../../../common/GenerateForm/hooks/useGenerateAgreement';
 import { IAgreementViewProps } from './AgreementView';
@@ -22,7 +23,7 @@ export const AgreementContainer: React.FunctionComponent<
   const generateAgreement = useGenerateAgreement();
 
   const { file, fileLoading } = useContext(SideBarContext);
-  if (!!file && file?.id === undefined && fileLoading === false) {
+  if (!isValidId(file?.id) && fileLoading === false) {
     throw new Error('Unable to determine id of current file.');
   }
 
@@ -34,7 +35,7 @@ export const AgreementContainer: React.FunctionComponent<
     fetchAgreements();
   }, [fetchAgreements]);
 
-  return !!file?.id ? (
+  return file?.id ? (
     <>
       <View
         loading={loading}

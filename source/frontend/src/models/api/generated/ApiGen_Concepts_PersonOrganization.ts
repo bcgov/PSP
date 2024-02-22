@@ -4,9 +4,13 @@
  */
 import { ApiGen_Base_BaseConcurrent } from './ApiGen_Base_BaseConcurrent';
 import { ApiGen_Concepts_Organization } from './ApiGen_Concepts_Organization';
+import { ApiGen_Concepts_Person } from './ApiGen_Concepts_Person';
 
 // LINK: @backend/apimodels/Models/Concepts/Person/PersonOrganizationModel.cs
 export interface ApiGen_Concepts_PersonOrganization extends ApiGen_Base_BaseConcurrent {
-  personId: number;
+  id: number;
+  personId: number | null;
+  person: ApiGen_Concepts_Person | null;
+  organizationId: number | null;
   organization: ApiGen_Concepts_Organization | null;
 }

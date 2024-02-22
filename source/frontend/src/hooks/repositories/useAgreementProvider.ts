@@ -3,7 +3,7 @@ import { useCallback, useMemo } from 'react';
 
 import { useApiAgreements } from '@/hooks/pims-api/useApiAgreements';
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
-import { Api_Agreement } from '@/models/api/Agreement';
+import { ApiGen_Concepts_Agreement } from '@/models/api/generated/ApiGen_Concepts_Agreement';
 import { useAxiosErrorHandler } from '@/utils';
 
 /**
@@ -13,7 +13,7 @@ export const useAgreementProvider = () => {
   const { getAcquisitionAgreementsApi, postAcquisitionAgreementsApi } = useApiAgreements();
 
   const getAcquisitionAgreements = useApiRequestWrapper<
-    (acqFileId: number) => Promise<AxiosResponse<Api_Agreement[], any>>
+    (acqFileId: number) => Promise<AxiosResponse<ApiGen_Concepts_Agreement[], any>>
   >({
     requestFunction: useCallback(
       async (acqFileId: number) => await getAcquisitionAgreementsApi(acqFileId),
@@ -24,10 +24,13 @@ export const useAgreementProvider = () => {
   });
 
   const updateAcquisitionAgreements = useApiRequestWrapper<
-    (acqFileId: number, agreements: Api_Agreement[]) => Promise<AxiosResponse<Api_Agreement[], any>>
+    (
+      acqFileId: number,
+      agreements: ApiGen_Concepts_Agreement[],
+    ) => Promise<AxiosResponse<ApiGen_Concepts_Agreement[], any>>
   >({
     requestFunction: useCallback(
-      async (acqFileId: number, agreement: Api_Agreement[]) =>
+      async (acqFileId: number, agreement: ApiGen_Concepts_Agreement[]) =>
         await postAcquisitionAgreementsApi(acqFileId, agreement),
       [postAcquisitionAgreementsApi],
     ),

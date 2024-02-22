@@ -11,16 +11,17 @@ import { StyledEditWrapper, StyledSummarySection } from '@/components/common/Sec
 import { StyledAddButton } from '@/components/common/styles';
 import Claims from '@/constants/claims';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
-import { AgreementStatusTypes, Api_Agreement } from '@/models/api/Agreement';
+import { ApiGen_CodeTypes_AgreementStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_AgreementStatusTypes';
+import { ApiGen_Concepts_Agreement } from '@/models/api/generated/ApiGen_Concepts_Agreement';
 import { formatMoney, prettyFormatDate } from '@/utils';
 
 import { StyledSectionSubheader } from '../styles';
 
 export interface IAgreementViewProps {
   loading: boolean;
-  agreements: Api_Agreement[];
+  agreements: ApiGen_Concepts_Agreement[];
   onEdit: () => void;
-  onGenerate: (agreement: Api_Agreement) => void;
+  onGenerate: (agreement: ApiGen_Concepts_Agreement) => void;
 }
 
 export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
@@ -75,7 +76,8 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
           <SectionField labelWidth="5" label="Agreement status">
             {agreement.agreementStatusType?.description ?? ''}
           </SectionField>
-          {agreement.agreementStatusType?.id === AgreementStatusTypes.CANCELLED && (
+          {agreement.agreementStatusType?.id ===
+            ApiGen_CodeTypes_AgreementStatusTypes.CANCELLED && (
             <SectionField labelWidth="5" label="Cancellation reason">
               {agreement.cancellationNote ?? ''}
             </SectionField>

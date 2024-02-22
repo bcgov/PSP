@@ -24,18 +24,18 @@ import { formatMoney } from '@/utils/numberFormatUtils';
 
 import { FormLeaseTerm } from '../../models';
 
-function initialOrRenewalTerm({ row: { original, index } }: CellProps<FormLeaseTerm, unknown>) {
+function initialOrRenewalTerm({ row: { index } }: CellProps<FormLeaseTerm, unknown>) {
   return stringToFragment(index === 0 ? 'Initial term' : `Renewal ${index}`);
 }
 
-function startAndEndDate({ row: { original, index } }: CellProps<FormLeaseTerm, string>) {
+function startAndEndDate({ row: { original } }: CellProps<FormLeaseTerm, string>) {
   return stringToFragment(
     `${prettyFormatDate(original.startDate)} - ${prettyFormatDate(original.expiryDate)}`,
   );
 }
 
 const renderExpectedTotal = () =>
-  function ({ row: { original, index } }: CellProps<FormLeaseTerm, string>) {
+  function ({ row: { original } }: CellProps<FormLeaseTerm, string>) {
     return stringToFragment(
       original.paymentAmount !== undefined
         ? formatMoney((original.paymentAmount as number) + ((original?.gstAmount as number) ?? 0))
@@ -107,7 +107,7 @@ function calculateExpectedTermAmount(
 ) {
   const numberOfIntervals = getNumberOfIntervals(frequency, startDate, endDate);
   const expectedPayment = expectedAmount + gstAmount;
-  return !!numberOfIntervals ? numberOfIntervals * expectedPayment : undefined;
+  return numberOfIntervals ? numberOfIntervals * expectedPayment : undefined;
 }
 
 const termActions = (

@@ -5,8 +5,9 @@ import {
   fromApiPerson,
   IContactSearchResult,
 } from '@/interfaces/IContactSearchResult';
-import { Api_DispositionFileTeam } from '@/models/api/DispositionFile';
-import { fromTypeCode, toTypeCode } from '@/utils/formUtils';
+import { ApiGen_Concepts_DispositionFileTeam } from '@/models/api/generated/ApiGen_Concepts_DispositionFileTeam';
+import { fromTypeCode, toTypeCodeNullable } from '@/utils/formUtils';
+import { exists, isValidId } from '@/utils/utils';
 
 export interface WithDispositionTeam {
   team: DispositionTeamSubFormModel[];
@@ -14,8 +15,8 @@ export interface WithDispositionTeam {
 
 export class DispositionTeamSubFormModel {
   contact: IContactSearchResult | null = null;
-  teamProfileTypeCode: string = '';
-  primaryContactId: string = '';
+  teamProfileTypeCode = '';
+  primaryContactId = '';
 
   constructor(
     readonly id: number | null = null,
@@ -27,10 +28,10 @@ export class DispositionTeamSubFormModel {
     this.contact = contact;
   }
 
-  toApi(dispositionFileId: number): Api_DispositionFileTeam | null {
+  toApi(dispositionFileId: number): ApiGen_Concepts_DispositionFileTeam | null {
     const personId = this.contact?.personId ?? null;
     const organizationId = !personId ? this.contact?.organizationId ?? null : null;
-    if (personId === null && organizationId === null) {
+    if (!isValidId(personId) && !isValidId(organizationId)) {
       return null;
     }
 
@@ -38,26 +39,27 @@ export class DispositionTeamSubFormModel {
       id: this.id ?? 0,
       rowVersion: this.rowVersion ?? 0,
       dispositionFileId: dispositionFileId,
-      personId: personId ?? undefined,
-      person: undefined,
-      organizationId: organizationId ?? undefined,
-      organization: undefined,
+      personId: personId ?? null,
+      person: null,
+      organizationId: organizationId ?? null,
+      organization: null,
       primaryContactId:
         !!this.primaryContactId && isNumber(+this.primaryContactId)
           ? Number(this.primaryContactId)
-          : undefined,
-      teamProfileType: toTypeCode(this.teamProfileTypeCode),
+          : null,
+      teamProfileType: toTypeCodeNullable(this.teamProfileTypeCode),
       teamProfileTypeCode: this.teamProfileTypeCode,
+      primaryContact: null,
     };
   }
 
-  static fromApi(model: Api_DispositionFileTeam | null): DispositionTeamSubFormModel {
-    const contact: IContactSearchResult | undefined =
-      model?.person !== undefined && model?.person !== null
-        ? fromApiPerson(model.person)
-        : model?.organization !== undefined && model?.organization !== null
-        ? fromApiOrganization(model.organization)
-        : undefined;
+  static fromApi(model: ApiGen_Concepts_DispositionFileTeam | null): DispositionTeamSubFormModel {
+    // todo:the method 'exists' here should allow the compiler to validate the child property. this works correctly in typescropt 5.3 +
+    const contact: IContactSearchResult | undefined = exists(model?.person)
+      ? fromApiPerson(model!.person)
+      : exists(model?.organization)
+      ? fromApiOrganization(model!.organization)
+      : undefined;
 
     const newForm = new DispositionTeamSubFormModel(model?.id ?? 0, model?.rowVersion, contact);
     newForm.teamProfileTypeCode = fromTypeCode(model?.teamProfileType) ?? '';

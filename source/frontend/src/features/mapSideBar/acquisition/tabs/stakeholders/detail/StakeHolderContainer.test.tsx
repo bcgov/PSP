@@ -5,7 +5,7 @@ import { forwardRef } from 'react';
 import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
 import { getMockApiInterestHolders } from '@/mocks/interestHolders.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
-import { Api_InterestHolder } from '@/models/api/InterestHolder';
+import { ApiGen_Concepts_InterestHolder } from '@/models/api/generated/ApiGen_Concepts_InterestHolder';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { render, RenderOptions } from '@/utils/test-utils';
 
@@ -19,7 +19,7 @@ const storeState = {
 
 const mockGetApi = {
   error: undefined,
-  response: [] as Api_InterestHolder[],
+  response: [] as ApiGen_Concepts_InterestHolder[],
   execute: jest.fn().mockResolvedValue(getMockApiInterestHolders()),
   loading: false,
 };

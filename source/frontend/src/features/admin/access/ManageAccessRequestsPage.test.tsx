@@ -53,7 +53,7 @@ const successStore = mockStore({
 const componentRender = (store: any) => {
   mockAxios.onGet().reply(200, getMockPagedAccessRequests());
   process.env.REACT_APP_TENANT = 'MOTI';
-  let component = render(<ManageAccessRequestsPage />);
+  const component = render(<ManageAccessRequestsPage />);
   return {
     findFirstRow: () => {
       const rows = component.getAllByRole('row');

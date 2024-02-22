@@ -4,13 +4,13 @@ import styled from 'styled-components';
 
 import { HeaderField } from '@/components/common/HeaderField/HeaderField';
 import { UserNameTooltip } from '@/components/common/UserNameTooltip';
-import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
 import { Api_LastUpdatedBy } from '@/models/api/File';
+import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { prettyFormatUTCDate } from '@/utils';
 import { formatMinistryProject } from '@/utils/formUtils';
 
 export interface IAcquisitionHeaderProps {
-  acquisitionFile?: Api_AcquisitionFile;
+  acquisitionFile?: ApiGen_Concepts_AcquisitionFile;
   lastUpdatedBy: Api_LastUpdatedBy | null;
 }
 

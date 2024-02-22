@@ -4,12 +4,14 @@ import { useCallback, useContext, useState } from 'react';
 import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
 import { useLeasePaymentRepository } from '@/hooks/repositories/useLeasePaymentRepository';
 import { IResponseWrapper } from '@/hooks/util/useApiRequestWrapper';
-import { Api_LeaseTerm } from '@/models/api/LeaseTerm';
+import { ApiGen_Concepts_LeaseTerm } from '@/models/api/generated/ApiGen_Concepts_LeaseTerm';
 
 import { FormLeasePayment, FormLeaseTerm } from '../models';
 
 export const useDeleteTermsPayments = (
-  deleteLeaseTerm: IResponseWrapper<(term: Api_LeaseTerm) => Promise<AxiosResponse<boolean, any>>>,
+  deleteLeaseTerm: IResponseWrapper<
+    (term: ApiGen_Concepts_LeaseTerm) => Promise<AxiosResponse<boolean, any>>
+  >,
   getLeaseTerms: (leaseId: number) => Promise<void>,
   onSuccess: () => void,
 ) => {
@@ -49,7 +51,7 @@ export const useDeleteTermsPayments = (
    */
   const isValidForDelete = useCallback(
     (leaseTerm: FormLeaseTerm) => {
-      if (leaseTerm.payments.length) {
+      if (leaseTerm.payments.length > 0) {
         setDeleteModalWarning({ title: 'Delete Term', message: deleteWithPayments });
         return false;
       } else if (

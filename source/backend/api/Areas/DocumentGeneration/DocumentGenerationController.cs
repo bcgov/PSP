@@ -7,6 +7,7 @@ using Pims.Api.Models.DocumentGeneration;
 
 using Pims.Api.Models.Requests.Http;
 using Pims.Api.Services;
+using Pims.Core.Json;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Pims.Api.Controllers
@@ -49,6 +50,7 @@ namespace Pims.Api.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(ExternalResponse<Models.Cdogs.FileTypes>), 200)]
         [SwaggerOperation(Tags = new[] { "document-generation" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public async Task<IActionResult> GetSupportedDocumentTypes()
         {
             var supportedFileTypes = await _documentGenerationService.GetSupportedFileTypes();
@@ -63,6 +65,7 @@ namespace Pims.Api.Controllers
         // [HasPermission(Permissions.GenerateDocuments)]
         [ProducesResponseType(typeof(ExternalResponse<string>), 200)]
         [SwaggerOperation(Tags = new[] { "document-generation" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public async Task<IActionResult> UploadTemplate([FromForm] IFormFile file)
         {
             var result = await _documentGenerationService.UploadFileTemplate(file);

@@ -15,10 +15,10 @@ import {
   PIMS_Property_Location_View,
 } from '@/models/layers/pimsPropertyLocationView';
 
+import { createPoints } from '../../MapView.test';
 import { ICluster } from '../../types';
 import {
   createClusterMarker,
-  createPoints,
   disposedIcon,
   getMarkerIcon,
   otherInterestIcon,
@@ -275,7 +275,7 @@ describe('mapUtils tests', () => {
 
     it('if force exact param is specified will automatically use = instead of ilike', () => {
       const cql = toCqlFilterValue({ PID: '12345678', PIN: '54321' }, { forceExactMatch: true });
-      expect(cql).toBe("PID = '12345678' AND PIN = '54321'");
+      expect(cql).toBe("PID = '12345678' AND PIN='54321'");
     });
   });
 });

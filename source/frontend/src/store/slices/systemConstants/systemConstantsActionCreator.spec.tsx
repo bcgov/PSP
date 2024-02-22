@@ -24,7 +24,7 @@ beforeEach(() => {
   errorSpy.mockClear();
 });
 
-let currentStore: MockStoreEnhanced<any, {}>;
+let currentStore: MockStoreEnhanced<any, object>;
 const mockStore = configureMockStore([thunk]);
 const getStore = (values?: any) => {
   currentStore = mockStore(values ?? {});

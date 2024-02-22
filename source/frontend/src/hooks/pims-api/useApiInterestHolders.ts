@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Api_InterestHolder } from '@/models/api/InterestHolder';
+import { ApiGen_Concepts_InterestHolder } from '@/models/api/generated/ApiGen_Concepts_InterestHolder';
 
 import useAxiosApi from './useApi';
 
@@ -14,9 +14,12 @@ export const useApiInterestHolders = () => {
   return React.useMemo(
     () => ({
       getAcquisitionInterestHolderApi: (acqFileId: number) =>
-        api.get<Api_InterestHolder[]>(`/acquisitionfiles/${acqFileId}/interestholders`),
-      postAcquisitionholderApi: (acqFileId: number, agreements: Api_InterestHolder[]) =>
-        api.put<Api_InterestHolder[]>(`/acquisitionfiles/${acqFileId}/interestholders`, agreements),
+        api.get<ApiGen_Concepts_InterestHolder[]>(`/acquisitionfiles/${acqFileId}/interestholders`),
+      postAcquisitionholderApi: (acqFileId: number, agreements: ApiGen_Concepts_InterestHolder[]) =>
+        api.put<ApiGen_Concepts_InterestHolder[]>(
+          `/acquisitionfiles/${acqFileId}/interestholders`,
+          agreements,
+        ),
     }),
     [api],
   );

@@ -1,4 +1,4 @@
-import { Api_ExpropriationPayment } from '@/models/api/ExpropriationPayment';
+import { ApiGen_Concepts_ExpropriationPayment } from '@/models/api/generated/ApiGen_Concepts_ExpropriationPayment';
 import { formatMoney } from '@/utils/numberFormatUtils';
 
 import { Api_GenerateExpropriationPaymentItem } from '../GenerateExpropriationPaymentItem';
@@ -11,7 +11,7 @@ export class Api_GenerateExpropriationForm8 {
   payment_items: Api_GenerateExpropriationPaymentItem[];
   total_amount: string;
 
-  constructor(form8: Api_ExpropriationPayment) {
+  constructor(form8: ApiGen_Concepts_ExpropriationPayment) {
     this.payee = getForm8Recipient(form8);
     this.exp_authority = new Api_GenerateOrganization(form8.expropriatingAuthority);
     this.payment_items =
@@ -22,7 +22,7 @@ export class Api_GenerateExpropriationForm8 {
   }
 }
 
-const getForm8Recipient = (form8: Api_ExpropriationPayment): Api_GenerateOwner => {
+const getForm8Recipient = (form8: ApiGen_Concepts_ExpropriationPayment): Api_GenerateOwner => {
   if (form8.acquisitionOwnerId && form8.acquisitionOwnerId) {
     return new Api_GenerateOwner(form8.acquisitionOwner);
   }

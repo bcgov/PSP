@@ -13,9 +13,10 @@ import FilePropertiesTable from '@/components/filePropertiesTable/FileProperties
 import * as API from '@/constants/API';
 import { useOrganizationRepository } from '@/features/contacts/repositories/useOrganizationRepository';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
-import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
-import { Api_OrganizationPerson } from '@/models/api/Organization';
-import { Api_PropertyFile } from '@/models/api/PropertyFile';
+import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
+import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
+import { ApiGen_Concepts_PersonOrganization } from '@/models/api/generated/ApiGen_Concepts_PersonOrganization';
+import { exists } from '@/utils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
 import { InterestHolderForm, StakeHolderForm } from './models';
@@ -24,7 +25,7 @@ export interface IInterestHolderProps {
   index: number;
   errors: FormikErrors<StakeHolderForm>;
   arrayHelpers: FieldArrayRenderProps;
-  file: Api_AcquisitionFile;
+  file: ApiGen_Concepts_AcquisitionFile;
   interestHolder: InterestHolderForm;
 }
 
@@ -38,7 +39,7 @@ export const InterestHolderSubForm: React.FunctionComponent<IInterestHolderProps
   const { values, setFieldValue } = useFormikContext<StakeHolderForm>();
   const { getOptionsByType } = useLookupCodeHelpers();
   const interestHolderInterestTypes = getOptionsByType(API.INTEREST_HOLDER_TYPES);
-  var interestHolderContact = values.interestHolders[index].contact;
+  const interestHolderContact = values.interestHolders[index].contact;
 
   const {
     getOrganizationDetail: { execute: fetchOrganization, response: organization },
@@ -62,7 +63,7 @@ export const InterestHolderSubForm: React.FunctionComponent<IInterestHolderProps
   }, [orgPersons, setFieldValue, index]);
 
   const primaryContacts: SelectOption[] =
-    orgPersons?.map((orgPerson: Api_OrganizationPerson) => {
+    orgPersons?.map((orgPerson: ApiGen_Concepts_PersonOrganization) => {
       return {
         label: `${formatApiPersonNames(orgPerson.person)}`,
         value: orgPerson.personId ?? '',
@@ -135,9 +136,9 @@ export const InterestHolderSubForm: React.FunctionComponent<IInterestHolderProps
           selectedFileProperties={
             interestHolder.impactedProperties
               .map(ip => file.fileProperties?.find(fp => fp.id === ip.acquisitionFilePropertyId))
-              .filter((fp): fp is Api_PropertyFile => !!fp) ?? []
+              .filter(exists) ?? []
           }
-          setSelectedFileProperties={(fileProperties: Api_PropertyFile[]) => {
+          setSelectedFileProperties={(fileProperties: ApiGen_Concepts_FileProperty[]) => {
             const interestHolderProperties = fileProperties.map(fileProperty => {
               const matchingProperty = interestHolder.impactedProperties.find(
                 ip => ip.acquisitionFilePropertyId === fileProperty.id,

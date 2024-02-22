@@ -5,12 +5,12 @@ import styled from 'styled-components';
 import { HeaderField } from '@/components/common/HeaderField/HeaderField';
 import { UserNameTooltip } from '@/components/common/UserNameTooltip';
 import { Api_LastUpdatedBy } from '@/models/api/File';
-import { Api_ResearchFile } from '@/models/api/ResearchFile';
-import Api_TypeCode from '@/models/api/TypeCode';
-import { prettyFormatUTCDate } from '@/utils';
+import { ApiGen_Base_CodeType } from '@/models/api/generated/ApiGen_Base_CodeType';
+import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Concepts_ResearchFile';
+import { exists, prettyFormatUTCDate } from '@/utils';
 
 export interface IResearchHeaderProps {
-  researchFile?: Api_ResearchFile;
+  researchFile?: ApiGen_Concepts_ResearchFile;
   lastUpdatedBy: Api_LastUpdatedBy | null;
 }
 
@@ -31,10 +31,12 @@ const ResearchHeader: React.FunctionComponent<
     .map(x => x.description)
     .join(', ');
 
-  function removeDuplicates(list: (Api_TypeCode<number> | undefined)[]): Api_TypeCode<number>[] {
+  function removeDuplicates(
+    list: (ApiGen_Base_CodeType<number> | undefined | null)[],
+  ): ApiGen_Base_CodeType<number>[] {
     return list
-      .filter((x): x is Api_TypeCode<number> => !!x && x.description !== '')
-      .reduce((acc: Api_TypeCode<number>[], curr: Api_TypeCode<number>) => {
+      .filter((x): x is ApiGen_Base_CodeType<number> => exists(x) && x.description !== '')
+      .reduce((acc: ApiGen_Base_CodeType<number>[], curr: ApiGen_Base_CodeType<number>) => {
         if (acc.find(x => curr.id === x.id) === undefined) {
           acc.push(curr);
         }

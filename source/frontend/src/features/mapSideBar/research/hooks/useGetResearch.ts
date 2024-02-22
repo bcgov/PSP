@@ -5,7 +5,8 @@ import { toast } from 'react-toastify';
 import { useApiResearchFile } from '@/hooks/pims-api/useApiResearchFile';
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import { IApiError } from '@/interfaces/IApiError';
-import { Api_ResearchFile, Api_ResearchFileProperty } from '@/models/api/ResearchFile';
+import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Concepts_ResearchFile';
+import { ApiGen_Concepts_ResearchFileProperty } from '@/models/api/generated/ApiGen_Concepts_ResearchFileProperty';
 
 /**
  * hook that retrieves a research file.
@@ -13,7 +14,7 @@ import { Api_ResearchFile, Api_ResearchFileProperty } from '@/models/api/Researc
 export const useGetResearch = () => {
   const { getResearchFile } = useApiResearchFile();
   const retrieveResearchFile = useApiRequestWrapper<
-    (researchFileId: number) => Promise<AxiosResponse<Api_ResearchFile, any>>
+    (researchFileId: number) => Promise<AxiosResponse<ApiGen_Concepts_ResearchFile, any>>
   >({
     requestFunction: useCallback(
       async (researchFileId: number) => await getResearchFile(researchFileId),
@@ -31,7 +32,7 @@ export const useGetResearch = () => {
 
   const { getResearchFileProperties } = useApiResearchFile();
   const retrieveResearchFileProperties = useApiRequestWrapper<
-    (researchFileId: number) => Promise<AxiosResponse<Api_ResearchFileProperty[], any>>
+    (researchFileId: number) => Promise<AxiosResponse<ApiGen_Concepts_ResearchFileProperty[], any>>
   >({
     requestFunction: useCallback(
       async (researchFileId: number) => await getResearchFileProperties(researchFileId),

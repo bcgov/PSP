@@ -11,7 +11,7 @@ import { NoteTypes } from '@/constants/noteTypes';
 import { useApiNotes } from '@/hooks/pims-api/useApiNotes';
 import { useModalManagement } from '@/hooks/useModalManagement';
 import useIsMounted from '@/hooks/util/useIsMounted';
-import { Api_Note } from '@/models/api/Note';
+import { ApiGen_Concepts_Note } from '@/models/api/generated/ApiGen_Concepts_Note';
 
 import { AddNotesContainer } from '../add/AddNotesContainer';
 import { NoteContainer } from '../NoteContainer';
@@ -34,11 +34,13 @@ export const NoteListView: React.FunctionComponent<React.PropsWithChildren<INote
   const { getNotes, deleteNote } = useApiNotes();
 
   const [showDeleteConfirm, setShowDeleteConfirm] = React.useState<boolean>(false);
-  const [currentNote, setCurrentNote] = React.useState<Api_Note>();
+  const [currentNote, setCurrentNote] = React.useState<ApiGen_Concepts_Note>();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   // Notes should display by default in descending order of created date
-  const [sort, setSort] = React.useState<TableSort<Api_Note>>({ appCreateTimestamp: 'desc' });
-  const [noteResult, setNoteResult] = React.useState<Api_Note[]>([]);
+  const [sort, setSort] = React.useState<TableSort<ApiGen_Concepts_Note>>({
+    appCreateTimestamp: 'desc',
+  });
+  const [noteResult, setNoteResult] = React.useState<ApiGen_Concepts_Note[]>([]);
 
   const [isAddNotesOpened, openAddNotes, closeAddNotes] = useModalManagement();
   const [isViewNotesOpened, openViewNotes, closeViewNotes] = useModalManagement();
@@ -64,7 +66,7 @@ export const NoteListView: React.FunctionComponent<React.PropsWithChildren<INote
       const sortFields = Object.keys(sort);
       if (sortFields?.length > 0) {
         const keyName = (sort as any)[sortFields[0]];
-        return orderBy(noteResult, sortFields[0], keyName) as Api_Note[];
+        return orderBy(noteResult, sortFields[0], keyName) as ApiGen_Concepts_Note[];
       }
       return noteResult;
     }
@@ -110,11 +112,11 @@ export const NoteListView: React.FunctionComponent<React.PropsWithChildren<INote
             loading={isLoading}
             sort={sort}
             setSort={setSort}
-            onShowDetails={(note: Api_Note) => {
+            onShowDetails={(note: ApiGen_Concepts_Note) => {
               setCurrentNote(note);
               openViewNotes();
             }}
-            onDelete={(note: Api_Note) => {
+            onDelete={(note: ApiGen_Concepts_Note) => {
               setCurrentNote(note);
               setShowDeleteConfirm(true);
             }}

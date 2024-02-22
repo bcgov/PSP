@@ -4,19 +4,21 @@ import { useDocumentGenerationRepository } from '@/features/documents/hooks/useD
 import { FormTemplateTypes } from '@/features/mapSideBar/shared/content/models';
 import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
-import { Api_AcquisitionFileTeam } from '@/models/api/AcquisitionFile';
-import { AgreementTypes, Api_Agreement } from '@/models/api/Agreement';
+import { ApiGen_CodeTypes_AgreementTypes } from '@/models/api/generated/ApiGen_CodeTypes_AgreementTypes';
 import { ApiGen_CodeTypes_ExternalResponseStatus } from '@/models/api/generated/ApiGen_CodeTypes_ExternalResponseStatus';
-import { Api_Organization } from '@/models/api/Organization';
+import { ApiGen_Concepts_AcquisitionFileTeam } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileTeam';
+import { ApiGen_Concepts_Agreement } from '@/models/api/generated/ApiGen_Concepts_Agreement';
+import { ApiGen_Concepts_Organization } from '@/models/api/generated/ApiGen_Concepts_Organization';
 import { Api_GenerateAcquisitionFile } from '@/models/generate/acquisition/GenerateAcquisitionFile';
 import { Api_GenerateAgreement } from '@/models/generate/GenerateAgreement';
+import { exists } from '@/utils/utils';
 
 export const useGenerateAgreement = () => {
   const { getPersonConcept, getOrganizationConcept } = useApiContacts();
   const { getAcquisitionFile, getAcquisitionProperties } = useAcquisitionProvider();
   const { generateDocumentDownloadWrappedRequest: generate } = useDocumentGenerationRepository();
-  const generateAgreement = async (agreement: Api_Agreement) => {
-    if (agreement?.agreementType?.id === undefined) {
+  const generateAgreement = async (agreement: ApiGen_Concepts_Agreement) => {
+    if (!exists(agreement?.agreementType?.id)) {
       throw Error('user must choose agreement type in order to generate a document');
     }
     const file = await getAcquisitionFile.execute(agreement.acquisitionFileId);
@@ -24,7 +26,7 @@ export const useGenerateAgreement = () => {
     if (!file) {
       throw Error('Acquisition file not found');
     }
-    file.fileProperties = properties;
+    file.fileProperties = properties ?? null;
 
     const coordinator = file.acquisitionTeam?.find(
       team => team.teamProfileTypeCode === 'PROPCOORD',
@@ -43,14 +45,14 @@ export const useGenerateAgreement = () => {
       ? getPersonConcept(coordinator?.personId).then(p => (coordinator.person = p?.data))
       : coordinator?.organizationId
       ? getOrganizationConcept(coordinator?.organizationId).then(o =>
-          !!coordinator ? setOrganization(coordinator, o?.data) : null,
+          coordinator ? setOrganization(coordinator, o?.data) : null,
         )
       : Promise.resolve();
     const negotiatingAgentPromise = negotiatingAgent?.personId
       ? getPersonConcept(negotiatingAgent?.personId).then(p => (negotiatingAgent.person = p?.data))
       : negotiatingAgent?.organizationId
       ? getOrganizationConcept(negotiatingAgent?.organizationId).then(o =>
-          !!negotiatingAgent ? setOrganization(negotiatingAgent, o?.data) : null,
+          negotiatingAgent ? setOrganization(negotiatingAgent, o?.data) : null,
         )
       : Promise.resolve();
     const provincialSolicitorPromise = provincialSolicitor?.personId
@@ -59,7 +61,7 @@ export const useGenerateAgreement = () => {
         )
       : provincialSolicitor?.organizationId
       ? getOrganizationConcept(provincialSolicitor?.organizationId).then(o =>
-          !!provincialSolicitor ? setOrganization(provincialSolicitor, o?.data) : null,
+          provincialSolicitor ? setOrganization(provincialSolicitor, o?.data) : null,
         )
       : Promise.resolve();
 
@@ -96,11 +98,11 @@ export const useGenerateAgreement = () => {
     });
     const agreementData = new Api_GenerateAgreement(agreement, fileData);
     const generatedFile = await generate({
-      templateType: getTemplateTypeFromAgreementType(agreement.agreementType.id),
+      templateType: getTemplateTypeFromAgreementType(agreement.agreementType!.id),
       templateData: agreementData,
       convertToType: null,
     });
-    generatedFile?.status === ApiGen_CodeTypes_ExternalResponseStatus.Success!! &&
+    generatedFile?.status === ApiGen_CodeTypes_ExternalResponseStatus.Success &&
       generatedFile?.payload &&
       showFile(generatedFile?.payload);
   };
@@ -113,23 +115,26 @@ export const useGenerateAgreement = () => {
  * @param agreementType
  * @returns
  */
-const getTemplateTypeFromAgreementType = (agreementType: string) => {
+const getTemplateTypeFromAgreementType = (agreementType: string | null) => {
   switch (agreementType) {
-    case AgreementTypes.H179A:
+    case ApiGen_CodeTypes_AgreementTypes.H179A:
       return FormTemplateTypes.H179A;
-    case AgreementTypes.H179P:
+    case ApiGen_CodeTypes_AgreementTypes.H179P:
       return FormTemplateTypes.H179P;
-    case AgreementTypes.H179T:
+    case ApiGen_CodeTypes_AgreementTypes.H179T:
       return FormTemplateTypes.H179T;
-    case AgreementTypes.H0074:
+    case ApiGen_CodeTypes_AgreementTypes.H0074:
       return FormTemplateTypes.H0074;
     default:
       throw Error(`Unable to find form type for agreement type: ${agreementType}`);
   }
 };
 
-const setOrganization = (team: Api_AcquisitionFileTeam, organization: Api_Organization) => {
-  if (!!team) {
+const setOrganization = (
+  team: ApiGen_Concepts_AcquisitionFileTeam,
+  organization: ApiGen_Concepts_Organization,
+) => {
+  if (team) {
     team.organization = organization;
     team.primaryContact =
       organization?.organizationPersons?.find(op => op.personId === team.primaryContactId)

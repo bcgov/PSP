@@ -11,7 +11,6 @@ import { IAddress, IOrganization } from '@/interfaces';
 import { UtcIsoDateTime } from '@/models/api/UtcIsoDateTime';
 
 import IPropertySurplus from './IPropertySurplus';
-import ITypeCode from './ITypeCode';
 
 /**
  * A property entity represents a land, or other type of property.
@@ -44,7 +43,6 @@ export interface IProperty {
 
   areaUnitId?: PropertyAreaUnitTypes;
   areaUnit?: string;
-  areaUnitType?: ITypeCode<string>;
   landArea?: number;
   landLegalDescription?: string;
   encumbranceReason?: string;
@@ -66,14 +64,12 @@ export interface IProperty {
   rowVersion?: number;
 }
 
-export interface IFormProperty
-  extends ExtendOverride<
-    IProperty,
-    {
-      areaUnitType?: ITypeCode<string>;
-      address?: IAddress;
-      landArea?: number;
-      landLegalDescription?: string;
-      coordinates?: string;
-    }
-  > {}
+export type IFormProperty = ExtendOverride<
+  IProperty,
+  {
+    address?: IAddress;
+    landArea?: number;
+    landLegalDescription?: string;
+    coordinates?: string;
+  }
+>;

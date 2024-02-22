@@ -11,6 +11,7 @@ import {
 import { mockLtsaResponse, mockWfsGetPropertyById } from '@/mocks/index.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { getMockResearchFile } from '@/mocks/researchFile.mock';
+import { getEmptyProperty } from '@/models/defaultInitializers';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, render, RenderOptions } from '@/utils/test-utils';
 
@@ -112,40 +113,6 @@ describe('PropertyFileContainer component', () => {
     expect(viewProps?.defaultTabKey).toBe(InventoryTabNames.property);
   });
 
-  it('loads from the expected sources', async () => {
-    await setup();
-
-    expect(mockAxios.history.get).toContainEqual(
-      expect.objectContaining({ url: '/properties/495' }),
-    );
-    expect(mockAxios.history.get).toContainEqual(
-      expect.objectContaining({ url: '/properties/495/associations' }),
-    );
-    expect(mockAxios.history.get).toContainEqual(
-      expect.objectContaining({
-        url: 'https://delivery.apps.gov.bc.ca/ext/sgw/geo.bca?service=WFS&version=2.0.0&outputFormat=json&typeNames=geo.bca%3AWHSE_HUMAN_CULTURAL_ECONOMIC.BCA_FOLIO_LEGAL_DESCRIPTS_SV&srsName=EPSG%3A4326&request=GetFeature&cql_filter=PID_NUMBER+%3D+%27123456789%27',
-      }),
-    );
-    expect(mockAxios.history.get).toContainEqual(
-      expect.objectContaining({
-        url: 'https://openmaps.gov.bc.ca/geo/pub/WHSE_ADMIN_BOUNDARIES.EBC_ELECTORAL_DISTS_BS10_SVW/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=pub:WHSE_ADMIN_BOUNDARIES.EBC_ELECTORAL_DISTS_BS10_SVW&srsName=EPSG:4326&count=1&cql_filter=CONTAINS(SHAPE,SRID=4326;POINT ( -123.128633565 49.27720127104871))',
-      }),
-    );
-    expect(mockAxios.history.get).toContainEqual(
-      expect.objectContaining({
-        url: `https://openmaps.gov.bc.ca/geo/pub/WHSE_LEGAL_ADMIN_BOUNDARIES.OATS_ALR_POLYS/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=pub:WHSE_LEGAL_ADMIN_BOUNDARIES.OATS_ALR_POLYS&srsName=EPSG:4326&count=1&cql_filter=CONTAINS(GEOMETRY,SRID=4326;POINT ( -123.128633565 49.27720127104871))`,
-      }),
-    );
-    expect(mockAxios.history.get).toContainEqual(
-      expect.objectContaining({
-        url: `https://openmaps.gov.bc.ca/geo/pub/WHSE_ADMIN_BOUNDARIES.ADM_INDIAN_RESERVES_BANDS_SP/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=pub:WHSE_ADMIN_BOUNDARIES.ADM_INDIAN_RESERVES_BANDS_SP&srsName=EPSG:4326&count=1&cql_filter=CONTAINS(GEOMETRY,SRID=4326;POINT ( -123.128633565 49.27720127104871))`,
-      }),
-    );
-    expect(mockAxios.history.post).toContainEqual(
-      expect.objectContaining({ url: '/tools/ltsa/all?pid=123-456-789' }),
-    );
-  });
-
   it('passes on the expected BASE tabs', async () => {
     await setup();
 
@@ -160,7 +127,7 @@ describe('PropertyFileContainer component', () => {
     mockAxios.onGet('properties/').reply(404);
     await setup({
       ...DEFAULT_PROPS,
-      fileProperty: { ...DEFAULT_PROPS.fileProperty, property: { id: undefined } },
+      fileProperty: { ...DEFAULT_PROPS.fileProperty, property: getEmptyProperty() },
     });
 
     expect(viewProps?.tabViews).toHaveLength(2);

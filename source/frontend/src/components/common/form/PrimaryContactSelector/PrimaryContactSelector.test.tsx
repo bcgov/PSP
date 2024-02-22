@@ -6,7 +6,7 @@ import { fromApiOrganization, fromApiPerson } from '@/interfaces/IContactSearchR
 import { getMockPerson } from '@/mocks/contacts.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { getMockOrganization } from '@/mocks/organization.mock';
-import { Api_Organization } from '@/models/api/Organization';
+import { ApiGen_Concepts_Organization } from '@/models/api/generated/ApiGen_Concepts_Organization';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { getByName, render, RenderOptions, screen, waitForEffects } from '@/utils/test-utils';
 
@@ -58,7 +58,6 @@ describe('PrimaryContactSelector component', () => {
               firstName: 'chester',
               surname: 'tester',
             },
-            isDisabled: false,
             rowVersion: 1,
           },
           {
@@ -73,7 +72,7 @@ describe('PrimaryContactSelector component', () => {
             rowVersion: 1,
           },
         ],
-      } as Api_Organization,
+      } as ApiGen_Concepts_Organization,
     });
   });
 
@@ -121,11 +120,10 @@ describe('PrimaryContactSelector component', () => {
               firstName: 'chester',
               surname: 'tester',
             },
-            isDisabled: false,
             rowVersion: 1,
           },
         ],
-      } as Api_Organization,
+      } as ApiGen_Concepts_Organization,
     });
 
     setup({ props: { contactInfo: fromApiOrganization(getMockOrganization()) } });
@@ -137,7 +135,7 @@ describe('PrimaryContactSelector component', () => {
 
   it(`shows message 'No contacts available' when no primary contact is available`, async () => {
     getOrganizationConceptFn.mockResolvedValue({
-      data: { ...getMockOrganization(), organizationPersons: [] } as Api_Organization,
+      data: { ...getMockOrganization(), organizationPersons: [] } as ApiGen_Concepts_Organization,
     });
 
     setup({ props: { contactInfo: fromApiOrganization(getMockOrganization()) } });

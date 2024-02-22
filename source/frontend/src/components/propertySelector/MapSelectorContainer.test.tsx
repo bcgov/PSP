@@ -25,6 +25,7 @@ const store = mockStore({});
 const onSelectedProperties = jest.fn();
 
 const testProperty: IMapProperty = {
+  propertyId: 123,
   pid: '123-456-789',
   planNumber: 'SPS22411',
   address: 'Test address 123',

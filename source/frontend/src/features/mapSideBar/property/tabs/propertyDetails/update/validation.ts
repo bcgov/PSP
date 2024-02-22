@@ -21,14 +21,6 @@ export const UpdatePropertyDetailsYupSchema = Yup.object().shape({
       .required(),
     otherwise: Yup.array().nullable(),
   }),
-  adjacentLands: Yup.array().when('tenures', {
-    is: (tenureArray: PropertyTenureFormModel[]) =>
-      tenureArray?.some(obj => obj.typeCode === PropertyTenureTypes.AdjacentLand),
-    then: Yup.array()
-      .min(1, `Adjacent land type is required if tenure status includes 'Adjacent Land'`)
-      .required(),
-    otherwise: Yup.array().nullable(),
-  }),
   volumetricParcelTypeCode: Yup.string().when('isVolumetricParcel', {
     is: (isVolumetricParcel: string) => stringToBoolean(isVolumetricParcel) === true,
     then: Yup.string().required('Volumetric Type is required'),

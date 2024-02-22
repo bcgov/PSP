@@ -3,25 +3,25 @@ import { CellProps } from 'react-table';
 
 import OverflowTip from '@/components/common/OverflowTip';
 import { ColumnWithProps, Table } from '@/components/Table';
-import { Api_Property } from '@/models/api/Property';
-import { Api_PropertyFile } from '@/models/api/PropertyFile';
+import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
+import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { getFilePropertyName } from '@/utils/mapPropertyUtils';
 
 interface IFilePropertiesTableProps {
-  fileProperties: Api_PropertyFile[];
-  setSelectedFileProperties: (properties: Api_PropertyFile[]) => void;
-  selectedFileProperties: Api_PropertyFile[];
+  fileProperties: ApiGen_Concepts_FileProperty[];
+  setSelectedFileProperties: (properties: ApiGen_Concepts_FileProperty[]) => void;
+  selectedFileProperties: ApiGen_Concepts_FileProperty[];
   disabledSelection: boolean;
 }
 
-const columns: ColumnWithProps<Api_PropertyFile>[] = [
+const columns: ColumnWithProps<ApiGen_Concepts_FileProperty>[] = [
   {
     Header: 'Identifier',
     accessor: 'property',
     align: 'left',
     minWidth: 60,
     maxWidth: 60,
-    Cell: (cellProps: CellProps<Api_PropertyFile, Api_Property | undefined>) => {
+    Cell: (cellProps: CellProps<ApiGen_Concepts_FileProperty, ApiGen_Concepts_Property | null>) => {
       const propertyName = getFilePropertyName(cellProps.row.original);
       return <OverflowTip fullText={`${propertyName.label}: ${propertyName.value}`} />;
     },
@@ -36,7 +36,7 @@ const FilePropertiesTable: React.FunctionComponent<IFilePropertiesTableProps> = 
 }) => {
   return (
     <>
-      <Table<Api_PropertyFile>
+      <Table<ApiGen_Concepts_FileProperty>
         name="selectableFileProperties"
         hideHeaders
         hideToolbar

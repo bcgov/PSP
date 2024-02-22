@@ -14,6 +14,7 @@ import PropertyAssociationTabView from '@/features/mapSideBar/property/tabs/prop
 import { PropertyDetailsTabView } from '@/features/mapSideBar/property/tabs/propertyDetails/detail/PropertyDetailsTabView';
 import ComposedPropertyState from '@/hooks/repositories/useComposedProperties';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import { isValidId } from '@/utils';
 
 import { PropertyManagementTabView } from './tabs/propertyDetailsManagement/detail/PropertyManagementTabView';
 
@@ -27,7 +28,7 @@ export interface IPropertyContainerProps {
 export const PropertyContainer: React.FunctionComponent<
   React.PropsWithChildren<IPropertyContainerProps>
 > = ({ composedPropertyState }) => {
-  const showPropertyInfoTab = composedPropertyState?.id !== undefined;
+  const showPropertyInfoTab = isValidId(composedPropertyState?.id);
   const { hasClaim } = useKeycloakWrapper();
 
   const tabViews: TabInventoryView[] = [];
@@ -64,7 +65,7 @@ export const PropertyContainer: React.FunctionComponent<
     name: 'Value',
   });
 
-  var defaultTab = InventoryTabNames.title;
+  let defaultTab = InventoryTabNames.title;
 
   // TODO: PSP-4406 this should have a loading flag
   const propertyViewForm = usePropertyDetails(composedPropertyState.apiWrapper?.response);
@@ -86,11 +87,11 @@ export const PropertyContainer: React.FunctionComponent<
     defaultTab = InventoryTabNames.property;
   }
 
-  if (composedPropertyState.propertyAssociationWrapper?.response?.id !== undefined) {
+  if (isValidId(composedPropertyState.propertyAssociationWrapper?.response?.id)) {
     tabViews.push({
       content: (
         <PropertyAssociationTabView
-          isLoading={composedPropertyState.propertyAssociationWrapper?.loading}
+          isLoading={composedPropertyState.propertyAssociationWrapper!.loading}
           associations={composedPropertyState.propertyAssociationWrapper?.response}
         />
       ),

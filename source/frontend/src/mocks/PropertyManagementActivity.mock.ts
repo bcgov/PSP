@@ -1,6 +1,8 @@
-import { Api_PropertyActivity } from '@/models/api/PropertyActivity';
+import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
+import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 
-const emptyActivity: Api_PropertyActivity = {
+const emptyActivity: ApiGen_Concepts_PropertyActivity = {
   id: 0,
   activityTypeCode: {
     id: 'ACTIVITY-TYPE',
@@ -20,7 +22,7 @@ const emptyActivity: Api_PropertyActivity = {
     isDisabled: false,
     displayOrder: 100,
   },
-  requestAddedDateOnly: '',
+  requestAddedDateOnly: EpochIsoDateTime,
   completionDateOnly: null,
   description: '',
   requestSource: '',
@@ -37,12 +39,12 @@ const emptyActivity: Api_PropertyActivity = {
   ministryContacts: [],
   activityProperties: [],
   invoices: [],
-  rowVersion: 0,
+  ...getEmptyBaseAudit(0),
 };
 export const mockGetPropertyManagementActivity = (
-  id: number = 1,
-  propertyId: number = 1,
-): Api_PropertyActivity => ({
+  id = 1,
+  propertyId = 1,
+): ApiGen_Concepts_PropertyActivity => ({
   ...emptyActivity,
   id: id,
   activityTypeCode: {
@@ -69,18 +71,18 @@ export const mockGetPropertyManagementActivity = (
     {
       id: 15,
       propertyActivityId: 200,
-      propertyActivityModel: null,
+      propertyActivity: null,
       propertyId: propertyId,
       property: null,
-      rowVersion: 1,
+      ...getEmptyBaseAudit(1),
     },
   ],
 });
 
 export const mockGetPropertyManagementActivityNotStarted = (
-  id: number = 1,
-  propertyId: number = 1,
-): Api_PropertyActivity => ({
+  id = 1,
+  propertyId = 1,
+): ApiGen_Concepts_PropertyActivity => ({
   ...emptyActivity,
   id: id,
   activityTypeCode: {
@@ -107,15 +109,15 @@ export const mockGetPropertyManagementActivityNotStarted = (
     {
       id: 73,
       propertyActivityId: 200,
-      propertyActivityModel: null,
+      propertyActivity: null,
       propertyId: propertyId,
       property: null,
-      rowVersion: 1,
+      ...getEmptyBaseAudit(1),
     },
   ],
 });
 
-export const mockGetPropertyManagementActivityList = (): Api_PropertyActivity[] => [
+export const mockGetPropertyManagementActivityList = (): ApiGen_Concepts_PropertyActivity[] => [
   {
     ...emptyActivity,
     id: 1,

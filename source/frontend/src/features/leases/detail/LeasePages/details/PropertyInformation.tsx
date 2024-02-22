@@ -4,8 +4,9 @@ import styled from 'styled-components';
 
 import { Input } from '@/components/common/form';
 import { SectionField } from '@/components/common/Section/SectionField';
-import { Api_Lease } from '@/models/api/Lease';
-import { formatNumber, pidFormatter } from '@/utils';
+import { ApiGen_Base_CodeType } from '@/models/api/generated/ApiGen_Base_CodeType';
+import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
+import { formatNumber, isValidString, pidFormatter } from '@/utils';
 import { withNameSpace } from '@/utils/formUtils';
 
 import AddressSubForm from '../AddressSubForm';
@@ -23,14 +24,21 @@ export interface IPropertyInformationProps {
 export const PropertyInformation: React.FunctionComponent<
   React.PropsWithChildren<IPropertyInformationProps & Partial<FieldArrayRenderProps>>
 > = ({ nameSpace, disabled, hideAddress }) => {
-  const formikProps = useFormikContext<Api_Lease>();
-  const landArea = getIn(formikProps.values, withNameSpace(nameSpace, 'leaseArea'));
-  const areaUnitType = getIn(formikProps.values, withNameSpace(nameSpace, 'areaUnitType'));
+  const formikProps = useFormikContext<ApiGen_Concepts_Lease>();
+
+  const landArea: number | null = getIn(formikProps.values, withNameSpace(nameSpace, 'leaseArea'));
+
+  const areaUnitType: ApiGen_Base_CodeType<string> | null = getIn(
+    formikProps.values,
+    withNameSpace(nameSpace, 'areaUnitType'),
+  );
+
   const legalDescription = getIn(
     formikProps.values,
     withNameSpace(nameSpace, 'property.landLegalDescription'),
   );
   const pid = getIn(formikProps.values, withNameSpace(nameSpace, 'property.pid'));
+
   const pidText = pid ? `PID: ${pidFormatter(pid)}` : '';
   return (
     <StyledPropertyInfo>
@@ -41,8 +49,8 @@ export const PropertyInformation: React.FunctionComponent<
         <Input disabled={disabled} field={withNameSpace(nameSpace, 'propertyName')} />
       </SectionField>
       <SectionField label="Area included" labelWidth="3">
-        {formatNumber(landArea, 2, 2)}{' '}
-        {areaUnitType?.description ? (
+        {formatNumber(landArea || 0, 2, 2)}{' '}
+        {isValidString(areaUnitType?.description) ? (
           `${areaUnitType?.description}.`
         ) : (
           <>

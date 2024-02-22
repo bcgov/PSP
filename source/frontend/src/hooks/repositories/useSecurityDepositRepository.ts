@@ -1,7 +1,7 @@
 import { AxiosResponse } from 'axios';
 import { useCallback, useMemo } from 'react';
 
-import { Api_SecurityDeposit } from '@/models/api/SecurityDeposit';
+import { ApiGen_Concepts_SecurityDeposit } from '@/models/api/generated/ApiGen_Concepts_SecurityDeposit';
 import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils';
 
 import { useApiLeaseDeposits } from '../pims-api/useApiLeaseDeposits';
@@ -19,7 +19,7 @@ export const useSecurityDepositRepository = () => {
     getLeaseDeposits,
   } = useApiLeaseDeposits();
   const getSecurityDepositsApi = useApiRequestWrapper<
-    (leaseId: number) => Promise<AxiosResponse<Api_SecurityDeposit[], any>>
+    (leaseId: number) => Promise<AxiosResponse<ApiGen_Concepts_SecurityDeposit[], any>>
   >({
     requestFunction: useCallback(
       async (leaseId: number) => await getLeaseDeposits(leaseId),
@@ -33,11 +33,11 @@ export const useSecurityDepositRepository = () => {
   const updateSecurityDepositApi = useApiRequestWrapper<
     (
       leaseId: number,
-      securityDeposit: Api_SecurityDeposit,
-    ) => Promise<AxiosResponse<Api_SecurityDeposit, any>>
+      securityDeposit: ApiGen_Concepts_SecurityDeposit,
+    ) => Promise<AxiosResponse<ApiGen_Concepts_SecurityDeposit, any>>
   >({
     requestFunction: useCallback(
-      async (leaseId: number, securityDeposit: Api_SecurityDeposit) =>
+      async (leaseId: number, securityDeposit: ApiGen_Concepts_SecurityDeposit) =>
         await putLeaseDeposit(leaseId, securityDeposit),
       [putLeaseDeposit],
     ),
@@ -61,11 +61,11 @@ export const useSecurityDepositRepository = () => {
   const addSecurityDepositApi = useApiRequestWrapper<
     (
       leaseId: number,
-      securityDeposit: Api_SecurityDeposit,
-    ) => Promise<AxiosResponse<Api_SecurityDeposit, any>>
+      securityDeposit: ApiGen_Concepts_SecurityDeposit,
+    ) => Promise<AxiosResponse<ApiGen_Concepts_SecurityDeposit, any>>
   >({
     requestFunction: useCallback(
-      async (leaseId: number, securityDeposit: Api_SecurityDeposit) =>
+      async (leaseId: number, securityDeposit: ApiGen_Concepts_SecurityDeposit) =>
         await postLeaseDeposit(leaseId, securityDeposit),
       [postLeaseDeposit],
     ),
@@ -75,10 +75,13 @@ export const useSecurityDepositRepository = () => {
   });
 
   const deleteSecurityDepositApi = useApiRequestWrapper<
-    (leaseId: number, securityDeposit: Api_SecurityDeposit) => Promise<AxiosResponse<void, any>>
+    (
+      leaseId: number,
+      securityDeposit: ApiGen_Concepts_SecurityDeposit,
+    ) => Promise<AxiosResponse<void, any>>
   >({
     requestFunction: useCallback(
-      async (leaseId: number, securityDeposit: Api_SecurityDeposit) =>
+      async (leaseId: number, securityDeposit: ApiGen_Concepts_SecurityDeposit) =>
         await deleteLeaseDeposit(leaseId, securityDeposit),
       [deleteLeaseDeposit],
     ),

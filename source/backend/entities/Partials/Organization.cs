@@ -24,7 +24,7 @@ namespace Pims.Dal.Entities
         [NotMapped]
         public string Description { get => OrganizationAlias; set => OrganizationAlias = value; }
 
-        public ICollection<PimsPerson> GetPersons() => PimsPersonOrganizations?.Select(po => po.Person).Select(p =>
+        public ICollection<PimsPerson> GetPersons() => PimsPersonOrganizations?.Select(po => po.Person).Where(p => p != null).Select(p =>
         {
             p.PimsPersonOrganizations = null;
             return p;

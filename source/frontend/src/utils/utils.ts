@@ -5,6 +5,7 @@ import { hideLoading, showLoading } from 'react-redux-loading-bar';
 
 import { SelectOption } from '@/components/common/form';
 import { TableSort } from '@/components/Table/TableSort';
+import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { logError, logRequest, logSuccess } from '@/store/slices/network/networkSlice';
 
 /**
@@ -46,7 +47,7 @@ export const isPositiveNumberOrZero = (input: string | number | undefined | null
 };
 
 export const isNullOrWhitespace = (value: string | null | undefined): boolean => {
-  return value === null || value === undefined || value.trim() === '';
+  return !exists(value) || value.trim() === '';
 };
 
 type FormikMemoProps = {
@@ -94,6 +95,7 @@ export const formikFieldMemo = (
  * @param axiosPromise The result of an axios.get, .put, ..., call.
  */
 export const handleAxiosResponse = <ResponseType>(
+  // eslint-disable-next-line @typescript-eslint/ban-types
   dispatch: Function,
   actionType: string,
   axiosPromise: Promise<AxiosResponse<ResponseType>>,
@@ -143,7 +145,9 @@ export const generateMultiSortCriteria = (sort: TableSort<any>) => {
  * Convert sort query string to TableSort config
  * ['Name desc'] = {name: 'desc'}
  */
-export const resolveSortCriteriaFromUrl = (input: string[]): TableSort<any> | {} => {
+export const resolveSortCriteriaFromUrl = (
+  input: string[],
+): TableSort<any> | Record<string, never> => {
   if (isEmpty(input)) {
     return {};
   }
@@ -168,6 +172,32 @@ export const getPage = <T>(pageIndex: number, pageSize: number, data: T[]) => {
   const pageStart = (pageIndex ?? 0) * pageSize;
   return data.slice(pageStart, pageStart + pageSize);
 };
+
+/**
+ * Meant to be used as the function passed during a conditional statement to remove null or undefined entries.
+ * example. myArray.filter(exists);
+ *          if(exists(a?.b?.c)){}
+ */
+export function exists<T>(value: T | null | undefined): value is T {
+  return value === (value ?? !value);
+}
+
+/**
+ * Returns true id an identifier belongs to an existing entry on the backend
+ * @param value the paraneter to be assessed
+ * @returns true if valid, false otherwise
+ */
+export function isValidId(value: number | null | undefined): value is number {
+  return exists(value) && !isNaN(value) && value !== 0;
+}
+
+export function isValidString(value: string | null | undefined): value is string {
+  return exists(value) && value.length > 0;
+}
+
+export function isValidIsoDateTime(value: string | null | undefined): value is string {
+  return isValidString(value) && value !== EpochIsoDateTime;
+}
 
 /**
  * Add a simple retry wrapper to help avoid chunk errors in deployed pims application, recursively calls promise based on attemptsLeft parameter.
