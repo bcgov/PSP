@@ -48,8 +48,6 @@ export const AgreementSubForm: React.FunctionComponent<IAgreementSubFormProps> =
   const setFieldValue = formikProps.setFieldValue;
   useEffect(() => {
     if (
-      (touched?.agreementStatusTypeCode ||
-        initialAgreement?.agreementStatusTypeCode !== agreement?.agreementStatusTypeCode) &&
       agreement?.agreementStatusTypeCode !== AgreementStatusTypes.CANCELLED &&
       !!agreement?.cancellationNote
     ) {
