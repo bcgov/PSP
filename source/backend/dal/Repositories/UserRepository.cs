@@ -206,10 +206,7 @@ namespace Pims.Dal.Repositories
 
             if (filter != null)
             {
-                if (filter.Page < 1)
-                {
-                    filter.Page = 1;
-                }
+                filter.Page = 1;
 
                 if (filter.Quantity < 1)
                 {
