@@ -41,11 +41,13 @@ export const AgreementSubForm: React.FunctionComponent<IAgreementSubFormProps> =
 
   const agreementStatusOptions = getOptionsByType(API.AGREEMENT_STATUS_TYPES);
   const agreement = getIn(formikProps.values, nameSpace);
+  const touched = getIn(formikProps.touched, nameSpace);
 
   const { setDisplayModal, setModalContent } = useModalContext();
   const setFieldValue = formikProps.setFieldValue;
   useEffect(() => {
     if (
+      touched?.agreementStatusTypeCode &&
       agreement.agreementStatusTypeCode !== AgreementStatusTypes.CANCELLED &&
       !!agreement.cancellationNote
     ) {
