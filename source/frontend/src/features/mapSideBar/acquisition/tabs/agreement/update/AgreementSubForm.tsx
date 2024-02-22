@@ -72,7 +72,14 @@ export const AgreementSubForm: React.FunctionComponent<IAgreementSubFormProps> =
       });
       setDisplayModal(true);
     }
-  }, [agreement, setFieldValue, nameSpace, setDisplayModal, setModalContent]);
+  }, [
+    agreement,
+    setFieldValue,
+    nameSpace,
+    setDisplayModal,
+    setModalContent,
+    touched?.agreementStatusTypeCode,
+  ]);
 
   return (
     <>
