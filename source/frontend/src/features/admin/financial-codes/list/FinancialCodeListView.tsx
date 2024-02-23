@@ -10,7 +10,7 @@ import { TableSort } from '@/components/Table/TableSort';
 import { Roles } from '@/constants/roles';
 import { useFinancialCodeRepository } from '@/hooks/repositories/useFinancialCodeRepository';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
-import { Api_FinancialCode } from '@/models/api/FinancialCode';
+import { ApiGen_Concepts_FinancialCode } from '@/models/api/generated/ApiGen_Concepts_FinancialCode';
 import { isExpiredCode } from '@/utils/financialCodeUtils';
 
 import {
@@ -46,7 +46,7 @@ export const FinancialCodeListView: React.FC = () => {
   }, [fetchData, financialCodeResults]);
 
   // Sorting and filtering for this list view is performed client-side
-  const [sort, setSort] = React.useState<TableSort<Api_FinancialCode>>({});
+  const [sort, setSort] = React.useState<TableSort<ApiGen_Concepts_FinancialCode>>({});
   const [filter, setFilter] = React.useState<IFinancialCodeFilter>(defaultFinancialCodeFilter);
 
   const sortedFilteredFinancialCodes = useMemo(() => {
@@ -76,7 +76,7 @@ export const FinancialCodeListView: React.FC = () => {
       if (sort) {
         const sortFields = Object.keys(sort);
         if (sortFields?.length > 0) {
-          const sortBy = sortFields[0] as keyof Api_FinancialCode;
+          const sortBy = sortFields[0] as keyof ApiGen_Concepts_FinancialCode;
           const sortDirection = sort[sortBy];
           records = orderBy(records, sortBy, sortDirection);
         } else {

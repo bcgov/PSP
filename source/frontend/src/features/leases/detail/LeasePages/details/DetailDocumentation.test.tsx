@@ -2,8 +2,11 @@ import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
 
-import { getDefaultFormLease, LeaseFormModel } from '@/features/leases/models';
-import { mockParcel } from '@/mocks/filterData.mock';
+import { mockApiProperty } from '@/mocks/filterData.mock';
+import { getEmptyPropertyLease } from '@/mocks/properties.mock';
+import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
+import { getEmptyLease } from '@/models/defaultInitializers';
+import { toTypeCode } from '@/utils/formUtils';
 import { render, RenderOptions } from '@/utils/test-utils';
 
 import DetailDocumentation, { IDetailDocumentationProps } from './DetailDocumentation';
@@ -12,11 +15,12 @@ const history = createMemoryHistory();
 
 describe('DetailDocumentation component', () => {
   const setup = (
-    renderOptions: RenderOptions & IDetailDocumentationProps & { lease?: LeaseFormModel } = {},
+    renderOptions: RenderOptions &
+      IDetailDocumentationProps & { lease?: ApiGen_Concepts_Lease } = {},
   ) => {
     // render component under test
     const component = render(
-      <Formik onSubmit={noop} initialValues={renderOptions.lease ?? new LeaseFormModel()}>
+      <Formik onSubmit={noop} initialValues={renderOptions.lease ?? getEmptyLease()}>
         <DetailDocumentation
           disabled={renderOptions.disabled}
           nameSpace={renderOptions.nameSpace}
@@ -35,8 +39,18 @@ describe('DetailDocumentation component', () => {
   it('renders minimally as expected', () => {
     const { component } = setup({
       lease: {
-        ...new LeaseFormModel(),
-        properties: [{ ...mockParcel, areaUnitTypeCode: 'test', landArea: '123', leaseId: null }],
+        ...getEmptyLease(),
+        fileProperties: [
+          {
+            ...getEmptyPropertyLease(),
+            property: {
+              ...mockApiProperty,
+              areaUnit: toTypeCode('test'),
+              landArea: 123,
+            },
+            fileId: 1,
+          },
+        ],
       },
     });
     expect(component.asFragment()).toMatchSnapshot();
@@ -45,8 +59,17 @@ describe('DetailDocumentation component', () => {
   it('renders a complete lease as expected', () => {
     const { component } = setup({
       lease: {
-        ...new LeaseFormModel(),
-        properties: [{ ...mockParcel, areaUnitTypeCode: 'test', landArea: '123', leaseId: null }],
+        ...getEmptyLease(),
+        fileProperties: [
+          {
+            ...getEmptyPropertyLease(),
+            property: {
+              ...mockApiProperty,
+              areaUnit: toTypeCode('test'),
+              landArea: 123,
+            },
+          },
+        ],
         amount: 1,
         description: 'a test description',
         programName: 'A program',
@@ -69,9 +92,8 @@ describe('DetailDocumentation component', () => {
       component: { getByDisplayValue },
     } = setup({
       lease: {
-        ...getDefaultFormLease(),
+        ...getEmptyLease(),
         hasPhysicalLicense: true,
-        hasDigitalLicense: undefined,
       },
     });
     expect(getByDisplayValue('Yes')).toBeVisible();
@@ -82,8 +104,7 @@ describe('DetailDocumentation component', () => {
       component: { getByDisplayValue },
     } = setup({
       lease: {
-        ...getDefaultFormLease(),
-        hasPhysicalLicense: undefined,
+        ...getEmptyLease(),
         hasDigitalLicense: true,
       },
     });
@@ -95,7 +116,7 @@ describe('DetailDocumentation component', () => {
       component: { getByText },
     } = setup({
       lease: {
-        ...getDefaultFormLease(),
+        ...getEmptyLease(),
         documentationReference: 'documentation Reference',
       },
     });
@@ -107,7 +128,7 @@ describe('DetailDocumentation component', () => {
       component: { getByDisplayValue },
     } = setup({
       lease: {
-        ...getDefaultFormLease(),
+        ...getEmptyLease(),
         psFileNo: 'A PS File No',
       },
     });

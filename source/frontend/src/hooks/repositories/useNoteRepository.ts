@@ -4,7 +4,8 @@ import { useCallback, useMemo } from 'react';
 import { NoteTypes } from '@/constants/index';
 import { useApiNotes } from '@/hooks/pims-api/useApiNotes';
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
-import { Api_EntityNote, Api_Note } from '@/models/api/Note';
+import { ApiGen_Concepts_EntityNote } from '@/models/api/generated/ApiGen_Concepts_EntityNote';
+import { ApiGen_Concepts_Note } from '@/models/api/generated/ApiGen_Concepts_Note';
 import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils';
 
 /**
@@ -14,10 +15,13 @@ export const useNoteRepository = () => {
   const { getNote, postNote, putNote } = useApiNotes();
 
   const addNoteApi = useApiRequestWrapper<
-    (type: NoteTypes, note: Api_EntityNote) => Promise<AxiosResponse<Api_EntityNote, any>>
+    (
+      type: NoteTypes,
+      note: ApiGen_Concepts_EntityNote,
+    ) => Promise<AxiosResponse<ApiGen_Concepts_EntityNote, any>>
   >({
     requestFunction: useCallback(
-      async (type: NoteTypes, note: Api_EntityNote) => await postNote(type, note),
+      async (type: NoteTypes, note: ApiGen_Concepts_EntityNote) => await postNote(type, note),
       [postNote],
     ),
     requestName: 'AddNote',
@@ -26,7 +30,7 @@ export const useNoteRepository = () => {
   });
 
   const getNoteApi = useApiRequestWrapper<
-    (noteId: number) => Promise<AxiosResponse<Api_Note, any>>
+    (noteId: number) => Promise<AxiosResponse<ApiGen_Concepts_Note, any>>
   >({
     requestFunction: useCallback(async (noteId: number) => await getNote(noteId), [getNote]),
     requestName: 'GetNote',
@@ -35,9 +39,12 @@ export const useNoteRepository = () => {
   });
 
   const updateNoteApi = useApiRequestWrapper<
-    (note: Api_Note) => Promise<AxiosResponse<Api_Note, any>>
+    (note: ApiGen_Concepts_Note) => Promise<AxiosResponse<ApiGen_Concepts_Note, any>>
   >({
-    requestFunction: useCallback(async (note: Api_Note) => await putNote(note), [putNote]),
+    requestFunction: useCallback(
+      async (note: ApiGen_Concepts_Note) => await putNote(note),
+      [putNote],
+    ),
     requestName: 'UpdateNote',
     onSuccess: useAxiosSuccessHandler('Note saved'),
     onError: useAxiosErrorHandler(),

@@ -12,6 +12,7 @@ import { ContactManagerModal } from '@/components/contact/ContactManagerModal';
 import * as API from '@/constants/API';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { IContactSearchResult } from '@/interfaces';
+import { isValidString } from '@/utils';
 
 import { FormLeaseDeposit } from '../../models/FormLeaseDeposit';
 import { ReceivedDepositYupSchema } from './ReceivedDepositYupSchema';
@@ -54,8 +55,8 @@ export const ReceivedDepositForm: React.FunctionComponent<
                   placeholder="Select..."
                   options={depositTypeOptions}
                   onChange={() => {
-                    let depositTypeCode = formikProps.values?.depositTypeCode;
-                    if (!!depositTypeCode && depositTypeCode !== 'OTHER') {
+                    const depositTypeCode = formikProps.values?.depositTypeCode;
+                    if (isValidString(depositTypeCode) && depositTypeCode !== 'OTHER') {
                       formikProps.setFieldValue('otherTypeDescription', '');
                     }
                   }}

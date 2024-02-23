@@ -5,6 +5,7 @@ import * as API from '@/constants/API';
 import { useUserInfoRepository } from '@/hooks/repositories/useUserInfoRepository';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
+import { exists } from '@/utils';
 
 import { Select, SelectProps } from '../Select';
 
@@ -26,10 +27,10 @@ export const UserRegionSelectContainer: React.FunctionComponent<
   );
   const { retrieveUserInfo, retrieveUserInfoResponse } = useUserInfoRepository();
   const regionTypes = getOptionsByType(API.REGION_TYPES);
-  const userRegionCodes = retrieveUserInfoResponse?.userRegions?.map(ur =>
-    ur.regionCode?.toString(),
-  );
-  const userRegionTypes = regionTypes.filter(r => userRegionCodes?.includes(r.code));
+  const userRegionCodes =
+    retrieveUserInfoResponse?.userRegions?.map(ur => ur.regionCode?.toString()).filter(exists) ??
+    [];
+  const userRegionTypes = regionTypes.filter(r => userRegionCodes?.includes(r.code ?? ''));
 
   useEffect(() => {
     formattedGuid && retrieveUserInfo(formattedGuid);

@@ -1,23 +1,13 @@
 using Pims.Api.Models.Base;
-using Pims.Api.Models.Concepts.Property;
+using Pims.Api.Models.Concepts.File;
 
 namespace Pims.Api.Models.Concepts.Lease
 {
-    public class PropertyLeaseModel : BaseAuditModel
+    public class PropertyLeaseModel : FilePropertyModel
     {
-        #region Properties
+        #region Propertie
 
-        public long? Id { get; set; }
-
-        public long? LeaseId { get; set; }
-
-        public long? PropertyId { get; set; }
-
-        public PropertyModel Property { get; set; }
-
-        public LeaseModel Lease { get; set; }
-
-        public string PropertyName { get; set; }
+        public new LeaseModel File { get; set; }
 
         public double? LeaseArea { get; set; }
 

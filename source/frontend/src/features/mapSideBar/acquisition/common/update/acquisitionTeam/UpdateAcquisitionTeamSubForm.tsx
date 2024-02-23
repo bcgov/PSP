@@ -14,10 +14,8 @@ import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { AcquisitionFormModal } from '../../modals/AcquisitionFormModal';
 import { AcquisitionTeamFormModel, WithAcquisitionTeam } from '../../models';
 
-interface IUpdateAcquisitionTeamSubFormProps {}
-
 export const UpdateAcquisitionTeamSubForm: React.FunctionComponent<
-  React.PropsWithChildren<IUpdateAcquisitionTeamSubFormProps>
+  React.PropsWithChildren<unknown>
 > = () => {
   const { values, setFieldTouched } = useFormikContext<WithAcquisitionTeam>();
   const [showRemoveMemberModal, setShowRemoveMemberModal] = useState<boolean>(false);

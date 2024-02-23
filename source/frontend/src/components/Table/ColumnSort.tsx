@@ -7,7 +7,7 @@ import variables from '@/assets/scss/_variables.module.scss';
 import { ColumnInstanceWithProps } from '.';
 import { TableSort } from './TableSort';
 
-interface IColumnSortProps<T extends object = {}> {
+interface IColumnSortProps<T extends object = object> {
   column: ColumnInstanceWithProps<T>;
   sort?: TableSort<T>;
   onSort: () => void;
@@ -37,7 +37,7 @@ const Up = styled(IoMdArrowDropup)<Props>`
   height: 1.6rem;
 `;
 
-function ColumnSort<T extends object = {}>({ column, onSort, sort }: IColumnSortProps<T>) {
+function ColumnSort<T extends object = object>({ column, onSort, sort }: IColumnSortProps<T>) {
   if (!column.sortable) {
     return null;
   }

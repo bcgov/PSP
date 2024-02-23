@@ -25,7 +25,7 @@ export const useDispositionFileExport = () => {
       dispatch(logRequest(requestId));
       dispatch(showLoading());
       try {
-        const { data, status } = await apiExportDispositionFiles(filter, outputFormat);
+        const { data, status } = await apiExportDispositionFiles(filter);
         if (status === 204) {
           toast.warn(
             "We were unable to retrieve any data for your request. If you've applied any filters or search criteria, ensure they are set correctly. Broadening your criteria may yield results.",

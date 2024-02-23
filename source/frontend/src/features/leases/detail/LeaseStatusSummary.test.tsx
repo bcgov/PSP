@@ -1,7 +1,7 @@
 import { createMemoryHistory } from 'history';
 import moment from 'moment';
 
-import { defaultApiLease } from '@/models/api/Lease';
+import { defaultApiLease } from '@/models/defaultInitializers';
 import { render, RenderOptions } from '@/utils/test-utils';
 
 import { ILeaseStatusSummaryProps, LeaseStatusSummary } from './LeaseStatusSummary';
@@ -27,14 +27,14 @@ describe('LeaseStatusSummary component', () => {
   it('renders as expected when active', () => {
     const futureExpiry = moment().add(1, 'days');
     const { component } = setup({
-      lease: { ...defaultApiLease, expiryDate: futureExpiry.format('YYYY-MM-DD') },
+      lease: { ...defaultApiLease(), expiryDate: futureExpiry.format('YYYY-MM-DD') },
     });
     expect(component.asFragment()).toMatchSnapshot();
   });
   it('renders as expected when inactive', () => {
     const pastExpiry = moment().subtract(1, 'days');
     const { component } = setup({
-      lease: { ...defaultApiLease, expiryDate: pastExpiry.format('YYYY-MM-DD') },
+      lease: { ...defaultApiLease(), expiryDate: pastExpiry.format('YYYY-MM-DD') },
     });
     expect(component.asFragment()).toMatchSnapshot();
   });
@@ -42,7 +42,7 @@ describe('LeaseStatusSummary component', () => {
   it('displays the lFileNo when provided', () => {
     const {
       component: { getByText },
-    } = setup({ lease: { ...defaultApiLease, lFileNo: '111-222-333' } });
+    } = setup({ lease: { ...defaultApiLease(), lFileNo: '111-222-333' } });
     expect(getByText('111-222-333')).toBeVisible();
   });
 });

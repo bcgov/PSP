@@ -14,9 +14,10 @@ import { StyledSummarySection } from '@/components/common/Section/SectionStyles'
 import FilePropertiesTable from '@/components/filePropertiesTable/FilePropertiesTable';
 import { StyledLink } from '@/components/maps/leaflet/LayerPopup/styles';
 import { InterestHolderType } from '@/constants/interestHolderTypes';
-import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
-import { Api_InterestHolder } from '@/models/api/InterestHolder';
-import { Api_PropertyFile } from '@/models/api/PropertyFile';
+import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
+import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
+import { ApiGen_Concepts_InterestHolder } from '@/models/api/generated/ApiGen_Concepts_InterestHolder';
+import { exists } from '@/utils';
 
 import { InterestHolderSubForm } from './InterestHolderSubForm';
 import { InterestHolderForm, StakeHolderForm } from './models';
@@ -24,11 +25,11 @@ import { UpdateStakeHolderYupSchema } from './UpdateStakeHolderYupSchema';
 
 export interface IUpdateStakeHolderFormProps {
   formikRef: React.Ref<FormikProps<StakeHolderForm>>;
-  file: Api_AcquisitionFile;
+  file: ApiGen_Concepts_AcquisitionFile;
   onSubmit: (
     interestHolders: StakeHolderForm,
     formikHelpers: FormikHelpers<StakeHolderForm>,
-  ) => Promise<Api_InterestHolder[] | undefined>;
+  ) => Promise<ApiGen_Concepts_InterestHolder[] | undefined>;
   interestHolders: StakeHolderForm;
   loading: boolean;
 }
@@ -74,6 +75,7 @@ export const UpdateStakeHolderForm: React.FunctionComponent<IUpdateStakeHolderFo
                     )}
                     {values.interestHolders.map((interestHolder, index) => (
                       <InterestHolderSubForm
+                        key={`interest-holder-${interestHolder?.interestHolderId ?? index}`}
                         index={index}
                         errors={errors}
                         arrayHelpers={arrayHelpers}
@@ -180,9 +182,11 @@ export const UpdateStakeHolderForm: React.FunctionComponent<IUpdateStakeHolderFo
                                     fp => fp.id === ip.acquisitionFilePropertyId,
                                   ),
                                 )
-                                .filter((fp): fp is Api_PropertyFile => !!fp) ?? []
+                                .filter(exists) ?? []
                             }
-                            setSelectedFileProperties={(fileProperties: Api_PropertyFile[]) => {
+                            setSelectedFileProperties={(
+                              fileProperties: ApiGen_Concepts_FileProperty[],
+                            ) => {
                               const interestHolderProperties = fileProperties.map(fileProperty => {
                                 const matchingProperty = interestHolder.impactedProperties.find(
                                   ip => ip.acquisitionFilePropertyId === fileProperty.id,

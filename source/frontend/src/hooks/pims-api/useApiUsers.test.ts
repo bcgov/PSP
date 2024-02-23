@@ -2,8 +2,9 @@ import { renderHook } from '@testing-library/react-hooks';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 
-import { IPagedItems } from '@/interfaces';
 import { mockAccessRequest } from '@/mocks/filterData.mock';
+import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
+import { ApiGen_Concepts_AccessRequest } from '@/models/api/generated/ApiGen_Concepts_AccessRequest';
 
 import { mockUser } from '../../mocks/filterData.mock';
 import { useApiUsers } from './useApiUsers';
@@ -25,13 +26,14 @@ describe('useApiUsers api hook', () => {
   };
 
   it('Gets paged users', async () => {
-    mockAxios.onPost(`/admin/users/filter`).reply(200, {
-      items: [mockAccessRequest],
-      pageIndex: 1,
-      page: 1,
-      quantity: 5,
-      total: 10,
-    } as IPagedItems);
+    mockAxios
+      .onPost(`/admin/users/filter`)
+      .reply<ApiGen_Base_Page<ApiGen_Concepts_AccessRequest>>(200, {
+        items: [mockAccessRequest],
+        page: 1,
+        quantity: 5,
+        total: 10,
+      });
 
     const { getUsersPaged } = setup();
     const response = await getUsersPaged({ page: 1 });
@@ -39,7 +41,6 @@ describe('useApiUsers api hook', () => {
     expect(response.status).toBe(200);
     expect(response.data).toStrictEqual({
       items: [mockAccessRequest],
-      pageIndex: 1,
       page: 1,
       quantity: 5,
       total: 10,

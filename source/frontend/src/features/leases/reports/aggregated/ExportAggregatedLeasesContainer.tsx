@@ -15,15 +15,13 @@ import { getCurrentFiscalYear } from '@/utils';
 
 import { generateFiscalYearOptions } from '../reportUtils';
 
-interface IExportAggregatedLeasesContainerProps {}
-
 export interface IExportAggregatedLeasesContainer {
   fiscalYear: number;
 }
 
 export const ExportAggregatedLeasesContainer: React.FunctionComponent<
-  React.PropsWithChildren<IExportAggregatedLeasesContainerProps>
-> = props => {
+  React.PropsWithChildren<unknown>
+> = () => {
   const { exportAggregatedLeases } = useLeaseExport();
   const fiscalYearOptions = generateFiscalYearOptions(1990, getCurrentFiscalYear());
   return (

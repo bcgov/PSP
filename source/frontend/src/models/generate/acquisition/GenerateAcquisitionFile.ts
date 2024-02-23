@@ -1,5 +1,7 @@
-import { Api_AcquisitionFile, Api_AcquisitionFileTeam } from '@/models/api/AcquisitionFile';
-import { Api_InterestHolder, Api_InterestHolderProperty } from '@/models/api/InterestHolder';
+import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
+import { ApiGen_Concepts_AcquisitionFileTeam } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileTeam';
+import { ApiGen_Concepts_InterestHolder } from '@/models/api/generated/ApiGen_Concepts_InterestHolder';
+import { ApiGen_Concepts_InterestHolderProperty } from '@/models/api/generated/ApiGen_Concepts_InterestHolderProperty';
 
 import { Api_GenerateOrganization } from '../GenerateOrganization';
 import { Api_GenerateOwner } from '../GenerateOwner';
@@ -11,12 +13,12 @@ import { Api_GenerateH120Property } from './GenerateH120Property';
 import { Api_GenerateInterestHolder } from './GenerateInterestHolder';
 
 export interface IApiGenerateAcquisitionFileInput {
-  file: Api_AcquisitionFile | null;
-  coordinatorContact?: Api_AcquisitionFileTeam | null;
-  negotiatingAgent?: Api_AcquisitionFileTeam | null;
-  provincialSolicitor?: Api_AcquisitionFileTeam | null;
-  ownerSolicitor?: Api_InterestHolder | null;
-  interestHolders?: Api_InterestHolder[];
+  file: ApiGen_Concepts_AcquisitionFile | null;
+  coordinatorContact?: ApiGen_Concepts_AcquisitionFileTeam | null;
+  negotiatingAgent?: ApiGen_Concepts_AcquisitionFileTeam | null;
+  provincialSolicitor?: ApiGen_Concepts_AcquisitionFileTeam | null;
+  ownerSolicitor?: ApiGen_Concepts_InterestHolder | null;
+  interestHolders?: ApiGen_Concepts_InterestHolder[];
 }
 
 export class Api_GenerateAcquisitionFile {
@@ -60,19 +62,19 @@ export class Api_GenerateAcquisitionFile {
           allInterestHoldersPropertes.filter(
             ihp =>
               ihp.acquisitionFilePropertyId === fp?.id &&
-              ihp.propertyInterestTypes.some(pit => pit.id !== 'NIP'),
+              ihp.propertyInterestTypes?.some(pit => pit.id !== 'NIP'),
           ) ?? [];
 
         const interestHoldersForAcquisitionFile = matchingInterestHolderProperties.flatMap(
-          (mihp: Api_InterestHolderProperty) =>
-            mihp.propertyInterestTypes.map(
+          (mihp: ApiGen_Concepts_InterestHolderProperty) =>
+            mihp.propertyInterestTypes?.map(
               pit =>
                 new Api_GenerateH120InterestHolder(
                   interestHolders.find(ih => ih.interestHolderId === mihp.interestHolderId) ?? null,
                   mihp,
                   pit,
                 ),
-            ),
+            ) || [],
         );
 
         return new Api_GenerateH120Property(fp?.property, interestHoldersForAcquisitionFile);
@@ -102,7 +104,7 @@ export class Api_GenerateAcquisitionFile {
     this.all_owners_string_and = this.owners.map(owner => owner.owner_string).join(' And ');
   }
 
-  getTeam = (team: Api_AcquisitionFileTeam | null, overrideOrgAddress: boolean = false) => {
+  getTeam = (team: ApiGen_Concepts_AcquisitionFileTeam | null, overrideOrgAddress = false) => {
     if (!team) return undefined;
 
     if (team.person) {

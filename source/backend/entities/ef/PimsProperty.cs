@@ -248,6 +248,12 @@ public partial class PimsProperty
     public bool IsSensitive { get; set; }
 
     /// <summary>
+    /// If the property was the source of a subdivision operation or the target of a consolidation operation, the property is marked as retired.
+    /// </summary>
+    [Column("IS_RETIRED")]
+    public bool? IsRetired { get; set; }
+
+    /// <summary>
     /// Is this property a provincial public highway?
     /// </summary>
     [Column("IS_PROVINCIAL_PUBLIC_HWY")]
@@ -410,6 +416,12 @@ public partial class PimsProperty
 
     [InverseProperty("Property")]
     public virtual ICollection<PimsPropertyLease> PimsPropertyLeases { get; set; } = new List<PimsPropertyLease>();
+
+    [InverseProperty("DestinationProperty")]
+    public virtual ICollection<PimsPropertyOperation> PimsPropertyOperationDestinationProperties { get; set; } = new List<PimsPropertyOperation>();
+
+    [InverseProperty("SourceProperty")]
+    public virtual ICollection<PimsPropertyOperation> PimsPropertyOperationSourceProperties { get; set; } = new List<PimsPropertyOperation>();
 
     [InverseProperty("Property")]
     public virtual ICollection<PimsPropertyOrganization> PimsPropertyOrganizations { get; set; } = new List<PimsPropertyOrganization>();

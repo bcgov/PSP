@@ -2,8 +2,9 @@ import { getIn, useFormikContext } from 'formik';
 import * as React from 'react';
 
 import { Form, Input } from '@/components/common/form';
-import { Api_Address } from '@/models/api/Address';
-import { Api_Lease } from '@/models/api/Lease';
+import { ApiGen_Concepts_Address } from '@/models/api/generated/ApiGen_Concepts_Address';
+import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
+import { exists, isValidString } from '@/utils';
 import { withNameSpace } from '@/utils/formUtils';
 
 import { FieldValue } from '../styles';
@@ -16,10 +17,14 @@ export interface IAddressSubFormProps {
 export const AddressSubForm: React.FunctionComponent<
   React.PropsWithChildren<IAddressSubFormProps>
 > = ({ disabled, nameSpace }) => {
-  const formikProps = useFormikContext<Api_Lease>();
-  const address = getIn(formikProps.values, withNameSpace(nameSpace)) as Api_Address;
+  const formikProps = useFormikContext<ApiGen_Concepts_Lease>();
 
-  if (!address) {
+  const address: ApiGen_Concepts_Address | null = getIn(
+    formikProps.values,
+    withNameSpace(nameSpace),
+  );
+
+  if (!exists(address)) {
     return (
       <>
         <Form.Label>Address:</Form.Label>
@@ -38,19 +43,21 @@ export const AddressSubForm: React.FunctionComponent<
 
   return (
     <>
-      {streetAddress1 && (
+      {isValidString(streetAddress1) && (
         <Input disabled={disabled} field={withNameSpace(nameSpace, 'streetAddress1')} />
       )}
-      {streetAddress2 && (
+      {isValidString(streetAddress2) && (
         <Input disabled={disabled} field={withNameSpace(nameSpace, 'streetAddress2')} />
       )}
-      {streetAddress3 && (
+      {isValidString(streetAddress3) && (
         <Input disabled={disabled} field={withNameSpace(nameSpace, 'streetAddress3')} />
       )}
-      {municipality && (
+      {isValidString(municipality) && (
         <Input disabled={disabled} field={withNameSpace(nameSpace, 'municipality')} />
       )}
-      {postal && <Input disabled={disabled} field={withNameSpace(nameSpace, 'postal')} />}
+      {isValidString(postal) && (
+        <Input disabled={disabled} field={withNameSpace(nameSpace, 'postal')} />
+      )}
       {province && (
         <Input disabled={disabled} field={withNameSpace(nameSpace, 'province.description')} />
       )}

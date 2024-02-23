@@ -1,5 +1,7 @@
 import moment, { Moment } from 'moment-timezone';
 
+import { exists, isValidIsoDateTime } from './utils';
+
 /**
  * Gets the fiscal year (ending in) based on the current date.
  */
@@ -14,8 +16,10 @@ export const getCurrentFiscalYear = (): number => {
  * @returns A string representing the input date in the supplied date/time format
  */
 export const prettyFormatDate = (date?: string | Date | Moment | null) => {
-  if (typeof date === 'string' && !!date) return moment(date).format('MMM D, YYYY');
-  return !!date ? moment(date).format('MMM D, YYYY') : '';
+  if (typeof date === 'string') {
+    return isValidIsoDateTime(date) ? moment(date).format('MMM D, YYYY') : '';
+  }
+  return exists(date) ? moment(date).format('MMM D, YYYY') : '';
 };
 
 /**
@@ -45,8 +49,10 @@ export const prettyFormatDateTime = (date?: string | Date | Moment | null) => {
  */
 export const formatUTCDateTime = (
   date?: string | Date | Moment | null,
-  format: string = 'YYYY-MM-DD hh:mm a',
+  format = 'YYYY-MM-DD hh:mm a',
 ) => {
-  if (typeof date === 'string' && !!date) return moment.utc(date).local().format(format);
-  return !!date ? moment.utc(date).local().format(format) : '';
+  if (typeof date === 'string' && isValidIsoDateTime(date)) {
+    return moment.utc(date).local().format(format);
+  }
+  return exists(date) ? moment.utc(date).local().format(format) : '';
 };

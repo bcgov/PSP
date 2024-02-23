@@ -1,5 +1,6 @@
 using System.Text.Json;
 using Pims.Api.Constants;
+using Pims.Api.Models.CodeTypes;
 
 namespace Pims.Api.Models.DocumentGeneration
 {

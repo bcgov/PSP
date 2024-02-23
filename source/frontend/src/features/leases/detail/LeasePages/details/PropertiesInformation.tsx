@@ -5,7 +5,9 @@ import * as React from 'react';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { Section } from '@/components/common/Section/Section';
 import { PropertyInformation } from '@/features/leases';
-import { FormLeaseProperty, LeaseFormModel } from '@/features/leases/models';
+import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
+import { ApiGen_Concepts_PropertyLease } from '@/models/api/generated/ApiGen_Concepts_PropertyLease';
+import { exists } from '@/utils';
 import { withNameSpace } from '@/utils/formUtils';
 
 export interface IPropertiesInformationProps {
@@ -21,10 +23,10 @@ export interface IPropertiesInformationProps {
 export const PropertiesInformation: React.FunctionComponent<
   React.PropsWithChildren<IPropertiesInformationProps>
 > = ({ nameSpace, disabled, hideAddress }) => {
-  const { values } = useFormikContext<LeaseFormModel>();
+  const { values } = useFormikContext<ApiGen_Concepts_Lease>();
 
-  const properties: FormLeaseProperty[] = React.useMemo(() => {
-    return getIn(values, withNameSpace(nameSpace, 'properties')) ?? [];
+  const properties: ApiGen_Concepts_PropertyLease[] = React.useMemo(() => {
+    return getIn(values, withNameSpace(nameSpace, 'fileProperties')) ?? [];
   }, [values, nameSpace]);
 
   const { setFilePropertyLocations } = useMapStateMachine();
@@ -33,13 +35,13 @@ export const PropertiesInformation: React.FunctionComponent<
     return (
       properties
         .map<LatLngLiteral | undefined>(x => {
-          if (x.property?.latitude !== undefined && x.property?.longitude !== undefined) {
-            return { lat: x.property?.latitude, lng: x.property?.longitude };
+          if (exists(x.property?.latitude) && exists(x.property?.longitude)) {
+            return { lat: x.property!.latitude, lng: x.property!.longitude };
           } else {
             return undefined;
           }
         })
-        .filter((x): x is LatLngLiteral => x !== undefined) || []
+        .filter(exists) || []
     );
   }, [properties]);
 
@@ -50,14 +52,15 @@ export const PropertiesInformation: React.FunctionComponent<
   return properties?.length ? (
     <Section initiallyExpanded={true} isCollapsable={true} header="Property Information">
       <FieldArray
-        name={withNameSpace(nameSpace, 'properties')}
+        name={withNameSpace(nameSpace, 'fileProperties')}
         render={renderProps =>
-          properties.map((property: FormLeaseProperty, index) => (
+          properties.map((property: ApiGen_Concepts_PropertyLease, index) => (
             <PropertyInformation
               {...renderProps}
-              nameSpace={withNameSpace(nameSpace, `properties.${index}`)}
+              nameSpace={withNameSpace(nameSpace, `fileProperties.${index}`)}
               disabled={disabled}
               hideAddress={hideAddress}
+              key={`property-${property.id ?? index}`}
             />
           ))
         }

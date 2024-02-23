@@ -1,10 +1,11 @@
 import * as Yup from 'yup';
 
 import { AreaUnitTypes } from '@/constants/areaUnitTypes';
-import { Api_Take } from '@/models/api/Take';
+import { ApiGen_Concepts_Take } from '@/models/api/generated/ApiGen_Concepts_Take';
 import { UtcIsoDateTime } from '@/models/api/UtcIsoDateTime';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { convertArea } from '@/utils/convertUtils';
-import { fromTypeCodeNullable, stringToUndefined, toTypeCodeNullable } from '@/utils/formUtils';
+import { fromTypeCodeNullable, stringToNull, toTypeCodeNullable } from '@/utils/formUtils';
 
 /* eslint-disable no-template-curly-in-string */
 export const TakesYupSchema = Yup.object().shape({
@@ -65,10 +66,10 @@ export class TakeModel {
   rowVersion?: number;
   appCreateTimestamp: UtcIsoDateTime | null;
 
-  constructor(base: Api_Take) {
+  constructor(base: ApiGen_Concepts_Take) {
     this.id = base.id;
-    this.rowVersion = base.rowVersion;
-    this.description = base.description;
+    this.rowVersion = base.rowVersion ?? undefined;
+    this.description = base.description ?? '';
     this.isThereSurplus = base.isThereSurplus ? 'true' : 'false';
     this.isNewHighwayDedication = base.isNewHighwayDedication ? 'true' : 'false';
     this.isNewLandAct = base.isNewLandAct ? 'true' : 'false';
@@ -105,7 +106,7 @@ export class TakeModel {
     this.appCreateTimestamp = base.appCreateTimestamp ?? null;
   }
 
-  toApi(): Api_Take {
+  toApi(): ApiGen_Concepts_Take {
     return {
       id: this.id || 0,
       propertyAcquisitionFileId: this.propertyAcquisitionFileId || 0,
@@ -147,15 +148,15 @@ export class TakeModel {
           this.statutoryRightOfWayAreaUnitTypeCode,
           AreaUnitTypes.SquareMeters.toString(),
         ) || null,
-      srwEndDt: stringToUndefined(this.srwEndDt),
-      ltcEndDt: stringToUndefined(this.ltcEndDt),
-      landActEndDt: stringToUndefined(this.landActEndDt),
+      srwEndDt: stringToNull(this.srwEndDt),
+      ltcEndDt: stringToNull(this.ltcEndDt),
+      landActEndDt: stringToNull(this.landActEndDt),
       landActTypeCode: toTypeCodeNullable(this.landActTypeCode),
       isThereSurplus: this.isThereSurplus === 'true',
       isNewLandAct: this.isNewLandAct === 'true',
       isNewLicenseToConstruct: this.isNewLicenseToConstruct === 'true',
       isNewInterestInSrw: this.isNewInterestInSrw === 'true',
-      rowVersion: this.rowVersion,
+      ...getEmptyBaseAudit(this.rowVersion),
     };
   }
 }

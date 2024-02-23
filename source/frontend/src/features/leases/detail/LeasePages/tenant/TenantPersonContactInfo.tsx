@@ -20,7 +20,7 @@ export interface ITenantPersonContactInfoProps {
  */
 export const TenantPersonContactInfo: React.FunctionComponent<
   React.PropsWithChildren<ITenantPersonContactInfoProps & Partial<FieldArrayRenderProps>>
-> = ({ nameSpace, disabled }) => {
+> = ({ nameSpace }) => {
   const { values } = useFormikContext<LeaseFormModel>();
   const tenant: FormTenant = getIn(values, nameSpace);
   return (

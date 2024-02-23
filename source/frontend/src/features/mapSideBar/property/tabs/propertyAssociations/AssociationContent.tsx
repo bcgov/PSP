@@ -5,7 +5,7 @@ import { CellProps } from 'react-table';
 
 import { UserNameTooltip } from '@/components/common/UserNameTooltip';
 import { ColumnWithProps, renderDate, Table } from '@/components/Table';
-import { Api_PropertyAssociation } from '@/models/api/Property';
+import { ApiGen_Concepts_Association } from '@/models/api/generated/ApiGen_Concepts_Association';
 
 interface IAssociationInfo {
   id: string;
@@ -20,7 +20,7 @@ interface IAssociationInfo {
 
 export interface IAssociationContentProps {
   associationName: string;
-  associations?: Api_PropertyAssociation[];
+  associations?: ApiGen_Concepts_Association[];
   linkUrlMask: string;
 }
 

@@ -10,7 +10,7 @@ import { TableSort } from '@/components/Table/TableSort';
 import Claims from '@/constants/claims';
 import { PropertyManagementActivityStatusTypes } from '@/constants/propertyMgmtActivityStatusTypes';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
-import { Api_PropertyActivity } from '@/models/api/PropertyActivity';
+import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
 import { stringToFragment } from '@/utils/columnUtils';
 import { prettyFormatDate } from '@/utils/dateUtils';
 
@@ -21,8 +21,8 @@ export interface IManagementActivitiesListProps {
   propertyActivities: PropertyActivityRow[];
   handleView: (activityId: number) => void;
   handleDelete: (activityId: number) => void;
-  sort: TableSort<Api_PropertyActivity>;
-  setSort: (value: TableSort<Api_PropertyActivity>) => void;
+  sort: TableSort<ApiGen_Concepts_PropertyActivity>;
+  setSort: (value: TableSort<ApiGen_Concepts_PropertyActivity>) => void;
 }
 
 export function createTableColumns(

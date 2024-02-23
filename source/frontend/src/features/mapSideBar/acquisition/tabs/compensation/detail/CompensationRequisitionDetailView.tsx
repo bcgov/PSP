@@ -14,11 +14,11 @@ import { StyledAddButton } from '@/components/common/styles';
 import TooltipIcon from '@/components/common/TooltipIcon';
 import { Claims, Roles } from '@/constants';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
-import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
-import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
-import { Api_Organization } from '@/models/api/Organization';
-import { Api_Person } from '@/models/api/Person';
-import { formatMoney, prettyFormatDate } from '@/utils';
+import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
+import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
+import { ApiGen_Concepts_Organization } from '@/models/api/generated/ApiGen_Concepts_Organization';
+import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_Person';
+import { exists, formatMoney, prettyFormatDate } from '@/utils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
 import { cannotEditMessage } from '../../../common/constants';
@@ -26,14 +26,14 @@ import { DetailAcquisitionFileOwner } from '../../../models/DetailAcquisitionFil
 import StatusUpdateSolver from '../../fileDetails/detail/statusUpdateSolver';
 
 export interface CompensationRequisitionDetailViewProps {
-  acquisitionFile: Api_AcquisitionFile;
-  compensation: Api_CompensationRequisition;
-  compensationContactPerson: Api_Person | undefined;
-  compensationContactOrganization: Api_Organization | undefined;
+  acquisitionFile: ApiGen_Concepts_AcquisitionFile;
+  compensation: ApiGen_Concepts_CompensationRequisition;
+  compensationContactPerson: ApiGen_Concepts_Person | undefined;
+  compensationContactOrganization: ApiGen_Concepts_Organization | undefined;
   clientConstant: string;
   loading: boolean;
   setEditMode: (editMode: boolean) => void;
-  onGenerate: (compensation: Api_CompensationRequisition) => void;
+  onGenerate: (compensation: ApiGen_Concepts_CompensationRequisition) => void;
 }
 
 interface PayeeViewDetails {
@@ -59,10 +59,9 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
   const { hasClaim, hasRole } = useKeycloakWrapper();
   const [payeeDetails, setPayeeDetails] = useState<PayeeViewDetails | null>(null);
 
-  const projectName =
-    compensation?.alternateProject !== undefined
-      ? compensation?.alternateProject?.code + ' - ' + compensation?.alternateProject?.description
-      : '';
+  const projectName = exists(compensation?.alternateProject)
+    ? compensation?.alternateProject?.code + ' - ' + compensation?.alternateProject?.description
+    : '';
 
   useEffect(() => {
     if (!compensation) {
@@ -70,7 +69,7 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
       return;
     }
 
-    let payeeDetail: PayeeViewDetails = {
+    const payeeDetail: PayeeViewDetails = {
       contactEnabled: false,
       isPaymentInTrust: compensation?.isPaymentInTrust || false,
       isGstApplicable: false,
@@ -78,7 +77,7 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
       displayName: '',
     };
 
-    if (!!compensation.acquisitionOwner) {
+    if (compensation.acquisitionOwner) {
       const ownerDetail = DetailAcquisitionFileOwner.fromApi(compensation.acquisitionOwner);
       payeeDetail.displayName = ownerDetail.ownerName ?? '';
     } else if (compensation.interestHolderId) {
@@ -101,11 +100,11 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
         payeeDetail.contactString = 'O' + compensationContactOrganization.id;
         payeeDetail.contactEnabled = true;
       }
-    } else if (!!compensation.legacyPayee) {
+    } else if (compensation.legacyPayee) {
       payeeDetail.displayName = `${compensation.legacyPayee}`;
     }
 
-    var results =
+    const results =
       compensation.financials?.filter(el => {
         return el.isGstRequired === true;
       }) || [];
@@ -116,15 +115,15 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
   }, [compensation, compensationContactOrganization, compensationContactPerson]);
 
   const compPretaxAmount = compensation?.financials
-    .map(f => f.pretaxAmount ?? 0)
+    ?.map(f => f.pretaxAmount ?? 0)
     .reduce((prev, next) => prev + next, 0);
 
   const compTaxAmount = compensation?.financials
-    .map(f => f.taxAmount ?? 0)
+    ?.map(f => f.taxAmount ?? 0)
     .reduce((prev, next) => prev + next, 0);
 
   const compTotalAmount = compensation?.financials
-    .map(f => f.totalAmount ?? 0)
+    ?.map(f => f.totalAmount ?? 0)
     .reduce((prev, next) => prev + next, 0);
 
   const acqFileProject = acquisitionFile?.project;
@@ -324,7 +323,7 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
       </Section>
 
       <Section header="Financial Activities" isCollapsable initiallyExpanded>
-        {compensation.financials.map((item, index) => (
+        {compensation.financials?.map((item, index) => (
           <>
             <StyledSubHeader>
               <label>Activity {index + 1}</label>

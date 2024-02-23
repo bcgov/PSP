@@ -1,21 +1,21 @@
 import { SelectOption } from '@/components/common/form';
-import { FinancialCodeTypes } from '@/constants/financialCodeTypes';
+import { ApiGen_Concepts_FinancialCodeTypes } from '@/models/api/generated/ApiGen_Concepts_FinancialCodeTypes';
 
-export function formatFinancialCodeType(value: FinancialCodeTypes): string {
+export function formatFinancialCodeType(value: ApiGen_Concepts_FinancialCodeTypes): string {
   switch (value) {
-    case FinancialCodeTypes.BusinessFunction:
+    case ApiGen_Concepts_FinancialCodeTypes.BusinessFunction:
       return 'Business function';
-    case FinancialCodeTypes.CostType:
+    case ApiGen_Concepts_FinancialCodeTypes.CostType:
       return 'Cost types';
-    case FinancialCodeTypes.WorkActivity:
+    case ApiGen_Concepts_FinancialCodeTypes.WorkActivity:
       return 'Work activity';
-    case FinancialCodeTypes.ChartOfAccounts:
+    case ApiGen_Concepts_FinancialCodeTypes.ChartOfAccounts:
       return 'Chart of accounts';
-    case FinancialCodeTypes.FinancialActivity:
+    case ApiGen_Concepts_FinancialCodeTypes.FinancialActivity:
       return 'Financial activity';
-    case FinancialCodeTypes.Responsibility:
+    case ApiGen_Concepts_FinancialCodeTypes.Responsibility:
       return 'Responsibility';
-    case FinancialCodeTypes.YearlyFinancial:
+    case ApiGen_Concepts_FinancialCodeTypes.YearlyFinancial:
       return 'Yearly financial';
     default:
       return 'Unknown';
@@ -26,8 +26,10 @@ export function formatFinancialCodeType(value: FinancialCodeTypes): string {
  * Converts the FinancialCodeTypes enum to SELECT options for display in the UI
  */
 export function formatAsSelectOptions(): SelectOption[] {
-  return Object.keys(FinancialCodeTypes).map<SelectOption>(key => ({
+  return Object.keys(ApiGen_Concepts_FinancialCodeTypes).map<SelectOption>(key => ({
     value: key,
-    label: formatFinancialCodeType(FinancialCodeTypes[key as FinancialCodeTypes]),
+    label: formatFinancialCodeType(
+      ApiGen_Concepts_FinancialCodeTypes[key as ApiGen_Concepts_FinancialCodeTypes],
+    ),
   }));
 }

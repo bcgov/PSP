@@ -1,5 +1,6 @@
-import { Api_AcquisitionFileOwner } from '@/models/api/AcquisitionFile';
-import { Api_Address } from '@/models/api/Address';
+import { ApiGen_Concepts_AcquisitionFileOwner } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileOwner';
+import { ApiGen_Concepts_Address } from '@/models/api/generated/ApiGen_Concepts_Address';
+import { exists } from '@/utils/utils';
 
 export class DetailAcquisitionFileOwner {
   isPrimary?: boolean;
@@ -9,7 +10,7 @@ export class DetailAcquisitionFileOwner {
   ownerContactEmail?: string;
   ownerContactPhone?: string;
 
-  static fromApi(owner: Api_AcquisitionFileOwner): DetailAcquisitionFileOwner {
+  static fromApi(owner: ApiGen_Concepts_AcquisitionFileOwner): DetailAcquisitionFileOwner {
     return {
       isPrimary: owner.isPrimaryContact,
       ownerName: getOwnerDisplayName(owner),
@@ -21,12 +22,12 @@ export class DetailAcquisitionFileOwner {
   }
 }
 
-const getOwnerDisplayName = (owner: Api_AcquisitionFileOwner): string => {
+const getOwnerDisplayName = (owner: ApiGen_Concepts_AcquisitionFileOwner): string => {
   let ownerDisplayName = '';
   if (owner.isOrganization) {
-    let regNumber = owner.registrationNumber ? `Reg#:${owner.registrationNumber}` : null;
-    let incNumber = owner.incorporationNumber ? `Inc#:${owner.incorporationNumber}` : null;
-    let separator = owner.incorporationNumber && owner.registrationNumber ? ' / ' : null;
+    const regNumber = owner.registrationNumber ? `Reg#:${owner.registrationNumber}` : null;
+    const incNumber = owner.incorporationNumber ? `Inc#:${owner.incorporationNumber}` : null;
+    const separator = owner.incorporationNumber && owner.registrationNumber ? ' / ' : null;
 
     if (incNumber || regNumber) {
       ownerDisplayName = concatValues(
@@ -43,16 +44,16 @@ const getOwnerDisplayName = (owner: Api_AcquisitionFileOwner): string => {
   return ownerDisplayName;
 };
 
-const getFormattedAddress = (address?: Api_Address | null): string => {
-  if (address === null || address === undefined) {
+const getFormattedAddress = (address?: ApiGen_Concepts_Address | null): string => {
+  if (!exists(address)) {
     return '';
   }
 
   let addressDisplay = '';
-  let streetAddress1 = address?.streetAddress1 ? address?.streetAddress1.trim() : null;
-  let streetAddress2 = address?.streetAddress2 ? address?.streetAddress2.trim() : null;
-  let streetAddress3 = address?.streetAddress3 ? address?.streetAddress3.trim() : null;
-  let streetAddress4 = concatValues(
+  const streetAddress1 = address?.streetAddress1 ? address?.streetAddress1.trim() : null;
+  const streetAddress2 = address?.streetAddress2 ? address?.streetAddress2.trim() : null;
+  const streetAddress3 = address?.streetAddress3 ? address?.streetAddress3.trim() : null;
+  const streetAddress4 = concatValues(
     [address?.municipality, address?.province?.description, address?.postal],
     ', ',
   );
@@ -75,20 +76,17 @@ const getFormattedAddress = (address?: Api_Address | null): string => {
 
   if (address?.country?.description) {
     if (address?.country?.code === 'OTHER') {
-      let countryDisplay =
+      const countryDisplay =
         `${address?.country?.description?.trim()} - ${address?.countryOther?.trim()}` || '';
       addressDisplay = addressDisplay.concat(countryDisplay);
     } else {
-      let countryDisplay = address?.country?.description?.trim() || '';
+      const countryDisplay = address?.country?.description?.trim() || '';
       addressDisplay = addressDisplay.concat(countryDisplay);
     }
   }
   return addressDisplay;
 };
 
-const concatValues = (
-  nameParts: Array<string | undefined | null>,
-  separator: string = ' ',
-): string => {
-  return nameParts.filter(n => n !== null && n !== undefined && n.trim() !== '').join(separator);
+const concatValues = (nameParts: Array<string | undefined | null>, separator = ' '): string => {
+  return nameParts.filter(n => exists(n) && n.trim() !== '').join(separator);
 };

@@ -11,10 +11,10 @@ export interface IModalContext {
 
 export const ModalContext = React.createContext<IModalContext>({
   modalProps: { variant: 'info' },
-  setDisplayModal: (display: boolean) => {
+  setDisplayModal: () => {
     throw Error('setDisplayModal function not defined');
   },
-  setModalContent: (modalProps?: ModalContent) => {
+  setModalContent: () => {
     throw Error('setModalProps function not defined');
   },
 });

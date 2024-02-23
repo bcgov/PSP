@@ -8,8 +8,8 @@ import { StyledEditWrapper, StyledSummarySection } from '@/components/common/Sec
 import { Claims } from '@/constants/index';
 import { StyledNoData } from '@/features/documents/commonStyles';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
-import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
-import { Api_InterestHolder } from '@/models/api/InterestHolder';
+import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
+import { ApiGen_Concepts_InterestHolder } from '@/models/api/generated/ApiGen_Concepts_InterestHolder';
 
 import StatusUpdateSolver from '../../fileDetails/detail/statusUpdateSolver';
 import PropertyInterestHoldersViewTable from './PropertyInterestHoldersViewTable';
@@ -17,8 +17,8 @@ import StakeholderOrganizer from './stakeholderOrganizer';
 
 export interface IStakeHolderViewProps {
   loading: boolean;
-  acquisitionFile: Api_AcquisitionFile;
-  interestHolders: Api_InterestHolder[] | undefined;
+  acquisitionFile: ApiGen_Concepts_AcquisitionFile;
+  interestHolders: ApiGen_Concepts_InterestHolder[] | undefined;
   onEdit: () => void;
 }
 

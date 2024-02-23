@@ -58,7 +58,7 @@ export const TermsForm: React.FunctionComponent<React.PropsWithChildren<ITermsFo
     'receivedDate',
     'desc',
   );
-  const lastPaymentDate = allPayments.length ? allPayments[0]?.receivedDate : '';
+  const lastPaymentDate = allPayments.length > 0 ? allPayments[0]?.receivedDate : '';
 
   /** This is the payments subtable displayed for each term row. */
   const renderPayments = useDeepCompareMemo(

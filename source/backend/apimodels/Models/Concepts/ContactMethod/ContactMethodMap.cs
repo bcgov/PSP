@@ -10,12 +10,16 @@ namespace Pims.Api.Models.Concepts.ContactMethod
         {
             config.NewConfig<Entity.PimsContactMethod, ContactMethodModel>()
                 .Map(dest => dest.Id, src => src.ContactMethodId)
+                .Map(dest => dest.PersonId, src => src.PersonId)
+                .Map(dest => dest.OrganizationId, src => src.OrganizationId)
                 .Map(dest => dest.ContactMethodType, src => src.ContactMethodTypeCodeNavigation)
                 .Map(dest => dest.Value, src => src.ContactMethodValue)
                 .Inherits<Entity.IBaseEntity, BaseConcurrentModel>();
 
             config.NewConfig<ContactMethodModel, Entity.PimsContactMethod>()
                 .Map(dest => dest.ContactMethodId, src => src.Id)
+                .Map(dest => dest.PersonId, src => src.PersonId)
+                .Map(dest => dest.OrganizationId, src => src.OrganizationId)
                 .Map(dest => dest.ContactMethodTypeCode, src => src.ContactMethodType.Id)
                 .Map(dest => dest.ContactMethodValue, src => src.Value)
                 .Inherits<BaseConcurrentModel, Entity.IBaseEntity>();

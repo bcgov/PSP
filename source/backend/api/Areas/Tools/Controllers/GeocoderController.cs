@@ -4,13 +4,13 @@ using System.Threading.Tasks;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Pims.Api.Models.Requests.Geocoder;
 using Pims.Api.Policies;
 using Pims.Dal.Security;
 using Pims.Geocoder;
 using Pims.Geocoder.Extensions;
 using Pims.Geocoder.Parameters;
 using Swashbuckle.AspNetCore.Annotations;
-using Model = Pims.Api.Areas.Tools.Models.Geocoder;
 
 namespace Pims.Api.Areas.Tools.Controllers
 {
@@ -57,7 +57,7 @@ namespace Pims.Api.Areas.Tools.Controllers
         /// <returns>An array of address matches.</returns>
         [HttpGet("addresses")]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(IEnumerable<Model.AddressModel>), 200)]
+        [ProducesResponseType(typeof(IEnumerable<GeoAddressResponse>), 200)]
         [ProducesResponseType(typeof(Pims.Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "tools-geocoder" })]
         [HasPermission(Permissions.PropertyEdit)]
@@ -66,7 +66,7 @@ namespace Pims.Api.Areas.Tools.Controllers
             var parameters = this.Request.QueryString.ParseQueryString<AddressesParameters>();
             parameters.AddressString = address;
             var result = await _geocoderService.GetSiteAddressesAsync(parameters);
-            return new JsonResult(_mapper.Map<Model.AddressModel[]>(result.Features));
+            return new JsonResult(_mapper.Map<GeoAddressResponse[]>(result.Features));
         }
 
         /// <summary>
@@ -76,14 +76,14 @@ namespace Pims.Api.Areas.Tools.Controllers
         /// <returns>An array of PIDs for the supplied 'siteId'.</returns>
         [HttpGet("parcels/pids/{siteId}")]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(IEnumerable<Model.AddressModel>), 200)]
+        [ProducesResponseType(typeof(SitePidsResponse), 200)]
         [ProducesResponseType(typeof(Pims.Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "tools-geocoder" })]
         [HasPermission(Permissions.PropertyEdit)]
         public async Task<IActionResult> FindPidsAsync(Guid siteId)
         {
             var result = await _geocoderService.GetPids(siteId);
-            return new JsonResult(_mapper.Map<Model.SitePidsResponseModel>(result));
+            return new JsonResult(_mapper.Map<SitePidsResponse>(result));
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace Pims.Api.Areas.Tools.Controllers
         /// <returns>A single address match.</returns>
         [HttpGet("nearest")]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(Model.AddressModel), 200)]
+        [ProducesResponseType(typeof(GeoAddressResponse), 200)]
         [ProducesResponseType(typeof(Pims.Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "tools-geocoder" })]
         [HasPermission(Permissions.PropertyEdit)]
@@ -102,7 +102,7 @@ namespace Pims.Api.Areas.Tools.Controllers
             var parameters = this.Request.QueryString.ParseQueryString<NearestParameters>();
             parameters.Point = point;
             var result = await _geocoderService.GetNearestSiteAsync(parameters);
-            return new JsonResult(_mapper.Map<Model.AddressModel>(result));
+            return new JsonResult(_mapper.Map<GeoAddressResponse>(result));
         }
 
         /// <summary>
@@ -112,7 +112,7 @@ namespace Pims.Api.Areas.Tools.Controllers
         /// <returns>An array of address matches.</returns>
         [HttpGet("near")]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(IEnumerable<Model.AddressModel>), 200)]
+        [ProducesResponseType(typeof(IEnumerable<GeoAddressResponse>), 200)]
         [ProducesResponseType(typeof(Pims.Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "tools-geocoder" })]
         [HasPermission(Permissions.PropertyEdit)]
@@ -121,7 +121,7 @@ namespace Pims.Api.Areas.Tools.Controllers
             var parameters = this.Request.QueryString.ParseQueryString<NearParameters>();
             parameters.Point = point;
             var result = await _geocoderService.GetNearSitesAsync(parameters);
-            return new JsonResult(_mapper.Map<Model.AddressModel[]>(result.Features));
+            return new JsonResult(_mapper.Map<GeoAddressResponse[]>(result.Features));
         }
         #endregion
     }

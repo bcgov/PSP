@@ -1,15 +1,16 @@
-import { Api_Contact } from '@/models/api/Contact';
-import { Api_Organization } from '@/models/api/Organization';
-import { Api_Person } from '@/models/api/Person';
+import { ApiGen_Concepts_Contact } from '@/models/api/generated/ApiGen_Concepts_Contact';
+import { ApiGen_Concepts_Organization } from '@/models/api/generated/ApiGen_Concepts_Organization';
+import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_Person';
+import { exists } from '@/utils/utils';
 
 export interface ISelectedTenant {
   id: string;
   personId?: number;
-  person?: Api_Person;
+  person?: ApiGen_Concepts_Person;
   primaryContactId?: number;
-  primaryContact?: Api_Person;
+  primaryContact?: ApiGen_Concepts_Person;
   organizationId?: number;
-  organization?: Api_Organization;
+  organization?: ApiGen_Concepts_Organization;
   leaseTenantId?: number;
   isDisabled?: boolean;
   summary?: string;
@@ -20,17 +21,16 @@ export interface ISelectedTenant {
   note?: string;
 }
 
-export function fromContact(baseModel: Api_Contact): ISelectedTenant {
+export function fromContact(baseModel: ApiGen_Concepts_Contact): ISelectedTenant {
   return {
-    id: baseModel.id,
+    id: baseModel.id ?? '',
     personId: baseModel.person?.id,
     organizationId: baseModel.organization?.id,
 
     isDisabled: baseModel.person?.isDisabled || baseModel.organization?.isDisabled || false,
-    summary:
-      baseModel.organization !== undefined
-        ? baseModel.organization.name || ''
-        : baseModel.person?.firstName + ' ' + baseModel.person?.surname,
+    summary: exists(baseModel.organization)
+      ? baseModel.organization.name || ''
+      : baseModel.person?.firstName + ' ' + baseModel.person?.surname,
     email: '',
     mailingAddress: '',
     municipalityName: '',

@@ -121,7 +121,7 @@ const CurrencyInput = ({
   return (
     <Form.Group
       controlId={`input-${field}`}
-      className={classNames(!!required ? 'required' : '', className)}
+      className={classNames(required ? 'required' : '', className)}
     >
       {!!label && (
         <Form.Label>

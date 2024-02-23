@@ -2,7 +2,7 @@ import { createMemoryHistory } from 'history';
 
 import { mockLookups } from '@/mocks/lookups.mock';
 import { getMockApiPropertyManagement } from '@/mocks/propertyManagement.mock';
-import { Api_PropertyManagement } from '@/models/api/Property';
+import { ApiGen_Concepts_PropertyManagement } from '@/models/api/generated/ApiGen_Concepts_PropertyManagement';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
@@ -15,7 +15,7 @@ const storeState = {
 
 const mockGetApi = {
   error: undefined,
-  response: undefined as Api_PropertyManagement | undefined,
+  response: undefined as ApiGen_Concepts_PropertyManagement | undefined,
   execute: jest.fn(),
   loading: false,
 };

@@ -5,7 +5,7 @@ import * as React from 'react';
 import { InlineInput } from '@/components/common/form/styles';
 import * as Styled from '@/features/leases/detail/styles';
 import { LeaseFormModel } from '@/features/leases/models';
-import { Api_LeaseTerm } from '@/models/api/LeaseTerm';
+import { ApiGen_Concepts_LeaseTerm } from '@/models/api/generated/ApiGen_Concepts_LeaseTerm';
 import { withNameSpace } from '@/utils/formUtils';
 
 import { leaseTermColumns } from './columns';
@@ -26,7 +26,7 @@ export const DetailTerms: React.FunctionComponent<React.PropsWithChildren<IDetai
   const formikProps = useFormikContext<LeaseFormModel>();
   const { values } = formikProps;
   const terms = getIn(values, withNameSpace(nameSpace, 'terms'));
-  const currentTerm = terms.find((term: Api_LeaseTerm) =>
+  const currentTerm = terms.find((term: ApiGen_Concepts_LeaseTerm) =>
     moment().isSameOrBefore(moment(term.expiryDate), 'day'),
   );
 
@@ -47,7 +47,7 @@ export const DetailTerms: React.FunctionComponent<React.PropsWithChildren<IDetai
         />
         <InlineInput disabled={disabled} label="Total renewal terms:" field="renewalCount" />
       </Styled.TableHeadFields>
-      <Styled.TermsTable<Api_LeaseTerm>
+      <Styled.TermsTable<ApiGen_Concepts_LeaseTerm>
         name="leaseTermsTable"
         data={terms || []}
         columns={leaseTermColumns}

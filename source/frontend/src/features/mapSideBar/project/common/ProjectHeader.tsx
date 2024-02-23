@@ -3,11 +3,11 @@ import styled from 'styled-components';
 
 import { HeaderField } from '@/components/common/HeaderField/HeaderField';
 import { UserNameTooltip } from '@/components/common/UserNameTooltip';
-import { Api_Project } from '@/models/api/Project';
+import { ApiGen_Concepts_Project } from '@/models/api/generated/ApiGen_Concepts_Project';
 import { prettyFormatUTCDate } from '@/utils';
 
 export interface IProjectHeaderProps {
-  project?: Api_Project;
+  project?: ApiGen_Concepts_Project;
 }
 
 const ProjectHeader: React.FunctionComponent<React.PropsWithChildren<IProjectHeaderProps>> = ({

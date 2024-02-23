@@ -13,6 +13,7 @@ namespace Pims.Api.Areas.Research.Controllers
     using Pims.Api.Models.Concepts.ResearchFile;
     using Pims.Api.Policies;
     using Pims.Api.Services;
+    using Pims.Core.Json;
     using Pims.Dal.Entities.Models;
     using Pims.Dal.Security;
     using Swashbuckle.AspNetCore.Annotations;
@@ -61,6 +62,7 @@ namespace Pims.Api.Areas.Research.Controllers
         [ProducesResponseType(typeof(IEnumerable<ResearchFileModel>), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "research", "file" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetResearchFiles()
         {
             var uri = new Uri(this.Request.GetDisplayUrl());
@@ -79,6 +81,7 @@ namespace Pims.Api.Areas.Research.Controllers
         [ProducesResponseType(typeof(IEnumerable<ResearchFileModel>), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "research", "file" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetResearchFiles([FromBody] ResearchFilterModel filter)
         {
             filter.ThrowBadRequestIfNull($"The request must include a filter.");

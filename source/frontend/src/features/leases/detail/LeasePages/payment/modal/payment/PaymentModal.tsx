@@ -3,7 +3,7 @@ import * as React from 'react';
 import { useRef } from 'react';
 
 import GenericModal from '@/components/common/GenericModal';
-import { Api_LeaseTerm } from '@/models/api/LeaseTerm';
+import { ApiGen_Concepts_LeaseTerm } from '@/models/api/generated/ApiGen_Concepts_LeaseTerm';
 
 import { FormLeasePayment } from '../../models';
 import { PaymentForm } from './PaymentForm';
@@ -11,7 +11,7 @@ import { PaymentForm } from './PaymentForm';
 export interface IPaymentModalProps {
   initialValues?: FormLeasePayment;
   displayModal?: boolean;
-  terms: Api_LeaseTerm[];
+  terms: ApiGen_Concepts_LeaseTerm[];
   onCancel: () => void;
   onSave: (values: FormLeasePayment) => void;
 }

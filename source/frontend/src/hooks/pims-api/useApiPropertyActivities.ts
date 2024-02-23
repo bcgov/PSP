@@ -1,7 +1,8 @@
 import React from 'react';
 
 import { IResearchFilter } from '@/features/research/interfaces';
-import { Api_PropertyActivity, Api_PropertyActivitySubtype } from '@/models/api/PropertyActivity';
+import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
+import { ApiGen_Concepts_PropertyActivitySubtype } from '@/models/api/generated/ApiGen_Concepts_PropertyActivitySubtype';
 
 import { IPaginateRequest } from './interfaces/IPaginateRequest';
 import useAxiosApi from './useApi';
@@ -16,21 +17,28 @@ export const useApiPropertyActivities = () => {
   return React.useMemo(
     () => ({
       getActivitySubtypesApi: () =>
-        api.get<Api_PropertyActivitySubtype[]>(`/properties/management-activities/subtypes`),
+        api.get<ApiGen_Concepts_PropertyActivitySubtype[]>(
+          `/properties/management-activities/subtypes`,
+        ),
 
       getActivitiesApi: (propertyId: number) =>
-        api.get<Api_PropertyActivity[]>(`/properties/${propertyId}/management-activities`),
+        api.get<ApiGen_Concepts_PropertyActivity[]>(
+          `/properties/${propertyId}/management-activities`,
+        ),
 
       getActivityApi: (propertyId: number, activityId: number) =>
-        api.get<Api_PropertyActivity>(
+        api.get<ApiGen_Concepts_PropertyActivity>(
           `/properties/${propertyId}/management-activities/${activityId}`,
         ),
 
-      postActivityApi: (propertyId: number, activity: Api_PropertyActivity) =>
-        api.post<Api_PropertyActivity>(`/properties/${propertyId}/management-activities`, activity),
+      postActivityApi: (propertyId: number, activity: ApiGen_Concepts_PropertyActivity) =>
+        api.post<ApiGen_Concepts_PropertyActivity>(
+          `/properties/${propertyId}/management-activities`,
+          activity,
+        ),
 
-      putActivityApi: (propertyId: number, activity: Api_PropertyActivity) =>
-        api.put<Api_PropertyActivity>(
+      putActivityApi: (propertyId: number, activity: ApiGen_Concepts_PropertyActivity) =>
+        api.put<ApiGen_Concepts_PropertyActivity>(
           `/properties/${propertyId}/management-activities/${activity.id}`,
           activity,
         ),

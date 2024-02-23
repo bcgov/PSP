@@ -6,7 +6,7 @@ import {
   mockGetPropertyManagementActivityList,
   mockGetPropertyManagementActivityNotStarted,
 } from '@/mocks/PropertyManagementActivity.mock';
-import { Api_PropertyActivity } from '@/models/api/PropertyActivity';
+import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { fireEvent, render, RenderOptions, waitFor } from '@/utils/test-utils';
 
@@ -61,7 +61,9 @@ describe('Activities list view', () => {
     const { asFragment } = await setup({
       claims: [Claims.MANAGEMENT_VIEW],
       propertyActivities: [
-        ...apiModelList.map((x: Api_PropertyActivity) => PropertyActivityRow.fromApi(x)),
+        ...apiModelList.map((x: ApiGen_Concepts_PropertyActivity) =>
+          PropertyActivityRow.fromApi(x),
+        ),
       ],
     });
     const fragment = await waitFor(() => asFragment());
@@ -73,7 +75,9 @@ describe('Activities list view', () => {
     const { queryByTestId } = await setup({
       claims: [Claims.MANAGEMENT_VIEW],
       propertyActivities: [
-        ...apiModelList.map((x: Api_PropertyActivity) => PropertyActivityRow.fromApi(x)),
+        ...apiModelList.map((x: ApiGen_Concepts_PropertyActivity) =>
+          PropertyActivityRow.fromApi(x),
+        ),
       ],
     });
 
@@ -97,7 +101,9 @@ describe('Activities list view', () => {
     const { queryByTestId } = await setup({
       claims: [Claims.MANAGEMENT_VIEW, Claims.MANAGEMENT_DELETE],
       propertyActivities: [
-        ...apiModelList.map((x: Api_PropertyActivity) => PropertyActivityRow.fromApi(x)),
+        ...apiModelList.map((x: ApiGen_Concepts_PropertyActivity) =>
+          PropertyActivityRow.fromApi(x),
+        ),
       ],
     });
     const firstRowDelete = queryByTestId(`activity-delete-${apiModelList[0].id}`);

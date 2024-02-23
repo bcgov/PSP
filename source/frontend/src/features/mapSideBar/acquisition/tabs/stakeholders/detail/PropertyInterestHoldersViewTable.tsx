@@ -3,8 +3,8 @@ import { CellProps } from 'react-table';
 
 import { StyledLink } from '@/components/maps/leaflet/LayerPopup/styles';
 import { ColumnWithProps, Table } from '@/components/Table';
-import { Api_InterestHolderProperty } from '@/models/api/InterestHolder';
-import { Api_Person } from '@/models/api/Person';
+import { ApiGen_Concepts_InterestHolderProperty } from '@/models/api/generated/ApiGen_Concepts_InterestHolderProperty';
+import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_Person';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
 import { InterestHolderViewForm, InterestHolderViewRow } from '../update/models';
@@ -22,7 +22,7 @@ const getColumnsByProperty = (
     align: 'left',
     minWidth: 60,
     maxWidth: 60,
-    Cell: (cellProps: CellProps<InterestHolderViewRow, Api_Person | null>) => {
+    Cell: (cellProps: CellProps<InterestHolderViewRow, ApiGen_Concepts_Person | null>) => {
       return (
         <StyledLink
           target="_blank"
@@ -46,7 +46,7 @@ const getColumnsByProperty = (
     align: 'left',
     minWidth: 60,
     maxWidth: 60,
-    Cell: (cellProps: CellProps<InterestHolderViewRow, Api_Person | null>) => {
+    Cell: (cellProps: CellProps<InterestHolderViewRow, ApiGen_Concepts_Person | null>) => {
       return cellProps.row.original?.primaryContact ? (
         <StyledLink
           target="_blank"
@@ -68,7 +68,9 @@ const getColumnsByProperty = (
     align: 'left',
     minWidth: 60,
     maxWidth: 60,
-    Cell: (cellProps: CellProps<InterestHolderViewRow, Api_InterestHolderProperty | null>) => {
+    Cell: (
+      cellProps: CellProps<InterestHolderViewRow, ApiGen_Concepts_InterestHolderProperty | null>,
+    ) => {
       const propertyInterestType = cellProps.row.original.interestHolderType?.description ?? '';
 
       return <>{propertyInterestType}</>;

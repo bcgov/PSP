@@ -1,5 +1,5 @@
-import { Api_CompensationFinancial } from '@/models/api/CompensationFinancial';
-import { Api_H120Category } from '@/models/api/H120Category';
+import { ApiGen_Concepts_CompensationFinancial } from '@/models/api/generated/ApiGen_Concepts_CompensationFinancial';
+import { ApiGen_Concepts_H120Category } from '@/models/api/generated/ApiGen_Concepts_H120Category';
 import { formatMoney } from '@/utils';
 
 export class Api_GenerateCompensationFinancialSummary {
@@ -8,9 +8,9 @@ export class Api_GenerateCompensationFinancialSummary {
   h120_category_name: string;
 
   constructor(
-    h120Category: Api_H120Category | null,
-    h120Financials: Api_CompensationFinancial[],
-    finalFileFinancials: Api_CompensationFinancial[],
+    h120Category: ApiGen_Concepts_H120Category | null,
+    h120Financials: ApiGen_Concepts_CompensationFinancial[],
+    finalFileFinancials: ApiGen_Concepts_CompensationFinancial[],
   ) {
     this.h120_category_name = h120Category?.description ?? '';
     this.pretax_total = formatMoney(

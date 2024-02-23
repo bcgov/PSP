@@ -4,12 +4,12 @@ import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledEditWrapper, StyledSummarySection } from '@/components/common/Section/SectionStyles';
 import Claims from '@/constants/claims';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
-import { Api_Project } from '@/models/api/Project';
+import { ApiGen_Concepts_Project } from '@/models/api/generated/ApiGen_Concepts_Project';
 
 import ProjectProductView from './ProjectProductView';
 
 export interface IProjectSummaryViewProps {
-  project: Api_Project;
+  project: ApiGen_Concepts_Project;
   onEdit: () => void;
 }
 

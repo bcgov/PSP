@@ -1,23 +1,21 @@
 import isNumber from 'lodash/isNumber';
 
 import { SelectOption } from '@/components/common/form';
-import {
-  Api_DispositionFile,
-  Api_DispositionFileProperty,
-  Api_DispositionFileTeam,
-} from '@/models/api/DispositionFile';
 import { Api_DispositionFilter } from '@/models/api/DispositionFilter';
+import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
+import { ApiGen_Concepts_DispositionFileProperty } from '@/models/api/generated/ApiGen_Concepts_DispositionFileProperty';
+import { ApiGen_Concepts_DispositionFileTeam } from '@/models/api/generated/ApiGen_Concepts_DispositionFileTeam';
 
 export class DispositionFilterModel {
-  searchBy: string = 'address';
-  pin: string = '';
-  pid: string = '';
-  address: string = '';
+  searchBy = 'address';
+  pin = '';
+  pid = '';
+  address = '';
   dispositionTeamMember: SelectOption | null = null;
-  fileNameOrNumberOrReference: string = '';
-  dispositionFileStatusCode: string = '';
-  dispositionStatusCode: string = '';
-  dispositionTypeCode: string = '';
+  fileNameOrNumberOrReference = '';
+  dispositionFileStatusCode = '';
+  dispositionStatusCode = '';
+  dispositionTypeCode = '';
 
   toApi(): Api_DispositionFilter {
     const personMemberId =
@@ -71,18 +69,18 @@ export class DispositionFilterModel {
 
 export class DispositionSearchResultModel {
   id: number | null = null;
-  fileNumber: string = '';
-  fileName: string = '';
-  fileReference: string = '';
-  region: string = '';
-  dispositionTypeCode: string = '';
-  dispositionStatusTypeCode: string = '';
-  dispositionFileStatusTypeCode: string = '';
-  dispositionTeam: Api_DispositionFileTeam[] = [];
-  fileProperties?: Api_DispositionFileProperty[] = [];
+  fileNumber = '';
+  fileName = '';
+  fileReference = '';
+  region = '';
+  dispositionTypeCode = '';
+  dispositionStatusTypeCode = '';
+  dispositionFileStatusTypeCode = '';
+  dispositionTeam: ApiGen_Concepts_DispositionFileTeam[] = [];
+  fileProperties?: ApiGen_Concepts_DispositionFileProperty[] = [];
 
-  static fromApi(base: Api_DispositionFile): DispositionSearchResultModel {
-    var newModel = new DispositionSearchResultModel();
+  static fromApi(base: ApiGen_Concepts_DispositionFile): DispositionSearchResultModel {
+    const newModel = new DispositionSearchResultModel();
     newModel.id = base.id ?? null;
     newModel.fileNumber = base.fileNumber ?? '';
     newModel.fileName = base.fileName ?? '';

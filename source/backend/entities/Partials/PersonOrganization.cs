@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Pims.Dal.Entities
 {
     /// <summary>
-    /// PersonOrganization class, provides an entity for the datamodel to manage a list of addresses for a person.
+    /// PersonOrganization class, provides an entity for the datamodel to manage the relationship between persons and organizations.
     /// </summary>
     public partial class PimsPersonOrganization : StandardIdentityBaseAppEntity<long>, IBaseAppEntity
     {

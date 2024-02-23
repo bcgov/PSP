@@ -8,7 +8,8 @@ import {
   emptyCompensationFinancial,
   getMockApiDefaultCompensation,
 } from '@/mocks/compensations.mock';
-import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
+import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
+import { toTypeCodeNullable } from '@/utils/formUtils';
 import { act, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
 import CompensationRequisitionDetailView, {
@@ -127,7 +128,7 @@ describe('Compensation Detail View Component', () => {
       props: {
         acquisitionFile: {
           ...acquistionFile,
-          fileStatusTypeCode: { id: AcquisitionStatus.Active },
+          fileStatusTypeCode: toTypeCodeNullable(AcquisitionStatus.Active),
         },
         compensation: { ...mockFinalCompensation, isDraft: true },
       },
@@ -163,7 +164,7 @@ describe('Compensation Detail View Component', () => {
       props: {
         acquisitionFile: {
           ...acquistionFile,
-          fileStatusTypeCode: { id: AcquisitionStatus.Complete },
+          fileStatusTypeCode: toTypeCodeNullable(AcquisitionStatus.Complete),
         },
         compensation: { ...mockFinalCompensation, isDraft: false },
       },
@@ -187,7 +188,7 @@ describe('Compensation Detail View Component', () => {
   });
 
   it('displays the compensation finalized date', async () => {
-    const mockFinalCompensation: Api_CompensationRequisition = {
+    const mockFinalCompensation: ApiGen_Concepts_CompensationRequisition = {
       ...getMockApiDefaultCompensation(),
       isDraft: false,
       finalizedDate: '2024-06-12T18:00:00',

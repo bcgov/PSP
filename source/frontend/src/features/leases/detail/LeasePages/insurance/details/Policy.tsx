@@ -2,11 +2,11 @@ import React from 'react';
 
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
-import { Api_Insurance } from '@/models/api/Insurance';
+import { ApiGen_Concepts_Insurance } from '@/models/api/generated/ApiGen_Concepts_Insurance';
 import { formatMoney, prettyFormatDate } from '@/utils';
 
 interface PolicyProps {
-  insurance: Api_Insurance;
+  insurance: ApiGen_Concepts_Insurance;
 }
 
 interface PolicyView {
@@ -25,7 +25,7 @@ const Policy: React.FunctionComponent<React.PropsWithChildren<PolicyProps>> = ({
     expiryDate: prettyFormatDate(insurance.expiryDate),
     coverageDescription: insurance.coverageDescription || '',
     otherInsuranceType: insurance.otherInsuranceType ?? undefined,
-    insuranceType: insurance.insuranceType.description,
+    insuranceType: insurance.insuranceType?.description ?? undefined,
   };
   return (
     <Section header={policy.insuranceType}>

@@ -34,7 +34,7 @@ jest.mock('@/hooks/pims-api/useApiUsers');
 
 const agreementTypes: ILookupCode[] = mockLookups.filter(x => x.type === AGREEMENT_TYPES);
 
-let mockViewProps: IUpdateAgreementsFormProps = {
+const mockViewProps: IUpdateAgreementsFormProps = {
   acquistionFile: undefined,
   isLoading: false,
   formikRef: null as any,
@@ -117,9 +117,9 @@ describe('UpdateAgreementsForm component', () => {
     const { getByText, container } = setup();
 
     await act(async () => selectOptions('agreements.0.agreementStatusTypeCode', 'CANCELLED'));
-    await act(async () =>
-      fillInput(container, 'agreements.0.cancellationNote', 'this is a test cancellation note'),
-    );
+    await act(async () => {
+      fillInput(container, 'agreements.0.cancellationNote', 'this is a test cancellation note');
+    });
     await act(async () => selectOptions('agreements.0.agreementStatusTypeCode', 'DRAFT'));
     expect(
       getByText(
@@ -132,9 +132,9 @@ describe('UpdateAgreementsForm component', () => {
     const { container, getByText, formikRef, queryByText } = setup();
 
     await act(async () => selectOptions('agreements.0.agreementStatusTypeCode', 'CANCELLED'));
-    await act(async () =>
-      fillInput(container, 'agreements.0.cancellationNote', 'this is a test cancellation note'),
-    );
+    await act(async () => {
+      fillInput(container, 'agreements.0.cancellationNote', 'this is a test cancellation note');
+    });
     await act(async () => selectOptions('agreements.0.agreementStatusTypeCode', 'DRAFT'));
     await act(async () => userEvent.click(getByText('Yes')));
 

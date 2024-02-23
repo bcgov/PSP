@@ -25,7 +25,7 @@ export const useParcelMapLayer = () => {
 
   const { execute: getAllFeatures, loading: getAllFeaturesLoading } = getAllFeaturesWrapper;
 
-  const handleError = useCallback((error: unknown) => {
+  const handleError = useCallback(() => {
     toast.error('Unable to contact Parcel Map');
   }, []);
 
@@ -41,7 +41,7 @@ export const useParcelMapLayer = () => {
         // TODO: Enhance useLayerQuery to allow generics to match the Property types
         return data as FeatureCollection<Geometry, PMBC_Feature_Properties> | undefined;
       } catch (e: unknown) {
-        handleError(e);
+        handleError();
         return undefined;
       }
     },
@@ -58,7 +58,7 @@ export const useParcelMapLayer = () => {
         // TODO: Enhance useLayerQuery to allow generics to match the Property types
         return data as FeatureCollection<Geometry, PMBC_Feature_Properties> | undefined;
       } catch (e: unknown) {
-        handleError(e);
+        handleError();
         return undefined;
       }
     },
@@ -75,7 +75,7 @@ export const useParcelMapLayer = () => {
         // TODO: Enhance useLayerQuery to allow generics to match the Property types
         return data as FeatureCollection<Geometry, PMBC_Feature_Properties> | undefined;
       } catch (e: unknown) {
-        handleError(e);
+        handleError();
         return undefined;
       }
     },
@@ -99,7 +99,7 @@ export const useParcelMapLayer = () => {
           ? forceCasted.features[0]
           : undefined;
       } catch (e: unknown) {
-        handleError(e);
+        handleError();
         return undefined;
       }
     },
