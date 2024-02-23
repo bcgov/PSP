@@ -307,5 +307,7 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             return input.Substring(startIndex, endIndex);
         }
+
+        public void Dispose() => webDriver.Dispose();
     }
 }

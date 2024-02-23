@@ -187,6 +187,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         {
             /* TEST COVERAGE: PSP-4200 */
             Assert.Equal("No Contacts match the search criteria", searchContacts.GetNoSearchMessage());
+            searchContacts.Dispose();
         }
 
         [StepDefinition(@"Expected Content is displayed on Contacts Table from contact type ""(.*)""")]
@@ -195,13 +196,11 @@ namespace PIMS.Tests.Automation.StepDefinitions
             /* TEST COVERAGE: PSP-2355 */
 
             if (contactType == "Individual")
-            {
                 searchContacts.VerifyContactTableContent(individualContact.FullName, individualContact.FirstName, individualContact.LastName, individualContact.Organization, individualContact.IndEmail1, individualContact.IndMailAddress.AddressLine1, individualContact.IndMailAddress.City, individualContact.IndMailAddress.ProvinceView, individualContact.IndMailAddress.Country);
-            }
             else
-            {
                 searchContacts.VerifyContactTableContent(organizationContact.OrganizationName, "", "", organizationContact.OrganizationName, organizationContact.OrgEmail1, organizationContact.OrgMailAddress.AddressLine1, organizationContact.OrgMailAddress.City, organizationContact.OrgMailAddress.ProvinceView, organizationContact.OrgMailAddress.Country);
-            }
+
+            searchContacts.Dispose();
         }
 
         private void PopulateIndividualContact(int rowNumber)

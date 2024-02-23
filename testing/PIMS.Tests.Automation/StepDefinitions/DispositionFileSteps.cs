@@ -17,7 +17,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly Notes notes;
         private readonly DispositionChecklist checklist;
         private readonly DispositionOfferSale offerSale;
-        private readonly PurchaseMember purchaseMember;
+        private readonly SharedPagination sharedPagination;
 
         private readonly string userName = "TRANPSP1";
         private string dispositionFileCode = "";
@@ -34,6 +34,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
             notes = new Notes(driver.Current);
             checklist = new DispositionChecklist(driver.Current);
             offerSale = new DispositionOfferSale(driver.Current);
+            sharedPagination = new SharedPagination(driver.Current);
+
             dispositionFile = new DispositionFile();
         }
 
@@ -50,7 +52,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             dispositionFileDetails.NavigateToCreateNewDipositionFile();
 
             //Validate Disposition File Details Create Form
-            dispositionFileDetails.VerifyDispositionFileCreate();
+            dispositionFileDetails.VerifyDispositionFileInitCreate();
 
             //Create basic Disposition File
             dispositionFileDetails.CreateMinimumDispositionFile(dispositionFile);
@@ -69,6 +71,9 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Enter to Edit mode of Disposition File
             dispositionFileDetails.EditDispositionFileBttn();
+
+            //Verify maximum fields within the form
+            dispositionFileDetails.VerifyMaximumFields();
 
             //Add Additional Optional information to the disposition file
             dispositionFileDetails.AddAdditionalInformation(dispositionFile);
@@ -375,7 +380,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             propertyInformation.ChooseCreationOptionFromPin("Disposition File - Create new");
 
             //Validate Acquisition File Details Create Form
-            dispositionFileDetails.VerifyDispositionFileCreate();
+            dispositionFileDetails.VerifyDispositionFileInitCreate();
 
             //Cancel empty acquisition file
             dispositionFileDetails.CancelDispositionFile();
@@ -434,6 +439,96 @@ namespace PIMS.Tests.Automation.StepDefinitions
             dispositionFileDetails.SaveDispositionFileDetails();
         }
 
+        [StepDefinition(@"I search for an existing Disposition File from row number (.*)")]
+        public void SearchExistingAcquisitionFile(int rowNumber)
+        {
+            /* TEST COVERAGE: PSP-7562, PSP-7563, PSP-7564 */
+
+            //Login to PIMS
+            loginSteps.Idir(userName);
+
+            //Navigate to Acquisition File Search
+            PopulateDispositionFile(rowNumber);
+            searchDispositionFiles.NavigateToSearchDispositionFile();
+
+            //Verify Pagination
+            sharedPagination.ChoosePaginationOption(5);
+            Assert.Equal(5, searchDispositionFiles.DispositionFileTableResultNumber());
+
+            sharedPagination.ChoosePaginationOption(10);
+            Assert.Equal(10, searchDispositionFiles.DispositionFileTableResultNumber());
+
+            sharedPagination.ChoosePaginationOption(20);
+            Assert.Equal(20, searchDispositionFiles.DispositionFileTableResultNumber());
+
+            sharedPagination.ChoosePaginationOption(50);
+            Assert.Equal(50, searchDispositionFiles.DispositionFileTableResultNumber());
+
+            sharedPagination.ChoosePaginationOption(100);
+            Assert.True(searchDispositionFiles.DispositionFileTableResultNumber() > 51);
+
+            //Verify Column Sorting by File Number
+            searchDispositionFiles.OrderByDispositionFileNumber();
+            var firstFileNbrDescResult = searchDispositionFiles.FirstDispositionFileNumber();
+
+            searchDispositionFiles.OrderByDispositionFileNumber();
+            var firstFileNbrAscResult = searchDispositionFiles.FirstDispositionFileNumber();
+
+            Assert.NotEqual(firstFileNbrDescResult, firstFileNbrAscResult);
+
+            //Verify Column Sorting by Reference Number
+            searchDispositionFiles.OrderByDispositionFileReferenceNumber();
+            var firstReferenceDescResult = searchDispositionFiles.FirstDispositionReferenceNumber();
+
+            searchDispositionFiles.OrderByDispositionFileReferenceNumber();
+            var firstReferenceAscResult = searchDispositionFiles.FirstDispositionReferenceNumber();
+
+            Assert.NotEqual(firstReferenceDescResult, firstReferenceAscResult);
+
+            //Verify Column Sorting by File Name
+            searchDispositionFiles.OrderByDispositionFileName();
+            var firstFileNameDescResult = searchDispositionFiles.FirstDispositionFileName();
+
+            searchDispositionFiles.OrderByDispositionFileName();
+            var firstFileNameAscResult = searchDispositionFiles.FirstDispositionFileName();
+
+            Assert.NotEqual(firstFileNameDescResult, firstFileNameAscResult);
+
+            //Verify Column Sorting by File Type
+            searchDispositionFiles.OrderByDispositionFileType();
+            var firstFileTypeDescResult = searchDispositionFiles.FirstDispositionFileType();
+
+            searchDispositionFiles.OrderByDispositionFileType();
+            var firstFileTypeAscResult = searchDispositionFiles.FirstDispositionFileType();
+
+            Assert.NotEqual(firstFileTypeDescResult, firstFileTypeAscResult);
+
+            //Verify Column Sorting by Disposition Status
+            searchDispositionFiles.OrderByDispositionStatus();
+            var firstFileDispStatusDescResult = searchDispositionFiles.FirstDispositionStatus();
+
+            searchDispositionFiles.OrderByDispositionStatus();
+            var firstFileDispStatusAscResult = searchDispositionFiles.FirstDispositionStatus();
+
+            Assert.NotEqual(firstFileDispStatusDescResult, firstFileDispStatusAscResult);
+
+            //Verify Column Sorting by File Status
+            searchDispositionFiles.OrderByDispositionFileStatus();
+            var firstFileStatusDescResult = searchDispositionFiles.FirstDispositionFileStatus();
+
+            searchDispositionFiles.OrderByDispositionFileStatus();
+            var firstFileStatusAscResult = searchDispositionFiles.FirstDispositionFileStatus();
+
+            Assert.NotEqual(firstFileStatusDescResult, firstFileStatusAscResult);
+
+            //Filter Disposition Files
+            searchDispositionFiles.FilterDispositionFiles("003-549-551", "Disposition Example File", "", "Archived", "On Hold", "");
+            Assert.False(searchDispositionFiles.SearchFoundResults());
+
+            //Look for the last created Disposition File
+            searchDispositionFiles.FilterDispositionFiles("", dispositionFile.DispositionFileName, "", dispositionFile.DispositionFileStatus, dispositionFile.DispositionStatus, dispositionFile.DispositionType);
+        }
+
         [StepDefinition(@"A new Disposition file is created successfully")]
         public void NewDispositionFileCreated()
         {
@@ -442,6 +537,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             Assert.True(searchDispositionFiles.SearchFoundResults());
             //searchDispositionFiles.VerifyAcquisitionFileTableContent(dispositionFile);
+            searchDispositionFiles.Dispose();
         }
 
         [StepDefinition(@"Disposition File's Checklist has been saved successfully")]
@@ -451,6 +547,19 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Verify Checklist Content after update
             checklist.VerifyChecklistViewForm(dispositionFile.DispositionFileChecklist);
+            checklist.Dispose();
+        }
+
+        [StepDefinition(@"Expected Disposition File Content is displayed on Disposition File List View")]
+        public void VerifyAcquisitionFileTableContent()
+        {
+            /* TEST COVERAGE: PSP-4253 */
+
+            //Verify List View
+            searchDispositionFiles.VerifyDispositionFileListView();
+            searchDispositionFiles.VerifyDispositionFileTableContent(dispositionFile);
+            searchDispositionFiles.Dispose();
+
         }
 
         private void PopulateDispositionFile(int rowNumber)
@@ -463,6 +572,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
             dispositionFile.DispositionFileStatus = ExcelDataContext.ReadData(rowNumber, "DispositionFileStatus");
 
             //Project
+            dispositionFile.DispositionProject = ExcelDataContext.ReadData(rowNumber, "DispositionProject");
+            dispositionFile.DispositionProjProduct = ExcelDataContext.ReadData(rowNumber, "DispositionProjProduct");
             dispositionFile.DispositionProjFunding = ExcelDataContext.ReadData(rowNumber, "DispositionProjFunding");
 
             //Schedule

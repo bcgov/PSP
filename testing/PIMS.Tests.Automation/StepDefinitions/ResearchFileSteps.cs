@@ -284,12 +284,15 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             searchResearchFile.VerifyResearchFileListView();
             searchResearchFile.VerifyResearchFileTableContent(researchFile, userName);
+
+            searchResearchFile.Dispose();
         }
 
         [StepDefinition(@"Research File Properties remain unchanged")]
         public void SearchResearchFileResult()
         {
             Assert.False(searchResearchFile.SearchFoundResults());
+            searchResearchFile.Dispose();
         }
 
         private void PopulateResearchFile(int rowNumber)
