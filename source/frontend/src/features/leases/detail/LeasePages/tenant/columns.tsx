@@ -7,6 +7,7 @@ import { ReactComponent as Inactive } from '@/assets/images/inactive.svg';
 import { Select, SelectOption } from '@/components/common/form';
 import { ColumnWithProps } from '@/components/Table';
 import { getPrimaryContact } from '@/features/contacts/contactUtils';
+import { isValidId } from '@/utils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
 import { FormTenant } from './models';
@@ -30,7 +31,7 @@ const getColumns = (tenantTypes: SelectOption[]): ColumnWithProps<FormTenant>[] 
       width: 20,
       maxWidth: 20,
       Cell: (props: CellProps<FormTenant>) =>
-        props.row.original.personId !== undefined ? (
+        isValidId(props.row.original.personId) ? (
           <FaRegUser size={20} />
         ) : (
           <FaRegBuilding size={20} />
@@ -61,7 +62,7 @@ const getColumns = (tenantTypes: SelectOption[]): ColumnWithProps<FormTenant>[] 
         let primaryContact = original.initialPrimaryContact;
         if (original.primaryContactId !== original.initialPrimaryContact?.id) {
           primaryContact = original.primaryContactId
-            ? getPrimaryContact(original.primaryContactId, original)
+            ? getPrimaryContact(original.primaryContactId, original) ?? undefined
             : undefined;
         }
         const primaryContactOptions: SelectOption[] =
@@ -69,7 +70,7 @@ const getColumns = (tenantTypes: SelectOption[]): ColumnWithProps<FormTenant>[] 
             label: formatApiPersonNames(person),
             value: person?.id ?? 0,
           })) ?? [];
-        if (!!props?.row?.original?.personId) {
+        if (isValidId(props?.row?.original?.personId)) {
           return <p>Not applicable</p>;
         } else if (persons?.length && persons?.length > 1) {
           return (

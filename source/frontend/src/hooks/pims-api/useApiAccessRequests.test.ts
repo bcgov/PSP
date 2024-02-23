@@ -2,8 +2,9 @@ import { renderHook } from '@testing-library/react-hooks';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 
-import { IPagedItems } from '@/interfaces';
 import { mockApiAccessRequest } from '@/mocks/filterData.mock';
+import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
+import { ApiGen_Concepts_AccessRequest } from '@/models/api/generated/ApiGen_Concepts_AccessRequest';
 
 import { useApiAccessRequests } from './useApiAccessRequests';
 
@@ -24,13 +25,14 @@ describe('useApiAccessRequests api hook', () => {
   };
 
   it('Gets paged access requests', async () => {
-    mockAxios.onGet('/admin/access/requests?page=1').reply(200, {
-      items: [mockApiAccessRequest],
-      pageIndex: 1,
-      page: 1,
-      quantity: 5,
-      total: 10,
-    } as IPagedItems);
+    mockAxios
+      .onGet('/admin/access/requests?page=1')
+      .reply<ApiGen_Base_Page<ApiGen_Concepts_AccessRequest>>(200, {
+        items: [mockApiAccessRequest],
+        page: 1,
+        quantity: 5,
+        total: 10,
+      });
 
     const { getAccessRequestsPaged } = setup();
     const response = await getAccessRequestsPaged({ page: 1 });
@@ -38,7 +40,6 @@ describe('useApiAccessRequests api hook', () => {
     expect(response.status).toBe(200);
     expect(response.data).toStrictEqual({
       items: [mockApiAccessRequest],
-      pageIndex: 1,
       page: 1,
       quantity: 5,
       total: 10,
@@ -64,7 +65,7 @@ describe('useApiAccessRequests api hook', () => {
   });
 
   it('Posts a new access request', async () => {
-    const newAccessRequest = { ...mockApiAccessRequest, id: undefined };
+    const newAccessRequest: ApiGen_Concepts_AccessRequest = { ...mockApiAccessRequest, id: 0 };
     mockAxios.onPost(`/access/requests`).reply(201, newAccessRequest);
     const { postAccessRequest } = setup();
     const response = await postAccessRequest(newAccessRequest);

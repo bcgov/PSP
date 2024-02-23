@@ -12,8 +12,9 @@ import { LeaseFormModel } from '@/features/leases/models';
 import { LeasePageProps } from '@/features/mapSideBar/lease/LeaseContainer';
 import { useLeaseTermRepository } from '@/hooks/repositories/useLeaseTermRepository';
 import { mockLookups } from '@/mocks/lookups.mock';
-import { defaultApiLease } from '@/models/api/Lease';
+import { defaultApiLease } from '@/models/defaultInitializers';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes/lookupCodesSlice';
+import { toTypeCodeNullable } from '@/utils/formUtils';
 import {
   act,
   fillInput,
@@ -49,7 +50,7 @@ const defaultLeaseWithTermsPayments: LeaseFormModel = {
   terms: [
     {
       ...defaultFormLeaseTerm,
-      statusTypeCode: { id: LeaseTermStatusTypes.EXERCISED },
+      statusTypeCode: toTypeCodeNullable(LeaseTermStatusTypes.EXERCISED),
       payments: [{ ...defaultTestFormLeasePayment }],
     },
   ],
@@ -85,7 +86,7 @@ describe('TermsPaymentsContainer component', () => {
       <LeaseStateContext.Provider
         value={{
           lease: {
-            ...defaultApiLease,
+            ...defaultApiLease(),
             ...renderOptions.initialValues,
             id: 1,
             startDate: '2020-01-01',
@@ -124,7 +125,7 @@ describe('TermsPaymentsContainer component', () => {
   it('renders with data as expected', async () => {
     const { component } = await setup({
       claims: [Claims.LEASE_EDIT],
-      initialValues: { ...defaultApiLease, terms: [defaultFormLeaseTerm] },
+      initialValues: { ...defaultApiLease(), terms: [defaultFormLeaseTerm] },
     });
 
     expect(component.asFragment()).toMatchSnapshot();
@@ -167,7 +168,7 @@ describe('TermsPaymentsContainer component', () => {
       const {
         component: { findAllByTitle, getByText },
       } = await setup({
-        initialValues: { ...defaultApiLease, terms: [{ ...defaultFormLeaseTerm, id: 1 }] },
+        initialValues: { ...defaultApiLease(), terms: [{ ...defaultFormLeaseTerm, id: 1 }] },
         claims: [Claims.LEASE_EDIT],
       });
       mockAxios.onPut().reply(200, { id: 1 });
@@ -188,7 +189,7 @@ describe('TermsPaymentsContainer component', () => {
         component: { queryByTitle },
       } = await setup({
         initialValues: {
-          ...defaultApiLease,
+          ...defaultApiLease(),
           terms: [{ ...defaultFormLeaseTerm, id: 1, payments: [{ id: 1 }] }],
         },
         claims: [Claims.LEASE_DELETE],
@@ -207,7 +208,7 @@ describe('TermsPaymentsContainer component', () => {
         component: { findAllByTitle, getByText },
       } = await setup({
         initialValues: {
-          ...defaultApiLease,
+          ...defaultApiLease(),
           terms: [
             { ...defaultFormLeaseTerm, id: 1 },
             { ...defaultFormLeaseTerm, id: 1 },
@@ -230,7 +231,7 @@ describe('TermsPaymentsContainer component', () => {
         component: { findAllByTitle },
       } = await setup({
         initialValues: {
-          ...defaultApiLease,
+          ...defaultApiLease(),
           terms: [{ ...defaultFormLeaseTerm, id: 1 }],
         },
         claims: [Claims.LEASE_EDIT],
@@ -252,7 +253,7 @@ describe('TermsPaymentsContainer component', () => {
         component: { findAllByTitle, getByText },
       } = await setup({
         initialValues: {
-          ...defaultApiLease,
+          ...defaultApiLease(),
           terms: [{ ...defaultFormLeaseTerm, id: 1 }],
         },
         claims: [Claims.LEASE_EDIT],

@@ -3,8 +3,7 @@ import {
   IApiGenerateExpropriationFormBaseInput,
 } from './GenerateExpropriationFormBase';
 
-export interface IApiGenerateExpropriationForm5Input
-  extends IApiGenerateExpropriationFormBaseInput {}
+export type IApiGenerateExpropriationForm5Input = IApiGenerateExpropriationFormBaseInput;
 
 export class Api_GenerateExpropriationForm5 extends Api_GenerateExpropriationFormBase {
   constructor({

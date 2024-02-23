@@ -96,7 +96,7 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
         /// <summary>
         /// get/set - A list of research property relationships.
         /// </summary>
-        public IList<AcquisitionFilePropertyModel> FileProperties { get; set; }
+        public new IList<AcquisitionFilePropertyModel> FileProperties { get; set; }
 
         /// <summary>
         /// get/set - A list of acquisition file team relationships.

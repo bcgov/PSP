@@ -5,7 +5,7 @@ import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { PayeeOption } from '@/features/mapSideBar/acquisition/models/PayeeOptionModel';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { useInterestHolderRepository } from '@/hooks/repositories/useInterestHolderRepository';
-import { Api_ExpropriationPayment } from '@/models/api/ExpropriationPayment';
+import { ApiGen_Concepts_ExpropriationPayment } from '@/models/api/generated/ApiGen_Concepts_ExpropriationPayment';
 import { SystemConstants, useSystemConstants } from '@/store/slices/systemConstants';
 
 import { Form8FormModel } from '../models/Form8FormModel';
@@ -48,7 +48,7 @@ export const AddForm8Container: React.FunctionComponent<
 
     await Promise.all([acquisitionOwnersCall, interestHoldersCall]).then(
       ([acquisitionOwners, interestHolders]) => {
-        let options = [];
+        const options = [];
 
         if (acquisitionOwners !== undefined) {
           const ownersOptions: PayeeOption[] = acquisitionOwners.map(x =>
@@ -69,7 +69,7 @@ export const AddForm8Container: React.FunctionComponent<
     );
   }, [acquisitionFileId, retrieveAcquisitionOwners, fetchInterestHolders]);
 
-  const handleSave = async (form8: Api_ExpropriationPayment) => {
+  const handleSave = async (form8: ApiGen_Concepts_ExpropriationPayment) => {
     return postAcquisitionForm8(acquisitionFileId, form8);
   };
 

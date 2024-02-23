@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Pims.Api.Models.Base;
 using Pims.Api.Models.Concepts.User;
 using Pims.Api.Policies;
+using Pims.Core.Json;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Repositories;
@@ -54,6 +55,7 @@ namespace Pims.Api.Areas.Admin.Controllers
         [ProducesResponseType(typeof(PageModel<UserModel>), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "admin-user" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetUsers()
         {
             var uri = new Uri(this.Request.GetDisplayUrl());
@@ -71,6 +73,7 @@ namespace Pims.Api.Areas.Admin.Controllers
         [ProducesResponseType(typeof(PageModel<UserModel>), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "admin-user" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetUsers(UserFilter filter)
         {
             var page = _userRepository.GetAllByFilter(filter);
@@ -88,6 +91,7 @@ namespace Pims.Api.Areas.Admin.Controllers
         [ProducesResponseType(typeof(UserModel), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "admin-user" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetUser(long id)
         {
             var entity = _userRepository.GetById(id);
@@ -105,6 +109,7 @@ namespace Pims.Api.Areas.Admin.Controllers
         [ProducesResponseType(typeof(UserModel), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "admin-user" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetUser(Guid key)
         {
             var entity = _userRepository.GetByKeycloakUserId(key);
@@ -122,6 +127,7 @@ namespace Pims.Api.Areas.Admin.Controllers
         [ProducesResponseType(typeof(UserModel), 201)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "admin-user" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult AddUser([FromBody] UserModel model)
         {
             var entity = _mapper.Map<PimsUser>(model);
@@ -143,7 +149,7 @@ namespace Pims.Api.Areas.Admin.Controllers
         [ProducesResponseType(typeof(UserModel), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "admin-user" })]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Parameter 'id' is required for route.")]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult UpdateUser(Guid key, [FromBody] UserModel model)
         {
             var entity = _mapper.Map<PimsUser>(model);
@@ -164,7 +170,7 @@ namespace Pims.Api.Areas.Admin.Controllers
         [ProducesResponseType(typeof(UserModel), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "admin-user" })]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Parameter 'key' is required for route.")]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult DeleteUser(Guid key, [FromBody] UserModel model)
         {
             var entity = _mapper.Map<PimsUser>(model);

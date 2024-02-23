@@ -4,13 +4,13 @@ import { FaBriefcase } from 'react-icons/fa';
 import { useHistory } from 'react-router-dom';
 
 import * as API from '@/constants/API';
-import { FinancialCodeTypes } from '@/constants/index';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
 import { useFinancialCodeRepository } from '@/hooks/repositories/useFinancialCodeRepository';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
-import { Api_FinancialCode } from '@/models/api/FinancialCode';
-import { Api_Project } from '@/models/api/Project';
+import { ApiGen_Concepts_FinancialCode } from '@/models/api/generated/ApiGen_Concepts_FinancialCode';
+import { ApiGen_Concepts_FinancialCodeTypes } from '@/models/api/generated/ApiGen_Concepts_FinancialCodeTypes';
+import { ApiGen_Concepts_Project } from '@/models/api/generated/ApiGen_Concepts_Project';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { toDropDownOptions } from '@/utils/financialCodeUtils';
 
@@ -31,18 +31,19 @@ const AddProjectContainer: React.FC<React.PropsWithChildren<IAddProjectContainer
     getFinancialCodesByType: { execute: getFinancialCodes },
   } = useFinancialCodeRepository();
 
-  const [businessFunctions, setBusinessFunctions] = useState<Api_FinancialCode[]>([]);
-  const [costTypes, setCostTypes] = useState<Api_FinancialCode[]>([]);
-  const [workActivities, setWorkActivities] = useState<Api_FinancialCode[]>([]);
+  const [businessFunctions, setBusinessFunctions] = useState<ApiGen_Concepts_FinancialCode[]>([]);
+  const [costTypes, setCostTypes] = useState<ApiGen_Concepts_FinancialCode[]>([]);
+  const [workActivities, setWorkActivities] = useState<ApiGen_Concepts_FinancialCode[]>([]);
   const [isValid, setIsValid] = useState<boolean>(true);
 
   const withUserOverride = useApiUserOverride<
-    (userOverrideCodes: UserOverrideCode[]) => Promise<Api_Project | void>
+    (userOverrideCodes: UserOverrideCode[]) => Promise<ApiGen_Concepts_Project | void>
   >('Failed to Add Project File');
 
   useEffect(() => {
     async function fetchBusinessFunctions() {
-      const data = (await getFinancialCodes(FinancialCodeTypes.BusinessFunction)) ?? [];
+      const data =
+        (await getFinancialCodes(ApiGen_Concepts_FinancialCodeTypes.BusinessFunction)) ?? [];
       setBusinessFunctions(data);
     }
     fetchBusinessFunctions();
@@ -51,7 +52,7 @@ const AddProjectContainer: React.FC<React.PropsWithChildren<IAddProjectContainer
 
   useEffect(() => {
     async function fetchCostTypes() {
-      const data = (await getFinancialCodes(FinancialCodeTypes.CostType)) ?? [];
+      const data = (await getFinancialCodes(ApiGen_Concepts_FinancialCodeTypes.CostType)) ?? [];
       setCostTypes(data);
     }
     fetchCostTypes();
@@ -60,7 +61,7 @@ const AddProjectContainer: React.FC<React.PropsWithChildren<IAddProjectContainer
 
   useEffect(() => {
     async function fetchWorkActivities() {
-      const data = (await getFinancialCodes(FinancialCodeTypes.WorkActivity)) ?? [];
+      const data = (await getFinancialCodes(ApiGen_Concepts_FinancialCodeTypes.WorkActivity)) ?? [];
       setWorkActivities(data);
     }
     fetchWorkActivities();
@@ -84,12 +85,12 @@ const AddProjectContainer: React.FC<React.PropsWithChildren<IAddProjectContainer
   const close = useCallback(() => onClose && onClose(), [onClose]);
 
   const handleSave = async () => {
-    var result = await (formikRef.current?.submitForm() ?? Promise.resolve());
+    const result = await (formikRef.current?.submitForm() ?? Promise.resolve());
     setIsValid(formikRef.current?.isValid ?? false);
     return result;
   };
 
-  const onSuccess = async (proj: Api_Project) => {
+  const onSuccess = async (proj: ApiGen_Concepts_Project) => {
     formikRef.current?.resetForm();
     history.replace(`/mapview/sidebar/project/${proj.id}`);
   };

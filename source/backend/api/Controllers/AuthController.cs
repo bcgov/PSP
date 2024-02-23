@@ -2,11 +2,11 @@ using System;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using Pims.Api.Models.Requests.Auth;
 using Pims.Core.Extensions;
 using Pims.Core.Http.Configuration;
 using Pims.Dal.Repositories;
 using Swashbuckle.AspNetCore.Annotations;
-using Model = Pims.Api.Models.Auth;
 
 namespace Pims.Api.Controllers
 {
@@ -53,7 +53,7 @@ namespace Pims.Api.Controllers
         [Authorize]
         [HttpPost("activate")]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(Model.UserModel), 200)]
+        [ProducesResponseType(typeof(ActivateResponse), 200)]
         [SwaggerOperation(Tags = new[] { "auth" })]
         public IActionResult Activate()
         {
@@ -65,12 +65,12 @@ namespace Pims.Api.Controllers
             if (!exists)
             {
                 // brand-new users cannot have claims mismatch
-                return new CreatedResult($"{user.GuidIdentifierValue}", new Model.UserModel(user.Internal_Id, user.GuidIdentifierValue.Value, true));
+                return new CreatedResult($"{user.GuidIdentifierValue}", new ActivateResponse(user.Internal_Id, user.GuidIdentifierValue.Value, true));
             }
 
             bool hasValidClaims = _userRepository.ValidateClaims(user);
 
-            return new JsonResult(new Model.UserModel(user.Internal_Id, user.GuidIdentifierValue.Value, hasValidClaims));
+            return new JsonResult(new ActivateResponse(user.Internal_Id, user.GuidIdentifierValue.Value, hasValidClaims));
         }
 
         /// <summary>

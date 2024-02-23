@@ -6,7 +6,7 @@ import React from 'react';
 
 import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
 import { mockLookups } from '@/mocks/lookups.mock';
-import { defaultApiLease } from '@/models/api/Lease';
+import { defaultApiLease } from '@/models/defaultInitializers';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { renderAsync, RenderOptions } from '@/utils/test-utils';
 
@@ -30,7 +30,7 @@ describe('Improvements Container component', () => {
       <LeaseStateContext.Provider
         value={{
           lease: {
-            ...defaultApiLease,
+            ...defaultApiLease(),
             id: 1,
           },
           setLease: noop,

@@ -61,7 +61,9 @@ describe('ContactFilterComponent', () => {
   it('searches all by default', async () => {
     const { container, searchButton } = setup();
     const allButton = container.querySelector(`#input-all`);
-    act(() => allButton && userEvent.click(allButton));
+    act(() => {
+      allButton && userEvent.click(allButton);
+    });
     await act(async () => userEvent.click(searchButton));
 
     expect(setFilter).toHaveBeenCalledWith(
@@ -72,7 +74,9 @@ describe('ContactFilterComponent', () => {
   it('searches organizations if radio option selected', async () => {
     const { container, searchButton } = setup();
     const organizationsButton = container.querySelector(`#input-organizations`);
-    act(() => organizationsButton && userEvent.click(organizationsButton));
+    act(() => {
+      organizationsButton && userEvent.click(organizationsButton);
+    });
     await act(async () => userEvent.click(searchButton));
 
     expect(setFilter).toHaveBeenCalledWith(
@@ -83,7 +87,9 @@ describe('ContactFilterComponent', () => {
   it('searches persons if radio option selected', async () => {
     const { container, searchButton } = setup();
     const personButton = container.querySelector(`#input-persons`);
-    act(() => personButton && userEvent.click(personButton));
+    act(() => {
+      personButton && userEvent.click(personButton);
+    });
     await act(async () => userEvent.click(searchButton));
 
     expect(setFilter).toHaveBeenCalledWith(
@@ -117,7 +123,9 @@ describe('ContactFilterComponent', () => {
     await act(async () => userEvent.click(activeCheck as Element));
 
     const personButton = container.querySelector(`#input-persons`);
-    act(() => personButton && userEvent.click(personButton));
+    act(() => {
+      personButton && userEvent.click(personButton);
+    });
 
     fillInput(container, 'municipality', 'victoria');
 

@@ -6,12 +6,12 @@ import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Scrollable as ScrollableBase } from '@/components/common/Scrollable/Scrollable';
 import { Section } from '@/components/common/Section/Section';
 import DocumentListContainer from '@/features/documents/list/DocumentListContainer';
-import { Api_FormDocumentType } from '@/models/api/FormDocument';
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
+import { ApiGen_Concepts_FormDocumentType } from '@/models/api/generated/ApiGen_Concepts_FormDocumentType';
 
 export interface IDocumentTemplateManagementViewProp {
   isLoading: boolean;
-  formDocumentTypes: Api_FormDocumentType[] | undefined;
+  formDocumentTypes: ApiGen_Concepts_FormDocumentType[] | undefined;
   selectedFormDocumentTypeCode: string | undefined;
   setSelectedFormDocumentTypeCode: (formTypeCode: string) => void;
 }
@@ -20,7 +20,7 @@ export const DocumentTemplateManagementView: React.FunctionComponent<
   React.PropsWithChildren<IDocumentTemplateManagementViewProp>
 > = props => {
   const onSelectChange = (selectedType: React.ChangeEvent<HTMLInputElement>) => {
-    var formDocumentTypeCode = selectedType.target.value;
+    const formDocumentTypeCode = selectedType.target.value;
     props.setSelectedFormDocumentTypeCode(formDocumentTypeCode);
   };
 
@@ -39,7 +39,10 @@ export const DocumentTemplateManagementView: React.FunctionComponent<
                   <option>Select a form type</option>
                   {props.formDocumentTypes?.map(types => {
                     return (
-                      <option value={types.formTypeCode} key={'form-type-' + types.formTypeCode}>
+                      <option
+                        value={types.formTypeCode ?? ''}
+                        key={'form-type-' + types.formTypeCode}
+                      >
                         {types.description}
                       </option>
                     );

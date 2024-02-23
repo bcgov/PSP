@@ -55,6 +55,11 @@ namespace Pims.Api.Models.Concepts.Address
         public CodeTypeModel Country { get; set; }
 
         /// <summary>
+        /// get/set - The address's District Code.
+        /// </summary>
+        public short? DistrictCode { get; set; }
+
+        /// <summary>
         /// get/set - The address's district.
         /// </summary>
         public CodeTypeModel District { get; set; }
@@ -63,6 +68,11 @@ namespace Pims.Api.Models.Concepts.Address
         /// get/set - The address's region.
         /// </summary>
         public CodeTypeModel Region { get; set; }
+
+        /// <summary>
+        /// get/set - The address's Region Code.
+        /// </summary>
+        public short? RegionCode { get; set; }
 
         /// <summary>
         /// get/set - The free-form value of country when country code is "Other".

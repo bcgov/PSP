@@ -6,8 +6,9 @@ import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
 import { SectionListHeader } from '@/components/common/SectionListHeader';
 import { Claims } from '@/constants';
-import { Api_AcquisitionFile, EnumAcquisitionFileType } from '@/models/api/AcquisitionFile';
-import { Api_ExpropriationPayment } from '@/models/api/ExpropriationPayment';
+import { EnumAcquisitionFileType } from '@/constants/acquisitionFileType';
+import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
+import { ApiGen_Concepts_ExpropriationPayment } from '@/models/api/generated/ApiGen_Concepts_ExpropriationPayment';
 
 import { useGenerateExpropriationForm1 } from '../../common/GenerateForm/hooks/useGenerateExpropriationForm1';
 import { useGenerateExpropriationForm5 } from '../../common/GenerateForm/hooks/useGenerateExpropriationForm5';
@@ -20,8 +21,8 @@ import ExpropriationForm9 from './form9/ExpropriationForm9';
 
 export interface IExpropriationTabContainerViewProps {
   loading: boolean;
-  acquisitionFile: Api_AcquisitionFile;
-  form8s: Api_ExpropriationPayment[];
+  acquisitionFile: ApiGen_Concepts_AcquisitionFile;
+  form8s: ApiGen_Concepts_ExpropriationPayment[];
   onForm8Deleted: (form8Id: number) => void;
 }
 
@@ -100,7 +101,7 @@ export const ExpropriationTabContainerView: React.FunctionComponent<
             form8Index={index}
             acquisitionFileNumber={acquisitionFile.fileNumber ?? ''}
             onGenerate={onGenerateForm8}
-            onDelete={() => onForm8Deleted(form.id!)}
+            onDelete={() => form?.id && onForm8Deleted(form.id)}
           ></ExpropriationForm8Details>
         ))}
       </Section>

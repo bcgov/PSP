@@ -1,21 +1,21 @@
 import { Table } from '@/components/Table';
 import { TableSort } from '@/components/Table/TableSort';
-import { Api_FinancialCode } from '@/models/api/FinancialCode';
+import { ApiGen_Concepts_FinancialCode } from '@/models/api/generated/ApiGen_Concepts_FinancialCode';
 
 import { columns } from './columns';
 
 export interface IFinancialCodeResultsProps {
-  results: Api_FinancialCode[];
+  results: ApiGen_Concepts_FinancialCode[];
   loading?: boolean;
-  sort: TableSort<Api_FinancialCode>;
-  setSort: (value: TableSort<Api_FinancialCode>) => void;
+  sort: TableSort<ApiGen_Concepts_FinancialCode>;
+  setSort: (value: TableSort<ApiGen_Concepts_FinancialCode>) => void;
 }
 
 export function FinancialCodeResults(props: IFinancialCodeResultsProps) {
   const { results, setSort, sort, ...rest } = props;
 
   return (
-    <Table<Api_FinancialCode>
+    <Table<ApiGen_Concepts_FinancialCode>
       name="FinancialCodeTable"
       manualSortBy={false}
       lockPageSize={false}

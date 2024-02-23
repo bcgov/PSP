@@ -148,7 +148,7 @@ const LeafletListenerComp = () => {
   }, [mapInstance]);
 
   useEffect(() => {
-    if (!!mapInstance) {
+    if (mapInstance) {
       const currentLayers = Object.keys((featureGroup as any)._layers)
         .map(k => (featureGroup as any)._layers[k])
         .map(l => l.options)
@@ -190,7 +190,9 @@ const LayersTree: React.FC<React.PropsWithChildren<{ items: TreeMenuItem[] }>> =
   const getLayerNodeIndex = (nodeKey: string, parentKey: string, mapLayers: TreeNode[]) => {
     const parent = mapLayers.find(node => node.key === parentKey);
 
-    return (parent!.nodes as any).findIndex((node: TreeNode) => node.key === nodeKey);
+    return parent
+      ? (parent.nodes ?? ([] as any)).findIndex((node: TreeNode) => node.key === nodeKey)
+      : undefined;
   };
 
   return (
@@ -286,7 +288,7 @@ const LayersMenu: React.FC<React.PropsWithChildren<unknown>> = () => {
 
   return (
     <Formik initialValues={{ layers }} onSubmit={noop}>
-      {({ values }) => (
+      {() => (
         <FormikForm>
           <LeafletListenerComp />
           <TreeMenu hasSearch={false} data={layers}>

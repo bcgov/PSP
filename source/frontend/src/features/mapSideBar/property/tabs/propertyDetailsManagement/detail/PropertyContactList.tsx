@@ -11,14 +11,15 @@ import { ColumnWithProps, Table } from '@/components/Table';
 import Claims from '@/constants/claims';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { useModalContext } from '@/hooks/useModalContext';
-import { Api_Organization } from '@/models/api/Organization';
-import { Api_Person } from '@/models/api/Person';
-import { Api_Property, Api_PropertyContact } from '@/models/api/Property';
+import { ApiGen_Concepts_Organization } from '@/models/api/generated/ApiGen_Concepts_Organization';
+import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_Person';
+import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
+import { ApiGen_Concepts_PropertyContact } from '@/models/api/generated/ApiGen_Concepts_PropertyContact';
 import { stringToFragment } from '@/utils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
 interface IPropertyContactListProps {
-  propertyContacts: Api_PropertyContact[];
+  propertyContacts: ApiGen_Concepts_PropertyContact[];
   handleEdit: (contactId: number) => void;
   handleDelete: (contactId: number) => void;
 }
@@ -27,14 +28,17 @@ export function createContactTableColumns(
   onEdit: (propertyContactId: number) => void,
   onDelete: (propertyContactId: number) => void,
 ) {
-  const columns: ColumnWithProps<Api_PropertyContact>[] = [
+  const columns: ColumnWithProps<ApiGen_Concepts_PropertyContact>[] = [
     {
       Header: 'Contact',
       align: 'left',
       minWidth: 60,
       maxWidth: 60,
       Cell: (
-        cellProps: CellProps<Api_PropertyContact, Api_Organization | Api_Person | undefined>,
+        cellProps: CellProps<
+          ApiGen_Concepts_PropertyContact,
+          ApiGen_Concepts_Organization | ApiGen_Concepts_Person | undefined
+        >,
       ) => {
         return (
           <StyledLink
@@ -59,7 +63,10 @@ export function createContactTableColumns(
       minWidth: 60,
       maxWidth: 60,
       Cell: (
-        cellProps: CellProps<Api_PropertyContact, Api_Organization | Api_Person | undefined>,
+        cellProps: CellProps<
+          ApiGen_Concepts_PropertyContact,
+          ApiGen_Concepts_Organization | ApiGen_Concepts_Person | undefined
+        >,
       ) => {
         const isOrganization = cellProps.row.original.organization !== null;
         const primaryContact = cellProps.row.original.primaryContact;
@@ -83,7 +90,9 @@ export function createContactTableColumns(
       align: 'left',
       minWidth: 60,
       maxWidth: 60,
-      Cell: (cellProps: CellProps<Api_PropertyContact, Api_Property | undefined>) => {
+      Cell: (
+        cellProps: CellProps<ApiGen_Concepts_PropertyContact, ApiGen_Concepts_Property | undefined>,
+      ) => {
         return stringToFragment(cellProps.row.original.purpose || '');
       },
     },
@@ -93,7 +102,7 @@ export function createContactTableColumns(
       sortable: false,
       width: 25,
       maxWidth: 25,
-      Cell: (cellProps: CellProps<Api_PropertyContact>) => {
+      Cell: (cellProps: CellProps<ApiGen_Concepts_PropertyContact>) => {
         const { hasClaim } = useKeycloakWrapper();
         return (
           <Row className="no-gutters">
@@ -161,7 +170,7 @@ const PropertyContactList: React.FunctionComponent<IPropertyContactListProps> = 
   );
 
   return (
-    <Table<Api_PropertyContact>
+    <Table<ApiGen_Concepts_PropertyContact>
       name="PropertyContactsTable"
       manualSortBy={false}
       lockPageSize={true}

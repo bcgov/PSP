@@ -113,6 +113,7 @@ export const createPimsFeatures = (
           ...EmptyPropertyLocation,
           PROPERTY_ID: x.propertyId ?? null,
           PID: x.pid ?? null,
+          IS_OWNED: true,
         },
       };
     }),

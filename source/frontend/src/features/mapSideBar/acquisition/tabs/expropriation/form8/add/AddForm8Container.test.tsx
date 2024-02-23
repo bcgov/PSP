@@ -6,7 +6,7 @@ import { mockAcquisitionFileOwnersResponse } from '@/mocks/acquisitionFiles.mock
 import { mockGetExpropriationPaymentApi } from '@/mocks/ExpropriationPayment.mock';
 import { getMockApiInterestHolders } from '@/mocks/interestHolders.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
-import { Api_ExpropriationPayment } from '@/models/api/ExpropriationPayment';
+import { ApiGen_Concepts_ExpropriationPayment } from '@/models/api/generated/ApiGen_Concepts_ExpropriationPayment';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { systemConstantsSlice } from '@/store/slices/systemConstants/systemConstantsSlice';
 import { act, render, RenderOptions } from '@/utils/test-utils';
@@ -110,9 +110,9 @@ describe('Add Form8 Container component', () => {
     mockGetFileOwnersApi.execute.mockReturnValue(mockFileOwnersResponse);
     mockPostApi.execute.mockReturnValue(mockGetExpropriationPaymentApi());
 
-    let createdForm8: Api_ExpropriationPayment | undefined;
+    let createdForm8: ApiGen_Concepts_ExpropriationPayment | undefined;
     await act(async () => {
-      createdForm8 = await viewProps?.onSave({} as Api_ExpropriationPayment);
+      createdForm8 = await viewProps?.onSave({} as ApiGen_Concepts_ExpropriationPayment);
     });
 
     expect(mockPostApi.execute).toHaveBeenCalled();

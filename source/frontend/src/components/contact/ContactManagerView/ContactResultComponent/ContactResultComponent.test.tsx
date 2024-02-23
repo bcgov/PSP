@@ -41,13 +41,12 @@ const setup = (
   };
 };
 
-const defaultSearchResult: IContactSearchResult = {
+const defaultPersonSearchResult: IContactSearchResult = {
   id: '1',
   summary: 'summary',
   mailingAddress: '123 mock st',
   surname: 'last',
   firstName: 'first',
-  organizationName: 'organizationName',
   email: 'email',
   municipalityName: 'city',
   provinceState: 'province',
@@ -57,16 +56,16 @@ const defaultSearchResult: IContactSearchResult = {
 
 const mockResults: IContactSearchResult[] = [
   {
-    ...defaultSearchResult,
+    ...defaultPersonSearchResult,
     personId: 1,
     id: '1',
   },
   {
-    ...defaultSearchResult,
+    ...defaultPersonSearchResult,
     id: '2',
   },
   {
-    ...defaultSearchResult,
+    ...defaultPersonSearchResult,
     id: '3',
     isDisabled: true,
   },

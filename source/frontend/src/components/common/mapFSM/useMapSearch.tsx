@@ -89,15 +89,11 @@ export const useMapSearch = () => {
     async (filter?: IGeoSearchParams) => {
       let result: MapFeatureData = emptyFeatureData;
       try {
-        let loadPropertiesTask: Promise<
-          FeatureCollection<Geometry, PIMS_Property_Location_View> | undefined
-        >;
-
         let findByPlanNumberTask:
           | Promise<FeatureCollection<Geometry, PMBC_Feature_Properties> | undefined>
           | undefined = undefined;
 
-        loadPropertiesTask = loadPimsProperties(filter);
+        const loadPropertiesTask = loadPimsProperties(filter);
 
         const forceExactMatch = true;
 
@@ -178,7 +174,6 @@ export const useMapSearch = () => {
         }
       } catch (error) {
         toast.error((error as Error).message, { autoClose: 7000 });
-      } finally {
       }
 
       return result;
@@ -191,10 +186,6 @@ export const useMapSearch = () => {
       let result: MapFeatureData = emptyFeatureData;
       //TODO: PSP-4390 currently this loads all matching properties, this should be rewritten to use the bbox and make one request per tile.
       try {
-        let loadPropertiesTask: Promise<
-          FeatureCollection<Geometry, PIMS_Property_Location_View> | undefined
-        >;
-
         let findByPinTask:
           | Promise<FeatureCollection<Geometry, PMBC_Feature_Properties> | undefined>
           | undefined = undefined;
@@ -203,7 +194,7 @@ export const useMapSearch = () => {
           | Promise<FeatureCollection<Geometry, PMBC_Feature_Properties> | undefined>
           | undefined = undefined;
 
-        loadPropertiesTask = loadPimsProperties(filter);
+        const loadPropertiesTask = loadPimsProperties(filter);
         if (filter?.PIN) {
           findByPinTask = pmbcServiceFindByPin(filter?.PIN);
         }

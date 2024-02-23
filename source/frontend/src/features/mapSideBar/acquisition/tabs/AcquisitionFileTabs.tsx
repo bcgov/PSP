@@ -1,14 +1,15 @@
 import React, { useContext } from 'react';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 
+import { EnumAcquisitionFileType } from '@/constants/acquisitionFileType';
 import * as API from '@/constants/API';
 import { Claims } from '@/constants/claims';
 import { NoteTypes } from '@/constants/noteTypes';
 import { FileTabs, FileTabType, TabFileView } from '@/features/mapSideBar/shared/detail/FileTabs';
 import NoteListView from '@/features/notes/list/NoteListView';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
-import { Api_AcquisitionFile, EnumAcquisitionFileType } from '@/models/api/AcquisitionFile';
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
+import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 
 import { SideBarContext } from '../../context/sidebarContext';
 import { ChecklistView } from '../../shared/tabs/checklist/detail/ChecklistView';
@@ -24,7 +25,7 @@ import StakeHolderContainer from './stakeholders/detail/StakeHolderContainer';
 import StakeHolderView from './stakeholders/detail/StakeHolderView';
 
 export interface IAcquisitionFileTabsProps {
-  acquisitionFile?: Api_AcquisitionFile;
+  acquisitionFile?: ApiGen_Concepts_AcquisitionFile;
   defaultTab: FileTabType;
   setIsEditing: (value: boolean) => void;
 }
@@ -164,7 +165,7 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
   }
 
   const onSetActiveTab = (tab: FileTabType) => {
-    let previousTab = activeTab;
+    const previousTab = activeTab;
     if (previousTab === FileTabType.COMPENSATIONS) {
       const backUrl = location.pathname.split('/compensation-requisition')[0];
       history.push(backUrl);

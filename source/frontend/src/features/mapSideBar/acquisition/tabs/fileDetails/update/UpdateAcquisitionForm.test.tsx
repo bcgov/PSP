@@ -96,7 +96,7 @@ describe('UpdateAcquisitionForm component', () => {
         utils.container.querySelector(`select[name="fileStatusTypeCode"]`) as HTMLSelectElement,
       getFileCompletionDatePicker: () =>
         utils.container.querySelector(`input[name="completionDate"]`) as HTMLInputElement,
-      getTeamMemberProfileDropDownList: (index: number = 0) =>
+      getTeamMemberProfileDropDownList: (index = 0) =>
         utils.container.querySelector(
           `select[name="team.${index}.contactTypeCode"]`,
         ) as HTMLSelectElement,

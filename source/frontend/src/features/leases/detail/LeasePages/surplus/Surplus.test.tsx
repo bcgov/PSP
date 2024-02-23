@@ -4,8 +4,9 @@ import noop from 'lodash/noop';
 import { LeaseContextProvider } from '@/features/leases/context/LeaseContext';
 import { usePropertyLeaseRepository } from '@/hooks/repositories/usePropertyLeaseRepository';
 import { getMockApiProperty } from '@/mocks/properties.mock';
-import { Api_Lease, defaultApiLease } from '@/models/api/Lease';
-import { Api_Property } from '@/models/api/Property';
+import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
+import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
+import { defaultApiLease } from '@/models/defaultInitializers';
 import { prettyFormatDate } from '@/utils';
 import { render, RenderOptions, RenderResult, waitFor } from '@/utils/test-utils';
 
@@ -17,10 +18,12 @@ usePropertyLeaseRepository as jest.MockedFunction<typeof usePropertyLeaseReposit
 jest.mock('@/hooks/repositories/usePropertyLeaseRepository');
 
 describe('Lease Surplus Declaration', () => {
-  const setup = (renderOptions: RenderOptions & { lease?: Api_Lease } = {}): RenderResult => {
+  const setup = (
+    renderOptions: RenderOptions & { lease?: ApiGen_Concepts_Lease } = {},
+  ): RenderResult => {
     // render component under test
     const result = render(
-      <LeaseContextProvider initialLease={renderOptions.lease ?? defaultApiLease}>
+      <LeaseContextProvider initialLease={renderOptions.lease ?? defaultApiLease()}>
         <Surplus />
       </LeaseContextProvider>,
       {
@@ -45,7 +48,7 @@ describe('Lease Surplus Declaration', () => {
     });
     const result = setup({
       lease: {
-        ...defaultApiLease,
+        ...defaultApiLease(),
       },
     });
     expect(result.asFragment()).toMatchSnapshot();
@@ -63,10 +66,15 @@ describe('Lease Surplus Declaration', () => {
         response: [
           {
             property: getMockApiProperty(),
-            lease: null,
-            leaseId: 0,
+            file: null,
+            fileId: 0,
             leaseArea: null,
             areaUnitType: null,
+            displayOrder: null,
+            id: 0,
+            propertyId: 0,
+            propertyName: null,
+            rowVersion: null,
           },
         ],
       },
@@ -80,8 +88,8 @@ describe('Lease Surplus Declaration', () => {
   });
 
   it('Default type value is unknown', async () => {
-    const testProperty: Api_Property = getMockApiProperty();
-    testProperty.surplusDeclarationType = undefined;
+    const testProperty: ApiGen_Concepts_Property = getMockApiProperty();
+    testProperty.surplusDeclarationType = null;
     (
       usePropertyLeaseRepository as jest.MockedFunction<typeof usePropertyLeaseRepository>
     ).mockReturnValue({
@@ -91,7 +99,18 @@ describe('Lease Surplus Declaration', () => {
         status: undefined,
         loading: false,
         response: [
-          { property: testProperty, lease: null, leaseId: 0, leaseArea: null, areaUnitType: null },
+          {
+            property: testProperty,
+            file: null,
+            fileId: 0,
+            leaseArea: null,
+            areaUnitType: null,
+            displayOrder: null,
+            id: 0,
+            propertyId: 0,
+            propertyName: null,
+            rowVersion: null,
+          },
         ],
       },
     });
@@ -105,9 +124,14 @@ describe('Lease Surplus Declaration', () => {
   });
 
   it('Values are displayed', async () => {
-    const testProperty: Api_Property = { ...getMockApiProperty(), pid: 1 };
+    const testProperty: ApiGen_Concepts_Property = { ...getMockApiProperty(), pid: 1 };
     testProperty.surplusDeclarationComment = 'Test Comment';
-    testProperty.surplusDeclarationType = { id: 'YES', isDisabled: false, description: 'Yes' };
+    testProperty.surplusDeclarationType = {
+      id: 'YES',
+      isDisabled: false,
+      description: 'Yes',
+      displayOrder: null,
+    };
     testProperty.surplusDeclarationDate = '2021-01-01';
     (
       usePropertyLeaseRepository as jest.MockedFunction<typeof usePropertyLeaseRepository>
@@ -118,7 +142,18 @@ describe('Lease Surplus Declaration', () => {
         status: undefined,
         loading: false,
         response: [
-          { property: testProperty, lease: null, leaseId: 0, leaseArea: null, areaUnitType: null },
+          {
+            property: testProperty,
+            file: null,
+            fileId: 0,
+            leaseArea: null,
+            areaUnitType: null,
+            displayOrder: null,
+            id: 0,
+            propertyId: 0,
+            propertyName: null,
+            rowVersion: null,
+          },
         ],
       },
     });

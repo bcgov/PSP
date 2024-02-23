@@ -10,7 +10,7 @@ import { InlineFlexDiv } from '@/components/common/styles';
 import { ColumnWithProps } from '@/components/Table';
 import { Claims } from '@/constants/index';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
-import { Api_Property } from '@/models/api/Property';
+import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { ILookupCode } from '@/store/slices/lookupCodes';
 import { formatApiAddress, formatNumber, mapLookupCode, stringToFragment } from '@/utils';
 
@@ -20,14 +20,14 @@ export const ColumnDiv = styled.div`
   padding-right: 0.5rem;
 `;
 
-const NumberCell = ({ cell: { value } }: CellProps<Api_Property, number | undefined>) =>
+const NumberCell = ({ cell: { value } }: CellProps<ApiGen_Concepts_Property, number | undefined>) =>
   stringToFragment(formatNumber(value ?? 0));
 
 type Props = {
   municipalities: ILookupCode[];
 };
 
-export const columns = ({ municipalities }: Props): ColumnWithProps<Api_Property>[] => [
+export const columns = ({ municipalities }: Props): ColumnWithProps<ApiGen_Concepts_Property>[] => [
   {
     Header: 'PID',
     accessor: 'pid',
@@ -67,7 +67,6 @@ export const columns = ({ municipalities }: Props): ColumnWithProps<Api_Property
   },
   {
     Header: 'Lot Size (in\u00A0ha)',
-    accessor: 'landArea',
     Cell: NumberCell,
     align: 'right',
     width: 20,
@@ -85,10 +84,10 @@ export const columns = ({ municipalities }: Props): ColumnWithProps<Api_Property
   },
   {
     Header: 'Ownership',
-    align: 'right',
+    align: 'left',
     sortable: true,
     width: 20,
-    Cell: (cellProps: CellProps<Api_Property>) => {
+    Cell: (cellProps: CellProps<ApiGen_Concepts_Property>) => {
       const { hasClaim } = useKeycloakWrapper();
 
       const ownershipText = cellProps.row.original.isOwned
@@ -117,7 +116,7 @@ export const columns = ({ municipalities }: Props): ColumnWithProps<Api_Property
     align: 'right',
     sortable: false,
     width: 20,
-    Cell: (cellProps: CellProps<Api_Property, number>) => {
+    Cell: (cellProps: CellProps<ApiGen_Concepts_Property, number>) => {
       const { hasClaim } = useKeycloakWrapper();
 
       return (

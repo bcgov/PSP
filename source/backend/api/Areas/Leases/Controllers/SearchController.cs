@@ -9,6 +9,7 @@ using Pims.Api.Areas.Lease.Models.Search;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Helpers.Extensions;
 using Pims.Api.Models.Base;
+using Pims.Api.Models.Concepts.Lease;
 using Pims.Api.Policies;
 using Pims.Api.Services;
 using Pims.Core.Extensions;
@@ -63,7 +64,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         [HttpGet]
         [HasPermission(Permissions.LeaseView)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(IEnumerable<LeaseModel>), 200)]
+        [ProducesResponseType(typeof(PageModel<LeaseModel>), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "lease" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
@@ -89,7 +90,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         [HttpPost("filter")]
         [HasPermission(Permissions.LeaseView)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(IEnumerable<LeaseModel>), 200)]
+        [ProducesResponseType(typeof(PageModel<LeaseModel>), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "lease" })]
         [TypeFilter(typeof(NullJsonResultFilter))]

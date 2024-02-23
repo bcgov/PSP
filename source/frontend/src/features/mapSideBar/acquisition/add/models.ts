@@ -1,13 +1,11 @@
 import { InterestHolderType } from '@/constants/interestHolderTypes';
 import { IAutocompletePrediction } from '@/interfaces';
-import {
-  Api_AcquisitionFile,
-  Api_AcquisitionFileOwner,
-  Api_AcquisitionFileProperty,
-  Api_AcquisitionFileTeam,
-} from '@/models/api/AcquisitionFile';
-import { Api_InterestHolder } from '@/models/api/InterestHolder';
-import { fromTypeCode, stringToNull, toTypeCode } from '@/utils/formUtils';
+import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
+import { ApiGen_Concepts_AcquisitionFileOwner } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileOwner';
+import { ApiGen_Concepts_AcquisitionFileProperty } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileProperty';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
+import { fromTypeCode, stringToNumberOrNull, toTypeCodeNullable } from '@/utils/formUtils';
+import { exists, isValidId, isValidIsoDateTime } from '@/utils/utils';
 
 import { PropertyForm } from '../../shared/models';
 import { ChecklistItemFormModel } from '../../shared/tabs/checklist/update/models';
@@ -38,81 +36,88 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
   fileCheckList: ChecklistItemFormModel[] = [];
 
   project?: IAutocompletePrediction;
-  product: string = '';
+  product = '';
   fundingTypeCode?: string;
-  fundingTypeOtherDescription: string = '';
+  fundingTypeOtherDescription = '';
   ownerSolicitor: InterestHolderForm = new InterestHolderForm(InterestHolderType.OWNER_SOLICITOR);
   ownerRepresentative: InterestHolderForm = new InterestHolderForm(
     InterestHolderType.OWNER_REPRESENTATIVE,
   );
   totalAllowableCompensation: number | '' = '';
 
-  toApi(): Api_AcquisitionFile {
+  toApi(): ApiGen_Concepts_AcquisitionFile {
     return {
-      id: this.id,
-      fileName: this.fileName,
-      rowVersion: this.rowVersion,
-      assignedDate: this.assignedDate,
-      deliveryDate: this.deliveryDate,
-      totalAllowableCompensation: stringToNull(this.totalAllowableCompensation),
-      legacyFileNumber: this.legacyFileNumber,
-      fileStatusTypeCode: toTypeCode(this.acquisitionFileStatusType),
-      acquisitionPhysFileStatusTypeCode: toTypeCode(this.acquisitionPhysFileStatusType),
-      acquisitionTypeCode: toTypeCode(this.acquisitionType),
-      regionCode: toTypeCode(Number(this.region)),
-      projectId: this.project?.id !== undefined && this.project?.id !== 0 ? this.project?.id : null,
+      id: this.id ?? 0,
+      fileName: this.fileName ?? null,
+      assignedDate: isValidIsoDateTime(this.assignedDate) ? this.assignedDate : null,
+      deliveryDate: isValidIsoDateTime(this.deliveryDate) ? this.deliveryDate : null,
+      totalAllowableCompensation: stringToNumberOrNull(this.totalAllowableCompensation),
+      legacyFileNumber: this.legacyFileNumber ?? null,
+      fileStatusTypeCode: toTypeCodeNullable(this.acquisitionFileStatusType),
+      acquisitionPhysFileStatusTypeCode: toTypeCodeNullable(this.acquisitionPhysFileStatusType),
+      acquisitionTypeCode: toTypeCodeNullable(this.acquisitionType),
+      regionCode: toTypeCodeNullable(Number(this.region)),
+      projectId: isValidId(this.project?.id) ? this.project!.id : null,
       productId: this.product !== '' ? Number(this.product) : null,
-      fundingTypeCode: toTypeCode(this.fundingTypeCode),
+      fundingTypeCode: toTypeCodeNullable(this.fundingTypeCode),
       fundingOther: this.fundingTypeOtherDescription,
       // ACQ file properties
-      fileProperties: this.properties.map<Api_AcquisitionFileProperty>(ap => {
-        return {
-          id: ap.id,
-          propertyName: ap.name,
-          displayOrder: ap.displayOrder,
-          rowVersion: ap.rowVersion,
-          property: ap.toApi(),
-          propertyId: ap.apiId,
-          acquisitionFile: { id: this.id },
-        };
-      }),
+      fileProperties: this.properties.map<ApiGen_Concepts_AcquisitionFileProperty>(ap => ({
+        id: ap.id ?? 0,
+        propertyName: ap.name ?? null,
+        displayOrder: ap.displayOrder ?? null,
+        rowVersion: ap.rowVersion ?? null,
+        property: ap.toApi(),
+        propertyId: ap.apiId ?? 0,
+        fileId: this.id ?? 0,
+        acquisitionFile: null,
+        file: null,
+      })),
       acquisitionFileOwners: this.owners
         .filter(x => !x.isEmpty())
-        .map<Api_AcquisitionFileOwner>(x => x.toApi()),
+        .map<ApiGen_Concepts_AcquisitionFileOwner>(x => x.toApi()),
       acquisitionTeam: this.team
         .filter(x => !!x.contact && !!x.contactTypeCode)
         .map(x => x.toApi(this.id || 0))
-        .filter((x): x is Api_AcquisitionFileTeam => x !== null),
+        .filter(exists),
       acquisitionFileInterestHolders: [
         InterestHolderForm.toApi(this.ownerSolicitor, []),
         InterestHolderForm.toApi(this.ownerRepresentative, []),
-      ].filter((x): x is Api_InterestHolder => x !== null),
+      ].filter(exists),
       fileChecklistItems: this.fileCheckList.map(x => x.toApi()),
+      completionDate: null,
+      compensationRequisitions: null,
+      fileNo: 0,
+      fileNumber: null,
+      legacyStakeholders: null,
+      product: null,
+      project: null,
+      ...getEmptyBaseAudit(this.rowVersion),
     };
   }
 
-  static fromApi(model: Api_AcquisitionFile): AcquisitionForm {
+  static fromApi(model: ApiGen_Concepts_AcquisitionFile): AcquisitionForm {
     const newForm = new AcquisitionForm();
     newForm.id = model.id;
     newForm.fileName = model.fileName || '';
-    newForm.rowVersion = model.rowVersion;
-    newForm.assignedDate = model.assignedDate;
-    newForm.deliveryDate = model.deliveryDate;
+    newForm.rowVersion = model.rowVersion ?? undefined;
+    newForm.assignedDate = model.assignedDate ?? undefined;
+    newForm.deliveryDate = model.deliveryDate ?? undefined;
     newForm.totalAllowableCompensation = model.totalAllowableCompensation || '';
-    newForm.legacyFileNumber = model.legacyFileNumber;
-    newForm.acquisitionFileStatusType = fromTypeCode(model.fileStatusTypeCode);
-    newForm.acquisitionPhysFileStatusType = fromTypeCode(model.acquisitionPhysFileStatusTypeCode);
-    newForm.acquisitionType = fromTypeCode(model.acquisitionTypeCode);
+    newForm.legacyFileNumber = model.legacyFileNumber ?? undefined;
+    newForm.acquisitionFileStatusType = fromTypeCode(model.fileStatusTypeCode) ?? undefined;
+    newForm.acquisitionPhysFileStatusType =
+      fromTypeCode(model.acquisitionPhysFileStatusTypeCode) ?? undefined;
+    newForm.acquisitionType = fromTypeCode(model.acquisitionTypeCode) ?? undefined;
     newForm.region = fromTypeCode(model.regionCode)?.toString();
     // ACQ file properties
     newForm.properties = model.fileProperties?.map(x => PropertyForm.fromApi(x)) || [];
     newForm.product = model.product?.id?.toString() ?? '';
-    newForm.fundingTypeCode = model.fundingTypeCode?.id;
+    newForm.fundingTypeCode = model.fundingTypeCode?.id ?? undefined;
     newForm.fundingTypeOtherDescription = model.fundingOther || '';
-    newForm.project =
-      model.project !== undefined
-        ? { id: model.project?.id || 0, text: model.project?.description || '' }
-        : undefined;
+    newForm.project = exists(model.project)
+      ? { id: model.project.id || 0, text: model.project.description || '' }
+      : undefined;
 
     const interestHolders = model.acquisitionFileInterestHolders?.map(x =>
       InterestHolderForm.fromApi(x, x.interestHolderType?.id as InterestHolderType),

@@ -11,8 +11,8 @@ export interface IContactManagerModalProps {
   selectedRows: IContactSearchResult[];
   showAddButton?: boolean;
   showActiveSelector?: boolean;
-  handleModalOk?: Function;
-  handleModalCancel?: Function;
+  handleModalOk?: () => void;
+  handleModalCancel?: () => void;
   isSingleSelect?: boolean;
   restrictContactType?: RestrictContactType;
   isSummary?: boolean;

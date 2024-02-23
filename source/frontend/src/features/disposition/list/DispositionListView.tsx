@@ -19,8 +19,8 @@ import { useDispositionProvider } from '@/hooks/repositories/useDispositionProvi
 import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { useSearch } from '@/hooks/useSearch';
-import { Api_DispositionFile } from '@/models/api/DispositionFile';
 import { Api_DispositionFilter } from '@/models/api/DispositionFilter';
+import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
 import { generateMultiSortCriteria, mapLookupCode } from '@/utils';
 import { toFilteredApiPaginateParams } from '@/utils/CommonFunctions';
 
@@ -70,7 +70,7 @@ export const DispositionListView: React.FC<unknown> = () => {
     setCurrentPage,
     setPageSize,
     loading,
-  } = useSearch<Api_DispositionFile, Api_DispositionFilter>(
+  } = useSearch<ApiGen_Concepts_DispositionFile, Api_DispositionFilter>(
     new DispositionFilterModel().toApi(),
     getDispositionFilesPagedApi,
     'No matching results can be found. Try widening your search criteria.',

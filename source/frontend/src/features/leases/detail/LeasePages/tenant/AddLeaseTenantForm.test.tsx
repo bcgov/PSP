@@ -3,12 +3,16 @@ import { createMemoryHistory } from 'history';
 import React from 'react';
 
 import { Claims } from '@/constants/claims';
-import { IPagedItems } from '@/interfaces';
+import { IContactSearchResult } from '@/interfaces';
 import {
+  getEmptyPerson,
   getMockContactOrganizationWithOnePerson,
   getMockContactPerson,
 } from '@/mocks/contacts.mock';
 import { mockLookups } from '@/mocks/index.mock';
+import { getEmptyOrganization } from '@/mocks/organization.mock';
+import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
+import { ApiGen_Concepts_Contact } from '@/models/api/generated/ApiGen_Concepts_Contact';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { mockKeycloak, renderAsync, RenderOptions, userEvent } from '@/utils/test-utils';
 
@@ -19,7 +23,9 @@ const history = createMemoryHistory();
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
-const mockGetContactsFn = jest.fn().mockResolvedValue({ data: {} as IPagedItems });
+const mockGetContactsFn = jest
+  .fn()
+  .mockResolvedValue({ data: {} as ApiGen_Base_Page<ApiGen_Concepts_Contact> });
 jest.mock('@react-keycloak/web');
 jest.mock('@/hooks/pims-api/useApiContacts', () => ({
   useApiContacts: () => {
@@ -159,9 +165,14 @@ describe('AddLeaseTenantForm component', () => {
   });
 
   it('displays no contacts available if organization has no contacts', async () => {
-    const organization = {
+    const organization: IContactSearchResult = {
       ...getMockContactOrganizationWithOnePerson(),
-      organization: { organizationPersons: [] },
+      organization: { ...getEmptyOrganization(), organizationPersons: [] },
+      personId: undefined,
+      person: undefined,
+      surname: undefined,
+      firstName: undefined,
+      middleNames: undefined,
     };
 
     await setup({
@@ -174,9 +185,14 @@ describe('AddLeaseTenantForm component', () => {
   });
 
   it('displays no contacts available if organization has no contacts', async () => {
-    const organization = {
+    const organization: IContactSearchResult = {
       ...getMockContactOrganizationWithOnePerson(),
-      organization: { organizationPersons: [] },
+      organization: { ...getEmptyOrganization(), organizationPersons: [] },
+      personId: undefined,
+      person: undefined,
+      surname: undefined,
+      firstName: undefined,
+      middleNames: undefined,
     };
 
     await setup({
@@ -189,9 +205,14 @@ describe('AddLeaseTenantForm component', () => {
   });
 
   it('displays no contacts available if organization has no contacts', async () => {
-    const organization = {
+    const organization: IContactSearchResult = {
       ...getMockContactOrganizationWithOnePerson(),
-      organization: { organizationPersons: [] },
+      organization: { ...getEmptyOrganization(), organizationPersons: [] },
+      personId: undefined,
+      person: undefined,
+      surname: undefined,
+      firstName: undefined,
+      middleNames: undefined,
     };
 
     await setup({
@@ -204,19 +225,26 @@ describe('AddLeaseTenantForm component', () => {
   });
 
   it('displays the primary contact if there is only one', async () => {
-    const organization = {
+    const organization: IContactSearchResult = {
       ...getMockContactOrganizationWithOnePerson(),
       organization: {
+        ...getEmptyOrganization(),
         organizationPersons: [
           {
+            id: 1,
+            organization: null,
             personId: 3,
             organizationId: 3,
-            isDisabled: false,
             rowVersion: 1,
-            person: { firstName: 'test', surname: 'testerson' },
+            person: { ...getEmptyPerson(), firstName: 'test', surname: 'testerson' },
           },
         ],
       },
+      personId: undefined,
+      person: undefined,
+      surname: undefined,
+      firstName: undefined,
+      middleNames: undefined,
     };
 
     await setup({
@@ -229,26 +257,34 @@ describe('AddLeaseTenantForm component', () => {
   });
 
   it('displays a list if there are multiple', async () => {
-    const organization = {
+    const organization: IContactSearchResult = {
       ...getMockContactOrganizationWithOnePerson(),
       organization: {
+        ...getEmptyOrganization(),
         organizationPersons: [
           {
+            id: 1,
+            organization: null,
             personId: 3,
             organizationId: 3,
-            isDisabled: false,
             rowVersion: 1,
-            person: { firstName: 'test', surname: 'testerson' },
+            person: { ...getEmptyPerson(), firstName: 'test', surname: 'testerson' },
           },
           {
+            id: 2,
+            organization: null,
             personId: 2,
             organizationId: 3,
-            isDisabled: false,
             rowVersion: 1,
-            person: { firstName: 'second', surname: 'testerson' },
+            person: { ...getEmptyPerson(), firstName: 'second', surname: 'testerson' },
           },
         ],
       },
+      personId: undefined,
+      person: undefined,
+      surname: undefined,
+      firstName: undefined,
+      middleNames: undefined,
     };
 
     await setup({

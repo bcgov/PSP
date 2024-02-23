@@ -1,5 +1,21 @@
-export const getMockH120Categories = () => [
+import { ApiGen_Concepts_H120Category } from '@/models/api/generated/ApiGen_Concepts_H120Category';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
+
+const emptyH120Category: ApiGen_Concepts_H120Category = {
+  id: null,
+  financialActivityId: null,
+  workActivityId: null,
+  costTypeId: null,
+  h120CategoryNo: null,
+  description: null,
+  expiryDate: null,
+  isDisabled: null,
+  ...getEmptyBaseAudit(),
+};
+
+export const getMockH120Categories = (): ApiGen_Concepts_H120Category[] => [
   {
+    ...emptyH120Category,
     id: 2,
     financialActivityId: 2,
     costTypeId: 1184,
@@ -12,6 +28,7 @@ export const getMockH120Categories = () => [
     rowVersion: 1,
   },
   {
+    ...emptyH120Category,
     id: 3,
     financialActivityId: 3,
     costTypeId: 1164,
@@ -24,6 +41,7 @@ export const getMockH120Categories = () => [
     rowVersion: 1,
   },
   {
+    ...emptyH120Category,
     id: 4,
     financialActivityId: 4,
     costTypeId: 1420,
@@ -36,6 +54,7 @@ export const getMockH120Categories = () => [
     rowVersion: 1,
   },
   {
+    ...emptyH120Category,
     id: 5,
     financialActivityId: 5,
     costTypeId: 1126,
@@ -48,6 +67,7 @@ export const getMockH120Categories = () => [
     rowVersion: 1,
   },
   {
+    ...emptyH120Category,
     id: 6,
     financialActivityId: 6,
     costTypeId: 1487,
@@ -60,6 +80,7 @@ export const getMockH120Categories = () => [
     rowVersion: 1,
   },
   {
+    ...emptyH120Category,
     id: 7,
     financialActivityId: 7,
     costTypeId: 1532,
@@ -72,6 +93,7 @@ export const getMockH120Categories = () => [
     rowVersion: 1,
   },
   {
+    ...emptyH120Category,
     id: 8,
     financialActivityId: 8,
     costTypeId: 1466,
@@ -84,6 +106,7 @@ export const getMockH120Categories = () => [
     rowVersion: 1,
   },
   {
+    ...emptyH120Category,
     id: 9,
     financialActivityId: 9,
     h120CategoryNo: 4,
@@ -95,6 +118,7 @@ export const getMockH120Categories = () => [
     rowVersion: 1,
   },
   {
+    ...emptyH120Category,
     id: 10,
     financialActivityId: 10,
     costTypeId: 1518,
@@ -107,6 +131,7 @@ export const getMockH120Categories = () => [
     rowVersion: 1,
   },
   {
+    ...emptyH120Category,
     id: 11,
     financialActivityId: 11,
     costTypeId: 1201,
@@ -119,6 +144,7 @@ export const getMockH120Categories = () => [
     rowVersion: 1,
   },
   {
+    ...emptyH120Category,
     id: 12,
     financialActivityId: 12,
     costTypeId: 1359,
@@ -131,6 +157,7 @@ export const getMockH120Categories = () => [
     rowVersion: 1,
   },
   {
+    ...emptyH120Category,
     id: 13,
     financialActivityId: 13,
     costTypeId: 871,
@@ -143,6 +170,7 @@ export const getMockH120Categories = () => [
     rowVersion: 1,
   },
   {
+    ...emptyH120Category,
     id: 14,
     financialActivityId: 14,
     costTypeId: 999,
@@ -155,6 +183,7 @@ export const getMockH120Categories = () => [
     rowVersion: 1,
   },
   {
+    ...emptyH120Category,
     id: 15,
     financialActivityId: 15,
     costTypeId: 1360,
@@ -167,6 +196,7 @@ export const getMockH120Categories = () => [
     rowVersion: 1,
   },
   {
+    ...emptyH120Category,
     id: 16,
     financialActivityId: 16,
     h120CategoryNo: 5,
@@ -178,6 +208,7 @@ export const getMockH120Categories = () => [
     rowVersion: 1,
   },
   {
+    ...emptyH120Category,
     id: 17,
     financialActivityId: 17,
     costTypeId: 1278,
@@ -190,6 +221,7 @@ export const getMockH120Categories = () => [
     rowVersion: 1,
   },
   {
+    ...emptyH120Category,
     id: 18,
     financialActivityId: 18,
     costTypeId: 825,
@@ -202,6 +234,7 @@ export const getMockH120Categories = () => [
     rowVersion: 1,
   },
   {
+    ...emptyH120Category,
     id: 19,
     financialActivityId: 19,
     costTypeId: 1270,
@@ -214,6 +247,7 @@ export const getMockH120Categories = () => [
     rowVersion: 1,
   },
   {
+    ...emptyH120Category,
     id: 20,
     financialActivityId: 20,
     costTypeId: 1169,
@@ -226,6 +260,7 @@ export const getMockH120Categories = () => [
     rowVersion: 1,
   },
   {
+    ...emptyH120Category,
     id: 21,
     financialActivityId: 21,
     costTypeId: 1147,
@@ -238,6 +273,7 @@ export const getMockH120Categories = () => [
     rowVersion: 1,
   },
   {
+    ...emptyH120Category,
     id: 22,
     financialActivityId: 22,
     costTypeId: 1136,
@@ -250,6 +286,7 @@ export const getMockH120Categories = () => [
     rowVersion: 1,
   },
   {
+    ...emptyH120Category,
     id: 23,
     financialActivityId: 23,
     costTypeId: 1165,
@@ -262,6 +299,7 @@ export const getMockH120Categories = () => [
     rowVersion: 1,
   },
   {
+    ...emptyH120Category,
     id: 24,
     financialActivityId: 24,
     costTypeId: 979,
@@ -274,6 +312,7 @@ export const getMockH120Categories = () => [
     rowVersion: 1,
   },
   {
+    ...emptyH120Category,
     id: 25,
     financialActivityId: 25,
     costTypeId: 1351,
@@ -286,6 +325,7 @@ export const getMockH120Categories = () => [
     rowVersion: 1,
   },
   {
+    ...emptyH120Category,
     id: 26,
     financialActivityId: 26,
     costTypeId: 799,
@@ -298,6 +338,7 @@ export const getMockH120Categories = () => [
     rowVersion: 1,
   },
   {
+    ...emptyH120Category,
     id: 27,
     financialActivityId: 27,
     costTypeId: 1271,
@@ -310,6 +351,7 @@ export const getMockH120Categories = () => [
     rowVersion: 1,
   },
   {
+    ...emptyH120Category,
     id: 28,
     financialActivityId: 28,
     costTypeId: 1509,
@@ -322,6 +364,7 @@ export const getMockH120Categories = () => [
     rowVersion: 1,
   },
   {
+    ...emptyH120Category,
     id: 29,
     financialActivityId: 29,
     costTypeId: 1360,
@@ -334,6 +377,7 @@ export const getMockH120Categories = () => [
     rowVersion: 1,
   },
   {
+    ...emptyH120Category,
     id: 30,
     financialActivityId: 30,
     costTypeId: 1571,
@@ -346,6 +390,7 @@ export const getMockH120Categories = () => [
     rowVersion: 1,
   },
   {
+    ...emptyH120Category,
     id: 31,
     financialActivityId: 31,
     costTypeId: 1172,

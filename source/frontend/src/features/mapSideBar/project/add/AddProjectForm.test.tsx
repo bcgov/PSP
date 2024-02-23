@@ -8,7 +8,9 @@ import { useUserInfoRepository } from '@/hooks/repositories/useUserInfoRepositor
 import { getMockLookUpsByType, mockLookups } from '@/mocks/lookups.mock';
 import { mockProjectGetResponse } from '@/mocks/projects.mock';
 import { getUserMock } from '@/mocks/user.mock';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { toTypeCodeNullable } from '@/utils/formUtils';
 import { act, fakeText, fillInput, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import { ProjectForm } from '../models';
@@ -32,14 +34,18 @@ jest.mock('@/hooks/repositories/useUserInfoRepository');
       {
         id: 1,
         userId: 5,
+        user: null,
         regionCode: 1,
-        region: { id: 1 },
+        region: toTypeCodeNullable(1),
+        ...getEmptyBaseAudit(),
       },
       {
         id: 2,
         userId: 5,
+        user: null,
         regionCode: 2,
-        region: { id: 2 },
+        region: toTypeCodeNullable(2),
+        ...getEmptyBaseAudit(),
       },
     ],
   },

@@ -26,7 +26,7 @@ export const MapClickMonitor: React.FunctionComponent<
       mapMachine.isSelecting &&
       mapMachine.mapLocationFeatureDataset &&
       previous !== mapMachine.mapLocationFeatureDataset &&
-      previous !== undefined
+      previous !== undefined //todo: this is not validating as expected
     ) {
       addProperty(featuresetToMapProperty(mapMachine.mapLocationFeatureDataset));
     }

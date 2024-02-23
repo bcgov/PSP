@@ -7,6 +7,7 @@ using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Models.Concepts.ResearchFile;
 using Pims.Api.Policies;
 using Pims.Api.Services;
+using Pims.Core.Json;
 using Pims.Dal.Entities;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Security;
@@ -56,6 +57,7 @@ namespace Pims.Api.Areas.ResearchFile.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(ResearchFileModel), 200)]
         [SwaggerOperation(Tags = new[] { "researchfile" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetResearchFile(long id)
         {
             var researchFile = _researchFileService.GetById(id);
@@ -86,6 +88,7 @@ namespace Pims.Api.Areas.ResearchFile.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(IEnumerable<ResearchFilePropertyModel>), 200)]
         [SwaggerOperation(Tags = new[] { "researchfile" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetResearchFileProperties(long id)
         {
             var researchFileProperties = _researchFileService.GetProperties(id);
@@ -102,6 +105,7 @@ namespace Pims.Api.Areas.ResearchFile.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(ResearchFileModel), 200)]
         [SwaggerOperation(Tags = new[] { "researchfile" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult AddResearchFile(ResearchFileModel researchFileModel, [FromQuery] string[] userOverrideCodes)
         {
             var researchFileEntity = _mapper.Map<PimsResearchFile>(researchFileModel);
@@ -119,6 +123,7 @@ namespace Pims.Api.Areas.ResearchFile.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(ResearchFileModel), 200)]
         [SwaggerOperation(Tags = new[] { "researchfile" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult UpdateResearchFile([FromBody] ResearchFileModel researchFileModel)
         {
             var researchFileEntity = _mapper.Map<Dal.Entities.PimsResearchFile>(researchFileModel);
@@ -136,6 +141,7 @@ namespace Pims.Api.Areas.ResearchFile.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(ResearchFileModel), 200)]
         [SwaggerOperation(Tags = new[] { "researchfile" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult UpdateResearchFileProperties([FromBody] ResearchFileModel researchFileModel, [FromQuery] string[] userOverrideCodes)
         {
             var researchFileEntity = _mapper.Map<Dal.Entities.PimsResearchFile>(researchFileModel);
@@ -153,6 +159,7 @@ namespace Pims.Api.Areas.ResearchFile.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(ResearchFilePropertyModel), 200)]
         [SwaggerOperation(Tags = new[] { "researchFile" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult UpdateResearchFileProperty(long researchFileId, long researchFilePropertyId, [FromBody] ResearchFilePropertyModel researchFilePropertyModel)
         {
             if (researchFilePropertyId != researchFilePropertyModel.Id)

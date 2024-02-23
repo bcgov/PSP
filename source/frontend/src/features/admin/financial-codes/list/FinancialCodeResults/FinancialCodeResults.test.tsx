@@ -1,5 +1,5 @@
 import { Roles } from '@/constants/index';
-import { Api_FinancialCode } from '@/models/api/FinancialCode';
+import { ApiGen_Concepts_FinancialCode } from '@/models/api/generated/ApiGen_Concepts_FinancialCode';
 import { render, RenderOptions } from '@/utils/test-utils';
 
 import { FinancialCodeResults, IFinancialCodeResultsProps } from './FinancialCodeResults';
@@ -28,7 +28,7 @@ const setup = (
   };
 };
 
-const mockResults: Api_FinancialCode[] = [];
+const mockResults: ApiGen_Concepts_FinancialCode[] = [];
 
 describe('Financial Code Results Table', () => {
   beforeEach(() => {

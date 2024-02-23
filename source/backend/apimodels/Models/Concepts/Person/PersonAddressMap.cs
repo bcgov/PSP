@@ -20,6 +20,7 @@ namespace Pims.Api.Models.Concepts
                 .Map(dest => dest.PersonAddressId, src => src.Id)
                 .Map(dest => dest.PersonId, src => src.PersonId)
                 .Map(dest => dest.AddressId, src => src.Address.Id)
+                .Map(dest => dest.Address, src => src.Address)
                 .Map(dest => dest.AddressUsageTypeCode, src => src.AddressUsageType.Id)
                 .Inherits<BaseConcurrentModel, Entity.IBaseEntity>();
         }

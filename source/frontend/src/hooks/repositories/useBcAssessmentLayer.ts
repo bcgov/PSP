@@ -89,9 +89,9 @@ export const useBcAssessmentLayer = (
           'Invalid BC Assessment response. Unable to load BC Assessment data for property.',
         );
       }
-      let folioId = legalDescriptionResponse?.features[0]?.properties?.FOLIO_ID;
-      let rollNumber = legalDescriptionResponse?.features[0]?.properties?.ROLL_NUMBER;
-      let jurisdictionCode = legalDescriptionResponse?.features[0]?.properties?.JURISDICTION_CODE;
+      const folioId = legalDescriptionResponse?.features[0]?.properties?.FOLIO_ID;
+      const rollNumber = legalDescriptionResponse?.features[0]?.properties?.ROLL_NUMBER;
+      const jurisdictionCode = legalDescriptionResponse?.features[0]?.properties?.JURISDICTION_CODE;
 
       if (!folioId || !rollNumber) {
         throw Error(

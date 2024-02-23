@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
-import { Api_AcquisitionFileOwner } from '@/models/api/AcquisitionFile';
+import { ApiGen_Concepts_AcquisitionFileOwner } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileOwner';
 
 export interface IAcquisitionOwnersContainerProps {
   acquisitionFileId: number;
@@ -9,16 +9,16 @@ export interface IAcquisitionOwnersContainerProps {
 }
 
 export interface IAcquisitionOwnersSummaryViewProps {
-  ownersList?: Api_AcquisitionFileOwner[];
+  ownersList?: ApiGen_Concepts_AcquisitionFileOwner[];
   isLoading: boolean;
 }
 
 const AcquisitionOwnersSummaryContainer: React.FunctionComponent<
   React.PropsWithChildren<IAcquisitionOwnersContainerProps>
 > = ({ acquisitionFileId, View }) => {
-  const [ownersDetails, setOwnersDetails] = useState<Api_AcquisitionFileOwner[] | undefined>(
-    undefined,
-  );
+  const [ownersDetails, setOwnersDetails] = useState<
+    ApiGen_Concepts_AcquisitionFileOwner[] | undefined
+  >(undefined);
 
   const {
     getAcquisitionOwners: {

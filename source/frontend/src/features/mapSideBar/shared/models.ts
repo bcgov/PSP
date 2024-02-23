@@ -1,13 +1,15 @@
 import { Polygon, Position } from 'geojson';
 
 import { IMapProperty } from '@/components/propertySelector/models';
-import { Api_Address } from '@/models/api/Address';
-import { Api_File } from '@/models/api/File';
-import { Api_Property } from '@/models/api/Property';
-import { Api_PropertyFile } from '@/models/api/PropertyFile';
+import { ApiGen_Concepts_Address } from '@/models/api/generated/ApiGen_Concepts_Address';
+import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
+import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
+import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
+import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { IBcAssessmentSummary } from '@/models/layers/bcAssesment';
-import { formatApiAddress, formatBcaAddress, pidParser } from '@/utils';
-import { toTypeCode } from '@/utils/formUtils';
+import { exists, formatApiAddress, formatBcaAddress, pidParser } from '@/utils';
+import { toTypeCodeNullable } from '@/utils/formUtils';
 
 export class FileForm {
   public id?: number;
@@ -19,31 +21,36 @@ export class FileForm {
     this.properties = [];
   }
 
-  public toApi(): Api_File {
+  public toApi(): ApiGen_Concepts_File {
     return {
-      id: this.id,
+      id: this.id ?? 0,
       fileName: this.name,
-      fileProperties: this.properties.map<Api_PropertyFile>(x => {
-        return {
-          id: x.id,
-          fileId: this.id,
-          property: x.toApi(),
-          propertyId: x.apiId,
-          file: { id: this.id },
-          propertyName: x.name,
-          rowVersion: x.rowVersion,
-        };
-      }),
-      rowVersion: this.rowVersion,
+      fileProperties: this.properties.map(x => this.toPropertyApi(x)),
+      fileNumber: null,
+      fileStatusTypeCode: null,
+      ...getEmptyBaseAudit(this.rowVersion),
     };
   }
 
-  public static fromApi(model: Api_File): FileForm {
+  private toPropertyApi(x: PropertyForm): ApiGen_Concepts_FileProperty {
+    return {
+      id: x.id ?? 0,
+      fileId: this.id ?? 0,
+      property: x.toApi(),
+      propertyId: x.apiId ?? 0,
+      propertyName: x.name ?? null,
+      rowVersion: x.rowVersion ?? null,
+      displayOrder: null,
+      file: null,
+    };
+  }
+
+  public static fromApi(model: ApiGen_Concepts_File): FileForm {
     const newForm = new FileForm();
     newForm.id = model.id;
     newForm.name = model.fileName || '';
     newForm.properties = model.fileProperties?.map(x => PropertyForm.fromApi(x)) || [];
-    newForm.rowVersion = model.rowVersion;
+    newForm.rowVersion = model.rowVersion ?? undefined;
 
     return newForm;
   }
@@ -71,6 +78,8 @@ export class PropertyForm {
   public address?: AddressForm;
   public displayOrder?: number;
   public isOwned?: boolean;
+  public isDisposed?: boolean;
+  public isOtherInterest?: boolean;
 
   private constructor(baseModel?: Partial<PropertyForm>) {
     Object.assign(this, baseModel);
@@ -108,7 +117,7 @@ export class PropertyForm {
     };
   }
 
-  public static fromApi(model: Api_PropertyFile): PropertyForm {
+  public static fromApi(model: ApiGen_Concepts_FileProperty): PropertyForm {
     const newForm = new PropertyForm();
     newForm.id = model.id;
     newForm.fileId = model.fileId;
@@ -116,44 +125,85 @@ export class PropertyForm {
     newForm.name = model.propertyName ?? undefined;
     newForm.pid = model.property?.pid?.toString();
     newForm.pin = model.property?.pin?.toString();
-    newForm.latitude = model.property?.latitude;
-    newForm.longitude = model.property?.longitude;
-    newForm.planNumber = model.property?.planNumber;
-    newForm.region = model.property?.region?.id;
-    newForm.district = model.property?.district?.id;
-    newForm.rowVersion = model.rowVersion;
-    newForm.propertyRowVersion = model.property?.rowVersion;
-    newForm.displayOrder = model.displayOrder;
+    newForm.latitude = model.property?.latitude ?? undefined;
+    newForm.longitude = model.property?.longitude ?? undefined;
+    newForm.planNumber = model.property?.planNumber ?? undefined;
+    newForm.region = model.property?.region?.id ?? undefined;
+    newForm.district = model.property?.district?.id ?? undefined;
+    newForm.rowVersion = model.rowVersion ?? undefined;
+    newForm.propertyRowVersion = model.property?.rowVersion ?? undefined;
+    newForm.displayOrder = model.displayOrder ?? undefined;
     newForm.isOwned = model.property?.isOwned;
-    newForm.formattedAddress = formatApiAddress(model.property?.address);
+    newForm.isDisposed = model.property?.isDisposed;
+    newForm.isOtherInterest = model.property?.isOtherInterest;
+    newForm.formattedAddress = exists(model.property?.address)
+      ? formatApiAddress(model.property?.address)
+      : '';
     newForm.address = model.property?.address
       ? AddressForm.fromApi(model.property?.address)
       : undefined;
-    newForm.legalDescription = model.property?.landLegalDescription;
+    newForm.legalDescription = model.property?.landLegalDescription ?? undefined;
 
     return newForm;
   }
 
-  public toApi(): Api_Property {
+  public toApi(): ApiGen_Concepts_Property {
     return {
-      id: this.apiId,
-      pid: pidParser(this.pid),
-      pin: this.pin !== undefined ? Number(this.pin) : undefined,
-      planNumber: this.planNumber,
-      location: { coordinate: { x: this.longitude, y: this.latitude } },
+      id: this.apiId ?? 0,
+      pid: pidParser(this.pid) ?? null,
+      pin: this.pin !== undefined ? Number(this.pin) : null,
+      planNumber: this.planNumber ?? null,
+      location: { coordinate: { x: this.longitude ?? 0, y: this.latitude ?? 0 } },
       boundary: this.polygon
         ? {
             coordinates: this.polygon.coordinates.flatMap(positions =>
               positions.map((p: Position) => ({ x: p[0], y: p[1] })),
             ),
           }
-        : undefined,
-      region: toTypeCode(this.region),
-      district: toTypeCode(this.district),
-      rowVersion: this.propertyRowVersion,
-      isOwned: this.isOwned,
-      address: this.address?.toApi(),
-      landLegalDescription: this.legalDescription,
+        : null,
+      region: toTypeCodeNullable(this.region),
+      district: toTypeCodeNullable(this.district),
+      rowVersion: this.propertyRowVersion ?? null,
+      isOwned: this.isOwned ?? false,
+      isDisposed: this.isDisposed ?? false,
+      isOtherInterest: this.isOtherInterest ?? false,
+      address: this.address?.toApi() ?? null,
+      landLegalDescription: this.legalDescription ?? null,
+      propertyType: null,
+      anomalies: null,
+      tenures: null,
+      roadTypes: null,
+      status: null,
+      dataSource: null,
+      dataSourceEffectiveDateOnly: EpochIsoDateTime,
+      latitude: null,
+      longitude: null,
+      name: null,
+      description: null,
+      isSensitive: false,
+      isProvincialPublicHwy: null,
+      pphStatusUpdateUserid: null,
+      pphStatusUpdateTimestamp: null,
+      pphStatusUpdateUserGuid: null,
+      isRwyBeltDomPatent: null,
+      pphStatusTypeCode: null,
+      isPropertyOfInterest: false,
+      isVisibleToOtherAgencies: false,
+      areaUnit: null,
+      landArea: null,
+      isVolumetricParcel: null,
+      volumetricMeasurement: null,
+      volumetricUnit: null,
+      volumetricType: null,
+      municipalZoning: null,
+      zoning: null,
+      zoningPotential: null,
+      generalLocation: null,
+      propertyContacts: null,
+      notes: null,
+      surplusDeclarationType: null,
+      surplusDeclarationComment: null,
+      surplusDeclarationDate: EpochIsoDateTime,
     };
   }
 }
@@ -170,8 +220,6 @@ export class AddressForm {
   public municipality?: string;
   public postalCode?: string;
 
-  private constructor() {}
-
   public static fromBcaAddress(model: IBcAssessmentSummary['ADDRESSES'][0]): AddressForm {
     const newForm = new AddressForm();
     newForm.streetAddress1 = formatBcaAddress(model);
@@ -181,29 +229,41 @@ export class AddressForm {
     return newForm;
   }
 
-  public static fromApi(model: Api_Address): AddressForm {
+  public static fromApi(model: ApiGen_Concepts_Address): AddressForm {
     const newForm = new AddressForm();
-    newForm.id = model.id;
-    newForm.streetAddress1 = model.streetAddress1;
-    newForm.streetAddress2 = model.streetAddress2;
-    newForm.streetAddress3 = model.streetAddress3;
-    newForm.municipality = model.municipality;
-    newForm.postalCode = model.postal;
-    newForm.apiId = model?.id;
-    newForm.rowVersion = model.rowVersion;
+    newForm.id = model.id ?? undefined;
+    newForm.streetAddress1 = model.streetAddress1 ?? undefined;
+    newForm.streetAddress2 = model.streetAddress2 ?? undefined;
+    newForm.streetAddress3 = model.streetAddress3 ?? undefined;
+    newForm.municipality = model.municipality ?? undefined;
+    newForm.postalCode = model.postal ?? undefined;
+    newForm.apiId = model?.id ?? undefined;
+    newForm.rowVersion = model.rowVersion ?? undefined;
 
     return newForm;
   }
 
-  public toApi(): Api_Address {
+  public toApi(): ApiGen_Concepts_Address {
     return {
-      id: this.apiId,
-      rowVersion: this.rowVersion,
-      streetAddress1: this.streetAddress1,
-      streetAddress2: this.streetAddress2,
-      streetAddress3: this.streetAddress3,
-      municipality: this.municipality,
-      postal: this.postalCode,
+      id: this.apiId ?? null,
+      rowVersion: this.rowVersion ?? null,
+      streetAddress1: this.streetAddress1 ?? null,
+      streetAddress2: this.streetAddress2 ?? null,
+      streetAddress3: this.streetAddress3 ?? null,
+      municipality: this.municipality ?? null,
+      postal: this.postalCode ?? null,
+      comment: null,
+      country: null,
+      countryId: null,
+      countryOther: null,
+      district: null,
+      latitude: null,
+      longitude: null,
+      province: null,
+      provinceStateId: null,
+      region: null,
+      regionCode: null,
+      districtCode: null,
     };
   }
 }

@@ -1,5 +1,6 @@
 // __mocks__/popper.js.js
 
+import noop from 'lodash/noop';
 import PopperJs from 'popper.js';
 
 export default class Popper {
@@ -7,9 +8,9 @@ export default class Popper {
     this.placements = PopperJs.placements;
 
     return {
-      update: () => {},
-      destroy: () => {},
-      scheduleUpdate: () => {},
+      update: noop,
+      destroy: noop,
+      scheduleUpdate: noop,
     };
   }
 }

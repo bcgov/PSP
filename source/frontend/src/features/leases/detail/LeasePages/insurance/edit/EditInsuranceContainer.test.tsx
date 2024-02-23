@@ -3,8 +3,9 @@ import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
 
-import { TypeCodeUtils } from '@/interfaces';
-import { Api_Insurance } from '@/models/api/Insurance';
+import { TypeCodeUtils } from '@/interfaces/ITypeCode';
+import { ApiGen_Concepts_Insurance } from '@/models/api/generated/ApiGen_Concepts_Insurance';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { ILookupCode } from '@/store/slices/lookupCodes';
 import { act, render, RenderOptions, RenderResult } from '@/utils/test-utils';
 
@@ -25,7 +26,7 @@ export const mockInsuranceTypeCar: ILookupCode = {
   displayOrder: 2,
 };
 
-const mockInsuranceHome: Api_Insurance = {
+const mockInsuranceHome: ApiGen_Concepts_Insurance = {
   id: 123459,
   leaseId: 1,
   insuranceType: TypeCodeUtils.createFromLookup(mockInsuranceTypeHome),
@@ -34,7 +35,7 @@ const mockInsuranceHome: Api_Insurance = {
   coverageLimit: 777,
   expiryDate: '2022-01-01',
   isInsuranceInPlace: true,
-  rowVersion: 0,
+  ...getEmptyBaseAudit(),
 };
 
 const defaultProps: InsuranceEditContainerProps = {
@@ -97,7 +98,7 @@ describe('Edit Lease Insurance', () => {
   });
 
   it('Updates form lists when clicked', async () => {
-    const testInsuranceCar: Api_Insurance = {
+    const testInsuranceCar: ApiGen_Concepts_Insurance = {
       ...mockInsuranceHome,
       coverageLimit: 888,
       coverageDescription: 'test description for a test insurance car',
