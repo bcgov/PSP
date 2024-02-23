@@ -149,6 +149,21 @@ describe('mapUtils tests', () => {
         ),
       ).toEqual(disposedIcon);
     });
+    it(`follows precedence when property has multiple ownership flags`, () => {
+      expect(
+        getMarkerIcon(
+          {
+            ...feature,
+            properties: {
+              ...EmptyPropertyLocation, PROPERTY_ID: '1',
+              IS_OWNED: true,
+              IS_PROPERTY_OF_INTEREST: true,
+            },
+          },
+          false,
+        ),
+      ).toEqual(parcelIcon);
+    });
     it(`returns null when passed feature is not one of: 'Core Inventory', 'Property of Interest', 'Other Interest' or 'Disposed'`, () => {
       expect(
         getMarkerIcon(
