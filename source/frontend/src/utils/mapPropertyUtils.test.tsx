@@ -118,12 +118,36 @@ describe('mapPropertyUtils', () => {
   it.each([
     [false, { label: NameSourceType.NONE, value: '' }, { ...getEmptyFileProperty() }],
     [false, { label: NameSourceType.NONE, value: '' }, undefined],
-    [false, { label: NameSourceType.NONE, value: '' }, { ...getEmptyFileProperty(), propertyName: '' }],
-    [false, { label: NameSourceType.NONE, value: '' }, { ...getEmptyFileProperty(), propertyName: null }],
-    [false, { label: NameSourceType.NAME, value: 'name' }, { ...getEmptyFileProperty(), propertyName: 'name' }],
-    [true, { label: NameSourceType.NONE, value: '' }, { ...getEmptyFileProperty(), propertyName: 'name' }],
-    [false, { label: NameSourceType.NONE, value: '' }, { ...getEmptyFileProperty(), property: null }],
-    [false, { label: NameSourceType.PID, value: '000-000-001' }, { ...getEmptyFileProperty(), property: { ...getEmptyProperty(), pid: 1 } }],
+    [
+      false,
+      { label: NameSourceType.NONE, value: '' },
+      { ...getEmptyFileProperty(), propertyName: '' },
+    ],
+    [
+      false,
+      { label: NameSourceType.NONE, value: '' },
+      { ...getEmptyFileProperty(), propertyName: null },
+    ],
+    [
+      false,
+      { label: NameSourceType.NAME, value: 'name' },
+      { ...getEmptyFileProperty(), propertyName: 'name' },
+    ],
+    [
+      true,
+      { label: NameSourceType.NONE, value: '' },
+      { ...getEmptyFileProperty(), propertyName: 'name' },
+    ],
+    [
+      false,
+      { label: NameSourceType.NONE, value: '' },
+      { ...getEmptyFileProperty(), property: null },
+    ],
+    [
+      false,
+      { label: NameSourceType.PID, value: '000-000-001' },
+      { ...getEmptyFileProperty(), property: { ...getEmptyProperty(), pid: 1 } },
+    ],
   ])(
     'getFilePropertyName test with ignore name flag %p expecting %p source %p',
     (skipName: boolean, expectedName: PropertyName, mapProperty?: ApiGen_Concepts_FileProperty) => {

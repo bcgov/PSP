@@ -155,7 +155,8 @@ describe('mapUtils tests', () => {
           {
             ...feature,
             properties: {
-              ...EmptyPropertyLocation, PROPERTY_ID: '1',
+              ...EmptyPropertyLocation,
+              PROPERTY_ID: '1',
               IS_OWNED: true,
               IS_PROPERTY_OF_INTEREST: true,
             },
