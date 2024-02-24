@@ -97,6 +97,7 @@ describe('LayerPopupView component', () => {
           regionFeature: null,
           districtFeature: null,
           municipalityFeature: null,
+          selectingComponentId: null,
         },
       });
       const ellipsis = getByTestId('fly-out-ellipsis');
@@ -122,6 +123,7 @@ describe('LayerPopupView component', () => {
           regionFeature: null,
           districtFeature: null,
           municipalityFeature: null,
+          selectingComponentId: null,
         },
       });
       const ellipsis = getByTestId('fly-out-ellipsis');

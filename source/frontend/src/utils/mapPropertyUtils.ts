@@ -14,6 +14,7 @@ import { toast } from 'react-toastify';
 import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { ONE_HUNDRED_METER_PRECISION } from '@/components/maps/constants';
 import { IMapProperty } from '@/components/propertySelector/models';
+import { AreaUnitTypes } from '@/constants';
 import { DistrictCodes } from '@/constants/districtCodes';
 import { RegionCodes } from '@/constants/regionCodes';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
@@ -171,6 +172,8 @@ function toMapProperty(
     district: feature?.properties?.DISTRICT_NUMBER,
     districtName: feature?.properties?.DISTRICT_NAME,
     name: feature?.properties?.NAME,
+    landArea: feature?.properties?.FEATURE_AREA_SQM,
+    areaUnit: AreaUnitTypes.SquareMeters,
   };
 }
 
@@ -205,6 +208,14 @@ export function featuresetToMapProperty(
       : DistrictCodes.Unknown,
     districtName: districtFeature?.properties?.DISTRICT_NAME ?? 'Cannot determine',
     name: pimsFeature?.properties?.NAME ?? undefined,
+    areaUnit: pimsFeature?.properties?.PROPERTY_AREA_UNIT_TYPE_CODE
+      ? AreaUnitTypes[
+          pimsFeature?.properties?.PROPERTY_AREA_UNIT_TYPE_CODE as keyof typeof AreaUnitTypes
+        ]
+      : AreaUnitTypes.SquareMeters,
+    landArea: pimsFeature?.properties?.LAND_AREA
+      ? +pimsFeature?.properties?.LAND_AREA
+      : parcelFeature?.properties?.FEATURE_AREA_SQM ?? 0,
   };
 }
 

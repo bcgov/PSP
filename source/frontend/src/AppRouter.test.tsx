@@ -94,6 +94,7 @@ jest.mock('./hooks/pims-api/useApiProperties');
   getPropertiesApi: jest.fn(),
   getPropertyConceptWithIdApi: jest.fn(),
   putPropertyConceptApi: jest.fn(),
+  getPropertyConceptWithPidApi: jest.fn(),
 });
 
 jest.mock('./hooks/pims-api/useApiLeases');
