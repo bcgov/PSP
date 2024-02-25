@@ -5,15 +5,18 @@ import { usePimsPropertyRepository } from '@/hooks/repositories/usePimsPropertyR
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 
 import { ILayerSearchCriteria } from '../models';
-import PropertySelectorPidSearchView from './PropertySelectorPidSearchView';
+import { IPropertySearchSelectorPidFormViewProps } from './PropertySelectorPidSearchView';
 
 export interface PropertySelectorPidSearchContainerProps {
   setSelectProperty: (property: ApiGen_Concepts_Property) => void;
+  PropertySelectorPidSearchView: React.FunctionComponent<
+    React.PropsWithChildren<IPropertySearchSelectorPidFormViewProps>
+  >;
 }
 
 export const PropertySelectorPidSearchContainer: React.FunctionComponent<
   React.PropsWithChildren<PropertySelectorPidSearchContainerProps>
-> = ({ setSelectProperty }) => {
+> = ({ setSelectProperty, PropertySelectorPidSearchView }) => {
   const { getPropertyByPidWrapper } = usePimsPropertyRepository();
 
   const searchFunc = useCallback(
@@ -29,12 +32,10 @@ export const PropertySelectorPidSearchContainer: React.FunctionComponent<
   );
 
   return (
-    <>
-      <PropertySelectorPidSearchView
-        onSearch={searchFunc}
-        loading={getPropertyByPidWrapper.loading}
-      />
-    </>
+    <PropertySelectorPidSearchView
+      onSearch={searchFunc}
+      loading={getPropertyByPidWrapper.loading}
+    />
   );
 };
 

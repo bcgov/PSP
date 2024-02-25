@@ -38,21 +38,41 @@ namespace Pims.Api.Services
             // validate
             long sourcePropertyId = operations.FirstOrDefault().SourcePropertyId;
             PimsProperty dbSourceProperty = _propertyService.GetById(sourcePropertyId);
-            if(dbSourceProperty.IsRetired == true)
+            if (dbSourceProperty.IsRetired == true)
             {
-                throw new BusinessRuleViolationException("Retired properties cannot be subdivided");
+                throw new BusinessRuleViolationException("Retired properties cannot be subdivided.");
             }
 
-            foreach(var operation in operations)
+            if (operations.Any(op => op.PropertyOperationNo != operations.FirstOrDefault().PropertyOperationNo))
             {
-                if(dbSourceProperty.Pid == operation.DestinationProperty.Pid)
+                 throw new BusinessRuleViolationException("All property operations must have matching operation numbers.");
+            }
+
+            if (operations.Any(op => op.PropertyOperationTypeCode != operations.FirstOrDefault().PropertyOperationTypeCode))
+            {
+                 throw new BusinessRuleViolationException("All property operations must have matching type codes.");
+            }
+
+            if (operations.Any(op => op.SourcePropertyId != operations.FirstOrDefault().SourcePropertyId))
+            {
+                 throw new BusinessRuleViolationException("All property operations must have the same PIMS parent property.");
+            }
+
+            if (operations.Select(o => o.DestinationProperty).Count() < 2)
+            {
+                 throw new BusinessRuleViolationException("Subdivisions must contain at least two child properties.");
+            }
+
+            foreach (var operation in operations)
+            {
+                if (dbSourceProperty.Pid == operation.DestinationProperty.Pid)
                 {
                     continue; // the user is allowed to add a child property that exists in pims if it has the same pid as the destination property.
                 }
                 try
                 {
                     _propertyService.GetByPid(operation.DestinationProperty.Pid.ToString());
-                    throw new BusinessRuleViolationException("Subdivision children may not already be in the PIMS inventory");
+                    throw new BusinessRuleViolationException("Subdivision children may not already be in the PIMS inventory.");
 
                 } catch (KeyNotFoundException)
                 {

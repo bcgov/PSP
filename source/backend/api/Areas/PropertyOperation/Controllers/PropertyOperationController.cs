@@ -15,6 +15,8 @@ using Swashbuckle.AspNetCore.Annotations;
 using Pims.Api.Models.Concepts.Property;
 using Pims.Api.Models.CodeTypes;
 using Pims.Dal.Entities;
+using Pims.Core.Exceptions;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace Pims.Api.Areas.PropertyOperation.Controllers
 {
@@ -76,21 +78,11 @@ namespace Pims.Api.Areas.PropertyOperation.Controllers
                 return BadRequest("No property operations were sent.");
             }
 
-            if (operations.Any(op => op.PropertyOperationNo != operations.FirstOrDefault().PropertyOperationNo))
-            {
-                return BadRequest("All property operations must have matching operation numbers.");
-            }
-
-            if (operations.Any(op => op.PropertyOperationTypeCode.Id != operations.FirstOrDefault().PropertyOperationTypeCode.Id))
-            {
-                return BadRequest("All property operations must have matching type codes");
-            }
-
             var operationTypeCode = operations.FirstOrDefault().PropertyOperationTypeCode;
             var propertyOperations = _mapper.Map<IEnumerable<Dal.Entities.PimsPropertyOperation>>(operations);
             if(!Enum.TryParse(operationTypeCode?.Id, out PropertyOperationTypes propertyOperationTypes))
             {
-                return BadRequest("Unsupported property operation type code");
+                return BadRequest("Unsupported property operation type code.");
             }
             switch (propertyOperationTypes)
             {
@@ -98,7 +90,7 @@ namespace Pims.Api.Areas.PropertyOperation.Controllers
                     var newProperties = _propertyOperationService.SubdivideProperty(propertyOperations);
                     return new JsonResult(_mapper.Map<IEnumerable<PimsPropertyOperation>>(newProperties));
                 default:
-                    return BadRequest("Unsupported property operation type code");
+                    return BadRequest("Unsupported property operation type code.");
             }
         }
 

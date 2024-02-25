@@ -10,9 +10,9 @@ import { Form } from '@/components/common/form';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
 import { H2 } from '@/components/common/styles';
-import MapSelectorContainer from '@/components/propertySelector/MapSelectorContainer';
+import { IMapSelectorContainerProps } from '@/components/propertySelector/MapSelectorContainer';
 import { StyledTabView } from '@/components/propertySelector/PropertySelectorTabsView';
-import PropertySelectorPidSearchContainer from '@/components/propertySelector/search/PropertySelectorPidSearchContainer';
+import { PropertySelectorPidSearchContainerProps } from '@/components/propertySelector/search/PropertySelectorPidSearchContainer';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { BC_ASSESSMENT_TYPES, IBcAssessmentSummary } from '@/models/layers/bcAssesment';
 
@@ -56,6 +56,10 @@ export interface IAddSubdivisionViewProps {
       }
     | undefined
   >;
+  MapSelectorComponent: React.FunctionComponent<IMapSelectorContainerProps>;
+  PropertySelectorPidSearchComponent: React.FunctionComponent<
+    React.PropsWithChildren<PropertySelectorPidSearchContainerProps>
+  >;
 }
 
 const AddSubdivisionView: React.FunctionComponent<
@@ -69,6 +73,8 @@ const AddSubdivisionView: React.FunctionComponent<
   onSave,
   onCancel,
   getPrimaryAddressByPid,
+  MapSelectorComponent,
+  PropertySelectorPidSearchComponent,
 }) => {
   return (
     <MapSideBarLayout
@@ -109,7 +115,7 @@ const AddSubdivisionView: React.FunctionComponent<
               <p>Select the parent property that was subdivided:</p>
               <StyledTabView activeKey="parent-property">
                 <Tab eventKey="parent-property" title="Parent Property Search">
-                  <PropertySelectorPidSearchContainer
+                  <PropertySelectorPidSearchComponent
                     setSelectProperty={selectedProperty =>
                       setFieldValue('sourceProperty', selectedProperty)
                     }
@@ -133,7 +139,7 @@ const AddSubdivisionView: React.FunctionComponent<
               <br />
               <p>Select the child properties to which parent property was subdivided:</p>
               <br />
-              <MapSelectorContainer
+              <MapSelectorComponent
                 addSelectedProperties={async properties => {
                   const allProperties = [...values.destinationProperties];
                   await properties.reduce(async (promise, property) => {

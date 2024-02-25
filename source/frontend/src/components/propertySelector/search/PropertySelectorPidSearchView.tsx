@@ -9,13 +9,13 @@ import { SubdivisionFormModel } from '@/features/mapSideBar/subdivision/AddSubdi
 
 import { ILayerSearchCriteria } from '../models';
 
-export interface IPropertySearchSelectorFormViewProps {
+export interface IPropertySearchSelectorPidFormViewProps {
   onSearch: (search: ILayerSearchCriteria) => void;
   loading: boolean;
 }
 
-export const PropertySearchSelectorFormView: React.FunctionComponent<
-  React.PropsWithChildren<IPropertySearchSelectorFormViewProps>
+export const PropertySearchSelectorPidFormView: React.FunctionComponent<
+  React.PropsWithChildren<IPropertySearchSelectorPidFormViewProps>
 > = ({ onSearch, loading }) => {
   const formikProps = useFormikContext<SubdivisionFormModel>();
   return (
@@ -61,4 +61,4 @@ export const PropertySearchSelectorFormView: React.FunctionComponent<
   );
 };
 
-export default PropertySearchSelectorFormView;
+export default PropertySearchSelectorPidFormView;

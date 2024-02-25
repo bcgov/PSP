@@ -4,6 +4,8 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
+import MapSelectorContainer from '@/components/propertySelector/MapSelectorContainer';
+import PropertySelectorPidSearchContainer from '@/components/propertySelector/search/PropertySelectorPidSearchContainer';
 import { useBcaAddress } from '@/features/properties/map/hooks/useBcaAddress';
 import { usePropertyOperationRepository } from '@/hooks/repositories/usePropertyOperationRepository';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
@@ -86,8 +88,8 @@ const AddSubdivisionContainer: React.FC<IAddSubdivisionContainerProps> = ({ onCl
 
       setModalContent({
         variant: 'info',
-        cancelButtonText: 'Cancel',
-        okButtonText: 'Save',
+        cancelButtonText: 'No',
+        okButtonText: 'Yes',
         title: 'Are you sure?',
         message: (
           <>
@@ -124,7 +126,6 @@ const AddSubdivisionContainer: React.FC<IAddSubdivisionContainerProps> = ({ onCl
       const response = await addPropertyOperation(propertyOperations, userOverrideCodes);
 
       if (response?.length) {
-        formikHelpers?.resetForm();
         handleSuccess(propertyOperations);
       }
     } finally {
@@ -135,11 +136,11 @@ const AddSubdivisionContainer: React.FC<IAddSubdivisionContainerProps> = ({ onCl
   const handleSuccess = async (subdivisions: ApiGen_Concepts_PropertyOperation[]) => {
     mapMachine.refreshMapProperties();
     // eslint-disable-next-line no-debugger
-    debugger;
     if (subdivisions.length === 0 || !subdivisions[0].sourceProperty) {
       history.replace(`/mapview`);
+    } else {
+      history.replace(`/mapview/sidebar/property/${subdivisions[0].sourceProperty?.id}`);
     }
-    history.replace(`/mapview/sidebar/property/${subdivisions[0].sourceProperty?.id}`);
   };
 
   return (
@@ -170,6 +171,8 @@ const AddSubdivisionContainer: React.FC<IAddSubdivisionContainerProps> = ({ onCl
       subdivisionInitialValues={initialForm}
       displayFormInvalid={!isFormValid}
       getPrimaryAddressByPid={getPrimaryAddressByPid}
+      PropertySelectorPidSearchComponent={PropertySelectorPidSearchContainer}
+      MapSelectorComponent={MapSelectorContainer}
     ></View>
   );
 };

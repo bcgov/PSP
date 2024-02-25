@@ -20,13 +20,13 @@ export class SubdivisionFormModel {
 
   toApi(): ApiGen_Concepts_PropertyOperation[] {
     // eslint-disable-next-line no-debugger
-    return this.destinationProperties.map(dp => ({
+    return this.destinationProperties?.map(dp => ({
       ...getEmptyBaseAudit(0),
       id: 0,
       sourcePropertyId: this.sourceProperty?.id ?? 0,
       sourceProperty: this.sourceProperty,
       destinationProperty: dp,
-      destinationPropertyId: dp.id ?? 0,
+      destinationPropertyId: dp?.id ?? 0,
       operationDt: null,
       isDisabled: false,
       propertyOperationNo: this.propertyOperationNo ?? 0,
