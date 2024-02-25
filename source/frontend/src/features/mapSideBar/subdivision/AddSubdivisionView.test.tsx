@@ -137,7 +137,7 @@ describe('Add Subdivision View', () => {
     const { getByTitle, queryByText } = await setup({
       props: {
         subdivisionInitialValues: {
-          sourceProperty: { ...getMockApiProperty(), pid: 111-111-111 },
+          sourceProperty: { ...getMockApiProperty(), pid: 111 - 111 - 111 },
           destinationProperties: [],
         } as unknown as SubdivisionFormModel,
       },
@@ -154,7 +154,7 @@ describe('Add Subdivision View', () => {
     const { getByTitle, queryByText } = await setup({
       props: {
         subdivisionInitialValues: {
-          destinationProperties: [{ ...getMockApiProperty(), pid: 111-111-111 }],
+          destinationProperties: [{ ...getMockApiProperty(), pid: 111 - 111 - 111 }],
         } as unknown as SubdivisionFormModel,
       },
     });
