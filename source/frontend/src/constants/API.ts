@@ -134,4 +134,4 @@ export const DISPOSITION_OFFER_STATUS_TYPES = 'PimsDispositionOfferStatusType';
 export const ACTIVATE_USER = () => `/auth/activate`; // get filtered properties or all if not specified.
 
 export const MAX_SQL_INT_SIZE = 2147483647;
-export const MAX_SQL_MONEY_SIZE = 922337203685477.58;
+export const MAX_SQL_MONEY_SIZE = 922337203685477;

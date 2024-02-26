@@ -10,7 +10,8 @@ import { Claims, Roles } from '@/constants';
 import { cannotEditMessage } from '@/features/mapSideBar/acquisition/common/constants';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
-import { Api_DispositionFile, Api_DispositionFileOffer } from '@/models/api/DispositionFile';
+import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
+import { ApiGen_Concepts_DispositionFileOffer } from '@/models/api/generated/ApiGen_Concepts_DispositionFileOffer';
 import { prettyFormatDate } from '@/utils/dateUtils';
 import { formatMoney } from '@/utils/numberFormatUtils';
 
@@ -18,9 +19,9 @@ import DispositionStatusUpdateSolver from '../../../fileDetails/detail/Dispositi
 
 export interface IDispositionOfferDetailsProps {
   index: number;
-  dispositionOffer: Api_DispositionFileOffer;
+  dispositionOffer: ApiGen_Concepts_DispositionFileOffer;
   onDelete: (offerId: number) => void;
-  dispositionFile: Api_DispositionFile;
+  dispositionFile: ApiGen_Concepts_DispositionFile;
 }
 
 const DispositionOfferDetails: React.FunctionComponent<IDispositionOfferDetailsProps> = ({
@@ -68,7 +69,7 @@ const DispositionOfferDetails: React.FunctionComponent<IDispositionOfferDetailsP
                   okButtonText: 'Yes',
                   cancelButtonText: 'No',
                   handleOk: async () => {
-                    onDelete(dispositionOffer.id!);
+                    dispositionOffer?.id && onDelete(dispositionOffer.id);
                     setDisplayModal(false);
                   },
                   handleCancel: () => {

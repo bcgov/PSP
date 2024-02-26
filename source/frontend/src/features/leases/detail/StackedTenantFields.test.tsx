@@ -1,5 +1,7 @@
 import { createMemoryHistory } from 'history';
 
+import { getEmptyPerson } from '@/mocks/contacts.mock';
+import { getEmptyLeaseTenant } from '@/mocks/lease.mock';
 import { render, RenderOptions } from '@/utils/test-utils';
 
 import StackedPidTenantFields, { IStackedTenantFieldsProps } from './StackedTenantFields';
@@ -30,8 +32,10 @@ describe('StackedPidTenantFields component', () => {
     const { component } = setup({
       tenants: [
         {
+          ...getEmptyLeaseTenant(),
           leaseId: 1,
-          person: { firstName: 'First', surname: 'Last' },
+          personId: 1,
+          person: { ...getEmptyPerson(), id: 1, firstName: 'First', surname: 'Last' },
         },
       ],
     });
@@ -42,7 +46,19 @@ describe('StackedPidTenantFields component', () => {
     const {
       component: { getByText },
     } = setup({
-      tenants: [{ leaseId: 1, person: { firstName: 'tenantFirst', surname: 'tenantSurname' } }],
+      tenants: [
+        {
+          ...getEmptyLeaseTenant(),
+          leaseId: 1,
+          personId: 1,
+          person: {
+            ...getEmptyPerson(),
+            id: 1,
+            firstName: 'tenantFirst',
+            surname: 'tenantSurname',
+          },
+        },
+      ],
     });
     expect(getByText('tenantFirst tenantSurname')).toBeVisible();
   });

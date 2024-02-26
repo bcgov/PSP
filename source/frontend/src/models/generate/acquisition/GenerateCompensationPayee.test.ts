@@ -6,9 +6,10 @@ import {
 import { getMockApiDefaultCompensation } from '@/mocks/compensations.mock';
 import { emptyApiInterestHolder } from '@/mocks/interestHolder.mock';
 import { mockCompReqH120s } from '@/mocks/mockCompReqH120s.mock';
-import { Api_AcquisitionFileOwner, Api_AcquisitionFileTeam } from '@/models/api/AcquisitionFile';
-import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
-import { Api_InterestHolder } from '@/models/api/InterestHolder';
+import { ApiGen_Concepts_AcquisitionFileOwner } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileOwner';
+import { ApiGen_Concepts_AcquisitionFileTeam } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileTeam';
+import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
+import { ApiGen_Concepts_InterestHolder } from '@/models/api/generated/ApiGen_Concepts_InterestHolder';
 import { formatMoney } from '@/utils';
 
 import { Api_GenerateCompensationPayee } from './GenerateCompensationPayee';
@@ -36,8 +37,8 @@ describe('GenerateCompensationPayee tests', () => {
     ['FORTIS BC', mockAcquisitionFileOwnersResponse()[1]],
   ])(
     'can generate with owner payee: %s',
-    (expectedName: string, owner: Api_AcquisitionFileOwner) => {
-      const compensation: Api_CompensationRequisition = {
+    (expectedName: string, owner: ApiGen_Concepts_AcquisitionFileOwner) => {
+      const compensation: ApiGen_Concepts_CompensationRequisition = {
         ...getMockApiDefaultCompensation(),
         acquisitionOwner: owner,
       };
@@ -55,7 +56,7 @@ describe('GenerateCompensationPayee tests', () => {
         acquisitionFileId: 2,
         personId: 1,
         person: { id: 1, firstName: 'first', surname: 'last' },
-      } as Api_InterestHolder,
+      } as ApiGen_Concepts_InterestHolder,
     ],
     [
       'ABC Inc',
@@ -65,12 +66,12 @@ describe('GenerateCompensationPayee tests', () => {
         acquisitionFileId: 2,
         organizationId: 100,
         organization: { id: 100, name: 'ABC Inc' },
-      } as Api_InterestHolder,
+      } as ApiGen_Concepts_InterestHolder,
     ],
   ])(
     'can generate with interest holder payee: %s',
-    (expectedName: string, ih: Api_InterestHolder) => {
-      const compensation: Api_CompensationRequisition = {
+    (expectedName: string, ih: ApiGen_Concepts_InterestHolder) => {
+      const compensation: ApiGen_Concepts_CompensationRequisition = {
         ...getMockApiDefaultCompensation(),
         interestHolder: ih,
       };
@@ -84,8 +85,8 @@ describe('GenerateCompensationPayee tests', () => {
     ['ABC Inc', mockApiAcquisitionFileTeamOrganization()],
   ])(
     'can generate with acquisition team payee: %s',
-    (expectedName: string, teamMember: Api_AcquisitionFileTeam) => {
-      const compensation: Api_CompensationRequisition = {
+    (expectedName: string, teamMember: ApiGen_Concepts_AcquisitionFileTeam) => {
+      const compensation: ApiGen_Concepts_CompensationRequisition = {
         ...getMockApiDefaultCompensation(),
         acquisitionFileTeam: teamMember,
       };
@@ -95,7 +96,7 @@ describe('GenerateCompensationPayee tests', () => {
   );
 
   it('can generate with legacy payee', () => {
-    const compensation: Api_CompensationRequisition = {
+    const compensation: ApiGen_Concepts_CompensationRequisition = {
       ...getMockApiDefaultCompensation(),
       legacyPayee: 'Chester Tester',
     };

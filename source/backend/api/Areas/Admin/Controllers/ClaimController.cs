@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Pims.Api.Models.Base;
 using Pims.Api.Models.Concepts.Claim;
 using Pims.Api.Policies;
+using Pims.Core.Json;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
@@ -55,6 +56,7 @@ namespace Pims.Api.Areas.Admin.Controllers
         [ProducesResponseType(typeof(PageModel<ClaimModel>), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "admin-claim" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetClaims(int page = 1, int quantity = 10, string name = null)
         {
             if (page < 1)

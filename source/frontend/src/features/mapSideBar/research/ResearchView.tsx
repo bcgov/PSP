@@ -4,7 +4,7 @@ import { matchPath, Route, useHistory, useRouteMatch } from 'react-router-dom';
 
 import { FileTypes } from '@/constants';
 import { InventoryTabNames } from '@/features/mapSideBar/property/InventoryTabs';
-import { Api_ResearchFile } from '@/models/api/ResearchFile';
+import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Concepts_ResearchFile';
 import { stripTrailingSlash } from '@/utils';
 
 import FilePropertyRouter from '../router/FilePropertyRouter';
@@ -12,7 +12,7 @@ import { FileTabType } from '../shared/detail/FileTabs';
 import ResearchRouter from './ResearchRouter';
 
 export interface IViewSelectorProps {
-  researchFile?: Api_ResearchFile;
+  researchFile?: ApiGen_Concepts_ResearchFile;
   setEditMode: (isEditing: boolean) => void;
   isEditing: boolean;
   onSuccess: () => void;
@@ -42,7 +42,7 @@ const ResearchView = React.forwardRef<FormikProps<any>, IViewSelectorProps>((pro
       />
       <Route
         path={`${stripTrailingSlash(match.path)}/property/:menuIndex`}
-        render={({ match }) => (
+        render={() => (
           <FilePropertyRouter
             formikRef={formikRef}
             selectedMenuIndex={selectedMenuIndex}

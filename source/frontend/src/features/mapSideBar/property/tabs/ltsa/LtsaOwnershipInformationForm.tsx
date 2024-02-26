@@ -23,7 +23,7 @@ export const LtsaOwnershipInformationForm: React.FunctionComponent<
       {ownershipGroups.length === 0 && 'None'}
       <FieldArray
         name={withNameSpace(nameSpace, 'ownershipGroups')}
-        render={({ push, remove, name }) => (
+        render={() => (
           <React.Fragment key={`ownership-info-row-${nameSpace}`}>
             {ownershipGroups.map((ownershipGroup: ChargeOwnershipGroup, index: number) => {
               const innerNameSpace = withNameSpace(nameSpace, `ownershipGroups.${index}`);

@@ -7,9 +7,7 @@ import { Backdrop } from '@/components/common/styles';
 import { SideBarContext } from './context/sidebarContext';
 import MapRouter from './router/MapRouter';
 
-interface IMapSideBarProps {}
-
-const MapSideBar: React.FunctionComponent<React.PropsWithChildren<IMapSideBarProps>> = () => {
+const MapSideBar: React.FunctionComponent<React.PropsWithChildren<unknown>> = () => {
   const { fullWidth } = useContext(SideBarContext);
 
   const mapMachine = useMapStateMachine();

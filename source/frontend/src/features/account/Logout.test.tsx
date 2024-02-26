@@ -12,7 +12,7 @@ jest.mock('@/hooks/useConfiguration');
 
 describe('logout', () => {
   const history = createMemoryHistory();
-  let { location } = window;
+  const { location } = window;
 
   beforeAll(() => {
     delete (window as any).location;

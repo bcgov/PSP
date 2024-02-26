@@ -1,8 +1,9 @@
-import { Api_FinancialCode } from '@/models/api/FinancialCode';
+import { ApiGen_Concepts_FinancialCode } from '@/models/api/generated/ApiGen_Concepts_FinancialCode';
+import { ApiGen_Concepts_FinancialCodeTypes } from '@/models/api/generated/ApiGen_Concepts_FinancialCodeTypes';
 
-export const mockFinancialCode: () => Api_FinancialCode = () => ({
+export const mockFinancialCode: () => ApiGen_Concepts_FinancialCode = () => ({
   id: 3,
-  type: 'BusinessFunction',
+  type: ApiGen_Concepts_FinancialCodeTypes.BusinessFunction,
   code: 'CONSTRUC',
   description: 'CONSTRUCTION',
   effectiveDate: '1999-11-22T18:22:24',
@@ -11,4 +12,8 @@ export const mockFinancialCode: () => Api_FinancialCode = () => ({
   appLastUpdateUserid: 'dbo',
   appCreateUserid: 'dbo',
   rowVersion: 1,
+  appCreateUserGuid: null,
+  appLastUpdateUserGuid: null,
+  displayOrder: null,
+  expiryDate: null,
 });

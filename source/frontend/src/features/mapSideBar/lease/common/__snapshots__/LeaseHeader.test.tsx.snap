@@ -263,6 +263,7 @@ exports[`LeaseHeader component renders as expected when no data is provided 1`] 
                 <strong>
                   <div>
                     <span>
+                      French Mouse Property Management
                       <br />
                     </span>
                     <button

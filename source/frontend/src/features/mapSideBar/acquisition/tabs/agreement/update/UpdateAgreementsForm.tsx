@@ -9,8 +9,8 @@ import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
 import TooltipIcon from '@/components/common/TooltipIcon';
 import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
-import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
-import { Api_Agreement } from '@/models/api/Agreement';
+import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
+import { ApiGen_Concepts_Agreement } from '@/models/api/generated/ApiGen_Concepts_Agreement';
 import { ILookupCode } from '@/store/slices/lookupCodes';
 
 import { cannotEditMessage } from '../../../common/constants';
@@ -21,11 +21,13 @@ import { UpdateAgreementsYupSchema } from './UpdateAgreementsYupSchema';
 
 export interface IUpdateAgreementsFormProps {
   isLoading: boolean;
-  acquistionFile: Api_AcquisitionFile | undefined;
+  acquistionFile: ApiGen_Concepts_AcquisitionFile | undefined;
   formikRef: React.Ref<FormikProps<AgreementsFormModel>>;
   initialValues: AgreementsFormModel;
   agreementTypes: ILookupCode[];
-  onSave: (apiAcquisitionFile: AgreementsFormModel) => Promise<Api_Agreement[] | undefined>;
+  onSave: (
+    apiAcquisitionFile: AgreementsFormModel,
+  ) => Promise<ApiGen_Concepts_Agreement[] | undefined>;
 }
 
 export const UpdateAgreementsForm: React.FC<IUpdateAgreementsFormProps> = ({

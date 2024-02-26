@@ -1,17 +1,17 @@
 import { ENVIRONMENT } from '@/constants/environment';
 import CustomAxios from '@/customAxios';
-import { Api_PropertyManagement } from '@/models/api/Property';
+import { ApiGen_Concepts_PropertyManagement } from '@/models/api/generated/ApiGen_Concepts_PropertyManagement';
 
 export const getPropertyManagementApi = (propertyId: number) =>
-  CustomAxios({ baseURL: ENVIRONMENT.apiUrl }).get<Api_PropertyManagement>(
+  CustomAxios({ baseURL: ENVIRONMENT.apiUrl }).get<ApiGen_Concepts_PropertyManagement>(
     `/properties/${propertyId}/management`,
   );
 
 export const putPropertyManagementApi = (
   propertyId: number,
-  propertyManagement: Api_PropertyManagement,
+  propertyManagement: ApiGen_Concepts_PropertyManagement,
 ) =>
-  CustomAxios({ baseURL: ENVIRONMENT.apiUrl }).put<Api_PropertyManagement>(
+  CustomAxios({ baseURL: ENVIRONMENT.apiUrl }).put<ApiGen_Concepts_PropertyManagement>(
     `/properties/${propertyId}/management`,
     propertyManagement,
   );

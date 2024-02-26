@@ -149,7 +149,7 @@ const DocumentUploadContainer = forwardRef<
   ]);
 
   const onUploadDocument = async (uploadRequest: ApiGen_Requests_DocumentUploadRequest) => {
-    var result = await uploadDocument(props.relationshipType, props.parentId, uploadRequest);
+    const result = await uploadDocument(props.relationshipType, props.parentId, uploadRequest);
     if (result !== undefined) {
       props.onUploadSuccess();
     }

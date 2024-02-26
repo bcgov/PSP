@@ -1,7 +1,5 @@
-using System;
 using Mapster;
 using Pims.Api.Models.Base;
-using Pims.Core.Extensions;
 using Entity = Pims.Dal.Entities;
 
 namespace Pims.Api.Models.Concepts.Property
@@ -19,10 +17,6 @@ namespace Pims.Api.Models.Concepts.Property
                 .Map(dest => dest.CompletionDateOnly, src => src.CompletionDt)
                 .Map(dest => dest.Description, src => src.Description)
                 .Map(dest => dest.RequestSource, src => src.RequestSource)
-                //.Map(dest => dest.PretaxAmt, src => src.PretaxAmt) // TODO: Fix mapping
-                //.Map(dest => dest.GstAmt, src => src.GstAmt)
-                //.Map(dest => dest.PstAmt, src => src.PstAmt)
-                //.Map(dest => dest.TotalAmt, src => src.TotalAmt)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
                 .Map(dest => dest.ServiceProviderOrgId, src => src.ServiceProviderOrgId)
                 .Map(dest => dest.ServiceProviderOrg, src => src.ServiceProviderOrg)
@@ -43,10 +37,6 @@ namespace Pims.Api.Models.Concepts.Property
                 .Map(dest => dest.CompletionDt, src => src.CompletionDateOnly)
                 .Map(dest => dest.Description, src => src.Description)
                 .Map(dest => dest.RequestSource, src => src.RequestSource)
-                //.Map(dest => dest.PretaxAmt, src => src.PretaxAmt)
-                //.Map(dest => dest.GstAmt, src => src.GstAmt)
-                //.Map(dest => dest.PstAmt, src => src.PstAmt)
-                //.Map(dest => dest.TotalAmt, src => src.TotalAmt)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
                 .Map(dest => dest.ServiceProviderOrgId, src => src.ServiceProviderOrgId)
                 .Map(dest => dest.ServiceProviderPersonId, src => src.ServiceProviderPersonId)

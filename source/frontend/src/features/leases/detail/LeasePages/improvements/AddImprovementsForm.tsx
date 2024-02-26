@@ -43,7 +43,7 @@ export const AddImprovementsForm: React.FunctionComponent<
               <Styled.ImprovementsContainer className="improvements">
                 <FieldArray
                   name="improvements"
-                  render={renderProps =>
+                  render={() =>
                     formikProps.values.improvements.map(
                       (improvement: ILeaseImprovementForm, index) => {
                         const title =

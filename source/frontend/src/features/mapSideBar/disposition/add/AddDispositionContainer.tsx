@@ -9,7 +9,7 @@ import useApiUserOverride from '@/hooks/useApiUserOverride';
 import { useInitialMapSelectorProperties } from '@/hooks/useInitialMapSelectorProperties';
 import { useModalContext } from '@/hooks/useModalContext';
 import { IApiError } from '@/interfaces/IApiError';
-import { Api_DispositionFile } from '@/models/api/DispositionFile';
+import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { featuresetToMapProperty } from '@/utils';
 
@@ -77,10 +77,10 @@ const AddDispositionContainer: React.FC<IAddDispositionContainerProps> = ({ onCl
   };
 
   const withUserOverride = useApiUserOverride<
-    (userOverrideCodes: UserOverrideCode[]) => Promise<Api_DispositionFile | void>
+    (userOverrideCodes: UserOverrideCode[]) => Promise<ApiGen_Concepts_DispositionFile | void>
   >('Failed to create Disposition File');
 
-  const handleSuccess = async (disposition: Api_DispositionFile) => {
+  const handleSuccess = async (disposition: ApiGen_Concepts_DispositionFile) => {
     mapMachine.refreshMapProperties();
     history.replace(`/mapview/sidebar/disposition/${disposition.id}`);
   };
@@ -94,7 +94,7 @@ const AddDispositionContainer: React.FC<IAddDispositionContainerProps> = ({ onCl
       const dispositionFile = values.toApi();
       const response = await addDispositionFileApi(dispositionFile, userOverrideCodes);
 
-      if (!!response?.id) {
+      if (response?.id) {
         formikHelpers?.resetForm();
         handleSuccess(response);
       }

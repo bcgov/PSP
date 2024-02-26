@@ -89,9 +89,9 @@ describe('AcquisitionHeader component', () => {
   it('renders the Product label when null', async () => {
     const { getByText, getByTestId } = setup({
       acquisitionFile: {
-        ...mockAcquisitionFileResponse,
+        ...mockAcquisitionFileResponse(),
         totalAllowableCompensation: 0,
-        product: undefined,
+        product: null,
         productId: null,
         projectId: null,
         fileChecklistItems: [],

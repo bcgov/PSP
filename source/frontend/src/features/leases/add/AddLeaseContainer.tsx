@@ -12,6 +12,7 @@ import SidebarFooter from '@/features/mapSideBar/shared/SidebarFooter';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
 import { useInitialMapSelectorProperties } from '@/hooks/useInitialMapSelectorProperties';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
+import { exists, isValidId } from '@/utils';
 import { featuresetToMapProperty } from '@/utils/mapPropertyUtils';
 
 import { useAddLease } from '../hooks/useAddLease';
@@ -57,8 +58,9 @@ export const AddLeaseContainer: React.FunctionComponent<
     const response = await addLease.execute(leaseApi, userOverrideCodes);
     formikHelpers.setSubmitting(false);
 
-    if (!!response?.id) {
-      if (leaseApi.properties?.find(p => !p.property?.address && !p.property?.id)) {
+    // TODO: the isValidId check is sufficient but current ts (4.3) does not see it as valid. This works correctly on 5.3
+    if (exists(response) && isValidId(response?.id)) {
+      if (leaseApi.fileProperties?.find(p => !p.property?.address && !p.property?.id)) {
         toast.warn(
           'Address could not be retrieved for this property, it will have to be provided manually in property details tab',
           { autoClose: 15000 },

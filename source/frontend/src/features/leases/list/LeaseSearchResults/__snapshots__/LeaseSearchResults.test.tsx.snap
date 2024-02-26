@@ -226,7 +226,7 @@ exports[`Lease Search Results Table matches snapshot 1`] = `
             Status
             <div
               class="c0"
-              data-testid="sort-column-statusType"
+              data-testid="sort-column-Status"
             >
               <svg
                 class="c1"
@@ -456,7 +456,7 @@ exports[`Lease Search Results Table matches snapshot 1`] = `
                     <strong
                       class="pr-2"
                     >
-                      PID:
+                      PIN:
                     </strong>
                      999
                   </div>

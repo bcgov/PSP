@@ -1,4 +1,3 @@
-import React from 'react';
 import { FaTrash } from 'react-icons/fa';
 import { ImFileText2 } from 'react-icons/im';
 import { CellProps } from 'react-table';
@@ -9,13 +8,13 @@ import { InlineFlexDiv } from '@/components/common/styles';
 import { ColumnWithProps, DateCell } from '@/components/Table';
 import { Claims } from '@/constants/index';
 import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
-import { Api_Note } from '@/models/api/Note';
+import { ApiGen_Concepts_Note } from '@/models/api/generated/ApiGen_Concepts_Note';
 
 export function createTableColumns(
-  onShowDetails: (note: Api_Note) => void,
-  onDelete: (note: Api_Note) => void,
+  onShowDetails: (note: ApiGen_Concepts_Note) => void,
+  onDelete: (note: ApiGen_Concepts_Note) => void,
 ) {
-  const columns: ColumnWithProps<Api_Note>[] = [
+  const columns: ColumnWithProps<ApiGen_Concepts_Note>[] = [
     {
       Header: 'Note',
       accessor: 'note',
@@ -48,7 +47,7 @@ export function createTableColumns(
       sortable: false,
       width: 10,
       maxWidth: 10,
-      Cell: (cellProps: CellProps<Api_Note>) => {
+      Cell: (cellProps: CellProps<ApiGen_Concepts_Note>) => {
         const { hasClaim } = useKeycloakWrapper();
 
         return (

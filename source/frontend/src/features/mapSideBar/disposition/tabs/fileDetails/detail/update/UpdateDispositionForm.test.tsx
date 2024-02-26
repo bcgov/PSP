@@ -7,7 +7,6 @@ import { DispositionFormModel } from '@/features/mapSideBar/disposition/models/D
 import { IAutocompletePrediction } from '@/interfaces/IAutocomplete';
 import { mockDispositionFileResponse } from '@/mocks/dispositionFiles.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
-import { Api_DispositionFile } from '@/models/api/DispositionFile';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, render, RenderOptions, userEvent, waitFor, waitForEffects } from '@/utils/test-utils';
 
@@ -72,9 +71,7 @@ describe('UpdateDispositionForm component', () => {
   let initialValues: DispositionFormModel;
 
   beforeEach(() => {
-    initialValues = DispositionFormModel.fromApi(
-      mockDispositionFileResponse() as unknown as Api_DispositionFile,
-    );
+    initialValues = DispositionFormModel.fromApi(mockDispositionFileResponse());
   });
 
   afterEach(() => {

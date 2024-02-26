@@ -5,17 +5,25 @@
 import { ApiGen_Base_BaseConcurrent } from './ApiGen_Base_BaseConcurrent';
 import { ApiGen_Concepts_ContactMethod } from './ApiGen_Concepts_ContactMethod';
 import { ApiGen_Concepts_OrganizationAddress } from './ApiGen_Concepts_OrganizationAddress';
-import { ApiGen_Concepts_OrganizationPerson } from './ApiGen_Concepts_OrganizationPerson';
+import { ApiGen_Concepts_PersonOrganization } from './ApiGen_Concepts_PersonOrganization';
 
 // LINK: @backend/apimodels/Models/Concepts/Organization/OrganizationModel.cs
 export interface ApiGen_Concepts_Organization extends ApiGen_Base_BaseConcurrent {
   id: number;
-  isDisabled: boolean;
+  parentOrganizationId: number | null;
+  regionCode: number | null;
+  districtCode: number | null;
+  organizationTypeCode: string | null;
+  identifierTypeCode: string | null;
+  organizationIdentifier: string | null;
   name: string | null;
   alias: string | null;
   incorporationNumber: string | null;
-  organizationPersons: ApiGen_Concepts_OrganizationPerson[] | null;
-  organizationAddresses: ApiGen_Concepts_OrganizationAddress[] | null;
-  contactMethods: ApiGen_Concepts_ContactMethod[] | null;
+  website: string | null;
   comment: string | null;
+  isDisabled: boolean;
+  contactMethods: ApiGen_Concepts_ContactMethod[] | null;
+  organizationAddresses: ApiGen_Concepts_OrganizationAddress[] | null;
+  organizationPersons: ApiGen_Concepts_PersonOrganization[] | null;
+  parentOrganization: ApiGen_Concepts_Organization | null;
 }

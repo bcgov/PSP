@@ -23,12 +23,13 @@ export interface ApiGen_Concepts_Property extends ApiGen_Base_BaseConcurrent {
   dataSource: ApiGen_Base_CodeType<string> | null;
   region: ApiGen_Base_CodeType<number> | null;
   district: ApiGen_Base_CodeType<number> | null;
-  dataSourceEffectiveDate: string;
+  dataSourceEffectiveDateOnly: string;
   latitude: number | null;
   longitude: number | null;
   name: string | null;
   description: string | null;
   isSensitive: boolean;
+  isRetired: boolean;
   isProvincialPublicHwy: boolean | null;
   pphStatusUpdateUserid: string | null;
   pphStatusUpdateTimestamp: string | null;
@@ -41,6 +42,8 @@ export interface ApiGen_Concepts_Property extends ApiGen_Base_BaseConcurrent {
   planNumber: string | null;
   isOwned: boolean;
   isPropertyOfInterest: boolean;
+  isOtherInterest: boolean;
+  isDisposed: boolean;
   isVisibleToOtherAgencies: boolean;
   areaUnit: ApiGen_Base_CodeType<string> | null;
   landArea: number | null;

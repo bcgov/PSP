@@ -9,7 +9,7 @@ import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { getMockResearchFile } from '@/mocks/researchFile.mock';
-import { Api_ResearchFile } from '@/models/api/ResearchFile';
+import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Concepts_ResearchFile';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { render, RenderOptions, waitForElementToBeRemoved } from '@/utils/test-utils';
 
@@ -71,7 +71,7 @@ describe('ResearchContainer component', () => {
     mockAxios.onGet(`/researchFiles/${mockResearchFile?.id}`).reply(200, {
       ...mockResearchFile,
       fileProperties: [{ id: 1 }],
-    } as Api_ResearchFile);
+    } as ApiGen_Concepts_ResearchFile);
     mockAxios
       .onGet(`/researchFiles/${mockResearchFile?.id}/properties`)
       .reply(200, [{ id: 1, property: { pid: '123-456-789' } }]);

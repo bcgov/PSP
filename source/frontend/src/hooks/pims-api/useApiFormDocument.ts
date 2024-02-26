@@ -1,24 +1,27 @@
 import { ENVIRONMENT } from '@/constants/environment';
 import { FileTypes } from '@/constants/fileTypes';
 import CustomAxios from '@/customAxios';
-import { Api_FormDocumentFile, Api_FormDocumentType } from '@/models/api/FormDocument';
+import { ApiGen_Concepts_FormDocumentFile } from '@/models/api/generated/ApiGen_Concepts_FormDocumentFile';
+import { ApiGen_Concepts_FormDocumentType } from '@/models/api/generated/ApiGen_Concepts_FormDocumentType';
 
 export const getFormDocumentTypesApi = () =>
-  CustomAxios({ baseURL: ENVIRONMENT.apiUrl }).get<Api_FormDocumentType[]>(`/formDocument/`);
+  CustomAxios({ baseURL: ENVIRONMENT.apiUrl }).get<ApiGen_Concepts_FormDocumentType[]>(
+    `/formDocument/`,
+  );
 
-export const postFileFormApi = (fileType: FileTypes, form: Api_FormDocumentFile) =>
-  CustomAxios({ baseURL: ENVIRONMENT.apiUrl }).post<Api_FormDocumentFile>(
+export const postFileFormApi = (fileType: FileTypes, form: ApiGen_Concepts_FormDocumentFile) =>
+  CustomAxios({ baseURL: ENVIRONMENT.apiUrl }).post<ApiGen_Concepts_FormDocumentFile>(
     `/formDocument/${fileType}`,
     form,
   );
 
 export const getFileForms = (fileType: FileTypes, fileId: number) =>
-  CustomAxios({ baseURL: ENVIRONMENT.apiUrl }).get<Api_FormDocumentFile[]>(
+  CustomAxios({ baseURL: ENVIRONMENT.apiUrl }).get<ApiGen_Concepts_FormDocumentFile[]>(
     `/formDocument/${fileType}/file/${fileId}`,
   );
 
 export const getFileForm = (fileType: FileTypes, formFileId: number) =>
-  CustomAxios({ baseURL: ENVIRONMENT.apiUrl }).get<Api_FormDocumentFile>(
+  CustomAxios({ baseURL: ENVIRONMENT.apiUrl }).get<ApiGen_Concepts_FormDocumentFile>(
     `/formDocument/${fileType}/${formFileId}`,
   );
 

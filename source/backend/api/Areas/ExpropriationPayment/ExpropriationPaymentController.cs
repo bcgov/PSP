@@ -46,6 +46,7 @@ namespace Pims.Api.Areas.ExpropriationPayment
         [Produces("application/json")]
         [ProducesResponseType(typeof(ExpropriationPaymentModel), 200)]
         [SwaggerOperation(Tags = new[] { "expropriation-payments" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetExpropriationPaymentById([FromRoute] long id)
         {
             _logger.LogInformation(
@@ -73,6 +74,7 @@ namespace Pims.Api.Areas.ExpropriationPayment
         [Produces("application/json")]
         [ProducesResponseType(typeof(ExpropriationPaymentModel), 200)]
         [SwaggerOperation(Tags = new[] { "expropriation-payments" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult UpdateExpropriationPayment([FromRoute] long id, [FromBody] ExpropriationPaymentModel expropriationPayment)
         {
             _logger.LogInformation(

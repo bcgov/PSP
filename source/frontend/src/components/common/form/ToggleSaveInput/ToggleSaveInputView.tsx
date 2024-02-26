@@ -53,7 +53,7 @@ export const ToggleSaveInputView: React.FC<IToggleSaveInputViewProps> = ({
             title="Enter a financial value"
           />
         )}
-        <Button title="confirm" variant="link" onClick={e => onClick(value)}>
+        <Button title="confirm" variant="link" onClick={() => onClick(value)}>
           {isSaving ? (
             <Spinner data-testid="spinner" animation="border" />
           ) : (

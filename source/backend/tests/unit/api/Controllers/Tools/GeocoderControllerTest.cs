@@ -1,20 +1,13 @@
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using FluentAssertions;
-using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Pims.Api.Areas.Tools.Controllers;
-using Pims.Api.Controllers;
 using Pims.Core.Test;
-using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Pims.Geocoder;
 using Pims.Geocoder.Models;
 using Pims.Geocoder.Parameters;
 using Xunit;
-using Model = Pims.Api.Areas.Tools.Models.Geocoder;
 
 namespace Pims.Api.Test.Controllers.Tools
 {

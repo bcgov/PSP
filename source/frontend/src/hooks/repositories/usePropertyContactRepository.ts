@@ -2,7 +2,7 @@ import { AxiosResponse } from 'axios';
 import { useCallback, useMemo } from 'react';
 
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
-import { Api_PropertyContact } from '@/models/api/Property';
+import { ApiGen_Concepts_PropertyContact } from '@/models/api/generated/ApiGen_Concepts_PropertyContact';
 import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils';
 
 import {
@@ -18,7 +18,7 @@ import {
  */
 export const usePropertyContactRepository = () => {
   const getPropertyContacts = useApiRequestWrapper<
-    (propertyId: number) => Promise<AxiosResponse<Api_PropertyContact[], any>>
+    (propertyId: number) => Promise<AxiosResponse<ApiGen_Concepts_PropertyContact[], any>>
   >({
     requestFunction: useCallback(
       async (propertyId: number) => await getPropertyContactsApi(propertyId),
@@ -30,7 +30,10 @@ export const usePropertyContactRepository = () => {
   });
 
   const getPropertyContact = useApiRequestWrapper<
-    (propertyId: number, contactId: number) => Promise<AxiosResponse<Api_PropertyContact, any>>
+    (
+      propertyId: number,
+      contactId: number,
+    ) => Promise<AxiosResponse<ApiGen_Concepts_PropertyContact, any>>
   >({
     requestFunction: useCallback(
       async (propertyId: number, contactId: number) =>
@@ -46,11 +49,11 @@ export const usePropertyContactRepository = () => {
     (
       propertyId: number,
       contactId: number,
-      contact: Api_PropertyContact,
-    ) => Promise<AxiosResponse<Api_PropertyContact, any>>
+      contact: ApiGen_Concepts_PropertyContact,
+    ) => Promise<AxiosResponse<ApiGen_Concepts_PropertyContact, any>>
   >({
     requestFunction: useCallback(
-      async (propertyId: number, contactId: number, contact: Api_PropertyContact) =>
+      async (propertyId: number, contactId: number, contact: ApiGen_Concepts_PropertyContact) =>
         await putPropertyContactsApi(propertyId, contactId, contact),
       [],
     ),
@@ -62,11 +65,11 @@ export const usePropertyContactRepository = () => {
   const createPropertyContact = useApiRequestWrapper<
     (
       propertyId: number,
-      contact: Api_PropertyContact,
-    ) => Promise<AxiosResponse<Api_PropertyContact, any>>
+      contact: ApiGen_Concepts_PropertyContact,
+    ) => Promise<AxiosResponse<ApiGen_Concepts_PropertyContact, any>>
   >({
     requestFunction: useCallback(
-      async (propertyId: number, contact: Api_PropertyContact) =>
+      async (propertyId: number, contact: ApiGen_Concepts_PropertyContact) =>
         await postPropertyContactsApi(propertyId, contact),
       [],
     ),

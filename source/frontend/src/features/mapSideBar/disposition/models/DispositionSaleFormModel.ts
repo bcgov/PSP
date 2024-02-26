@@ -1,5 +1,6 @@
 import { ApiGen_Concepts_DispositionFileSale } from '@/models/api/generated/ApiGen_Concepts_DispositionFileSale';
 import { ApiGen_Concepts_DispositionSalePurchaser } from '@/models/api/generated/ApiGen_Concepts_DispositionSalePurchaser';
+import { exists, isValidIsoDateTime } from '@/utils';
 import { emptyStringtoNullable, stringToBoolean } from '@/utils/formUtils';
 
 import { DispositionSaleContactModel } from './DispositionSaleContactModel';
@@ -14,7 +15,7 @@ export class DispositionSaleFormModel implements WithSalePurchasers {
   saleFiscalYear: string | null = null;
   finalSaleAmount: number | null = null;
   realtorCommissionAmount: number | null = null;
-  isGstRequired: boolean = false;
+  isGstRequired = false;
   gstCollectedAmount: number | null = null;
   netBookAmount: number | null = null;
   totalCostAmount: number | null = null;
@@ -81,8 +82,12 @@ export class DispositionSaleFormModel implements WithSalePurchasers {
     return {
       id: this.id,
       dispositionFileId: this.dispositionFileId,
-      finalConditionRemovalDate: emptyStringtoNullable(this.finalConditionRemovalDate),
-      saleCompletionDate: emptyStringtoNullable(this.saleCompletionDate),
+      finalConditionRemovalDate: isValidIsoDateTime(this.finalConditionRemovalDate)
+        ? this.finalConditionRemovalDate
+        : null,
+      saleCompletionDate: isValidIsoDateTime(this.saleCompletionDate)
+        ? this.finalConditionRemovalDate
+        : null,
       saleFiscalYear: emptyStringtoNullable(this.saleFiscalYear),
       finalSaleAmount: this.finalSaleAmount ? parseFloat(this.finalSaleAmount.toString()) : null,
       realtorCommissionAmount: this.realtorCommissionAmount
@@ -116,7 +121,7 @@ export class DispositionSaleFormModel implements WithSalePurchasers {
 export const calculateNetProceedsBeforeSppAmount = (
   apiModel: ApiGen_Concepts_DispositionFileSale | null,
 ): number | null => {
-  return apiModel == null
+  return !exists(apiModel)
     ? 0
     : (apiModel.finalSaleAmount ?? 0) -
         ((apiModel.realtorCommissionAmount ?? 0) +
@@ -128,7 +133,7 @@ export const calculateNetProceedsBeforeSppAmount = (
 export const calculateNetProceedsAfterSppAmount = (
   apiModel: ApiGen_Concepts_DispositionFileSale | null,
 ): number | null => {
-  return apiModel == null
+  return !exists(apiModel)
     ? 0
     : (apiModel.finalSaleAmount ?? 0) -
         ((apiModel.realtorCommissionAmount ?? 0) +

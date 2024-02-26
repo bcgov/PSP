@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
 
 import { useDeepCompareMemoize } from './useDeepCompareMemoize';
@@ -11,7 +12,6 @@ import { useDeepCompareMemoize } from './useDeepCompareMemoize';
  *
  */
 function useDeepCompareMemo<T>(factory: () => T, dependencies: React.DependencyList) {
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   return React.useMemo(factory, useDeepCompareMemoize(dependencies));
 }
 

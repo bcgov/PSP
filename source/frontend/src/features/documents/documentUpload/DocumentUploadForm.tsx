@@ -79,7 +79,7 @@ const DocumentUploadForm: React.FunctionComponent<
               x => x.id === Number(values.documentTypeId),
             );
             if (selectedDocumentType !== undefined) {
-              var request = values.toRequestApi(selectedFile, selectedDocumentType);
+              const request = values.toRequestApi(selectedFile, selectedDocumentType);
 
               await props.onUploadDocument(request);
               setSubmitting(false);

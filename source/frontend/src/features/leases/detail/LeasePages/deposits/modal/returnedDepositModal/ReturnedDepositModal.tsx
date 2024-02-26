@@ -3,6 +3,7 @@ import * as React from 'react';
 import { useRef } from 'react';
 
 import GenericModal from '@/components/common/GenericModal';
+import { isValidId } from '@/utils';
 
 import { FormLeaseDepositReturn } from '../../models/FormLeaseDepositReturn';
 import { ReturnDepositForm } from './ReturnDepositForm';
@@ -22,7 +23,7 @@ export const ReturnedDepositModal: React.FunctionComponent<
   React.PropsWithChildren<IReturnedDepositModalProps>
 > = ({ initialValues, display, onCancel, onSave }) => {
   const formikRef = useRef<FormikProps<FormLeaseDepositReturn>>(null);
-  const modalTitle = initialValues?.id === undefined ? 'Return a Deposit' : 'Edit a Deposit Return';
+  const modalTitle = !isValidId(initialValues?.id) ? 'Return a Deposit' : 'Edit a Deposit Return';
   return (
     <GenericModal
       variant="info"

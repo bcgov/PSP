@@ -115,7 +115,7 @@ export const FinancialActivitiesSubForm: React.FunctionComponent<
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                         onPretaxAmountUpdated(index, e.target.value);
                       }}
-                      onBlurChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                      onBlurChange={() => {
                         activitiesUpdated();
                       }}
                     />
@@ -181,7 +181,7 @@ export const FinancialActivitiesSubForm: React.FunctionComponent<
               cancelButtonText="Cancel"
               handleOk={() => {
                 setShowModal(false);
-                arrayHelpers.remove(rowToDelete!);
+                rowToDelete !== undefined && arrayHelpers.remove(rowToDelete);
                 setRowToDelete(undefined);
                 activitiesUpdated();
               }}

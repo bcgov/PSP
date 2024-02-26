@@ -2,11 +2,9 @@ import { ArrayHelpers, FieldArray } from 'formik';
 import React from 'react';
 
 import { LinkButton } from '@/components/common/buttons';
-import { IEditableContactMethodForm } from '@/interfaces/editable-contact';
+import { IEditableContactMethodForm } from '@/features/contacts/formModels';
 
 import { ContactPhone } from './ContactPhone';
-
-const emptyContactMethod: IEditableContactMethodForm = { value: '', contactMethodTypeCode: '' };
 
 export interface IContactPhoneList {
   field: string;
@@ -22,8 +20,12 @@ export const ContactPhoneList: React.FunctionComponent<
 > = ({ field, contactPhones = [] }) => {
   // clear out existing values instead of removing last item from array
   const onRemove = (array: Array<any>, index: number, arrayHelpers: ArrayHelpers) => {
-    if (index >= 1) return () => arrayHelpers.remove(index);
-    if (array.length === 1) return () => arrayHelpers.replace(index, { ...emptyContactMethod });
+    if (index >= 1) {
+      return () => arrayHelpers.remove(index);
+    }
+    if (array.length === 1) {
+      return () => arrayHelpers.replace(index, new IEditableContactMethodForm());
+    }
     return undefined;
   };
 
@@ -38,7 +40,7 @@ export const ContactPhoneList: React.FunctionComponent<
               onRemove={onRemove(array, index, arrayHelpers)}
             />
           ))}
-          <LinkButton onClick={() => arrayHelpers.push({ ...emptyContactMethod })}>
+          <LinkButton onClick={() => arrayHelpers.push(new IEditableContactMethodForm())}>
             + Add phone number
           </LinkButton>
         </>

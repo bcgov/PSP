@@ -18,7 +18,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         //Initial View Create Form
         private By takePropertyTitle = By.XPath("//div[contains(text(),'Takes for')]");
-        private By take1Subtitle = By.XPath("//h2/div/div[contains(text(),'Take 1')]");
+        private By takeNewSubtitle = By.XPath("//h2/div/div[contains(text(),'New Take')]");
         private By takeTypeLabel = By.XPath("//label[contains(text(),'Take type')]");
         private By take1TypeSelect = By.Id("input-takes.0.takeTypeCode");
         private By take1DeleteButton = By.CssSelector("button[title='delete take']");
@@ -64,6 +64,7 @@ namespace PIMS.Tests.Automation.PageObjects
         public void ClickEditTakesButton()
         {
             WaitUntilSpinnerDisappear();
+            WaitUntilClickable(takesEditButton);
             webDriver.FindElement(takesEditButton).Click();
         }
 
@@ -270,7 +271,7 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
 
             AssertTrueIsDisplayed(takePropertyTitle);
-            AssertTrueIsDisplayed(take1Subtitle);
+            AssertTrueIsDisplayed(takeNewSubtitle);
             AssertTrueIsDisplayed(takeTypeLabel);
             AssertTrueIsDisplayed(take1TypeSelect);
             AssertTrueIsDisplayed(take1DeleteButton);
@@ -299,7 +300,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyCreatedTakeViewForm(Take take)
         {
-            var index = take.TakeCounter;
+            var index = 0;
 
             //Take Details
             AssertTrueIsDisplayed(By.XPath("//div[@data-testid='take-"+ index +"']/div/div/div/label[contains(text(),'Take added on')]"));

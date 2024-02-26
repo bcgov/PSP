@@ -6,7 +6,7 @@ import { ColumnWithProps, Table } from '@/components/Table';
 import { PidCell } from '@/components/Table/PidCell';
 import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
 import { usePropertyLeaseRepository } from '@/hooks/repositories/usePropertyLeaseRepository';
-import { prettyFormatDate, stringToFragment } from '@/utils';
+import { isValidIsoDateTime, prettyFormatDate, stringToFragment } from '@/utils';
 
 interface IDeclaration {
   id?: number;
@@ -63,13 +63,15 @@ const Surplus: React.FunctionComponent<React.PropsWithChildren<unknown>> = () =>
     lease?.id && getPropertyLeases(lease.id);
   }, [lease, getPropertyLeases]);
 
-  let declarations: IDeclaration[] = (properties ?? []).map<IDeclaration>(x => {
+  const declarations: IDeclaration[] = (properties ?? []).map<IDeclaration>(x => {
     return {
       id: x.id,
       identifier: x?.property?.pid?.toString() ?? '',
       comments: x?.property?.surplusDeclarationComment || '',
       declarationType: x?.property?.surplusDeclarationType?.description || 'Unknown',
-      date: x?.property?.surplusDeclarationDate || '',
+      date: isValidIsoDateTime(x?.property?.surplusDeclarationDate)
+        ? x.property!.surplusDeclarationDate
+        : '',
     };
   });
 

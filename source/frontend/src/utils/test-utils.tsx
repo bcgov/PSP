@@ -62,7 +62,7 @@ export function fakeText(length = 50): string {
  * @returns a Promise
  */
 export const waitForEffects = async () => {
-  return act(() => {});
+  return act(noop);
 };
 
 /**
@@ -92,7 +92,7 @@ export const fillInput = async (
   container: HTMLElement,
   name: string,
   value: any,
-  type: string = 'input',
+  type = 'input',
 ) => {
   let input: Element | null = null;
 
@@ -123,7 +123,7 @@ export const fillInput = async (
       },
     });
     const select = container.querySelector(`[aria-label="${value}"]`);
-    fireEvent.click(select!);
+    select && fireEvent.click(select);
     fireEvent.focusOut(input);
   } else if (type === 'datepicker') {
     fireEvent.mouseDown(input);
@@ -170,8 +170,8 @@ export const deferred = () => {
  * @returns The created error.
  */
 export function createAxiosError(
-  status: number = 500,
-  message: string = 'Internal Server Error',
+  status = 500,
+  message = 'Internal Server Error',
   data: any = {},
   type?: string,
 ): AxiosError<IApiError> {

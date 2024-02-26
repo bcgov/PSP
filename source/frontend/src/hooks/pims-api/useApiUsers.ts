@@ -4,8 +4,9 @@ import React from 'react';
 import { IPaginateParams } from '@/constants/API';
 import * as pimsToasts from '@/constants/toasts';
 import { LifecycleToasts } from '@/customAxios';
-import { IPagedItems, IUser } from '@/interfaces';
-import { Api_User } from '@/models/api/User';
+import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
+import { ApiGen_Concepts_User } from '@/models/api/generated/ApiGen_Concepts_User';
+import { ApiGen_Requests_ActivateResponse } from '@/models/api/generated/ApiGen_Requests_ActivateResponse';
 
 import useAxiosApi from './useApi';
 
@@ -26,13 +27,16 @@ export const useApiUsers = () => {
 
   return React.useMemo(
     () => ({
-      activateUser: () => api.post<IUser>('/auth/activate'),
-      getUser: (key: string) => api.get<Api_User>(`/admin/users/${key}`),
-      getUserInfo: (key: string) => api.get<Api_User>(`/users/info/${key}`),
+      activateUser: () => api.post<ApiGen_Requests_ActivateResponse>('/auth/activate'),
+      getUser: (key: string) => api.get<ApiGen_Concepts_User>(`/admin/users/${key}`),
+      getUserInfo: (key: string) => api.get<ApiGen_Concepts_User>(`/users/info/${key}`),
       getUsersPaged: (params: IPaginateParams) =>
-        api.post<IPagedItems<Api_User>>(`/admin/users/filter`, params),
-      putUser: (user: Api_User) =>
-        apiWithToasts.put<Api_User>(`/keycloak/users/${user.guidIdentifierValue}`, user),
+        api.post<ApiGen_Base_Page<ApiGen_Concepts_User>>(`/admin/users/filter`, params),
+      putUser: (user: ApiGen_Concepts_User) =>
+        apiWithToasts.put<ApiGen_Concepts_User>(
+          `/keycloak/users/${user.guidIdentifierValue}`,
+          user,
+        ),
       exportUsers: (filter: IPaginateParams, accept: string) =>
         api.get<Blob>(
           `/reports/users?${filter ? queryString.stringify({ ...filter, all: true }) : ''}`,

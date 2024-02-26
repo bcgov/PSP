@@ -1,4 +1,4 @@
-using Pims.Api.Models.Concepts.Organization;
+using Pims.Api.Areas.Contact.Models.Contact;
 
 namespace Pims.Api.Areas.Contact.Models.Search
 {
@@ -15,6 +15,8 @@ namespace Pims.Api.Areas.Contact.Models.Search
         /// get/set - The primary key to identify the person.
         /// </summary>
         public long? PersonId { get; set; }
+
+        public PersonModel Person { get; set; }
 
         /// <summary>
         /// get/set - The primary key to identify the organization.

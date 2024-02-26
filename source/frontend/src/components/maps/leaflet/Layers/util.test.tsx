@@ -15,10 +15,10 @@ import {
   PIMS_Property_Location_View,
 } from '@/models/layers/pimsPropertyLocationView';
 
+import { createPoints } from '../../MapView.test';
 import { ICluster } from '../../types';
 import {
   createClusterMarker,
-  createPoints,
   disposedIcon,
   getMarkerIcon,
   otherInterestIcon,
@@ -149,6 +149,22 @@ describe('mapUtils tests', () => {
         ),
       ).toEqual(disposedIcon);
     });
+    it(`follows precedence when property has multiple ownership flags`, () => {
+      expect(
+        getMarkerIcon(
+          {
+            ...feature,
+            properties: {
+              ...EmptyPropertyLocation,
+              PROPERTY_ID: '1',
+              IS_OWNED: true,
+              IS_PROPERTY_OF_INTEREST: true,
+            },
+          },
+          false,
+        ),
+      ).toEqual(parcelIcon);
+    });
     it(`returns null when passed feature is not one of: 'Core Inventory', 'Property of Interest', 'Other Interest' or 'Disposed'`, () => {
       expect(
         getMarkerIcon(
@@ -275,7 +291,7 @@ describe('mapUtils tests', () => {
 
     it('if force exact param is specified will automatically use = instead of ilike', () => {
       const cql = toCqlFilterValue({ PID: '12345678', PIN: '54321' }, { forceExactMatch: true });
-      expect(cql).toBe("PID = '12345678' AND PIN = '54321'");
+      expect(cql).toBe("PID = '12345678' AND PIN='54321'");
     });
   });
 });

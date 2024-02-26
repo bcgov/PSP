@@ -4,7 +4,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
-import { defaultApiLease } from '@/models/api/Lease';
+import { defaultApiLease } from '@/models/defaultInitializers';
 
 import DetailAdministration from './DetailAdministration';
 import DetailConsultation from './DetailConsultation';
@@ -12,15 +12,11 @@ import DetailDocumentation from './DetailDocumentation';
 import DetailTermInformation from './DetailTermInformation';
 import PropertiesInformation from './PropertiesInformation';
 
-export interface IDetailsProps {}
-
-export const LeaseDetailsForm: React.FunctionComponent<
-  React.PropsWithChildren<IDetailsProps>
-> = () => {
+export const LeaseDetailsForm: React.FunctionComponent<React.PropsWithChildren<unknown>> = () => {
   const { lease } = React.useContext(LeaseStateContext);
   return (
     <Formik
-      initialValues={{ ...defaultApiLease, ...lease }}
+      initialValues={{ ...defaultApiLease(), ...lease }}
       enableReinitialize={true}
       onSubmit={noop}
     >

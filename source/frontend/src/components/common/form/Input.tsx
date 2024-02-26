@@ -36,7 +36,7 @@ type OptionalAttributes = {
   /** class to apply to the inner input */
   innerClassName?: string;
   /** formatter to apply during input onblur */
-  onBlurFormatter?: Function;
+  onBlurFormatter?: (value: string) => string;
   /** optional help text to display below the FormControl */
   helpText?: string;
   /** optional tooltip text to display after the label */
@@ -85,7 +85,7 @@ export const Input: React.FC<React.PropsWithChildren<InputProps>> = ({
   const asElement: any = is || 'input';
   const [restricted, setRestricted] = useState(onBlurFormatter ? onBlurFormatter(value) : value);
   const handleRestrictedChange = (event: any) => {
-    let val = event.target.value;
+    const val = event.target.value;
     pattern?.test(val) && setRestricted(val);
     handleChange(event);
     if (onChange) {
@@ -114,7 +114,7 @@ export const Input: React.FC<React.PropsWithChildren<InputProps>> = ({
   return (
     <Form.Group
       controlId={`input-${field}`}
-      className={classNames(!!required ? 'required' : '', className, 'input')}
+      className={classNames(required ? 'required' : '', className, 'input')}
     >
       {!!label && (
         <Form.Label>

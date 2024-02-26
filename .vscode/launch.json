@@ -10,16 +10,16 @@
       "request": "launch",
       "console": "internalConsole",
       "preLaunchTask": "build",
-      "program": "${workspaceRoot}/tools/keycloak/sync/bin/Debug/net6.0/Pims.Tools.Keycloak.Sync.dll",
+      "program": "${workspaceRoot}/tools/keycloak/sync/bin/Debug/net8.0/Pims.Tools.Keycloak.Sync.dll",
       "cwd": "${workspaceRoot}/tools/keycloak/sync",
       "stopAtEntry": false
     },
     {
-      "name": ".NET 6 Launch (api)",
+      "name": ".NET 8 Launch (api)",
       "type": "coreclr",
       "request": "launch",
       "preLaunchTask": "build",
-      "program": "${workspaceRoot}/source/backend/api/bin/Debug/net6.0/Pims.Api.dll",
+      "program": "${workspaceRoot}/source/backend/api/bin/Debug/net8.0/Pims.Api.dll",
       "args": [],
       "cwd": "${workspaceRoot}/source/backend/api",
       "stopAtEntry": false,
@@ -32,7 +32,7 @@
       }
     },
     {
-      "name": ".NET 6 Attach",
+      "name": ".NET 8 Attach",
       "type": "coreclr",
       "request": "attach",
       "processId": "${command:pickProcess}"
