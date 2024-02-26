@@ -44,6 +44,26 @@ namespace Pims.Dal.Repositories
                 .ToList();
         }
 
+        public PimsAgreement AddAgreement(PimsAgreement agreement)
+        {
+            using var scope = Logger.QueryScope();
+
+            Context.PimsAgreements.Add(agreement);
+
+            return agreement;
+        }
+
+        public PimsAgreement GetAgreementById(long agreementId)
+        {
+            using var scope = Logger.QueryScope();
+
+            return Context.PimsAgreements.Where(x => x.AgreementId == agreementId)
+                .AsNoTracking()
+                .Include(x => x.AgreementTypeCodeNavigation)
+                .Include(x => x.AgreementStatusTypeCodeNavigation)
+                .FirstOrDefault() ?? throw new KeyNotFoundException();
+        }
+
         public List<PimsAgreement> SearchAgreements(AcquisitionReportFilterModel filter)
         {
             using var scope = Logger.QueryScope();
@@ -86,10 +106,30 @@ namespace Pims.Dal.Repositories
             return query.ToList();
         }
 
-        public List<PimsAgreement> UpdateAllForAcquisition(long acquisitionFileId, List<PimsAgreement> agreements)
+        public PimsAgreement UpdateAgreement(PimsAgreement agreement)
         {
-            Context.UpdateChild<PimsAcquisitionFile, long, PimsAgreement, long>(p => p.PimsAgreements, acquisitionFileId, agreements.ToArray());
-            return agreements;
+            using var scope = Logger.QueryScope();
+
+            var existingAgreement = Context.PimsAgreements.FirstOrDefault(x => x.AgreementId == agreement.AgreementId) ?? throw new KeyNotFoundException();
+
+            Context.Entry(existingAgreement).CurrentValues.SetValues(agreement);
+
+            return existingAgreement;
+        }
+
+        public bool TryDeleteAgreement(long acquisitionFileId, long agreementId)
+        {
+            using var scope = Logger.QueryScope();
+
+            var deletedEntity = Context.PimsAgreements.Where(x => x.AcquisitionFileId == acquisitionFileId && x.AgreementId == agreementId).FirstOrDefault();
+            if (deletedEntity is not null)
+            {
+                Context.PimsAgreements.Remove(deletedEntity);
+
+                return true;
+            }
+
+            return false;
         }
 
         #endregion

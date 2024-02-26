@@ -2298,6 +2298,41 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
+        public void GetAgreementById_NoPermission()
+        {
+            // Arrange
+            var service = this.CreateAcquisitionServiceWithPermissions();
+
+            // Act
+            Action act = () => service.GetAgreementById(1, 10);
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+        }
+
+        [Fact]
+        public void GetAgreementById_NoPermission_IsContractor()
+        {
+            // Arrange
+            var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileView, Permissions.AgreementView);
+
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+
+            var repository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
+
+            var contractorUser = EntityHelper.CreateUser(1, Guid.NewGuid(), username: "Test", isContractor: true);
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
+
+            // Act
+            Action act = () => service.GetAgreementById(1, 10);
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+        }
+
+        [Fact]
         public void SearchAgreementsByAcquisitionFileId_Success()
         {
             // Arrange
@@ -2397,7 +2432,24 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
-        public void UpdateAgreementsByAcquisitionFileId_NoPermission_IsContractor()
+        public void UpdateAgreement_Should_Fail_NoPermission()
+        {
+            // Arrange
+            var service = this.CreateAcquisitionServiceWithPermissions();
+
+            // Act
+            Action act = () => service.UpdateAgreement(1, new()
+            {
+                AcquisitionFileId = 1,
+                AgreementId = 10,
+            });
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+        }
+
+        [Fact]
+        public void UpdateAgreement_NoPermission_IsContractor()
         {
             // Arrange
             var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileView, Permissions.AgreementView);
@@ -2412,7 +2464,42 @@ namespace Pims.Api.Test.Services
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
 
             // Act
-            Action act = () => service.UpdateAgreements(1, It.IsAny<List<PimsAgreement>>());
+            Action act = () => service.UpdateAgreement(1, It.IsAny<PimsAgreement>());
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+        }
+
+        [Fact]
+        public void DeleteAgreement_Fail_NoPermission()
+        {
+            // Arrange
+            var service = this.CreateAcquisitionServiceWithPermissions();
+
+            // Act
+            Action act = () => service.DeleteAgreement(1, 10);
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+        }
+
+        [Fact]
+        public void DeleteAgreement_Fail_NoPermission_IsContractor()
+        {
+            // Arrange
+            var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AgreementView);
+
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+
+            var repository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
+
+            var contractorUser = EntityHelper.CreateUser(1, Guid.NewGuid(), username: "Test", isContractor: true);
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
+
+            // Act
+            Action act = () => service.DeleteAgreement(1, 10);
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
