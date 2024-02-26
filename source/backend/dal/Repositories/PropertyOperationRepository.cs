@@ -16,7 +16,7 @@ namespace Pims.Dal.Repositories
         #region Constructors
 
         /// <summary>
-        /// Creates a new instance of a NoteRepository, and initializes it with the specified arguments.
+        /// Creates a new instance of a PropertyOperationRepository, and initializes it with the specified arguments.
         /// </summary>
         /// <param name="dbContext"></param>
         /// <param name="user"></param>
@@ -79,7 +79,7 @@ namespace Pims.Dal.Repositories
 
         public int Count()
         {
-            return this.Context.PimsNotes.Count();
+            return this.Context.PimsPropertyOperations.Count();
         }
         #endregion
     }

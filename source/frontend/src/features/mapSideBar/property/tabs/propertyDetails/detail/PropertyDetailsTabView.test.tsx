@@ -21,14 +21,14 @@ const storeState = {
 
 // mock keycloak auth library
 jest.mock('@react-keycloak/web');
-jest.mock('@/hooks/pims-api/useApiPropertyOperation.ts');
+jest.mock('@/hooks/pims-api/useApiPropertyOperation');
 const getPropertyOperationsApiMock = jest.fn();
 (useApiPropertyOperation as jest.Mock).mockImplementation(() => ({
   getPropertyOperationsApi: getPropertyOperationsApiMock,
 }));
 
 
-jest.mock('@/hooks/pims-api/useApiProperties.ts');
+jest.mock('@/hooks/pims-api/useApiProperties');
 const getPropertyConceptWithIdApiMock = jest.fn();
 (useApiProperties as jest.Mock).mockImplementation(() => ({
   getPropertyConceptWithIdApi: getPropertyConceptWithIdApiMock,

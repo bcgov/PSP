@@ -25,7 +25,7 @@ import { booleanToYesNoUnknownString, stringToBoolean } from '@/utils/formUtils'
 import { getPrettyLatLng } from '@/utils/mapPropertyUtils';
 
 import { IPropertyDetailsForm, readOnlyMultiSelectStyle } from './PropertyDetailsTabView.helpers';
-import { SubsivisionContainer } from './propertyOperation/SubdivisionContainer';
+import { SubdivisionContainer } from './propertyOperation/SubdivisionContainer';
 
 export interface IPropertyDetailsTabView {
   property?: IPropertyDetailsForm;
@@ -228,7 +228,7 @@ export const PropertyDetailsTabView: React.FunctionComponent<IPropertyDetailsTab
 
       {isValidId(property?.id) && (
         <Section header="Subdivision History">
-          <SubsivisionContainer propertyId={property!.id} />
+          <SubdivisionContainer propertyId={property!.id} />
         </Section>
       )}
     </StyledSummarySection>

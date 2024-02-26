@@ -19,7 +19,7 @@ interface OperationSet {
   destinationProperties: ApiGen_Concepts_Property[];
 }
 
-export const SubsivisionContainer: React.FunctionComponent<ISubdivisionContainer> = ({
+export const SubdivisionContainer: React.FunctionComponent<ISubdivisionContainer> = ({
   propertyId,
 }) => {
   const View = SubdivisionView;
