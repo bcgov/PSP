@@ -13,8 +13,12 @@ import { useAxiosErrorHandler } from '@/utils';
  * hook that retrieves a property from the inventory.
  */
 export const usePimsPropertyRepository = () => {
-  const { getPropertyConceptWithIdApi, putPropertyConceptApi, getMatchingPropertiesApi } =
-    useApiProperties();
+  const {
+    getPropertyConceptWithIdApi,
+    putPropertyConceptApi,
+    getMatchingPropertiesApi,
+    getPropertyConceptWithPidApi,
+  } = useApiProperties();
 
   const getPropertyWrapper = useApiRequestWrapper({
     requestFunction: useCallback(
@@ -22,6 +26,15 @@ export const usePimsPropertyRepository = () => {
       [getPropertyConceptWithIdApi],
     ),
     requestName: 'getPropertyApiById',
+    onError: useAxiosErrorHandler('Failed to retrieve property information from PIMS'),
+  });
+
+  const getPropertyByPidWrapper = useApiRequestWrapper({
+    requestFunction: useCallback(
+      async (pid: string) => await getPropertyConceptWithPidApi(pid),
+      [getPropertyConceptWithPidApi],
+    ),
+    requestName: 'getPropertyConceptWithPidApi',
     onError: useAxiosErrorHandler('Failed to retrieve property information from PIMS'),
   });
 
@@ -54,7 +67,12 @@ export const usePimsPropertyRepository = () => {
   });
 
   return useMemo(
-    () => ({ getPropertyWrapper, updatePropertyWrapper, getMatchingProperties }),
-    [getPropertyWrapper, updatePropertyWrapper, getMatchingProperties],
+    () => ({
+      getPropertyWrapper,
+      updatePropertyWrapper,
+      getMatchingProperties,
+      getPropertyByPidWrapper,
+    }),
+    [getPropertyWrapper, updatePropertyWrapper, getMatchingProperties, getPropertyByPidWrapper],
   );
 };

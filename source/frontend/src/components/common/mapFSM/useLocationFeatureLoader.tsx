@@ -14,6 +14,7 @@ import { PMBC_Feature_Properties } from '@/models/layers/parcelMapBC';
 import { PIMS_Property_Location_View } from '@/models/layers/pimsPropertyLocationView';
 
 export interface LocationFeatureDataset {
+  selectingComponentId: string | null;
   location: LatLngLiteral;
   pimsFeature: Feature<Geometry, PIMS_Property_Location_View> | null;
   parcelFeature: Feature<Geometry, PMBC_Feature_Properties> | null;
@@ -41,6 +42,7 @@ const useLocationFeatureLoader = () => {
   const loadLocationDetails = useCallback(
     async (latLng: LatLngLiteral): Promise<LocationFeatureDataset> => {
       const result: LocationFeatureDataset = {
+        selectingComponentId: null,
         location: latLng,
         pimsFeature: null,
         parcelFeature: null,

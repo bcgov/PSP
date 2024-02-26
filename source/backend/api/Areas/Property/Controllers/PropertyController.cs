@@ -86,6 +86,22 @@ namespace Pims.Api.Areas.Property.Controllers
         }
 
         /// <summary>
+        /// Get the property for the specified 'pid'.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("pid/{pid}")]
+        [HasPermission(Permissions.PropertyView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(PropertyModel), 200)]
+        [SwaggerOperation(Tags = new[] { "property" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult GetConceptPropertyWithId(string pid)
+        {
+            var property = _propertyService.GetByPid(pid);
+            return new JsonResult(_mapper.Map<PropertyModel>(property));
+        }
+
+        /// <summary>
         /// Get the properties for the specified set of ids.
         /// </summary>
         /// <returns></returns>

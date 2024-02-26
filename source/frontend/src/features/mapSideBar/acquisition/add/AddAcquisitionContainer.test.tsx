@@ -207,6 +207,7 @@ describe('AddAcquisitionContainer component', () => {
         },
         districtFeature: null,
         municipalityFeature: null,
+        selectingComponentId: null,
       },
     };
     (useMapStateMachine as unknown as jest.Mock<Partial<IMapStateMachineContext>>).mockReturnValue(
@@ -237,6 +238,7 @@ describe('AddAcquisitionContainer component', () => {
         },
         districtFeature: null,
         municipalityFeature: null,
+        selectingComponentId: null,
       },
     };
     (useMapStateMachine as unknown as jest.Mock<Partial<IMapStateMachineContext>>).mockReturnValue(

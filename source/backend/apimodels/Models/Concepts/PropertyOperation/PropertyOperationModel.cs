@@ -1,4 +1,3 @@
-
 using System;
 using Pims.Api.Models.Base;
 using Pims.Api.Models.Concepts.Property;

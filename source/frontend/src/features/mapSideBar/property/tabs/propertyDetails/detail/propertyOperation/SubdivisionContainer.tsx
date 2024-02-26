@@ -97,7 +97,6 @@ export const SubdivisionContainer: React.FunctionComponent<ISubdivisionContainer
           destinationProperties={operationSet.destinationProperties}
         />
       ))}
-      ,
     </>
   );
 };
