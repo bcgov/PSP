@@ -23,19 +23,24 @@ namespace PIMS.Tests.Automation.PageObjects
         private By searchPropertyFoundCluster = By.CssSelector("div[class='leaflet-marker-icon marker-cluster marker-cluster-small leaflet-zoom-animated leaflet-interactive']");
 
         //Properties List View Elements
-        private By searchPropertyListViewTitle = By.XPath("//h3[contains(text(),'Property Information')]");
+        private By searchPropertyListViewTitle = By.XPath("//h3[contains(text(),'Search Results')]");
+        private By searchPropertyViewByLabel = By.XPath("//div/strong[contains(text(),'View by')]");
+        private By searchViewByContainer = By.CssSelector("div[id='properties-selector']");
         private By searchPropertyListHeaderPid = By.XPath("//div[@data-testid='propertiesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'PID')]");
         private By searchPropertyListHeaderPin = By.XPath("//div[@data-testid='propertiesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'PIN')]");
         private By searchPropertyListHeaderAddress = By.XPath("//div[@data-testid='propertiesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Civic Address')]");
         private By searchPropertyListHeaderLocation = By.XPath("//div[@data-testid='propertiesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Location')]");
+        private By searchPropertyListLocationSortBttn = By.CssSelector("div[data-testid='sort-column-Location']");
         private By searchPropertyListHeaderLotSize = By.XPath("//div[@data-testid='propertiesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Lot Size')]");
+        private By searchPropertyListLotSizeSortBttn = By.CssSelector("div[data-testid='sort-column-landArea']");
+        private By searchPropertyListHeaderOwnership = By.XPath("//div[@data-testid='propertiesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Ownership')]");
+        private By searchPropertyListOwnershipSortBttn = By.CssSelector("div[data-testid='sort-column-Ownership']");
         private By searchPropertyListContent = By.XPath("//div[@data-testid='propertiesTable']/form/div/div");
         private By searchPropertyListContent1stProp = By.XPath("//div[@data-testid='propertiesTable']/form/div/div[1]");
-        private By searchPropertyListContent1stViewTabBttn = By.XPath("//div[@data-testid='propertiesTable']/form/div/div[1]/div/div[6]/div/button[@data-testid='view-prop-tab']");
-        private By searchPropertyListContent1stViewWindowBttn = By.XPath("//div[@data-testid='propertiesTable']/form/div/div[1]/div/div[6]/div/button[@data-testid='view-prop-ext']");
+        private By searchPropertyListContent1stViewTabBttn = By.XPath("//div[@data-testid='propertiesTable']/form/div/div[1]/div/div[7]/div/button[@data-testid='view-prop-tab']");
+        private By searchPropertyListContent1stViewWindowBttn = By.XPath("//div[@data-testid='propertiesTable']/form/div/div[1]/div/div[7]/div/button[@data-testid='view-prop-ext']");
         private By searchPropertyListPaginationMenu = By.CssSelector("div[class='Menu-root']");
         private By searchPropertyListPaginationMenuBttn = By.CssSelector("div[class='Menu-button']");
-        private By searchPropertyListPaginationMenuItems = By.CssSelector("div[class='Menu-items']");
         private By searchPropertyListPagination = By.CssSelector("ul[class='pagination']");
 
         private SharedModals sharedModals;
@@ -119,21 +124,28 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             WaitUntilVisible(searchPropertyListContent);
 
-            Assert.True(webDriver.FindElement(searchPropertyListViewTitle).Displayed);
-            Assert.True(webDriver.FindElement(searchPropertyListHeaderPid).Displayed);
-            Assert.True(webDriver.FindElement(searchPropertyListHeaderPin).Displayed);
-            Assert.True(webDriver.FindElement(searchPropertyListHeaderAddress).Displayed);
-            Assert.True(webDriver.FindElement(searchPropertyListHeaderLocation).Displayed);
-            Assert.True(webDriver.FindElement(searchPropertyListHeaderLotSize).Displayed);
-            Assert.True(webDriver.FindElement(searchPropertyListContent).Displayed);
-            Assert.True(webDriver.FindElement(searchPropertyListContent1stProp).Displayed);
-            Assert.True(webDriver.FindElement(searchPropertyListContent1stViewTabBttn).Displayed);
-            Assert.True(webDriver.FindElement(searchPropertyListContent1stViewWindowBttn).Displayed);
-            Assert.True(webDriver.FindElement(searchPropertyListPaginationMenu).Displayed);
-            Assert.True(webDriver.FindElement(searchPropertyListPaginationMenuBttn).Displayed);
-            //Assert.True(webDriver.FindElement(searchPropertyListPaginationMenuItems).Displayed);
-            Assert.True(webDriver.FindElement(searchPropertyListPagination).Displayed);
+            AssertTrueIsDisplayed(searchPropertyListViewTitle);
+            AssertTrueIsDisplayed(searchPropertyViewByLabel);
+            AssertTrueIsDisplayed(searchViewByContainer);
 
+            AssertTrueIsDisplayed(searchPropertyListHeaderPid);
+            AssertTrueIsDisplayed(searchPropertyListHeaderPin);
+            AssertTrueIsDisplayed(searchPropertyListHeaderAddress);
+            AssertTrueIsDisplayed(searchPropertyListHeaderLocation);
+            AssertTrueIsDisplayed(searchPropertyListLocationSortBttn);
+            AssertTrueIsDisplayed(searchPropertyListHeaderLotSize);
+            AssertTrueIsDisplayed(searchPropertyListLotSizeSortBttn);
+            AssertTrueIsDisplayed(searchPropertyListHeaderOwnership);
+            AssertTrueIsDisplayed(searchPropertyListOwnershipSortBttn);
+
+            AssertTrueIsDisplayed(searchPropertyListContent);
+            AssertTrueIsDisplayed(searchPropertyListContent1stProp);
+            AssertTrueIsDisplayed(searchPropertyListContent1stViewTabBttn);
+            AssertTrueIsDisplayed(searchPropertyListContent1stViewWindowBttn);
+
+            AssertTrueIsDisplayed(searchPropertyListPaginationMenu);
+            AssertTrueIsDisplayed(searchPropertyListPaginationMenuBttn);
+            AssertTrueIsDisplayed(searchPropertyListPagination);
         }
 
         public int PropertiesFoundCount()
