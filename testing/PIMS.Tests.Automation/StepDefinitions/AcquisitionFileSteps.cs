@@ -2,7 +2,6 @@
 
 using PIMS.Tests.Automation.Classes;
 using PIMS.Tests.Automation.Data;
-using PIMS.Tests.Automation.PageObjects;
 using System.Data;
 
 namespace PIMS.Tests.Automation.StepDefinitions
@@ -914,11 +913,11 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"A new Acquisition file is created successfully")]
         public void NewAcquisitionFileCreated()
         {
-
             searchAcquisitionFiles.NavigateToSearchAcquisitionFile();
             searchAcquisitionFiles.SearchAcquisitionFileByAFile(acquisitionFileCode);
 
             Assert.True(searchAcquisitionFiles.SearchFoundResults());
+            searchAcquisitionFiles.Dispose();
         }
 
         [StepDefinition(@"An existing Acquisition file has been edited successfully")]
@@ -926,6 +925,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         {
             acquisitionFilesDetails.NavigateToFileDetailsTab();
             acquisitionFilesDetails.VerifyAcquisitionFileView(acquisitionFile);
+            searchAcquisitionFiles.Dispose();
         }
 
         [StepDefinition(@"Expected Acquisition File Content is displayed on Acquisition File Table")]
@@ -936,6 +936,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Verify List View
             searchAcquisitionFiles.VerifyAcquisitionFileListView();
             searchAcquisitionFiles.VerifyAcquisitionFileTableContent(acquisitionFile);
+            searchAcquisitionFiles.Dispose();
 
         }
 
@@ -944,6 +945,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         {
             //Verify Checklist Content after update
             checklist.VerifyChecklistViewForm(acquisitionFile.AcquisitionFileChecklist);
+            searchAcquisitionFiles.Dispose();
         }
 
         private void PopulateAcquisitionFile(int rowNumber)
@@ -1128,24 +1130,24 @@ namespace PIMS.Tests.Automation.StepDefinitions
             for (int i = startRow; i < startRow + rowsCount; i++)
             {
                 AcquisitionOwner owner = new AcquisitionOwner();
-                owner.ContactType = ExcelDataContext.ReadData(i, "ContactType");
-                owner.isPrimary = bool.Parse(ExcelDataContext.ReadData(i, "isPrimary"));
-                owner.GivenNames = ExcelDataContext.ReadData(i, "GivenNames");
-                owner.LastName = ExcelDataContext.ReadData(i, "LastName");
-                owner.OtherName = ExcelDataContext.ReadData(i, "OtherName");
-                owner.CorporationName = ExcelDataContext.ReadData(i, "CorporationName");
-                owner.IncorporationNumber = ExcelDataContext.ReadData(i, "IncorporationNumber");
-                owner.RegistrationNumber = ExcelDataContext.ReadData(i, "RegistrationNumber");
-                owner.MailAddressLine1 = ExcelDataContext.ReadData(i, "MailAddressLine1");
-                owner.MailAddressLine2 = ExcelDataContext.ReadData(i, "MailAddressLine2");
-                owner.MailAddressLine3 = ExcelDataContext.ReadData(i, "MailAddressLine3");
-                owner.MailCity = ExcelDataContext.ReadData(i, "MailCity");
-                owner.MailProvince = ExcelDataContext.ReadData(i, "MailProvince");
-                owner.MailCountry = ExcelDataContext.ReadData(i, "MailCountry");
-                owner.MailOtherCountry = ExcelDataContext.ReadData(i, "MailOtherCountry");
-                owner.MailPostalCode = ExcelDataContext.ReadData(i, "MailPostalCode");
-                owner.Email = ExcelDataContext.ReadData(i, "Email");
-                owner.Phone = ExcelDataContext.ReadData(i, "Phone");
+                owner.OwnerContactType = ExcelDataContext.ReadData(i, "OwnerContactType");
+                owner.OwnerIsPrimary = bool.Parse(ExcelDataContext.ReadData(i, "OwnerIsPrimary"));
+                owner.OwnerGivenNames = ExcelDataContext.ReadData(i, "OwnerGivenNames");
+                owner.OwnerLastName = ExcelDataContext.ReadData(i, "OwnerLastName");
+                owner.OwnerOtherName = ExcelDataContext.ReadData(i, "OwnerOtherName");
+                owner.OwnerCorporationName = ExcelDataContext.ReadData(i, "OwnerCorporationName");
+                owner.OwnerIncorporationNumber = ExcelDataContext.ReadData(i, "OwnerIncorporationNumber");
+                owner.OwnerRegistrationNumber = ExcelDataContext.ReadData(i, "OwnerRegistrationNumber");
+                owner.OwnerMailAddress.AddressLine1 = ExcelDataContext.ReadData(i, "OwnerMailAddressLine1");
+                owner.OwnerMailAddress.AddressLine2 = ExcelDataContext.ReadData(i, "OwnerMailAddressLine2");
+                owner.OwnerMailAddress.AddressLine3 = ExcelDataContext.ReadData(i, "OwnerMailAddressLine3");
+                owner.OwnerMailAddress.City = ExcelDataContext.ReadData(i, "OwnerMailCity");
+                owner.OwnerMailAddress.Province = ExcelDataContext.ReadData(i, "OwnerMailProvince");
+                owner.OwnerMailAddress.Country = ExcelDataContext.ReadData(i, "OwnerMailCountry");
+                owner.OwnerMailAddress.OtherCountry = ExcelDataContext.ReadData(i, "OwnerMailOtherCountry");
+                owner.OwnerMailAddress.PostalCode = ExcelDataContext.ReadData(i, "OwnerMailPostalCode");
+                owner.OwnerEmail = ExcelDataContext.ReadData(i, "OwnerEmail");
+                owner.OwnerPhone = ExcelDataContext.ReadData(i, "OwnerPhone");
 
                 acquisitionFile.AcquisitionOwners.Add(owner);
             }

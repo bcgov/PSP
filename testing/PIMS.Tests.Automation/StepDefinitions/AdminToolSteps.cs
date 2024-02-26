@@ -334,6 +334,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             /* TEST COVERAGE: PSP-1764 */
 
             helpDesk.CancelHelpDeskModal();
+            helpDesk.Dispose();
         }
 
         [StepDefinition(@"User Management rendered successfully")]
@@ -343,6 +344,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Verify List View
             manageUsers.VerifyManageUserListView();
+            manageUsers.Dispose();
 
         }
 
@@ -353,6 +355,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Verify CDOGS List View
             cdogsTemplates.VerifyCDOGSListView();
+            cdogsTemplates.Dispose();
 
         }
 
@@ -363,12 +366,14 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Verify Financial Codes List View
             financialCodes.VerifyFinancialCodeListView();
+            financialCodes.Dispose();
         }
 
         [StepDefinition(@"Financial Code cannot be duplicated successfully")]
         public void FinancialCodesCannotDuplicateSuccessfully()
         {
             Assert.True(financialCodes.DuplicateErrorMessageDisplayed());
+            financialCodes.Dispose();
         }
 
         private void PopulateFinancialCode(int rowNumber)

@@ -83,6 +83,7 @@ export class PropertyForm {
   public isOtherInterest?: boolean;
   public landArea?: number;
   public areaUnit?: AreaUnitTypes;
+  public isRetired?: boolean;
 
   private constructor(baseModel?: Partial<PropertyForm>) {
     Object.assign(this, baseModel);
@@ -148,6 +149,7 @@ export class PropertyForm {
       ? AddressForm.fromApi(model.property?.address)
       : undefined;
     newForm.legalDescription = model.property?.landLegalDescription ?? undefined;
+    newForm.isRetired = model.property?.isRetired ?? undefined;
 
     return newForm;
   }
@@ -201,6 +203,7 @@ export class PropertyForm {
       isOtherInterest: this.isOtherInterest ?? false,
       address: this.address?.toApi() ?? null,
       landLegalDescription: this.legalDescription ?? null,
+      isRetired: this.isRetired ?? false,
       propertyType: null,
       anomalies: null,
       tenures: null,

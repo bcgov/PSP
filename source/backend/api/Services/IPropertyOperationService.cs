@@ -5,6 +5,8 @@ namespace Pims.Api.Services
 {
     public interface IPropertyOperationService
     {
-        public IEnumerable<PimsPropertyOperation> SubdivideProperty(IEnumerable<PimsPropertyOperation> operations);
+        IList<PimsPropertyOperation> GetOperationsForProperty(long propertyId);
+
+        IEnumerable<PimsPropertyOperation> SubdivideProperty(IEnumerable<PimsPropertyOperation> operations);
     }
 }

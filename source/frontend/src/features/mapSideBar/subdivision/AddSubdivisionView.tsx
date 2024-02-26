@@ -13,6 +13,7 @@ import { H2 } from '@/components/common/styles';
 import { IMapSelectorContainerProps } from '@/components/propertySelector/MapSelectorContainer';
 import { StyledTabView } from '@/components/propertySelector/PropertySelectorTabsView';
 import { PropertySelectorPidSearchContainerProps } from '@/components/propertySelector/search/PropertySelectorPidSearchContainer';
+import PropertySearchSelectorPidFormView from '@/components/propertySelector/search/PropertySelectorPidSearchView';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { BC_ASSESSMENT_TYPES, IBcAssessmentSummary } from '@/models/layers/bcAssesment';
 
@@ -119,6 +120,7 @@ const AddSubdivisionView: React.FunctionComponent<
                     setSelectProperty={selectedProperty =>
                       setFieldValue('sourceProperty', selectedProperty)
                     }
+                    PropertySelectorPidSearchView={PropertySearchSelectorPidFormView}
                   />
                 </Tab>
               </StyledTabView>

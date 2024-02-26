@@ -10,7 +10,7 @@ import useAxiosApi from './useApi';
 export type IPaginateDisposition = IPaginateRequest<Api_DispositionFilter>;
 
 /**
- * PIMS API wrapper to centralize all AJAX requests to the property operation file endpoints.
+ * PIMS API wrapper to centralize all AJAX requests to the PropertyOperations endpoints.
  * @returns Object containing functions to make requests to the PIMS API.
  */
 export const useApiPropertyOperation = () => {
@@ -26,6 +26,8 @@ export const useApiPropertyOperation = () => {
           `/property/operations?${userOverrideCodes.map(o => `userOverrideCodes=${o}`).join('&')}`,
           propertyOperations,
         ),
+      getPropertyOperationsApi: (id: number) =>
+        api.get<ApiGen_Concepts_PropertyOperation[]>(`/properties/${id}/propertyOperations`),
     }),
     [api],
   );
