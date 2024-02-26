@@ -27,7 +27,6 @@ const getPropertyOperationsApiMock = jest.fn();
   getPropertyOperationsApi: getPropertyOperationsApiMock,
 }));
 
-
 jest.mock('@/hooks/pims-api/useApiProperties');
 const getPropertyConceptWithIdApiMock = jest.fn();
 (useApiProperties as jest.Mock).mockImplementation(() => ({
