@@ -980,7 +980,7 @@ exports[`DispositionPropertiesSubForm component renders as expected 1`] = `
         <div
           class="col"
         >
-          Selected Properties
+          Selected properties
         </div>
       </div>
     </h2>

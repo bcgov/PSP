@@ -77,7 +77,7 @@ describe('DispositionView component', () => {
           {...{
             ...props,
             dispositionFile: {
-              ...(mockDispositionFileResponse()),
+              ...mockDispositionFileResponse(),
               fileProperties: mockDispositionFilePropertyResponse() as any,
             },
           }}

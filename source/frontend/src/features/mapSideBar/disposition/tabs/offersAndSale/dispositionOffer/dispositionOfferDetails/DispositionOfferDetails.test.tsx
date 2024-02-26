@@ -29,10 +29,7 @@ describe('Disposition Offer Detail View component', () => {
         index={0}
         dispositionOffer={renderOptions.props?.dispositionOffer ?? mockDispositionOffer}
         onDelete={onDelete}
-        dispositionFile={
-          renderOptions.props?.dispositionFile ??
-          (mockDispositionFileResponse())
-        }
+        dispositionFile={renderOptions.props?.dispositionFile ?? mockDispositionFileResponse()}
       />,
       {
         ...renderOptions,
@@ -89,7 +86,7 @@ describe('Disposition Offer Detail View component', () => {
       claims: [Claims.DISPOSITION_EDIT],
       props: {
         dispositionFile: {
-          ...(mockDispositionFileResponse()),
+          ...mockDispositionFileResponse(),
           fileStatusTypeCode: toTypeCode(DispositionFileStatus.Complete),
         },
       },
@@ -108,7 +105,7 @@ describe('Disposition Offer Detail View component', () => {
       roles: [Roles.SYSTEM_ADMINISTRATOR],
       props: {
         dispositionFile: {
-          ...(mockDispositionFileResponse()),
+          ...mockDispositionFileResponse(),
           fileStatusTypeCode: toTypeCode(DispositionFileStatus.Complete),
         },
       },
