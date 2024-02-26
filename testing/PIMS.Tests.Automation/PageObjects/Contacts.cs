@@ -79,6 +79,7 @@ namespace PIMS.Tests.Automation.PageObjects
         //Contacts Form View Elements
         private By contactTitle = By.XPath("//h1[contains(text(),'Contact')]");
         private By contactEditButton = By.CssSelector("button[title='Edit Contact']");
+        private By contactBreadcrumb = By.CssSelector("nav[aria-label='breadcrumb']");
 
         private By contactIndFullName = By.CssSelector("h2[data-testid='contact-person-fullname']");
         private By contactIndPrefNameLabel = By.XPath("//strong[contains(text(),'Preferred name')]");
@@ -848,7 +849,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 sharedModals.ModalClickOKBttn();
             }
 
-            AssertTrueIsDisplayed(contactEditButton);
+            AssertTrueIsDisplayed(contactBreadcrumb);
         }
 
         //Cancel Contact
@@ -857,14 +858,6 @@ namespace PIMS.Tests.Automation.PageObjects
             ButtonElement("Cancel");
 
             Wait();
-            //if (webDriver.FindElements(contactModal).Count > 0)
-            //{
-            //    Assert.Equal("Confirm Changes", sharedModals.ModalHeader());
-            //    Assert.Equal("If you choose to cancel now, your changes will not be saved.", sharedModals.ConfirmationModalText1());
-            //    Assert.Equal("Do you want to proceed?", sharedModals.ConfirmationModalText2());
-
-            //    sharedModals.ModalClickOKBttn();
-            //}
             sharedModals.CancelActionModal();
 
             AssertTrueIsDisplayed(contactsSearchTable);
@@ -880,8 +873,8 @@ namespace PIMS.Tests.Automation.PageObjects
 
             if(contact.FullName != "")
                 AssertTrueContentEquals(contactIndFullName, contact.FullName);
-            AssertTrueIsDisplayed(contactIndPrefNameLabel);
 
+            AssertTrueIsDisplayed(contactIndPrefNameLabel);
             if(contact.PreferableName != "")
                 AssertTrueContentEquals(contactIndPrefNameContent, contact.PreferableName);
 

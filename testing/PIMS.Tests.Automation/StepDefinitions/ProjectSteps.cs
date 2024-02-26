@@ -206,6 +206,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchProjects.SearchProjectByName(projectName);
 
             Assert.True(searchProjects.SearchFoundResults());
+            searchProjects.Dispose();
         }
 
         [StepDefinition(@"Expected Project Content is displayed on Projects Table")]
@@ -216,6 +217,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Verify List View
             searchProjects.VerifySearchView();
             searchProjects.VerifyViewSearchResult(project);
+            searchProjects.Dispose();
         }
 
         [StepDefinition(@"Duplicate Project Alert is displayed")]
@@ -224,6 +226,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             /* TEST COVERAGE:  PSP-5670 */
 
             Assert.True(projects.DuplicateProject());
+            searchProjects.Dispose();
         }
 
         private void PopulateProjectData(int rowNumber)

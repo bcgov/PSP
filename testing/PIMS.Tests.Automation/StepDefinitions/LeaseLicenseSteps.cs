@@ -156,7 +156,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             sharedSearchProperties.VerifyLocateOnMapFeature();
 
             //Delete last property
-            sharedSearchProperties.DeleteLastPropertyFromFile();
+            sharedSearchProperties.DeleteLastPropertyFromLease();
 
             //Save the new license details
             leaseDetails.SaveLicense();
@@ -669,6 +669,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchLease.SearchLicenseByLFile(leaseCode);
 
             Assert.True(searchLease.SearchFoundResults());
+            searchLease.Dispose();
         }
 
         [StepDefinition(@"Expected Lease File Content is displayed on Leases Table")]
@@ -679,6 +680,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Verify List View
             searchLease.VerifySearchLeasesView();
             searchLease.VerifyLeaseTableContent(lease.LeaseExpiryDate, lease.Program, lease.LeaseStatus);
+            searchLease.Dispose();
 
         }
 

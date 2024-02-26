@@ -1,3 +1,4 @@
+import { AxiosError } from 'axios';
 import { FormikProps } from 'formik';
 import React, {
   useCallback,
@@ -18,6 +19,7 @@ import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvi
 import { useQuery } from '@/hooks/use-query';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
 import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
+import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
@@ -265,22 +267,34 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
     file: ApiGen_Concepts_File,
   ): Promise<ApiGen_Concepts_File | undefined> => {
     // The backend does not update the product or project so its safe to send nulls even if there might be data for those fields.
-    return withUserOverride((userOverrideCodes: UserOverrideCode[]) => {
-      return updateAcquisitionProperties
-        .execute(
-          {
-            ...(file as ApiGen_Concepts_AcquisitionFile),
-            productId: null,
-            projectId: null,
-            fileChecklistItems: [],
-          },
-          userOverrideCodes,
-        )
-        .then(response => {
-          onSuccess();
-          return response;
+    return withUserOverride(
+      (userOverrideCodes: UserOverrideCode[]) => {
+        return updateAcquisitionProperties
+          .execute(
+            {
+              ...(file as ApiGen_Concepts_AcquisitionFile),
+              productId: null,
+              projectId: null,
+              fileChecklistItems: [],
+            },
+            userOverrideCodes,
+          )
+          .then(response => {
+            onSuccess();
+            return response;
+          });
+      },
+      [],
+      (axiosError: AxiosError<IApiError>) => {
+        setModalContent({
+          variant: 'error',
+          title: 'Error',
+          message: axiosError?.response?.data.error,
+          okButtonText: 'Close',
         });
-    });
+        setDisplayModal(true);
+      },
+    );
   };
 
   // UI components
