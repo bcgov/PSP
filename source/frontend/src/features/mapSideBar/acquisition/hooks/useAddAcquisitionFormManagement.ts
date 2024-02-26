@@ -1,12 +1,12 @@
-import axios, { AxiosError } from 'axios';
+import { AxiosError } from 'axios';
 import { FormikProps } from 'formik';
 import { useCallback } from 'react';
-import { toast } from 'react-toastify';
 
 import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
 import { useInitialMapSelectorProperties } from '@/hooks/useInitialMapSelectorProperties';
+import { useModalContext } from '@/hooks/useModalContext';
 import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
@@ -28,7 +28,7 @@ export interface IUseAddAcquisitionFormManagementProps {
  */
 export function useAddAcquisitionFormManagement(props: IUseAddAcquisitionFormManagementProps) {
   const { addAcquisitionFile } = useAcquisitionProvider();
-
+  const { setModalContent, setDisplayModal } = useModalContext();
   const { onSuccess } = props;
   const { bcaLoading, initialProperty } = useInitialMapSelectorProperties(props.selectedFeature);
   const withUserOverride = useApiUserOverride<
@@ -38,26 +38,33 @@ export function useAddAcquisitionFormManagement(props: IUseAddAcquisitionFormMan
   // save handler
   const handleSubmit = useCallback(
     async (values: AcquisitionForm, setSubmitting: (isSubmitting: boolean) => void) => {
-      return withUserOverride(async (userOverrideCodes: UserOverrideCode[]) => {
-        try {
-          const acquisitionFile = values.toApi();
-          const response = await addAcquisitionFile.execute(acquisitionFile, userOverrideCodes);
-          if (exists(response) && isValidId(response?.id)) {
-            if (typeof onSuccess === 'function') {
-              await onSuccess(response);
+      return withUserOverride(
+        async (userOverrideCodes: UserOverrideCode[]) => {
+          try {
+            const acquisitionFile = values.toApi();
+            const response = await addAcquisitionFile.execute(acquisitionFile, userOverrideCodes);
+            if (exists(response) && isValidId(response?.id)) {
+              if (typeof onSuccess === 'function') {
+                await onSuccess(response);
+              }
             }
+          } finally {
+            setSubmitting(false);
           }
-        } catch (e) {
-          const axiosError = e as AxiosError<IApiError>;
-          if (axios.isAxiosError(e) && e.response?.status === 409) {
-            toast.error(axiosError?.response?.data.error);
-          }
-        } finally {
-          setSubmitting(false);
-        }
-      });
+        },
+        [],
+        (axiosError: AxiosError<IApiError>) => {
+          setModalContent({
+            variant: 'error',
+            title: 'Error',
+            message: axiosError?.response?.data.error,
+            okButtonText: 'Close',
+          });
+          setDisplayModal(true);
+        },
+      );
     },
-    [addAcquisitionFile, onSuccess, withUserOverride],
+    [addAcquisitionFile, onSuccess, setDisplayModal, setModalContent, withUserOverride],
   );
   if (props.initialForm?.properties.length && initialProperty) {
     props.initialForm.properties[0].address = initialProperty.address;

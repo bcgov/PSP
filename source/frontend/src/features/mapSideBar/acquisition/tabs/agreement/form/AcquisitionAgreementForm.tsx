@@ -31,6 +31,7 @@ const AcquisitionAgreementForm: React.FunctionComponent<
   const agreementStatusTypeCodeValue = getIn(formikProps.values, 'agreementStatusTypeCode');
   const agreementTypeCodeValue = getIn(formikProps.values, 'agreementTypeCode');
   const agreementCancellationNoteValue = getIn(formikProps.values, 'cancellationNote');
+  const agreementStatusTypeCodeTouched = getIn(formikProps.touched, 'agreementStatusTypeCode');
 
   useEffect(() => {
     if (
@@ -64,6 +65,7 @@ const AcquisitionAgreementForm: React.FunctionComponent<
     setDisplayModal,
     setModalContent,
     formikProps,
+    agreementStatusTypeCodeTouched,
   ]);
 
   return (

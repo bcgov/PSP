@@ -409,7 +409,8 @@ namespace Pims.Api.Test.Services
 
         [Theory]
         [MemberData(nameof(UpdateFinalValidationUserOverrideParameters))]
-        public void Update_Final_Validation_UserOverride(EnumDispositionFileStatusTypeCode fileStatus) {
+        public void Update_Final_Validation_UserOverride(EnumDispositionFileStatusTypeCode fileStatus)
+        {
             // Arrange
             var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionEdit);
             var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
@@ -1579,7 +1580,7 @@ namespace Pims.Api.Test.Services
                 DispositionFileId = 1,
                 DispositionAppraisalId = 100,
             });
-            
+
 
             // Act
             var result = service.AddDispositionFileAppraisal(1, new()
@@ -1814,7 +1815,7 @@ namespace Pims.Api.Test.Services
                         DispositionOfferStatusTypeCode = EnumDispositionOfferStatusTypeCode.REJECTED.ToString(),
                     }
                 },
-                DispositionFileStatusTypeCode = EnumDispositionFileStatusTypeCode.COMPLETE.ToString(),                
+                DispositionFileStatusTypeCode = EnumDispositionFileStatusTypeCode.COMPLETE.ToString(),
             });
             repository.Setup(x => x.AddDispositionOffer(It.IsAny<PimsDispositionOffer>())).Returns(new PimsDispositionOffer()
             {
@@ -1960,7 +1961,7 @@ namespace Pims.Api.Test.Services
                         DispositionOfferStatusTypeCode = EnumDispositionOfferStatusTypeCode.REJECTED.ToString(),
                     }
                 },
-                DispositionFileStatusTypeCode = EnumDispositionFileStatusTypeCode.COMPLETE.ToString(),                
+                DispositionFileStatusTypeCode = EnumDispositionFileStatusTypeCode.COMPLETE.ToString(),
             });
             repository.Setup(x => x.AddDispositionOffer(It.IsAny<PimsDispositionOffer>())).Returns(new PimsDispositionOffer()
             {

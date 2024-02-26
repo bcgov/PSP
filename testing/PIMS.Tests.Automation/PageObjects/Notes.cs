@@ -111,16 +111,15 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(notesAddDetailsCancelBttn).Click();
 
             Wait();
-            //if (webDriver.FindElements(notesCancelPopupContent).Count() > 0)
-            //{
-            //    AssertTrueIsDisplayed(notesCancelPopupHeader);
-            //    Assert.Contains("If you choose to cancel now, your changes will not be saved.", webDriver.FindElement(notesCancelPopupBody).Text);
-            //    Assert.Contains("Do you want to proceed?", webDriver.FindElement(notesCancelPopupBody).Text);
+            if (webDriver.FindElements(notesCancelPopupContent).Count() > 0)
+            {
+                AssertTrueIsDisplayed(notesCancelPopupHeader);
+                Assert.Contains("If you choose to cancel now, your changes will not be saved.", webDriver.FindElement(notesCancelPopupBody).Text);
+                Assert.Contains("Do you want to proceed?", webDriver.FindElement(notesCancelPopupBody).Text);
 
-            //    Wait(2000);
-            //    webDriver.FindElement(notesCancelOkBttn).Click();
-            //}
-            sharedModals.CancelActionModal();
+                Wait(2000);
+                webDriver.FindElement(notesCancelOkBttn).Click();
+            }
         }
 
         public void DeleteLastSecondNote()

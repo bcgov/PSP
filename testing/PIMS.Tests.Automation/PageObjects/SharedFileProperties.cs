@@ -174,7 +174,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void SelectFirstOptionFromSearch()
         {
-            Wait(2000);
+            Wait();
             FocusAndClick(searchProperties1stResultPropCheckbox);
 
             webDriver.FindElement(searchPropertiesAddSelectionBttn).Click();
@@ -299,6 +299,30 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(propertiesAfterRemove == propertyIndex - 1);
 
         }
+
+        public void DeleteLastPropertyFromLease()
+        {
+            Wait();
+            var propertyIndex = webDriver.FindElements(searchPropertiesPropertiesInFileTotal).Count();
+
+            WaitUntilClickable(By.XPath("//h2/div/div[contains(text(),'Selected properties')]/parent::div/parent::h2/following-sibling::div/div[@class='align-items-center mb-3 no-gutters row']["+ propertyIndex +"]/div[4]/button"));
+            webDriver.FindElement(By.XPath("//h2/div/div[contains(text(),'Selected properties')]/parent::div/parent::h2/following-sibling::div/div[@class='align-items-center mb-3 no-gutters row']["+ propertyIndex +"]/div[4]/button")).Click();
+
+            Wait(2000);
+            if (webDriver.FindElements(searchPropertiesModal).Count > 0)
+            {
+                Assert.True(sharedModals.ModalHeader() == "Removing Property from form");
+                Assert.True(sharedModals.ModalContent() == "Are you sure you want to remove this property from this lease/license?");
+
+                sharedModals.ModalClickOKBttn();
+            }
+
+            Wait();
+            var propertiesAfterRemove = webDriver.FindElements(searchPropertiesPropertiesInFileTotal).Count();
+            Assert.True(propertiesAfterRemove == propertyIndex - 1);
+
+        }
+
 
         public void SaveFileProperties()
         {

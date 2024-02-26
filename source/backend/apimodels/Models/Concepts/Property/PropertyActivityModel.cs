@@ -26,14 +26,6 @@ namespace Pims.Api.Models.Concepts.Property
 
         public string RequestSource { get; set; }
 
-        public decimal? PretaxAmt { get; set; }
-
-        public decimal? GstAmt { get; set; }
-
-        public decimal? PstAmt { get; set; }
-
-        public decimal? TotalAmt { get; set; }
-
         public bool? IsDisabled { get; set; }
 
         public long? ServiceProviderOrgId { get; set; }
