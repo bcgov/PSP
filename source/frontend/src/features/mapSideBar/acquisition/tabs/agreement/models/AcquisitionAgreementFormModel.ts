@@ -29,6 +29,7 @@ export class AcquisitionAgreementFormModel {
   ) {
     this.agreementId = agreementId;
     this.acquisitionFileId = acquisitionFileId;
+    this.rowVersion = rowVersion;
   }
 
   static fromApi(apiModel: ApiGen_Concepts_Agreement): AcquisitionAgreementFormModel {

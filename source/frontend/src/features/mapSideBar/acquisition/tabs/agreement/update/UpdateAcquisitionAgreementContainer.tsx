@@ -75,16 +75,14 @@ const UpdateAcquisitionAgreementContainer: React.FunctionComponent<
   }, [fetchAcquisitionAgreement]);
 
   return (
-    initialValues && (
-      <View
-        initialValues={initialValues}
-        isLoading={fetchingAgreement || updatingAgreement}
-        onSave={handleSave}
-        onSuccess={handleSuccess}
-        onCancel={() => history.push(backUrl)}
-        onError={onCreateError}
-      ></View>
-    )
+    <View
+      initialValues={initialValues}
+      isLoading={fetchingAgreement || updatingAgreement}
+      onSave={handleSave}
+      onSuccess={handleSuccess}
+      onCancel={() => history.push(backUrl)}
+      onError={onCreateError}
+    ></View>
   );
 };
 
