@@ -173,6 +173,10 @@ export const getPage = <T>(pageIndex: number, pageSize: number, data: T[]) => {
   return data.slice(pageStart, pageStart + pageSize);
 };
 
+export function unique<T>(value: T, index: number, array: T[]) {
+  return array.indexOf(value) === index;
+}
+
 /**
  * Meant to be used as the function passed during a conditional statement to remove null or undefined entries.
  * example. myArray.filter(exists);

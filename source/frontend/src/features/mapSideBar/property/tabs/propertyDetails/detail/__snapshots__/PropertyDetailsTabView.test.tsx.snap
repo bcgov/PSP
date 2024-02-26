@@ -753,6 +753,28 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
         </p>
       </div>
     </div>
+    <div
+      class="c2 form-section"
+    >
+      <h2
+        class="c3"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            Subdivision History
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        ,
+      </div>
+    </div>
   </div>
 </DocumentFragment>
 `;

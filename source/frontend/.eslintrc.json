@@ -24,7 +24,8 @@
     ],
     "react/display-name": "off",
     "react/prop-types": "off",
-    "no-prototype-builtins": "off"
+    "no-prototype-builtins": "off",
+    "no-debugger": "off"
   },
   "ignorePatterns": ["src/**/*.test.ts", "src/**/*.test.tsx"],
   "settings": {
