@@ -89,6 +89,11 @@ namespace Pims.Api.Models.Concepts.Property
         public bool IsSensitive { get; set; }
 
         /// <summary>
+        /// get/set - Whether the property is retired.
+        /// </summary>
+        public bool IsRetired { get; set; }
+
+        /// <summary>
         /// get/set - Whether the property is a provincial highway.
         /// </summary>
         public bool? IsProvincialPublicHwy { get; set; }
