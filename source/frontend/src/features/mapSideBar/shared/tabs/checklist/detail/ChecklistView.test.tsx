@@ -52,7 +52,8 @@ describe('ChecklistView component', () => {
   };
 
   beforeEach(() => {
-    mockViewProps.apiFile = mockDispositionFileResponse() as unknown as ApiGen_Concepts_FileWithChecklist;
+    mockViewProps.apiFile =
+      mockDispositionFileResponse() as unknown as ApiGen_Concepts_FileWithChecklist;
     mockViewProps.apiFile.fileChecklistItems = mockFileChecklistResponse();
   });
 

@@ -16,7 +16,9 @@ import { toTypeCode } from '@/utils/formUtils';
 const history = createMemoryHistory();
 jest.mock('@react-keycloak/web');
 
-const mockDispositionFileApi = mockDispositionFileResponse(1) as unknown as ApiGen_Concepts_DispositionFile;
+const mockDispositionFileApi = mockDispositionFileResponse(
+  1,
+) as unknown as ApiGen_Concepts_DispositionFile;
 const mockDispositionSaleApi = mockDispositionFileSaleApi(1);
 
 const onDelete = jest.fn();
@@ -79,7 +81,9 @@ describe('Disposition Offer Detail View component', () => {
   });
 
   it('displays the Disposition Appraisal and Value when available', async () => {
-    const mockDisposition = mockDispositionFileResponse(1) as unknown as ApiGen_Concepts_DispositionFile;
+    const mockDisposition = mockDispositionFileResponse(
+      1,
+    ) as unknown as ApiGen_Concepts_DispositionFile;
 
     const { queryByTestId } = await setup({
       props: {
@@ -136,7 +140,7 @@ describe('Disposition Offer Detail View component', () => {
     const { queryByTitle, queryByTestId } = await setup({
       props: {
         dispositionFile: {
-          ...(mockDispositionFileResponse()),
+          ...mockDispositionFileResponse(),
           fileStatusTypeCode: toTypeCode(DispositionFileStatus.Complete),
         },
       },
@@ -185,7 +189,7 @@ describe('Disposition Offer Detail View component', () => {
     const { queryByTitle, queryByTestId } = await setup({
       props: {
         dispositionFile: {
-          ...(mockDispositionFileResponse()),
+          ...mockDispositionFileResponse(),
           fileStatusTypeCode: toTypeCode(DispositionFileStatus.Complete),
         },
       },
@@ -204,7 +208,7 @@ describe('Disposition Offer Detail View component', () => {
     const { queryByTitle, queryByTestId } = await setup({
       props: {
         dispositionFile: {
-          ...(mockDispositionFileResponse()),
+          ...mockDispositionFileResponse(),
           fileStatusTypeCode: toTypeCode(DispositionFileStatus.Complete),
         },
       },
