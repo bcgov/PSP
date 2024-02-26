@@ -152,7 +152,6 @@ describe('DispositionContainer component', () => {
     expect(
       mockAxios.history.put.filter(x => x.url === '/dispositionfiles/1/properties?'),
     ).toHaveLength(1);
-
   });
 
   it('should show error popup when user adds a property outside of the user account regions', async () => {
