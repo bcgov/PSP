@@ -4,6 +4,7 @@ using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
 using Pims.Api.Models.Concepts.User;
 using Pims.Api.Policies;
+using Pims.Core.Json;
 using Pims.Dal.Keycloak;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
@@ -55,7 +56,7 @@ namespace Pims.Api.Areas.Keycloak.Controllers
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "admin-user" })]
         [HasPermission(Permissions.AdminUsers)]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Parameter 'key' is required for route.")]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public async Task<IActionResult> UpdateUserAsync(Guid key, [FromBody] UserModel model)
         {
             var user = _mapper.Map<Entity.PimsUser>(model);

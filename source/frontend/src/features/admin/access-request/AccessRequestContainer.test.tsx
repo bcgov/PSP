@@ -94,7 +94,7 @@ describe('AccessRequestContainer component', () => {
     expect(mockAxios.history.put[0].url).toBe('/access/requests/8');
     expect({
       ...JSON.parse(mockAxios.history.put[0].data),
-      accessRequestStatusTypeCode: undefined,
+      accessRequestStatusTypeCode: null,
       userId: 30,
     }).toEqual({
       ...new FormAccessRequest(getMockAccessRequest()).toApi(),

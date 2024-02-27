@@ -9,13 +9,13 @@ import { StyledEditWrapper } from '@/components/common/Section/SectionStyles';
 import { Claims } from '@/constants/index';
 import { useQuery } from '@/hooks/use-query';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
-import { Api_PropertyManagement } from '@/models/api/Property';
+import { ApiGen_Concepts_PropertyManagement } from '@/models/api/generated/ApiGen_Concepts_PropertyManagement';
 import { formatApiPropertyManagementLease } from '@/utils';
 import { booleanToYesNoUnknownString } from '@/utils/formUtils';
 
 export interface IPropertyManagementDetailViewProps {
   isLoading: boolean;
-  propertyManagement: Api_PropertyManagement | null;
+  propertyManagement: ApiGen_Concepts_PropertyManagement | null;
 }
 
 export const PropertyManagementDetailView: React.FC<IPropertyManagementDetailViewProps> = ({

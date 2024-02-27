@@ -35,7 +35,7 @@ describe('DispositionTeamSubForm component', () => {
     return {
       ...utils,
       getFormikRef: () => ref,
-      getTeamMemberProfileDropDownList: (index: number = 0) =>
+      getTeamMemberProfileDropDownList: (index = 0) =>
         utils.container.querySelector(
           `select[name="team.${index}.teamProfileTypeCode"]`,
         ) as HTMLSelectElement,

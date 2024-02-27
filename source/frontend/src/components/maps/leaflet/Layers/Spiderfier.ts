@@ -13,6 +13,7 @@ import { AnyProps, PointFeature } from 'supercluster';
 import invariant from 'tiny-invariant';
 
 import { ICluster } from '@/components/maps/types';
+import { exists } from '@/utils/utils';
 
 export interface SpiderfierOptions<P> {
   /** Increase from 1 to increase the distance away from the center that spiderfied markers are placed. Use if you are using big marker icons (Default: 1). */
@@ -159,8 +160,8 @@ export class Spiderfier<P> {
     const markers: SpiderMarker<P>[] = [];
     const lines: SpiderLine[] = [];
     for (let i = 0; i < points.length; i++) {
-      let newPos: LatLng = this.map.layerPointToLatLng(positions[i]);
-      let geojson: PointFeature<P> = points[i];
+      const newPos: LatLng = this.map.layerPointToLatLng(positions[i]);
+      const geojson: PointFeature<P> = points[i];
       markers.push({ ...geojson, position: newPos });
       lines.push({ coords: [centerLatLng, newPos], options: legOptions });
     }
@@ -176,7 +177,7 @@ export class Spiderfier<P> {
     const geojsonObj = (layer as Marker)?.feature;
     const id = geojsonObj ? getClusterId(geojsonObj) : null;
     const targetId = getClusterId(cluster);
-    return id !== null && id !== undefined && id === targetId;
+    return exists(id) && id === targetId;
   }
 
   private generatePointsCircle(count: number, center: LeafletPoint): LeafletPoint[] {

@@ -1,4 +1,6 @@
 import * as yup from 'yup';
+
+import { exists } from '@/utils';
 /* eslint-disable no-template-curly-in-string */
 
 export const CompensationRequisitionYupSchema = yup.object().shape({
@@ -29,7 +31,7 @@ export const CompensationRequisitionYupSchema = yup.object().shape({
       isGstRequired: yup.string(),
       pretaxAmount: yup
         .number()
-        .transform(value => (isNaN(value) || value === null || value === undefined ? 0 : value))
+        .transform(value => (isNaN(value) || !exists(value) ? 0 : value))
         .required('Amount is required'),
       taxAmount: yup.number().when('isGstRequired', {
         is: 'true',

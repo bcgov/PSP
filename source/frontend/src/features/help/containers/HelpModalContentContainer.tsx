@@ -9,7 +9,7 @@ import HelpSubmitBox from '../components/HelpSubmitBox';
 
 interface IHelpModalContentContainerProps {
   /** Set the content of the parent mailto component based on the ticket form. */
-  setMailto: Function;
+  setMailto: (mailto: { subject: string; body: string; email: string }) => void;
 }
 
 /**

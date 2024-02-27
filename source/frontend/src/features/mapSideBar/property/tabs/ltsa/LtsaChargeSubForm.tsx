@@ -22,7 +22,7 @@ export const LtsaChargeSubForm: React.FunctionComponent<
       {charges.length === 0 && 'None'}
       <FieldArray
         name={withNameSpace(nameSpace, 'chargesOnTitle')}
-        render={({ push, remove, name }) => (
+        render={() => (
           <React.Fragment key={`charge-sub-row-${nameSpace}`}>
             {charges.map((charge: ChargeOnTitle, index: number) => {
               const innerNameSpace = withNameSpace(nameSpace, `chargesOnTitle.${index}.charge`);

@@ -2,7 +2,8 @@ import { AxiosResponse } from 'axios';
 import { useCallback, useMemo } from 'react';
 
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
-import { Api_PropertyActivity, Api_PropertyActivitySubtype } from '@/models/api/PropertyActivity';
+import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
+import { ApiGen_Concepts_PropertyActivitySubtype } from '@/models/api/generated/ApiGen_Concepts_PropertyActivitySubtype';
 import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils';
 
 import { useApiPropertyActivities } from '../pims-api/useApiPropertyActivities';
@@ -21,7 +22,7 @@ export const usePropertyActivityRepository = () => {
   } = useApiPropertyActivities();
 
   const getActivitySubtypes = useApiRequestWrapper<
-    () => Promise<AxiosResponse<Api_PropertyActivitySubtype[], any>>
+    () => Promise<AxiosResponse<ApiGen_Concepts_PropertyActivitySubtype[], any>>
   >({
     requestFunction: useCallback(
       async () => await getActivitySubtypesApi(),
@@ -33,7 +34,7 @@ export const usePropertyActivityRepository = () => {
   });
 
   const getActivities = useApiRequestWrapper<
-    (propertyId: number) => Promise<AxiosResponse<Api_PropertyActivity[], any>>
+    (propertyId: number) => Promise<AxiosResponse<ApiGen_Concepts_PropertyActivity[], any>>
   >({
     requestFunction: useCallback(
       async (propertyId: number) => await getActivitiesApi(propertyId),
@@ -45,7 +46,10 @@ export const usePropertyActivityRepository = () => {
   });
 
   const getActivity = useApiRequestWrapper<
-    (propertyId: number, activityId: number) => Promise<AxiosResponse<Api_PropertyActivity, any>>
+    (
+      propertyId: number,
+      activityId: number,
+    ) => Promise<AxiosResponse<ApiGen_Concepts_PropertyActivity, any>>
   >({
     requestFunction: useCallback(
       async (propertyId: number, activityId: number) =>
@@ -60,11 +64,11 @@ export const usePropertyActivityRepository = () => {
   const createActivity = useApiRequestWrapper<
     (
       propertyId: number,
-      activity: Api_PropertyActivity,
-    ) => Promise<AxiosResponse<Api_PropertyActivity, any>>
+      activity: ApiGen_Concepts_PropertyActivity,
+    ) => Promise<AxiosResponse<ApiGen_Concepts_PropertyActivity, any>>
   >({
     requestFunction: useCallback(
-      async (propertyId: number, activity: Api_PropertyActivity) =>
+      async (propertyId: number, activity: ApiGen_Concepts_PropertyActivity) =>
         await postActivityApi(propertyId, activity),
       [postActivityApi],
     ),
@@ -76,11 +80,11 @@ export const usePropertyActivityRepository = () => {
   const updateActivity = useApiRequestWrapper<
     (
       propertyId: number,
-      activity: Api_PropertyActivity,
-    ) => Promise<AxiosResponse<Api_PropertyActivity, any>>
+      activity: ApiGen_Concepts_PropertyActivity,
+    ) => Promise<AxiosResponse<ApiGen_Concepts_PropertyActivity, any>>
   >({
     requestFunction: useCallback(
-      async (propertyId: number, activity: Api_PropertyActivity) =>
+      async (propertyId: number, activity: ApiGen_Concepts_PropertyActivity) =>
         await putActivityApi(propertyId, activity),
       [putActivityApi],
     ),

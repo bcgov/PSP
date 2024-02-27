@@ -1,7 +1,8 @@
 import React from 'react';
 
 import { NoteTypes } from '@/constants/noteTypes';
-import { Api_EntityNote, Api_Note } from '@/models/api/Note';
+import { ApiGen_Concepts_EntityNote } from '@/models/api/generated/ApiGen_Concepts_EntityNote';
+import { ApiGen_Concepts_Note } from '@/models/api/generated/ApiGen_Concepts_Note';
 
 import useAxiosApi from './useApi';
 
@@ -16,11 +17,12 @@ export const useApiNotes = () => {
   return React.useMemo(
     () => ({
       getNotes: (type: NoteTypes, entityId: number) =>
-        api.get<Api_Note[]>(`/notes/${type}/${entityId}`),
-      getNote: (noteId: number) => api.get<Api_Note>(`/notes/${noteId}`),
-      postNote: (type: NoteTypes, note: Api_EntityNote) =>
-        api.post<Api_EntityNote>(`/notes/${type}`, note),
-      putNote: (note: Api_Note) => api.put<Api_Note>(`/notes/${note.id}`, note),
+        api.get<ApiGen_Concepts_Note[]>(`/notes/${type}/${entityId}`),
+      getNote: (noteId: number) => api.get<ApiGen_Concepts_Note>(`/notes/${noteId}`),
+      postNote: (type: NoteTypes, note: ApiGen_Concepts_EntityNote) =>
+        api.post<ApiGen_Concepts_EntityNote>(`/notes/${type}`, note),
+      putNote: (note: ApiGen_Concepts_Note) =>
+        api.put<ApiGen_Concepts_Note>(`/notes/${note.id}`, note),
       deleteNote: (type: NoteTypes, noteId: number) =>
         api.delete<boolean>(`/notes/${noteId}/${type}`),
     }),

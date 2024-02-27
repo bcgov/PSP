@@ -1,10 +1,16 @@
 import { ContactMethodTypes } from '@/constants/contactMethodType';
 import { UserTypes } from '@/constants/index';
-import { Api_AccessRequest } from '@/models/api/AccessRequest';
+import { ApiGen_Concepts_AccessRequest } from '@/models/api/generated/ApiGen_Concepts_AccessRequest';
 import { UtcIsoDateTime } from '@/models/api/UtcIsoDateTime';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { NumberFieldValue } from '@/typings/NumberFieldValue';
 import { getPreferredContactMethodValue } from '@/utils/contactMethodUtil';
-import { fromTypeCode, stringToUndefined, toTypeCode } from '@/utils/formUtils';
+import {
+  fromTypeCode,
+  stringToNumber,
+  stringToNumberOrNull,
+  toTypeCodeNullable,
+} from '@/utils/formUtils';
 
 export class FormAccessRequest {
   public id: NumberFieldValue;
@@ -27,9 +33,9 @@ export class FormAccessRequest {
   public keycloakUserGuid: string;
   public rowVersion?: number;
 
-  constructor(accessRequest: Api_AccessRequest) {
+  constructor(accessRequest: ApiGen_Concepts_AccessRequest) {
     this.id = accessRequest.id ?? '';
-    this.userId = accessRequest.userId;
+    this.userId = accessRequest.userId ?? '';
     this.roleId = accessRequest.roleId ?? '';
     this.roleName = accessRequest?.role?.name ?? '';
     this.note = accessRequest.note ?? '';
@@ -52,25 +58,35 @@ export class FormAccessRequest {
     this.keycloakUserGuid = accessRequest?.user?.guidIdentifierValue ?? '';
     this.position = accessRequest?.user?.position ?? '';
     this.userTypeCode = fromTypeCode(accessRequest?.user?.userTypeCode) ?? UserTypes.Contractor;
-    this.rowVersion = accessRequest.rowVersion;
+    this.rowVersion = accessRequest.rowVersion ?? undefined;
   }
 
-  public toApi(): Api_AccessRequest {
+  public toApi(): ApiGen_Concepts_AccessRequest {
     return {
-      id: stringToUndefined(this.id),
-      userId: stringToUndefined(this.userId),
-      roleId: stringToUndefined(this.roleId),
+      id: stringToNumber(this.id),
+      userId: stringToNumberOrNull(this.userId),
+      roleId: stringToNumberOrNull(this.roleId),
       note: this.note,
-      accessRequestStatusTypeCode: toTypeCode(this.accessRequestStatusTypeCodeId),
-      regionCode: this.regionCodeId ? toTypeCode<number>(this.regionCodeId) : undefined,
+      accessRequestStatusTypeCode: toTypeCodeNullable(this.accessRequestStatusTypeCodeId),
+      regionCode: this.regionCodeId ? toTypeCodeNullable<number>(this.regionCodeId) : null,
       user: {
         guidIdentifierValue: this.keycloakUserGuid,
         position: this.position,
-        userTypeCode: toTypeCode(this.userTypeCode),
+        userTypeCode: toTypeCodeNullable(this.userTypeCode),
         userRoles: [],
         userRegions: [],
+        approvedById: 0,
+        businessIdentifierValue: null,
+        id: 0,
+        isDisabled: false,
+        issueDate: null,
+        lastLogin: null,
+        note: null,
+        person: null,
+        ...getEmptyBaseAudit(),
       },
-      rowVersion: this.rowVersion,
+      role: null,
+      ...getEmptyBaseAudit(this.rowVersion),
     };
   }
 }

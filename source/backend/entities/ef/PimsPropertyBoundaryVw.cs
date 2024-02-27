@@ -140,6 +140,9 @@ public partial class PimsPropertyBoundaryVw
     [Column("IS_OTHER_INTEREST")]
     public bool IsOtherInterest { get; set; }
 
+    [Column("IS_RETIRED")]
+    public bool? IsRetired { get; set; }
+
     [Column("IS_VISIBLE_TO_OTHER_AGENCIES")]
     public bool IsVisibleToOtherAgencies { get; set; }
 

@@ -1,5 +1,6 @@
 import clsx from 'classnames';
 import React, { useState } from 'react';
+import { MapContainerProps } from 'react-leaflet';
 import styled from 'styled-components';
 
 import DraftSvg from '@/assets/images/pins/icon-draft.svg';
@@ -18,8 +19,6 @@ enum MapCursors {
   DRAFT = 'draft-cursor',
   DEFAULT = 'default',
 }
-
-interface MapContainerProps {}
 
 const MapContainer: React.FC<React.PropsWithChildren<MapContainerProps>> = () => {
   const [showActionBar, setShowActionBar] = useState(false);

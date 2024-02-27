@@ -1,18 +1,19 @@
 import { FaExternalLinkAlt } from 'react-icons/fa';
 
-import { Api_Organization } from '@/models/api/Organization';
-import { Api_Person } from '@/models/api/Person';
+import { ApiGen_Concepts_Organization } from '@/models/api/generated/ApiGen_Concepts_Organization';
+import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_Person';
+import { exists } from '@/utils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
 import { StyledLink } from '../maps/leaflet/LayerPopup/styles';
 
 type ContactPersonLink = {
-  person: Api_Person;
+  person: ApiGen_Concepts_Person;
   organization?: never;
 };
 type ContactOrganizationLink = {
   person?: never;
-  organization: Api_Organization;
+  organization: ApiGen_Concepts_Organization;
 };
 
 export type IContactLinkProps = ContactPersonLink | ContactOrganizationLink;
@@ -20,7 +21,7 @@ export type IContactLinkProps = ContactPersonLink | ContactOrganizationLink;
 function isPersonLink(
   contactLink: ContactPersonLink | ContactOrganizationLink,
 ): contactLink is ContactPersonLink {
-  return contactLink.person !== undefined;
+  return exists(contactLink.person);
 }
 
 export const ContactLink: React.FunctionComponent<

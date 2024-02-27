@@ -2,6 +2,7 @@ import { AddressTypes } from '@/constants/addressTypes';
 import { ContactInfoField } from '@/features/contacts/interfaces';
 import { Dictionary } from '@/interfaces/Dictionary';
 import { IContactAddress, IContactMethod } from '@/interfaces/IContact';
+import { exists } from '@/utils';
 
 // the order of this array corresponds to the expected display order
 const addressSortOrder = [AddressTypes.Mailing, AddressTypes.Residential, AddressTypes.Billing];
@@ -26,12 +27,15 @@ export function getContactInfo(
     return [];
   }
   // Get only the valid types
-  let filteredFields = contactMethods.reduce(
+  const filteredFields = contactMethods.reduce(
     (accumulator: ContactInfoField[], method: IContactMethod) => {
-      if (Object.keys(validTypes).includes(method.contactMethodType.id)) {
+      if (
+        exists(method.contactMethodType?.id) &&
+        Object.keys(validTypes).includes(method.contactMethodType!.id)
+      ) {
         accumulator.push({
           info: method.value,
-          label: validTypes[method.contactMethodType.id],
+          label: validTypes[method.contactMethodType!.id],
         });
       }
       return accumulator;
@@ -45,7 +49,7 @@ export function getContactInfo(
   });
 }
 
-export const fakeAddresses = [
+export const fakeAddresses: IContactAddress[] = [
   {
     id: 1,
     rowVersion: 3,
@@ -53,6 +57,7 @@ export const fakeAddresses = [
       id: 'BILLING',
       description: 'Billing address',
       isDisabled: false,
+      displayOrder: null,
     },
     streetAddress1: 'Billing address',
     municipality: 'Hollywood North',
@@ -75,6 +80,7 @@ export const fakeAddresses = [
       id: 'MAILING',
       description: 'Mailing address',
       isDisabled: false,
+      displayOrder: null,
     },
     streetAddress1: 'Mailing address',
     streetAddress2: 'Living in a van',
@@ -99,6 +105,7 @@ export const fakeAddresses = [
       id: 'RESIDNT',
       description: 'Property address',
       isDisabled: false,
+      displayOrder: null,
     },
     streetAddress1: 'Property address',
     streetAddress2: '',

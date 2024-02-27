@@ -16,10 +16,10 @@ import { ONE_HUNDRED_METER_PRECISION } from '@/components/maps/constants';
 import { IMapProperty } from '@/components/propertySelector/models';
 import { DistrictCodes } from '@/constants/districtCodes';
 import { RegionCodes } from '@/constants/regionCodes';
-import { Api_PropertyFile } from '@/models/api/PropertyFile';
-import { formatApiAddress, pidFormatter } from '@/utils';
-
-import { Api_Geometry, Api_Property } from '../models/api/Property';
+import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
+import { ApiGen_Concepts_Geometry } from '@/models/api/generated/ApiGen_Concepts_Geometry';
+import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
+import { exists, formatApiAddress, pidFormatter } from '@/utils';
 
 export enum NameSourceType {
   PID = 'PID',
@@ -31,7 +31,7 @@ export enum NameSourceType {
   ADDRESS = 'Address',
 }
 
-interface PropertyName {
+export interface PropertyName {
   label: NameSourceType;
   value: string;
 }
@@ -48,7 +48,7 @@ export const getPropertyName = (property: IMapProperty): PropertyName => {
       label: NameSourceType.LOCATION,
       value: compact([property.longitude?.toFixed(6), property.latitude?.toFixed(6)]).join(', '),
     };
-  } else if (!!property.address) {
+  } else if (property.address) {
     return {
       label: NameSourceType.ADDRESS,
       value: property.address,
@@ -57,54 +57,53 @@ export const getPropertyName = (property: IMapProperty): PropertyName => {
   return { label: NameSourceType.NONE, value: '' };
 };
 
-export const getPrettyLatLng = (location?: Api_Geometry) =>
+export const getPrettyLatLng = (location: ApiGen_Concepts_Geometry | undefined | null) =>
   compact([
     location?.coordinate?.x?.toFixed(6) ?? 0,
     location?.coordinate?.y?.toFixed(6) ?? 0,
   ]).join(', ');
 
-export const getLatLng = (location?: Api_Geometry | null): LatLngLiteral | null => {
+export const getLatLng = (
+  location: ApiGen_Concepts_Geometry | undefined | null,
+): LatLngLiteral | null => {
   const coordinate = location?.coordinate;
-  if (coordinate !== null && coordinate !== undefined) {
-    return { lat: coordinate.y!, lng: coordinate.x! };
+  if (exists(coordinate)) {
+    return { lat: coordinate.y, lng: coordinate.x };
   }
   return null;
 };
 
 export const getFilePropertyName = (
-  fileProperty?: Api_PropertyFile,
-  skipName: boolean = false,
+  fileProperty: ApiGen_Concepts_FileProperty | undefined | null,
+  skipName = false,
 ): PropertyName => {
-  if (fileProperty === undefined) {
+  if (!exists(fileProperty)) {
     return { label: NameSourceType.NONE, value: '' };
   }
 
-  if (
-    fileProperty.propertyName !== undefined &&
-    fileProperty.propertyName !== null &&
-    fileProperty.propertyName !== '' &&
-    skipName === false
-  ) {
+  if (exists(fileProperty.propertyName) && fileProperty.propertyName !== '' && skipName === false) {
     return { label: NameSourceType.NAME, value: fileProperty.propertyName ?? '' };
-  } else if (!!fileProperty.property) {
+  } else if (exists(fileProperty.property)) {
     const property = fileProperty.property;
     return getApiPropertyName(property);
   }
   return { label: NameSourceType.NONE, value: '' };
 };
 
-export const getApiPropertyName = (property?: Api_Property): PropertyName => {
-  if (property === undefined) {
+export const getApiPropertyName = (
+  property: ApiGen_Concepts_Property | undefined | null,
+): PropertyName => {
+  if (!exists(property)) {
     return { label: NameSourceType.NONE, value: '' };
   }
 
-  let mapProperty: IMapProperty = {
+  const mapProperty: IMapProperty = {
     pin: property.pin?.toString(),
     pid: property.pid?.toString(),
-    latitude: property.latitude,
-    longitude: property.longitude,
-    planNumber: property.planNumber,
-    address: property.address !== undefined ? formatApiAddress(property.address) : undefined,
+    latitude: property.latitude ?? undefined,
+    longitude: property.longitude ?? undefined,
+    planNumber: property.planNumber ?? undefined,
+    address: exists(property.address) ? formatApiAddress(property.address) : undefined,
   };
   return getPropertyName(mapProperty);
 };
@@ -177,14 +176,14 @@ function toMapProperty(
 
 export function featuresetToMapProperty(
   featureSet: LocationFeatureDataset,
-  address: string = 'unknown',
+  address = 'unknown',
 ): IMapProperty {
   const pimsFeature = featureSet.pimsFeature;
   const parcelFeature = featureSet.parcelFeature;
   const regionFeature = featureSet.regionFeature;
   const districtFeature = featureSet.districtFeature;
 
-  const propertyId = pimsFeature?.properties.PROPERTY_ID;
+  const propertyId = pimsFeature?.properties?.PROPERTY_ID;
   const pid = pidFromFeatureSet(featureSet);
   const pin = pinFromFeatureSet(featureSet);
   return {
@@ -194,40 +193,31 @@ export function featuresetToMapProperty(
     latitude: featureSet.location.lat,
     longitude: featureSet.location.lng,
     polygon:
-      parcelFeature?.geometry.type === 'Polygon' ? (parcelFeature.geometry as Polygon) : undefined,
-    planNumber: parcelFeature?.properties.PLAN_NUMBER?.toString() ?? undefined,
+      parcelFeature?.geometry?.type === 'Polygon' ? (parcelFeature.geometry as Polygon) : undefined,
+    planNumber: parcelFeature?.properties?.PLAN_NUMBER?.toString() ?? undefined,
     address: address,
-    region: isNumber(regionFeature?.properties.REGION_NUMBER)
-      ? regionFeature?.properties.REGION_NUMBER
+    region: isNumber(regionFeature?.properties?.REGION_NUMBER)
+      ? regionFeature?.properties?.REGION_NUMBER
       : RegionCodes.Unknown,
-    regionName: regionFeature?.properties.REGION_NAME ?? 'Cannot determine',
-    district: isNumber(districtFeature?.properties.DISTRICT_NUMBER)
-      ? districtFeature?.properties.DISTRICT_NUMBER
+    regionName: regionFeature?.properties?.REGION_NAME ?? 'Cannot determine',
+    district: isNumber(districtFeature?.properties?.DISTRICT_NUMBER)
+      ? districtFeature?.properties?.DISTRICT_NUMBER
       : DistrictCodes.Unknown,
-    districtName: districtFeature?.properties.DISTRICT_NAME ?? 'Cannot determine',
-    name: pimsFeature?.properties.NAME ?? undefined,
+    districtName: districtFeature?.properties?.DISTRICT_NAME ?? 'Cannot determine',
+    name: pimsFeature?.properties?.NAME ?? undefined,
   };
 }
 
 export function pidFromFeatureSet(featureset: LocationFeatureDataset): string | null {
-  if (featureset.pimsFeature !== null) {
-    return featureset.pimsFeature.properties.PID;
-  } else if (featureset.parcelFeature !== null) {
-    return featureset.parcelFeature.properties.PID;
-  } else {
-    return null;
-  }
+  return (
+    featureset.pimsFeature?.properties?.PID ?? featureset.parcelFeature?.properties?.PID ?? null
+  );
 }
 
 export function pinFromFeatureSet(featureset: LocationFeatureDataset): string | null {
-  if (featureset.pimsFeature !== null) {
-    return featureset.pimsFeature.properties.PIN;
-  } else if (
-    featureset.parcelFeature !== null &&
-    featureset.parcelFeature.properties.PIN !== null
-  ) {
-    return featureset.parcelFeature.properties.PIN.toString();
-  } else {
-    return null;
-  }
+  return (
+    featureset.pimsFeature?.properties?.PIN ??
+    featureset.parcelFeature?.properties?.PIN?.toString() ??
+    null
+  );
 }

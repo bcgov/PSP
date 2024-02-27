@@ -1,4 +1,6 @@
-import { Api_DispositionFileAppraisal } from '@/models/api/DispositionFile';
+import { ApiGen_Concepts_DispositionFileAppraisal } from '@/models/api/generated/ApiGen_Concepts_DispositionFileAppraisal';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
+import { isValidIsoDateTime } from '@/utils';
 import { emptyStringtoNullable } from '@/utils/formUtils';
 
 export class DispositionAppraisalFormModel {
@@ -28,7 +30,7 @@ export class DispositionAppraisalFormModel {
     );
   }
 
-  static fromApi(entity: Api_DispositionFileAppraisal): DispositionAppraisalFormModel {
+  static fromApi(entity: ApiGen_Concepts_DispositionFileAppraisal): DispositionAppraisalFormModel {
     const model = new DispositionAppraisalFormModel(
       entity.id,
       entity.dispositionFileId,
@@ -44,18 +46,18 @@ export class DispositionAppraisalFormModel {
     return model;
   }
 
-  toApi(): Api_DispositionFileAppraisal {
+  toApi(): ApiGen_Concepts_DispositionFileAppraisal {
     return {
       id: this.id,
       dispositionFileId: this.dispositionFileId,
       appraisedAmount: this.appraisedValueAmount
         ? parseFloat(this.appraisedValueAmount.toString())
         : null,
-      appraisalDate: emptyStringtoNullable(this.appraisalDate),
+      appraisalDate: isValidIsoDateTime(this.appraisalDate) ? this.appraisalDate : null,
       bcaValueAmount: this.bcaValueAmount ? parseFloat(this.bcaValueAmount.toString()) : null,
       bcaRollYear: emptyStringtoNullable(this.bcaRollYear),
       listPriceAmount: this.listPriceAmount ? parseFloat(this.listPriceAmount.toString()) : null,
-      rowVersion: this.rowVersion ?? 0,
+      ...getEmptyBaseAudit(this.rowVersion),
     };
   }
 }

@@ -10,9 +10,10 @@ import { useQuery } from '@/hooks/use-query';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
 import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
 import { IApiError } from '@/interfaces/IApiError';
-import { Api_File } from '@/models/api/File';
+import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
+import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
-import { stripTrailingSlash } from '@/utils';
+import { exists, stripTrailingSlash } from '@/utils';
 
 import { SideBarContext } from '../context/sidebarContext';
 import { IDispositionViewProps } from './DispositionView';
@@ -84,8 +85,8 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
 
   // Retrieve disposition file from API and save it to local state and side-bar context
   const fetchDispositionFile = useCallback(async () => {
-    var retrieved = await retrieveDispositionFile(dispositionFileId);
-    if (retrieved === undefined) {
+    const retrieved = await retrieveDispositionFile(dispositionFileId);
+    if (!exists(retrieved)) {
       return;
     }
 
@@ -101,7 +102,7 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
   ]);
 
   const fetchLastUpdatedBy = React.useCallback(async () => {
-    var retrieved = await getLastUpdatedBy(dispositionFileId);
+    const retrieved = await getLastUpdatedBy(dispositionFileId);
     if (retrieved !== undefined) {
       setLastUpdatedBy(retrieved);
     } else {
@@ -111,8 +112,8 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
 
   React.useEffect(() => {
     if (
-      lastUpdatedBy === undefined ||
-      dispositionFileId !== lastUpdatedBy?.parentId ||
+      !exists(lastUpdatedBy) ||
+      dispositionFileId !== lastUpdatedBy.parentId ||
       staleLastUpdatedBy
     ) {
       fetchLastUpdatedBy();
@@ -209,14 +210,16 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
     }
   };
 
-  const onUpdateProperties = (file: Api_File): Promise<Api_File | undefined> => {
+  const onUpdateProperties = (
+    file: ApiGen_Concepts_File,
+  ): Promise<ApiGen_Concepts_File | undefined> => {
     // The backend does not update the product or project so its safe to send nulls even if there might be data for those fields.
     return withUserOverride(
       (userOverrideCodes: UserOverrideCode[]) => {
         return updateDispositionProperties
           .execute(
             {
-              ...file,
+              ...(file as ApiGen_Concepts_DispositionFile),
               productId: null,
               projectId: null,
               fileChecklistItems: [],
@@ -235,12 +238,16 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
               dispositionAppraisal: null,
               dispositionSale: null,
               dispositionOffers: [],
+              initiatingBranchTypeCode: null,
+              physicalFileStatusTypeCode: null,
+              fundingTypeCode: null,
+              initiatingDocumentTypeCode: null,
             },
             userOverrideCodes,
           )
           .then(response => {
             history.push(`${stripTrailingSlash(match.url)}`);
-            onSuccess();
+            onSuccess(true, true);
             return response;
           });
       },
@@ -257,12 +264,12 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
     );
   };
 
-  const canRemove = async (propertyId: number) => {
+  const canRemove = async () => {
     return true;
   };
 
   // UI components
-  var loading =
+  const loading =
     loadingDispositionFile ||
     loadingGetLastUpdatedBy ||
     (loadingDispositionFileProperties && !isPropertySelector) ||
@@ -289,7 +296,7 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
           dispositionFile?.id === dispositionFileId
             ? {
                 ...dispositionFile,
-                fileProperties: dispositionFileProperties,
+                fileProperties: dispositionFileProperties ?? null,
                 fileChecklistItems: dispositionFileChecklist ?? [],
               }
             : undefined

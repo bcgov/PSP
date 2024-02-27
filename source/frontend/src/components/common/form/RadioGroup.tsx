@@ -58,14 +58,12 @@ export const RadioGroup = ({
   radioValues,
   label,
   postLabel,
-  as: is, // `as` is reserved in typescript
   placeholder,
   className,
   radioGroupClassName,
   innerClassName,
   required,
   disabled,
-  type,
   custom,
   toolTip,
   toolTipId,
@@ -80,13 +78,15 @@ export const RadioGroup = ({
   return (
     <StyledRadioGroup
       controlId={`${field}`}
-      className={classNames(!!required ? 'required' : '', className)}
+      className={classNames(required ? 'required' : '', className)}
       $flexDirection={flexDirection ?? 'column'}
     >
       {!!label && (
         <Form.Label>
           {label}
-          {!!toolTip && <TooltipIcon toolTipId={toolTipId!} toolTip={toolTip} />}
+          {!!toolTip && toolTipId !== undefined && toolTipId !== null && (
+            <TooltipIcon toolTipId={toolTipId} toolTip={toolTip} />
+          )}
         </Form.Label>
       )}
       <div className="radio-group">

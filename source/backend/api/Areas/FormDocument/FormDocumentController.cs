@@ -7,6 +7,7 @@ using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Models.Concepts.FormDocument;
 using Pims.Api.Policies;
 using Pims.Api.Services;
+using Pims.Core.Json;
 using Pims.Dal.Entities;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
@@ -57,6 +58,7 @@ namespace Pims.Api.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(List<FormDocumentTypeModel>), 200)]
         [SwaggerOperation(Tags = new[] { "form-document" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetFormDocumentTypes()
         {
             var supportedFileTypes = _formDocumentService.GetAllFormDocumentTypes();
@@ -74,6 +76,7 @@ namespace Pims.Api.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(FormDocumentFileModel), 200)]
         [SwaggerOperation(Tags = new[] { "form" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult AddFormDocumentFile(FileType fileType, [FromBody] FormDocumentFileModel formFileModel)
         {
             switch (fileType)
@@ -98,6 +101,7 @@ namespace Pims.Api.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(FormDocumentFileModel), 200)]
         [SwaggerOperation(Tags = new[] { "form" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetFileForms(FileType fileType, long fileId)
         {
             IEnumerable<FormDocumentFileModel> forms;
@@ -120,6 +124,7 @@ namespace Pims.Api.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(FormDocumentFileModel), 200)]
         [SwaggerOperation(Tags = new[] { "form" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetFileForm(FileType fileType, long fileFormId)
         {
             FormDocumentFileModel form;
@@ -142,6 +147,7 @@ namespace Pims.Api.Controllers
         [HasPermission(Permissions.FormDelete)]
         [ProducesResponseType(typeof(bool), 200)]
         [SwaggerOperation(Tags = new[] { "activity" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult DeleteFileForm(FileType fileType, long fileFormId)
         {
             var deleted = fileType switch

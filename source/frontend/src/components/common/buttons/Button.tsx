@@ -38,6 +38,7 @@ export const Button = forwardRef<typeof StyledButton, ButtonProps>((props, ref) 
     Button: true,
     'Button--disabled': disabled,
     'Button--icon-only': (children === null || children === undefined) && icon,
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     [className!]: className,
   });
 

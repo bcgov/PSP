@@ -1,7 +1,15 @@
 import { Formik, FormikProps } from 'formik';
 import React from 'react';
 
-import { act, fireEvent, render, RenderOptions, screen, userEvent } from '@/utils/test-utils';
+import {
+  act,
+  fireEvent,
+  render,
+  RenderOptions,
+  screen,
+  userEvent,
+  waitForEffects,
+} from '@/utils/test-utils';
 
 import { Select, SelectOption, SelectProps } from './Select';
 
@@ -121,7 +129,8 @@ describe('Select component', () => {
         screen.getByRole('option', { name: 'Ireland' }),
       ),
     );
-    await act(async () => fireEvent.blur(screen.getByRole('combobox')));
+    fireEvent.blur(screen.getByRole('combobox'));
+    await waitForEffects();
 
     expect(formik.current?.values.countryId).toBe(2);
   });
@@ -147,7 +156,9 @@ describe('Select component', () => {
         screen.getByRole('option', { name: 'Select a country' }),
       ),
     );
-    await act(async () => fireEvent.blur(screen.getByRole('combobox')));
+    await act(async () => {
+      fireEvent.blur(screen.getByRole('combobox'));
+    });
 
     expect(formik.current?.values.countryId).toBeUndefined();
   });

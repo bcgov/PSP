@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 
 import { IGenericNetworkAction } from '@/store/slices/network/interfaces';
 import { logError } from '@/store/slices/network/networkSlice';
-import { store } from '@/store/store';
+import { RootState, store } from '@/store/store';
 
 export const defaultEnvelope = (x: any) => ({ data: { records: x } });
 
@@ -33,7 +33,7 @@ export const CustomAxios = ({
   baseURL,
 }: {
   lifecycleToasts?: LifecycleToasts;
-  selector?: Function;
+  selector?: (state: RootState) => RootState;
   envelope?: typeof defaultEnvelope;
   baseURL?: string;
 } = {}) => {

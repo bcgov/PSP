@@ -5,7 +5,7 @@ import { createMemoryHistory } from 'history';
 import { NoteTypes } from '@/constants/index';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { mockNoteResponse } from '@/mocks/noteResponses.mock';
-import { Api_Note } from '@/models/api/Note';
+import { ApiGen_Concepts_Note } from '@/models/api/generated/ApiGen_Concepts_Note';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
@@ -105,7 +105,7 @@ describe('UpdateNoteContainer component', () => {
     mockAxios.onPut().reply(200, mockNoteResponse(1));
     await act(async () => userEvent.click(getSaveButton()));
 
-    const axiosData: Api_Note = JSON.parse(mockAxios.history.put[0].data);
+    const axiosData: ApiGen_Concepts_Note = JSON.parse(mockAxios.history.put[0].data);
     const expectedValues = formValues.toApi();
 
     expect(mockAxios.history.put[0].url).toBe('/notes/1');
@@ -115,7 +115,7 @@ describe('UpdateNoteContainer component', () => {
   });
 
   it('should support updating notes from other entity types', async () => {
-    const formValues = NoteForm.fromApi(BASIC_PROPS.note as Api_Note);
+    const formValues = NoteForm.fromApi(BASIC_PROPS.note as ApiGen_Concepts_Note);
     formValues.note = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
 
     const { getSaveButton, findByLabelText } = setup({

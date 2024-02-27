@@ -14,17 +14,11 @@ import {
   useAddressHelpers,
 } from '@/features/contacts/contact/create/components';
 import * as Styled from '@/features/contacts/contact/edit/styles';
-import {
-  apiOrganizationToFormOrganization,
-  formOrganizationToApiOrganization,
-} from '@/features/contacts/contactUtils';
+import { IEditableOrganizationForm } from '@/features/contacts/formModels';
 import { useOrganizationDetail } from '@/features/contacts/hooks/useOrganizationDetail';
 import useUpdateContact from '@/features/contacts/hooks/useUpdateContact';
-import {
-  defaultCreateOrganization,
-  IEditableOrganizationForm,
-} from '@/interfaces/editable-contact';
 import { IContactPerson } from '@/interfaces/IContact';
+import { isValidId } from '@/utils';
 
 import { OrganizationSubForm } from '../../Organization/OrganizationSubForm';
 import { onValidateOrganization } from '../../utils/contactUtils';
@@ -42,11 +36,11 @@ export const UpdateOrganizationForm: React.FC<{ id: number }> = ({ id }) => {
     { setSubmitting }: FormikHelpers<IEditableOrganizationForm>,
   ) => {
     try {
-      const apiOrganization = formOrganizationToApiOrganization(formOrganization);
+      const apiOrganization = formOrganization.formOrganizationToApiOrganization();
       const organizationResponse = await updateOrganization(apiOrganization);
       const organizationId = organizationResponse?.id;
 
-      if (!!organizationId) {
+      if (isValidId(organizationId)) {
         history.push(`/contact/O${organizationId}`);
       }
     } finally {
@@ -57,28 +51,11 @@ export const UpdateOrganizationForm: React.FC<{ id: number }> = ({ id }) => {
   // fetch organization details from API for the supplied Id
   const { organization } = useOrganizationDetail(id);
   const formOrganization = useMemo(
-    () => apiOrganizationToFormOrganization(organization),
+    () => IEditableOrganizationForm.apiOrganizationToFormOrganization(organization),
     [organization],
   );
 
-  const initialValues = !!formOrganization
-    ? {
-        ...defaultCreateOrganization,
-        ...formOrganization,
-        mailingAddress: {
-          ...defaultCreateOrganization.mailingAddress,
-          ...formOrganization.mailingAddress,
-        },
-        propertyAddress: {
-          ...defaultCreateOrganization.propertyAddress,
-          ...formOrganization.propertyAddress,
-        },
-        billingAddress: {
-          ...defaultCreateOrganization.billingAddress,
-          ...formOrganization.billingAddress,
-        },
-      }
-    : defaultCreateOrganization;
+  const initialValues = formOrganization ? formOrganization : new IEditableOrganizationForm();
 
   return (
     <Formik

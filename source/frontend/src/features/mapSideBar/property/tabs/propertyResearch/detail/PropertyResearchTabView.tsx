@@ -7,7 +7,8 @@ import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { Claims } from '@/constants/index';
 import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
-import { Api_ResearchFileProperty } from '@/models/api/ResearchFile';
+import { ApiGen_Concepts_ResearchFileProperty } from '@/models/api/generated/ApiGen_Concepts_ResearchFileProperty';
+import { exists } from '@/utils/utils';
 
 interface PropertyResearchFile {
   id: number;
@@ -20,7 +21,7 @@ interface PropertyResearchFile {
 }
 
 export interface IPropertyResearchTabViewProps {
-  researchFile: Api_ResearchFileProperty;
+  researchFile: ApiGen_Concepts_ResearchFileProperty;
   setEditMode: (isEditing: boolean) => void;
 }
 
@@ -34,18 +35,16 @@ export const PropertyResearchTabView: React.FunctionComponent<
       props.researchFile.purposeTypes
         ?.map(x => x.propertyPurposeType?.description || '')
         .join(', ') || '',
-    legalOpinionRequired:
-      props.researchFile.isLegalOpinionRequired !== undefined
-        ? props.researchFile.isLegalOpinionRequired
-          ? 'Yes'
-          : 'No'
-        : '',
-    legalOpinionObtained:
-      props.researchFile.isLegalOpinionObtained !== undefined
-        ? props.researchFile.isLegalOpinionObtained
-          ? 'Yes'
-          : 'No'
-        : '',
+    legalOpinionRequired: exists(props.researchFile.isLegalOpinionRequired)
+      ? props.researchFile.isLegalOpinionRequired
+        ? 'Yes'
+        : 'No'
+      : '',
+    legalOpinionObtained: exists(props.researchFile.isLegalOpinionObtained)
+      ? props.researchFile.isLegalOpinionObtained
+        ? 'Yes'
+        : 'No'
+      : '',
     documentReference: props.researchFile.documentReference || '',
     summaryNotes: props.researchFile.researchSummary || '',
   };

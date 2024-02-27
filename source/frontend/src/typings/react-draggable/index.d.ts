@@ -59,14 +59,14 @@ declare module 'react-draggable' {
 
   export default class Draggable extends React.Component<
     React.PropsWithChildren<Partial<DraggableProps>>,
-    {}
+    object
   > {
     static defaultProps: DraggableProps;
   }
 
   export class DraggableCore extends React.Component<
     React.PropsWithChildren<Partial<DraggableCoreProps>>,
-    {}
+    object
   > {
     static defaultProps: DraggableCoreProps;
   }

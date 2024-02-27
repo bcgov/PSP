@@ -582,7 +582,7 @@ namespace Pims.Dal.Test.Repositories
 
 
             // Act
-            var transferredProperty = repository.TransferFileProperty(property, true, true);
+            var transferredProperty = repository.TransferFileProperty(property, new Models.PropertyOwnershipState() { isPropertyOfInterest = true, isOwned = true});
             context.CommitTransaction();
 
             // Assert
@@ -601,7 +601,7 @@ namespace Pims.Dal.Test.Repositories
 
 
             // Act
-            var transferredProperty = repository.TransferFileProperty(property, false, false);
+            var transferredProperty = repository.TransferFileProperty(property, new Models.PropertyOwnershipState() { isPropertyOfInterest = false, isOwned = false });
             context.CommitTransaction();
 
             // Assert

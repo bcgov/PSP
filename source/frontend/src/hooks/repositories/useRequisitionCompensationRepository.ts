@@ -7,7 +7,7 @@ import {
   putCompensationRequisitionApi,
 } from '@/hooks/pims-api/useApiRequisitionCompensations';
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
-import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
+import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
 import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils';
 
 /**
@@ -15,7 +15,7 @@ import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils';
  */
 export const useCompensationRequisitionRepository = () => {
   const getCompensationRequisition = useApiRequestWrapper<
-    (compensationId: number) => Promise<AxiosResponse<Api_CompensationRequisition, any>>
+    (compensationId: number) => Promise<AxiosResponse<ApiGen_Concepts_CompensationRequisition, any>>
   >({
     requestFunction: useCallback(
       async (compensationId: number) => await getCompensationRequisitionApi(compensationId),
@@ -28,11 +28,11 @@ export const useCompensationRequisitionRepository = () => {
 
   const updateCompensationRequisition = useApiRequestWrapper<
     (
-      compensation: Api_CompensationRequisition,
-    ) => Promise<AxiosResponse<Api_CompensationRequisition, any>>
+      compensation: ApiGen_Concepts_CompensationRequisition,
+    ) => Promise<AxiosResponse<ApiGen_Concepts_CompensationRequisition, any>>
   >({
     requestFunction: useCallback(
-      async (compensation: Api_CompensationRequisition) =>
+      async (compensation: ApiGen_Concepts_CompensationRequisition) =>
         await putCompensationRequisitionApi(compensation),
       [],
     ),

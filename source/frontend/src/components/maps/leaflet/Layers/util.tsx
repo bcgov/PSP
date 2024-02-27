@@ -3,9 +3,8 @@ import L, { DivIcon, GeoJSON, LatLngExpression, Layer, Map, Marker } from 'leafl
 import ReactDOMServer from 'react-dom/server';
 import Supercluster from 'supercluster';
 
-import { ICluster, PointFeature } from '@/components/maps/types';
+import { ICluster } from '@/components/maps/types';
 import { DraftCircleNumber } from '@/components/propertySelector/selectedPropertyList/DraftCircleNumber';
-import { IProperty } from '@/interfaces';
 import { PMBC_Feature_Properties } from '@/models/layers/parcelMapBC';
 import {
   PIMS_Property_Boundary_View,
@@ -125,27 +124,6 @@ export const notOwnedPropertyIconSelect = L.icon({
   shadowSize: [41, 41],
 });
 
-/**
- * Creates map points (in GeoJSON format) for further clustering by `supercluster`
- * @param properties
- */
-// TODO:is this necessary?
-export const createPoints = (properties: IProperty[], type: string = 'Point') =>
-  properties.map(x => {
-    return {
-      type: 'Feature',
-      properties: {
-        ...x,
-        cluster: false,
-        PROPERTY_ID: x.id,
-      },
-      geometry: {
-        type: type,
-        coordinates: [x.longitude, x.latitude],
-      },
-    } as PointFeature;
-  });
-
 type MarkerFeature =
   | PIMS_Property_Location_View
   | PIMS_Property_Boundary_View
@@ -173,13 +151,36 @@ export function pointToLayer<P extends MarkerFeature, C extends Supercluster.Clu
 
 /**
  * Get an icon type for the specified cluster property details.
+ *
+ * Precedence (map viewing map markers)
+ * 1. Core Inventory
+ * 2. Other Interest
+ * 3. Property of Interest
+ * 4. Disposed (only if advanced filter is open)
  */
 export function getMarkerIcon(
   feature: Supercluster.PointFeature<PIMS_Property_Location_View | PIMS_Property_Boundary_View>,
   selected: boolean,
-  showDisposed: boolean = false,
-): L.Icon<L.IconOptions> {
-  if (showDisposed && feature.properties.IS_DISPOSED) {
+  showDisposed = false,
+): L.Icon<L.IconOptions> | null {
+  if (feature?.properties?.IS_OWNED === true) {
+    if (selected) {
+      return parcelIconSelect;
+    }
+    return parcelIcon;
+  } else if (feature?.properties?.IS_OTHER_INTEREST === true) {
+    if (selected) {
+      return otherInterestIconSelect;
+    } else {
+      return otherInterestIcon;
+    }
+  } else if (feature?.properties?.IS_PROPERTY_OF_INTEREST === true) {
+    if (selected) {
+      return propertyOfInterestIconSelect;
+    } else {
+      return propertyOfInterestIcon;
+    }
+  } else if (showDisposed && feature?.properties?.IS_DISPOSED === true) {
     if (selected) {
       return disposedIconSelect;
     } else {
@@ -187,26 +188,7 @@ export function getMarkerIcon(
     }
   }
 
-  if (feature.properties.IS_PROPERTY_OF_INTEREST) {
-    if (selected) {
-      return propertyOfInterestIconSelect;
-    } else {
-      return propertyOfInterestIcon;
-    }
-  }
-
-  if (feature.properties.IS_OWNED) {
-    if (selected) {
-      return parcelIconSelect;
-    }
-    return parcelIcon;
-  }
-
-  if (selected) {
-    return otherInterestIconSelect;
-  } else {
-    return otherInterestIcon;
-  }
+  return null;
 }
 
 /**
@@ -243,7 +225,7 @@ export const createSingleMarker = <P extends MarkerFeature>(
 
   if (isOwned) {
     const icon = getMarkerIcon(feature, false);
-    return new Marker(latlng, { icon });
+    return icon ? new Marker(latlng, { icon }) : (null as unknown as Layer);
   } else {
     const icon = getNotOwnerMarkerIcon(false);
     return new Marker(latlng, { icon });
@@ -299,7 +281,6 @@ export function createClusterMarker<P extends GeoJsonProperties>(
   }
 
   const size = count < 100 ? 'small' : count < 1000 ? 'medium' : 'large';
-  let icon: DivIcon;
 
   if (!iconsCache[count]) {
     iconsCache[count] = new DivIcon({
@@ -309,7 +290,7 @@ export function createClusterMarker<P extends GeoJsonProperties>(
     });
   }
 
-  icon = iconsCache[count];
+  const icon = iconsCache[count];
   return new Marker(latlng, { icon });
 }
 

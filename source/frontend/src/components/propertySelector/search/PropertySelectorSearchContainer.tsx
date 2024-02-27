@@ -71,13 +71,13 @@ export const PropertySelectorSearchContainer: React.FunctionComponent<
       const foundProperties = featuresToIdentifiedMapProperty(result) ?? [];
       // match the region and district for all found properties
       if (result?.features?.length !== undefined && result?.features?.length <= 15) {
-        var matchTask = foundProperties.map(p =>
+        const matchTask = foundProperties.map(p =>
           matchRegionAndDistrict(p, findRegion, findDistrict),
         );
 
-        var getAddressTasks = foundProperties.map(p => getPropertyAddress(p, getNearestToPoint));
+        const getAddressTasks = foundProperties.map(p => getPropertyAddress(p, getNearestToPoint));
 
-        var addresses = await Promise.all(getAddressTasks);
+        const addresses = await Promise.all(getAddressTasks);
         await Promise.all(matchTask);
         foundProperties.forEach((p, i) => {
           p.address = addresses[i]?.fullAddress;

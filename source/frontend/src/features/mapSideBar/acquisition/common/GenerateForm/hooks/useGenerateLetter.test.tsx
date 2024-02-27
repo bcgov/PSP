@@ -8,12 +8,12 @@ import { useDocumentGenerationRepository } from '@/features/documents/hooks/useD
 import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
-import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
+import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 
 import { useGenerateLetter } from '../hooks/useGenerateLetter';
 
 const generateFn = jest.fn();
-const getAcquisitionFileFn = jest.fn<Api_AcquisitionFile | undefined, any[]>();
+const getAcquisitionFileFn = jest.fn<ApiGen_Concepts_AcquisitionFile | undefined, any[]>();
 const getPersonConceptFn = jest.fn();
 const getOrganizationConceptFn = jest.fn();
 
@@ -44,7 +44,10 @@ const getWrapper =
   ({ children }: any) =>
     <Provider store={store}>{children}</Provider>;
 
-const setup = (params?: { storeValues?: any; acquisitionResponse?: Api_AcquisitionFile }) => {
+const setup = (params?: {
+  storeValues?: any;
+  acquisitionResponse?: ApiGen_Concepts_AcquisitionFile;
+}) => {
   var acquisitionResponse = mockAcquisitionFileResponse();
   if (params?.acquisitionResponse !== undefined) {
     acquisitionResponse = params.acquisitionResponse;
@@ -67,7 +70,7 @@ describe('useGenerateLetter functions', () => {
     });
   });
   it('makes requests to expected api endpoints if a team member is a property coordinator with person', async () => {
-    const responseWithTeam: Api_AcquisitionFile = {
+    const responseWithTeam: ApiGen_Concepts_AcquisitionFile = {
       ...mockAcquisitionFileResponse(),
       acquisitionTeam: [
         {
@@ -76,6 +79,12 @@ describe('useGenerateLetter functions', () => {
           personId: 1,
           teamProfileTypeCode: 'PROPCOORD',
           rowVersion: 2,
+          organization: null,
+          organizationId: null,
+          person: null,
+          primaryContact: null,
+          primaryContactId: null,
+          teamProfileType: null,
         },
       ],
     };
@@ -89,7 +98,7 @@ describe('useGenerateLetter functions', () => {
   });
 
   it('makes requests to expected api endpoints if a team member is a property coordinator with org', async () => {
-    const responseWithTeam: Api_AcquisitionFile = {
+    const responseWithTeam: ApiGen_Concepts_AcquisitionFile = {
       ...mockAcquisitionFileResponse(),
       acquisitionTeam: [
         {
@@ -98,6 +107,12 @@ describe('useGenerateLetter functions', () => {
           organizationId: 1,
           teamProfileTypeCode: 'PROPCOORD',
           rowVersion: 2,
+          organization: null,
+          person: null,
+          primaryContact: null,
+          primaryContactId: null,
+          teamProfileType: null,
+          personId: null,
         },
       ],
     };

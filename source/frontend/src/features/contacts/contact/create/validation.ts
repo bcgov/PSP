@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 
-import { IEditableOrganizationForm, IEditablePersonForm } from '@/interfaces/editable-contact';
+import { IEditableOrganizationForm, IEditablePersonForm } from '../../formModels';
 
 export function hasPhoneNumber(values: IEditablePersonForm | IEditableOrganizationForm): boolean {
   return values?.phoneContactMethods.some(obj => !!obj.value);

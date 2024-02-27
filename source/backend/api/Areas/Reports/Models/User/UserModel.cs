@@ -16,11 +16,6 @@ namespace Pims.Api.Areas.Reports.Models.User
         public long Id { get; set; }
 
         /// <summary>
-        /// get/set - Unique key to identify the claim.
-        /// </summary>
-        public Guid KeycloakUserId { get; set; }
-
-        /// <summary>
         /// get/set - The user's unique identity.
         /// </summary>
         public string BusinessIdentifier { get; set; }

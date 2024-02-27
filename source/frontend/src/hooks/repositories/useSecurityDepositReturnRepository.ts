@@ -1,7 +1,7 @@
 import { AxiosResponse } from 'axios';
 import { useCallback, useMemo } from 'react';
 
-import { Api_SecurityDepositReturn } from '@/models/api/SecurityDeposit';
+import { ApiGen_Concepts_SecurityDepositReturn } from '@/models/api/generated/ApiGen_Concepts_SecurityDepositReturn';
 import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils';
 
 import { useApiLeaseDepositReturns } from '../pims-api/useApiLeaseDepositsReturn';
@@ -17,11 +17,11 @@ export const useSecurityDepositReturnRepository = () => {
   const updateSecurityDepositReturnApi = useApiRequestWrapper<
     (
       leaseId: number,
-      securityDepositReturn: Api_SecurityDepositReturn,
-    ) => Promise<AxiosResponse<Api_SecurityDepositReturn, any>>
+      securityDepositReturn: ApiGen_Concepts_SecurityDepositReturn,
+    ) => Promise<AxiosResponse<ApiGen_Concepts_SecurityDepositReturn, any>>
   >({
     requestFunction: useCallback(
-      async (leaseId: number, securityDepositReturn: Api_SecurityDepositReturn) =>
+      async (leaseId: number, securityDepositReturn: ApiGen_Concepts_SecurityDepositReturn) =>
         await putLeaseDepositReturn(leaseId, securityDepositReturn),
       [putLeaseDepositReturn],
     ),
@@ -33,11 +33,11 @@ export const useSecurityDepositReturnRepository = () => {
   const addSecurityDepositReturnApi = useApiRequestWrapper<
     (
       leaseId: number,
-      securityDepositReturn: Api_SecurityDepositReturn,
-    ) => Promise<AxiosResponse<Api_SecurityDepositReturn, any>>
+      securityDepositReturn: ApiGen_Concepts_SecurityDepositReturn,
+    ) => Promise<AxiosResponse<ApiGen_Concepts_SecurityDepositReturn, any>>
   >({
     requestFunction: useCallback(
-      async (leaseId: number, securityDepositReturn: Api_SecurityDepositReturn) =>
+      async (leaseId: number, securityDepositReturn: ApiGen_Concepts_SecurityDepositReturn) =>
         await postLeaseDepositReturn(leaseId, securityDepositReturn),
       [postLeaseDepositReturn],
     ),
@@ -49,11 +49,11 @@ export const useSecurityDepositReturnRepository = () => {
   const deleteSecurityDepositReturnApi = useApiRequestWrapper<
     (
       leaseId: number,
-      securityDepositReturn: Api_SecurityDepositReturn,
+      securityDepositReturn: ApiGen_Concepts_SecurityDepositReturn,
     ) => Promise<AxiosResponse<void, any>>
   >({
     requestFunction: useCallback(
-      async (leaseId: number, securityDepositReturn: Api_SecurityDepositReturn) =>
+      async (leaseId: number, securityDepositReturn: ApiGen_Concepts_SecurityDepositReturn) =>
         await deleteLeaseDepositReturn(leaseId, securityDepositReturn),
       [deleteLeaseDepositReturn],
     ),

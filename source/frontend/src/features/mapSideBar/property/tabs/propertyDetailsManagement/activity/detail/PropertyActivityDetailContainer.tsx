@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import { usePropertyActivityRepository } from '@/hooks/repositories/usePropertyActivityRepository';
-import { Api_PropertyActivity } from '@/models/api/PropertyActivity';
+import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
+import { exists, isValidId } from '@/utils/utils';
 
 import useActivityContactRetriever from '../hooks';
 import { IPropertyActivityDetailViewProps } from './PropertyActivityDetailView';
@@ -18,7 +19,9 @@ export const PropertyActivityDetailContainer: React.FunctionComponent<
 > = ({ propertyId, propertyActivityId, onClose, View }) => {
   const [show, setShow] = useState(true);
 
-  const [loadedActivity, setLoadedActivity] = useState<Api_PropertyActivity | null>(null);
+  const [loadedActivity, setLoadedActivity] = useState<ApiGen_Concepts_PropertyActivity | null>(
+    null,
+  );
 
   const {
     fetchMinistryContacts,
@@ -35,12 +38,16 @@ export const PropertyActivityDetailContainer: React.FunctionComponent<
   const fetchActivity = useCallback(
     async (propertyId: number, activityId: number) => {
       const retrieved = await getActivity(propertyId, activityId);
-      if (retrieved !== undefined) {
-        for (let i = 0; i < retrieved.ministryContacts.length; i++) {
-          await fetchMinistryContacts(retrieved.ministryContacts[i]);
+      if (exists(retrieved)) {
+        if (exists(retrieved.ministryContacts)) {
+          for (let i = 0; i < retrieved.ministryContacts.length; i++) {
+            await fetchMinistryContacts(retrieved.ministryContacts[i]);
+          }
         }
-        for (let i = 0; i < retrieved.involvedParties.length; i++) {
-          await fetchPartiesContact(retrieved.involvedParties[i]);
+        if (exists(retrieved.involvedParties)) {
+          for (let i = 0; i < retrieved.involvedParties.length; i++) {
+            await fetchPartiesContact(retrieved.involvedParties[i]);
+          }
         }
         await fetchProviderContact(retrieved);
 
@@ -53,7 +60,7 @@ export const PropertyActivityDetailContainer: React.FunctionComponent<
   );
 
   useEffect(() => {
-    if (propertyId !== undefined && propertyActivityId !== undefined) {
+    if (isValidId(propertyId) && isValidId(propertyActivityId)) {
       fetchActivity(propertyId, propertyActivityId);
     }
   }, [propertyId, propertyActivityId, fetchActivity]);

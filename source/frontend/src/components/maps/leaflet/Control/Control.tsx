@@ -1,4 +1,5 @@
-import L from 'leaflet';
+import L, { LeafletEventHandlerFn } from 'leaflet';
+import noop from 'lodash/noop';
 import React, { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useMap } from 'react-leaflet';
@@ -7,11 +8,11 @@ const LeafControl = L.Control.extend({
   options: {
     className: '',
     onOff: '',
-    handleOff: function noop() {},
+    handleOff: noop() as unknown as () => LeafletEventHandlerFn | undefined,
   },
 
-  onAdd(map: L.Map) {
-    var div = L.DomUtil.create('div', this.options.className);
+  onAdd() {
+    const div = L.DomUtil.create('div', this.options.className);
     // clicks and scroll events for this control will NOT send events to map behind it
     L.DomEvent.disableClickPropagation(div);
     L.DomEvent.disableScrollPropagation(div);

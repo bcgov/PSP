@@ -7,15 +7,18 @@ import {
   mockDispositionFileResponse,
   mockDispositionFileSaleApi,
 } from '@/mocks/dispositionFiles.mock';
-import { Api_DispositionFile } from '@/models/api/DispositionFile';
 import { render, RenderOptions, waitFor, waitForEffects } from '@/utils/test-utils';
 
 import OffersAndSaleView, { IOffersAndSaleViewProps } from './OffersAndSaleView';
+import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
+import { toTypeCode } from '@/utils/formUtils';
 
 const history = createMemoryHistory();
 jest.mock('@react-keycloak/web');
 
-const mockDispositionFileApi = mockDispositionFileResponse(1) as unknown as Api_DispositionFile;
+const mockDispositionFileApi = mockDispositionFileResponse(
+  1,
+) as unknown as ApiGen_Concepts_DispositionFile;
 const mockDispositionSaleApi = mockDispositionFileSaleApi(1);
 
 const onDelete = jest.fn();
@@ -78,7 +81,9 @@ describe('Disposition Offer Detail View component', () => {
   });
 
   it('displays the Disposition Appraisal and Value when available', async () => {
-    const mockDisposition = mockDispositionFileResponse(1) as unknown as Api_DispositionFile;
+    const mockDisposition = mockDispositionFileResponse(
+      1,
+    ) as unknown as ApiGen_Concepts_DispositionFile;
 
     const { queryByTestId } = await setup({
       props: {
@@ -99,7 +104,7 @@ describe('Disposition Offer Detail View component', () => {
     const { queryByTitle, queryByTestId } = await setup({
       props: {
         dispositionFile:
-          mockDispositionFileResponse() as unknown as Api_DispositionFile as unknown as Api_DispositionFile,
+          mockDispositionFileResponse() as unknown as ApiGen_Concepts_DispositionFile,
       },
       claims: [Claims.DISPOSITION_VIEW],
     });
@@ -116,8 +121,8 @@ describe('Disposition Offer Detail View component', () => {
     const { queryByTitle, queryByTestId } = await setup({
       props: {
         dispositionFile: {
-          ...(mockDispositionFileResponse() as unknown as Api_DispositionFile as unknown as Api_DispositionFile),
-          fileStatusTypeCode: { id: DispositionFileStatus.Complete },
+          ...(mockDispositionFileResponse() as unknown as ApiGen_Concepts_DispositionFile),
+          fileStatusTypeCode: toTypeCode(DispositionFileStatus.Complete),
         },
       },
       claims: [Claims.DISPOSITION_EDIT],
@@ -135,8 +140,8 @@ describe('Disposition Offer Detail View component', () => {
     const { queryByTitle, queryByTestId } = await setup({
       props: {
         dispositionFile: {
-          ...(mockDispositionFileResponse() as unknown as Api_DispositionFile),
-          fileStatusTypeCode: { id: DispositionFileStatus.Complete },
+          ...mockDispositionFileResponse(),
+          fileStatusTypeCode: toTypeCode(DispositionFileStatus.Complete),
         },
       },
       claims: [Claims.DISPOSITION_EDIT],
@@ -155,7 +160,7 @@ describe('Disposition Offer Detail View component', () => {
     const { getByTitle } = await setup({
       props: {
         dispositionFile:
-          mockDispositionFileResponse() as unknown as Api_DispositionFile as unknown as Api_DispositionFile,
+          mockDispositionFileResponse() as unknown as ApiGen_Concepts_DispositionFile,
       },
       claims: [Claims.DISPOSITION_EDIT],
     });
@@ -168,7 +173,7 @@ describe('Disposition Offer Detail View component', () => {
 
   it('hides the edit button for Sale for users without permissions', async () => {
     const { queryByTitle, queryByTestId } = await setup({
-      props: { dispositionFile: mockDispositionFileResponse() as unknown as Api_DispositionFile },
+      props: { dispositionFile: mockDispositionFileResponse() },
       claims: [Claims.DISPOSITION_VIEW],
     });
     await waitForEffects();
@@ -184,8 +189,8 @@ describe('Disposition Offer Detail View component', () => {
     const { queryByTitle, queryByTestId } = await setup({
       props: {
         dispositionFile: {
-          ...(mockDispositionFileResponse() as unknown as Api_DispositionFile),
-          fileStatusTypeCode: { id: DispositionFileStatus.Complete },
+          ...mockDispositionFileResponse(),
+          fileStatusTypeCode: toTypeCode(DispositionFileStatus.Complete),
         },
       },
       claims: [Claims.DISPOSITION_EDIT],
@@ -203,8 +208,8 @@ describe('Disposition Offer Detail View component', () => {
     const { queryByTitle, queryByTestId } = await setup({
       props: {
         dispositionFile: {
-          ...(mockDispositionFileResponse() as unknown as Api_DispositionFile),
-          fileStatusTypeCode: { id: DispositionFileStatus.Complete },
+          ...mockDispositionFileResponse(),
+          fileStatusTypeCode: toTypeCode(DispositionFileStatus.Complete),
         },
       },
       claims: [Claims.DISPOSITION_EDIT],
@@ -221,7 +226,7 @@ describe('Disposition Offer Detail View component', () => {
 
   it('renders the edit button for Sale for users with disposition edit permissions', async () => {
     const { getByTitle } = await setup({
-      props: { dispositionFile: mockDispositionFileResponse() as unknown as Api_DispositionFile },
+      props: { dispositionFile: mockDispositionFileResponse() },
       claims: [Claims.DISPOSITION_EDIT],
     });
     await waitForEffects();

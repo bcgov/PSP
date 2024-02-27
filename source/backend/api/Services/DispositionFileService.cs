@@ -128,7 +128,7 @@ namespace Pims.Api.Services
             if (!userOverrides.Contains(UserOverrideCode.DispositionFileFinalStatus) && !doNotAddToStatuses.Contains(currentDispositionFile.DispositionFileStatusTypeCode)
                 && doNotAddToStatuses.Contains(dispositionFile.DispositionFileStatusTypeCode))
             {
-                throw new UserOverrideException(UserOverrideCode.DispositionFileFinalStatus, "You are changing this file to a non-editable state. Only system administrators can edit the file when set to Archived, Cancelled or Completed state). Do you wish to continue?");
+                throw new UserOverrideException(UserOverrideCode.DispositionFileFinalStatus, "You are changing this file to a non-editable state. (Only system administrators can edit the file when set to Archived, Cancelled or Completed state). Do you wish to continue?");
             }
             else if (currentDispositionFile.DispositionFileStatusTypeCode != EnumDispositionFileStatusTypeCode.COMPLETE.ToString()
                 && dispositionFile.DispositionFileStatusTypeCode == EnumDispositionFileStatusTypeCode.COMPLETE.ToString())
@@ -417,16 +417,22 @@ namespace Pims.Api.Services
             return checklistItems;
         }
 
-        public PimsDispositionFile UpdateChecklistItems(PimsDispositionFile dispositionFile)
+        public PimsDispositionFile UpdateChecklistItems(IList<PimsDispositionChecklistItem> checklistItems)
         {
-            dispositionFile.ThrowIfNull(nameof(dispositionFile));
-            _logger.LogInformation("Updating disposition file checklist with DispositionFile id: {id}", dispositionFile.Internal_Id);
+            checklistItems.ThrowIfNull(nameof(checklistItems));
+            if (checklistItems.Count == 0)
+            {
+                throw new BadRequestException("Checklist items must be greater than zero");
+            }
+
+            var dispositionFileId = checklistItems.FirstOrDefault().DispositionFileId;
+            _logger.LogInformation("Updating disposition file checklist with DispositionFile id: {id}", dispositionFileId);
             _user.ThrowIfNotAuthorized(Permissions.DispositionEdit);
 
             // Get the current checklist items for this disposition file.
-            var currentItems = _checklistRepository.GetAllChecklistItemsByDispositionFileId(dispositionFile.Internal_Id).ToDictionary(ci => ci.Internal_Id);
+            var currentItems = _checklistRepository.GetAllChecklistItemsByDispositionFileId(dispositionFileId).ToDictionary(ci => ci.Internal_Id);
 
-            foreach (var incomingItem in dispositionFile.PimsDispositionChecklistItems)
+            foreach (var incomingItem in checklistItems)
             {
                 if (!currentItems.TryGetValue(incomingItem.Internal_Id, out var existingItem) && incomingItem.Internal_Id != 0)
                 {
@@ -445,7 +451,7 @@ namespace Pims.Api.Services
             }
 
             _checklistRepository.CommitTransaction();
-            return _dispositionFileRepository.GetById(dispositionFile.Internal_Id);
+            return _dispositionFileRepository.GetById(dispositionFileId);
         }
 
         public List<DispositionFileExportModel> GetDispositionFileExport(DispositionFilter filter)
@@ -579,7 +585,7 @@ namespace Pims.Api.Services
             foreach (var dispositionProperty in ownedProperties)
             {
                 var property = dispositionProperty.Property;
-                _propertyRepository.TransferFileProperty(property, false, false, true);
+                _propertyRepository.TransferFileProperty(property, new Dal.Models.PropertyOwnershipState() { isDisposed = true, isPropertyOfInterest = false, isOtherInterest = false, isOwned = false});
             }
         }
 

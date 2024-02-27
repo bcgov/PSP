@@ -9,7 +9,7 @@ export interface IHealthLive {
   // Dictionary of health information.
   entries: {
     liveliness: {
-      data: {};
+      data: object;
       // Length of time this service has been healthy.
       duration: Date;
       // Status of the liveness service.

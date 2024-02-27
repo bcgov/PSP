@@ -1,7 +1,7 @@
 import { AxiosResponse } from 'axios';
 import { useCallback } from 'react';
 
-import { Api_LeaseTerm } from '@/models/api/LeaseTerm';
+import { ApiGen_Concepts_LeaseTerm } from '@/models/api/generated/ApiGen_Concepts_LeaseTerm';
 import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils';
 
 import {
@@ -18,7 +18,7 @@ import useDeepCompareMemo from '../util/useDeepCompareMemo';
  */
 export const useLeaseTermRepository = () => {
   const getLeaseTermsApi = useApiRequestWrapper<
-    (leaseId: number) => Promise<AxiosResponse<Api_LeaseTerm[], any>>
+    (leaseId: number) => Promise<AxiosResponse<ApiGen_Concepts_LeaseTerm[], any>>
   >({
     requestFunction: useCallback(async (leaseId: number) => await getLeaseTerms(leaseId), []),
     requestName: 'getLeaseTerms',
@@ -27,27 +27,36 @@ export const useLeaseTermRepository = () => {
   });
 
   const updateLeaseTermApi = useApiRequestWrapper<
-    (term: Api_LeaseTerm) => Promise<AxiosResponse<Api_LeaseTerm, any>>
+    (term: ApiGen_Concepts_LeaseTerm) => Promise<AxiosResponse<ApiGen_Concepts_LeaseTerm, any>>
   >({
-    requestFunction: useCallback(async (term: Api_LeaseTerm) => await putLeaseTerm(term), []),
+    requestFunction: useCallback(
+      async (term: ApiGen_Concepts_LeaseTerm) => await putLeaseTerm(term),
+      [],
+    ),
     requestName: 'putLeaseTerm',
     onSuccess: useAxiosSuccessHandler('Term saved successfully.'),
     onError: useAxiosErrorHandler(),
   });
 
   const addLeaseTermApi = useApiRequestWrapper<
-    (term: Api_LeaseTerm) => Promise<AxiosResponse<Api_LeaseTerm, any>>
+    (term: ApiGen_Concepts_LeaseTerm) => Promise<AxiosResponse<ApiGen_Concepts_LeaseTerm, any>>
   >({
-    requestFunction: useCallback(async (term: Api_LeaseTerm) => await postLeaseTerm(term), []),
+    requestFunction: useCallback(
+      async (term: ApiGen_Concepts_LeaseTerm) => await postLeaseTerm(term),
+      [],
+    ),
     requestName: 'postLeaseTerm',
     onSuccess: useAxiosSuccessHandler('Term saved successfully.'),
     onError: useAxiosErrorHandler(),
   });
 
   const deleteLeaseTermApi = useApiRequestWrapper<
-    (term: Api_LeaseTerm) => Promise<AxiosResponse<boolean, any>>
+    (term: ApiGen_Concepts_LeaseTerm) => Promise<AxiosResponse<boolean, any>>
   >({
-    requestFunction: useCallback(async (term: Api_LeaseTerm) => await deleteLeaseTerm(term), []),
+    requestFunction: useCallback(
+      async (term: ApiGen_Concepts_LeaseTerm) => await deleteLeaseTerm(term),
+      [],
+    ),
     requestName: 'deleteLeaseTerm',
     onSuccess: useAxiosSuccessHandler('Term deleted successfully.'),
     onError: useAxiosErrorHandler(),

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Pims.Api.Models.Concepts.FinancialCode;
 using Pims.Api.Policies;
 using Pims.Api.Services;
+using Pims.Core.Json;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -47,6 +48,7 @@ namespace Pims.Api.Controllers
         [ProducesResponseType(typeof(IEnumerable<FinancialCodeModel>), 200)]
         [ProducesResponseType(typeof(Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "financialcodes" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetFinancialCodesByType(FinancialCodeTypes type)
         {
             return new JsonResult(_financialCodeService.GetFinancialCodesByType(type));
@@ -61,6 +63,7 @@ namespace Pims.Api.Controllers
         [ProducesResponseType(typeof(IEnumerable<FinancialCodeModel>), 200)]
         [ProducesResponseType(typeof(Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "financialcodes" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetFinancialActivityCodes()
         {
             return new JsonResult(_financialCodeService.GetFinancialCodesByType(FinancialCodeTypes.FinancialActivity));
@@ -75,6 +78,7 @@ namespace Pims.Api.Controllers
         [ProducesResponseType(typeof(IEnumerable<FinancialCodeModel>), 200)]
         [ProducesResponseType(typeof(Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "financialcodes" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetChartOfAccounts()
         {
             return new JsonResult(_financialCodeService.GetFinancialCodesByType(FinancialCodeTypes.ChartOfAccounts));
@@ -89,6 +93,7 @@ namespace Pims.Api.Controllers
         [ProducesResponseType(typeof(IEnumerable<FinancialCodeModel>), 200)]
         [ProducesResponseType(typeof(Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "financialcodes" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetResponsibilities()
         {
             return new JsonResult(_financialCodeService.GetFinancialCodesByType(FinancialCodeTypes.Responsibility));
@@ -103,6 +108,7 @@ namespace Pims.Api.Controllers
         [ProducesResponseType(typeof(IEnumerable<FinancialCodeModel>), 200)]
         [ProducesResponseType(typeof(Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "financialcodes" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetYearlyFinancials()
         {
             return new JsonResult(_financialCodeService.GetFinancialCodesByType(FinancialCodeTypes.YearlyFinancial));

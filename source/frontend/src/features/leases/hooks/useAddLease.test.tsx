@@ -7,7 +7,7 @@ import configureMockStore, { MockStoreEnhanced } from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
 import * as MOCK from '@/mocks/data.mock';
-import { defaultApiLease } from '@/models/api/Lease';
+import { defaultApiLease } from '@/models/defaultInitializers';
 
 import { useAddLease } from './useAddLease';
 
@@ -40,21 +40,21 @@ describe('useAddLease functions', () => {
   });
   describe('addLease', () => {
     it('Request successful, dispatches success with correct response', async () => {
-      mockAxios.onPost().reply(200, defaultApiLease);
+      mockAxios.onPost().reply(200, defaultApiLease());
 
       const { addLease } = setup();
-      const leaseResponse = await addLease.execute(defaultApiLease, []);
+      const leaseResponse = await addLease.execute(defaultApiLease(), []);
 
       expect(find(currentStore.getActions(), { type: 'loading-bar/SHOW' })).toBeDefined();
       expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeUndefined();
-      expect(leaseResponse).toEqual(defaultApiLease);
+      expect(leaseResponse).toEqual(defaultApiLease());
     });
 
     it('Request failure, dispatches error with correct response', async () => {
       mockAxios.onPost().reply(400, MOCK.ERROR);
 
       const { addLease } = setup();
-      expect(async () => await addLease.execute(defaultApiLease, [])).rejects.toThrow();
+      expect(async () => await addLease.execute(defaultApiLease(), [])).rejects.toThrow();
     });
   });
 });

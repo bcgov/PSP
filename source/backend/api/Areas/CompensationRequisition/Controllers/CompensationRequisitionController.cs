@@ -46,6 +46,7 @@ namespace Pims.Api.Areas.CompensationRequisition.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(CompensationRequisitionModel), 200)]
         [SwaggerOperation(Tags = new[] { "compensation-requisition" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetCompensationRequisitionById([FromRoute] long id)
         {
             _logger.LogInformation(
@@ -66,6 +67,7 @@ namespace Pims.Api.Areas.CompensationRequisition.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(CompensationRequisitionModel), 200)]
         [SwaggerOperation(Tags = new[] { "compensation-requisition" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult UpdateCompensationRequisition([FromRoute] long id, [FromBody] CompensationRequisitionModel compensationRequisition)
         {
             _logger.LogInformation(

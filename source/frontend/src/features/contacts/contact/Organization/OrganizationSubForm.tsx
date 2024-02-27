@@ -7,8 +7,8 @@ import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import TooltipIcon from '@/components/common/TooltipIcon';
 import * as Styled from '@/features/contacts/contact/edit/styles';
-import { IEditableOrganizationForm } from '@/interfaces/editable-contact';
 
+import { IEditableOrganizationForm } from '../../formModels';
 import { ContactEmailList, ContactPhoneList } from '../create/components';
 
 interface IOrganizationSubFormProps {

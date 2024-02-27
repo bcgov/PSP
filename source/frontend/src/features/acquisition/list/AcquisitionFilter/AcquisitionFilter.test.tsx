@@ -5,7 +5,7 @@ import { mockLookups } from '@/mocks/lookups.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, fillInput, render, RenderOptions, waitFor } from '@/utils/test-utils';
 
-import { AcquisitionFilterModel, Api_AcquisitionFilter } from '../interfaces';
+import { AcquisitionFilterModel, ApiGen_Concepts_AcquisitionFilter } from '../interfaces';
 import { AcquisitionFilter } from './AcquisitionFilter';
 
 jest.mock('@react-keycloak/web');
@@ -97,7 +97,9 @@ describe('Acquisition Filter', () => {
     await act(async () => userEvent.click(resetButton));
 
     expect(setFilter).toHaveBeenCalledWith(
-      expect.objectContaining<Api_AcquisitionFilter>(new AcquisitionFilterModel().toApi()),
+      expect.objectContaining<ApiGen_Concepts_AcquisitionFilter>(
+        new AcquisitionFilterModel().toApi(),
+      ),
     );
   });
 });

@@ -3,9 +3,10 @@ import React from 'react';
 
 import { Form } from '@/components/common/form/Form';
 import { FormSectionClear } from '@/components/common/form/styles';
-import { Api_Insurance } from '@/models/api/Insurance';
+import { ApiGen_Concepts_Insurance } from '@/models/api/generated/ApiGen_Concepts_Insurance';
 import { ILookupCode } from '@/store/slices/lookupCodes/interfaces';
 import { withNameSpace } from '@/utils/formUtils';
+import { exists } from '@/utils/utils';
 
 import InsuranceForm from './InsuranceForm';
 import { InsuranceYupSchema } from './InsuranceYupSchema';
@@ -13,9 +14,9 @@ import { FormInsurance, IUpdateFormInsurance } from './models';
 
 export interface InsuranceEditContainerProps {
   leaseId: number;
-  insuranceList: Api_Insurance[];
+  insuranceList: ApiGen_Concepts_Insurance[];
   insuranceTypes: ILookupCode[];
-  onSave: (insurances: Api_Insurance[]) => Promise<void>;
+  onSave: (insurances: ApiGen_Concepts_Insurance[]) => Promise<void>;
   formikRef: React.RefObject<FormikProps<any>>;
 }
 
@@ -24,7 +25,7 @@ const InsuranceEditContainer: React.FunctionComponent<
 > = ({ leaseId, insuranceList, insuranceTypes, onSave, formikRef }) => {
   const handleOnChange = (e: any, codeType: any, arrayHelpers: any) => {
     if (formikRef.current) {
-      let found = initialInsurances.findIndex(x => x.insuranceType.id === codeType.id);
+      const found = initialInsurances.findIndex(x => x.insuranceType?.id === codeType.id);
 
       if (e.target.checked) {
         arrayHelpers.push(codeType.id);
@@ -38,7 +39,7 @@ const InsuranceEditContainer: React.FunctionComponent<
   };
 
   const initialInsurances = insuranceTypes.map<FormInsurance>(x => {
-    let foundInsurance = insuranceList.find(i => i.insuranceType.id === x.id);
+    const foundInsurance = insuranceList.find(i => i.insuranceType?.id === x.id);
     if (foundInsurance) {
       return FormInsurance.createFromModel(foundInsurance);
     } else {
@@ -46,7 +47,7 @@ const InsuranceEditContainer: React.FunctionComponent<
     }
   });
 
-  const initialTypes = insuranceList.map<string>(x => x.insuranceType.id);
+  const initialTypes = insuranceList.map(x => x?.insuranceType?.id).filter(exists);
 
   const initialValues: IUpdateFormInsurance = {
     insurances: initialInsurances,
@@ -59,7 +60,9 @@ const InsuranceEditContainer: React.FunctionComponent<
       validationSchema={InsuranceYupSchema}
       onSubmit={(values: IUpdateFormInsurance) => {
         return onSave(
-          values.insurances.filter(i => i.isShown).map<Api_Insurance>(x => x.toInterfaceModel()),
+          values.insurances
+            .filter(i => i.isShown)
+            .map<ApiGen_Concepts_Insurance>(x => x.toInterfaceModel()),
         );
       }}
       innerRef={formikRef}

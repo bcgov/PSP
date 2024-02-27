@@ -2,15 +2,15 @@ import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
 
 import { ColumnWithProps, DateCell } from '@/components/Table';
-import { FinancialCodeTypes } from '@/constants/financialCodeTypes';
 import { Roles } from '@/constants/roles';
 import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
-import { Api_FinancialCode } from '@/models/api/FinancialCode';
+import { ApiGen_Concepts_FinancialCode } from '@/models/api/generated/ApiGen_Concepts_FinancialCode';
+import { ApiGen_Concepts_FinancialCodeTypes } from '@/models/api/generated/ApiGen_Concepts_FinancialCodeTypes';
 import { stringToFragment } from '@/utils';
 
 import { formatFinancialCodeType } from '../../financialCodeUtils';
 
-export const columns: ColumnWithProps<Api_FinancialCode>[] = [
+export const columns: ColumnWithProps<ApiGen_Concepts_FinancialCode>[] = [
   {
     Header: 'Code value',
     accessor: 'code',
@@ -19,7 +19,7 @@ export const columns: ColumnWithProps<Api_FinancialCode>[] = [
     sortable: true,
     width: 10,
     maxWidth: 20,
-    Cell: (props: CellProps<Api_FinancialCode>) => {
+    Cell: (props: CellProps<ApiGen_Concepts_FinancialCode>) => {
       const { hasRole } = useKeycloakWrapper();
       const financialCode = props.row.original;
       if (hasRole(Roles.SYSTEM_ADMINISTRATOR)) {
@@ -49,9 +49,9 @@ export const columns: ColumnWithProps<Api_FinancialCode>[] = [
     sortable: true,
     width: 10,
     maxWidth: 20,
-    Cell: (props: CellProps<Api_FinancialCode>) => {
+    Cell: (props: CellProps<ApiGen_Concepts_FinancialCode>) => {
       return stringToFragment(
-        formatFinancialCodeType(props.row.original.type as FinancialCodeTypes),
+        formatFinancialCodeType(props.row.original.type as ApiGen_Concepts_FinancialCodeTypes),
       );
     },
   },

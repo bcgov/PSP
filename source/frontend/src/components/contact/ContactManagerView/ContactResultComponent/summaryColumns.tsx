@@ -2,17 +2,18 @@ import { FaRegBuilding, FaRegUser } from 'react-icons/fa';
 import { CellProps } from 'react-table';
 
 import { ColumnWithProps } from '@/components/Table';
-import { IContactSearchResult } from '@/interfaces';
+import { IContactSearchResult, isPersonResult } from '@/interfaces';
+import { isValidId } from '@/utils';
 
 const summaryColumns: ColumnWithProps<IContactSearchResult>[] = [
   {
     Header: '',
-    accessor: 'id',
+    id: 'id',
     align: 'center',
     width: 20,
     maxWidth: 20,
     Cell: (props: CellProps<IContactSearchResult>) =>
-      props.row.original.personId !== undefined ? (
+      isValidId(props.row.original.personId) ? (
         <FaRegUser size={20} />
       ) : (
         <FaRegBuilding size={20} />
@@ -20,14 +21,14 @@ const summaryColumns: ColumnWithProps<IContactSearchResult>[] = [
   },
   {
     Header: 'Name',
-    accessor: 'summary',
+    id: 'summary',
     align: 'left',
     clickable: true,
     sortable: true,
     width: 80,
     maxWidth: 120,
     Cell: (props: CellProps<IContactSearchResult>) =>
-      props.row.original.personId !== undefined ? (
+      isPersonResult(props.row.original) ? (
         <strong>{props.row.original.firstName + ' ' + props.row.original.surname}</strong>
       ) : (
         <span></span>
@@ -35,11 +36,14 @@ const summaryColumns: ColumnWithProps<IContactSearchResult>[] = [
   },
   {
     Header: 'Organization',
-    accessor: 'organizationName',
+    id: 'organizationName',
     sortable: true,
     align: 'left',
     width: 80,
     maxWidth: 100,
+    Cell: (props: CellProps<IContactSearchResult>) => (
+      <span>{props.row.original.organizationName}</span>
+    ),
   },
   {
     Header: 'Mailing address',

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Pims.Api.Models.Concepts.AcquisitionFile;
 using Pims.Api.Policies;
 using Pims.Api.Services;
+using Pims.Core.Json;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -67,6 +68,7 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(AgreementModel), 200)]
         [SwaggerOperation(Tags = new[] { "acquisitionfile" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult UpdateAcquisitionFileAgreements([FromRoute] long id, [FromBody] List<AgreementModel> agreements)
         {
             var agreementEntities = _mapper.Map<List<Dal.Entities.PimsAgreement>>(agreements);

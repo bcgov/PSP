@@ -2,7 +2,7 @@ import { AxiosResponse } from 'axios';
 import { useCallback } from 'react';
 
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
-import { Api_H120Category } from '@/models/api/H120Category';
+import { ApiGen_Concepts_H120Category } from '@/models/api/generated/ApiGen_Concepts_H120Category';
 import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils';
 
 import { getH120Categories as getH120CategoriesApi } from './../pims-api/useApiH120Category';
@@ -12,7 +12,7 @@ import { getH120Categories as getH120CategoriesApi } from './../pims-api/useApiH
  */
 export const useH120CategoryRepository = () => {
   const getH120Categories = useApiRequestWrapper<
-    () => Promise<AxiosResponse<Api_H120Category[], any>>
+    () => Promise<AxiosResponse<ApiGen_Concepts_H120Category[], any>>
   >({
     requestFunction: useCallback(async () => await getH120CategoriesApi(), []),
     requestName: 'getH120Categories',

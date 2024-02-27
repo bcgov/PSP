@@ -2,9 +2,9 @@ import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
 
 import { LeaseFormModel } from '@/features/leases/models';
-import { mockApiPerson, mockOrganization } from '@/mocks/filterData.mock';
-import { getMockApiLease } from '@/mocks/lease.mock';
-import { defaultApiLease } from '@/models/api/Lease';
+import { mockApiOrganization, mockApiPerson } from '@/mocks/filterData.mock';
+import { getEmptyLeaseTenant, getMockApiLease } from '@/mocks/lease.mock';
+import { defaultApiLease } from '@/models/defaultInitializers';
 import { render, RenderOptions, screen, userEvent } from '@/utils/test-utils';
 
 import { FormTenant } from './models';
@@ -14,7 +14,7 @@ const history = createMemoryHistory();
 
 describe('PrimaryContactWarningModal component', () => {
   const setup = (
-    renderOptions: RenderOptions & { tenants?: FormTenant[]; saveCallback?: Function } = {},
+    renderOptions: RenderOptions & { tenants?: FormTenant[]; saveCallback?: () => void } = {},
   ) => {
     // render component under test
     const component = render(
@@ -35,10 +35,10 @@ describe('PrimaryContactWarningModal component', () => {
   it('renders as expected', () => {
     const { component } = setup({
       tenants: LeaseFormModel.fromApi({
-        ...defaultApiLease,
+        ...defaultApiLease(),
         tenants: [
-          { leaseId: 1, person: mockApiPerson },
-          { leaseId: 1, organization: mockOrganization },
+          { ...getEmptyLeaseTenant(), leaseId: 1, person: mockApiPerson },
+          { ...getEmptyLeaseTenant(), leaseId: 1, organization: mockApiOrganization },
         ],
       }).tenants,
     });
@@ -49,10 +49,10 @@ describe('PrimaryContactWarningModal component', () => {
     const { component } = setup({
       saveCallback: saveCallback,
       tenants: LeaseFormModel.fromApi({
-        ...defaultApiLease,
+        ...defaultApiLease(),
         tenants: [
-          { leaseId: 1, person: mockApiPerson },
-          { leaseId: 1, person: mockApiPerson },
+          { ...getEmptyLeaseTenant(), leaseId: 1, person: mockApiPerson },
+          { ...getEmptyLeaseTenant(), leaseId: 1, person: mockApiPerson },
         ],
       }).tenants,
     });
@@ -69,9 +69,9 @@ describe('PrimaryContactWarningModal component', () => {
         ...getMockApiLease(),
         tenants: [
           {
-            ...getMockApiLease().tenants[0],
-            primaryContactId: undefined,
-            primaryContact: undefined,
+            ...getMockApiLease().tenants![0],
+            primaryContactId: null,
+            primaryContact: null,
           },
         ],
       }).tenants,

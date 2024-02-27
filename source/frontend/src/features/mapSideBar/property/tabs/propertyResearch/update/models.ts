@@ -1,7 +1,7 @@
-import {
-  Api_ResearchFileProperty,
-  Api_ResearchFilePropertyPurposeType,
-} from '@/models/api/ResearchFile';
+import { ApiGen_Concepts_PropertyPurpose } from '@/models/api/generated/ApiGen_Concepts_PropertyPurpose';
+import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Concepts_ResearchFile';
+import { ApiGen_Concepts_ResearchFileProperty } from '@/models/api/generated/ApiGen_Concepts_ResearchFileProperty';
+import { exists } from '@/utils/utils';
 
 export class PropertyResearchFilePurposeFormModel {
   public id?: number;
@@ -10,24 +10,27 @@ export class PropertyResearchFilePurposeFormModel {
   public version?: number;
 
   public static fromApi(
-    base: Api_ResearchFilePropertyPurposeType,
+    base: ApiGen_Concepts_PropertyPurpose,
   ): PropertyResearchFilePurposeFormModel {
-    var newModel = new PropertyResearchFilePurposeFormModel();
+    const newModel = new PropertyResearchFilePurposeFormModel();
     newModel.id = base.id;
-    newModel.propertyPurposeTypeCode = base.propertyPurposeType?.id;
-    newModel.propertyPurposeTypeDescription = base.propertyPurposeType?.description;
-    newModel.version = base.rowVersion;
+    newModel.propertyPurposeTypeCode = base.propertyPurposeType?.id ?? undefined;
+    newModel.propertyPurposeTypeDescription = base.propertyPurposeType?.description ?? undefined;
+    newModel.version = base.rowVersion ?? undefined;
     return newModel;
   }
 
-  public toApi(): Api_ResearchFilePropertyPurposeType {
+  public toApi(): ApiGen_Concepts_PropertyPurpose {
     return {
-      id: this.id,
+      id: this.id ?? 0,
       propertyPurposeType: {
-        id: this.propertyPurposeTypeCode,
-        description: this.propertyPurposeTypeDescription,
+        id: this.propertyPurposeTypeCode ?? null,
+        description: this.propertyPurposeTypeDescription ?? null,
+        displayOrder: null,
+        isDisabled: false,
       },
-      rowVersion: this.version,
+      rowVersion: this.version ?? null,
+      propertyResearchFileId: 0,
     };
   }
 }
@@ -41,65 +44,64 @@ export class UpdatePropertyFormModel {
   public documentReference?: string;
   public researchSummary?: string;
   public propertyId?: number;
-  public researchFileId?: number;
-  public researchFileVersion?: number;
+
   public purposeTypes?: PropertyResearchFilePurposeFormModel[];
   public rowVersion?: number;
 
-  public static fromApi(base: Api_ResearchFileProperty): UpdatePropertyFormModel {
-    var model = new UpdatePropertyFormModel();
-    model.id = base.id;
-    model.propertyName = base.propertyName;
-    model.displayOrder = base.displayOrder;
-    model.isLegalOpinionRequired =
-      base.isLegalOpinionRequired === undefined
-        ? 'unknown'
-        : base.isLegalOpinionRequired
-        ? 'yes'
-        : 'no';
-    model.isLegalOpinionObtained =
-      base.isLegalOpinionObtained === undefined
-        ? 'unknown'
-        : base.isLegalOpinionObtained
-        ? 'yes'
-        : 'no';
-    model.documentReference = base.documentReference;
-    model.researchSummary = base.researchSummary;
-    model.propertyId = base.property?.id;
-    model.researchFileId = base.file?.id;
-    model.researchFileVersion = base.file?.rowVersion;
+  public researchFile: ApiGen_Concepts_ResearchFile | null = null;
 
-    model.purposeTypes = base.purposeTypes?.map((x: Api_ResearchFilePropertyPurposeType) =>
+  public static fromApi(base: ApiGen_Concepts_ResearchFileProperty): UpdatePropertyFormModel {
+    const model = new UpdatePropertyFormModel();
+    model.id = base.id;
+    model.propertyName = base.propertyName ?? undefined;
+    model.displayOrder = base.displayOrder ?? undefined;
+    model.isLegalOpinionRequired = !exists(base.isLegalOpinionRequired)
+      ? 'unknown'
+      : base.isLegalOpinionRequired
+      ? 'yes'
+      : 'no';
+    model.isLegalOpinionObtained = !exists(base.isLegalOpinionObtained)
+      ? 'unknown'
+      : base.isLegalOpinionObtained
+      ? 'yes'
+      : 'no';
+    model.documentReference = base.documentReference ?? undefined;
+    model.researchSummary = base.researchSummary ?? undefined;
+    model.propertyId = base.property?.id;
+    model.researchFile = base.file;
+
+    model.purposeTypes = base.purposeTypes?.map((x: ApiGen_Concepts_PropertyPurpose) =>
       PropertyResearchFilePurposeFormModel.fromApi(x),
     );
-    model.rowVersion = base.rowVersion;
+    model.rowVersion = base.rowVersion ?? undefined;
     return model;
   }
 
-  public toApi(): Api_ResearchFileProperty {
+  public toApi(): ApiGen_Concepts_ResearchFileProperty {
     return {
-      id: this.id,
-      propertyId: this.propertyId,
-      propertyName: this.propertyName,
-      displayOrder: this.displayOrder,
+      id: this.id ?? 0,
+      propertyId: this.propertyId ?? 0,
+      propertyName: this.propertyName ?? null,
+      displayOrder: this.displayOrder ?? null,
       isLegalOpinionRequired:
-        this.isLegalOpinionRequired === undefined || this.isLegalOpinionRequired === 'unknown'
-          ? undefined
+        !exists(this.isLegalOpinionRequired) || this.isLegalOpinionRequired === 'unknown'
+          ? null
           : this.isLegalOpinionRequired === 'yes'
           ? true
           : false,
       isLegalOpinionObtained:
-        this.isLegalOpinionObtained === undefined || this.isLegalOpinionObtained === 'unknown'
-          ? undefined
+        !exists(this.isLegalOpinionObtained) || this.isLegalOpinionObtained === 'unknown'
+          ? null
           : this.isLegalOpinionObtained === 'yes'
           ? true
           : false,
-      documentReference: this.documentReference,
-      researchSummary: this.researchSummary,
-      property: { id: this.propertyId },
-      file: { id: this.researchFileId, rowVersion: this.researchFileVersion },
-      purposeTypes: this.purposeTypes?.map(x => x.toApi()),
-      rowVersion: this.rowVersion,
+      documentReference: this.documentReference ?? null,
+      researchSummary: this.researchSummary ?? null,
+      property: null,
+      fileId: this.researchFile?.id ?? 0,
+      file: this.researchFile,
+      purposeTypes: this.purposeTypes?.map(x => x.toApi()) ?? null,
+      rowVersion: this.rowVersion ?? null,
     };
   }
 }

@@ -6,19 +6,19 @@ import { LeaseFormModel } from '@/features/leases/models';
 import NoteListView from '@/features/notes/list/NoteListView';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
-import { Api_Lease } from '@/models/api/Lease';
+import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 
 import { LeaseContainerState, LeasePageNames, leasePages } from '../LeaseContainer';
 import { LeaseFileTabNames, LeaseFileTabs, LeaseTabFileView } from './LeaseFileTabs';
 import { LeaseTab } from './LeaseTab';
 
 export interface ILeaseTabsContainerProps {
-  lease?: Api_Lease;
+  lease?: ApiGen_Concepts_Lease;
   refreshLease: () => void;
-  setLease: (lease: Api_Lease) => void;
+  setLease: (lease: ApiGen_Concepts_Lease) => void;
   setContainerState: (value: Partial<LeaseContainerState>) => void;
   isEditing: boolean;
-  onEdit?: () => {};
+  onEdit?: () => object;
   activeTab?: LeaseFileTabNames;
   formikRef: React.RefObject<FormikProps<LeaseFormModel>>;
   onSuccess: () => void;
@@ -161,7 +161,7 @@ export const LeaseTabsContainer: React.FC<ILeaseTabsContainerProps> = ({
     });
   }
 
-  var defaultTab = LeaseFileTabNames.fileDetails;
+  const defaultTab = LeaseFileTabNames.fileDetails;
 
   return (
     <LeaseFileTabs

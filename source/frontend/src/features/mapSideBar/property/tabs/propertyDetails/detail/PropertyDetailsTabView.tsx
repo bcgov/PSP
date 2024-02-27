@@ -20,10 +20,12 @@ import { Claims, PropertyTenureTypes } from '@/constants/index';
 import { useQuery } from '@/hooks/use-query';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
+import { exists, isValidId } from '@/utils';
 import { booleanToYesNoUnknownString, stringToBoolean } from '@/utils/formUtils';
 import { getPrettyLatLng } from '@/utils/mapPropertyUtils';
 
 import { IPropertyDetailsForm, readOnlyMultiSelectStyle } from './PropertyDetailsTabView.helpers';
+import { SubdivisionContainer } from './propertyOperation/SubdivisionContainer';
 
 export interface IPropertyDetailsTabView {
   property?: IPropertyDetailsForm;
@@ -75,11 +77,11 @@ export const PropertyDetailsTabView: React.FunctionComponent<IPropertyDetailsTab
         )}
       </StyledEditWrapper>
       <Section header="Property Address">
-        {address !== undefined ? (
+        {exists(address) ? (
           <>
             <StyledSubtleText>
               This is the address stored in PIMS application for this property and will be used
-              wherever this property's address is needed.
+              wherever this property&apos;s address is needed.
             </StyledSubtleText>
             <SectionField label="Address">
               {address?.streetAddress1 && <div>{address?.streetAddress1}</div>}
@@ -173,7 +175,10 @@ export const PropertyDetailsTabView: React.FunctionComponent<IPropertyDetailsTab
 
       <Section header="Measurements">
         <SectionField label="Area" labelWidth="2">
-          <AreaContainer landArea={property?.landArea} unitCode={property?.areaUnit?.id} />
+          <AreaContainer
+            landArea={property?.landArea ?? undefined}
+            unitCode={property?.areaUnit?.id ?? undefined}
+          />
         </SectionField>
 
         <SectionField label="Is this a volumetric parcel?" labelWidth="auto" className="py-4">
@@ -202,9 +207,9 @@ export const PropertyDetailsTabView: React.FunctionComponent<IPropertyDetailsTab
             <Row>
               <Col>
                 <VolumeContainer
-                  volumetricMeasurement={property?.volumetricMeasurement}
-                  volumetricUnit={property?.volumetricUnit?.id}
-                  volumetricType={property?.volumetricType?.description}
+                  volumetricMeasurement={property?.volumetricMeasurement ?? undefined}
+                  volumetricUnit={property?.volumetricUnit?.id ?? undefined}
+                  volumetricType={property?.volumetricType?.description ?? undefined}
                 />
               </Col>
               <Col>
@@ -220,6 +225,12 @@ export const PropertyDetailsTabView: React.FunctionComponent<IPropertyDetailsTab
       <Section header="Notes">
         <p>{property?.notes}</p>
       </Section>
+
+      {isValidId(property?.id) && (
+        <Section header="Subdivision History">
+          <SubdivisionContainer propertyId={property!.id} />
+        </Section>
+      )}
     </StyledSummarySection>
   );
 };
