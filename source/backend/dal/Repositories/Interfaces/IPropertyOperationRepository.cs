@@ -1,10 +1,9 @@
-
 using System.Collections.Generic;
 using Pims.Dal.Entities;
 
 namespace Pims.Dal.Repositories
 {
-    public interface IPropertyOperationRepository : IRepository
+    public interface IPropertyOperationRepository : IRepository<PimsPropertyOperation>
     {
         IList<PimsPropertyOperation> GetByOperationNumber(long operationNumber);
 
@@ -13,5 +12,7 @@ namespace Pims.Dal.Repositories
         long GetRowVersion(long id);
 
         int Count();
+
+        public IEnumerable<PimsPropertyOperation> AddRange(IEnumerable<PimsPropertyOperation> operations);
     }
 }

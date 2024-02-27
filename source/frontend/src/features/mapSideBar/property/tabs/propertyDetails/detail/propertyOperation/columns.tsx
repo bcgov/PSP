@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
 
 import { ColumnWithProps } from '@/components/Table';
+import { AreaUnitTypes } from '@/constants';
+import { convertArea, formatNumber } from '@/utils';
 
 import { PropertySubdivisionResult } from './SubdivisionView';
 
@@ -55,14 +57,17 @@ const columns: ColumnWithProps<PropertySubdivisionResult>[] = [
     },
   },
   {
-    Header: 'Area (ha)',
+    Header: 'Area (sq m)',
     accessor: 'area',
     align: 'right',
     clickable: true,
     width: 10,
     maxWidth: 20,
     Cell: (props: CellProps<PropertySubdivisionResult>) => {
-      return <> {props.row.original.area} </>;
+      const landArea = props.row.original.area;
+      const landUnitCode = props.row.original.areaUnitCode;
+      const meters = convertArea(landArea, landUnitCode, AreaUnitTypes.SquareMeters);
+      return <> {formatNumber(meters, 0, 2)} </>;
     },
   },
 ];

@@ -14,6 +14,7 @@ export enum SideBarType {
   PROJECT = 'PROJECT',
   PROPERTY_INFORMATION = 'PROPERTY_INFORMATION',
   DISPOSITION = 'DISPOSITION',
+  SUBDIVISION = 'SUBDIVISION',
 }
 
 // Local context for the machine - Not related to React Context!
@@ -22,6 +23,7 @@ export type MachineContext = {
   mapLocationSelected: LatLngLiteral | null;
   mapLocationFeatureDataset: LocationFeatureDataset | null;
   selectedFeatureDataset: LocationFeatureDataset | null;
+  selectingComponentId: string | null;
 
   mapFeatureData: MapFeatureData;
 
