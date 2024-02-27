@@ -10,8 +10,8 @@ import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineCo
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
 import { useInitialMapSelectorProperties } from '@/hooks/useInitialMapSelectorProperties';
-import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Concepts_ResearchFile';
 import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
+import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Concepts_ResearchFile';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { featuresetToMapProperty } from '@/utils/mapPropertyUtils';
 

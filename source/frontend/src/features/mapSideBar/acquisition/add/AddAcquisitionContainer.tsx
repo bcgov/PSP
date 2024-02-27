@@ -8,8 +8,8 @@ import { ReactComponent as RealEstateAgent } from '@/assets/images/real-estate-a
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
-import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
+import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { featuresetToMapProperty } from '@/utils/mapPropertyUtils';
 
 import { PropertyForm } from '../../shared/models';
