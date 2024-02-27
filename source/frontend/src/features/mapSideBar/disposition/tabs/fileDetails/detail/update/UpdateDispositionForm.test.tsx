@@ -71,9 +71,7 @@ describe('UpdateDispositionForm component', () => {
   let initialValues: DispositionFormModel;
 
   beforeEach(() => {
-    initialValues = DispositionFormModel.fromApi(
-      mockDispositionFileResponse(),
-    );
+    initialValues = DispositionFormModel.fromApi(mockDispositionFileResponse());
   });
 
   afterEach(() => {

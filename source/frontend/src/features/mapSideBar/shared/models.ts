@@ -1,6 +1,7 @@
 import { Polygon, Position } from 'geojson';
 
 import { IMapProperty } from '@/components/propertySelector/models';
+import { AreaUnitTypes } from '@/constants';
 import { ApiGen_Concepts_Address } from '@/models/api/generated/ApiGen_Concepts_Address';
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
@@ -80,6 +81,9 @@ export class PropertyForm {
   public isOwned?: boolean;
   public isDisposed?: boolean;
   public isOtherInterest?: boolean;
+  public landArea?: number;
+  public areaUnit?: AreaUnitTypes;
+  public isRetired?: boolean;
 
   private constructor(baseModel?: Partial<PropertyForm>) {
     Object.assign(this, baseModel);
@@ -99,6 +103,8 @@ export class PropertyForm {
       district: model.district,
       districtName: model.districtName,
       formattedAddress: model.address,
+      landArea: model.landArea,
+      areaUnit: model.areaUnit,
     });
   }
 
@@ -143,6 +149,34 @@ export class PropertyForm {
       ? AddressForm.fromApi(model.property?.address)
       : undefined;
     newForm.legalDescription = model.property?.landLegalDescription ?? undefined;
+    newForm.isRetired = model.property?.isRetired ?? undefined;
+
+    return newForm;
+  }
+
+  public static fromPropertyApi(model: ApiGen_Concepts_Property): PropertyForm {
+    const newForm = new PropertyForm();
+    newForm.id = model.id;
+    newForm.apiId = model?.id;
+    newForm.pid = model?.pid?.toString();
+    newForm.pin = model?.pin?.toString();
+    newForm.latitude = model?.latitude ?? undefined;
+    newForm.longitude = model?.longitude ?? undefined;
+    newForm.planNumber = model?.planNumber ?? undefined;
+    newForm.region = model?.region?.id ?? undefined;
+    newForm.district = model?.district?.id ?? undefined;
+    newForm.rowVersion = model.rowVersion ?? undefined;
+    newForm.propertyRowVersion = model?.rowVersion ?? undefined;
+    newForm.isOwned = model?.isOwned;
+    newForm.isDisposed = model?.isDisposed;
+    newForm.isOtherInterest = model?.isOtherInterest;
+    newForm.formattedAddress = exists(model?.address) ? formatApiAddress(model?.address) : '';
+    newForm.address = model?.address ? AddressForm.fromApi(model?.address) : undefined;
+    newForm.legalDescription = model?.landLegalDescription ?? undefined;
+    newForm.landArea = model?.landArea ?? undefined;
+    newForm.areaUnit = model?.areaUnit
+      ? AreaUnitTypes[model?.areaUnit?.id as keyof typeof AreaUnitTypes]
+      : undefined;
 
     return newForm;
   }
@@ -169,6 +203,7 @@ export class PropertyForm {
       isOtherInterest: this.isOtherInterest ?? false,
       address: this.address?.toApi() ?? null,
       landLegalDescription: this.legalDescription ?? null,
+      isRetired: this.isRetired ?? false,
       propertyType: null,
       anomalies: null,
       tenures: null,
@@ -176,8 +211,8 @@ export class PropertyForm {
       status: null,
       dataSource: null,
       dataSourceEffectiveDateOnly: EpochIsoDateTime,
-      latitude: null,
-      longitude: null,
+      latitude: this.latitude ?? null,
+      longitude: this.longitude ?? null,
       name: null,
       description: null,
       isSensitive: false,
@@ -189,8 +224,10 @@ export class PropertyForm {
       pphStatusTypeCode: null,
       isPropertyOfInterest: false,
       isVisibleToOtherAgencies: false,
-      areaUnit: null,
-      landArea: null,
+      areaUnit: this.areaUnit
+        ? { id: this.areaUnit, description: null, isDisabled: false, displayOrder: 0 }
+        : null,
+      landArea: this.landArea ?? null,
       isVolumetricParcel: null,
       volumetricMeasurement: null,
       volumetricUnit: null,

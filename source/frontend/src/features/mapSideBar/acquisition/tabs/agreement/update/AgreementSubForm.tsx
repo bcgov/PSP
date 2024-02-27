@@ -41,13 +41,15 @@ export const AgreementSubForm: React.FunctionComponent<IAgreementSubFormProps> =
 
   const agreementStatusOptions = getOptionsByType(API.AGREEMENT_STATUS_TYPES);
   const agreement = getIn(formikProps.values, nameSpace);
+  const touched = getIn(formikProps.touched, nameSpace);
+  const initialAgreement = getIn(formikProps.initialValues, nameSpace);
 
   const { setDisplayModal, setModalContent } = useModalContext();
   const setFieldValue = formikProps.setFieldValue;
   useEffect(() => {
     if (
-      agreement.agreementStatusTypeCode !== ApiGen_CodeTypes_AgreementStatusTypes.CANCELLED &&
-      !!agreement.cancellationNote
+      agreement?.agreementStatusTypeCode !== ApiGen_CodeTypes_AgreementStatusTypes.CANCELLED &&
+      !!agreement?.cancellationNote
     ) {
       setModalContent({
         variant: 'warning',
@@ -70,7 +72,15 @@ export const AgreementSubForm: React.FunctionComponent<IAgreementSubFormProps> =
       });
       setDisplayModal(true);
     }
-  }, [agreement, setFieldValue, nameSpace, setDisplayModal, setModalContent]);
+  }, [
+    agreement,
+    setFieldValue,
+    nameSpace,
+    setDisplayModal,
+    setModalContent,
+    touched?.agreementStatusTypeCode,
+    initialAgreement?.agreementStatusTypeCode,
+  ]);
 
   return (
     <>

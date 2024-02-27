@@ -42,3 +42,7 @@ Scenario: 06. Disposition File Notes
 Scenario: 07. Disposition File from PIN
 	Given I create a new Disposition File from row number 12
 	Then A new Disposition file is created successfully
+
+Scenario: 08. Disposition Files List View
+	Given I search for an existing Disposition File from row number 2
+	Then Expected Disposition File Content is displayed on Disposition File List View

@@ -16,7 +16,7 @@ namespace Pims.Dal.Repositories
         #region Constructors
 
         /// <summary>
-        /// Creates a new instance of a NoteRepository, and initializes it with the specified arguments.
+        /// Creates a new instance of a EntityNoteRepository, and initializes it with the specified arguments.
         /// </summary>
         /// <param name="dbContext"></param>
         /// <param name="user"></param>

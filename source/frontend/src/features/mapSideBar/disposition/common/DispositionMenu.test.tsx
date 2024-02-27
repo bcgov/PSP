@@ -128,7 +128,7 @@ describe('DispositionMenu component', () => {
     const { queryByTitle, queryByTestId } = setup(
       {
         dispositionFile: {
-          ...(mockDispositionFileResponse()),
+          ...mockDispositionFileResponse(),
           fileStatusTypeCode: toTypeCode(DispositionFileStatus.Complete),
         },
         items: testData,
@@ -147,7 +147,7 @@ describe('DispositionMenu component', () => {
     const { queryByTitle, queryByTestId } = setup(
       {
         dispositionFile: {
-          ...(mockDispositionFileResponse()),
+          ...mockDispositionFileResponse(),
           fileStatusTypeCode: toTypeCode(DispositionFileStatus.Complete),
         },
         items: testData,

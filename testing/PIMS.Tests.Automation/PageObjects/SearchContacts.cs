@@ -200,14 +200,12 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueContentEquals(searchContactFirstEmailDiv, email);
             AssertTrueContentEquals(searchContactFirstMailAddressDiv, address);
             AssertTrueContentEquals(searchContactFirstCityDiv, city);
+
             if (country == "Canada" || country == "United States of America")
-            {
                 AssertTrueContentEquals(searchContactFirstProvinceDiv, province);
-            }
             else
-            {
                 AssertTrueContentEquals(searchContactFirstProvinceDiv, "");
-            }
+            
             AssertTrueIsDisplayed(searchContactUpdateBttn);
             AssertTrueIsDisplayed(searchContactViewBttn);
             
