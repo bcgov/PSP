@@ -86,7 +86,6 @@ export const AddAcquisitionForm = React.forwardRef<
           <AddAcquisitionDetailSubForm
             formikProps={formikProps}
             onSubmit={onSubmit}
-            initialValues={initialValues}
             showDiffMinistryRegionModal={showDiffMinistryRegionModal}
             setShowDiffMinistryRegionModal={setShowDiffMinistryRegionModal}
           ></AddAcquisitionDetailSubForm>
@@ -98,7 +97,6 @@ export const AddAcquisitionForm = React.forwardRef<
 
 const AddAcquisitionDetailSubForm: React.FC<{
   formikProps: FormikProps<AcquisitionForm>;
-  initialValues: AcquisitionForm;
   onSubmit: (
     values: AcquisitionForm,
     setSubmitting: (isSubmitting: boolean) => void,
@@ -106,13 +104,7 @@ const AddAcquisitionDetailSubForm: React.FC<{
   ) => void | Promise<any>;
   showDiffMinistryRegionModal: boolean;
   setShowDiffMinistryRegionModal: React.Dispatch<React.SetStateAction<boolean>>;
-}> = ({
-  formikProps,
-  initialValues,
-  onSubmit,
-  showDiffMinistryRegionModal,
-  setShowDiffMinistryRegionModal,
-}) => {
+}> = ({ formikProps, onSubmit, showDiffMinistryRegionModal, setShowDiffMinistryRegionModal }) => {
   const [projectProducts, setProjectProducts] = React.useState<
     ApiGen_Concepts_Product[] | undefined
   >(undefined);
