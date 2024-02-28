@@ -6,6 +6,7 @@ import styled from 'styled-components';
 
 import { Form } from '@/components/common/form/Form';
 import GenericModal from '@/components/common/GenericModal';
+import OverflowTip from '@/components/common/OverflowTip';
 import { Api_GenerateOwner } from '@/models/generate/GenerateOwner';
 import { withNameSpace } from '@/utils/formUtils';
 
@@ -82,12 +83,12 @@ const GenerateLetterRecipientsModal: React.FunctionComponent<
                             value={rec.id}
                             onChange={formikProps.handleChange}
                           />
-                          <Form.Check.Label htmlFor={'recipient-' + index}>
+                          <Form.Check.Label className="w-100" htmlFor={'recipient-' + index}>
                             {rec.interestType === 'OWNR' && (
-                              <label>
-                                {rec.generateModel?.owner_string}
+                              <>
+                                <OverflowTip fullText={rec.generateModel?.owner_string} />
                                 <span className="type">{rec.getInterestTypeString()}</span>
-                              </label>
+                              </>
                             )}
                             {rec.interestType !== 'OWNR' && rec.getContactRouteParam() && (
                               <StyledLinkWrapper>
@@ -160,6 +161,7 @@ const StyledDiv = styled.div`
   border-radius: 0.5rem;
   max-height: 180px;
   overflow-y: auto;
+  overflow-x: hidden;
   padding: 0.5rem 1.5rem;
 
   .form-check {
@@ -171,7 +173,7 @@ const StyledDiv = styled.div`
   .form-group {
     label {
       font-family: BcSans-Bold;
-      line-height: 1rem;
+      line-height: 1.5rem;
       color: ${props => props.theme.css.textColor};
 
       span.type {
@@ -179,6 +181,7 @@ const StyledDiv = styled.div`
         font-family: BCSans-Italic;
         font-style: italic;
         margin-left: 0.5rem;
+        width: 100%;
       }
     }
   }
