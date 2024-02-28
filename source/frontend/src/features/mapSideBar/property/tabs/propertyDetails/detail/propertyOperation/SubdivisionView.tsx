@@ -8,7 +8,7 @@ import { getApiPropertyName, prettyFormatDateTime } from '@/utils';
 
 import columns from './columns';
 
-interface ISubdivisionViewProps {
+export interface ISubdivisionViewProps {
   operationTimeStamp: UtcIsoDateTime;
   sourceProperties: ApiGen_Concepts_Property[];
   destinationProperties: ApiGen_Concepts_Property[];
