@@ -115,6 +115,7 @@ const columns: ColumnWithProps<ApiGen_Concepts_Lease>[] = [
     sortable: true,
     width: 20,
     maxWidth: 20,
+    accessor: 'fileStatusTypeCode',
     Cell: renderTypeCode,
   },
 ];
@@ -140,6 +141,8 @@ export function LeaseSearchResults(props: ILeaseSearchResultsProps) {
     ({ pageIndex }: { pageIndex: number }) => setPageIndex && setPageIndex(pageIndex),
     [setPageIndex],
   );
+
+  console.log(results);
 
   return (
     <Table<ApiGen_Concepts_Lease>
