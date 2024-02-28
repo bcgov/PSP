@@ -142,8 +142,6 @@ export function LeaseSearchResults(props: ILeaseSearchResultsProps) {
     [setPageIndex],
   );
 
-  console.log(results);
-
   return (
     <Table<ApiGen_Concepts_Lease>
       name="leasesTable"
