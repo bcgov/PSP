@@ -1,4 +1,7 @@
 PSP_PIMS | Development Sprint: S75.00 | Design Sprint: 74 | Date: 2024-Feb-27
+- Altered tables:
+  - PIMS_PROPERTY
+  - PIMS_PROPERTY_HIST
 - Altered seed scripts:
   - 135_DML_PIMS_PROP_MGMT_ACTIVITY_TYPE.sql
   - 136_DML_PIMS_PROP_MGMT_ACTIVITY_SUBTYPE.sql
