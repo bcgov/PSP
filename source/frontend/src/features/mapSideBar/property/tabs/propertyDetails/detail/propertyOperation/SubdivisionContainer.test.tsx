@@ -1,8 +1,7 @@
-
 import { createMemoryHistory } from 'history';
 import { Claims } from '@/constants/index';
 import { render, RenderOptions } from '@/utils/test-utils';
-import { ISubdivisionContainerProps, SubdivisionContainer } from "./SubdivisionContainer";
+import { ISubdivisionContainerProps, SubdivisionContainer } from './SubdivisionContainer';
 import { ISubdivisionViewProps } from './SubdivisionView';
 import { usePropertyOperationRepository } from '@/hooks/repositories/usePropertyOperationRepository';
 import { getEmptyPropertyOperation } from '@/mocks/propertyOperation.mock';
@@ -33,17 +32,26 @@ jest.mock('@/hooks/repositories/usePimsPropertyRepository');
 let subdivisionViewsProps: ISubdivisionViewProps[] = [];
 const mockView: React.FunctionComponent<ISubdivisionViewProps> = props => {
   subdivisionViewsProps.push(props);
-  return <div><span>Test view</span><span>source:{props.sourceProperties.length}</span><span>destination:{props.destinationProperties.length}</span></div>;
+  return (
+    <div>
+      <span>Test view</span>
+      <span>source:{props.sourceProperties.length}</span>
+      <span>destination:{props.destinationProperties.length}</span>
+    </div>
+  );
 };
 
 describe('SubdivisionContainer component', () => {
-  const setup = (renderOptions: RenderOptions & Partial<ISubdivisionContainerProps> = { propertyId: 1 }) => {
-
+  const setup = (
+    renderOptions: RenderOptions & Partial<ISubdivisionContainerProps> = { propertyId: 1 },
+  ) => {
     const { propertyId, ...rest } = renderOptions;
-    const component = render(<SubdivisionContainer propertyId={propertyId ?? 0} View={mockView} />, { ...rest, store: storeState, claims: [Claims.PROPERTY_VIEW], history, });
+    const component = render(
+      <SubdivisionContainer propertyId={propertyId ?? 0} View={mockView} />,
+      { ...rest, store: storeState, claims: [Claims.PROPERTY_VIEW], history },
+    );
 
     return { ...component };
-
   };
   beforeEach(() => {
     mockGetPropertyOperations.mockReturnValue([]);
@@ -66,7 +74,7 @@ describe('SubdivisionContainer component', () => {
         sourcePropertyId: 3,
         destinationPropertyId: 4,
         propertyOperationNo: 2,
-      }
+      },
     ]);
     mockGetProperty.mockReturnValue({ ...getEmptyProperty(), id: 1 });
     mockGetProperty.mockReturnValueOnce({ ...getEmptyProperty(), id: 2 });
@@ -94,7 +102,7 @@ describe('SubdivisionContainer component', () => {
         sourcePropertyId: 3,
         destinationPropertyId: 4,
         propertyOperationNo: 1,
-      }
+      },
     ]);
     mockGetProperty.mockReturnValue({ ...getEmptyProperty(), id: 1 });
     mockGetProperty.mockReturnValueOnce({ ...getEmptyProperty(), id: 2 });
@@ -106,4 +114,3 @@ describe('SubdivisionContainer component', () => {
     expect(mockGetProperty).toHaveBeenCalledTimes(4);
   });
 });
-
