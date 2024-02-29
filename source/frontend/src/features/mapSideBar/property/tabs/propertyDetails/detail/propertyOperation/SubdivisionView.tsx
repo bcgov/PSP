@@ -1,6 +1,7 @@
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { Table } from '@/components/Table';
+import { AreaUnitTypes } from '@/constants';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { UtcIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { getApiPropertyName, prettyFormatDateTime } from '@/utils';
@@ -20,6 +21,7 @@ export interface PropertySubdivisionResult {
   plan: string;
   status: string;
   area: number;
+  areaUnitCode: string;
 }
 
 export const SubdivisionView: React.FunctionComponent<ISubdivisionViewProps> = ({
@@ -36,6 +38,7 @@ export const SubdivisionView: React.FunctionComponent<ISubdivisionViewProps> = (
       plan: property.planNumber?.toString() ?? '',
       status: property.isRetired ? 'Retired' : 'Active',
       area: property.landArea ?? 0,
+      areaUnitCode: property.areaUnit?.id ?? AreaUnitTypes.SquareMeters,
     };
   };
 

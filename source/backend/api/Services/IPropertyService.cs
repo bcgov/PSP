@@ -13,7 +13,7 @@ namespace Pims.Api.Services
 
         PimsProperty GetByPid(string pid);
 
-        PimsProperty Update(PimsProperty property);
+        PimsProperty Update(PimsProperty property, bool commitTransaction = true);
 
         IList<PimsPropertyContact> GetContacts(long propertyId);
 

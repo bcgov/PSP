@@ -33,6 +33,7 @@ export interface IMapStateMachineContext {
   pendingFitBounds: boolean;
   requestedFitBounds: LatLngBounds;
   isSelecting: boolean;
+  selectingComponentId: string | null;
   isFiltering: boolean;
   isShowingMapLayers: boolean;
   activePimsPropertyIds: number[];
@@ -52,7 +53,7 @@ export interface IMapStateMachineContext {
   setMapSearchCriteria: (searchCriteria: IPropertyFilter) => void;
   refreshMapProperties: () => void;
   prepareForCreation: () => void;
-  startSelection: () => void;
+  startSelection: (selectingComponentId?: string) => void;
   finishSelection: () => void;
   toggleMapFilter: () => void;
   toggleMapLayer: () => void;
@@ -232,9 +233,12 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
     serviceSend({ type: 'PREPARE_FOR_CREATION' });
   }, [serviceSend]);
 
-  const startSelection = useCallback(() => {
-    serviceSend({ type: 'START_SELECTION' });
-  }, [serviceSend]);
+  const startSelection = useCallback(
+    (selectingComponentId?: string) => {
+      serviceSend({ type: 'START_SELECTION', selectingComponentId });
+    },
+    [serviceSend],
+  );
 
   const finishSelection = useCallback(() => {
     serviceSend({ type: 'FINISH_SELECTION' });
@@ -307,6 +311,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         pendingFitBounds: state.matches({ mapVisible: { mapRequest: 'pendingFitBounds' } }),
         requestedFitBounds: state.context.requestedFitBounds,
         isSelecting: state.matches({ mapVisible: { featureView: 'selecting' } }),
+        selectingComponentId: state.context.selectingComponentId,
         isFiltering: isFiltering,
         isShowingMapLayers: isShowingMapLayers,
         activePimsPropertyIds: state.context.activePimsPropertyIds,

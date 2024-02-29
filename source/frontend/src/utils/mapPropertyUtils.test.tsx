@@ -21,11 +21,14 @@ import {
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { getEmptyFileProperty } from '@/mocks/fileProperty.mock';
 import { getEmptyProperty } from '@/models/defaultInitializers';
+import { AreaUnitTypes } from '@/constants';
 
 const expectedMapProperty = {
   address: '',
+  areaUnit: 'M2',
   district: 2,
   districtName: 'Vancouver Island',
+  landArea: 647.4646,
   latitude: 48.432802005,
   longitude: -123.310041775,
   name: undefined,
@@ -165,8 +168,10 @@ describe('mapPropertyUtils', () => {
       [
         {
           address: undefined,
+          areaUnit: AreaUnitTypes.SquareMeters,
           district: undefined,
           districtName: undefined,
+          landArea: 29217,
           latitude: 48.76613749999999,
           longitude: -123.46163749999998,
           name: undefined,
@@ -185,8 +190,10 @@ describe('mapPropertyUtils', () => {
       [
         {
           address: undefined,
+          areaUnit: AreaUnitTypes.SquareMeters,
           district: undefined,
           districtName: undefined,
+          landArea: 29217,
           latitude: 48.76613749999999,
           longitude: -123.46163749999998,
           name: undefined,
@@ -217,7 +224,13 @@ describe('mapPropertyUtils', () => {
     [
       { ...getMockLocationFeatureDataset(), parcelFeature: {} as any },
       '',
-      { ...expectedMapProperty, pid: undefined, planNumber: undefined, polygon: undefined },
+      {
+        ...expectedMapProperty,
+        pid: undefined,
+        planNumber: undefined,
+        polygon: undefined,
+        landArea: 0,
+      },
     ],
     [
       { ...getMockLocationFeatureDataset(), pimsFeature: {} as any },

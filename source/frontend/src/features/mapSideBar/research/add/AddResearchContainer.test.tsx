@@ -76,6 +76,7 @@ describe('AddResearchContainer component', () => {
         regionFeature: null,
         districtFeature: null,
         municipalityFeature: null,
+        selectingComponentId: null,
       },
     });
 
