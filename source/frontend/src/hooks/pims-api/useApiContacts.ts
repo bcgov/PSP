@@ -2,11 +2,11 @@ import queryString from 'query-string';
 import React from 'react';
 
 import { IContactFilter } from '@/components/contact/ContactManagerView/IContactFilter';
-import { IContactSearchResult, IPagedItems } from '@/interfaces';
-import { IEditableOrganization, IEditablePerson } from '@/interfaces/editable-contact';
+import { IContactSearchResult } from '@/interfaces';
 import { IContact } from '@/interfaces/IContact';
-import { Api_Organization } from '@/models/api/Organization';
-import { Api_Person } from '@/models/api/Person';
+import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
+import { ApiGen_Concepts_Organization } from '@/models/api/generated/ApiGen_Concepts_Organization';
+import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_Person';
 
 import { IPaginateRequest } from './interfaces/IPaginateRequest';
 import useAxiosApi from './useApi';
@@ -21,28 +21,27 @@ export const useApiContacts = () => {
   return React.useMemo(
     () => ({
       getContacts: (params: IPaginateContacts | null) =>
-        api.get<IPagedItems<IContactSearchResult>>(
+        api.get<ApiGen_Base_Page<IContactSearchResult>>(
           `/contacts/search?${params ? queryString.stringify(params) : ''}`,
         ),
       // This endpoint returns contact data in read-only form, including formatting some fields; e.g. full name = first + middle + last
       getContact: (id: string) => api.get<IContact>(`/contacts/${id}`),
-      // This is different than getContact above. This endpoints returns person data that can be edited in a form
-      getPerson: (id: number) => api.get<IEditablePerson>(`/persons/${id}`),
-      getPersonConcept: (id: number) => api.get<Api_Person>(`/persons/concept/${id}`),
-      postPerson: (person: IEditablePerson, userOverride: boolean) =>
-        api.post<IEditablePerson>(`/persons?userOverride=${userOverride}`, person),
-      putPerson: (person: IEditablePerson) =>
-        api.put<IEditablePerson>(`/persons/${person.id}`, person),
-      getOrganization: (id: number) => api.get<IEditableOrganization>(`/organizations/${id}`),
+      getPersonConcept: (id: number) => api.get<ApiGen_Concepts_Person>(`/persons/concept/${id}`),
+      postPerson: (person: ApiGen_Concepts_Person, userOverride: boolean) =>
+        api.post<ApiGen_Concepts_Person>(`/persons?userOverride=${userOverride}`, person),
+      putPerson: (person: ApiGen_Concepts_Person) =>
+        api.put<ApiGen_Concepts_Person>(`/persons/${person.id}`, person),
+      getOrganization: (id: number) =>
+        api.get<ApiGen_Concepts_Organization>(`/organizations/${id}`),
       getOrganizationConcept: (id: number) =>
-        api.get<Api_Organization>(`/organizations/concept/${id}`),
-      postOrganization: (organization: IEditableOrganization, userOverride: boolean) =>
-        api.post<IEditableOrganization>(
+        api.get<ApiGen_Concepts_Organization>(`/organizations/concept/${id}`),
+      postOrganization: (organization: ApiGen_Concepts_Organization, userOverride: boolean) =>
+        api.post<ApiGen_Concepts_Organization>(
           `/organizations?userOverride=${userOverride}`,
           organization,
         ),
-      putOrganization: (organization: IEditableOrganization) =>
-        api.put<IEditableOrganization>(`/organizations/${organization.id}`, organization),
+      putOrganization: (organization: ApiGen_Concepts_Organization) =>
+        api.put<ApiGen_Concepts_Organization>(`/organizations/${organization.id}`, organization),
     }),
     [api],
   );

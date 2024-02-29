@@ -5,8 +5,8 @@ import styled from 'styled-components';
 
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
-import { Api_Lease } from '@/models/api/Lease';
-import { Api_LeaseTerm } from '@/models/api/LeaseTerm';
+import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
+import { ApiGen_Concepts_LeaseTerm } from '@/models/api/generated/ApiGen_Concepts_LeaseTerm';
 import { withNameSpace } from '@/utils/formUtils';
 
 import { DetailTermInformationBox } from './DetailTermInformationBox';
@@ -22,16 +22,16 @@ export interface IDetailTermInformationProps {
 export const DetailTermInformation: React.FunctionComponent<
   React.PropsWithChildren<IDetailTermInformationProps>
 > = ({ nameSpace }) => {
-  const { values } = useFormikContext<Api_Lease>();
+  const { values } = useFormikContext<ApiGen_Concepts_Lease>();
   const startDate = getIn(values, withNameSpace(nameSpace, 'startDate'));
   const expiryDate = getIn(values, withNameSpace(nameSpace, 'expiryDate'));
   const terms = getIn(values, withNameSpace(nameSpace, 'terms'));
   const currentTerm = terms.find(
-    (term: Api_LeaseTerm) =>
+    (term: ApiGen_Concepts_LeaseTerm) =>
       moment().isSameOrBefore(moment(term.expiryDate), 'day') ||
       (moment().isSameOrAfter(moment(term.startDate), 'day') && term.expiryDate === null),
   );
-  const projectName = !!values?.project
+  const projectName = values?.project
     ? `${values?.project?.code} - ${values?.project?.description}`
     : '';
 

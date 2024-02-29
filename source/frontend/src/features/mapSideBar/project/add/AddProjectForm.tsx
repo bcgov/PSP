@@ -40,7 +40,7 @@ const AddProjectForm = React.forwardRef<FormikProps<ProjectForm>, IAddProjectFor
     } = props;
 
     const handleSubmit = async (values: ProjectForm, formikHelpers: FormikHelpers<ProjectForm>) => {
-      var result = await onSubmit(values, formikHelpers);
+      const result = await onSubmit(values, formikHelpers);
       formikHelpers.setSubmitting(false);
       return result;
     };
@@ -62,7 +62,7 @@ const AddProjectForm = React.forwardRef<FormikProps<ProjectForm>, IAddProjectFor
                     <Col>
                       <p>
                         Before creating a project, <Link to={'/project/list'}>do a search</Link> to
-                        ensure the the project you're creating doesn't already exist.
+                        ensure the the project you&apos;re creating doesn&apos;t already exist.
                       </p>
                     </Col>
                   </StyledRow>

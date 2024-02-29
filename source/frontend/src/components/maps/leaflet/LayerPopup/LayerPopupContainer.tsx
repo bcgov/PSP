@@ -35,8 +35,6 @@ export type LayerPopupInformation = {
   config: PopupContentConfig;
 };
 
-export interface ILayerPopupProps {}
-
 const emptyLayerPopupInformation: LayerPopupInformation = {
   latlng: { lat: 0, lng: 0 },
   title: '',
@@ -44,69 +42,68 @@ const emptyLayerPopupInformation: LayerPopupInformation = {
   config: {},
 };
 
-export const LayerPopupContainer = React.forwardRef<
-  LeafletPopup,
-  React.PropsWithChildren<ILayerPopupProps>
->((props, ref) => {
-  const mapMachine = useMapStateMachine();
+export const LayerPopupContainer = React.forwardRef<LeafletPopup, React.PropsWithChildren<unknown>>(
+  (props, ref) => {
+    const mapMachine = useMapStateMachine();
 
-  const [layerPopup, setLayerPopup] = useState<LayerPopupInformation>(emptyLayerPopupInformation);
+    const [layerPopup, setLayerPopup] = useState<LayerPopupInformation>(emptyLayerPopupInformation);
 
-  useEffect(() => {
-    if (mapMachine.mapLocationFeatureDataset) {
-      const featureSet = mapMachine.mapLocationFeatureDataset;
+    useEffect(() => {
+      if (mapMachine.mapLocationFeatureDataset) {
+        const featureSet = mapMachine.mapLocationFeatureDataset;
 
-      let popupTitle = 'Location Information';
-      let popupMapBounds: LatLngBounds | undefined;
-      let popupDisplayConfig: PopupContentConfig = {};
-      let popupProperties: GeoJsonProperties = {};
-      let popupFeature;
+        let popupTitle = 'Location Information';
+        let popupMapBounds: LatLngBounds | undefined;
+        let popupDisplayConfig: PopupContentConfig = {};
+        let popupProperties: GeoJsonProperties = {};
+        let popupFeature;
 
-      if (featureSet.parcelFeature !== null) {
-        popupTitle = 'LTSA ParcelMap data';
-        popupMapBounds = featureSet.parcelFeature.geometry
-          ? geoJSON(featureSet.parcelFeature.geometry).getBounds()
-          : undefined;
-        popupDisplayConfig = parcelLayerPopupConfig;
-        popupProperties = featureSet.parcelFeature.properties;
-        popupFeature = featureSet.parcelFeature;
-      } else if (featureSet.municipalityFeature !== null) {
-        popupTitle = 'Municipality Information';
-        popupMapBounds = featureSet.municipalityFeature.geometry
-          ? geoJSON(featureSet.municipalityFeature.geometry).getBounds()
-          : undefined;
-        popupDisplayConfig = municipalityLayerPopupConfig;
-        popupProperties = featureSet.municipalityFeature.properties;
-        popupFeature = featureSet.municipalityFeature;
+        if (featureSet.parcelFeature !== null) {
+          popupTitle = 'LTSA ParcelMap data';
+          popupMapBounds = featureSet.parcelFeature.geometry
+            ? geoJSON(featureSet.parcelFeature.geometry).getBounds()
+            : undefined;
+          popupDisplayConfig = parcelLayerPopupConfig;
+          popupProperties = featureSet.parcelFeature.properties;
+          popupFeature = featureSet.parcelFeature;
+        } else if (featureSet.municipalityFeature !== null) {
+          popupTitle = 'Municipality Information';
+          popupMapBounds = featureSet.municipalityFeature.geometry
+            ? geoJSON(featureSet.municipalityFeature.geometry).getBounds()
+            : undefined;
+          popupDisplayConfig = municipalityLayerPopupConfig;
+          popupProperties = featureSet.municipalityFeature.properties;
+          popupFeature = featureSet.municipalityFeature;
+        }
+
+        setLayerPopup({
+          latlng: mapMachine.mapLocationFeatureDataset.location,
+          title: popupTitle,
+          bounds: popupMapBounds,
+          feature: popupFeature,
+          data: popupProperties,
+          config: popupDisplayConfig,
+        });
       }
+    }, [mapMachine]);
 
-      setLayerPopup({
-        latlng: mapMachine.mapLocationFeatureDataset.location,
-        title: popupTitle,
-        bounds: popupMapBounds,
-        feature: popupFeature,
-        data: popupProperties,
-        config: popupDisplayConfig,
-      });
-    }
-  }, [mapMachine]);
-
-  return (
-    <Popup
-      ref={ref}
-      position={layerPopup.latlng}
-      offset={[0, -25]}
-      closeButton={false}
-      autoPan={false}
-      autoClose={false}
-      closeOnClick={false}
-      closeOnEscapeKey={false}
-    >
-      <LayerPopupView
-        {...props}
-        layerPopup={layerPopup}
-        featureDataset={mapMachine.mapLocationFeatureDataset}
-      />
-    </Popup>
-  );
-});
+    return (
+      <Popup
+        ref={ref}
+        position={layerPopup.latlng}
+        offset={[0, -25]}
+        closeButton={false}
+        autoPan={false}
+        autoClose={false}
+        closeOnClick={false}
+        closeOnEscapeKey={false}
+      >
+        <LayerPopupView
+          {...props}
+          layerPopup={layerPopup}
+          featureDataset={mapMachine.mapLocationFeatureDataset}
+        />
+      </Popup>
+    );
+  },
+);

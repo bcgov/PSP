@@ -1,10 +1,13 @@
-import { Api_ResearchFile } from '@/models/api/ResearchFile';
+import { getEmptyOrganization } from '@/mocks/organization.mock';
+import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Concepts_ResearchFile';
+import { getEmptyResearchFile } from '@/models/defaultInitializers';
 import { prettyFormatUTCDate } from '@/utils';
 import { render, RenderOptions } from '@/utils/test-utils';
 
 import ResearchHeader, { IResearchHeaderProps } from './ResearchHeader';
 
-const testResearchFile: Api_ResearchFile = {
+const testResearchFile: ApiGen_Concepts_ResearchFile = {
+  ...getEmptyResearchFile(),
   id: 5,
   fileName: 'New research file',
   roadName: 'Test road name',
@@ -14,6 +17,7 @@ const testResearchFile: Api_ResearchFile = {
     id: 'ACTIVE',
     description: 'Active',
     isDisabled: false,
+    displayOrder: null,
   },
   fileProperties: [],
   requestDate: '2022-04-14T00:00:00',
@@ -26,8 +30,10 @@ const testResearchFile: Api_ResearchFile = {
     id: 'HQ',
     description: 'Headquarters (HQ)',
     isDisabled: false,
+    displayOrder: null,
   },
   requestorOrganization: {
+    ...getEmptyOrganization(),
     id: 3,
     isDisabled: false,
     name: 'Dairy Queen Forever! Property Management',
@@ -35,6 +41,9 @@ const testResearchFile: Api_ResearchFile = {
     organizationAddresses: [],
     contactMethods: [],
     rowVersion: 1,
+    alias: null,
+    comment: null,
+    incorporationNumber: null,
   },
   researchFilePurposes: [],
   appCreateTimestamp: '2022-04-22T19:36:45.65',

@@ -9,8 +9,17 @@ namespace Pims.Tools.TsModelGenerator.Converter
         {
             System.Console.WriteLine(typeInfo.FullName);
 
+            var typeInfoName = string.Empty;
+            if (typeInfo.FullName == null)
+            {
+                typeInfoName = typeInfo.Namespace;
+            }
+            else
+            {
+                typeInfoName = typeInfo.FullName;
+            }
 
-            var isSystemType = typeInfo.FullName.StartsWith("System");
+            var isSystemType = typeInfoName.StartsWith("System");
 
             string? root;
             if (isSystemType)
@@ -19,7 +28,7 @@ namespace Pims.Tools.TsModelGenerator.Converter
             }
             else
             {
-                var tokenized = typeInfo.FullName.Split(".");
+                var tokenized = typeInfoName.Split(".");
                 root = tokenized[3];
             }
 

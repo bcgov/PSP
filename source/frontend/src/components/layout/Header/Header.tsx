@@ -72,7 +72,7 @@ export const Header = () => {
       </div>
       {keycloak.obj.authenticated && <UserProfile />}
       <Nav className="other">
-        {errors && errors.length ? (
+        {errors && errors.length > 0 ? (
           <FaBomb size={30} className="errors" onClick={handleShow} />
         ) : null}
       </Nav>

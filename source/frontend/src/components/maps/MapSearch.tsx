@@ -10,7 +10,7 @@ import {
   IPropertyFilter,
 } from '@/features/properties/filter/IPropertyFilter';
 
-export type MapSearchProps = {};
+export type MapSearchProps = object;
 
 /**
  * Creates a component that handles searches that affect the map.

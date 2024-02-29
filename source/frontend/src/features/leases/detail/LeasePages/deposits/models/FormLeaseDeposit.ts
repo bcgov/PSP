@@ -1,6 +1,8 @@
 import { fromContact, IContactSearchResult, toContact } from '@/interfaces';
-import { Api_SecurityDeposit } from '@/models/api/SecurityDeposit';
+import { ApiGen_Concepts_SecurityDeposit } from '@/models/api/generated/ApiGen_Concepts_SecurityDeposit';
 import { NumberFieldValue } from '@/typings/NumberFieldValue';
+import { isValidIsoDateTime } from '@/utils';
+import { toTypeCodeNullable } from '@/utils/formUtils';
 
 export class FormLeaseDeposit {
   public id?: number;
@@ -28,14 +30,16 @@ export class FormLeaseDeposit {
     return deposit;
   }
 
-  public static fromApi(baseModel: Api_SecurityDeposit): FormLeaseDeposit {
-    let model = new FormLeaseDeposit();
+  public static fromApi(baseModel: ApiGen_Concepts_SecurityDeposit): FormLeaseDeposit {
+    const model = new FormLeaseDeposit();
     model.leaseId = baseModel.leaseId ?? undefined;
     model.id = baseModel.id ?? undefined;
-    model.description = baseModel.description;
+    model.description = baseModel.description ?? '';
     model.amountPaid = baseModel.amountPaid;
-    model.depositDate = baseModel.depositDateOnly || '';
-    model.depositTypeCode = baseModel.depositType.id;
+    model.depositDate = isValidIsoDateTime(baseModel.depositDateOnly)
+      ? baseModel.depositDateOnly
+      : '';
+    model.depositTypeCode = baseModel.depositType?.id ?? '';
     model.otherTypeDescription = baseModel.otherTypeDescription || '';
     model.contactHolder =
       baseModel.contactHolder !== null ? fromContact(baseModel.contactHolder) : undefined;
@@ -44,14 +48,14 @@ export class FormLeaseDeposit {
     return model;
   }
 
-  public toApi(): Api_SecurityDeposit {
+  public toApi(): ApiGen_Concepts_SecurityDeposit {
     return {
       id: this.id ?? null,
-      leaseId: this.leaseId ?? null,
+      leaseId: this.leaseId ?? 0,
       description: this.description,
       amountPaid: this.amountPaid === '' ? 0 : this.amountPaid,
       depositDateOnly: this.depositDate,
-      depositType: { id: this.depositTypeCode },
+      depositType: toTypeCodeNullable(this.depositTypeCode),
       otherTypeDescription: this.otherTypeDescription === '' ? null : this.otherTypeDescription,
       contactHolder: this.contactHolder !== undefined ? toContact(this.contactHolder) : null,
       depositReturns: [],

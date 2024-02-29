@@ -1,23 +1,13 @@
-import { Api_Contact } from '@/models/api/Contact';
+import { ApiGen_Concepts_Contact } from '@/models/api/generated/ApiGen_Concepts_Contact';
 import { ApiGen_Concepts_Organization } from '@/models/api/generated/ApiGen_Concepts_Organization';
 import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_Person';
-import { Api_Organization } from '@/models/api/Organization';
-import { Api_Person } from '@/models/api/Person';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
-export interface IContactSearchResult {
+interface BaseContactResult {
   id: string;
-  personId?: number;
-  person?: Api_Person;
-  organizationId?: number;
-  organization?: Api_Organization;
   leaseTenantId?: number;
   isDisabled?: boolean;
   summary?: string;
-  surname?: string | null;
-  firstName?: string | null;
-  middleNames?: string | null;
-  organizationName?: string | null;
   email?: string;
   mailingAddress?: string;
   municipalityName?: string;
@@ -29,90 +19,137 @@ export interface IContactSearchResult {
   tenantType?: string;
 }
 
-export function fromContact(baseModel: Api_Contact): IContactSearchResult {
-  return {
-    id: baseModel.id,
-    personId: baseModel.person?.id,
-    organizationId: baseModel.organization?.id,
+interface PersonContactResult extends BaseContactResult {
+  personId?: number;
+  person?: ApiGen_Concepts_Person;
 
-    isDisabled: baseModel.person?.isDisabled || baseModel.organization?.isDisabled || false,
-    summary: !!baseModel.person
-      ? formatApiPersonNames(baseModel.person)
-      : baseModel.organization?.name,
-    surname: baseModel.person?.surname,
-    firstName: baseModel.person?.firstName,
-    middleNames: baseModel.person?.middleNames,
-    organizationName: baseModel.organization?.name,
-    email: '',
-    mailingAddress: '',
-    municipalityName: '',
-    provinceState: '',
-    provinceStateId: 0,
-  };
+  surname?: string;
+  firstName?: string;
+  middleNames?: string;
+
+  organizationName?: string;
+  organizationId?: never;
+  organization?: never;
+  primaryOrgContact?: never;
+  primaryOrgContactId?: never;
 }
 
-export function fromApiPerson(
-  baseModel: ApiGen_Concepts_Person | Api_Person,
-): IContactSearchResult {
-  var personOrganizations =
-    baseModel?.personOrganizations !== undefined ? baseModel.personOrganizations : undefined;
+interface OrganizationContactResult extends BaseContactResult {
+  personId?: never;
+  person?: never;
+  surname?: never;
+  firstName?: never;
+  middleNames?: never;
 
-  var organization =
-    personOrganizations && personOrganizations?.length > 0
-      ? personOrganizations[0].organization
-      : undefined;
-
-  return {
-    id: 'P' + baseModel?.id,
-    personId: baseModel?.id,
-    organizationId: organization?.id,
-    isDisabled: baseModel?.isDisabled,
-    summary: baseModel?.firstName + ' ' + baseModel?.surname,
-    surname: baseModel?.surname,
-    firstName: baseModel?.firstName,
-    middleNames: baseModel?.middleNames,
-    organizationName: organization?.name,
-    email: '',
-    mailingAddress: '',
-    municipalityName: '',
-    provinceState: '',
-    provinceStateId: 0,
-  };
+  organizationId?: number;
+  organization?: ApiGen_Concepts_Organization;
+  primaryOrgContact?: ApiGen_Concepts_Person;
+  primaryOrgContactId?: number;
+  organizationName?: string;
 }
 
-export function fromApiOrganization(
-  baseModel: ApiGen_Concepts_Organization | Api_Organization,
-): IContactSearchResult {
-  return {
-    id: 'O' + baseModel.id,
-    organizationId: baseModel.id,
-    isDisabled: baseModel.isDisabled,
-    summary: baseModel.name || '',
-    organizationName: baseModel.name,
-    email: '',
-    mailingAddress: '',
-    municipalityName: '',
-    provinceState: '',
-    provinceStateId: 0,
-  };
+export function isPersonResult(
+  contactResult: IContactSearchResult,
+): contactResult is PersonContactResult {
+  return contactResult.id.startsWith('P') && contactResult.personId !== undefined;
 }
 
-export function toContact(baseModel: IContactSearchResult): Api_Contact {
-  if (baseModel.id.startsWith('P')) {
+export type IContactSearchResult = PersonContactResult | OrganizationContactResult;
+
+export function fromContact(baseModel: ApiGen_Concepts_Contact): IContactSearchResult {
+  //NOTE: this will display a person's org if they have one, it will not display an org's person as there may be many.
+  if (baseModel?.id?.startsWith('P') === true) {
     return {
       id: baseModel.id,
-      person: baseModel.personId !== undefined ? toPerson(baseModel) : undefined,
+      person: baseModel.person ?? undefined,
+      personId: baseModel.person?.id,
+      isDisabled: baseModel.person?.isDisabled || false,
+      summary: formatApiPersonNames(baseModel.person),
+      surname: baseModel.person?.surname ?? undefined,
+      firstName: baseModel.person?.firstName ?? undefined,
+      middleNames: baseModel.person?.middleNames ?? undefined,
+      email: '',
+      mailingAddress: '',
+      municipalityName: '',
+      provinceState: '',
+      provinceStateId: 0,
+      organizationName: baseModel.organization?.name ?? undefined,
     };
   } else {
     return {
-      id: baseModel.id,
-      organization: baseModel.organizationId !== undefined ? toOrganization(baseModel) : undefined,
+      id: baseModel.id ?? '',
+      organization: baseModel.organization ?? undefined,
+      organizationId: baseModel.organization?.id,
+      isDisabled: baseModel.organization?.isDisabled || false,
+      summary: baseModel.organization?.name ?? undefined,
+      organizationName: baseModel.organization?.name ?? undefined,
+      email: '',
+      mailingAddress: '',
+      municipalityName: '',
+      provinceState: '',
+      provinceStateId: 0,
     };
   }
 }
 
-export function toPerson(baseModel?: IContactSearchResult): Api_Person | undefined {
-  if (baseModel === undefined || baseModel.id.startsWith('O')) {
+export function fromApiPerson(baseModel: ApiGen_Concepts_Person): IContactSearchResult {
+  const personOrganizations = baseModel?.personOrganizations;
+  return {
+    id: 'P' + baseModel?.id,
+    personId: baseModel?.id,
+    person: baseModel,
+    isDisabled: baseModel?.isDisabled,
+    summary: baseModel?.firstName + ' ' + baseModel?.surname,
+    surname: baseModel?.surname ?? undefined,
+    firstName: baseModel?.firstName ?? undefined,
+    middleNames: baseModel?.middleNames ?? undefined,
+    email: '',
+    mailingAddress: '',
+    municipalityName: '',
+    provinceState: '',
+    provinceStateId: 0,
+    organizationName:
+      personOrganizations && personOrganizations.length > 0
+        ? personOrganizations[0].organization?.name ?? undefined
+        : '',
+  };
+}
+
+export function fromApiOrganization(baseModel: ApiGen_Concepts_Organization): IContactSearchResult {
+  return {
+    id: 'O' + baseModel.id,
+    organizationId: baseModel.id,
+    organization: baseModel,
+    isDisabled: baseModel.isDisabled,
+    summary: baseModel.name || '',
+    organizationName: baseModel.name ?? undefined,
+    email: '',
+    mailingAddress: '',
+    municipalityName: '',
+    provinceState: '',
+    provinceStateId: 0,
+  };
+}
+
+export function toContact(baseModel: IContactSearchResult): ApiGen_Concepts_Contact {
+  if (isPersonResult(baseModel)) {
+    return {
+      id: baseModel.id,
+      person: baseModel.personId !== undefined ? toPerson(baseModel) ?? null : null,
+      organization: null,
+    };
+  } else {
+    return {
+      id: baseModel.id,
+      organization:
+        baseModel.organizationId !== undefined ? toOrganization(baseModel) ?? null : null,
+      person: null,
+    };
+  }
+}
+
+export function toPerson(baseModel?: IContactSearchResult): ApiGen_Concepts_Person | undefined {
+  if (baseModel === undefined || !isPersonResult(baseModel)) {
     return undefined;
   }
   return {
@@ -121,23 +158,45 @@ export function toPerson(baseModel?: IContactSearchResult): Api_Person | undefin
     middleNames: baseModel.middleNames || '',
     surname: baseModel.surname || '',
     preferredName: '',
-    isDisabled: baseModel.isDisabled,
+    isDisabled: !!baseModel.isDisabled,
     comment: '',
     rowVersion: 0,
+    personOrganizations: baseModel.person?.personOrganizations ?? null,
+    personAddresses: baseModel.person?.personAddresses ?? null,
+    contactMethods: baseModel.person?.contactMethods ?? null,
+    addressComment: null,
+    birthDate: null,
+    nameSuffix: null,
+    propertyActivityId: null,
+    useOrganizationAddress: null,
   };
 }
 
-export function toOrganization(baseModel?: IContactSearchResult): Api_Organization | undefined {
-  if (baseModel === undefined || baseModel.id.startsWith('P')) {
+export function toOrganization(
+  baseModel?: IContactSearchResult,
+): ApiGen_Concepts_Organization | undefined {
+  if (baseModel === undefined || isPersonResult(baseModel)) {
     return undefined;
   }
+
   return {
     id: baseModel.organizationId || 0,
     name: baseModel.organizationName || '',
-    isDisabled: baseModel.isDisabled,
+    isDisabled: !!baseModel.isDisabled,
     alias: '',
     comment: '',
     incorporationNumber: '',
     rowVersion: 0,
+    organizationPersons: baseModel.organization?.organizationPersons ?? null,
+    organizationAddresses: baseModel.organization?.organizationAddresses ?? null,
+    contactMethods: baseModel.organization?.contactMethods ?? null,
+    districtCode: null,
+    identifierTypeCode: null,
+    organizationIdentifier: null,
+    organizationTypeCode: null,
+    parentOrganization: null,
+    parentOrganizationId: null,
+    regionCode: null,
+    website: null,
   };
 }

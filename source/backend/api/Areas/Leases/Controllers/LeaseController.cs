@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -59,7 +58,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         [HttpGet("{id:long}")]
         [HasPermission(Permissions.LeaseView)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(IEnumerable<LeaseModel>), 200)]
+        [ProducesResponseType(typeof(LeaseModel), 200)]
         [SwaggerOperation(Tags = new[] { "lease" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetLease(int id)
@@ -85,6 +84,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(Dal.Entities.Models.LastUpdatedByModel), 200)]
         [SwaggerOperation(Tags = new[] { "lease" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetLastUpdatedBy(long id)
         {
             var lastUpdated = _leaseService.GetLastUpdateInformation(id);
@@ -98,7 +98,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         [HttpPost]
         [HasPermission(Permissions.LeaseAdd)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(IEnumerable<LeaseModel>), 200)]
+        [ProducesResponseType(typeof(LeaseModel), 200)]
         [SwaggerOperation(Tags = new[] { "lease" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult AddLease(LeaseModel leaseModel, [FromQuery] string[] userOverrideCodes)
@@ -124,7 +124,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         [HttpPut("{id:long}")]
         [HasPermission(Permissions.LeaseEdit)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(IEnumerable<LeaseModel>), 200)]
+        [ProducesResponseType(typeof(LeaseModel), 200)]
         [SwaggerOperation(Tags = new[] { "lease" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult UpdateLease(LeaseModel leaseModel, [FromQuery] string[] userOverrideCodes)

@@ -3,17 +3,18 @@ import { useCallback, useMemo } from 'react';
 
 import { useApiAcquisitionFile } from '@/hooks/pims-api/useApiAcquisitionFile';
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
-import {
-  Api_AcquisitionFile,
-  Api_AcquisitionFileOwner,
-  Api_AcquisitionFileProperty,
-  Api_AcquisitionFileTeam,
-} from '@/models/api/AcquisitionFile';
-import { Api_CompensationFinancial } from '@/models/api/CompensationFinancial';
-import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
-import { Api_ExpropriationPayment } from '@/models/api/ExpropriationPayment';
-import { Api_FileChecklistItem, Api_FileWithChecklist, Api_LastUpdatedBy } from '@/models/api/File';
-import { Api_Product, Api_Project } from '@/models/api/Project';
+import { Api_LastUpdatedBy } from '@/models/api/File';
+import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
+import { ApiGen_Concepts_AcquisitionFileOwner } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileOwner';
+import { ApiGen_Concepts_AcquisitionFileProperty } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileProperty';
+import { ApiGen_Concepts_AcquisitionFileTeam } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileTeam';
+import { ApiGen_Concepts_CompensationFinancial } from '@/models/api/generated/ApiGen_Concepts_CompensationFinancial';
+import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
+import { ApiGen_Concepts_ExpropriationPayment } from '@/models/api/generated/ApiGen_Concepts_ExpropriationPayment';
+import { ApiGen_Concepts_FileChecklistItem } from '@/models/api/generated/ApiGen_Concepts_FileChecklistItem';
+import { ApiGen_Concepts_FileWithChecklist } from '@/models/api/generated/ApiGen_Concepts_FileWithChecklist';
+import { ApiGen_Concepts_Product } from '@/models/api/generated/ApiGen_Concepts_Product';
+import { ApiGen_Concepts_Project } from '@/models/api/generated/ApiGen_Concepts_Project';
 import { Api_ExportProjectFilter } from '@/models/api/ProjectFilter';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import {
@@ -52,12 +53,12 @@ export const useAcquisitionProvider = () => {
 
   const addAcquisitionFileApi = useApiRequestWrapper<
     (
-      acqFile: Api_AcquisitionFile,
+      acqFile: ApiGen_Concepts_AcquisitionFile,
       userOverrideCodes: UserOverrideCode[],
-    ) => Promise<AxiosResponse<Api_AcquisitionFile, any>>
+    ) => Promise<AxiosResponse<ApiGen_Concepts_AcquisitionFile, any>>
   >({
     requestFunction: useCallback(
-      async (acqFile: Api_AcquisitionFile, useOverride: UserOverrideCode[] = []) =>
+      async (acqFile: ApiGen_Concepts_AcquisitionFile, useOverride: UserOverrideCode[] = []) =>
         await postAcquisitionFile(acqFile, useOverride),
       [postAcquisitionFile],
     ),
@@ -68,7 +69,7 @@ export const useAcquisitionProvider = () => {
   });
 
   const getAcquisitionFileApi = useApiRequestWrapper<
-    (acqFileId: number) => Promise<AxiosResponse<Api_AcquisitionFile, any>>
+    (acqFileId: number) => Promise<AxiosResponse<ApiGen_Concepts_AcquisitionFile, any>>
   >({
     requestFunction: useCallback(
       async (acqFileId: number) => await getAcquisitionFile(acqFileId),
@@ -113,13 +114,15 @@ export const useAcquisitionProvider = () => {
 
   const updateAcquisitionFileApi = useApiRequestWrapper<
     (
-      acqFile: Api_AcquisitionFile,
+      acqFile: ApiGen_Concepts_AcquisitionFile,
       userOverrideCodes: UserOverrideCode[],
-    ) => Promise<AxiosResponse<Api_AcquisitionFile, any>>
+    ) => Promise<AxiosResponse<ApiGen_Concepts_AcquisitionFile, any>>
   >({
     requestFunction: useCallback(
-      async (acqFile: Api_AcquisitionFile, userOverrideCodes: UserOverrideCode[] = []) =>
-        await putAcquisitionFile(acqFile, userOverrideCodes),
+      async (
+        acqFile: ApiGen_Concepts_AcquisitionFile,
+        userOverrideCodes: UserOverrideCode[] = [],
+      ) => await putAcquisitionFile(acqFile, userOverrideCodes),
       [putAcquisitionFile],
     ),
     requestName: 'UpdateAcquisitionFile',
@@ -130,12 +133,12 @@ export const useAcquisitionProvider = () => {
 
   const updateAcquisitionPropertiesApi = useApiRequestWrapper<
     (
-      acqFile: Api_AcquisitionFile,
+      acqFile: ApiGen_Concepts_AcquisitionFile,
       userOverrideCodes: UserOverrideCode[],
-    ) => Promise<AxiosResponse<Api_AcquisitionFile, any>>
+    ) => Promise<AxiosResponse<ApiGen_Concepts_AcquisitionFile, any>>
   >({
     requestFunction: useCallback(
-      async (acqFile: Api_AcquisitionFile, userOverrideCodes: UserOverrideCode[]) =>
+      async (acqFile: ApiGen_Concepts_AcquisitionFile, userOverrideCodes: UserOverrideCode[]) =>
         await putAcquisitionFileProperties(acqFile, userOverrideCodes),
       [putAcquisitionFileProperties],
     ),
@@ -146,7 +149,7 @@ export const useAcquisitionProvider = () => {
   });
 
   const getAcquisitionPropertiesApi = useApiRequestWrapper<
-    (acqFileId: number) => Promise<AxiosResponse<Api_AcquisitionFileProperty[], any>>
+    (acqFileId: number) => Promise<AxiosResponse<ApiGen_Concepts_AcquisitionFileProperty[], any>>
   >({
     requestFunction: useCallback(
       async (acqFileId: number) => await getAcquisitionFileProperties(acqFileId),
@@ -157,7 +160,7 @@ export const useAcquisitionProvider = () => {
   });
 
   const getAcquisitionOwnersApi = useApiRequestWrapper<
-    (acqFileId: number) => Promise<AxiosResponse<Api_AcquisitionFileOwner[], any>>
+    (acqFileId: number) => Promise<AxiosResponse<ApiGen_Concepts_AcquisitionFileOwner[], any>>
   >({
     requestFunction: useCallback(
       async (acqFileId: number) => await getAcquisitionFileOwners(acqFileId),
@@ -168,7 +171,7 @@ export const useAcquisitionProvider = () => {
   });
 
   const getAllAcquisitionTeamMembersApi = useApiRequestWrapper<
-    () => Promise<AxiosResponse<Api_AcquisitionFileTeam[], any>>
+    () => Promise<AxiosResponse<ApiGen_Concepts_AcquisitionFileTeam[], any>>
   >({
     requestFunction: useCallback(
       async () => await getAllAcquisitionFileTeamMembers(),
@@ -179,7 +182,7 @@ export const useAcquisitionProvider = () => {
   });
 
   const getAcquisitionProjectApi = useApiRequestWrapper<
-    (acqFileId: number) => Promise<AxiosResponse<Api_Project, any>>
+    (acqFileId: number) => Promise<AxiosResponse<ApiGen_Concepts_Project, any>>
   >({
     requestFunction: useCallback(
       async (acqFileId: number) => await getAcquisitionFileProject(acqFileId),
@@ -190,7 +193,7 @@ export const useAcquisitionProvider = () => {
   });
 
   const getAcquisitionProductApi = useApiRequestWrapper<
-    (acqFileId: number) => Promise<AxiosResponse<Api_Product, any>>
+    (acqFileId: number) => Promise<AxiosResponse<ApiGen_Concepts_Product, any>>
   >({
     requestFunction: useCallback(
       async (acqFileId: number) => await getAcquisitionFileProduct(acqFileId),
@@ -201,7 +204,7 @@ export const useAcquisitionProvider = () => {
   });
 
   const getAcquisitionChecklistApi = useApiRequestWrapper<
-    (acqFileId: number) => Promise<AxiosResponse<Api_FileChecklistItem[], any>>
+    (acqFileId: number) => Promise<AxiosResponse<ApiGen_Concepts_FileChecklistItem[], any>>
   >({
     requestFunction: useCallback(
       async (acqFileId: number) => await getAcquisitionFileChecklist(acqFileId),
@@ -212,10 +215,13 @@ export const useAcquisitionProvider = () => {
   });
 
   const updateAcquisitionChecklistApi = useApiRequestWrapper<
-    (acqFile: Api_FileWithChecklist) => Promise<AxiosResponse<Api_AcquisitionFile, any>>
+    (
+      acqFile: ApiGen_Concepts_FileWithChecklist,
+    ) => Promise<AxiosResponse<ApiGen_Concepts_AcquisitionFile, any>>
   >({
     requestFunction: useCallback(
-      async (acqFile: Api_FileWithChecklist) => await putAcquisitionFileChecklist(acqFile),
+      async (acqFile: ApiGen_Concepts_FileWithChecklist) =>
+        await putAcquisitionFileChecklist(acqFile),
       [putAcquisitionFileChecklist],
     ),
     requestName: 'UpdateAcquisitionFileChecklist',
@@ -224,7 +230,7 @@ export const useAcquisitionProvider = () => {
   });
 
   const getAcquisitionCompensationRequisitionsApi = useApiRequestWrapper<
-    (acqFileId: number) => Promise<AxiosResponse<Api_CompensationRequisition[], any>>
+    (acqFileId: number) => Promise<AxiosResponse<ApiGen_Concepts_CompensationRequisition[], any>>
   >({
     requestFunction: useCallback(
       async (acqFileId: number) => await getFileCompensationRequisitions(acqFileId),
@@ -240,7 +246,7 @@ export const useAcquisitionProvider = () => {
     (
       acqFileId: number,
       finalOnly: boolean,
-    ) => Promise<AxiosResponse<Api_CompensationFinancial[], any>>
+    ) => Promise<AxiosResponse<ApiGen_Concepts_CompensationFinancial[], any>>
   >({
     requestFunction: useCallback(
       async (acqFileId: number, finalOnly: boolean) =>
@@ -256,11 +262,11 @@ export const useAcquisitionProvider = () => {
   const postFileCompensationRequisitionApi = useApiRequestWrapper<
     (
       acqFileId: number,
-      compRequisition: Api_CompensationRequisition,
-    ) => Promise<AxiosResponse<Api_CompensationRequisition, any>>
+      compRequisition: ApiGen_Concepts_CompensationRequisition,
+    ) => Promise<AxiosResponse<ApiGen_Concepts_CompensationRequisition, any>>
   >({
     requestFunction: useCallback(
-      async (acqFileId: number, compRequisition: Api_CompensationRequisition) =>
+      async (acqFileId: number, compRequisition: ApiGen_Concepts_CompensationRequisition) =>
         await postFileCompensationRequisition(acqFileId, compRequisition),
       [postFileCompensationRequisition],
     ),
@@ -272,11 +278,11 @@ export const useAcquisitionProvider = () => {
   const postFileForm8Api = useApiRequestWrapper<
     (
       acqFileId: number,
-      form8: Api_ExpropriationPayment,
-    ) => Promise<AxiosResponse<Api_ExpropriationPayment, any>>
+      form8: ApiGen_Concepts_ExpropriationPayment,
+    ) => Promise<AxiosResponse<ApiGen_Concepts_ExpropriationPayment, any>>
   >({
     requestFunction: useCallback(
-      async (acqFileId: number, form8: Api_ExpropriationPayment) =>
+      async (acqFileId: number, form8: ApiGen_Concepts_ExpropriationPayment) =>
         await postFileForm8(acqFileId, form8),
       [postFileForm8],
     ),
@@ -286,7 +292,7 @@ export const useAcquisitionProvider = () => {
   });
 
   const getAcquisitionForm8sApi = useApiRequestWrapper<
-    (acqFileId: number) => Promise<AxiosResponse<Api_ExpropriationPayment[], any>>
+    (acqFileId: number) => Promise<AxiosResponse<ApiGen_Concepts_ExpropriationPayment[], any>>
   >({
     requestFunction: useCallback(
       async (acqFileId: number) => await getAcquisitionFileForm8s(acqFileId),

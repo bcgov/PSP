@@ -213,7 +213,8 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(a => a.ProvinceState)
                 .Include(p => p.Address)
                     .ThenInclude(a => a.Country)
-                .FirstOrDefault(p => p.Pid == pid) ?? throw new KeyNotFoundException();
+                    .OrderByDescending(p => p.PropertyId)
+                .FirstOrDefault(p => p.Pid == pid && p.IsRetired != true) ?? throw new KeyNotFoundException();
             return property;
         }
 
@@ -307,6 +308,7 @@ namespace Pims.Dal.Repositories
             property.SurplusDeclarationComment = existingProperty.SurplusDeclarationComment;
             property.SurplusDeclarationDate = existingProperty.SurplusDeclarationDate;
             property.IsOwned = existingProperty.IsOwned;
+            property.IsRetired = existingProperty.IsRetired;
             property.IsPropertyOfInterest = existingProperty.IsPropertyOfInterest;
             property.IsVisibleToOtherAgencies = existingProperty.IsVisibleToOtherAgencies;
             property.IsSensitive = existingProperty.IsSensitive;

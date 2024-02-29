@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import { Button } from '@/components/common/buttons';
 import { IMapProperty } from '@/components/propertySelector/models';
 import { PropertyForm } from '@/features/mapSideBar/shared/models';
+import { isValidId } from '@/utils';
 import { getPropertyName, NameSourceType } from '@/utils/mapPropertyUtils';
 
 import PropertyMapSelectorFormView from './map/PropertyMapSelectorFormView';
@@ -14,11 +15,13 @@ import PropertySelectorSearchContainer from './search/PropertySelectorSearchCont
 export interface IMapSelectorContainerProps {
   addSelectedProperties: (properties: IMapProperty[]) => void; // TODO: This component should be providing the featureDataset instead of the IMapProperty.
   modifiedProperties: PropertyForm[]; // TODO: Figure out if this component really needs the entire propertyForm. It could be that only the lat long are needed.
+  selectedComponentId?: string;
 }
 
 export const MapSelectorContainer: React.FunctionComponent<IMapSelectorContainerProps> = ({
   addSelectedProperties,
   modifiedProperties,
+  selectedComponentId,
 }) => {
   const [searchSelectedProperties, setSearchSelectedProperties] = useState<IMapProperty[]>([]);
   const [activeSelectorTab, setActiveSelectorTab] = useState<SelectorTabNames>(
@@ -26,7 +29,7 @@ export const MapSelectorContainer: React.FunctionComponent<IMapSelectorContainer
   );
   const modifiedMapProperties = modifiedProperties.map(mp => mp.toMapProperty());
   const [lastSelectedProperty, setLastSelectedProperty] = React.useState<IMapProperty | undefined>(
-    modifiedProperties?.length === 1 && modifiedProperties[0].apiId === undefined // why? Because create from map needs to show the info differently
+    modifiedProperties?.length === 1 && isValidId(modifiedProperties[0].apiId) // why? Because create from map needs to show the info differently
       ? modifiedMapProperties[0]
       : undefined,
   );
@@ -43,8 +46,9 @@ export const MapSelectorContainer: React.FunctionComponent<IMapSelectorContainer
               addProperties([property], modifiedMapProperties, addSelectedProperties);
             }}
             selectedProperties={modifiedMapProperties}
+            selectedComponentId={selectedComponentId}
             lastSelectedProperty={
-              !!lastSelectedProperty
+              lastSelectedProperty
                 ? modifiedMapProperties.find(
                     p => getPropertyName(p).value === getPropertyName(lastSelectedProperty).value,
                   )

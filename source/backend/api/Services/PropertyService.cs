@@ -98,7 +98,7 @@ namespace Pims.Api.Services
             return property;
         }
 
-        public PimsProperty Update(PimsProperty property)
+        public PimsProperty Update(PimsProperty property, bool commitTransaction = true)
         {
             _logger.LogInformation("Updating property...");
             _user.ThrowIfNotAuthorized(Permissions.PropertyEdit);
@@ -112,7 +112,10 @@ namespace Pims.Api.Services
             }
 
             var newProperty = _propertyRepository.Update(property);
-            _propertyRepository.CommitTransaction();
+            if (commitTransaction)
+            {
+                _propertyRepository.CommitTransaction();
+            }
 
             return GetById(newProperty.Internal_Id);
         }

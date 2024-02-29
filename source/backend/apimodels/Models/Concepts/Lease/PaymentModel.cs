@@ -21,11 +21,6 @@ namespace Pims.Api.Models.Concepts.Lease
         public long LeaseTermId { get; set; }
 
         /// <summary>
-        /// get/set - The Rowversion on the parent lease, must be up to date to allow lease add/update operations.
-        /// </summary>
-        public long LeaseRowVersion { get; set; }
-
-        /// <summary>
         /// get/set - The payment method, such as cheque, transfer.
         /// </summary>
         public CodeTypeModel<string> LeasePaymentMethodType { get; set; }

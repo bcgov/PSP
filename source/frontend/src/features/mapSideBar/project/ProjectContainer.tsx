@@ -3,14 +3,14 @@ import { useCallback, useContext, useEffect, useReducer, useState } from 'react'
 import * as Yup from 'yup';
 
 import { useProjectProvider } from '@/hooks/repositories/useProjectProvider';
-import { Api_Project } from '@/models/api/Project';
+import { ApiGen_Concepts_Project } from '@/models/api/generated/ApiGen_Concepts_Project';
 
 import { SideBarContext } from '../context/sidebarContext';
 import { ProjectForm } from './models';
 import { ProjectTabNames } from './tabs/ProjectTabs';
 
 export interface IProjectContainerViewProps {
-  project?: Api_Project;
+  project?: ApiGen_Concepts_Project;
   viewTitle?: string;
   loadingProject?: boolean;
   activeTab?: ProjectTabNames;
@@ -19,7 +19,7 @@ export interface IProjectContainerViewProps {
   isSubmitting: boolean;
   onSetContainerState: (value: Partial<ProjectContainerState>) => void;
   onClose: () => void;
-  onSetProject: (project: Api_Project) => void;
+  onSetProject: (project: ApiGen_Concepts_Project) => void;
   onSuccess: () => void;
   setIsValid: (value: boolean) => void;
   displayRequiredFieldsError: boolean;
@@ -88,11 +88,11 @@ const ProjectContainer: React.FunctionComponent<
 
   // Retrieve acquisition file from API and save it to local state and side-bar context
   const fetchProject = useCallback(async () => {
-    var retrieved = await getProject(projectId);
+    const retrieved = await getProject(projectId);
     setProjectInstance(retrieved);
   }, [projectId, getProject]);
 
-  const [project, setProjectInstance] = useState<Api_Project | undefined>(undefined);
+  const [project, setProjectInstance] = useState<ApiGen_Concepts_Project | undefined>(undefined);
 
   useEffect(() => {
     if (!project) {

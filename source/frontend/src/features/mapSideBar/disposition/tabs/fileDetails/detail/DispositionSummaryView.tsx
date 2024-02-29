@@ -10,14 +10,14 @@ import { StyledLink } from '@/components/maps/leaflet/LayerPopup/styles';
 import { Claims, Roles } from '@/constants';
 import { cannotEditMessage } from '@/features/mapSideBar/acquisition/common/constants';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
-import { Api_DispositionFile } from '@/models/api/DispositionFile';
+import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
 import { prettyFormatDate } from '@/utils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
 import DispositionStatusUpdateSolver from './DispositionStatusUpdateSolver';
 
 export interface IDispositionSummaryViewProps {
-  dispositionFile?: Api_DispositionFile;
+  dispositionFile?: ApiGen_Concepts_DispositionFile;
   onEdit: () => void;
 }
 
@@ -135,7 +135,7 @@ export const DispositionSummaryView: React.FunctionComponent<IDispositionSummary
         </SectionField>
       </Section>
       <Section header="Disposition Team">
-        {dispositionFile?.dispositionTeam.map((teamMember, index) => (
+        {dispositionFile?.dispositionTeam?.map((teamMember, index) => (
           <React.Fragment key={`disp-team-${index}`}>
             <SectionField label={teamMember?.teamProfileType?.description || ''} labelWidth="5">
               <StyledLink

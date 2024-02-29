@@ -10,6 +10,7 @@ import { useInterestHolderRepository } from '@/hooks/repositories/useInterestHol
 import { ApiGen_CodeTypes_ExternalResponseStatus } from '@/models/api/generated/ApiGen_CodeTypes_ExternalResponseStatus';
 import { Api_GenerateAcquisitionFile } from '@/models/generate/acquisition/GenerateAcquisitionFile';
 import { Api_GenerateExpropriationForm5 } from '@/models/generate/acquisition/GenerateExpropriationForm5';
+import { isValidId } from '@/utils';
 
 export const useGenerateExpropriationForm5 = () => {
   const { getOrganizationConcept } = useApiContacts();
@@ -34,7 +35,7 @@ export const useGenerateExpropriationForm5 = () => {
     if (!file) {
       throw Error('Acquisition file not found');
     }
-    file.fileProperties = properties;
+    file.fileProperties = properties ?? null;
 
     const fileData = new Api_GenerateAcquisitionFile({
       file: file,
@@ -42,7 +43,7 @@ export const useGenerateExpropriationForm5 = () => {
     });
 
     const filePropertyIds = new Set(
-      formModel.impactedProperties.map(fp => fp?.id).filter((p): p is number => !!p),
+      formModel.impactedProperties.map(fp => fp?.id).filter(isValidId),
     );
     const selectedProperties = properties?.filter(fp => filePropertyIds.has(Number(fp.id)));
 

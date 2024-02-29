@@ -51,8 +51,8 @@ const UpdatePropertyForm: React.FunctionComponent<
 
   function onSelectedPurposeChange(selectedList: MultiSelectOption[]) {
     setSelectedPurposes(selectedList);
-    var mapped = selectedList.map<PropertyResearchFilePurposeFormModel>(x => {
-      var purposeType = new PropertyResearchFilePurposeFormModel();
+    const mapped = selectedList.map<PropertyResearchFilePurposeFormModel>(x => {
+      const purposeType = new PropertyResearchFilePurposeFormModel();
       purposeType.propertyPurposeTypeCode = x.id;
       purposeType.propertyPurposeTypeDescription = x.text;
       return purposeType;

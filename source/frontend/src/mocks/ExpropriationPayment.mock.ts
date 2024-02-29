@@ -1,9 +1,12 @@
-import { Api_ExpropriationPayment } from '@/models/api/ExpropriationPayment';
+import { ApiGen_Concepts_ExpropriationPayment } from '@/models/api/generated/ApiGen_Concepts_ExpropriationPayment';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
+
+import { getEmptyOrganization } from './organization.mock';
 
 export const mockGetExpropriationPaymentApi = (
-  id: number = 1,
-  acquisitionFileId: number = 1,
-): Api_ExpropriationPayment => ({
+  id = 1,
+  acquisitionFileId = 1,
+): ApiGen_Concepts_ExpropriationPayment => ({
   id,
   acquisitionFileId,
   acquisitionOwnerId: 10,
@@ -30,16 +33,29 @@ export const mockGetExpropriationPaymentApi = (
       countryId: 1,
       postal: 'IH8 B0B',
       rowVersion: 1,
+      comment: null,
+      country: null,
+      countryOther: null,
+      district: null,
+      latitude: null,
+      longitude: null,
+      province: null,
+      region: null,
+      districtCode: null,
+      regionCode: null,
     },
     appCreateTimestamp: '2023-02-06T22:27:22.01',
     appLastUpdateTimestamp: '2023-02-06T22:27:22.01',
     appLastUpdateUserid: 'dbo',
     appCreateUserid: 'dbo',
+    appCreateUserGuid: null,
+    appLastUpdateUserGuid: null,
   },
   interestHolderId: null,
   interestHolder: null,
   expropriatingAuthorityId: 1,
   expropriatingAuthority: {
+    ...getEmptyOrganization(),
     id: 100,
     isDisabled: false,
     name: 'FORTIS BC',
@@ -71,13 +87,23 @@ export const mockGetExpropriationPaymentApi = (
           },
           postal: 'zzz zzz',
           rowVersion: 1,
+          comment: null,
+          countryOther: null,
+          district: null,
+          latitude: null,
+          longitude: null,
+          region: null,
+          regionCode: null,
+          districtCode: null,
         },
         addressUsageType: {
           id: 'MAILING',
           description: 'Mailing address',
           isDisabled: false,
+          displayOrder: null,
         },
         rowVersion: 1,
+        organizationId: 1,
       },
     ],
     contactMethods: [],
@@ -86,7 +112,6 @@ export const mockGetExpropriationPaymentApi = (
   },
   description: 'MY DESCRIPTION',
   isDisabled: false,
-  rowVersion: 1,
   paymentItems: [
     {
       id: 11,
@@ -135,4 +160,5 @@ export const mockGetExpropriationPaymentApi = (
       rowVersion: 2,
     },
   ],
+  ...getEmptyBaseAudit(1),
 });

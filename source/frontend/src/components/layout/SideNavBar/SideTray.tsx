@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 import clsx from 'classnames';
 import { ReactElement, useEffect, useState } from 'react';
 import ReactVisibilitySensor from 'react-visibility-sensor';

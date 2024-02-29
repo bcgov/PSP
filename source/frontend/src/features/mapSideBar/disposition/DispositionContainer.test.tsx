@@ -12,7 +12,6 @@ import {
 import { mockLastUpdatedBy } from '@/mocks/lastUpdatedBy.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
-import { Api_DispositionFile } from '@/models/api/DispositionFile';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
   act,
@@ -27,10 +26,11 @@ import {
 import { SideBarContextProvider } from '../context/sidebarContext';
 import DispositionContainer, { IDispositionContainerProps } from './DispositionContainer';
 import { IDispositionViewProps } from './DispositionView';
+import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 
 const history = createMemoryHistory();
 const mockAxios = new MockAdapter(axios);
-const mockDispositionFileApi = mockDispositionFileResponse() as unknown as Api_DispositionFile;
+const mockDispositionFileApi = mockDispositionFileResponse();
 
 // mock auth library
 jest.mock('@react-keycloak/web');
@@ -48,7 +48,7 @@ jest.mock('react-visibility-sensor', () => {
   });
 });
 
-let viewProps: IDispositionViewProps = {} as any;
+let viewProps!: IDispositionViewProps;
 const DispositionContainerView = (props: IDispositionViewProps) => {
   viewProps = props;
   return (
@@ -135,7 +135,9 @@ describe('DispositionContainer component', () => {
 
     mockAxios.onGet(new RegExp('dispositionfiles/1/properties')).timeout();
     await act(async () => viewProps.onShowPropertySelector());
-    await act(async () => viewProps.canRemove(1));
+    await act(async () => {
+      viewProps.canRemove(1);
+    });
     expect(spinner).not.toBeVisible();
   });
 
@@ -145,7 +147,7 @@ describe('DispositionContainer component', () => {
     const spinner = getByTestId('filter-backdrop-loading');
     await waitForElementToBeRemoved(spinner);
 
-    await act(async () => viewProps.onUpdateProperties(mockDispositionFileApi));
+    await viewProps.onUpdateProperties(mockDispositionFileApi);
     expect(spinner).not.toBeVisible();
     expect(
       mockAxios.history.put.filter(x => x.url === '/dispositionfiles/1/properties?'),
@@ -163,7 +165,7 @@ describe('DispositionContainer component', () => {
       .onPut(new RegExp('dispositionfiles/1/properties'))
       .reply(400, { error: errorMessage });
 
-    await act(async () => viewProps.onUpdateProperties(mockDispositionFileApi));
+    await viewProps.onUpdateProperties(mockDispositionFileApi);
     expect(spinner).not.toBeVisible();
     expect(await screen.findByText(errorMessage)).toBeVisible();
   });
@@ -212,7 +214,9 @@ describe('DispositionContainer component', () => {
     expect(history.location.pathname).toBe('/property/1');
 
     const yesButton = getByText('Yes');
-    await act(async () => fireEvent.click(yesButton));
+    await act(async () => {
+      fireEvent.click(yesButton);
+    });
     const params = new URLSearchParams(history.location.search);
     await waitFor(async () => expect(params.has('edit')).toBe(false));
   });

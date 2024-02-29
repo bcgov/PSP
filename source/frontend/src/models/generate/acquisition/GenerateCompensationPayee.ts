@@ -1,5 +1,5 @@
-import { Api_CompensationFinancial } from '@/models/api/CompensationFinancial';
-import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
+import { ApiGen_Concepts_CompensationFinancial } from '@/models/api/generated/ApiGen_Concepts_CompensationFinancial';
+import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
 import { formatMoney } from '@/utils';
 import { formatNames } from '@/utils/personUtils';
 
@@ -12,8 +12,8 @@ export class Api_GenerateCompensationPayee {
   gst_number: string;
 
   constructor(
-    compensation: Api_CompensationRequisition | null,
-    financialActivities: Api_CompensationFinancial[] | [],
+    compensation: ApiGen_Concepts_CompensationRequisition | null,
+    financialActivities: ApiGen_Concepts_CompensationFinancial[] | [],
   ) {
     this.gst_number = compensation?.gstNumber ? compensation.gstNumber ?? '' : '';
 

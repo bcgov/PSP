@@ -3,7 +3,9 @@ import { useCallback, useEffect, useState } from 'react';
 import React from 'react';
 
 import { usePropertyContactRepository } from '@/hooks/repositories/usePropertyContactRepository';
-import { Api_PropertyContact } from '@/models/api/Property';
+import { ApiGen_Concepts_PropertyContact } from '@/models/api/generated/ApiGen_Concepts_PropertyContact';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
+import { isValidId } from '@/utils';
 
 import { IPropertyContactEditFormProps } from './PropertyContactEditForm';
 
@@ -21,7 +23,7 @@ export const PropertyContactEditContainer = React.forwardRef<
   IPropertyContactEditContainerProps
 >((props, formikRef) => {
   const View = props.View;
-  const [propertyContact, setPropertyContact] = useState<Api_PropertyContact>({
+  const [propertyContact, setPropertyContact] = useState<ApiGen_Concepts_PropertyContact>({
     id: 0,
     propertyId: props.propertyId,
     organizationId: null,
@@ -31,7 +33,7 @@ export const PropertyContactEditContainer = React.forwardRef<
     primaryContactId: null,
     primaryContact: null,
     purpose: null,
-    rowVersion: null,
+    ...getEmptyBaseAudit(),
   });
 
   const {
@@ -41,7 +43,7 @@ export const PropertyContactEditContainer = React.forwardRef<
   } = usePropertyContactRepository();
 
   const fetchPropertyContacts = useCallback(async () => {
-    if (props.contactId !== 0) {
+    if (isValidId(props.contactId)) {
       const propertyContactResponse = await getContact(props.propertyId, props.contactId);
       if (propertyContactResponse) {
         setPropertyContact(propertyContactResponse);
@@ -53,9 +55,9 @@ export const PropertyContactEditContainer = React.forwardRef<
     fetchPropertyContacts();
   }, [fetchPropertyContacts]);
 
-  const onSave = async (model: Api_PropertyContact) => {
+  const onSave = async (model: ApiGen_Concepts_PropertyContact) => {
     let result = undefined;
-    if (model.id !== 0) {
+    if (isValidId(model.id)) {
       result = await updateContact(props.propertyId, model.id, model);
     } else {
       result = await createContact(props.propertyId, model);

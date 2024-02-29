@@ -1,4 +1,5 @@
 import { Formik } from 'formik';
+import noop from 'lodash/noop';
 import styled from 'styled-components';
 
 import { FormSection } from '@/components/common/form/styles';
@@ -30,7 +31,7 @@ export const ViewTenantForm: React.FunctionComponent<React.PropsWithChildren<ITe
     <FormSectionOne>
       <Formik
         initialValues={{ ...new LeaseFormModel(), tenants: tenants }}
-        onSubmit={() => {}}
+        onSubmit={noop}
         enableReinitialize
       >
         <>

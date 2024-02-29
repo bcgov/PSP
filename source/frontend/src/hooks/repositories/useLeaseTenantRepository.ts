@@ -1,7 +1,7 @@
 import { AxiosResponse } from 'axios';
 import { useCallback, useMemo } from 'react';
 
-import { Api_LeaseTenant } from '@/models/api/LeaseTenant';
+import { ApiGen_Concepts_LeaseTenant } from '@/models/api/generated/ApiGen_Concepts_LeaseTenant';
 import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils/axiosUtils';
 
 import { getLeaseTenants, updateLeaseTenants } from '../pims-api/useApiLeaseTenants';
@@ -12,7 +12,7 @@ import { useApiRequestWrapper } from '../util/useApiRequestWrapper';
  */
 export const useLeaseTenantRepository = () => {
   const getLeaseTenantsApi = useApiRequestWrapper<
-    (leaseId: number) => Promise<AxiosResponse<Api_LeaseTenant[], any>>
+    (leaseId: number) => Promise<AxiosResponse<ApiGen_Concepts_LeaseTenant[], any>>
   >({
     requestFunction: useCallback(async (leaseId: number) => await getLeaseTenants(leaseId), []),
     requestName: 'getLeaseTenants',
@@ -23,11 +23,11 @@ export const useLeaseTenantRepository = () => {
   const updateLeaseTenantsApi = useApiRequestWrapper<
     (
       leaseId: number,
-      improvements: Api_LeaseTenant[],
-    ) => Promise<AxiosResponse<Api_LeaseTenant[], any>>
+      improvements: ApiGen_Concepts_LeaseTenant[],
+    ) => Promise<AxiosResponse<ApiGen_Concepts_LeaseTenant[], any>>
   >({
     requestFunction: useCallback(
-      async (leaseId: number, improvements: Api_LeaseTenant[]) =>
+      async (leaseId: number, improvements: ApiGen_Concepts_LeaseTenant[]) =>
         await updateLeaseTenants(leaseId, improvements),
       [],
     ),

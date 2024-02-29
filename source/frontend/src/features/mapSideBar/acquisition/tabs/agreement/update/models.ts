@@ -1,37 +1,39 @@
-import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
-import { Api_Agreement } from '@/models/api/Agreement';
-import { stringToUndefined, toTypeCode } from '@/utils/formUtils';
+import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
+import { ApiGen_Concepts_Agreement } from '@/models/api/generated/ApiGen_Concepts_Agreement';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
+import { isValidIsoDateTime } from '@/utils';
+import { stringToNull, stringToNumberOrNull, toTypeCodeNullable } from '@/utils/formUtils';
 
 export class SingleAgreementFormModel {
-  public agreementId: number = 0;
+  public agreementId = 0;
 
-  public agreementTypeCode: string = '';
-  public agreementTypeDescription: string = '';
-  public agreementDate: string = '';
-  public completionDate: string = '';
-  public terminationDate: string = '';
-  public commencementDate: string = '';
-  public possessionDate: string = '';
-  public depositAmount: string = '';
-  public noLaterThanDays: string = '';
-  public purchasePrice: string = '';
-  public legalSurveyPlanNum: string = '';
-  public offerDate: string = '';
-  public expiryDateTime: string = '';
-  public signedDate: string = '';
-  public inspectionDate: string = '';
-  public agreementStatusTypeCode: string = 'DRAFT';
-  public agreementStatusTypeDescription: string = '';
-  public cancellationNote: string = '';
+  public agreementTypeCode = '';
+  public agreementTypeDescription = '';
+  public agreementDate = '';
+  public completionDate = '';
+  public terminationDate = '';
+  public commencementDate = '';
+  public possessionDate = '';
+  public depositAmount = '';
+  public noLaterThanDays = '';
+  public purchasePrice = '';
+  public legalSurveyPlanNum = '';
+  public offerDate = '';
+  public expiryDateTime = '';
+  public signedDate = '';
+  public inspectionDate = '';
+  public agreementStatusTypeCode = 'DRAFT';
+  public agreementStatusTypeDescription = '';
+  public cancellationNote = '';
 
   public rowVersion: number | null = null;
 
-  static fromApi(apiModel: Api_Agreement): SingleAgreementFormModel {
+  static fromApi(apiModel: ApiGen_Concepts_Agreement): SingleAgreementFormModel {
     const agreement = new SingleAgreementFormModel();
 
     agreement.agreementId = apiModel.agreementId;
-    agreement.agreementTypeCode = apiModel.agreementType.id || '';
-    agreement.agreementTypeDescription = apiModel.agreementType.description || '';
+    agreement.agreementTypeCode = apiModel.agreementType?.id || '';
+    agreement.agreementTypeDescription = apiModel.agreementType?.description || '';
     agreement.agreementDate = apiModel.agreementDate || '';
     agreement.agreementStatusTypeCode = apiModel.agreementStatusType?.id || '';
     agreement.agreementStatusTypeDescription = apiModel.agreementStatusType?.description || '';
@@ -53,27 +55,38 @@ export class SingleAgreementFormModel {
     return agreement;
   }
 
-  public toApi(acquisitionFileId: number): Api_Agreement {
+  public toApi(acquisitionFileId: number): ApiGen_Concepts_Agreement {
     return {
       agreementId: this.agreementId,
       acquisitionFileId: acquisitionFileId,
-      agreementType: toTypeCode(this.agreementTypeCode) || {},
-      agreementDate: stringToUndefined(this.agreementDate),
-      agreementStatusType: toTypeCode(this.agreementStatusTypeCode) || {},
-      completionDate: stringToUndefined(this.completionDate),
-      terminationDate: stringToUndefined(this.terminationDate),
-      commencementDate: stringToUndefined(this.commencementDate),
-      possessionDate: stringToUndefined(this.possessionDate),
+      agreementType: toTypeCodeNullable(this.agreementTypeCode) || {
+        id: null,
+        description: null,
+        displayOrder: null,
+        isDisabled: false,
+      },
+      agreementDate: isValidIsoDateTime(this.agreementDate) ? this.agreementDate : null,
+      agreementStatusType: toTypeCodeNullable(this.agreementStatusTypeCode) || {
+        id: null,
+        description: null,
+        displayOrder: null,
+        isDisabled: false,
+      },
+      completionDate: isValidIsoDateTime(this.completionDate) ? this.completionDate : null,
+      terminationDate: isValidIsoDateTime(this.terminationDate) ? this.terminationDate : null,
+      commencementDate: isValidIsoDateTime(this.commencementDate) ? this.commencementDate : null,
+      possessionDate: isValidIsoDateTime(this.possessionDate) ? this.possessionDate : null,
       depositAmount: this.depositAmount !== '' ? Number(this.depositAmount) : null,
-      noLaterThanDays: stringToUndefined(this.noLaterThanDays),
-      purchasePrice: stringToUndefined(this.purchasePrice),
-      legalSurveyPlanNum: stringToUndefined(this.legalSurveyPlanNum),
-      offerDate: stringToUndefined(this.offerDate),
-      expiryDateTime: stringToUndefined(this.expiryDateTime),
-      signedDate: stringToUndefined(this.signedDate),
-      inspectionDate: stringToUndefined(this.inspectionDate),
-      rowVersion: this.rowVersion ?? undefined,
-      cancellationNote: stringToUndefined(this.cancellationNote),
+      noLaterThanDays: stringToNumberOrNull(this.noLaterThanDays),
+      purchasePrice: stringToNumberOrNull(this.purchasePrice),
+      legalSurveyPlanNum: stringToNull(this.legalSurveyPlanNum),
+      offerDate: isValidIsoDateTime(this.offerDate) ? this.offerDate : null,
+      expiryDateTime: isValidIsoDateTime(this.expiryDateTime) ? this.expiryDateTime : null,
+      signedDate: isValidIsoDateTime(this.signedDate) ? this.signedDate : null,
+      inspectionDate: isValidIsoDateTime(this.inspectionDate) ? this.inspectionDate : null,
+      cancellationNote: stringToNull(this.cancellationNote),
+      isDraft: null,
+      ...getEmptyBaseAudit(this.rowVersion),
     };
   }
 }
@@ -86,16 +99,19 @@ export class AgreementsFormModel {
     this.acquisitionFileId = acquisitionFileId;
   }
 
-  static fromApi(acquisitionFileId: number, agreements: Api_Agreement[]): AgreementsFormModel {
+  static fromApi(
+    acquisitionFileId: number,
+    agreements: ApiGen_Concepts_Agreement[],
+  ): AgreementsFormModel {
     const newFormModel = new AgreementsFormModel(acquisitionFileId);
     agreements.forEach(x => newFormModel.agreements.push(SingleAgreementFormModel.fromApi(x)));
     return newFormModel;
   }
 
-  public toApi(): Api_Agreement[] {
+  public toApi(): ApiGen_Concepts_Agreement[] {
     return this.agreements.map(x => x.toApi(this.acquisitionFileId));
   }
 }
 
-export const isAcquisitionFile = (file: unknown): file is Api_AcquisitionFile =>
+export const isAcquisitionFile = (file: unknown): file is ApiGen_Concepts_AcquisitionFile =>
   !!file && Object.prototype.hasOwnProperty.call(file, 'acquisitionTypeCode');

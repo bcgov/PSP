@@ -9,8 +9,8 @@ import { useAdminBoundaryMapLayer } from '@/hooks/repositories/mapLayer/useAdmin
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { useH120CategoryRepository } from '@/hooks/repositories/useH120CategoryRepository';
 import { useInterestHolderRepository } from '@/hooks/repositories/useInterestHolderRepository';
-import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
 import { ApiGen_CodeTypes_ExternalResponseStatus } from '@/models/api/generated/ApiGen_CodeTypes_ExternalResponseStatus';
+import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
 import { Api_GenerateAcquisitionFile } from '@/models/generate/acquisition/GenerateAcquisitionFile';
 import { Api_GenerateCompensation } from '@/models/generate/acquisition/GenerateCompensation';
 import { Api_GenerateH120Property } from '@/models/generate/acquisition/GenerateH120Property';
@@ -37,7 +37,7 @@ export const useGenerateH120 = () => {
     return layerData?.properties.ED_NAME ?? '';
   };
 
-  const generateCompensation = async (compensation: Api_CompensationRequisition) => {
+  const generateCompensation = async (compensation: ApiGen_Concepts_CompensationRequisition) => {
     if (!compensation?.id) {
       throw Error(
         'user must choose a valid compensation requisition in order to generate a document',
@@ -83,7 +83,7 @@ export const useGenerateH120 = () => {
     if (!file) {
       throw Error('Acquisition file not found');
     }
-    file.fileProperties = properties;
+    file.fileProperties = properties ?? null;
 
     // Add ELECTORAL_DISTRICT info to each property (from map layer request)
     const fileData = new Api_GenerateAcquisitionFile({
@@ -104,9 +104,10 @@ export const useGenerateH120 = () => {
     // Populate payee information
     if (compensation?.acquisitionFileTeam) {
       if (compensation?.acquisitionFileTeam?.personId) {
-        compensation.acquisitionFileTeam.person = acquisitionFileTeamPerson?.data;
+        compensation.acquisitionFileTeam.person = acquisitionFileTeamPerson?.data ?? null;
       } else if (compensation?.acquisitionFileTeam?.organizationId) {
-        compensation.acquisitionFileTeam.organization = acquisitionFileTeamOrganization?.data;
+        compensation.acquisitionFileTeam.organization =
+          acquisitionFileTeamOrganization?.data ?? null;
       }
     } else if (compensation?.interestHolderId) {
       const matchedInterestHolder =
@@ -127,7 +128,7 @@ export const useGenerateH120 = () => {
       convertToType: ConvertToTypes.PDF,
     });
     if (
-      generatedFile?.status === ApiGen_CodeTypes_ExternalResponseStatus.Success!! &&
+      generatedFile?.status === ApiGen_CodeTypes_ExternalResponseStatus.Success &&
       generatedFile?.payload
     ) {
       showFile(generatedFile?.payload);

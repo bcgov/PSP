@@ -6,8 +6,9 @@ import * as API from '@/constants/API';
 import Claims from '@/constants/claims';
 import { useApiGeocoder } from '@/hooks/pims-api/useApiGeocoder';
 import { useApiProperties } from '@/hooks/pims-api/useApiProperties';
-import { IPagedItems, IProperty } from '@/interfaces';
-import { mockParcel } from '@/mocks/filterData.mock';
+import { mockApiProperty } from '@/mocks/filterData.mock';
+import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
+import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { ILookupCode } from '@/store/slices/lookupCodes';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { cleanup, render, RenderOptions, waitFor } from '@/utils/test-utils';
@@ -19,12 +20,18 @@ jest.mock('@react-keycloak/web');
 jest.mock('@/hooks/pims-api/useApiGeocoder');
 jest.mock('@/hooks/pims-api/useApiProperties');
 
-const mockApiGetPropertiesPagedApi = jest.fn<Promise<AxiosResponse<IPagedItems<IProperty>>>, any>();
+const mockApiGetPropertiesPagedApi = jest.fn<
+  Promise<AxiosResponse<ApiGen_Base_Page<ApiGen_Concepts_Property>>>,
+  any
+>();
 (useApiProperties as unknown as jest.Mock<Partial<typeof useApiProperties>>).mockReturnValue({
   getPropertiesPagedApi: mockApiGetPropertiesPagedApi,
 });
 
-const mockApiGetSitePidsApi = jest.fn<Promise<AxiosResponse<IPagedItems<IProperty>>>, any>();
+const mockApiGetSitePidsApi = jest.fn<
+  Promise<AxiosResponse<ApiGen_Base_Page<ApiGen_Concepts_Property>>>,
+  any
+>();
 (useApiGeocoder as unknown as jest.Mock<Partial<typeof useApiGeocoder>>).mockReturnValue({
   getSitePidsApi: mockApiGetSitePidsApi,
 });
@@ -56,7 +63,7 @@ const setup = (renderOptions: RenderOptions = {}) => {
   };
 };
 
-const setupMockApi = (properties?: IProperty[]) => {
+const setupMockApi = (properties?: ApiGen_Concepts_Property[]) => {
   const mockProperties = properties ?? [];
   const len = mockProperties.length;
   mockApiGetPropertiesPagedApi.mockResolvedValue({
@@ -102,7 +109,7 @@ describe('Property list view', () => {
   });
 
   it('displays list of properties', async () => {
-    setupMockApi([mockParcel]);
+    setupMockApi([mockApiProperty]);
     const {
       component: { findByText },
     } = setup();
@@ -126,7 +133,7 @@ describe('Property list view', () => {
   });
 
   it('displays column icons', async () => {
-    setupMockApi([mockParcel]);
+    setupMockApi([mockApiProperty]);
     const {
       component: { getByTestId },
       findSpinner,

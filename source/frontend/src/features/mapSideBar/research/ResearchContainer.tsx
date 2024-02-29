@@ -14,10 +14,10 @@ import { useResearchRepository } from '@/hooks/repositories/useResearchRepositor
 import { useQuery } from '@/hooks/use-query';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
 import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
-import { Api_File } from '@/models/api/File';
-import { Api_ResearchFile } from '@/models/api/ResearchFile';
+import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
+import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Concepts_ResearchFile';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
-import { stripTrailingSlash } from '@/utils';
+import { exists, stripTrailingSlash } from '@/utils';
 import { getFilePropertyName } from '@/utils/mapPropertyUtils';
 
 import { SideBarContext } from '../context/sidebarContext';
@@ -77,7 +77,7 @@ export const ResearchContainer: React.FunctionComponent<
 
   const { updateResearchFileProperties } = useUpdateResearchProperties();
   const wrapWithOverride = useApiUserOverride<
-    (userOverrideCodes: UserOverrideCode[]) => Promise<Api_ResearchFile | undefined>
+    (userOverrideCodes: UserOverrideCode[]) => Promise<ApiGen_Concepts_ResearchFile | undefined>
   >('Failed to update Research File');
 
   useEffect(
@@ -87,16 +87,20 @@ export const ResearchContainer: React.FunctionComponent<
   );
 
   const fetchResearchFile = React.useCallback(async () => {
-    var retrieved = await getResearchFile(props.researchFileId);
-    var researchProperties = await getResearchFileProperties(props.researchFileId);
-    retrieved?.fileProperties?.forEach(async fp => {
-      fp.property = researchProperties?.find(ap => fp.id === ap.id)?.property;
-    });
-    setFile({ ...retrieved, fileType: FileTypes.Research });
+    const retrieved = await getResearchFile(props.researchFileId);
+    if (exists(retrieved)) {
+      const researchProperties = await getResearchFileProperties(props.researchFileId);
+      retrieved.fileProperties?.forEach(async fp => {
+        fp.property = researchProperties?.find(ap => fp.id === ap.id)?.property ?? null;
+      });
+      setFile({ ...retrieved, fileType: FileTypes.Research });
+    } else {
+      setFile(undefined);
+    }
   }, [getResearchFile, getResearchFileProperties, props.researchFileId, setFile]);
 
   const fetchLastUpdatedBy = React.useCallback(async () => {
-    var retrieved = await getLastUpdatedBy(props.researchFileId);
+    const retrieved = await getLastUpdatedBy(props.researchFileId);
     if (retrieved !== undefined) {
       setLastUpdatedBy(retrieved);
     } else {
@@ -134,7 +138,7 @@ export const ResearchContainer: React.FunctionComponent<
 
   React.useEffect(() => {
     if (
-      lastUpdatedBy === undefined ||
+      !exists(lastUpdatedBy) ||
       researchFileId !== lastUpdatedBy?.parentId ||
       staleLastUpdatedBy
     ) {
@@ -226,9 +230,12 @@ export const ResearchContainer: React.FunctionComponent<
         file={researchFile}
         setIsShowingPropertySelector={setIsShowingPropertySelector}
         onSuccess={onSuccess}
-        updateFileProperties={(file: Api_File) =>
+        updateFileProperties={(file: ApiGen_Concepts_File) =>
           wrapWithOverride((userOverrideCodes: UserOverrideCode[]) =>
-            updateResearchFileProperties(file, userOverrideCodes).then(response => {
+            updateResearchFileProperties(
+              file as ApiGen_Concepts_ResearchFile,
+              userOverrideCodes,
+            ).then(response => {
               onSuccess();
               setIsShowingPropertySelector(false);
               return response;
@@ -244,7 +251,12 @@ export const ResearchContainer: React.FunctionComponent<
       <MapSideBarLayout
         title={isEditing ? 'Update Research File' : 'Research File'}
         icon={<MdTopic title="User Profile" size="2.5rem" className="mr-2" />}
-        header={<ResearchHeader researchFile={researchFile} lastUpdatedBy={lastUpdatedBy} />}
+        header={
+          <ResearchHeader
+            researchFile={researchFile as unknown as ApiGen_Concepts_ResearchFile}
+            lastUpdatedBy={lastUpdatedBy}
+          />
+        }
         footer={
           isEditing && (
             <SidebarFooter
@@ -272,7 +284,7 @@ export const ResearchContainer: React.FunctionComponent<
           bodyComponent={
             <StyledFormWrapper>
               <ResearchView
-                researchFile={researchFile}
+                researchFile={researchFile as unknown as ApiGen_Concepts_ResearchFile}
                 onSuccess={onSuccess}
                 setEditMode={setIsEditing}
                 ref={formikRef}

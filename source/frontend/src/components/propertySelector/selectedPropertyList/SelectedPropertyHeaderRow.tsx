@@ -4,11 +4,9 @@ import styled from 'styled-components';
 
 import TooltipIcon from '@/components/common/TooltipIcon';
 
-interface ISelectedPropertyHeaderRowProps {}
-
 export const SelectedPropertyHeaderRow: React.FunctionComponent<
-  React.PropsWithChildren<ISelectedPropertyHeaderRowProps>
-> = props => {
+  React.PropsWithChildren<unknown>
+> = () => {
   return (
     <HeaderRow className="no-gutters">
       <Col md={3}>Identifier</Col>
@@ -23,7 +21,7 @@ export const SelectedPropertyHeaderRow: React.FunctionComponent<
   );
 };
 
-const HeaderRow = styled(Row)`
+export const HeaderRow = styled(Row)`
   font-size: 1.6rem;
   color: ${props => props.theme.css.lightVariantColor};
   border-bottom: 0.2rem solid ${props => props.theme.css.lightVariantColor};

@@ -64,7 +64,7 @@ export const TypeaheadSelect = React.forwardRef<Typeahead<SelectOption>, ITypeah
 
     const onSelectChange = React.useCallback(
       (selectedArray: SelectOption[]) => {
-        const selected = selectedArray.length ? selectedArray[0] : undefined;
+        const selected = selectedArray.length > 0 ? selectedArray[0] : undefined;
         setFieldValue(field, selected);
         if (typeof onChange === 'function') {
           onChange(selected);

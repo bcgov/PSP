@@ -4,14 +4,17 @@ import { useAdminBoundaryMapLayer } from '@/hooks/repositories/mapLayer/useAdmin
 import { useIndianReserveBandMapLayer } from '@/hooks/repositories/mapLayer/useIndianReserveBandMapLayer';
 import { useLegalAdminBoundariesMapLayer } from '@/hooks/repositories/mapLayer/useLegalAdminBoundariesMapLayer';
 import useIsMounted from '@/hooks/util/useIsMounted';
-import { Api_Property } from '@/models/api/Property';
+import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
+import { exists } from '@/utils';
 
 import {
   IPropertyDetailsForm,
   toFormValues,
 } from '../property/tabs/propertyDetails/detail/PropertyDetailsTabView.helpers';
 
-export function usePropertyDetails(property?: Api_Property): IPropertyDetailsForm | undefined {
+export function usePropertyDetails(
+  property?: ApiGen_Concepts_Property,
+): IPropertyDetailsForm | undefined {
   const isMounted = useIsMounted();
   const electoralService_ = useAdminBoundaryMapLayer();
   const findElectoralDistrict = electoralService_.findElectoralDistrict;
@@ -27,7 +30,7 @@ export function usePropertyDetails(property?: Api_Property): IPropertyDetailsFor
   const lat = property?.latitude;
   const lng = property?.longitude;
   const location = useMemo(
-    () => (lat === undefined || lng === undefined ? undefined : { lat, lng }),
+    () => (!exists(lat) || !exists(lng) ? undefined : { lat, lng }),
     [lat, lng],
   );
 
@@ -46,7 +49,7 @@ export function usePropertyDetails(property?: Api_Property): IPropertyDetailsFor
     async function fn() {
       // Query BC Geographic Warehouse layers - ONLY if lat, long have been provided!
 
-      if (location !== undefined) {
+      if (exists(location)) {
         const electoralDistrictFeature = await findElectoralDistrict(location);
         const alrFeature = await findOneAgriculturalReserve(location, 'GEOMETRY');
         const firstNationsFeature = await findFirstNation(location, 'GEOMETRY');

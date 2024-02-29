@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using Pims.Api.Models.Concepts.H120Category;
 using Pims.Api.Services;
 using Pims.Core.Extensions;
+using Pims.Core.Json;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Pims.Api.Areas.CompensationRequisition.Controllers
@@ -41,6 +42,7 @@ namespace Pims.Api.Areas.CompensationRequisition.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(IEnumerable<H120CategoryModel>), 200)]
         [SwaggerOperation(Tags = new[] { "h120" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetH120Categories()
         {
             _logger.LogInformation(

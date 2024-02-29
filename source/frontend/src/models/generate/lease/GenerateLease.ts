@@ -1,12 +1,12 @@
 import { first, orderBy } from 'lodash';
 import moment from 'moment';
 
-import { Api_Insurance } from '@/models/api/Insurance';
-import { Api_Lease } from '@/models/api/Lease';
-import { Api_LeaseTenant } from '@/models/api/LeaseTenant';
-import { Api_LeaseTerm } from '@/models/api/LeaseTerm';
-import { Api_PropertyLease } from '@/models/api/PropertyLease';
-import { Api_SecurityDeposit } from '@/models/api/SecurityDeposit';
+import { ApiGen_Concepts_Insurance } from '@/models/api/generated/ApiGen_Concepts_Insurance';
+import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
+import { ApiGen_Concepts_LeaseTenant } from '@/models/api/generated/ApiGen_Concepts_LeaseTenant';
+import { ApiGen_Concepts_LeaseTerm } from '@/models/api/generated/ApiGen_Concepts_LeaseTerm';
+import { ApiGen_Concepts_PropertyLease } from '@/models/api/generated/ApiGen_Concepts_PropertyLease';
+import { ApiGen_Concepts_SecurityDeposit } from '@/models/api/generated/ApiGen_Concepts_SecurityDeposit';
 import { formatMoney, pidFormatter } from '@/utils';
 
 import { Api_GenerateLeaseProperty } from './GenerateLeaseProperty';
@@ -32,14 +32,14 @@ export class Api_GenerateLease {
   lease_properties: Api_GenerateLeaseProperty[];
 
   constructor(
-    lease: Api_Lease,
-    insurances: Api_Insurance[],
-    tenants: Api_LeaseTenant[],
-    securityDeposits: Api_SecurityDeposit[],
-    propertyLeases: Api_PropertyLease[],
-    terms: Api_LeaseTerm[],
+    lease: ApiGen_Concepts_Lease,
+    insurances: ApiGen_Concepts_Insurance[],
+    tenants: ApiGen_Concepts_LeaseTenant[],
+    securityDeposits: ApiGen_Concepts_SecurityDeposit[],
+    propertyLeases: ApiGen_Concepts_PropertyLease[],
+    terms: ApiGen_Concepts_LeaseTerm[],
   ) {
-    const firstTerm = first(orderBy(terms, (t: Api_LeaseTerm) => t.id));
+    const firstTerm = first(orderBy(terms, (t: ApiGen_Concepts_LeaseTerm) => t.id));
     this.file_number = lease.lFileNo ?? '';
     this.commencement_date = firstTerm?.startDate
       ? moment.utc(firstTerm?.startDate).format('MMMM DD, YYYY')

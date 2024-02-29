@@ -8,14 +8,14 @@ import {
 
 import { Section } from '@/components/common/Section/Section';
 import { StyledSummarySection } from '@/components/common/Section/SectionStyles';
-import { Api_PropertyAssociations } from '@/models/api/Property';
+import { ApiGen_Concepts_PropertyAssociations } from '@/models/api/generated/ApiGen_Concepts_PropertyAssociations';
 
 import AssociationContent from './AssociationContent';
 import AssociationHeader from './AssociationHeader';
 
 export interface IPropertyAssociationTabViewProps {
   isLoading: boolean;
-  associations?: Api_PropertyAssociations;
+  associations?: ApiGen_Concepts_PropertyAssociations;
 }
 
 const PropertyAssociationTabView: React.FunctionComponent<
@@ -37,7 +37,7 @@ const PropertyAssociationTabView: React.FunctionComponent<
       >
         <AssociationContent
           associationName="research"
-          associations={props.associations?.researchAssociations}
+          associations={props.associations?.researchAssociations ?? undefined}
           linkUrlMask="/mapview/sidebar/research/|id|"
         />
       </Section>
@@ -53,7 +53,7 @@ const PropertyAssociationTabView: React.FunctionComponent<
       >
         <AssociationContent
           associationName="acquisition"
-          associations={props.associations?.acquisitionAssociations}
+          associations={props.associations?.acquisitionAssociations ?? undefined}
           linkUrlMask="/mapview/sidebar/acquisition/|id|"
         />
       </Section>
@@ -69,7 +69,7 @@ const PropertyAssociationTabView: React.FunctionComponent<
       >
         <AssociationContent
           associationName="lease"
-          associations={props.associations?.leaseAssociations}
+          associations={props.associations?.leaseAssociations ?? undefined}
           linkUrlMask="/mapview/sidebar/lease/|id|"
         />
       </Section>
@@ -85,7 +85,7 @@ const PropertyAssociationTabView: React.FunctionComponent<
       >
         <AssociationContent
           associationName="disposition"
-          associations={props.associations?.dispositionAssociations}
+          associations={props.associations?.dispositionAssociations ?? undefined}
           linkUrlMask="/mapview/sidebar/disposition/|id|"
         />
       </Section>

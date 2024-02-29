@@ -14,6 +14,9 @@ const featureViewStates = {
       on: {
         START_SELECTION: {
           target: 'selecting',
+          actions: [
+            assign({ selectingComponentId: (_, event: any) => event.selectingComponentId }),
+          ],
         },
         TOGGLE_FILTER: {
           target: 'filtering',
@@ -175,7 +178,7 @@ const selectedFeatureLoaderStates = {
             assign({
               isLoading: () => true,
               mapLocationSelected: (_, event: any) => event.latlng,
-              mapFeatureSelected: (_, event: any) => null,
+              mapFeatureSelected: () => null,
               mapLocationFeatureDataset: () => null,
             }),
           ],
@@ -185,7 +188,7 @@ const selectedFeatureLoaderStates = {
           actions: [
             assign({
               isLoading: () => true,
-              mapLocationSelected: (_, event: any) => null,
+              mapLocationSelected: () => null,
               mapFeatureSelected: (_, event: any) => event.featureSelected,
               mapLocationFeatureDataset: () => null,
             }),
@@ -212,7 +215,12 @@ const selectedFeatureLoaderStates = {
             assign({
               isLoading: () => false,
               showPopup: () => true,
-              mapLocationFeatureDataset: (context, event: any) => event.data,
+              mapLocationFeatureDataset: (context: any, event: any) => {
+                return {
+                  ...event.data,
+                  selectingComponentId: context.selectingComponentId,
+                };
+              },
             }),
             raise('FINISHED_LOCATION_DATA_LOAD'),
           ],
@@ -318,6 +326,7 @@ export const mapMachine = createMachine<MachineContext>({
     mapFeatureSelected: null,
     mapLocationFeatureDataset: null,
     selectedFeatureDataset: null,
+    selectingComponentId: null,
     isLoading: false,
     searchCriteria: null,
     mapFeatureData: emptyFeatureData,
@@ -336,7 +345,7 @@ export const mapMachine = createMachine<MachineContext>({
             target: 'mapVisible',
           },
           {
-            cond: (context: MachineContext, event: any) => context.searchCriteria === null,
+            cond: (context: MachineContext) => context.searchCriteria === null,
             actions: assign({ searchCriteria: () => defaultPropertyFilter }),
             target: ['mapVisible.sideBar.sidebarOpen', 'mapVisible.featureDataLoader.loading'],
           },
@@ -346,7 +355,7 @@ export const mapMachine = createMachine<MachineContext>({
         ],
         OPEN_SIDEBAR: [
           {
-            cond: (context: MachineContext, event: any) => context.searchCriteria === null,
+            cond: (context: MachineContext) => context.searchCriteria === null,
             actions: assign({ searchCriteria: () => defaultPropertyFilter }),
             target: ['mapVisible.sideBar.sidebarOpen', 'mapVisible.featureDataLoader.loading'],
           },

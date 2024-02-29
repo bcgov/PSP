@@ -8,14 +8,38 @@ import configureMockStore, { MockStoreEnhanced } from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
 import * as MOCK from '@/mocks/data.mock';
-import { Api_ResearchFile } from '@/models/api/ResearchFile';
+import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Concepts_ResearchFile';
 import { networkSlice } from '@/store/slices/network/networkSlice';
 
 import { useAddResearch } from './useAddResearch';
 
-const testResearchFile: Api_ResearchFile = {
+const testResearchFile: ApiGen_Concepts_ResearchFile = {
   id: 1,
   fileNumber: 'RFile-0123456789',
+  roadName: null,
+  roadAlias: null,
+  fileProperties: null,
+  requestDate: null,
+  requestDescription: null,
+  requestSourceDescription: null,
+  researchResult: null,
+  researchCompletionDate: null,
+  isExpropriation: null,
+  expropriationNotes: null,
+  requestSourceType: null,
+  requestorPerson: null,
+  requestorOrganization: null,
+  researchFilePurposes: null,
+  researchFileProjects: null,
+  fileName: null,
+  fileStatusTypeCode: null,
+  appCreateTimestamp: '',
+  appLastUpdateTimestamp: '',
+  appLastUpdateUserid: null,
+  appCreateUserid: null,
+  appLastUpdateUserGuid: null,
+  appCreateUserGuid: null,
+  rowVersion: null,
 };
 
 const dispatch = jest.fn();

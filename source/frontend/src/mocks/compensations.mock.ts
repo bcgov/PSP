@@ -1,7 +1,10 @@
-import { Api_CompensationFinancial } from '@/models/api/CompensationFinancial';
-import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
+import { ApiGen_Concepts_CompensationFinancial } from '@/models/api/generated/ApiGen_Concepts_CompensationFinancial';
+import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
+import { ApiGen_Concepts_FinancialCodeTypes } from '@/models/api/generated/ApiGen_Concepts_FinancialCodeTypes';
+import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 
-export const emptyCompensationRequisition: Api_CompensationRequisition = {
+export const emptyCompensationRequisition: ApiGen_Concepts_CompensationRequisition = {
   id: null,
   acquisitionFileId: 0,
   acquisitionFile: null,
@@ -33,9 +36,10 @@ export const emptyCompensationRequisition: Api_CompensationRequisition = {
   gstNumber: null,
   specialInstruction: null,
   detailedRemarks: null,
+  ...getEmptyBaseAudit(),
 };
 
-export const emptyCompensationFinancial: Api_CompensationFinancial = {
+export const emptyCompensationFinancial: ApiGen_Concepts_CompensationFinancial = {
   id: null,
   compensationId: 0,
   financialActivityCodeId: 0,
@@ -45,75 +49,91 @@ export const emptyCompensationFinancial: Api_CompensationFinancial = {
   taxAmount: null,
   totalAmount: null,
   isDisabled: null,
-  rowVersion: null,
+  h120CategoryId: null,
+  ...getEmptyBaseAudit(),
 };
 
-export const getMockApiDefaultCompensation = (): Api_CompensationRequisition => ({
+export const getMockApiDefaultCompensation = (): ApiGen_Concepts_CompensationRequisition => ({
   ...emptyCompensationRequisition,
   id: 1,
   acquisitionFileId: 2,
   rowVersion: 1,
 });
 
-export const getMockApiCompensationWithFinancials = (): Api_CompensationRequisition => ({
-  ...emptyCompensationRequisition,
-  id: 1,
-  acquisitionFileId: 2,
-  isDraft: true,
-  fiscalYear: '2023/2024',
-  specialInstruction: 'SPECIAL INSTRUCTION',
-  detailedRemarks: 'DETAILED REMARKS',
-  financials: [
-    {
-      id: 1,
-      financialActivityCodeId: 2,
-      financialActivityCode: {
+export const getMockApiCompensationWithFinancials =
+  (): ApiGen_Concepts_CompensationRequisition => ({
+    ...emptyCompensationRequisition,
+    id: 1,
+    acquisitionFileId: 2,
+    isDraft: true,
+    fiscalYear: '2023/2024',
+    specialInstruction: 'SPECIAL INSTRUCTION',
+    detailedRemarks: 'DETAILED REMARKS',
+    financials: [
+      {
+        id: 1,
+        financialActivityCodeId: 2,
+        financialActivityCode: {
+          id: 2,
+          description: 'Market',
+          type: ApiGen_Concepts_FinancialCodeTypes.BusinessFunction,
+          displayOrder: null,
+          effectiveDate: EpochIsoDateTime,
+          expiryDate: null,
+          code: null,
+          ...getEmptyBaseAudit(),
+        },
+        compensationId: 1,
+        pretaxAmount: 10000.0,
+        isGstRequired: true,
+        taxAmount: 500.0,
+        totalAmount: 10500.0,
+        isDisabled: false,
+        appCreateTimestamp: '2023-06-12T17:57:08.397',
+        appLastUpdateTimestamp: '2023-06-13T15:39:31.167',
+        appLastUpdateUserid: 'JOHNDOE',
+        appCreateUserid: 'JOHNDOE',
+        appLastUpdateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
+        appCreateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
+        rowVersion: 1,
+        h120CategoryId: null,
+      },
+      {
         id: 2,
-        description: 'Market',
+        financialActivityCodeId: 9,
+        financialActivityCode: {
+          id: 9,
+          description: 'Owners Entitlements',
+          type: ApiGen_Concepts_FinancialCodeTypes.BusinessFunction,
+          displayOrder: null,
+          effectiveDate: EpochIsoDateTime,
+          expiryDate: null,
+          code: null,
+          ...getEmptyBaseAudit(),
+        },
+        compensationId: 1,
+        pretaxAmount: 20000.0,
+        isGstRequired: true,
+        taxAmount: 1000.0,
+        totalAmount: 21000.0,
+        isDisabled: false,
+        appCreateTimestamp: '2023-06-12T17:57:35.28',
+        appLastUpdateTimestamp: '2023-06-13T15:39:31.167',
+        appLastUpdateUserid: 'JOHNDOE',
+        appCreateUserid: 'JOHNDOE',
+        appLastUpdateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
+        appCreateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
+        rowVersion: 8,
+        h120CategoryId: null,
       },
-      compensationId: 1,
-      pretaxAmount: 10000.0,
-      isGstRequired: true,
-      taxAmount: 500.0,
-      totalAmount: 10500.0,
-      isDisabled: false,
-      appCreateTimestamp: '2023-06-12T17:57:08.397',
-      appLastUpdateTimestamp: '2023-06-13T15:39:31.167',
-      appLastUpdateUserid: 'JOHNDOE',
-      appCreateUserid: 'JOHNDOE',
-      appLastUpdateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
-      appCreateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
-      rowVersion: 1,
-    },
-    {
-      id: 2,
-      financialActivityCodeId: 9,
-      financialActivityCode: {
-        id: 9,
-        description: 'Owners Entitlements',
-      },
-      compensationId: 1,
-      pretaxAmount: 20000.0,
-      isGstRequired: true,
-      taxAmount: 1000.0,
-      totalAmount: 21000.0,
-      isDisabled: false,
-      appCreateTimestamp: '2023-06-12T17:57:35.28',
-      appLastUpdateTimestamp: '2023-06-13T15:39:31.167',
-      appLastUpdateUserid: 'JOHNDOE',
-      appCreateUserid: 'JOHNDOE',
-      appLastUpdateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
-      appCreateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
-      rowVersion: 8,
-    },
-  ],
-  isPaymentInTrust: true,
-  gstNumber: '9999',
-  acquisitionOwnerId: 1,
-  rowVersion: 1,
-});
+    ],
+    isPaymentInTrust: true,
+    gstNumber: '9999',
+    acquisitionOwnerId: 1,
+    rowVersion: 1,
+  });
 
-export const getMockApiCompensationList = (): Api_CompensationRequisition[] => [
+export const getMockApiCompensationList = (): ApiGen_Concepts_CompensationRequisition[] => [
   {
     ...emptyCompensationRequisition,
     id: 1,
@@ -135,9 +155,19 @@ export const getMockApiCompensationList = (): Api_CompensationRequisition[] => [
         taxAmount: 2.0,
         totalAmount: 10.0,
         isDisabled: false,
-        rowVersion: 1,
         financialActivityCodeId: 1,
-        financialActivityCode: { id: 1 },
+        financialActivityCode: {
+          id: 1,
+          description: null,
+          type: ApiGen_Concepts_FinancialCodeTypes.BusinessFunction,
+          displayOrder: null,
+          effectiveDate: EpochIsoDateTime,
+          expiryDate: null,
+          code: null,
+          ...getEmptyBaseAudit(),
+        },
+        h120CategoryId: null,
+        ...getEmptyBaseAudit(1),
       },
       {
         id: 2,
@@ -147,9 +177,19 @@ export const getMockApiCompensationList = (): Api_CompensationRequisition[] => [
         taxAmount: 5.0,
         totalAmount: 15.0,
         isDisabled: false,
-        rowVersion: 1,
         financialActivityCodeId: 3,
-        financialActivityCode: { id: 3 },
+        financialActivityCode: {
+          id: 3,
+          type: ApiGen_Concepts_FinancialCodeTypes.BusinessFunction,
+          displayOrder: null,
+          effectiveDate: EpochIsoDateTime,
+          expiryDate: null,
+          code: null,
+          description: null,
+          ...getEmptyBaseAudit(),
+        },
+        h120CategoryId: null,
+        ...getEmptyBaseAudit(1),
       },
       {
         id: 3,
@@ -159,9 +199,19 @@ export const getMockApiCompensationList = (): Api_CompensationRequisition[] => [
         taxAmount: 1.0,
         totalAmount: 3.0,
         isDisabled: false,
-        rowVersion: 1,
         financialActivityCodeId: 1,
-        financialActivityCode: { id: 1 },
+        financialActivityCode: {
+          id: 1,
+          type: ApiGen_Concepts_FinancialCodeTypes.BusinessFunction,
+          displayOrder: null,
+          effectiveDate: EpochIsoDateTime,
+          expiryDate: null,
+          code: null,
+          description: null,
+          ...getEmptyBaseAudit(),
+        },
+        h120CategoryId: null,
+        ...getEmptyBaseAudit(1),
       },
       {
         id: 4,
@@ -171,9 +221,19 @@ export const getMockApiCompensationList = (): Api_CompensationRequisition[] => [
         taxAmount: 2.0,
         totalAmount: 7.0,
         isDisabled: false,
-        rowVersion: 1,
         financialActivityCodeId: 2,
-        financialActivityCode: { id: 2 },
+        financialActivityCode: {
+          id: 2,
+          type: ApiGen_Concepts_FinancialCodeTypes.BusinessFunction,
+          displayOrder: null,
+          effectiveDate: EpochIsoDateTime,
+          expiryDate: null,
+          code: null,
+          description: null,
+          ...getEmptyBaseAudit(),
+        },
+        h120CategoryId: null,
+        ...getEmptyBaseAudit(1),
       },
     ],
     rowVersion: 1,
@@ -207,9 +267,19 @@ export const getMockApiCompensationList = (): Api_CompensationRequisition[] => [
         taxAmount: 2.0,
         totalAmount: 7.0,
         isDisabled: false,
-        rowVersion: 1,
         financialActivityCodeId: 1,
-        financialActivityCode: { id: 1 },
+        financialActivityCode: {
+          id: 1,
+          type: ApiGen_Concepts_FinancialCodeTypes.BusinessFunction,
+          displayOrder: null,
+          effectiveDate: EpochIsoDateTime,
+          expiryDate: null,
+          code: null,
+          description: null,
+          ...getEmptyBaseAudit(),
+        },
+        h120CategoryId: null,
+        ...getEmptyBaseAudit(1),
       },
     ],
     rowVersion: 1,
@@ -224,7 +294,7 @@ export const getMockApiCompensationList = (): Api_CompensationRequisition[] => [
   },
 ];
 
-export const getMockDefaultCreateCompenReq = (): Api_CompensationRequisition => ({
+export const getMockDefaultCreateCompenReq = (): ApiGen_Concepts_CompensationRequisition => ({
   ...emptyCompensationRequisition,
   acquisitionFileId: 1,
   isDraft: true,

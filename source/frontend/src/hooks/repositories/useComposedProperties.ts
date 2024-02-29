@@ -4,9 +4,11 @@ import { useEffect, useMemo, useState } from 'react';
 
 import { ComposedProperty } from '@/features/mapSideBar/property/ComposedProperty';
 import { LtsaOrders } from '@/interfaces/ltsaModels';
-import { Api_Property, Api_PropertyAssociations } from '@/models/api/Property';
+import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
+import { ApiGen_Concepts_PropertyAssociations } from '@/models/api/generated/ApiGen_Concepts_PropertyAssociations';
 import { IBcAssessmentSummary } from '@/models/layers/bcAssesment';
 import { useTenant } from '@/tenants/useTenant';
+import { isValidId } from '@/utils';
 
 import { useGeoServer } from '../layer-api/useGeoServer';
 import { IWfsGetAllFeaturesOptions } from '../layer-api/useWfsLayer';
@@ -34,9 +36,11 @@ export default interface ComposedPropertyState {
   pin?: string;
   id?: number;
   ltsaWrapper?: IResponseWrapper<(pid: string) => Promise<AxiosResponse<LtsaOrders, any>>>;
-  apiWrapper?: IResponseWrapper<(id: number) => Promise<AxiosResponse<Api_Property, any>>>;
+  apiWrapper?: IResponseWrapper<
+    (id: number) => Promise<AxiosResponse<ApiGen_Concepts_Property, any>>
+  >;
   propertyAssociationWrapper?: IResponseWrapper<
-    (id: number) => Promise<AxiosResponse<Api_PropertyAssociations, any>>
+    (id: number) => Promise<AxiosResponse<ApiGen_Concepts_PropertyAssociations, any>>
   >;
   parcelMapWrapper?: IResponseWrapper<
     (
@@ -100,7 +104,7 @@ export const useComposedProperties = ({
   const executeGetPropertyAssociations = getPropertyAssociationsWrapper.execute;
 
   useEffect(() => {
-    if (id !== undefined && !isNaN(id)) {
+    if (isValidId(id)) {
       typeCheckWrapper(() => executeGetApiProperty(id), PROPERTY_TYPES.PIMS_API);
       typeCheckWrapper(() => executeGetPropertyWfs(id), PROPERTY_TYPES.PIMS_GEOSERVER);
       typeCheckWrapper(() => executeGetPropertyAssociations(id), PROPERTY_TYPES.ASSOCIATIONS);
@@ -127,7 +131,7 @@ export const useComposedProperties = ({
         () => executeBcAssessmentSummary(retrievedPid ?? ''),
         PROPERTY_TYPES.BC_ASSESSMENT,
       );
-    } else if (!!retrievedPin) {
+    } else if (retrievedPin) {
       typeCheckWrapper(() => findByPin(retrievedPin, true), PROPERTY_TYPES.PARCEL_MAP);
     }
   }, [

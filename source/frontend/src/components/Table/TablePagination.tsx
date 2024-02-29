@@ -1,6 +1,6 @@
 import './TablePagination.scss';
 
-import React, { PropsWithChildren, ReactElement, useCallback } from 'react';
+import { PropsWithChildren, ReactElement, useCallback } from 'react';
 import ReactPaginate from 'react-paginate';
 import { TableInstance } from 'react-table';
 

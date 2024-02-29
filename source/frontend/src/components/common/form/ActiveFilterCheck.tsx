@@ -1,5 +1,4 @@
 import { getIn, useFormikContext } from 'formik';
-import * as React from 'react';
 
 import { Check } from '@/components/common/form';
 import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';

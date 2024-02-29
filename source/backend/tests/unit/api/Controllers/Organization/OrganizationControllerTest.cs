@@ -1,18 +1,12 @@
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using FluentAssertions;
 using MapsterMapper;
-using Microsoft.AspNetCore.Mvc;
 using Moq;
-using Pims.Api.Areas.Lease.Controllers;
 using Pims.Api.Areas.Organizations.Controllers;
+using Pims.Api.Models.Concepts.Organization;
 using Pims.Api.Services;
 using Pims.Core.Test;
-using Pims.Dal;
 using Pims.Dal.Security;
-using Pims.Dal.Services;
 using Xunit;
-using Model = Pims.Api.Areas.Organizations.Models.Organization;
 
 namespace Pims.Api.Test.Controllers
 {
@@ -67,7 +61,7 @@ namespace Pims.Api.Test.Controllers
             this._service.Setup(m => m.UpdateOrganization(It.IsAny<Pims.Dal.Entities.PimsOrganization>(), It.IsAny<long>())).Returns(organization);
 
             // Act
-            var result = this._controller.UpdateOrganization(this._mapper.Map<Model.OrganizationModel>(organization));
+            var result = this._controller.UpdateOrganization(this._mapper.Map<OrganizationModel>(organization));
 
             // Assert
             this._service.Verify(m => m.UpdateOrganization(It.IsAny<Pims.Dal.Entities.PimsOrganization>(), It.IsAny<long>()), Times.Once());

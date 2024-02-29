@@ -1,4 +1,5 @@
-import { Api_Project } from '@/models/api/Project';
+import { ApiGen_Concepts_Project } from '@/models/api/generated/ApiGen_Concepts_Project';
+import { isValidIsoDateTime } from '@/utils';
 
 export class ProjectSearchResultModel {
   id: number | null = null;
@@ -9,8 +10,8 @@ export class ProjectSearchResultModel {
   lastUpdatedBy: string | '' = '';
   lastUpdatedDate: string | '' = '';
 
-  static fromApi(base: Api_Project): ProjectSearchResultModel {
-    var newModel = new ProjectSearchResultModel();
+  static fromApi(base: ApiGen_Concepts_Project): ProjectSearchResultModel {
+    const newModel = new ProjectSearchResultModel();
 
     newModel.id = base.id ?? null;
     newModel.code = base.code?.toString() ?? '';
@@ -18,7 +19,9 @@ export class ProjectSearchResultModel {
     newModel.region = base.regionCode?.description ?? '';
     newModel.status = base.projectStatusTypeCode?.description ?? '';
     newModel.lastUpdatedBy = base.appLastUpdateUserid ?? '';
-    newModel.lastUpdatedDate = base.appLastUpdateTimestamp ?? '';
+    newModel.lastUpdatedDate = isValidIsoDateTime(base.appLastUpdateTimestamp)
+      ? base.appLastUpdateTimestamp
+      : '';
 
     return newModel;
   }

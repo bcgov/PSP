@@ -9,17 +9,17 @@ import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { SectionListHeader } from '@/components/common/SectionListHeader';
 import Claims from '@/constants/claims';
-import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
-import { Api_CompensationFinancial } from '@/models/api/CompensationFinancial';
-import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
+import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
+import { ApiGen_Concepts_CompensationFinancial } from '@/models/api/generated/ApiGen_Concepts_CompensationFinancial';
+import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
 import { formatMoney } from '@/utils';
 
 import StatusUpdateSolver from '../../fileDetails/detail/statusUpdateSolver';
 import { CompensationResults } from './CompensationResults';
 
 export interface ICompensationListViewProps {
-  acquisitionFile: Api_AcquisitionFile;
-  compensations: Api_CompensationRequisition[];
+  acquisitionFile: ApiGen_Concepts_AcquisitionFile;
+  compensations: ApiGen_Concepts_CompensationRequisition[];
   onAdd: () => void;
   onDelete: (compensationId: number) => void;
   onUpdateTotalCompensation: (totalAllowableCompensation: number | null) => Promise<number | null>;
@@ -37,10 +37,10 @@ export const CompensationListView: React.FunctionComponent<ICompensationListView
 
   const fileCompensationTotal = compensations
     .filter(x => !x.isDraft)
-    .reduce((fileTotal: number, current: Api_CompensationRequisition) => {
+    .reduce((fileTotal: number, current: ApiGen_Concepts_CompensationRequisition) => {
       const compensationTotal =
         current.financials?.reduce(
-          (financialTotal: number, financial: Api_CompensationFinancial) => {
+          (financialTotal: number, financial: ApiGen_Concepts_CompensationFinancial) => {
             return financialTotal + (financial.totalAmount || 0);
           },
           0,
@@ -50,10 +50,10 @@ export const CompensationListView: React.FunctionComponent<ICompensationListView
 
   const fileDraftCompensationTotal = compensations
     .filter(x => x.isDraft)
-    .reduce((fileTotal: number, current: Api_CompensationRequisition) => {
+    .reduce((fileTotal: number, current: ApiGen_Concepts_CompensationRequisition) => {
       const compensationTotal =
         current.financials?.reduce(
-          (financialTotal: number, financial: Api_CompensationFinancial) => {
+          (financialTotal: number, financial: ApiGen_Concepts_CompensationFinancial) => {
             return financialTotal + (financial.totalAmount || 0);
           },
           0,

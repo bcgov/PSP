@@ -9,6 +9,7 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
         public void Register(TypeAdapterConfig config)
         {
             config.NewConfig<Entity.PimsPropertyAcquisitionFile, AcquisitionFilePropertyModel>()
+                .PreserveReference(true)
                 .Map(dest => dest.Id, src => src.PropertyAcquisitionFileId)
                 .Map(dest => dest.PropertyName, src => src.PropertyName)
                 .Map(dest => dest.DisplayOrder, src => src.DisplayOrder)
@@ -19,6 +20,7 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
                 .Inherits<Entity.IBaseEntity, BaseConcurrentModel>();
 
             config.NewConfig<AcquisitionFilePropertyModel, Entity.PimsPropertyAcquisitionFile>()
+                .PreserveReference(true)
                 .Map(dest => dest.PropertyAcquisitionFileId, src => src.Id)
                 .Map(dest => dest.Property, src => src.Property)
                 .Map(dest => dest.PropertyId, src => src.Property.Id)
