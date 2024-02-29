@@ -38,6 +38,7 @@ namespace Pims.Dal.Helpers.Extensions
                     .ThenInclude(a => a.ProvinceState)
                 .Include(p => p.Address)
                     .ThenInclude(a => a.Country)
+                .Include(p => p.PropertyAreaUnitTypeCodeNavigation)
                 .AsNoTracking();
 
             var predicate = GenerateCommonPropertyQuery(user, filter);
