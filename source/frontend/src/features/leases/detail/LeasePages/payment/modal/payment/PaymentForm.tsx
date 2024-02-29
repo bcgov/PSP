@@ -1,6 +1,7 @@
 import { Formik, FormikProps } from 'formik';
 
-import { Api_LeaseTerm } from '@/models/api/LeaseTerm';
+import { ApiGen_Concepts_LeaseTerm } from '@/models/api/generated/ApiGen_Concepts_LeaseTerm';
+import { toTypeCodeNullable } from '@/utils/formUtils';
 
 import { defaultFormLeasePayment, FormLeasePayment, FormLeaseTerm } from '../../models';
 import { isActualGstEligible } from '../../TermPaymentsContainer';
@@ -12,7 +13,7 @@ export interface IPaymentFormProps {
   onSave: (values: FormLeasePayment) => void;
   initialValues?: FormLeasePayment;
   isReceived?: boolean;
-  terms: Api_LeaseTerm[];
+  terms: ApiGen_Concepts_LeaseTerm[];
 }
 
 /**
@@ -46,7 +47,7 @@ export const PaymentForm: React.FunctionComponent<React.PropsWithChildren<IPayme
       initialValues={{
         ...defaultFormLeasePayment,
         ...initialValues,
-        leasePaymentMethodType: { id: 'CHEQ' },
+        leasePaymentMethodType: toTypeCodeNullable('CHEQ'),
         amountGst: isGstEligible ? initialValues?.amountGst ?? '' : '',
       }}
     >

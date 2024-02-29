@@ -8,7 +8,7 @@ import { ReactComponent as RealEstateAgent } from '@/assets/images/real-estate-a
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
-import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
+import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { featuresetToMapProperty } from '@/utils/mapPropertyUtils';
 
 import { PropertyForm } from '../../shared/models';
@@ -67,7 +67,7 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
   };
 
   // navigate to read-only view after file has been created
-  const onSuccess = async (acqFile: Api_AcquisitionFile) => {
+  const onSuccess = async (acqFile: ApiGen_Concepts_AcquisitionFile) => {
     if (acqFile.fileProperties?.find(ap => !ap.property?.address && !ap.property?.id)) {
       toast.warn(
         'Address could not be retrieved for this property, it will have to be provided manually in property details tab',

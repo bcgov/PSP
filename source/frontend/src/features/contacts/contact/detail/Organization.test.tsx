@@ -53,7 +53,7 @@ describe('Contact OrganizationView component', () => {
       },
     });
 
-    var statusElement = component.getByTestId('contact-organization-status');
+    const statusElement = component.getByTestId('contact-organization-status');
     expect(statusElement.textContent).toBe('INACTIVE');
   });
 
@@ -70,16 +70,16 @@ describe('Contact OrganizationView component', () => {
       },
     });
 
-    var statusElement = component.getByTestId('contact-organization-status');
+    const statusElement = component.getByTestId('contact-organization-status');
     expect(statusElement.textContent).toBe('ACTIVE');
 
-    var nameElement = component.getByTestId('contact-organization-fullname');
+    const nameElement = component.getByTestId('contact-organization-fullname');
     expect(nameElement.textContent).toBe(testName);
 
-    var aliasElement = component.getByTestId('contact-organization-alias');
+    const aliasElement = component.getByTestId('contact-organization-alias');
     expect(aliasElement.textContent).toBe(testAlias);
 
-    var incorporationElement = component.getByTestId('contact-organization-incorporationNumber');
+    const incorporationElement = component.getByTestId('contact-organization-incorporationNumber');
     expect(incorporationElement.textContent).toBe(testIncNumber);
   });
 
@@ -91,6 +91,7 @@ describe('Contact OrganizationView component', () => {
         id: ContactMethodTypes.PersonalEmail,
         description: 'Personal Email',
         isDisabled: false,
+        displayOrder: null,
       },
       value: 'test@bench.com',
     };
@@ -100,6 +101,7 @@ describe('Contact OrganizationView component', () => {
       contactMethodType: {
         id: ContactMethodTypes.WorkEmail,
         description: 'Work Email',
+        displayOrder: null,
         isDisabled: false,
       },
       value: 'test@bench.net',
@@ -113,7 +115,7 @@ describe('Contact OrganizationView component', () => {
       },
     });
 
-    var emailValueElements = component.getAllByTestId('email-value');
+    const emailValueElements = component.getAllByTestId('email-value');
     expect(emailValueElements.length).toBe(2);
 
     // Verify that the display is in the correct order
@@ -128,6 +130,7 @@ describe('Contact OrganizationView component', () => {
       contactMethodType: {
         id: ContactMethodTypes.Fax,
         description: 'Fax',
+        displayOrder: null,
         isDisabled: false,
       },
       value: '123456789',
@@ -138,6 +141,7 @@ describe('Contact OrganizationView component', () => {
       contactMethodType: {
         id: ContactMethodTypes.PersonalPhone,
         description: 'Personal Phone',
+        displayOrder: null,
         isDisabled: false,
       },
       value: '800123123',
@@ -148,6 +152,7 @@ describe('Contact OrganizationView component', () => {
       contactMethodType: {
         id: ContactMethodTypes.WorkPhone,
         description: 'Work Phone',
+        displayOrder: null,
         isDisabled: false,
       },
       value: '555123123',
@@ -158,6 +163,7 @@ describe('Contact OrganizationView component', () => {
       contactMethodType: {
         id: ContactMethodTypes.WorkMobile,
         description: 'Work mobil',
+        displayOrder: null,
         isDisabled: false,
       },
       value: '800123123',
@@ -168,6 +174,7 @@ describe('Contact OrganizationView component', () => {
       contactMethodType: {
         id: ContactMethodTypes.PersonalMobile,
         description: 'Personal Mobile',
+        displayOrder: null,
         isDisabled: false,
       },
       value: '750748789',
@@ -187,7 +194,7 @@ describe('Contact OrganizationView component', () => {
       },
     });
 
-    var phoneValueElements = component.getAllByTestId('phone-value');
+    const phoneValueElements = component.getAllByTestId('phone-value');
     expect(phoneValueElements.length).toBe(5);
 
     // Verify that the display is in the correct order
@@ -214,6 +221,7 @@ describe('Contact OrganizationView component', () => {
       addressType: {
         id: AddressTypes.Mailing,
         description: 'Mailing Address',
+        displayOrder: null,
         isDisabled: false,
       },
     };
@@ -232,6 +240,7 @@ describe('Contact OrganizationView component', () => {
       addressType: {
         id: AddressTypes.Residential,
         description: 'Residential Address',
+        displayOrder: null,
         isDisabled: false,
       },
     };
@@ -244,7 +253,7 @@ describe('Contact OrganizationView component', () => {
       },
     });
 
-    var addressElements = component.getAllByTestId('contact-organization-address');
+    const addressElements = component.getAllByTestId('contact-organization-address');
     expect(addressElements.length).toBe(2);
 
     // Verify that the display is in the correct order
@@ -273,6 +282,7 @@ describe('Contact OrganizationView component', () => {
       addressType: {
         id: AddressTypes.Mailing,
         description: 'Mailing Address',
+        displayOrder: null,
         isDisabled: false,
       },
     };
@@ -285,7 +295,7 @@ describe('Contact OrganizationView component', () => {
       },
     });
 
-    var addressElement = component.getByTestId('contact-organization-address');
+    const addressElement = component.getByTestId('contact-organization-address');
 
     // Verify that the display is in the correct order
     expect(addressElement.textContent).toBe(
@@ -325,7 +335,7 @@ describe('Contact OrganizationView component', () => {
       },
     });
 
-    var personElements = component.getAllByTestId('contact-organization-person');
+    const personElements = component.getAllByTestId('contact-organization-person');
     expect(personElements.length).toBe(3);
 
     // Verify that the display is in the correct order
@@ -342,7 +352,7 @@ describe('Contact OrganizationView component', () => {
       },
     });
 
-    var addressElements = component.getAllByTestId('contact-organization-address');
+    const addressElements = component.getAllByTestId('contact-organization-address');
     expect(addressElements.length).toBe(3);
 
     expect(addressElements[0].children[0]).toHaveTextContent('Mailing address');
@@ -351,7 +361,7 @@ describe('Contact OrganizationView component', () => {
   });
 
   it('Shows comment information', () => {
-    const testComment: string = 'A test comment :)';
+    const testComment = 'A test comment :)';
     const { component } = setup({
       organization: {
         ...fakeOrganization,
@@ -359,7 +369,7 @@ describe('Contact OrganizationView component', () => {
       },
     });
 
-    var commentElement = component.getByTestId('contact-organization-comment');
+    const commentElement = component.getByTestId('contact-organization-comment');
     expect(commentElement.textContent).toBe(testComment);
   });
 });

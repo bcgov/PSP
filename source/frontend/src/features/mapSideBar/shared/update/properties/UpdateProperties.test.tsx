@@ -4,8 +4,10 @@ import MockAdapter from 'axios-mock-adapter';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { SideBarContextProvider } from '@/features/mapSideBar/context/sidebarContext';
+import { getMockApiAddress } from '@/mocks/address.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
+import { getMockApiProperty } from '@/mocks/properties.mock';
 import { getMockResearchFile } from '@/mocks/researchFile.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { fillInput, render, RenderOptions, userEvent } from '@/utils/test-utils';
@@ -83,25 +85,28 @@ describe('UpdateProperties component', () => {
             id: 3,
             propertyId: 443,
             property: {
+              ...getMockApiProperty(),
               id: 443,
               anomalies: [],
               tenures: [],
               roadTypes: [],
-              adjacentLands: [],
               region: {
                 id: 1,
                 description: 'South Coast Region',
                 isDisabled: false,
+                displayOrder: null,
               },
               district: {
                 id: 2,
                 description: 'Vancouver Island District',
                 isDisabled: false,
+                displayOrder: null,
               },
               dataSourceEffectiveDateOnly: '2022-10-05T00:00:00',
               isSensitive: false,
               isRwyBeltDomPatent: false,
               address: {
+                ...getMockApiAddress(),
                 id: 1,
                 streetAddress1: '45 - 904 Hollywood Crescent',
                 streetAddress2: 'Living in a van',
@@ -117,11 +122,15 @@ describe('UpdateProperties component', () => {
               rowVersion: 3,
             },
             rowVersion: 1,
+            displayOrder: null,
+            fileId: 1,
+            propertyName: null,
+            file: null,
           },
         ],
       },
     });
-    expect(getByText(/Address: 45 - 904 Ho/)).toBeVisible();
+    expect(getByText(/45 - 904 Ho/)).toBeVisible();
   });
 
   it('save button displays modal', async () => {

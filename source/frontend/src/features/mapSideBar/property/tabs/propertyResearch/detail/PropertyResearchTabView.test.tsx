@@ -1,7 +1,8 @@
 import { createMemoryHistory } from 'history';
 
 import { Claims } from '@/constants/index';
-import { Api_ResearchFileProperty } from '@/models/api/ResearchFile';
+import { ApiGen_Concepts_ResearchFileProperty } from '@/models/api/generated/ApiGen_Concepts_ResearchFileProperty';
+import { getEmptyProperty, getEmptyResearchFile } from '@/models/defaultInitializers';
 import { render, RenderOptions } from '@/utils/test-utils';
 
 import PropertyResearchTabView, { IPropertyResearchTabViewProps } from './PropertyResearchTabView';
@@ -38,18 +39,41 @@ describe('PropertyResearchTabView component', () => {
   });
 });
 
-const fakePropertyResearch: Api_ResearchFileProperty = {
+const fakePropertyResearch: ApiGen_Concepts_ResearchFileProperty = {
   id: 0,
   propertyId: 1,
-  property: {},
-  file: {},
+  property: getEmptyProperty(),
+  file: getEmptyResearchFile(),
   propertyName: 'The Research Property name',
   isLegalOpinionRequired: true,
   isLegalOpinionObtained: true,
   documentReference: 'A document reference',
   researchSummary: 'Research summary notes',
   purposeTypes: [
-    { propertyPurposeType: { id: 'TYPE_A', description: 'Type A' } },
-    { propertyPurposeType: { id: 'TYPE_B', description: 'Type B' } },
+    {
+      propertyPurposeType: {
+        id: 'TYPE_A',
+        description: 'Type A',
+        displayOrder: null,
+        isDisabled: false,
+      },
+      id: 0,
+      propertyResearchFileId: 0,
+      rowVersion: null,
+    },
+    {
+      propertyPurposeType: {
+        id: 'TYPE_B',
+        description: 'Type B',
+        displayOrder: null,
+        isDisabled: false,
+      },
+      id: 0,
+      propertyResearchFileId: 0,
+      rowVersion: null,
+    },
   ],
+  displayOrder: null,
+  fileId: 0,
+  rowVersion: null,
 };

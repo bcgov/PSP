@@ -4,6 +4,7 @@ using Pims.Api.Models;
 using Pims.Api.Models.Base;
 using Pims.Api.Models.Concepts.AccessRequest;
 using Pims.Api.Policies;
+using Pims.Core.Json;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
@@ -57,6 +58,7 @@ namespace Pims.Api.Areas.Admin.Controllers
         [ProducesResponseType(typeof(PageModel<AccessRequestModel>), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "admin-access-requests" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetPage(int page = 1, int quantity = 10, string searchText = null, string sort = null)
         {
             if (page < 1)
@@ -94,6 +96,7 @@ namespace Pims.Api.Areas.Admin.Controllers
         [ProducesResponseType(typeof(ErrorResponseModel), 400)]
         [ProducesResponseType(typeof(ErrorResponseModel), 403)]
         [SwaggerOperation(Tags = new[] { "user" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetAccessRequest(long id)
         {
             var accessRequest = _accessRequestRepository.GetById(id);
@@ -111,6 +114,7 @@ namespace Pims.Api.Areas.Admin.Controllers
         [ProducesResponseType(typeof(AccessRequestModel), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "admin-access-requests" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult Delete(long id, [FromBody] AccessRequestModel model)
         {
             var entity = _mapper.Map<Entity.PimsAccessRequest>(model);

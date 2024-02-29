@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
 
 import { useDeepCompareMemoize } from './useDeepCompareMemoize';
@@ -14,7 +15,6 @@ function useDeepCompareCallback<T extends (...args: any[]) => any>(
   callback: T,
   dependencies: React.DependencyList,
 ) {
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   return React.useCallback(callback, useDeepCompareMemoize(dependencies));
 }
 

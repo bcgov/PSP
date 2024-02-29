@@ -68,8 +68,8 @@ exports[`PropertyInformation component renders a complete lease as expected 1`] 
         >
           <input
             class="form-control"
-            id="input-properties.0.propertyName"
-            name="properties.0.propertyName"
+            id="input-fileProperties.0.propertyName"
+            name="fileProperties.0.propertyName"
             value=""
           />
         </div>
@@ -212,8 +212,8 @@ exports[`PropertyInformation component renders minimally as expected 1`] = `
         >
           <input
             class="form-control"
-            id="input-properties.0.propertyName"
-            name="properties.0.propertyName"
+            id="input-fileProperties.0.propertyName"
+            name="fileProperties.0.propertyName"
             value=""
           />
         </div>

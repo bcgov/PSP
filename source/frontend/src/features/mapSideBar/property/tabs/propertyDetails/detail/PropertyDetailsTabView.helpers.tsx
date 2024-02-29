@@ -1,42 +1,43 @@
 import { Feature, Geometry } from 'geojson';
 
-import { Api_Property } from '@/models/api/Property';
-import Api_TypeCode from '@/models/api/TypeCode';
+import { ApiGen_Base_CodeType } from '@/models/api/generated/ApiGen_Base_CodeType';
+import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
+import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
+import { getEmptyProperty } from '@/models/defaultInitializers';
 import { EBC_ELECTORAL_DISTS_BS10_SVW_Feature_Properties } from '@/models/layers/electoralBoundaries';
+import { exists } from '@/utils';
 import { booleanToString } from '@/utils/formUtils';
 
-export interface IPropertyDetailsForm
-  extends ExtendOverride<
-    Api_Property,
-    {
-      electoralDistrict:
-        | Feature<Geometry, EBC_ELECTORAL_DISTS_BS10_SVW_Feature_Properties>
-        | undefined;
-      isALR?: boolean;
-      firstNations?: {
-        bandName: string;
-        reserveName: string;
-      };
-      isVolumetricParcel: string; // radio buttons only support string values, not booleans
-      anomalies: (Api_TypeCode<string> | undefined)[];
-      tenures: (Api_TypeCode<string> | undefined)[];
-      adjacentLands: (Api_TypeCode<string> | undefined)[];
-      roadTypes: (Api_TypeCode<string> | undefined)[];
-    }
-  > {}
+export type IPropertyDetailsForm = ExtendOverride<
+  ApiGen_Concepts_Property,
+  {
+    electoralDistrict:
+      | Feature<Geometry, EBC_ELECTORAL_DISTS_BS10_SVW_Feature_Properties>
+      | undefined;
+    isALR?: boolean;
+    firstNations?: {
+      bandName: string;
+      reserveName: string;
+    };
+    isVolumetricParcel: string; // radio buttons only support string values, not booleans
+    anomalies: ApiGen_Base_CodeType<string>[];
+    tenures: ApiGen_Base_CodeType<string>[];
+    roadTypes: ApiGen_Base_CodeType<string>[];
+  }
+>;
 
-export function toFormValues(apiData?: Api_Property): IPropertyDetailsForm {
+export function toFormValues(apiData?: ApiGen_Concepts_Property): IPropertyDetailsForm {
   return {
+    ...getEmptyProperty(),
     ...apiData,
     isALR: false,
     firstNations: {
       bandName: '',
       reserveName: '',
     },
-    anomalies: apiData?.anomalies?.map(a => a.propertyAnomalyTypeCode) ?? [],
-    tenures: apiData?.tenures?.map(t => t.propertyTenureTypeCode) ?? [],
-    adjacentLands: apiData?.adjacentLands?.map(a => a.propertyAdjacentLandTypeCode) ?? [],
-    roadTypes: apiData?.roadTypes?.map(a => a.propertyRoadTypeCode) ?? [],
+    anomalies: apiData?.anomalies?.map(a => a.propertyAnomalyTypeCode).filter(exists) ?? [],
+    tenures: apiData?.tenures?.map(t => t.propertyTenureTypeCode).filter(exists) ?? [],
+    roadTypes: apiData?.roadTypes?.map(a => a.propertyRoadTypeCode).filter(exists) ?? [],
     isVolumetricParcel: booleanToString(apiData?.isVolumetricParcel),
     electoralDistrict: undefined,
   };
@@ -60,12 +61,11 @@ export const readOnlyMultiSelectStyle = {
   },
 };
 
-export const defaultPropertyInfo: Partial<Api_Property> = {
+export const defaultPropertyInfo: Partial<ApiGen_Concepts_Property> = {
   anomalies: [],
   tenures: [],
   roadTypes: [],
-  adjacentLands: [],
-  dataSourceEffectiveDateOnly: '',
+  dataSourceEffectiveDateOnly: EpochIsoDateTime,
   isSensitive: false,
   isProvincialPublicHwy: false,
   pid: 0,

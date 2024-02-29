@@ -3,7 +3,8 @@ import { useCallback } from 'react';
 
 import { NoteTypes } from '@/constants/index';
 import { useNoteRepository } from '@/hooks/repositories/useNoteRepository';
-import { Api_Note } from '@/models/api/Note';
+import { ApiGen_Concepts_Note } from '@/models/api/generated/ApiGen_Concepts_Note';
+import { isValidId } from '@/utils';
 
 import { NoteForm } from '../models';
 import { UpdateNoteYupSchema } from '../update/UpdateNoteYupSchema';
@@ -12,7 +13,7 @@ export interface IUseUpdateNotesFormManagementProps {
   /** The parent entity type for adding notes - e.g. 'activity' */
   type: NoteTypes;
   /** The note to update */
-  note?: Api_Note;
+  note?: ApiGen_Concepts_Note;
   /** Optional - callback to execute after a successful update */
   onSuccess?: () => void;
 }
@@ -31,7 +32,7 @@ export function useUpdateNotesFormManagement(props: IUseUpdateNotesFormManagemen
       const response = await updateNote.execute(apiNote);
       formikHelpers?.setSubmitting(false);
 
-      if (!!response?.id) {
+      if (isValidId(response?.id)) {
         formikHelpers?.resetForm();
         if (typeof onSuccess === 'function') {
           onSuccess();

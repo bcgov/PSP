@@ -6,6 +6,7 @@ import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvi
 import { ApiGen_CodeTypes_ExternalResponseStatus } from '@/models/api/generated/ApiGen_CodeTypes_ExternalResponseStatus';
 import { Api_GenerateLetter } from '@/models/generate/GenerateLetter';
 import { Api_GenerateOwner } from '@/models/generate/GenerateOwner';
+import { isValidId } from '@/utils';
 
 export const useGenerateLetter = () => {
   const { getPersonConcept, getOrganizationConcept } = useApiContacts();
@@ -24,11 +25,11 @@ export const useGenerateLetter = () => {
       const coordinator = file.acquisitionTeam?.find(
         team => team.teamProfileTypeCode === 'PROPCOORD',
       );
-      if (!!coordinator?.personId) {
-        coordinator.person = (await getPersonConcept(coordinator?.personId))?.data;
-      } else if (!!coordinator?.organizationId) {
-        coordinator.organization = (
-          await getOrganizationConcept(coordinator?.organizationId)
+      if (isValidId(coordinator?.personId)) {
+        coordinator!.person = (await getPersonConcept(coordinator!.personId))?.data;
+      } else if (isValidId(coordinator?.organizationId)) {
+        coordinator!.organization = (
+          await getOrganizationConcept(coordinator!.organizationId)
         )?.data;
       }
       const letterData = new Api_GenerateLetter(file, coordinator);
@@ -38,7 +39,7 @@ export const useGenerateLetter = () => {
         templateData: letterData,
         convertToType: null,
       });
-      generatedFile?.status === ApiGen_CodeTypes_ExternalResponseStatus.Success!! &&
+      generatedFile?.status === ApiGen_CodeTypes_ExternalResponseStatus.Success &&
         generatedFile?.payload &&
         showFile(generatedFile?.payload);
     }

@@ -24,17 +24,17 @@ export const toCqlFilterValue = (object: Record<string, string>, flags?: IWfsCql
   Object.keys(object).forEach((key: string) => {
     if (object[key]) {
       if (
-        ((key === 'PID' || key === 'PID_PADDED') && object[key]?.length === 9) ||
-        flags?.forceExactMatch
+        (key === 'PID' || key === 'PID_PADDED') &&
+        (object[key]?.length === 9 || flags?.forceExactMatch)
       ) {
         cql.push(`${key} = '${object[key]}'`);
       } else if (key === 'PIN' && flags?.forceExactMatch) {
-        cql.push(`${key}=${object[key].replace(/[^0-9]/g, '')}`);
+        cql.push(`${key}='${object[key].replace(/[^0-9]/g, '')}'`);
       } else {
         cql.push(`${key} ilike '%${object[key]}%'`);
       }
     }
   });
 
-  return cql.length ? (flags?.useCqlOr ? cql.join(' OR ') : cql.join(' AND ')) : '';
+  return cql.length > 0 ? (flags?.useCqlOr ? cql.join(' OR ') : cql.join(' AND ')) : '';
 };

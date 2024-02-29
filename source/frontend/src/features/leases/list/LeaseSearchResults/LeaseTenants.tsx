@@ -23,8 +23,8 @@ const LeaseTenants: React.FunctionComponent<
     displayNames = names;
   }
 
-  let rowItems = displayNames.map((tenantName, index) => {
-    let isLastItem = index + 1 === names.length;
+  const rowItems = displayNames.map((tenantName, index) => {
+    const isLastItem = index + 1 === names.length;
     return (
       <Row key={index} className={`mx-0 ${isLastItem ? '' : 'border-bottom'}`}>
         <Col md="auto">

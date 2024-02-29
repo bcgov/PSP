@@ -1,17 +1,17 @@
 import { CellProps } from 'react-table';
 
 import { ColumnWithProps, DateCell } from '@/components/Table';
-import { Api_LeaseTerm } from '@/models/api/LeaseTerm';
-import Api_TypeCode from '@/models/api/TypeCode';
+import { ApiGen_Base_CodeType } from '@/models/api/generated/ApiGen_Base_CodeType';
+import { ApiGen_Concepts_LeaseTerm } from '@/models/api/generated/ApiGen_Concepts_LeaseTerm';
 import { stringToFragment } from '@/utils';
 
-export const leaseTermColumns: ColumnWithProps<Api_LeaseTerm>[] = [
+export const leaseTermColumns: ColumnWithProps<ApiGen_Concepts_LeaseTerm>[] = [
   {
     Header: 'Term ID',
     accessor: 'id',
     align: 'left',
     sortable: false,
-    Cell: ({ cell }: CellProps<Api_LeaseTerm, number | null>) =>
+    Cell: ({ cell }: CellProps<ApiGen_Concepts_LeaseTerm, number | null>) =>
       stringToFragment(cell.row.index === 0 ? 'initial term' : `renewal ${cell.row.index}`),
   },
   {
@@ -40,7 +40,9 @@ export const leaseTermColumns: ColumnWithProps<Api_LeaseTerm>[] = [
     accessor: 'statusTypeCode',
     align: 'left',
     sortable: false,
-    Cell: ({ cell: { value } }: CellProps<Api_LeaseTerm, Api_TypeCode<string> | null>) =>
+    Cell: ({
+      cell: { value },
+    }: CellProps<ApiGen_Concepts_LeaseTerm, ApiGen_Base_CodeType<string> | null>) =>
       stringToFragment(value?.description ?? ''),
   },
 ];

@@ -1,7 +1,7 @@
 import { AxiosResponse } from 'axios';
 import { useCallback, useMemo } from 'react';
 
-import { Api_PropertyImprovement } from '@/models/api/PropertyImprovement';
+import { ApiGen_Concepts_PropertyImprovement } from '@/models/api/generated/ApiGen_Concepts_PropertyImprovement';
 import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils';
 
 import {
@@ -15,7 +15,7 @@ import { useApiRequestWrapper } from '../util/useApiRequestWrapper';
  */
 export const usePropertyImprovementRepository = () => {
   const getPropertyImprovementsApi = useApiRequestWrapper<
-    (leaseId: number) => Promise<AxiosResponse<Api_PropertyImprovement[], any>>
+    (leaseId: number) => Promise<AxiosResponse<ApiGen_Concepts_PropertyImprovement[], any>>
   >({
     requestFunction: useCallback(
       async (leaseId: number) => await getPropertyImprovements(leaseId),
@@ -29,11 +29,11 @@ export const usePropertyImprovementRepository = () => {
   const updatePropertyImprovementsApi = useApiRequestWrapper<
     (
       leaseId: number,
-      improvements: Api_PropertyImprovement[],
-    ) => Promise<AxiosResponse<Api_PropertyImprovement[], any>>
+      improvements: ApiGen_Concepts_PropertyImprovement[],
+    ) => Promise<AxiosResponse<ApiGen_Concepts_PropertyImprovement[], any>>
   >({
     requestFunction: useCallback(
-      async (leaseId: number, improvements: Api_PropertyImprovement[]) =>
+      async (leaseId: number, improvements: ApiGen_Concepts_PropertyImprovement[]) =>
         await updatePropertyImprovements(leaseId, improvements),
       [],
     ),

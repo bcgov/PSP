@@ -82,7 +82,7 @@ const FormikDateYearPicker: FunctionComponent<React.PropsWithChildren<FastDateYe
 
   return (
     <StyledGroup
-      className={classNames(!!required ? 'required' : '', className)}
+      className={classNames(required ? 'required' : '', className)}
       controlId={`datepicker-${field}`}
     >
       {!!label && <Form.Label>{label}</Form.Label>}

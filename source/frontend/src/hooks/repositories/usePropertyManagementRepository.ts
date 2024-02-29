@@ -1,7 +1,7 @@
 import { useCallback, useMemo } from 'react';
 
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
-import { Api_PropertyManagement } from '@/models/api/Property';
+import { ApiGen_Concepts_PropertyManagement } from '@/models/api/generated/ApiGen_Concepts_PropertyManagement';
 import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils';
 
 import {
@@ -25,7 +25,7 @@ export const usePropertyManagementRepository = () => {
 
   const updatePropertyManagementWrapper = useApiRequestWrapper<typeof putPropertyManagementApi>({
     requestFunction: useCallback(
-      async (propertyId: number, propertyManagement: Api_PropertyManagement) =>
+      async (propertyId: number, propertyManagement: ApiGen_Concepts_PropertyManagement) =>
         await putPropertyManagementApi(propertyId, propertyManagement),
       [],
     ),

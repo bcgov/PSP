@@ -24,11 +24,12 @@ namespace Pims.Api.Models.Concepts.Property
                 .Map(dest => dest.GeneralLocation, src => src.GeneralLocation)
 
                 .Map(dest => dest.DataSource, src => src.PropertyDataSourceTypeCodeNavigation)
-                .Map(dest => dest.DataSourceEffectiveDate, src => src.PropertyDataSourceEffectiveDate)
+                .Map(dest => dest.DataSourceEffectiveDateOnly, src => src.PropertyDataSourceEffectiveDate)
 
                 .Map(dest => dest.Name, src => src.Name)
                 .Map(dest => dest.Description, src => src.Description)
                 .Map(dest => dest.IsSensitive, src => src.IsSensitive)
+                .Map(dest => dest.IsRetired, src => src.IsRetired)
                 .Map(dest => dest.IsProvincialPublicHwy, src => src.IsProvincialPublicHwy)
                 .Map(dest => dest.IsRwyBeltDomPatent, src => src.IsRwyBeltDomPatent)
                 .Map(dest => dest.PphStatusTypeCode, src => src.PphStatusTypeCode)
@@ -87,6 +88,7 @@ namespace Pims.Api.Models.Concepts.Property
                 .Map(dest => dest.Name, src => src.Name)
                 .Map(dest => dest.Description, src => src.Description)
                 .Map(dest => dest.IsSensitive, src => src.IsSensitive)
+                .Map(dest => dest.IsRetired, src => src.IsRetired)
                 .Map(dest => dest.IsProvincialPublicHwy, src => src.IsProvincialPublicHwy)
                 .Map(dest => dest.IsRwyBeltDomPatent, src => src.IsRwyBeltDomPatent)
                 .Map(dest => dest.PphStatusTypeCode, src => src.PphStatusTypeCode)

@@ -5,7 +5,7 @@ import { forwardRef } from 'react';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { getMockApiPropertyFiles } from '@/mocks/properties.mock';
 import { getMockApiTakes } from '@/mocks/takes.mock';
-import { Api_Take } from '@/models/api/Take';
+import { ApiGen_Concepts_Take } from '@/models/api/generated/ApiGen_Concepts_Take';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, render, RenderOptions, waitForEffects } from '@/utils/test-utils';
 
@@ -109,7 +109,7 @@ describe('TakesUpdateContainer component', () => {
   });
 
   it('returns converts takes returned from the api into form models', async () => {
-    const apiTake: Api_Take = { ...getMockApiTakes()[0], propertyAcquisitionFileId: 1 };
+    const apiTake: ApiGen_Concepts_Take = { ...getMockApiTakes()[0], propertyAcquisitionFileId: 1 };
     mockGetApi.execute.mockResolvedValue([apiTake]);
     setup({});
     await waitForEffects();

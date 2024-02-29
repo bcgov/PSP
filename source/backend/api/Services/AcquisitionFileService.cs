@@ -4,7 +4,6 @@ using System.Linq;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Pims.Api.Constants;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Helpers.Extensions;
 using Pims.Api.Models.CodeTypes;
@@ -230,6 +229,8 @@ namespace Pims.Api.Services
 
             acquisitionFile.AcquisitionFileStatusTypeCode = "ACTIVE";
             MatchProperties(acquisitionFile, userOverrides);
+            ValidatePropertyRegions(acquisitionFile);
+
             PopulateAcquisitionChecklist(acquisitionFile);
 
             var newAcqFile = _acqFileRepository.Add(acquisitionFile);
@@ -297,6 +298,8 @@ namespace Pims.Api.Services
 
             MatchProperties(acquisitionFile, userOverrides);
 
+            ValidatePropertyRegions(acquisitionFile);
+
             AcquisitionStatusTypes? currentAcquisitionStatus = GetCurrentAcquisitionStatus(acquisitionFile.Internal_Id);
             if (!_statusSolver.CanEditProperties(currentAcquisitionStatus) && !_user.HasPermission(Permissions.SystemAdmin))
             {
@@ -354,23 +357,30 @@ namespace Pims.Api.Services
             return _acqFileRepository.GetById(acquisitionFile.Internal_Id);
         }
 
-        public PimsAcquisitionFile UpdateChecklistItems(PimsAcquisitionFile acquisitionFile)
+        public PimsAcquisitionFile UpdateChecklistItems(IList<PimsAcquisitionChecklistItem> checklistItems)
         {
-            acquisitionFile.ThrowIfNull(nameof(acquisitionFile));
-            _logger.LogInformation("Updating acquisition file checklist with AcquisitionFile id: {id}", acquisitionFile.Internal_Id);
-            _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileEdit);
-            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, acquisitionFile.Internal_Id);
+            checklistItems.ThrowIfNull(nameof(checklistItems));
+            if (checklistItems.Count == 0)
+            {
+                throw new BadRequestException("Checklist items must be greater than zero");
+            }
 
-            var currentAcquisitionStatus = GetCurrentAcquisitionStatus(acquisitionFile.Internal_Id);
+            var acquisitionFileId = checklistItems.FirstOrDefault().AcquisitionFileId;
+
+            _logger.LogInformation("Updating acquisition file checklist with AcquisitionFile id: {id}", acquisitionFileId);
+            _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileEdit);
+            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, acquisitionFileId);
+
+            var currentAcquisitionStatus = GetCurrentAcquisitionStatus(acquisitionFileId);
             if (!_statusSolver.CanEditChecklists(currentAcquisitionStatus) && !_user.HasPermission(Permissions.SystemAdmin))
             {
                 throw new BusinessRuleViolationException("The file you are editing is not active or draft, so you cannot save changes. Refresh your browser to see file state.");
             }
 
             // Get the current checklist items for this acquisition file.
-            var currentItems = _checklistRepository.GetAllChecklistItemsByAcquisitionFileId(acquisitionFile.Internal_Id).ToDictionary(ci => ci.Internal_Id);
+            var currentItems = _checklistRepository.GetAllChecklistItemsByAcquisitionFileId(acquisitionFileId).ToDictionary(ci => ci.Internal_Id);
 
-            foreach (var incomingItem in acquisitionFile.PimsAcquisitionChecklistItems)
+            foreach (var incomingItem in checklistItems)
             {
                 if (!currentItems.TryGetValue(incomingItem.Internal_Id, out var existingItem) && incomingItem.Internal_Id != 0)
                 {
@@ -389,7 +399,7 @@ namespace Pims.Api.Services
             }
 
             _checklistRepository.CommitTransaction();
-            return _acqFileRepository.GetById(acquisitionFile.Internal_Id);
+            return _acqFileRepository.GetById(acquisitionFileId);
         }
 
         public IEnumerable<PimsAgreement> GetAgreements(long id)
@@ -865,6 +875,19 @@ namespace Pims.Api.Services
                     && currentAcquisitionFile.PimsInterestHolders.Any(x => x.Internal_Id.Equals(compReq.InterestHolderId)))
                 {
                     throw new ForeignKeyDependencyException("Acquisition File Interest Holder can not be removed since it's assigned as a payee for a compensation requisition");
+                }
+            }
+        }
+
+        private void ValidatePropertyRegions(PimsAcquisitionFile acquisitionFile)
+        {
+            var userRegions = _user.GetUserRegions(_userRepository);
+            foreach (var acquisitionProperty in acquisitionFile.PimsPropertyAcquisitionFiles)
+            {
+                var propertyRegion = acquisitionProperty.Property?.RegionCode ?? _propertyRepository.GetPropertyRegion(acquisitionProperty.PropertyId);
+                if (!userRegions.Contains(propertyRegion))
+                {
+                    throw new BadRequestException("You cannot add a property that is outside of your user account region(s).\n\nPlease select a different property or contact admin at pims@gov.bc.ca to add the required region to your user account settings.");
                 }
             }
         }

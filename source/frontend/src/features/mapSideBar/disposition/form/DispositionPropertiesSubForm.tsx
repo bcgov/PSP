@@ -62,7 +62,7 @@ const DispositionPropertiesSubForm: React.FunctionComponent<
                 />
               </Col>
             </Row>
-            <Section header="Selected Properties">
+            <Section header="Selected properties">
               <SelectedPropertyHeaderRow />
               {formikProps.values.fileProperties.map((property, index) => (
                 <SelectedPropertyRow

@@ -1,7 +1,7 @@
 import { rest, server } from '@/mocks/msw/server';
 import { mockProjectGetResponse } from '@/mocks/projects.mock';
 import { getUserMock } from '@/mocks/user.mock';
-import { Api_Project } from '@/models/api/Project';
+import { ApiGen_Concepts_Project } from '@/models/api/generated/ApiGen_Concepts_Project';
 import { prettyFormatUTCDate } from '@/utils';
 import { render, RenderOptions } from '@/utils/test-utils';
 
@@ -16,7 +16,7 @@ describe('ProjectHeader component', () => {
     return { ...utils };
   };
 
-  let project: Api_Project;
+  let project: ApiGen_Concepts_Project;
   beforeEach(() => {
     project = mockProjectGetResponse();
     server.use(

@@ -10,6 +10,7 @@ using Pims.Api.Models.Concepts.Document;
 using Pims.Api.Models.Requests.Document.Upload;
 using Pims.Api.Policies;
 using Pims.Api.Services;
+using Pims.Core.Json;
 using Pims.Dal.Entities;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
@@ -66,6 +67,7 @@ namespace Pims.Api.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(List<DocumentTypeModel>), 200)]
         [SwaggerOperation(Tags = new[] { "document-types" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetDocumentRelationshipTypes(DocumentRelationType relationshipType)
         {
             var documentTypes = _documentService.GetPimsDocumentTypes(relationshipType);
@@ -84,6 +86,7 @@ namespace Pims.Api.Controllers
         [HasPermission(Permissions.DocumentView)]
         [ProducesResponseType(typeof(IList<DocumentRelationshipModel>), 200)]
         [SwaggerOperation(Tags = new[] { "document" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetRelationshipDocuments(DocumentRelationType relationshipType, string parentId)
         {
             switch (relationshipType)
@@ -133,6 +136,7 @@ namespace Pims.Api.Controllers
         [HasPermission(Permissions.DocumentAdd)]
         [ProducesResponseType(typeof(DocumentUploadResponse), 200)]
         [SwaggerOperation(Tags = new[] { "documents" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public async Task<IActionResult> UploadDocumentWithParent(
             DocumentRelationType relationshipType,
             string parentId,
@@ -164,6 +168,7 @@ namespace Pims.Api.Controllers
         [HasPermission(Permissions.DocumentDelete)]
         [ProducesResponseType(typeof(bool), 200)]
         [SwaggerOperation(Tags = new[] { "document" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public async Task<IActionResult> DeleteDocumentRelationship(DocumentRelationType relationshipType, [FromBody] DocumentRelationshipModel model)
         {
             switch (relationshipType)

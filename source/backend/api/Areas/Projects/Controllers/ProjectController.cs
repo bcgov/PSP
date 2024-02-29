@@ -116,6 +116,7 @@ namespace Pims.Api.Areas.Projects.Controllers
         [ProducesResponseType(typeof(ProjectModel), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "project" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult AddProject(ProjectModel projectModel, [FromQuery] string[] userOverrideCodes)
         {
             try
@@ -138,6 +139,7 @@ namespace Pims.Api.Areas.Projects.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(ProjectModel), 200)]
         [SwaggerOperation(Tags = new[] { "project" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult UpdateProject([FromRoute] long id, [FromBody] ProjectModel model, [FromQuery] string[] userOverrideCodes)
         {
             if (id != model.Id)

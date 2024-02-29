@@ -1,9 +1,9 @@
 import { ENVIRONMENT } from '@/constants';
 import CustomAxios from '@/customAxios';
-import { Api_Insurance } from '@/models/api/Insurance';
+import { ApiGen_Concepts_Insurance } from '@/models/api/generated/ApiGen_Concepts_Insurance';
 
-export const updateLeaseInsurances = (leaseId: number, insurances: Api_Insurance[]) =>
-  CustomAxios({ baseURL: ENVIRONMENT.apiUrl }).put<Api_Insurance[]>(
+export const updateLeaseInsurances = (leaseId: number, insurances: ApiGen_Concepts_Insurance[]) =>
+  CustomAxios({ baseURL: ENVIRONMENT.apiUrl }).put<ApiGen_Concepts_Insurance[]>(
     `/leases/${leaseId}/insurances`,
     insurances,
   );

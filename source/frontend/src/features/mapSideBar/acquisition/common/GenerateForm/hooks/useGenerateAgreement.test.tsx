@@ -9,14 +9,14 @@ import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
 import { mockAgreementsResponse } from '@/mocks/agreements.mock';
-import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
-import { Api_Property } from '@/models/api/Property';
+import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
+import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 
 import { useGenerateAgreement } from './useGenerateAgreement';
 
 const generateFn = jest.fn();
-const getAcquisitionFileFn = jest.fn<Api_AcquisitionFile | undefined, any[]>();
-const getAcquisitionFileProperties = jest.fn<Api_Property[] | undefined, any[]>();
+const getAcquisitionFileFn = jest.fn<ApiGen_Concepts_AcquisitionFile | undefined, any[]>();
+const getAcquisitionFileProperties = jest.fn<ApiGen_Concepts_Property[] | undefined, any[]>();
 const getPersonConceptFn = jest.fn().mockResolvedValue({});
 const getOrganizationConceptFn = jest.fn().mockResolvedValue({});
 
@@ -48,7 +48,10 @@ const getWrapper =
   ({ children }: any) =>
     <Provider store={store}>{children}</Provider>;
 
-const setup = (params?: { storeValues?: any; acquisitionResponse?: Api_AcquisitionFile }) => {
+const setup = (params?: {
+  storeValues?: any;
+  acquisitionResponse?: ApiGen_Concepts_AcquisitionFile;
+}) => {
   var acquisitionResponse = mockAcquisitionFileResponse();
   if (params?.acquisitionResponse !== undefined) {
     acquisitionResponse = params.acquisitionResponse;
@@ -71,7 +74,7 @@ describe('useGenerateAgreement functions', () => {
     });
   });
   it('makes requests to expected api endpoints if a team member is a property coordinator with person', async () => {
-    const responseWithTeam: Api_AcquisitionFile = {
+    const responseWithTeam: ApiGen_Concepts_AcquisitionFile = {
       ...mockAcquisitionFileResponse(),
       acquisitionTeam: [
         {
@@ -80,6 +83,12 @@ describe('useGenerateAgreement functions', () => {
           personId: 1,
           teamProfileTypeCode: 'PROPCOORD',
           rowVersion: 2,
+          organization: null,
+          person: null,
+          primaryContact: null,
+          primaryContactId: null,
+          teamProfileType: null,
+          organizationId: null,
         },
       ],
     };
@@ -94,7 +103,7 @@ describe('useGenerateAgreement functions', () => {
   });
 
   it('makes requests to expected api endpoints if a team member is a negotiating agent with person', async () => {
-    const responseWithTeam: Api_AcquisitionFile = {
+    const responseWithTeam: ApiGen_Concepts_AcquisitionFile = {
       ...mockAcquisitionFileResponse(),
       acquisitionTeam: [
         {
@@ -103,6 +112,12 @@ describe('useGenerateAgreement functions', () => {
           personId: 1,
           teamProfileTypeCode: 'NEGOTAGENT',
           rowVersion: 2,
+          organization: null,
+          person: null,
+          primaryContact: null,
+          primaryContactId: null,
+          teamProfileType: null,
+          organizationId: null,
         },
       ],
     };
@@ -117,7 +132,7 @@ describe('useGenerateAgreement functions', () => {
   });
 
   it('makes requests to expected api endpoints if a team member is a property coordinator with org', async () => {
-    const responseWithTeam: Api_AcquisitionFile = {
+    const responseWithTeam: ApiGen_Concepts_AcquisitionFile = {
       ...mockAcquisitionFileResponse(),
       acquisitionTeam: [
         {
@@ -126,6 +141,12 @@ describe('useGenerateAgreement functions', () => {
           organizationId: 1,
           teamProfileTypeCode: 'PROPCOORD',
           rowVersion: 2,
+          organization: null,
+          person: null,
+          primaryContact: null,
+          primaryContactId: null,
+          teamProfileType: null,
+          personId: null,
         },
       ],
     };
@@ -140,7 +161,7 @@ describe('useGenerateAgreement functions', () => {
   });
 
   it('makes requests to expected api endpoints if a team member is a negotiating agent with organization', async () => {
-    const responseWithTeam: Api_AcquisitionFile = {
+    const responseWithTeam: ApiGen_Concepts_AcquisitionFile = {
       ...mockAcquisitionFileResponse(),
       acquisitionTeam: [
         {
@@ -149,6 +170,12 @@ describe('useGenerateAgreement functions', () => {
           organizationId: 1,
           teamProfileTypeCode: 'NEGOTAGENT',
           rowVersion: 2,
+          organization: null,
+          person: null,
+          primaryContact: null,
+          primaryContactId: null,
+          teamProfileType: null,
+          personId: null,
         },
       ],
     };

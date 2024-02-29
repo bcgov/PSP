@@ -19,17 +19,17 @@ import { isAcquisitionFile } from '@/features/mapSideBar/acquisition/tabs/agreem
 import StatusUpdateSolver from '@/features/mapSideBar/acquisition/tabs/fileDetails/detail/statusUpdateSolver';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
-import { Api_PropertyFile } from '@/models/api/PropertyFile';
-import { Api_Take } from '@/models/api/Take';
+import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
+import { ApiGen_Concepts_Take } from '@/models/api/generated/ApiGen_Concepts_Take';
 import { getApiPropertyName, prettyFormatDate, prettyFormatUTCDate } from '@/utils';
 
 import { StyledBorderSection, StyledNoTabSection } from '../styles';
 
 export interface ITakesDetailViewProps {
-  takes: Api_Take[];
+  takes: ApiGen_Concepts_Take[];
   allTakesCount: number;
   loading: boolean;
-  fileProperty: Api_PropertyFile;
+  fileProperty: ApiGen_Concepts_FileProperty;
   onEdit: (edit: boolean) => void;
 }
 

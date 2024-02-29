@@ -81,7 +81,7 @@ const FormikDatePicker: FunctionComponent<React.PropsWithChildren<FastDatePicker
   const isValid = !error && touch && value && !disabled ? 'is-valid ' : '';
   return (
     <StyledGroup
-      className={classNames(!!required ? 'required' : '', className)}
+      className={classNames(required ? 'required' : '', className)}
       controlId={`datepicker-${field}`}
     >
       {!!label && <Form.Label>{label}</Form.Label>}

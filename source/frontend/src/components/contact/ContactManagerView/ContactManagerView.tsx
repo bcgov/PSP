@@ -52,7 +52,7 @@ const ContactManagerView = ({
   const { hasClaim } = useKeycloakWrapper();
   const { getContacts } = useApiContacts();
 
-  var initialFilter: IContactFilter = (
+  const initialFilter: IContactFilter = (
     noInitialSearch ? undefined : defaultFilter
   ) as IContactFilter;
 

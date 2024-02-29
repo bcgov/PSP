@@ -4,7 +4,7 @@ import { InterestHolderType } from '@/constants/interestHolderTypes';
 import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
 import { emptyApiInterestHolder, emptyInterestHolderProperty } from '@/mocks/interestHolder.mock';
 import { getMockApiInterestHolders } from '@/mocks/interestHolders.mock';
-import { Api_InterestHolder } from '@/models/api/InterestHolder';
+import { ApiGen_Concepts_InterestHolder } from '@/models/api/generated/ApiGen_Concepts_InterestHolder';
 
 import StakeholderOrganizer from './stakeholderOrganizer';
 
@@ -24,13 +24,15 @@ describe('StakeholderOrganizer', () => {
   it('does not group interest and non-interests for the same property', async () => {
     const acquisitionFile = mockAcquisitionFileResponse();
 
-    const testInterestHolders: Api_InterestHolder[] = [
+    const testInterestHolders: ApiGen_Concepts_InterestHolder[] = [
       {
         ...emptyApiInterestHolder,
         interestHolderProperties: [
           {
             ...emptyInterestHolderProperty,
-            propertyInterestTypes: [{ id: 'NIP' }],
+            propertyInterestTypes: [
+              { id: 'NIP', description: null, displayOrder: null, isDisabled: false },
+            ],
             acquisitionFilePropertyId: 1,
           },
         ],
@@ -40,7 +42,9 @@ describe('StakeholderOrganizer', () => {
         interestHolderProperties: [
           {
             ...emptyInterestHolderProperty,
-            propertyInterestTypes: [{ id: 'IP' }],
+            propertyInterestTypes: [
+              { id: 'IP', description: null, displayOrder: null, isDisabled: false },
+            ],
             acquisitionFilePropertyId: 1,
           },
         ],
@@ -61,28 +65,43 @@ describe('StakeholderOrganizer', () => {
   it('does not group interest holders for different properties interest types', async () => {
     const acquisitionFile = mockAcquisitionFileResponse();
 
-    const testInterestHolders: Api_InterestHolder[] = [
+    const testInterestHolders: ApiGen_Concepts_InterestHolder[] = [
       {
         ...emptyApiInterestHolder,
         personId: 1,
-        interestHolderType: { id: InterestHolderType.INTEREST_HOLDER },
+        interestHolderType: {
+          id: InterestHolderType.INTEREST_HOLDER,
+          description: null,
+          displayOrder: null,
+          isDisabled: false,
+        },
+
         interestHolderProperties: [
           {
             ...emptyInterestHolderProperty,
             acquisitionFilePropertyId: 1,
-            propertyInterestTypes: [{ id: 'test_interest_1' }],
+            propertyInterestTypes: [
+              { id: 'test_interest_1', description: null, displayOrder: null, isDisabled: false },
+            ],
           },
         ],
       },
       {
         ...emptyApiInterestHolder,
         personId: 1,
-        interestHolderType: { id: InterestHolderType.INTEREST_HOLDER },
+        interestHolderType: {
+          id: InterestHolderType.INTEREST_HOLDER,
+          description: null,
+          displayOrder: null,
+          isDisabled: false,
+        },
         interestHolderProperties: [
           {
             ...emptyInterestHolderProperty,
             acquisitionFilePropertyId: 2,
-            propertyInterestTypes: [{ id: 'test_interest_2' }],
+            propertyInterestTypes: [
+              { id: 'test_interest_2', description: null, displayOrder: null, isDisabled: false },
+            ],
           },
         ],
       },
@@ -100,16 +119,24 @@ describe('StakeholderOrganizer', () => {
   it('it separates non-interest and interest payees even if they are for the same interest holder property', async () => {
     const acquisitionFile = mockAcquisitionFileResponse();
 
-    const testInterestHolders: Api_InterestHolder[] = [
+    const testInterestHolders: ApiGen_Concepts_InterestHolder[] = [
       {
         ...emptyApiInterestHolder,
         personId: 1,
-        interestHolderType: { id: InterestHolderType.INTEREST_HOLDER },
+        interestHolderType: {
+          id: InterestHolderType.INTEREST_HOLDER,
+          description: null,
+          displayOrder: null,
+          isDisabled: false,
+        },
         interestHolderProperties: [
           {
             ...emptyInterestHolderProperty,
             acquisitionFilePropertyId: 1,
-            propertyInterestTypes: [{ id: 'test_interest_1' }, { id: 'NIP' }],
+            propertyInterestTypes: [
+              { id: 'test_interest_1', description: null, displayOrder: null, isDisabled: false },
+              { id: 'NIP', description: null, displayOrder: null, isDisabled: false },
+            ],
           },
         ],
       },

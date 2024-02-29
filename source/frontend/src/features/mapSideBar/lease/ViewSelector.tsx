@@ -2,18 +2,18 @@ import { FormikProps } from 'formik';
 import * as React from 'react';
 
 import { LeaseFormModel } from '@/features/leases/models';
-import { Api_Lease } from '@/models/api/Lease';
+import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 
 import { LeaseFileTabNames } from './detail/LeaseFileTabs';
 import { LeaseTabsContainer } from './detail/LeaseTabsContainer';
 import { LeaseContainerState, LeasePageNames, leasePages } from './LeaseContainer';
 
 export interface IViewSelectorProps {
-  lease?: Api_Lease;
+  lease?: ApiGen_Concepts_Lease;
   isEditing: boolean;
   setContainerState: (value: Partial<LeaseContainerState>) => void;
   refreshLease: () => void;
-  setLease: (lease: Api_Lease) => void;
+  setLease: (lease: ApiGen_Concepts_Lease) => void;
   activeEditForm?: LeasePageNames;
   activeTab?: LeaseFileTabNames;
   formikRef: React.RefObject<FormikProps<LeaseFormModel>>;

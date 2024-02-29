@@ -1,10 +1,14 @@
 import { IContactSearchResult } from '@/interfaces/IContactSearchResult';
-import { Api_Person } from '@/models/api/Person';
+import { ApiGen_Concepts_ContactMethod } from '@/models/api/generated/ApiGen_Concepts_ContactMethod';
+import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_Person';
+
+import { getEmptyOrganization } from './organization.mock';
 
 export const getMockContactOrganizationWithOnePerson = (): IContactSearchResult => ({
   id: 'O3',
   organizationId: 3,
   organization: {
+    ...getEmptyOrganization(),
     id: 3,
     isDisabled: false,
     name: 'Dairy Queen Forever! Property Management',
@@ -12,15 +16,18 @@ export const getMockContactOrganizationWithOnePerson = (): IContactSearchResult 
     incorporationNumber: '56789',
     organizationPersons: [
       {
+        id: 1,
         personId: 3,
+        person: null,
         organizationId: 3,
-        isDisabled: false,
+        organization: null,
         rowVersion: 1,
       },
     ],
     organizationAddresses: [
       {
         id: 4,
+        organizationId: 1,
         address: {
           id: 3,
           streetAddress1: '1012 Douglas',
@@ -40,18 +47,31 @@ export const getMockContactOrganizationWithOnePerson = (): IContactSearchResult 
             displayOrder: 1,
           },
           postal: 'V9B 000',
+
           rowVersion: 1,
+          comment: null,
+          countryId: null,
+          countryOther: null,
+          district: null,
+          latitude: null,
+          longitude: null,
+          provinceStateId: null,
+          region: null,
+          districtCode: null,
+          regionCode: null,
         },
         addressUsageType: {
           id: 'MAILING',
           description: 'Mailing address',
           isDisabled: false,
+          displayOrder: null,
         },
         rowVersion: 1,
       },
     ],
     contactMethods: [],
     rowVersion: 1,
+    comment: null,
   },
   summary: 'Dairy Queen Forever! Property Management',
   organizationName: 'Dairy Queen Forever! Property Management',
@@ -62,36 +82,44 @@ export const getMockContactOrganizationWithMultiplePeople = (): IContactSearchRe
   id: 'O2',
   organizationId: 2,
   organization: {
+    ...getEmptyOrganization(),
     id: 2,
     isDisabled: false,
     name: 'French Mouse Property Management',
     organizationPersons: [
       {
+        id: 1,
         personId: 1,
+        person: null,
         organizationId: 2,
-        isDisabled: false,
+        organization: null,
         rowVersion: 1,
       },
       {
+        id: 2,
         personId: 3,
+        person: null,
         organizationId: 2,
-        isDisabled: false,
+        organization: null,
         rowVersion: 1,
       },
     ],
     organizationAddresses: [],
     contactMethods: [],
     rowVersion: 1,
+    alias: null,
+    comment: null,
+    incorporationNumber: null,
   },
   summary: 'French Mouse Property Management',
   organizationName: 'French Mouse Property Management',
   isDisabled: false,
 });
 
-export const getMockContactPerson = () => ({
+export const getMockContactPerson = (): IContactSearchResult => ({
   id: 'P1',
   personId: 1,
-  person: { firstName: 'test', surname: 'person' },
+  person: { ...getEmptyPerson(), firstName: 'test', surname: 'person' },
 });
 
 export const getMockPerson = ({
@@ -102,37 +130,50 @@ export const getMockPerson = ({
   id: number;
   surname: string;
   firstName: string;
-}): Api_Person => ({
+}): ApiGen_Concepts_Person => ({
+  ...getEmptyPerson(),
   id: id,
   isDisabled: false,
   surname: surname,
   firstName: firstName,
   middleNames: '',
+  comment: null,
+  preferredName: null,
   personOrganizations: [
     {
+      person: null,
       personId: 3,
       organization: {
+        ...getEmptyOrganization(),
         id: 3,
         isDisabled: false,
         name: 'Dairy Queen Forever! Property Management',
         organizationPersons: [
           {
+            id: 1,
             personId: 3,
+            person: null,
             organizationId: 3,
-            isDisabled: false,
+            organization: null,
             rowVersion: 1,
           },
         ],
         organizationAddresses: [],
         contactMethods: [],
         rowVersion: 1,
+        alias: null,
+        comment: null,
+        incorporationNumber: null,
       },
       rowVersion: 1,
+      id: 0,
+      organizationId: null,
     },
   ],
   personAddresses: [
     {
       id: 3,
+      personId: 2,
       address: {
         id: 3,
         streetAddress1: '123 Main Street',
@@ -153,16 +194,28 @@ export const getMockPerson = ({
         },
         postal: 'I4M B0B',
         rowVersion: 1,
+        comment: null,
+        countryId: null,
+        countryOther: null,
+        district: null,
+        latitude: null,
+        longitude: null,
+        provinceStateId: null,
+        region: null,
+        regionCode: null,
+        districtCode: null,
       },
       addressUsageType: {
         id: 'MAILADDR',
         description: 'Mailing address',
         isDisabled: true,
+        displayOrder: null,
       },
       rowVersion: 1,
     },
     {
       id: 4,
+      personId: 2,
       address: {
         id: 3,
         streetAddress1: '123 Main Street',
@@ -183,11 +236,22 @@ export const getMockPerson = ({
         },
         postal: 'V9B B0B',
         rowVersion: 1,
+        comment: null,
+        countryId: null,
+        countryOther: null,
+        district: null,
+        latitude: null,
+        longitude: null,
+        provinceStateId: null,
+        region: null,
+        districtCode: null,
+        regionCode: null,
       },
       addressUsageType: {
         id: 'MAILING',
         description: 'Mailing address',
         isDisabled: false,
+        displayOrder: null,
       },
       rowVersion: 1,
     },
@@ -199,10 +263,45 @@ export const getMockPerson = ({
         id: 'PERSPHONE',
         description: 'Personal phone',
         isDisabled: false,
+        displayOrder: null,
       },
+      personId: 2,
+      organizationId: null,
       value: '6049983251',
       rowVersion: 1,
     },
   ],
   rowVersion: 1,
 });
+
+export const getEmptyPerson = (): ApiGen_Concepts_Person => {
+  return {
+    id: 0,
+    surname: null,
+    firstName: null,
+    middleNames: null,
+    nameSuffix: null,
+    preferredName: null,
+    birthDate: null,
+    comment: null,
+    addressComment: null,
+    useOrganizationAddress: null,
+    isDisabled: false,
+    propertyActivityId: null,
+    contactMethods: null,
+    personAddresses: null,
+    personOrganizations: null,
+    rowVersion: null,
+  };
+};
+
+export const getEmptyContactMethod = (): ApiGen_Concepts_ContactMethod => {
+  return {
+    id: 0,
+    contactMethodType: null,
+    value: null,
+    rowVersion: null,
+    personId: null,
+    organizationId: null,
+  };
+};

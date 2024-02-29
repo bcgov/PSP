@@ -1,4 +1,6 @@
-import { Api_PropertyImprovement } from '@/models/api/PropertyImprovement';
+import { ApiGen_Concepts_PropertyImprovement } from '@/models/api/generated/ApiGen_Concepts_PropertyImprovement';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
+import { toTypeCodeNullable } from '@/utils/formUtils';
 
 export class ILeaseImprovementsForm {
   improvements: ILeaseImprovementForm[] = [];
@@ -7,14 +9,14 @@ export class ILeaseImprovementsForm {
 export class ILeaseImprovementForm {
   id?: number;
   leaseId?: number;
-  propertyImprovementTypeId: string = '';
-  propertyImprovementType: string = '';
-  description: string = '';
-  structureSize: string = '';
-  address: string = '';
+  propertyImprovementTypeId = '';
+  propertyImprovementType = '';
+  description = '';
+  structureSize = '';
+  address = '';
   rowVersion?: number;
 
-  public static fromApi(improvement: Api_PropertyImprovement) {
+  public static fromApi(improvement: ApiGen_Concepts_PropertyImprovement) {
     const form = new ILeaseImprovementForm();
     form.id = improvement.id ?? undefined;
     form.leaseId = improvement.leaseId ?? undefined;
@@ -28,15 +30,15 @@ export class ILeaseImprovementForm {
   }
 
   public static toApi(form: ILeaseImprovementForm) {
-    const improvement: Api_PropertyImprovement = {
+    const improvement: ApiGen_Concepts_PropertyImprovement = {
       id: form.id ?? null,
       leaseId: form.leaseId ?? null,
       lease: null,
-      propertyImprovementTypeCode: { id: form.propertyImprovementTypeId },
+      propertyImprovementTypeCode: toTypeCodeNullable(form.propertyImprovementTypeId),
       improvementDescription: form.description,
       structureSize: form.structureSize,
       address: form.address,
-      rowVersion: form.rowVersion,
+      ...getEmptyBaseAudit(form.rowVersion),
     };
     return improvement;
   }

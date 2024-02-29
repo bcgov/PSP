@@ -36,7 +36,7 @@ export const useAdminBoundaryMapLayer = () => {
   const findOneWhereContainsElectoralLoading = findOneWhereContainsWrappedElectoral.loading;
 
   const findRegion = useCallback(
-    async (latlng: LatLngLiteral, geometryName: string = 'SHAPE', spatialReferenceId = 4326) => {
+    async (latlng: LatLngLiteral, geometryName = 'SHAPE', spatialReferenceId = 4326) => {
       const featureCollection = await findOneWhereContainsRegionExecute(
         latlng,
         geometryName,
@@ -56,7 +56,7 @@ export const useAdminBoundaryMapLayer = () => {
   );
 
   const findDistrict = useCallback(
-    async (latlng: LatLngLiteral, geometryName: string = 'SHAPE', spatialReferenceId = 4326) => {
+    async (latlng: LatLngLiteral, geometryName = 'SHAPE', spatialReferenceId = 4326) => {
       const featureCollection = await findOneWhereContainsDistrictExecute(
         latlng,
         geometryName,

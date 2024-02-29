@@ -6,7 +6,7 @@ import * as API from '@/constants/API';
 import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
 import { usePropertyImprovementRepository } from '@/hooks/repositories/usePropertyImprovementRepository';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
-import { Api_PropertyImprovement } from '@/models/api/PropertyImprovement';
+import { ApiGen_Concepts_PropertyImprovement } from '@/models/api/generated/ApiGen_Concepts_PropertyImprovement';
 import { ILookupCode } from '@/store/slices/lookupCodes';
 
 import AddImprovementsForm from './AddImprovementsForm';
@@ -15,7 +15,7 @@ import { ILeaseImprovementForm, ILeaseImprovementsForm } from './models';
 interface IAddImprovementsContainerProps {
   formikRef: React.RefObject<FormikProps<any>>;
   onEdit?: (isEditing: boolean) => void;
-  improvements: Api_PropertyImprovement[];
+  improvements: ApiGen_Concepts_PropertyImprovement[];
   loading: boolean;
   onSuccess: () => void;
 }

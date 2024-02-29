@@ -1,0 +1,11 @@
+apiVersion: ops.gov.bc.ca/v1alpha1
+kind: SysdigTeam
+metadata:
+  name: 3cd915-sysdigteam
+  namespace: 3cd915-tools
+spec:
+  team:
+    description: The Sysdig Team for the OpenShift Project Set PSP
+    users:
+      - name: emailforasr@gmail.com
+        role: ROLE_TEAM_EDIT

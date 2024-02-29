@@ -1,18 +1,16 @@
 import { ContactMethodTypes } from '@/constants/contactMethodType';
-import { Api_ContactMethod } from '@/models/api/ContactMethod';
+import { ApiGen_Concepts_ContactMethod } from '@/models/api/generated/ApiGen_Concepts_ContactMethod';
+
+import { exists } from './utils';
 
 export function getPreferredContactMethodValue(
-  methods: Api_ContactMethod[] | undefined,
+  methods: ApiGen_Concepts_ContactMethod[] | null | undefined,
   ...typeCodes: ContactMethodTypes[]
-): string | undefined {
-  if (methods === undefined) {
-    return undefined;
+): string | null {
+  if (!exists(methods)) {
+    return null;
   }
 
   const stringTypeCodes = typeCodes.map(type => type.toString());
-  return (
-    methods.find(
-      x => stringTypeCodes.includes(x.contactMethodType?.id ?? '') && x.isPreferredMethod,
-    )?.value ?? methods.find(x => stringTypeCodes.includes(x.contactMethodType?.id ?? ''))?.value
-  );
+  return methods.find(x => stringTypeCodes.includes(x.contactMethodType?.id ?? ''))?.value ?? null;
 }

@@ -4,13 +4,14 @@ import { ContactMethodTypes } from '@/constants/contactMethodType';
 import { AddressTypes } from '@/constants/index';
 import useAddContact from '@/features/contacts/hooks/useAddContact';
 import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
-import {
-  IEditableContactMethod,
-  IEditableOrganization,
-  IEditablePerson,
-  IEditablePersonAddress,
-} from '@/interfaces/editable-contact';
+import { getEmptyAddress } from '@/mocks/address.mock';
+import { getEmptyContactMethod, getEmptyPerson } from '@/mocks/contacts.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
+import { getEmptyOrganization } from '@/mocks/organization.mock';
+import { ApiGen_Concepts_ContactMethod } from '@/models/api/generated/ApiGen_Concepts_ContactMethod';
+import { ApiGen_Concepts_Organization } from '@/models/api/generated/ApiGen_Concepts_Organization';
+import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_Person';
+import { ApiGen_Concepts_PersonAddress } from '@/models/api/generated/ApiGen_Concepts_PersonAddress';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, fillInput, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
@@ -21,68 +22,103 @@ const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
 
-const mockOrganization: IEditableOrganization = {
+const mockOrganization: ApiGen_Concepts_Organization = {
+  ...getEmptyOrganization(),
   id: 200,
   isDisabled: false,
   name: 'FooBarBaz Property Management',
   alias: '',
   incorporationNumber: 'BC123456789',
   comment: 'I got comments for you',
-  addresses: [
+  rowVersion: null,
+  organizationPersons: null,
+  organizationAddresses: [
     {
-      organizationAddressId: 1,
-      organizationAddressRowVersion: 2,
-      organizationId: 200,
       id: 1,
-      addressTypeId: { id: AddressTypes.Mailing },
-      streetAddress1: '3000 Main Ave',
-      streetAddress2: '',
-      streetAddress3: '',
-      municipality: 'Vancouver',
-      provinceId: 1,
-      countryId: 1,
-      postal: 'V8V1A1',
-      rowVersion: 3,
+      rowVersion: 2,
+      organizationId: 200,
+      addressUsageType: {
+        id: AddressTypes.Mailing,
+        description: null,
+        isDisabled: false,
+        displayOrder: null,
+      },
+      address: {
+        ...getEmptyAddress(),
+        streetAddress1: '3000 Main Ave',
+        streetAddress2: '',
+        streetAddress3: '',
+        municipality: 'Vancouver',
+        provinceStateId: 1,
+        countryId: 1,
+        postal: 'V8V1A1',
+        rowVersion: 3,
+      },
     },
   ],
   contactMethods: [
     {
-      contactMethodTypeCode: { id: ContactMethodTypes.WorkEmail },
+      id: 1,
+      rowVersion: null,
+      contactMethodType: {
+        id: ContactMethodTypes.WorkEmail,
+        description: null,
+        isDisabled: false,
+        displayOrder: null,
+      },
       value: 'foo@bar.com',
+      personId: null,
+      organizationId: 200,
     },
   ],
 };
 
-const mockPerson: IEditablePerson = {
+const mockPerson: ApiGen_Concepts_Person = {
+  ...getEmptyPerson(),
   isDisabled: false,
   firstName: 'Chester',
   middleNames: '',
   surname: 'Tester',
   preferredName: '',
   comment: '',
-  organization: null,
-  useOrganizationAddress: false,
-  addresses: [],
+  personOrganizations: null,
+  personAddresses: [],
   contactMethods: [],
+  useOrganizationAddress: false,
 };
 
-const mockContactMethod: IEditableContactMethod = {
-  contactMethodTypeCode: {
+const mockContactMethod: ApiGen_Concepts_ContactMethod = {
+  ...getEmptyContactMethod(),
+  contactMethodType: {
     id: 'WORKEMAIL',
+    description: null,
+    isDisabled: false,
+    displayOrder: null,
   },
   value: 'test@test.com',
 };
 
-const mockAddress: IEditablePersonAddress = {
-  streetAddress1: 'Test Street',
-  streetAddress2: '',
-  streetAddress3: '',
-  municipality: 'Amsterdam',
-  provinceId: undefined,
-  countryId: 4,
-  countryOther: 'Netherlands',
-  postal: '123456',
-  addressTypeId: { id: AddressTypes.Mailing },
+const mockAddress: ApiGen_Concepts_PersonAddress = {
+  id: 0,
+  personId: 0,
+  rowVersion: null,
+  address: {
+    ...getEmptyAddress(),
+    streetAddress1: 'Test Street',
+    streetAddress2: '',
+    streetAddress3: '',
+    municipality: 'Amsterdam',
+    provinceStateId: null,
+    countryId: 4,
+    countryOther: 'Netherlands',
+    postal: '123456',
+  },
+  addressUsageType: {
+    id: AddressTypes.Mailing,
+    description: null,
+    isDisabled: false,
+    displayOrder: null,
+  },
 };
 
 // Mock API service calls
@@ -133,7 +169,7 @@ describe('CreatePersonForm', () => {
 
   describe('when Save button is clicked', () => {
     it('should save the form with minimal data', async () => {
-      const expectedFormData: IEditablePerson = {
+      const expectedFormData: ApiGen_Concepts_Person = {
         ...mockPerson,
         contactMethods: [{ ...mockContactMethod }],
       };
@@ -162,25 +198,38 @@ describe('CreatePersonForm', () => {
     });
 
     it(`should save the form with address information when 'Other' country selected and no province is supplied`, async () => {
-      const expectedFormData: IEditablePerson = {
+      const expectedFormData: ApiGen_Concepts_Person = {
         ...mockPerson,
-        addresses: [{ ...mockAddress }],
+        personAddresses: [{ ...mockAddress }],
       };
 
+      addPerson.mockResolvedValue({ ...expectedFormData, id: 1 });
       const { getSaveButton, container } = setup();
 
       // provide required fields
       await act(async () => {
         await fillInput(container, 'firstName', 'Chester');
         await fillInput(container, 'surname', 'Tester');
-        await fillInput(container, 'mailingAddress.streetAddress1', mockAddress.streetAddress1);
-        await fillInput(container, 'mailingAddress.municipality', mockAddress.municipality);
+        await fillInput(
+          container,
+          'mailingAddress.streetAddress1',
+          mockAddress.address?.streetAddress1,
+        );
+        await fillInput(
+          container,
+          'mailingAddress.municipality',
+          mockAddress.address?.municipality,
+        );
         await fillInput(container, 'mailingAddress.countryId', 4, 'select');
       });
 
       await act(async () => {
-        await fillInput(container, 'mailingAddress.countryOther', mockAddress.countryOther);
-        await fillInput(container, 'mailingAddress.postal', mockAddress.postal);
+        await fillInput(
+          container,
+          'mailingAddress.countryOther',
+          mockAddress.address?.countryOther,
+        );
+        await fillInput(container, 'mailingAddress.postal', mockAddress.address?.postal);
       });
 
       const save = getSaveButton();

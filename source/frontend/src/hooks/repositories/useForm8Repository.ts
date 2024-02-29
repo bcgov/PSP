@@ -2,14 +2,14 @@ import { AxiosResponse } from 'axios';
 import { useCallback, useMemo } from 'react';
 
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
-import { Api_ExpropriationPayment } from '@/models/api/ExpropriationPayment';
+import { ApiGen_Concepts_ExpropriationPayment } from '@/models/api/generated/ApiGen_Concepts_ExpropriationPayment';
 import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils';
 
 import { deleteForm8Api, getForm8Api, putForm8Api } from '../pims-api/useApiForm8';
 
 export const useForm8Repository = () => {
   const getForm8 = useApiRequestWrapper<
-    (id: number) => Promise<AxiosResponse<Api_ExpropriationPayment, any>>
+    (id: number) => Promise<AxiosResponse<ApiGen_Concepts_ExpropriationPayment, any>>
   >({
     requestFunction: useCallback(async (id: number) => await getForm8Api(id), []),
     requestName: 'getForm8',
@@ -18,10 +18,12 @@ export const useForm8Repository = () => {
   });
 
   const updateForm8 = useApiRequestWrapper<
-    (form8: Api_ExpropriationPayment) => Promise<AxiosResponse<Api_ExpropriationPayment, any>>
+    (
+      form8: ApiGen_Concepts_ExpropriationPayment,
+    ) => Promise<AxiosResponse<ApiGen_Concepts_ExpropriationPayment, any>>
   >({
     requestFunction: useCallback(
-      async (form8: Api_ExpropriationPayment) => await putForm8Api(form8),
+      async (form8: ApiGen_Concepts_ExpropriationPayment) => await putForm8Api(form8),
       [],
     ),
     requestName: 'UpdateForm8',

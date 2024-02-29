@@ -16,8 +16,10 @@ export interface ApiGen_Concepts_Address extends ApiGen_Base_BaseConcurrent {
   province: ApiGen_Concepts_CodeType | null;
   countryId: number | null;
   country: ApiGen_Concepts_CodeType | null;
+  districtCode: number | null;
   district: ApiGen_Concepts_CodeType | null;
   region: ApiGen_Concepts_CodeType | null;
+  regionCode: number | null;
   countryOther: string | null;
   postal: string | null;
   latitude: number | null;

@@ -33,13 +33,15 @@ namespace PIMS.Tests.Automation.PageObjects
         private By searchDispositionFileNameHeader = By.XPath("//div[@role='table']/div[@class='thead thead-light']/div/div/div[contains(text(),'Disposition file name')]");
         private By searchDispositionOrderFileNameBttn = By.CssSelector("div[data-testid='sort-column-fileName']");
         private By searchDispositionFileTypeHeader = By.XPath("//div[@role='table']/div[@class='thead thead-light']/div/div/div[contains(text(),'Disposition type')]");
-        private By searchAcquisitionFileOrderTypeBttn = By.CssSelector("div[data-testid='sort-column-dispositionTypeCode']");
+        private By searchDispositionFileOrderTypeBttn = By.CssSelector("div[data-testid='sort-column-dispositionTypeCode']");
         private By searchDispositionMOTIRegionHeader = By.XPath("//div[@role='table']/div[@class='thead thead-light']/div/div/div[contains(text(),'MOTI Region')]");
         private By searchDispositionTeamMemberHeader = By.XPath("//div[@role='table']/div[@class='thead thead-light']/div/div/div[contains(text(),'Team member')]");
         private By searchDispositionAddressHeader = By.XPath("//div[@role='table']/div[@class='thead thead-light']/div/div/div[contains(text(),'Civic Address / PID / PIN')]");
-        private By searchDispositionStatusHeader = By.XPath("//div[@role='table']/div[@class='thead thead-light']/div/div/div[contains(text(),'Disposition status')]");
+        private By searchDispositionDispositionStatusHeader = By.XPath("//div[@role='table']/div[@class='thead thead-light']/div/div/div[contains(text(),'Disposition status')]");
+        private By searchDispositionFileOrderDispositionStatusBttn = By.CssSelector("div[data-testid='sort-column-dispositionStatusTypeCode']");
         private By searchDispositionFileStatusHeader = By.XPath("//div[@role='table']/div[@class='thead thead-light']/div/div/div[contains(text(),'Status')]");
-        private By searchAcquisitionFileOrderStatusBttn = By.CssSelector("div[data-testid='sort-column-dispositionFileStatusTypeCode']");
+        private By searchDispositionFileOrderStatusBttn = By.CssSelector("div[data-testid='sort-column-dispositionFileStatusTypeCode']");
+        
         private By searchDispositionFileTableContent = By.CssSelector("div[data-testid='dispositionFilesTable'] div[class='tbody'] div[class='tr-wrapper']");
 
         //Search Disposition File Pagination
@@ -52,7 +54,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By searchDispositionFile1stResultReference = By.CssSelector("div[data-testid='dispositionFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td clickable']:nth-child(2)");
         private By searchDispositionFile1stResultName = By.CssSelector("div[data-testid='dispositionFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td clickable']:nth-child(3)");
         private By searchDispositionFile1stResultType = By.CssSelector("div[data-testid='dispositionFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td clickable']:nth-child(4)");
-        private By searchDispositionFile1stResultMOTIRegion = By.CssSelector("div[data-testid='dispositionFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td clickable']:nth-child(5)");
+        private By searchDispositionFile1stResultMOTIRegion = By.CssSelector("div[data-testid='dispositionFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div:nth-child(5)");
         private By searchDispositionFile1stResultTeamMember = By.CssSelector("div[data-testid='dispositionFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td clickable']:nth-child(6) span");
         private By searchDispositionFile1stResultAddress = By.CssSelector("div[data-testid='dispositionFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td'] div[class='w-100'] div");
         private By searchDispositionFile1stResultStatus = By.CssSelector("div[data-testid='dispositionFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td clickable']:nth-child(8)");
@@ -119,14 +121,20 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void OrderByDispositionFileType()
         {
-            WaitUntilClickable(searchAcquisitionFileOrderTypeBttn);
-            webDriver.FindElement(searchAcquisitionFileOrderTypeBttn).Click();
+            WaitUntilClickable(searchDispositionFileOrderTypeBttn);
+            webDriver.FindElement(searchDispositionFileOrderTypeBttn).Click();
+        }
+
+        public void OrderByDispositionStatus()
+        {
+            WaitUntilClickable(searchDispositionFileOrderDispositionStatusBttn);
+            webDriver.FindElement(searchDispositionFileOrderDispositionStatusBttn).Click();
         }
 
         public void OrderByDispositionFileStatus()
         {
-            WaitUntilClickable(searchAcquisitionFileOrderStatusBttn);
-            webDriver.FindElement(searchAcquisitionFileOrderStatusBttn).Click();
+            WaitUntilClickable(searchDispositionFileOrderStatusBttn);
+            webDriver.FindElement(searchDispositionFileOrderStatusBttn).Click();
         }
 
         public void SelectFirstOption()
@@ -220,14 +228,14 @@ namespace PIMS.Tests.Automation.PageObjects
             return webDriver.FindElements(searchDispositionFileTableContent).Count;
         }
 
-        public void VerifyAcquisitionFileListView()
+        public void VerifyDispositionFileListView()
         {
             Wait();
 
-            //Acquisition File Title
+            //Disposition File Title
             AssertTrueIsDisplayed(searchAcquisitionFileTitle);
 
-            //Acquisition File Search Filters
+            //Disposition File Search Filters
             AssertTrueIsDisplayed(searchDispositionFileSearchBySelect);
             AssertTrueIsDisplayed(searchDispositionFileSearchByAddressInput);
             AssertTrueIsDisplayed(searchDispositionFileNameInput);
@@ -239,7 +247,7 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(searchDispositionFileSearchButton);
             AssertTrueIsDisplayed(searchDispositionFileCreateNewButton);
 
-            //Acquisition Files List View
+            //DIsposition Files List View
             AssertTrueIsDisplayed(searchDispositionFileNumberHeader);
             AssertTrueIsDisplayed(searchDispositionOrderFileNumberBttn);
             AssertTrueIsDisplayed(searchDispositionReferenceHeader);
@@ -247,21 +255,22 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(searchDispositionFileNameHeader);
             AssertTrueIsDisplayed(searchDispositionOrderFileNameBttn);
             AssertTrueIsDisplayed(searchDispositionFileTypeHeader);
-            AssertTrueIsDisplayed(searchAcquisitionFileOrderTypeBttn);
+            AssertTrueIsDisplayed(searchDispositionFileOrderTypeBttn);
             AssertTrueIsDisplayed(searchDispositionMOTIRegionHeader);
             AssertTrueIsDisplayed(searchDispositionTeamMemberHeader);
             AssertTrueIsDisplayed(searchDispositionAddressHeader);
-            AssertTrueIsDisplayed(searchDispositionStatusHeader);
+            AssertTrueIsDisplayed(searchDispositionDispositionStatusHeader);
+            AssertTrueIsDisplayed(searchDispositionFileOrderDispositionStatusBttn);
             AssertTrueIsDisplayed(searchDispositionFileStatusHeader);
-            AssertTrueIsDisplayed(searchAcquisitionFileOrderStatusBttn);
+            AssertTrueIsDisplayed(searchDispositionFileOrderStatusBttn);
             AssertTrueIsDisplayed(searchDispositionFileTableContent);
 
-            //Acquisition File Pagination
+            //Disposition File Pagination
             AssertTrueIsDisplayed(searchDispositionFilePaginationMenu);
             AssertTrueIsDisplayed(searchDispositionPaginationList);
         }
 
-        public void VerifyAcquisitionFileTableContent(DispositionFile disposition)
+        public void VerifyDispositionFileTableContent(DispositionFile disposition)
         {
             AssertTrueIsDisplayed(searchDispositionFile1stResult);
 

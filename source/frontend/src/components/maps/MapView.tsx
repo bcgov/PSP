@@ -10,7 +10,7 @@ import * as Styled from './leaflet/styles';
 import MapLeafletView from './MapLeafletView';
 import MapSearch from './MapSearch';
 
-export type MapViewProps = {};
+export type MapViewProps = object;
 
 /**
  * Container for the map component.

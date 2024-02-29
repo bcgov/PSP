@@ -1,9 +1,10 @@
 import { createMemoryHistory } from 'history';
 
 import { LeaseContextProvider } from '@/features/leases/context/LeaseContext';
-import { mockApiPerson, mockOrganization } from '@/mocks/filterData.mock';
-import { getMockApiLease } from '@/mocks/lease.mock';
-import { Api_Lease, defaultApiLease } from '@/models/api/Lease';
+import { mockApiOrganization, mockApiPerson, mockOrganization } from '@/mocks/filterData.mock';
+import { getEmptyLeaseTenant, getMockApiLease } from '@/mocks/lease.mock';
+import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
+import { defaultApiLease } from '@/models/defaultInitializers';
 import { render, RenderOptions } from '@/utils/test-utils';
 
 import { FormTenant } from './models';
@@ -13,12 +14,14 @@ const history = createMemoryHistory();
 
 describe('Tenant component', () => {
   const setup = (
-    renderOptions: RenderOptions & ITenantProps & { lease?: Api_Lease } = { tenants: [] },
+    renderOptions: RenderOptions & ITenantProps & { lease?: ApiGen_Concepts_Lease } = {
+      tenants: [],
+    },
   ) => {
     // render component under test
     const component = render(
       <LeaseContextProvider
-        initialLease={renderOptions.lease ? renderOptions.lease : defaultApiLease}
+        initialLease={renderOptions.lease ? renderOptions.lease : defaultApiLease()}
       >
         <ViewTenantForm nameSpace={renderOptions.nameSpace} tenants={renderOptions.tenants ?? []} />
       </LeaseContextProvider>,
@@ -35,10 +38,10 @@ describe('Tenant component', () => {
   it('renders as expected', () => {
     const { component } = setup({
       lease: {
-        ...defaultApiLease,
+        ...defaultApiLease(),
         tenants: [
-          { leaseId: 1, person: mockApiPerson },
-          { leaseId: 1, organization: mockOrganization },
+          { ...getEmptyLeaseTenant(), leaseId: 1, person: mockApiPerson },
+          { ...getEmptyLeaseTenant(), leaseId: 1, organization: mockApiOrganization },
         ],
       },
       tenants: [],
@@ -48,11 +51,15 @@ describe('Tenant component', () => {
   it('renders one Person Tenant section per person', () => {
     const { component } = setup({
       lease: {
-        ...defaultApiLease,
+        ...defaultApiLease(),
       },
       tenants: [
         { leaseId: 1, personId: mockApiPerson.id, note: 'person note' },
-        { leaseId: 1, organizationId: mockOrganization.id, note: 'organization id' },
+        {
+          leaseId: 1,
+          organizationId: mockOrganization.id,
+          note: 'organization id',
+        },
       ],
     });
     const { getAllByText } = component;
@@ -65,10 +72,10 @@ describe('Tenant component', () => {
   it.skip('renders one notes section per tenant note', () => {
     const { component } = setup({
       lease: {
-        ...defaultApiLease,
+        ...defaultApiLease(),
         tenants: [
-          { leaseId: 1, person: mockApiPerson },
-          { leaseId: 1, organization: mockOrganization },
+          { ...getEmptyLeaseTenant(), leaseId: 1, person: mockApiPerson },
+          { ...getEmptyLeaseTenant(), leaseId: 1, organization: mockApiOrganization },
         ],
       },
       tenants: [
@@ -84,7 +91,7 @@ describe('Tenant component', () => {
 
   it('renders assignee section', () => {
     const { component } = setup({
-      lease: { ...defaultApiLease, tenants: [] },
+      lease: { ...defaultApiLease(), tenants: [] },
       tenants: [],
     });
     const { getAllByText } = component;
@@ -95,7 +102,7 @@ describe('Tenant component', () => {
 
   it('renders representative section', () => {
     const { component } = setup({
-      lease: { ...defaultApiLease, tenants: [] },
+      lease: { ...defaultApiLease(), tenants: [] },
       tenants: [],
     });
     const { getAllByText } = component;
@@ -106,7 +113,7 @@ describe('Tenant component', () => {
 
   it('renders property manager section', () => {
     const { component } = setup({
-      lease: { ...defaultApiLease, tenants: [] },
+      lease: { ...defaultApiLease(), tenants: [] },
       tenants: [],
     });
     const { getAllByText } = component;
@@ -116,7 +123,7 @@ describe('Tenant component', () => {
   });
   it('renders unknown section', () => {
     const { component } = setup({
-      lease: { ...defaultApiLease, tenants: [] },
+      lease: { ...defaultApiLease(), tenants: [] },
       tenants: [],
     });
     const { getAllByText } = component;

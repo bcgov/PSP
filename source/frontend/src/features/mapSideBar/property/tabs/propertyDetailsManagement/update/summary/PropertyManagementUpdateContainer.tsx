@@ -2,7 +2,8 @@ import { FormikProps } from 'formik';
 import React, { useCallback, useEffect, useState } from 'react';
 
 import { usePropertyManagementRepository } from '@/hooks/repositories/usePropertyManagementRepository';
-import { Api_PropertyManagement } from '@/models/api/Property';
+import { ApiGen_Concepts_PropertyManagement } from '@/models/api/generated/ApiGen_Concepts_PropertyManagement';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 
 import { PropertyManagementFormModel } from './models';
 import { IPropertyManagementUpdateFormProps } from './PropertyManagementUpdateForm';
@@ -20,15 +21,15 @@ export const PropertyManagementUpdateContainer = React.forwardRef<
   FormikProps<PropertyManagementFormModel>,
   IPropertyManagementUpdateContainerProps
 >(({ propertyId, View, onSuccess }, formikRef) => {
-  const [propertyManagement, setPropertyManagement] = useState<Api_PropertyManagement>({
+  const [propertyManagement, setPropertyManagement] = useState<ApiGen_Concepts_PropertyManagement>({
     id: propertyId,
-    rowVersion: null,
     managementPurposes: [],
     additionalDetails: null,
     isUtilitiesPayable: null,
     isTaxesPayable: null,
     relatedLeases: 0,
     leaseExpiryDate: null,
+    ...getEmptyBaseAudit(),
   });
 
   const {
@@ -50,7 +51,7 @@ export const PropertyManagementUpdateContainer = React.forwardRef<
     fetchPropertyManagement();
   }, [fetchPropertyManagement]);
 
-  const onSave = async (apiModel: Api_PropertyManagement) => {
+  const onSave = async (apiModel: ApiGen_Concepts_PropertyManagement) => {
     const result = await updatePropertyManagement(propertyId, apiModel);
     if (result?.id) {
       onSuccess();

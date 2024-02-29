@@ -8,7 +8,7 @@ import { Claims } from '@/constants/claims';
 import { useApiProjects } from '@/hooks/pims-api/useApiProjects';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { useSearch } from '@/hooks/useSearch';
-import { Api_Project } from '@/models/api/Project';
+import { ApiGen_Concepts_Project } from '@/models/api/generated/ApiGen_Concepts_Project';
 
 import { IProjectFilter } from '../interfaces';
 import { defaultFilter, ProjectFilter } from './ProjectFilter/ProjectFilter';
@@ -37,7 +37,7 @@ export const ProjectListView: React.FunctionComponent<React.PropsWithChildren<un
     setCurrentPage,
     setPageSize,
     loading,
-  } = useSearch<Api_Project, IProjectFilter>(
+  } = useSearch<ApiGen_Concepts_Project, IProjectFilter>(
     defaultFilter,
     searchProjects,
     'No matching results can be found. Try widening your search criteria.',

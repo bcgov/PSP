@@ -11,7 +11,7 @@ import {
   getMockApiDefaultCompensation,
 } from '@/mocks/compensations.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
-import { Api_AcquisitionFileOwner } from '@/models/api/AcquisitionFile';
+import { ApiGen_Concepts_AcquisitionFileOwner } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileOwner';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
   act,
@@ -45,7 +45,7 @@ const defaultCompensation = new CompensationRequisitionFormModel(
   '',
 );
 
-const getPayeeOptions = (owners: Api_AcquisitionFileOwner[]): PayeeOption[] => {
+const getPayeeOptions = (owners: ApiGen_Concepts_AcquisitionFileOwner[]): PayeeOption[] => {
   const options: PayeeOption[] = [];
 
   const ownersOptions: PayeeOption[] = owners.map(x => PayeeOption.createOwner(x));

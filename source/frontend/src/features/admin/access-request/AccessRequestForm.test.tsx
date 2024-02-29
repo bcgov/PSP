@@ -1,6 +1,6 @@
 import { getMockAccessRequest } from '@/mocks/accessRequest.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
-import { Api_AccessRequest } from '@/models/api/AccessRequest';
+import { ApiGen_Concepts_AccessRequest } from '@/models/api/generated/ApiGen_Concepts_AccessRequest';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { fakeText, fillInput, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
@@ -75,7 +75,7 @@ describe('AccessRequestForm component', () => {
     const submitButton = getUpdateButton();
     userEvent.click(submitButton);
 
-    const expectedValues: Api_AccessRequest = { ...initialValues.toApi() };
+    const expectedValues: ApiGen_Concepts_AccessRequest = { ...initialValues.toApi() };
     expectedValues.user!.position = 'position';
     expectedValues.note = 'test note';
 
