@@ -28,6 +28,7 @@ import { isValidId } from '@/utils';
 
 import PersonSubForm from '../../Person/PersonSubForm';
 import { onValidatePerson } from '../../utils/contactUtils';
+import { UnsavedChangesPrompt } from '@/components/common/form/UnsavedChangesPrompt';
 
 /**
  * Formik-connected form to Update Individual Contacts
@@ -145,6 +146,8 @@ const UpdatePersonComponent: React.FC<
 
   return (
     <>
+      <UnsavedChangesPrompt />
+
       {/* Confirmation popup when Cancel button is clicked */}
       <CancelConfirmationModal
         variant="info"

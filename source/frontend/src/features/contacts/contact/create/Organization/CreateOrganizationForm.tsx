@@ -20,6 +20,7 @@ import { isValidId } from '@/utils';
 
 import OrganizationSubForm from '../../Organization/OrganizationSubForm';
 import { onValidateOrganization } from '../../utils/contactUtils';
+import { UnsavedChangesPrompt } from '@/components/common/form/UnsavedChangesPrompt';
 
 /**
  * Formik-connected form to Create Organizational Contacts
@@ -127,6 +128,8 @@ const CreateOrganizationComponent: React.FC<FormikProps<IEditableOrganizationFor
 
   return (
     <>
+      <UnsavedChangesPrompt />
+
       {/* Confirmation popup when Cancel button is clicked */}
       <CancelConfirmationModal
         variant="info"
