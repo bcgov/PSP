@@ -1,7 +1,7 @@
 import { mockLookups } from '@/mocks/index.mock';
 
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import UpdateAcquisitionAgreementView, { IUpdateAcquisitionAgreementViewProps } from './UpdateAcquisitionAgreementView';
+import UpdateAcquisitionAgreementForm, { IUpdateAcquisitionAgreementViewProps } from './UpdateAcquisitionAgreementForm';
 import { AcquisitionAgreementFormModel } from '../models/AcquisitionAgreementFormModel';
 import { act, RenderOptions, render, fillInput, waitForEffects, selectOptions } from '@/utils/test-utils';
 
@@ -13,21 +13,17 @@ export const organizerMock = {
 const mockViewProps: IUpdateAcquisitionAgreementViewProps = {
   isLoading: false,
   initialValues: new AcquisitionAgreementFormModel(1),
-  onSave: jest.fn(),
-  onSuccess: jest.fn(),
-  onError: jest.fn(),
+  onSubmit: jest.fn(),
   onCancel: jest.fn(),
 };
 
 describe('UpdateAcquisitionAgreementView component', () => {
   const setup = async (renderOptions: RenderOptions = {}) => {
     const utils = render(
-      <UpdateAcquisitionAgreementView
+      <UpdateAcquisitionAgreementForm
         isLoading={false}
         initialValues={mockViewProps.initialValues}
-        onSave={mockViewProps.onSave}
-        onSuccess={mockViewProps.onSuccess}
-        onError={mockViewProps.onError}
+        onSubmit={mockViewProps.onSubmit}
         onCancel={mockViewProps.onCancel}
       />,
       {

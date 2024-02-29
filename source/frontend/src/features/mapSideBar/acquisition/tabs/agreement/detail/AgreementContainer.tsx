@@ -62,7 +62,7 @@ export const AgreementContainer: React.FunctionComponent<
   }, [acquisitionFileId, getAcquisition, getAgreements]);
 
   const handleAgreementDeleted = async (agreementId: number) => {
-    if (acquisitionFileId) {
+    if (isValidId(acquisitionFileId)) {
       await deleteAgreement(acquisitionFileId, agreementId);
       const updatedAgreements = await getAgreements(acquisitionFileId);
       if (updatedAgreements) {

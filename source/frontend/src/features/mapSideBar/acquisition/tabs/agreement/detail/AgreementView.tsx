@@ -19,7 +19,7 @@ import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
 import { ApiGen_CodeTypes_AgreementStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_AgreementStatusTypes';
 import { ApiGen_CodeTypes_AgreementTypes } from '@/models/api/generated/ApiGen_CodeTypes_AgreementTypes';
 import { ApiGen_Concepts_Agreement } from '@/models/api/generated/ApiGen_Concepts_Agreement';
-import { formatMoney, prettyFormatDate } from '@/utils';
+import { exists, formatMoney, prettyFormatDate } from '@/utils';
 
 import { cannotEditMessage } from '../../../common/constants';
 import StatusUpdateSolver from '../../fileDetails/detail/statusUpdateSolver';
@@ -68,7 +68,7 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
                 <Row>
                   <Col md={5}>{`Agreement ${++index}`}</Col>
                   <Col md={7}>
-                    {agreement.agreementType !== null && (
+                    {exists(agreement.agreementType) && (
                       <StyledButtonContainer>
                         <StyledAddButton
                           onClick={() => {

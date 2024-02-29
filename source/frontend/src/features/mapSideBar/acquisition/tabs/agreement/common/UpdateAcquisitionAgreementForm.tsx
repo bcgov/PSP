@@ -1,12 +1,9 @@
-import axios, { AxiosError } from 'axios';
-import { Formik } from 'formik';
+import { Formik, FormikHelpers } from 'formik';
 import styled from 'styled-components';
 
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import SidebarFooter from '@/features/mapSideBar/shared/SidebarFooter';
 import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
-import { IApiError } from '@/interfaces/IApiError';
-import { ApiGen_Concepts_Agreement } from '@/models/api/generated/ApiGen_Concepts_Agreement';
 
 import AcquisitionAgreementForm from '../form/AcquisitionAgreementForm';
 import { AcquisitionAgreementFormYupSchema } from '../form/AcquisitionAgreementFormYupSchema';
@@ -15,15 +12,16 @@ import { AcquisitionAgreementFormModel } from '../models/AcquisitionAgreementFor
 export interface IUpdateAcquisitionAgreementViewProps {
   isLoading: boolean;
   initialValues: AcquisitionAgreementFormModel | null;
-  onSave: (agreement: ApiGen_Concepts_Agreement) => Promise<ApiGen_Concepts_Agreement | undefined>;
-  onSuccess: () => void;
-  onError: (e: AxiosError<IApiError>) => void;
+  onSubmit: (
+    values: AcquisitionAgreementFormModel,
+    formikHelpers: FormikHelpers<AcquisitionAgreementFormModel>,
+  ) => Promise<void>;
   onCancel: () => void;
 }
 
-const UpdateAcquisitionAgreementView: React.FunctionComponent<
+const UpdateAcquisitionAgreementForm: React.FunctionComponent<
   React.PropsWithChildren<IUpdateAcquisitionAgreementViewProps>
-> = ({ isLoading, initialValues, onSave, onSuccess, onError, onCancel }) => {
+> = ({ isLoading, initialValues, onSubmit, onCancel }) => {
   const { setModalContent, setDisplayModal } = useModalContext();
 
   const cancelFunc = (resetForm: () => void, dirty: boolean) => {
@@ -50,21 +48,7 @@ const UpdateAcquisitionAgreementView: React.FunctionComponent<
           enableReinitialize
           initialValues={initialValues}
           validationSchema={AcquisitionAgreementFormYupSchema}
-          onSubmit={async (values, formikHelpers) => {
-            try {
-              const agreementSaved = await onSave(values.toApi());
-              if (agreementSaved) {
-                onSuccess();
-              }
-            } catch (e) {
-              if (axios.isAxiosError(e)) {
-                const axiosError = e as AxiosError<IApiError>;
-                onError && onError(axiosError);
-              }
-            } finally {
-              formikHelpers.setSubmitting(false);
-            }
-          }}
+          onSubmit={onSubmit}
         >
           {formikProps => {
             return (
@@ -95,7 +79,7 @@ const UpdateAcquisitionAgreementView: React.FunctionComponent<
   );
 };
 
-export default UpdateAcquisitionAgreementView;
+export default UpdateAcquisitionAgreementForm;
 
 const StyledFormWrapper = styled.div`
   display: flex;

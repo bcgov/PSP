@@ -1,14 +1,16 @@
-
 import { createMemoryHistory } from 'history';
-import { RenderOptions, act, render } from "@/utils/test-utils";
-import AddAcquisitionAgreementContainer, { IAddAcquisitionAgreementContainerProps } from "./AddAcquisitionAgreementContainer";
+import { RenderOptions, act, render } from '@/utils/test-utils';
+import AddAcquisitionAgreementContainer, {
+  IAddAcquisitionAgreementContainerProps,
+} from './AddAcquisitionAgreementContainer';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { IUpdateAcquisitionAgreementViewProps } from '../common/UpdateAcquisitionAgreementView';
+import { IUpdateAcquisitionAgreementViewProps } from '../common/UpdateAcquisitionAgreementForm';
 import { Claims } from '@/constants/claims';
 import { mockAgreementResponseApi } from '@/mocks/agreements.mock';
 import { ApiGen_Concepts_Agreement } from '@/models/api/generated/ApiGen_Concepts_Agreement';
-
+import { AcquisitionAgreementFormModel } from '../models/AcquisitionAgreementFormModel';
+import { FormikHelpers } from 'formik';
 
 const history = createMemoryHistory();
 const mockPostApi = {
@@ -19,7 +21,6 @@ const mockPostApi = {
 };
 const onSuccess = jest.fn();
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 let viewProps: IUpdateAcquisitionAgreementViewProps | undefined;
 const TestView: React.FC<IUpdateAcquisitionAgreementViewProps> = props => {
   viewProps = props;
@@ -41,7 +42,11 @@ describe('Add Disposition Offer Container component', () => {
     } = {},
   ) => {
     const component = render(
-      <AddAcquisitionAgreementContainer acquisitionFileId={1} View={TestView} onSuccess={onSuccess} />,
+      <AddAcquisitionAgreementContainer
+        acquisitionFileId={1}
+        View={TestView}
+        onSuccess={onSuccess}
+      />,
       {
         history,
         store: {
@@ -74,25 +79,55 @@ describe('Add Disposition Offer Container component', () => {
     expect(viewProps?.initialValues?.agreementId).toBe(0);
     expect(viewProps?.initialValues?.acquisitionFileId).toBe(1);
     expect(viewProps?.initialValues?.agreementStatusTypeCode).toBe('DRAFT');
-    expect(viewProps?.initialValues?.agreementTypeCode).toBe('');
-    expect(viewProps?.initialValues?.agreementDate).toBe('');
-    expect(viewProps?.initialValues?.cancellationNote).toBe('');
+    expect(viewProps?.initialValues?.agreementTypeCode).toBe(null);
+    expect(viewProps?.initialValues?.agreementDate).toBe(null);
+    expect(viewProps?.initialValues?.cancellationNote).toBe(null);
     expect(viewProps?.initialValues?.rowVersion).toBe(null);
   });
 
   it('makes request to create a new Agreement and returns the response', async () => {
-    await setup();
+    await setup({ props: { acquisitionFileId: 1 } });
     const agreementMock = mockAgreementResponseApi(1);
     mockPostApi.execute.mockReturnValue(agreementMock);
 
-    let createdAgreement: ApiGen_Concepts_Agreement | undefined;
+    const agreementFormModel = new AcquisitionAgreementFormModel(1);
+    agreementFormModel.agreementTypeCode = 'H0074';
     await act(async () => {
-      createdAgreement = await viewProps?.onSave({} as ApiGen_Concepts_Agreement);
+      return viewProps?.onSubmit(agreementFormModel, { setSubmitting: jest.fn() } as any);
     });
 
-    expect(mockPostApi.execute).toHaveBeenCalled();
-    expect(createdAgreement).toStrictEqual({ ...agreementMock });
+    expect(mockPostApi.execute).toHaveBeenCalledWith(
+      1,
+      expect.objectContaining({
+        agreementId: 0,
+        acquisitionFileId: 1,
+        agreementType: { description: null, displayOrder: null, id: 'H0074', isDisabled: false },
+        agreementDate: null,
+        agreementStatusType: {
+          id: 'DRAFT',
+          description: null,
+          displayOrder: null,
+          isDisabled: false,
+        },
+        cancellationNote: null,
+        commencementDate: null,
+        completionDate: null,
+        depositAmount: 0,
+        expiryDateTime: null,
+        inspectionDate: null,
+        isDraft: null,
+        legalSurveyPlanNum: null,
+        noLaterThanDays: 0,
+        offerDate: null,
+        possessionDate: null,
+        purchasePrice: 0,
+        rowVersion: null,
+        signedDate: null,
+        terminationDate: null,
+      }),
+    );
 
+    expect(onSuccess).toHaveBeenCalled();
     expect(history.location.pathname).toBe('/');
   });
 

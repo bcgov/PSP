@@ -1,6 +1,6 @@
 import { mockAgreementResponseApi } from '@/mocks/agreements.mock';
 import { createMemoryHistory } from 'history';
-import { IUpdateAcquisitionAgreementViewProps } from '../common/UpdateAcquisitionAgreementView';
+import { IUpdateAcquisitionAgreementViewProps } from '../common/UpdateAcquisitionAgreementForm';
 import { RenderOptions, act, render, waitForEffects } from '@/utils/test-utils';
 import UpdateAcquisitionAgreementContainer, {
   IUpdateAcquisitionAgreementContainerProps,
@@ -39,7 +39,6 @@ jest.mock('@/hooks/repositories/useAgreementProvider', () => ({
   },
 }));
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 let viewProps: IUpdateAcquisitionAgreementViewProps | undefined;
 const TestView: React.FC<IUpdateAcquisitionAgreementViewProps> = props => {
   viewProps = props;
@@ -104,13 +103,48 @@ describe('Update AcquisitionAgreementContainer component', () => {
 
     await setup({props: { acquisitionFileId: 1, agreementId: 10 }});
 
-    let createdAgreement: ApiGen_Concepts_Agreement | undefined;
+    let agreementFormModel = AcquisitionAgreementFormModel.fromApi(mockAcquisitionAgreementApi);
+    agreementFormModel.agreementStatusTypeCode = 'FINAL';
+
     await act(async () => {
-      createdAgreement = await viewProps?.onSave({} as ApiGen_Concepts_Agreement);
+      return viewProps?.onSubmit(
+        agreementFormModel,
+        { setSubmitting: jest.fn() } as any,
+      );
     });
 
-    expect(mockPutAgreementApi.execute).toHaveBeenCalled();
-    expect(createdAgreement).toStrictEqual({ ...mockAcquisitionAgreementApi });
+    expect(mockPutAgreementApi.execute).toHaveBeenCalledWith(
+      1,
+      10,
+      expect.objectContaining({
+        agreementId: 10,
+        acquisitionFileId: 1,
+        agreementType: { description: null, displayOrder: null, id: 'H0074', isDisabled: false },
+        agreementDate: null,
+        agreementStatusType: {
+          id: 'FINAL',
+          description: null,
+          displayOrder: null,
+          isDisabled: false,
+        },
+        cancellationNote: null,
+        commencementDate: null,
+        completionDate: null,
+        depositAmount: null,
+        expiryDateTime: null,
+        inspectionDate: null,
+        isDraft: null,
+        legalSurveyPlanNum: null,
+        noLaterThanDays: 0,
+        offerDate: null,
+        possessionDate: null,
+        purchasePrice: 0,
+        rowVersion: 1,
+        signedDate: null,
+        terminationDate: null,
+      }),
+    );
+    expect(onSuccess).toHaveBeenCalled();
     expect(history.location.pathname).toBe('/');
   });
 

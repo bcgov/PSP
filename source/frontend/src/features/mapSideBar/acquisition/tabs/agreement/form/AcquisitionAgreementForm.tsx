@@ -28,10 +28,19 @@ const AcquisitionAgreementForm: React.FunctionComponent<
   const agreementStatusOptions = getOptionsByType(API.AGREEMENT_STATUS_TYPES);
   const agreementTypeOptions = getByType(API.AGREEMENT_TYPES);
 
-  const agreementStatusTypeCodeValue = getIn(formikProps.values, 'agreementStatusTypeCode');
-  const agreementTypeCodeValue = getIn(formikProps.values, 'agreementTypeCode');
-  const agreementCancellationNoteValue = getIn(formikProps.values, 'cancellationNote');
-  const agreementStatusTypeCodeTouched = getIn(formikProps.touched, 'agreementStatusTypeCode');
+  const agreementStatusTypeCodeValue: string | null = getIn(
+    formikProps.values,
+    'agreementStatusTypeCode',
+  );
+  const agreementTypeCodeValue: string | null = getIn(formikProps.values, 'agreementTypeCode');
+  const agreementCancellationNoteValue: string | null = getIn(
+    formikProps.values,
+    'cancellationNote',
+  );
+  const agreementStatusTypeCodeTouched: string | null = getIn(
+    formikProps.touched,
+    'agreementStatusTypeCode',
+  );
 
   useEffect(() => {
     if (
@@ -97,7 +106,7 @@ const AcquisitionAgreementForm: React.FunctionComponent<
         />
       </SectionField>
       <SectionField labelWidth="5" label="Agreement date">
-        <FastDatePicker field={'agreementDate'} formikProps={formikProps} />
+        <FastDatePicker field="agreementDate" formikProps={formikProps} />
       </SectionField>
       {agreementTypeCodeValue === ApiGen_CodeTypes_AgreementTypes.H0074 && (
         <SectionField labelWidth="5" label="Commencement date">

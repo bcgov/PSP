@@ -1,4 +1,5 @@
-import { AxiosError } from 'axios';
+import axios, { AxiosError } from 'axios';
+import { FormikHelpers } from 'formik';
 import { useCallback, useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -6,9 +7,8 @@ import { toast } from 'react-toastify';
 import { useAgreementProvider } from '@/hooks/repositories/useAgreementProvider';
 import { useModalContext } from '@/hooks/useModalContext';
 import { IApiError } from '@/interfaces/IApiError';
-import { ApiGen_Concepts_Agreement } from '@/models/api/generated/ApiGen_Concepts_Agreement';
 
-import { IUpdateAcquisitionAgreementViewProps } from '../common/UpdateAcquisitionAgreementView';
+import { IUpdateAcquisitionAgreementViewProps } from '../common/UpdateAcquisitionAgreementForm';
 import { AcquisitionAgreementFormModel } from '../models/AcquisitionAgreementFormModel';
 
 export interface IUpdateAcquisitionAgreementContainerProps {
@@ -32,10 +32,6 @@ const UpdateAcquisitionAgreementContainer: React.FunctionComponent<
     updateAcquisitionAgreement: { execute: updateAcquisitionAgreement, loading: updatingAgreement },
     getAcquisitionAgreementById: { execute: getAgreement, loading: fetchingAgreement },
   } = useAgreementProvider();
-
-  const handleSave = async (updatedAgreement: ApiGen_Concepts_Agreement) => {
-    return updateAcquisitionAgreement(acquisitionFileId, agreementId, updatedAgreement);
-  };
 
   const handleSuccess = async () => {
     onSuccess();
@@ -61,6 +57,29 @@ const UpdateAcquisitionAgreementContainer: React.FunctionComponent<
     }
   };
 
+  const handleSubmit = async (
+    values: AcquisitionAgreementFormModel,
+    formikHelpers: FormikHelpers<AcquisitionAgreementFormModel>,
+  ) => {
+    try {
+      const agreementSaved = await updateAcquisitionAgreement(
+        acquisitionFileId,
+        agreementId,
+        values.toApi(),
+      );
+      if (agreementSaved) {
+        handleSuccess();
+      }
+    } catch (e) {
+      if (axios.isAxiosError(e)) {
+        const axiosError = e as AxiosError<IApiError>;
+        onCreateError && onCreateError(axiosError);
+      }
+    } finally {
+      formikHelpers.setSubmitting(false);
+    }
+  };
+
   const fetchAcquisitionAgreement = useCallback(async () => {
     const agreement = await getAgreement(acquisitionFileId, agreementId);
 
@@ -78,10 +97,8 @@ const UpdateAcquisitionAgreementContainer: React.FunctionComponent<
     <View
       initialValues={initialValues}
       isLoading={fetchingAgreement || updatingAgreement}
-      onSave={handleSave}
-      onSuccess={handleSuccess}
+      onSubmit={handleSubmit}
       onCancel={() => history.push(backUrl)}
-      onError={onCreateError}
     ></View>
   );
 };

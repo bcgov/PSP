@@ -345,7 +345,6 @@ exports[`UpdateAcquisitionAgreementView component renders as expected 1`] = `
                   class="form-control"
                   id="input-legalSurveyPlanNum"
                   name="legalSurveyPlanNum"
-                  title=""
                   value=""
                 />
               </div>
@@ -687,7 +686,6 @@ exports[`UpdateAcquisitionAgreementView component renders as expected 1`] = `
                     class="form-control"
                     id="input-noLaterThanDays"
                     name="noLaterThanDays"
-                    title=""
                     value=""
                   />
                 </div>

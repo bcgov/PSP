@@ -2,24 +2,24 @@ import { ApiGen_Concepts_Agreement } from '@/models/api/generated/ApiGen_Concept
 import { stringToNull, stringToNumber, toTypeCodeNullable } from '@/utils/formUtils';
 
 export class AcquisitionAgreementFormModel {
-  public agreementTypeCode: string | null = '';
-  public agreementTypeDescription: string | null = '';
-  public agreementDate: string | null = '';
-  public completionDate: string | null = '';
-  public terminationDate: string | null = '';
-  public commencementDate: string | null = '';
-  public possessionDate: string | null = '';
-  public depositAmount: string | null = '';
-  public noLaterThanDays: string | null = '';
-  public purchasePrice: string | null = '';
-  public legalSurveyPlanNum: string | null = '';
-  public offerDate: string | null = '';
-  public expiryDateTime: string | null = '';
-  public signedDate: string | null = '';
-  public inspectionDate: string | null = '';
-  public agreementStatusTypeCode: string | null = 'DRAFT';
-  public agreementStatusTypeDescription: string | null = '';
-  public cancellationNote: string | null = '';
+  public agreementTypeCode: string | null = null;
+  public agreementTypeDescription: string | null = null;
+  public agreementDate: string | null = null;
+  public completionDate: string | null = null;
+  public terminationDate: string | null = null;
+  public commencementDate: string | null = null;
+  public possessionDate: string | null = null;
+  public depositAmount: string | null = null;
+  public noLaterThanDays: string | null = null;
+  public purchasePrice: string | null = null;
+  public legalSurveyPlanNum: string | null = null;
+  public offerDate: string | null = null;
+  public expiryDateTime: string | null = null;
+  public signedDate: string | null = null;
+  public inspectionDate: string | null = null;
+  public agreementStatusTypeCode = 'DRAFT';
+  public agreementStatusTypeDescription: string | null = null;
+  public cancellationNote: string | null = null;
   public isDraft: boolean | null = null;
 
   constructor(

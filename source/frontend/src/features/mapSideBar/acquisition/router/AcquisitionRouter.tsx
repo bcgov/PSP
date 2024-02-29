@@ -12,7 +12,7 @@ import AppRoute from '@/utils/AppRoute';
 import { UpdateChecklistForm } from '../../shared/tabs/checklist/update/UpdateChecklistForm';
 import { AcquisitionFileTabs } from '../tabs/AcquisitionFileTabs';
 import AddAcquisitionAgreementContainer from '../tabs/agreement/add/AddAcquisitionAgreementContainer';
-import UpdateAcquisitionAgreementView from '../tabs/agreement/common/UpdateAcquisitionAgreementView';
+import UpdateAcquisitionAgreementForm from '../tabs/agreement/common/UpdateAcquisitionAgreementForm';
 import UpdateAcquisitionAgreementContainer from '../tabs/agreement/update/UpdateAcquisitionAgreementContainer';
 import { UpdateAcquisitionChecklistContainer } from '../tabs/checklist/update/UpdateAcquisitionChecklistContainer';
 import AddForm8Container from '../tabs/expropriation/form8/add/AddForm8Container';
@@ -93,7 +93,7 @@ export const AcquisitionRouter: React.FC<IAcquisitionRouterProps> = props => {
             props.acquisitionFile?.id ? (
               <AddAcquisitionAgreementContainer
                 acquisitionFileId={props.acquisitionFile?.id}
-                View={UpdateAcquisitionAgreementView}
+                View={UpdateAcquisitionAgreementForm}
                 onSuccess={props.onSuccess}
               />
             ) : null
@@ -109,7 +109,7 @@ export const AcquisitionRouter: React.FC<IAcquisitionRouterProps> = props => {
               <UpdateAcquisitionAgreementContainer
                 acquisitionFileId={props.acquisitionFile?.id}
                 agreementId={match.params.agreementId}
-                View={UpdateAcquisitionAgreementView}
+                View={UpdateAcquisitionAgreementForm}
                 onSuccess={props.onSuccess}
               />
             ) : null

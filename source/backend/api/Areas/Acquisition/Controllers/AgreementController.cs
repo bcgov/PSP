@@ -74,7 +74,7 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         }
 
         /// <summary>
-        /// Get the acquisition file agreements.
+        /// Create the acquisition file agreement to the acquisition file.
         /// </summary>
         /// <returns>The agreements items.</returns>
         [HttpPost("{id:long}/agreements")]

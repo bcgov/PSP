@@ -1,13 +1,13 @@
-import { AxiosError } from 'axios';
+import axios, { AxiosError } from 'axios';
+import { FormikHelpers } from 'formik';
 import { useHistory, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import { useAgreementProvider } from '@/hooks/repositories/useAgreementProvider';
 import { useModalContext } from '@/hooks/useModalContext';
 import { IApiError } from '@/interfaces/IApiError';
-import { ApiGen_Concepts_Agreement } from '@/models/api/generated/ApiGen_Concepts_Agreement';
 
-import { IUpdateAcquisitionAgreementViewProps } from '../common/UpdateAcquisitionAgreementView';
+import { IUpdateAcquisitionAgreementViewProps } from '../common/UpdateAcquisitionAgreementForm';
 import { AcquisitionAgreementFormModel } from '../models/AcquisitionAgreementFormModel';
 
 export interface IAddAcquisitionAgreementContainerProps {
@@ -30,15 +30,6 @@ const AddAcquisitionAgreementContainer: React.FunctionComponent<
     addAcquisitionAgreement: { execute: postAcquisitionAgreement, loading },
   } = useAgreementProvider();
 
-  const handleSave = async (newAgreement: ApiGen_Concepts_Agreement) => {
-    return postAcquisitionAgreement(acquisitionFileId, newAgreement);
-  };
-
-  const handleSuccess = async () => {
-    onSuccess();
-    history.push(backUrl);
-  };
-
   const onCreateError = (e: AxiosError<IApiError>) => {
     if (e?.response?.status === 409) {
       setModalContent({
@@ -58,15 +49,33 @@ const AddAcquisitionAgreementContainer: React.FunctionComponent<
     }
   };
 
+  const handleSubmit = async (
+    values: AcquisitionAgreementFormModel,
+    formikHelpers: FormikHelpers<AcquisitionAgreementFormModel>,
+  ) => {
+    try {
+      const agreementSaved = await postAcquisitionAgreement(acquisitionFileId, values.toApi());
+      if (agreementSaved) {
+        onSuccess();
+        history.push(backUrl);
+      }
+    } catch (e) {
+      if (axios.isAxiosError(e)) {
+        const axiosError = e as AxiosError<IApiError>;
+        onCreateError && onCreateError(axiosError);
+      }
+    } finally {
+      formikHelpers.setSubmitting(false);
+    }
+  };
+
   return (
     initialValues && (
       <View
         initialValues={initialValues}
         isLoading={loading}
-        onSave={handleSave}
-        onSuccess={handleSuccess}
+        onSubmit={handleSubmit}
         onCancel={() => history.push(backUrl)}
-        onError={onCreateError}
       ></View>
     )
   );
