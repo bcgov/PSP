@@ -64,6 +64,10 @@ namespace Pims.Api.Areas.Property.Models.Search
                 {
                     tempSort[i] = tempSort[i].Replace("Location", "Address.MunicipalityName");
                 }
+                if (tempSort[i].StartsWith("LotSizeInHa"))
+                {
+                    tempSort[i] = tempSort[i].Replace("LotSizeInHa", "LandArea");
+                }
                 if (tempSort[i].StartsWith("Ownership"))
                 {
                     // The order will affect the display in the frontend. For now in alphabetical order.
