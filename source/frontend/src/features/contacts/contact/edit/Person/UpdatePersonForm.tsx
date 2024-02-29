@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 
 import { Button } from '@/components/common/buttons/Button';
 import { Select } from '@/components/common/form';
+import { UnsavedChangesPrompt } from '@/components/common/form/UnsavedChangesPrompt';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { FlexBox } from '@/components/common/styles';
@@ -28,7 +29,6 @@ import { isValidId } from '@/utils';
 
 import PersonSubForm from '../../Person/PersonSubForm';
 import { onValidatePerson } from '../../utils/contactUtils';
-import { UnsavedChangesPrompt } from '@/components/common/form/UnsavedChangesPrompt';
 
 /**
  * Formik-connected form to Update Individual Contacts

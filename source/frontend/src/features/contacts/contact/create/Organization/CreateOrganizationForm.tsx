@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom';
 
 import { Button } from '@/components/common/buttons/Button';
 import { TextArea } from '@/components/common/form';
+import { UnsavedChangesPrompt } from '@/components/common/form/UnsavedChangesPrompt';
 import { Section } from '@/components/common/Section/Section';
 import { FlexBox } from '@/components/common/styles';
 import {
@@ -20,7 +21,6 @@ import { isValidId } from '@/utils';
 
 import OrganizationSubForm from '../../Organization/OrganizationSubForm';
 import { onValidateOrganization } from '../../utils/contactUtils';
-import { UnsavedChangesPrompt } from '@/components/common/form/UnsavedChangesPrompt';
 
 /**
  * Formik-connected form to Create Organizational Contacts
