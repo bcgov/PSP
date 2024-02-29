@@ -8,20 +8,17 @@ import { Input } from '@/components/common/form';
 import { TypeaheadField } from '@/components/common/form/Typeahead';
 import { InlineFlexDiv } from '@/components/common/styles';
 import { ColumnWithProps } from '@/components/Table';
-import { Claims } from '@/constants/index';
+import { AreaUnitTypes, Claims } from '@/constants/index';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { ILookupCode } from '@/store/slices/lookupCodes';
-import { formatApiAddress, formatNumber, mapLookupCode, stringToFragment } from '@/utils';
+import { convertArea, formatApiAddress, formatNumber, mapLookupCode } from '@/utils';
 
 export const ColumnDiv = styled.div`
   display: flex;
   flex-flow: column;
   padding-right: 0.5rem;
 `;
-
-const NumberCell = ({ cell: { value } }: CellProps<ApiGen_Concepts_Property, number | undefined>) =>
-  stringToFragment(formatNumber(value ?? 0));
 
 type Props = {
   municipalities: ILookupCode[];
@@ -67,7 +64,16 @@ export const columns = ({ municipalities }: Props): ColumnWithProps<ApiGen_Conce
   },
   {
     Header: 'Lot Size (in\u00A0ha)',
-    Cell: NumberCell,
+    Cell: (props: CellProps<ApiGen_Concepts_Property>) => {
+      const landArea = props.row.original.landArea ?? 0;
+      const landUnitCode = props.row.original.areaUnit?.id;
+      const hectars = convertArea(
+        landArea,
+        landUnitCode ?? AreaUnitTypes.SquareMeters,
+        AreaUnitTypes.Hectares,
+      );
+      return <> {formatNumber(hectars, 0, 3)} </>;
+    },
     align: 'right',
     width: 20,
     sortable: true,
