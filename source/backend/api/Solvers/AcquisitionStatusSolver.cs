@@ -70,25 +70,12 @@ namespace Pims.Api.Services
                 return false;
             }
 
-            bool canEdit;
-            switch (acquisitionStatus)
+            var canEdit = acquisitionStatus switch
             {
-                case AcquisitionStatusTypes.ACTIVE:
-                case AcquisitionStatusTypes.DRAFT:
-                    canEdit = true;
-                    break;
-                case AcquisitionStatusTypes.ARCHIV:
-                case AcquisitionStatusTypes.CANCEL:
-                case AcquisitionStatusTypes.CLOSED:
-                case AcquisitionStatusTypes.COMPLT:
-                case AcquisitionStatusTypes.HOLD:
-                    canEdit = false;
-                    break;
-                default:
-                    canEdit = false;
-                    break;
-            }
-
+                AcquisitionStatusTypes.ACTIVE or AcquisitionStatusTypes.DRAFT => true,
+                AcquisitionStatusTypes.ARCHIV or AcquisitionStatusTypes.CANCEL or AcquisitionStatusTypes.CLOSED or AcquisitionStatusTypes.COMPLT or AcquisitionStatusTypes.HOLD => false,
+                _ => false,
+            };
             return canEdit;
         }
 

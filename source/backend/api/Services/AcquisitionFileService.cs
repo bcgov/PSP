@@ -411,6 +411,28 @@ namespace Pims.Api.Services
             return _agreementRepository.GetAgreementsByAcquisitionFile(id);
         }
 
+        public PimsAgreement AddAgreement(long acquisitionFileId, PimsAgreement agreement)
+        {
+            _user.ThrowIfNotAuthorized(Permissions.AgreementView);
+            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, acquisitionFileId);
+
+            ValidateAcquisitionFileStatus(acquisitionFileId, agreement.AgreementStatusTypeCode);
+
+            var newAgreement = _agreementRepository.AddAgreement(agreement);
+            _agreementRepository.CommitTransaction();
+
+            return newAgreement;
+        }
+
+        public PimsAgreement GetAgreementById(long acquisitionFileId, long agreementId)
+        {
+            _logger.LogInformation("Getting acquisition file agreement with Agreement id: {agreementId}", agreementId);
+            _user.ThrowIfNotAuthorized(Permissions.AgreementView);
+            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, acquisitionFileId);
+
+            return _agreementRepository.GetAgreementById(agreementId);
+        }
+
         public IEnumerable<PimsAgreement> SearchAgreements(AcquisitionReportFilterModel filter)
         {
             _logger.LogInformation("Searching all agreements matching the filter: {filter} ", filter);
@@ -425,39 +447,35 @@ namespace Pims.Api.Services
             return allMatchingAgreements.Where(a => pimsUser.PimsRegionUsers.Any(ur => ur.RegionCode == a.AcquisitionFile.RegionCode));
         }
 
-        public IEnumerable<PimsAgreement> UpdateAgreements(long acquisitionFileId, List<PimsAgreement> agreements)
+        public PimsAgreement UpdateAgreement(long acquisitionFileId, PimsAgreement agreement)
         {
+            _user.ThrowIfNotAuthorized(Permissions.AgreementView);
+            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, acquisitionFileId);
+
+            var currentAgreement = _agreementRepository.GetAgreementById(agreement.AgreementId);
+
+            ValidateAcquisitionFileStatus(acquisitionFileId, currentAgreement.AgreementStatusTypeCode);
+
+            var updatedAgreement = _agreementRepository.UpdateAgreement(agreement);
+            _agreementRepository.CommitTransaction();
+
+            return updatedAgreement;
+        }
+
+        public bool DeleteAgreement(long acquisitionFileId, long agreementId)
+        {
+            _user.ThrowIfNotAuthorized(Permissions.AgreementView);
             _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, acquisitionFileId);
 
             var currentAcquisitionStatus = GetCurrentAcquisitionStatus(acquisitionFileId);
+            var agreement = _agreementRepository.GetAgreementById(agreementId);
 
-            var currentAgreements = _agreementRepository.GetAgreementsByAcquisitionFile(acquisitionFileId);
+            ValidateAcquisitionFileStatus(acquisitionFileId, agreement.AgreementStatusTypeCode);
 
-            var toBeUpdated = currentAgreements.Where(ca => agreements.Any(na => ca.AgreementId == na.AgreementId && !ca.IsEqual(na)));
-            var toBeDeleted = currentAgreements.Where(ca => !agreements.Any(na => ca.AgreementId == na.AgreementId));
-
-            foreach (var agreement in toBeUpdated)
-            {
-                var agreementStatus = Enum.Parse<AgreementStatusTypes>(agreement.AgreementStatusTypeCode);
-                if (!_statusSolver.CanEditOrDeleteAgreement(currentAcquisitionStatus, agreementStatus) && !_user.HasPermission(Permissions.SystemAdmin))
-                {
-                    throw new BusinessRuleViolationException("The file you are editing is not active or draft, so you cannot save changes. Refresh your browser to see file state.");
-                }
-            }
-
-            foreach (var agreement in toBeDeleted)
-            {
-                var agreementStatus = Enum.Parse<AgreementStatusTypes>(agreement.AgreementStatusTypeCode);
-                if (!_statusSolver.CanEditOrDeleteAgreement(currentAcquisitionStatus, agreementStatus) && !_user.HasPermission(Permissions.SystemAdmin))
-                {
-                    throw new BusinessRuleViolationException("The file you are editing is not active or draft, so you cannot save changes. Refresh your browser to see file state.");
-                }
-            }
-
-            var updatedAgreements = _agreementRepository.UpdateAllForAcquisition(acquisitionFileId, agreements);
+            bool deleteResult = _agreementRepository.TryDeleteAgreement(acquisitionFileId, agreementId);
             _agreementRepository.CommitTransaction();
 
-            return updatedAgreements;
+            return deleteResult;
         }
 
         public IEnumerable<PimsInterestHolder> GetInterestHolders(long id)
@@ -692,6 +710,17 @@ namespace Pims.Api.Services
             {
                 throw new BusinessRuleViolationException("You cannot complete a file when there are one or more draft agreements, or one or more draft compensations requisitions." +
                     "\n\nRemove any draft compensations requisitions. Agreements should be set to final, cancelled, or removed.");
+            }
+        }
+
+        private void ValidateAcquisitionFileStatus(long acquisitionFileId, string agreementCurrentStatusTypeCode)
+        {
+            var currentAcquisitionStatus = GetCurrentAcquisitionStatus(acquisitionFileId);
+            var agreementStatus = Enum.Parse<AgreementStatusTypes>(agreementCurrentStatusTypeCode);
+
+            if (!_statusSolver.CanEditOrDeleteAgreement(currentAcquisitionStatus, agreementStatus) && !_user.HasPermission(Permissions.SystemAdmin))
+            {
+                throw new BusinessRuleViolationException("The file you are editing is not active or draft, so you cannot save changes. Refresh your browser to see file state.");
             }
         }
 
