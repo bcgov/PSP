@@ -151,7 +151,7 @@ public partial class PimsPropertyLocationVw
     public string Zoning { get; set; }
 
     [Column("ZONING_POTENTIAL")]
-    [StringLength(50)]
+    [StringLength(100)]
     public string ZoningPotential { get; set; }
 
     [Column("IS_PAYABLE_LEASE")]
