@@ -38,8 +38,6 @@ const ownershipFilterOptions: MultiSelectOption[] = [
   { id: 'isDisposed', text: 'Disposed' },
 ];
 
-//interface SortParams {}
-
 const PropertyListView: React.FC<React.PropsWithChildren<unknown>> = () => {
   const { getByType } = useLookupCodeHelpers();
   const tableFormRef = useRef<
