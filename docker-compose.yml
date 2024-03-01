@@ -102,6 +102,10 @@ services:
       - TZ=UTC
     volumes:
       - ./tools/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./tools/prometheus/alert-rules.yml:/etc/prometheus/alert-rules.yml
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--web.enable-lifecycle"
 
   grafana:
     image: grafana/grafana-oss
