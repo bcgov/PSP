@@ -8,5 +8,7 @@ namespace Pims.Api.Services
         IList<PimsPropertyOperation> GetOperationsForProperty(long propertyId);
 
         IEnumerable<PimsPropertyOperation> SubdivideProperty(IEnumerable<PimsPropertyOperation> operations);
+
+        IEnumerable<PimsPropertyOperation> ConsolidateProperty(IEnumerable<PimsPropertyOperation> operations);
     }
 }
