@@ -1,0 +1,24 @@
+name: 'Test Action'
+description: 'Greet someone'
+inputs:
+  my_param:
+    description: 'My parameter for testing stuff'
+    required: true
+    default: 'Hello there!'
+outputs:
+  random-number:
+    description: "Random number"
+    value: ${{ steps.random-number-generator.outputs.random-number }}
+runs:
+  using: 'composite'
+  steps:
+    - name: First Step
+      run: echo 'This is the first step with param :$INPUT_MY_PARAM:}}'
+      shell: bash
+      env:
+        INPUT_MY_PARAM: ${{ inputs.my_param }}
+
+    - name: Second Step
+      run: echo 'random-number=$(echo $RANDOM)' >> $GITHUB_OUTPUT
+      shell: bash
+

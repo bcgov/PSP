@@ -1,0 +1,47 @@
+
+name: Testing Workflow
+env:
+  OPENSHIFT_SERVER: ${{ secrets.OPENSHIFT_SERVER }}
+  # service account: gitaction
+  OPENSHIFT_TOKEN: ${{ secrets.OPENSHIFT_TOKEN }}
+  OPENSHIFT_TOOLS_NAMESPACE: "3cd915-tools"
+  MS_TEAMS_WEBHOOK_BUILD_CHANNEL: ${{ secrets.MS_TEAMS_WEBHOOK_URI_BUILD_CHANNEL }}
+  AUTH__KEYCLOAK__SECRET: ${{ secrets.KEYCLOAK_SECRET }}
+  AUTH__KEYCLOAK__SERVICEACCOUNT__SECRET: ${{ secrets.KEYCLOAK_SERVICEACCOUNT_SECRET }}
+  sync-directory: ./tools/keycloak/sync
+  ASPNETCORE_ENVIRONMENT: "Development"
+
+  ## variables for scripts under git\openshift\4.0\scripts\oc-*.sh
+  APP_PORT: 8080
+  DESTINATION: "dev"
+  OC_JOB_NAME: "dev"
+  GIT_URL: "${{github.server_url}}/${{github.repository}}"
+  GIT_BRANCH: "${{github.ref}}"
+  APP_NAME: "pims"
+  PROJ_PREFIX: "3cd915"
+  PROJ_TOOLS: "3cd915-tools"
+  PROJ_DEV: "dev"
+  PROJ_TEST: "test"
+  PROJ_PROD: "prod"
+  TAG_DEV: "dev"
+  TAG_TEST: "test"
+  TAG_PROD: "prod"
+
+on: [push]
+
+jobs:
+  job_a:
+    runs-on: ubuntu-latest
+    name: A job to say hello
+    steps:
+      - uses: actions/checkout@v4
+      - id: foo
+      - uses: actions/action_a@v1
+        with:
+          my_param: 'Hello from parent'
+      - run: echo random-number "$RANDOM_NUMBER"
+        shell: bash
+        env:
+          RANDOM_NUMBER: ${{ steps.foo.outputs.random-number }}
+
+
