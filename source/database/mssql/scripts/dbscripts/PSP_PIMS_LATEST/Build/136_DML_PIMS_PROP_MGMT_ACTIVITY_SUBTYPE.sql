@@ -3,7 +3,8 @@ Populate the PIMS_PROP_MGMT_ACTIVITY_SUBTYPE table.
 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
 Author        Date         Comment
 ------------  -----------  -----------------------------------------------------
-Doug Filteau  2023-Sep-11  Initial version
+Doug Filteau  2023-Sep-11  Initial version.
+Doug Filteau  2024-Feb-26  Added UTILITYBILL and TAXESLEVIES.
 ----------------------------------------------------------------------------- */
 
 DELETE FROM PIMS_PROP_MGMT_ACTIVITY_SUBTYPE
@@ -59,5 +60,15 @@ VALUES
   (N'APPLICPERMIT',  N'AGRILANDRES',      N'Agricultural Land Reserves (ALR)'),
   (N'APPLICPERMIT',  N'DEVELOPMENT',      N'Development'),
   (N'APPLICPERMIT',  N'SUBDIVISION',      N'Sub-Division'),
-  (N'APPLICPERMIT',  N'PERMITS',          N'Permits');
+  (N'APPLICPERMIT',  N'PERMITS',          N'Permits'),
+  
+  (N'UTILITYBILL',   N'ELECTRICITYBILL',  N'Electricity'),
+  (N'UTILITYBILL',   N'GASBILL',          N'Gas'),
+  (N'UTILITYBILL',   N'INTERNETBILL',     N'Internet'),
+  (N'UTILITYBILL',   N'SEWERWATERBILL',   N'Sewer and Water'),
+  (N'UTILITYBILL',   N'TELEPHONEBILL',    N'Telephone'),
+  
+  (N'TAXESLEVIES',   N'MUNIPROPTAX',      N'Municipal property taxes'),
+  (N'TAXESLEVIES',   N'WATERTAX',         N'Water'),
+  (N'TAXESLEVIES',   N'OTHERTAX',         N'Other');
 GO
