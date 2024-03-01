@@ -464,7 +464,7 @@ namespace Pims.Api.Services
             return dispositionFiles
                 .Select(file => new DispositionFileExportModel
                 {
-                    FileNumber = file.FileNumber ?? string.Empty,
+                    FileNumber = file.FileNumber != null ? $"D-{file.FileNumber}" : string.Empty,
                     ReferenceNumber = file.FileReference ?? string.Empty,
                     FileName = file.FileName ?? string.Empty,
                     DispositionType = file.DispositionTypeCodeNavigation?.Description ?? string.Empty,

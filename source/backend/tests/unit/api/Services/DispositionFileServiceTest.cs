@@ -2258,7 +2258,7 @@ namespace Pims.Api.Test.Services
             Assert.NotNull(result);
             Assert.Equal(1, result.Count());
             Assert.Equal("1234 St BC desc V9V9V9", result[0].CivicAddress);
-            Assert.Equal("10-25-2023", result[0].FileNumber);
+            Assert.Equal("D-10-25-2023", result[0].FileNumber);
             Assert.Equal("8000|9000", result[0].Pid);
             dispFilerepository.Verify(x => x.GetDispositionFileExportDeep(It.IsAny<DispositionFilter>()), Times.Once);
         }
