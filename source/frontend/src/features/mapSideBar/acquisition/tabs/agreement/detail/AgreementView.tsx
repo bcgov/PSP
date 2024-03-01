@@ -1,148 +1,224 @@
 import * as React from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { FaMailBulk } from 'react-icons/fa';
+import { FaMailBulk, FaPlus, FaTrash } from 'react-icons/fa';
+import { useHistory, useRouteMatch } from 'react-router-dom';
 import styled from 'styled-components';
 
+import { StyledRemoveLinkButton } from '@/components/common/buttons/RemoveButton';
 import EditButton from '@/components/common/EditButton';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
-import { StyledEditWrapper, StyledSummarySection } from '@/components/common/Section/SectionStyles';
+import { StyledSummarySection } from '@/components/common/Section/SectionStyles';
+import { SectionListHeader } from '@/components/common/SectionListHeader';
 import { StyledAddButton } from '@/components/common/styles';
+import TooltipIcon from '@/components/common/TooltipIcon';
 import Claims from '@/constants/claims';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
 import { ApiGen_CodeTypes_AgreementStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_AgreementStatusTypes';
+import { ApiGen_CodeTypes_AgreementTypes } from '@/models/api/generated/ApiGen_CodeTypes_AgreementTypes';
 import { ApiGen_Concepts_Agreement } from '@/models/api/generated/ApiGen_Concepts_Agreement';
-import { formatMoney, prettyFormatDate } from '@/utils';
+import { exists, formatMoney, prettyFormatDate } from '@/utils';
 
-import { StyledSectionSubheader } from '../styles';
+import { cannotEditMessage } from '../../../common/constants';
+import StatusUpdateSolver from '../../fileDetails/detail/statusUpdateSolver';
 
 export interface IAgreementViewProps {
   loading: boolean;
   agreements: ApiGen_Concepts_Agreement[];
-  onEdit: () => void;
+  statusUpdateSolver: StatusUpdateSolver;
   onGenerate: (agreement: ApiGen_Concepts_Agreement) => void;
+  onDelete: (agreementId: number) => void;
 }
 
 export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
   loading,
   agreements,
-  onEdit,
+  statusUpdateSolver,
   onGenerate,
+  onDelete,
 }) => {
   const keycloak = useKeycloakWrapper();
-  const H0074Type = 'H0074';
+  const history = useHistory();
+  const match = useRouteMatch();
+  const { setModalContent, setDisplayModal } = useModalContext();
 
   return (
     <StyledSummarySection>
       <LoadingBackdrop show={loading} parentScreen={true} />
-      <StyledEditWrapper className="mr-3 my-1">
-        {keycloak.hasClaim(Claims.ACQUISITION_EDIT) ? (
-          <EditButton title="Edit agreements file" onClick={onEdit} />
-        ) : null}
-      </StyledEditWrapper>
-      {agreements.length === 0 && (
-        <StyledNoData>
-          <p>There are no agreements associated with this file.</p>
-          <p> To begin an agreement, click the edit button.</p>
-        </StyledNoData>
-      )}
-      {agreements.map((agreement, index) => (
-        <Section
-          key={`agreement-section-${index}`}
-          header={
-            <Row>
-              <Col md={6}>{`Agreement ${index + 1}`}</Col>
-              <Col md={6} style={{ paddingRight: '0px' }}>
-                {agreement.agreementType !== null && (
-                  <StyledButtonContainer>
-                    <StyledAddButton
-                      onClick={() => {
-                        onGenerate(agreement);
-                      }}
-                    >
-                      <FaMailBulk className="mr-2" />
-                      Generate document
-                    </StyledAddButton>
-                  </StyledButtonContainer>
-                )}
-              </Col>
-            </Row>
-          }
-          isCollapsable
-          initiallyExpanded
-        >
-          <StyledSectionSubheader>Agreement details</StyledSectionSubheader>
-          <SectionField labelWidth="5" label="Agreement status">
-            {agreement.agreementStatusType?.description ?? ''}
-          </SectionField>
-          {agreement.agreementStatusType?.id ===
-            ApiGen_CodeTypes_AgreementStatusTypes.CANCELLED && (
-            <SectionField labelWidth="5" label="Cancellation reason">
-              {agreement.cancellationNote ?? ''}
-            </SectionField>
-          )}
-          <SectionField labelWidth="5" label="Legal survey plan">
-            {agreement.legalSurveyPlanNum}
-          </SectionField>
-          <SectionField labelWidth="5" label="Agreement type">
-            {agreement.agreementType?.description}
-          </SectionField>
-          <SectionField labelWidth="5" label="Agreement date">
-            {prettyFormatDate(agreement.agreementDate)}
-          </SectionField>
-          {agreement.agreementType?.id === H0074Type && (
-            <SectionField labelWidth="5" label="Commencement date">
-              {prettyFormatDate(agreement.commencementDate)}
-            </SectionField>
-          )}
-          <SectionField labelWidth="5" label="Completion date">
-            {prettyFormatDate(agreement.completionDate)}
-          </SectionField>
-          <SectionField labelWidth="5" label="Termination date">
-            {prettyFormatDate(agreement.terminationDate)}
-          </SectionField>
-          <SectionField labelWidth="5" label="Possession date">
-            {prettyFormatDate(agreement.possessionDate)}
-          </SectionField>
 
-          <StyledSectionSubheader>Financial</StyledSectionSubheader>
-          <SectionField labelWidth="5" label="Purchase price">
-            {formatMoney(agreement.purchasePrice)}
-          </SectionField>
-          <SectionField
-            labelWidth="5"
-            label="Deposit due no later than"
-            tooltip="Generally, if applicable, this is number of days from the execution of the agreement."
-          >
-            {agreement.noLaterThanDays ? (
-              <span>
-                {agreement.noLaterThanDays} <strong>days</strong>
-              </span>
-            ) : (
-              ''
-            )}
-          </SectionField>
-          <SectionField labelWidth="5" label="Deposit amount">
-            {formatMoney(agreement.depositAmount)}
-          </SectionField>
-        </Section>
-      ))}
+      <Section
+        header={
+          <SectionListHeader
+            claims={[Claims.ACQUISITION_EDIT]}
+            title="Agreements"
+            addButtonText="Add Agreement"
+            addButtonIcon={<FaPlus size={'2rem'} />}
+            onAdd={() => {
+              history.push(`${match.url}/add`);
+            }}
+          />
+        }
+      >
+        {agreements.map((agreement, index) => (
+          <StyledAgreementBorder key={`agreement-section-${index}`}>
+            <Section
+              header={
+                <Row>
+                  <Col md={5}>{`Agreement ${++index}`}</Col>
+                  <Col md={7}>
+                    {exists(agreement.agreementType) && (
+                      <StyledButtonContainer>
+                        <StyledAddButton
+                          onClick={() => {
+                            onGenerate(agreement);
+                          }}
+                        >
+                          <FaMailBulk className="mr-2" />
+                          Generate
+                        </StyledAddButton>
+
+                        {!statusUpdateSolver.canEditOrDeleteAgreement(
+                          agreement.agreementStatusType?.id ?? null,
+                        ) && (
+                          <TooltipIcon
+                            toolTipId={`${agreement?.agreementId}-agreement-cannot-edit-tooltip`}
+                            toolTip={cannotEditMessage}
+                          />
+                        )}
+
+                        {statusUpdateSolver.canEditOrDeleteAgreement(
+                          agreement.agreementStatusType?.id ?? null,
+                        ) &&
+                          keycloak.hasClaim(Claims.ACQUISITION_EDIT) && (
+                            <>
+                              <EditButton
+                                title="Edit Agreement"
+                                dataTestId={`agreements[${index}].edit-btn`}
+                                onClick={() =>
+                                  history.push(`${match.url}/${agreement.agreementId}/update`)
+                                }
+                              />
+                              <StyledRemoveLinkButton
+                                title="Delete Agreement"
+                                data-testid={`agreements[${index}].delete-btn`}
+                                variant="light"
+                                onClick={() => {
+                                  setModalContent({
+                                    ...getDeleteModalProps(),
+                                    variant: 'error',
+                                    title: 'Delete Agreement',
+                                    message: `You have selected to delete this Agreement.
+                                        Do you want to proceed?`,
+                                    okButtonText: 'Yes',
+                                    cancelButtonText: 'No',
+                                    handleOk: async () => {
+                                      agreement.agreementId && onDelete(agreement.agreementId);
+                                      setDisplayModal(false);
+                                    },
+                                    handleCancel: () => {
+                                      setDisplayModal(false);
+                                    },
+                                  });
+                                  setDisplayModal(true);
+                                }}
+                              >
+                                <FaTrash size="2rem" />
+                              </StyledRemoveLinkButton>
+                            </>
+                          )}
+                      </StyledButtonContainer>
+                    )}
+                  </Col>
+                </Row>
+              }
+              isCollapsable
+              initiallyExpanded
+            >
+              <SectionField labelWidth="5" label="Agreement status">
+                {agreement.agreementStatusType?.description ?? ''}
+              </SectionField>
+              {agreement.agreementStatusType?.id ===
+                ApiGen_CodeTypes_AgreementStatusTypes.CANCELLED && (
+                <SectionField labelWidth="5" label="Cancellation reason">
+                  {agreement.cancellationNote ?? ''}
+                </SectionField>
+              )}
+              <SectionField labelWidth="5" label="Legal survey plan">
+                {agreement.legalSurveyPlanNum}
+              </SectionField>
+              <SectionField labelWidth="5" label="Agreement type">
+                {agreement.agreementType?.description}
+              </SectionField>
+              <SectionField labelWidth="5" label="Agreement date">
+                {prettyFormatDate(agreement.agreementDate)}
+              </SectionField>
+              {agreement.agreementType?.id === ApiGen_CodeTypes_AgreementTypes.H0074 && (
+                <SectionField labelWidth="5" label="Commencement date">
+                  {prettyFormatDate(agreement.commencementDate)}
+                </SectionField>
+              )}
+              <SectionField labelWidth="5" label="Completion date">
+                {prettyFormatDate(agreement.completionDate)}
+              </SectionField>
+              <SectionField labelWidth="5" label="Termination date">
+                {prettyFormatDate(agreement.terminationDate)}
+              </SectionField>
+              <SectionField labelWidth="5" label="Possession date">
+                {prettyFormatDate(agreement.possessionDate)}
+              </SectionField>
+
+              <StyledAgreementSubheader>Financial</StyledAgreementSubheader>
+              <SectionField labelWidth="5" label="Purchase price">
+                {formatMoney(agreement.purchasePrice)}
+              </SectionField>
+              <SectionField
+                labelWidth="5"
+                label="Deposit due no later than"
+                tooltip="Generally, if applicable, this is number of days from the execution of the agreement."
+              >
+                {agreement.noLaterThanDays ? (
+                  <span>
+                    {agreement.noLaterThanDays} <strong>days</strong>
+                  </span>
+                ) : (
+                  ''
+                )}
+              </SectionField>
+              <SectionField labelWidth="5" label="Deposit amount">
+                {formatMoney(agreement.depositAmount)}
+              </SectionField>
+            </Section>
+          </StyledAgreementBorder>
+        ))}
+        {agreements.length === 0 && (
+          <p>There are no agreements indicated in this acquisition file.</p>
+        )}
+      </Section>
     </StyledSummarySection>
   );
 };
 
 export default AgreementView;
 
-export const StyledNoData = styled.div`
-  font-style: italic;
-  margin: 1.5rem;
-  padding: 1rem;
-  background-color: white;
-  text-align: left;
+export const StyledButtonContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 0.5rem;
+`;
+
+const StyledAgreementBorder = styled.div`
+  border: solid 0.2rem ${props => props.theme.css.discardedColor};
+  margin-bottom: 1.5rem;
   border-radius: 0.5rem;
 `;
 
-export const StyledButtonContainer = styled.div`
-  float: right;
+export const StyledAgreementSubheader = styled.div`
+  font-weight: bold;
+  border-bottom: 0.2rem ${props => props.theme.css.discardedColor} solid;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
 `;

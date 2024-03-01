@@ -29,10 +29,10 @@ import { FileTabType } from '../shared/detail/FileTabs';
 import SidebarFooter from '../shared/SidebarFooter';
 import UpdateProperties from '../shared/update/properties/UpdateProperties';
 import { AcquisitionContainerState } from './AcquisitionContainer';
+import { isAcquisitionFile } from './add/models';
 import AcquisitionHeader from './common/AcquisitionHeader';
 import AcquisitionMenu from './common/AcquisitionMenu';
 import { AcquisitionRouter } from './router/AcquisitionRouter';
-import { isAcquisitionFile } from './tabs/agreement/update/models';
 
 export interface IAcquisitionViewProps {
   onClose: (() => void) | undefined;
