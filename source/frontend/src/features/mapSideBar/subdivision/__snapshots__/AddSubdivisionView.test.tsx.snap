@@ -276,7 +276,7 @@ exports[`Add Subdivision View matches snapshot 1`] = `
                 <div
                   class="col"
                 >
-                  Selected Children
+                  Selected Parent
                 </div>
               </div>
             </h2>
