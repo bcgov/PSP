@@ -247,9 +247,14 @@ namespace Pims.Api.Services
 
             _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, acquisitionFile.Internal_Id);
             ValidateVersion(acquisitionFile.Internal_Id, acquisitionFile.ConcurrencyControlNumber);
-            ValidateDrafts(acquisitionFile);
 
             AcquisitionStatusTypes? currentAcquisitionStatus = GetCurrentAcquisitionStatus(acquisitionFile.Internal_Id);
+
+            if (currentAcquisitionStatus != AcquisitionStatusTypes.COMPLT && acquisitionFile.AcquisitionFileStatusTypeCode == AcquisitionStatusTypes.COMPLT.ToString())
+            {
+                ValidateDrafts(acquisitionFile);
+            }
+
             if (!_statusSolver.CanEditDetails(currentAcquisitionStatus) && !_user.HasPermission(Permissions.SystemAdmin))
             {
                 throw new BusinessRuleViolationException("The file you are editing is not active or draft, so you cannot save changes. Refresh your browser to see file state.");
@@ -260,7 +265,7 @@ namespace Pims.Api.Services
                 ValidateMinistryRegion(acquisitionFile.Internal_Id, acquisitionFile.RegionCode);
             }
 
-            if (acquisitionFile.AcquisitionFileStatusTypeCode == "COMPLT")
+            if (acquisitionFile.AcquisitionFileStatusTypeCode == AcquisitionStatusTypes.COMPLT.ToString())
             {
                 TransferPropertiesOfInterest(acquisitionFile, userOverrides.Contains(UserOverrideCode.PoiToInventory));
             }
@@ -705,11 +710,16 @@ namespace Pims.Api.Services
         {
             var agreements = _agreementRepository.GetAgreementsByAcquisitionFile(incomingFile.AcquisitionFileId);
             var compensations = _compensationRequisitionRepository.GetAllByAcquisitionFileId(incomingFile.AcquisitionFileId);
-            if (incomingFile.AcquisitionFileStatusTypeCode == nameof(AcquisitionStatusTypes.COMPLT) &&
-                (agreements.Any(a => a?.AgreementStatusTypeCode == "DRAFT") || compensations.Any(c => c.IsDraft.HasValue && c.IsDraft.Value)))
+            if (agreements.Any(a => a?.AgreementStatusTypeCode == AgreementStatusTypes.DRAFT.ToString()) || compensations.Any(c => c.IsDraft.HasValue && c.IsDraft.Value))
             {
                 throw new BusinessRuleViolationException("You cannot complete a file when there are one or more draft agreements, or one or more draft compensations requisitions." +
                     "\n\nRemove any draft compensations requisitions. Agreements should be set to final, cancelled, or removed.");
+            }
+
+            var takes = _takeRepository.GetAllByAcquisitionFileId(incomingFile.AcquisitionFileId);
+            if (takes.Any(t => t.TakeStatusTypeCode == AcquisitionTakeStatusTypes.INPROGRESS.ToString()))
+            {
+                throw new BusinessRuleViolationException("Please ensure all in-progress property takes have been completed or canceled before completing an Acquisition File.");
             }
         }
 
