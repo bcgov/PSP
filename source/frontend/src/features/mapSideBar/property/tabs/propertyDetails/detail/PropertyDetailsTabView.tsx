@@ -13,6 +13,7 @@ import {
   StyledSubtleText,
   StyledSummarySection,
 } from '@/components/common/Section/SectionStyles';
+import TooltipIcon from '@/components/common/TooltipIcon';
 import AreaContainer from '@/components/measurements/AreaContainer';
 import VolumeContainer from '@/components/measurements/VolumeContainer';
 import * as API from '@/constants/API';
@@ -63,11 +64,18 @@ export const PropertyDetailsTabView: React.FunctionComponent<IPropertyDetailsTab
 
   const isVolumetricParcel = stringToBoolean(property?.isVolumetricParcel || '');
 
+  const canEditDetails = (property?: IPropertyDetailsForm) => {
+    if (exists(property) && property.isRetired) {
+      return false;
+    }
+    return true;
+  };
+
   return (
     <StyledSummarySection>
       <LoadingBackdrop show={loading} parentScreen={true} />
       <StyledEditWrapper className="mr-3 my-1">
-        {hasClaim(Claims.PROPERTY_EDIT) && (
+        {hasClaim(Claims.PROPERTY_EDIT) && canEditDetails() ? (
           <EditButton
             title="Edit property details"
             onClick={() => {
@@ -75,7 +83,13 @@ export const PropertyDetailsTabView: React.FunctionComponent<IPropertyDetailsTab
               history.push({ search: query.toString() });
             }}
           />
-        )}
+        ) : null}
+        {!canEditDetails() ? (
+          <TooltipIcon
+            toolTipId={`${property?.id || 0}-summary-cannot-edit-tooltip`}
+            toolTip="Retired records are referenced for historical purposes only and cannot be edited or deleted."
+          />
+        ) : null}
       </StyledEditWrapper>
       <Section header="Property Address">
         {exists(address) ? (
