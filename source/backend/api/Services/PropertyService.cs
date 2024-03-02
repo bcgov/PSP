@@ -9,6 +9,7 @@ using Pims.Api.Constants;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Models.CodeTypes;
 using Pims.Api.Models.Concepts.Property;
+using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 using Pims.Dal.Exceptions;
@@ -102,6 +103,12 @@ namespace Pims.Api.Services
         {
             _logger.LogInformation("Updating property...");
             _user.ThrowIfNotAuthorized(Permissions.PropertyEdit);
+
+            var existingProperty = GetById(property.Internal_Id);
+            if (existingProperty.IsRetired.HasValue && existingProperty.IsRetired.Value)
+            {
+                throw new BusinessRuleViolationException("Retired records are referenced for historical purposes only and cannot be edited or deleted.");
+            }
 
             // convert spatial location from lat/long (4326) to BC Albers (3005) for database storage
             var geom = property.Location;

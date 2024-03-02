@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using NetTopologySuite.Geometries;
+using Pims.Api.Models.CodeTypes;
 using Pims.Dal;
 using Pims.Dal.Entities;
 using Entity = Pims.Dal.Entities;
@@ -38,7 +39,7 @@ namespace Pims.Core.Test
                 PropertyId = pid,
                 Pin = pin,
                 ConcurrencyControlNumber = 1,
-                Location = new NetTopologySuite.Geometries.Point(0, 0),
+                Location = new NetTopologySuite.Geometries.Point(0, 0) { SRID = SpatialReference.BCALBERS },
                 SurplusDeclarationTypeCode = "SURPLUS",
             };
             if (lease != null)
