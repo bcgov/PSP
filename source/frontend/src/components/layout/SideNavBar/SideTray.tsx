@@ -10,6 +10,7 @@ import { ContactTray } from './ContactTray';
 import { DispositionTray } from './DispositionTray';
 import { ProjectTray } from './ProjectTray';
 import * as Styled from './styles';
+import { SubdivisionConsolidationTray } from './SubdCons';
 
 export enum SidebarContextType {
   ADMIN = 'admin',
@@ -19,6 +20,7 @@ export enum SidebarContextType {
   CONTACT = 'contact',
   ACQUISITION = 'acquisition',
   DISPOSITION = 'disposition',
+  SUBDCONS = 'subdivision-consolidation',
 }
 
 interface ISideTrayProps {
@@ -48,6 +50,7 @@ export const SideTray = ({ context, setContext }: ISideTrayProps) => {
     [SidebarContextType.ACQUISITION, <AcquisitionTray onLinkClick={handleFileSet} />],
     [SidebarContextType.PROJECT, <ProjectTray onLinkClick={() => setShow(false)} />],
     [SidebarContextType.DISPOSITION, <DispositionTray onLinkClick={handleFileSet} />],
+    [SidebarContextType.SUBDCONS, <SubdivisionConsolidationTray onLinkClick={handleFileSet} />],
   ]);
 
   useEffect(() => {
