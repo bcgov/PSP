@@ -11,9 +11,10 @@ import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { ILookupCode } from '@/store/slices/lookupCodes';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { cleanup, render, RenderOptions, waitFor } from '@/utils/test-utils';
+import { act, cleanup, focusOptionMultiselect, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
-import PropertyListView from './PropertyListView';
+import PropertyListView, { ownershipFilterOptions } from './PropertyListView';
+import { MultiSelectOption } from '@/features/acquisition/list/interfaces';
 
 // Set all module functions to jest.fn
 jest.mock('@react-keycloak/web');
@@ -144,5 +145,67 @@ describe('Property list view', () => {
 
     expect(getByTestId('view-prop-tab')).toBeInTheDocument();
     expect(getByTestId('view-prop-ext')).toBeInTheDocument();
+  });
+
+  it('preselects default property ownership state', async () => {
+    setupMockApi([mockApiProperty]);
+    const {
+      component: { getByText },
+      findSpinner,
+    } = setup({});
+
+    // wait for table to finish loading
+    await waitFor(async () => expect(findSpinner()).not.toBeInTheDocument());
+
+    expect(getByText('Core Inventory')).toBeInTheDocument();
+    expect(getByText('Property Of Interest')).toBeInTheDocument();
+    expect(getByText('Disposed')).toBeInTheDocument();
+  });
+
+  it('allows property ownership to be selected', async () => {
+    setupMockApi([mockApiProperty]);
+    const {
+      component: { container },
+      findSpinner,
+    } = setup({});
+
+    // wait for table to finish loading
+    await waitFor(async () => expect(findSpinner()).not.toBeInTheDocument());
+
+    const optionSelected = ownershipFilterOptions.find(o => o.id === 'isDisposed') as MultiSelectOption;
+
+    // click on the multi-select to show drop-down list
+    act(() => userEvent.click(container.querySelector(`#properties-selector`) as HTMLInputElement));
+  
+    // select an option from the drop-down
+    focusOptionMultiselect(container, optionSelected, ownershipFilterOptions);
+
+    await(waitFor(()=>{
+      expect(mockApiGetPropertiesPagedApi).toHaveBeenCalledWith({
+        "address": "",
+        "latitude": "",
+        "longitude": "",
+        "ownership": "isCoreInventory,isPropertyOfInterest,isOtherInterest,isDisposed",
+        "page": 1,
+        "pinOrPid": "",
+        "planNumber": "",
+        "quantity": 10,
+        "searchBy": "pinOrPid",
+        "sort": undefined,
+      });
+    }))
+  });
+
+  it('displays a tooltip beside properties that are retired', async () => {
+    setupMockApi([{...mockApiProperty, isRetired: true}]);
+    const {
+      component: { getByTestId },
+      findSpinner,
+    } = setup({});
+
+    // wait for table to finish loading
+    await waitFor(async () => expect(findSpinner()).not.toBeInTheDocument());
+
+    expect(getByTestId('tooltip-icon-retired-tooltip')).toBeVisible();
   });
 });
