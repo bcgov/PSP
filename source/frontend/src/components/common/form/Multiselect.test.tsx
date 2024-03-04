@@ -2,7 +2,13 @@ import { act } from '@testing-library/react';
 import { Formik } from 'formik';
 import noop from 'lodash/noop';
 
-import { focusOptionMultiselect, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
+import {
+  focusOptionMultiselect,
+  render,
+  RenderOptions,
+  userEvent,
+  waitFor,
+} from '@/utils/test-utils';
 
 import { IMultiselectProps, Multiselect } from './Multiselect';
 
@@ -84,7 +90,7 @@ describe('Multiselect component', () => {
     });
 
     // click on the multi-select to show drop-down list
-    await waitFor(async ()=> {
+    await waitFor(async () => {
       act(() => userEvent.click(getInput()));
     });
 

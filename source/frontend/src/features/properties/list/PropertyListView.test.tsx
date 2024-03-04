@@ -11,7 +11,15 @@ import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { ILookupCode } from '@/store/slices/lookupCodes';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { act, cleanup, focusOptionMultiselect, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
+import {
+  act,
+  cleanup,
+  focusOptionMultiselect,
+  render,
+  RenderOptions,
+  userEvent,
+  waitFor,
+} from '@/utils/test-utils';
 
 import PropertyListView, { ownershipFilterOptions } from './PropertyListView';
 import { MultiSelectOption } from '@/features/acquisition/list/interfaces';
@@ -172,32 +180,34 @@ describe('Property list view', () => {
     // wait for table to finish loading
     await waitFor(async () => expect(findSpinner()).not.toBeInTheDocument());
 
-    const optionSelected = ownershipFilterOptions.find(o => o.id === 'isDisposed') as MultiSelectOption;
+    const optionSelected = ownershipFilterOptions.find(
+      o => o.id === 'isDisposed',
+    ) as MultiSelectOption;
 
     // click on the multi-select to show drop-down list
     act(() => userEvent.click(container.querySelector(`#properties-selector`) as HTMLInputElement));
-  
+
     // select an option from the drop-down
     focusOptionMultiselect(container, optionSelected, ownershipFilterOptions);
 
-    await(waitFor(()=>{
+    await waitFor(() => {
       expect(mockApiGetPropertiesPagedApi).toHaveBeenCalledWith({
-        "address": "",
-        "latitude": "",
-        "longitude": "",
-        "ownership": "isCoreInventory,isPropertyOfInterest,isOtherInterest,isDisposed",
-        "page": 1,
-        "pinOrPid": "",
-        "planNumber": "",
-        "quantity": 10,
-        "searchBy": "pinOrPid",
-        "sort": undefined,
+        address: '',
+        latitude: '',
+        longitude: '',
+        ownership: 'isCoreInventory,isPropertyOfInterest,isOtherInterest,isDisposed',
+        page: 1,
+        pinOrPid: '',
+        planNumber: '',
+        quantity: 10,
+        searchBy: 'pinOrPid',
+        sort: undefined,
       });
-    }))
+    });
   });
 
   it('displays a tooltip beside properties that are retired', async () => {
-    setupMockApi([{...mockApiProperty, isRetired: true}]);
+    setupMockApi([{ ...mockApiProperty, isRetired: true }]);
     const {
       component: { getByTestId },
       findSpinner,
