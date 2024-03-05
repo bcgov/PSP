@@ -313,6 +313,7 @@ export const mapMachine = createMachine<MachineContext>({
   // Machine identifier
   id: 'map',
   initial: 'notMap',
+  predictableActionArguments: true,
 
   // Local context for entire machine
   context: {

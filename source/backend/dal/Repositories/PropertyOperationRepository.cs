@@ -41,6 +41,7 @@ namespace Pims.Dal.Repositories
 
         #region Methods
 
+        /// <summary>
         /// Retrieves the property operations for the given operation number.
         /// </summary>
         /// <param name="operationNumber"></param>
@@ -103,8 +104,6 @@ namespace Pims.Dal.Repositories
             using var scope = Logger.QueryScope();
             operations.ThrowIfNull(nameof(operations));
 
-            Context.PimsPropertyOperations.AddRange(operations);
-
             long operationNo = _sequenceRepository.GetNextSequenceValue(PROPERTYOPERATIONNOSEQUENCE);
             DateTime dateTime = DateTime.UtcNow;
 
@@ -113,6 +112,8 @@ namespace Pims.Dal.Repositories
                 operation.PropertyOperationNo = operationNo;
                 operation.OperationDt = dateTime;
             }
+
+            Context.PimsPropertyOperations.AddRange(operations);
             return operations;
         }
 

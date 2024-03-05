@@ -124,7 +124,7 @@ const AddSubdivisionView: React.FunctionComponent<
                   />
                 </Tab>
               </StyledTabView>
-              <Section header="Selected Children">
+              <Section header="Selected Parent">
                 <SelectedOperationPropertyHeader />
                 {values.sourceProperty?.pid && (
                   <SelectedOperationProperty
