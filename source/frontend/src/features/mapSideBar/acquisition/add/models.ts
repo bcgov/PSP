@@ -132,3 +132,6 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
     return newForm;
   }
 }
+
+export const isAcquisitionFile = (file: unknown): file is ApiGen_Concepts_AcquisitionFile =>
+  !!file && Object.prototype.hasOwnProperty.call(file, 'acquisitionTypeCode');

@@ -7,10 +7,11 @@ import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts
 import { UtcIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { exists, unique } from '@/utils';
 
-import { SubdivisionView } from './SubdivisionView';
+import { ISubdivisionViewProps } from './SubdivisionView';
 
-interface ISubdivisionContainer {
+export interface ISubdivisionContainerProps {
   propertyId: number;
+  View: React.FunctionComponent<ISubdivisionViewProps>;
 }
 
 interface OperationSet {
@@ -19,11 +20,10 @@ interface OperationSet {
   destinationProperties: ApiGen_Concepts_Property[];
 }
 
-export const SubdivisionContainer: React.FunctionComponent<ISubdivisionContainer> = ({
+export const SubdivisionContainer: React.FunctionComponent<ISubdivisionContainerProps> = ({
   propertyId,
+  View,
 }) => {
-  const View = SubdivisionView;
-
   const [operationDictionary, setOperationDictionary] = useState<Dictionary<OperationSet>>({});
 
   const { getPropertyWrapper } = usePimsPropertyRepository();
@@ -36,6 +36,7 @@ export const SubdivisionContainer: React.FunctionComponent<ISubdivisionContainer
     async (propertyId: number) => {
       const results = await getPropertyOperationsExecute(propertyId);
 
+      const newOperations: Dictionary<OperationSet> = {};
       if (exists(results)) {
         const resultGroup = groupBy(results, x => x.propertyOperationNo);
 
@@ -70,13 +71,12 @@ export const SubdivisionContainer: React.FunctionComponent<ISubdivisionContainer
             destinationProperties: retrievedDestinations.filter(exists) ?? [],
           };
 
-          operationDictionary[key] = operationSet;
-
-          setOperationDictionary(operationDictionary);
+          newOperations[key] = operationSet;
         }
+        setOperationDictionary({ ...newOperations });
       }
     },
-    [getPropertyExecute, getPropertyOperationsExecute, operationDictionary],
+    [getPropertyExecute, getPropertyOperationsExecute],
   );
 
   useEffect(() => {

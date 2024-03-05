@@ -480,6 +480,42 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
+        public void Update_Drafts_TakesInProgress_Violation()
+        {
+            // Arrange
+            var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit);
+
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+
+            var repository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
+            repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+
+            var agreementRepository = this._helper.GetService<Mock<IAgreementRepository>>();
+            agreementRepository.Setup(x => x.GetAgreementsByAcquisitionFile(It.IsAny<long>())).Returns(new List<PimsAgreement>() { });
+
+            var compReqRepository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
+            compReqRepository.Setup(x => x.GetAllByAcquisitionFileId(It.IsAny<long>())).Returns(new List<PimsCompensationRequisition>());
+
+            var takeRepository = this._helper.GetService<Mock<ITakeRepository>>();
+            takeRepository.Setup(x => x.GetAllByAcquisitionFileId(It.IsAny<long>())).Returns(new List<PimsTake>() { new PimsTake() { TakeStatusTypeCode = AcquisitionTakeStatusTypes.INPROGRESS.ToString() } });
+
+            // Act
+            var pimsAcquisitionUpdate = EntityHelper.CreateAcquisitionFile(acqFile.AcquisitionFileId, acqFile.FileName);
+            pimsAcquisitionUpdate.AcquisitionFileStatusTypeCode = AcquisitionStatusTypes.COMPLT.ToString();
+            pimsAcquisitionUpdate.AcquisitionFileStatusTypeCodeNavigation = null;
+
+            Action act = () => service.Update(pimsAcquisitionUpdate, new List<UserOverrideCode>());
+
+            // Assert
+            var exception = act.Should().Throw<BusinessRuleViolationException>();
+            exception.WithMessage("Please ensure all in-progress property takes have been completed or canceled before completing an Acquisition File.");
+        }
+
+        [Fact]
         public void Update_DraftsNotComplete_NoViolation()
         {
             // Arrange
@@ -2378,6 +2414,41 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
+        public void GetAgreementById_NoPermission()
+        {
+            // Arrange
+            var service = this.CreateAcquisitionServiceWithPermissions();
+
+            // Act
+            Action act = () => service.GetAgreementById(1, 10);
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+        }
+
+        [Fact]
+        public void GetAgreementById_NoPermission_IsContractor()
+        {
+            // Arrange
+            var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileView, Permissions.AgreementView);
+
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+
+            var repository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
+
+            var contractorUser = EntityHelper.CreateUser(1, Guid.NewGuid(), username: "Test", isContractor: true);
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
+
+            // Act
+            Action act = () => service.GetAgreementById(1, 10);
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+        }
+
+        [Fact]
         public void SearchAgreementsByAcquisitionFileId_Success()
         {
             // Arrange
@@ -2477,7 +2548,24 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
-        public void UpdateAgreementsByAcquisitionFileId_NoPermission_IsContractor()
+        public void UpdateAgreement_Should_Fail_NoPermission()
+        {
+            // Arrange
+            var service = this.CreateAcquisitionServiceWithPermissions();
+
+            // Act
+            Action act = () => service.UpdateAgreement(1, new()
+            {
+                AcquisitionFileId = 1,
+                AgreementId = 10,
+            });
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+        }
+
+        [Fact]
+        public void UpdateAgreement_NoPermission_IsContractor()
         {
             // Arrange
             var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileView, Permissions.AgreementView);
@@ -2492,7 +2580,42 @@ namespace Pims.Api.Test.Services
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
 
             // Act
-            Action act = () => service.UpdateAgreements(1, It.IsAny<List<PimsAgreement>>());
+            Action act = () => service.UpdateAgreement(1, It.IsAny<PimsAgreement>());
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+        }
+
+        [Fact]
+        public void DeleteAgreement_Fail_NoPermission()
+        {
+            // Arrange
+            var service = this.CreateAcquisitionServiceWithPermissions();
+
+            // Act
+            Action act = () => service.DeleteAgreement(1, 10);
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+        }
+
+        [Fact]
+        public void DeleteAgreement_Fail_NoPermission_IsContractor()
+        {
+            // Arrange
+            var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AgreementView);
+
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+
+            var repository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
+
+            var contractorUser = EntityHelper.CreateUser(1, Guid.NewGuid(), username: "Test", isContractor: true);
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
+
+            // Act
+            Action act = () => service.DeleteAgreement(1, 10);
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();

@@ -47,10 +47,10 @@ const AddSubdivisionContainer: React.FC<IAddSubdivisionContainerProps> = ({ onCl
           setDisplayModal(false);
         },
       });
+      setDisplayModal(true);
     } else {
       onClose?.();
     }
-    setDisplayModal(true);
   }, [onClose, setDisplayModal, setModalContent]);
 
   const initialForm = useMemo(() => {

@@ -13,11 +13,16 @@ const columns: ColumnWithProps<PropertySubdivisionResult>[] = [
     Header: 'Parent',
     accessor: 'isSource',
     align: 'center',
-    clickable: true,
     width: 5,
     maxWidth: 5,
     Cell: (props: CellProps<PropertySubdivisionResult>) => {
-      return props.row.original.isSource ? <FiCheck size="2rem" color="black" /> : <></>;
+      return props.row.original.isSource ? (
+        <span data-testid="isSource">
+          <FiCheck size="2rem" color="black" />
+        </span>
+      ) : (
+        <></>
+      );
     },
   },
   {
@@ -49,7 +54,6 @@ const columns: ColumnWithProps<PropertySubdivisionResult>[] = [
     Header: 'Status',
     accessor: 'status',
     align: 'left',
-    clickable: true,
     width: 10,
     maxWidth: 20,
     Cell: (props: CellProps<PropertySubdivisionResult>) => {
@@ -60,7 +64,6 @@ const columns: ColumnWithProps<PropertySubdivisionResult>[] = [
     Header: 'Area (sq m)',
     accessor: 'area',
     align: 'right',
-    clickable: true,
     width: 10,
     maxWidth: 20,
     Cell: (props: CellProps<PropertySubdivisionResult>) => {

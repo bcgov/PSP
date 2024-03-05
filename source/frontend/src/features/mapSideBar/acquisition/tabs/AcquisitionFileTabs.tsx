@@ -107,13 +107,7 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
 
   if (acquisitionFile?.id && hasClaim(Claims.AGREEMENT_VIEW)) {
     tabViews.push({
-      content: (
-        <AgreementContainer
-          acquisitionFileId={acquisitionFile.id}
-          View={AgreementView}
-          onEdit={() => setIsEditing(true)}
-        />
-      ),
+      content: <AgreementContainer acquisitionFileId={acquisitionFile.id} View={AgreementView} />,
       key: FileTabType.AGREEMENTS,
       name: 'Agreements',
     });
