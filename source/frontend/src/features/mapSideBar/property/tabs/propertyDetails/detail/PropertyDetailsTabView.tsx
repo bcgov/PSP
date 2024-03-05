@@ -75,7 +75,7 @@ export const PropertyDetailsTabView: React.FunctionComponent<IPropertyDetailsTab
     <StyledSummarySection>
       <LoadingBackdrop show={loading} parentScreen={true} />
       <StyledEditWrapper className="mr-3 my-1">
-        {hasClaim(Claims.PROPERTY_EDIT) && canEditDetails() ? (
+        {hasClaim(Claims.PROPERTY_EDIT) && canEditDetails(property) ? (
           <EditButton
             title="Edit property details"
             onClick={() => {
@@ -84,7 +84,7 @@ export const PropertyDetailsTabView: React.FunctionComponent<IPropertyDetailsTab
             }}
           />
         ) : null}
-        {!canEditDetails() ? (
+        {!canEditDetails(property) ? (
           <TooltipIcon
             toolTipId={`${property?.id || 0}-summary-cannot-edit-tooltip`}
             toolTip="Retired records are referenced for historical purposes only and cannot be edited or deleted."

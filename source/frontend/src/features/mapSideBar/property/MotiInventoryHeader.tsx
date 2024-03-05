@@ -1,11 +1,13 @@
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
+import { AiOutlineExclamationCircle } from 'react-icons/ai';
 import { FaSearchPlus } from 'react-icons/fa';
 import styled from 'styled-components';
 
 import { StyledIconButton } from '@/components/common/buttons';
 import { HeaderField } from '@/components/common/HeaderField/HeaderField';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
+import { InlineFlexDiv } from '@/components/common/styles';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
 import { IMapProperty } from '@/components/propertySelector/models';
 import { ComposedProperty } from '@/features/mapSideBar/property/ComposedProperty';
@@ -30,6 +32,14 @@ export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderPr
   }
 
   const isLoading = props.isLoading;
+
+  const isExpired = React.useMemo(() => {
+    if (exists(apiProperty) && apiProperty.isRetired) {
+      return true;
+    }
+    return false;
+  }, [apiProperty]);
+
   return (
     <>
       <LoadingBackdrop show={isLoading} parentScreen={true} />
@@ -63,6 +73,17 @@ export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderPr
               </HeaderField>
             </Col>
           </Row>
+          {isExpired && (
+            <Row className="no-gutters">
+              <Col xs="8"></Col>
+              <Col className="d-flex justify-content-end pr-4">
+                <ExpiredWarning>
+                  <AiOutlineExclamationCircle size={16} />
+                  &nbsp; EXPIRED
+                </ExpiredWarning>
+              </Col>
+            </Row>
+          )}
         </Col>
         <Col xs="auto" className="d-flex p-0 align-items-center justify-content-end">
           <TooltipWrapper tooltipId="property-zoom-map" tooltip="Zoom Map">
@@ -87,4 +108,17 @@ const StyledDivider = styled.div`
   border-bottom-style: solid;
   border-bottom-color: grey;
   border-bottom-width: 0.1rem;
+`;
+
+export const ExpiredWarning = styled(InlineFlexDiv)`
+  text-transform: uppercase;
+  color: ${props => props.theme.css.expiredColor};
+  background-color: ${props => props.theme.css.expiredBackgroundColor};
+  border-radius: 0.4rem;
+  letter-spacing: 0.1rem;
+  padding: 0.2rem 0.5rem;
+  font-family: 'BCSans-Bold';
+  font-size: 1.4rem;
+  align-items: center;
+  width: fit-content;
 `;
