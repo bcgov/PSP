@@ -53,7 +53,7 @@ Scenario: 08. Lease and License Notes
 	Then A new lease is created successfully
 
 Scenario: 09. Lease and License from Inventory Property Pin
-	Given I create a new Lease through a Property Pin from row number 4
+	Given I create a new Lease through a Property Pin from row number 6
 	Then A new lease is created successfully
 
 Scenario: 10. Lease and License List View

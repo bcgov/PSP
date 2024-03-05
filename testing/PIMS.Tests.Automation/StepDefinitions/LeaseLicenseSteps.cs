@@ -650,7 +650,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchLease.FilterLeasesFiles(lease.SearchProperties.PID, lease.LeaseExpiryDate, "",  lease.LeaseStatus);
             Assert.True(searchLease.SearchFoundResults());
 
-            searchLease.FilterLeasesFiles("", "", lease.LeaseTenants[0].Summary, "");
+            searchLease.FilterLeasesFiles("", "", "Progressive Motor Sports", "");
             Assert.True(searchLease.SearchFoundResults());
 
             searchLease.FilterLeasesFiles("003-549-551", "05/12/1987", "Jonathan Doe", "Discarded");
@@ -679,7 +679,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Verify List View
             searchLease.VerifySearchLeasesView();
-            searchLease.VerifyLeaseTableContent(lease.LeaseExpiryDate, lease.Program, lease.LeaseStatus);
+            searchLease.VerifyLeaseTableContent(lease);
             searchLease.Dispose();
 
         }

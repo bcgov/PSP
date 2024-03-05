@@ -14,32 +14,32 @@ Scenario: 02. Organization Contact
 	Then Expected Content is displayed on Contacts Table from contact type "Organization"
 
 Scenario: 03. Lease and License File Details
-	Given I create a new minimum Lease from row number 3
+	Given I create a new minimum Lease from row number 5
 	When  I add additional Information to the Lease Details
 	Then A new lease is created successfully
 
 Scenario: 04. Lease and License Tenants
-	Given I create a new minimum Lease from row number 3
+	Given I create a new minimum Lease from row number 5
 	When  I add Tenants to the Lease
 	Then A new lease is created successfully
 
 Scenario: 05. Lease and License Improvements
-	Given I create a new minimum Lease from row number 3
+	Given I create a new minimum Lease from row number 5
 	When  I add Improvements to the Lease
 	Then A new lease is created successfully
 
 Scenario: 06. Lease and License Insurance
-	Given I create a new minimum Lease from row number 3
+	Given I create a new minimum Lease from row number 5
 	When  I add Insurance to the Lease
 	Then A new lease is created successfully
 
 Scenario: 07. Lease and License Deposits
-	Given I create a new minimum Lease from row number 3
+	Given I create a new minimum Lease from row number 5
 	When  I add Deposits to the Lease
 	Then A new lease is created successfully
 
 Scenario: 08. Lease and License Payments
-	Given I create a new minimum Lease from row number 3
+	Given I create a new minimum Lease from row number 5
 	When  I add Payments to the Lease
 	Then A new lease is created successfully
 
