@@ -26,6 +26,7 @@ import { getPrettyLatLng } from '@/utils/mapPropertyUtils';
 
 import { IPropertyDetailsForm, readOnlyMultiSelectStyle } from './PropertyDetailsTabView.helpers';
 import { SubdivisionContainer } from './propertyOperation/SubdivisionContainer';
+import { SubdivisionView } from './propertyOperation/SubdivisionView';
 
 export interface IPropertyDetailsTabView {
   property?: IPropertyDetailsForm;
@@ -228,7 +229,7 @@ export const PropertyDetailsTabView: React.FunctionComponent<IPropertyDetailsTab
 
       {isValidId(property?.id) && (
         <Section header="Subdivision History">
-          <SubdivisionContainer propertyId={property!.id} />
+          <SubdivisionContainer propertyId={property!.id} View={SubdivisionView} />
         </Section>
       )}
     </StyledSummarySection>
