@@ -69,7 +69,7 @@ describe('NotesModal component', () => {
     act(() => {
       userEvent.type(noteField, 'test note');
     });
-    const saveButton = getByText('Save');
+    const saveButton = getByText('Yes');
     act(() => {
       userEvent.click(saveButton);
     });
@@ -92,7 +92,7 @@ describe('NotesModal component', () => {
     act(() => {
       userEvent.type(noteField, 'test note');
     });
-    const cancelButton = getByText('Cancel');
+    const cancelButton = getByText('No');
     act(() => {
       userEvent.click(cancelButton);
     });

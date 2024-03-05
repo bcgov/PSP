@@ -76,7 +76,11 @@ namespace Pims.Dal
             repositories.AddScoped<Repositories.IPropertyContactRepository, Repositories.PropertyContactRepository>();
             repositories.AddScoped<Repositories.IPropertyActivityRepository, Repositories.PropertyActivityRepository>();
             repositories.AddScoped<Repositories.IPropertyActivityDocumentRepository, Repositories.PropertyActivityDocumentRepository>();
-            return repositories; // TODO: PSP-4424 Use reflection to find all Repositories.
+            repositories.AddScoped<Repositories.IDispositionFilePropertyRepository, Repositories.DispositionFilePropertyRepository>();
+            repositories.AddScoped<Repositories.IDispositionFileRepository, Repositories.DispositionFileRepository>();
+            repositories.AddScoped<Repositories.IDispositionFileDocumentRepository, Repositories.DispositionFileDocumentRepository>();
+            repositories.AddScoped<Repositories.IDispositionFileChecklistRepository, Repositories.DispositionFileChecklistRepository>();
+            return repositories;
         }
 
         /// <summary>

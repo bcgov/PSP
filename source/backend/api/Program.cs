@@ -2,7 +2,6 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using CommandLine;
 using CommandLine.Text;
-using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
@@ -56,7 +55,7 @@ namespace Pims.Api
         /// </summary>
         /// <param name="options"></param>
         /// <returns></returns>
-        private static IWebHostBuilder CreateWebHostBuilder(ProgramOptions options)
+        private static IHostBuilder CreateWebHostBuilder(ProgramOptions options)
         {
             var args = options.ToArgs();
             DotNetEnv.Env.Load();
@@ -66,8 +65,8 @@ namespace Pims.Api
                 .AddCommandLine(args)
                 .Build();
 
-            return WebHost.CreateDefaultBuilder(args)
-                .ConfigureAppConfiguration((hostingContext, config) =>
+            return Host.CreateDefaultBuilder(args).ConfigureWebHostDefaults(webHostBuilder =>
+                webHostBuilder.ConfigureAppConfiguration((hostingContext, config) =>
                 {
                     config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
                     config.AddJsonFile($"appsettings.{env}.json", optional: true, reloadOnChange: true);
@@ -82,13 +81,12 @@ namespace Pims.Api
                     config.AddEnvironmentVariables();
                     config.AddCommandLine(args);
                 })
-                .UseSerilog()
                 .UseUrls(config.GetValue<string>("ASPNETCORE_URLS"))
                 .UseStartup<Startup>()
                 .UseKestrel(options =>
                 {
                     options.Limits.MaxRequestBodySize = 524288000; // 500MB
-                });
+                })).UseSerilog();
         }
     }
 }

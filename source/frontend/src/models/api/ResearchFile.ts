@@ -4,6 +4,7 @@ import Api_TypeCode from '@/models/api/TypeCode';
 
 import { Api_AuditFields } from './AuditFields';
 import { Api_ConcurrentVersion } from './ConcurrentVersion';
+import { DateOnly } from './DateOnly';
 import { Api_Organization } from './Organization';
 import { Api_Person } from './Person';
 import { Api_Project } from './Project';
@@ -26,11 +27,11 @@ export interface Api_ResearchFileProperty extends Api_PropertyFile, Api_Concurre
 export interface Api_ResearchFile extends Api_File, Api_AuditFields {
   roadName?: string;
   roadAlias?: string;
-  requestDate?: string;
+  requestDate?: DateOnly;
   requestDescription?: string;
   requestSourceDescription?: string;
   researchResult?: string;
-  researchCompletionDate?: string;
+  researchCompletionDate?: DateOnly;
   isExpropriation?: boolean;
   expropriationNotes?: string;
   requestSourceType?: Api_TypeCode<string>;

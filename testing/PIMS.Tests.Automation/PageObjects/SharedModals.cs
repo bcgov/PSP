@@ -43,6 +43,12 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(generalModalOkBttn).Click();
         }
 
+        public void ModalClickCancelBttn()
+        {
+            Wait(2000);
+            webDriver.FindElement(generalModalCancelBttn).Click();
+        }
+
         public string SecondaryModalHeader()
         {
             WaitUntilVisible(secondaryModal);
@@ -88,6 +94,17 @@ namespace PIMS.Tests.Automation.PageObjects
         public void IsToastyPresent()
         {
             AssertTrueIsDisplayed(generalToastBody);
+        }
+
+        public void CancelActionModal()
+        {
+            if (webDriver.FindElements(generalModalContent).Count() > 0)
+            {
+                Assert.Equal("Confirm Changes", ModalHeader());
+                Assert.Contains("If you choose to cancel now, your changes will not be saved.", ModalContent());
+                Assert.Contains("Do you want to proceed?", ModalContent());
+                ModalClickOKBttn();
+            }
         }
 
         public void SiteMinderModal()

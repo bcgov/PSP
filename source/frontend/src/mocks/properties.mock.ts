@@ -3,7 +3,7 @@ import { PropertyDataSourceTypes } from '@/constants/propertyDataSourceTypes';
 import { PropertyStatusTypes } from '@/constants/propertyStatusTypes';
 import { PropertyTenureTypes } from '@/constants/propertyTenureTypes';
 import { IProperty } from '@/interfaces';
-import { mockAddress } from '@/mocks/index.mock';
+import { mockAcquisitionFileResponse, mockAddress } from '@/mocks/index.mock';
 import { Api_Property } from '@/models/api/Property';
 
 import { Api_PropertyFile } from '../models/api/PropertyFile';
@@ -83,7 +83,7 @@ export const getMockApiProperty: () => Api_Property = () => ({
   pid: 0,
   status: { id: PropertyStatusTypes.UnderAdmin },
   dataSourceId: PropertyDataSourceTypes.PAIMS,
-  dataSourceEffectiveDate: '2021-08-30T17:28:17.655Z',
+  dataSourceEffectiveDateOnly: '2021-08-30T17:28:17.655Z',
   classificationId: PropertyClassificationTypes.CoreOperational,
   tenureId: PropertyTenureTypes.HighwayRoad,
   zoning: '',
@@ -106,7 +106,7 @@ export const getMockApiProperties: () => Api_Property[] = () => [
     pid: 0,
     status: { id: PropertyStatusTypes.UnderAdmin },
     dataSourceId: PropertyDataSourceTypes.PAIMS,
-    dataSourceEffectiveDate: '2021-08-30T17:28:17.655Z',
+    dataSourceEffectiveDateOnly: '2021-08-30T17:28:17.655Z',
     classificationId: PropertyClassificationTypes.CoreOperational,
     tenureId: PropertyTenureTypes.HighwayRoad,
     zoning: '',
@@ -127,7 +127,7 @@ export const getMockApiProperties: () => Api_Property[] = () => [
     pid: 1,
     status: { id: PropertyStatusTypes.UnderAdmin },
     dataSourceId: PropertyDataSourceTypes.PAIMS,
-    dataSourceEffectiveDate: '2021-08-30T18:14:13.170Z',
+    dataSourceEffectiveDateOnly: '2021-08-30T18:14:13.170Z',
     classificationId: PropertyClassificationTypes.CoreOperational,
     tenureId: PropertyTenureTypes.HighwayRoad,
     zoning: '',
@@ -148,7 +148,7 @@ export const getMockApiProperties: () => Api_Property[] = () => [
     pid: 2,
     status: { id: PropertyStatusTypes.UnderAdmin },
     dataSourceId: PropertyDataSourceTypes.PAIMS,
-    dataSourceEffectiveDate: '2021-08-30T18:14:13.170Z',
+    dataSourceEffectiveDateOnly: '2021-08-30T18:14:13.170Z',
     classificationId: PropertyClassificationTypes.CoreOperational,
     tenureId: PropertyTenureTypes.HighwayRoad,
     zoning: '',
@@ -170,6 +170,7 @@ export const getMockApiPropertyFiles = (): Api_PropertyFile[] => [
   {
     id: 1,
     fileId: 1,
+    file: mockAcquisitionFileResponse(),
     propertyName: 'test property name',
     propertyId: 1,
     property: {
@@ -188,7 +189,7 @@ export const getMockApiPropertyFiles = (): Api_PropertyFile[] => [
         description: 'Lower Mainland District',
         isDisabled: false,
       },
-      dataSourceEffectiveDate: '2021-08-31T00:00:00',
+      dataSourceEffectiveDateOnly: '2021-08-31T00:00:00',
       latitude: 54.794202998379006,
       longitude: -127.18413347053901,
       isSensitive: false,
@@ -209,6 +210,8 @@ export const getMockApiPropertyFiles = (): Api_PropertyFile[] => [
   {
     id: 2,
     propertyId: 2,
+    fileId: 2,
+    file: mockAcquisitionFileResponse(),
     property: {
       id: 2,
       anomalies: [],
@@ -225,7 +228,7 @@ export const getMockApiPropertyFiles = (): Api_PropertyFile[] => [
         description: 'Lower Mainland District',
         isDisabled: false,
       },
-      dataSourceEffectiveDate: '2021-08-31T00:00:00',
+      dataSourceEffectiveDateOnly: '2021-08-31T00:00:00',
       latitude: 54.54882129837095,
       longitude: -128.60383100540952,
       isSensitive: false,

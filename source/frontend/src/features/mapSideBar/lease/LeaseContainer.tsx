@@ -161,9 +161,9 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
     }
   }, [staleFile, refresh, setStaleFile]);
 
-  const onChildSucess = () => {
+  const onChildSucess = useCallback(() => {
     setStaleLastUpdatedBy(true);
-  };
+  }, [setStaleLastUpdatedBy]);
 
   const handleCancelConfirm = () => {
     if (formikRef !== undefined) {
@@ -231,18 +231,17 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
       <GenericModal
         variant="info"
         display={containerState.showConfirmModal}
-        title={'Confirm changes'}
+        title={'Confirm Changes'}
         message={
           <>
-            <div>If you cancel now, this Lease/License will not be saved.</div>
-            <br />
-            <strong>Are you sure you want to Cancel?</strong>
+            <p>If you choose to cancel now, your changes will not be saved.</p>
+            <p>Do you want to proceed?</p>
           </>
         }
         handleOk={handleCancelConfirm}
         handleCancel={() => setContainerState({ showConfirmModal: false })}
-        okButtonText="Ok"
-        cancelButtonText="Resume editing"
+        okButtonText="Yes"
+        cancelButtonText="No"
         show
       />
       <StyledFormWrapper>

@@ -28,17 +28,17 @@ namespace Pims.Api.Models.Concepts.Lease
         /// <summary>
         /// get/set - The payment method, such as cheque, transfer.
         /// </summary>
-        public TypeModel<string> LeasePaymentMethodType { get; set; }
+        public CodeTypeModel<string> LeasePaymentMethodType { get; set; }
 
         /// <summary>
         /// get/set - The status of the payment, generally paid or unpaid.
         /// </summary>
-        public TypeModel<string> LeasePaymentStatusTypeCode { get; set; }
+        public CodeTypeModel<string> LeasePaymentStatusTypeCode { get; set; }
 
         /// <summary>
         /// get/set - The date the payment was or will be received.
         /// </summary>
-        public DateTime ReceivedDate { get; set; }
+        public DateOnly ReceivedDate { get; set; }
 
         /// <summary>
         /// get/set - The Expected Payment per interval before tax.

@@ -202,6 +202,41 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
   line-height: 2rem;
 }
 
+.c19.c19.btn {
+  font-size: 1.3rem;
+  color: #aaaaaa;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  line-height: unset;
+}
+
+.c19.c19.btn .text {
+  display: none;
+}
+
+.c19.c19.btn:hover,
+.c19.c19.btn:active,
+.c19.c19.btn:focus {
+  color: #d8292f;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  opacity: unset;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+}
+
+.c19.c19.btn:hover .text,
+.c19.c19.btn:active .text,
+.c19.c19.btn:focus .text {
+  display: inline;
+  line-height: 2rem;
+}
+
 .c15 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -323,26 +358,6 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
 
 .c2 {
   font-weight: bold;
-}
-
-.c19 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  width: 100%;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  gap: 0rem;
-  -webkit-align-items: flex-start;
-  -webkit-box-align: flex-start;
-  -ms-flex-align: flex-start;
-  align-items: flex-start;
-  -webkit-box-pack: end;
-  -webkit-justify-content: flex-end;
-  -ms-flex-pack: end;
-  justify-content: flex-end;
 }
 
 .c18 {
@@ -1115,6 +1130,13 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                   value="CONSEN"
                 >
                   Consensual Agreement
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-HISTORY"
+                  value="HISTORY"
+                >
+                  Historical
                 </option>
                 <option
                   class="option"
@@ -1932,124 +1954,174 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                 Mailing Address
               </h3>
               <div
-                class="row"
+                class="pb-2 row"
               >
                 <div
-                  class="col-md-8"
+                  class="pr-0 text-left col-4"
                 >
-                  <div
-                    class="input form-group"
+                  <label
+                    class="c2"
                   >
-                    <label
-                      class="form-label"
-                      for="input-owners[0].address.streetAddress1"
-                    >
-                      Address (line 1) 
-                    </label>
-                    <input
-                      class="form-control"
-                      id="input-owners[0].address.streetAddress1"
-                      name="owners[0].address.streetAddress1"
-                      title="456 Souris Street"
-                      value="456 Souris Street"
-                    />
-                  </div>
-                  <div
-                    class="input form-group"
-                  >
-                    <label
-                      class="form-label"
-                      for="input-owners[0].address.streetAddress2"
-                    >
-                      Address (line 2) 
-                    </label>
-                    <input
-                      class="form-control"
-                      id="input-owners[0].address.streetAddress2"
-                      name="owners[0].address.streetAddress2"
-                      title="PO Box 250"
-                      value="PO Box 250"
-                    />
-                  </div>
-                  <div
-                    class="input form-group"
-                  >
-                    <label
-                      class="form-label"
-                      for="input-owners[0].address.streetAddress3"
-                    >
-                      Address (line 3) 
-                    </label>
-                    <input
-                      class="form-control"
-                      id="input-owners[0].address.streetAddress3"
-                      name="owners[0].address.streetAddress3"
-                      title="A Hoot and a holler from the A&W"
-                      value="A Hoot and a holler from the A&W"
-                    />
-                  </div>
+                    Address (line 1):
+                  </label>
                 </div>
                 <div
-                  class="col"
-                  style="padding-left: 0px; padding-bottom: 2rem;"
+                  class="c3 text-left col"
                 >
                   <div
-                    class="c19 h-100"
+                    class="row"
                   >
-                    <button
-                      class="c9 Button c11 btn btn-link"
-                      type="button"
+                    <div
+                      class="col-md-9"
                     >
                       <div
-                        class="Button__value"
+                        class="input form-group"
                       >
-                        <svg
-                          data-testid="remove-button"
-                          fill="currentColor"
-                          height="2rem"
-                          stroke="currentColor"
-                          stroke-width="0"
-                          viewBox="0 0 24 24"
-                          width="2rem"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <title>
-                            remove
-                          </title>
-                          <path
-                            d="M0 0h24v24H0z"
-                            fill="none"
-                          />
-                          <path
-                            d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                          />
-                        </svg>
-                         
-                        <span
-                          class="text"
-                        >
-                          Remove
-                        </span>
+                        <input
+                          class="form-control"
+                          id="input-owners[0].address.streetAddress1"
+                          name="owners[0].address.streetAddress1"
+                          title="456 Souris Street"
+                          value="456 Souris Street"
+                        />
                       </div>
-                    </button>
+                    </div>
                   </div>
                 </div>
               </div>
               <div
-                class="row"
+                class="pb-2 row"
               >
                 <div
-                  class="col-md-4"
+                  class="pr-0 text-left col-4"
+                >
+                  <label
+                    class="c2"
+                  >
+                    Address (line 2):
+                  </label>
+                </div>
+                <div
+                  class="c3 text-left col"
+                >
+                  <div
+                    class="row"
+                  >
+                    <div
+                      class="col-md-9"
+                    >
+                      <div
+                        class="input form-group"
+                      >
+                        <input
+                          class="form-control"
+                          id="input-owners[0].address.streetAddress2"
+                          name="owners[0].address.streetAddress2"
+                          title="PO Box 250"
+                          value="PO Box 250"
+                        />
+                      </div>
+                    </div>
+                    <div
+                      class="pl-0 pt-2 col"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-4"
+                >
+                  <label
+                    class="c2"
+                  >
+                    Address (line 3):
+                  </label>
+                </div>
+                <div
+                  class="c3 text-left col"
+                >
+                  <div
+                    class="row"
+                  >
+                    <div
+                      class="col-md-9"
+                    >
+                      <div
+                        class="input form-group"
+                      >
+                        <input
+                          class="form-control"
+                          id="input-owners[0].address.streetAddress3"
+                          name="owners[0].address.streetAddress3"
+                          title="A Hoot and a holler from the A&W"
+                          value="A Hoot and a holler from the A&W"
+                        />
+                      </div>
+                    </div>
+                    <div
+                      class="pl-0 pt-2 col"
+                    >
+                      <button
+                        class="c9 Button c19 btn btn-link"
+                        type="button"
+                      >
+                        <div
+                          class="Button__value"
+                        >
+                          <svg
+                            data-testid="remove-button"
+                            fill="currentColor"
+                            height="2rem"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 24 24"
+                            width="2rem"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <title>
+                              remove
+                            </title>
+                            <path
+                              d="M0 0h24v24H0z"
+                              fill="none"
+                            />
+                            <path
+                              d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                            />
+                          </svg>
+                           
+                          <span
+                            class="text"
+                          >
+                            Remove
+                          </span>
+                        </div>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-4"
+                >
+                  <label
+                    class="c2"
+                  >
+                    Country:
+                  </label>
+                </div>
+                <div
+                  class="c3 text-left col-4"
                 >
                   <div
                     class="form-group"
                   >
-                    <label
-                      class="form-label"
-                      for="input-owners[0].address.countryId"
-                    >
-                      Country 
-                    </label>
                     <select
                       class="form-select form-control"
                       id="input-owners[0].address.countryId"
@@ -2093,20 +2165,23 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                 </div>
               </div>
               <div
-                class="row"
+                class="pb-2 row"
               >
                 <div
-                  class="col-md-4"
+                  class="pr-0 text-left col-4"
+                >
+                  <label
+                    class="c2"
+                  >
+                    City:
+                  </label>
+                </div>
+                <div
+                  class="c3 text-left col-4"
                 >
                   <div
                     class="input form-group"
                   >
-                    <label
-                      class="form-label"
-                      for="input-owners[0].address.municipality"
-                    >
-                      City 
-                    </label>
                     <input
                       class="form-control"
                       id="input-owners[0].address.municipality"
@@ -2118,20 +2193,23 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                 </div>
               </div>
               <div
-                class="row"
+                class="pb-2 row"
               >
                 <div
-                  class="col-md-4"
+                  class="pr-0 text-left col-4"
+                >
+                  <label
+                    class="c2"
+                  >
+                    Province:
+                  </label>
+                </div>
+                <div
+                  class="c3 text-left col-4"
                 >
                   <div
                     class="form-group"
                   >
-                    <label
-                      class="form-label"
-                      for="input-owners[0].address.provinceId"
-                    >
-                      Province 
-                    </label>
                     <select
                       class="form-select form-control"
                       id="input-owners[0].address.provinceId"
@@ -2238,20 +2316,23 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                 </div>
               </div>
               <div
-                class="row"
+                class="pb-2 row"
               >
                 <div
-                  class="col-md-4"
+                  class="pr-0 text-left col-4"
+                >
+                  <label
+                    class="c2"
+                  >
+                    Postal Code:
+                  </label>
+                </div>
+                <div
+                  class="c3 text-left col-4"
                 >
                   <div
                     class="input form-group"
                   >
-                    <label
-                      class="form-label"
-                      for="input-owners[0].address.postal"
-                    >
-                      Postal Code 
-                    </label>
                     <input
                       class="form-control"
                       id="input-owners[0].address.postal"
@@ -2666,124 +2747,174 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                 Mailing Address
               </h3>
               <div
-                class="row"
+                class="pb-2 row"
               >
                 <div
-                  class="col-md-8"
+                  class="pr-0 text-left col-4"
                 >
-                  <div
-                    class="input form-group"
+                  <label
+                    class="c2"
                   >
-                    <label
-                      class="form-label"
-                      for="input-owners[1].address.streetAddress1"
-                    >
-                      Address (line 1) 
-                    </label>
-                    <input
-                      class="form-control"
-                      id="input-owners[1].address.streetAddress1"
-                      name="owners[1].address.streetAddress1"
-                      title="123 Main Street"
-                      value="123 Main Street"
-                    />
-                  </div>
-                  <div
-                    class="input form-group"
-                  >
-                    <label
-                      class="form-label"
-                      for="input-owners[1].address.streetAddress2"
-                    >
-                      Address (line 2) 
-                    </label>
-                    <input
-                      class="form-control"
-                      id="input-owners[1].address.streetAddress2"
-                      name="owners[1].address.streetAddress2"
-                      title="PO Box 123"
-                      value="PO Box 123"
-                    />
-                  </div>
-                  <div
-                    class="input form-group"
-                  >
-                    <label
-                      class="form-label"
-                      for="input-owners[1].address.streetAddress3"
-                    >
-                      Address (line 3) 
-                    </label>
-                    <input
-                      class="form-control"
-                      id="input-owners[1].address.streetAddress3"
-                      name="owners[1].address.streetAddress3"
-                      title="Next to the Dairy Queen"
-                      value="Next to the Dairy Queen"
-                    />
-                  </div>
+                    Address (line 1):
+                  </label>
                 </div>
                 <div
-                  class="col"
-                  style="padding-left: 0px; padding-bottom: 2rem;"
+                  class="c3 text-left col"
                 >
                   <div
-                    class="c19 h-100"
+                    class="row"
                   >
-                    <button
-                      class="c9 Button c11 btn btn-link"
-                      type="button"
+                    <div
+                      class="col-md-9"
                     >
                       <div
-                        class="Button__value"
+                        class="input form-group"
                       >
-                        <svg
-                          data-testid="remove-button"
-                          fill="currentColor"
-                          height="2rem"
-                          stroke="currentColor"
-                          stroke-width="0"
-                          viewBox="0 0 24 24"
-                          width="2rem"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <title>
-                            remove
-                          </title>
-                          <path
-                            d="M0 0h24v24H0z"
-                            fill="none"
-                          />
-                          <path
-                            d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                          />
-                        </svg>
-                         
-                        <span
-                          class="text"
-                        >
-                          Remove
-                        </span>
+                        <input
+                          class="form-control"
+                          id="input-owners[1].address.streetAddress1"
+                          name="owners[1].address.streetAddress1"
+                          title="123 Main Street"
+                          value="123 Main Street"
+                        />
                       </div>
-                    </button>
+                    </div>
                   </div>
                 </div>
               </div>
               <div
-                class="row"
+                class="pb-2 row"
               >
                 <div
-                  class="col-md-4"
+                  class="pr-0 text-left col-4"
+                >
+                  <label
+                    class="c2"
+                  >
+                    Address (line 2):
+                  </label>
+                </div>
+                <div
+                  class="c3 text-left col"
+                >
+                  <div
+                    class="row"
+                  >
+                    <div
+                      class="col-md-9"
+                    >
+                      <div
+                        class="input form-group"
+                      >
+                        <input
+                          class="form-control"
+                          id="input-owners[1].address.streetAddress2"
+                          name="owners[1].address.streetAddress2"
+                          title="PO Box 123"
+                          value="PO Box 123"
+                        />
+                      </div>
+                    </div>
+                    <div
+                      class="pl-0 pt-2 col"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-4"
+                >
+                  <label
+                    class="c2"
+                  >
+                    Address (line 3):
+                  </label>
+                </div>
+                <div
+                  class="c3 text-left col"
+                >
+                  <div
+                    class="row"
+                  >
+                    <div
+                      class="col-md-9"
+                    >
+                      <div
+                        class="input form-group"
+                      >
+                        <input
+                          class="form-control"
+                          id="input-owners[1].address.streetAddress3"
+                          name="owners[1].address.streetAddress3"
+                          title="Next to the Dairy Queen"
+                          value="Next to the Dairy Queen"
+                        />
+                      </div>
+                    </div>
+                    <div
+                      class="pl-0 pt-2 col"
+                    >
+                      <button
+                        class="c9 Button c19 btn btn-link"
+                        type="button"
+                      >
+                        <div
+                          class="Button__value"
+                        >
+                          <svg
+                            data-testid="remove-button"
+                            fill="currentColor"
+                            height="2rem"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 24 24"
+                            width="2rem"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <title>
+                              remove
+                            </title>
+                            <path
+                              d="M0 0h24v24H0z"
+                              fill="none"
+                            />
+                            <path
+                              d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                            />
+                          </svg>
+                           
+                          <span
+                            class="text"
+                          >
+                            Remove
+                          </span>
+                        </div>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-4"
+                >
+                  <label
+                    class="c2"
+                  >
+                    Country:
+                  </label>
+                </div>
+                <div
+                  class="c3 text-left col-4"
                 >
                   <div
                     class="form-group"
                   >
-                    <label
-                      class="form-label"
-                      for="input-owners[1].address.countryId"
-                    >
-                      Country 
-                    </label>
                     <select
                       class="form-select form-control"
                       id="input-owners[1].address.countryId"
@@ -2827,20 +2958,23 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                 </div>
               </div>
               <div
-                class="row"
+                class="pb-2 row"
               >
                 <div
-                  class="col-md-4"
+                  class="pr-0 text-left col-4"
+                >
+                  <label
+                    class="c2"
+                  >
+                    City:
+                  </label>
+                </div>
+                <div
+                  class="c3 text-left col-4"
                 >
                   <div
                     class="input form-group"
                   >
-                    <label
-                      class="form-label"
-                      for="input-owners[1].address.municipality"
-                    >
-                      City 
-                    </label>
                     <input
                       class="form-control"
                       id="input-owners[1].address.municipality"
@@ -2852,20 +2986,23 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                 </div>
               </div>
               <div
-                class="row"
+                class="pb-2 row"
               >
                 <div
-                  class="col-md-4"
+                  class="pr-0 text-left col-4"
+                >
+                  <label
+                    class="c2"
+                  >
+                    Province:
+                  </label>
+                </div>
+                <div
+                  class="c3 text-left col-4"
                 >
                   <div
                     class="form-group"
                   >
-                    <label
-                      class="form-label"
-                      for="input-owners[1].address.provinceId"
-                    >
-                      Province 
-                    </label>
                     <select
                       class="form-select form-control"
                       id="input-owners[1].address.provinceId"
@@ -2972,20 +3109,23 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
                 </div>
               </div>
               <div
-                class="row"
+                class="pb-2 row"
               >
                 <div
-                  class="col-md-4"
+                  class="pr-0 text-left col-4"
+                >
+                  <label
+                    class="c2"
+                  >
+                    Postal Code:
+                  </label>
+                </div>
+                <div
+                  class="c3 text-left col-4"
                 >
                   <div
                     class="input form-group"
                   >
-                    <label
-                      class="form-label"
-                      for="input-owners[1].address.postal"
-                    >
-                      Postal Code 
-                    </label>
                     <input
                       class="form-control"
                       id="input-owners[1].address.postal"

@@ -1,10 +1,11 @@
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
 using Microsoft.Extensions.Logging;
+using Pims.Api.Models.CodeTypes;
 using Pims.Core.Extensions;
-using Pims.Dal.Constants;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
@@ -29,6 +30,7 @@ namespace Pims.Api.Services
         private readonly IInsuranceRepository _insuranceRepository;
         private readonly ILeaseTenantRepository _tenantRepository;
         private readonly IUserRepository _userRepository;
+        private readonly IPropertyService _propertyService;
 
         public LeaseService(
             ClaimsPrincipal user,
@@ -42,7 +44,8 @@ namespace Pims.Api.Services
             IEntityNoteRepository entityNoteRepository,
             IInsuranceRepository insuranceRepository,
             ILeaseTenantRepository tenantRepository,
-            IUserRepository userRepository)
+            IUserRepository userRepository,
+            IPropertyService propertyService)
             : base(user, logger)
         {
             _logger = logger;
@@ -57,6 +60,7 @@ namespace Pims.Api.Services
             _insuranceRepository = insuranceRepository;
             _tenantRepository = tenantRepository;
             _userRepository = userRepository;
+            _propertyService = propertyService;
         }
 
         public bool IsRowVersionEqual(long leaseId, long rowVersion)
@@ -233,7 +237,7 @@ namespace Pims.Api.Services
             List<PimsPropertyLease> differenceSet = currentProperties.Where(x => !lease.PimsPropertyLeases.Any(y => y.Internal_Id == x.Internal_Id)).ToList();
             foreach (var deletedProperty in differenceSet)
             {
-                if (deletedProperty.Property.IsPropertyOfInterest.HasValue && deletedProperty.Property.IsPropertyOfInterest.Value)
+                if (deletedProperty.Property.IsPropertyOfInterest == true)
                 {
                     PimsProperty propertyWithAssociations = _propertyRepository.GetAllAssociationsById(deletedProperty.PropertyId);
                     var leaseAssociationCount = propertyWithAssociations.PimsPropertyLeases.Count;
@@ -360,7 +364,7 @@ namespace Pims.Api.Services
                     catch (KeyNotFoundException)
                     {
                         _logger.LogDebug("Adding new property with pid:{pid}", pid);
-                        PopulateNewProperty(leaseProperty.Property);
+                        _propertyService.PopulateNewProperty(leaseProperty.Property, true, false);
                     }
                 }
                 else if (leaseProperty.Property.Pin.HasValue)
@@ -376,55 +380,14 @@ namespace Pims.Api.Services
                     catch (KeyNotFoundException)
                     {
                         _logger.LogDebug("Adding new property with pin:{pin}", pin);
-                        PopulateNewProperty(leaseProperty.Property);
+                        _propertyService.PopulateNewProperty(leaseProperty.Property, true, false);
                     }
                 }
                 else
                 {
                     _logger.LogDebug("Adding new property without a pid or pin");
-                    PopulateNewProperty(leaseProperty.Property);
+                    _propertyService.PopulateNewProperty(leaseProperty.Property, true, false);
                 }
-            }
-        }
-
-        private void PopulateNewProperty(PimsProperty property)
-        {
-            property.PropertyClassificationTypeCode = "UNKNOWN";
-            property.PropertyDataSourceEffectiveDate = System.DateTime.Now;
-            property.PropertyDataSourceTypeCode = "PMBC";
-
-            property.PropertyTypeCode = "UNKNOWN";
-
-            property.PropertyStatusTypeCode = "UNKNOWN";
-            property.SurplusDeclarationTypeCode = "UNKNOWN";
-
-            property.IsPropertyOfInterest = false;
-
-            if (property.Address != null)
-            {
-                var provinceId = _lookupRepository.GetAllProvinces().FirstOrDefault(p => p.ProvinceStateCode == "BC")?.Id;
-                if (provinceId.HasValue)
-                {
-                    property.Address.ProvinceStateId = provinceId.Value;
-                }
-                property.Address.CountryId = _lookupRepository.GetAllCountries().FirstOrDefault(p => p.CountryCode == "CA")?.Id;
-            }
-
-            // convert spatial location from lat/long (4326) to BC Albers (3005) for database storage
-            var geom = property.Location;
-            if (geom.SRID != SpatialReference.BCALBERS)
-            {
-                var newCoords = _coordinateService.TransformCoordinates(geom.SRID, SpatialReference.BCALBERS, geom.Coordinate);
-                property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.BCALBERS);
-            }
-
-            // apply similar logic to the boundary
-            var boundaryGeom = property.Boundary;
-            if (boundaryGeom != null && boundaryGeom.SRID != SpatialReference.BCALBERS)
-            {
-                var newCoords = property.Boundary.Coordinates.Select(coord => _coordinateService.TransformCoordinates(boundaryGeom.SRID, SpatialReference.BCALBERS, coord));
-                var gf = NetTopologySuite.NtsGeometryServices.Instance.CreateGeometryFactory(SpatialReference.BCALBERS);
-                property.Boundary = gf.CreatePolygon(newCoords.ToArray());
             }
         }
     }

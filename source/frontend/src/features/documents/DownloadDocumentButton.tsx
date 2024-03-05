@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import { LinkButton } from '@/components/common/buttons';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import TooltipIcon from '@/components/common/TooltipIcon';
-import { Api_FileDownload } from '@/models/api/DocumentStorage';
+import { ApiGen_Requests_FileDownloadResponse } from '@/models/api/generated/ApiGen_Requests_FileDownloadResponse';
 
 import { useDocumentProvider } from './hooks/useDocumentProvider';
 
@@ -81,11 +81,21 @@ const DownloadDocumentButton: React.FunctionComponent<
  * @param response The API file download response.
  * @param fileName Optional file name to override default file name returned from API.
  */
-export const showFile = async (response?: Api_FileDownload, fileName?: string) => {
-  if (response !== undefined && response.size > 0) {
+export const showFile = async (
+  response?: ApiGen_Requests_FileDownloadResponse,
+  fileName?: string,
+) => {
+  if (
+    response !== undefined &&
+    response.size > 0 &&
+    response.filePayload !== null &&
+    response.mimetype !== null &&
+    response.fileName !== null
+  ) {
     if (response.encodingType === 'base64') {
       const blob = b64toBlob(response.filePayload, response.mimetype);
-      fileDownload(blob, fileName ? fileName : response.fileName);
+      const displayedFileName = fileName ? fileName : response.fileName;
+      fileDownload(blob, displayedFileName);
     } else {
       throw new Error('Only base64 encoding is supported');
     }

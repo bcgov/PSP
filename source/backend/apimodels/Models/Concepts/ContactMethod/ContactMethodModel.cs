@@ -1,6 +1,6 @@
 using Pims.Api.Models.Base;
 
-namespace Pims.Api.Models.Concepts.Contact.ContactMethod
+namespace Pims.Api.Models.Concepts.ContactMethod
 {
     /// <summary>
     /// Provides a Contact method model.
@@ -17,7 +17,7 @@ namespace Pims.Api.Models.Concepts.Contact.ContactMethod
         /// <summary>
         /// get/set - The contact method type.
         /// </summary>
-        public TypeModel<string> ContactMethodType { get; set; }
+        public CodeTypeModel<string> ContactMethodType { get; set; }
 
         /// <summary>
         /// get/set - The contact method value.

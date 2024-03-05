@@ -32,6 +32,10 @@ namespace Pims.Dal.Entities
 
             this.CountryCode = code;
         }
+
+        public PimsCountry()
+        {
+        }
         #endregion
     }
 }

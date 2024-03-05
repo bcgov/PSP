@@ -3,11 +3,14 @@ using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Moq;
-using Pims.Api.Concepts.CodeTypes;
-using Pims.Api.Models.Concepts.Document.Upload;
-using Pims.Api.Models.Concepts.Http;
+
+
+
 using Pims.Api.Models;
+using Pims.Api.Models.CodeTypes;
 using Pims.Api.Models.Concepts;
+using Pims.Api.Models.Requests.Document.Upload;
+using Pims.Api.Models.Requests.Http;
 using Pims.Api.Services;
 using Pims.Core.Test;
 using Pims.Dal.Entities;
@@ -149,7 +152,7 @@ namespace Pims.Api.Test.Services
             Func<Task> act = () => service.UploadFormDocumentTemplateAsync(testTypeCode, testUploadRequest);
 
             // Assert
-            act.Should().Throw<NotAuthorizedException>();
+            act.Should().ThrowAsync<NotAuthorizedException>();
             documentService.Verify(x => x.UploadDocumentAsync(testUploadRequest), Times.Never);
         }
 
@@ -171,7 +174,7 @@ namespace Pims.Api.Test.Services
 
             var documentRepositoryMock = this._helper.GetService<Mock<IDocumentRepository>>();
             documentRepositoryMock.Setup(x => x.DocumentRelationshipCount(testDocumentId)).Returns(1);
-            documentServiceMock.Setup(x => x.DeleteDocumentAsync(testExistingDocument)).ReturnsAsync(new ExternalResult<string>() { Status = ExternalResultStatus.Success });
+            documentServiceMock.Setup(x => x.DeleteDocumentAsync(testExistingDocument)).ReturnsAsync(new ExternalResponse<string>() { Status = ExternalResponseStatus.Success });
 
             // Act
             var result = service.UploadFormDocumentTemplateAsync(testTypeCode, testUploadRequest);
@@ -200,13 +203,13 @@ namespace Pims.Api.Test.Services
 
             var documentRepositoryMock = this._helper.GetService<Mock<IDocumentRepository>>();
             documentRepositoryMock.Setup(x => x.DocumentRelationshipCount(testDocumentId)).Returns(1);
-            documentServiceMock.Setup(x => x.DeleteDocumentAsync(testExistingDocument)).ReturnsAsync(new ExternalResult<string>() { Status = ExternalResultStatus.Error });
+            documentServiceMock.Setup(x => x.DeleteDocumentAsync(testExistingDocument)).ReturnsAsync(new ExternalResponse<string>() { Status = ExternalResponseStatus.Error });
 
             // Act
             Func<Task> act = () => service.UploadFormDocumentTemplateAsync(testTypeCode, testUploadRequest);
 
             // Assert
-            act.Should().Throw<InvalidOperationException>();
+            act.Should().ThrowAsync<InvalidOperationException>();
             documentRepositoryMock.Verify(x => x.DocumentRelationshipCount(testDocumentId), Times.Once);
             documentServiceMock.Verify(x => x.DeleteDocumentAsync(testExistingDocument), Times.Once);
             documentServiceMock.Verify(x => x.UploadDocumentAsync(testUploadRequest), Times.Never);
@@ -278,7 +281,7 @@ namespace Pims.Api.Test.Services
             Func<Task> act = () => service.DeleteFormDocumentTemplateAsync(testFormType);
 
             // Assert
-            act.Should().Throw<NotAuthorizedException>();
+            act.Should().ThrowAsync<NotAuthorizedException>();
             documentRepositoryMock.Verify(x => x.DocumentRelationshipCount(testDocumentId), Times.Never);
         }
         #endregion

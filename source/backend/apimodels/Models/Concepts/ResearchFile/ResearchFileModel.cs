@@ -20,7 +20,7 @@ namespace Pims.Api.Models.Concepts.ResearchFile
         /// </summary>
         public IList<ResearchFilePropertyModel> FileProperties { get; set; }
 
-        public DateTime? RequestDate { get; set; }
+        public DateOnly? RequestDate { get; set; }
 
         public string RequestDescription { get; set; }
 
@@ -28,13 +28,13 @@ namespace Pims.Api.Models.Concepts.ResearchFile
 
         public string ResearchResult { get; set; }
 
-        public DateTime? ResearchCompletionDate { get; set; }
+        public DateOnly? ResearchCompletionDate { get; set; }
 
         public bool? IsExpropriation { get; set; }
 
         public string ExpropriationNotes { get; set; }
 
-        public TypeModel<string> RequestSourceType { get; set; }
+        public CodeTypeModel<string> RequestSourceType { get; set; }
 
         public PersonModel RequestorPerson { get; set; }
 

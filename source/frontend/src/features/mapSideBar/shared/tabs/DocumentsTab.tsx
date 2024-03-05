@@ -1,28 +1,28 @@
 import * as React from 'react';
 
-import { DocumentRelationshipType } from '@/constants/documentRelationshipType';
 import DocumentListContainer from '@/features/documents/list/DocumentListContainer';
+import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
 
 interface IDocumentsTabProps {
   fileId: number;
-  relationshipType: DocumentRelationshipType;
+  relationshipType: ApiGen_CodeTypes_DocumentRelationType;
+  title?: string;
   onSuccess?: () => void;
 }
 
 const DocumentsTab: React.FunctionComponent<IDocumentsTabProps> = ({
   fileId,
   relationshipType,
+  title = 'File Documents',
   onSuccess,
 }) => {
   return (
-    <>
-      <DocumentListContainer
-        title="File Documents"
-        parentId={fileId.toString()}
-        relationshipType={relationshipType}
-        onSuccess={onSuccess}
-      />
-    </>
+    <DocumentListContainer
+      title={title}
+      parentId={fileId.toString()}
+      relationshipType={relationshipType}
+      onSuccess={onSuccess}
+    />
   );
 };
 

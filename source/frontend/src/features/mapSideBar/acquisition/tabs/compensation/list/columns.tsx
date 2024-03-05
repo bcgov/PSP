@@ -6,13 +6,16 @@ import styled from 'styled-components';
 import { LinkButton, StyledRemoveIconButton } from '@/components/common/buttons';
 import { Button } from '@/components/common/buttons/Button';
 import { InlineFlexDiv } from '@/components/common/styles';
+import TooltipIcon from '@/components/common/TooltipIcon';
 import { ColumnWithProps } from '@/components/Table';
 import Claims from '@/constants/claims';
+import Roles from '@/constants/roles';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { Api_CompensationFinancial } from '@/models/api/CompensationFinancial';
 import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
 import { formatMoney, prettyFormatDate, stringToFragment } from '@/utils';
 
+import { cannotEditMessage } from '../../../common/constants';
 import StatusUpdateSolver from '../../fileDetails/detail/statusUpdateSolver';
 
 export function createCompensationTableColumns(
@@ -86,7 +89,16 @@ export function createCompensationTableColumns(
       width: 20,
       maxWidth: 20,
       Cell: (cellProps: CellProps<Api_CompensationRequisition>) => {
-        const { hasClaim } = useKeycloakWrapper();
+        const { hasClaim, hasRole } = useKeycloakWrapper();
+        const canEditDetails = (isDraft: boolean | null) => {
+          if (
+            hasRole(Roles.SYSTEM_ADMINISTRATOR) ||
+            statusSolver.canEditOrDeleteCompensation(isDraft)
+          ) {
+            return true;
+          }
+          return false;
+        };
         return (
           <StyledDiv className="no-gutters">
             {hasClaim(Claims.COMPENSATION_REQUISITION_VIEW) && (
@@ -105,7 +117,7 @@ export function createCompensationTableColumns(
               </Col>
             )}
             {hasClaim(Claims.COMPENSATION_REQUISITION_DELETE) &&
-              statusSolver.canEditOrDeleteCompensation(cellProps.row.original.isDraft) && (
+              canEditDetails(cellProps.row.original.isDraft) && (
                 <StyledRemoveIconButton
                   id={`compensation-delete-${cellProps.row.id}`}
                   data-testid={`compensation-delete-${cellProps.row.id}`}
@@ -114,6 +126,13 @@ export function createCompensationTableColumns(
                 >
                   <FaTrash size="2rem" />
                 </StyledRemoveIconButton>
+              )}
+            {hasClaim(Claims.COMPENSATION_REQUISITION_DELETE) &&
+              !canEditDetails(cellProps.row.original.isDraft) && (
+                <TooltipIcon
+                  toolTipId={`${cellProps.row.original?.id || 0}-summary-cannot-edit-tooltip`}
+                  toolTip={cannotEditMessage}
+                />
               )}
           </StyledDiv>
         );

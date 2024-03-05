@@ -1,5 +1,7 @@
+using System;
 using Mapster;
 using Pims.Api.Models.Base;
+using Pims.Core.Extensions;
 using Entity = Pims.Dal.Entities;
 
 namespace Pims.Api.Models.Concepts.Property
@@ -13,8 +15,8 @@ namespace Pims.Api.Models.Concepts.Property
                 .Map(dest => dest.ActivityTypeCode, src => src.PropMgmtActivityTypeCodeNavigation)
                 .Map(dest => dest.ActivitySubtypeCode, src => src.PropMgmtActivitySubtypeCodeNavigation)
                 .Map(dest => dest.ActivityStatusTypeCode, src => src.PropMgmtActivityStatusTypeCodeNavigation)
-                .Map(dest => dest.RequestAddedDateTime, src => src.RequestAddedDt)
-                .Map(dest => dest.CompletionDateTime, src => src.CompletionDt)
+                .Map(dest => dest.RequestAddedDateOnly, src => src.RequestAddedDt)
+                .Map(dest => dest.CompletionDateOnly, src => src.CompletionDt)
                 .Map(dest => dest.Description, src => src.Description)
                 .Map(dest => dest.RequestSource, src => src.RequestSource)
                 .Map(dest => dest.PretaxAmt, src => src.PretaxAmt)
@@ -37,8 +39,8 @@ namespace Pims.Api.Models.Concepts.Property
                 .Map(dest => dest.PropMgmtActivityTypeCode, src => src.ActivityTypeCode.Id)
                 .Map(dest => dest.PropMgmtActivitySubtypeCode, src => src.ActivitySubtypeCode.Id)
                 .Map(dest => dest.PropMgmtActivityStatusTypeCode, src => src.ActivityStatusTypeCode.Id)
-                .Map(dest => dest.RequestAddedDt, src => src.RequestAddedDateTime)
-                .Map(dest => dest.CompletionDt, src => src.CompletionDateTime)
+                .Map(dest => dest.RequestAddedDt, src => src.RequestAddedDateOnly)
+                .Map(dest => dest.CompletionDt, src => src.CompletionDateOnly)
                 .Map(dest => dest.Description, src => src.Description)
                 .Map(dest => dest.RequestSource, src => src.RequestSource)
                 .Map(dest => dest.PretaxAmt, src => src.PretaxAmt)

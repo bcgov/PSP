@@ -101,18 +101,18 @@ namespace PIMS.Tests.Automation.PageObjects
         public void CreateNewFinancialCode(FinancialCode financialCode)
         {
             WaitUntilClickable(financialCodeFormTypeSelect);
-            ChooseSpecificSelectOption(financialCodeFormTypeSelect, financialCode.CodeType);
-            webDriver.FindElement(financialCodeFormValueInput).SendKeys(financialCode.CodeValue);
-            webDriver.FindElement(financialCodeFormDescriptionInput).SendKeys(financialCode.CodeDescription);
-            webDriver.FindElement(financialCodeFormOrderInput).SendKeys(financialCode.DisplayOrder);
+            ChooseSpecificSelectOption(financialCodeFormTypeSelect, financialCode.FinnCodeType);
+            webDriver.FindElement(financialCodeFormValueInput).SendKeys(financialCode.FinnCodeValue);
+            webDriver.FindElement(financialCodeFormDescriptionInput).SendKeys(financialCode.FinnCodeDescription);
+            webDriver.FindElement(financialCodeFormOrderInput).SendKeys(financialCode.FinnDisplayOrder);
         }
 
         public void UpdateFinancialCode(FinancialCode financialCode)
         {
             WaitUntilClickable(financialCodeFormDescriptionInput);
             ClearInput(financialCodeFormDescriptionInput);
-            webDriver.FindElement(financialCodeFormDescriptionInput).SendKeys(financialCode.CodeDescription);
-            webDriver.FindElement(financialCodeFormExpiryDateInput).SendKeys(financialCode.ExpiryDate);
+            webDriver.FindElement(financialCodeFormDescriptionInput).SendKeys(financialCode.FinnCodeDescription);
+            webDriver.FindElement(financialCodeFormExpiryDateInput).SendKeys(financialCode.FinnExpiryDate);
             webDriver.FindElement(financialCodeFormExpiryDateLabel).Click();
         }
 
@@ -130,8 +130,9 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
             if (webDriver.FindElements(financialCodeModal).Count() > 0)
             {
-                Assert.True(sharedModals.ModalHeader().Equals("Unsaved Changes"));
-                Assert.True(sharedModals.ModalContent().Equals("You have made changes on this form. Do you wish to leave without saving?"));
+                Assert.Equal("Confirm Changes", sharedModals.ModalHeader());
+                Assert.Contains("If you choose to cancel now, your changes will not be saved.", sharedModals.ModalContent());
+                Assert.Contains("Do you want to proceed?", sharedModals.ModalContent());
 
                 sharedModals.ModalClickOKBttn();
             }

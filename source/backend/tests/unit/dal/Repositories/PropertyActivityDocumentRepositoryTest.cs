@@ -39,9 +39,13 @@ namespace Pims.Dal.Test.Repositories
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.DocumentView);
 
-            var document = new PimsDocument() { DocumentStatusTypeCodeNavigation = new PimsDocumentStatusType() { DocumentStatusTypeCode = "test" }, DocumentType = new PimsDocumentTyp() };
+            var document = new PimsDocument() { DocumentStatusTypeCodeNavigation = new PimsDocumentStatusType() { DocumentStatusTypeCode = "test", Description = "Active", DbCreateUserid = "test", DbLastUpdateUserid = "test" }, DocumentType = new PimsDocumentTyp() { DocumentType = "IMAGE", DocumentTypeDescription = "Image", DbCreateUserid = "test", DbLastUpdateUserid = "test" }, FileName = "test.txt" };
             var propertyActivityFileDocument = new PimsPropertyActivityDocument() { Document = document };
-            PimsPropertyActivity pimsPropertyActivity = new PimsPropertyActivity() { PimsPropertyActivityDocuments = new List<PimsPropertyActivityDocument>() { propertyActivityFileDocument } };
+            PimsPropertyActivity pimsPropertyActivity = new PimsPropertyActivity() { PimsPropertyActivityDocuments = new List<PimsPropertyActivityDocument>() { propertyActivityFileDocument },
+                PropMgmtActivityStatusTypeCode = "ACTIVE",
+                PropMgmtActivitySubtypeCode = "ACTIVE",
+                PropMgmtActivityTypeCode = "test"
+            };
             var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(pimsPropertyActivity);
 
             var repository = helper.CreateRepository<PropertyActivityDocumentRepository>(user);

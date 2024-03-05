@@ -1,40 +1,37 @@
-import { DocumentRelationshipType } from '@/constants/documentRelationshipType';
-import {
-  Api_Document,
-  Api_DocumentMetadataUpdate,
-  Api_DocumentRelationship,
-  Api_DocumentType,
-  Api_DocumentUpdateRequest,
-  Api_DocumentUploadRequest,
-} from '@/models/api/Document';
-import {
-  Api_Storage_DocumentDetail,
-  Api_Storage_DocumentMetadata,
-  Api_Storage_DocumentTypeMetadataType,
-} from '@/models/api/DocumentStorage';
-import Api_TypeCode from '@/models/api/TypeCode';
+import { ApiGen_Base_CodeType } from '@/models/api/generated/ApiGen_Base_CodeType';
+import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
+import { ApiGen_Concepts_Document } from '@/models/api/generated/ApiGen_Concepts_Document';
+import { ApiGen_Concepts_DocumentMetadataUpdate } from '@/models/api/generated/ApiGen_Concepts_DocumentMetadataUpdate';
+import { ApiGen_Concepts_DocumentRelationship } from '@/models/api/generated/ApiGen_Concepts_DocumentRelationship';
+import { ApiGen_Concepts_DocumentType } from '@/models/api/generated/ApiGen_Concepts_DocumentType';
+import { ApiGen_Mayan_DocumentDetail } from '@/models/api/generated/ApiGen_Mayan_DocumentDetail';
+import { ApiGen_Mayan_DocumentMetadata } from '@/models/api/generated/ApiGen_Mayan_DocumentMetadata';
+import { ApiGen_Mayan_DocumentTypeMetadataType } from '@/models/api/generated/ApiGen_Mayan_DocumentTypeMetadataType';
+import { ApiGen_Requests_DocumentUpdateRequest } from '@/models/api/generated/ApiGen_Requests_DocumentUpdateRequest';
+import { ApiGen_Requests_DocumentUploadRequest } from '@/models/api/generated/ApiGen_Requests_DocumentUploadRequest';
+import { EpochIsoDateTime, UtcIsoDateTime } from '@/models/api/UtcIsoDateTime';
 
 export interface ComposedDocument {
-  mayanMetadata?: Api_Storage_DocumentMetadata[];
-  pimsDocumentRelationship?: Api_DocumentRelationship;
-  documentDetail?: Api_Storage_DocumentDetail;
+  mayanMetadata?: ApiGen_Mayan_DocumentMetadata[];
+  pimsDocumentRelationship?: ApiGen_Concepts_DocumentRelationship;
+  documentDetail?: ApiGen_Mayan_DocumentDetail;
   mayanFileId?: number;
 }
 
 export class DocumentRow {
   id?: number;
   mayanDocumentId: number | undefined;
-  documentType: Api_DocumentType | undefined;
-  statusTypeCode: Api_TypeCode<string> | undefined;
+  documentType: ApiGen_Concepts_DocumentType | undefined;
+  statusTypeCode: ApiGen_Base_CodeType<string> | undefined;
   fileName: string | undefined;
   isFileAvailable: boolean | undefined;
-  appCreateTimestamp?: string;
+  appCreateTimestamp?: UtcIsoDateTime;
   appCreateUserid?: string;
   relationshipId: number | undefined;
-  relationshipType: DocumentRelationshipType | undefined;
-  parentId: number | undefined;
+  relationshipType: ApiGen_CodeTypes_DocumentRelationType | null = null;
+  parentId: string | undefined;
 
-  public static fromApi(relationship: Api_DocumentRelationship): DocumentRow {
+  public static fromApi(relationship: ApiGen_Concepts_DocumentRelationship): DocumentRow {
     const row: DocumentRow = new DocumentRow();
     row.id = relationship.document?.id;
     row.documentType = relationship.document?.documentType ?? undefined;
@@ -42,15 +39,15 @@ export class DocumentRow {
     row.statusTypeCode = relationship.document?.statusTypeCode ?? undefined;
     row.fileName = relationship.document?.fileName ?? undefined;
     row.appCreateTimestamp = relationship.document?.appCreateTimestamp;
-    row.appCreateUserid = relationship.document?.appCreateUserid;
+    row.appCreateUserid = relationship.document?.appCreateUserid ?? undefined;
 
     row.relationshipId = relationship.id;
-    row.relationshipType = relationship.relationshipType ?? undefined;
+    row.relationshipType = relationship.relationshipType ?? null;
     row.parentId = relationship.parentId ?? undefined;
     return row;
   }
 
-  public static fromApiDocument(document: Api_Document): DocumentRow {
+  public static fromApiDocument(document: ApiGen_Concepts_Document): DocumentRow {
     const row: DocumentRow = new DocumentRow();
     row.id = document?.id;
     row.documentType = document?.documentType ?? undefined;
@@ -58,26 +55,45 @@ export class DocumentRow {
     row.statusTypeCode = document?.statusTypeCode ?? undefined;
     row.fileName = document?.fileName ?? undefined;
     row.appCreateTimestamp = document?.appCreateTimestamp;
-    row.appCreateUserid = document?.appCreateUserid;
+    row.appCreateUserid = document?.appCreateUserid ?? undefined;
 
     row.relationshipId = undefined;
-    row.relationshipType = undefined;
+    row.relationshipType = null;
     row.parentId = undefined;
     return row;
   }
 
-  public static toApi(document: DocumentRow): Api_DocumentRelationship {
+  public static toApi(document: DocumentRow): ApiGen_Concepts_DocumentRelationship {
+    if (document.relationshipType === null) {
+      throw new Error('Invalid document relationship type');
+    }
+
     return {
-      id: document.relationshipId,
-      relationshipType: document.relationshipType ?? null,
+      id: document.relationshipId || 0,
+      relationshipType: document.relationshipType,
       parentId: document.parentId ?? null,
       document: {
-        id: document.id,
-        mayanDocumentId: document.mayanDocumentId ?? null,
+        id: document.id || 0,
+        mayanDocumentId: document.mayanDocumentId ?? 0,
         documentType: document.documentType ?? null,
         statusTypeCode: document.statusTypeCode ?? null,
         fileName: document.fileName ?? null,
+        rowVersion: 1,
+
+        appCreateTimestamp: EpochIsoDateTime,
+        appLastUpdateTimestamp: EpochIsoDateTime,
+        appLastUpdateUserid: null,
+        appCreateUserid: null,
+        appLastUpdateUserGuid: null,
+        appCreateUserGuid: null,
       },
+      rowVersion: 0,
+      appCreateTimestamp: EpochIsoDateTime,
+      appLastUpdateTimestamp: EpochIsoDateTime,
+      appLastUpdateUserid: null,
+      appCreateUserid: null,
+      appLastUpdateUserGuid: null,
+      appCreateUserGuid: null,
     };
   }
 }
@@ -92,7 +108,7 @@ export class DocumentUploadFormData {
   public constructor(
     initialStatus: string,
     documentType: string,
-    metadata: Api_Storage_DocumentTypeMetadataType[],
+    metadata: ApiGen_Mayan_DocumentTypeMetadataType[],
   ) {
     this.documentStatusCode = initialStatus;
     this.documentTypeId = documentType;
@@ -103,21 +119,26 @@ export class DocumentUploadFormData {
     });
   }
 
-  public toRequestApi(file: File, documentType: Api_DocumentType): Api_DocumentUploadRequest {
-    var metadata: Api_DocumentMetadataUpdate[] = [];
+  public toRequestApi(
+    file: File,
+    documentType: ApiGen_Concepts_DocumentType,
+  ): ApiGen_Requests_DocumentUploadRequest {
+    var metadata: ApiGen_Concepts_DocumentMetadataUpdate[] = [];
     for (const key in this.documentMetadata) {
       const value = this.documentMetadata[key];
       metadata.push({
         metadataTypeId: Number(key),
         value: value,
+        id: 0,
       });
     }
 
     return {
-      documentType: documentType,
+      documentTypeId: documentType?.id,
       documentStatusCode: this.documentStatusCode,
       file: file,
       documentMetadata: metadata,
+      documentTypeMayanId: documentType?.mayanId,
     };
   }
 }
@@ -131,7 +152,7 @@ export class DocumentUpdateFormData {
 
   public static fromApi(
     composedDocument: ComposedDocument,
-    metadataTypes: Api_Storage_DocumentTypeMetadataType[],
+    metadataTypes: ApiGen_Mayan_DocumentTypeMetadataType[],
   ): DocumentUpdateFormData {
     var model = new DocumentUpdateFormData();
     model.documentId = composedDocument.pimsDocumentRelationship?.document?.id || 0;
@@ -142,7 +163,7 @@ export class DocumentUpdateFormData {
     model.documentMetadata = {};
     metadataTypes.forEach(metaType => {
       var foundMetadata = composedDocument.mayanMetadata?.find(
-        currentMeta => currentMeta.metadata_type.id === metaType.metadata_type?.id,
+        currentMeta => currentMeta?.metadata_type?.id === metaType.metadata_type?.id,
       );
       model.documentMetadata[metaType.metadata_type?.id?.toString() || '-'] =
         foundMetadata?.value ?? '';
@@ -153,8 +174,8 @@ export class DocumentUpdateFormData {
     return model;
   }
 
-  public toRequestApi(): Api_DocumentUpdateRequest {
-    var metadata: Api_DocumentMetadataUpdate[] = [];
+  public toRequestApi(): ApiGen_Requests_DocumentUpdateRequest {
+    var metadata: ApiGen_Concepts_DocumentMetadataUpdate[] = [];
 
     for (const key in this.documentMetadata) {
       const value = this.documentMetadata[key];
@@ -162,6 +183,7 @@ export class DocumentUpdateFormData {
       metadata.push({
         value: value,
         metadataTypeId: metadataTypeId,
+        id: 0,
       });
     }
 

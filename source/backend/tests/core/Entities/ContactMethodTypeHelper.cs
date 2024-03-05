@@ -15,7 +15,7 @@ namespace Pims.Core.Test
         /// <returns></returns>
         public static Entity.PimsContactMethodType CreateContactMethodType(string id)
         {
-            return new Entity.PimsContactMethodType(id) { ConcurrencyControlNumber = 1 };
+            return new Entity.PimsContactMethodType(id) { ConcurrencyControlNumber = 1, DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "desc" };
         }
 
         /// <summary>
@@ -26,10 +26,10 @@ namespace Pims.Core.Test
         {
             return new List<Entity.PimsContactMethodType>()
             {
-                new Entity.PimsContactMethodType("Email") { ConcurrencyControlNumber = 1 },
-                new Entity.PimsContactMethodType("Phone") { ConcurrencyControlNumber = 1 },
-                new Entity.PimsContactMethodType("Mobile") { ConcurrencyControlNumber = 1 },
-                new Entity.PimsContactMethodType("Fax") { ConcurrencyControlNumber = 1 },
+                new Entity.PimsContactMethodType("Email") { ConcurrencyControlNumber = 1, Description = "Active", DbCreateUserid = "test", DbLastUpdateUserid = "test" },
+                new Entity.PimsContactMethodType("Phone") { ConcurrencyControlNumber = 1, Description = "Active", DbCreateUserid = "test", DbLastUpdateUserid = "test" },
+                new Entity.PimsContactMethodType("Mobile") { ConcurrencyControlNumber = 1, Description = "Active", DbCreateUserid = "test", DbLastUpdateUserid = "test" },
+                new Entity.PimsContactMethodType("Fax") { ConcurrencyControlNumber = 1, Description = "Active", DbCreateUserid = "test", DbLastUpdateUserid = "test" },
             };
         }
     }

@@ -5,7 +5,6 @@ import { useApiAcquisitionFile } from '@/hooks/pims-api/useApiAcquisitionFile';
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import {
   Api_AcquisitionFile,
-  Api_AcquisitionFileChecklistItem,
   Api_AcquisitionFileOwner,
   Api_AcquisitionFileProperty,
   Api_AcquisitionFileTeam,
@@ -13,7 +12,7 @@ import {
 import { Api_CompensationFinancial } from '@/models/api/CompensationFinancial';
 import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
 import { Api_ExpropriationPayment } from '@/models/api/ExpropriationPayment';
-import { Api_LastUpdatedBy } from '@/models/api/File';
+import { Api_FileChecklistItem, Api_FileWithChecklist, Api_LastUpdatedBy } from '@/models/api/File';
 import { Api_Product, Api_Project } from '@/models/api/Project';
 import { Api_ExportProjectFilter } from '@/models/api/ProjectFilter';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
@@ -202,7 +201,7 @@ export const useAcquisitionProvider = () => {
   });
 
   const getAcquisitionChecklistApi = useApiRequestWrapper<
-    (acqFileId: number) => Promise<AxiosResponse<Api_AcquisitionFileChecklistItem[], any>>
+    (acqFileId: number) => Promise<AxiosResponse<Api_FileChecklistItem[], any>>
   >({
     requestFunction: useCallback(
       async (acqFileId: number) => await getAcquisitionFileChecklist(acqFileId),
@@ -213,10 +212,10 @@ export const useAcquisitionProvider = () => {
   });
 
   const updateAcquisitionChecklistApi = useApiRequestWrapper<
-    (acqFile: Api_AcquisitionFile) => Promise<AxiosResponse<Api_AcquisitionFile, any>>
+    (acqFile: Api_FileWithChecklist) => Promise<AxiosResponse<Api_AcquisitionFile, any>>
   >({
     requestFunction: useCallback(
-      async (acqFile: Api_AcquisitionFile) => await putAcquisitionFileChecklist(acqFile),
+      async (acqFile: Api_FileWithChecklist) => await putAcquisitionFileChecklist(acqFile),
       [putAcquisitionFileChecklist],
     ),
     requestName: 'UpdateAcquisitionFileChecklist',

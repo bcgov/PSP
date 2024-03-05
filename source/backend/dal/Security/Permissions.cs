@@ -188,5 +188,17 @@ namespace Pims.Dal.Security
 
         [Display(GroupName = "management", Name = "management-delete", Description = "Ability to delete Management information.")]
         ManagementDelete = 61,
+
+        [Display(GroupName = "disposition", Name = "disposition-view", Description = "Ability to view Disposition File information.")]
+        DispositionView = 62,
+
+        [Display(GroupName = "disposition", Name = "disposition-add", Description = "Ability to add new Disposition Files.")]
+        DispositionAdd = 63,
+
+        [Display(GroupName = "disposition", Name = "disposition-edit", Description = "Ability to edit existing Disposition File.")]
+        DispositionEdit = 64,
+
+        [Display(GroupName = "disposition", Name = "disposition-delete", Description = "Ability to delete Disposition Files.")]
+        DispositionDelete = 65,
     }
 }

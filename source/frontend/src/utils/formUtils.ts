@@ -32,7 +32,7 @@ export const phoneFormatter = (phoneNumber?: string) => {
   return '';
 };
 
-export function emptyStringtoNullable(value: string): string | null {
+export function emptyStringtoNullable(value: string | null): string | null {
   if (typeof value === 'string' && value === '') {
     return null;
   }
@@ -152,3 +152,8 @@ export function toRequiredTypeCode<T>(value?: Api_TypeCode<T>): Api_TypeCode<T> 
 export const getCurrencyCleanValue = (stringValue: string): number => {
   return Number(stringValue.replace(/[^0-9.-]/g, ''));
 };
+
+export function formatMinistryProject(projectNumber?: string | null, projectName?: string | null) {
+  const formattedValue = [projectNumber, projectName].filter(x => x).join(' - ');
+  return formattedValue;
+}

@@ -129,7 +129,7 @@ describe('compensation list view container', () => {
       claims: [],
     });
     viewProps.onDelete(1);
-    const continueButton = await screen.findByText('Continue');
+    const continueButton = await screen.findByText('Yes');
     act(() => userEvent.click(continueButton));
 
     expect(mockPostApi.execute).toHaveBeenCalledWith(1);
@@ -163,7 +163,7 @@ describe('compensation list view container', () => {
     expect(mockPutApi.execute).toHaveBeenCalledWith({ totalAllowableCompensation: 1000 }, []);
   });
 
-  it('displays a toast and throws an error if the api call fails', async () => {
+  it('displays an error modal and throws an error if the api call fails', async () => {
     mockPutApi.execute.mockRejectedValue(createAxiosError(400, 'total allowable update error'));
 
     await setup({});

@@ -10,6 +10,7 @@ import { Api_InterestHolder } from '@/models/api/InterestHolder';
 import { fromTypeCode, stringToNull, toTypeCode } from '@/utils/formUtils';
 
 import { PropertyForm } from '../../shared/models';
+import { ChecklistItemFormModel } from '../../shared/tabs/checklist/update/models';
 import {
   AcquisitionOwnerFormModel,
   AcquisitionTeamFormModel,
@@ -34,6 +35,7 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
   properties: PropertyForm[] = [];
   team: AcquisitionTeamFormModel[] = [];
   owners: AcquisitionOwnerFormModel[] = [];
+  fileCheckList: ChecklistItemFormModel[] = [];
 
   project?: IAutocompletePrediction;
   product: string = '';
@@ -85,6 +87,7 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
         InterestHolderForm.toApi(this.ownerSolicitor, []),
         InterestHolderForm.toApi(this.ownerRepresentative, []),
       ].filter((x): x is Api_InterestHolder => x !== null),
+      fileChecklistItems: this.fileCheckList.map(x => x.toApi()),
     };
   }
 

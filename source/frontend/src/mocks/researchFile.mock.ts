@@ -30,7 +30,7 @@ export const getMockResearchFile = (): Api_ResearchFile => ({
           description: 'Lower Mainland District',
           isDisabled: false,
         },
-        dataSourceEffectiveDate: '2022-09-02T00:00:00',
+        dataSourceEffectiveDateOnly: '2022-09-02T00:00:00',
         latitude: 49.27720127104871,
         longitude: -123.128633565,
         isSensitive: false,

@@ -2,9 +2,10 @@ using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Pims.Api.Models.Concepts.Http;
+
 using Pims.Api.Models.DocumentGeneration;
-using Pims.Api.Models.Download;
+
+using Pims.Api.Models.Requests.Http;
 using Pims.Api.Services;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -46,7 +47,7 @@ namespace Pims.Api.Controllers
 
         // [HasPermission(Permissions.GenerateDocuments)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(ExternalResult<Models.Cdogs.FileTypes>), 200)]
+        [ProducesResponseType(typeof(ExternalResponse<Models.Cdogs.FileTypes>), 200)]
         [SwaggerOperation(Tags = new[] { "document-generation" })]
         public async Task<IActionResult> GetSupportedDocumentTypes()
         {
@@ -60,7 +61,7 @@ namespace Pims.Api.Controllers
         [HttpPost("template")]
 
         // [HasPermission(Permissions.GenerateDocuments)]
-        [ProducesResponseType(typeof(ExternalResult<string>), 200)]
+        [ProducesResponseType(typeof(ExternalResponse<string>), 200)]
         [SwaggerOperation(Tags = new[] { "document-generation" })]
         public async Task<IActionResult> UploadTemplate([FromForm] IFormFile file)
         {
@@ -74,7 +75,7 @@ namespace Pims.Api.Controllers
         [HttpPost("template/generate/download-wrapped")]
 
         // [HasPermission(Permissions.GenerateDocuments)]
-        [ProducesResponseType(typeof(ExternalResult<FileDownload>), 200)]
+        [ProducesResponseType(typeof(ExternalResponse<FileDownloadResponse>), 200)]
         [SwaggerOperation(Tags = new[] { "document-generation" })]
         public async Task<IActionResult> UploadTemplateAndDownloadWrapped([FromBody] DocumentGenerationRequest request)
         {

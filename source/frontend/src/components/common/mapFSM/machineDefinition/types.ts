@@ -13,6 +13,7 @@ export enum SideBarType {
   LEASE_FILE = 'LEASE_FILE',
   PROJECT = 'PROJECT',
   PROPERTY_INFORMATION = 'PROPERTY_INFORMATION',
+  DISPOSITION = 'DISPOSITION',
 }
 
 // Local context for the machine - Not related to React Context!
@@ -33,6 +34,7 @@ export type MachineContext = {
   requestedFlyTo: RequestedFlyTo;
   filePropertyLocations: LatLngLiteral[];
   activePimsPropertyIds: number[];
+  showDisposed: boolean;
 };
 
 // Possible state machine states

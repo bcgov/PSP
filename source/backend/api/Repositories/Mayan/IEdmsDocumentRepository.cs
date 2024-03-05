@@ -1,9 +1,9 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using Pims.Api.Models.Concepts.Http;
-using Pims.Api.Models.Download;
+
 using Pims.Api.Models.Mayan;
 using Pims.Api.Models.Mayan.Document;
+using Pims.Api.Models.Requests.Http;
 
 namespace Pims.Api.Repositories.Mayan
 {
@@ -12,38 +12,38 @@ namespace Pims.Api.Repositories.Mayan
     /// </summary>
     public interface IEdmsDocumentRepository
     {
-        Task<ExternalResult<DocumentType>> TryCreateDocumentTypeAsync(DocumentType documentType);
+        Task<ExternalResponse<DocumentTypeModel>> TryCreateDocumentTypeAsync(DocumentTypeModel documentType);
 
-        Task<ExternalResult<DocumentType>> TryUpdateDocumentTypeAsync(DocumentType documentType);
+        Task<ExternalResponse<DocumentTypeModel>> TryUpdateDocumentTypeAsync(DocumentTypeModel documentType);
 
-        Task<ExternalResult<string>> TryDeleteDocumentTypeAsync(long documentTypeId);
+        Task<ExternalResponse<string>> TryDeleteDocumentTypeAsync(long documentTypeId);
 
-        Task<ExternalResult<QueryResult<DocumentType>>> TryGetDocumentTypesAsync(string ordering = "", int? page = null, int? pageSize = null);
+        Task<ExternalResponse<QueryResponse<DocumentTypeModel>>> TryGetDocumentTypesAsync(string ordering = "", int? page = null, int? pageSize = null);
 
-        Task<ExternalResult<QueryResult<DocumentTypeMetadataType>>> TryGetDocumentTypeMetadataTypesAsync(long documentTypeId, string ordering = "", int? page = null, int? pageSize = null);
+        Task<ExternalResponse<QueryResponse<DocumentTypeMetadataTypeModel>>> TryGetDocumentTypeMetadataTypesAsync(long documentTypeId, string ordering = "", int? page = null, int? pageSize = null);
 
-        Task<ExternalResult<QueryResult<DocumentDetail>>> TryGetDocumentsListAsync(string ordering = "", int? page = null, int? pageSize = null);
+        Task<ExternalResponse<QueryResponse<DocumentDetailModel>>> TryGetDocumentsListAsync(string ordering = "", int? page = null, int? pageSize = null);
 
-        Task<ExternalResult<QueryResult<DocumentMetadata>>> TryGetDocumentMetadataAsync(long documentId, string ordering = "", int? page = null, int? pageSize = null);
+        Task<ExternalResponse<QueryResponse<DocumentMetadataModel>>> TryGetDocumentMetadataAsync(long documentId, string ordering = "", int? page = null, int? pageSize = null);
 
-        Task<ExternalResult<DocumentDetail>> TryGetDocumentAsync(long documentId);
+        Task<ExternalResponse<DocumentDetailModel>> TryGetDocumentAsync(long documentId);
 
-        Task<ExternalResult<FileDownload>> TryDownloadFileAsync(long documentId, long fileId);
+        Task<ExternalResponse<FileDownloadResponse>> TryDownloadFileAsync(long documentId, long fileId);
 
-        Task<ExternalResult<string>> TryDeleteDocument(long documentId);
+        Task<ExternalResponse<string>> TryDeleteDocument(long documentId);
 
-        Task<ExternalResult<DocumentDetail>> TryUploadDocumentAsync(long documentType, IFormFile file);
+        Task<ExternalResponse<DocumentDetailModel>> TryUploadDocumentAsync(long documentType, IFormFile file);
 
-        Task<ExternalResult<DocumentMetadata>> TryCreateDocumentMetadataAsync(long documentId, long metadataTypeId, string value);
+        Task<ExternalResponse<DocumentMetadataModel>> TryCreateDocumentMetadataAsync(long documentId, long metadataTypeId, string value);
 
-        Task<ExternalResult<DocumentMetadata>> TryUpdateDocumentMetadataAsync(long documentId, long metadataId, string value);
+        Task<ExternalResponse<DocumentMetadataModel>> TryUpdateDocumentMetadataAsync(long documentId, long metadataId, string value);
 
-        Task<ExternalResult<string>> TryDeleteDocumentMetadataAsync(long documentId, long metadataId);
+        Task<ExternalResponse<string>> TryDeleteDocumentMetadataAsync(long documentId, long metadataId);
 
-        Task<ExternalResult<DocumentTypeMetadataType>> TryCreateDocumentTypeMetadataTypeAsync(long documentTypeId, long metadataTypeId, bool isRequired);
+        Task<ExternalResponse<DocumentTypeMetadataTypeModel>> TryCreateDocumentTypeMetadataTypeAsync(long documentTypeId, long metadataTypeId, bool isRequired);
 
-        Task<ExternalResult<DocumentTypeMetadataType>> TryUpdateDocumentTypeMetadataTypeAsync(long documentTypeId, long documentTypeMetadataTypeId, bool isRequired);
+        Task<ExternalResponse<DocumentTypeMetadataTypeModel>> TryUpdateDocumentTypeMetadataTypeAsync(long documentTypeId, long documentTypeMetadataTypeId, bool isRequired);
 
-        Task<ExternalResult<string>> TryDeleteDocumentTypeMetadataTypeAsync(long documentTypeId, long documentTypeMetadataTypeId);
+        Task<ExternalResponse<string>> TryDeleteDocumentTypeMetadataTypeAsync(long documentTypeId, long documentTypeMetadataTypeId);
     }
 }

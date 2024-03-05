@@ -49,7 +49,7 @@ namespace PIMS.Tests.Automation.Data
                     {
                         RowNumber = row,
                         ColumnName = ExcelSheetFile.Columns[col].ColumnName,
-                        ColumnValue = ExcelSheetFile.Rows[row - 1][col].ToString()
+                        ColumnValue = ExcelSheetFile.Rows[row - 1][col].ToString()!
                     };
 
                     //Add detaile per row 
@@ -65,9 +65,9 @@ namespace PIMS.Tests.Automation.Data
                 //Retriving Data using LINQ 
                 string data = (from colData in dataCollection
                                where colData.ColumnName == ColumnName && colData.RowNumber == rowNumber
-                               select colData.ColumnValue).FirstOrDefault();
+                               select colData.ColumnValue).FirstOrDefault()!;
 
-                return data.ToString();
+                return data!.ToString();
             }
             catch (Exception e)
             {

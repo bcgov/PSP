@@ -10,6 +10,7 @@ import {
   mockAcquisitionFileOwnersResponse,
   mockAcquisitionFileResponse,
 } from '@/mocks/acquisitionFiles.mock';
+import { mockApiPerson } from '@/mocks/filterData.mock';
 import { getMockApiInterestHolders } from '@/mocks/interestHolders.mock';
 import { mockLastUpdatedBy } from '@/mocks/lastUpdatedBy.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
@@ -29,6 +30,17 @@ import AcquisitionView, { IAcquisitionViewProps } from './AcquisitionView';
 jest.mock('@react-keycloak/web');
 
 jest.mock('@/components/common/mapFSM/MapStateMachineContext');
+jest.mock('@/hooks/repositories/useComposedProperties', () => {
+  return {
+    useComposedProperties: jest.fn().mockResolvedValue({ apiWrapper: { response: {} } }),
+    PROPERTY_TYPES: {},
+  };
+});
+jest.mock('@/features/mapSideBar/hooks/usePropertyDetails', () => {
+  return {
+    usePropertyDetails: jest.fn(),
+  };
+});
 
 const onClose = jest.fn();
 const onSave = jest.fn();
@@ -68,7 +80,6 @@ const DEFAULT_PROPS: IAcquisitionViewProps = {
   containerState: {
     isEditing: false,
     selectedMenuIndex: 0,
-    showConfirmModal: false,
     defaultFileTab: FileTabType.FILE_DETAILS,
     defaultPropertyTab: InventoryTabNames.property,
   },
@@ -129,6 +140,16 @@ describe('AcquisitionView component', () => {
       ),
       rest.get('/api/acquisitionfiles/:id/owners', (req, res, ctx) =>
         res(ctx.delay(500), ctx.status(200), ctx.json(mockAcquisitionFileOwnersResponse())),
+      ),
+      rest.get('/api/persons/concept/:id', (req, res, ctx) =>
+        res(ctx.delay(500), ctx.status(200), ctx.json(mockApiPerson)),
+      ),
+      rest.get('/api/acquisitionfiles/:id/properties', (req, res, ctx) =>
+        res(
+          ctx.delay(500),
+          ctx.status(200),
+          ctx.json(mockAcquisitionFileResponse().fileProperties),
+        ),
       ),
       rest.get('/api/acquisitionfiles/:id/interestholders', (req, res, ctx) =>
         res(ctx.delay(500), ctx.status(200), ctx.json(getMockApiInterestHolders())),

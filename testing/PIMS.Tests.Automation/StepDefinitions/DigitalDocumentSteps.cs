@@ -22,6 +22,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
             documentFiles = UploadFileDocuments();
             documentsRowStart = 0;
             documentsRowsQuantity = 0;
+
+            digitalDocumentList = new List<DigitalDocument>();
         }
 
         [StepDefinition(@"I create Digital Documents for a ""(.*)"" row number (.*)")]
@@ -43,6 +45,41 @@ namespace PIMS.Tests.Automation.StepDefinitions
             {
                 //Add a New Document
                 digitalDocumentsTab.AddNewDocument(fileType);
+
+                //Verify and create a new Document
+                digitalDocumentsTab.VerifyDocumentFields(digitalDocumentList[i].DocumentType);
+                digitalDocumentsTab.CreateNewDocumentType(digitalDocumentList[i]);
+
+                //Upload one digital document
+                Random random = new Random();
+                var index = random.Next(0, documentFiles.Count());
+                var document = documentFiles.ElementAt(index);
+
+                digitalDocumentsTab.UploadDocument(document.Url);
+
+                //Save digital document
+                digitalDocumentsTab.SaveDigitalDocument();
+
+                //Verify Details View Form
+                digitalDocumentsTab.ViewLastDocument(i);
+                digitalDocumentsTab.VerifyDocumentDetailsCreateViewForm(digitalDocumentList[i]);
+                digitalDocumentsTab.CloseDigitalDocumentViewDetails();
+            }
+        }
+
+        [StepDefinition(@"I create Digital Documents for a Property Management row number (.*)")]
+        public void DocumentActivityCreate(int rowNumber)
+        {
+            //Verify Initial List View
+            digitalDocumentsTab.VerifyDocumentsListView("Property Management");
+
+            //Getting Digital Document Details
+            PopulateDigitalDocumentIndex(rowNumber);
+
+            for (var i = 0; i < digitalDocumentList.Count; i++)
+            {
+                //Add a New Document
+                digitalDocumentsTab.AddNewDocument("Property Management");
 
                 //Verify and create a new Document
                 digitalDocumentsTab.VerifyDocumentFields(digitalDocumentList[i].DocumentType);
@@ -197,7 +234,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateDigitalDocumentIndex(int rowNumber)
         {
-            DataTable documentsIndexSheet = ExcelDataContext.GetInstance().Sheets["DocumentsIndex"];
+            DataTable documentsIndexSheet = ExcelDataContext.GetInstance().Sheets["DocumentsIndex"]!;
             ExcelDataContext.PopulateInCollection(documentsIndexSheet);
 
             digitalDocumentList = new List<DigitalDocument>();
@@ -213,7 +250,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateDigitalDocumentsDetails(int rowNumber)
         {
-            DataTable documentDetailsSheet = ExcelDataContext.GetInstance().Sheets["DocumentsDetails"];
+            DataTable documentDetailsSheet = ExcelDataContext.GetInstance().Sheets["DocumentsDetails"]!;
             ExcelDataContext.PopulateInCollection(documentDetailsSheet);
 
             DigitalDocument digitalDocument = new DigitalDocument();

@@ -18,6 +18,7 @@ interface IFileTabsProps {
 
 export enum FileTabType {
   FILE_DETAILS = 'fileDetails',
+  OFFERS_AND_SALE = 'offersAndSale',
   CHECKLIST = 'checklist',
   DOCUMENTS = 'documents',
   NOTES = 'notes',
@@ -39,6 +40,8 @@ export const FileTabs: React.FunctionComponent<React.PropsWithChildren<IFileTabs
 }) => {
   return (
     <TabView
+      unmountOnExit
+      mountOnEnter
       defaultActiveKey={defaultTabKey}
       activeKey={activeTab}
       onSelect={(eventKey: string | null) => {

@@ -17,6 +17,8 @@ namespace Pims.Dal.Repositories
     /// </summary>
     public class ResearchFileRepository : BaseRepository<PimsResearchFile>, IResearchFileRepository
     {
+        private readonly ISequenceRepository _sequenceRepository;
+
         #region Constructors
 
         /// <summary>
@@ -25,9 +27,10 @@ namespace Pims.Dal.Repositories
         /// <param name="dbContext"></param>
         /// <param name="user"></param>
         /// <param name="logger"></param>
-        public ResearchFileRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<ResearchFileRepository> logger)
+        public ResearchFileRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<ResearchFileRepository> logger, ISequenceRepository sequenceRepository)
             : base(dbContext, user, logger)
         {
+            _sequenceRepository = sequenceRepository;
         }
         #endregion
 
@@ -176,18 +179,22 @@ namespace Pims.Dal.Repositories
             lastUpdatedByAggregate.AddRange(documentsLastUpdatedBy);
 
             // This is needed to get the document last-updated-by from the document that where deleted
-            var documentsHistoryLastUpdatedBy = this.Context.PimsResearchFileDocumentHists.AsNoTracking()
+            var deletedDocuments = this.Context.PimsResearchFileDocumentHists.AsNoTracking()
                 .Where(rdh => rdh.ResearchFileId == id)
-                .Select(rdh => new LastUpdatedByModel()
-                {
-                    ParentId = id,
-                    AppLastUpdateUserid = rdh.AppLastUpdateUserid, // TODO: Update this once the DB tracks the user
-                    AppLastUpdateUserGuid = rdh.AppLastUpdateUserGuid, // TODO: Update this once the DB tracks the user
-                    AppLastUpdateTimestamp = rdh.EndDateHist ?? DateTime.UnixEpoch,
-                })
-                .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
-                .Take(1)
-                .ToList();
+                .GroupBy(rdh => rdh.ResearchFileDocumentId)
+                .Select(grdh => grdh.OrderByDescending(a => a.EffectiveDateHist).FirstOrDefault()).ToList();
+
+            var documentsHistoryLastUpdatedBy = deletedDocuments
+            .Select(rdh => new LastUpdatedByModel()
+            {
+                ParentId = id,
+                AppLastUpdateUserid = rdh.AppLastUpdateUserid, // TODO: Update this once the DB tracks the user
+                AppLastUpdateUserGuid = rdh.AppLastUpdateUserGuid, // TODO: Update this once the DB tracks the user
+                AppLastUpdateTimestamp = rdh.EndDateHist ?? DateTime.UnixEpoch,
+            })
+            .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
+            .Take(1)
+            .ToList();
             lastUpdatedByAggregate.AddRange(documentsHistoryLastUpdatedBy);
 
             var notesLastUpdatedBy = this.Context.PimsResearchFileNotes.AsNoTracking()
@@ -206,14 +213,18 @@ namespace Pims.Dal.Repositories
             lastUpdatedByAggregate.AddRange(notesLastUpdatedBy);
 
             // This is needed to get the notes last-updated-by from the notes that where deleted
-            var notesHistoryLastUpdatedBy = this.Context.PimsResearchFileNoteHists.AsNoTracking()
-                .Where(rnh => rnh.ResearchFileId == id)
-                .Select(rnh => new LastUpdatedByModel()
+            var deletedNotes = this.Context.PimsResearchFileNoteHists.AsNoTracking()
+                .Where(aph => aph.ResearchFileId == id)
+                .GroupBy(aph => aph.ResearchFileNoteId)
+                .Select(gaph => gaph.OrderByDescending(a => a.EffectiveDateHist).FirstOrDefault()).ToList();
+
+            var notesHistoryLastUpdatedBy = deletedNotes
+                .Select(anh => new LastUpdatedByModel()
                 {
                     ParentId = id,
-                    AppLastUpdateUserid = rnh.AppLastUpdateUserid, // TODO: Update this once the DB tracks the user
-                    AppLastUpdateUserGuid = rnh.AppLastUpdateUserGuid, // TODO: Update this once the DB tracks the user
-                    AppLastUpdateTimestamp = rnh.EndDateHist ?? DateTime.UnixEpoch,
+                    AppLastUpdateUserid = anh.AppLastUpdateUserid, // TODO: Update this once the DB tracks the user
+                    AppLastUpdateUserGuid = anh.AppLastUpdateUserGuid, // TODO: Update this once the DB tracks the user
+                    AppLastUpdateTimestamp = anh.EndDateHist ?? DateTime.UnixEpoch,
                 })
                 .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
                 .Take(1)
@@ -234,9 +245,13 @@ namespace Pims.Dal.Repositories
                 .ToList();
             lastUpdatedByAggregate.AddRange(propertiesLastUpdatedBy);
 
-            // This is needed to get the notes last-updated-by from the notes that where deleted
-            var propertiesHistoryLastUpdatedBy = this.Context.PimsPropertyResearchFileHists.AsNoTracking()
-            .Where(rph => rph.ResearchFileId == id)
+            // This is needed to get the properties last-updated-by from the notes that where deleted
+            var deletedProperties = this.Context.PimsPropertyResearchFileHists.AsNoTracking()
+                .Where(aph => aph.ResearchFileId == id)
+                .GroupBy(aph => aph.PropertyResearchFileId)
+                .Select(gaph => gaph.OrderByDescending(a => a.EffectiveDateHist).FirstOrDefault()).ToList();
+
+            var propertiesHistoryLastUpdatedBy = deletedProperties
             .Select(rph => new LastUpdatedByModel()
             {
                 ParentId = id,
@@ -303,13 +318,7 @@ namespace Pims.Dal.Repositories
         /// <param name="context"></param>
         private long GetNextResearchSequenceValue()
         {
-            SqlParameter result = new SqlParameter("@result", System.Data.SqlDbType.BigInt)
-            {
-                Direction = System.Data.ParameterDirection.Output,
-            };
-            this.Context.Database.ExecuteSqlRaw("set @result = next value for dbo.PIMS_RESEARCH_FILE_ID_SEQ;", result);
-
-            return (long)result.Value;
+            return _sequenceRepository.GetNextSequenceValue("dbo.PIMS_RESEARCH_FILE_ID_SEQ");
         }
         #endregion
     }

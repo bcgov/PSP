@@ -10,6 +10,8 @@ namespace Pims.Dal.Repositories
 
         IEnumerable<PimsNote> GetAllAcquisitionNotesById(long acquisitionId);
 
+        IEnumerable<PimsNote> GetAllDispositionNotesById(long dispositionId);
+
         IEnumerable<PimsNote> GetAllLeaseNotesById(long leaseId);
 
         IEnumerable<PimsNote> GetAllProjectNotesById(long entityId);
@@ -17,6 +19,8 @@ namespace Pims.Dal.Repositories
         IEnumerable<PimsNote> GetAllResearchNotesById(long entityId);
 
         bool DeleteAcquisitionFileNotes(long noteId);
+
+        bool DeleteDispositionFileNotes(long noteId);
 
         bool DeleteLeaseFileNotes(long noteId);
 

@@ -24,8 +24,8 @@ namespace Pims.Api.Models.Concepts.Lease
 
         public long? PrimaryContactId { get; set; }
 
-        public TypeModel<string> LessorType { get; set; }
+        public CodeTypeModel<string> LessorType { get; set; }
 
-        public TypeModel<string> TenantTypeCode { get; set; }
+        public CodeTypeModel<string> TenantTypeCode { get; set; }
     }
 }

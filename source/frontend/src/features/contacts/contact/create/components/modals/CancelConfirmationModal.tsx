@@ -1,5 +1,3 @@
-import React from 'react';
-
 import GenericModal, { ModalProps } from '@/components/common/GenericModal';
 
 export type ICancelConfirmationModalProps = Omit<
@@ -9,10 +7,16 @@ export type ICancelConfirmationModalProps = Omit<
 
 export const CancelConfirmationModal = (props: ICancelConfirmationModalProps) => (
   <GenericModal
-    title="Unsaved Changes"
-    message="Confirm cancel adding this contact? Changes will not be saved."
-    okButtonText="Confirm"
+    title="Confirm Changes"
+    message={
+      <>
+        <p>If you choose to cancel now, your changes will not be saved.</p>
+        <p>Do you want to proceed?</p>
+      </>
+    }
+    okButtonText="Yes"
     cancelButtonText="No"
     {...props}
+    variant="info"
   ></GenericModal>
 );

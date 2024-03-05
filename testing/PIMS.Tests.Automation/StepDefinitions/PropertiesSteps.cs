@@ -1,8 +1,5 @@
-﻿
-
-using PIMS.Tests.Automation.Classes;
+﻿using PIMS.Tests.Automation.Classes;
 using PIMS.Tests.Automation.Data;
-using PIMS.Tests.Automation.PageObjects;
 using System.Data;
 
 namespace PIMS.Tests.Automation.StepDefinitions
@@ -11,8 +8,11 @@ namespace PIMS.Tests.Automation.StepDefinitions
     public class PropertiesSteps
     {
         private readonly LoginSteps loginSteps;
-        private SearchProperties searchProperties;
-        private PropertyInformation propertyInformation;
+        private readonly SearchProperties searchProperties;
+        private readonly PropertyInformation propertyInformation;
+        private readonly PropertyManagementTab propertyManagementTab;
+        private readonly PropertyPIMSFiles pimsFiles;
+
         private readonly GenericSteps genericSteps;
 
         private readonly string userName = "TRANPSP1";
@@ -20,7 +20,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private Property property;
         private SearchProperty searchProperty;
         private PropertyManagement propertyManagement;
-        private PropertyManagementTab propertyManagementTab;
+
 
         public PropertiesSteps(BrowserDriver driver)
         {
@@ -28,13 +28,18 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchProperties = new SearchProperties(driver.Current);
             propertyInformation = new PropertyInformation(driver.Current);
             propertyManagementTab = new PropertyManagementTab(driver.Current);
+            pimsFiles = new PropertyPIMSFiles(driver.Current);
             genericSteps = new GenericSteps(driver);
+
+            property = new Property();
+            searchProperty = new SearchProperty();
+            propertyManagement = new PropertyManagement();
         }
 
         [StepDefinition(@"I search for a Property in the Inventory by different filters from row number (.*)")]
         public void SearchInventoryPropertyOnMap(int rowNumber)
         {
-            /* TEST COVERAGE:  PSP-1546, PSP-5090, PSP-5091, PSP-5092 */
+            /* TEST COVERAGE:  PSP-1546, PSP-5090, PSP-5091, PSP-5092, PSP-6693 */
 
             //Login to PIMS
             loginSteps.Idir(userName);
@@ -47,16 +52,25 @@ namespace PIMS.Tests.Automation.StepDefinitions
             Assert.True(searchProperties.PropertiesFoundCount() == 1);
 
             //Search for a valid PIN in Inventory
+            searchProperties.SearchPropertyReset();
             searchProperties.SearchPropertyByPINPID(searchProperty.PIN);
 
             //Validate that the result gives only one pin
             Assert.True(searchProperties.PropertiesFoundCount() == 1);
 
             //Search for a valid PID in Inventory
+            searchProperties.SearchPropertyReset();
             searchProperties.SearchPropertyByPINPID(searchProperty.PID);
 
             //Validate that the result gives only one pin
             Assert.True(searchProperties.PropertiesFoundCount() == 1);
+
+            //Search for a valid Plan in Inventory
+            searchProperties.SearchPropertyReset();
+            searchProperties.SearchPropertyByPlan(searchProperty.PlanNumber);
+
+            //Validate that the result gives only one pin
+            Assert.True(searchProperties.PropertiesClustersFoundCount() == 1);
 
         }
 
@@ -203,6 +217,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 propertyManagementTab.VerifyLastInsertedPropertyContactTable(propertyManagement.ManagementPropertyContacts[i]);
             }
 
+            //Insert Activities
             for (int j = 0; j < propertyManagement.ManagementPropertyActivities.Count; j++)
             {
                 propertyManagementTab.AddNewPropertyActivityButton();
@@ -213,6 +228,30 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 propertyManagementTab.ViewLastActivityFromList();
                 propertyManagementTab.VerifyLastInsertedActivityTable(propertyManagement.ManagementPropertyActivities[j]);
             }
+        }
+
+        [StepDefinition(@"I insert activities to the Property Management Tab from row number (.*)")]
+        public void InsertActivityManagementPropertyTab(int rowNumber)
+        {
+            //Grab data from excel
+            PopulateManagementProperty(rowNumber);
+
+            //Go to the Property Management Tab
+            propertyManagementTab.NavigateManagementTab();
+            //propertyManagementTab.VerifyInitManagementTabView();
+
+            //Insert Activities
+            for (int j = 0; j < propertyManagement.ManagementPropertyActivities.Count; j++)
+            {
+                propertyManagementTab.AddNewPropertyActivityButton();
+                propertyManagementTab.VerifyCreateActivityInitForm();
+                propertyManagementTab.InsertNewPropertyActivity(propertyManagement.ManagementPropertyActivities[j]);
+                propertyManagementTab.SavePropertyManagement();
+                propertyManagementTab.VerifyInsertedActivity(propertyManagement.ManagementPropertyActivities[j]);
+                propertyManagementTab.ViewLastActivityFromList();
+                propertyManagementTab.VerifyLastInsertedActivityTable(propertyManagement.ManagementPropertyActivities[j]);
+            }
+
         }
 
         [StepDefinition(@"I update information in the Property Management Tab from row number (.*)")]
@@ -269,25 +308,21 @@ namespace PIMS.Tests.Automation.StepDefinitions
             propertyManagementTab.DeleteAllActivities();
         }
 
-        [StepDefinition(@"LTSA Pop-up Information validation is successful")]
-        public void ValidateLTSAPopUp()
+        [StepDefinition(@"I delete all activities from the Property Management Tab")]
+        public void DeleteActivitiesManagementPropertyTab()
         {
-            /* TEST COVERAGE: PSP-3186 */
+            //Close Activity Tray
+            propertyManagementTab.CloseActivityTray();
 
-            //Select found property on Map
-            searchProperties.SelectFoundPin();
+            //Delete all Activities
+            propertyManagementTab.DeleteAllActivities();
+        }
 
-            //Validate LTSA Pop-up
-            propertyInformation.VerifyPropertyMapPopUpView();
-
-            //Close Property Details Form
-            propertyInformation.ClosePropertyInfoModal();
-
-            //Reset Map
-            searchProperties.SearchPropertyReset();
-
-            //Close LTSA Pop-up
-            propertyInformation.CloseLTSAPopUp();
+        [StepDefinition(@"I verify the PIMS Files Tab")]
+        public void VerifyPIMSFilesTab()
+        {
+            pimsFiles.NavigatePIMSFiles();
+            pimsFiles.VerifyPimsFiles();
         }
 
         [StepDefinition(@"No Properties were found")]
@@ -322,9 +357,24 @@ namespace PIMS.Tests.Automation.StepDefinitions
             propertyManagementTab.VerifyInitManagementTabView();
         }
 
+        [StepDefinition(@"PIMS Files Tab has rendered successfully")]
+        public void VerifySuccessPIMSFile()
+        {
+            Assert.True(pimsFiles.GetResearchFilesCount() > 0);
+            Assert.True(pimsFiles.GetAcquisitionFilesCount() > 0);
+            Assert.True(pimsFiles.GetLeasesCount() > 0);
+            Assert.True(pimsFiles.GetDispositionFilesCount() > 0);
+        }
+
+        [StepDefinition(@"Properties filters works successfully")]
+        public void PropertySearchBarSuccess()
+        {
+            searchProperties.SearchPropertyReset();
+        }
+
         private void PopulateProperty(int rowNumber)
         {
-            DataTable propertiesSheet = ExcelDataContext.GetInstance().Sheets["Properties"];
+            DataTable propertiesSheet = ExcelDataContext.GetInstance().Sheets["Properties"]!;
             ExcelDataContext.PopulateInCollection(propertiesSheet);
 
             property = new Property();
@@ -358,7 +408,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateSearchProperty(int rowNumber)
         {
-            DataTable searchPropertiesSheet = ExcelDataContext.GetInstance().Sheets["SearchProperties"];
+            DataTable searchPropertiesSheet = ExcelDataContext.GetInstance().Sheets["SearchProperties"]!;
             ExcelDataContext.PopulateInCollection(searchPropertiesSheet);
 
             searchProperty = new SearchProperty();
@@ -372,7 +422,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateManagementProperty(int rowNumber)
         {
-            DataTable propertyManagementSheet = ExcelDataContext.GetInstance().Sheets["PropertyManagement"];
+            DataTable propertyManagementSheet = ExcelDataContext.GetInstance().Sheets["PropertyManagement"]!;
             ExcelDataContext.PopulateInCollection(propertyManagementSheet);
 
             propertyManagement = new PropertyManagement();
@@ -395,7 +445,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateManagementContactsCollection(int startRow, int rowsCount)
         {
-            DataTable managementContactsSheet = ExcelDataContext.GetInstance().Sheets["PropertyManagementContact"];
+            DataTable managementContactsSheet = ExcelDataContext.GetInstance().Sheets["PropertyManagementContact"]!;
             ExcelDataContext.PopulateInCollection(managementContactsSheet);
 
             for (int i = startRow; i < startRow + rowsCount; i++)
@@ -412,7 +462,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateManagementActivitiesCollection(int startRow, int rowsCount)
         {
-            DataTable managementActivitesSheet = ExcelDataContext.GetInstance().Sheets["PropertyManagementActivity"];
+            DataTable managementActivitesSheet = ExcelDataContext.GetInstance().Sheets["PropertyManagementActivity"]!;
             ExcelDataContext.PopulateInCollection(managementActivitesSheet);
 
             for (int i = startRow; i < startRow + rowsCount; i++)
@@ -444,7 +494,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateManagementActivitiesInvoiceCollection(int startRow, int rowsCount, List<ManagementPropertyActivityInvoice> invoices)
         {
-            DataTable invoicesSheet = ExcelDataContext.GetInstance().Sheets["ManagementPropActivityInvoice"];
+            DataTable invoicesSheet = ExcelDataContext.GetInstance().Sheets["ManagementPropActivityInvoice"]!;
             ExcelDataContext.PopulateInCollection(invoicesSheet);
 
             for (int i = startRow; i < startRow + rowsCount; i++)

@@ -135,7 +135,7 @@ export function useSearch<ISearchResult extends object, IFilter extends object>(
       return;
     }
     callApi(currentPage, filter);
-  }, [currentPage, filter, callApi]);
+  }, [currentPage, filter, callApi, refreshIndex]);
 
   // allow manual re-triggers of the API calls
   const executeFn = useCallback(() => {

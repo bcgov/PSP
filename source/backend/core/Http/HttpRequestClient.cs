@@ -354,7 +354,7 @@ namespace Pims.Core.Http
             if (!(onError?.Invoke(response) ?? false))
             {
                 var error = new HttpClientRequestException(response);
-                _logger.LogError(error, "HttpClient request error exception", error.Message);
+                _logger.LogError(error, "HttpClient request error exception {error.Message}", error.Message);
                 throw error;
             }
 

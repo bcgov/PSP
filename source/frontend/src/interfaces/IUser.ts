@@ -1,6 +1,5 @@
-import { Moment } from 'moment';
-
 import Api_TypeCode from '@/models/api/TypeCode';
+import { UtcIsoDateTime } from '@/models/api/UtcIsoDateTime';
 
 import { IRole } from './IRole';
 
@@ -19,8 +18,8 @@ export interface IUser {
   roles?: IRole[];
   regions?: Api_TypeCode<string>[];
   isDisabled?: boolean;
-  lastLogin?: Date | string | Moment;
-  appCreateTimestamp?: Date | string | Moment;
+  lastLogin?: UtcIsoDateTime;
+  appCreateTimestamp?: UtcIsoDateTime;
   rowVersion?: number;
   landline?: string;
   mobile?: string;

@@ -27,6 +27,10 @@ namespace Pims.Dal.Entities
         {
             Id = id;
         }
+
+        public PimsLeaseStatusType()
+        {
+        }
         #endregion
 
         public static class PimsLeaseStatusTypes

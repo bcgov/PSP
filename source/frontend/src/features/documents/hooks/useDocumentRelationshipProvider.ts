@@ -2,15 +2,13 @@ import { AxiosError, AxiosResponse } from 'axios';
 import { useCallback } from 'react';
 import { toast } from 'react-toastify';
 
-import { DocumentRelationshipType } from '@/constants/documentRelationshipType';
 import { useApiDocuments } from '@/hooks/pims-api/useApiDocuments';
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import { IApiError } from '@/interfaces/IApiError';
-import {
-  Api_DocumentRelationship,
-  Api_DocumentUploadRequest,
-  Api_DocumentUploadResponse,
-} from '@/models/api/Document';
+import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
+import { ApiGen_Concepts_DocumentRelationship } from '@/models/api/generated/ApiGen_Concepts_DocumentRelationship';
+import { ApiGen_Requests_DocumentUploadRequest } from '@/models/api/generated/ApiGen_Requests_DocumentUploadRequest';
+import { ApiGen_Requests_DocumentUploadResponse } from '@/models/api/generated/ApiGen_Requests_DocumentUploadResponse';
 
 /**
  * hook that retrieves document relationship information.
@@ -26,12 +24,12 @@ export const useDocumentRelationshipProvider = () => {
   const { execute: retrieveDocumentRelationship, loading: retrieveDocumentRelationshipLoading } =
     useApiRequestWrapper<
       (
-        relationshipType: DocumentRelationshipType,
+        relationshipType: ApiGen_CodeTypes_DocumentRelationType,
         parentId: string,
-      ) => Promise<AxiosResponse<Api_DocumentRelationship[], any>>
+      ) => Promise<AxiosResponse<ApiGen_Concepts_DocumentRelationship[], any>>
     >({
       requestFunction: useCallback(
-        async (relationshipType: DocumentRelationshipType, parentId: string) =>
+        async (relationshipType: ApiGen_CodeTypes_DocumentRelationType, parentId: string) =>
           await getDocumentRelationshipApiCall(relationshipType, parentId),
         [getDocumentRelationshipApiCall],
       ),
@@ -49,14 +47,14 @@ export const useDocumentRelationshipProvider = () => {
   const { execute: deleteDocumentRelationship, loading: deleteDocumentRelationshipLoading } =
     useApiRequestWrapper<
       (
-        relationshipType: DocumentRelationshipType,
-        documentRelationship: Api_DocumentRelationship,
+        relationshipType: ApiGen_CodeTypes_DocumentRelationType,
+        documentRelationship: ApiGen_Concepts_DocumentRelationship,
       ) => Promise<AxiosResponse<boolean, any>>
     >({
       requestFunction: useCallback(
         async (
-          relationshipType: DocumentRelationshipType,
-          documentRelationship: Api_DocumentRelationship,
+          relationshipType: ApiGen_CodeTypes_DocumentRelationType,
+          documentRelationship: ApiGen_Concepts_DocumentRelationship,
         ) => await deleteDocumentRelationshipApiCall(relationshipType, documentRelationship),
         [deleteDocumentRelationshipApiCall],
       ),
@@ -80,16 +78,16 @@ export const useDocumentRelationshipProvider = () => {
   // Provides functionality for uploading a document for a given relationship
   const { execute: uploadDocument, loading: uploadDocumentLoading } = useApiRequestWrapper<
     (
-      relationshipType: DocumentRelationshipType,
+      relationshipType: ApiGen_CodeTypes_DocumentRelationType,
       parentId: string,
-      uploadRequest: Api_DocumentUploadRequest,
-    ) => Promise<AxiosResponse<Api_DocumentUploadResponse, any>>
+      uploadRequest: ApiGen_Requests_DocumentUploadRequest,
+    ) => Promise<AxiosResponse<ApiGen_Requests_DocumentUploadResponse, any>>
   >({
     requestFunction: useCallback(
       async (
-        relationshipType: DocumentRelationshipType,
+        relationshipType: ApiGen_CodeTypes_DocumentRelationType,
         parentId: string,
-        uploadRequest: Api_DocumentUploadRequest,
+        uploadRequest: ApiGen_Requests_DocumentUploadRequest,
       ) => await uploadDocumentRelationshipApiCall(relationshipType, parentId, uploadRequest),
       [uploadDocumentRelationshipApiCall],
     ),

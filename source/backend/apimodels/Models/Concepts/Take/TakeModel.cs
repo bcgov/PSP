@@ -17,7 +17,7 @@ namespace Pims.Api.Models.Concepts.Take
 
         public float? NewHighwayDedicationArea { get; set; }
 
-        public TypeModel<string> AreaUnitTypeCode { get; set; }
+        public CodeTypeModel<string> AreaUnitTypeCode { get; set; }
 
         public bool? IsAcquiredForInventory { get; set; }
 
@@ -33,11 +33,11 @@ namespace Pims.Api.Models.Concepts.Take
 
         public float? LicenseToConstructArea { get; set; }
 
-        public DateTime? LtcEndDt { get; set; }
+        public DateOnly? LtcEndDt { get; set; }
 
         public float? LandActArea { get; set; }
 
-        public DateTime? LandActEndDt { get; set; }
+        public DateOnly? LandActEndDt { get; set; }
 
         public AcquisitionFileModel PropertyAcquisitionFile { get; set; }
 
@@ -45,17 +45,17 @@ namespace Pims.Api.Models.Concepts.Take
 
         public float? StatutoryRightOfWayArea { get; set; }
 
-        public DateTime? SrwEndDt { get; set; }
+        public DateOnly? SrwEndDt { get; set; }
 
         public float? SurplusArea { get; set; }
 
-        public TypeModel<string> TakeSiteContamTypeCode { get; set; }
+        public CodeTypeModel<string> TakeSiteContamTypeCode { get; set; }
 
-        public TypeModel<string> TakeTypeCode { get; set; }
+        public CodeTypeModel<string> TakeTypeCode { get; set; }
 
-        public TypeModel<string> TakeStatusTypeCode { get; set; }
+        public CodeTypeModel<string> TakeStatusTypeCode { get; set; }
 
-        public TypeModel<string> LandActTypeCode { get; set; }
+        public CodeTypeModel<string> LandActTypeCode { get; set; }
         #endregion
     }
 }

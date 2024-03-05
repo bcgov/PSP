@@ -18,7 +18,7 @@ import { AddAcquisitionForm } from './AddAcquisitionForm';
 import { AcquisitionForm } from './models';
 
 export interface IAddAcquisitionContainerProps {
-  onClose?: () => void;
+  onClose: () => void;
 }
 
 export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = props => {

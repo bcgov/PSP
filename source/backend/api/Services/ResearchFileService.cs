@@ -4,8 +4,8 @@ using System.Linq;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Pims.Api.Models.CodeTypes;
 using Pims.Core.Extensions;
-using Pims.Dal.Constants;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
@@ -133,7 +133,7 @@ namespace Pims.Api.Services
             foreach (var deletedProperty in differenceSet)
             {
                 _researchFilePropertyRepository.Delete(deletedProperty);
-                if (deletedProperty.Property.IsPropertyOfInterest.HasValue && deletedProperty.Property.IsPropertyOfInterest.Value)
+                if (deletedProperty.Property.IsPropertyOfInterest == true)
                 {
                     PimsProperty propertyWithAssociations = _propertyRepository.GetAllAssociationsById(deletedProperty.PropertyId);
                     var leaseAssociationCount = propertyWithAssociations.PimsPropertyLeases.Count;
@@ -258,7 +258,7 @@ namespace Pims.Api.Services
         private void PopulateNewProperty(PimsProperty property)
         {
             property.PropertyClassificationTypeCode = "UNKNOWN";
-            property.PropertyDataSourceEffectiveDate = System.DateTime.Now;
+            property.PropertyDataSourceEffectiveDate = DateOnly.FromDateTime(System.DateTime.Now);
             property.PropertyDataSourceTypeCode = "PMBC";
 
             property.PropertyTypeCode = "UNKNOWN";

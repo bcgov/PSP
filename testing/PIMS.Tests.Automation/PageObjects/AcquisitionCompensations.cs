@@ -54,6 +54,11 @@ namespace PIMS.Tests.Automation.PageObjects
         private By requisitionStatusLabel = By.XPath("//div[contains(text(),'Requisition Details')]/parent::div/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Status')]");
         private By requisitionStatusContent = By.XPath("//div[contains(text(),'Requisition Details')]/parent::div/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Status')]/parent::div/following-sibling::div");
         private By requisitionStatusSelect = By.XPath("//div[contains(text(),'Requisition Details')]/parent::div/parent::h2/following-sibling::div/div/div/div/select[@id='input-status']");
+        private By requisitionAltProjectLabel = By.XPath("//div[contains(text(),'Requisition Details')]/parent::div/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Alternate project')]");
+        private By requisitionAltProjectContent = By.XPath("//div[contains(text(),'Requisition Details')]/parent::div/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Alternate project')]/parent::div/following-sibling::div");
+        private By requisitionAltProjectInput = By.Id("typeahead-alternateProject");
+        private By requisitionAltProjectOptions = By.CssSelector("div[data-testid='typeahead-alternateProject'] div[aria-label='menu-options']");
+        private By requisitionAltProject1stOption = By.CssSelector("div[data-testid='typeahead-alternateProject'] div[aria-label='menu-options'] a:nth-child(1)");
         private By requisitionFinalDateLabel = By.XPath("//label[contains(text(),'Final date')]");
         private By requisitionAgreementLabel = By.XPath("//div[contains(text(),'Requisition Details')]/parent::div/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Agreement date')]");
         private By requisitionAgreementContent = By.XPath("//div[contains(text(),'Requisition Details')]/parent::div/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Agreement date')]/parent::div/following-sibling::div");
@@ -64,6 +69,9 @@ namespace PIMS.Tests.Automation.PageObjects
         private By requisitionExpropriationVestingLabel = By.XPath("//label[contains(text(),'Expropriation vesting date')]");
         private By requisitionExpropriationVestingContent = By.XPath("//label[contains(text(),'Expropriation vesting date')]/parent::div/following-sibling::div");
         private By requisitionExpropriationVestingInput = By.Id("datepicker-expropriationVestingDateTime");
+        private By requisitionAdvancePaymentLabel = By.XPath("//label[contains(text(),'Advanced payment served date')]");
+        private By requisitionAdvancePaymentContent = By.XPath("//label[contains(text(),'Advanced payment served date')]/parent::div/following-sibling::div");
+        private By requisitionAdvancePaymentInput = By.Id("datepicker-advancedPaymentServedDate");
         private By requisitionSpecialInstructionLabel = By.XPath("//label[contains(text(),'Special instructions')]");
         private By requisitionSpecialInstructionContent = By.XPath("//label[contains(text(),'Special instructions')]/parent::div/following-sibling::div");
         private By requisitionSpecialInstructionTextarea = By.Id("input-specialInstruction");
@@ -159,7 +167,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void UpdateTotalAllowableCompensation(string allowableAmount)
         {
-            Wait(2000);
+            Wait();
             FocusAndClick(compensationTotalAllowableEdiBttn);
 
             WaitUntilVisible(compensationTotalAllowableInput);
@@ -179,7 +187,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void OpenCompensationDetails(int index)
         {
-            Wait(2000);
+            Wait();
 
             WaitUntilClickable(By.CssSelector("div[data-testid='AcquisitionCompensationTable'] div[class='tbody'] div[class='tr-wrapper'] div button div svg[data-testid='compensation-view-"+ index +"']"));
             webDriver.FindElement(By.CssSelector("div[data-testid='AcquisitionCompensationTable'] div[class='tbody'] div[class='tr-wrapper'] div button div svg[data-testid='compensation-view-"+ index +"']")).Click();
@@ -187,14 +195,14 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void DeleteCompensationRequisition(int index)
         {
-            Wait(2000);
+            Wait();
             //WaitUntilVisible(compensationH120Table);
             FocusAndClick(By.CssSelector("div[data-testid='AcquisitionCompensationTable'] div[class='tbody'] div[class='tr-wrapper'] div button[data-testid='compensation-delete-"+ index +"']"));
 
             if (webDriver.FindElements(acquisitionFileConfirmationModal).Count() > 0)
             {
-                Assert.True(sharedModals.ModalHeader().Equals("Confirm Delete"));
-                Assert.True(sharedModals.ModalContent().Equals("Are you sure you want to delete this item?"));
+                Assert.Equal("Confirm Delete", sharedModals.ModalHeader());
+                Assert.Equal("Are you sure you want to delete this item?", sharedModals.ModalContent());
                 sharedModals.ModalClickOKBttn();
             }
 
@@ -208,10 +216,10 @@ namespace PIMS.Tests.Automation.PageObjects
 
             if (webDriver.FindElements(acquisitionFileConfirmationModal).Count() > 0)
             {
-                Assert.True(sharedModals.ModalHeader().Equals("Confirm status change"));
-                Assert.True(sharedModals.ModalContent().Contains("You have selected to change the status from DRAFT to FINAL."));
-                Assert.True(sharedModals.ModalContent().Contains("We recommend that you only make this change status (draft to final) when printing the final version"));
-                Assert.True(sharedModals.ModalContent().Contains("without system administrator privileges. The compensation requisition cannot be changed again once it is saved as final."));
+                Assert.Equal("Confirm status change", sharedModals.ModalHeader());
+                Assert.Contains("You have selected to change the status from DRAFT to FINAL.", sharedModals.ModalContent());
+                Assert.Contains("We recommend that you only make this change status (draft to final) when printing the final version", sharedModals.ModalContent());
+                Assert.Contains("without system administrator privileges. The compensation requisition cannot be changed again once it is saved as final.", sharedModals.ModalContent());
                 
                 sharedModals.ModalClickOKBttn();
             }
@@ -224,19 +232,14 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
             FocusAndClick(requisitionCancelBttn);
 
-            if (webDriver.FindElements(acquisitionFileConfirmationModal).Count() > 0)
-            {
-                Assert.True(sharedModals.ModalHeader().Equals("Unsaved Changes"));
-                Assert.True(sharedModals.ModalContent().Equals("You have made changes on this form. Do you wish to leave without saving?"));
-                sharedModals.ModalClickOKBttn();
-            }
+            sharedModals.CancelActionModal();
 
             AssertTrueIsDisplayed(requisitionEditBttn);
         }
 
         public string GetCompensationFileNumber(int compFileNbr)
         {
-            Wait(2000);
+            Wait();
             WaitUntilVisible(By.CssSelector("div[data-testid='AcquisitionCompensationTable'] div[class='tr-wrapper']:nth-child("+ compFileNbr +") div:nth-child(2) div"));
 
             return webDriver.FindElement(By.CssSelector("div[data-testid='AcquisitionCompensationTable'] div[class='tr-wrapper']:nth-child("+ compFileNbr +") div:nth-child(2) div")).Text;
@@ -248,8 +251,8 @@ namespace PIMS.Tests.Automation.PageObjects
 
             if (webDriver.FindElements(acquisitionFileConfirmationModal).Count() > 0)
             {
-                Assert.True(sharedModals.ModalHeader().Equals("Remove financial activity"));
-                Assert.True(sharedModals.ModalContent().Equals("Are you sure you want to remove this financial activity?"));
+                Assert.Equal("Remove financial activity", sharedModals.ModalHeader());
+                Assert.Equal("Are you sure you want to remove this financial activity?", sharedModals.ModalContent());
                 sharedModals.ModalClickOKBttn();
             }
         }
@@ -265,6 +268,21 @@ namespace PIMS.Tests.Automation.PageObjects
             //Requisition Details
             if(compensation.CompensationStatus != "")
                 ChooseSpecificSelectOption(requisitionStatusSelect, compensation.CompensationStatus);
+
+            if (compensation.CompensationAlternateProject != "")
+            {
+                ClearInput(requisitionAltProjectInput);
+                webDriver.FindElement(requisitionAltProjectInput).SendKeys(compensation.CompensationAlternateProject);
+
+                Wait();
+                webDriver.FindElement(requisitionAltProjectInput).SendKeys(Keys.Space);
+
+                Wait();
+                webDriver.FindElement(requisitionAltProjectInput).SendKeys(Keys.Backspace);
+
+                Wait();
+                webDriver.FindElement(requisitionAltProject1stOption).Click();
+            }
 
             if (compensation.CompensationAgreementDate != "")
             {
@@ -285,6 +303,13 @@ namespace PIMS.Tests.Automation.PageObjects
                 ClearInput(requisitionExpropriationVestingInput);
                 webDriver.FindElement(requisitionExpropriationVestingInput).SendKeys(compensation.CompensationExpropriationVestingDate);
                 webDriver.FindElement(requisitionExpropriationVestingInput).SendKeys(Keys.Enter);
+            }
+
+            if (compensation.CompensationAdvancedPaymentDate != "")
+            {
+                ClearInput(requisitionAdvancePaymentInput);
+                webDriver.FindElement(requisitionAdvancePaymentInput).SendKeys(compensation.CompensationAdvancedPaymentDate);
+                webDriver.FindElement(requisitionAdvancePaymentInput).SendKeys(Keys.Enter);
             }
 
             if (compensation.CompensationSpecialInstructions != "")
@@ -402,11 +427,13 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(requisitionGenerateH120Bttn);
             AssertTrueIsDisplayed(requisitionEditBttn);
             AssertTrueIsDisplayed(requisitionStatusLabel);
+            AssertTrueIsDisplayed(requisitionAltProjectLabel);
             AssertTrueContentEquals(requisitionStatusContent, "Draft");
             AssertTrueIsDisplayed(requisitionFinalDateLabel);
             AssertTrueIsDisplayed(requisitionAgreementLabel);
             AssertTrueIsDisplayed(requsitionExpropriationServedLabel);
             AssertTrueIsDisplayed(requisitionExpropriationVestingLabel);
+            AssertTrueIsDisplayed(requisitionAdvancePaymentLabel);
             AssertTrueIsDisplayed(requisitionSpecialInstructionLabel);
 
             //Financial Coding
@@ -450,6 +477,8 @@ namespace PIMS.Tests.Automation.PageObjects
             
             AssertTrueIsDisplayed(requisitionStatusLabel);
             AssertTrueIsDisplayed(requisitionStatusSelect);
+            AssertTrueIsDisplayed(requisitionAltProjectLabel);
+            AssertTrueIsDisplayed(requisitionAltProjectInput);
             AssertTrueIsDisplayed(requisitionFinalDateLabel);
             AssertTrueIsDisplayed(requisitionAgreementLabel);
             AssertTrueIsDisplayed(requisitionAgreementInput);
@@ -457,6 +486,8 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(requisitionExpropriationServedInput);
             AssertTrueIsDisplayed(requisitionExpropriationVestingLabel);
             AssertTrueIsDisplayed(requisitionExpropriationVestingInput);
+            AssertTrueIsDisplayed(requisitionAdvancePaymentLabel);
+            AssertTrueIsDisplayed(requisitionAdvancePaymentInput);
             AssertTrueIsDisplayed(requisitionSpecialInstructionLabel);
             AssertTrueIsDisplayed(requisitionSpecialInstructionTextarea);
 
@@ -524,6 +555,8 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(requisitionEditBttn);
             AssertTrueIsDisplayed(requisitionStatusLabel);
             AssertTrueContentEquals(requisitionStatusContent, compensation.CompensationStatus);
+            AssertTrueIsDisplayed(requisitionAltProjectLabel);
+            AssertTrueContentEquals(requisitionAltProjectContent, TransformProjectFormat(compensation.CompensationAlternateProject));
             AssertTrueIsDisplayed(requisitionFinalDateLabel);
             AssertTrueIsDisplayed(requisitionAgreementLabel);
             AssertTrueContentEquals(requisitionAgreementContent, TransformDateFormat(compensation.CompensationAgreementDate));

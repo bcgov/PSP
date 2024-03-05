@@ -8,7 +8,7 @@ namespace Pims.Dal.Entities
     /// <summary>
     /// Organization class, provides an entity for the datamodel to manage property organizations.
     /// </summary>
-    public partial class PimsOrganization : StandardIdentityBaseAppEntity<long>, IDisableBaseAppEntity
+    public partial class PimsOrganization : StandardIdentityBaseAppEntity<long>, IDisableBaseAppEntity<bool>
     {
         #region Properties
 
@@ -35,6 +35,8 @@ namespace Pims.Dal.Entities
 
         #region Constructors
 
+        public PimsOrganization() { }
+
         /// <summary>
         /// Create a new instance of a Organization class.
         /// </summary>
@@ -43,7 +45,6 @@ namespace Pims.Dal.Entities
         /// <param name="identifierType"></param>
         /// <param name="address"></param>
         public PimsOrganization(string name, PimsOrganizationType type, PimsOrgIdentifierType identifierType, PimsAddress address)
-            : this()
         {
             if (string.IsNullOrWhiteSpace(name))
             {

@@ -13,7 +13,6 @@ import {
 import styled from 'styled-components';
 
 import { ReactComponent as RealEstateAgent } from '@/assets/images/real-estate-agent.svg';
-import GenericModal from '@/components/common/GenericModal';
 import { FileTypes } from '@/constants';
 import FileLayout from '@/features/mapSideBar/layout/FileLayout';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
@@ -25,6 +24,7 @@ import { getFilePropertyName } from '@/utils/mapPropertyUtils';
 
 import { SideBarContext } from '../context/sidebarContext';
 import { InventoryTabNames } from '../property/InventoryTabs';
+import { FilePropertyRouter } from '../router/FilePropertyRouter';
 import { FileTabType } from '../shared/detail/FileTabs';
 import SidebarFooter from '../shared/SidebarFooter';
 import UpdateProperties from '../shared/update/properties/UpdateProperties';
@@ -32,7 +32,7 @@ import { AcquisitionContainerState } from './AcquisitionContainer';
 import AcquisitionHeader from './common/AcquisitionHeader';
 import AcquisitionMenu from './common/AcquisitionMenu';
 import { AcquisitionRouter } from './router/AcquisitionRouter';
-import { FilePropertyRouter } from './router/FilePropertyRouter';
+import { isAcquisitionFile } from './tabs/agreement/update/models';
 
 export interface IAcquisitionViewProps {
   onClose: (() => void) | undefined;
@@ -60,13 +60,11 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
   onMenuChange,
   onShowPropertySelector,
   onSuccess,
-  onCancelConfirm,
   onUpdateProperties,
   canRemove,
   isEditing,
   setIsEditing,
   containerState,
-  setContainerState,
   formikRef,
   isFormValid,
   error,
@@ -76,7 +74,9 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
   const history = useHistory();
   const match = useRouteMatch();
   const { file, lastUpdatedBy } = useContext(SideBarContext);
-  const acquisitionFile: Api_AcquisitionFile = file as Api_AcquisitionFile;
+  const acquisitionFile: Api_AcquisitionFile = {
+    ...file,
+  } as Api_AcquisitionFile;
 
   // match for property menu routes - eg /property/1/ltsa
   const fileMatch = matchPath<Record<string, string>>(location.pathname, `${match.path}/:tab`);
@@ -148,13 +148,15 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
           <FileLayout
             leftComponent={
               <>
-                <AcquisitionMenu
-                  acquisitionFileId={file?.id || 0}
-                  items={menuItems}
-                  selectedIndex={selectedMenuIndex}
-                  onChange={onMenuChange}
-                  onShowPropertySelector={onShowPropertySelector}
-                />
+                {isAcquisitionFile(file) && (
+                  <AcquisitionMenu
+                    acquisitionFile={file}
+                    items={menuItems}
+                    selectedIndex={selectedMenuIndex}
+                    onChange={onMenuChange}
+                    onShowPropertySelector={onShowPropertySelector}
+                  />
+                )}
               </>
             }
             bodyComponent={
@@ -189,24 +191,6 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
                       onSuccess={onSuccess}
                     />
                   )}
-                />
-
-                <GenericModal
-                  variant="info"
-                  display={containerState.showConfirmModal}
-                  title={'Confirm changes'}
-                  message={
-                    <>
-                      <div>If you cancel now, this form will not be saved.</div>
-                      <br />
-                      <strong>Are you sure you want to Cancel?</strong>
-                    </>
-                  }
-                  handleOk={onCancelConfirm}
-                  handleCancel={() => setContainerState({ showConfirmModal: false })}
-                  okButtonText="Ok"
-                  cancelButtonText="Resume editing"
-                  show
                 />
               </StyledFormWrapper>
             }

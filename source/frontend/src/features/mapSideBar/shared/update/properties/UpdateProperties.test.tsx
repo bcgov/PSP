@@ -98,7 +98,7 @@ describe('UpdateProperties component', () => {
                 description: 'Vancouver Island District',
                 isDisabled: false,
               },
-              dataSourceEffectiveDate: '2022-10-05T00:00:00',
+              dataSourceEffectiveDateOnly: '2022-10-05T00:00:00',
               isSensitive: false,
               isRwyBeltDomPatent: false,
               address: {
@@ -185,7 +185,7 @@ describe('UpdateProperties component', () => {
     await act(async () => userEvent.click(cancelButton));
 
     expect(
-      await screen.findByText(/If you cancel now, this file will not be saved./),
+      await screen.findByText(/If you choose to cancel now, your changes will not be saved./i),
     ).toBeVisible();
   });
 
