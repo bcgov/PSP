@@ -1,10 +1,11 @@
 import { mockLookups } from '@/mocks/index.mock';
 
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import UpdateAcquisitionAgreementForm, { IUpdateAcquisitionAgreementViewProps } from './UpdateAcquisitionAgreementForm';
+import UpdateAcquisitionAgreementForm, {
+  IUpdateAcquisitionAgreementViewProps,
+} from './UpdateAcquisitionAgreementForm';
 import { AcquisitionAgreementFormModel } from '../models/AcquisitionAgreementFormModel';
-import { act, RenderOptions, render, fillInput, waitForEffects, selectOptions } from '@/utils/test-utils';
-
+import { act, RenderOptions, render, fillInput } from '@/utils/test-utils';
 
 export const organizerMock = {
   canEditOrDeleteAgreement: jest.fn(),
@@ -57,7 +58,7 @@ describe('UpdateAcquisitionAgreementView component', () => {
   });
 
   it('displays cancellation note if status is cancelled', async () => {
-    const {container, getByText } = await setup();
+    const { container, getByText } = await setup();
 
     await act(async () => {
       fillInput(container, 'agreementStatusTypeCode', 'CANCELLED', 'select');

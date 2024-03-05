@@ -80,7 +80,7 @@ describe('Update AcquisitionAgreementContainer component', () => {
   });
 
   it('Renders the underlying form', async () => {
-    const { getByText } = await setup({props: { acquisitionFileId: 1, agreementId: 10 }});
+    const { getByText } = await setup({ props: { acquisitionFileId: 1, agreementId: 10 } });
 
     expect(getByText(/Content Rendered/)).toBeVisible();
     expect(mockGetAgreementApi.execute).toHaveBeenCalledWith(1, 10);
@@ -88,7 +88,7 @@ describe('Update AcquisitionAgreementContainer component', () => {
 
   it('Loads props with the initial values', async () => {
     mockGetAgreementApi.execute.mockResolvedValue(mockAcquisitionAgreementApi);
-    await setup({props: { acquisitionFileId: 1, agreementId: 10 }});
+    await setup({ props: { acquisitionFileId: 1, agreementId: 10 } });
     await waitForEffects();
 
     expect(mockGetAgreementApi.execute).toHaveBeenCalledWith(1, 10);
@@ -101,16 +101,13 @@ describe('Update AcquisitionAgreementContainer component', () => {
     mockGetAgreementApi.execute.mockResolvedValue(mockAcquisitionAgreementApi);
     mockPutAgreementApi.execute.mockReturnValue(mockAcquisitionAgreementApi);
 
-    await setup({props: { acquisitionFileId: 1, agreementId: 10 }});
+    await setup({ props: { acquisitionFileId: 1, agreementId: 10 } });
 
     let agreementFormModel = AcquisitionAgreementFormModel.fromApi(mockAcquisitionAgreementApi);
     agreementFormModel.agreementStatusTypeCode = 'FINAL';
 
     await act(async () => {
-      return viewProps?.onSubmit(
-        agreementFormModel,
-        { setSubmitting: jest.fn() } as any,
-      );
+      return viewProps?.onSubmit(agreementFormModel, { setSubmitting: jest.fn() } as any);
     });
 
     expect(mockPutAgreementApi.execute).toHaveBeenCalledWith(
@@ -149,7 +146,7 @@ describe('Update AcquisitionAgreementContainer component', () => {
   });
 
   it('navigates back to Agreement when form is cancelled', async () => {
-    await setup({props: { acquisitionFileId: 1, agreementId: 10 }});
+    await setup({ props: { acquisitionFileId: 1, agreementId: 10 } });
     act(() => {
       viewProps?.onCancel();
     });
