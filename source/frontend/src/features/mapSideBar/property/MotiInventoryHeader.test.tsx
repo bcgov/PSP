@@ -85,8 +85,24 @@ describe('MotiInventoryHeader component', () => {
       },
       isLoading: false,
     });
-    // PID is shown
+    // land parcel type is shown
     expect(result.getByText(testProperty?.propertyType?.description as string)).toBeVisible();
+  });
+
+  it(`shows "retired" indicator for retired properties`, async () => {
+    const testProperty: ApiGen_Concepts_Property = {
+      ...getEmptyProperty(),
+      isRetired: true,
+    };
+    const result = setup({
+      composedProperty: {
+        ...defaultComposedProperty,
+        pimsProperty: testProperty,
+      },
+      isLoading: false,
+    });
+    // "retire" indicator is shown
+    expect(result.getByText(/expired/i)).toBeVisible();
   });
 
   it('allows the active property to be zoomed in', async () => {

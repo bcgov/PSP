@@ -7,12 +7,12 @@ import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts
 import { getEmptyBaseAudit, getEmptyProperty } from '@/models/defaultInitializers';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { toTypeCodeNullable } from '@/utils/formUtils';
-import { render, RenderOptions } from '@/utils/test-utils';
+import { RenderOptions, render } from '@/utils/test-utils';
 
+import { useApiProperties } from '@/hooks/pims-api/useApiProperties';
+import { useApiPropertyOperation } from '@/hooks/pims-api/useApiPropertyOperation';
 import { PropertyDetailsTabView } from './PropertyDetailsTabView';
 import { toFormValues } from './PropertyDetailsTabView.helpers';
-import { useApiPropertyOperation } from '@/hooks/pims-api/useApiPropertyOperation';
-import { useApiProperties } from '@/hooks/pims-api/useApiProperties';
 
 const history = createMemoryHistory();
 const storeState = {
@@ -41,7 +41,7 @@ describe('PropertyDetailsTabView component', () => {
     const component = render(<PropertyDetailsTabView property={formValues} loading={false} />, {
       ...rest,
       store: storeState,
-      claims: [Claims.PROPERTY_EDIT],
+      claims: renderOptions?.claims ?? [],
       history,
     });
 
@@ -167,6 +167,32 @@ describe('PropertyDetailsTabView component', () => {
 
     const { getByText } = setup({ property });
     expect(getByText(/Property address not available/i)).toBeVisible();
+  });
+
+  it('should display the Edit button if the user has permissions', async () => {
+    const property: ApiGen_Concepts_Property = {
+      ...mockPropertyInfo,
+    };
+    const { getByTitle } = setup({ property, claims: [Claims.PROPERTY_EDIT] });
+    expect(getByTitle(/Edit property details/)).toBeVisible();
+  });
+
+  it('should not display the Edit button if the user does not have permissions', async () => {
+    const property: ApiGen_Concepts_Property = {
+      ...mockPropertyInfo,
+    };
+    const { queryByTitle } = await setup({ property, claims: [] });
+    expect(queryByTitle(/Edit property details/)).toBeNull();
+  });
+
+  it('should replace the Edit button with a tooltip for retired properties', async () => {
+    const property: ApiGen_Concepts_Property = {
+      ...mockPropertyInfo,
+      isRetired: true,
+    };
+    const { queryByTitle, getByTestId } = await setup({ property, claims: [Claims.PROPERTY_EDIT] });
+    expect(queryByTitle(/Edit property details/)).toBeNull();
+    expect(getByTestId('tooltip-icon-1-summary-cannot-edit-tooltip')).toBeInTheDocument();
   });
 });
 
