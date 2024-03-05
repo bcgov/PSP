@@ -11,6 +11,8 @@ interface ISidebarFooterProps {
   onEdit?: (editMode: boolean) => void;
   onCancel: () => void;
   displayRequiredFieldError: boolean;
+  saveButtonLabel?: string;
+  cancelButtonLabel?: string;
 }
 
 const SidebarFooter: React.FunctionComponent<ISidebarFooterProps> = ({
@@ -21,6 +23,8 @@ const SidebarFooter: React.FunctionComponent<ISidebarFooterProps> = ({
   onCancel,
   isOkDisabled,
   displayRequiredFieldError,
+  saveButtonLabel,
+  cancelButtonLabel,
 }) => {
   return (
     <SidebarFooterBar className="justify-content-end mt-auto no-gutters">
@@ -33,12 +37,12 @@ const SidebarFooter: React.FunctionComponent<ISidebarFooterProps> = ({
           </Col>
           <Col xs="auto" className="pr-4">
             <Button variant="secondary" onClick={onCancel}>
-              Cancel
+              {cancelButtonLabel ?? 'Cancel'}
             </Button>
           </Col>
           <Col xs="auto">
             <Button disabled={isOkDisabled} onClick={onSave}>
-              Save
+              {saveButtonLabel ?? 'Save'}
             </Button>
           </Col>
         </>

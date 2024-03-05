@@ -12,6 +12,7 @@ import { pidParser } from '@/utils/propertyUtils';
 import { act, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import { ILayerPopupViewProps, LayerPopupView } from './LayerPopupView';
+import { emptyPimsBoundaryFeatureCollection } from '@/components/common/mapFSM/models';
 
 jest.mock('@react-keycloak/web');
 jest.mock('react-leaflet');
@@ -64,7 +65,7 @@ describe('LayerPopupView component', () => {
         layerPopup: {} as any,
         featureDataset: null,
       });
-      expect(queryByText('View more property info')).toBeNull();
+      expect(queryByText('View Property info')).toBeNull();
     });
 
     it('opens fly out when ellipsis is clicked', async () => {
@@ -74,7 +75,7 @@ describe('LayerPopupView component', () => {
       });
       const ellipsis = getByTestId('fly-out-ellipsis');
       act(() => userEvent.click(ellipsis));
-      expect(getByText('View more property info')).toBeVisible();
+      expect(getByText('View Property info')).toBeVisible();
     });
 
     it('handles view property action for inventory properties', async () => {
@@ -97,11 +98,12 @@ describe('LayerPopupView component', () => {
           regionFeature: null,
           districtFeature: null,
           municipalityFeature: null,
+          selectingComponentId: null,
         },
       });
       const ellipsis = getByTestId('fly-out-ellipsis');
       act(() => userEvent.click(ellipsis));
-      const link = getByText('View more property info');
+      const link = getByText('View Property info');
       act(() => userEvent.click(link));
       expect(history.location.pathname).toBe(`/mapview/sidebar/property/${propertyId}`);
     });
@@ -122,11 +124,12 @@ describe('LayerPopupView component', () => {
           regionFeature: null,
           districtFeature: null,
           municipalityFeature: null,
+          selectingComponentId: null,
         },
       });
       const ellipsis = getByTestId('fly-out-ellipsis');
       act(() => userEvent.click(ellipsis));
-      const link = getByText('View more property info');
+      const link = getByText('View Property info');
       act(() => userEvent.click(link));
       expect(history.location.pathname).toBe(
         `/mapview/sidebar/non-inventory-property/${parsedPid}`,
@@ -142,7 +145,7 @@ describe('LayerPopupView component', () => {
       });
       const ellipsis = getByTestId('fly-out-ellipsis');
       act(() => userEvent.click(ellipsis));
-      const link = getByText('Research File - Create new');
+      const link = getByText('Research File');
       act(() => userEvent.click(link));
       expect(history.location.pathname).toBe('/mapview/sidebar/research/new');
     });
@@ -156,9 +159,85 @@ describe('LayerPopupView component', () => {
       });
       const ellipsis = getByTestId('fly-out-ellipsis');
       act(() => userEvent.click(ellipsis));
-      const link = getByText('Acquisition File - Create new');
+      const link = getByText('Acquisition File');
       act(() => userEvent.click(link));
       expect(history.location.pathname).toBe('/mapview/sidebar/acquisition/new');
+    });
+
+    it('Hides subdivision and consolidation if not in the pims system', async () => {
+      const { getByTestId, getByText, queryByText } = setup({
+        layerPopup: { data: {} } as any,
+        featureDataset: {
+          pimsFeature: null,
+          location: { lat: 0, lng: 0 },
+          parcelFeature: null,
+          regionFeature: null,
+          districtFeature: null,
+          municipalityFeature: null,
+          selectingComponentId: null,
+        },
+        claims: [Claims.PROPERTY_ADD],
+      });
+      const ellipsis = getByTestId('fly-out-ellipsis');
+      act(() => userEvent.click(ellipsis));
+      const subdivisionLink = queryByText('Create Subdivision');
+      expect(subdivisionLink).not.toBeInTheDocument();
+      const consolidationLink = queryByText('Create Consolidation');
+      expect(consolidationLink).not.toBeInTheDocument();
+    });
+
+    it('handles create create subdivision action', async () => {
+      const propertyId = '1';
+
+      const { getByTestId, getByText } = setup({
+        layerPopup: { data: {} } as any,
+        featureDataset: {
+          pimsFeature: {
+            type: 'Feature',
+            properties: { ...EmptyPropertyLocation, PROPERTY_ID: propertyId },
+            geometry: { type: 'Point', coordinates: [] },
+          },
+          location: { lat: 0, lng: 0 },
+          parcelFeature: null,
+          regionFeature: null,
+          districtFeature: null,
+          municipalityFeature: null,
+          selectingComponentId: null,
+        },
+        claims: [Claims.PROPERTY_ADD],
+      });
+      const ellipsis = getByTestId('fly-out-ellipsis');
+      act(() => userEvent.click(ellipsis));
+      const link = getByText('Create Subdivision');
+      act(() => userEvent.click(link));
+      expect(history.location.pathname).toBe('/mapview/sidebar/subdivision/new');
+    });
+
+    it('handles create create consolidation action', async () => {
+      const propertyId = '1';
+
+      const { getByTestId, getByText } = setup({
+        layerPopup: { data: {} } as any,
+        featureDataset: {
+          pimsFeature: {
+            type: 'Feature',
+            properties: { ...EmptyPropertyLocation, PROPERTY_ID: propertyId },
+            geometry: { type: 'Point', coordinates: [] },
+          },
+          location: { lat: 0, lng: 0 },
+          parcelFeature: null,
+          regionFeature: null,
+          districtFeature: null,
+          municipalityFeature: null,
+          selectingComponentId: null,
+        },
+        claims: [Claims.PROPERTY_ADD],
+      });
+      const ellipsis = getByTestId('fly-out-ellipsis');
+      act(() => userEvent.click(ellipsis));
+      const link = getByText('Create Consolidation');
+      act(() => userEvent.click(link));
+      expect(history.location.pathname).toBe('/mapview/sidebar/consolidation/new');
     });
   });
 });

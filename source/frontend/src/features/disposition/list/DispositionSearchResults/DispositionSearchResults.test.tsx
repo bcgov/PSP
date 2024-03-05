@@ -81,7 +81,7 @@ describe('Disposition search results table', () => {
     setup({
       results: [
         DispositionSearchResultModel.fromApi({
-          ...(mockDispositionFileResponse()),
+          ...mockDispositionFileResponse(),
           fileProperties: [
             {
               id: 100,
@@ -127,7 +127,7 @@ describe('Disposition search results table', () => {
     setup({
       results: [
         DispositionSearchResultModel.fromApi({
-          ...(mockDispositionFileResponse()),
+          ...mockDispositionFileResponse(),
           dispositionTeam: [
             {
               id: 1,
@@ -171,7 +171,7 @@ describe('Disposition search results table', () => {
     setup({
       results: [
         DispositionSearchResultModel.fromApi({
-          ...(mockDispositionFileResponse()),
+          ...mockDispositionFileResponse(),
           dispositionTeam: [
             {
               id: 1,
@@ -216,7 +216,7 @@ describe('Disposition search results table', () => {
     setup({
       results: [
         DispositionSearchResultModel.fromApi({
-          ...(mockDispositionFileResponse()),
+          ...mockDispositionFileResponse(),
           dispositionTeam: [
             {
               id: 1,
