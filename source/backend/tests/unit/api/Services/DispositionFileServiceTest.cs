@@ -1468,8 +1468,6 @@ namespace Pims.Api.Test.Services
             act.Should().Throw<NotAuthorizedException>();
         }
 
-        #region AddDispositionFileAppraisal
-
         [Fact]
         public void AddDispositionFileAppraisal_Should_Fail_NoPermission()
         {
@@ -2817,8 +2815,6 @@ namespace Pims.Api.Test.Services
             Assert.NotNull(result);
             repository.Verify(x => x.UpdateDispositionFileSale(It.IsAny<PimsDispositionSale>()), Times.Once);
         }
-
-        #endregion
 
         #endregion
     }

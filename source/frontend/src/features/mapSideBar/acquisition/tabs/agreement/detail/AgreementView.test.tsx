@@ -4,25 +4,28 @@ import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { render, RenderOptions } from '@/utils/test-utils';
 
 import AgreementView, { IAgreementViewProps } from './AgreementView';
+import StatusUpdateSolver from '../../fileDetails/detail/statusUpdateSolver';
 
 // mock auth library
 jest.mock('@react-keycloak/web');
 
 const mockViewProps: IAgreementViewProps = {
   agreements: [],
-  onEdit: jest.fn(),
+  statusUpdateSolver: new StatusUpdateSolver(),
   onGenerate: jest.fn(),
   loading: false,
+  onDelete: jest.fn(),
 };
 
 describe('AgreementView component', () => {
   const setup = (renderOptions: RenderOptions = {}) => {
     const utils = render(
       <AgreementView
-        agreements={mockViewProps.agreements}
-        onEdit={mockViewProps.onEdit}
-        onGenerate={mockViewProps.onGenerate}
         loading={mockViewProps.loading}
+        agreements={mockViewProps.agreements}
+        statusUpdateSolver={mockViewProps.statusUpdateSolver}
+        onGenerate={mockViewProps.onGenerate}
+        onDelete={mockViewProps.onDelete}
       />,
       {
         store: {
