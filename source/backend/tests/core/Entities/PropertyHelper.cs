@@ -23,17 +23,18 @@ namespace Pims.Core.Test
         /// <param name="areaUnit"></param>
         /// <param name="dataSource"></param>
         /// <returns></returns>
-        public static Entity.PimsProperty CreateProperty(int pid, int? pin = null, Entity.PimsPropertyType type = null, Entity.PimsPropertyClassificationType classification = null, Entity.PimsAddress address = null, Entity.PimsPropertyTenureType tenure = null, Entity.PimsAreaUnitType areaUnit = null, Entity.PimsDataSourceType dataSource = null, Entity.PimsPropertyStatusType status = null, Entity.PimsLease lease = null, short? regionCode = null, bool? isCoreInventory = null, bool? isPointOfInterest = null, bool? isOtherInterest = null, bool? isDisposed = null)
+        public static Entity.PimsProperty CreateProperty(int pid, int? pin = null, PimsPropertyType type = null, PimsPropertyClassificationType classification = null, PimsAddress address = null, PimsPropertyTenureType tenure = null, PimsAreaUnitType areaUnit = null, PimsDataSourceType dataSource = null, PimsPropertyStatusType status = null, PimsLease lease = null, short? regionCode = null, bool? isCoreInventory = null, bool? isPointOfInterest = null, bool? isOtherInterest = null, bool? isDisposed = null, bool? isRetired = null)
         {
-            type ??= EntityHelper.CreatePropertyType($"Land-{pid}");
-            classification ??= EntityHelper.CreatePropertyClassificationType($"Class-{pid}");
-            address ??= EntityHelper.CreateAddress(pid);
-            tenure ??= EntityHelper.CreatePropertyTenureType($"Tenure-{pid}");
+            type ??= CreatePropertyType($"Land-{pid}");
+            classification ??= CreatePropertyClassificationType($"Class-{pid}");
+            address ??= CreateAddress(pid);
+            tenure ??= CreatePropertyTenureType($"Tenure-{pid}");
 
-            areaUnit ??= EntityHelper.CreatePropertyAreaUnitType($"Sqft-{pid}");
-            dataSource ??= EntityHelper.CreateDataSourceType($"LIS-{pid}");
-            status ??= EntityHelper.CreatePropertyStatusType($"Status-{pid}");
-            var property = new Entity.PimsProperty(pid, type, classification, address, new Entity.PimsPropPropTenureType { PropertyTenureTypeCodeNavigation = tenure }, areaUnit, dataSource, DateTime.UtcNow, status)
+            areaUnit ??= CreatePropertyAreaUnitType($"Sqft-{pid}");
+            dataSource ??= CreateDataSourceType($"LIS-{pid}");
+            status ??= CreatePropertyStatusType($"Status-{pid}");
+
+            var property = new PimsProperty(pid, type, classification, address, new PimsPropPropTenureType { PropertyTenureTypeCodeNavigation = tenure }, areaUnit, dataSource, DateTime.UtcNow, status)
             {
                 PropertyId = pid,
                 Pin = pin,
@@ -41,6 +42,8 @@ namespace Pims.Core.Test
                 Location = new NetTopologySuite.Geometries.Point(0, 0),
                 SurplusDeclarationTypeCode = "SURPLUS",
             };
+            property.IsRetired = false;
+
             if (lease != null)
             {
                 lease.PimsPropertyLeases.Add(new Entity.PimsPropertyLease() { Property = property, Lease = lease });
@@ -65,6 +68,12 @@ namespace Pims.Core.Test
             {
                 property.IsDisposed = isDisposed.Value;
             }
+
+            if (isRetired.HasValue)
+            {
+                property.IsRetired = isRetired.Value;
+            }
+
             return property;
         }
 
@@ -81,7 +90,7 @@ namespace Pims.Core.Test
         /// <param name="areaUnit"></param>
         /// <param name="dataSource"></param>
         /// <returns></returns>
-        public static Entity.PimsProperty CreateProperty(this PimsContext context, int pid, int? pin = null, Entity.PimsPropertyType type = null, Entity.PimsPropertyClassificationType classification = null, Entity.PimsAddress address = null, Entity.PimsPropertyTenureType tenure = null, Entity.PimsAreaUnitType areaUnit = null, Entity.PimsDataSourceType dataSource = null, Entity.PimsPropertyStatusType status = null, Geometry location = null)
+        public static Entity.PimsProperty CreateProperty(this PimsContext context, int pid, int? pin = null, PimsPropertyType type = null, PimsPropertyClassificationType classification = null, PimsAddress address = null, PimsPropertyTenureType tenure = null, PimsAreaUnitType areaUnit = null, PimsDataSourceType dataSource = null, PimsPropertyStatusType status = null, Geometry location = null, bool isRetired = false)
         {
             type ??= context.PimsPropertyTypes.FirstOrDefault() ?? throw new InvalidOperationException("Unable to find a property type.");
             classification ??= context.PimsPropertyClassificationTypes.FirstOrDefault() ?? throw new InvalidOperationException("Unable to find a property classification type.");
@@ -90,10 +99,12 @@ namespace Pims.Core.Test
             areaUnit ??= context.PimsAreaUnitTypes.FirstOrDefault() ?? throw new InvalidOperationException("Unable to find a property area unit type.");
             dataSource ??= context.PimsDataSourceTypes.FirstOrDefault() ?? throw new InvalidOperationException("Unable to find a property data source type.");
             status ??= context.PimsPropertyStatusTypes.FirstOrDefault() ?? throw new InvalidOperationException("Unable to find a property status type.");
-            var lease = context.PimsLeases.FirstOrDefault() ?? EntityHelper.CreateLease(pid);
-            var property = EntityHelper.CreateProperty(pid, pin, type, classification, address, tenure, areaUnit, dataSource, status);
+            var lease = context.PimsLeases.FirstOrDefault() ?? CreateLease(pid);
+            var property = CreateProperty(pid, pin, type, classification, address, tenure, areaUnit, dataSource, status);
             property.Location = location;
+            property.IsRetired = isRetired;
             context.PimsProperties.Add(property);
+
             return property;
         }
     }

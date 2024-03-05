@@ -41,14 +41,19 @@ describe('PropertyDetailsTabView component', () => {
     const component = render(<PropertyDetailsTabView property={formValues} loading={false} />, {
       ...rest,
       store: storeState,
+      useMockAuthentication: true,
       claims: [Claims.PROPERTY_EDIT],
       history,
     });
 
     return {
-      ...component,
+      ...component
     };
   };
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
 
   it('renders as expected when provided valid data object', () => {
     const { asFragment } = setup({ property: mockPropertyInfo });
@@ -159,6 +164,30 @@ describe('PropertyDetailsTabView component', () => {
     expect(getByText(/456 Souris Street/i)).toBeVisible();
   });
 
+  it('render the retired tooltip for users with edit permissions', () => {
+    const property: ApiGen_Concepts_Property = {
+      ...mockPropertyInfo,
+    };
+
+    property.isRetired = true;
+    const { queryByTitle, queryByTestId } = setup({ property, claims: [Claims.PROPERTY_EDIT] });
+
+    expect(queryByTitle('Edit property details')).not.toBeInTheDocument();
+    expect(queryByTestId('tooltip-icon-property-retired-msg')).toBeInTheDocument();
+  });
+
+  it('render the edit button when property is not retired', () => {
+    const property: ApiGen_Concepts_Property = {
+      ...mockPropertyInfo,
+    };
+
+    property.isRetired = true;
+    const { queryByTitle, queryByTestId } = setup({ property, claims: [Claims.PROPERTY_EDIT] });
+
+    expect(queryByTitle('Edit property details')).toBeInTheDocument();
+    expect(queryByTestId('tooltip-icon-property-retired-msg')).not.toBeInTheDocument();
+  });
+
   it('shows a warning message if no address found', () => {
     const property: ApiGen_Concepts_Property = {
       ...mockPropertyInfo,
@@ -234,6 +263,7 @@ export const mockPropertyInfo: ApiGen_Concepts_Property = {
   latitude: 1088851.4995,
   longitude: 924033.5004,
   isSensitive: false,
+  isRetired: false,
   address: {
     ...getEmptyAddress(),
     id: 204,

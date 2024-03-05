@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using LinqKit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Core.Helpers;
 using Pims.Dal.Entities;
@@ -290,9 +291,14 @@ namespace Pims.Dal.Repositories
             property.ThrowIfNull(nameof(property));
 
             var propertyId = property.Internal_Id;
-            var existingProperty = this.Context.PimsProperties
+            var existingProperty = Context.PimsProperties
                 .Include(p => p.Address)
                 .FirstOrDefault(p => p.PropertyId == propertyId) ?? throw new KeyNotFoundException();
+
+            if (existingProperty.IsRetired.HasValue && existingProperty.IsRetired.Value)
+            {
+                throw new BusinessRuleViolationException("Retired records are referenced for historical purposes only and cannot be edited or deleted.");
+            }
 
             // ignore a number of properties that we don't the frontend to override - for now
             property.Boundary = existingProperty.Boundary;

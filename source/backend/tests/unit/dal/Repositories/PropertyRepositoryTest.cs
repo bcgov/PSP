@@ -5,6 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Linq;
 using FluentAssertions;
+using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Core.Test;
 using Pims.Dal.Entities;
@@ -520,6 +521,48 @@ namespace Pims.Dal.Test.Repositories
             // Assert
             updatedProperty.Description.Should().Be("test");
             updatedProperty.Pid.Should().Be(200);
+        }
+
+        [Fact]
+        public void Update_Property_Success_not_retired()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.PropertyView, Permissions.PropertyEdit);
+            var property = EntityHelper.CreateProperty(1, isRetired: false);
+            _helper.AddAndSaveChanges(property);
+
+            var newValues = new Entity.PimsProperty();
+            property.CopyValues(newValues);
+            newValues.Description = "test";
+            newValues.Pid = 200;
+
+            // Act
+            var updatedProperty = repository.Update(newValues);
+
+            // Assert
+            updatedProperty.Description.Should().Be("test");
+            updatedProperty.Pid.Should().Be(200);
+        }
+
+        [Fact]
+        public void Update_Property_Fails_Property_Retired()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.PropertyView, Permissions.PropertyEdit);
+            var property = EntityHelper.CreateProperty(1, isRetired: true);
+            _helper.AddAndSaveChanges(property);
+
+            var newValues = new Entity.PimsProperty();
+            property.CopyValues(newValues);
+            newValues.Description = "test";
+            newValues.Pid = 200;
+
+            // Act
+            Action act = () => repository.Update(newValues);
+
+            // Assert
+            var exception = act.Should().Throw<BusinessRuleViolationException>();
+            exception.WithMessage("Retired records are referenced for historical purposes only and cannot be edited or deleted.");
         }
 
         [Fact]
