@@ -54,7 +54,7 @@ namespace Pims.Api.Test.Controllers.PropertyOperation
         }
 
         #region Tests
-        #region ExportProperties
+        #region Operations
 
         /// <summary>
         /// Mock a successful request with minimally valid models.
@@ -79,6 +79,28 @@ namespace Pims.Api.Test.Controllers.PropertyOperation
 
             // Assert
             service.Verify(m => m.SubdivideProperty(It.IsAny<IEnumerable<PimsPropertyOperation>>()), Times.Once());
+        }
+
+        [Fact]
+        public void RunPropertyOperationsConsolidate_Success()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var controller = helper.CreateController<PropertyOperationController>(Permissions.PropertyEdit);
+            IEnumerable<PropertyOperationModel> pimsPropertyOperations = new List<PropertyOperationModel>()
+            {
+                new PropertyOperationModel() { PropertyOperationTypeCode = new Models.Base.CodeTypeModel<string>() { Id = PropertyOperationTypes.CONSOLIDATE.ToString() }, PropertyOperationNo = 1 },
+                new PropertyOperationModel() { PropertyOperationTypeCode = new Models.Base.CodeTypeModel<string>() { Id = PropertyOperationTypes.CONSOLIDATE.ToString() }, PropertyOperationNo = 1 },
+            };
+
+
+            var service = helper.GetService<Mock<IPropertyOperationService>>();
+
+            // Act
+            controller.RunPropertyOperations(pimsPropertyOperations);
+
+            // Assert
+            service.Verify(m => m.ConsolidateProperty(It.IsAny<IEnumerable<PimsPropertyOperation>>()), Times.Once());
         }
 
         /// <summary>

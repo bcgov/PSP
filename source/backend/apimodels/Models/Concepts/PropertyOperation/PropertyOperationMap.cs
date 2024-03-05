@@ -24,6 +24,7 @@ namespace Pims.Api.Models.Concepts.Note
             config.NewConfig<PropertyOperationModel, Entity.PimsPropertyOperation>()
                 .Map(dest => dest.PropertyOperationId, src => src.Id)
                 .Map(dest => dest.SourcePropertyId, src => src.SourcePropertyId)
+                .Map(dest => dest.SourceProperty, src => src.SourceProperty)
                 .Map(dest => dest.DestinationPropertyId, src => src.DestinationPropertyId)
                 .Map(dest => dest.DestinationProperty, src => src.DestinationProperty)
                 .Map(dest => dest.PropertyOperationNo, src => src.PropertyOperationNo)
