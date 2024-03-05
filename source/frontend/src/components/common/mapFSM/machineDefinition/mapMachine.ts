@@ -14,6 +14,9 @@ const featureViewStates = {
       on: {
         START_SELECTION: {
           target: 'selecting',
+          actions: [
+            assign({ selectingComponentId: (_, event: any) => event.selectingComponentId }),
+          ],
         },
         TOGGLE_FILTER: {
           target: 'filtering',
@@ -212,7 +215,12 @@ const selectedFeatureLoaderStates = {
             assign({
               isLoading: () => false,
               showPopup: () => true,
-              mapLocationFeatureDataset: (context, event: any) => event.data,
+              mapLocationFeatureDataset: (context: any, event: any) => {
+                return {
+                  ...event.data,
+                  selectingComponentId: context.selectingComponentId,
+                };
+              },
             }),
             raise('FINISHED_LOCATION_DATA_LOAD'),
           ],
@@ -305,6 +313,7 @@ export const mapMachine = createMachine<MachineContext>({
   // Machine identifier
   id: 'map',
   initial: 'notMap',
+  predictableActionArguments: true,
 
   // Local context for entire machine
   context: {
@@ -318,6 +327,7 @@ export const mapMachine = createMachine<MachineContext>({
     mapFeatureSelected: null,
     mapLocationFeatureDataset: null,
     selectedFeatureDataset: null,
+    selectingComponentId: null,
     isLoading: false,
     searchCriteria: null,
     mapFeatureData: emptyFeatureData,

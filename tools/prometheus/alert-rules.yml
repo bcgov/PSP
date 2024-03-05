@@ -1,0 +1,12 @@
+groups:
+  - name: Hardware alerts
+    limit: 0
+    rules:
+      - alert: SqlServerDown
+        expr: aspnetcore_healthcheck_status{name="sqlserver"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: SQL Server down
+          description: "SQL server has been down on {{ $labels.instance }} for more than 1 minute."

@@ -138,9 +138,11 @@ describe('MapSelectorContainer component', () => {
     expect(onSelectedProperties).toHaveBeenCalledWith([
       {
         address: '1234 Fake St',
+        areaUnit: 'M2',
         district: 12,
         districtName: 'Cannot determine',
         id: 'PID-009-727-493',
+        landArea: 29217,
         latitude: 48.76613749999999,
         longitude: -123.46163749999998,
         name: undefined,

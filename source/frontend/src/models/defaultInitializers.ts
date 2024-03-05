@@ -123,6 +123,7 @@ export const getEmptyProperty = (): ApiGen_Concepts_Property => ({
   name: null,
   description: null,
   isSensitive: false,
+  isRetired: false,
   isProvincialPublicHwy: null,
   pphStatusUpdateUserid: null,
   pphStatusUpdateTimestamp: null,

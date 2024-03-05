@@ -86,7 +86,7 @@ export class DispositionSaleFormModel implements WithSalePurchasers {
         ? this.finalConditionRemovalDate
         : null,
       saleCompletionDate: isValidIsoDateTime(this.saleCompletionDate)
-        ? this.finalConditionRemovalDate
+        ? this.saleCompletionDate
         : null,
       saleFiscalYear: emptyStringtoNullable(this.saleFiscalYear),
       finalSaleAmount: this.finalSaleAmount ? parseFloat(this.finalSaleAmount.toString()) : null,

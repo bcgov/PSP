@@ -90,14 +90,15 @@ const onClose = jest.fn();
 describe('AddLeaseContainer component', () => {
   const setup = async (renderOptions: RenderOptions & Partial<IAddLeaseContainerProps> = {}) => {
     // render component under test
-    const component = await renderAsync(<AddLeaseContainer onClose={onClose} />, {
+    const utils = await renderAsync(<AddLeaseContainer onClose={onClose} />, {
       ...renderOptions,
       store: storeState,
       history,
     });
 
     return {
-      component,
+      ...utils,
+      getCloseButton: () => utils.getByTitle('close'),
     };
   };
 
@@ -110,23 +111,22 @@ describe('AddLeaseContainer component', () => {
   });
 
   it('renders as expected', async () => {
-    const { component } = await setup({});
-    expect(component.asFragment()).toMatchSnapshot();
+    const { asFragment } = await setup({});
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it('cancels the form', async () => {
-    const {
-      component: { getAllByText },
-    } = await setup({});
-    userEvent.click(getAllByText('Cancel')[0]);
-    expect(history.location.pathname).toBe('/');
+    const { getByTitle, getCloseButton } = await setup({});
+
+    await act(async () => userEvent.click(getCloseButton()));
+    await act(async () => userEvent.click(getByTitle('ok-modal')));
+
     expect(onClose).toBeCalled();
+    expect(history.location.pathname).toBe('/');
   });
 
   it('saves the form with minimal data', async () => {
-    const {
-      component: { getByText, container },
-    } = await setup({});
+    const { getByText, container } = await setup({});
 
     await act(() => selectOptions('statusTypeCode', 'DRAFT'));
     await act(() => selectOptions('paymentReceivableTypeCode', 'RCVBL'));
@@ -152,9 +152,7 @@ describe('AddLeaseContainer component', () => {
       }),
     );
 
-    const {
-      component: { getByText, findByText, container },
-    } = await setup({});
+    const { getByText, findByText, container } = await setup({});
 
     await act(() => selectOptions('statusTypeCode', 'DRAFT'));
     await act(() => selectOptions('paymentReceivableTypeCode', 'RCVBL'));
@@ -181,9 +179,7 @@ describe('AddLeaseContainer component', () => {
       }),
     );
 
-    const {
-      component: { getByText, container },
-    } = await setup({});
+    const { getByText, container } = await setup({});
 
     await act(() => selectOptions('statusTypeCode', 'DRAFT'));
     await act(() => selectOptions('paymentReceivableTypeCode', 'RCVBL'));
