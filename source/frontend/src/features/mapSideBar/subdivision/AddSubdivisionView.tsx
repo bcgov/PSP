@@ -85,14 +85,6 @@ const AddSubdivisionView: React.FunctionComponent<
     >
       <StyledFormWrapper>
         <LoadingBackdrop show={loading} />
-        <br />
-        <H2>
-          Properties in Subdivision &nbsp;
-          <FaInfoCircle className="tooltip-icon h-50" />
-          <StyledTooltipText>
-            Only a property that is in the PIMS inventory can be subdivided.
-          </StyledTooltipText>
-        </H2>
 
         <Formik<SubdivisionFormModel>
           onSubmit={onSubmit}
@@ -102,78 +94,87 @@ const AddSubdivisionView: React.FunctionComponent<
         >
           {({ values, setFieldValue, errors }) => (
             <Form>
-              <AddSubdivisionMarkerSynchronizer values={values} />
-              <p>Select the parent property that was subdivided:</p>
-              <StyledTabView activeKey="parent-property">
-                <Tab eventKey="parent-property" title="Parent Property Search">
-                  <PropertySelectorPidSearchComponent
-                    setSelectProperty={selectedProperty =>
-                      setFieldValue('sourceProperty', selectedProperty)
-                    }
-                    PropertySelectorPidSearchView={PropertySearchSelectorPidFormView}
-                  />
-                </Tab>
-              </StyledTabView>
-              <Section header="Selected Parent">
-                <SelectedOperationPropertyHeader />
-                {values.sourceProperty?.pid && (
-                  <SelectedOperationProperty
-                    property={values.sourceProperty}
-                    onRemove={() => setFieldValue('sourceProperty', undefined)}
-                    nameSpace="sourceProperty"
-                    getMarkerIndex={() => 0}
-                  />
-                )}
-                {errors.destinationProperties && (
-                  <div className="invalid-feedback">{errors.sourceProperty as string}</div>
-                )}
-              </Section>
-              <br />
-              <p>Select the child properties to which parent property was subdivided:</p>
-              <br />
-              <MapSelectorComponent
-                addSelectedProperties={async properties => {
-                  const allProperties = [...values.destinationProperties];
-                  await properties.reduce(async (promise, property) => {
-                    return promise.then(async () => {
-                      const formProperty = PropertyForm.fromMapProperty(property);
-                      if (property.pid) {
-                        formProperty.address = await getPrimaryAddressByPid(property.pid);
-                        allProperties.push(formProperty.toApi());
-                      } else {
-                        toast.error('Selected property must have a PID');
+              <Section>
+                <H2>
+                  Properties in Subdivision &nbsp;
+                  <FaInfoCircle className="tooltip-icon h-20" size="1rem" />
+                  <StyledTooltipText>
+                    Only a property that is in the PIMS inventory can be subdivided.
+                  </StyledTooltipText>
+                </H2>
+                <AddSubdivisionMarkerSynchronizer values={values} />
+                <p>Select the parent property that was subdivided:</p>
+                <StyledTabView activeKey="parent-property">
+                  <Tab eventKey="parent-property" title="Parent Property Search">
+                    <PropertySelectorPidSearchComponent
+                      setSelectProperty={selectedProperty =>
+                        setFieldValue('sourceProperty', selectedProperty)
                       }
-                    });
-                  }, Promise.resolve());
-                  setFieldValue('destinationProperties', allProperties);
-                }}
-                selectedComponentId="destination-property-selector"
-                modifiedProperties={values.destinationProperties.map(dp =>
-                  PropertyForm.fromPropertyApi(dp),
-                )}
-              />
-              <FieldArray name="destinationProperties">
-                {({ remove }) => (
-                  <Section header="Selected Children">
-                    <SelectedOperationPropertyHeader />
-                    {values.destinationProperties.map((property, index) => (
-                      <SelectedOperationProperty
-                        property={property}
-                        onRemove={() => remove(index)}
-                        nameSpace={`destinationProperties.${index}`}
-                        getMarkerIndex={property => getDraftMarkerIndex(property, values)}
-                        key={`destination-property-${property.pid}-${property.latitude}-${property.longitude}`}
-                        isEditable
-                      />
-                    ))}
-                    {errors.destinationProperties && (
-                      <div className="invalid-feedback">
-                        {errors.destinationProperties as string}
-                      </div>
-                    )}
-                  </Section>
-                )}
-              </FieldArray>
+                      PropertySelectorPidSearchView={PropertySearchSelectorPidFormView}
+                    />
+                  </Tab>
+                </StyledTabView>
+                <Section header="Selected Parent" noPadding className="pt-4">
+                  <SelectedOperationPropertyHeader />
+                  {values.sourceProperty?.pid && (
+                    <SelectedOperationProperty
+                      property={values.sourceProperty}
+                      onRemove={() => setFieldValue('sourceProperty', undefined)}
+                      nameSpace="sourceProperty"
+                      getMarkerIndex={() => 0}
+                    />
+                  )}
+                  {errors.destinationProperties && (
+                    <div className="invalid-feedback">{errors.sourceProperty as string}</div>
+                  )}
+                </Section>
+              </Section>
+              <Section>
+                <p>Select the child properties to which parent property was subdivided:</p>
+                <MapSelectorComponent
+                  addSelectedProperties={async properties => {
+                    const allProperties = [...values.destinationProperties];
+                    await properties.reduce(async (promise, property) => {
+                      return promise.then(async () => {
+                        const formProperty = PropertyForm.fromMapProperty(property);
+                        if (property.pid) {
+                          formProperty.address = await getPrimaryAddressByPid(property.pid);
+                          allProperties.push(formProperty.toApi());
+                        } else {
+                          toast.error('Selected property must have a PID');
+                        }
+                      });
+                    }, Promise.resolve());
+                    setFieldValue('destinationProperties', allProperties);
+                  }}
+                  selectedComponentId="destination-property-selector"
+                  modifiedProperties={values.destinationProperties.map(dp =>
+                    PropertyForm.fromPropertyApi(dp),
+                  )}
+                />
+                <FieldArray name="destinationProperties">
+                  {({ remove }) => (
+                    <Section header="Selected Children" noPadding className="pt-4">
+                      <SelectedOperationPropertyHeader />
+                      {values.destinationProperties.map((property, index) => (
+                        <SelectedOperationProperty
+                          property={property}
+                          onRemove={() => remove(index)}
+                          nameSpace={`destinationProperties.${index}`}
+                          getMarkerIndex={property => getDraftMarkerIndex(property, values)}
+                          key={`destination-property-${property.pid}-${property.latitude}-${property.longitude}`}
+                          isEditable
+                        />
+                      ))}
+                      {errors.destinationProperties && (
+                        <div className="invalid-feedback">
+                          {errors.destinationProperties as string}
+                        </div>
+                      )}
+                    </Section>
+                  )}
+                </FieldArray>
+              </Section>
             </Form>
           )}
         </Formik>
@@ -206,6 +207,7 @@ const StyledFormWrapper = styled.div`
   overflow-y: auto;
   padding-right: 1rem;
   padding-bottom: 1rem;
+  background-color: ${props => props.theme.css.filterBackgroundColor};
 `;
 
 const StyledTooltipText = styled.span`

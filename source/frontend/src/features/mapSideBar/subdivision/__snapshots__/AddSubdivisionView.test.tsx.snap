@@ -77,31 +77,31 @@ exports[`Add Subdivision View matches snapshot 1`] = `
       class="c3"
     />
   </div>
-  .c7 {
+  .c8 {
   background-color: white;
   font-size: 1.4rem;
   border-color: transparent;
 }
 
-.c7 .nav-tabs {
+.c8 .nav-tabs {
   height: auto;
 }
 
-.c7 .nav-item {
+.c8 .nav-item {
   min-width: 5rem;
   padding: 0.1rem 0.6rem;
 }
 
-.c7 .nav-item:hover {
+.c8 .nav-item:hover {
   border-color: transparent;
 }
 
-.c7 .nav-item.active {
+.c8 .nav-item.active {
   font-family: 'BCSans-Bold';
   border-color: transparent;
 }
 
-.c3 {
+.c4 {
   font-family: 'BCSans-Bold';
   font-size: 2.6rem;
   border-bottom: solid 0.2rem;
@@ -110,13 +110,13 @@ exports[`Add Subdivision View matches snapshot 1`] = `
   margin-bottom: 2rem;
 }
 
-.c9 {
+.c10 {
   font-weight: bold;
   border-bottom: 0.2rem solid;
   margin-bottom: 2rem;
 }
 
-.c8 {
+.c3 {
   margin: 1.5rem;
   padding: 1.5rem;
   background-color: white;
@@ -124,25 +124,31 @@ exports[`Add Subdivision View matches snapshot 1`] = `
   border-radius: 0.5rem;
 }
 
-.c5 {
+.c9 {
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
+.c6 {
   height: 100%;
 }
 
-.c5 .tab-content {
+.c6 .tab-content {
   border-radius: 0 0.4rem 0.4rem 0.4rem;
   height: calc(100% - 2.5rem);
   overflow-y: auto;
 }
 
-.c5 .tab-content .tab-pane {
+.c6 .tab-content .tab-pane {
   position: relative;
 }
 
-.c6 {
+.c7 {
   height: auto;
 }
 
-.c6.tab-content {
+.c7.tab-content {
   height: auto;
 }
 
@@ -160,7 +166,7 @@ exports[`Add Subdivision View matches snapshot 1`] = `
   width: 100%;
 }
 
-.c10 {
+.c11 {
   font-size: 1.6rem;
   border-bottom: 0.2rem solid;
   margin-bottom: 0.9rem;
@@ -187,7 +193,7 @@ exports[`Add Subdivision View matches snapshot 1`] = `
   padding-bottom: 1rem;
 }
 
-.c4 {
+.c5 {
   font-size: 1.4rem;
   font-family: 'BCSans',Fallback,sans-serif;
 }
@@ -201,176 +207,189 @@ exports[`Add Subdivision View matches snapshot 1`] = `
       <div
         class="c2"
       >
-        <br />
-        <h2
-          class="c3"
-        >
-          Properties in Subdivision  
-          <svg
-            class="tooltip-icon h-50"
-            fill="currentColor"
-            height="1em"
-            stroke="currentColor"
-            stroke-width="0"
-            viewBox="0 0 512 512"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
-            />
-          </svg>
-          <span
-            class="c4"
-          >
-            Only a property that is in the PIMS inventory can be subdivided.
-          </span>
-        </h2>
         <form
           class=""
           novalidate=""
         >
-          <p>
-            Select the parent property that was subdivided:
-          </p>
           <div
-            class="c5 c6"
+            class="c3 form-section"
           >
-            <nav
-              class="c7 nav nav-tabs"
-              role="tablist"
-            >
-              <a
-                aria-selected="true"
-                class="nav-item nav-link active"
-                data-rb-event-key="parent-property"
-                href="#"
-                role="tab"
-              >
-                Parent Property Search
-              </a>
-            </nav>
             <div
-              class="tab-content"
+              class="collapse show"
             >
-              <div
-                aria-hidden="false"
-                class="fade tab-pane active show"
-                role="tabpanel"
+              <h2
+                class="c4"
               >
-                <span>
-                  Content Rendered
+                Properties in Subdivision  
+                <svg
+                  class="tooltip-icon h-20"
+                  fill="currentColor"
+                  height="1rem"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 512 512"
+                  width="1rem"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                  />
+                </svg>
+                <span
+                  class="c5"
+                >
+                  Only a property that is in the PIMS inventory can be subdivided.
                 </span>
+              </h2>
+              <p>
+                Select the parent property that was subdivided:
+              </p>
+              <div
+                class="c6 c7"
+              >
+                <nav
+                  class="c8 nav nav-tabs"
+                  role="tablist"
+                >
+                  <a
+                    aria-selected="true"
+                    class="nav-item nav-link active"
+                    data-rb-event-key="parent-property"
+                    href="#"
+                    role="tab"
+                  >
+                    Parent Property Search
+                  </a>
+                </nav>
+                <div
+                  class="tab-content"
+                >
+                  <div
+                    aria-hidden="false"
+                    class="fade tab-pane active show"
+                    role="tabpanel"
+                  >
+                    <span>
+                      Content Rendered
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="c9 form-section pt-4"
+              >
+                <h2
+                  class="c10"
+                >
+                  <div
+                    class="no-gutters row"
+                  >
+                    <div
+                      class="col"
+                    >
+                      Selected Parent
+                    </div>
+                  </div>
+                </h2>
+                <div
+                  class="collapse show"
+                >
+                  <div
+                    class="c11 no-gutters row"
+                  >
+                    <div
+                      class="col-md-3"
+                    >
+                      Identifier
+                    </div>
+                    <div
+                      class="col-md-2"
+                    >
+                      Plan
+                    </div>
+                    <div
+                      class="col-md-2"
+                    >
+                      Area m
+                      <sup>
+                        2
+                      </sup>
+                    </div>
+                    <div
+                      class="col-md-3"
+                    >
+                      Address
+                    </div>
+                    <div
+                      class="col-md-2"
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
           <div
-            class="c8 form-section"
+            class="c3 form-section"
           >
-            <h2
-              class="c9"
-            >
-              <div
-                class="no-gutters row"
-              >
-                <div
-                  class="col"
-                >
-                  Selected Parent
-                </div>
-              </div>
-            </h2>
             <div
               class="collapse show"
             >
+              <p>
+                Select the child properties to which parent property was subdivided:
+              </p>
+              <span>
+                Content Rendered
+              </span>
               <div
-                class="c10 no-gutters row"
+                class="c9 form-section pt-4"
               >
-                <div
-                  class="col-md-3"
+                <h2
+                  class="c10"
                 >
-                  Identifier
-                </div>
+                  <div
+                    class="no-gutters row"
+                  >
+                    <div
+                      class="col"
+                    >
+                      Selected Children
+                    </div>
+                  </div>
+                </h2>
                 <div
-                  class="col-md-2"
+                  class="collapse show"
                 >
-                  Plan
+                  <div
+                    class="c11 no-gutters row"
+                  >
+                    <div
+                      class="col-md-3"
+                    >
+                      Identifier
+                    </div>
+                    <div
+                      class="col-md-2"
+                    >
+                      Plan
+                    </div>
+                    <div
+                      class="col-md-2"
+                    >
+                      Area m
+                      <sup>
+                        2
+                      </sup>
+                    </div>
+                    <div
+                      class="col-md-3"
+                    >
+                      Address
+                    </div>
+                    <div
+                      class="col-md-2"
+                    />
+                  </div>
                 </div>
-                <div
-                  class="col-md-2"
-                >
-                  Area m
-                  <sup>
-                    2
-                  </sup>
-                </div>
-                <div
-                  class="col-md-3"
-                >
-                  Address
-                </div>
-                <div
-                  class="col-md-2"
-                />
-              </div>
-            </div>
-          </div>
-          <br />
-          <p>
-            Select the child properties to which parent property was subdivided:
-          </p>
-          <br />
-          <span>
-            Content Rendered
-          </span>
-          <div
-            class="c8 form-section"
-          >
-            <h2
-              class="c9"
-            >
-              <div
-                class="no-gutters row"
-              >
-                <div
-                  class="col"
-                >
-                  Selected Children
-                </div>
-              </div>
-            </h2>
-            <div
-              class="collapse show"
-            >
-              <div
-                class="c10 no-gutters row"
-              >
-                <div
-                  class="col-md-3"
-                >
-                  Identifier
-                </div>
-                <div
-                  class="col-md-2"
-                >
-                  Plan
-                </div>
-                <div
-                  class="col-md-2"
-                >
-                  Area m
-                  <sup>
-                    2
-                  </sup>
-                </div>
-                <div
-                  class="col-md-3"
-                >
-                  Address
-                </div>
-                <div
-                  class="col-md-2"
-                />
               </div>
             </div>
           </div>
