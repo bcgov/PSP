@@ -8,12 +8,8 @@ import { lookupCodesSlice } from '@/store/slices/lookupCodes/lookupCodesSlice';
 import { render, RenderOptions, waitFor, screen, getByTitle, userEvent } from '@/utils/test-utils';
 import { ConsolidationFormModel } from './AddConsolidationModel';
 import AddConsolidationView, { IAddConsolidationViewProps } from './AddConsolidationView';
-import {
-  PropertySelectorPidSearchContainerProps,
-} from '@/components/propertySelector/search/PropertySelectorPidSearchContainer';
-import {
-  IMapSelectorContainerProps,
-} from '@/components/propertySelector/MapSelectorContainer';
+import { PropertySelectorPidSearchContainerProps } from '@/components/propertySelector/search/PropertySelectorPidSearchContainer';
+import { IMapSelectorContainerProps } from '@/components/propertySelector/MapSelectorContainer';
 import { IMapProperty } from '@/components/propertySelector/models';
 import { getMockApiProperty } from '@/mocks/properties.mock';
 import { pidFormatter } from '@/utils';
@@ -136,7 +132,6 @@ describe('Add Consolidation View', () => {
     const text = await screen.findByText(pidFormatter(property.pid?.toString() ?? ''));
     expect(text).toBeVisible();
   });
-
 
   it('selected source properties can be removed', async () => {
     const initialFormModel = new ConsolidationFormModel();

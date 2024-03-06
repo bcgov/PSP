@@ -36,7 +36,7 @@ describe('mapUtils tests', () => {
           type: 'Point',
           coordinates: [1, 2],
         },
-        properties: { ...EmptyPropertyLocation, PROPERTY_ID: '1', IS_OTHER_INTEREST: true },
+        properties: { ...EmptyPropertyLocation, PROPERTY_ID: 1, IS_OTHER_INTEREST: true },
       };
       const latlng: LatLngExpression = { lat: 1, lng: 2 };
 
@@ -105,7 +105,7 @@ describe('mapUtils tests', () => {
         getMarkerIcon(
           {
             ...feature,
-            properties: { ...EmptyPropertyLocation, PROPERTY_ID: '1', IS_OWNED: true },
+            properties: { ...EmptyPropertyLocation, PROPERTY_ID: 1, IS_OWNED: true },
           },
           false,
         ),
@@ -118,7 +118,7 @@ describe('mapUtils tests', () => {
             ...feature,
             properties: {
               ...EmptyPropertyLocation,
-              PROPERTY_ID: '1',
+              PROPERTY_ID: 1,
               IS_PROPERTY_OF_INTEREST: true,
             },
           },
@@ -131,7 +131,7 @@ describe('mapUtils tests', () => {
         getMarkerIcon(
           {
             ...feature,
-            properties: { ...EmptyPropertyLocation, PROPERTY_ID: '1', IS_OTHER_INTEREST: true },
+            properties: { ...EmptyPropertyLocation, PROPERTY_ID: 1, IS_OTHER_INTEREST: true },
           },
           false,
         ),
@@ -142,7 +142,7 @@ describe('mapUtils tests', () => {
         getMarkerIcon(
           {
             ...feature,
-            properties: { ...EmptyPropertyLocation, PROPERTY_ID: '1', IS_DISPOSED: true },
+            properties: { ...EmptyPropertyLocation, PROPERTY_ID: 1, IS_DISPOSED: true },
           },
           false,
           true,
@@ -156,7 +156,7 @@ describe('mapUtils tests', () => {
             ...feature,
             properties: {
               ...EmptyPropertyLocation,
-              PROPERTY_ID: '1',
+              PROPERTY_ID: 1,
               IS_OWNED: true,
               IS_PROPERTY_OF_INTEREST: true,
             },
@@ -172,7 +172,7 @@ describe('mapUtils tests', () => {
             ...feature,
             properties: {
               ...EmptyPropertyLocation,
-              PROPERTY_ID: '1',
+              PROPERTY_ID: 1,
               IS_OWNED: null,
               IS_PROPERTY_OF_INTEREST: null,
               IS_OTHER_INTEREST: null,
