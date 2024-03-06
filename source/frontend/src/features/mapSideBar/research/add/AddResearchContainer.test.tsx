@@ -11,7 +11,7 @@ import {
 } from '@/components/common/mapFSM/MapStateMachineContext';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { PMBC_Feature_Properties } from '@/models/layers/parcelMapBC';
-import { act, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
+import { act, renderAsync, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
 import AddResearchContainer, { IAddResearchContainerProps } from './AddResearchContainer';
 
@@ -20,6 +20,8 @@ const mockStore = configureMockStore([thunk]);
 const store = mockStore({});
 const history = createMemoryHistory();
 jest.mock('@react-keycloak/web');
+
+const onClose = jest.fn();
 
 // Need to mock this library for unit tests
 jest.mock('react-visibility-sensor', () => {
@@ -35,11 +37,11 @@ jest.mock('@/components/common/mapFSM/MapStateMachineContext');
 (useMapStateMachine as jest.Mock).mockImplementation(() => mapMachineBaseMock);
 
 describe('AddResearchContainer component', () => {
-  const setup = (
+  const setup = async (
     renderOptions: RenderOptions & IAddResearchContainerProps & Partial<IMapStateMachineContext>,
   ) => {
     // render component under test
-    const component = render(
+    const utils = await renderAsync(
       <>
         <AddResearchContainer onClose={renderOptions.onClose} />
       </>,
@@ -52,14 +54,16 @@ describe('AddResearchContainer component', () => {
     );
 
     return {
+      ...utils,
       store,
-      component,
+      getNameTextbox: () => utils.container.querySelector(`input[name="name"]`) as HTMLInputElement,
+      getCancelButton: () => utils.getByText(/Cancel/i),
     };
   };
 
-  it('renders as expected', () => {
-    const { component } = setup({ onClose: noop });
-    expect(component.asFragment()).toMatchSnapshot();
+  it('renders as expected', async () => {
+    const { asFragment } = await setup({ onClose: noop });
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it('displays the currently selected property', async () => {
@@ -76,13 +80,25 @@ describe('AddResearchContainer component', () => {
       },
     });
 
-    const {
-      component: { findByText },
-    } = setup({ onClose: noop });
+    const { findByText } = await setup({ onClose: noop });
     await act(async () => {
       const pidText = await findByText('PID: 002-225-255');
       expect(pidText).toBeVisible();
     });
+  });
+
+  it('should confirm and close the form when Cancel button is clicked with changes', async () => {
+    const { getCancelButton, getByText, getByTitle, getNameTextbox } = await setup({
+      onClose: onClose,
+    });
+
+    expect(getByText(/Create Research File/i)).toBeVisible();
+
+    await act(async () => userEvent.paste(getNameTextbox(), 'Test Value'));
+    await act(async () => userEvent.click(getCancelButton()));
+    await act(async () => userEvent.click(getByTitle('ok-modal')));
+
+    expect(onClose).toBeCalled();
   });
 
   it('resets the list of draft properties when closed', async () => {
@@ -93,9 +109,7 @@ describe('AddResearchContainer component', () => {
       testMockMahine,
     );
 
-    const {
-      component: { getByTitle },
-    } = setup({
+    const { getByTitle } = await setup({
       onClose: noop,
     });
 
@@ -108,7 +122,7 @@ describe('AddResearchContainer component', () => {
   });
 
   it('should have the Help with choosing a name text in the component', async () => {
-    setup({
+    await setup({
       onClose: noop,
     });
     expect(screen.getByText(`Help with choosing a name`)).toBeInTheDocument();
