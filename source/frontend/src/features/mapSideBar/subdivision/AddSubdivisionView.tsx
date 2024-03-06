@@ -15,7 +15,6 @@ import { StyledTabView } from '@/components/propertySelector/PropertySelectorTab
 import { PropertySelectorPidSearchContainerProps } from '@/components/propertySelector/search/PropertySelectorPidSearchContainer';
 import PropertySearchSelectorPidFormView from '@/components/propertySelector/search/PropertySelectorPidSearchView';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
-import { BC_ASSESSMENT_TYPES, IBcAssessmentSummary } from '@/models/layers/bcAssesment';
 
 import MapSideBarLayout from '../layout/MapSideBarLayout';
 import { AddressForm, PropertyForm } from '../shared/models';
@@ -47,16 +46,7 @@ export interface IAddSubdivisionViewProps {
   ) => void | Promise<any>;
   onCancel: () => void;
   onSave: () => void;
-  getPrimaryAddressByPid: (
-    pid: string,
-    timeout?: number,
-  ) => Promise<
-    | {
-        address?: IBcAssessmentSummary[BC_ASSESSMENT_TYPES.ADDRESSES][0];
-        legalDescription?: IBcAssessmentSummary[BC_ASSESSMENT_TYPES.LEGAL_DESCRIPTION];
-      }
-    | undefined
-  >;
+  getPrimaryAddressByPid: (pid: string) => Promise<AddressForm | undefined>;
   MapSelectorComponent: React.FunctionComponent<IMapSelectorContainerProps>;
   PropertySelectorPidSearchComponent: React.FunctionComponent<
     React.PropsWithChildren<PropertySelectorPidSearchContainerProps>
@@ -148,10 +138,7 @@ const AddSubdivisionView: React.FunctionComponent<
                     return promise.then(async () => {
                       const formProperty = PropertyForm.fromMapProperty(property);
                       if (property.pid) {
-                        const bcaSummary = await getPrimaryAddressByPid(property.pid, 3000);
-                        formProperty.address = bcaSummary?.address
-                          ? AddressForm.fromBcaAddress(bcaSummary?.address)
-                          : undefined;
+                        formProperty.address = await getPrimaryAddressByPid(property.pid);
                         allProperties.push(formProperty.toApi());
                       } else {
                         toast.error('Selected property must have a PID');

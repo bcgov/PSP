@@ -16,7 +16,7 @@ export const SubdivisionConsolidationTray = ({ onLinkClick }: ISideTrayPageProps
   return (
     <>
       <HalfHeightDiv>
-        <Styled.TrayHeader>Disposition Files</Styled.TrayHeader>
+        <Styled.TrayHeader>Subdivision & Consolidation</Styled.TrayHeader>
         {hasClaim(Claims.PROPERTY_ADD) && (
           <Link onClick={onLinkClick} to="/mapview/sidebar/subdivision/new">
             Create a Subdivision

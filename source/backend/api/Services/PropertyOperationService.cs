@@ -126,7 +126,7 @@ namespace Pims.Api.Services
 
             if (operations.Select(o => o.SourceProperty).GroupBy(s => s.PropertyId).Count() < 2)
             {
-                throw new BusinessRuleViolationException("Consolidations must contain at least two parent properties.");
+                throw new BusinessRuleViolationException("Consolidations must contain at least two different parent properties.");
             }
 
             // either the property exists in pims, and is present in the source properties list, or the property does not have a match in PIMS at all (neither pid nor property_id).

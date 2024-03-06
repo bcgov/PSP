@@ -17,18 +17,23 @@ import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { exists, featuresetToMapProperty, isValidString } from '@/utils';
 
 import { AddressForm, PropertyForm } from '../shared/models';
-import { SubdivisionFormModel } from './AddSubdivisionModel';
-import { IAddSubdivisionViewProps } from './AddSubdivisionView';
+import { ConsolidationFormModel } from './AddConsolidationModel';
+import { IAddConsolidationViewProps } from './AddConsolidationView';
 
-export interface IAddSubdivisionContainerProps {
+export interface IAddConsolidationContainerProps {
   onClose?: () => void;
-  View: React.FunctionComponent<React.PropsWithChildren<IAddSubdivisionViewProps>>;
+  View: React.FunctionComponent<React.PropsWithChildren<IAddConsolidationViewProps>>;
 }
 
-const AddSubdivisionContainer: React.FC<IAddSubdivisionContainerProps> = ({ onClose, View }) => {
+const AddConsolidationContainer: React.FC<IAddConsolidationContainerProps> = ({
+  onClose,
+  View,
+}) => {
   const [isFormValid, setIsFormValid] = useState<boolean>(true);
-  const [initialForm, setInitialForm] = useState<SubdivisionFormModel>(new SubdivisionFormModel());
-  const formikRef = useRef<FormikProps<SubdivisionFormModel>>(null);
+  const [initialForm, setInitialForm] = useState<ConsolidationFormModel>(
+    new ConsolidationFormModel(),
+  );
+  const formikRef = useRef<FormikProps<ConsolidationFormModel>>(null);
   const mapMachine = useMapStateMachine();
   const selectedFeatureDataset = mapMachine.selectedFeatureDataset;
   const history = useHistory();
@@ -48,10 +53,10 @@ const AddSubdivisionContainer: React.FC<IAddSubdivisionContainerProps> = ({ onCl
           setDisplayModal(false);
         },
       });
-      setDisplayModal(true);
     } else {
       onClose?.();
     }
+    setDisplayModal(true);
   }, [onClose, setDisplayModal, setModalContent]);
 
   const getAddress = useCallback(
@@ -66,15 +71,14 @@ const AddSubdivisionContainer: React.FC<IAddSubdivisionContainerProps> = ({ onCl
     loadInitialProperty();
 
     async function loadInitialProperty() {
-      // support creating a new subdivision from the map popup
       if (selectedFeatureDataset !== null) {
         const propertyForm = PropertyForm.fromMapProperty(
           featuresetToMapProperty(selectedFeatureDataset),
         );
         if (isValidString(propertyForm.pid)) {
           propertyForm.address = await getAddress(propertyForm.pid);
-          const consolidationFormModel = new SubdivisionFormModel();
-          consolidationFormModel.sourceProperty = propertyForm.toApi();
+          const consolidationFormModel = new ConsolidationFormModel();
+          consolidationFormModel.sourceProperties = [propertyForm.toApi()];
           setInitialForm(consolidationFormModel);
         }
       }
@@ -84,7 +88,7 @@ const AddSubdivisionContainer: React.FC<IAddSubdivisionContainerProps> = ({ onCl
   useEffect(() => {
     if (exists(initialForm) && exists(formikRef.current)) {
       formikRef.current.resetForm();
-      formikRef.current.setFieldValue('sourceProperty', initialForm.sourceProperty);
+      formikRef.current.setFieldValue('sourceProperties', initialForm.sourceProperties);
     }
   }, [initialForm]);
 
@@ -95,7 +99,7 @@ const AddSubdivisionContainer: React.FC<IAddSubdivisionContainerProps> = ({ onCl
 
   const withUserOverride = useApiUserOverride<
     (userOverrideCodes: UserOverrideCode[]) => Promise<ApiGen_Concepts_DispositionFile | void>
-  >('Failed to create Subdivision');
+  >('Failed to create Consolidation');
 
   const handleSave = async () => {
     await formikRef?.current?.validateForm();
@@ -110,12 +114,12 @@ const AddSubdivisionContainer: React.FC<IAddSubdivisionContainerProps> = ({ onCl
         message: (
           <>
             <p>
-              You are subdividing a property into two or more properties. The old parent property
-              record will be retired, and the new child properties will be created
+              You are consolidationg two or more properties into one. The old parent properties
+              records will be retired, and a new child property will be created
             </p>
             <p>
-              If you proceed, you will be redirected to the old parent property record, where you
-              can view changes and make updates to the new properties. Do you want to proceed?
+              If you proceed, you will be redirected to the new child property record, where you can
+              view changes and make updates. Do you want to proceed?
             </p>
           </>
         ),
@@ -133,8 +137,8 @@ const AddSubdivisionContainer: React.FC<IAddSubdivisionContainerProps> = ({ onCl
   };
 
   const handleSubmit = async (
-    values: SubdivisionFormModel,
-    formikHelpers: FormikHelpers<SubdivisionFormModel>,
+    values: ConsolidationFormModel,
+    formikHelpers: FormikHelpers<ConsolidationFormModel>,
     userOverrideCodes: UserOverrideCode[],
   ) => {
     try {
@@ -149,12 +153,12 @@ const AddSubdivisionContainer: React.FC<IAddSubdivisionContainerProps> = ({ onCl
     }
   };
 
-  const handleSuccess = async (subdivisions: ApiGen_Concepts_PropertyOperation[]) => {
+  const handleSuccess = async (consolidations: ApiGen_Concepts_PropertyOperation[]) => {
     mapMachine.refreshMapProperties();
-    if (subdivisions.length === 0 || !subdivisions[0].sourceProperty) {
+    if (consolidations.length === 0 || !consolidations[0].destinationProperty) {
       history.replace(`/mapview`);
     } else {
-      history.replace(`/mapview/sidebar/property/${subdivisions[0].sourceProperty?.id}`);
+      history.replace(`/mapview/sidebar/property/${consolidations[0].destinationProperty?.id}`);
     }
   };
 
@@ -163,8 +167,8 @@ const AddSubdivisionContainer: React.FC<IAddSubdivisionContainerProps> = ({ onCl
       formikRef={formikRef}
       loading={loading || bcaLoading}
       onSubmit={(
-        values: SubdivisionFormModel,
-        formikHelpers: FormikHelpers<SubdivisionFormModel>,
+        values: ConsolidationFormModel,
+        formikHelpers: FormikHelpers<ConsolidationFormModel>,
       ) =>
         withUserOverride(
           (userOverrideCodes: UserOverrideCode[]) =>
@@ -183,7 +187,7 @@ const AddSubdivisionContainer: React.FC<IAddSubdivisionContainerProps> = ({ onCl
       }
       onCancel={handleCancel}
       onSave={handleSave}
-      subdivisionInitialValues={initialForm}
+      consolidationInitialValues={initialForm}
       displayFormInvalid={!isFormValid}
       getPrimaryAddressByPid={getAddress}
       PropertySelectorPidSearchComponent={PropertySelectorPidSearchContainer}
@@ -192,4 +196,4 @@ const AddSubdivisionContainer: React.FC<IAddSubdivisionContainerProps> = ({ onCl
   );
 };
 
-export default AddSubdivisionContainer;
+export default AddConsolidationContainer;
