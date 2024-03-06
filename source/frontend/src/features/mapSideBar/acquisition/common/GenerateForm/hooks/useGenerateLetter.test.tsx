@@ -15,7 +15,10 @@ import { ApiGen_Concepts_AcquisitionFileProperty } from '@/models/api/generated/
 
 const generateFn = jest.fn();
 const getAcquisitionFileFn = jest.fn<ApiGen_Concepts_AcquisitionFile | undefined, any[]>();
-const getAcquisitionFilePropertiesFn = jest.fn<ApiGen_Concepts_AcquisitionFileProperty | undefined, any[]>();
+const getAcquisitionFilePropertiesFn = jest.fn<
+  ApiGen_Concepts_AcquisitionFileProperty | undefined,
+  any[]
+>();
 const getPersonConceptFn = jest.fn();
 const getOrganizationConceptFn = jest.fn();
 
@@ -38,7 +41,7 @@ jest.mock('@/hooks/pims-api/useApiContacts');
 
 let currentStore: MockStoreEnhanced<any, {}>;
 const mockStore = configureMockStore([thunk]);
-const getStore = (values?: any) => { 
+const getStore = (values?: any) => {
   currentStore = mockStore(values ?? {});
   return currentStore;
 };
