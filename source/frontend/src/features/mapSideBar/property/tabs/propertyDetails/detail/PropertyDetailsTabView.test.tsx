@@ -41,14 +41,17 @@ describe('PropertyDetailsTabView component', () => {
     const component = render(<PropertyDetailsTabView property={formValues} loading={false} />, {
       ...rest,
       store: storeState,
+      useMockAuthentication: true,
       claims: renderOptions?.claims ?? [],
       history,
     });
 
-    return {
-      ...component,
-    };
+    return { ...component };
   };
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
 
   it('renders as expected when provided valid data object', () => {
     const { asFragment } = setup({ property: mockPropertyInfo });
@@ -173,8 +176,9 @@ describe('PropertyDetailsTabView component', () => {
     const property: ApiGen_Concepts_Property = {
       ...mockPropertyInfo,
     };
-    const { getByTitle } = setup({ property, claims: [Claims.PROPERTY_EDIT] });
+    const { getByTitle, queryByTestId } = setup({ property, claims: [Claims.PROPERTY_EDIT] });
     expect(getByTitle(/Edit property details/)).toBeVisible();
+    expect(queryByTestId('tooltip-icon-property-retired-tooltip')).not.toBeInTheDocument();
   });
 
   it('should not display the Edit button if the user does not have permissions', async () => {
@@ -185,14 +189,14 @@ describe('PropertyDetailsTabView component', () => {
     expect(queryByTitle(/Edit property details/)).toBeNull();
   });
 
-  it('should replace the Edit button with a tooltip for retired properties', async () => {
+  it('should render the retired tooltip instead of the Edit button for retired properties', async () => {
     const property: ApiGen_Concepts_Property = {
       ...mockPropertyInfo,
       isRetired: true,
     };
     const { queryByTitle, getByTestId } = await setup({ property, claims: [Claims.PROPERTY_EDIT] });
     expect(queryByTitle(/Edit property details/)).toBeNull();
-    expect(getByTestId('tooltip-icon-1-summary-cannot-edit-tooltip')).toBeInTheDocument();
+    expect(getByTestId('tooltip-icon-property-retired-tooltip')).toBeInTheDocument();
   });
 });
 
@@ -260,6 +264,7 @@ export const mockPropertyInfo: ApiGen_Concepts_Property = {
   latitude: 1088851.4995,
   longitude: 924033.5004,
   isSensitive: false,
+  isRetired: false,
   address: {
     ...getEmptyAddress(),
     id: 204,

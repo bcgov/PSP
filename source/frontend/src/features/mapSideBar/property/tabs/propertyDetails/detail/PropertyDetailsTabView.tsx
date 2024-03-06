@@ -86,7 +86,7 @@ export const PropertyDetailsTabView: React.FunctionComponent<IPropertyDetailsTab
         ) : null}
         {!canEditDetails(property) ? (
           <TooltipIcon
-            toolTipId={`${property?.id || 0}-summary-cannot-edit-tooltip`}
+            toolTipId="property-retired-tooltip"
             toolTip="Retired records are referenced for historical purposes only and cannot be edited or deleted."
           />
         ) : null}
