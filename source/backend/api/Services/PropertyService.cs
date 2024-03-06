@@ -101,14 +101,8 @@ namespace Pims.Api.Services
 
         public PimsProperty Update(PimsProperty property, bool commitTransaction = true)
         {
-            _logger.LogInformation("Updating property...");
+            _logger.LogInformation("Updating property with id {id}", property.Internal_Id);
             _user.ThrowIfNotAuthorized(Permissions.PropertyEdit);
-
-            var existingProperty = GetById(property.Internal_Id);
-            if (existingProperty.IsRetired.HasValue && existingProperty.IsRetired.Value)
-            {
-                throw new BusinessRuleViolationException("Retired records are referenced for historical purposes only and cannot be edited or deleted.");
-            }
 
             // convert spatial location from lat/long (4326) to BC Albers (3005) for database storage
             var geom = property.Location;
