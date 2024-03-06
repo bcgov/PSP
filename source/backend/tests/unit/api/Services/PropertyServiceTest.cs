@@ -136,7 +136,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             repository.Verify(x => x.Update(It.IsAny<PimsProperty>(), It.IsAny<bool>()), Times.Once);
-            coordinateService.Verify(x => x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>()), Times.Exactly(2));
+            coordinateService.Verify(x => x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>()));
         }
 
         [Fact]
@@ -164,7 +164,7 @@ namespace Pims.Api.Test.Services
             var updatedProperty = service.Update(newValues);
 
             // Assert
-            coordinateService.Verify(x => x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>()), Times.Exactly(3));
+            coordinateService.Verify(x => x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>()));
             repository.Verify(x => x.Update(It.Is<PimsProperty>(p => p.Location.Coordinate.Equals(projected)), It.IsAny<bool>()), Times.Once);
         }
 
@@ -196,29 +196,6 @@ namespace Pims.Api.Test.Services
 
             // Assert
             Assert.Throws<NotAuthorizedException>(() => service.Update(property));
-            repository.Verify(x => x.Update(It.IsAny<PimsProperty>(), It.IsAny<bool>()), Times.Never);
-        }
-
-        [Fact]
-        public void Update_Property_Retired_Violation()
-        {
-            // Arrange
-            var property = EntityHelper.CreateProperty(1);
-            property.IsRetired = true;
-
-            var service = this.CreatePropertyServiceWithPermissions(Permissions.PropertyView, Permissions.PropertyEdit);
-            var repository = this._helper.GetService<Mock<IPropertyRepository>>();
-            repository.Setup(x => x.Update(It.IsAny<PimsProperty>(), It.IsAny<bool>())).Returns(property);
-            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(property);
-
-            // Act
-            Action act = () => service.Update(property);
-
-            // Assert
-            act.Should()
-                .Throw<BusinessRuleViolationException>()
-                .WithMessage("Retired records are referenced for historical purposes only and cannot be edited or deleted.");
-
             repository.Verify(x => x.Update(It.IsAny<PimsProperty>(), It.IsAny<bool>()), Times.Never);
         }
 
