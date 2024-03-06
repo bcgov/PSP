@@ -128,7 +128,6 @@ const CreateOrganizationComponent: React.FC<FormikProps<IEditableOrganizationFor
 
   return (
     <>
-      {/* Router-based confirmation popup when user tries to navigate away and form has unsaved changes */}
       <UnsavedChangesPrompt />
 
       {/* Confirmation popup when Cancel button is clicked */}
