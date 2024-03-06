@@ -11,9 +11,11 @@ import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 
 import { useGenerateLetter } from '../hooks/useGenerateLetter';
+import { ApiGen_Concepts_AcquisitionFileProperty } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileProperty';
 
 const generateFn = jest.fn();
 const getAcquisitionFileFn = jest.fn<ApiGen_Concepts_AcquisitionFile | undefined, any[]>();
+const getAcquisitionFilePropertiesFn = jest.fn<ApiGen_Concepts_AcquisitionFileProperty | undefined, any[]>();
 const getPersonConceptFn = jest.fn();
 const getOrganizationConceptFn = jest.fn();
 
@@ -25,6 +27,7 @@ jest.mock('@/features/documents/hooks/useDocumentGenerationRepository');
 jest.mock('@/hooks/repositories/useAcquisitionProvider');
 (useAcquisitionProvider as jest.Mock).mockImplementation(() => ({
   getAcquisitionFile: { execute: getAcquisitionFileFn },
+  getAcquisitionProperties: { execute: getAcquisitionFilePropertiesFn },
 }));
 
 jest.mock('@/hooks/pims-api/useApiContacts');
@@ -35,7 +38,7 @@ jest.mock('@/hooks/pims-api/useApiContacts');
 
 let currentStore: MockStoreEnhanced<any, {}>;
 const mockStore = configureMockStore([thunk]);
-const getStore = (values?: any) => {
+const getStore = (values?: any) => { 
   currentStore = mockStore(values ?? {});
   return currentStore;
 };
@@ -62,10 +65,12 @@ const setup = (params?: {
 };
 
 describe('useGenerateLetter functions', () => {
-  it('makes requests to expected api endpoints', async () => {
+  it('makes requests to expected base api endpoints', async () => {
     const generate = setup();
     await act(async () => {
       await generate(0);
+      expect(getAcquisitionFileFn).toHaveBeenCalled();
+      expect(getAcquisitionFilePropertiesFn).toHaveBeenCalled();
       expect(generateFn).toHaveBeenCalled();
     });
   });
