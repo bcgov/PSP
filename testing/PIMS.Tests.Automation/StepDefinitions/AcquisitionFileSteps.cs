@@ -86,6 +86,9 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Enter to Edit mode of Acquisition File
             acquisitionFilesDetails.EditAcquisitionFileBttn();
 
+            //Verify Maximum fields
+            acquisitionFilesDetails.VerifyMaximumFields();
+
             //Add Additional Optional information to the acquisition file
             acquisitionFilesDetails.AddAdditionalInformation(acquisitionFile);
 
@@ -356,17 +359,14 @@ namespace PIMS.Tests.Automation.StepDefinitions
             {
                 for (int i = 0; i < acquisitionFile.AcquisitionAgreements.Count; i++)
                 {
-                    //Edit Agreement button
-                    agreements.EditAgreementButton();
-
                     //Create Agreement button
                     agreements.CreateNewAgreementBttn();
 
                     //Verify Create Agreement form
-                    agreements.VerifyCreateAgreementForm(i);
+                    agreements.VerifyCreateAgreementForm();
 
                     //Add a new Agreement
-                    agreements.CreateNewAgreement(acquisitionFile.AcquisitionAgreements[i], i);
+                    agreements.CreateUpdateAgreement(acquisitionFile.AcquisitionAgreements[i]);
 
                     //Save new agreement
                     agreements.SaveAcquisitionFileAgreement();
@@ -392,50 +392,41 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Navigate to Agreements Tab
             agreements.NavigateAgreementsTab();
 
-            //Edit Agreement button
-            agreements.EditAgreementButton();
-
             //Create Agreement button
             agreements.CreateNewAgreementBttn();
 
             //Verify Create Agreement form
-            agreements.VerifyCreateAgreementForm(0);
+            agreements.VerifyCreateAgreementForm();
 
             //Add a new Agreement
-            agreements.CreateNewAgreement(acquisitionFile.AcquisitionAgreements[0], 4);
+            agreements.CreateUpdateAgreement(acquisitionFile.AcquisitionAgreements[0]);
 
             //Cancel agreements
             agreements.CancelAcquisitionFileAgreement();
-
-            //Edit Agreement button
-            agreements.EditAgreementButton();
 
             //Create Agreement button
             agreements.CreateNewAgreementBttn();
 
             //Add a new Agreement
-            agreements.CreateNewAgreement(acquisitionFile.AcquisitionAgreements[0], 4);
+            agreements.CreateUpdateAgreement(acquisitionFile.AcquisitionAgreements[0]);
 
             //Save new agreement
             agreements.SaveAcquisitionFileAgreement();
 
-            //Verify Edit Agreement form
+            //Verify new added Agreement form
             agreements.VerifyViewAgreementForm(acquisitionFile.AcquisitionAgreements[0], 4);
 
             //Edit Agreement button
-            agreements.EditAgreementButton();
+            agreements.EditAgreementButton(0);
 
             //Update created agreement
-            agreements.UpdateAgreement(acquisitionFile.AcquisitionAgreements[1], 4);
+            agreements.CreateUpdateAgreement(acquisitionFile.AcquisitionAgreements[1]);
 
             //Save new agreement
             agreements.SaveAcquisitionFileAgreement();
 
             //Verify Edit Agreement form
-            agreements.VerifyViewAgreementForm(acquisitionFile.AcquisitionAgreements[1], 4);
-
-            //Edit Agreement button
-            agreements.EditAgreementButton();
+            agreements.VerifyViewAgreementForm(acquisitionFile.AcquisitionAgreements[1], 0);
 
             var agreementsBeforeDelete = agreements.TotalAgreementsCount();
 
@@ -444,9 +435,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             var agreementsAfterDelete = agreements.TotalAgreementsCount();
             Assert.True(agreementsBeforeDelete - agreementsAfterDelete == 1);
-
-            //Save new agreement
-            agreements.SaveAcquisitionFileAgreement();
         }
 
         [StepDefinition(@"I create Stakeholders within an Acquisition File")]
@@ -1203,12 +1191,14 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 AcquisitionAgreement agreement = new AcquisitionAgreement();
 
                 agreement.AgreementStatus = ExcelDataContext.ReadData(i, "AgreementStatus");
+                agreement.AgreementCancellationReason = ExcelDataContext.ReadData(i, "AgreementCancellationReason");
                 agreement.AgreementLegalSurveyPlan = ExcelDataContext.ReadData(i, "AgreementLegalSurveyPlan");
                 agreement.AgreementType = ExcelDataContext.ReadData(i, "AgreementType");
                 agreement.AgreementDate = ExcelDataContext.ReadData(i, "AgreementDate");
                 agreement.AgreementCommencementDate = ExcelDataContext.ReadData(i, "AgreementCommencementDate");
                 agreement.AgreementCompletionDate = ExcelDataContext.ReadData(i, "AgreementCompletionDate");
                 agreement.AgreementTerminationDate = ExcelDataContext.ReadData(i, "AgreementTerminationDate");
+                agreement.AgreementPossessionDate = ExcelDataContext.ReadData(i, "AgreementPossessionDate");
                 agreement.AgreementPurchasePrice = ExcelDataContext.ReadData(i, "AgreementPurchasePrice");
                 agreement.AgreementDepositDue = ExcelDataContext.ReadData(i, "AgreementDepositDue");
                 agreement.AgreementDepositAmount = ExcelDataContext.ReadData(i, "AgreementDepositAmount");

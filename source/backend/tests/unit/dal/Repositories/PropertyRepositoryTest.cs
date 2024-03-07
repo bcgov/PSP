@@ -5,6 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Linq;
 using FluentAssertions;
+using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Core.Test;
 using Pims.Dal.Entities;
@@ -501,12 +502,35 @@ namespace Pims.Dal.Test.Repositories
         #endregion
 
         #region Update
-        [Fact]
-        public void Update_Property_Success()
+        [Theory]
+        [InlineData("test", 200, null)]
+        [InlineData("test", 200, false)]
+        public void Update_Property_Success_Not_Retired(string propertyDescription, int pid, bool? isRetired)
         {
             // Arrange
             var repository = CreateRepositoryWithPermissions(Permissions.PropertyView, Permissions.PropertyEdit);
-            var property = EntityHelper.CreateProperty(1);
+            var property = EntityHelper.CreateProperty(1, isRetired: isRetired);
+            _helper.AddAndSaveChanges(property);
+
+            var newValues = new Entity.PimsProperty();
+            property.CopyValues(newValues);
+            newValues.Description = propertyDescription;
+            newValues.Pid = pid;
+
+            // Act
+            var updatedProperty = repository.Update(newValues);
+
+            // Assert
+            updatedProperty.Description.Should().Be(propertyDescription);
+            updatedProperty.Pid.Should().Be(pid);
+        }
+
+        [Fact]
+        public void Update_Property_Retired_Violation()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.PropertyView, Permissions.PropertyEdit);
+            var property = EntityHelper.CreateProperty(1, isRetired: true);
             _helper.AddAndSaveChanges(property);
 
             var newValues = new Entity.PimsProperty();
@@ -515,11 +539,11 @@ namespace Pims.Dal.Test.Repositories
             newValues.Pid = 200;
 
             // Act
-            var updatedProperty = repository.Update(newValues);
+            Action act = () => repository.Update(newValues);
 
             // Assert
-            updatedProperty.Description.Should().Be("test");
-            updatedProperty.Pid.Should().Be(200);
+            var exception = act.Should().Throw<BusinessRuleViolationException>();
+            exception.WithMessage("Retired records are referenced for historical purposes only and cannot be edited or deleted.");
         }
 
         [Fact]
@@ -582,7 +606,7 @@ namespace Pims.Dal.Test.Repositories
 
 
             // Act
-            var transferredProperty = repository.TransferFileProperty(property, new Models.PropertyOwnershipState() { isPropertyOfInterest = true, isOwned = true});
+            var transferredProperty = repository.TransferFileProperty(property, new Models.PropertyOwnershipState() { isPropertyOfInterest = true, isOwned = true });
             context.CommitTransaction();
 
             // Assert
