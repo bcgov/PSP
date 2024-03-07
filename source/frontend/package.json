@@ -171,7 +171,12 @@
       "\\.(css|less|sass|scss)$": "<rootDir>/src/mocks/style.mock.js",
       "^axios$": "axios/dist/node/axios.cjs"
     },
-    "moduleFileExtensions": ["js", "jsx", "ts", "tsx"],
+    "moduleFileExtensions": [
+      "js",
+      "jsx",
+      "ts",
+      "tsx"
+    ],
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,ts,tsx}",
       "!<rootDir>/node_modules/**",
