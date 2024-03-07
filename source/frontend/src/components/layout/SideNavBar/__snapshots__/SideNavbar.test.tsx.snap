@@ -335,7 +335,9 @@ exports[`SideNavbar display and logic renders 1`] = `
           href="#"
           role="button"
         >
-          <svg>
+          <svg
+            class="m-1"
+          >
             subdivisionconsolidation.svg
           </svg>
           <label
