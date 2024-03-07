@@ -183,7 +183,10 @@ const AddSubdivisionView: React.FunctionComponent<
   );
 };
 
-const getDraftMarkerIndex = (property: ApiGen_Concepts_Property, form: SubdivisionFormModel) => {
+const getDraftMarkerIndex = (
+  property: ApiGen_Concepts_Property,
+  form: SubdivisionFormModel,
+): number => {
   let index = form.destinationProperties.findIndex(
     p =>
       p.latitude === property.latitude &&

@@ -96,7 +96,7 @@ const AddConsolidationView: React.FunctionComponent<
             <Form>
               <Section>
                 <H2>
-                  Properties in Consolidation &nbsp;
+                  Properties in Consolidation
                   <FaInfoCircle className="tooltip-icon h-20" size="1rem" />
                   <StyledTooltipText>
                     Only properties that is in the PIMS inventory can be consolidated.
@@ -181,7 +181,10 @@ const AddConsolidationView: React.FunctionComponent<
   );
 };
 
-const getDraftMarkerIndex = (property: ApiGen_Concepts_Property, form: ConsolidationFormModel) => {
+const getDraftMarkerIndex = (
+  property: ApiGen_Concepts_Property,
+  form: ConsolidationFormModel,
+): number => {
   const index = form.sourceProperties.findIndex(
     p =>
       p.latitude === property.latitude &&
