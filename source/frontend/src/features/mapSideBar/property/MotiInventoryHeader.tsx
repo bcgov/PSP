@@ -79,7 +79,7 @@ export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderPr
               <Col className="d-flex justify-content-end pr-4">
                 <ExpiredWarning>
                   <AiOutlineExclamationCircle size={16} />
-                  &nbsp; EXPIRED
+                  EXPIRED
                 </ExpiredWarning>
               </Col>
             </Row>
@@ -117,6 +117,7 @@ export const ExpiredWarning = styled(InlineFlexDiv)`
   border-radius: 0.4rem;
   letter-spacing: 0.1rem;
   padding: 0.2rem 0.5rem;
+  gap: 0.5rem;
   font-family: 'BCSans-Bold';
   font-size: 1.4rem;
   align-items: center;

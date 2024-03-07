@@ -502,45 +502,27 @@ namespace Pims.Dal.Test.Repositories
         #endregion
 
         #region Update
-        [Fact]
-        public void Update_Property_Success()
+        [Theory]
+        [InlineData("test", 200, null)]
+        [InlineData("test", 200, false)]
+        public void Update_Property_Success_Not_Retired(string propertyDescription, int pid, bool? isRetired)
         {
             // Arrange
             var repository = CreateRepositoryWithPermissions(Permissions.PropertyView, Permissions.PropertyEdit);
-            var property = EntityHelper.CreateProperty(1);
+            var property = EntityHelper.CreateProperty(1, isRetired: isRetired);
             _helper.AddAndSaveChanges(property);
 
             var newValues = new Entity.PimsProperty();
             property.CopyValues(newValues);
-            newValues.Description = "test";
-            newValues.Pid = 200;
+            newValues.Description = propertyDescription;
+            newValues.Pid = pid;
 
             // Act
             var updatedProperty = repository.Update(newValues);
 
             // Assert
-            updatedProperty.Description.Should().Be("test");
-            updatedProperty.Pid.Should().Be(200);
-        }
-        [Fact]
-        public void Update_Property_Success_Not_Retired()
-        {
-            // Arrange
-            var repository = CreateRepositoryWithPermissions(Permissions.PropertyView, Permissions.PropertyEdit);
-            var property = EntityHelper.CreateProperty(1, isRetired: false);
-            _helper.AddAndSaveChanges(property);
-
-            var newValues = new Entity.PimsProperty();
-            property.CopyValues(newValues);
-            newValues.Description = "test";
-            newValues.Pid = 200;
-
-            // Act
-            var updatedProperty = repository.Update(newValues);
-
-            // Assert
-            updatedProperty.Description.Should().Be("test");
-            updatedProperty.Pid.Should().Be(200);
+            updatedProperty.Description.Should().Be(propertyDescription);
+            updatedProperty.Pid.Should().Be(pid);
         }
 
         [Fact]

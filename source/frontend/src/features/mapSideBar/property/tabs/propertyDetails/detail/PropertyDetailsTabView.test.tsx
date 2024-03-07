@@ -178,7 +178,7 @@ describe('PropertyDetailsTabView component', () => {
     };
     const { getByTitle, queryByTestId } = setup({ property, claims: [Claims.PROPERTY_EDIT] });
     expect(getByTitle(/Edit property details/)).toBeVisible();
-    expect(queryByTestId('tooltip-icon-property-retired-tooltip')).not.toBeInTheDocument();
+    expect(queryByTestId('tooltip-icon-property-retired-tooltip')).toBeNull();
   });
 
   it('should not display the Edit button if the user does not have permissions', async () => {

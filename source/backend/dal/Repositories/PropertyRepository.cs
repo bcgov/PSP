@@ -296,7 +296,7 @@ namespace Pims.Dal.Repositories
                 .Include(p => p.Address)
                 .FirstOrDefault(p => p.PropertyId == propertyId) ?? throw new KeyNotFoundException();
 
-            // PSP-7876 prevent editing on retired properties
+            // prevent editing on retired properties
             if (existingProperty.IsRetired.HasValue && existingProperty.IsRetired.Value)
             {
                 throw new BusinessRuleViolationException("Retired records are referenced for historical purposes only and cannot be edited or deleted.");

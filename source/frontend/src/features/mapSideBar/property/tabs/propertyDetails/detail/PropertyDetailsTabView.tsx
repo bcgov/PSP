@@ -61,21 +61,14 @@ export const PropertyDetailsTabView: React.FunctionComponent<IPropertyDetailsTab
   // show/hide conditionals
   const isHighwayRoad = tenureStatus?.some(obj => obj?.id === PropertyTenureTypes.HighwayRoad);
   const isIndianReserve = tenureStatus?.some(obj => obj?.id === PropertyTenureTypes.IndianReserve);
-
   const isVolumetricParcel = stringToBoolean(property?.isVolumetricParcel || '');
-
-  const canEditDetails = (property?: IPropertyDetailsForm) => {
-    if (exists(property) && property.isRetired) {
-      return false;
-    }
-    return true;
-  };
+  const propertyIsRetired = exists(property) && property.isRetired;
 
   return (
     <StyledSummarySection>
       <LoadingBackdrop show={loading} parentScreen={true} />
       <StyledEditWrapper className="mr-3 my-1">
-        {hasClaim(Claims.PROPERTY_EDIT) && canEditDetails(property) ? (
+        {hasClaim(Claims.PROPERTY_EDIT) && !propertyIsRetired ? (
           <EditButton
             title="Edit property details"
             onClick={() => {
@@ -84,7 +77,7 @@ export const PropertyDetailsTabView: React.FunctionComponent<IPropertyDetailsTab
             }}
           />
         ) : null}
-        {!canEditDetails(property) ? (
+        {hasClaim(Claims.PROPERTY_EDIT) && propertyIsRetired ? (
           <TooltipIcon
             toolTipId="property-retired-tooltip"
             toolTip="Retired records are referenced for historical purposes only and cannot be edited or deleted."
