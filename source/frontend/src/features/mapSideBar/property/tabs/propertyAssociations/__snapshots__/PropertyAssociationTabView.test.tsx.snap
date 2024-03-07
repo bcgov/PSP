@@ -19,6 +19,7 @@ exports[`PropertyAssociationTabView component renders as expected when provided 
   font-weight: bold;
   border-bottom: 0.2rem solid;
   margin-bottom: 2rem;
+  text-transform: capitalize;
 }
 
 .c1 {

@@ -148,6 +148,7 @@ exports[`AddProjectForm component renders as expected 1`] = `
   font-weight: bold;
   border-bottom: 0.2rem solid;
   margin-bottom: 2rem;
+  text-transform: capitalize;
 }
 
 .c1 {
@@ -836,6 +837,7 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
   font-weight: bold;
   border-bottom: 0.2rem solid;
   margin-bottom: 2rem;
+  text-transform: capitalize;
 }
 
 .c1 {

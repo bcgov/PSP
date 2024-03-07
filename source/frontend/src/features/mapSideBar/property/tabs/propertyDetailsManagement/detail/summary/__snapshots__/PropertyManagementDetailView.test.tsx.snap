@@ -19,6 +19,7 @@ exports[`PropertyManagementDetailView component renders as expected when provide
   font-weight: bold;
   border-bottom: 0.2rem solid;
   margin-bottom: 2rem;
+  text-transform: capitalize;
 }
 
 .c0 {

@@ -40,6 +40,7 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
   font-weight: bold;
   border-bottom: 0.2rem solid;
   margin-bottom: 2rem;
+  text-transform: capitalize;
 }
 
 .c2 {

@@ -80,6 +80,7 @@ const StyledSectionHeader = styled.h2<{ isStyledHeader?: boolean }>`
   color: ${props => props.theme.css.primaryColor};
   border-bottom: 0.2rem ${props => props.theme.css.primaryColor} solid;
   margin-bottom: 2rem;
+  text-transform: capitalize;
 `;
 
 const StyledFormSection = styled.div<{ noPadding?: boolean }>`

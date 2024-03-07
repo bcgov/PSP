@@ -56,6 +56,7 @@ exports[`DispositionFileTabs component matches snapshot 1`] = `
   font-weight: bold;
   border-bottom: 0.2rem solid;
   margin-bottom: 2rem;
+  text-transform: capitalize;
 }
 
 .c4 {

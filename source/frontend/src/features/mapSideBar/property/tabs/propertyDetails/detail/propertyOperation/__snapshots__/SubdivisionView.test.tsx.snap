@@ -15,6 +15,7 @@ exports[`Subdivision detail view matches snapshot 1`] = `
   font-size: 1.0em;
   border-bottom: 0.2rem solid;
   margin-bottom: 2rem;
+  text-transform: capitalize;
 }
 
 .c0 {

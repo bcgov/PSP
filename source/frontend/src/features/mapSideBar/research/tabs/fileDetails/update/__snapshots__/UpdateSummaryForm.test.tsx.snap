@@ -282,6 +282,7 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
   font-weight: bold;
   border-bottom: 0.2rem solid;
   margin-bottom: 2rem;
+  text-transform: capitalize;
 }
 
 .c1 {
