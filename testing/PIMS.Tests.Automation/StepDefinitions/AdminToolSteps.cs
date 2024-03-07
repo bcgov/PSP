@@ -1,7 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
-using PIMS.Tests.Automation.Classes;
+﻿using PIMS.Tests.Automation.Classes;
 using PIMS.Tests.Automation.Data;
-using PIMS.Tests.Automation.PageObjects;
 using System.Data;
 
 namespace PIMS.Tests.Automation.StepDefinitions
@@ -65,6 +63,75 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Navigate to User Management
             manageUsers.NavigateUserManagement();
+
+            //Verify Pagination
+            sharedPagination.ChoosePaginationOption(5);
+            Assert.Equal(5, manageUsers.TotalUsersResult());
+
+            sharedPagination.ChoosePaginationOption(10);
+            Assert.Equal(10, manageUsers.TotalUsersResult());
+
+            sharedPagination.ChoosePaginationOption(20);
+            Assert.Equal(20, manageUsers.TotalUsersResult());
+
+            sharedPagination.ChoosePaginationOption(50);
+            Assert.Equal(50, manageUsers.TotalUsersResult());
+
+            sharedPagination.ChoosePaginationOption(100);
+            Assert.True(manageUsers.TotalUsersResult() > 50);
+
+            //Verify Column Sorting by IDIR
+            manageUsers.OrderByUserIDIR();
+            var firstIDIRDescResult = manageUsers.FirstUserIDIR();
+
+            manageUsers.OrderByUserIDIR();
+            var firstIDIRAscResult = manageUsers.FirstUserIDIR();
+
+            Assert.NotEqual(firstIDIRDescResult, firstIDIRAscResult);
+
+            //Verify Column Sorting by First Name
+            manageUsers.OrderByUserFirstName();
+            var firstNameDescResult = manageUsers.FirstUserFirstName();
+
+            manageUsers.OrderByUserFirstName();
+            var firstNameAscResult = manageUsers.FirstUserFirstName();
+
+            Assert.NotEqual(firstNameDescResult, firstNameAscResult);
+
+            //Verify Column Sorting by Last Name
+            manageUsers.OrderByUserLastName();
+            var firstLastNameDescResult = manageUsers.FirstUserLastName();
+
+            manageUsers.OrderByUserLastName();
+            var firstLastNameAscResult = manageUsers.FirstUserLastName();
+
+            Assert.NotEqual(firstLastNameDescResult, firstLastNameAscResult);
+
+            //Verify Column Sorting by Email
+            manageUsers.OrderByUserMail();
+            var firstEmailDescResult = manageUsers.FirstUserEmail();
+
+            manageUsers.OrderByUserMail();
+            var firstEmailAscResult = manageUsers.FirstUserEmail();
+
+            Assert.NotEqual(firstEmailDescResult, firstEmailAscResult);
+
+            //Verify Column Sorting by Position
+            manageUsers.OrderByUserPosition();
+            var firstPositionDescResult = manageUsers.FirstUserPosition();
+
+            manageUsers.OrderByUserPosition();
+            var firstPositionAscResult = manageUsers.FirstUserPosition();
+
+            Assert.NotEqual(firstPositionDescResult, firstPositionAscResult);
+
+            //Verify Pagination display different set of results
+            var firstUserPage1 = manageUsers.FirstUserIDIR();
+            sharedPagination.GoNextPage();
+            var firstUserPage2 = manageUsers.FirstUserIDIR();
+            Assert.NotEqual(firstUserPage1, firstUserPage2);
+
+            sharedPagination.ResetSearch();
 
             //Verify Filters
             manageUsers.FilterUsers("TRANPSP1", "Cannot determine");
@@ -301,6 +368,15 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             Assert.NotEqual(firstFinCodeExpiryDateDescResult, firstFinCodeExpiryDateAscResult);
 
+            //Verify Pagination display different set of results
+            sharedPagination.ResetSearch();
+
+            var firstFinancialPage1 = financialCodes.FirstFinancialCodeDescription();
+            sharedPagination.GoNextPage();
+            var firstFinancialPage2 = financialCodes.FirstFinancialCodeDescription();
+            Assert.NotEqual(firstFinancialPage1, firstFinancialPage2);
+
+            sharedPagination.ResetSearch();
 
             //Filter Financial Codes by Cost Types
             financialCodes.FilterFinancialCodeByType("Business function");
