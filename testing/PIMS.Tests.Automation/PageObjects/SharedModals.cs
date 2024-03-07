@@ -12,11 +12,11 @@ namespace PIMS.Tests.Automation.PageObjects
         private By generalModalOkBttn = By.CssSelector("button[title='ok-modal']");
         private By generalModalCancelBttn = By.CssSelector("button[title='cancel-modal']");
 
-        private By secondaryModal = By.XPath("//div[@role='dialog'][2]/div[@class='modal-dialog']");
-        private By secondaryModalHeader = By.XPath("//div[@role='dialog'][2]/div/div/div[@class='modal-header']/div");
+        private By secondaryModal = By.XPath("//div[@role='dialog'][2]/div/div[@class='modal-content']");
+        private By secondaryModalHeader = By.XPath("//div[@role='dialog'][2]/div/div/div[@class='modal-header']/div[1]");
         private By secondaryModalContent = By.XPath("//div[@role='dialog'][2]/div/div/div[@class='modal-body']");
-        private By secondaryModalOkBttn = By.XPath("//div[@role='dialog'][2]/div/div/div[@class='modal-footer']/button[@title='ok-modal']");
-        private By secondaryModalCancelBttn = By.XPath("//div[@role='dialog'][2]/div/div/div[@class='modal-footer']/button[@title='cancel-modal']");
+        private By secondaryModalOkBttn = By.XPath("//div[@role='dialog'][2]/div/div/div[@class='modal-footer']/div/button[@title='ok-modal']");
+        private By secondaryModalCancelBttn = By.XPath("//div[@role='dialog'][2]/div/div/div[@class='modal-footer']/div/button[@title='cancel-modal']");
 
         private By generalToastBody = By.CssSelector("div[class='Toastify__toast-body']");
         private By generalConfirmationModalBody1 = By.CssSelector("div[class='modal-body'] div");
