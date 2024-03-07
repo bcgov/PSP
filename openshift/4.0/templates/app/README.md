@@ -10,8 +10,8 @@ Update the configuration file and set the appropriate parameters.
 **Example**
 
 ```conf
-BUILDIMAGE_NAME=nodejs-16
-BUILDIMAGE_TAG=1-1
+BUILDIMAGE_NAME=nodejs-20
+BUILDIMAGE_TAG=1-34
 RUNTIMEIMAGE_NAME=nginx-runtime
 RUNTIMEIMAGE_TAG=dev
 GIT_URL=https://github.com/bcgov/PSP.git
