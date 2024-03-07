@@ -25,11 +25,11 @@ describe('useTenant hook', () => {
   beforeEach(() => {
     mockAxios.onAny().reply(200);
     jest.resetModules();
-    process.env = { ...origEnv };
+    // process.env = { ...origEnv };
   });
 
   afterAll(() => {
-    process.env = origEnv;
+    // process.env = origEnv;
     mockAxios.reset();
     jest.restoreAllMocks();
   });
