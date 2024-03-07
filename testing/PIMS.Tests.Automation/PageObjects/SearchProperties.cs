@@ -1,6 +1,4 @@
 ﻿using OpenQA.Selenium;
-using OpenQA.Selenium.Support.Events;
-using System.Diagnostics;
 
 namespace PIMS.Tests.Automation.PageObjects
 {
@@ -32,7 +30,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By searchPropertyListHeaderLocation = By.XPath("//div[@data-testid='propertiesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Location')]");
         private By searchPropertyListLocationSortBttn = By.CssSelector("div[data-testid='sort-column-Location']");
         private By searchPropertyListHeaderLotSize = By.XPath("//div[@data-testid='propertiesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Lot Size')]");
-        private By searchPropertyListLotSizeSortBttn = By.CssSelector("div[data-testid='sort-column-landArea']");
+        private By searchPropertyListLotSizeSortBttn = By.XPath("//div[@data-testid='propertiesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Lot Size')]/div");
         private By searchPropertyListHeaderOwnership = By.XPath("//div[@data-testid='propertiesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Ownership')]");
         private By searchPropertyListOwnershipSortBttn = By.CssSelector("div[data-testid='sort-column-Ownership']");
         private By searchPropertyListContent = By.XPath("//div[@data-testid='propertiesTable']/form/div/div");

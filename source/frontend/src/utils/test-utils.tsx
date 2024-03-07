@@ -7,7 +7,7 @@ import {
   RenderResult,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { AxiosError, AxiosResponse } from 'axios';
+import { AxiosError, AxiosRequestHeaders, AxiosResponse } from 'axios';
 import { createMemoryHistory, MemoryHistory } from 'history';
 import noop from 'lodash/noop';
 import React, { ReactNode } from 'react';
@@ -179,7 +179,7 @@ export function createAxiosError(
     isAxiosError: true,
     name: 'AxiosError',
     message,
-    config: {},
+    config: { headers: {} as AxiosRequestHeaders },
     toJSON: noop as any,
     response: {
       status,
