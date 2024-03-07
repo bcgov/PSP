@@ -15,34 +15,35 @@ import { StyledTabView } from '@/components/propertySelector/PropertySelectorTab
 import { PropertySelectorPidSearchContainerProps } from '@/components/propertySelector/search/PropertySelectorPidSearchContainer';
 import PropertySearchSelectorPidFormView from '@/components/propertySelector/search/PropertySelectorPidSearchView';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
+import { exists } from '@/utils';
 
 import MapSideBarLayout from '../layout/MapSideBarLayout';
 import { AddressForm, PropertyForm } from '../shared/models';
 import SelectedOperationProperty from '../shared/operations/SelectedOperationProperty';
 import SelectedOperationPropertyHeader from '../shared/operations/SelectedOperationPropertyHeader';
 import SidebarFooter from '../shared/SidebarFooter';
-import AddSubdivisionMarkerSynchronizer from './AddSubdivisionMarkerSynchronizer';
-import { SubdivisionFormModel } from './AddSubdivisionModel';
+import AddConsolidationMarkerSynchronizer from './AddConsolidationMarkerSynchronizer';
+import { ConsolidationFormModel } from './AddConsolidationModel';
 
-export const AddSubdivisionYupSchema = Yup.object().shape({
+export const AddConsolidationYupSchema = Yup.object().shape({
   pid: Yup.string()
     .nullable()
     .matches(/^\d{0,3}-\d{3}-\d{3}$|^\d{0,9}$/, 'Invalid PID'),
-  destinationProperties: Yup.array().test({
-    message: 'You must select at least two child properties',
+  sourceProperties: Yup.array().test({
+    message: 'You must select at least two parent properties',
     test: arr => !!arr?.length && arr.length >= 2,
   }),
-  sourceProperty: Yup.object().nullable().required('You must select a parent property'),
+  destinationProperty: Yup.object().nullable().required('You must select a child property'),
 });
 
-export interface IAddSubdivisionViewProps {
-  formikRef: React.RefObject<FormikProps<SubdivisionFormModel>>;
-  subdivisionInitialValues: SubdivisionFormModel;
+export interface IAddConsolidationViewProps {
+  formikRef: React.RefObject<FormikProps<ConsolidationFormModel>>;
+  consolidationInitialValues: ConsolidationFormModel;
   loading: boolean;
   displayFormInvalid: boolean;
   onSubmit: (
-    values: SubdivisionFormModel,
-    formikHelpers: FormikHelpers<SubdivisionFormModel>,
+    values: ConsolidationFormModel,
+    formikHelpers: FormikHelpers<ConsolidationFormModel>,
   ) => void | Promise<any>;
   onCancel: () => void;
   onSave: () => void;
@@ -53,11 +54,11 @@ export interface IAddSubdivisionViewProps {
   >;
 }
 
-const AddSubdivisionView: React.FunctionComponent<
-  React.PropsWithChildren<IAddSubdivisionViewProps>
+const AddConsolidationView: React.FunctionComponent<
+  React.PropsWithChildren<IAddConsolidationViewProps>
 > = ({
   formikRef,
-  subdivisionInitialValues,
+  consolidationInitialValues,
   loading,
   displayFormInvalid,
   onSubmit,
@@ -70,7 +71,7 @@ const AddSubdivisionView: React.FunctionComponent<
   return (
     <MapSideBarLayout
       showCloseButton
-      title="Create a Subdivision"
+      title="Create a Consolidation"
       icon={<StyledSubdivideConsolidateIcon />}
       onClose={onCancel}
       footer={
@@ -79,61 +80,68 @@ const AddSubdivisionView: React.FunctionComponent<
           onSave={onSave}
           onCancel={onCancel}
           displayRequiredFieldError={displayFormInvalid}
-          saveButtonLabel="Create Subdivision"
+          saveButtonLabel="Create Consolidation"
         />
       }
     >
       <StyledFormWrapper>
         <LoadingBackdrop show={loading} />
-
-        <Formik<SubdivisionFormModel>
+        <Formik<ConsolidationFormModel>
           onSubmit={onSubmit}
-          initialValues={subdivisionInitialValues}
+          initialValues={consolidationInitialValues}
           innerRef={formikRef}
-          validationSchema={AddSubdivisionYupSchema}
+          validationSchema={AddConsolidationYupSchema}
         >
           {({ values, setFieldValue, errors }) => (
             <Form>
               <Section>
                 <H2>
-                  Properties in Subdivision &nbsp;
+                  Properties in Consolidation
                   <FaInfoCircle className="tooltip-icon h-20" size="1rem" />
                   <StyledTooltipText>
-                    Only a property that is in the PIMS inventory can be subdivided.
+                    Only properties that is in the PIMS inventory can be consolidated.
                   </StyledTooltipText>
                 </H2>
-                <AddSubdivisionMarkerSynchronizer values={values} />
-                <p>Select the parent property that was subdivided:</p>
-                <StyledTabView activeKey="parent-property">
-                  <Tab eventKey="parent-property" title="Parent Property Search">
-                    <PropertySelectorPidSearchComponent
-                      setSelectProperty={selectedProperty =>
-                        setFieldValue('sourceProperty', selectedProperty)
-                      }
-                      PropertySelectorPidSearchView={PropertySearchSelectorPidFormView}
-                    />
-                  </Tab>
-                </StyledTabView>
-                <Section header="Selected Parent" noPadding className="pt-4">
-                  <SelectedOperationPropertyHeader />
-                  {values.sourceProperty?.pid && (
-                    <SelectedOperationProperty
-                      property={values.sourceProperty}
-                      onRemove={() => setFieldValue('sourceProperty', undefined)}
-                      nameSpace="sourceProperty"
-                      getMarkerIndex={() => 0}
-                    />
+                <AddConsolidationMarkerSynchronizer values={values} />
+                <p>Select two or more parent properties that were consolidated:</p>
+                <FieldArray name="sourceProperties">
+                  {({ remove, push }) => (
+                    <>
+                      <StyledTabView activeKey="parent-property">
+                        <Tab eventKey="parent-property" title="Parent Property Search">
+                          <PropertySelectorPidSearchComponent
+                            setSelectProperty={selectedProperty => push(selectedProperty)}
+                            PropertySelectorPidSearchView={PropertySearchSelectorPidFormView}
+                          />
+                        </Tab>
+                      </StyledTabView>
+                      <Section header="Selected Parent" noPadding className="pt-4">
+                        <SelectedOperationPropertyHeader />
+                        {values.sourceProperties.map((property, index) => (
+                          <SelectedOperationProperty
+                            property={property}
+                            onRemove={() => remove(index)}
+                            nameSpace={`destinationProperties.${index}`}
+                            getMarkerIndex={property => getDraftMarkerIndex(property, values)}
+                            key={`destination-property-${property.pid}-${property.latitude}-${property.longitude}`}
+                            isEditable
+                          />
+                        ))}
+                        {errors.sourceProperties && (
+                          <div className="invalid-feedback">
+                            {errors.sourceProperties as string}
+                          </div>
+                        )}
+                      </Section>
+                    </>
                   )}
-                  {errors.destinationProperties && (
-                    <div className="invalid-feedback">{errors.sourceProperty as string}</div>
-                  )}
-                </Section>
+                </FieldArray>
               </Section>
               <Section>
                 <p>Select the child properties to which parent property was subdivided:</p>
                 <MapSelectorComponent
                   addSelectedProperties={async properties => {
-                    const allProperties = [...values.destinationProperties];
+                    const allProperties: ApiGen_Concepts_Property[] = [];
                     await properties.reduce(async (promise, property) => {
                       return promise.then(async () => {
                         const formProperty = PropertyForm.fromMapProperty(property);
@@ -145,35 +153,25 @@ const AddSubdivisionView: React.FunctionComponent<
                         }
                       });
                     }, Promise.resolve());
-                    setFieldValue('destinationProperties', allProperties);
+                    setFieldValue('destinationProperty', allProperties[0]);
                   }}
                   selectedComponentId="destination-property-selector"
-                  modifiedProperties={values.destinationProperties.map(dp =>
-                    PropertyForm.fromPropertyApi(dp),
-                  )}
+                  modifiedProperties={[]}
                 />
-                <FieldArray name="destinationProperties">
-                  {({ remove }) => (
-                    <Section header="Selected Children" noPadding className="pt-4">
-                      <SelectedOperationPropertyHeader />
-                      {values.destinationProperties.map((property, index) => (
-                        <SelectedOperationProperty
-                          property={property}
-                          onRemove={() => remove(index)}
-                          nameSpace={`destinationProperties.${index}`}
-                          getMarkerIndex={property => getDraftMarkerIndex(property, values)}
-                          key={`destination-property-${property.pid}-${property.latitude}-${property.longitude}`}
-                          isEditable
-                        />
-                      ))}
-                      {errors.destinationProperties && (
-                        <div className="invalid-feedback">
-                          {errors.destinationProperties as string}
-                        </div>
-                      )}
-                    </Section>
+                <Section header="Selected Child" noPadding className="pt-4">
+                  <SelectedOperationPropertyHeader />
+                  {exists(values.destinationProperty) && (
+                    <SelectedOperationProperty
+                      property={values.destinationProperty}
+                      onRemove={() => setFieldValue('destinationProperty', undefined)}
+                      nameSpace="sourceProperty"
+                      getMarkerIndex={() => values.sourceProperties.length}
+                    />
                   )}
-                </FieldArray>
+                  {errors.destinationProperty && (
+                    <div className="invalid-feedback">{errors.destinationProperty as string}</div>
+                  )}
+                </Section>
               </Section>
             </Form>
           )}
@@ -185,21 +183,18 @@ const AddSubdivisionView: React.FunctionComponent<
 
 const getDraftMarkerIndex = (
   property: ApiGen_Concepts_Property,
-  form: SubdivisionFormModel,
+  form: ConsolidationFormModel,
 ): number => {
-  let index = form.destinationProperties.findIndex(
+  const index = form.sourceProperties.findIndex(
     p =>
       p.latitude === property.latitude &&
       p.longitude === property.longitude &&
       p.pid === property.pid,
   );
-  if (form.sourceProperty) {
-    index++;
-  }
   return index;
 };
 
-export default AddSubdivisionView;
+export default AddConsolidationView;
 
 const StyledFormWrapper = styled.div`
   display: flex;

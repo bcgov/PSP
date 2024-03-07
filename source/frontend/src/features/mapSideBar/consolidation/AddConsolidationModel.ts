@@ -5,12 +5,12 @@ import { ApiGen_Concepts_PropertyOperation } from '@/models/api/generated/ApiGen
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { exists } from '@/utils';
 
-export class SubdivisionFormModel {
-  sourceProperty: ApiGen_Concepts_Property | null = null;
-  destinationProperties: ApiGen_Concepts_Property[] = [];
+export class ConsolidationFormModel {
+  sourceProperties: ApiGen_Concepts_Property[] = [];
+  destinationProperty: ApiGen_Concepts_Property | null = null;
   propertyOperationNo: number | null = null;
   propertyOperationTypeCode: ApiGen_Base_CodeType<string> | null = {
-    id: ApiGen_CodeTypes_PropertyOperationTypes.SUBDIVIDE,
+    id: ApiGen_CodeTypes_PropertyOperationTypes.CONSOLIDATE,
     isDisabled: false,
     displayOrder: 0,
     description: '',
@@ -19,13 +19,13 @@ export class SubdivisionFormModel {
   pid = '';
 
   toApi(): ApiGen_Concepts_PropertyOperation[] {
-    return this.destinationProperties?.map(dp => ({
+    return this.sourceProperties?.map(sp => ({
       ...getEmptyBaseAudit(0),
       id: 0,
-      sourcePropertyId: this.sourceProperty?.id ?? 0,
-      sourceProperty: this.sourceProperty,
-      destinationProperty: dp,
-      destinationPropertyId: dp?.id ?? 0,
+      destinationPropertyId: this.destinationProperty?.id ?? 0,
+      destinationProperty: this.destinationProperty,
+      sourceProperty: sp,
+      sourcePropertyId: sp?.id ?? 0,
       operationDt: null,
       isDisabled: false,
       propertyOperationNo: this.propertyOperationNo ?? 0,
@@ -33,18 +33,17 @@ export class SubdivisionFormModel {
     }));
   }
 
-  static fromApi(operations: ApiGen_Concepts_PropertyOperation[]): SubdivisionFormModel {
-    const subdivisionForm = new SubdivisionFormModel();
+  static fromApi(operations: ApiGen_Concepts_PropertyOperation[]): ConsolidationFormModel {
+    const subdivisionForm = new ConsolidationFormModel();
 
     if (operations.length === 0) {
-      subdivisionForm.destinationProperties = [];
-      subdivisionForm.sourceProperty = null;
+      subdivisionForm.destinationProperty = null;
+      subdivisionForm.sourceProperties = [];
       subdivisionForm.propertyOperationNo = null;
       subdivisionForm.propertyOperationTypeCode = null;
     }
-    subdivisionForm.sourceProperty = operations[0].sourceProperty;
-    subdivisionForm.destinationProperties =
-      operations.map(op => op.destinationProperty).filter(exists) ?? [];
+    subdivisionForm.destinationProperty = operations[0].destinationProperty;
+    subdivisionForm.sourceProperties = operations.map(op => op.sourceProperty).filter(exists) ?? [];
     subdivisionForm.propertyOperationNo = operations[0].propertyOperationNo;
     subdivisionForm.propertyOperationTypeCode = operations[0].propertyOperationTypeCode;
     return subdivisionForm;
