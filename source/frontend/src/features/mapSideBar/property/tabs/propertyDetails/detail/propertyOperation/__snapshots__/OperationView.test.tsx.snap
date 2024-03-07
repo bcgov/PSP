@@ -57,13 +57,13 @@ exports[`Subdivision detail view matches snapshot 1`] = `
               <label
                 class="c2"
               >
-                Created Date Time:
+                Created on:
               </label>
             </div>
             <div
               class="c3 text-left col"
             >
-              Dec 31, 1969 04:00 pm
+              Dec 31, 1969 at 04:00 pm
             </div>
           </div>
         </div>
@@ -99,7 +99,7 @@ exports[`Subdivision detail view matches snapshot 1`] = `
     >
       <div
         class="table"
-        data-testid="subdivisionTable"
+        data-testid="propertyOperationTable"
         role="table"
       >
         <div
@@ -167,7 +167,7 @@ exports[`Subdivision detail view matches snapshot 1`] = `
               <div
                 class="sortable-column"
               >
-                Area (sq m)
+                Area
               </div>
             </div>
           </div>
@@ -246,7 +246,10 @@ exports[`Subdivision detail view matches snapshot 1`] = `
                 style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
-                 0 
+                0 m
+                <sup>
+                  2
+                </sup>
               </div>
             </div>
           </div>
@@ -298,7 +301,10 @@ exports[`Subdivision detail view matches snapshot 1`] = `
                 style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
-                 0 
+                0 m
+                <sup>
+                  2
+                </sup>
               </div>
             </div>
           </div>

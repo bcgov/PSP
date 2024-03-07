@@ -6,16 +6,16 @@ import { ColumnWithProps } from '@/components/Table';
 import { AreaUnitTypes } from '@/constants';
 import { convertArea, formatNumber } from '@/utils';
 
-import { PropertySubdivisionResult } from './SubdivisionView';
+import { PropertyOperationResult } from './OperationView';
 
-const columns: ColumnWithProps<PropertySubdivisionResult>[] = [
+const columns: ColumnWithProps<PropertyOperationResult>[] = [
   {
     Header: 'Parent',
     accessor: 'isSource',
     align: 'center',
     width: 5,
     maxWidth: 5,
-    Cell: (props: CellProps<PropertySubdivisionResult>) => {
+    Cell: (props: CellProps<PropertyOperationResult>) => {
       return props.row.original.isSource ? (
         <span data-testid="isSource">
           <FiCheck size="2rem" color="black" />
@@ -32,7 +32,7 @@ const columns: ColumnWithProps<PropertySubdivisionResult>[] = [
     clickable: true,
     width: 10,
     maxWidth: 20,
-    Cell: (props: CellProps<PropertySubdivisionResult>) => {
+    Cell: (props: CellProps<PropertyOperationResult>) => {
       return (
         <Link to={`/mapview/sidebar/property/${props.row.original.id}`}>
           {props.row.original.identifier}
@@ -46,7 +46,7 @@ const columns: ColumnWithProps<PropertySubdivisionResult>[] = [
     align: 'right',
     width: 10,
     maxWidth: 20,
-    Cell: (props: CellProps<PropertySubdivisionResult>) => {
+    Cell: (props: CellProps<PropertyOperationResult>) => {
       return <> {props.row.original.plan} </>;
     },
   },
@@ -56,21 +56,25 @@ const columns: ColumnWithProps<PropertySubdivisionResult>[] = [
     align: 'left',
     width: 10,
     maxWidth: 20,
-    Cell: (props: CellProps<PropertySubdivisionResult>) => {
+    Cell: (props: CellProps<PropertyOperationResult>) => {
       return <> {props.row.original.status} </>;
     },
   },
   {
-    Header: 'Area (sq m)',
+    Header: 'Area',
     accessor: 'area',
     align: 'right',
     width: 10,
     maxWidth: 20,
-    Cell: (props: CellProps<PropertySubdivisionResult>) => {
+    Cell: (props: CellProps<PropertyOperationResult>) => {
       const landArea = props.row.original.area;
       const landUnitCode = props.row.original.areaUnitCode;
       const meters = convertArea(landArea, landUnitCode, AreaUnitTypes.SquareMeters);
-      return <> {formatNumber(meters, 0, 2)} </>;
+      return (
+        <>
+          {formatNumber(meters, 0, 2)} m<sup>2</sup>
+        </>
+      );
     },
   },
 ];

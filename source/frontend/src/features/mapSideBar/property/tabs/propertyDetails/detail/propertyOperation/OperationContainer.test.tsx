@@ -1,8 +1,6 @@
 import { createMemoryHistory } from 'history';
 import { Claims } from '@/constants/index';
 import { render, RenderOptions } from '@/utils/test-utils';
-import { ISubdivisionContainerProps, SubdivisionContainer } from './SubdivisionContainer';
-import { ISubdivisionViewProps } from './SubdivisionView';
 import { usePropertyOperationRepository } from '@/hooks/repositories/usePropertyOperationRepository';
 import { getEmptyPropertyOperation } from '@/mocks/propertyOperation.mock';
 import { ApiGen_Concepts_PropertyOperation } from '@/models/api/generated/ApiGen_Concepts_PropertyOperation';
@@ -11,6 +9,10 @@ import { mockLookups } from '@/mocks/lookups.mock';
 import { usePimsPropertyRepository } from '@/hooks/repositories/usePimsPropertyRepository';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { getEmptyProperty } from '@/models/defaultInitializers';
+import { IOperationSectionViewProps } from './OperationSectionView';
+import { IOperationContainerProps, OperationContainer } from './OperationContainer';
+import { toTypeCode } from '@/utils/formUtils';
+import { ApiGen_CodeTypes_PropertyOperationTypes } from '@/models/api/generated/ApiGen_CodeTypes_PropertyOperationTypes';
 
 const history = createMemoryHistory();
 const storeState = {
@@ -29,25 +31,23 @@ jest.mock('@/hooks/repositories/usePimsPropertyRepository');
   getPropertyWrapper: { execute: mockGetProperty },
 });
 
-let subdivisionViewsProps: ISubdivisionViewProps[] = [];
-const mockView: React.FunctionComponent<ISubdivisionViewProps> = props => {
-  subdivisionViewsProps.push(props);
+const mockView: React.FunctionComponent<IOperationSectionViewProps> = props => {
   return (
     <div>
       <span>Test view</span>
-      <span>source:{props.sourceProperties.length}</span>
-      <span>destination:{props.destinationProperties.length}</span>
+      <span>subdivisions:{props.subdivisionOperations.length}</span>
+      <span>consolidations:{props.consolidationOperations.length}</span>
     </div>
   );
 };
 
-describe('SubdivisionContainer component', () => {
+describe('OperationContainer component', () => {
   const setup = (
-    renderOptions: RenderOptions & Partial<ISubdivisionContainerProps> = { propertyId: 1 },
+    renderOptions: RenderOptions & Partial<IOperationContainerProps> = { propertyId: 1 },
   ) => {
     const { propertyId, ...rest } = renderOptions;
     const component = render(
-      <SubdivisionContainer propertyId={propertyId ?? 0} View={mockView} />,
+      <OperationContainer propertyId={propertyId ?? 0} View={mockView} />,
       { ...rest, store: storeState, claims: [Claims.PROPERTY_VIEW], history },
     );
 
@@ -67,6 +67,7 @@ describe('SubdivisionContainer component', () => {
         sourcePropertyId: 1,
         destinationPropertyId: 2,
         propertyOperationNo: 1,
+        propertyOperationTypeCode: toTypeCode(ApiGen_CodeTypes_PropertyOperationTypes.SUBDIVIDE),
       },
       {
         ...getEmptyPropertyOperation(),
@@ -74,19 +75,21 @@ describe('SubdivisionContainer component', () => {
         sourcePropertyId: 3,
         destinationPropertyId: 4,
         propertyOperationNo: 2,
+        propertyOperationTypeCode: toTypeCode(ApiGen_CodeTypes_PropertyOperationTypes.SUBDIVIDE),
       },
     ]);
     mockGetProperty.mockReturnValue({ ...getEmptyProperty(), id: 1 });
     mockGetProperty.mockReturnValueOnce({ ...getEmptyProperty(), id: 2 });
 
-    const { findAllByText } = setup();
+    const { findByText } = setup();
 
-    expect(await findAllByText(/Test view/i)).toHaveLength(2);
+    expect(await findByText(/subdivisions:2/i)).toBeVisible();
+    expect(await findByText(/consolidations:0/i)).toBeVisible();
     expect(mockGetPropertyOperations).toHaveBeenCalledTimes(1);
     expect(mockGetProperty).toHaveBeenCalledTimes(4);
   });
 
-  it('Groups properties by operation', async () => {
+  it('Groups properties by operation type', async () => {
     // Setup
     mockGetPropertyOperations.mockReturnValue([
       {
@@ -95,21 +98,24 @@ describe('SubdivisionContainer component', () => {
         sourcePropertyId: 1,
         destinationPropertyId: 2,
         propertyOperationNo: 1,
+        propertyOperationTypeCode: toTypeCode(ApiGen_CodeTypes_PropertyOperationTypes.SUBDIVIDE),
       },
       {
         ...getEmptyPropertyOperation(),
         id: 2,
         sourcePropertyId: 3,
         destinationPropertyId: 4,
-        propertyOperationNo: 1,
+        propertyOperationNo: 2,
+        propertyOperationTypeCode: toTypeCode(ApiGen_CodeTypes_PropertyOperationTypes.CONSOLIDATE),
       },
     ]);
     mockGetProperty.mockReturnValue({ ...getEmptyProperty(), id: 1 });
     mockGetProperty.mockReturnValueOnce({ ...getEmptyProperty(), id: 2 });
 
-    const { findAllByText } = setup();
+    const { findByText } = setup();
 
-    expect(await findAllByText(/Test view/i)).toHaveLength(1);
+    expect(await findByText(/subdivisions:1/i)).toBeVisible();
+    expect(await findByText(/consolidations:1/i)).toBeVisible();
     expect(mockGetPropertyOperations).toHaveBeenCalledTimes(1);
     expect(mockGetProperty).toHaveBeenCalledTimes(4);
   });
