@@ -1,6 +1,7 @@
 ﻿
 
 using OpenQA.Selenium;
+using PIMS.Tests.Automation.Classes;
 
 namespace PIMS.Tests.Automation.PageObjects
 {
@@ -179,16 +180,26 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(searchLeasesPaginationList);
         }
 
-        public void VerifyLeaseTableContent(string expiryDate, string program, string status)
+        public void VerifyLeaseTableContent(Lease lease)
         {
             WaitUntilVisibleText(searchLicense1stResultExpiryDateContent, webDriver.FindElement(searchLicense1stResultExpiryDateContent).Text);
 
             AssertTrueIsDisplayed(searchLicense1stResultLink);
-            AssertTrueContentEquals(searchLicense1stResultExpiryDateContent, TransformDateFormat(expiryDate));
-            AssertTrueContentEquals(searchLicense1stResultProgramContent, program);
-            Assert.Equal(0, webDriver.FindElements(searchLicense1stResultTenantsContent).Count);
-            Assert.True(webDriver.FindElements(searchLicense1stResultPropertiesContent).Count > 0);
-            AssertTrueContentEquals(searchLicense1stResultStatusContent, status);
+
+            if(lease.LeaseExpiryDate != "")
+                AssertTrueContentEquals(searchLicense1stResultExpiryDateContent, TransformDateFormat(lease.LeaseExpiryDate));
+
+            if(lease.Program != "")
+                AssertTrueContentEquals(searchLicense1stResultProgramContent, lease.Program);
+
+            if(lease.LeaseTenants.Count > 0)
+                Assert.NotEmpty(webDriver.FindElements(searchLicense1stResultTenantsContent));
+
+            if (lease.SearchProperties.PID != "")
+                Assert.True(webDriver.FindElements(searchLicense1stResultPropertiesContent).Count > 0);
+
+            if(lease.LeaseStatus != "")
+                AssertTrueContentEquals(searchLicense1stResultStatusContent, lease.LeaseStatus);
         }
     }
 }

@@ -8,11 +8,11 @@ import { Input } from '@/components/common/form';
 import { TypeaheadField } from '@/components/common/form/Typeahead';
 import { InlineFlexDiv } from '@/components/common/styles';
 import { ColumnWithProps } from '@/components/Table';
-import { Claims } from '@/constants/index';
+import { AreaUnitTypes, Claims } from '@/constants/index';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
-import { IProperty } from '@/interfaces';
+import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { ILookupCode } from '@/store/slices/lookupCodes';
-import { formatNumber, formatStreetAddress, mapLookupCode, stringToFragment } from '@/utils';
+import { convertArea, formatApiAddress, formatNumber, mapLookupCode } from '@/utils';
 
 export const ColumnDiv = styled.div`
   display: flex;
@@ -20,14 +20,11 @@ export const ColumnDiv = styled.div`
   padding-right: 0.5rem;
 `;
 
-const NumberCell = ({ cell: { value } }: CellProps<IProperty, number | undefined>) =>
-  stringToFragment(formatNumber(value ?? 0));
-
 type Props = {
   municipalities: ILookupCode[];
 };
 
-export const columns = ({ municipalities }: Props): ColumnWithProps<IProperty>[] => [
+export const columns = ({ municipalities }: Props): ColumnWithProps<ApiGen_Concepts_Property>[] => [
   {
     Header: 'PID',
     accessor: 'pid',
@@ -42,7 +39,7 @@ export const columns = ({ municipalities }: Props): ColumnWithProps<IProperty>[]
   },
   {
     Header: 'Civic Address',
-    accessor: p => formatStreetAddress(p.address),
+    accessor: p => formatApiAddress(p.address),
     align: 'left',
     minWidth: 100,
     width: 150,
@@ -52,6 +49,7 @@ export const columns = ({ municipalities }: Props): ColumnWithProps<IProperty>[]
     accessor: p => p.address?.municipality,
     align: 'left',
     width: 50,
+    sortable: true,
     filter: {
       component: TypeaheadField,
       props: {
@@ -66,10 +64,19 @@ export const columns = ({ municipalities }: Props): ColumnWithProps<IProperty>[]
   },
   {
     Header: 'Lot Size (in\u00A0ha)',
-    accessor: 'landArea',
-    Cell: NumberCell,
+    Cell: (props: CellProps<ApiGen_Concepts_Property>) => {
+      const landArea = props.row.original.landArea ?? 0;
+      const landUnitCode = props.row.original.areaUnit?.id;
+      const hectars = convertArea(
+        landArea,
+        landUnitCode ?? AreaUnitTypes.SquareMeters,
+        AreaUnitTypes.Hectares,
+      );
+      return <> {formatNumber(hectars, 0, 3)} </>;
+    },
     align: 'right',
     width: 20,
+    sortable: true,
     filter: {
       component: Input,
       props: {
@@ -82,12 +89,40 @@ export const columns = ({ municipalities }: Props): ColumnWithProps<IProperty>[]
     },
   },
   {
-    Header: '',
+    Header: 'Ownership',
+    align: 'left',
+    sortable: true,
+    width: 20,
+    Cell: (cellProps: CellProps<ApiGen_Concepts_Property>) => {
+      const { hasClaim } = useKeycloakWrapper();
+
+      const ownershipText = cellProps.row.original.isOwned
+        ? 'Core Inventory'
+        : cellProps.row.original.isPropertyOfInterest
+        ? 'Property of Interest'
+        : cellProps.row.original.isOtherInterest
+        ? 'Other Interest'
+        : cellProps.row.original.isDisposed
+        ? 'Disposed'
+        : '';
+      return (
+        <StyledDiv>
+          {hasClaim(Claims.PROPERTY_VIEW) && (
+            <>
+              <span> {ownershipText}</span>
+            </>
+          )}
+        </StyledDiv>
+      );
+    },
+  },
+  {
+    Header: 'Actions',
     accessor: 'controls' as any, // this column is not part of the data model
     align: 'right',
     sortable: false,
     width: 20,
-    Cell: (cellProps: CellProps<IProperty, number>) => {
+    Cell: (cellProps: CellProps<ApiGen_Concepts_Property, number>) => {
       const { hasClaim } = useKeycloakWrapper();
 
       return (
@@ -99,9 +134,7 @@ export const columns = ({ municipalities }: Props): ColumnWithProps<IProperty>[]
               variant="light"
             >
               <Link
-                to={`/mapview/sidebar/property/${
-                  cellProps.row.original.id
-                }?pid=${cellProps.row.original.pid?.replace(/-/g, '')}`}
+                to={`/mapview/sidebar/property/${cellProps.row.original.id}?pid=${cellProps.row.original.pid}`}
               >
                 <FaEye />
               </Link>
@@ -111,9 +144,7 @@ export const columns = ({ municipalities }: Props): ColumnWithProps<IProperty>[]
           {hasClaim(Claims.PROPERTY_VIEW) && (
             <StyledIconButton data-testid="view-prop-ext" title="View Property" variant="light">
               <Link
-                to={`/mapview/sidebar/property/${
-                  cellProps.row.original.id
-                }?pid=${cellProps.row.original.pid?.replace(/-/g, '')}`}
+                to={`/mapview/sidebar/property/${cellProps.row.original.id}?pid=${cellProps.row.original.pid}`}
                 target="_blank"
                 rel="noopener noreferrer"
               >

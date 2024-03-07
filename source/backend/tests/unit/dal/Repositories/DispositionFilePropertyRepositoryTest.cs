@@ -30,10 +30,10 @@ namespace Pims.Dal.Test.Repositories
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.DispositionView);
 
-            var acqFile = EntityHelper.CreateDispositionFile();
-            var pimsPropertyDispositionFile = new PimsDispositionFileProperty() { DispositionFileId = acqFile.DispositionFileId, Property = EntityHelper.CreateProperty(1) };
+            var dspFile = EntityHelper.CreateDispositionFile();
+            var pimsDispositionFileProperty = new PimsDispositionFileProperty() { DispositionFileId = dspFile.DispositionFileId, Property = EntityHelper.CreateProperty(1) };
 
-            var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(pimsPropertyDispositionFile);
+            var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(pimsDispositionFileProperty);
             var repository = helper.CreateRepository<DispositionFilePropertyRepository>(user);
 
             // Act
@@ -43,7 +43,7 @@ namespace Pims.Dal.Test.Repositories
             result.Should().NotBeNull();
             result.Should().BeAssignableTo<List<PimsDispositionFileProperty>>();
             result.Should().HaveCount(1);
-            result.FirstOrDefault().DispositionFilePropertyId.Should().Be(pimsPropertyDispositionFile.DispositionFilePropertyId);
+            result.FirstOrDefault().DispositionFilePropertyId.Should().Be(pimsDispositionFileProperty.DispositionFilePropertyId);
         }
 
         [Fact]
@@ -73,11 +73,11 @@ namespace Pims.Dal.Test.Repositories
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.DispositionView);
 
-            var acqFile = EntityHelper.CreateDispositionFile();
-            var pimsPropertyDispositionFile = new PimsDispositionFileProperty() { DispositionFileId = acqFile.DispositionFileId, Property = EntityHelper.CreateProperty(1) };
-            var pimsPropertyDispositionFile2 = new PimsDispositionFileProperty() { DispositionFileId = acqFile.DispositionFileId, Property = EntityHelper.CreateProperty(2) };
+            var dspFile = EntityHelper.CreateDispositionFile();
+            var pimsDispositionFileProperty = new PimsDispositionFileProperty() { DispositionFileId = dspFile.DispositionFileId, Property = EntityHelper.CreateProperty(1) };
+            var pimsDispositionFileProperty2 = new PimsDispositionFileProperty() { DispositionFileId = dspFile.DispositionFileId, Property = EntityHelper.CreateProperty(2) };
 
-            var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(pimsPropertyDispositionFile);
+            var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(pimsDispositionFileProperty);
             var repository = helper.CreateRepository<DispositionFilePropertyRepository>(user);
 
             // Act
@@ -102,6 +102,126 @@ namespace Pims.Dal.Test.Repositories
             // Assert
             result.Should().Be(0);
         }
+        #endregion
+
+        #region Add
+        [Fact]
+        public void Add_Success()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.DispositionAdd);
+
+            var context = helper.CreatePimsContext(user, true);
+            var repository = helper.CreateRepository<DispositionFilePropertyRepository>(user);
+
+            var pimsDispositionFileProperty = new PimsDispositionFileProperty() { DispositionFileId = 1, PropertyId = 1, Property = new PimsProperty() { RegionCode = 1, PropertyId = 1 } };
+
+            // Act
+            var result = repository.Add(pimsDispositionFileProperty);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().BeAssignableTo<PimsDispositionFileProperty>();
+        }
+
+        [Fact]
+        public void Add_ThrowIfNull()
+        {
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.DispositionAdd);
+            helper.CreatePimsContext(user, true);
+
+            var repository = helper.CreateRepository<DispositionFilePropertyRepository>(user);
+
+            // Act
+            Action act = () => repository.Add(null);
+
+            // Assert
+            act.Should().Throw<ArgumentNullException>();
+        }
+        #endregion
+
+        #region Update
+        [Fact]
+        public void Update_Success()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.DispositionAdd);
+
+            var pimsDispositionFileProperty = new PimsDispositionFileProperty() { DispositionFileId = 1, Property = EntityHelper.CreateProperty(1) };
+
+            var context = helper.CreatePimsContext(user, true);
+            var repository = helper.CreateRepository<DispositionFilePropertyRepository>(user);
+            context.AddAndSaveChanges(pimsDispositionFileProperty);
+
+            // Act
+            var result = repository.Update(new PimsDispositionFileProperty() { DispositionFileId = 1, PropertyName = "updated", PropertyId = 1, Property = new PimsProperty() { RegionCode = 1, PropertyId = 2 } });
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().BeAssignableTo<PimsDispositionFileProperty>();
+            result.PropertyName.Should().Be("updated");
+        }
+
+        [Fact]
+        public void Update_ThrowIfNull()
+        {
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.DispositionAdd);
+            helper.CreatePimsContext(user, true);
+
+            var repository = helper.CreateRepository<DispositionFilePropertyRepository>(user);
+
+            // Act
+            Action act = () => repository.Update(null);
+
+            // Assert
+            act.Should().Throw<ArgumentNullException>();
+        }
+        #endregion
+
+        #region Delete
+        [Fact]
+        public void Delete_PropertyDispositionFile()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.DispositionDelete);
+            var pimsDispositionFileProperty = new PimsDispositionFileProperty() { Property = EntityHelper.CreateProperty(1) };
+
+            var context = helper.CreatePimsContext(user, true);
+            context.AddAndSaveChanges(pimsDispositionFileProperty);
+
+            var repository = helper.CreateRepository<DispositionFilePropertyRepository>(user);
+
+            // Act
+            repository.Delete(pimsDispositionFileProperty);
+
+            // Assert
+            var result = repository.GetPropertiesByDispositionFileId(pimsDispositionFileProperty.DispositionFilePropertyId);
+            result.Should().BeEmpty();
+        }
+
+        [Fact]
+        public void Delete_ThrowIfNull()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.DispositionDelete);
+
+            var context = helper.CreatePimsContext(user, true);
+
+            var repository = helper.CreateRepository<DispositionFilePropertyRepository>(user);
+
+            // Act
+            Action act = () => repository.Delete(null);
+
+            // Assert
+            act.Should().Throw<ArgumentNullException>();
+        }
+
         #endregion
 
         #endregion

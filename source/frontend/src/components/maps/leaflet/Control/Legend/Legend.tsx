@@ -16,8 +16,8 @@ export const Legend = () => {
   const keys = React.useMemo(() => {
     return [
       {
-        pin: '../../../../../assets/images/pins/land-poi.png',
-        label: 'Parcel',
+        pin: require('@/assets/images/pins/land-reg.png'),
+        label: 'Core Inventory',
       },
       {
         pin: '../../../../../assets/images/pins/land-poi.png',
@@ -28,7 +28,11 @@ export const Legend = () => {
         label: 'Other Interest',
       },
       {
-        pin: '../../../../../assets/images/pins/land-poi.png',
+        pin: require('@/assets/images/pins/disposed.png'),
+        label: 'Disposed',
+      },
+      {
+        pin: require('@/assets/images/pins/marker-info-orange.png'),
         label: 'Search result (not in inventory)',
       },
     ];

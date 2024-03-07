@@ -1,6 +1,7 @@
-import { Api_AcquisitionFileProperty } from '@/models/api/AcquisitionFile';
-import { Api_InterestHolder } from '@/models/api/InterestHolder';
-import { Api_Organization } from '@/models/api/Organization';
+import { ApiGen_Concepts_AcquisitionFileProperty } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileProperty';
+import { ApiGen_Concepts_InterestHolder } from '@/models/api/generated/ApiGen_Concepts_InterestHolder';
+import { ApiGen_Concepts_Organization } from '@/models/api/generated/ApiGen_Concepts_Organization';
+import { exists } from '@/utils';
 
 import { Api_GenerateOrganization } from '../GenerateOrganization';
 import { Api_GenerateProperty } from '../GenerateProperty';
@@ -9,9 +10,9 @@ import { Api_GenerateInterestHolder } from './GenerateInterestHolder';
 
 export interface IApiGenerateExpropriationFormBaseInput {
   file: Api_GenerateAcquisitionFile | null;
-  interestHolders?: Api_InterestHolder[];
-  expropriationAuthority: Api_Organization | null;
-  impactedProperties?: Api_AcquisitionFileProperty[];
+  interestHolders?: ApiGen_Concepts_InterestHolder[];
+  expropriationAuthority: ApiGen_Concepts_Organization | null;
+  impactedProperties?: ApiGen_Concepts_AcquisitionFileProperty[];
 }
 
 export class Api_GenerateExpropriationFormBase {
@@ -29,13 +30,11 @@ export class Api_GenerateExpropriationFormBase {
     this.file = file;
     this.exp_authority = new Api_GenerateOrganization(expropriationAuthority);
     this.impacted_properties = impactedProperties.map(fp => new Api_GenerateProperty(fp?.property));
-    const filePropertyIds = new Set(
-      impactedProperties.map(fp => fp?.id).filter((p): p is number => !!p),
-    );
+    const filePropertyIds = new Set(impactedProperties.map(fp => fp?.id).filter(exists));
     const matchingInterestHolders = interestHolders.filter(ih =>
       ih?.interestHolderProperties?.some(
         ihp =>
-          ihp?.propertyInterestTypes.some(pit => pit.id !== 'NIP') &&
+          ihp?.propertyInterestTypes?.some(pit => pit.id !== 'NIP') &&
           filePropertyIds.has(Number(ihp.acquisitionFilePropertyId)),
       ),
     );

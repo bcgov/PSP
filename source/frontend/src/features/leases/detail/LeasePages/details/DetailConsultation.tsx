@@ -4,7 +4,10 @@ import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import * as API from '@/constants/API';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
-import { Api_Lease, Api_LeaseConsultation } from '@/models/api/Lease';
+import { ApiGen_Concepts_ConsultationLease } from '@/models/api/generated/ApiGen_Concepts_ConsultationLease';
+import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
+import { exists } from '@/utils/utils';
 
 export interface IDetailConsultationProps {
   nameSpace?: string;
@@ -16,32 +19,39 @@ export interface IDetailConsultationProps {
  */
 export const DetailConsultation: React.FunctionComponent<
   React.PropsWithChildren<IDetailConsultationProps>
-> = ({ nameSpace }) => {
-  const { values, setFieldValue } = useFormikContext<Api_Lease>();
+> = () => {
+  const { values, setFieldValue } = useFormikContext<ApiGen_Concepts_Lease>();
 
   const { getByType } = useLookupCodeHelpers();
   const consultationTypes = getByType(API.CONSULTATION_TYPES);
 
   // Not all consultations might be coming from the backend. Add the ones missing.
-  if (values.consultations.length !== consultationTypes.length) {
-    const newConsultations: Api_LeaseConsultation[] = [];
+  if (values.consultations?.length !== consultationTypes.length) {
+    const newConsultations: ApiGen_Concepts_ConsultationLease[] = [];
 
     consultationTypes.forEach(consultationType => {
-      const newConsultation: Api_LeaseConsultation = {
+      const newConsultation: ApiGen_Concepts_ConsultationLease = {
         id: 0,
         parentLeaseId: values.id || 0,
         consultationType: {
           id: consultationType.id.toString(),
           description: consultationType.name,
+          displayOrder: null,
+          isDisabled: false,
         },
-        consultationStatusType: { id: 'UNKNOWN', description: 'Unknown' },
+        consultationStatusType: {
+          id: 'UNKNOWN',
+          description: 'Unknown',
+          displayOrder: null,
+          isDisabled: false,
+        },
         otherDescription: null,
-        rowVersion: 0,
+        ...getEmptyBaseAudit(0),
       };
 
       // If there is a consultation with the type, set the status to the existing one
-      let existingConsultation = values.consultations.find(
-        consultation => consultation.consultationType === consultationType.id,
+      const existingConsultation = values.consultations?.find(
+        consultation => consultation.consultationType?.id === consultationType.id,
       );
       if (existingConsultation !== undefined) {
         newConsultation.id = existingConsultation.id;
@@ -53,9 +63,9 @@ export const DetailConsultation: React.FunctionComponent<
     setFieldValue('consultations', newConsultations);
   }
 
-  const generateLabel = (consultation: Api_LeaseConsultation): string => {
-    var label = consultation.consultationType?.description || '';
-    if (consultation.otherDescription !== undefined && consultation.otherDescription !== null) {
+  const generateLabel = (consultation: ApiGen_Concepts_ConsultationLease): string => {
+    let label = consultation.consultationType?.description || '';
+    if (exists(consultation.otherDescription)) {
       label += ' | ' + consultation.otherDescription;
     }
 
@@ -64,7 +74,7 @@ export const DetailConsultation: React.FunctionComponent<
 
   return (
     <Section header="Consultation" initiallyExpanded isCollapsable>
-      {values.consultations.map((consultation, index) => (
+      {values.consultations?.map(consultation => (
         <SectionField
           key={`consultations-${consultation.consultationType?.id}`}
           label={generateLabel(consultation)}

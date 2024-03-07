@@ -526,12 +526,12 @@ namespace PIMS.Tests.Automation.PageObjects
             sharedModals.ModalClickOKBttn();
 
             Wait();
-            if (webDriver.FindElements(researchFileConfirmationModal).Count() > 1)
+            if (webDriver.FindElements(researchFileConfirmationModal).Count() > 0)
             {
                 Assert.Equal("User Override Required", sharedModals.SecondaryModalHeader());
-                Assert.Contains("The selected property already exists in the system's inventory. However, the record is missing spatial details.", sharedModals.SecondaryModalContent());
-                Assert.Contains("To add the property, the spatial details for this property will need to be updated. The system will attempt to update the property record with spatial information from the current selection.", sharedModals.SecondaryModalContent());
-                sharedModals.SecondaryModalClickOKBttn();
+                Assert.Contains("The selected property already exists in the system's inventory. However, the record is missing spatial details.", sharedModals.ModalContent());
+                Assert.Contains("To add the property, the spatial details for this property will need to be updated. The system will attempt to update the property record with spatial information from the current selection.", sharedModals.ModalContent());
+                sharedModals.ModalClickOKBttn();
             }
         }
 
@@ -545,13 +545,13 @@ namespace PIMS.Tests.Automation.PageObjects
                 {
                     webDriver.SwitchTo().Alert().Accept();
                 }
-            } catch (WebDriverTimeoutException e)
+            } catch (WebDriverTimeoutException)
             {
                 if (webDriver.FindElements(researchFileConfirmationModal).Count() > 0)
                 {
-                    Assert.Equal("Confirm changes", sharedModals.ModalHeader());
-                    Assert.Equal("If you choose to cancel now, your changes will not be saved.", sharedModals.ConfirmationModalText1());
-                    Assert.Equal("Do you want to proceed?", sharedModals.ConfirmationModalText2());
+                    Assert.Equal("Confirm Changes", sharedModals.ModalHeader());
+                    Assert.Contains("If you choose to cancel now, your changes will not be saved.", sharedModals.ModalContent());
+                    Assert.Contains("Do you want to proceed?", sharedModals.ModalContent());
 
                     sharedModals.ModalClickOKBttn();
                 }

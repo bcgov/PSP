@@ -1,4 +1,4 @@
-import { Api_Project } from '@/models/api/Project';
+import { ApiGen_Concepts_Project } from '../api/generated/ApiGen_Concepts_Project';
 
 export class Api_GenerateProject {
   business_function: string;
@@ -7,7 +7,7 @@ export class Api_GenerateProject {
   number: string;
   name: string;
 
-  constructor(project: Api_Project | null) {
+  constructor(project: ApiGen_Concepts_Project | null) {
     this.business_function = project?.businessFunctionCode?.description ?? '';
     this.work_activity = project?.workActivityCode?.description ?? '';
     this.cost_type = project?.costTypeCode?.description ?? '';

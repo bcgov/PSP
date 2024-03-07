@@ -12,17 +12,23 @@ export class PropertyFilterFormModel {
 
   // Tenure Filters
   public tenureStatuses: CodeTypeSelectOption[] = [];
-  public tenurePPH: string = '';
+  public tenurePPH = '';
   public tenureRoadTypes: CodeTypeSelectOption[] = [];
 
   // Lease filters
-  public leaseStatus: string = '';
-  public leasePayRcvblType: string = '';
+  public leaseStatus = '';
+  public leasePayRcvblType = '';
   public leaseTypes: CodeTypeSelectOption[] = [];
   public leasePurposes: CodeTypeSelectOption[] = [];
 
   // Anomaly filters
   public anomalies: CodeTypeSelectOption[] = [];
+
+  // Ownership filters
+  public isCoreInventory = true;
+  public isPropertyOfInterest = true;
+  public isOtherInterest = true;
+  public isDisposed = false;
 
   public toApi(): Api_PropertyFilterCriteria {
     return {
@@ -38,6 +44,11 @@ export class PropertyFilterFormModel {
       leasePurposes: this.leasePurposes.map(lp => lp.codeType),
 
       anomalyIds: this.anomalies.map(a => a.codeType),
+
+      isCoreInventory: this.isCoreInventory,
+      isPropertyOfInterest: this.isPropertyOfInterest,
+      isOtherInterest: this.isOtherInterest,
+      isDisposed: this.isDisposed,
     };
   }
 }

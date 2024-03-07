@@ -3,19 +3,21 @@ import { FormikHelpers, FormikProps } from 'formik';
 import React from 'react';
 
 import { ModalSize } from '@/components/common/GenericModal';
+import { DispositionFileStatus } from '@/constants/dispositionFileStatus';
 import { useDispositionProvider } from '@/hooks/repositories/useDispositionProvider';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
 import { useModalContext } from '@/hooks/useModalContext';
 import { IApiError } from '@/interfaces/IApiError';
-import { Api_DispositionFile } from '@/models/api/DispositionFile';
+import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
+import { isValidId } from '@/utils';
 
 import { DispositionFormModel } from '../../../../models/DispositionFormModel';
 import { IUpdateDispositionFormProps } from './UpdateDispositionForm';
 
 export interface IUpdateDispositionContainerProps {
-  dispositionFile: Api_DispositionFile;
-  onSuccess: () => void;
+  dispositionFile: ApiGen_Concepts_DispositionFile;
+  onSuccess: (updateProperties?: boolean, updateFile?: boolean) => void;
   View: React.FC<IUpdateDispositionFormProps>;
 }
 
@@ -31,7 +33,7 @@ export const UpdateDispositionContainer = React.forwardRef<
   } = useDispositionProvider();
 
   const withUserOverride = useApiUserOverride<
-    (userOverrideCodes: UserOverrideCode[]) => Promise<Api_DispositionFile | void>
+    (userOverrideCodes: UserOverrideCode[]) => Promise<ApiGen_Concepts_DispositionFile | void>
   >('Failed to update Disposition File');
 
   const handleSubmit = async (
@@ -48,9 +50,19 @@ export const UpdateDispositionContainer = React.forwardRef<
           userOverrideCodes,
         );
 
-        if (!!response?.id) {
+        if (isValidId(response?.id)) {
           formikHelpers?.resetForm();
-          onSuccess();
+          const activeTypeCodes = [
+            DispositionFileStatus.Active.toString(),
+            DispositionFileStatus.Draft.toString(),
+            DispositionFileStatus.Hold.toString(),
+          ];
+          //refresh the map properties if this disposition file was set to a final state.
+          onSuccess(
+            !!dispositionFile.fileStatusTypeCode?.id &&
+              !activeTypeCodes.includes(dispositionFile.fileStatusTypeCode.id),
+            true,
+          );
         }
       }
     } finally {
@@ -92,6 +104,10 @@ export const UpdateDispositionContainer = React.forwardRef<
       }
     }
   };
+
+  if (!dispositionFile) {
+    return null;
+  }
 
   return (
     <View

@@ -24,9 +24,9 @@ export interface ModalVisibleState {
 
 export interface ModalContent {
   /** Optional function to control behaviour of cancel button. Default is to close the modal. */
-  handleCancel?: Function;
+  handleCancel?: () => void;
   /** Optional function to control behaviour of ok button. Default is to reload the app. */
-  handleOk?: Function;
+  handleOk?: () => void;
   handleOkDisabled?: boolean;
   /** Optional text to display on the cancel button. Default is Cancel. */
   cancelButtonText?: string;

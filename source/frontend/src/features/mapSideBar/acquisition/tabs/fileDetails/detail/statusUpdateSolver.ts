@@ -1,12 +1,10 @@
 import { AcquisitionStatus } from '@/constants/acquisitionFileStatus';
-import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
-import { AgreementStatusTypes } from '@/models/api/Agreement';
+import { ApiGen_CodeTypes_AgreementStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_AgreementStatusTypes';
+import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 
 class StatusUpdateSolver {
-  private readonly acquisitionFile: Api_AcquisitionFile | null;
-
-  constructor(apiModel: Api_AcquisitionFile | undefined | null) {
-    this.acquisitionFile = apiModel ?? null;
+  constructor(private readonly acquisitionFile: ApiGen_Concepts_AcquisitionFile | null = null) {
+    this.acquisitionFile = acquisitionFile;
   }
 
   canEditDetails(): boolean {
@@ -76,7 +74,7 @@ class StatusUpdateSolver {
     switch (statusCode) {
       case AcquisitionStatus.Active:
       case AcquisitionStatus.Draft:
-        canEdit = true;
+        canEdit = isDraftCompensation ?? true;
         break;
       case AcquisitionStatus.Archived:
       case AcquisitionStatus.Cancelled:
@@ -111,7 +109,7 @@ class StatusUpdateSolver {
       case AcquisitionStatus.Closed:
       case AcquisitionStatus.Complete:
       case AcquisitionStatus.Hold:
-        canEdit = agreementStatusCode !== AgreementStatusTypes.FINAL ?? true;
+        canEdit = agreementStatusCode !== ApiGen_CodeTypes_AgreementStatusTypes.FINAL ?? true;
         break;
       default:
         canEdit = false;
@@ -228,13 +226,14 @@ class StatusUpdateSolver {
     switch (statusCode) {
       case AcquisitionStatus.Active:
       case AcquisitionStatus.Draft:
+        canEdit = true;
+        break;
       case AcquisitionStatus.Archived:
       case AcquisitionStatus.Cancelled:
       case AcquisitionStatus.Closed:
       case AcquisitionStatus.Complete:
       case AcquisitionStatus.Hold:
-      default:
-        canEdit = true;
+        canEdit = false;
         break;
     }
 

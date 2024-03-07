@@ -47,7 +47,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void NavigateAdminTemplates()
         {
-            Wait(3000);
+            Wait();
 
             WaitUntilClickable(adminToolsTemplatesLink);
             webDriver.FindElement(adminToolsTemplatesLink).Click();

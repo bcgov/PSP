@@ -12,11 +12,11 @@ namespace PIMS.Tests.Automation.PageObjects
         private By generalModalOkBttn = By.CssSelector("button[title='ok-modal']");
         private By generalModalCancelBttn = By.CssSelector("button[title='cancel-modal']");
 
-        private By secondaryModal = By.XPath("//div[@role='dialog'][2]/div[@class='modal-dialog']");
-        private By secondaryModalHeader = By.XPath("//div[@role='dialog'][2]/div/div/div[@class='modal-header']/div");
+        private By secondaryModal = By.XPath("//div[@role='dialog'][2]/div/div[@class='modal-content']");
+        private By secondaryModalHeader = By.XPath("//div[@role='dialog'][2]/div/div/div[@class='modal-header']/div[1]");
         private By secondaryModalContent = By.XPath("//div[@role='dialog'][2]/div/div/div[@class='modal-body']");
-        private By secondaryModalOkBttn = By.XPath("//div[@role='dialog'][2]/div/div/div[@class='modal-footer']/button[@title='ok-modal']");
-        private By secondaryModalCancelBttn = By.XPath("//div[@role='dialog'][2]/div/div/div[@class='modal-footer']/button[@title='cancel-modal']");
+        private By secondaryModalOkBttn = By.XPath("//div[@role='dialog'][2]/div/div/div[@class='modal-footer']/div/button[@title='ok-modal']");
+        private By secondaryModalCancelBttn = By.XPath("//div[@role='dialog'][2]/div/div/div[@class='modal-footer']/div/button[@title='cancel-modal']");
 
         private By generalToastBody = By.CssSelector("div[class='Toastify__toast-body']");
         private By generalConfirmationModalBody1 = By.CssSelector("div[class='modal-body'] div");
@@ -94,6 +94,17 @@ namespace PIMS.Tests.Automation.PageObjects
         public void IsToastyPresent()
         {
             AssertTrueIsDisplayed(generalToastBody);
+        }
+
+        public void CancelActionModal()
+        {
+            if (webDriver.FindElements(generalModalContent).Count() > 0)
+            {
+                Assert.Equal("Confirm Changes", ModalHeader());
+                Assert.Contains("If you choose to cancel now, your changes will not be saved.", ModalContent());
+                Assert.Contains("Do you want to proceed?", ModalContent());
+                ModalClickOKBttn();
+            }
         }
 
         public void SiteMinderModal()

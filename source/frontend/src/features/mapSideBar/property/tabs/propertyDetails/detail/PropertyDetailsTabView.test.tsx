@@ -1,11 +1,16 @@
 import { createMemoryHistory } from 'history';
 
 import { Claims, PropertyTenureTypes } from '@/constants/index';
+import { getEmptyAddress } from '@/mocks/address.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
-import { Api_Property } from '@/models/api/Property';
+import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
+import { getEmptyBaseAudit, getEmptyProperty } from '@/models/defaultInitializers';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { render, RenderOptions } from '@/utils/test-utils';
+import { toTypeCodeNullable } from '@/utils/formUtils';
+import { RenderOptions, render } from '@/utils/test-utils';
 
+import { useApiProperties } from '@/hooks/pims-api/useApiProperties';
+import { useApiPropertyOperation } from '@/hooks/pims-api/useApiPropertyOperation';
 import { PropertyDetailsTabView } from './PropertyDetailsTabView';
 import { toFormValues } from './PropertyDetailsTabView.helpers';
 
@@ -16,23 +21,37 @@ const storeState = {
 
 // mock keycloak auth library
 jest.mock('@react-keycloak/web');
+jest.mock('@/hooks/pims-api/useApiPropertyOperation');
+const getPropertyOperationsApiMock = jest.fn();
+(useApiPropertyOperation as jest.Mock).mockImplementation(() => ({
+  getPropertyOperationsApi: getPropertyOperationsApiMock,
+}));
+
+jest.mock('@/hooks/pims-api/useApiProperties');
+const getPropertyConceptWithIdApiMock = jest.fn();
+(useApiProperties as jest.Mock).mockImplementation(() => ({
+  getPropertyConceptWithIdApi: getPropertyConceptWithIdApiMock,
+}));
 
 describe('PropertyDetailsTabView component', () => {
   // render component under test
-  const setup = (renderOptions: RenderOptions & { property?: Api_Property } = {}) => {
+  const setup = (renderOptions: RenderOptions & { property?: ApiGen_Concepts_Property } = {}) => {
     const { property, ...rest } = renderOptions;
     const formValues = toFormValues(property);
     const component = render(<PropertyDetailsTabView property={formValues} loading={false} />, {
       ...rest,
       store: storeState,
-      claims: [Claims.PROPERTY_EDIT],
+      useMockAuthentication: true,
+      claims: renderOptions?.claims ?? [],
       history,
     });
 
-    return {
-      ...component,
-    };
+    return { ...component };
   };
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
 
   it('renders as expected when provided valid data object', () => {
     const { asFragment } = setup({ property: mockPropertyInfo });
@@ -40,14 +59,21 @@ describe('PropertyDetailsTabView component', () => {
   });
 
   it('does not throw an exception for an invalid data object', () => {
-    const { getByText } = setup({ property: {} as Api_Property });
+    const { getByText } = setup({ property: {} as ApiGen_Concepts_Property });
     expect(getByText(/property attributes/i)).toBeVisible();
   });
 
   it('shows highway/road multi-select when tenure status is Highway/Road', () => {
-    const property: Api_Property = {
+    const property: ApiGen_Concepts_Property = {
       ...mockPropertyInfo,
-      tenures: [{ propertyTenureTypeCode: { id: PropertyTenureTypes.HighwayRoad } }],
+      tenures: [
+        {
+          propertyTenureTypeCode: toTypeCodeNullable(PropertyTenureTypes.HighwayRoad),
+          id: 0,
+          propertyId: mockPropertyInfo.id,
+          ...getEmptyBaseAudit(),
+        },
+      ],
     };
 
     const { getByText } = setup({ property });
@@ -55,9 +81,16 @@ describe('PropertyDetailsTabView component', () => {
   });
 
   it('does not show highway/road multi-select when tenure status is not Highway/Road', () => {
-    const property: Api_Property = {
+    const property: ApiGen_Concepts_Property = {
       ...mockPropertyInfo,
-      tenures: [{ propertyTenureTypeCode: { id: PropertyTenureTypes.Unknown } }],
+      tenures: [
+        {
+          propertyTenureTypeCode: toTypeCodeNullable(PropertyTenureTypes.Unknown),
+          id: 0,
+          propertyId: mockPropertyInfo.id,
+          ...getEmptyBaseAudit(),
+        },
+      ],
     };
 
     const { queryByText } = setup({ property });
@@ -65,9 +98,16 @@ describe('PropertyDetailsTabView component', () => {
   });
 
   it('shows first nations information when tenure status is Indian Reserve', () => {
-    const property: Api_Property = {
+    const property: ApiGen_Concepts_Property = {
       ...mockPropertyInfo,
-      tenures: [{ propertyTenureTypeCode: { id: PropertyTenureTypes.IndianReserve } }],
+      tenures: [
+        {
+          propertyTenureTypeCode: toTypeCodeNullable(PropertyTenureTypes.IndianReserve),
+          id: 0,
+          propertyId: mockPropertyInfo.id,
+          ...getEmptyBaseAudit(),
+        },
+      ],
     };
 
     const { getByText } = setup({ property });
@@ -75,7 +115,7 @@ describe('PropertyDetailsTabView component', () => {
   });
 
   it('does not show first nations information when tenure status is not Indian Reserve', () => {
-    const property: Api_Property = {
+    const property: ApiGen_Concepts_Property = {
       ...mockPropertyInfo,
     };
 
@@ -84,7 +124,7 @@ describe('PropertyDetailsTabView component', () => {
   });
 
   it('shows additional volume measurements for volumetric parcels', () => {
-    const property: Api_Property = {
+    const property: ApiGen_Concepts_Property = {
       ...mockPropertyInfo,
       isVolumetricParcel: true,
     };
@@ -94,7 +134,7 @@ describe('PropertyDetailsTabView component', () => {
   });
 
   it('shows Provincial public hwy field', () => {
-    const property: Api_Property = {
+    const property: ApiGen_Concepts_Property = {
       ...mockPropertyInfo,
       pphStatusTypeCode: 'NONPPH',
     };
@@ -104,7 +144,7 @@ describe('PropertyDetailsTabView component', () => {
   });
 
   it('does not show shows additional volume measurements for non-volumetric parcels', () => {
-    const property: Api_Property = {
+    const property: ApiGen_Concepts_Property = {
       ...mockPropertyInfo,
       isVolumetricParcel: false,
     };
@@ -114,7 +154,7 @@ describe('PropertyDetailsTabView component', () => {
   });
 
   it('shows property address if available', () => {
-    const property: Api_Property = {
+    const property: ApiGen_Concepts_Property = {
       ...mockPropertyInfo,
     };
 
@@ -123,22 +163,51 @@ describe('PropertyDetailsTabView component', () => {
   });
 
   it('shows a warning message if no address found', () => {
-    const property: Api_Property = {
+    const property: ApiGen_Concepts_Property = {
       ...mockPropertyInfo,
     };
-    property.address = undefined;
+    property.address = null;
 
     const { getByText } = setup({ property });
     expect(getByText(/Property address not available/i)).toBeVisible();
   });
+
+  it('should display the Edit button if the user has permissions', async () => {
+    const property: ApiGen_Concepts_Property = {
+      ...mockPropertyInfo,
+    };
+    const { getByTitle, queryByTestId } = setup({ property, claims: [Claims.PROPERTY_EDIT] });
+    expect(getByTitle(/Edit property details/)).toBeVisible();
+    expect(queryByTestId('tooltip-icon-property-retired-tooltip')).toBeNull();
+  });
+
+  it('should not display the Edit button if the user does not have permissions', async () => {
+    const property: ApiGen_Concepts_Property = {
+      ...mockPropertyInfo,
+    };
+    const { queryByTitle } = await setup({ property, claims: [] });
+    expect(queryByTitle(/Edit property details/)).toBeNull();
+  });
+
+  it('should render the retired tooltip instead of the Edit button for retired properties', async () => {
+    const property: ApiGen_Concepts_Property = {
+      ...mockPropertyInfo,
+      isRetired: true,
+    };
+    const { queryByTitle, getByTestId } = await setup({ property, claims: [Claims.PROPERTY_EDIT] });
+    expect(queryByTitle(/Edit property details/)).toBeNull();
+    expect(getByTestId('tooltip-icon-property-retired-tooltip')).toBeInTheDocument();
+  });
 });
 
-export const mockPropertyInfo: Api_Property = {
+export const mockPropertyInfo: ApiGen_Concepts_Property = {
+  ...getEmptyProperty(),
   id: 1,
   propertyType: {
     id: 'TITLED',
     description: 'Titled',
     isDisabled: false,
+    displayOrder: null,
   },
   anomalies: [
     {
@@ -146,7 +215,11 @@ export const mockPropertyInfo: Api_Property = {
         id: 'BLDGLIENS',
         description: 'Building liens',
         isDisabled: false,
+        displayOrder: null,
       },
+      id: 0,
+      propertyId: 1,
+      ...getEmptyBaseAudit(),
     },
   ],
   tenures: [
@@ -155,7 +228,11 @@ export const mockPropertyInfo: Api_Property = {
         id: 'CLOSEDRD',
         description: 'Closed Road',
         isDisabled: false,
+        displayOrder: null,
       },
+      id: 0,
+      propertyId: 1,
+      ...getEmptyBaseAudit(),
     },
   ],
   roadTypes: [
@@ -164,33 +241,32 @@ export const mockPropertyInfo: Api_Property = {
         id: 'GAZSURVD',
         description: 'Gazetted (Surveyed)',
         isDisabled: false,
+        displayOrder: null,
       },
-    },
-  ],
-  adjacentLands: [
-    {
-      propertyAdjacentLandTypeCode: {
-        id: 'PRIVATE',
-        description: 'Private (Fee Simple)',
-        isDisabled: false,
-      },
+      id: 0,
+      propertyId: 0,
+      ...getEmptyBaseAudit(),
     },
   ],
   status: {
     id: 'MOTIADMIN',
     description: 'Under MoTI administration',
     isDisabled: false,
+    displayOrder: null,
   },
   dataSource: {
     id: 'PAIMS',
     description: 'Property Acquisition and Inventory Management System (PAIMS)',
     isDisabled: false,
+    displayOrder: null,
   },
   dataSourceEffectiveDateOnly: '2021-08-31T00:00:00',
   latitude: 1088851.4995,
   longitude: 924033.5004,
   isSensitive: false,
+  isRetired: false,
   address: {
+    ...getEmptyAddress(),
     id: 204,
     streetAddress1: '456 Souris Street',
     streetAddress2: 'PO Box 250',
@@ -217,6 +293,7 @@ export const mockPropertyInfo: Api_Property = {
     id: 'HA',
     description: 'Hectare',
     isDisabled: false,
+    displayOrder: null,
   },
   landArea: 1,
   isVolumetricParcel: false,
@@ -225,11 +302,13 @@ export const mockPropertyInfo: Api_Property = {
     id: 'M3',
     description: 'Cubic Meters',
     isDisabled: false,
+    displayOrder: null,
   },
   volumetricType: {
     id: 'AIRSPACE',
     description: 'Airspace',
     isDisabled: false,
+    displayOrder: null,
   },
   municipalZoning: 'Some municipal zoning comments',
   zoning: 'Lorem ipsum',

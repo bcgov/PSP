@@ -4,6 +4,7 @@ import { useRef } from 'react';
 import { FaDollarSign } from 'react-icons/fa';
 
 import GenericModal, { ModalSize } from '@/components/common/GenericModal';
+import { isValidId } from '@/utils';
 
 import { FormLeaseDeposit } from '../../models/FormLeaseDeposit';
 import { ReceivedDepositForm } from './ReceivedDepositForm';
@@ -23,7 +24,7 @@ export const ReceivedDepositModal: React.FunctionComponent<
   React.PropsWithChildren<IReceivedDepositModalProps>
 > = ({ initialValues, display, onCancel, onSave }) => {
   const formikRef = useRef<FormikProps<FormLeaseDeposit>>(null);
-  const modalTitle = initialValues.id === undefined ? 'Add a Deposit' : 'Edit Deposit';
+  const modalTitle = !isValidId(initialValues.id) ? 'Add a Deposit' : 'Edit Deposit';
   return (
     <GenericModal
       variant="info"

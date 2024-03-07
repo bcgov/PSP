@@ -1,44 +1,86 @@
-import {
-  Api_DispositionFile,
-  Api_DispositionFileAppraisal,
-  Api_DispositionFileOffer,
-} from '@/models/api/DispositionFile';
+import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
+import { ApiGen_Concepts_DispositionFileAppraisal } from '@/models/api/generated/ApiGen_Concepts_DispositionFileAppraisal';
+import { ApiGen_Concepts_DispositionFileOffer } from '@/models/api/generated/ApiGen_Concepts_DispositionFileOffer';
 import { ApiGen_Concepts_DispositionFileSale } from '@/models/api/generated/ApiGen_Concepts_DispositionFileSale';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
+
+import { getEmptyPerson } from './contacts.mock';
+import { getEmptyOrganization } from './organization.mock';
 
 export const mockDispositionFileResponse = (
   id = 1,
   name = 'Test Disposition File',
   rowVersion = 1,
-): Api_DispositionFile => ({
+): ApiGen_Concepts_DispositionFile => ({
   fileReference: 'FILE_REFERENCE 8128827 3EAD56A',
   initiatingDocumentDate: '1917-06-29T00:00:00',
   assignedDate: '2025-04-26T00:00:00',
   completionDate: '1956-05-28T00:00:00',
-  project: null,
-  projectId: null,
-  product: null,
-  productId: null,
+  projectId: 1,
+  project: {
+    id: 1,
+    projectStatusTypeCode: null,
+    businessFunctionCode: null,
+    costTypeCode: null,
+    workActivityCode: null,
+    regionCode: null,
+    code: '00048',
+    description: 'CLAIMS',
+    note: null,
+    projectProducts: [],
+    appCreateTimestamp: '2024-02-06T20:56:46.47',
+    appLastUpdateTimestamp: '2024-02-06T20:56:46.47',
+    appLastUpdateUserid: 'dbo',
+    appCreateUserid: 'dbo',
+    appLastUpdateUserGuid: null,
+    appCreateUserGuid: null,
+    rowVersion: 1,
+  },
+  productId: 10,
+  product: {
+    id: 10,
+    projectProducts: [],
+    acquisitionFiles: [],
+    code: '00055',
+    description: 'AVALANCHE  \u0026  PROGRAM REVIEW',
+    startDate: null,
+    costEstimate: null,
+    costEstimateDate: null,
+    objective: null,
+    scope: null,
+    appCreateTimestamp: '2024-02-06T20:56:46.58',
+    appLastUpdateTimestamp: '2024-02-06T20:56:46.58',
+    appLastUpdateUserid: 'dbo',
+    appCreateUserid: 'dbo',
+    appLastUpdateUserGuid: null,
+    appCreateUserGuid: null,
+    rowVersion: 1,
+  },
   dispositionTypeCode: {
     id: 'CLOSURE',
     description: 'Road Closure',
     isDisabled: false,
+    displayOrder: 10,
   },
   dispositionStatusTypeCode: null,
   initiatingBranchTypeCode: {
     id: 'PLMB',
     description: 'PLMB',
     isDisabled: false,
+    displayOrder: 10,
   },
   physicalFileStatusTypeCode: {
     id: 'PENDING',
     description: 'Pending Litigation',
     isDisabled: false,
+    displayOrder: 10,
   },
   fundingTypeCode: null,
   initiatingDocumentTypeCode: {
     id: 'SURPLUS',
     description: 'Surplus Declaration',
     isDisabled: false,
+    displayOrder: 10,
   },
   dispositionTypeOther: null,
   initiatingDocumentTypeOther: null,
@@ -46,6 +88,7 @@ export const mockDispositionFileResponse = (
     id: 4,
     description: 'Cannot determine',
     isDisabled: false,
+    displayOrder: 10,
   },
   fileProperties: [],
   dispositionTeam: [
@@ -54,20 +97,29 @@ export const mockDispositionFileResponse = (
       dispositionFileId: 120,
       personId: 6,
       person: {
+        ...getEmptyPerson(),
         id: 6,
         isDisabled: false,
         surname: 'Sanchez',
+        middleNames: '',
         firstName: 'Alejandro',
+        preferredName: 'Alex',
         personOrganizations: [],
         personAddresses: [],
         contactMethods: [],
+        comment: null,
         rowVersion: 1,
       },
+      organizationId: null,
+      organization: null,
+      primaryContactId: null,
+      primaryContact: null,
       teamProfileTypeCode: 'MOTILAWYER',
       teamProfileType: {
         id: 'MOTILAWYER',
         description: 'MoTI Solicitor',
         isDisabled: false,
+        displayOrder: 1,
       },
       rowVersion: 1,
     },
@@ -76,20 +128,29 @@ export const mockDispositionFileResponse = (
       dispositionFileId: 120,
       personId: 9,
       person: {
+        ...getEmptyPerson(),
         id: 9,
         isDisabled: false,
         surname: 'Monga',
         firstName: 'Aman',
+        middleNames: '',
+        preferredName: 'Aman',
         personOrganizations: [],
         personAddresses: [],
         contactMethods: [],
+        comment: null,
         rowVersion: 1,
       },
+      organizationId: null,
+      organization: null,
+      primaryContactId: null,
+      primaryContact: null,
       teamProfileTypeCode: 'NEGOTAGENT',
       teamProfileType: {
         id: 'NEGOTAGENT',
         description: 'Negotiation agent',
         isDisabled: false,
+        displayOrder: 10,
       },
       rowVersion: 1,
     },
@@ -98,9 +159,10 @@ export const mockDispositionFileResponse = (
   fileName: name ?? 'FILE_NAME B8233BF E8C7408',
   fileNumber: 'FILE_NUMBER 3A8F46B',
   fileStatusTypeCode: {
-    id: 'CANCELLED',
-    description: 'Cancelled',
+    id: 'DRAFT',
+    description: 'Draft',
     isDisabled: false,
+    displayOrder: 10,
   },
   dispositionAppraisal: {
     id: 250,
@@ -110,6 +172,7 @@ export const mockDispositionFileResponse = (
     bcaValueAmount: 600000,
     bcaRollYear: '2023',
     listPriceAmount: 590000,
+    ...getEmptyBaseAudit(1),
   },
   dispositionOffers: [],
   dispositionSale: null,
@@ -247,9 +310,9 @@ export const mockDispositionFilePropertyResponse = () => [
 ];
 
 export const mockDispositionFileOfferApi = (
-  id: number = 0,
-  dispositionFileId: number = 1,
-): Api_DispositionFileOffer => ({
+  id = 0,
+  dispositionFileId = 1,
+): ApiGen_Concepts_DispositionFileOffer => ({
   id: id,
   dispositionFileId: dispositionFileId,
   dispositionOfferStatusTypeCode: 'OPEN',
@@ -257,17 +320,19 @@ export const mockDispositionFileOfferApi = (
     id: 'OPEN',
     description: 'Open',
     isDisabled: false,
+    displayOrder: null,
   },
   offerName: 'TEST OFFER NAME',
   offerDate: '2023-12-25T00:00:00',
   offerExpiryDate: '2024-12-25T00:00:00',
   offerAmount: 1500000.99,
   offerNote: 'MY OFFER NOTES',
+  rowVersion: 0,
 });
 
 export const mockDispositionFileSaleApi = (
-  id: number = 0,
-  dispositionFileId: number = 1,
+  id = 0,
+  dispositionFileId = 1,
 ): ApiGen_Concepts_DispositionFileSale => ({
   id: id,
   dispositionFileId: dispositionFileId,
@@ -282,11 +347,12 @@ export const mockDispositionFileSaleApi = (
   totalCostAmount: 856320.36,
   sppAmount: 1000.0,
   remediationAmount: 1.0,
+  purchaserAgentId: 100,
   dispositionPurchaserAgent: {
     id: 100,
-    dispositionSaleId: 1,
     personId: 1000,
     person: {
+      ...getEmptyPerson(),
       id: 1000,
       isDisabled: false,
       surname: 'DOE',
@@ -311,6 +377,7 @@ export const mockDispositionFileSaleApi = (
       dispositionSaleId: 1,
       personId: 12,
       person: {
+        ...getEmptyPerson(),
         id: 12,
         isDisabled: false,
         surname: 'Cheese',
@@ -334,6 +401,7 @@ export const mockDispositionFileSaleApi = (
       dispositionSaleId: 1,
       personId: 15,
       person: {
+        ...getEmptyPerson(),
         id: 15,
         isDisabled: false,
         surname: 'Sanchez',
@@ -359,6 +427,7 @@ export const mockDispositionFileSaleApi = (
       person: null,
       organizationId: 1,
       organization: {
+        ...getEmptyOrganization(),
         id: 1,
         isDisabled: false,
         name: 'Ministry of Transportation and Infrastructure',
@@ -372,6 +441,7 @@ export const mockDispositionFileSaleApi = (
       },
       primaryContactId: 16,
       primaryContact: {
+        ...getEmptyPerson(),
         id: 16,
         isDisabled: false,
         surname: 'Rodriguez',
@@ -387,11 +457,12 @@ export const mockDispositionFileSaleApi = (
       rowVersion: 1,
     },
   ],
+  purchaserSolicitorId: 101,
   dispositionPurchaserSolicitor: {
     id: 101,
-    dispositionSaleId: 1,
     personId: 1001,
     person: {
+      ...getEmptyPerson(),
       id: 1001,
       isDisabled: false,
       surname: 'DOE',
@@ -414,9 +485,9 @@ export const mockDispositionFileSaleApi = (
 });
 
 export const mockDispositionAppraisalApi = (
-  id: number = 10,
-  dispositionFileId: number = 1,
-): Api_DispositionFileAppraisal => ({
+  id = 10,
+  dispositionFileId = 1,
+): ApiGen_Concepts_DispositionFileAppraisal => ({
   id: id,
   dispositionFileId: dispositionFileId,
   appraisedAmount: 20000.0,
@@ -428,8 +499,8 @@ export const mockDispositionAppraisalApi = (
 });
 
 export const mockDispositionSaleApi = (
-  id: number = 10,
-  dispositionFileId: number = 1,
+  id = 10,
+  dispositionFileId = 1,
 ): ApiGen_Concepts_DispositionFileSale => ({
   id: id,
   dispositionFileId: dispositionFileId,
@@ -452,6 +523,7 @@ export const mockDispositionSaleApi = (
       person: null,
       organizationId: 2,
       organization: {
+        ...getEmptyOrganization(),
         id: 2,
         isDisabled: false,
         incorporationNumber: '123456',
@@ -465,6 +537,7 @@ export const mockDispositionSaleApi = (
       },
       primaryContactId: 2,
       primaryContact: {
+        ...getEmptyPerson(),
         id: 2,
         isDisabled: false,
         surname: 'Wilson',
@@ -486,6 +559,7 @@ export const mockDispositionSaleApi = (
       person: null,
       organizationId: 3,
       organization: {
+        ...getEmptyOrganization(),
         id: 3,
         isDisabled: false,
         incorporationNumber: '123456',
@@ -499,6 +573,7 @@ export const mockDispositionSaleApi = (
       },
       primaryContactId: 3,
       primaryContact: {
+        ...getEmptyPerson(),
         id: 3,
         isDisabled: false,
         surname: 'Cheese',
@@ -518,6 +593,7 @@ export const mockDispositionSaleApi = (
       dispositionSaleId: id,
       personId: 15,
       person: {
+        ...getEmptyPerson(),
         id: 15,
         isDisabled: false,
         surname: 'Sanchez',
@@ -537,13 +613,14 @@ export const mockDispositionSaleApi = (
       rowVersion: 4,
     },
   ],
+  purchaserAgentId: 300,
   dispositionPurchaserAgent: {
     id: 300,
-    dispositionSaleId: id,
     personId: null,
     person: null,
     organizationId: 3,
     organization: {
+      ...getEmptyOrganization(),
       id: 3,
       isDisabled: false,
       incorporationNumber: '123456',
@@ -557,6 +634,7 @@ export const mockDispositionSaleApi = (
     },
     primaryContactId: 3,
     primaryContact: {
+      ...getEmptyPerson(),
       id: 3,
       isDisabled: false,
       surname: 'Cheese',
@@ -571,13 +649,14 @@ export const mockDispositionSaleApi = (
     },
     rowVersion: 1,
   },
+  purchaserSolicitorId: 21,
   dispositionPurchaserSolicitor: {
     id: 21,
-    dispositionSaleId: 27,
     personId: null,
     person: null,
     organizationId: 2,
     organization: {
+      ...getEmptyOrganization(),
       id: 2,
       isDisabled: false,
       incorporationNumber: '5678',
@@ -591,6 +670,7 @@ export const mockDispositionSaleApi = (
     },
     primaryContactId: 2,
     primaryContact: {
+      ...getEmptyPerson(),
       id: 2,
       isDisabled: false,
       surname: 'Wilson',

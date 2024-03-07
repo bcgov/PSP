@@ -10,15 +10,15 @@ import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledSummarySection } from '@/components/common/Section/SectionStyles';
 import * as API from '@/constants/API';
 import { useLookupCodeHelpers } from '@/hooks/useLookupCodeHelpers';
-import { Api_PropertyManagement } from '@/models/api/Property';
+import { ApiGen_Concepts_PropertyManagement } from '@/models/api/generated/ApiGen_Concepts_PropertyManagement';
 
 import { ManagementPurposeModel, PropertyManagementFormModel } from './models';
 import { PropertyManagementYupSchema } from './validation';
 
 export interface IPropertyManagementUpdateFormProps {
   isLoading: boolean;
-  propertyManagement: Api_PropertyManagement;
-  onSave: (apiModel: Api_PropertyManagement) => Promise<void>;
+  propertyManagement: ApiGen_Concepts_PropertyManagement;
+  onSave: (apiModel: ApiGen_Concepts_PropertyManagement) => Promise<void>;
 }
 
 export const PropertyManagementUpdateForm = React.forwardRef<

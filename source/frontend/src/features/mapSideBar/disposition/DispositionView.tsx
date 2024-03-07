@@ -17,8 +17,8 @@ import { FileTypes } from '@/constants';
 import FileLayout from '@/features/mapSideBar/layout/FileLayout';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
 import { IApiError } from '@/interfaces/IApiError';
-import { Api_DispositionFile } from '@/models/api/DispositionFile';
-import { Api_File } from '@/models/api/File';
+import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
+import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { stripTrailingSlash } from '@/utils';
 import { getFilePropertyName } from '@/utils/mapPropertyUtils';
 
@@ -38,15 +38,15 @@ export interface IDispositionViewProps {
   onCancel: () => void;
   onMenuChange: (selectedIndex: number) => void;
   onShowPropertySelector: () => void;
-  onSuccess: (updateProperties?: boolean) => void;
-  onUpdateProperties: (file: Api_File) => Promise<Api_File | undefined>;
+  onSuccess: (updateProperties?: boolean, updateFile?: boolean) => void;
+  onUpdateProperties: (file: ApiGen_Concepts_File) => Promise<ApiGen_Concepts_File | undefined>;
   canRemove: (propertyId: number) => Promise<boolean>;
   isEditing: boolean;
   setIsEditing: (value: boolean) => void;
   formikRef: React.RefObject<FormikProps<any>>;
   isFormValid: boolean;
   error: AxiosError<IApiError, any> | undefined;
-  dispositionFile?: Api_DispositionFile;
+  dispositionFile?: ApiGen_Concepts_DispositionFile;
 }
 
 export const DispositionView: React.FunctionComponent<IDispositionViewProps> = ({
@@ -142,7 +142,7 @@ export const DispositionView: React.FunctionComponent<IDispositionViewProps> = (
             leftComponent={
               <>
                 <DispositionMenu
-                  dispositionFileId={dispositionFile?.id || 0}
+                  dispositionFile={dispositionFile}
                   items={menuItems}
                   selectedIndex={selectedMenuIndex}
                   onChange={onMenuChange}

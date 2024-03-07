@@ -48,7 +48,7 @@ jobs:
           notification-summary: PIMS UAT Pre-Release Hotfix started.
           notification-color: 17a2b8
           timezone: America/Los_Angeles
-  
+
   create-builds:
     name: create builds
     needs: ci-cd-start-notification
@@ -124,8 +124,8 @@ jobs:
           namespace: ${{ env.OPENSHIFT_TOOLS_NAMESPACE }}
       - name: call scripts to deploy api and frontend
         run: |
-          OC_JOB_NAME=${{github.event.inputs.HOTFIX_BRANCH}} &&./openshift/4.0/player.sh deploy api $DESTINATION -apply
-          OC_JOB_NAME=${{github.event.inputs.HOTFIX_BRANCH}} &&./openshift/4.0/player.sh deploy app $DESTINATION -apply
+          RELEASE_TAG=latest-${{github.event.inputs.HOTFIX_BRANCH}} && ./openshift/4.0/player.sh deploy api $DESTINATION -apply
+          RELEASE_TAG=latest-${{github.event.inputs.HOTFIX_BRANCH}} && ./openshift/4.0/player.sh deploy app $DESTINATION -apply
 
   # the command:
   # 1) creates an openshift job with generated name to avoid name conflict, substituting the variables in the template.
@@ -150,8 +150,8 @@ jobs:
         run: |
           oc process -f ./openshift/4.0/templates/jobs/db-deploy.yaml -p DB_SECRET_NAME=pims-database-uat -p GIT_BRANCH=${{github.event.inputs.HOTFIX_BRANCH}} -p SERVER_NAME=sqlprd.th.gov.bc.ca -p DB_NAME=PIMS_UAT -p NAMESPACE=3cd915-test | oc create -f - | grep -oP "(?<=job\.batch/)[^\s]*" | (read JOB_NAME; oc wait --for=condition=complete job/$JOB_NAME --timeout=120s)
 
-## Call the mayan sync task three times, once for each mayan sync endpoint. The task will wait for the job to complete before exiting.
-## Note: this depends on the mayan-sync configmap for the target namespace being up to date.
+  ## Call the mayan sync task three times, once for each mayan sync endpoint. The task will wait for the job to complete before exiting.
+  ## Note: this depends on the mayan-sync configmap for the target namespace being up to date.
   mayan-sync:
     name: sync mayan
     needs: database-upgrade
@@ -169,9 +169,9 @@ jobs:
       - name: call scripts to sync mayan
         shell: bash
         run: |
-          oc process -f ./openshift/4.0/templates/jobs/mayan-sync.yaml -p NAMESPACE=3cd915-test -p TOKEN_URL=https://test.loginproxy.gov.bc.ca:443/auth/realms/standard/protocol/openid-connect/token -p CLIENT_ID=property-services-project-api-4380 -p MAYAN_SYNC_URL=https://uat-pims.th.gov.bc.ca/:443/api/documents/sync/mayan/metadatatype -p KEYCLOAK_SECRET_NAME=pims-api-sso-uat | oc create -f - | grep -oP "(?<=\/)[^\s]*" | (read TASK_NAME; oc wait --for=condition=succeeded taskruns/$TASK_NAME --timeout=80s)
-          oc process -f ./openshift/4.0/templates/jobs/mayan-sync.yaml -p NAMESPACE=3cd915-test -p TOKEN_URL=https://test.loginproxy.gov.bc.ca:443/auth/realms/standard/protocol/openid-connect/token -p CLIENT_ID=property-services-project-api-4380 -p MAYAN_SYNC_URL=https://uat-pims.th.gov.bc.ca/:443/api/documents/sync/documenttype -p KEYCLOAK_SECRET_NAME=pims-api-sso-uat | oc create -f - | grep -oP "(?<=\/)[^\s]*" | (read TASK_NAME; oc wait --for=condition=succeeded taskruns/$TASK_NAME --timeout=80s)
-          oc process -f ./openshift/4.0/templates/jobs/mayan-sync.yaml -p NAMESPACE=3cd915-test -p TOKEN_URL=https://test.loginproxy.gov.bc.ca:443/auth/realms/standard/protocol/openid-connect/token -p CLIENT_ID=property-services-project-api-4380 -p MAYAN_SYNC_URL=https://uat-pims.th.gov.bc.ca/:443/api/documents/sync/mayan -p KEYCLOAK_SECRET_NAME=pims-api-sso-uat | oc create -f - | grep -oP "(?<=\/)[^\s]*" | (read TASK_NAME; oc wait --for=condition=succeeded taskruns/$TASK_NAME --timeout=80s)
+          oc process -f ./openshift/4.0/templates/jobs/mayan-sync.yaml -p NAMESPACE=3cd915-test -p TOKEN_URL=https://test.loginproxy.gov.bc.ca:443/auth/realms/standard/protocol/openid-connect/token -p CLIENT_ID=property-services-project-api-4380 -p MAYAN_SYNC_URL=https://pims-app-uat-3cd915-test.apps.silver.devops.gov.bc.ca/api/documents/sync/mayan/metadatatype -p KEYCLOAK_SECRET_NAME=pims-api-sso-uat | oc create -f - | grep -oP "(?<=\/)[^\s]*" | (read TASK_NAME; oc wait --for=condition=succeeded taskruns/$TASK_NAME --timeout=80s)
+          oc process -f ./openshift/4.0/templates/jobs/mayan-sync.yaml -p NAMESPACE=3cd915-test -p TOKEN_URL=https://test.loginproxy.gov.bc.ca:443/auth/realms/standard/protocol/openid-connect/token -p CLIENT_ID=property-services-project-api-4380 -p MAYAN_SYNC_URL=https://pims-app-uat-3cd915-test.apps.silver.devops.gov.bc.ca/api/documents/sync/documenttype -p KEYCLOAK_SECRET_NAME=pims-api-sso-uat | oc create -f - | grep -oP "(?<=\/)[^\s]*" | (read TASK_NAME; oc wait --for=condition=succeeded taskruns/$TASK_NAME --timeout=80s)
+          oc process -f ./openshift/4.0/templates/jobs/mayan-sync.yaml -p NAMESPACE=3cd915-test -p TOKEN_URL=https://test.loginproxy.gov.bc.ca:443/auth/realms/standard/protocol/openid-connect/token -p CLIENT_ID=property-services-project-api-4380 -p MAYAN_SYNC_URL=https://pims-app-uat-3cd915-test.apps.silver.devops.gov.bc.ca/api/documents/sync/mayan -p KEYCLOAK_SECRET_NAME=pims-api-sso-uat | oc create -f - | grep -oP "(?<=\/)[^\s]*" | (read TASK_NAME; oc wait --for=condition=succeeded taskruns/$TASK_NAME --timeout=80s)
 
   sync-keycloak:
     name: Sync Keycloak
@@ -215,7 +215,7 @@ jobs:
           notification-summary: PIMS UAT Pre-Release Hotfix complete with status ${{ steps.check.outputs.status }}
           notification-color: 17a2b8
           timezone: America/Los_Angeles
-  
+
   cleanup-builds:
     if: always()
     name: cleanup builds

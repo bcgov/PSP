@@ -3,7 +3,7 @@ import React from 'react';
 
 import { useOrganizationRepository } from '@/features/contacts/repositories/useOrganizationRepository';
 import { IContactSearchResult } from '@/interfaces';
-import { Api_OrganizationPerson } from '@/models/api/Organization';
+import { ApiGen_Concepts_PersonOrganization } from '@/models/api/generated/ApiGen_Concepts_PersonOrganization';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
 import { Select, SelectOption } from '../Select';
@@ -40,7 +40,7 @@ export const PrimaryContactSelector: React.FC<IPrimaryContactSelectorProps> = ({
   }, [field, orgPersons, setFieldValue]);
 
   const primaryContacts: SelectOption[] =
-    orgPersons?.map((orgPerson: Api_OrganizationPerson) => {
+    orgPersons?.map((orgPerson: ApiGen_Concepts_PersonOrganization) => {
       return {
         label: `${formatApiPersonNames(orgPerson.person)}`,
         value: orgPerson.personId ?? '',

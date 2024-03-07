@@ -1,6 +1,6 @@
 import { render, RenderOptions } from '@testing-library/react';
 
-import { Api_Project } from '@/models/api/Project';
+import { ApiGen_Concepts_Project } from '@/models/api/generated/ApiGen_Concepts_Project';
 
 import { ProjectSearchResultModel } from './models';
 import { IProjectSearchResultsProps, ProjectSearchResults } from './ProjectSearchResults';
@@ -22,7 +22,7 @@ const setup = (
   };
 };
 
-const mockResults: Api_Project[] = [];
+const mockResults: ApiGen_Concepts_Project[] = [];
 
 describe('Project Search Results Table', () => {
   beforeEach(() => {

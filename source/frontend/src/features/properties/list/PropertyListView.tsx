@@ -3,9 +3,12 @@ import './PropertyListView.scss';
 import { Form, Formik, FormikProps } from 'formik';
 import isEmpty from 'lodash/isEmpty';
 import noop from 'lodash/noop';
+import Multiselect from 'multiselect-react-dropdown';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
+import { Row } from 'react-bootstrap';
+import { Col } from 'react-bootstrap';
 import Container from 'react-bootstrap/Container';
-import { FaFileAlt, FaFileExcel } from 'react-icons/fa';
+import { FaFileAlt, FaFileExcel, FaTimes } from 'react-icons/fa';
 import styled from 'styled-components';
 
 import { StyledIconButton } from '@/components/common/buttons';
@@ -13,49 +16,49 @@ import TooltipWrapper from '@/components/common/TooltipWrapper';
 import { Table } from '@/components/Table';
 import { TableSort } from '@/components/Table/TableSort';
 import * as API from '@/constants/API';
+import { MultiSelectOption } from '@/features/acquisition/list/interfaces';
 import { useApiProperties } from '@/hooks/pims-api/useApiProperties';
 import { useProperties } from '@/hooks/repositories/useProperties';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { useRouterFilter } from '@/hooks/useRouterFilter';
 import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
-import { IProperty } from '@/interfaces';
+import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { generateMultiSortCriteria } from '@/utils';
 import { toFilteredApiPaginateParams } from '@/utils/CommonFunctions';
 
 import { PropertyFilter } from '../filter';
-import { IPropertyFilter } from '../filter/IPropertyFilter';
+import { defaultPropertyFilter, IPropertyFilter } from '../filter/IPropertyFilter';
 import { SearchToggleOption } from '../filter/PropertySearchToggle';
 import { columns as columnDefinitions } from './columns';
 
-const defaultFilterValues: IPropertyFilter = {
-  searchBy: 'pinOrPid',
-  pinOrPid: '',
-  address: '',
-  page: '1',
-  quantity: '10',
-  latitude: undefined,
-  longitude: undefined,
-};
+const ownershipFilterOptions: MultiSelectOption[] = [
+  { id: 'isCoreInventory', text: 'Core Inventory' },
+  { id: 'isPropertyOfInterest', text: 'Property Of Interest' },
+  { id: 'isOtherInterest', text: 'Other Interest' },
+  { id: 'isDisposed', text: 'Disposed' },
+];
 
 const PropertyListView: React.FC<React.PropsWithChildren<unknown>> = () => {
   const { getByType } = useLookupCodeHelpers();
-  const tableFormRef = useRef<FormikProps<{ properties: IProperty[] }> | undefined>();
+  const tableFormRef = useRef<
+    FormikProps<{ properties: ApiGen_Concepts_Property[] }> | undefined
+  >();
 
   const municipalities = useMemo(() => getByType(API.ADMINISTRATIVE_AREA_TYPES), [getByType]);
 
   const columns = useMemo(() => columnDefinitions({ municipalities }), [municipalities]);
 
   // We'll start our table without any data
-  const [data, setData] = useState<IProperty[] | undefined>();
+  const [data, setData] = useState<ApiGen_Concepts_Property[] | undefined>();
 
   // Filtering and pagination state
-  const [filter, setFilter] = useState<IPropertyFilter>(defaultFilterValues);
+  const [filter, setFilter] = useState<IPropertyFilter>(defaultPropertyFilter);
 
   const [pageSize, setPageSize] = useState(10);
   const [pageIndex, setPageIndex] = useState(0);
   const [pageCount, setPageCount] = useState(0);
   const [totalItems, setTotalItems] = useState(0);
-  const [sort, setSort] = useState<TableSort<IProperty>>({});
+  const [sort, setSort] = useState<TableSort<ApiGen_Concepts_Property>>({});
 
   const fetchIdRef = useRef(0);
 
@@ -99,7 +102,7 @@ const PropertyListView: React.FC<React.PropsWithChildren<unknown>> = () => {
       pageIndex: number;
       pageSize: number;
       filter: IPropertyFilter;
-      sort: TableSort<IProperty>;
+      sort: TableSort<ApiGen_Concepts_Property>;
     }) => {
       // Give this fetch an ID
       const fetchId = ++fetchIdRef.current;
@@ -150,13 +153,20 @@ const PropertyListView: React.FC<React.PropsWithChildren<unknown>> = () => {
 
   const appliedFilter = { ...filter };
 
+  const multiselectOwnershipRef = React.createRef<Multiselect>();
+
+  const onSelectedOwnershipChange = (selectedList: MultiSelectOption[]) => {
+    const selectedIds = selectedList.map(o => o.id);
+    setFilter({ ...filter, ownership: selectedIds.join(',') });
+  };
+
   return (
     <Container fluid className="PropertyListView">
       <Container fluid className="filter-container border-bottom">
         <StyledFilterContainer fluid className="px-0">
           <PropertyFilter
             useGeocoder={false}
-            defaultFilter={defaultFilterValues}
+            defaultFilter={defaultPropertyFilter}
             onChange={handleFilterChange}
             sort={sort}
             onSorting={setSort}
@@ -164,23 +174,57 @@ const PropertyListView: React.FC<React.PropsWithChildren<unknown>> = () => {
           />
         </StyledFilterContainer>
       </Container>
+      <div className="mt-5 mx-5">
+        <StyledPageHeader>Search Results</StyledPageHeader>
+        <Row>
+          <Col xs="10">
+            <StyledFilterBox className="p-3">
+              <Row>
+                <Col xl="1">
+                  <strong>View by:</strong>
+                </Col>
+                <Col xs="auto">
+                  <Multiselect
+                    id="properties-selector"
+                    ref={multiselectOwnershipRef}
+                    options={ownershipFilterOptions}
+                    selectedValues={filter.ownership
+                      .split(',')
+                      .map<MultiSelectOption | undefined>(o =>
+                        ownershipFilterOptions.find(op => op.id === o),
+                      )
+                      .filter((x): x is MultiSelectOption => x !== undefined)}
+                    onSelect={onSelectedOwnershipChange}
+                    onRemove={onSelectedOwnershipChange}
+                    displayValue="text"
+                    placeholder="Select ownership status"
+                    customCloseIcon={<FaTimes size="18px" className="ml-3" />}
+                    hidePlaceholder={true}
+                    style={defaultStyle}
+                  />
+                </Col>
+              </Row>
+            </StyledFilterBox>
+          </Col>
+          <Col>
+            <Container fluid className="TableToolbar px-0">
+              <div className="menu"></div>
+              <TooltipWrapper tooltipId="export-to-excel" tooltip="Export to Excel">
+                <StyledIconButton onClick={() => fetch('excel')}>
+                  <FaFileExcel data-testid="excel-icon" size={36} />
+                </StyledIconButton>
+              </TooltipWrapper>
+              <TooltipWrapper tooltipId="export-to-excel" tooltip="Export to CSV">
+                <StyledIconButton onClick={() => fetch('csv')}>
+                  <FaFileAlt data-testid="csv-icon" size={36} />
+                </StyledIconButton>
+              </TooltipWrapper>
+            </Container>
+          </Col>
+        </Row>
+      </div>
       <div className="ScrollContainer">
-        <Container fluid className="TableToolbar px-0">
-          <h3>Property Information</h3>
-          <div className="menu"></div>
-          <TooltipWrapper tooltipId="export-to-excel" tooltip="Export to Excel">
-            <StyledIconButton onClick={() => fetch('excel')}>
-              <FaFileExcel data-testid="excel-icon" size={36} />
-            </StyledIconButton>
-          </TooltipWrapper>
-          <TooltipWrapper tooltipId="export-to-excel" tooltip="Export to CSV">
-            <StyledIconButton onClick={() => fetch('csv')}>
-              <FaFileAlt data-testid="csv-icon" size={36} />
-            </StyledIconButton>
-          </TooltipWrapper>
-        </Container>
-
-        <Table<IProperty>
+        <Table<ApiGen_Concepts_Property>
           name="propertiesTable"
           columns={columns}
           data={data || []}
@@ -212,6 +256,10 @@ const PropertyListView: React.FC<React.PropsWithChildren<unknown>> = () => {
 };
 
 export default PropertyListView;
+
+export const StyledPageHeader = styled.h3`
+  text-align: left;
+`;
 
 const StyledFilterContainer = styled(Container)`
   transition: margin 1s;
@@ -247,3 +295,26 @@ const StyledFilterContainer = styled(Container)`
     margin-bottom: 0;
   }
 `;
+export const StyledFilterBox = styled.div`
+  background-color: ${({ theme }) => theme.css.filterBoxColor};
+  border-radius: 0.5rem;
+`;
+
+const defaultStyle = {
+  chips: {
+    background: '#F2F2F2',
+    borderRadius: '4px',
+    color: 'black',
+    fontSize: '16px',
+    marginRight: '1em',
+    whiteSpace: 'normal',
+  },
+  multiselectContainer: {
+    width: 'auto',
+    color: 'black',
+  },
+  searchBox: {
+    background: 'white',
+    border: '1px solid #606060',
+  },
+};

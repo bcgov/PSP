@@ -1022,7 +1022,7 @@ exports[`Lease and License List View matches snapshot 1`] = `
                 Status
                 <div
                   class="c13"
-                  data-testid="sort-column-statusType"
+                  data-testid="sort-column-fileStatusTypeCode"
                 >
                   <svg
                     class="c14"

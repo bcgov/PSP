@@ -84,7 +84,7 @@ describe('DepositsReceivedContainer component', () => {
     const dataRow = findFirstRow() as HTMLElement;
 
     expect(dataRow).not.toBeNull();
-    expect(findCell(dataRow, 0)?.textContent).toBe(deposit.depositType.description ?? '');
+    expect(findCell(dataRow, 0)?.textContent).toBe(deposit.depositType?.description ?? '');
     expect(findCell(dataRow, 1)?.textContent).toBe(deposit.description);
     expect(findCell(dataRow, 2)?.textContent).toBe(formatMoney(deposit.amountPaid));
     expect(findCell(dataRow, 3)?.textContent).toBe(prettyFormatDate(deposit.depositDateOnly));

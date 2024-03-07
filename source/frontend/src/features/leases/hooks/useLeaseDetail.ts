@@ -8,7 +8,7 @@ import { useLeaseTermRepository } from '@/hooks/repositories/useLeaseTermReposit
 import { usePropertyLeaseRepository } from '@/hooks/repositories/usePropertyLeaseRepository';
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
-import { Api_Lease } from '@/models/api/Lease';
+import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { useAxiosErrorHandler } from '@/utils';
 
 import { LeaseStateContext } from './../context/LeaseContext';
@@ -54,11 +54,11 @@ export function useLeaseDetail(leaseId?: number) {
         propertyLeasesPromise,
         leaseTermsPromise,
       ]);
-      if (!!lease) {
-        const mergedLeases: Api_Lease = {
+      if (lease) {
+        const mergedLeases: ApiGen_Concepts_Lease = {
           ...lease,
           tenants: leaseTenants ?? [],
-          properties: propertyLeases ?? [],
+          fileProperties: propertyLeases ?? [],
           terms: leaseTerms ?? [],
         };
         setLease(mergedLeases);
@@ -70,7 +70,7 @@ export function useLeaseDetail(leaseId?: number) {
 
   const fetchLastUpdatedBy = useCallback(async () => {
     if (leaseId) {
-      var retrieved = await getLastUpdatedBy(leaseId);
+      const retrieved = await getLastUpdatedBy(leaseId);
       if (retrieved !== undefined) {
         setLastUpdatedBy(retrieved);
       } else {

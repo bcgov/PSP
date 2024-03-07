@@ -4,7 +4,7 @@ import { useRef } from 'react';
 import { CancelConfirmationModal } from '@/components/common/CancelConfirmationModal';
 import { NoteTypes } from '@/constants/index';
 import { useModalManagement } from '@/hooks/useModalManagement';
-import { Api_Note } from '@/models/api/Note';
+import { ApiGen_Concepts_Note } from '@/models/api/generated/ApiGen_Concepts_Note';
 
 import { useUpdateNotesFormManagement } from '../hooks/useUpdateNotesFormManagement';
 import { NoteForm } from '../models';
@@ -16,7 +16,7 @@ export interface IUpdateNoteContainerProps {
   /** The parent entity type for adding notes - e.g. 'activity' */
   type: NoteTypes;
   /** The note to update */
-  note?: Api_Note;
+  note?: ApiGen_Concepts_Note;
   /** Optional - callback to execute after a successful update */
   onSuccess?: () => void;
   /** Whether to show the notes modal. Default: false */

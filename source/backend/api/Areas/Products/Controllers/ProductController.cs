@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Pims.Api.Models.Concepts.AcquisitionFile;
 using Pims.Api.Policies;
 using Pims.Api.Services;
+using Pims.Core.Json;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -49,6 +50,7 @@ namespace Pims.Api.Areas.Projects.Controllers
         [ProducesResponseType(typeof(List<AcquisitionFileModel>), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "product" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetFiles(long productId)
         {
             var acquisitionFiles = _projectService.GetProductFiles(productId);

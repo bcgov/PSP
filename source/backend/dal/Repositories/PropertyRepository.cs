@@ -6,11 +6,13 @@ using System.Text.RegularExpressions;
 using LinqKit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Core.Helpers;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Helpers.Extensions;
+using Pims.Dal.Models;
 using Pims.Dal.Security;
 
 namespace Pims.Dal.Repositories
@@ -212,7 +214,8 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(a => a.ProvinceState)
                 .Include(p => p.Address)
                     .ThenInclude(a => a.Country)
-                .FirstOrDefault(p => p.Pid == pid) ?? throw new KeyNotFoundException();
+                    .OrderByDescending(p => p.PropertyId)
+                .FirstOrDefault(p => p.Pid == pid && p.IsRetired != true) ?? throw new KeyNotFoundException();
             return property;
         }
 
@@ -281,16 +284,23 @@ namespace Pims.Dal.Repositories
         /// <summary>
         /// Update the passed property in the database assuming the user has the required claims.
         /// </summary>
-        /// <param name="property"></param>
-        /// <returns></returns>
+        /// <param name="property">The property to update.</param>
+        /// <param name="overrideLocation">Whether to update the property spatial location with the incoming value. Defaults to false.</param>
+        /// <returns>The updated property.</returns>
         public PimsProperty Update(PimsProperty property, bool overrideLocation = false)
         {
             property.ThrowIfNull(nameof(property));
 
             var propertyId = property.Internal_Id;
-            var existingProperty = this.Context.PimsProperties
+            var existingProperty = Context.PimsProperties
                 .Include(p => p.Address)
                 .FirstOrDefault(p => p.PropertyId == propertyId) ?? throw new KeyNotFoundException();
+
+            // prevent editing on retired properties
+            if (existingProperty.IsRetired.HasValue && existingProperty.IsRetired.Value)
+            {
+                throw new BusinessRuleViolationException("Retired records are referenced for historical purposes only and cannot be edited or deleted.");
+            }
 
             // ignore a number of properties that we don't the frontend to override - for now
             property.Boundary = existingProperty.Boundary;
@@ -306,6 +316,7 @@ namespace Pims.Dal.Repositories
             property.SurplusDeclarationComment = existingProperty.SurplusDeclarationComment;
             property.SurplusDeclarationDate = existingProperty.SurplusDeclarationDate;
             property.IsOwned = existingProperty.IsOwned;
+            property.IsRetired = existingProperty.IsRetired;
             property.IsPropertyOfInterest = existingProperty.IsPropertyOfInterest;
             property.IsVisibleToOtherAgencies = existingProperty.IsVisibleToOtherAgencies;
             property.IsSensitive = existingProperty.IsSensitive;
@@ -386,17 +397,19 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="property">The property to update.</param>
         /// <returns>The updated property.</returns>
-        public PimsProperty TransferFileProperty(PimsProperty property, bool isOwned, bool isPropertyOfInterest = false)
+        public PimsProperty TransferFileProperty(PimsProperty property, PropertyOwnershipState state)
         {
             property.ThrowIfNull(nameof(property));
 
             var existingProperty = Context.PimsProperties
                 .FirstOrDefault(p => p.PropertyId == property.Internal_Id) ?? throw new KeyNotFoundException();
 
-            existingProperty.IsPropertyOfInterest = isPropertyOfInterest;
-            existingProperty.IsOwned = isOwned;
+            existingProperty.IsPropertyOfInterest = state.isPropertyOfInterest;
+            existingProperty.IsOwned = state.isOwned;
+            existingProperty.IsDisposed = state.isDisposed;
+            existingProperty.IsOtherInterest = state.isOtherInterest;
 
-            if (isOwned)
+            if (state.isOwned)
             {
                 existingProperty.PropertyClassificationTypeCode = "COREOPER";
             }
@@ -410,7 +423,7 @@ namespace Pims.Dal.Repositories
 
         public HashSet<long> GetMatchingIds(PropertyFilterCriteria filter)
         {
-            var predicate = PredicateBuilder.New<PimsProperty>(acq => true);
+            var predicate = PredicateBuilder.New<PimsProperty>(p => true);
 
             // Project filters
             if (filter.ProjectId.HasValue)
@@ -479,10 +492,23 @@ namespace Pims.Dal.Repositories
                     p.PimsPropPropAnomalyTypes.Any(at => filter.AnomalyIds.Contains(at.PropertyAnomalyTypeCode)));
             }
 
+            // Property ownership filters
+            predicate.And(p => (p.IsOwned && filter.IsCoreInventory) ||
+                (p.IsPropertyOfInterest && filter.IsPropertyOfInterest) ||
+                (p.IsOtherInterest && filter.IsOtherInterest) ||
+                (p.IsDisposed && filter.IsDisposed));
+
             return Context.PimsProperties.AsNoTracking()
                 .Where(predicate)
                 .Select(x => x.PropertyId)
                 .ToHashSet();
+        }
+
+        public short GetPropertyRegion(long id)
+        {
+            var property = Context.PimsProperties.AsNoTracking()
+                .FirstOrDefault(p => p.PropertyId == id) ?? throw new KeyNotFoundException();
+            return property.RegionCode;
         }
 
         #endregion

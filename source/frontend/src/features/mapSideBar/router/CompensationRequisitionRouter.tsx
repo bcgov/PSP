@@ -17,7 +17,7 @@ export const CompensationRequisitionRouter: React.FunctionComponent<
   const location = useLocation();
   const history = useHistory();
 
-  let matched = matchPath(location.pathname, {
+  const matched = matchPath(location.pathname, {
     path: '/mapview/sidebar/acquisition/*/compensation-requisition/*',
     exact: true,
     strict: true,

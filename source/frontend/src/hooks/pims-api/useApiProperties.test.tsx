@@ -2,8 +2,9 @@ import { renderHook } from '@testing-library/react-hooks';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 
-import { IPagedItems } from '@/interfaces';
-import { mockParcel } from '@/mocks/filterData.mock';
+import { mockApiProperty } from '@/mocks/filterData.mock';
+import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
+import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 
 import { useApiProperties } from './useApiProperties';
 
@@ -23,21 +24,19 @@ describe('useApiProperties api hook', () => {
   };
 
   it('Gets paged parcels', async () => {
-    mockAxios.onGet(`/properties/search?`).reply(200, {
-      items: [mockParcel],
-      pageIndex: 1,
+    mockAxios.onGet(`/properties/search?`).reply<ApiGen_Base_Page<ApiGen_Concepts_Property>>(200, {
+      items: [mockApiProperty],
       page: 1,
       quantity: 5,
       total: 10,
-    } as IPagedItems);
+    });
 
     const { getPropertiesPagedApi } = setup();
     const response = await getPropertiesPagedApi({} as any);
 
     expect(response.status).toBe(200);
     expect(response.data).toStrictEqual({
-      items: [mockParcel],
-      pageIndex: 1,
+      items: [mockApiProperty],
       page: 1,
       quantity: 5,
       total: 10,
@@ -45,21 +44,21 @@ describe('useApiProperties api hook', () => {
   });
 
   it('Gets detailed parcels', async () => {
-    mockAxios.onGet(`/properties/search?`).reply(200, mockParcel);
+    mockAxios.onGet(`/properties/search?`).reply(200, mockApiProperty);
 
     const { getPropertiesPagedApi } = setup();
     const response = await getPropertiesPagedApi({} as any);
 
     expect(response.status).toBe(200);
-    expect(response.data).toEqual(mockParcel);
+    expect(response.data).toEqual(mockApiProperty);
   });
   it('Gets a detailed parcel', async () => {
-    mockAxios.onGet(`/properties/${mockParcel.id}`).reply(200, mockParcel);
+    mockAxios.onGet(`/properties/${mockApiProperty.id}`).reply(200, mockApiProperty);
 
     const { getPropertyConceptWithIdApi } = setup();
-    const response = await getPropertyConceptWithIdApi(mockParcel.id as number);
+    const response = await getPropertyConceptWithIdApi(mockApiProperty.id);
 
     expect(response.status).toBe(200);
-    expect(response.data).toEqual(mockParcel);
+    expect(response.data).toEqual(mockApiProperty);
   });
 });

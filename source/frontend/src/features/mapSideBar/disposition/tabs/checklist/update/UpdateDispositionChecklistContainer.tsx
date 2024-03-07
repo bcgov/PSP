@@ -9,13 +9,13 @@ import { IUpdateChecklistFormProps } from '@/features/mapSideBar/shared/tabs/che
 import { useDispositionProvider } from '@/hooks/repositories/useDispositionProvider';
 import { useLookupCodeHelpers } from '@/hooks/useLookupCodeHelpers';
 import { IApiError } from '@/interfaces/IApiError';
-import { Api_DispositionFile } from '@/models/api/DispositionFile';
-import { Api_FileWithChecklist } from '@/models/api/File';
+import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
+import { ApiGen_Concepts_FileWithChecklist } from '@/models/api/generated/ApiGen_Concepts_FileWithChecklist';
 
 export interface IDispositionChecklistContainerProps {
   formikRef: React.Ref<FormikProps<ChecklistFormModel>>;
-  dispositionFile?: Api_DispositionFile;
-  onSuccess: () => void;
+  dispositionFile?: ApiGen_Concepts_DispositionFile;
+  onSuccess: (updateProperties?: boolean, updateFile?: boolean) => void;
   View: React.FC<IUpdateChecklistFormProps>;
 }
 
@@ -37,12 +37,12 @@ export const UpdateDispositionChecklistContainer: React.FC<IDispositionChecklist
       ? ChecklistFormModel.fromApi(dispositionFile, sectionTypes)
       : new ChecklistFormModel();
 
-  const saveChecklist = async (apiDispositionFile: Api_FileWithChecklist) => {
+  const saveChecklist = async (apiDispositionFile: ApiGen_Concepts_FileWithChecklist) => {
     return updateDispositionChecklist(apiDispositionFile);
   };
 
-  const onUpdateSuccess = async (apiDispositionFile: Api_FileWithChecklist) => {
-    onSuccess && onSuccess();
+  const onUpdateSuccess = async () => {
+    onSuccess && onSuccess(false, true);
   };
 
   // generic error handler.

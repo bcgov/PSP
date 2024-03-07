@@ -1,4 +1,4 @@
-FROM node:16-slim as node
+FROM node:20-slim as node
 
 # install build toolchain
 RUN apt-get update \

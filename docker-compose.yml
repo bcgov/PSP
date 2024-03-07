@@ -1,7 +1,6 @@
 version: "3.5"
 
 services:
-
   ####################### Database #######################
   database:
     environment:
@@ -87,17 +86,40 @@ services:
     restart: on-failure
     container_name: psp-clamav
     healthcheck:
-      test: [ "CMD", "./check.sh" ]
+      test: ["CMD", "./check.sh"]
       interval: 60s
       retries: 3
       start_period: 120s
     networks:
       - psp
 
+  prometheus:
+    image: ubuntu/prometheus
+    container_name: psp-prometheus
+    ports:
+      - 9000:9090
+    environment:
+      - TZ=UTC
+    volumes:
+      - ./tools/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./tools/prometheus/alert-rules.yml:/etc/prometheus/alert-rules.yml
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--web.enable-lifecycle"
+
+  grafana:
+    image: grafana/grafana-oss
+    container_name: psp-grafana
+    restart: on-failure
+    ports:
+      - 4000:3000
+    depends_on:
+      - prometheus
+
 ####################### Networks Definition #######################
 networks:
   psp:
-    name: psp-net
+    name: psp
     driver: bridge
 
 ####################### Volumes Definition #######################

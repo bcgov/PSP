@@ -3,7 +3,7 @@ import { useCallback } from 'react';
 
 import { useApiLeases } from '@/hooks/pims-api/useApiLeases';
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
-import { Api_Lease } from '@/models/api/Lease';
+import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 
 /**
@@ -15,12 +15,12 @@ export const useUpdateLease = () => {
 
   const updateApiLease = useApiRequestWrapper<
     (
-      lease: Api_Lease,
+      lease: ApiGen_Concepts_Lease,
       userOverrideCodes: UserOverrideCode[],
-    ) => Promise<AxiosResponse<Api_Lease, any>>
+    ) => Promise<AxiosResponse<ApiGen_Concepts_Lease, any>>
   >({
     requestFunction: useCallback(
-      async (lease: Api_Lease, userOverrideCodes: UserOverrideCode[] = []) =>
+      async (lease: ApiGen_Concepts_Lease, userOverrideCodes: UserOverrideCode[] = []) =>
         await putApiLease(lease, userOverrideCodes),
       [putApiLease],
     ),

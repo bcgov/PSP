@@ -232,12 +232,7 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
             FocusAndClick(requisitionCancelBttn);
 
-            if (webDriver.FindElements(acquisitionFileConfirmationModal).Count() > 0)
-            {
-                Assert.Equal("Unsaved Changes", sharedModals.ModalHeader());
-                Assert.Equal("You have made changes on this form. Do you wish to leave without saving?", sharedModals.ModalContent());
-                sharedModals.ModalClickOKBttn();
-            }
+            sharedModals.CancelActionModal();
 
             AssertTrueIsDisplayed(requisitionEditBttn);
         }
@@ -270,6 +265,8 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void UpdateCompensationDetails(AcquisitionCompensation compensation)
         {
+            Wait();
+
             //Requisition Details
             if(compensation.CompensationStatus != "")
                 ChooseSpecificSelectOption(requisitionStatusSelect, compensation.CompensationStatus);

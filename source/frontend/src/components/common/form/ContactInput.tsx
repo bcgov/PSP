@@ -11,6 +11,7 @@ import styled from 'styled-components';
 import { Button } from '@/components/common/buttons/Button';
 import { Input } from '@/components/common/form';
 import { IContactSearchResult } from '@/interfaces';
+import { isValidId } from '@/utils';
 import { formatNames } from '@/utils/personUtils';
 
 import { LinkButton } from '../buttons';
@@ -20,7 +21,7 @@ import { DisplayError } from './DisplayError';
 type RequiredAttributes = {
   field: string;
   setShowContactManager: React.Dispatch<React.SetStateAction<boolean>>;
-  onClear: Function;
+  onClear: () => void;
 };
 
 type OptionalAttributes = {
@@ -45,12 +46,12 @@ export const ContactInput: React.FC<React.PropsWithChildren<ContactInputProps>> 
   const contactInfo: IContactSearchResult | undefined = getIn(values, field);
   const errorTooltip = error && touch && displayErrorTooltips ? error : undefined;
 
-  var text = 'Select from contacts';
+  let text = 'Select from contacts';
 
   if (contactInfo !== undefined) {
-    if (contactInfo.personId !== undefined) {
+    if (isValidId(contactInfo.personId)) {
       text = formatNames([contactInfo.firstName, contactInfo.middleNames, contactInfo.surname]);
-    } else if (contactInfo.organizationId !== undefined) {
+    } else if (isValidId(contactInfo.organizationId)) {
       text = contactInfo.organizationName || '';
     }
   }
@@ -58,14 +59,14 @@ export const ContactInput: React.FC<React.PropsWithChildren<ContactInputProps>> 
   return (
     <Form.Group
       controlId={`input-${field}`}
-      className={classNames(!!required ? 'required' : '', 'input')}
+      className={classNames(required ? 'required' : '', 'input')}
     >
       {!!label && <Form.Label>{label}</Form.Label>}
 
       <TooltipWrapper tooltipId={`${field}-error-tooltip}`} tooltip={errorTooltip}>
         <Row>
           <Col>
-            <StyledDiv className={!!error ? 'is-invalid' : ''}>
+            <StyledDiv className={error ? 'is-invalid' : ''}>
               {text}
               <StyledRemoveLinkButton
                 onClick={() => {

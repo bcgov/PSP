@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Security.Claims;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Constants;
+using Pims.Api.Models.CodeTypes;
 using Pims.Core.Exceptions;
 using Pims.Dal.Entities;
 using Pims.Dal.Helpers.Extensions;

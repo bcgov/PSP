@@ -5,11 +5,13 @@ import * as API from '@/constants/API';
 import { useApiUsers } from '@/hooks/pims-api/useApiUsers';
 import { mockDispositionFileResponse } from '@/mocks/dispositionFiles.mock';
 import { mockFileChecklistResponse, mockLookups } from '@/mocks/index.mock';
+import { ApiGen_Concepts_FileChecklistItem } from '@/models/api/generated/ApiGen_Concepts_FileChecklistItem';
 import { ILookupCode, lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, createAxiosError, render, RenderOptions } from '@/utils/test-utils';
 
 import { ChecklistFormModel } from './models';
 import { IUpdateChecklistFormProps, UpdateChecklistForm } from './UpdateChecklistForm';
+import { ApiGen_Concepts_FileWithChecklist } from '@/models/api/generated/ApiGen_Concepts_FileWithChecklist';
 
 // mock API service calls
 jest.mock('@/hooks/pims-api/useApiUsers');
@@ -22,7 +24,7 @@ const sectionTypes = mockLookups.filter(
   c => c.type === API.ACQUISITION_CHECKLIST_SECTION_TYPES && c.isDisabled !== true,
 ) as ILookupCode[];
 
-let mockViewProps: IUpdateChecklistFormProps = {
+const mockViewProps: IUpdateChecklistFormProps = {
   formikRef: null as any,
   initialValues: new ChecklistFormModel(),
   onSave: jest.fn(),
@@ -65,9 +67,13 @@ describe('UpdateChecklist form', () => {
 
   beforeEach(() => {
     const apiDispositionFile = mockDispositionFileResponse();
-    apiDispositionFile.fileChecklistItems = mockFileChecklistResponse();
+    apiDispositionFile.fileChecklistItems =
+      mockFileChecklistResponse() as ApiGen_Concepts_FileChecklistItem[];
 
-    mockViewProps.initialValues = ChecklistFormModel.fromApi(apiDispositionFile, sectionTypes);
+    mockViewProps.initialValues = ChecklistFormModel.fromApi(
+      apiDispositionFile as unknown as ApiGen_Concepts_FileWithChecklist,
+      sectionTypes,
+    );
   });
 
   afterEach(() => {

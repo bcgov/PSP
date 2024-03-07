@@ -11,7 +11,7 @@ import { Table } from '@/components/Table';
 import { useApiUsers } from '@/hooks/pims-api/useApiUsers';
 import { useSearch } from '@/hooks/useSearch';
 import { IUsersFilter } from '@/interfaces';
-import { Api_User } from '@/models/api/User';
+import { ApiGen_Concepts_User } from '@/models/api/generated/ApiGen_Concepts_User';
 import { generateMultiSortCriteria } from '@/utils';
 import { toFilteredApiPaginateParams } from '@/utils/CommonFunctions';
 
@@ -43,7 +43,7 @@ export const ManageUsersPage = () => {
     sort,
     setSort,
     execute,
-  } = useSearch<Api_User, IUsersFilter>(
+  } = useSearch<ApiGen_Concepts_User, IUsersFilter>(
     defaultUserFilter,
     getUsersPaged,
     'No matching results can be found. Try widening your search criteria.',
@@ -56,7 +56,7 @@ export const ManageUsersPage = () => {
   );
 
   const columns = useMemo(() => getUserColumns(execute), [execute]);
-  let userList = results.map((u: Api_User): FormUser => new FormUser(u));
+  const userList = results.map((u: ApiGen_Concepts_User): FormUser => new FormUser(u));
 
   /**
    * @param {'csv' | 'excel'} accept Whether the fetch is for type of CSV or EXCEL

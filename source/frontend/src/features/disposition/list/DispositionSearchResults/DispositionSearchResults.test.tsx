@@ -1,8 +1,10 @@
 import { Claims } from '@/constants/claims';
+import { getEmptyPerson } from '@/mocks/contacts.mock';
 import { mockDispositionFileResponse } from '@/mocks/dispositionFiles.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
+import { getEmptyOrganization } from '@/mocks/organization.mock';
 import { getMockApiProperty } from '@/mocks/properties.mock';
-import { Api_DispositionFile } from '@/models/api/DispositionFile';
+import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { render, RenderOptions, screen } from '@/utils/test-utils';
 
@@ -15,7 +17,9 @@ import {
 jest.mock('@react-keycloak/web');
 
 const setSort = jest.fn();
-const mockResults: Api_DispositionFile[] = [mockDispositionFileResponse(1, 'test disposition')];
+const mockResults: ApiGen_Concepts_DispositionFile[] = [
+  mockDispositionFileResponse(1, 'test disposition'),
+];
 
 describe('Disposition search results table', () => {
   const getTableRows = () => document.querySelectorAll('.table .tbody .tr-wrapper');
@@ -84,18 +88,30 @@ describe('Disposition search results table', () => {
               fileId: 1,
               propertyId: 1,
               property: { ...getMockApiProperty(), id: 1 },
+              displayOrder: null,
+              file: null,
+              propertyName: null,
+              rowVersion: null,
             },
             {
               id: 200,
               fileId: 1,
               propertyId: 2,
               property: { ...getMockApiProperty(), id: 2 },
+              displayOrder: null,
+              file: null,
+              propertyName: null,
+              rowVersion: null,
             },
             {
               id: 300,
               fileId: 1,
               propertyId: 3,
               property: { ...getMockApiProperty(), id: 3 },
+              displayOrder: null,
+              file: null,
+              propertyName: null,
+              rowVersion: null,
             },
           ],
         }),
@@ -104,7 +120,7 @@ describe('Disposition search results table', () => {
 
     const addresses = screen.getAllByText('1234 mock Street', { exact: false });
     expect(addresses).toHaveLength(2);
-    expect(screen.getByText('[+1 more...]')).toBeVisible();
+    expect(screen.getAllByText('[+1 more...]')).toHaveLength(1);
   });
 
   it('displays a team member organization', () => {
@@ -118,6 +134,7 @@ describe('Disposition search results table', () => {
               dispositionFileId: 1,
               organizationId: 6,
               organization: {
+                ...getEmptyOrganization(),
                 id: 6,
                 isDisabled: false,
                 name: 'FORTIS BC',
@@ -133,7 +150,14 @@ describe('Disposition search results table', () => {
                 id: 'MAJORPRJ',
                 description: 'Major Projects',
                 isDisabled: false,
+                displayOrder: null,
               },
+              primaryContact: null,
+              primaryContactId: null,
+              rowVersion: null,
+              teamProfileTypeCode: null,
+              person: null,
+              personId: null,
             },
           ],
         }),
@@ -154,17 +178,31 @@ describe('Disposition search results table', () => {
               dispositionFileId: 1,
               personId: 6,
               person: {
+                ...getEmptyPerson(),
                 id: 6,
                 isDisabled: false,
                 rowVersion: 1,
                 firstName: 'chester',
                 surname: 'tester',
+                comment: null,
+                contactMethods: null,
+                middleNames: null,
+                personAddresses: null,
+                personOrganizations: null,
+                preferredName: null,
               },
               teamProfileType: {
                 id: 'MoTIReg',
                 description: 'MoTI Region',
                 isDisabled: false,
+                displayOrder: null,
               },
+              primaryContact: null,
+              primaryContactId: null,
+              rowVersion: null,
+              teamProfileTypeCode: null,
+              organization: null,
+              organizationId: null,
             },
           ],
         }),
@@ -185,6 +223,7 @@ describe('Disposition search results table', () => {
               dispositionFileId: 1,
               organizationId: 6,
               organization: {
+                ...getEmptyOrganization(),
                 id: 6,
                 isDisabled: false,
                 name: 'FORTIS BC',
@@ -200,41 +239,76 @@ describe('Disposition search results table', () => {
                 id: 'MAJORPRJ',
                 description: 'Major Projects',
                 isDisabled: false,
+                displayOrder: null,
               },
+              person: null,
+              personId: null,
+              primaryContact: null,
+              primaryContactId: null,
+              rowVersion: null,
+              teamProfileTypeCode: null,
             },
             {
               id: 2,
               dispositionFileId: 1,
               personId: 6,
               person: {
+                ...getEmptyPerson(),
                 id: 6,
                 isDisabled: false,
                 rowVersion: 1,
                 firstName: 'chester',
                 surname: 'tester',
+                comment: null,
+                contactMethods: null,
+                middleNames: null,
+                personAddresses: null,
+                personOrganizations: null,
+                preferredName: null,
               },
               teamProfileType: {
                 id: 'MoTIReg',
                 description: 'MoTI Region',
                 isDisabled: false,
+                displayOrder: null,
               },
+              primaryContact: null,
+              primaryContactId: null,
+              rowVersion: null,
+              teamProfileTypeCode: null,
+              organization: null,
+              organizationId: null,
             },
             {
               id: 3,
               dispositionFileId: 1,
               personId: 7,
               person: {
+                ...getEmptyPerson(),
                 id: 7,
                 isDisabled: false,
                 rowVersion: 1,
                 firstName: 'john',
                 surname: 'doe',
+                comment: null,
+                contactMethods: null,
+                middleNames: null,
+                personAddresses: null,
+                personOrganizations: null,
+                preferredName: null,
               },
               teamProfileType: {
                 id: 'CAPPROG',
                 description: 'Capital Program',
                 isDisabled: false,
+                displayOrder: null,
               },
+              primaryContact: null,
+              primaryContactId: null,
+              rowVersion: null,
+              teamProfileTypeCode: null,
+              organization: null,
+              organizationId: null,
             },
           ],
         }),

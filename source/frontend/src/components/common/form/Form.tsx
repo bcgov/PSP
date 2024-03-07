@@ -15,7 +15,7 @@ type FormProps = {
  * Formik-connected form control that provides thin wrappers for React-Bootstrap form controls;
  * e.g. <Form.Row>, <Form.Group>, <Form.Control>, etc.
  */
-const Form = ({ className, children, autoComplete, ...rest }: FormProps) => {
+const Form = ({ className, children, ...rest }: FormProps) => {
   const { handleSubmit } = useFormikContext();
   return (
     <FormBase noValidate className={className} onSubmit={handleSubmit} {...(rest as any)}>

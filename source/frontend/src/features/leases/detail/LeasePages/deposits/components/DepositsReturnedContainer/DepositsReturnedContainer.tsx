@@ -1,12 +1,13 @@
 import { Section } from '@/components/common/Section/Section';
 import { Table } from '@/components/Table';
-import { Api_SecurityDeposit, Api_SecurityDepositReturn } from '@/models/api/SecurityDeposit';
+import { ApiGen_Concepts_SecurityDeposit } from '@/models/api/generated/ApiGen_Concepts_SecurityDeposit';
+import { ApiGen_Concepts_SecurityDepositReturn } from '@/models/api/generated/ApiGen_Concepts_SecurityDepositReturn';
 
 import { getColumns, ReturnListEntry } from './columns';
 
 export interface IDepositsReturnedContainerProps {
-  securityDeposits: Api_SecurityDeposit[];
-  depositReturns: Api_SecurityDepositReturn[];
+  securityDeposits: ApiGen_Concepts_SecurityDeposit[];
+  depositReturns: ApiGen_Concepts_SecurityDepositReturn[];
   onEdit: (id: number) => void;
   onDelete: (id: number) => void;
 }
@@ -16,8 +17,8 @@ const DepositsReturnedContainer: React.FC<
 > = ({ securityDeposits, depositReturns, onEdit, onDelete }) => {
   const columns = getColumns({ onEdit, onDelete });
   const dataSource = depositReturns.reduce(
-    (accumulator: ReturnListEntry[], returnDeposit: Api_SecurityDepositReturn) => {
-      var parentDeposit = securityDeposits.find(r => r?.id === returnDeposit?.parentDepositId);
+    (accumulator: ReturnListEntry[], returnDeposit: ApiGen_Concepts_SecurityDepositReturn) => {
+      const parentDeposit = securityDeposits.find(r => r?.id === returnDeposit?.parentDepositId);
       if (parentDeposit) {
         accumulator.push(new ReturnListEntry(returnDeposit, parentDeposit));
       }

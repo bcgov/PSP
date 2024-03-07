@@ -3,6 +3,7 @@ import { useCallback } from 'react';
 import { useBcAssessmentLayer } from '@/hooks/repositories/useBcAssessmentLayer';
 import { BC_ASSESSMENT_TYPES, IBcAssessmentSummary } from '@/models/layers/bcAssesment';
 import { useTenant } from '@/tenants';
+import { isValidString } from '@/utils';
 
 /**
  * hook that provides a function to retrieve the primary address for a given pid from BC Assessment.
@@ -25,7 +26,7 @@ export const useBcaAddress = () => {
         }
       | undefined
     > => {
-      if (!!pid) {
+      if (isValidString(pid)) {
         timeout = timeout ?? 10000;
         const response = await getBcaSummary(pid, [BC_ASSESSMENT_TYPES.ADDRESSES], timeout);
         const addresses = response?.ADDRESSES;

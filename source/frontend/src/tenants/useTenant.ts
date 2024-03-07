@@ -10,7 +10,7 @@ import { TenantContext } from '.';
  * @returns ITenantConfig object from context.
  */
 export const useTenant = (): ITenantConfig2 => {
-  var { tenant } = React.useContext(TenantContext);
+  const { tenant } = React.useContext(TenantContext);
 
   return tenant;
 };

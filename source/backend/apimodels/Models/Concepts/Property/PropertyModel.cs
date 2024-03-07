@@ -61,7 +61,7 @@ namespace Pims.Api.Models.Concepts.Property
         /// <summary>
         /// get/set - The data source effective date.
         /// </summary>
-        public DateOnly DataSourceEffectiveDate { get; set; }
+        public DateOnly DataSourceEffectiveDateOnly { get; set; }
 
         /// <summary>
         /// get/set - The GIS latitude location of the property.
@@ -87,6 +87,11 @@ namespace Pims.Api.Models.Concepts.Property
         /// get/set - Whether the property is sensitive data.
         /// </summary>
         public bool IsSensitive { get; set; }
+
+        /// <summary>
+        /// get/set - Whether the property is retired.
+        /// </summary>
+        public bool IsRetired { get; set; }
 
         /// <summary>
         /// get/set - Whether the property is a provincial highway.
@@ -153,6 +158,16 @@ namespace Pims.Api.Models.Concepts.Property
         /// get/set - Whether this parcel is a property of interest to the ministry.
         /// </summary>
         public bool IsPropertyOfInterest { get; set; }
+
+        /// <summary>
+        /// get/set - Whether this parcel is part of other types of interests for the ministry. i.e legal rights.
+        /// </summary>
+        public bool IsOtherInterest { get; set; }
+
+        /// <summary>
+        /// get/set - Whether this parcel is part has been disposed.
+        /// </summary>
+        public bool IsDisposed { get; set; }
 
         /// <summary>
         /// get/set - Whether or not other agencies can view this property.

@@ -5,8 +5,8 @@ import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
 import Claims from '@/constants/claims';
 import { InventoryTabNames } from '@/features/mapSideBar/property/InventoryTabs';
 import { FileTabType } from '@/features/mapSideBar/shared/detail/FileTabs';
-import { Api_DispositionFile } from '@/models/api/DispositionFile';
-import { stripTrailingSlash } from '@/utils';
+import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
+import { exists, stripTrailingSlash } from '@/utils';
 import AppRoute from '@/utils/AppRoute';
 
 import { UpdateChecklistForm } from '../../shared/tabs/checklist/update/UpdateChecklistForm';
@@ -24,18 +24,18 @@ import UpdateDispositionSaleView from '../tabs/offersAndSale/dispositionSale/upd
 
 export interface IDispositionRouterProps {
   formikRef: React.Ref<FormikProps<any>>;
-  dispositionFile?: Api_DispositionFile;
+  dispositionFile?: ApiGen_Concepts_DispositionFile;
   isEditing: boolean;
   setIsEditing: (value: boolean) => void;
   defaultFileTab: FileTabType;
   defaultPropertyTab: InventoryTabNames;
-  onSuccess: (updateProperties?: boolean) => void;
+  onSuccess: (updateProperties?: boolean, updateFile?: boolean) => void;
 }
 
 export const DispositionRouter: React.FC<IDispositionRouterProps> = props => {
   const { path, url } = useRouteMatch();
 
-  if (props.dispositionFile === undefined || props.dispositionFile === null) {
+  if (!exists(props.dispositionFile)) {
     return null;
   }
 
@@ -84,11 +84,12 @@ export const DispositionRouter: React.FC<IDispositionRouterProps> = props => {
             <UpdateDispositionAppraisalContainer
               dispositionFileId={props.dispositionFile?.id ?? 0}
               View={DispositionAppraisalForm}
+              onSuccess={props.onSuccess}
             ></UpdateDispositionAppraisalContainer>
           )}
           claim={Claims.DISPOSITION_EDIT}
           key={'disposition'}
-          title={'Updpate Appraisal'}
+          title={'Update Appraisal'}
         />
         <AppRoute
           exact
@@ -97,6 +98,7 @@ export const DispositionRouter: React.FC<IDispositionRouterProps> = props => {
             <AddDispositionOfferContainer
               dispositionFileId={props.dispositionFile?.id ?? 0}
               View={DispositionOfferForm}
+              onSuccess={props.onSuccess}
             ></AddDispositionOfferContainer>
           )}
           claim={Claims.DISPOSITION_EDIT}
@@ -111,6 +113,7 @@ export const DispositionRouter: React.FC<IDispositionRouterProps> = props => {
               dispositionFileId={props.dispositionFile?.id ?? 0}
               dispositionOfferId={match.params.offerId}
               View={DispositionOfferForm}
+              onSuccess={props.onSuccess}
             ></UpdateDispositionOfferContainer>
           )}
           claim={Claims.DISPOSITION_EDIT}

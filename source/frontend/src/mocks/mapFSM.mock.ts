@@ -26,6 +26,7 @@ export const mapMachineBaseMock: IMapStateMachineContext = {
   mapFeatureSelected: null,
   mapLocationSelected: null,
   mapLocationFeatureDataset: null,
+  selectingComponentId: null,
   selectedFeatureDataset: null,
   showPopup: false,
   isLoading: false,
@@ -36,6 +37,7 @@ export const mapMachineBaseMock: IMapStateMachineContext = {
   isSelecting: false,
   isFiltering: false,
   isShowingMapLayers: false,
+  showDisposed: false,
 
   requestFlyToLocation: jest.fn(),
 
@@ -56,4 +58,5 @@ export const mapMachineBaseMock: IMapStateMachineContext = {
   toggleMapFilter: jest.fn(),
 
   toggleMapLayer: jest.fn(),
+  setShowDisposed: jest.fn(),
 };

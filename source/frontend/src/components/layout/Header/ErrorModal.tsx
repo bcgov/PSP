@@ -40,7 +40,7 @@ export const ErrorModal = ({ errors, show, setShow }: IErrorModalProps) => {
   };
 
   const errorShortUrl = (error: IGenericNetworkAction): string => {
-    var url = errorUrl(error);
+    const url = errorUrl(error);
     if (url.length > 20) {
       return error?.error?.response?.config?.url?.substr(0, 20) + '...';
     } else {

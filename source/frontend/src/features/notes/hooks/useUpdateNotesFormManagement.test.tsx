@@ -33,7 +33,7 @@ const BASIC_PROPS: IUseUpdateNotesFormManagementProps = {
 describe('useUpdateNotesFormManagement hook', () => {
   const setup = (hookProps: IUseUpdateNotesFormManagementProps = { ...BASIC_PROPS }) => {
     const { result } = renderHook(() => useUpdateNotesFormManagement({ ...hookProps }), {
-      wrapper: (props: React.PropsWithChildren) => (
+      wrapper: (props: React.PropsWithChildren<unknown>) => (
         <TestCommonWrapper store={mockStore} history={history}>
           {props.children}
         </TestCommonWrapper>
@@ -54,7 +54,7 @@ describe('useUpdateNotesFormManagement hook', () => {
 
   it('should return valid initial values', async () => {
     const { initialValues } = setup();
-    expect(initialValues).toEqual({ ...mockNoteResponse(1) });
+    expect(initialValues).toEqual(NoteForm.fromApi(mockNoteResponse(1)));
   });
 
   it('should provide form validation schema', async () => {

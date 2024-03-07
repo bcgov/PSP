@@ -13,7 +13,7 @@ export const PAGINATION_MAX_PAGES = 9;
  * @param {T} [filter]
  * @returns {IPaginateRequest<T>}
  */
-export const toFilteredApiPaginateParams = <T extends object = {}>(
+export const toFilteredApiPaginateParams = <T extends object = object>(
   page: number,
   quantity?: number,
   sort?: string | string[],

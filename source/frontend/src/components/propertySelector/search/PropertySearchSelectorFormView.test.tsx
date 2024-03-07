@@ -179,9 +179,11 @@ describe('PropertySearchSelectorFormView component', () => {
       expect(onSelectedProperties).toHaveBeenCalledWith([
         {
           address: 'unknown',
+          areaUnit: 'M2',
           district: undefined,
           districtName: undefined,
           id: 'PID-006-772-331',
+          landArea: 4478.6462,
           latitude: 55.706191605,
           longitude: -121.60790412,
           name: undefined,

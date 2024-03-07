@@ -6,18 +6,20 @@ import { toast } from 'react-toastify';
 import styled from 'styled-components';
 
 import { H1 } from '@/components/common/styles';
-import { FinancialCodeTypes } from '@/constants/index';
 import { useFinancialCodeRepository } from '@/hooks/repositories/useFinancialCodeRepository';
 import { IApiError } from '@/interfaces/IApiError';
-import { Api_FinancialCode } from '@/models/api/FinancialCode';
+import { ApiGen_Concepts_FinancialCode } from '@/models/api/generated/ApiGen_Concepts_FinancialCode';
+import { ApiGen_Concepts_FinancialCodeTypes } from '@/models/api/generated/ApiGen_Concepts_FinancialCodeTypes';
 
 import { AddFinancialCodeYupSchema } from './AddFinancialCodeYupSchema';
 
 export interface IAddFinancialCodeFormProps {
   validationSchema?: any;
-  onSave: (financialCode: Api_FinancialCode) => Promise<Api_FinancialCode | undefined>;
+  onSave: (
+    financialCode: ApiGen_Concepts_FinancialCode,
+  ) => Promise<ApiGen_Concepts_FinancialCode | undefined>;
   onCancel: () => void;
-  onSuccess: (financialCode: Api_FinancialCode) => Promise<void>;
+  onSuccess: (financialCode: ApiGen_Concepts_FinancialCode) => Promise<void>;
   onError: (e: AxiosError<IApiError>) => void;
 }
 
@@ -32,9 +34,12 @@ export const AddFinancialCodeContainer: React.FC<IAddFinancialCodeContainerProps
     addFinancialCode: { execute: addFinancialCode },
   } = useFinancialCodeRepository();
 
-  const createFinancialCode = async (financialCode: Api_FinancialCode) => {
+  const createFinancialCode = async (financialCode: ApiGen_Concepts_FinancialCode) => {
     setDuplicateError(false);
-    return addFinancialCode(financialCode.type as FinancialCodeTypes, financialCode);
+    return addFinancialCode(
+      financialCode.type as ApiGen_Concepts_FinancialCodeTypes,
+      financialCode,
+    );
   };
 
   // navigate back to list view
@@ -42,7 +47,7 @@ export const AddFinancialCodeContainer: React.FC<IAddFinancialCodeContainerProps
     history.replace(`/admin/financial-code/list`);
   };
 
-  const onCreateSuccess = async (financialCode: Api_FinancialCode) => {
+  const onCreateSuccess = async () => {
     toast.success(`Financial code saved`);
     history.replace(`/admin/financial-code/list`);
   };

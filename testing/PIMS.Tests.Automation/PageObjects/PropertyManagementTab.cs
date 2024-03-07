@@ -419,7 +419,7 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(managementSummaryTitle);
             AssertTrueIsDisplayed(managementPropertyPurposeLabel);
             AssertTrueIsDisplayed(managementLeaseLabel);
-            AssertTrueContentEquals(managementLeaseContent, "No");
+            AssertTrueContentEquals(managementLeaseContent, "Multiple");
             AssertTrueIsDisplayed(managementUtilitiesPayableLabel);
             AssertTrueContentEquals(managementUtilitiesPayableContent, "Unknown");
             AssertTrueIsDisplayed(managementTaxesPayableLabel);

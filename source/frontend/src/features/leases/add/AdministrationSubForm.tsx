@@ -10,6 +10,7 @@ import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import * as API from '@/constants/API';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
+import { isValidString } from '@/utils';
 
 import { LeaseFormModel } from '../models';
 import * as Styled from './styles';
@@ -33,26 +34,26 @@ const AdministrationSubForm: React.FunctionComponent<
 
   //clear the associated other fields if the corresponding type has its value changed from other to something else.
   useEffect(() => {
-    if (!!categoryTypeCode && categoryTypeCode !== 'OTHER') {
+    if (isValidString(categoryTypeCode) && categoryTypeCode !== 'OTHER') {
       setFieldValue('otherCategoryTypeDescription', '');
     }
-    if (!!leaseTypeCode && leaseTypeCode !== 'OTHER') {
+    if (isValidString(leaseTypeCode) && leaseTypeCode !== 'OTHER') {
       setFieldValue('otherLeaseTypeDescription', '');
     }
-    if (!!leaseTypeCode && !isLeaseCategoryVisible(leaseTypeCode)) {
+    if (isValidString(leaseTypeCode) && !isLeaseCategoryVisible(leaseTypeCode)) {
       setFieldValue('otherCategoryTypeDescription', '');
       setFieldValue('categoryTypeCode', '');
     }
-    if (!!purposeTypeCode && purposeTypeCode !== 'OTHER') {
+    if (isValidString(purposeTypeCode) && purposeTypeCode !== 'OTHER') {
       setFieldValue('otherPurposeTypeDescription', '');
     }
-    if (!!programTypeCode && programTypeCode !== 'OTHER') {
+    if (isValidString(programTypeCode) && programTypeCode !== 'OTHER') {
       setFieldValue('otherProgramTypeDescription', '');
     }
   }, [categoryTypeCode, leaseTypeCode, purposeTypeCode, programTypeCode, setFieldValue]);
 
   useEffect(() => {
-    if (!!leaseTypeCode && !isLeaseCategoryVisible(leaseTypeCode)) {
+    if (isValidString(leaseTypeCode) && !isLeaseCategoryVisible(leaseTypeCode)) {
       setFieldValue('categoryTypeCode', '');
     }
   }, [leaseTypeCode, setFieldValue]);

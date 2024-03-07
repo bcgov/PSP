@@ -1,5 +1,5 @@
+import { AxiosError } from 'axios';
 import { FormikProps } from 'formik';
-import noop from 'lodash/noop';
 import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { matchPath, useHistory, useLocation, useRouteMatch } from 'react-router-dom';
 
@@ -7,8 +7,13 @@ import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { useDispositionProvider } from '@/hooks/repositories/useDispositionProvider';
 import { useQuery } from '@/hooks/use-query';
+import useApiUserOverride from '@/hooks/useApiUserOverride';
 import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
-import { stripTrailingSlash } from '@/utils';
+import { IApiError } from '@/interfaces/IApiError';
+import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
+import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
+import { UserOverrideCode } from '@/models/api/UserOverrideCode';
+import { exists, stripTrailingSlash } from '@/utils';
 
 import { SideBarContext } from '../context/sidebarContext';
 import { IDispositionViewProps } from './DispositionView';
@@ -25,6 +30,9 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
   const { setLastUpdatedBy, lastUpdatedBy, staleLastUpdatedBy, staleFile } =
     useContext(SideBarContext);
   const [isValid, setIsValid] = useState<boolean>(true);
+  const withUserOverride = useApiUserOverride<
+    (userOverrideCodes: UserOverrideCode[]) => Promise<any | void>
+  >('Failed to update Disposition File Properties');
 
   const {
     getDispositionFile: {
@@ -43,6 +51,7 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
       loading: loadingDispositionFileChecklist,
       response: dispositionFileChecklist,
     },
+    updateDispositionProperties,
     getLastUpdatedBy: { execute: getLastUpdatedBy, loading: loadingGetLastUpdatedBy },
   } = useDispositionProvider();
 
@@ -76,8 +85,8 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
 
   // Retrieve disposition file from API and save it to local state and side-bar context
   const fetchDispositionFile = useCallback(async () => {
-    var retrieved = await retrieveDispositionFile(dispositionFileId);
-    if (retrieved === undefined) {
+    const retrieved = await retrieveDispositionFile(dispositionFileId);
+    if (!exists(retrieved)) {
       return;
     }
 
@@ -93,7 +102,7 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
   ]);
 
   const fetchLastUpdatedBy = React.useCallback(async () => {
-    var retrieved = await getLastUpdatedBy(dispositionFileId);
+    const retrieved = await getLastUpdatedBy(dispositionFileId);
     if (retrieved !== undefined) {
       setLastUpdatedBy(retrieved);
     } else {
@@ -103,8 +112,8 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
 
   React.useEffect(() => {
     if (
-      lastUpdatedBy === undefined ||
-      dispositionFileId !== lastUpdatedBy?.parentId ||
+      !exists(lastUpdatedBy) ||
+      dispositionFileId !== lastUpdatedBy.parentId ||
       staleLastUpdatedBy
     ) {
       fetchLastUpdatedBy();
@@ -113,13 +122,19 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
 
   useEffect(() => {
     if (
-      dispositionFileId === undefined ||
-      (dispositionFileId !== dispositionFile?.id && !loadingDispositionFile) ||
+      (!error && dispositionFileId !== dispositionFile?.id && !loadingDispositionFile) ||
       staleFile
     ) {
       fetchDispositionFile();
     }
-  }, [dispositionFile, fetchDispositionFile, dispositionFileId, staleFile, loadingDispositionFile]);
+  }, [
+    dispositionFile,
+    fetchDispositionFile,
+    dispositionFileId,
+    staleFile,
+    loadingDispositionFile,
+    error,
+  ]);
 
   const close = useCallback(() => onClose && onClose(), [onClose]);
 
@@ -184,21 +199,77 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
     setIsEditing(false);
   };
 
-  const onSuccess = (refreshProperties?: boolean) => {
-    fetchDispositionFile();
+  const onSuccess = (refreshProperties?: boolean, refreshFile?: boolean) => {
     setIsEditing(false);
     fetchLastUpdatedBy();
+    if (refreshFile) {
+      fetchDispositionFile();
+    }
     if (refreshProperties) {
       mapMachine.refreshMapProperties();
     }
   };
 
-  const canRemove = async (propertyId: number) => {
+  const onUpdateProperties = (
+    file: ApiGen_Concepts_File,
+  ): Promise<ApiGen_Concepts_File | undefined> => {
+    // The backend does not update the product or project so its safe to send nulls even if there might be data for those fields.
+    return withUserOverride(
+      (userOverrideCodes: UserOverrideCode[]) => {
+        return updateDispositionProperties
+          .execute(
+            {
+              ...(file as ApiGen_Concepts_DispositionFile),
+              productId: null,
+              projectId: null,
+              fileChecklistItems: [],
+              fileReference: null,
+              assignedDate: null,
+              completionDate: null,
+              initiatingDocumentDate: null,
+              dispositionTypeOther: null,
+              initiatingDocumentTypeOther: null,
+              dispositionStatusTypeCode: null,
+              dispositionTypeCode: null,
+              regionCode: null,
+              project: null,
+              product: null,
+              dispositionTeam: [],
+              dispositionAppraisal: null,
+              dispositionSale: null,
+              dispositionOffers: [],
+              initiatingBranchTypeCode: null,
+              physicalFileStatusTypeCode: null,
+              fundingTypeCode: null,
+              initiatingDocumentTypeCode: null,
+            },
+            userOverrideCodes,
+          )
+          .then(response => {
+            history.push(`${stripTrailingSlash(match.url)}`);
+            onSuccess(true, true);
+            return response;
+          });
+      },
+      [],
+      (axiosError: AxiosError<IApiError>) => {
+        setModalContent({
+          variant: 'error',
+          title: 'Error',
+          message: axiosError?.response?.data.error,
+          okButtonText: 'Close',
+        });
+        setDisplayModal(true);
+      },
+    );
+  };
+
+  const canRemove = async () => {
     return true;
   };
 
   // UI components
-  var loading =
+  const loading =
     loadingDispositionFile ||
     loadingGetLastUpdatedBy ||
     (loadingDispositionFileProperties && !isPropertySelector) ||
@@ -215,17 +286,17 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
         onSave={handleSaveClick}
         onMenuChange={onMenuChange}
         onShowPropertySelector={onShowPropertySelector}
-        onUpdateProperties={noop as any}
+        onUpdateProperties={onUpdateProperties}
         onSuccess={onSuccess}
         canRemove={canRemove}
         formikRef={formikRef}
         isFormValid={isValid}
         error={error}
         dispositionFile={
-          !loading && !!dispositionFile
+          dispositionFile?.id === dispositionFileId
             ? {
                 ...dispositionFile,
-                fileProperties: dispositionFileProperties,
+                fileProperties: dispositionFileProperties ?? null,
                 fileChecklistItems: dispositionFileChecklist ?? [],
               }
             : undefined

@@ -46,12 +46,13 @@ const DispositionPropertiesSubForm: React.FunctionComponent<
                             ? AddressForm.fromBcaAddress(bcaSummary?.address)
                             : undefined;
                         }
+                        // auto-select file region based upon the location of the property
                         if (
                           values.fileProperties?.length === 0 &&
                           index === 0 &&
                           formProperty.regionName !== 'Cannot determine'
                         ) {
-                          formikProps.setFieldValue(`region`, formProperty.region);
+                          formikProps.setFieldValue(`regionCode`, formProperty.region);
                         }
                         push(formProperty);
                       });
@@ -61,7 +62,7 @@ const DispositionPropertiesSubForm: React.FunctionComponent<
                 />
               </Col>
             </Row>
-            <Section header="Selected Properties">
+            <Section header="Selected properties">
               <SelectedPropertyHeaderRow />
               {formikProps.values.fileProperties.map((property, index) => (
                 <SelectedPropertyRow

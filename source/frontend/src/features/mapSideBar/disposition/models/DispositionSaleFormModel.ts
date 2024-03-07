@@ -1,8 +1,13 @@
 import { ApiGen_Concepts_DispositionFileSale } from '@/models/api/generated/ApiGen_Concepts_DispositionFileSale';
 import { ApiGen_Concepts_DispositionSalePurchaser } from '@/models/api/generated/ApiGen_Concepts_DispositionSalePurchaser';
+import { exists, isValidIsoDateTime } from '@/utils';
 import { emptyStringtoNullable, stringToBoolean } from '@/utils/formUtils';
 
-import { DispositionSaleContactModel, WithSalePurchasers } from './DispositionSaleContactModel';
+import { DispositionSaleContactModel } from './DispositionSaleContactModel';
+import {
+  DispositionSalePurchaserContactModel,
+  WithSalePurchasers,
+} from './DispositionSalePurchaserContactModel';
 
 export class DispositionSaleFormModel implements WithSalePurchasers {
   finalConditionRemovalDate: string | null = null;
@@ -10,7 +15,7 @@ export class DispositionSaleFormModel implements WithSalePurchasers {
   saleFiscalYear: string | null = null;
   finalSaleAmount: number | null = null;
   realtorCommissionAmount: number | null = null;
-  isGstRequired: boolean = false;
+  isGstRequired = false;
   gstCollectedAmount: number | null = null;
   netBookAmount: number | null = null;
   totalCostAmount: number | null = null;
@@ -18,8 +23,10 @@ export class DispositionSaleFormModel implements WithSalePurchasers {
   sppAmount: number | null = null;
   netProceedsAfterSppAmount: number | null = null;
   remediationAmount: number | null = null;
-  dispositionPurchasers: DispositionSaleContactModel[] = [];
+  dispositionPurchasers: DispositionSalePurchaserContactModel[] = [];
+  purchaserAgentId: number | null = null;
   dispositionPurchaserAgent: DispositionSaleContactModel | null = new DispositionSaleContactModel();
+  purchaserSolicitorId: number | null = null;
   dispositionPurchaserSolicitor: DispositionSaleContactModel | null =
     new DispositionSaleContactModel();
 
@@ -56,15 +63,17 @@ export class DispositionSaleFormModel implements WithSalePurchasers {
     model.netProceedsAfterSppAmount = calculateNetProceedsAfterSppAmount(entity);
 
     model.dispositionPurchasers =
-      entity.dispositionPurchasers?.map(x => DispositionSaleContactModel.fromApi(x)) || [];
+      entity.dispositionPurchasers?.map(x => DispositionSalePurchaserContactModel.fromApi(x)) || [];
 
+    model.purchaserAgentId = entity.purchaserAgentId;
     model.dispositionPurchaserAgent = entity.dispositionPurchaserAgent
       ? DispositionSaleContactModel.fromApi(entity.dispositionPurchaserAgent)
-      : new DispositionSaleContactModel(null, entity.id);
+      : new DispositionSaleContactModel(null);
 
+    model.purchaserSolicitorId = entity.purchaserSolicitorId;
     model.dispositionPurchaserSolicitor = entity.dispositionPurchaserSolicitor
       ? DispositionSaleContactModel.fromApi(entity.dispositionPurchaserSolicitor)
-      : new DispositionSaleContactModel(null, entity.id);
+      : new DispositionSaleContactModel(null);
 
     return model;
   }
@@ -73,8 +82,12 @@ export class DispositionSaleFormModel implements WithSalePurchasers {
     return {
       id: this.id,
       dispositionFileId: this.dispositionFileId,
-      finalConditionRemovalDate: emptyStringtoNullable(this.finalConditionRemovalDate),
-      saleCompletionDate: emptyStringtoNullable(this.saleCompletionDate),
+      finalConditionRemovalDate: isValidIsoDateTime(this.finalConditionRemovalDate)
+        ? this.finalConditionRemovalDate
+        : null,
+      saleCompletionDate: isValidIsoDateTime(this.saleCompletionDate)
+        ? this.saleCompletionDate
+        : null,
       saleFiscalYear: emptyStringtoNullable(this.saleFiscalYear),
       finalSaleAmount: this.finalSaleAmount ? parseFloat(this.finalSaleAmount.toString()) : null,
       realtorCommissionAmount: this.realtorCommissionAmount
@@ -95,7 +108,11 @@ export class DispositionSaleFormModel implements WithSalePurchasers {
         .map(x => x.toApi())
         .filter((x): x is ApiGen_Concepts_DispositionSalePurchaser => x !== null),
       dispositionPurchaserAgent: this.dispositionPurchaserAgent?.toApi() ?? null,
+      purchaserAgentId:
+        this.dispositionPurchaserAgent?.toApi() === null ? null : this.purchaserAgentId,
       dispositionPurchaserSolicitor: this.dispositionPurchaserSolicitor?.toApi() ?? null,
+      purchaserSolicitorId:
+        this.dispositionPurchaserSolicitor?.toApi() === null ? null : this.purchaserSolicitorId,
       rowVersion: this.rowVersion ?? 0,
     };
   }
@@ -104,7 +121,7 @@ export class DispositionSaleFormModel implements WithSalePurchasers {
 export const calculateNetProceedsBeforeSppAmount = (
   apiModel: ApiGen_Concepts_DispositionFileSale | null,
 ): number | null => {
-  return apiModel == null
+  return !exists(apiModel)
     ? 0
     : (apiModel.finalSaleAmount ?? 0) -
         ((apiModel.realtorCommissionAmount ?? 0) +
@@ -116,7 +133,7 @@ export const calculateNetProceedsBeforeSppAmount = (
 export const calculateNetProceedsAfterSppAmount = (
   apiModel: ApiGen_Concepts_DispositionFileSale | null,
 ): number | null => {
-  return apiModel == null
+  return !exists(apiModel)
     ? 0
     : (apiModel.finalSaleAmount ?? 0) -
         ((apiModel.realtorCommissionAmount ?? 0) +

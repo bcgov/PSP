@@ -2,14 +2,14 @@ import * as React from 'react';
 import { useEffect } from 'react';
 
 import { useInterestHolderRepository } from '@/hooks/repositories/useInterestHolderRepository';
-import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
+import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 
 import { IStakeHolderViewProps } from './StakeHolderView';
 
 export interface IStakeHolderContainerProps {
   View: React.FC<IStakeHolderViewProps>;
   onEdit: () => void;
-  acquisitionFile: Api_AcquisitionFile;
+  acquisitionFile: ApiGen_Concepts_AcquisitionFile;
 }
 
 export const StakeHolderContainer: React.FunctionComponent<IStakeHolderContainerProps> = ({

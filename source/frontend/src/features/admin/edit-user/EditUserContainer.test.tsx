@@ -85,8 +85,8 @@ describe('EditUserContainer component', () => {
     );
     expect({
       ...JSON.parse(mockAxios.history.put[0].data),
-      approvedById: undefined,
-      issueDate: undefined,
+      approvedById: 0,
+      issueDate: null,
     }).toEqual({
       ...new FormUser(getUserMock()).toApi(),
       note: 'test note',

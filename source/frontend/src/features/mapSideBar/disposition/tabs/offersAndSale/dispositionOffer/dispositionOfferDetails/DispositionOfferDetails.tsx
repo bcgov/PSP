@@ -5,23 +5,30 @@ import styled from 'styled-components';
 import { StyledRemoveLinkButton } from '@/components/common/buttons/RemoveButton';
 import EditButton from '@/components/common/EditButton';
 import { SectionField } from '@/components/common/Section/SectionField';
-import { Claims } from '@/constants';
+import TooltipIcon from '@/components/common/TooltipIcon';
+import { Claims, Roles } from '@/constants';
+import { cannotEditMessage } from '@/features/mapSideBar/acquisition/common/constants';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
-import { Api_DispositionFileOffer } from '@/models/api/DispositionFile';
+import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
+import { ApiGen_Concepts_DispositionFileOffer } from '@/models/api/generated/ApiGen_Concepts_DispositionFileOffer';
 import { prettyFormatDate } from '@/utils/dateUtils';
 import { formatMoney } from '@/utils/numberFormatUtils';
 
+import DispositionStatusUpdateSolver from '../../../fileDetails/detail/DispositionStatusUpdateSolver';
+
 export interface IDispositionOfferDetailsProps {
   index: number;
-  dispositionOffer: Api_DispositionFileOffer;
+  dispositionOffer: ApiGen_Concepts_DispositionFileOffer;
   onDelete: (offerId: number) => void;
+  dispositionFile: ApiGen_Concepts_DispositionFile;
 }
 
 const DispositionOfferDetails: React.FunctionComponent<IDispositionOfferDetailsProps> = ({
   index,
   dispositionOffer,
   onDelete,
+  dispositionFile,
 }) => {
   const keycloak = useKeycloakWrapper();
   const history = useHistory();
@@ -29,10 +36,19 @@ const DispositionOfferDetails: React.FunctionComponent<IDispositionOfferDetailsP
 
   const { setModalContent, setDisplayModal } = useModalContext();
 
+  const statusSolver = new DispositionStatusUpdateSolver(dispositionFile);
+
+  const canEditDetails = () => {
+    if (keycloak.hasRole(Roles.SYSTEM_ADMINISTRATOR) || statusSolver.canEditOfferSalesValues()) {
+      return true;
+    }
+    return false;
+  };
+
   return (
     <StyledOfferBorder>
       <StyledSubHeader>
-        {keycloak.hasClaim(Claims.DISPOSITION_EDIT) && (
+        {keycloak.hasClaim(Claims.DISPOSITION_EDIT) && canEditDetails() && (
           <>
             <EditButton
               title="Edit Offer"
@@ -53,7 +69,7 @@ const DispositionOfferDetails: React.FunctionComponent<IDispositionOfferDetailsP
                   okButtonText: 'Yes',
                   cancelButtonText: 'No',
                   handleOk: async () => {
-                    onDelete(dispositionOffer.id!);
+                    dispositionOffer?.id && onDelete(dispositionOffer.id);
                     setDisplayModal(false);
                   },
                   handleCancel: () => {
@@ -66,6 +82,12 @@ const DispositionOfferDetails: React.FunctionComponent<IDispositionOfferDetailsP
               <FaTrash size="2rem" />
             </StyledRemoveLinkButton>
           </>
+        )}
+        {keycloak.hasClaim(Claims.DISPOSITION_EDIT) && !canEditDetails() && (
+          <TooltipIcon
+            toolTipId={`${dispositionFile?.id || 0}-summary-cannot-edit-tooltip`}
+            toolTip={cannotEditMessage}
+          />
         )}
       </StyledSubHeader>
       <SectionField

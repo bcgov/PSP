@@ -103,6 +103,7 @@ describe('AcquisitionFileTabs component', () => {
       id: 'SECTN3',
       description: 'Section 3 Agreement',
       isDisabled: false,
+      displayOrder: null,
     };
 
     const { queryByText } = setup({
@@ -120,6 +121,7 @@ describe('AcquisitionFileTabs component', () => {
       id: 'SECTN6',
       description: 'Section 6 Expropriation',
       isDisabled: false,
+      displayOrder: null,
     };
 
     const { queryByText } = setup({

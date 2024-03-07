@@ -34,7 +34,7 @@ describe('useAddNotesFormManagement hook', () => {
           onSuccess,
         }),
       {
-        wrapper: (props: React.PropsWithChildren) => (
+        wrapper: (props: React.PropsWithChildren<unknown>) => (
           <TestCommonWrapper store={mockStore} history={history}>
             {props.children}
           </TestCommonWrapper>
@@ -60,7 +60,7 @@ describe('useAddNotesFormManagement hook', () => {
     expect(initialValues).toEqual(
       expect.objectContaining({
         parentId: 1,
-        note: { note: '' },
+        note: { note: '', isSystemGenerated: false },
       }),
     );
   });

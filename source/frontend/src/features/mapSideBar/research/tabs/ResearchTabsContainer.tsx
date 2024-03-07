@@ -6,7 +6,7 @@ import { NoteTypes } from '@/constants/noteTypes';
 import NoteListView from '@/features/notes/list/NoteListView';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
-import { Api_ResearchFile } from '@/models/api/ResearchFile';
+import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Concepts_ResearchFile';
 
 import { SideBarContext } from '../../context/sidebarContext';
 import { FileTabs, FileTabType, TabFileView } from '../../shared/detail/FileTabs';
@@ -14,7 +14,7 @@ import DocumentsTab from '../../shared/tabs/DocumentsTab';
 import ResearchSummaryView from './fileDetails/details/ResearchSummaryView';
 
 export interface IResearchTabsContainerProps {
-  researchFile?: Api_ResearchFile;
+  researchFile?: ApiGen_Concepts_ResearchFile;
   setIsEditing: (value: boolean) => void;
 }
 

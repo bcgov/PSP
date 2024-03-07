@@ -23,10 +23,10 @@ import ProjectContainer from '../project/ProjectContainer';
 import ProjectContainerView from '../project/ProjectContainerView';
 import AddResearchContainer from '../research/add/AddResearchContainer';
 import ResearchContainer from '../research/ResearchContainer';
+import AddSubdivisionContainer from '../subdivision/AddSubdivisionContainer';
+import AddSubdivisionContainerView from '../subdivision/AddSubdivisionView';
 
-interface IMapRouterProps {}
-
-export const MapRouter: React.FunctionComponent<IMapRouterProps> = memo(props => {
+export const MapRouter: React.FunctionComponent = memo(() => {
   const location = useLocation();
   const history = useHistory();
 
@@ -102,6 +102,16 @@ export const MapRouter: React.FunctionComponent<IMapRouterProps> = memo(props =>
     [location],
   );
 
+  const isSubdivision = useMemo(
+    () =>
+      matchPath(location.pathname, {
+        path: '/mapview/sidebar/subdivision/*',
+        exact: true,
+        strict: true,
+      }),
+    [location],
+  );
+
   useEffect(() => {
     if (matched !== null) {
       let sidebarType: SideBarType = SideBarType.NOT_DEFINED;
@@ -117,6 +127,8 @@ export const MapRouter: React.FunctionComponent<IMapRouterProps> = memo(props =>
         sidebarType = SideBarType.PROPERTY_INFORMATION;
       } else if (isDisposition) {
         sidebarType = SideBarType.DISPOSITION;
+      } else if (isSubdivision) {
+        sidebarType = SideBarType.SUBDIVISION;
       }
 
       openSidebar(sidebarType);
@@ -133,6 +145,7 @@ export const MapRouter: React.FunctionComponent<IMapRouterProps> = memo(props =>
     openSidebar,
     closeSidebar,
     isDisposition,
+    isSubdivision,
   ]);
 
   const onClose = () => {
@@ -263,6 +276,15 @@ export const MapRouter: React.FunctionComponent<IMapRouterProps> = memo(props =>
         claim={Claims.LEASE_VIEW}
         key={'LeaseLicense'}
         title={'Lease / License File'}
+      />
+      <AppRoute
+        path={`/mapview/sidebar/subdivision/new`}
+        customRender={() => (
+          <AddSubdivisionContainer onClose={onClose} View={AddSubdivisionContainerView} />
+        )}
+        claim={Claims.PROPERTY_EDIT}
+        key={'NewSubdivision'}
+        title={'Create Subdivision'}
       />
     </Switch>
   );

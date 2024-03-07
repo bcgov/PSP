@@ -345,6 +345,25 @@ namespace Pims.Api.Test.Controllers
             this._service.Verify(m => m.UpdateDispositionFileAppraisal(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<PimsDispositionAppraisal>()), Times.Once());
         }
 
+        /// <summary>
+        /// Make a successful request to get a disposition file property by id.
+        /// </summary>
+        [Fact]
+        public void UpdateDispositionFileProperties_Success()
+        {
+            // Arrange
+            var dispFile = new PimsDispositionFile();
+
+            this._service.Setup(m => m.Update(It.IsAny<long>(), It.IsAny<PimsDispositionFile>(), It.IsAny<IEnumerable<UserOverrideCode>>())).Returns(dispFile);
+
+            // Act
+            var model = _mapper.Map<DispositionFileModel>(dispFile);
+            var result = this._controller.UpdateDispositionFileProperties(model, new string[] { });
+
+            // Assert
+            this._service.Verify(m => m.UpdateProperties(It.IsAny<PimsDispositionFile>(), It.IsAny<IEnumerable<UserOverrideCode>>()), Times.Once());
+        }
+
         #endregion
     }
 }

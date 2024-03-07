@@ -9,6 +9,7 @@ import AdminPanelSettings from '@/assets/images/admin-panel-settings.svg?react';
 import Fence from '@/assets/images/fence.svg?react';
 import RealEstateAgent from '@/assets/images/real-estate-agent.svg?react';
 import Source from '@/assets/images/source.svg?react';
+import ConsolidateSubdivideIcon from '@/assets/images/subdivisionconsolidation.svg?react';
 import { NavIcon } from '@/components/layout';
 import { Claims, Roles } from '@/constants/index';
 
@@ -62,6 +63,12 @@ export const SideNavBar = () => {
           onClick={() => setTrayPage(SidebarContextType.DISPOSITION)}
           icon={<TbArrowBounce size={24} color="white" fillOpacity={0} />}
           text="Disposition"
+          showText={expanded}
+        />
+        <NavIcon
+          onClick={() => setTrayPage(SidebarContextType.SUBDCONS)}
+          icon={<ConsolidateSubdivideIcon />}
+          text="Subdivision & Consolidation"
           showText={expanded}
         />
         <NavIcon

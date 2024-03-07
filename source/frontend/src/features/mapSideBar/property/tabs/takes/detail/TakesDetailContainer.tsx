@@ -1,14 +1,13 @@
 import orderBy from 'lodash/orderBy';
-import moment from 'moment';
 import * as React from 'react';
 
-import { Api_PropertyFile } from '@/models/api/PropertyFile';
+import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 
 import { useTakesRepository } from '../repositories/useTakesRepository';
 import { ITakesDetailViewProps } from './TakesDetailView';
 
 interface ITakesDetailContainerProps {
-  fileProperty: Api_PropertyFile;
+  fileProperty: ApiGen_Concepts_FileProperty;
   onEdit: (edit: boolean) => void;
   View: React.FunctionComponent<React.PropsWithChildren<ITakesDetailViewProps>>;
 }
@@ -40,14 +39,14 @@ const TakesDetailContainer: React.FunctionComponent<ITakesDetailContainerProps> 
   } = useTakesRepository();
 
   React.useEffect(() => {
-    fileId && executeTakesByFileProperty(fileId, propertyId!);
+    fileId && propertyId && executeTakesByFileProperty(fileId, propertyId);
     propertyId && executeTakesCount(propertyId);
   }, [executeTakesByFileProperty, executeTakesCount, fileId, propertyId]);
 
   return (
     <View
       onEdit={onEdit}
-      takes={orderBy(takes, t => moment(t.appCreateTimestamp), 'desc') ?? []}
+      takes={orderBy(takes, t => t.id, 'desc') ?? []}
       loading={takesByFileLoading && takesCountLoading}
       allTakesCount={takesCount ?? 0}
       fileProperty={fileProperty}

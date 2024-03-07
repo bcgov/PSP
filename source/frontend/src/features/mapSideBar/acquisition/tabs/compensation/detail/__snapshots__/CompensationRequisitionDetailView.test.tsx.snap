@@ -466,9 +466,7 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
           </div>
           <div
             class="c8 text-left col"
-          >
-            undefined - undefined
-          </div>
+          />
         </div>
         <div
           class="pb-2 row"

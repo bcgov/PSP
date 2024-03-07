@@ -1,14 +1,9 @@
-import {
-  Api_DispositionFile,
-  Api_DispositionFileProperty,
-  Api_DispositionFileTeam,
-} from '@/models/api/DispositionFile';
-import {
-  emptyStringtoNullable,
-  fromTypeCode,
-  toTypeCode,
-  toTypeCodeNullable,
-} from '@/utils/formUtils';
+import { IAutocompletePrediction } from '@/interfaces/IAutocomplete';
+import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
+import { ApiGen_Concepts_DispositionFileProperty } from '@/models/api/generated/ApiGen_Concepts_DispositionFileProperty';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
+import { emptyStringtoNullable, fromTypeCode, toTypeCodeNullable } from '@/utils/formUtils';
+import { exists, isValidIsoDateTime } from '@/utils/utils';
 
 import { PropertyForm } from '../../shared/models';
 import { ChecklistItemFormModel } from '../../shared/tabs/checklist/update/models';
@@ -28,11 +23,13 @@ export class DispositionFormModel implements WithDispositionTeam {
   dispositionStatusTypeCode: string | null = null;
   initiatingBranchTypeCode: string | null = null;
   physicalFileStatusTypeCode: string | null = null;
+  project: IAutocompletePrediction | null = null;
+  productId: string | null = null;
   fundingTypeCode: string | null = null;
   initiatingDocumentTypeCode: string | null = null;
   initiatingDocumentTypeOther: string | null = '';
   initiatingDocumentDate: string | null = null;
-  regionCode: string | null = '';
+  regionCode: string | null = null;
   fileProperties: PropertyForm[] = [];
   team: DispositionTeamSubFormModel[] = [];
   offers: DispositionOfferFormModel[] = [];
@@ -44,8 +41,8 @@ export class DispositionFormModel implements WithDispositionTeam {
     readonly id: number | null = null,
     readonly fileNumber: string | null = null,
     readonly rowVersion: number | null = null,
-    dispositionFileStatus: string = 'ACTIVE',
-    dispositionStatus: string = 'UNKNOWN',
+    dispositionFileStatus = 'ACTIVE',
+    dispositionStatus = 'UNKNOWN',
   ) {
     this.id = id;
     this.fileNumber = fileNumber;
@@ -53,64 +50,71 @@ export class DispositionFormModel implements WithDispositionTeam {
     this.dispositionStatusTypeCode = dispositionStatus;
   }
 
-  toApi(): Api_DispositionFile {
+  toApi(): ApiGen_Concepts_DispositionFile {
     return {
-      id: this.id ?? undefined,
-      fileName: this.fileName ?? undefined,
-      fileNumber: this.fileNumber ?? undefined,
-      fileStatusTypeCode: toTypeCode(this.fileStatusTypeCode),
+      id: this.id ?? 0,
+      fileName: this.fileName ?? null,
+      fileNumber: this.fileNumber ?? null,
+      fileStatusTypeCode: toTypeCodeNullable(this.fileStatusTypeCode),
       fileReference: emptyStringtoNullable(this.referenceNumber),
-      assignedDate: this.assignedDate,
-      completionDate: this.completionDate,
+      assignedDate: isValidIsoDateTime(this.assignedDate) ? this.assignedDate : this.assignedDate,
+      completionDate: isValidIsoDateTime(this.completionDate)
+        ? this.completionDate
+        : this.completionDate,
       dispositionTypeCode: toTypeCodeNullable(this.dispositionTypeCode),
       dispositionTypeOther: this.dispositionTypeOther ? this.dispositionTypeOther : null,
       dispositionStatusTypeCode: toTypeCodeNullable(this.dispositionStatusTypeCode),
-      initiatingBranchTypeCode: toTypeCode(this.initiatingBranchTypeCode),
-      physicalFileStatusTypeCode: toTypeCode(this.physicalFileStatusTypeCode),
+      initiatingBranchTypeCode: toTypeCodeNullable(this.initiatingBranchTypeCode),
+      physicalFileStatusTypeCode: toTypeCodeNullable(this.physicalFileStatusTypeCode),
+      project: null,
+      projectId: this.project?.id !== undefined && this.project?.id !== 0 ? this.project?.id : null,
+      product: null,
+      productId: this.productId ? Number(this.productId) : null,
       fundingTypeCode: toTypeCodeNullable(this.fundingTypeCode),
-      initiatingDocumentTypeCode: toTypeCode(this.initiatingDocumentTypeCode),
+      initiatingDocumentTypeCode: toTypeCodeNullable(this.initiatingDocumentTypeCode),
       initiatingDocumentTypeOther: this.initiatingDocumentTypeOther
         ? this.initiatingDocumentTypeOther
         : null,
-      initiatingDocumentDate: this.initiatingDocumentDate,
-      regionCode: toTypeCodeNullable(Number(this.regionCode)),
+      initiatingDocumentDate: isValidIsoDateTime(this.initiatingDocumentDate)
+        ? this.initiatingDocumentDate
+        : null,
+      regionCode: exists(this.regionCode) ? toTypeCodeNullable(Number(this.regionCode)) : null,
       dispositionTeam: this.team
         .filter(x => !!x.contact && !!x.teamProfileTypeCode)
         .map(x => x.toApi(this.id || 0))
-        .filter((x): x is Api_DispositionFileTeam => x !== null),
-      fileProperties: this.fileProperties.map<Api_DispositionFileProperty>(ap => {
-        return {
-          id: ap.id,
-          propertyName: ap.name,
-          displayOrder: ap.displayOrder,
-          rowVersion: ap.rowVersion,
-          property: ap.toApi(),
-          propertyId: ap.apiId,
-          acquisitionFile: { id: this.id },
-        };
-      }),
+        .filter(exists),
+      fileProperties: this.fileProperties.map<ApiGen_Concepts_DispositionFileProperty>(ap => ({
+        id: ap.id ?? 0,
+        propertyName: ap.name ?? null,
+        displayOrder: ap.displayOrder ?? null,
+        rowVersion: ap.rowVersion ?? null,
+        property: ap.toApi(),
+        propertyId: ap.apiId ?? 0,
+        file: null,
+        fileId: 0,
+      })),
 
       dispositionOffers: this.offers.map(x => x.toApi()),
       dispositionSale: this.sale ? this.sale.toApi() : null,
-      project: null,
-      projectId: null,
-      product: null,
-      productId: null,
       dispositionAppraisal: this.appraisal ? this.appraisal.toApi() : null,
       fileChecklistItems: this.fileChecklist.map(x => x.toApi()),
-      rowVersion: this.rowVersion ?? 0,
+      ...getEmptyBaseAudit(this.rowVersion),
     };
   }
 
-  static fromApi(model: Api_DispositionFile): DispositionFormModel {
+  static fromApi(model: ApiGen_Concepts_DispositionFile): DispositionFormModel {
     const dispositionForm = new DispositionFormModel(
       model.id,
       model.fileNumber,
       model.rowVersion,
-      model.fileStatusTypeCode?.id,
-      model.dispositionStatusTypeCode?.id,
+      model.fileStatusTypeCode?.id ?? undefined,
+      model.dispositionStatusTypeCode?.id ?? undefined,
     );
 
+    dispositionForm.project = model.project
+      ? { id: model.project?.id || 0, text: model.project?.description || '' }
+      : null;
+    dispositionForm.productId = model.product?.id?.toString() ?? '';
     dispositionForm.fundingTypeCode = fromTypeCode(model.fundingTypeCode) ?? '';
     dispositionForm.fileName = model.fileName ?? '';
     dispositionForm.referenceNumber = model.fileReference;

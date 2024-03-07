@@ -4,12 +4,13 @@ import styled from 'styled-components';
 
 import { HeaderField } from '@/components/common/HeaderField/HeaderField';
 import { UserNameTooltip } from '@/components/common/UserNameTooltip';
-import { Api_DispositionFile } from '@/models/api/DispositionFile';
 import { Api_LastUpdatedBy } from '@/models/api/File';
+import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
 import { prettyFormatUTCDate } from '@/utils/dateUtils';
 
 export interface IDispositionHeaderProps {
-  dispositionFile?: Api_DispositionFile;
+  dispositionFile?: ApiGen_Concepts_DispositionFile;
+
   lastUpdatedBy: Api_LastUpdatedBy | null;
 }
 

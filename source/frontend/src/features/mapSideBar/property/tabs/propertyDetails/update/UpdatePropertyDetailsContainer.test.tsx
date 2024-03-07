@@ -9,8 +9,12 @@ import {
   IMapLayerResults,
   useQueryMapLayersByLocation,
 } from '@/hooks/repositories/useQueryMapLayersByLocation';
+import { getEmptyAddress } from '@/mocks/address.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
-import { Api_Property } from '@/models/api/Property';
+import { ApiGen_Concepts_Address } from '@/models/api/generated/ApiGen_Concepts_Address';
+import { ApiGen_Concepts_CodeType } from '@/models/api/generated/ApiGen_Concepts_CodeType';
+import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
+import { getEmptyBaseAudit, getEmptyProperty } from '@/models/defaultInitializers';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
@@ -33,12 +37,14 @@ const DEFAULT_PROPS: IUpdatePropertyDetailsContainerProps = {
 };
 
 const mockAxios = new MockAdapter(axios);
-const fakeProperty: Api_Property = {
+const fakeProperty: ApiGen_Concepts_Property = {
+  ...getEmptyProperty(),
   id: 205,
   propertyType: {
     id: 'TITLED',
     description: 'Titled',
     isDisabled: false,
+    displayOrder: null,
   },
   anomalies: [
     {
@@ -48,8 +54,9 @@ const fakeProperty: Api_Property = {
         id: 'ACCESS',
         description: 'Access',
         isDisabled: false,
+        displayOrder: null,
       },
-      rowVersion: 17,
+      ...getEmptyBaseAudit(17),
     },
     {
       id: 3,
@@ -58,8 +65,9 @@ const fakeProperty: Api_Property = {
         id: 'DISTURB',
         description: 'Disturbance',
         isDisabled: false,
+        displayOrder: null,
       },
-      rowVersion: 12,
+      ...getEmptyBaseAudit(12),
     },
   ],
   tenures: [
@@ -70,8 +78,9 @@ const fakeProperty: Api_Property = {
         id: 'HWYROAD',
         description: 'Highway/Road established by',
         isDisabled: false,
+        displayOrder: null,
       },
-      rowVersion: 16,
+      ...getEmptyBaseAudit(16),
     },
     {
       id: 454,
@@ -80,8 +89,9 @@ const fakeProperty: Api_Property = {
         id: 'ADJLAND',
         description: 'Adjacent Land type',
         isDisabled: false,
+        displayOrder: null,
       },
-      rowVersion: 16,
+      ...getEmptyBaseAudit(16),
     },
   ],
   roadTypes: [
@@ -92,8 +102,9 @@ const fakeProperty: Api_Property = {
         id: 'CTRLACC',
         description: 'Controlled Access',
         isDisabled: false,
+        displayOrder: null,
       },
-      rowVersion: 16,
+      ...getEmptyBaseAudit(16),
     },
     {
       id: 3,
@@ -102,53 +113,47 @@ const fakeProperty: Api_Property = {
         id: 'OIC',
         description: 'Order in Council (OIC)',
         isDisabled: false,
+        displayOrder: null,
       },
-      rowVersion: 13,
-    },
-  ],
-  adjacentLands: [
-    {
-      id: 1,
-      propertyId: 205,
-      propertyAdjacentLandTypeCode: {
-        id: 'INDIANR',
-        description: 'Indian Reserve (IR)',
-        isDisabled: false,
-      },
-      rowVersion: 16,
+      ...getEmptyBaseAudit(13),
     },
   ],
   status: {
     id: 'MOTIADMIN',
     description: 'Under MoTI administration',
     isDisabled: false,
+    displayOrder: null,
   },
   dataSource: {
     id: 'PAIMS',
     description: 'Property Acquisition and Inventory Management System (PAIMS)',
     isDisabled: false,
+    displayOrder: null,
   },
   region: {
     id: 1,
     description: 'South Coast Region',
     isDisabled: false,
+    displayOrder: null,
   },
   district: {
     id: 1,
     description: 'Lower Mainland District',
     isDisabled: false,
+    displayOrder: null,
   },
   dataSourceEffectiveDateOnly: '2021-08-31T00:00:00',
   latitude: 925866.6022023489,
   longitude: 1406876.1727310908,
   isSensitive: false,
-  pphStatusUpdateTimestamp: new Date('2020-05-10T20:00'),
+  pphStatusUpdateTimestamp: '2020-05-10T20:00',
   pphStatusUpdateUserGuid: 'A85F259B-FEBF-4508-87A6-1C2419036EFA',
   pphStatusUpdateUserid: 'USER',
   isRwyBeltDomPatent: false,
   pphStatusTypeCode: 'Non-PPH',
 
   address: {
+    ...getEmptyAddress(),
     id: 1,
     streetAddress1: '45 - 904 Hollywood Crescent',
     streetAddress2: 'Living in a van',
@@ -175,6 +180,7 @@ const fakeProperty: Api_Property = {
     id: 'M2',
     description: 'Meters sq',
     isDisabled: false,
+    displayOrder: null,
   },
   landArea: 25000,
   isVolumetricParcel: true,
@@ -183,11 +189,13 @@ const fakeProperty: Api_Property = {
     id: 'M3',
     description: 'Cubic Meters',
     isDisabled: false,
+    displayOrder: null,
   },
   volumetricType: {
     id: 'SUBSURF',
     description: 'Sub-surface',
     isDisabled: false,
+    displayOrder: null,
   },
   municipalZoning: 'Zoning # 1',
   location: {
@@ -265,15 +273,19 @@ describe('UpdatePropertyDetailsContainer component', () => {
     expect(await findByTitle('Down by the River')).toBeInTheDocument();
     await act(async () => formikRef.current?.submitForm() as Promise<void>);
 
-    const expectedValues = expect.objectContaining<Api_Property>({
-      address: expect.objectContaining({
+    const expectedValues = expect.objectContaining<Partial<ApiGen_Concepts_Property>>({
+      address: expect.objectContaining<Partial<ApiGen_Concepts_Address>>({
         streetAddress1: fakeProperty.address?.streetAddress1,
         streetAddress2: fakeProperty.address?.streetAddress2,
         streetAddress3: fakeProperty.address?.streetAddress3,
         municipality: fakeProperty.address?.municipality,
         postal: fakeProperty.address?.postal,
-        country: { id: fakeProperty.address?.country?.id },
-        province: { id: fakeProperty.address?.province?.id },
+        country: expect.objectContaining<Partial<ApiGen_Concepts_CodeType>>({
+          id: fakeProperty.address!.country!.id,
+        }),
+        province: expect.objectContaining<Partial<ApiGen_Concepts_CodeType>>({
+          id: fakeProperty.address!.province!.id,
+        }),
       }),
     });
 
@@ -295,15 +307,19 @@ describe('UpdatePropertyDetailsContainer component', () => {
     });
 
     await waitFor(() => {
-      const expectedValues = expect.objectContaining<Api_Property>({
-        address: expect.objectContaining({
+      const expectedValues = expect.objectContaining<Partial<ApiGen_Concepts_Property>>({
+        address: expect.objectContaining<Partial<ApiGen_Concepts_Address>>({
           streetAddress1: '123 Mock St',
           streetAddress2: fakeProperty.address?.streetAddress2,
           streetAddress3: fakeProperty.address?.streetAddress3,
           municipality: fakeProperty.address?.municipality,
           postal: fakeProperty.address?.postal,
-          country: { id: fakeProperty.address?.country?.id },
-          province: { id: fakeProperty.address?.province?.id },
+          country: expect.objectContaining<Partial<ApiGen_Concepts_CodeType>>({
+            id: fakeProperty.address!.country!.id,
+          }),
+          province: expect.objectContaining<Partial<ApiGen_Concepts_CodeType>>({
+            id: fakeProperty.address!.province!.id,
+          }),
         }),
       });
       expect(updateProperty).toBeCalledWith(expectedValues);
@@ -339,8 +355,8 @@ describe('UpdatePropertyDetailsContainer component', () => {
     });
 
     await waitFor(() => {
-      const expectedValues = expect.objectContaining<Api_Property>({
-        address: undefined,
+      const expectedValues = expect.objectContaining<Partial<ApiGen_Concepts_Property>>({
+        address: null,
       });
 
       expect(updateProperty).toBeCalledWith(expectedValues);

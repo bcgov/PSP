@@ -47,6 +47,8 @@ namespace Pims.Api.Services
 
         List<DispositionFileExportModel> GetDispositionFileExport(DispositionFilter filter);
 
-        PimsDispositionFile UpdateChecklistItems(PimsDispositionFile dispositionFile);
+        PimsDispositionFile UpdateChecklistItems(IList<PimsDispositionChecklistItem> checklistItems);
+
+        PimsDispositionFile UpdateProperties(PimsDispositionFile dispositionFile, IEnumerable<UserOverrideCode> userOverrides);
     }
 }

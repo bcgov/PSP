@@ -3,12 +3,12 @@ import { Section } from '@/components/common/Section/Section';
 import { Table } from '@/components/Table';
 import Claims from '@/constants/claims';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
-import { Api_SecurityDeposit } from '@/models/api/SecurityDeposit';
+import { ApiGen_Concepts_SecurityDeposit } from '@/models/api/generated/ApiGen_Concepts_SecurityDeposit';
 
 import { DepositListEntry, getColumns } from './columns';
 
 export interface IDepositsReceivedContainerProps {
-  securityDeposits: Api_SecurityDeposit[];
+  securityDeposits: ApiGen_Concepts_SecurityDeposit[];
   onAdd: () => void;
   onEdit: (id: number) => void;
   onDelete: (id: number) => void;

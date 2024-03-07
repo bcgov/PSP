@@ -180,7 +180,7 @@ refresh: | down build up ## Recreates local docker environment
 .PHONY: infra
 infra: ## Starts infrastructure containers (e.g. database, geoserver). Useful for local debugging
 	@echo "$(P) Starting up infrastructure containers..."
-	@"$(MAKE)" start n="database geoserver"
+	@"$(MAKE)" start n="database geoserver grafana prometheus"
 
 start: ## Starts the local containers (n=service name)
 	@echo "$(P) Starting client and server containers..."
@@ -316,7 +316,7 @@ generate-tsapi: ## Generates the pims API typescript files
 	@echo "$(P) Generating pims api Ts files..."
 	@cd tools/TsModelGenerator; dotnet build; dotnet run;
 	@make frontend-lint
-	
+
 
 frontend-lint:
 	@echo "$(P) Running lint:fix..."

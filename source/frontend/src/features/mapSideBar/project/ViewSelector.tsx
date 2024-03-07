@@ -1,7 +1,7 @@
 import { FormikProps } from 'formik';
 import React from 'react';
 
-import { Api_Project } from '@/models/api/Project';
+import { ApiGen_Concepts_Project } from '@/models/api/generated/ApiGen_Concepts_Project';
 
 import AddProjectForm from './add/AddProjectForm';
 import { ProjectContainerState, ProjectPageNames } from './ProjectContainer';
@@ -10,10 +10,10 @@ import { ProjectTabNames } from './tabs/ProjectTabs';
 import ProjectTabsContainer from './tabs/ProjectTabsContainer';
 
 export interface IViewSelectorProps {
-  project?: Api_Project;
+  project?: ApiGen_Concepts_Project;
   isEditing: boolean;
   setContainerState: (value: Partial<ProjectContainerState>) => void;
-  setProject: (project: Api_Project) => void;
+  setProject: (project: ApiGen_Concepts_Project) => void;
   activeTab?: ProjectTabNames;
   activeEditForm?: ProjectPageNames;
   onSuccess: () => void;

@@ -27,13 +27,19 @@ namespace Pims.Api.Services
 
         IEnumerable<PimsAcquisitionChecklistItem> GetChecklistItems(long id);
 
-        PimsAcquisitionFile UpdateChecklistItems(PimsAcquisitionFile acquisitionFile);
+        PimsAcquisitionFile UpdateChecklistItems(IList<PimsAcquisitionChecklistItem> checklistItems);
 
         IEnumerable<PimsAgreement> GetAgreements(long id);
 
+        PimsAgreement AddAgreement(long acquisitionFileId, PimsAgreement agreement);
+
+        PimsAgreement GetAgreementById(long acquisitionFileId, long agreementId);
+
         IEnumerable<PimsAgreement> SearchAgreements(AcquisitionReportFilterModel filter);
 
-        IEnumerable<PimsAgreement> UpdateAgreements(long acquisitionFileId, List<PimsAgreement> agreements);
+        PimsAgreement UpdateAgreement(long acquisitionFileId, PimsAgreement agreement);
+
+        bool DeleteAgreement(long acquisitionFileId, long agreementId);
 
         IEnumerable<PimsInterestHolder> GetInterestHolders(long id);
 

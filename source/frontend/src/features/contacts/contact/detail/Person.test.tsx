@@ -52,7 +52,7 @@ describe('Contact PersonView component', () => {
       },
     });
 
-    var statusElement = component.getByTestId('contact-person-status');
+    const statusElement = component.getByTestId('contact-person-status');
     expect(statusElement.textContent).toBe('INACTIVE');
   });
 
@@ -67,13 +67,13 @@ describe('Contact PersonView component', () => {
       },
     });
 
-    var statusElement = component.getByTestId('contact-person-status');
+    const statusElement = component.getByTestId('contact-person-status');
     expect(statusElement.textContent).toBe('ACTIVE');
 
-    var nameElement = component.getByTestId('contact-person-fullname');
+    const nameElement = component.getByTestId('contact-person-fullname');
     expect(nameElement.textContent).toBe(testName);
 
-    var preferredElement = component.getByTestId('contact-person-preferred');
+    const preferredElement = component.getByTestId('contact-person-preferred');
     expect(preferredElement.textContent).toBe(preferredName);
   });
 
@@ -85,6 +85,7 @@ describe('Contact PersonView component', () => {
         id: ContactMethodTypes.PersonalEmail,
         description: 'Personal Email',
         isDisabled: false,
+        displayOrder: null,
       },
       value: 'test@bench.com',
     };
@@ -95,6 +96,7 @@ describe('Contact PersonView component', () => {
         id: ContactMethodTypes.WorkEmail,
         description: 'Work Email',
         isDisabled: false,
+        displayOrder: null,
       },
       value: 'test@bench.net',
     };
@@ -107,7 +109,7 @@ describe('Contact PersonView component', () => {
       },
     });
 
-    var emailValueElements = component.getAllByTestId('email-value');
+    const emailValueElements = component.getAllByTestId('email-value');
     expect(emailValueElements.length).toBe(2);
 
     // Verify that the display is in the correct order
@@ -123,6 +125,7 @@ describe('Contact PersonView component', () => {
         id: ContactMethodTypes.Fax,
         description: 'Fax',
         isDisabled: false,
+        displayOrder: null,
       },
       value: '123456789',
     };
@@ -133,6 +136,7 @@ describe('Contact PersonView component', () => {
         id: ContactMethodTypes.PersonalPhone,
         description: 'Personal Phone',
         isDisabled: false,
+        displayOrder: null,
       },
       value: '800123123',
     };
@@ -143,6 +147,7 @@ describe('Contact PersonView component', () => {
         id: ContactMethodTypes.WorkPhone,
         description: 'Work Phone',
         isDisabled: false,
+        displayOrder: null,
       },
       value: '555123123',
     };
@@ -153,6 +158,7 @@ describe('Contact PersonView component', () => {
         id: ContactMethodTypes.WorkMobile,
         description: 'Work mobil',
         isDisabled: false,
+        displayOrder: null,
       },
       value: '800123123',
     };
@@ -163,6 +169,7 @@ describe('Contact PersonView component', () => {
         id: ContactMethodTypes.PersonalMobile,
         description: 'Personal Mobile',
         isDisabled: false,
+        displayOrder: null,
       },
       value: '750748789',
     };
@@ -181,7 +188,7 @@ describe('Contact PersonView component', () => {
       },
     });
 
-    var phoneValueElements = component.getAllByTestId('phone-value');
+    const phoneValueElements = component.getAllByTestId('phone-value');
     expect(phoneValueElements.length).toBe(5);
 
     // Verify that the display is in the correct order
@@ -210,7 +217,7 @@ describe('Contact PersonView component', () => {
       },
     });
 
-    var organizationElements = component.getAllByTestId('contact-person-organization');
+    const organizationElements = component.getAllByTestId('contact-person-organization');
     expect(organizationElements.length).toBe(1);
 
     // Verify that the display is in the correct order
@@ -234,6 +241,7 @@ describe('Contact PersonView component', () => {
         id: AddressTypes.Mailing,
         description: 'Mailing Address',
         isDisabled: false,
+        displayOrder: null,
       },
     };
     const residentialAddress: IContactAddress = {
@@ -252,6 +260,7 @@ describe('Contact PersonView component', () => {
         id: AddressTypes.Residential,
         description: 'Residential Address',
         isDisabled: false,
+        displayOrder: null,
       },
     };
 
@@ -263,7 +272,7 @@ describe('Contact PersonView component', () => {
       },
     });
 
-    var addressElements = component.getAllByTestId('contact-person-address');
+    const addressElements = component.getAllByTestId('contact-person-address');
     expect(addressElements.length).toBe(2);
 
     // Verify that the display is in the correct order
@@ -293,6 +302,7 @@ describe('Contact PersonView component', () => {
         id: AddressTypes.Mailing,
         description: 'Mailing Address',
         isDisabled: false,
+        displayOrder: null,
       },
     };
 
@@ -304,7 +314,7 @@ describe('Contact PersonView component', () => {
       },
     });
 
-    var addressElement = component.getByTestId('contact-person-address');
+    const addressElement = component.getByTestId('contact-person-address');
 
     // Verify that the display is in the correct order
     expect(addressElement.textContent).toBe(
@@ -313,7 +323,7 @@ describe('Contact PersonView component', () => {
   });
 
   it('Shows comment information', () => {
-    const testComment: string = 'A test comment :)';
+    const testComment = 'A test comment :)';
     const { component } = setup({
       person: {
         ...fakePerson,
@@ -321,7 +331,7 @@ describe('Contact PersonView component', () => {
       },
     });
 
-    var commentElement = component.getByTestId('contact-person-comment');
+    const commentElement = component.getByTestId('contact-person-comment');
     expect(commentElement.textContent).toBe(testComment);
   });
 
@@ -333,7 +343,7 @@ describe('Contact PersonView component', () => {
       },
     });
 
-    var addressElements = component.getAllByTestId('contact-person-address');
+    const addressElements = component.getAllByTestId('contact-person-address');
     expect(addressElements.length).toBe(3);
 
     expect(addressElements[0].children[0]).toHaveTextContent('Mailing address');
