@@ -100,6 +100,16 @@ export const disposedIconSelect = L.icon({
   shadowSize: [41, 41],
 });
 
+// retired icon (grey)
+export const retiredIcon = L.icon({
+  iconUrl: require('@/assets/images/pins/retired.png') ?? 'assets/images/pins/retired.png',
+  shadowUrl: require('@/assets/images/pins/marker-shadow.png') ?? 'marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41],
+});
+
 // not owned property icon (orange)
 export const notOwnedPropertyIcon = L.icon({
   iconUrl:
@@ -153,17 +163,26 @@ export function pointToLayer<P extends MarkerFeature, C extends Supercluster.Clu
  * Get an icon type for the specified cluster property details.
  *
  * Precedence (map viewing map markers)
- * 1. Core Inventory
- * 2. Other Interest
- * 3. Property of Interest
- * 4. Disposed (only if advanced filter is open)
+ *
+ * 1. Retired (only if advanced filter is open). This will take precedence over other ownership statuses.
+ * 2. Core Inventory
+ * 3. Other Interest
+ * 4. Property of Interest
+ * 5. Disposed (only if advanced filter is open)
  */
 export function getMarkerIcon(
   feature: Supercluster.PointFeature<PIMS_Property_Location_View | PIMS_Property_Boundary_View>,
   selected: boolean,
   showDisposed = false,
+  showRetired = false,
 ): L.Icon<L.IconOptions> | null {
-  if (feature?.properties?.IS_OWNED === true) {
+  if (feature?.properties?.IS_RETIRED === true) {
+    if (showRetired) {
+      return retiredIcon;
+    } else {
+      return null;
+    }
+  } else if (feature?.properties?.IS_OWNED === true) {
     if (selected) {
       return parcelIconSelect;
     }
