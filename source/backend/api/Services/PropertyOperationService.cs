@@ -83,7 +83,7 @@ namespace Pims.Api.Services
             }
 
             // retire the source property
-            _propertyService.RetireProperty(dbSourceProperty);
+            _propertyService.RetireProperty(dbSourceProperty, false);
 
             foreach (var operation in operations)
             {
@@ -153,8 +153,7 @@ namespace Pims.Api.Services
             // retire the source properties
             foreach (var sp in dbSourceProperties)
             {
-                sp.IsRetired = true;
-                _propertyService.Update(sp, false);
+                _propertyService.RetireProperty(sp, false);
             }
 
             destinationProperty.PropertyId = 0; // in the case this property already exists, this will force it to be recreated.
