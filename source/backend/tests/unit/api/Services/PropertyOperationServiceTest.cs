@@ -191,7 +191,7 @@ namespace Pims.Api.Test.Services
             var sameProperty = EntityHelper.CreateProperty(3);
             propertyService.Setup(x => x.GetById(It.IsAny<long>())).Returns(sameProperty);
             propertyService.Setup(x => x.GetByPid(It.IsAny<string>())).Throws(new KeyNotFoundException());
-            propertyService.Setup(x => x.Update(It.IsAny<PimsProperty>(), false)).Returns(sameProperty);
+            propertyService.Setup(x => x.RetireProperty(It.IsAny<PimsProperty>(), false)).Returns(sameProperty);
             propertyService.Setup(x => x.PopulateNewProperty(It.IsAny<PimsProperty>(), true, false)).Returns(sameProperty);
 
             var operations = new List<PimsPropertyOperation>() { EntityHelper.CreatePropertyOperation(), EntityHelper.CreatePropertyOperation() };
@@ -204,7 +204,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             repository.Verify(x => x.AddRange(It.IsAny<List<PimsPropertyOperation>>()), Times.Once);
-            propertyService.Verify(x => x.Update(It.IsAny<PimsProperty>(), false), Times.Once);
+            propertyService.Verify(x => x.RetireProperty(It.IsAny<PimsProperty>(), false), Times.Once);
             propertyService.Verify(x => x.PopulateNewProperty(It.IsAny<PimsProperty>(), true, false), Times.Exactly(2));
         }
 
@@ -217,7 +217,7 @@ namespace Pims.Api.Test.Services
             var sameProperty = EntityHelper.CreateProperty(3);
             propertyService.Setup(x => x.GetById(It.IsAny<long>())).Returns(sameProperty);
             propertyService.Setup(x => x.GetByPid(It.IsAny<string>())).Returns(sameProperty);
-            propertyService.Setup(x => x.Update(It.IsAny<PimsProperty>(), false)).Returns(sameProperty);
+            propertyService.Setup(x => x.RetireProperty(It.IsAny<PimsProperty>(), false)).Returns(sameProperty);
             propertyService.Setup(x => x.PopulateNewProperty(It.IsAny<PimsProperty>(), true, false)).Returns(sameProperty);
 
             var operationWithSameDestSource = EntityHelper.CreatePropertyOperation();
@@ -233,7 +233,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             repository.Verify(x => x.AddRange(It.IsAny<List<PimsPropertyOperation>>()), Times.Once);
-            propertyService.Verify(x => x.Update(It.IsAny<PimsProperty>(), false), Times.Once);
+            propertyService.Verify(x => x.RetireProperty(It.IsAny<PimsProperty>(), false), Times.Once);
             propertyService.Verify(x => x.PopulateNewProperty(It.IsAny<PimsProperty>(), true, false), Times.Exactly(2));
         }
 
@@ -434,7 +434,7 @@ namespace Pims.Api.Test.Services
             var otherProperty = EntityHelper.CreateProperty(4);
             propertyService.Setup(x => x.GetMultipleById(It.IsAny<List<long>>())).Returns(new List<PimsProperty> { sameProperty, otherProperty });
             propertyService.Setup(x => x.GetByPid(It.IsAny<string>())).Throws(new KeyNotFoundException());
-            propertyService.Setup(x => x.Update(It.IsAny<PimsProperty>(), false)).Returns(sameProperty);
+            propertyService.Setup(x => x.RetireProperty(It.IsAny<PimsProperty>(), false)).Returns((PimsProperty p, bool b) => p);
             propertyService.Setup(x => x.PopulateNewProperty(It.IsAny<PimsProperty>(), true, false)).Returns(sameProperty);
 
             var operationOne = EntityHelper.CreatePropertyOperation();
@@ -451,7 +451,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             repository.Verify(x => x.AddRange(It.IsAny<List<PimsPropertyOperation>>()), Times.Once);
-            propertyService.Verify(x => x.Update(It.IsAny<PimsProperty>(), false), Times.Exactly(2));
+            propertyService.Verify(x => x.RetireProperty(It.IsAny<PimsProperty>(), false), Times.Exactly(2));
             propertyService.Verify(x => x.PopulateNewProperty(It.IsAny<PimsProperty>(), true, false), Times.Once);
         }
 
@@ -465,7 +465,7 @@ namespace Pims.Api.Test.Services
             var otherProperty = EntityHelper.CreateProperty(4);
             propertyService.Setup(x => x.GetMultipleById(It.IsAny<List<long>>())).Returns(new List<PimsProperty> { sameProperty, otherProperty });
             propertyService.Setup(x => x.GetByPid(It.IsAny<string>())).Returns(sameProperty);
-            propertyService.Setup(x => x.Update(It.IsAny<PimsProperty>(), false)).Returns(sameProperty);
+            propertyService.Setup(x => x.RetireProperty(It.IsAny<PimsProperty>(), false)).Returns((PimsProperty p, bool b) => p);
             propertyService.Setup(x => x.PopulateNewProperty(It.IsAny<PimsProperty>(), true, false)).Returns(sameProperty);
 
             var operationWithSameDestSource = EntityHelper.CreatePropertyOperation();
@@ -484,7 +484,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             repository.Verify(x => x.AddRange(It.IsAny<List<PimsPropertyOperation>>()), Times.Once);
-            propertyService.Verify(x => x.Update(It.IsAny<PimsProperty>(), false), Times.Exactly(2));
+            propertyService.Verify(x => x.RetireProperty(It.IsAny<PimsProperty>(), false), Times.Exactly(2));
             propertyService.Verify(x => x.PopulateNewProperty(It.IsAny<PimsProperty>(), true, false), Times.Once);
         }
 
