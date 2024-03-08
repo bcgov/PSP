@@ -31,7 +31,7 @@ module.exports = {
   },
   // The Jest config to use when running your jest tests
   jest: function override(config) {
-    config.transformIgnorePatterns = ['node_modules/(?!(react-leaflet|@react-leaflet/core)/)'];
+    config.transformIgnorePatterns = ['<rootDir>/node_modules/(?!(react-leaflet|@react-leaflet))'];
     return config;
   },
 

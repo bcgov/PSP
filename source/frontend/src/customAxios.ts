@@ -1,5 +1,5 @@
 import { Dispatch } from '@reduxjs/toolkit';
-import axios, { AxiosError } from 'axios';
+import axios, { AxiosError, AxiosRequestHeaders } from 'axios';
 import { isEmpty } from 'lodash';
 import { hideLoading } from 'react-redux-loading-bar';
 import { toast } from 'react-toastify';
@@ -48,7 +48,7 @@ export const CustomAxios = ({
   });
   instance.interceptors.request.use(config => {
     if (config.headers === undefined) {
-      config.headers = {};
+      config.headers = {} as AxiosRequestHeaders;
     }
     config.headers.Authorization = `Bearer ${store.getState().jwt}`;
     if (selector !== undefined) {

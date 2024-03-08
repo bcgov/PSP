@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Add Subdivision View matches snapshot 1`] = `
+exports[`Add Consolidation View matches snapshot 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
@@ -48,7 +48,7 @@ exports[`Add Subdivision View matches snapshot 1`] = `
           >
             subdivisionconsolidation.svg
           </svg>
-          Create a Subdivision
+          Create a Consolidation
         </h1>
       </div>
       <div
@@ -220,7 +220,7 @@ exports[`Add Subdivision View matches snapshot 1`] = `
               <h2
                 class="c4"
               >
-                Properties in Subdivision  
+                Properties in Consolidation
                 <svg
                   class="tooltip-icon h-20"
                   fill="currentColor"
@@ -238,11 +238,11 @@ exports[`Add Subdivision View matches snapshot 1`] = `
                 <span
                   class="c5"
                 >
-                  Only a property that is in the PIMS inventory can be subdivided.
+                  Only properties that is in the PIMS inventory can be consolidated.
                 </span>
               </h2>
               <p>
-                Select the parent property that was subdivided:
+                Select two or more parent properties that were consolidated:
               </p>
               <div
                 class="c6 c7"
@@ -352,7 +352,7 @@ exports[`Add Subdivision View matches snapshot 1`] = `
                     <div
                       class="col"
                     >
-                      Selected Children
+                      Selected Child
                     </div>
                   </div>
                 </h2>
@@ -573,7 +573,7 @@ exports[`Add Subdivision View matches snapshot 1`] = `
           <div
             class="Button__value"
           >
-            Create Subdivision
+            Create Consolidation
           </div>
         </button>
       </div>

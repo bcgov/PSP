@@ -129,7 +129,7 @@ namespace Pims.Api.Areas.Property.Controllers
         [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult UpdateConceptProperty([FromBody] PropertyModel propertyModel)
         {
-            var propertyEntity = _mapper.Map<Pims.Dal.Entities.PimsProperty>(propertyModel);
+            var propertyEntity = _mapper.Map<Dal.Entities.PimsProperty>(propertyModel);
             var updatedProperty = _propertyService.Update(propertyEntity);
 
             return new JsonResult(_mapper.Map<PropertyModel>(updatedProperty));

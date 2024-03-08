@@ -6,16 +6,13 @@ import Claims from '@/constants/claims';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes/lookupCodesSlice';
 import { render, RenderOptions, waitFor, screen, getByTitle, userEvent } from '@/utils/test-utils';
-import { SubdivisionFormModel } from './AddSubdivisionModel';
-import AddSubdivisionView, { IAddSubdivisionViewProps } from './AddSubdivisionView';
-import PropertySelectorPidSearchContainer, {
-  PropertySelectorPidSearchContainerProps,
-} from '@/components/propertySelector/search/PropertySelectorPidSearchContainer';
-import MapSelectorContainer, {
-  IMapSelectorContainerProps,
-} from '@/components/propertySelector/MapSelectorContainer';
+import { ConsolidationFormModel } from './AddConsolidationModel';
+import AddConsolidationView, { IAddConsolidationViewProps } from './AddConsolidationView';
+import { PropertySelectorPidSearchContainerProps } from '@/components/propertySelector/search/PropertySelectorPidSearchContainer';
+import { IMapSelectorContainerProps } from '@/components/propertySelector/MapSelectorContainer';
 import { IMapProperty } from '@/components/propertySelector/models';
 import { getMockApiProperty } from '@/mocks/properties.mock';
+import { pidFormatter } from '@/utils';
 
 const history = createMemoryHistory();
 jest.mock('@react-keycloak/web');
@@ -35,7 +32,7 @@ jest.mock('react-visibility-sensor', () => {
   });
 });
 
-const initialValues = new SubdivisionFormModel();
+const initialValues = new ConsolidationFormModel();
 
 let pidSelectorProps: PropertySelectorPidSearchContainerProps;
 let mapSelectorProps: IMapSelectorContainerProps;
@@ -50,13 +47,13 @@ const TestView: React.FunctionComponent<IMapSelectorContainerProps> = props => {
   return <span>Content Rendered</span>;
 };
 
-describe('Add Subdivision View', () => {
+describe('Add Consolidation View', () => {
   const setup = async (
-    renderOptions: RenderOptions & { props?: Partial<IAddSubdivisionViewProps> } = {},
+    renderOptions: RenderOptions & { props?: Partial<IAddConsolidationViewProps> } = {},
   ) => {
-    const ref = createRef<FormikProps<SubdivisionFormModel>>();
+    const ref = createRef<FormikProps<ConsolidationFormModel>>();
     const utils = render(
-      <AddSubdivisionView
+      <AddConsolidationView
         {...renderOptions.props}
         formikRef={ref}
         loading={renderOptions.props?.loading ?? false}
@@ -64,7 +61,9 @@ describe('Add Subdivision View', () => {
         onCancel={onCancel}
         onSave={onSave}
         onSubmit={onSubmit}
-        subdivisionInitialValues={renderOptions.props?.subdivisionInitialValues ?? initialValues}
+        consolidationInitialValues={
+          renderOptions.props?.consolidationInitialValues ?? initialValues
+        }
         getPrimaryAddressByPid={getPrimaryAddressByPid}
         PropertySelectorPidSearchComponent={PidSelectorView}
         MapSelectorComponent={TestView}
@@ -126,20 +125,21 @@ describe('Add Subdivision View', () => {
   it('The PID search result is added to the source property', async () => {
     await setup();
     const property = getMockApiProperty();
+    property.pid = 88999888;
     await waitFor(async () => {
       pidSelectorProps.setSelectProperty(property);
     });
-    const text = await screen.findByText(property.pid?.toString() ?? '');
+    const text = await screen.findByText(pidFormatter(property.pid?.toString() ?? ''));
     expect(text).toBeVisible();
   });
 
-  it('selected source property can be removed', async () => {
+  it('selected source properties can be removed', async () => {
+    const initialFormModel = new ConsolidationFormModel();
+    initialFormModel.sourceProperties = [{ ...getMockApiProperty(), pid: 111 - 111 - 111 }];
+
     const { getByTitle, queryByText } = await setup({
       props: {
-        subdivisionInitialValues: {
-          sourceProperty: { ...getMockApiProperty(), pid: 111 - 111 - 111 },
-          destinationProperties: [],
-        } as unknown as SubdivisionFormModel,
+        consolidationInitialValues: initialFormModel,
       },
     });
 
@@ -150,12 +150,13 @@ describe('Add Subdivision View', () => {
     expect(queryByText('111-111-111')).toBeNull();
   });
 
-  it('selected destination properties can be removed', async () => {
+  it('selected destination property can be removed', async () => {
+    const initialFormModel = new ConsolidationFormModel();
+    initialFormModel.destinationProperty = { ...getMockApiProperty(), pid: 111 - 111 - 111 };
+    initialFormModel.sourceProperties = [];
     const { getByTitle, queryByText } = await setup({
       props: {
-        subdivisionInitialValues: {
-          destinationProperties: [{ ...getMockApiProperty(), pid: 111 - 111 - 111 }],
-        } as unknown as SubdivisionFormModel,
+        consolidationInitialValues: initialFormModel,
       },
     });
 

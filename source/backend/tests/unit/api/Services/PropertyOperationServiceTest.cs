@@ -272,7 +272,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             var exception = act.Should().Throw<BusinessRuleViolationException>();
-            exception.WithMessage("Consolidations must contain at least two parent properties.");
+            exception.WithMessage("Consolidations must contain at least two different parent properties.");
         }
 
         [Fact]
@@ -347,7 +347,7 @@ namespace Pims.Api.Test.Services
 
             var operationOne = EntityHelper.CreatePropertyOperation();
             operationOne.DestinationProperty.Pid = -1;
-            
+
             var operations = new List<PimsPropertyOperation>() { operationOne, EntityHelper.CreatePropertyOperation() };
 
             // Act

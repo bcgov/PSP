@@ -80,7 +80,7 @@ describe('LayerPopupView component', () => {
 
     it('handles view property action for inventory properties', async () => {
       const pid = '123456789';
-      const propertyId = '123456789';
+      const propertyId = 123456789;
 
       const { getByTestId, getByText } = setup({
         layerPopup: {
@@ -187,7 +187,7 @@ describe('LayerPopupView component', () => {
     });
 
     it('handles create create subdivision action', async () => {
-      const propertyId = '1';
+      const propertyId = 1;
 
       const { getByTestId, getByText } = setup({
         layerPopup: { data: {} } as any,
@@ -214,7 +214,7 @@ describe('LayerPopupView component', () => {
     });
 
     it('handles create create consolidation action', async () => {
-      const propertyId = '1';
+      const propertyId = 1;
 
       const { getByTestId, getByText } = setup({
         layerPopup: { data: {} } as any,
