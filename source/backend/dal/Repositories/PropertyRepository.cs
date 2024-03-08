@@ -87,9 +87,9 @@ namespace Pims.Dal.Repositories
         /// <returns></returns>
         public PimsProperty GetById(long id)
         {
-            this.User.ThrowIfNotAllAuthorized(Permissions.PropertyView);
+            User.ThrowIfNotAllAuthorized(Permissions.PropertyView);
 
-            var property = this.Context.PimsProperties
+            var property = Context.PimsProperties.AsNoTracking()
                 .Include(p => p.DistrictCodeNavigation)
                 .Include(p => p.RegionCodeNavigation)
                 .Include(p => p.PropertyTypeCodeNavigation)
@@ -418,6 +418,17 @@ namespace Pims.Dal.Repositories
                 existingProperty.PropertyClassificationTypeCode = "OTHER";
             }
 
+            return existingProperty;
+        }
+
+        public PimsProperty RetireProperty(PimsProperty property)
+        {
+            property.ThrowIfNull(nameof(property));
+
+            var existingProperty = Context.PimsProperties
+                .FirstOrDefault(p => p.PropertyId == property.Internal_Id) ?? throw new KeyNotFoundException();
+
+            existingProperty.IsRetired = true;
             return existingProperty;
         }
 
