@@ -36,16 +36,20 @@ namespace PIMS.Tests.Automation.PageObjects
         private By searchLicenceLFileColumnHeader = By.XPath("//div[@data-testid='leasesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'L-File Number')]");
         private By searchLicenseOrderByLFileBttn = By.CssSelector("div[data-testid='sort-column-lFileNo']");
         private By searchLicenceExpiryDateColumnHeader = By.XPath("//div[@data-testid='leasesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Expiry Date')]");
+        private By searchLicenseOrderByExpiryDateBttn = By.CssSelector("div[data-testid='sort-column-expiryDate']");
         private By searchLicenceProgramNameColumnHeader = By.XPath("//div[@data-testid='leasesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Program Name')]");
+        private By searchLicenseOrderByProgramNameBttn = By.CssSelector("div[data-testid='sort-column-programName']");
         private By searchLicenceTenantNameColumnHeader = By.XPath("//div[@data-testid='leasesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Tenant Names')]");
         private By searchLicencePropertiesColumnHeader = By.XPath("//div[@data-testid='leasesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Properties')]");
         private By searchLicenceStatusColumnHeader = By.XPath("//div[@data-testid='leasesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Status')]");
+        private By searchLicenseOrderByStatusBttn = By.CssSelector("div[data-testid='sort-column-fileStatusTypeCode']");
+
         private By searchLicenseResultsTable = By.CssSelector("div[data-testid='leasesTable'] div[class='tbody'] div[class='tr-wrapper']");
 
         //Search Table 1st Result Elements
         private By searchLicenseResultsTable1stResult = By.CssSelector("div[data-testid='leasesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1)");
         private By searchLicense1stResultLink = By.CssSelector("div[data-testid='leasesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) a");
-        private By searchLicense1stResultExpiryDateContent = By.XPath("//div[@data-testid='leasesTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[2]/span");
+        private By searchLicense1stResultExpiryDateContent = By.XPath("//div[@data-testid='leasesTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[2]/span[1]");
         private By searchLicense1stResultProgramContent = By.XPath("//div[@data-testid='leasesTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[3]");
         private By searchLicense1stResultTenantsContent = By.XPath("//div[@data-testid='leasesTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[4]/div/div");
         private By searchLicense1stResultPropertiesContent = By.XPath("//div[@data-testid='leasesTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[5]/div/div");
@@ -94,6 +98,16 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(searchLicenseOrderByLFileBttn).Click();
         }
 
+        public void SearchAllLeases()
+        {
+            Wait(2000);
+            webDriver.FindElement(searchLicenseResetButton).Click();
+
+            Wait(2000);
+            webDriver.FindElement(searchLicenseActiveStatusDeleteBttn).Click();
+            webDriver.FindElement(searchLicenseSearchButton).Click();
+        }
+
         public void OrderByLastLease()
         {
             WaitUntilClickable(searchLicenseOrderByLFileBttn);
@@ -103,6 +117,30 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(searchLicenseOrderByLFileBttn).Click();
         }
 
+        public void OrderByLeaseFileNumber()
+        {
+            WaitUntilClickable(searchLicenseOrderByLFileBttn);
+            webDriver.FindElement(searchLicenseOrderByLFileBttn).Click();
+        }
+
+        public void OrderByLeaseExpiryDate()
+        {
+            WaitUntilClickable(searchLicenseOrderByExpiryDateBttn);
+            webDriver.FindElement(searchLicenseOrderByExpiryDateBttn).Click();
+        }
+
+        public void OrderByLeaseProgramName()
+        {
+            WaitUntilClickable(searchLicenseOrderByProgramNameBttn);
+            webDriver.FindElement(searchLicenseOrderByProgramNameBttn).Click();
+        }
+
+        public void OrderByLeaseStatus()
+        {
+            WaitUntilClickable(searchLicenseOrderByStatusBttn);
+            webDriver.FindElement(searchLicenseOrderByStatusBttn).Click();
+        }
+
         public void SelectFirstOption()
         {
             WaitUntilClickable(searchLicense1stResultLink);
@@ -110,6 +148,30 @@ namespace PIMS.Tests.Automation.PageObjects
 
             WaitUntilVisible(searchLicenseFileHeaderCode);
             Assert.True(webDriver.FindElement(searchLicenseFileHeaderCode).Displayed);
+        }
+
+        public string FirstLeaseFileNumber()
+        {
+            WaitUntilTableSpinnerDisappear();
+            return webDriver.FindElement(searchLicense1stResultLink).Text;
+        }
+
+        public string FirstLeaseExpiryDate()
+        {
+            WaitUntilTableSpinnerDisappear();
+            return webDriver.FindElement(searchLicense1stResultExpiryDateContent).Text;
+        }
+
+        public string FirstLeaseProgramName()
+        {
+            WaitUntilTableSpinnerDisappear();
+            return webDriver.FindElement(searchLicense1stResultProgramContent).Text;
+        }
+
+        public string FirstLeaseStatus()
+        {
+            WaitUntilTableSpinnerDisappear();
+            return webDriver.FindElement(searchLicense1stResultStatusContent).Text;
         }
 
         public void FilterLeasesFiles(string pid, string expiryDate, string tenant, string status)
@@ -140,6 +202,12 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             Wait(2000);
             return webDriver.FindElements(searchLicenseResultsTable1stResult).Count > 0;
+        }
+
+        public int LeasesTableResultNumber()
+        {
+            WaitUntilTableSpinnerDisappear();
+            return webDriver.FindElements(searchLicenseResultsTable).Count;
         }
 
         public void VerifySearchLeasesView()
