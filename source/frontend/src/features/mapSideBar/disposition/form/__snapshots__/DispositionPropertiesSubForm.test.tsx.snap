@@ -223,6 +223,10 @@ exports[`DispositionPropertiesSubForm component renders as expected 1`] = `
   font-weight: bold;
 }
 
+.c8 span {
+  position: absolute;
+}
+
 .c5.c5.c5 input,
 .c5.c5.c5 select,
 .c5.c5.c5 textarea {

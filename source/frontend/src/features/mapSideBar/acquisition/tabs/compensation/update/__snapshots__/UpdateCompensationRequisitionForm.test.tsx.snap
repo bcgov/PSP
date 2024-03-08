@@ -202,6 +202,10 @@ exports[`Compensation Requisition UpdateForm component renders as expected 1`] =
   font-weight: bold;
 }
 
+.c3 span {
+  position: absolute;
+}
+
 .c13 {
   position: -webkit-sticky;
   position: sticky;

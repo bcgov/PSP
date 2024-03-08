@@ -103,6 +103,10 @@ exports[`AcquisitionFileTabs component matches snapshot 1`] = `
   font-weight: bold;
 }
 
+.c6 span {
+  position: absolute;
+}
+
 .c8 {
   display: -webkit-box;
   display: -webkit-flex;

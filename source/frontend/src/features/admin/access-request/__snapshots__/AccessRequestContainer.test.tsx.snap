@@ -215,6 +215,10 @@ exports[`AccessRequestContainer component makes a request based on the access re
   font-weight: bold;
 }
 
+.c0 span {
+  position: absolute;
+}
+
 .c4 {
   position: absolute;
   top: 1rem;
@@ -936,6 +940,10 @@ exports[`AccessRequestContainer component makes a request when no id is provided
 
 .c0 {
   font-weight: bold;
+}
+
+.c0 span {
+  position: absolute;
 }
 
 .c4 {

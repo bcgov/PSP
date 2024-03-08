@@ -77,6 +77,10 @@ exports[`ResearchFileTabs component matches snapshot 1`] = `
   font-weight: bold;
 }
 
+.c6 span {
+  position: absolute;
+}
+
 <div
     class="c0"
   >

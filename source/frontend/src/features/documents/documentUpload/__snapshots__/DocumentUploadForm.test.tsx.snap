@@ -12,6 +12,10 @@ exports[`DocumentUploadView component renders as expected 1`] = `
   font-weight: bold;
 }
 
+.c0 span {
+  position: absolute;
+}
+
 .c2 {
   border: 1px solid;
   border-style: dashed;

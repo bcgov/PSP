@@ -158,6 +158,10 @@ exports[`DocumentDetailView component renders as expected 1`] = `
   font-weight: bold;
 }
 
+.c1 span {
+  position: absolute;
+}
+
 .c8 {
   width: 100%;
   -webkit-box-flex: 1;

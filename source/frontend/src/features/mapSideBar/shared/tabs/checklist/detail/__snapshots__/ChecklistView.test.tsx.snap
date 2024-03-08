@@ -44,6 +44,10 @@ exports[`ChecklistView component renders as expected 1`] = `
   font-weight: bold;
 }
 
+.c6 span {
+  position: absolute;
+}
+
 .c3 {
   font-size: 1.4rem;
   text-align: center;

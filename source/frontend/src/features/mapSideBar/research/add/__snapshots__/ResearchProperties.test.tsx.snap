@@ -276,6 +276,10 @@ exports[`ResearchProperties component renders as expected when provided no prope
   font-weight: bold;
 }
 
+.c9 span {
+  position: absolute;
+}
+
 .c6.c6.c6 input,
 .c6.c6.c6 select,
 .c6.c6.c6 textarea {

@@ -258,6 +258,10 @@ exports[`AddResearchForm component renders as expected 1`] = `
   font-weight: bold;
 }
 
+.c17 span {
+  position: absolute;
+}
+
 .c15:hover {
   cursor: pointer;
 }

@@ -175,6 +175,10 @@ exports[`AddFinancialCode form renders as expected 1`] = `
   font-weight: bold;
 }
 
+.c1 span {
+  position: absolute;
+}
+
 .c0 .form-section {
   margin: 0;
   padding-left: 0;

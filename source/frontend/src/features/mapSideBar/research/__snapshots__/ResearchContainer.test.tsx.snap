@@ -111,6 +111,10 @@ exports[`ResearchContainer component renders as expected 1`] = `
   font-weight: bold;
 }
 
+.c23 span {
+  position: absolute;
+}
+
 .c17 {
   height: 100%;
 }

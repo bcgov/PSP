@@ -227,6 +227,10 @@ exports[`ReceivedDepositForm component renders as expected 1`] = `
   font-weight: bold;
 }
 
+.c1 span {
+  position: absolute;
+}
+
 .c0 .form-group {
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
@@ -746,6 +750,10 @@ exports[`ReceivedDepositForm component renders with data as expected 1`] = `
 
 .c1 {
   font-weight: bold;
+}
+
+.c1 span {
+  position: absolute;
 }
 
 .c0 .form-group {

@@ -31,6 +31,10 @@ exports[`Add Improvements container component displays the improvement types in 
   font-weight: bold;
 }
 
+.c4 span {
+  position: absolute;
+}
+
 .c6 {
   font-family: 'BCSans';
 }
@@ -458,6 +462,10 @@ exports[`Add Improvements container component renders as expected 1`] = `
 
 .c4 {
   font-weight: bold;
+}
+
+.c4 span {
+  position: absolute;
 }
 
 .c6 {

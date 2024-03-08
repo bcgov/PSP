@@ -209,6 +209,10 @@ exports[`EditUserContainer component makes a request based on the user id 1`] = 
   font-weight: bold;
 }
 
+.c0 span {
+  position: absolute;
+}
+
 .c4 {
   position: absolute;
   top: 1rem;

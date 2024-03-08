@@ -198,6 +198,10 @@ exports[`UpdateAcquisitionAgreementView component renders as expected 1`] = `
   font-weight: bold;
 }
 
+.c3 span {
+  position: absolute;
+}
+
 .c7 {
   font-weight: bold;
   border-bottom: 0.2rem solid;

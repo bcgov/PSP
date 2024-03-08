@@ -303,6 +303,10 @@ exports[`UpdateResearchForm component renders as expected when provided no resea
   font-weight: bold;
 }
 
+.c3 span {
+  position: absolute;
+}
+
 .c5 {
   font-size: 16px;
   color: #1a5a96;

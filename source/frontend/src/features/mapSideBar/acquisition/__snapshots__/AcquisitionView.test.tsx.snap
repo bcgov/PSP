@@ -392,6 +392,10 @@ exports[`AcquisitionView component renders as expected 1`] = `
   font-weight: bold;
 }
 
+.c17 span {
+  position: absolute;
+}
+
 .c4 {
   text-align: left;
   padding: 0px;

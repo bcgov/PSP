@@ -31,6 +31,10 @@ exports[`compensation list view renders as expected 1`] = `
   font-weight: bold;
 }
 
+.c4 span {
+  position: absolute;
+}
+
 .c3 {
   -webkit-box-pack: justify;
   -webkit-justify-content: space-between;

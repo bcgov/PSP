@@ -290,6 +290,10 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
   font-weight: bold;
 }
 
+.c8 span {
+  position: absolute;
+}
+
 .c14 {
   max-width: 25rem;
   padding: 1rem;

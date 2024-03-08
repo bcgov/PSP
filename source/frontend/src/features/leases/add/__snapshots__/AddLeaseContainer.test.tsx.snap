@@ -370,6 +370,10 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
   font-weight: bold;
 }
 
+.c4 span {
+  position: absolute;
+}
+
 .c14.c14.c14 input,
 .c14.c14.c14 select,
 .c14.c14.c14 textarea {

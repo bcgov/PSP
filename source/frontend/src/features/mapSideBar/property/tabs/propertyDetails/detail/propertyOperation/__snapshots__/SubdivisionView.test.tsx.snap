@@ -36,6 +36,10 @@ exports[`Subdivision detail view matches snapshot 1`] = `
   font-weight: bold;
 }
 
+.c2 span {
+  position: absolute;
+}
+
 <div
     class="c0 form-section"
   >

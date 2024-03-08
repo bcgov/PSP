@@ -39,6 +39,10 @@ exports[`ResearchSummaryView component renders as expected when research file is
   font-weight: bold;
 }
 
+.c4 span {
+  position: absolute;
+}
+
 <div
     class="c0"
   >

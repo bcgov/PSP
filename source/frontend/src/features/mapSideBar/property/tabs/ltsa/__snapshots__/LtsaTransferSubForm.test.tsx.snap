@@ -17,6 +17,10 @@ exports[`LtsaTransferSubForm component renders transfer sub form 1`] = `
   font-weight: bold;
 }
 
+.c0 span {
+  position: absolute;
+}
+
 <div
     class="pb-2 row"
   >
@@ -56,6 +60,10 @@ exports[`LtsaTransferSubForm component renders transfer sub form 1`] = `
   font-weight: bold;
 }
 
+.c0 span {
+  position: absolute;
+}
+
 <div
     class="pb-2 row"
   >
@@ -92,6 +100,10 @@ exports[`LtsaTransferSubForm component renders transfer sub form 1`] = `
 
 .c0 {
   font-weight: bold;
+}
+
+.c0 span {
+  position: absolute;
 }
 
 <div
@@ -133,6 +145,10 @@ exports[`LtsaTransferSubForm component renders transfer sub form 1`] = `
   font-weight: bold;
 }
 
+.c0 span {
+  position: absolute;
+}
+
 <div
     class="pb-2 row"
   >
@@ -170,6 +186,10 @@ exports[`LtsaTransferSubForm component renders transfer sub form 1`] = `
 
 .c0 {
   font-weight: bold;
+}
+
+.c0 span {
+  position: absolute;
 }
 
 <div

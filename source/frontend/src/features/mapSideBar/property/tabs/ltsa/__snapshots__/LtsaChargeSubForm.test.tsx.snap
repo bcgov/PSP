@@ -17,6 +17,10 @@ exports[`LtsaChargeSubForm component renders charge sub form 1`] = `
   font-weight: bold;
 }
 
+.c0 span {
+  position: absolute;
+}
+
 <div>
     <div
       class="pb-2 row"

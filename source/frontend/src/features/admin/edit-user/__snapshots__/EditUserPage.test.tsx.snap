@@ -218,6 +218,10 @@ exports[`Edit user page EditUserPage renders 1`] = `
   font-weight: bold;
 }
 
+.c2 span {
+  position: absolute;
+}
+
 .c6 {
   position: absolute;
   top: 1rem;

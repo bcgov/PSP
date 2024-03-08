@@ -214,6 +214,10 @@ exports[`EditUserForm component renders as expected 1`] = `
   font-weight: bold;
 }
 
+.c0 span {
+  position: absolute;
+}
+
 .c5 {
   position: absolute;
   top: 1rem;

@@ -42,6 +42,10 @@ exports[`TakesDetailView component renders as expected 1`] = `
   font-weight: bold;
 }
 
+.c5 span {
+  position: absolute;
+}
+
 .c4 {
   border-radius: 0.5rem;
   padding: 1rem;

@@ -44,6 +44,10 @@ exports[`ProjectSummaryView component matches snapshot 1`] = `
   font-weight: bold;
 }
 
+.c5 span {
+  position: absolute;
+}
+
 .c7 {
   font-weight: bold;
   border-bottom-style: solid;

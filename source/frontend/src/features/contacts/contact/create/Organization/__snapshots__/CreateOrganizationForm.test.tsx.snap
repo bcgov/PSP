@@ -216,6 +216,10 @@ exports[`CreateOrganizationForm renders as expected 1`] = `
   font-weight: bold;
 }
 
+.c5 span {
+  position: absolute;
+}
+
 .c7 {
   display: -webkit-box;
   display: -webkit-flex;
