@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Col, Row } from 'react-bootstrap';
 import { FaMailBulk, FaPlus, FaTrash } from 'react-icons/fa';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import styled from 'styled-components';
@@ -65,9 +64,9 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
           <StyledAgreementBorder key={`agreement-section-${index}`}>
             <Section
               header={
-                <Row>
-                  <Col md={5}>{`Agreement ${++index}`}</Col>
-                  <Col md={7}>
+                <StyledHeaderContainer>
+                  <div>{`Agreement ${++index}`}</div>
+                  <div>
                     {exists(agreement.agreementType) && (
                       <StyledButtonContainer>
                         <StyledAddButton
@@ -130,8 +129,8 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
                           )}
                       </StyledButtonContainer>
                     )}
-                  </Col>
-                </Row>
+                  </div>
+                </StyledHeaderContainer>
               }
               isCollapsable
               initiallyExpanded
@@ -208,6 +207,14 @@ export const StyledButtonContainer = styled.div`
   justify-content: flex-end;
   align-items: center;
   margin-bottom: 0.5rem;
+  align-items: center;
+`;
+
+const StyledHeaderContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 const StyledAgreementBorder = styled.div`
