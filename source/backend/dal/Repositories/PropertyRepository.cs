@@ -493,10 +493,29 @@ namespace Pims.Dal.Repositories
             }
 
             // Property ownership filters
-            predicate.And(p => (p.IsOwned && filter.IsCoreInventory) ||
-                (p.IsPropertyOfInterest && filter.IsPropertyOfInterest) ||
-                (p.IsOtherInterest && filter.IsOtherInterest) ||
-                (p.IsDisposed && filter.IsDisposed));
+            var ownershipBuilder = PredicateBuilder.New<PimsProperty>(p => false);
+            if (filter.IsCoreInventory)
+            {
+                ownershipBuilder.Or(p => p.IsOwned);
+            }
+            if (filter.IsPropertyOfInterest)
+            {
+                ownershipBuilder.Or(p => p.IsPropertyOfInterest);
+            }
+            if (filter.IsOtherInterest)
+            {
+                ownershipBuilder.Or(p => p.IsOtherInterest);
+            }
+            if (filter.IsDisposed)
+            {
+                ownershipBuilder.Or(p => p.IsDisposed);
+            }
+            if (filter.IsRetired)
+            {
+                ownershipBuilder.Or(p => p.IsRetired.HasValue && p.IsRetired.Value);
+            }
+
+            predicate.And(ownershipBuilder);
 
             return Context.PimsProperties.AsNoTracking()
                 .Where(predicate)
