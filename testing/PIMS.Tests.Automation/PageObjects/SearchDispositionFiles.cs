@@ -128,7 +128,7 @@ namespace PIMS.Tests.Automation.PageObjects
         public void OrderByDispositionStatus()
         {
             WaitUntilClickable(searchDispositionFileOrderDispositionStatusBttn);
-            webDriver.FindElement(searchDispositionFileOrderDispositionStatusBttn).Click();
+            FocusAndClick(searchDispositionFileOrderDispositionStatusBttn);
         }
 
         public void OrderByDispositionFileStatus()

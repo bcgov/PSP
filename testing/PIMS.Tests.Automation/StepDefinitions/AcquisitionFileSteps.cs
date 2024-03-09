@@ -1,6 +1,4 @@
-﻿
-
-using PIMS.Tests.Automation.Classes;
+﻿using PIMS.Tests.Automation.Classes;
 using PIMS.Tests.Automation.Data;
 using System.Data;
 
@@ -890,11 +888,21 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             Assert.NotEqual(firstFileNameDescResult, firstFileNameAscResult);
 
-            //Filter research Files
+            //Verify Pagination display different set of results
+            sharedPagination.ResetSearch();
+
+            var firstAcquisitionPage1 = searchAcquisitionFiles.FirstAcquisitionFileNumber();
+            sharedPagination.GoNextPage();
+            var firstAcquisitionPage2 = searchAcquisitionFiles.FirstAcquisitionFileNumber();
+            Assert.NotEqual(firstAcquisitionPage1, firstAcquisitionPage2);
+
+            sharedPagination.ResetSearch();
+
+            //Filter Acquisition Files
             searchAcquisitionFiles.FilterAcquisitionFiles("003-549-551", "", "", "Acquisition from Jonathan Doe", "", "Cancelled", "");
             Assert.False(searchAcquisitionFiles.SearchFoundResults());
 
-            //Look for the last created research file
+            //Look for the last created Acquisition File
             searchAcquisitionFiles.FilterAcquisitionFiles("", "", "", acquisitionFile.AcquisitionFileName, "", acquisitionFile.AcquisitionStatus, "");
         }
 
