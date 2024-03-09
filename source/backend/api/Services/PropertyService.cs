@@ -9,7 +9,6 @@ using Pims.Api.Constants;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Models.CodeTypes;
 using Pims.Api.Models.Concepts.Property;
-using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 using Pims.Dal.Exceptions;
@@ -119,6 +118,19 @@ namespace Pims.Api.Services
             }
 
             return GetById(newProperty.Internal_Id);
+        }
+
+        public PimsProperty RetireProperty(PimsProperty property, bool commitTransaction = true)
+        {
+            _logger.LogInformation("Retiring property with id {id}", property.Internal_Id);
+            _user.ThrowIfNotAuthorized(Permissions.PropertyEdit);
+
+            var retiredProperty = _propertyRepository.RetireProperty(property);
+            if (commitTransaction)
+            {
+                _propertyRepository.CommitTransaction();
+            }
+            return GetById(retiredProperty.Internal_Id); ;
         }
 
         public IList<PimsPropertyContact> GetContacts(long propertyId)

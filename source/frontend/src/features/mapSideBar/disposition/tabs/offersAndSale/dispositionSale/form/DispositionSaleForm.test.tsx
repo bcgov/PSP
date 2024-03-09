@@ -429,7 +429,9 @@ describe('DispositionSaleForm  component', () => {
       fillInput(container, 'isGstRequired', 'false', 'select');
     });
     await waitForEffects();
-    expect(getByText(/The GST, if provided, will be cleared. Do you wish to proceed/i)).toBeVisible();
+    expect(
+      getByText(/The GST, if provided, will be cleared. Do you wish to proceed/i),
+    ).toBeVisible();
     await act(async () => userEvent.click(getByTitle('ok-modal')));
 
     expect(getGSTCollectedAmountTextbox()).toBeNull();
