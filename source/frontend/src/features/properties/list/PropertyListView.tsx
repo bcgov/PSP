@@ -31,11 +31,12 @@ import { defaultPropertyFilter, IPropertyFilter } from '../filter/IPropertyFilte
 import { SearchToggleOption } from '../filter/PropertySearchToggle';
 import { columns as columnDefinitions } from './columns';
 
-const ownershipFilterOptions: MultiSelectOption[] = [
+export const ownershipFilterOptions: MultiSelectOption[] = [
   { id: 'isCoreInventory', text: 'Core Inventory' },
   { id: 'isPropertyOfInterest', text: 'Property Of Interest' },
   { id: 'isOtherInterest', text: 'Other Interest' },
   { id: 'isDisposed', text: 'Disposed' },
+  { id: 'isRetired', text: 'Retired' },
 ];
 
 const PropertyListView: React.FC<React.PropsWithChildren<unknown>> = () => {
@@ -156,6 +157,7 @@ const PropertyListView: React.FC<React.PropsWithChildren<unknown>> = () => {
   const multiselectOwnershipRef = React.createRef<Multiselect>();
 
   const onSelectedOwnershipChange = (selectedList: MultiSelectOption[]) => {
+    setPageIndex(0);
     const selectedIds = selectedList.map(o => o.id);
     setFilter({ ...filter, ownership: selectedIds.join(',') });
   };

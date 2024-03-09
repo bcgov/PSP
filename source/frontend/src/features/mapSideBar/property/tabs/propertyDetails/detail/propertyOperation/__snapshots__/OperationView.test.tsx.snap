@@ -18,8 +18,6 @@ exports[`Subdivision detail view matches snapshot 1`] = `
 }
 
 .c0 {
-  margin: 1.5rem;
-  padding: 1.5rem;
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
@@ -49,7 +47,7 @@ exports[`Subdivision detail view matches snapshot 1`] = `
           class="col"
         >
           <div
-            class="pb-2 row"
+            class="row"
           >
             <div
               class="pr-0 text-left col-auto"
@@ -57,13 +55,13 @@ exports[`Subdivision detail view matches snapshot 1`] = `
               <label
                 class="c2"
               >
-                Created Date Time:
+                Created on:
               </label>
             </div>
             <div
               class="c3 text-left col"
             >
-              Dec 31, 1969 04:00 pm
+              Dec 31, 1969 at 04:00 pm
             </div>
           </div>
         </div>
@@ -99,7 +97,7 @@ exports[`Subdivision detail view matches snapshot 1`] = `
     >
       <div
         class="table"
-        data-testid="subdivisionTable"
+        data-testid="propertyOperationTable"
         role="table"
       >
         <div
@@ -167,7 +165,7 @@ exports[`Subdivision detail view matches snapshot 1`] = `
               <div
                 class="sortable-column"
               >
-                Area (sq m)
+                Area
               </div>
             </div>
           </div>
@@ -220,8 +218,24 @@ exports[`Subdivision detail view matches snapshot 1`] = `
               >
                 <a
                   href="/mapview/sidebar/property/2"
+                  rel="noopener noreferrer"
+                  target="_blank"
                 >
                   PID: 000-001-111
+                  <svg
+                    class="ml-2"
+                    fill="currentColor"
+                    height="1rem"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"
+                    />
+                  </svg>
                 </a>
               </div>
               <div
@@ -246,7 +260,10 @@ exports[`Subdivision detail view matches snapshot 1`] = `
                 style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
-                 0 
+                0 m
+                <sup>
+                  2
+                </sup>
               </div>
             </div>
           </div>
@@ -272,8 +289,24 @@ exports[`Subdivision detail view matches snapshot 1`] = `
               >
                 <a
                   href="/mapview/sidebar/property/1"
+                  rel="noopener noreferrer"
+                  target="_blank"
                 >
                   PID: 000-002-222
+                  <svg
+                    class="ml-2"
+                    fill="currentColor"
+                    height="1rem"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"
+                    />
+                  </svg>
                 </a>
               </div>
               <div
@@ -298,7 +331,10 @@ exports[`Subdivision detail view matches snapshot 1`] = `
                 style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
-                 0 
+                0 m
+                <sup>
+                  2
+                </sup>
               </div>
             </div>
           </div>
