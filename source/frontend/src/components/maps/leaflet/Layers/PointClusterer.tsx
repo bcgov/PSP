@@ -95,20 +95,39 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
   const pimsLocationFeatures: FeatureCollection<Geometry, PIMS_Property_Location_View> =
     useMemo(() => {
       if (mapMachine.isFiltering && mapMachine.mapFeatureData.pimsLocationFeatures !== null) {
-        const filteredFeatures = mapMachine.mapFeatureData.pimsLocationFeatures.features.filter(x =>
+        let filteredFeatures = mapMachine.mapFeatureData.pimsLocationFeatures.features.filter(x =>
           mapMachine.activePimsPropertyIds.includes(Number(x.properties.PROPERTY_ID)),
         );
+
+        // allow clustering of retired properties when advanced filter is open
+        if (!mapMachine.showRetired) {
+          filteredFeatures = filteredFeatures.filter(x => !x.properties.IS_RETIRED);
+        }
+
         return {
           type: mapMachine.mapFeatureData.pimsLocationFeatures.type,
           features: filteredFeatures,
         };
       } else {
+        if (mapMachine.mapFeatureData.pimsLocationFeatures !== null) {
+          // By default, all properties that are marked as retired, are not displayed on the map, regardless of other states on the property
+          const filteredFeatures = mapMachine.mapFeatureData.pimsLocationFeatures.features.filter(
+            x => !x.properties.IS_RETIRED,
+          );
+
+          return {
+            type: mapMachine.mapFeatureData.pimsLocationFeatures.type,
+            features: filteredFeatures,
+          };
+        }
+
         return mapMachine.mapFeatureData.pimsLocationFeatures;
       }
     }, [
       mapMachine.activePimsPropertyIds,
       mapMachine.isFiltering,
       mapMachine.mapFeatureData.pimsLocationFeatures,
+      mapMachine.showRetired,
     ]);
 
   const pimsBoundaryFeatures = mapMachine.mapFeatureData.pimsBoundaryFeatures;

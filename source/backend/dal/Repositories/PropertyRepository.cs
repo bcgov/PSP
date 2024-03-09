@@ -87,9 +87,9 @@ namespace Pims.Dal.Repositories
         /// <returns></returns>
         public PimsProperty GetById(long id)
         {
-            this.User.ThrowIfNotAllAuthorized(Permissions.PropertyView);
+            User.ThrowIfNotAllAuthorized(Permissions.PropertyView);
 
-            var property = this.Context.PimsProperties
+            var property = Context.PimsProperties.AsNoTracking()
                 .Include(p => p.DistrictCodeNavigation)
                 .Include(p => p.RegionCodeNavigation)
                 .Include(p => p.PropertyTypeCodeNavigation)
@@ -421,6 +421,17 @@ namespace Pims.Dal.Repositories
             return existingProperty;
         }
 
+        public PimsProperty RetireProperty(PimsProperty property)
+        {
+            property.ThrowIfNull(nameof(property));
+
+            var existingProperty = Context.PimsProperties
+                .FirstOrDefault(p => p.PropertyId == property.Internal_Id) ?? throw new KeyNotFoundException();
+
+            existingProperty.IsRetired = true;
+            return existingProperty;
+        }
+
         public HashSet<long> GetMatchingIds(PropertyFilterCriteria filter)
         {
             var predicate = PredicateBuilder.New<PimsProperty>(p => true);
@@ -493,10 +504,29 @@ namespace Pims.Dal.Repositories
             }
 
             // Property ownership filters
-            predicate.And(p => (p.IsOwned && filter.IsCoreInventory) ||
-                (p.IsPropertyOfInterest && filter.IsPropertyOfInterest) ||
-                (p.IsOtherInterest && filter.IsOtherInterest) ||
-                (p.IsDisposed && filter.IsDisposed));
+            var ownershipBuilder = PredicateBuilder.New<PimsProperty>(p => false);
+            if (filter.IsCoreInventory)
+            {
+                ownershipBuilder.Or(p => p.IsOwned);
+            }
+            if (filter.IsPropertyOfInterest)
+            {
+                ownershipBuilder.Or(p => p.IsPropertyOfInterest);
+            }
+            if (filter.IsOtherInterest)
+            {
+                ownershipBuilder.Or(p => p.IsOtherInterest);
+            }
+            if (filter.IsDisposed)
+            {
+                ownershipBuilder.Or(p => p.IsDisposed);
+            }
+            if (filter.IsRetired)
+            {
+                ownershipBuilder.Or(p => p.IsRetired.HasValue && p.IsRetired.Value);
+            }
+
+            predicate.And(ownershipBuilder);
 
             return Context.PimsProperties.AsNoTracking()
                 .Where(predicate)
