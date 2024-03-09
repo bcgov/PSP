@@ -38,6 +38,7 @@ export type MachineContext = {
   filePropertyLocations: LatLngLiteral[];
   activePimsPropertyIds: number[];
   showDisposed: boolean;
+  showRetired: boolean;
 };
 
 // Possible state machine states
