@@ -155,7 +155,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchProjects.OrderByProjectNumber();
             var firstProjectNbrAscResult = searchProjects.FirstProjectCode();
 
-            Assert.True(firstProjectNbrDescResult != firstProjectNbrAscResult);
+            Assert.NotEqual(firstProjectNbrDescResult, firstProjectNbrAscResult);
 
             //Verify Column Sorting by Project Name
             searchProjects.OrderByProjectName();
@@ -164,7 +164,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchProjects.OrderByProjectName();
             var firstProjectNameAscResult = searchProjects.FirstProjectName();
 
-            Assert.True(firstProjectNameResult != firstProjectNameAscResult);
+            Assert.NotEqual(firstProjectNameResult, firstProjectNameAscResult);
 
             //Verify Column Sorting Last Updated By
             searchProjects.OrderByProjectLastUpdatedBy();
@@ -173,7 +173,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchProjects.OrderByProjectLastUpdatedBy();
             var firstProjectLastUpdatedByAscResult = searchProjects.FirstProjectLastUpdatedBy();
 
-            Assert.True(firstProjectLastUpdatedByDescResult != firstProjectLastUpdatedByAscResult);
+            Assert.NotEqual(firstProjectLastUpdatedByDescResult, firstProjectLastUpdatedByAscResult);
 
             //Verify Column Sorting Last Updated Date
             searchProjects.OrderByProjectLastUpdatedDate();
@@ -182,7 +182,17 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchProjects.OrderByProjectLastUpdatedDate();
             var firstProjectLastUpdatedDateAscResult = searchProjects.FirstProjectLastUpdatedDate();
 
-            Assert.True(firstProjectLastUpdatedDateDescResult != firstProjectLastUpdatedDateAscResult);
+            Assert.NotEqual(firstProjectLastUpdatedDateDescResult, firstProjectLastUpdatedDateAscResult);
+
+            //Verify Pagination display different set of results
+            sharedPagination.ResetSearch();
+
+            var firstProjectPage1 = searchProjects.FirstProjectName();
+            sharedPagination.GoNextPage();
+            var firstProjectPage2 = searchProjects.FirstProjectName();
+            Assert.NotEqual(firstProjectPage1, firstProjectPage2);
+
+            sharedPagination.ResetSearch();
 
             //Filter Projects by Region
             searchProjects.SearchProjectByRegion("Northern Region");
