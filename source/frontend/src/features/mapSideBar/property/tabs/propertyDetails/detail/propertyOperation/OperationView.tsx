@@ -55,13 +55,14 @@ export const OperationView: React.FunctionComponent<IOperationViewProps> = ({
   return (
     <Section
       header={
-        <SectionField label="Created on" labelWidth="auto">
+        <SectionField label="Created on" labelWidth="auto" className="">
           {prettyFormatUTCDate(operationTimeStamp)} at {prettyFormatUTCTime(operationTimeStamp)}
         </SectionField>
       }
       isStyledHeader
       initiallyExpanded
       isCollapsable
+      noPadding
     >
       <Table<PropertyOperationResult>
         name="propertyOperationTable"

@@ -1,3 +1,4 @@
+import { FaExternalLinkAlt } from 'react-icons/fa';
 import { FiCheck } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
@@ -34,8 +35,13 @@ const columns: ColumnWithProps<PropertyOperationResult>[] = [
     maxWidth: 20,
     Cell: (props: CellProps<PropertyOperationResult>) => {
       return (
-        <Link to={`/mapview/sidebar/property/${props.row.original.id}`}>
+        <Link
+          target="_blank"
+          rel="noopener noreferrer"
+          to={`/mapview/sidebar/property/${props.row.original.id}`}
+        >
           {props.row.original.identifier}
+          <FaExternalLinkAlt className="ml-2" size="1rem" />
         </Link>
       );
     },

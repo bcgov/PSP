@@ -5,13 +5,8 @@ using Microsoft.Extensions.Logging;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 using Pims.Dal.Helpers.Extensions;
-
-using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using Pims.Dal.Entities;
 
 namespace Pims.Dal.Repositories
 {
@@ -49,7 +44,9 @@ namespace Pims.Dal.Repositories
         public IList<PimsPropertyOperation> GetByOperationNumber(long operationNumber)
         {
             return this.Context.PimsPropertyOperations.AsNoTracking()
-                .Where(x => x.PropertyOperationNo == operationNumber).ToList();
+                .Where(x => x.PropertyOperationNo == operationNumber)
+                .Include(op => op.PropertyOperationTypeCodeNavigation)
+                .ToList();
         }
 
         /// <summary>

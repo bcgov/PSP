@@ -20,12 +20,15 @@ export const OperationSectionView: React.FunctionComponent<IOperationSectionView
       <Section header="Subdivision History">
         {hasSubdivisions ? (
           subdivisionOperations.map((operationSet, index) => (
-            <OperationView
-              key={index}
-              operationTimeStamp={operationSet.operationDateTime ?? ''}
-              sourceProperties={operationSet.sourceProperties}
-              destinationProperties={operationSet.destinationProperties}
-            />
+            <>
+              <OperationView
+                key={index}
+                operationTimeStamp={operationSet.operationDateTime ?? ''}
+                sourceProperties={operationSet.sourceProperties}
+                destinationProperties={operationSet.destinationProperties}
+              />
+              {index < subdivisionOperations.length - 1 && <br />}
+            </>
           ))
         ) : (
           <StyledNoData>This property is not part of a subdivision</StyledNoData>
