@@ -77,26 +77,26 @@ exports[`Add Subdivision View matches snapshot 1`] = `
       class="c3"
     />
   </div>
-  .c8 {
+  .c7 {
   background-color: white;
   font-size: 1.4rem;
   border-color: transparent;
 }
 
-.c8 .nav-tabs {
+.c7 .nav-tabs {
   height: auto;
 }
 
-.c8 .nav-item {
+.c7 .nav-item {
   min-width: 5rem;
   padding: 0.1rem 0.6rem;
 }
 
-.c8 .nav-item:hover {
+.c7 .nav-item:hover {
   border-color: transparent;
 }
 
-.c8 .nav-item.active {
+.c7 .nav-item.active {
   font-family: 'BCSans-Bold';
   border-color: transparent;
 }
@@ -110,7 +110,7 @@ exports[`Add Subdivision View matches snapshot 1`] = `
   margin-bottom: 2rem;
 }
 
-.c10 {
+.c9 {
   font-weight: bold;
   border-bottom: 0.2rem solid;
   margin-bottom: 2rem;
@@ -124,31 +124,31 @@ exports[`Add Subdivision View matches snapshot 1`] = `
   border-radius: 0.5rem;
 }
 
-.c9 {
+.c8 {
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
 }
 
-.c6 {
+.c5 {
   height: 100%;
 }
 
-.c6 .tab-content {
+.c5 .tab-content {
   border-radius: 0 0.4rem 0.4rem 0.4rem;
   height: calc(100% - 2.5rem);
   overflow-y: auto;
 }
 
-.c6 .tab-content .tab-pane {
+.c5 .tab-content .tab-pane {
   position: relative;
 }
 
-.c7 {
+.c6 {
   height: auto;
 }
 
-.c7.tab-content {
+.c6.tab-content {
   height: auto;
 }
 
@@ -166,7 +166,7 @@ exports[`Add Subdivision View matches snapshot 1`] = `
   width: 100%;
 }
 
-.c11 {
+.c10 {
   font-size: 1.6rem;
   border-bottom: 0.2rem solid;
   margin-bottom: 0.9rem;
@@ -191,11 +191,6 @@ exports[`Add Subdivision View matches snapshot 1`] = `
   overflow-y: auto;
   padding-right: 1rem;
   padding-bottom: 1rem;
-}
-
-.c5 {
-  font-size: 1.4rem;
-  font-family: 'BCSans',Fallback,sans-serif;
 }
 
 <div
@@ -235,20 +230,15 @@ exports[`Add Subdivision View matches snapshot 1`] = `
                     d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
                   />
                 </svg>
-                <span
-                  class="c5"
-                >
-                  Only a property that is in the PIMS inventory can be subdivided.
-                </span>
               </h2>
               <p>
                 Select the parent property that was subdivided:
               </p>
               <div
-                class="c6 c7"
+                class="c5 c6"
               >
                 <nav
-                  class="c8 nav nav-tabs"
+                  class="c7 nav nav-tabs"
                   role="tablist"
                 >
                   <a
@@ -276,10 +266,10 @@ exports[`Add Subdivision View matches snapshot 1`] = `
                 </div>
               </div>
               <div
-                class="c9 form-section pt-4"
+                class="c8 form-section pt-4"
               >
                 <h2
-                  class="c10"
+                  class="c9"
                 >
                   <div
                     class="no-gutters row"
@@ -295,7 +285,7 @@ exports[`Add Subdivision View matches snapshot 1`] = `
                   class="collapse show"
                 >
                   <div
-                    class="c11 no-gutters row"
+                    class="c10 no-gutters row"
                   >
                     <div
                       class="col-md-3"
@@ -341,10 +331,10 @@ exports[`Add Subdivision View matches snapshot 1`] = `
                 Content Rendered
               </span>
               <div
-                class="c9 form-section pt-4"
+                class="c8 form-section pt-4"
               >
                 <h2
-                  class="c10"
+                  class="c9"
                 >
                   <div
                     class="no-gutters row"
@@ -360,7 +350,7 @@ exports[`Add Subdivision View matches snapshot 1`] = `
                   class="collapse show"
                 >
                   <div
-                    class="c11 no-gutters row"
+                    class="c10 no-gutters row"
                   >
                     <div
                       class="col-md-3"
