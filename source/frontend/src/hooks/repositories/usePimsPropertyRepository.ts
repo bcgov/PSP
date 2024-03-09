@@ -35,7 +35,7 @@ export const usePimsPropertyRepository = () => {
       [getPropertyConceptWithPidApi],
     ),
     requestName: 'getPropertyConceptWithPidApi',
-    onError: useAxiosErrorHandler('Failed to retrieve property information from PIMS'),
+    throwError: true,
   });
 
   const getMatchingProperties = useApiRequestWrapper({
