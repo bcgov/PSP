@@ -211,12 +211,6 @@ const StyledFormWrapper = styled.div`
   background-color: ${props => props.theme.css.filterBackgroundColor};
 `;
 
-const StyledTooltipText = styled.span`
-  color: ${props => props.theme.css.slideOutBlue};
-  font-size: 1.4rem;
-  font-family: 'BCSans', Fallback, sans-serif;
-`;
-
 const StyledSubdivideConsolidateIcon = styled(ConsolidateSubdivideIcon)`
   width: 3rem;
   height: 3rem;
