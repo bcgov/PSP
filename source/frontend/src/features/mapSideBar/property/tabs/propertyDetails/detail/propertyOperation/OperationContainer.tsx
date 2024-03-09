@@ -1,30 +1,33 @@
-import { Dictionary, groupBy } from 'lodash';
+import { groupBy } from 'lodash';
 import { useCallback, useEffect, useState } from 'react';
 
 import { usePimsPropertyRepository } from '@/hooks/repositories/usePimsPropertyRepository';
 import { usePropertyOperationRepository } from '@/hooks/repositories/usePropertyOperationRepository';
+import { ApiGen_CodeTypes_PropertyOperationTypes } from '@/models/api/generated/ApiGen_CodeTypes_PropertyOperationTypes';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { UtcIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { exists, unique } from '@/utils';
 
-import { ISubdivisionViewProps } from './SubdivisionView';
+import { IOperationSectionViewProps } from './OperationSectionView';
 
-export interface ISubdivisionContainerProps {
+export interface IOperationContainerProps {
   propertyId: number;
-  View: React.FunctionComponent<ISubdivisionViewProps>;
+  View: React.FunctionComponent<IOperationSectionViewProps>;
 }
 
-interface OperationSet {
+export interface OperationSet {
   operationDateTime: UtcIsoDateTime;
   sourceProperties: ApiGen_Concepts_Property[];
   destinationProperties: ApiGen_Concepts_Property[];
+  operationType: ApiGen_CodeTypes_PropertyOperationTypes;
 }
 
-export const SubdivisionContainer: React.FunctionComponent<ISubdivisionContainerProps> = ({
+export const OperationContainer: React.FunctionComponent<IOperationContainerProps> = ({
   propertyId,
   View,
 }) => {
-  const [operationDictionary, setOperationDictionary] = useState<Dictionary<OperationSet>>({});
+  const [subdivisionOperations, setSubdivisionOperations] = useState<OperationSet[]>([]);
+  const [consolidationOperations, setConsolidationOperations] = useState<OperationSet[]>([]);
 
   const { getPropertyWrapper } = usePimsPropertyRepository();
   const getPropertyExecute = getPropertyWrapper.execute;
@@ -36,7 +39,7 @@ export const SubdivisionContainer: React.FunctionComponent<ISubdivisionContainer
     async (propertyId: number) => {
       const results = await getPropertyOperationsExecute(propertyId);
 
-      const newOperations: Dictionary<OperationSet> = {};
+      const newOperations: OperationSet[] = [];
       if (exists(results)) {
         const resultGroup = groupBy(results, x => x.propertyOperationNo);
 
@@ -65,15 +68,32 @@ export const SubdivisionContainer: React.FunctionComponent<ISubdivisionContainer
           const retrievedSources = await Promise.all(sourcePromises);
           const retrievedDestinations = await Promise.all(destinationPromises);
 
+          const resultOperationType =
+            result[0].propertyOperationTypeCode?.id ??
+            ApiGen_CodeTypes_PropertyOperationTypes.SUBDIVIDE;
+          const operationType =
+            ApiGen_CodeTypes_PropertyOperationTypes[
+              resultOperationType as keyof typeof ApiGen_CodeTypes_PropertyOperationTypes
+            ];
+
           const operationSet: OperationSet = {
             operationDateTime: result[0].operationDt ?? '',
             sourceProperties: retrievedSources.filter(exists) ?? [],
             destinationProperties: retrievedDestinations.filter(exists) ?? [],
+            operationType,
           };
 
-          newOperations[key] = operationSet;
+          newOperations.push(operationSet);
         }
-        setOperationDictionary({ ...newOperations });
+        const subdivisions = newOperations.filter(
+          x => x.operationType === ApiGen_CodeTypes_PropertyOperationTypes.SUBDIVIDE,
+        );
+        const consolidations = newOperations.filter(
+          x => x.operationType === ApiGen_CodeTypes_PropertyOperationTypes.CONSOLIDATE,
+        );
+
+        setSubdivisionOperations(subdivisions);
+        setConsolidationOperations(consolidations);
       }
     },
     [getPropertyExecute, getPropertyOperationsExecute],
@@ -83,20 +103,10 @@ export const SubdivisionContainer: React.FunctionComponent<ISubdivisionContainer
     fetchOperations(propertyId);
   }, [fetchOperations, propertyId]);
 
-  if (!exists(operationDictionary)) {
-    return <></>;
-  }
-
   return (
-    <>
-      {Object.values(operationDictionary).map((operationSet, index) => (
-        <View
-          key={index}
-          operationTimeStamp={operationSet.operationDateTime ?? ''}
-          sourceProperties={operationSet.sourceProperties}
-          destinationProperties={operationSet.destinationProperties}
-        />
-      ))}
-    </>
+    <View
+      subdivisionOperations={subdivisionOperations}
+      consolidationOperations={consolidationOperations}
+    />
   );
 };
