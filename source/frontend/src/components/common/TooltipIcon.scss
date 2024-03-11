@@ -7,6 +7,13 @@
   margin-bottom: 0.2rem;
 }
 
+.tooltip-icon.warning {
+  min-width: 1.4rem;
+  min-height: 1.4rem;
+  color: $font-warning-color;
+  margin: 0rem 0.2rem;
+}
+
 .tooltip {
   white-space: pre-wrap;
   .tooltip-inner {
@@ -14,6 +21,29 @@
     max-width: 40rem;
     background-color: $secondary-variant-color;
     color: #ffffff;
+  }
+  &.bs-tooltip-top .arrow::before {
+    border-top-color: $secondary-variant-color;
+  }
+  &.bs-tooltip-right .arrow::before {
+    border-right-color: $secondary-variant-color;
+  }
+  &.bs-tooltip-left .arrow::before {
+    border-left-color: $secondary-variant-color;
+  }
+  &.bs-tooltip-bottom .arrow::before {
+    border-bottom-color: $secondary-variant-color;
+  }
+}
+
+.tooltip.warning {
+  white-space: pre-wrap;
+  .tooltip-inner {
+    text-align: left;
+    max-width: 40rem;
+    background-color: $summary-color;
+    color: $font-warning-color;
+    font-weight: 700;
   }
   &.bs-tooltip-top .arrow::before {
     border-top-color: $secondary-variant-color;

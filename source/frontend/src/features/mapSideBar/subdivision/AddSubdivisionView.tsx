@@ -10,6 +10,7 @@ import { Form } from '@/components/common/form';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
 import { H2 } from '@/components/common/styles';
+import TooltipWrapper from '@/components/common/TooltipWrapper';
 import { IMapSelectorContainerProps } from '@/components/propertySelector/MapSelectorContainer';
 import { StyledTabView } from '@/components/propertySelector/PropertySelectorTabsView';
 import { PropertySelectorPidSearchContainerProps } from '@/components/propertySelector/search/PropertySelectorPidSearchContainer';
@@ -97,10 +98,12 @@ const AddSubdivisionView: React.FunctionComponent<
               <Section>
                 <H2>
                   Properties in Subdivision &nbsp;
-                  <FaInfoCircle className="tooltip-icon h-20" size="1rem" />
-                  <StyledTooltipText>
-                    Only a property that is in the PIMS inventory can be subdivided.
-                  </StyledTooltipText>
+                  <TooltipWrapper
+                    tooltipId="pims-only-subdivision-tooltip"
+                    tooltip="Only a property that is in the PIMS inventory can be subdivided"
+                  >
+                    <FaInfoCircle className="tooltip-icon h-20" size="1rem" />
+                  </TooltipWrapper>
                 </H2>
                 <AddSubdivisionMarkerSynchronizer values={values} />
                 <p>Select the parent property that was subdivided:</p>
@@ -211,12 +214,6 @@ const StyledFormWrapper = styled.div`
   padding-right: 1rem;
   padding-bottom: 1rem;
   background-color: ${props => props.theme.css.filterBackgroundColor};
-`;
-
-const StyledTooltipText = styled.span`
-  color: ${props => props.theme.css.slideOutBlue};
-  font-size: 1.4rem;
-  font-family: 'BCSans', Fallback, sans-serif;
 `;
 
 const StyledSubdivideConsolidateIcon = styled(ConsolidateSubdivideIcon)`

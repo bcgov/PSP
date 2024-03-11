@@ -6,78 +6,78 @@ namespace PIMS.Tests.Automation.PageObjects
     public class FinancialCodes : PageObjectBase
     {
         //Main Menu Element
-        private By financialCodeMainMenuLink = By.XPath("//a[contains(text(),'Manage Project and Financial Codes')]");
+        private readonly By financialCodeMainMenuLink = By.XPath("//a[contains(text(),'Manage Project and Financial Codes')]");
 
         //Financial Codes List View Elements
         //Financial Codes Filters Elements
-        private By financialCodeTitle = By.XPath("//h3[contains(text(),'Financial Codes')]");
-        private By financialCodeTypeSelect = By.Id("input-financialCodeType");
-        private By financialCodeDescriptionInput = By.Id("input-codeValueOrDescription");
-        private By financialCodeShowExpiredInput = By.Id("input-showExpiredCodes");
-        private By financialCodeShowExpiredSpan = By.XPath("//span[contains(text(),'Show expired codes')]");
-        private By financialCodeSearchBttn = By.Id("search-button");
-        private By financialCodeResetBttn = By.Id("reset-button");
+        private readonly By financialCodeTitle = By.XPath("//h3[contains(text(),'Financial Codes')]");
+        private readonly By financialCodeTypeSelect = By.Id("input-financialCodeType");
+        private readonly By financialCodeDescriptionInput = By.Id("input-codeValueOrDescription");
+        private readonly By financialCodeShowExpiredInput = By.Id("input-showExpiredCodes");
+        private readonly By financialCodeShowExpiredSpan = By.XPath("//span[contains(text(),'Show expired codes')]");
+        private readonly By financialCodeSearchBttn = By.Id("search-button");
+        private readonly By financialCodeResetBttn = By.Id("reset-button");
 
-        private By financialCodeCreateNewBttn = By.XPath("//div[@data-testid='FinancialCodeTable']/preceding-sibling::button");
+        private readonly By financialCodeCreateNewBttn = By.XPath("//div[@data-testid='FinancialCodeTable']/preceding-sibling::button");
 
         //Financial Codes Table
-        private By financialCodeTableHeaderCodeValue = By.XPath("//div[@data-testid='FinancialCodeTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Code value')]");
-        private By financialCodeTableCodeSortBttn = By.CssSelector("div[data-testid='sort-column-code']");
-        private By financialCodeTableHeaderCodeDescription = By.XPath("//div[@data-testid='FinancialCodeTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Code description')]");
-        private By financialCodeTableDescriptionSortBttn = By.CssSelector("div[data-testid='sort-column-description']");
-        private By financialCodeTableHeaderCodeType = By.XPath("//div[@data-testid='FinancialCodeTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Code type')]");
-        private By financialCodeTableTypeSortBttn = By.CssSelector("div[data-testid='sort-column-type']");
-        private By financialCodeTableHeaderEffectiveDate = By.XPath("//div[@data-testid='FinancialCodeTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Effective date')]");
-        private By financialCodeTableEffectiveDateSortBttn = By.CssSelector("div[data-testid='sort-column-effectiveDate']");
-        private By financialCodeTableHeaderExpiryDate = By.XPath("//div[@data-testid='FinancialCodeTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Expiry date')]");
-        private By financialCodeTableExpiryDateSortBttn = By.CssSelector("div[data-testid='sort-column-expiryDate']");
-        private By financialCodeTableResultsTotal = By.XPath("//div[@data-testid='FinancialCodeTable']/div[@class='tbody']/div[@class='tr-wrapper']");
+        private readonly By financialCodeTableHeaderCodeValue = By.XPath("//div[@data-testid='FinancialCodeTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Code value')]");
+        private readonly By financialCodeTableCodeSortBttn = By.CssSelector("div[data-testid='sort-column-code']");
+        private readonly By financialCodeTableHeaderCodeDescription = By.XPath("//div[@data-testid='FinancialCodeTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Code description')]");
+        private readonly By financialCodeTableDescriptionSortBttn = By.CssSelector("div[data-testid='sort-column-description']");
+        private readonly By financialCodeTableHeaderCodeType = By.XPath("//div[@data-testid='FinancialCodeTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Code type')]");
+        private readonly By financialCodeTableTypeSortBttn = By.CssSelector("div[data-testid='sort-column-type']");
+        private readonly By financialCodeTableHeaderEffectiveDate = By.XPath("//div[@data-testid='FinancialCodeTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Effective date')]");
+        private readonly By financialCodeTableEffectiveDateSortBttn = By.CssSelector("div[data-testid='sort-column-effectiveDate']");
+        private readonly By financialCodeTableHeaderExpiryDate = By.XPath("//div[@data-testid='FinancialCodeTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Expiry date')]");
+        private readonly By financialCodeTableExpiryDateSortBttn = By.CssSelector("div[data-testid='sort-column-expiryDate']");
+        private readonly By financialCodeTableResultsTotal = By.XPath("//div[@data-testid='FinancialCodeTable']/div[@class='tbody']/div[@class='tr-wrapper']");
 
-        private By financialResults1stResultCodeValue = By.XPath("//div[@data-testid='FinancialCodeTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[1]/a");
-        private By financialResults1stResultCodeDescription = By.XPath("//div[@data-testid='FinancialCodeTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[2]");
-        private By financialResults1stResultCodeType = By.XPath("//div[@data-testid='FinancialCodeTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[3]");
-        private By financialResults1stResultEffectiveDate = By.XPath("//div[@data-testid='FinancialCodeTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[4]");
-        private By financialResults1stResultExpiryDate = By.XPath("//div[@data-testid='FinancialCodeTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[5]");
+        private readonly By financialResults1stResultCodeValue = By.XPath("//div[@data-testid='FinancialCodeTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[1]/a");
+        private readonly By financialResults1stResultCodeDescription = By.XPath("//div[@data-testid='FinancialCodeTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[2]");
+        private readonly By financialResults1stResultCodeType = By.XPath("//div[@data-testid='FinancialCodeTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[3]");
+        private readonly By financialResults1stResultEffectiveDate = By.XPath("//div[@data-testid='FinancialCodeTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[4]");
+        private readonly By financialResults1stResultExpiryDate = By.XPath("//div[@data-testid='FinancialCodeTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[5]");
 
-        private By financialCodePaginationEntries = By.CssSelector("div[class='Menu-root']");
-        private By financialCodePaginationList = By.CssSelector("ul[class='pagination']");
+        private readonly By financialCodePaginationEntries = By.CssSelector("div[class='Menu-root']");
+        private readonly By financialCodePaginationList = By.CssSelector("ul[class='pagination']");
 
         //Financial Codes Create/Update Form Elements
-        private By financialCodeCreateTitle = By.XPath("//h1[contains(text(),'Create Financial Code')]");
-        private By financialCodeUpdateTitle = By.XPath("//h1[contains(text(),'Update Financial Code')]");
+        private readonly By financialCodeCreateTitle = By.XPath("//h1[contains(text(),'Create Financial Code')]");
+        private readonly By financialCodeUpdateTitle = By.XPath("//h1[contains(text(),'Update Financial Code')]");
 
-        private By financialCodeFormTypeLabel = By.XPath("//label[contains(text(),'Code type')]");
-        private By financialCodeFormTypeSelect = By.Id("input-type");
-        private By financialCodeFormTypeErrorMessage = By.XPath("//div[contains(text(),'Code type is required')]");
+        private readonly By financialCodeFormTypeLabel = By.XPath("//label[contains(text(),'Code type')]");
+        private readonly By financialCodeFormTypeSelect = By.Id("input-type");
+        private readonly By financialCodeFormTypeErrorMessage = By.XPath("//div[contains(text(),'Code type is required')]");
 
-        private By financialCodeFormValueLabel = By.XPath("//label[contains(text(),'Code value')]");
-        private By financialCodeFormValueInput = By.Id("input-code");
-        private By financialCodeFormValueErrorMessage = By.XPath("//div[contains(text(),'Code value is required')]");
-        private By financialCodeFormValueContent = By.XPath("//label[contains(text(),'Code type')]/parent::div/following-sibling::div/span");
+        private readonly By financialCodeFormValueLabel = By.XPath("//label[contains(text(),'Code value')]");
+        private readonly By financialCodeFormValueInput = By.Id("input-code");
+        private readonly By financialCodeFormValueErrorMessage = By.XPath("//div[contains(text(),'Code value is required')]");
+        private readonly By financialCodeFormValueContent = By.XPath("//label[contains(text(),'Code type')]/parent::div/following-sibling::div/span");
 
-        private By financialCodeFormDescriptionLabel = By.XPath("//label[contains(text(),'Code description')]");
-        private By financialCodeFormDescriptionInput = By.Id("input-description");
-        private By financialCodeFormDescriptionErrorMessage = By.XPath("//div[contains(text(),'Code description is required')]");
+        private readonly By financialCodeFormDescriptionLabel = By.XPath("//label[contains(text(),'Code description')]");
+        private readonly By financialCodeFormDescriptionInput = By.Id("input-description");
+        private readonly By financialCodeFormDescriptionErrorMessage = By.XPath("//div[contains(text(),'Code description is required')]");
 
-        private By financialCodeFormEffectiveDateLabel = By.XPath("//label[contains(text(),'Effective date')]");
-        private By financialCodeFormEffectiveDateTooltip = By.XPath("//label[contains(text(),'Effective date')]/span/span[@data-testid='tooltip-icon-section-field-tooltip']");
-        private By financialCodeFormEffectiveDateInput = By.Id("datepicker-effectiveDate");
+        private readonly By financialCodeFormEffectiveDateLabel = By.XPath("//label[contains(text(),'Effective date')]");
+        private readonly By financialCodeFormEffectiveDateTooltip = By.XPath("//label[contains(text(),'Effective date')]/span/span[@data-testid='tooltip-icon-section-field-tooltip']");
+        private readonly By financialCodeFormEffectiveDateInput = By.Id("datepicker-effectiveDate");
 
-        private By financialCodeFormExpiryDateLabel = By.XPath("//label[contains(text(),'Expiry date')]");
-        private By financialCodeFormExpiryDateTooltip = By.XPath("//label[contains(text(),'Expiry date')]/span/span[@data-testid='tooltip-icon-section-field-tooltip']");
-        private By financialCodeFormExpiryDateInput = By.Id("datepicker-expiryDate");
+        private readonly By financialCodeFormExpiryDateLabel = By.XPath("//label[contains(text(),'Expiry date')]");
+        private readonly By financialCodeFormExpiryDateTooltip = By.XPath("//label[contains(text(),'Expiry date')]/span/span[@data-testid='tooltip-icon-section-field-tooltip']");
+        private readonly By financialCodeFormExpiryDateInput = By.Id("datepicker-expiryDate");
 
-        private By financialCodeFormOrderLabel = By.XPath("//label[contains(text(),'Display order')]");
-        private By financialCodeFormOrderInput = By.Id("input-displayOrder");
+        private readonly By financialCodeFormOrderLabel = By.XPath("//label[contains(text(),'Display order')]");
+        private readonly By financialCodeFormOrderInput = By.Id("input-displayOrder");
 
-        private By financialCodeFormCancelBttn = By.XPath("//div[contains(text(),'Cancel')]/parent::button");
-        private By financialCodeFormSaveBttn = By.XPath("//div[contains(text(),'Save')]/parent::button");
+        private readonly By financialCodeFormCancelBttn = By.XPath("//div[contains(text(),'Cancel')]/parent::button");
+        private readonly By financialCodeFormSaveBttn = By.XPath("//div[contains(text(),'Save')]/parent::button");
 
         //Financial Code Confirmation Modal
-        private By financialCodeModal = By.CssSelector("div[class='modal-content']");
+        private readonly By financialCodeModal = By.CssSelector("div[class='modal-content']");
 
         //Financial Code Error Message
-        private By financialCodeDuplicateErrorMessage = By.XPath("//div[contains(text(),'Cannot create duplicate financial code')]");
+        private readonly By financialCodeDuplicateErrorMessage = By.XPath("//div[contains(text(),'Cannot create duplicate financial code')]");
 
         private SharedModals sharedModals;
 
@@ -128,7 +128,7 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(financialCodeFormCancelBttn).Click();
 
             Wait();
-            if (webDriver.FindElements(financialCodeModal).Count() > 0)
+            if (webDriver.FindElements(financialCodeModal).Count > 0)
             {
                 Assert.Equal("Confirm Changes", sharedModals.ModalHeader());
                 Assert.Contains("If you choose to cancel now, your changes will not be saved.", sharedModals.ModalContent());
@@ -191,7 +191,7 @@ namespace PIMS.Tests.Automation.PageObjects
         public int CountTotalFinancialCodeResults()
         {
             WaitUntilTableSpinnerDisappear();
-            return webDriver.FindElements(financialCodeTableResultsTotal).Count();
+            return webDriver.FindElements(financialCodeTableResultsTotal).Count;
         }
 
         public Boolean DuplicateErrorMessageDisplayed()
@@ -253,7 +253,7 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(financialCodeTableHeaderEffectiveDate);
             AssertTrueIsDisplayed(financialCodeTableHeaderExpiryDate);
 
-            Assert.True(webDriver.FindElements(financialCodeTableResultsTotal).Count() > 0);
+            Assert.True(webDriver.FindElements(financialCodeTableResultsTotal).Count > 0);
 
             AssertTrueIsDisplayed(financialCodePaginationEntries);
             AssertTrueIsDisplayed(financialCodePaginationList);

@@ -15,6 +15,8 @@ namespace Pims.Api.Services
 
         PimsProperty Update(PimsProperty property, bool commitTransaction = true);
 
+        PimsProperty RetireProperty(PimsProperty property, bool commitTransaction = true);
+
         IList<PimsPropertyContact> GetContacts(long propertyId);
 
         PimsPropertyContact GetContact(long propertyId, long contactId);
