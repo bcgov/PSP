@@ -1,49 +1,68 @@
-import { Api_Project } from '@/models/api/Project';
+import { ApiGen_Concepts_FinancialCode } from '@/models/api/generated/ApiGen_Concepts_FinancialCode';
+import { ApiGen_Concepts_FinancialCodeTypes } from '@/models/api/generated/ApiGen_Concepts_FinancialCodeTypes';
+import { ApiGen_Concepts_Project } from '@/models/api/generated/ApiGen_Concepts_Project';
+import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 
-export const mockProjects = (): Api_Project[] => [
+const emptyFunctionCode: ApiGen_Concepts_FinancialCode = {
+  id: 0,
+  type: ApiGen_Concepts_FinancialCodeTypes.BusinessFunction,
+  code: null,
+  description: null,
+  displayOrder: null,
+  effectiveDate: EpochIsoDateTime,
+  expiryDate: null,
+  ...getEmptyBaseAudit(),
+};
+
+export const mockProjects = (): ApiGen_Concepts_Project[] => [
   {
     id: 1,
-    businessFunctionCode: { id: 1, code: '13' },
-    costTypeCode: { id: 1, code: '13' },
-    workActivityCode: { id: 1, code: '11' },
+    businessFunctionCode: { ...emptyFunctionCode, id: 1, code: '13' },
+    costTypeCode: { ...emptyFunctionCode, id: 1, code: '13' },
+    workActivityCode: { ...emptyFunctionCode, id: 1, code: '11' },
     regionCode: {
       id: 1,
       description: 'South Coast Region',
+      displayOrder: null,
+      isDisabled: false,
     },
     code: '776',
     description: 'test DESCRIPTION 1',
     note: 'test NOTE 1',
-    rowVersion: 1,
     projectStatusTypeCode: null,
     projectProducts: [],
+    ...getEmptyBaseAudit(1),
   },
   {
     id: 2,
-    businessFunctionCode: { id: 1, code: '12' },
-    costTypeCode: { id: 1, code: '13' },
-    workActivityCode: { id: 1, code: '11' },
+    businessFunctionCode: { ...emptyFunctionCode, id: 1, code: '12' },
+    costTypeCode: { ...emptyFunctionCode, id: 1, code: '13' },
+    workActivityCode: { ...emptyFunctionCode, id: 1, code: '11' },
     regionCode: {
       id: 2,
       description: 'Southern Interior Region',
+      displayOrder: null,
+      isDisabled: false,
     },
     code: '777',
     description: 'test DESCRIPTION 2',
     note: 'test NOTE 2',
-    rowVersion: 1,
     projectStatusTypeCode: null,
     projectProducts: [],
+    ...getEmptyBaseAudit(1),
   },
 ];
 
 export const mockProjectPostResponse = (
-  id: number = 1,
-  rowVersion: number = 1,
-  description: string = 'TRANS-CANADA HWY - 10',
+  id = 1,
+  rowVersion = 1,
+  description = 'TRANS-CANADA HWY - 10',
   code: string,
-  regionCodeId: number = 1,
-  statusCode: string = 'AC',
-  summary: string = 'NEW PROJECT',
-): Api_Project => ({
+  regionCodeId = 1,
+  statusCode = 'AC',
+  summary = 'NEW PROJECT',
+): ApiGen_Concepts_Project => ({
   id: id,
   rowVersion: rowVersion,
   code: code,
@@ -51,10 +70,14 @@ export const mockProjectPostResponse = (
   regionCode: {
     id: regionCodeId,
     description: 'REGION',
+    displayOrder: null,
+    isDisabled: false,
   },
   projectStatusTypeCode: {
     id: statusCode,
     description: 'ACTIVE (AC)',
+    displayOrder: null,
+    isDisabled: false,
   },
   businessFunctionCode: null,
   workActivityCode: null,
@@ -69,17 +92,19 @@ export const mockProjectPostResponse = (
   appCreateUserGuid: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
 });
 
-export const mockProjectGetResponse = (): Api_Project => ({
+export const mockProjectGetResponse = (): ApiGen_Concepts_Project => ({
   id: 20,
   projectStatusTypeCode: {
     id: 'AC',
     description: 'Active (AC)',
     isDisabled: false,
+    displayOrder: null,
   },
   regionCode: {
     id: 1,
-    code: '1',
     description: 'South Coast Region',
+    displayOrder: null,
+    isDisabled: false,
   },
   code: '771',
   description: 'Project Cool A',
@@ -101,9 +126,9 @@ export const mockProjectGetResponse = (): Api_Project => ({
         costEstimateDate: '2023-02-02T00:00:00',
         objective: 'Objective of Product A',
         scope: 'Scope of Product A',
-        rowVersion: 1,
+        ...getEmptyBaseAudit(1),
       },
-      rowVersion: 1,
+      ...getEmptyBaseAudit(1),
     },
     {
       id: 2,
@@ -121,9 +146,9 @@ export const mockProjectGetResponse = (): Api_Project => ({
         costEstimateDate: '2023-02-04T00:00:00',
         objective: 'Objective of Product B',
         scope: 'Scope of Product B',
-        rowVersion: 1,
+        ...getEmptyBaseAudit(1),
       },
-      rowVersion: 1,
+      ...getEmptyBaseAudit(1),
     },
   ],
   businessFunctionCode: null,

@@ -9,7 +9,7 @@ import { ApiGen_Concepts_ProjectProduct } from './ApiGen_Concepts_ProjectProduct
 
 // LINK: @backend/apimodels/Models/Concepts/Project/ProjectModel.cs
 export interface ApiGen_Concepts_Project extends ApiGen_Base_BaseAudit {
-  id: number | null;
+  id: number;
   projectStatusTypeCode: ApiGen_Base_CodeType<string> | null;
   businessFunctionCode: ApiGen_Concepts_FinancialCode | null;
   costTypeCode: ApiGen_Concepts_FinancialCode | null;

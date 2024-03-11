@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO.Compression;
 using System.Linq;
 using FluentAssertions;
+using k8s.Models;
 using Moq;
 using Pims.Core.Exceptions;
 using Pims.Core.Test;
@@ -348,6 +349,243 @@ namespace Pims.Dal.Test.Repositories
             // Assert
             act.Should().Throw<KeyNotFoundException>();
         }
+
+        [Fact]
+        public void UpdateDisposition_Sale_PurchaserAgent_Removed()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.DispositionView);
+
+            var purchaserAgent = new PimsDspPurchAgent()
+            {
+                PersonId = 1000,
+            };
+
+            var dispFile = EntityHelper.CreateDispositionFile();
+            dispFile.PimsDispositionSales = new List<PimsDispositionSale>() {
+                new PimsDispositionSale()
+                {
+                    DispositionSaleId = 1,
+                    SaleFinalAmt = 2000,
+                    DspPurchAgentId = purchaserAgent.DspPurchAgentId,
+                    DspPurchAgent = purchaserAgent,
+                }
+            };
+            _helper.AddAndSaveChanges(dispFile);
+
+            var sale = dispFile.PimsDispositionSales.FirstOrDefault();
+            sale.DspPurchAgent = null;
+            sale.DspPurchAgentId = null;
+
+            // Act
+            var result = repository.UpdateDispositionFileSale(sale);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().BeAssignableTo<PimsDispositionSale>();
+            Assert.Null(result.DspPurchAgentId);
+            Assert.Null(result.DspPurchAgent);
+        }
+
+        [Fact]
+        public void UpdateDisposition_Sale_PurchaserAgent_Added()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.DispositionView);
+
+            var dispFile = EntityHelper.CreateDispositionFile();
+            dispFile.PimsDispositionSales = new List<PimsDispositionSale>() {
+                new PimsDispositionSale()
+                {
+                    DispositionSaleId = 1,
+                    SaleFinalAmt = 2000,
+                    DspPurchAgentId = null,
+                    DspPurchAgent = null,
+                }
+            };
+            _helper.AddAndSaveChanges(dispFile);
+
+            var sale = dispFile.PimsDispositionSales.FirstOrDefault();
+            sale.DspPurchAgent = new()
+            {
+                DspPurchAgentId = 1000,
+                PersonId = 100,
+            };
+            sale.DspPurchAgentId = 1000;
+
+            // Act
+            var result = repository.UpdateDispositionFileSale(sale);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().BeAssignableTo<PimsDispositionSale>();
+            Assert.NotNull(result.DspPurchAgentId);
+            Assert.NotNull(result.DspPurchAgent);
+        }
+
+        [Fact]
+        public void UpdateDisposition_Sale_PurchaserAgent_Updated()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.DispositionView);
+
+            var dispFile = EntityHelper.CreateDispositionFile();
+            dispFile.PimsDispositionSales = new List<PimsDispositionSale>() {
+                new PimsDispositionSale()
+                {
+                    DispositionSaleId = 1,
+                    SaleFinalAmt = 2000,
+                    DspPurchAgentId = 10,
+                    DspPurchAgent = new PimsDspPurchAgent()
+                    {
+                        DspPurchAgentId = 10,
+                        PersonId = 1000,
+                    }
+                }
+            };
+            _helper.AddAndSaveChanges(dispFile);
+
+            var updatedSale = new PimsDispositionSale(){
+                DispositionSaleId = 1,
+                SaleFinalAmt = 3000,
+                DspPurchAgentId = 10,
+                DspPurchAgent = new PimsDspPurchAgent()
+                {
+                    DspPurchAgentId = 10,
+                    PersonId = 2000,
+                }
+            };
+
+            // Act
+            var result = repository.UpdateDispositionFileSale(updatedSale);
+            var updatedAgent = result.DspPurchAgent;
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().BeAssignableTo<PimsDispositionSale>();
+            Assert.NotNull(result.DspPurchAgentId);
+            Assert.NotNull(result.DspPurchAgent);
+            Assert.Equal(2000, updatedAgent.PersonId);
+        }
+
+                [Fact]
+        public void UpdateDisposition_Sale_PurchaserSolicitor_Removed()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.DispositionView);
+
+            var purchaserSolicitor = new PimsDspPurchSolicitor()
+            {
+                PersonId = 1000,
+            };
+
+            var dispFile = EntityHelper.CreateDispositionFile();
+            dispFile.PimsDispositionSales = new List<PimsDispositionSale>() {
+                new PimsDispositionSale()
+                {
+                    DispositionSaleId = 1,
+                    SaleFinalAmt = 2000,
+                    DspPurchSolicitorId = purchaserSolicitor.DspPurchSolicitorId,
+                    DspPurchSolicitor = purchaserSolicitor,
+                }
+            };
+            _helper.AddAndSaveChanges(dispFile);
+
+            var sale = dispFile.PimsDispositionSales.FirstOrDefault();
+            sale.DspPurchSolicitor = null;
+            sale.DspPurchSolicitorId = null;
+
+            // Act
+            var result = repository.UpdateDispositionFileSale(sale);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().BeAssignableTo<PimsDispositionSale>();
+            Assert.Null(result.DspPurchSolicitorId);
+            Assert.Null(result.DspPurchSolicitor);
+        }
+
+        [Fact]
+        public void UpdateDisposition_Sale_PurchaserSolicitor_Added()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.DispositionView);
+
+            var dispFile = EntityHelper.CreateDispositionFile();
+            dispFile.PimsDispositionSales = new List<PimsDispositionSale>() {
+                new PimsDispositionSale()
+                {
+                    DispositionSaleId = 1,
+                    SaleFinalAmt = 2000,
+                    DspPurchSolicitorId = null,
+                    DspPurchSolicitor = null,
+                }
+            };
+            _helper.AddAndSaveChanges(dispFile);
+
+            var sale = dispFile.PimsDispositionSales.FirstOrDefault();
+            sale.DspPurchSolicitor = new()
+            {
+                DspPurchSolicitorId = 1000,
+                PersonId = 100,
+            };
+            sale.DspPurchSolicitorId = 1000;
+
+            // Act
+            var result = repository.UpdateDispositionFileSale(sale);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().BeAssignableTo<PimsDispositionSale>();
+            Assert.NotNull(result.DspPurchSolicitorId);
+            Assert.NotNull(result.DspPurchSolicitor);
+        }
+
+        [Fact]
+        public void UpdateDisposition_Sale_PurchaserSolicitor_Updated()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.DispositionView);
+
+            var dispFile = EntityHelper.CreateDispositionFile();
+            dispFile.PimsDispositionSales = new List<PimsDispositionSale>() {
+                new PimsDispositionSale()
+                {
+                    DispositionSaleId = 1,
+                    SaleFinalAmt = 2000,
+                    DspPurchSolicitorId = 10,
+                    DspPurchSolicitor = new PimsDspPurchSolicitor()
+                    {
+                        DspPurchSolicitorId = 10,
+                        PersonId = 1000,
+                    }
+                }
+            };
+            _helper.AddAndSaveChanges(dispFile);
+
+            var updatedSale = new PimsDispositionSale(){
+                DispositionSaleId = 1,
+                SaleFinalAmt = 3000,
+                DspPurchSolicitorId = 10,
+                DspPurchSolicitor = new PimsDspPurchSolicitor()
+                {
+                    DspPurchSolicitorId = 10,
+                    PersonId = 2000,
+                }
+            };
+
+            // Act
+            var result = repository.UpdateDispositionFileSale(updatedSale);
+            var updatedSolicitor = result.DspPurchSolicitor;
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().BeAssignableTo<PimsDispositionSale>();
+            Assert.NotNull(result.DspPurchSolicitorId);
+            Assert.NotNull(result.DspPurchSolicitor);
+            Assert.Equal(2000, updatedSolicitor.PersonId);
+        }
+
 
         [Fact]
         public void UpdateDisposition_Sale_Success()
@@ -765,8 +1003,8 @@ namespace Pims.Dal.Test.Repositories
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.DispositionAdd);
             var dspFile = EntityHelper.CreateDispositionFile();
-            dspFile.FileNumber = "fileNumber";
-            var filter = new DispositionFilter() { FileNameOrNumberOrReference = "fileNumber" };
+            dspFile.FileNumber = "100";
+            var filter = new DispositionFilter() { FileNameOrNumberOrReference = "D-100" };
 
             helper.CreatePimsContext(user, true).AddAndSaveChanges(dspFile);
 

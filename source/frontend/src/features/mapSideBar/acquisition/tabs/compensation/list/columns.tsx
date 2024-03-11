@@ -6,13 +6,16 @@ import styled from 'styled-components';
 import { LinkButton, StyledRemoveIconButton } from '@/components/common/buttons';
 import { Button } from '@/components/common/buttons/Button';
 import { InlineFlexDiv } from '@/components/common/styles';
+import TooltipIcon from '@/components/common/TooltipIcon';
 import { ColumnWithProps } from '@/components/Table';
 import Claims from '@/constants/claims';
+import Roles from '@/constants/roles';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
-import { Api_CompensationFinancial } from '@/models/api/CompensationFinancial';
-import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
+import { ApiGen_Concepts_CompensationFinancial } from '@/models/api/generated/ApiGen_Concepts_CompensationFinancial';
+import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
 import { formatMoney, prettyFormatDate, stringToFragment } from '@/utils';
 
+import { cannotEditMessage } from '../../../common/constants';
 import StatusUpdateSolver from '../../fileDetails/detail/statusUpdateSolver';
 
 export function createCompensationTableColumns(
@@ -20,14 +23,14 @@ export function createCompensationTableColumns(
   onShow: (compensationId: number) => void,
   onDelete: (compensationId: number) => void,
 ) {
-  const columns: ColumnWithProps<Api_CompensationRequisition>[] = [
+  const columns: ColumnWithProps<ApiGen_Concepts_CompensationRequisition>[] = [
     {
       Header: 'Final Date',
       align: 'left',
       sortable: false,
       minWidth: 40,
       maxWidth: 40,
-      Cell: (cellProps: CellProps<Api_CompensationRequisition>) => {
+      Cell: (cellProps: CellProps<ApiGen_Concepts_CompensationRequisition>) => {
         return stringToFragment(prettyFormatDate(cellProps.row.original.finalizedDate));
       },
     },
@@ -38,7 +41,7 @@ export function createCompensationTableColumns(
       sortable: false,
       minWidth: 40,
       maxWidth: 40,
-      Cell: (cellProps: CellProps<Api_CompensationRequisition>) => {
+      Cell: (cellProps: CellProps<ApiGen_Concepts_CompensationRequisition>) => {
         const { hasClaim } = useKeycloakWrapper();
         return hasClaim(Claims.COMPENSATION_REQUISITION_VIEW) ? (
           <LinkButton
@@ -47,7 +50,7 @@ export function createCompensationTableColumns(
             {cellProps.row.original.id}
           </LinkButton>
         ) : (
-          stringToFragment(cellProps.row.original.id!)
+          stringToFragment(cellProps.row.original.id ?? undefined)
         );
       },
     },
@@ -57,9 +60,9 @@ export function createCompensationTableColumns(
       sortable: false,
       width: 30,
       maxWidth: 30,
-      Cell: (cellProps: CellProps<Api_CompensationRequisition>) => {
+      Cell: (cellProps: CellProps<ApiGen_Concepts_CompensationRequisition>) => {
         const totalAmount = cellProps.row.original.financials?.reduce(
-          (total: number, method: Api_CompensationFinancial) => {
+          (total: number, method: ApiGen_Concepts_CompensationFinancial) => {
             return total + (method.totalAmount ?? 0);
           },
           0,
@@ -75,7 +78,7 @@ export function createCompensationTableColumns(
       sortable: false,
       minWidth: 20,
       maxWidth: 20,
-      Cell: (cellProps: CellProps<Api_CompensationRequisition>) => {
+      Cell: (cellProps: CellProps<ApiGen_Concepts_CompensationRequisition>) => {
         return cellProps.row.original.isDraft ? stringToFragment('Draft') : <b>Final</b>;
       },
     },
@@ -85,8 +88,17 @@ export function createCompensationTableColumns(
       sortable: false,
       width: 20,
       maxWidth: 20,
-      Cell: (cellProps: CellProps<Api_CompensationRequisition>) => {
-        const { hasClaim } = useKeycloakWrapper();
+      Cell: (cellProps: CellProps<ApiGen_Concepts_CompensationRequisition>) => {
+        const { hasClaim, hasRole } = useKeycloakWrapper();
+        const canEditDetails = (isDraft: boolean | null) => {
+          if (
+            hasRole(Roles.SYSTEM_ADMINISTRATOR) ||
+            statusSolver.canEditOrDeleteCompensation(isDraft)
+          ) {
+            return true;
+          }
+          return false;
+        };
         return (
           <StyledDiv className="no-gutters">
             {hasClaim(Claims.COMPENSATION_REQUISITION_VIEW) && (
@@ -105,7 +117,7 @@ export function createCompensationTableColumns(
               </Col>
             )}
             {hasClaim(Claims.COMPENSATION_REQUISITION_DELETE) &&
-              statusSolver.canEditOrDeleteCompensation(cellProps.row.original.isDraft) && (
+              canEditDetails(cellProps.row.original.isDraft) && (
                 <StyledRemoveIconButton
                   id={`compensation-delete-${cellProps.row.id}`}
                   data-testid={`compensation-delete-${cellProps.row.id}`}
@@ -114,6 +126,13 @@ export function createCompensationTableColumns(
                 >
                   <FaTrash size="2rem" />
                 </StyledRemoveIconButton>
+              )}
+            {hasClaim(Claims.COMPENSATION_REQUISITION_DELETE) &&
+              !canEditDetails(cellProps.row.original.isDraft) && (
+                <TooltipIcon
+                  toolTipId={`${cellProps.row.original?.id || 0}-summary-cannot-edit-tooltip`}
+                  toolTip={cannotEditMessage}
+                />
               )}
           </StyledDiv>
         );

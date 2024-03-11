@@ -40,6 +40,10 @@ namespace Pims.Dal.Repositories
             return Context.PimsPropertyLeases.AsNoTracking()
                 .Include(pl => pl.Property)
                     .ThenInclude(p => p.Address)
+                    .ThenInclude(p => p.Country)
+                .Include(pl => pl.Property)
+                    .ThenInclude(p => p.Address)
+                    .ThenInclude(p => p.ProvinceState)
                 .Include(pl => pl.Lease)
                     .ThenInclude(l => l.LeaseStatusTypeCodeNavigation)
                 .Include(pl => pl.Lease)
@@ -55,8 +59,12 @@ namespace Pims.Dal.Repositories
         public IEnumerable<PimsPropertyLease> GetAllByLeaseId(long leaseId)
         {
             return this.Context.PimsPropertyLeases.AsNoTracking()
-                .Include(p => p.Property)
+                .Include(pl => pl.Property)
                     .ThenInclude(p => p.Address)
+                    .ThenInclude(p => p.Country)
+                .Include(pl => pl.Property)
+                    .ThenInclude(p => p.Address)
+                    .ThenInclude(p => p.ProvinceState)
                 .Include(l => l.Lease)
                 .Where(p => p.LeaseId == leaseId);
         }

@@ -30,12 +30,16 @@ namespace PIMS.Tests.Automation.StepDefinitions
             propertyManagementTab = new PropertyManagementTab(driver.Current);
             pimsFiles = new PropertyPIMSFiles(driver.Current);
             genericSteps = new GenericSteps(driver);
+
+            property = new Property();
+            searchProperty = new SearchProperty();
+            propertyManagement = new PropertyManagement();
         }
 
         [StepDefinition(@"I search for a Property in the Inventory by different filters from row number (.*)")]
         public void SearchInventoryPropertyOnMap(int rowNumber)
         {
-            /* TEST COVERAGE:  PSP-1546, PSP-5090, PSP-5091, PSP-5092 */
+            /* TEST COVERAGE:  PSP-1546, PSP-5090, PSP-5091, PSP-5092, PSP-6693 */
 
             //Login to PIMS
             loginSteps.Idir(userName);
@@ -48,22 +52,25 @@ namespace PIMS.Tests.Automation.StepDefinitions
             Assert.True(searchProperties.PropertiesFoundCount() == 1);
 
             //Search for a valid PIN in Inventory
+            searchProperties.SearchPropertyReset();
             searchProperties.SearchPropertyByPINPID(searchProperty.PIN);
 
             //Validate that the result gives only one pin
             Assert.True(searchProperties.PropertiesFoundCount() == 1);
 
             //Search for a valid PID in Inventory
+            searchProperties.SearchPropertyReset();
             searchProperties.SearchPropertyByPINPID(searchProperty.PID);
 
             //Validate that the result gives only one pin
             Assert.True(searchProperties.PropertiesFoundCount() == 1);
 
             //Search for a valid Plan in Inventory
-            searchProperties.SearchPropertyByPINPID(searchProperty.PlanNumber);
+            searchProperties.SearchPropertyReset();
+            searchProperties.SearchPropertyByPlan(searchProperty.PlanNumber);
 
             //Validate that the result gives only one pin
-            Assert.True(searchProperties.PropertiesFoundCount() == 1);
+            Assert.True(searchProperties.PropertiesClustersFoundCount() == 1);
 
         }
 
@@ -325,6 +332,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Validate that the result gives only one pin
             Assert.True(searchProperties.PropertiesFoundCount() == 0);
+            searchProperties.Dispose();
         }
 
         [StepDefinition(@"A Property Information is saved successfully")]
@@ -332,6 +340,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         {
             //Validate Property Information View Form after changes
             propertyInformation.VerifyPropertyDetailsView();
+            propertyInformation.Dispose();
         }
 
         [StepDefinition(@"Non-Inventory property renders correctly")]
@@ -342,12 +351,14 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Validate correct tabs are displayed
             propertyInformation.VerifyNonInventoryPropertyTabs();
+            propertyInformation.Dispose();
         }
 
         [StepDefinition(@"Property Management Tab has been updated successfully")]
         public void PropertyManagementSuccess()
         {
             propertyManagementTab.VerifyInitManagementTabView();
+            propertyManagementTab.Dispose();
         }
 
         [StepDefinition(@"PIMS Files Tab has rendered successfully")]
@@ -356,18 +367,21 @@ namespace PIMS.Tests.Automation.StepDefinitions
             Assert.True(pimsFiles.GetResearchFilesCount() > 0);
             Assert.True(pimsFiles.GetAcquisitionFilesCount() > 0);
             Assert.True(pimsFiles.GetLeasesCount() > 0);
-            Assert.True(pimsFiles.GetDispositionFilesCount() == 0);
+            Assert.True(pimsFiles.GetDispositionFilesCount() > 0);
+
+            pimsFiles.Dispose();
         }
 
         [StepDefinition(@"Properties filters works successfully")]
         public void PropertySearchBarSuccess()
         {
             searchProperties.SearchPropertyReset();
+            searchProperties.Dispose();
         }
 
         private void PopulateProperty(int rowNumber)
         {
-            DataTable propertiesSheet = ExcelDataContext.GetInstance().Sheets["Properties"];
+            DataTable propertiesSheet = ExcelDataContext.GetInstance().Sheets["Properties"]!;
             ExcelDataContext.PopulateInCollection(propertiesSheet);
 
             property = new Property();
@@ -401,7 +415,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateSearchProperty(int rowNumber)
         {
-            DataTable searchPropertiesSheet = ExcelDataContext.GetInstance().Sheets["SearchProperties"];
+            DataTable searchPropertiesSheet = ExcelDataContext.GetInstance().Sheets["SearchProperties"]!;
             ExcelDataContext.PopulateInCollection(searchPropertiesSheet);
 
             searchProperty = new SearchProperty();
@@ -415,7 +429,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateManagementProperty(int rowNumber)
         {
-            DataTable propertyManagementSheet = ExcelDataContext.GetInstance().Sheets["PropertyManagement"];
+            DataTable propertyManagementSheet = ExcelDataContext.GetInstance().Sheets["PropertyManagement"]!;
             ExcelDataContext.PopulateInCollection(propertyManagementSheet);
 
             propertyManagement = new PropertyManagement();
@@ -438,7 +452,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateManagementContactsCollection(int startRow, int rowsCount)
         {
-            DataTable managementContactsSheet = ExcelDataContext.GetInstance().Sheets["PropertyManagementContact"];
+            DataTable managementContactsSheet = ExcelDataContext.GetInstance().Sheets["PropertyManagementContact"]!;
             ExcelDataContext.PopulateInCollection(managementContactsSheet);
 
             for (int i = startRow; i < startRow + rowsCount; i++)
@@ -455,7 +469,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateManagementActivitiesCollection(int startRow, int rowsCount)
         {
-            DataTable managementActivitesSheet = ExcelDataContext.GetInstance().Sheets["PropertyManagementActivity"];
+            DataTable managementActivitesSheet = ExcelDataContext.GetInstance().Sheets["PropertyManagementActivity"]!;
             ExcelDataContext.PopulateInCollection(managementActivitesSheet);
 
             for (int i = startRow; i < startRow + rowsCount; i++)
@@ -487,7 +501,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateManagementActivitiesInvoiceCollection(int startRow, int rowsCount, List<ManagementPropertyActivityInvoice> invoices)
         {
-            DataTable invoicesSheet = ExcelDataContext.GetInstance().Sheets["ManagementPropActivityInvoice"];
+            DataTable invoicesSheet = ExcelDataContext.GetInstance().Sheets["ManagementPropActivityInvoice"]!;
             ExcelDataContext.PopulateInCollection(invoicesSheet);
 
             for (int i = startRow; i < startRow + rowsCount; i++)

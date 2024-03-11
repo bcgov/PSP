@@ -9,6 +9,7 @@ using Pims.Api.Constants;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Models.CodeTypes;
 using Pims.Api.Models.Concepts.Property;
+using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 using Pims.Dal.Exceptions;
@@ -98,9 +99,9 @@ namespace Pims.Api.Services
             return property;
         }
 
-        public PimsProperty Update(PimsProperty property)
+        public PimsProperty Update(PimsProperty property, bool commitTransaction = true)
         {
-            _logger.LogInformation("Updating property...");
+            _logger.LogInformation("Updating property with id {id}", property.Internal_Id);
             _user.ThrowIfNotAuthorized(Permissions.PropertyEdit);
 
             // convert spatial location from lat/long (4326) to BC Albers (3005) for database storage
@@ -112,7 +113,10 @@ namespace Pims.Api.Services
             }
 
             var newProperty = _propertyRepository.Update(property);
-            _propertyRepository.CommitTransaction();
+            if (commitTransaction)
+            {
+                _propertyRepository.CommitTransaction();
+            }
 
             return GetById(newProperty.Internal_Id);
         }

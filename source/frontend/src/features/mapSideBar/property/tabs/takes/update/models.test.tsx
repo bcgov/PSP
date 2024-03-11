@@ -1,11 +1,12 @@
-import { Api_Take } from '@/models/api/Take';
+import { ApiGen_Concepts_Take } from '@/models/api/generated/ApiGen_Concepts_Take';
+import { toTypeCode } from '@/utils/formUtils';
 
 import { TakeModel } from './models';
 import { emptyTake } from './TakesUpdateForm';
 
 describe('take model tests', () => {
   it("converts all false it values to 'false'", () => {
-    const apiTake: Api_Take = {
+    const apiTake: ApiGen_Concepts_Take = {
       ...emptyTake,
       isAcquiredForInventory: false,
       isNewLicenseToConstruct: false,
@@ -24,7 +25,7 @@ describe('take model tests', () => {
   });
 
   it("converts all true it values to 'true'", () => {
-    const apiTake: Api_Take = {
+    const apiTake: ApiGen_Concepts_Take = {
       ...emptyTake,
       isAcquiredForInventory: true,
       isNewLicenseToConstruct: true,
@@ -42,7 +43,7 @@ describe('take model tests', () => {
     expect(takeModel.isThereSurplus).toBe('true');
   });
   it('sets all undefined areas to 0', () => {
-    const apiTake: Api_Take = {
+    const apiTake: ApiGen_Concepts_Take = {
       ...emptyTake,
       landActArea: null,
       newHighwayDedicationArea: null,
@@ -59,9 +60,9 @@ describe('take model tests', () => {
   });
 
   it('sets all area units to the unit from the backend', () => {
-    const apiTake: Api_Take = {
+    const apiTake: ApiGen_Concepts_Take = {
       ...emptyTake,
-      areaUnitTypeCode: { id: 'FEET2' },
+      areaUnitTypeCode: toTypeCode('FEET2'),
     };
     const takeModel = new TakeModel(apiTake);
     expect(takeModel.landActAreaUnitTypeCode).toBe('FEET2');
@@ -73,7 +74,7 @@ describe('take model tests', () => {
 
   describe('translating the model to the api format', () => {
     it('converts all areas to their m2 equivalents', () => {
-      const apiTake: Api_Take = {
+      const apiTake: ApiGen_Concepts_Take = {
         ...emptyTake,
         landActArea: 1,
         newHighwayDedicationArea: 2,

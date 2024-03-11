@@ -1,23 +1,28 @@
+import { EnumAcquisitionFileType } from '@/constants/acquisitionFileType';
 import { InterestHolderType } from '@/constants/interestHolderTypes';
-import {
-  Api_AcquisitionFile,
-  Api_AcquisitionFileOwner,
-  Api_AcquisitionFileTeam,
-  EnumAcquisitionFileType,
-} from '@/models/api/AcquisitionFile';
-import { Api_FileChecklistItem } from '@/models/api/File';
+import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
+import { ApiGen_Concepts_AcquisitionFileOwner } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileOwner';
+import { ApiGen_Concepts_AcquisitionFileTeam } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileTeam';
+import { ApiGen_Concepts_FileChecklistItem } from '@/models/api/generated/ApiGen_Concepts_FileChecklistItem';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
+import { toTypeCodeNullable } from '@/utils/formUtils';
+
+import { getMockApiAddress } from './address.mock';
+import { getEmptyPerson, getMockPerson } from './contacts.mock';
+import { getEmptyOrganization } from './organization.mock';
+import { getMockApiProperty } from './properties.mock';
 
 export const mockAcquisitionFileResponse = (
   id = 1,
   name = 'Test ACQ File',
   rowVersion = 1,
-): Api_AcquisitionFile => ({
+): ApiGen_Concepts_AcquisitionFile => ({
   id,
   rowVersion,
   fileNumber: '1-12345-01',
   fileName: name,
   project: {
-    id: null,
+    id: 1,
     code: '001',
     description: `Hwy 14 Expansion - Vancouver Island but it's really long so it can wrap around if it has to`,
     costTypeCode: null,
@@ -27,7 +32,7 @@ export const mockAcquisitionFileResponse = (
     regionCode: null,
     note: null,
     projectProducts: [],
-    rowVersion: null,
+    ...getEmptyBaseAudit(),
   },
   projectId: null,
   product: {
@@ -36,12 +41,12 @@ export const mockAcquisitionFileResponse = (
     projectProducts: [],
     code: '00048',
     description: 'MISCELLANEOUS CLAIMS',
-    rowVersion: 1,
     startDate: '2022-06-27T00:00:00',
     costEstimate: 10000,
     costEstimateDate: null,
     objective: 'For Product',
     scope: null,
+    ...getEmptyBaseAudit(1),
   },
   productId: null,
   legacyFileNumber: 'legacy file number',
@@ -51,36 +56,41 @@ export const mockAcquisitionFileResponse = (
     id: 'ACTIVE',
     description: 'Active',
     isDisabled: false,
+    displayOrder: null,
   },
   acquisitionTypeCode: {
     id: 'CONSEN',
     description: 'Consensual Agreement',
     isDisabled: false,
+    displayOrder: null,
   },
   regionCode: {
     id: 1,
     description: 'South Coast Region',
     isDisabled: false,
+    displayOrder: null,
   },
   fileProperties: [
     {
       id: 1,
       propertyId: 442,
       property: {
+        ...getMockApiProperty(),
         id: 442,
         anomalies: [],
         tenures: [],
         roadTypes: [],
-        adjacentLands: [],
         region: {
           id: 1,
           description: 'South Coast Region',
           isDisabled: false,
+          displayOrder: null,
         },
         district: {
           id: 2,
           description: 'Vancouver Island District',
           isDisabled: false,
+          displayOrder: null,
         },
         dataSourceEffectiveDateOnly: '2022-08-30T00:00:00',
         latitude: 392268.0638614455,
@@ -98,26 +108,32 @@ export const mockAcquisitionFileResponse = (
         },
         rowVersion: 1,
       },
+      displayOrder: null,
+      fileId: 1,
+      file: null,
+      propertyName: null,
       rowVersion: 1,
     },
     {
       id: 2,
       propertyId: 443,
       property: {
+        ...getMockApiProperty(),
         id: 443,
         anomalies: [],
         tenures: [],
         roadTypes: [],
-        adjacentLands: [],
         region: {
           id: 1,
           description: 'South Coast Region',
           isDisabled: false,
+          displayOrder: null,
         },
         district: {
           id: 2,
           description: 'Vancouver Island District',
           isDisabled: false,
+          displayOrder: null,
         },
         dataSourceEffectiveDateOnly: '2022-08-30T00:00:00',
         latitude: 392208.44089083467,
@@ -136,6 +152,10 @@ export const mockAcquisitionFileResponse = (
         rowVersion: 1,
       },
       rowVersion: 1,
+      displayOrder: null,
+      fileId: 1,
+      file: null,
+      propertyName: null,
     },
   ],
   acquisitionTeam: [
@@ -144,6 +164,7 @@ export const mockAcquisitionFileResponse = (
       acquisitionFileId: 1,
       personId: 1,
       person: {
+        ...getEmptyPerson(),
         id: 1,
         isDisabled: false,
         surname: 'Smith',
@@ -160,14 +181,21 @@ export const mockAcquisitionFileResponse = (
         id: 'NEGOTAGENT',
         description: 'Negotiation agent',
         isDisabled: false,
+        displayOrder: null,
       },
       rowVersion: 2,
+      organization: null,
+      organizationId: null,
+      primaryContactId: null,
+      primaryContact: null,
+      teamProfileTypeCode: null,
     },
     {
       id: 2,
       acquisitionFileId: 1,
       personId: 3,
       person: {
+        ...getEmptyPerson(),
         id: 3,
         isDisabled: false,
         surname: 'Cheese',
@@ -177,13 +205,21 @@ export const mockAcquisitionFileResponse = (
         personAddresses: [],
         contactMethods: [],
         rowVersion: 1,
+        comment: null,
+        preferredName: null,
       },
       teamProfileType: {
         id: 'MOTILAWYER',
         description: 'Negotiation agent',
         isDisabled: false,
+        displayOrder: null,
       },
       rowVersion: 2,
+      organization: null,
+      organizationId: null,
+      primaryContact: null,
+      primaryContactId: null,
+      teamProfileTypeCode: null,
     },
   ],
   acquisitionFileOwners: [
@@ -201,6 +237,7 @@ export const mockAcquisitionFileResponse = (
       contactEmailAddr: 'jonh.doe@gmail.com',
       contactPhoneNum: '775-111-1111',
       address: {
+        ...getMockApiAddress(),
         id: 4,
         streetAddress1: '456 Souris Street',
         streetAddress2: 'PO Box 250',
@@ -215,6 +252,8 @@ export const mockAcquisitionFileResponse = (
       appLastUpdateTimestamp: '2023-02-06T22:27:22.01',
       appLastUpdateUserid: 'dbo',
       appCreateUserid: 'dbo',
+      appCreateUserGuid: null,
+      appLastUpdateUserGuid: null,
     },
     {
       id: 3,
@@ -230,6 +269,7 @@ export const mockAcquisitionFileResponse = (
       contactEmailAddr: 'fake@email.ca',
       contactPhoneNum: '775-111-1111',
       address: {
+        ...getMockApiAddress(),
         id: 3,
         streetAddress1: '123 Main Street',
         streetAddress2: 'PO Box 123',
@@ -244,42 +284,59 @@ export const mockAcquisitionFileResponse = (
       appLastUpdateTimestamp: '2023-02-08T18:11:12.303',
       appLastUpdateUserid: 'dbo',
       appCreateUserid: 'dbo',
+      appCreateUserGuid: null,
+      appLastUpdateUserGuid: null,
     },
   ],
   acquisitionFileInterestHolders: [
     {
       interestHolderId: 1,
-      interestHolderType: { id: InterestHolderType.OWNER_SOLICITOR },
+      interestHolderType: toTypeCodeNullable(InterestHolderType.OWNER_SOLICITOR),
+
       acquisitionFileId: 1,
       personId: null,
       person: null,
       organizationId: 1,
       organization: {
+        ...getEmptyOrganization(),
         id: 1,
         name: 'Millennium Inc',
         alias: 'M Inc',
         incorporationNumber: '1234',
         comment: '',
+        contactMethods: null,
+        isDisabled: false,
+        organizationAddresses: null,
+        organizationPersons: null,
+        rowVersion: null,
       },
       interestHolderProperties: [],
       primaryContactId: 1,
       primaryContact: {
+        ...getEmptyPerson(),
         id: 1,
         firstName: 'Luke',
         surname: 'Skywalker',
+        comment: null,
+        contactMethods: null,
+        isDisabled: false,
+        middleNames: null,
+        personAddresses: null,
+        personOrganizations: null,
+        preferredName: null,
+        rowVersion: null,
       },
       comment: null,
       isDisabled: false,
+      ...getEmptyBaseAudit(),
     },
     {
       interestHolderId: 1,
-      interestHolderType: { id: InterestHolderType.OWNER_REPRESENTATIVE },
+      interestHolderType: toTypeCodeNullable(InterestHolderType.OWNER_REPRESENTATIVE),
       acquisitionFileId: 1,
       personId: 2,
       person: {
-        id: 2,
-        firstName: 'Han',
-        surname: 'Solo',
+        ...getMockPerson({ firstName: 'Han', id: 2, surname: 'Solo' }),
       },
       organization: null,
       organizationId: null,
@@ -288,6 +345,7 @@ export const mockAcquisitionFileResponse = (
       primaryContact: null,
       comment: 'test representative comment',
       isDisabled: false,
+      ...getEmptyBaseAudit(),
     },
   ],
   fileChecklistItems: [],
@@ -299,21 +357,25 @@ export const mockAcquisitionFileResponse = (
   appCreateUserid: 'admin',
   appLastUpdateUserGuid: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
   appCreateUserGuid: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
+  acquisitionPhysFileStatusTypeCode: null,
+  compensationRequisitions: null,
+  completionDate: null,
+  fileNo: 1,
+  fundingOther: null,
+  fundingTypeCode: null,
 });
 
 export const getMockExpropriationFile = (
   fileType: string = EnumAcquisitionFileType.SECTN6,
-): Api_AcquisitionFile => {
+): ApiGen_Concepts_AcquisitionFile => {
   const mockFile = mockAcquisitionFileResponse();
-  mockFile.acquisitionTypeCode = {
-    id: fileType,
-  };
+  mockFile.acquisitionTypeCode = toTypeCodeNullable(fileType);
   return mockFile;
 };
 
 export const mockAcquisitionFileOwnersResponse = (
-  acquisitionFileId: number = 1,
-): Api_AcquisitionFileOwner[] => [
+  acquisitionFileId = 1,
+): ApiGen_Concepts_AcquisitionFileOwner[] => [
   {
     id: 1,
     acquisitionFileId: acquisitionFileId,
@@ -339,9 +401,21 @@ export const mockAcquisitionFileOwnersResponse = (
       country: { id: 1, code: 'CA', description: 'Canada', displayOrder: 1 },
       postal: 'IH8 B0B',
       rowVersion: 1,
+      comment: null,
+      countryOther: null,
+      district: null,
+      latitude: null,
+      longitude: null,
+      region: null,
+      regionCode: null,
+      districtCode: null,
     },
     appCreateTimestamp: '0001-01-01T00:00:00',
     appLastUpdateTimestamp: '0001-01-01T00:00:00',
+    appCreateUserGuid: null,
+    appCreateUserid: null,
+    appLastUpdateUserGuid: null,
+    appLastUpdateUserid: null,
   },
   {
     id: 3,
@@ -368,17 +442,30 @@ export const mockAcquisitionFileOwnersResponse = (
       country: { id: 1, code: 'CA', description: 'Canada', displayOrder: 1 },
       postal: 'I4M B0B',
       rowVersion: 1,
+      comment: null,
+      countryOther: null,
+      district: null,
+      latitude: null,
+      longitude: null,
+      region: null,
+      districtCode: null,
+      regionCode: null,
     },
     appCreateTimestamp: '0001-01-01T00:00:00',
     appLastUpdateTimestamp: '0001-01-01T00:00:00',
+    appCreateUserGuid: null,
+    appCreateUserid: null,
+    appLastUpdateUserGuid: null,
+    appLastUpdateUserid: null,
   },
 ];
 
-export const mockApiAcquisitionFileTeamPerson = (): Api_AcquisitionFileTeam => ({
+export const mockApiAcquisitionFileTeamPerson = (): ApiGen_Concepts_AcquisitionFileTeam => ({
   id: 1,
   acquisitionFileId: 1,
   personId: 1,
   person: {
+    ...getEmptyPerson(),
     id: 1,
     isDisabled: false,
     surname: 'last',
@@ -387,20 +474,30 @@ export const mockApiAcquisitionFileTeamPerson = (): Api_AcquisitionFileTeam => (
     personAddresses: [],
     contactMethods: [],
     rowVersion: 2,
+    comment: null,
+    middleNames: null,
+    preferredName: null,
   },
   teamProfileType: {
     id: 'NEGOTAGENT',
     description: 'Negotiation agent',
     isDisabled: false,
+    displayOrder: null,
   },
   rowVersion: 2,
+  organization: null,
+  organizationId: null,
+  primaryContact: null,
+  primaryContactId: null,
+  teamProfileTypeCode: null,
 });
 
-export const mockApiAcquisitionFileTeamOrganization = (): Api_AcquisitionFileTeam => ({
+export const mockApiAcquisitionFileTeamOrganization = (): ApiGen_Concepts_AcquisitionFileTeam => ({
   id: 1,
   acquisitionFileId: 1,
   organizationId: 2,
   organization: {
+    ...getEmptyOrganization(),
     id: 2,
     isDisabled: false,
     name: 'ABC Inc',
@@ -408,16 +505,25 @@ export const mockApiAcquisitionFileTeamOrganization = (): Api_AcquisitionFileTea
     organizationAddresses: [],
     contactMethods: [],
     rowVersion: 2,
+    alias: null,
+    comment: null,
+    incorporationNumber: null,
   },
   teamProfileType: {
     id: 'MOTILAWYER',
     description: 'MoTI Solicitor',
     isDisabled: false,
+    displayOrder: null,
   },
   rowVersion: 2,
+  person: null,
+  personId: null,
+  primaryContact: null,
+  primaryContactId: null,
+  teamProfileTypeCode: null,
 });
 
-export const mockFileChecklistResponse = (fileId: number = 1): Api_FileChecklistItem[] => [
+export const mockFileChecklistResponse = (fileId = 1): ApiGen_Concepts_FileChecklistItem[] => [
   {
     id: 51,
     fileId,
@@ -428,6 +534,7 @@ export const mockFileChecklistResponse = (fileId: number = 1): Api_FileChecklist
       isDisabled: false,
       displayOrder: 1,
       rowVersion: 2,
+      hint: null,
     },
     statusTypeCode: {
       id: 'COMPLT',
@@ -453,6 +560,7 @@ export const mockFileChecklistResponse = (fileId: number = 1): Api_FileChecklist
       isDisabled: false,
       displayOrder: 32,
       rowVersion: 4,
+      hint: null,
     },
     statusTypeCode: {
       id: 'INCOMP',
@@ -608,6 +716,7 @@ export const mockFileChecklistResponse = (fileId: number = 1): Api_FileChecklist
       isDisabled: false,
       displayOrder: 27,
       rowVersion: 2,
+      hint: null,
     },
     statusTypeCode: {
       id: 'INCOMP',
@@ -633,6 +742,7 @@ export const mockFileChecklistResponse = (fileId: number = 1): Api_FileChecklist
       isDisabled: false,
       displayOrder: 25,
       rowVersion: 2,
+      hint: null,
     },
     statusTypeCode: {
       id: 'INCOMP',
@@ -658,6 +768,7 @@ export const mockFileChecklistResponse = (fileId: number = 1): Api_FileChecklist
       isDisabled: false,
       displayOrder: 24,
       rowVersion: 2,
+      hint: null,
     },
     statusTypeCode: {
       id: 'INCOMP',
@@ -683,6 +794,7 @@ export const mockFileChecklistResponse = (fileId: number = 1): Api_FileChecklist
       isDisabled: false,
       displayOrder: 23,
       rowVersion: 2,
+      hint: null,
     },
     statusTypeCode: {
       id: 'INCOMP',
@@ -708,6 +820,7 @@ export const mockFileChecklistResponse = (fileId: number = 1): Api_FileChecklist
       isDisabled: false,
       displayOrder: 22,
       rowVersion: 4,
+      hint: null,
     },
     statusTypeCode: {
       id: 'INCOMP',
@@ -759,6 +872,7 @@ export const mockFileChecklistResponse = (fileId: number = 1): Api_FileChecklist
       isDisabled: false,
       displayOrder: 20,
       rowVersion: 4,
+      hint: null,
     },
     statusTypeCode: {
       id: 'INCOMP',
@@ -836,6 +950,7 @@ export const mockFileChecklistResponse = (fileId: number = 1): Api_FileChecklist
       isDisabled: false,
       displayOrder: 17,
       rowVersion: 2,
+      hint: null,
     },
     statusTypeCode: {
       id: 'INCOMP',
@@ -861,6 +976,7 @@ export const mockFileChecklistResponse = (fileId: number = 1): Api_FileChecklist
       isDisabled: false,
       displayOrder: 16,
       rowVersion: 4,
+      hint: null,
     },
     statusTypeCode: {
       id: 'INCOMP',
@@ -886,6 +1002,7 @@ export const mockFileChecklistResponse = (fileId: number = 1): Api_FileChecklist
       isDisabled: false,
       displayOrder: 2,
       rowVersion: 2,
+      hint: null,
     },
     statusTypeCode: {
       id: 'INCOMP',
@@ -911,6 +1028,7 @@ export const mockFileChecklistResponse = (fileId: number = 1): Api_FileChecklist
       isDisabled: false,
       displayOrder: 3,
       rowVersion: 2,
+      hint: null,
     },
     statusTypeCode: {
       id: 'NOTAPP',
@@ -936,6 +1054,7 @@ export const mockFileChecklistResponse = (fileId: number = 1): Api_FileChecklist
       isDisabled: false,
       displayOrder: 4,
       rowVersion: 4,
+      hint: null,
     },
     statusTypeCode: {
       id: 'COMPLT',
@@ -987,6 +1106,7 @@ export const mockFileChecklistResponse = (fileId: number = 1): Api_FileChecklist
       isDisabled: false,
       displayOrder: 6,
       rowVersion: 2,
+      hint: null,
     },
     statusTypeCode: {
       id: 'INCOMP',
@@ -1012,6 +1132,7 @@ export const mockFileChecklistResponse = (fileId: number = 1): Api_FileChecklist
       isDisabled: false,
       displayOrder: 7,
       rowVersion: 2,
+      hint: null,
     },
     statusTypeCode: {
       id: 'INCOMP',
@@ -1037,6 +1158,7 @@ export const mockFileChecklistResponse = (fileId: number = 1): Api_FileChecklist
       isDisabled: false,
       displayOrder: 33,
       rowVersion: 4,
+      hint: null,
     },
     statusTypeCode: {
       id: 'INCOMP',
@@ -1088,6 +1210,7 @@ export const mockFileChecklistResponse = (fileId: number = 1): Api_FileChecklist
       isDisabled: false,
       displayOrder: 10,
       rowVersion: 2,
+      hint: null,
     },
     statusTypeCode: {
       id: 'INCOMP',
@@ -1165,6 +1288,7 @@ export const mockFileChecklistResponse = (fileId: number = 1): Api_FileChecklist
       isDisabled: false,
       displayOrder: 13,
       rowVersion: 2,
+      hint: null,
     },
     statusTypeCode: {
       id: 'INCOMP',
@@ -1190,6 +1314,7 @@ export const mockFileChecklistResponse = (fileId: number = 1): Api_FileChecklist
       isDisabled: false,
       displayOrder: 14,
       rowVersion: 4,
+      hint: null,
     },
     statusTypeCode: {
       id: 'INCOMP',
@@ -1215,6 +1340,7 @@ export const mockFileChecklistResponse = (fileId: number = 1): Api_FileChecklist
       isDisabled: false,
       displayOrder: 15,
       rowVersion: 2,
+      hint: null,
     },
     statusTypeCode: {
       id: 'INCOMP',
@@ -1240,6 +1366,7 @@ export const mockFileChecklistResponse = (fileId: number = 1): Api_FileChecklist
       isDisabled: false,
       displayOrder: 9,
       rowVersion: 2,
+      hint: null,
     },
     statusTypeCode: {
       id: 'INCOMP',

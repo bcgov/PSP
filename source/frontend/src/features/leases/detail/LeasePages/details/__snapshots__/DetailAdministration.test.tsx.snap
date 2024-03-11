@@ -457,7 +457,6 @@ exports[`DetailAdministration component renders minimally as expected 1`] = `
               class="form-control"
               id="input-programName"
               name="programName"
-              title=""
               value=""
             />
           </div>
@@ -663,7 +662,6 @@ exports[`DetailAdministration component renders minimally as expected 1`] = `
               class="form-control"
               id="input-motiName"
               name="motiName"
-              title=""
               value=""
             />
           </div>
@@ -691,7 +689,6 @@ exports[`DetailAdministration component renders minimally as expected 1`] = `
               class="form-control"
               id="input-description"
               name="description"
-              title=""
               value=""
             />
           </div>

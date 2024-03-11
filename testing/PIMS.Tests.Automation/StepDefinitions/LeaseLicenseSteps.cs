@@ -42,6 +42,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchProperties = new SearchProperties(driver.Current);
             propertyInformation = new PropertyInformation(driver.Current);
             sharedSearchProperties = new SharedFileProperties(driver.Current);
+
+            lease = new Lease();
         }
 
         [StepDefinition(@"I create a new minimum Lease from row number (.*)")]
@@ -154,7 +156,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             sharedSearchProperties.VerifyLocateOnMapFeature();
 
             //Delete last property
-            sharedSearchProperties.DeleteLastPropertyFromFile();
+            sharedSearchProperties.DeleteLastPropertyFromLease();
 
             //Save the new license details
             leaseDetails.SaveLicense();
@@ -648,7 +650,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchLease.FilterLeasesFiles(lease.SearchProperties.PID, lease.LeaseExpiryDate, "",  lease.LeaseStatus);
             Assert.True(searchLease.SearchFoundResults());
 
-            searchLease.FilterLeasesFiles("", "", lease.LeaseTenants[0].Summary, "");
+            searchLease.FilterLeasesFiles("", "", "Progressive Motor Sports", "");
             Assert.True(searchLease.SearchFoundResults());
 
             searchLease.FilterLeasesFiles("003-549-551", "05/12/1987", "Jonathan Doe", "Discarded");
@@ -667,6 +669,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchLease.SearchLicenseByLFile(leaseCode);
 
             Assert.True(searchLease.SearchFoundResults());
+            searchLease.Dispose();
         }
 
         [StepDefinition(@"Expected Lease File Content is displayed on Leases Table")]
@@ -676,13 +679,14 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Verify List View
             searchLease.VerifySearchLeasesView();
-            searchLease.VerifyLeaseTableContent(lease.LeaseExpiryDate, lease.Program, lease.LeaseStatus);
+            searchLease.VerifyLeaseTableContent(lease);
+            searchLease.Dispose();
 
         }
 
         private void PopulateLeaseLicense(int rowNumber)
         {
-            DataTable leaseSheet = ExcelDataContext.GetInstance().Sheets["Leases"];
+            DataTable leaseSheet = ExcelDataContext.GetInstance().Sheets["Leases"]!;
             ExcelDataContext.PopulateInCollection(leaseSheet);
 
             lease = new Lease();
@@ -729,7 +733,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             if (lease.SearchPropertiesIndex > 0)
             {
-                DataTable searchPropertiesSheet = ExcelDataContext.GetInstance().Sheets["SearchProperties"];
+                DataTable searchPropertiesSheet = ExcelDataContext.GetInstance().Sheets["SearchProperties"]!;
                 ExcelDataContext.PopulateInCollection(searchPropertiesSheet);
 
                 lease.SearchProperties.PID = ExcelDataContext.ReadData(lease.SearchPropertiesIndex, "PID");
@@ -823,7 +827,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateTenantsCollection(int startRow, int rowsCount)
         {
-            DataTable leasesTenantsSheet = ExcelDataContext.GetInstance().Sheets["LeasesTenants"];
+            DataTable leasesTenantsSheet = ExcelDataContext.GetInstance().Sheets["LeasesTenants"]!;
             ExcelDataContext.PopulateInCollection(leasesTenantsSheet);
 
             for (int i = startRow; i < startRow + rowsCount; i++)
@@ -840,7 +844,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateDepositsCollection(int startRow, int rowsCount)
         {
-            DataTable leasesDepositsSheet = ExcelDataContext.GetInstance().Sheets["LeasesDeposits"];
+            DataTable leasesDepositsSheet = ExcelDataContext.GetInstance().Sheets["LeasesDeposits"]!;
             ExcelDataContext.PopulateInCollection(leasesDepositsSheet);
 
             for (int i = startRow; i < startRow + rowsCount; i++)
@@ -867,7 +871,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateTermsCollection(int startRow, int rowsCount)
         {
-            DataTable leasesTermsSheet = ExcelDataContext.GetInstance().Sheets["LeasesTerms"];
+            DataTable leasesTermsSheet = ExcelDataContext.GetInstance().Sheets["LeasesTerms"]!;
             ExcelDataContext.PopulateInCollection(leasesTermsSheet);
 
             for (int i = startRow; i < startRow + rowsCount; i++)
@@ -887,7 +891,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulatePaymentsCollection(int startRow, int rowsCount)
         {
-            DataTable leasesDepositsPaymentsSheet = ExcelDataContext.GetInstance().Sheets["LeasesPayments"];
+            DataTable leasesDepositsPaymentsSheet = ExcelDataContext.GetInstance().Sheets["LeasesPayments"]!;
             ExcelDataContext.PopulateInCollection(leasesDepositsPaymentsSheet);
 
             for (int i = startRow; i < startRow + rowsCount; i++)

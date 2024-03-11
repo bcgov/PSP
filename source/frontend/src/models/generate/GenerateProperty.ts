@@ -1,9 +1,10 @@
-import { Api_Geometry, Api_Property } from '@/models/api/Property';
-import { pidFormatter } from '@/utils';
+import { exists, pidFormatter } from '@/utils';
 
+import { ApiGen_Concepts_Geometry } from '../api/generated/ApiGen_Concepts_Geometry';
+import { ApiGen_Concepts_Property } from '../api/generated/ApiGen_Concepts_Property';
 import { Api_GenerateAddress } from './GenerateAddress';
 export class Api_GenerateProperty {
-  location: Api_Geometry | null;
+  location: ApiGen_Concepts_Geometry | null;
   pid: string;
   legal_description: string;
   region: string;
@@ -12,15 +13,11 @@ export class Api_GenerateProperty {
   district: string;
   electoral_dist: string;
 
-  constructor(property: Api_Property | null | undefined) {
-    this.location =
-      property?.location !== null && property?.location !== undefined ? property.location : null;
+  constructor(property: ApiGen_Concepts_Property | null | undefined) {
+    this.location = exists(property?.location) ? property!.location : null;
     this.pid = pidFormatter(property?.pid?.toString()) ?? '';
     this.legal_description = property?.landLegalDescription ?? '';
-    this.address =
-      property?.address !== null && property?.address !== undefined
-        ? new Api_GenerateAddress(property.address)
-        : null;
+    this.address = exists(property?.address) ? new Api_GenerateAddress(property!.address) : null;
     this.region = property?.region?.description ?? '';
     this.district = property?.district?.description ?? '';
     this.electoral_dist = '';

@@ -47,10 +47,10 @@ namespace PIMS.Tests.Automation.PageObjects
         private By noteEditTextarea = By.Id("input-note");
 
         //Notes Cancel pop-up Elements
-        private By notesCancelPopupContent = By.XPath("//div[contains(text(),'Unsaved Changes')]/parent::div/parent::div");
-        private By notesCancelPopupHeader = By.XPath("//div[contains(text(),'Unsaved Changes')]");
-        private By notesCancelPopupBody = By.XPath("//div[contains(text(),'Unsaved Changes')]/parent::div/following-sibling::div[@class='modal-body']");
-        private By notesCancelOkBttn = By.XPath("//div[contains(text(),'Unsaved Changes')]/parent::div/parent::div/div/div[@class='button-wrap']/button[@title='ok-modal']");
+        private By notesCancelPopupContent = By.XPath("//div[contains(text(),'Confirm Changes')]/parent::div/parent::div");
+        private By notesCancelPopupHeader = By.XPath("//div[contains(text(),'Confirm Changes')]");
+        private By notesCancelPopupBody = By.XPath("//div[contains(text(),'Confirm Changes')]/parent::div/following-sibling::div[@class='modal-body']");
+        private By notesCancelOkBttn = By.XPath("//div[contains(text(),'Confirm Changes')]/parent::div/parent::div/div/div[@class='button-wrap']/button[@title='ok-modal']");
 
         //Notes Delete pop-up Elements
         private By notesDeletePopupHeader = By.CssSelector("div[class='modal-header'] div");
@@ -86,7 +86,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void ViewSecondNoteDetails()
         {
-            Wait(2000);
+            Wait();
             webDriver.FindElement(notesTab2ndResultViewBttn).Click();
         }
 
@@ -101,7 +101,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void SaveNote()
         {
-            WaitUntilClickable(notesAddDetailsSaveBttn);
+            Wait();
             webDriver.FindElement(notesAddDetailsSaveBttn).Click();
         }
 
@@ -114,7 +114,8 @@ namespace PIMS.Tests.Automation.PageObjects
             if (webDriver.FindElements(notesCancelPopupContent).Count() > 0)
             {
                 AssertTrueIsDisplayed(notesCancelPopupHeader);
-                Assert.Equal("You have made changes on this form. Do you wish to leave without saving?", webDriver.FindElement(notesCancelPopupBody).Text);
+                Assert.Contains("If you choose to cancel now, your changes will not be saved.", webDriver.FindElement(notesCancelPopupBody).Text);
+                Assert.Contains("Do you want to proceed?", webDriver.FindElement(notesCancelPopupBody).Text);
 
                 Wait(2000);
                 webDriver.FindElement(notesCancelOkBttn).Click();

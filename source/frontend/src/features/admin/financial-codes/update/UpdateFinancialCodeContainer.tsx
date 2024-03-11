@@ -7,24 +7,26 @@ import styled from 'styled-components';
 
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { H1 } from '@/components/common/styles';
-import { FinancialCodeTypes } from '@/constants/index';
 import { useFinancialCodeRepository } from '@/hooks/repositories/useFinancialCodeRepository';
 import { IApiError } from '@/interfaces/IApiError';
-import { Api_FinancialCode } from '@/models/api/FinancialCode';
+import { ApiGen_Concepts_FinancialCode } from '@/models/api/generated/ApiGen_Concepts_FinancialCode';
+import { ApiGen_Concepts_FinancialCodeTypes } from '@/models/api/generated/ApiGen_Concepts_FinancialCodeTypes';
 
 import { UpdateFinancialCodeYupSchema } from './UpdateFinancialCodeYupSchema';
 
 export interface IUpdateFinancialCodeFormProps {
-  financialCode?: Api_FinancialCode;
+  financialCode?: ApiGen_Concepts_FinancialCode;
   validationSchema?: any;
-  onSave: (financialCode: Api_FinancialCode) => Promise<Api_FinancialCode | undefined>;
+  onSave: (
+    financialCode: ApiGen_Concepts_FinancialCode,
+  ) => Promise<ApiGen_Concepts_FinancialCode | undefined>;
   onCancel: () => void;
-  onSuccess: (financialCode: Api_FinancialCode) => Promise<void>;
+  onSuccess: (financialCode: ApiGen_Concepts_FinancialCode) => Promise<void>;
   onError: (e: AxiosError<IApiError>) => void;
 }
 
 export interface IUpdateFinancialCodeContainerProps {
-  type: FinancialCodeTypes;
+  type: ApiGen_Concepts_FinancialCodeTypes;
   id: number;
   View: React.FC<IUpdateFinancialCodeFormProps>;
 }
@@ -51,7 +53,7 @@ export const UpdateFinancialCodeContainer: React.FC<IUpdateFinancialCodeContaine
     }
   }, [getFinancialCode, id, type]);
 
-  const onSave = async (financialCode: Api_FinancialCode) => {
+  const onSave = async (financialCode: ApiGen_Concepts_FinancialCode) => {
     setDuplicateError(false);
     return updateFinancialCode(financialCode);
   };
@@ -61,7 +63,7 @@ export const UpdateFinancialCodeContainer: React.FC<IUpdateFinancialCodeContaine
     history.replace(`/admin/financial-code/list`);
   };
 
-  const onUpdateSuccess = async (financialCode: Api_FinancialCode) => {
+  const onUpdateSuccess = async () => {
     toast.success(`Financial code saved`);
     history.replace(`/admin/financial-code/list`);
   };

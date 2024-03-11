@@ -9,13 +9,18 @@ import { LeaseContextProvider } from '@/features/leases/context/LeaseContext';
 import { LeaseFormModel } from '@/features/leases/models';
 import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
 import { useLeaseTenantRepository } from '@/hooks/repositories/useLeaseTenantRepository';
+import { IContactSearchResult } from '@/interfaces';
 import {
+  getEmptyPerson,
   getMockContactOrganizationWithMultiplePeople,
   getMockContactOrganizationWithOnePerson,
 } from '@/mocks/contacts.mock';
 import { getMockApiLease } from '@/mocks/lease.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
-import { Api_Lease, defaultApiLease } from '@/models/api/Lease';
+import { getEmptyOrganization } from '@/mocks/organization.mock';
+import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
+import { ApiGen_Concepts_LeaseTenant } from '@/models/api/generated/ApiGen_Concepts_LeaseTenant';
+import { defaultApiLease, getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { mockKeycloak, renderAsync } from '@/utils/test-utils';
 
@@ -31,7 +36,7 @@ jest.mock('@/features/leases/hooks/useUpdateLease');
 jest.mock('@/hooks/repositories/useLeaseTenantRepository');
 
 const getPersonConcept = jest.fn();
-const updateTenants = jest.fn().mockResolvedValue({ ...defaultApiLease, id: 1 });
+const updateTenants = jest.fn().mockResolvedValue({ ...defaultApiLease(), id: 1 });
 const onEdit = jest.fn();
 const onSuccess = jest.fn();
 
@@ -52,7 +57,7 @@ const View = (props: IAddLeaseTenantFormProps & IPrimaryContactWarningModalProps
 };
 
 const getLeaseTenantsObj = {
-  execute: jest.fn().mockResolvedValue(defaultApiLease.tenants),
+  execute: jest.fn().mockResolvedValue(defaultApiLease().tenants),
   loading: false,
   error: undefined,
   response: [],
@@ -60,11 +65,11 @@ const getLeaseTenantsObj = {
 
 describe('AddLeaseTenantContainer component', () => {
   const setup = async (
-    renderOptions: RenderOptions & { lease?: Api_Lease; tenants?: FormTenant[] } = {},
+    renderOptions: RenderOptions & { lease?: ApiGen_Concepts_Lease; tenants?: FormTenant[] } = {},
   ) => {
     // render component under test
     const component = await renderAsync(
-      <LeaseContextProvider initialLease={renderOptions.lease ?? { ...defaultApiLease, id: 1 }}>
+      <LeaseContextProvider initialLease={renderOptions.lease ?? { ...defaultApiLease(), id: 1 }}>
         <AddLeaseTenantContainer
           formikRef={React.createRef()}
           View={View}
@@ -126,13 +131,30 @@ describe('AddLeaseTenantContainer component', () => {
   it('does not request previously requested data', async () => {
     await setup({});
 
+    const contact: IContactSearchResult = {
+      ...getMockContactOrganizationWithOnePerson(),
+      organization: {
+        ...getEmptyOrganization(),
+        organizationPersons: [
+          {
+            id: 0,
+            person: getEmptyPerson(),
+            organizationId: 1,
+            organization: null,
+            personId: 2,
+            rowVersion: null,
+          },
+        ],
+      },
+      person: undefined,
+      personId: undefined,
+      surname: undefined,
+      firstName: undefined,
+      middleNames: undefined,
+    };
+
     await waitFor(() => {
-      viewProps.setSelectedTenants([
-        {
-          ...getMockContactOrganizationWithOnePerson(),
-          organization: { organizationPersons: [{ person: {} }] },
-        },
-      ]);
+      viewProps.setSelectedTenants([contact]);
       expect(getPersonConcept).not.toHaveBeenCalled();
     });
   });
@@ -212,15 +234,19 @@ describe('AddLeaseTenantContainer component', () => {
     await waitFor(async () => {
       expect(updateTenants).toHaveBeenCalledTimes(1);
       expect(onEdit).toHaveBeenCalledWith(false);
-      expect(updateTenants.mock.calls[0][1][0]).toStrictEqual({
+      expect(updateTenants.mock.calls[0][1][0]).toStrictEqual<ApiGen_Concepts_LeaseTenant>({
         personId: 1,
-        organizationId: undefined,
-        lessorType: undefined,
-        tenantTypeCode: undefined,
-        primaryContactId: undefined,
-        note: undefined,
-        rowVersion: undefined,
+        person: null,
+        organizationId: null,
+        organization: null,
+        lessorType: null,
+        tenantTypeCode: null,
+        primaryContactId: null,
+        note: null,
         leaseId: 0,
+        leaseTenantId: null,
+        primaryContact: null,
+        ...getEmptyBaseAudit(),
       });
     });
   });

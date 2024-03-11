@@ -3,7 +3,6 @@ using SeleniumExtras.WaitHelpers;
 using OpenQA.Selenium.Support.UI;
 using System.Text.RegularExpressions;
 using PIMS.Tests.Automation.Classes;
-using System;
 
 namespace PIMS.Tests.Automation.PageObjects
 {
@@ -224,7 +223,7 @@ namespace PIMS.Tests.Automation.PageObjects
             if(acquisition.PhysicalFileStatus != "")
                 ChooseSpecificSelectOption(acquisitionFilePhysicalStatusSelect, acquisition.PhysicalFileStatus);
 
-            if (acquisition.AcquisitionTeam.Count > 0)
+            if (acquisition.AcquisitionTeam!.Count > 0)
             {
                 for (var i = 0; i < acquisition.AcquisitionTeam.Count; i++)
                 {
@@ -232,7 +231,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 }
             }
 
-            if (acquisition.AcquisitionOwners.Count > 0)
+            if (acquisition.AcquisitionOwners!.Count > 0)
             {
                 for (var i = 0; i < acquisition.AcquisitionOwners.Count; i++)
                 {
@@ -356,7 +355,7 @@ namespace PIMS.Tests.Automation.PageObjects
             if (acquisition.PhysicalFileStatus != "") 
                 ChooseSpecificSelectOption(acquisitionFilePhysicalStatusSelect, acquisition.PhysicalFileStatus);
 
-            if (acquisition.AcquisitionTeam.Count > 0)
+            if (acquisition.AcquisitionTeam!.Count > 0)
             {
                 while (webDriver.FindElements(acquisitionFileTeamMembersGroup).Count > 0)
                     DeleteFirstStaffMember();
@@ -367,7 +366,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 }
             }
 
-            if (acquisition.AcquisitionOwners.Count > 0)
+            if (acquisition.AcquisitionOwners!.Count > 0)
             {
                 while (webDriver.FindElements(acquisitionFileOwnersGroup).Count > 0)
                     DeleteOwner();
@@ -425,6 +424,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 sharedModals.ModalClickOKBttn();
             }
 
+            Wait();
             AssertTrueIsDisplayed(acquisitionFileEditButton);
         }
 
@@ -449,14 +449,9 @@ namespace PIMS.Tests.Automation.PageObjects
                     webDriver.SwitchTo().Alert().Accept();
                 }
             }
-            catch (WebDriverTimeoutException e)
+            catch (WebDriverTimeoutException)
             {
-                if (webDriver.FindElements(acquisitionFileConfirmationModal).Count() > 0)
-                {
-                    Assert.Equal("Unsaved Changes", sharedModals.ModalHeader());
-                    Assert.Equal("You have made changes on this form. Do you wish to leave without saving?", sharedModals.ModalContent());
-                    sharedModals.ModalClickOKBttn();
-                }
+                sharedModals.CancelActionModal();
             }
         }
 
@@ -553,7 +548,7 @@ namespace PIMS.Tests.Automation.PageObjects
             //Team members
             AssertTrueIsDisplayed(acquisitionFileTeamSubtitle);
 
-            if (acquisition.AcquisitionTeam.Count > 0)
+            if (acquisition.AcquisitionTeam!.Count > 0)
             {
                 var index = 1;
 
@@ -575,45 +570,45 @@ namespace PIMS.Tests.Automation.PageObjects
             //Owners
             AssertTrueIsDisplayed(acquisitionFileOwnerSubtitle);
 
-            if (acquisition.AcquisitionOwners.Count > 0)
+            if (acquisition.AcquisitionOwners!.Count > 0)
             {
                 for (var i = 0; i < acquisition.AcquisitionOwners.Count; i++)
                 {
 
-                    if (acquisition.AcquisitionOwners[i].ContactType.Equals("Individual"))
+                    if (acquisition.AcquisitionOwners[i].OwnerContactType.Equals("Individual"))
                     {
-                        AssertTrueElementContains(By.XPath("//span[@data-testid='owner["+ i +"]']/div[2]/div[2]"), acquisition.AcquisitionOwners[i].GivenNames);
-                        AssertTrueElementContains(By.XPath("//span[@data-testid='owner["+ i +"]']/div[2]/div[2]"), acquisition.AcquisitionOwners[i].LastName);
-                        AssertTrueContentEquals(By.XPath("//span[@data-testid='owner["+ i +"]']/div[3]/div[2]"), acquisition.AcquisitionOwners[i].OtherName);
+                        AssertTrueElementContains(By.XPath("//span[@data-testid='owner["+ i +"]']/div[2]/div[2]"), acquisition.AcquisitionOwners[i].OwnerGivenNames);
+                        AssertTrueElementContains(By.XPath("//span[@data-testid='owner["+ i +"]']/div[2]/div[2]"), acquisition.AcquisitionOwners[i].OwnerLastName);
+                        AssertTrueContentEquals(By.XPath("//span[@data-testid='owner["+ i +"]']/div[3]/div[2]"), acquisition.AcquisitionOwners[i].OwnerOtherName);
                     }
                     else
                     {
-                        AssertTrueElementContains(By.XPath("//span[@data-testid='owner["+ i +"]']/div[2]/div[2]"), acquisition.AcquisitionOwners[i].CorporationName);
+                        AssertTrueElementContains(By.XPath("//span[@data-testid='owner["+ i +"]']/div[2]/div[2]"), acquisition.AcquisitionOwners[i].OwnerCorporationName);
 
-                        if (acquisition.AcquisitionOwners[i].CorporationName != "")
-                            AssertTrueElementContains(By.XPath("//span[@data-testid='owner["+ i +"]']/div[2]/div[2]"), acquisition.AcquisitionOwners[i].CorporationName);
-                        if (acquisition.AcquisitionOwners[i].RegistrationNumber != "")
-                            AssertTrueElementContains(By.XPath("//span[@data-testid='owner["+ i +"]']/div[2]/div[2]"), acquisition.AcquisitionOwners[i].RegistrationNumber);
+                        if (acquisition.AcquisitionOwners[i].OwnerCorporationName != "")
+                            AssertTrueElementContains(By.XPath("//span[@data-testid='owner["+ i +"]']/div[2]/div[2]"), acquisition.AcquisitionOwners[i].OwnerCorporationName);
+                        if (acquisition.AcquisitionOwners[i].OwnerRegistrationNumber != "")
+                            AssertTrueElementContains(By.XPath("//span[@data-testid='owner["+ i +"]']/div[2]/div[2]"), acquisition.AcquisitionOwners[i].OwnerRegistrationNumber);
 
-                        AssertTrueContentEquals(By.XPath("//span[@data-testid='owner["+ i +"]']/div[3]/div[2]"), acquisition.AcquisitionOwners[i].OtherName);
+                        AssertTrueContentEquals(By.XPath("//span[@data-testid='owner["+ i +"]']/div[3]/div[2]"), acquisition.AcquisitionOwners[i].OwnerOtherName);
                     }
 
-                    if (acquisition.AcquisitionOwners[i].MailAddressLine1 != "")
-                        AssertTrueElementContains(By.XPath("//span[@data-testid='owner["+ i +"]']/div[4]/div[2]"), acquisition.AcquisitionOwners[i].MailAddressLine1);
-                    if (acquisition.AcquisitionOwners[i].MailAddressLine2 != "")
-                        AssertTrueElementContains(By.XPath("//span[@data-testid='owner["+ i +"]']/div[4]/div[2]"), acquisition.AcquisitionOwners[i].MailAddressLine2);
-                    if (acquisition.AcquisitionOwners[i].MailAddressLine3 != "")
-                        AssertTrueElementContains(By.XPath("//span[@data-testid='owner["+ i +"]']/div[4]/div[2]"), acquisition.AcquisitionOwners[i].MailAddressLine3);
-                    if (acquisition.AcquisitionOwners[i].MailCountry != "")
-                        AssertTrueElementContains(By.XPath("//span[@data-testid='owner["+ i +"]']/div[4]/div[2]"), acquisition.AcquisitionOwners[i].MailCountry);
-                    if (acquisition.AcquisitionOwners[i].MailCity != "")
-                        AssertTrueElementContains(By.XPath("//span[@data-testid='owner["+ i +"]']/div[4]/div[2]"), acquisition.AcquisitionOwners[i].MailCity);
-                    if (acquisition.AcquisitionOwners[i].MailProvince != "")
-                        AssertTrueElementContains(By.XPath("//span[@data-testid='owner["+ i +"]']/div[4]/div[2]"), acquisition.AcquisitionOwners[i].MailProvince);
-                    //if (acquisition.AcquisitionOwners[i].MailOtherCountry != "")
-                        //AssertTrueElementContains(By.XPath("//span[@data-testid='owner["+ i +"]']/div[4]/div[2]"), acquisition.AcquisitionOwners[i].MailOtherCountry);
-                    if (acquisition.AcquisitionOwners[i].MailPostalCode != "")
-                        AssertTrueElementContains(By.XPath("//span[@data-testid='owner["+ i +"]']/div[4]/div[2]"), acquisition.AcquisitionOwners[i].MailPostalCode);
+                    if (acquisition.AcquisitionOwners[i].OwnerMailAddress.AddressLine1 != "")
+                        AssertTrueElementContains(By.XPath("//span[@data-testid='owner["+ i +"]']/div[4]/div[2]"), acquisition.AcquisitionOwners[i].OwnerMailAddress.AddressLine1);
+                    if (acquisition.AcquisitionOwners[i].OwnerMailAddress.AddressLine2 != "")
+                        AssertTrueElementContains(By.XPath("//span[@data-testid='owner["+ i +"]']/div[4]/div[2]"), acquisition.AcquisitionOwners[i].OwnerMailAddress.AddressLine2);
+                    if (acquisition.AcquisitionOwners[i].OwnerMailAddress.AddressLine3 != "")
+                        AssertTrueElementContains(By.XPath("//span[@data-testid='owner["+ i +"]']/div[4]/div[2]"), acquisition.AcquisitionOwners[i].OwnerMailAddress.AddressLine3);
+                    if (acquisition.AcquisitionOwners[i].OwnerMailAddress.Country != "")
+                        AssertTrueElementContains(By.XPath("//span[@data-testid='owner["+ i +"]']/div[4]/div[2]"), acquisition.AcquisitionOwners[i].OwnerMailAddress.Country);
+                    if (acquisition.AcquisitionOwners[i].OwnerMailAddress.City != "")
+                        AssertTrueElementContains(By.XPath("//span[@data-testid='owner["+ i +"]']/div[4]/div[2]"), acquisition.AcquisitionOwners[i].OwnerMailAddress.City);
+                    if (acquisition.AcquisitionOwners[i].OwnerMailAddress.Province != "")
+                        AssertTrueElementContains(By.XPath("//span[@data-testid='owner["+ i +"]']/div[4]/div[2]"), acquisition.AcquisitionOwners[i].OwnerMailAddress.Province);
+                    if (acquisition.AcquisitionOwners[i].OwnerMailAddress.OtherCountry != "")
+                        AssertTrueElementContains(By.XPath("//span[@data-testid='owner["+ i +"]']/div[4]/div[2]"), "Other - " + acquisition.AcquisitionOwners[i].OwnerMailAddress.OtherCountry);
+                    if (acquisition.AcquisitionOwners[i].OwnerMailAddress.PostalCode != "")
+                        AssertTrueElementContains(By.XPath("//span[@data-testid='owner["+ i +"]']/div[4]/div[2]"), acquisition.AcquisitionOwners[i].OwnerMailAddress.PostalCode);
                 }
             }
 
@@ -662,8 +657,6 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(acquisitionFileDetailsMOTIRegionLabel);
             AssertTrueIsDisplayed(acquisitionFileDetailsRegionSelect);
 
-            VerifyMaximumFields();
-
             //Team members
             AssertTrueIsDisplayed(acquisitionFileTeamSubtitle);
             AssertTrueIsDisplayed(acquisitionFileAddAnotherMemberLink);
@@ -681,6 +674,39 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(acquisitionFileOwnerRepresentativeButton);
             AssertTrueIsDisplayed(acquisitionFileOwnerCommentLabel);
             AssertTrueIsDisplayed(acquisitionFileOwnerCommentTextArea);
+        }
+
+        public void VerifyMaximumFields()
+        {
+            //Get previous inserted data
+            var acquisitionFileName = webDriver.FindElement(acquisitionFileNameInput).GetAttribute("value");
+
+            //Verify File Name Input
+            webDriver.FindElement(acquisitionFileNameInput).SendKeys("Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus");
+            webDriver.FindElement(acquisitionFileDetailsNameLabel).Click();
+            AssertTrueIsDisplayed(acquisitionFileNameInvalidMessage);
+            ClearInput(acquisitionFileNameInput);
+
+            //Verify Historical File Number Input
+            webDriver.FindElement(acquisitionFileHistoricalNumberInput).SendKeys("Lorem ipsum dolor s");
+            webDriver.FindElement(acquisitionFileHistoricalNumberLabel).Click();
+            AssertTrueIsDisplayed(acquisitionFileHistoricalInvalidMessage);
+            ClearInput(acquisitionFileHistoricalNumberInput);
+
+            //Re-insert acquisition file name
+            webDriver.FindElement(acquisitionFileNameInput).SendKeys(acquisitionFileName);
+        }
+
+        public void DeleteFirstStaffMember()
+        {
+            WaitUntilClickable(acquisitionFileTeamFirstMemberDeleteBttn);
+            webDriver.FindElement(acquisitionFileTeamFirstMemberDeleteBttn).Click();
+
+            WaitUntilVisible(acquisitionFileConfirmationModal);
+            Assert.True(sharedModals.ModalHeader() == "Remove Team Member");
+            Assert.True(sharedModals.ModalContent() == "Are you sure you want to remove this row?");
+
+            sharedModals.ModalClickOKBttn();
         }
 
         private void AddTeamMembers(TeamMember teamMember)
@@ -708,68 +734,56 @@ namespace PIMS.Tests.Automation.PageObjects
             FocusAndClick(acquisitionFileAddOwnerLink);
 
             Wait();
-            if (owner.ContactType.Equals("Individual"))
+            if (owner.OwnerContactType.Equals("Individual"))
             {
                 FocusAndClick(By.CssSelector("input[data-testid='radio-owners["+ ownerIndex +"].isorganization-individual']"));
 
-                if (owner.GivenNames != "")
-                    webDriver.FindElement(By.Id("input-owners["+ ownerIndex +"].givenName")).SendKeys(owner.GivenNames);
-                if (owner.LastName != "")
-                    webDriver.FindElement(By.Id("input-owners["+ ownerIndex +"].lastNameAndCorpName")).SendKeys(owner.LastName);
-                if (owner.OtherName != "")
-                    webDriver.FindElement(By.Id("input-owners["+ ownerIndex +"].otherName")).SendKeys(owner.OtherName);
+                if (owner.OwnerGivenNames != "")
+                    webDriver.FindElement(By.Id("input-owners["+ ownerIndex +"].givenName")).SendKeys(owner.OwnerGivenNames);
+                if (owner.OwnerLastName != "")
+                    webDriver.FindElement(By.Id("input-owners["+ ownerIndex +"].lastNameAndCorpName")).SendKeys(owner.OwnerLastName);
+                if (owner.OwnerOtherName != "")
+                    webDriver.FindElement(By.Id("input-owners["+ ownerIndex +"].otherName")).SendKeys(owner.OwnerOtherName);
             }
             else
             {
                 FocusAndClick(By.CssSelector("input[data-testid='radio-owners["+ ownerIndex +"].isorganization-corporation']"));
 
-                if (owner.CorporationName != "")
-                    webDriver.FindElement(By.Id("input-owners["+ ownerIndex +"].lastNameAndCorpName")).SendKeys(owner.CorporationName);
-                if (owner.OtherName != "")
-                    webDriver.FindElement(By.Id("input-owners["+ ownerIndex +"].otherName")).SendKeys(owner.OtherName);
-                if (owner.IncorporationNumber != "")
-                    webDriver.FindElement(By.Id("input-owners["+ ownerIndex +"].incorporationNumber")).SendKeys(owner.IncorporationNumber);
-                if (owner.RegistrationNumber != "")
-                    webDriver.FindElement(By.Id("input-owners["+ ownerIndex +"].registrationNumber")).SendKeys(owner.RegistrationNumber);
+                if (owner.OwnerCorporationName != "")
+                    webDriver.FindElement(By.Id("input-owners["+ ownerIndex +"].lastNameAndCorpName")).SendKeys(owner.OwnerCorporationName);
+                if (owner.OwnerOtherName != "")
+                    webDriver.FindElement(By.Id("input-owners["+ ownerIndex +"].otherName")).SendKeys(owner.OwnerOtherName);
+                if (owner.OwnerIncorporationNumber != "")
+                    webDriver.FindElement(By.Id("input-owners["+ ownerIndex +"].incorporationNumber")).SendKeys(owner.OwnerIncorporationNumber);
+                if (owner.OwnerRegistrationNumber != "")
+                    webDriver.FindElement(By.Id("input-owners["+ ownerIndex +"].registrationNumber")).SendKeys(owner.OwnerRegistrationNumber);
             }   
 
-            if(owner.isPrimary)
+            if(owner.OwnerIsPrimary)
                 FocusAndClick(By.CssSelector("input[data-testid='radio-owners["+ ownerIndex +"].isprimarycontact-primary contact']"));
 
-            if(owner.MailAddressLine1 != "")
-                webDriver.FindElement(By.Id("input-owners["+ ownerIndex +"].address.streetAddress1")).SendKeys(owner.MailAddressLine1);
-            if (owner.MailAddressLine2 != "")
-                webDriver.FindElement(By.Id("input-owners["+ ownerIndex +"].address.streetAddress2")).SendKeys(owner.MailAddressLine2);
-            if (owner.MailAddressLine3 != "")
-                webDriver.FindElement(By.Id("input-owners["+ ownerIndex +"].address.streetAddress3")).SendKeys(owner.MailAddressLine3);
-            if (owner.MailCountry != "")
-                ChooseSpecificSelectOption(By.Id("input-owners["+ ownerIndex +"].address.countryId"), owner.MailCountry);
-            if (owner.MailCity != "")
-                webDriver.FindElement(By.Id("input-owners["+ ownerIndex +"].address.municipality")).SendKeys(owner.MailCity);
-            if (owner.MailProvince != "")
-                webDriver.FindElement(By.Id("input-owners["+ ownerIndex +"].address.provinceId")).SendKeys(owner.MailProvince);
-            if (owner.MailOtherCountry != "")
-                webDriver.FindElement(By.Id("input-owners["+ ownerIndex +"].address.countryOther")).SendKeys(owner.MailOtherCountry);
-            if (owner.MailPostalCode != "")
-                webDriver.FindElement(By.Id("input-owners["+ ownerIndex +"].address.postal")).SendKeys(owner.MailPostalCode);
+            if(owner.OwnerMailAddress.AddressLine1 != "")
+                webDriver.FindElement(By.Id("input-owners["+ ownerIndex +"].address.streetAddress1")).SendKeys(owner.OwnerMailAddress.AddressLine1);
+            if (owner.OwnerMailAddress.AddressLine2 != "")
+                webDriver.FindElement(By.Id("input-owners["+ ownerIndex +"].address.streetAddress2")).SendKeys(owner.OwnerMailAddress.AddressLine2);
+            if (owner.OwnerMailAddress.AddressLine3 != "")
+                webDriver.FindElement(By.Id("input-owners["+ ownerIndex +"].address.streetAddress3")).SendKeys(owner.OwnerMailAddress.AddressLine3);
+            if (owner.OwnerMailAddress.Country != "")
+                ChooseSpecificSelectOption(By.Id("input-owners["+ ownerIndex +"].address.countryId"), owner.OwnerMailAddress.Country);
+            if (owner.OwnerMailAddress.City != "")
+                webDriver.FindElement(By.Id("input-owners["+ ownerIndex +"].address.municipality")).SendKeys(owner.OwnerMailAddress.City);
+            if (owner.OwnerMailAddress.Province != "")
+                webDriver.FindElement(By.Id("input-owners["+ ownerIndex +"].address.provinceId")).SendKeys(owner.OwnerMailAddress.Province);
+            if (owner.OwnerMailAddress.OtherCountry != "")
+                webDriver.FindElement(By.Id("input-owners["+ ownerIndex +"].address.countryOther")).SendKeys(owner.OwnerMailAddress.OtherCountry);
+            if (owner.OwnerMailAddress.PostalCode != "")
+                webDriver.FindElement(By.Id("input-owners["+ ownerIndex +"].address.postal")).SendKeys(owner.OwnerMailAddress.PostalCode);
 
-            if (owner.Email != "")
-                webDriver.FindElement(By.Id("input-owners["+ ownerIndex +"].contactEmailAddress")).SendKeys(owner.Email);
-            if (owner.Phone != "")
-                webDriver.FindElement(By.Id("input-owners["+ ownerIndex +"].contactPhoneNumber")).SendKeys(owner.Phone);
+            if (owner.OwnerEmail != "")
+                webDriver.FindElement(By.Id("input-owners["+ ownerIndex +"].contactEmailAddress")).SendKeys(owner.OwnerEmail);
+            if (owner.OwnerPhone != "")
+                webDriver.FindElement(By.Id("input-owners["+ ownerIndex +"].contactPhoneNumber")).SendKeys(owner.OwnerPhone);
 
-        }
-
-        public void DeleteFirstStaffMember()
-        {
-            WaitUntilClickable(acquisitionFileTeamFirstMemberDeleteBttn);
-            webDriver.FindElement(acquisitionFileTeamFirstMemberDeleteBttn).Click();
-
-            WaitUntilVisible(acquisitionFileConfirmationModal);
-            Assert.True(sharedModals.ModalHeader() == "Remove Team Member");
-            Assert.True(sharedModals.ModalContent() == "Are you sure you want to remove this row?");
-
-            sharedModals.ModalClickOKBttn();
         }
 
         private void DeleteOwner()
@@ -799,21 +813,6 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(By.CssSelector("div[data-testid='contact-input'] button[title='Select Contact']")).Click();
             sharedSelectContact.SelectContact("Test", "");
             AssertTrueIsDisplayed(acquisitionFileTeamInvalidProfileMessage);
-        }
-
-        private void VerifyMaximumFields()
-        {
-            //Verify File Name Input
-            webDriver.FindElement(acquisitionFileNameInput).SendKeys("Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus");
-            webDriver.FindElement(acquisitionFileDetailsNameLabel).Click();
-            AssertTrueIsDisplayed(acquisitionFileNameInvalidMessage);
-            ClearInput(acquisitionFileNameInput);
-
-            //Verify Historical File Number Input
-            webDriver.FindElement(acquisitionFileHistoricalNumberInput).SendKeys("Lorem ipsum dolor s");
-            webDriver.FindElement(acquisitionFileHistoricalNumberLabel).Click();
-            AssertTrueIsDisplayed(acquisitionFileHistoricalInvalidMessage);
-            ClearInput(acquisitionFileHistoricalNumberInput);
         }
     }
 }

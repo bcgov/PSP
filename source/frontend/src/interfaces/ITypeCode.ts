@@ -1,20 +1,17 @@
+import { ApiGen_Base_CodeType } from '@/models/api/generated/ApiGen_Base_CodeType';
 import { ILookupCode } from '@/store/slices/lookupCodes';
 
-export default interface ITypeCode<T> {
-  id: T;
-  description?: string;
-  isDisabled?: boolean;
-  displayOrder?: number;
-}
-
-export const defaultTypeCode: ITypeCode<string> = {
+export const defaultTypeCode = (): ApiGen_Base_CodeType<string> => ({
   id: '',
   description: '',
   isDisabled: false,
-};
+  displayOrder: null,
+});
 
 export class TypeCodeUtils {
-  public static createFromLookup<T extends string | number>(lookupCode: ILookupCode): ITypeCode<T> {
+  public static createFromLookup<T extends string | number>(
+    lookupCode: ILookupCode,
+  ): ApiGen_Base_CodeType<T> {
     return {
       id: lookupCode.id as T,
       description: lookupCode.name,

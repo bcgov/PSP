@@ -6,8 +6,8 @@ import thunk from 'redux-thunk';
 import { useDocumentGenerationRepository } from '@/features/documents/hooks/useDocumentGenerationRepository';
 import { useForm8Repository } from '@/hooks/repositories/useForm8Repository';
 import { mockGetExpropriationPaymentApi } from '@/mocks/ExpropriationPayment.mock';
-import { Api_ExpropriationPayment } from '@/models/api/ExpropriationPayment';
 import { ApiGen_CodeTypes_ExternalResponseStatus } from '@/models/api/generated/ApiGen_CodeTypes_ExternalResponseStatus';
+import { ApiGen_Concepts_ExpropriationPayment } from '@/models/api/generated/ApiGen_Concepts_ExpropriationPayment';
 
 import { useGenerateExpropriationForm8 } from './useGenerateExpropriationForm8';
 
@@ -15,7 +15,10 @@ const generateFn = jest
   .fn()
   .mockResolvedValue({ status: ApiGen_CodeTypes_ExternalResponseStatus.Success, payload: {} });
 
-const getExpropriationPaymentApi = jest.fn<Promise<Api_ExpropriationPayment | undefined>, any[]>();
+const getExpropriationPaymentApi = jest.fn<
+  Promise<ApiGen_Concepts_ExpropriationPayment | undefined>,
+  any[]
+>();
 
 jest.mock('@/hooks/repositories/useForm8Repository');
 (useForm8Repository as jest.Mock).mockImplementation(() => ({
@@ -40,9 +43,9 @@ const getWrapper =
 
 const setup = (params?: {
   storeValues?: any;
-  expropriationPaymentResponse?: Api_ExpropriationPayment;
+  expropriationPaymentResponse?: ApiGen_Concepts_ExpropriationPayment;
 }) => {
-  var expropriationPaymentResponse = mockGetExpropriationPaymentApi();
+  let expropriationPaymentResponse = mockGetExpropriationPaymentApi();
   if (params?.expropriationPaymentResponse !== undefined) {
     expropriationPaymentResponse = params.expropriationPaymentResponse;
   }

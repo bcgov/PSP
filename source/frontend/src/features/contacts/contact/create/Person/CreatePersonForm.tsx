@@ -14,19 +14,11 @@ import {
   useAddressHelpers,
 } from '@/features/contacts/contact/create/components';
 import * as Styled from '@/features/contacts/contact/create/styles';
-import {
-  apiAddressToFormAddress,
-  formPersonToApiPerson,
-  getApiMailingAddress,
-} from '@/features/contacts/contactUtils';
+import { IEditablePersonAddressForm, IEditablePersonForm } from '@/features/contacts/formModels';
 import useAddContact from '@/features/contacts/hooks/useAddContact';
 import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
 import { usePrevious } from '@/hooks/usePrevious';
-import {
-  defaultCreatePerson,
-  getDefaultAddress,
-  IEditablePersonForm,
-} from '@/interfaces/editable-contact';
+import { isValidId } from '@/utils';
 
 import PersonSubForm from '../../Person/PersonSubForm';
 import { onValidatePerson } from '../../utils/contactUtils';
@@ -52,10 +44,10 @@ export const CreatePersonForm: React.FunctionComponent<React.PropsWithChildren<u
   ) => {
     try {
       setShowDuplicateModal(false);
-      let newPerson = formPersonToApiPerson(formPerson);
+      const newPerson = formPerson.formPersonToApiPerson();
       const personResponse = await addPerson(newPerson, setShowDuplicateModal, allowDuplicate);
 
-      if (!!personResponse?.id) {
+      if (isValidId(personResponse?.id)) {
         history.push(`/contact/P${personResponse?.id}`);
       }
     } finally {
@@ -74,7 +66,7 @@ export const CreatePersonForm: React.FunctionComponent<React.PropsWithChildren<u
     <>
       <Formik
         component={CreatePersonComponent}
-        initialValues={defaultCreatePerson}
+        initialValues={new IEditablePersonForm()}
         enableReinitialize
         validate={(values: IEditablePersonForm) => onValidatePerson(values, otherCountryId)}
         onSubmit={onSubmit}
@@ -112,6 +104,7 @@ const CreatePersonComponent: React.FC<FormikProps<IEditablePersonForm>> = ({
   const { getOrganization } = useApiContacts();
   const [showConfirmation, setShowConfirmation] = useState(false);
 
+  const personId = getIn(values, 'id');
   const organizationId = getIn(values, 'organization.id');
   const useOrganizationAddress = getIn(values, 'useOrganizationAddress');
   const previousUseOrganizationAddress = usePrevious(useOrganizationAddress);
@@ -141,20 +134,25 @@ const CreatePersonComponent: React.FC<FormikProps<IEditablePersonForm>> = ({
     if (useOrganizationAddress === true && organizationId) {
       getOrganization(organizationId)
         .then(({ data }) => {
-          const mailing = getApiMailingAddress(data);
-          setFieldValue('mailingAddress', apiAddressToFormAddress(mailing));
+          const mailing = data.organizationAddresses?.find(
+            a => a.addressUsageType?.id === AddressTypes.Mailing,
+          );
+          setFieldValue(
+            'mailingAddress',
+            IEditablePersonAddressForm.apiOrgAddressToFormAddress(personId, mailing),
+          );
         })
         .catch(() => {
-          setFieldValue('mailingAddress', getDefaultAddress(AddressTypes.Mailing));
+          setFieldValue('mailingAddress', new IEditablePersonAddressForm(AddressTypes.Mailing));
           toast.error('Failed to get organization address.');
         });
     }
-  }, [useOrganizationAddress, organizationId, setFieldValue, getOrganization]);
+  }, [useOrganizationAddress, organizationId, setFieldValue, getOrganization, personId]);
 
   // toggle is off - clear out existing values
   useEffect(() => {
     if (previousUseOrganizationAddress === true && useOrganizationAddress === false) {
-      setFieldValue('mailingAddress', getDefaultAddress(AddressTypes.Mailing));
+      setFieldValue('mailingAddress', new IEditablePersonAddressForm(AddressTypes.Mailing));
     }
   }, [previousUseOrganizationAddress, useOrganizationAddress, setFieldValue]);
 
@@ -167,7 +165,6 @@ const CreatePersonComponent: React.FC<FormikProps<IEditablePersonForm>> = ({
 
   return (
     <>
-      {/* Router-based confirmation popup when user tries to navigate away and form has unsaved changes */}
       <UnsavedChangesPrompt />
 
       {/* Confirmation popup when Cancel button is clicked */}
@@ -184,7 +181,7 @@ const CreatePersonComponent: React.FC<FormikProps<IEditablePersonForm>> = ({
       />
 
       <Styled.CreateFormLayout>
-        <Styled.Form id="createForm">
+        <Styled.Form id="createForm" placeholder={undefined}>
           <FlexBox column>
             <PersonSubForm isContactMethodInvalid={isContactMethodInvalid} />
           </FlexBox>

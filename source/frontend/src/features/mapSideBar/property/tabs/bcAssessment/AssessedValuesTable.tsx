@@ -28,7 +28,7 @@ const columns: ColumnWithProps<BcAssessmentValuesModelType>[] = [
     accessor: 'BCA_FGPV_SYSID',
     align: 'left',
     width: 20,
-    Cell: ({ cell }: CellProps<BcAssessmentValuesModelType, number | undefined>) => <>Current</>,
+    Cell: () => <>Current</>,
   },
   {
     Header: 'Property Class',

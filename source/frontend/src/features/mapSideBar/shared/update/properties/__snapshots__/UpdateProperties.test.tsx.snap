@@ -348,9 +348,6 @@ exports[`UpdateProperties component renders as expected 1`] = `
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  width: -webkit-fit-content;
-  width: -moz-fit-content;
-  width: fit-content;
 }
 
 .c21 {
@@ -530,7 +527,9 @@ exports[`UpdateProperties component renders as expected 1`] = `
                             </div>
                             <div
                               class="c13 text-left col"
-                            />
+                            >
+                              123456789
+                            </div>
                           </div>
                           <div
                             class="pb-2 row"
@@ -547,7 +546,9 @@ exports[`UpdateProperties component renders as expected 1`] = `
                             </div>
                             <div
                               class="c13 text-left col"
-                            />
+                            >
+                              EPP92028
+                            </div>
                           </div>
                           <div
                             class="pb-2 row"
@@ -564,7 +565,9 @@ exports[`UpdateProperties component renders as expected 1`] = `
                             </div>
                             <div
                               class="c13 text-left col"
-                            />
+                            >
+                              1234 mock Street N/A Victoria, V1V1V1
+                            </div>
                           </div>
                           <div
                             class="pb-2 row"
@@ -581,7 +584,9 @@ exports[`UpdateProperties component renders as expected 1`] = `
                             </div>
                             <div
                               class="c13 text-left col"
-                            />
+                            >
+                              1
+                            </div>
                           </div>
                           <div
                             class="pb-2 row"
@@ -598,7 +603,9 @@ exports[`UpdateProperties component renders as expected 1`] = `
                             </div>
                             <div
                               class="c13 text-left col"
-                            />
+                            >
+                              1
+                            </div>
                           </div>
                         </div>
                       </div>

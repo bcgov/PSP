@@ -141,7 +141,9 @@ describe('AcquisitionContainer component', () => {
 
     mockAxios.onGet(new RegExp('acquisitionfiles/1/properties')).timeout();
     await act(async () => viewProps.onShowPropertySelector());
-    await act(async () => viewProps.canRemove(1));
+    await act(async () => {
+      viewProps.canRemove(1);
+    });
     expect(spinner).not.toBeVisible();
   });
 
@@ -161,7 +163,7 @@ describe('AcquisitionContainer component', () => {
       },
     ]);
     await act(async () => viewProps.onShowPropertySelector());
-    const canRemoveResponse = await act(() => viewProps.canRemove(1));
+    const canRemoveResponse = await viewProps.canRemove(1);
     expect(canRemoveResponse).toBe(true);
   });
 

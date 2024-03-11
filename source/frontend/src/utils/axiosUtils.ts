@@ -58,11 +58,19 @@ export function useAxiosErrorHandlerWithAuthorization(
 }
 
 export function useAxiosErrorHandlerWithConfirmation(
-  needsUserAction: (userOverrideCode: UserOverrideCode | null, message: string | null) => void,
+  needsUserAction: (
+    userOverrideCode: UserOverrideCode | null,
+    message: string | null,
+    previousUserOverrideCodes: UserOverrideCode[],
+  ) => void,
   message = 'Network error. Check responses and try again.',
 ) {
   return useCallback(
-    (error: unknown, handleError?: (e: AxiosError<IApiError>) => void) => {
+    (
+      error: unknown,
+      handleError?: (e: AxiosError<IApiError>) => void,
+      previousUserOverrideCodes?: UserOverrideCode[],
+    ) => {
       if (axios.isAxiosError(error)) {
         const axiosError = error as AxiosError<IApiError>;
         if (axiosError?.response?.status === 409) {
@@ -74,7 +82,11 @@ export function useAxiosErrorHandlerWithConfirmation(
             : null;
 
           if (userOverrideCode) {
-            needsUserAction(userOverrideCode, axiosError?.response?.data?.error ?? null);
+            needsUserAction(
+              userOverrideCode,
+              axiosError?.response?.data?.error ?? null,
+              previousUserOverrideCodes ?? [],
+            );
           } else {
             toast.error(axiosError?.response.data.error);
           }

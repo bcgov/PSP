@@ -94,7 +94,7 @@ export function MultiselectInner<T, U>(
   const mergedStyle = { ...defaultStyle, ...style };
 
   // Allow external consumers to handle onSelect, onRemove events via callbacks
-  const onChange = (selectedList: T[], func?: Function) => {
+  const onChange = (selectedList: T[], func?: (selectedList: T[], selectedItem?: T) => void) => {
     setFieldValue(field, selectedList);
     setFieldTouched(field, true);
     if (typeof func === 'function') {

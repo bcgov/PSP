@@ -230,6 +230,12 @@ public partial class PimsProperty
     public bool IsPropertyOfInterest { get; set; }
 
     /// <summary>
+    /// Is this a property of other interest to the Ministry?
+    /// </summary>
+    [Column("IS_OTHER_INTEREST")]
+    public bool IsOtherInterest { get; set; }
+
+    /// <summary>
     /// Is the property visible to other agencies?
     /// </summary>
     [Column("IS_VISIBLE_TO_OTHER_AGENCIES")]
@@ -240,6 +246,12 @@ public partial class PimsProperty
     /// </summary>
     [Column("IS_SENSITIVE")]
     public bool IsSensitive { get; set; }
+
+    /// <summary>
+    /// If the property was the source of a subdivision operation or the target of a consolidation operation, the property is marked as retired.
+    /// </summary>
+    [Column("IS_RETIRED")]
+    public bool? IsRetired { get; set; }
 
     /// <summary>
     /// Is this property a provincial public highway?
@@ -283,7 +295,7 @@ public partial class PimsProperty
     /// Potential property zoning
     /// </summary>
     [Column("ZONING_POTENTIAL")]
-    [StringLength(50)]
+    [StringLength(100)]
     public string ZoningPotential { get; set; }
 
     /// <summary>
@@ -404,6 +416,12 @@ public partial class PimsProperty
 
     [InverseProperty("Property")]
     public virtual ICollection<PimsPropertyLease> PimsPropertyLeases { get; set; } = new List<PimsPropertyLease>();
+
+    [InverseProperty("DestinationProperty")]
+    public virtual ICollection<PimsPropertyOperation> PimsPropertyOperationDestinationProperties { get; set; } = new List<PimsPropertyOperation>();
+
+    [InverseProperty("SourceProperty")]
+    public virtual ICollection<PimsPropertyOperation> PimsPropertyOperationSourceProperties { get; set; } = new List<PimsPropertyOperation>();
 
     [InverseProperty("Property")]
     public virtual ICollection<PimsPropertyOrganization> PimsPropertyOrganizations { get; set; } = new List<PimsPropertyOrganization>();

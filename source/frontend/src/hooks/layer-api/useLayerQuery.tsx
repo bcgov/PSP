@@ -79,8 +79,8 @@ export const useLayerQuery = (url: string, authenticated?: boolean): IUserLayerQ
   const findOneWhereContains = useCallback(
     async (
       latlng: LatLngLiteral,
-      geometryName: string = 'SHAPE',
-      spatialReferenceId: number = 4326,
+      geometryName = 'SHAPE',
+      spatialReferenceId = 4326,
     ): Promise<FeatureCollection> => {
       const data: FeatureCollection = (
         await wfsAxios2({ authenticated }).get<FeatureCollection>(
@@ -113,8 +113,8 @@ export const useLayerQuery = (url: string, authenticated?: boolean): IUserLayerQ
     requestFunction: useCallback(
       async (
         latlng: LatLngLiteral,
-        geometryName: string = 'SHAPE',
-        spatialReferenceId: number = 4326,
+        geometryName = 'SHAPE',
+        spatialReferenceId = 4326,
       ): Promise<AxiosResponse<FeatureCollection<Geometry, GeoJsonProperties>>> => {
         const data = await wfsAxios2({ authenticated }).get<
           FeatureCollection<Geometry, GeoJsonProperties>
@@ -132,8 +132,8 @@ export const useLayerQuery = (url: string, authenticated?: boolean): IUserLayerQ
     requestFunction: useCallback(
       async (
         latlng: LatLngLiteral,
-        geometryName: string = 'POINT',
-        spatialReferenceId: number = 4326,
+        geometryName = 'POINT',
+        spatialReferenceId = 4326,
       ): Promise<AxiosResponse<FeatureCollection<Geometry, GeoJsonProperties>>> => {
         const data = await wfsAxios2({ authenticated }).get<
           FeatureCollection<Geometry, GeoJsonProperties>
@@ -182,8 +182,8 @@ export const useLayerQuery = (url: string, authenticated?: boolean): IUserLayerQ
   const findMetadataByLocation = useCallback(
     async (
       latlng: LatLngLiteral,
-      geometryName: string = 'SHAPE',
-      spatialReferenceId: number = 4326,
+      geometryName = 'SHAPE',
+      spatialReferenceId = 4326,
     ): Promise<Record<string, any>> => {
       try {
         const collection = await findOneWhereContains(latlng, geometryName, spatialReferenceId);

@@ -206,19 +206,14 @@ namespace Pims.Dal.Repositories
 
             if (filter != null)
             {
-                if (filter.Page < 1)
-                {
-                    filter.Page = 1;
-                }
-
                 if (filter.Quantity < 1)
                 {
                     filter.Quantity = 1;
                 }
 
-                if (filter.Quantity > 50)
+                if (filter.Page < 1)
                 {
-                    filter.Quantity = 50;
+                    filter.Page = 1;
                 }
 
                 if (filter.Sort == null)
@@ -276,7 +271,7 @@ namespace Pims.Dal.Repositories
                     }
                     else
                     {
-                        query = query.OrderByProperty(filter.Sort);
+                        query = query.OrderByProperty(true, filter.Sort);
                     }
                 }
             }

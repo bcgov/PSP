@@ -1,6 +1,7 @@
 import { AxiosError } from 'axios';
 import { FormikHelpers, FormikProps } from 'formik';
 import React from 'react';
+import { FaExclamationCircle } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
 
@@ -8,15 +9,16 @@ import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvi
 import useApiUserOverride from '@/hooks/useApiUserOverride';
 import { useModalContext } from '@/hooks/useModalContext';
 import { IApiError } from '@/interfaces/IApiError';
-import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
+import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
+import { isValidId } from '@/utils';
 
 import { UpdateAcquisitionSummaryFormModel } from './models';
 import { UpdateAcquisitionFileYupSchema } from './UpdateAcquisitionFileYupSchema';
 import { IUpdateAcquisitionFormProps } from './UpdateAcquisitionForm';
 
 export interface IUpdateAcquisitionContainerProps {
-  acquisitionFile: Api_AcquisitionFile;
+  acquisitionFile: ApiGen_Concepts_AcquisitionFile;
   onSuccess: () => void;
   View: React.FC<IUpdateAcquisitionFormProps>;
 }
@@ -44,7 +46,7 @@ export const UpdateAcquisitionContainer = React.forwardRef<
   } = useAcquisitionProvider();
 
   const withUserOverride = useApiUserOverride<
-    (userOverrideCodes: UserOverrideCode[]) => Promise<Api_AcquisitionFile | void>
+    (userOverrideCodes: UserOverrideCode[]) => Promise<ApiGen_Concepts_AcquisitionFile | void>
   >('Failed to update Acquisition File');
 
   const handleSubmit = async (
@@ -56,7 +58,7 @@ export const UpdateAcquisitionContainer = React.forwardRef<
       const acquisitionFile = values.toApi();
       const response = await updateAcquisitionFile(acquisitionFile, userOverrideCodes);
 
-      if (!!response?.id) {
+      if (isValidId(response?.id)) {
         if (acquisitionFile.fileProperties?.find(ap => !ap.property?.address && !ap.property?.id)) {
           toast.warn(
             'Address could not be retrieved for this property, it will have to be provided manually in property details tab',
@@ -89,7 +91,8 @@ export const UpdateAcquisitionContainer = React.forwardRef<
             (axiosError: AxiosError<IApiError>) => {
               setModalContent({
                 variant: 'error',
-                title: 'Warning',
+                title: 'Error',
+                headerIcon: <FaExclamationCircle size={22} />,
                 message: axiosError?.response?.data.error,
                 okButtonText: 'Close',
               });

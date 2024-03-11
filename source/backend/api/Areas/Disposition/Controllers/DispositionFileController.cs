@@ -5,9 +5,7 @@ using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Pims.Api.Areas.Acquisition.Controllers;
 using Pims.Api.Helpers.Exceptions;
-using Pims.Api.Models.Concepts.DispositionFile;
 using Pims.Api.Models.Concepts.DispositionFile;
 using Pims.Api.Policies;
 using Pims.Api.Services;
@@ -91,6 +89,7 @@ namespace Pims.Api.Areas.Disposition.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(DispositionFileModel), 200)]
         [SwaggerOperation(Tags = new[] { "dispositionfile" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult AddDispositionFile([FromBody] DispositionFileModel model, [FromQuery] string[] userOverrideCodes)
         {
             _logger.LogInformation(
@@ -114,7 +113,8 @@ namespace Pims.Api.Areas.Disposition.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(DispositionFileModel), 200)]
         [SwaggerOperation(Tags = new[] { "dispositionfile" })]
-        public IActionResult UpdateDispositionFile([FromRoute]long id, [FromBody] DispositionFileModel model, [FromQuery] string[] userOverrideCodes)
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult UpdateDispositionFile([FromRoute] long id, [FromBody] DispositionFileModel model, [FromQuery] string[] userOverrideCodes)
         {
             _logger.LogInformation(
                 "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
@@ -188,6 +188,7 @@ namespace Pims.Api.Areas.Disposition.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(IEnumerable<DispositionFileTeamModel>), 200)]
         [SwaggerOperation(Tags = new[] { "dispositionfile" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetDispositionTeamMembers()
         {
             _logger.LogInformation(
@@ -208,7 +209,7 @@ namespace Pims.Api.Areas.Disposition.Controllers
         [ProducesResponseType(typeof(IEnumerable<DispositionFileOfferModel>), 200)]
         [SwaggerOperation(Tags = new[] { "dispositionfile" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
-        public IActionResult GetDispositionFileOffers([FromRoute]long id)
+        public IActionResult GetDispositionFileOffers([FromRoute] long id)
         {
             _logger.LogInformation(
                 "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
@@ -229,7 +230,7 @@ namespace Pims.Api.Areas.Disposition.Controllers
         [ProducesResponseType(typeof(DispositionFileOfferModel), 200)]
         [SwaggerOperation(Tags = new[] { "dispositionfile" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
-        public IActionResult GetDispositionFileOfferById([FromRoute]long id, [FromRoute]long offerId)
+        public IActionResult GetDispositionFileOfferById([FromRoute] long id, [FromRoute] long offerId)
         {
             _logger.LogInformation(
                 "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
@@ -251,7 +252,7 @@ namespace Pims.Api.Areas.Disposition.Controllers
         [ProducesResponseType(typeof(DispositionFileOfferModel), 201)]
         [SwaggerOperation(Tags = new[] { "dispositionfile" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
-        public IActionResult AddDispositionFileOffer([FromRoute]long id, [FromBody]DispositionFileOfferModel dispositionFileOffer)
+        public IActionResult AddDispositionFileOffer([FromRoute] long id, [FromBody] DispositionFileOfferModel dispositionFileOffer)
         {
             _logger.LogInformation(
                 "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
@@ -281,7 +282,7 @@ namespace Pims.Api.Areas.Disposition.Controllers
         [ProducesResponseType(typeof(DispositionFileOfferModel), 200)]
         [SwaggerOperation(Tags = new[] { "dispositionfile" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
-        public IActionResult UpdateDispositionFileOffer([FromRoute]long id, [FromRoute]long offerId, [FromBody]DispositionFileOfferModel dispositionFileOffer)
+        public IActionResult UpdateDispositionFileOffer([FromRoute] long id, [FromRoute] long offerId, [FromBody] DispositionFileOfferModel dispositionFileOffer)
         {
             _logger.LogInformation(
                 "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
@@ -332,7 +333,7 @@ namespace Pims.Api.Areas.Disposition.Controllers
         [ProducesResponseType(typeof(DispositionFileSaleModel), 200)]
         [SwaggerOperation(Tags = new[] { "dispositionfile" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
-        public IActionResult GetDispositionFileSales([FromRoute]long id)
+        public IActionResult GetDispositionFileSales([FromRoute] long id)
         {
             _logger.LogInformation(
                 "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
@@ -482,6 +483,22 @@ namespace Pims.Api.Areas.Disposition.Controllers
             var updatedOffer = _dispositionService.UpdateDispositionFileAppraisal(id, appraisalId, dispositionAppraisalEntity);
 
             return new JsonResult(_mapper.Map<DispositionFileAppraisalModel>(updatedOffer));
+        }
+
+        /// <summary>
+        /// Update the disposition file properties.
+        /// </summary>
+        /// <returns></returns>
+        [HttpPut("{id:long}/properties")]
+        [HasPermission(Permissions.DispositionEdit)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(DispositionFileModel), 200)]
+        [SwaggerOperation(Tags = new[] { "dispositionfile" })]
+        public IActionResult UpdateDispositionFileProperties([FromBody] DispositionFileModel dispositionFileModel, [FromQuery] string[] userOverrideCodes)
+        {
+            var dispositionFileEntity = _mapper.Map<Dal.Entities.PimsDispositionFile>(dispositionFileModel);
+            var dispositionFile = _dispositionService.UpdateProperties(dispositionFileEntity, userOverrideCodes.Select(oc => UserOverrideCode.Parse(oc)));
+            return new JsonResult(_mapper.Map<DispositionFileModel>(dispositionFile));
         }
 
         #endregion

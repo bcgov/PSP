@@ -97,7 +97,9 @@ describe('ProjectSelector component', () => {
     const items = await findItems();
     expect(items).toHaveLength(1);
     act(() => items[0].focus());
-    await act(async () => userEvent.keyboard('{Enter}'));
+    await act(async () => {
+      userEvent.keyboard('{Enter}');
+    });
     expect(onChange).toHaveBeenCalled();
   });
 });

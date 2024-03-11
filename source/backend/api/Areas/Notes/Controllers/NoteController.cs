@@ -6,6 +6,7 @@ using Pims.Api.Constants;
 using Pims.Api.Models.Concepts.Note;
 using Pims.Api.Policies;
 using Pims.Api.Services;
+using Pims.Core.Json;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -55,6 +56,7 @@ namespace Pims.Api.Areas.Notes.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(EntityNoteModel), 200)]
         [SwaggerOperation(Tags = new[] { "note" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult AddNote(NoteType type, [FromBody] EntityNoteModel noteModel)
         {
             var createdNote = _noteService.Add(type, noteModel);
@@ -72,6 +74,7 @@ namespace Pims.Api.Areas.Notes.Controllers
         [HasPermission(Permissions.NoteView)]
         [ProducesResponseType(typeof(IEnumerable<NoteModel>), 200)]
         [SwaggerOperation(Tags = new[] { "note" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetNotes(NoteType type, long entityId)
         {
             var notes = _noteService.GetNotes(type, entityId);
@@ -89,6 +92,7 @@ namespace Pims.Api.Areas.Notes.Controllers
         [HasPermission(Permissions.NoteView)]
         [ProducesResponseType(typeof(NoteModel), 200)]
         [SwaggerOperation(Tags = new[] { "note" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetNoteById(long noteId)
         {
             var note = _noteService.GetById(noteId);
@@ -106,6 +110,7 @@ namespace Pims.Api.Areas.Notes.Controllers
         [HasPermission(Permissions.NoteEdit)]
         [ProducesResponseType(typeof(NoteModel), 200)]
         [SwaggerOperation(Tags = new[] { "note" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult UpdateNote(long noteId, [FromBody] NoteModel noteModel)
         {
             if (noteId != noteModel.Id)
@@ -127,6 +132,7 @@ namespace Pims.Api.Areas.Notes.Controllers
         [HasPermission(Permissions.NoteDelete)]
         [ProducesResponseType(typeof(bool), 200)]
         [SwaggerOperation(Tags = new[] { "note" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult DeleteNote(NoteType type, long noteId)
         {
             return new JsonResult(_noteService.DeleteNote(type, noteId));

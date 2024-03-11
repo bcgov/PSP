@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import { useDispositionProvider } from '@/hooks/repositories/useDispositionProvider';
 import { useModalContext } from '@/hooks/useModalContext';
 import { IApiError } from '@/interfaces/IApiError';
-import { Api_DispositionFileOffer } from '@/models/api/DispositionFile';
+import { ApiGen_Concepts_DispositionFileOffer } from '@/models/api/generated/ApiGen_Concepts_DispositionFileOffer';
 
 import { IDispositionOfferFormProps } from '../form/DispositionOfferForm';
 import { DispositionOfferFormModel } from '../models/DispositionOfferFormModel';
@@ -15,11 +15,12 @@ export interface IUpdateDispositionOfferContainerProps {
   dispositionFileId: number;
   dispositionOfferId: number;
   View: React.FC<IDispositionOfferFormProps>;
+  onSuccess: () => void;
 }
 
 const UpdateDispositionOfferContainer: React.FunctionComponent<
   React.PropsWithChildren<IUpdateDispositionOfferContainerProps>
-> = ({ dispositionFileId, dispositionOfferId, View }) => {
+> = ({ dispositionFileId, dispositionOfferId, View, onSuccess }) => {
   const history = useHistory();
   const location = useLocation();
   const backUrl = location.pathname.split(`/offers/${dispositionOfferId}/update`)[0];
@@ -41,12 +42,13 @@ const UpdateDispositionOfferContainer: React.FunctionComponent<
     }
   }, [dispositionFileId, dispositionOfferId, getDispositionOffer]);
 
-  const handleSave = async (newOffer: Api_DispositionFileOffer) => {
+  const handleSave = async (newOffer: ApiGen_Concepts_DispositionFileOffer) => {
     setOfferStatusError(false);
     return putDispositionOffer(dispositionFileId, dispositionOfferId, newOffer);
   };
 
   const handleSucces = async () => {
+    onSuccess();
     history.push(backUrl);
   };
 

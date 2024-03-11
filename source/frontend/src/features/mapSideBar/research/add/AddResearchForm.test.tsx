@@ -49,7 +49,7 @@ describe('AddResearchForm component', () => {
   });
 
   it('renders as expected', async () => {
-    var initialValues = new ResearchForm();
+    const initialValues = new ResearchForm();
     const { asFragment, findByText } = setup({ initialValues });
 
     expect(await findByText(/No results found for your search criteria./i)).toBeVisible();
@@ -57,7 +57,7 @@ describe('AddResearchForm component', () => {
   });
 
   it('renders the R-file name field', async () => {
-    var initialValues = new ResearchForm();
+    const initialValues = new ResearchForm();
     const { getByPlaceholderText, findByText } = setup({ initialValues });
 
     expect(await findByText(/No results found for your search criteria./i)).toBeVisible();
@@ -66,7 +66,7 @@ describe('AddResearchForm component', () => {
   });
 
   it('should have the Help with choosing a name text in the component', async () => {
-    var initialValues = new ResearchForm();
+    const initialValues = new ResearchForm();
     setup({ initialValues });
 
     expect(await screen.findByText(/No results found for your search criteria./i)).toBeVisible();
@@ -74,7 +74,7 @@ describe('AddResearchForm component', () => {
   });
 
   it('should validate R-File name', async () => {
-    var initialValues = new ResearchForm();
+    const initialValues = new ResearchForm();
     const { container, findByText } = setup({ initialValues });
 
     expect(await findByText(/No results found for your search criteria./i)).toBeVisible();

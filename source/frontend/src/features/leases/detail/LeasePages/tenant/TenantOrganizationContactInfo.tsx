@@ -22,13 +22,13 @@ export interface ITenantOrganizationContactInfoProps {
  */
 export const TenantOrganizationContactInfo: React.FunctionComponent<
   React.PropsWithChildren<ITenantOrganizationContactInfoProps & Partial<FieldArrayRenderProps>>
-> = ({ nameSpace, disabled }) => {
+> = ({ nameSpace }) => {
   const { values } = useFormikContext<LeaseFormModel>();
   const tenant: FormTenant = getIn(values, nameSpace);
   let primaryContact = tenant?.initialPrimaryContact;
   if (primaryContact?.id !== tenant?.primaryContactId) {
     primaryContact = tenant?.primaryContactId
-      ? getPrimaryContact(tenant?.primaryContactId, tenant)
+      ? getPrimaryContact(tenant?.primaryContactId, tenant) ?? undefined
       : undefined;
   }
   const primaryContactName = formatApiPersonNames(primaryContact);

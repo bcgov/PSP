@@ -9,7 +9,7 @@ import { useUserInfoRepository } from '@/hooks/repositories/useUserInfoRepositor
 import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
-import { Api_User } from '@/models/api/User';
+import { ApiGen_Concepts_User } from '@/models/api/generated/ApiGen_Concepts_User';
 import { emptyRegion } from '@/models/layers/motRegionalBoundary';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, renderAsync, RenderOptions, screen, userEvent } from '@/utils/test-utils';
@@ -57,7 +57,7 @@ jest.mock('@/hooks/repositories/useUserInfoRepository');
         region: { id: 2 },
       },
     ],
-  } as Api_User,
+  } as ApiGen_Concepts_User,
 });
 
 // Mock API service calls
@@ -190,6 +190,18 @@ describe('AddAcquisitionContainer component', () => {
     expect(onClose).toBeCalled();
   });
 
+  it('should confirm and close the form when Cancel button is clicked with changes', async () => {
+    const { getCancelButton, getByText, getNameTextbox, getByTitle } = await setup();
+
+    expect(getByText(/Create Acquisition File/i)).toBeVisible();
+
+    await act(async () => userEvent.paste(getNameTextbox(), formValues.fileName as string));
+    await act(async () => userEvent.click(getCancelButton()));
+    await act(async () => userEvent.click(getByTitle('ok-modal')));
+
+    expect(onClose).toBeCalled();
+  });
+
   it('should pre-populate the region if a property is selected', async () => {
     const testMockMahine: IMapStateMachineContext = {
       ...mapMachineBaseMock,
@@ -207,6 +219,7 @@ describe('AddAcquisitionContainer component', () => {
         },
         districtFeature: null,
         municipalityFeature: null,
+        selectingComponentId: null,
       },
     };
     (useMapStateMachine as unknown as jest.Mock<Partial<IMapStateMachineContext>>).mockReturnValue(
@@ -237,6 +250,7 @@ describe('AddAcquisitionContainer component', () => {
         },
         districtFeature: null,
         municipalityFeature: null,
+        selectingComponentId: null,
       },
     };
     (useMapStateMachine as unknown as jest.Mock<Partial<IMapStateMachineContext>>).mockReturnValue(

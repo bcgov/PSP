@@ -9,7 +9,7 @@ import useApiUserOverride from '@/hooks/useApiUserOverride';
 import { useInitialMapSelectorProperties } from '@/hooks/useInitialMapSelectorProperties';
 import { useModalContext } from '@/hooks/useModalContext';
 import { IApiError } from '@/interfaces/IApiError';
-import { Api_DispositionFile } from '@/models/api/DispositionFile';
+import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { featuresetToMapProperty } from '@/utils';
 
@@ -39,9 +39,13 @@ const AddDispositionContainer: React.FC<IAddDispositionContainerProps> = ({ onCl
     const dispositionForm = new DispositionFormModel();
     // support creating a new disposition file from the map popup
     if (selectedFeatureDataset !== null) {
-      dispositionForm.fileProperties = [
-        PropertyForm.fromMapProperty(featuresetToMapProperty(selectedFeatureDataset)),
-      ];
+      const property = PropertyForm.fromMapProperty(
+        featuresetToMapProperty(selectedFeatureDataset),
+      );
+      dispositionForm.fileProperties = [property];
+      // auto-select file region based upon the location of the property
+      dispositionForm.regionCode =
+        property.regionName !== 'Cannot determine' ? property.region?.toString() ?? null : null;
     }
     return dispositionForm;
   }, [selectedFeatureDataset]);
@@ -73,10 +77,10 @@ const AddDispositionContainer: React.FC<IAddDispositionContainerProps> = ({ onCl
   };
 
   const withUserOverride = useApiUserOverride<
-    (userOverrideCodes: UserOverrideCode[]) => Promise<Api_DispositionFile | void>
+    (userOverrideCodes: UserOverrideCode[]) => Promise<ApiGen_Concepts_DispositionFile | void>
   >('Failed to create Disposition File');
 
-  const handleSuccess = async (disposition: Api_DispositionFile) => {
+  const handleSuccess = async (disposition: ApiGen_Concepts_DispositionFile) => {
     mapMachine.refreshMapProperties();
     history.replace(`/mapview/sidebar/disposition/${disposition.id}`);
   };
@@ -90,7 +94,7 @@ const AddDispositionContainer: React.FC<IAddDispositionContainerProps> = ({ onCl
       const dispositionFile = values.toApi();
       const response = await addDispositionFileApi(dispositionFile, userOverrideCodes);
 
-      if (!!response?.id) {
+      if (response?.id) {
         formikHelpers?.resetForm();
         handleSuccess(response);
       }
@@ -118,7 +122,7 @@ const AddDispositionContainer: React.FC<IAddDispositionContainerProps> = ({ onCl
           (axiosError: AxiosError<IApiError>) => {
             setModalContent({
               variant: 'error',
-              title: 'Warning',
+              title: 'Error',
               message: axiosError?.response?.data.error,
               okButtonText: 'Close',
             });

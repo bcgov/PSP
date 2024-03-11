@@ -3,7 +3,6 @@ import { renderHook } from '@testing-library/react-hooks';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { find, values } from 'lodash';
-import React from 'react';
 import { Provider } from 'react-redux';
 import configureMockStore, { MockStoreEnhanced } from 'redux-mock-store';
 import thunk from 'redux-thunk';
@@ -26,7 +25,7 @@ beforeEach(() => {
   errorSpy.mockClear();
 });
 
-let currentStore: MockStoreEnhanced<any, {}>;
+let currentStore: MockStoreEnhanced<any, object>;
 const mockStore = configureMockStore([thunk]);
 const getStore = (values?: any) => {
   currentStore = mockStore(values ?? {});

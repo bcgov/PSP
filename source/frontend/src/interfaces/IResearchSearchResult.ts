@@ -1,5 +1,5 @@
-import Api_TypeCode from '@/interfaces/ITypeCode';
-import { Api_ResearchFileProperty } from '@/models/api/ResearchFile';
+import { ApiGen_Base_CodeType } from '@/models/api/generated/ApiGen_Base_CodeType';
+import { ApiGen_Concepts_ResearchFileProperty } from '@/models/api/generated/ApiGen_Concepts_ResearchFileProperty';
 
 export interface IResearchSearchResult {
   id: number;
@@ -10,8 +10,8 @@ export interface IResearchSearchResult {
   appCreateTimestamp: string;
   appCreateUserid: string;
   appLastUpdateTimestamp: string;
-  fileStatusTypeCode: Api_TypeCode<string>;
-  fileProperties: Api_ResearchFileProperty[];
+  fileStatusTypeCode: ApiGen_Base_CodeType<string>;
+  fileProperties: ApiGen_Concepts_ResearchFileProperty[];
 }
 
 export class ResearchSearchResultModel {
@@ -23,11 +23,11 @@ export class ResearchSearchResultModel {
   appCreateTimestamp?: string;
   appCreateUserid?: string;
   appLastUpdateTimestamp?: string;
-  researchFileStatusTypeCode?: Api_TypeCode<string>;
-  fileProperties?: Api_ResearchFileProperty[];
+  researchFileStatusTypeCode?: ApiGen_Base_CodeType<string>;
+  fileProperties?: ApiGen_Concepts_ResearchFileProperty[];
 
   static fromApi(base: IResearchSearchResult): ResearchSearchResultModel {
-    var newModel = new ResearchSearchResultModel();
+    const newModel = new ResearchSearchResultModel();
     newModel.id = base.id;
     newModel.name = base.fileName;
     newModel.rfileNumber = base.fileNumber;

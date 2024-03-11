@@ -4,10 +4,11 @@ import { FormikProps } from 'formik';
 import { createRef } from 'react';
 
 import { DispositionFormModel } from '@/features/mapSideBar/disposition/models/DispositionFormModel';
+import { IAutocompletePrediction } from '@/interfaces/IAutocomplete';
 import { mockDispositionFileResponse } from '@/mocks/dispositionFiles.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { act, render, RenderOptions, userEvent } from '@/utils/test-utils';
+import { act, render, RenderOptions, userEvent, waitFor, waitForEffects } from '@/utils/test-utils';
 
 import UpdateDispositionForm, { IUpdateDispositionFormProps } from './UpdateDispositionForm';
 
@@ -55,6 +56,15 @@ describe('UpdateDispositionForm component', () => {
         utils.container.querySelector(
           `select[name="team.${index}.teamProfileTypeCode"]`,
         ) as HTMLSelectElement,
+      getDispositionFileStatusDropDownList: (index: number = 0) =>
+        utils.container.querySelector(`select[name="fileStatusTypeCode"]`) as HTMLSelectElement,
+      getCompletionDate: () => utils.container.querySelector(`input[name="completionDate"]`),
+      getRemoveProjectButton: () =>
+        utils.container.querySelector(
+          `div[data-testid="typeahead-project"] button`,
+        ) as HTMLSelectElement,
+      getProductDropDownList: (index: number = 0) =>
+        utils.container.querySelector(`select[name="productId"]`) as HTMLSelectElement,
     };
   };
 
@@ -100,5 +110,44 @@ describe('UpdateDispositionForm component', () => {
     });
 
     expect(queryByTestId(/team-profile-dup-error/i)).toBeNull();
+  });
+
+  it('it clears the product field when a project is removed', async () => {
+    const { getRemoveProjectButton, getProductDropDownList, getFormikRef } = setup({
+      initialValues,
+      loading: false,
+      formikRef: ref,
+      onSubmit,
+    });
+
+    await waitFor(() => userEvent.click(getRemoveProjectButton()));
+    await waitForEffects();
+
+    initialValues.productId = '';
+    initialValues.project = '' as unknown as IAutocompletePrediction;
+
+    expect(getProductDropDownList()).toBeNull();
+
+    await waitFor(() => getFormikRef().current?.submitForm());
+
+    expect(onSubmit).toHaveBeenLastCalledWith(initialValues, expect.anything());
+  });
+
+  it('it enables and makes required the file completion date when status set to complete', async () => {
+    const { getDispositionFileStatusDropDownList, getCompletionDate } = setup({
+      initialValues,
+      loading: false,
+      formikRef: ref,
+      onSubmit,
+    });
+
+    expect(getCompletionDate()).toBeDisabled();
+
+    // Set duplicate should fail
+    await act(async () => {
+      userEvent.selectOptions(getDispositionFileStatusDropDownList(0), 'COMPLETE');
+    });
+
+    expect(getCompletionDate()).toBeEnabled();
   });
 });

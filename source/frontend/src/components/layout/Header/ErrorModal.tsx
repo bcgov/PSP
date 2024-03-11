@@ -40,7 +40,7 @@ export const ErrorModal = ({ errors, show, setShow }: IErrorModalProps) => {
   };
 
   const errorShortUrl = (error: IGenericNetworkAction): string => {
-    var url = errorUrl(error);
+    const url = errorUrl(error);
     if (url.length > 20) {
       return error?.error?.response?.config?.url?.substr(0, 20) + '...';
     } else {
@@ -64,7 +64,7 @@ export const ErrorModal = ({ errors, show, setShow }: IErrorModalProps) => {
         <ErrorWrapper>
           {errors.map((error: IGenericNetworkAction, index: number) => (
             <ErrorEntry key={index}>
-              {process.env.NODE_ENV === 'development' ? (
+              {import.meta.env.DEV ? (
                 <Section header={errorShortUrl(error)} isCollapsable>
                   <SectionField label="Status" labelWidth="2">
                     <ErrorDescription>{errorStatus(error)}</ErrorDescription>

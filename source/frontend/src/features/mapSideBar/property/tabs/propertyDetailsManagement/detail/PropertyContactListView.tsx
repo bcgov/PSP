@@ -5,7 +5,7 @@ import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
 import { SectionListHeader } from '@/components/common/SectionListHeader';
 import Claims from '@/constants/claims';
-import { Api_PropertyContact } from '@/models/api/Property';
+import { ApiGen_Concepts_PropertyContact } from '@/models/api/generated/ApiGen_Concepts_PropertyContact';
 
 import { InventoryTabNames } from '../../../InventoryTabs';
 import { PropertyEditForms } from '../../../PropertyRouter';
@@ -13,7 +13,7 @@ import PropertyContactList from './PropertyContactList';
 
 export interface IPropertyContactListViewProps {
   isLoading: boolean;
-  propertyContacts: Api_PropertyContact[];
+  propertyContacts: ApiGen_Concepts_PropertyContact[];
   onDelete: (contactId: number) => void;
 }
 

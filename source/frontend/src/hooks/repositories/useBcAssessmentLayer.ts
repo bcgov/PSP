@@ -1,4 +1,4 @@
-import { AxiosResponse } from 'axios';
+import { AxiosRequestHeaders, AxiosResponse } from 'axios';
 import { useCallback } from 'react';
 
 import { BC_ASSESSMENT_TYPES, IBcAssessmentSummary } from '@/models/layers/bcAssesment';
@@ -80,7 +80,7 @@ export const useBcAssessmentLayer = (
           status: 500,
           statusText: 'Failed to load BC Assessment data',
           headers: {},
-          config: {},
+          config: { headers: {} as AxiosRequestHeaders },
         };
       }
 
@@ -89,9 +89,9 @@ export const useBcAssessmentLayer = (
           'Invalid BC Assessment response. Unable to load BC Assessment data for property.',
         );
       }
-      let folioId = legalDescriptionResponse?.features[0]?.properties?.FOLIO_ID;
-      let rollNumber = legalDescriptionResponse?.features[0]?.properties?.ROLL_NUMBER;
-      let jurisdictionCode = legalDescriptionResponse?.features[0]?.properties?.JURISDICTION_CODE;
+      const folioId = legalDescriptionResponse?.features[0]?.properties?.FOLIO_ID;
+      const rollNumber = legalDescriptionResponse?.features[0]?.properties?.ROLL_NUMBER;
+      const jurisdictionCode = legalDescriptionResponse?.features[0]?.properties?.JURISDICTION_CODE;
 
       if (!folioId || !rollNumber) {
         throw Error(
@@ -166,7 +166,13 @@ export const useBcAssessmentLayer = (
         FOLIO_DESCRIPTION: responses[3]?.features[0]?.properties ?? {},
         SALES: responses[4]?.features?.map((f: { properties: any }) => f.properties ?? {}) ?? [],
       };
-      return { data: summary, status: 200, statusText: 'Success', headers: {}, config: {} };
+      return {
+        data: summary,
+        status: 200,
+        statusText: 'Success',
+        headers: {},
+        config: { headers: {} as AxiosRequestHeaders },
+      };
     },
     [getAddresses, getValues, getCharges, getFolioDescriptions, getSales, getLegalDescriptions],
   );

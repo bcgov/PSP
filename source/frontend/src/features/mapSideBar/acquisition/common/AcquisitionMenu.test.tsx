@@ -1,4 +1,7 @@
-import { Claims } from '@/constants/index';
+import { AcquisitionStatus } from '@/constants/acquisitionFileStatus';
+import { Claims, Roles } from '@/constants/index';
+import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
+import { toTypeCode } from '@/utils/formUtils';
 import { render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import AcquisitionMenu, { IAcquisitionMenuProps } from './AcquisitionMenu';
@@ -19,7 +22,7 @@ describe('AcquisitionMenu component', () => {
   ) => {
     const utils = render(
       <AcquisitionMenu
-        acquisitionFileId={props.acquisitionFileId}
+        acquisitionFile={props.acquisitionFile}
         selectedIndex={props.selectedIndex}
         items={props.items}
         onChange={onChange}
@@ -41,7 +44,7 @@ describe('AcquisitionMenu component', () => {
 
   it('matches snapshot', () => {
     const { asFragment } = setup({
-      acquisitionFileId: 1,
+      acquisitionFile: mockAcquisitionFileResponse(),
       items: testData,
       selectedIndex: 0,
     });
@@ -50,7 +53,7 @@ describe('AcquisitionMenu component', () => {
 
   it('renders the items ', () => {
     const { getByText } = setup({
-      acquisitionFileId: 1,
+      acquisitionFile: mockAcquisitionFileResponse(),
       items: testData,
       selectedIndex: 0,
     });
@@ -62,7 +65,7 @@ describe('AcquisitionMenu component', () => {
 
   it('renders selected item with different style', () => {
     const { getByTestId } = setup({
-      acquisitionFileId: 1,
+      acquisitionFile: mockAcquisitionFileResponse(),
       items: testData,
       selectedIndex: 1,
     });
@@ -74,7 +77,7 @@ describe('AcquisitionMenu component', () => {
 
   it('allows the selected item to be changed', () => {
     const { getByText } = setup({
-      acquisitionFileId: 1,
+      acquisitionFile: mockAcquisitionFileResponse(),
       items: testData,
       selectedIndex: 1,
     });
@@ -86,9 +89,9 @@ describe('AcquisitionMenu component', () => {
   });
 
   it(`renders the edit button for users with property edit permissions`, () => {
-    const { getByTitle } = setup(
+    const { getByTitle, queryByTestId } = setup(
       {
-        acquisitionFileId: 1,
+        acquisitionFile: mockAcquisitionFileResponse(),
         items: testData,
         selectedIndex: 1,
       },
@@ -100,13 +103,15 @@ describe('AcquisitionMenu component', () => {
 
     userEvent.click(button);
 
+    const icon = queryByTestId('tooltip-icon-1-summary-cannot-edit-tooltip');
     expect(onShowPropertySelector).toHaveBeenCalled();
+    expect(icon).toBeNull();
   });
 
   it(`doesn't render the edit button for users without edit permissions`, () => {
-    const { queryByTitle } = setup(
+    const { queryByTitle, queryByTestId } = setup(
       {
-        acquisitionFileId: 1,
+        acquisitionFile: mockAcquisitionFileResponse(),
         items: testData,
         selectedIndex: 1,
       },
@@ -114,6 +119,46 @@ describe('AcquisitionMenu component', () => {
     );
 
     const button = queryByTitle('Change properties');
+    const icon = queryByTestId('tooltip-icon-1-summary-cannot-edit-tooltip');
     expect(button).toBeNull();
+    expect(icon).toBeNull();
+  });
+
+  it(`renders the warning icon instead of the edit button for users`, () => {
+    const { queryByTitle, queryByTestId } = setup(
+      {
+        acquisitionFile: {
+          ...mockAcquisitionFileResponse(),
+          fileStatusTypeCode: toTypeCode(AcquisitionStatus.Complete),
+        },
+        items: testData,
+        selectedIndex: 1,
+      },
+      { claims: [Claims.ACQUISITION_EDIT] },
+    );
+
+    const button = queryByTitle('Change properties');
+    const icon = queryByTestId('tooltip-icon-1-summary-cannot-edit-tooltip');
+    expect(button).toBeNull();
+    expect(icon).toBeVisible();
+  });
+
+  it(`it does not render the warning icon instead of the edit button for system admins`, () => {
+    const { queryByTitle, queryByTestId } = setup(
+      {
+        acquisitionFile: {
+          ...mockAcquisitionFileResponse(),
+          fileStatusTypeCode: toTypeCode(AcquisitionStatus.Complete),
+        },
+        items: testData,
+        selectedIndex: 1,
+      },
+      { claims: [Claims.ACQUISITION_EDIT], roles: [Roles.SYSTEM_ADMINISTRATOR] },
+    );
+
+    const button = queryByTitle('Change properties');
+    const icon = queryByTestId('tooltip-icon-1-summary-cannot-edit-tooltip');
+    expect(button).toBeVisible();
+    expect(icon).toBeNull();
   });
 });

@@ -1,15 +1,16 @@
-import { LatLngLiteral } from 'leaflet';
 import { findIndex } from 'lodash';
 import * as React from 'react';
 import { useCallback, useEffect, useState } from 'react';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { FileTypes } from '@/constants/fileTypes';
-import { Api_File, Api_LastUpdatedBy } from '@/models/api/File';
-import { Api_Project } from '@/models/api/Project';
+import { Api_LastUpdatedBy } from '@/models/api/File';
+import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
+import { ApiGen_Concepts_Project } from '@/models/api/generated/ApiGen_Concepts_Project';
+import { exists } from '@/utils';
 import { getLatLng } from '@/utils/mapPropertyUtils';
 
-export interface TypedFile extends Api_File {
+export interface TypedFile extends ApiGen_Concepts_File {
   fileType: FileTypes;
   projectId?: number | null;
   productId?: number | null;
@@ -24,8 +25,8 @@ export interface ISideBarContext {
   setFileLoading: (loading: boolean) => void;
   resetFilePropertyLocations: () => void;
   projectLoading: boolean;
-  project?: Api_Project;
-  setProject: (project?: Api_Project) => void;
+  project?: ApiGen_Concepts_Project;
+  setProject: (project?: ApiGen_Concepts_Project) => void;
   setProjectLoading: (loading: boolean) => void;
   getFilePropertyIndexById: (filePropertyId: number) => number;
   fullWidth: boolean;
@@ -39,40 +40,40 @@ export interface ISideBarContext {
 
 export const SideBarContext = React.createContext<ISideBarContext>({
   file: undefined,
-  setFile: (file?: TypedFile) => {
+  setFile: () => {
     throw Error('setFile function not defined');
   },
   fileLoading: false,
-  setFileLoading: (loading: boolean) => {
+  setFileLoading: () => {
     throw Error('setFileLoading function not defined');
   },
   resetFilePropertyLocations: () => {
     throw Error('resetFilePropertyLocations function not defined');
   },
   staleFile: false,
-  setStaleFile: (stale: boolean) => {
+  setStaleFile: () => {
     throw Error('setStaleFile function not defined');
   },
-  getFilePropertyIndexById: (filePropertyId: number) => {
+  getFilePropertyIndexById: () => {
     throw Error('setStaleFile function not defined');
   },
   fullWidth: false,
-  setFullWidth: (fullWidth: boolean) => {
+  setFullWidth: () => {
     throw Error('setFullWidth function not defined');
   },
-  setProject: (project?: Api_Project) => {
+  setProject: () => {
     throw Error('setProject function not defined');
   },
   projectLoading: false,
-  setProjectLoading: (loading: boolean) => {
+  setProjectLoading: () => {
     throw Error('setProjectLoading function not defined');
   },
   lastUpdatedBy: null,
-  setLastUpdatedBy: (lastUpdatedBy: Api_LastUpdatedBy | null) => {
+  setLastUpdatedBy: () => {
     throw Error('setLastUpdatedBy function not defined');
   },
   staleLastUpdatedBy: false,
-  setStaleLastUpdatedBy: (loading: boolean) => {
+  setStaleLastUpdatedBy: () => {
     throw Error('setStaleLastUpdatedBy function not defined');
   },
 });
@@ -80,11 +81,11 @@ export const SideBarContext = React.createContext<ISideBarContext>({
 export const SideBarContextProvider = (props: {
   children: React.ReactChild | React.ReactChild[] | React.ReactNode;
   file?: TypedFile;
-  project?: Api_Project;
+  project?: ApiGen_Concepts_Project;
   lastUpdatedBy?: Api_LastUpdatedBy;
 }) => {
   const [file, setFile] = useState<TypedFile | undefined>(props.file);
-  const [project, setProject] = useState<Api_Project | undefined>(props.project);
+  const [project, setProject] = useState<ApiGen_Concepts_Project | undefined>(props.project);
   const [staleFile, setStaleFile] = useState<boolean>(false);
   const [lastUpdatedBy, setLastUpdatedBy] = useState<Api_LastUpdatedBy | null>(
     props.lastUpdatedBy ?? null,
@@ -111,7 +112,7 @@ export const SideBarContextProvider = (props: {
   );
 
   const setProjectInstance = useCallback(
-    (project?: Api_Project) => {
+    (project?: ApiGen_Concepts_Project) => {
       setProject(project);
     },
     [setProject],
@@ -125,10 +126,10 @@ export const SideBarContextProvider = (props: {
   const fileProperties = file?.fileProperties;
 
   const resetFilePropertyLocations = useCallback(() => {
-    if (fileProperties !== undefined) {
+    if (exists(fileProperties)) {
       const propertyLocations = fileProperties
         .map(x => getLatLng(x.property?.location))
-        .filter((x): x is LatLngLiteral => x !== undefined && x !== null);
+        .filter(exists);
 
       setFilePropertyLocations(propertyLocations);
     } else {

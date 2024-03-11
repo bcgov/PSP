@@ -13,13 +13,13 @@ import { InlineFlexDiv } from '@/components/common/styles';
 import { UserNameTooltip } from '@/components/common/UserNameTooltip';
 import { LeaseHeaderAddresses } from '@/features/leases/detail/LeaseHeaderAddresses';
 import { Api_LastUpdatedBy } from '@/models/api/File';
-import { Api_Lease } from '@/models/api/Lease';
+import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { prettyFormatDate, prettyFormatUTCDate } from '@/utils';
 
 import { LeaseHeaderTenants } from './LeaseHeaderTenants';
 
 export interface ILeaseHeaderProps {
-  lease?: Api_Lease;
+  lease?: ApiGen_Concepts_Lease;
   lastUpdatedBy: Api_LastUpdatedBy | null;
 }
 
@@ -46,7 +46,7 @@ export const LeaseHeader: React.FC<ILeaseHeaderProps> = ({ lease, lastUpdatedBy 
             <Col>
               <HeaderField label="Property:" labelWidth="3" contentWidth="9">
                 <LeaseHeaderAddresses
-                  propertyLeases={lease?.properties ?? []}
+                  propertyLeases={lease?.fileProperties ?? []}
                   maxCollapsedLength={1}
                   delimiter={<br />}
                 />
@@ -92,7 +92,7 @@ export const LeaseHeader: React.FC<ILeaseHeaderProps> = ({ lease, lastUpdatedBy 
           <Row className="no-gutters">
             <Col>
               <HeaderField className="justify-content-end" label="Status:">
-                {lease?.statusType?.description}
+                {lease?.fileStatusTypeCode?.description}
               </HeaderField>
             </Col>
           </Row>

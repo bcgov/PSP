@@ -1,4 +1,4 @@
-using Pims.Api.Constants;
+using Pims.Api.Models.CodeTypes;
 
 namespace Pims.Api.Services
 {
@@ -34,7 +34,7 @@ namespace Pims.Api.Services
             return canEdit;
         }
 
-        public bool CanEditTakes(AcquisitionStatusTypes? acquisitionStatus)
+        public bool CanEditProperties(AcquisitionStatusTypes? acquisitionStatus)
         {
             if (acquisitionStatus == null)
             {
@@ -60,6 +60,22 @@ namespace Pims.Api.Services
                     break;
             }
 
+            return canEdit;
+        }
+
+        public bool CanEditTakes(AcquisitionStatusTypes? acquisitionStatus)
+        {
+            if (acquisitionStatus == null)
+            {
+                return false;
+            }
+
+            var canEdit = acquisitionStatus switch
+            {
+                AcquisitionStatusTypes.ACTIVE or AcquisitionStatusTypes.DRAFT => true,
+                AcquisitionStatusTypes.ARCHIV or AcquisitionStatusTypes.CANCEL or AcquisitionStatusTypes.CLOSED or AcquisitionStatusTypes.COMPLT or AcquisitionStatusTypes.HOLD => false,
+                _ => false,
+            };
             return canEdit;
         }
 

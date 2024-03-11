@@ -26,9 +26,11 @@ import {
 import { SideBarContextProvider } from '../context/sidebarContext';
 import DispositionContainer, { IDispositionContainerProps } from './DispositionContainer';
 import { IDispositionViewProps } from './DispositionView';
+import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 
 const history = createMemoryHistory();
 const mockAxios = new MockAdapter(axios);
+const mockDispositionFileApi = mockDispositionFileResponse();
 
 // mock auth library
 jest.mock('@react-keycloak/web');
@@ -46,7 +48,7 @@ jest.mock('react-visibility-sensor', () => {
   });
 });
 
-let viewProps: IDispositionViewProps = {} as any;
+let viewProps!: IDispositionViewProps;
 const DispositionContainerView = (props: IDispositionViewProps) => {
   viewProps = props;
   return (
@@ -95,8 +97,11 @@ describe('DispositionContainer component', () => {
     mockAxios
       .onGet(new RegExp('dispositionfiles/1/properties'))
       .reply(200, mockDispositionFilePropertyResponse());
+    mockAxios
+      .onPut(new RegExp('dispositionfiles/1/properties'))
+      .reply(200, mockDispositionFilePropertyResponse());
     mockAxios.onGet(new RegExp('dispositionfiles/1/updateInfo')).reply(200, mockLastUpdatedBy(1));
-    mockAxios.onGet(new RegExp('dispositionfiles/1')).reply(200, mockDispositionFileResponse());
+    mockAxios.onGet(new RegExp('dispositionfiles/1')).reply(200, mockDispositionFileApi);
   });
 
   afterEach(() => {
@@ -130,8 +135,39 @@ describe('DispositionContainer component', () => {
 
     mockAxios.onGet(new RegExp('dispositionfiles/1/properties')).timeout();
     await act(async () => viewProps.onShowPropertySelector());
-    await act(async () => viewProps.canRemove(1));
+    await act(async () => {
+      viewProps.canRemove(1);
+    });
     expect(spinner).not.toBeVisible();
+  });
+
+  it('should call the onUpdateProperty when related function is called', async () => {
+    const { getByTestId } = setup(undefined, { claims: [] });
+
+    const spinner = getByTestId('filter-backdrop-loading');
+    await waitForElementToBeRemoved(spinner);
+
+    await viewProps.onUpdateProperties(mockDispositionFileApi);
+    expect(spinner).not.toBeVisible();
+    expect(
+      mockAxios.history.put.filter(x => x.url === '/dispositionfiles/1/properties?'),
+    ).toHaveLength(1);
+  });
+
+  it('should show error popup when user adds a property outside of the user account regions', async () => {
+    const { getByTestId } = setup(undefined, { claims: [] });
+
+    const spinner = getByTestId('filter-backdrop-loading');
+    await waitForElementToBeRemoved(spinner);
+
+    const errorMessage = 'You cannot add a property that is outside of your user account region';
+    mockAxios
+      .onPut(new RegExp('dispositionfiles/1/properties'))
+      .reply(400, { error: errorMessage });
+
+    await viewProps.onUpdateProperties(mockDispositionFileApi);
+    expect(spinner).not.toBeVisible();
+    expect(await screen.findByText(errorMessage)).toBeVisible();
   });
 
   it('should change menu index when not editing', async () => {
@@ -178,7 +214,9 @@ describe('DispositionContainer component', () => {
     expect(history.location.pathname).toBe('/property/1');
 
     const yesButton = getByText('Yes');
-    await act(async () => fireEvent.click(yesButton));
+    await act(async () => {
+      fireEvent.click(yesButton);
+    });
     const params = new URLSearchParams(history.location.search);
     await waitFor(async () => expect(params.has('edit')).toBe(false));
   });
@@ -204,7 +242,7 @@ describe('DispositionContainer component', () => {
     const spinner = getByTestId('filter-backdrop-loading');
     await waitForElementToBeRemoved(spinner);
 
-    await act(async () => viewProps.onSuccess());
+    await act(async () => viewProps.onSuccess(true, true));
 
     expect(mockAxios.history.get.filter(x => x.url === '/dispositionfiles/1')).toHaveLength(2);
   });

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
+import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 
 import useAxiosApi from './useApi';
 
@@ -14,7 +14,7 @@ export const useApiProducts = () => {
   return React.useMemo(
     () => ({
       getProductFiles: (id: number) =>
-        api.get<Api_AcquisitionFile[] | null>(`/products/${id}/acquisitionfiles`),
+        api.get<ApiGen_Concepts_AcquisitionFile[] | null>(`/products/${id}/acquisitionfiles`),
     }),
     [api],
   );

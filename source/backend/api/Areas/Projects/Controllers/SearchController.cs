@@ -8,6 +8,7 @@ using Pims.Api.Models.Base;
 using Pims.Api.Models.Concepts.Project;
 using Pims.Api.Policies;
 using Pims.Api.Services;
+using Pims.Core.Json;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
@@ -37,6 +38,7 @@ namespace Pims.Api.Areas.Projects.Controllers
         [ProducesResponseType(typeof(IEnumerable<ProjectModel>), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "project" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public async Task<IActionResult> GetProject([FromQuery] ProjectFilterModel filter)
         {
             var projects = await _projectService.GetPage((ProjectFilter)filter);

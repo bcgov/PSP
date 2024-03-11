@@ -7,9 +7,10 @@ import styled from 'styled-components';
 import { Button } from '@/components/common/buttons';
 import { FastDatePicker, Input } from '@/components/common/form';
 import { SectionField } from '@/components/common/Section/SectionField';
-import { FinancialCodeTypes } from '@/constants/index';
 import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
 import { IApiError } from '@/interfaces/IApiError';
+import { ApiGen_Concepts_FinancialCodeTypes } from '@/models/api/generated/ApiGen_Concepts_FinancialCodeTypes';
+import { exists, isValidId } from '@/utils';
 
 import { formatFinancialCodeType } from '../financialCodeUtils';
 import { FinancialCodeForm } from '../models';
@@ -54,7 +55,8 @@ export const UpdateFinancialCodeForm: React.FC<IUpdateFinancialCodeFormProps> = 
       onSubmit={async (values, formikHelpers) => {
         try {
           const createdCode = await onSave(values.toApi());
-          if (!!createdCode?.id) {
+          // TODO: the isValidId check is sufficient but current ts (4.3) does not see it as valid. This works correctly on 5.3
+          if (exists(createdCode) && isValidId(createdCode?.id)) {
             formikHelpers.resetForm({
               values: FinancialCodeForm.fromApi(createdCode),
             });
@@ -73,7 +75,11 @@ export const UpdateFinancialCodeForm: React.FC<IUpdateFinancialCodeFormProps> = 
       {formikProps => (
         <Container>
           <SectionField label="Code type" labelWidth="2">
-            <span>{formatFinancialCodeType(formikProps.values.type as FinancialCodeTypes)}</span>
+            <span>
+              {formatFinancialCodeType(
+                formikProps.values.type as ApiGen_Concepts_FinancialCodeTypes,
+              )}
+            </span>
           </SectionField>
           <SectionField label="Code value" required labelWidth="2">
             <Input field="code" type="text" placeholder="Code value" />

@@ -1,7 +1,7 @@
 import { AxiosResponse } from 'axios';
 import { useCallback, useMemo } from 'react';
 
-import { Api_PropertyLease } from '@/models/api/PropertyLease';
+import { ApiGen_Concepts_PropertyLease } from '@/models/api/generated/ApiGen_Concepts_PropertyLease';
 import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils';
 
 import { getPropertyLeases } from '../pims-api/useApiPropertyLeases';
@@ -12,7 +12,7 @@ import { useApiRequestWrapper } from '../util/useApiRequestWrapper';
  */
 export const usePropertyLeaseRepository = () => {
   const getPropertyLeasesApi = useApiRequestWrapper<
-    (leaseId: number) => Promise<AxiosResponse<Api_PropertyLease[], any>>
+    (leaseId: number) => Promise<AxiosResponse<ApiGen_Concepts_PropertyLease[], any>>
   >({
     requestFunction: useCallback(async (leaseId: number) => await getPropertyLeases(leaseId), []),
     requestName: 'getPropertyLeases',

@@ -10,13 +10,18 @@ import { ApiGen_Concepts_PersonOrganization } from './ApiGen_Concepts_PersonOrga
 // LINK: @backend/apimodels/Models/Concepts/Person/PersonModel.cs
 export interface ApiGen_Concepts_Person extends ApiGen_Base_BaseConcurrent {
   id: number;
-  isDisabled: boolean;
   surname: string | null;
   firstName: string | null;
   middleNames: string | null;
+  nameSuffix: string | null;
   preferredName: string | null;
-  personOrganizations: ApiGen_Concepts_PersonOrganization[] | null;
-  personAddresses: ApiGen_Concepts_PersonAddress[] | null;
-  contactMethods: ApiGen_Concepts_ContactMethod[] | null;
+  birthDate: string | null;
   comment: string | null;
+  addressComment: string | null;
+  useOrganizationAddress: boolean | null;
+  isDisabled: boolean;
+  propertyActivityId: number | null;
+  contactMethods: ApiGen_Concepts_ContactMethod[] | null;
+  personAddresses: ApiGen_Concepts_PersonAddress[] | null;
+  personOrganizations: ApiGen_Concepts_PersonOrganization[] | null;
 }

@@ -1,8 +1,10 @@
 import { InterestHolderType } from '@/constants/interestHolderTypes';
-import { Api_AcquisitionFileOwner, Api_AcquisitionFileTeam } from '@/models/api/AcquisitionFile';
-import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
-import { Api_InterestHolder } from '@/models/api/InterestHolder';
-import { isNullOrWhitespace } from '@/utils';
+import { ApiGen_Concepts_AcquisitionFileOwner } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileOwner';
+import { ApiGen_Concepts_AcquisitionFileTeam } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileTeam';
+import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
+import { ApiGen_Concepts_InterestHolder } from '@/models/api/generated/ApiGen_Concepts_InterestHolder';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
+import { exists, isNullOrWhitespace } from '@/utils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
 import { PayeeType } from './PayeeTypeModel';
@@ -28,7 +30,7 @@ export class PayeeOption {
     this.payeeType = payeeType;
   }
 
-  public static fromApi(apiModel: Api_CompensationRequisition): string {
+  public static fromApi(apiModel: ApiGen_Concepts_CompensationRequisition): string {
     if (apiModel.acquisitionOwnerId) {
       return PayeeOption.generateKey(apiModel.acquisitionOwnerId, PayeeType.Owner);
     }
@@ -51,15 +53,18 @@ export class PayeeOption {
       }
     }
 
-    if (!!apiModel.legacyPayee) {
+    if (apiModel.legacyPayee) {
       return PayeeOption.generateKey(apiModel.id, PayeeType.LegacyPayee);
     }
 
     return '';
   }
 
-  public static toApi(payeeKey: string, options: PayeeOption[]): Api_CompensationRequisition {
-    const compensationModel: Api_CompensationRequisition = {
+  public static toApi(
+    payeeKey: string,
+    options: PayeeOption[],
+  ): ApiGen_Concepts_CompensationRequisition {
+    const compensationModel: ApiGen_Concepts_CompensationRequisition = {
       isPaymentInTrust: null,
       gstNumber: null,
       acquisitionOwnerId: null,
@@ -91,6 +96,7 @@ export class PayeeOption {
       finalizedDate: null,
       specialInstruction: null,
       detailedRemarks: null,
+      ...getEmptyBaseAudit(),
     };
 
     if (isNullOrWhitespace(payeeKey)) {
@@ -128,8 +134,8 @@ export class PayeeOption {
     }
   }
 
-  public static createOwner(model: Api_AcquisitionFileOwner): PayeeOption {
-    let name = model.isOrganization
+  public static createOwner(model: ApiGen_Concepts_AcquisitionFileOwner): PayeeOption {
+    const name = model.isOrganization
       ? `${model.lastNameAndCorpName}, Inc. No. ${model.incorporationNumber} (OR Reg. No. ${model.registrationNumber})`
       : [model.givenName, model.lastNameAndCorpName, model.otherName].filter(x => !!x).join(' ');
     return new PayeeOption(
@@ -141,7 +147,7 @@ export class PayeeOption {
     );
   }
 
-  public static createOwnerSolicitor(model: Api_InterestHolder): PayeeOption {
+  public static createOwnerSolicitor(model: ApiGen_Concepts_InterestHolder): PayeeOption {
     let name = '';
     if (model.person) {
       name = formatApiPersonNames(model.person);
@@ -157,8 +163,8 @@ export class PayeeOption {
     );
   }
 
-  public static createOwnerRepresentative(model: Api_InterestHolder): PayeeOption {
-    let name = formatApiPersonNames(model.person);
+  public static createOwnerRepresentative(model: ApiGen_Concepts_InterestHolder): PayeeOption {
+    const name = formatApiPersonNames(model.person);
     return new PayeeOption(
       model.interestHolderId || 0,
       name,
@@ -168,7 +174,7 @@ export class PayeeOption {
     );
   }
 
-  public static createTeamMember(model: Api_AcquisitionFileTeam): PayeeOption {
+  public static createTeamMember(model: ApiGen_Concepts_AcquisitionFileTeam): PayeeOption {
     let name = '';
     if (model.person) {
       name = formatApiPersonNames(model.person);
@@ -184,7 +190,7 @@ export class PayeeOption {
     );
   }
 
-  public static createInterestHolder(model: Api_InterestHolder): PayeeOption {
+  public static createInterestHolder(model: ApiGen_Concepts_InterestHolder): PayeeOption {
     if (model.interestHolderType?.id === InterestHolderType.OWNER_SOLICITOR) {
       return this.createOwnerSolicitor(model);
     } else if (model.interestHolderType?.id === InterestHolderType.OWNER_REPRESENTATIVE) {
@@ -200,9 +206,12 @@ export class PayeeOption {
 
     // The interest holders should always have a property
     const typeDescription =
-      model.interestHolderProperties.length > 0
-        ? model.interestHolderProperties[0].propertyInterestTypes[0]?.description
-        : 'ERROR: Missing interest type';
+      exists(model.interestHolderProperties) && model.interestHolderProperties.length > 0
+        ? exists(model.interestHolderProperties[0].propertyInterestTypes) &&
+          model.interestHolderProperties[0].propertyInterestTypes.length > 0
+          ? model.interestHolderProperties[0].propertyInterestTypes[0].description
+          : 'ERROR: Missing interest type'
+        : 'ERROR: Missing interest holder';
 
     return new PayeeOption(
       model.interestHolderId || 0,
@@ -213,7 +222,7 @@ export class PayeeOption {
     );
   }
 
-  public static createLegacyPayee(model: Api_CompensationRequisition): PayeeOption {
+  public static createLegacyPayee(model: ApiGen_Concepts_CompensationRequisition): PayeeOption {
     return new PayeeOption(
       model.id || 0,
       model.legacyPayee || '',

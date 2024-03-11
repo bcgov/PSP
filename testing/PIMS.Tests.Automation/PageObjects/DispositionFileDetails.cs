@@ -18,6 +18,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         //Disposition File Details View and Create Forms Elements
         private By dispositionFileViewTitle = By.XPath("//h1[contains(text(),'Disposition File')]");
+        private By dispositionFileMainFormDiv = By.XPath("//h1[contains(text(),'Create Disposition File')]/parent::div/parent::div/parent::div/parent::div");
 
         private By dispositionFileCreateTitle = By.XPath("//h1[contains(text(),'Create Disposition File')]");
         private By dispositionFileHeaderCodeLabel = By.XPath("//label[contains(text(), 'File:')]");
@@ -41,7 +42,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By dispositionFileProject1stOption = By.CssSelector("div[id='typeahead-project'] a");
         private By dispositionFileProjectContent = By.XPath("//div[@class='collapse show']/div/div/label[contains(text(),'Ministry project')]/parent::div/following-sibling::div");
         private By dispositionFileProjectProductLabel = By.XPath("//label[contains(text(),'Product')]");
-        private By dispositionFileProjectProductSelect = By.Id("input-product");
+        private By dispositionFileProjectProductSelect = By.Id("input-productId");
         private By dispositionFileProjectProductContent = By.XPath("//label[contains(text(),'Product')]/parent::div/following-sibling::div");
         private By dispositionFileProjectFundingLabel = By.XPath("//label[contains(text(),'Funding')]");
         private By dispositionFileProjectFundingInput = By.Id("input-fundingTypeCode");
@@ -99,7 +100,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By dispositionFileDetailsPhysicalFileSelect = By.Id("input-physicalFileStatusTypeCode");
 
         private By dispositionFileDetailsInitiatingBranchLabel = By.XPath("//label[contains(text(),'Initiating branch')]");
-        private By dispositionFileDetailsInitiatingBranchContent = By.XPath("//label[contains(text(),'initiating branch')]/parent::div/following-sibling::div");
+        private By dispositionFileDetailsInitiatingBranchContent = By.XPath("//label[contains(text(),'Initiating branch')]/parent::div/following-sibling::div");
         private By dispositionFileDetailsInitiatingBranchSelect = By.Id("input-initiatingBranchTypeCode");
 
         private By dispositionFileDetailsMOTIRegionLabel = By.XPath("//label[contains(text(),'Ministry region')]");
@@ -123,11 +124,13 @@ namespace PIMS.Tests.Automation.PageObjects
         private By dispositionFileConfirmationModal = By.CssSelector("div[class='modal-content']");
 
         private SharedSelectContact sharedSelectContact;
+        private SharedFileProperties sharedFileProperties;
         private SharedModals sharedModals;
 
         public DispositionFileDetails(IWebDriver webDriver) : base(webDriver)
         {
             sharedSelectContact = new SharedSelectContact(webDriver);
+            sharedFileProperties = new SharedFileProperties(webDriver);
             sharedModals = new SharedModals(webDriver); 
         }
 
@@ -178,29 +181,29 @@ namespace PIMS.Tests.Automation.PageObjects
             if (disposition.DispositionFileStatus != "")
                 ChooseSpecificSelectOption(dispositionFileStatusSelect, disposition.DispositionFileStatus);
 
-            //if (acquisition.AcquisitionProject != "")
-            //{
-            //    WaitUntilVisible(acquisitionFileProjectInput);
+            //Project
+            if (disposition.DispositionProject != "")
+            {
+                WaitUntilVisible(dispositionFileProjectInput);
+                webDriver.FindElement(dispositionFileProjectInput).SendKeys(disposition.DispositionProject);
 
-            //    webDriver.FindElement(acquisitionFileProjectInput).SendKeys(acquisition.AcquisitionProject);
+                Wait();
+                webDriver.FindElement(dispositionFileProjectInput).SendKeys(Keys.Space);
 
-            //    Wait();
-            //    webDriver.FindElement(acquisitionFileProjectInput).SendKeys(Keys.Space);
+                Wait();
+                webDriver.FindElement(dispositionFileProjectInput).SendKeys(Keys.Backspace);
 
-            //    Wait();
-            //    webDriver.FindElement(acquisitionFileProjectInput).SendKeys(Keys.Backspace);
+                Wait(2000);
+                FocusAndClick(dispositionFileProject1stOption);
+            }
 
-            //    Wait(2000);
-            //    FocusAndClick(acquisitionFileProject1stOption);
-            //}
+            if (disposition.DispositionProjProduct != "")
+            {
+                WaitUntilVisible(dispositionFileProjectProductSelect);
+                webDriver.FindElement(dispositionFileProjectProductSelect).Click();
 
-            //if (acquisition.AcquisitionProjProduct != "")
-            //{
-            //    WaitUntilVisible(acquisitionFileProjectProductSelect);
-            //    webDriver.FindElement(acquisitionFileProjectProductSelect).Click();
-
-            //    ChooseSpecificSelectOption(acquisitionFileProjectProductSelect, acquisition.AcquisitionProjProductCode + " " + acquisition.AcquisitionProjProduct);
-            //}
+                ChooseSpecificSelectOption(dispositionFileProjectProductSelect, disposition.DispositionProjProduct);
+            }
 
             if (disposition.DispositionProjFunding != "")
                 ChooseSpecificSelectOption(dispositionFileProjectFundingInput, disposition.DispositionProjFunding);
@@ -210,6 +213,7 @@ namespace PIMS.Tests.Automation.PageObjects
             //    webDriver.FindElement(acquisitionFileProjectOtherFundingInput).SendKeys(acquisition.AcquisitionFundingOther);
             //}
 
+            //Disposition Details
             if (disposition.DispositionAssignedDate != "")
             {
                 ClearInput(dispositionFileAssignedDateInput);
@@ -258,8 +262,8 @@ namespace PIMS.Tests.Automation.PageObjects
                 webDriver.FindElement(dispositionFileDetailsInitiatingDocumentDateInput).SendKeys(Keys.Enter);
             }
 
-            if (disposition.PhysicalFileStatus != "")
-                ChooseSpecificSelectOption(dispositionFileDetailsPhysicalFileSelect, disposition.PhysicalFileStatus);
+            if (disposition.DispositionPhysicalFileStatus != "")
+                ChooseSpecificSelectOption(dispositionFileDetailsPhysicalFileSelect, disposition.DispositionPhysicalFileStatus);
 
             if (disposition.InitiatingBranch != "")
                 ChooseSpecificSelectOption(dispositionFileDetailsInitiatingBranchSelect, disposition.InitiatingBranch);
@@ -284,13 +288,31 @@ namespace PIMS.Tests.Automation.PageObjects
             }
 
             //Project
+            if (disposition.DispositionProject != "")
+            {
+                WaitUntilVisible(dispositionFileProjectInput);
+                webDriver.FindElement(dispositionFileProjectInput).SendKeys(disposition.DispositionProject);
+
+                Wait();
+                webDriver.FindElement(dispositionFileProjectInput).SendKeys(Keys.Space);
+
+                Wait();
+                webDriver.FindElement(dispositionFileProjectInput).SendKeys(Keys.Backspace);
+
+                Wait(2000);
+                FocusAndClick(dispositionFileProject1stOption);
+            }
+
+            if (disposition.DispositionProjProduct != "")
+            {
+                WaitUntilVisible(dispositionFileProjectProductSelect);
+                webDriver.FindElement(dispositionFileProjectProductSelect).Click();
+
+                ChooseSpecificSelectOption(dispositionFileProjectProductSelect, disposition.DispositionProjProduct);
+            }
+
             if (disposition.DispositionProjFunding != "")
                 ChooseSpecificSelectOption(dispositionFileProjectFundingInput, disposition.DispositionProjFunding);
-
-            //if (webDriver.FindElements(acquisitionFileProjectOtherFundingLabel).Count > 0)
-            //{
-            //    webDriver.FindElement(acquisitionFileProjectOtherFundingInput).SendKeys(acquisition.AcquisitionFundingOther);
-            //}
 
             //Schedule
             if (disposition.DispositionAssignedDate != "")
@@ -342,8 +364,8 @@ namespace PIMS.Tests.Automation.PageObjects
                 webDriver.FindElement(dispositionFileDetailsInitiatingDocumentDateInput).SendKeys(Keys.Enter);
             }
 
-            if (disposition.PhysicalFileStatus != "")
-                ChooseSpecificSelectOption(dispositionFileDetailsPhysicalFileSelect, disposition.PhysicalFileStatus);
+            if (disposition.DispositionPhysicalFileStatus != "")
+                ChooseSpecificSelectOption(dispositionFileDetailsPhysicalFileSelect, disposition.DispositionPhysicalFileStatus);
 
             if (disposition.InitiatingBranch != "")
                 ChooseSpecificSelectOption(dispositionFileDetailsInitiatingBranchSelect, disposition.InitiatingBranch);
@@ -373,7 +395,7 @@ namespace PIMS.Tests.Automation.PageObjects
             if (webDriver.FindElements(dispositionFileConfirmationModal).Count() > 0)
             {
                 Assert.Equal("User Override Required", sharedModals.ModalHeader());
-                Assert.Equal("You are changing this file to a non-editable state. Only system administrators can edit the file when set to Archived, Cancelled or Completed state). Do you wish to continue?", sharedModals.ModalContent());
+                Assert.Equal("You are changing this file to a non-editable state. (Only system administrators can edit the file when set to Archived, Cancelled or Completed state). Do you wish to continue?", sharedModals.ModalContent());
                 sharedModals.ModalClickOKBttn();
             }
 
@@ -395,10 +417,16 @@ namespace PIMS.Tests.Automation.PageObjects
             
             if (webDriver.FindElements(dispositionFileConfirmationModal).Count() > 0)
             {
-                Assert.Equal("Unsaved Changes", sharedModals.ModalHeader());
-                Assert.Equal("You have made changes on this form. Do you wish to leave without saving?", sharedModals.ModalContent());
+                Assert.Equal("Confirm Changes", sharedModals.ModalHeader());
+                Assert.Contains("If you choose to cancel now, your changes will not be saved.", sharedModals.ModalContent());
+                Assert.Contains("Do you want to proceed?", sharedModals.ModalContent());
                 sharedModals.ModalClickOKBttn();
             }
+        }
+
+        public int IsCreateDispositionFileFormVisible()
+        {
+            return webDriver.FindElements(dispositionFileMainFormDiv).Count();
         }
 
         public string GetDispositionFileCode()
@@ -406,19 +434,18 @@ namespace PIMS.Tests.Automation.PageObjects
             WaitUntilVisible(dispositionFileHeaderCodeContent);
 
             var totalFileName = webDriver.FindElement(dispositionFileHeaderCodeContent).Text;
-            //return Regex.Match(totalFileName, "^[^ ]+").Value;
-            return Regex.Match(totalFileName, "(?<=D-).*").Value;
+            return Regex.Match(totalFileName, "^[^ ]+").Value;
+            //return Regex.Match(totalFileName, "(?<=D-).*").Value;
         }
 
-        public void VerifyDispositionFileCreate()
+        public void VerifyDispositionFileInitCreate()
         {
             AssertTrueIsDisplayed(dispositionFileCreateTitle);
 
             //Project
             AssertTrueIsDisplayed(dispositionFileProjectSubtitle);
             AssertTrueIsDisplayed(dispositionFileProjectLabel);
-            //AssertTrueIsDisplayed(dispositionFileProjectInput);
-            AssertTrueIsDisplayed(dispositionFileProjectProductLabel);
+            AssertTrueIsDisplayed(dispositionFileProjectInput);
             AssertTrueIsDisplayed(dispositionFileProjectFundingLabel);
             AssertTrueIsDisplayed(dispositionFileProjectFundingInput);
 
@@ -428,6 +455,9 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(dispositionFileAssignedDateInput);
             AssertTrueIsDisplayed(dispositionFileScheduleCompletedDateLabel);
             AssertTrueIsDisplayed(dispositionFileCompletedDateLabelInput);
+
+            //Properties Selection
+            sharedFileProperties.VerifyLocateOnMapFeature();
 
             //Disposition Details
             AssertTrueIsDisplayed(dispositionFileDetailsSubtitle);
@@ -451,8 +481,6 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(dispositionFileDetailsInitiatingBranchSelect);
             AssertTrueIsDisplayed(dispositionFileDetailsMOTIRegionLabel);
             AssertTrueIsDisplayed(dispositionFileDetailsMOTIRegionSelect);
-
-            VerifyMaximumFields();
 
             //Team members
             AssertTrueIsDisplayed(dispositionFileTeamSubtitle);
@@ -483,21 +511,18 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(dispositionFileProjectSubtitle);
             AssertTrueIsDisplayed(dispositionFileProjectLabel);
 
-            //if (acquisition.AcquisitionProject != "")
-            //    AssertTrueContentEquals(acquisitionFileProjectContent, acquisition.AcquisitionProjCode + " - " + acquisition.AcquisitionProject);
+            if (disposition.DispositionProject != "")
+                AssertTrueContentEquals(dispositionFileProjectContent, TransformProjectFormat(disposition.DispositionProject));
 
             AssertTrueIsDisplayed(dispositionFileProjectProductLabel);
 
-            //if (acquisition.AcquisitionProjProduct != "")
-            //    AssertTrueContentEquals(acquisitionFileProjectProductContent, acquisition.AcquisitionProjProductCode + " " +acquisition.AcquisitionProjProduct);
+            if (disposition.DispositionProjProduct != "")
+                AssertTrueContentEquals(dispositionFileProjectProductContent, disposition.DispositionProjProduct);
 
             AssertTrueIsDisplayed(dispositionFileProjectFundingLabel);
 
             if (disposition.DispositionProjFunding != "")
                 AssertTrueContentEquals(dispositionFileProjectFundingContent, disposition.DispositionProjFunding);
-
-            //if (webDriver.FindElements(acquisitionFileProjectOtherFundingLabel).Count > 0 && acquisition.AcquisitionFundingOther != "")
-            //    AssertTrueContentEquals(acquisitionFileProjectOtherFundingContent, acquisition.AcquisitionFundingOther);
 
             //Schedule
             AssertTrueIsDisplayed(dispositionFileScheduleSubtitle);
@@ -562,11 +587,11 @@ namespace PIMS.Tests.Automation.PageObjects
             //Physical File Status
             AssertTrueIsDisplayed(dispositionFileDetailsPhysicalFileLabel);
 
-            if (disposition.PhysicalFileStatus != "")
-                AssertTrueContentEquals(dispositionFileDetailsPhysicalFileContent, disposition.PhysicalFileStatus);
+            if (disposition.DispositionPhysicalFileStatus != "")
+                AssertTrueContentEquals(dispositionFileDetailsPhysicalFileContent, disposition.DispositionPhysicalFileStatus);
 
             //Initiating Branch
-            //AssertTrueIsDisplayed(dispositionFileDetailsInitiatingBranchLabel);
+            AssertTrueIsDisplayed(dispositionFileDetailsInitiatingBranchLabel);
 
             if (disposition.InitiatingBranch != "")
                 AssertTrueContentEquals(dispositionFileDetailsInitiatingBranchContent, disposition.InitiatingBranch);
@@ -611,8 +636,12 @@ namespace PIMS.Tests.Automation.PageObjects
             sharedModals.ModalClickOKBttn();
         }
 
-        private void VerifyMaximumFields()
+        public void VerifyMaximumFields()
         {
+            //Capture fields data before verifying max fields capacity
+            var fileName = webDriver.FindElement(dispositionFileDetailsNameInput).GetAttribute("value");
+            var referenceNumber = webDriver.FindElement(dispositionFileDetailsReferenceNumberInput).GetAttribute("value");
+
             //Verify File Name Input
             webDriver.FindElement(dispositionFileDetailsNameInput).SendKeys("Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus");
             webDriver.FindElement(dispositionFileDetailsNameLabel).Click();
@@ -624,6 +653,11 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(dispositionFileDetailsReferenceNumberLabel).Click();
             AssertTrueIsDisplayed(dispositionFileReferenceNumberInvalidMessage);
             ClearInput(dispositionFileDetailsReferenceNumberInput);
+
+            //Insert back the data that was in the form
+            webDriver.FindElement(dispositionFileDetailsNameInput).SendKeys(fileName);
+            webDriver.FindElement(dispositionFileDetailsReferenceNumberInput).SendKeys(referenceNumber);
+
         }
 
         private void AddTeamMembers(TeamMember teamMember)

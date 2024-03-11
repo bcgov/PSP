@@ -31,6 +31,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchProperties = new SearchProperties(driver.Current);
             genericSteps = new GenericSteps(driver);
             notes = new Notes(driver.Current);
+
+            researchFile = new ResearchFile();
         }
 
         [StepDefinition(@"I create a basic Research File from row number (.*)")]
@@ -238,7 +240,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             researchFiles.CreateResearchFile(researchFile);
 
             //Fill name to selected property
-            sharedFileProperties.AddNameSelectedProperty("Automated Property from Pin", 1);
+            sharedFileProperties.AddNameSelectedProperty("Automated Property from Pin", 0);
 
             //Save Research File
             researchFiles.SaveResearchFile();
@@ -282,17 +284,20 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             searchResearchFile.VerifyResearchFileListView();
             searchResearchFile.VerifyResearchFileTableContent(researchFile, userName);
+
+            searchResearchFile.Dispose();
         }
 
         [StepDefinition(@"Research File Properties remain unchanged")]
         public void SearchResearchFileResult()
         {
             Assert.False(searchResearchFile.SearchFoundResults());
+            searchResearchFile.Dispose();
         }
 
         private void PopulateResearchFile(int rowNumber)
         {
-            DataTable researchFileSheet = ExcelDataContext.GetInstance().Sheets["ResearchFiles"];
+            DataTable researchFileSheet = ExcelDataContext.GetInstance().Sheets["ResearchFiles"]!;
             ExcelDataContext.PopulateInCollection(researchFileSheet);
             researchFile = new ResearchFile();
 
@@ -322,7 +327,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             if (researchFile.SearchPropertiesIndex > 0)
             {
-                DataTable searchPropertiesSheet = ExcelDataContext.GetInstance().Sheets["SearchProperties"];
+                DataTable searchPropertiesSheet = ExcelDataContext.GetInstance().Sheets["SearchProperties"]!;
                 ExcelDataContext.PopulateInCollection(searchPropertiesSheet);
 
                 researchFile.SearchProperties.PID = ExcelDataContext.ReadData(researchFile.SearchPropertiesIndex, "PID");
@@ -341,7 +346,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         {
             researchFile.PropertyResearch = new List<PropertyResearch>();
 
-            DataTable propertyResearchSheet = ExcelDataContext.GetInstance().Sheets["PropertyResearch"];
+            DataTable propertyResearchSheet = ExcelDataContext.GetInstance().Sheets["PropertyResearch"]!;
             ExcelDataContext.PopulateInCollection(propertyResearchSheet);
 
             for (int i = startRow; i <= startRow + rowsCount; i++)

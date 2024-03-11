@@ -1,3 +1,4 @@
+import { AxiosError } from 'axios';
 import { FormikProps } from 'formik';
 import React, {
   useCallback,
@@ -18,9 +19,11 @@ import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvi
 import { useQuery } from '@/hooks/use-query';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
 import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
-import { Api_File } from '@/models/api/File';
+import { IApiError } from '@/interfaces/IApiError';
+import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
+import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
-import { stripTrailingSlash } from '@/utils';
+import { exists, stripTrailingSlash } from '@/utils';
 
 import { SideBarContext } from '../context/sidebarContext';
 import { FileTabType } from '../shared/detail/FileTabs';
@@ -124,8 +127,8 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
 
   // Retrieve acquisition file from API and save it to local state and side-bar context
   const fetchAcquisitionFile = useCallback(async () => {
-    var retrieved = await retrieveAcquisitionFile(acquisitionFileId);
-    if (retrieved === undefined) {
+    const retrieved = await retrieveAcquisitionFile(acquisitionFileId);
+    if (!exists(retrieved)) {
       return;
     }
 
@@ -135,12 +138,10 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
     const acquisitionProperties = await acquisitionPropertiesTask;
     const acquisitionChecklist = await acquisitionChecklistTask;
 
-    if (retrieved) {
-      retrieved.fileProperties = acquisitionProperties;
-      retrieved.fileChecklistItems = acquisitionChecklist ?? [];
-      setFile({ ...retrieved, fileType: FileTypes.Acquisition });
-      setStaleFile(false);
-    }
+    retrieved.fileProperties = acquisitionProperties ?? null;
+    retrieved.fileChecklistItems = acquisitionChecklist ?? [];
+    setFile({ ...retrieved, fileType: FileTypes.Acquisition });
+    setStaleFile(false);
   }, [
     acquisitionFileId,
     retrieveAcquisitionFileProperties,
@@ -151,7 +152,7 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
   ]);
 
   const fetchLastUpdatedBy = React.useCallback(async () => {
-    var retrieved = await getLastUpdatedBy(acquisitionFileId);
+    const retrieved = await getLastUpdatedBy(acquisitionFileId);
     if (retrieved !== undefined) {
       setLastUpdatedBy(retrieved);
     } else {
@@ -161,7 +162,7 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
 
   React.useEffect(() => {
     if (
-      lastUpdatedBy === undefined ||
+      !exists(lastUpdatedBy) ||
       acquisitionFileId !== lastUpdatedBy?.parentId ||
       staleLastUpdatedBy
     ) {
@@ -170,7 +171,7 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
   }, [fetchLastUpdatedBy, lastUpdatedBy, acquisitionFileId, staleLastUpdatedBy]);
 
   useEffect(() => {
-    if (acquisitionFile === undefined || acquisitionFileId !== acquisitionFile.id || staleFile) {
+    if (!exists(acquisitionFile) || acquisitionFileId !== acquisitionFile.id || staleFile) {
       fetchAcquisitionFile();
     }
   }, [acquisitionFile, fetchAcquisitionFile, acquisitionFileId, staleFile]);
@@ -258,23 +259,42 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
     setIsEditing(false);
   };
 
-  const canRemove = async (propertyId: number) => {
+  const canRemove = async () => {
     return true;
   };
 
-  const onUpdateProperties = (file: Api_File): Promise<Api_File | undefined> => {
+  const onUpdateProperties = (
+    file: ApiGen_Concepts_File,
+  ): Promise<ApiGen_Concepts_File | undefined> => {
     // The backend does not update the product or project so its safe to send nulls even if there might be data for those fields.
-    return withUserOverride((userOverrideCodes: UserOverrideCode[]) => {
-      return updateAcquisitionProperties
-        .execute(
-          { ...file, productId: null, projectId: null, fileChecklistItems: [] },
-          userOverrideCodes,
-        )
-        .then(response => {
-          onSuccess();
-          return response;
+    return withUserOverride(
+      (userOverrideCodes: UserOverrideCode[]) => {
+        return updateAcquisitionProperties
+          .execute(
+            {
+              ...(file as ApiGen_Concepts_AcquisitionFile),
+              productId: null,
+              projectId: null,
+              fileChecklistItems: [],
+            },
+            userOverrideCodes,
+          )
+          .then(response => {
+            onSuccess();
+            return response;
+          });
+      },
+      [],
+      (axiosError: AxiosError<IApiError>) => {
+        setModalContent({
+          variant: 'error',
+          title: 'Error',
+          message: axiosError?.response?.data.error,
+          okButtonText: 'Close',
         });
-    });
+        setDisplayModal(true);
+      },
+    );
   };
 
   // UI components

@@ -10,7 +10,8 @@ import {
   postFileFormApi,
 } from '@/hooks/pims-api/useApiFormDocument';
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
-import { Api_FormDocumentFile, Api_FormDocumentType } from '@/models/api/FormDocument';
+import { ApiGen_Concepts_FormDocumentFile } from '@/models/api/generated/ApiGen_Concepts_FormDocumentFile';
+import { ApiGen_Concepts_FormDocumentType } from '@/models/api/generated/ApiGen_Concepts_FormDocumentType';
 import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils';
 
 /**
@@ -18,7 +19,7 @@ import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils';
  */
 export const useFormDocumentRepository = () => {
   const getFormDocumentTypes = useApiRequestWrapper<
-    () => Promise<AxiosResponse<Api_FormDocumentType[], any>>
+    () => Promise<AxiosResponse<ApiGen_Concepts_FormDocumentType[], any>>
   >({
     requestFunction: useCallback(async () => await getFormDocumentTypesApi(), []),
     requestName: 'getFormDocumentTypes',
@@ -32,11 +33,11 @@ export const useFormDocumentRepository = () => {
   const addFormDocumentFile = useApiRequestWrapper<
     (
       fileType: FileTypes,
-      activity: Api_FormDocumentFile,
-    ) => Promise<AxiosResponse<Api_FormDocumentFile, any>>
+      activity: ApiGen_Concepts_FormDocumentFile,
+    ) => Promise<AxiosResponse<ApiGen_Concepts_FormDocumentFile, any>>
   >({
     requestFunction: useCallback(
-      async (fileType: FileTypes, fileForm: Api_FormDocumentFile) =>
+      async (fileType: FileTypes, fileForm: ApiGen_Concepts_FormDocumentFile) =>
         await postFileFormApi(fileType, fileForm),
       [],
     ),
@@ -46,7 +47,10 @@ export const useFormDocumentRepository = () => {
   });
 
   const getFileFormsApi = useApiRequestWrapper<
-    (fileType: FileTypes, fileId: number) => Promise<AxiosResponse<Api_FormDocumentFile[], any>>
+    (
+      fileType: FileTypes,
+      fileId: number,
+    ) => Promise<AxiosResponse<ApiGen_Concepts_FormDocumentFile[], any>>
   >({
     requestFunction: useCallback(
       async (fileType: FileTypes, fileId: number) => await getFileForms(fileType, fileId),
@@ -57,7 +61,10 @@ export const useFormDocumentRepository = () => {
     onError: useAxiosErrorHandler('Failed to load form templates. Refresh the page to try again.'),
   });
   const getFileFormApi = useApiRequestWrapper<
-    (fileType: FileTypes, formFileId: number) => Promise<AxiosResponse<Api_FormDocumentFile, any>>
+    (
+      fileType: FileTypes,
+      formFileId: number,
+    ) => Promise<AxiosResponse<ApiGen_Concepts_FormDocumentFile, any>>
   >({
     requestFunction: useCallback(
       async (fileType: FileTypes, fileId: number) => await getFileForm(fileType, fileId),

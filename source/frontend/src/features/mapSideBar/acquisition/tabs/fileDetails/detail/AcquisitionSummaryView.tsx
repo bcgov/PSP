@@ -12,8 +12,8 @@ import { Claims, Roles } from '@/constants';
 import { InterestHolderType } from '@/constants/interestHolderTypes';
 import { usePersonRepository } from '@/features/contacts/repositories/usePersonRepository';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
-import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
-import { prettyFormatDate } from '@/utils';
+import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
+import { exists, prettyFormatDate } from '@/utils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
 import { cannotEditMessage } from '../../../common/constants';
@@ -23,7 +23,7 @@ import { DetailAcquisitionFile } from './models';
 import StatusUpdateSolver from './statusUpdateSolver';
 
 export interface IAcquisitionSummaryViewProps {
-  acquisitionFile?: Api_AcquisitionFile;
+  acquisitionFile?: ApiGen_Concepts_AcquisitionFile;
   onEdit: () => void;
 }
 
@@ -36,15 +36,13 @@ const AcquisitionSummaryView: React.FC<IAcquisitionSummaryViewProps> = ({
 
   const { hasRole } = useKeycloakWrapper();
 
-  const projectName =
-    acquisitionFile?.project !== undefined
-      ? acquisitionFile?.project?.code + ' - ' + acquisitionFile?.project?.description
-      : '';
+  const projectName = exists(acquisitionFile?.project)
+    ? acquisitionFile?.project?.code + ' - ' + acquisitionFile?.project?.description
+    : '';
 
-  const productName =
-    acquisitionFile?.product !== undefined
-      ? acquisitionFile?.product?.code + ' ' + acquisitionFile?.product?.description
-      : '';
+  const productName = exists(acquisitionFile?.product)
+    ? acquisitionFile?.product?.code + ' ' + acquisitionFile?.product?.description
+    : '';
 
   const ownerSolicitor = acquisitionFile?.acquisitionFileInterestHolders?.find(
     x => x.interestHolderType?.id === InterestHolderType.OWNER_SOLICITOR,
@@ -161,9 +159,9 @@ const AcquisitionSummaryView: React.FC<IAcquisitionSummaryViewProps> = ({
         ))}
       </Section>
       <Section header="Owner Information">
-        {acquisitionFile !== undefined && (
+        {acquisitionFile?.id !== undefined && (
           <AcquisitionOwnersSummaryContainer
-            acquisitionFileId={acquisitionFile.id!}
+            acquisitionFileId={acquisitionFile.id}
             View={AcquisitionOwnersSummaryView}
           ></AcquisitionOwnersSummaryContainer>
         )}

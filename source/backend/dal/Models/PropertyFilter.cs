@@ -25,6 +25,11 @@ namespace Pims.Dal.Entities.Models
         /// get/set - The property plan number.
         /// </summary>
         public string PlanNumber { get; set; }
+
+        /// <summary>
+        /// get/set - The property ownership status.
+        /// </summary>
+        public IList<string> Ownership { get; set; }
         #endregion
 
         #region Constructors
@@ -34,6 +39,7 @@ namespace Pims.Dal.Entities.Models
         /// </summary>
         public PropertyFilter()
         {
+            Ownership = new List<string>();
         }
 
         /// <summary>
@@ -50,6 +56,7 @@ namespace Pims.Dal.Entities.Models
             this.Address = filter.GetStringValue(nameof(this.Address));
             this.PinOrPid = filter.GetStringValue(nameof(this.PinOrPid));
             this.PlanNumber = filter.GetStringValue(nameof(this.PlanNumber));
+            this.Ownership = filter.GetStringArrayValue(nameof(this.Ownership));
         }
         #endregion
 

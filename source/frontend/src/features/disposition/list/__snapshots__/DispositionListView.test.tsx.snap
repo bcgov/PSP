@@ -409,7 +409,7 @@ exports[`Disposition List View matches snapshot 1`] = `
                               aria-hidden="true"
                               class="rbt-input-hint"
                               readonly=""
-                              style="background-color: transparent; border-color: transparent; box-shadow: none; color: rgba(0, 0, 0, 0.35); left: 0px; pointer-events: none; position: absolute; top: 0px; width: 100%; border-style: inset inset inset inset; border-width: 2px 2px 2px 2px; line-height: normal; padding: 1px 1px 1px 1px;"
+                              style="background-color: transparent; border-color: transparent; box-shadow: none; color: rgba(0, 0, 0, 0.54); left: 0px; pointer-events: none; position: absolute; top: 0px; width: 100%; border-style: inset inset inset inset; border-width: 2px 2px 2px 2px; line-height: normal; padding: 1px 1px 1px 1px;"
                               tabindex="-1"
                               value=""
                             />
@@ -1090,7 +1090,7 @@ exports[`Disposition List View matches snapshot 1`] = `
                 Road Closure
               </div>
               <div
-                class="td clickable"
+                class="td"
                 role="cell"
                 style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
@@ -1134,7 +1134,7 @@ exports[`Disposition List View matches snapshot 1`] = `
                 style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
-                Cancelled
+                Draft
               </div>
             </div>
           </div>

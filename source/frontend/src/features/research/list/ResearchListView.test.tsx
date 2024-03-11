@@ -4,7 +4,9 @@ import { Claims } from '@/constants/index';
 import { useApiResearchFile } from '@/hooks/pims-api/useApiResearchFile';
 import { IResearchSearchResult } from '@/interfaces/IResearchSearchResult';
 import { mockLookups } from '@/mocks/lookups.mock';
-import { Api_ResearchFile } from '@/models/api/ResearchFile';
+import { getMockApiProperty } from '@/mocks/properties.mock';
+import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Concepts_ResearchFile';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
   act,
@@ -102,6 +104,7 @@ describe('Research List View', () => {
           id: 'ACTIVE',
           description: 'Active',
           isDisabled: false,
+          displayOrder: null,
         },
         fileName: 'name',
         fileNumber: 'R100-100-100',
@@ -167,6 +170,7 @@ describe('Research List View', () => {
           id: 'ACTIVE',
           description: 'Active',
           isDisabled: false,
+          displayOrder: null,
         },
         fileName: 'name',
         fileNumber: 'R100-100-100',
@@ -507,8 +511,32 @@ describe('Research List View', () => {
   });
 });
 
-const mockResearchListViewResponse: Api_ResearchFile[] = [
+const emptyResearchFile: ApiGen_Concepts_ResearchFile = {
+  roadName: null,
+  roadAlias: null,
+  fileProperties: null,
+  requestDate: null,
+  requestDescription: null,
+  requestSourceDescription: null,
+  researchResult: null,
+  researchCompletionDate: null,
+  isExpropriation: null,
+  expropriationNotes: null,
+  requestSourceType: null,
+  requestorPerson: null,
+  requestorOrganization: null,
+  researchFilePurposes: null,
+  researchFileProjects: null,
+  id: 0,
+  fileName: null,
+  fileNumber: null,
+  fileStatusTypeCode: null,
+  ...getEmptyBaseAudit(),
+};
+
+const mockResearchListViewResponse: ApiGen_Concepts_ResearchFile[] = [
   {
+    ...emptyResearchFile,
     id: 1,
     fileName: 'name',
     fileNumber: 'R100-100-100',
@@ -517,11 +545,13 @@ const mockResearchListViewResponse: Api_ResearchFile[] = [
         id: 1,
         propertyId: 1,
         property: {
+          ...getMockApiProperty(),
           id: 1,
           region: {
             id: 2,
             description: 'Southern Interior Region',
             isDisabled: false,
+            displayOrder: null,
           },
           dataSourceEffectiveDateOnly: '2021-08-31T00:00:00',
           isSensitive: false,
@@ -533,16 +563,27 @@ const mockResearchListViewResponse: Api_ResearchFile[] = [
           rowVersion: 2,
         },
         rowVersion: 0,
+        displayOrder: null,
+        documentReference: null,
+        fileId: 1,
+        isLegalOpinionObtained: null,
+        isLegalOpinionRequired: null,
+        propertyName: null,
+        purposeTypes: null,
+        researchSummary: null,
+        file: null,
       },
       {
         id: 2,
         propertyId: 2,
         property: {
+          ...getMockApiProperty(),
           id: 2,
           region: {
             id: 1,
             description: 'South Coast Region',
             isDisabled: false,
+            displayOrder: null,
           },
           dataSourceEffectiveDateOnly: '2021-08-31T00:00:00',
           isSensitive: false,
@@ -554,6 +595,15 @@ const mockResearchListViewResponse: Api_ResearchFile[] = [
           rowVersion: 2,
         },
         rowVersion: 0,
+        displayOrder: null,
+        documentReference: null,
+        fileId: 1,
+        isLegalOpinionObtained: null,
+        isLegalOpinionRequired: null,
+        propertyName: null,
+        purposeTypes: null,
+        researchSummary: null,
+        file: null,
       },
     ],
     appCreateTimestamp: '2020-01-01T00:00:00',
@@ -563,6 +613,7 @@ const mockResearchListViewResponse: Api_ResearchFile[] = [
     rowVersion: 1,
   },
   {
+    ...emptyResearchFile,
     id: 2,
     fileName: 'name',
     roadName: 'a road name',
@@ -575,6 +626,7 @@ const mockResearchListViewResponse: Api_ResearchFile[] = [
     rowVersion: 1,
   },
   {
+    ...emptyResearchFile,
     id: 3,
     fileName: 'test file name 1',
     fileNumber: 'R100-100-102',
@@ -586,6 +638,7 @@ const mockResearchListViewResponse: Api_ResearchFile[] = [
     rowVersion: 1,
   },
   {
+    ...emptyResearchFile,
     id: 4,
     fileName: 'name',
     fileNumber: 'R100-100-103',
@@ -597,6 +650,7 @@ const mockResearchListViewResponse: Api_ResearchFile[] = [
     rowVersion: 1,
   },
   {
+    ...emptyResearchFile,
     id: 5,
     fileName: 'name',
     fileNumber: 'R100-100-104',

@@ -4,14 +4,16 @@ import { useMemo, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-import { ReactComponent as Fence } from '@/assets/images/fence.svg';
+import Fence from '@/assets/images/fence.svg?react';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { IMapProperty } from '@/components/propertySelector/models';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
 import SidebarFooter from '@/features/mapSideBar/shared/SidebarFooter';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
 import { useInitialMapSelectorProperties } from '@/hooks/useInitialMapSelectorProperties';
+import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
+import { exists, isValidId } from '@/utils';
 import { featuresetToMapProperty } from '@/utils/mapPropertyUtils';
 
 import { useAddLease } from '../hooks/useAddLease';
@@ -25,9 +27,11 @@ export interface IAddLeaseContainerProps {
 export const AddLeaseContainer: React.FunctionComponent<
   React.PropsWithChildren<IAddLeaseContainerProps>
 > = props => {
+  const { onClose } = props;
   const history = useHistory();
   const formikRef = useRef<FormikProps<LeaseFormModel>>(null);
   const mapMachine = useMapStateMachine();
+  const { setModalContent, setDisplayModal } = useModalContext();
 
   const selectedFeatureDataset = mapMachine.selectedFeatureDataset;
 
@@ -57,8 +61,9 @@ export const AddLeaseContainer: React.FunctionComponent<
     const response = await addLease.execute(leaseApi, userOverrideCodes);
     formikHelpers.setSubmitting(false);
 
-    if (!!response?.id) {
-      if (leaseApi.properties?.find(p => !p.property?.address && !p.property?.id)) {
+    // TODO: the isValidId check is sufficient but current ts (4.3) does not see it as valid. This works correctly on 5.3
+    if (exists(response) && isValidId(response?.id)) {
+      if (leaseApi.fileProperties?.find(p => !p.property?.address && !p.property?.id)) {
         toast.warn(
           'Address could not be retrieved for this property, it will have to be provided manually in property details tab',
           { autoClose: 15000 },
@@ -84,7 +89,20 @@ export const AddLeaseContainer: React.FunctionComponent<
   };
 
   const handleCancel = () => {
-    props.onClose();
+    if (!formikRef.current?.dirty) {
+      formikRef.current?.resetForm();
+      onClose();
+    } else {
+      setModalContent({
+        ...getCancelModalProps(),
+        handleOk: () => {
+          formikRef.current?.resetForm();
+          setDisplayModal(false);
+          onClose();
+        },
+      });
+      setDisplayModal(true);
+    }
   };
 
   return (

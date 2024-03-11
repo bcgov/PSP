@@ -23,12 +23,6 @@ public partial class PimsPropertyHist
     [Column("PROPERTY_ID")]
     public long PropertyId { get; set; }
 
-    [Column("PROPERTY_MANAGER_ID")]
-    public long? PropertyManagerId { get; set; }
-
-    [Column("PROP_MGMT_ORG_ID")]
-    public long? PropMgmtOrgId { get; set; }
-
     [Required]
     [Column("PROPERTY_TYPE_CODE")]
     [StringLength(20)]
@@ -144,11 +138,17 @@ public partial class PimsPropertyHist
     [Column("IS_PROPERTY_OF_INTEREST")]
     public bool IsPropertyOfInterest { get; set; }
 
+    [Column("IS_OTHER_INTEREST")]
+    public bool IsOtherInterest { get; set; }
+
     [Column("IS_VISIBLE_TO_OTHER_AGENCIES")]
     public bool IsVisibleToOtherAgencies { get; set; }
 
     [Column("IS_SENSITIVE")]
     public bool IsSensitive { get; set; }
+
+    [Column("IS_RETIRED")]
+    public bool? IsRetired { get; set; }
 
     [Column("IS_PROVINCIAL_PUBLIC_HWY")]
     public bool? IsProvincialPublicHwy { get; set; }
@@ -171,7 +171,7 @@ public partial class PimsPropertyHist
     public string Zoning { get; set; }
 
     [Column("ZONING_POTENTIAL")]
-    [StringLength(50)]
+    [StringLength(100)]
     public string ZoningPotential { get; set; }
 
     [Column("ADDITIONAL_DETAILS")]
@@ -242,4 +242,10 @@ public partial class PimsPropertyHist
     [Column("DB_LAST_UPDATE_USERID")]
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
+
+    [Column("PROPERTY_MANAGER_ID")]
+    public long? PropertyManagerId { get; set; }
+
+    [Column("PROP_MGMT_ORG_ID")]
+    public long? PropMgmtOrgId { get; set; }
 }

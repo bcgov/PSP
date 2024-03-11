@@ -102,8 +102,8 @@ export class DocumentUploadFormData {
   public documentTypeId: string;
   public documentStatusCode: string;
   public documentMetadata: Record<string, string>;
-  public isDocumentTypeChanged: boolean = false;
-  public isSelectedFile: boolean = false;
+  public isDocumentTypeChanged = false;
+  public isSelectedFile = false;
 
   public constructor(
     initialStatus: string,
@@ -123,7 +123,7 @@ export class DocumentUploadFormData {
     file: File,
     documentType: ApiGen_Concepts_DocumentType,
   ): ApiGen_Requests_DocumentUploadRequest {
-    var metadata: ApiGen_Concepts_DocumentMetadataUpdate[] = [];
+    const metadata: ApiGen_Concepts_DocumentMetadataUpdate[] = [];
     for (const key in this.documentMetadata) {
       const value = this.documentMetadata[key];
       metadata.push({
@@ -148,13 +148,13 @@ export class DocumentUpdateFormData {
   public mayanDocumentId: number;
   public documentStatusCode: string;
   public documentMetadata: Record<string, string>;
-  public documentTypeId: string = '';
+  public documentTypeId = '';
 
   public static fromApi(
     composedDocument: ComposedDocument,
     metadataTypes: ApiGen_Mayan_DocumentTypeMetadataType[],
   ): DocumentUpdateFormData {
-    var model = new DocumentUpdateFormData();
+    const model = new DocumentUpdateFormData();
     model.documentId = composedDocument.pimsDocumentRelationship?.document?.id || 0;
     model.mayanDocumentId =
       composedDocument.pimsDocumentRelationship?.document?.mayanDocumentId || 0;
@@ -162,7 +162,7 @@ export class DocumentUpdateFormData {
       composedDocument.pimsDocumentRelationship?.document?.statusTypeCode?.id?.toString() || '';
     model.documentMetadata = {};
     metadataTypes.forEach(metaType => {
-      var foundMetadata = composedDocument.mayanMetadata?.find(
+      const foundMetadata = composedDocument.mayanMetadata?.find(
         currentMeta => currentMeta?.metadata_type?.id === metaType.metadata_type?.id,
       );
       model.documentMetadata[metaType.metadata_type?.id?.toString() || '-'] =
@@ -175,7 +175,7 @@ export class DocumentUpdateFormData {
   }
 
   public toRequestApi(): ApiGen_Requests_DocumentUpdateRequest {
-    var metadata: ApiGen_Concepts_DocumentMetadataUpdate[] = [];
+    const metadata: ApiGen_Concepts_DocumentMetadataUpdate[] = [];
 
     for (const key in this.documentMetadata) {
       const value = this.documentMetadata[key];

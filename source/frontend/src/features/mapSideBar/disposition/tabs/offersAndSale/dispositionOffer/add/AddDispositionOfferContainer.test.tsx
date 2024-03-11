@@ -4,7 +4,7 @@ import React from 'react';
 import { Claims } from '@/constants/claims';
 import { mockDispositionFileOfferApi } from '@/mocks/dispositionFiles.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
-import { Api_DispositionFileOffer } from '@/models/api/DispositionFile';
+import { ApiGen_Concepts_DispositionFileOffer } from '@/models/api/generated/ApiGen_Concepts_DispositionFileOffer';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, createAxiosError, render, RenderOptions } from '@/utils/test-utils';
 
@@ -21,6 +21,7 @@ const mockPostApi = {
   execute: jest.fn(),
   loading: false,
 };
+const onSuccess = jest.fn();
 
 jest.mock('@/hooks/repositories/useDispositionProvider', () => ({
   useDispositionProvider: () => {
@@ -44,7 +45,7 @@ describe('Add Disposition Offer Container component', () => {
     } = {},
   ) => {
     const component = render(
-      <AddDispositionOfferContainer dispositionFileId={1} View={TestView} />,
+      <AddDispositionOfferContainer dispositionFileId={1} View={TestView} onSuccess={onSuccess} />,
       {
         history,
         store: {
@@ -89,9 +90,9 @@ describe('Add Disposition Offer Container component', () => {
     const offerMock = mockDispositionFileOfferApi();
     mockPostApi.execute.mockReturnValue(offerMock);
 
-    let createdOffer: Api_DispositionFileOffer | undefined;
+    let createdOffer: ApiGen_Concepts_DispositionFileOffer | undefined;
     await act(async () => {
-      createdOffer = await viewProps?.onSave({} as Api_DispositionFileOffer);
+      createdOffer = await viewProps?.onSave({} as ApiGen_Concepts_DispositionFileOffer);
     });
 
     expect(mockPostApi.execute).toHaveBeenCalled();

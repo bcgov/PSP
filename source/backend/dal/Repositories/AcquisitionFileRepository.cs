@@ -167,8 +167,12 @@ namespace Pims.Dal.Repositories
             lastUpdatedByAggregate.AddRange(ownersLastUpdatedBy);
 
             // Acquisition Deleted Owners
-            var ownersHistLastUpdatedBy = this.Context.PimsAcquisitionOwnerHists.AsNoTracking()
-                .Where(aoh => aoh.AcquisitionFileId == id)
+            var deletedOwners = this.Context.PimsAcquisitionOwnerHists.AsNoTracking()
+               .Where(aph => aph.AcquisitionFileId == id)
+               .GroupBy(aph => aph.AcquisitionOwnerId)
+               .Select(gaph => gaph.OrderByDescending(a => a.EffectiveDateHist).FirstOrDefault()).ToList();
+
+            var ownersHistLastUpdatedBy = deletedOwners
                 .Select(aoh => new LastUpdatedByModel()
                 {
                     ParentId = id,
@@ -213,8 +217,12 @@ namespace Pims.Dal.Repositories
 
             // Acquisition Deleted Team
             // This is needed to get the acquisition team last-updated-by when deleted
-            var teamHistLastUpdatedBy = this.Context.PimsAcquisitionFileTeamHists.AsNoTracking()
-              .Where(aph => aph.AcquisitionFileId == id)
+            var deletedTeams = this.Context.PimsAcquisitionFileTeamHists.AsNoTracking()
+                .Where(aph => aph.AcquisitionFileId == id)
+                .GroupBy(aph => aph.AcquisitionFileTeamId)
+                .Select(gaph => gaph.OrderByDescending(a => a.EffectiveDateHist).FirstOrDefault()).ToList();
+
+            var teamHistLastUpdatedBy = deletedTeams
               .Select(aph => new LastUpdatedByModel()
               {
                   ParentId = id,
@@ -244,8 +252,12 @@ namespace Pims.Dal.Repositories
 
             // Acquisition Deleted Interest Holders
             // This is needed to get the acquisition interest holder last-updated-by when deleted
-            var interestHolderHistLastUpdatedBy = this.Context.PimsInterestHolderHists.AsNoTracking()
-              .Where(aihh => aihh.AcquisitionFileId == id)
+            var deletedInterestHolders = this.Context.PimsInterestHolderHists.AsNoTracking()
+                .Where(aph => aph.AcquisitionFileId == id)
+                .GroupBy(aph => aph.InterestHolderId)
+                .Select(gaph => gaph.OrderByDescending(a => a.EffectiveDateHist).FirstOrDefault()).ToList();
+
+            var interestHolderHistLastUpdatedBy = deletedInterestHolders
               .Select(aihh => new LastUpdatedByModel()
               {
                   ParentId = id,
@@ -276,8 +288,12 @@ namespace Pims.Dal.Repositories
 
             // Acquisition Deleted Documents
             // This is needed to get the document last-updated-by from the document that where deleted
-            var documentsHistoryLastUpdatedBy = this.Context.PimsAcquisitionFileDocumentHists.AsNoTracking()
-                .Where(adh => adh.AcquisitionFileId == id)
+            var deletedDocuments = this.Context.PimsAcquisitionFileDocumentHists.AsNoTracking()
+                .Where(aph => aph.AcquisitionFileId == id)
+                .GroupBy(aph => aph.AcquisitionFileDocumentId)
+                .Select(gaph => gaph.OrderByDescending(a => a.EffectiveDateHist).FirstOrDefault()).ToList();
+
+            var documentsHistoryLastUpdatedBy = deletedDocuments
                 .Select(adh => new LastUpdatedByModel()
                 {
                     ParentId = id,
@@ -308,8 +324,12 @@ namespace Pims.Dal.Repositories
 
             // Acquisition Deleted Notes
             // This is needed to get the document last-updated-by from the document that where deleted
-            var notesHistoryLastUpdatedBy = this.Context.PimsAcquisitionFileNoteHists.AsNoTracking()
-                .Where(anh => anh.AcquisitionFileId == id)
+            var deletedNotes = this.Context.PimsAcquisitionFileNoteHists.AsNoTracking()
+                .Where(aph => aph.AcquisitionFileId == id)
+                .GroupBy(aph => aph.AcquisitionFileNoteId)
+                .Select(gaph => gaph.OrderByDescending(a => a.EffectiveDateHist).FirstOrDefault()).ToList();
+
+            var notesHistoryLastUpdatedBy = deletedNotes
                 .Select(anh => new LastUpdatedByModel()
                 {
                     ParentId = id,
@@ -339,8 +359,12 @@ namespace Pims.Dal.Repositories
 
             // Acquisition Deleted Properties
             // This is needed to get the notes last-updated-by from the notes that where deleted
-            var propertiesHistoryLastUpdatedBy = this.Context.PimsPropertyAcquisitionFileHists.AsNoTracking()
-            .Where(aph => aph.AcquisitionFileId == id)
+            var deletedProperties = this.Context.PimsPropertyAcquisitionFileHists.AsNoTracking()
+               .Where(aph => aph.AcquisitionFileId == id)
+               .GroupBy(aph => aph.PropertyAcquisitionFileId)
+               .Select(gaph => gaph.OrderByDescending(a => a.EffectiveDateHist).FirstOrDefault()).ToList();
+
+            var propertiesHistoryLastUpdatedBy = deletedProperties
             .Select(aph => new LastUpdatedByModel()
             {
                 ParentId = id,
@@ -372,19 +396,24 @@ namespace Pims.Dal.Repositories
             // Acquisition Deleted Takes
             // This is needed to get the notes last-updated-by from the notes that where deleted
             var takeHists = this.Context.PimsTakeHists.AsNoTracking();
-            var takesHistoryLastUpdatedBy = this.Context.PimsPropertyAcquisitionFileHists.AsNoTracking()
+            var deletedTakes = this.Context.PimsPropertyAcquisitionFileHists.AsNoTracking()
             .Where(at => at.AcquisitionFileId == id)
             .Join(
                     takeHists,
                     propAcqHist => propAcqHist.PropertyAcquisitionFileId,
                     takeHist => takeHist.PropertyAcquisitionFileId,
-                    (acqPropHist, takeHist) => new LastUpdatedByModel()
-                    {
-                        ParentId = id,
-                        AppLastUpdateUserid = takeHist.AppLastUpdateUserid, // TODO: Update this once the DB tracks the user
-                        AppLastUpdateUserGuid = takeHist.AppLastUpdateUserGuid, // TODO: Update this once the DB tracks the user
-                        AppLastUpdateTimestamp = takeHist.EndDateHist ?? DateTime.UnixEpoch,
-                    })
+                    (acqPropHist, takeHist) => takeHist)
+                .GroupBy(aph => aph.TakeId)
+                .Select(gaph => gaph.OrderByDescending(a => a.EffectiveDateHist).FirstOrDefault()).ToList();
+
+            var takesHistoryLastUpdatedBy = deletedTakes
+            .Select(rdh => new LastUpdatedByModel()
+            {
+                ParentId = id,
+                AppLastUpdateUserid = rdh.AppLastUpdateUserid, // TODO: Update this once the DB tracks the user
+                AppLastUpdateUserGuid = rdh.AppLastUpdateUserGuid, // TODO: Update this once the DB tracks the user
+                AppLastUpdateTimestamp = rdh.EndDateHist ?? DateTime.UnixEpoch,
+            })
             .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
             .Take(1)
             .ToList();
@@ -407,8 +436,12 @@ namespace Pims.Dal.Repositories
 
             // Acquisition Deleted Compensation Requisition
             // This is needed to get the notes last-updated-by from the notes that where deleted
-            var compensationHistoryLastUpdatedBy = this.Context.PimsCompensationRequisitionHists.AsNoTracking()
-            .Where(acrh => acrh.AcquisitionFileId == id)
+            var deletedCompReqs = this.Context.PimsCompensationRequisitionHists.AsNoTracking()
+                .Where(aph => aph.AcquisitionFileId == id)
+                .GroupBy(aph => aph.CompensationRequisitionId)
+                .Select(gaph => gaph.OrderByDescending(a => a.EffectiveDateHist).FirstOrDefault()).ToList();
+
+            var compensationHistoryLastUpdatedBy = deletedCompReqs
             .Select(acrh => new LastUpdatedByModel()
             {
                 ParentId = id,
@@ -440,19 +473,24 @@ namespace Pims.Dal.Repositories
             // Acquisition Deleted Compensation Requsition Financials
             // This is needed to get the notes last-updated-by from the notes that where deleted
             var financialHists = this.Context.PimsCompReqFinancialHists.AsNoTracking();
-            var compreqHistoryLastUpdatedBy = this.Context.PimsCompensationRequisitionHists.AsNoTracking()
+            var deletedCompReqFinancials = this.Context.PimsCompensationRequisitionHists.AsNoTracking()
             .Where(at => at.AcquisitionFileId == id)
             .Join(
                     financialHists,
                     compReqHist => compReqHist.CompensationRequisitionId,
                     financialHist => financialHist.CompensationRequisitionId,
-                    (compReqHist, compReqFinHist) => new LastUpdatedByModel()
-                    {
-                        ParentId = id,
-                        AppLastUpdateUserid = compReqFinHist.AppLastUpdateUserid, // TODO: Update this once the DB tracks the user
-                        AppLastUpdateUserGuid = compReqFinHist.AppLastUpdateUserGuid, // TODO: Update this once the DB tracks the user
-                        AppLastUpdateTimestamp = compReqFinHist.EndDateHist ?? DateTime.UnixEpoch,
-                    })
+                    (compReqHist, compReqFinHist) => compReqFinHist)
+                .GroupBy(aph => aph.CompReqFinancialId)
+                .Select(gaph => gaph.OrderByDescending(a => a.EffectiveDateHist).FirstOrDefault()).ToList();
+
+            var compreqHistoryLastUpdatedBy = deletedCompReqFinancials
+            .Select(rdh => new LastUpdatedByModel()
+            {
+                ParentId = id,
+                AppLastUpdateUserid = rdh.AppLastUpdateUserid, // TODO: Update this once the DB tracks the user
+                AppLastUpdateUserGuid = rdh.AppLastUpdateUserGuid, // TODO: Update this once the DB tracks the user
+                AppLastUpdateTimestamp = rdh.EndDateHist ?? DateTime.UnixEpoch,
+            })
             .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
             .Take(1)
             .ToList();
@@ -475,8 +513,12 @@ namespace Pims.Dal.Repositories
 
             // Acquisition Deleted Expropiation Payments
             // This is needed to get the notes last-updated-by from the notes that where deleted
-            var expPaymentsHistoryLastUpdatedBy = this.Context.PimsExpropriationPaymentHists.AsNoTracking()
-            .Where(aeph => aeph.AcquisitionFileId == id)
+            var deletedExpropiationPayments = this.Context.PimsExpropriationPaymentHists.AsNoTracking()
+                .Where(aph => aph.AcquisitionFileId == id)
+                .GroupBy(aph => aph.ExpropriationPaymentId)
+                .Select(gaph => gaph.OrderByDescending(a => a.EffectiveDateHist).FirstOrDefault()).ToList();
+
+            var expPaymentsHistoryLastUpdatedBy = deletedExpropiationPayments
             .Select(aeph => new LastUpdatedByModel()
             {
                 ParentId = id,
@@ -508,19 +550,24 @@ namespace Pims.Dal.Repositories
             // Acquisition Deleted Expropiation payments
             // This is needed to get the notes last-updated-by from the notes that where deleted
             var expItemHists = this.Context.PimsExpropPmtPmtItemHists.AsNoTracking();
-            var expHistoryLastUpdatedBy = this.Context.PimsExpropriationPaymentHists.AsNoTracking()
+            var deletedPaymentItems = this.Context.PimsExpropriationPaymentHists.AsNoTracking()
             .Where(at => at.AcquisitionFileId == id)
             .Join(
                     expItemHists,
                     expPaymentHist => expPaymentHist.ExpropriationPaymentId,
                     expItemHist => expItemHist.ExpropriationPaymentId,
-                    (expPaymentHist, expItemHist) => new LastUpdatedByModel()
-                    {
-                        ParentId = id,
-                        AppLastUpdateUserid = expItemHist.AppLastUpdateUserid, // TODO: Update this once the DB tracks the user
-                        AppLastUpdateUserGuid = expItemHist.AppLastUpdateUserGuid, // TODO: Update this once the DB tracks the user
-                        AppLastUpdateTimestamp = expItemHist.EndDateHist ?? DateTime.UnixEpoch,
-                    })
+                    (expPaymentHist, expItemHist) => expItemHist)
+                .GroupBy(aph => aph.ExpropPmtPmtItemId)
+                .Select(gaph => gaph.OrderByDescending(a => a.EffectiveDateHist).FirstOrDefault()).ToList();
+
+            var expHistoryLastUpdatedBy = deletedPaymentItems
+            .Select(rdh => new LastUpdatedByModel()
+            {
+                ParentId = id,
+                AppLastUpdateUserid = rdh.AppLastUpdateUserid, // TODO: Update this once the DB tracks the user
+                AppLastUpdateUserGuid = rdh.AppLastUpdateUserGuid, // TODO: Update this once the DB tracks the user
+                AppLastUpdateTimestamp = rdh.EndDateHist ?? DateTime.UnixEpoch,
+            })
             .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
             .Take(1)
             .ToList();
@@ -543,8 +590,12 @@ namespace Pims.Dal.Repositories
 
             // Acquisition Deleted Agreements
             // This is needed to get the notes last-updated-by from the notes that where deleted
-            var agreementsHistoryLastUpdatedBy = this.Context.PimsAgreementHists.AsNoTracking()
-            .Where(aah => aah.AcquisitionFileId == id)
+            var deletedAgreements = this.Context.PimsAgreementHists.AsNoTracking()
+                .Where(aph => aph.AcquisitionFileId == id)
+                .GroupBy(aph => aph.AgreementId)
+                .Select(gaph => gaph.OrderByDescending(a => a.EffectiveDateHist).FirstOrDefault()).ToList();
+
+            var agreementsHistoryLastUpdatedBy = deletedAgreements
             .Select(aah => new LastUpdatedByModel()
             {
                 ParentId = id,
@@ -824,7 +875,7 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(fp => fp.AlternateProject)
                 .Where(predicate);
 
-            query = (filter.Sort?.Any() == true) ? query.OrderByProperty(filter.Sort) : query.OrderBy(acq => acq.AcquisitionFileId);
+            query = (filter.Sort?.Any() == true) ? query.OrderByProperty(true, filter.Sort) : query.OrderBy(acq => acq.AcquisitionFileId);
 
             return query;
         }

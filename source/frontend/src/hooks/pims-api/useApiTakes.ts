@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { Api_Take } from './../../models/api/Take';
+import { ApiGen_Concepts_Take } from '@/models/api/generated/ApiGen_Concepts_Take';
+
 import useAxiosApi from './useApi';
 
 /**
@@ -13,13 +14,16 @@ export const useApiTakes = () => {
 
   return React.useMemo(
     () => ({
-      getTakesByAcqFileId: (fileId: number) => api.get<Api_Take[]>(`/takes/acquisition/${fileId}`),
+      getTakesByAcqFileId: (fileId: number) =>
+        api.get<ApiGen_Concepts_Take[]>(`/takes/acquisition/${fileId}`),
       getTakesByPropertyId: (fileId: number, propertyId: number) =>
-        api.get<Api_Take[]>(`/takes/acquisition/${fileId}/property/${propertyId}`),
+        api.get<ApiGen_Concepts_Take[]>(`/takes/acquisition/${fileId}/property/${propertyId}`),
       getTakesCountByPropertyId: (propertyId: number) =>
         api.get<number>(`/takes/property/${propertyId}/count`),
-      updateTakesCountByPropertyId: (acquisitionFilePropertyId: number, takes: Api_Take[]) =>
-        api.put<number>(`/takes/acquisition/property/${acquisitionFilePropertyId}`, takes),
+      updateTakesCountByPropertyId: (
+        acquisitionFilePropertyId: number,
+        takes: ApiGen_Concepts_Take[],
+      ) => api.put<number>(`/takes/acquisition/property/${acquisitionFilePropertyId}`, takes),
     }),
     [api],
   );

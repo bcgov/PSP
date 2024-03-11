@@ -5,6 +5,7 @@ using Pims.Api.Models.Concepts.FinancialCode;
 using Pims.Api.Policies;
 using Pims.Api.Services;
 using Pims.Core.Exceptions;
+using Pims.Core.Json;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -49,6 +50,7 @@ namespace Pims.Api.Areas.Admin.Controllers
         [ProducesResponseType(typeof(IEnumerable<FinancialCodeModel>), 200)]
         [ProducesResponseType(typeof(Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "admin-financialcodes" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetFinancialCodes()
         {
             var allCodes = _financialCodeService.GetAllFinancialCodes();
@@ -67,6 +69,7 @@ namespace Pims.Api.Areas.Admin.Controllers
         [ProducesResponseType(typeof(Models.ErrorResponseModel), 400)]
         [ProducesResponseType(typeof(Models.ErrorResponseModel), 409)]
         [SwaggerOperation(Tags = new[] { "admin-financialcodes" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetFinancialCode(FinancialCodeTypes type, long codeId)
         {
             return new JsonResult(_financialCodeService.GetById(type, codeId));
@@ -84,6 +87,7 @@ namespace Pims.Api.Areas.Admin.Controllers
         [ProducesResponseType(typeof(Models.ErrorResponseModel), 400)]
         [ProducesResponseType(typeof(Models.ErrorResponseModel), 409)]
         [SwaggerOperation(Tags = new[] { "admin-financialcodes" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult AddFinancialCode(FinancialCodeTypes type, [FromBody] FinancialCodeModel codeModel)
         {
             try
@@ -110,6 +114,7 @@ namespace Pims.Api.Areas.Admin.Controllers
         [ProducesResponseType(typeof(Models.ErrorResponseModel), 400)]
         [ProducesResponseType(typeof(Models.ErrorResponseModel), 409)]
         [SwaggerOperation(Tags = new[] { "admin-financialcodes" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult UpdateFinancialCode(FinancialCodeTypes type, long codeId, [FromBody] FinancialCodeModel codeModel)
         {
             try

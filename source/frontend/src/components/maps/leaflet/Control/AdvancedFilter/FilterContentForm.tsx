@@ -1,8 +1,16 @@
 import { Form, Formik, useFormikContext } from 'formik';
 import { noop } from 'lodash';
 import React, { useEffect, useMemo } from 'react';
+import Col from 'react-bootstrap/Col';
+import Image from 'react-bootstrap/Image';
+import Row from 'react-bootstrap/Row';
+import styled from 'styled-components';
 
-import { Select, SelectOption } from '@/components/common/form';
+import DisposedPng from '@/assets/images/pins/disposed.png';
+import PropertyOfInterestPng from '@/assets/images/pins/land-poi.png';
+import CoreInventoryPng from '@/assets/images/pins/land-reg.png';
+import OtherInterestPng from '@/assets/images/pins/other-interest.png';
+import { Check, Select, SelectOption } from '@/components/common/form';
 import { Multiselect } from '@/components/common/form/Multiselect';
 import { ProjectSelector } from '@/components/common/form/ProjectSelector/ProjectSelector';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
@@ -90,7 +98,7 @@ export const FilterContentForm: React.FC<React.PropsWithChildren<IFilterContentF
 
   return (
     <Formik<PropertyFilterFormModel> initialValues={initialFilter} onSubmit={noop}>
-      <Form>
+      <Form placeholder={undefined}>
         <FormObserver onChange={onChange} />
         <LoadingBackdrop show={isLoading} parentScreen />
         <Section header="Project" isCollapsable initiallyExpanded>
@@ -176,7 +184,59 @@ export const FilterContentForm: React.FC<React.PropsWithChildren<IFilterContentF
             />
           </SectionField>
         </Section>
+        <Section header="Show Ownership" isCollapsable initiallyExpanded>
+          <SectionField label={null} contentWidth="12">
+            <Row className="pb-4">
+              <Col xs={1}>
+                <Check field="isCoreInventory" />
+              </Col>
+              <Col xs={1}>
+                <Image height={36} src={CoreInventoryPng} />
+              </Col>
+              <Col className="pl-5">
+                <StyledSpan className="mb-3">Core Inventory</StyledSpan>
+              </Col>
+            </Row>
+            <Row className="pb-4">
+              <Col xs={1}>
+                <Check field="isPropertyOfInterest" />
+              </Col>
+              <Col xs={1}>
+                <Image height={36} src={PropertyOfInterestPng} />
+              </Col>
+              <Col className="pl-5">
+                <StyledSpan className="mb-3">Property of Interest</StyledSpan>
+              </Col>
+            </Row>
+            <Row className="pb-4">
+              <Col xs={1}>
+                <Check field="isOtherInterest" />
+              </Col>
+              <Col xs={1}>
+                <Image height={36} src={OtherInterestPng} />
+              </Col>
+              <Col className="pl-5">
+                <StyledSpan className="mb-3">Other Interest</StyledSpan>
+              </Col>
+            </Row>
+            <Row>
+              <Col xs={1}>
+                <Check field="isDisposed" />
+              </Col>
+              <Col xs={1}>
+                <Image height={36} src={DisposedPng} />
+              </Col>
+              <Col className="pl-5">
+                <StyledSpan className="mb-3">Disposed</StyledSpan>
+              </Col>
+            </Row>
+          </SectionField>
+        </Section>
       </Form>
     </Formik>
   );
 };
+
+const StyledSpan = styled.span`
+  color: ${props => props.theme.css.textColor};
+`;

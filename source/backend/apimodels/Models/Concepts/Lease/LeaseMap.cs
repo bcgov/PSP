@@ -1,9 +1,10 @@
+using System;
+using System.Collections.Immutable;
 using Mapster;
 using Pims.Api.Helpers.Extensions;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 using Pims.Dal.Helpers.Extensions;
-using System;
 
 namespace Pims.Api.Models.Concepts.Lease
 {
@@ -12,11 +13,12 @@ namespace Pims.Api.Models.Concepts.Lease
         public void Register(TypeAdapterConfig config)
         {
             config.NewConfig<PimsLease, LeaseModel>()
+                .PreserveReference(true)
                 .Map(dest => dest.Id, src => src.LeaseId)
                 .Map(dest => dest.RowVersion, src => src.ConcurrencyControlNumber)
                 .Map(dest => dest.Amount, src => src.LeaseAmount)
                 .Map(dest => dest.RenewalCount, src => src.PimsLeaseTerms.Count)
-                .Map(dest => dest.Properties, src => src.PimsPropertyLeases)
+                .Map(dest => dest.FileProperties, src => src.PimsPropertyLeases)
                 .Map(dest => dest.LFileNo, src => src.LFileNo)
                 .Map(dest => dest.TfaFileNumber, src => src.TfaFileNumber)
                 .Map(dest => dest.PsFileNo, src => src.PsFileNo)
@@ -35,7 +37,7 @@ namespace Pims.Api.Models.Concepts.Lease
                 .Map(dest => dest.Type, src => src.LeaseLicenseTypeCodeNavigation)
                 .Map(dest => dest.InitiatorType, src => src.LeaseInitiatorTypeCodeNavigation)
                 .Map(dest => dest.PurposeType, src => src.LeasePurposeTypeCodeNavigation)
-                .Map(dest => dest.StatusType, src => src.LeaseStatusTypeCodeNavigation)
+                .Map(dest => dest.FileStatusTypeCode, src => src.LeaseStatusTypeCodeNavigation)
                 .Map(dest => dest.ResponsibilityType, src => src.LeaseResponsibilityTypeCodeNavigation)
                 .Map(dest => dest.ResponsibilityEffectiveDate, src => src.ResponsibilityEffectiveDate.ToNullableDateOnly())
                 .Map(dest => dest.DocumentationReference, src => src.DocumentationReference)
@@ -52,13 +54,15 @@ namespace Pims.Api.Models.Concepts.Lease
                 .Map(dest => dest.HasDigitalFile, src => src.HasDigitalFile)
                 .Map(dest => dest.HasPhysicalLicense, src => src.HasPhysicialLicense)
                 .Map(dest => dest.Project, src => src.Project)
-                .Map(dest => dest.Tenants, src => src.PimsLeaseTenants);
+                .Map(dest => dest.Tenants, src => src.PimsLeaseTenants)
+                .Map(dest => dest.Terms, src => src.PimsLeaseTerms);
 
             config.NewConfig<LeaseModel, PimsLease>()
+                .PreserveReference(true)
                 .Map(dest => dest.LeaseId, src => src.Id)
                 .Map(dest => dest.ConcurrencyControlNumber, src => src.RowVersion)
                 .Map(dest => dest.LeaseAmount, src => src.Amount)
-                .Map(dest => dest.PimsPropertyLeases, src => src.Properties)
+                .Map(dest => dest.PimsPropertyLeases, src => src.FileProperties.ToImmutableList())
                 .Map(dest => dest.LFileNo, src => src.LFileNo)
                 .Map(dest => dest.PsFileNo, src => src.PsFileNo)
                 .Map(dest => dest.TfaFileNumber, src => src.TfaFileNumber)
@@ -78,7 +82,7 @@ namespace Pims.Api.Models.Concepts.Lease
                 .Map(dest => dest.LeaseInitiatorTypeCode, src => src.InitiatorType.GetTypeId())
                 .Map(dest => dest.LeasePurposeTypeCode, src => src.PurposeType.GetTypeId())
                 .Map(dest => dest.LeaseResponsibilityTypeCode, src => src.ResponsibilityType.GetTypeId())
-                .Map(dest => dest.LeaseStatusTypeCode, src => src.StatusType.GetTypeId())
+                .Map(dest => dest.LeaseStatusTypeCode, src => src.FileStatusTypeCode.GetTypeId())
                 .Map(dest => dest.ResponsibilityEffectiveDate, src => src.ResponsibilityEffectiveDate.ToNullableDateTime())
                 .Map(dest => dest.DocumentationReference, src => src.DocumentationReference)
                 .Map(dest => dest.LeaseNotes, src => src.Note)
