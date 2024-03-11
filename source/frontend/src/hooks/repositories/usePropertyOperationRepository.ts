@@ -8,8 +8,6 @@ import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils';
 
 import { useApiPropertyOperation } from '../pims-api/useApiPropertyOperation';
 
-const ignoreErrorCodes = [409];
-
 /**
  * hook that interacts with the PropertyOperation File API.
  */
@@ -31,7 +29,6 @@ export const usePropertyOperationRepository = () => {
     ),
     requestName: 'AddPropertyOperation',
     onSuccess: useAxiosSuccessHandler('Property operation saved'),
-    skipErrorLogCodes: ignoreErrorCodes,
     throwError: true,
   });
 

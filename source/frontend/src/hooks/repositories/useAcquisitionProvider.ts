@@ -23,8 +23,6 @@ import {
   useAxiosSuccessHandler,
 } from '@/utils';
 
-const ignoreErrorCodes = [409];
-
 /**
  * hook that interacts with the Acquisition File API.
  */
@@ -64,7 +62,6 @@ export const useAcquisitionProvider = () => {
     ),
     requestName: 'AddAcquisitionFile',
     onSuccess: useAxiosSuccessHandler('Acquisition File saved'),
-    skipErrorLogCodes: ignoreErrorCodes,
     throwError: true,
   });
 
@@ -127,7 +124,6 @@ export const useAcquisitionProvider = () => {
     ),
     requestName: 'UpdateAcquisitionFile',
     onSuccess: useAxiosSuccessHandler('Acquisition File updated'),
-    skipErrorLogCodes: ignoreErrorCodes,
     throwError: true,
   });
 
@@ -144,7 +140,6 @@ export const useAcquisitionProvider = () => {
     ),
     requestName: 'UpdateAcquisitionFileProperties',
     onSuccess: useAxiosSuccessHandler('Acquisition File Properties updated'),
-    skipErrorLogCodes: ignoreErrorCodes,
     throwError: true,
   });
 
