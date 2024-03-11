@@ -174,7 +174,7 @@ exports[`AgreementView component renders as expected 1`] = `
   font-weight: bold;
 }
 
-.c8 span {
+.c9 span {
   position: absolute;
 }
 
