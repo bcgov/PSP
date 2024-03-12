@@ -11,9 +11,7 @@ const history = createMemoryHistory();
 const store = { [lookupCodesSlice.name]: { lookupCodes: mockLookups } };
 
 describe('Subdivision detail view', () => {
-  const setup = (
-    renderOptions: RenderOptions & { props?: Partial<IOperationViewProps> } = {},
-  ) => {
+  const setup = (renderOptions: RenderOptions & { props?: Partial<IOperationViewProps> } = {}) => {
     const props = renderOptions.props;
     const component = render(
       <OperationView
