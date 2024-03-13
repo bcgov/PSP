@@ -46,10 +46,12 @@ describe('OperationContainer component', () => {
     renderOptions: RenderOptions & Partial<IOperationContainerProps> = { propertyId: 1 },
   ) => {
     const { propertyId, ...rest } = renderOptions;
-    const component = render(
-      <OperationContainer propertyId={propertyId ?? 0} View={mockView} />,
-      { ...rest, store: storeState, claims: [Claims.PROPERTY_VIEW], history },
-    );
+    const component = render(<OperationContainer propertyId={propertyId ?? 0} View={mockView} />, {
+      ...rest,
+      store: storeState,
+      claims: [Claims.PROPERTY_VIEW],
+      history,
+    });
 
     return { ...component };
   };
