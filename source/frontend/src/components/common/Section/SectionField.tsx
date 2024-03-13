@@ -66,7 +66,4 @@ export const StyledCol = styled(Col)`
 
 export const StyledFieldLabel = styled.label`
   font-weight: bold;
-  span {
-    position: absolute;
-  }
 `;
