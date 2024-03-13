@@ -17,10 +17,6 @@ exports[`ProjectExportForm component renders as expected 1`] = `
   font-weight: bold;
 }
 
-.c0 span {
-  position: absolute;
-}
-
 <form
     action="#"
   >

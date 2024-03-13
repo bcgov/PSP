@@ -357,10 +357,6 @@ exports[`Lease Insurance renders as expected 1`] = `
   font-weight: bold;
 }
 
-.c3 span {
-  position: absolute;
-}
-
 .c2 {
   padding: 1rem;
   font-size: 1.4rem;

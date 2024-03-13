@@ -360,10 +360,6 @@ exports[`UpdateAcquisitionForm component renders as expected 1`] = `
   font-weight: bold;
 }
 
-.c2 span {
-  position: absolute;
-}
-
 .c18 {
   background-color: none;
 }

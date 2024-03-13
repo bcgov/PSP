@@ -287,10 +287,6 @@ exports[`UpdateContactContainer renders as expected 1`] = `
   font-weight: bold;
 }
 
-.c10 span {
-  position: absolute;
-}
-
 .c15 {
   display: -webkit-box;
   display: -webkit-flex;

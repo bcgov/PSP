@@ -216,10 +216,6 @@ exports[`UpdateOrganizationForm renders as expected 1`] = `
   font-weight: bold;
 }
 
-.c4 span {
-  position: absolute;
-}
-
 .c7 {
   display: -webkit-box;
   display: -webkit-flex;

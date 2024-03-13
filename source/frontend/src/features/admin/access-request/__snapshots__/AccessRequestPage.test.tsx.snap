@@ -218,10 +218,6 @@ exports[`AccessRequestPage renders correctly 1`] = `
   font-weight: bold;
 }
 
-.c2 span {
-  position: absolute;
-}
-
 .c6 {
   position: absolute;
   top: 1rem;

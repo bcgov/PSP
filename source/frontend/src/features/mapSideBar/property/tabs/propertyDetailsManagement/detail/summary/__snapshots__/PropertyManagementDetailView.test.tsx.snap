@@ -40,10 +40,6 @@ exports[`PropertyManagementDetailView component renders as expected when provide
   font-weight: bold;
 }
 
-.c4 span {
-  position: absolute;
-}
-
 <div
     class="c0 form-section"
   >

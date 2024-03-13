@@ -35,10 +35,6 @@ exports[`UpdatePropertyForm component renders as expected when provided no resea
   font-weight: bold;
 }
 
-.c3 span {
-  position: absolute;
-}
-
 <div
     class="c0"
   >

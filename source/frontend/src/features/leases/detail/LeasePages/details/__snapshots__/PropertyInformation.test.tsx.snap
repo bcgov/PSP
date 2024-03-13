@@ -17,10 +17,6 @@ exports[`PropertyInformation component renders a complete lease as expected 1`] 
   font-weight: bold;
 }
 
-.c1 span {
-  position: absolute;
-}
-
 .c3 {
   grid-column: controls;
   border-left: 1px solid black !important;
@@ -163,10 +159,6 @@ exports[`PropertyInformation component renders minimally as expected 1`] = `
 
 .c1 {
   font-weight: bold;
-}
-
-.c1 span {
-  position: absolute;
 }
 
 .c3 {

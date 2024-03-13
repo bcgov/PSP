@@ -73,10 +73,6 @@ exports[`AdministrationSubForm component renders as expected 1`] = `
   font-weight: bold;
 }
 
-.c2 span {
-  position: absolute;
-}
-
 .c7 textarea.form-control {
   min-width: 80rem;
   height: 7rem;

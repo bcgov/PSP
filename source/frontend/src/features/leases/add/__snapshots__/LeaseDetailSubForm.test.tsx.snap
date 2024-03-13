@@ -53,10 +53,6 @@ exports[`LeaseDetailSubForm component renders as expected 1`] = `
   font-weight: bold;
 }
 
-.c1 span {
-  position: absolute;
-}
-
 <div
     class="c0 form-section"
   >

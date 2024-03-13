@@ -174,10 +174,6 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
   font-weight: bold;
 }
 
-.c7 span {
-  position: absolute;
-}
-
 .c2 {
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;

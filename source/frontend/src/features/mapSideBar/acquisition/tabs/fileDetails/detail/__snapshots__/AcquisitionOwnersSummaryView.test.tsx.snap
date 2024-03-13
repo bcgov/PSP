@@ -28,10 +28,6 @@ exports[`Acquisition File Owners View component Renders Component as expected 1`
   font-weight: bold;
 }
 
-.c1 span {
-  position: absolute;
-}
-
 .c2 {
   white-space: pre-line;
 }
@@ -202,10 +198,6 @@ Canada
 
 .c1 {
   font-weight: bold;
-}
-
-.c1 span {
-  position: absolute;
 }
 
 .c2 {

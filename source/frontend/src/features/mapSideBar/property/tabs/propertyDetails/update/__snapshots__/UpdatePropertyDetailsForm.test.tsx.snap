@@ -262,10 +262,6 @@ exports[`UpdatePropertyDetailsForm component renders as expected 1`] = `
   font-weight: bold;
 }
 
-.c3 span {
-  position: absolute;
-}
-
 .c8 {
   max-width: 25rem;
   padding: 1rem;

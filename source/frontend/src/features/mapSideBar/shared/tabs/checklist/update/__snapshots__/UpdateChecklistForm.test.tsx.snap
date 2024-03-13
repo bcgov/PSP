@@ -35,10 +35,6 @@ exports[`UpdateChecklist form renders as expected 1`] = `
   font-weight: bold;
 }
 
-.c4 span {
-  position: absolute;
-}
-
 .c2 {
   font-size: 1.4rem;
   text-align: center;

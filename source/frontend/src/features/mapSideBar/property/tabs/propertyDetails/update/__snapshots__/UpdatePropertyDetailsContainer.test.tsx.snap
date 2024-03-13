@@ -262,10 +262,6 @@ exports[`UpdatePropertyDetailsContainer component renders as expected 1`] = `
   font-weight: bold;
 }
 
-.c4 span {
-  position: absolute;
-}
-
 .c9 {
   max-width: 25rem;
   padding: 1rem;

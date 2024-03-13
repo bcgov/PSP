@@ -200,10 +200,6 @@ exports[`Disposition Offer Detail View component renders as expected 1`] = `
   font-weight: bold;
 }
 
-.c3 span {
-  position: absolute;
-}
-
 .c5 {
   padding: 0 0.4rem;
   display: block;

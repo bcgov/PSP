@@ -280,10 +280,6 @@ exports[`UpdateProperties component renders as expected 1`] = `
   font-weight: bold;
 }
 
-.c12 span {
-  position: absolute;
-}
-
 .c9.c9.c9 input,
 .c9.c9.c9 select,
 .c9.c9.c9 textarea {

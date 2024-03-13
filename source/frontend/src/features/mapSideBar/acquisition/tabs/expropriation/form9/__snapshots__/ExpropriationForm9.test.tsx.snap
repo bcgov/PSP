@@ -185,10 +185,6 @@ exports[`Expropriation Form 1 matches snapshot 1`] = `
   font-weight: bold;
 }
 
-.c0 span {
-  position: absolute;
-}
-
 <div
     class="pb-2 row"
   >
@@ -306,10 +302,6 @@ exports[`Expropriation Form 1 matches snapshot 1`] = `
 
 .c0 {
   font-weight: bold;
-}
-
-.c0 span {
-  position: absolute;
 }
 
 .c3 {
@@ -501,10 +493,6 @@ exports[`Expropriation Form 1 matches snapshot 1`] = `
 
 .c0 {
   font-weight: bold;
-}
-
-.c0 span {
-  position: absolute;
 }
 
 <div

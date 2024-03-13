@@ -39,10 +39,6 @@ exports[`AcquisitionSummaryView component matches snapshot 1`] = `
   font-weight: bold;
 }
 
-.c4 span {
-  position: absolute;
-}
-
 .c7 {
   font-size: 1.6rem;
   -webkit-text-decoration: none;

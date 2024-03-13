@@ -31,10 +31,6 @@ exports[`PropertyResearchTabView component renders as expected when provided val
   font-weight: bold;
 }
 
-.c3 span {
-  position: absolute;
-}
-
 .c0 {
   text-align: right;
 }

@@ -17,10 +17,6 @@ exports[`LtsaLandSubForm component renders charge sub form 1`] = `
   font-weight: bold;
 }
 
-.c0 span {
-  position: absolute;
-}
-
 <div
     class="pb-2 row"
   >
@@ -60,10 +56,6 @@ exports[`LtsaLandSubForm component renders charge sub form 1`] = `
   font-weight: bold;
 }
 
-.c0 span {
-  position: absolute;
-}
-
 <div
     class="pb-2 row"
   >
@@ -96,10 +88,6 @@ PLAN 24843
 
 .c0 {
   font-weight: bold;
-}
-
-.c0 span {
-  position: absolute;
 }
 
 <div
@@ -181,10 +169,6 @@ PLAN 24843
   font-weight: bold;
 }
 
-.c0 span {
-  position: absolute;
-}
-
 <div
     class="pb-2 row"
   >
@@ -216,10 +200,6 @@ DEPOSITED JULY 30TH, 1974.
 
 .c0 {
   font-weight: bold;
-}
-
-.c0 span {
-  position: absolute;
 }
 
 <div
@@ -301,10 +281,6 @@ DEPOSITED JULY 30TH, 1974.
   font-weight: bold;
 }
 
-.c0 span {
-  position: absolute;
-}
-
 <div
     class="pb-2 row"
   >
@@ -335,10 +311,6 @@ DEPOSITED JULY 30TH, 1974.
 
 .c0 {
   font-weight: bold;
-}
-
-.c0 span {
-  position: absolute;
 }
 
 <div
@@ -418,10 +390,6 @@ DEPOSITED JULY 30TH, 1974.
 
 .c0 {
   font-weight: bold;
-}
-
-.c0 span {
-  position: absolute;
 }
 
 <div

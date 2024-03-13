@@ -209,10 +209,6 @@ exports[`AccessRequestForm component renders as expected 1`] = `
   font-weight: bold;
 }
 
-.c0 span {
-  position: absolute;
-}
-
 .c4 {
   position: absolute;
   top: 1rem;

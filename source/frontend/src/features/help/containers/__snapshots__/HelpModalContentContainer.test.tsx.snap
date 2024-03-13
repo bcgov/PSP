@@ -37,10 +37,6 @@ exports[`HelpContainer renders correctly... 1`] = `
   font-weight: bold;
 }
 
-.c1 span {
-  position: absolute;
-}
-
 .c0 {
   margin-left: 0;
   overflow: hidden;

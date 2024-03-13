@@ -353,10 +353,6 @@ exports[`AddResearchContainer component renders as expected 1`] = `
   font-weight: bold;
 }
 
-.c20 span {
-  position: absolute;
-}
-
 .c18:hover {
   cursor: pointer;
 }

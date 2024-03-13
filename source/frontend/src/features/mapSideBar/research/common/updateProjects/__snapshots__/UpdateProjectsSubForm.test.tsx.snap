@@ -343,10 +343,6 @@ exports[`UpdateProjectsSubForm renders as expected with pre-existing form data 1
   font-weight: bold;
 }
 
-.c0 span {
-  position: absolute;
-}
-
 <div
     class="pb-2 row"
   >

@@ -371,10 +371,6 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
   font-weight: bold;
 }
 
-.c6 span {
-  position: absolute;
-}
-
 .c16:hover {
   cursor: pointer;
 }

@@ -220,10 +220,6 @@ exports[`UpdatePersonForm renders as expected 1`] = `
   font-weight: bold;
 }
 
-.c4 span {
-  position: absolute;
-}
-
 .c9 {
   display: -webkit-box;
   display: -webkit-flex;

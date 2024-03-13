@@ -35,10 +35,6 @@ exports[`PropertyManagementUpdateForm component renders as expected 1`] = `
   font-weight: bold;
 }
 
-.c4 span {
-  position: absolute;
-}
-
 .c0 {
   display: -webkit-box;
   display: -webkit-flex;

@@ -301,10 +301,6 @@ exports[`CreateContactContainer component should render as expected 1`] = `
   font-weight: bold;
 }
 
-.c13 span {
-  position: absolute;
-}
-
 .c16 {
   display: -webkit-box;
   display: -webkit-flex;

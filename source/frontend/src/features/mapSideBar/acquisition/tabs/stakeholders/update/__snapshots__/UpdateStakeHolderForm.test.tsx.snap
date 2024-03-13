@@ -237,10 +237,6 @@ exports[`UpdateStakeHolderForm component renders as expected 1`] = `
   font-weight: bold;
 }
 
-.c4 span {
-  position: absolute;
-}
-
 .c10 {
   white-space: nowrap;
   overflow: hidden;

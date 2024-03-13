@@ -39,10 +39,6 @@ exports[`DispositionSummaryView component matches snapshot 1`] = `
   font-weight: bold;
 }
 
-.c3 span {
-  position: absolute;
-}
-
 .c6 {
   padding: 0 0.4rem;
   display: block;

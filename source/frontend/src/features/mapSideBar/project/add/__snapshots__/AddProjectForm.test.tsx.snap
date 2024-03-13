@@ -169,10 +169,6 @@ exports[`AddProjectForm component renders as expected 1`] = `
   font-weight: bold;
 }
 
-.c3 span {
-  position: absolute;
-}
-
 .c0 {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
@@ -859,10 +855,6 @@ exports[`AddProjectForm component renders as expected with existing data 1`] = `
 
 .c3 {
   font-weight: bold;
-}
-
-.c3 span {
-  position: absolute;
 }
 
 .c11 textarea.form-control {

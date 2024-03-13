@@ -174,10 +174,6 @@ exports[`Form 8 Detail View component renders as expected 1`] = `
   font-weight: bold;
 }
 
-.c5 span {
-  position: absolute;
-}
-
 .c8 {
   padding: 0 0.4rem;
   display: block;
