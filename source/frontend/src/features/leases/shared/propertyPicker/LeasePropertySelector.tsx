@@ -109,7 +109,7 @@ export const LeasePropertySelector: React.FunctionComponent<LeasePropertySelecto
         const formProperty = FormLeaseProperty.fromMapProperty(property);
 
         const bcaSummary = property?.pid
-          ? await getPrimaryAddressByPid(property.pid, 3000)
+          ? await getPrimaryAddressByPid(property.pid, 30000)
           : undefined;
 
         // Retrieve the pims id of the property if it exists
