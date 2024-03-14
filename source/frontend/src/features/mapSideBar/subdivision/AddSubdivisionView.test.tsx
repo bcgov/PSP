@@ -5,7 +5,15 @@ import { createRef } from 'react';
 import Claims from '@/constants/claims';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes/lookupCodesSlice';
-import { render, RenderOptions, waitFor, screen, getByTitle, userEvent } from '@/utils/test-utils';
+import {
+  render,
+  RenderOptions,
+  waitFor,
+  screen,
+  getByTitle,
+  userEvent,
+  act,
+} from '@/utils/test-utils';
 import { SubdivisionFormModel } from './AddSubdivisionModel';
 import AddSubdivisionView, { IAddSubdivisionViewProps } from './AddSubdivisionView';
 import PropertySelectorPidSearchContainer, {
@@ -108,7 +116,7 @@ describe('Add Subdivision View', () => {
 
   it('calls getPrimaryAddressByPid when destination property is activated', async () => {
     await setup();
-    await waitFor(async () => {
+    await act(async () => {
       mapSelectorProps.addSelectedProperties([testProperty]);
     });
     expect(getPrimaryAddressByPid).toHaveBeenCalledWith(testProperty.pid);
@@ -116,7 +124,7 @@ describe('Add Subdivision View', () => {
 
   it('does not call for address if property has no pid', async () => {
     await setup();
-    await waitFor(async () => {
+    await act(async () => {
       mapSelectorProps.addSelectedProperties([{ ...testProperty, pid: undefined }]);
     });
     const text = await screen.findByText('Selected property must have a PID');
@@ -126,7 +134,7 @@ describe('Add Subdivision View', () => {
   it('The PID search result is added to the source property', async () => {
     await setup();
     const property = getMockApiProperty();
-    await waitFor(async () => {
+    await act(async () => {
       pidSelectorProps.setSelectProperty(property);
     });
     const text = await screen.findByText(property.pid?.toString() ?? '');
@@ -144,7 +152,7 @@ describe('Add Subdivision View', () => {
     });
 
     const button = getByTitle('remove');
-    await waitFor(async () => {
+    await act(async () => {
       userEvent.click(button);
     });
     expect(queryByText('111-111-111')).toBeNull();
@@ -160,7 +168,7 @@ describe('Add Subdivision View', () => {
     });
 
     const button = getByTitle('remove');
-    await waitFor(async () => {
+    await act(async () => {
       userEvent.click(button);
     });
     expect(queryByText('111-111-111')).toBeNull();

@@ -102,7 +102,7 @@ describe('Manage Users Component', () => {
     const excelIcon = getByTestId('excel-icon');
     mockAxios.onGet().reply(200);
 
-    act(() => {
+    await act(async () => {
       fireEvent.click(excelIcon);
     });
     await waitFor(() => {
@@ -116,7 +116,7 @@ describe('Manage Users Component', () => {
     await fillInput(container, 'firstName', 'testUserFirst1');
     const searchButton = container.querySelector('#search-button');
     mockAxios.onPost().reply(200);
-    act(() => {
+    await act(async () => {
       fireEvent.click(searchButton!);
     });
     await waitFor(() => {
@@ -131,7 +131,9 @@ describe('Manage Users Component', () => {
 
     await fillInput(container, 'email', 'email');
     const resetButton = getByTitle('reset-button');
-    userEvent.click(resetButton);
+    await act(async () => {
+      userEvent.click(resetButton);
+    });
 
     const email = getAllByPlaceholderText('Email')[0];
 
@@ -168,12 +170,15 @@ describe('Manage Users Component', () => {
 
     it('Disable action submits a request', async () => {
       mockAxios.onPut().reply(200, {});
+
       const { getAllByText, getByTitle } = testRender(getStore());
 
       await waitForElementToBeRemoved(getByTitle('table-loading'));
 
       const disableButton = getAllByText('Disable')[0];
-      userEvent.click(disableButton);
+      await act(async () => {
+        userEvent.click(disableButton);
+      });
 
       await waitFor(() => {
         expect(mockAxios.history.put[0].url).toEqual(

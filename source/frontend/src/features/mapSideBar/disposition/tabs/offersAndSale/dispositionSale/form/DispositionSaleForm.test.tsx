@@ -91,12 +91,14 @@ describe('DispositionSaleForm  component', () => {
       },
     });
 
+    await act(async () => {});
     const fragment = await waitFor(() => asFragment());
     expect(fragment).toMatchSnapshot();
   });
 
   it(`renders 'Add Purchaser' link`, async () => {
     const { getByTestId } = await setup({});
+    await act(async () => {});
     expect(getByTestId('add-purchaser-button')).toBeVisible();
   });
 
@@ -165,7 +167,7 @@ describe('DispositionSaleForm  component', () => {
     });
     waitForEffects();
 
-    act(() => {
+    await act(async () => {
       fillInput(container, 'isGstRequired', 'true', 'select');
     });
     waitForEffects();
@@ -194,7 +196,7 @@ describe('DispositionSaleForm  component', () => {
     });
     waitForEffects();
 
-    act(() => {
+    await act(async () => {
       fillInput(container, 'isGstRequired', 'true', 'select');
     });
     waitForEffects();
@@ -202,7 +204,7 @@ describe('DispositionSaleForm  component', () => {
     expect(getGSTCollectedAmountTextbox()).toBeVisible();
     expect(getGSTCollectedAmountTextbox()).toHaveValue('$50,000.00');
 
-    act(() => {
+    await act(async () => {
       fillInput(container, 'isGstRequired', 'false', 'select');
     });
     waitForEffects();
@@ -325,7 +327,7 @@ describe('DispositionSaleForm  component', () => {
     expect(getNetProceedsBeforeSPPAmountTextbox()).toHaveValue('$10,000.00');
     expect(getNetProceedsAfterSPPAmountTextbox()).toHaveValue('$9,500.00');
 
-    act(() => {
+    await act(async () => {
       fillInput(container, 'isGstRequired', 'true', 'select');
     });
     fireEvent.blur(getGSTCollectedAmountTextbox());
@@ -394,7 +396,7 @@ describe('DispositionSaleForm  component', () => {
       fireEvent.change(getFinalSaleAmountTextbox(), { target: { value: '10500' } });
     });
 
-    act(() => {
+    await act(async () => {
       fillInput(container, 'isGstRequired', 'true', 'select');
     });
     await waitForEffects();
@@ -425,7 +427,7 @@ describe('DispositionSaleForm  component', () => {
     expect(getNetProceedsBeforeSPPAmountTextbox()).toHaveValue('$9,500.00');
     expect(getNetProceedsAfterSPPAmountTextbox()).toHaveValue('$9,000.00');
 
-    act(() => {
+    await act(async () => {
       fillInput(container, 'isGstRequired', 'false', 'select');
     });
     await waitForEffects();

@@ -122,7 +122,7 @@ export class InterestHolderForm {
   interestHolderId: number | null = null;
   personId = '';
   organizationId = '';
-  contact: IContactSearchResult | null = null;
+  contact: IContactSearchResult | null = { id: '' };
   primaryContactId?: number | null = null;
   impactedProperties: InterestHolderPropertyForm[] = [];
   interestTypeCode = '';

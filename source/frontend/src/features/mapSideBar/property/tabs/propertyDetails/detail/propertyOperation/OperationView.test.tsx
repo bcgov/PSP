@@ -55,7 +55,6 @@ describe('Subdivision detail view', () => {
       props: { sourceProperties, destinationProperties },
     });
 
-    console.log(container.innerHTML);
     expect(await findAllByText(/PID:/i)).toHaveLength(3);
   });
 

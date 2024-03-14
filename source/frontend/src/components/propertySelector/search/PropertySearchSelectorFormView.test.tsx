@@ -145,7 +145,7 @@ describe('PropertySearchSelectorFormView component', () => {
         searchResults: toMapProperty(mockPropertyLayerSearchResponse.features),
       });
       const nextPage = getByLabelText('Page 2');
-      act(() => userEvent.click(nextPage));
+      await act(async () => userEvent.click(nextPage));
       await waitFor(async () => {
         expect(getByText(`6 - 7 of 7`)).toBeVisible();
         expect(getAllByRole('row')).toHaveLength(3);
@@ -174,7 +174,7 @@ describe('PropertySearchSelectorFormView component', () => {
         searchResults: toMapProperty(mockPropertyLayerSearchResponse.features),
       });
       const checkbox = await findByTestId('selectrow-PID-006-772-331');
-      act(() => userEvent.click(checkbox));
+      await act(async () => userEvent.click(checkbox));
       expect(checkbox).toBeChecked();
       expect(onSelectedProperties).toHaveBeenCalledWith([
         {

@@ -7,7 +7,7 @@ import { mockDispositionAppraisalApi } from '@/mocks/dispositionFiles.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { ApiGen_Concepts_DispositionFileAppraisal } from '@/models/api/generated/ApiGen_Concepts_DispositionFileAppraisal';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { render, RenderOptions, waitForEffects } from '@/utils/test-utils';
+import { prettyDOM, render, RenderOptions, waitForEffects, screen } from '@/utils/test-utils';
 
 import { IDispositionAppraisalFormProps } from '../form/DispositionAppraisalForm';
 import UpdateDispositionAppraisalContainer, {
@@ -91,8 +91,10 @@ describe('Update Disposition Appraisal Container component', () => {
   });
 
   it('Renders the underlying form', async () => {
-    const { getByText } = await setup();
-    expect(getByText(/Content Rendered/)).toBeVisible();
+    await act(async () => {
+      await setup();
+    });
+    expect(screen.getByText(/Content Rendered/)).toBeVisible();
     expect(mockGetAppraisalApi.execute).toHaveBeenCalled();
   });
 
@@ -161,8 +163,8 @@ describe('Update Disposition Appraisal Container component', () => {
   });
 
   it('navigates back to Offers and Sale tab when form is cancelled', async () => {
-    await setup();
-    act(() => {
+    await act(async () => {
+      await setup();
       viewProps?.onCancel();
     });
 
