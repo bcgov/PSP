@@ -158,7 +158,7 @@ describe('Add Consolidation Container component', () => {
   it('Changes the url when the submit operation completes successfully when the response contains a viable property to navigate', async () => {
     await setup({});
 
-    mockAddPropertyOperation.execute.mockResolvedValue([{destinationProperty:{id:1}}]);
+    mockAddPropertyOperation.execute.mockResolvedValue([{ destinationProperty: { id: 1 } }]);
     const model = new ConsolidationFormModel();
     model.sourceProperties = [{} as ApiGen_Concepts_Property];
     model.destinationProperty = { id: 1 } as ApiGen_Concepts_Property;
