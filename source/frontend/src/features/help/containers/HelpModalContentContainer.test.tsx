@@ -23,21 +23,21 @@ describe('help modal content', () => {
         <HelpModalContentContainer setMailto={jest.fn()} />
       </TestCommonWrapper>,
     );
-    await act(async()=>{});
+    await act(async () => {});
     const fragment = await waitFor(() => asFragment());
     expect(fragment).toMatchSnapshot();
   });
 
   it('Populates from keycloak email correctly...', async () => {
     renderComponent();
-    await act(async()=>{});
+    await act(async () => {});
     const email = await waitFor(() => screen.getByDisplayValue('test@test.com'));
     expect(email).toBeInTheDocument();
   });
 
   it('Populates name from keycloak correctly...', async () => {
     renderComponent();
-    await act(async()=>{});
+    await act(async () => {});
     const name = await waitFor(() => screen.getByDisplayValue('Chester Tester'));
     expect(name).toBeInTheDocument();
   });

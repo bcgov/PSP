@@ -78,7 +78,7 @@ describe('AcquisitionProperties component', () => {
   it('should remove property from list when Remove button is clicked', async () => {
     const { getAllByTitle, queryByText } = setup({ initialForm: testForm });
     const pidRow = getAllByTitle('remove')[0];
-    await act(async()=>userEvent.click(pidRow));
+    await act(async () => userEvent.click(pidRow));
 
     await waitFor(() => {
       expect(customSetFilePropertyLocations).toHaveBeenCalledWith([{ lat: 0, lng: 0 }]);

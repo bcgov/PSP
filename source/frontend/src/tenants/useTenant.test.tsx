@@ -37,7 +37,7 @@ describe('useTenant hook', () => {
   it('returns default configuration when REACT_APP_TENANT is not set', async () => {
     process.env.REACT_APP_TENANT = undefined;
     const { findByTestId } = testRender();
-    await act(async()=>{});
+    await act(async () => {});
     const title = await findByTestId('tenant');
     const tenant = title.innerHTML.replace(/&amp;/g, '&');
     expect({ ...JSON.parse(tenant), propertiesUrl: undefined }).toStrictEqual({

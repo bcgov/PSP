@@ -74,7 +74,7 @@ describe('LayerPopupView component', () => {
         featureDataset: null,
       });
       const ellipsis = getByTestId('fly-out-ellipsis');
-      await act(async() => userEvent.click(ellipsis));
+      await act(async () => userEvent.click(ellipsis));
       expect(getByText('View Property info')).toBeVisible();
     });
 
@@ -102,9 +102,9 @@ describe('LayerPopupView component', () => {
         },
       });
       const ellipsis = getByTestId('fly-out-ellipsis');
-      await act(async() => userEvent.click(ellipsis));
+      await act(async () => userEvent.click(ellipsis));
       const link = getByText('View Property info');
-      await act(async() => userEvent.click(link));
+      await act(async () => userEvent.click(link));
       expect(history.location.pathname).toBe(`/mapview/sidebar/property/${propertyId}`);
     });
 
@@ -128,9 +128,9 @@ describe('LayerPopupView component', () => {
         },
       });
       const ellipsis = getByTestId('fly-out-ellipsis');
-      await act(async() => userEvent.click(ellipsis));
+      await act(async () => userEvent.click(ellipsis));
       const link = getByText('View Property info');
-      await act(async() => userEvent.click(link));
+      await act(async () => userEvent.click(link));
       expect(history.location.pathname).toBe(
         `/mapview/sidebar/non-inventory-property/${parsedPid}`,
       );
@@ -144,9 +144,9 @@ describe('LayerPopupView component', () => {
         claims: [Claims.RESEARCH_ADD],
       });
       const ellipsis = getByTestId('fly-out-ellipsis');
-      await act(async() => userEvent.click(ellipsis));
+      await act(async () => userEvent.click(ellipsis));
       const link = getByText('Research File');
-      await act(async() => userEvent.click(link));
+      await act(async () => userEvent.click(link));
       expect(history.location.pathname).toBe('/mapview/sidebar/research/new');
     });
 
@@ -158,9 +158,9 @@ describe('LayerPopupView component', () => {
         claims: [Claims.ACQUISITION_ADD],
       });
       const ellipsis = getByTestId('fly-out-ellipsis');
-      await act(async() => userEvent.click(ellipsis));
+      await act(async () => userEvent.click(ellipsis));
       const link = getByText('Acquisition File');
-      await act(async() => userEvent.click(link));
+      await act(async () => userEvent.click(link));
       expect(history.location.pathname).toBe('/mapview/sidebar/acquisition/new');
     });
 
@@ -179,7 +179,7 @@ describe('LayerPopupView component', () => {
         claims: [Claims.PROPERTY_ADD],
       });
       const ellipsis = getByTestId('fly-out-ellipsis');
-      await act(async() => userEvent.click(ellipsis));
+      await act(async () => userEvent.click(ellipsis));
       const subdivisionLink = queryByText('Create Subdivision');
       expect(subdivisionLink).not.toBeInTheDocument();
       const consolidationLink = queryByText('Create Consolidation');
@@ -207,9 +207,9 @@ describe('LayerPopupView component', () => {
         claims: [Claims.PROPERTY_ADD],
       });
       const ellipsis = getByTestId('fly-out-ellipsis');
-      await act(async() => userEvent.click(ellipsis));
+      await act(async () => userEvent.click(ellipsis));
       const link = getByText('Create Subdivision');
-      await act(async() => userEvent.click(link));
+      await act(async () => userEvent.click(link));
       expect(history.location.pathname).toBe('/mapview/sidebar/subdivision/new');
     });
 
@@ -234,9 +234,9 @@ describe('LayerPopupView component', () => {
         claims: [Claims.PROPERTY_ADD],
       });
       const ellipsis = getByTestId('fly-out-ellipsis');
-      await act(async() => userEvent.click(ellipsis));
+      await act(async () => userEvent.click(ellipsis));
       const link = getByText('Create Consolidation');
-      await act(async() => userEvent.click(link));
+      await act(async () => userEvent.click(link));
       expect(history.location.pathname).toBe('/mapview/sidebar/consolidation/new');
     });
   });

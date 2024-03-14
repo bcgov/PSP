@@ -83,7 +83,7 @@ describe('DepositNotes component', () => {
       disabled: true,
     });
     const editButton = getByTestId('edit-notes');
-    await act(async() => userEvent.click(editButton));
+    await act(async () => userEvent.click(editButton));
     expect(onEdit).toHaveBeenCalled();
   });
 
@@ -95,7 +95,7 @@ describe('DepositNotes component', () => {
     });
     await fillInput(container, 'returnNotes', 'test note', 'textarea');
     const saveButton = getByText('Save');
-    await act(async() => userEvent.click(saveButton));
+    await act(async () => userEvent.click(saveButton));
     expect(onSave).toHaveBeenCalledWith('test note');
   });
 
@@ -106,7 +106,7 @@ describe('DepositNotes component', () => {
       disabled: false,
     });
     const cancelButton = getByText('Cancel');
-    await act(async() => userEvent.click(cancelButton));
+    await act(async () => userEvent.click(cancelButton));
     expect(onCancel).toHaveBeenCalled();
   });
 });

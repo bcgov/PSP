@@ -97,7 +97,7 @@ describe('ResearchContainer component', () => {
   it('renders research details when file is in context', async () => {
     const typedFile: TypedFile = { ...getMockResearchFile(), fileType: FileTypes.Research };
     const { findByText } = setup({ context: { file: typedFile } });
-    await act(async()=>{});
+    await act(async () => {});
     expect(await findByText('File Summary')).toBeVisible();
   });
 

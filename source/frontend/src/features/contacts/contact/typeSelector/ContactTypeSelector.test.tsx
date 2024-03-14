@@ -61,7 +61,7 @@ describe('ContactTypeSelector component', () => {
     const {
       component: { getByLabelText },
     } = setup({ contactType: ContactTypes.ORGANIZATION });
-    await act(async() => userEvent.click(getByLabelText('Individual')));
+    await act(async () => userEvent.click(getByLabelText('Individual')));
     expect(setContactTypeFn).toHaveBeenCalledWith(ContactTypes.INDIVIDUAL);
   });
 
@@ -69,7 +69,7 @@ describe('ContactTypeSelector component', () => {
     const {
       component: { getByLabelText },
     } = setup({ contactType: ContactTypes.INDIVIDUAL });
-    await act(async() => userEvent.click(getByLabelText('Organization')));
+    await act(async () => userEvent.click(getByLabelText('Organization')));
     expect(setContactTypeFn).toHaveBeenCalledWith(ContactTypes.ORGANIZATION);
   });
 });

@@ -114,7 +114,7 @@ describe('AddLeaseContainer component', () => {
     const { asFragment, findByText } = await setup({});
     await findByText(/First nation/i);
     expect(asFragment()).toMatchSnapshot();
-    await act(async()=>{});
+    await act(async () => {});
   });
 
   it('cancels the form', async () => {

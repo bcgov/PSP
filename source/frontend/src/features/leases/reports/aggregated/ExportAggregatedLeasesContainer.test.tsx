@@ -65,7 +65,7 @@ describe('PaymentsContainer component', () => {
     } = await setup();
     mockAxios.onGet().reply(200, {});
 
-    await act(async() => userEvent.click(getByTitle('Export Aggregated Report')));
+    await act(async () => userEvent.click(getByTitle('Export Aggregated Report')));
 
     await waitFor(() => {
       expect(mockAxios.history.get[0].url).toEqual(
@@ -80,7 +80,7 @@ describe('PaymentsContainer component', () => {
     } = await setup();
     mockAxios.onGet().reply(400, {});
 
-    await act(async() => userEvent.click(getByTitle('Export Aggregated Report')));
+    await act(async () => userEvent.click(getByTitle('Export Aggregated Report')));
     const errorText = await findByText(
       'Failed to export report. If this error persists, please contact your System Administrator.',
     );

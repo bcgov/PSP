@@ -78,7 +78,7 @@ describe('NoteDetailsFormModal component', () => {
 
   it('should execute callback when Close button is clicked', async () => {
     const { getModalCloseButton } = setup();
-    await act(async() => userEvent.click(getModalCloseButton()));
+    await act(async () => userEvent.click(getModalCloseButton()));
 
     expect(onClose).toBeCalled();
   });
@@ -106,7 +106,7 @@ describe('NoteDetailsFormModal component', () => {
 
   it('should execute callback when Edit button is clicked', async () => {
     const { getEditButton } = setup({ ...BASIC_PROPS }, { claims: [Claims.NOTE_EDIT] });
-    await act(async() => userEvent.click(getEditButton()));
+    await act(async () => userEvent.click(getEditButton()));
 
     expect(onEdit).toBeCalledWith(mockNoteResponse(1));
     expect(onClose).not.toBeCalled();

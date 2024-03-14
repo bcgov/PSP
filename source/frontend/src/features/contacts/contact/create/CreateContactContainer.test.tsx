@@ -28,19 +28,19 @@ describe('CreateContactContainer component', () => {
 
   it('should render as expected', async () => {
     const { asFragment } = setup();
-    await act(async()=>{});
+    await act(async () => {});
     expect(asFragment()).toMatchSnapshot();
   });
 
   it('should display contact selector', async () => {
     const { getByLabelText } = setup();
-    await act(async()=>{});
+    await act(async () => {});
     expect(getByLabelText('Individual')).toBeVisible();
   });
 
   it('should render Create Person form by default', async () => {
     const { getByText } = setup();
-    await act(async()=>{});
+    await act(async () => {});
     expect(getByText(/First name/i)).toBeVisible();
   });
 

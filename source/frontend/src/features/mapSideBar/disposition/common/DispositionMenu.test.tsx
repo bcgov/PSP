@@ -75,7 +75,7 @@ describe('DispositionMenu component', () => {
     expect(getByTestId('menu-item-row-2')).not.toHaveClass('selected');
   });
 
-  it('allows the selected item to be changed', async() => {
+  it('allows the selected item to be changed', async () => {
     const { getByText } = setup({
       dispositionFile: mockDispositionFileResponse(),
       items: testData,
@@ -83,12 +83,12 @@ describe('DispositionMenu component', () => {
     });
 
     const lastItem = getByText('three');
-    await act(async() => userEvent.click(lastItem));
+    await act(async () => userEvent.click(lastItem));
 
     expect(onChange).toHaveBeenCalledWith(2);
   });
 
-  it(`renders the edit button for users with property edit permissions`, async() => {
+  it(`renders the edit button for users with property edit permissions`, async () => {
     const { getByTitle, queryByTestId } = setup(
       {
         dispositionFile: mockDispositionFileResponse(),
@@ -101,7 +101,7 @@ describe('DispositionMenu component', () => {
     const button = getByTitle('Change properties');
     expect(button).toBeVisible();
 
-    await act(async() => userEvent.click(button));
+    await act(async () => userEvent.click(button));
 
     const icon = queryByTestId('tooltip-icon-1-summary-cannot-edit-tooltip');
     expect(onShowPropertySelector).toHaveBeenCalled();

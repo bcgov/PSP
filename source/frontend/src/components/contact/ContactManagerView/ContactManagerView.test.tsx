@@ -126,7 +126,7 @@ describe('ContactManagerView', () => {
     setupMockSearch([defaultPersonSearchResult]);
     const { container, searchButton } = setup({});
     const allButton = container.querySelector(`#input-all`);
-    allButton && await act(async () => userEvent.click(allButton));
+    allButton && (await act(async () => userEvent.click(allButton)));
     await act(async () => userEvent.click(searchButton));
 
     expect(getContacts).toHaveBeenCalledWith(

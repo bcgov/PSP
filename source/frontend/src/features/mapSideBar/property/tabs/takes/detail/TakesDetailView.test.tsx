@@ -63,7 +63,7 @@ describe('TakesDetailView component', () => {
   it('clicking the edit button fires the edit event', async () => {
     const { getByTitle } = setup({ props: { loading: true }, claims: [Claims.PROPERTY_EDIT] });
     const editButton = getByTitle('Edit takes');
-    await act(async() => userEvent.click(editButton));
+    await act(async () => userEvent.click(editButton));
     expect(onEdit).toHaveBeenCalled();
   });
 

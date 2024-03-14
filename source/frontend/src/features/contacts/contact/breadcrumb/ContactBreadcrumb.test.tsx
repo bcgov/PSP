@@ -31,7 +31,7 @@ describe('ContactBreadCrumb component', () => {
   it('navigates to the expected location when contact search clicked', async () => {
     const { component } = setup();
     const { getByText } = component;
-    await act(async() => userEvent.click(getByText('Contact Search')));
+    await act(async () => userEvent.click(getByText('Contact Search')));
     expect(history.location.pathname).toBe('/contact/list');
   });
 

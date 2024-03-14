@@ -74,7 +74,7 @@ describe('ReceivedDepositModal component', () => {
     await fillInput(document.body, 'depositDate', '2020-01-02', 'datepicker');
     await fillInput(document.body, 'contactHolder.id', 'p1');
     const saveButton = getByText('Yes');
-    await act(async() => userEvent.click(saveButton));
+    await act(async () => userEvent.click(saveButton));
     await waitFor(() => expect(onSave).toHaveBeenCalled());
     expect(onSave).toHaveBeenCalledWith({
       amountPaid: 1235,
@@ -94,7 +94,7 @@ describe('ReceivedDepositModal component', () => {
       component: { getByText },
     } = await setup({});
     const cancelButton = getByText('No');
-    await act(async() => userEvent.click(cancelButton));
+    await act(async () => userEvent.click(cancelButton));
     expect(onCancel).toHaveBeenCalled();
   });
 });

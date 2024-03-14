@@ -304,7 +304,7 @@ describe('PaymentsForm component', () => {
         isReceivable: false,
       });
       const editButton = await findAllByTitle('edit actual');
-      await act(async()=>userEvent.click(editButton[0]));
+      await act(async () => userEvent.click(editButton[0]));
       expect(onEdit).toHaveBeenCalledWith(defaultTestFormLeasePayment);
     });
 
@@ -317,7 +317,7 @@ describe('PaymentsForm component', () => {
         claims: [Claims.LEASE_EDIT],
       });
       const deleteButton = await findAllByTitle('delete actual');
-      await act(async ()=>userEvent.click(deleteButton[0]));
+      await act(async () => userEvent.click(deleteButton[0]));
       expect(onDelete).toHaveBeenCalledWith(defaultTestFormLeasePayment);
     });
   });

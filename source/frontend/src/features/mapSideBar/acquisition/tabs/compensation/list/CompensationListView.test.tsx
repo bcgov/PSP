@@ -125,7 +125,7 @@ describe('compensation list view', () => {
     });
 
     const deleteButton = (await findAllByTitle('Delete Compensation'))[0];
-    await act(async() => userEvent.click(deleteButton));
+    await act(async () => userEvent.click(deleteButton));
     await waitFor(() => {
       expect(onDelete).toHaveBeenCalledWith(compensations[3].id);
     });
@@ -182,7 +182,7 @@ describe('compensation list view', () => {
 
     const addButton = getByText('Add a Requisition');
     expect(addButton).toBeVisible();
-    await act(async() => userEvent.click(addButton));
+    await act(async () => userEvent.click(addButton));
     await waitFor(() => {
       expect(onAddCompensationRequisition).toHaveBeenCalled();
     });

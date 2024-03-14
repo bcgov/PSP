@@ -268,8 +268,8 @@ xdescribe('MapProperties View', () => {
 
     const nameInput = findPidField();
     const searchButton = findSearchButton();
-    await act(async() => userEvent.type(nameInput, '123-456-789'));
-    await act(async() => userEvent.click(searchButton));
+    await act(async () => userEvent.type(nameInput, '123-456-789'));
+    await act(async () => userEvent.click(searchButton));
     // check API call params...
     const filter = expect.objectContaining({ PID: '123456789' });
     await waitFor(() => expect(mockLoadProperties).toHaveBeenCalledWith(filter));
@@ -284,7 +284,7 @@ xdescribe('MapProperties View', () => {
     });
     await waitFor(() => ready);
     const searchButton = findSearchButton();
-    await act(async() => userEvent.click(searchButton));
+    await act(async () => userEvent.click(searchButton));
     expect(mockLoadProperties).toHaveBeenCalled();
   });
 
@@ -304,13 +304,13 @@ xdescribe('MapProperties View', () => {
     // type something in the filter bar
     const nameInput = findPidField();
     const searchButton = findSearchButton();
-    await act(async() => userEvent.type(nameInput, '123-456-789'));
-    await act(async() => userEvent.click(searchButton));
+    await act(async () => userEvent.type(nameInput, '123-456-789'));
+    await act(async () => userEvent.click(searchButton));
     // check API call params...
     const filter = expect.objectContaining({ PID: '123456789' });
     await waitFor(() => expect(mockLoadProperties).toHaveBeenCalledWith(filter));
     const resetButton = findResetButton();
-    await act(async() => userEvent.click(resetButton));
+    await act(async () => userEvent.click(resetButton));
     const defaultFilter = expect.objectContaining({ PID: undefined });
     await waitFor(() => expect(mockLoadProperties).toHaveBeenCalledWith(defaultFilter));
   });

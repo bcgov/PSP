@@ -155,7 +155,7 @@ describe('CreatePersonForm', () => {
 
   it('renders as expected', async () => {
     const { asFragment } = setup();
-    await act(async()=>{});
+    await act(async () => {});
     expect(asFragment()).toMatchSnapshot();
   });
 

@@ -124,7 +124,7 @@ describe('Disposition Offer Detail View component', () => {
     });
 
     const deleteButton = getByTestId('Offer[0].delete-btn');
-    await act(async() => userEvent.click(deleteButton));
+    await act(async () => userEvent.click(deleteButton));
 
     expect(onDelete).not.toHaveBeenCalled();
     expect(await findByText(/You have selected to delete this offer./i)).toBeVisible();
@@ -139,7 +139,7 @@ describe('Disposition Offer Detail View component', () => {
     });
 
     const editButton = getByTestId('Offer[0].edit-btn');
-    await act(async() => userEvent.click(editButton));
+    await act(async () => userEvent.click(editButton));
 
     expect(history.location.pathname).toBe('//offers/100/update');
   });

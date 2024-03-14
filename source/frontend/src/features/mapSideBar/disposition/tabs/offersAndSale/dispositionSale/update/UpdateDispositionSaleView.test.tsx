@@ -63,11 +63,9 @@ describe('Update Disposition Sale View', () => {
   });
 
   it('renders as expected', async () => {
-    
     const { asFragment } = await setup();
-    await act(async ()=>{});
+    await act(async () => {});
     const fragment = await waitFor(async () => asFragment());
     expect(fragment).toMatchSnapshot();
-    
   });
 });

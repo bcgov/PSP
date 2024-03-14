@@ -46,7 +46,7 @@ describe('Layer Popup links', () => {
     const link = getByText(/Zoom/i);
     expect(link).toBeInTheDocument();
     // click link
-    await act(async() => userEvent.click(link));
+    await act(async () => userEvent.click(link));
     expect(mapMachineMock.requestFlyToBounds).toBeCalled();
   });
 });

@@ -82,7 +82,7 @@ describe('ReturnedDepositModal component', () => {
     await fillInput(document.body, 'contactHolder.id', 'p1');
 
     const saveButton = getByText('Save');
-    await act(async() => userEvent.click(saveButton));
+    await act(async () => userEvent.click(saveButton));
     await waitFor(() => expect(onSave).toHaveBeenCalled());
     expect(onSave).toHaveBeenCalledWith({
       claimsAgainst: 1000,

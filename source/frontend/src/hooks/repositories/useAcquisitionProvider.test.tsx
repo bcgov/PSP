@@ -78,7 +78,7 @@ describe('useAcquisitionProvider hook', () => {
       mockAxios.onPost(url).reply(400, MOCK.ERROR);
       const { addAcquisitionFile } = setup();
 
-      await act(async()=>{
+      await act(async () => {
         expect(async () => {
           await addAcquisitionFile.execute(mockAcquisitionFileResponse(1), []);
         }).rejects.toThrow();

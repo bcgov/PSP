@@ -375,7 +375,7 @@ describe('MapContainer', () => {
     const cluster = container.querySelector('.leaflet-marker-icon.marker-cluster');
     expect(cluster).toBeVisible();
     await waitFor(async () => {
-      await act(async() => userEvent.click(cluster!));
+      await act(async () => userEvent.click(cluster!));
       const polyline = container.querySelector('.leaflet-pane.leaflet-overlay-pane svg g');
       expect(polyline).toBeVisible();
     });

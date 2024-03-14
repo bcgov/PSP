@@ -70,7 +70,7 @@ describe('LayersControl View', () => {
     expect(layersContainer.className).toContain('closed');
     // clicking the button should open it...
     const toggleBtn = findToggleButton();
-    await act(async() => userEvent.click(toggleBtn));
+    await act(async () => userEvent.click(toggleBtn));
     await waitFor(() => expect(layersContainer.className).not.toContain('closed'));
   });
 
@@ -83,7 +83,7 @@ describe('LayersControl View', () => {
     expect(layersContainer.className).not.toContain('closed');
     // clicking the button should close it...
     const toggleBtn = findToggleButton();
-    await act(async() => userEvent.click(toggleBtn));
+    await act(async () => userEvent.click(toggleBtn));
     await waitFor(() => expect(layersContainer.className).toContain('closed'));
   });
 

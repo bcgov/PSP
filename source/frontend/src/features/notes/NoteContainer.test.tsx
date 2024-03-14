@@ -117,7 +117,7 @@ describe('NoteContainer component', () => {
       const modalTitle = getByText(/Notes/i);
       expect(modalTitle).toBeVisible();
 
-      await act(async() => userEvent.click(getCloseButton()));
+      await act(async () => userEvent.click(getCloseButton()));
       await waitFor(() => expect(closeModal).toBeCalled());
     });
 
@@ -190,7 +190,7 @@ describe('NoteContainer component', () => {
       const modalTitle = getByText(/Notes/i);
       expect(modalTitle).toBeVisible();
 
-      await act(async() => userEvent.click(getCancelButton()));
+      await act(async () => userEvent.click(getCancelButton()));
       await waitFor(() => expect(closeModal).toBeCalled());
     });
 
@@ -205,7 +205,9 @@ describe('NoteContainer component', () => {
 
       const textarea = await findByLabelText(/Type a note/i);
       await act(async () => userEvent.clear(textarea));
-      await act(async () => userEvent.type(textarea, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'));
+      await act(async () =>
+        userEvent.type(textarea, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'),
+      );
 
       mockAxios.onPut().reply(200, mockNoteResponse(1));
       await act(async () => userEvent.click(getSaveButton()));

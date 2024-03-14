@@ -66,11 +66,11 @@ describe('ChecklistView component', () => {
     expect(asFragment()).toMatchSnapshot();
   });
 
-  it('renders the edit button for users with acquisition edit permissions', async() => {
+  it('renders the edit button for users with acquisition edit permissions', async () => {
     const { getByTitle } = setup({ claims: [Claims.ACQUISITION_EDIT] });
     const editButton = getByTitle('Edit checklist');
     expect(editButton).toBeVisible();
-    await act(async() => userEvent.click(editButton));
+    await act(async () => userEvent.click(editButton));
     expect(mockViewProps.onEdit).toHaveBeenCalled();
   });
 

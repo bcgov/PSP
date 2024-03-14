@@ -116,7 +116,7 @@ describe('Manage Users Component', () => {
     await fillInput(container, 'firstName', 'testUserFirst1');
     const searchButton = container.querySelector('#search-button');
     mockAxios.onPost().reply(200);
-    await act(async() => {
+    await act(async () => {
       fireEvent.click(searchButton!);
     });
     await waitFor(() => {
@@ -170,13 +170,13 @@ describe('Manage Users Component', () => {
 
     it('Disable action submits a request', async () => {
       mockAxios.onPut().reply(200, {});
-      
+
       const { getAllByText, getByTitle } = testRender(getStore());
 
       await waitForElementToBeRemoved(getByTitle('table-loading'));
 
       const disableButton = getAllByText('Disable')[0];
-      await act(async()=>{
+      await act(async () => {
         userEvent.click(disableButton);
       });
 

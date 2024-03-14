@@ -70,7 +70,7 @@ describe('Lease and License List View', () => {
   it('matches snapshot', async () => {
     setupMockSearch();
     const { asFragment } = setup();
-    await act(async()=>{});
+    await act(async () => {});
 
     const fragment = await waitFor(() => asFragment());
     expect(fragment).toMatchSnapshot();

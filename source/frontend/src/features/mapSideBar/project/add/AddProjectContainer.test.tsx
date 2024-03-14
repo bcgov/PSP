@@ -112,7 +112,7 @@ describe('AddProjectContainer component', () => {
 
   it('renders as expected', async () => {
     const { asFragment } = setup();
-    await act(async()=>{});
+    await act(async () => {});
     expect(asFragment()).toMatchSnapshot();
   });
 
@@ -135,7 +135,7 @@ describe('AddProjectContainer component', () => {
     expect(selectRegion.tagName).toBe('SELECT');
     expect(selectStatus).toBeVisible();
     expect(selectStatus.tagName).toBe('SELECT');
-    await act(async()=>{});
+    await act(async () => {});
   });
 
   it('should save the form and navigate to details view when Save button is clicked', async () => {
@@ -179,7 +179,7 @@ describe('AddProjectContainer component', () => {
           formValues.summary,
         ),
       );
-      await act(async() => userEvent.click(getSaveButton()));
+    await act(async () => userEvent.click(getSaveButton()));
 
     await waitFor(() => {
       const axiosData: ApiGen_Concepts_Project = JSON.parse(mockAxios.history.post[0].data);

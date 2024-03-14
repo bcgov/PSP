@@ -90,10 +90,10 @@ describe('DepositsContainer', () => {
       claims: [Claims.LEASE_EDIT],
     });
     const editButton = getByTestId('edit-notes');
-    await act(async() => userEvent.click(editButton));
+    await act(async () => userEvent.click(editButton));
     await fillInput(container, 'returnNotes', 'test note', 'textarea');
     const saveButton = getByText('Save');
-    await act(async() => userEvent.click(saveButton));
+    await act(async () => userEvent.click(saveButton));
     await waitFor(async () => {
       expect(mockAxios.history.put).toHaveLength(1);
     });

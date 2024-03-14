@@ -189,7 +189,7 @@ describe('PropertySelectorSearchContainer component', () => {
       // clicking on a suggestion should initiate a search by address
       const firstAddress = addressSuggestions?.firstElementChild as HTMLElement;
       expect(firstAddress).toBeInTheDocument();
-      await act(async() => userEvent.click(firstAddress));
+      await act(async () => userEvent.click(firstAddress));
     });
 
     await waitFor(() => {

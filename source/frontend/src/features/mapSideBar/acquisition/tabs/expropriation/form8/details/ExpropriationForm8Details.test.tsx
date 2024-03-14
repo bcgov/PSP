@@ -107,7 +107,7 @@ describe('Form 8 Detail View component', () => {
     });
 
     const deleteButton = getByTestId('form8[0].delete-form8');
-    await act(async() => userEvent.click(deleteButton));
+    await act(async () => userEvent.click(deleteButton));
 
     expect(onDelete).not.toHaveBeenCalled();
     expect(await findByText(/Do you wish to remove this Form 8./i)).toBeVisible();
@@ -122,7 +122,7 @@ describe('Form 8 Detail View component', () => {
     });
 
     const editButton = getByTestId('form8[0].edit-form8');
-    await act(async() => userEvent.click(editButton));
+    await act(async () => userEvent.click(editButton));
 
     expect(history.location.pathname).toBe('//1');
   });

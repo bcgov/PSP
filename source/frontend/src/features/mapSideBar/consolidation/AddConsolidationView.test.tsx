@@ -5,7 +5,15 @@ import { createRef } from 'react';
 import Claims from '@/constants/claims';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes/lookupCodesSlice';
-import { render, RenderOptions, waitFor, screen, getByTitle, userEvent, act } from '@/utils/test-utils';
+import {
+  render,
+  RenderOptions,
+  waitFor,
+  screen,
+  getByTitle,
+  userEvent,
+  act,
+} from '@/utils/test-utils';
 import { ConsolidationFormModel } from './AddConsolidationModel';
 import AddConsolidationView, { IAddConsolidationViewProps } from './AddConsolidationView';
 import { PropertySelectorPidSearchContainerProps } from '@/components/propertySelector/search/PropertySelectorPidSearchContainer';

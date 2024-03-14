@@ -185,7 +185,7 @@ describe('AddAcquisitionContainer component', () => {
     const { getCancelButton, getByText } = await setup();
 
     expect(getByText(/Create Acquisition File/i)).toBeVisible();
-    await act(async ()=>userEvent.click(getCancelButton()));
+    await act(async () => userEvent.click(getCancelButton()));
 
     expect(onClose).toBeCalled();
   });

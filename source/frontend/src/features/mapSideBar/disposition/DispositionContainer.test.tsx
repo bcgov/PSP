@@ -147,7 +147,7 @@ describe('DispositionContainer component', () => {
     const spinner = getByTestId('filter-backdrop-loading');
     await waitForElementToBeRemoved(spinner);
 
-    await act(async()=>{
+    await act(async () => {
       await viewProps.onUpdateProperties(mockDispositionFileApi);
     });
     expect(spinner).not.toBeVisible();
@@ -166,7 +166,7 @@ describe('DispositionContainer component', () => {
     mockAxios
       .onPut(new RegExp('dispositionfiles/1/properties'))
       .reply(400, { error: errorMessage });
-    await act(async()=>{
+    await act(async () => {
       await viewProps.onUpdateProperties(mockDispositionFileApi);
     });
     expect(spinner).not.toBeVisible();
@@ -195,7 +195,7 @@ describe('DispositionContainer component', () => {
     await screen.findByText('1');
     await act(async () => viewProps.onMenuChange(1));
 
-    await waitFor(()=>{
+    await waitFor(() => {
       const warning = getByText(/Confirm Changes/i);
       expect(warning).toBeVisible();
     });

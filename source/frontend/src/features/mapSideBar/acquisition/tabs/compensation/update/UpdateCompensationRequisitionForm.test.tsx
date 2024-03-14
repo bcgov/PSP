@@ -175,7 +175,7 @@ describe('Compensation Requisition UpdateForm component', () => {
     });
 
     const saveButton = getByText('Save');
-    await act(async()=>userEvent.click(saveButton));
+    await act(async () => userEvent.click(saveButton));
 
     expect(await findByText(/Special instructions must be at most 2000 characters/i)).toBeVisible();
     expect(await findByText(/Detailed remarks must be at most 2000 characters/i)).toBeVisible();
@@ -208,7 +208,7 @@ describe('Compensation Requisition UpdateForm component', () => {
       getPayeePaymentInTrust,
     } = await setup({ props: { initialValues: compensationWithPayeeInformation } });
 
-    await waitFor(async ()=>{});
+    await waitFor(async () => {});
 
     expect(getPayeePaymentInTrust()).toBeChecked();
     expect(getPayeeGSTNumber()).toHaveValue('9999');

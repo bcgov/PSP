@@ -83,7 +83,7 @@ describe('AcquisitionMenu component', () => {
     });
 
     const lastItem = getByText('three');
-    await act(async() => userEvent.click(lastItem));
+    await act(async () => userEvent.click(lastItem));
 
     expect(onChange).toHaveBeenCalledWith(2);
   });
@@ -101,7 +101,7 @@ describe('AcquisitionMenu component', () => {
     const button = getByTitle('Change properties');
     expect(button).toBeVisible();
 
-    await act(async() => userEvent.click(button));
+    await act(async () => userEvent.click(button));
 
     const icon = queryByTestId('tooltip-icon-1-summary-cannot-edit-tooltip');
     expect(onShowPropertySelector).toHaveBeenCalled();
