@@ -135,17 +135,8 @@ describe('DispositionView component', () => {
 
     expect(getByText('Disposition File')).toBeVisible();
 
-    expect(getByText(/FILE_NUMBER 3A8F46B/g)).toBeVisible();
+    expect(getByText(/FILE_NUMBER 3A8F46B/i)).toBeVisible();
     expect(getByText(prettyFormatUTCDate(testDispositionFile.appCreateTimestamp))).toBeVisible();
-  });
-
-  it('should close the form when Close button is clicked', async () => {
-    const { getCloseButton, getByText } = await setup();
-
-    expect(getByText('Disposition File')).toBeVisible();
-    await waitFor(() => userEvent.click(getCloseButton()));
-
-    expect(onClose).toBeCalled();
   });
 
   it('should display the Edit Properties button if the user has permissions', async () => {
@@ -182,7 +173,7 @@ describe('DispositionView component', () => {
     expect(tab).toBeVisible();
     expect(tab).toHaveClass('active');
     // toast
-    expect(await findByText(/Could not find property in the file/)).toBeVisible();
+    expect(await findByText(/Could not find property in the file/i)).toBeVisible();
   });
 
   it('should display the Property Selector according to routing', async () => {
@@ -242,5 +233,14 @@ describe('DispositionView component', () => {
     history.replace(`/mapview/sidebar/disposition/1/property/1?edit=true`);
     const { getByText } = await setup({ ...DEFAULT_PROPS, isEditing: true } as any);
     expect(getByText('Update Property File Data')).toBeVisible();
+  });
+
+  it('should close the form when Close button is clicked', async () => {
+    const { getCloseButton, getByText } = await setup();
+
+    expect(getByText('Disposition File')).toBeVisible();
+    await act(async () => userEvent.click(getCloseButton()));
+
+    expect(onClose).toBeCalled();
   });
 });

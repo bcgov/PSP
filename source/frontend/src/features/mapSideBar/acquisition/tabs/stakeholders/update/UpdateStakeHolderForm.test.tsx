@@ -8,6 +8,7 @@ import { act, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import { StakeHolderForm } from './models';
 import UpdateStakeHolderForm, { IUpdateStakeHolderFormProps } from './UpdateStakeHolderForm';
+import React from 'react';
 
 const history = createMemoryHistory();
 const storeState = {
@@ -25,7 +26,7 @@ describe('UpdateStakeHolderForm component', () => {
       <UpdateStakeHolderForm
         {...renderOptions.props}
         onSubmit={onSubmit}
-        formikRef={{} as any}
+        formikRef={React.createRef() as any}
         file={mockAcquisitionFileResponse()}
         interestHolders={
           renderOptions.props?.interestHolders ??

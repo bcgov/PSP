@@ -56,7 +56,7 @@ const AddSubdivisionContainer: React.FC<IAddSubdivisionContainerProps> = ({ onCl
 
   const getAddress = useCallback(
     async (pid: string): Promise<AddressForm | undefined> => {
-      const bcaSummary = await getPrimaryAddressByPid(pid, 3000);
+      const bcaSummary = await getPrimaryAddressByPid(pid, 30000);
       return bcaSummary?.address ? AddressForm.fromBcaAddress(bcaSummary?.address) : undefined;
     },
     [getPrimaryAddressByPid],

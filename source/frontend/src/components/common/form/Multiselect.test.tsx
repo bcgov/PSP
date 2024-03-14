@@ -91,11 +91,11 @@ describe('Multiselect component', () => {
 
     // click on the multi-select to show drop-down list
     await waitFor(async () => {
-      act(() => userEvent.click(getInput()));
+      await act(async () => userEvent.click(getInput()));
     });
 
     // select an option from the drop-down
-    focusOptionMultiselect(container, optionSelected, fakeOptions);
+    await focusOptionMultiselect(container, optionSelected, fakeOptions);
 
     // assert
     expect(onSelectSpy).toHaveBeenCalledWith([optionSelected]);
@@ -116,7 +116,7 @@ describe('Multiselect component', () => {
 
     // find option to remove (multi-select chip) and click on the X icon
     const chip = findChip(optionToRemove);
-    await act(async () => await waitFor(() => userEvent.click(findChipCloseIcon(chip))));
+    await act(async () => userEvent.click(findChipCloseIcon(chip)));
 
     // assert
     expect(onRemoveSpy).toHaveBeenCalledWith(remainingOptions);

@@ -164,7 +164,7 @@ export const getMockSales = () => ({
         SALES_COUNT: 2,
         SALES_ID: 'D0000229XY',
         DOCUMENT_NUMBER: 'BA123339',
-        CONVEYANCE_DATE: '2006-08-16Z',
+        CONVEYANCE_DATE: '2006-08-16',
         CONVEYANCE_PRICE: 999000,
         CONVEYANCE_TYPE: '7',
         CONVEYANCE_TYPE_DESCRIPTION: 'Improved Single Property Transaction',

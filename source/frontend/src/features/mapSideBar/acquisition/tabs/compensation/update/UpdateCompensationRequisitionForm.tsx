@@ -1,6 +1,7 @@
 import { Formik, FormikProps } from 'formik';
 import moment from 'moment';
 import { useEffect, useRef, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 import {
@@ -323,14 +324,21 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
               variant="info"
               display={showModal}
               title="Confirm status change"
-              message={[
-                `You have selected to change the status from DRAFT to FINAL.
-
-                We recommend that you only make this change status (draft to final) when printing the final version, as `,
-                // eslint-disable-next-line react/jsx-key
-                <strong>you will not be able to roll back to draft status </strong>,
-                `without system administrator privileges. The compensation requisition cannot be changed again once it is saved as final.`,
-              ]}
+              message={
+                <>
+                  You have selected to change the status from DRAFT to FINAL. <br />
+                  <br />
+                  We recommend that you only make this change status (draft to final) when printing
+                  the final version, as
+                  <br />
+                  <br />
+                  <strong key="">you will not be able to roll back to draft status </strong>
+                  <br />
+                  <br />
+                  without system administrator privileges. The compensation requisition cannot be
+                  changed again once it is saved as final.
+                </>
+              }
               okButtonText="Proceed"
               cancelButtonText="Cancel"
               handleOk={async () => {
