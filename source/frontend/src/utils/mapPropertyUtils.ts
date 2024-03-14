@@ -221,13 +221,15 @@ export function featuresetToMapProperty(
 
 export function pidFromFeatureSet(featureset: LocationFeatureDataset): string | null {
   return (
-    featureset.pimsFeature?.properties?.PID ?? featureset.parcelFeature?.properties?.PID ?? null
+    featureset.pimsFeature?.properties?.PID?.toString() ??
+    featureset.parcelFeature?.properties?.PID ??
+    null
   );
 }
 
 export function pinFromFeatureSet(featureset: LocationFeatureDataset): string | null {
   return (
-    featureset.pimsFeature?.properties?.PIN ??
+    featureset.pimsFeature?.properties?.PIN?.toString() ??
     featureset.parcelFeature?.properties?.PIN?.toString() ??
     null
   );

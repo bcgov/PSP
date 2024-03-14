@@ -6,12 +6,16 @@ namespace PIMS.Tests.Automation.PageObjects
     {
         //Search Acquisition File Pagination
 
+        private By searchListResetButton = By.Id("reset-button");
+
         private By searchTableEntriesSpan = By.XPath("//span[contains(text(),'Entries')]");
         private By searchTablePagination5 = By.CssSelector("div[title='menu-item-5']");
         private By searchTablePagination10 = By.CssSelector("div[title='menu-item-10']");
         private By searchTablePagination20 = By.CssSelector("div[title='menu-item-20']");
         private By searchTablePagination50 = By.CssSelector("div[title='menu-item-50']");
         private By searchTablePagination100 = By.CssSelector("div[title='menu-item-100']");
+
+        private By searchTableNextPageButton = By.CssSelector("ul[class='pagination'] li:last-child");
 
         public SharedPagination(IWebDriver webDriver) : base(webDriver)
         {}
@@ -46,6 +50,17 @@ namespace PIMS.Tests.Automation.PageObjects
                     webDriver.FindElement(searchTablePagination100).Click();
                     break;
             }
+        }
+
+        public void GoNextPage()
+        {
+            webDriver.FindElement(searchTableNextPageButton).Click();
+        }
+
+        public void ResetSearch()
+        {
+            WaitUntilClickable(searchListResetButton);
+            webDriver.FindElement(searchListResetButton).Click();
         }
     }
 }

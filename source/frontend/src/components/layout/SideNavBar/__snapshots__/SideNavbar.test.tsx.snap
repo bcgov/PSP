@@ -326,6 +326,27 @@ exports[`SideNavbar display and logic renders 1`] = `
           </label>
         </a>
       </div>
+      <div
+        class="c2 nav-item"
+        data-testid="nav-tooltip-subdivision&consolidation"
+      >
+        <a
+          class="c3 nav-link"
+          href="#"
+          role="button"
+        >
+          <svg
+            class="m-1"
+          >
+            subdivisionconsolidation.svg
+          </svg>
+          <label
+            class="c4"
+          >
+            Subdivision & Consolidation
+          </label>
+        </a>
+      </div>
       <svg
         class="chevron"
         fill="currentColor"

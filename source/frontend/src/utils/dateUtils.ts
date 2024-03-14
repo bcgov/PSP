@@ -32,6 +32,15 @@ export const prettyFormatUTCDate = (date?: string | Date | Moment | null) => {
 };
 
 /**
+ * Formats the passed string UTC date with custom date format: 'hh:mm a'
+ * @param date UTC date/time string.
+ * @returns A string representing the input date in time format.
+ */
+export const prettyFormatUTCTime = (date?: string | Date | Moment | null) => {
+  return formatUTCDateTime(date, 'hh:mm a');
+};
+
+/**
  * Formats the passed string date with custom date format: 'MMM D, YYYY hh:mm a'
  * @param date UTC date/time string.
  * @returns A string representing the input date in the supplied date/time format

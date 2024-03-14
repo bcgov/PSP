@@ -12,6 +12,7 @@ export const useGenerateLetter = () => {
   const { getPersonConcept, getOrganizationConcept } = useApiContacts();
   const {
     getAcquisitionFile: { execute: getAcquisitionFile },
+    getAcquisitionProperties: { execute: getAcquisitionProperties },
   } = useAcquisitionProvider();
 
   const { generateDocumentDownloadWrappedRequest: generate } = useDocumentGenerationRepository();
@@ -22,6 +23,8 @@ export const useGenerateLetter = () => {
   ) => {
     const file = await getAcquisitionFile(acquisitionFileId);
     if (file) {
+      const properties = await getAcquisitionProperties(acquisitionFileId);
+      file.fileProperties = properties ?? [];
       const coordinator = file.acquisitionTeam?.find(
         team => team.teamProfileTypeCode === 'PROPCOORD',
       );

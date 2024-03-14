@@ -130,12 +130,14 @@
     public class AcquisitionAgreement
     {
         public string AgreementStatus { get; set; } = null!;
+        public string AgreementCancellationReason { get; set; } = null!;
         public string AgreementLegalSurveyPlan { get; set; } = null!;
         public string AgreementType { get; set; } = null!;
         public string AgreementDate { get; set; } = null!;
         public string AgreementCompletionDate { get; set; } = null!;
         public string AgreementCommencementDate { get; set; } = null!;
         public string AgreementTerminationDate { get; set; } = null!;
+        public string AgreementPossessionDate { get; set; } = null!;
         public string AgreementPurchasePrice { get; set; } = null!;
         public string AgreementDepositDue { get; set; } = null!;
         public string AgreementDepositAmount { get; set; } = null!;

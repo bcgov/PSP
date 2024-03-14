@@ -111,7 +111,7 @@ describe('Add Subdivision View', () => {
     await waitFor(async () => {
       mapSelectorProps.addSelectedProperties([testProperty]);
     });
-    expect(getPrimaryAddressByPid).toHaveBeenCalledWith(testProperty.pid, 3000);
+    expect(getPrimaryAddressByPid).toHaveBeenCalledWith(testProperty.pid);
   });
 
   it('does not call for address if property has no pid', async () => {

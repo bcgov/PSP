@@ -2,7 +2,13 @@ import { act } from '@testing-library/react';
 import { Formik } from 'formik';
 import noop from 'lodash/noop';
 
-import { render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
+import {
+  focusOptionMultiselect,
+  render,
+  RenderOptions,
+  userEvent,
+  waitFor,
+} from '@/utils/test-utils';
 
 import { IMultiselectProps, Multiselect } from './Multiselect';
 
@@ -84,11 +90,12 @@ describe('Multiselect component', () => {
     });
 
     // click on the multi-select to show drop-down list
-    act(() => userEvent.click(getInput()));
+    await waitFor(async () => {
+      act(() => userEvent.click(getInput()));
+    });
 
     // select an option from the drop-down
-    focusOption(container, optionSelected, fakeOptions);
-    await act(async () => await waitFor(() => userEvent.click(findDropdownOption(optionSelected))));
+    focusOptionMultiselect(container, optionSelected, fakeOptions);
 
     // assert
     expect(onSelectSpy).toHaveBeenCalledWith([optionSelected]);
@@ -115,17 +122,3 @@ describe('Multiselect component', () => {
     expect(onRemoveSpy).toHaveBeenCalledWith(remainingOptions);
   });
 });
-
-// simulate scrolling down using the keyboard arrows
-function focusOption(container: HTMLElement, option: Option, options: readonly Option[]) {
-  const indexOfSelectedOption = options.findIndex(o => o.id === option.id);
-  for (let i = 0; i < indexOfSelectedOption; i++) {
-    act(() => {
-      userEvent.keyboard('{ArrowDown}');
-    });
-  }
-  expect(
-    container.querySelector('.multiselect-container .optionContainer li.option.highlight')!
-      .textContent,
-  ).toEqual(option.text);
-}

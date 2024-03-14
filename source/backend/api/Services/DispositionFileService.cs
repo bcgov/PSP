@@ -169,8 +169,6 @@ namespace Pims.Api.Services
             _logger.LogDebug("Disposition file search with filter: {filter}", filter);
             _user.ThrowIfNotAuthorized(Permissions.DispositionView);
 
-            filter.FileNameOrNumberOrReference = Regex.Replace(filter.FileNameOrNumberOrReference ?? string.Empty, @"^[d,D]-", string.Empty);
-
             var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
             long? contractorPersonId = (pimsUser != null && pimsUser.IsContractor) ? pimsUser.PersonId : null;
 
@@ -464,7 +462,7 @@ namespace Pims.Api.Services
             return dispositionFiles
                 .Select(file => new DispositionFileExportModel
                 {
-                    FileNumber = file.FileNumber ?? string.Empty,
+                    FileNumber = file.FileNumber != null ? $"D-{file.FileNumber}" : string.Empty,
                     ReferenceNumber = file.FileReference ?? string.Empty,
                     FileName = file.FileName ?? string.Empty,
                     DispositionType = file.DispositionTypeCodeNavigation?.Description ?? string.Empty,

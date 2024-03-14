@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using LinqKit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Core.Helpers;
 using Pims.Dal.Entities;
@@ -86,9 +87,9 @@ namespace Pims.Dal.Repositories
         /// <returns></returns>
         public PimsProperty GetById(long id)
         {
-            this.User.ThrowIfNotAllAuthorized(Permissions.PropertyView);
+            User.ThrowIfNotAllAuthorized(Permissions.PropertyView);
 
-            var property = this.Context.PimsProperties
+            var property = Context.PimsProperties.AsNoTracking()
                 .Include(p => p.DistrictCodeNavigation)
                 .Include(p => p.RegionCodeNavigation)
                 .Include(p => p.PropertyTypeCodeNavigation)
@@ -283,16 +284,23 @@ namespace Pims.Dal.Repositories
         /// <summary>
         /// Update the passed property in the database assuming the user has the required claims.
         /// </summary>
-        /// <param name="property"></param>
-        /// <returns></returns>
+        /// <param name="property">The property to update.</param>
+        /// <param name="overrideLocation">Whether to update the property spatial location with the incoming value. Defaults to false.</param>
+        /// <returns>The updated property.</returns>
         public PimsProperty Update(PimsProperty property, bool overrideLocation = false)
         {
             property.ThrowIfNull(nameof(property));
 
             var propertyId = property.Internal_Id;
-            var existingProperty = this.Context.PimsProperties
+            var existingProperty = Context.PimsProperties
                 .Include(p => p.Address)
                 .FirstOrDefault(p => p.PropertyId == propertyId) ?? throw new KeyNotFoundException();
+
+            // prevent editing on retired properties
+            if (existingProperty.IsRetired.HasValue && existingProperty.IsRetired.Value)
+            {
+                throw new BusinessRuleViolationException("Retired records are referenced for historical purposes only and cannot be edited or deleted.");
+            }
 
             // ignore a number of properties that we don't the frontend to override - for now
             property.Boundary = existingProperty.Boundary;
@@ -413,6 +421,17 @@ namespace Pims.Dal.Repositories
             return existingProperty;
         }
 
+        public PimsProperty RetireProperty(PimsProperty property)
+        {
+            property.ThrowIfNull(nameof(property));
+
+            var existingProperty = Context.PimsProperties
+                .FirstOrDefault(p => p.PropertyId == property.Internal_Id) ?? throw new KeyNotFoundException();
+
+            existingProperty.IsRetired = true;
+            return existingProperty;
+        }
+
         public HashSet<long> GetMatchingIds(PropertyFilterCriteria filter)
         {
             var predicate = PredicateBuilder.New<PimsProperty>(p => true);
@@ -485,10 +504,29 @@ namespace Pims.Dal.Repositories
             }
 
             // Property ownership filters
-            predicate.And(p => (p.IsOwned && filter.IsCoreInventory) ||
-                (p.IsPropertyOfInterest && filter.IsPropertyOfInterest) ||
-                (p.IsOtherInterest && filter.IsOtherInterest) ||
-                (p.IsDisposed && filter.IsDisposed));
+            var ownershipBuilder = PredicateBuilder.New<PimsProperty>(p => false);
+            if (filter.IsCoreInventory)
+            {
+                ownershipBuilder.Or(p => p.IsOwned);
+            }
+            if (filter.IsPropertyOfInterest)
+            {
+                ownershipBuilder.Or(p => p.IsPropertyOfInterest);
+            }
+            if (filter.IsOtherInterest)
+            {
+                ownershipBuilder.Or(p => p.IsOtherInterest);
+            }
+            if (filter.IsDisposed)
+            {
+                ownershipBuilder.Or(p => p.IsDisposed);
+            }
+            if (filter.IsRetired)
+            {
+                ownershipBuilder.Or(p => p.IsRetired.HasValue && p.IsRetired.Value);
+            }
+
+            predicate.And(ownershipBuilder);
 
             return Context.PimsProperties.AsNoTracking()
                 .Where(predicate)

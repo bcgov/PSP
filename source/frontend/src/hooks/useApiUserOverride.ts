@@ -102,7 +102,6 @@ export const useApiUserOverride = <
                 setDisplayModal(false);
               },
               okButtonText: 'Yes',
-              okButtonVariant: 'warning',
               cancelButtonText: 'No',
             });
           }
