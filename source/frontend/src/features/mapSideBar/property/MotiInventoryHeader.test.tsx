@@ -102,7 +102,7 @@ describe('MotiInventoryHeader component', () => {
       isLoading: false,
     });
     // "retired" indicator is shown
-    expect(result.getByText(/expired/i)).toBeVisible();
+    expect(result.getByText(/retired/i)).toBeVisible();
   });
 
   it('allows the active property to be zoomed in', async () => {
