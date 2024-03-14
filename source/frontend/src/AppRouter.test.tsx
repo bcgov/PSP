@@ -101,16 +101,14 @@ jest.mock('./hooks/pims-api/useApiProperties');
 
 jest.mock('./hooks/pims-api/useApiLeases');
 (useApiLeases as jest.MockedFunction<typeof useApiLeases>).mockReturnValue({
-  getLeases: jest
-    .fn()
-    .mockResolvedValue({
-      data: {
-        items: [{ lFileNo: 'l-1234' }],
-        page: 1,
-        total: 1,
-        quantity: 1,
-      } as ApiGen_Base_Page<ApiGen_Concepts_Lease>,
-    }),
+  getLeases: jest.fn().mockResolvedValue({
+    data: {
+      items: [{ lFileNo: 'l-1234' }],
+      page: 1,
+      total: 1,
+      quantity: 1,
+    } as ApiGen_Base_Page<ApiGen_Concepts_Lease>,
+  }),
   getApiLease: jest.fn(),
   getLastUpdatedByApi: jest.fn(),
   postLease: jest.fn(),
@@ -122,16 +120,14 @@ jest.mock('./hooks/pims-api/useApiLeases');
 
 jest.mock('./hooks/pims-api/useApiAcquisitionFile');
 (useApiAcquisitionFile as jest.MockedFunction<typeof useApiAcquisitionFile>).mockReturnValue({
-  getAcquisitionFiles: jest
-    .fn()
-    .mockResolvedValue({
-      data: {
-        items: [{ fileName: 'test acq file' }],
-        page: 1,
-        total: 1,
-        quantity: 1,
-      } as ApiGen_Base_Page<ApiGen_Concepts_AcquisitionFile>,
-    }),
+  getAcquisitionFiles: jest.fn().mockResolvedValue({
+    data: {
+      items: [{ fileName: 'test acq file' }],
+      page: 1,
+      total: 1,
+      quantity: 1,
+    } as ApiGen_Base_Page<ApiGen_Concepts_AcquisitionFile>,
+  }),
   getAcquisitionFile: jest.fn(),
   getLastUpdatedByApi: jest.fn(),
   getAgreementReport: jest.fn(),
@@ -156,16 +152,14 @@ jest.mock('./hooks/pims-api/useApiAcquisitionFile');
 
 jest.mock('./hooks/pims-api/useApiResearchFile');
 (useApiResearchFile as jest.MockedFunction<typeof useApiResearchFile>).mockReturnValue({
-  getResearchFiles: jest
-    .fn()
-    .mockResolvedValue({
-      data: {
-        items: [{ fileName: 'test research file' }],
-        page: 1,
-        total: 1,
-        quantity: 1,
-      } as ApiGen_Base_Page<IResearchSearchResult>,
-    }),
+  getResearchFiles: jest.fn().mockResolvedValue({
+    data: {
+      items: [{ fileName: 'test research file' }],
+      page: 1,
+      total: 1,
+      quantity: 1,
+    } as ApiGen_Base_Page<IResearchSearchResult>,
+  }),
   getResearchFile: jest.fn(),
   postResearchFile: jest.fn(),
   putResearchFile: jest.fn(),
