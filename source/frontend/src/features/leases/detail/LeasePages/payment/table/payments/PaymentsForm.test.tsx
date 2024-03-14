@@ -259,14 +259,14 @@ describe('PaymentsForm component', () => {
         isReceivable: false,
       });
       const notesButton = await findByTitle('notes');
-      act(() => {
+      await act(async () => {
         userEvent.click(notesButton);
       });
       await act(async () => {
         await fillInput(document.body, 'terms.0.payments.0.note', 'a test note', 'textarea');
       });
       const saveButton = getByText('Yes');
-      act(() => {
+      await act(async () => {
         userEvent.click(saveButton);
       });
       expect(onSave).toHaveBeenCalledWith({ ...defaultTestFormLeasePayment, note: 'a test note' });
@@ -279,7 +279,7 @@ describe('PaymentsForm component', () => {
         isReceivable: false,
       });
       const notesButton = await findByTitle('notes');
-      act(() => {
+      await act(async () => {
         userEvent.click(notesButton);
       });
       await act(async () => {
@@ -287,7 +287,7 @@ describe('PaymentsForm component', () => {
       });
       await screen.findByDisplayValue('a test note');
       const cancelButton = getByText('No');
-      act(() => {
+      await act(async () => {
         userEvent.click(cancelButton);
         userEvent.click(notesButton);
       });
@@ -304,7 +304,7 @@ describe('PaymentsForm component', () => {
         isReceivable: false,
       });
       const editButton = await findAllByTitle('edit actual');
-      userEvent.click(editButton[0]);
+      await act(async()=>userEvent.click(editButton[0]));
       expect(onEdit).toHaveBeenCalledWith(defaultTestFormLeasePayment);
     });
 
@@ -317,7 +317,7 @@ describe('PaymentsForm component', () => {
         claims: [Claims.LEASE_EDIT],
       });
       const deleteButton = await findAllByTitle('delete actual');
-      userEvent.click(deleteButton[0]);
+      await act(async ()=>userEvent.click(deleteButton[0]));
       expect(onDelete).toHaveBeenCalledWith(defaultTestFormLeasePayment);
     });
   });

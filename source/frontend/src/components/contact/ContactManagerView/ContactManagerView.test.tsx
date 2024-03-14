@@ -126,7 +126,7 @@ describe('ContactManagerView', () => {
     setupMockSearch([defaultPersonSearchResult]);
     const { container, searchButton } = setup({});
     const allButton = container.querySelector(`#input-all`);
-    allButton && userEvent.click(allButton);
+    allButton && await act(async () => userEvent.click(allButton));
     await act(async () => userEvent.click(searchButton));
 
     expect(getContacts).toHaveBeenCalledWith(
@@ -140,7 +140,7 @@ describe('ContactManagerView', () => {
     setupMockSearch([defaultPersonSearchResult]);
     const { container, searchButton } = setup({});
     const organizationsButton = container.querySelector(`#input-organizations`);
-    act(() => {
+    await act(async () => {
       organizationsButton && userEvent.click(organizationsButton);
     });
     await act(async () => userEvent.click(searchButton));
@@ -156,7 +156,7 @@ describe('ContactManagerView', () => {
     setupMockSearch([defaultPersonSearchResult]);
     const { container, searchButton } = setup({});
     const personButton = container.querySelector(`#input-persons`);
-    act(() => {
+    await act(async () => {
       personButton && userEvent.click(personButton);
     });
     await act(async () => userEvent.click(searchButton));

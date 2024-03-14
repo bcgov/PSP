@@ -2,7 +2,7 @@ import { getMockAccessRequest } from '@/mocks/accessRequest.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { ApiGen_Concepts_AccessRequest } from '@/models/api/generated/ApiGen_Concepts_AccessRequest';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { fakeText, fillInput, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
+import { act, fakeText, fillInput, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
 import AccessRequestForm from './AccessRequestForm';
 import { FormAccessRequest } from './models';
@@ -51,9 +51,9 @@ describe('AccessRequestForm component', () => {
     expect(asFragment()).toMatchSnapshot();
   });
 
-  it('cancels the form when Cancel is clicked', () => {
+  it('cancels the form when Cancel is clicked', async () => {
     const { getCancelButton } = setup({ initialValues });
-    userEvent.click(getCancelButton());
+    await act(async() => userEvent.click(getCancelButton()));
     expect(onCancel).toBeCalled();
   });
 
@@ -62,7 +62,7 @@ describe('AccessRequestForm component', () => {
       initialValues,
     });
     const submitButton = getUpdateButton();
-    userEvent.click(submitButton);
+    await act(async() => userEvent.click(submitButton));
     await waitFor(async () => expect(addAccessRequest).toHaveBeenCalledWith(initialValues.toApi()));
   });
 
@@ -73,7 +73,7 @@ describe('AccessRequestForm component', () => {
     await fillInput(container, 'position', 'position');
     await fillInput(container, 'note', 'test note', 'textarea');
     const submitButton = getUpdateButton();
-    userEvent.click(submitButton);
+    await act(async() => userEvent.click(submitButton));
 
     const expectedValues: ApiGen_Concepts_AccessRequest = { ...initialValues.toApi() };
     expectedValues.user!.position = 'position';
@@ -93,7 +93,7 @@ describe('AccessRequestForm component', () => {
     expect(await findByText(/Note must be less than 4000 characters/i)).toBeVisible();
 
     const submitButton = getUpdateButton();
-    userEvent.click(submitButton);
+    await act(async() => userEvent.click(submitButton));
 
     await waitFor(() => expect(addAccessRequest).not.toHaveBeenCalled());
   });

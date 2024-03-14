@@ -2,7 +2,7 @@ import userEvent from '@testing-library/user-event';
 import { createMemoryHistory } from 'history';
 
 import { ContactTypes } from '@/features/contacts/interfaces';
-import { render, RenderOptions } from '@/utils/test-utils';
+import { act, render, RenderOptions } from '@/utils/test-utils';
 
 import { ContactTypeSelector } from './ContactTypeSelector';
 
@@ -57,19 +57,19 @@ describe('ContactTypeSelector component', () => {
     } = setup({ contactType: ContactTypes.ORGANIZATION });
     expect(getByLabelText('Organization')).toBeChecked();
   });
-  it('calls setContactType correctly if individual is clicked', () => {
+  it('calls setContactType correctly if individual is clicked', async () => {
     const {
       component: { getByLabelText },
     } = setup({ contactType: ContactTypes.ORGANIZATION });
-    userEvent.click(getByLabelText('Individual'));
+    await act(async() => userEvent.click(getByLabelText('Individual')));
     expect(setContactTypeFn).toHaveBeenCalledWith(ContactTypes.INDIVIDUAL);
   });
 
-  it('calls setContactType correctly if organization is clicked', () => {
+  it('calls setContactType correctly if organization is clicked', async () => {
     const {
       component: { getByLabelText },
     } = setup({ contactType: ContactTypes.INDIVIDUAL });
-    userEvent.click(getByLabelText('Organization'));
+    await act(async() => userEvent.click(getByLabelText('Organization')));
     expect(setContactTypeFn).toHaveBeenCalledWith(ContactTypes.ORGANIZATION);
   });
 });

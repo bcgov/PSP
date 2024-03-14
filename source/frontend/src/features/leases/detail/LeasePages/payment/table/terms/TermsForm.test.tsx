@@ -483,7 +483,7 @@ describe('TermsForm component', () => {
     const generateButton = queryAllByTitle('Generate H1005(a)')[0];
     expect(generateButton).toBeVisible();
 
-    act(() => userEvent.click(generateButton));
+    await act(async() => userEvent.click(generateButton));
     expect(onGenerate).toHaveBeenCalled();
   });
 });

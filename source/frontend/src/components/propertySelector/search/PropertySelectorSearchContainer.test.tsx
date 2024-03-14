@@ -99,7 +99,7 @@ describe('PropertySelectorSearchContainer component', () => {
     await fillInput(container, 'pid', '123-456-789');
 
     const searchButton = getByTitle('search');
-    act(() => {
+    await act(async () => {
       userEvent.click(searchButton);
     });
 
@@ -127,7 +127,7 @@ describe('PropertySelectorSearchContainer component', () => {
     await fillInput(container, 'pin', '54321');
 
     const searchButton = getByTitle('search');
-    act(() => {
+    await act(async () => {
       userEvent.click(searchButton);
     });
 
@@ -154,7 +154,7 @@ describe('PropertySelectorSearchContainer component', () => {
     await fillInput(container, 'planNumber', 'PRP4520');
 
     const searchButton = getByTitle('search');
-    act(() => {
+    await act(async () => {
       userEvent.click(searchButton);
     });
 
@@ -183,13 +183,13 @@ describe('PropertySelectorSearchContainer component', () => {
 
     // typing on address search field should bring up address suggestions
     let addressSuggestions: HTMLElement;
-    await waitFor(() => {
+    await waitFor(async () => {
       addressSuggestions = container.querySelector('.suggestionList') as HTMLElement;
       expect(addressSuggestions).toBeInTheDocument();
       // clicking on a suggestion should initiate a search by address
       const firstAddress = addressSuggestions?.firstElementChild as HTMLElement;
       expect(firstAddress).toBeInTheDocument();
-      userEvent.click(firstAddress);
+      await act(async() => userEvent.click(firstAddress));
     });
 
     await waitFor(() => {

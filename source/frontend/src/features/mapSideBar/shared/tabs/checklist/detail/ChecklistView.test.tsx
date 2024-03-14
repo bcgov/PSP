@@ -6,7 +6,7 @@ import { mockDispositionFileResponse } from '@/mocks/dispositionFiles.mock';
 import { mockLookups } from '@/mocks/index.mock';
 import { ApiGen_Concepts_FileWithChecklist } from '@/models/api/generated/ApiGen_Concepts_FileWithChecklist';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { render, RenderOptions, userEvent } from '@/utils/test-utils';
+import { act, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import { ChecklistView, IChecklistViewProps } from './ChecklistView';
 
@@ -66,11 +66,11 @@ describe('ChecklistView component', () => {
     expect(asFragment()).toMatchSnapshot();
   });
 
-  it('renders the edit button for users with acquisition edit permissions', () => {
+  it('renders the edit button for users with acquisition edit permissions', async() => {
     const { getByTitle } = setup({ claims: [Claims.ACQUISITION_EDIT] });
     const editButton = getByTitle('Edit checklist');
     expect(editButton).toBeVisible();
-    userEvent.click(editButton);
+    await act(async() => userEvent.click(editButton));
     expect(mockViewProps.onEdit).toHaveBeenCalled();
   });
 

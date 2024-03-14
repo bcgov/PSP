@@ -57,7 +57,7 @@ describe('ModalContainer component', () => {
     });
 
     const okButton = await screen.findByText('ok');
-    act(() => userEvent.click(okButton));
+    await act(async() => userEvent.click(okButton));
 
     await (() => {
       expect(screen.queryByText('test')).toBeNull();

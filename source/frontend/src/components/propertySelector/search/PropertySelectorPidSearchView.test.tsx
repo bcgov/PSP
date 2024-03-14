@@ -4,7 +4,7 @@ import { createRef } from 'react';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
-import { fillInput, renderAsync, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
+import { act, fillInput, renderAsync, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 import PropertySelectorPidSearchContainer, {
   PropertySelectorPidSearchContainerProps,
 } from './PropertySelectorPidSearchContainer';
@@ -78,7 +78,7 @@ describe('PropertySearchPidSelector component', () => {
     });
 
     const searchButton = getByTitle('search');
-    await waitFor(async () => {
+    await act(async () => {
       userEvent.click(searchButton);
     });
 

@@ -5,7 +5,7 @@ import { DispositionSaleFormModel } from '@/features/mapSideBar/disposition/mode
 import { mockLookups } from '@/mocks/lookups.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes/lookupCodesSlice';
 import { systemConstantsSlice } from '@/store/slices/systemConstants';
-import { render, RenderOptions, waitFor } from '@/utils/test-utils';
+import { render, RenderOptions, waitFor, act } from '@/utils/test-utils';
 
 import UpdateDispositionSaleView, {
   IUpdateDispositionSaleViewProps,
@@ -63,9 +63,11 @@ describe('Update Disposition Sale View', () => {
   });
 
   it('renders as expected', async () => {
+    
     const { asFragment } = await setup();
-
-    const fragment = await waitFor(() => asFragment());
+    await act(async ()=>{});
+    const fragment = await waitFor(async () => asFragment());
     expect(fragment).toMatchSnapshot();
+    
   });
 });

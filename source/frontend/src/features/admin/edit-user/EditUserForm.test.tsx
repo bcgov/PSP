@@ -1,7 +1,7 @@
 import { mockLookups } from '@/mocks/lookups.mock';
 import { getUserMock } from '@/mocks/user.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { fakeText, fillInput, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
+import { act, fakeText, fillInput, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
 import { FormUser } from '../users/models';
 import EditUserForm from './EditUserForm';
@@ -49,16 +49,16 @@ describe('EditUserForm component', () => {
     expect(asFragment()).toMatchSnapshot();
   });
 
-  it('cancels the form when Cancel is clicked', () => {
+  it('cancels the form when Cancel is clicked', async () => {
     const { getCancelButton } = setup({ initialValues });
-    userEvent.click(getCancelButton());
+    await act(async() => userEvent.click(getCancelButton()));
     expect(onCancel).toBeCalled();
   });
 
   it('saves the form with minimal data when Submit button is clicked', async () => {
     const { getSaveButton } = setup({ initialValues });
     const submitButton = getSaveButton();
-    userEvent.click(submitButton);
+    await act(async() => userEvent.click(submitButton));
     await waitFor(async () => expect(onSubmit).toHaveBeenCalledWith(initialValues.toApi()));
   });
 
@@ -69,7 +69,7 @@ describe('EditUserForm component', () => {
     await fillInput(container, 'position', 'position');
     await fillInput(container, 'note', 'test note', 'textarea');
     const submitButton = getSaveButton();
-    userEvent.click(submitButton);
+    await act(async() => userEvent.click(submitButton));
 
     const expectedValues = { ...initialValues.toApi() };
     expectedValues.position = 'position';
@@ -90,7 +90,7 @@ describe('EditUserForm component', () => {
     expect(await findByText(/Last Name is required/i)).toBeVisible();
 
     const submitButton = getSaveButton();
-    userEvent.click(submitButton);
+    await act(async() => userEvent.click(submitButton));
 
     await waitFor(() => expect(onSubmit).not.toHaveBeenCalled());
   });
@@ -113,7 +113,7 @@ describe('EditUserForm component', () => {
     expect(await findByText(/Note must be less than 1000 characters/i)).toBeVisible();
 
     const submitButton = getSaveButton();
-    userEvent.click(submitButton);
+    await act(async() => userEvent.click(submitButton));
 
     await waitFor(() => expect(onSubmit).not.toHaveBeenCalled());
   });

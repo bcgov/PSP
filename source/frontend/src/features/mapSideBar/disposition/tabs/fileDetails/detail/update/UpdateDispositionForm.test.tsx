@@ -81,11 +81,13 @@ describe('UpdateDispositionForm component', () => {
 
   it('renders as expected', async () => {
     const { asFragment } = setup({ initialValues, loading: false, formikRef: ref, onSubmit });
+    await act(async()=>{});
     expect(asFragment()).toMatchSnapshot();
   });
 
   it('renders loading spinner', async () => {
     const { getByTestId } = setup({ initialValues, loading: true, formikRef: ref, onSubmit });
+    await act(async()=>{});
     expect(getByTestId('filter-backdrop-loading')).toBeVisible();
   });
 

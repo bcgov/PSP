@@ -6,7 +6,7 @@ import { createMemoryHistory } from 'history';
 import { getMockDepositReturns, getMockDeposits } from '@/mocks/deposits.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { fillInput, renderAsync, RenderOptions, waitFor } from '@/utils/test-utils';
+import { act, fillInput, renderAsync, RenderOptions, waitFor } from '@/utils/test-utils';
 
 import { FormLeaseDepositReturn } from '../../models/FormLeaseDepositReturn';
 import ReturnedDepositModal, { IReturnedDepositModalProps } from './ReturnedDepositModal';
@@ -82,7 +82,7 @@ describe('ReturnedDepositModal component', () => {
     await fillInput(document.body, 'contactHolder.id', 'p1');
 
     const saveButton = getByText('Save');
-    userEvent.click(saveButton);
+    await act(async() => userEvent.click(saveButton));
     await waitFor(() => expect(onSave).toHaveBeenCalled());
     expect(onSave).toHaveBeenCalledWith({
       claimsAgainst: 1000,

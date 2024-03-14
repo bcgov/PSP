@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { act, render } from '@testing-library/react';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 
@@ -34,6 +34,7 @@ describe('Tenant configuration', () => {
 
   it('Tenant returns correct default configuration', async () => {
     const { findByText, asFragment } = render(renderTenant());
+    await act(async()=>{});
     expect(await findByText(/Default Tenant Name/)).toBeVisible();
     expect(asFragment()).toMatchSnapshot();
   });
@@ -41,6 +42,7 @@ describe('Tenant configuration', () => {
   it('Tenant returns correct non-existing configuration', async () => {
     process.env.REACT_APP_TENANT = 'FAKE';
     const { findByText, asFragment } = render(renderTenant());
+    await act(async()=>{});
     expect(await findByText(/Default Tenant Name/)).toBeVisible();
     expect(asFragment()).toMatchSnapshot();
   });

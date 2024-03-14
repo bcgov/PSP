@@ -5,7 +5,7 @@ import {
   IMapStateMachineContext,
   useMapStateMachine,
 } from '@/components/common/mapFSM/MapStateMachineContext';
-import { cleanup, render } from '@/utils/test-utils';
+import { act, cleanup, render } from '@/utils/test-utils';
 
 import { ILayerPopupLinksProps, LayerPopupLinks } from './LayerPopupLinks';
 
@@ -40,13 +40,13 @@ describe('Layer Popup links', () => {
     expect(link).toBeInTheDocument();
   });
 
-  it(`Zooms the map to property bounds when Zoom link is clicked`, () => {
+  it(`Zooms the map to property bounds when Zoom link is clicked`, async () => {
     // render popup
     const { getByText } = renderLinks({ bounds: new L.LatLngBounds(southWest, northEast) });
     const link = getByText(/Zoom/i);
     expect(link).toBeInTheDocument();
     // click link
-    userEvent.click(link);
+    await act(async() => userEvent.click(link));
     expect(mapMachineMock.requestFlyToBounds).toBeCalled();
   });
 });

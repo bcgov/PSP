@@ -5,7 +5,7 @@ import { createMemoryHistory } from 'history';
 
 import { mockLookups } from '@/mocks/index.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { renderAsync, RenderOptions, waitFor } from '@/utils/test-utils';
+import { act, renderAsync, RenderOptions, waitFor } from '@/utils/test-utils';
 
 import ExportLeasePaymentsContainer, {
   IExportLeasePaymentsContainer,
@@ -65,7 +65,7 @@ describe('PaymentsContainer component', () => {
     } = await setup();
     mockAxios.onGet().reply(200, {});
 
-    userEvent.click(getByTitle('Export Aggregated Report'));
+    await act(async() => userEvent.click(getByTitle('Export Aggregated Report')));
 
     await waitFor(() => {
       expect(mockAxios.history.get[0].url).toEqual(`/reports/leases/payments?fiscalYearStart=2020`);
@@ -78,7 +78,7 @@ describe('PaymentsContainer component', () => {
     } = await setup();
     mockAxios.onGet().reply(400, {});
 
-    userEvent.click(getByTitle('Export Aggregated Report'));
+    await act(async() => userEvent.click(getByTitle('Export Aggregated Report')));
     const errorText = await findByText(
       'Failed to export report. If this error persists, please contact your System Administrator.',
     );

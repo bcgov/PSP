@@ -126,13 +126,15 @@ describe('UpdateAcquisitionForm component', () => {
   });
 
   it('renders as expected', async () => {
-    const { asFragment } = setup({ initialValues });
+    const { asFragment, findByDisplayValue } = setup({ initialValues });
     expect(asFragment()).toMatchSnapshot();
+    await act(async()=>{});
   });
 
   it('displays legacy file number', async () => {
     const { getByDisplayValue } = setup({ initialValues });
     expect(getByDisplayValue('legacy file number')).toBeVisible();
+    await act(async()=>{});
   });
 
   it('displays owner solicitor and owner representative', async () => {
@@ -140,6 +142,7 @@ describe('UpdateAcquisitionForm component', () => {
     expect(getByText('Millennium Inc')).toBeVisible();
     expect(getByText('Han Solo')).toBeVisible();
     expect(getByText('test representative comment')).toBeVisible();
+    await act(async()=>{});
   });
 
   it('displays Individual type Owner with data', async () => {
@@ -165,6 +168,7 @@ describe('UpdateAcquisitionForm component', () => {
 
     expect(getEmailTextbox(0).value).toEqual('jonh.doe@gmail.com');
     expect(getPhoneTextbox(0).value).toEqual('775-111-1111');
+    await act(async()=>{});
   });
 
   it('displays Corporation type Owner with data', async () => {
@@ -191,6 +195,7 @@ describe('UpdateAcquisitionForm component', () => {
 
     expect(getEmailTextbox(1).value).toEqual('fake@email.ca');
     expect(getPhoneTextbox(1).value).toEqual('775-111-1111');
+    await act(async()=>{});
   });
 
   it('it validates that only profile is not repeated on another team member', async () => {
@@ -220,7 +225,7 @@ describe('UpdateAcquisitionForm component', () => {
       initialValues,
     });
 
-    await waitFor(() => userEvent.click(getRemoveProjectButton()));
+    await act(async() => userEvent.click(getRemoveProjectButton()));
     await waitFor(() => getFormikRef().current?.submitForm());
 
     initialValues.product = '';

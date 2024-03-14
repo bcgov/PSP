@@ -8,7 +8,7 @@ import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineCo
 import { FilterContentContainer } from '@/components/maps/leaflet/Control/AdvancedFilter/FilterContentContainer';
 import { FilterContentForm } from '@/components/maps/leaflet/Control/AdvancedFilter/FilterContentForm';
 import MapView from '@/components/maps/MapView';
-import { FilterProvider } from '@/components/maps/providers/FIlterProvider';
+import { FilterProvider } from '@/components/maps/providers/FilterProvider';
 import AdvancedFilterBar from '@/features/advancedFilterBar/AdvancedFilterBar';
 import { SideBarContextProvider } from '@/features/mapSideBar/context/sidebarContext';
 import MapSideBar from '@/features/mapSideBar/MapSideBar';

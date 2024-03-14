@@ -3,7 +3,7 @@ import { noop } from 'lodash';
 
 import { Claims } from '@/constants/claims';
 import { LeaseFormModel } from '@/features/leases/models';
-import { fillInput, render, RenderOptions, userEvent } from '@/utils/test-utils';
+import { act, fillInput, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import { DepositNotes, IDepositNotesProps } from './DepositNotes';
 jest.mock('@react-keycloak/web');
@@ -83,7 +83,7 @@ describe('DepositNotes component', () => {
       disabled: true,
     });
     const editButton = getByTestId('edit-notes');
-    userEvent.click(editButton);
+    await act(async() => userEvent.click(editButton));
     expect(onEdit).toHaveBeenCalled();
   });
 
@@ -95,7 +95,7 @@ describe('DepositNotes component', () => {
     });
     await fillInput(container, 'returnNotes', 'test note', 'textarea');
     const saveButton = getByText('Save');
-    userEvent.click(saveButton);
+    await act(async() => userEvent.click(saveButton));
     expect(onSave).toHaveBeenCalledWith('test note');
   });
 
@@ -106,7 +106,7 @@ describe('DepositNotes component', () => {
       disabled: false,
     });
     const cancelButton = getByText('Cancel');
-    userEvent.click(cancelButton);
+    await act(async() => userEvent.click(cancelButton));
     expect(onCancel).toHaveBeenCalled();
   });
 });

@@ -90,7 +90,7 @@ describe('ProjectExportContainer component', () => {
 
   it('requests agreement export when export function called', async () => {
     setup();
-    await act(() => viewProps.onExport({ type: 'AGREEMENT' } as Api_ExportProjectFilter));
+    await act(async () => viewProps.onExport({ type: 'AGREEMENT' } as Api_ExportProjectFilter));
 
     const { getAgreementsReport } = useAcquisitionProvider();
     expect(getAgreementsReport.execute).toHaveBeenCalled();
@@ -106,7 +106,7 @@ describe('ProjectExportContainer component', () => {
     } as unknown as ReturnType<typeof useAcquisitionProvider>);
 
     setup();
-    await act(() => viewProps.onExport({ type: 'AGREEMENT' } as Api_ExportProjectFilter));
+    await act(async () => viewProps.onExport({ type: 'AGREEMENT' } as Api_ExportProjectFilter));
 
     const { getAgreementsReport } = useAcquisitionProvider();
     expect(getAgreementsReport.execute).toHaveBeenCalled();
@@ -117,7 +117,7 @@ describe('ProjectExportContainer component', () => {
 
   it('requests compensation export when export function called', async () => {
     setup();
-    await act(() => viewProps.onExport({ type: 'COMPENSATION' } as Api_ExportProjectFilter));
+    await act(async () => viewProps.onExport({ type: 'COMPENSATION' } as Api_ExportProjectFilter));
 
     const { getCompensationReport } = useAcquisitionProvider();
     expect(getCompensationReport.execute).toHaveBeenCalled();
@@ -133,7 +133,7 @@ describe('ProjectExportContainer component', () => {
     } as unknown as ReturnType<typeof useAcquisitionProvider>);
 
     setup();
-    await act(() => viewProps.onExport({ type: 'COMPENSATION' } as Api_ExportProjectFilter));
+    await act(async () => viewProps.onExport({ type: 'COMPENSATION' } as Api_ExportProjectFilter));
 
     const { getCompensationReport } = useAcquisitionProvider();
     expect(getCompensationReport.execute).toHaveBeenCalled();
@@ -152,7 +152,7 @@ describe('ProjectExportContainer component', () => {
     } as unknown as ReturnType<typeof useAcquisitionProvider>);
 
     setup();
-    await act(() => viewProps.onExport({ type: 'COMPENSATION' } as Api_ExportProjectFilter));
+    await act(async () => viewProps.onExport({ type: 'COMPENSATION' } as Api_ExportProjectFilter));
 
     const { getCompensationReport } = useAcquisitionProvider();
     expect(getCompensationReport.execute).toHaveBeenCalled();

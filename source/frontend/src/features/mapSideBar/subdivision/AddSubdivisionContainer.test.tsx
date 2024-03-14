@@ -94,6 +94,7 @@ describe('Add Disposition Container component', () => {
 
   it('Renders the underlying form', async () => {
     const { getByText } = await setup();
+    await act(async()=>{});
     expect(getByText(/Content Rendered/)).toBeVisible();
   });
 

@@ -5,7 +5,7 @@ import { createMemoryHistory } from 'history';
 
 import { mockLookups } from '@/mocks/lookups.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { fillInput, renderAsync, RenderOptions, waitFor } from '@/utils/test-utils';
+import { act, fillInput, renderAsync, RenderOptions, waitFor } from '@/utils/test-utils';
 
 import { FormLeaseDeposit } from '../../models/FormLeaseDeposit';
 import ReceivedDepositModal, { IReceivedDepositModalProps } from './ReceivedDepositModal';
@@ -74,7 +74,7 @@ describe('ReceivedDepositModal component', () => {
     await fillInput(document.body, 'depositDate', '2020-01-02', 'datepicker');
     await fillInput(document.body, 'contactHolder.id', 'p1');
     const saveButton = getByText('Yes');
-    userEvent.click(saveButton);
+    await act(async() => userEvent.click(saveButton));
     await waitFor(() => expect(onSave).toHaveBeenCalled());
     expect(onSave).toHaveBeenCalledWith({
       amountPaid: 1235,
@@ -94,7 +94,7 @@ describe('ReceivedDepositModal component', () => {
       component: { getByText },
     } = await setup({});
     const cancelButton = getByText('No');
-    userEvent.click(cancelButton);
+    await act(async() => userEvent.click(cancelButton));
     expect(onCancel).toHaveBeenCalled();
   });
 });
