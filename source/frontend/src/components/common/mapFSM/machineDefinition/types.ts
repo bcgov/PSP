@@ -15,6 +15,7 @@ export enum SideBarType {
   PROPERTY_INFORMATION = 'PROPERTY_INFORMATION',
   DISPOSITION = 'DISPOSITION',
   SUBDIVISION = 'SUBDIVISION',
+  CONSOLIDATION = 'CONSOLIDATION',
 }
 
 // Local context for the machine - Not related to React Context!
@@ -37,6 +38,7 @@ export type MachineContext = {
   filePropertyLocations: LatLngLiteral[];
   activePimsPropertyIds: number[];
   showDisposed: boolean;
+  showRetired: boolean;
 };
 
 // Possible state machine states

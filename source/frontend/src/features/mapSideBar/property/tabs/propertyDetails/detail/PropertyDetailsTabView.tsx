@@ -13,6 +13,7 @@ import {
   StyledSubtleText,
   StyledSummarySection,
 } from '@/components/common/Section/SectionStyles';
+import TooltipIcon from '@/components/common/TooltipIcon';
 import AreaContainer from '@/components/measurements/AreaContainer';
 import VolumeContainer from '@/components/measurements/VolumeContainer';
 import * as API from '@/constants/API';
@@ -25,7 +26,8 @@ import { booleanToYesNoUnknownString, stringToBoolean } from '@/utils/formUtils'
 import { getPrettyLatLng } from '@/utils/mapPropertyUtils';
 
 import { IPropertyDetailsForm, readOnlyMultiSelectStyle } from './PropertyDetailsTabView.helpers';
-import { SubdivisionContainer } from './propertyOperation/SubdivisionContainer';
+import { OperationContainer } from './propertyOperation/OperationContainer';
+import { OperationSectionView } from './propertyOperation/OperationSectionView';
 
 export interface IPropertyDetailsTabView {
   property?: IPropertyDetailsForm;
@@ -59,14 +61,14 @@ export const PropertyDetailsTabView: React.FunctionComponent<IPropertyDetailsTab
   // show/hide conditionals
   const isHighwayRoad = tenureStatus?.some(obj => obj?.id === PropertyTenureTypes.HighwayRoad);
   const isIndianReserve = tenureStatus?.some(obj => obj?.id === PropertyTenureTypes.IndianReserve);
-
   const isVolumetricParcel = stringToBoolean(property?.isVolumetricParcel || '');
+  const propertyIsRetired = exists(property) && property.isRetired;
 
   return (
     <StyledSummarySection>
       <LoadingBackdrop show={loading} parentScreen={true} />
       <StyledEditWrapper className="mr-3 my-1">
-        {hasClaim(Claims.PROPERTY_EDIT) && (
+        {hasClaim(Claims.PROPERTY_EDIT) && !propertyIsRetired ? (
           <EditButton
             title="Edit property details"
             onClick={() => {
@@ -74,7 +76,13 @@ export const PropertyDetailsTabView: React.FunctionComponent<IPropertyDetailsTab
               history.push({ search: query.toString() });
             }}
           />
-        )}
+        ) : null}
+        {hasClaim(Claims.PROPERTY_EDIT) && propertyIsRetired ? (
+          <TooltipIcon
+            toolTipId="property-retired-tooltip"
+            toolTip="Retired records are referenced for historical purposes only and cannot be edited or deleted."
+          />
+        ) : null}
       </StyledEditWrapper>
       <Section header="Property Address">
         {exists(address) ? (
@@ -227,9 +235,7 @@ export const PropertyDetailsTabView: React.FunctionComponent<IPropertyDetailsTab
       </Section>
 
       {isValidId(property?.id) && (
-        <Section header="Subdivision History">
-          <SubdivisionContainer propertyId={property!.id} />
-        </Section>
+        <OperationContainer propertyId={property!.id} View={OperationSectionView} />
       )}
     </StyledSummarySection>
   );

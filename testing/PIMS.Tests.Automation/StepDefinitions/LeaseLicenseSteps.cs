@@ -1,8 +1,6 @@
 ﻿
-
 using PIMS.Tests.Automation.Classes;
 using PIMS.Tests.Automation.Data;
-using PIMS.Tests.Automation.PageObjects;
 using System.Data;
 
 namespace PIMS.Tests.Automation.StepDefinitions
@@ -18,10 +16,12 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly LeaseInsurance insurance;
         private readonly LeaseDeposits deposits;
         private readonly LeaseSurplus surplus;
-        private readonly SearchLease searchLease;
+        private readonly SearchLease searchLeases;
         private readonly SearchProperties searchProperties;
         private readonly PropertyInformation propertyInformation;
         private readonly SharedFileProperties sharedSearchProperties;
+        private readonly SharedPagination sharedPagination;
+
 
         private readonly string userName = "TRANPSP1";
 
@@ -38,10 +38,11 @@ namespace PIMS.Tests.Automation.StepDefinitions
             insurance = new LeaseInsurance(driver.Current);
             deposits = new LeaseDeposits(driver.Current);
             surplus = new LeaseSurplus(driver.Current);
-            searchLease = new SearchLease(driver.Current);
+            searchLeases = new SearchLease(driver.Current);
             searchProperties = new SearchProperties(driver.Current);
             propertyInformation = new PropertyInformation(driver.Current);
             sharedSearchProperties = new SharedFileProperties(driver.Current);
+            sharedPagination = new SharedPagination(driver.Current);
 
             lease = new Lease();
         }
@@ -137,11 +138,11 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Navigate to Search Leases
             PopulateLeaseLicense(rowNumber);
-            searchLease.NavigateToSearchLicense();
+            searchLeases.NavigateToSearchLicense();
 
             //Look for the previously created lease
-            searchLease.SearchLicenseByLFile(leaseCode);
-            searchLease.SelectFirstOption();
+            searchLeases.SearchLicenseByLFile(leaseCode);
+            searchLeases.SelectFirstOption();
 
             //Edit File Details Section
             leaseDetails.EditLeaseFileDetailsBttn();
@@ -216,11 +217,11 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Navigate to Search Leases
             PopulateLeaseLicense(rowNumber);
-            searchLease.NavigateToSearchLicense();
+            searchLeases.NavigateToSearchLicense();
 
             //Look for the previously created lease
-            searchLease.SearchLicenseByLFile(leaseCode);
-            searchLease.SelectFirstOption();
+            searchLeases.SearchLicenseByLFile(leaseCode);
+            searchLeases.SelectFirstOption();
 
             //Navigate to Tenants section
             tenant.NavigateToTenantSection();
@@ -290,11 +291,11 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Navigate to Search Leases
             PopulateLeaseLicense(rowNumber);
-            searchLease.NavigateToSearchLicense();
+            searchLeases.NavigateToSearchLicense();
 
             //Look for the previously created lease
-            searchLease.SearchLicenseByLFile(leaseCode);
-            searchLease.SelectFirstOption();
+            searchLeases.SearchLicenseByLFile(leaseCode);
+            searchLeases.SelectFirstOption();
 
            
             //Navigate to the improvements section
@@ -368,11 +369,11 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Navigate to Search Leases
             PopulateLeaseLicense(rowNumber);
-            searchLease.NavigateToSearchLicense();
+            searchLeases.NavigateToSearchLicense();
 
             //Look for the previously created lease
-            searchLease.SearchLicenseByLFile(leaseCode);
-            searchLease.SelectFirstOption();
+            searchLeases.SearchLicenseByLFile(leaseCode);
+            searchLeases.SelectFirstOption();
 
             //Navigate to Insurance
             insurance.NavigateToInsuranceSection();
@@ -447,11 +448,11 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Navigate to Search Leases
             PopulateLeaseLicense(rowNumber);
-            searchLease.NavigateToSearchLicense();
+            searchLeases.NavigateToSearchLicense();
 
             //Look for the last created lease
-            searchLease.SearchLicenseByLFile(leaseCode);
-            searchLease.SelectFirstOption();
+            searchLeases.SearchLicenseByLFile(leaseCode);
+            searchLeases.SelectFirstOption();
 
             //Navigate to Deposits
             deposits.NavigateToDepositSection();
@@ -521,11 +522,11 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Navigate to Search Leases
             PopulateLeaseLicense(rowNumber);
-            searchLease.NavigateToSearchLicense();
+            searchLeases.NavigateToSearchLicense();
 
             //Look for the last created lease
-            searchLease.SearchLastLease();
-            searchLease.SelectFirstOption();
+            searchLeases.SearchLastLease();
+            searchLeases.SelectFirstOption();
 
             //Navigate to Payments
             payments.NavigateToPaymentSection();
@@ -643,21 +644,86 @@ namespace PIMS.Tests.Automation.StepDefinitions
             loginSteps.Idir(userName);
 
             //Navigate to Leases Search
-            searchLease.NavigateToSearchLicense();
+            searchLeases.NavigateToSearchLicense();
+
+            //Verify Pagination
+            sharedPagination.ChoosePaginationOption(5);
+            Assert.Equal(5, searchLeases.LeasesTableResultNumber());
+
+            sharedPagination.ChoosePaginationOption(10);
+            Assert.Equal(10, searchLeases.LeasesTableResultNumber());
+
+            sharedPagination.ChoosePaginationOption(20);
+            Assert.Equal(20, searchLeases.LeasesTableResultNumber());
+
+            sharedPagination.ChoosePaginationOption(50);
+            Assert.Equal(50, searchLeases.LeasesTableResultNumber());
+
+            sharedPagination.ChoosePaginationOption(100);
+            Assert.Equal(100, searchLeases.LeasesTableResultNumber());
+
+            //Delete "Active" status from list view
+            searchLeases.SearchAllLeases();
+
+            //Verify Column Sorting by File Number
+            searchLeases.OrderByLeaseFileNumber();
+            var firstFileNbrDescResult = searchLeases.FirstLeaseFileNumber();
+
+            searchLeases.OrderByLeaseFileNumber();
+            var firstFileNbrAscResult = searchLeases.FirstLeaseFileNumber();
+
+            Assert.NotEqual(firstFileNbrDescResult, firstFileNbrAscResult);
+
+            //Verify Column Sorting by Expiry Date
+            searchLeases.OrderByLeaseExpiryDate();
+            var firstExpiryDateDescResult = searchLeases.FirstLeaseExpiryDate();
+
+            searchLeases.OrderByLeaseExpiryDate();
+            var firstExpiryDatelAscResult = searchLeases.FirstLeaseExpiryDate();
+
+            Assert.NotEqual(firstExpiryDateDescResult, firstExpiryDatelAscResult);
+
+            //Verify Column Sorting by Program Name
+            searchLeases.OrderByLeaseProgramName();
+            var firstProgramNameDescResult = searchLeases.FirstLeaseProgramName();
+
+            searchLeases.OrderByLeaseProgramName();
+            var firstProgramNameAscResult = searchLeases.FirstLeaseProgramName();
+
+            Assert.NotEqual(firstProgramNameDescResult, firstProgramNameAscResult);
+
+            //Verify Column Sorting by File Name
+            searchLeases.OrderByLeaseStatus();
+            var firstStatusDescResult = searchLeases.FirstLeaseStatus();
+
+            searchLeases.OrderByLeaseStatus();
+            var firstStatusAscResult = searchLeases.FirstLeaseStatus();
+
+            Assert.NotEqual(firstStatusDescResult, firstStatusAscResult);
+
+            //Verify Pagination display different set of results
+            sharedPagination.ResetSearch();
+
+            var firstLeasePage1 = searchLeases.FirstLeaseFileNumber();
+            sharedPagination.GoNextPage();
+            var firstLeasePage2 = searchLeases.FirstLeaseFileNumber();
+            Assert.NotEqual(firstLeasePage1, firstLeasePage2);
+
+            sharedPagination.ResetSearch();
 
             //Filter leases Files
             PopulateLeaseLicense(rowNumber);
-            searchLease.FilterLeasesFiles(lease.SearchProperties.PID, lease.LeaseExpiryDate, "",  lease.LeaseStatus);
-            Assert.True(searchLease.SearchFoundResults());
+            searchLeases.FilterLeasesFiles(lease.SearchProperties.PID, lease.LeaseExpiryDate, "",  lease.LeaseStatus);
+            Assert.True(searchLeases.SearchFoundResults());
 
-            searchLease.FilterLeasesFiles("", "", lease.LeaseTenants[0].Summary, "");
-            Assert.True(searchLease.SearchFoundResults());
+            searchLeases.FilterLeasesFiles("", "", "Progressive Motor Sports", "");
+            Assert.True(searchLeases.SearchFoundResults());
 
-            searchLease.FilterLeasesFiles("003-549-551", "05/12/1987", "Jonathan Doe", "Discarded");
-            Assert.False(searchLease.SearchFoundResults());
+            searchLeases.FilterLeasesFiles("003-549-551", "05/12/1987", "Jonathan Doe", "Discarded");
+            Assert.False(searchLeases.SearchFoundResults());
 
-            searchLease.FilterLeasesFiles("", "03/22/2024", "", "Terminated");
-            searchLease.OrderByLastLease();
+            searchLeases.FilterLeasesFiles("", "03/22/2024", "", "Terminated");
+            searchLeases.OrderByLastLease();
         }
 
         [StepDefinition(@"A new lease is created successfully")]
@@ -665,11 +731,11 @@ namespace PIMS.Tests.Automation.StepDefinitions
         {
             //TEST COVERAGE: PSP-2466, PSP-2993
 
-            searchLease.NavigateToSearchLicense();
-            searchLease.SearchLicenseByLFile(leaseCode);
+            searchLeases.NavigateToSearchLicense();
+            searchLeases.SearchLicenseByLFile(leaseCode);
 
-            Assert.True(searchLease.SearchFoundResults());
-            searchLease.Dispose();
+            Assert.True(searchLeases.SearchFoundResults());
+            searchLeases.Dispose();
         }
 
         [StepDefinition(@"Expected Lease File Content is displayed on Leases Table")]
@@ -678,9 +744,9 @@ namespace PIMS.Tests.Automation.StepDefinitions
             /* TEST COVERAGE: PSP-1833 */
 
             //Verify List View
-            searchLease.VerifySearchLeasesView();
-            searchLease.VerifyLeaseTableContent(lease.LeaseExpiryDate, lease.Program, lease.LeaseStatus);
-            searchLease.Dispose();
+            searchLeases.VerifySearchLeasesView();
+            searchLeases.VerifyLeaseTableContent(lease);
+            searchLeases.Dispose();
 
         }
 

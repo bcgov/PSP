@@ -1,5 +1,5 @@
 import { FormikProps } from 'formik';
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
@@ -8,6 +8,7 @@ import { ReactComponent as RealEstateAgent } from '@/assets/images/real-estate-a
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
+import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { featuresetToMapProperty } from '@/utils/mapPropertyUtils';
 
@@ -26,8 +27,8 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
   const history = useHistory();
   const formikRef = useRef<FormikProps<AcquisitionForm>>(null);
   const [isValid, setIsValid] = useState<boolean>(true);
+  const { setModalContent, setDisplayModal } = useModalContext();
 
-  const close = useCallback(() => onClose && onClose(), [onClose]);
   const mapMachine = useMapStateMachine();
   const selectedFeatureDataset = mapMachine.selectedFeatureDataset;
 
@@ -87,6 +88,23 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
     formikRef,
   });
 
+  const cancelFunc = () => {
+    if (!formikRef.current?.dirty) {
+      formikRef.current?.resetForm();
+      onClose();
+    } else {
+      setModalContent({
+        ...getCancelModalProps(),
+        handleOk: () => {
+          formikRef.current?.resetForm();
+          setDisplayModal(false);
+          onClose();
+        },
+      });
+      setDisplayModal(true);
+    }
+  };
+
   return (
     <MapSideBarLayout
       showCloseButton
@@ -100,12 +118,12 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
           className="mr-2"
         />
       }
-      onClose={close}
+      onClose={cancelFunc}
       footer={
         <SidebarFooter
           isOkDisabled={helper.loading}
           onSave={handleSave}
-          onCancel={close}
+          onCancel={cancelFunc}
           displayRequiredFieldError={isValid === false}
         />
       }

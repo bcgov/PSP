@@ -74,8 +74,8 @@ interface ParcelSeed {
   id: number;
   latitude: number;
   longitude: number;
-  propertyId?: string;
-  pid?: string;
+  propertyId?: number;
+  pid?: number;
 }
 
 export const largeMockParcels: ParcelSeed[] = [
@@ -93,10 +93,10 @@ export const largeMockParcels: ParcelSeed[] = [
 ];
 
 export const distantMockParcels: ParcelSeed[] = [
-  { id: 1, latitude: 53.917061, longitude: -122.749672, propertyId: '1' },
-  { id: 2, latitude: 54.917062, longitude: -123.749692, propertyId: '2' },
-  { id: 3, latitude: 55.917063, longitude: -124.749682, propertyId: '3' },
-  { id: 4, latitude: 56.917064, longitude: -125.749672, propertyId: '4' },
+  { id: 1, latitude: 53.917061, longitude: -122.749672, propertyId: 1 },
+  { id: 2, latitude: 54.917062, longitude: -123.749692, propertyId: 2 },
+  { id: 3, latitude: 55.917063, longitude: -124.749682, propertyId: 3 },
+  { id: 4, latitude: 56.917064, longitude: -125.749672, propertyId: 4 },
 ];
 
 export const createPimsFeatures = (
@@ -128,9 +128,9 @@ const smallMockParcels: ParcelSeed[] = [
 
 // This mocks the parcels of land a user can see - render a cluster and a marker
 const mockParcels: ParcelSeed[] = [
-  { id: 1, latitude: 55.917161, longitude: -122.749612, pid: '7771' },
-  { id: 2, latitude: 55.917262, longitude: -122.749622, pid: '7772' },
-  { id: 3, latitude: 55.917363, longitude: -122.749732, pid: '7773' },
+  { id: 1, latitude: 55.917161, longitude: -122.749612, pid: 7771 },
+  { id: 2, latitude: 55.917262, longitude: -122.749622, pid: 7772 },
+  { id: 3, latitude: 55.917363, longitude: -122.749732, pid: 7773 },
 ];
 
 jest.mock('@/components/common/mapFSM/MapStateMachineContext');

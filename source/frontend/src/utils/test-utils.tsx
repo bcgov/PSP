@@ -5,9 +5,10 @@ import {
   render as rtlRender,
   RenderOptions as RtlRenderOptions,
   RenderResult,
+  waitFor,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { AxiosError, AxiosResponse } from 'axios';
+import { AxiosError, AxiosRequestHeaders, AxiosResponse } from 'axios';
 import { createMemoryHistory, MemoryHistory } from 'history';
 import noop from 'lodash/noop';
 import React, { ReactNode } from 'react';
@@ -18,6 +19,11 @@ import { FilterProvider } from '@/components/maps/providers/FIlterProvider';
 import { IApiError } from '@/interfaces/IApiError';
 
 import TestCommonWrapper from './TestCommonWrapper';
+
+interface Option {
+  id: number | string;
+  text: string;
+}
 
 export const mockKeycloak = (
   props: {
@@ -179,7 +185,7 @@ export function createAxiosError(
     isAxiosError: true,
     name: 'AxiosError',
     message,
-    config: {},
+    config: { headers: {} as AxiosRequestHeaders },
     toJSON: noop as any,
     response: {
       status,
@@ -320,6 +326,32 @@ async function renderAsync(
     );
   }
   return await rtlRender(ui, { wrapper: AllTheProviders, ...renderOptions });
+}
+
+// simulate scrolling down using the keyboard arrows
+export async function focusOptionMultiselect(
+  container: HTMLElement,
+  option: Option,
+  options: readonly Option[],
+) {
+  const indexOfSelectedOption = options.findIndex(o => o.id === option.id);
+  for (let i = 0; i < indexOfSelectedOption; i++) {
+    act(() => {
+      userEvent.keyboard('{ArrowDown}');
+    });
+  }
+  expect(
+    container.querySelector('.multiselect-container .optionContainer li.option.highlight')!
+      .textContent,
+  ).toEqual(option.text);
+
+  await waitFor(async () => {
+    act(() => {
+      userEvent.click(
+        container.querySelector('.multiselect-container .optionContainer li.option.highlight')!,
+      );
+    });
+  });
 }
 
 // re-export everything from RTL

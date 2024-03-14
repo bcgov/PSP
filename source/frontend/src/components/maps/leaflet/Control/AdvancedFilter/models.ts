@@ -29,6 +29,7 @@ export class PropertyFilterFormModel {
   public isPropertyOfInterest = true;
   public isOtherInterest = true;
   public isDisposed = false;
+  public isRetired = false;
 
   public toApi(): Api_PropertyFilterCriteria {
     return {
@@ -49,6 +50,7 @@ export class PropertyFilterFormModel {
       isPropertyOfInterest: this.isPropertyOfInterest,
       isOtherInterest: this.isOtherInterest,
       isDisposed: this.isDisposed,
+      isRetired: this.isRetired,
     };
   }
 }
