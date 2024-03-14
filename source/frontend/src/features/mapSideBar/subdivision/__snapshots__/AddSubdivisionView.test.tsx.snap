@@ -298,7 +298,7 @@ exports[`Add Subdivision View matches snapshot 1`] = `
                       Plan
                     </div>
                     <div
-                      class="col-md-2"
+                      class="col-md-3"
                     >
                       Area m
                       <sup>
@@ -311,7 +311,7 @@ exports[`Add Subdivision View matches snapshot 1`] = `
                       Address
                     </div>
                     <div
-                      class="col-md-2"
+                      class="col-md-1"
                     />
                   </div>
                 </div>
@@ -363,7 +363,7 @@ exports[`Add Subdivision View matches snapshot 1`] = `
                       Plan
                     </div>
                     <div
-                      class="col-md-2"
+                      class="col-md-3"
                     >
                       Area m
                       <sup>
@@ -376,7 +376,7 @@ exports[`Add Subdivision View matches snapshot 1`] = `
                       Address
                     </div>
                     <div
-                      class="col-md-2"
+                      class="col-md-1"
                     />
                   </div>
                 </div>
