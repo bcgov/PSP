@@ -131,7 +131,7 @@ describe('LayerPopupFlyout component', () => {
     expect(onCreateSubdivision).toHaveBeenCalled();
   });
 
-  it('Hides all options for retired properties', async () => {
+  it('Hides options for retired properties leaving only Research File', async () => {
     const { queryByText } = setup({
       isInPims: true,
       isRetiredProperty: true,
@@ -144,12 +144,12 @@ describe('LayerPopupFlyout component', () => {
       ],
     });
 
-    expect(queryByText('Create:')).not.toBeInTheDocument();
-    expect(queryByText('Research File')).not.toBeInTheDocument();
+    expect(queryByText('Create:')).toBeInTheDocument();
+    expect(queryByText('Research File')).toBeInTheDocument();
+
     expect(queryByText('Acquisition File')).not.toBeInTheDocument();
     expect(queryByText('Lease/License')).not.toBeInTheDocument();
     expect(queryByText('Disposition File')).not.toBeInTheDocument();
-
     expect(queryByText('Create Subdivision')).not.toBeInTheDocument();
     expect(queryByText('Create Consolidation')).not.toBeInTheDocument();
   });

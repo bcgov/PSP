@@ -43,28 +43,42 @@ export const LayerPopupFlyout: React.FC<React.PropsWithChildren<ILayerPopupFlyou
           <ListGroup.Item>
             <StyledSubheading>Create:</StyledSubheading>
           </ListGroup.Item>
-          {keycloak.hasClaim(Claims.RESEARCH_ADD) && !isRetiredProperty && (
+          {keycloak.hasClaim(Claims.RESEARCH_ADD) && (
             <ListGroup.Item>
               <LinkButton onClick={onCreateResearchFile}>Research File</LinkButton>
             </ListGroup.Item>
           )}
-          {keycloak.hasClaim(Claims.ACQUISITION_ADD) && !isRetiredProperty && (
+          {keycloak.hasClaim(Claims.ACQUISITION_ADD) && (
             <ListGroup.Item>
               <LinkButton onClick={onCreateAcquisitionFile}>Acquisition File</LinkButton>
             </ListGroup.Item>
           )}
-          {keycloak.hasClaim(Claims.LEASE_ADD) && !isRetiredProperty && (
+          {keycloak.hasClaim(Claims.LEASE_ADD) && (
             <ListGroup.Item>
               <LinkButton onClick={onCreateLeaseLicense}>Lease/License</LinkButton>
             </ListGroup.Item>
           )}
-          {keycloak.hasClaim(Claims.DISPOSITION_ADD) && !isRetiredProperty && (
+          {keycloak.hasClaim(Claims.DISPOSITION_ADD) && (
             <ListGroup.Item>
               <LinkButton onClick={onCreateDispositionFile}>Disposition File</LinkButton>
             </ListGroup.Item>
           )}
         </StyledLinkSection>
       )}
+
+      {isRetiredProperty && (
+        <StyledLinkSection>
+          <ListGroup.Item>
+            <StyledSubheading>Create:</StyledSubheading>
+          </ListGroup.Item>
+          {keycloak.hasClaim(Claims.RESEARCH_ADD) && (
+            <ListGroup.Item>
+              <LinkButton onClick={onCreateResearchFile}>Research File</LinkButton>
+            </ListGroup.Item>
+          )}
+        </StyledLinkSection>
+      )}
+
       {keycloak.hasClaim(Claims.PROPERTY_ADD) && isInPims && !isRetiredProperty && (
         <StyledLinkSection>
           <ListGroup.Item>
