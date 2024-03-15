@@ -65,7 +65,7 @@ export const useApiRequestWrapper = <
 
   // allow direct access to the api wrapper function in case direct invocation is required by consumer.
   const wrappedApiRequest = useCallback<
-    (params: Parameters<FunctionType>) => Promise<unknown | undefined>
+    (...params: Parameters<FunctionType>) => Promise<unknown | undefined>
   >(
     async (...args) => {
       try {
@@ -144,7 +144,7 @@ export const useApiRequestWrapper = <
   useEffect(() => {
     if (invoke) {
       // If invoke is set then the function is parameterless.
-      wrappedApiRequest(undefined as Parameters<FunctionType>);
+      (wrappedApiRequest as unknown as () => void)();
     }
   }, [wrappedApiRequest, invoke]);
 
