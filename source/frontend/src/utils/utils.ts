@@ -118,7 +118,7 @@ export const handleAxiosResponse = <ResponseType>(
           logError({
             name: actionType,
             status: axiosError?.response?.status,
-            error: axiosError ?? {},
+            error: axiosError ?? ({} as unknown as AxiosError<unknown, any>),
           }),
         );
       }

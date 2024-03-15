@@ -76,7 +76,7 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
   const { file, lastUpdatedBy } = useContext(SideBarContext);
   const acquisitionFile: ApiGen_Concepts_AcquisitionFile = {
     ...file,
-  } as ApiGen_Concepts_AcquisitionFile;
+  } as unknown as ApiGen_Concepts_AcquisitionFile;
 
   // match for property menu routes - eg /property/1/ltsa
   const fileMatch = matchPath<Record<string, string>>(location.pathname, `${match.path}/:tab`);

@@ -1,6 +1,11 @@
+import { FeatureCollection, Polygon } from 'geojson';
+
 import { IBcAssessmentSummary } from '@/models/layers/bcAssesment';
 
-export const getMockLegalDescriptions = () => ({
+export const getMockLegalDescriptions: () => FeatureCollection<
+  Polygon,
+  IBcAssessmentSummary['LEGAL_DESCRIPTION']
+> = () => ({
   type: 'FeatureCollection',
   features: [
     {
@@ -77,7 +82,10 @@ export const getMockLegalDescriptions = () => ({
   bbox: [-123.43521, 48.46278, -123.4349, 48.46286],
 });
 
-export const getMockAddresses = () => ({
+export const getMockAddresses: () => FeatureCollection<
+  Polygon,
+  IBcAssessmentSummary['ADDRESSES'][0]
+> = () => ({
   type: 'FeatureCollection',
   features: [
     {
@@ -135,7 +143,10 @@ export const getMockAddresses = () => ({
   bbox: [-123.43521, 48.46278, -123.4349, 48.46286],
 });
 
-export const getMockSales = () => ({
+export const getMockSales: () => FeatureCollection<
+  Polygon,
+  IBcAssessmentSummary['SALES'][0]
+> = () => ({
   type: 'FeatureCollection',
   features: [
     {
@@ -183,7 +194,10 @@ export const getMockSales = () => ({
   ],
 });
 
-export const getMockValues = () => ({
+export const getMockValues: () => FeatureCollection<
+  Polygon,
+  IBcAssessmentSummary['VALUES'][0]
+> = () => ({
   type: 'FeatureCollection',
   features: [
     {
@@ -239,7 +253,10 @@ export const getMockValues = () => ({
   bbox: [-123.43521, 48.46278, -123.4349, 48.46286],
 });
 
-export const getMockDescription = () => ({
+export const getMockDescription: () => FeatureCollection<
+  Polygon,
+  IBcAssessmentSummary['FOLIO_DESCRIPTION']
+> = () => ({
   type: 'FeatureCollection',
   features: [
     {
@@ -306,7 +323,10 @@ export const getMockDescription = () => ({
   bbox: [-123.43521, 48.46278, -123.4349, 48.46286],
 });
 
-export const getMockLandChars = () => ({
+export const getMockLandChars: () => FeatureCollection<
+  Polygon,
+  IBcAssessmentSummary['CHARGES'][0]
+> = () => ({
   type: 'FeatureCollection',
   features: [
     {
@@ -344,7 +364,6 @@ export const getMockLandChars = () => ({
         FEATURE_LENGTH_M: 391.2363,
         OBJECTID: 1857581,
         SE_ANNO_CAD_DATA: null,
-        bbox: [-125.30846, 52.46245, -125.30638, 52.46332],
       },
     },
   ],

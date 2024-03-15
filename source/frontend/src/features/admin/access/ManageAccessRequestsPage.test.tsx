@@ -37,7 +37,7 @@ const lCodes = {
 };
 
 jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'), // use actual for all non-hook parts
+  ...(jest.requireActual('react-router-dom') as any), // use actual for all non-hook parts
   useRouteMatch: () => ({ url: '/admin', path: '/admin' }),
 }));
 

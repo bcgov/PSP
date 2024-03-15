@@ -150,7 +150,7 @@ describe('AddLeaseTenantContainer component', () => {
       surname: undefined,
       firstName: undefined,
       middleNames: undefined,
-    };
+    } as unknown as IContactSearchResult;
 
     await act(async () => {
       viewProps.setSelectedTenants([contact]);
