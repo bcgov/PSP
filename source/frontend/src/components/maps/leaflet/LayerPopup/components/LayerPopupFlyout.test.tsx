@@ -28,6 +28,7 @@ describe('LayerPopupFlyout component', () => {
     const component = render(
       <LayerPopupFlyout
         isInPims={renderOptions?.isInPims ?? false}
+        isRetiredProperty={renderOptions?.isRetiredProperty ?? false}
         onViewPropertyInfo={onViewPropertyInfo}
         onCreateAcquisitionFile={onCreateAcquisitionFile}
         onCreateResearchFile={onCreateResearchFile}
@@ -128,5 +129,28 @@ describe('LayerPopupFlyout component', () => {
     const link = getByText('Create Subdivision');
     await act(async () => userEvent.click(link));
     expect(onCreateSubdivision).toHaveBeenCalled();
+  });
+
+  it('Hides all options for retired properties', async () => {
+    const { queryByText } = setup({
+      isInPims: true,
+      isRetiredProperty: true,
+      claims: [
+        Claims.PROPERTY_ADD,
+        Claims.DISPOSITION_ADD,
+        Claims.LEASE_ADD,
+        Claims.ACQUISITION_ADD,
+        Claims.RESEARCH_ADD,
+      ],
+    });
+
+    expect(queryByText('Create:')).not.toBeInTheDocument();
+    expect(queryByText('Research File')).not.toBeInTheDocument();
+    expect(queryByText('Acquisition File')).not.toBeInTheDocument();
+    expect(queryByText('Lease/License')).not.toBeInTheDocument();
+    expect(queryByText('Disposition File')).not.toBeInTheDocument();
+
+    expect(queryByText('Create Subdivision')).not.toBeInTheDocument();
+    expect(queryByText('Create Consolidation')).not.toBeInTheDocument();
   });
 });
