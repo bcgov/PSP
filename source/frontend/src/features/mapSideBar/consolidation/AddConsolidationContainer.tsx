@@ -146,7 +146,7 @@ const AddConsolidationContainer: React.FC<IAddConsolidationContainerProps> = ({
       const response = await addPropertyOperation(propertyOperations, userOverrideCodes);
 
       if (response?.length) {
-        handleSuccess(propertyOperations);
+        handleSuccess(response);
       }
     } finally {
       formikHelpers?.setSubmitting(false);

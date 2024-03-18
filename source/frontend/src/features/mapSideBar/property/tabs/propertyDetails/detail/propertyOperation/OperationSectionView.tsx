@@ -1,5 +1,6 @@
 import { Section } from '@/components/common/Section/Section';
 import { StyledNoData } from '@/features/documents/commonStyles';
+import { ApiGen_CodeTypes_PropertyOperationTypes } from '@/models/api/generated/ApiGen_CodeTypes_PropertyOperationTypes';
 
 import { OperationSet } from './OperationContainer';
 import { OperationView } from './OperationView';
@@ -23,6 +24,7 @@ export const OperationSectionView: React.FunctionComponent<IOperationSectionView
             <>
               <OperationView
                 key={index}
+                operationType={ApiGen_CodeTypes_PropertyOperationTypes.SUBDIVIDE}
                 operationTimeStamp={operationSet.operationDateTime ?? ''}
                 sourceProperties={operationSet.sourceProperties}
                 destinationProperties={operationSet.destinationProperties}
@@ -39,6 +41,7 @@ export const OperationSectionView: React.FunctionComponent<IOperationSectionView
           consolidationOperations.map((operationSet, index) => (
             <OperationView
               key={index}
+              operationType={ApiGen_CodeTypes_PropertyOperationTypes.CONSOLIDATE}
               operationTimeStamp={operationSet.operationDateTime ?? ''}
               sourceProperties={operationSet.sourceProperties}
               destinationProperties={operationSet.destinationProperties}
