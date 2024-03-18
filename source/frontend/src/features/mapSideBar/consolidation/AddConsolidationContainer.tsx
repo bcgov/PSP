@@ -53,10 +53,10 @@ const AddConsolidationContainer: React.FC<IAddConsolidationContainerProps> = ({
           setDisplayModal(false);
         },
       });
+      setDisplayModal(true);
     } else {
       onClose?.();
     }
-    setDisplayModal(true);
   }, [onClose, setDisplayModal, setModalContent]);
 
   const getAddress = useCallback(
