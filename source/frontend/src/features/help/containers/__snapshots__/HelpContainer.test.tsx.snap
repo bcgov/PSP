@@ -1,11 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`HelpContainer tests HelpContainer renders correctly... 1`] = `
-Array [
+exports[`HelpContainer component renders correctly 1`] = `
+<DocumentFragment>
   <div
-    className="Toastify"
-  />,
-  <div />,
+    class="Toastify"
+  />
+  <div />
   .c1 {
   cursor: pointer;
 }
@@ -34,27 +34,17 @@ Array [
 }
 
 <div
-    className="nav-item"
+    class="nav-item"
   >
     <div
-      className="c0"
-      onBlur={[Function]}
-      onClick={[Function]}
-      onFocus={[Function]}
-      onMouseOut={[Function]}
-      onMouseOver={[Function]}
+      class="c0"
     >
       <svg
-        className="c1"
+        class="c1"
         fill="currentColor"
         height="24px"
         stroke="currentColor"
-        strokeWidth="0"
-        style={
-          Object {
-            "color": undefined,
-          }
-        }
+        stroke-width="0"
         viewBox="0 0 512 512"
         width="24px"
         xmlns="http://www.w3.org/2000/svg"
@@ -67,9 +57,6 @@ Array [
         Help
       </label>
     </div>
-    <div
-      className="container"
-    />
-  </div>,
-]
+  </div>
+</DocumentFragment>
 `;
