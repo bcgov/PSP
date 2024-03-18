@@ -74,6 +74,7 @@ describe('ManagementActivitiesListContainer component', () => {
   it('renders as expected', async () => {
     mockGetApi.execute.mockResolvedValue(mockGetPropertyManagementActivityList());
     const { asFragment } = await setup({});
+    await act(async () => {});
     const fragment = await waitFor(() => asFragment());
 
     expect(fragment).toMatchSnapshot();
@@ -84,9 +85,11 @@ describe('ManagementActivitiesListContainer component', () => {
     mockGetApi.execute.mockResolvedValue(mockGetPropertyManagementActivityList());
     await setup({});
 
-    viewProps.onDelete(1);
-    const modal = await screen.findByText('Confirm Delete');
+    await act(async () => {
+      viewProps.onDelete(1);
+    });
 
+    const modal = await screen.findByText('Confirm Delete');
     expect(modal).toBeVisible();
   });
 
@@ -96,9 +99,11 @@ describe('ManagementActivitiesListContainer component', () => {
       claims: [Claims.MANAGEMENT_DELETE],
     });
 
-    viewProps.onDelete(1);
+    await act(async () => {
+      viewProps.onDelete(1);
+    });
     const continueButton = await screen.findByText('Yes');
-    act(() => userEvent.click(continueButton));
+    await act(async () => userEvent.click(continueButton));
 
     expect(mockDeleteApi.execute).toHaveBeenCalledTimes(1);
   });

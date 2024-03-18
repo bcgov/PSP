@@ -5,7 +5,7 @@ import thunk from 'redux-thunk';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
-import { render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
+import { act, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
 import { PropertyForm } from '../../shared/models';
 import { AcquisitionPropertiesSubForm } from './AcquisitionPropertiesSubForm';
@@ -78,7 +78,7 @@ describe('AcquisitionProperties component', () => {
   it('should remove property from list when Remove button is clicked', async () => {
     const { getAllByTitle, queryByText } = setup({ initialForm: testForm });
     const pidRow = getAllByTitle('remove')[0];
-    userEvent.click(pidRow);
+    await act(async () => userEvent.click(pidRow));
 
     await waitFor(() => {
       expect(customSetFilePropertyLocations).toHaveBeenCalledWith([{ lat: 0, lng: 0 }]);

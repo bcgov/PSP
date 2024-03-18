@@ -80,9 +80,10 @@ describe('UpdateProjectContainer', () => {
     (useMapStateMachine as jest.Mock).mockImplementation(() => mapMachineBaseMock);
   });
 
-  it('renders the underlying form', () => {
+  it('renders the underlying form', async () => {
     const { getByText } = setup();
     expect(getByText(/Content Rendered/)).toBeVisible();
+    await act(async () => {});
   });
 
   it('Maps the ApiGen_Concepts_Project values to the form passed to the view', () => {

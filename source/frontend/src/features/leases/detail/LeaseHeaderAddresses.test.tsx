@@ -40,8 +40,9 @@ describe('LeaseHeaderAddresses component', () => {
 
   it('renders 2 addresses by default', async () => {
     const { getAllByText, getByText } = setup({
-      propertyLeases: getMockProperties().map(p => ({
+      propertyLeases: getMockProperties().map((p, index) => ({
         ...getEmptyPropertyLease(),
+        id: index,
         fileId: 1,
         property: p as any,
       })),

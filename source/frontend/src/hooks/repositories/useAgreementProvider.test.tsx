@@ -78,9 +78,11 @@ describe('useAcquisitionProvider hook', () => {
       mockAxios.onPost(url).reply(400, MOCK.ERROR);
       const { addAcquisitionFile } = setup();
 
-      expect(() =>
-        addAcquisitionFile.execute(mockAcquisitionFileResponse(1), []),
-      ).rejects.toThrow();
+      await act(async () => {
+        expect(() =>
+          addAcquisitionFile.execute(mockAcquisitionFileResponse(1), []),
+        ).rejects.toThrow();
+      });
     });
   });
 

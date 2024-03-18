@@ -91,7 +91,7 @@ describe('Edit user page', () => {
       await findByDisplayValue('pos');
 
       expect(getByTestId('email').getAttribute('value')).toEqual('devin.smith@gov.bc.ca');
-      expect(getByTestId('businessIdentifier').getAttribute('value')).toEqual('desmith@idir');
+      expect(getByTestId('businessIdentifierValue').getAttribute('value')).toEqual('desmith@idir');
       expect(getByTestId('firstName').getAttribute('value')).toEqual('Devin');
       expect(getByTestId('surname').getAttribute('value')).toEqual('Smith');
       expect(getByTestId('position').getAttribute('value')).toEqual('pos');
@@ -104,7 +104,7 @@ describe('Edit user page', () => {
       const saveButton = getByText('Save');
       mockAxios.onGet().reply(200, getUserMock());
       await findByDisplayValue('pos');
-      act(() => {
+      await act(async () => {
         saveButton.click();
       });
       await findByText('Updating User...');
@@ -114,9 +114,9 @@ describe('Edit user page', () => {
       const { getByText, findByText, findByDisplayValue } = renderEditUserPage();
       const saveButton = getByText('Save');
       mockAxios.onGet().reply(200, getUserMock());
-      mockAxios.onPut().reply(200, {});
+      mockAxios.onPut().reply(200, getUserMock());
       await findByDisplayValue('pos');
-      act(() => {
+      await act(async () => {
         saveButton.click();
       });
       await findByText('User updated');
@@ -128,7 +128,7 @@ describe('Edit user page', () => {
       mockAxios.onGet().replyOnce(200, getUserMock());
       mockAxios.onPut().reply(500, {});
       await findByDisplayValue('pos');
-      act(() => {
+      await act(async () => {
         saveButton.click();
       });
       await findByText('Failed to update User');

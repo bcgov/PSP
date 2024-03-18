@@ -164,11 +164,11 @@ describe('Document List View', () => {
       claims: [Claims.DOCUMENT_ADD, Claims.DOCUMENT_DELETE, Claims.DOCUMENT_VIEW],
     });
     const deleteButtonTooltip = await findAllByTestId('document-delete-button');
-    act(() => userEvent.click(deleteButtonTooltip[0]));
+    await act(async () => userEvent.click(deleteButtonTooltip[0]));
 
     await waitFor(() => screen.getByText('Yes'));
     const continueButton = screen.getByText('Yes');
-    act(() => userEvent.click(continueButton));
+    await act(async () => userEvent.click(continueButton));
 
     expect(deleteMock).toHaveBeenCalledWith(DocumentRow.toApi(documentRows[0]));
   });
