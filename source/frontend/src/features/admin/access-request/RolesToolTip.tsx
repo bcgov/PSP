@@ -8,19 +8,20 @@ const RolesToolTip: React.FunctionComponent<React.PropsWithChildren<unknown>> = 
       <br />
       <br />
       <b>System Administrator</b>
-      <p>System Administrator of the PIMS solution.</p>
-      <br />
-      <b>Finance</b>
-      <p>Finance team members.</p>
+      <p>
+        System administrator of the PIMS solution with view, create, update and delete access
+        through out the system including elevated access to override some system based restrictions.
+      </p>
       <br />
       <b>Functional</b>
-      <p>PLMB staff (includes team members from HQ, regions and districts).</p>
-      <br />
-      <b>Functional (Restricted)</b>
-      <p>Contractors, Internal ministry staff.</p>
+      <p>
+        Ability to view, create, update and delete entities corresponding to the respective business
+        process, generally granted to PLMB staff and equivalent contractors from HQ, regions and
+        district.
+      </p>
       <br />
       <b>Read Only</b>
-      <p>Other ministries (e.g. Attorney General).</p>
+      <p>Ability to view entities corresponding to the respective business process.</p>
     </StyledTooltip>
   );
 };
