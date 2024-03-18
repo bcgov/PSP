@@ -69,7 +69,6 @@ const AddConsolidationView: React.FunctionComponent<
   MapSelectorComponent,
   PropertySelectorPidSearchComponent,
 }) => {
-  console.log(formikRef?.current);
   return (
     <MapSideBarLayout
       showCloseButton
