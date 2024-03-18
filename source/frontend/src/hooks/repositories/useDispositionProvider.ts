@@ -19,8 +19,6 @@ import {
   useAxiosSuccessHandler,
 } from '@/utils';
 
-const ignoreErrorCodes = [409];
-
 /**
  * hook that interacts with the Disposition File API.
  */
@@ -63,7 +61,6 @@ export const useDispositionProvider = () => {
     ),
     requestName: 'AddDispositionFile',
     onSuccess: useAxiosSuccessHandler('Disposition File saved'),
-    skipErrorLogCodes: ignoreErrorCodes,
     throwError: true,
   });
 
@@ -95,7 +92,6 @@ export const useDispositionProvider = () => {
     ),
     requestName: 'UpdateDispositionFile',
     onSuccess: useAxiosSuccessHandler('Disposition File saved'),
-    skipErrorLogCodes: ignoreErrorCodes,
     throwError: true,
   });
 
@@ -112,7 +108,6 @@ export const useDispositionProvider = () => {
     ),
     requestName: 'UpdateDispositionFileProperties',
     onSuccess: useAxiosSuccessHandler('Disposition File Properties updated'),
-    skipErrorLogCodes: ignoreErrorCodes,
     throwError: true,
   });
 
@@ -204,7 +199,6 @@ export const useDispositionProvider = () => {
       [postDispositionFileAppraisal],
     ),
     requestName: 'PostDispositionAppraisal',
-    skipErrorLogCodes: ignoreErrorCodes,
     throwError: true,
   });
 
@@ -224,7 +218,6 @@ export const useDispositionProvider = () => {
       [putDispositionFileAppraisal],
     ),
     requestName: 'PutDispositionAppraisal',
-    skipErrorLogCodes: ignoreErrorCodes,
     throwError: true,
   });
 
@@ -253,7 +246,6 @@ export const useDispositionProvider = () => {
       [postDispositionFileOffer],
     ),
     requestName: 'PostDispositionOffer',
-    skipErrorLogCodes: ignoreErrorCodes,
     throwError: true,
   });
 
@@ -280,7 +272,6 @@ export const useDispositionProvider = () => {
       [postDispositionFileSale],
     ),
     requestName: 'PostDispositionSale',
-    skipErrorLogCodes: ignoreErrorCodes,
     throwError: true,
   });
 
@@ -334,7 +325,6 @@ export const useDispositionProvider = () => {
       [putDispositionFileOffer],
     ),
     requestName: 'PutDispositionOffer',
-    skipErrorLogCodes: ignoreErrorCodes,
     throwError: true,
   });
 
