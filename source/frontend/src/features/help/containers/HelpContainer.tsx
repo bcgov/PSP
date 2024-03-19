@@ -45,45 +45,46 @@ export function HelpContainer() {
     update();
   }, [getSettings, config]);
 
-  useEffect(() => {
-    setModalContent({
-      draggable: true,
-      variant: 'info',
-      cancelButtonText: 'No',
-      okButtonText: 'Yes',
-      title: 'Help Desk',
-      headerIcon: <FaQuestionCircle size={22} />,
-      message: (
-        <>
-          <H3Styled>Get started with PIMS</H3Styled>
-          <p>
-            This overview has useful tools that will support you to start using the application. You
-            can also watch the video demos.
-          </p>
-          <LinkStyled target="_blank" href={pimsTrainingResourceUrl}>
-            PIMS Resources
-          </LinkStyled>
-          <hr />
-          <HelpModalContentContainer setMailto={setMailto} />
-          <StyledConfirmationText>
-            Do you want to proceed and send the email?
-          </StyledConfirmationText>
-        </>
-      ),
-      handleOk: () => setDisplayModal(false),
-      handleOkDisabled: !exists(helpDeskEmail),
-      okButtonHref:
-        exists(helpDeskEmail) && exists(mailto)
-          ? `mailto:${helpDeskEmail}?subject=${mailto?.subject}&body=${mailto?.body}`
-          : undefined,
-      handleCancel: () => setDisplayModal(false),
-    });
-  }, [helpDeskEmail, mailto, pimsTrainingResourceUrl, setDisplayModal, setModalContent]);
-
   return keycloak.obj.authenticated ? (
     <Nav.Item>
       <TooltipWrapper tooltipId="help-tooltip" tooltip="Ask for Help">
-        <StyledContainer onClick={() => setDisplayModal(true)}>
+        <StyledContainer
+          onClick={() => {
+            setModalContent({
+              draggable: true,
+              variant: 'info',
+              cancelButtonText: 'No',
+              okButtonText: 'Yes',
+              title: 'Help Desk',
+              headerIcon: <FaQuestionCircle size={22} />,
+              message: (
+                <>
+                  <H3Styled>Get started with PIMS</H3Styled>
+                  <p>
+                    This overview has useful tools that will support you to start using the
+                    application. You can also watch the video demos.
+                  </p>
+                  <LinkStyled target="_blank" href={pimsTrainingResourceUrl}>
+                    PIMS Resources
+                  </LinkStyled>
+                  <hr />
+                  <HelpModalContentContainer setMailto={setMailto} />
+                  <StyledConfirmationText>
+                    Do you want to proceed and send the email?
+                  </StyledConfirmationText>
+                </>
+              ),
+              handleOk: () => setDisplayModal(false),
+              handleOkDisabled: !exists(helpDeskEmail),
+              okButtonHref:
+                exists(helpDeskEmail) && exists(mailto)
+                  ? `mailto:${helpDeskEmail}?subject=${mailto?.subject}&body=${mailto?.body}`
+                  : undefined,
+              handleCancel: () => setDisplayModal(false),
+            });
+            setDisplayModal(true);
+          }}
+        >
           <StyledHelpIcon size="24px" />
           <label>Help</label>
         </StyledContainer>
