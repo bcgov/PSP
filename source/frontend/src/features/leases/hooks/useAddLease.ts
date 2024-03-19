@@ -25,7 +25,6 @@ export const useAddLease = () => {
     ),
     requestName: 'addLease',
     throwError: true,
-    skipErrorLogCodes: [409],
   });
 
   return { addLease };

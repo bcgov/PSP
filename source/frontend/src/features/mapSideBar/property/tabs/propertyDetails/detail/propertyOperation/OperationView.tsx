@@ -2,13 +2,15 @@ import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { Table } from '@/components/Table';
 import { AreaUnitTypes } from '@/constants';
+import { ApiGen_CodeTypes_PropertyOperationTypes } from '@/models/api/generated/ApiGen_CodeTypes_PropertyOperationTypes';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { UtcIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { getApiPropertyName, prettyFormatUTCDate, prettyFormatUTCTime } from '@/utils';
 
-import columns from './columns';
+import getColumns from './columns';
 
 export interface IOperationViewProps {
+  operationType: ApiGen_CodeTypes_PropertyOperationTypes;
   operationTimeStamp: UtcIsoDateTime;
   sourceProperties: ApiGen_Concepts_Property[];
   destinationProperties: ApiGen_Concepts_Property[];
@@ -25,6 +27,7 @@ export interface PropertyOperationResult {
 }
 
 export const OperationView: React.FunctionComponent<IOperationViewProps> = ({
+  operationType,
   operationTimeStamp,
   sourceProperties,
   destinationProperties,
@@ -42,11 +45,11 @@ export const OperationView: React.FunctionComponent<IOperationViewProps> = ({
     };
   };
 
-  let operationColumns = sourceProperties.map<PropertyOperationResult>(o => {
+  let operationData = sourceProperties.map<PropertyOperationResult>(o => {
     return toOperationResult(o, true);
   });
 
-  operationColumns = operationColumns.concat(
+  operationData = operationData.concat(
     destinationProperties.map<PropertyOperationResult>(o => {
       return toOperationResult(o, false);
     }),
@@ -66,8 +69,8 @@ export const OperationView: React.FunctionComponent<IOperationViewProps> = ({
     >
       <Table<PropertyOperationResult>
         name="propertyOperationTable"
-        columns={columns}
-        data={operationColumns}
+        columns={getColumns(ApiGen_CodeTypes_PropertyOperationTypes.SUBDIVIDE === operationType)}
+        data={operationData}
         hideToolbar
         manualPagination
         disableSelection={true}

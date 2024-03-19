@@ -27,8 +27,10 @@ export function useAxiosErrorHandler(message = 'Network error. Check responses a
     (axiosError: AxiosError<IApiError>) => {
       if (axiosError?.response?.status === 400) {
         toast.error(axiosError?.response.data.error, { autoClose: 10000 });
+        return Promise.resolve();
       } else {
         toast.error(message);
+        return Promise.reject(axiosError);
       }
     },
     [message],
@@ -47,10 +49,13 @@ export function useAxiosErrorHandlerWithAuthorization(
     (axiosError: AxiosError<IApiError>) => {
       if (axiosError?.response?.status === 400) {
         toast.error(axiosError?.response.data.error, { autoClose: 10000 });
+        return Promise.resolve();
       } else if (axiosError?.response?.status === 403) {
         history.push('/forbidden');
+        return Promise.resolve();
       } else {
         toast.error(message);
+        return Promise.reject(axiosError);
       }
     },
     [history, message],
