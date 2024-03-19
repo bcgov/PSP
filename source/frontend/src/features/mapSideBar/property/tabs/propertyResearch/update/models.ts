@@ -68,11 +68,6 @@ export class UpdatePropertyFormModel {
     model.documentReference = base.documentReference ?? undefined;
     model.researchSummary = base.researchSummary ?? undefined;
     model.propertyId = base.property?.id;
-    model.researchFile = base.file;
-    if (model.researchFile) {
-      //psp-7975 formik does not handle recursive objects.
-      model.researchFile.fileProperties = null;
-    }
 
     model.purposeTypes = base.purposeTypes?.map((x: ApiGen_Concepts_PropertyPurpose) =>
       PropertyResearchFilePurposeFormModel.fromApi(x),
