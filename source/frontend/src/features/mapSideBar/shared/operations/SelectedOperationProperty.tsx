@@ -32,7 +32,7 @@ export const SelectedOperationProperty: React.FunctionComponent<
         </div>
       </Col>
       <Col md={2}>{property.planNumber}</Col>
-      <Col md={2}>
+      <Col md={3}>
         {isEditable ? (
           <InlineInput className="w-75" field={`${nameSpace}.landArea`} />
         ) : (
@@ -44,7 +44,7 @@ export const SelectedOperationProperty: React.FunctionComponent<
         )}
       </Col>
       <Col md={3}>{formatApiAddress(property?.address) ?? ''}</Col>
-      <Col md={2} className="d-flex justify-content-center">
+      <Col md={1} className="d-flex justify-content-center">
         <RemoveButton onRemove={onRemove} />
       </Col>
     </Row>

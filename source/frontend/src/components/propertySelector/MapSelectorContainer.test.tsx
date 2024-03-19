@@ -110,10 +110,10 @@ describe('MapSelectorContainer component', () => {
       modifiedProperties: [PropertyForm.fromMapProperty(testProperty)],
     });
     await act(async () => {
-      expect(getByText(/SPS22411/g)).toBeVisible();
-      expect(getByText(/Test address 123/g)).toBeVisible();
-      expect(getByText(/1 - South Coast/g)).toBeVisible();
-      expect(getByText(/5 - Okanagan-Shuswap/g)).toBeVisible();
+      expect(getByText(/SPS22411/i)).toBeVisible();
+      expect(getByText(/Test address 123/i)).toBeVisible();
+      expect(getByText(/1 - South Coast/i)).toBeVisible();
+      expect(getByText(/5 - Okanagan-Shuswap/i)).toBeVisible();
     });
   });
 

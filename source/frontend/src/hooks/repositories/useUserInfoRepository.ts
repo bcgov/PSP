@@ -27,8 +27,10 @@ export const useUserInfoRepository = () => {
       onError: useCallback((axiosError: AxiosError<IApiError>) => {
         if (axiosError?.response?.status === 400) {
           toast.error(axiosError?.response.data.error);
+          return Promise.resolve();
         } else {
           toast.error('Failed to retrieve user information for currently logged in user.');
+          return Promise.reject(axiosError);
         }
       }, []),
     },

@@ -6,8 +6,6 @@ import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import { ApiGen_Concepts_InterestHolder } from '@/models/api/generated/ApiGen_Concepts_InterestHolder';
 import { useAxiosErrorHandler } from '@/utils';
 
-const ignoreErrorCodes = [409];
-
 /**
  * hook that interacts with the InterestHolde API.
  */
@@ -37,7 +35,6 @@ export const useInterestHolderRepository = () => {
       [postAcquisitionholderApi],
     ),
     requestName: 'updateAcquisitionInterestHolder',
-    skipErrorLogCodes: ignoreErrorCodes,
     throwError: true,
   });
 

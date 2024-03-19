@@ -81,6 +81,7 @@ export const ContactInput: React.FC<React.PropsWithChildren<ContactInputProps>> 
               field={field + '.id'}
               placeholder="Select from Contacts"
               className="d-none"
+              defaultValue=""
             ></Input>
           </Col>
           <Col xs="auto" className="pl-0">

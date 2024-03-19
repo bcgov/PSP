@@ -24,7 +24,7 @@ export const toCqlFilterValue = (object: Record<string, string>, flags?: IWfsCql
   Object.keys(object).forEach((key: string) => {
     if (object[key]) {
       if (
-        (key === 'PID' || key === 'PID_PADDED') &&
+        (key === 'PID' || key === 'PID_PADDED' || key === 'PID_NUMBER') &&
         (object[key]?.length === 9 || flags?.forceExactMatch)
       ) {
         cql.push(`${key} = '${object[key]}'`);

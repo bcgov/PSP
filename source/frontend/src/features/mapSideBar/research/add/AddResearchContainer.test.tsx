@@ -63,6 +63,7 @@ describe('AddResearchContainer component', () => {
 
   it('renders as expected', async () => {
     const { asFragment } = await setup({ onClose: noop });
+    await act(async () => {});
     expect(asFragment()).toMatchSnapshot();
   });
 
@@ -102,11 +103,11 @@ describe('AddResearchContainer component', () => {
   });
 
   it('resets the list of draft properties when closed', async () => {
-    const testMockMahine: IMapStateMachineContext = {
+    const testMockMachine: IMapStateMachineContext = {
       ...mapMachineBaseMock,
     };
     (useMapStateMachine as unknown as jest.Mock<Partial<IMapStateMachineContext>>).mockReturnValue(
-      testMockMahine,
+      testMockMachine,
     );
 
     const { getByTitle } = await setup({
@@ -115,9 +116,11 @@ describe('AddResearchContainer component', () => {
 
     const closeButton = getByTitle('close');
 
-    await waitFor(async () => {
+    await act(async () => {
       userEvent.click(closeButton);
-      expect(testMockMahine.setFilePropertyLocations).toHaveBeenCalledWith([]);
+    });
+    await waitFor(() => {
+      expect(testMockMachine.setFilePropertyLocations).toHaveBeenCalledWith([]);
     });
   });
 
@@ -125,6 +128,7 @@ describe('AddResearchContainer component', () => {
     await setup({
       onClose: noop,
     });
+    await act(async () => {});
     expect(screen.getByText(`Help with choosing a name`)).toBeInTheDocument();
   });
 });

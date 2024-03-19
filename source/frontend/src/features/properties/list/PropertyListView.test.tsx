@@ -185,10 +185,12 @@ describe('Property list view', () => {
     ) as MultiSelectOption;
 
     // click on the multi-select to show drop-down list
-    act(() => userEvent.click(container.querySelector(`#properties-selector`) as HTMLInputElement));
+    await act(async () =>
+      userEvent.click(container.querySelector(`#properties-selector`) as HTMLInputElement),
+    );
 
     // select an option from the drop-down
-    focusOptionMultiselect(container, optionSelected, ownershipFilterOptions);
+    await focusOptionMultiselect(container, optionSelected, ownershipFilterOptions);
 
     await waitFor(() => {
       expect(mockApiGetPropertiesPagedApi).toHaveBeenCalledWith({
