@@ -7,6 +7,7 @@ import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import * as API from '@/constants/API';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
+import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
 
 import { FormLeaseConsultation, LeaseFormModel } from '../models';
 
@@ -23,7 +24,7 @@ const ConsultationSubForm: React.FunctionComponent<
   const consultationTypes = getByType(API.CONSULTATION_TYPES);
   const consultationStatusTypes = getOptionsByType(API.CONSULTATION_STATUS_TYPES);
 
-  React.useEffect(() => {
+  useDeepCompareEffect(() => {
     // Not all consultations might be coming from the backend. Add the ones missing.
     if (consultations.length !== consultationTypes.length) {
       const newConsultations: FormLeaseConsultation[] = [];
