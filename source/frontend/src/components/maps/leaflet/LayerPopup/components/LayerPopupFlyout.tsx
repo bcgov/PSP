@@ -8,6 +8,7 @@ import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
 
 export interface ILayerPopupFlyoutProps {
   isInPims: boolean;
+  isRetiredProperty: boolean;
   onViewPropertyInfo: (event: React.MouseEvent<HTMLElement>) => void;
   onCreateResearchFile: (event: React.MouseEvent<HTMLElement>) => void;
   onCreateAcquisitionFile: (event: React.MouseEvent<HTMLElement>) => void;
@@ -19,6 +20,7 @@ export interface ILayerPopupFlyoutProps {
 
 export const LayerPopupFlyout: React.FC<React.PropsWithChildren<ILayerPopupFlyoutProps>> = ({
   isInPims,
+  isRetiredProperty,
   onViewPropertyInfo,
   onCreateResearchFile,
   onCreateAcquisitionFile,
@@ -36,32 +38,48 @@ export const LayerPopupFlyout: React.FC<React.PropsWithChildren<ILayerPopupFlyou
           <LinkButton onClick={onViewPropertyInfo}>View Property info</LinkButton>
         </ListGroup.Item>
       </StyledLinkSection>
-      <StyledLinkSection>
-        <ListGroup.Item>
-          <StyledSubheading>Create:</StyledSubheading>
-        </ListGroup.Item>
-        {keycloak.hasClaim(Claims.RESEARCH_ADD) && (
+      {!isRetiredProperty && (
+        <StyledLinkSection>
           <ListGroup.Item>
-            <LinkButton onClick={onCreateResearchFile}>Research File</LinkButton>
+            <StyledSubheading>Create:</StyledSubheading>
           </ListGroup.Item>
-        )}
-        {keycloak.hasClaim(Claims.ACQUISITION_ADD) && (
+          {keycloak.hasClaim(Claims.RESEARCH_ADD) && (
+            <ListGroup.Item>
+              <LinkButton onClick={onCreateResearchFile}>Research File</LinkButton>
+            </ListGroup.Item>
+          )}
+          {keycloak.hasClaim(Claims.ACQUISITION_ADD) && (
+            <ListGroup.Item>
+              <LinkButton onClick={onCreateAcquisitionFile}>Acquisition File</LinkButton>
+            </ListGroup.Item>
+          )}
+          {keycloak.hasClaim(Claims.LEASE_ADD) && (
+            <ListGroup.Item>
+              <LinkButton onClick={onCreateLeaseLicense}>Lease/License</LinkButton>
+            </ListGroup.Item>
+          )}
+          {keycloak.hasClaim(Claims.DISPOSITION_ADD) && (
+            <ListGroup.Item>
+              <LinkButton onClick={onCreateDispositionFile}>Disposition File</LinkButton>
+            </ListGroup.Item>
+          )}
+        </StyledLinkSection>
+      )}
+
+      {isRetiredProperty && (
+        <StyledLinkSection>
           <ListGroup.Item>
-            <LinkButton onClick={onCreateAcquisitionFile}>Acquisition File</LinkButton>
+            <StyledSubheading>Create:</StyledSubheading>
           </ListGroup.Item>
-        )}
-        {keycloak.hasClaim(Claims.LEASE_ADD) && (
-          <ListGroup.Item>
-            <LinkButton onClick={onCreateLeaseLicense}>Lease/License</LinkButton>
-          </ListGroup.Item>
-        )}
-        {keycloak.hasClaim(Claims.DISPOSITION_ADD) && (
-          <ListGroup.Item>
-            <LinkButton onClick={onCreateDispositionFile}>Disposition File</LinkButton>
-          </ListGroup.Item>
-        )}
-      </StyledLinkSection>
-      {keycloak.hasClaim(Claims.PROPERTY_ADD) && isInPims && (
+          {keycloak.hasClaim(Claims.RESEARCH_ADD) && (
+            <ListGroup.Item>
+              <LinkButton onClick={onCreateResearchFile}>Research File</LinkButton>
+            </ListGroup.Item>
+          )}
+        </StyledLinkSection>
+      )}
+
+      {keycloak.hasClaim(Claims.PROPERTY_ADD) && isInPims && !isRetiredProperty && (
         <StyledLinkSection>
           <ListGroup.Item>
             <LinkButton onClick={onCreateSubdivision}>Create Subdivision</LinkButton>
