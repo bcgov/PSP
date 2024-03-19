@@ -104,8 +104,8 @@ describe('useAcquisitionProvider hook', () => {
       expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeUndefined();
     });
 
-    it('Dispatches error with correct response when request fails', async () => {
-      mockAxios.onGet(url).reply(400, MOCK.ERROR);
+    it('Dispatches error with correct response when request fails with 500', async () => {
+      mockAxios.onGet(url).reply(500, MOCK.ERROR);
       const { getAcquisitionFile } = setup();
 
       await act(async () => {
@@ -113,6 +113,18 @@ describe('useAcquisitionProvider hook', () => {
       });
 
       expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeDefined();
+      expect(toastErrorSpy).toHaveBeenCalled();
+    });
+
+    it('Dispatches error with correct response when request fails with 400', async () => {
+      mockAxios.onGet(url).reply(400, MOCK.ERROR);
+      const { getAcquisitionFile } = setup();
+
+      await act(async () => {
+        await getAcquisitionFile.execute(mockAcquisitionFileResponse().id || 0);
+      });
+
+      expect(find(currentStore.getActions(), { type: 'network/logError' })).toBe(undefined);
       expect(toastErrorSpy).toHaveBeenCalled();
     });
   });

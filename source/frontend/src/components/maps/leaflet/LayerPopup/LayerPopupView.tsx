@@ -34,7 +34,7 @@ export const LayerPopupView: React.FC<React.PropsWithChildren<ILayerPopupViewPro
 
   const mapMachine = useMapStateMachine();
 
-  const pimsPropertyId = featureDataset?.pimsFeature?.properties.PROPERTY_ID;
+  const pimsPropertyId = featureDataset?.pimsFeature?.properties?.PROPERTY_ID;
   const isInPims = isValidId(Number(pimsPropertyId));
   const isRetiredProperty = featureDataset?.pimsFeature?.properties.IS_RETIRED ?? false;
 
@@ -42,10 +42,10 @@ export const LayerPopupView: React.FC<React.PropsWithChildren<ILayerPopupViewPro
     if (isInPims) {
       closeFlyout();
       history.push(`/mapview/sidebar/property/${pimsPropertyId}`);
-    } else if (featureDataset?.parcelFeature?.properties.PID) {
+    } else if (featureDataset?.parcelFeature?.properties?.PID) {
       closeFlyout();
       const parcelFeature = featureDataset?.parcelFeature;
-      const parsedPid = pidParser(parcelFeature.properties.PID);
+      const parsedPid = pidParser(parcelFeature?.properties?.PID);
       history.push(`/mapview/sidebar/non-inventory-property/${parsedPid}`);
     } else {
       console.warn('Invalid marker when trying to see property information');

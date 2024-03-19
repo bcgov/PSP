@@ -26,7 +26,6 @@ export const useUpdateLease = () => {
     ),
     requestName: 'updateLease',
     throwError: true,
-    skipErrorLogCodes: [409],
   });
 
   return { updateApiLease };
