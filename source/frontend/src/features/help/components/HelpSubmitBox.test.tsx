@@ -1,32 +1,32 @@
-import { act, render, screen, waitFor } from '@testing-library/react';
+import { act, render, screen } from '@/utils/test-utils';
 
 import HelpSubmitBox from './HelpSubmitBox';
 
-const renderHelpBox = () =>
-  render(
-    <HelpSubmitBox
-      user="Test User"
-      email="test@test.com"
-      setMailto={jest.fn()}
-      page="Landing Page"
-    />,
-  );
+describe('HelpSubmitBox component', () => {
+  const setup = () =>
+    render(
+      <HelpSubmitBox
+        user="Test User"
+        email="test@test.com"
+        setMailto={jest.fn()}
+        page="Landing Page"
+      />,
+    );
 
-describe('Help Box tests', () => {
   it('renders properly', async () => {
-    await act(async () => {
-      const { asFragment } = renderHelpBox();
-      const fragment = await waitFor(() => asFragment());
-
-      expect(fragment).toMatchSnapshot();
-    });
+    const { asFragment } = setup();
+    await act(async () => {});
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it('displays appropriate fields', async () => {
-    await act(async () => {
-      renderHelpBox();
-    });
-    const desc = await waitFor(() => screen.getByText('Description:'));
+    setup();
+    await act(async () => {});
+    const name = screen.getByText('Name:');
+    const email = screen.getByText('Email:');
+    const desc = screen.getByText('Description:');
+    expect(name).toBeInTheDocument();
+    expect(email).toBeInTheDocument();
     expect(desc).toBeInTheDocument();
   });
 });

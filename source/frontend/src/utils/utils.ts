@@ -1,4 +1,4 @@
-import { AxiosError, AxiosResponse } from 'axios';
+import { AxiosResponse } from 'axios';
 import { FormikProps, getIn } from 'formik';
 import { isEmpty, isNull, isUndefined, lowerFirst, startCase } from 'lodash';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
@@ -6,7 +6,7 @@ import { hideLoading, showLoading } from 'react-redux-loading-bar';
 import { SelectOption } from '@/components/common/form';
 import { TableSort } from '@/components/Table/TableSort';
 import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
-import { logError, logRequest, logSuccess } from '@/store/slices/network/networkSlice';
+import { logRequest, logSuccess } from '@/store/slices/network/networkSlice';
 
 /**
  * Removes a trailing slash from a string.
@@ -99,7 +99,6 @@ export const handleAxiosResponse = <ResponseType>(
   dispatch: Function,
   actionType: string,
   axiosPromise: Promise<AxiosResponse<ResponseType>>,
-  skipErrorLogCodes?: number[],
 ): Promise<AxiosResponse<ResponseType>> => {
   dispatch(logRequest(actionType));
   dispatch(showLoading());
@@ -108,21 +107,6 @@ export const handleAxiosResponse = <ResponseType>(
       dispatch(logSuccess({ name: actionType, status: response.status }));
       dispatch(hideLoading());
       return response;
-    })
-    .catch((axiosError: AxiosError) => {
-      if (
-        !skipErrorLogCodes ||
-        (axiosError?.response?.status && !skipErrorLogCodes.includes(axiosError?.response?.status))
-      ) {
-        dispatch(
-          logError({
-            name: actionType,
-            status: axiosError?.response?.status,
-            error: axiosError ?? {},
-          }),
-        );
-      }
-      throw axiosError;
     })
     .finally(() => {
       dispatch(hideLoading());

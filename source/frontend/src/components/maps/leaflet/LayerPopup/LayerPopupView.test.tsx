@@ -136,6 +136,34 @@ describe('LayerPopupView component', () => {
       );
     });
 
+    it('handles view property action for non-inventory properties where the properties object is null', async () => {
+      const pid = '123456789';
+      const { getByTestId, getByText } = setup({
+        layerPopup: { data: { PID: pid } } as any,
+        featureDataset: {
+          parcelFeature: {
+            type: 'Feature',
+            properties: { ...emptyPmbcParcel, PID: pid },
+            geometry: { type: 'Point', coordinates: [] },
+          },
+          location: { lat: 0, lng: 0 },
+          pimsFeature: {
+            type: 'Feature',
+            properties: null as any,
+            geometry: { type: 'Point', coordinates: [] },
+          },
+          regionFeature: null,
+          districtFeature: null,
+          municipalityFeature: null,
+          selectingComponentId: null,
+        },
+      });
+      const ellipsis = getByTestId('fly-out-ellipsis');
+      await act(async () => userEvent.click(ellipsis));
+      const link = getByText('View Property info');
+      await act(async () => userEvent.click(link));
+    });
+
     it('handles create research file action', async () => {
       const { getByTestId, getByText } = setup({
         layerPopup: {} as any,
