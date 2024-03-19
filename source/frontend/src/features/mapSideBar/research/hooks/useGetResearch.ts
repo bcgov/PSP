@@ -24,8 +24,10 @@ export const useGetResearch = () => {
     onError: useCallback((axiosError: AxiosError<IApiError>) => {
       if (axiosError?.response?.status === 400) {
         toast.error(axiosError?.response.data.error);
+        return Promise.resolve();
       } else {
         toast.error('Retrieve research file error. Check responses and try again.');
+        return Promise.reject();
       }
     }, []),
   });
@@ -42,8 +44,10 @@ export const useGetResearch = () => {
     onError: useCallback((axiosError: AxiosError<IApiError>) => {
       if (axiosError?.response?.status === 400) {
         toast.error(axiosError?.response.data.error);
+        return Promise.resolve();
       } else {
         toast.error('Retrieve research file properties error. Check responses and try again.');
+        return Promise.reject(axiosError);
       }
     }, []),
   });

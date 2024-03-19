@@ -92,6 +92,8 @@ const AddConsolidationView: React.FunctionComponent<
           initialValues={consolidationInitialValues}
           innerRef={formikRef}
           validationSchema={AddConsolidationYupSchema}
+          validateOnBlur={false}
+          validateOnChange={false}
         >
           {({ values, setFieldValue, errors }) => (
             <Form>
@@ -118,16 +120,15 @@ const AddConsolidationView: React.FunctionComponent<
                           />
                         </Tab>
                       </StyledTabView>
-                      <Section header="Selected Parent" noPadding className="pt-4">
+                      <Section header="Selected Parents" noPadding className="pt-4">
                         <SelectedOperationPropertyHeader />
                         {values.sourceProperties.map((property, index) => (
                           <SelectedOperationProperty
                             property={property}
                             onRemove={() => remove(index)}
-                            nameSpace={`destinationProperties.${index}`}
+                            nameSpace={`sourceProperties.${index}`}
                             getMarkerIndex={property => getDraftMarkerIndex(property, values)}
                             key={`destination-property-${property.pid}-${property.latitude}-${property.longitude}`}
-                            isEditable
                           />
                         ))}
                         {errors.sourceProperties && (
@@ -167,8 +168,9 @@ const AddConsolidationView: React.FunctionComponent<
                     <SelectedOperationProperty
                       property={values.destinationProperty}
                       onRemove={() => setFieldValue('destinationProperty', undefined)}
-                      nameSpace="sourceProperty"
+                      nameSpace="destinationProperty"
                       getMarkerIndex={() => values.sourceProperties.length}
+                      isEditable
                     />
                   )}
                   {errors.destinationProperty && (

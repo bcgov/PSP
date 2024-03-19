@@ -27,7 +27,6 @@ export const useUpdateResearchProperties = () => {
     requestName: 'UpdateResearchFileProperties',
     onSuccess: useCallback(() => toast.success('Research File Properties updated'), []),
     throwError: true,
-    skipErrorLogCodes: [409],
   });
 
   return { updateResearchFileProperties: execute };

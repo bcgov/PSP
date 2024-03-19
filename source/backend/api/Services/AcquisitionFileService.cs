@@ -745,10 +745,10 @@ namespace Pims.Api.Services
         {
             // Get the current properties in the research file
             var currentProperties = _acquisitionFilePropertyRepository.GetPropertiesByAcquisitionFileId(acquisitionFile.Internal_Id);
-            var propertiesOfInterest = currentProperties.Where(p => p.Property.IsPropertyOfInterest);
 
             // PSP-6111 Business rule: Transfer properties of interest to core inventory when acquisition file is completed
-            foreach (var acquisitionProperty in propertiesOfInterest)
+            // PSP-7892 Business rule: Process all properties in the acq file (not only properties of interest).
+            foreach (var acquisitionProperty in currentProperties)
             {
                 var property = acquisitionProperty.Property;
                 var takes = _takeRepository.GetAllByPropertyAcquisitionFileId(acquisitionProperty.Internal_Id);
@@ -776,9 +776,34 @@ namespace Pims.Api.Services
                     isOtherInterest = false;
                 }
 
-                if (!userOverride && (isOwned || isOtherInterest))
+                // PSP-7892: Follow ownership priority when updating an existing property
+                if (property.IsOwned || isOwned)
+                {
+                    isOwned = true;
+                    isOtherInterest = false;
+                    isPropertyOfInterest = false;
+                }
+                else if(property.IsOtherInterest || isOtherInterest)
+                {
+                    isOwned = false;
+                    isOtherInterest = true;
+                    isPropertyOfInterest = false;
+                }
+                else if(property.IsPropertyOfInterest || isPropertyOfInterest)
+                {
+                    isOwned = false;
+                    isOtherInterest = false;
+                    isPropertyOfInterest = true;
+                }
+
+                if (!userOverride && property.IsPropertyOfInterest && (isOwned || isOtherInterest))
                 {
                     throw new UserOverrideException(UserOverrideCode.PoiToInventory, "You have one or more take(s) that will be added to MoTI Inventory. Do you want to acknowledge and proceed?");
+                }
+
+                if (!userOverride && property.IsOtherInterest && isOwned)
+                {
+                    throw new UserOverrideException(UserOverrideCode.PoiToInventory, "You have one or more take(s) that will be changed from 'Other Interest' to 'Core Inventory'. Do you want to acknowledge and proceed?");
                 }
 
                 PropertyOwnershipState ownership = new() { isOwned = isOwned, isPropertyOfInterest = isPropertyOfInterest, isOtherInterest = isOtherInterest, isDisposed = false };
