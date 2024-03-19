@@ -227,14 +227,19 @@ namespace Pims.Api.Services
             ValidateStaff(acquisitionFile);
             ValidateOrganizationStaff(acquisitionFile);
 
-            acquisitionFile.AcquisitionFileStatusTypeCode = "ACTIVE";
+            if (acquisitionFile.PimsPropertyAcquisitionFiles.Any(x => x.Property.IsRetired.HasValue && x.Property.IsRetired.Value))
+            {
+                throw new BusinessRuleViolationException("Retired property can not be selected.");
+            }
             MatchProperties(acquisitionFile, userOverrides);
             ValidatePropertyRegions(acquisitionFile);
 
             PopulateAcquisitionChecklist(acquisitionFile);
 
+            acquisitionFile.AcquisitionFileStatusTypeCode = AcquisitionStatusTypes.ACTIVE.ToString();
             var newAcqFile = _acqFileRepository.Add(acquisitionFile);
             _acqFileRepository.CommitTransaction();
+
             return newAcqFile;
         }
 

@@ -198,6 +198,44 @@ namespace Pims.Api.Test.Services
             act.Should().Throw<BadRequestException>();
             repository.Verify(x => x.Add(It.IsAny<PimsAcquisitionFile>()), Times.Never);
         }
+
+        [Fact]
+        public void Add_WithRetiredProperty_Should_Fail()
+        {
+            // Arrange
+            var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileAdd);
+
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+
+            acqFile.PimsPropertyAcquisitionFiles = new List<PimsPropertyAcquisitionFile>()
+            {   
+                new PimsPropertyAcquisitionFile()
+                {
+                    PropertyId = 100,
+                    Property = new PimsProperty()
+                    {
+                        IsRetired = true,
+                    }
+                },
+            };
+
+            var repository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
+            repository.Setup(x => x.Add(It.IsAny<PimsAcquisitionFile>())).Returns(acqFile);
+
+            var lookupRepository = this._helper.GetService<Mock<ILookupRepository>>();
+            lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser(1, Guid.NewGuid(), "Test", regionCode: 1));
+
+            // Act
+            Action act = () => service.Add(acqFile, new List<UserOverrideCode>());
+
+            // Assert
+            var ex = act.Should().Throw<BusinessRuleViolationException>();
+            ex.WithMessage("Retired property can not be selected.");
+        }
+
         #endregion
 
         #region GetById

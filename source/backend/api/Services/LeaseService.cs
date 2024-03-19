@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Models.CodeTypes;
+using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
@@ -184,6 +185,11 @@ namespace Pims.Api.Services
             var pimsUser = _userRepository.GetByKeycloakUserId(_user.GetUserKey());
             pimsUser.ThrowInvalidAccessToLeaseFile(lease.RegionCode);
 
+            if (lease.PimsPropertyLeases.Any(x => x.Property.IsRetired.HasValue && x.Property.IsRetired.Value))
+            {
+                throw new BusinessRuleViolationException("Retired property can not be selected.");
+            }
+
             var leasesWithProperties = AssociatePropertyLeases(lease, userOverrides);
             return _leaseRepository.Add(leasesWithProperties);
         }
@@ -237,7 +243,7 @@ namespace Pims.Api.Services
             List<PimsPropertyLease> differenceSet = currentProperties.Where(x => !lease.PimsPropertyLeases.Any(y => y.Internal_Id == x.Internal_Id)).ToList();
             foreach (var deletedProperty in differenceSet)
             {
-                if (deletedProperty.Property.IsPropertyOfInterest == true)
+                if (deletedProperty.Property.IsPropertyOfInterest)
                 {
                     PimsProperty propertyWithAssociations = _propertyRepository.GetAllAssociationsById(deletedProperty.PropertyId);
                     var leaseAssociationCount = propertyWithAssociations.PimsPropertyLeases.Count;

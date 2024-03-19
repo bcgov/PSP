@@ -8,6 +8,7 @@ using Moq;
 using Pims.Api.Constants;
 using Pims.Api.Models.Concepts;
 using Pims.Api.Services;
+using Pims.Core.Exceptions;
 using Pims.Core.Test;
 using Pims.Dal;
 using Pims.Dal.Entities;
@@ -112,6 +113,37 @@ namespace Pims.Api.Test.Services
             act.Should().Throw<NotAuthorizedException>();
             leaseRepository.Verify(x => x.Add(It.IsAny<PimsLease>()), Times.Never);
         }
+
+        //[Fact]
+        //public void Add_WithRetiredProperty_Should_Fail()
+        //{
+        //    // Arrange
+        //    var lease = EntityHelper.CreateLease(1);
+        //    lease.RegionCode = 1;
+
+        //    lease.PimsPropertyLeases
+
+        //    var user = new PimsUser();
+        //    user.PimsRegionUsers.Add(new PimsRegionUser() { RegionCode = lease.RegionCode.Value });
+
+        //    var service = this.CreateLeaseService(Permissions.LeaseAdd);
+
+        //    var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
+        //    leaseRepository.Setup(x => x.Add(It.IsAny<PimsLease>())).Returns(lease);
+
+        //    //var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
+        //    //propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>())).Returns(lease.PimsPropertyLeases.FirstOrDefault().Property);
+
+        //    //var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+        //    //userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(user);
+
+        //    // Act
+        //    Action act = () => service.Add(lease, new List<UserOverrideCode>());
+
+        //    // Assert
+        //    var ex = act.Should().Throw<BusinessRuleViolationException>();
+        //    ex.WithMessage("Retired property can not be selected.");
+        //}
 
         #endregion
 
