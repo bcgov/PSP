@@ -36,6 +36,7 @@ export const LayerPopupView: React.FC<React.PropsWithChildren<ILayerPopupViewPro
 
   const pimsPropertyId = featureDataset?.pimsFeature?.properties?.PROPERTY_ID;
   const isInPims = isValidId(Number(pimsPropertyId));
+  const isRetiredProperty = featureDataset?.pimsFeature?.properties?.IS_RETIRED ?? false;
 
   const onPropertyViewClicked = () => {
     if (isInPims) {
@@ -128,6 +129,7 @@ export const LayerPopupView: React.FC<React.PropsWithChildren<ILayerPopupViewPro
         <StyledFlyoutContainer>
           <LayerPopupFlyout
             isInPims={isInPims}
+            isRetiredProperty={isRetiredProperty}
             onViewPropertyInfo={handleViewPropertyInfo}
             onCreateResearchFile={handleCreateResearchFile}
             onCreateAcquisitionFile={handleCreateAcquisitionFile}
