@@ -11,6 +11,7 @@ import AreaContainer from '@/components/measurements/AreaContainer';
 import { Roles } from '@/constants';
 import * as API from '@/constants/API';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import { TakesStatusTypes } from '@/constants/takesStatusTypes';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
 import { ApiGen_CodeTypes_AcquisitionTakeStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_AcquisitionTakeStatusTypes';
@@ -53,6 +54,12 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({
     withNameSpace(nameSpace, 'isNewLicenseToConstruct'),
   );
   const takeStatusTypeCode = getIn(values, withNameSpace(nameSpace, 'takeStatusTypeCode'));
+
+  React.useEffect(() => {
+    if (currentTake.completionDt && currentTake.takeStatusTypeCode !== TakesStatusTypes.COMPLETE) {
+      setFieldValue(withNameSpace(nameSpace, 'completionDt'), '');
+    }
+  }, [currentTake.completionDt, currentTake.takeStatusTypeCode, nameSpace, setFieldValue]);
 
   const getModalWarning = (onOk: () => void) => {
     return (e: React.ChangeEvent<any>) => {
@@ -119,6 +126,20 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({
           field={withNameSpace(nameSpace, 'takeStatusTypeCode')}
           options={takeStatusTypeOptions}
           disabled={!canEditTake}
+        />
+      </SectionField>
+      <SectionField
+        label="Completion date"
+        required={currentTake.takeStatusTypeCode === TakesStatusTypes.COMPLETE}
+        tooltip={`This will be enabled when the file status is set to "Completed"`}
+        labelWidth="4"
+        contentWidth="5"
+      >
+        <FastDatePicker
+          formikProps={formikProps}
+          field={withNameSpace(nameSpace, 'completionDt')}
+          maxDate={new Date()}
+          disabled={currentTake.takeStatusTypeCode !== TakesStatusTypes.COMPLETE}
         />
       </SectionField>
       <SectionField label="Site contamination" labelWidth="4" contentWidth="5">

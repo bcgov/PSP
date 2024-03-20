@@ -22,6 +22,7 @@ export interface ApiGen_Concepts_Take extends ApiGen_Base_BaseAudit {
   ltcEndDt: string | null;
   landActArea: number | null;
   landActEndDt: string | null;
+  completionDt: string | null;
   propertyAcquisitionFile: ApiGen_Concepts_AcquisitionFile | null;
   propertyAcquisitionFileId: number;
   statutoryRightOfWayArea: number | null;

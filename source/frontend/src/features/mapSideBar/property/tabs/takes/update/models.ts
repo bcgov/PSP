@@ -1,6 +1,7 @@
 import * as Yup from 'yup';
 
 import { AreaUnitTypes } from '@/constants/areaUnitTypes';
+import { TakesStatusTypes } from '@/constants/takesStatusTypes';
 import { ApiGen_Concepts_Take } from '@/models/api/generated/ApiGen_Concepts_Take';
 import { UtcIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
@@ -31,12 +32,17 @@ export const TakesYupSchema = Yup.object().shape({
         is: (isNewLandAct: boolean) => isNewLandAct,
         then: Yup.string().required('Land Act is required'),
       }),
+      completionDt: Yup.string().when('takeStatusTypeCode', {
+        is: (takeStatusTypeCode: string) => takeStatusTypeCode === TakesStatusTypes.COMPLETE,
+        then: Yup.string().nullable().required('A completed take must have a completion date.'),
+      }),
     }),
   ),
 });
 
 export class TakeModel {
   id?: number;
+  completionDt: string | null;
   description: string;
   isThereSurplus: 'false' | 'true';
   isNewHighwayDedication: 'false' | 'true';
@@ -103,6 +109,7 @@ export class TakeModel {
     this.newHighwayDedicationArea = base.newHighwayDedicationArea ?? 0;
     this.newHighwayDedicationAreaUnitTypeCode =
       fromTypeCodeNullable(base.areaUnitTypeCode) ?? AreaUnitTypes.SquareMeters.toString();
+    this.completionDt = base.completionDt;
     this.appCreateTimestamp = base.appCreateTimestamp ?? null;
   }
 
@@ -157,6 +164,7 @@ export class TakeModel {
       isNewLicenseToConstruct: this.isNewLicenseToConstruct === 'true',
       isNewInterestInSrw: this.isNewInterestInSrw === 'true',
       ...getEmptyBaseAudit(this.rowVersion),
+      completionDt: stringToNull(this.completionDt),
     };
   }
 }

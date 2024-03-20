@@ -91,6 +91,10 @@ namespace Pims.Api.Services
                     }
                 }
             }
+            else if (takes.Any(t => t.TakeStatusTypeCode == TakeStatusTypes.COMPLETE.ToString()))
+            {
+                throw new BusinessRuleViolationException("A completed take must have a completion date.");
+            }
 
             _takeRepository.UpdateAcquisitionPropertyTakes(acquisitionFilePropertyId, takes);
             _takeRepository.CommitTransaction();
