@@ -5,7 +5,7 @@ import { LeaseFormModel } from '@/features/leases/models';
 import { mockApiOrganization, mockApiPerson } from '@/mocks/filterData.mock';
 import { getEmptyLeaseTenant, getMockApiLease } from '@/mocks/lease.mock';
 import { defaultApiLease } from '@/models/defaultInitializers';
-import { render, RenderOptions, screen, userEvent } from '@/utils/test-utils';
+import { act, render, RenderOptions, screen, userEvent } from '@/utils/test-utils';
 
 import { FormTenant } from './models';
 import PrimaryContactWarningModal from './PrimaryContactWarningModal';
@@ -44,7 +44,7 @@ describe('PrimaryContactWarningModal component', () => {
     });
     expect(component.asFragment()).toMatchSnapshot();
   });
-  it('calls saveCallback on save', () => {
+  it('calls saveCallback on save', async () => {
     const saveCallback = jest.fn();
     const { component } = setup({
       saveCallback: saveCallback,
@@ -58,7 +58,7 @@ describe('PrimaryContactWarningModal component', () => {
     });
     const { getByText } = component;
     const save = getByText('Save');
-    userEvent.click(save);
+    await act(async () => userEvent.click(save));
 
     expect(saveCallback).toHaveBeenCalled();
   });

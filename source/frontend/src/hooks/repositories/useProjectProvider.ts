@@ -32,8 +32,10 @@ export const useProjectProvider = () => {
       onError: useCallback((axiosError: AxiosError<IApiError>) => {
         if (axiosError?.response?.status === 400) {
           toast.error(axiosError?.response.data.error);
+          return Promise.resolve();
         } else {
           toast.error('Retrieve products for project error. Check responses and try again.');
+          return Promise.reject(axiosError);
         }
       }, []),
     });
@@ -54,8 +56,10 @@ export const useProjectProvider = () => {
     onError: useCallback((axiosError: AxiosError<IApiError>) => {
       if (axiosError?.response?.status === 409) {
         toast.error(axiosError?.response.data as any);
+        return Promise.resolve();
       } else {
         toast.error('Failed to save project.');
+        return Promise.reject(axiosError);
       }
     }, []),
     throwError: true,

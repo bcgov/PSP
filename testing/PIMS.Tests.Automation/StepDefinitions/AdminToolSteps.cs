@@ -126,9 +126,12 @@ namespace PIMS.Tests.Automation.StepDefinitions
             Assert.NotEqual(firstPositionDescResult, firstPositionAscResult);
 
             //Verify Pagination display different set of results
+<<<<<<< HEAD
             sharedPagination.ChoosePaginationOption(10);
             sharedPagination.ResetSearch();
 
+=======
+>>>>>>> c9b4c1f863ae17316148cb7eb8866aa9ae4c6b1a
             var firstUserPage1 = manageUsers.FirstUserIDIR();
             sharedPagination.GoNextPage();
             var firstUserPage2 = manageUsers.FirstUserIDIR();
@@ -372,14 +375,20 @@ namespace PIMS.Tests.Automation.StepDefinitions
             Assert.NotEqual(firstFinCodeExpiryDateDescResult, firstFinCodeExpiryDateAscResult);
 
             //Verify Pagination display different set of results
+<<<<<<< HEAD
             sharedPagination.ChoosePaginationOption(10);
+=======
+>>>>>>> c9b4c1f863ae17316148cb7eb8866aa9ae4c6b1a
             sharedPagination.ResetSearch();
 
             var firstFinancialPage1 = financialCodes.FirstFinancialCodeDescription();
             sharedPagination.GoNextPage();
             var firstFinancialPage2 = financialCodes.FirstFinancialCodeDescription();
             Assert.NotEqual(firstFinancialPage1, firstFinancialPage2);
+<<<<<<< HEAD
             sharedPagination.Go1stPage();
+=======
+>>>>>>> c9b4c1f863ae17316148cb7eb8866aa9ae4c6b1a
 
             sharedPagination.ResetSearch();
 

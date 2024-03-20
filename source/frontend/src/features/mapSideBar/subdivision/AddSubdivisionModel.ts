@@ -19,7 +19,6 @@ export class SubdivisionFormModel {
   pid = '';
 
   toApi(): ApiGen_Concepts_PropertyOperation[] {
-    // eslint-disable-next-line no-debugger
     return this.destinationProperties?.map(dp => ({
       ...getEmptyBaseAudit(0),
       id: 0,

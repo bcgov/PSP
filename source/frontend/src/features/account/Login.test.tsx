@@ -120,7 +120,7 @@ describe('login', () => {
     (useKeycloak as jest.Mock).mockReturnValue({ keycloak: { authenticated: false } });
     const { getAllByRole } = renderLogin();
     expect(getAllByRole('heading')[0]).toHaveTextContent(
-      'TRAN Property Information Management System (PIMS)',
+      'MOTI Property Information Management System (PIMS)',
     );
     expect(getAllByRole('heading')[1]).toHaveTextContent(
       'PIMS enables you to view highways and properties owned by the Ministry of Transportation and Infrastructure',

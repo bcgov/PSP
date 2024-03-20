@@ -2,19 +2,21 @@ import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { Table } from '@/components/Table';
 import { AreaUnitTypes } from '@/constants';
+import { ApiGen_CodeTypes_PropertyOperationTypes } from '@/models/api/generated/ApiGen_CodeTypes_PropertyOperationTypes';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { UtcIsoDateTime } from '@/models/api/UtcIsoDateTime';
-import { getApiPropertyName, prettyFormatDateTime } from '@/utils';
+import { getApiPropertyName, prettyFormatUTCDate, prettyFormatUTCTime } from '@/utils';
 
-import columns from './columns';
+import getColumns from './columns';
 
-export interface ISubdivisionViewProps {
+export interface IOperationViewProps {
+  operationType: ApiGen_CodeTypes_PropertyOperationTypes;
   operationTimeStamp: UtcIsoDateTime;
   sourceProperties: ApiGen_Concepts_Property[];
   destinationProperties: ApiGen_Concepts_Property[];
 }
 
-export interface PropertySubdivisionResult {
+export interface PropertyOperationResult {
   id: number;
   isSource: boolean;
   identifier: string;
@@ -24,12 +26,13 @@ export interface PropertySubdivisionResult {
   areaUnitCode: string;
 }
 
-export const SubdivisionView: React.FunctionComponent<ISubdivisionViewProps> = ({
+export const OperationView: React.FunctionComponent<IOperationViewProps> = ({
+  operationType,
   operationTimeStamp,
   sourceProperties,
   destinationProperties,
 }) => {
-  const toSubdivistionResult = (property: ApiGen_Concepts_Property, isSource: boolean) => {
+  const toOperationResult = (property: ApiGen_Concepts_Property, isSource: boolean) => {
     const propertyName = getApiPropertyName(property);
     return {
       id: property.id,
@@ -42,32 +45,32 @@ export const SubdivisionView: React.FunctionComponent<ISubdivisionViewProps> = (
     };
   };
 
-  let subdivisionColumns = sourceProperties.map<PropertySubdivisionResult>(o => {
-    return toSubdivistionResult(o, true);
+  let operationData = sourceProperties.map<PropertyOperationResult>(o => {
+    return toOperationResult(o, true);
   });
 
-  subdivisionColumns = subdivisionColumns.concat(
-    destinationProperties.map<PropertySubdivisionResult>(o => {
-      return toSubdivistionResult(o, false);
+  operationData = operationData.concat(
+    destinationProperties.map<PropertyOperationResult>(o => {
+      return toOperationResult(o, false);
     }),
   );
 
   return (
     <Section
       header={
-        <SectionField label="Created Date Time" labelWidth="auto">
-          {prettyFormatDateTime(operationTimeStamp)}
+        <SectionField label="Created on" labelWidth="auto" className="">
+          {prettyFormatUTCDate(operationTimeStamp)} at {prettyFormatUTCTime(operationTimeStamp)}
         </SectionField>
       }
       isStyledHeader
       initiallyExpanded
       isCollapsable
+      noPadding
     >
-      <Table<PropertySubdivisionResult>
-        name="subdivisionTable"
-        columns={columns}
-        data={subdivisionColumns}
-        noRowsMessage="No subdivision history"
+      <Table<PropertyOperationResult>
+        name="propertyOperationTable"
+        columns={getColumns(ApiGen_CodeTypes_PropertyOperationTypes.SUBDIVIDE === operationType)}
+        data={operationData}
         hideToolbar
         manualPagination
         disableSelection={true}

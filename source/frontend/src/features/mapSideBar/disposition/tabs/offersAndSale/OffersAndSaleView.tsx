@@ -245,7 +245,7 @@ const OffersAndSaleView: React.FunctionComponent<IOffersAndSaleViewProps> = ({
               {dispositionSale.saleFiscalYear}
             </SectionField>
             <SectionField
-              label="Final sale price ($), incl. GST ($)"
+              label="Final sale price, incl. GST ($)"
               labelWidth="6"
               valueTestId="disposition-sale.finalSaleAmount"
             >
@@ -294,7 +294,7 @@ const OffersAndSaleView: React.FunctionComponent<IOffersAndSaleViewProps> = ({
             <SectionField
               label="Net proceeds before SPP cost ($)"
               labelWidth="6"
-              tooltip="Net Proceeds before Surplus Property Program (SPP) Cost = Final Sales price, less Commissions, and Net Book Value."
+              tooltip="Net Proceeds before Surplus Property Program (SPP) Cost = Final Sales price, less Commissions, GST Total Cost of Sales, and Net Book Value."
               valueTestId="disposition-sale.netProceedsBeforeSppAmount"
             >
               {formatMoney(calculateNetProceedsBeforeSppAmount(dispositionSale))}
@@ -310,7 +310,7 @@ const OffersAndSaleView: React.FunctionComponent<IOffersAndSaleViewProps> = ({
             <SectionField
               label="Net proceeds after SPP cost ($)"
               labelWidth="6"
-              tooltip="Net Proceeds after SPP Cost = Final Sales price, less Commissions, Net Book Value, Total Cost of Sales, and SPP Amount."
+              tooltip="Net Proceeds after SPP Cost = Final Sales price, less Commissions, GST, Net Book Value, Total Cost of Sales,  and SPP Amount."
               valueTestId="disposition-sale.netProceedsAfterSppAmount"
             >
               {formatMoney(calculateNetProceedsAfterSppAmount(dispositionSale))}

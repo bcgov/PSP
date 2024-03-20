@@ -33,7 +33,7 @@ export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderPr
 
   const isLoading = props.isLoading;
 
-  const isExpired = React.useMemo(() => {
+  const isRetired = React.useMemo(() => {
     if (exists(apiProperty) && apiProperty.isRetired) {
       return true;
     }
@@ -73,14 +73,14 @@ export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderPr
               </HeaderField>
             </Col>
           </Row>
-          {isExpired && (
+          {isRetired && (
             <Row className="no-gutters">
               <Col xs="8"></Col>
               <Col className="d-flex justify-content-end pr-4">
-                <ExpiredWarning>
+                <RetiredWarning>
                   <AiOutlineExclamationCircle size={16} />
-                  EXPIRED
-                </ExpiredWarning>
+                  RETIRED
+                </RetiredWarning>
               </Col>
             </Row>
           )}
@@ -110,7 +110,7 @@ const StyledDivider = styled.div`
   border-bottom-width: 0.1rem;
 `;
 
-export const ExpiredWarning = styled(InlineFlexDiv)`
+export const RetiredWarning = styled(InlineFlexDiv)`
   text-transform: uppercase;
   color: ${props => props.theme.css.expiredColor};
   background-color: ${props => props.theme.css.expiredBackgroundColor};

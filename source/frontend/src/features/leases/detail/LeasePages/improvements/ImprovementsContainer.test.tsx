@@ -8,7 +8,7 @@ import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { defaultApiLease } from '@/models/defaultInitializers';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { renderAsync, RenderOptions } from '@/utils/test-utils';
+import { act, renderAsync, RenderOptions } from '@/utils/test-utils';
 
 import { ImprovementsContainer } from './ImprovementsContainer';
 import { ILeaseImprovementForm } from './models';
@@ -59,6 +59,7 @@ describe('Improvements Container component', () => {
   });
   it('renders as expected', async () => {
     const { component } = await setup({});
+    await act(async () => {});
     expect(component.asFragment()).toMatchSnapshot();
   });
 
@@ -67,6 +68,7 @@ describe('Improvements Container component', () => {
       component: { getByText },
     } = await setup({ improvements: [] });
 
+    await act(async () => {});
     expect(
       getByText(
         'There are no commercial, residential, or other improvements indicated with this lease/license.',

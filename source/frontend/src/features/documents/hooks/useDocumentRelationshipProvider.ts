@@ -37,8 +37,10 @@ export const useDocumentRelationshipProvider = () => {
       onError: useCallback((axiosError: AxiosError<IApiError>) => {
         if (axiosError?.response?.status === 400) {
           toast.error(axiosError?.response.data.error);
+          return Promise.resolve();
         } else {
           toast.error('Retrieve document relationship error. Check responses and try again.');
+          return Promise.reject(axiosError);
         }
       }, []),
     });
@@ -69,8 +71,10 @@ export const useDocumentRelationshipProvider = () => {
       onError: useCallback((axiosError: AxiosError<IApiError>) => {
         if (axiosError?.response?.status === 400) {
           toast.error(axiosError?.response.data.error);
+          return Promise.resolve();
         } else {
           toast.error('Delete document relationship error. Check responses and try again.');
+          return Promise.reject(axiosError);
         }
       }, []),
     });
@@ -98,8 +102,10 @@ export const useDocumentRelationshipProvider = () => {
     onError: useCallback((axiosError: AxiosError<IApiError>) => {
       if (axiosError?.response?.status === 400) {
         toast.error(axiosError?.response.data.error);
+        return Promise.resolve();
       } else {
         toast.error('Upload document relationship error. Check responses and try again.');
+        return Promise.reject(axiosError);
       }
     }, []),
   });

@@ -78,7 +78,6 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
 
     mapMachine.refreshMapProperties();
     history.replace(`/mapview/sidebar/acquisition/${acqFile.id}`);
-    formikRef.current?.resetForm({ values: AcquisitionForm.fromApi(acqFile) });
   };
 
   const helper = useAddAcquisitionFormManagement({

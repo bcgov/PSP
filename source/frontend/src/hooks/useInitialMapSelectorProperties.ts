@@ -13,7 +13,7 @@ export const useInitialMapSelectorProperties = (selectedFeature: LocationFeature
   useEffect(() => {
     const getInitialPropertyAddress = async () => {
       if (pid !== null) {
-        const bcaSummary = await getPrimaryAddressByPid(pid, 3000);
+        const bcaSummary = await getPrimaryAddressByPid(pid, 30000);
         bcaSummary?.address && setBcaAddress(AddressForm.fromBcaAddress(bcaSummary?.address));
       }
     };

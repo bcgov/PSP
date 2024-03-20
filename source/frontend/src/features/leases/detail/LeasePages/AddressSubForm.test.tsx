@@ -21,14 +21,14 @@ const defaultLeaseWithPropertyAddress = (
     ...getEmptyLease(),
     fileProperties: [
       {
-        ...mockLeaseProperty(),
+        ...mockLeaseProperty(1),
         areaUnitType: toTypeCode('test'),
         leaseArea: 0,
         property: {
           ...getEmptyProperty(),
           address:
             address !== undefined
-              ? { ...getEmptyAddress(), ...mockLeaseProperty().property!.address, ...address }
+              ? { ...getEmptyAddress(), ...mockLeaseProperty(2).property!.address, ...address }
               : null,
         },
         fileId: 0,
@@ -65,7 +65,7 @@ describe('AddressSubForm component', () => {
         ...getEmptyLease(),
         fileProperties: [
           {
-            ...mockLeaseProperty(),
+            ...mockLeaseProperty(1),
             areaUnitType: toTypeCode('test'),
             leaseArea: 0,
             fileId: 0,

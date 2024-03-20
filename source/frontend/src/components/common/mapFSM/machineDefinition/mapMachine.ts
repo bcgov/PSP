@@ -53,7 +53,7 @@ const featureViewStates = {
       on: {
         TOGGLE_FILTER: {
           target: 'browsing',
-          actions: assign({ showDisposed: () => false }),
+          actions: [assign({ showDisposed: () => false }), assign({ showRetired: () => false })],
         },
         TOGGLE_LAYERS: {
           target: 'layerControl',
@@ -63,6 +63,9 @@ const featureViewStates = {
         },
         SET_SHOW_DISPOSED: {
           actions: assign({ showDisposed: (_, event: any) => event.show }),
+        },
+        SET_SHOW_RETIRED: {
+          actions: assign({ showRetired: (_, event: any) => event.show }),
         },
       },
     },
@@ -334,6 +337,7 @@ export const mapMachine = createMachine<MachineContext>({
     filePropertyLocations: [],
     activePimsPropertyIds: [],
     showDisposed: false,
+    showRetired: false,
   },
 
   // State definitions

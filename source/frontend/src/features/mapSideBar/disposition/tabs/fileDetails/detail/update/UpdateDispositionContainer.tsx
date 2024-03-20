@@ -95,8 +95,8 @@ export const UpdateDispositionContainer = React.forwardRef<
         break;
       default: {
         setModalContent({
-          variant: 'warning',
-          title: 'Warning',
+          variant: 'error',
+          title: 'Error',
           message: axiosError?.response?.data.error,
           okButtonText: 'Close',
         });

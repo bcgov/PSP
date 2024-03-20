@@ -242,6 +242,7 @@ exports[`LayerFilter component renders as expected 1`] = `
                 id="input-address"
                 name="address"
                 placeholder="Enter a Address"
+                title=""
                 value=""
               />
             </div>

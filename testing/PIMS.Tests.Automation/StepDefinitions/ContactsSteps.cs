@@ -137,12 +137,20 @@ namespace PIMS.Tests.Automation.StepDefinitions
             if (contactType == "Individual")
             {
                 PopulateIndividualContact(rowNumber);
+<<<<<<< HEAD
                 searchContacts.FilterContacts("Individual", individualContact.FullName, "");
+=======
+                searchContacts.FilterContacts(individualContact.FullName);
+>>>>>>> c9b4c1f863ae17316148cb7eb8866aa9ae4c6b1a
             }
             else
             {
                 PopulateOrganizationContact(rowNumber);
+<<<<<<< HEAD
                 searchContacts.FilterContacts("Organization", organizationContact.OrganizationName, "");
+=======
+                searchContacts.FilterContacts(organizationContact.OrganizationName);
+>>>>>>> c9b4c1f863ae17316148cb7eb8866aa9ae4c6b1a
             }
         }
 
@@ -161,12 +169,20 @@ namespace PIMS.Tests.Automation.StepDefinitions
             if (contactType == "Individual")
             {
                 PopulateIndividualContact(rowNumber);
+<<<<<<< HEAD
                 searchContacts.FilterContacts("Individual",individualContact.FullName, "");
+=======
+                searchContacts.FilterContacts(individualContact.FullName);
+>>>>>>> c9b4c1f863ae17316148cb7eb8866aa9ae4c6b1a
             }
             else
             {
                 PopulateOrganizationContact(rowNumber);
+<<<<<<< HEAD
                 searchContacts.FilterContacts("Organization",organizationContact.OrganizationName, "");
+=======
+                searchContacts.FilterContacts(organizationContact.OrganizationName);
+>>>>>>> c9b4c1f863ae17316148cb7eb8866aa9ae4c6b1a
             }
         }
 
