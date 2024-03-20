@@ -77,10 +77,6 @@ namespace Pims.Api.Services
 
             ValidateStaff(dispositionFile);
 
-            if (dispositionFile.PimsDispositionFileProperties.Any(x => x.Property.IsRetired.HasValue && x.Property.IsRetired.Value))
-            {
-                throw new BusinessRuleViolationException("Retired property can not be selected.");
-            }
             MatchProperties(dispositionFile, userOverrides);
             ValidatePropertyRegions(dispositionFile);
 

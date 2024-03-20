@@ -115,43 +115,6 @@ namespace Pims.Api.Test.Services
             leaseRepository.Verify(x => x.Add(It.IsAny<PimsLease>()), Times.Never);
         }
 
-        [Fact]
-        public void Add_WithRetiredProperty_Should_Fail()
-        {
-            // Arrange
-            var lease = EntityHelper.CreateLease(1);
-            lease.RegionCode = 1;
-
-            lease.PimsPropertyLeases = new List<PimsPropertyLease>() {
-                new PimsPropertyLease()
-                {
-                    PropertyId = 100,
-                    Property = new PimsProperty()
-                    {
-                        IsRetired = true,
-                    }
-                }
-            };
-
-            var user = new PimsUser();
-            user.PimsRegionUsers.Add(new PimsRegionUser() { RegionCode = lease.RegionCode.Value });
-
-            var service = this.CreateLeaseService(Permissions.LeaseAdd);
-
-            var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
-            leaseRepository.Setup(x => x.Add(It.IsAny<PimsLease>())).Returns(lease);
-
-            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
-            userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(user);
-
-            // Act
-            Action act = () => service.Add(lease, new List<UserOverrideCode>());
-
-            // Assert
-            var ex = act.Should().Throw<BusinessRuleViolationException>();
-            ex.WithMessage("Retired property can not be selected.");
-        }
-
         #endregion
 
         #region Update
@@ -232,17 +195,52 @@ namespace Pims.Api.Test.Services
             var propertyLeaseRepository = this._helper.GetService<Mock<IPropertyLeaseRepository>>();
             var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+
             propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>())).Returns(lease.PimsPropertyLeases.FirstOrDefault().Property);
             leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
             leaseRepository.Setup(x => x.Get(It.IsAny<long>())).Returns(EntityHelper.CreateLease(1));
             userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(new PimsUser());
 
             // Act
-
             var updatedLease = service.Update(lease, new List<UserOverrideCode>() { UserOverrideCode.AddLocationToProperty });
 
             // Assert
             leaseRepository.Verify(x => x.Update(lease, false), Times.Once);
+        }
+
+        [Fact]
+        public void Update_Properties_WithRetiredProperty_Should_Fail()
+        {
+            // Arrange
+            var lease = EntityHelper.CreateLease(1);
+
+            var service = this.CreateLeaseService(Permissions.LeaseEdit, Permissions.LeaseView);
+            var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
+            var propertyLeaseRepository = this._helper.GetService<Mock<IPropertyLeaseRepository>>();
+            var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+
+            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>())).Returns(lease.PimsPropertyLeases.FirstOrDefault().Property);
+            leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
+            leaseRepository.Setup(x => x.Get(It.IsAny<long>())).Returns(EntityHelper.CreateLease(1));
+            userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(new PimsUser());
+
+            lease.PimsPropertyLeases.Add(new PimsPropertyLease()
+            {
+                PropertyId = 100,
+                Property = new PimsProperty()
+                {
+                    Pid = 1,
+                    IsRetired = true,
+                }
+            });
+
+            // Act
+            Action act = () => service.Update(lease, new List<UserOverrideCode>() { UserOverrideCode.AddLocationToProperty });
+
+            // Assert
+            var ex = act.Should().Throw<BusinessRuleViolationException>();
+            ex.WithMessage("Retired property can not be selected.");
         }
 
         [Fact]

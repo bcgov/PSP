@@ -313,33 +313,6 @@ namespace Pims.Api.Test.Services
             repository.Verify(x => x.Add(It.IsAny<PimsDispositionFile>()), Times.Once);
         }
 
-        [Fact]
-        public void Add_WithRetiredProperty_Should_Fail()
-        {
-            // Arrange
-            var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionAdd);
-
-            var dispositionFile = EntityHelper.CreateDispositionFile();
-            dispositionFile.PimsDispositionFileProperties = new List<PimsDispositionFileProperty>()
-            {
-                new PimsDispositionFileProperty()
-                {
-                    PropertyId = 100,
-                    Property = new PimsProperty()
-                    {
-                        IsRetired = true,
-                    }
-                },
-            };
-
-            // Act
-            Action act = () => service.Add(dispositionFile, new List<UserOverrideCode>());
-
-            // Assert
-            var ex = act.Should().Throw<BusinessRuleViolationException>();
-            ex.WithMessage("Retired property can not be selected.");
-        }
-
         #endregion
 
         #region Update

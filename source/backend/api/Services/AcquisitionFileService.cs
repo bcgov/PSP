@@ -227,10 +227,6 @@ namespace Pims.Api.Services
             ValidateStaff(acquisitionFile);
             ValidateOrganizationStaff(acquisitionFile);
 
-            if (acquisitionFile.PimsPropertyAcquisitionFiles.Any(x => x.Property.IsRetired.HasValue && x.Property.IsRetired.Value))
-            {
-                throw new BusinessRuleViolationException("Retired property can not be selected.");
-            }
             MatchProperties(acquisitionFile, userOverrides);
             ValidatePropertyRegions(acquisitionFile);
 
