@@ -69,11 +69,7 @@ export default UpdateAcquisitionForm;
 const AcquisitionDetailSubForm: React.FC<{
   formikProps: FormikProps<UpdateAcquisitionSummaryFormModel>;
 }> = ({ formikProps }) => {
-  const {
-    setFieldValue,
-    initialValues,
-    values: { fileStatusTypeCode },
-  } = formikProps;
+  const { setFieldValue, initialValues } = formikProps;
 
   const [projectProducts, setProjectProducts] = React.useState<
     ApiGen_Concepts_Product[] | undefined
