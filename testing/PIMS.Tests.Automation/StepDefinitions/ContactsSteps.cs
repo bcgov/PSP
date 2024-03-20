@@ -137,12 +137,12 @@ namespace PIMS.Tests.Automation.StepDefinitions
             if (contactType == "Individual")
             {
                 PopulateIndividualContact(rowNumber);
-                searchContacts.FilterContacts(individualContact.FullName);
+                searchContacts.FilterContacts("Individual", individualContact.FullName, "");
             }
             else
             {
                 PopulateOrganizationContact(rowNumber);
-                searchContacts.FilterContacts(organizationContact.OrganizationName);
+                searchContacts.FilterContacts("Organization", organizationContact.OrganizationName, "");
             }
         }
 
@@ -161,12 +161,12 @@ namespace PIMS.Tests.Automation.StepDefinitions
             if (contactType == "Individual")
             {
                 PopulateIndividualContact(rowNumber);
-                searchContacts.FilterContacts(individualContact.FullName);
+                searchContacts.FilterContacts("Individual",individualContact.FullName, "");
             }
             else
             {
                 PopulateOrganizationContact(rowNumber);
-                searchContacts.FilterContacts(organizationContact.OrganizationName);
+                searchContacts.FilterContacts("Organization",organizationContact.OrganizationName, "");
             }
         }
 

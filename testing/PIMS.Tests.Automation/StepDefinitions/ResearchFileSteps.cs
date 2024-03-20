@@ -1,6 +1,5 @@
 ﻿using PIMS.Tests.Automation.Classes;
 using PIMS.Tests.Automation.Data;
-using PIMS.Tests.Automation.PageObjects;
 using System.Data;
 
 namespace PIMS.Tests.Automation.StepDefinitions
@@ -237,7 +236,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Open elipsis option
             propertyInformation.OpenMoreOptionsPopUp();
-            propertyInformation.ChooseCreationOptionFromPin("Research File - Create new");
+            propertyInformation.ChooseCreationOptionFromPin("Research File");
 
             //Fill basic Research File information
             researchFiles.CreateResearchFile(researchFile);
