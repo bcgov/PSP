@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Col, Row } from 'react-bootstrap';
 import { FaMailBulk, FaPlus, FaTrash } from 'react-icons/fa';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import styled from 'styled-components';
@@ -65,9 +64,9 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
           <StyledAgreementBorder key={`agreement-section-${index}`}>
             <Section
               header={
-                <Row>
-                  <Col md={5}>{`Agreement ${++index}`}</Col>
-                  <Col md={7}>
+                <StyledHeaderContainer>
+                  <div>{`Agreement ${++index}`}</div>
+                  <div>
                     {exists(agreement.agreementType) && (
                       <StyledButtonContainer>
                         <StyledAddButton
@@ -130,51 +129,51 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
                           )}
                       </StyledButtonContainer>
                     )}
-                  </Col>
-                </Row>
+                  </div>
+                </StyledHeaderContainer>
               }
               isCollapsable
               initiallyExpanded
             >
-              <SectionField labelWidth="5" label="Agreement status">
+              <SectionField labelWidth="6" label="Agreement status">
                 {agreement.agreementStatusType?.description ?? ''}
               </SectionField>
               {agreement.agreementStatusType?.id ===
                 ApiGen_CodeTypes_AgreementStatusTypes.CANCELLED && (
-                <SectionField labelWidth="5" label="Cancellation reason">
+                <SectionField labelWidth="6" label="Cancellation reason">
                   {agreement.cancellationNote ?? ''}
                 </SectionField>
               )}
-              <SectionField labelWidth="5" label="Legal survey plan">
+              <SectionField labelWidth="6" label="Legal survey plan">
                 {agreement.legalSurveyPlanNum}
               </SectionField>
-              <SectionField labelWidth="5" label="Agreement type">
+              <SectionField labelWidth="6" label="Agreement type">
                 {agreement.agreementType?.description}
               </SectionField>
-              <SectionField labelWidth="5" label="Agreement date">
+              <SectionField labelWidth="6" label="Agreement date">
                 {prettyFormatDate(agreement.agreementDate)}
               </SectionField>
               {agreement.agreementType?.id === ApiGen_CodeTypes_AgreementTypes.H0074 && (
-                <SectionField labelWidth="5" label="Commencement date">
+                <SectionField labelWidth="6" label="Commencement date">
                   {prettyFormatDate(agreement.commencementDate)}
                 </SectionField>
               )}
-              <SectionField labelWidth="5" label="Completion date">
+              <SectionField labelWidth="6" label="Completion date">
                 {prettyFormatDate(agreement.completionDate)}
               </SectionField>
-              <SectionField labelWidth="5" label="Termination date">
+              <SectionField labelWidth="6" label="Termination date">
                 {prettyFormatDate(agreement.terminationDate)}
               </SectionField>
-              <SectionField labelWidth="5" label="Possession date">
+              <SectionField labelWidth="6" label="Possession date">
                 {prettyFormatDate(agreement.possessionDate)}
               </SectionField>
 
               <StyledAgreementSubheader>Financial</StyledAgreementSubheader>
-              <SectionField labelWidth="5" label="Purchase price">
+              <SectionField labelWidth="6" label="Purchase price">
                 {formatMoney(agreement.purchasePrice)}
               </SectionField>
               <SectionField
-                labelWidth="5"
+                labelWidth="6"
                 label="Deposit due no later than"
                 tooltip="Generally, if applicable, this is number of days from the execution of the agreement."
               >
@@ -186,7 +185,7 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
                   ''
                 )}
               </SectionField>
-              <SectionField labelWidth="5" label="Deposit amount">
+              <SectionField labelWidth="6" label="Deposit amount">
                 {formatMoney(agreement.depositAmount)}
               </SectionField>
             </Section>
@@ -208,6 +207,14 @@ export const StyledButtonContainer = styled.div`
   justify-content: flex-end;
   align-items: center;
   margin-bottom: 0.5rem;
+  align-items: center;
+`;
+
+const StyledHeaderContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 const StyledAgreementBorder = styled.div`

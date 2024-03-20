@@ -121,6 +121,19 @@ namespace Pims.Api.Services
             return GetById(newProperty.Internal_Id);
         }
 
+        public PimsProperty RetireProperty(PimsProperty property, bool commitTransaction = true)
+        {
+            _logger.LogInformation("Retiring property with id {id}", property.Internal_Id);
+            _user.ThrowIfNotAuthorized(Permissions.PropertyEdit);
+
+            var retiredProperty = _propertyRepository.RetireProperty(property);
+            if (commitTransaction)
+            {
+                _propertyRepository.CommitTransaction();
+            }
+            return GetById(retiredProperty.Internal_Id); ;
+        }
+
         public IList<PimsPropertyContact> GetContacts(long propertyId)
         {
             _logger.LogInformation("Retrieving property contacts...");

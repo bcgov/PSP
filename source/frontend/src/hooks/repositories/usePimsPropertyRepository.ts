@@ -35,7 +35,7 @@ export const usePimsPropertyRepository = () => {
       [getPropertyConceptWithPidApi],
     ),
     requestName: 'getPropertyConceptWithPidApi',
-    onError: useAxiosErrorHandler('Failed to retrieve property information from PIMS'),
+    throwError: true,
   });
 
   const getMatchingProperties = useApiRequestWrapper({
@@ -60,8 +60,10 @@ export const usePimsPropertyRepository = () => {
     onError: useCallback((axiosError: AxiosError<IApiError>) => {
       if (axiosError?.response?.status === 400) {
         toast.error(axiosError?.response.data.error);
+        return Promise.resolve();
       } else {
         toast.error('Save error. Check responses and try again.');
+        return Promise.reject(axiosError);
       }
     }, []),
   });

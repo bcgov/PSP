@@ -1,6 +1,6 @@
 import { AxiosError } from 'axios';
 import { FormikHelpers, FormikProps } from 'formik';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
@@ -14,9 +14,9 @@ import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
 import { ApiGen_Concepts_PropertyOperation } from '@/models/api/generated/ApiGen_Concepts_PropertyOperation';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
-import { featuresetToMapProperty } from '@/utils';
+import { exists, featuresetToMapProperty, isValidString } from '@/utils';
 
-import { PropertyForm } from '../shared/models';
+import { AddressForm, PropertyForm } from '../shared/models';
 import { SubdivisionFormModel } from './AddSubdivisionModel';
 import { IAddSubdivisionViewProps } from './AddSubdivisionView';
 
@@ -27,6 +27,7 @@ export interface IAddSubdivisionContainerProps {
 
 const AddSubdivisionContainer: React.FC<IAddSubdivisionContainerProps> = ({ onClose, View }) => {
   const [isFormValid, setIsFormValid] = useState<boolean>(true);
+  const [initialForm, setInitialForm] = useState<SubdivisionFormModel>(new SubdivisionFormModel());
   const formikRef = useRef<FormikProps<SubdivisionFormModel>>(null);
   const mapMachine = useMapStateMachine();
   const selectedFeatureDataset = mapMachine.selectedFeatureDataset;
@@ -53,22 +54,37 @@ const AddSubdivisionContainer: React.FC<IAddSubdivisionContainerProps> = ({ onCl
     }
   }, [onClose, setDisplayModal, setModalContent]);
 
-  const initialForm = useMemo(() => {
-    const subdivisionFormModel = new SubdivisionFormModel();
-    // support creating a new disposition file from the map popup
-    if (selectedFeatureDataset !== null) {
-      const property = PropertyForm.fromMapProperty(
-        featuresetToMapProperty(selectedFeatureDataset),
-      ).toApi();
-      subdivisionFormModel.sourceProperty = property;
-    }
-    return subdivisionFormModel;
-  }, [selectedFeatureDataset]);
+  const getAddress = useCallback(
+    async (pid: string): Promise<AddressForm | undefined> => {
+      const bcaSummary = await getPrimaryAddressByPid(pid, 30000);
+      return bcaSummary?.address ? AddressForm.fromBcaAddress(bcaSummary?.address) : undefined;
+    },
+    [getPrimaryAddressByPid],
+  );
 
   useEffect(() => {
-    if (!!initialForm && !!formikRef.current) {
+    loadInitialProperty();
+
+    async function loadInitialProperty() {
+      // support creating a new subdivision from the map popup
+      if (selectedFeatureDataset !== null) {
+        const propertyForm = PropertyForm.fromMapProperty(
+          featuresetToMapProperty(selectedFeatureDataset),
+        );
+        if (isValidString(propertyForm.pid)) {
+          propertyForm.address = await getAddress(propertyForm.pid);
+          const consolidationFormModel = new SubdivisionFormModel();
+          consolidationFormModel.sourceProperty = propertyForm.toApi();
+          setInitialForm(consolidationFormModel);
+        }
+      }
+    }
+  }, [selectedFeatureDataset, getAddress]);
+
+  useEffect(() => {
+    if (exists(initialForm) && exists(formikRef.current)) {
       formikRef.current.resetForm();
-      formikRef.current?.setFieldValue('sourceProperty', initialForm.sourceProperty);
+      formikRef.current.setFieldValue('sourceProperty', initialForm.sourceProperty);
     }
   }, [initialForm]);
 
@@ -79,7 +95,7 @@ const AddSubdivisionContainer: React.FC<IAddSubdivisionContainerProps> = ({ onCl
 
   const withUserOverride = useApiUserOverride<
     (userOverrideCodes: UserOverrideCode[]) => Promise<ApiGen_Concepts_DispositionFile | void>
-  >('Failed to create Disposition File');
+  >('Failed to create Subdivision');
 
   const handleSave = async () => {
     await formikRef?.current?.validateForm();
@@ -135,7 +151,6 @@ const AddSubdivisionContainer: React.FC<IAddSubdivisionContainerProps> = ({ onCl
 
   const handleSuccess = async (subdivisions: ApiGen_Concepts_PropertyOperation[]) => {
     mapMachine.refreshMapProperties();
-    // eslint-disable-next-line no-debugger
     if (subdivisions.length === 0 || !subdivisions[0].sourceProperty) {
       history.replace(`/mapview`);
     } else {
@@ -170,7 +185,7 @@ const AddSubdivisionContainer: React.FC<IAddSubdivisionContainerProps> = ({ onCl
       onSave={handleSave}
       subdivisionInitialValues={initialForm}
       displayFormInvalid={!isFormValid}
-      getPrimaryAddressByPid={getPrimaryAddressByPid}
+      getPrimaryAddressByPid={getAddress}
       PropertySelectorPidSearchComponent={PropertySelectorPidSearchContainer}
       MapSelectorComponent={MapSelectorContainer}
     ></View>

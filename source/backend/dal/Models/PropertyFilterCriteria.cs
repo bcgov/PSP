@@ -74,6 +74,11 @@ namespace Pims.Dal.Entities.Models
         /// </summary>
         public bool IsDisposed { get; set; } = false;
 
+        /// <summary>
+        /// get/set - Whether or not to show retired properties.
+        /// </summary>
+        public bool IsRetired { get; set; } = false;
+
         #endregion
     }
 }

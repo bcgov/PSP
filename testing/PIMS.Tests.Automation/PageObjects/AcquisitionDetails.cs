@@ -441,18 +441,20 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
             ButtonElement("Cancel");
 
-            try
-            {
-                WebDriverWait wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(3));
-                if (wait.Until(ExpectedConditions.AlertIsPresent()) != null)
-                {
-                    webDriver.SwitchTo().Alert().Accept();
-                }
-            }
-            catch (WebDriverTimeoutException)
-            {
-                sharedModals.CancelActionModal();
-            }
+            sharedModals.CancelActionModal();
+
+            //try
+            //{
+            //    WebDriverWait wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(3));
+            //    if (wait.Until(ExpectedConditions.AlertIsPresent()) != null)
+            //    {
+            //        webDriver.SwitchTo().Alert().Accept();
+            //    }
+            //}
+            //catch (WebDriverTimeoutException)
+            //{
+            //    sharedModals.CancelActionModal();
+            //}
         }
 
         public string GetAcquisitionFileCode()

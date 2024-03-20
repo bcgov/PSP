@@ -32,10 +32,14 @@ namespace Pims.Dal.Test.Repositories
             {
                 new object[] { new PropertyFilter() { PinOrPid = "111-111-111" , Ownership = new List<string>()}, 1 },
                 new object[] { new PropertyFilter() { PinOrPid = "111"  , Ownership = new List<string>()}, 2 },
-                new object[] { new PropertyFilter() { Address = "12342 Test Street"  , Ownership = new List<string>()}, 6 },
-                new object[] { new PropertyFilter() { Page = 1, Quantity = 10 , Ownership = new List<string>() }, 6 },
-                new object[] { new PropertyFilter(), 6 },
+                new object[] { new PropertyFilter() { Address = "12342 Test Street"  , Ownership = new List<string>()}, 7 },
+                new object[] { new PropertyFilter() { PlanNumber = "SP-89TTXY", Ownership = new List<string>()}, 1 },
+                new object[] { new PropertyFilter() { Page = 1, Quantity = 10 , Ownership = new List<string>() }, 7 },
+                new object[] { new PropertyFilter(), 7 },
                 new object[] { new PropertyFilter(){ Ownership = new List<string>(){"isCoreInventory", "isPropertyOfInterest"}}, 4 },
+                new object[] { new PropertyFilter(){ Ownership = new List<string>(){"isDisposed"}}, 1 },
+                new object[] { new PropertyFilter(){ Ownership = new List<string>(){"isRetired"}}, 1 },
+                new object[] { new PropertyFilter(){ Ownership = new List<string>(){"isOtherInterest"}}, 1 },
                 new object[] { new PropertyFilter(){ Ownership = new List<string>(){"isCoreInventory"}}, 3 },
             };
         #endregion
@@ -110,6 +114,10 @@ namespace Pims.Dal.Test.Repositories
             testProperty.IsOwned = true;
             testProperty = init.CreateProperty(111111111);
             testProperty.IsOwned = true;
+            testProperty = init.CreateProperty(22222);
+            testProperty.IsRetired = true;
+            testProperty = init.CreateProperty(33333);
+            testProperty.SurveyPlanNumber = "SP-89TTXY";
 
             init.SaveChanges();
 

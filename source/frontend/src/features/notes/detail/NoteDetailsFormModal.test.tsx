@@ -6,7 +6,7 @@ import { mockLookups } from '@/mocks/lookups.mock';
 import { mockNoteResponse } from '@/mocks/noteResponses.mock';
 import { ApiGen_Concepts_Note } from '@/models/api/generated/ApiGen_Concepts_Note';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
+import { act, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
 import { INoteDetailsFormModalProps, NoteDetailsFormModal } from './NoteDetailsFormModal';
 
@@ -78,7 +78,7 @@ describe('NoteDetailsFormModal component', () => {
 
   it('should execute callback when Close button is clicked', async () => {
     const { getModalCloseButton } = setup();
-    userEvent.click(getModalCloseButton());
+    await act(async () => userEvent.click(getModalCloseButton()));
 
     expect(onClose).toBeCalled();
   });
@@ -106,7 +106,7 @@ describe('NoteDetailsFormModal component', () => {
 
   it('should execute callback when Edit button is clicked', async () => {
     const { getEditButton } = setup({ ...BASIC_PROPS }, { claims: [Claims.NOTE_EDIT] });
-    await waitFor(() => userEvent.click(getEditButton()));
+    await act(async () => userEvent.click(getEditButton()));
 
     expect(onEdit).toBeCalledWith(mockNoteResponse(1));
     expect(onClose).not.toBeCalled();

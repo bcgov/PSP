@@ -191,7 +191,7 @@ namespace Pims.Api.Test.Services
             var sameProperty = EntityHelper.CreateProperty(3);
             propertyService.Setup(x => x.GetById(It.IsAny<long>())).Returns(sameProperty);
             propertyService.Setup(x => x.GetByPid(It.IsAny<string>())).Throws(new KeyNotFoundException());
-            propertyService.Setup(x => x.Update(It.IsAny<PimsProperty>(), false)).Returns(sameProperty);
+            propertyService.Setup(x => x.RetireProperty(It.IsAny<PimsProperty>(), false)).Returns(sameProperty);
             propertyService.Setup(x => x.PopulateNewProperty(It.IsAny<PimsProperty>(), true, false)).Returns(sameProperty);
 
             var operations = new List<PimsPropertyOperation>() { EntityHelper.CreatePropertyOperation(), EntityHelper.CreatePropertyOperation() };
@@ -204,7 +204,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             repository.Verify(x => x.AddRange(It.IsAny<List<PimsPropertyOperation>>()), Times.Once);
-            propertyService.Verify(x => x.Update(It.IsAny<PimsProperty>(), false), Times.Once);
+            propertyService.Verify(x => x.RetireProperty(It.IsAny<PimsProperty>(), false), Times.Once);
             propertyService.Verify(x => x.PopulateNewProperty(It.IsAny<PimsProperty>(), true, false), Times.Exactly(2));
         }
 
@@ -217,7 +217,7 @@ namespace Pims.Api.Test.Services
             var sameProperty = EntityHelper.CreateProperty(3);
             propertyService.Setup(x => x.GetById(It.IsAny<long>())).Returns(sameProperty);
             propertyService.Setup(x => x.GetByPid(It.IsAny<string>())).Returns(sameProperty);
-            propertyService.Setup(x => x.Update(It.IsAny<PimsProperty>(), false)).Returns(sameProperty);
+            propertyService.Setup(x => x.RetireProperty(It.IsAny<PimsProperty>(), false)).Returns(sameProperty);
             propertyService.Setup(x => x.PopulateNewProperty(It.IsAny<PimsProperty>(), true, false)).Returns(sameProperty);
 
             var operationWithSameDestSource = EntityHelper.CreatePropertyOperation();
@@ -233,7 +233,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             repository.Verify(x => x.AddRange(It.IsAny<List<PimsPropertyOperation>>()), Times.Once);
-            propertyService.Verify(x => x.Update(It.IsAny<PimsProperty>(), false), Times.Once);
+            propertyService.Verify(x => x.RetireProperty(It.IsAny<PimsProperty>(), false), Times.Once);
             propertyService.Verify(x => x.PopulateNewProperty(It.IsAny<PimsProperty>(), true, false), Times.Exactly(2));
         }
 
@@ -272,7 +272,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             var exception = act.Should().Throw<BusinessRuleViolationException>();
-            exception.WithMessage("Consolidations must contain at least two parent properties.");
+            exception.WithMessage("Consolidations must contain at least two different parent properties.");
         }
 
         [Fact]
@@ -347,7 +347,6 @@ namespace Pims.Api.Test.Services
 
             var operationOne = EntityHelper.CreatePropertyOperation();
             operationOne.DestinationProperty.Pid = -1;
-            
             var operations = new List<PimsPropertyOperation>() { operationOne, EntityHelper.CreatePropertyOperation() };
 
             // Act
@@ -385,7 +384,7 @@ namespace Pims.Api.Test.Services
             var service = this.CreateDispositionServiceWithPermissions(Permissions.PropertyEdit);
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
             propertyService.Setup(x => x.GetMultipleById(It.IsAny<List<long>>())).Returns(new List<PimsProperty> { EntityHelper.CreateProperty(3), EntityHelper.CreateProperty(4) });
-            propertyService.Setup(x => x.GetByPid(It.IsAny<string>())).Returns(EntityHelper.CreateProperty(4));
+            propertyService.Setup(x => x.GetByPid(It.IsAny<string>())).Returns(EntityHelper.CreateProperty(2));
 
             var operationOne = EntityHelper.CreatePropertyOperation();
             operationOne.SourceProperty.PropertyId = 5;
@@ -401,30 +400,6 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
-        public void Consolidate_Should_Fail_PidExists()
-        {
-            // Arrange
-            var service = this.CreateDispositionServiceWithPermissions(Permissions.PropertyEdit);
-            var propertyService = this._helper.GetService<Mock<IPropertyService>>();
-            propertyService.Setup(x => x.GetMultipleById(It.IsAny<List<long>>())).Returns(new List<PimsProperty> { EntityHelper.CreateProperty(3), EntityHelper.CreateProperty(4) });
-            propertyService.Setup(x => x.GetByPid(It.IsAny<string>())).Returns(EntityHelper.CreateProperty(4));
-
-            var operationOne = EntityHelper.CreatePropertyOperation();
-            operationOne.SourceProperty.PropertyId = 5;
-            operationOne.DestinationPropertyId = 0;
-            operationOne.DestinationProperty.PropertyId = 0;
-
-            var operations = new List<PimsPropertyOperation>() { operationOne, EntityHelper.CreatePropertyOperation() };
-
-            // Act
-            Action act = () => service.ConsolidateProperty(operations);
-
-            // Assert
-            var exception = act.Should().Throw<BusinessRuleViolationException>();
-            exception.WithMessage("Consolidated child may not already be in the PIMS inventory.");
-        }
-
-        [Fact]
         public void Consolidate_Success()
         {
             // Arrange
@@ -434,7 +409,7 @@ namespace Pims.Api.Test.Services
             var otherProperty = EntityHelper.CreateProperty(4);
             propertyService.Setup(x => x.GetMultipleById(It.IsAny<List<long>>())).Returns(new List<PimsProperty> { sameProperty, otherProperty });
             propertyService.Setup(x => x.GetByPid(It.IsAny<string>())).Throws(new KeyNotFoundException());
-            propertyService.Setup(x => x.Update(It.IsAny<PimsProperty>(), false)).Returns(sameProperty);
+            propertyService.Setup(x => x.RetireProperty(It.IsAny<PimsProperty>(), false)).Returns((PimsProperty p, bool b) => p);
             propertyService.Setup(x => x.PopulateNewProperty(It.IsAny<PimsProperty>(), true, false)).Returns(sameProperty);
 
             var operationOne = EntityHelper.CreatePropertyOperation();
@@ -451,7 +426,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             repository.Verify(x => x.AddRange(It.IsAny<List<PimsPropertyOperation>>()), Times.Once);
-            propertyService.Verify(x => x.Update(It.IsAny<PimsProperty>(), false), Times.Exactly(2));
+            propertyService.Verify(x => x.RetireProperty(It.IsAny<PimsProperty>(), false), Times.Exactly(2));
             propertyService.Verify(x => x.PopulateNewProperty(It.IsAny<PimsProperty>(), true, false), Times.Once);
         }
 
@@ -465,7 +440,7 @@ namespace Pims.Api.Test.Services
             var otherProperty = EntityHelper.CreateProperty(4);
             propertyService.Setup(x => x.GetMultipleById(It.IsAny<List<long>>())).Returns(new List<PimsProperty> { sameProperty, otherProperty });
             propertyService.Setup(x => x.GetByPid(It.IsAny<string>())).Returns(sameProperty);
-            propertyService.Setup(x => x.Update(It.IsAny<PimsProperty>(), false)).Returns(sameProperty);
+            propertyService.Setup(x => x.RetireProperty(It.IsAny<PimsProperty>(), false)).Returns((PimsProperty p, bool b) => p);
             propertyService.Setup(x => x.PopulateNewProperty(It.IsAny<PimsProperty>(), true, false)).Returns(sameProperty);
 
             var operationWithSameDestSource = EntityHelper.CreatePropertyOperation();
@@ -484,7 +459,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             repository.Verify(x => x.AddRange(It.IsAny<List<PimsPropertyOperation>>()), Times.Once);
-            propertyService.Verify(x => x.Update(It.IsAny<PimsProperty>(), false), Times.Exactly(2));
+            propertyService.Verify(x => x.RetireProperty(It.IsAny<PimsProperty>(), false), Times.Exactly(2));
             propertyService.Verify(x => x.PopulateNewProperty(It.IsAny<PimsProperty>(), true, false), Times.Once);
         }
 

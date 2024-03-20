@@ -147,7 +147,7 @@ describe('Update AcquisitionAgreementContainer component', () => {
 
   it('navigates back to Agreement when form is cancelled', async () => {
     await setup({ props: { acquisitionFileId: 1, agreementId: 10 } });
-    act(() => {
+    await act(async () => {
       viewProps?.onCancel();
     });
 

@@ -70,6 +70,7 @@ describe('Lease and License List View', () => {
   it('matches snapshot', async () => {
     setupMockSearch();
     const { asFragment } = setup();
+    await act(async () => {});
 
     const fragment = await waitFor(() => asFragment());
     expect(fragment).toMatchSnapshot();
@@ -104,7 +105,7 @@ describe('Lease and License List View', () => {
     const { container, searchButton, findByText, getByTitle } = setup();
     await waitForElementToBeRemoved(getByTitle('table-loading'));
 
-    act(() => {
+    await act(async () => {
       fillInput(container, 'searchBy', 'pinOrPid', 'select');
       fillInput(container, 'pinOrPid', '123');
     });

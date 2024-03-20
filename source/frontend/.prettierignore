@@ -6,4 +6,4 @@ node_modules
 build
 *.yaml
 *.yml
-mockServiceWork.js
+mockServiceWorker.js

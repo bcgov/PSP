@@ -38,6 +38,7 @@ export const mapMachineBaseMock: IMapStateMachineContext = {
   isFiltering: false,
   isShowingMapLayers: false,
   showDisposed: false,
+  showRetired: false,
 
   requestFlyToLocation: jest.fn(),
 
@@ -59,4 +60,5 @@ export const mapMachineBaseMock: IMapStateMachineContext = {
 
   toggleMapLayer: jest.fn(),
   setShowDisposed: jest.fn(),
+  setShowRetired: jest.fn(),
 };

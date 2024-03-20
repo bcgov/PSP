@@ -134,6 +134,7 @@ describe('UpdateCompensationRequisition Container component', () => {
 
   it('renders the underlying form', async () => {
     const { getByText } = await setup();
+    await act(async () => {});
     expect(getByText(/Content Rendered/)).toBeVisible();
   });
 
@@ -180,7 +181,7 @@ describe('UpdateCompensationRequisition Container component', () => {
       props: { compensation: mockCompensationUpdate },
     });
 
-    await waitForEffects();
+    await act(async () => {});
 
     mockCompensationUpdate.detailedRemarks = 'my update';
     mockUpdateCompensation.mockResolvedValue(mockCompensationUpdate);
@@ -232,6 +233,7 @@ describe('UpdateCompensationRequisition Container component', () => {
     ];
     mockGetApi.execute = jest.fn().mockResolvedValue(expiredFinancialCodes);
     await setup();
+    await act(async () => {});
 
     await waitFor(async () => {
       expect(viewProps?.financialActivityOptions).toHaveLength(1);

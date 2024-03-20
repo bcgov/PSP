@@ -5,7 +5,14 @@ import UpdateAcquisitionAgreementForm, {
   IUpdateAcquisitionAgreementViewProps,
 } from './UpdateAcquisitionAgreementForm';
 import { AcquisitionAgreementFormModel } from '../models/AcquisitionAgreementFormModel';
-import { act, RenderOptions, render, fillInput } from '@/utils/test-utils';
+import {
+  act,
+  RenderOptions,
+  render,
+  fillInput,
+  waitForEffects,
+  selectOptions,
+} from '@/utils/test-utils';
 
 export const organizerMock = {
   canEditOrDeleteAgreement: jest.fn(),

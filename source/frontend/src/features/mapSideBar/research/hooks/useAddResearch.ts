@@ -24,7 +24,6 @@ export const useAddResearch = () => {
     requestName: 'AddResearchFile',
     onSuccess: useCallback(() => toast.success('Research File saved'), []),
     throwError: true,
-    skipErrorLogCodes: [409],
   });
 
   return { addResearchFile: execute };

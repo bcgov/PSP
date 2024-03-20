@@ -18,8 +18,10 @@ export const useUpdateContact = () => {
   const onError = useCallback((axiosError: AxiosError<IApiError>) => {
     if (axiosError?.response?.status === 400) {
       toast.error(axiosError?.response.data.error);
+      return Promise.resolve();
     } else {
       toast.error('Unable to save. Please try again.');
+      return Promise.reject(axiosError);
     }
   }, []);
 

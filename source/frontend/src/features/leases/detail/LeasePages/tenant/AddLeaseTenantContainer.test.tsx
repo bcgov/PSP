@@ -107,12 +107,11 @@ describe('AddLeaseTenantContainer component', () => {
   it('makes requests for primary contacts', async () => {
     await setup({});
 
-    await waitFor(() => {
+    await act(async () => {
       viewProps.setSelectedTenants([getMockContactOrganizationWithOnePerson()]);
-
-      expect(getPersonConcept).toHaveBeenCalledTimes(1);
-      expect(viewProps.selectedTenants[0].organizationPersons).toHaveLength(1);
     });
+    expect(getPersonConcept).toHaveBeenCalledTimes(1);
+    expect(viewProps.selectedTenants[0].organizationPersons).toHaveLength(1);
   });
 
   it('does not request duplicate person ids', async () => {
@@ -153,10 +152,10 @@ describe('AddLeaseTenantContainer component', () => {
       middleNames: undefined,
     };
 
-    await waitFor(() => {
+    await act(async () => {
       viewProps.setSelectedTenants([contact]);
-      expect(getPersonConcept).not.toHaveBeenCalled();
     });
+    expect(getPersonConcept).not.toHaveBeenCalled();
   });
 
   it('does not overwrite an existing primary contact if the selection does not change', async () => {
@@ -169,7 +168,7 @@ describe('AddLeaseTenantContainer component', () => {
       expect(viewProps.selectedTenants).toHaveLength(1);
     });
 
-    await waitFor(() => {
+    await act(async () => {
       //act
       viewProps.setSelectedTenants([getMockContactOrganizationWithOnePerson()]);
     });
@@ -184,32 +183,34 @@ describe('AddLeaseTenantContainer component', () => {
       viewProps.setSelectedTenants([getMockContactOrganizationWithMultiplePeople()]);
       expect(viewProps.selectedTenants).toHaveLength(1);
     });
-    viewProps.onSubmit({
-      ...LeaseFormModel.fromApi(getMockApiLease()),
-      tenants: viewProps.selectedTenants,
+    await act(async () => {
+      viewProps.onSubmit({
+        ...LeaseFormModel.fromApi(getMockApiLease()),
+        tenants: viewProps.selectedTenants,
+      });
     });
-    await waitFor(() => {
-      expect(viewProps.saveCallback).not.toBeUndefined();
-    });
+    expect(viewProps.saveCallback).not.toBeUndefined();
   });
 
   it('callback submits data with a valid empty primary contact', async () => {
     await setup({});
 
-    await waitFor(() => {
+    await act(async () => {
       viewProps.setSelectedTenants([getMockContactOrganizationWithMultiplePeople()]);
-      expect(viewProps.selectedTenants).toHaveLength(1);
     });
-    viewProps.onSubmit({
-      ...LeaseFormModel.fromApi(getMockApiLease()),
-      tenants: viewProps.selectedTenants,
+    expect(viewProps.selectedTenants).toHaveLength(1);
+    await act(async () => {
+      viewProps.onSubmit({
+        ...LeaseFormModel.fromApi(getMockApiLease()),
+        tenants: viewProps.selectedTenants,
+      });
     });
     await waitFor(() => {
       expect(viewProps.saveCallback).not.toBeUndefined();
     });
 
     viewProps.saveCallback && viewProps.saveCallback();
-    await waitFor(() => {
+    await act(async () => {
       expect(updateTenants).toHaveBeenCalledTimes(1);
       expect(updateTenants.mock.calls[0][0].primaryContactId).toBeUndefined();
     });
@@ -217,7 +218,9 @@ describe('AddLeaseTenantContainer component', () => {
 
   it('onSubmit calls api with expected data', async () => {
     await setup({});
-    viewProps.onSubmit({ ...new LeaseFormModel(), id: 1 });
+    await act(async () => {
+      viewProps.onSubmit({ ...new LeaseFormModel(), id: 1 });
+    });
     await waitFor(() => {
       expect(updateTenants).toHaveBeenCalledTimes(1);
       expect(onEdit).toHaveBeenCalledWith(false);

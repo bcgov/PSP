@@ -56,12 +56,12 @@ namespace Pims.Api.Services
 
             if (operations.Any(op => op.SourcePropertyId != operations.FirstOrDefault().SourcePropertyId))
             {
-                 throw new BusinessRuleViolationException("All property operations must have the same PIMS parent property.");
+                throw new BusinessRuleViolationException("All property operations must have the same PIMS parent property.");
             }
 
             if (operations.Select(o => o.DestinationProperty).Count() < 2)
             {
-                 throw new BusinessRuleViolationException("Subdivisions must contain at least two child properties.");
+                throw new BusinessRuleViolationException("Subdivisions must contain at least two child properties.");
             }
 
             foreach (var operation in operations)
@@ -75,15 +75,15 @@ namespace Pims.Api.Services
                     _propertyService.GetByPid(operation.DestinationProperty.Pid.ToString());
                     throw new BusinessRuleViolationException("Subdivision children may not already be in the PIMS inventory.");
 
-                } catch (KeyNotFoundException)
+                }
+                catch (KeyNotFoundException)
                 {
                     // ignore exception, the pid should not exist.
                 }
             }
 
             // retire the source property
-            dbSourceProperty.IsRetired = true;
-            _propertyService.Update(dbSourceProperty, false);
+            _propertyService.RetireProperty(dbSourceProperty, false);
 
             foreach (var operation in operations)
             {
@@ -109,7 +109,7 @@ namespace Pims.Api.Services
             IEnumerable<PimsProperty> dbSourceProperties = _propertyService.GetMultipleById(sourceProperties.Select(sp => sp.PropertyId).ToList());
 
             CommonPropertyOperationValidation(operations);
-            if(destinationProperty?.Pid == null)
+            if (destinationProperty?.Pid == null)
             {
                 throw new BusinessRuleViolationException("Consolidation child must have a property with a valid PID.");
             }
@@ -126,40 +126,34 @@ namespace Pims.Api.Services
 
             if (operations.Select(o => o.SourceProperty).GroupBy(s => s.PropertyId).Count() < 2)
             {
-                throw new BusinessRuleViolationException("Consolidations must contain at least two parent properties.");
+                throw new BusinessRuleViolationException("Consolidations must contain at least two different parent properties.");
             }
 
-            // either the property exists in pims, and is present in the source properties list, or the property does not have a match in PIMS at all (neither pid nor property_id).
-            if (destinationProperty?.PropertyId > 0)
+            try
             {
-                if (!dbSourceProperties.Any(sp => sp.PropertyId == destinationProperty?.PropertyId))
+                var dbDestinationProperty = _propertyService.GetByPid(destinationProperty?.Pid?.ToString());
+
+                // if the property exists in pims, it must also be present in the source properties list.
+                if (!dbSourceProperties.Any(sp => sp.PropertyId == dbDestinationProperty?.PropertyId))
                 {
                     throw new BusinessRuleViolationException("Consolidated child property may not be in the PIMS inventory unless also in the parent property list.");
                 }
             }
-            else
+            catch (KeyNotFoundException)
             {
-                try
-                {
-                    _propertyService.GetByPid(destinationProperty?.Pid?.ToString());
-                    throw new BusinessRuleViolationException("Consolidated child may not already be in the PIMS inventory.");
-                }
-                catch (KeyNotFoundException)
-                {
-                    // ignore exception, the pid should not exist.
-                }
+                // ignore exception, the pid should not exist.
             }
 
             // retire the source properties
             foreach (var sp in dbSourceProperties)
             {
-                sp.IsRetired = true;
-                _propertyService.Update(sp, false);
+                _propertyService.RetireProperty(sp, false);
             }
 
             destinationProperty.PropertyId = 0; // in the case this property already exists, this will force it to be recreated.
             var newProperty = _propertyService.PopulateNewProperty(destinationProperty, isOwned: true, isPropertyOfInterest: false);
-            operations.ForEach(op => {
+            operations.ForEach(op =>
+            {
                 op.DestinationProperty = newProperty;
                 op.DestinationPropertyId = newProperty.PropertyId;
                 op.SourceProperty = null; // do not allow the property operation to modify the source in the add range operation.

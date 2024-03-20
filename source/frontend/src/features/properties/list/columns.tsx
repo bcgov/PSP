@@ -7,6 +7,7 @@ import { StyledIconButton } from '@/components/common/buttons';
 import { Input } from '@/components/common/form';
 import { TypeaheadField } from '@/components/common/form/Typeahead';
 import { InlineFlexDiv } from '@/components/common/styles';
+import TooltipIcon from '@/components/common/TooltipIcon';
 import { ColumnWithProps } from '@/components/Table';
 import { AreaUnitTypes, Claims } from '@/constants/index';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
@@ -30,6 +31,23 @@ export const columns = ({ municipalities }: Props): ColumnWithProps<ApiGen_Conce
     accessor: 'pid',
     align: 'right',
     width: 40,
+    Cell: (props: CellProps<ApiGen_Concepts_Property>) => {
+      return (
+        <>
+          {props.row.original.pid}
+          <span style={{ width: '2rem' }}>
+            {props.row.original.isRetired ? (
+              <TooltipIcon
+                variant="warning"
+                toolTipId="retired-tooltip"
+                toolTip="RETIRED"
+                placement="right"
+              />
+            ) : null}
+          </span>
+        </>
+      );
+    },
   },
   {
     Header: 'PIN',

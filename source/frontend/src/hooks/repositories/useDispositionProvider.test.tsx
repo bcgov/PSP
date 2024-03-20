@@ -75,8 +75,8 @@ describe('useDispositionProvider hook', () => {
       expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeUndefined();
     });
 
-    it('Dispatches error with correct response when request fails', async () => {
-      mockAxios.onGet(url).reply(400, MOCK.ERROR);
+    it('Dispatches error with correct response when request fails with a 500', async () => {
+      mockAxios.onGet(url).reply(500, MOCK.ERROR);
       const { getDispositionFile } = setup();
 
       await act(async () => {
@@ -84,6 +84,18 @@ describe('useDispositionProvider hook', () => {
       });
 
       expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeDefined();
+      expect(toastErrorSpy).toHaveBeenCalled();
+    });
+
+    it('Dispatches error with correct response when request fails with a 400', async () => {
+      mockAxios.onGet(url).reply(400, MOCK.ERROR);
+      const { getDispositionFile } = setup();
+
+      await act(async () => {
+        await getDispositionFile.execute(mockDispositionFileResponse().id || 0);
+      });
+
+      expect(find(currentStore.getActions(), { type: 'network/logError' })).toBe(undefined);
       expect(toastErrorSpy).toHaveBeenCalled();
     });
   });
@@ -106,8 +118,8 @@ describe('useDispositionProvider hook', () => {
       expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeUndefined();
     });
 
-    it('Dispatches error with correct response when request fails', async () => {
-      mockAxios.onGet(url).reply(400, MOCK.ERROR);
+    it('Dispatches error with correct response when request fails with a 500', async () => {
+      mockAxios.onGet(url).reply(500, MOCK.ERROR);
       const { getDispositionProperties } = setup();
 
       await act(async () => {
@@ -115,6 +127,18 @@ describe('useDispositionProvider hook', () => {
       });
 
       expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeDefined();
+      expect(toastErrorSpy).toHaveBeenCalled();
+    });
+
+    it('Dispatches error with correct response when request fails with a 400', async () => {
+      mockAxios.onGet(url).reply(400, MOCK.ERROR);
+      const { getDispositionProperties } = setup();
+
+      await act(async () => {
+        await getDispositionProperties.execute(mockDispositionFilePropertyResponse()[0].fileId);
+      });
+
+      expect(find(currentStore.getActions(), { type: 'network/logError' })).toBe(undefined);
       expect(toastErrorSpy).toHaveBeenCalled();
     });
   });

@@ -17,12 +17,12 @@ import { useCalculateNetProceeds } from '../hooks/useCalculateNetProceeds';
 import DispositionSalePurchaserSubForm from './DispositionSalePurchasersSubForm';
 
 export interface IDispositionSaleFormProps {
-  dispostionSaleId: number | null;
+  dispositionSaleId: number | null;
 }
 
 const DispositionSaleForm: React.FunctionComponent<
   React.PropsWithChildren<IDispositionSaleFormProps>
-> = ({ dispostionSaleId }) => {
+> = ({ dispositionSaleId }) => {
   const formikProps = useFormikContext<DispositionSaleFormModel>();
   const { setModalContent, setDisplayModal } = useModalContext();
 
@@ -85,7 +85,7 @@ const DispositionSaleForm: React.FunctionComponent<
   return (
     <Section header="Sales Details">
       <SectionField label="Purchaser name(s)" labelWidth="5" contentWidth="7">
-        <DispositionSalePurchaserSubForm dispositionSaleId={dispostionSaleId} />
+        <DispositionSalePurchaserSubForm dispositionSaleId={dispositionSaleId} />
       </SectionField>
 
       <SectionField label="Purchaser agent" labelWidth="5" contentWidth="6">
@@ -190,7 +190,7 @@ const DispositionSaleForm: React.FunctionComponent<
         label="Net proceeds before SPP cost ($)"
         labelWidth="5"
         contentWidth="5"
-        tooltip="Net Proceeds before Surplus Property Program (SPP) Cost = Final Sales price, less Commissions, and Net Book Value."
+        tooltip="Net Proceeds before Surplus Property Program (SPP) Cost = Final Sales price, less Commissions, GST Total Cost of Sales, and Net Book Value."
       >
         <FastCurrencyInput
           formikProps={formikProps}

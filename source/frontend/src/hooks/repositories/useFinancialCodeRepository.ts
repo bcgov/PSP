@@ -17,8 +17,6 @@ import { ApiGen_Concepts_FinancialCode } from '@/models/api/generated/ApiGen_Con
 import { ApiGen_Concepts_FinancialCodeTypes } from '@/models/api/generated/ApiGen_Concepts_FinancialCodeTypes';
 import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils';
 
-const ignoreErrorCodes = [409];
-
 /**
  * hook that interacts with the Financial Codes API.
  */
@@ -113,7 +111,6 @@ export const useFinancialCodeRepository = () => {
       [],
     ),
     requestName: 'AddFinancialCodes',
-    skipErrorLogCodes: ignoreErrorCodes,
     throwError: true,
   });
 
@@ -127,7 +124,6 @@ export const useFinancialCodeRepository = () => {
       [],
     ),
     requestName: 'UpdateFinancialCodes',
-    skipErrorLogCodes: ignoreErrorCodes,
     throwError: true,
   });
 

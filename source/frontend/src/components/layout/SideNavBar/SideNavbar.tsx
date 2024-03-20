@@ -5,11 +5,13 @@ import { MdChevronLeft, MdChevronRight, MdContactMail, MdHome } from 'react-icon
 import { TbArrowBounce } from 'react-icons/tb';
 import { useHistory } from 'react-router-dom';
 
+
 import AdminPanelSettings from '@/assets/images/admin-panel-settings.svg?react';
 import Fence from '@/assets/images/fence.svg?react';
 import RealEstateAgent from '@/assets/images/real-estate-agent.svg?react';
 import Source from '@/assets/images/source.svg?react';
 import ConsolidateSubdivideIcon from '@/assets/images/subdivisionconsolidation.svg?react';
+
 import { NavIcon } from '@/components/layout';
 import { Claims, Roles } from '@/constants/index';
 
@@ -67,7 +69,7 @@ export const SideNavBar = () => {
         />
         <NavIcon
           onClick={() => setTrayPage(SidebarContextType.SUBDCONS)}
-          icon={<ConsolidateSubdivideIcon />}
+          icon={<ConsolidateSubdivideIcon className="m-1" />}
           text="Subdivision & Consolidation"
           showText={expanded}
         />

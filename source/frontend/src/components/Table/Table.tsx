@@ -602,11 +602,14 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = obje
             key={`tr-footer-${footerGroup.id}`}
           >
             {footerGroup.headers.map(
-              (column: ColumnInstanceWithProps<T> & { Footer?: React.FC<{ properties: T[] }> }) => (
+              (
+                column: ColumnInstanceWithProps<T> & { Footer?: React.FC<{ properties: T[] }> },
+                index,
+              ) => (
                 <div
                   {...column.getHeaderProps(headerPropsGetter)}
                   className="th"
-                  key={`th-footer-${footerGroup.id}`}
+                  key={`th-footer-${footerGroup.id ?? index}`}
                 >
                   {column.Footer ? <column.Footer properties={map(page, 'original')} /> : null}
                 </div>

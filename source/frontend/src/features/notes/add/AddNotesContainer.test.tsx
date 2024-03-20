@@ -92,7 +92,7 @@ describe('AddNotesContainer component', () => {
     const { getSaveButton, findByLabelText } = setup(BASIC_PROPS);
 
     const textarea = await findByLabelText(/Type a note/i);
-    act(() => {
+    await act(async () => {
       userEvent.type(textarea, formValues.note.note as string);
     });
 
@@ -123,7 +123,7 @@ describe('AddNotesContainer component', () => {
     });
 
     const textarea = await findByLabelText(/Type a note/i);
-    act(() => {
+    await act(async () => {
       userEvent.type(textarea, formValues.note.note as string);
     });
 
