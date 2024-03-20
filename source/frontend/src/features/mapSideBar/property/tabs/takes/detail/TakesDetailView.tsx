@@ -114,6 +114,11 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
                 ? getCodeById(API.TAKE_STATUS_TYPES, take.takeStatusTypeCode.id)
                 : ''}
             </SectionField>
+            {take.completionDt && (
+              <SectionField label="Completion date *">
+                {prettyFormatDate(take.completionDt)}
+              </SectionField>
+            )}
             <SectionField label="Site contamination">
               {take.takeSiteContamTypeCode?.id
                 ? getCodeById(API.TAKE_SITE_CONTAM_TYPES, take.takeSiteContamTypeCode.id)
