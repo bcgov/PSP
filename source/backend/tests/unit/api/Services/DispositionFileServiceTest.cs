@@ -414,6 +414,7 @@ namespace Pims.Api.Test.Services
             // Arrange
             var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionEdit);
             var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
+            var dispositionFilePropertyRepository = this._helper.GetService<Mock<IDispositionFilePropertyRepository>>();
 
             var dispFile = EntityHelper.CreateDispositionFile(1);
 
@@ -428,6 +429,8 @@ namespace Pims.Api.Test.Services
             repository.Setup(x => x.GetRegion(It.IsAny<long>())).Returns(1);
             repository.Setup(x => x.Update(It.IsAny<long>(), It.IsAny<PimsDispositionFile>())).Returns(dispFile);
             repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(dispFile);
+
+            dispositionFilePropertyRepository.Setup(x => x.GetPropertiesByDispositionFileId(It.IsAny<long>())).Returns(new List<PimsDispositionFileProperty>() { });
 
             // Act
             Action act = () => service.Update(2, updateDispFile, new List<UserOverrideCode>() { UserOverrideCode.DispositionFileFinalStatus });
@@ -443,6 +446,7 @@ namespace Pims.Api.Test.Services
             // Arrange
             var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionEdit);
             var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
+            var dispositionFilePropertyRepository = this._helper.GetService<Mock<IDispositionFilePropertyRepository>>();
 
             var statusMock = this._helper.GetService<Mock<IDispositionStatusSolver>>();
             statusMock.Setup(x => x.CanEditDetails(It.IsAny<DispositionStatusTypes>())).Returns(true);
@@ -456,6 +460,7 @@ namespace Pims.Api.Test.Services
             repository.Setup(x => x.GetRegion(It.IsAny<long>())).Returns(1);
             repository.Setup(x => x.Update(It.IsAny<long>(), It.IsAny<PimsDispositionFile>())).Returns(dispFile);
             repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(dispFile);
+            dispositionFilePropertyRepository.Setup(x => x.GetPropertiesByDispositionFileId(It.IsAny<long>())).Returns(new List<PimsDispositionFileProperty>() { });
 
             // Act
             Action act = () => service.Update(2, updateDispFile, new List<UserOverrideCode>() { UserOverrideCode.DispositionFileFinalStatus });
