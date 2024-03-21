@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Models.CodeTypes;
+using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
@@ -185,6 +186,7 @@ namespace Pims.Api.Services
             pimsUser.ThrowInvalidAccessToLeaseFile(lease.RegionCode);
 
             var leasesWithProperties = AssociatePropertyLeases(lease, userOverrides);
+
             return _leaseRepository.Add(leasesWithProperties);
         }
 
@@ -203,12 +205,20 @@ namespace Pims.Api.Services
         {
             _logger.LogInformation("Updating lease {leaseId}", lease.LeaseId);
             _user.ThrowIfNotAuthorized(Permissions.LeaseEdit);
+
             var pimsUser = _userRepository.GetByKeycloakUserId(_user.GetUserKey());
             var currentLease = _leaseRepository.GetNoTracking(lease.LeaseId);
+
             pimsUser.ThrowInvalidAccessToLeaseFile(currentLease.RegionCode); // need to check that the user is able to access the current lease as well as has the region for the updated lease.
             pimsUser.ThrowInvalidAccessToLeaseFile(lease.RegionCode);
 
             var currentProperties = _propertyLeaseRepository.GetAllByLeaseId(lease.LeaseId);
+            var newPropertiesAdded = lease.PimsPropertyLeases.Where(x => !currentProperties.Any(y => y.Internal_Id == x.Internal_Id)).ToList();
+
+            if(newPropertiesAdded.Any(x => x.Property.IsRetired.HasValue && x.Property.IsRetired.Value))
+            {
+                throw new BusinessRuleViolationException("Retired property can not be selected.");
+            }
 
             if (currentLease.LeaseStatusTypeCode != lease.LeaseStatusTypeCode)
             {
@@ -237,7 +247,7 @@ namespace Pims.Api.Services
             List<PimsPropertyLease> differenceSet = currentProperties.Where(x => !lease.PimsPropertyLeases.Any(y => y.Internal_Id == x.Internal_Id)).ToList();
             foreach (var deletedProperty in differenceSet)
             {
-                if (deletedProperty.Property.IsPropertyOfInterest == true)
+                if (deletedProperty.Property.IsPropertyOfInterest)
                 {
                     PimsProperty propertyWithAssociations = _propertyRepository.GetAllAssociationsById(deletedProperty.PropertyId);
                     var leaseAssociationCount = propertyWithAssociations.PimsPropertyLeases.Count;
