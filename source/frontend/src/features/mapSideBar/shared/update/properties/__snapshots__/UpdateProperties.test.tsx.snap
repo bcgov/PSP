@@ -226,6 +226,8 @@ exports[`UpdateProperties component renders as expected 1`] = `
 
 .c6 .nav-item:hover {
   border-color: transparent;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
 }
 
 .c6 .nav-item.active {

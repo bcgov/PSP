@@ -184,6 +184,8 @@ exports[`AcquisitionProperties component renders as expected 1`] = `
 
 .c2 .nav-item:hover {
   border-color: transparent;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
 }
 
 .c2 .nav-item.active {
