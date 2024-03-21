@@ -231,6 +231,8 @@ exports[`ResearchProperties component renders as expected when provided no prope
 
 .c4 .nav-item:hover {
   border-color: transparent;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
 }
 
 .c4 .nav-item.active {

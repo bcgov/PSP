@@ -23,6 +23,8 @@ exports[`DispositionFileTabs component matches snapshot 1`] = `
 
 .c1 .nav-item:hover {
   border-color: transparent;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
 }
 
 .c1 .nav-item.active {

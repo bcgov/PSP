@@ -207,6 +207,8 @@ exports[`AddAcquisitionForm component renders as expected 1`] = `
 
 .c10 .nav-item:hover {
   border-color: transparent;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
 }
 
 .c10 .nav-item.active {

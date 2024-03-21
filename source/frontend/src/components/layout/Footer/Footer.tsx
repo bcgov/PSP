@@ -55,10 +55,10 @@ const FooterStyled = styled('div')`
   align-content: flex-start;
 
   a {
+    color: #ffffff;
     display: inline;
     &:link,
     &:visited {
-      color: #ffffff;
       font-size: 1.6rem;
       font-family: 'BCSans', Fallback, sans-serif;
       padding: 0 1rem;

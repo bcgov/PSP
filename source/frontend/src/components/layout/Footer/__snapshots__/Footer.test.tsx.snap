@@ -27,12 +27,12 @@ exports[`Footer renders correctly 1`] = `
 }
 
 .c0 a {
+  color: #ffffff;
   display: inline;
 }
 
 .c0 a:link,
 .c0 a:visited {
-  color: #ffffff;
   font-size: 1.6rem;
   font-family: 'BCSans',Fallback,sans-serif;
   padding: 0 1rem;

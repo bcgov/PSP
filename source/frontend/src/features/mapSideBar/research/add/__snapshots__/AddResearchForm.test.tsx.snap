@@ -179,6 +179,8 @@ exports[`AddResearchForm component renders as expected 1`] = `
 
 .c12 .nav-item:hover {
   border-color: transparent;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
 }
 
 .c12 .nav-item.active {

@@ -179,6 +179,8 @@ exports[`MapSelectorContainer component renders as expected when provided no pro
 
 .c2 .nav-item:hover {
   border-color: transparent;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
 }
 
 .c2 .nav-item.active {
