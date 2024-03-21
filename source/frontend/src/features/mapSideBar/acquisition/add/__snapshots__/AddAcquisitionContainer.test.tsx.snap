@@ -276,6 +276,8 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
 
 .c13 .nav-item:hover {
   border-color: transparent;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
 }
 
 .c13 .nav-item.active {
