@@ -207,7 +207,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Search for a property by PIN
             sharedFileProperties.NavigateToSearchTab();
-            sharedFileProperties.SelectPropertyByPIN(dispositionFile.DispositionSearchProperties.PIN);
+            sharedFileProperties.SelectPropertyByPID(dispositionFile.DispositionSearchProperties.PID);
             sharedFileProperties.SelectFirstOptionFromSearch();
 
             //Delete last Property
@@ -377,7 +377,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Open elipsis option
             propertyInformation.OpenMoreOptionsPopUp();
-            propertyInformation.ChooseCreationOptionFromPin("Disposition File - Create new");
+            propertyInformation.ChooseCreationOptionFromPin("Disposition File");
 
             //Validate Acquisition File Details Create Form
             dispositionFileDetails.VerifyDispositionFileInitCreate();
@@ -399,7 +399,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Open elipsis option
             propertyInformation.OpenMoreOptionsPopUp();
-            propertyInformation.ChooseCreationOptionFromPin("Acquisition File - Create new");
+            propertyInformation.ChooseCreationOptionFromPin("Disposition File");
 
             //Fill basic Acquisition File information
             dispositionFileDetails.CreateMinimumDispositionFile(dispositionFile);
@@ -418,7 +418,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Open elipsis option
             propertyInformation.OpenMoreOptionsPopUp();
-            propertyInformation.ChooseCreationOptionFromPin("Acquisition File - Create new");
+            propertyInformation.ChooseCreationOptionFromPin("Disposition File");
 
             //Fill basic Acquisition File information
             dispositionFileDetails.CreateMinimumDispositionFile(dispositionFile);
