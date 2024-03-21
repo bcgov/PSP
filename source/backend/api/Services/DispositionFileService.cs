@@ -78,7 +78,6 @@ namespace Pims.Api.Services
             ValidateStaff(dispositionFile);
 
             MatchProperties(dispositionFile, userOverrides);
-
             ValidatePropertyRegions(dispositionFile);
 
             var newDispositionFile = _dispositionFileRepository.Add(dispositionFile);
