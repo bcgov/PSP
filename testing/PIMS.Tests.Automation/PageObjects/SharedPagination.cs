@@ -16,10 +16,8 @@ namespace PIMS.Tests.Automation.PageObjects
         private By searchTablePagination100 = By.CssSelector("div[title='menu-item-100']");
 
         private By searchTableNextPageButton = By.CssSelector("ul[class='pagination'] li:last-child");
-<<<<<<< HEAD
         private By searchTable1stPageButton = By.CssSelector("ul[class='pagination'] li:nth-child(2)");
-=======
->>>>>>> c9b4c1f863ae17316148cb7eb8866aa9ae4c6b1a
+
 
         public SharedPagination(IWebDriver webDriver) : base(webDriver)
         {}
@@ -61,15 +59,12 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(searchTableNextPageButton).Click();
         }
 
-<<<<<<< HEAD
         public void Go1stPage()
         {
             webDriver.FindElement(searchTable1stPageButton).Click();
 
         }
 
-=======
->>>>>>> c9b4c1f863ae17316148cb7eb8866aa9ae4c6b1a
         public void ResetSearch()
         {
             WaitUntilClickable(searchListResetButton);
