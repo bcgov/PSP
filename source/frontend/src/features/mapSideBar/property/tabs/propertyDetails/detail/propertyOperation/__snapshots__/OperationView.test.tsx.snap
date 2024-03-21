@@ -110,6 +110,10 @@ exports[`Subdivision detail view matches snapshot 1`] = `
           >
             <div
               class="th"
+              style="width: 4.7rem;"
+            />
+            <div
+              class="th"
               colspan="1"
               role="columnheader"
               style="box-sizing: border-box; flex: 5 0 auto; min-width: 30px; width: 5px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
@@ -182,6 +186,27 @@ exports[`Subdivision detail view matches snapshot 1`] = `
               role="row"
               style="display: flex; flex: 1 0 auto; min-width: 150px;"
             >
+              <div
+                class="td expander svg-btn"
+              >
+                <svg
+                  fill="currentColor"
+                  height="24"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 24 24"
+                  width="24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M10 17l5-5-5-5v10z"
+                  />
+                  <path
+                    d="M0 24V0h24v24H0z"
+                    fill="none"
+                  />
+                </svg>
+              </div>
               <div
                 class="td"
                 role="cell"
@@ -275,6 +300,27 @@ exports[`Subdivision detail view matches snapshot 1`] = `
               role="row"
               style="display: flex; flex: 1 0 auto; min-width: 150px;"
             >
+              <div
+                class="td expander svg-btn"
+              >
+                <svg
+                  fill="currentColor"
+                  height="24"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 24 24"
+                  width="24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M10 17l5-5-5-5v10z"
+                  />
+                  <path
+                    d="M0 24V0h24v24H0z"
+                    fill="none"
+                  />
+                </svg>
+              </div>
               <div
                 class="td"
                 role="cell"

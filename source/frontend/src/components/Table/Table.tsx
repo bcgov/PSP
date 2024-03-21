@@ -699,8 +699,11 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = obje
             })}
           </div>
           {props.detailsPanel && (
-            <Collapse in={props.detailsPanel.checkExpanded(row.original, expandedRows)}>
-              <div style={{ padding: 10 }}>{props.detailsPanel.render(row.original)}</div>
+            <Collapse
+              in={props.detailsPanel.checkExpanded(row.original, expandedRows)}
+              mountOnEnter
+            >
+              <div>{props.detailsPanel.render(row.original)}</div>
             </Collapse>
           )}
         </div>

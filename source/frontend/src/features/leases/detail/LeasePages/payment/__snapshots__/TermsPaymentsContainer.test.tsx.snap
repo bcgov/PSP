@@ -332,34 +332,6 @@ exports[`TermsPaymentsContainer component renders as expected 1`] = `
   flex-wrap: nowrap;
 }
 
-.c5 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  gap: 2rem;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-}
-
-.c6 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  gap: 1rem;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-}
-
-.c7 {
-  gap: 3rem;
-  background-color: white;
-  min-height: 6rem;
-}
-
 .c1 {
   font-weight: bold;
   border-bottom: 0.2rem solid;
@@ -850,58 +822,6 @@ exports[`TermsPaymentsContainer component renders as expected 1`] = `
                       </svg>
                     </div>
                   </button>
-                </div>
-              </div>
-            </div>
-            <div
-              class="collapse"
-              style="padding: 10px;"
-            >
-              <div
-                class="row"
-              >
-                <div
-                  class="c5 col-md-2"
-                >
-                  <svg
-                    class="receipt"
-                    fill="currentColor"
-                    height="24"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    viewBox="0 0 24 24"
-                    width="24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M0 0h24v24H0z"
-                      fill="none"
-                    />
-                    <path
-                      d="M18 17H6v-2h12v2zm0-4H6v-2h12v2zm0-4H6V7h12v2zM3 22l1.5-1.5L6 22l1.5-1.5L9 22l1.5-1.5L12 22l1.5-1.5L15 22l1.5-1.5L18 22l1.5-1.5L21 22V2l-1.5 1.5L18 2l-1.5 1.5L15 2l-1.5 1.5L12 2l-1.5 1.5L9 2 7.5 3.5 6 2 4.5 3.5 3 2v20z"
-                    />
-                  </svg>
-                  <div
-                    class="c6"
-                  >
-                    <b>
-                      Payments Sent
-                    </b>
-                  </div>
-                </div>
-                <div
-                  class="col-md-10"
-                >
-                  <div
-                    class="c2 c7"
-                  >
-                    <p>
-                      There are no recorded payments for this term.
-                    </p>
-                    <p>
-                      Term must be exercised to add payments.
-                    </p>
-                  </div>
                 </div>
               </div>
             </div>
@@ -1066,34 +986,6 @@ exports[`TermsPaymentsContainer component renders with data as expected 1`] = `
   flex-wrap: nowrap;
 }
 
-.c5 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  gap: 2rem;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-}
-
-.c6 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  gap: 1rem;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-}
-
-.c7 {
-  gap: 3rem;
-  background-color: white;
-  min-height: 6rem;
-}
-
 .c1 {
   font-weight: bold;
   border-bottom: 0.2rem solid;
@@ -1584,58 +1476,6 @@ exports[`TermsPaymentsContainer component renders with data as expected 1`] = `
                       </svg>
                     </div>
                   </button>
-                </div>
-              </div>
-            </div>
-            <div
-              class="collapse"
-              style="padding: 10px;"
-            >
-              <div
-                class="row"
-              >
-                <div
-                  class="c5 col-md-2"
-                >
-                  <svg
-                    class="receipt"
-                    fill="currentColor"
-                    height="24"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    viewBox="0 0 24 24"
-                    width="24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M0 0h24v24H0z"
-                      fill="none"
-                    />
-                    <path
-                      d="M18 17H6v-2h12v2zm0-4H6v-2h12v2zm0-4H6V7h12v2zM3 22l1.5-1.5L6 22l1.5-1.5L9 22l1.5-1.5L12 22l1.5-1.5L15 22l1.5-1.5L18 22l1.5-1.5L21 22V2l-1.5 1.5L18 2l-1.5 1.5L15 2l-1.5 1.5L12 2l-1.5 1.5L9 2 7.5 3.5 6 2 4.5 3.5 3 2v20z"
-                    />
-                  </svg>
-                  <div
-                    class="c6"
-                  >
-                    <b>
-                      Payments Sent
-                    </b>
-                  </div>
-                </div>
-                <div
-                  class="col-md-10"
-                >
-                  <div
-                    class="c2 c7"
-                  >
-                    <p>
-                      There are no recorded payments for this term.
-                    </p>
-                    <p>
-                      Term must be exercised to add payments.
-                    </p>
-                  </div>
                 </div>
               </div>
             </div>
