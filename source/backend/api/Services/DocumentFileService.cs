@@ -60,28 +60,28 @@ namespace Pims.Api.Services
         public IList<T> GetFileDocuments<T>(FileType fileType, long fileId)
             where T : PimsFileDocument
         {
-            Logger.LogInformation("Retrieving PIMS documents related to the file of type $fileType", fileType);
-            this.User.ThrowIfNotAuthorized(Permissions.DocumentView);
+            Logger.LogInformation("Retrieving PIMS documents related to the file of type ${fileType}", fileType);
+            User.ThrowIfNotAuthorized(Permissions.DocumentView);
 
             switch (fileType)
             {
                 case FileType.Research:
-                    this.User.ThrowIfNotAuthorized(Permissions.ResearchFileView);
+                    User.ThrowIfNotAuthorized(Permissions.ResearchFileView);
                     return researchFileDocumentRepository.GetAllByResearchFile(fileId).Select(f => f as T).ToArray();
                 case FileType.Acquisition:
-                    this.User.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
+                    User.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
                     return acquisitionFileDocumentRepository.GetAllByAcquisitionFile(fileId).Select(f => f as T).ToArray();
                 case FileType.Project:
-                    this.User.ThrowIfNotAuthorized(Permissions.ProjectView);
+                    User.ThrowIfNotAuthorized(Permissions.ProjectView);
                     return _projectRepository.GetAllProjectDocuments(fileId).Select(f => f as T).ToArray();
                 case FileType.Lease:
-                    this.User.ThrowIfNotAuthorized(Permissions.LeaseView);
+                    User.ThrowIfNotAuthorized(Permissions.LeaseView);
                     return _leaseRepository.GetAllLeaseDocuments(fileId).Select(f => f as T).ToArray();
                 case FileType.Management:
-                    this.User.ThrowIfNotAuthorized(Permissions.ManagementView);
+                    User.ThrowIfNotAuthorized(Permissions.ManagementView);
                     return _propertyActivityDocumentRepository.GetAllByPropertyActivity(fileId).Select(f => f as T).ToArray();
                 case FileType.Disposition:
-                    this.User.ThrowIfNotAuthorized(Permissions.DispositionView);
+                    User.ThrowIfNotAuthorized(Permissions.DispositionView);
                     return _dispositionFileDocumentRepository.GetAllByDispositionFile(fileId).Select(f => f as T).ToArray();
                 default:
                     throw new BadRequestException("FileT type not valid to get documents.");
@@ -90,8 +90,8 @@ namespace Pims.Api.Services
 
         public async Task<DocumentUploadRelationshipResponse> UploadResearchDocumentAsync(long researchFileId, DocumentUploadRequest uploadRequest)
         {
-            this.Logger.LogInformation("Uploading document for single research file");
-            this.User.ThrowIfNotAllAuthorized(Permissions.DocumentAdd, Permissions.ResearchFileEdit);
+            Logger.LogInformation("Uploading document for single research file");
+            User.ThrowIfNotAllAuthorized(Permissions.DocumentAdd, Permissions.ResearchFileEdit);
 
             DocumentUploadResponse uploadResult = await documentService.UploadDocumentAsync(uploadRequest);
 
@@ -119,8 +119,8 @@ namespace Pims.Api.Services
 
         public async Task<DocumentUploadRelationshipResponse> UploadAcquisitionDocumentAsync(long acquisitionFileId, DocumentUploadRequest uploadRequest)
         {
-            this.Logger.LogInformation("Uploading document for single acquisition file");
-            this.User.ThrowIfNotAllAuthorized(Permissions.DocumentAdd, Permissions.AcquisitionFileEdit);
+            Logger.LogInformation("Uploading document for single acquisition file");
+            User.ThrowIfNotAllAuthorized(Permissions.DocumentAdd, Permissions.AcquisitionFileEdit);
 
             DocumentUploadResponse uploadResult = await documentService.UploadDocumentAsync(uploadRequest);
 
@@ -148,8 +148,8 @@ namespace Pims.Api.Services
 
         public async Task<DocumentUploadRelationshipResponse> UploadProjectDocumentAsync(long projectId, DocumentUploadRequest uploadRequest)
         {
-            this.Logger.LogInformation("Uploading document for single Project");
-            this.User.ThrowIfNotAllAuthorized(Permissions.DocumentAdd, Permissions.ProjectEdit);
+            Logger.LogInformation("Uploading document for single Project");
+            User.ThrowIfNotAllAuthorized(Permissions.DocumentAdd, Permissions.ProjectEdit);
 
             DocumentUploadResponse uploadResult = await documentService.UploadDocumentAsync(uploadRequest);
 
@@ -176,8 +176,8 @@ namespace Pims.Api.Services
 
         public async Task<DocumentUploadRelationshipResponse> UploadLeaseDocumentAsync(long leaseId, DocumentUploadRequest uploadRequest)
         {
-            this.Logger.LogInformation("Uploading document for single Lease");
-            this.User.ThrowIfNotAllAuthorized(Permissions.DocumentAdd, Permissions.LeaseEdit);
+            Logger.LogInformation("Uploading document for single Lease");
+            User.ThrowIfNotAllAuthorized(Permissions.DocumentAdd, Permissions.LeaseEdit);
 
             DocumentUploadResponse uploadResult = await documentService.UploadDocumentAsync(uploadRequest);
 
@@ -204,8 +204,8 @@ namespace Pims.Api.Services
 
         public async Task<DocumentUploadRelationshipResponse> UploadPropertyActivityDocumentAsync(long propertyActivityId, DocumentUploadRequest uploadRequest)
         {
-            this.Logger.LogInformation("Uploading document for single Property Activity");
-            this.User.ThrowIfNotAllAuthorized(Permissions.DocumentAdd, Permissions.ManagementEdit);
+            Logger.LogInformation("Uploading document for single Property Activity");
+            User.ThrowIfNotAllAuthorized(Permissions.DocumentAdd, Permissions.ManagementEdit);
 
             DocumentUploadResponse uploadResult = await documentService.UploadDocumentAsync(uploadRequest);
 
@@ -232,8 +232,8 @@ namespace Pims.Api.Services
 
         public async Task<DocumentUploadRelationshipResponse> UploadDispositionDocumentAsync(long dispositionFileId, DocumentUploadRequest uploadRequest)
         {
-            this.Logger.LogInformation("Uploading document for single disposition file");
-            this.User.ThrowIfNotAllAuthorized(Permissions.DocumentAdd, Permissions.DispositionEdit);
+            Logger.LogInformation("Uploading document for single disposition file");
+            User.ThrowIfNotAllAuthorized(Permissions.DocumentAdd, Permissions.DispositionEdit);
 
             DocumentUploadResponse uploadResult = await documentService.UploadDocumentAsync(uploadRequest);
 
@@ -260,8 +260,8 @@ namespace Pims.Api.Services
 
         public async Task<ExternalResponse<string>> DeleteResearchDocumentAsync(PimsResearchFileDocument researchFileDocument)
         {
-            this.Logger.LogInformation("Deleting PIMS document for single research file");
-            this.User.ThrowIfNotAllAuthorized(Permissions.DocumentDelete, Permissions.ResearchFileEdit);
+            Logger.LogInformation("Deleting PIMS document for single research file");
+            User.ThrowIfNotAllAuthorized(Permissions.DocumentDelete, Permissions.ResearchFileEdit);
 
             var relationshipCount = _documentRepository.DocumentRelationshipCount(researchFileDocument.DocumentId);
             if (relationshipCount == 1)
@@ -278,8 +278,8 @@ namespace Pims.Api.Services
 
         public async Task<ExternalResponse<string>> DeleteProjectDocumentAsync(PimsProjectDocument projectDocument)
         {
-            this.Logger.LogInformation("Deleting PIMS document for single Project");
-            this.User.ThrowIfNotAllAuthorized(Permissions.DocumentDelete, Permissions.ProjectEdit);
+            Logger.LogInformation("Deleting PIMS document for single Project");
+            User.ThrowIfNotAllAuthorized(Permissions.DocumentDelete, Permissions.ProjectEdit);
 
             var relationshipCount = _documentRepository.DocumentRelationshipCount(projectDocument.DocumentId);
             if (relationshipCount == 1)
@@ -296,8 +296,8 @@ namespace Pims.Api.Services
 
         public async Task<ExternalResponse<string>> DeleteAcquisitionDocumentAsync(PimsAcquisitionFileDocument acquisitionFileDocument)
         {
-            this.Logger.LogInformation("Deleting PIMS document for single acquisition file");
-            this.User.ThrowIfNotAllAuthorized(Permissions.DocumentDelete, Permissions.AcquisitionFileEdit);
+            Logger.LogInformation("Deleting PIMS document for single acquisition file");
+            User.ThrowIfNotAllAuthorized(Permissions.DocumentDelete, Permissions.AcquisitionFileEdit);
 
             var relationshipCount = _documentRepository.DocumentRelationshipCount(acquisitionFileDocument.DocumentId);
             if (relationshipCount == 1)
@@ -314,8 +314,8 @@ namespace Pims.Api.Services
 
         public async Task<ExternalResponse<string>> DeleteLeaseDocumentAsync(PimsLeaseDocument leaseDocument)
         {
-            this.Logger.LogInformation("Deleting PIMS document for single lease");
-            this.User.ThrowIfNotAllAuthorized(Permissions.DocumentDelete, Permissions.LeaseEdit);
+            Logger.LogInformation("Deleting PIMS document for single lease");
+            User.ThrowIfNotAllAuthorized(Permissions.DocumentDelete, Permissions.LeaseEdit);
 
             var relationshipCount = _documentRepository.DocumentRelationshipCount(leaseDocument.DocumentId);
             if (relationshipCount == 1)
@@ -332,8 +332,8 @@ namespace Pims.Api.Services
 
         public async Task<ExternalResponse<string>> DeletePropertyActivityDocumentAsync(PimsPropertyActivityDocument propertyActivityDocument)
         {
-            this.Logger.LogInformation("Deleting PIMS document for single Property Activity");
-            this.User.ThrowIfNotAllAuthorized(Permissions.DocumentDelete, Permissions.ManagementEdit);
+            Logger.LogInformation("Deleting PIMS document for single Property Activity");
+            User.ThrowIfNotAllAuthorized(Permissions.DocumentDelete, Permissions.ManagementEdit);
 
             var relationshipCount = _documentRepository.DocumentRelationshipCount(propertyActivityDocument.DocumentId);
             if (relationshipCount == 1)
@@ -350,8 +350,8 @@ namespace Pims.Api.Services
 
         public async Task<ExternalResponse<string>> DeleteDispositionDocumentAsync(PimsDispositionFileDocument dispositionFileDocument)
         {
-            this.Logger.LogInformation("Deleting PIMS document for single disposition file");
-            this.User.ThrowIfNotAllAuthorized(Permissions.DocumentDelete, Permissions.DispositionEdit);
+            Logger.LogInformation("Deleting PIMS document for single disposition file");
+            User.ThrowIfNotAllAuthorized(Permissions.DocumentDelete, Permissions.DispositionEdit);
 
             var relationshipCount = _documentRepository.DocumentRelationshipCount(dispositionFileDocument.DocumentId);
             if (relationshipCount == 1)
