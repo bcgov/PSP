@@ -9,7 +9,7 @@
     "@xstate/react": "3.2.2",
     "@types/polylabel": "1.0.5",
     "axios": "0.23.0",
-    "bootstrap": "4.6.0",
+    "bootstrap": "4.6.2",
     "classnames": "2.3.1",
     "convert": "4.4.2",
     "dequal": "2.0.2",
