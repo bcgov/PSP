@@ -74,7 +74,7 @@ export const Section: React.FC<
   );
 };
 
-const StyledSectionHeader = styled.h2<{ isStyledHeader?: boolean }>`
+export const StyledSectionHeader = styled.h2<{ isStyledHeader?: boolean }>`
   font-size: ${props => (props.isStyledHeader === true ? '1.0em' : '')};
   font-weight: ${props => (props.isStyledHeader === true ? '' : 'bold')};
   color: ${props => props.theme.css.primaryColor};

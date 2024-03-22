@@ -84,9 +84,6 @@ export const StyledTable = styled(Table)`
 export const StyledPaymentTable = styled(Table)`
   &&.table {
     width: 100%;
-    .tbody {
-      padding-left: 0;
-    }
     .thead {
       .tr {
         .th {
