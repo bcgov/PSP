@@ -32,8 +32,9 @@ export const PropertySelectorPidSearchContainer: React.FunctionComponent<
               toast.warn(
                 'Only properties that are part of the Core Inventory (owned) can be subdivided/consolidated. This property is not in core inventory within PIMS.',
               );
+            } else {
+              setSelectProperty(result);
             }
-            setSelectProperty(result);
           }
         } catch (e) {
           const axiosError = e as AxiosError<IApiError>;
