@@ -188,6 +188,7 @@ exports[`Subdivision detail view matches snapshot 1`] = `
             >
               <div
                 class="td expander svg-btn"
+                data-testid="table-row-expander-2"
               >
                 <svg
                   fill="currentColor"
@@ -302,6 +303,7 @@ exports[`Subdivision detail view matches snapshot 1`] = `
             >
               <div
                 class="td expander svg-btn"
+                data-testid="table-row-expander-1"
               >
                 <svg
                   fill="currentColor"

@@ -557,6 +557,7 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = obje
       open?: boolean,
       className?: string,
       onClick?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void,
+      id?: string | number,
     ) => {
       const detailsClosedIcon =
         props.detailsPanel && props.detailsPanel.icons?.closed ? (
@@ -576,7 +577,11 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = obje
             tooltipId="expand-all-rows"
             tooltip={open ? 'Collapse Row' : 'Expand Row'}
           >
-            <div className={className + ' svg-btn'} onClick={onClick}>
+            <div
+              className={className + ' svg-btn'}
+              data-testid={`table-row-expander-${id}`}
+              onClick={onClick}
+            >
               {open ? detailsOpenedIcon : detailsClosedIcon}
             </div>
           </TooltipWrapper>
@@ -660,6 +665,7 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = obje
                 props.detailsPanel && props.detailsPanel.checkExpanded(row.original, expandedRows),
                 'td expander',
                 e => handleExpandClick(e, row.original),
+                row.original.id ?? '',
               )}
             {props.canRowExpand && !props.canRowExpand(row) ? (
               <div className="td">
@@ -677,6 +683,7 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = obje
                 props.detailsPanel && props.detailsPanel.checkExpanded(row.original, expandedRows),
                 'td expander',
                 e => handleExpandClick(e, row.original),
+                row.original.id ?? '',
               )}
             {row.cells.map((cell: CellWithProps<T>) => {
               return (

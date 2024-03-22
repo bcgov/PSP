@@ -109,7 +109,7 @@ export const OperationContainer: React.FunctionComponent<IOperationContainerProp
     <View
       subdivisionOperations={subdivisionOperations}
       consolidationOperations={consolidationOperations}
-      loading={!propertyId || getPropertyOperations.loading}
+      loading={!exists(propertyId) || getPropertyOperations.loading}
     />
   );
 };

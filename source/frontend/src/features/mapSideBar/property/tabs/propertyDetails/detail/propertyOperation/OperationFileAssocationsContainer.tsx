@@ -38,6 +38,7 @@ export const OperationFileAssociationsContainer: React.FunctionComponent<
         data={typedOperationAssociations}
         name="PropertyOperationAssociations"
         loading={loading}
+        noRowsMessage="There are no files associated to the property."
       />
     </>
   );

@@ -781,6 +781,7 @@ exports[`TermsForm component renders with data as expected 1`] = `
             >
               <div
                 class="td expander svg-btn"
+                data-testid="table-row-expander-"
               >
                 <svg
                   fill="currentColor"

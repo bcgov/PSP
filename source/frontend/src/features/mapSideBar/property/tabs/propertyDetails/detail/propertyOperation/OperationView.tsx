@@ -63,7 +63,7 @@ export const OperationView: React.FunctionComponent<IOperationViewProps> = ({
     }),
   );
 
-  /** This is the payments subtable displayed for each term row. */
+  /** This is the operation association subtable displayed for each term row. */
   const renderOperationAssociations = useDeepCompareMemo(
     () => (row: PropertyOperationResult) => {
       const matchingOperation = operationData.find(t => t.id === row.id);
