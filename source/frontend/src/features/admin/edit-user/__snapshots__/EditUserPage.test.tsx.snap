@@ -287,9 +287,9 @@ exports[`Edit user page EditUserPage renders 1`] = `
               >
                 <input
                   class="form-control"
-                  data-testid="businessIdentifier"
-                  id="input-businessIdentifier"
-                  name="businessIdentifier"
+                  data-testid="businessIdentifierValue"
+                  id="input-businessIdentifierValue"
+                  name="businessIdentifierValue"
                   readonly=""
                   title=""
                   type="text"

@@ -1,8 +1,5 @@
 ﻿using OpenQA.Selenium;
-using OpenQA.Selenium.Support.Extensions;
-using OpenQA.Selenium.Support.UI;
 using PIMS.Tests.Automation.Classes;
-using SeleniumExtras.WaitHelpers;
 
 namespace PIMS.Tests.Automation.PageObjects
 {
@@ -112,20 +109,6 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(searchProjectButton).Click();
         }
 
-        public void SearchLastProject()
-        {
-            WaitUntilVisible(searchProjectResetButton);
-            webDriver.FindElement(searchProjectResetButton).Click();
-
-            WaitUntilVisible(searchProjectTotalCount);
-            ChooseSpecificSelectOption(searchProjectStatusSelect, "All Statuses");
-            FocusAndClick(searchProjectButton);
-
-            WaitUntilVisible(searchProjectTotalCount);
-            webDriver.FindElement(searchProjectUpdatedDateSortBttn).Click();
-            webDriver.FindElement(searchProjectUpdatedDateSortBttn).Click();
-        }
-
         public void SelectFirstResult()
         {
             WaitUntilVisible(searchProjectTotalCount);
@@ -155,6 +138,7 @@ namespace PIMS.Tests.Automation.PageObjects
             WaitUntilClickable(searchProjectLastUpdatedDateOrderBttn);
             webDriver.FindElement(searchProjectLastUpdatedDateOrderBttn).Click();
         }
+
 
         public void VerifySearchView()
         {

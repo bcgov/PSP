@@ -265,6 +265,8 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void UpdateCompensationDetails(AcquisitionCompensation compensation)
         {
+            Wait();
+
             //Requisition Details
             if(compensation.CompensationStatus != "")
                 ChooseSpecificSelectOption(requisitionStatusSelect, compensation.CompensationStatus);

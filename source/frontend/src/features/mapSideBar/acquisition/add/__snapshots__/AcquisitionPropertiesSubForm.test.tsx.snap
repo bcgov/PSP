@@ -954,9 +954,6 @@ exports[`AcquisitionProperties component renders as expected 1`] = `
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  width: -webkit-fit-content;
-  width: -moz-fit-content;
-  width: fit-content;
 }
 
 .c3 {

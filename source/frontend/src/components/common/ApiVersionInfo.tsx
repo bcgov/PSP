@@ -2,6 +2,7 @@ import React from 'react';
 
 import IApiVersion from '@/hooks/pims-api/interfaces/IApiVersion';
 import { useApiHealth } from '@/hooks/pims-api/useApiHealth';
+import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
 
 /**
  * Provides a way to display the API version information.
@@ -12,11 +13,11 @@ export const ApiVersionInfo = () => {
   const { getVersion } = useApiHealth();
   const [version, setVersion] = React.useState<IApiVersion>();
 
-  React.useEffect(() => {
+  useDeepCompareEffect(() => {
     let isActive = true;
     const get = async () => {
       const response = await getVersion();
-      if (isActive) {
+      if (isActive && version?.informationalVersion !== response.data?.informationalVersion) {
         setVersion(response.data);
       }
     };

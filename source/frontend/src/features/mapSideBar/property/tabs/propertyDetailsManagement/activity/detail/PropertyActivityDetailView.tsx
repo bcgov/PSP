@@ -44,6 +44,18 @@ export const PropertyActivityDetailView: React.FunctionComponent<
 
   if (props.activity !== null) {
     const invoices: ApiGen_Concepts_PropertyActivityInvoice[] = props.activity.invoices ?? [];
+
+    let pretaxAmount = 0;
+    let gstAmount = 0;
+    let pstAmount = 0;
+    let totalAmount = 0;
+
+    for (let i = 0; i < invoices.length; i++) {
+      pretaxAmount += invoices[i].pretaxAmount ?? 0;
+      gstAmount += invoices[i].gstAmount ?? 0;
+      pstAmount += invoices[i].pstAmount ?? 0;
+      totalAmount += invoices[i].totalAmount ?? 0;
+    }
     return (
       <ReactVisibilitySensor
         onChange={(isVisible: boolean) => {
@@ -135,16 +147,16 @@ export const PropertyActivityDetailView: React.FunctionComponent<
                 ))}
                 <Section header="Invoices Total">
                   <SectionField label="Total (before tax)" contentWidth="7">
-                    {formatMoney(props.activity.pretaxAmt)}
+                    {formatMoney(pretaxAmount)}
                   </SectionField>
                   <SectionField label="GST amount" contentWidth="7">
-                    {formatMoney(props.activity.gstAmt)}
+                    {formatMoney(gstAmount)}
                   </SectionField>
                   <SectionField label="PST amount" contentWidth="7">
-                    {formatMoney(props.activity.pstAmt)}
+                    {formatMoney(pstAmount)}
                   </SectionField>
                   <SectionField label="Total amount" contentWidth="7">
-                    {formatMoney(props.activity.totalAmt)}
+                    {formatMoney(totalAmount)}
                   </SectionField>
                 </Section>
               </StyledSummarySection>

@@ -3,6 +3,8 @@
     public class DispositionFile
     {
         public string DispositionFileStatus { get; set; } = null!;
+        public string DispositionProject { get; set; } = null!;
+        public string DispositionProjProduct { get; set; } = null!;
         public string DispositionProjFunding { get; set; } = null!;
         public string DispositionAssignedDate { get; set; } = null!;
         public string DispositionCompletedDate { get; set; } = null!;

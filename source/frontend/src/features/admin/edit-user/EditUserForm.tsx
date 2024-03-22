@@ -50,8 +50,8 @@ const EditUserForm: React.FunctionComponent<React.PropsWithChildren<IEditUserFor
         <Form className="userInfo">
           <SectionField label="IDIR/BCeID" labelWidth="2">
             <Input
-              data-testid="businessIdentifier"
-              field="businessIdentifier"
+              data-testid="businessIdentifierValue"
+              field="businessIdentifierValue"
               value={formikProps.values.businessIdentifierValue}
               readOnly={true}
               type="text"

@@ -10,6 +10,7 @@ import DisposedPng from '@/assets/images/pins/disposed.png';
 import PropertyOfInterestPng from '@/assets/images/pins/land-poi.png';
 import CoreInventoryPng from '@/assets/images/pins/land-reg.png';
 import OtherInterestPng from '@/assets/images/pins/other-interest.png';
+import RetiredPng from '@/assets/images/pins/retired.png';
 import { Check, Select, SelectOption } from '@/components/common/form';
 import { Multiselect } from '@/components/common/form/Multiselect';
 import { ProjectSelector } from '@/components/common/form/ProjectSelector/ProjectSelector';
@@ -186,7 +187,7 @@ export const FilterContentForm: React.FC<React.PropsWithChildren<IFilterContentF
         </Section>
         <Section header="Show Ownership" isCollapsable initiallyExpanded>
           <SectionField label={null} contentWidth="12">
-            <Row className="pb-4">
+            <Row>
               <Col xs={1}>
                 <Check field="isCoreInventory" />
               </Col>
@@ -197,7 +198,7 @@ export const FilterContentForm: React.FC<React.PropsWithChildren<IFilterContentF
                 <StyledSpan className="mb-3">Core Inventory</StyledSpan>
               </Col>
             </Row>
-            <Row className="pb-4">
+            <Row className="pt-4">
               <Col xs={1}>
                 <Check field="isPropertyOfInterest" />
               </Col>
@@ -208,7 +209,7 @@ export const FilterContentForm: React.FC<React.PropsWithChildren<IFilterContentF
                 <StyledSpan className="mb-3">Property of Interest</StyledSpan>
               </Col>
             </Row>
-            <Row className="pb-4">
+            <Row className="pt-4">
               <Col xs={1}>
                 <Check field="isOtherInterest" />
               </Col>
@@ -219,7 +220,7 @@ export const FilterContentForm: React.FC<React.PropsWithChildren<IFilterContentF
                 <StyledSpan className="mb-3">Other Interest</StyledSpan>
               </Col>
             </Row>
-            <Row>
+            <Row className="pt-4">
               <Col xs={1}>
                 <Check field="isDisposed" />
               </Col>
@@ -228,6 +229,17 @@ export const FilterContentForm: React.FC<React.PropsWithChildren<IFilterContentF
               </Col>
               <Col className="pl-5">
                 <StyledSpan className="mb-3">Disposed</StyledSpan>
+              </Col>
+            </Row>
+            <Row className="pt-4">
+              <Col xs={1}>
+                <Check field="isRetired" />
+              </Col>
+              <Col xs={1}>
+                <Image height={36} src={RetiredPng} />
+              </Col>
+              <Col className="pl-5">
+                <StyledSpan className="mb-3">Retired</StyledSpan>
               </Col>
             </Row>
           </SectionField>

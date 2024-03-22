@@ -21,7 +21,7 @@ x-mayan-container: &mayan-container
 networks:
   psp:
     external: true
-    name: psp-net
+    name: psp
 
 services:
   app:

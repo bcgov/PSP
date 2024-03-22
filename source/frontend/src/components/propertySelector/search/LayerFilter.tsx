@@ -17,6 +17,7 @@ export const defaultLayerFilter: ILayerSearchCriteria = {
   pid: '',
   pin: '',
   planNumber: '',
+  address: '',
   searchBy: 'pid',
 };
 

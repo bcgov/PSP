@@ -6,7 +6,7 @@ import { useUserInfoRepository } from '@/hooks/repositories/useUserInfoRepositor
 import { mockLookups } from '@/mocks/lookups.mock';
 import { getUserMock } from '@/mocks/user.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { fillInput, renderAsync, RenderOptions } from '@/utils/test-utils';
+import { act, fillInput, renderAsync, RenderOptions } from '@/utils/test-utils';
 
 import { getDefaultFormLease } from '../models';
 import AdministrationSubForm, { IAdministrationSubFormProps } from './AdministrationSubForm';
@@ -63,17 +63,21 @@ describe('AdministrationSubForm component', () => {
     const {
       component: { container, findByText },
     } = await setup({});
-    await fillInput(container, 'leaseTypeCode', 'LSREG', 'select');
+    await act(async () => {
+      await fillInput(container, 'leaseTypeCode', 'LSREG', 'select');
+    });
     expect(await findByText('Category:')).toBeVisible();
   });
 
-  it('displays other category text if "Other" is selected', async () => {
+  it('displays other category text if Other is selected', async () => {
     const {
       component: { container, findByText },
     } = await setup({});
 
-    await fillInput(container, 'leaseTypeCode', 'LSREG', 'select');
-    await fillInput(container, 'categoryTypeCode', 'OTHER', 'select');
+    await act(async () => {
+      await fillInput(container, 'leaseTypeCode', 'LSREG', 'select');
+      await fillInput(container, 'categoryTypeCode', 'OTHER', 'select');
+    });
     const otherText = await findByText('Describe other:');
     expect(otherText).toBeVisible();
     const otherField = await container.querySelector(`input[name="otherCategoryTypeDescription"]`);
@@ -84,14 +88,21 @@ describe('AdministrationSubForm component', () => {
     const {
       component: { container, findByText },
     } = await setup({});
-    await fillInput(container, 'leaseTypeCode', 'LSREG', 'select');
-    await fillInput(container, 'categoryTypeCode', 'OTHER', 'select');
-    await fillInput(container, 'otherCategoryTypeDescription', 'other category');
+    await act(async () => {
+      await fillInput(container, 'leaseTypeCode', 'LSREG', 'select');
+      await fillInput(container, 'categoryTypeCode', 'OTHER', 'select');
+      await fillInput(container, 'otherCategoryTypeDescription', 'other category');
+    });
     await findByText('Describe other:');
-    await fillInput(container, 'leaseTypeCode', 'OTHER', 'select');
+    await act(async () => {
+      await fillInput(container, 'leaseTypeCode', 'OTHER', 'select');
+    });
     await findByText('Describe other:');
-    await fillInput(container, 'leaseTypeCode', 'LSREG', 'select');
-    await fillInput(container, 'categoryTypeCode', 'OTHER', 'select');
+    await act(async () => {
+      await fillInput(container, 'leaseTypeCode', 'LSREG', 'select');
+      await fillInput(container, 'categoryTypeCode', 'OTHER', 'select');
+    });
+
     const otherText = await findByText('Describe other:');
     expect(otherText).toBeVisible();
 
@@ -99,14 +110,16 @@ describe('AdministrationSubForm component', () => {
     expect(otherField).toHaveValue('');
   });
 
-  it('displays other type text if "Other" is selected', async () => {
+  it('displays other type text if Other is selected', async () => {
     const {
       component: { container, findByText },
     } = await setup({});
     let otherField = await container.querySelector(`input[name="otherLeaseTypeDescription"]`);
     expect(otherField).toBeNull();
 
-    await fillInput(container, 'leaseTypeCode', 'OTHER', 'select');
+    await act(async () => {
+      await fillInput(container, 'leaseTypeCode', 'OTHER', 'select');
+    });
     const otherText = await findByText('Describe other:');
     expect(otherText).toBeVisible();
 
@@ -114,14 +127,16 @@ describe('AdministrationSubForm component', () => {
     expect(otherField).toBeVisible();
   });
 
-  it('displays other purpose text if "Other" is selected', async () => {
+  it('displays other purpose text if Other is selected', async () => {
     const {
       component: { container, getByText },
     } = await setup({});
     let otherField = await container.querySelector(`input[name="otherPurposeTypeDescription"]`);
     expect(otherField).toBeNull();
 
-    await fillInput(container, 'purposeTypeCode', 'OTHER', 'select');
+    await act(async () => {
+      await fillInput(container, 'purposeTypeCode', 'OTHER', 'select');
+    });
     const otherText = await getByText('Describe other:');
     expect(otherText).toBeVisible();
 
@@ -129,14 +144,16 @@ describe('AdministrationSubForm component', () => {
     expect(otherField).toBeVisible();
   });
 
-  it('displays other program text if "Other" is selected', async () => {
+  it('displays other program text if Other is selected', async () => {
     const {
       component: { container, getByText },
     } = await setup({});
     let otherField = await container.querySelector(`input[name="otherProgramTypeDescription"]`);
     expect(otherField).toBeNull();
 
-    await fillInput(container, 'programTypeCode', 'OTHER', 'select');
+    await act(async () => {
+      await fillInput(container, 'programTypeCode', 'OTHER', 'select');
+    });
     const otherText = await getByText('Other Program:');
     expect(otherText).toBeVisible();
     otherField = await container.querySelector(`input[name="otherProgramTypeDescription"]`);

@@ -69,7 +69,8 @@ describe('Contact List View', () => {
 
   it('matches snapshot', async () => {
     setupMockSearch();
-    const { asFragment } = setup();
+    const { asFragment, findByText } = setup();
+    await act(async () => {});
 
     const fragment = await waitFor(() => asFragment());
     expect(fragment).toMatchSnapshot();
@@ -109,7 +110,7 @@ describe('Contact List View', () => {
     setupMockSearch([defaultPersonSearchResult]);
     const { container, searchButton } = setup({});
     const allButton = container.querySelector(`#input-all`);
-    allButton && userEvent.click(allButton);
+    allButton && (await act(async () => userEvent.click(allButton)));
     await act(async () => userEvent.click(searchButton));
 
     expect(getContacts).toHaveBeenCalledWith(
@@ -123,7 +124,7 @@ describe('Contact List View', () => {
     setupMockSearch([defaultPersonSearchResult]);
     const { container, searchButton } = setup({});
     const organizationsButton = container.querySelector(`#input-organizations`);
-    organizationsButton && userEvent.click(organizationsButton);
+    organizationsButton && (await act(async () => userEvent.click(organizationsButton)));
     await act(async () => userEvent.click(searchButton));
 
     expect(getContacts).toHaveBeenCalledWith(
@@ -137,7 +138,7 @@ describe('Contact List View', () => {
     setupMockSearch([defaultPersonSearchResult]);
     const { container, searchButton } = setup({});
     const personButton = container.querySelector(`#input-persons`);
-    personButton && userEvent.click(personButton);
+    personButton && (await act(async () => userEvent.click(personButton)));
     await act(async () => userEvent.click(searchButton));
 
     expect(getContacts).toHaveBeenCalledWith(

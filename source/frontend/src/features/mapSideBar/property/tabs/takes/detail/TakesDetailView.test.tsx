@@ -60,10 +60,10 @@ describe('TakesDetailView component', () => {
     expect(spinner).toBeVisible();
   });
 
-  it('clicking the edit button fires the edit event', () => {
+  it('clicking the edit button fires the edit event', async () => {
     const { getByTitle } = setup({ props: { loading: true }, claims: [Claims.PROPERTY_EDIT] });
     const editButton = getByTitle('Edit takes');
-    act(() => userEvent.click(editButton));
+    await act(async () => userEvent.click(editButton));
     expect(onEdit).toHaveBeenCalled();
   });
 

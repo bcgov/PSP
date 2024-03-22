@@ -1,4 +1,4 @@
-import { RenderOptions } from '@testing-library/react';
+import { RenderOptions, act } from '@testing-library/react';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { Formik } from 'formik';
@@ -68,8 +68,10 @@ describe('TermForm component', () => {
       component: { container, findByText },
     } = await setup({});
 
-    await fillInput(container, 'startDate', '2020-01-02', 'datepicker');
-    await fillInput(container, 'expiryDate', '2020-01-01', 'datepicker');
+    await act(async () => {
+      await fillInput(container, 'startDate', '2020-01-02', 'datepicker');
+      await fillInput(container, 'expiryDate', '2020-01-01', 'datepicker');
+    });
     const error = await findByText('Expiry Date must be after Start Date');
     expect(error).toBeVisible();
   });
@@ -79,8 +81,10 @@ describe('TermForm component', () => {
       component: { container, findByDisplayValue },
     } = await setup({});
 
-    const { input } = await fillInput(container, 'expiryDate', '2020-01-02', 'datepicker');
-    await findByDisplayValue('Jan 02, 2020');
+    await act(async () => {
+      await fillInput(container, 'expiryDate', '2020-01-02', 'datepicker');
+    });
+    const input = await findByDisplayValue('Jan 02, 2020');
     expect(input).toHaveProperty('required');
   });
 

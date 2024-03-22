@@ -118,7 +118,7 @@ export const handleAxiosResponse = <ResponseType>(
           logError({
             name: actionType,
             status: axiosError?.response?.status,
-            error: axiosError ?? {},
+            error: axiosError ?? ({} as unknown as AxiosError<unknown, any>),
           }),
         );
       }
@@ -172,6 +172,10 @@ export const getPage = <T>(pageIndex: number, pageSize: number, data: T[]) => {
   const pageStart = (pageIndex ?? 0) * pageSize;
   return data.slice(pageStart, pageStart + pageSize);
 };
+
+export function unique<T>(value: T, index: number, array: T[]) {
+  return array.indexOf(value) === index;
+}
 
 /**
  * Meant to be used as the function passed during a conditional statement to remove null or undefined entries.

@@ -622,6 +622,11 @@ exports[`Property list view matches snapshot 1`] = `
                         >
                           Disposed
                         </li>
+                        <li
+                          class="option    "
+                        >
+                          Retired
+                        </li>
                       </ul>
                     </div>
                   </div>

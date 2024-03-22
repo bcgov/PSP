@@ -47,9 +47,9 @@ describe('Basemap Toggle', () => {
     expect(asFragment()).toMatchSnapshot();
   });
 
-  it('calls toggle event handler when toggled', () => {
+  it('calls toggle event handler when toggled', async () => {
     const { getByAltText } = setup();
-    act(() => userEvent.click(getByAltText(/Map Thumbnail/i)));
+    await act(async () => userEvent.click(getByAltText(/Map Thumbnail/i)));
     expect(onToggle).toBeCalledTimes(1);
     expect(onToggle).toBeCalledWith<[BasemapToggleEvent]>({
       current: basemaps[1],

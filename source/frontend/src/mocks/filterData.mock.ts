@@ -685,11 +685,12 @@ export const mockApiProperty: ApiGen_Concepts_Property = {
   landLegalDescription: 'test description',
 };
 
-export const mockLeaseProperty = (): ApiGen_Concepts_PropertyLease => {
+export const mockLeaseProperty = (id: number): ApiGen_Concepts_PropertyLease => {
   return {
     ...getEmptyPropertyLease(),
     property: {
       ...mockApiProperty,
+      id,
     },
   };
 };

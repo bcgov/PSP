@@ -12,15 +12,16 @@ export interface IPropertyMapSelectorFormViewProps {
   onSelectedProperty: (property: IMapProperty) => void;
   lastSelectedProperty?: IMapProperty;
   selectedProperties: IMapProperty[];
+  selectedComponentId?: string | null;
 }
 
 const PropertyMapSelectorFormView: React.FunctionComponent<
   React.PropsWithChildren<IPropertyMapSelectorFormViewProps>
-> = ({ onSelectedProperty, lastSelectedProperty, selectedProperties }) => {
+> = ({ onSelectedProperty, lastSelectedProperty, selectedProperties, selectedComponentId }) => {
   const mapMachine = useMapStateMachine();
 
   const onClickDraftMarker = () => {
-    mapMachine.startSelection();
+    mapMachine.startSelection(selectedComponentId ?? undefined);
   };
 
   return (
@@ -31,7 +32,11 @@ const PropertyMapSelectorFormView: React.FunctionComponent<
         selectedProperty={lastSelectedProperty}
       />
 
-      <MapClickMonitor addProperty={onSelectedProperty} modifiedProperties={selectedProperties} />
+      <MapClickMonitor
+        addProperty={onSelectedProperty}
+        modifiedProperties={selectedProperties}
+        selectedComponentId={selectedComponentId ?? null}
+      />
     </Section>
   );
 };

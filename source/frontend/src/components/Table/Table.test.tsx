@@ -99,7 +99,7 @@ describe('Generic table component', () => {
       const { getByLabelText, getByText } = setup({ props: { pageSize: 5 } });
 
       const page2Button = getByLabelText('Page 2');
-      act(() => {
+      await act(async () => {
         userEvent.click(page2Button);
       });
       expect(getByText('six')).toBeVisible();
@@ -129,7 +129,7 @@ describe('Generic table component', () => {
       });
 
       const page2Button = getByLabelText('Page 2');
-      act(() => {
+      await act(async () => {
         userEvent.click(page2Button);
       });
       expect(tableRows).toHaveLength(6); //pagination is handled externally, the table component will ignore the page size prop.
@@ -167,7 +167,7 @@ describe('Generic table component', () => {
         props: { pageSize: 10, manualPagination: true, onPageSizeChange },
       });
 
-      act(() => {
+      await act(async () => {
         userEvent.click(getByTitle('menu-item-5'));
       });
       expect(onPageSizeChange).toHaveBeenCalledWith(5);
@@ -198,12 +198,12 @@ describe('Generic table component', () => {
     });
 
     const selectRowOneButton = getByTestId('selectrow-1');
-    act(() => {
+    await act(async () => {
       userEvent.click(selectRowOneButton);
     });
 
     const selectRowTwoButton = getByTestId('selectrow-2');
-    act(() => {
+    await act(async () => {
       userEvent.click(selectRowTwoButton);
     });
 
@@ -220,11 +220,11 @@ describe('Generic table component', () => {
     });
 
     const selectRowOneButton = getByTestId('selectrow-1');
-    act(() => {
+    await act(async () => {
       userEvent.click(selectRowOneButton);
     });
     const selectRowTwoButton = getByTestId('selectrow-2');
-    act(() => {
+    await act(async () => {
       userEvent.click(selectRowTwoButton);
     });
 
@@ -249,18 +249,18 @@ describe('Generic table component', () => {
     });
 
     const selectRowOneButton = getByTestId('selectrow-1');
-    act(() => {
+    await act(async () => {
       userEvent.click(selectRowOneButton);
     });
 
     const page2Button = getByLabelText('Page 2');
-    act(() => {
+    await act(async () => {
       userEvent.click(page2Button);
     });
     await findByLabelText('Page 2 is your current page');
 
     const selectRowTwoButton = getByTestId('selectrow-2');
-    act(() => {
+    await act(async () => {
       userEvent.click(selectRowTwoButton);
     });
 

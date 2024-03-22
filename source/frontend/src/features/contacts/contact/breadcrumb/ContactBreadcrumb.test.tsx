@@ -2,7 +2,7 @@ import userEvent from '@testing-library/user-event';
 import { createMemoryHistory } from 'history';
 import { ReactElement } from 'react';
 
-import { render, RenderOptions } from '@/utils/test-utils';
+import { act, render, RenderOptions } from '@/utils/test-utils';
 
 import { ContactBreadcrumb } from '../..';
 
@@ -28,10 +28,10 @@ describe('ContactBreadCrumb component', () => {
     const { component } = setup();
     expect(component.asFragment()).toMatchSnapshot();
   });
-  it('navigates to the expected location when contact search clicked', () => {
+  it('navigates to the expected location when contact search clicked', async () => {
     const { component } = setup();
     const { getByText } = component;
-    userEvent.click(getByText('Contact Search'));
+    await act(async () => userEvent.click(getByText('Contact Search')));
     expect(history.location.pathname).toBe('/contact/list');
   });
 

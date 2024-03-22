@@ -538,24 +538,25 @@ namespace PIMS.Tests.Automation.PageObjects
         public void CancelResearchFile()
         {
             ButtonElement("Cancel");
+            sharedModals.CancelActionModal();
 
-            try {
-                WebDriverWait wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(3));
-                if (wait.Until(ExpectedConditions.AlertIsPresent()) != null)
-                {
-                    webDriver.SwitchTo().Alert().Accept();
-                }
-            } catch (WebDriverTimeoutException)
-            {
-                if (webDriver.FindElements(researchFileConfirmationModal).Count() > 0)
-                {
-                    Assert.Equal("Confirm Changes", sharedModals.ModalHeader());
-                    Assert.Contains("If you choose to cancel now, your changes will not be saved.", sharedModals.ModalContent());
-                    Assert.Contains("Do you want to proceed?", sharedModals.ModalContent());
+            //try {
+            //    WebDriverWait wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(3));
+            //    if (wait.Until(ExpectedConditions.AlertIsPresent()) != null)
+            //    {
+            //        webDriver.SwitchTo().Alert().Accept();
+            //    }
+            //} catch (WebDriverTimeoutException)
+            //{
+            //    if (webDriver.FindElements(researchFileConfirmationModal).Count() > 0)
+            //    {
+            //        Assert.Equal("Confirm Changes", sharedModals.ModalHeader());
+            //        Assert.Contains("If you choose to cancel now, your changes will not be saved.", sharedModals.ModalContent());
+            //        Assert.Contains("Do you want to proceed?", sharedModals.ModalContent());
 
-                    sharedModals.ModalClickOKBttn();
-                }
-            }
+            //        sharedModals.ModalClickOKBttn();
+            //    }
+            //}
         }
 
         //Get the research file number

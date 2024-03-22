@@ -1,7 +1,7 @@
 import { Formik, FormikProps } from 'formik';
 import moment from 'moment';
 import { useEffect, useRef, useState } from 'react';
-import { Prompt } from 'react-router-dom';
+import React from 'react';
 import styled from 'styled-components';
 
 import {
@@ -15,7 +15,6 @@ import {
   TextArea,
 } from '@/components/common/form';
 import { TypeaheadSelect } from '@/components/common/form/TypeaheadSelect';
-import { UnsavedChangesPrompt } from '@/components/common/form/UnsavedChangesPrompt';
 import GenericModal from '@/components/common/GenericModal';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
@@ -145,7 +144,6 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
         return (
           <StyledFormWrapper>
             <LoadingBackdrop show={isLoading}></LoadingBackdrop>
-            <UnsavedChangesPrompt />
 
             <StyledContent>
               <Section header="Requisition Details">
@@ -305,11 +303,6 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
               </Section>
             </StyledContent>
 
-            <Prompt
-              when={formikProps.dirty}
-              message="You have made changes on this form. Do you wish to leave without saving?"
-            />
-
             <StyledFooter>
               <SidebarFooter
                 onSave={async () => {
@@ -331,14 +324,21 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
               variant="info"
               display={showModal}
               title="Confirm status change"
-              message={[
-                `You have selected to change the status from DRAFT to FINAL.
-
-                We recommend that you only make this change status (draft to final) when printing the final version, as `,
-                // eslint-disable-next-line react/jsx-key
-                <strong>you will not be able to roll back to draft status </strong>,
-                `without system administrator privileges. The compensation requisition cannot be changed again once it is saved as final.`,
-              ]}
+              message={
+                <>
+                  You have selected to change the status from DRAFT to FINAL. <br />
+                  <br />
+                  We recommend that you only make this change status (draft to final) when printing
+                  the final version, as
+                  <br />
+                  <br />
+                  <strong key="">you will not be able to roll back to draft status </strong>
+                  <br />
+                  <br />
+                  without system administrator privileges. The compensation requisition cannot be
+                  changed again once it is saved as final.
+                </>
+              }
               okButtonText="Proceed"
               cancelButtonText="Cancel"
               handleOk={async () => {

@@ -124,7 +124,7 @@ describe('ExpandableTextList component', () => {
     });
 
     const moreButton = getByText('[+1 more...]');
-    act(() => {
+    await act(async () => {
       userEvent.click(moreButton);
     });
     expect(getByText('000-000-000')).toBeVisible();
@@ -142,11 +142,11 @@ describe('ExpandableTextList component', () => {
     });
 
     const moreButton = getByTestId('expand');
-    act(() => {
+    await act(async () => {
       userEvent.click(moreButton);
     });
     const hideButton = getByText('hide');
-    act(() => {
+    await act(async () => {
       userEvent.click(hideButton);
     });
     expect(getByText('000-000-000')).toBeVisible();

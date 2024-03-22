@@ -3,10 +3,13 @@ import React, { useState } from 'react';
 import { Col, Collapse, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
+import { exists } from '@/utils';
+
 import { ArrowDropDownIcon, ArrowDropUpIcon } from './SectionStyles';
 
 interface SectionProps {
   header?: React.ReactNode;
+  isStyledHeader?: boolean;
   isCollapsable?: boolean;
   initiallyExpanded?: boolean;
   noPadding?: boolean;
@@ -18,6 +21,7 @@ export const Section: React.FC<
   }
 > = ({
   header,
+  isStyledHeader,
   children,
   title,
   isCollapsable,
@@ -33,8 +37,8 @@ export const Section: React.FC<
       data-testid={rest['data-testid']}
       noPadding={noPadding}
     >
-      {header && (
-        <StyledSectionHeader>
+      {exists(header) && (
+        <StyledSectionHeader isStyledHeader={isStyledHeader}>
           <Row className="no-gutters">
             <Col>{header}</Col>
             {isCollapsable && (
@@ -70,8 +74,9 @@ export const Section: React.FC<
   );
 };
 
-const StyledSectionHeader = styled.h2`
-  font-weight: bold;
+const StyledSectionHeader = styled.h2<{ isStyledHeader?: boolean }>`
+  font-size: ${props => (props.isStyledHeader === true ? '1.0em' : '')};
+  font-weight: ${props => (props.isStyledHeader === true ? '' : 'bold')};
   color: ${props => props.theme.css.primaryColor};
   border-bottom: 0.2rem ${props => props.theme.css.primaryColor} solid;
   margin-bottom: 2rem;

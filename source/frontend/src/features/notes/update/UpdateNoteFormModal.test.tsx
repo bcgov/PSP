@@ -99,18 +99,18 @@ describe('UpdateNoteFormModal component', () => {
 
     // note cannot exceed 4000 characters
     const textarea = await findByLabelText(/Type a note/i);
-    act(() => userEvent.paste(textarea, fakeText(4001)));
-    act(() => userEvent.click(getSaveButton()));
+    await act(async () => userEvent.paste(textarea, fakeText(4001)));
+    await act(async () => userEvent.click(getSaveButton()));
 
     expect(validationSchema).toBeCalled();
     expect(await findByText(/Notes must be at most 4000 characters/i)).toBeVisible();
   });
 
-  it('should cancel form when Cancel button is clicked', () => {
+  it('should cancel form when Cancel button is clicked', async () => {
     const { getCancelButton, getByText } = setup({ initialValues });
 
     expect(getByText(/Notes/i)).toBeVisible();
-    act(() => userEvent.click(getCancelButton()));
+    await act(async () => userEvent.click(getCancelButton()));
 
     expect(onCancelClick).toBeCalled();
     expect(validationSchema).not.toBeCalled();

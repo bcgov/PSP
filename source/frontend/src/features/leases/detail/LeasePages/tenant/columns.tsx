@@ -75,6 +75,7 @@ const getColumns = (tenantTypes: SelectOption[]): ColumnWithProps<FormTenant>[] 
         } else if (persons?.length && persons?.length > 1) {
           return (
             <Select
+              key={`tenants.primaryContact.${persons[0]?.id ?? props?.row?.index}`}
               field={`tenants.${props.row.index}.primaryContactId`}
               type="number"
               options={primaryContactOptions}
@@ -82,7 +83,11 @@ const getColumns = (tenantTypes: SelectOption[]): ColumnWithProps<FormTenant>[] 
             ></Select>
           );
         } else if (persons?.length === 1) {
-          return <p>{formatApiPersonNames(primaryContact ?? persons[0])}</p>;
+          return (
+            <p key={`tenants.primaryContact.${persons[0]?.id ?? props?.row?.index}`}>
+              {formatApiPersonNames(primaryContact ?? persons[0])}
+            </p>
+          );
         } else {
           return <p>No contacts available</p>;
         }

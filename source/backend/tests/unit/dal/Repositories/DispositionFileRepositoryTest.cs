@@ -1003,8 +1003,8 @@ namespace Pims.Dal.Test.Repositories
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.DispositionAdd);
             var dspFile = EntityHelper.CreateDispositionFile();
-            dspFile.FileNumber = "fileNumber";
-            var filter = new DispositionFilter() { FileNameOrNumberOrReference = "fileNumber" };
+            dspFile.FileNumber = "100";
+            var filter = new DispositionFilter() { FileNameOrNumberOrReference = "D-100" };
 
             helper.CreatePimsContext(user, true).AddAndSaveChanges(dspFile);
 

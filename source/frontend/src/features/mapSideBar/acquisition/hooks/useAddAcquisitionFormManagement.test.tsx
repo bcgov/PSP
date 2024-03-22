@@ -15,6 +15,7 @@ import {
   IUseAddAcquisitionFormManagementProps,
   useAddAcquisitionFormManagement,
 } from './useAddAcquisitionFormManagement';
+import React from 'react';
 
 const history = createMemoryHistory();
 const mockAxios = new MockAdapter(axios);
@@ -35,7 +36,7 @@ describe('useAddAcquisitionFormManagement hook', () => {
         useAddAcquisitionFormManagement({
           onSuccess: hookProps.onSuccess,
           selectedFeature: null,
-          formikRef: {} as any,
+          formikRef: React.createRef(),
         }),
       {
         wrapper: Wrapper,

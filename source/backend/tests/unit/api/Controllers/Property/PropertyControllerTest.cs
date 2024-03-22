@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using MapsterMapper;
@@ -63,13 +64,13 @@ namespace Pims.Api.Test.Controllers.Property
             // Arrange
             var property = EntityHelper.CreateProperty(12345);
 
-            this._service.Setup(m => m.Update(It.IsAny<Pims.Dal.Entities.PimsProperty>())).Returns(property);
+            this._service.Setup(m => m.Update(It.IsAny<Pims.Dal.Entities.PimsProperty>(), It.IsAny<Boolean>())).Returns(property);
 
             // Act
             var result = this._controller.UpdateConceptProperty(this._mapper.Map<PropertyModel>(property));
 
             // Assert
-            this._service.Verify(m => m.Update(It.IsAny<Pims.Dal.Entities.PimsProperty>()), Times.Once());
+            this._service.Verify(m => m.Update(It.IsAny<Pims.Dal.Entities.PimsProperty>(), It.IsAny<Boolean>()), Times.Once());
         }
         #endregion
     }

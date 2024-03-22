@@ -5,6 +5,7 @@
 import '@testing-library/jest-dom';
 import 'jest-styled-components';
 
+import failOnConsole from 'jest-fail-on-console';
 import noop from 'lodash/noop';
 import moment from 'moment-timezone';
 import { MockedRequest } from 'msw';
@@ -93,3 +94,5 @@ afterEach(() => {
 
 // Clean up after the tests are finished.
 afterAll(() => server.close());
+
+failOnConsole({ shouldFailOnWarn: true, shouldFailOnError: true });

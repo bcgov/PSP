@@ -1,6 +1,5 @@
 import { Formik, FormikHelpers, FormikProps } from 'formik';
 import * as React from 'react';
-import { Prompt } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { IMapProperty } from '@/components/propertySelector/models';
@@ -52,10 +51,6 @@ const AddLeaseForm: React.FunctionComponent<React.PropsWithChildren<IAddLeaseFor
       >
         {formikProps => (
           <>
-            <Prompt
-              when={formikProps.dirty && formikProps.submitCount === 0}
-              message="You have made changes on this form. Do you wish to leave without saving?"
-            />
             <>
               <LeaseDetailSubForm formikProps={formikProps}></LeaseDetailSubForm>
               <LeasePropertySelector formikProps={formikProps} />

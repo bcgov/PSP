@@ -115,6 +115,7 @@ const columns: ColumnWithProps<ApiGen_Concepts_Lease>[] = [
     sortable: true,
     width: 20,
     maxWidth: 20,
+    accessor: 'fileStatusTypeCode',
     Cell: renderTypeCode,
   },
 ];

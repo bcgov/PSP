@@ -118,7 +118,9 @@ describe('compensation list view container', () => {
     setup({
       claims: [],
     });
-    viewProps.onDelete(1);
+    await act(async () => {
+      viewProps.onDelete(1);
+    });
     const modal = await screen.findByText('Confirm Delete');
 
     expect(modal).toBeVisible();
@@ -128,9 +130,11 @@ describe('compensation list view container', () => {
     setup({
       claims: [],
     });
-    viewProps.onDelete(1);
+    await act(async () => {
+      viewProps.onDelete(1);
+    });
     const continueButton = await screen.findByText('Yes');
-    act(() => userEvent.click(continueButton));
+    await act(async () => userEvent.click(continueButton));
 
     expect(mockPostApi.execute).toHaveBeenCalledWith(1);
   });
@@ -167,9 +171,11 @@ describe('compensation list view container', () => {
     mockPutApi.execute.mockRejectedValue(createAxiosError(400, 'total allowable update error'));
 
     await setup({});
-    await expect(async () => await viewProps?.onUpdateTotalCompensation(1000)).rejects.toThrowError(
-      'total allowable update error',
-    );
+    await act(async () => {
+      expect(async () => await viewProps?.onUpdateTotalCompensation(1000)).rejects.toThrowError(
+        'total allowable update error',
+      );
+    });
     await screen.findByText('total allowable update error');
   });
 });

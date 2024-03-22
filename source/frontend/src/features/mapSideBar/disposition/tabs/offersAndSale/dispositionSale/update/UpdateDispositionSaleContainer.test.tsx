@@ -149,7 +149,7 @@ describe('Update Disposition Appraisal Container component', () => {
 
   it('navigates back to Offers and Sale tab when form is cancelled', async () => {
     await setup();
-    act(() => {
+    await act(async () => {
       viewProps?.onCancel();
     });
 

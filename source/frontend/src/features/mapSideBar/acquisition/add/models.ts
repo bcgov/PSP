@@ -21,15 +21,15 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
   id?: number;
   fileName?: string = '';
   legacyFileNumber?: string = '';
-  assignedDate?: string;
-  deliveryDate?: string;
+  assignedDate?: string = '';
+  deliveryDate?: string = '';
   rowVersion?: number;
   // Code Tables
-  acquisitionFileStatusType?: string;
-  acquisitionPhysFileStatusType?: string;
-  acquisitionType?: string;
+  acquisitionFileStatusType?: string = '';
+  acquisitionPhysFileStatusType?: string = '';
+  acquisitionType?: string = '';
   // MOTI region
-  region?: string;
+  region?: string = '';
   properties: PropertyForm[] = [];
   team: AcquisitionTeamFormModel[] = [];
   owners: AcquisitionOwnerFormModel[] = [];
@@ -37,7 +37,7 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
 
   project?: IAutocompletePrediction;
   product = '';
-  fundingTypeCode?: string;
+  fundingTypeCode?: string = '';
   fundingTypeOtherDescription = '';
   ownerSolicitor: InterestHolderForm = new InterestHolderForm(InterestHolderType.OWNER_SOLICITOR);
   ownerRepresentative: InterestHolderForm = new InterestHolderForm(
@@ -132,3 +132,6 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
     return newForm;
   }
 }
+
+export const isAcquisitionFile = (file: unknown): file is ApiGen_Concepts_AcquisitionFile =>
+  !!file && Object.prototype.hasOwnProperty.call(file, 'acquisitionTypeCode');

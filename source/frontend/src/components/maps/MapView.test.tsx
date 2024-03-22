@@ -10,7 +10,7 @@ import { IProperty } from '@/interfaces';
 import { mockApiProperty } from '@/mocks/filterData.mock';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { cleanup, deferred, render, RenderOptions, waitFor } from '@/utils/test-utils';
+import { act, cleanup, deferred, render, RenderOptions, waitFor } from '@/utils/test-utils';
 
 import MapView from './MapView';
 import { PointFeature } from './types';
@@ -197,7 +197,7 @@ xdescribe('MapProperties View', () => {
     expect(layersContainer.className).toContain('closed');
     // clicking the button should open the layer list...
     const layersControlButton = findLayerListButton();
-    userEvent.click(layersControlButton);
+    await act(async () => userEvent.click(layersControlButton));
     await waitFor(() => expect(layersContainer.className).not.toContain('closed'));
   });
 
@@ -268,8 +268,8 @@ xdescribe('MapProperties View', () => {
 
     const nameInput = findPidField();
     const searchButton = findSearchButton();
-    userEvent.type(nameInput, '123-456-789');
-    await waitFor(() => userEvent.click(searchButton));
+    await act(async () => userEvent.type(nameInput, '123-456-789'));
+    await act(async () => userEvent.click(searchButton));
     // check API call params...
     const filter = expect.objectContaining({ PID: '123456789' });
     await waitFor(() => expect(mockLoadProperties).toHaveBeenCalledWith(filter));
@@ -284,7 +284,7 @@ xdescribe('MapProperties View', () => {
     });
     await waitFor(() => ready);
     const searchButton = findSearchButton();
-    await waitFor(() => userEvent.click(searchButton));
+    await act(async () => userEvent.click(searchButton));
     expect(mockLoadProperties).toHaveBeenCalled();
   });
 
@@ -304,13 +304,13 @@ xdescribe('MapProperties View', () => {
     // type something in the filter bar
     const nameInput = findPidField();
     const searchButton = findSearchButton();
-    userEvent.type(nameInput, '123-456-789');
-    await waitFor(() => userEvent.click(searchButton));
+    await act(async () => userEvent.type(nameInput, '123-456-789'));
+    await act(async () => userEvent.click(searchButton));
     // check API call params...
     const filter = expect.objectContaining({ PID: '123456789' });
     await waitFor(() => expect(mockLoadProperties).toHaveBeenCalledWith(filter));
     const resetButton = findResetButton();
-    await waitFor(() => userEvent.click(resetButton));
+    await act(async () => userEvent.click(resetButton));
     const defaultFilter = expect.objectContaining({ PID: undefined });
     await waitFor(() => expect(mockLoadProperties).toHaveBeenCalledWith(defaultFilter));
   });

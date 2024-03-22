@@ -16,4 +16,5 @@ export interface Api_PropertyFilterCriteria {
   isPropertyOfInterest: boolean;
   isOtherInterest: boolean;
   isDisposed: boolean;
+  isRetired: boolean;
 }

@@ -41,7 +41,7 @@ export const PropertySelectorTabsView: React.FunctionComponent<
   );
 };
 
-const StyledTabView = styled(TabView)`
+export const StyledTabView = styled(TabView)`
   height: auto;
   &.tab-content {
     height: auto;

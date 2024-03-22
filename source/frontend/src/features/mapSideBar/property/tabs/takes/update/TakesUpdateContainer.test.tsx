@@ -80,20 +80,24 @@ describe('TakesUpdateContainer component', () => {
 
   it('renders as expected', async () => {
     const { asFragment } = setup({});
-    await waitForEffects();
+    await act(async () => {});
     expect(asFragment()).toMatchSnapshot();
   });
 
-  it('throws an error if file property is invalid', () => {
+  it('throws an error if file property is invalid', async () => {
+    jest.spyOn(console, 'error');
+    (console.error as any).mockImplementation(() => {});
     const render = () => setup({ props: { fileProperty: {} as any } });
+
     expect(render).toThrow('File property must have id');
+    (console.error as any).mockRestore();
   });
 
   it('calls onSuccess when onSubmit method is called', async () => {
     setup({});
     const formikHelpers = { setSubmitting: jest.fn() };
-    await waitForEffects();
-    await act(() =>
+    await act(async () => {});
+    await act(async () =>
       viewProps.onSubmit({ takes: [new TakeModel(getMockApiTakes()[0])] }, formikHelpers as any),
     );
 
@@ -103,7 +107,7 @@ describe('TakesUpdateContainer component', () => {
 
   it('returns an empty takes array if no takes are returned from the api', async () => {
     setup({});
-    await waitForEffects();
+    await act(async () => {});
 
     expect(viewProps.takes).toStrictEqual([new TakeModel(emptyTake)]);
   });

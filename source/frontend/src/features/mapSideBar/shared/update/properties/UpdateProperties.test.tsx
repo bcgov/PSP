@@ -13,6 +13,7 @@ import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { fillInput, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import UpdateProperties, { IUpdatePropertiesProps } from './UpdateProperties';
+import React from 'react';
 
 const mockAxios = new MockAdapter(axios);
 jest.mock('@react-keycloak/web');
@@ -45,7 +46,7 @@ describe('UpdateProperties component', () => {
           onSuccess={onSuccess}
           updateFileProperties={updateFileProperties}
           canRemove={props.canRemove ?? jest.fn()}
-          formikRef={{} as any}
+          formikRef={React.createRef() as any}
         />
       </SideBarContextProvider>,
       {
@@ -136,7 +137,7 @@ describe('UpdateProperties component', () => {
   it('save button displays modal', async () => {
     const { getByText } = setup({});
     const saveButton = getByText('Save');
-    act(() => userEvent.click(saveButton));
+    await act(async () => userEvent.click(saveButton));
 
     expect(
       await screen.findByText(/You have made changes to the properties in this file./),
@@ -147,10 +148,10 @@ describe('UpdateProperties component', () => {
     updateFileProperties.mockResolvedValue(getMockResearchFile());
     const { getByText } = setup({});
     const saveButton = getByText('Save');
-    act(() => userEvent.click(saveButton));
+    await act(async () => userEvent.click(saveButton));
 
     const saveConfirmButton = await screen.findByTitle('ok-modal');
-    act(() => userEvent.click(saveConfirmButton));
+    await act(async () => userEvent.click(saveConfirmButton));
 
     await waitFor(() => {
       expect(updateFileProperties).toHaveBeenCalled();
@@ -166,10 +167,10 @@ describe('UpdateProperties component', () => {
     } as Partial<AxiosError>);
     const { getByText } = setup({});
     const saveButton = getByText('Save');
-    act(() => userEvent.click(saveButton));
+    await act(async () => userEvent.click(saveButton));
 
     const saveConfirmButton = await screen.findByTitle('ok-modal');
-    act(() => userEvent.click(saveConfirmButton));
+    await act(async () => userEvent.click(saveConfirmButton));
 
     await waitFor(() => {
       expect(updateFileProperties).toHaveBeenCalled();
@@ -180,7 +181,7 @@ describe('UpdateProperties component', () => {
   it('cancel button cancels component if no actions taken', async () => {
     const { getByText } = setup({});
     const cancelButton = getByText('Cancel');
-    act(() => userEvent.click(cancelButton));
+    await act(async () => userEvent.click(cancelButton));
 
     expect(setIsShowingPropertySelector).toHaveBeenCalledWith(false);
   });

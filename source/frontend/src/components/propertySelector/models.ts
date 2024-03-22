@@ -1,5 +1,7 @@
 import { Polygon } from 'geojson';
 
+import { AreaUnitTypes } from '@/constants';
+
 export interface IMapProperty {
   propertyId?: number;
   pid?: string;
@@ -14,6 +16,8 @@ export interface IMapProperty {
   district?: number;
   districtName?: string;
   name?: string;
+  landArea?: number;
+  areaUnit?: AreaUnitTypes;
 }
 
 export interface SearchResultProperty extends IMapProperty {

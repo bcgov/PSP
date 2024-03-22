@@ -61,7 +61,7 @@ describe('ContactFilterComponent', () => {
   it('searches all by default', async () => {
     const { container, searchButton } = setup();
     const allButton = container.querySelector(`#input-all`);
-    act(() => {
+    await act(async () => {
       allButton && userEvent.click(allButton);
     });
     await act(async () => userEvent.click(searchButton));
@@ -74,7 +74,7 @@ describe('ContactFilterComponent', () => {
   it('searches organizations if radio option selected', async () => {
     const { container, searchButton } = setup();
     const organizationsButton = container.querySelector(`#input-organizations`);
-    act(() => {
+    await act(async () => {
       organizationsButton && userEvent.click(organizationsButton);
     });
     await act(async () => userEvent.click(searchButton));
@@ -87,7 +87,7 @@ describe('ContactFilterComponent', () => {
   it('searches persons if radio option selected', async () => {
     const { container, searchButton } = setup();
     const personButton = container.querySelector(`#input-persons`);
-    act(() => {
+    await act(async () => {
       personButton && userEvent.click(personButton);
     });
     await act(async () => userEvent.click(searchButton));
@@ -123,7 +123,7 @@ describe('ContactFilterComponent', () => {
     await act(async () => userEvent.click(activeCheck as Element));
 
     const personButton = container.querySelector(`#input-persons`);
-    act(() => {
+    await act(async () => {
       personButton && userEvent.click(personButton);
     });
 

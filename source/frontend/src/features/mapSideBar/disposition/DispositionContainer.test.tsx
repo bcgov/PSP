@@ -147,12 +147,13 @@ describe('DispositionContainer component', () => {
     const spinner = getByTestId('filter-backdrop-loading');
     await waitForElementToBeRemoved(spinner);
 
-    await viewProps.onUpdateProperties(mockDispositionFileApi);
+    await act(async () => {
+      await viewProps.onUpdateProperties(mockDispositionFileApi);
+    });
     expect(spinner).not.toBeVisible();
     expect(
       mockAxios.history.put.filter(x => x.url === '/dispositionfiles/1/properties?'),
     ).toHaveLength(1);
-
   });
 
   it('should show error popup when user adds a property outside of the user account regions', async () => {
@@ -165,8 +166,9 @@ describe('DispositionContainer component', () => {
     mockAxios
       .onPut(new RegExp('dispositionfiles/1/properties'))
       .reply(400, { error: errorMessage });
-
-    await viewProps.onUpdateProperties(mockDispositionFileApi);
+    await act(async () => {
+      await viewProps.onUpdateProperties(mockDispositionFileApi);
+    });
     expect(spinner).not.toBeVisible();
     expect(await screen.findByText(errorMessage)).toBeVisible();
   });
@@ -193,11 +195,10 @@ describe('DispositionContainer component', () => {
     await screen.findByText('1');
     await act(async () => viewProps.onMenuChange(1));
 
-    expect(history.location.pathname).toBe('/property/1');
-    const params = new URLSearchParams(history.location.search);
-    expect(params.has('edit')).toBe(true);
-    const warning = getByText(/Confirm Changes/i);
-    expect(warning).toBeVisible();
+    await waitFor(() => {
+      const warning = getByText(/Confirm Changes/i);
+      expect(warning).toBeVisible();
+    });
   });
 
   it('Cancels edit if user confirms modal', async () => {

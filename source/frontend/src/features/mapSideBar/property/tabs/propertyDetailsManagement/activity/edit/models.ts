@@ -177,10 +177,6 @@ export class PropertyActivityFormModel {
       activityProperties: [],
       invoices: this.invoices.map(i => i.toApi(this.id)),
 
-      pretaxAmt: this.pretaxAmount,
-      gstAmt: this.gstAmount,
-      pstAmt: this.pstAmount,
-      totalAmt: this.totalAmount,
       ...getEmptyBaseAudit(this.rowNumber),
     };
 
@@ -227,10 +223,6 @@ export class PropertyActivityFormModel {
         model.serviceProviderOrg,
       );
       formModel.invoices = model.invoices?.map(i => ActivityInvoiceFormModel.fromApi(i)) ?? [];
-      formModel.pretaxAmount = model.pretaxAmt || 0;
-      formModel.gstAmount = model.gstAmt || 0;
-      formModel.pstAmount = model.pstAmt || 0;
-      formModel.totalAmount = model.totalAmt || 0;
       formModel.rowNumber = model.rowVersion || 0;
       formModel.activityProperties =
         model.activityProperties?.map(p => ActivityPropertyFormModel.fromApi(p)) ?? [];

@@ -7,6 +7,7 @@ using FluentAssertions;
 using FluentAssertions.Extensions;
 using Moq;
 using NetTopologySuite.Geometries;
+using Pims.Api.Models.CodeTypes;
 using Pims.Api.Services;
 using Pims.Core.Test;
 using Pims.Dal.Entities;
@@ -167,6 +168,7 @@ namespace Pims.Api.Test.Services
             researchFile.ConcurrencyControlNumber = 1;
 
             var property = EntityHelper.CreateProperty(12345);
+            property.Location.SRID = SpatialReference.WGS84;
             researchFile.PimsPropertyResearchFiles = new List<PimsPropertyResearchFile>() { new PimsPropertyResearchFile() { Property = property } };
 
             var repository = this._helper.GetService<Mock<IResearchFileRepository>>();
@@ -211,6 +213,7 @@ namespace Pims.Api.Test.Services
             researchFile.ConcurrencyControlNumber = 1;
 
             var property = EntityHelper.CreateProperty(12345, 54321);
+            property.Location.SRID = SpatialReference.WGS84;
             property.Pid = null;
             researchFile.PimsPropertyResearchFiles = new List<PimsPropertyResearchFile>() { new PimsPropertyResearchFile() { Property = property } };
 

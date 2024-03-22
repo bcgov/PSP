@@ -109,8 +109,10 @@ describe('useGenerateH10005a functions', () => {
   it('throws an error if no acquisition file is found', async () => {
     const generate = setup();
     getApiLeaseFn.mockResolvedValue({ data: null });
-    await expect(generate(getMockApiLease())).rejects.toThrow(
-      'Failed to load lease, reload this page to try again.',
+    await act(() =>
+      expect(generate(getMockApiLease())).rejects.toThrow(
+        'Failed to load lease, reload this page to try again.',
+      ),
     );
   });
 
@@ -120,6 +122,6 @@ describe('useGenerateH10005a functions', () => {
       payload: null,
     });
     const generate = setup();
-    await expect(generate(getMockApiLease())).rejects.toThrow('Failed to generate file');
+    await act(() => expect(generate(getMockApiLease())).rejects.toThrow('Failed to generate file'));
   });
 });

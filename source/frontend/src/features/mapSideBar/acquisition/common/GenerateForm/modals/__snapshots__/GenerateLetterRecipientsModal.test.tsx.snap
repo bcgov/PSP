@@ -255,6 +255,7 @@ exports[`GenerateLetterRecipients modal renders as expected 1`] = `
   border-radius: 0.5rem;
   max-height: 180px;
   overflow-y: auto;
+  overflow-x: hidden;
   padding: 0.5rem 1.5rem;
 }
 
@@ -264,7 +265,7 @@ exports[`GenerateLetterRecipients modal renders as expected 1`] = `
 
 .c2 .form-group label {
   font-family: BcSans-Bold;
-  line-height: 1rem;
+  line-height: 1.5rem;
 }
 
 .c2 .form-group label span.type {
@@ -272,6 +273,7 @@ exports[`GenerateLetterRecipients modal renders as expected 1`] = `
   font-family: BCSans-Italic;
   font-style: italic;
   margin-left: 0.5rem;
+  width: 100%;
 }
 
 <body

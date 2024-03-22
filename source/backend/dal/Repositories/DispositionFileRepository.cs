@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using System.Text.RegularExpressions;
 using LinqKit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -622,6 +623,7 @@ namespace Pims.Dal.Repositories
         /// <returns></returns>
         private IQueryable<PimsDispositionFile> GetCommonDispositionFileQueryDeep(DispositionFilter filter, long? contractorPersonId = null)
         {
+            filter.FileNameOrNumberOrReference = Regex.Replace(filter.FileNameOrNumberOrReference ?? string.Empty, @"^[d,D]-", string.Empty);
             var predicate = PredicateBuilder.New<PimsDispositionFile>(disp => true);
             if (!string.IsNullOrWhiteSpace(filter.Pid))
             {

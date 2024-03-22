@@ -3,10 +3,8 @@ import { ApiGen_CodeTypes_AgreementStatusTypes } from '@/models/api/generated/Ap
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 
 class StatusUpdateSolver {
-  private readonly acquisitionFile: ApiGen_Concepts_AcquisitionFile | null;
-
-  constructor(apiModel: ApiGen_Concepts_AcquisitionFile | undefined | null) {
-    this.acquisitionFile = apiModel ?? null;
+  constructor(private readonly acquisitionFile: ApiGen_Concepts_AcquisitionFile | null = null) {
+    this.acquisitionFile = acquisitionFile;
   }
 
   canEditDetails(): boolean {

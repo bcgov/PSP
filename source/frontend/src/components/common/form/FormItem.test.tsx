@@ -38,8 +38,8 @@ describe('FormItem component', () => {
     const { getByTestId, queryByText } = await setup({ props: { validate } });
 
     expect(queryByText('error')).not.toBeInTheDocument();
-    await act(() => userEvent.paste(getByTestId('input'), 'foo bar baz'));
-    await act(() => userEvent.click(getByTestId('submit')));
+    await act(async () => userEvent.paste(getByTestId('input'), 'foo bar baz'));
+    await act(async () => userEvent.click(getByTestId('submit')));
 
     expect(queryByText('error')).toBeInTheDocument();
     const containerDiv = getByTestId('input').parentElement!;
@@ -50,8 +50,8 @@ describe('FormItem component', () => {
     const validate = () => undefined;
     const { getByTestId } = await setup({ props: { validate } });
 
-    await act(() => userEvent.paste(getByTestId('input'), 'foo bar baz'));
-    await act(() => userEvent.click(getByTestId('submit')));
+    await act(async () => userEvent.paste(getByTestId('input'), 'foo bar baz'));
+    await act(async () => userEvent.click(getByTestId('submit')));
 
     const errorElement = getByTestId('input').parentElement!.nextSibling;
     expect(errorElement).toBeNull();

@@ -14,8 +14,7 @@ jest.mock('@react-keycloak/web');
 
 const onEdit = jest.fn();
 
-const mockDispositionFileApi =
-  mockDispositionFileResponse();
+const mockDispositionFileApi = mockDispositionFileResponse();
 
 describe('DispositionSummaryView component', () => {
   // render component under test
@@ -66,8 +65,7 @@ describe('DispositionSummaryView component', () => {
   it('does not render the edit button for users that do not have disposition edit permissions', async () => {
     const { queryByTitle, queryByTestId } = setup(
       {
-        dispositionFile:
-          mockDispositionFileResponse(),
+        dispositionFile: mockDispositionFileResponse(),
       },
       { claims: [] },
     );
@@ -82,7 +80,7 @@ describe('DispositionSummaryView component', () => {
     const { queryByTitle, queryByTestId } = setup(
       {
         dispositionFile: {
-          ...(mockDispositionFileResponse()),
+          ...mockDispositionFileResponse(),
           fileStatusTypeCode: toTypeCode(DispositionFileStatus.Complete),
         },
       },
@@ -99,7 +97,7 @@ describe('DispositionSummaryView component', () => {
     const { queryByTitle, queryByTestId } = setup(
       {
         dispositionFile: {
-          ...(mockDispositionFileResponse()),
+          ...mockDispositionFileResponse(),
           fileStatusTypeCode: toTypeCode(DispositionFileStatus.Complete),
         },
       },
@@ -130,7 +128,7 @@ describe('DispositionSummaryView component', () => {
       { claims: [] },
     );
     await waitForEffects();
-    expect(getByText(/Other \(initiating document\)/g, { exact: false })).toBeVisible();
+    expect(getByText(/Other \(initiating document\)/i, { exact: false })).toBeVisible();
   });
 
   it('renders other other disposition type field when disposition type is OTHER', async () => {
@@ -144,7 +142,7 @@ describe('DispositionSummaryView component', () => {
       { claims: [] },
     );
     await waitForEffects();
-    expect(getByText(/Other \(disposition type\)/g, { exact: false })).toBeVisible();
+    expect(getByText(/Other \(disposition type\)/i, { exact: false })).toBeVisible();
   });
 
   it('renders disposition team member person', async () => {

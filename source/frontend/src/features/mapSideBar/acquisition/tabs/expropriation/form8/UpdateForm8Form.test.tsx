@@ -76,12 +76,12 @@ describe('Form 8 UpdateForm component', () => {
     const { container, getByTestId, findByText, getSaveButton } = await setup({});
 
     await act(async () => userEvent.click(getByTestId('add-payment-item')));
-    await act(() => {
+    await act(async () => {
       fillInput(container, 'paymentItems[0].paymentItemTypeCode', 'MARKETVALUE', 'select');
     });
 
     await act(async () => userEvent.click(getByTestId('add-payment-item')));
-    await act(() => {
+    await act(async () => {
       fillInput(container, 'paymentItems[1].paymentItemTypeCode', 'MARKETVALUE', 'select');
     });
 

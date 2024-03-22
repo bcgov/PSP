@@ -1,5 +1,5 @@
 ﻿using OpenQA.Selenium;
-using PIMS.Tests.Automation.Classes;
+using System.Security.Cryptography;
 
 namespace PIMS.Tests.Automation.PageObjects
 {
@@ -18,14 +18,18 @@ namespace PIMS.Tests.Automation.PageObjects
         private By searchContactActiveSpan = By.XPath("//span[contains(text(),'Show active contacts only')]");
         private By searchContactAddNewBttn = By.XPath("//span[contains(text(),'Add new contact')]/parent::div/parent::button");
 
-        private By searchContactTable = By.CssSelector("div[data-testid='contactsTable']");
         private By searchContactTableSummaryColumn = By.XPath("//div[contains(text(),'Summary')]");
+        private By searchContactOrderBySummaryBttn = By.CssSelector("div[data-testid='sort-column-summary']");
         private By searchContactTableFirstNameColumn = By.XPath("//div[contains(text(),'First name')]");
+        private By searchContactOrderByFirstNameBttn = By.CssSelector("div[data-testid='sort-column-firstName']");
         private By searchContactTableLastNameColumn = By.XPath("//div[contains(text(),'Last name')]");
+        private By searchContactOrderByLastNameBttn = By.CssSelector("div[data-testid='sort-column-surname']");
         private By searchContactTableOrganizationColumn = By.XPath("//div[contains(text(),'Organization')]");
+        private By searchContactOrderByOrganizationBttn = By.CssSelector("div[data-testid='sort-column-organizationName']");
         private By searchContactTableEmailColumn = By.XPath("//div[contains(text(),'E-mail')]");
         private By searchContactTableMailingAddressColumn = By.XPath("//div[contains(text(),'Mailing address')]");
         private By searchContactTableCityColumn = By.XPath("//div[contains(text(),'City')]");
+        private By searchContactOrderByCityBttn = By.CssSelector("div[data-testid='sort-column-municipalityName']");
         private By searchContactTableProvinceColumn = By.XPath("//div[contains(text(),'Prov')]");
         private By searchContactTableUpdateViewColumn = By.XPath("//div[contains(text(),'Update/View')]");
         private By searchContactNoResults = By.CssSelector("div[class='no-rows-message']");
@@ -33,15 +37,18 @@ namespace PIMS.Tests.Automation.PageObjects
         private By searchContactMenuItems = By.CssSelector("div[class='Menu-root']");
         private By searchContactPaginationList = By.CssSelector("ul[class='pagination']");
 
-        private By searchContactLoadingResultTable = By.CssSelector("div[data-testid='contactsTable'] div[class='table-loading'] div[title='table-loading']");
-        private By searchContactFirstResultLink = By.CssSelector("div[class='tr-wrapper']:nth-child(1) div:nth-child(3) a");
-        private By searchContactFirstNameDiv = By.CssSelector("div[class='tr-wrapper']:nth-child(1) div:nth-child(4)");
-        private By searchContactFirstLastNameDiv = By.CssSelector("div[class='tr-wrapper']:nth-child(1) div:nth-child(5)");
-        private By searchContactFirstOrganizationDiv = By.CssSelector("div[class='tr-wrapper']:nth-child(1) div:nth-child(6)");
-        private By searchContactFirstEmailDiv = By.CssSelector("div[class='tr-wrapper']:nth-child(1) div:nth-child(7)");
-        private By searchContactFirstMailAddressDiv = By.CssSelector("div[class='tr-wrapper']:nth-child(1) div:nth-child(8)");
-        private By searchContactFirstCityDiv = By.CssSelector("div[class='tr-wrapper']:nth-child(1) div:nth-child(9)");
-        private By searchContactFirstProvinceDiv = By.CssSelector("div[class='tr-wrapper']:nth-child(1) div:nth-child(10)");
+        //First result cell elements
+        private By searchContactTableContent = By.CssSelector("div[data-testid='contactsTable'] div[class='tbody'] div[class='tr-wrapper']");
+        private By searchContact1stRowResult = By.CssSelector("div[data-testid='contactsTable'] div[class='tbody'] div[class='tr-wrapper']:first-child");
+        private By searchContact1stResultLink = By.CssSelector("div[class='tr-wrapper']:nth-child(1) div:nth-child(3) a");
+        private By searchContact1stFirstNameContent = By.CssSelector("div[class='tr-wrapper']:nth-child(1) div:nth-child(4)");
+        private By searchContact1stLastNameContent = By.CssSelector("div[class='tr-wrapper']:nth-child(1) div:nth-child(5)");
+        private By searchContact1stOrganizationContent = By.CssSelector("div[class='tr-wrapper']:nth-child(1) div:nth-child(6)");
+        private By searchContact1stEmailContent = By.CssSelector("div[class='tr-wrapper']:nth-child(1) div:nth-child(7)");
+        private By searchContact1stMailAddressContent = By.CssSelector("div[class='tr-wrapper']:nth-child(1) div:nth-child(8)");
+        private By searchContact1stCityContent = By.CssSelector("div[class='tr-wrapper']:nth-child(1) div:nth-child(9)");
+        private By searchContact1stProvinceContent = By.CssSelector("div[class='tr-wrapper']:nth-child(1) div:nth-child(10)");
+
         private By searchContactUpdateBttn = By.CssSelector("div[class='tr-wrapper']:nth-child(1) div:nth-child(11) button:nth-child(1)");
         private By searchContactViewBttn = By.CssSelector("div[class='tr-wrapper']:nth-child(1) div:nth-child(11) button:nth-child(2)");
 
@@ -55,8 +62,6 @@ namespace PIMS.Tests.Automation.PageObjects
         //Navigates to Search a Contact
         public void NavigateToSearchContact()
         {
-            //Wait(3000);
-
             WaitUntilClickable(menuContactsButton);
             FocusAndClick(menuContactsButton);
 
@@ -65,32 +70,27 @@ namespace PIMS.Tests.Automation.PageObjects
         }
 
         //Search For a general contact
-        public void SearchGeneralContact(string searchCriteria)
-        {
-            WaitUntilDisappear(searchContactLoadingResultTable);
-
-            WaitUntilClickable(searchContactNameInput);
-            webDriver.FindElement(searchContactNameInput).SendKeys(searchCriteria);
-            webDriver.FindElement(searchContactResultsBttn).Click();
-        }
-
-        //Search for an Individual Contact
-        public void SearchIndividualContact(string searchCriteria)
-        {
-            FocusAndClick(searchContactIndRadioBttn);
-            webDriver.FindElement(searchContactNameInput).SendKeys(searchCriteria);
-
-            Wait();
-            webDriver.FindElement(searchContactResultsBttn).Click();
-        }
-
-        //Search for an Organization Contact
-        public void SearchOrganizationContact(string searchCriteria)
+        public void FilterContacts(string contactType = "", string summary = "", string city = "")
         {
             Wait();
 
-            FocusAndClick(searchContactOrgRadioBttn);
-            webDriver.FindElement(searchContactNameInput).SendKeys(searchCriteria);
+            webDriver.FindElement(searchContactResetBttn).Click();
+
+            Wait();
+            if (contactType != "")
+            {
+                if(contactType == "Individual")
+                    FocusAndClick(searchContactIndRadioBttn);
+                else
+                    FocusAndClick(searchContactOrgRadioBttn);
+            }
+
+            if(summary != "")
+                webDriver.FindElement(searchContactNameInput).SendKeys(summary);
+
+            if(city != "")
+                webDriver.FindElement(searchContactCityInput).SendKeys(city);
+
             webDriver.FindElement(searchContactResultsBttn).Click();
         }
 
@@ -98,57 +98,8 @@ namespace PIMS.Tests.Automation.PageObjects
         public void SelectFirstResultLink()
         {
             Wait(2000);
-            webDriver.FindElement(searchContactFirstResultLink).Click();
+            webDriver.FindElement(searchContact1stResultLink).Click();
         }
-
-        //Click on Create new contact
-        public void CreateNewContactFromSearch()
-        {
-            webDriver.FindElement(searchContactAddNewBttn).Click();
-        }
-
-        //Verify Links functionality on Search Contacts
-        public void VerifySearchLinks(string searchCriteria)
-        {
-            WaitUntilClickable(searchContactNameInput);
-            webDriver.FindElement(searchContactNameInput).SendKeys(searchCriteria);
-            webDriver.FindElement(searchContactResultsBttn).Click();
-
-            //Verify Update link
-            WaitUntilClickable(searchContactUpdateBttn);
-            webDriver.FindElement(searchContactUpdateBttn).Click();
-
-            WaitUntilVisible(searchUpdateForm);
-            Assert.True(webDriver.FindElement(searchUpdateForm).Displayed);
-
-            webDriver.FindElement(searchContactBackLink).Click();
-
-            WaitUntilVisible(searchContactNameInput);
-            webDriver.FindElement(searchContactNameInput).SendKeys(searchCriteria);
-            webDriver.FindElement(searchContactResultsBttn).Click();
-
-            //Verify View Link
-            WaitUntilClickable(searchContactUpdateBttn);
-            webDriver.FindElement(searchContactUpdateBttn).Click();
-
-            WaitUntilVisible(searchContactViewContactInfoHeader);
-            Assert.True(webDriver.FindElement(searchContactViewContactInfoHeader).Displayed);
-
-            webDriver.FindElement(searchContactBackLink).Click();
-
-        }
-
-        //Verify Search Contacts Main Screen
-        public Boolean SearchContactRender()
-        {
-            WaitUntilVisible(searchContactMenuItems);
-            ScrollToElement(searchContactMenuItems);
-
-            return webDriver.FindElement(searchContactTable).Displayed
-                    && webDriver.FindElement(searchContactMenuItems).Displayed
-                    && webDriver.FindElement(searchContactPaginationList).Displayed;
-        }
-
 
         public string GetNoSearchMessage()
         {
@@ -172,7 +123,6 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(webDriver.FindElement(searchContactAddNewBttn).Displayed);
 
             //Table Elements
-            Assert.True(webDriver.FindElement(searchContactTable).Displayed);
             Assert.True(webDriver.FindElement(searchContactTableSummaryColumn).Displayed);
             Assert.True(webDriver.FindElement(searchContactTableFirstNameColumn).Displayed);
             Assert.True(webDriver.FindElement(searchContactTableLastNameColumn).Displayed);
@@ -189,25 +139,95 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(webDriver.FindElement(searchContactPaginationList).Displayed);
         }
 
+        public void OrderByContactSummary()
+        {
+            WaitUntilClickable(searchContactOrderBySummaryBttn);
+            webDriver.FindElement(searchContactOrderBySummaryBttn).Click();
+        }
+
+        public void OrderByContactFirstName()
+        {
+            WaitUntilClickable(searchContactOrderByFirstNameBttn);
+            webDriver.FindElement(searchContactOrderByFirstNameBttn).Click();
+        }
+
+        public void OrderByContactLastName()
+        {
+            WaitUntilClickable(searchContactOrderByLastNameBttn);
+            webDriver.FindElement(searchContactOrderByLastNameBttn).Click();
+        }
+
+        public void OrderByContactOrganization()
+        {
+            WaitUntilClickable(searchContactOrderByOrganizationBttn);
+            webDriver.FindElement(searchContactOrderByOrganizationBttn).Click();
+        }
+
+        public void OrderByContactCity()
+        {
+            WaitUntilClickable(searchContactOrderByCityBttn);
+            webDriver.FindElement(searchContactOrderByCityBttn).Click();
+        }
+
+        public string FirstContactSummary()
+        {
+            WaitUntilTableSpinnerDisappear();
+            return webDriver.FindElement(searchContact1stResultLink).Text;
+        }
+
+        public string FirstContactFirstName()
+        {
+            WaitUntilTableSpinnerDisappear();
+            return webDriver.FindElement(searchContact1stFirstNameContent).Text;
+        }
+
+        public string FirstContactLastName()
+        {
+            WaitUntilTableSpinnerDisappear();
+            return webDriver.FindElement(searchContact1stLastNameContent).Text;
+        }
+
+        public string FirstContactOrganization()
+        {
+            WaitUntilTableSpinnerDisappear();
+            return webDriver.FindElement(searchContact1stOrganizationContent).Text;
+        }
+
+        public string FirstContactCity()
+        {
+            WaitUntilTableSpinnerDisappear();
+            return webDriver.FindElement(searchContact1stCityContent).Text;
+        }
+
+        public int ContactsTableResultNumber()
+        {
+            WaitUntilTableSpinnerDisappear();
+            return webDriver.FindElements(searchContactTableContent).Count;
+        }
+
+        public Boolean SearchFoundResults()
+        {
+            WaitUntilTableSpinnerDisappear();
+            return webDriver.FindElements(searchContact1stRowResult).Count > 0;
+        }
+
         public void VerifyContactTableContent(string summary, string firstName, string lastName, string organization, string email, string address, string city, string province, string country)
         {
             Wait(2000);
 
-            AssertTrueContentEquals(searchContactFirstResultLink,summary);
-            AssertTrueContentEquals(searchContactFirstNameDiv, firstName);
-            AssertTrueContentEquals(searchContactFirstLastNameDiv, lastName);
-            AssertTrueContentEquals(searchContactFirstOrganizationDiv, organization);
-            AssertTrueContentEquals(searchContactFirstEmailDiv, email);
-            AssertTrueContentEquals(searchContactFirstMailAddressDiv, address);
-            AssertTrueContentEquals(searchContactFirstCityDiv, city);
+            AssertTrueContentEquals(searchContact1stResultLink,summary);
+            AssertTrueContentEquals(searchContact1stFirstNameContent, firstName);
+            AssertTrueContentEquals(searchContact1stLastNameContent, lastName);
+            AssertTrueContentEquals(searchContact1stOrganizationContent, organization);
+            AssertTrueContentEquals(searchContact1stEmailContent, email);
+            AssertTrueContentEquals(searchContact1stMailAddressContent, address);
+            AssertTrueContentEquals(searchContact1stCityContent, city);
+
             if (country == "Canada" || country == "United States of America")
-            {
-                AssertTrueContentEquals(searchContactFirstProvinceDiv, province);
-            }
+                AssertTrueContentEquals(searchContact1stProvinceContent, province);
             else
-            {
-                AssertTrueContentEquals(searchContactFirstProvinceDiv, "");
-            }
+                AssertTrueContentEquals(searchContact1stProvinceContent, "");
+            
             AssertTrueIsDisplayed(searchContactUpdateBttn);
             AssertTrueIsDisplayed(searchContactViewBttn);
             

@@ -17,18 +17,18 @@ export interface IBcAssessmentSummary {
     FOLIO_STATUS_DESCRIPTION: string;
     ACTUAL_USE_CODE: string;
     ACTUAL_USE_DESCRIPTION: string;
-    ALR_CODE: string;
-    ALR_DESCRIPTION: string;
+    ALR_CODE: string | null;
+    ALR_DESCRIPTION: string | null;
     BC_TRANSIT_IND: string;
-    LAND_DEPTH: number;
+    LAND_DEPTH: number | null;
     LAND_SIZE: number;
     LAND_DIMENSION_TYPE: string;
     LAND_UNITS: string;
-    LAND_WIDTH: number;
+    LAND_WIDTH: number | null;
     NEIGHBOURHOOD_CODE: string;
     NEIGHBOURHOOD: string;
-    MANUAL_CLASS_CODE: string;
-    MANUAL_CLASS_DESCRIPTION: string;
+    MANUAL_CLASS_CODE: string | null;
+    MANUAL_CLASS_DESCRIPTION: string | null;
     REGIONAL_DISTRICT_CODE: string;
     REGIONAL_DISTRICT: string;
     HOSPITAL_DISTRICT_CODE: string;
@@ -39,8 +39,8 @@ export interface IBcAssessmentSummary {
     TENURE_DESCRIPTION: string;
     JURISDICTION_CODE: string;
     JURISDICTION: string;
-    WHEN_CREATED: string;
-    WHEN_UPDATED: string;
+    WHEN_CREATED: string | null;
+    WHEN_UPDATED: string | null;
   }>;
   LEGAL_DESCRIPTION: Partial<{
     BCA_FLD_SYSID: number;
@@ -164,7 +164,7 @@ export interface IBcAssessmentSummary {
     WHEN_UPDATE: string;
   }>[];
   CHARGES: Partial<{
-    SE_ANNO_CAD_DATA: string;
+    SE_ANNO_CAD_DATA: string | null;
     BCA_FLC_SYSID: number;
     ROLL_NUMBER: string;
     FOLIO_ID: string;
@@ -175,9 +175,9 @@ export interface IBcAssessmentSummary {
     LAND_CHARACTERISTIC_DESC: string;
     JURISDICTION_CODE: string;
     JURISDICTION: string;
-    WHEN_CREATED: string;
-    WHEN_UPDATED: string;
-    EXPIRY_DATE: string;
+    WHEN_CREATED: string | null;
+    WHEN_UPDATED: string | null;
+    EXPIRY_DATE: string | null;
     FEATURE_AREA_SQM: number;
     FEATURE_LENGTH_M: number;
     SHAPE: any;

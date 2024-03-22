@@ -3,7 +3,7 @@ import { noop } from 'lodash';
 
 import { Claims } from '@/constants/claims';
 import { IContactSearchResult } from '@/interfaces';
-import { mockKeycloak, render, RenderOptions, waitFor } from '@/utils/test-utils';
+import { act, mockKeycloak, render, RenderOptions, waitFor } from '@/utils/test-utils';
 
 import { ContactResultComponent, IContactResultComponentProps } from './ContactResultComponent';
 
@@ -100,7 +100,7 @@ describe('Contact Search Results Table', () => {
   it('sorts table when sort buttons are clicked', async () => {
     const { getByTestId } = setup({ results: mockResults });
     // click on sort buttons
-    userEvent.click(getByTestId('sort-column-summary'));
+    await act(async () => userEvent.click(getByTestId('sort-column-summary')));
 
     await waitFor(() => {
       // should be sorted in ascending order

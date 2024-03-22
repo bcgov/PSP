@@ -121,9 +121,6 @@ const DispositionForm = React.forwardRef<FormikProps<DispositionFormModel>, IDis
                   <SectionField label="Assigned date">
                     <FastDatePicker field="assignedDate" formikProps={formikProps} />
                   </SectionField>
-                  <SectionField label="Disposition completed date">
-                    <FastDatePicker field="completionDate" formikProps={formikProps} />
-                  </SectionField>
                 </Section>
 
                 <Section header="Properties to include in this file:">

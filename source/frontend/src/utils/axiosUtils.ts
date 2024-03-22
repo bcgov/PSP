@@ -28,6 +28,7 @@ export function useAxiosErrorHandler(message = 'Network error. Check responses a
       if (axiosError?.response?.status === 400) {
         toast.error(axiosError?.response.data.error, { autoClose: 10000 });
       } else {
+        console.log(JSON.stringify(axiosError));
         toast.error(message);
       }
     },

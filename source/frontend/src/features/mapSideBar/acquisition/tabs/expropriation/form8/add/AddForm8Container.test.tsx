@@ -94,11 +94,13 @@ describe('Add Form8 Container component', () => {
 
   it('Renders the underlying form', async () => {
     const { getByText } = await setup();
+    await act(async () => {});
     expect(getByText(/Content Rendered/)).toBeVisible();
   });
 
   it('Loads props with the initial values', async () => {
     await setup();
+    await act(async () => {});
 
     expect(viewProps?.initialValues?.id).toBe(null);
     expect(viewProps?.initialValues?.acquisitionFileId).toBe(1);
@@ -123,7 +125,7 @@ describe('Add Form8 Container component', () => {
 
   it('navigates back to expropriation tab when form is cancelled', async () => {
     await setup();
-    act(() => {
+    await act(async () => {
       viewProps?.onCancel();
     });
 

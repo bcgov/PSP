@@ -226,7 +226,7 @@ exports[`Lease Search Results Table matches snapshot 1`] = `
             Status
             <div
               class="c0"
-              data-testid="sort-column-Status"
+              data-testid="sort-column-fileStatusTypeCode"
             >
               <svg
                 class="c1"

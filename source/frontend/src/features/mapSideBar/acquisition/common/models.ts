@@ -178,14 +178,14 @@ export class AcquisitionOwnerFormModel {
 export class OwnerAddressFormModel {
   id?: number;
   rowVersion?: number;
-  streetAddress1?: string;
-  streetAddress2?: string;
-  streetAddress3?: string;
-  municipality?: string;
-  postal?: string;
-  provinceId?: NumberFieldValue;
+  streetAddress1?: string = '';
+  streetAddress2?: string = '';
+  streetAddress3?: string = '';
+  municipality?: string = '';
+  postal?: string = '';
+  provinceId?: NumberFieldValue = '';
   countryId?: NumberFieldValue = 1;
-  countryOther?: string;
+  countryOther?: string = '';
 
   static addressLines(apiAddress: OwnerAddressFormModel | undefined): number {
     if (!apiAddress) {

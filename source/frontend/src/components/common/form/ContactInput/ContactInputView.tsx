@@ -76,6 +76,7 @@ const ContactInputView: React.FunctionComponent<IContactInputViewProps> = ({
                 field={field + '.id'}
                 placeholder="Select from Contacts"
                 className="d-none"
+                defaultValue=""
               ></Input>
             </Col>
             <Col xs="auto" className="pl-0">

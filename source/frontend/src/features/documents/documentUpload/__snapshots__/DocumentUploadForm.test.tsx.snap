@@ -319,7 +319,9 @@ exports[`DocumentUploadView component renders as expected 1`] = `
           </div>
           <div
             style="color: red;"
-          />
+          >
+            Mandatory fields are required.
+          </div>
         </div>
         <div
           class="pt-5 pb-0 mb-0"

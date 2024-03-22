@@ -300,9 +300,9 @@ describe('UpdatePropertyDetailsContainer component', () => {
     const addressLine1 = document.querySelector(
       `input[name='address.streetAddress1']`,
     ) as HTMLElement;
-    act(() => {
-      userEvent.clear(addressLine1);
-      userEvent.paste(addressLine1, '123 Mock St');
+    await act(async () => {
+      await act(async () => userEvent.clear(addressLine1));
+      await act(async () => userEvent.paste(addressLine1, '123 Mock St'));
       formikRef.current?.submitForm();
     });
 
@@ -345,12 +345,12 @@ describe('UpdatePropertyDetailsContainer component', () => {
     ) as HTMLElement;
     const postal = document.querySelector(`input[name='address.postal']`) as HTMLElement;
 
-    act(() => {
-      userEvent.clear(addressLine1);
-      userEvent.clear(addressLine2);
-      userEvent.clear(addressLine3);
-      userEvent.clear(municipality);
-      userEvent.clear(postal);
+    await act(async () => {
+      await act(async () => userEvent.clear(addressLine1));
+      await act(async () => userEvent.clear(addressLine2));
+      await act(async () => userEvent.clear(addressLine3));
+      await act(async () => userEvent.clear(municipality));
+      await act(async () => userEvent.clear(postal));
       formikRef.current?.submitForm() as Promise<void>;
     });
 

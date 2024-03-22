@@ -295,7 +295,7 @@ public partial class PimsProperty
     /// Potential property zoning
     /// </summary>
     [Column("ZONING_POTENTIAL")]
-    [StringLength(50)]
+    [StringLength(100)]
     public string ZoningPotential { get; set; }
 
     /// <summary>

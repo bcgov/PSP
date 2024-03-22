@@ -6,7 +6,7 @@ import React from 'react';
 
 import { mockLookups } from '@/mocks/lookups.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { fillInput, renderAsync, RenderOptions, waitFor } from '@/utils/test-utils';
+import { act, fillInput, renderAsync, RenderOptions, waitFor } from '@/utils/test-utils';
 
 import { defaultFormLeasePayment } from '../../models';
 import { IPaymentModalProps, PaymentModal } from './PaymentModal';
@@ -70,7 +70,7 @@ describe('PaymentModal component', () => {
     await fillInput(document.body, 'amountGst', '50');
     await fillInput(document.body, 'amountTotal', '1200');
     const saveButton = getByText('Save payment');
-    userEvent.click(saveButton);
+    await act(async () => userEvent.click(saveButton));
     await waitFor(() => expect(onSave).toHaveBeenCalled());
     expect(onSave).toHaveBeenCalledWith({
       ...defaultFormLeasePayment,
@@ -92,7 +92,7 @@ describe('PaymentModal component', () => {
       component: { getByText },
     } = await setup({});
     const cancelButton = getByText('Cancel');
-    userEvent.click(cancelButton);
+    await act(async () => userEvent.click(cancelButton));
     expect(onCancel).toHaveBeenCalled();
   });
 });

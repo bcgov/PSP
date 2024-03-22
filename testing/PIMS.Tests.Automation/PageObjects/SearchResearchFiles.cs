@@ -39,13 +39,22 @@ namespace PIMS.Tests.Automation.PageObjects
         //Search Research Files 1st Result Elements
         private By searchResearchFile1stResult = By.CssSelector("div[data-testid='researchFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1)");
         private By searchResearchFile1stResultLink = By.CssSelector("div[data-testid='researchFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td clickable'] a");
+        private By searchResearchFileOrderFileNumberBttn = By.CssSelector("div[data-testid='sort-column-rfileNumber']");
         private By searchResearchFile1stResultFileName = By.CssSelector("div[data-testid='researchFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td clickable']:nth-child(2)");
+        private By searchResearchFileOrderFileNameBttn = By.CssSelector("div[data-testid='sort-column-name']");
         private By searchResearchFile1stResultRegion = By.CssSelector("div[data-testid='researchFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td clickable']:nth-child(3)");
         private By searchResearchFile1stResultCreator = By.CssSelector("div[data-testid='researchFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td clickable']:nth-child(4)");
+        private By searchResearchFileOrderCreatorNameBttn = By.CssSelector("div[data-testid='sort-column-appCreateUserid']");
         private By searchResearchFile1stResultCreateDate = By.CssSelector("div[data-testid='researchFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td clickable']:nth-child(5)");
+        private By searchResearchFileOrderCreateDateBttn = By.CssSelector("div[data-testid='sort-column-appCreateTimestamp']");
         private By searchResearchFile1stResultUpdatedBy = By.CssSelector("div[data-testid='researchFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td clickable']:nth-child(6)");
+        private By searchResearchFileOrderLastUpdatedByBttn = By.CssSelector("div[data-testid='sort-column-appLastUpdateUserid']");
         private By searchResearchFile1stResultUpdateDate = By.CssSelector("div[data-testid='researchFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td clickable']:nth-child(7)");
+        private By searchResearchFileOrderUpdatedDateBttn = By.CssSelector("div[data-testid='sort-column-appLastUpdateTimestamp']");
         private By searchResearchFile1stResultStatus = By.CssSelector("div[data-testid='researchFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td clickable']:nth-child(8)");
+        private By searchResearchFileStatusNameBttn = By.CssSelector("div[data-testid='sort-column-researchFileStatusTypeCode']");
+
+        private By searchResearchFileTableContent = By.CssSelector("div[data-testid='researchFilesTable'] div[class='tbody'] div[class='tr-wrapper']");
 
         //Search Research File Pagination
         private By searchResearchFilePaginationMenu = By.CssSelector("div[class='Menu-root']");
@@ -77,27 +86,97 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(searchResearchFileButton).Click();
         }
 
-        public void SearchLastResearchFile()
+        public void SearchAllResearchFiles()
         {
-            WaitUntilClickable(searchResearchFileResetButton);
-            webDriver.FindElement(searchResearchFileResetButton).Click();
-
-            WaitUntilClickable(searchResearchFileSortByRFileBttn);
-            webDriver.FindElement(searchResearchFileSortByRFileBttn).Click();
-            webDriver.FindElement(searchResearchFileSortByRFileBttn).Click();
-
-            WaitUntilClickable(searchResearchStatusSelect);
+            Wait(2000);
             ChooseSpecificSelectOption(searchResearchStatusSelect, "All Status");
-            FocusAndClick(searchResearchFileButton);
+
+            WaitUntilClickable(searchResearchFileButton);
+            webDriver.FindElement(searchResearchFileButton).Click();
         }
 
-        public void SelectFirstResult()
+        public void OrderByResearchFileNumber()
         {
-            WaitUntilClickable(searchResearchFile1stResultLink);
-            webDriver.FindElement(searchResearchFile1stResultLink).Click();
+            WaitUntilClickable(searchResearchFileOrderFileNumberBttn);
+            webDriver.FindElement(searchResearchFileOrderFileNumberBttn).Click();
+        }
 
-            WaitUntilVisible(researchFileHeaderCode);
-            Assert.True(webDriver.FindElement(researchFileHeaderCode).Displayed);
+        public void OrderByResearchFileName()
+        {
+            WaitUntilClickable(searchResearchFileOrderFileNameBttn);
+            webDriver.FindElement(searchResearchFileOrderFileNameBttn).Click();
+        }
+
+        public void OrderByResearchFileCreatedBy()
+        {
+            WaitUntilClickable(searchResearchFileOrderCreatorNameBttn);
+            webDriver.FindElement(searchResearchFileOrderCreatorNameBttn).Click();
+        }
+
+        public void OrderByResearchCreatedDate()
+        {
+            WaitUntilClickable(searchResearchFileOrderCreateDateBttn);
+            webDriver.FindElement(searchResearchFileOrderCreateDateBttn).Click();
+        }
+
+        public void OrderByResearchLastUpdatedBy()
+        {
+            WaitUntilClickable(searchResearchFileOrderLastUpdatedByBttn);
+            webDriver.FindElement(searchResearchFileOrderLastUpdatedByBttn).Click();
+        }
+
+        public void OrderByResearchUpdatedDate()
+        {
+            WaitUntilClickable(searchResearchFileOrderUpdatedDateBttn);
+            webDriver.FindElement(searchResearchFileOrderUpdatedDateBttn).Click();
+        }
+
+        public void OrderByResearchStatus()
+        {
+            WaitUntilClickable(searchResearchFileStatusNameBttn);
+            webDriver.FindElement(searchResearchFileStatusNameBttn).Click();
+        }
+
+        public string FirstResearchFileNumber()
+        {
+            WaitUntilTableSpinnerDisappear();
+            return webDriver.FindElement(searchResearchFile1stResultLink).Text;
+        }
+
+        public string FirstResearchFileName()
+        {
+            WaitUntilTableSpinnerDisappear();
+            return webDriver.FindElement(searchResearchFile1stResultFileName).Text;
+        }
+
+        public string FirstResearchCreatedBy()
+        {
+            WaitUntilTableSpinnerDisappear();
+            return webDriver.FindElement(searchResearchFile1stResultCreator).Text;
+        }
+
+        public string FirstResearchCreatedDate()
+        {
+            WaitUntilTableSpinnerDisappear();
+            return webDriver.FindElement(searchResearchFile1stResultCreateDate).Text;
+        }
+
+        public string FirstResearchUpdatedBy()
+        {
+            WaitUntilTableSpinnerDisappear();
+            return webDriver.FindElement(searchResearchFile1stResultUpdatedBy).Text;
+        }
+
+        public string FirstResearchUpdatedDate()
+        {
+            WaitUntilTableSpinnerDisappear();
+            return webDriver.FindElement(searchResearchFile1stResultUpdateDate).Text;
+        }
+
+        public string FirstResearchFileStatus()
+        {
+            WaitUntilTableSpinnerDisappear();
+            return webDriver.FindElement(searchResearchFile1stResultStatus).Text;
         }
 
         public void VerifyResearchFileListView()
@@ -174,6 +253,12 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             Wait(2000);
             return webDriver.FindElements(searchResearchFile1stResult).Count > 0;
+        }
+
+        public int ResearchFileTableResultNumber()
+        {
+            WaitUntilTableSpinnerDisappear();
+            return webDriver.FindElements(searchResearchFileTableContent).Count;
         }
     }
 }

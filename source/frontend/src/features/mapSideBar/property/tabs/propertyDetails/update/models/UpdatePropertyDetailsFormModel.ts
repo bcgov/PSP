@@ -93,6 +93,7 @@ export class UpdatePropertyDetailsFormModel {
   name?: string;
   description?: string;
   isSensitive?: boolean;
+  isRetired?: boolean;
   pphStatusTypeCode?: string;
   pphStatusUpdateUserid?: string;
   pphStatusUpdateUserGuid?: string;
@@ -150,6 +151,7 @@ export class UpdatePropertyDetailsFormModel {
     model.name = base.name ?? undefined;
     model.description = base.description ?? undefined;
     model.isSensitive = base.isSensitive;
+    model.isRetired = base.isRetired;
     model.pphStatusTypeCode = base.pphStatusTypeCode ?? 'UNKNOWN';
     model.isRwyBeltDomPatent = base.isRwyBeltDomPatent ?? undefined;
     model.pphStatusUpdateUserid = base.pphStatusUpdateUserid ?? undefined;
@@ -208,6 +210,7 @@ export class UpdatePropertyDetailsFormModel {
       name: this.name ?? null,
       description: this.description ?? null,
       isSensitive: this.isSensitive ?? false,
+      isRetired: this.isRetired ?? false,
       pphStatusTypeCode: this.pphStatusTypeCode ?? null,
       isRwyBeltDomPatent: this.isRwyBeltDomPatent ?? null,
       latitude: this.latitude ?? null,

@@ -96,6 +96,7 @@ namespace Pims.Api.Areas.Reports.Controllers
             }
 
             filter.Quantity = all ? _userRepository.Count() : filter.Quantity;
+            filter.Page = 1;
             var page = _userRepository.GetAllByFilter(filter);
             var report = _mapper.Map<PageModel<Models.User.UserModel>>(page);
 

@@ -24,9 +24,10 @@
     ],
     "react/display-name": "off",
     "react/prop-types": "off",
-    "no-prototype-builtins": "off"
+    "no-prototype-builtins": "off",
+    "no-debugger": "off"
   },
-  "ignorePatterns": ["src/**/*.test.ts", "src/**/*.test.tsx"],
+  "ignorePatterns": ["src/**/*.test.ts", "src/**/*.test.tsx", "src/**/mockServiceWorker.js"],
   "settings": {
     "react": {
       "version": "detect"

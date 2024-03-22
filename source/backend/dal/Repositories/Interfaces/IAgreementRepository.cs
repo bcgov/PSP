@@ -8,8 +8,14 @@ namespace Pims.Dal.Repositories
     {
         List<PimsAgreement> GetAgreementsByAcquisitionFile(long acquisitionFileId);
 
+        PimsAgreement GetAgreementById(long agreementId);
+
+        PimsAgreement AddAgreement(PimsAgreement agreement);
+
         List<PimsAgreement> SearchAgreements(AcquisitionReportFilterModel filter);
 
-        List<PimsAgreement> UpdateAllForAcquisition(long acquisitionFileId, List<PimsAgreement> agreements);
+        PimsAgreement UpdateAgreement(PimsAgreement agreement);
+
+        bool TryDeleteAgreement(long acquisitionFileId, long agreementId);
     }
 }

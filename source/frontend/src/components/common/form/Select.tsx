@@ -153,7 +153,7 @@ export const Select: React.FC<React.PropsWithChildren<SelectProps>> = ({
         custom={custom}
         isInvalid={!!touch && !!error}
         {...rest}
-        value={getIn(values, field)}
+        value={getIn(values, field) ?? ''}
         multiple={multiple}
         onChange={onSelectChange}
         onBlur={(e: any) => {

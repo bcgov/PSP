@@ -6,7 +6,7 @@ import { Input } from '@/components/common/form';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { ApiGen_Base_CodeType } from '@/models/api/generated/ApiGen_Base_CodeType';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
-import { formatNumber, isValidString, pidFormatter } from '@/utils';
+import { formatNumber, isValidId, isValidString, pidFormatter } from '@/utils';
 import { withNameSpace } from '@/utils/formUtils';
 
 import AddressSubForm from '../AddressSubForm';
@@ -33,13 +33,13 @@ export const PropertyInformation: React.FunctionComponent<
     withNameSpace(nameSpace, 'areaUnitType'),
   );
 
-  const legalDescription = getIn(
+  const legalDescription: string = getIn(
     formikProps.values,
     withNameSpace(nameSpace, 'property.landLegalDescription'),
   );
-  const pid = getIn(formikProps.values, withNameSpace(nameSpace, 'property.pid'));
+  const pid: number | null = getIn(formikProps.values, withNameSpace(nameSpace, 'property.pid'));
 
-  const pidText = pid ? `PID: ${pidFormatter(pid)}` : '';
+  const pidText = isValidId(pid) ? `PID: ${pidFormatter(pid.toString())}` : '';
   return (
     <StyledPropertyInfo>
       <SectionField label="PID" labelWidth="3">

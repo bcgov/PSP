@@ -1,5 +1,5 @@
 import { Claims } from '@/constants/index';
-import { render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
+import { act, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
 import ResearchMenu, { IResearchMenuProps } from './ResearchMenu';
 
@@ -79,7 +79,7 @@ describe('ResearchMenu component', () => {
     });
 
     const lastItem = getByText(testItems[2]);
-    await waitFor(() => userEvent.click(lastItem));
+    await act(async () => userEvent.click(lastItem));
 
     expect(onChange).toHaveBeenCalledWith(2);
   });
@@ -97,7 +97,7 @@ describe('ResearchMenu component', () => {
 
     const button = getByTitle('Change properties');
     expect(button).toBeVisible();
-    await waitFor(() => userEvent.click(button));
+    await act(async () => userEvent.click(button));
 
     expect(onEdit).toHaveBeenCalledWith();
   });

@@ -90,8 +90,7 @@ jest.mock('@/hooks/repositories/useDispositionProvider', () => ({
 const history = createMemoryHistory();
 const setIsEditing = jest.fn();
 
-const mockDispositionFileResponseApi =
-  mockDispositionFileResponse();
+const mockDispositionFileResponseApi = mockDispositionFileResponse();
 
 describe('DispositionFileTabs component', () => {
   // render component under test

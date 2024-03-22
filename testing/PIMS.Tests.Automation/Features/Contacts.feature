@@ -24,7 +24,6 @@ Scenario Outline: 02. Individual Contacts
 	| Individual  | 3         | 4          |
 	| Individual  | 5         | 6          |
 
-
 Scenario Outline: 03. Search for a non-existing Contact
 	Given I search for an non-existing contact from type "<ContactType>" row number <RowNumber>
 	Then No contacts results are found
@@ -32,6 +31,10 @@ Scenario Outline: 03. Search for a non-existing Contact
 	| ContactType	| RowNumber |
 	| Individual	| 8         |
 	| Organization	| 6         |
+
+Scenario: 04. Contacts List View
+	Given I verify the Contacts List View from row number 1
+	Then Expected Content is displayed on Contacts Table from contact type "Organization"
 
 
 

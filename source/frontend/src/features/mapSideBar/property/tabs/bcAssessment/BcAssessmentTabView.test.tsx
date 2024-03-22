@@ -47,7 +47,7 @@ describe('BcAssessmentTabView component', () => {
   it('renders as expected when provided valid ltsa data object and requested on datetime', () => {
     const { component } = setup({
       summaryData: mockBcAssessmentSummary,
-      requestedOn: new Date('06-Apr-2022 11:32 AM'),
+      requestedOn: new Date('2022-04-22 11:32 AM'),
       loading: false,
     });
 

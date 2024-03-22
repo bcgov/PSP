@@ -48,11 +48,11 @@ describe('PropertiesInformation component', () => {
         ...getEmptyLease(),
         fileProperties: [
           {
-            ...mockLeaseProperty(),
+            ...mockLeaseProperty(1),
             areaUnitType: toTypeCode('test'),
             leaseArea: 123,
             file: null,
-            fileId: 0,
+            fileId: 1,
           },
         ],
       },
@@ -65,18 +65,20 @@ describe('PropertiesInformation component', () => {
         ...getEmptyLease(),
         fileProperties: [
           {
-            ...mockLeaseProperty(),
+            ...mockLeaseProperty(1),
             areaUnitType: toTypeCode('test'),
             leaseArea: 123,
             file: null,
-            fileId: 0,
+            fileId: 1,
+            id: 1,
           },
           {
-            ...mockLeaseProperty(),
+            ...mockLeaseProperty(2),
             areaUnitType: toTypeCode('test'),
             leaseArea: 123,
             file: null,
-            fileId: 0,
+            fileId: 2,
+            id: 2,
           },
         ],
       },

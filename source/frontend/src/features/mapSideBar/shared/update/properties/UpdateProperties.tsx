@@ -155,7 +155,10 @@ export const UpdateProperties: React.FunctionComponent<
                             return promise.then(async () => {
                               const formProperty = PropertyForm.fromMapProperty(property);
                               if (property.pid) {
-                                const bcaSummary = await getPrimaryAddressByPid(property.pid, 3000);
+                                const bcaSummary = await getPrimaryAddressByPid(
+                                  property.pid,
+                                  30000,
+                                );
                                 formProperty.address = bcaSummary?.address
                                   ? AddressForm.fromBcaAddress(bcaSummary?.address)
                                   : undefined;

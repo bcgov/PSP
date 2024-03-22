@@ -21,10 +21,6 @@ export interface ApiGen_Concepts_PropertyActivity extends ApiGen_Base_BaseAudit 
   completionDateOnly: string | null;
   description: string | null;
   requestSource: string | null;
-  pretaxAmt: number | null;
-  gstAmt: number | null;
-  pstAmt: number | null;
-  totalAmt: number | null;
   isDisabled: boolean | null;
   serviceProviderOrgId: number | null;
   serviceProviderOrg: ApiGen_Concepts_Organization | null;

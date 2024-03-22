@@ -3,7 +3,7 @@
 echo 'Enter a username for the API database.'
 read -p 'Username: ' varApiDb
 
-passvar=$(grep -Po '^DB_PASSWORD=\K.*$' ./database/mssql/.env)
+passvar=$(grep -Po '^DB_PASSWORD=\K.*$' ./source/database/mssql/.env)
 
 if [ -z "$passvar" ]
 then

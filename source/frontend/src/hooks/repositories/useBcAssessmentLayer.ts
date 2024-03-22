@@ -1,4 +1,4 @@
-import { AxiosResponse } from 'axios';
+import { AxiosRequestHeaders, AxiosResponse } from 'axios';
 import { useCallback } from 'react';
 
 import { BC_ASSESSMENT_TYPES, IBcAssessmentSummary } from '@/models/layers/bcAssesment';
@@ -80,7 +80,7 @@ export const useBcAssessmentLayer = (
           status: 500,
           statusText: 'Failed to load BC Assessment data',
           headers: {},
-          config: {},
+          config: { headers: {} as AxiosRequestHeaders },
         };
       }
 
@@ -105,7 +105,10 @@ export const useBcAssessmentLayer = (
               { FOLIO_ID: folioId, ROLL_NUMBER: rollNumber, JURISDICTION_CODE: jurisdictionCode },
               { timeout: timeout ?? 10000, useCqlOr: false, forceExactMatch: true },
             )
-          : Promise.resolve();
+          : Promise.resolve({
+              type: 'FeatureCollection',
+              features: [],
+            });
 
       const valuesPromise =
         typesToLoad === undefined || !!typesToLoad?.find(t => t === BC_ASSESSMENT_TYPES.VALUES)
@@ -113,7 +116,10 @@ export const useBcAssessmentLayer = (
               { FOLIO_ID: folioId, ROLL_NUMBER: rollNumber, JURISDICTION_CODE: jurisdictionCode },
               { timeout: timeout ?? 10000, useCqlOr: false, forceExactMatch: true },
             )
-          : Promise.resolve();
+          : Promise.resolve({
+              type: 'FeatureCollection',
+              features: [],
+            });
 
       const chargesPromise =
         typesToLoad === undefined || !!typesToLoad?.find(t => t === BC_ASSESSMENT_TYPES.CHARGES)
@@ -121,7 +127,10 @@ export const useBcAssessmentLayer = (
               { FOLIO_ID: folioId, ROLL_NUMBER: rollNumber, JURISDICTION_CODE: jurisdictionCode },
               { timeout: timeout ?? 10000, useCqlOr: false, forceExactMatch: true },
             )
-          : Promise.resolve();
+          : Promise.resolve({
+              type: 'FeatureCollection',
+              features: [],
+            });
 
       const folioDescriptionsPromise =
         typesToLoad === undefined ||
@@ -130,7 +139,10 @@ export const useBcAssessmentLayer = (
               { FOLIO_ID: folioId, ROLL_NUMBER: rollNumber, JURISDICTION_CODE: jurisdictionCode },
               { timeout: timeout ?? 10000, useCqlOr: false, forceExactMatch: true },
             )
-          : Promise.resolve();
+          : Promise.resolve({
+              type: 'FeatureCollection',
+              features: [],
+            });
 
       const salesPromise =
         typesToLoad === undefined || !!typesToLoad?.find(t => t === BC_ASSESSMENT_TYPES.SALES)
@@ -138,7 +150,10 @@ export const useBcAssessmentLayer = (
               { FOLIO_ID: folioId, ROLL_NUMBER: rollNumber, JURISDICTION_CODE: jurisdictionCode },
               { timeout: timeout ?? 10000, useCqlOr: false, forceExactMatch: true },
             )
-          : Promise.resolve();
+          : Promise.resolve({
+              type: 'FeatureCollection',
+              features: [],
+            });
 
       const responses = await Promise.all([
         addressPromise,
@@ -166,7 +181,13 @@ export const useBcAssessmentLayer = (
         FOLIO_DESCRIPTION: responses[3]?.features[0]?.properties ?? {},
         SALES: responses[4]?.features?.map((f: { properties: any }) => f.properties ?? {}) ?? [],
       };
-      return { data: summary, status: 200, statusText: 'Success', headers: {}, config: {} };
+      return {
+        data: summary,
+        status: 200,
+        statusText: 'Success',
+        headers: {},
+        config: { headers: {} as AxiosRequestHeaders },
+      };
     },
     [getAddresses, getValues, getCharges, getFolioDescriptions, getSales, getLegalDescriptions],
   );

@@ -14,6 +14,8 @@ export enum SideBarType {
   PROJECT = 'PROJECT',
   PROPERTY_INFORMATION = 'PROPERTY_INFORMATION',
   DISPOSITION = 'DISPOSITION',
+  SUBDIVISION = 'SUBDIVISION',
+  CONSOLIDATION = 'CONSOLIDATION',
 }
 
 // Local context for the machine - Not related to React Context!
@@ -22,6 +24,7 @@ export type MachineContext = {
   mapLocationSelected: LatLngLiteral | null;
   mapLocationFeatureDataset: LocationFeatureDataset | null;
   selectedFeatureDataset: LocationFeatureDataset | null;
+  selectingComponentId: string | null;
 
   mapFeatureData: MapFeatureData;
 
@@ -35,6 +38,7 @@ export type MachineContext = {
   filePropertyLocations: LatLngLiteral[];
   activePimsPropertyIds: number[];
   showDisposed: boolean;
+  showRetired: boolean;
 };
 
 // Possible state machine states

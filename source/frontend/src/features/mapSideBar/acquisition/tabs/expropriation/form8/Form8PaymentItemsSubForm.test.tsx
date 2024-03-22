@@ -195,7 +195,7 @@ describe('FinancialActivitiesSubForm  component', () => {
       fireEvent.change(getPreTaxAmountTextbox(0), { target: { value: '$100.00' } });
     });
 
-    await act(() => {
+    await act(async () => {
       fillInput(container, 'paymentItems[0].isGstRequired', 'true', 'select');
     });
 
@@ -226,7 +226,7 @@ describe('FinancialActivitiesSubForm  component', () => {
       fireEvent.change(getPreTaxAmountTextbox(0), { target: { value: '$100.00' } });
     });
 
-    await act(() => {
+    await act(async () => {
       fillInput(container, 'paymentItems[0].isGstRequired', 'true', 'select');
     });
 
@@ -235,7 +235,7 @@ describe('FinancialActivitiesSubForm  component', () => {
     expect(getTaxAmountTextbox(0)).toHaveValue('$5.00');
     expect(getTotalAmountTextbox(0)).toHaveValue('$105.00');
 
-    await act(() => {
+    await act(async () => {
       fillInput(container, 'paymentItems[0].isGstRequired', 'false', 'select');
     });
 
@@ -265,7 +265,7 @@ describe('FinancialActivitiesSubForm  component', () => {
       fireEvent.change(getPreTaxAmountTextbox(0), { target: { value: '$100.00' } });
     });
 
-    await act(() => {
+    await act(async () => {
       fillInput(container, 'paymentItems[0].isGstRequired', 'true', 'select');
     });
 

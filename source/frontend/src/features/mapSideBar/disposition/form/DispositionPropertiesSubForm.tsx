@@ -41,7 +41,7 @@ const DispositionPropertiesSubForm: React.FunctionComponent<
                       return promise.then(async () => {
                         const formProperty = PropertyForm.fromMapProperty(property);
                         if (property.pid) {
-                          const bcaSummary = await getPrimaryAddressByPid(property.pid, 3000);
+                          const bcaSummary = await getPrimaryAddressByPid(property.pid, 30000);
                           formProperty.address = bcaSummary?.address
                             ? AddressForm.fromBcaAddress(bcaSummary?.address)
                             : undefined;
@@ -62,7 +62,7 @@ const DispositionPropertiesSubForm: React.FunctionComponent<
                 />
               </Col>
             </Row>
-            <Section header="Selected Properties">
+            <Section header="Selected properties">
               <SelectedPropertyHeaderRow />
               {formikProps.values.fileProperties.map((property, index) => (
                 <SelectedPropertyRow

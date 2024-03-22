@@ -29,6 +29,7 @@ export interface ApiGen_Concepts_Property extends ApiGen_Base_BaseConcurrent {
   name: string | null;
   description: string | null;
   isSensitive: boolean;
+  isRetired: boolean;
   isProvincialPublicHwy: boolean | null;
   pphStatusUpdateUserid: string | null;
   pphStatusUpdateTimestamp: string | null;

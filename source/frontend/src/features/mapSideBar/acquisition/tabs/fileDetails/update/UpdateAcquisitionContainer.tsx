@@ -1,6 +1,7 @@
 import { AxiosError } from 'axios';
 import { FormikHelpers, FormikProps } from 'formik';
 import React from 'react';
+import { FaExclamationCircle } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
 
@@ -90,7 +91,8 @@ export const UpdateAcquisitionContainer = React.forwardRef<
             (axiosError: AxiosError<IApiError>) => {
               setModalContent({
                 variant: 'error',
-                title: 'Warning',
+                title: 'Error',
+                headerIcon: <FaExclamationCircle size={22} />,
                 message: axiosError?.response?.data.error,
                 okButtonText: 'Close',
               });

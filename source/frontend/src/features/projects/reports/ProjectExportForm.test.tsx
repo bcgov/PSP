@@ -95,7 +95,7 @@ describe('ProjectExportForm component', () => {
       userEvent.selectOptions(select, ProjectExportTypes.AGREEMENT);
     });
 
-    expect(screen.getByText(/776/g)).not.toBeNull();
+    expect(screen.getByText(/776/i)).not.toBeNull();
   });
 
   it('displays team members when passed person', async () => {
@@ -114,7 +114,7 @@ describe('ProjectExportForm component', () => {
       userEvent.selectOptions(select, ProjectExportTypes.AGREEMENT);
     });
 
-    expect(screen.getByText(/first last/g)).not.toBeNull();
+    expect(screen.getByText(/first last/i)).not.toBeNull();
   });
 
   it('displays team members when passed organization', async () => {
@@ -133,7 +133,7 @@ describe('ProjectExportForm component', () => {
       userEvent.selectOptions(select, ProjectExportTypes.AGREEMENT);
     });
 
-    expect(screen.getByText(/FORTIS BC/g)).not.toBeNull();
+    expect(screen.getByText(/FORTIS BC/i)).not.toBeNull();
   });
 
   it('hides submit, project, team members by default', async () => {

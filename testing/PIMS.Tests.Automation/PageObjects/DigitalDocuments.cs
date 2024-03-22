@@ -85,7 +85,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By documentCanLandSurveyTypeIndianReserveMandatory = By.XPath("//div[contains(text(),'Indian reserve or national park is required')]");
 
         //Upload Photos/Images/Video and Correspondence Fields
-        private By documentCivicAddressInput = By.Id("input-documentMetadata.96");
+        private By documentCivicAddressInput = By.CssSelector("input[data-testid='metadata-input-CIVIC_ADDRESS']");
         private By documentPhotosCorrespondenceTypeDateLabel = By.XPath("//div[@class='modal-body']/div/div/div/div/div/label[contains(text(),'Date')]");
         private By documentPhotosCorrespondenceTypeDateInput = By.Id("input-documentMetadata.57");
         private By documentOwnerLabel = By.XPath("//div[@class='modal-body']/div/div/div/div/div/label[contains(text(),'Owner')]");

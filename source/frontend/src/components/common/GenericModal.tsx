@@ -250,7 +250,7 @@ const ModalContainer = (props: BsModalProps & ModalProps) => {
     <div>
       <StyledModal
         {...rest}
-        show={props.show}
+        show={!!props.show}
         onHide={props.close}
         dialogClassName={classNames(modalSize, props.className)}
       >

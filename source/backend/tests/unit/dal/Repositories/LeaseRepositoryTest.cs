@@ -366,7 +366,7 @@ namespace Pims.Dal.Test.Repositories
 
             // Act
             lease.LeaseDescription = "updated";
-            Action act = ()=> repository.Update(null);
+            Action act = () => repository.Update(null);
 
             // Assert
             act.Should().Throw<ArgumentNullException>();
@@ -692,14 +692,15 @@ namespace Pims.Dal.Test.Repositories
             var repository = helper.CreateRepository<PropertyLeaseRepository>(user);
             helper.SaveChanges();
 
-            // Act
-            var propertyToUpdate = lease.PimsPropertyLeases.FirstOrDefault();
-            propertyToUpdate.Property = EntityHelper.CreateProperty(2);
+            var propertyLeaseToUpdate = lease.PimsPropertyLeases.FirstOrDefault();
+            propertyLeaseToUpdate.PropertyId = 2;
+            propertyLeaseToUpdate.Property = EntityHelper.CreateProperty(2);
 
             // Act
+            var properties = repository.UpdatePropertyLeases(1, lease.PimsPropertyLeases);
+
             // Assert
-            Assert.Throws<InvalidOperationException>(() =>
-                repository.UpdatePropertyLeases(1, lease.PimsPropertyLeases));
+            properties.Should().HaveCount(1);
         }
 
         [Fact]
@@ -910,9 +911,12 @@ namespace Pims.Dal.Test.Repositories
             var repository = helper.CreateRepository<LeaseRepository>(user);
 
             // Act
-            var addConsultation = new Dal.Entities.PimsLeaseConsultation() { LeaseId = lease.LeaseId,
+            var addConsultation = new Dal.Entities.PimsLeaseConsultation()
+            {
+                LeaseId = lease.LeaseId,
                 ConsultationStatusTypeCodeNavigation = new PimsConsultationStatusType() { Id = "DRAFT", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "Draft" },
-                ConsultationTypeCodeNavigation = new PimsConsultationType() { Id = "HIGHWAY", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "Highway" } };
+                ConsultationTypeCodeNavigation = new PimsConsultationType() { Id = "HIGHWAY", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "Highway" }
+            };
             lease.PimsLeaseConsultations.Add(addConsultation);
             var consultations = repository.UpdateLeaseConsultations(1, 2, lease.PimsLeaseConsultations).PimsLeaseConsultations;
             context.CommitTransaction();

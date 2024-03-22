@@ -1,2 +1,3 @@
 src/serviceWorker.ts
+mockServiceWorker.js
 node_modules

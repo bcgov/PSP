@@ -10,6 +10,7 @@ import { ILookupCode } from '@/store/slices/lookupCodes';
 import { act, render, RenderOptions, RenderResult } from '@/utils/test-utils';
 
 import InsuranceEditContainer, { InsuranceEditContainerProps } from './EditInsuranceContainer';
+import React from 'react';
 
 export const mockInsuranceTypeHome: ILookupCode = {
   id: 'HOME',
@@ -43,7 +44,7 @@ const defaultProps: InsuranceEditContainerProps = {
   insuranceList: [mockInsuranceHome],
   insuranceTypes: [mockInsuranceTypeHome, mockInsuranceTypeCar],
   onSave: () => Promise.resolve(),
-  formikRef: {} as any,
+  formikRef: React.createRef(),
 };
 
 const history = createMemoryHistory();

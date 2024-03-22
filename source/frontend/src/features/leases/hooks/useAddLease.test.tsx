@@ -10,6 +10,7 @@ import * as MOCK from '@/mocks/data.mock';
 import { defaultApiLease } from '@/models/defaultInitializers';
 
 import { useAddLease } from './useAddLease';
+import { act } from '@testing-library/react';
 
 const dispatch = jest.fn();
 const mockAxios = new MockAdapter(axios);
@@ -43,18 +44,22 @@ describe('useAddLease functions', () => {
       mockAxios.onPost().reply(200, defaultApiLease());
 
       const { addLease } = setup();
-      const leaseResponse = await addLease.execute(defaultApiLease(), []);
+      await act(async () => {
+        const leaseResponse = await addLease.execute(defaultApiLease(), []);
 
-      expect(find(currentStore.getActions(), { type: 'loading-bar/SHOW' })).toBeDefined();
-      expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeUndefined();
-      expect(leaseResponse).toEqual(defaultApiLease());
+        expect(find(currentStore.getActions(), { type: 'loading-bar/SHOW' })).toBeDefined();
+        expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeUndefined();
+        expect(leaseResponse).toEqual(defaultApiLease());
+      });
     });
 
     it('Request failure, dispatches error with correct response', async () => {
       mockAxios.onPost().reply(400, MOCK.ERROR);
 
       const { addLease } = setup();
-      expect(async () => await addLease.execute(defaultApiLease(), [])).rejects.toThrow();
+      await act(async () => {
+        expect(async () => await addLease.execute(defaultApiLease(), [])).rejects.toThrow();
+      });
     });
   });
 });

@@ -82,7 +82,7 @@ describe('AddNotesFormModal component', () => {
 
     // note cannot exceed 4000 characters
     const textarea = await findByLabelText(/Type a note/i);
-    userEvent.paste(textarea, fakeText(4001));
+    await act(async () => userEvent.paste(textarea, fakeText(4001)));
     await act(async () => userEvent.click(getSaveButton()));
 
     expect(validationSchema).toBeCalled();

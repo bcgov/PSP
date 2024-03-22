@@ -676,7 +676,7 @@ exports[`DispositionSaleForm  component renders as expected 1`] = `
           <label
             class="c2"
           >
-            Final sale price ($):
+            Final sale price, incl. GST ($):
           </label>
         </div>
         <div

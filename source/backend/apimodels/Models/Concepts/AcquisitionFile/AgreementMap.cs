@@ -1,6 +1,5 @@
 using Mapster;
 using Pims.Api.Models.Base;
-using Pims.Core.Extensions;
 using Entity = Pims.Dal.Entities;
 
 namespace Pims.Api.Models.Concepts.AcquisitionFile
@@ -15,7 +14,6 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
                 .Map(dest => dest.AgreementType, src => src.AgreementTypeCodeNavigation)
                 .Map(dest => dest.AgreementStatusType, src => src.AgreementStatusTypeCodeNavigation)
                 .Map(dest => dest.AgreementDate, src => src.AgreementDate)
-
                 .Map(dest => dest.CompletionDate, src => src.CompletionDate)
                 .Map(dest => dest.TerminationDate, src => src.TerminationDate)
                 .Map(dest => dest.CommencementDate, src => src.CommencementDate)
@@ -29,7 +27,7 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
                 .Map(dest => dest.SignedDate, src => src.SignedDate)
                 .Map(dest => dest.InspectionDate, src => src.InspectionDate)
                 .Map(dest => dest.CancellationNote, src => src.CancellationNote)
-                .Inherits<Entity.IBaseAppEntity, BaseAuditModel>();
+                .Inherits<Entity.IBaseAppEntity, BaseConcurrentModel>();
 
             config.NewConfig<AgreementModel, Entity.PimsAgreement>()
                 .Map(dest => dest.AgreementId, src => src.AgreementId)
@@ -37,7 +35,6 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
                 .Map(dest => dest.AgreementTypeCode, src => src.AgreementType.Id)
                 .Map(dest => dest.AgreementStatusTypeCode, src => src.AgreementStatusType.Id)
                 .Map(dest => dest.AgreementDate, src => src.AgreementDate)
-
                 .Map(dest => dest.CompletionDate, src => src.CompletionDate)
                 .Map(dest => dest.TerminationDate, src => src.TerminationDate)
                 .Map(dest => dest.CommencementDate, src => src.CommencementDate)
@@ -51,7 +48,7 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
                 .Map(dest => dest.SignedDate, src => src.SignedDate)
                 .Map(dest => dest.InspectionDate, src => src.InspectionDate)
                 .Map(dest => dest.CancellationNote, src => src.CancellationNote)
-                .Inherits<BaseAuditModel, Entity.IBaseAppEntity>();
+                .Inherits<BaseConcurrentModel, Entity.IBaseAppEntity>();
         }
     }
 }

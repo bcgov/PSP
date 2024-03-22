@@ -80,7 +80,7 @@ describe('ResearchFileTabs component', () => {
     );
 
     const editButton = getByText('Documents');
-    act(() => {
+    await act(async () => {
       userEvent.click(editButton);
     });
     await waitFor(() => {
@@ -98,7 +98,7 @@ describe('ResearchFileTabs component', () => {
     );
 
     const editButton = getAllByText('Notes')[0];
-    act(() => {
+    await act(async () => {
       userEvent.click(editButton);
     });
     await waitFor(() => {

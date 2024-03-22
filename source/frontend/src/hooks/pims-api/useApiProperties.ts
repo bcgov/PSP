@@ -41,6 +41,8 @@ export const useApiProperties = () => {
         api.get<ApiGen_Concepts_Property[]>(`/properties?${ids.map(x => `ids=${x}`).join('&')}`),
       getPropertyConceptWithIdApi: (id: number) =>
         api.get<ApiGen_Concepts_Property>(`/properties/${id}`),
+      getPropertyConceptWithPidApi: (pid: string) =>
+        api.get<ApiGen_Concepts_Property>(`/properties/pid/${pid}`),
       putPropertyConceptApi: (property: ApiGen_Concepts_Property) =>
         api.put<ApiGen_Concepts_Property>(`/properties/${property.id}`, property),
     }),

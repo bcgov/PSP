@@ -12,6 +12,7 @@ interface TooltipIconProps extends Partial<React.ComponentPropsWithRef<typeof Ov
   toolTipId: string;
   className?: string;
   innerClassName?: string;
+  variant?: 'info' | 'warning';
   customOverlay?: OverlayChildren;
   customToolTipIcon?: React.ReactNode;
 }
@@ -20,7 +21,7 @@ const TooltipIcon: React.FunctionComponent<React.PropsWithChildren<TooltipIconPr
   const overlay =
     props.customOverlay === undefined
       ? ((
-          <Tooltip id={props.toolTipId} className={props.className}>
+          <Tooltip id={props.toolTipId} className={classNames(props.className, props.variant)}>
             {props.toolTip}
           </Tooltip>
         ) as OverlayChildren)
@@ -28,21 +29,23 @@ const TooltipIcon: React.FunctionComponent<React.PropsWithChildren<TooltipIconPr
 
   const icon =
     props.customToolTipIcon === undefined ? (
-      <FaInfoCircle className={classNames('tooltip-icon', props.innerClassName)} />
+      <FaInfoCircle className={classNames('tooltip-icon', props.innerClassName, props.variant)} />
     ) : (
       props.customToolTipIcon
     );
 
   return (
-    <OverlayTrigger placement={props.placement} overlay={overlay}>
-      <span
-        data-testid={`tooltip-icon-${props.toolTipId}`}
-        className="tooltip-icon"
-        id={props.toolTipId}
-      >
-        {icon}
-      </span>
-    </OverlayTrigger>
+    <>
+      <OverlayTrigger placement={props.placement} overlay={overlay}>
+        <span
+          data-testid={`tooltip-icon-${props.toolTipId}`}
+          className="tooltip-icon"
+          id={props.toolTipId}
+        >
+          {icon}
+        </span>
+      </OverlayTrigger>
+    </>
   );
 };
 

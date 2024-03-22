@@ -29,10 +29,10 @@ import { FileTabType } from '../shared/detail/FileTabs';
 import SidebarFooter from '../shared/SidebarFooter';
 import UpdateProperties from '../shared/update/properties/UpdateProperties';
 import { AcquisitionContainerState } from './AcquisitionContainer';
+import { isAcquisitionFile } from './add/models';
 import AcquisitionHeader from './common/AcquisitionHeader';
 import AcquisitionMenu from './common/AcquisitionMenu';
 import { AcquisitionRouter } from './router/AcquisitionRouter';
-import { isAcquisitionFile } from './tabs/agreement/update/models';
 
 export interface IAcquisitionViewProps {
   onClose: (() => void) | undefined;
@@ -76,7 +76,7 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
   const { file, lastUpdatedBy } = useContext(SideBarContext);
   const acquisitionFile: ApiGen_Concepts_AcquisitionFile = {
     ...file,
-  } as ApiGen_Concepts_AcquisitionFile;
+  } as unknown as ApiGen_Concepts_AcquisitionFile;
 
   // match for property menu routes - eg /property/1/ltsa
   const fileMatch = matchPath<Record<string, string>>(location.pathname, `${match.path}/:tab`);

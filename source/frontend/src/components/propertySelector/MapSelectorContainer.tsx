@@ -15,11 +15,13 @@ import PropertySelectorSearchContainer from './search/PropertySelectorSearchCont
 export interface IMapSelectorContainerProps {
   addSelectedProperties: (properties: IMapProperty[]) => void; // TODO: This component should be providing the featureDataset instead of the IMapProperty.
   modifiedProperties: PropertyForm[]; // TODO: Figure out if this component really needs the entire propertyForm. It could be that only the lat long are needed.
+  selectedComponentId?: string;
 }
 
 export const MapSelectorContainer: React.FunctionComponent<IMapSelectorContainerProps> = ({
   addSelectedProperties,
   modifiedProperties,
+  selectedComponentId,
 }) => {
   const [searchSelectedProperties, setSearchSelectedProperties] = useState<IMapProperty[]>([]);
   const [activeSelectorTab, setActiveSelectorTab] = useState<SelectorTabNames>(
@@ -44,6 +46,7 @@ export const MapSelectorContainer: React.FunctionComponent<IMapSelectorContainer
               addProperties([property], modifiedMapProperties, addSelectedProperties);
             }}
             selectedProperties={modifiedMapProperties}
+            selectedComponentId={selectedComponentId}
             lastSelectedProperty={
               lastSelectedProperty
                 ? modifiedMapProperties.find(

@@ -30,13 +30,10 @@ namespace PIMS.Tests.Automation.Drivers
         {
             var options = new ChromeOptions();
             if (runAutomationHeadless)
-            {
                 options.AddArguments("window-size=1920,1080", "headless", "no-sandbox");
-            }
             else
-            {
                 options.AddArguments("start-maximized");
-            }
+            
             var chromeDriver = new ChromeDriver(ChromeDriverService.CreateDefaultService(), options);
             //chromeDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(120);
             //chromeDriver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(120);
@@ -49,14 +46,10 @@ namespace PIMS.Tests.Automation.Drivers
         {
             var options = new EdgeOptions();
             if (runAutomationHeadless)
-            {
                 options.AddArguments("window-size=1920,1080", "headless");
-            }
             else
-            {
                 options.AddArguments("start-maximized");
-            }
-
+           
             var edgeDriver = new EdgeDriver(EdgeDriverService.CreateDefaultService(), options, TimeSpan.FromMinutes(3));
             edgeDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(120);
             edgeDriver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(120);
@@ -75,9 +68,7 @@ namespace PIMS.Tests.Automation.Drivers
         public void Dispose()
         {
             if (currentWebDriverLazy.IsValueCreated && closeBrowserOnDispose)
-            {
                 Current.Quit();
-            }
         }
     }
 }

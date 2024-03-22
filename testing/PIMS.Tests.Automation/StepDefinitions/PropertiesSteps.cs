@@ -332,6 +332,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Validate that the result gives only one pin
             Assert.True(searchProperties.PropertiesFoundCount() == 0);
+            searchProperties.Dispose();
         }
 
         [StepDefinition(@"A Property Information is saved successfully")]
@@ -339,6 +340,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         {
             //Validate Property Information View Form after changes
             propertyInformation.VerifyPropertyDetailsView();
+            propertyInformation.Dispose();
         }
 
         [StepDefinition(@"Non-Inventory property renders correctly")]
@@ -349,12 +351,14 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Validate correct tabs are displayed
             propertyInformation.VerifyNonInventoryPropertyTabs();
+            propertyInformation.Dispose();
         }
 
         [StepDefinition(@"Property Management Tab has been updated successfully")]
         public void PropertyManagementSuccess()
         {
             propertyManagementTab.VerifyInitManagementTabView();
+            propertyManagementTab.Dispose();
         }
 
         [StepDefinition(@"PIMS Files Tab has rendered successfully")]
@@ -364,12 +368,15 @@ namespace PIMS.Tests.Automation.StepDefinitions
             Assert.True(pimsFiles.GetAcquisitionFilesCount() > 0);
             Assert.True(pimsFiles.GetLeasesCount() > 0);
             Assert.True(pimsFiles.GetDispositionFilesCount() > 0);
+
+            pimsFiles.Dispose();
         }
 
         [StepDefinition(@"Properties filters works successfully")]
         public void PropertySearchBarSuccess()
         {
             searchProperties.SearchPropertyReset();
+            searchProperties.Dispose();
         }
 
         private void PopulateProperty(int rowNumber)

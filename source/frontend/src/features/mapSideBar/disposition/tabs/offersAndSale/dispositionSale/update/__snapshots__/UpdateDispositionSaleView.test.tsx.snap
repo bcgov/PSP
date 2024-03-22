@@ -715,7 +715,7 @@ exports[`Update Disposition Sale View renders as expected 1`] = `
               <label
                 class="c3"
               >
-                Final sale price ($):
+                Final sale price, incl. GST ($):
               </label>
             </div>
             <div

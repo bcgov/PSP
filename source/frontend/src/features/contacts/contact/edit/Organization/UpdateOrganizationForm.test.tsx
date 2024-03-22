@@ -136,18 +136,20 @@ describe('UpdateOrganizationForm', () => {
       const { getSaveButton, container } = setup({ id: 1 });
 
       // change some fields
-      await fillInput(container, 'name', newValues.name);
-      await fillInput(
-        container,
-        'emailContactMethods.0.value',
-        newValues?.contactMethods?.[0].value,
-      );
-      await fillInput(
-        container,
-        'emailContactMethods.0.contactMethodTypeCode',
-        newValues?.contactMethods?.[0].contactMethodType?.id,
-        'select',
-      );
+      await act(async () => {
+        await fillInput(container, 'name', newValues.name);
+        await fillInput(
+          container,
+          'emailContactMethods.0.value',
+          newValues?.contactMethods?.[0].value,
+        );
+        await fillInput(
+          container,
+          'emailContactMethods.0.contactMethodTypeCode',
+          newValues?.contactMethods?.[0].contactMethodType?.id,
+          'select',
+        );
+      });
 
       const save = getSaveButton();
       await act(async () => userEvent.click(save));
@@ -172,19 +174,29 @@ describe('UpdateOrganizationForm', () => {
       const { getSaveButton, container } = setup({ id: 1 });
 
       // change some fields
-      await fillInput(container, 'name', newValues.name);
-      await fillInput(
-        container,
-        'mailingAddress.streetAddress1',
-        mockAddress.address?.streetAddress1,
-      );
-      await fillInput(container, 'mailingAddress.municipality', mockAddress.address?.municipality);
+      await act(async () => {
+        await fillInput(container, 'name', newValues.name);
+        await fillInput(
+          container,
+          'mailingAddress.streetAddress1',
+          mockAddress.address?.streetAddress1,
+        );
+        await fillInput(
+          container,
+          'mailingAddress.municipality',
+          mockAddress.address?.municipality,
+        );
 
-      // wait for re-render upon changing country to OTHER
-      fillInput(container, 'mailingAddress.countryId', 4, 'select');
+        // wait for re-render upon changing country to OTHER
+        fillInput(container, 'mailingAddress.countryId', 4, 'select');
 
-      await fillInput(container, 'mailingAddress.countryOther', mockAddress.address?.countryOther);
-      await fillInput(container, 'mailingAddress.postal', mockAddress.address?.postal);
+        await fillInput(
+          container,
+          'mailingAddress.countryOther',
+          mockAddress.address?.countryOther,
+        );
+        await fillInput(container, 'mailingAddress.postal', mockAddress.address?.postal);
+      });
 
       const save = getSaveButton();
       await act(async () => userEvent.click(save));

@@ -50,7 +50,7 @@ describe('NotesModal component', () => {
     const {
       component: { getByTitle, findByTestId },
     } = await setup({ initialValues: { note: 'test note' } });
-    act(() => {
+    await act(async () => {
       userEvent.click(getByTitle('notes'));
     });
     const noteField = await findByTestId('note-field');
@@ -61,16 +61,16 @@ describe('NotesModal component', () => {
     const {
       component: { getByTitle, getByText, findByTestId },
     } = await setup({});
-    act(() => {
+    await act(async () => {
       userEvent.click(getByTitle('notes'));
     });
 
     const noteField = await findByTestId('note-field');
-    act(() => {
+    await act(async () => {
       userEvent.type(noteField, 'test note');
     });
     const saveButton = getByText('Yes');
-    act(() => {
+    await act(async () => {
       userEvent.click(saveButton);
     });
 
@@ -85,19 +85,19 @@ describe('NotesModal component', () => {
     const {
       component: { getByTitle, getByText, findByTestId },
     } = await setup({ initialValues: { note: '' } });
-    act(() => {
+    await act(async () => {
       userEvent.click(getByTitle('notes'));
     });
     let noteField = await findByTestId('note-field');
-    act(() => {
+    await act(async () => {
       userEvent.type(noteField, 'test note');
     });
     const cancelButton = getByText('No');
-    act(() => {
+    await act(async () => {
       userEvent.click(cancelButton);
     });
 
-    act(() => {
+    await act(async () => {
       userEvent.click(getByTitle('notes'));
     });
     noteField = await findByTestId('note-field');
