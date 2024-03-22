@@ -100,7 +100,7 @@ namespace Pims.Api.Services
                 UploadResponse = uploadResult,
             };
 
-            if (uploadResult.Document.Id != 0)
+            if (uploadResult.Document is not null && uploadResult.Document.Id != 0)
             {
                 // Create the pims document research file relationship
                 PimsResearchFileDocument newResearchFileDocument = new PimsResearchFileDocument()
@@ -129,7 +129,7 @@ namespace Pims.Api.Services
                 UploadResponse = uploadResult,
             };
 
-            if (uploadResult.Document.Id != 0)
+            if (uploadResult.Document is not null && uploadResult.Document.Id != 0)
             {
                 // Create the pims document acquisition file relationship
                 PimsAcquisitionFileDocument newAcquisitionDocument = new PimsAcquisitionFileDocument()
@@ -158,7 +158,7 @@ namespace Pims.Api.Services
                 UploadResponse = uploadResult,
             };
 
-            if (uploadResult.Document.Id != 0)
+            if (uploadResult.Document is not null && uploadResult.Document.Id != 0)
             {
                 PimsProjectDocument newProjectDocument = new()
                 {
@@ -186,7 +186,7 @@ namespace Pims.Api.Services
                 UploadResponse = uploadResult,
             };
 
-            if (uploadResult.Document.Id != 0)
+            if (uploadResult.Document is not null && uploadResult.Document.Id != 0)
             {
                 PimsLeaseDocument newDocument = new()
                 {
@@ -214,7 +214,7 @@ namespace Pims.Api.Services
                 UploadResponse = uploadResult,
             };
 
-            if (uploadResult.Document.Id != 0)
+            if (uploadResult.Document is not null && uploadResult.Document.Id != 0)
             {
                 PimsPropertyActivityDocument newDocument = new()
                 {
@@ -242,7 +242,7 @@ namespace Pims.Api.Services
                 UploadResponse = uploadResult,
             };
 
-            if (uploadResult.Document.Id != 0)
+            if (uploadResult.Document is not null && uploadResult.Document.Id != 0)
             {
                 PimsDispositionFileDocument newDocument = new()
                 {
