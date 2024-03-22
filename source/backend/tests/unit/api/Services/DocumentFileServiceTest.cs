@@ -216,7 +216,7 @@ namespace Pims.Api.Test.Services
             var service = this.CreateDocumentFileServiceWithPermissions();
             var documentService = this._helper.GetService<Mock<IDocumentService>>();
 
-            DocumentUploadRequest uploadRequest = new() { DocumentTypeId = 1, File = this._helper.GetFormFile(string.Empty) };
+            DocumentUploadRequest uploadRequest = new() { DocumentTypeId = 1, File = this._helper.GetFormFile("Lorem Ipsum") };
 
             // Assert
             Func<Task> sut = async () => await service.UploadResearchDocumentAsync(1, uploadRequest);
@@ -233,7 +233,7 @@ namespace Pims.Api.Test.Services
             var service = this.CreateDocumentFileServiceWithPermissions();
             var documentService = this._helper.GetService<Mock<IDocumentService>>();
 
-            DocumentUploadRequest uploadRequest = new() { DocumentTypeId = 1, File = this._helper.GetFormFile(string.Empty) };
+            DocumentUploadRequest uploadRequest = new() { DocumentTypeId = 1, File = this._helper.GetFormFile("Lorem Ipsum") };
 
             // Assert
             Func<Task> sut = async () => await service.UploadResearchDocumentAsync(1, uploadRequest);
@@ -250,7 +250,7 @@ namespace Pims.Api.Test.Services
             var service = this.CreateDocumentFileServiceWithPermissions();
             var documentService = this._helper.GetService<Mock<IDocumentService>>();
 
-            DocumentUploadRequest uploadRequest = new() { DocumentTypeId = 1, File = this._helper.GetFormFile(string.Empty) };
+            DocumentUploadRequest uploadRequest = new() { DocumentTypeId = 1, File = this._helper.GetFormFile("Lorem Ipsum") };
 
             // Assert
             Func<Task> sut = async () => await service.UploadProjectDocumentAsync(1, uploadRequest);
@@ -267,7 +267,7 @@ namespace Pims.Api.Test.Services
             var service = this.CreateDocumentFileServiceWithPermissions();
             var documentService = this._helper.GetService<Mock<IDocumentService>>();
 
-            DocumentUploadRequest uploadRequest = new() { DocumentTypeId = 1, File = this._helper.GetFormFile(string.Empty) };
+            DocumentUploadRequest uploadRequest = new() { DocumentTypeId = 1, File = this._helper.GetFormFile("Lorem Ipsum") };
 
             // Assert
             Func<Task> sut = async () => await service.UploadLeaseDocumentAsync(1, uploadRequest);
@@ -284,7 +284,7 @@ namespace Pims.Api.Test.Services
             var service = this.CreateDocumentFileServiceWithPermissions();
             var documentService = this._helper.GetService<Mock<IDocumentService>>();
 
-            DocumentUploadRequest uploadRequest = new() { DocumentTypeId = 1, File = this._helper.GetFormFile(string.Empty) };
+            DocumentUploadRequest uploadRequest = new() { DocumentTypeId = 1, File = this._helper.GetFormFile("Lorem Ipsum") };
 
             // Assert
             Func<Task> sut = async () => await service.UploadPropertyActivityDocumentAsync(1, uploadRequest);
@@ -301,7 +301,7 @@ namespace Pims.Api.Test.Services
             var service = this.CreateDocumentFileServiceWithPermissions();
             var documentService = this._helper.GetService<Mock<IDocumentService>>();
 
-            DocumentUploadRequest uploadRequest = new() { DocumentTypeId = 1, File = this._helper.GetFormFile(string.Empty) };
+            DocumentUploadRequest uploadRequest = new() { DocumentTypeId = 1, File = this._helper.GetFormFile("Lorem Ipsum") };
 
             // Assert
             Func<Task> action = async () => await service.UploadDispositionDocumentAsync(1, uploadRequest);
@@ -333,7 +333,7 @@ namespace Pims.Api.Test.Services
             {
                 DocumentTypeMayanId = 3,
                 DocumentTypeId = 4,
-                File = this._helper.GetFormFile(string.Empty),
+                File = this._helper.GetFormFile("Lorem Ipsum"),
                 DocumentStatusCode = "DocumentStatus",
             };
 
@@ -345,7 +345,35 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
-        public async void UploadDocumentAsync_Project_Success_EmptyFile()
+        public async void UploadDocumentAsync_Project_Fail_EmptyFile()
+        {
+            // Arrange
+            var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentAdd, Permissions.ProjectEdit);
+            var documentService = this._helper.GetService<Mock<IDocumentService>>();
+            var projectRepository = this._helper.GetService<Mock<IProjectRepository>>();
+            documentService.Setup(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>()));
+
+            // Act
+            DocumentUploadRequest uploadRequest = new()
+            {
+                DocumentTypeMayanId = 3,
+                DocumentTypeId = 4,
+                File = this._helper.GetFormFile(string.Empty), // empty file (0 kb)
+                DocumentStatusCode = "DocumentStatus",
+            };
+
+            Func<Task> act = async () => await service.UploadProjectDocumentAsync(1, uploadRequest);
+
+            // Assert
+            var ex = await act.Should().ThrowAsync<BadRequestException>();
+            ex.Which.Message.Should().Be("The submitted file is empty");
+
+            documentService.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>()), Times.Never);
+            projectRepository.Verify(x => x.AddProjectDocument(It.IsAny<PimsProjectDocument>()), Times.Never);
+        }
+
+        [Fact]
+        public async void UploadDocumentAsync_Project_Fail_GenericError()
         {
             // Arrange
             var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentAdd, Permissions.ProjectEdit);
@@ -356,7 +384,7 @@ namespace Pims.Api.Test.Services
                 .ReturnsAsync(new DocumentUploadResponse()
                 {
                     Document = null,
-                    DocumentExternalResponse = new() { Message = "File is empty", Status = ExternalResponseStatus.Error }
+                    DocumentExternalResponse = new() { Message = "Mayan test error", Status = ExternalResponseStatus.Error }
                 });
 
             // Act
@@ -364,13 +392,17 @@ namespace Pims.Api.Test.Services
             {
                 DocumentTypeMayanId = 3,
                 DocumentTypeId = 4,
-                File = this._helper.GetFormFile(string.Empty),
+                File = this._helper.GetFormFile("Lorem Ipsum"),
                 DocumentStatusCode = "DocumentStatus",
             };
 
-            await service.UploadProjectDocumentAsync(1, uploadRequest);
+            Func<Task> act = async () => await service.UploadProjectDocumentAsync(1, uploadRequest);
 
             // Assert
+            var ex = await act.Should().ThrowAsync<BadRequestException>();
+            ex.Which.Message.Should().Be("Unexpected exception uploading file");
+            ex.Which.InnerException.Message.Should().Be("Mayan test error");
+
             documentService.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>()), Times.Once);
             projectRepository.Verify(x => x.AddProjectDocument(It.IsAny<PimsProjectDocument>()), Times.Never);
         }
@@ -397,7 +429,7 @@ namespace Pims.Api.Test.Services
             {
                 DocumentTypeMayanId = 3,
                 DocumentTypeId = 4,
-                File = this._helper.GetFormFile(string.Empty),
+                File = this._helper.GetFormFile("Lorem Ipsum"),
                 DocumentStatusCode = "DocumentStatus",
             };
 
@@ -409,7 +441,35 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
-        public async void UploadDocumentAsync_Acquisition_Success_EmptyFile()
+        public async void UploadDocumentAsync_Acquisition_Fail_EmptyFile()
+        {
+            // Arrange
+            var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentAdd, Permissions.AcquisitionFileEdit);
+            var documentService = this._helper.GetService<Mock<IDocumentService>>();
+            var acquisitionFileDocumentRepository = this._helper.GetService<Mock<IAcquisitionFileDocumentRepository>>();
+            documentService.Setup(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>()));
+
+            // Act
+            DocumentUploadRequest uploadRequest = new()
+            {
+                DocumentTypeMayanId = 3,
+                DocumentTypeId = 4,
+                File = this._helper.GetFormFile(string.Empty), // empty file (0 kb)
+                DocumentStatusCode = "DocumentStatus",
+            };
+
+            Func<Task> act = async () => await service.UploadAcquisitionDocumentAsync(1, uploadRequest);
+
+            // Assert
+            var ex = await act.Should().ThrowAsync<BadRequestException>();
+            ex.Which.Message.Should().Be("The submitted file is empty");
+
+            documentService.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>()), Times.Never);
+            acquisitionFileDocumentRepository.Verify(x => x.AddAcquisition(It.IsAny<PimsAcquisitionFileDocument>()), Times.Never);
+        }
+
+        [Fact]
+        public async void UploadDocumentAsync_Acquisition_Fail_GenericError()
         {
             // Arrange
             var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentAdd, Permissions.AcquisitionFileEdit);
@@ -420,7 +480,7 @@ namespace Pims.Api.Test.Services
                 .ReturnsAsync(new DocumentUploadResponse()
                 {
                     Document = null,
-                    DocumentExternalResponse = new() { Message = "File is empty", Status = ExternalResponseStatus.Error }
+                    DocumentExternalResponse = new() { Message = "Mayan test error", Status = ExternalResponseStatus.Error }
                 });
 
             // Act
@@ -428,13 +488,17 @@ namespace Pims.Api.Test.Services
             {
                 DocumentTypeMayanId = 3,
                 DocumentTypeId = 4,
-                File = this._helper.GetFormFile(string.Empty),
+                File = this._helper.GetFormFile("Lorem Ipsum"),
                 DocumentStatusCode = "DocumentStatus",
             };
 
-            await service.UploadAcquisitionDocumentAsync(1, uploadRequest);
+            Func<Task> act = async () => await service.UploadAcquisitionDocumentAsync(1, uploadRequest);
 
             // Assert
+            var ex = await act.Should().ThrowAsync<BadRequestException>();
+            ex.Which.Message.Should().Be("Unexpected exception uploading file");
+            ex.Which.InnerException.Message.Should().Be("Mayan test error");
+
             documentService.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>()), Times.Once);
             acquisitionFileDocumentRepository.Verify(x => x.AddAcquisition(It.IsAny<PimsAcquisitionFileDocument>()), Times.Never);
         }
@@ -461,7 +525,7 @@ namespace Pims.Api.Test.Services
             {
                 DocumentTypeMayanId = 3,
                 DocumentTypeId = 4,
-                File = this._helper.GetFormFile(string.Empty),
+                File = this._helper.GetFormFile("Lorem Ipsum"),
                 DocumentStatusCode = "DocumentStatus",
             };
 
@@ -473,7 +537,35 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
-        public async void UploadDocumentAsync_Research_Success_EmptyFile()
+        public async void UploadDocumentAsync_Research_Fail_EmptyFile()
+        {
+            // Arrange
+            var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentAdd, Permissions.ResearchFileEdit);
+            var documentService = this._helper.GetService<Mock<IDocumentService>>();
+            var researchFileDocumentRepository = this._helper.GetService<Mock<IResearchFileDocumentRepository>>();
+            documentService.Setup(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>()));
+
+            // Act
+            DocumentUploadRequest uploadRequest = new()
+            {
+                DocumentTypeMayanId = 3,
+                DocumentTypeId = 4,
+                File = this._helper.GetFormFile(string.Empty), // empty file (0 kb)
+                DocumentStatusCode = "DocumentStatus",
+            };
+
+            Func<Task> act = async () => await service.UploadResearchDocumentAsync(1, uploadRequest);
+
+            // Assert
+            var ex = await act.Should().ThrowAsync<BadRequestException>();
+            ex.Which.Message.Should().Be("The submitted file is empty");
+
+            documentService.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>()), Times.Never);
+            researchFileDocumentRepository.Verify(x => x.AddResearch(It.IsAny<PimsResearchFileDocument>()), Times.Never);
+        }
+
+        [Fact]
+        public async void UploadDocumentAsync_Research_Fail_GenericError()
         {
             // Arrange
             var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentAdd, Permissions.ResearchFileEdit);
@@ -484,7 +576,7 @@ namespace Pims.Api.Test.Services
                 .ReturnsAsync(new DocumentUploadResponse()
                 {
                     Document = null,
-                    DocumentExternalResponse = new() { Message = "File is empty", Status = ExternalResponseStatus.Error }
+                    DocumentExternalResponse = new() { Message = "Mayan test error", Status = ExternalResponseStatus.Error }
                 });
 
             // Act
@@ -492,13 +584,17 @@ namespace Pims.Api.Test.Services
             {
                 DocumentTypeMayanId = 3,
                 DocumentTypeId = 4,
-                File = this._helper.GetFormFile(string.Empty),
+                File = this._helper.GetFormFile("Lorem Ipsum"),
                 DocumentStatusCode = "DocumentStatus",
             };
 
-            await service.UploadResearchDocumentAsync(1, uploadRequest);
+            Func<Task> act = async () => await service.UploadResearchDocumentAsync(1, uploadRequest);
 
             // Assert
+            var ex = await act.Should().ThrowAsync<BadRequestException>();
+            ex.Which.Message.Should().Be("Unexpected exception uploading file");
+            ex.Which.InnerException.Message.Should().Be("Mayan test error");
+
             documentService.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>()), Times.Once);
             researchFileDocumentRepository.Verify(x => x.AddResearch(It.IsAny<PimsResearchFileDocument>()), Times.Never);
         }
@@ -525,7 +621,7 @@ namespace Pims.Api.Test.Services
             {
                 DocumentTypeMayanId = 3,
                 DocumentTypeId = 4,
-                File = this._helper.GetFormFile(string.Empty),
+                File = this._helper.GetFormFile("Lorem Ipsum"),
                 DocumentStatusCode = "DocumentStatus",
             };
 
@@ -537,7 +633,35 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
-        public async void UploadDocumentAsync_Lease_Success_EmptyFile()
+        public async void UploadDocumentAsync_Lease_Fail_EmptyFile()
+        {
+            // Arrange
+            var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentAdd, Permissions.LeaseEdit);
+            var documentService = this._helper.GetService<Mock<IDocumentService>>();
+            var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
+            documentService.Setup(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>()));
+
+            // Act
+            DocumentUploadRequest uploadRequest = new()
+            {
+                DocumentTypeMayanId = 3,
+                DocumentTypeId = 4,
+                File = this._helper.GetFormFile(string.Empty), // empty file (0 kb)
+                DocumentStatusCode = "DocumentStatus",
+            };
+
+            Func<Task> act = async () => await service.UploadLeaseDocumentAsync(1, uploadRequest);
+
+            // Assert
+            var ex = await act.Should().ThrowAsync<BadRequestException>();
+            ex.Which.Message.Should().Be("The submitted file is empty");
+
+            documentService.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>()), Times.Never);
+            leaseRepository.Verify(x => x.AddLeaseDocument(It.IsAny<PimsLeaseDocument>()), Times.Never);
+        }
+
+        [Fact]
+        public async void UploadDocumentAsync_Lease_Fail_GenericError()
         {
             // Arrange
             var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentAdd, Permissions.LeaseEdit);
@@ -548,7 +672,7 @@ namespace Pims.Api.Test.Services
                 .ReturnsAsync(new DocumentUploadResponse()
                 {
                     Document = null,
-                    DocumentExternalResponse = new() { Message = "File is empty", Status = ExternalResponseStatus.Error }
+                    DocumentExternalResponse = new() { Message = "Mayan test error", Status = ExternalResponseStatus.Error }
                 });
 
             // Act
@@ -556,13 +680,17 @@ namespace Pims.Api.Test.Services
             {
                 DocumentTypeMayanId = 3,
                 DocumentTypeId = 4,
-                File = this._helper.GetFormFile(string.Empty),
+                File = this._helper.GetFormFile("Lorem Ipsum"),
                 DocumentStatusCode = "DocumentStatus",
             };
 
-            await service.UploadLeaseDocumentAsync(1, uploadRequest);
+            Func<Task> act = async () => await service.UploadLeaseDocumentAsync(1, uploadRequest);
 
             // Assert
+            var ex = await act.Should().ThrowAsync<BadRequestException>();
+            ex.Which.Message.Should().Be("Unexpected exception uploading file");
+            ex.Which.InnerException.Message.Should().Be("Mayan test error");
+
             documentService.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>()), Times.Once);
             leaseRepository.Verify(x => x.AddLeaseDocument(It.IsAny<PimsLeaseDocument>()), Times.Never);
         }
@@ -589,7 +717,7 @@ namespace Pims.Api.Test.Services
             {
                 DocumentTypeMayanId = 3,
                 DocumentTypeId = 4,
-                File = this._helper.GetFormFile(string.Empty),
+                File = this._helper.GetFormFile("Lorem Ipsum"),
                 DocumentStatusCode = "DocumentStatus",
             };
 
@@ -601,7 +729,35 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
-        public async void UploadDocumentAsync_PropertyActivity_Success_EmptyFile()
+        public async void UploadDocumentAsync_PropertyActivity_Fail_EmptyFile()
+        {
+            // Arrange
+            var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentAdd, Permissions.ManagementEdit);
+            var documentService = this._helper.GetService<Mock<IDocumentService>>();
+            var propertyActivityDocumentRepository = this._helper.GetService<Mock<IPropertyActivityDocumentRepository>>();
+            documentService.Setup(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>()));
+
+            // Act
+            DocumentUploadRequest uploadRequest = new()
+            {
+                DocumentTypeMayanId = 3,
+                DocumentTypeId = 4,
+                File = this._helper.GetFormFile(string.Empty), // empty file (0 kb)
+                DocumentStatusCode = "DocumentStatus",
+            };
+
+            Func<Task> act = async () => await service.UploadPropertyActivityDocumentAsync(1, uploadRequest);
+
+            // Assert
+            var ex = await act.Should().ThrowAsync<BadRequestException>();
+            ex.Which.Message.Should().Be("The submitted file is empty");
+
+            documentService.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>()), Times.Never);
+            propertyActivityDocumentRepository.Verify(x => x.AddPropertyActivityDocument(It.IsAny<PimsPropertyActivityDocument>()), Times.Never);
+        }
+
+        [Fact]
+        public async void UploadDocumentAsync_PropertyActivity_Fail_GenericError()
         {
             // Arrange
             var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentAdd, Permissions.ManagementEdit);
@@ -612,7 +768,7 @@ namespace Pims.Api.Test.Services
                 .ReturnsAsync(new DocumentUploadResponse()
                 {
                     Document = null,
-                    DocumentExternalResponse = new() { Message = "File is empty", Status = ExternalResponseStatus.Error }
+                    DocumentExternalResponse = new() { Message = "Mayan test error", Status = ExternalResponseStatus.Error }
                 });
 
             // Act
@@ -620,13 +776,17 @@ namespace Pims.Api.Test.Services
             {
                 DocumentTypeMayanId = 3,
                 DocumentTypeId = 4,
-                File = this._helper.GetFormFile(string.Empty),
+                File = this._helper.GetFormFile("Lorem Ipsum"),
                 DocumentStatusCode = "DocumentStatus",
             };
 
-            await service.UploadPropertyActivityDocumentAsync(1, uploadRequest);
+            Func<Task> act = async () => await service.UploadPropertyActivityDocumentAsync(1, uploadRequest);
 
             // Assert
+            var ex = await act.Should().ThrowAsync<BadRequestException>();
+            ex.Which.Message.Should().Be("Unexpected exception uploading file");
+            ex.Which.InnerException.Message.Should().Be("Mayan test error");
+
             documentService.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>()), Times.Once);
             propertyActivityDocumentRepository.Verify(x => x.AddPropertyActivityDocument(It.IsAny<PimsPropertyActivityDocument>()), Times.Never);
         }
@@ -656,7 +816,7 @@ namespace Pims.Api.Test.Services
             {
                 DocumentTypeMayanId = 3,
                 DocumentTypeId = 4,
-                File = this._helper.GetFormFile(string.Empty),
+                File = this._helper.GetFormFile("Lorem Ipsum"),
                 DocumentStatusCode = "DocumentStatus",
             };
 
@@ -671,7 +831,35 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
-        public async void UploadDocumentAsync_Disposition_Success_EmptyFile()
+        public async void UploadDocumentAsync_Disposition_Fail_EmptyFile()
+        {
+            // Arrange
+            var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentAdd, Permissions.DispositionEdit);
+            var documentService = this._helper.GetService<Mock<IDocumentService>>();
+            var dispositionFileDocumentRepository = this._helper.GetService<Mock<IDispositionFileDocumentRepository>>();
+            documentService.Setup(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>()));
+
+            // Act
+            DocumentUploadRequest uploadRequest = new()
+            {
+                DocumentTypeMayanId = 3,
+                DocumentTypeId = 4,
+                File = this._helper.GetFormFile(string.Empty), // empty file (0 kb)
+                DocumentStatusCode = "DocumentStatus",
+            };
+
+            Func<Task> act = async () => await service.UploadDispositionDocumentAsync(100, uploadRequest);
+
+            // Assert
+            var ex = await act.Should().ThrowAsync<BadRequestException>();
+            ex.Which.Message.Should().Be("The submitted file is empty");
+
+            documentService.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>()), Times.Never);
+            dispositionFileDocumentRepository.Verify(x => x.AddDispositionDocument(It.IsAny<PimsDispositionFileDocument>()), Times.Never);
+        }
+
+        [Fact]
+        public async void UploadDocumentAsync_Disposition_Fail_GenericError()
         {
             // Arrange
             var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentAdd, Permissions.DispositionEdit);
@@ -682,24 +870,25 @@ namespace Pims.Api.Test.Services
                 .ReturnsAsync(new DocumentUploadResponse()
                 {
                     Document = null,
-                    DocumentExternalResponse = new() { Message = "File is empty", Status = ExternalResponseStatus.Error }
+                    DocumentExternalResponse = new() { Message = "Mayan test error", Status = ExternalResponseStatus.Error }
                 });
-
-            dispositionFileDocumentRepository.Setup(x => x.AddDispositionDocument(It.IsAny<PimsDispositionFileDocument>()))
-                .Returns(new PimsDispositionFileDocument() { DispositionFileId = 100, DocumentId = 1 });
 
             // Act
             DocumentUploadRequest uploadRequest = new()
             {
                 DocumentTypeMayanId = 3,
                 DocumentTypeId = 4,
-                File = this._helper.GetFormFile(string.Empty),
+                File = this._helper.GetFormFile("Lorem Ipsum"),
                 DocumentStatusCode = "DocumentStatus",
             };
 
-            var result = await service.UploadDispositionDocumentAsync(100, uploadRequest);
+            Func<Task> act = async () => await service.UploadDispositionDocumentAsync(100, uploadRequest);
 
             // Assert
+            var ex = await act.Should().ThrowAsync<BadRequestException>();
+            ex.Which.Message.Should().Be("Unexpected exception uploading file");
+            ex.Which.InnerException.Message.Should().Be("Mayan test error");
+
             documentService.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>()), Times.Once);
             dispositionFileDocumentRepository.Verify(x => x.AddDispositionDocument(It.IsAny<PimsDispositionFileDocument>()), Times.Never);
         }

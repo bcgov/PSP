@@ -93,12 +93,18 @@ namespace Pims.Api.Services
             Logger.LogInformation("Uploading document for single research file");
             User.ThrowIfNotAllAuthorized(Permissions.DocumentAdd, Permissions.ResearchFileEdit);
 
+            // Do not call Mayan if uploaded file is empty (zero-size)
+            ValidateZeroLengthFile(uploadRequest);
+
             DocumentUploadResponse uploadResult = await documentService.UploadDocumentAsync(uploadRequest);
 
             DocumentUploadRelationshipResponse relationshipResponse = new DocumentUploadRelationshipResponse()
             {
                 UploadResponse = uploadResult,
             };
+
+            // Throw an error if Mayan returns a null document. This means it wasn't able to store it.
+            ValidateDocumentUploadResponse(uploadResult);
 
             if (uploadResult.Document is not null && uploadResult.Document.Id != 0)
             {
@@ -122,12 +128,18 @@ namespace Pims.Api.Services
             Logger.LogInformation("Uploading document for single acquisition file");
             User.ThrowIfNotAllAuthorized(Permissions.DocumentAdd, Permissions.AcquisitionFileEdit);
 
+            // Do not call Mayan if uploaded file is empty (zero-size)
+            ValidateZeroLengthFile(uploadRequest);
+
             DocumentUploadResponse uploadResult = await documentService.UploadDocumentAsync(uploadRequest);
 
             DocumentUploadRelationshipResponse relationshipResponse = new DocumentUploadRelationshipResponse()
             {
                 UploadResponse = uploadResult,
             };
+
+            // Throw an error if Mayan returns a null document. This means it wasn't able to store it.
+            ValidateDocumentUploadResponse(uploadResult);
 
             if (uploadResult.Document is not null && uploadResult.Document.Id != 0)
             {
@@ -151,12 +163,18 @@ namespace Pims.Api.Services
             Logger.LogInformation("Uploading document for single Project");
             User.ThrowIfNotAllAuthorized(Permissions.DocumentAdd, Permissions.ProjectEdit);
 
+            // Do not call Mayan if uploaded file is empty (zero-size)
+            ValidateZeroLengthFile(uploadRequest);
+
             DocumentUploadResponse uploadResult = await documentService.UploadDocumentAsync(uploadRequest);
 
             DocumentUploadRelationshipResponse relationshipResponse = new()
             {
                 UploadResponse = uploadResult,
             };
+
+            // Throw an error if Mayan returns a null document. This means it wasn't able to store it.
+            ValidateDocumentUploadResponse(uploadResult);
 
             if (uploadResult.Document is not null && uploadResult.Document.Id != 0)
             {
@@ -179,12 +197,18 @@ namespace Pims.Api.Services
             Logger.LogInformation("Uploading document for single Lease");
             User.ThrowIfNotAllAuthorized(Permissions.DocumentAdd, Permissions.LeaseEdit);
 
+            // Do not call Mayan if uploaded file is empty (zero-size)
+            ValidateZeroLengthFile(uploadRequest);
+
             DocumentUploadResponse uploadResult = await documentService.UploadDocumentAsync(uploadRequest);
 
             DocumentUploadRelationshipResponse relationshipResponse = new()
             {
                 UploadResponse = uploadResult,
             };
+
+            // Throw an error if Mayan returns a null document. This means it wasn't able to store it.
+            ValidateDocumentUploadResponse(uploadResult);
 
             if (uploadResult.Document is not null && uploadResult.Document.Id != 0)
             {
@@ -207,12 +231,18 @@ namespace Pims.Api.Services
             Logger.LogInformation("Uploading document for single Property Activity");
             User.ThrowIfNotAllAuthorized(Permissions.DocumentAdd, Permissions.ManagementEdit);
 
+            // Do not call Mayan if uploaded file is empty (zero-size)
+            ValidateZeroLengthFile(uploadRequest);
+
             DocumentUploadResponse uploadResult = await documentService.UploadDocumentAsync(uploadRequest);
 
             DocumentUploadRelationshipResponse relationshipResponse = new()
             {
                 UploadResponse = uploadResult,
             };
+
+            // Throw an error if Mayan returns a null document. This means it wasn't able to store it.
+            ValidateDocumentUploadResponse(uploadResult);
 
             if (uploadResult.Document is not null && uploadResult.Document.Id != 0)
             {
@@ -235,12 +265,18 @@ namespace Pims.Api.Services
             Logger.LogInformation("Uploading document for single disposition file");
             User.ThrowIfNotAllAuthorized(Permissions.DocumentAdd, Permissions.DispositionEdit);
 
+            // Do not call Mayan if uploaded file is empty (zero-size)
+            ValidateZeroLengthFile(uploadRequest);
+
             DocumentUploadResponse uploadResult = await documentService.UploadDocumentAsync(uploadRequest);
 
             DocumentUploadRelationshipResponse relationshipResponse = new()
             {
                 UploadResponse = uploadResult,
             };
+
+            // Throw an error if Mayan returns a null document. This means it wasn't able to store it.
+            ValidateDocumentUploadResponse(uploadResult);
 
             if (uploadResult.Document is not null && uploadResult.Document.Id != 0)
             {
@@ -363,6 +399,22 @@ namespace Pims.Api.Services
                 _dispositionFileDocumentRepository.DeleteDispositionDocument(dispositionFileDocument);
                 _dispositionFileDocumentRepository.CommitTransaction();
                 return new ExternalResponse<string>() { Status = ExternalResponseStatus.NotExecuted };
+            }
+        }
+
+        private static void ValidateZeroLengthFile(DocumentUploadRequest uploadRequest)
+        {
+            if (uploadRequest.File is not null && uploadRequest.File.Length == 0)
+            {
+                throw new BadRequestException("The submitted file is empty");
+            }
+        }
+
+        private static void ValidateDocumentUploadResponse(DocumentUploadResponse uploadResult)
+        {
+            if (uploadResult.Document is null)
+            {
+                throw new BadRequestException("Unexpected exception uploading file", new System.Exception(uploadResult.DocumentExternalResponse.Message));
             }
         }
     }
