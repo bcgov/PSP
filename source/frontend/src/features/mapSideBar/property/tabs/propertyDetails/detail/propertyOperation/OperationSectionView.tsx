@@ -1,3 +1,5 @@
+import React from 'react';
+
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
 import { StyledNoData } from '@/features/documents/commonStyles';
@@ -27,9 +29,8 @@ export const OperationSectionView: React.FunctionComponent<IOperationSectionView
           <>
             <LoadingBackdrop show={loading} parentScreen />
             {subdivisionOperations.map((operationSet, index) => (
-              <>
+              <React.Fragment key={`${ApiGen_CodeTypes_PropertyOperationTypes.SUBDIVIDE}-${index}`}>
                 <OperationView
-                  key={index}
                   operationType={ApiGen_CodeTypes_PropertyOperationTypes.SUBDIVIDE}
                   operationTimeStamp={operationSet.operationDateTime ?? ''}
                   sourceProperties={operationSet.sourceProperties}
@@ -37,7 +38,7 @@ export const OperationSectionView: React.FunctionComponent<IOperationSectionView
                   ExpandedRowComponent={OperationFileAssociationsContainer}
                 />
                 {index < subdivisionOperations.length - 1 && <br />}
-              </>
+              </React.Fragment>
             ))}
           </>
         ) : (
@@ -50,7 +51,7 @@ export const OperationSectionView: React.FunctionComponent<IOperationSectionView
             <LoadingBackdrop show={loading} parentScreen />
             {consolidationOperations.map((operationSet, index) => (
               <OperationView
-                key={index}
+                key={`${ApiGen_CodeTypes_PropertyOperationTypes.CONSOLIDATE}-${index}`}
                 operationType={ApiGen_CodeTypes_PropertyOperationTypes.CONSOLIDATE}
                 operationTimeStamp={operationSet.operationDateTime ?? ''}
                 sourceProperties={operationSet.sourceProperties}
