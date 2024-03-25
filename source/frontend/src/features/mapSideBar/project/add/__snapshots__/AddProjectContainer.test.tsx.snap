@@ -21,7 +21,7 @@ exports[`AddProjectContainer component renders as expected 1`] = `
 }
 
 .c1 {
-  font-size: 30px;
+  font-size: 2.4rem;
   cursor: pointer;
 }
 
@@ -108,6 +108,7 @@ exports[`AddProjectContainer component renders as expected 1`] = `
   -ms-letter-spacing: 0.1rem;
   letter-spacing: 0.1rem;
   cursor: pointer;
+  height: 3.8rem;
 }
 
 .c10.btn:hover {
@@ -775,6 +776,7 @@ exports[`AddProjectContainer component renders as expected 1`] = `
   -ms-letter-spacing: 0.1rem;
   letter-spacing: 0.1rem;
   cursor: pointer;
+  height: 3.8rem;
 }
 
 .c1.btn:hover {
@@ -894,13 +896,13 @@ exports[`AddProjectContainer component renders as expected 1`] = `
     class=""
   >
     <div
-      class="c0 justify-content-end mt-auto no-gutters row"
+      class="c0 justify-content-end mb-12 mt-12 p-0 no-gutters row"
     >
       <div
         class="pr-3 col-auto"
       />
       <div
-        class="pr-4 col-auto"
+        class="pr-6 col-auto"
       >
         <button
           class="c1 Button btn btn-secondary"
@@ -917,7 +919,7 @@ exports[`AddProjectContainer component renders as expected 1`] = `
         class="col-auto"
       >
         <button
-          class="c1 Button btn btn-primary"
+          class="c1 Button mr-9 btn btn-primary"
           type="button"
         >
           <div

@@ -21,7 +21,7 @@ exports[`Add Disposition Container View matches snapshot 1`] = `
 }
 
 .c1 {
-  font-size: 30px;
+  font-size: 2.4rem;
   cursor: pointer;
 }
 
