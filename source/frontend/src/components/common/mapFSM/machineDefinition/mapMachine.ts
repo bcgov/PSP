@@ -42,6 +42,9 @@ const featureViewStates = {
         TOGGLE_LAYERS: {
           target: 'browsing',
         },
+        SET_MAP_LAYERS: {
+          actions: assign({ activeLayers: (_, event: any) => event.activeLayers }),
+        },
       },
     },
     filtering: {
@@ -324,6 +327,7 @@ export const mapMachine = createMachine<MachineContext>({
     filePropertyLocations: [],
     activePimsPropertyIds: [],
     showDisposed: false,
+    activeLayers: [],
   },
 
   // State definitions

@@ -77,6 +77,7 @@ describe('UpdateAgreementsContainer component', () => {
 
   it('renders the underlying form', async () => {
     const { getByText } = setup();
+    await act(async () => {});
     expect(getByText(/Content Rendered/)).toBeVisible();
   });
 

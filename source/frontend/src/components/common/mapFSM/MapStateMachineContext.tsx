@@ -3,6 +3,7 @@ import { LatLngBounds, LatLngLiteral } from 'leaflet';
 import React, { useCallback, useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
 
+import { ILayerItem } from '@/components/maps/leaflet/Control/LayersControl/types';
 import { IGeoSearchParams } from '@/constants/API';
 import {
   defaultPropertyFilter,
@@ -37,6 +38,7 @@ export interface IMapStateMachineContext {
   isShowingMapLayers: boolean;
   activePimsPropertyIds: number[];
   showDisposed: boolean;
+  activeLayers: ILayerItem[];
 
   requestFlyToLocation: (latlng: LatLngLiteral) => void;
   requestFlyToBounds: (bounds: LatLngBounds) => void;
@@ -57,6 +59,7 @@ export interface IMapStateMachineContext {
   toggleMapFilter: () => void;
   toggleMapLayer: () => void;
   setFilePropertyLocations: (locations: LatLngLiteral[]) => void;
+  setMapLayers: (layers: ILayerItem[]) => void;
 
   setVisiblePimsProperties: (propertyIds: number[]) => void;
   setShowDisposed: (show: boolean) => void;
@@ -247,6 +250,13 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
     [serviceSend],
   );
 
+  const setMapLayers = useCallback(
+    (activeLayers: ILayerItem[]) => {
+      serviceSend({ type: 'SET_MAP_LAYERS', activeLayers });
+    },
+    [serviceSend],
+  );
+
   const setVisiblePimsProperties = useCallback(
     (propertyIds: number[]) => {
       serviceSend({ type: 'SET_VISIBLE_PROPERTIES', propertyIds });
@@ -309,6 +319,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         isSelecting: state.matches({ mapVisible: { featureView: 'selecting' } }),
         isFiltering: isFiltering,
         isShowingMapLayers: isShowingMapLayers,
+        activeLayers: state.context.activeLayers,
         activePimsPropertyIds: state.context.activePimsPropertyIds,
         showDisposed: state.context.showDisposed,
 
@@ -331,6 +342,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         setFilePropertyLocations,
         setVisiblePimsProperties,
         setShowDisposed,
+        setMapLayers,
       }}
     >
       {children}

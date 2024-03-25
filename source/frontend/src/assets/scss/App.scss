@@ -89,8 +89,8 @@ a {
     padding: 0.8rem 1.2rem;
     color: $link-color;
     border-color: $link-color;
-    border-top-width: .2rem;
-    border-bottom-width: .2rem;
+    border-top-width: 0.2rem;
+    border-bottom-width: 0.2rem;
     &:hover {
       border-color: $secondary-variant-color;
     }
@@ -99,7 +99,7 @@ a {
   .page-item.active .page-link {
     color: #fff;
     background-color: $link-color;
-    
+
     &:hover {
       background-color: $secondary-variant-color;
     }
