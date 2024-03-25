@@ -608,7 +608,7 @@ namespace Pims.Dal.Test.Repositories
             helper.SaveChanges();
 
             var propertyRepository = helper.GetService<Mock<IPropertyRepository>>();
-            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>())).Returns(propertyOne);
+            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), false)).Returns(propertyOne);
 
             var repository = helper.GetService<Mock<IPropertyLeaseRepository>>();
             repository.Setup(x => x.GetAllByPropertyId(It.IsAny<long>())).Returns(propertyOne.PimsPropertyLeases);
@@ -642,7 +642,7 @@ namespace Pims.Dal.Test.Repositories
             propertyOne.PimsPropertyLeases = new List<PimsPropertyLease>() { new Dal.Entities.PimsPropertyLease() { LeaseId = leaseTwo.LeaseId, PropertyId = propertyOne.PropertyId, Lease = leaseTwo } };
 
             var propertyRepository = helper.GetService<Mock<IPropertyRepository>>();
-            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>())).Returns(propertyOne);
+            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), false)).Returns(propertyOne);
 
             var repository = helper.GetService<Mock<IPropertyLeaseRepository>>();
             repository.Setup(x => x.GetAllByPropertyId(It.IsAny<long>())).Returns(propertyOne.PimsPropertyLeases);
@@ -680,7 +680,7 @@ namespace Pims.Dal.Test.Repositories
             helper.SaveChanges();
 
             var propertyRepository = helper.GetService<Mock<IPropertyRepository>>();
-            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>())).Returns(propertyOne);
+            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), false)).Returns(propertyOne);
 
             var repository = helper.GetService<Mock<IPropertyLeaseRepository>>();
             repository.Setup(x => x.GetAllByPropertyId(It.IsAny<long>())).Returns(new List<PimsPropertyLease>());

@@ -66,7 +66,7 @@ namespace Pims.Dal.Test.Repositories
         }
 
         [Fact]
-        public void Add__WithRetiredProperty_Should_Fail()
+        public void Add_WithRetiredProperty_Should_Fail()
         {
             // Arrange
             var helper = new TestHelper();
