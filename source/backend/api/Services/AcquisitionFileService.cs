@@ -227,14 +227,15 @@ namespace Pims.Api.Services
             ValidateStaff(acquisitionFile);
             ValidateOrganizationStaff(acquisitionFile);
 
-            acquisitionFile.AcquisitionFileStatusTypeCode = "ACTIVE";
             MatchProperties(acquisitionFile, userOverrides);
             ValidatePropertyRegions(acquisitionFile);
 
             PopulateAcquisitionChecklist(acquisitionFile);
 
+            acquisitionFile.AcquisitionFileStatusTypeCode = AcquisitionStatusTypes.ACTIVE.ToString();
             var newAcqFile = _acqFileRepository.Add(acquisitionFile);
             _acqFileRepository.CommitTransaction();
+
             return newAcqFile;
         }
 

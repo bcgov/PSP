@@ -9,7 +9,6 @@ using Pims.Api.Constants;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Models.CodeTypes;
 using Pims.Api.Models.Concepts.Property;
-using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 using Pims.Dal.Exceptions;

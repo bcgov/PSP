@@ -347,6 +347,7 @@ namespace Pims.Api.Test.Services
 
             var operationOne = EntityHelper.CreatePropertyOperation();
             operationOne.DestinationProperty.Pid = -1;
+
             var operations = new List<PimsPropertyOperation>() { operationOne, EntityHelper.CreatePropertyOperation() };
 
             // Act
