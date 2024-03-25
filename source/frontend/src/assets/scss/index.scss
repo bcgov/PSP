@@ -22,17 +22,21 @@ $spacer: 1.6rem;
 $spacers: ();
 // stylelint-disable-next-line scss/dollar-variable-default
 @for $i from 1 through 50 {
-  $spacers: map-merge($spacers, 
+  $spacers: map-merge(
+    $spacers,
     (
-      $i: (($i * .25) * $spacer)
-    ),
+      $i: (
+        ($i * 0.25) * $spacer,
+      ),
+    )
   );
 }
 
-
 @each $size, $length in $spacers {
-  @if "#{$size}" != "0" {
-    .m-#{$size} { margin: $length !important; }
+  @if '#{$size}'!='0' {
+    .m-#{$size} {
+      margin: $length !important;
+    }
     .mt-#{$size},
     .my-#{$size} {
       margin-top: $length !important;
@@ -53,8 +57,10 @@ $spacers: ();
 }
 
 @each $size, $length in $spacers {
-  @if "#{$size}" != "0" {
-    .p-#{$size} { padding: $length !important; }
+  @if '#{$size}'!='0' {
+    .p-#{$size} {
+      padding: $length !important;
+    }
     .pt-#{$size},
     .py-#{$size} {
       padding-top: $length !important;
