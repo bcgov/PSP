@@ -87,7 +87,7 @@ namespace Pims.Dal.Repositories
             using var scope = Logger.QueryScope();
             disposition.ThrowIfNull(nameof(disposition));
 
-            if (disposition.PimsDispositionFileProperties.Any(x => x.Property.IsRetired.HasValue && x.Property.IsRetired.Value))
+            if (disposition.PimsDispositionFileProperties.Any(x => x.Property != null && x.Property.IsRetired.HasValue && x.Property.IsRetired.Value))
             {
                 throw new BusinessRuleViolationException("Retired property can not be selected.");
             }

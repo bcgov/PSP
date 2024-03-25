@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
-using System.Text.RegularExpressions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Constants;
@@ -74,7 +73,6 @@ namespace Pims.Api.Services
 
             dispositionFile.DispositionStatusTypeCode ??= EnumDispositionStatusTypeCode.UNKNOWN.ToString();
             dispositionFile.DispositionFileStatusTypeCode ??= EnumDispositionFileStatusTypeCode.ACTIVE.ToString();
-
             ValidateStaff(dispositionFile);
 
             MatchProperties(dispositionFile, userOverrides);
@@ -704,7 +702,12 @@ namespace Pims.Api.Services
                     var pid = dispProperty.Property.Pid.Value;
                     try
                     {
-                        var foundProperty = _propertyRepository.GetByPid(pid);
+                        var foundProperty = _propertyRepository.GetByPid(pid, true);
+                        if (foundProperty.IsRetired.HasValue && foundProperty.IsRetired.Value)
+                        {
+                            throw new BusinessRuleViolationException("Retired property can not be selected.");
+                        }
+
                         dispProperty.PropertyId = foundProperty.Internal_Id;
                         _propertyService.UpdateLocation(dispProperty.Property, ref foundProperty, overrideCodes);
                         dispProperty.Property = null;
@@ -718,7 +721,7 @@ namespace Pims.Api.Services
                         }
                         else
                         {
-                            throw new UserOverrideException(UserOverrideCode.DisposingPropertyNotInventoried, "You have added one or more properties to the disposition file that are not in the MoTI Inventory. Do you want to proceed?");
+                            throw new UserOverrideException(UserOverrideCode.DisposingPropertyNotInventoried, "You have added one or more properties to the disposition file that are not in the MOTI Inventory. Do you want to proceed?");
                         }
                     }
                 }
@@ -728,6 +731,11 @@ namespace Pims.Api.Services
                     try
                     {
                         var foundProperty = _propertyRepository.GetByPin(pin);
+                        if (foundProperty.IsRetired.HasValue && foundProperty.IsRetired.Value)
+                        {
+                            throw new BusinessRuleViolationException("Retired property can not be selected.");
+                        }
+
                         dispProperty.PropertyId = foundProperty.Internal_Id;
                         _propertyService.UpdateLocation(dispProperty.Property, ref foundProperty, overrideCodes);
                         dispProperty.Property = null;

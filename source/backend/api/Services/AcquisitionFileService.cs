@@ -626,7 +626,12 @@ namespace Pims.Api.Services
                     var pid = acquisitionProperty.Property.Pid.Value;
                     try
                     {
-                        var foundProperty = _propertyRepository.GetByPid(pid);
+                        var foundProperty = _propertyRepository.GetByPid(pid, true);
+                        if (foundProperty.IsRetired.HasValue && foundProperty.IsRetired.Value)
+                        {
+                            throw new BusinessRuleViolationException("Retired property can not be selected.");
+                        }
+
                         acquisitionProperty.PropertyId = foundProperty.Internal_Id;
                         _propertyService.UpdateLocation(acquisitionProperty.Property, ref foundProperty, userOverrideCodes);
                         acquisitionProperty.Property = foundProperty;
@@ -643,6 +648,11 @@ namespace Pims.Api.Services
                     try
                     {
                         var foundProperty = _propertyRepository.GetByPin(pin);
+                        if (foundProperty.IsRetired.HasValue && foundProperty.IsRetired.Value)
+                        {
+                            throw new BusinessRuleViolationException("Retired property can not be selected.");
+                        }
+
                         acquisitionProperty.PropertyId = foundProperty.Internal_Id;
                         _propertyService.UpdateLocation(acquisitionProperty.Property, ref foundProperty, userOverrideCodes);
                         acquisitionProperty.Property = foundProperty;
