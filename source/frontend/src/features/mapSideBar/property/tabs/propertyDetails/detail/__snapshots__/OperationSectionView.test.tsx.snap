@@ -1,0 +1,100 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Operation section view matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div />
+  .c1 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c0 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
+.c2 {
+  text-align: center;
+  font-style: italic;
+}
+
+<div
+    class="c0 form-section position-relative"
+  >
+    <h2
+      class="c1"
+    >
+      <div
+        class="no-gutters row"
+      >
+        <div
+          class="col"
+        >
+          Subdivision History
+        </div>
+      </div>
+    </h2>
+    <div
+      class="collapse show"
+    >
+      <div
+        class="c2"
+      >
+        This property is not part of a subdivision
+      </div>
+    </div>
+  </div>
+  .c1 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c0 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
+.c2 {
+  text-align: center;
+  font-style: italic;
+}
+
+<div
+    class="c0 form-section position-relative"
+  >
+    <h2
+      class="c1"
+    >
+      <div
+        class="no-gutters row"
+      >
+        <div
+          class="col"
+        >
+          Consolidation History
+        </div>
+      </div>
+    </h2>
+    <div
+      class="collapse show"
+    >
+      <div
+        class="c2"
+      >
+        This property is not part of a consolidation
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
