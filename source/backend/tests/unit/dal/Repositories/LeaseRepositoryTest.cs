@@ -601,14 +601,16 @@ namespace Pims.Dal.Test.Repositories
             var propertyOne = EntityHelper.CreateProperty(1);
             var context = helper.CreatePimsContext(user, true);
             context.AddRange(propertyOne, lease);
+
             var service = helper.Create<LeaseService>(user);
             helper.SaveChanges();
+
             var leaseTwo = context.CreateLease(2, addProperty: false);
             propertyOne.PimsPropertyLeases = new List<PimsPropertyLease>() { new Dal.Entities.PimsPropertyLease() { LeaseId = leaseTwo.LeaseId, Lease = leaseTwo, PropertyId = propertyOne.PropertyId } };
             helper.SaveChanges();
 
             var propertyRepository = helper.GetService<Mock<IPropertyRepository>>();
-            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), false)).Returns(propertyOne);
+            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), true)).Returns(propertyOne);
 
             var repository = helper.GetService<Mock<IPropertyLeaseRepository>>();
             repository.Setup(x => x.GetAllByPropertyId(It.IsAny<long>())).Returns(propertyOne.PimsPropertyLeases);
@@ -642,7 +644,7 @@ namespace Pims.Dal.Test.Repositories
             propertyOne.PimsPropertyLeases = new List<PimsPropertyLease>() { new Dal.Entities.PimsPropertyLease() { LeaseId = leaseTwo.LeaseId, PropertyId = propertyOne.PropertyId, Lease = leaseTwo } };
 
             var propertyRepository = helper.GetService<Mock<IPropertyRepository>>();
-            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), false)).Returns(propertyOne);
+            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), true)).Returns(propertyOne);
 
             var repository = helper.GetService<Mock<IPropertyLeaseRepository>>();
             repository.Setup(x => x.GetAllByPropertyId(It.IsAny<long>())).Returns(propertyOne.PimsPropertyLeases);
@@ -680,7 +682,7 @@ namespace Pims.Dal.Test.Repositories
             helper.SaveChanges();
 
             var propertyRepository = helper.GetService<Mock<IPropertyRepository>>();
-            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), false)).Returns(propertyOne);
+            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), true)).Returns(propertyOne);
 
             var repository = helper.GetService<Mock<IPropertyLeaseRepository>>();
             repository.Setup(x => x.GetAllByPropertyId(It.IsAny<long>())).Returns(new List<PimsPropertyLease>());
