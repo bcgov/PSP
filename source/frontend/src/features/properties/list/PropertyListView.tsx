@@ -248,7 +248,7 @@ const PropertyListView: React.FC<React.PropsWithChildren<unknown>> = () => {
               initialValues={{ properties: data || [] }}
               onSubmit={noop}
             >
-              <Form placeholder={undefined}>{body}</Form>
+              <Form>{body}</Form>
             </Formik>
           )}
         />

@@ -416,16 +416,16 @@ describe('DispositionSaleForm  component', () => {
     fireEvent.blur(getNetBookAmountTextbox());
     await waitForEffects();
 
-    expect(getNetProceedsBeforeSPPAmountTextbox()).toHaveValue('$10,000.00');
-    expect(getNetProceedsAfterSPPAmountTextbox()).toHaveValue('$10,000.00');
+    expect(getNetProceedsBeforeSPPAmountTextbox()).toHaveValue('$9,500.00');
+    expect(getNetProceedsAfterSPPAmountTextbox()).toHaveValue('$9,500.00');
 
     await act(async () => {
       fireEvent.change(getSPPAmountTextbox(), { target: { value: '$500.00' } });
     });
     fireEvent.blur(getSPPAmountTextbox());
 
-    expect(getNetProceedsBeforeSPPAmountTextbox()).toHaveValue('$10,000.00');
-    expect(getNetProceedsAfterSPPAmountTextbox()).toHaveValue('$9,500.00');
+    expect(getNetProceedsBeforeSPPAmountTextbox()).toHaveValue('$9,500.00');
+    expect(getNetProceedsAfterSPPAmountTextbox()).toHaveValue('$9,000.00');
 
     await act(async () => {
       fillInput(container, 'isGstRequired', 'false', 'select');

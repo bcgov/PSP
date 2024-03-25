@@ -10,7 +10,7 @@ describe('FastCurrencyInput', () => {
     const { asFragment } = render(
       <Formik initialValues={{ assessedLand: '' }} onSubmit={noop}>
         {props => (
-          <Form placeholder={undefined}>
+          <Form>
             <FastCurrencyInput formikProps={props} field={'assessedLand'} tooltip={'Tooltip'} />
           </Form>
         )}
@@ -23,7 +23,7 @@ describe('FastCurrencyInput', () => {
     const { container } = render(
       <Formik initialValues={{ assessedLand: '' }} onSubmit={noop}>
         {props => (
-          <Form placeholder={undefined}>
+          <Form>
             <FastCurrencyInput formikProps={props} field={'assessedLand'} />
           </Form>
         )}
@@ -37,7 +37,7 @@ describe('FastCurrencyInput', () => {
     const { container } = render(
       <Formik initialValues={{ assessedLand: '' }} onSubmit={noop}>
         {props => (
-          <Form placeholder={undefined}>
+          <Form>
             <FastCurrencyInput formikProps={props} field={'assessedLand'} tooltip="Test tooltip" />
           </Form>
         )}
@@ -50,7 +50,7 @@ describe('FastCurrencyInput', () => {
     const { findByPlaceholderText } = render(
       <Formik initialValues={{ assessedLand: '' }} onSubmit={noop}>
         {props => (
-          <Form placeholder={undefined}>
+          <Form>
             <FastCurrencyInput
               formikProps={props}
               field={'assessedLand'}

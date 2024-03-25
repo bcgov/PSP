@@ -64,7 +64,6 @@ export const ContactFilterComponent: React.FunctionComponent<
     >
       {({ resetForm, isSubmitting, values, submitForm }) => (
         <StyledFilterBoxForm
-          placeholder={undefined}
           onKeyUp={(e: any) => {
             if (e.keyCode === 13) {
               submitForm();

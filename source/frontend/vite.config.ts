@@ -4,6 +4,7 @@ import { defineConfig } from 'vite';
 import eslint from 'vite-plugin-eslint';
 import svgr from 'vite-plugin-svgr';
 import viteTsconfigPaths from 'vite-tsconfig-paths';
+import viteCompression from 'vite-plugin-compression';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -14,6 +15,23 @@ export default defineConfig({
     open: true,
     port: 3000,
     headers: {
+      'Content-Security-Policy':
+        "base-uri 'self'; \
+         default-src 'self'; \
+         script-src 'self' 'sha256-8ZgGo/nOlaDknQkDUYiedLuFRSGJwIz6LAzsOrNxhmU='; \
+         connect-src 'self' https://maps.gov.bc.ca/arcgis/rest/ https://server.arcgisonline.com/ArcGIS/rest/ https://dev.loginproxy.gov.bc.ca/ https://dev-pims.th.gov.bc.ca/api/ https://openmaps.gov.bc.ca/ https://delivery.apps.gov.bc.ca/; \
+         img-src 'self' data: blob: https://openmaps.gov.bc.ca/ https://maps.gov.bc.ca/ https://server.arcgisonline.com/; \
+         style-src 'self' 'unsafe-inline'; \
+         form-action 'self'; \
+         font-src 'self'; \
+         frame-src 'self' https://dev.loginproxy.gov.bc.ca/; \
+         frame-ancestors 'self'; \
+         ",
+      'Strict-Transport-Security': ' "max-age=86400; includeSubDomains"',
+      'X-Content-Type-Options': ' "nosniff"',
+      'X-XSS-Protection': '1',
+      'X-Frame-Options': 'DENY',
+      'Cache-Control': '"no-cache, no-store, must-revalidate"',
       Pragma: '"no-cache"',
       Expires: '"0"',
     },
@@ -46,5 +64,6 @@ export default defineConfig({
     svgr({
       include: '**/*.svg?react',
     }),
+    viteCompression(),
   ],
 });

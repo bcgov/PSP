@@ -181,7 +181,7 @@ const CreatePersonComponent: React.FC<FormikProps<IEditablePersonForm>> = ({
       />
 
       <Styled.CreateFormLayout>
-        <Styled.Form id="createForm" placeholder={undefined}>
+        <Styled.Form id="createForm">
           <FlexBox column>
             <PersonSubForm isContactMethodInvalid={isContactMethodInvalid} />
           </FlexBox>

@@ -212,7 +212,7 @@ const DispositionSaleForm: React.FunctionComponent<
         label="Net proceeds after SPP cost ($)"
         labelWidth="5"
         contentWidth="5"
-        tooltip="Net Proceeds after SPP Cost = Final Sales price, less Commissions, Net Book Value, Total Cost of Sales, and SPP Amount."
+        tooltip="Net Proceeds after SPP Cost = Final Sales price, less Commissions, GST, Net Book Value, Total Cost of Sales,  and SPP Amount."
       >
         <FastCurrencyInput
           formikProps={formikProps}

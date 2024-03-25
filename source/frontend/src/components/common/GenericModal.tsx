@@ -211,7 +211,7 @@ export const GenericModal = (props: Omit<BsModalProps, 'onHide'> & ModalProps) =
       onHide={noop}
       className={getModalClass()}
     >
-      <Modal.Header closeButton={closeButton} onHide={close} placeholder={undefined}>
+      <Modal.Header closeButton={closeButton} onHide={close}>
         <Modal.Title>
           {headerIconValue && <div className="header-icon">{headerIconValue}</div>}
           {title}

@@ -144,7 +144,7 @@ const CreateOrganizationComponent: React.FC<FormikProps<IEditableOrganizationFor
       />
 
       <Styled.CreateFormLayout>
-        <Styled.Form id="createForm" placeholder={undefined}>
+        <Styled.Form id="createForm">
           <FlexBox column>
             <OrganizationSubForm isContactMethodInvalid={isContactMethodInvalid} />
             <Section header="Mailing Address" isCollapsable initiallyExpanded>

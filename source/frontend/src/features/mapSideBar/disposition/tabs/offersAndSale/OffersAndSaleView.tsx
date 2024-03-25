@@ -310,7 +310,7 @@ const OffersAndSaleView: React.FunctionComponent<IOffersAndSaleViewProps> = ({
             <SectionField
               label="Net proceeds after SPP cost ($)"
               labelWidth="6"
-              tooltip="Net Proceeds after SPP Cost = Final Sales price, less Commissions, Net Book Value, Total Cost of Sales, and SPP Amount."
+              tooltip="Net Proceeds after SPP Cost = Final Sales price, less Commissions, GST, Net Book Value, Total Cost of Sales,  and SPP Amount."
               valueTestId="disposition-sale.netProceedsAfterSppAmount"
             >
               {formatMoney(calculateNetProceedsAfterSppAmount(dispositionSale))}

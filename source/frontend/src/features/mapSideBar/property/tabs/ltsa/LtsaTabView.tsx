@@ -65,7 +65,7 @@ export const LtsaTabView: React.FunctionComponent<React.PropsWithChildren<ILtsaT
           onSubmit={noop}
           enableReinitialize={true}
         >
-          <StyledForm placeholder={undefined}>
+          <StyledForm>
             {ltsaRequestedOn && (
               <StyledInlineMessageSection>
                 <InlineMessage>

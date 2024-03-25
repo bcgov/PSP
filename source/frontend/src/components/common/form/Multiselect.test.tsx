@@ -122,17 +122,3 @@ describe('Multiselect component', () => {
     expect(onRemoveSpy).toHaveBeenCalledWith(remainingOptions);
   });
 });
-
-// simulate scrolling down using the keyboard arrows
-function focusOption(container: HTMLElement, option: Option, options: readonly Option[]) {
-  const indexOfSelectedOption = options.findIndex(o => o.id === option.id);
-  for (let i = 0; i < indexOfSelectedOption; i++) {
-    act(() => {
-      userEvent.keyboard('{ArrowDown}');
-    });
-  }
-  expect(
-    container.querySelector('.multiselect-container .optionContainer li.option.highlight')!
-      .textContent,
-  ).toEqual(option.text);
-}

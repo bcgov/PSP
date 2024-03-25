@@ -126,7 +126,7 @@ const UpdateOrganization: React.FC<FormikProps<IEditableOrganizationForm>> = ({
       />
 
       <Styled.ScrollingFormLayout>
-        <Styled.Form id="updateForm" placeholder={undefined}>
+        <Styled.Form id="updateForm">
           <FlexBox column>
             <Section className="py-2">
               <SectionField

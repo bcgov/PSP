@@ -111,23 +111,6 @@ export const useDispositionProvider = () => {
     throwError: true,
   });
 
-  const updateDispositionPropertiesApi = useApiRequestWrapper<
-    (
-      acqFile: ApiGen_Concepts_DispositionFile,
-      userOverrideCodes: UserOverrideCode[],
-    ) => Promise<AxiosResponse<ApiGen_Concepts_DispositionFile, any>>
-  >({
-    requestFunction: useCallback(
-      async (acqFile: ApiGen_Concepts_DispositionFile, userOverrideCodes: UserOverrideCode[]) =>
-        await putDispositionFileProperties(acqFile, userOverrideCodes),
-      [putDispositionFileProperties],
-    ),
-    requestName: 'UpdateDispositionFileProperties',
-    onSuccess: useAxiosSuccessHandler('Disposition File Properties updated'),
-    skipErrorLogCodes: ignoreErrorCodes,
-    throwError: true,
-  });
-
   const getLastUpdatedBy = useApiRequestWrapper<
     (dispositionFileId: number) => Promise<AxiosResponse<Api_LastUpdatedBy, any>>
   >({

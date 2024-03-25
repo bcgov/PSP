@@ -432,11 +432,6 @@ namespace PIMS.Tests.Automation.PageObjects
             return webDriver.FindElements(dispositionFileMainFormDiv).Count();
         }
 
-        public int IsCreateDispositionFileFormVisible()
-        {
-            return webDriver.FindElements(dispositionFileMainFormDiv).Count();
-        }
-
         public string GetDispositionFileCode()
         {
             WaitUntilVisible(dispositionFileHeaderCodeContent);

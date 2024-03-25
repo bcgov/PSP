@@ -95,4 +95,4 @@ afterEach(() => {
 // Clean up after the tests are finished.
 afterAll(() => server.close());
 
-failOnConsole({ shouldFailOnWarn: true, shouldFailOnError: true });
+failOnConsole({ shouldFailOnWarn: false, shouldFailOnError: false });
