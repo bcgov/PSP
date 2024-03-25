@@ -20,7 +20,7 @@ namespace Pims.Dal.Repositories
 
         PimsProperty GetByPid(string pid);
 
-        PimsProperty GetByPid(int pid);
+        PimsProperty GetByPid(int pid, bool includeRetired = false);
 
         PimsProperty GetByPin(int pin);
 

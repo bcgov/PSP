@@ -25,8 +25,8 @@ export const OperationFileAssociationsContainer: React.FunctionComponent<
     }
   }, [operation?.id, execute]);
   const typedOperationAssociations = [
-    ...(response?.acquisitionAssociations ?? []).map(a => ({ ...a, type: FileTypes.Acquisition })),
     ...(response?.researchAssociations ?? []).map(a => ({ ...a, type: FileTypes.Research })),
+    ...(response?.acquisitionAssociations ?? []).map(a => ({ ...a, type: FileTypes.Acquisition })),
     ...(response?.leaseAssociations ?? []).map(a => ({ ...a, type: FileTypes.Lease })),
     ...(response?.dispositionAssociations ?? []).map(a => ({ ...a, type: FileTypes.Disposition })),
   ];
