@@ -3,7 +3,7 @@ import React from 'react';
 import { Row } from 'react-bootstrap';
 import Col from 'react-bootstrap/Col';
 
-import { ReactComponent as Active } from '@/assets/images/active.svg';
+import Active from '@/assets/images/active.svg?react';
 import { ResetButton, SearchButton } from '@/components/common/buttons';
 import { Input, Select } from '@/components/common/form';
 import ActiveFilterCheck from '@/components/common/form/ActiveFilterCheck';

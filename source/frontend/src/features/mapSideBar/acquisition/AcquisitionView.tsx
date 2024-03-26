@@ -12,7 +12,7 @@ import {
 } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { ReactComponent as RealEstateAgent } from '@/assets/images/real-estate-agent.svg';
+import RealEstateAgent from '@/assets/images/real-estate-agent.svg?react';
 import { FileTypes } from '@/constants';
 import FileLayout from '@/features/mapSideBar/layout/FileLayout';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';

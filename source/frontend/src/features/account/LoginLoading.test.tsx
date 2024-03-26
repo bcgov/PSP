@@ -22,13 +22,13 @@ const TestLoginLoading = () => {
 
 describe('Empty Header', () => {
   it('MOTI Login Loading', () => {
-    process.env.REACT_APP_TENANT = 'MOTI';
+    import.meta.env.VITE_TENANT = 'MOTI';
     const { container } = render(<TestLoginLoading />);
     expect(container.firstChild).toMatchSnapshot();
   });
 
   it('CITZ Login Loading', () => {
-    process.env.REACT_APP_TENANT = 'CITZ';
+    import.meta.env.VITE_TENANT = 'CITZ';
     const { container } = render(<TestLoginLoading />);
     expect(container.firstChild).toMatchSnapshot();
   });

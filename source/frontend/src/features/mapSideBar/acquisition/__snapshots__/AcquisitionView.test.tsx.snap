@@ -44,7 +44,7 @@ exports[`AcquisitionView component renders as expected 1`] = `
             title="Acquisition file Icon"
             width="2.6rem"
           >
-            real-estate-agent.svg
+            <span />
           </svg>
           Acquisition File
         </h1>

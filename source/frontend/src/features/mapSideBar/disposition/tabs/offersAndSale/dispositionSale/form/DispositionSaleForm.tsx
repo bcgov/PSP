@@ -17,12 +17,12 @@ import { useCalculateNetProceeds } from '../hooks/useCalculateNetProceeds';
 import DispositionSalePurchaserSubForm from './DispositionSalePurchasersSubForm';
 
 export interface IDispositionSaleFormProps {
-  dispostionSaleId: number | null;
+  dispositionSaleId: number | null;
 }
 
 const DispositionSaleForm: React.FunctionComponent<
   React.PropsWithChildren<IDispositionSaleFormProps>
-> = ({ dispostionSaleId }) => {
+> = ({ dispositionSaleId }) => {
   const formikProps = useFormikContext<DispositionSaleFormModel>();
   const { setModalContent, setDisplayModal } = useModalContext();
 
@@ -85,7 +85,7 @@ const DispositionSaleForm: React.FunctionComponent<
   return (
     <Section header="Sales Details">
       <SectionField label="Purchaser name(s)" labelWidth="5" contentWidth="7">
-        <DispositionSalePurchaserSubForm dispositionSaleId={dispostionSaleId} />
+        <DispositionSalePurchaserSubForm dispositionSaleId={dispositionSaleId} />
       </SectionField>
 
       <SectionField label="Purchaser agent" labelWidth="5" contentWidth="6">

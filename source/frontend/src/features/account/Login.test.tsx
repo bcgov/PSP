@@ -57,7 +57,7 @@ const TestLogin = ({
 
 //boilerplate function used by most tests to wrap the Login component with a router.
 const renderLogin = () => {
-  process.env.REACT_APP_TENANT = 'MOTI';
+  import.meta.env.VITE_TENANT = 'MOTI';
   const history = createMemoryHistory();
   return render(<TestLogin history={history} />);
 };
@@ -68,14 +68,14 @@ describe('login', () => {
   });
   it('login renders correctly', () => {
     (useKeycloak as jest.Mock).mockReturnValue({ keycloak: { authenticated: false } });
-    process.env.REACT_APP_TENANT = 'MOTI';
+    import.meta.env.VITE_TENANT = 'MOTI';
     const history = createMemoryHistory();
     const tree = renderer.create(<TestLogin history={history} />).toJSON();
     expect(tree).toMatchSnapshot();
   });
 
   it('authenticated users are redirected to the mapview', () => {
-    process.env.REACT_APP_TENANT = 'MOTI';
+    import.meta.env.VITE_TENANT = 'MOTI';
     (useKeycloak as jest.Mock).mockReturnValue({
       keycloak: { authenticated: true, userInfo: { client_roles: [Roles.SYSTEM_ADMINISTRATOR] } },
     });
@@ -85,7 +85,7 @@ describe('login', () => {
   });
 
   it('authenticated lease functional users are redirected to the lease list', () => {
-    process.env.REACT_APP_TENANT = 'MOTI';
+    import.meta.env.VITE_TENANT = 'MOTI';
     (useKeycloak as jest.Mock).mockReturnValue({
       keycloak: { authenticated: true, userInfo: { client_roles: [Roles.LEASE_FUNCTIONAL] } },
     });
@@ -95,7 +95,7 @@ describe('login', () => {
   });
 
   it('new users are sent to the guest page', () => {
-    process.env.REACT_APP_TENANT = 'MOTI';
+    import.meta.env.VITE_TENANT = 'MOTI';
     (useKeycloak as jest.Mock).mockReturnValue({
       keycloak: { authenticated: true, realmAccess: { client_roles: [] } },
     });

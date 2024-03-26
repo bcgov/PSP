@@ -7,7 +7,7 @@ import EmptyHeader from './EmptyHeader';
 
 describe('Empty Header', () => {
   it('renders', () => {
-    process.env.REACT_APP_TENANT = 'MOTI';
+    import.meta.env.VITE_TENANT = 'MOTI';
     const { container } = render(
       <TenantProvider>
         <EmptyHeader></EmptyHeader>

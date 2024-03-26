@@ -111,13 +111,13 @@ describe('MapFilterBar', () => {
   mockedAxios.get.mockImplementationOnce(() => Promise.resolve({}));
 
   beforeEach(() => {
-    process.env.REACT_APP_TENANT = 'MOTI';
+    import.meta.env.VITE_TENANT = 'MOTI';
     history = createMemoryHistory();
     mockKeycloak([]);
   });
 
   afterEach(() => {
-    delete process.env.REACT_APP_TENANT;
+    delete import.meta.env.VITE_TENANT;
     cleanup();
   });
 

@@ -38,7 +38,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
           class="c0 mr-auto"
         >
           <svg>
-            fence.svg
+            <span />
           </svg>
           Create Lease/License
         </h1>
@@ -859,7 +859,7 @@ exports[`AddLeaseContainer component renders as expected 1`] = `
                                   title="Click once to enter property selection mode."
                                   width="97"
                                 >
-                                  icon-draft.svg
+                                  <span />
                                 </svg>
                                 <ol>
                                   <li>

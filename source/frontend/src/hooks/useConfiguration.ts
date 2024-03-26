@@ -7,12 +7,12 @@ export interface IConfiguration {
 }
 
 export const useConfiguration = (): IConfiguration => {
-  const isTest: boolean = process.env.NODE_ENV === 'test';
-  const isDevelopment: boolean = process.env.NODE_ENV === 'development';
-  const isProduction: boolean = process.env.NODE_ENV === 'production';
+  const isTest: boolean = import.meta.env.NODE_ENV === 'test';
+  const isDevelopment: boolean = import.meta.env.DEV;
+  const isProduction: boolean = import.meta.env.PROD;
 
   return {
-    siteMinderLogoutUrl: process.env.REACT_APP_SITEMINDER_LOGOUT_URL,
+    siteMinderLogoutUrl: import.meta.env.VITE_SITEMINDER_LOGOUT_URL,
     isTest,
     isDevelopment,
     isProduction,

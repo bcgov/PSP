@@ -4,7 +4,7 @@ import { Col, Row } from 'react-bootstrap';
 import { FaRegBuilding, FaRegUser } from 'react-icons/fa';
 import styled from 'styled-components';
 
-import { ReactComponent as Active } from '@/assets/images/active.svg';
+import Active from '@/assets/images/active.svg?react';
 import { ResetButton, SearchButton } from '@/components/common/buttons';
 import ActiveFilterCheck from '@/components/common/form/ActiveFilterCheck';
 import { RadioGroup } from '@/components/common/form/RadioGroup';

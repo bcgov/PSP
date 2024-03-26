@@ -5,6 +5,7 @@ using System.Security.Claims;
 using LinqKit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
@@ -655,6 +656,11 @@ namespace Pims.Dal.Repositories
         {
             using var scope = Logger.QueryScope();
             acquisitionFile.ThrowIfNull(nameof(acquisitionFile));
+
+            if (acquisitionFile.PimsPropertyAcquisitionFiles.Any(x => x.Property.IsRetired.HasValue && x.Property.IsRetired.Value))
+            {
+                throw new BusinessRuleViolationException("Retired property can not be selected.");
+            }
 
             // Existing properties should not be added.
             foreach (var acquisitionProperty in acquisitionFile.PimsPropertyAcquisitionFiles)

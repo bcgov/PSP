@@ -28,7 +28,7 @@ describe('login error page', () => {
     cleanup();
   });
   it('login error page renders correctly', () => {
-    process.env.REACT_APP_TENANT = 'MOTI';
+    import.meta.env.VITE_TENANT = 'MOTI';
     const history = createMemoryHistory();
     const tree = renderer
       .create(

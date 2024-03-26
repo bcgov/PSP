@@ -198,6 +198,7 @@ namespace Pims.Api.Test.Services
             act.Should().Throw<BadRequestException>();
             repository.Verify(x => x.Add(It.IsAny<PimsAcquisitionFile>()), Times.Never);
         }
+
         #endregion
 
         #region GetById

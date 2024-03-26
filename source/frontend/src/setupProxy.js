@@ -5,7 +5,7 @@ module.exports = function (app) {
   app.use(
     '/api',
     createProxyMiddleware({
-      target: process.env.API_URL || 'http://localhost:5000/',
+      target: import.meta.env.API_URL || 'http://localhost:5000/',
       changeOrigin: true,
       secure: false,
       // timeout: 2000,

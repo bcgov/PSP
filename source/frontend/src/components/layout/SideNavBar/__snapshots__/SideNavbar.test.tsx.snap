@@ -234,7 +234,7 @@ exports[`SideNavbar display and logic renders 1`] = `
           role="button"
         >
           <svg>
-            source.svg
+            <span />
           </svg>
           <label
             class="c4"
@@ -253,7 +253,7 @@ exports[`SideNavbar display and logic renders 1`] = `
           role="button"
         >
           <svg>
-            real-estate-agent.svg
+            <span />
           </svg>
           <label
             class="c4"
@@ -272,7 +272,7 @@ exports[`SideNavbar display and logic renders 1`] = `
           role="button"
         >
           <svg>
-            fence.svg
+            <span />
           </svg>
           <label
             class="c4"
@@ -338,7 +338,7 @@ exports[`SideNavbar display and logic renders 1`] = `
           <svg
             class="m-1"
           >
-            subdivisionconsolidation.svg
+            <span />
           </svg>
           <label
             class="c4"

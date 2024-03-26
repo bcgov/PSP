@@ -9,7 +9,7 @@ export const store = configureStore({
   reducer: reducer,
   middleware: (getDefaultMiddleware: () => any[]) =>
     getDefaultMiddleware().concat(logger).concat(loadingBarMiddleware()),
-  devTools: process.env.NODE_ENV !== 'production',
+  devTools: import.meta.env.PROD === false,
 });
 export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;

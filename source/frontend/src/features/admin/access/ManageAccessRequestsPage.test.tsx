@@ -52,7 +52,7 @@ const successStore = mockStore({
 
 const componentRender = (store: any) => {
   mockAxios.onGet().reply(200, getMockPagedAccessRequests());
-  process.env.REACT_APP_TENANT = 'MOTI';
+  import.meta.env.VITE_TENANT = 'MOTI';
   const component = render(<ManageAccessRequestsPage />);
   return {
     findFirstRow: () => {

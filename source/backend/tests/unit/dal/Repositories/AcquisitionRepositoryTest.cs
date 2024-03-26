@@ -220,6 +220,39 @@ namespace Pims.Dal.Test.Repositories
             // Assert
             act.Should().Throw<ArgumentNullException>();
         }
+
+
+        [Fact]
+        public void Add_WithRetiredProperty_Should_Fail()
+        {
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.AcquisitionFileAdd);
+            helper.CreatePimsContext(user, true);
+
+            var repository = helper.CreateRepository<AcquisitionFileRepository>(user);
+
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+            acqFile.PimsPropertyAcquisitionFiles = new List<PimsPropertyAcquisitionFile>()
+            {
+                new PimsPropertyAcquisitionFile()
+                {
+                    PropertyId = 100,
+                    Property = new PimsProperty()
+                    {
+                        IsRetired = true,
+                    }
+                },
+            };
+
+            // Act
+            Action act = () => repository.Add(acqFile);
+
+            // Assert
+            var ex = act.Should().Throw<BusinessRuleViolationException>();
+            ex.WithMessage("Retired property can not be selected.");
+        }
+
+
         #endregion
 
         #region GetById

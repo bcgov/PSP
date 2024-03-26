@@ -57,7 +57,7 @@ exports[`PropertySelectorSubForm component renders as expected when provided no 
           title="Click once to enter property selection mode."
           width="97"
         >
-          icon-draft.svg
+          <span />
         </svg>
         <ol>
           <li>

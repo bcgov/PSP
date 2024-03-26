@@ -245,7 +245,7 @@ const OffersAndSaleView: React.FunctionComponent<IOffersAndSaleViewProps> = ({
               {dispositionSale.saleFiscalYear}
             </SectionField>
             <SectionField
-              label="Final sale price ($), incl. GST ($)"
+              label="Final sale price, incl. GST ($)"
               labelWidth="6"
               valueTestId="disposition-sale.finalSaleAmount"
             >

@@ -40,7 +40,7 @@ describe('DispositionSaleForm  component', () => {
         validationSchema={DispositionSaleFormYupSchema}
         innerRef={ref}
       >
-        {formikProps => <DispositionSaleForm dispostionSaleId={null} />}
+        {formikProps => <DispositionSaleForm dispositionSaleId={null} />}
       </Formik>,
       {
         ...renderOptions,
@@ -87,7 +87,7 @@ describe('DispositionSaleForm  component', () => {
   it('renders as expected', async () => {
     const { asFragment } = await setup({
       props: {
-        dispostionSaleId: null,
+        dispositionSaleId: null,
       },
     });
 
@@ -103,7 +103,7 @@ describe('DispositionSaleForm  component', () => {
   });
 
   it(`renders 'Remove team member' link`, async () => {
-    const { getByTestId } = await setup({ props: { dispostionSaleId: null } });
+    const { getByTestId } = await setup({ props: { dispositionSaleId: null } });
     const addRow = getByTestId('add-purchaser-button');
 
     await act(async () => userEvent.click(addRow));
@@ -112,7 +112,7 @@ describe('DispositionSaleForm  component', () => {
 
   it(`displays a confirmation popup before purchaser is removed`, async () => {
     const { getByTestId, getByText } = await setup({
-      props: { dispostionSaleId: null },
+      props: { dispositionSaleId: null },
     });
     const addRow = getByTestId('add-purchaser-button');
 
@@ -124,7 +124,7 @@ describe('DispositionSaleForm  component', () => {
 
   it(`removes the purchaser upon user confirmation`, async () => {
     const { getByTestId, getByText, getByTitle, queryByTestId } = await setup({
-      props: { dispostionSaleId: null },
+      props: { dispositionSaleId: null },
     });
 
     const addRow = getByTestId('add-purchaser-button');
@@ -139,7 +139,7 @@ describe('DispositionSaleForm  component', () => {
 
   it(`does not remove the owner when confirmation popup is cancelled`, async () => {
     const { getByTestId, getByText, getByTitle } = await setup({
-      props: { dispostionSaleId: null },
+      props: { dispositionSaleId: null },
     });
 
     const addRow = getByTestId('add-purchaser-button');
@@ -155,7 +155,7 @@ describe('DispositionSaleForm  component', () => {
 
   it('Calculates the GST collected amount over the "Final Sale Amount" when the GST is required is set to "Yes"', async () => {
     const { container, getFinalSaleAmountTextbox, getGSTCollectedAmountTextbox } = await setup({
-      props: { dispostionSaleId: null },
+      props: { dispositionSaleId: null },
     });
 
     expect(getFinalSaleAmountTextbox()).toBeVisible();
@@ -184,7 +184,7 @@ describe('DispositionSaleForm  component', () => {
       getByTitle,
       findByText,
     } = await setup({
-      props: { dispostionSaleId: null },
+      props: { dispositionSaleId: null },
     });
 
     expect(getFinalSaleAmountTextbox()).toBeVisible();
@@ -228,7 +228,7 @@ describe('DispositionSaleForm  component', () => {
       getSPPAmountTextbox,
       getNetProceedsAfterSPPAmountTextbox,
     } = await setup({
-      props: { dispostionSaleId: null },
+      props: { dispositionSaleId: null },
     });
 
     expect(getFinalSaleAmountTextbox()).toBeVisible();
@@ -284,7 +284,7 @@ describe('DispositionSaleForm  component', () => {
       getSPPAmountTextbox,
       getNetProceedsAfterSPPAmountTextbox,
     } = await setup({
-      props: { dispostionSaleId: null },
+      props: { dispositionSaleId: null },
     });
 
     expect(getFinalSaleAmountTextbox()).toBeVisible();
@@ -348,7 +348,7 @@ describe('DispositionSaleForm  component', () => {
       getNetProceedsBeforeSPPAmountTextbox,
       getNetProceedsAfterSPPAmountTextbox,
     } = await setup({
-      props: { dispostionSaleId: null },
+      props: { dispositionSaleId: null },
     });
 
     expect(getFinalSaleAmountTextbox()).toBeVisible();
@@ -385,7 +385,7 @@ describe('DispositionSaleForm  component', () => {
       getByText,
       getByTitle,
     } = await setup({
-      props: { dispostionSaleId: null },
+      props: { dispositionSaleId: null },
     });
 
     expect(getFinalSaleAmountTextbox()).toBeVisible();

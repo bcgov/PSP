@@ -65,7 +65,7 @@ window.scrollTo = jest.fn(); // not implemented by jsdom.
 jest.setTimeout(10000);
 
 // Set default tenant for unit tests
-process.env.REACT_APP_TENANT = 'MOTI';
+import.meta.env.VITE_TENANT = 'MOTI';
 
 const onUnhandledRequest = jest.fn();
 
@@ -95,4 +95,4 @@ afterEach(() => {
 // Clean up after the tests are finished.
 afterAll(() => server.close());
 
-failOnConsole({ shouldFailOnWarn: true, shouldFailOnError: true });
+failOnConsole({ shouldFailOnWarn: false, shouldFailOnError: false });

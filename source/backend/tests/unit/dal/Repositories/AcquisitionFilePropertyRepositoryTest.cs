@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using FluentAssertions;
+using Pims.Core.Exceptions;
 using Pims.Core.Test;
 using Pims.Dal.Entities;
+using Pims.Dal.Exceptions;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Xunit;
@@ -140,6 +142,32 @@ namespace Pims.Dal.Test.Repositories
             // Assert
             act.Should().Throw<ArgumentNullException>();
         }
+
+        [Fact]
+        public void Add_WithRetiredProperty_Should_Fail()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.AcquisitionFileAdd);
+
+            var context = helper.CreatePimsContext(user, true);
+            var repository = helper.CreateRepository<AcquisitionFilePropertyRepository>(user);
+
+            var pimsPropertyAcquisitionFile = new PimsPropertyAcquisitionFile()
+            {
+                AcquisitionFileId = 1,
+                PropertyId = 1,
+                Property = new PimsProperty() { RegionCode = 1, PropertyId = 1, IsRetired = true }
+            };
+
+            // Act
+            Action act = () => repository.Add(pimsPropertyAcquisitionFile);
+
+            // Assert
+            var ex = act.Should().Throw<BusinessRuleViolationException>();
+            ex.WithMessage("Retired property can not be selected.");
+        }
+
         #endregion
 
         #region Update

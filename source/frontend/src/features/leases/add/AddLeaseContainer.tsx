@@ -4,7 +4,7 @@ import { useMemo, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-import { ReactComponent as Fence } from '@/assets/images/fence.svg';
+import Fence from '@/assets/images/fence.svg?react';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { IMapProperty } from '@/components/propertySelector/models';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
