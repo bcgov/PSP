@@ -20,7 +20,6 @@ import { MultiSelectOption } from '@/features/acquisition/list/interfaces';
 import { useApiProperties } from '@/hooks/pims-api/useApiProperties';
 import { useProperties } from '@/hooks/repositories/useProperties';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
-import { useRouterFilter } from '@/hooks/useRouterFilter';
 import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { generateMultiSortCriteria } from '@/utils';
@@ -63,25 +62,13 @@ const PropertyListView: React.FC<React.PropsWithChildren<unknown>> = () => {
 
   const fetchIdRef = useRef(0);
 
-  const parsedFilter = useMemo(() => {
-    const data = { ...filter };
-    return data;
-  }, [filter]);
-
-  const { updateSearch } = useRouterFilter({
-    filter: parsedFilter,
-    setFilter: setFilter,
-    key: 'propertyFilter',
-  });
-
   // Update internal state whenever the filter bar state changes
   const handleFilterChange = useCallback(
     (value: IPropertyFilter) => {
       setFilter({ ...value });
-      updateSearch({ ...value });
       setPageIndex(0); // Go to first page of results when filter changes
     },
-    [setFilter, setPageIndex, updateSearch],
+    [setFilter, setPageIndex],
   );
   // This will get called when the table needs new data
   const onRequestData = useCallback(
