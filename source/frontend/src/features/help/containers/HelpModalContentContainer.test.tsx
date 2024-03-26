@@ -1,42 +1,40 @@
-import { act, render, screen, waitFor } from '@testing-library/react';
+import { act, render, screen, waitFor } from '@/utils/test-utils';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
-import TestCommonWrapper from '@/utils/TestCommonWrapper';
-
 import HelpModalContentContainer from './HelpModalContentContainer';
+
+jest.mock('@react-keycloak/web');
 
 const mockStore = configureMockStore([thunk]);
 const store = mockStore({});
 
-const renderComponent = () =>
-  render(
-    <TestCommonWrapper store={store}>
-      <HelpModalContentContainer setMailto={jest.fn()} />
-    </TestCommonWrapper>,
-  );
-describe('help modal content', () => {
-  it('HelpContainer renders correctly...', async () => {
+describe('HelpModalContentContainer component', () => {
+  const setup = () =>
+    render(<HelpModalContentContainer setMailto={jest.fn()} />, {
+      useMockAuthentication: true,
+      store,
+    });
+
+  beforeEach(() => {
     process.env.REACT_APP_TENANT = 'MOTI';
-    const { asFragment } = render(
-      <TestCommonWrapper store={store} claims={['test']}>
-        <HelpModalContentContainer setMailto={jest.fn()} />
-      </TestCommonWrapper>,
-    );
-    await act(async () => {});
-    const fragment = await waitFor(() => asFragment());
-    expect(fragment).toMatchSnapshot();
   });
 
-  it('Populates from keycloak email correctly...', async () => {
-    renderComponent();
+  it('renders correctly', async () => {
+    const { asFragment } = setup();
+    await act(async () => {});
+    expect(asFragment()).toMatchSnapshot();
+  });
+
+  it('populates email from keycloak correctly', async () => {
+    setup();
     await act(async () => {});
     const email = await waitFor(() => screen.getByDisplayValue('test@test.com'));
     expect(email).toBeInTheDocument();
   });
 
-  it('Populates name from keycloak correctly...', async () => {
-    renderComponent();
+  it('populates name from keycloak correctly', async () => {
+    setup();
     await act(async () => {});
     const name = await waitFor(() => screen.getByDisplayValue('Chester Tester'));
     expect(name).toBeInTheDocument();

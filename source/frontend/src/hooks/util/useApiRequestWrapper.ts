@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 
 import useIsMounted from '@/hooks/util/useIsMounted';
 import { IApiError } from '@/interfaces/IApiError';
+import { logError } from '@/store/slices/network/networkSlice';
 import { handleAxiosResponse } from '@/utils';
 
 export interface IResponseWrapper<
@@ -26,9 +27,8 @@ export interface IApiRequestWrapper<
   requestFunction: FunctionType;
   requestName: string;
   onSuccess?: (response: Awaited<ReturnType<FunctionType>>['data'] | undefined) => void;
-  onError?: (e: AxiosError<IApiError>) => void;
+  onError?: (e: AxiosError<IApiError>) => Promise<void>;
   invoke?: boolean;
-  skipErrorLogCodes?: number[];
   throwError?: boolean;
   rawResponse?: boolean;
 }
@@ -51,7 +51,6 @@ export const useApiRequestWrapper = <
   onSuccess,
   onError,
   invoke,
-  skipErrorLogCodes,
   throwError,
   rawResponse,
 }: IApiRequestWrapper<FunctionType>): IResponseWrapper<FunctionType> => {
@@ -80,7 +79,6 @@ export const useApiRequestWrapper = <
               dispatch,
               requestName,
               requestFunction(...args),
-              skipErrorLogCodes,
             )
           : await requestFunction(...args);
         if (!isMounted()) {
@@ -98,7 +96,28 @@ export const useApiRequestWrapper = <
           return;
         }
         const axiosError = e as AxiosError<IApiError>;
-        onError && onError(axiosError);
+        if (onError) {
+          onError(axiosError).catch((axiosError: AxiosError) => {
+            // Log any unhandled errors out to the default PIMS error handler (bomb icon).
+            dispatch(
+              logError({
+                name: requestName,
+                status: axiosError?.response?.status,
+                error: axiosError ?? {},
+              }),
+            );
+          });
+        } else if (!throwError) {
+          // If no error handling is provided, fall back to the default PIMS error handler (bomb icon).
+          dispatch(
+            logError({
+              name: requestName,
+              status: axiosError?.response?.status,
+              error: axiosError ?? {},
+            }),
+          );
+        }
+
         setError(axiosError);
         if (throwError) {
           throw e;
@@ -115,7 +134,6 @@ export const useApiRequestWrapper = <
       dispatch,
       requestName,
       requestFunction,
-      skipErrorLogCodes,
       isMounted,
       onSuccess,
       throwError,

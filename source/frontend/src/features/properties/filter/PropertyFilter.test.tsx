@@ -10,7 +10,15 @@ import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import filterSlice from '@/store/slices/filter/filterSlice';
 import { ILookupCode, lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { act, cleanup, fireEvent, render, waitFor } from '@/utils/test-utils';
+import {
+  act,
+  cleanup,
+  fireEvent,
+  getByDisplayValue,
+  render,
+  waitFor,
+  screen,
+} from '@/utils/test-utils';
 import { fillInput } from '@/utils/test-utils';
 import TestCommonWrapper from '@/utils/TestCommonWrapper';
 
@@ -89,9 +97,13 @@ const getStore = (filter: any) =>
     [lookupCodesSlice.name]: lCodes,
   });
 
-const getUiElement = (filter: IPropertyFilter, showAllOrganizationSelect = true) => (
+const getUiElement = (
+  filter: IPropertyFilter,
+  showAllOrganizationSelect = true,
+  useGeocoder = true,
+) => (
   <TestCommonWrapper store={getStore(filter)} history={history}>
-    <PropertyFilter useGeocoder={true} defaultFilter={filter} onChange={onFilterChange} />
+    <PropertyFilter useGeocoder={useGeocoder} defaultFilter={filter} onChange={onFilterChange} />
   </TestCommonWrapper>
 );
 
@@ -120,7 +132,7 @@ describe('MapFilterBar', () => {
     // Arrange
     mockKeycloak(['admin-properties']);
 
-    const { container } = render(getUiElement(defaultPropertyFilter));
+    const { container } = render(getUiElement({ ...defaultPropertyFilter, searchBy: 'address' }));
     const submit = container.querySelector('button[type="submit"]');
 
     // Act
@@ -133,6 +145,28 @@ describe('MapFilterBar', () => {
 
     // Assert
     expect(onFilterChange).not.toHaveBeenCalled();
+  });
+
+  it('submits if address set and useGeocoder false', async () => {
+    // Arrange
+    mockKeycloak(['admin-properties']);
+
+    const { container } = await render(
+      getUiElement({ ...defaultPropertyFilter, searchBy: 'address' }, true, false),
+    );
+    const submit = container.querySelector('button[type="submit"]');
+
+    // Act
+    // Enter values on the form fields, then click the Search button
+    await waitFor(() => fillInput(container, 'address', 'Victoria'));
+
+    await screen.findByDisplayValue('Victoria');
+    await act(async () => {
+      fireEvent.click(submit!);
+    });
+
+    // Assert
+    expect(onFilterChange).toHaveBeenCalled();
   });
 
   it('resets values when reset button is clicked', async () => {

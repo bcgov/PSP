@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
@@ -760,6 +761,11 @@ namespace Pims.Dal.Repositories
             }
 
             User.ThrowIfNotAuthorized(Permissions.LeaseAdd);
+
+            if (lease.PimsPropertyLeases.Any(x => x.Property != null && x.Property.IsRetired.HasValue && x.Property.IsRetired.Value))
+            {
+                throw new BusinessRuleViolationException("Retired property can not be selected.");
+            }
 
             lease = GenerateLFileNo(lease);
 

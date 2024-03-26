@@ -3,6 +3,7 @@ using System.Linq;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 
@@ -61,6 +62,11 @@ namespace Pims.Dal.Repositories
         public PimsPropertyAcquisitionFile Add(PimsPropertyAcquisitionFile propertyAcquisitionFile)
         {
             propertyAcquisitionFile.ThrowIfNull(nameof(propertyAcquisitionFile));
+
+            if (propertyAcquisitionFile.Property.IsRetired.HasValue && propertyAcquisitionFile.Property.IsRetired.Value)
+            {
+                throw new BusinessRuleViolationException("Retired property can not be selected.");
+            }
 
             // Mark the property not to be changed if it did not exist already.
             if (propertyAcquisitionFile.PropertyId != 0)

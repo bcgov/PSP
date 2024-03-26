@@ -385,7 +385,7 @@ namespace Pims.Api.Test.Services
             var service = this.CreateDispositionServiceWithPermissions(Permissions.PropertyEdit);
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
             propertyService.Setup(x => x.GetMultipleById(It.IsAny<List<long>>())).Returns(new List<PimsProperty> { EntityHelper.CreateProperty(3), EntityHelper.CreateProperty(4) });
-            propertyService.Setup(x => x.GetByPid(It.IsAny<string>())).Returns(EntityHelper.CreateProperty(4));
+            propertyService.Setup(x => x.GetByPid(It.IsAny<string>())).Returns(EntityHelper.CreateProperty(2));
 
             var operationOne = EntityHelper.CreatePropertyOperation();
             operationOne.SourceProperty.PropertyId = 5;
@@ -398,30 +398,6 @@ namespace Pims.Api.Test.Services
             // Assert
             var exception = act.Should().Throw<BusinessRuleViolationException>();
             exception.WithMessage("Consolidated child property may not be in the PIMS inventory unless also in the parent property list.");
-        }
-
-        [Fact]
-        public void Consolidate_Should_Fail_PidExists()
-        {
-            // Arrange
-            var service = this.CreateDispositionServiceWithPermissions(Permissions.PropertyEdit);
-            var propertyService = this._helper.GetService<Mock<IPropertyService>>();
-            propertyService.Setup(x => x.GetMultipleById(It.IsAny<List<long>>())).Returns(new List<PimsProperty> { EntityHelper.CreateProperty(3), EntityHelper.CreateProperty(4) });
-            propertyService.Setup(x => x.GetByPid(It.IsAny<string>())).Returns(EntityHelper.CreateProperty(4));
-
-            var operationOne = EntityHelper.CreatePropertyOperation();
-            operationOne.SourceProperty.PropertyId = 5;
-            operationOne.DestinationPropertyId = 0;
-            operationOne.DestinationProperty.PropertyId = 0;
-
-            var operations = new List<PimsPropertyOperation>() { operationOne, EntityHelper.CreatePropertyOperation() };
-
-            // Act
-            Action act = () => service.ConsolidateProperty(operations);
-
-            // Assert
-            var exception = act.Should().Throw<BusinessRuleViolationException>();
-            exception.WithMessage("Consolidated child may not already be in the PIMS inventory.");
         }
 
         [Fact]

@@ -100,4 +100,24 @@
         public string PropertyActivityInvoicePSTAmount { get; set; } = null!;
         public string PropertyActivityInvoiceTotalAmount { get; set; } = null!;
     }
+
+    public class PropertyHistory
+    {
+        public string PropertyHistoryIdentifier { get; set; } = null!;
+        public string PropertyHistoryPlan { get; set; } = null!;
+        public string PropertyHistoryStatus { get; set; } = null!;
+        public string PropertyHistoryArea { get; set; } = null!;
+    }
+
+    public class PropertySubdivision
+    {
+        public PropertyHistory SubdivisionSource { get; set; } = new PropertyHistory();
+        public List<PropertyHistory> SubdivisionDestination { get; set; } = new List<PropertyHistory>();
+    }
+
+    public class PropertyConsolidation
+    {
+        public List<PropertyHistory> ConsolidationSource { get; set; } = new List<PropertyHistory>();
+        public PropertyHistory ConsolidationDestination { get; set; } = new PropertyHistory();
+    }
 }
