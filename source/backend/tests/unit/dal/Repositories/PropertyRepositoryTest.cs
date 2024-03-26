@@ -38,7 +38,7 @@ namespace Pims.Dal.Test.Repositories
                 new object[] { new PropertyFilter(), 7 },
                 new object[] { new PropertyFilter(){ Ownership = new List<string>(){"isCoreInventory", "isPropertyOfInterest"}}, 4 },
                 new object[] { new PropertyFilter(){ Ownership = new List<string>(){"isDisposed"}}, 1 },
-                new object[] { new PropertyFilter(){ Ownership = new List<string>(){"isRetired"}}, 1 },
+                new object[] { new PropertyFilter(){ Ownership = new List<string>(){"isRetired"}}, 2 },
                 new object[] { new PropertyFilter(){ Ownership = new List<string>(){"isOtherInterest"}}, 1 },
                 new object[] { new PropertyFilter(){ Ownership = new List<string>(){"isCoreInventory"}}, 3 },
             };
@@ -118,6 +118,9 @@ namespace Pims.Dal.Test.Repositories
             testProperty.IsRetired = true;
             testProperty = init.CreateProperty(33333);
             testProperty.SurveyPlanNumber = "SP-89TTXY";
+            testProperty = init.CreateProperty(44444);
+            testProperty.IsRetired = true;
+            testProperty.IsOwned = true;
 
             init.SaveChanges();
 
