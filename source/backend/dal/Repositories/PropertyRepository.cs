@@ -195,7 +195,7 @@ namespace Pims.Dal.Repositories
 
             if(includeRetired)
             {
-                query = query.Where(r => r.IsRetired.HasValue && r.IsRetired.Value);
+                query = query.Where(r => !r.IsRetired.HasValue || (r.IsRetired.HasValue && r.IsRetired.Value));
             }
             else
             {
