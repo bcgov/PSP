@@ -184,11 +184,11 @@ infra: ## Starts infrastructure containers (e.g. database, geoserver). Useful fo
 
 start: ## Starts the local containers (n=service name)
 	@echo "$(P) Starting client and server containers..."
-	@docker-compose start $(n)
+	@docker-compose --profile all start $(n)
 
 up: ## Runs the local containers (n=service name)
 	@echo "$(P) Running client and server..."
-	@docker-compose up -d --no-recreate $(n)
+	@docker-compose --profile all up -d --no-recreate $(n)
 
 destroy: ## Stops the local containers and removes them (n=service name)
 	@echo "$(P) Removing docker containers..."
@@ -196,15 +196,15 @@ destroy: ## Stops the local containers and removes them (n=service name)
 
 down: ## Stops the local containers and removes them
 	@echo "$(P) Stopping client and server..."
-	@docker-compose down
+	@docker-compose --profile all down
 
 stop: ## Stops the local containers (n=service name)
 	@echo "$(P) Stopping client and server..."
-	@docker-compose stop $(n)
+	@docker-compose --profile all stop $(n)
 
 build: ## Builds the local containers (n=service name)
 	@echo "$(P) Building images..."
-	@docker-compose build --no-cache $(n)
+	@docker-compose --profile all build --no-cache $(n)
 
 rebuild: ## Build the local contains (n=service name) and then start them after building
 	@"$(MAKE)" build n=$(n)
@@ -215,6 +215,9 @@ clean: ## Removes all local containers, images, volumes, etc
 	@docker-compose rm -f -v -s
 	@docker volume rm -f psp-frontend-node-cache
 	@docker volume rm -f psp-api-db-data
+
+restart-mayan: 
+	@docker-compose --profile mayan up --build -d
 
 logs: ## Shows logs for running containers (n=service name)
 	@docker-compose logs -f $(n)

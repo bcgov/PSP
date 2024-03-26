@@ -1,8 +1,14 @@
 version: "3.5"
 
+include:
+  - tools/mayan-edms/docker-compose.yml
+
 services:
   ####################### Database #######################
   database:
+    profiles:
+      - all
+      - psp
     environment:
       - TARGET_SPRINT
       - SEED
@@ -21,6 +27,9 @@ services:
 
   ####################### Backend #######################
   backend:
+    profiles:
+      - all
+      - psp
     restart: on-failure:1
     container_name: psp-api
     build:
@@ -39,6 +48,9 @@ services:
 
   ####################### Frontend #######################
   frontend:
+    profiles:
+      - all
+      - psp
     stdin_open: true
     tty: true
     restart: on-failure:1
@@ -59,6 +71,9 @@ services:
 
   ####################### GeoServer #######################
   geoserver:
+    profiles:
+      - all
+      - psp
     image: kartoza/geoserver:2.19.2
     volumes:
       - ./tools/geoserver/geoserver_data:/opt/geoserver/data_dir/workspaces
@@ -77,6 +92,8 @@ services:
   ####################### Clam AV #######################
   # example av test file here: https://serverfault.com/questions/484082/how-should-i-test-clam-anti-virus
   clamav:
+    profiles:
+      - all
     image: mkodockx/docker-clamav:alpine-idb-amd64
     environment:
       - CLAMD_CONF_MaxFileSize=500M
@@ -86,7 +103,7 @@ services:
     restart: on-failure
     container_name: psp-clamav
     healthcheck:
-      test: ["CMD", "./check.sh"]
+      test: [ "CMD", "./check.sh" ]
       interval: 60s
       retries: 3
       start_period: 120s
@@ -94,6 +111,9 @@ services:
       - psp
 
   prometheus:
+    profiles:
+      - all
+      - monitoring
     image: ubuntu/prometheus
     container_name: psp-prometheus
     ports:
@@ -108,6 +128,9 @@ services:
       - "--web.enable-lifecycle"
 
   grafana:
+    profiles:
+      - all
+      - monitoring
     image: grafana/grafana-oss
     container_name: psp-grafana
     restart: on-failure
