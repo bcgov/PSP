@@ -22,7 +22,7 @@ namespace Pims.Dal.Repositories
 
         PimsProperty GetByPid(int pid, bool includeRetired = false);
 
-        PimsProperty GetByPin(int pin);
+        PimsProperty GetByPin(int pin, bool includeRetired = false);
 
         PimsProperty GetAllAssociationsById(long id);
 

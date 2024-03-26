@@ -228,17 +228,26 @@ namespace Pims.Dal.Repositories
                         .OrderByDescending(p => p.PropertyId).FirstOrDefault(p => p.Pid == pid) ?? throw new KeyNotFoundException();
         }
 
-        /// <summary>
         /// Get the property for the specified PIN value.
         /// </summary>
         /// <param name="pin"></param>
         /// <returns></returns>
-        public PimsProperty GetByPin(int pin)
+        public PimsProperty GetByPin(int pin, bool includeRetired = false)
         {
             this.User.ThrowIfNotAllAuthorized(Permissions.PropertyView);
 
-            var property = this.Context.PimsProperties.AsNoTracking()
-                .Include(p => p.DistrictCodeNavigation)
+            var query = Context.PimsProperties.AsNoTracking();
+
+            if(includeRetired)
+            {
+                query = query.Where(r => !r.IsRetired.HasValue || (r.IsRetired.HasValue && r.IsRetired.Value));
+            }
+            else
+            {
+                query = query.Where(r => !r.IsRetired.HasValue || (r.IsRetired.HasValue && !r.IsRetired.Value));
+            }
+
+            return query.Include(p => p.DistrictCodeNavigation)
                 .Include(p => p.RegionCodeNavigation)
                 .Include(p => p.PropertyTypeCodeNavigation)
                 .Include(p => p.PropertyStatusTypeCodeNavigation)
@@ -262,7 +271,6 @@ namespace Pims.Dal.Repositories
                 .Include(p => p.Address)
                     .ThenInclude(a => a.Country)
                 .FirstOrDefault(p => p.Pin == pin) ?? throw new KeyNotFoundException();
-            return property;
         }
 
         /// <summary>
