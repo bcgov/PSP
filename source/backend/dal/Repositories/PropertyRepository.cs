@@ -228,6 +228,7 @@ namespace Pims.Dal.Repositories
                         .OrderByDescending(p => p.PropertyId).FirstOrDefault(p => p.Pid == pid) ?? throw new KeyNotFoundException();
         }
 
+        /// <summary>
         /// Get the property for the specified PIN value.
         /// </summary>
         /// <param name="pin"></param>
