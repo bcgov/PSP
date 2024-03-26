@@ -1,4 +1,5 @@
 import { AxiosError } from 'axios';
+import { AxiosResponse } from 'axios';
 import { useCallback, useMemo } from 'react';
 import { toast } from 'react-toastify';
 
@@ -29,13 +30,15 @@ export const usePimsPropertyRepository = () => {
     onError: useAxiosErrorHandler('Failed to retrieve property information from PIMS'),
   });
 
-  const getPropertyByPidWrapper = useApiRequestWrapper({
+  const getPropertyByPidWrapper = useApiRequestWrapper<
+    (...args: any[]) => Promise<AxiosResponse<ApiGen_Concepts_Property, any>>
+  >({
     requestFunction: useCallback(
       async (pid: string) => await getPropertyConceptWithPidApi(pid),
       [getPropertyConceptWithPidApi],
     ),
     requestName: 'getPropertyConceptWithPidApi',
-    onError: useAxiosErrorHandler('Failed to retrieve property information from PIMS'),
+    throwError: true,
   });
 
   const getMatchingProperties = useApiRequestWrapper({
@@ -60,8 +63,10 @@ export const usePimsPropertyRepository = () => {
     onError: useCallback((axiosError: AxiosError<IApiError>) => {
       if (axiosError?.response?.status === 400) {
         toast.error(axiosError?.response.data.error);
+        return Promise.resolve();
       } else {
         toast.error('Save error. Check responses and try again.');
+        return Promise.reject(axiosError);
       }
     }, []),
   });

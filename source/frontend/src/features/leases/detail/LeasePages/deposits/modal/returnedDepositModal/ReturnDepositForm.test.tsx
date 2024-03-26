@@ -7,7 +7,7 @@ import { noop } from 'lodash';
 import { getMockDeposits } from '@/mocks/deposits.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { fillInput, renderAsync, RenderOptions } from '@/utils/test-utils';
+import { act, fillInput, renderAsync, RenderOptions } from '@/utils/test-utils';
 
 import { FormLeaseDepositReturn } from '../../models/FormLeaseDepositReturn';
 import ReturnDepositForm, { IReturnDepositFormProps } from './ReturnDepositForm';
@@ -69,8 +69,10 @@ describe('ReturnDepositForm component', () => {
       component: { container, findByDisplayValue },
     } = await setup({});
 
-    const { input } = await fillInput(container, 'returnDate', '2020-01-02', 'datepicker');
-    await findByDisplayValue('Jan 02, 2020');
+    await act(async () => {
+      await fillInput(container, 'returnDate', '2020-01-02', 'datepicker');
+    });
+    const input = await findByDisplayValue('Jan 02, 2020');
     expect(input).toHaveProperty('required');
   });
 });

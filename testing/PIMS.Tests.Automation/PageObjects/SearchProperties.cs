@@ -1,6 +1,4 @@
 ﻿using OpenQA.Selenium;
-using OpenQA.Selenium.Support.Events;
-using System.Diagnostics;
 
 namespace PIMS.Tests.Automation.PageObjects
 {
@@ -32,11 +30,15 @@ namespace PIMS.Tests.Automation.PageObjects
         private By searchPropertyListHeaderLocation = By.XPath("//div[@data-testid='propertiesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Location')]");
         private By searchPropertyListLocationSortBttn = By.CssSelector("div[data-testid='sort-column-Location']");
         private By searchPropertyListHeaderLotSize = By.XPath("//div[@data-testid='propertiesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Lot Size')]");
-        private By searchPropertyListLotSizeSortBttn = By.CssSelector("div[data-testid='sort-column-landArea']");
+        private By searchPropertyListLotSizeSortBttn = By.XPath("//div[@data-testid='propertiesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Lot Size')]/div");
         private By searchPropertyListHeaderOwnership = By.XPath("//div[@data-testid='propertiesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Ownership')]");
         private By searchPropertyListOwnershipSortBttn = By.CssSelector("div[data-testid='sort-column-Ownership']");
         private By searchPropertyListContent = By.XPath("//div[@data-testid='propertiesTable']/form/div/div");
         private By searchPropertyListContent1stProp = By.XPath("//div[@data-testid='propertiesTable']/form/div/div[1]");
+        private By searchPropertyListContent1stPID = By.XPath("//div[@data-testid='propertiesTable']/form/div/div[1]/div/div[1]");
+        private By searchPropertyListContent1stLocation = By.XPath("//div[@data-testid='propertiesTable']/form/div/div[1]/div/div[4]");
+        private By searchPropertyListContent1stLotSize = By.XPath("//div[@data-testid='propertiesTable']/form/div/div[1]/div/div[5]");
+        private By searchPropertyListContent1stOwnership = By.XPath("//div[@data-testid='propertiesTable']/form/div/div[1]/div/div[6]");
         private By searchPropertyListContent1stViewTabBttn = By.XPath("//div[@data-testid='propertiesTable']/form/div/div[1]/div/div[7]/div/button[@data-testid='view-prop-tab']");
         private By searchPropertyListContent1stViewWindowBttn = By.XPath("//div[@data-testid='propertiesTable']/form/div/div[1]/div/div[7]/div/button[@data-testid='view-prop-ext']");
         private By searchPropertyListPaginationMenu = By.CssSelector("div[class='Menu-root']");
@@ -63,9 +65,9 @@ namespace PIMS.Tests.Automation.PageObjects
             WaitUntilSpinnerDisappear();
         }
 
-        public void SearchPropertyByAddress(string address)
+        public void SearchPropertyByAddressMap(string address)
         {
-            Wait(3000);
+            Wait();
 
             WaitUntilClickable(searchPropertyTypeSelect);
             ChooseSpecificSelectOption(searchPropertyTypeSelect, "Address");
@@ -76,6 +78,18 @@ namespace PIMS.Tests.Automation.PageObjects
             
             webDriver.FindElement(searchPropertySearchBttn).Click();
             WaitUntilSpinnerDisappear();
+        }
+
+        public void SearchPropertyByAddressList(string address)
+        {
+            Wait();
+
+            WaitUntilClickable(searchPropertyTypeSelect);
+            ChooseSpecificSelectOption(searchPropertyTypeSelect, "Address");
+            webDriver.FindElement(searchPropertyByAddressInput).SendKeys(address);
+
+            webDriver.FindElement(searchPropertySearchBttn).Click();
+            WaitUntilTableSpinnerDisappear();
         }
 
         public void SearchPropertyByPlan(string plan)
@@ -92,6 +106,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void SearchPropertyReset()
         {
+            Wait();
             WaitUntilClickable(searchPropertyResetBttn);
             webDriver.FindElement(searchPropertyResetBttn).Click();
 
@@ -110,7 +125,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void NavigatePropertyListView()
         {
-            Wait(2000);
+            Wait();
             webDriver.FindElement(searchPropertyListViewIcon).Click();
         }
 
@@ -118,6 +133,48 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             WaitUntilClickable(searchPropertyListContent1stViewTabBttn);
             webDriver.FindElement(searchPropertyListContent1stViewTabBttn).Click();
+        }
+
+        public void OrderByPropertyLocation()
+        {
+            WaitUntilClickable(searchPropertyListLocationSortBttn);
+            webDriver.FindElement(searchPropertyListLocationSortBttn).Click();
+        }
+
+        public void OrderByPropertyLotSize()
+        {
+            WaitUntilClickable(searchPropertyListLotSizeSortBttn);
+            webDriver.FindElement(searchPropertyListLotSizeSortBttn).Click();
+        }
+
+        public void OrderByPropertyOwnership()
+        {
+            WaitUntilClickable(searchPropertyListOwnershipSortBttn);
+            webDriver.FindElement(searchPropertyListOwnershipSortBttn).Click();
+        }
+
+        public string FirstPropertyPID()
+        {
+            WaitUntilTableSpinnerDisappear();
+            return webDriver.FindElement(searchPropertyListContent1stPID).Text;
+        }
+
+        public string FirstPropertyLocation()
+        {
+            WaitUntilTableSpinnerDisappear();
+            return webDriver.FindElement(searchPropertyListContent1stLocation).Text;
+        }
+
+        public string FirstPropertyLotSize()
+        {
+            WaitUntilTableSpinnerDisappear();
+            return webDriver.FindElement(searchPropertyListContent1stLotSize).Text;
+        }
+
+        public string FirstPropertyOwnership()
+        {
+            WaitUntilTableSpinnerDisappear();
+            return webDriver.FindElement(searchPropertyListContent1stOwnership).Text;
         }
 
         public void ValidatePropertyListView()
@@ -148,15 +205,21 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(searchPropertyListPagination);
         }
 
-        public int PropertiesFoundCount()
+        public int PropertiesMapFoundCount()
         {
-            Wait(2000);
+            Wait();
             return webDriver.FindElements(searchPropertyFoundPin).Count();
+        }
+
+        public int PropertiesListFoundCount()
+        {
+            WaitUntilTableSpinnerDisappear();
+            return webDriver.FindElements(searchPropertyListContent).Count();
         }
 
         public int PropertiesClustersFoundCount()
         {
-            Wait(2000);
+            Wait();
             return webDriver.FindElements(searchPropertyFoundCluster).Count();
         }
 

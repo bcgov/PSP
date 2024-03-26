@@ -207,7 +207,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Search for a property by PIN
             sharedFileProperties.NavigateToSearchTab();
-            sharedFileProperties.SelectPropertyByPIN(dispositionFile.DispositionSearchProperties.PIN);
+            sharedFileProperties.SelectPropertyByPID(dispositionFile.DispositionSearchProperties.PID);
             sharedFileProperties.SelectFirstOptionFromSearch();
 
             //Delete last Property
@@ -377,7 +377,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Open elipsis option
             propertyInformation.OpenMoreOptionsPopUp();
-            propertyInformation.ChooseCreationOptionFromPin("Disposition File - Create new");
+            propertyInformation.ChooseCreationOptionFromPin("Disposition File");
 
             //Validate Acquisition File Details Create Form
             dispositionFileDetails.VerifyDispositionFileInitCreate();
@@ -399,7 +399,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Open elipsis option
             propertyInformation.OpenMoreOptionsPopUp();
-            propertyInformation.ChooseCreationOptionFromPin("Acquisition File - Create new");
+            propertyInformation.ChooseCreationOptionFromPin("Disposition File");
 
             //Fill basic Acquisition File information
             dispositionFileDetails.CreateMinimumDispositionFile(dispositionFile);
@@ -418,7 +418,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Open elipsis option
             propertyInformation.OpenMoreOptionsPopUp();
-            propertyInformation.ChooseCreationOptionFromPin("Acquisition File - Create new");
+            propertyInformation.ChooseCreationOptionFromPin("Disposition File");
 
             //Fill basic Acquisition File information
             dispositionFileDetails.CreateMinimumDispositionFile(dispositionFile);
@@ -466,6 +466,9 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             sharedPagination.ChoosePaginationOption(100);
             Assert.True(searchDispositionFiles.DispositionFileTableResultNumber() > 51);
+
+            //Reset Pagination to 10
+            sharedPagination.ChoosePaginationOption(10);
 
             //Verify Column Sorting by File Number
             searchDispositionFiles.OrderByDispositionFileNumber();
@@ -520,6 +523,16 @@ namespace PIMS.Tests.Automation.StepDefinitions
             var firstFileStatusAscResult = searchDispositionFiles.FirstDispositionFileStatus();
 
             Assert.NotEqual(firstFileStatusDescResult, firstFileStatusAscResult);
+
+            //Verify Pagination display different set of results
+            sharedPagination.ResetSearch();
+
+            var firstDispositionPage1 = searchDispositionFiles.FirstDispositionFileNumber();
+            sharedPagination.GoNextPage();
+            var firstDispositionPage2 = searchDispositionFiles.FirstDispositionFileNumber();
+            Assert.NotEqual(firstDispositionPage1, firstDispositionPage2);
+
+            sharedPagination.ResetSearch();
 
             //Filter Disposition Files
             searchDispositionFiles.FilterDispositionFiles("003-549-551", "Disposition Example File", "", "Archived", "On Hold", "");

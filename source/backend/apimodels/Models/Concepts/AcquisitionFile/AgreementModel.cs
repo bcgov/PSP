@@ -3,7 +3,7 @@ using Pims.Api.Models.Base;
 
 namespace Pims.Api.Models.Concepts.AcquisitionFile
 {
-    public class AgreementModel : BaseAuditModel
+    public class AgreementModel : BaseConcurrentModel
     {
         public long AgreementId { get; set; }
 

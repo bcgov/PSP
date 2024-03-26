@@ -90,14 +90,15 @@ const onClose = jest.fn();
 describe('AddLeaseContainer component', () => {
   const setup = async (renderOptions: RenderOptions & Partial<IAddLeaseContainerProps> = {}) => {
     // render component under test
-    const component = await renderAsync(<AddLeaseContainer onClose={onClose} />, {
+    const utils = await renderAsync(<AddLeaseContainer onClose={onClose} />, {
       ...renderOptions,
       store: storeState,
       history,
     });
 
     return {
-      component,
+      ...utils,
+      getCloseButton: () => utils.getByTitle('close'),
     };
   };
 
@@ -110,34 +111,35 @@ describe('AddLeaseContainer component', () => {
   });
 
   it('renders as expected', async () => {
-    const { component } = await setup({});
-    expect(component.asFragment()).toMatchSnapshot();
+    const { asFragment, findByText } = await setup({});
+    await findByText(/First nation/i);
+    expect(asFragment()).toMatchSnapshot();
+    await act(async () => {});
   });
 
   it('cancels the form', async () => {
-    const {
-      component: { getAllByText },
-    } = await setup({});
-    userEvent.click(getAllByText('Cancel')[0]);
-    expect(history.location.pathname).toBe('/');
+    const { getByTitle, getCloseButton } = await setup({});
+
+    await act(async () => userEvent.click(getCloseButton()));
+    await act(async () => userEvent.click(getByTitle('ok-modal')));
+
     expect(onClose).toBeCalled();
+    expect(history.location.pathname).toBe('/');
   });
 
   it('saves the form with minimal data', async () => {
-    const {
-      component: { getByText, container },
-    } = await setup({});
+    const { getByText, container } = await setup({});
 
-    await act(() => selectOptions('statusTypeCode', 'DRAFT'));
-    await act(() => selectOptions('paymentReceivableTypeCode', 'RCVBL'));
-    await act(() => selectOptions('regionId', '1'));
-    await act(() => selectOptions('programTypeCode', 'BCFERRIES'));
-    await act(() => selectOptions('leaseTypeCode', 'LIOCCTTLD'));
-    await act(() => selectOptions('purposeTypeCode', 'BCFERRIES'));
-    await act(() => {
+    await act(async () => selectOptions('statusTypeCode', 'DRAFT'));
+    await act(async () => selectOptions('paymentReceivableTypeCode', 'RCVBL'));
+    await act(async () => selectOptions('regionId', '1'));
+    await act(async () => selectOptions('programTypeCode', 'BCFERRIES'));
+    await act(async () => selectOptions('leaseTypeCode', 'LIOCCTTLD'));
+    await act(async () => selectOptions('purposeTypeCode', 'BCFERRIES'));
+    await act(async () => {
       fillInput(container, 'startDate', '01/01/2020', 'datepicker');
     });
-    await act(() => {
+    await act(async () => {
       fillInput(container, 'expiryDate', '01/02/2020', 'datepicker');
     });
     await act(async () => userEvent.click(getByText(/Save/i)));
@@ -152,20 +154,18 @@ describe('AddLeaseContainer component', () => {
       }),
     );
 
-    const {
-      component: { getByText, findByText, container },
-    } = await setup({});
+    const { getByText, findByText, container } = await setup({});
 
-    await act(() => selectOptions('statusTypeCode', 'DRAFT'));
-    await act(() => selectOptions('paymentReceivableTypeCode', 'RCVBL'));
-    await act(() => selectOptions('regionId', '1'));
-    await act(() => selectOptions('programTypeCode', 'BCFERRIES'));
-    await act(() => selectOptions('leaseTypeCode', 'LIOCCTTLD'));
-    await act(() => selectOptions('purposeTypeCode', 'BCFERRIES'));
-    await act(() => {
+    await act(async () => selectOptions('statusTypeCode', 'DRAFT'));
+    await act(async () => selectOptions('paymentReceivableTypeCode', 'RCVBL'));
+    await act(async () => selectOptions('regionId', '1'));
+    await act(async () => selectOptions('programTypeCode', 'BCFERRIES'));
+    await act(async () => selectOptions('leaseTypeCode', 'LIOCCTTLD'));
+    await act(async () => selectOptions('purposeTypeCode', 'BCFERRIES'));
+    await act(async () => {
       fillInput(container, 'startDate', '01/01/2020', 'datepicker');
     });
-    await act(() => {
+    await act(async () => {
       fillInput(container, 'expiryDate', '01/02/2020', 'datepicker');
     });
     await act(async () => userEvent.click(getByText(/Save/i)));
@@ -181,20 +181,18 @@ describe('AddLeaseContainer component', () => {
       }),
     );
 
-    const {
-      component: { getByText, container },
-    } = await setup({});
+    const { getByText, container } = await setup({});
 
-    await act(() => selectOptions('statusTypeCode', 'DRAFT'));
-    await act(() => selectOptions('paymentReceivableTypeCode', 'RCVBL'));
-    await act(() => selectOptions('regionId', '1'));
-    await act(() => selectOptions('programTypeCode', 'BCFERRIES'));
-    await act(() => selectOptions('leaseTypeCode', 'LIOCCTTLD'));
-    await act(() => selectOptions('purposeTypeCode', 'BCFERRIES'));
-    await act(() => {
+    await act(async () => selectOptions('statusTypeCode', 'DRAFT'));
+    await act(async () => selectOptions('paymentReceivableTypeCode', 'RCVBL'));
+    await act(async () => selectOptions('regionId', '1'));
+    await act(async () => selectOptions('programTypeCode', 'BCFERRIES'));
+    await act(async () => selectOptions('leaseTypeCode', 'LIOCCTTLD'));
+    await act(async () => selectOptions('purposeTypeCode', 'BCFERRIES'));
+    await act(async () => {
       fillInput(container, 'startDate', '01/01/2020', 'datepicker');
     });
-    await act(() => {
+    await act(async () => {
       fillInput(container, 'expiryDate', '01/02/2020', 'datepicker');
     });
     await act(async () => userEvent.click(getByText(/Save/i)));

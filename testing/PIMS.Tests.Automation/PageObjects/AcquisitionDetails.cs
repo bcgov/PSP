@@ -1,6 +1,4 @@
 ﻿using OpenQA.Selenium;
-using SeleniumExtras.WaitHelpers;
-using OpenQA.Selenium.Support.UI;
 using System.Text.RegularExpressions;
 using PIMS.Tests.Automation.Classes;
 
@@ -135,12 +133,6 @@ namespace PIMS.Tests.Automation.PageObjects
 
             WaitUntilVisible(createAcquisitionFileButton);
             FocusAndClick(createAcquisitionFileButton);
-        }
-
-        public void NavigateToFileSummary()
-        {
-            WaitUntilClickable(acquisitionFileSummaryBttn);
-            webDriver.FindElement(acquisitionFileSummaryBttn).Click();
         }
 
         public void NavigateToFileDetailsTab()
@@ -424,6 +416,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 sharedModals.ModalClickOKBttn();
             }
 
+            Wait();
             AssertTrueIsDisplayed(acquisitionFileEditButton);
         }
 
@@ -440,18 +433,20 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
             ButtonElement("Cancel");
 
-            try
-            {
-                WebDriverWait wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(3));
-                if (wait.Until(ExpectedConditions.AlertIsPresent()) != null)
-                {
-                    webDriver.SwitchTo().Alert().Accept();
-                }
-            }
-            catch (WebDriverTimeoutException)
-            {
-                sharedModals.CancelActionModal();
-            }
+            sharedModals.CancelActionModal();
+
+            //try
+            //{
+            //    WebDriverWait wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(3));
+            //    if (wait.Until(ExpectedConditions.AlertIsPresent()) != null)
+            //    {
+            //        webDriver.SwitchTo().Alert().Accept();
+            //    }
+            //}
+            //catch (WebDriverTimeoutException)
+            //{
+            //    sharedModals.CancelActionModal();
+            //}
         }
 
         public string GetAcquisitionFileCode()
@@ -656,8 +651,6 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(acquisitionFileDetailsMOTIRegionLabel);
             AssertTrueIsDisplayed(acquisitionFileDetailsRegionSelect);
 
-            VerifyMaximumFields();
-
             //Team members
             AssertTrueIsDisplayed(acquisitionFileTeamSubtitle);
             AssertTrueIsDisplayed(acquisitionFileAddAnotherMemberLink);
@@ -675,6 +668,39 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(acquisitionFileOwnerRepresentativeButton);
             AssertTrueIsDisplayed(acquisitionFileOwnerCommentLabel);
             AssertTrueIsDisplayed(acquisitionFileOwnerCommentTextArea);
+        }
+
+        public void VerifyMaximumFields()
+        {
+            //Get previous inserted data
+            var acquisitionFileName = webDriver.FindElement(acquisitionFileNameInput).GetAttribute("value");
+
+            //Verify File Name Input
+            webDriver.FindElement(acquisitionFileNameInput).SendKeys("Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus");
+            webDriver.FindElement(acquisitionFileDetailsNameLabel).Click();
+            AssertTrueIsDisplayed(acquisitionFileNameInvalidMessage);
+            ClearInput(acquisitionFileNameInput);
+
+            //Verify Historical File Number Input
+            webDriver.FindElement(acquisitionFileHistoricalNumberInput).SendKeys("Lorem ipsum dolor s");
+            webDriver.FindElement(acquisitionFileHistoricalNumberLabel).Click();
+            AssertTrueIsDisplayed(acquisitionFileHistoricalInvalidMessage);
+            ClearInput(acquisitionFileHistoricalNumberInput);
+
+            //Re-insert acquisition file name
+            webDriver.FindElement(acquisitionFileNameInput).SendKeys(acquisitionFileName);
+        }
+
+        public void DeleteFirstStaffMember()
+        {
+            WaitUntilClickable(acquisitionFileTeamFirstMemberDeleteBttn);
+            webDriver.FindElement(acquisitionFileTeamFirstMemberDeleteBttn).Click();
+
+            WaitUntilVisible(acquisitionFileConfirmationModal);
+            Assert.True(sharedModals.ModalHeader() == "Remove Team Member");
+            Assert.True(sharedModals.ModalContent() == "Are you sure you want to remove this row?");
+
+            sharedModals.ModalClickOKBttn();
         }
 
         private void AddTeamMembers(TeamMember teamMember)
@@ -733,9 +759,15 @@ namespace PIMS.Tests.Automation.PageObjects
             if(owner.OwnerMailAddress.AddressLine1 != "")
                 webDriver.FindElement(By.Id("input-owners["+ ownerIndex +"].address.streetAddress1")).SendKeys(owner.OwnerMailAddress.AddressLine1);
             if (owner.OwnerMailAddress.AddressLine2 != "")
+            {
+                webDriver.FindElement(By.XPath("//input[@id='input-owners["+ ownerIndex +"].address.streetAddress1']/parent::div/parent::div/parent::div/parent::div/parent::div /following-sibling::div/div/div/div/button")).Click();
                 webDriver.FindElement(By.Id("input-owners["+ ownerIndex +"].address.streetAddress2")).SendKeys(owner.OwnerMailAddress.AddressLine2);
+            }
             if (owner.OwnerMailAddress.AddressLine3 != "")
+            {
+                webDriver.FindElement(By.XPath("//input[@id='input-owners["+ ownerIndex +"].address.streetAddress2']/parent::div/parent::div/parent::div/parent::div/parent::div /following-sibling::div/div/div/div/button")).Click();
                 webDriver.FindElement(By.Id("input-owners["+ ownerIndex +"].address.streetAddress3")).SendKeys(owner.OwnerMailAddress.AddressLine3);
+            }
             if (owner.OwnerMailAddress.Country != "")
                 ChooseSpecificSelectOption(By.Id("input-owners["+ ownerIndex +"].address.countryId"), owner.OwnerMailAddress.Country);
             if (owner.OwnerMailAddress.City != "")
@@ -752,18 +784,6 @@ namespace PIMS.Tests.Automation.PageObjects
             if (owner.OwnerPhone != "")
                 webDriver.FindElement(By.Id("input-owners["+ ownerIndex +"].contactPhoneNumber")).SendKeys(owner.OwnerPhone);
 
-        }
-
-        public void DeleteFirstStaffMember()
-        {
-            WaitUntilClickable(acquisitionFileTeamFirstMemberDeleteBttn);
-            webDriver.FindElement(acquisitionFileTeamFirstMemberDeleteBttn).Click();
-
-            WaitUntilVisible(acquisitionFileConfirmationModal);
-            Assert.True(sharedModals.ModalHeader() == "Remove Team Member");
-            Assert.True(sharedModals.ModalContent() == "Are you sure you want to remove this row?");
-
-            sharedModals.ModalClickOKBttn();
         }
 
         private void DeleteOwner()
@@ -793,21 +813,6 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(By.CssSelector("div[data-testid='contact-input'] button[title='Select Contact']")).Click();
             sharedSelectContact.SelectContact("Test", "");
             AssertTrueIsDisplayed(acquisitionFileTeamInvalidProfileMessage);
-        }
-
-        private void VerifyMaximumFields()
-        {
-            //Verify File Name Input
-            webDriver.FindElement(acquisitionFileNameInput).SendKeys("Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus");
-            webDriver.FindElement(acquisitionFileDetailsNameLabel).Click();
-            AssertTrueIsDisplayed(acquisitionFileNameInvalidMessage);
-            ClearInput(acquisitionFileNameInput);
-
-            //Verify Historical File Number Input
-            webDriver.FindElement(acquisitionFileHistoricalNumberInput).SendKeys("Lorem ipsum dolor s");
-            webDriver.FindElement(acquisitionFileHistoricalNumberLabel).Click();
-            AssertTrueIsDisplayed(acquisitionFileHistoricalInvalidMessage);
-            ClearInput(acquisitionFileHistoricalNumberInput);
         }
     }
 }

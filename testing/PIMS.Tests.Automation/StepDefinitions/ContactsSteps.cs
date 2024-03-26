@@ -1,7 +1,7 @@
-﻿using Microsoft.Extensions.Configuration;
-using System.Data;
+﻿using System.Data;
 using PIMS.Tests.Automation.Data;
 using PIMS.Tests.Automation.Classes;
+using PIMS.Tests.Automation.PageObjects;
 
 namespace PIMS.Tests.Automation.StepDefinitions
 {
@@ -11,6 +11,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly LoginSteps loginSteps;
         private readonly Contacts contacts;
         private readonly SearchContacts searchContacts;
+        private readonly SharedPagination sharedPagination;
 
         private readonly string userName = "TRANPSP1";
 
@@ -22,6 +23,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
             loginSteps = new LoginSteps(driver);
             contacts = new Contacts(driver.Current);
             searchContacts = new SearchContacts(driver.Current);
+            sharedPagination = new SharedPagination(driver.Current);
+
             individualContact = new IndividualContact();
             organizationContact = new OrganizationContact();
         }
@@ -134,12 +137,14 @@ namespace PIMS.Tests.Automation.StepDefinitions
             if (contactType == "Individual")
             {
                 PopulateIndividualContact(rowNumber);
-                searchContacts.SearchGeneralContact(individualContact.FullName);
+                searchContacts.FilterContacts("Individual", individualContact.FullName, "");
+                searchContacts.FilterContacts(individualContact.FullName);
             }
             else
             {
                 PopulateOrganizationContact(rowNumber);
-                searchContacts.SearchGeneralContact(organizationContact.OrganizationName);
+                searchContacts.FilterContacts("Organization", organizationContact.OrganizationName, "");
+                searchContacts.FilterContacts(organizationContact.OrganizationName);
             }
         }
 
@@ -158,28 +163,111 @@ namespace PIMS.Tests.Automation.StepDefinitions
             if (contactType == "Individual")
             {
                 PopulateIndividualContact(rowNumber);
-                searchContacts.SearchGeneralContact(individualContact.FullName);
+                searchContacts.FilterContacts("Individual",individualContact.FullName, "");
+                searchContacts.FilterContacts(individualContact.FullName);
             }
             else
             {
                 PopulateOrganizationContact(rowNumber);
-                searchContacts.SearchGeneralContact(organizationContact.OrganizationName);
+                searchContacts.FilterContacts("Organization",organizationContact.OrganizationName, "");
+                searchContacts.FilterContacts(organizationContact.OrganizationName);
             }
         }
 
-        [StepDefinition(@"I verify the Contacts List View")]
-        public void VerifyContactsListView()
+        [StepDefinition(@"I verify the Contacts List View from row number (.*)")]
+        public void VerifyContactsListView(int rowNumber)
         {
             /* TEST COVERAGE: PSP-2355, PSP-4559 */
 
             //Login to PIMS
             loginSteps.Idir(userName);
 
+            //Populate contacts data
+            PopulateOrganizationContact(rowNumber);
+
             //Navigate to Search a Contact
             searchContacts.NavigateToSearchContact();
 
             //Verify List View
             searchContacts.VerifyContactsListView();
+
+            //Verify Pagination
+            sharedPagination.ChoosePaginationOption(5);
+            Assert.Equal(5, searchContacts.ContactsTableResultNumber());
+
+            sharedPagination.ChoosePaginationOption(10);
+            Assert.Equal(10, searchContacts.ContactsTableResultNumber());
+
+            sharedPagination.ChoosePaginationOption(20);
+            Assert.Equal(20, searchContacts.ContactsTableResultNumber());
+
+            sharedPagination.ChoosePaginationOption(50);
+            Assert.Equal(50, searchContacts.ContactsTableResultNumber());
+
+            sharedPagination.ChoosePaginationOption(100);
+            Assert.Equal(100, searchContacts.ContactsTableResultNumber());
+
+            //Verify Column Sorting by Contact Summary
+            searchContacts.OrderByContactSummary();
+            var firstSummaryDescResult = searchContacts.FirstContactSummary();
+
+            searchContacts.OrderByContactSummary();
+            var firstSummaryAscResult = searchContacts.FirstContactSummary();
+
+            Assert.NotEqual(firstSummaryDescResult, firstSummaryAscResult);
+
+            //Verify Column Sorting by First Name
+            searchContacts.OrderByContactFirstName();
+            var firstNameDescResult = searchContacts.FirstContactFirstName();
+
+            searchContacts.OrderByContactFirstName();
+            var firstNameAscResult = searchContacts.FirstContactFirstName();
+
+            Assert.NotEqual(firstNameDescResult, firstNameAscResult);
+
+            //Verify Column Sorting by Last Name
+            searchContacts.OrderByContactLastName();
+            var firstLastNameDescResult = searchContacts.FirstContactLastName();
+
+            searchContacts.OrderByContactLastName();
+            var firstLastNameAscResult = searchContacts.FirstContactLastName();
+
+            Assert.NotEqual(firstLastNameDescResult, firstLastNameAscResult);
+
+            //Verify Column Sorting by Organization
+            searchContacts.OrderByContactOrganization();
+            var firstOrganizationDescResult = searchContacts.FirstContactOrganization();
+
+            searchContacts.OrderByContactOrganization();
+            var firstOrganizationAscResult = searchContacts.FirstContactOrganization();
+
+            Assert.NotEqual(firstOrganizationDescResult, firstOrganizationAscResult);
+
+            //Verify Column Sorting by City
+            searchContacts.OrderByContactCity();
+            var firstCityDescResult = searchContacts.FirstContactCity();
+
+            searchContacts.OrderByContactCity();
+            var firstCityAscResult = searchContacts.FirstContactCity();
+
+            Assert.NotEqual(firstCityDescResult, firstCityAscResult);
+
+            //Verify Pagination display different set of results
+            sharedPagination.ResetSearch();
+
+            var firstContactPage1 = searchContacts.FirstContactSummary();
+            sharedPagination.GoNextPage();
+            var firstContactPage2 = searchContacts.FirstContactSummary();
+            Assert.NotEqual(firstContactPage1, firstContactPage2);
+
+            sharedPagination.ResetSearch();
+
+            //Filter Acquisition Files
+            searchContacts.FilterContacts("Individual", "Maria Johnson", "California");
+            Assert.False(searchContacts.SearchFoundResults());
+
+            //Look for the last created Acquisition File
+            searchContacts.FilterContacts("Organization", organizationContact.OrganizationName, organizationContact.OrgMailAddress.City);
         }
 
         [StepDefinition(@"No contacts results are found")]

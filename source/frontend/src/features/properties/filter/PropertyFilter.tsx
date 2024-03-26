@@ -156,7 +156,13 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
               <SearchButton
                 disabled={
                   isSubmitting ||
-                  !(values.pinOrPid || values.latitude || values.longitude || values.planNumber)
+                  !(
+                    values.pinOrPid ||
+                    values.latitude ||
+                    values.longitude ||
+                    values.planNumber ||
+                    values.address
+                  )
                 }
               />
             </Col>

@@ -22,8 +22,8 @@ describe('GenerateLease tests', () => {
       [],
       [],
       [
-        { startDate: '01-01-2020' } as ApiGen_Concepts_LeaseTerm,
-        { startDate: '02-02-2022' } as ApiGen_Concepts_LeaseTerm,
+        { startDate: '2020-01-01' } as ApiGen_Concepts_LeaseTerm,
+        { startDate: '2022-02-02' } as ApiGen_Concepts_LeaseTerm,
       ],
     );
     expect(lease.commencement_date).toBe(`January 01, 2020`);

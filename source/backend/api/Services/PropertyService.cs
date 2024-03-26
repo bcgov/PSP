@@ -100,7 +100,7 @@ namespace Pims.Api.Services
 
         public PimsProperty Update(PimsProperty property, bool commitTransaction = true)
         {
-            _logger.LogInformation("Updating property...");
+            _logger.LogInformation("Updating property with id {id}", property.Internal_Id);
             _user.ThrowIfNotAuthorized(Permissions.PropertyEdit);
 
             // convert spatial location from lat/long (4326) to BC Albers (3005) for database storage
@@ -118,6 +118,19 @@ namespace Pims.Api.Services
             }
 
             return GetById(newProperty.Internal_Id);
+        }
+
+        public PimsProperty RetireProperty(PimsProperty property, bool commitTransaction = true)
+        {
+            _logger.LogInformation("Retiring property with id {id}", property.Internal_Id);
+            _user.ThrowIfNotAuthorized(Permissions.PropertyEdit);
+
+            var retiredProperty = _propertyRepository.RetireProperty(property);
+            if (commitTransaction)
+            {
+                _propertyRepository.CommitTransaction();
+            }
+            return GetById(retiredProperty.Internal_Id); ;
         }
 
         public IList<PimsPropertyContact> GetContacts(long propertyId)

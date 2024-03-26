@@ -40,7 +40,7 @@ describe('DispositionSaleForm  component', () => {
         validationSchema={DispositionSaleFormYupSchema}
         innerRef={ref}
       >
-        {formikProps => <DispositionSaleForm dispostionSaleId={null} />}
+        {formikProps => <DispositionSaleForm dispositionSaleId={null} />}
       </Formik>,
       {
         ...renderOptions,
@@ -87,21 +87,23 @@ describe('DispositionSaleForm  component', () => {
   it('renders as expected', async () => {
     const { asFragment } = await setup({
       props: {
-        dispostionSaleId: null,
+        dispositionSaleId: null,
       },
     });
 
+    await act(async () => {});
     const fragment = await waitFor(() => asFragment());
     expect(fragment).toMatchSnapshot();
   });
 
   it(`renders 'Add Purchaser' link`, async () => {
     const { getByTestId } = await setup({});
+    await act(async () => {});
     expect(getByTestId('add-purchaser-button')).toBeVisible();
   });
 
   it(`renders 'Remove team member' link`, async () => {
-    const { getByTestId } = await setup({ props: { dispostionSaleId: null } });
+    const { getByTestId } = await setup({ props: { dispositionSaleId: null } });
     const addRow = getByTestId('add-purchaser-button');
 
     await act(async () => userEvent.click(addRow));
@@ -110,7 +112,7 @@ describe('DispositionSaleForm  component', () => {
 
   it(`displays a confirmation popup before purchaser is removed`, async () => {
     const { getByTestId, getByText } = await setup({
-      props: { dispostionSaleId: null },
+      props: { dispositionSaleId: null },
     });
     const addRow = getByTestId('add-purchaser-button');
 
@@ -122,7 +124,7 @@ describe('DispositionSaleForm  component', () => {
 
   it(`removes the purchaser upon user confirmation`, async () => {
     const { getByTestId, getByText, getByTitle, queryByTestId } = await setup({
-      props: { dispostionSaleId: null },
+      props: { dispositionSaleId: null },
     });
 
     const addRow = getByTestId('add-purchaser-button');
@@ -137,7 +139,7 @@ describe('DispositionSaleForm  component', () => {
 
   it(`does not remove the owner when confirmation popup is cancelled`, async () => {
     const { getByTestId, getByText, getByTitle } = await setup({
-      props: { dispostionSaleId: null },
+      props: { dispositionSaleId: null },
     });
 
     const addRow = getByTestId('add-purchaser-button');
@@ -153,7 +155,7 @@ describe('DispositionSaleForm  component', () => {
 
   it('Calculates the GST collected amount over the "Final Sale Amount" when the GST is required is set to "Yes"', async () => {
     const { container, getFinalSaleAmountTextbox, getGSTCollectedAmountTextbox } = await setup({
-      props: { dispostionSaleId: null },
+      props: { dispositionSaleId: null },
     });
 
     expect(getFinalSaleAmountTextbox()).toBeVisible();
@@ -161,11 +163,11 @@ describe('DispositionSaleForm  component', () => {
     expect(getGSTCollectedAmountTextbox()).toBeNull();
 
     await act(async () => {
-      fireEvent.change(getFinalSaleAmountTextbox(), { target: { value: '$1,000,000.00' } });
+      fireEvent.change(getFinalSaleAmountTextbox(), { target: { value: '$1,050,000.00' } });
     });
     waitForEffects();
 
-    act(() => {
+    await act(async () => {
       fillInput(container, 'isGstRequired', 'true', 'select');
     });
     waitForEffects();
@@ -182,7 +184,7 @@ describe('DispositionSaleForm  component', () => {
       getByTitle,
       findByText,
     } = await setup({
-      props: { dispostionSaleId: null },
+      props: { dispositionSaleId: null },
     });
 
     expect(getFinalSaleAmountTextbox()).toBeVisible();
@@ -190,11 +192,11 @@ describe('DispositionSaleForm  component', () => {
     expect(getGSTCollectedAmountTextbox()).toBeNull();
 
     await act(async () => {
-      fireEvent.change(getFinalSaleAmountTextbox(), { target: { value: '$1,000,000.00' } });
+      fireEvent.change(getFinalSaleAmountTextbox(), { target: { value: '$1,050,000.00' } });
     });
     waitForEffects();
 
-    act(() => {
+    await act(async () => {
       fillInput(container, 'isGstRequired', 'true', 'select');
     });
     waitForEffects();
@@ -202,7 +204,7 @@ describe('DispositionSaleForm  component', () => {
     expect(getGSTCollectedAmountTextbox()).toBeVisible();
     expect(getGSTCollectedAmountTextbox()).toHaveValue('$50,000.00');
 
-    act(() => {
+    await act(async () => {
       fillInput(container, 'isGstRequired', 'false', 'select');
     });
     waitForEffects();
@@ -226,7 +228,7 @@ describe('DispositionSaleForm  component', () => {
       getSPPAmountTextbox,
       getNetProceedsAfterSPPAmountTextbox,
     } = await setup({
-      props: { dispostionSaleId: null },
+      props: { dispositionSaleId: null },
     });
 
     expect(getFinalSaleAmountTextbox()).toBeVisible();
@@ -282,7 +284,7 @@ describe('DispositionSaleForm  component', () => {
       getSPPAmountTextbox,
       getNetProceedsAfterSPPAmountTextbox,
     } = await setup({
-      props: { dispostionSaleId: null },
+      props: { dispositionSaleId: null },
     });
 
     expect(getFinalSaleAmountTextbox()).toBeVisible();
@@ -290,7 +292,7 @@ describe('DispositionSaleForm  component', () => {
     expect(getGSTCollectedAmountTextbox()).toBeNull();
 
     await act(async () => {
-      fireEvent.change(getFinalSaleAmountTextbox(), { target: { value: '$10,000.00' } });
+      fireEvent.change(getFinalSaleAmountTextbox(), { target: { value: '$10,500.00' } });
     });
     fireEvent.blur(getFinalSaleAmountTextbox());
     await waitForEffects();
@@ -313,8 +315,8 @@ describe('DispositionSaleForm  component', () => {
     fireEvent.blur(getNetBookAmountTextbox());
     await waitForEffects();
 
-    expect(getNetProceedsBeforeSPPAmountTextbox()).toHaveValue('$9,500.00');
-    expect(getNetProceedsAfterSPPAmountTextbox()).toHaveValue('$9,500.00');
+    expect(getNetProceedsBeforeSPPAmountTextbox()).toHaveValue('$10,000.00');
+    expect(getNetProceedsAfterSPPAmountTextbox()).toHaveValue('$10,000.00');
 
     await act(async () => {
       fireEvent.change(getSPPAmountTextbox(), { target: { value: '$500.00' } });
@@ -322,10 +324,10 @@ describe('DispositionSaleForm  component', () => {
     fireEvent.blur(getSPPAmountTextbox());
     await waitForEffects();
 
-    expect(getNetProceedsBeforeSPPAmountTextbox()).toHaveValue('$9,500.00');
-    expect(getNetProceedsAfterSPPAmountTextbox()).toHaveValue('$9,000.00');
+    expect(getNetProceedsBeforeSPPAmountTextbox()).toHaveValue('$10,000.00');
+    expect(getNetProceedsAfterSPPAmountTextbox()).toHaveValue('$9,500.00');
 
-    act(() => {
+    await act(async () => {
       fillInput(container, 'isGstRequired', 'true', 'select');
     });
     fireEvent.blur(getGSTCollectedAmountTextbox());
@@ -334,8 +336,8 @@ describe('DispositionSaleForm  component', () => {
     expect(getGSTCollectedAmountTextbox()).toBeVisible();
     expect(getGSTCollectedAmountTextbox()).toHaveValue('$500.00');
 
-    expect(getNetProceedsBeforeSPPAmountTextbox()).toHaveValue('$9,000.00');
-    expect(getNetProceedsAfterSPPAmountTextbox()).toHaveValue('$8,500.00');
+    expect(getNetProceedsBeforeSPPAmountTextbox()).toHaveValue('$9,500.00');
+    expect(getNetProceedsAfterSPPAmountTextbox()).toHaveValue('$9,000.00');
   });
 
   it('Calculates the Net Proceeds WITH Negative Values', async () => {
@@ -346,7 +348,7 @@ describe('DispositionSaleForm  component', () => {
       getNetProceedsBeforeSPPAmountTextbox,
       getNetProceedsAfterSPPAmountTextbox,
     } = await setup({
-      props: { dispostionSaleId: null },
+      props: { dispositionSaleId: null },
     });
 
     expect(getFinalSaleAmountTextbox()).toBeVisible();
@@ -380,8 +382,10 @@ describe('DispositionSaleForm  component', () => {
       getNetProceedsBeforeSPPAmountTextbox,
       getSPPAmountTextbox,
       getNetProceedsAfterSPPAmountTextbox,
+      getByText,
+      getByTitle,
     } = await setup({
-      props: { dispostionSaleId: null },
+      props: { dispositionSaleId: null },
     });
 
     expect(getFinalSaleAmountTextbox()).toBeVisible();
@@ -389,11 +393,21 @@ describe('DispositionSaleForm  component', () => {
     expect(getGSTCollectedAmountTextbox()).toBeNull();
 
     await act(async () => {
-      fireEvent.change(getFinalSaleAmountTextbox(), { target: { value: '$10,000.00' } });
+      fireEvent.change(getFinalSaleAmountTextbox(), { target: { value: '10500' } });
+    });
+
+    await act(async () => {
+      fillInput(container, 'isGstRequired', 'true', 'select');
+    });
+    await waitForEffects();
+
+    expect(getGSTCollectedAmountTextbox()).toBeVisible();
+    expect(getGSTCollectedAmountTextbox()).toHaveValue('$500.00');
+
+    await act(async () => {
       fireEvent.change(getRealtorCommissionAmountTextbox(), { target: { value: '$100.00' } });
       fireEvent.change(getTotalCostSaleAmountTextbox(), { target: { value: '$100.00' } });
     });
-    fireEvent.blur(getFinalSaleAmountTextbox());
     await waitForEffects();
 
     await act(async () => {
@@ -409,21 +423,22 @@ describe('DispositionSaleForm  component', () => {
       fireEvent.change(getSPPAmountTextbox(), { target: { value: '$500.00' } });
     });
     fireEvent.blur(getSPPAmountTextbox());
-    await waitForEffects();
 
     expect(getNetProceedsBeforeSPPAmountTextbox()).toHaveValue('$9,500.00');
     expect(getNetProceedsAfterSPPAmountTextbox()).toHaveValue('$9,000.00');
 
-    act(() => {
-      fillInput(container, 'isGstRequired', 'true', 'select');
+    await act(async () => {
+      fillInput(container, 'isGstRequired', 'false', 'select');
     });
-    fireEvent.blur(getGSTCollectedAmountTextbox());
     await waitForEffects();
+    expect(
+      getByText(/The GST, if provided, will be cleared. Do you wish to proceed/i),
+    ).toBeVisible();
+    await act(async () => userEvent.click(getByTitle('ok-modal')));
 
-    expect(getGSTCollectedAmountTextbox()).toBeVisible();
-    expect(getGSTCollectedAmountTextbox()).toHaveValue('$500.00');
-
-    expect(getNetProceedsBeforeSPPAmountTextbox()).toHaveValue('$9,000.00');
-    expect(getNetProceedsAfterSPPAmountTextbox()).toHaveValue('$8,500.00');
+    expect(getGSTCollectedAmountTextbox()).toBeNull();
+    expect(getFinalSaleAmountTextbox()).toHaveValue('$10,500.00');
+    expect(getNetProceedsBeforeSPPAmountTextbox()).toHaveValue('$10,000.00');
+    expect(getNetProceedsAfterSPPAmountTextbox()).toHaveValue('$9,500.00');
   });
 });

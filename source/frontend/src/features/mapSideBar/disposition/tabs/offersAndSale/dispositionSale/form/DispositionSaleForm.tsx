@@ -17,12 +17,12 @@ import { useCalculateNetProceeds } from '../hooks/useCalculateNetProceeds';
 import DispositionSalePurchaserSubForm from './DispositionSalePurchasersSubForm';
 
 export interface IDispositionSaleFormProps {
-  dispostionSaleId: number | null;
+  dispositionSaleId: number | null;
 }
 
 const DispositionSaleForm: React.FunctionComponent<
   React.PropsWithChildren<IDispositionSaleFormProps>
-> = ({ dispostionSaleId }) => {
+> = ({ dispositionSaleId }) => {
   const formikProps = useFormikContext<DispositionSaleFormModel>();
   const { setModalContent, setDisplayModal } = useModalContext();
 
@@ -75,7 +75,7 @@ const DispositionSaleForm: React.FunctionComponent<
 
   const setGSTDerivedAmountFields = (gstRequired: boolean, salesAmount: number): void => {
     if (gstRequired && gstDecimal) {
-      const taxAmount = salesAmount * gstDecimal;
+      const taxAmount = salesAmount - salesAmount / (1 + gstDecimal);
       formikProps.setFieldValue(`gstCollectedAmount`, taxAmount);
     } else {
       formikProps.setFieldValue(`gstCollectedAmount`, '');
@@ -85,7 +85,7 @@ const DispositionSaleForm: React.FunctionComponent<
   return (
     <Section header="Sales Details">
       <SectionField label="Purchaser name(s)" labelWidth="5" contentWidth="7">
-        <DispositionSalePurchaserSubForm dispositionSaleId={dispostionSaleId} />
+        <DispositionSalePurchaserSubForm dispositionSaleId={dispositionSaleId} />
       </SectionField>
 
       <SectionField label="Purchaser agent" labelWidth="5" contentWidth="6">
@@ -95,6 +95,7 @@ const DispositionSaleForm: React.FunctionComponent<
           displayErrorAsTooltip={false}
         ></ContactInputContainer>
       </SectionField>
+
       {dispositionPurchaserAgent.contact?.organizationId &&
         !dispositionPurchaserAgent.contact?.personId && (
           <SectionField label="Primary contact" labelWidth="5" contentWidth="5">
@@ -111,6 +112,7 @@ const DispositionSaleForm: React.FunctionComponent<
           View={ContactInputView}
         ></ContactInputContainer>
       </SectionField>
+
       {dispositionPurchaserSolicitor.contact?.organizationId &&
         !dispositionPurchaserSolicitor.contact?.personId && (
           <SectionField label="Primary contact" labelWidth="5" contentWidth="5">
@@ -135,7 +137,7 @@ const DispositionSaleForm: React.FunctionComponent<
       <SectionField label="Fiscal year of sale" labelWidth="5" contentWidth="5">
         <FastDateYearPicker field="saleFiscalYear" formikProps={formikProps} />
       </SectionField>
-      <SectionField label="Final sale price ($)" labelWidth="5" contentWidth="5">
+      <SectionField label="Final sale price, incl. GST ($)" labelWidth="5" contentWidth="5">
         <FastCurrencyInput
           formikProps={formikProps}
           field="finalSaleAmount"

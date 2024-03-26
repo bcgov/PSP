@@ -38,6 +38,7 @@ export interface IMapStateMachineContext {
   isShowingMapLayers: boolean;
   activePimsPropertyIds: number[];
   showDisposed: boolean;
+  showRetired: boolean;
 
   requestFlyToLocation: (latlng: LatLngLiteral) => void;
   requestFlyToBounds: (bounds: LatLngBounds) => void;
@@ -61,6 +62,7 @@ export interface IMapStateMachineContext {
 
   setVisiblePimsProperties: (propertyIds: number[]) => void;
   setShowDisposed: (show: boolean) => void;
+  setShowRetired: (show: boolean) => void;
 }
 
 const MapStateMachineContext = React.createContext<IMapStateMachineContext>(
@@ -265,6 +267,13 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
     [serviceSend],
   );
 
+  const setShowRetired = useCallback(
+    (show: boolean) => {
+      serviceSend({ type: 'SET_SHOW_RETIRED', show });
+    },
+    [serviceSend],
+  );
+
   const toggleMapFilter = useCallback(() => {
     serviceSend({ type: 'TOGGLE_FILTER' });
   }, [serviceSend]);
@@ -316,6 +325,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         isShowingMapLayers: isShowingMapLayers,
         activePimsPropertyIds: state.context.activePimsPropertyIds,
         showDisposed: state.context.showDisposed,
+        showRetired: state.context.showRetired,
 
         setMapSearchCriteria,
         refreshMapProperties,
@@ -336,6 +346,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         setFilePropertyLocations,
         setVisiblePimsProperties,
         setShowDisposed,
+        setShowRetired,
       }}
     >
       {children}

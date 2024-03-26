@@ -93,7 +93,7 @@ const UpdateDispositionForm: React.FC<IUpdateDispositionFormProps> = ({
             <LoadingBackdrop show={loading} parentScreen />
 
             <Container>
-              <Section header="">
+              <Section>
                 <SectionField label="Status" required>
                   <Select
                     field="fileStatusTypeCode"
@@ -244,10 +244,8 @@ const UpdateDispositionForm: React.FC<IUpdateDispositionFormProps> = ({
 export default UpdateDispositionForm;
 
 const Container = styled.div`
-  .form-section {
-    margin: 0;
-    padding-left: 0;
-  }
+  background-color: ${props => props.theme.css.filterBackgroundColor};
+  padding-top: 1rem;
 
   .tab-pane {
     .form-section {

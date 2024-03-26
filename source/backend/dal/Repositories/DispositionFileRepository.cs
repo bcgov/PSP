@@ -2,9 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using System.Text.RegularExpressions;
 using LinqKit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
@@ -84,6 +86,11 @@ namespace Pims.Dal.Repositories
         {
             using var scope = Logger.QueryScope();
             disposition.ThrowIfNull(nameof(disposition));
+
+            if (disposition.PimsDispositionFileProperties.Any(x => x.Property != null && x.Property.IsRetired.HasValue && x.Property.IsRetired.Value))
+            {
+                throw new BusinessRuleViolationException("Retired property can not be selected.");
+            }
 
             disposition.FileNumber = _sequenceRepository.GetNextSequenceValue(FILENUMBERSEQUENCETABLE).ToString();
 
@@ -622,6 +629,7 @@ namespace Pims.Dal.Repositories
         /// <returns></returns>
         private IQueryable<PimsDispositionFile> GetCommonDispositionFileQueryDeep(DispositionFilter filter, long? contractorPersonId = null)
         {
+            filter.FileNameOrNumberOrReference = Regex.Replace(filter.FileNameOrNumberOrReference ?? string.Empty, @"^[d,D]-", string.Empty);
             var predicate = PredicateBuilder.New<PimsDispositionFile>(disp => true);
             if (!string.IsNullOrWhiteSpace(filter.Pid))
             {

@@ -28,7 +28,16 @@ const onSuccessMock = jest.fn();
 
 const SaveButton = () => {
   const { submitForm } = useFormikContext();
-  return <button onClick={submitForm}>Save</button>;
+  return (
+    <button
+      onClick={e => {
+        submitForm();
+        e.preventDefault();
+      }}
+    >
+      Save
+    </button>
+  );
 };
 
 describe('Add Improvements container component', () => {
@@ -122,18 +131,20 @@ describe('Add Improvements container component', () => {
     const {
       component: { getByText, container },
     } = await setup({});
-    await fillInput(container, 'improvements.0.address', 'address 1');
-    await fillInput(container, 'improvements.0.structureSize', 'structure 1');
-    await fillInput(container, 'improvements.0.description', 'description 1');
-    await fillInput(container, 'improvements.1.address', 'address 2');
-    await fillInput(container, 'improvements.1.structureSize', 'structure 2');
-    await fillInput(container, 'improvements.1.description', 'description 2');
-    await fillInput(container, 'improvements.2.address', 'address 3');
-    await fillInput(container, 'improvements.2.structureSize', 'structure 3');
-    await fillInput(container, 'improvements.2.description', 'description 3');
+    await act(async () => {
+      await fillInput(container, 'improvements.0.address', 'address 1');
+      await fillInput(container, 'improvements.0.structureSize', 'structure 1');
+      await fillInput(container, 'improvements.0.description', 'description 1');
+      await fillInput(container, 'improvements.1.address', 'address 2');
+      await fillInput(container, 'improvements.1.structureSize', 'structure 2');
+      await fillInput(container, 'improvements.1.description', 'description 2');
+      await fillInput(container, 'improvements.2.address', 'address 3');
+      await fillInput(container, 'improvements.2.structureSize', 'structure 3');
+      await fillInput(container, 'improvements.2.description', 'description 3');
+    });
 
     mockAxios.onPut().reply(200, []);
-    act(() => userEvent.click(getByText('Save')));
+    await act(async () => userEvent.click(getByText('Save')));
     await waitFor(() => {
       expect(mockAxios.history.put[0].data).toEqual(expectedFormData);
     });
@@ -144,15 +155,17 @@ describe('Add Improvements container component', () => {
       component: { getByText, container },
     } = await setup({});
 
-    await fillInput(container, 'improvements.0.address', 'address 1');
-    await fillInput(container, 'improvements.0.structureSize', 'structure 1');
-    await fillInput(container, 'improvements.0.description', 'description 1');
-    await fillInput(container, 'improvements.1.address', 'address 2');
-    await fillInput(container, 'improvements.1.structureSize', 'structure 2');
-    await fillInput(container, 'improvements.1.description', 'description 2');
+    await act(async () => {
+      await fillInput(container, 'improvements.0.address', 'address 1');
+      await fillInput(container, 'improvements.0.structureSize', 'structure 1');
+      await fillInput(container, 'improvements.0.description', 'description 1');
+      await fillInput(container, 'improvements.1.address', 'address 2');
+      await fillInput(container, 'improvements.1.structureSize', 'structure 2');
+      await fillInput(container, 'improvements.1.description', 'description 2');
+    });
 
     mockAxios.onPut().reply(200, []);
-    act(() => userEvent.click(getByText('Save')));
+    await act(async () => userEvent.click(getByText('Save')));
     await waitFor(() => {
       expect(JSON.parse(mockAxios.history.put[0].data)).toHaveLength(2);
     });

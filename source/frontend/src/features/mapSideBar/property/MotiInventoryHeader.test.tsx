@@ -1,6 +1,6 @@
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { getEmptyProperty } from '@/models/defaultInitializers';
-import { render, RenderOptions, RenderResult, userEvent } from '@/utils/test-utils';
+import { act, render, RenderOptions, RenderResult, userEvent } from '@/utils/test-utils';
 
 import { ComposedProperty } from './ComposedProperty';
 import { IMotiInventoryHeaderProps, MotiInventoryHeader } from './MotiInventoryHeader';
@@ -85,8 +85,24 @@ describe('MotiInventoryHeader component', () => {
       },
       isLoading: false,
     });
-    // PID is shown
+    // land parcel type is shown
     expect(result.getByText(testProperty?.propertyType?.description as string)).toBeVisible();
+  });
+
+  it(`shows "retired" indicator for retired properties`, async () => {
+    const testProperty: ApiGen_Concepts_Property = {
+      ...getEmptyProperty(),
+      isRetired: true,
+    };
+    const result = setup({
+      composedProperty: {
+        ...defaultComposedProperty,
+        pimsProperty: testProperty,
+      },
+      isLoading: false,
+    });
+    // "retired" indicator is shown
+    expect(result.getByText(/retired/i)).toBeVisible();
   });
 
   it('allows the active property to be zoomed in', async () => {
@@ -100,7 +116,7 @@ describe('MotiInventoryHeader component', () => {
       isLoading: false,
     });
     const zoomButton = getByTitle('Zoom Map');
-    userEvent.click(zoomButton);
+    await act(async () => userEvent.click(zoomButton));
     expect(onZoom).toHaveBeenCalled();
   });
 
@@ -114,7 +130,7 @@ describe('MotiInventoryHeader component', () => {
     });
 
     const zoomButton = getByTitle('Zoom Map');
-    userEvent.click(zoomButton);
+    await act(async () => userEvent.click(zoomButton));
     expect(onZoom).toHaveBeenCalled();
   });
 });

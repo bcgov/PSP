@@ -87,8 +87,11 @@ namespace Pims.Api.Areas.PropertyOperation.Controllers
             switch (propertyOperationTypes)
             {
                 case PropertyOperationTypes.SUBDIVIDE:
-                    var newProperties = _propertyOperationService.SubdivideProperty(propertyOperations);
-                    return new JsonResult(_mapper.Map<IEnumerable<PimsPropertyOperation>>(newProperties));
+                    var subdividedProperties = _propertyOperationService.SubdivideProperty(propertyOperations);
+                    return new JsonResult(_mapper.Map<IEnumerable<PropertyOperationModel>>(subdividedProperties));
+                case PropertyOperationTypes.CONSOLIDATE:
+                    var consolidatedProperties = _propertyOperationService.ConsolidateProperty(propertyOperations);
+                    return new JsonResult(_mapper.Map<IEnumerable<PropertyOperationModel>>(consolidatedProperties));
                 default:
                     return BadRequest("Unsupported property operation type code.");
             }

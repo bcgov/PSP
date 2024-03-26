@@ -26,6 +26,10 @@ export const Legend = () => {
         label: 'Disposed',
       },
       {
+        pin: require('@/assets/images/pins/retired.png'),
+        label: 'Retired (Subdivided/consolidated)',
+      },
+      {
         pin: require('@/assets/images/pins/marker-info-orange.png'),
         label: 'Search result (not in inventory)',
       },

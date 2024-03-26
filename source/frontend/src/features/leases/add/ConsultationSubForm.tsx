@@ -7,6 +7,7 @@ import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import * as API from '@/constants/API';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
+import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
 
 import { FormLeaseConsultation, LeaseFormModel } from '../models';
 
@@ -23,28 +24,33 @@ const ConsultationSubForm: React.FunctionComponent<
   const consultationTypes = getByType(API.CONSULTATION_TYPES);
   const consultationStatusTypes = getOptionsByType(API.CONSULTATION_STATUS_TYPES);
 
-  // Not all consultations might be coming from the backend. Add the ones missing.
-  if (consultations.length !== consultationTypes.length) {
-    const newConsultations: FormLeaseConsultation[] = [];
+  useDeepCompareEffect(() => {
+    // Not all consultations might be coming from the backend. Add the ones missing.
+    if (consultations.length !== consultationTypes.length) {
+      const newConsultations: FormLeaseConsultation[] = [];
 
-    consultationTypes.forEach(consultationType => {
-      const newConsultation = FormLeaseConsultation.fromApiLookup(values.id || 0, consultationType);
+      consultationTypes.forEach(consultationType => {
+        const newConsultation = FormLeaseConsultation.fromApiLookup(
+          values.id || 0,
+          consultationType,
+        );
 
-      // If there is a consultation with the type, set the status to the existing one
-      const existingConsultation = consultations.find(
-        consultation => consultation.consultationType === consultationType.id,
-      );
-      if (existingConsultation !== undefined) {
-        newConsultation.id = existingConsultation.id;
-        newConsultation.consultationStatusType = existingConsultation.consultationStatusType;
-        newConsultation.consultationStatusTypeDescription =
-          existingConsultation.consultationStatusTypeDescription;
-        newConsultation.rowVersion = existingConsultation.rowVersion;
-      }
-      newConsultations.push(newConsultation);
-    });
-    setFieldValue('consultations', newConsultations);
-  }
+        // If there is a consultation with the type, set the status to the existing one
+        const existingConsultation = consultations.find(
+          consultation => consultation.consultationType === consultationType.id,
+        );
+        if (existingConsultation !== undefined) {
+          newConsultation.id = existingConsultation.id;
+          newConsultation.consultationStatusType = existingConsultation.consultationStatusType;
+          newConsultation.consultationStatusTypeDescription =
+            existingConsultation.consultationStatusTypeDescription;
+          newConsultation.rowVersion = existingConsultation.rowVersion;
+        }
+        newConsultations.push(newConsultation);
+      });
+      setFieldValue('consultations', newConsultations);
+    }
+  }, [consultationTypes, consultations, setFieldValue, values.id]);
 
   return (
     <Section header="Consultation" isCollapsable initiallyExpanded>

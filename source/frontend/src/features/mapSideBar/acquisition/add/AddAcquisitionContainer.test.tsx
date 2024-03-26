@@ -185,7 +185,19 @@ describe('AddAcquisitionContainer component', () => {
     const { getCancelButton, getByText } = await setup();
 
     expect(getByText(/Create Acquisition File/i)).toBeVisible();
-    userEvent.click(getCancelButton());
+    await act(async () => userEvent.click(getCancelButton()));
+
+    expect(onClose).toBeCalled();
+  });
+
+  it('should confirm and close the form when Cancel button is clicked with changes', async () => {
+    const { getCancelButton, getByText, getNameTextbox, getByTitle } = await setup();
+
+    expect(getByText(/Create Acquisition File/i)).toBeVisible();
+
+    await act(async () => userEvent.paste(getNameTextbox(), formValues.fileName as string));
+    await act(async () => userEvent.click(getCancelButton()));
+    await act(async () => userEvent.click(getByTitle('ok-modal')));
 
     expect(onClose).toBeCalled();
   });
