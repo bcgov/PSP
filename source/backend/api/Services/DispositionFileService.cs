@@ -552,7 +552,7 @@ namespace Pims.Api.Services
             // The following checks result in hard STOP errors
             if (isFileClosing)
             {
-                if (currentProperties.Any(p => p.Property.IsPropertyOfInterest))
+                if (currentProperties.Any(p => !p.Property.IsOwned))
                 {
                     throw new BusinessRuleViolationException("You have one or more properties attached to this Disposition file that is NOT in the \"Core Inventory\" (i.e. owned by BCTFA and/or HMK). To complete this file you must either, remove these non \"Non-Core Inventory\" properties, OR make sure the property is added to the PIMS inventory first.");
                 }
@@ -582,7 +582,7 @@ namespace Pims.Api.Services
                 throw new UserOverrideException(UserOverrideCode.DispositionFileFinalStatus, "You are changing this file to a non-editable state. (Only system administrators can edit the file when set to Archived, Cancelled or Completed state). Do you wish to continue?");
             }
 
-            if (isFileClosing && currentProperties.Any(p => p.Property.IsOwned) && !userOverrides.Contains(UserOverrideCode.DisposeOfProperties))
+            if (isFileClosing && !userOverrides.Contains(UserOverrideCode.DisposeOfProperties))
             {
                 throw new UserOverrideException(UserOverrideCode.DisposeOfProperties, "You are completing this Disposition File with owned PIMS inventory properties. All properties will be removed from the PIMS inventory (any Other Interests will remain). Do you wish to proceed?");
             }
