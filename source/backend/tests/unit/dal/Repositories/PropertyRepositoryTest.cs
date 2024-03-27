@@ -491,6 +491,39 @@ namespace Pims.Dal.Test.Repositories
             result.Should().NotBeNull();
             result.Pid.Should().Be(pid);
         }
+
+        [Fact]
+        public void GetByPid_Success_Retired()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.PropertyView);
+            var pid = 1111;
+            var property = EntityHelper.CreateProperty(pid);
+            property.IsRetired = true;
+            _helper.AddAndSaveChanges(property);
+
+            // Act
+            var result = repository.GetByPid(pid, true);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Pid.Should().Be(pid);
+        }
+
+        [Fact]
+        public void GetByPid_Filter_Retired()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.PropertyView);
+            var pid = 1111;
+            var property = EntityHelper.CreateProperty(pid);
+            property.IsRetired = true;
+            _helper.AddAndSaveChanges(property);
+
+            // Act
+            Action result = () => repository.GetByPid(pid, false);
+            result.Should().Throw<KeyNotFoundException>();
+        }
         #endregion
 
         #region GetByPin
@@ -509,6 +542,41 @@ namespace Pims.Dal.Test.Repositories
             // Assert
             result.Should().NotBeNull();
             result.Pin.Should().Be(pin);
+        }
+
+        [Fact]
+        public void GetByPin_Success_Retired()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.PropertyView);
+            var pin = 1111;
+            var property = EntityHelper.CreateProperty(1, pin);
+            property.IsRetired = true;
+            _helper.AddAndSaveChanges(property);
+
+            // Act
+            var result = repository.GetByPin(pin, true);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Pin.Should().Be(pin);
+        }
+
+        [Fact]
+        public void GetByPin_Filter_Retired()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.PropertyView);
+            var pin = 1111;
+            var property = EntityHelper.CreateProperty(1, pin);
+            property.IsRetired = true;
+            _helper.AddAndSaveChanges(property);
+
+            // Act
+            Action action = () => repository.GetByPin(pin, false);
+
+            // Assert
+            action.Should().Throw<KeyNotFoundException>();
         }
         #endregion
 
