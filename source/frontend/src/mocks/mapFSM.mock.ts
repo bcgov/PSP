@@ -61,4 +61,5 @@ export const mapMachineBaseMock: IMapStateMachineContext = {
   toggleMapLayer: jest.fn(),
   setShowDisposed: jest.fn(),
   setShowRetired: jest.fn(),
+  changeSidebar: jest.fn(),
 };
