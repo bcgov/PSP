@@ -710,7 +710,7 @@ namespace Pims.Api.Services
 
                         dispProperty.PropertyId = foundProperty.Internal_Id;
                         _propertyService.UpdateLocation(dispProperty.Property, ref foundProperty, overrideCodes);
-                        dispProperty.Property = null;
+                        dispProperty.Property = foundProperty;
                     }
                     catch (KeyNotFoundException)
                     {
@@ -730,7 +730,7 @@ namespace Pims.Api.Services
                     var pin = dispProperty.Property.Pin.Value;
                     try
                     {
-                        var foundProperty = _propertyRepository.GetByPin(pin);
+                        var foundProperty = _propertyRepository.GetByPin(pin, true);
                         if (foundProperty.IsRetired.HasValue && foundProperty.IsRetired.Value)
                         {
                             throw new BusinessRuleViolationException("Retired property can not be selected.");
@@ -738,7 +738,7 @@ namespace Pims.Api.Services
 
                         dispProperty.PropertyId = foundProperty.Internal_Id;
                         _propertyService.UpdateLocation(dispProperty.Property, ref foundProperty, overrideCodes);
-                        dispProperty.Property = null;
+                        dispProperty.Property = foundProperty;
                     }
                     catch (KeyNotFoundException)
                     {
