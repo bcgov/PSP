@@ -164,6 +164,7 @@ namespace Pims.Dal.Repositories
                 .Include(p => p.Address)
                     .ThenInclude(a => a.Country)
                 .Where(p => ids.Any(s => s == p.PropertyId))
+                .AsNoTracking()
                 .ToList();
             return property;
         }

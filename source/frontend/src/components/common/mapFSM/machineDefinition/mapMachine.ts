@@ -277,6 +277,13 @@ const sideBarStates = {
           actions: assign({ selectedFeatureDataset: () => null }),
           target: 'fullScreen',
         },
+        CHANGE_SIDEBAR: {
+          actions: [
+            assign({
+              filePropertyLocations: () => [],
+            }),
+          ],
+        },
 
         SET_FILE_PROPERTY_LOCATIONS: {
           actions: [
