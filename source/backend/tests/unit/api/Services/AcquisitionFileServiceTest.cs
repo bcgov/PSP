@@ -556,6 +556,42 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
+        public void Update_Drafts_TakesNotInFile_Violation()
+        {
+            // Arrange
+            var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit);
+
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+
+            var repository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
+            repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+
+            var agreementRepository = this._helper.GetService<Mock<IAgreementRepository>>();
+            agreementRepository.Setup(x => x.GetAgreementsByAcquisitionFile(It.IsAny<long>())).Returns(new List<PimsAgreement>() { });
+
+            var compReqRepository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
+            compReqRepository.Setup(x => x.GetAllByAcquisitionFileId(It.IsAny<long>())).Returns(new List<PimsCompensationRequisition>());
+
+            var takeRepository = this._helper.GetService<Mock<ITakeRepository>>();
+            takeRepository.Setup(x => x.GetAllByAcquisitionFileId(It.IsAny<long>())).Returns(new List<PimsTake>());
+
+            // Act
+            var pimsAcquisitionUpdate = EntityHelper.CreateAcquisitionFile(acqFile.AcquisitionFileId, acqFile.FileName);
+            pimsAcquisitionUpdate.AcquisitionFileStatusTypeCode = AcquisitionStatusTypes.COMPLT.ToString();
+            pimsAcquisitionUpdate.AcquisitionFileStatusTypeCodeNavigation = null;
+
+            Action act = () => service.Update(pimsAcquisitionUpdate, new List<UserOverrideCode>());
+
+            // Assert
+            var exception = act.Should().Throw<BusinessRuleViolationException>();
+            exception.WithMessage("You cannot complete an acquisition file that has no takes.");
+        }
+
+        [Fact]
         public void Update_DraftsNotComplete_NoViolation()
         {
             // Arrange
