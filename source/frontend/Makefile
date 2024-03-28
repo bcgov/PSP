@@ -90,6 +90,9 @@ docker: | build up rebuild-all-local-friendly-message ## Builds and runs the doc
 
 restart: | stop build up rebuild-all-local-friendly-message ## Rebuilds the docker containers
 
+restart-mayan: 
+	@docker-compose --profile mayan up --build -d
+
 build-all: ## Rebuilds all docker containers for this project
 	@echo -e "\n$(P) Building images..."
 	@docker-compose build --force-rm --no-cache
@@ -100,19 +103,19 @@ build: ## Builds the frontend container
 
 up: ## Runs the frontend docker container
 	@echo -e "\n$(P) Running client and server..."
-	@docker-compose up -d
+	@docker-compose --profile all up -d
 
 down: ## Tears down the docker development containers
 	@echo -e "\n$(P) Stopping client and server..."
-	@docker-compose down
+	@docker-compose --profile all down
 
 start: ## Starts the local containers (n=service name)
 	@echo "$(P) Starting client and server containers..."
-	@docker-compose start $(n)
+	@docker-compose --profile all start $(n)
 
 stop: ## Stops the local containers (n=service name)
 	@echo "$(P) Stopping client and server..."
-	@docker-compose stop $(n)
+	@docker-compose --profile all stop $(n)
 
 clean: ## Removes local docker containers, images, volumes, etc
 	@echo -e "\n$(P) Removing containers, images, volumes etc..."
