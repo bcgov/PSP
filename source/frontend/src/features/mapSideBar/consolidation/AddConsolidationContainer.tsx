@@ -53,10 +53,10 @@ const AddConsolidationContainer: React.FC<IAddConsolidationContainerProps> = ({
           setDisplayModal(false);
         },
       });
+      setDisplayModal(true);
     } else {
       onClose?.();
     }
-    setDisplayModal(true);
   }, [onClose, setDisplayModal, setModalContent]);
 
   const getAddress = useCallback(
@@ -76,7 +76,9 @@ const AddConsolidationContainer: React.FC<IAddConsolidationContainerProps> = ({
           featuresetToMapProperty(selectedFeatureDataset),
         );
         if (isValidString(propertyForm.pid)) {
-          propertyForm.address = await getAddress(propertyForm.pid);
+          propertyForm.address = selectedFeatureDataset.pimsFeature?.properties
+            ? AddressForm.fromPimsView(selectedFeatureDataset.pimsFeature?.properties)
+            : undefined;
           const consolidationFormModel = new ConsolidationFormModel();
           consolidationFormModel.sourceProperties = [propertyForm.toApi()];
           setInitialForm(consolidationFormModel);
@@ -92,10 +94,10 @@ const AddConsolidationContainer: React.FC<IAddConsolidationContainerProps> = ({
     }
   }, [initialForm]);
 
-  const finishSelection = mapMachine.finishSelection;
+  const changeSidebar = mapMachine.changeSidebar;
   useEffect(() => {
-    return () => finishSelection();
-  }, [finishSelection]);
+    return () => changeSidebar();
+  }, [changeSidebar]);
 
   const withUserOverride = useApiUserOverride<
     (userOverrideCodes: UserOverrideCode[]) => Promise<ApiGen_Concepts_DispositionFile | void>
@@ -146,7 +148,7 @@ const AddConsolidationContainer: React.FC<IAddConsolidationContainerProps> = ({
       const response = await addPropertyOperation(propertyOperations, userOverrideCodes);
 
       if (response?.length) {
-        handleSuccess(propertyOperations);
+        handleSuccess(response);
       }
     } finally {
       formikHelpers?.setSubmitting(false);

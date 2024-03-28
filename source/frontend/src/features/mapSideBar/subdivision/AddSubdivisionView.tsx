@@ -92,6 +92,8 @@ const AddSubdivisionView: React.FunctionComponent<
           initialValues={subdivisionInitialValues}
           innerRef={formikRef}
           validationSchema={AddSubdivisionYupSchema}
+          validateOnBlur={false}
+          validateOnChange={false}
         >
           {({ values, setFieldValue, errors }) => (
             <Form>

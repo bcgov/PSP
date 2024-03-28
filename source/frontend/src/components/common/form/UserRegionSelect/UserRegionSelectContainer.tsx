@@ -17,7 +17,7 @@ export interface IUserRegionSelectContainerProps {
 /** display a list of all regions filtered by the current user's regions. */
 export const UserRegionSelectContainer: React.FunctionComponent<
   IUserRegionSelectContainerProps & Partial<SelectProps>
-> = ({ field, ...rest }) => {
+> = ({ field, includeAll, ...rest }) => {
   const { getOptionsByType } = useLookupCodeHelpers();
   const { obj } = useKeycloakWrapper();
   const { idir_user_guid } = obj.userInfo;
@@ -46,7 +46,7 @@ export const UserRegionSelectContainer: React.FunctionComponent<
       ></Select>
     );
   }
-  if (rest.includeAll) {
+  if (includeAll) {
     userRegionTypes.unshift({ label: 'All Regions', value: '' });
   }
 

@@ -17,14 +17,16 @@ namespace Pims.Api.Models.Concepts.ResearchFile
                 .Map(dest => dest.DocumentReference, src => src.DocumentReference)
                 .Map(dest => dest.ResearchSummary, src => src.ResearchSummary)
                 .Map(dest => dest.Property, src => src.Property)
+                .Map(dest => dest.PropertyId, src => src.PropertyId)
                 .Map(dest => dest.File, src => src.ResearchFile)
+                .Map(dest => dest.FileId, src => src.ResearchFileId)
                 .Map(dest => dest.PurposeTypes, src => src.PimsPrfPropResearchPurposeTypes)
                 .Inherits<Entity.IBaseEntity, BaseConcurrentModel>();
 
             config.NewConfig<ResearchFilePropertyModel, Entity.PimsPropertyResearchFile>()
                 .Map(dest => dest.PropertyResearchFileId, src => src.Id)
                 .Map(dest => dest.Property, src => src.Property)
-                .Map(dest => dest.PropertyId, src => src.Property.Id)
+                .Map(dest => dest.PropertyId, src => src.PropertyId)
                 .Map(dest => dest.ResearchFileId, src => src.FileId)
                 .Map(dest => dest.PropertyName, src => src.PropertyName)
                 .Map(dest => dest.DisplayOrder, src => src.DisplayOrder)

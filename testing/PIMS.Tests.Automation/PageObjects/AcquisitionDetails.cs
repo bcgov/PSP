@@ -1,6 +1,4 @@
 ﻿using OpenQA.Selenium;
-using SeleniumExtras.WaitHelpers;
-using OpenQA.Selenium.Support.UI;
 using System.Text.RegularExpressions;
 using PIMS.Tests.Automation.Classes;
 
@@ -135,12 +133,6 @@ namespace PIMS.Tests.Automation.PageObjects
 
             WaitUntilVisible(createAcquisitionFileButton);
             FocusAndClick(createAcquisitionFileButton);
-        }
-
-        public void NavigateToFileSummary()
-        {
-            WaitUntilClickable(acquisitionFileSummaryBttn);
-            webDriver.FindElement(acquisitionFileSummaryBttn).Click();
         }
 
         public void NavigateToFileDetailsTab()
@@ -767,9 +759,15 @@ namespace PIMS.Tests.Automation.PageObjects
             if(owner.OwnerMailAddress.AddressLine1 != "")
                 webDriver.FindElement(By.Id("input-owners["+ ownerIndex +"].address.streetAddress1")).SendKeys(owner.OwnerMailAddress.AddressLine1);
             if (owner.OwnerMailAddress.AddressLine2 != "")
+            {
+                webDriver.FindElement(By.XPath("//input[@id='input-owners["+ ownerIndex +"].address.streetAddress1']/parent::div/parent::div/parent::div/parent::div/parent::div /following-sibling::div/div/div/div/button")).Click();
                 webDriver.FindElement(By.Id("input-owners["+ ownerIndex +"].address.streetAddress2")).SendKeys(owner.OwnerMailAddress.AddressLine2);
+            }
             if (owner.OwnerMailAddress.AddressLine3 != "")
+            {
+                webDriver.FindElement(By.XPath("//input[@id='input-owners["+ ownerIndex +"].address.streetAddress2']/parent::div/parent::div/parent::div/parent::div/parent::div /following-sibling::div/div/div/div/button")).Click();
                 webDriver.FindElement(By.Id("input-owners["+ ownerIndex +"].address.streetAddress3")).SendKeys(owner.OwnerMailAddress.AddressLine3);
+            }
             if (owner.OwnerMailAddress.Country != "")
                 ChooseSpecificSelectOption(By.Id("input-owners["+ ownerIndex +"].address.countryId"), owner.OwnerMailAddress.Country);
             if (owner.OwnerMailAddress.City != "")

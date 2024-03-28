@@ -7,7 +7,7 @@ import { noop } from 'lodash';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { systemConstantsSlice } from '@/store/slices/systemConstants';
-import { fillInput, renderAsync, RenderOptions } from '@/utils/test-utils';
+import { act, fillInput, renderAsync, RenderOptions } from '@/utils/test-utils';
 
 import { defaultFormLeasePayment } from '../../models';
 import { isActualGstEligible as isActualGstEligibleOriginal } from '../../TermPaymentsContainer';
@@ -77,7 +77,9 @@ describe('PaymentForm component', () => {
       component: { container, findByLabelText },
     } = await setup({ initialValues: { ...defaultFormLeasePayment, leaseTermId: 1 } });
 
-    await fillInput(container, 'amountTotal', '1050');
+    await act(async () => {
+      await fillInput(container, 'amountTotal', '1050');
+    });
     const amountPreTax = await findByLabelText('Expected payment ($)');
     const amountGst = await findByLabelText('GST ($)');
     expect(amountPreTax).toHaveValue('$1,000.00');
@@ -90,7 +92,9 @@ describe('PaymentForm component', () => {
       component: { container, findByLabelText },
     } = await setup({ initialValues: { ...defaultFormLeasePayment, leaseTermId: 1 } });
 
-    await fillInput(container, 'amountTotal', '1000');
+    await act(async () => {
+      await fillInput(container, 'amountTotal', '1000');
+    });
     const amountPreTax = await findByLabelText('Expected payment ($)');
     expect(amountPreTax).toHaveValue('$1,000.00');
   });
@@ -107,7 +111,9 @@ describe('PaymentForm component', () => {
       },
     });
 
-    await fillInput(container, 'amountTotal', '1000');
+    await act(async () => {
+      await fillInput(container, 'amountTotal', '1000');
+    });
     const amountPreTax = await findByLabelText('Expected payment ($)');
     expect(amountPreTax).toHaveValue('$1,000.00');
   });

@@ -129,25 +129,19 @@ namespace Pims.Api.Services
                 throw new BusinessRuleViolationException("Consolidations must contain at least two different parent properties.");
             }
 
-            // either the property exists in pims, and is present in the source properties list, or the property does not have a match in PIMS at all (neither pid nor property_id).
-            if (destinationProperty?.PropertyId > 0)
+            try
             {
-                if (!dbSourceProperties.Any(sp => sp.PropertyId == destinationProperty?.PropertyId))
+                var dbDestinationProperty = _propertyService.GetByPid(destinationProperty?.Pid?.ToString());
+
+                // if the property exists in pims, it must also be present in the source properties list.
+                if (!dbSourceProperties.Any(sp => sp.PropertyId == dbDestinationProperty?.PropertyId))
                 {
                     throw new BusinessRuleViolationException("Consolidated child property may not be in the PIMS inventory unless also in the parent property list.");
                 }
             }
-            else
+            catch (KeyNotFoundException)
             {
-                try
-                {
-                    _propertyService.GetByPid(destinationProperty?.Pid?.ToString());
-                    throw new BusinessRuleViolationException("Consolidated child may not already be in the PIMS inventory.");
-                }
-                catch (KeyNotFoundException)
-                {
-                    // ignore exception, the pid should not exist.
-                }
+                // ignore exception, the pid should not exist.
             }
 
             // retire the source properties

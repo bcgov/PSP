@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaExternalLinkAlt, FaMoneyCheck } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
@@ -324,7 +325,9 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
 
       <Section header="Financial Activities" isCollapsable initiallyExpanded>
         {compensation.financials?.map((item, index) => (
-          <>
+          <React.Fragment
+            key={`${item.financialActivityCode?.code}-${item.financialActivityCode?.description}`}
+          >
             <StyledSubHeader>
               <label>Activity {index + 1}</label>
             </StyledSubHeader>
@@ -343,7 +346,7 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
             <SectionField label="Total amount" labelWidth="4">
               {formatMoney(item.totalAmount ?? 0)}
             </SectionField>
-          </>
+          </React.Fragment>
         ))}
       </Section>
 

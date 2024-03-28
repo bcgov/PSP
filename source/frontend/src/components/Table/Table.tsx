@@ -557,6 +557,7 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = obje
       open?: boolean,
       className?: string,
       onClick?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void,
+      id?: string | number,
     ) => {
       const detailsClosedIcon =
         props.detailsPanel && props.detailsPanel.icons?.closed ? (
@@ -576,7 +577,11 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = obje
             tooltipId="expand-all-rows"
             tooltip={open ? 'Collapse Row' : 'Expand Row'}
           >
-            <div className={className + ' svg-btn'} onClick={onClick}>
+            <div
+              className={className + ' svg-btn'}
+              data-testid={`table-row-expander-${id}`}
+              onClick={onClick}
+            >
               {open ? detailsOpenedIcon : detailsClosedIcon}
             </div>
           </TooltipWrapper>
@@ -602,11 +607,14 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = obje
             key={`tr-footer-${footerGroup.id}`}
           >
             {footerGroup.headers.map(
-              (column: ColumnInstanceWithProps<T> & { Footer?: React.FC<{ properties: T[] }> }) => (
+              (
+                column: ColumnInstanceWithProps<T> & { Footer?: React.FC<{ properties: T[] }> },
+                index,
+              ) => (
                 <div
                   {...column.getHeaderProps(headerPropsGetter)}
                   className="th"
-                  key={`th-footer-${footerGroup.id}`}
+                  key={`th-footer-${footerGroup.id ?? index}`}
                 >
                   {column.Footer ? <column.Footer properties={map(page, 'original')} /> : null}
                 </div>
@@ -657,6 +665,7 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = obje
                 props.detailsPanel && props.detailsPanel.checkExpanded(row.original, expandedRows),
                 'td expander',
                 e => handleExpandClick(e, row.original),
+                row.original.id ?? '',
               )}
             {props.canRowExpand && !props.canRowExpand(row) ? (
               <div className="td">
@@ -674,6 +683,7 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = obje
                 props.detailsPanel && props.detailsPanel.checkExpanded(row.original, expandedRows),
                 'td expander',
                 e => handleExpandClick(e, row.original),
+                row.original.id ?? '',
               )}
             {row.cells.map((cell: CellWithProps<T>) => {
               return (
@@ -696,8 +706,11 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = obje
             })}
           </div>
           {props.detailsPanel && (
-            <Collapse in={props.detailsPanel.checkExpanded(row.original, expandedRows)}>
-              <div style={{ padding: 10 }}>{props.detailsPanel.render(row.original)}</div>
+            <Collapse
+              in={props.detailsPanel.checkExpanded(row.original, expandedRows)}
+              mountOnEnter
+            >
+              <div>{props.detailsPanel.render(row.original)}</div>
             </Collapse>
           )}
         </div>

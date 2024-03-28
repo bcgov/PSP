@@ -268,7 +268,7 @@ exports[`UpdateAcquisitionAgreementView component renders as expected 1`] = `
             <div
               class="col"
             >
-              Agreement details
+              Agreement Details
             </div>
           </div>
         </h2>

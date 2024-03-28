@@ -7,7 +7,7 @@ import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts
 import { getEmptyBaseAudit, getEmptyProperty } from '@/models/defaultInitializers';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { toTypeCodeNullable } from '@/utils/formUtils';
-import { RenderOptions, render } from '@/utils/test-utils';
+import { RenderOptions, act, render } from '@/utils/test-utils';
 
 import { useApiProperties } from '@/hooks/pims-api/useApiProperties';
 import { useApiPropertyOperation } from '@/hooks/pims-api/useApiPropertyOperation';
@@ -53,17 +53,19 @@ describe('PropertyDetailsTabView component', () => {
     jest.clearAllMocks();
   });
 
-  it('renders as expected when provided valid data object', () => {
+  it('renders as expected when provided valid data object', async () => {
     const { asFragment } = setup({ property: mockPropertyInfo });
+    await act(async () => {});
     expect(asFragment()).toMatchSnapshot();
   });
 
-  it('does not throw an exception for an invalid data object', () => {
+  it('does not throw an exception for an invalid data object', async () => {
     const { getByText } = setup({ property: {} as ApiGen_Concepts_Property });
+    await act(async () => {});
     expect(getByText(/property attributes/i)).toBeVisible();
   });
 
-  it('shows highway/road multi-select when tenure status is Highway/Road', () => {
+  it('shows highway/road multi-select when tenure status is Highway/Road', async () => {
     const property: ApiGen_Concepts_Property = {
       ...mockPropertyInfo,
       tenures: [
@@ -77,10 +79,11 @@ describe('PropertyDetailsTabView component', () => {
     };
 
     const { getByText } = setup({ property });
+    await act(async () => {});
     expect(getByText('Highway / Road Details:')).toBeVisible();
   });
 
-  it('does not show highway/road multi-select when tenure status is not Highway/Road', () => {
+  it('does not show highway/road multi-select when tenure status is not Highway/Road', async () => {
     const property: ApiGen_Concepts_Property = {
       ...mockPropertyInfo,
       tenures: [
@@ -94,10 +97,11 @@ describe('PropertyDetailsTabView component', () => {
     };
 
     const { queryByText } = setup({ property });
+    await act(async () => {});
     expect(queryByText('Highway / Road Details:')).toBeNull();
   });
 
-  it('shows first nations information when tenure status is Indian Reserve', () => {
+  it('shows first nations information when tenure status is Indian Reserve', async () => {
     const property: ApiGen_Concepts_Property = {
       ...mockPropertyInfo,
       tenures: [
@@ -111,64 +115,71 @@ describe('PropertyDetailsTabView component', () => {
     };
 
     const { getByText } = setup({ property });
+    await act(async () => {});
     expect(getByText(/First Nations Information/i)).toBeVisible();
   });
 
-  it('does not show first nations information when tenure status is not Indian Reserve', () => {
+  it('does not show first nations information when tenure status is not Indian Reserve', async () => {
     const property: ApiGen_Concepts_Property = {
       ...mockPropertyInfo,
     };
 
     const { queryByText } = setup({ property });
+    await act(async () => {});
     expect(queryByText(/First Nations Information/i)).toBeNull();
   });
 
-  it('shows additional volume measurements for volumetric parcels', () => {
+  it('shows additional volume measurements for volumetric parcels', async () => {
     const property: ApiGen_Concepts_Property = {
       ...mockPropertyInfo,
       isVolumetricParcel: true,
     };
 
     const { getByText } = setup({ property });
+    await act(async () => {});
     expect(getByText(/Volume/)).toBeVisible();
   });
 
-  it('shows Provincial public hwy field', () => {
+  it('shows Provincial public hwy field', async () => {
     const property: ApiGen_Concepts_Property = {
       ...mockPropertyInfo,
       pphStatusTypeCode: 'NONPPH',
     };
 
     const { getByText } = setup({ property });
+    await act(async () => {});
     expect(getByText(/Non-Provincial Public Highway/i)).toBeVisible();
   });
 
-  it('does not show shows additional volume measurements for non-volumetric parcels', () => {
+  it('does not show shows additional volume measurements for non-volumetric parcels', async () => {
     const property: ApiGen_Concepts_Property = {
       ...mockPropertyInfo,
       isVolumetricParcel: false,
     };
 
     const { queryByText } = setup({ property });
+    await act(async () => {});
     expect(queryByText(/Volume/)).toBeNull();
   });
 
-  it('shows property address if available', () => {
+  it('shows property address if available', async () => {
     const property: ApiGen_Concepts_Property = {
       ...mockPropertyInfo,
     };
 
     const { getByText } = setup({ property });
+    await act(async () => {});
     expect(getByText(/456 Souris Street/i)).toBeVisible();
   });
 
-  it('shows a warning message if no address found', () => {
+  it('shows a warning message if no address found', async () => {
     const property: ApiGen_Concepts_Property = {
       ...mockPropertyInfo,
     };
     property.address = null;
 
     const { getByText } = setup({ property });
+    await act(async () => {});
     expect(getByText(/Property address not available/i)).toBeVisible();
   });
 
@@ -177,6 +188,7 @@ describe('PropertyDetailsTabView component', () => {
       ...mockPropertyInfo,
     };
     const { getByTitle, queryByTestId } = setup({ property, claims: [Claims.PROPERTY_EDIT] });
+    await act(async () => {});
     expect(getByTitle(/Edit property details/)).toBeVisible();
     expect(queryByTestId('tooltip-icon-property-retired-tooltip')).toBeNull();
   });
@@ -186,6 +198,7 @@ describe('PropertyDetailsTabView component', () => {
       ...mockPropertyInfo,
     };
     const { queryByTitle } = await setup({ property, claims: [] });
+    await act(async () => {});
     expect(queryByTitle(/Edit property details/)).toBeNull();
   });
 
@@ -195,6 +208,7 @@ describe('PropertyDetailsTabView component', () => {
       isRetired: true,
     };
     const { queryByTitle, getByTestId } = await setup({ property, claims: [Claims.PROPERTY_EDIT] });
+    await act(async () => {});
     expect(queryByTitle(/Edit property details/)).toBeNull();
     expect(getByTestId('tooltip-icon-property-retired-tooltip')).toBeInTheDocument();
   });

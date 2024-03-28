@@ -11,7 +11,7 @@ import { exists, unique } from '@/utils';
 import { IOperationSectionViewProps } from './OperationSectionView';
 
 export interface IOperationContainerProps {
-  propertyId: number;
+  propertyId: number | undefined;
   View: React.FunctionComponent<IOperationSectionViewProps>;
 }
 
@@ -36,64 +36,66 @@ export const OperationContainer: React.FunctionComponent<IOperationContainerProp
   const getPropertyOperationsExecute = getPropertyOperations.execute;
 
   const fetchOperations = useCallback(
-    async (propertyId: number) => {
-      const results = await getPropertyOperationsExecute(propertyId);
+    async (propertyId?: number) => {
+      if (propertyId) {
+        const results = await getPropertyOperationsExecute(propertyId);
 
-      const newOperations: OperationSet[] = [];
-      if (exists(results)) {
-        const resultGroup = groupBy(results, x => x.propertyOperationNo);
+        const newOperations: OperationSet[] = [];
+        if (exists(results)) {
+          const resultGroup = groupBy(results, x => x.propertyOperationNo);
 
-        for (const key in resultGroup) {
-          const result = resultGroup[key];
+          for (const key in resultGroup) {
+            const result = resultGroup[key];
 
-          const sourceIds = result
-            .map(po => po.sourcePropertyId)
-            .filter(exists)
-            .filter(unique);
-          const destinationIds = result
-            .map(po => po.destinationPropertyId)
-            .filter(exists)
-            .filter(unique);
+            const sourceIds = result
+              .map(po => po.sourcePropertyId)
+              .filter(exists)
+              .filter(unique);
+            const destinationIds = result
+              .map(po => po.destinationPropertyId)
+              .filter(exists)
+              .filter(unique);
 
-          const sourcePromises: Promise<ApiGen_Concepts_Property | undefined>[] = [];
-          const destinationPromises: Promise<ApiGen_Concepts_Property | undefined>[] = [];
+            const sourcePromises: Promise<ApiGen_Concepts_Property | undefined>[] = [];
+            const destinationPromises: Promise<ApiGen_Concepts_Property | undefined>[] = [];
 
-          for (let i = 0; i < sourceIds.length; i++) {
-            sourcePromises.push(getPropertyExecute(sourceIds[i]));
+            for (let i = 0; i < sourceIds.length; i++) {
+              sourcePromises.push(getPropertyExecute(sourceIds[i]));
+            }
+            for (let i = 0; i < destinationIds.length; i++) {
+              destinationPromises.push(getPropertyExecute(destinationIds[i]));
+            }
+
+            const retrievedSources = await Promise.all(sourcePromises);
+            const retrievedDestinations = await Promise.all(destinationPromises);
+
+            const resultOperationType =
+              result[0].propertyOperationTypeCode?.id ??
+              ApiGen_CodeTypes_PropertyOperationTypes.SUBDIVIDE;
+            const operationType =
+              ApiGen_CodeTypes_PropertyOperationTypes[
+                resultOperationType as keyof typeof ApiGen_CodeTypes_PropertyOperationTypes
+              ];
+
+            const operationSet: OperationSet = {
+              operationDateTime: result[0].operationDt ?? '',
+              sourceProperties: retrievedSources.filter(exists) ?? [],
+              destinationProperties: retrievedDestinations.filter(exists) ?? [],
+              operationType,
+            };
+
+            newOperations.push(operationSet);
           }
-          for (let i = 0; i < destinationIds.length; i++) {
-            destinationPromises.push(getPropertyExecute(destinationIds[i]));
-          }
+          const subdivisions = newOperations.filter(
+            x => x.operationType === ApiGen_CodeTypes_PropertyOperationTypes.SUBDIVIDE,
+          );
+          const consolidations = newOperations.filter(
+            x => x.operationType === ApiGen_CodeTypes_PropertyOperationTypes.CONSOLIDATE,
+          );
 
-          const retrievedSources = await Promise.all(sourcePromises);
-          const retrievedDestinations = await Promise.all(destinationPromises);
-
-          const resultOperationType =
-            result[0].propertyOperationTypeCode?.id ??
-            ApiGen_CodeTypes_PropertyOperationTypes.SUBDIVIDE;
-          const operationType =
-            ApiGen_CodeTypes_PropertyOperationTypes[
-              resultOperationType as keyof typeof ApiGen_CodeTypes_PropertyOperationTypes
-            ];
-
-          const operationSet: OperationSet = {
-            operationDateTime: result[0].operationDt ?? '',
-            sourceProperties: retrievedSources.filter(exists) ?? [],
-            destinationProperties: retrievedDestinations.filter(exists) ?? [],
-            operationType,
-          };
-
-          newOperations.push(operationSet);
+          setSubdivisionOperations(subdivisions);
+          setConsolidationOperations(consolidations);
         }
-        const subdivisions = newOperations.filter(
-          x => x.operationType === ApiGen_CodeTypes_PropertyOperationTypes.SUBDIVIDE,
-        );
-        const consolidations = newOperations.filter(
-          x => x.operationType === ApiGen_CodeTypes_PropertyOperationTypes.CONSOLIDATE,
-        );
-
-        setSubdivisionOperations(subdivisions);
-        setConsolidationOperations(consolidations);
       }
     },
     [getPropertyExecute, getPropertyOperationsExecute],
@@ -107,6 +109,7 @@ export const OperationContainer: React.FunctionComponent<IOperationContainerProp
     <View
       subdivisionOperations={subdivisionOperations}
       consolidationOperations={consolidationOperations}
+      loading={!exists(propertyId) || getPropertyOperations.loading}
     />
   );
 };

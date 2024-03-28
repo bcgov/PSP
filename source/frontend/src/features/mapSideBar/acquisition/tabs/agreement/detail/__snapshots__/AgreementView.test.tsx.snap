@@ -384,7 +384,7 @@ exports[`AgreementView component renders as expected 1`] = `
                 class="pb-2 row"
               >
                 <div
-                  class="pr-0 text-left col-5"
+                  class="pr-0 text-left col-6"
                 >
                   <label
                     class="c9"
@@ -402,7 +402,7 @@ exports[`AgreementView component renders as expected 1`] = `
                 class="pb-2 row"
               >
                 <div
-                  class="pr-0 text-left col-5"
+                  class="pr-0 text-left col-6"
                 >
                   <label
                     class="c9"
@@ -418,7 +418,7 @@ exports[`AgreementView component renders as expected 1`] = `
                 class="pb-2 row"
               >
                 <div
-                  class="pr-0 text-left col-5"
+                  class="pr-0 text-left col-6"
                 >
                   <label
                     class="c9"
@@ -436,7 +436,7 @@ exports[`AgreementView component renders as expected 1`] = `
                 class="pb-2 row"
               >
                 <div
-                  class="pr-0 text-left col-5"
+                  class="pr-0 text-left col-6"
                 >
                   <label
                     class="c9"
@@ -452,7 +452,7 @@ exports[`AgreementView component renders as expected 1`] = `
                 class="pb-2 row"
               >
                 <div
-                  class="pr-0 text-left col-5"
+                  class="pr-0 text-left col-6"
                 >
                   <label
                     class="c9"
@@ -468,7 +468,7 @@ exports[`AgreementView component renders as expected 1`] = `
                 class="pb-2 row"
               >
                 <div
-                  class="pr-0 text-left col-5"
+                  class="pr-0 text-left col-6"
                 >
                   <label
                     class="c9"
@@ -484,7 +484,7 @@ exports[`AgreementView component renders as expected 1`] = `
                 class="pb-2 row"
               >
                 <div
-                  class="pr-0 text-left col-5"
+                  class="pr-0 text-left col-6"
                 >
                   <label
                     class="c9"
@@ -500,7 +500,7 @@ exports[`AgreementView component renders as expected 1`] = `
                 class="pb-2 row"
               >
                 <div
-                  class="pr-0 text-left col-5"
+                  class="pr-0 text-left col-6"
                 >
                   <label
                     class="c9"
@@ -521,7 +521,7 @@ exports[`AgreementView component renders as expected 1`] = `
                 class="pb-2 row"
               >
                 <div
-                  class="pr-0 text-left col-5"
+                  class="pr-0 text-left col-6"
                 >
                   <label
                     class="c9"
@@ -537,7 +537,7 @@ exports[`AgreementView component renders as expected 1`] = `
                 class="pb-2 row"
               >
                 <div
-                  class="pr-0 text-left col-5"
+                  class="pr-0 text-left col-6"
                 >
                   <label
                     class="c9"
@@ -577,7 +577,7 @@ exports[`AgreementView component renders as expected 1`] = `
                 class="pb-2 row"
               >
                 <div
-                  class="pr-0 text-left col-5"
+                  class="pr-0 text-left col-6"
                 >
                   <label
                     class="c9"
@@ -699,7 +699,7 @@ exports[`AgreementView component renders as expected 1`] = `
                 class="pb-2 row"
               >
                 <div
-                  class="pr-0 text-left col-5"
+                  class="pr-0 text-left col-6"
                 >
                   <label
                     class="c9"
@@ -717,7 +717,7 @@ exports[`AgreementView component renders as expected 1`] = `
                 class="pb-2 row"
               >
                 <div
-                  class="pr-0 text-left col-5"
+                  class="pr-0 text-left col-6"
                 >
                   <label
                     class="c9"
@@ -733,7 +733,7 @@ exports[`AgreementView component renders as expected 1`] = `
                 class="pb-2 row"
               >
                 <div
-                  class="pr-0 text-left col-5"
+                  class="pr-0 text-left col-6"
                 >
                   <label
                     class="c9"
@@ -751,7 +751,7 @@ exports[`AgreementView component renders as expected 1`] = `
                 class="pb-2 row"
               >
                 <div
-                  class="pr-0 text-left col-5"
+                  class="pr-0 text-left col-6"
                 >
                   <label
                     class="c9"
@@ -769,7 +769,7 @@ exports[`AgreementView component renders as expected 1`] = `
                 class="pb-2 row"
               >
                 <div
-                  class="pr-0 text-left col-5"
+                  class="pr-0 text-left col-6"
                 >
                   <label
                     class="c9"
@@ -787,7 +787,7 @@ exports[`AgreementView component renders as expected 1`] = `
                 class="pb-2 row"
               >
                 <div
-                  class="pr-0 text-left col-5"
+                  class="pr-0 text-left col-6"
                 >
                   <label
                     class="c9"
@@ -805,7 +805,7 @@ exports[`AgreementView component renders as expected 1`] = `
                 class="pb-2 row"
               >
                 <div
-                  class="pr-0 text-left col-5"
+                  class="pr-0 text-left col-6"
                 >
                   <label
                     class="c9"
@@ -828,7 +828,7 @@ exports[`AgreementView component renders as expected 1`] = `
                 class="pb-2 row"
               >
                 <div
-                  class="pr-0 text-left col-5"
+                  class="pr-0 text-left col-6"
                 >
                   <label
                     class="c9"
@@ -846,7 +846,7 @@ exports[`AgreementView component renders as expected 1`] = `
                 class="pb-2 row"
               >
                 <div
-                  class="pr-0 text-left col-5"
+                  class="pr-0 text-left col-6"
                 >
                   <label
                     class="c9"
@@ -893,7 +893,7 @@ exports[`AgreementView component renders as expected 1`] = `
                 class="pb-2 row"
               >
                 <div
-                  class="pr-0 text-left col-5"
+                  class="pr-0 text-left col-6"
                 >
                   <label
                     class="c9"

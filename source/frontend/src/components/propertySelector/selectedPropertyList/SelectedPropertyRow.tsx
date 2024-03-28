@@ -49,6 +49,7 @@ export const SelectedPropertyRow: React.FunctionComponent<
           label=""
           field={withNameSpace(nameSpace, 'name')}
           displayErrorTooltips={true}
+          defaultValue=""
         />
       </Col>
       <Col md={2}>

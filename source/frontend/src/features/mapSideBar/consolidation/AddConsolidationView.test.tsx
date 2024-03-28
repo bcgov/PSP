@@ -5,7 +5,15 @@ import { createRef } from 'react';
 import Claims from '@/constants/claims';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes/lookupCodesSlice';
-import { render, RenderOptions, waitFor, screen, getByTitle, userEvent } from '@/utils/test-utils';
+import {
+  render,
+  RenderOptions,
+  waitFor,
+  screen,
+  getByTitle,
+  userEvent,
+  act,
+} from '@/utils/test-utils';
 import { ConsolidationFormModel } from './AddConsolidationModel';
 import AddConsolidationView, { IAddConsolidationViewProps } from './AddConsolidationView';
 import { PropertySelectorPidSearchContainerProps } from '@/components/propertySelector/search/PropertySelectorPidSearchContainer';
@@ -107,7 +115,7 @@ describe('Add Consolidation View', () => {
 
   it('calls getPrimaryAddressByPid when destination property is activated', async () => {
     await setup();
-    await waitFor(async () => {
+    await act(async () => {
       mapSelectorProps.addSelectedProperties([testProperty]);
     });
     expect(getPrimaryAddressByPid).toHaveBeenCalledWith(testProperty.pid);
@@ -115,7 +123,7 @@ describe('Add Consolidation View', () => {
 
   it('does not call for address if property has no pid', async () => {
     await setup();
-    await waitFor(async () => {
+    await act(async () => {
       mapSelectorProps.addSelectedProperties([{ ...testProperty, pid: undefined }]);
     });
     const text = await screen.findByText('Selected property must have a PID');
@@ -126,7 +134,7 @@ describe('Add Consolidation View', () => {
     await setup();
     const property = getMockApiProperty();
     property.pid = 88999888;
-    await waitFor(async () => {
+    await act(async () => {
       pidSelectorProps.setSelectProperty(property);
     });
     const text = await screen.findByText(pidFormatter(property.pid?.toString() ?? ''));
@@ -144,7 +152,7 @@ describe('Add Consolidation View', () => {
     });
 
     const button = getByTitle('remove');
-    await waitFor(async () => {
+    await act(async () => {
       userEvent.click(button);
     });
     expect(queryByText('111-111-111')).toBeNull();
@@ -161,7 +169,7 @@ describe('Add Consolidation View', () => {
     });
 
     const button = getByTitle('remove');
-    await waitFor(async () => {
+    await act(async () => {
       userEvent.click(button);
     });
     expect(queryByText('111-111-111')).toBeNull();

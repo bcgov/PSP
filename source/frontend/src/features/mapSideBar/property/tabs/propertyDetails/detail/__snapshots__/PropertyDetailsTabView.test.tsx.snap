@@ -738,7 +738,7 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
       </div>
     </div>
     <div
-      class="c2 form-section"
+      class="c2 form-section position-relative"
     >
       <h2
         class="c3"
@@ -764,7 +764,7 @@ exports[`PropertyDetailsTabView component renders as expected when provided vali
       </div>
     </div>
     <div
-      class="c2 form-section"
+      class="c2 form-section position-relative"
     >
       <h2
         class="c3"

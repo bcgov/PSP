@@ -73,8 +73,8 @@ describe('useNoteRepository hook', () => {
       expect(toastSuccessSpy).toHaveBeenCalledWith('Note saved');
     });
 
-    it('Dispatches error with correct response when request fails', async () => {
-      mockAxios.onPost(url).reply(400, MOCK.ERROR);
+    it('Dispatches error with correct response when request fails with 500', async () => {
+      mockAxios.onPost(url).reply(500, MOCK.ERROR);
       const { addNote } = setup();
 
       await act(async () => {
@@ -82,6 +82,17 @@ describe('useNoteRepository hook', () => {
       });
 
       expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeDefined();
+      expect(toastErrorSpy).toHaveBeenCalled();
+    });
+    it('Dispatches error with correct response when request fails with 400', async () => {
+      mockAxios.onPost(url).reply(400, MOCK.ERROR);
+      const { addNote } = setup();
+
+      await act(async () => {
+        await addNote.execute(NoteTypes.Activity, mockEntityNote());
+      });
+
+      expect(find(currentStore.getActions(), { type: 'network/logError' })).toBe(undefined);
       expect(toastErrorSpy).toHaveBeenCalled();
     });
   });
@@ -136,8 +147,8 @@ describe('useNoteRepository hook', () => {
       expect(toastSuccessSpy).toHaveBeenCalledWith('Note saved');
     });
 
-    it('Dispatches error with correct response when request fails', async () => {
-      mockAxios.onPut(url).reply(400, MOCK.ERROR);
+    it('Dispatches error with correct response when request fails with a 500', async () => {
+      mockAxios.onPut(url).reply(500, MOCK.ERROR);
       const { updateNote } = setup();
 
       await act(async () => {
@@ -145,6 +156,18 @@ describe('useNoteRepository hook', () => {
       });
 
       expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeDefined();
+      expect(toastErrorSpy).toHaveBeenCalled();
+    });
+
+    it('Dispatches error with correct response when request fails with a 400', async () => {
+      mockAxios.onPut(url).reply(400, MOCK.ERROR);
+      const { updateNote } = setup();
+
+      await act(async () => {
+        await updateNote.execute(mockNoteResponse(1));
+      });
+
+      expect(find(currentStore.getActions(), { type: 'network/logError' })).toBe(undefined);
       expect(toastErrorSpy).toHaveBeenCalled();
     });
   });

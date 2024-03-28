@@ -10,7 +10,7 @@ import Supercluster, { ClusterFeature, ClusterProperties, PointFeature } from 's
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import useSupercluster from '@/components/maps/hooks/useSupercluster';
-import { useFilterContext } from '@/components/maps/providers/FIlterProvider';
+import { useFilterContext } from '@/components/maps/providers/FilterProvider';
 import { ICluster } from '@/components/maps/types';
 import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
 import { PMBC_Feature_Properties } from '@/models/layers/parcelMapBC';

@@ -116,7 +116,7 @@ namespace Pims.Api.Test.Services
             repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(researchFile);
 
             var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
-            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>())).Returns(property);
+            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), true)).Returns(property);
 
             var filePropertyRepository = this._helper.GetService<Mock<IResearchFilePropertyRepository>>();
             filePropertyRepository.Setup(x => x.GetAllByResearchFileId(It.IsAny<long>())).Returns(researchFile.PimsPropertyResearchFiles.ToList());
@@ -146,7 +146,7 @@ namespace Pims.Api.Test.Services
             repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(researchFile);
 
             var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
-            propertyRepository.Setup(x => x.GetByPin(It.IsAny<int>())).Returns(property);
+            propertyRepository.Setup(x => x.GetByPin(It.IsAny<int>(), true)).Returns(property);
 
             var filePropertyRepository = this._helper.GetService<Mock<IResearchFilePropertyRepository>>();
             filePropertyRepository.Setup(x => x.GetAllByResearchFileId(It.IsAny<long>())).Returns(researchFile.PimsPropertyResearchFiles.ToList());
@@ -181,7 +181,7 @@ namespace Pims.Api.Test.Services
             filePropertyRepository.Setup(x => x.Add(It.IsAny<PimsPropertyResearchFile>())).Callback<PimsPropertyResearchFile>(x => updatedResearchFileProperty = x).Returns(researchFile.PimsPropertyResearchFiles.FirstOrDefault());
 
             var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
-            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>())).Throws<KeyNotFoundException>();
+            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), true)).Throws<KeyNotFoundException>();
 
             var coordinateService = this._helper.GetService<Mock<ICoordinateTransformService>>();
             coordinateService.Setup(x => x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>())).Returns(new Coordinate(924046.3314288399, 1088892.9140135897));
@@ -227,7 +227,7 @@ namespace Pims.Api.Test.Services
             filePropertyRepository.Setup(x => x.Add(It.IsAny<PimsPropertyResearchFile>())).Callback<PimsPropertyResearchFile>(x => updatedResearchFileProperty = x).Returns(researchFile.PimsPropertyResearchFiles.FirstOrDefault());
 
             var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
-            propertyRepository.Setup(x => x.GetByPin(It.IsAny<int>())).Throws<KeyNotFoundException>();
+            propertyRepository.Setup(x => x.GetByPin(It.IsAny<int>(), true)).Throws<KeyNotFoundException>();
 
             var coordinateService = this._helper.GetService<Mock<ICoordinateTransformService>>();
             coordinateService.Setup(x => x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>())).Returns(new Coordinate(924046.3314288399, 1088892.9140135897));
