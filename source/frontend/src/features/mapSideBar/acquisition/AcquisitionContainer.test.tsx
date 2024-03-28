@@ -103,9 +103,6 @@ describe('AcquisitionContainer component', () => {
       .onGet(new RegExp('acquisitionfiles/1/properties'))
       .reply(200, mockAcquisitionFileResponse().fileProperties);
     mockAxios.onGet(new RegExp('acquisitionfiles/1/updateInfo')).reply(200, mockLastUpdatedBy(1));
-    mockAxios
-      .onGet(new RegExp('acquisitionfiles/1/owners'))
-      .reply(200, mockAcquisitionFileOwnersResponse());
     mockAxios.onGet(new RegExp('acquisitionfiles/*')).reply(200, mockAcquisitionFileResponse());
     mockAxios.onGet(new RegExp('notes/*')).reply(200, mockNotesResponse());
   });
