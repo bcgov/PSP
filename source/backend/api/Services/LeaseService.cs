@@ -380,7 +380,7 @@ namespace Pims.Api.Services
                     var pin = leaseProperty.Property.Pin.Value;
                     try
                     {
-                        var foundProperty = _propertyRepository.GetByPin(pin);
+                        var foundProperty = _propertyRepository.GetByPin(pin, true);
                         if (foundProperty.IsRetired.HasValue && foundProperty.IsRetired.Value)
                         {
                             throw new BusinessRuleViolationException("Retired property can not be selected.");
