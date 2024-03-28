@@ -74,7 +74,7 @@ describe('LayerPopupView component', () => {
         featureDataset: null,
       });
       const ellipsis = getByTestId('fly-out-ellipsis');
-      act(() => userEvent.click(ellipsis));
+      await act(async () => userEvent.click(ellipsis));
       expect(getByText('View Property info')).toBeVisible();
     });
 
@@ -102,9 +102,9 @@ describe('LayerPopupView component', () => {
         },
       });
       const ellipsis = getByTestId('fly-out-ellipsis');
-      act(() => userEvent.click(ellipsis));
+      await act(async () => userEvent.click(ellipsis));
       const link = getByText('View Property info');
-      act(() => userEvent.click(link));
+      await act(async () => userEvent.click(link));
       expect(history.location.pathname).toBe(`/mapview/sidebar/property/${propertyId}`);
     });
 
@@ -128,12 +128,40 @@ describe('LayerPopupView component', () => {
         },
       });
       const ellipsis = getByTestId('fly-out-ellipsis');
-      act(() => userEvent.click(ellipsis));
+      await act(async () => userEvent.click(ellipsis));
       const link = getByText('View Property info');
-      act(() => userEvent.click(link));
+      await act(async () => userEvent.click(link));
       expect(history.location.pathname).toBe(
         `/mapview/sidebar/non-inventory-property/${parsedPid}`,
       );
+    });
+
+    it('handles view property action for non-inventory properties where the properties object is null', async () => {
+      const pid = '123456789';
+      const { getByTestId, getByText } = setup({
+        layerPopup: { data: { PID: pid } } as any,
+        featureDataset: {
+          parcelFeature: {
+            type: 'Feature',
+            properties: { ...emptyPmbcParcel, PID: pid },
+            geometry: { type: 'Point', coordinates: [] },
+          },
+          location: { lat: 0, lng: 0 },
+          pimsFeature: {
+            type: 'Feature',
+            properties: null as any,
+            geometry: { type: 'Point', coordinates: [] },
+          },
+          regionFeature: null,
+          districtFeature: null,
+          municipalityFeature: null,
+          selectingComponentId: null,
+        },
+      });
+      const ellipsis = getByTestId('fly-out-ellipsis');
+      await act(async () => userEvent.click(ellipsis));
+      const link = getByText('View Property info');
+      await act(async () => userEvent.click(link));
     });
 
     it('handles create research file action', async () => {
@@ -144,9 +172,9 @@ describe('LayerPopupView component', () => {
         claims: [Claims.RESEARCH_ADD],
       });
       const ellipsis = getByTestId('fly-out-ellipsis');
-      act(() => userEvent.click(ellipsis));
+      await act(async () => userEvent.click(ellipsis));
       const link = getByText('Research File');
-      act(() => userEvent.click(link));
+      await act(async () => userEvent.click(link));
       expect(history.location.pathname).toBe('/mapview/sidebar/research/new');
     });
 
@@ -158,9 +186,9 @@ describe('LayerPopupView component', () => {
         claims: [Claims.ACQUISITION_ADD],
       });
       const ellipsis = getByTestId('fly-out-ellipsis');
-      act(() => userEvent.click(ellipsis));
+      await act(async () => userEvent.click(ellipsis));
       const link = getByText('Acquisition File');
-      act(() => userEvent.click(link));
+      await act(async () => userEvent.click(link));
       expect(history.location.pathname).toBe('/mapview/sidebar/acquisition/new');
     });
 
@@ -179,7 +207,7 @@ describe('LayerPopupView component', () => {
         claims: [Claims.PROPERTY_ADD],
       });
       const ellipsis = getByTestId('fly-out-ellipsis');
-      act(() => userEvent.click(ellipsis));
+      await act(async () => userEvent.click(ellipsis));
       const subdivisionLink = queryByText('Create Subdivision');
       expect(subdivisionLink).not.toBeInTheDocument();
       const consolidationLink = queryByText('Create Consolidation');
@@ -207,9 +235,9 @@ describe('LayerPopupView component', () => {
         claims: [Claims.PROPERTY_ADD],
       });
       const ellipsis = getByTestId('fly-out-ellipsis');
-      act(() => userEvent.click(ellipsis));
+      await act(async () => userEvent.click(ellipsis));
       const link = getByText('Create Subdivision');
-      act(() => userEvent.click(link));
+      await act(async () => userEvent.click(link));
       expect(history.location.pathname).toBe('/mapview/sidebar/subdivision/new');
     });
 
@@ -234,9 +262,9 @@ describe('LayerPopupView component', () => {
         claims: [Claims.PROPERTY_ADD],
       });
       const ellipsis = getByTestId('fly-out-ellipsis');
-      act(() => userEvent.click(ellipsis));
+      await act(async () => userEvent.click(ellipsis));
       const link = getByText('Create Consolidation');
-      act(() => userEvent.click(link));
+      await act(async () => userEvent.click(link));
       expect(history.location.pathname).toBe('/mapview/sidebar/consolidation/new');
     });
   });

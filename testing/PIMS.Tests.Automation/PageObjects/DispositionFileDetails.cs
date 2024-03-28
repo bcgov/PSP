@@ -456,8 +456,6 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(dispositionFileScheduleSubtitle);
             AssertTrueIsDisplayed(dispositionFileScheduleAssignedDateLabel);
             AssertTrueIsDisplayed(dispositionFileAssignedDateInput);
-            AssertTrueIsDisplayed(dispositionFileScheduleCompletedDateLabel);
-            AssertTrueIsDisplayed(dispositionFileCompletedDateLabelInput);
 
             //Properties Selection
             sharedFileProperties.VerifyLocateOnMapFeature();

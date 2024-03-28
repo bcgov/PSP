@@ -53,8 +53,10 @@ export const useDocumentProvider = () => {
       onError: useCallback((axiosError: AxiosError<IApiError>) => {
         if (axiosError?.response?.status === 400) {
           toast.error(axiosError?.response.data.error);
+          return Promise.resolve();
         } else {
           toast.error('Retrieve document metadata file error. Check responses and try again.');
+          return Promise.reject(axiosError);
         }
       }, []),
     });
@@ -81,8 +83,10 @@ export const useDocumentProvider = () => {
       onError: useCallback((axiosError: AxiosError<IApiError>) => {
         if (axiosError?.response?.status === 400) {
           toast.error(axiosError?.response.data.error);
+          return Promise.resolve();
         } else {
           toast.error('Retrieve document type metadata error. Check responses and try again.');
+          return Promise.reject(axiosError);
         }
       }, []),
     });
@@ -99,8 +103,10 @@ export const useDocumentProvider = () => {
     onError: useCallback((axiosError: AxiosError<IApiError>) => {
       if (axiosError?.response?.status === 400) {
         toast.error(axiosError?.response.data.error);
+        return Promise.resolve();
       } else {
         toast.error('Retrieve document types error. Check responses and try again.');
+        return Promise.reject(axiosError);
       }
     }, []),
   });
@@ -121,8 +127,10 @@ export const useDocumentProvider = () => {
       onError: useCallback((axiosError: AxiosError<IApiError>) => {
         if (axiosError?.response?.status === 400) {
           toast.error(axiosError?.response.data.error);
+          return Promise.resolve();
         } else {
           toast.error('Retrieve document relationship types error. Check responses and try again.');
+          return Promise.reject(axiosError);
         }
       }, []),
     });
@@ -143,8 +151,10 @@ export const useDocumentProvider = () => {
     onError: useCallback((axiosError: AxiosError<IApiError>) => {
       if (axiosError?.response?.status === 400) {
         toast.error(axiosError?.response.data.error);
+        return Promise.resolve();
       } else {
         toast.error('Update document error. Check responses and try again.');
+        return Promise.reject();
       }
     }, []),
   });
@@ -166,7 +176,9 @@ export const useDocumentProvider = () => {
       onError: useCallback((axiosError: AxiosError<IApiError>) => {
         if (axiosError?.response?.status === 400) {
           toast.error(axiosError?.response.data.error);
+          return Promise.resolve();
         }
+        return Promise.reject(axiosError);
       }, []),
     });
 
@@ -187,7 +199,9 @@ export const useDocumentProvider = () => {
       onError: useCallback((axiosError: AxiosError<IApiError>) => {
         if (axiosError?.response?.status === 400) {
           toast.error(axiosError?.response.data.error);
+          return Promise.resolve();
         }
+        return Promise.reject(axiosError);
       }, []),
     });
 
@@ -208,7 +222,9 @@ export const useDocumentProvider = () => {
     onError: useCallback((axiosError: AxiosError<IApiError>) => {
       if (axiosError?.response?.status === 400) {
         toast.error(axiosError?.response.data.error);
+        return Promise.resolve();
       }
+      return Promise.reject(axiosError);
     }, []),
   });
 

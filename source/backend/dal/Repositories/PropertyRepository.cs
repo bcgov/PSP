@@ -164,6 +164,7 @@ namespace Pims.Dal.Repositories
                 .Include(p => p.Address)
                     .ThenInclude(a => a.Country)
                 .Where(p => ids.Any(s => s == p.PropertyId))
+                .AsNoTracking()
                 .ToList();
             return property;
         }
@@ -185,38 +186,43 @@ namespace Pims.Dal.Repositories
         /// Get the property for the specified PID value.
         /// </summary>
         /// <param name="pid"></param>
+        /// <param name="includeRetired"></param>
         /// <returns></returns>
-        public PimsProperty GetByPid(int pid)
+        public PimsProperty GetByPid(int pid, bool includeRetired = false)
         {
             this.User.ThrowIfNotAllAuthorized(Permissions.PropertyView);
 
-            var property = this.Context.PimsProperties.AsNoTracking()
-                .Include(p => p.DistrictCodeNavigation)
-                .Include(p => p.RegionCodeNavigation)
-                .Include(p => p.PropertyTypeCodeNavigation)
-                .Include(p => p.PropertyStatusTypeCodeNavigation)
-                .Include(p => p.PropertyDataSourceTypeCodeNavigation)
-                .Include(p => p.PropertyClassificationTypeCodeNavigation)
-                .Include(p => p.PimsPropPropAnomalyTypes)
-                    .ThenInclude(t => t.PropertyAnomalyTypeCodeNavigation)
-                .Include(p => p.PimsPropPropRoadTypes)
-                    .ThenInclude(t => t.PropertyRoadTypeCodeNavigation)
-                .Include(p => p.PimsPropPropTenureTypes)
-                    .ThenInclude(t => t.PropertyTenureTypeCodeNavigation)
-                .Include(p => p.PropertyAreaUnitTypeCodeNavigation)
-                .Include(p => p.VolumetricTypeCodeNavigation)
-                .Include(p => p.VolumeUnitTypeCodeNavigation)
-                .Include(p => p.Address)
-                    .ThenInclude(a => a.RegionCodeNavigation)
-                .Include(p => p.Address)
-                    .ThenInclude(a => a.DistrictCodeNavigation)
-                .Include(p => p.Address)
-                    .ThenInclude(a => a.ProvinceState)
-                .Include(p => p.Address)
-                    .ThenInclude(a => a.Country)
-                    .OrderByDescending(p => p.PropertyId)
-                .FirstOrDefault(p => p.Pid == pid && p.IsRetired != true) ?? throw new KeyNotFoundException();
-            return property;
+            var query = Context.PimsProperties.AsNoTracking();
+
+            if(!includeRetired)
+            {
+                query = query.Where(r => !r.IsRetired.HasValue || (r.IsRetired.HasValue && !r.IsRetired.Value));
+            }
+
+            return query.Include(p => p.DistrictCodeNavigation)
+                    .Include(p => p.RegionCodeNavigation)
+                    .Include(p => p.PropertyTypeCodeNavigation)
+                    .Include(p => p.PropertyStatusTypeCodeNavigation)
+                    .Include(p => p.PropertyDataSourceTypeCodeNavigation)
+                    .Include(p => p.PropertyClassificationTypeCodeNavigation)
+                    .Include(p => p.PimsPropPropAnomalyTypes)
+                        .ThenInclude(t => t.PropertyAnomalyTypeCodeNavigation)
+                    .Include(p => p.PimsPropPropRoadTypes)
+                        .ThenInclude(t => t.PropertyRoadTypeCodeNavigation)
+                    .Include(p => p.PimsPropPropTenureTypes)
+                        .ThenInclude(t => t.PropertyTenureTypeCodeNavigation)
+                    .Include(p => p.PropertyAreaUnitTypeCodeNavigation)
+                    .Include(p => p.VolumetricTypeCodeNavigation)
+                    .Include(p => p.VolumeUnitTypeCodeNavigation)
+                    .Include(p => p.Address)
+                        .ThenInclude(a => a.RegionCodeNavigation)
+                    .Include(p => p.Address)
+                        .ThenInclude(a => a.DistrictCodeNavigation)
+                    .Include(p => p.Address)
+                        .ThenInclude(a => a.ProvinceState)
+                    .Include(p => p.Address)
+                        .ThenInclude(a => a.Country)
+                        .OrderByDescending(p => p.PropertyId).FirstOrDefault(p => p.Pid == pid) ?? throw new KeyNotFoundException();
         }
 
         /// <summary>
@@ -224,12 +230,18 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="pin"></param>
         /// <returns></returns>
-        public PimsProperty GetByPin(int pin)
+        public PimsProperty GetByPin(int pin, bool includeRetired = false)
         {
             this.User.ThrowIfNotAllAuthorized(Permissions.PropertyView);
 
-            var property = this.Context.PimsProperties.AsNoTracking()
-                .Include(p => p.DistrictCodeNavigation)
+            var query = Context.PimsProperties.AsNoTracking();
+
+            if(!includeRetired)
+            {
+                query = query.Where(r => !r.IsRetired.HasValue || (r.IsRetired.HasValue && !r.IsRetired.Value));
+            }
+
+            return query.Include(p => p.DistrictCodeNavigation)
                 .Include(p => p.RegionCodeNavigation)
                 .Include(p => p.PropertyTypeCodeNavigation)
                 .Include(p => p.PropertyStatusTypeCodeNavigation)
@@ -253,7 +265,6 @@ namespace Pims.Dal.Repositories
                 .Include(p => p.Address)
                     .ThenInclude(a => a.Country)
                 .FirstOrDefault(p => p.Pin == pin) ?? throw new KeyNotFoundException();
-            return property;
         }
 
         /// <summary>

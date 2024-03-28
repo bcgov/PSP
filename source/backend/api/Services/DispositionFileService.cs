@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
-using System.Text.RegularExpressions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Constants;
@@ -74,11 +73,9 @@ namespace Pims.Api.Services
 
             dispositionFile.DispositionStatusTypeCode ??= EnumDispositionStatusTypeCode.UNKNOWN.ToString();
             dispositionFile.DispositionFileStatusTypeCode ??= EnumDispositionFileStatusTypeCode.ACTIVE.ToString();
-
             ValidateStaff(dispositionFile);
 
             MatchProperties(dispositionFile, userOverrides);
-
             ValidatePropertyRegions(dispositionFile);
 
             var newDispositionFile = _dispositionFileRepository.Add(dispositionFile);
@@ -117,35 +114,18 @@ namespace Pims.Api.Services
                 throw new BusinessRuleViolationException("The file you are editing is not active or draft, so you cannot save changes. Refresh your browser to see file state.");
             }
 
-            ValidateStaff(dispositionFile);
             ValidateVersion(id, dispositionFile.ConcurrencyControlNumber);
 
-            dispositionFile.ThrowContractorRemovedFromTeam(_user, _userRepository);
-
-            var doNotAddToStatuses = new List<string>() { EnumDispositionFileStatusTypeCode.COMPLETE.ToString(), EnumDispositionFileStatusTypeCode.ARCHIVED.ToString(), EnumDispositionFileStatusTypeCode.CANCELLED.ToString(), };
+            // validate disposition file state before proceeding with any database updates
             var currentDispositionFile = _dispositionFileRepository.GetById(id);
+            ValidateFileBeforeUpdate(dispositionFile, currentDispositionFile, userOverrides);
 
-            if (!userOverrides.Contains(UserOverrideCode.DispositionFileFinalStatus) && !doNotAddToStatuses.Contains(currentDispositionFile.DispositionFileStatusTypeCode)
-                && doNotAddToStatuses.Contains(dispositionFile.DispositionFileStatusTypeCode))
-            {
-                throw new UserOverrideException(UserOverrideCode.DispositionFileFinalStatus, "You are changing this file to a non-editable state. (Only system administrators can edit the file when set to Archived, Cancelled or Completed state). Do you wish to continue?");
-            }
-            else if (currentDispositionFile.DispositionFileStatusTypeCode != EnumDispositionFileStatusTypeCode.COMPLETE.ToString()
-                && dispositionFile.DispositionFileStatusTypeCode == EnumDispositionFileStatusTypeCode.COMPLETE.ToString())
-            {
-                if (currentDispositionFile?.PimsDispositionSales?.FirstOrDefault()?.SaleFinalAmt == null)
-                {
-                    throw new BusinessRuleViolationException("You have not added a Sales Price. Please add a Sales Price before completion.");
-                }
-                else if (currentDispositionFile.PimsDispositionFileProperties.Count > 0)
-                {
-                    DisposeOfProperties(dispositionFile, userOverrides);
-                }
-            }
+            var isFileClosing = currentDispositionFile.DispositionFileStatusTypeCode != EnumDispositionFileStatusTypeCode.COMPLETE.ToString() &&
+                                dispositionFile.DispositionFileStatusTypeCode == EnumDispositionFileStatusTypeCode.COMPLETE.ToString();
 
-            if (!userOverrides.Contains(UserOverrideCode.UpdateRegion))
+            if (isFileClosing && currentDispositionFile.PimsDispositionFileProperties?.Count > 0)
             {
-                ValidateMinistryRegion(id, dispositionFile.RegionCode);
+                DisposeOfProperties(dispositionFile);
             }
 
             _dispositionFileRepository.Update(id, dispositionFile);
@@ -560,30 +540,69 @@ namespace Pims.Api.Services
             return _dispositionFileRepository.GetById(dispositionFile.Internal_Id);
         }
 
-        /// <summary>
-        /// Attempt to dispose of any properties if all business rules are met.
-        /// </summary>
-        /// <param name="dispositionFile"></param>
-        private void DisposeOfProperties(PimsDispositionFile dispositionFile, IEnumerable<UserOverrideCode> userOverrides)
+        private void ValidateFileBeforeUpdate(PimsDispositionFile incomingDispositionFile, PimsDispositionFile currentDispositionFile, IEnumerable<UserOverrideCode> userOverrides)
         {
-            var currentProperties = _dispositionFilePropertyRepository.GetPropertiesByDispositionFileId(dispositionFile.Internal_Id);
-            if (currentProperties.Any(p => p.Property.IsOwned) && !userOverrides.Contains(UserOverrideCode.DisposeOfProperties))
+            // Implement file validation logic before proceeding to update. This includes file closing validation.
+            // The order of validation checks is important as it has been requested by business users.
+            var isFileClosing = currentDispositionFile.DispositionFileStatusTypeCode != EnumDispositionFileStatusTypeCode.COMPLETE.ToString() &&
+                                incomingDispositionFile.DispositionFileStatusTypeCode == EnumDispositionFileStatusTypeCode.COMPLETE.ToString();
+
+            var currentProperties = _dispositionFilePropertyRepository.GetPropertiesByDispositionFileId(incomingDispositionFile.Internal_Id);
+
+            // The following checks result in hard STOP errors
+            if (isFileClosing)
+            {
+                if (currentProperties.Any(p => !p.Property.IsOwned))
+                {
+                    throw new BusinessRuleViolationException("You have one or more properties attached to this Disposition file that is NOT in the \"Core Inventory\" (i.e. owned by BCTFA and/or HMK). To complete this file you must either, remove these non \"Non-Core Inventory\" properties, OR make sure the property is added to the PIMS inventory first.");
+                }
+
+                if (currentDispositionFile.PimsDispositionSales?.FirstOrDefault()?.SaleFinalAmt == null)
+                {
+                    throw new BusinessRuleViolationException("You have not added a Sales Price. Please add a Sales Price before completion.");
+                }
+            }
+
+            ValidateStaff(incomingDispositionFile);
+            incomingDispositionFile.ThrowContractorRemovedFromTeam(_user, _userRepository);
+
+            // From here on - these checks result in warnings that require user confirmation
+            if (!userOverrides.Contains(UserOverrideCode.UpdateRegion))
+            {
+                // confirm user action - file region was changed
+                ValidateMinistryRegion(incomingDispositionFile.Internal_Id, incomingDispositionFile.RegionCode);
+            }
+
+            var nonEditableStatuses = new List<string>() { EnumDispositionFileStatusTypeCode.COMPLETE.ToString(), EnumDispositionFileStatusTypeCode.ARCHIVED.ToString(), EnumDispositionFileStatusTypeCode.CANCELLED.ToString(), };
+            var isFileChangingToNonEditableState = !nonEditableStatuses.Contains(currentDispositionFile.DispositionFileStatusTypeCode) && nonEditableStatuses.Contains(incomingDispositionFile.DispositionFileStatusTypeCode);
+
+            // confirm user action - file is changing to non-editable state
+            if (!userOverrides.Contains(UserOverrideCode.DispositionFileFinalStatus) && isFileChangingToNonEditableState)
+            {
+                throw new UserOverrideException(UserOverrideCode.DispositionFileFinalStatus, "You are changing this file to a non-editable state. (Only system administrators can edit the file when set to Archived, Cancelled or Completed state). Do you wish to continue?");
+            }
+
+            if (isFileClosing && !userOverrides.Contains(UserOverrideCode.DisposeOfProperties))
             {
                 throw new UserOverrideException(UserOverrideCode.DisposeOfProperties, "You are completing this Disposition File with owned PIMS inventory properties. All properties will be removed from the PIMS inventory (any Other Interests will remain). Do you wish to proceed?");
             }
-            else if (currentProperties.Any(p => p.Property.IsPropertyOfInterest))
-            {
-                throw new BusinessRuleViolationException("You have one or more properties attached to this Disposition file that is NOT in the \"Core Inventory\" (i.e. owned by BCTFA and/or HMK). To complete this file you must either, remove these non \"Non-Core Inventory\" properties, OR make sure the property is added to the PIMS inventory first.");
-            }
+        }
 
-            // Get the current properties in the research file
+        /// <summary>
+        /// Attempt to dispose of any properties if all business rules are met.
+        /// </summary>
+        /// <param name="dispositionFile">The disposition file entity.</param>
+        private void DisposeOfProperties(PimsDispositionFile dispositionFile)
+        {
+            // Get the current properties in the disposition file
+            var currentProperties = _dispositionFilePropertyRepository.GetPropertiesByDispositionFileId(dispositionFile.Internal_Id);
             var ownedProperties = currentProperties.Where(p => p.Property.IsOwned);
 
             // PSP-7275 Business rule: Transfer properties of interest to disposed when disposition file is completed
             foreach (var dispositionProperty in ownedProperties)
             {
                 var property = dispositionProperty.Property;
-                _propertyRepository.TransferFileProperty(property, new Dal.Models.PropertyOwnershipState() { isDisposed = true, isPropertyOfInterest = false, isOtherInterest = false, isOwned = false});
+                _propertyRepository.TransferFileProperty(property, new Dal.Models.PropertyOwnershipState() { isDisposed = true, isPropertyOfInterest = false, isOtherInterest = false, isOwned = false });
             }
         }
 
@@ -683,10 +702,15 @@ namespace Pims.Api.Services
                     var pid = dispProperty.Property.Pid.Value;
                     try
                     {
-                        var foundProperty = _propertyRepository.GetByPid(pid);
+                        var foundProperty = _propertyRepository.GetByPid(pid, true);
+                        if (foundProperty.IsRetired.HasValue && foundProperty.IsRetired.Value)
+                        {
+                            throw new BusinessRuleViolationException("Retired property can not be selected.");
+                        }
+
                         dispProperty.PropertyId = foundProperty.Internal_Id;
                         _propertyService.UpdateLocation(dispProperty.Property, ref foundProperty, overrideCodes);
-                        dispProperty.Property = null;
+                        dispProperty.Property = foundProperty;
                     }
                     catch (KeyNotFoundException)
                     {
@@ -697,7 +721,7 @@ namespace Pims.Api.Services
                         }
                         else
                         {
-                            throw new UserOverrideException(UserOverrideCode.DisposingPropertyNotInventoried, "You have added one or more properties to the disposition file that are not in the MoTI Inventory. Do you want to proceed?");
+                            throw new UserOverrideException(UserOverrideCode.DisposingPropertyNotInventoried, "You have added one or more properties to the disposition file that are not in the MOTI Inventory. Do you want to proceed?");
                         }
                     }
                 }
@@ -706,10 +730,15 @@ namespace Pims.Api.Services
                     var pin = dispProperty.Property.Pin.Value;
                     try
                     {
-                        var foundProperty = _propertyRepository.GetByPin(pin);
+                        var foundProperty = _propertyRepository.GetByPin(pin, true);
+                        if (foundProperty.IsRetired.HasValue && foundProperty.IsRetired.Value)
+                        {
+                            throw new BusinessRuleViolationException("Retired property can not be selected.");
+                        }
+
                         dispProperty.PropertyId = foundProperty.Internal_Id;
                         _propertyService.UpdateLocation(dispProperty.Property, ref foundProperty, overrideCodes);
-                        dispProperty.Property = null;
+                        dispProperty.Property = foundProperty;
                     }
                     catch (KeyNotFoundException)
                     {

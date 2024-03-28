@@ -17,8 +17,6 @@ import { logRequest, logSuccess } from '@/store/slices/network/networkSlice';
 
 import { useApiRequestWrapper } from '../util/useApiRequestWrapper';
 
-const ignoreErrorCodes = [404];
-
 export const useProperties = () => {
   const dispatch = useDispatch();
   const {
@@ -40,7 +38,6 @@ export const useProperties = () => {
       [getPropertiesPagedApi],
     ),
     requestName: actionTypes.GET_PARCELS,
-    skipErrorLogCodes: ignoreErrorCodes,
     throwError: true,
   });
 
@@ -52,7 +49,6 @@ export const useProperties = () => {
       [getPropertyConceptWithIdApi],
     ),
     requestName: actionTypes.GET_PARCELS,
-    skipErrorLogCodes: ignoreErrorCodes,
     throwError: true,
   });
 
@@ -64,7 +60,6 @@ export const useProperties = () => {
       [getPropertiesApi],
     ),
     requestName: 'getProperties',
-    skipErrorLogCodes: ignoreErrorCodes,
     throwError: true,
   });
 

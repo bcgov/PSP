@@ -128,7 +128,7 @@ describe('DispositionSummaryView component', () => {
       { claims: [] },
     );
     await waitForEffects();
-    expect(getByText(/Other \(initiating document\)/g, { exact: false })).toBeVisible();
+    expect(getByText(/Other \(initiating document\)/i, { exact: false })).toBeVisible();
   });
 
   it('renders other other disposition type field when disposition type is OTHER', async () => {
@@ -142,7 +142,7 @@ describe('DispositionSummaryView component', () => {
       { claims: [] },
     );
     await waitForEffects();
-    expect(getByText(/Other \(disposition type\)/g, { exact: false })).toBeVisible();
+    expect(getByText(/Other \(disposition type\)/i, { exact: false })).toBeVisible();
   });
 
   it('renders disposition team member person', async () => {

@@ -3,7 +3,7 @@ import { createMemoryHistory } from 'history';
 import { Claims } from '@/constants/claims';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { render, RenderOptions, userEvent } from '@/utils/test-utils';
+import { act, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import { ILayerPopupFlyoutProps, LayerPopupFlyout } from './LayerPopupFlyout';
 
@@ -28,6 +28,7 @@ describe('LayerPopupFlyout component', () => {
     const component = render(
       <LayerPopupFlyout
         isInPims={renderOptions?.isInPims ?? false}
+        isRetiredProperty={renderOptions?.isRetiredProperty ?? false}
         onViewPropertyInfo={onViewPropertyInfo}
         onCreateAcquisitionFile={onCreateAcquisitionFile}
         onCreateResearchFile={onCreateResearchFile}
@@ -64,7 +65,7 @@ describe('LayerPopupFlyout component', () => {
     const { getByText } = setup();
 
     const link = getByText('View Property info');
-    userEvent.click(link);
+    await act(async () => userEvent.click(link));
     expect(onViewPropertyInfo).toHaveBeenCalled();
   });
 
@@ -79,7 +80,7 @@ describe('LayerPopupFlyout component', () => {
     const { getByText } = setup({ claims: [Claims.RESEARCH_ADD] });
 
     const link = getByText('Research File');
-    userEvent.click(link);
+    await act(async () => userEvent.click(link));
     expect(onCreateResearchFile).toHaveBeenCalled();
   });
 
@@ -94,7 +95,7 @@ describe('LayerPopupFlyout component', () => {
     const { getByText } = setup({ claims: [Claims.ACQUISITION_ADD] });
 
     const link = getByText('Acquisition File');
-    userEvent.click(link);
+    await act(async () => userEvent.click(link));
     expect(onCreateAcquisitionFile).toHaveBeenCalled();
   });
 
@@ -109,7 +110,7 @@ describe('LayerPopupFlyout component', () => {
     const { getByText } = setup({ claims: [Claims.DISPOSITION_ADD] });
 
     const link = getByText('Disposition File');
-    userEvent.click(link);
+    await act(async () => userEvent.click(link));
     expect(onCreateDispositionFile).toHaveBeenCalled();
   });
 
@@ -126,7 +127,30 @@ describe('LayerPopupFlyout component', () => {
     const { getByText } = setup({ isInPims: true, claims: [Claims.PROPERTY_ADD] });
 
     const link = getByText('Create Subdivision');
-    userEvent.click(link);
+    await act(async () => userEvent.click(link));
     expect(onCreateSubdivision).toHaveBeenCalled();
+  });
+
+  it('Hides options for retired properties leaving only Research File', async () => {
+    const { queryByText } = setup({
+      isInPims: true,
+      isRetiredProperty: true,
+      claims: [
+        Claims.PROPERTY_ADD,
+        Claims.DISPOSITION_ADD,
+        Claims.LEASE_ADD,
+        Claims.ACQUISITION_ADD,
+        Claims.RESEARCH_ADD,
+      ],
+    });
+
+    expect(queryByText('Create:')).toBeInTheDocument();
+    expect(queryByText('Research File')).toBeInTheDocument();
+
+    expect(queryByText('Acquisition File')).not.toBeInTheDocument();
+    expect(queryByText('Lease/License')).not.toBeInTheDocument();
+    expect(queryByText('Disposition File')).not.toBeInTheDocument();
+    expect(queryByText('Create Subdivision')).not.toBeInTheDocument();
+    expect(queryByText('Create Consolidation')).not.toBeInTheDocument();
   });
 });

@@ -220,7 +220,7 @@ namespace Pims.Api.Services
                     var pid = researchProperty.Property.Pid.Value;
                     try
                     {
-                        var foundProperty = _propertyRepository.GetByPid(pid);
+                        var foundProperty = _propertyRepository.GetByPid(pid, true);
                         researchProperty.PropertyId = foundProperty.Internal_Id;
                         UpdateLocation(researchProperty.Property, ref foundProperty, userOverrideCodes);
                         researchProperty.Property = foundProperty;
@@ -236,7 +236,7 @@ namespace Pims.Api.Services
                     var pin = researchProperty.Property.Pin.Value;
                     try
                     {
-                        var foundProperty = _propertyRepository.GetByPin(pin);
+                        var foundProperty = _propertyRepository.GetByPin(pin, true);
                         researchProperty.PropertyId = foundProperty.Internal_Id;
                         UpdateLocation(researchProperty.Property, ref foundProperty, userOverrideCodes);
                         researchProperty.Property = foundProperty;

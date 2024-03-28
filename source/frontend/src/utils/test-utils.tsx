@@ -15,7 +15,7 @@ import React, { ReactNode } from 'react';
 import { MapContainer } from 'react-leaflet';
 import { Router } from 'react-router-dom';
 
-import { FilterProvider } from '@/components/maps/providers/FIlterProvider';
+import { FilterProvider } from '@/components/maps/providers/FilterProvider';
 import { IApiError } from '@/interfaces/IApiError';
 
 import TestCommonWrapper from './TestCommonWrapper';
@@ -336,7 +336,7 @@ export async function focusOptionMultiselect(
 ) {
   const indexOfSelectedOption = options.findIndex(o => o.id === option.id);
   for (let i = 0; i < indexOfSelectedOption; i++) {
-    act(() => {
+    await act(async () => {
       userEvent.keyboard('{ArrowDown}');
     });
   }
@@ -346,7 +346,7 @@ export async function focusOptionMultiselect(
   ).toEqual(option.text);
 
   await waitFor(async () => {
-    act(() => {
+    await act(async () => {
       userEvent.click(
         container.querySelector('.multiselect-container .optionContainer li.option.highlight')!,
       );

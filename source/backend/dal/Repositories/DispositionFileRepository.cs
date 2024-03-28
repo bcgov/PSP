@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using LinqKit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
@@ -85,6 +86,11 @@ namespace Pims.Dal.Repositories
         {
             using var scope = Logger.QueryScope();
             disposition.ThrowIfNull(nameof(disposition));
+
+            if (disposition.PimsDispositionFileProperties.Any(x => x.Property != null && x.Property.IsRetired.HasValue && x.Property.IsRetired.Value))
+            {
+                throw new BusinessRuleViolationException("Retired property can not be selected.");
+            }
 
             disposition.FileNumber = _sequenceRepository.GetNextSequenceValue(FILENUMBERSEQUENCETABLE).ToString();
 

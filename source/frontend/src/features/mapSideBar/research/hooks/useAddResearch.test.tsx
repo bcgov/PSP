@@ -98,9 +98,11 @@ describe('useAddResearch functions', () => {
       mockAxios.onPost(url).reply(400, MOCK.ERROR);
       const { addResearchFile } = setup();
 
-      expect(async () => {
-        await addResearchFile(testResearchFile);
-      }).rejects.toThrow();
+      await act(async () => {
+        expect(async () => {
+          await addResearchFile(testResearchFile);
+        }).rejects.toThrow();
+      });
     });
   });
 });

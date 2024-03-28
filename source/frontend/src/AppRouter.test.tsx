@@ -23,7 +23,7 @@ import { lookupCodesSlice } from './store/slices/lookupCodes';
 import { networkSlice } from './store/slices/network/networkSlice';
 import { tenantsSlice } from './store/slices/tenants';
 import { defaultTenant } from './tenants/config/defaultTenant';
-import { mockKeycloak, render, RenderOptions, screen } from './utils/test-utils';
+import { act, mockKeycloak, render, RenderOptions, screen, waitFor } from './utils/test-utils';
 
 jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
@@ -65,7 +65,9 @@ jest.mock('@/hooks/usePimsIdleTimer');
 
 jest.mock('@/hooks/pims-api/useApiHealth', () => ({
   useApiHealth: () => ({
-    getVersion: jest.fn().mockResolvedValue({ data: { environment: 'test', version: '1.0.0.0' } }),
+    getVersion: jest
+      .fn()
+      .mockResolvedValue({ data: { environment: 'test', informationalVersion: '1.0.0.0' } }),
   }),
 }));
 
@@ -99,7 +101,14 @@ jest.mock('./hooks/pims-api/useApiProperties');
 
 jest.mock('./hooks/pims-api/useApiLeases');
 (useApiLeases as jest.MockedFunction<typeof useApiLeases>).mockReturnValue({
-  getLeases: jest.fn().mockResolvedValue({ data: {} as ApiGen_Base_Page<ApiGen_Concepts_Lease> }),
+  getLeases: jest.fn().mockResolvedValue({
+    data: {
+      items: [{ lFileNo: 'l-1234' }],
+      page: 1,
+      total: 1,
+      quantity: 1,
+    } as ApiGen_Base_Page<ApiGen_Concepts_Lease>,
+  }),
   getApiLease: jest.fn(),
   getLastUpdatedByApi: jest.fn(),
   postLease: jest.fn(),
@@ -111,9 +120,14 @@ jest.mock('./hooks/pims-api/useApiLeases');
 
 jest.mock('./hooks/pims-api/useApiAcquisitionFile');
 (useApiAcquisitionFile as jest.MockedFunction<typeof useApiAcquisitionFile>).mockReturnValue({
-  getAcquisitionFiles: jest
-    .fn()
-    .mockResolvedValue({ data: {} as ApiGen_Base_Page<ApiGen_Concepts_AcquisitionFile> }),
+  getAcquisitionFiles: jest.fn().mockResolvedValue({
+    data: {
+      items: [{ fileName: 'test acq file' }],
+      page: 1,
+      total: 1,
+      quantity: 1,
+    } as ApiGen_Base_Page<ApiGen_Concepts_AcquisitionFile>,
+  }),
   getAcquisitionFile: jest.fn(),
   getLastUpdatedByApi: jest.fn(),
   getAgreementReport: jest.fn(),
@@ -138,9 +152,14 @@ jest.mock('./hooks/pims-api/useApiAcquisitionFile');
 
 jest.mock('./hooks/pims-api/useApiResearchFile');
 (useApiResearchFile as jest.MockedFunction<typeof useApiResearchFile>).mockReturnValue({
-  getResearchFiles: jest
-    .fn()
-    .mockResolvedValue({ data: {} as ApiGen_Base_Page<IResearchSearchResult> }),
+  getResearchFiles: jest.fn().mockResolvedValue({
+    data: {
+      items: [{ fileName: 'test research file' }],
+      page: 1,
+      total: 1,
+      quantity: 1,
+    } as ApiGen_Base_Page<IResearchSearchResult>,
+  }),
   getResearchFile: jest.fn(),
   postResearchFile: jest.fn(),
   putResearchFile: jest.fn(),
@@ -189,11 +208,13 @@ describe('PSP routing', () => {
 
     it('should redirect unauthenticated user to the login page', async () => {
       const { getByText } = setup('/');
+      await screen.findByText('v1.0.0.0');
       expect(getByText('Sign into PIMS with your government issued IDIR')).toBeVisible();
     });
 
     it('should show header and footer links', async () => {
       const { getByRole } = setup('/');
+      await screen.findByText('v1.0.0.0');
       expect(getByRole('link', { name: 'Disclaimer' })).toHaveAttribute(
         'href',
         'http://www.gov.bc.ca/gov/content/home/disclaimer',
@@ -202,6 +223,7 @@ describe('PSP routing', () => {
 
     it('should show a page for non-supported browsers', async () => {
       const { getByText } = setup('/ienotsupported');
+      await screen.findByText('v1.0.0.0');
       expect(
         getByText('Please use a supported internet browser such as Chrome, Firefox or Edge.'),
       ).toBeVisible();
@@ -209,6 +231,7 @@ describe('PSP routing', () => {
 
     it('should show the access denied page', async () => {
       const { getByText, getByRole } = setup('/forbidden');
+      await screen.findByText('v1.0.0.0');
       expect(getByText('You do not have permission to view this page')).toBeVisible();
       expect(getByRole('link', { name: 'Go back to the map' })).toBeVisible();
     });
@@ -217,6 +240,7 @@ describe('PSP routing', () => {
       'should show the not found page when route is %s',
       async url => {
         const { getByText, getByRole } = setup(url);
+        await screen.findByText('v1.0.0.0');
         expect(getByText('Page not found')).toBeVisible();
         expect(getByRole('link', { name: 'Go back to the map' })).toBeVisible();
       },
@@ -226,6 +250,7 @@ describe('PSP routing', () => {
   describe('authenticated routes', () => {
     it('should display the property list view', async () => {
       setup('/properties/list', { claims: [Claims.PROPERTY_VIEW] });
+      await screen.findByText('v1.0.0.0');
       const lazyElement = await screen.findByText('Civic Address');
       expect(lazyElement).toBeInTheDocument();
       expect(document.title).toMatch(/View Inventory/i);
@@ -233,35 +258,41 @@ describe('PSP routing', () => {
 
     it('should display the lease list view', async () => {
       setup('/lease/list', { claims: [Claims.LEASE_VIEW] });
-      const lazyElement = await screen.findByText('L-File Number');
+      await screen.findByText('v1.0.0.0');
+      const lazyElement = await screen.findByText('l-1234');
       expect(lazyElement).toBeInTheDocument();
       expect(document.title).toMatch(/View Lease & Licenses/i);
     });
 
     it('should display the acquisition list view', async () => {
       setup('/acquisition/list', { claims: [Claims.ACQUISITION_VIEW] });
-      const lazyElement = await screen.findByText('Acquisition file name');
+      await screen.findByText('v1.0.0.0');
+      const lazyElement = await screen.findByText('test acq file');
       expect(lazyElement).toBeInTheDocument();
       expect(document.title).toMatch(/View Acquisition Files/i);
     });
 
     it('should display the research list view', async () => {
       setup('/research/list', { claims: [Claims.RESEARCH_VIEW] });
-      const lazyElement = await screen.findByText('File #');
+      await screen.findByText('v1.0.0.0');
+      const lazyElement = await screen.findByText('test research file');
       expect(lazyElement).toBeInTheDocument();
       expect(document.title).toMatch(/View Research Files/i);
     });
 
     it('should display the admin users page at the expected route', async () => {
       setup('/admin/users', { claims: [Claims.ADMIN_USERS] });
-      const lazyElement = await screen.findByText('User Management');
+      await screen.findByText('v1.0.0.0');
+      const lazyElement = await screen.findByText('Smith');
       expect(lazyElement).toBeInTheDocument();
       expect(document.title).toMatch(/Users Management/i);
     });
 
     it('should display the edit user page at the expected route', async () => {
       setup('/admin/user/1', { claims: [Claims.ADMIN_USERS] });
-      const lazyElement = await screen.findByText('User Information');
+      await screen.findByText('v1.0.0.0');
+      const lazyElement = await screen.findByDisplayValue('Smith');
+
       expect(lazyElement).toBeInTheDocument();
       expect(document.title).toMatch(/Edit User/i);
     });

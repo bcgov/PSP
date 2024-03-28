@@ -1,6 +1,6 @@
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { getEmptyProperty } from '@/models/defaultInitializers';
-import { render, RenderOptions, RenderResult, userEvent } from '@/utils/test-utils';
+import { act, render, RenderOptions, RenderResult, userEvent } from '@/utils/test-utils';
 
 import { ComposedProperty } from './ComposedProperty';
 import { IMotiInventoryHeaderProps, MotiInventoryHeader } from './MotiInventoryHeader';
@@ -116,7 +116,7 @@ describe('MotiInventoryHeader component', () => {
       isLoading: false,
     });
     const zoomButton = getByTitle('Zoom Map');
-    userEvent.click(zoomButton);
+    await act(async () => userEvent.click(zoomButton));
     expect(onZoom).toHaveBeenCalled();
   });
 
@@ -130,7 +130,7 @@ describe('MotiInventoryHeader component', () => {
     });
 
     const zoomButton = getByTitle('Zoom Map');
-    userEvent.click(zoomButton);
+    await act(async () => userEvent.click(zoomButton));
     expect(onZoom).toHaveBeenCalled();
   });
 });

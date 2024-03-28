@@ -8,11 +8,11 @@ export const SelectedOperationPropertyHeader: React.FunctionComponent = () => {
     <HeaderRow className="no-gutters">
       <Col md={3}>Identifier</Col>
       <Col md={2}>Plan</Col>
-      <Col md={2}>
+      <Col md={3}>
         Area m<sup>2</sup>
       </Col>
       <Col md={3}>Address</Col>
-      <Col md={2}></Col>
+      <Col md={1}></Col>
     </HeaderRow>
   );
 };

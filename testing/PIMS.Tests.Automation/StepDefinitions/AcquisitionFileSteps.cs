@@ -7,7 +7,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
     [Binding]
     public class AcquisitionFileSteps
     {
-        private readonly GenericSteps genericSteps;
         private readonly LoginSteps loginSteps;
         private readonly AcquisitionDetails acquisitionFilesDetails;
         private readonly SearchAcquisitionFiles searchAcquisitionFiles;
@@ -32,7 +31,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
         public AcquisitionFileSteps(BrowserDriver driver)
         {
             loginSteps = new LoginSteps(driver);
-            genericSteps = new GenericSteps(driver);
 
             acquisitionFilesDetails = new AcquisitionDetails(driver.Current);
             searchAcquisitionFiles = new SearchAcquisitionFiles(driver.Current);
@@ -771,7 +769,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Open elipsis option
             propertyInformation.OpenMoreOptionsPopUp();
-            propertyInformation.ChooseCreationOptionFromPin("Acquisition File - Create new");
+            propertyInformation.ChooseCreationOptionFromPin("Acquisition File");
 
             //Validate Acquisition File Details Create Form
             acquisitionFilesDetails.VerifyAcquisitionFileCreate();
@@ -793,7 +791,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Open elipsis option
             propertyInformation.OpenMoreOptionsPopUp();
-            propertyInformation.ChooseCreationOptionFromPin("Acquisition File - Create new");
+            propertyInformation.ChooseCreationOptionFromPin("Acquisition File");
 
             //Fill basic Acquisition File information
             acquisitionFilesDetails.CreateMinimumAcquisitionFile(acquisitionFile);
@@ -812,7 +810,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Open elipsis option
             propertyInformation.OpenMoreOptionsPopUp();
-            propertyInformation.ChooseCreationOptionFromPin("Acquisition File - Create new");
+            propertyInformation.ChooseCreationOptionFromPin("Acquisition File");
 
             //Fill basic Acquisition File information
             acquisitionFilesDetails.CreateMinimumAcquisitionFile(acquisitionFile);

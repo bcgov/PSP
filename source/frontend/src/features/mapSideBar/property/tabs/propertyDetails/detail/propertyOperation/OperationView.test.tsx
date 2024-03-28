@@ -6,6 +6,7 @@ import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { getEmptyProperty } from '@/models/defaultInitializers';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { IOperationViewProps, OperationView } from './OperationView';
+import { ApiGen_CodeTypes_PropertyOperationTypes } from '@/models/api/generated/ApiGen_CodeTypes_PropertyOperationTypes';
 
 const history = createMemoryHistory();
 const store = { [lookupCodesSlice.name]: { lookupCodes: mockLookups } };
@@ -15,9 +16,11 @@ describe('Subdivision detail view', () => {
     const props = renderOptions.props;
     const component = render(
       <OperationView
+        operationType={props?.operationType ?? ApiGen_CodeTypes_PropertyOperationTypes.SUBDIVIDE}
         operationTimeStamp={props?.operationTimeStamp ?? EpochIsoDateTime}
         sourceProperties={props?.sourceProperties ?? []}
         destinationProperties={props?.destinationProperties ?? []}
+        ExpandedRowComponent={() => <></>}
       />,
       {
         ...renderOptions,
@@ -55,7 +58,6 @@ describe('Subdivision detail view', () => {
       props: { sourceProperties, destinationProperties },
     });
 
-    console.log(container.innerHTML);
     expect(await findAllByText(/PID:/i)).toHaveLength(3);
   });
 
