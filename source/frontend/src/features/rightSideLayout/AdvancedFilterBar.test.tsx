@@ -1,17 +1,22 @@
 import { act, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
-import AdvancedFilterBar, { IAdvancedFilterBarProps } from './AdvancedFilterBar';
+import RightSideLayout, { IRightSideLayoutProps } from './RightSideLayout';
 
 const toggle = jest.fn();
 
 describe('AdvancedFilterBar', () => {
-  const setup = async (renderOptions: RenderOptions & { props?: IAdvancedFilterBarProps } = {}) => {
-    const props: IAdvancedFilterBarProps = {
+  const setup = async (
+    renderOptions: RenderOptions & { props?: Partial<IRightSideLayoutProps> } = {},
+  ) => {
+    const props: IRightSideLayoutProps = {
       toggle: renderOptions?.props?.toggle ? renderOptions.props.toggle : toggle,
       isOpen: renderOptions?.props?.isOpen ? renderOptions.props.isOpen : false,
+      title: 'test',
+      closeTooltipText: 'close button tooltip',
+      'data-testId': 'advanced-filter-sidebar',
     };
 
-    const utils = render(<AdvancedFilterBar {...props} />, {
+    const utils = render(<RightSideLayout {...props} />, {
       ...renderOptions,
     });
 

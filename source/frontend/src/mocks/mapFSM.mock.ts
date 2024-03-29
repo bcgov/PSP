@@ -34,6 +34,7 @@ export const mapMachineBaseMock: IMapStateMachineContext = {
 
   filePropertyLocations: [],
   activePimsPropertyIds: [],
+  activeLayers: [],
   isSelecting: false,
   isFiltering: false,
   isShowingMapLayers: false,
@@ -61,5 +62,6 @@ export const mapMachineBaseMock: IMapStateMachineContext = {
   toggleMapLayer: jest.fn(),
   setShowDisposed: jest.fn(),
   setShowRetired: jest.fn(),
+  setMapLayers: jest.fn(),
   changeSidebar: jest.fn(),
 };

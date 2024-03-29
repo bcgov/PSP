@@ -4,36 +4,43 @@ import styled from 'styled-components';
 
 import TooltipWrapper from '@/components/common/TooltipWrapper';
 
-export interface IAdvancedFilterBarProps {
+export interface IRightSideLayoutProps {
   isOpen: boolean;
   toggle: () => void;
+  title: string;
+  closeTooltipText: string;
+  'data-testId': string;
 }
 
-const AdvancedFilterBar: React.FC<React.PropsWithChildren<IAdvancedFilterBarProps>> = ({
+const RightSideLayout: React.FC<React.PropsWithChildren<IRightSideLayoutProps>> = ({
   isOpen,
   toggle,
   children,
+  title,
+  closeTooltipText,
+  ...rest
 }) => {
   return (
-    <StyledMapSideBar show={isOpen} data-testid="advanced-filter-sidebar">
-      {isOpen && (
-        <>
-          <StyledHeader>
-            <StyledTitle>Filter By:</StyledTitle>
-            <TooltipWrapper tooltipId="close-sidebar-tooltip" tooltip="Close Advanced Map Filters">
-              <CloseIcon title="close" onClick={toggle} />
-            </TooltipWrapper>
-          </StyledHeader>
-          <StyledContent>{children}</StyledContent>
-        </>
-      )}
+    <StyledMapSideBar show={isOpen} data-testid={rest['data-testId']}>
+      <>
+        <StyledHeader>
+          <StyledTitle>{title}</StyledTitle>
+          <TooltipWrapper
+            tooltipId={`close-sidebar-tooltip-${title?.toLocaleLowerCase()}`}
+            tooltip={closeTooltipText}
+          >
+            <CloseIcon title="close" onClick={toggle} />
+          </TooltipWrapper>
+        </StyledHeader>
+        <StyledContent>{children}</StyledContent>
+      </>
     </StyledMapSideBar>
   );
 };
 
-export default AdvancedFilterBar;
+export default RightSideLayout;
 
-const StyledMapSideBar = styled.div<{ show: boolean }>`
+export const StyledMapSideBar = styled.div<{ show: boolean }>`
   display: flex;
   flex-flow: column;
   position: relative;
