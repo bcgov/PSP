@@ -34,6 +34,7 @@ exports[`ResearchProperties component renders as expected when provided no prope
   -ms-letter-spacing: 0.1rem;
   letter-spacing: 0.1rem;
   cursor: pointer;
+  height: 3.8rem;
 }
 
 .c14.btn:hover {
