@@ -43,11 +43,13 @@ import {
 } from '@/utils/test-utils';
 
 import MapContainer from './MapContainer';
+import { useApiProperties } from '@/hooks/pims-api/useApiProperties';
+import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
+import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 
 const mockAxios = new MockAdapter(axios);
 jest.mock('@react-keycloak/web');
 jest.mock('@/components/maps/leaflet/LayerPopup/components/LayerPopupContent');
-jest.mock('@/features/advancedFilterBar/AdvancedFilterBar');
 jest.mock('@/hooks/pims-api/useApiProperties');
 jest.mock('@/hooks/useLtsa');
 jest.mock('@/hooks/repositories/useComposedProperties');
@@ -66,6 +68,18 @@ jest.mock('react-visibility-sensor', () => {
     }
     return children;
   });
+});
+
+(useApiProperties as jest.MockedFunction<typeof useApiProperties>).mockReturnValue({
+  getPropertiesPagedApi: jest
+    .fn()
+    .mockResolvedValue({ data: {} as ApiGen_Base_Page<ApiGen_Concepts_Property> }),
+  getMatchingPropertiesApi: jest.fn(),
+  getPropertyAssociationsApi: jest.fn(),
+  exportPropertiesApi: jest.fn(),
+  getPropertiesApi: jest.fn(),
+  getPropertyConceptWithIdApi: jest.fn(),
+  putPropertyConceptApi: jest.fn(),
 });
 
 const mockStore = configureMockStore([thunk]);
