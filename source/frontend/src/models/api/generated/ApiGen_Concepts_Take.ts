@@ -18,11 +18,14 @@ export interface ApiGen_Concepts_Take extends ApiGen_Base_BaseAudit {
   isNewHighwayDedication: boolean | null;
   isNewLandAct: boolean | null;
   isNewInterestInSrw: boolean | null;
+  isLeasePayable: boolean | null;
   licenseToConstructArea: number | null;
   ltcEndDt: string | null;
   landActArea: number | null;
+  leasePayableArea: number | null;
   landActEndDt: string | null;
   completionDt: string | null;
+  leasePayableEndDt: string | null;
   propertyAcquisitionFile: ApiGen_Concepts_AcquisitionFile | null;
   propertyAcquisitionFileId: number;
   statutoryRightOfWayArea: number | null;

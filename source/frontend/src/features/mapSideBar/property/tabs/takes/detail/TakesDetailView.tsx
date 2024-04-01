@@ -182,7 +182,7 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
                 )}
               </StyledBorderSection>
               <StyledBorderSection>
-                <SectionField label="Is a there a new Land Act tenure? *" labelWidth="8">
+                <SectionField label="Is there a new Land Act tenure? *" labelWidth="8">
                   <YesNoButtons
                     id="landActToggle"
                     disabled
@@ -226,6 +226,26 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
 
                     <SectionField label="LTC end date" labelWidth="3" contentWidth="4">
                       {prettyFormatDate(take.ltcEndDt ?? undefined)}
+                    </SectionField>
+                  </>
+                )}
+              </StyledBorderSection>
+              <StyledBorderSection>
+                <SectionField label="Is there a Lease (Payable)? *" labelWidth="8">
+                  <YesNoButtons
+                    id="leasePayableToggle"
+                    disabled
+                    value={take.isLeasePayable ?? undefined}
+                  />
+                </SectionField>
+                {take.isLeasePayable && (
+                  <>
+                    <SectionField label="Area" labelWidth="12">
+                      <AreaContainer landArea={take.leasePayableArea ?? undefined} />
+                    </SectionField>
+
+                    <SectionField label="End date" labelWidth="3" contentWidth="4">
+                      {prettyFormatDate(take.leasePayableEndDt ?? undefined)}
                     </SectionField>
                   </>
                 )}
