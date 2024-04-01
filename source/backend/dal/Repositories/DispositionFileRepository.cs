@@ -92,6 +92,15 @@ namespace Pims.Dal.Repositories
                 throw new BusinessRuleViolationException("Retired property can not be selected.");
             }
 
+            // Existing properties should not be added.
+            foreach (var dispositionProperty in disposition.PimsDispositionFileProperties)
+            {
+                if (dispositionProperty.Property.Internal_Id != 0)
+                {
+                    dispositionProperty.Property = null;
+                }
+            }
+
             disposition.FileNumber = _sequenceRepository.GetNextSequenceValue(FILENUMBERSEQUENCETABLE).ToString();
 
             Context.PimsDispositionFiles.Add(disposition);
