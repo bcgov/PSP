@@ -44,7 +44,7 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
             title="Acquisition file Icon"
             width="2.6rem"
           >
-            real-estate-agent.svg
+            <span />
           </svg>
           Create Acquisition File
         </h1>
@@ -896,7 +896,7 @@ exports[`AddAcquisitionContainer component renders as expected 1`] = `
                                     title="Click once to enter property selection mode."
                                     width="97"
                                   >
-                                    icon-draft.svg
+                                    <span />
                                   </svg>
                                   <ol>
                                     <li>

@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
 
-import { ReactComponent as Active } from '@/assets/images/active.svg';
-import { ReactComponent as Inactive } from '@/assets/images/inactive.svg';
+import Active from '@/assets/images/active.svg?react';
+import Inactive from '@/assets/images/inactive.svg?react';
 import { ColumnWithProps, renderTypeCode } from '@/components/Table';
 import { DateTimeCell } from '@/components/Table/DateCell';
 import { stringToFragment } from '@/utils';

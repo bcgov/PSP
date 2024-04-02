@@ -74,14 +74,14 @@ class StatusUpdateSolver {
     switch (statusCode) {
       case AcquisitionStatus.Active:
       case AcquisitionStatus.Draft:
-        canEdit = isDraftCompensation ?? true;
+        canEdit = isDraftCompensation !== false;
         break;
       case AcquisitionStatus.Archived:
       case AcquisitionStatus.Cancelled:
       case AcquisitionStatus.Closed:
       case AcquisitionStatus.Complete:
       case AcquisitionStatus.Hold:
-        canEdit = isDraftCompensation ?? true;
+        canEdit = isDraftCompensation !== false;
         break;
       default:
         canEdit = false;
@@ -109,7 +109,7 @@ class StatusUpdateSolver {
       case AcquisitionStatus.Closed:
       case AcquisitionStatus.Complete:
       case AcquisitionStatus.Hold:
-        canEdit = agreementStatusCode !== ApiGen_CodeTypes_AgreementStatusTypes.FINAL ?? true;
+        canEdit = agreementStatusCode !== ApiGen_CodeTypes_AgreementStatusTypes.FINAL;
         break;
       default:
         canEdit = false;

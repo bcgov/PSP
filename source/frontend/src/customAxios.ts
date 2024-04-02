@@ -43,7 +43,7 @@ export const CustomAxios = ({
     baseURL,
     headers: {
       'Access-Control-Allow-Origin': '*',
-      'Cache-Control': process.env.NODE_ENV === 'development' ? 'no-cache' : '',
+      'Cache-Control': import.meta.env.DEV ? 'no-cache' : '',
     },
   });
   instance.interceptors.request.use(config => {

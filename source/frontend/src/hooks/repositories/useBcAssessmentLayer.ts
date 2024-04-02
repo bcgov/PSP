@@ -105,7 +105,10 @@ export const useBcAssessmentLayer = (
               { FOLIO_ID: folioId, ROLL_NUMBER: rollNumber, JURISDICTION_CODE: jurisdictionCode },
               { timeout: timeout ?? 10000, useCqlOr: false, forceExactMatch: true },
             )
-          : Promise.resolve();
+          : Promise.resolve({
+              type: 'FeatureCollection',
+              features: [],
+            });
 
       const valuesPromise =
         typesToLoad === undefined || !!typesToLoad?.find(t => t === BC_ASSESSMENT_TYPES.VALUES)
@@ -113,7 +116,10 @@ export const useBcAssessmentLayer = (
               { FOLIO_ID: folioId, ROLL_NUMBER: rollNumber, JURISDICTION_CODE: jurisdictionCode },
               { timeout: timeout ?? 10000, useCqlOr: false, forceExactMatch: true },
             )
-          : Promise.resolve();
+          : Promise.resolve({
+              type: 'FeatureCollection',
+              features: [],
+            });
 
       const chargesPromise =
         typesToLoad === undefined || !!typesToLoad?.find(t => t === BC_ASSESSMENT_TYPES.CHARGES)
@@ -121,7 +127,10 @@ export const useBcAssessmentLayer = (
               { FOLIO_ID: folioId, ROLL_NUMBER: rollNumber, JURISDICTION_CODE: jurisdictionCode },
               { timeout: timeout ?? 10000, useCqlOr: false, forceExactMatch: true },
             )
-          : Promise.resolve();
+          : Promise.resolve({
+              type: 'FeatureCollection',
+              features: [],
+            });
 
       const folioDescriptionsPromise =
         typesToLoad === undefined ||
@@ -130,7 +139,10 @@ export const useBcAssessmentLayer = (
               { FOLIO_ID: folioId, ROLL_NUMBER: rollNumber, JURISDICTION_CODE: jurisdictionCode },
               { timeout: timeout ?? 10000, useCqlOr: false, forceExactMatch: true },
             )
-          : Promise.resolve();
+          : Promise.resolve({
+              type: 'FeatureCollection',
+              features: [],
+            });
 
       const salesPromise =
         typesToLoad === undefined || !!typesToLoad?.find(t => t === BC_ASSESSMENT_TYPES.SALES)
@@ -138,7 +150,10 @@ export const useBcAssessmentLayer = (
               { FOLIO_ID: folioId, ROLL_NUMBER: rollNumber, JURISDICTION_CODE: jurisdictionCode },
               { timeout: timeout ?? 10000, useCqlOr: false, forceExactMatch: true },
             )
-          : Promise.resolve();
+          : Promise.resolve({
+              type: 'FeatureCollection',
+              features: [],
+            });
 
       const responses = await Promise.all([
         addressPromise,
