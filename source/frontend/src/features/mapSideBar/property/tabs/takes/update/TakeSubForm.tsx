@@ -93,6 +93,7 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({
           setDisplayModal(true);
         }}
       ></StyledRemoveLinkButton>
+
       <SectionField label="Take type" required labelWidth="4" contentWidth="5">
         <Select
           field={withNameSpace(nameSpace, 'takeTypeCode')}
