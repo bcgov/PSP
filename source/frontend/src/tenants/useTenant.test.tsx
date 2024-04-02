@@ -25,7 +25,7 @@ describe('useTenant hook', () => {
   beforeEach(() => {
     mockAxios.onAny().reply(200);
     jest.resetModules();
-    import.meta.env.VITE_TENANT = {...origEnv};
+    import.meta.env.VITE_TENANT = { ...origEnv };
   });
 
   afterAll(() => {

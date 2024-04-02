@@ -121,7 +121,7 @@ export class ProjectForm {
     newForm.projectName = model.description ?? '';
     newForm.projectNumber = model.code ?? '';
     newForm.projectStatusType = model.projectStatusTypeCode?.id ?? '';
-    newForm.region = model.regionCode?.id ? +model.regionCode?.id ?? '' : '';
+    newForm.region = model.regionCode?.id ? +model.regionCode?.id : '';
     newForm.summary = model.note ?? '';
     newForm.rowVersion = model.rowVersion ?? null;
     newForm.products =

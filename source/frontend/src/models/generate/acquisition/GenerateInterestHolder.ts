@@ -12,7 +12,7 @@ export class Api_GenerateInterestHolder {
   primary_contact: Api_GeneratePerson | null;
 
   constructor(interestHolder: ApiGen_Concepts_InterestHolder | null) {
-    this.is_organization = !!interestHolder?.organization ?? false;
+    this.is_organization = !!interestHolder?.organization;
     this.full_name_string = this.is_organization
       ? `${interestHolder?.organization?.name ?? ''} (Inc. No. ${
           interestHolder?.organization?.incorporationNumber ?? ''
