@@ -142,7 +142,7 @@ const AddConsolidationView: React.FunctionComponent<
                 </FieldArray>
               </Section>
               <Section>
-                <p>Select the child properties to which parent property was subdivided:</p>
+                <p>Select the child property to which parent properties were consolidated:</p>
                 <MapSelectorComponent
                   addSelectedProperties={async properties => {
                     const allProperties: ApiGen_Concepts_Property[] = [];

@@ -9,12 +9,12 @@ Scenario: 01. Disposition File Details
 	And I update the File details from an existing Disposition File from row number 3
 	Then A new Disposition file is created successfully
 
-#Scenario: 02. Disposition File Properties
-#	Given I create a new Disposition File from row number 5
-#	When I add Properties to the Disposition File
-#	And I update a Disposition File's Properties from row number 6
-#	And I update a Property details from row number 5
-#	Then A new Disposition file is created successfully
+Scenario: 02. Disposition File Properties
+	Given I create a new Disposition File from row number 5
+	When I add Properties to the Disposition File
+	And I update a Disposition File's Properties from row number 6
+	And I update a Property details from row number 5
+	Then A new Disposition file is created successfully
 
 Scenario: 03. Disposition Checklist Tab
 	Given I create a new Disposition File from row number 7
@@ -40,7 +40,7 @@ Scenario: 06. Disposition File Notes
 	Then A new Disposition file is created successfully
 
 Scenario: 07. Disposition File from PIN
-	Given I create a new Disposition File from row number 12
+	Given I create a Disposition File from a pin on map from row number 12
 	Then A new Disposition file is created successfully
 
 Scenario: 08. Disposition Files List View

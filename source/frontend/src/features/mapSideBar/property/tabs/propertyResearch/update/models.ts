@@ -1,7 +1,8 @@
 import { ApiGen_Concepts_PropertyPurpose } from '@/models/api/generated/ApiGen_Concepts_PropertyPurpose';
-import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Concepts_ResearchFile';
 import { ApiGen_Concepts_ResearchFileProperty } from '@/models/api/generated/ApiGen_Concepts_ResearchFileProperty';
 import { exists } from '@/utils/utils';
+
+import { getEmptyResearchFile } from './../../../../../../models/defaultInitializers';
 
 export class PropertyResearchFilePurposeFormModel {
   public id?: number;
@@ -48,7 +49,8 @@ export class UpdatePropertyFormModel {
   public purposeTypes?: PropertyResearchFilePurposeFormModel[];
   public rowVersion?: number;
 
-  public researchFile: ApiGen_Concepts_ResearchFile | null = null;
+  public researchFileRowVersion: number | null = null;
+  public researchFileId: number | null = null;
 
   public static fromApi(base: ApiGen_Concepts_ResearchFileProperty): UpdatePropertyFormModel {
     const model = new UpdatePropertyFormModel();
@@ -68,6 +70,8 @@ export class UpdatePropertyFormModel {
     model.documentReference = base.documentReference ?? undefined;
     model.researchSummary = base.researchSummary ?? undefined;
     model.propertyId = base.property?.id;
+    model.researchFileRowVersion = base?.file?.rowVersion ?? null;
+    model.researchFileId = base?.fileId ?? null;
 
     model.purposeTypes = base.purposeTypes?.map((x: ApiGen_Concepts_PropertyPurpose) =>
       PropertyResearchFilePurposeFormModel.fromApi(x),
@@ -97,8 +101,8 @@ export class UpdatePropertyFormModel {
       documentReference: this.documentReference ?? null,
       researchSummary: this.researchSummary ?? null,
       property: null,
-      fileId: this.researchFile?.id ?? 0,
-      file: this.researchFile,
+      fileId: this.researchFileId ?? 0,
+      file: { ...getEmptyResearchFile(), rowVersion: this.researchFileRowVersion },
       purposeTypes: this.purposeTypes?.map(x => x.toApi()) ?? null,
       rowVersion: this.rowVersion ?? null,
     };

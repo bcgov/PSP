@@ -78,7 +78,7 @@ const AcquisitionAgreementForm: React.FunctionComponent<
   ]);
 
   return (
-    <Section header="Agreement details">
+    <Section header="Agreement Details">
       <SectionField labelWidth="5" label="Agreement status">
         <Select options={agreementStatusOptions} field="agreementStatusTypeCode" />
       </SectionField>

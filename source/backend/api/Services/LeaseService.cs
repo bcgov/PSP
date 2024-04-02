@@ -26,7 +26,6 @@ namespace Pims.Api.Services
         private readonly ICoordinateTransformService _coordinateService;
         private readonly IPropertyRepository _propertyRepository;
         private readonly IPropertyLeaseRepository _propertyLeaseRepository;
-        private readonly ILookupRepository _lookupRepository;
         private readonly IEntityNoteRepository _entityNoteRepository;
         private readonly IInsuranceRepository _insuranceRepository;
         private readonly ILeaseTenantRepository _tenantRepository;
@@ -41,7 +40,6 @@ namespace Pims.Api.Services
             IPropertyRepository propertyRepository,
             IPropertyLeaseRepository propertyLeaseRepository,
             IPropertyImprovementRepository propertyImprovementRepository,
-            ILookupRepository lookupRepository,
             IEntityNoteRepository entityNoteRepository,
             IInsuranceRepository insuranceRepository,
             ILeaseTenantRepository tenantRepository,
@@ -55,7 +53,6 @@ namespace Pims.Api.Services
             _coordinateService = coordinateTransformService;
             _propertyRepository = propertyRepository;
             _propertyLeaseRepository = propertyLeaseRepository;
-            _lookupRepository = lookupRepository;
             _entityNoteRepository = entityNoteRepository;
             _propertyImprovementRepository = propertyImprovementRepository;
             _insuranceRepository = insuranceRepository;
@@ -222,7 +219,7 @@ namespace Pims.Api.Services
 
             if (currentLease.LeaseStatusTypeCode != lease.LeaseStatusTypeCode)
             {
-                _entityNoteRepository.Add<PimsLeaseNote>(
+                _entityNoteRepository.Add(
                     new PimsLeaseNote()
                     {
                         LeaseId = currentLease.LeaseId,
@@ -300,6 +297,7 @@ namespace Pims.Api.Services
                 var existingPropertyLeases = _propertyLeaseRepository.GetAllByPropertyId(property.PropertyId);
                 var isPropertyOnOtherLease = existingPropertyLeases.Any(p => p.LeaseId != lease.Internal_Id);
                 var isPropertyOnThisLease = existingPropertyLeases.Any(p => p.LeaseId == lease.Internal_Id);
+
                 if (isPropertyOnOtherLease && !isPropertyOnThisLease && !userOverrides.Contains(UserOverrideCode.AddPropertyToInventory))
                 {
                     var genericOverrideErrorMsg = $"is attached to L-File # {existingPropertyLeases.FirstOrDefault().Lease.LFileNo}";
@@ -313,6 +311,7 @@ namespace Pims.Api.Services
                     }
                     string overrideError = $"Lng/Lat {propertyLease?.Property?.Location.Coordinate.X.ToString(CultureInfo.CurrentCulture) ?? string.Empty}, " +
                         $"{propertyLease?.Property?.Location.Coordinate.Y.ToString(CultureInfo.CurrentCulture) ?? string.Empty} {genericOverrideErrorMsg}";
+
                     throw new UserOverrideException(UserOverrideCode.AddPropertyToInventory, overrideError);
                 }
 
@@ -366,7 +365,12 @@ namespace Pims.Api.Services
                     var pid = leaseProperty.Property.Pid.Value;
                     try
                     {
-                        var foundProperty = _propertyRepository.GetByPid(pid);
+                        var foundProperty = _propertyRepository.GetByPid(pid, true);
+                        if (foundProperty.IsRetired.HasValue && foundProperty.IsRetired.Value)
+                        {
+                            throw new BusinessRuleViolationException("Retired property can not be selected.");
+                        }
+
                         leaseProperty.PropertyId = foundProperty.Internal_Id;
                         UpdateLocation(leaseProperty.Property, ref foundProperty, userOverrides);
                         leaseProperty.Property = foundProperty;
@@ -382,7 +386,12 @@ namespace Pims.Api.Services
                     var pin = leaseProperty.Property.Pin.Value;
                     try
                     {
-                        var foundProperty = _propertyRepository.GetByPin(pin);
+                        var foundProperty = _propertyRepository.GetByPin(pin, true);
+                        if (foundProperty.IsRetired.HasValue && foundProperty.IsRetired.Value)
+                        {
+                            throw new BusinessRuleViolationException("Retired property can not be selected.");
+                        }
+
                         leaseProperty.PropertyId = foundProperty.Internal_Id;
                         UpdateLocation(leaseProperty.Property, ref foundProperty, userOverrides);
                         leaseProperty.Property = foundProperty;

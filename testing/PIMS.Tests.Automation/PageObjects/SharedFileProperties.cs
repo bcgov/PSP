@@ -69,6 +69,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         //File Confirmation Modal Elements
         private By propertiesFileConfirmationModal = By.CssSelector("div[class='modal-content']");
+        private By propertiesFileMOTIInventoryModal = By.XPath("//div[@role='dialog'][2]/div/div/div[contains(text(),'You have added one or more properties to the disposition file that are not in the MoTI Inventory. Do you want to proceed?')]");
 
         //Toast Element
         private By duplicatePropToast = By.CssSelector("div[id='duplicate-property'] div[class='Toastify__toast-body']");
@@ -336,8 +337,15 @@ namespace PIMS.Tests.Automation.PageObjects
             if (webDriver.FindElements(propertiesFileConfirmationModal).Count() > 1)
             {
                 Assert.Equal("User Override Required", sharedModals.SecondaryModalHeader());
-                Assert.Contains("The selected property already exists in the system's inventory. However, the record is missing spatial details.", sharedModals.SecondaryModalContent());
-                Assert.Contains("To add the property, the spatial details for this property will need to be updated. The system will attempt to update the property record with spatial information from the current selection.", sharedModals.SecondaryModalContent());
+                if (webDriver.FindElements(propertiesFileMOTIInventoryModal).Count > 0)
+                {
+                    Assert.Contains("You have added one or more properties to the disposition file that are not in the MoTI Inventory. Do you want to proceed?", sharedModals.SecondaryModalContent());
+                }
+                else
+                {
+                    Assert.Contains("The selected property already exists in the system's inventory. However, the record is missing spatial details.", sharedModals.SecondaryModalContent());
+                    Assert.Contains("To add the property, the spatial details for this property will need to be updated. The system will attempt to update the property record with spatial information from the current selection.", sharedModals.SecondaryModalContent());
+                }
                 sharedModals.SecondaryModalClickOKBttn();
             }
         }
