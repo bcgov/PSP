@@ -260,41 +260,6 @@ namespace Pims.Api.Test.Services
             var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
 
-            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>())).Returns(lease.PimsPropertyLeases.FirstOrDefault().Property);
-            leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
-            leaseRepository.Setup(x => x.Get(It.IsAny<long>())).Returns(EntityHelper.CreateLease(1));
-            userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(new PimsUser());
-
-            lease.PimsPropertyLeases.Add(new PimsPropertyLease()
-            {
-                PropertyId = 100,
-                Property = new PimsProperty()
-                {
-                    Pid = 1,
-                    IsRetired = true,
-                }
-            });
-
-            // Act
-            Action act = () => service.Update(lease, new List<UserOverrideCode>() { UserOverrideCode.AddLocationToProperty });
-
-            // Assert
-            var ex = act.Should().Throw<BusinessRuleViolationException>();
-            ex.WithMessage("Retired property can not be selected.");
-        }
-
-        [Fact]
-        public void Update_Properties_WithRetiredProperty_Should_Fail()
-        {
-            // Arrange
-            var lease = EntityHelper.CreateLease(1);
-
-            var service = this.CreateLeaseService(Permissions.LeaseEdit, Permissions.LeaseView);
-            var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
-            var propertyLeaseRepository = this._helper.GetService<Mock<IPropertyLeaseRepository>>();
-            var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
-            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
-
             PimsProperty property = new PimsProperty()
             {
                 PropertyId = 100,
