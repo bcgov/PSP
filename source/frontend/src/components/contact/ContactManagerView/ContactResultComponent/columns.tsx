@@ -4,8 +4,8 @@ import { Link, useHistory } from 'react-router-dom';
 import { CellProps } from 'react-table';
 import styled from 'styled-components';
 
-import { ReactComponent as Active } from '@/assets/images/active.svg';
-import { ReactComponent as Inactive } from '@/assets/images/inactive.svg';
+import Active from '@/assets/images/active.svg?react';
+import Inactive from '@/assets/images/inactive.svg?react';
 import { StyledIconButton } from '@/components/common/buttons';
 import { InlineFlexDiv } from '@/components/common/styles';
 import { ColumnWithProps } from '@/components/Table';

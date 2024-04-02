@@ -103,7 +103,7 @@ export const useApiRequestWrapper = <
               logError({
                 name: requestName,
                 status: axiosError?.response?.status,
-                error: axiosError ?? {},
+                error: axiosError ?? ({} as unknown as AxiosError),
               }),
             );
           });
@@ -113,7 +113,7 @@ export const useApiRequestWrapper = <
             logError({
               name: requestName,
               status: axiosError?.response?.status,
-              error: axiosError ?? {},
+              error: axiosError ?? ({} as unknown as AxiosError),
             }),
           );
         }

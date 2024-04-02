@@ -227,14 +227,15 @@ namespace Pims.Api.Services
             ValidateStaff(acquisitionFile);
             ValidateOrganizationStaff(acquisitionFile);
 
-            acquisitionFile.AcquisitionFileStatusTypeCode = "ACTIVE";
             MatchProperties(acquisitionFile, userOverrides);
             ValidatePropertyRegions(acquisitionFile);
 
             PopulateAcquisitionChecklist(acquisitionFile);
 
+            acquisitionFile.AcquisitionFileStatusTypeCode = AcquisitionStatusTypes.ACTIVE.ToString();
             var newAcqFile = _acqFileRepository.Add(acquisitionFile);
             _acqFileRepository.CommitTransaction();
+
             return newAcqFile;
         }
 
@@ -625,7 +626,12 @@ namespace Pims.Api.Services
                     var pid = acquisitionProperty.Property.Pid.Value;
                     try
                     {
-                        var foundProperty = _propertyRepository.GetByPid(pid);
+                        var foundProperty = _propertyRepository.GetByPid(pid, true);
+                        if (foundProperty.IsRetired.HasValue && foundProperty.IsRetired.Value)
+                        {
+                            throw new BusinessRuleViolationException("Retired property can not be selected.");
+                        }
+
                         acquisitionProperty.PropertyId = foundProperty.Internal_Id;
                         _propertyService.UpdateLocation(acquisitionProperty.Property, ref foundProperty, userOverrideCodes);
                         acquisitionProperty.Property = foundProperty;
@@ -641,7 +647,12 @@ namespace Pims.Api.Services
                     var pin = acquisitionProperty.Property.Pin.Value;
                     try
                     {
-                        var foundProperty = _propertyRepository.GetByPin(pin);
+                        var foundProperty = _propertyRepository.GetByPin(pin, true);
+                        if (foundProperty.IsRetired.HasValue && foundProperty.IsRetired.Value)
+                        {
+                            throw new BusinessRuleViolationException("Retired property can not be selected.");
+                        }
+
                         acquisitionProperty.PropertyId = foundProperty.Internal_Id;
                         _propertyService.UpdateLocation(acquisitionProperty.Property, ref foundProperty, userOverrideCodes);
                         acquisitionProperty.Property = foundProperty;
@@ -783,13 +794,13 @@ namespace Pims.Api.Services
                     isOtherInterest = false;
                     isPropertyOfInterest = false;
                 }
-                else if(property.IsOtherInterest || isOtherInterest)
+                else if (property.IsOtherInterest || isOtherInterest)
                 {
                     isOwned = false;
                     isOtherInterest = true;
                     isPropertyOfInterest = false;
                 }
-                else if(property.IsPropertyOfInterest || isPropertyOfInterest)
+                else if (property.IsPropertyOfInterest || isPropertyOfInterest)
                 {
                     isOwned = false;
                     isOtherInterest = false;

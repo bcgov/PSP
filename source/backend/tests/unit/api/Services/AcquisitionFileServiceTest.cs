@@ -198,6 +198,46 @@ namespace Pims.Api.Test.Services
             act.Should().Throw<BadRequestException>();
             repository.Verify(x => x.Add(It.IsAny<PimsAcquisitionFile>()), Times.Never);
         }
+
+        [Fact]
+        public void Add_WithRetiredProperty_Should_Fail()
+        {
+            // Arrange
+            var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileAdd);
+
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+            PimsProperty property = new PimsProperty()
+            {
+                PropertyId = 100,
+                Pid = 1000,
+                IsRetired = true,
+            };
+
+            acqFile.PimsPropertyAcquisitionFiles.Add(new PimsPropertyAcquisitionFile()
+            {
+                Property = property,
+            });
+
+            var repository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
+            repository.Setup(x => x.Add(It.IsAny<PimsAcquisitionFile>())).Returns(acqFile);
+
+            var lookupRepository = this._helper.GetService<Mock<ILookupRepository>>();
+            lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser(1, Guid.NewGuid(), "Test", regionCode: 1));
+
+            var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
+            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), true)).Returns(property);
+
+            // Act
+            Action act = () => service.Add(acqFile, new List<UserOverrideCode>());
+
+            // Assert
+            var ex = act.Should().Throw<BusinessRuleViolationException>();
+            ex.WithMessage("Retired property can not be selected.");
+        }
+
         #endregion
 
         #region GetById
@@ -1310,7 +1350,7 @@ namespace Pims.Api.Test.Services
             repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
 
             var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
-            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>())).Returns(property);
+            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), false)).Returns(property);
 
             var filePropertyRepository = this._helper.GetService<Mock<IAcquisitionFilePropertyRepository>>();
             filePropertyRepository.Setup(x => x.GetPropertiesByAcquisitionFileId(It.IsAny<long>())).Returns(acqFile.PimsPropertyAcquisitionFiles.ToList());
@@ -1342,7 +1382,7 @@ namespace Pims.Api.Test.Services
             repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
 
             var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
-            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>())).Returns(property);
+            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), true)).Returns(property);
             propertyRepository.Setup(x => x.GetPropertyRegion(It.IsAny<long>())).Returns(1);
 
             var filePropertyRepository = this._helper.GetService<Mock<IAcquisitionFilePropertyRepository>>();
@@ -1383,7 +1423,7 @@ namespace Pims.Api.Test.Services
             filePropertyRepository.Setup(x => x.Add(It.IsAny<PimsPropertyAcquisitionFile>())).Callback<PimsPropertyAcquisitionFile>(x => updatedAcquisitionFileProperty = x).Returns(acqFile.PimsPropertyAcquisitionFiles.FirstOrDefault());
 
             var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
-            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>())).Throws<KeyNotFoundException>();
+            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), true)).Throws<KeyNotFoundException>();
             propertyRepository.Setup(x => x.GetPropertyRegion(It.IsAny<long>())).Returns(1);
 
             var coordinateService = this._helper.GetService<Mock<ICoordinateTransformService>>();
@@ -1445,7 +1485,7 @@ namespace Pims.Api.Test.Services
             filePropertyRepository.Setup(x => x.GetPropertiesByAcquisitionFileId(It.IsAny<long>())).Returns(new List<PimsPropertyAcquisitionFile>() { new PimsPropertyAcquisitionFile() { Internal_Id = 1, Property = property, PropertyName = "updated" } });
 
             var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
-            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>())).Throws<KeyNotFoundException>();
+            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), true)).Throws<KeyNotFoundException>();
             propertyRepository.Setup(x => x.GetPropertyRegion(It.IsAny<long>())).Returns(1);
 
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
@@ -1480,7 +1520,7 @@ namespace Pims.Api.Test.Services
             filePropertyRepository.Setup(x => x.GetPropertiesByAcquisitionFileId(It.IsAny<long>())).Returns(new List<PimsPropertyAcquisitionFile>() { new PimsPropertyAcquisitionFile() { Property = property } });
 
             var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
-            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>())).Throws<KeyNotFoundException>();
+            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), false)).Throws<KeyNotFoundException>();
 
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
@@ -1519,7 +1559,7 @@ namespace Pims.Api.Test.Services
             filePropertyRepository.Setup(x => x.GetAcquisitionFilePropertyRelatedCount(It.IsAny<long>())).Returns(1);
 
             var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
-            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>())).Throws<KeyNotFoundException>();
+            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), false)).Throws<KeyNotFoundException>();
             propertyRepository.Setup(x => x.GetAllAssociationsById(It.IsAny<long>())).Returns(property);
 
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
@@ -1603,7 +1643,7 @@ namespace Pims.Api.Test.Services
             filePropertyRepository.Setup(x => x.GetAcquisitionFilePropertyRelatedCount(It.IsAny<long>())).Returns(1);
 
             var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
-            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>())).Throws<KeyNotFoundException>();
+            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), false)).Throws<KeyNotFoundException>();
             propertyRepository.Setup(x => x.GetAllAssociationsById(It.IsAny<long>())).Returns(property);
 
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
@@ -1637,7 +1677,7 @@ namespace Pims.Api.Test.Services
             filePropertyRepository.Setup(x => x.GetAcquisitionFilePropertyRelatedCount(It.IsAny<long>())).Returns(1);
 
             var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
-            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>())).Throws<KeyNotFoundException>();
+            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), false)).Throws<KeyNotFoundException>();
             propertyRepository.Setup(x => x.GetAllAssociationsById(It.IsAny<long>())).Returns(property);
 
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
@@ -1695,7 +1735,7 @@ namespace Pims.Api.Test.Services
             repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
 
             var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
-            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>())).Returns(property);
+            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), true)).Returns(property);
             propertyRepository.Setup(x => x.GetPropertyRegion(It.IsAny<long>())).Returns(1);
 
             var filePropertyRepository = this._helper.GetService<Mock<IAcquisitionFilePropertyRepository>>();
@@ -1731,7 +1771,7 @@ namespace Pims.Api.Test.Services
             repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
 
             var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
-            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>())).Returns(property);
+            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), true)).Returns(property);
             propertyRepository.Setup(x => x.GetPropertyRegion(It.IsAny<long>())).Returns(3);
 
             var filePropertyRepository = this._helper.GetService<Mock<IAcquisitionFilePropertyRepository>>();
@@ -1746,6 +1786,54 @@ namespace Pims.Api.Test.Services
             // Assert
             var exception = act.Should().Throw<BadRequestException>();
             exception.WithMessage("You cannot add a property that is outside of your user account region(s)*"); // partial match on the error message - as documented by FluentAssertions
+        }
+
+
+        [Fact]
+        public void UpdateProperties_WithRetiredProperty_Should_Fail()
+        {
+            // Arrange
+            var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit, Permissions.PropertyAdd, Permissions.PropertyView);
+
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+            acqFile.ConcurrencyControlNumber = 1;
+
+            PimsProperty property = EntityHelper.CreateProperty(12345, regionCode: 3);
+            PimsProperty retiredProperty = new PimsProperty()
+            {
+                PropertyId = 100,
+                Pid = 1000,
+                IsRetired = true,
+            };
+
+            acqFile.PimsPropertyAcquisitionFiles = new List<PimsPropertyAcquisitionFile>() {
+                new()
+                {
+                    Property = retiredProperty
+                }
+            };
+
+
+            var repository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
+            repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
+
+            var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
+            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), true)).Returns(retiredProperty);
+            propertyRepository.Setup(x => x.GetPropertyRegion(It.IsAny<long>())).Returns(3);
+
+            var filePropertyRepository = this._helper.GetService<Mock<IAcquisitionFilePropertyRepository>>();
+            filePropertyRepository.Setup(x => x.GetPropertiesByAcquisitionFileId(It.IsAny<long>())).Returns(acqFile.PimsPropertyAcquisitionFiles.ToList());
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser(1, Guid.NewGuid(), "Test", regionCode: 1));
+
+            // Act
+            Action act = () => service.UpdateProperties(acqFile, new List<UserOverrideCode>());
+
+            // Assert
+            var ex = act.Should().Throw<BusinessRuleViolationException>();
+            ex.WithMessage("Retired property can not be selected.");
         }
         #endregion
 

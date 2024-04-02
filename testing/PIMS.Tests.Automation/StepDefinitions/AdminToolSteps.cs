@@ -126,6 +126,9 @@ namespace PIMS.Tests.Automation.StepDefinitions
             Assert.NotEqual(firstPositionDescResult, firstPositionAscResult);
 
             //Verify Pagination display different set of results
+            sharedPagination.ChoosePaginationOption(10);
+            sharedPagination.ResetSearch();
+
             var firstUserPage1 = manageUsers.FirstUserIDIR();
             sharedPagination.GoNextPage();
             var firstUserPage2 = manageUsers.FirstUserIDIR();
@@ -369,6 +372,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
             Assert.NotEqual(firstFinCodeExpiryDateDescResult, firstFinCodeExpiryDateAscResult);
 
             //Verify Pagination display different set of results
+
+            sharedPagination.ChoosePaginationOption(10);
             sharedPagination.ResetSearch();
 
             var firstFinancialPage1 = financialCodes.FirstFinancialCodeDescription();
@@ -376,6 +381,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             var firstFinancialPage2 = financialCodes.FirstFinancialCodeDescription();
             Assert.NotEqual(firstFinancialPage1, firstFinancialPage2);
 
+            sharedPagination.Go1stPage();
             sharedPagination.ResetSearch();
 
             //Filter Financial Codes by Cost Types
@@ -464,8 +470,5 @@ namespace PIMS.Tests.Automation.StepDefinitions
             financialCode.FinnExpiryDate = ExcelDataContext.ReadData(rowNumber, "FinnExpiryDate");
             financialCode.FinnDisplayOrder = ExcelDataContext.ReadData(rowNumber, "FinnDisplayOrder");
         }
-
     }
-
-
 }

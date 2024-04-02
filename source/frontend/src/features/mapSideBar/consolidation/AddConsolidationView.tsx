@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import styled from 'styled-components';
 import * as Yup from 'yup';
 
-import { ReactComponent as ConsolidateSubdivideIcon } from '@/assets/images/subdivisionconsolidation.svg';
+import ConsolidateSubdivideIcon from '@/assets/images/subdivisionconsolidation.svg?react';
 import { Form } from '@/components/common/form';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
@@ -142,7 +142,7 @@ const AddConsolidationView: React.FunctionComponent<
                 </FieldArray>
               </Section>
               <Section>
-                <p>Select the child properties to which parent property was subdivided:</p>
+                <p>Select the child property to which parent properties were consolidated:</p>
                 <MapSelectorComponent
                   addSelectedProperties={async properties => {
                     const allProperties: ApiGen_Concepts_Property[] = [];

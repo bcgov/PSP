@@ -9,6 +9,7 @@ import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts
 import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { IBcAssessmentSummary } from '@/models/layers/bcAssesment';
+import { PIMS_Property_Location_View } from '@/models/layers/pimsPropertyLocationView';
 import { exists, formatApiAddress, formatBcaAddress, pidParser } from '@/utils';
 import { toTypeCodeNullable } from '@/utils/formUtils';
 
@@ -262,6 +263,19 @@ export class AddressForm {
     newForm.streetAddress1 = formatBcaAddress(model);
     newForm.municipality = model.CITY;
     newForm.postalCode = model.POSTAL_CODE;
+
+    return newForm;
+  }
+
+  public static fromPimsView(model: PIMS_Property_Location_View): AddressForm {
+    const newForm = new AddressForm();
+    newForm.id = model.ADDRESS_ID ?? undefined;
+    newForm.streetAddress1 = model.STREET_ADDRESS_1 ?? undefined;
+    newForm.streetAddress2 = model.STREET_ADDRESS_2 ?? undefined;
+    newForm.streetAddress3 = model.STREET_ADDRESS_3 ?? undefined;
+    newForm.municipality = model.MUNICIPALITY_NAME ?? undefined;
+    newForm.postalCode = model.POSTAL_CODE ?? undefined;
+    newForm.apiId = model?.ADDRESS_ID ?? undefined;
 
     return newForm;
   }

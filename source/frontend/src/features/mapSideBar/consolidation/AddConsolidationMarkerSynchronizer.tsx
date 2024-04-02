@@ -13,10 +13,10 @@ const AddConsolidationMarkerSynchronizer: React.FunctionComponent<
   IAddConsolidationMarkerSynchronizerProps
 > = ({ values }) => {
   useDraftMarkerSynchronizer([
+    ...values.sourceProperties.map(dp => PropertyForm.fromPropertyApi(dp).toMapProperty()),
     ...(values.destinationProperty
       ? [PropertyForm.fromPropertyApi(values.destinationProperty).toMapProperty()]
       : []),
-    ...values.sourceProperties.map(dp => PropertyForm.fromPropertyApi(dp).toMapProperty()),
   ]);
   return null;
 };

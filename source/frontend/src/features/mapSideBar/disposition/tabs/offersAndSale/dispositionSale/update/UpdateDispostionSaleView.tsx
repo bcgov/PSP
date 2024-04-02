@@ -80,7 +80,7 @@ const UpdateDispositionSaleView: React.FC<IUpdateDispositionSaleViewProps> = ({
                 parentScreen={true}
               ></LoadingBackdrop>
               <StyledContent>
-                <DispositionSaleForm dispostionSaleId={initialValues.id} />
+                <DispositionSaleForm dispositionSaleId={initialValues.id} />
               </StyledContent>
               <StyledFooter>
                 <SidebarFooter

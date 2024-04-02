@@ -571,7 +571,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Start a new lease from pop-up
             propertyInformation.OpenMoreOptionsPopUp();
-            propertyInformation.ChooseCreationOptionFromPin("Lease/License - Create new");
+            propertyInformation.ChooseCreationOptionFromPin("Lease/License");
 
             //Fill basic information on the form
             leaseDetails.CreateMinimumLicenseDetails(lease);
@@ -613,7 +613,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Start a new lease from pop-up
             propertyInformation.OpenMoreOptionsPopUp();
-            propertyInformation.ChooseCreationOptionFromPin("Lease/License - Create new");
+            propertyInformation.ChooseCreationOptionFromPin("Lease/License");
 
             //Fill basic information on the form
             leaseDetails.CreateMinimumLicenseDetails(lease);
@@ -623,7 +623,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Start a new lease from pop-up
             propertyInformation.OpenMoreOptionsPopUp();
-            propertyInformation.ChooseCreationOptionFromPin("Lease/License - Create new");
+            propertyInformation.ChooseCreationOptionFromPin("Lease/License");
 
             //Fill basic information on the form
             leaseDetails.CreateMinimumLicenseDetails(lease);

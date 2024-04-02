@@ -46,7 +46,7 @@ exports[`Add Consolidation View matches snapshot 1`] = `
           <svg
             class="c1"
           >
-            subdivisionconsolidation.svg
+            <span />
           </svg>
           Create a Consolidation
         </h1>
@@ -325,7 +325,7 @@ exports[`Add Consolidation View matches snapshot 1`] = `
               class="collapse show"
             >
               <p>
-                Select the child properties to which parent property was subdivided:
+                Select the child property to which parent properties were consolidated:
               </p>
               <span>
                 Content Rendered

@@ -468,7 +468,7 @@ exports[`Property list view matches snapshot 1`] = `
                     class="c7"
                   >
                     <svg>
-                      icon-map.svg
+                      <span />
                     </svg>
                   </div>
                 </div>
@@ -479,7 +479,7 @@ exports[`Property list view matches snapshot 1`] = `
                     class="c7"
                   >
                     <svg>
-                      icon-table.svg
+                      <span />
                     </svg>
                   </div>
                 </div>

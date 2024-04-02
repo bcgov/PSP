@@ -25,7 +25,7 @@ jest.mock('@/hooks/useLookupCodeHelpers');
 
 describe('HelpContainer component', () => {
   beforeEach(() => {
-    process.env.REACT_APP_TENANT = 'MOTI';
+    import.meta.env.VITE_TENANT = 'MOTI';
   });
   afterEach(() => {
     cleanup();

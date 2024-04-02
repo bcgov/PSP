@@ -74,7 +74,7 @@ const PropertyRouter = React.forwardRef<FormikProps<any>, IPropertyRouterProps>(
             customRender={({ match }) => (
               <PropertyContactEditContainer
                 propertyId={match.params.propertyId}
-                contactId={+match.params.contactId ?? 0}
+                contactId={match.params.contactId ? +match.params.contactId : 0}
                 View={PropertyContactEditForm}
                 onSuccess={() => {
                   setIsEditing(false);

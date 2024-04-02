@@ -9,9 +9,9 @@ import { convertArea, formatNumber } from '@/utils';
 
 import { PropertyOperationResult } from './OperationView';
 
-const getColumns: (isSubdivision: boolean) => ColumnWithProps<PropertyOperationResult>[] = (
+const getPropertyOperationColumns: (
   isSubdivision: boolean,
-) => {
+) => ColumnWithProps<PropertyOperationResult>[] = (isSubdivision: boolean) => {
   return [
     {
       Header: isSubdivision ? 'Parent' : 'Child',
@@ -92,4 +92,4 @@ const getColumns: (isSubdivision: boolean) => ColumnWithProps<PropertyOperationR
   ];
 };
 
-export default getColumns;
+export default getPropertyOperationColumns;

@@ -20,6 +20,7 @@ describe('Subdivision detail view', () => {
         operationTimeStamp={props?.operationTimeStamp ?? EpochIsoDateTime}
         sourceProperties={props?.sourceProperties ?? []}
         destinationProperties={props?.destinationProperties ?? []}
+        ExpandedRowComponent={() => <></>}
       />,
       {
         ...renderOptions,

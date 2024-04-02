@@ -113,7 +113,7 @@ exports[`ResearchMenu component renders as expected when provided no research fi
             height="2.4rem"
             width="2.4rem"
           >
-            edit-map-marker.svg
+            <span />
           </svg>
         </button>
       </div>
