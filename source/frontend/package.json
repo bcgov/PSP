@@ -96,7 +96,7 @@
     "cross-env": "7.0.3",
     "customize-cra": "1.0.0",
     "dependency-cruiser": "13.0.3",
-    "eslint": "8.5.0",
+    "eslint": "8.57.0",
     "eslint-config-prettier": "8.5.0",
     "eslint-config-react-app": "7.0.1",
     "eslint-plugin-prettier": "3.4.0",
@@ -123,7 +123,7 @@
     "redux-mock-store": "1.5.4",
     "sass": "1.43.2",
     "ts-jest": "29.1.2",
-    "typescript": "4.8.4",
+    "typescript": "5.4.2",
     "vite": "5.0.10",
     "vite-plugin-compression": "^0.5.1",
     "vite-plugin-eslint": "1.8.1",
@@ -139,7 +139,9 @@
     "word-wrap": "@aashutoshrathi/word-wrap",
     "@typescript-eslint/eslint-plugin": "5.62.0",
     "react-popper": "2.3.0",
-    "nth-check": "2.0.1"
+    "nth-check": "2.0.1",
+    "babel-core": "6.26.3",
+    "typescript": "5.4.2"
   },
   "scripts": {
     "start": "vite",

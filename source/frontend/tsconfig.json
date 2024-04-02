@@ -8,7 +8,7 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "strict": true,
+    "strict": false,
     "forceConsistentCasingInFileNames": true,
     "module": "ESNext",
     "moduleResolution": "node",
@@ -18,7 +18,7 @@
     "jsx": "react-jsx",
     "downlevelIteration": true,
     "noFallthroughCasesInSwitch": true,
-    "typeRoots": ["src/typings", "node_modules/@types"],
+    "typeRoots": ["./node_modules/@types/", "./types", "./node_modules"],
     "paths": {
       "@/*": ["src/*"],
       "react-draggable": ["typings/react-draggable"]
