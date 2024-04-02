@@ -35,9 +35,7 @@ export interface IUpdatePropertiesProps {
   formikRef?: React.RefObject<FormikProps<any>>;
 }
 
-export const UpdateProperties: React.FunctionComponent<
-  React.PropsWithChildren<IUpdatePropertiesProps>
-> = props => {
+export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> = props => {
   const localRef = useRef<FormikProps<FileForm>>(null);
   const formikRef = props.formikRef ? props.formikRef : localRef;
   const formFile = FileForm.fromApi(props.file);
