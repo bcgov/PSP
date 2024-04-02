@@ -14,6 +14,7 @@ exclude: # exclude matching issues
       - .sonarqube/**
       - zap-report.html
       - zap-report.xml
+      - vite.config.ts
   - message: Ignore mocks
     paths:
       - mockServiceWorker.js
