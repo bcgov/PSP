@@ -14,7 +14,6 @@ exclude: # exclude matching issues
       - .sonarqube/**
       - zap-report.html
       - zap-report.xml
-      - vite.config.ts
   - message: Ignore mocks
     paths:
       - mockServiceWorker.js
@@ -36,6 +35,7 @@ exclude: # exclude matching issues
       - "*.ico"
       - "*.css"
       - "*.scss"
+      - "*.config.ts"
   - message: Ignore integrity hashes on Openshift config files
     pattern: sha256:.*
     paths:
