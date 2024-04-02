@@ -46,7 +46,7 @@ exports[`Add Subdivision View matches snapshot 1`] = `
           <svg
             class="c1"
           >
-            subdivisionconsolidation.svg
+            <span />
           </svg>
           Create a Subdivision
         </h1>

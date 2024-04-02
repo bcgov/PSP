@@ -28,7 +28,7 @@ export class Api_GenerateH120Property {
     this.location_of_land = property?.generalLocation ?? '';
     this.district = property?.district?.description ?? '';
     this.interest_holders_string =
-      interestHolders?.map(ih => ih.interestHolderString).join(', ') ?? [];
+      interestHolders?.map(ih => ih.interestHolderString).join(', ') ?? '';
     this.electoral_dist = '';
   }
 }

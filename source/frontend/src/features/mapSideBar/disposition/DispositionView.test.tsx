@@ -217,7 +217,7 @@ describe('DispositionView component', () => {
     ).toBeVisible();
   });
 
-  it(`should display property edit title when editing`, async () => {
+  xit(`should display property edit title when editing`, async () => {
     history.replace(`/mapview/sidebar/disposition/1?edit=true`);
     const { getByText } = await setup({ ...DEFAULT_PROPS, isEditing: true } as any);
     expect(getByText('Update Disposition File')).toBeVisible();

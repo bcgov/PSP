@@ -578,7 +578,7 @@ exports[`Contact Search Results Table matches snapshot 1`] = `
             title=""
           >
             <svg>
-              active.svg
+              <span />
             </svg>
           </div>
           <div
@@ -742,7 +742,7 @@ exports[`Contact Search Results Table matches snapshot 1`] = `
             title=""
           >
             <svg>
-              active.svg
+              <span />
             </svg>
           </div>
           <div
@@ -906,7 +906,7 @@ exports[`Contact Search Results Table matches snapshot 1`] = `
             title=""
           >
             <svg>
-              inactive.svg
+              <span />
             </svg>
           </div>
           <div

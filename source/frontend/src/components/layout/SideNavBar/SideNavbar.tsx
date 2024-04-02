@@ -5,11 +5,11 @@ import { MdChevronLeft, MdChevronRight, MdContactMail, MdHome } from 'react-icon
 import { TbArrowBounce } from 'react-icons/tb';
 import { useHistory } from 'react-router-dom';
 
-import { ReactComponent as AdminPanelSettings } from '@/assets/images/admin-panel-settings.svg';
-import { ReactComponent as Fence } from '@/assets/images/fence.svg';
-import { ReactComponent as RealEstateAgent } from '@/assets/images/real-estate-agent.svg';
-import { ReactComponent as Source } from '@/assets/images/source.svg';
-import { ReactComponent as ConsolidateSubdivideIcon } from '@/assets/images/subdivisionconsolidation.svg';
+import AdminPanelSettings from '@/assets/images/admin-panel-settings.svg?react';
+import Fence from '@/assets/images/fence.svg?react';
+import RealEstateAgent from '@/assets/images/real-estate-agent.svg?react';
+import Source from '@/assets/images/source.svg?react';
+import ConsolidateSubdivideIcon from '@/assets/images/subdivisionconsolidation.svg?react';
 import { NavIcon } from '@/components/layout';
 import { Claims, Roles } from '@/constants/index';
 

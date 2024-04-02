@@ -186,7 +186,7 @@ describe('AddLeaseTenantForm component', () => {
       surname: undefined,
       firstName: undefined,
       middleNames: undefined,
-    };
+    } as unknown as IContactSearchResult;
 
     await setup({
       selectedTenants: [new FormTenant(undefined, organization)],
@@ -206,7 +206,7 @@ describe('AddLeaseTenantForm component', () => {
       surname: undefined,
       firstName: undefined,
       middleNames: undefined,
-    };
+    } as unknown as IContactSearchResult;
 
     await setup({
       selectedTenants: [new FormTenant(undefined, organization)],
@@ -226,7 +226,7 @@ describe('AddLeaseTenantForm component', () => {
       surname: undefined,
       firstName: undefined,
       middleNames: undefined,
-    };
+    } as unknown as IContactSearchResult;
 
     await setup({
       selectedTenants: [new FormTenant(undefined, organization)],
@@ -258,7 +258,7 @@ describe('AddLeaseTenantForm component', () => {
       surname: undefined,
       firstName: undefined,
       middleNames: undefined,
-    };
+    } as unknown as IContactSearchResult;
 
     await setup({
       selectedTenants: [new FormTenant(undefined, organization)],
@@ -298,7 +298,7 @@ describe('AddLeaseTenantForm component', () => {
       surname: undefined,
       firstName: undefined,
       middleNames: undefined,
-    };
+    } as unknown as IContactSearchResult;
 
     await setup({
       selectedTenants: [new FormTenant(undefined, organization)],
