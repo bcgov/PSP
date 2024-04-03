@@ -22,9 +22,10 @@ interface IFooterProps {
 
 const FooterStyled = styled.footer<IFooterProps>`
   // colors
-  background-color: ${props => props.backgroundColor ?? props.theme.css.primaryColor};
+  background-color: ${props =>
+    props.backgroundColor ?? props.theme.bcTokens.surfaceColorPrimaryButtonDefault};
   border: none;
-  border-top: 0.2rem solid ${props => props.theme.css.accentColor};
+  border-top: 0.2rem solid ${props => props.theme.bcTokens.themeGold100};
   grid-area: footer;
 
   a,

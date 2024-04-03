@@ -4,12 +4,12 @@ import { Scrollable } from '@/components/common/Scrollable/Scrollable';
 
 export const StyledGreySection = styled.div`
   padding: 1rem;
-  background-color: ${({ theme }) => theme.css.filterBackgroundColor};
+  background-color: ${({ theme }) => theme.css.highlightBackgroundColor};
 `;
 
 export const StyledH2 = styled.h2`
   font-weight: 700;
-  color: ${props => props.theme.css.primaryColor};
+  color: ${props => props.theme.bcTokens.surfaceColorPrimaryButtonDefault};
 `;
 
 export const StyledH3 = styled.h3`
@@ -18,8 +18,8 @@ export const StyledH3 = styled.h3`
   margin-bottom: 1rem;
   text-align: left;
   padding-top: 1rem;
-  color: ${props => props.theme.css.primaryColor};
-  border-bottom: solid 0.1rem ${props => props.theme.css.primaryColor};
+  color: ${props => props.theme.bcTokens.surfaceColorPrimaryButtonDefault};
+  border-bottom: solid 0.1rem ${props => props.theme.bcTokens.surfaceColorPrimaryButtonDefault};
 `;
 
 export const StyledHeader = styled.div`

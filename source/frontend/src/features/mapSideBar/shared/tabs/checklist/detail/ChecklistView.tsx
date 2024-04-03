@@ -146,10 +146,10 @@ const StyledChecklistItemAudit = styled.span`
   font-size: 1.1rem;
   font-style: italic;
   text-align: right;
-  color: ${props => props.theme.css.discardedColor};
+  color: ${props => props.theme.css.actionColor};
 
   .tooltip-icon {
-    color: ${props => props.theme.css.discardedColor};
+    color: ${props => props.theme.css.actionColor};
   }
 `;
 

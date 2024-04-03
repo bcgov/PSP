@@ -298,12 +298,12 @@ export const getLeaseTermColumns = ({
 const StyledIcons = styled(InlineFlexDiv)`
   align-items: center;
   [id^='edit-term'] {
-    color: ${props => props.theme.css.slideOutBlue};
+    color: ${props => props.theme.css.secondaryVariantColor};
   }
   [id^='delete-term'] {
-    color: ${props => props.theme.css.discardedColor};
+    color: ${props => props.theme.css.actionColor};
     :hover {
-      color: ${({ theme }) => theme.css.dangerColor};
+      color: ${({ theme }) => theme.bcTokens.surfaceColorPrimaryDangerButtonDefault};
     }
   }
   .btn.btn-primary {
@@ -313,5 +313,5 @@ const StyledIcons = styled(InlineFlexDiv)`
 `;
 
 const GenerateIcon = styled(FaFileContract)`
-  color: ${props => props.theme.css.slideOutBlue};
+  color: ${props => props.theme.css.secondaryVariantColor};
 `;

@@ -208,11 +208,11 @@ const StyledSubHeader = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  border-bottom: solid 0.2rem ${props => props.theme.css.primaryColor};
+  border-bottom: solid 0.2rem ${props => props.theme.bcTokens.surfaceColorPrimaryButtonDefault};
   margin-bottom: 2rem;
 
   label {
-    color: ${props => props.theme.css.primaryColor};
+    color: ${props => props.theme.bcTokens.surfaceColorPrimaryButtonDefault};
     font-family: 'BCSans-Bold';
     font-size: 1.75rem;
     width: 100%;

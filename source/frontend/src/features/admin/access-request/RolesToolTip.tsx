@@ -34,7 +34,7 @@ const StyledTooltip = styled.div`
 `;
 
 const StyledTooltipHeader = styled.b`
-  color: ${({ theme }) => theme.css.primaryColor};
+  color: ${({ theme }) => theme.bcTokens.surfaceColorPrimaryButtonDefault};
   font-size: 2.6rem;
 `;
 

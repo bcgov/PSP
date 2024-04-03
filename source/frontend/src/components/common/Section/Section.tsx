@@ -77,8 +77,8 @@ export const Section: React.FC<
 export const StyledSectionHeader = styled.h2<{ isStyledHeader?: boolean }>`
   font-size: ${props => (props.isStyledHeader === true ? '1.0em' : '')};
   font-weight: ${props => (props.isStyledHeader === true ? '' : 'bold')};
-  color: ${props => props.theme.css.primaryColor};
-  border-bottom: 0.2rem ${props => props.theme.css.primaryColor} solid;
+  color: ${props => props.theme.bcTokens.surfaceColorPrimaryButtonDefault};
+  border-bottom: 0.2rem ${props => props.theme.bcTokens.surfaceColorPrimaryButtonDefault} solid;
   margin-bottom: 2rem;
 `;
 

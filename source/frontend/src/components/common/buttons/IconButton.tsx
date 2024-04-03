@@ -23,27 +23,31 @@ export const StyledIconButton = styled(Button)`
     &.btn-primary {
       svg {
         color: ${({ theme, disabled }) =>
-          disabled ? theme.css.disabledColor : theme.css.primaryColor};
+          disabled
+            ? theme.bcTokens.iconsColorDisabled
+            : theme.bcTokens.surfaceColorPrimaryButtonDefault};
       }
       svg:hover {
         color: ${({ theme, disabled }) =>
-          disabled ? theme.css.disabledColor : theme.css.primaryColor};
+          disabled
+            ? theme.bcTokens.iconsColorDisabled
+            : theme.bcTokens.surfaceColorPrimaryButtonDefault};
       }
     }
     &.btn-light {
       svg {
-        color: ${({ theme }) => theme.css.slideOutBlue};
+        color: ${({ theme }) => theme.css.secondaryVariantColor};
       }
       svg:hover {
-        color: ${({ theme }) => theme.css.dangerColor};
+        color: ${({ theme }) => theme.bcTokens.surfaceColorPrimaryDangerButtonDefault};
       }
     }
     &.btn-info {
       svg {
-        color: ${({ theme }) => theme.css.slideOutBlue};
+        color: ${({ theme }) => theme.css.secondaryVariantColor};
       }
       svg:hover {
-        color: ${({ theme }) => theme.css.activeColor};
+        color: ${({ theme }) => theme.css.linkColor};
       }
     }
   }

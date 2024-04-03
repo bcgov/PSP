@@ -8,6 +8,6 @@ export const StyledSectionCentered = styled(Section)`
 `;
 
 export const StyledChecklistItemStatus = styled.span<{ color?: string }>`
-  color: ${props => props.color ?? props.theme.css.textColor};
+  color: ${props => props.color ?? props.theme.bcTokens.typographyColorSecondary};
   min-width: 11rem;
 `;

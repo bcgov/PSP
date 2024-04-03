@@ -161,7 +161,7 @@ export const ExpropriationForm8Details: React.FunctionComponent<
 export default ExpropriationForm8Details;
 
 const StyledForm8Border = styled.div`
-  border: solid 0.2rem ${props => props.theme.css.discardedColor};
+  border: solid 0.2rem ${props => props.theme.css.actionColor};
   margin-bottom: 0.5rem;
 `;
 
@@ -180,11 +180,11 @@ const StyledSubHeader = styled.div`
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
-  border-bottom: solid 0.2rem ${props => props.theme.css.primaryColor};
+  border-bottom: solid 0.2rem ${props => props.theme.bcTokens.surfaceColorPrimaryButtonDefault};
   margin-bottom: 2rem;
 
   label {
-    color: ${props => props.theme.css.primaryColor};
+    color: ${props => props.theme.bcTokens.surfaceColorPrimaryButtonDefault};
     font-family: 'BCSans-Bold';
     font-size: 1.75rem;
     width: 100%;

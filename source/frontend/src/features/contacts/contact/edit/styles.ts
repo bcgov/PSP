@@ -11,7 +11,7 @@ export * from '@/features/contacts/styles';
 export const H2 = styled.h2`
   font-size: 2rem;
   font-weight: 700;
-  color: ${props => props.theme.css.primaryColor};
+  color: ${props => props.theme.bcTokens.surfaceColorPrimaryButtonDefault};
   text-decoration: none solid rgb(0, 51, 102);
   line-height: 2.9rem;
 `;
@@ -19,7 +19,7 @@ export const H2 = styled.h2`
 export const H3 = styled.h3`
   font-size: 1.6rem;
   font-weight: 700;
-  color: ${props => props.theme.css.formTextColor};
+  color: ${props => props.theme.bcTokens.typographyColorPrimary};
   text-decoration: none solid rgb(33, 37, 41);
   line-height: 2rem;
 `;
@@ -38,7 +38,7 @@ export const Form = styled(FormikForm)`
 export const FormLabel = styled(FormBase.Label)`
   font-size: 1.6rem;
   font-weight: 700;
-  color: ${props => props.theme.css.formTextColor};
+  color: ${props => props.theme.bcTokens.typographyColorPrimary};
   text-decoration: none solid rgb(33, 37, 41);
   line-height: 2rem;
 `;
@@ -77,7 +77,7 @@ export const RemoveButton = styled(Button).attrs({ variant: 'link' })`
 export const SubtleText = styled.span`
   font-size: 1.6rem;
   font-weight: 400;
-  color: ${props => props.theme.css.subtleColor};
+  color: ${props => props.theme.bcTokens.iconsColorDisabled};
   text-decoration: none solid rgb(170, 170, 170);
   line-height: 2rem;
 `;

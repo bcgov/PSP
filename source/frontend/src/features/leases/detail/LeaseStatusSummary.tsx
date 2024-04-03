@@ -35,38 +35,38 @@ const StyledLeaseStatusSummary = styled.div`
   background-color: white;
   display: flex;
   flex-direction: column;
-  border: 1px solid ${props => props.theme.css.accentColor};
+  border: 1px solid ${props => props.theme.bcTokens.themeGold100};
   padding: 0.2rem 1rem;
   height: 90%;
   b {
     padding: 0.25rem 0;
     color: black;
     &:first-child {
-      color: ${props => props.theme.css.accentColor};
+      color: ${props => props.theme.bcTokens.themeGold100};
     }
   }
   &.active {
-    border: 1px solid ${props => props.theme.css.completedColor};
+    border: 1px solid ${props => props.theme.bcTokens.iconColorSuccess};
     b:first-child {
-      color: ${props => props.theme.css.completedColor};
+      color: ${props => props.theme.bcTokens.iconColorSuccess};
     }
   }
   &.terminated {
-    border: 1px solid ${props => props.theme.css.dangerColor};
+    border: 1px solid ${props => props.theme.bcTokens.surfaceColorPrimaryDangerButtonDefault};
     b:first-child {
-      color: ${props => props.theme.css.dangerColor};
+      color: ${props => props.theme.bcTokens.surfaceColorPrimaryDangerButtonDefault};
     }
   }
   &.discard {
-    border: 1px solid ${props => props.theme.css.discardedColor};
+    border: 1px solid ${props => props.theme.css.actionColor};
     b:first-child {
-      color: ${props => props.theme.css.discardedColor};
+      color: ${props => props.theme.css.actionColor};
     }
   }
   &.draft {
-    border: 1px solid ${props => props.theme.css.draftColor};
+    border: 1px solid ${props => props.theme.css.secondaryVariantColor};
     b:first-child {
-      color: ${props => props.theme.css.draftColor};
+      color: ${props => props.theme.css.secondaryVariantColor};
     }
   }
 `;

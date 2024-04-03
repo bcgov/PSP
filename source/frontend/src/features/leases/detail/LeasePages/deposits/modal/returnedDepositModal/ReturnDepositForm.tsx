@@ -167,7 +167,7 @@ const StyledFormBody = styled.form`
 `;
 
 export const SubHeaderSection = styled.div`
-  background-color: ${props => props.theme.css.filterBackgroundColor};
+  background-color: ${props => props.theme.css.highlightBackgroundColor};
 `;
 
 const StyledReturningDepositLink = styled.a`

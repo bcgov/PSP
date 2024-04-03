@@ -107,10 +107,10 @@ const StyledDiv = styled.div`
   padding-right: 2.1rem;
   min-height: 2.5em;
   background-image: none;
-  color: ${props => props.theme.css.formControlTextColor};
-  border: ${props => props.theme.css.lightVariantColor} solid 0.1rem;
+  color: ${props => props.theme.bcTokens.typographyColorSecondary};
+  border: ${props => props.theme.css.borderOutlineColor} solid 0.1rem;
   &.is-invalid {
-    border: ${props => props.theme.css.dangerColor} solid 0.1rem;
+    border: ${props => props.theme.bcTokens.surfaceColorPrimaryDangerButtonDefault} solid 0.1rem;
   }
 `;
 
@@ -119,7 +119,7 @@ export const StyledRemoveLinkButton = styled(LinkButton)`
     position: absolute;
     top: calc(50% - 1.4rem);
     right: 0.4rem;
-    color: ${props => props.theme.css.primaryBorderColor};
+    color: ${props => props.theme.bcTokens.iconsColorDisabled};
     text-decoration: none;
     line-height: unset;
     .text {
@@ -128,7 +128,7 @@ export const StyledRemoveLinkButton = styled(LinkButton)`
     &:hover,
     &:active,
     &:focus {
-      color: ${props => props.theme.css.dangerColor};
+      color: ${props => props.theme.bcTokens.surfaceColorPrimaryDangerButtonDefault};
       text-decoration: none;
       opacity: unset;
     }

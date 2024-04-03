@@ -70,7 +70,7 @@ const StyledSection = styled.div`
   background-color: #f0f7fc;
   margin-bottom: 2rem;
   font-size: 16px;
-  color: ${props => props.theme.css.darkBlue};
+  color: ${props => props.theme.bcTokens.surfaceColorBackgroundDarkBlue};
   text-decoration: none solid rgb(49, 49, 50);
   line-height: 24px;
 `;

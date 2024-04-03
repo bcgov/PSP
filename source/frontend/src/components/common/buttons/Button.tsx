@@ -86,15 +86,15 @@ const StyledButton = styled(BootstrapButton)`
     &:focus {
       outline-width: 0.4rem;
       outline-style: solid;
-      outline-color: ${({ theme }) => theme.css.buttonOutlineColor};
+      outline-color: ${({ theme }) => theme.css.secondaryVariantColor};
       outline-offset: 1px;
       box-shadow: none;
     }
 
     // PRIMARY buttons
     &.btn-primary {
-      color: ${({ theme }) => theme.css.primaryBackgroundColor};
-      background-color: ${({ theme }) => theme.css.primaryColor};
+      color: ${({ theme }) => theme.bcTokens.surfaceColorFormsDefault};
+      background-color: ${({ theme }) => theme.bcTokens.surfaceColorPrimaryButtonDefault};
       border: none;
       &:hover,
       &:active,
@@ -105,20 +105,20 @@ const StyledButton = styled(BootstrapButton)`
 
     // SECONDARY buttons
     &.btn-secondary {
-      color: ${({ theme }) => theme.css.primaryColor};
+      color: ${({ theme }) => theme.bcTokens.surfaceColorPrimaryButtonDefault};
       background: none;
-      border-color: ${({ theme }) => theme.css.primaryColor};
+      border-color: ${({ theme }) => theme.bcTokens.surfaceColorPrimaryButtonDefault};
       &:hover,
       &:active,
       &:focus {
-        color: ${({ theme }) => theme.css.primaryBackgroundColor};
-        background-color: ${({ theme }) => theme.css.primaryColor};
+        color: ${({ theme }) => theme.bcTokens.surfaceColorFormsDefault};
+        background-color: ${({ theme }) => theme.bcTokens.surfaceColorPrimaryButtonDefault};
       }
     }
 
     // INFO buttons
     &.btn-info {
-      color: ${({ theme }) => theme.css.buttonInfoColor};
+      color: ${({ theme }) => theme.css.borderOutlineColor};
       border: none;
       background: none;
       padding-left: 0.6rem;
@@ -126,60 +126,60 @@ const StyledButton = styled(BootstrapButton)`
       &:hover,
       &:active,
       &:focus {
-        color: ${({ theme }) => theme.css.sresIconColor};
+        color: ${({ theme }) => theme.css.secondaryVariantColor};
         background: none;
       }
     }
 
     // LIGHT buttons
     &.btn-light {
-      color: ${({ theme }) => theme.css.primaryBackgroundColor};
-      background-color: ${({ theme }) => theme.css.lightVariantColor};
+      color: ${({ theme }) => theme.bcTokens.surfaceColorFormsDefault};
+      background-color: ${({ theme }) => theme.css.borderOutlineColor};
       border: none;
       &:hover,
       &:active,
       &:focus {
-        color: ${({ theme }) => theme.css.primaryBackgroundColor};
-        background-color: ${({ theme }) => theme.css.lightVariantColor};
+        color: ${({ theme }) => theme.bcTokens.surfaceColorFormsDefault};
+        background-color: ${({ theme }) => theme.css.borderOutlineColor};
       }
     }
 
     // DARK buttons
     &.btn-dark {
-      color: ${({ theme }) => theme.css.primaryBackgroundColor};
-      background-color: ${({ theme }) => theme.css.darkVariantColor};
+      color: ${({ theme }) => theme.bcTokens.surfaceColorFormsDefault};
+      background-color: ${({ theme }) => theme.bcTokens.typographyColorSecondary};
       border: none;
       &:hover,
       &:active,
       &:focus {
-        color: ${({ theme }) => theme.css.primaryBackgroundColor};
-        background-color: ${({ theme }) => theme.css.darkVariantColor};
+        color: ${({ theme }) => theme.bcTokens.surfaceColorFormsDefault};
+        background-color: ${({ theme }) => theme.bcTokens.typographyColorSecondary};
       }
     }
 
     // DANGER buttons
     &.btn-danger {
-      color: ${({ theme }) => theme.css.primaryBackgroundColor};
-      background-color: ${({ theme }) => theme.css.dangerColor};
+      color: ${({ theme }) => theme.bcTokens.surfaceColorFormsDefault};
+      background-color: ${({ theme }) => theme.bcTokens.surfaceColorPrimaryDangerButtonDefault};
       &:hover,
       &:active,
       &:focus {
-        color: ${({ theme }) => theme.css.primaryBackgroundColor};
-        background-color: ${({ theme }) => theme.css.dangerColor};
+        color: ${({ theme }) => theme.bcTokens.surfaceColorFormsDefault};
+        background-color: ${({ theme }) => theme.bcTokens.surfaceColorPrimaryDangerButtonDefault};
       }
     }
 
     // WARNING buttons
     &.btn-warning {
-      color: ${({ theme }) => theme.css.primaryBackgroundColor};
-      background-color: ${({ theme }) => theme.css.accentColor};
-      border-color: ${({ theme }) => theme.css.accentColor};
+      color: ${({ theme }) => theme.bcTokens.surfaceColorFormsDefault};
+      background-color: ${({ theme }) => theme.bcTokens.themeGold100};
+      border-color: ${({ theme }) => theme.bcTokens.themeGold100};
       &:hover,
       &:active,
       &:focus {
-        color: ${({ theme }) => theme.css.primaryBackgroundColor};
-        border-color: ${({ theme }) => theme.css.accentColor};
-        background-color: ${({ theme }) => theme.css.accentColor};
+        color: ${({ theme }) => theme.bcTokens.surfaceColorFormsDefault};
+        border-color: ${({ theme }) => theme.bcTokens.themeGold100};
+        background-color: ${({ theme }) => theme.bcTokens.themeGold100};
       }
     }
 
@@ -210,7 +210,7 @@ const StyledButton = styled(BootstrapButton)`
 
       &:disabled,
       &.disabled {
-        color: ${({ theme }) => theme.css.disabledColor};
+        color: ${({ theme }) => theme.bcTokens.iconsColorDisabled};
         background: none;
         pointer-events: none;
       }

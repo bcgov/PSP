@@ -10,13 +10,13 @@
 }
 
 .Toastify__toast.Toastify__toast--warning {
-  color: $text-color;
-  background-color: $light-accent-color;
+  color: var(--typography-color-secondary);
+  background-color: $secondary-variant-color;
 }
 
 .Toastify__toast.Toastify__toast--error {
   color: #fff;
-  background-color: $danger-color;
+  background-color: var(--surface-color-primary-danger-button-default);
 }
 
 .tooltip {
@@ -120,12 +120,12 @@ a {
   }
 
   .error {
-    color: $danger-color;
+    color: var(--surface-color-primary-danger-button-default);
   }
 
   .btn.btn-success,
   .btn.btn-success:active {
-    background-color: $completed-color;
+    background-color: --support-border-color-success;
   }
 
   ul.pagination li {
@@ -149,10 +149,10 @@ a {
   //by default, highlight dropdown options blue
   .dropdown-item,
   .dropdown-header {
-    color: $text-color;
+    color: var(--typography-color-secondary);
     &:hover {
       color: #fff;
-      background-color: $active-color;
+      background-color: $secondary-variant-color;
     }
   }
 }

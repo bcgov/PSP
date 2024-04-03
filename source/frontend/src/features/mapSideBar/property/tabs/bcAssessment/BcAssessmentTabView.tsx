@@ -157,7 +157,7 @@ export const StyledForm = styled.div`
 `;
 
 const StyledSubtleText = styled.p`
-  color: ${props => props.theme.css.subtleColor};
+  color: ${props => props.theme.bcTokens.iconsColorDisabled};
   text-align: left;
 `;
 

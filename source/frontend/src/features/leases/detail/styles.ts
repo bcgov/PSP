@@ -17,8 +17,8 @@ export const LeaseH2 = styled.h2`
   font-size: 3.2rem;
   line-height: 4.2rem;
   text-align: left;
-  color: ${props => props.theme.css.textColor};
-  border-bottom: solid 0.4rem ${props => props.theme.css.primaryColor};
+  color: ${props => props.theme.bcTokens.typographyColorSecondary};
+  border-bottom: solid 0.4rem ${props => props.theme.bcTokens.surfaceColorPrimaryButtonDefault};
 `;
 
 export const LeaseH3 = styled.h3`
@@ -27,8 +27,8 @@ export const LeaseH3 = styled.h3`
   margin-bottom: 1rem;
   text-align: left;
   padding: 1rem 0 0.5rem 0;
-  color: ${props => props.theme.css.textColor};
-  border-bottom: solid 0.3rem ${props => props.theme.css.primaryColor};
+  color: ${props => props.theme.bcTokens.typographyColorSecondary};
+  border-bottom: solid 0.3rem ${props => props.theme.bcTokens.surfaceColorPrimaryButtonDefault};
 `;
 
 export const LeaseH4 = styled.h4`
@@ -48,7 +48,7 @@ export const LeaseH5 = styled.h5`
 
 export const LeaseH6 = styled.h6`
   font-size: 2rem;
-  color: ${props => props.theme.css.textColor};
+  color: ${props => props.theme.bcTokens.typographyColorSecondary};
   text-align: left;
   font-family: BcSans-Bold;
 `;
@@ -74,7 +74,7 @@ export const LeaseHeaderText = styled(InlineFlexDiv)`
 `;
 
 export const ExpiredWarning = styled(InlineFlexDiv)`
-  color: ${props => props.theme.css.dangerColor};
+  color: ${props => props.theme.bcTokens.surfaceColorPrimaryDangerButtonDefault};
   background-color: ${props => props.theme.css.dangerBackgroundColor};
   border-radius: 0.4rem;
   letter-spacing: 0.1rem;
@@ -88,7 +88,7 @@ export const ExpiredWarning = styled(InlineFlexDiv)`
 export const LeaseHeader = styled(InlineFlexDiv)`
   border-radius: 1rem 1rem 0 0;
   grid-area: leaseheader;
-  background-color: ${props => props.theme.css.slideOutBlue};
+  background-color: ${props => props.theme.css.secondaryVariantColor};
   color: white;
   align-items: center;
   justify-content: center;
@@ -207,13 +207,13 @@ export const TermsTable = styled(Table)`
     background-color: #f2f2f2;
   }
   &.table .tbody .tr-wrapper .tr.selected {
-    background-color: ${props => props.theme.css.accentColor};
+    background-color: ${props => props.theme.bcTokens.themeGold100};
     font-family: 'BCSans-Bold';
     margin-left: -8rem;
     &:before {
       content: 'current';
       padding-right: 1.5rem;
-      background-color: ${props => props.theme.css.accentColor};
+      background-color: ${props => props.theme.bcTokens.themeGold100};
       background-image: url(${caretRightSvgUrl});
       background-repeat: no-repeat;
       background-position: right;
@@ -240,7 +240,7 @@ export const NestedInlineField = styled(InlineInput)`
 `;
 
 export const SectionHeader = styled(FormDescriptionLabel)`
-  color: ${props => props.theme.css.primaryColor};
+  color: ${props => props.theme.bcTokens.surfaceColorPrimaryButtonDefault};
   font-size: 1.8rem;
   margin-bottom: 2rem;
 `;

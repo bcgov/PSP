@@ -63,7 +63,7 @@ const ClickableDownload = styled(FaDownload)`
     cursor: pointer;
   }
   align-self: center;
-  color: ${({ theme }) => theme.css.slideOutBlue};
+  color: ${({ theme }) => theme.css.secondaryVariantColor};
 `;
 
 export default ExportAggregatedLeasesContainer;
