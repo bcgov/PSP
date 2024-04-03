@@ -16,7 +16,7 @@ import { rest, server } from '@/mocks/msw/server';
 import { getUserMock } from '@/mocks/user.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { prettyFormatUTCDate } from '@/utils';
-import { act, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
+import { RenderOptions, act, render, userEvent } from '@/utils/test-utils';
 
 import DispositionView, { IDispositionViewProps } from './DispositionView';
 
@@ -33,6 +33,7 @@ const onCancel = jest.fn();
 const onMenuChange = jest.fn();
 const onSuccess = jest.fn();
 const onUpdateProperties = jest.fn();
+const confirmBeforeAdd = jest.fn();
 const canRemove = jest.fn();
 const setIsEditing = jest.fn();
 const onEditFileProperties = jest.fn();
@@ -54,6 +55,7 @@ const DEFAULT_PROPS: IDispositionViewProps = {
   onMenuChange,
   onSuccess,
   onUpdateProperties,
+  confirmBeforeAdd,
   canRemove,
   isEditing: false,
   setIsEditing,

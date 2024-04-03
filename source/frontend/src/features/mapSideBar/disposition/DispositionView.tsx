@@ -40,6 +40,7 @@ export interface IDispositionViewProps {
   onShowPropertySelector: () => void;
   onSuccess: (updateProperties?: boolean, updateFile?: boolean) => void;
   onUpdateProperties: (file: ApiGen_Concepts_File) => Promise<ApiGen_Concepts_File | undefined>;
+  confirmBeforeAdd: (propertyId: number) => Promise<boolean>;
   canRemove: (propertyId: number) => Promise<boolean>;
   isEditing: boolean;
   setIsEditing: (value: boolean) => void;
@@ -57,6 +58,7 @@ export const DispositionView: React.FunctionComponent<IDispositionViewProps> = (
   onShowPropertySelector,
   onSuccess,
   onUpdateProperties,
+  confirmBeforeAdd,
   canRemove,
   isEditing,
   setIsEditing,
@@ -105,6 +107,7 @@ export const DispositionView: React.FunctionComponent<IDispositionViewProps> = (
             setIsShowingPropertySelector={closePropertySelector}
             onSuccess={onSuccess}
             updateFileProperties={onUpdateProperties}
+            confirmBeforeAdd={confirmBeforeAdd}
             canRemove={canRemove}
             formikRef={formikRef}
           />

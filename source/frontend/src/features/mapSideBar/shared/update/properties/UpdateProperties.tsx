@@ -32,6 +32,8 @@ export interface IUpdatePropertiesProps {
     userOverrideCodes: UserOverrideCode[],
   ) => Promise<ApiGen_Concepts_File | undefined>;
   canRemove: (propertyId: number) => Promise<boolean>;
+  confirmBeforeAdd: (propertyId: number) => Promise<boolean>;
+  confirmBeforeAddMessage?: React.ReactNode;
   formikRef?: React.RefObject<FormikProps<any>>;
 }
 
@@ -43,10 +45,8 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
   const [showSaveConfirmModal, setShowSaveConfirmModal] = useState<boolean>(false);
   const [showAssociatedEntityWarning, setShowAssociatedEntityWarning] = useState<boolean>(false);
   const [isValid, setIsValid] = useState<boolean>(true);
-
   const { setModalContent, setDisplayModal } = useModalContext();
   const { resetFilePropertyLocations } = useContext(SideBarContext);
-
   const { getPrimaryAddressByPid, bcaLoading } = useBcaAddress();
 
   const handleSaveClick = async () => {
@@ -117,6 +117,13 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
     }
   };
 
+  const defaultConfirmBeforeAddMessage = (
+    <>
+      <p>This property has already been added to one or more files.</p>
+      <p>Do you want to acknowledge and proceed?</p>
+    </>
+  );
+
   return (
     <>
       <LoadingBackdrop show={bcaLoading} />
@@ -161,7 +168,30 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
                                   ? AddressForm.fromBcaAddress(bcaSummary?.address)
                                   : undefined;
                               }
-                              push(formProperty);
+
+                              if (
+                                formProperty.apiId &&
+                                (await props.confirmBeforeAdd(formProperty.apiId))
+                              ) {
+                                // Require user confirmation before adding property to file
+                                setModalContent({
+                                  variant: 'warning',
+                                  title: 'User Override Required',
+                                  message:
+                                    props.confirmBeforeAddMessage ?? defaultConfirmBeforeAddMessage,
+                                  okButtonText: 'Yes',
+                                  cancelButtonText: 'No',
+                                  handleOk: () => {
+                                    push(formProperty);
+                                    setDisplayModal(false);
+                                  },
+                                  handleCancel: () => setDisplayModal(false),
+                                });
+                                setDisplayModal(true);
+                              } else {
+                                // No confirmation needed - just add the property to the file
+                                push(formProperty);
+                              }
                             });
                           }, Promise.resolve());
                         }}
