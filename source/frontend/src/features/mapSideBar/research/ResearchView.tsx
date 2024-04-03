@@ -16,7 +16,7 @@ import { SideBarContext } from '../context/sidebarContext';
 import FilePropertyRouter from '../router/FilePropertyRouter';
 import { FileTabType } from '../shared/detail/FileTabs';
 import SidebarFooter from '../shared/SidebarFooter';
-import { UpdateProperties } from '../shared/update/properties/UpdateProperties';
+import UpdateProperties from '../shared/update/properties/UpdateProperties';
 import ResearchHeader from './common/ResearchHeader';
 import ResearchMenu from './common/ResearchMenu';
 import ResearchRouter from './ResearchRouter';
@@ -36,6 +36,7 @@ export interface IResearchViewProps {
   onCancel: () => void;
   onMenuChange: (selectedIndex: number) => void;
   onUpdateProperties: (file: ApiGen_Concepts_File) => Promise<ApiGen_Concepts_File | undefined>;
+  confirmBeforeAdd: (propertyId: number) => Promise<boolean>;
   canRemove: (propertyId: number) => Promise<boolean>;
   onSuccess: () => void;
 }
@@ -62,6 +63,13 @@ const ResearchView: React.FunctionComponent<IResearchViewProps> = props => {
         setIsShowingPropertySelector={props.setIsShowingPropertySelector}
         onSuccess={props.onSuccess}
         updateFileProperties={props.onUpdateProperties}
+        confirmBeforeAdd={props.confirmBeforeAdd}
+        confirmBeforeAddMessage={
+          <>
+            <p>This property has already been added to one or more research files.</p>
+            <p>Do you want to acknowledge and proceed?</p>
+          </>
+        }
         canRemove={props.canRemove}
         formikRef={props.formikRef}
       />

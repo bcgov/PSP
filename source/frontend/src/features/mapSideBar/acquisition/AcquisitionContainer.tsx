@@ -263,6 +263,10 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
     return true;
   };
 
+  const confirmBeforeAdd = async () => {
+    return false;
+  };
+
   const onUpdateProperties = (
     file: ApiGen_Concepts_File,
   ): Promise<ApiGen_Concepts_File | undefined> => {
@@ -321,6 +325,7 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
       onCancelConfirm={handleCancelConfirm}
       onUpdateProperties={onUpdateProperties}
       onSuccess={onSuccess}
+      confirmBeforeAdd={confirmBeforeAdd}
       canRemove={canRemove}
       formikRef={formikRef}
       isFormValid={isValid}

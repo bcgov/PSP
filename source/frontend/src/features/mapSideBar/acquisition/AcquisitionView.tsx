@@ -43,6 +43,7 @@ export interface IAcquisitionViewProps {
   onSuccess: () => void;
   onCancelConfirm: () => void;
   onUpdateProperties: (file: ApiGen_Concepts_File) => Promise<ApiGen_Concepts_File | undefined>;
+  confirmBeforeAdd: (propertyId: number) => Promise<boolean>;
   canRemove: (propertyId: number) => Promise<boolean>;
   isEditing: boolean;
   setIsEditing: (value: boolean) => void;
@@ -61,6 +62,7 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
   onShowPropertySelector,
   onSuccess,
   onUpdateProperties,
+  confirmBeforeAdd,
   canRemove,
   isEditing,
   setIsEditing,
@@ -112,6 +114,7 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
             setIsShowingPropertySelector={closePropertySelector}
             onSuccess={onSuccess}
             updateFileProperties={onUpdateProperties}
+            confirmBeforeAdd={confirmBeforeAdd}
             canRemove={canRemove}
             formikRef={formikRef}
           />

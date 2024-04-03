@@ -6,6 +6,7 @@ import { useHistory, useRouteMatch } from 'react-router-dom';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { FileTypes } from '@/constants/fileTypes';
+import { usePropertyAssociations } from '@/hooks/repositories/usePropertyAssociations';
 import { useResearchRepository } from '@/hooks/repositories/useResearchRepository';
 import { useQuery } from '@/hooks/use-query';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
@@ -39,6 +40,8 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
   const {
     getLastUpdatedBy: { execute: getLastUpdatedBy, loading: loadingLastUpdatedBy },
   } = useResearchRepository();
+
+  const { execute: getPropertyAssociations } = usePropertyAssociations();
 
   const mapMachine = useMapStateMachine();
   const {
@@ -201,6 +204,16 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
   //TODO: add this if we need this check for the research file.
   const canRemove = async () => true;
 
+  // Warn user that property is part of an existing research file
+  const confirmBeforeAdd = async (propertyId: number) => {
+    const response = await getPropertyAssociations(propertyId);
+    const researchAssociations = response?.researchAssociations ?? [];
+    const otherResearchFiles = researchAssociations.filter(
+      a => exists(a.id) && a.id !== researchFileId,
+    );
+    return otherResearchFiles.length > 0;
+  };
+
   const onUpdateProperties = (
     file: ApiGen_Concepts_File,
   ): Promise<ApiGen_Concepts_File | undefined> => {
@@ -238,6 +251,7 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
       onCancel={handleCancelClick}
       onMenuChange={onMenuChange}
       onUpdateProperties={onUpdateProperties}
+      confirmBeforeAdd={confirmBeforeAdd}
       canRemove={canRemove}
       onSuccess={onSuccess}
       isFormValid={isValid}
