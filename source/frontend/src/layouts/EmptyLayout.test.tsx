@@ -22,7 +22,7 @@ jest.mock('@/hooks/pims-api/useApiHealth', () => ({
 }));
 
 describe('Empty Layout', () => {
-  process.env.REACT_APP_TENANT = 'MOTI';
+  import.meta.env.VITE_TENANT = 'MOTI';
 
   it('renders', async () => {
     await act(async () => {

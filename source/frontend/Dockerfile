@@ -12,7 +12,7 @@ ENTRYPOINT ["dumb-init", "--"]
 WORKDIR /usr/app
 
 # install a specific NPM version
-RUN npm install -g npm@6.14.14
+RUN npm install -g npm@10.2.4
 
 COPY package*.json ./
 

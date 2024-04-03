@@ -164,6 +164,7 @@ namespace Pims.Dal.Repositories
                 .Include(p => p.Address)
                     .ThenInclude(a => a.Country)
                 .Where(p => ids.Any(s => s == p.PropertyId))
+                .AsNoTracking()
                 .ToList();
             return property;
         }
@@ -193,11 +194,7 @@ namespace Pims.Dal.Repositories
 
             var query = Context.PimsProperties.AsNoTracking();
 
-            if(includeRetired)
-            {
-                query = query.Where(r => !r.IsRetired.HasValue || (r.IsRetired.HasValue && r.IsRetired.Value));
-            }
-            else
+            if(!includeRetired)
             {
                 query = query.Where(r => !r.IsRetired.HasValue || (r.IsRetired.HasValue && !r.IsRetired.Value));
             }
@@ -239,11 +236,7 @@ namespace Pims.Dal.Repositories
 
             var query = Context.PimsProperties.AsNoTracking();
 
-            if(includeRetired)
-            {
-                query = query.Where(r => !r.IsRetired.HasValue || (r.IsRetired.HasValue && r.IsRetired.Value));
-            }
-            else
+            if(!includeRetired)
             {
                 query = query.Where(r => !r.IsRetired.HasValue || (r.IsRetired.HasValue && !r.IsRetired.Value));
             }

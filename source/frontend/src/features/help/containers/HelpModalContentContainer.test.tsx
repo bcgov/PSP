@@ -17,7 +17,7 @@ describe('HelpModalContentContainer component', () => {
     });
 
   beforeEach(() => {
-    process.env.REACT_APP_TENANT = 'MOTI';
+    import.meta.env.VITE_TENANT = 'MOTI';
   });
 
   it('renders correctly', async () => {

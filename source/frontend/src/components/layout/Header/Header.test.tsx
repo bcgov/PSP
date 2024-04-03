@@ -66,7 +66,7 @@ describe('App Header', () => {
   });
 
   it('renders for MOTI tenant', async () => {
-    process.env.REACT_APP_TENANT = 'MOTI';
+    import.meta.env.VITE_TENANT = 'MOTI';
     mockKeycloak({ authenticated: false });
     const { findByText } = setup();
     expect(await findByText(config['MOTI'].title)).toBeInTheDocument();

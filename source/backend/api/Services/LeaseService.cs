@@ -210,6 +210,12 @@ namespace Pims.Api.Services
             pimsUser.ThrowInvalidAccessToLeaseFile(lease.RegionCode);
 
             var currentProperties = _propertyLeaseRepository.GetAllByLeaseId(lease.LeaseId);
+            var newPropertiesAdded = lease.PimsPropertyLeases.Where(x => !currentProperties.Any(y => y.Internal_Id == x.Internal_Id)).ToList();
+
+            if(newPropertiesAdded.Any(x => x.Property.IsRetired.HasValue && x.Property.IsRetired.Value))
+            {
+                throw new BusinessRuleViolationException("Retired property can not be selected.");
+            }
 
             if (currentLease.LeaseStatusTypeCode != lease.LeaseStatusTypeCode)
             {
@@ -380,7 +386,7 @@ namespace Pims.Api.Services
                     var pin = leaseProperty.Property.Pin.Value;
                     try
                     {
-                        var foundProperty = _propertyRepository.GetByPin(pin);
+                        var foundProperty = _propertyRepository.GetByPin(pin, true);
                         if (foundProperty.IsRetired.HasValue && foundProperty.IsRetired.Value)
                         {
                             throw new BusinessRuleViolationException("Retired property can not be selected.");

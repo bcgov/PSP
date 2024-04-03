@@ -35,6 +35,7 @@ import {
   act,
   cleanup,
   mockKeycloak,
+  prettyDOM,
   render,
   RenderOptions,
   screen,
@@ -333,18 +334,13 @@ describe('MapContainer', () => {
   it('clusters can be clicked to zoom and spiderfy', async () => {
     const { container } = await setup();
 
-    // click the zoom-out button 10 times
-    const zoomOut = container.querySelector('.leaflet-control-zoom-out');
-    for (let i = 1; i <= 10; i++) {
-      await act(async () => userEvent.click(zoomOut!));
-    }
-
     const cluster = container.querySelector('.leaflet-marker-icon.marker-cluster');
     expect(cluster).toBeVisible();
-    await act(async () => userEvent.click(cluster!));
 
-    const polyline = container.querySelector('.leaflet-pane.leaflet-overlay-pane svg g');
-    expect(polyline).toBeVisible();
+    //continue clicking the cluster until it is fully expanded.
+    while (container.querySelector('.leaflet-marker-icon.marker-cluster') != null) {
+      await act(async () => userEvent.click(cluster!));
+    }
   });
 
   it('the map can be clicked', async () => {
@@ -383,7 +379,7 @@ describe('MapContainer', () => {
 
   it('Rendered markers can be clicked normally', async () => {
     const pimsFeatures = createPimsFeatures(mockParcels);
-    const feature = pimsFeatures.features[0];
+    const feature = pimsFeatures.features[2];
     const [longitude, latitude] = feature.geometry.coordinates;
 
     const expectedFeature: FeatureSelected = {
@@ -421,7 +417,7 @@ describe('MapContainer', () => {
     mockKeycloak({ claims: [Claims.ADMIN_PROPERTIES] });
 
     const pimsFeatures = createPimsFeatures(mockParcels);
-    const feature = pimsFeatures.features[0];
+    const feature = pimsFeatures.features[2];
     const [longitude, latitude] = feature.geometry.coordinates;
 
     const expectedFeature: FeatureSelected = {

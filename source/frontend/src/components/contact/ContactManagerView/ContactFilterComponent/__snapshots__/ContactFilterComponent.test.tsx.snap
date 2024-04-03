@@ -519,7 +519,7 @@ exports[`ContactFilterComponent matches snapshot 1`] = `
               </div>
             </div>
             <svg>
-              active.svg
+              <span />
             </svg>
             <span>
               Show active contacts only
