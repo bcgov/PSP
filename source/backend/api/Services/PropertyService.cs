@@ -307,7 +307,7 @@ namespace Pims.Api.Services
             property.PropertyStatusTypeCode = "UNKNOWN";
             property.SurplusDeclarationTypeCode = "UNKNOWN";
 
-            property.IsPropertyOfInterest = isPropertyOfInterest;
+            //property.IsPropertyOfInterest = isPropertyOfInterest; TODO: Fix mapings
             property.IsOwned = isOwned;
 
             if (property.Address != null)

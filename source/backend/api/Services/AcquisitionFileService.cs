@@ -342,6 +342,8 @@ namespace Pims.Api.Services
                     throw new BusinessRuleViolationException("You must remove all takes and interest holders from an acquisition file property before removing that property from an acquisition file");
                 }
                 _acquisitionFilePropertyRepository.Delete(deletedProperty);
+                /*
+                TODO: Fix mapings
                 if (deletedProperty.Property.IsPropertyOfInterest)
                 {
                     PimsProperty propertyWithAssociations = _propertyRepository.GetAllAssociationsById(deletedProperty.PropertyId);
@@ -354,6 +356,7 @@ namespace Pims.Api.Services
                         _propertyRepository.Delete(deletedProperty.Property);
                     }
                 }
+                */
             }
 
             _acqFileRepository.CommitTransaction();
@@ -741,7 +744,6 @@ namespace Pims.Api.Services
                 throw new BusinessRuleViolationException("The file you are editing is not active or draft, so you cannot save changes. Refresh your browser to see file state.");
             }
         }
-
 
         private void AddNoteIfStatusChanged(PimsAcquisitionFile updateAcquisitionFile)
         {

@@ -521,6 +521,8 @@ namespace Pims.Api.Services
             foreach (var deletedProperty in differenceSet)
             {
                 _dispositionFilePropertyRepository.Delete(deletedProperty);
+                /*
+                TODO: Fix mapings
                 if (deletedProperty.Property.IsPropertyOfInterest)
                 {
                     PimsProperty propertyWithAssociations = _propertyRepository.GetAllAssociationsById(deletedProperty.PropertyId);
@@ -534,6 +536,7 @@ namespace Pims.Api.Services
                         _propertyRepository.Delete(deletedProperty.Property);
                     }
                 }
+                */
             }
 
             _dispositionFileRepository.CommitTransaction();
