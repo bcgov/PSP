@@ -8,9 +8,12 @@ import { RadioGroup, yesNoRadioGroupValues } from '@/components/common/form/Radi
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import AreaContainer from '@/components/measurements/AreaContainer';
+import { Roles } from '@/constants';
 import * as API from '@/constants/API';
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
+import { ApiGen_CodeTypes_AcquisitionTakeStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_AcquisitionTakeStatusTypes';
 import { withNameSpace } from '@/utils/formUtils';
 
 import { StyledBorderSection, StyledNoTabSection } from '../styles';
@@ -31,6 +34,7 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({
   const currentTake = getIn(values, withNameSpace(nameSpace));
   const { getOptionsByType } = useLookupCodeHelpers();
   const { setModalContent, setDisplayModal } = useModalContext();
+  const { hasRole } = useKeycloakWrapper();
 
   const takeTypeOptions = getOptionsByType(API.TAKE_TYPES);
   const takeStatusTypeOptions = getOptionsByType(API.TAKE_STATUS_TYPES);
@@ -48,6 +52,7 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({
     values,
     withNameSpace(nameSpace, 'isNewLicenseToConstruct'),
   );
+  const takeStatusTypeCode = getIn(values, withNameSpace(nameSpace, 'takeStatusTypeCode'));
 
   const getModalWarning = (onOk: () => void) => {
     return (e: React.ChangeEvent<any>) => {
@@ -70,6 +75,11 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({
     };
   };
 
+  const canEditTake =
+    currentTake?.id === 0 ||
+    takeStatusTypeCode !== ApiGen_CodeTypes_AcquisitionTakeStatusTypes.COMPLETE ||
+    hasRole(Roles.SYSTEM_ADMINISTRATOR);
+
   return (
     <Section
       className="position-relative"
@@ -77,44 +87,49 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({
       isCollapsable={true}
       initiallyExpanded={true}
     >
-      <StyledRemoveLinkButton
-        style={{ position: 'absolute', right: '1rem' }}
-        title="delete take"
-        data-testid="take-delete-button"
-        icon={<FaTrash size={24} id={`take-delete-${takeIndex}`} title="delete take" />}
-        onClick={() => {
-          setModalContent({
-            ...getDeleteModalProps(),
-            handleOk: () => {
-              onRemove(takeIndex);
-              setDisplayModal(false);
-            },
-          });
-          setDisplayModal(true);
-        }}
-      ></StyledRemoveLinkButton>
+      {canEditTake && (
+        <StyledRemoveLinkButton
+          style={{ position: 'absolute', right: '1rem' }}
+          title="delete take"
+          data-testid="take-delete-button"
+          icon={<FaTrash size={24} id={`take-delete-${takeIndex}`} title="delete take icon" />}
+          onClick={() => {
+            setModalContent({
+              ...getDeleteModalProps(),
+              handleOk: () => {
+                onRemove(takeIndex);
+                setDisplayModal(false);
+              },
+            });
+            setDisplayModal(true);
+          }}
+        ></StyledRemoveLinkButton>
+      )}
 
       <SectionField label="Take type" required labelWidth="4" contentWidth="5">
         <Select
           field={withNameSpace(nameSpace, 'takeTypeCode')}
           options={takeTypeOptions}
           placeholder="Select take type"
+          disabled={!canEditTake}
         />
       </SectionField>
       <SectionField label="Take status" required labelWidth="4" contentWidth="5">
         <Select
           field={withNameSpace(nameSpace, 'takeStatusTypeCode')}
           options={takeStatusTypeOptions}
+          disabled={!canEditTake}
         />
       </SectionField>
       <SectionField label="Site contamination" labelWidth="4" contentWidth="5">
         <Select
           field={withNameSpace(nameSpace, 'takeSiteContamTypeCode')}
           options={takeSiteContamTypeOptions}
+          disabled={!canEditTake}
         />
       </SectionField>
       <SectionField label="Description of this Take" labelWidth="12">
-        <TextArea field={withNameSpace(nameSpace, 'description')} />
+        <TextArea field={withNameSpace(nameSpace, 'description')} disabled={!canEditTake} />
       </SectionField>
       <StyledNoTabSection header="Area">
         <StyledBorderSection>
@@ -131,6 +146,7 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({
                 setFieldValue(withNameSpace(nameSpace, 'isNewHighwayDedication'), 'false');
                 setFieldValue(withNameSpace(nameSpace, 'newHighwayDedicationArea'), 0);
               })}
+              disabled={!canEditTake}
             />
           </SectionField>
           {isNewHighwayDedication === 'true' && (
@@ -168,6 +184,7 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({
               field={withNameSpace(nameSpace, 'isAcquiredForInventory')}
               radioValues={yesNoRadioGroupValues}
               flexDirection="row"
+              disabled={!canEditTake}
             />
           </SectionField>
         </StyledBorderSection>
@@ -185,6 +202,7 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({
                 setFieldValue(withNameSpace(nameSpace, 'statutoryRightOfWayArea'), 0);
                 setFieldValue(withNameSpace(nameSpace, 'srwEndDt'), '');
               })}
+              disabled={!canEditTake}
             />
           </SectionField>
           {isNewInterestInSrw === 'true' && (
@@ -201,7 +219,7 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({
                       areaUnitTypeCode,
                     );
                   }}
-                  isEditable
+                  isEditable={canEditTake}
                   unitCode={getIn(
                     values,
                     withNameSpace(nameSpace, 'statutoryRightOfWayAreaUnitTypeCode'),
@@ -231,6 +249,7 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({
                 setFieldValue(withNameSpace(nameSpace, 'landActEndDt'), '');
                 setFieldValue(withNameSpace(nameSpace, 'landActTypeCode'), '');
               })}
+              disabled={!canEditTake}
             />
           </SectionField>
           {isNewLandAct === 'true' && (
@@ -240,6 +259,7 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({
                   field={withNameSpace(nameSpace, 'landActTypeCode')}
                   placeholder="Select Land Act"
                   options={takeLandActTypeOptions}
+                  disabled={!canEditTake}
                 />
               </SectionField>
               <SectionField label="Area" labelWidth="12">
@@ -251,7 +271,7 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({
                       areaUnitTypeCode,
                     );
                   }}
-                  isEditable
+                  isEditable={canEditTake}
                   unitCode={getIn(values, withNameSpace(nameSpace, 'landActAreaUnitTypeCode'))}
                   landArea={currentTake.landActArea}
                   field={withNameSpace(nameSpace, 'landActArea')}
@@ -261,6 +281,7 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({
                 <FastDatePicker
                   field={withNameSpace(nameSpace, 'landActEndDt')}
                   formikProps={formikProps}
+                  disabled={!canEditTake}
                 />
               </SectionField>
             </>
@@ -280,6 +301,7 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({
                 setFieldValue(withNameSpace(nameSpace, 'licenseToConstructArea'), 0);
                 setFieldValue(withNameSpace(nameSpace, 'ltcEndDt'), '');
               })}
+              disabled={!canEditTake}
             />
           </SectionField>
           {isNewLicenseToConstruct === 'true' && (
@@ -296,7 +318,7 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({
                       areaUnitTypeCode,
                     );
                   }}
-                  isEditable
+                  isEditable={canEditTake}
                   unitCode={getIn(
                     values,
                     withNameSpace(nameSpace, 'licenseToConstructAreaUnitTypeCode'),
@@ -310,6 +332,7 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({
                 <FastDatePicker
                   field={withNameSpace(nameSpace, 'ltcEndDt')}
                   formikProps={formikProps}
+                  disabled={!canEditTake}
                 />
               </SectionField>
             </>
@@ -327,6 +350,7 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({
                 setFieldValue(withNameSpace(nameSpace, 'isThereSurplus'), 'false');
                 setFieldValue(withNameSpace(nameSpace, 'surplusArea'), 0);
               })}
+              disabled={!canEditTake}
             />
           </SectionField>
           {isThereSurplus === 'true' && (
@@ -340,7 +364,7 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({
                       areaUnitTypeCode,
                     );
                   }}
-                  isEditable
+                  isEditable={canEditTake}
                   unitCode={getIn(values, withNameSpace(nameSpace, 'surplusAreaUnitTypeCode'))}
                   landArea={currentTake.surplusArea}
                   field={withNameSpace(nameSpace, 'surplusArea')}

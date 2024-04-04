@@ -8,6 +8,10 @@ import { act, render, RenderOptions, screen, userEvent } from '@/utils/test-util
 
 import { TakeModel } from './models';
 import TakesUpdateForm, { ITakesUpdateFormProps } from './TakesUpdateForm';
+import { ApiGen_CodeTypes_AcquisitionTakeStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_AcquisitionTakeStatusTypes';
+import { Claims, Roles } from '@/constants';
+
+jest.mock('@react-keycloak/web');
 
 const history = createMemoryHistory();
 const storeState = {
@@ -31,6 +35,7 @@ describe('TakesUpdateForm component', () => {
         ...renderOptions,
         store: storeState,
         history,
+        useMockAuthentication: true,
       },
     );
 
@@ -170,5 +175,38 @@ describe('TakesUpdateForm component', () => {
     await act(async () => userEvent.click(confirmButton));
 
     expect(queryByDisplayValue('20234.28')).toBeNull();
+  });
+
+  it('hides the delete button when the take has been completed', () => {
+    let completeTake =  getMockApiTakes()[0];
+    const takeModel = new TakeModel(completeTake);
+    takeModel.takeStatusTypeCode = ApiGen_CodeTypes_AcquisitionTakeStatusTypes.COMPLETE;
+
+    const { queryByTitle, getByTestId } = setup({props: {
+      takes: [takeModel],
+    }});
+
+    const deleteButton = queryByTitle('delete take');
+    expect(deleteButton).toBeNull();
+
+    const noButton = getByTestId('radio-takes.0.istheresurplus-no');
+    expect(noButton).toBeDisabled();
+  });
+
+  it('shows the edit button when the take has been completed for Admin users', () => {
+    let completeTake =  getMockApiTakes()[0];
+    const takeModel = new TakeModel(completeTake);
+    takeModel.takeStatusTypeCode = ApiGen_CodeTypes_AcquisitionTakeStatusTypes.COMPLETE;
+
+    const { queryByTitle } = setup({
+      props: {
+      takes: [takeModel],
+      },
+      claims: [Claims.ACQUISITION_EDIT],
+      roles: [Roles.SYSTEM_ADMINISTRATOR]
+    });
+
+    const deleteButton = queryByTitle('delete take');
+    expect(deleteButton).toBeInTheDocument();
   });
 });

@@ -1,5 +1,4 @@
 import { ApiGen_CodeTypes_AcquisitionStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_AcquisitionStatusTypes';
-import { ApiGen_CodeTypes_AcquisitionTakeStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_AcquisitionTakeStatusTypes';
 import { ApiGen_CodeTypes_AgreementStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_AgreementStatusTypes';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 
@@ -62,28 +61,6 @@ class StatusUpdateSolver {
     }
 
     return canEdit;
-  }
-
-  canDeleteTake(takeStatus: ApiGen_CodeTypes_AcquisitionTakeStatusTypes): boolean {
-    if (this.acquisitionFile === null) {
-      return false;
-    }
-
-    let canDelete = false;
-    switch (takeStatus) {
-      case ApiGen_CodeTypes_AcquisitionTakeStatusTypes.CANCELLED:
-      case ApiGen_CodeTypes_AcquisitionTakeStatusTypes.INPROGRESS:
-        canDelete = true;
-        break;
-      case ApiGen_CodeTypes_AcquisitionTakeStatusTypes.COMPLETE:
-        canDelete = false;
-        break;
-      default:
-        canDelete = false;
-        break;
-    }
-
-    return canDelete;
   }
 
   canEditOrDeleteCompensation(isDraftCompensation: boolean | null): boolean {
