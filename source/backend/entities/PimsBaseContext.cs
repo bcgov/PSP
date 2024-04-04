@@ -5607,12 +5607,9 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.FileNumber).HasComment("The (ARCS/ORCS) number identifying the Property File.");
             entity.Property(e => e.FileNumberSuffix).HasComment("A suffix to distinguish between Property Files with the same number.");
             entity.Property(e => e.GeneralLocation).HasComment("Descriptive location of the property, primarily for H120 activities.");
-            entity.Property(e => e.IsDisposed).HasComment("Has the property currently in disposition status?  This infers that the property was once owned by the Ministry but has since ceased to retain ownership of the property.");
-            entity.Property(e => e.IsOtherInterest).HasComment("Is this a property of other interest to the Ministry?");
             entity.Property(e => e.IsOwned)
                 .HasDefaultValue(true)
                 .HasComment("Is the property currently owned?");
-            entity.Property(e => e.IsPropertyOfInterest).HasComment("Is this a property of interest to the Ministry?");
             entity.Property(e => e.IsProvincialPublicHwy).HasComment("Is this property a provincial public highway?");
             entity.Property(e => e.IsRetired).HasComment("If the property was the source of a subdivision operation or the target of a consolidation operation, the property is marked as retired.");
             entity.Property(e => e.IsRwyBeltDomPatent)
@@ -7176,6 +7173,7 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
             entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
             entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.CompletionDt).HasComment("Date the take was completed.");
             entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
             entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
             entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");

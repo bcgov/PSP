@@ -52,6 +52,9 @@ public partial class PimsTakeHist
     [StringLength(4000)]
     public string Description { get; set; }
 
+    [Column("COMPLETION_DT")]
+    public DateOnly? CompletionDt { get; set; }
+
     [Column("IS_NEW_HIGHWAY_DEDICATION")]
     public bool IsNewHighwayDedication { get; set; }
 
