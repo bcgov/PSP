@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using Microsoft.Extensions.Logging;
+using Pims.Api.Constants;
 using Pims.Api.Models.CodeTypes;
 using Pims.Core.Exceptions;
 using Pims.Dal.Entities;
@@ -70,6 +71,10 @@ namespace Pims.Api.Services
             {
                 throw new BusinessRuleViolationException("Retired records are referenced for historical purposes only and cannot be edited or deleted. If the take has been added in error, contact your system administrator to re-open the file, which will allow take deletion.");
             }
+            else if (takes.Any(t => t.TakeStatusTypeCode == TakeStatusTypes.COMPLETE.ToString() && t.CompletionDt == null))
+            {
+                throw new BusinessRuleViolationException("A completed take must have a completion date.");
+            }
             else
             {
                 // Complete Takes can only be deleted or set to InProgress by Admins when File is Active/Draft
@@ -90,10 +95,6 @@ namespace Pims.Api.Services
                         }
                     }
                 }
-            }
-            else if (takes.Any(t => t.TakeStatusTypeCode == TakeStatusTypes.COMPLETE.ToString() && t.CompletionDt == null))
-            {
-                throw new BusinessRuleViolationException("A completed take must have a completion date.");
             }
 
             _takeRepository.UpdateAcquisitionPropertyTakes(acquisitionFilePropertyId, takes);
