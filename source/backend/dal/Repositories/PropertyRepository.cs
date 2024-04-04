@@ -326,7 +326,6 @@ namespace Pims.Dal.Repositories
             property.SurplusDeclarationTypeCode = existingProperty.SurplusDeclarationTypeCode;
             property.SurplusDeclarationComment = existingProperty.SurplusDeclarationComment;
             property.SurplusDeclarationDate = existingProperty.SurplusDeclarationDate;
-            property.IsOwned = existingProperty.IsOwned;
             property.IsRetired = existingProperty.IsRetired;
             property.IsPropertyOfInterest = existingProperty.IsPropertyOfInterest;
             property.IsVisibleToOtherAgencies = existingProperty.IsVisibleToOtherAgencies;

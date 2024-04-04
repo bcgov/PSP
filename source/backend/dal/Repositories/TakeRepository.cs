@@ -46,7 +46,7 @@ namespace Pims.Dal.Repositories
         /// <param name="fileId"></param>
         /// <param name="acquisitionFilePropertyId"></param>
         /// <returns></returns>
-        public IEnumerable<PimsTake> GetAllByPropertyId(long fileId, long acquisitionFilePropertyId)
+        public IEnumerable<PimsTake> GetAllByAcqPropertyId(long fileId, long acquisitionFilePropertyId)
         {
             return Context.PimsTakes
                 .Include(t => t.PropertyAcquisitionFile)
@@ -56,6 +56,18 @@ namespace Pims.Dal.Repositories
                 .Include(t => t.LandActTypeCodeNavigation)
                 .Where(t => t.PropertyAcquisitionFile.AcquisitionFileId == fileId
                         && t.PropertyAcquisitionFile.PropertyId == acquisitionFilePropertyId)
+                .AsNoTracking();
+        }
+
+        /// <summary>
+        /// Get all Takes for a Property.
+        /// </summary>
+        /// <param name="propertyId"></param>
+        /// <returns></returns>
+        public IEnumerable<PimsTake> GetAllByPropertyId(long propertyId)
+        {
+            return Context.PimsTakes
+                .Where(t => t.PropertyAcquisitionFile.PropertyId == propertyId)
                 .AsNoTracking();
         }
 
