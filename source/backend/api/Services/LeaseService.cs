@@ -244,6 +244,8 @@ namespace Pims.Api.Services
             List<PimsPropertyLease> differenceSet = currentProperties.Where(x => !lease.PimsPropertyLeases.Any(y => y.Internal_Id == x.Internal_Id)).ToList();
             foreach (var deletedProperty in differenceSet)
             {
+                /*
+                TODO: Fix mapings
                 if (deletedProperty.Property.IsPropertyOfInterest)
                 {
                     PimsProperty propertyWithAssociations = _propertyRepository.GetAllAssociationsById(deletedProperty.PropertyId);
@@ -256,6 +258,7 @@ namespace Pims.Api.Services
                         _propertyRepository.Delete(deletedProperty.Property);
                     }
                 }
+                */
             }
 
             _leaseRepository.CommitTransaction();
