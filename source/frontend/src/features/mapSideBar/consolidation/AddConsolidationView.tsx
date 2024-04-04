@@ -15,8 +15,9 @@ import { IMapSelectorContainerProps } from '@/components/propertySelector/MapSel
 import { StyledTabView } from '@/components/propertySelector/PropertySelectorTabsView';
 import { PropertySelectorPidSearchContainerProps } from '@/components/propertySelector/search/PropertySelectorPidSearchContainer';
 import PropertySearchSelectorPidFormView from '@/components/propertySelector/search/PropertySelectorPidSearchView';
+import { AreaUnitTypes } from '@/constants/areaUnitTypes';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
-import { exists } from '@/utils';
+import { convertArea, exists } from '@/utils';
 
 import MapSideBarLayout from '../layout/MapSideBarLayout';
 import { AddressForm, PropertyForm } from '../shared/models';
@@ -149,6 +150,15 @@ const AddConsolidationView: React.FunctionComponent<
                     await properties.reduce(async (promise, property) => {
                       return promise.then(async () => {
                         const formProperty = PropertyForm.fromMapProperty(property);
+                        formProperty.landArea =
+                          property.landArea && property.areaUnit
+                            ? convertArea(
+                                property.landArea,
+                                property.areaUnit,
+                                AreaUnitTypes.SquareMeters,
+                              )
+                            : 0;
+                        formProperty.areaUnit = AreaUnitTypes.SquareMeters;
                         if (property.pid) {
                           formProperty.address = await getPrimaryAddressByPid(property.pid);
                           allProperties.push(formProperty.toApi());
