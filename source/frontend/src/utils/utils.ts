@@ -31,7 +31,7 @@ export function round(value: number, decimalPlaces = 2): number {
 
 export const enumFromValue = <T extends Record<string, string>>(val: string, _enum: T) => {
   const enumName = (Object.keys(_enum) as Array<keyof T>).find(k => _enum[k] === val);
-  if (!enumName) return null;
+  if (!enumName) return undefined;
   return _enum[enumName];
 };
 
