@@ -32,10 +32,12 @@ export const TakesYupSchema = Yup.object().shape({
         is: (isNewLandAct: boolean) => isNewLandAct,
         then: Yup.string().required('Land Act is required'),
       }),
-      completionDt: Yup.string().when('takeStatusTypeCode', {
-        is: (takeStatusTypeCode: string) => takeStatusTypeCode === TakesStatusTypes.COMPLETE,
-        then: Yup.string().nullable().required('A completed take must have a completion date.'),
-      }),
+      completionDt: Yup.string()
+        .nullable()
+        .when('takeStatusTypeCode', {
+          is: (takeStatusTypeCode: string) => takeStatusTypeCode === TakesStatusTypes.COMPLETE,
+          then: Yup.string().nullable().required('A completed take must have a completion date.'),
+        }),
     }),
   ),
 });
