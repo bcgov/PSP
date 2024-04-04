@@ -14,8 +14,8 @@ namespace Pims.Api.Models.Concepts.Property
                 .Map(dest => dest.Coordinates, src => src.Coordinates);
 
             config.NewConfig<PolygonModel, Geometry>()
-                .ConstructUsing(src => NetTopologySuite.NtsGeometryServices.Instance.CreateGeometryFactory(4326)
-                .CreatePolygon(src.Coordinates.Select(coordinate => GeometryHelper.CreatePoint(coordinate.X, coordinate.Y, SpatialReference.WGS84).Coordinate).ToArray()));
+                .ConstructUsing(src => src != null ? NetTopologySuite.NtsGeometryServices.Instance.CreateGeometryFactory(4326)
+                .CreatePolygon(src.Coordinates.Select(coordinate => GeometryHelper.CreatePoint(coordinate.X, coordinate.Y, SpatialReference.WGS84).Coordinate).ToArray()) : null);
 
             config.NewConfig<Coordinate[], PolygonModel>()
                 .Map(dest => dest.Coordinates, src => src);
