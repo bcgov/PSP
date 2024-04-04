@@ -328,7 +328,7 @@ namespace Pims.Dal.Repositories
             property.SurplusDeclarationDate = existingProperty.SurplusDeclarationDate;
             property.IsOwned = existingProperty.IsOwned;
             property.IsRetired = existingProperty.IsRetired;
-            property.IsPropertyOfInterest = existingProperty.IsPropertyOfInterest;
+            //property.IsPropertyOfInterest = existingProperty.IsPropertyOfInterest; TODO: Fix mapings
             property.IsVisibleToOtherAgencies = existingProperty.IsVisibleToOtherAgencies;
             property.IsSensitive = existingProperty.IsSensitive;
 
@@ -415,10 +415,10 @@ namespace Pims.Dal.Repositories
             var existingProperty = Context.PimsProperties
                 .FirstOrDefault(p => p.PropertyId == property.Internal_Id) ?? throw new KeyNotFoundException();
 
-            existingProperty.IsPropertyOfInterest = state.isPropertyOfInterest;
+            //existingProperty.IsPropertyOfInterest = state.isPropertyOfInterest;
             existingProperty.IsOwned = state.isOwned;
-            existingProperty.IsDisposed = state.isDisposed;
-            existingProperty.IsOtherInterest = state.isOtherInterest;
+            //existingProperty.IsDisposed = state.isDisposed;
+            //existingProperty.IsOtherInterest = state.isOtherInterest;
 
             if (state.isOwned)
             {
@@ -520,6 +520,7 @@ namespace Pims.Dal.Repositories
             {
                 ownershipBuilder.Or(p => p.IsOwned);
             }
+            /* TODO: Fix mapings
             if (filter.IsPropertyOfInterest)
             {
                 ownershipBuilder.Or(p => p.IsPropertyOfInterest);
@@ -536,6 +537,7 @@ namespace Pims.Dal.Repositories
             {
                 ownershipBuilder.Or(p => p.IsRetired.HasValue && p.IsRetired.Value);
             }
+            */
 
             predicate.And(ownershipBuilder);
 

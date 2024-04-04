@@ -106,6 +106,7 @@ namespace Pims.Dal.Helpers.Extensions
                 {
                     ownershipBuilder = ownershipBuilder.Or(p => p.IsOwned && p.IsRetired != true);
                 }
+                /* TODO: Fix mapings
                 if (filter.Ownership.Contains("isPropertyOfInterest"))
                 {
                     ownershipBuilder = ownershipBuilder.Or(p => p.IsPropertyOfInterest && p.IsRetired != true);
@@ -117,7 +118,7 @@ namespace Pims.Dal.Helpers.Extensions
                 if (filter.Ownership.Contains("isDisposed"))
                 {
                     ownershipBuilder = ownershipBuilder.Or(p => p.IsDisposed && p.IsRetired != true);
-                }
+                }*/
             }
             else
             {
