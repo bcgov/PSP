@@ -12,7 +12,7 @@ import {
 } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { ReactComponent as RealEstateAgent } from '@/assets/images/real-estate-agent.svg';
+import RealEstateAgent from '@/assets/images/real-estate-agent.svg?react';
 import { FileTypes } from '@/constants';
 import FileLayout from '@/features/mapSideBar/layout/FileLayout';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
@@ -76,7 +76,7 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
   const { file, lastUpdatedBy } = useContext(SideBarContext);
   const acquisitionFile: ApiGen_Concepts_AcquisitionFile = {
     ...file,
-  } as ApiGen_Concepts_AcquisitionFile;
+  } as unknown as ApiGen_Concepts_AcquisitionFile;
 
   // match for property menu routes - eg /property/1/ltsa
   const fileMatch = matchPath<Record<string, string>>(location.pathname, `${match.path}/:tab`);

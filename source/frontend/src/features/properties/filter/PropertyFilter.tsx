@@ -8,7 +8,6 @@ import { ResetButton, SearchButton } from '@/components/common/buttons';
 import { Form, Input, Select } from '@/components/common/form';
 import { TableSort } from '@/components/Table/TableSort';
 import { useGeocoderRepository } from '@/hooks/useGeocoderRepository';
-import { useRouterFilter } from '@/hooks/useRouterFilter';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { FilterBarSchema } from '@/utils/YupSchema';
 
@@ -41,26 +40,12 @@ export interface IPropertyFilterProps {
 export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterProps>> = ({
   defaultFilter,
   onChange,
-  sort,
-  onSorting,
   toggle = SearchToggleOption.Map,
   useGeocoder,
 }) => {
   const [propertyFilter, setPropertyFilter] = useState<IPropertyFilter>(defaultFilter);
 
   const { getSitePids } = useGeocoderRepository();
-
-  useRouterFilter<IPropertyFilter>({
-    filter: propertyFilter,
-    setFilter: filter => {
-      onChange(filter);
-      setPropertyFilter(filter);
-    },
-    key: 'propertyFilter',
-    sort: sort,
-    setSorting: onSorting,
-    exactPath: '/mapview',
-  });
 
   const history = useHistory();
   const initialValues = useMemo(() => {

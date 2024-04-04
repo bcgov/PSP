@@ -2,7 +2,7 @@ import { Col, Row } from 'react-bootstrap';
 import { FaCaretRight } from 'react-icons/fa';
 import styled from 'styled-components';
 
-import { ReactComponent as EditMapMarker } from '@/assets/images/edit-map-marker.svg';
+import EditMapMarker from '@/assets/images/edit-map-marker.svg?react';
 import { EditButton } from '@/components/common/EditButton';
 import { Claims } from '@/constants/index';
 import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
