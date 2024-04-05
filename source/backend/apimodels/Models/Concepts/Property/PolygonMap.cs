@@ -11,7 +11,7 @@ namespace Pims.Api.Models.Concepts.Property
         public void Register(TypeAdapterConfig config)
         {
             config.NewConfig<Geometry, PolygonModel>()
-                .Map(dest => dest.Coordinates, src => src.Coordinates);
+                .Map(dest => dest.Coordinates, src => src != null && src.GeometryType == Geometry.TypeNamePolygon ? src.Coordinates : null);
 
             config.NewConfig<PolygonModel, Geometry>()
                 .ConstructUsing(src => src != null ? NetTopologySuite.NtsGeometryServices.Instance.CreateGeometryFactory(4326)
