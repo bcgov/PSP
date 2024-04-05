@@ -115,6 +115,12 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
             onSuccess={onSuccess}
             updateFileProperties={onUpdateProperties}
             confirmBeforeAdd={confirmBeforeAdd}
+            confirmBeforeAddMessage={
+              <>
+                <p>This property has already been added to one or more acquisition files.</p>
+                <p>Do you want to acknowledge and proceed?</p>
+              </>
+            }
             canRemove={canRemove}
             formikRef={formikRef}
           />

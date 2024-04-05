@@ -16,6 +16,7 @@ import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineCo
 import { FileTypes } from '@/constants/index';
 import { InventoryTabNames } from '@/features/mapSideBar/property/InventoryTabs';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
+import { usePropertyAssociations } from '@/hooks/repositories/usePropertyAssociations';
 import { useQuery } from '@/hooks/use-query';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
 import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
@@ -84,6 +85,7 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
   } = useAcquisitionProvider();
 
   const { setModalContent, setDisplayModal } = useModalContext();
+  const { execute: getPropertyAssociations } = usePropertyAssociations();
   const mapMachine = useMapStateMachine();
 
   const formikRef = useRef<FormikProps<any>>(null);
@@ -263,9 +265,18 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
     return true;
   };
 
-  const confirmBeforeAdd = async () => {
-    return false;
-  };
+  // Warn user that property is part of an existing acquisition file
+  const confirmBeforeAdd = useCallback(
+    async (propertyId: number) => {
+      const response = await getPropertyAssociations(propertyId);
+      const acquisitionAssociations = response?.acquisitionAssociations ?? [];
+      const otherAcqFiles = acquisitionAssociations.filter(
+        a => exists(a.id) && a.id !== acquisitionFileId,
+      );
+      return otherAcqFiles.length > 0;
+    },
+    [getPropertyAssociations, acquisitionFileId],
+  );
 
   const onUpdateProperties = (
     file: ApiGen_Concepts_File,

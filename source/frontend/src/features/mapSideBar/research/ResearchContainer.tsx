@@ -1,6 +1,5 @@
 import { FormikProps } from 'formik';
-import * as React from 'react';
-import { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
@@ -205,14 +204,17 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
   const canRemove = async () => true;
 
   // Warn user that property is part of an existing research file
-  const confirmBeforeAdd = async (propertyId: number) => {
-    const response = await getPropertyAssociations(propertyId);
-    const researchAssociations = response?.researchAssociations ?? [];
-    const otherResearchFiles = researchAssociations.filter(
-      a => exists(a.id) && a.id !== researchFileId,
-    );
-    return otherResearchFiles.length > 0;
-  };
+  const confirmBeforeAdd = useCallback(
+    async (propertyId: number) => {
+      const response = await getPropertyAssociations(propertyId);
+      const researchAssociations = response?.researchAssociations ?? [];
+      const otherResearchFiles = researchAssociations.filter(
+        a => exists(a.id) && a.id !== researchFileId,
+      );
+      return otherResearchFiles.length > 0;
+    },
+    [getPropertyAssociations, researchFileId],
+  );
 
   const onUpdateProperties = (
     file: ApiGen_Concepts_File,
