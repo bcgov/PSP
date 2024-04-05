@@ -31,13 +31,14 @@ describe('ResearchProperties component', () => {
   const setup = (
     renderOptions: RenderOptions & {
       initialForm: ResearchForm;
+      confirmBeforeAdd?: (propertyId: number) => Promise<boolean>;
     } & Partial<IMapStateMachineContext>,
   ) => {
     // render component under test
     const component = render(
       <MapStateMachineProvider /*values={{}}*/>
         <Formik initialValues={renderOptions.initialForm} onSubmit={noop}>
-          <ResearchProperties />
+          <ResearchProperties confirmBeforeAdd={renderOptions.confirmBeforeAdd ?? jest.fn()} />
         </Formik>
       </MapStateMachineProvider>,
       {
