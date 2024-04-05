@@ -80,6 +80,20 @@ exports[`ResearchContainer component renders as expected 1`] = `
   cursor: pointer;
 }
 
+.c17 {
+  height: 100%;
+}
+
+.c17 .tab-content {
+  border-radius: 0 0.4rem 0.4rem 0.4rem;
+  height: calc(100% - 2.5rem);
+  overflow-y: auto;
+}
+
+.c17 .tab-content .tab-pane {
+  position: relative;
+}
+
 .c19 {
   padding-top: 1rem;
 }
@@ -111,20 +125,6 @@ exports[`ResearchContainer component renders as expected 1`] = `
 
 .c23 {
   font-weight: bold;
-}
-
-.c17 {
-  height: 100%;
-}
-
-.c17 .tab-content {
-  border-radius: 0 0.4rem 0.4rem 0.4rem;
-  height: calc(100% - 2.5rem);
-  overflow-y: auto;
-}
-
-.c17 .tab-content .tab-pane {
-  position: relative;
 }
 
 .c4 {
@@ -223,7 +223,45 @@ exports[`ResearchContainer component renders as expected 1`] = `
   <div>
     <div
       class="Toastify"
-    />
+    >
+      <div
+        class="Toastify__toast-container Toastify__toast-container--top-right"
+      >
+        <div
+          class="Toastify__toast Toastify__toast--error Toastify--animate Toastify__bounce-enter--top-right"
+          id="eo2d437kf"
+        >
+          <div
+            class="Toastify__toast-body"
+            role="alert"
+          >
+            Failed to retrive last-updated-by information for research file.
+          </div>
+          <button
+            aria-label="close"
+            class="Toastify__close-button Toastify__close-button--error"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              viewBox="0 0 14 16"
+            >
+              <path
+                d="M7.71 8.23l3.75 3.75-1.48 1.48-3.75-3.75-3.75 3.75L1 11.98l3.75-3.75L1 4.48 2.48 3l3.75 3.75L9.98 3l1.48 1.48-3.75 3.75z"
+                fill-rule="evenodd"
+              />
+            </svg>
+          </button>
+          <div
+            aria-hidden="true"
+            aria-label="notification timer"
+            class="Toastify__progress-bar Toastify__progress-bar--animated Toastify__progress-bar--error"
+            role="progressbar"
+            style="animation-duration: 5000ms; animation-play-state: running; opacity: 0;"
+          />
+        </div>
+      </div>
+    </div>
     <div />
     <div
       class=""
