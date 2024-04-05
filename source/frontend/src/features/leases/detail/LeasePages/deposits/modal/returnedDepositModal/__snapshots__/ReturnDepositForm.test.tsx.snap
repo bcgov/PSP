@@ -68,6 +68,7 @@ exports[`ReturnDepositForm component renders as expected 1`] = `
   -ms-letter-spacing: 0.1rem;
   letter-spacing: 0.1rem;
   cursor: pointer;
+  height: 3.8rem;
 }
 
 .c8.btn:hover {
@@ -677,6 +678,7 @@ exports[`ReturnDepositForm component renders with data as expected 1`] = `
   -ms-letter-spacing: 0.1rem;
   letter-spacing: 0.1rem;
   cursor: pointer;
+  height: 3.8rem;
 }
 
 .c8.btn:hover {
