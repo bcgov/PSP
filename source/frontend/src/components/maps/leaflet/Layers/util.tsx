@@ -180,6 +180,12 @@ export function getMarkerIcon(
     } else {
       return null;
     }
+  } else if (showDisposed && feature?.properties?.IS_DISPOSED === true) {
+    if (selected) {
+      return disposedIconSelect;
+    } else {
+      return disposedIcon;
+    }
   } else if (feature?.properties?.IS_OWNED === true) {
     if (selected) {
       return parcelIconSelect;
@@ -191,17 +197,14 @@ export function getMarkerIcon(
     } else {
       return otherInterestIcon;
     }
-  } else if (feature?.properties?.IS_PROPERTY_OF_INTEREST === true) {
+  } else if (
+    feature?.properties?.HAS_ACTIVE_ACQUISITION_FILE === true ||
+    feature?.properties?.HAS_ACTIVE_RESEARCH_FILE === true
+  ) {
     if (selected) {
       return propertyOfInterestIconSelect;
     } else {
       return propertyOfInterestIcon;
-    }
-  } else if (showDisposed && feature?.properties?.IS_DISPOSED === true) {
-    if (selected) {
-      return disposedIconSelect;
-    } else {
-      return disposedIcon;
     }
   }
 
