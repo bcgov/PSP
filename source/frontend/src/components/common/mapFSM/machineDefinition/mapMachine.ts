@@ -383,6 +383,7 @@ export const mapMachine = createMachine<MachineContext>({
     },
     mapVisible: {
       type: 'parallel',
+      entry: [send({ type: 'REFRESH_PROPERTIES', searchCriteria: defaultPropertyFilter })],
       on: {
         EXIT_MAP: {
           target: 'notMap',

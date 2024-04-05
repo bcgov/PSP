@@ -253,7 +253,7 @@ namespace Pims.Api.Services
 
             if (currentAcquisitionStatus != AcquisitionStatusTypes.COMPLT && acquisitionFile.AcquisitionFileStatusTypeCode == AcquisitionStatusTypes.COMPLT.ToString())
             {
-                ValidateDrafts(acquisitionFile);
+                ValidateDraftsOnComplete(acquisitionFile);
             }
 
             if (!_statusSolver.CanEditDetails(currentAcquisitionStatus) && !_user.HasPermission(Permissions.SystemAdmin))
@@ -345,6 +345,8 @@ namespace Pims.Api.Services
                     throw new BusinessRuleViolationException("You must remove all takes and interest holders from an acquisition file property before removing that property from an acquisition file");
                 }
                 _acquisitionFilePropertyRepository.Delete(deletedProperty);
+                /*
+                TODO: Fix mapings
                 if (deletedProperty.Property.IsPropertyOfInterest)
                 {
                     PimsProperty propertyWithAssociations = _propertyRepository.GetAllAssociationsById(deletedProperty.PropertyId);
@@ -357,6 +359,7 @@ namespace Pims.Api.Services
                         _propertyRepository.Delete(deletedProperty.Property);
                     }
                 }
+                */
             }
 
             _acqFileRepository.CommitTransaction();
@@ -717,7 +720,7 @@ namespace Pims.Api.Services
             }
         }
 
-        private void ValidateDrafts(PimsAcquisitionFile incomingFile)
+        private void ValidateDraftsOnComplete(PimsAcquisitionFile incomingFile)
         {
             var agreements = _agreementRepository.GetAgreementsByAcquisitionFile(incomingFile.AcquisitionFileId);
             var compensations = _compensationRequisitionRepository.GetAllByAcquisitionFileId(incomingFile.AcquisitionFileId);
@@ -728,6 +731,12 @@ namespace Pims.Api.Services
             }
 
             var takes = _takeRepository.GetAllByAcquisitionFileId(incomingFile.AcquisitionFileId);
+
+            if (!takes.Any())
+            {
+                throw new BusinessRuleViolationException("You cannot complete an acquisition file that has no takes.");
+            }
+
             if (takes.Any(t => t.TakeStatusTypeCode == AcquisitionTakeStatusTypes.INPROGRESS.ToString()))
             {
                 throw new BusinessRuleViolationException("Please ensure all in-progress property takes have been completed or canceled before completing an Acquisition File.");
@@ -788,6 +797,8 @@ namespace Pims.Api.Services
                 }
 
                 // PSP-7892: Follow ownership priority when updating an existing property
+                /*
+                TODO: Fix mapings
                 if (property.IsOwned || isOwned)
                 {
                     isOwned = true;
@@ -816,6 +827,7 @@ namespace Pims.Api.Services
                 {
                     throw new UserOverrideException(UserOverrideCode.PoiToInventory, "You have one or more take(s) that will be changed from 'Other Interest' to 'Core Inventory'. Do you want to acknowledge and proceed?");
                 }
+                */
 
                 PropertyOwnershipState ownership = new() { isOwned = isOwned, isPropertyOfInterest = isPropertyOfInterest, isOtherInterest = isOtherInterest, isDisposed = false };
                 _propertyRepository.TransferFileProperty(property, ownership);
