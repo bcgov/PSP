@@ -55,6 +55,12 @@ public partial class PimsTake
     public string Description { get; set; }
 
     /// <summary>
+    /// Date the take was completed.
+    /// </summary>
+    [Column("COMPLETION_DT")]
+    public DateOnly? CompletionDt { get; set; }
+
+    /// <summary>
     /// Is there a new right of way? (default = FALSE)
     /// </summary>
     [Column("IS_NEW_HIGHWAY_DEDICATION")]

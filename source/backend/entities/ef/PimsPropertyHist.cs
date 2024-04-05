@@ -132,15 +132,6 @@ public partial class PimsPropertyHist
     [Column("IS_OWNED")]
     public bool IsOwned { get; set; }
 
-    [Column("IS_DISPOSED")]
-    public bool IsDisposed { get; set; }
-
-    [Column("IS_PROPERTY_OF_INTEREST")]
-    public bool IsPropertyOfInterest { get; set; }
-
-    [Column("IS_OTHER_INTEREST")]
-    public bool IsOtherInterest { get; set; }
-
     [Column("IS_VISIBLE_TO_OTHER_AGENCIES")]
     public bool IsVisibleToOtherAgencies { get; set; }
 
@@ -248,4 +239,13 @@ public partial class PimsPropertyHist
 
     [Column("PROP_MGMT_ORG_ID")]
     public long? PropMgmtOrgId { get; set; }
+
+    [Column("IS_DISPOSED")]
+    public bool? IsDisposed { get; set; }
+
+    [Column("IS_PROPERTY_OF_INTEREST")]
+    public bool? IsPropertyOfInterest { get; set; }
+
+    [Column("IS_OTHER_INTEREST")]
+    public bool? IsOtherInterest { get; set; }
 }

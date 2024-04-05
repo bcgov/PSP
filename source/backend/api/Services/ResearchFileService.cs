@@ -133,6 +133,8 @@ namespace Pims.Api.Services
             foreach (var deletedProperty in differenceSet)
             {
                 _researchFilePropertyRepository.Delete(deletedProperty);
+                /*
+                TODO: Fix mapings
                 if (deletedProperty.Property.IsPropertyOfInterest == true)
                 {
                     PimsProperty propertyWithAssociations = _propertyRepository.GetAllAssociationsById(deletedProperty.PropertyId);
@@ -145,6 +147,7 @@ namespace Pims.Api.Services
                         _propertyRepository.Delete(deletedProperty.Property);
                     }
                 }
+                */
             }
 
             _researchFilePropertyRepository.CommitTransaction();
@@ -266,7 +269,7 @@ namespace Pims.Api.Services
             property.PropertyStatusTypeCode = "UNKNOWN";
             property.SurplusDeclarationTypeCode = "UNKNOWN";
 
-            property.IsPropertyOfInterest = true;
+            //property.IsPropertyOfInterest = true; TODO: Fix mapings
 
             if (property.Address != null)
             {
