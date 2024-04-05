@@ -9,7 +9,11 @@ import { ResearchFileNameGuide } from '../common/ResearchFileNameGuide';
 import { UpdateProjectsSubForm } from '../common/updateProjects/UpdateProjectsSubForm';
 import ResearchProperties from './ResearchProperties';
 
-const AddResearchForm: React.FC = () => {
+export interface IAddResearchFormProps {
+  confirmBeforeAdd: (propertyId: number) => Promise<boolean>;
+}
+
+const AddResearchForm: React.FC<IAddResearchFormProps> = props => {
   return (
     <StyledFormWrapper>
       <Section>
@@ -27,7 +31,7 @@ const AddResearchForm: React.FC = () => {
       <Section header="Project">
         <UpdateProjectsSubForm field="researchFileProjects" />
       </Section>
-      <ResearchProperties />
+      <ResearchProperties confirmBeforeAdd={props.confirmBeforeAdd} />
     </StyledFormWrapper>
   );
 };
