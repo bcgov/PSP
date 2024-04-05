@@ -36,8 +36,9 @@ export interface PIMS_Property_Location_View {
   readonly IS_SENSITIVE: boolean | null;
   readonly IS_OWNED: boolean | null;
   readonly IS_DISPOSED: boolean | null;
-  readonly IS_PROPERTY_OF_INTEREST: boolean | null;
   readonly IS_OTHER_INTEREST: boolean | null;
+  readonly HAS_ACTIVE_ACQUISITION_FILE: boolean | null;
+  readonly HAS_ACTIVE_RESEARCH_FILE: boolean | null;
   readonly IS_RETIRED: boolean | null;
   readonly IS_VISIBLE_TO_OTHER_AGENCIES: boolean | null;
   readonly ZONING: string | null;
@@ -82,7 +83,8 @@ export const EmptyPropertyLocation: PIMS_Property_Location_View = {
   IS_SENSITIVE: null,
   IS_OWNED: null,
   IS_DISPOSED: null,
-  IS_PROPERTY_OF_INTEREST: null,
+  HAS_ACTIVE_ACQUISITION_FILE: null,
+  HAS_ACTIVE_RESEARCH_FILE: null,
   IS_OTHER_INTEREST: null,
   IS_RETIRED: null,
   IS_VISIBLE_TO_OTHER_AGENCIES: null,
@@ -130,7 +132,8 @@ export interface PIMS_Property_Boundary_View {
   readonly IS_SENSITIVE: boolean | null;
   readonly IS_OWNED: boolean | null;
   readonly IS_DISPOSED: boolean | null;
-  readonly IS_PROPERTY_OF_INTEREST: boolean | null;
+  readonly HAS_ACTIVE_RESEARCH_FILE: boolean | null;
+  readonly HAS_ACTIVE_ACQUISITION_FILE: boolean | null;
   readonly IS_OTHER_INTEREST: boolean | null;
   readonly IS_RETIRED: boolean | null;
   readonly IS_VISIBLE_TO_OTHER_AGENCIES: boolean | null;

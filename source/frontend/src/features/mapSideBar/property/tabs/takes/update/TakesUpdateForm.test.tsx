@@ -178,13 +178,15 @@ describe('TakesUpdateForm component', () => {
   });
 
   it('hides the delete button when the take has been completed', () => {
-    let completeTake =  getMockApiTakes()[0];
+    let completeTake = getMockApiTakes()[0];
     const takeModel = new TakeModel(completeTake);
     takeModel.takeStatusTypeCode = ApiGen_CodeTypes_AcquisitionTakeStatusTypes.COMPLETE;
 
-    const { queryByTitle, getByTestId } = setup({props: {
-      takes: [takeModel],
-    }});
+    const { queryByTitle, getByTestId } = setup({
+      props: {
+        takes: [takeModel],
+      },
+    });
 
     const deleteButton = queryByTitle('delete take');
     expect(deleteButton).toBeNull();
@@ -194,16 +196,16 @@ describe('TakesUpdateForm component', () => {
   });
 
   it('shows the edit button when the take has been completed for Admin users', () => {
-    let completeTake =  getMockApiTakes()[0];
+    let completeTake = getMockApiTakes()[0];
     const takeModel = new TakeModel(completeTake);
     takeModel.takeStatusTypeCode = ApiGen_CodeTypes_AcquisitionTakeStatusTypes.COMPLETE;
 
     const { queryByTitle } = setup({
       props: {
-      takes: [takeModel],
+        takes: [takeModel],
       },
       claims: [Claims.ACQUISITION_EDIT],
-      roles: [Roles.SYSTEM_ADMINISTRATOR]
+      roles: [Roles.SYSTEM_ADMINISTRATOR],
     });
 
     const deleteButton = queryByTitle('delete take');
