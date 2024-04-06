@@ -87,8 +87,7 @@ namespace Pims.Api.Services
 
             if (_takeInteractionSolver.ResultsInOwnedProperty(completedTakes))
             {
-                currentProperty.IsOwned = true;
-                _propertyRepository.Update(currentProperty);
+                _propertyRepository.TransferFileProperty(currentProperty, true);
             }
 
             _takeRepository.CommitTransaction();

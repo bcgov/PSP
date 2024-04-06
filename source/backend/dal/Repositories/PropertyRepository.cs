@@ -194,7 +194,7 @@ namespace Pims.Dal.Repositories
 
             var query = Context.PimsProperties.AsNoTracking();
 
-            if(!includeRetired)
+            if (!includeRetired)
             {
                 query = query.Where(r => !r.IsRetired.HasValue || (r.IsRetired.HasValue && !r.IsRetired.Value));
             }
@@ -236,7 +236,7 @@ namespace Pims.Dal.Repositories
 
             var query = Context.PimsProperties.AsNoTracking();
 
-            if(!includeRetired)
+            if (!includeRetired)
             {
                 query = query.Where(r => !r.IsRetired.HasValue || (r.IsRetired.HasValue && !r.IsRetired.Value));
             }
@@ -268,7 +268,7 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
-        /// Get the property for the specified id value.
+        /// Get the property with file associations for the specified id value.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -290,6 +290,22 @@ namespace Pims.Dal.Repositories
                 .FirstOrDefault(p => p.PropertyId == id);
 
             return property;
+        }
+
+        /// <summary>
+        /// Get the total count of associated files for the given property id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public long GetAllAssociationsCountById(long id)
+        {
+            PimsProperty propertyWithAssociations = this.GetAllAssociationsById(id);
+            var leaseAssociationCount = propertyWithAssociations.PimsPropertyLeases.Count;
+            var researchAssociationCount = propertyWithAssociations.PimsPropertyResearchFiles.Count;
+            var acquisitionAssociationCount = propertyWithAssociations.PimsPropertyAcquisitionFiles.Count;
+            var dispositionAssociationCount = propertyWithAssociations.PimsDispositionFileProperties.Count;
+
+            return leaseAssociationCount + researchAssociationCount + acquisitionAssociationCount + dispositionAssociationCount;
         }
 
         /// <summary>
@@ -327,7 +343,6 @@ namespace Pims.Dal.Repositories
             property.SurplusDeclarationComment = existingProperty.SurplusDeclarationComment;
             property.SurplusDeclarationDate = existingProperty.SurplusDeclarationDate;
             property.IsRetired = existingProperty.IsRetired;
-            //property.IsPropertyOfInterest = existingProperty.IsPropertyOfInterest; TODO: Fix mapings
             property.IsVisibleToOtherAgencies = existingProperty.IsVisibleToOtherAgencies;
             property.IsSensitive = existingProperty.IsSensitive;
 
@@ -407,19 +422,16 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="property">The property to update.</param>
         /// <returns>The updated property.</returns>
-        public PimsProperty TransferFileProperty(PimsProperty property, PropertyOwnershipState state)
+        public PimsProperty TransferFileProperty(PimsProperty property, bool isOwned)
         {
             property.ThrowIfNull(nameof(property));
 
             var existingProperty = Context.PimsProperties
                 .FirstOrDefault(p => p.PropertyId == property.Internal_Id) ?? throw new KeyNotFoundException();
 
-            //existingProperty.IsPropertyOfInterest = state.isPropertyOfInterest;
-            existingProperty.IsOwned = state.isOwned;
-            //existingProperty.IsDisposed = state.isDisposed;
-            //existingProperty.IsOtherInterest = state.isOtherInterest;
+            existingProperty.IsOwned = isOwned;
 
-            if (state.isOwned)
+            if (isOwned)
             {
                 existingProperty.PropertyClassificationTypeCode = "COREOPER";
             }
