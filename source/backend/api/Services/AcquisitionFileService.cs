@@ -250,7 +250,7 @@ namespace Pims.Api.Services
 
             if (currentAcquisitionStatus != AcquisitionStatusTypes.COMPLT && acquisitionFile.AcquisitionFileStatusTypeCode == AcquisitionStatusTypes.COMPLT.ToString())
             {
-                ValidateDrafts(acquisitionFile);
+                ValidateDraftsOnComplete(acquisitionFile);
             }
 
             if (!_statusSolver.CanEditDetails(currentAcquisitionStatus) && !_user.HasPermission(Permissions.SystemAdmin))
@@ -705,7 +705,7 @@ namespace Pims.Api.Services
             }
         }
 
-        private void ValidateDrafts(PimsAcquisitionFile incomingFile)
+        private void ValidateDraftsOnComplete(PimsAcquisitionFile incomingFile)
         {
             var agreements = _agreementRepository.GetAgreementsByAcquisitionFile(incomingFile.AcquisitionFileId);
             var compensations = _compensationRequisitionRepository.GetAllByAcquisitionFileId(incomingFile.AcquisitionFileId);
@@ -716,6 +716,12 @@ namespace Pims.Api.Services
             }
 
             var takes = _takeRepository.GetAllByAcquisitionFileId(incomingFile.AcquisitionFileId);
+
+            if (!takes.Any())
+            {
+                throw new BusinessRuleViolationException("You cannot complete an acquisition file that has no takes.");
+            }
+
             if (takes.Any(t => t.TakeStatusTypeCode == AcquisitionTakeStatusTypes.INPROGRESS.ToString()))
             {
                 throw new BusinessRuleViolationException("Please ensure all in-progress property takes have been completed or canceled before completing an Acquisition File.");

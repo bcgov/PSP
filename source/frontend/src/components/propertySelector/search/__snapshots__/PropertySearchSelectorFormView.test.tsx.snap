@@ -34,6 +34,7 @@ exports[`PropertySearchSelectorFormView component renders as expected when provi
   -ms-letter-spacing: 0.1rem;
   letter-spacing: 0.1rem;
   cursor: pointer;
+  height: 3.8rem;
 }
 
 .c5.btn:hover {

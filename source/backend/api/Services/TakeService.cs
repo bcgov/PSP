@@ -69,11 +69,35 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.PropertyView, Permissions.AcquisitionFileView);
 
             var currentAcquistionFile = _acqFileRepository.GetByAcquisitionFilePropertyId(acquisitionFilePropertyId);
+            var currentFilePropertyTakes = _takeRepository.GetAllByPropertyAcquisitionFileId(acquisitionFilePropertyId);
 
             var currentAcquisitionStatus = Enum.Parse<AcquisitionStatusTypes>(currentAcquistionFile.AcquisitionFileStatusTypeCode);
-            if (!_statusSolver.CanEditTakes(currentAcquisitionStatus) && !_user.HasPermission(Permissions.SystemAdmin))
+
+            // No user can update the takes when the File is not Active/Draft
+            if (!_statusSolver.CanEditTakes(currentAcquisitionStatus))
             {
-                throw new BusinessRuleViolationException("The file you are editing is not active or draft, so you cannot save changes. Refresh your browser to see file state.");
+                throw new BusinessRuleViolationException("Retired records are referenced for historical purposes only and cannot be edited or deleted. If the take has been added in error, contact your system administrator to re-open the file, which will allow take deletion.");
+            }
+            else
+            {
+                // Complete Takes can only be deleted or set to InProgress by Admins when File is Active/Draft
+                if (!_user.HasPermission(Permissions.SystemAdmin))
+                {
+                    var currentCompleteTakes = currentFilePropertyTakes
+                        .Where(x => x.TakeStatusTypeCode == AcquisitionTakeStatusTypes.COMPLETE.ToString()).ToList();
+
+                    if (currentCompleteTakes.Count > 0)
+                    {
+                        foreach (var completeTake in currentCompleteTakes)
+                        {
+                            var updatedTake = takes.FirstOrDefault(x => x.TakeId == completeTake.TakeId);
+                            if (updatedTake is null || updatedTake?.TakeStatusTypeCode != completeTake.TakeStatusTypeCode)
+                            {
+                                throw new BusinessRuleViolationException("Retired records are referenced for historical purposes only and cannot be edited or deleted. If the take has been added in error, contact your system administrator to re-open the file, which will allow take deletion.");
+                            }
+                        }
+                    }
+                }
             }
 
             // Update takes

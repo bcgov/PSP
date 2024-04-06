@@ -34,6 +34,7 @@ exports[`Compensation Requisition UpdateForm component renders as expected 1`] =
   -ms-letter-spacing: 0.1rem;
   letter-spacing: 0.1rem;
   cursor: pointer;
+  height: 3.8rem;
 }
 
 .c11.btn:hover {
@@ -1325,13 +1326,13 @@ exports[`Compensation Requisition UpdateForm component renders as expected 1`] =
       class="c12"
     >
       <div
-        class="c13 justify-content-end mt-auto no-gutters row"
+        class="c13 justify-content-end mb-12 mt-12 p-0 no-gutters row"
       >
         <div
           class="pr-3 col-auto"
         />
         <div
-          class="pr-4 col-auto"
+          class="pr-6 col-auto"
         >
           <button
             class="c11 Button btn btn-secondary"
@@ -1348,7 +1349,7 @@ exports[`Compensation Requisition UpdateForm component renders as expected 1`] =
           class="col-auto"
         >
           <button
-            class="c11 Button Button--disabled btn btn-primary"
+            class="c11 Button Button--disabled mr-9 btn btn-primary"
             disabled=""
             type="button"
           >
