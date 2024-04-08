@@ -218,24 +218,6 @@ public partial class PimsProperty
     public bool IsOwned { get; set; }
 
     /// <summary>
-    /// Has the property currently in disposition status?  This infers that the property was once owned by the Ministry but has since ceased to retain ownership of the property.
-    /// </summary>
-    [Column("IS_DISPOSED")]
-    public bool IsDisposed { get; set; }
-
-    /// <summary>
-    /// Is this a property of interest to the Ministry?
-    /// </summary>
-    [Column("IS_PROPERTY_OF_INTEREST")]
-    public bool IsPropertyOfInterest { get; set; }
-
-    /// <summary>
-    /// Is this a property of other interest to the Ministry?
-    /// </summary>
-    [Column("IS_OTHER_INTEREST")]
-    public bool IsOtherInterest { get; set; }
-
-    /// <summary>
     /// Is the property visible to other agencies?
     /// </summary>
     [Column("IS_VISIBLE_TO_OTHER_AGENCIES")]

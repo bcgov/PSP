@@ -44,7 +44,7 @@ exports[`AcquisitionView component renders as expected 1`] = `
             title="Acquisition file Icon"
             width="2.6rem"
           >
-            real-estate-agent.svg
+            <span />
           </svg>
           Acquisition File
         </h1>
@@ -282,6 +282,8 @@ exports[`AcquisitionView component renders as expected 1`] = `
 
 .c12 .nav-item:hover {
   border-color: transparent;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
 }
 
 .c12 .nav-item.active {
@@ -290,29 +292,9 @@ exports[`AcquisitionView component renders as expected 1`] = `
 }
 
 .c20 {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  z-index: 999;
-  top: 0;
-  left: 0;
-  background-color: rgba(0,0,0,0.5);
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-align-content: center;
-  -ms-flex-line-pack: center;
-  align-content: center;
-  justify-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
+  font-size: 1.6rem;
+  -webkit-text-decoration: none;
+  text-decoration: none;
 }
 
 .c11 {
@@ -1083,14 +1065,11 @@ exports[`AcquisitionView component renders as expected 1`] = `
                       <div
                         class="collapse show"
                       >
-                        <div
+                        <p
                           class="c20"
                         >
-                          <div
-                            class="spinner-border text-warning"
-                            data-testid="filter-backdrop-loading"
-                          />
-                        </div>
+                          Each property in this file should be owned by the owner(s) in this section
+                        </p>
                         <div
                           class="pb-2 row"
                         >

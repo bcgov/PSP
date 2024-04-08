@@ -277,6 +277,13 @@ const sideBarStates = {
           actions: assign({ selectedFeatureDataset: () => null }),
           target: 'fullScreen',
         },
+        CHANGE_SIDEBAR: {
+          actions: [
+            assign({
+              filePropertyLocations: () => [],
+            }),
+          ],
+        },
 
         SET_FILE_PROPERTY_LOCATIONS: {
           actions: [
@@ -376,6 +383,7 @@ export const mapMachine = createMachine<MachineContext>({
     },
     mapVisible: {
       type: 'parallel',
+      entry: [send({ type: 'REFRESH_PROPERTIES', searchCriteria: defaultPropertyFilter })],
       on: {
         EXIT_MAP: {
           target: 'notMap',

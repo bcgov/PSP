@@ -34,6 +34,7 @@ exports[`Contact Search Results Table matches snapshot 1`] = `
   -ms-letter-spacing: 0.1rem;
   letter-spacing: 0.1rem;
   cursor: pointer;
+  height: 3.8rem;
 }
 
 .c5.btn:hover {
@@ -578,7 +579,7 @@ exports[`Contact Search Results Table matches snapshot 1`] = `
             title=""
           >
             <svg>
-              active.svg
+              <span />
             </svg>
           </div>
           <div
@@ -742,7 +743,7 @@ exports[`Contact Search Results Table matches snapshot 1`] = `
             title=""
           >
             <svg>
-              active.svg
+              <span />
             </svg>
           </div>
           <div
@@ -906,7 +907,7 @@ exports[`Contact Search Results Table matches snapshot 1`] = `
             title=""
           >
             <svg>
-              inactive.svg
+              <span />
             </svg>
           </div>
           <div

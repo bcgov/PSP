@@ -82,6 +82,7 @@ export const Tabs = styled(BsTabs)`
     &:hover {
       color: ${props => props.theme.css.secondaryVariantColor};
       border-color: transparent;
+      text-decoration: underline;
     }
     &.active {
       background-color: ${props => props.theme.css.filterBackgroundColor};

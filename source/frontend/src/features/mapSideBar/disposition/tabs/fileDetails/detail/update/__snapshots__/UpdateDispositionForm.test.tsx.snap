@@ -34,6 +34,7 @@ exports[`UpdateDispositionForm component renders as expected 1`] = `
   -ms-letter-spacing: 0.1rem;
   letter-spacing: 0.1rem;
   cursor: pointer;
+  height: 3.8rem;
 }
 
 .c9.btn:hover {
@@ -202,7 +203,7 @@ exports[`UpdateDispositionForm component renders as expected 1`] = `
   line-height: 2rem;
 }
 
-.c2 {
+.c4 {
   font-weight: bold;
   border-bottom: 0.2rem solid;
   margin-bottom: 2rem;
@@ -216,14 +217,14 @@ exports[`UpdateDispositionForm component renders as expected 1`] = `
   border-radius: 0.5rem;
 }
 
-.c4.required::before {
+.c3.required::before {
   content: '*';
   position: absolute;
   top: 0.75rem;
   left: 0rem;
 }
 
-.c3 {
+.c2 {
   font-weight: bold;
 }
 
@@ -261,9 +262,8 @@ exports[`UpdateDispositionForm component renders as expected 1`] = `
   opacity: unset;
 }
 
-.c0 .form-section {
-  margin: 0;
-  padding-left: 0;
+.c0 {
+  padding-top: 1rem;
 }
 
 .c0 .tab-pane .form-section {
@@ -281,17 +281,6 @@ exports[`UpdateDispositionForm component renders as expected 1`] = `
     <div
       class="c1 form-section"
     >
-      <h2
-        class="c2"
-      >
-        <div
-          class="no-gutters row"
-        >
-          <div
-            class="col"
-          />
-        </div>
-      </h2>
       <div
         class="collapse show"
       >
@@ -302,13 +291,13 @@ exports[`UpdateDispositionForm component renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c2"
             >
               Status:
             </label>
           </div>
           <div
-            class="c4 required text-left col"
+            class="c3 required text-left col"
           >
             <div
               class="required form-group"
@@ -371,7 +360,7 @@ exports[`UpdateDispositionForm component renders as expected 1`] = `
       class="c1 form-section"
     >
       <h2
-        class="c2"
+        class="c4"
       >
         <div
           class="no-gutters row"
@@ -393,13 +382,13 @@ exports[`UpdateDispositionForm component renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c2"
             >
               Ministry project:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c3 text-left col"
           >
             <div
               class="c5 form-group"
@@ -466,13 +455,13 @@ exports[`UpdateDispositionForm component renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c2"
             >
               Funding:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c3 text-left col"
           >
             <div
               class="form-group"
@@ -497,7 +486,7 @@ exports[`UpdateDispositionForm component renders as expected 1`] = `
       class="c1 form-section"
     >
       <h2
-        class="c2"
+        class="c4"
       >
         <div
           class="no-gutters row"
@@ -519,13 +508,13 @@ exports[`UpdateDispositionForm component renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c2"
             >
               Assigned date:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c3 text-left col"
           >
             <div
               class="c6 form-group"
@@ -566,13 +555,13 @@ exports[`UpdateDispositionForm component renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c2"
             >
               Disposition completed date:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c3 text-left col"
           >
             <div
               class="c6 form-group"
@@ -613,7 +602,7 @@ exports[`UpdateDispositionForm component renders as expected 1`] = `
       class="c1 form-section"
     >
       <h2
-        class="c2"
+        class="c4"
       >
         <div
           class="no-gutters row"
@@ -635,13 +624,13 @@ exports[`UpdateDispositionForm component renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c2"
             >
               Disposition file name:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c3 text-left col"
           >
             <div
               class="input form-group"
@@ -663,7 +652,7 @@ exports[`UpdateDispositionForm component renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c2"
             >
               Reference number:
               <span
@@ -693,7 +682,7 @@ exports[`UpdateDispositionForm component renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c3 text-left col"
           >
             <div
               class="input form-group"
@@ -715,13 +704,13 @@ exports[`UpdateDispositionForm component renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c2"
             >
               Disposition status:
             </label>
           </div>
           <div
-            class="c4 required text-left col"
+            class="c3 required text-left col"
           >
             <div
               class="required form-group"
@@ -785,13 +774,13 @@ exports[`UpdateDispositionForm component renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c2"
             >
               Disposition type:
             </label>
           </div>
           <div
-            class="c4 required text-left col"
+            class="c3 required text-left col"
           >
             <div
               class="required form-group"
@@ -846,7 +835,7 @@ exports[`UpdateDispositionForm component renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c2"
             >
               Initiating document:
               <span
@@ -876,7 +865,7 @@ exports[`UpdateDispositionForm component renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c3 text-left col"
           >
             <div
               class="required form-group"
@@ -931,7 +920,7 @@ exports[`UpdateDispositionForm component renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c2"
             >
               Initiating document date:
               <span
@@ -961,7 +950,7 @@ exports[`UpdateDispositionForm component renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c3 text-left col"
           >
             <div
               class="c6 form-group"
@@ -1002,13 +991,13 @@ exports[`UpdateDispositionForm component renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c2"
             >
               Physical file status:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c3 text-left col"
           >
             <div
               class="form-group"
@@ -1055,13 +1044,13 @@ exports[`UpdateDispositionForm component renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c2"
             >
               Initiating branch:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c3 text-left col"
           >
             <div
               class="form-group"
@@ -1122,13 +1111,13 @@ exports[`UpdateDispositionForm component renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c2"
             >
               Ministry region:
             </label>
           </div>
           <div
-            class="c4 required text-left col"
+            class="c3 required text-left col"
           >
             <div
               class="required d-flex form-group"
@@ -1174,7 +1163,7 @@ exports[`UpdateDispositionForm component renders as expected 1`] = `
       class="c1 form-section"
     >
       <h2
-        class="c2"
+        class="c4"
       >
         <div
           class="no-gutters row"

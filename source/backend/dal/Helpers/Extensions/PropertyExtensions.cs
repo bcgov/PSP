@@ -104,20 +104,21 @@ namespace Pims.Dal.Helpers.Extensions
                 ownershipBuilder = isRetired ? PredicateBuilder.New<PimsProperty>(p => p.IsRetired == true) : PredicateBuilder.New<PimsProperty>(p => false);
                 if (filter.Ownership.Contains("isCoreInventory"))
                 {
-                    ownershipBuilder = ownershipBuilder.Or(p => p.IsOwned);
+                    ownershipBuilder = ownershipBuilder.Or(p => p.IsOwned && p.IsRetired != true);
                 }
+                /* TODO: Fix mapings
                 if (filter.Ownership.Contains("isPropertyOfInterest"))
                 {
-                    ownershipBuilder = ownershipBuilder.Or(p => p.IsPropertyOfInterest);
+                    ownershipBuilder = ownershipBuilder.Or(p => p.IsPropertyOfInterest && p.IsRetired != true);
                 }
                 if (filter.Ownership.Contains("isOtherInterest"))
                 {
-                    ownershipBuilder = ownershipBuilder.Or(p => p.IsOtherInterest);
+                    ownershipBuilder = ownershipBuilder.Or(p => p.IsOtherInterest && p.IsRetired != true);
                 }
                 if (filter.Ownership.Contains("isDisposed"))
                 {
-                    ownershipBuilder = ownershipBuilder.Or(p => p.IsDisposed);
-                }
+                    ownershipBuilder = ownershipBuilder.Or(p => p.IsDisposed && p.IsRetired != true);
+                }*/
             }
             else
             {

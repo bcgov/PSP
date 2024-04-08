@@ -56,6 +56,8 @@ namespace Pims.Core.Test
             {
                 property.IsOwned = isCoreInventory.Value;
             }
+            /*
+            TODO: Fix mapings
             if (isPointOfInterest.HasValue)
             {
                 property.IsPropertyOfInterest = isPointOfInterest.Value;
@@ -72,6 +74,7 @@ namespace Pims.Core.Test
             {
                 property.IsRetired = isRetired.Value;
             }
+            */
 
             return property;
         }

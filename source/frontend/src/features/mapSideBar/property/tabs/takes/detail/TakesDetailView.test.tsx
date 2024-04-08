@@ -1,6 +1,5 @@
 import { createMemoryHistory } from 'history';
 
-import { AcquisitionStatus } from '@/constants/acquisitionFileStatus';
 import { Claims } from '@/constants/claims';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { getMockApiPropertyFiles } from '@/mocks/properties.mock';
@@ -11,6 +10,7 @@ import { toTypeCodeNullable } from '@/utils/formUtils';
 import { act, render, RenderOptions, screen, userEvent, within } from '@/utils/test-utils';
 
 import TakesDetailView, { ITakesDetailViewProps } from './TakesDetailView';
+import { ApiGen_CodeTypes_AcquisitionStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_AcquisitionStatusTypes';
 
 const history = createMemoryHistory();
 const storeState = {
@@ -77,7 +77,7 @@ describe('TakesDetailView component', () => {
           ...fileProperty,
           file: {
             ...file,
-            fileStatusTypeCode: toTypeCodeNullable(AcquisitionStatus.Complete),
+            fileStatusTypeCode: toTypeCodeNullable(ApiGen_CodeTypes_AcquisitionStatusTypes.COMPLT),
           },
         },
       },
