@@ -144,6 +144,24 @@ public partial class PimsTake
     [Column("SURPLUS_AREA")]
     public float? SurplusArea { get; set; }
 
+    /// <summary>
+    /// Is there an active lease associated with the take?
+    /// </summary>
+    [Column("IS_ACTIVE_LEASE")]
+    public bool IsActiveLease { get; set; }
+
+    /// <summary>
+    /// Area of the active lease.
+    /// </summary>
+    [Column("ACTIVE_LEASE_AREA")]
+    public float? ActiveLeaseArea { get; set; }
+
+    /// <summary>
+    /// End date of the active lease.
+    /// </summary>
+    [Column("ACTIVE_LEASE_END_DT")]
+    public DateOnly? ActiveLeaseEndDt { get; set; }
+
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }
 
