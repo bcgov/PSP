@@ -5,7 +5,7 @@
 /* Project name:          PIMS S77.00                                     */
 /* Author:                Doug Filteau                                    */
 /* Script type:           Database drop script                            */
-/* Created on:            2024-04-03 09:28                                */
+/* Created on:            2024-04-05 13:21                                */
 /* ---------------------------------------------------------------------- */
 
 
@@ -4055,6 +4055,10 @@ ALTER TABLE [dbo].[PIMS_TAKE] DROP CONSTRAINT [TAKE_IS_THERE_SURPLUS_DEF]
 GO
 
 
+ALTER TABLE [dbo].[PIMS_TAKE] DROP CONSTRAINT [TAKE_IS_ACTIVE_LEASE_DEF]
+GO
+
+
 ALTER TABLE [dbo].[PIMS_TAKE] DROP CONSTRAINT [TAKE_CONCURRENCY_CONTROL_NUMBER_DEF]
 GO
 
@@ -4164,6 +4168,18 @@ GO
 
 
 EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_TAKE', 'COLUMN', N'SURPLUS_AREA'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_TAKE', 'COLUMN', N'IS_ACTIVE_LEASE'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_TAKE', 'COLUMN', N'ACTIVE_LEASE_AREA'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_TAKE', 'COLUMN', N'ACTIVE_LEASE_END_DT'
 GO
 
 
