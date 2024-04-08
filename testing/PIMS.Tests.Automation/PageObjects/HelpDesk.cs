@@ -26,7 +26,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         //Help Desk Buttons Elements
         private By noButton = By.XPath("//div[contains(text(), 'No')]/parent::button");
-        private By yesButton = By.XPath("//div[contains(text(), 'Yes')]/parent::a");
+        private By yesButton = By.XPath("//div[contains(text(), 'Yes')]/parent::button");
 
         public HelpDesk(IWebDriver webDriver) : base(webDriver)
         {}

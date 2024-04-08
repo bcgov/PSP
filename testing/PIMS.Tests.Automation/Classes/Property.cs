@@ -44,6 +44,7 @@
         public string Address { get; set; } = null!;
         public string PlanNumber { get; set; } = null!;
         public string LegalDescription { get; set; } = null!;
+        public List<string> MultiplePIDS { get; set; } = new List<string>();
     }
 
     public class PropertyManagement

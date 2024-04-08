@@ -392,19 +392,18 @@ namespace PIMS.Tests.Automation.PageObjects
             ButtonElement("Save");
 
             Wait();
-            if (webDriver.FindElements(dispositionFileConfirmationModal).Count() > 0)
+            while (webDriver.FindElements(dispositionFileConfirmationModal).Count() > 0)
             {
                 Assert.Equal("User Override Required", sharedModals.ModalHeader());
-                Assert.Equal("You are changing this file to a non-editable state. (Only system administrators can edit the file when set to Archived, Cancelled or Completed state). Do you wish to continue?", sharedModals.ModalContent());
-                sharedModals.ModalClickOKBttn();
-            }
 
-            Wait();
-            if (webDriver.FindElements(dispositionFileConfirmationModal).Count() > 0)
-            {
-                Assert.Equal("User Override Required", sharedModals.ModalHeader());
-                Assert.Equal("The Ministry region has been changed, this will result in a change to the file's prefix. This requires user confirmation.", sharedModals.ModalContent());
+                if(sharedModals.ModalContent().Contains("You are changing this file to a non-editable state"))
+                    Assert.Equal("You are changing this file to a non-editable state. (Only system administrators can edit the file when set to Archived, Cancelled or Completed state). Do you wish to continue?", sharedModals.ModalContent());
+
+                else if(sharedModals.ModalContent().Contains("The Ministry region has been changed"))
+                    Assert.Equal("The Ministry region has been changed, this will result in a change to the file's prefix. This requires user confirmation.", sharedModals.ModalContent());
+
                 sharedModals.ModalClickOKBttn();
+                Wait();
             }
 
             AssertTrueIsDisplayed(dispositionFileEditButton);

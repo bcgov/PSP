@@ -92,6 +92,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 webDriver.FindElement(searchContactCityInput).SendKeys(city);
 
             webDriver.FindElement(searchContactResultsBttn).Click();
+            WaitUntilTableSpinnerDisappear();
         }
 
         //Pick the first Search Result

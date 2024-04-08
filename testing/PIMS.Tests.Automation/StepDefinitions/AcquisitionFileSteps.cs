@@ -8,6 +8,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
     public class AcquisitionFileSteps
     {
         private readonly LoginSteps loginSteps;
+        private readonly GenericSteps genericSteps;
         private readonly AcquisitionDetails acquisitionFilesDetails;
         private readonly SearchAcquisitionFiles searchAcquisitionFiles;
         private readonly SharedFileProperties sharedFileProperties;
@@ -31,6 +32,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         public AcquisitionFileSteps(BrowserDriver driver)
         {
             loginSteps = new LoginSteps(driver);
+            genericSteps = new GenericSteps(driver);
 
             acquisitionFilesDetails = new AcquisitionDetails(driver.Current);
             searchAcquisitionFiles = new SearchAcquisitionFiles(driver.Current);
@@ -188,6 +190,16 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //    sharedSearchProperties.SelectPropertyByLegalDescription(acquisitionFile.SearchProperties.LegalDescription);
             //    sharedSearchProperties.SelectFirstOption();
             //}
+
+            //Search for Multiple PIDs
+            if(acquisitionFile.AcquisitionSearchProperties.MultiplePIDS.Count > 0)
+            {
+                foreach (string prop in acquisitionFile.AcquisitionSearchProperties.MultiplePIDS)
+                {
+                    sharedFileProperties.SelectPropertyByPID(prop);
+                    sharedFileProperties.SelectFirstOptionFromSearch();
+                }
+            }
 
             //Search for a duplicate property
             if (acquisitionFile.AcquisitionSearchProperties.PID != "")
@@ -984,10 +996,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
             acquisitionFile.OwnerStartRow = int.Parse(ExcelDataContext.ReadData(rowNumber, "OwnerStartRow"));
             acquisitionFile.OwnerCount = int.Parse(ExcelDataContext.ReadData(rowNumber, "OwnerCount"));
             if (acquisitionFile.OwnerStartRow != 0 && acquisitionFile.OwnerCount != 0)
-            {
                 PopulateOwnersCollection(acquisitionFile.OwnerStartRow, acquisitionFile.OwnerCount);
-            }
-
+            
             acquisitionFile.OwnerSolicitor = ExcelDataContext.ReadData(rowNumber, "OwnerSolicitor");
             acquisitionFile.OwnerRepresentative = ExcelDataContext.ReadData(rowNumber, "OwnerRepresentative");
             acquisitionFile.OwnerComment = ExcelDataContext.ReadData(rowNumber, "OwnerComment");
@@ -1004,6 +1014,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 acquisitionFile.AcquisitionSearchProperties.Address = ExcelDataContext.ReadData(acquisitionFile.AcquisitionSearchPropertiesIndex, "Address");
                 acquisitionFile.AcquisitionSearchProperties.PlanNumber = ExcelDataContext.ReadData(acquisitionFile.AcquisitionSearchPropertiesIndex, "PlanNumber");
                 acquisitionFile.AcquisitionSearchProperties.LegalDescription = ExcelDataContext.ReadData(acquisitionFile.AcquisitionSearchPropertiesIndex, "LegalDescription");
+                acquisitionFile.AcquisitionSearchProperties.MultiplePIDS = genericSteps.PopulateLists(ExcelDataContext.ReadData(acquisitionFile.AcquisitionSearchPropertiesIndex, "MultiplePIDS"));
             }
 
             //Acquisition's Properties' Takes
@@ -1167,6 +1178,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
                 take.IsNewInterestLand = ExcelDataContext.ReadData(i, "IsNewInterestLand");
                 take.IsNewInterestLandArea = ExcelDataContext.ReadData(i, "IsNewInterestLandArea");
+                take.IsNewInterestLandDate = ExcelDataContext.ReadData(i, "IsNewInterestLandDate");
 
                 take.IsLandActTenure = ExcelDataContext.ReadData(i, "IsLandActTenure");
                 take.IsLandActTenureDetail = ExcelDataContext.ReadData(i, "IsLandActTenureDetail");
