@@ -27,7 +27,7 @@ const SidebarFooter: React.FunctionComponent<ISidebarFooterProps> = ({
   cancelButtonLabel,
 }) => {
   return (
-    <SidebarFooterBar className="justify-content-end mt-auto no-gutters">
+    <SidebarFooterBar className="justify-content-end mb-12 mt-12 p-0 no-gutters">
       {(!showEdit || editMode) && (
         <>
           <Col xs="auto" className="pr-3">
@@ -35,13 +35,13 @@ const SidebarFooter: React.FunctionComponent<ISidebarFooterProps> = ({
               <StyledError>Please check form fields for errors.</StyledError>
             )}
           </Col>
-          <Col xs="auto" className="pr-4">
+          <Col xs="auto" className="pr-6">
             <Button variant="secondary" onClick={onCancel}>
               {cancelButtonLabel ?? 'Cancel'}
             </Button>
           </Col>
           <Col xs="auto">
-            <Button disabled={isOkDisabled} onClick={onSave}>
+            <Button disabled={isOkDisabled} onClick={onSave} className="mr-9">
               {saveButtonLabel ?? 'Save'}
             </Button>
           </Col>

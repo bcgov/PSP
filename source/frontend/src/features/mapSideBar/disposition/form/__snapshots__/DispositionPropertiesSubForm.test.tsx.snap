@@ -39,6 +39,7 @@ exports[`DispositionPropertiesSubForm component renders as expected 1`] = `
   -ms-letter-spacing: 0.1rem;
   letter-spacing: 0.1rem;
   cursor: pointer;
+  height: 3.8rem;
 }
 
 .c13.btn:hover {
@@ -184,6 +185,8 @@ exports[`DispositionPropertiesSubForm component renders as expected 1`] = `
 
 .c2 .nav-item:hover {
   border-color: transparent;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
 }
 
 .c2 .nav-item.active {
@@ -770,6 +773,7 @@ exports[`DispositionPropertiesSubForm component renders as expected 1`] = `
   -ms-letter-spacing: 0.1rem;
   letter-spacing: 0.1rem;
   cursor: pointer;
+  height: 3.8rem;
 }
 
 .c7.btn:hover {

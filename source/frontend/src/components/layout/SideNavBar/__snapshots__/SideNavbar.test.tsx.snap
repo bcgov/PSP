@@ -336,7 +336,7 @@ exports[`SideNavbar display and logic renders 1`] = `
           role="button"
         >
           <svg
-            class="m-1"
+            class="mr-1"
           >
             <span />
           </svg>
