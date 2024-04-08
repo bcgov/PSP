@@ -72,7 +72,9 @@ const AddSubdivisionContainer: React.FC<IAddSubdivisionContainerProps> = ({ onCl
           featuresetToMapProperty(selectedFeatureDataset),
         );
         if (isValidString(propertyForm.pid)) {
-          propertyForm.address = await getAddress(propertyForm.pid);
+          propertyForm.address = selectedFeatureDataset.pimsFeature?.properties
+            ? AddressForm.fromPimsView(selectedFeatureDataset.pimsFeature?.properties)
+            : undefined;
           const consolidationFormModel = new SubdivisionFormModel();
           consolidationFormModel.sourceProperty = propertyForm.toApi();
           setInitialForm(consolidationFormModel);
@@ -88,10 +90,10 @@ const AddSubdivisionContainer: React.FC<IAddSubdivisionContainerProps> = ({ onCl
     }
   }, [initialForm]);
 
-  const finishSelection = mapMachine.finishSelection;
+  const changeSidebar = mapMachine.changeSidebar;
   useEffect(() => {
-    return () => finishSelection();
-  }, [finishSelection]);
+    return () => changeSidebar();
+  }, [changeSidebar]);
 
   const withUserOverride = useApiUserOverride<
     (userOverrideCodes: UserOverrideCode[]) => Promise<ApiGen_Concepts_DispositionFile | void>

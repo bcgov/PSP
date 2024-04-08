@@ -123,16 +123,16 @@ namespace Pims.Api.Services
             this.Logger.LogInformation("Uploading document");
             this.User.ThrowIfNotAuthorized(Permissions.DocumentAdd);
 
-            ExternalResponse<DocumentDetailModel> ExternalResponse = await UploadDocumentAsync(uploadRequest.DocumentTypeMayanId, uploadRequest.File);
+            ExternalResponse<DocumentDetailModel> externalResponse = await UploadDocumentAsync(uploadRequest.DocumentTypeMayanId, uploadRequest.File);
             DocumentUploadResponse response = new DocumentUploadResponse()
             {
-                DocumentExternalResponse = ExternalResponse,
+                DocumentExternalResponse = externalResponse,
                 MetadataExternalResponse = new List<ExternalResponse<DocumentMetadataModel>>(),
             };
 
-            if (ExternalResponse.Status == ExternalResponseStatus.Success)
+            if (externalResponse.Status == ExternalResponseStatus.Success)
             {
-                var externalDocument = ExternalResponse.Payload;
+                var externalDocument = externalResponse.Payload;
 
                 // Create metadata of document
                 if (uploadRequest.DocumentMetadata != null)

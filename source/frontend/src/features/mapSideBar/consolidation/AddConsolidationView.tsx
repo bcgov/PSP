@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import styled from 'styled-components';
 import * as Yup from 'yup';
 
-import { ReactComponent as ConsolidateSubdivideIcon } from '@/assets/images/subdivisionconsolidation.svg';
+import ConsolidateSubdivideIcon from '@/assets/images/subdivisionconsolidation.svg?react';
 import { Form } from '@/components/common/form';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
@@ -15,8 +15,9 @@ import { IMapSelectorContainerProps } from '@/components/propertySelector/MapSel
 import { StyledTabView } from '@/components/propertySelector/PropertySelectorTabsView';
 import { PropertySelectorPidSearchContainerProps } from '@/components/propertySelector/search/PropertySelectorPidSearchContainer';
 import PropertySearchSelectorPidFormView from '@/components/propertySelector/search/PropertySelectorPidSearchView';
+import { AreaUnitTypes } from '@/constants/areaUnitTypes';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
-import { exists } from '@/utils';
+import { convertArea, exists } from '@/utils';
 
 import MapSideBarLayout from '../layout/MapSideBarLayout';
 import { AddressForm, PropertyForm } from '../shared/models';
@@ -142,13 +143,22 @@ const AddConsolidationView: React.FunctionComponent<
                 </FieldArray>
               </Section>
               <Section>
-                <p>Select the child properties to which parent property was subdivided:</p>
+                <p>Select the child property to which parent properties were consolidated:</p>
                 <MapSelectorComponent
                   addSelectedProperties={async properties => {
                     const allProperties: ApiGen_Concepts_Property[] = [];
                     await properties.reduce(async (promise, property) => {
                       return promise.then(async () => {
                         const formProperty = PropertyForm.fromMapProperty(property);
+                        formProperty.landArea =
+                          property.landArea && property.areaUnit
+                            ? convertArea(
+                                property.landArea,
+                                property.areaUnit,
+                                AreaUnitTypes.SquareMeters,
+                              )
+                            : 0;
+                        formProperty.areaUnit = AreaUnitTypes.SquareMeters;
                         if (property.pid) {
                           formProperty.address = await getPrimaryAddressByPid(property.pid);
                           allProperties.push(formProperty.toApi());

@@ -24,6 +24,7 @@ import {
   waitFor,
   prettyDOM,
   waitForElementToBeRemoved,
+  getByTestId,
 } from '@/utils/test-utils';
 
 import { defaultFormLeaseTerm, FormLeaseTerm } from './models';
@@ -293,13 +294,15 @@ describe('TermsPaymentsContainer component', () => {
         )),
       );
       const {
-        component: { findByText, getByText },
+        component: { findByText, getByText, findByTestId },
       } = await setup({
         claims: [Claims.LEASE_EDIT, Claims.LEASE_ADD],
         initialValues: defaultLeaseWithTermsPayments,
       });
       mockAxios.onPost().reply(200, { id: 1 });
 
+      const expander = await findByTestId('table-row-expander-');
+      await act(async () => userEvent.click(expander));
       const addButton = await findByText('Record a Payment');
       await act(async () => {
         userEvent.click(addButton);
@@ -318,13 +321,15 @@ describe('TermsPaymentsContainer component', () => {
         )),
       );
       const {
-        component: { findAllByTitle, getByText, findByText },
+        component: { findAllByTitle, findByTestId, getByText, findByText },
       } = await setup({
         initialValues: defaultLeaseWithTermsPayments,
         claims: [Claims.LEASE_EDIT, Claims.LEASE_ADD],
       });
       mockAxios.onPut().reply(200, { id: 1 });
 
+      const expander = await findByTestId('table-row-expander-');
+      await act(async () => userEvent.click(expander));
       const editButton = await findAllByTitle('edit actual');
       await act(async () => {
         userEvent.click(editButton[0]);
@@ -342,13 +347,15 @@ describe('TermsPaymentsContainer component', () => {
         )),
       );
       const {
-        component: { findAllByTitle, getByText, findByText },
+        component: { findAllByTitle, getByText, findByText, getByTestId },
       } = await setup({
         initialValues: defaultLeaseWithTermsPayments,
         claims: [Claims.LEASE_EDIT],
       });
 
-      await findByText('Jan 1, 2020');
+      await findByText('- Jan 1, 2020', { exact: false });
+      const expander = getByTestId('table-row-expander-');
+      await act(async () => userEvent.click(expander));
 
       const deleteButton = (await findAllByTitle('delete actual'))[0];
       await act(async () => userEvent.click(deleteButton));
@@ -363,13 +370,15 @@ describe('TermsPaymentsContainer component', () => {
         )),
       );
       const {
-        component: { findAllByTitle, getByText, findByText },
+        component: { findAllByTitle, getByText, findByText, getByTestId },
       } = await setup({
         initialValues: defaultLeaseWithTermsPayments,
         claims: [Claims.LEASE_EDIT],
       });
       mockAxios.onDelete().reply(200, { id: 1 });
-      await findByText('Jan 1, 2020');
+      await findByText('- Jan 1, 2020', { exact: false });
+      const expander = getByTestId('table-row-expander-');
+      await act(async () => userEvent.click(expander));
 
       const deleteButton = (await findAllByTitle('delete actual'))[0];
       await act(async () => userEvent.click(deleteButton));

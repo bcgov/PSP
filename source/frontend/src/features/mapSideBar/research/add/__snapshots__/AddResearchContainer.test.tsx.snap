@@ -115,6 +115,7 @@ exports[`AddResearchContainer component renders as expected 1`] = `
   -ms-letter-spacing: 0.1rem;
   letter-spacing: 0.1rem;
   cursor: pointer;
+  height: 3.8rem;
 }
 
 .c12.btn:hover {
@@ -260,6 +261,8 @@ exports[`AddResearchContainer component renders as expected 1`] = `
 
 .c15 .nav-item:hover {
   border-color: transparent;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
 }
 
 .c15 .nav-item.active {
@@ -706,7 +709,7 @@ exports[`AddResearchContainer component renders as expected 1`] = `
                                     title="Click once to enter property selection mode."
                                     width="97"
                                   >
-                                    icon-draft.svg
+                                    <span />
                                   </svg>
                                   <ol>
                                     <li>
@@ -1195,6 +1198,7 @@ exports[`AddResearchContainer component renders as expected 1`] = `
   -ms-letter-spacing: 0.1rem;
   letter-spacing: 0.1rem;
   cursor: pointer;
+  height: 3.8rem;
 }
 
 .c1.btn:hover {
@@ -1314,13 +1318,13 @@ exports[`AddResearchContainer component renders as expected 1`] = `
     class=""
   >
     <div
-      class="c0 justify-content-end mt-auto no-gutters row"
+      class="c0 justify-content-end mb-12 mt-12 p-0 no-gutters row"
     >
       <div
         class="pr-3 col-auto"
       />
       <div
-        class="pr-4 col-auto"
+        class="pr-6 col-auto"
       >
         <button
           class="c1 Button btn btn-secondary"
@@ -1337,7 +1341,7 @@ exports[`AddResearchContainer component renders as expected 1`] = `
         class="col-auto"
       >
         <button
-          class="c1 Button btn btn-primary"
+          class="c1 Button mr-9 btn btn-primary"
           type="button"
         >
           <div

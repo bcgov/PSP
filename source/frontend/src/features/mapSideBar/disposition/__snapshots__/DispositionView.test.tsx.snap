@@ -44,7 +44,7 @@ exports[`DispositionView component renders as expected 1`] = `
             title="Disposition file Icon"
             width="2.6rem"
           >
-            real-estate-agent.svg
+            <span />
           </svg>
           Disposition File
         </h1>
@@ -243,6 +243,8 @@ exports[`DispositionView component renders as expected 1`] = `
 
 .c12 .nav-item:hover {
   border-color: transparent;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
 }
 
 .c12 .nav-item.active {

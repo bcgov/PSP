@@ -34,6 +34,7 @@ exports[`ResearchProperties component renders as expected when provided no prope
   -ms-letter-spacing: 0.1rem;
   letter-spacing: 0.1rem;
   cursor: pointer;
+  height: 3.8rem;
 }
 
 .c14.btn:hover {
@@ -231,6 +232,8 @@ exports[`ResearchProperties component renders as expected when provided no prope
 
 .c4 .nav-item:hover {
   border-color: transparent;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
 }
 
 .c4 .nav-item.active {
@@ -445,7 +448,7 @@ exports[`ResearchProperties component renders as expected when provided no prope
                             title="Click once to enter property selection mode."
                             width="97"
                           >
-                            icon-draft.svg
+                            <span />
                           </svg>
                           <ol>
                             <li>

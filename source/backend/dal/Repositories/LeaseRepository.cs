@@ -762,7 +762,7 @@ namespace Pims.Dal.Repositories
 
             User.ThrowIfNotAuthorized(Permissions.LeaseAdd);
 
-            if (lease.PimsPropertyLeases.Any(x => x.Property.IsRetired.HasValue && x.Property.IsRetired.Value))
+            if (lease.PimsPropertyLeases.Any(x => x.Property != null && x.Property.IsRetired.HasValue && x.Property.IsRetired.Value))
             {
                 throw new BusinessRuleViolationException("Retired property can not be selected.");
             }

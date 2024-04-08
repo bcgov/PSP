@@ -34,6 +34,7 @@ exports[`LayerPopupView component renders as expected with layer popup content 1
   -ms-letter-spacing: 0.1rem;
   letter-spacing: 0.1rem;
   cursor: pointer;
+  height: 3.8rem;
 }
 
 .c3.btn:hover {

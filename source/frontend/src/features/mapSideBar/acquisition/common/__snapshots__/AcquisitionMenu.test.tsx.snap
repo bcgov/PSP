@@ -113,7 +113,7 @@ exports[`AcquisitionMenu component matches snapshot 1`] = `
             height="2.4rem"
             width="2.4rem"
           >
-            edit-map-marker.svg
+            <span />
           </svg>
         </button>
       </div>

@@ -21,7 +21,7 @@ import { Claims, PropertyTenureTypes } from '@/constants/index';
 import { useQuery } from '@/hooks/use-query';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
-import { exists, isValidId } from '@/utils';
+import { exists } from '@/utils';
 import { booleanToYesNoUnknownString, stringToBoolean } from '@/utils/formUtils';
 import { getPrettyLatLng } from '@/utils/mapPropertyUtils';
 
@@ -234,9 +234,7 @@ export const PropertyDetailsTabView: React.FunctionComponent<IPropertyDetailsTab
         <p>{property?.notes}</p>
       </Section>
 
-      {isValidId(property?.id) && (
-        <OperationContainer propertyId={property!.id} View={OperationSectionView} />
-      )}
+      <OperationContainer propertyId={property?.id} View={OperationSectionView} />
     </StyledSummarySection>
   );
 };

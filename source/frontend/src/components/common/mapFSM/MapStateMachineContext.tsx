@@ -63,6 +63,7 @@ export interface IMapStateMachineContext {
   setVisiblePimsProperties: (propertyIds: number[]) => void;
   setShowDisposed: (show: boolean) => void;
   setShowRetired: (show: boolean) => void;
+  changeSidebar: () => void;
 }
 
 const MapStateMachineContext = React.createContext<IMapStateMachineContext>(
@@ -246,6 +247,10 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
     serviceSend({ type: 'FINISH_SELECTION' });
   }, [serviceSend]);
 
+  const changeSidebar = useCallback(() => {
+    serviceSend({ type: 'CHANGE_SIDEBAR' });
+  }, [serviceSend]);
+
   const setFilePropertyLocations = useCallback(
     (locations: LatLngLiteral[]) => {
       serviceSend({ type: 'SET_FILE_PROPERTY_LOCATIONS', locations });
@@ -347,6 +352,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         setVisiblePimsProperties,
         setShowDisposed,
         setShowRetired,
+        changeSidebar,
       }}
     >
       {children}

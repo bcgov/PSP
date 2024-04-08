@@ -131,15 +131,6 @@ public partial class PimsPropertyLocationVw
     [Column("IS_OWNED")]
     public bool IsOwned { get; set; }
 
-    [Column("IS_DISPOSED")]
-    public bool IsDisposed { get; set; }
-
-    [Column("IS_PROPERTY_OF_INTEREST")]
-    public bool IsPropertyOfInterest { get; set; }
-
-    [Column("IS_OTHER_INTEREST")]
-    public bool IsOtherInterest { get; set; }
-
     [Column("IS_RETIRED")]
     public bool? IsRetired { get; set; }
 
@@ -153,6 +144,18 @@ public partial class PimsPropertyLocationVw
     [Column("ZONING_POTENTIAL")]
     [StringLength(100)]
     public string ZoningPotential { get; set; }
+
+    [Column("IS_DISPOSED")]
+    public bool? IsDisposed { get; set; }
+
+    [Column("IS_OTHER_INTEREST")]
+    public bool? IsOtherInterest { get; set; }
+
+    [Column("HAS_ACTIVE_ACQUISITION_FILE")]
+    public bool? HasActiveAcquisitionFile { get; set; }
+
+    [Column("HAS_ACTIVE_RESEARCH_FILE")]
+    public bool? HasActiveResearchFile { get; set; }
 
     [Column("IS_PAYABLE_LEASE")]
     public bool? IsPayableLease { get; set; }

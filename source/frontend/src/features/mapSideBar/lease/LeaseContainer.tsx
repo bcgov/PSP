@@ -3,7 +3,7 @@ import React, { useCallback, useContext, useEffect, useReducer, useRef, useState
 import styled from 'styled-components';
 import * as Yup from 'yup';
 
-import { ReactComponent as Fence } from '@/assets/images/fence.svg';
+import Fence from '@/assets/images/fence.svg?react';
 import GenericModal from '@/components/common/GenericModal';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Claims } from '@/constants';

@@ -11,11 +11,11 @@ namespace Pims.Api.Models.Concepts.Property
         public void Register(TypeAdapterConfig config)
         {
             config.NewConfig<Geometry, PolygonModel>()
-                .Map(dest => dest.Coordinates, src => src.Coordinates);
+                .Map(dest => dest.Coordinates, src => src != null && src.GeometryType == Geometry.TypeNamePolygon ? src.Coordinates : null);
 
             config.NewConfig<PolygonModel, Geometry>()
-                .ConstructUsing(src => NetTopologySuite.NtsGeometryServices.Instance.CreateGeometryFactory(4326)
-                .CreatePolygon(src.Coordinates.Select(coordinate => GeometryHelper.CreatePoint(coordinate.X, coordinate.Y, SpatialReference.WGS84).Coordinate).ToArray()));
+                .ConstructUsing(src => src != null ? NetTopologySuite.NtsGeometryServices.Instance.CreateGeometryFactory(4326)
+                .CreatePolygon(src.Coordinates.Select(coordinate => GeometryHelper.CreatePoint(coordinate.X, coordinate.Y, SpatialReference.WGS84).Coordinate).ToArray()) : null);
 
             config.NewConfig<Coordinate[], PolygonModel>()
                 .Map(dest => dest.Coordinates, src => src);

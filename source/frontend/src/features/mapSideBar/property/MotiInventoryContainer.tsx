@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { generatePath, useHistory, useRouteMatch } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { ReactComponent as LotSvg } from '@/assets/images/icon-lot.svg';
+import LotSvg from '@/assets/images/icon-lot.svg?react';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { PROPERTY_TYPES, useComposedProperties } from '@/hooks/repositories/useComposedProperties';
 import { useQuery } from '@/hooks/use-query';

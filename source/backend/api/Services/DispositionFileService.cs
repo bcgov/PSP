@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
-using System.Text.RegularExpressions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Constants;
@@ -74,7 +73,6 @@ namespace Pims.Api.Services
 
             dispositionFile.DispositionStatusTypeCode ??= EnumDispositionStatusTypeCode.UNKNOWN.ToString();
             dispositionFile.DispositionFileStatusTypeCode ??= EnumDispositionFileStatusTypeCode.ACTIVE.ToString();
-
             ValidateStaff(dispositionFile);
 
             MatchProperties(dispositionFile, userOverrides);
@@ -523,6 +521,8 @@ namespace Pims.Api.Services
             foreach (var deletedProperty in differenceSet)
             {
                 _dispositionFilePropertyRepository.Delete(deletedProperty);
+                /*
+                TODO: Fix mapings
                 if (deletedProperty.Property.IsPropertyOfInterest)
                 {
                     PimsProperty propertyWithAssociations = _propertyRepository.GetAllAssociationsById(deletedProperty.PropertyId);
@@ -536,6 +536,7 @@ namespace Pims.Api.Services
                         _propertyRepository.Delete(deletedProperty.Property);
                     }
                 }
+                */
             }
 
             _dispositionFileRepository.CommitTransaction();
@@ -554,7 +555,7 @@ namespace Pims.Api.Services
             // The following checks result in hard STOP errors
             if (isFileClosing)
             {
-                if (currentProperties.Any(p => p.Property.IsPropertyOfInterest))
+                if (currentProperties.Any(p => !p.Property.IsOwned))
                 {
                     throw new BusinessRuleViolationException("You have one or more properties attached to this Disposition file that is NOT in the \"Core Inventory\" (i.e. owned by BCTFA and/or HMK). To complete this file you must either, remove these non \"Non-Core Inventory\" properties, OR make sure the property is added to the PIMS inventory first.");
                 }
@@ -584,7 +585,7 @@ namespace Pims.Api.Services
                 throw new UserOverrideException(UserOverrideCode.DispositionFileFinalStatus, "You are changing this file to a non-editable state. (Only system administrators can edit the file when set to Archived, Cancelled or Completed state). Do you wish to continue?");
             }
 
-            if (isFileClosing && currentProperties.Any(p => p.Property.IsOwned) && !userOverrides.Contains(UserOverrideCode.DisposeOfProperties))
+            if (isFileClosing && !userOverrides.Contains(UserOverrideCode.DisposeOfProperties))
             {
                 throw new UserOverrideException(UserOverrideCode.DisposeOfProperties, "You are completing this Disposition File with owned PIMS inventory properties. All properties will be removed from the PIMS inventory (any Other Interests will remain). Do you wish to proceed?");
             }
@@ -704,10 +705,15 @@ namespace Pims.Api.Services
                     var pid = dispProperty.Property.Pid.Value;
                     try
                     {
-                        var foundProperty = _propertyRepository.GetByPid(pid);
+                        var foundProperty = _propertyRepository.GetByPid(pid, true);
+                        if (foundProperty.IsRetired.HasValue && foundProperty.IsRetired.Value)
+                        {
+                            throw new BusinessRuleViolationException("Retired property can not be selected.");
+                        }
+
                         dispProperty.PropertyId = foundProperty.Internal_Id;
                         _propertyService.UpdateLocation(dispProperty.Property, ref foundProperty, overrideCodes);
-                        dispProperty.Property = null;
+                        dispProperty.Property = foundProperty;
                     }
                     catch (KeyNotFoundException)
                     {
@@ -718,7 +724,7 @@ namespace Pims.Api.Services
                         }
                         else
                         {
-                            throw new UserOverrideException(UserOverrideCode.DisposingPropertyNotInventoried, "You have added one or more properties to the disposition file that are not in the MoTI Inventory. Do you want to proceed?");
+                            throw new UserOverrideException(UserOverrideCode.DisposingPropertyNotInventoried, "You have added one or more properties to the disposition file that are not in the MOTI Inventory. Do you want to proceed?");
                         }
                     }
                 }
@@ -727,10 +733,15 @@ namespace Pims.Api.Services
                     var pin = dispProperty.Property.Pin.Value;
                     try
                     {
-                        var foundProperty = _propertyRepository.GetByPin(pin);
+                        var foundProperty = _propertyRepository.GetByPin(pin, true);
+                        if (foundProperty.IsRetired.HasValue && foundProperty.IsRetired.Value)
+                        {
+                            throw new BusinessRuleViolationException("Retired property can not be selected.");
+                        }
+
                         dispProperty.PropertyId = foundProperty.Internal_Id;
                         _propertyService.UpdateLocation(dispProperty.Property, ref foundProperty, overrideCodes);
-                        dispProperty.Property = null;
+                        dispProperty.Property = foundProperty;
                     }
                     catch (KeyNotFoundException)
                     {

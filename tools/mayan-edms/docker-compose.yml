@@ -18,17 +18,13 @@ x-mayan-container: &mayan-container
     # - /opt/staging_folder:/staging_folder
     # - /opt/watch_folder:/watch_folder
 
-networks:
-  psp:
-    external: true
-    name: psp
-
 services:
   app:
     <<: *mayan-container
     profiles:
       - all_in_one
       - all
+      - mayan
     ports:
       - "7080:8000"
 
@@ -49,6 +45,7 @@ services:
     profiles:
       - elasticsearch
       - all
+      - mayan
     restart: unless-stopped
     ulimits:
       memlock:
@@ -85,6 +82,7 @@ services:
     profiles:
       - postgresql
       - all
+      - mayan
     restart: unless-stopped
     volumes:
       - ${MAYAN_POSTGRES_VOLUME:-postgres}:/var/lib/postgresql/data
@@ -114,6 +112,7 @@ services:
     profiles:
       - redis
       - all
+      - mayan
     restart: unless-stopped
     volumes:
       - ${MAYAN_REDIS_VOLUME:-redis}:/data
@@ -150,6 +149,7 @@ services:
     profiles:
       - extra_worker_a
       - all
+      - mayan
 
   # Run a separate class B worker
   worker_b:
@@ -161,6 +161,7 @@ services:
     profiles:
       - extra_worker_b
       - all
+      - mayan
 
   # Run a separate class C worker
   worker_c:
@@ -172,6 +173,7 @@ services:
     profiles:
       - extra_worker_c
       - all
+      - mayan
 
   # Run a separate class D worker
   worker_d:
@@ -183,6 +185,7 @@ services:
     profiles:
       - extra_worker_d
       - all
+      - mayan
 
   worker_custom_queue:
     <<: *mayan-container
@@ -193,6 +196,7 @@ services:
     profiles:
       - extra_worker_custom
       - all
+      - mayan
 
   # Run a separate Celery beat container
   celery_beat:
@@ -203,6 +207,7 @@ services:
     profiles:
       - extra_celery_beat
       - all
+      - mayan
 
   command_initialsetup_or_performupgrade:
     <<: *mayan-container
@@ -226,6 +231,7 @@ services:
     profiles:
       - rabbitmq
       - all
+      - mayan
     restart: unless-stopped
     volumes:
       - ${MAYAN_RABBITMQ_VOLUME:-rabbitmq}:/var/lib/rabbitmq

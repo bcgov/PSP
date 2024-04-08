@@ -28,12 +28,20 @@ export const PropertySelectorPidSearchContainer: React.FunctionComponent<
         try {
           const result = await getPropertyByPidWrapper.execute(layerSearch?.pid);
           if (result) {
-            setSelectProperty(result);
+            if (!result.isOwned || result.isRetired) {
+              toast.warn(
+                'Only properties that are part of the Core Inventory (owned) can be subdivided/consolidated. This property is not in core inventory within PIMS.',
+              );
+            } else {
+              setSelectProperty(result);
+            }
           }
         } catch (e) {
           const axiosError = e as AxiosError<IApiError>;
           if (axiosError?.response?.status === 404) {
-            toast.warn('The PID that you are searching for does not exist in the PIMS database.');
+            toast.warn(
+              'Only properties that are part of the Core Inventory (owned) can be subdivided/consolidated. This property is not in core inventory within PIMS.',
+            );
           }
         }
       }
