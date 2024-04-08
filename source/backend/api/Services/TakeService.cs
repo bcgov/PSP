@@ -71,7 +71,7 @@ namespace Pims.Api.Services
             {
                 throw new BusinessRuleViolationException("Retired records are referenced for historical purposes only and cannot be edited or deleted. If the take has been added in error, contact your system administrator to re-open the file, which will allow take deletion.");
             }
-            else if (takes.Any(t => t.TakeStatusTypeCode == TakeStatusTypes.COMPLETE.ToString() && t.CompletionDt == null))
+            else if (takes.Any(t => t.TakeStatusTypeCode == AcquisitionTakeStatusTypes.COMPLETE.ToString() && t.CompletionDt == null))
             {
                 throw new BusinessRuleViolationException("A completed take must have a completion date.");
             }

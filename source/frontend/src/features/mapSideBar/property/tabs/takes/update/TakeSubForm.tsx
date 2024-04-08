@@ -10,7 +10,6 @@ import { SectionField } from '@/components/common/Section/SectionField';
 import AreaContainer from '@/components/measurements/AreaContainer';
 import { Roles } from '@/constants';
 import * as API from '@/constants/API';
-import { TakesStatusTypes } from '@/constants/takesStatusTypes';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
@@ -56,7 +55,10 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({
   const takeStatusTypeCode = getIn(values, withNameSpace(nameSpace, 'takeStatusTypeCode'));
 
   React.useEffect(() => {
-    if (currentTake.completionDt && currentTake.takeStatusTypeCode !== TakesStatusTypes.COMPLETE) {
+    if (
+      currentTake.completionDt &&
+      currentTake.takeStatusTypeCode !== ApiGen_CodeTypes_AcquisitionTakeStatusTypes.COMPLETE
+    ) {
       setFieldValue(withNameSpace(nameSpace, 'completionDt'), '');
     }
   }, [currentTake.completionDt, currentTake.takeStatusTypeCode, nameSpace, setFieldValue]);
@@ -130,7 +132,9 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({
       </SectionField>
       <SectionField
         label="Completion date"
-        required={currentTake.takeStatusTypeCode === TakesStatusTypes.COMPLETE}
+        required={
+          currentTake.takeStatusTypeCode === ApiGen_CodeTypes_AcquisitionTakeStatusTypes.COMPLETE
+        }
         tooltip={`This will be enabled when the file status is set to "Completed"`}
         labelWidth="4"
         contentWidth="5"
@@ -139,7 +143,9 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({
           formikProps={formikProps}
           field={withNameSpace(nameSpace, 'completionDt')}
           maxDate={new Date()}
-          disabled={currentTake.takeStatusTypeCode !== TakesStatusTypes.COMPLETE}
+          disabled={
+            currentTake.takeStatusTypeCode !== ApiGen_CodeTypes_AcquisitionTakeStatusTypes.COMPLETE
+          }
         />
       </SectionField>
       <SectionField label="Site contamination" labelWidth="4" contentWidth="5">
