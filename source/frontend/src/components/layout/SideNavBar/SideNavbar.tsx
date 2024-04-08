@@ -67,7 +67,7 @@ export const SideNavBar = () => {
         />
         <NavIcon
           onClick={() => setTrayPage(SidebarContextType.SUBDCONS)}
-          icon={<ConsolidateSubdivideIcon className="m-1" />}
+          icon={<ConsolidateSubdivideIcon className="mr-1" />}
           text="Subdivision & Consolidation"
           showText={expanded}
         />

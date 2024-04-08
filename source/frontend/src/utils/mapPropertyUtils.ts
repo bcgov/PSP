@@ -20,7 +20,7 @@ import { RegionCodes } from '@/constants/regionCodes';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { ApiGen_Concepts_Geometry } from '@/models/api/generated/ApiGen_Concepts_Geometry';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
-import { exists, formatApiAddress, pidFormatter } from '@/utils';
+import { enumFromValue, exists, formatApiAddress, pidFormatter } from '@/utils';
 
 export enum NameSourceType {
   PID = 'PID',
@@ -209,9 +209,7 @@ export function featuresetToMapProperty(
     districtName: districtFeature?.properties?.DISTRICT_NAME ?? 'Cannot determine',
     name: pimsFeature?.properties?.NAME ?? undefined,
     areaUnit: pimsFeature?.properties?.PROPERTY_AREA_UNIT_TYPE_CODE
-      ? AreaUnitTypes[
-          pimsFeature?.properties?.PROPERTY_AREA_UNIT_TYPE_CODE as keyof typeof AreaUnitTypes
-        ]
+      ? enumFromValue(pimsFeature?.properties?.PROPERTY_AREA_UNIT_TYPE_CODE, AreaUnitTypes)
       : AreaUnitTypes.SquareMeters,
     landArea: pimsFeature?.properties?.LAND_AREA
       ? +pimsFeature?.properties?.LAND_AREA

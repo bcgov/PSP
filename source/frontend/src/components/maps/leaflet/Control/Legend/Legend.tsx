@@ -51,8 +51,8 @@ export const Legend = () => {
         {keys.map((item, index) => {
           return (
             <Row key={index}>
-              <Col xs={2}>
-                <Image height={25} src={item.pin} />
+              <Col xs={3} className="d-flex justify-content-center">
+                <Image width={32} src={item.pin} />
               </Col>
               <Col className="label">{item.label}</Col>
             </Row>
