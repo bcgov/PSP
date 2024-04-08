@@ -29,6 +29,7 @@ exports[`UpdateNoteContainer component renders as expected 1`] = `
   -ms-letter-spacing: 0.1rem;
   letter-spacing: 0.1rem;
   cursor: pointer;
+  height: 3.8rem;
 }
 
 .c2.btn:hover {
