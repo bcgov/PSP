@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using FluentAssertions;
 using Moq;
 using Pims.Api.Constants;
@@ -215,6 +216,7 @@ namespace Pims.Api.Test.Services
             var service = this.CreateWithPermissions(Permissions.SystemAdmin, Permissions.PropertyView, Permissions.AcquisitionFileView);
 
             var acqRepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
+            acqRepository.Setup(x => x.GetProperty(It.IsAny<long>())).Returns(new PimsProperty() { PropertyId = 1 });
             acqRepository.Setup(x => x.GetByAcquisitionFilePropertyId(It.IsAny<long>())).Returns(new PimsAcquisitionFile() { AcquisitionFileStatusTypeCode = AcquisitionStatusTypes.ACTIVE.ToString() });
 
             PimsTake completedTake = new()
@@ -224,7 +226,8 @@ namespace Pims.Api.Test.Services
             };
 
             var takeRepository = this._helper.GetService<Mock<ITakeRepository>>();
-            takeRepository.Setup(x => x.GetAllByPropertyAcquisitionFileId(It.IsAny<long>())).Returns(new List<PimsTake>() { completedTake });
+            takeRepository.Setup(x => x.GetAllByPropertyId(It.IsAny<long>())).Returns(new List<PimsTake>() { completedTake });
+            //takeRepository.Setup(x => x.GetAllByPropertyId(It.IsAny<long>())).Returns(takes);
 
             var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
             solver.Setup(x => x.CanEditTakes(It.IsAny<AcquisitionStatusTypes?>())).Returns(true);
@@ -238,55 +241,44 @@ namespace Pims.Api.Test.Services
         }
 
         public static IEnumerable<object[]> takesTestParameters = new List<object[]>() {
-            new object[] { new List<PimsTake>() { new PimsTake() { IsNewHighwayDedication = true }, new PimsTake() { IsNewLicenseToConstruct = true } }, true },
-            new object[] { new List<PimsTake>() { new PimsTake() { IsNewLandAct = true }, new PimsTake() { IsNewLicenseToConstruct = true } }, true, false }, // core inventory takes priority over other interest
-            new object[] { new List<PimsTake>() { new PimsTake() { IsNewLandAct = true, LandActEndDt = DateOnly.FromDateTime(DateTime.Now.AddDays(-1)) }, new PimsTake() { IsNewLicenseToConstruct = true } }, false, false }, // should ignore any expired takes
-            new object[] { new List<PimsTake>(), false, true }, // No takes should be core inventory
-            new object[] { new List<PimsTake>() { new PimsTake() { IsNewLandAct = true, LandActEndDt = DateOnly.FromDateTime(DateTime.Now.AddDays(-1)) } }, true }, // only expired takes is the same as no takes
-            new object[] { new List<PimsTake>() { new PimsTake() { IsNewHighwayDedication = true }, new PimsTake() { IsNewLicenseToConstruct = true } }, true },
-            new object[] { new List<PimsTake>() { new PimsTake() { IsNewHighwayDedication = true }, new PimsTake() { IsNewLicenseToConstruct = true } }, true },
-            new object[] { new List<PimsTake>() { new PimsTake() { IsNewHighwayDedication = true }, new PimsTake() { IsNewLicenseToConstruct = true } }, true },
-            new object[] { new List<PimsTake>() { new PimsTake() { IsNewLandAct = true, LandActTypeCode = "Section 15" } }, false },
-            new object[] { new List<PimsTake>() { new PimsTake() { IsNewLandAct = true, LandActTypeCode = "Section 16" } }, true },
-            new object[] { new List<PimsTake>() { new PimsTake() { IsNewLandAct = true, LandActTypeCode = "Section 17" } }, false },
-            new object[] { new List<PimsTake>() { new PimsTake() { IsNewLandAct = true, LandActTypeCode = "NOI" } }, false },
-            new object[] { new List<PimsTake>() { new PimsTake() { IsNewLandAct = true, LandActTypeCode = "Section 66" } }, false },
-            new object[] { new List<PimsTake>() { new PimsTake() { IsNewLandAct = true, LandActTypeCode = "Crown Grant (New)" } }, true },
-            new object[] { new List<PimsTake>() { new PimsTake() { IsNewInterestInSrw = true } }, false },
-            new object[] { new List<PimsTake>() { new PimsTake() { IsNewLicenseToConstruct = true } }, false },
-            new object[] { new List<PimsTake>() { new PimsTake() { IsThereSurplus = true } }, true },
-            new object[] { new List<PimsTake>() { new PimsTake() { IsNewHighwayDedication = true } }, false },
-            new object[] { new List<PimsTake>() { new PimsTake() { IsNewHighwayDedication = true, IsAcquiredForInventory = false } }, false },
-            new object[] { new List<PimsTake>() { new PimsTake() { IsNewHighwayDedication = false, IsAcquiredForInventory = true } }, true },
-            new object[] { new List<PimsTake>() { new PimsTake() { IsNewLandAct = true, LandActTypeCode = "Section 16", IsNewHighwayDedication = true, IsAcquiredForInventory = false } }, false },
+            //new object[] { new List<PimsTake>(), false }, // No takes should be core inventory
+            new object[] { new List<PimsTake>() { new PimsTake() { TakeStatusTypeCode="CANCELLED" }}, false, false },
+            new object[] { new List<PimsTake>() { new PimsTake() { TakeStatusTypeCode="INPROGRESS"  }}, false , false},
+            new object[] { new List<PimsTake>() { new PimsTake() { TakeStatusTypeCode="COMPLETE" }}, true, true },
+            new object[] { new List<PimsTake>() { new PimsTake() { TakeStatusTypeCode="COMPLETE" }}, false , false},
         }.ToArray();
 
         [Theory, MemberData(nameof(takesTestParameters))]
-        public void Update_Success_Transfer_MultipleTakes_Core(List<PimsTake> takes, bool expectedIsOwned)
+        public void Update_Success_Transfer_MultipleTakes_Core(List<PimsTake> takes, bool solverResult, bool expectTransfer)
         {
             // Arrange
             var service = this.CreateWithPermissions(Permissions.PropertyView, Permissions.AcquisitionFileView);
             var takeRepository = this._helper.GetService<Mock<ITakeRepository>>();
             takeRepository.Setup(x =>
                 x.UpdateAcquisitionPropertyTakes(It.IsAny<long>(), It.IsAny<IEnumerable<PimsTake>>()));
+            takeRepository.Setup(x => x.GetAllByPropertyId(It.IsAny<long>())).Returns(takes);
+
+            var takeInteractionSolver = this._helper.GetMock<ITakeInteractionSolver>();
+            takeInteractionSolver.Setup(x => x.ResultsInOwnedProperty(It.IsAny<IEnumerable<PimsTake>>())).Returns(solverResult);
 
             var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
 
             var acqRepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
+            acqRepository.Setup(x => x.GetProperty(It.IsAny<long>())).Returns(new PimsProperty() { PropertyId = 1 });
             acqRepository.Setup(x => x.GetByAcquisitionFilePropertyId(It.IsAny<long>())).Returns(new PimsAcquisitionFile() { AcquisitionFileStatusTypeCode = AcquisitionStatusTypes.ACTIVE.ToString() });
 
             var acqStatusSolver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
             acqStatusSolver.Setup(x => x.CanEditTakes(It.IsAny<AcquisitionStatusTypes?>())).Returns(true);
 
-            //var takeInteractionSolver = this._helper.GetService<Mock<ITakeInteractionSolver>>();
-            //takeInteractionSolver.Setup(x => x.ResultsInOwnedProperty(It.IsAny<IEnumerable<PimsTake>>())).Returns(true);
-
             // Act
             var result = service.UpdateAcquisitionPropertyTakes(1, takes);
 
+            var completedCount = takes.Count(x => x.TakeStatusTypeCode == "COMPLETE");
+
             // Assert
             takeRepository.Verify(x => x.UpdateAcquisitionPropertyTakes(1, takes), Times.Once);
-            propertyRepository.Verify(x => x.TransferFileProperty(It.IsAny<PimsProperty>(), expectedIsOwned), Times.Once);
+            takeInteractionSolver.Verify(x => x.ResultsInOwnedProperty(takes), completedCount > 0 ? Times.Once : Times.Never);
+            propertyRepository.Verify(x => x.TransferFileProperty(It.IsAny<PimsProperty>(), true), expectTransfer ? Times.Once : Times.Never);
         }
     }
 }

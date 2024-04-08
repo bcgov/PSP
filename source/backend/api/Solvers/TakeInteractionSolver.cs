@@ -9,7 +9,7 @@ namespace Pims.Api.Services
 
         public TakeInteractionSolver()
         {
-            LandActWithOwnership = new HashSet<string>() { "Crown Grant", "Transfer" };
+            LandActWithOwnership = new HashSet<string>() { "Crown Grant", "Transfer Admin" };
         }
 
         /// <summary>
