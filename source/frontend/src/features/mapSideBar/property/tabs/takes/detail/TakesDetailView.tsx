@@ -12,11 +12,11 @@ import TooltipIcon from '@/components/common/TooltipIcon';
 import AreaContainer from '@/components/measurements/AreaContainer';
 import * as API from '@/constants/API';
 import { Claims } from '@/constants/claims';
-import { TakesStatusTypes } from '@/constants/takesStatusTypes';
 import { isAcquisitionFile } from '@/features/mapSideBar/acquisition/add/models';
 import StatusUpdateSolver from '@/features/mapSideBar/acquisition/tabs/fileDetails/detail/statusUpdateSolver';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
+import { ApiGen_CodeTypes_AcquisitionTakeStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_AcquisitionTakeStatusTypes';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { ApiGen_Concepts_Take } from '@/models/api/generated/ApiGen_Concepts_Take';
 import { getApiPropertyName, prettyFormatDate, prettyFormatUTCDate } from '@/utils';
@@ -39,10 +39,10 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
   onEdit,
 }) => {
   const cancelledTakes = takes?.filter(
-    t => t.takeStatusTypeCode?.id === TakesStatusTypes.CANCELLED,
+    t => t.takeStatusTypeCode?.id === ApiGen_CodeTypes_AcquisitionTakeStatusTypes.CANCELLED,
   );
   const nonCancelledTakes = takes?.filter(
-    t => t.takeStatusTypeCode?.id !== TakesStatusTypes.CANCELLED,
+    t => t.takeStatusTypeCode?.id !== ApiGen_CodeTypes_AcquisitionTakeStatusTypes.CANCELLED,
   );
   const takesNotInFile = allTakesCount - (takes?.length ?? 0);
 

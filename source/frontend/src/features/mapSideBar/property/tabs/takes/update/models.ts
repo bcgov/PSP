@@ -1,12 +1,13 @@
 import * as Yup from 'yup';
 
 import { AreaUnitTypes } from '@/constants/areaUnitTypes';
-import { TakesStatusTypes } from '@/constants/takesStatusTypes';
 import { ApiGen_Concepts_Take } from '@/models/api/generated/ApiGen_Concepts_Take';
 import { UtcIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { convertArea } from '@/utils/convertUtils';
 import { fromTypeCodeNullable, stringToNull, toTypeCodeNullable } from '@/utils/formUtils';
+
+import { ApiGen_CodeTypes_AcquisitionTakeStatusTypes } from './../../../../../../models/api/generated/ApiGen_CodeTypes_AcquisitionTakeStatusTypes';
 
 /* eslint-disable no-template-curly-in-string */
 export const TakesYupSchema = Yup.object().shape({
@@ -35,7 +36,8 @@ export const TakesYupSchema = Yup.object().shape({
       completionDt: Yup.string()
         .nullable()
         .when('takeStatusTypeCode', {
-          is: (takeStatusTypeCode: string) => takeStatusTypeCode === TakesStatusTypes.COMPLETE,
+          is: (takeStatusTypeCode: string) =>
+            takeStatusTypeCode === ApiGen_CodeTypes_AcquisitionTakeStatusTypes.COMPLETE,
           then: Yup.string().nullable().required('A completed take must have a completion date.'),
         }),
     }),
