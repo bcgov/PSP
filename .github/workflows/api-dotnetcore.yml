@@ -1,7 +1,10 @@
 name: API (.NET 8)
 
 on:
-  workflow_dispatch:
+  push:
+    branches: [master, dev, test]
+  pull_request:
+    branches: [master, dev, test]
 
 jobs:
   # JOB to run change detection
