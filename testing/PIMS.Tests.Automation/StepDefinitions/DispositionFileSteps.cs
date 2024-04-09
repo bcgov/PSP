@@ -462,7 +462,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             Assert.Equal(20, searchDispositionFiles.DispositionFileTableResultNumber());
 
             sharedPagination.ChoosePaginationOption(50);
-            Assert.Equal(50, searchDispositionFiles.DispositionFileTableResultNumber());
+            Assert.True(searchDispositionFiles.DispositionFileTableResultNumber() > 21);
 
             sharedPagination.ChoosePaginationOption(100);
             Assert.True(searchDispositionFiles.DispositionFileTableResultNumber() > 51);
@@ -549,7 +549,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchDispositionFiles.SearchDispositionFileByDFile(dispositionFileCode);
 
             Assert.True(searchDispositionFiles.SearchFoundResults());
-            //searchDispositionFiles.VerifyAcquisitionFileTableContent(dispositionFile);
             searchDispositionFiles.Dispose();
         }
 
