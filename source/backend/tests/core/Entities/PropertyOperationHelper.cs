@@ -27,8 +27,8 @@ namespace Pims.Core.Test
             propertyOperation.PropertyOperationTypeCodeNavigation = operationType ?? new Entity.PimsPropertyOperationType() { PropertyOperationTypeCode = PropertyOperationTypes.SUBDIVIDE.ToString(), Description = "SUBDIVIDE", DbCreateUserid = "create user", DbLastUpdateUserid = "last user" };
             propertyOperation.PropertyOperationNo = operationNo;
             propertyOperation.OperationDt = DateTime.UtcNow;
-            propertyOperation.SourceProperty = EntityHelper.CreateProperty(1);
-            propertyOperation.DestinationProperty = EntityHelper.CreateProperty(2);
+            propertyOperation.SourceProperty = EntityHelper.CreateProperty(1, isCoreInventory: true);
+            propertyOperation.DestinationProperty = EntityHelper.CreateProperty(2, isCoreInventory: true);
 
             return propertyOperation;
         }
