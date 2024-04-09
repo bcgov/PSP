@@ -200,6 +200,7 @@
         public string IsMotiInventory { get; set; } = null!;
         public string IsNewInterestLand { get; set; } = null!;
         public string IsNewInterestLandArea { get; set; } = null!;
+        public string IsNewInterestLandDate { get; set; } = null!;
         public string IsLandActTenure { get; set; } = null!;
         public string IsLandActTenureDetail { get; set; } = null!;
         public string IsLandActTenureArea { get; set; } = null!;

@@ -69,7 +69,7 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(propertyLeasesSubtitle);
             AssertTrueIsDisplayed(propertyLeaseCountLabel);
 
-            WaitUntilVisible(propertyLeaseExpandTableBttn);
+            Wait();
             webDriver.FindElement(propertyLeaseExpandTableBttn).Click();
 
             AssertTrueIsDisplayed(propertyLeaseTable);

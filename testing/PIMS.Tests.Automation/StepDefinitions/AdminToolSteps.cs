@@ -438,7 +438,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Verify CDOGS List View
             cdogsTemplates.VerifyCDOGSListView();
             cdogsTemplates.Dispose();
-
         }
 
         [StepDefinition(@"Financial Codes rendered successfully")]
