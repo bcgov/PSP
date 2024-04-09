@@ -167,6 +167,11 @@ namespace Pims.Api.Services
 
         private static void CommonPropertyOperationValidation(IEnumerable<PimsPropertyOperation> operations)
         {
+            if (operations.Any(op => op.SourceProperty?.IsOwned != true))
+            {
+                throw new BusinessRuleViolationException("All source properties must be owned.");
+            }
+
             if (operations.Any(op => op.PropertyOperationNo != operations.FirstOrDefault().PropertyOperationNo))
             {
                 throw new BusinessRuleViolationException("All property operations must have matching operation numbers.");
