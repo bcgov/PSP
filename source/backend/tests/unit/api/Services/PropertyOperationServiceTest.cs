@@ -214,7 +214,7 @@ namespace Pims.Api.Test.Services
             // Arrange
             var service = this.CreateDispositionServiceWithPermissions(Permissions.PropertyEdit);
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
-            var sameProperty = EntityHelper.CreateProperty(3);
+            var sameProperty = EntityHelper.CreateProperty(3, isCoreInventory: true);
             propertyService.Setup(x => x.GetById(It.IsAny<long>())).Returns(sameProperty);
             propertyService.Setup(x => x.GetByPid(It.IsAny<string>())).Returns(sameProperty);
             propertyService.Setup(x => x.RetireProperty(It.IsAny<PimsProperty>(), false)).Returns(sameProperty);
@@ -401,6 +401,38 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
+        public void Consolidate_Should_Fail_NotOwnedSource()
+        {
+            // Arrange
+            var service = this.CreateDispositionServiceWithPermissions(Permissions.PropertyEdit);
+            var propertyService = this._helper.GetService<Mock<IPropertyService>>();
+            var sameProperty = EntityHelper.CreateProperty(3);
+            var otherProperty = EntityHelper.CreateProperty(4);
+            propertyService.Setup(x => x.GetMultipleById(It.IsAny<List<long>>())).Returns(new List<PimsProperty> { sameProperty, otherProperty });
+            propertyService.Setup(x => x.GetByPid(It.IsAny<string>())).Throws(new KeyNotFoundException());
+            propertyService.Setup(x => x.RetireProperty(It.IsAny<PimsProperty>(), false)).Returns((PimsProperty p, bool b) => p);
+            propertyService.Setup(x => x.PopulateNewProperty(It.IsAny<PimsProperty>(), true, false)).Returns(sameProperty);
+
+            var operationOne = EntityHelper.CreatePropertyOperation();
+            operationOne.DestinationProperty.PropertyId = 0;
+            operationOne.SourceProperty.PropertyId = 5;
+            sameProperty.IsOwned = false;
+            operationOne.SourceProperty = sameProperty;
+
+            var operations = new List<PimsPropertyOperation>() { operationOne, EntityHelper.CreatePropertyOperation() };
+
+            var repository = this._helper.GetService<Mock<IPropertyOperationRepository>>();
+            repository.Setup(x => x.AddRange(It.IsAny<List<PimsPropertyOperation>>())).Returns(operations);
+
+            // Act
+            Action act = () => service.ConsolidateProperty(operations);
+
+            // Assert
+            var exception = act.Should().Throw<BusinessRuleViolationException>();
+            exception.WithMessage("All source properties must be owned.");
+        }
+
+        [Fact]
         public void Consolidate_Success()
         {
             // Arrange
@@ -437,8 +469,8 @@ namespace Pims.Api.Test.Services
             // Arrange
             var service = this.CreateDispositionServiceWithPermissions(Permissions.PropertyEdit);
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
-            var sameProperty = EntityHelper.CreateProperty(3);
-            var otherProperty = EntityHelper.CreateProperty(4);
+            var sameProperty = EntityHelper.CreateProperty(3, isCoreInventory: true);
+            var otherProperty = EntityHelper.CreateProperty(4, isCoreInventory: true);
             propertyService.Setup(x => x.GetMultipleById(It.IsAny<List<long>>())).Returns(new List<PimsProperty> { sameProperty, otherProperty });
             propertyService.Setup(x => x.GetByPid(It.IsAny<string>())).Returns(sameProperty);
             propertyService.Setup(x => x.RetireProperty(It.IsAny<PimsProperty>(), false)).Returns((PimsProperty p, bool b) => p);

@@ -7,6 +7,8 @@ import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { convertArea } from '@/utils/convertUtils';
 import { fromTypeCodeNullable, stringToNull, toTypeCodeNullable } from '@/utils/formUtils';
 
+import { ApiGen_CodeTypes_AcquisitionTakeStatusTypes } from './../../../../../../models/api/generated/ApiGen_CodeTypes_AcquisitionTakeStatusTypes';
+
 /* eslint-disable no-template-curly-in-string */
 export const TakesYupSchema = Yup.object().shape({
   takes: Yup.array().of(
@@ -31,12 +33,20 @@ export const TakesYupSchema = Yup.object().shape({
         is: (isNewLandAct: boolean) => isNewLandAct,
         then: Yup.string().required('Land Act is required'),
       }),
+      completionDt: Yup.string()
+        .nullable()
+        .when('takeStatusTypeCode', {
+          is: (takeStatusTypeCode: string) =>
+            takeStatusTypeCode === ApiGen_CodeTypes_AcquisitionTakeStatusTypes.COMPLETE,
+          then: Yup.string().nullable().required('A completed take must have a completion date.'),
+        }),
     }),
   ),
 });
 
 export class TakeModel {
   id?: number;
+  completionDt: string | null;
   description: string;
   isThereSurplus: 'false' | 'true';
   isNewHighwayDedication: 'false' | 'true';
@@ -103,6 +113,7 @@ export class TakeModel {
     this.newHighwayDedicationArea = base.newHighwayDedicationArea ?? 0;
     this.newHighwayDedicationAreaUnitTypeCode =
       fromTypeCodeNullable(base.areaUnitTypeCode) ?? AreaUnitTypes.SquareMeters.toString();
+    this.completionDt = base.completionDt;
     this.appCreateTimestamp = base.appCreateTimestamp ?? null;
   }
 
@@ -157,6 +168,7 @@ export class TakeModel {
       isNewLicenseToConstruct: this.isNewLicenseToConstruct === 'true',
       isNewInterestInSrw: this.isNewInterestInSrw === 'true',
       ...getEmptyBaseAudit(this.rowVersion),
+      completionDt: stringToNull(this.completionDt),
     };
   }
 }

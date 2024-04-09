@@ -15,7 +15,7 @@ GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
 
--- Delete the "Transfer Admin" type
+-- Disable the "Transfer Admin" type
 DECLARE @CurrCd NVARCHAR(20)
 SET     @CurrCd = N'Transfer Admin'
 
@@ -25,8 +25,9 @@ WHERE  LAND_ACT_TYPE_CODE = @CurrCd;
 
 IF @@ROWCOUNT = 1
   BEGIN
-  DELETE
-  FROM   PIMS_LAND_ACT_TYPE
+  UPDATE PIMS_LAND_ACT_TYPE
+  SET    IS_DISABLED = 1
+       , CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER + 1
   WHERE  LAND_ACT_TYPE_CODE = @CurrCd;
   END
 GO

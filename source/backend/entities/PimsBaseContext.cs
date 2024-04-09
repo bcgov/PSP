@@ -7167,6 +7167,8 @@ public partial class PimsBaseContext : DbContext
                 });
 
             entity.Property(e => e.TakeId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_TAKE_ID_SEQ])");
+            entity.Property(e => e.ActiveLeaseArea).HasComment("Area of the active lease.");
+            entity.Property(e => e.ActiveLeaseEndDt).HasComment("End date of the active lease.");
             entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
             entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
             entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
@@ -7181,6 +7183,7 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
             entity.Property(e => e.Description).HasComment("Description of the property take.");
             entity.Property(e => e.IsAcquiredForInventory).HasComment("Is this being acquired for inventory? (default = TRUE)");
+            entity.Property(e => e.IsActiveLease).HasComment("Is there an active lease associated with the take?");
             entity.Property(e => e.IsNewHighwayDedication).HasComment("Is there a new right of way? (default = FALSE)");
             entity.Property(e => e.IsNewInterestInSrw).HasComment("Is there a statutory right of way? (default = FALSE)");
             entity.Property(e => e.IsNewLandAct).HasComment("Is there a Section 16? (default = FALSE)");

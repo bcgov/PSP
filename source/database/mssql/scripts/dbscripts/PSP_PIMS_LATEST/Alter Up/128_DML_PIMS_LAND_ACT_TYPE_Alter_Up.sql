@@ -1,4 +1,4 @@
-/* -----------------------------------------------------------------------------
+ /* -----------------------------------------------------------------------------
 Alter the data in the PIMS_LAND_ACT_TYPE table.
 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
 Author        Date         Comment
@@ -24,11 +24,14 @@ FROM   PIMS_LAND_ACT_TYPE
 WHERE  LAND_ACT_TYPE_CODE = @CurrCd;
 
 IF @@ROWCOUNT = 0
-  BEGIN
   INSERT INTO PIMS_LAND_ACT_TYPE (LAND_ACT_TYPE_CODE, DESCRIPTION, DISPLAY_ORDER)
     VALUES
       (N'Transfer Admin', N'Transfer of Admin and Control', 7);
-  END
+ELSE  
+  UPDATE PIMS_LAND_ACT_TYPE
+  SET    IS_DISABLED = 0
+       , CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER + 1
+  WHERE  LAND_ACT_TYPE_CODE = @CurrCd;
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO

@@ -39,6 +39,8 @@ namespace Pims.Api.Models.Concepts.Take
 
         public DateOnly? LandActEndDt { get; set; }
 
+        public DateOnly? CompletionDt { get; set; }
+
         public AcquisitionFileModel PropertyAcquisitionFile { get; set; }
 
         public long PropertyAcquisitionFileId { get; set; }
