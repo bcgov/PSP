@@ -1,10 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Text.RegularExpressions;
 using LinqKit;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 using Pims.Dal.Security;
@@ -101,24 +101,42 @@ namespace Pims.Dal.Helpers.Extensions
 
             if (filter.Ownership.Count > 0)
             {
+                var authorizationTypes = new List<string>(){
+                   "NOI",
+                   "Section 15",
+                   "Section 16",
+                   "Section 17",
+                   "Section 66",
+                };
+
+                // Property ownership filters
+                // TODO: Instead of doing redoing the query, the view could be used for ownership related queries
                 ownershipBuilder = isRetired ? PredicateBuilder.New<PimsProperty>(p => p.IsRetired == true) : PredicateBuilder.New<PimsProperty>(p => false);
                 if (filter.Ownership.Contains("isCoreInventory"))
                 {
                     ownershipBuilder = ownershipBuilder.Or(p => p.IsOwned && p.IsRetired != true);
                 }
-                /* TODO: Fix mapings
+                if (filter.Ownership.Contains("isCoreInventory"))
+                {
+                    ownershipBuilder.Or(p => p.IsOwned);
+                }
                 if (filter.Ownership.Contains("isPropertyOfInterest"))
                 {
-                    ownershipBuilder = ownershipBuilder.Or(p => p.IsPropertyOfInterest && p.IsRetired != true);
+                    ownershipBuilder.Or(p => p.IsRetired != true && p.PimsPropertyAcquisitionFiles.Any(x => x.AcquisitionFile.AcquisitionFileStatusTypeCode == "DRAFT" || x.AcquisitionFile.AcquisitionFileStatusTypeCode == "ACTIVE"));
+                    ownershipBuilder.Or(p => p.IsRetired != true && p.PimsPropertyResearchFiles.Any(x => x.ResearchFile.ResearchFileStatusTypeCode == "ACTIVE"));
                 }
                 if (filter.Ownership.Contains("isOtherInterest"))
                 {
-                    ownershipBuilder = ownershipBuilder.Or(p => p.IsOtherInterest && p.IsRetired != true);
+                    var today = DateOnly.FromDateTime(DateTime.Now);
+                    ownershipBuilder.Or(p => p.IsRetired != true && p.PimsPropertyAcquisitionFiles.Any(x => x.PimsTakes.Any(t => t.TakeStatusTypeCode == "COMPLETE" && t.IsNewLandAct && authorizationTypes.Contains(t.LandActTypeCode) && t.LandActEndDt >= today)));
+                    ownershipBuilder.Or(p => p.IsRetired != true && p.PimsPropertyAcquisitionFiles.Any(x => x.PimsTakes.Any(t => t.TakeStatusTypeCode == "COMPLETE" && t.IsNewInterestInSrw && t.SrwEndDt >= today)));
+                    ownershipBuilder.Or(p => p.IsRetired != true && p.PimsPropertyAcquisitionFiles.Any(x => x.PimsTakes.Any(t => t.TakeStatusTypeCode == "COMPLETE" && t.IsNewLicenseToConstruct && t.LtcEndDt >= today)));
+                    ownershipBuilder.Or(p => p.IsRetired != true && p.PimsPropertyAcquisitionFiles.Any(x => x.PimsTakes.Any(t => t.TakeStatusTypeCode == "COMPLETE" && t.IsActiveLease && t.ActiveLeaseEndDt >= today)));
                 }
                 if (filter.Ownership.Contains("isDisposed"))
                 {
-                    ownershipBuilder = ownershipBuilder.Or(p => p.IsDisposed && p.IsRetired != true);
-                }*/
+                    ownershipBuilder.Or(p => p.IsRetired != true && p.PimsDispositionFileProperties.Any(d => d.DispositionFile.DispositionStatusTypeCode == "COMPLETE"));
+                }
             }
             else
             {

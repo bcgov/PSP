@@ -41,9 +41,6 @@ export interface ApiGen_Concepts_Property extends ApiGen_Base_BaseConcurrent {
   pin: number | null;
   planNumber: string | null;
   isOwned: boolean;
-  isPropertyOfInterest: boolean;
-  isOtherInterest: boolean;
-  isDisposed: boolean;
   isVisibleToOtherAgencies: boolean;
   areaUnit: ApiGen_Base_CodeType<string> | null;
   landArea: number | null;

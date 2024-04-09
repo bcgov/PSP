@@ -525,35 +525,56 @@ namespace Pims.Dal.Repositories
                     p.PimsPropPropAnomalyTypes.Any(at => filter.AnomalyIds.Contains(at.PropertyAnomalyTypeCode)));
             }
 
+
+            var authorizationTypes = new List<string>(){
+               "NOI",
+               "Section 15",
+               "Section 16",
+               "Section 17",
+               "Section 66",
+            };
+
             // Property ownership filters
+            // TODO: Instead of doing redoing the query, the view could be used for ownership related queries
             var ownershipBuilder = PredicateBuilder.New<PimsProperty>(p => false);
             if (filter.IsCoreInventory)
             {
                 ownershipBuilder.Or(p => p.IsOwned);
             }
-            /* TODO: Fix mapings
             if (filter.IsPropertyOfInterest)
             {
-                ownershipBuilder.Or(p => p.IsPropertyOfInterest);
+                ownershipBuilder.Or(p => p.PimsPropertyAcquisitionFiles.Any(x => x.AcquisitionFile.AcquisitionFileStatusTypeCode == "DRAFT" || x.AcquisitionFile.AcquisitionFileStatusTypeCode == "ACTIVE"));
+                ownershipBuilder.Or(p => p.PimsPropertyResearchFiles.Any(x => x.ResearchFile.ResearchFileStatusTypeCode == "ACTIVE"));
             }
             if (filter.IsOtherInterest)
             {
-                ownershipBuilder.Or(p => p.IsOtherInterest);
+                var today = DateOnly.FromDateTime(DateTime.Now);
+                ownershipBuilder.Or(p => p.PimsPropertyAcquisitionFiles.Any(x => x.PimsTakes.Any(t => t.TakeStatusTypeCode == "COMPLETE" && t.IsNewLandAct && authorizationTypes.Contains(t.LandActTypeCode) && t.LandActEndDt >= today)));
+                ownershipBuilder.Or(p => p.PimsPropertyAcquisitionFiles.Any(x => x.PimsTakes.Any(t => t.TakeStatusTypeCode == "COMPLETE" && t.IsNewInterestInSrw && t.SrwEndDt >= today)));
+                ownershipBuilder.Or(p => p.PimsPropertyAcquisitionFiles.Any(x => x.PimsTakes.Any(t => t.TakeStatusTypeCode == "COMPLETE" && t.IsNewLicenseToConstruct && t.LtcEndDt >= today)));
+                ownershipBuilder.Or(p => p.PimsPropertyAcquisitionFiles.Any(x => x.PimsTakes.Any(t => t.TakeStatusTypeCode == "COMPLETE" && t.IsActiveLease && t.ActiveLeaseEndDt >= today)));
             }
             if (filter.IsDisposed)
             {
-                ownershipBuilder.Or(p => p.IsDisposed);
+                ownershipBuilder.Or(p => p.PimsDispositionFileProperties.Any(d => d.DispositionFile.DispositionStatusTypeCode == "COMPLETE"));
             }
             if (filter.IsRetired)
             {
                 ownershipBuilder.Or(p => p.IsRetired.HasValue && p.IsRetired.Value);
             }
-            */
 
             predicate.And(ownershipBuilder);
 
             return Context.PimsProperties.AsNoTracking()
                 .Where(predicate)
+                .Include(p => p.PimsPropertyResearchFiles)
+                  .ThenInclude(pr => pr.ResearchFile)
+                .Include(p => p.PimsPropertyAcquisitionFiles)
+                  .ThenInclude(pa => pa.AcquisitionFile)
+                .Include(p => p.PimsPropertyAcquisitionFiles)
+                  .ThenInclude(pa => pa.PimsTakes)
+                .Include(p => p.PimsDispositionFileProperties)
+                  .ThenInclude(pd => pd.DispositionFile)
                 .Select(x => x.PropertyId)
                 .ToHashSet();
         }

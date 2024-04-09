@@ -90,8 +90,7 @@ namespace Pims.Dal.Test.Repositories
             // Assert
             act.Should().Throw<NotAuthorizedException>();
         }
-        
-        /*
+
         [Theory]
         [MemberData(nameof(AllPropertyFilters))]
         public void GetPage_Properties(PropertyFilter filter, int expectedCount)
@@ -103,35 +102,25 @@ namespace Pims.Dal.Test.Repositories
             using var init = helper.InitializeDatabase(user);
 
             PimsProperty testProperty = null;
-
             testProperty = init.CreateProperty(2);
             testProperty.IsOwned = true;
-
             testProperty = init.CreateProperty(3, pin: 111);
-            testProperty.IsOwned = false;
-
+            testProperty.PimsPropertyAcquisitionFiles = new List<PimsPropertyAcquisitionFile>() { new PimsPropertyAcquisitionFile() { AcquisitionFile = new PimsAcquisitionFile() { AcquisitionFileStatusTypeCode = "ACTIVE" } } };
             testProperty = init.CreateProperty(4, address: init.PimsAddresses.FirstOrDefault());
-            testProperty.IsOwned = false;
-
+            testProperty.PimsPropertyAcquisitionFiles = new List<PimsPropertyAcquisitionFile>() { new PimsPropertyAcquisitionFile() { AcquisitionFile = new PimsAcquisitionFile() { AcquisitionFileStatusTypeCode = "ACTIVE" }, PimsTakes = new List<PimsTake>() { new PimsTake() { TakeStatusTypeCode = "COMPLETE", IsNewInterestInSrw = true, SrwEndDt = DateOnly.MaxValue } } } };
             testProperty = init.CreateProperty(5, classification: init.PimsPropertyClassificationTypes.FirstOrDefault(c => c.PropertyClassificationTypeCode == "Core Operational"));
-            testProperty.IsOwned = false;
-
+            testProperty.PimsDispositionFileProperties = new List<PimsDispositionFileProperty>() { new PimsDispositionFileProperty() { DispositionFile = new PimsDispositionFile() { DispositionFileStatusTypeCode = "ACTIVE" } } };
             testProperty = init.CreateProperty(6, location: new NetTopologySuite.Geometries.Point(-123.720810, 48.529338));
             testProperty.IsOwned = true;
-
             testProperty = init.CreateProperty(111111111);
             testProperty.IsOwned = true;
-            
             testProperty = init.CreateProperty(22222);
             testProperty.IsRetired = true;
-
             testProperty = init.CreateProperty(33333);
             testProperty.SurveyPlanNumber = "SP-89TTXY";
-
             testProperty = init.CreateProperty(44444);
             testProperty.IsRetired = true;
             testProperty.IsOwned = true;
-
             init.SaveChanges();
 
             var repository = helper.CreateRepository<PropertyRepository>(user);
@@ -144,7 +133,6 @@ namespace Pims.Dal.Test.Repositories
             Assert.IsAssignableFrom<IEnumerable<Entity.PimsProperty>>(result);
             Assert.Equal(expectedCount, result.Total);
         }
-        */
         #endregion
 
         #region Get
@@ -696,7 +684,7 @@ namespace Pims.Dal.Test.Repositories
 
 
             // Act
-            var transferredProperty = repository.TransferFileProperty(property, true );
+            var transferredProperty = repository.TransferFileProperty(property, true);
             context.CommitTransaction();
 
             // Assert
@@ -719,7 +707,6 @@ namespace Pims.Dal.Test.Repositories
 
             // Assert
             transferredProperty.IsOwned.Should().BeFalse();
-            //transferredProperty.IsPropertyOfInterest.Should().BeFalse(); TODO: Fix mapings
             transferredProperty.PropertyClassificationTypeCode.Should().Be("OTHER");
         }
         #endregion
