@@ -48,7 +48,7 @@ export const TenantProvider: React.FC<React.PropsWithChildren<unknown>> = props 
       }
     } else {
       // Fetch the configuration file generated for the environment.
-      const r = await axios.get<ITenantConfig>(`${import.meta.env.PUBLIC_URL}/tenants/tenant.json`);
+      const r = await axios.get<ITenantConfig>('tenants/tenant.json');
       const fileTenantConfig = await r.data;
       setTenant({ ...defaultTenant, ...fileTenantConfig });
     }
