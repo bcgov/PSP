@@ -71,7 +71,7 @@ jobs:
           # Environment variables to tag the upload with (e.g. PYTHON | OS,PYTHON)
           env_vars: javascript
           # Specify whether or not CI build should fail if Codecov runs into an error during upload
-          fail_ci_if_error: true
+          fail_ci_if_error: false
 
       - name: SonarQube Scan
         id: scan
