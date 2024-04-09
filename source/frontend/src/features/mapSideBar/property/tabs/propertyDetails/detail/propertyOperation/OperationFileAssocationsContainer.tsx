@@ -39,6 +39,7 @@ export const OperationFileAssociationsContainer: React.FunctionComponent<
         name="PropertyOperationAssociations"
         loading={loading}
         noRowsMessage="There are no files associated to the property."
+        hideToolbar
       />
     </>
   );
