@@ -102,8 +102,10 @@ namespace Pims.Dal.Test.Repositories
             using var init = helper.InitializeDatabase(user);
 
             PimsProperty testProperty = null;
+
             testProperty = init.CreateProperty(2);
             testProperty.IsOwned = true;
+
             testProperty = init.CreateProperty(3, pin: 111);
             testProperty.PimsPropertyAcquisitionFiles = new List<PimsPropertyAcquisitionFile>() { new PimsPropertyAcquisitionFile() { AcquisitionFile = new PimsAcquisitionFile() { AcquisitionFileStatusTypeCode = "ACTIVE" } } };
             testProperty = init.CreateProperty(4, address: init.PimsAddresses.FirstOrDefault());
@@ -112,12 +114,16 @@ namespace Pims.Dal.Test.Repositories
             testProperty.PimsDispositionFileProperties = new List<PimsDispositionFileProperty>() { new PimsDispositionFileProperty() { DispositionFile = new PimsDispositionFile() { DispositionFileStatusTypeCode = "ACTIVE" } } };
             testProperty = init.CreateProperty(6, location: new NetTopologySuite.Geometries.Point(-123.720810, 48.529338));
             testProperty.IsOwned = true;
+
             testProperty = init.CreateProperty(111111111);
             testProperty.IsOwned = true;
+            
             testProperty = init.CreateProperty(22222);
             testProperty.IsRetired = true;
+
             testProperty = init.CreateProperty(33333);
             testProperty.SurveyPlanNumber = "SP-89TTXY";
+
             testProperty = init.CreateProperty(44444);
             testProperty.IsRetired = true;
             testProperty.IsOwned = true;

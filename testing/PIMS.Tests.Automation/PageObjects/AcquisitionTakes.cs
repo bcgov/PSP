@@ -154,6 +154,11 @@ namespace PIMS.Tests.Automation.PageObjects
                 AssertTrueDoublesEquals(By.XPath("//input[@data-testid='radio-takes."+ index +".isnewinterestinsrw-yes']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/div/div/div/div/input[@name='area-hectares']"), TransformSqMtToHectares(take.IsNewInterestLandArea));
                 AssertTrueDoublesEquals(By.XPath("//input[@data-testid='radio-takes."+ index +".isnewinterestinsrw-yes']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/div/div/div/div/input[@name='area-sq-feet']"), TransformSqMtToSqFt(take.IsNewInterestLandArea));
                 AssertTrueDoublesEquals(By.XPath("//input[@data-testid='radio-takes."+ index +".isnewinterestinsrw-yes']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/div/div/div/div/input[@name='area-acres']"), TransformSqMtToAcres(take.IsNewInterestLandArea));
+
+                ClearInput(By.Id("datepicker-takes."+ index +".srwEndDt"));
+                webDriver.FindElement(By.Id("datepicker-takes."+ index +".srwEndDt")).SendKeys(take.IsNewInterestLandDate);
+                webDriver.FindElement(By.Id("datepicker-takes."+ index +".srwEndDt")).SendKeys(Keys.Enter);
+
             }
 
             //Land Act Tenure

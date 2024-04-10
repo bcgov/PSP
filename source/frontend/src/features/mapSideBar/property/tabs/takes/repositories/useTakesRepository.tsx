@@ -67,6 +67,7 @@ export const useTakesRepository = () => {
     requestName: 'UpdateTakesByAcquisitionPropertyId',
     onSuccess: useAxiosSuccessHandler(),
     onError: useAxiosErrorHandler(),
+    throwError: true,
   });
 
   return useMemo(

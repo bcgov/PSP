@@ -37,6 +37,7 @@ export const getMockApiTakes = (): ApiGen_Concepts_Take[] => [
       displayOrder: null,
       isDisabled: false,
     },
+    completionDt: '',
     rowVersion: 2,
   },
 ];

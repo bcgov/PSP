@@ -122,6 +122,7 @@ export const emptyTake: ApiGen_Concepts_Take = {
   takeTypeCode: null,
   takeStatusTypeCode: toTypeCode('INPROGRESS'),
   landActTypeCode: null,
+  completionDt: null,
   ...getEmptyBaseAudit(),
 };
 

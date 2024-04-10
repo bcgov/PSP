@@ -206,7 +206,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchProperties.SearchPropertyByPINPID(searchProperty.PID);
 
             //Validate that the result gives only one pin
-            Assert.True(searchProperties.PropertiesListFoundCount() == 2);
+            Assert.True(searchProperties.PropertiesListFoundCount() == 1);
 
             //Search for a valid Plan in Inventory
             searchProperties.SearchPropertyReset();
@@ -519,6 +519,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchProperty.Address = ExcelDataContext.ReadData(rowNumber, "Address");
             searchProperty.PlanNumber = ExcelDataContext.ReadData(rowNumber, "PlanNumber");
             searchProperty.LegalDescription = ExcelDataContext.ReadData(rowNumber, "LegalDescription");
+            searchProperty.MultiplePIDS = genericSteps.PopulateLists(ExcelDataContext.ReadData(rowNumber, "MultiplePIDS"));
         }
 
         private void PopulateManagementProperty(int rowNumber)

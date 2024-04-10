@@ -86,8 +86,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By dispositionSalesDetailsFiscalYearInput = By.Id("datepicker-saleFiscalYear");
 
         private By dispositionSalesDetailsSalePriceLabel = By.XPath("//label[contains(text(),'Final sale price, incl. GST ($)')]");
-        private By dispositionSalesDetailsSalePriceLabel2 = By.XPath("//label[contains(text(),'Final sale price ($), incl. GST ($)')]");
-        private By dispositionSalesDetailsSalePriceContent = By.XPath("//label[contains(text(),'Final sale price ($), incl. GST ($)')]/parent::div/following-sibling::div");
+        private By dispositionSalesDetailsSalePriceContent = By.XPath("//label[contains(text(),'Final sale price, incl. GST ($)')]/parent::div/following-sibling::div");
         private By dispositionSalesDetailsSalePriceInput = By.Id("input-finalSaleAmount");
 
         private By dispositionSalesDetailsRealtorCommissionLabel = By.XPath("//label[contains(text(),'Realtor commission ($)')]");
@@ -628,7 +627,7 @@ namespace PIMS.Tests.Automation.PageObjects
             if(disposition.FiscalYearOfSale != "")
                 AssertTrueContentEquals(dispositionSalesDetailsFiscalYearContent, disposition.FiscalYearOfSale);
 
-            AssertTrueIsDisplayed(dispositionSalesDetailsSalePriceLabel2);
+            AssertTrueIsDisplayed(dispositionSalesDetailsSalePriceLabel);
             if (disposition.FinalSalePrice != "")
                 AssertTrueContentEquals(dispositionSalesDetailsSalePriceContent, TransformCurrencyFormat(disposition.FinalSalePrice));
 
