@@ -93,9 +93,9 @@ namespace Pims.Api.Services
                 {
                     foreach (var completeTake in currentCompleteTakes)
                     {
-                        // Validate that the current completed date can only by updated by a sysadmin
+                        // Validate that the current completed take can only by updated by a sysadmin
                         var updatedTake = takes.FirstOrDefault(x => x.TakeId == completeTake.TakeId);
-                        if (!_user.HasPermission(Permissions.SystemAdmin) && updatedTake is not null && updatedTake.TakeStatusTypeCode != completeTake.TakeStatusTypeCode)
+                        if (!_user.HasPermission(Permissions.SystemAdmin) && (updatedTake is null || (updatedTake is not null && updatedTake.TakeStatusTypeCode != completeTake.TakeStatusTypeCode)))
                         {
                             throw new BusinessRuleViolationException("Retired records are referenced for historical purposes only and cannot be edited or deleted. If the take has been added in error, contact your system administrator to re-open the file, which will allow take deletion.");
                         }

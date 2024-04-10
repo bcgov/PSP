@@ -42,7 +42,8 @@ namespace Pims.Api.Test.Services
             new object[] { new List<PimsTake>() { new PimsTake() { IsNewHighwayDedication = true, IsAcquiredForInventory=true }}, true },
         }.ToArray();
 
-        [Theory, MemberData(nameof(takesTestParameters))]
+        [Theory]
+        [MemberData(nameof(takesTestParameters))]
         public void Update_Success_Transfer_MultipleTakes_Core(List<PimsTake> takes, bool expectedIsOwned)
         {
             // Arrange

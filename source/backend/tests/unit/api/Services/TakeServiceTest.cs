@@ -188,7 +188,11 @@ namespace Pims.Api.Test.Services
             var service = this.CreateWithPermissions(Permissions.PropertyView, Permissions.AcquisitionFileView);
 
             var acqRepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
-            acqRepository.Setup(x => x.GetByAcquisitionFilePropertyId(It.IsAny<long>())).Returns(new PimsAcquisitionFile() { AcquisitionFileStatusTypeCode = AcquisitionStatusTypes.ACTIVE.ToString() });
+            acqRepository.Setup(x => x.GetByAcquisitionFilePropertyId(It.IsAny<long>())).Returns(
+                new PimsAcquisitionFile() { 
+                    AcquisitionFileStatusTypeCode = AcquisitionStatusTypes.ACTIVE.ToString() 
+                }
+            );
 
             PimsTake completedTake = new()
             {
@@ -197,7 +201,9 @@ namespace Pims.Api.Test.Services
             };
 
             var takeRepository = this._helper.GetService<Mock<ITakeRepository>>();
-            takeRepository.Setup(x => x.GetAllByPropertyAcquisitionFileId(It.IsAny<long>())).Returns(new List<PimsTake>() { completedTake });
+            takeRepository.Setup(x => x.GetAllByPropertyAcquisitionFileId(It.IsAny<long>())).Returns(
+                new List<PimsTake>() { completedTake }
+            );
 
             var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
             solver.Setup(x => x.CanEditTakes(It.IsAny<AcquisitionStatusTypes?>())).Returns(true);

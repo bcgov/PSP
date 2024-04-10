@@ -101,7 +101,7 @@ namespace Pims.Dal.Helpers.Extensions
 
             if (filter.Ownership.Count > 0)
             {
-                var authorizationTypes = new List<string>(){
+                var authorizationTypes = new List<string>() {
                    "NOI",
                    "Section 15",
                    "Section 16",
@@ -115,10 +115,6 @@ namespace Pims.Dal.Helpers.Extensions
                 if (filter.Ownership.Contains("isCoreInventory"))
                 {
                     ownershipBuilder = ownershipBuilder.Or(p => p.IsOwned && p.IsRetired != true);
-                }
-                if (filter.Ownership.Contains("isCoreInventory"))
-                {
-                    ownershipBuilder.Or(p => p.IsOwned);
                 }
                 if (filter.Ownership.Contains("isPropertyOfInterest"))
                 {
