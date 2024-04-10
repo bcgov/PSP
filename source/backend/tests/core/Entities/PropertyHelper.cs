@@ -23,7 +23,7 @@ namespace Pims.Core.Test
         /// <param name="areaUnit"></param>
         /// <param name="dataSource"></param>
         /// <returns></returns>
-        public static PimsProperty CreateProperty(int pid, int? pin = null, PimsPropertyType type = null, PimsPropertyClassificationType classification = null, PimsAddress address = null, PimsPropertyTenureType tenure = null, PimsAreaUnitType areaUnit = null, PimsDataSourceType dataSource = null, PimsPropertyStatusType status = null, PimsLease lease = null, short? regionCode = null, bool? isCoreInventory = null, bool? isPointOfInterest = null, bool? isOtherInterest = null, bool? isDisposed = null, bool? isRetired = null)
+        public static PimsProperty CreateProperty(int pid, int? pin = null, PimsPropertyType type = null, PimsPropertyClassificationType classification = null, PimsAddress address = null, PimsPropertyTenureType tenure = null, PimsAreaUnitType areaUnit = null, PimsDataSourceType dataSource = null, PimsPropertyStatusType status = null, PimsLease lease = null, short? regionCode = null, bool? isCoreInventory = null, bool? isRetired = null)
         {
             type ??= CreatePropertyType($"Land-{pid}");
             classification ??= CreatePropertyClassificationType($"Class-{pid}");
@@ -56,25 +56,10 @@ namespace Pims.Core.Test
             {
                 property.IsOwned = isCoreInventory.Value;
             }
-            /*
-            TODO: Fix mapings
-            if (isPointOfInterest.HasValue)
-            {
-                property.IsPropertyOfInterest = isPointOfInterest.Value;
-            }
-            if (isOtherInterest.HasValue)
-            {
-                property.IsOtherInterest = isOtherInterest.Value;
-            }
-            if (isDisposed.HasValue)
-            {
-                property.IsDisposed = isDisposed.Value;
-            }
             if (isRetired.HasValue)
             {
                 property.IsRetired = isRetired.Value;
             }
-            */
 
             return property;
         }

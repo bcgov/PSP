@@ -26,6 +26,7 @@ namespace Pims.Api.Services
         private readonly ICoordinateTransformService _coordinateService;
         private readonly ILookupRepository _lookupRepository;
         private readonly IEntityNoteRepository _entityNoteRepository;
+        private readonly IPropertyService _propertyService;
 
         public ResearchFileService(
             ClaimsPrincipal user,
@@ -35,7 +36,8 @@ namespace Pims.Api.Services
             IPropertyRepository propertyRepository,
             ICoordinateTransformService coordinateService,
             ILookupRepository lookupRepository,
-            IEntityNoteRepository entityNoteRepository)
+            IEntityNoteRepository entityNoteRepository,
+            IPropertyService propertyService)
         {
             _user = user;
             _logger = logger;
@@ -45,6 +47,7 @@ namespace Pims.Api.Services
             _coordinateService = coordinateService;
             _lookupRepository = lookupRepository;
             _entityNoteRepository = entityNoteRepository;
+            _propertyService = propertyService;
         }
 
         public PimsResearchFile GetById(long id)
@@ -133,21 +136,12 @@ namespace Pims.Api.Services
             foreach (var deletedProperty in differenceSet)
             {
                 _researchFilePropertyRepository.Delete(deletedProperty);
-                /*
-                TODO: Fix mapings
-                if (deletedProperty.Property.IsPropertyOfInterest == true)
+                var totalAssociationCount = _propertyRepository.GetAllAssociationsCountById(deletedProperty.PropertyId);
+                if (totalAssociationCount <= 1)
                 {
-                    PimsProperty propertyWithAssociations = _propertyRepository.GetAllAssociationsById(deletedProperty.PropertyId);
-                    var leaseAssociationCount = propertyWithAssociations.PimsPropertyLeases.Count;
-                    var researchAssociationCount = propertyWithAssociations.PimsPropertyResearchFiles.Count;
-                    var acquisitionAssociationCount = propertyWithAssociations.PimsPropertyAcquisitionFiles.Count;
-                    if (leaseAssociationCount + acquisitionAssociationCount == 0 && researchAssociationCount <= 1 && deletedProperty?.Property?.IsPropertyOfInterest == true)
-                    {
-                        _researchFilePropertyRepository.CommitTransaction(); // TODO: this can only be removed if cascade deletes are implemented. EF executes deletes in alphabetic order.
-                        _propertyRepository.Delete(deletedProperty.Property);
-                    }
+                    _researchFilePropertyRepository.CommitTransaction(); // TODO: this can only be removed if cascade deletes are implemented. EF executes deletes in alphabetic order.
+                    _propertyRepository.Delete(deletedProperty.Property);
                 }
-                */
             }
 
             _researchFilePropertyRepository.CommitTransaction();
@@ -231,7 +225,7 @@ namespace Pims.Api.Services
                     catch (KeyNotFoundException)
                     {
                         _logger.LogDebug("Adding new property with pid:{pid}", pid);
-                        PopulateNewProperty(researchProperty.Property);
+                        researchProperty.Property = _propertyService.PopulateNewProperty(researchProperty.Property);
                     }
                 }
                 else if (researchProperty.Property.Pin.HasValue)
@@ -247,55 +241,14 @@ namespace Pims.Api.Services
                     catch (KeyNotFoundException)
                     {
                         _logger.LogDebug("Adding new property with pin:{pin}", pin);
-                        PopulateNewProperty(researchProperty.Property);
+                        researchProperty.Property = _propertyService.PopulateNewProperty(researchProperty.Property);
                     }
                 }
                 else
                 {
                     _logger.LogDebug("Adding new property without a pid");
-                    PopulateNewProperty(researchProperty.Property);
+                    researchProperty.Property = _propertyService.PopulateNewProperty(researchProperty.Property);
                 }
-            }
-        }
-
-        private void PopulateNewProperty(PimsProperty property)
-        {
-            property.PropertyClassificationTypeCode = "UNKNOWN";
-            property.PropertyDataSourceEffectiveDate = DateOnly.FromDateTime(System.DateTime.Now);
-            property.PropertyDataSourceTypeCode = "PMBC";
-
-            property.PropertyTypeCode = "UNKNOWN";
-
-            property.PropertyStatusTypeCode = "UNKNOWN";
-            property.SurplusDeclarationTypeCode = "UNKNOWN";
-
-            //property.IsPropertyOfInterest = true; TODO: Fix mapings
-
-            if (property.Address != null)
-            {
-                var provinceId = _lookupRepository.GetAllProvinces().FirstOrDefault(p => p.ProvinceStateCode == "BC")?.Id;
-                if (provinceId.HasValue)
-                {
-                    property.Address.ProvinceStateId = provinceId.Value;
-                }
-                property.Address.CountryId = _lookupRepository.GetAllCountries().FirstOrDefault(p => p.CountryCode == "CA")?.Id;
-            }
-
-            // convert spatial location from lat/long (4326) to BC Albers (3005) for database storage
-            var geom = property.Location;
-            if (geom.SRID != SpatialReference.BCALBERS)
-            {
-                var newCoords = _coordinateService.TransformCoordinates(geom.SRID, SpatialReference.BCALBERS, geom.Coordinate);
-                property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.BCALBERS);
-            }
-
-            // apply similar logic to the boundary
-            var boundaryGeom = property.Boundary;
-            if (boundaryGeom != null && boundaryGeom.SRID != SpatialReference.BCALBERS)
-            {
-                var newCoords = property.Boundary.Coordinates.Select(coord => _coordinateService.TransformCoordinates(boundaryGeom.SRID, SpatialReference.BCALBERS, coord));
-                var gf = NetTopologySuite.NtsGeometryServices.Instance.CreateGeometryFactory(SpatialReference.BCALBERS);
-                property.Boundary = gf.CreatePolygon(newCoords.ToArray());
             }
         }
 

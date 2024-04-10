@@ -15,24 +15,32 @@ namespace Pims.Api.Services
 {
     public class TakeService : ITakeService
     {
+
+
         private readonly ClaimsPrincipal _user;
         private readonly ILogger _logger;
         private readonly IAcquisitionFileRepository _acqFileRepository;
         private readonly ITakeRepository _takeRepository;
         private readonly IAcquisitionStatusSolver _statusSolver;
+        private readonly ITakeInteractionSolver _takeInteractionSolver;
+        private readonly IPropertyRepository _propertyRepository;
 
         public TakeService(
             ClaimsPrincipal user,
             ILogger<AcquisitionFileService> logger,
             IAcquisitionFileRepository acqFileRepository,
             ITakeRepository repository,
-            IAcquisitionStatusSolver statusSolver)
+            IAcquisitionStatusSolver statusSolver,
+            ITakeInteractionSolver takeInteractionSolver,
+            IPropertyRepository propertyRepository)
         {
             _user = user;
             _logger = logger;
             _acqFileRepository = acqFileRepository;
             _takeRepository = repository;
             _statusSolver = statusSolver;
+            _takeInteractionSolver = takeInteractionSolver;
+            _propertyRepository = propertyRepository;
         }
 
         public IEnumerable<PimsTake> GetByFileId(long fileId)
@@ -46,7 +54,7 @@ namespace Pims.Api.Services
         {
             _logger.LogInformation($"Getting takes with fileId {fileId} and propertyId {acquisitionFilePropertyId}");
             _user.ThrowIfNotAuthorized(Permissions.PropertyView, Permissions.AcquisitionFileView);
-            return _takeRepository.GetAllByPropertyId(fileId, acquisitionFilePropertyId);
+            return _takeRepository.GetAllByAcqPropertyId(fileId, acquisitionFilePropertyId);
         }
 
         public int GetCountByPropertyId(long propertyId)
@@ -97,7 +105,20 @@ namespace Pims.Api.Services
                 }
             }
 
+            // Update takes
             _takeRepository.UpdateAcquisitionPropertyTakes(acquisitionFilePropertyId, takes);
+
+            // Evaluate if the property needs to be updated
+            var currentProperty = _acqFileRepository.GetProperty(acquisitionFilePropertyId);
+            var currentTakes = _takeRepository.GetAllByPropertyId(currentProperty.PropertyId);
+
+            var completedTakes = currentTakes.Where(t => t.TakeStatusTypeCode == "COMPLETE").ToList();
+
+            if (_takeInteractionSolver.ResultsInOwnedProperty(completedTakes))
+            {
+                _propertyRepository.TransferFileProperty(currentProperty, true);
+            }
+
             _takeRepository.CommitTransaction();
 
             return _takeRepository.GetAllByPropertyAcquisitionFileId(acquisitionFilePropertyId);

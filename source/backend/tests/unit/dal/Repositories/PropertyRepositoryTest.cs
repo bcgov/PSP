@@ -90,9 +90,8 @@ namespace Pims.Dal.Test.Repositories
             // Assert
             act.Should().Throw<NotAuthorizedException>();
         }
-
+        
         /*
-        TODO: Fix mapings
         [Theory]
         [MemberData(nameof(AllPropertyFilters))]
         public void GetPage_Properties(PropertyFilter filter, int expectedCount)
@@ -104,22 +103,31 @@ namespace Pims.Dal.Test.Repositories
             using var init = helper.InitializeDatabase(user);
 
             PimsProperty testProperty = null;
+
             testProperty = init.CreateProperty(2);
             testProperty.IsOwned = true;
+
             testProperty = init.CreateProperty(3, pin: 111);
-            testProperty.IsPropertyOfInterest = true;
+            testProperty.IsOwned = false;
+
             testProperty = init.CreateProperty(4, address: init.PimsAddresses.FirstOrDefault());
-            testProperty.IsOtherInterest = true;
+            testProperty.IsOwned = false;
+
             testProperty = init.CreateProperty(5, classification: init.PimsPropertyClassificationTypes.FirstOrDefault(c => c.PropertyClassificationTypeCode == "Core Operational"));
-            testProperty.IsDisposed = true;
+            testProperty.IsOwned = false;
+
             testProperty = init.CreateProperty(6, location: new NetTopologySuite.Geometries.Point(-123.720810, 48.529338));
             testProperty.IsOwned = true;
+
             testProperty = init.CreateProperty(111111111);
             testProperty.IsOwned = true;
+            
             testProperty = init.CreateProperty(22222);
             testProperty.IsRetired = true;
+
             testProperty = init.CreateProperty(33333);
             testProperty.SurveyPlanNumber = "SP-89TTXY";
+
             testProperty = init.CreateProperty(44444);
             testProperty.IsRetired = true;
             testProperty.IsOwned = true;
@@ -607,8 +615,6 @@ namespace Pims.Dal.Test.Repositories
             updatedProperty.Pid.Should().Be(pid);
         }
 
-        /*
-        TODO: Fix mapings
         [Fact]
         public void Update_Property_Retired_Violation()
         {
@@ -629,7 +635,6 @@ namespace Pims.Dal.Test.Repositories
             var exception = act.Should().Throw<BusinessRuleViolationException>();
             exception.WithMessage("Retired records are referenced for historical purposes only and cannot be edited or deleted.");
         }
-        */
 
         [Fact]
         public void Update_Property_KeyNotFound()
@@ -691,12 +696,11 @@ namespace Pims.Dal.Test.Repositories
 
 
             // Act
-            var transferredProperty = repository.TransferFileProperty(property, new Models.PropertyOwnershipState() { isPropertyOfInterest = true, isOwned = true });
+            var transferredProperty = repository.TransferFileProperty(property, true );
             context.CommitTransaction();
 
             // Assert
             transferredProperty.IsOwned.Should().BeTrue();
-            //transferredProperty.IsPropertyOfInterest.Should().BeTrue(); TODO: Fix mapings
             transferredProperty.PropertyClassificationTypeCode.Should().Be("COREOPER");
         }
 
@@ -710,7 +714,7 @@ namespace Pims.Dal.Test.Repositories
 
 
             // Act
-            var transferredProperty = repository.TransferFileProperty(property, new Models.PropertyOwnershipState() { isPropertyOfInterest = false, isOwned = false });
+            var transferredProperty = repository.TransferFileProperty(property, false);
             context.CommitTransaction();
 
             // Assert
