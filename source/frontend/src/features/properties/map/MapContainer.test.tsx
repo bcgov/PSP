@@ -80,6 +80,7 @@ jest.mock('react-visibility-sensor', () => {
   exportPropertiesApi: jest.fn(),
   getPropertiesApi: jest.fn(),
   getPropertyConceptWithIdApi: jest.fn(),
+  getPropertyConceptWithPidApi: jest.fn(),
   putPropertyConceptApi: jest.fn(),
 });
 

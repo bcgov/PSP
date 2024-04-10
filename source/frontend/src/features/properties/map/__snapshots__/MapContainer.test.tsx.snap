@@ -1519,7 +1519,7 @@ exports[`MapContainer Renders the map 1`] = `
                   class="c18 text-left col-12"
                 >
                   <div
-                    class="pb-4 row"
+                    class="row"
                   >
                     <div
                       class="col-1"
@@ -1565,7 +1565,7 @@ exports[`MapContainer Renders the map 1`] = `
                     </div>
                   </div>
                   <div
-                    class="pb-4 row"
+                    class="pt-4 row"
                   >
                     <div
                       class="col-1"
@@ -1611,7 +1611,7 @@ exports[`MapContainer Renders the map 1`] = `
                     </div>
                   </div>
                   <div
-                    class="pb-4 row"
+                    class="pt-4 row"
                   >
                     <div
                       class="col-1"
@@ -1657,7 +1657,7 @@ exports[`MapContainer Renders the map 1`] = `
                     </div>
                   </div>
                   <div
-                    class="row"
+                    class="pt-4 row"
                   >
                     <div
                       class="col-1"
@@ -1698,6 +1698,51 @@ exports[`MapContainer Renders the map 1`] = `
                         class="mb-3"
                       >
                         Disposed
+                      </span>
+                    </div>
+                  </div>
+                  <div
+                    class="pt-4 row"
+                  >
+                    <div
+                      class="col-1"
+                    >
+                      <div
+                        class="form-group"
+                      >
+                        <div
+                          class="check-field"
+                        >
+                          <div
+                            class="form-check"
+                          >
+                            <input
+                              class="form-check-input position-static"
+                              id="input-isRetired"
+                              name="isRetired"
+                              type="checkbox"
+                              value="false"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="col-1"
+                    >
+                      <img
+                        class=""
+                        height="36"
+                        src="retired.png"
+                      />
+                    </div>
+                    <div
+                      class="pl-5 col"
+                    >
+                      <span
+                        class="mb-3"
+                      >
+                        Retired
                       </span>
                     </div>
                   </div>
