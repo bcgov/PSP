@@ -244,8 +244,8 @@ namespace Pims.Api.Test.Services
             //new object[] { new List<PimsTake>(), false }, // No takes should be core inventory
             new object[] { new List<PimsTake>() { new PimsTake() { TakeStatusTypeCode="CANCELLED" }}, false, false },
             new object[] { new List<PimsTake>() { new PimsTake() { TakeStatusTypeCode="INPROGRESS"  }}, false , false},
-            new object[] { new List<PimsTake>() { new PimsTake() { TakeStatusTypeCode="COMPLETE" }}, true, true },
-            new object[] { new List<PimsTake>() { new PimsTake() { TakeStatusTypeCode="COMPLETE" }}, false , false},
+            new object[] { new List<PimsTake>() { new PimsTake() { TakeStatusTypeCode="COMPLETE", CompletionDt = new DateOnly() }}, true, true },
+            new object[] { new List<PimsTake>() { new PimsTake() { TakeStatusTypeCode="COMPLETE", CompletionDt = new DateOnly() }}, false , false},
         }.ToArray();
 
         [Theory, MemberData(nameof(takesTestParameters))]
