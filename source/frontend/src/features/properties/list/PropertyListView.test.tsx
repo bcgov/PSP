@@ -6,7 +6,7 @@ import * as API from '@/constants/API';
 import Claims from '@/constants/claims';
 import { useApiGeocoder } from '@/hooks/pims-api/useApiGeocoder';
 import { useApiProperties } from '@/hooks/pims-api/useApiProperties';
-import { mockApiProperty } from '@/mocks/filterData.mock';
+import { mockApiPropertyView } from '@/mocks/filterData.mock';
 import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { ILookupCode } from '@/store/slices/lookupCodes';
@@ -23,18 +23,19 @@ import {
 
 import PropertyListView, { ownershipFilterOptions } from './PropertyListView';
 import { MultiSelectOption } from '@/features/acquisition/list/interfaces';
+import { ApiGen_Concepts_PropertyView } from '@/models/api/generated/ApiGen_Concepts_PropertyView';
 
 // Set all module functions to jest.fn
 jest.mock('@react-keycloak/web');
 jest.mock('@/hooks/pims-api/useApiGeocoder');
 jest.mock('@/hooks/pims-api/useApiProperties');
 
-const mockApiGetPropertiesPagedApi = jest.fn<
-  Promise<AxiosResponse<ApiGen_Base_Page<ApiGen_Concepts_Property>>>,
+const mockApiGetPropertiesViewPagedApi = jest.fn<
+  Promise<AxiosResponse<ApiGen_Base_Page<ApiGen_Concepts_PropertyView>>>,
   any
 >();
 (useApiProperties as unknown as jest.Mock<Partial<typeof useApiProperties>>).mockReturnValue({
-  getPropertiesPagedApi: mockApiGetPropertiesPagedApi,
+  getPropertiesViewPagedApi: mockApiGetPropertiesViewPagedApi,
 });
 
 const mockApiGetSitePidsApi = jest.fn<
@@ -72,10 +73,10 @@ const setup = (renderOptions: RenderOptions = {}) => {
   };
 };
 
-const setupMockApi = (properties?: ApiGen_Concepts_Property[]) => {
+const setupMockApi = (properties?: ApiGen_Concepts_PropertyView[]) => {
   const mockProperties = properties ?? [];
   const len = mockProperties.length;
-  mockApiGetPropertiesPagedApi.mockResolvedValue({
+  mockApiGetPropertiesViewPagedApi.mockResolvedValue({
     data: {
       quantity: len,
       total: len,
@@ -92,7 +93,7 @@ describe('Property list view', () => {
     mockAxios.reset();
     mockAxios.onAny().reply(200, {});
 
-    mockApiGetPropertiesPagedApi.mockClear();
+    mockApiGetPropertiesViewPagedApi.mockClear();
   });
   afterEach(() => {
     history.push({ search: '' });
@@ -118,7 +119,7 @@ describe('Property list view', () => {
   });
 
   it('displays list of properties', async () => {
-    setupMockApi([mockApiProperty]);
+    setupMockApi([mockApiPropertyView()]);
     const {
       component: { findByText },
     } = setup();
@@ -142,7 +143,7 @@ describe('Property list view', () => {
   });
 
   it('displays column icons', async () => {
-    setupMockApi([mockApiProperty]);
+    setupMockApi([mockApiPropertyView()]);
     const {
       component: { getByTestId },
       findSpinner,
@@ -156,7 +157,7 @@ describe('Property list view', () => {
   });
 
   it('preselects default property ownership state', async () => {
-    setupMockApi([mockApiProperty]);
+    setupMockApi([mockApiPropertyView()]);
     const {
       component: { getByText },
       findSpinner,
@@ -171,7 +172,7 @@ describe('Property list view', () => {
   });
 
   it('allows property ownership to be selected', async () => {
-    setupMockApi([mockApiProperty]);
+    setupMockApi([mockApiPropertyView()]);
     const {
       component: { container },
       findSpinner,
@@ -193,7 +194,7 @@ describe('Property list view', () => {
     await focusOptionMultiselect(container, optionSelected, ownershipFilterOptions);
 
     await waitFor(() => {
-      expect(mockApiGetPropertiesPagedApi).toHaveBeenCalledWith({
+      expect(mockApiGetPropertiesViewPagedApi).toHaveBeenCalledWith({
         address: '',
         latitude: '',
         longitude: '',
@@ -209,7 +210,7 @@ describe('Property list view', () => {
   });
 
   it('displays a tooltip beside properties that are retired', async () => {
-    setupMockApi([{ ...mockApiProperty, isRetired: true }]);
+    setupMockApi([{ ...mockApiPropertyView(), isRetired: true }]);
     const {
       component: { getByTestId },
       findSpinner,

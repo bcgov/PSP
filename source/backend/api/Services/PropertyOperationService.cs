@@ -48,7 +48,7 @@ namespace Pims.Api.Services
             long sourcePropertyId = operations.FirstOrDefault().SourcePropertyId;
             PimsProperty dbSourceProperty = _propertyService.GetById(sourcePropertyId);
 
-            CommonPropertyOperationValidation(operations);
+            CommonPropertyOperationValidation(operations, new List<PimsProperty>() { dbSourceProperty });
             if (dbSourceProperty.IsRetired == true)
             {
                 throw new BusinessRuleViolationException("Retired properties cannot be subdivided.");
@@ -108,7 +108,7 @@ namespace Pims.Api.Services
             IEnumerable<PimsProperty> sourceProperties = operations.Select(p => p.SourceProperty);
             IEnumerable<PimsProperty> dbSourceProperties = _propertyService.GetMultipleById(sourceProperties.Select(sp => sp.PropertyId).ToList());
 
-            CommonPropertyOperationValidation(operations);
+            CommonPropertyOperationValidation(operations, sourceProperties);
             if (destinationProperty?.Pid == null)
             {
                 throw new BusinessRuleViolationException("Consolidation child must have a property with a valid PID.");
@@ -165,8 +165,22 @@ namespace Pims.Api.Services
             return completedOperations;
         }
 
-        private static void CommonPropertyOperationValidation(IEnumerable<PimsPropertyOperation> operations)
+        private static void CommonPropertyOperationValidation(IEnumerable<PimsPropertyOperation> operations, IEnumerable<PimsProperty> dbSourceProperties)
         {
+
+            foreach (var operation in operations)
+            {
+                var dbProperty = dbSourceProperties.First(p => p.PropertyId == operation.SourcePropertyId);
+                if (dbProperty == null)
+                {
+                    throw new BusinessRuleViolationException("All source properties must exist in the system.");
+                }
+                if (dbProperty.IsOwned != operation.SourceProperty.IsOwned)
+                {
+                    throw new BusinessRuleViolationException("All source properties must match the current property in the system.");
+                }
+            }
+
             if (operations.Any(op => op.SourceProperty?.IsOwned != true))
             {
                 throw new BusinessRuleViolationException("All source properties must be owned.");

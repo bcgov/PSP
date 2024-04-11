@@ -9,7 +9,7 @@ namespace Pims.Api.Models.Concepts.Property
     {
         #region Properties
 
-        public long PropertyId { get; set; }
+        public long Id { get; set; }
 
         public int? Pid { get; set; }
 

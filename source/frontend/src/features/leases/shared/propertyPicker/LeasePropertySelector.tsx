@@ -14,7 +14,7 @@ import { useBcaAddress } from '@/features/properties/map/hooks/useBcaAddress';
 import { useProperties } from '@/hooks/repositories/useProperties';
 import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
 import useDeepCompareMemo from '@/hooks/util/useDeepCompareMemo';
-import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
+import { ApiGen_Concepts_PropertyView } from '@/models/api/generated/ApiGen_Concepts_PropertyView';
 import { isValidId } from '@/utils';
 
 import { FormLeaseProperty, LeaseFormModel } from '../../models';
@@ -30,7 +30,7 @@ export const LeasePropertySelector: React.FunctionComponent<LeasePropertySelecto
 }) => {
   const { values } = formikProps;
 
-  const { getProperties } = useProperties();
+  const { getPropertiesFromView: getProperties } = useProperties();
 
   const { setModalContent, setDisplayModal } = useContext(ModalContext);
   const [propertiesToConfirm, setPropertiesToConfirm] = useState<FormLeaseProperty[]>([]);
@@ -54,7 +54,7 @@ export const LeasePropertySelector: React.FunctionComponent<LeasePropertySelecto
 
   const searchProperty = async (
     newProperty: IMapProperty,
-  ): Promise<ApiGen_Concepts_Property[] | undefined> => {
+  ): Promise<ApiGen_Concepts_PropertyView[] | undefined> => {
     const params: IPropertyFilter = {
       pinOrPid: (newProperty.pid || newProperty.pin || '')?.toString(),
       searchBy: 'pinOrPid',

@@ -5,7 +5,7 @@
 
 // LINK: @backend/apimodels/Models/Concepts/Property/PropertyViewModel.cs
 export interface ApiGen_Concepts_PropertyView {
-  propertyId: number;
+  id: number;
   pid: number | null;
   pidPadded: string | null;
   pin: number | null;

@@ -80,8 +80,6 @@ export class PropertyForm {
   public address?: AddressForm;
   public displayOrder?: number;
   public isOwned?: boolean;
-  public isDisposed?: boolean;
-  public isOtherInterest?: boolean;
   public landArea?: number;
   public areaUnit?: AreaUnitTypes;
   public isRetired?: boolean;
@@ -141,8 +139,6 @@ export class PropertyForm {
     newForm.propertyRowVersion = model.property?.rowVersion ?? undefined;
     newForm.displayOrder = model.displayOrder ?? undefined;
     newForm.isOwned = model.property?.isOwned;
-    newForm.isDisposed = model.property?.isDisposed;
-    newForm.isOtherInterest = model.property?.isOtherInterest;
     newForm.formattedAddress = exists(model.property?.address)
       ? formatApiAddress(model.property?.address)
       : '';
@@ -169,8 +165,6 @@ export class PropertyForm {
     newForm.rowVersion = model.rowVersion ?? undefined;
     newForm.propertyRowVersion = model?.rowVersion ?? undefined;
     newForm.isOwned = model?.isOwned;
-    newForm.isDisposed = model?.isDisposed;
-    newForm.isOtherInterest = model?.isOtherInterest;
     newForm.formattedAddress = exists(model?.address) ? formatApiAddress(model?.address) : '';
     newForm.address = model?.address ? AddressForm.fromApi(model?.address) : undefined;
     newForm.legalDescription = model?.landLegalDescription ?? undefined;
@@ -200,8 +194,6 @@ export class PropertyForm {
       district: toTypeCodeNullable(this.district),
       rowVersion: this.propertyRowVersion ?? null,
       isOwned: this.isOwned ?? false,
-      isDisposed: this.isDisposed ?? false,
-      isOtherInterest: this.isOtherInterest ?? false,
       address: this.address?.toApi() ?? null,
       landLegalDescription: this.legalDescription ?? null,
       isRetired: this.isRetired ?? false,
@@ -223,7 +215,6 @@ export class PropertyForm {
       pphStatusUpdateUserGuid: null,
       isRwyBeltDomPatent: null,
       pphStatusTypeCode: null,
-      isPropertyOfInterest: false,
       isVisibleToOtherAgencies: false,
       areaUnit: this.areaUnit
         ? { id: this.areaUnit, description: null, isDisabled: false, displayOrder: 0 }
