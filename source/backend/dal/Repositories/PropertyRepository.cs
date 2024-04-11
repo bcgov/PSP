@@ -54,7 +54,7 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>
-        public Paged<PimsProperty> GetPage(PropertyFilter filter)
+        public Paged<PimsPropertyLocationVw> GetPage(PropertyFilter filter)
         {
             this.User.ThrowIfNotAuthorized(Permissions.PropertyView);
             filter.ThrowIfNull(nameof(filter));
@@ -77,7 +77,7 @@ namespace Pims.Dal.Repositories
                 items = items.Where(i => i.Pid.ToString().PadLeft(9, '0').Contains(formattedPidPin) || i.Pin.ToString().Contains(formattedPidPin)).ToArray();
             }
 
-            return new Paged<PimsProperty>(items, filter.Page, filter.Quantity, query.Count());
+            return new Paged<PimsPropertyLocationVw>(items, filter.Page, filter.Quantity, query.Count());
         }
 
         /// <summary>

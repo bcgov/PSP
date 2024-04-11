@@ -110,7 +110,8 @@ namespace Pims.Api.Services
             var currentProperty = _acqFileRepository.GetProperty(acquisitionFilePropertyId);
             var currentTakes = _takeRepository.GetAllByPropertyId(currentProperty.PropertyId);
 
-            var completedTakes = currentTakes.Where(t => t.TakeStatusTypeCode == "COMPLETE").ToList();
+            var completedTakes = currentTakes.Union(takes)
+                .Where(x => x.TakeStatusTypeCode == AcquisitionTakeStatusTypes.COMPLETE.ToString()).ToList();
 
             if (_takeInteractionSolver.ResultsInOwnedProperty(completedTakes))
             {

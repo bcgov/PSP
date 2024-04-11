@@ -12,7 +12,7 @@ namespace Pims.Dal.Repositories
     {
         int Count();
 
-        Paged<PimsProperty> GetPage(PropertyFilter filter);
+        Paged<PimsPropertyLocationVw> GetPage(PropertyFilter filter);
 
         PimsProperty GetById(long id);
 
