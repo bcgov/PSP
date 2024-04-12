@@ -45,6 +45,7 @@ const MapContainer: React.FC<React.PropsWithChildren<MapContainerProps>> = () =>
   );
 };
 
+// prettier-ignore
 const StyleMapView = styled.div`
   display: flex;
   flex-direction: row;
@@ -52,7 +53,9 @@ const StyleMapView = styled.div`
   &.draft-cursor,
   &.draft-cursor .leaflet-grab,
   &.draft-cursor .leaflet-interactive {
-    cursor: url(${DraftSvg}) 15 45, pointer;
+    // when passing a URL of SVG to a manually constructed url(), the variable should be wrapped within double quotes.
+    // ref: https://vitejs.dev/guide/assets
+    cursor: url("${DraftSvg}") 15 45, pointer;
   }
 `;
 
