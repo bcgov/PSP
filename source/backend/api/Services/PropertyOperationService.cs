@@ -74,7 +74,6 @@ namespace Pims.Api.Services
                 {
                     _propertyService.GetByPid(operation.DestinationProperty.Pid.ToString());
                     throw new BusinessRuleViolationException("Subdivision children may not already be in the PIMS inventory.");
-
                 }
                 catch (KeyNotFoundException)
                 {
@@ -168,16 +167,16 @@ namespace Pims.Api.Services
         private static void CommonPropertyOperationValidation(IEnumerable<PimsPropertyOperation> operations, IEnumerable<PimsProperty> dbSourceProperties)
         {
 
-            foreach (var operation in operations)
+            foreach (var sourceProperty in dbSourceProperties)
             {
-                var dbProperty = dbSourceProperties.First(p => p.PropertyId == operation.SourcePropertyId);
-                if (dbProperty == null)
+                var operation = operations.FirstOrDefault(p => p.SourcePropertyId == sourceProperty.PropertyId);
+                if (operation == null)
                 {
                     throw new BusinessRuleViolationException("All source properties must exist in the system.");
                 }
-                if (dbProperty.IsOwned != operation.SourceProperty.IsOwned)
+                if (sourceProperty.IsOwned != operation.SourceProperty.IsOwned)
                 {
-                    throw new BusinessRuleViolationException("All source properties must match the current property in the system.");
+                    throw new BusinessRuleViolationException("All source properties must match existing properties in the system.");
                 }
             }
 

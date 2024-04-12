@@ -10,6 +10,7 @@ using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using NetTopologySuite.Geometries;
+using Newtonsoft.Json.Converters;
 using NExpect.Interfaces;
 using Pims.Api.Constants;
 using Pims.Api.Helpers.Exceptions;
@@ -71,9 +72,13 @@ namespace Pims.Api.Test.Services
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
             var retiredProperty = EntityHelper.CreateProperty(3);
             retiredProperty.IsRetired = true;
+            retiredProperty.IsOwned = true;
+
             propertyService.Setup(x => x.GetById(It.IsAny<long>())).Returns(retiredProperty);
 
             var operation = EntityHelper.CreatePropertyOperation();
+            operation.SourceProperty = retiredProperty;
+            operation.SourcePropertyId = retiredProperty.PropertyId;
             var operations = new List<PimsPropertyOperation>() { operation };
 
             // Act
@@ -90,10 +95,14 @@ namespace Pims.Api.Test.Services
             // Arrange
             var service = this.CreateDispositionServiceWithPermissions(Permissions.PropertyEdit);
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
-            propertyService.Setup(x => x.GetById(It.IsAny<long>())).Returns(EntityHelper.CreateProperty(3));
+            var property = EntityHelper.CreateProperty(3);
+            property.IsOwned = true;
+            propertyService.Setup(x => x.GetById(It.IsAny<long>())).Returns(property);
 
             var operationOne = EntityHelper.CreatePropertyOperation();
             operationOne.PropertyOperationNo = -1;
+            operationOne.SourceProperty = property;
+            operationOne.SourcePropertyId = property.PropertyId;
             var operations = new List<PimsPropertyOperation>() { operationOne, EntityHelper.CreatePropertyOperation() };
 
             // Act
@@ -110,10 +119,14 @@ namespace Pims.Api.Test.Services
             // Arrange
             var service = this.CreateDispositionServiceWithPermissions(Permissions.PropertyEdit);
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
-            propertyService.Setup(x => x.GetById(It.IsAny<long>())).Returns(EntityHelper.CreateProperty(3));
+            var property = EntityHelper.CreateProperty(3);
+            property.IsOwned = true;
+            propertyService.Setup(x => x.GetById(It.IsAny<long>())).Returns(property);
 
             var operationOne = EntityHelper.CreatePropertyOperation();
             operationOne.PropertyOperationTypeCode = PropertyOperationTypes.CONSOLIDATE.ToString();
+            operationOne.SourceProperty = property;
+            operationOne.SourcePropertyId = property.PropertyId;
             var operations = new List<PimsPropertyOperation>() { operationOne, EntityHelper.CreatePropertyOperation() };
 
             // Act
@@ -130,10 +143,14 @@ namespace Pims.Api.Test.Services
             // Arrange
             var service = this.CreateDispositionServiceWithPermissions(Permissions.PropertyEdit);
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
-            propertyService.Setup(x => x.GetById(It.IsAny<long>())).Returns(EntityHelper.CreateProperty(3));
+            var property = EntityHelper.CreateProperty(3);
+            property.IsOwned = true;
+            propertyService.Setup(x => x.GetById(It.IsAny<long>())).Returns(property);
 
             var operationOne = EntityHelper.CreatePropertyOperation();
             operationOne.SourcePropertyId = 2;
+            operationOne.SourceProperty = property;
+            operationOne.SourcePropertyId = property.PropertyId;
             var operations = new List<PimsPropertyOperation>() { operationOne, EntityHelper.CreatePropertyOperation() };
 
             // Act
@@ -150,9 +167,13 @@ namespace Pims.Api.Test.Services
             // Arrange
             var service = this.CreateDispositionServiceWithPermissions(Permissions.PropertyEdit);
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
-            propertyService.Setup(x => x.GetById(It.IsAny<long>())).Returns(EntityHelper.CreateProperty(3));
+            var property = EntityHelper.CreateProperty(3);
+            property.IsOwned = true;
+            propertyService.Setup(x => x.GetById(It.IsAny<long>())).Returns(property);
 
             var operationOne = EntityHelper.CreatePropertyOperation();
+            operationOne.SourceProperty = property;
+            operationOne.SourcePropertyId = property.PropertyId;
             var operations = new List<PimsPropertyOperation>() { operationOne };
 
             // Act
@@ -168,11 +189,23 @@ namespace Pims.Api.Test.Services
         {
             // Arrange
             var service = this.CreateDispositionServiceWithPermissions(Permissions.PropertyEdit);
+
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
-            propertyService.Setup(x => x.GetById(It.IsAny<long>())).Returns(EntityHelper.CreateProperty(3));
+            var property = EntityHelper.CreateProperty(3);
+            property.IsOwned = true;
+            propertyService.Setup(x => x.GetById(It.IsAny<long>())).Returns(property);
+
             propertyService.Setup(x => x.GetByPid(It.IsAny<string>())).Returns(EntityHelper.CreateProperty(4));
 
-            var operations = new List<PimsPropertyOperation>() { EntityHelper.CreatePropertyOperation(), EntityHelper.CreatePropertyOperation() };
+            var operationOne = EntityHelper.CreatePropertyOperation();
+            operationOne.SourceProperty = property;
+            operationOne.SourcePropertyId = property.PropertyId;
+
+            var operationTwo = EntityHelper.CreatePropertyOperation();
+            operationTwo.SourceProperty = property;
+            operationTwo.SourcePropertyId = property.PropertyId;
+
+            var operations = new List<PimsPropertyOperation>() { operationOne, operationTwo };
 
             // Act
             Action act = () => service.SubdivideProperty(operations);
@@ -189,12 +222,21 @@ namespace Pims.Api.Test.Services
             var service = this.CreateDispositionServiceWithPermissions(Permissions.PropertyEdit);
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
             var sameProperty = EntityHelper.CreateProperty(3);
+            sameProperty.IsOwned = true;
             propertyService.Setup(x => x.GetById(It.IsAny<long>())).Returns(sameProperty);
             propertyService.Setup(x => x.GetByPid(It.IsAny<string>())).Throws(new KeyNotFoundException());
             propertyService.Setup(x => x.RetireProperty(It.IsAny<PimsProperty>(), false)).Returns(sameProperty);
             propertyService.Setup(x => x.PopulateNewProperty(It.IsAny<PimsProperty>(), true, false)).Returns(sameProperty);
 
-            var operations = new List<PimsPropertyOperation>() { EntityHelper.CreatePropertyOperation(), EntityHelper.CreatePropertyOperation() };
+            var operationOne = EntityHelper.CreatePropertyOperation();
+            operationOne.SourceProperty = sameProperty;
+            operationOne.SourcePropertyId = sameProperty.PropertyId;
+
+            var operationTwo = EntityHelper.CreatePropertyOperation();
+            operationTwo.SourceProperty = sameProperty;
+            operationTwo.SourcePropertyId = sameProperty.PropertyId;
+
+            var operations = new List<PimsPropertyOperation>() { operationOne, operationTwo };
 
             var repository = this._helper.GetService<Mock<IPropertyOperationRepository>>();
             repository.Setup(x => x.AddRange(It.IsAny<List<PimsPropertyOperation>>())).Returns(operations);
@@ -222,7 +264,9 @@ namespace Pims.Api.Test.Services
 
             var operationWithSameDestSource = EntityHelper.CreatePropertyOperation();
             operationWithSameDestSource.DestinationProperty = sameProperty;
+            operationWithSameDestSource.DestinationPropertyId = 0;
             operationWithSameDestSource.SourceProperty = sameProperty;
+            operationWithSameDestSource.SourcePropertyId = sameProperty.PropertyId;
             var operations = new List<PimsPropertyOperation>() { operationWithSameDestSource, operationWithSameDestSource };
 
             var repository = this._helper.GetService<Mock<IPropertyOperationRepository>>();
@@ -261,10 +305,12 @@ namespace Pims.Api.Test.Services
             var service = this.CreateDispositionServiceWithPermissions(Permissions.PropertyEdit);
 
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
-            var retiredProperty = EntityHelper.CreateProperty(3);
-            propertyService.Setup(x => x.GetMultipleById(It.IsAny<List<long>>())).Returns(new List<PimsProperty> { retiredProperty });
+            var property = EntityHelper.CreateProperty(3, isCoreInventory: true);
+            propertyService.Setup(x => x.GetMultipleById(It.IsAny<List<long>>())).Returns(new List<PimsProperty> { property });
 
             var operation = EntityHelper.CreatePropertyOperation();
+            operation.SourceProperty = property;
+            operation.SourcePropertyId = property.PropertyId;
             var operations = new List<PimsPropertyOperation>() { operation };
 
             // Act
@@ -282,11 +328,14 @@ namespace Pims.Api.Test.Services
             var service = this.CreateDispositionServiceWithPermissions(Permissions.PropertyEdit);
 
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
-            var retiredProperty = EntityHelper.CreateProperty(3);
+            var retiredProperty = EntityHelper.CreateProperty(3, isCoreInventory: true);
             retiredProperty.IsRetired = true;
             propertyService.Setup(x => x.GetMultipleById(It.IsAny<List<long>>())).Returns(new List<PimsProperty> { retiredProperty });
 
             var operation = EntityHelper.CreatePropertyOperation();
+            operation.SourceProperty = retiredProperty;
+            operation.SourcePropertyId = retiredProperty.PropertyId;
+
             var operations = new List<PimsPropertyOperation>() { operation };
 
             // Act
@@ -303,11 +352,18 @@ namespace Pims.Api.Test.Services
             // Arrange
             var service = this.CreateDispositionServiceWithPermissions(Permissions.PropertyEdit);
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
-            propertyService.Setup(x => x.GetMultipleById(It.IsAny<List<long>>())).Returns(new List<PimsProperty> { EntityHelper.CreateProperty(3), EntityHelper.CreateProperty(4) });
+            var property = EntityHelper.CreateProperty(3, isCoreInventory: true);
+            var propertyTwo = EntityHelper.CreateProperty(4, isCoreInventory: true);
+            propertyService.Setup(x => x.GetMultipleById(It.IsAny<List<long>>())).Returns(new List<PimsProperty> { property, propertyTwo });
 
             var operationOne = EntityHelper.CreatePropertyOperation();
             operationOne.PropertyOperationNo = -1;
-            var operations = new List<PimsPropertyOperation>() { operationOne, EntityHelper.CreatePropertyOperation() };
+            operationOne.SourceProperty = property;
+            operationOne.SourcePropertyId = property.PropertyId;
+            var operationTwo = EntityHelper.CreatePropertyOperation();
+            operationTwo.SourceProperty = propertyTwo;
+            operationTwo.SourcePropertyId = propertyTwo.PropertyId;
+            var operations = new List<PimsPropertyOperation>() { operationOne, operationTwo };
 
             // Act
             Action act = () => service.ConsolidateProperty(operations);
@@ -323,11 +379,18 @@ namespace Pims.Api.Test.Services
             // Arrange
             var service = this.CreateDispositionServiceWithPermissions(Permissions.PropertyEdit);
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
-            propertyService.Setup(x => x.GetMultipleById(It.IsAny<List<long>>())).Returns(new List<PimsProperty> { EntityHelper.CreateProperty(3), EntityHelper.CreateProperty(4) });
+            var property = EntityHelper.CreateProperty(3, isCoreInventory: true);
+            var propertyTwo = EntityHelper.CreateProperty(4, isCoreInventory: true);
+            propertyService.Setup(x => x.GetMultipleById(It.IsAny<List<long>>())).Returns(new List<PimsProperty> { property, propertyTwo });
 
             var operationOne = EntityHelper.CreatePropertyOperation();
             operationOne.PropertyOperationTypeCode = PropertyOperationTypes.CONSOLIDATE.ToString();
-            var operations = new List<PimsPropertyOperation>() { operationOne, EntityHelper.CreatePropertyOperation() };
+            operationOne.SourceProperty = property;
+            operationOne.SourcePropertyId = property.PropertyId;
+            var operationTwo = EntityHelper.CreatePropertyOperation();
+            operationTwo.SourceProperty = propertyTwo;
+            operationTwo.SourcePropertyId = propertyTwo.PropertyId;
+            var operations = new List<PimsPropertyOperation>() { operationOne, operationTwo };
 
             // Act
             Action act = () => service.ConsolidateProperty(operations);
@@ -343,12 +406,18 @@ namespace Pims.Api.Test.Services
             // Arrange
             var service = this.CreateDispositionServiceWithPermissions(Permissions.PropertyEdit);
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
-            propertyService.Setup(x => x.GetMultipleById(It.IsAny<List<long>>())).Returns(new List<PimsProperty> { EntityHelper.CreateProperty(3), EntityHelper.CreateProperty(4) });
+            var property = EntityHelper.CreateProperty(3, isCoreInventory: true);
+            var propertyTwo = EntityHelper.CreateProperty(4, isCoreInventory: true);
+            propertyService.Setup(x => x.GetMultipleById(It.IsAny<List<long>>())).Returns(new List<PimsProperty> { property, propertyTwo });
 
             var operationOne = EntityHelper.CreatePropertyOperation();
             operationOne.DestinationProperty.Pid = -1;
-
-            var operations = new List<PimsPropertyOperation>() { operationOne, EntityHelper.CreatePropertyOperation() };
+            operationOne.SourceProperty = property;
+            operationOne.SourcePropertyId = property.PropertyId;
+            var operationTwo = EntityHelper.CreatePropertyOperation();
+            operationTwo.SourceProperty = propertyTwo;
+            operationTwo.SourcePropertyId = propertyTwo.PropertyId;
+            var operations = new List<PimsPropertyOperation>() { operationOne, operationTwo };
 
             // Act
             Action act = () => service.ConsolidateProperty(operations);
@@ -364,10 +433,14 @@ namespace Pims.Api.Test.Services
             // Arrange
             var service = this.CreateDispositionServiceWithPermissions(Permissions.PropertyEdit);
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
-            propertyService.Setup(x => x.GetMultipleById(It.IsAny<List<long>>())).Returns(new List<PimsProperty> { EntityHelper.CreateProperty(3), EntityHelper.CreateProperty(4) });
+            var property = EntityHelper.CreateProperty(3, isCoreInventory: true);
+            var propertyTwo = EntityHelper.CreateProperty(4, isCoreInventory: true);
+            propertyService.Setup(x => x.GetMultipleById(It.IsAny<List<long>>())).Returns(new List<PimsProperty> { property, propertyTwo });
 
             var operationOne = EntityHelper.CreatePropertyOperation();
             operationOne.DestinationProperty = null;
+            operationOne.SourceProperty = property;
+            operationOne.SourcePropertyId = property.PropertyId;
             var operations = new List<PimsPropertyOperation>() { operationOne };
 
             // Act
@@ -384,13 +457,28 @@ namespace Pims.Api.Test.Services
             // Arrange
             var service = this.CreateDispositionServiceWithPermissions(Permissions.PropertyEdit);
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
-            propertyService.Setup(x => x.GetMultipleById(It.IsAny<List<long>>())).Returns(new List<PimsProperty> { EntityHelper.CreateProperty(3), EntityHelper.CreateProperty(4) });
-            propertyService.Setup(x => x.GetByPid(It.IsAny<string>())).Returns(EntityHelper.CreateProperty(2));
+            var property = EntityHelper.CreateProperty(3, isCoreInventory: true);
+            property.Pid = 2;
+            var propertyTwo = EntityHelper.CreateProperty(4, isCoreInventory: true);
+            propertyTwo.Pid = 3;
+            var propertyThree = EntityHelper.CreateProperty(5, isCoreInventory: true);
+            propertyThree.Pid = 4;
+            propertyService.Setup(x => x.GetMultipleById(It.IsAny<List<long>>())).Returns(new List<PimsProperty> { property, propertyTwo });
+            propertyService.Setup(x => x.GetByPid(It.IsAny<string>())).Returns(propertyThree);
 
             var operationOne = EntityHelper.CreatePropertyOperation();
-            operationOne.SourceProperty.PropertyId = 5;
+            operationOne.SourceProperty = property;
+            operationOne.SourcePropertyId = property.PropertyId;
+            operationOne.DestinationProperty = propertyThree;
+            operationOne.DestinationPropertyId = 0;
 
-            var operations = new List<PimsPropertyOperation>() { operationOne, EntityHelper.CreatePropertyOperation() };
+            var operationTwo = EntityHelper.CreatePropertyOperation();
+            operationTwo.SourceProperty = propertyTwo;
+            operationTwo.SourcePropertyId = propertyTwo.PropertyId;
+            operationTwo.DestinationProperty = propertyThree;
+            operationTwo.DestinationPropertyId = 0;
+
+            var operations = new List<PimsPropertyOperation>() { operationOne, operationTwo };
 
             // Act
             Action act = () => service.ConsolidateProperty(operations);
@@ -415,11 +503,17 @@ namespace Pims.Api.Test.Services
 
             var operationOne = EntityHelper.CreatePropertyOperation();
             operationOne.DestinationProperty.PropertyId = 0;
-            operationOne.SourceProperty.PropertyId = 5;
-            sameProperty.IsOwned = false;
             operationOne.SourceProperty = sameProperty;
+            operationOne.SourcePropertyId = sameProperty.PropertyId;
+            sameProperty.IsOwned = false;
 
-            var operations = new List<PimsPropertyOperation>() { operationOne, EntityHelper.CreatePropertyOperation() };
+            var operationTwo = EntityHelper.CreatePropertyOperation();
+            operationTwo.DestinationProperty.PropertyId = 0;
+            operationTwo.SourceProperty = otherProperty;
+            operationTwo.SourcePropertyId = otherProperty.PropertyId;
+            sameProperty.IsOwned = false;
+
+            var operations = new List<PimsPropertyOperation>() { operationOne, operationTwo };
 
             var repository = this._helper.GetService<Mock<IPropertyOperationRepository>>();
             repository.Setup(x => x.AddRange(It.IsAny<List<PimsPropertyOperation>>())).Returns(operations);
@@ -438,8 +532,8 @@ namespace Pims.Api.Test.Services
             // Arrange
             var service = this.CreateDispositionServiceWithPermissions(Permissions.PropertyEdit);
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
-            var sameProperty = EntityHelper.CreateProperty(3);
-            var otherProperty = EntityHelper.CreateProperty(4);
+            var sameProperty = EntityHelper.CreateProperty(3, isCoreInventory: true);
+            var otherProperty = EntityHelper.CreateProperty(4, isCoreInventory: true);
             propertyService.Setup(x => x.GetMultipleById(It.IsAny<List<long>>())).Returns(new List<PimsProperty> { sameProperty, otherProperty });
             propertyService.Setup(x => x.GetByPid(It.IsAny<string>())).Throws(new KeyNotFoundException());
             propertyService.Setup(x => x.RetireProperty(It.IsAny<PimsProperty>(), false)).Returns((PimsProperty p, bool b) => p);
@@ -447,9 +541,15 @@ namespace Pims.Api.Test.Services
 
             var operationOne = EntityHelper.CreatePropertyOperation();
             operationOne.DestinationProperty.PropertyId = 0;
-            operationOne.SourceProperty.PropertyId = 5;
+            operationOne.SourceProperty = sameProperty;
+            operationOne.SourcePropertyId = sameProperty.PropertyId;
 
-            var operations = new List<PimsPropertyOperation>() { operationOne, EntityHelper.CreatePropertyOperation() };
+            var operationTwo = EntityHelper.CreatePropertyOperation();
+            operationTwo.DestinationProperty.PropertyId = 0;
+            operationTwo.SourceProperty = otherProperty;
+            operationTwo.SourcePropertyId = otherProperty.PropertyId;
+
+            var operations = new List<PimsPropertyOperation>() { operationOne, operationTwo };
 
             var repository = this._helper.GetService<Mock<IPropertyOperationRepository>>();
             repository.Setup(x => x.AddRange(It.IsAny<List<PimsPropertyOperation>>())).Returns(operations);
@@ -479,9 +579,12 @@ namespace Pims.Api.Test.Services
             var operationWithSameDestSource = EntityHelper.CreatePropertyOperation();
             operationWithSameDestSource.DestinationProperty = sameProperty;
             operationWithSameDestSource.SourceProperty = sameProperty;
+            operationWithSameDestSource.SourcePropertyId = sameProperty.PropertyId;
+
             var operationWithSameDestSourceTwo = EntityHelper.CreatePropertyOperation();
             operationWithSameDestSourceTwo.DestinationProperty = sameProperty;
             operationWithSameDestSourceTwo.SourceProperty = otherProperty;
+            operationWithSameDestSourceTwo.SourcePropertyId = otherProperty.PropertyId;
             var operations = new List<PimsPropertyOperation>() { operationWithSameDestSource, operationWithSameDestSourceTwo };
 
             var repository = this._helper.GetService<Mock<IPropertyOperationRepository>>();
