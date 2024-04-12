@@ -86,9 +86,9 @@ namespace Pims.Api.Test.Controllers.Reports
             // Arrange
             this._headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENTTYPECSV);
 
-            var properties = new[] { EntityHelper.CreateProperty(1) };
+            var properties = new[] { EntityHelper.CreatePropertyView(1) };
 
-            var page = new Paged<Entity.PimsProperty>(properties, filter.Page, filter.Quantity);
+            var page = new Paged<Entity.PimsPropertyLocationVw>(properties, filter.Page, filter.Quantity);
             this._repository.Setup(m => m.GetPage(It.IsAny<Entity.Models.PropertyFilter>())).Returns(page);
 
             // Act
@@ -111,9 +111,9 @@ namespace Pims.Api.Test.Controllers.Reports
             // Arrange
             this._headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENTTYPECSV);
 
-            var properties = new[] { EntityHelper.CreateProperty(1) };
+            var properties = new[] { EntityHelper.CreatePropertyView(1) };
 
-            var page = new Paged<Entity.PimsProperty>(properties);
+            var page = new Paged<Entity.PimsPropertyLocationVw>(properties);
             this._repository.Setup(m => m.GetPage(It.IsAny<Entity.Models.PropertyFilter>())).Returns(page);
 
             // Act
@@ -136,9 +136,9 @@ namespace Pims.Api.Test.Controllers.Reports
             // Arrange
             this._headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENTTYPEEXCEL);
 
-            var properties = new[] { EntityHelper.CreateProperty(1) };
+            var properties = new[] { EntityHelper.CreatePropertyView(1) };
 
-            var page = new Paged<Entity.PimsProperty>(properties, filter.Page, filter.Quantity);
+            var page = new Paged<Entity.PimsPropertyLocationVw>(properties, filter.Page, filter.Quantity);
             this._repository.Setup(m => m.GetPage(It.IsAny<Entity.Models.PropertyFilter>())).Returns(page);
 
             // Act
@@ -162,9 +162,9 @@ namespace Pims.Api.Test.Controllers.Reports
             // Arrange
             this._headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENTTYPEEXCEL);
 
-            var properties = new[] { EntityHelper.CreateProperty(1) };
+            var properties = new[] { EntityHelper.CreatePropertyView(1) };
 
-            var page = new Paged<Entity.PimsProperty>(properties);
+            var page = new Paged<Entity.PimsPropertyLocationVw>(properties);
             this._repository.Setup(m => m.GetPage(It.IsAny<Entity.Models.PropertyFilter>())).Returns(page);
 
             // Act
@@ -188,9 +188,9 @@ namespace Pims.Api.Test.Controllers.Reports
             // Arrange
             this._headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENTTYPEEXCELX);
 
-            var properties = new[] { EntityHelper.CreateProperty(1) };
+            var properties = new[] { EntityHelper.CreatePropertyView(1) };
 
-            var page = new Paged<Entity.PimsProperty>(properties, filter.Page, filter.Quantity);
+            var page = new Paged<Entity.PimsPropertyLocationVw>(properties, filter.Page, filter.Quantity);
             this._repository.Setup(m => m.GetPage(It.IsAny<Entity.Models.PropertyFilter>())).Returns(page);
 
             // Act
@@ -214,9 +214,9 @@ namespace Pims.Api.Test.Controllers.Reports
             // Arrange
             this._headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENTTYPEEXCELX);
 
-            var properties = new[] { EntityHelper.CreateProperty(1) };
+            var properties = new[] { EntityHelper.CreatePropertyView(1) };
 
-            var page = new Paged<Entity.PimsProperty>(properties);
+            var page = new Paged<Entity.PimsPropertyLocationVw>(properties);
             this._repository.Setup(m => m.GetPage(It.IsAny<Entity.Models.PropertyFilter>())).Returns(page);
 
             // Act

@@ -72,6 +72,7 @@ const AddConsolidationContainer: React.FC<IAddConsolidationContainerProps> = ({
 
     async function loadInitialProperty() {
       if (selectedFeatureDataset !== null) {
+        // TODO: this is an odd conversion. the feature set should map directly to a Pims Property
         const propertyForm = PropertyForm.fromMapProperty(
           featuresetToMapProperty(selectedFeatureDataset),
         );
@@ -79,6 +80,8 @@ const AddConsolidationContainer: React.FC<IAddConsolidationContainerProps> = ({
           propertyForm.address = selectedFeatureDataset.pimsFeature?.properties
             ? AddressForm.fromPimsView(selectedFeatureDataset.pimsFeature?.properties)
             : undefined;
+          // TODO: Remove this once the conversion is cleaner
+          propertyForm.isOwned = selectedFeatureDataset.pimsFeature?.properties.IS_OWNED;
           const consolidationFormModel = new ConsolidationFormModel();
           consolidationFormModel.sourceProperties = [propertyForm.toApi()];
           setInitialForm(consolidationFormModel);

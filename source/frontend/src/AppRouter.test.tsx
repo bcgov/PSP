@@ -87,7 +87,7 @@ jest.mock('./hooks/pims-api/useApiUsers');
 
 jest.mock('./hooks/pims-api/useApiProperties');
 (useApiProperties as jest.MockedFunction<typeof useApiProperties>).mockReturnValue({
-  getPropertiesPagedApi: jest
+  getPropertiesViewPagedApi: jest
     .fn()
     .mockResolvedValue({ data: {} as ApiGen_Base_Page<ApiGen_Concepts_Property> }),
   getMatchingPropertiesApi: jest.fn(),

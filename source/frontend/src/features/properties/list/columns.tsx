@@ -11,9 +11,9 @@ import TooltipIcon from '@/components/common/TooltipIcon';
 import { ColumnWithProps } from '@/components/Table';
 import { AreaUnitTypes, Claims } from '@/constants/index';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
-import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
+import { ApiGen_Concepts_PropertyView } from '@/models/api/generated/ApiGen_Concepts_PropertyView';
 import { ILookupCode } from '@/store/slices/lookupCodes';
-import { convertArea, formatApiAddress, formatNumber, mapLookupCode } from '@/utils';
+import { convertArea, formatNumber, formatSplitAddress, mapLookupCode } from '@/utils';
 
 export const ColumnDiv = styled.div`
   display: flex;
@@ -25,13 +25,15 @@ type Props = {
   municipalities: ILookupCode[];
 };
 
-export const columns = ({ municipalities }: Props): ColumnWithProps<ApiGen_Concepts_Property>[] => [
+export const columns = ({
+  municipalities,
+}: Props): ColumnWithProps<ApiGen_Concepts_PropertyView>[] => [
   {
     Header: 'PID',
     accessor: 'pid',
     align: 'right',
     width: 40,
-    Cell: (props: CellProps<ApiGen_Concepts_Property>) => {
+    Cell: (props: CellProps<ApiGen_Concepts_PropertyView>) => {
       return (
         <>
           {props.row.original.pid}
@@ -57,14 +59,22 @@ export const columns = ({ municipalities }: Props): ColumnWithProps<ApiGen_Conce
   },
   {
     Header: 'Civic Address',
-    accessor: p => formatApiAddress(p.address),
+    accessor: p =>
+      formatSplitAddress(
+        p.streetAddress1,
+        p.streetAddress2,
+        p.streetAddress3,
+        p.municipalityName,
+        p.provinceName,
+        p.postalCode,
+      ),
     align: 'left',
     minWidth: 100,
     width: 150,
   },
   {
     Header: 'Location',
-    accessor: p => p.address?.municipality,
+    accessor: p => p.municipalityName,
     align: 'left',
     width: 50,
     sortable: true,
@@ -82,9 +92,9 @@ export const columns = ({ municipalities }: Props): ColumnWithProps<ApiGen_Conce
   },
   {
     Header: 'Lot Size (in\u00A0ha)',
-    Cell: (props: CellProps<ApiGen_Concepts_Property>) => {
+    Cell: (props: CellProps<ApiGen_Concepts_PropertyView>) => {
       const landArea = props.row.original.landArea ?? 0;
-      const landUnitCode = props.row.original.areaUnit?.id;
+      const landUnitCode = props.row.original.propertyAreaUnitTypeCode;
       const hectars = convertArea(
         landArea,
         landUnitCode ?? AreaUnitTypes.SquareMeters,
@@ -111,16 +121,17 @@ export const columns = ({ municipalities }: Props): ColumnWithProps<ApiGen_Conce
     align: 'left',
     sortable: true,
     width: 20,
-    Cell: (cellProps: CellProps<ApiGen_Concepts_Property>) => {
+    Cell: (cellProps: CellProps<ApiGen_Concepts_PropertyView>) => {
       const { hasClaim } = useKeycloakWrapper();
 
-      const ownershipText = cellProps.row.original.isOwned
+      const property = cellProps.row.original;
+      const ownershipText = property.isOwned
         ? 'Core Inventory'
-        : cellProps.row.original.isPropertyOfInterest
+        : property.hasActiveResearchFile || property.hasActiveResearchFile
         ? 'Property of Interest'
-        : cellProps.row.original.isOtherInterest
+        : property.isOtherInterest
         ? 'Other Interest'
-        : cellProps.row.original.isDisposed
+        : property.isDisposed
         ? 'Disposed'
         : '';
       return (
@@ -140,8 +151,9 @@ export const columns = ({ municipalities }: Props): ColumnWithProps<ApiGen_Conce
     align: 'right',
     sortable: false,
     width: 20,
-    Cell: (cellProps: CellProps<ApiGen_Concepts_Property, number>) => {
+    Cell: (cellProps: CellProps<ApiGen_Concepts_PropertyView, number>) => {
       const { hasClaim } = useKeycloakWrapper();
+      const property = cellProps.row.original;
 
       return (
         <StyledDiv>
@@ -151,9 +163,7 @@ export const columns = ({ municipalities }: Props): ColumnWithProps<ApiGen_Conce
               title="View Property Info"
               variant="light"
             >
-              <Link
-                to={`/mapview/sidebar/property/${cellProps.row.original.id}?pid=${cellProps.row.original.pid}`}
-              >
+              <Link to={`/mapview/sidebar/property/${property.id}?pid=${property.pid}`}>
                 <FaEye />
               </Link>
             </StyledIconButton>
@@ -162,7 +172,7 @@ export const columns = ({ municipalities }: Props): ColumnWithProps<ApiGen_Conce
           {hasClaim(Claims.PROPERTY_VIEW) && (
             <StyledIconButton data-testid="view-prop-ext" title="View Property" variant="light">
               <Link
-                to={`/mapview/sidebar/property/${cellProps.row.original.id}?pid=${cellProps.row.original.pid}`}
+                to={`/mapview/sidebar/property/${property.id}?pid=${property.pid}`}
                 target="_blank"
                 rel="noopener noreferrer"
               >

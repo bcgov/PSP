@@ -62,7 +62,7 @@ namespace Pims.Api.Areas.Property.Models.Search
             {
                 if (tempSort[i].StartsWith("Location"))
                 {
-                    tempSort[i] = tempSort[i].Replace("Location", "Address.MunicipalityName");
+                    tempSort[i] = tempSort[i].Replace("Location", "MunicipalityName");
                 }
                 if (tempSort[i].StartsWith("LotSizeInHa"))
                 {
@@ -76,7 +76,8 @@ namespace Pims.Api.Areas.Property.Models.Search
                     tempSort[i] = this.Sort[i].Replace("Ownership", "IsOwned");
                     tempSort.Add($"IsDisposed {direction}");
                     tempSort.Add($"IsOtherInterest {direction}");
-                    tempSort.Add($"IsPropertyOfInterest {direction}");
+                    tempSort.Add($"HasActiveAcquisitionFile {direction}");
+                    tempSort.Add($"HasActiveResearchFile {direction}");
                 }
             }
             this.Sort = tempSort.ToArray();

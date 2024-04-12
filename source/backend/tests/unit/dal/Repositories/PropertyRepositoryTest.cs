@@ -32,15 +32,17 @@ namespace Pims.Dal.Test.Repositories
             {
                 new object[] { new PropertyFilter() { PinOrPid = "111-111-111" , Ownership = new List<string>()}, 1 },
                 new object[] { new PropertyFilter() { PinOrPid = "111"  , Ownership = new List<string>()}, 2 },
-                new object[] { new PropertyFilter() { Address = "12342 Test Street"  , Ownership = new List<string>()}, 7 },
+                new object[] { new PropertyFilter() { Address = "12342 Test Street"  , Ownership = new List<string>()}, 8 },
                 new object[] { new PropertyFilter() { PlanNumber = "SP-89TTXY", Ownership = new List<string>()}, 1 },
-                new object[] { new PropertyFilter() { Page = 1, Quantity = 10 , Ownership = new List<string>() }, 7 },
-                new object[] { new PropertyFilter(), 7 },
-                new object[] { new PropertyFilter(){ Ownership = new List<string>(){"isCoreInventory", "isPropertyOfInterest"}}, 4 },
+                new object[] { new PropertyFilter() { Page = 1, Quantity = 10 , Ownership = new List<string>() }, 8 },
+                new object[] { new PropertyFilter(), 8 },
+                new object[] { new PropertyFilter(){ Ownership = new List<string>(){"isCoreInventory" }}, 4 },
+                new object[] { new PropertyFilter(){ Ownership = new List<string>(){"isPropertyOfInterest" }}, 2 },
+
                 new object[] { new PropertyFilter(){ Ownership = new List<string>(){"isDisposed"}}, 1 },
                 new object[] { new PropertyFilter(){ Ownership = new List<string>(){"isRetired"}}, 2 },
                 new object[] { new PropertyFilter(){ Ownership = new List<string>(){"isOtherInterest"}}, 1 },
-                new object[] { new PropertyFilter(){ Ownership = new List<string>(){"isCoreInventory"}}, 3 },
+                new object[] { new PropertyFilter(){ Ownership = new List<string>(){"isCoreInventory", "isPropertyOfInterest"}}, 6 },
             };
         #endregion
 
@@ -90,8 +92,9 @@ namespace Pims.Dal.Test.Repositories
             // Assert
             act.Should().Throw<NotAuthorizedException>();
         }
-        
+
         /*
+        // TODO: Figure out how to add DB views to the context
         [Theory]
         [MemberData(nameof(AllPropertyFilters))]
         public void GetPage_Properties(PropertyFilter filter, int expectedCount)
@@ -102,33 +105,33 @@ namespace Pims.Dal.Test.Repositories
 
             using var init = helper.InitializeDatabase(user);
 
-            PimsProperty testProperty = null;
+            PimsPropertyLocationVw testProperty = null;
 
-            testProperty = init.CreateProperty(2);
+            testProperty = init.CreatePropertyView(2);
             testProperty.IsOwned = true;
 
-            testProperty = init.CreateProperty(3, pin: 111);
+            testProperty = init.CreatePropertyView(3, pin: 111);
             testProperty.IsOwned = false;
 
-            testProperty = init.CreateProperty(4, address: init.PimsAddresses.FirstOrDefault());
+            testProperty = init.CreatePropertyView(4, address: init.PimsAddresses.FirstOrDefault());
             testProperty.IsOwned = false;
 
-            testProperty = init.CreateProperty(5, classification: init.PimsPropertyClassificationTypes.FirstOrDefault(c => c.PropertyClassificationTypeCode == "Core Operational"));
+            testProperty = init.CreatePropertyView(5, classification: init.PimsPropertyClassificationTypes.FirstOrDefault(c => c.PropertyClassificationTypeCode == "Core Operational"));
             testProperty.IsOwned = false;
 
-            testProperty = init.CreateProperty(6, location: new NetTopologySuite.Geometries.Point(-123.720810, 48.529338));
+            testProperty = init.CreatePropertyView(6, location: new NetTopologySuite.Geometries.Point(-123.720810, 48.529338));
             testProperty.IsOwned = true;
 
-            testProperty = init.CreateProperty(111111111);
+            testProperty = init.CreatePropertyView(111111111);
             testProperty.IsOwned = true;
-            
-            testProperty = init.CreateProperty(22222);
+
+            testProperty = init.CreatePropertyView(22222);
             testProperty.IsRetired = true;
 
-            testProperty = init.CreateProperty(33333);
+            testProperty = init.CreatePropertyView(33333);
             testProperty.SurveyPlanNumber = "SP-89TTXY";
 
-            testProperty = init.CreateProperty(44444);
+            testProperty = init.CreatePropertyView(44444);
             testProperty.IsRetired = true;
             testProperty.IsOwned = true;
 
@@ -696,7 +699,7 @@ namespace Pims.Dal.Test.Repositories
 
 
             // Act
-            var transferredProperty = repository.TransferFileProperty(property, true );
+            var transferredProperty = repository.TransferFileProperty(property, true);
             context.CommitTransaction();
 
             // Assert
@@ -719,7 +722,6 @@ namespace Pims.Dal.Test.Repositories
 
             // Assert
             transferredProperty.IsOwned.Should().BeFalse();
-            //transferredProperty.IsPropertyOfInterest.Should().BeFalse(); TODO: Fix mapings
             transferredProperty.PropertyClassificationTypeCode.Should().Be("OTHER");
         }
         #endregion

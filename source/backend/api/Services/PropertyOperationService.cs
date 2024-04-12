@@ -3,6 +3,7 @@ using System.Linq;
 using System.Security.Claims;
 using LinqKit;
 using Microsoft.Extensions.Logging;
+using Pims.Api.Helpers.Exceptions;
 using Pims.Core.Exceptions;
 using Pims.Dal.Entities;
 using Pims.Dal.Helpers.Extensions;
@@ -48,7 +49,7 @@ namespace Pims.Api.Services
             long sourcePropertyId = operations.FirstOrDefault().SourcePropertyId;
             PimsProperty dbSourceProperty = _propertyService.GetById(sourcePropertyId);
 
-            CommonPropertyOperationValidation(operations);
+            CommonPropertyOperationValidation(operations, new List<PimsProperty>() { dbSourceProperty });
             if (dbSourceProperty.IsRetired == true)
             {
                 throw new BusinessRuleViolationException("Retired properties cannot be subdivided.");
@@ -74,7 +75,6 @@ namespace Pims.Api.Services
                 {
                     _propertyService.GetByPid(operation.DestinationProperty.Pid.ToString());
                     throw new BusinessRuleViolationException("Subdivision children may not already be in the PIMS inventory.");
-
                 }
                 catch (KeyNotFoundException)
                 {
@@ -108,7 +108,7 @@ namespace Pims.Api.Services
             IEnumerable<PimsProperty> sourceProperties = operations.Select(p => p.SourceProperty);
             IEnumerable<PimsProperty> dbSourceProperties = _propertyService.GetMultipleById(sourceProperties.Select(sp => sp.PropertyId).ToList());
 
-            CommonPropertyOperationValidation(operations);
+            CommonPropertyOperationValidation(operations, sourceProperties);
             if (destinationProperty?.Pid == null)
             {
                 throw new BusinessRuleViolationException("Consolidation child must have a property with a valid PID.");
@@ -165,8 +165,22 @@ namespace Pims.Api.Services
             return completedOperations;
         }
 
-        private static void CommonPropertyOperationValidation(IEnumerable<PimsPropertyOperation> operations)
+        private static void CommonPropertyOperationValidation(IEnumerable<PimsPropertyOperation> operations, IEnumerable<PimsProperty> dbSourceProperties)
         {
+
+            foreach (var sourceProperty in dbSourceProperties)
+            {
+                var operation = operations.FirstOrDefault(p => p.SourcePropertyId == sourceProperty.PropertyId);
+                if (operation == null)
+                {
+                    throw new BadRequestException("All source properties must exist in the system.");
+                }
+                if (sourceProperty.IsOwned != operation.SourceProperty.IsOwned)
+                {
+                    throw new BusinessRuleViolationException("All source properties must match existing properties in the system.");
+                }
+            }
+
             if (operations.Any(op => op.SourceProperty?.IsOwned != true))
             {
                 throw new BusinessRuleViolationException("All source properties must be owned.");
