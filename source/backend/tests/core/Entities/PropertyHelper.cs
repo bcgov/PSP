@@ -64,6 +64,41 @@ namespace Pims.Core.Test
             return property;
         }
 
+        public static PimsPropertyLocationVw CreatePropertyView(int pid, int? pin = null, PimsPropertyType type = null, PimsPropertyClassificationType classification = null, PimsAddress address = null, short? regionCode = null, bool? isCoreInventory = null, bool? isRetired = null)
+        {
+            type ??= CreatePropertyType($"Land-{pid}");
+            classification ??= CreatePropertyClassificationType($"Class-{pid}");
+            address ??= CreateAddress(pid);
+
+            var property = new PimsPropertyLocationVw()
+            {
+                PropertyId = pid,
+                Pin = pin,
+                IsRetired = false,
+                PropertyTypeCode = type.PropertyTypeCode,
+                PropertyClassificationTypeCode = classification.PropertyClassificationTypeCode,
+                AddressId = address.AddressId,
+                StreetAddress1 = address.StreetAddress1,
+                StreetAddress2 = address.StreetAddress2,
+                StreetAddress3 = address.StreetAddress3,
+            };
+
+            if (regionCode.HasValue)
+            {
+                property.RegionCode = regionCode.Value;
+            }
+            if (isCoreInventory.HasValue)
+            {
+                property.IsOwned = isCoreInventory.Value;
+            }
+            if (isRetired.HasValue)
+            {
+                property.IsRetired = isRetired.Value;
+            }
+
+            return property;
+        }
+
         /// <summary>
         /// Create a new instance of an Property.
         /// Adds the property to the specified 'context'.
