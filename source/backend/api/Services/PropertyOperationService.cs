@@ -3,6 +3,7 @@ using System.Linq;
 using System.Security.Claims;
 using LinqKit;
 using Microsoft.Extensions.Logging;
+using Pims.Api.Helpers.Exceptions;
 using Pims.Core.Exceptions;
 using Pims.Dal.Entities;
 using Pims.Dal.Helpers.Extensions;
@@ -172,7 +173,7 @@ namespace Pims.Api.Services
                 var operation = operations.FirstOrDefault(p => p.SourcePropertyId == sourceProperty.PropertyId);
                 if (operation == null)
                 {
-                    throw new BusinessRuleViolationException("All source properties must exist in the system.");
+                    throw new BadRequestException("All source properties must exist in the system.");
                 }
                 if (sourceProperty.IsOwned != operation.SourceProperty.IsOwned)
                 {

@@ -108,7 +108,6 @@ const PropertyListView: React.FC<React.PropsWithChildren<unknown>> = () => {
 
       // The server could send back total page count.
       // For now we'll just calculate it.
-      console.log(data);
       if (fetchId === fetchIdRef.current && data?.items) {
         setData(data.items);
         setPageCount(Math.ceil(data.total / pageSize));

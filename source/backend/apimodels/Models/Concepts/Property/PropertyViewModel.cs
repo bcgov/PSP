@@ -57,7 +57,6 @@ namespace Pims.Api.Models.Concepts.Property
 
         public short DistrictCode { get; set; }
 
-        //public Geometry Geometry { get; set; }
         public string PropertyAreaUnitTypeCode { get; set; }
 
         public float? LandArea { get; set; }

@@ -148,7 +148,6 @@ const AddConsolidationContainer: React.FC<IAddConsolidationContainerProps> = ({
   ) => {
     try {
       const propertyOperations = values.toApi();
-      console.log(propertyOperations);
       const response = await addPropertyOperation(propertyOperations, userOverrideCodes);
 
       if (response?.length) {

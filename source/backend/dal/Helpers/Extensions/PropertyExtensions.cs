@@ -92,16 +92,7 @@ namespace Pims.Dal.Helpers.Extensions
 
             if (filter.Ownership.Count > 0)
             {
-                var authorizationTypes = new List<string>() {
-                   "NOI",
-                   "Section 15",
-                   "Section 16",
-                   "Section 17",
-                   "Section 66",
-                };
-
                 // Property ownership filters
-                // TODO: Instead of doing redoing the query, the view could be used for ownership related queries
                 ownershipBuilder = isRetired ? PredicateBuilder.New<PimsPropertyLocationVw>(p => p.IsRetired == true) : PredicateBuilder.New<PimsPropertyLocationVw>(p => false);
                 if (filter.Ownership.Contains("isCoreInventory"))
                 {
@@ -114,7 +105,6 @@ namespace Pims.Dal.Helpers.Extensions
                 }
                 if (filter.Ownership.Contains("isOtherInterest"))
                 {
-                    var today = DateOnly.FromDateTime(DateTime.Now);
                     ownershipBuilder.Or(p => p.IsRetired != true && p.IsOtherInterest.HasValue && p.IsOtherInterest.Value);
                 }
                 if (filter.Ownership.Contains("isDisposed"))
