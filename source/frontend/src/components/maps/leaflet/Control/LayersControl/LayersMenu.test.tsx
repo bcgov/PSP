@@ -2,13 +2,21 @@ import { noop } from 'lodash';
 import React from 'react';
 
 import { TenantProvider } from '@/tenants';
-import { cleanup, render } from '@/utils/test-utils';
+import { cleanup, prettyDOM, render } from '@/utils/test-utils';
 import { createMapContainer, deferred } from '@/utils/test-utils';
 
-import LayersMenu from './LayersMenu';
+import { LayersMenu } from './LayersMenu';
+import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
+import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
+
+jest.mock('@/components/common/mapFSM/MapStateMachineContext');
 
 describe('LayersMenu View', () => {
   afterEach(cleanup);
+
+  beforeEach(() => {
+    (useMapStateMachine as jest.Mock).mockImplementation(() => mapMachineBaseMock);
+  });
 
   const setup = (setMap = noop) => {
     // render component under test

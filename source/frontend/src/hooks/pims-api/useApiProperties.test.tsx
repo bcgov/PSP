@@ -31,7 +31,7 @@ describe('useApiProperties api hook', () => {
       total: 10,
     });
 
-    const { getPropertiesViewPagedApi  } = setup();
+    const { getPropertiesViewPagedApi } = setup();
     const response = await getPropertiesViewPagedApi({} as any);
 
     expect(response.status).toBe(200);
