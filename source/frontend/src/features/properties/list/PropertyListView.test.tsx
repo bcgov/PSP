@@ -25,6 +25,7 @@ import PropertyListView, { ownershipFilterOptions } from './PropertyListView';
 import { MultiSelectOption } from '@/features/acquisition/list/interfaces';
 import { IGeocoderPidsResponse } from '@/hooks/pims-api/interfaces/IGeocoder';
 import { IPropertyFilter } from '../filter/IPropertyFilter';
+import { ApiGen_Concepts_PropertyView } from '@/models/api/generated/ApiGen_Concepts_PropertyView';
 
 // Set all module functions to vi.fn
 
@@ -33,10 +34,10 @@ vi.mock('@/hooks/pims-api/useApiProperties');
 
 const mockApiGetPropertiesPagedApi = vi.fn();
 vi.mocked(useApiProperties).mockReturnValue({
-  getPropertiesPagedApi: mockApiGetPropertiesPagedApi as (
+  getPropertiesViewPagedApi: mockApiGetPropertiesPagedApi as (
     params: IPropertyFilter | null,
   ) => Promise<AxiosResponse<ApiGen_Base_Page<ApiGen_Concepts_Property>, any>>,
-} as ReturnType<typeof useApiProperties>);
+} as unknown as ReturnType<typeof useApiProperties>);
 
 const mockApiGetSitePidsApi = vi.fn();
 vi.mocked(useApiGeocoder).mockReturnValue({
@@ -75,7 +76,7 @@ const setup = (renderOptions: RenderOptions = {}) => {
 const setupMockApi = (properties?: ApiGen_Concepts_PropertyView[]) => {
   const mockProperties = properties ?? [];
   const len = mockProperties.length;
-  mockApiGetPropertiesViewPagedApi.mockResolvedValue({
+  mockApiGetPropertiesPagedApi.mockResolvedValue({
     data: {
       quantity: len,
       total: len,
@@ -92,7 +93,7 @@ describe('Property list view', () => {
     mockAxios.reset();
     mockAxios.onAny().reply(200, {});
 
-    mockApiGetPropertiesViewPagedApi.mockClear();
+    mockApiGetPropertiesPagedApi.mockClear();
   });
   afterEach(() => {
     history.push({ search: '' });
@@ -193,7 +194,7 @@ describe('Property list view', () => {
     await focusOptionMultiselect(container, optionSelected, ownershipFilterOptions);
 
     await waitFor(() => {
-      expect(mockApiGetPropertiesViewPagedApi).toHaveBeenCalledWith({
+      expect(mockApiGetPropertiesPagedApi).toHaveBeenCalledWith({
         address: '',
         latitude: '',
         longitude: '',

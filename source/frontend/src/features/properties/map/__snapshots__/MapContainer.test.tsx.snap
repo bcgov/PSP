@@ -521,7 +521,7 @@ exports[`MapContainer > Renders the map 1`] = `
 .c0.draft-cursor,
 .c0.draft-cursor .leaflet-grab,
 .c0.draft-cursor .leaflet-interactive {
-  cursor: url(/src/assets/images/pins/icon-draft.svg) 15 45,pointer;
+  cursor: url("/src/assets/images/pins/icon-draft.svg") 15 45,pointer;
 }
 
 <div
