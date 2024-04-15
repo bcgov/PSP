@@ -13,7 +13,7 @@ export default defineConfig({
     setupFiles: ['./src/setupTests.ts'],
     environment: 'jsdom',
     coverage: {
-      reporter: ['lcov', 'text'],
+      reporter: [['lcov'], ['text'], ['json', { file: 'coverage-final.json' }]],
       include: ['src/**/*.{js,jsx,ts,tsx}'],
       exclude: [
         'node_modules/**',
