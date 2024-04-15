@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Basemap Toggle renders correctly - defaults to street layer 1`] = `
+exports[`Basemap Toggle > renders correctly - defaults to street layer 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"

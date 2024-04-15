@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`DocumentDetailForm component renders as expected 1`] = `
+exports[`DocumentDetailForm component > renders as expected 1`] = `
 .c8.btn {
   display: -webkit-box;
   display: -webkit-flex;
