@@ -8,8 +8,8 @@ import GenerateLetterRecipientsModal, {
 } from './GenerateLetterRecipientsModal';
 import { LetterRecipientsForm } from './models/LetterRecipientsForm';
 
-const onGenerateLetterOk = jest.fn();
-const onCancelClick = jest.fn();
+const onGenerateLetterOk = vi.fn();
+const onCancelClick = vi.fn();
 
 describe('GenerateLetterRecipients modal', () => {
   const setup = async (
@@ -37,7 +37,7 @@ describe('GenerateLetterRecipients modal', () => {
   };
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders as expected', async () => {

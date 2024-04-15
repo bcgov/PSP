@@ -18,13 +18,16 @@ import {
 } from './CompensationRequisitionDetailContainer';
 import { CompensationRequisitionDetailViewProps } from './CompensationRequisitionDetailView';
 
-jest.mock('@/hooks/pims-api/useApiContacts');
-const getPersonConceptFn = jest.fn();
-const getOrganizationConceptFn = jest.fn();
-(useApiContacts as jest.Mock).mockImplementation(() => ({
-  getPersonConcept: getPersonConceptFn,
-  getOrganizationConcept: getOrganizationConceptFn,
-}));
+vi.mock('@/hooks/pims-api/useApiContacts');
+const getPersonConceptFn = vi.fn();
+const getOrganizationConceptFn = vi.fn();
+vi.mocked(useApiContacts).mockImplementation(
+  () =>
+    ({
+      getPersonConcept: getPersonConceptFn,
+      getOrganizationConcept: getOrganizationConceptFn,
+    } as unknown as ReturnType<typeof useApiContacts>),
+);
 
 let viewProps: CompensationRequisitionDetailViewProps;
 
@@ -33,7 +36,7 @@ const CompensationViewComponent = (props: CompensationRequisitionDetailViewProps
   return <></>;
 };
 
-const setEditMode = jest.fn();
+const setEditMode = vi.fn();
 
 describe('Compensation Detail View container', () => {
   const setup = (
@@ -74,7 +77,7 @@ describe('Compensation Detail View container', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('makes request to get person concept for acquisition team payee', async () => {

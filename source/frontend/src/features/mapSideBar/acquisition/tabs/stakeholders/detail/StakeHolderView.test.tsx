@@ -11,21 +11,19 @@ import { InterestHolderViewForm, InterestHolderViewRow } from '../update/models'
 import StakeholderOrganizer from './stakeholderOrganizer';
 import StakeHolderView, { IStakeHolderViewProps } from './StakeHolderView';
 
-jest.mock('@react-keycloak/web');
-
 const history = createMemoryHistory();
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
 
-jest.mock('./stakeholderOrganizer');
+vi.mock('./stakeholderOrganizer');
 
 export const organizerMock = {
-  getInterestProperties: jest.fn(),
-  getNonInterestProperties: jest.fn(),
+  getInterestProperties: vi.fn(),
+  getNonInterestProperties: vi.fn(),
 };
 
-const onEdit = jest.fn();
+const onEdit = vi.fn();
 
 describe('StakeHolderView component', () => {
   // render component under test
@@ -52,7 +50,7 @@ describe('StakeHolderView component', () => {
   };
 
   beforeEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
 
     const groupedInterestProperties = getMockApiInterestHolders()
       .flatMap(i => i.interestHolderProperties)
@@ -66,11 +64,13 @@ describe('StakeHolderView component', () => {
 
     organizerMock.getInterestProperties.mockReturnValue(groupedInterestProperties);
     organizerMock.getNonInterestProperties.mockReturnValue(groupedNonInterestProperties);
-    (StakeholderOrganizer as jest.Mock).mockImplementation(() => organizerMock);
+    vi.mocked(StakeholderOrganizer).mockImplementation(
+      () => organizerMock as unknown as StakeholderOrganizer,
+    );
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders as expected', () => {

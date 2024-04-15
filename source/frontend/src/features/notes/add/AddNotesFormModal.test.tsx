@@ -11,10 +11,10 @@ import { EntityNoteForm } from './models';
 
 const history = createMemoryHistory();
 
-const handleSubmit = jest.fn();
-const validationSchema = jest.fn().mockReturnValue(AddNotesYupSchema);
-const handleSaveClick = jest.fn();
-const handleCancelClick = jest.fn();
+const handleSubmit = vi.fn();
+const validationSchema = vi.fn().mockReturnValue(AddNotesYupSchema);
+const handleSaveClick = vi.fn();
+const handleCancelClick = vi.fn();
 
 describe('AddNotesFormModal component', () => {
   // render component under test
@@ -52,7 +52,7 @@ describe('AddNotesFormModal component', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders as expected', () => {

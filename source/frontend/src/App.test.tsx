@@ -1,27 +1,27 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 
-import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import useKeycloakWrapper, { IKeycloak } from '@/hooks/useKeycloakWrapper';
 
 const mockAxios = new MockAdapter(axios);
 
-jest.mock('@/hooks/useKeycloakWrapper');
-(useKeycloakWrapper as jest.Mock).mockReturnValue({ hasClaim: () => true });
+vi.mock('@/hooks/useKeycloakWrapper');
+vi.mocked(useKeycloakWrapper).mockReturnValue({ hasClaim: () => true } as unknown as IKeycloak);
 
 // This is required to mock react-redux so that the App can render.
-const mockDispatch = jest.fn();
-jest.mock('react-redux', () => ({
+const mockDispatch = vi.fn();
+vi.mock('react-redux', () => ({
   connect:
     (mapStateToProps: any, mapDispatchToProps: (arg0: any, arg1: any) => any) =>
     (reactComponent: any) => ({
       mapStateToProps,
-      mapDispatchToProps: jest.fn((dispatch = mockDispatch, ownProps) =>
+      mapDispatchToProps: vi.fn((dispatch = mockDispatch, ownProps) =>
         mapDispatchToProps(dispatch, ownProps),
       ),
       reactComponent,
-      mockDispatch: jest.fn(),
+      mockDispatch: vi.fn(),
     }),
-  useSelector: jest.fn(),
+  useSelector: vi.fn(),
   useDispatch: () => mockDispatch,
 }));
 

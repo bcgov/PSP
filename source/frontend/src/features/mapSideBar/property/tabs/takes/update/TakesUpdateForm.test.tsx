@@ -11,14 +11,12 @@ import TakesUpdateForm, { ITakesUpdateFormProps } from './TakesUpdateForm';
 import { ApiGen_CodeTypes_AcquisitionTakeStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_AcquisitionTakeStatusTypes';
 import { Claims, Roles } from '@/constants';
 
-jest.mock('@react-keycloak/web');
-
 const history = createMemoryHistory();
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
 
-const onSubmit = jest.fn();
+const onSubmit = vi.fn();
 
 describe('TakesUpdateForm component', () => {
   // render component under test
@@ -45,7 +43,7 @@ describe('TakesUpdateForm component', () => {
   };
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders as expected', () => {

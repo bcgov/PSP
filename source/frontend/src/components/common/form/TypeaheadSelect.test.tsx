@@ -1,10 +1,10 @@
 import { Formik, FormikProps } from 'formik';
-import React from 'react';
 
 import { act, render, RenderOptions, screen, userEvent } from '@/utils/test-utils';
 
 import { SelectOption } from './Select';
 import { ITypeaheadSelectProps, TypeaheadSelect } from './TypeaheadSelect';
+import { createRef } from 'react';
 
 const countries: SelectOption[] = [
   { label: 'Austria', value: 'AT' },
@@ -12,8 +12,8 @@ const countries: SelectOption[] = [
   { label: 'Ireland', value: 'IE' },
 ];
 
-const onChange = jest.fn();
-const onBlur = jest.fn();
+const onChange = vi.fn();
+const onBlur = vi.fn();
 
 describe('TypeaheadSelect component', () => {
   const setup = (
@@ -21,13 +21,13 @@ describe('TypeaheadSelect component', () => {
       initialValues?: { country: SelectOption };
     } = {},
   ) => {
-    const formikRef = React.createRef<FormikProps<any>>();
+    const formikRef = createRef<FormikProps<any>>();
 
     const utils = render(
       <Formik
         innerRef={formikRef}
         initialValues={options?.initialValues ?? { country: undefined }}
-        onSubmit={jest.fn()}
+        onSubmit={vi.fn()}
       >
         <TypeaheadSelect
           field="country"
@@ -51,7 +51,7 @@ describe('TypeaheadSelect component', () => {
   };
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders as expected', () => {

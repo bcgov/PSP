@@ -5,9 +5,8 @@ import { render, RenderOptions } from '@/utils/test-utils';
 import { FinancialCodeResults, IFinancialCodeResultsProps } from './FinancialCodeResults';
 
 // mock auth library
-jest.mock('@react-keycloak/web');
 
-const setSort = jest.fn();
+const setSort = vi.fn();
 
 // render component under test
 const setup = (

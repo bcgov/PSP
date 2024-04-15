@@ -12,6 +12,10 @@ import { useTakesRepository } from '../repositories/useTakesRepository';
 import { ITakesDetailContainerProps } from '../update/TakesUpdateContainer';
 import TakesDetailContainer from './TakesDetailContainer';
 import { ITakesDetailViewProps } from './TakesDetailView';
+import { IResponseWrapper } from '@/hooks/util/useApiRequestWrapper';
+import { ApiGen_Concepts_Take } from '@/models/api/generated/ApiGen_Concepts_Take';
+import { AxiosResponse } from 'axios';
+import { vi } from 'vitest';
 
 const history = createMemoryHistory();
 const storeState = {
@@ -21,18 +25,18 @@ const storeState = {
 const mockGetApi = {
   error: undefined,
   response: undefined,
-  execute: jest.fn(),
+  execute: vi.fn(),
   loading: false,
 };
 
 const mockCountsApi = {
   error: undefined,
   response: undefined,
-  execute: jest.fn(),
+  execute: vi.fn(),
   loading: false,
 };
 
-jest.mock('../repositories/useTakesRepository');
+vi.mock('../repositories/useTakesRepository');
 
 describe('TakesDetailContainer component', () => {
   // render component under test
@@ -43,7 +47,7 @@ describe('TakesDetailContainer component', () => {
     return <></>;
   });
 
-  const onEdit = jest.fn();
+  const onEdit = vi.fn();
 
   const setup = (
     renderOptions: RenderOptions & { props?: Partial<ITakesDetailContainerProps> },
@@ -68,14 +72,18 @@ describe('TakesDetailContainer component', () => {
   };
 
   beforeEach(() => {
-    (useTakesRepository as jest.Mock).mockReturnValue({
-      getTakesByPropertyId: mockGetApi,
-      getTakesCountByPropertyId: mockCountsApi,
-    });
+    vi.mocked(useTakesRepository).mockReturnValue({
+      getTakesByPropertyId: mockGetApi as unknown as IResponseWrapper<
+        (fileId: number, propertyId: number) => Promise<AxiosResponse<ApiGen_Concepts_Take[], any>>
+      >,
+      getTakesCountByPropertyId: mockCountsApi as unknown as IResponseWrapper<
+        (propertyId: number) => Promise<AxiosResponse<number, any>>
+      >,
+    } as unknown as ReturnType<typeof useTakesRepository>);
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders as expected', () => {
@@ -93,20 +101,23 @@ describe('TakesDetailContainer component', () => {
   });
 
   it('returns the takes sorted by the id', async () => {
-    (useTakesRepository as jest.Mock).mockReturnValue({
+    vi.mocked(useTakesRepository).mockReturnValue({
       getTakesByPropertyId: {
         ...mockGetApi,
         response: [
-          { ...getMockApiTakes(), id: '1' },
-          { ...getMockApiTakes(), id: '2' },
+          { ...getMockApiTakes(), id: 1 } as unknown as ApiGen_Concepts_Take,
+          { ...getMockApiTakes(), id: 2 } as unknown as ApiGen_Concepts_Take,
         ],
+        status: 200,
       },
-      getTakesCountByPropertyId: mockCountsApi,
-    });
+      getTakesCountByPropertyId: mockCountsApi as unknown as IResponseWrapper<
+        (propertyId: number) => Promise<AxiosResponse<number, any>>
+      >,
+    } as unknown as ReturnType<typeof useTakesRepository>);
     setup({});
 
     await waitFor(() => {
-      expect(viewProps.takes[0].id).toBe('2');
+      expect(viewProps.takes[0].id).toBe(2);
     });
   });
 

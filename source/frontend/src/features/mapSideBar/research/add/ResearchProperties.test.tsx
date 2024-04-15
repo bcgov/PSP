@@ -1,5 +1,5 @@
 import { Formik } from 'formik';
-import { noop } from 'lodash';
+import noop from 'lodash/noop';
 import { act } from 'react-dom/test-utils';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
@@ -24,8 +24,7 @@ testForm.properties = [
 ];
 
 const store = mockStore({});
-const setDraftProperties = jest.fn();
-jest.mock('@react-keycloak/web');
+const setDraftProperties = vi.fn();
 
 describe('ResearchProperties component', () => {
   const setup = (
@@ -36,15 +35,14 @@ describe('ResearchProperties component', () => {
   ) => {
     // render component under test
     const component = render(
-      <MapStateMachineProvider /*values={{}}*/>
-        <Formik initialValues={renderOptions.initialForm} onSubmit={noop}>
-          <ResearchProperties confirmBeforeAdd={renderOptions.confirmBeforeAdd ?? jest.fn()} />
-        </Formik>
-      </MapStateMachineProvider>,
+      <Formik initialValues={renderOptions.initialForm} onSubmit={noop}>
+        <ResearchProperties confirmBeforeAdd={jest.fn()} />
+      </Formik>,
       {
         ...renderOptions,
         store: store,
         claims: [],
+        useMockAuthentication: true,
       },
     );
 
@@ -55,7 +53,7 @@ describe('ResearchProperties component', () => {
   };
 
   afterEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
     setDraftProperties.mockReset();
   });
 

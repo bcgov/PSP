@@ -8,7 +8,7 @@ import { render, RenderOptions } from '@/utils/test-utils';
 
 import { ILeaseSearchResultsProps, LeaseSearchResults } from './LeaseSearchResults';
 
-const setSort = jest.fn();
+const setSort = vi.fn();
 
 // render component under test
 const setup = (

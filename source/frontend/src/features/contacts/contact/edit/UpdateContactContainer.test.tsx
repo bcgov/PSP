@@ -63,14 +63,14 @@ const mockOrganization: ApiGen_Concepts_Organization = {
 };
 
 // Mock API service calls
-jest.mock('@/features/contacts/hooks/useOrganizationDetail');
-jest.mock('@/features/contacts/hooks/usePersonDetail');
+vi.mock('@/features/contacts/hooks/useOrganizationDetail');
+vi.mock('@/features/contacts/hooks/usePersonDetail');
 
-(useOrganizationDetail as jest.Mock<ReturnType<typeof useOrganizationDetail>>).mockReturnValue({
+vi.mocked(useOrganizationDetail).mockReturnValue({
   organization: mockOrganization,
 });
 
-(usePersonDetail as jest.Mock<ReturnType<typeof usePersonDetail>>).mockReturnValue({
+vi.mocked(usePersonDetail).mockReturnValue({
   person: mockPerson,
 });
 

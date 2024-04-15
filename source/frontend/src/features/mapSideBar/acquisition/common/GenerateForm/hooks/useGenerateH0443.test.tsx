@@ -16,32 +16,44 @@ import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts
 
 import { useGenerateH0443 } from './useGenerateH0443';
 
-const getPropertiesFn = jest.fn<ApiGen_Concepts_Property[], any[]>();
-const generateFn = jest.fn();
-const getAcquisitionFileFn = jest.fn<ApiGen_Concepts_AcquisitionFile | undefined, any[]>();
-const getPersonConceptFn = jest.fn();
-const getOrganizationConceptFn = jest.fn();
+const getPropertiesFn = vi.fn<ApiGen_Concepts_Property[], any[]>();
+const generateFn = vi.fn();
+const getAcquisitionFileFn = vi.fn();
+const getPersonConceptFn = vi.fn();
+const getOrganizationConceptFn = vi.fn();
 
-jest.mock('@/features/documents/hooks/useDocumentGenerationRepository');
-(useDocumentGenerationRepository as jest.Mock).mockImplementation(() => ({
-  generateDocumentDownloadWrappedRequest: generateFn,
-}));
+vi.mock('@/features/documents/hooks/useDocumentGenerationRepository');
+vi.mocked(useDocumentGenerationRepository).mockImplementation(
+  () =>
+    ({
+      generateDocumentDownloadWrappedRequest: generateFn,
+    } as unknown as ReturnType<typeof useDocumentGenerationRepository>),
+);
 
-jest.mock('@/hooks/repositories/useAcquisitionProvider');
-(useAcquisitionProvider as jest.Mock).mockImplementation(() => ({
-  getAcquisitionFile: { execute: getAcquisitionFileFn },
-}));
+vi.mock('@/hooks/repositories/useAcquisitionProvider');
+vi.mocked(useAcquisitionProvider).mockImplementation(
+  () =>
+    ({
+      getAcquisitionFile: { execute: getAcquisitionFileFn },
+    } as unknown as ReturnType<typeof useAcquisitionProvider>),
+);
 
-jest.mock('@/hooks/repositories/useProperties');
-(useProperties as jest.Mock).mockImplementation(() => ({
-  getMultiplePropertiesById: { execute: getPropertiesFn },
-}));
+vi.mock('@/hooks/repositories/useProperties');
+vi.mocked(useProperties).mockImplementation(
+  () =>
+    ({
+      getMultiplePropertiesById: { execute: getPropertiesFn },
+    } as unknown as ReturnType<typeof useProperties>),
+);
 
-jest.mock('@/hooks/pims-api/useApiContacts');
-(useApiContacts as jest.Mock).mockImplementation(() => ({
-  getPersonConcept: getPersonConceptFn,
-  getOrganizationConcept: getOrganizationConceptFn,
-}));
+vi.mock('@/hooks/pims-api/useApiContacts');
+vi.mocked(useApiContacts).mockImplementation(
+  () =>
+    ({
+      getPersonConcept: getPersonConceptFn,
+      getOrganizationConcept: getOrganizationConceptFn,
+    } as unknown as ReturnType<typeof useApiContacts>),
+);
 
 let currentStore: MockStoreEnhanced<any, {}>;
 const mockStore = configureMockStore([thunk]);
@@ -72,6 +84,9 @@ const setup = (params?: {
 };
 
 describe('useGenerateH0443 functions', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
   it('makes requests to expected api endpoints', async () => {
     const generate = setup();
     await act(async () => await generate(0));

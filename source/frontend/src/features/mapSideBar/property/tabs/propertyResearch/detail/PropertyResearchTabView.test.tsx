@@ -9,10 +9,9 @@ import PropertyResearchTabView, { IPropertyResearchTabViewProps } from './Proper
 
 const history = createMemoryHistory();
 
-const setEditMode = jest.fn();
+const setEditMode = vi.fn();
 
 // mock keycloak auth library
-jest.mock('@react-keycloak/web');
 
 describe('PropertyResearchTabView component', () => {
   // render component under test

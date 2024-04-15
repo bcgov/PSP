@@ -23,11 +23,10 @@ const storeState = {
 const mockGetApi = {
   error: undefined,
   response: [1] as number[] | undefined,
-  execute: jest.fn().mockResolvedValue([1]),
+  execute: vi.fn().mockResolvedValue([1]),
   loading: false,
 };
-jest.mock('@/components/common/mapFSM/MapStateMachineContext');
-jest.mock('@/hooks/repositories/usePimsPropertyRepository', () => ({
+vi.mock('@/hooks/repositories/usePimsPropertyRepository', () => ({
   usePimsPropertyRepository: () => {
     return {
       getMatchingProperties: mockGetApi,
@@ -59,19 +58,11 @@ describe('FilterContentContainer component', () => {
   };
 
   beforeEach(() => {
-    jest.resetAllMocks();
-    const testMockMahine: IMapStateMachineContext = {
-      ...mapMachineBaseMock,
-      isFiltering: true,
-    };
-
-    (useMapStateMachine as unknown as jest.Mock<Partial<IMapStateMachineContext>>).mockReturnValue(
-      testMockMahine,
-    );
+    vi.resetAllMocks();
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('fetches filter data from the api', async () => {

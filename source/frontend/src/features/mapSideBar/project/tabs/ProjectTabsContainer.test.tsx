@@ -1,17 +1,32 @@
 import Claims from '@/constants/claims';
 import { mockProjectGetResponse } from '@/mocks/projects.mock';
-import { render, RenderOptions, screen } from '@/utils/test-utils';
+import {
+  cleanup,
+  render,
+  RenderOptions,
+  screen,
+  waitFor,
+  waitForElementToBeRemoved,
+} from '@/utils/test-utils';
 
 import ProjectTabsContainer, { IProjectTabsContainerProps } from './ProjectTabsContainer';
 
 // mock auth library
-jest.mock('@react-keycloak/web');
 
-const setProjectMock = jest.fn();
-const setEditModeMock = jest.fn();
-const setContainerStateMock = jest.fn();
+const setProjectMock = vi.fn();
+const setEditModeMock = vi.fn();
+const setContainerStateMock = vi.fn();
 
 const mockProject = mockProjectGetResponse();
+
+vi.mock('@/features/documents/hooks/useDocumentRelationshipProvider', () => ({
+  useDocumentRelationshipProvider: () => {
+    return {
+      retrieveDocumentRelationship: vi.fn(),
+      retrieveDocumentRelationshipLoading: false,
+    };
+  },
+}));
 
 describe('Project Tabs component', () => {
   // render component under test
@@ -33,11 +48,12 @@ describe('Project Tabs component', () => {
   };
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
+    cleanup();
   });
 
-  it('matches snapshot', () => {
-    const { asFragment } = setup(
+  it('matches snapshot', async () => {
+    const { asFragment, getByTitle } = setup(
       {
         project: mockProject,
         setProject: setProjectMock,
@@ -45,6 +61,7 @@ describe('Project Tabs component', () => {
       },
       { claims: [Claims.DOCUMENT_VIEW] },
     );
+
     expect(asFragment()).toMatchSnapshot();
   });
 

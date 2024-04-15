@@ -7,10 +7,9 @@ import { act, render, RenderOptions, userEvent } from '@/utils/test-utils';
 import DispositionMenu, { IDispositionMenuProps } from './DispositionMenu';
 
 // mock auth library
-jest.mock('@react-keycloak/web');
 
-const onChange = jest.fn();
-const onShowPropertySelector = jest.fn();
+const onChange = vi.fn();
+const onShowPropertySelector = vi.fn();
 
 const testData = ['one', 'two', 'three'];
 
@@ -39,7 +38,7 @@ describe('DispositionMenu component', () => {
   };
 
   afterEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
   });
 
   it('matches snapshot', () => {

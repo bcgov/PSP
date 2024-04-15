@@ -1,6 +1,6 @@
 import { createMemoryHistory, MemoryHistory } from 'history';
 import React from 'react';
-import { Router } from 'react-router-dom';
+import { Router } from 'react-router-dom/cjs/react-router-dom';
 
 interface TestRouterWrapperParams {
   children: React.ReactNode;

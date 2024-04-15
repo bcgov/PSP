@@ -33,32 +33,28 @@ const storeState = {
 const mockPostApi = {
   error: undefined,
   response: undefined,
-  execute: jest.fn(),
+  execute: vi.fn(),
   loading: false,
 };
 const mockGetApi = {
   error: undefined,
   response: getMockApiCompensationList(),
-  execute: jest.fn(),
+  execute: vi.fn(),
   loading: false,
 };
 
 const mockPutApi = {
   error: undefined,
   response: { ...mockAcquisitionFileResponse(), totalAllowableCompensation: 1000 },
-  execute: jest.fn(),
+  execute: vi.fn(),
   loading: false,
 };
 
-jest.mock('@/hooks/repositories/useRequisitionCompensationRepository');
-
-jest.mock('@/components/common/mapFSM/MapStateMachineContext');
-(useMapStateMachine as jest.Mock).mockImplementation(() => mapMachineBaseMock);
+vi.mock('@/hooks/repositories/useRequisitionCompensationRepository');
 
 const history = createMemoryHistory();
-jest.mock('@react-keycloak/web');
 
-jest.mock('@/hooks/repositories/useAcquisitionProvider', () => ({
+vi.mock('@/hooks/repositories/useAcquisitionProvider', () => ({
   useAcquisitionProvider: () => {
     return {
       getAcquisitionCompensationRequisitions: mockGetApi,
@@ -101,9 +97,12 @@ describe('compensation list view container', () => {
   };
 
   beforeEach(() => {
-    (useCompensationRequisitionRepository as jest.Mock).mockImplementation(() => ({
-      deleteCompensation: mockPostApi,
-    }));
+    vi.mocked(useCompensationRequisitionRepository).mockImplementation(
+      () =>
+        ({
+          deleteCompensation: mockPostApi,
+        } as unknown as ReturnType<typeof useCompensationRequisitionRepository>),
+    );
   });
 
   it('renders as expected', async () => {

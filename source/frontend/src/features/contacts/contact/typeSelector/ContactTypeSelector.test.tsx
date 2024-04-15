@@ -7,7 +7,7 @@ import { act, render, RenderOptions } from '@/utils/test-utils';
 import { ContactTypeSelector } from './ContactTypeSelector';
 
 const history = createMemoryHistory();
-const setContactTypeFn = jest.fn();
+const setContactTypeFn = vi.fn();
 
 describe('ContactTypeSelector component', () => {
   const setup = (

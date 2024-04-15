@@ -6,7 +6,6 @@ import ProjectContainerView from './ProjectContainerView';
 import { ProjectTabNames } from './tabs/ProjectTabs';
 
 // mock auth library
-jest.mock('@react-keycloak/web');
 
 const mockProps: IProjectContainerViewProps = {
   project: mockProjectGetResponse(),
@@ -16,13 +15,24 @@ const mockProps: IProjectContainerViewProps = {
   isEditing: false,
   showConfirmModal: false,
   isSubmitting: false,
-  onClose: jest.fn(),
-  onSetProject: jest.fn(),
-  onSetContainerState: jest.fn(),
-  onSuccess: jest.fn(),
-  setIsValid: jest.fn(),
+  onClose: vi.fn(),
+  onSetProject: vi.fn(),
+  onSetContainerState: vi.fn(),
+  onSuccess: vi.fn(),
+  setIsValid: vi.fn(),
   displayRequiredFieldsError: false,
 };
+
+vi.mock('react-visibility-sensor', () => {
+  return {
+    default: vi.fn().mockImplementation(({ children }) => {
+      if (children instanceof Function) {
+        return children({ isVisible: true });
+      }
+      return children;
+    }),
+  };
+});
 
 describe('ProjectSummaryView component', () => {
   // render component under test
@@ -36,7 +46,7 @@ describe('ProjectSummaryView component', () => {
   };
 
   beforeEach(() => {
-    jest.resetAllMocks();
+    vi.clearAllMocks();
   });
 
   it('matches snapshot', () => {

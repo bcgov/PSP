@@ -8,18 +8,18 @@ import {
 describe('Date utils', () => {
   describe('getCurrentFiscalYear', () => {
     beforeAll(() => {
-      jest.useFakeTimers('modern');
+      vi.useFakeTimers();
     });
     afterAll(() => {
-      jest.useRealTimers();
+      vi.useRealTimers();
     });
 
     it('should return fiscal year 2023 for December 2022', () => {
-      jest.setSystemTime(new Date('04 Dec 2022 10:00:00 GMT').getTime());
+      vi.setSystemTime(new Date('04 Dec 2022 10:00:00 GMT').getTime());
       expect(getCurrentFiscalYear()).toBe(2023);
     });
     it('should return fiscal year 2023 for March 2023', () => {
-      jest.setSystemTime(new Date('15 Mar 2023 10:00:00 GMT').getTime());
+      vi.setSystemTime(new Date('15 Mar 2023 10:00:00 GMT').getTime());
       expect(getCurrentFiscalYear()).toBe(2023);
     });
   });

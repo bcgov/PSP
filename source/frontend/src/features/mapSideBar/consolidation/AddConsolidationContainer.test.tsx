@@ -12,11 +12,9 @@ import AddConsolidationContainer, {
   IAddConsolidationContainerProps,
 } from './AddConsolidationContainer';
 
-jest.mock('@react-keycloak/web');
-jest.mock('@/components/common/mapFSM/MapStateMachineContext');
 const history = createMemoryHistory();
 
-const onClose = jest.fn();
+const onClose = vi.fn();
 
 let viewProps: IAddConsolidationViewProps | undefined;
 const TestView: React.FC<IAddConsolidationViewProps> = props => {
@@ -37,11 +35,11 @@ const TestView: React.FC<IAddConsolidationViewProps> = props => {
 const mockAddPropertyOperation = {
   error: undefined,
   response: undefined,
-  execute: jest.fn(),
+  execute: vi.fn(),
   loading: false,
 };
 
-jest.mock('@/hooks/repositories/usePropertyOperationRepository', () => ({
+vi.mock('@/hooks/repositories/usePropertyOperationRepository', () => ({
   usePropertyOperationRepository: () => {
     return {
       addPropertyOperationApi: mockAddPropertyOperation,
@@ -75,12 +73,10 @@ describe('Add Consolidation Container component', () => {
   beforeEach(() => {
     viewProps = undefined;
     history.location.pathname = '/';
-    jest.resetAllMocks();
-    (useMapStateMachine as jest.Mock).mockImplementation(() => mapMachineBaseMock);
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('Renders the underlying form', async () => {

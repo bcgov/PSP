@@ -1,6 +1,6 @@
 import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
-import { noop } from 'lodash';
+import noop from 'lodash/noop';
 
 import { mockLookups } from '@/mocks/lookups.mock';
 import { getEmptyOrganization } from '@/mocks/organization.mock';
@@ -91,7 +91,7 @@ describe('UpdateResearchForm component', () => {
   };
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders as expected when provided no research file', () => {

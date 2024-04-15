@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { FormikProps } from 'formik';
 import { createMemoryHistory } from 'history';
@@ -23,13 +23,15 @@ import {
   IUpdatePropertyDetailsContainerProps,
   UpdatePropertyDetailsContainer,
 } from './UpdatePropertyDetailsContainer';
+import { IResponseWrapper } from '@/hooks/util/useApiRequestWrapper';
+import { LatLngLiteral } from 'leaflet';
 
 const history = createMemoryHistory();
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
 
-const onSuccess = jest.fn();
+const onSuccess = vi.fn();
 
 const DEFAULT_PROPS: IUpdatePropertyDetailsContainerProps = {
   id: 205,
@@ -209,30 +211,34 @@ const fakeProperty: ApiGen_Concepts_Property = {
 };
 
 // Mock API service calls
-jest.mock('@/hooks/repositories/usePimsPropertyRepository');
-jest.mock('@/hooks/repositories/useQueryMapLayersByLocation');
+vi.mock('@/hooks/repositories/usePimsPropertyRepository');
+vi.mock('@/hooks/repositories/useQueryMapLayersByLocation');
 
-const getProperty = jest.fn(() => ({ ...fakeProperty }));
-const updateProperty = jest.fn(() => ({ ...fakeProperty }));
-(usePimsPropertyRepository as jest.Mock).mockReturnValue({
+const getProperty = vi.fn(() => ({ ...fakeProperty }));
+const updateProperty = vi.fn(() => ({ ...fakeProperty }));
+vi.mocked(usePimsPropertyRepository).mockReturnValue({
   getPropertyWrapper: {
-    execute: getProperty,
+    execute: getProperty as unknown as (id: number) => Promise<ApiGen_Concepts_Property>,
     loading: false,
-  },
+  } as IResponseWrapper<(id: number) => Promise<AxiosResponse<ApiGen_Concepts_Property, any>>>,
   updatePropertyWrapper: {
-    execute: updateProperty,
+    execute: updateProperty as unknown as (
+      property: ApiGen_Concepts_Property,
+    ) => Promise<ApiGen_Concepts_Property>,
     updatePropertyLoading: false,
-  },
-});
+  } as unknown as IResponseWrapper<
+    (property: ApiGen_Concepts_Property) => Promise<AxiosResponse<ApiGen_Concepts_Property, any>>
+  >,
+} as ReturnType<typeof usePimsPropertyRepository>);
 
-(useQueryMapLayersByLocation as jest.Mock).mockReturnValue({
-  queryAll: jest.fn<IMapLayerResults, any[]>(() => ({
+vi.mocked(useQueryMapLayersByLocation).mockReturnValue({
+  queryAll: vi.fn(() => ({
     isALR: null,
     motiRegion: null,
     highwaysDistrict: null,
     electoralDistrict: null,
     firstNations: null,
-  })),
+  })) as unknown as (location: LatLngLiteral) => Promise<IMapLayerResults>,
 });
 
 describe('UpdatePropertyDetailsContainer component', () => {
@@ -259,7 +265,7 @@ describe('UpdatePropertyDetailsContainer component', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders as expected', async () => {

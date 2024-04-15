@@ -1,6 +1,6 @@
 import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
-import { noop } from 'lodash';
+import noop from 'lodash/noop';
 
 import { useProjectTypeahead } from '@/hooks/useProjectTypeahead';
 import { mockLookups } from '@/mocks/lookups.mock';
@@ -16,12 +16,10 @@ const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
 
-jest.mock('@/hooks/useProjectTypeahead');
-const mockUseProjectTypeahead = useProjectTypeahead as jest.MockedFunction<
-  typeof useProjectTypeahead
->;
+vi.mock('@/hooks/useProjectTypeahead');
+const mockUseProjectTypeahead = vi.mocked(useProjectTypeahead);
 
-const handleTypeaheadSearch = jest.fn();
+const handleTypeaheadSearch = vi.fn();
 
 describe('LeaseDetailSubForm component', () => {
   const setup = async (renderOptions: RenderOptions & Partial<ILeaseDetailsSubFormProps> = {}) => {
@@ -71,7 +69,7 @@ describe('LeaseDetailSubForm component', () => {
   });
 
   afterEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
   });
 
   it('renders as expected', async () => {

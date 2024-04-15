@@ -10,11 +10,9 @@ import { DispositionFormModel } from '../models/DispositionFormModel';
 import AddDispositionContainer, { IAddDispositionContainerProps } from './AddDispositionContainer';
 import { IAddDispositionContainerViewProps } from './AddDispositionContainerView';
 
-jest.mock('@react-keycloak/web');
-jest.mock('@/components/common/mapFSM/MapStateMachineContext');
 const history = createMemoryHistory();
 
-const onClose = jest.fn();
+const onClose = vi.fn();
 
 let viewProps: IAddDispositionContainerViewProps | undefined;
 const TestView: React.FC<IAddDispositionContainerViewProps> = props => {
@@ -25,11 +23,11 @@ const TestView: React.FC<IAddDispositionContainerViewProps> = props => {
 const mockCreateDispositionFile = {
   error: undefined,
   response: undefined,
-  execute: jest.fn(),
+  execute: vi.fn(),
   loading: false,
 };
 
-jest.mock('@/hooks/repositories/useDispositionProvider', () => ({
+vi.mock('@/hooks/repositories/useDispositionProvider', () => ({
   useDispositionProvider: () => {
     return {
       addDispositionFileApi: mockCreateDispositionFile,
@@ -62,12 +60,10 @@ describe('Add Disposition Container component', () => {
 
   beforeEach(() => {
     viewProps = undefined;
-    jest.resetAllMocks();
-    (useMapStateMachine as jest.Mock).mockImplementation(() => mapMachineBaseMock);
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('Renders the underlying form', async () => {
@@ -96,7 +92,7 @@ describe('Add Disposition Container component', () => {
 
     const { getFormikRef, findByText } = await setup();
     const formikHelpers: Partial<FormikHelpers<DispositionFormModel>> = {
-      setSubmitting: jest.fn(),
+      setSubmitting: vi.fn(),
     };
 
     await act(async () => {

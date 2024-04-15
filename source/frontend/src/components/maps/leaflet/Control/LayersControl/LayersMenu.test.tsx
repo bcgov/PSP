@@ -1,5 +1,4 @@
-import { noop } from 'lodash';
-import React from 'react';
+import noop from 'lodash/noop';
 
 import { TenantProvider } from '@/tenants';
 import { cleanup, prettyDOM, render } from '@/utils/test-utils';

@@ -23,28 +23,27 @@ import {
 
 import PropertyListView, { ownershipFilterOptions } from './PropertyListView';
 import { MultiSelectOption } from '@/features/acquisition/list/interfaces';
-import { ApiGen_Concepts_PropertyView } from '@/models/api/generated/ApiGen_Concepts_PropertyView';
+import { IGeocoderPidsResponse } from '@/hooks/pims-api/interfaces/IGeocoder';
+import { IPropertyFilter } from '../filter/IPropertyFilter';
 
-// Set all module functions to jest.fn
-jest.mock('@react-keycloak/web');
-jest.mock('@/hooks/pims-api/useApiGeocoder');
-jest.mock('@/hooks/pims-api/useApiProperties');
+// Set all module functions to vi.fn
 
-const mockApiGetPropertiesViewPagedApi = jest.fn<
-  Promise<AxiosResponse<ApiGen_Base_Page<ApiGen_Concepts_PropertyView>>>,
-  any
->();
-(useApiProperties as unknown as jest.Mock<Partial<typeof useApiProperties>>).mockReturnValue({
-  getPropertiesViewPagedApi: mockApiGetPropertiesViewPagedApi,
-});
+vi.mock('@/hooks/pims-api/useApiGeocoder');
+vi.mock('@/hooks/pims-api/useApiProperties');
 
-const mockApiGetSitePidsApi = jest.fn<
-  Promise<AxiosResponse<ApiGen_Base_Page<ApiGen_Concepts_Property>>>,
-  any
->();
-(useApiGeocoder as unknown as jest.Mock<Partial<typeof useApiGeocoder>>).mockReturnValue({
-  getSitePidsApi: mockApiGetSitePidsApi,
-});
+const mockApiGetPropertiesPagedApi = vi.fn();
+vi.mocked(useApiProperties).mockReturnValue({
+  getPropertiesPagedApi: mockApiGetPropertiesPagedApi as (
+    params: IPropertyFilter | null,
+  ) => Promise<AxiosResponse<ApiGen_Base_Page<ApiGen_Concepts_Property>, any>>,
+} as ReturnType<typeof useApiProperties>);
+
+const mockApiGetSitePidsApi = vi.fn();
+vi.mocked(useApiGeocoder).mockReturnValue({
+  getSitePidsApi: mockApiGetSitePidsApi as unknown as (
+    siteId: string,
+  ) => Promise<AxiosResponse<IGeocoderPidsResponse, any>>,
+} as unknown as ReturnType<typeof useApiGeocoder>);
 
 const mockAxios = new MockAdapter(axios);
 const history = createMemoryHistory();

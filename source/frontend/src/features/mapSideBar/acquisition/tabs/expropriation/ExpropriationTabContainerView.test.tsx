@@ -11,7 +11,6 @@ import {
 } from './ExpropriationTabContainerView';
 
 const history = createMemoryHistory();
-jest.mock('@react-keycloak/web');
 
 describe('Expropriation Tab Container View', () => {
   const setup = async (
@@ -23,7 +22,7 @@ describe('Expropriation Tab Container View', () => {
         loading={renderOptions.props?.loading ?? false}
         acquisitionFile={renderOptions.props?.acquisitionFile ?? getMockExpropriationFile()}
         form8s={renderOptions.props?.form8s ?? []}
-        onForm8Deleted={jest.fn()}
+        onForm8Deleted={vi.fn()}
       />,
       {
         ...renderOptions,
@@ -39,7 +38,7 @@ describe('Expropriation Tab Container View', () => {
   };
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('displays a loading spinner when loading', async () => {

@@ -13,18 +13,15 @@ import { act, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import { ILayerPopupViewProps, LayerPopupView } from './LayerPopupView';
 import { emptyPimsBoundaryFeatureCollection } from '@/components/common/mapFSM/models';
+import { useKeycloak } from '@react-keycloak/web';
 
-jest.mock('@react-keycloak/web');
-jest.mock('react-leaflet');
-
-jest.mock('@/components/common/mapFSM/MapStateMachineContext');
+vi.mock('react-leaflet');
 
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
 
 const history = createMemoryHistory();
-(useMap as jest.Mock).mockReturnValue({});
 
 describe('LayerPopupView component', () => {
   const setup = (renderOptions: RenderOptions & ILayerPopupViewProps) => {
@@ -46,11 +43,6 @@ describe('LayerPopupView component', () => {
       ...component,
     };
   };
-
-  beforeEach(() => {
-    jest.resetAllMocks();
-    (useMapStateMachine as jest.Mock).mockImplementation(() => mapMachineBaseMock);
-  });
 
   it('renders as expected with layer popup content', async () => {
     const { asFragment } = setup({

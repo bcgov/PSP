@@ -11,18 +11,17 @@ import { act, render, RenderOptions, userEvent } from '@/utils/test-utils';
 import { ChecklistView, IChecklistViewProps } from './ChecklistView';
 
 // mock auth library
-jest.mock('@react-keycloak/web');
 
 // mock API service calls
-jest.mock('@/hooks/pims-api/useApiUsers');
+vi.mock('@/hooks/pims-api/useApiUsers');
 
-(useApiUsers as jest.MockedFunction<typeof useApiUsers>).mockReturnValue({
-  getUserInfo: jest.fn().mockResolvedValue({}),
+vi.mocked(useApiUsers).mockReturnValue({
+  getUserInfo: vi.fn().mockResolvedValue({}),
 } as any);
 
 const mockViewProps: IChecklistViewProps = {
   apiFile: undefined,
-  onEdit: jest.fn(),
+  onEdit: vi.fn(),
   sectionTypeName: API.ACQUISITION_CHECKLIST_SECTION_TYPES,
   editClaim: Claims.ACQUISITION_EDIT,
 };
@@ -58,7 +57,7 @@ describe('ChecklistView component', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders as expected', async () => {

@@ -1,6 +1,5 @@
 import { cleanup, render } from '@testing-library/react';
 import { BBox, GeoJsonProperties } from 'geojson';
-import React from 'react';
 import Supercluster from 'supercluster';
 
 import useSupercluster from './useSupercluster';

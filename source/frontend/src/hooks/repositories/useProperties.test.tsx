@@ -13,10 +13,10 @@ import { networkSlice } from '@/store/slices/network/networkSlice';
 
 import { useProperties } from './useProperties';
 
-const dispatch = jest.fn();
-const requestSpy = jest.spyOn(networkSlice.actions, 'logRequest');
-const successSpy = jest.spyOn(networkSlice.actions, 'logSuccess');
-const errorSpy = jest.spyOn(networkSlice.actions, 'logError');
+const dispatch = vi.fn();
+const requestSpy = vi.spyOn(networkSlice.actions, 'logRequest');
+const successSpy = vi.spyOn(networkSlice.actions, 'logSuccess');
+const errorSpy = vi.spyOn(networkSlice.actions, 'logError');
 const mockAxios = new MockAdapter(axios);
 
 beforeEach(() => {
@@ -44,7 +44,7 @@ const setup = (values?: any) => {
 
 describe('useProperties functions', () => {
   afterAll(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
   describe('getProperties action creator', () => {
     const url = `/properties/search?`;

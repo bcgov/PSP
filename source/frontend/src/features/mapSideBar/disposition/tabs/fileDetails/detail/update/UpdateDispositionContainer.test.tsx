@@ -22,12 +22,12 @@ import UpdateDispositionContainer from './UpdateDispositionContainer';
 import { IUpdateDispositionFormProps } from './UpdateDispositionForm';
 
 // mock API service calls
-jest.mock('@/hooks/repositories/useDispositionProvider');
+vi.mock('@/hooks/repositories/useDispositionProvider');
 
 type Provider = typeof useDispositionProvider;
-const mockUpdateDispositionFile = jest.fn();
+const mockUpdateDispositionFile = vi.fn();
 
-(useDispositionProvider as jest.MockedFunction<Provider>).mockReturnValue({
+vi.mocked(useDispositionProvider).mockReturnValue({
   putDispositionFile: {
     error: undefined,
     response: undefined,
@@ -54,7 +54,7 @@ const TestView: React.FC<IUpdateDispositionFormProps> = props => {
 
 describe('UpdateDisposition container', () => {
   let dispositionFile: ApiGen_Concepts_DispositionFile;
-  const onSuccess = jest.fn();
+  const onSuccess = vi.fn();
 
   const setup = (renderOptions: RenderOptions = {}) => {
     const formikRef = createRef<FormikProps<DispositionFormModel>>();
@@ -87,7 +87,7 @@ describe('UpdateDisposition container', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders the underlying form', async () => {
