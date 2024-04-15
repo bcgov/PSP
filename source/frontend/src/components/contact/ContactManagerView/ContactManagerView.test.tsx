@@ -84,7 +84,7 @@ describe('ContactManagerView', () => {
     mockKeycloak({ claims: [Claims.CONTACT_VIEW] });
   });
 
-  it.skip('matches snapshot', async () => {
+  it('matches snapshot', async () => {
     setupMockSearch();
     const { asFragment, getByTitle } = setup();
     await waitForElementToBeRemoved(getByTitle('table-loading'));

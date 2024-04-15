@@ -48,26 +48,29 @@ import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts
 import MapContainer from './MapContainer';
 
 const mockAxios = new MockAdapter(axios);
-jest.mock('@react-keycloak/web');
-jest.mock('@/components/maps/leaflet/LayerPopup/components/LayerPopupContent');
-jest.mock('@/hooks/pims-api/useApiProperties');
-jest.mock('@/hooks/useLtsa');
-jest.mock('@/hooks/repositories/useComposedProperties');
-jest.mock('@/hooks/repositories/usePropertyAssociations');
-jest.mock('@/hooks/repositories/mapLayer/useParcelMapLayer');
-jest.mock('@/hooks/repositories/mapLayer/useAdminBoundaryMapLayer');
-jest.mock('@/hooks/repositories/mapLayer/usePimsPropertyLayer');
-jest.mock('@/hooks/repositories/mapLayer/useLegalAdminBoundariesMapLayer');
-jest.mock('@/hooks/repositories/mapLayer/useIndianReserveBandMapLayer');
+
+vi.mock('@/components/maps/leaflet/LayerPopup/components/LayerPopupContent');
+vi.mock('@/features/advancedFilterBar/AdvancedFilterBar');
+vi.mock('@/hooks/pims-api/useApiProperties');
+vi.mock('@/hooks/useLtsa');
+vi.mock('@/hooks/repositories/useComposedProperties');
+vi.mock('@/hooks/repositories/usePropertyAssociations');
+vi.mock('@/hooks/repositories/mapLayer/useParcelMapLayer');
+vi.mock('@/hooks/repositories/mapLayer/useAdminBoundaryMapLayer');
+vi.mock('@/hooks/repositories/mapLayer/usePimsPropertyLayer');
+vi.mock('@/hooks/repositories/mapLayer/useLegalAdminBoundariesMapLayer');
+vi.mock('@/hooks/repositories/mapLayer/useIndianReserveBandMapLayer');
 
 // Need to mock this library for unit tests
-jest.mock('react-visibility-sensor', () => {
-  return jest.fn().mockImplementation(({ children }) => {
-    if (children instanceof Function) {
-      return children({ isVisible: true });
-    }
-    return children;
-  });
+vi.mock('react-visibility-sensor', () => {
+  return {
+    default: vi.fn().mockImplementation(({ children }) => {
+      if (children instanceof Function) {
+        return children({ isVisible: true });
+      }
+      return children;
+    }),
+  };
 });
 
 (useApiProperties as jest.MockedFunction<typeof useApiProperties>).mockReturnValue({
@@ -149,8 +152,6 @@ const mockParcels: ParcelSeed[] = [
   { id: 3, latitude: 55.917363, longitude: -122.749732, pid: 7773 },
 ];
 
-jest.mock('@/components/common/mapFSM/MapStateMachineContext');
-
 // This will spoof the active parcel (the one that will populate the popup details)
 const mockDetails = {
   propertyDetail: {
@@ -209,7 +210,16 @@ describe('MapContainer', () => {
       {
         store,
         history,
+        mockMapMachine: {
+          ...mapMachineBaseMock,
+          mapFeatureData: {
+            pimsLocationFeatures: createPimsFeatures(mockParcels),
+            pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
+            pmbcFeatures: emptyPmbcFeatureCollection,
+          },
+        },
         ...renderOptions,
+        useMockAuthentication: true,
       },
     );
     await act(async () => {}); // Wait for async mount actions to settle
@@ -218,31 +228,13 @@ describe('MapContainer', () => {
   };
 
   beforeEach(() => {
-    (useKeycloak as jest.Mock).mockReturnValue({
-      keycloak: {
-        userInfo: {
-          client_roles: ['property-edit', 'property-view'],
-          organizations: [0],
-        },
-      },
-    });
-
-    (useMapStateMachine as unknown as jest.Mock<Partial<IMapStateMachineContext>>).mockReturnValue({
-      ...mapMachineBaseMock,
-      mapFeatureData: {
-        pimsLocationFeatures: createPimsFeatures(mockParcels),
-        pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
-        pmbcFeatures: emptyPmbcFeatureCollection,
-      },
-    });
-
     delete (window as any).ResizeObserver;
-    window.ResizeObserver = jest.fn().mockImplementation(() => ({
-      observe: jest.fn(),
-      unobserve: jest.fn(),
-      disconnect: jest.fn(),
+    window.ResizeObserver = vi.fn().mockImplementation(() => ({
+      observe: vi.fn(),
+      unobserve: vi.fn(),
+      disconnect: vi.fn(),
     }));
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     mockAxios.reset();
     mockAxios.onGet('/basemaps.json').reply(200, {
       basemaps: [
@@ -297,16 +289,16 @@ describe('MapContainer', () => {
   });
 
   it('the map can zoom in until no clusters are visible', async () => {
-    (useMapStateMachine as unknown as jest.Mock<Partial<IMapStateMachineContext>>).mockReturnValue({
-      ...mapMachineBaseMock,
-      mapFeatureData: {
-        pimsLocationFeatures: createPimsFeatures(smallMockParcels),
-        pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
-        pmbcFeatures: emptyPmbcFeatureCollection,
+    const { container } = await setup({
+      mockMapMachine: {
+        ...mapMachineBaseMock,
+        mapFeatureData: {
+          pimsLocationFeatures: createPimsFeatures(smallMockParcels),
+          pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
+          pmbcFeatures: emptyPmbcFeatureCollection,
+        },
       },
     });
-
-    const { container } = await setup();
 
     // click the zoom-in button 10 times
     const zoomIn = container.querySelector('.leaflet-control-zoom-in');
@@ -319,16 +311,16 @@ describe('MapContainer', () => {
   });
 
   it('the map can handle features with invalid geometry', async () => {
-    (useMapStateMachine as unknown as jest.Mock<Partial<IMapStateMachineContext>>).mockReturnValue({
-      ...mapMachineBaseMock,
-      mapFeatureData: {
-        pimsLocationFeatures: emptyPimsLocationFeatureCollection,
-        pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
-        pmbcFeatures: emptyPmbcFeatureCollection,
+    const { container } = await setup({
+      mockMapMachine: {
+        ...mapMachineBaseMock,
+        mapFeatureData: {
+          pimsLocationFeatures: emptyPimsLocationFeatureCollection,
+          pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
+          pmbcFeatures: emptyPmbcFeatureCollection,
+        },
       },
     });
-
-    const { container } = await setup();
     const map = container.querySelector('.leaflet-container');
     expect(map).toBeVisible();
   });
@@ -372,16 +364,16 @@ describe('MapContainer', () => {
   });
 
   it('clusters can be clicked to zoom and spiderfy large clusters', async () => {
-    (useMapStateMachine as unknown as jest.Mock<Partial<IMapStateMachineContext>>).mockReturnValue({
-      ...mapMachineBaseMock,
-      mapFeatureData: {
-        pimsLocationFeatures: createPimsFeatures(largeMockParcels),
-        pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
-        pmbcFeatures: emptyPmbcFeatureCollection,
+    const { container } = await setup({
+      mockMapMachine: {
+        ...mapMachineBaseMock,
+        mapFeatureData: {
+          pimsLocationFeatures: createPimsFeatures(largeMockParcels),
+          pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
+          pmbcFeatures: emptyPmbcFeatureCollection,
+        },
       },
     });
-
-    const { container } = await setup();
 
     const cluster = container.querySelector('.leaflet-marker-icon.marker-cluster');
     expect(cluster).toBeVisible();
@@ -412,11 +404,8 @@ describe('MapContainer', () => {
         pmbcFeatures: emptyPmbcFeatureCollection,
       },
     };
-    (useMapStateMachine as unknown as jest.Mock<Partial<IMapStateMachineContext>>).mockReturnValue(
-      testMapMock,
-    );
 
-    await setup();
+    await setup({ mockMapMachine: testMapMock });
 
     // click on clustered markers to expand into single markers
     const cluster = document.querySelector('.leaflet-marker-icon.marker-cluster');
@@ -450,11 +439,8 @@ describe('MapContainer', () => {
         pmbcFeatures: emptyPmbcFeatureCollection,
       },
     };
-    (useMapStateMachine as unknown as jest.Mock<Partial<IMapStateMachineContext>>).mockReturnValue(
-      testMapMock,
-    );
 
-    await setup();
+    await setup({ mockMapMachine: testMapMock });
     // click on clustered markers to expand into single markers
     const cluster = document.querySelector('.leaflet-marker-icon.marker-cluster');
     await act(async () => userEvent.click(cluster!));
@@ -495,11 +481,8 @@ describe('MapContainer', () => {
       },
       isFiltering: false,
     };
-    (useMapStateMachine as unknown as jest.Mock<Partial<IMapStateMachineContext>>).mockReturnValue(
-      testMapMock,
-    );
 
-    await setup();
+    await setup({ mockMapMachine: testMapMock });
 
     const clusterIcons = document.querySelectorAll('.leaflet-marker-icon.marker-cluster');
     const markerIcons = document.querySelectorAll('img.leaflet-marker-icon');
@@ -533,11 +516,8 @@ describe('MapContainer', () => {
       activePimsPropertyIds: activeIds,
       isFiltering: true,
     };
-    (useMapStateMachine as unknown as jest.Mock<Partial<IMapStateMachineContext>>).mockReturnValue(
-      testMapMock,
-    );
 
-    await setup();
+    await setup({ mockMapMachine: testMapMock });
 
     const clusterIcons = document.querySelectorAll('.leaflet-marker-icon.marker-cluster');
     const markerIcons = document.querySelectorAll('img.leaflet-marker-icon');
