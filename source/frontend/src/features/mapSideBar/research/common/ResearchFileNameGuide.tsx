@@ -1,13 +1,11 @@
-import * as React from 'react';
+import { FunctionComponent, PropsWithChildren, useState } from 'react';
 import { Col, Collapse, Row } from 'react-bootstrap';
 import { FaInfoCircle } from 'react-icons/fa';
 import { MdArrowDropDown, MdArrowDropUp } from 'react-icons/md';
 import styled from 'styled-components';
 
-export const ResearchFileNameGuide: React.FunctionComponent<
-  React.PropsWithChildren<unknown>
-> = () => {
-  const [isCollapsed, setIsCollapsed] = React.useState<boolean>(true);
+export const ResearchFileNameGuide: FunctionComponent<PropsWithChildren<unknown>> = () => {
+  const [isCollapsed, setIsCollapsed] = useState<boolean>(true);
   return (
     <>
       <StyledSectionHeader>

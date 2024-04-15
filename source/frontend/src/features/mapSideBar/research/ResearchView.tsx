@@ -1,5 +1,5 @@
 import { FormikProps } from 'formik';
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { MdTopic } from 'react-icons/md';
 import { matchPath, Route, useHistory, useRouteMatch } from 'react-router-dom';
 import styled from 'styled-components';

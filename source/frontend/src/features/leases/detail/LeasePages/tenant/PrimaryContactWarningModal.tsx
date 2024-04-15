@@ -1,5 +1,4 @@
 import filter from 'lodash/filter';
-import * as React from 'react';
 
 import { GenericModal } from '@/components/common/GenericModal';
 

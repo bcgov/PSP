@@ -1,5 +1,4 @@
 import { useFormikContext } from 'formik';
-import * as React from 'react';
 import { AiOutlineExclamationCircle } from 'react-icons/ai';
 
 import { Input } from '@/components/common/form';

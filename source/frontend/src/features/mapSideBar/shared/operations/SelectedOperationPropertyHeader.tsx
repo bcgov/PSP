@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { Col } from 'react-bootstrap';
 
 import { HeaderRow } from '@/components/propertySelector/selectedPropertyList/SelectedPropertyHeaderRow';

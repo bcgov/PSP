@@ -1,5 +1,5 @@
 import { FieldArray, Formik, FormikHelpers, FormikProps } from 'formik';
-import * as React from 'react';
+import { forwardRef } from 'react';
 import { FaPlus } from 'react-icons/fa';
 import styled from 'styled-components';
 
@@ -27,7 +27,7 @@ export interface TakesForm {
   takes: TakeModel[];
 }
 
-export const TakesUpdateForm = React.forwardRef<FormikProps<any>, ITakesUpdateFormProps>(
+export const TakesUpdateForm = forwardRef<FormikProps<any>, ITakesUpdateFormProps>(
   ({ takes, loading, fileProperty, onSubmit }, ref) => {
     if (loading) {
       return (

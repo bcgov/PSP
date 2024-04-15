@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { noop } from 'lodash';
+import noop from 'lodash/noop';
 import React, { useState } from 'react';
 import {
   Modal,

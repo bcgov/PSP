@@ -1,6 +1,5 @@
-import { FormikProps } from 'formik';
-import * as React from 'react';
-import { useContext, useEffect } from 'react';
+import { FormikProps } from 'formik/dist/types';
+import { RefObject, useContext, useEffect } from 'react';
 
 import ProtectedComponent from '@/components/common/ProtectedComponent';
 import { Section } from '@/components/common/Section/Section';
@@ -40,7 +39,7 @@ export const ImprovementsContainer: React.FunctionComponent<
   return isEditing ? (
     <ProtectedComponent claims={[Claims.LEASE_EDIT]}>
       <AddImprovementsContainer
-        formikRef={formikRef as React.RefObject<FormikProps<LeaseFormModel>>}
+        formikRef={formikRef as RefObject<FormikProps<LeaseFormModel>>}
         onEdit={onEdit}
         improvements={improvements ?? []}
         loading={loading}

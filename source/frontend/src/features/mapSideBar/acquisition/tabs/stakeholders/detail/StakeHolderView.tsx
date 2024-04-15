@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 import EditButton from '@/components/common/EditButton';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';

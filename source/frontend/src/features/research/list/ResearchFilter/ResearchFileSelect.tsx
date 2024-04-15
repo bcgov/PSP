@@ -1,5 +1,4 @@
 import { useFormikContext } from 'formik';
-import * as React from 'react';
 
 import { InputGroup, Select } from '@/components/common/form';
 

@@ -1,7 +1,7 @@
-import { noop } from 'lodash';
-import * as React from 'react';
+import noop from 'lodash/noop';
+import { createContext, useContext, useState } from 'react';
 
-const FilterContext = React.createContext<{
+const FilterContext = createContext<{
   changed: boolean;
   setChanged: (state: boolean) => void;
 }>({ changed: true, setChanged: noop });
@@ -12,11 +12,11 @@ const FilterContext = React.createContext<{
  */
 export const FilterProvider: React.FC<React.PropsWithChildren<unknown>> = ({ children }) => {
   // Default changed state to false on page load
-  const [changed, setChanged] = React.useState(false);
+  const [changed, setChanged] = useState(false);
 
   return (
     <FilterContext.Provider value={{ changed, setChanged }}>{children}</FilterContext.Provider>
   );
 };
 
-export const useFilterContext = () => React.useContext(FilterContext);
+export const useFilterContext = () => useContext(FilterContext);

@@ -1,5 +1,4 @@
 import { useFormikContext } from 'formik';
-import * as React from 'react';
 import { Col, Row } from 'react-bootstrap';
 
 import { ResetButton, SearchButton } from '@/components/common/buttons';

@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, useLayoutEffect } from 'react';
+import { FC, lazy, PropsWithChildren, Suspense, useLayoutEffect } from 'react';
 import Col from 'react-bootstrap/Col';
 import { Redirect, Switch, useLocation } from 'react-router-dom';
 
@@ -64,7 +64,7 @@ const DispositionListView = lazy(() =>
   componentLoader(import('@/features/disposition/list/DispositionListView'), 2),
 );
 
-const AppRouter: React.FC<React.PropsWithChildren<unknown>> = () => {
+const AppRouter: FC<PropsWithChildren<unknown>> = () => {
   const location = useLocation();
   useLayoutEffect(() => {
     window.scrollTo(0, 0);

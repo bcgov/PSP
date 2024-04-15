@@ -1,5 +1,4 @@
 import { Formik, FormikHelpers, FormikProps } from 'formik';
-import * as React from 'react';
 import styled from 'styled-components';
 
 import { IMapProperty } from '@/components/propertySelector/models';

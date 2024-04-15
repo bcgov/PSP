@@ -1,5 +1,4 @@
 import { getIn, useFormikContext } from 'formik';
-import * as React from 'react';
 import { FaTrash } from 'react-icons/fa';
 
 import { StyledRemoveLinkButton } from '@/components/common/buttons';

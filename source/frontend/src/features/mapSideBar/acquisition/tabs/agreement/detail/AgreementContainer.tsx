@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { useCallback, useContext, useEffect, useState } from 'react';
 
 import { SideBarContext } from '@/features/mapSideBar/context/sidebarContext';

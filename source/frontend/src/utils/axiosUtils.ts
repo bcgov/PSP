@@ -29,7 +29,6 @@ export function useAxiosErrorHandler(message = 'Network error. Check responses a
         toast.error(axiosError?.response.data.error, { autoClose: 10000 });
         return Promise.resolve();
       } else {
-        console.log(JSON.stringify(axiosError));
         toast.error(message);
         return Promise.reject(axiosError);
       }

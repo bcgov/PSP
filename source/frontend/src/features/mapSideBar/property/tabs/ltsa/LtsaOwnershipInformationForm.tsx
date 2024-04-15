@@ -1,5 +1,5 @@
 import { FieldArray, getIn, useFormikContext } from 'formik';
-import * as React from 'react';
+import { Fragment, FunctionComponent, PropsWithChildren } from 'react';
 import styled from 'styled-components';
 
 import { Input } from '@/components/common/form';
@@ -13,22 +13,22 @@ export interface ILtsaOwnershipInformationFormProps {
   nameSpace?: string;
 }
 
-export const LtsaOwnershipInformationForm: React.FunctionComponent<
-  React.PropsWithChildren<ILtsaOwnershipInformationFormProps>
+export const LtsaOwnershipInformationForm: FunctionComponent<
+  PropsWithChildren<ILtsaOwnershipInformationFormProps>
 > = ({ nameSpace }) => {
   const { values } = useFormikContext<LtsaOrders>();
   const ownershipGroups = getIn(values, withNameSpace(nameSpace, 'ownershipGroups')) ?? [];
   return (
-    <React.Fragment key={`ownership-info-main-row-${nameSpace}`}>
+    <Fragment key={`ownership-info-main-row-${nameSpace}`}>
       {ownershipGroups.length === 0 && 'None'}
       <FieldArray
         name={withNameSpace(nameSpace, 'ownershipGroups')}
         render={() => (
-          <React.Fragment key={`ownership-info-row-${nameSpace}`}>
+          <Fragment key={`ownership-info-row-${nameSpace}`}>
             {ownershipGroups.map((ownershipGroup: ChargeOwnershipGroup, index: number) => {
               const innerNameSpace = withNameSpace(nameSpace, `ownershipGroups.${index}`);
               return (
-                <React.Fragment key={`ownership-info-sub-row-${innerNameSpace}`}>
+                <Fragment key={`ownership-info-sub-row-${innerNameSpace}`}>
                   <OwnershipInfoMain showBottomMargin={index < ownershipGroups.length - 1}>
                     <OwnershipSummary>
                       <OwnershipInfo>
@@ -48,13 +48,13 @@ export const LtsaOwnershipInformationForm: React.FunctionComponent<
                     </OwnershipSummary>
                     <LtsaOwnershipInformationTitleOwnerForm nameSpace={innerNameSpace} />
                   </OwnershipInfoMain>
-                </React.Fragment>
+                </Fragment>
               );
             })}
-          </React.Fragment>
+          </Fragment>
         )}
       />
-    </React.Fragment>
+    </Fragment>
   );
 };
 
