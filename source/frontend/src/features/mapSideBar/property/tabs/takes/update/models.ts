@@ -183,7 +183,7 @@ export class TakeModel {
           this.leasePayableAreaUnitTypeCode,
           AreaUnitTypes.SquareMeters.toString(),
         ) || null,
-      leasePayableEndDt: this.leasePayableEndDt,
+      leasePayableEndDt: stringToNull(this.leasePayableEndDt),
       ...getEmptyBaseAudit(this.rowVersion),
       completionDt: stringToNull(this.completionDt),
     };
