@@ -24,6 +24,7 @@ import MapSelectorContainer, {
 } from '@/components/propertySelector/MapSelectorContainer';
 import { IMapProperty } from '@/components/propertySelector/models';
 import { getMockApiProperty } from '@/mocks/properties.mock';
+import { AreaUnitTypes } from '@/constants';
 
 const history = createMemoryHistory();
 jest.mock('@react-keycloak/web');
@@ -172,5 +173,38 @@ describe('Add Subdivision View', () => {
       userEvent.click(button);
     });
     expect(queryByText('111-111-111')).toBeNull();
+  });
+
+  it.only('property area only has 3 digits', async () => {
+    const initialFormModel = new SubdivisionFormModel();
+    getPrimaryAddressByPid.mockImplementation(() => Promise.resolve(undefined));
+    const { queryByDisplayValue } = await setup({
+      props: {
+        subdivisionInitialValues: initialFormModel,
+      },
+    });
+
+    const mapProperty: IMapProperty = {
+      propertyId: 123,
+      pid: '123-456-789',
+      planNumber: 'SPS22411',
+      address: 'Test address 123',
+      region: 1,
+      regionName: 'Some test region',
+      district: 5,
+      districtName: 'Okanagan-Shuswap',
+      areaUnit: AreaUnitTypes.SquareMeters,
+      landArea: 1.12345,
+    };
+
+    await act(async () => {
+      mapSelectorProps.addSelectedProperties([mapProperty]);
+    });
+
+    expect(getPrimaryAddressByPid).toHaveBeenCalledWith(testProperty.pid);
+
+    expect(queryByDisplayValue('1.1234')).toBeNull();
+    expect(queryByDisplayValue('1.123')).toBeVisible();
+    expect(queryByDisplayValue('1.12')).toBeNull();
   });
 });

@@ -70,6 +70,10 @@ const AddSubdivisionView: React.FunctionComponent<
   MapSelectorComponent,
   PropertySelectorPidSearchComponent,
 }) => {
+  const getAreaValue = (area: number, unit: string): number => {
+    const sqm = convertArea(area, unit, AreaUnitTypes.SquareMeters);
+    return Number(sqm.toFixed(3));
+  };
   return (
     <MapSideBarLayout
       showCloseButton
@@ -146,11 +150,7 @@ const AddSubdivisionView: React.FunctionComponent<
                         const formProperty = PropertyForm.fromMapProperty(property);
                         formProperty.landArea =
                           property.landArea && property.areaUnit
-                            ? convertArea(
-                                property.landArea,
-                                property.areaUnit,
-                                AreaUnitTypes.SquareMeters,
-                              )
+                            ? getAreaValue(property.landArea, property.areaUnit)
                             : 0;
                         formProperty.areaUnit = AreaUnitTypes.SquareMeters;
                         if (property.pid) {
