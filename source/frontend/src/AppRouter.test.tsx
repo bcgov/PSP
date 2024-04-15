@@ -206,7 +206,7 @@ describe('PSP routing', () => {
       mockKeycloak({ authenticated: false });
     });
 
-    x.it('should redirect unauthenticated user to the login page', async () => {
+    xit('should redirect unauthenticated user to the login page', async () => {
       const { getByText } = setup('/');
       await screen.findByText('v1.0.0.0');
       expect(getByText('Sign into PIMS with your government issued IDIR')).toBeVisible();
