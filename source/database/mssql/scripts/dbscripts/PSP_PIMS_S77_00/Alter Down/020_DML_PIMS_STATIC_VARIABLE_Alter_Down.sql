@@ -1,9 +1,10 @@
 /* -----------------------------------------------------------------------------
-Alter the data in the PIMS_LAND_ACT_TYPE table.
+Alter the data in the PIMS_STATIC_VARIABLE table.
 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
 Author        Date         Comment
 ------------  -----------  -----------------------------------------------------
 Doug Filteau  2024-Mar-27  Initial version
+Doug Filteau  2024-Apr-16  Updated FY Start and End.
 ----------------------------------------------------------------------------- */
 
 SET XACT_ABORT ON
@@ -15,20 +16,39 @@ GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
 
--- Disable the "Transfer Admin" type
+-- Update the "FYSTART" variable/
 DECLARE @CurrCd NVARCHAR(20)
-SET     @CurrCd = N'Transfer Admin'
+SET     @CurrCd = N'FYSTART'
 
-SELECT LAND_ACT_TYPE_CODE
-FROM   PIMS_LAND_ACT_TYPE
-WHERE  LAND_ACT_TYPE_CODE = @CurrCd;
+SELECT STATIC_VARIABLE_NAME
+FROM   PIMS_STATIC_VARIABLE
+WHERE  STATIC_VARIABLE_NAME = @CurrCd;
 
 IF @@ROWCOUNT = 1
   BEGIN
-  UPDATE PIMS_LAND_ACT_TYPE
-  SET    IS_DISABLED = 1
+  UPDATE PIMS_STATIC_VARIABLE
+  SET    STATIC_VARIABLE_VALUE      = N'01/04/2023'
        , CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER + 1
-  WHERE  LAND_ACT_TYPE_CODE = @CurrCd;
+  WHERE  STATIC_VARIABLE_NAME = @CurrCd;
+  END
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Update the "FYSTART" variable/
+DECLARE @CurrCd NVARCHAR(20)
+SET     @CurrCd = N'FYEND'
+
+SELECT STATIC_VARIABLE_NAME
+FROM   PIMS_STATIC_VARIABLE
+WHERE  STATIC_VARIABLE_NAME = @CurrCd;
+
+IF @@ROWCOUNT = 1
+  BEGIN
+  UPDATE PIMS_STATIC_VARIABLE
+  SET    STATIC_VARIABLE_VALUE      = N'31/03/2024'
+       , CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER + 1
+  WHERE  STATIC_VARIABLE_NAME = @CurrCd;
   END
 GO
 IF @@ERROR <> 0 SET NOEXEC ON

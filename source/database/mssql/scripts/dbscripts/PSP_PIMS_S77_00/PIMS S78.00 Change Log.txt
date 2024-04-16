@@ -1,3 +1,9 @@
+PSP_PIMS | Development Sprint: S78.00 | Design Sprint: 77 | Date: 2024-Apr-16
+- Altered seed scripts:
+  - 020_DML_PIMS_STATIC_VARIABLE.sql
+  - 056_DML_PIMS_LEASE_PURPOSE_TYPE.sql
+- Requires additional metadata to meet standards
+
 PSP_PIMS | Development Sprint: S77.00 | Design Sprint: 76 | Date: 2024-Apr-03
 - Altered tables:
   - PIMS_PROPERTY
