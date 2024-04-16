@@ -16,13 +16,14 @@ import { ApiGen_Concepts_Organization } from '@/models/api/generated/ApiGen_Conc
 import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_Person';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { ApiGen_Concepts_PropertyLease } from '@/models/api/generated/ApiGen_Concepts_PropertyLease';
+import { ApiGen_Concepts_PropertyView } from '@/models/api/generated/ApiGen_Concepts_PropertyView';
 import { ApiGen_Concepts_User } from '@/models/api/generated/ApiGen_Concepts_User';
 import { getEmptyBaseAudit, getEmptyProperty } from '@/models/defaultInitializers';
 import { ILookupCode } from '@/store/slices/lookupCodes';
 import { toTypeCode, toTypeCodeNullable } from '@/utils/formUtils';
 
 import { getEmptyContactMethod, getEmptyPerson } from './contacts.mock';
-import { getEmptyPropertyLease } from './properties.mock';
+import { getEmptyPropertyLease, getEmptyPropertyView } from './properties.mock';
 import { getEmptyRole } from './role.mock';
 import { getEmptyUser } from './user.mock';
 
@@ -684,6 +685,26 @@ export const mockApiProperty: ApiGen_Concepts_Property = {
   landArea: 123,
   landLegalDescription: 'test description',
 };
+
+export const mockApiPropertyView = (): ApiGen_Concepts_PropertyView => ({
+  ...getEmptyPropertyView(),
+  id: 1,
+  pid: 0,
+  pin: null,
+  zoning: '',
+  zoningPotential: '',
+  isSensitive: false,
+  name: 'test name',
+  description: 'test',
+  streetAddress1: mockApiAddress.streetAddress1,
+  streetAddress2: mockApiAddress.streetAddress2,
+  streetAddress3: mockApiAddress.streetAddress3,
+  municipalityName: mockApiAddress.municipality,
+  districtCode: mockApiAddress.districtCode,
+  countryCode: mockApiAddress.country.code,
+  landArea: 123,
+  landLegalDescription: 'test description',
+});
 
 export const mockLeaseProperty = (id: number): ApiGen_Concepts_PropertyLease => {
   return {

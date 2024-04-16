@@ -64,6 +64,8 @@ export default defineConfig({
     svgr({
       include: '**/*.svg?react',
     }),
-    viteCompression(),
+    viteCompression({
+      filter: /\.(js|mjs|css|html)$/i,
+    }),
   ],
 });

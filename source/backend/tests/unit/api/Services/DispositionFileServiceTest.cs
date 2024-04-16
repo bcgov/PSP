@@ -313,8 +313,6 @@ namespace Pims.Api.Test.Services
             repository.Verify(x => x.Add(It.IsAny<PimsDispositionFile>()), Times.Once);
         }
 
-        /*
-        TODO: Fix mapings
         [Fact]
         public void Add_WithRetiredProperty_Should_Fail()
         {
@@ -349,7 +347,6 @@ namespace Pims.Api.Test.Services
             var ex = act.Should().Throw<BusinessRuleViolationException>();
             ex.WithMessage("Retired property can not be selected.");
         }
-        */
 
         #endregion
 
@@ -532,7 +529,6 @@ namespace Pims.Api.Test.Services
 
             var nonInventoryProperty = EntityHelper.CreateProperty(1);
             nonInventoryProperty.IsOwned = false;
-            //nonInventoryProperty.IsPropertyOfInterest = true; TODO: Fix mapings
             dispositionFilePropertyRepository.Setup(x => x.GetPropertiesByDispositionFileId(It.IsAny<long>())).Returns(new List<PimsDispositionFileProperty>() { new PimsDispositionFileProperty() { Property = nonInventoryProperty } });
 
             // Act
@@ -594,7 +590,6 @@ namespace Pims.Api.Test.Services
 
             var inventoryProperty = EntityHelper.CreateProperty(1);
             inventoryProperty.IsOwned = true;
-            //inventoryProperty.IsPropertyOfInterest = false; TODO: Fix mapings
             dispositionFilePropertyRepository.Setup(x => x.GetPropertiesByDispositionFileId(It.IsAny<long>())).Returns(new List<PimsDispositionFileProperty>() { new PimsDispositionFileProperty() { Property = inventoryProperty } });
 
             // Act
@@ -955,7 +950,6 @@ namespace Pims.Api.Test.Services
                 PropertyTypeCode = "UNKNOWN",
                 PropertyStatusTypeCode = "UNKNOWN",
                 SurplusDeclarationTypeCode = "UNKNOWN",
-                //IsPropertyOfInterest = true, TODO: Fix mapings
                 RegionCode = 1
             });
 
@@ -1006,7 +1000,6 @@ namespace Pims.Api.Test.Services
                 PropertyTypeCode = "UNKNOWN",
                 PropertyStatusTypeCode = "UNKNOWN",
                 SurplusDeclarationTypeCode = "UNKNOWN",
-                //IsPropertyOfInterest = true, TODO: Fix mapings
                 RegionCode = 1
             });
 
@@ -1025,7 +1018,7 @@ namespace Pims.Api.Test.Services
             updatedProperty.SurplusDeclarationTypeCode.Should().Be("UNKNOWN");
             updatedProperty.PropertyDataSourceEffectiveDate.Should().Be(DateOnly.FromDateTime(DateTime.Now));
             updatedProperty.PropertyDataSourceTypeCode.Should().Be("PMBC");
-            //updatedProperty.IsPropertyOfInterest.Should().Be(true); TODO: Fix mapings
+            updatedProperty.IsOwned.Should().Be(false);
 
             filePropertyRepository.Verify(x => x.GetPropertiesByDispositionFileId(It.IsAny<long>()), Times.Once);
         }
@@ -1094,8 +1087,6 @@ namespace Pims.Api.Test.Services
             filePropertyRepository.Verify(x => x.Delete(It.IsAny<PimsDispositionFileProperty>()), Times.Once);
         }
 
-        /*
-        TODO: Fix mapings
         [Fact]
         public void UpdateProperties_RemoveProperty_Success()
         {
@@ -1106,7 +1097,6 @@ namespace Pims.Api.Test.Services
             dspFile.ConcurrencyControlNumber = 1;
 
             var property = EntityHelper.CreateProperty(12345);
-            //property.IsPropertyOfInterest = true; TODO: Fix mapings
             property.PimsPropertyResearchFiles = new List<PimsPropertyResearchFile>();
             property.PimsPropertyLeases = new List<PimsPropertyLease>();
             property.PimsDispositionFileProperties = new List<PimsDispositionFileProperty>() { new PimsDispositionFileProperty() };
@@ -1133,7 +1123,6 @@ namespace Pims.Api.Test.Services
             filePropertyRepository.Verify(x => x.Delete(It.IsAny<PimsDispositionFileProperty>()), Times.Once);
             propertyRepository.Verify(x => x.Delete(It.IsAny<PimsProperty>()), Times.Once);
         }
-        */
 
         [Fact]
         public void UpdateProperties_NoPermission()

@@ -54,6 +54,15 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({
   );
   const takeStatusTypeCode = getIn(values, withNameSpace(nameSpace, 'takeStatusTypeCode'));
 
+  React.useEffect(() => {
+    if (
+      currentTake.completionDt &&
+      currentTake.takeStatusTypeCode !== ApiGen_CodeTypes_AcquisitionTakeStatusTypes.COMPLETE
+    ) {
+      setFieldValue(withNameSpace(nameSpace, 'completionDt'), '');
+    }
+  }, [currentTake.completionDt, currentTake.takeStatusTypeCode, nameSpace, setFieldValue]);
+
   const getModalWarning = (onOk: () => void) => {
     return (e: React.ChangeEvent<any>) => {
       if (e.target.value === 'false') {
@@ -119,6 +128,24 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({
           field={withNameSpace(nameSpace, 'takeStatusTypeCode')}
           options={takeStatusTypeOptions}
           disabled={!canEditTake}
+        />
+      </SectionField>
+      <SectionField
+        label="Completion date"
+        required={
+          currentTake.takeStatusTypeCode === ApiGen_CodeTypes_AcquisitionTakeStatusTypes.COMPLETE
+        }
+        tooltip={`This will be enabled when the file status is set to "Completed"`}
+        labelWidth="4"
+        contentWidth="5"
+      >
+        <FastDatePicker
+          formikProps={formikProps}
+          field={withNameSpace(nameSpace, 'completionDt')}
+          maxDate={new Date()}
+          disabled={
+            currentTake.takeStatusTypeCode !== ApiGen_CodeTypes_AcquisitionTakeStatusTypes.COMPLETE
+          }
         />
       </SectionField>
       <SectionField label="Site contamination" labelWidth="4" contentWidth="5">
