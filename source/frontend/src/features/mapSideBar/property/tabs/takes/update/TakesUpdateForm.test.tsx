@@ -115,6 +115,22 @@ describe('TakesUpdateForm component', () => {
     expect(confirmModal).toBeVisible();
   });
 
+  it('displays a warning if lease payable radio button toggled from no to yes', async () => {
+    const { getByTestId } = setup({});
+    const noButton = getByTestId('radio-takes.0.isleasepayable-no');
+    const yesButton = getByTestId('radio-takes.0.isleasepayable-yes');
+
+    await act(async () => userEvent.click(noButton));
+
+    const confirmModal = await screen.findByText('Confirm');
+    await act(async () => userEvent.click(confirmModal));
+
+    await act(async () => userEvent.click(yesButton));
+
+    const closeModal = await screen.findByText('Close');
+    expect(closeModal).toBeVisible();
+  });
+
   it('resets is new isNewHighwayDedication values if radio button toggled from yes to no', async () => {
     const { getByTestId, queryByDisplayValue } = setup({});
     const noButton = getByTestId('radio-takes.0.isnewhighwaydedication-no');
@@ -200,7 +216,6 @@ describe('TakesUpdateForm component', () => {
     const noButton = getByTestId('radio-takes.0.isleasepayable-no');
     await act(async () => userEvent.click(noButton));
 
-    console.log(prettyDOM(undefined, 999999));
     expect(queryByDisplayValue('20231.28')).not.toBeNull();
     const confirmButton = await screen.findByText('Confirm');
     await act(async () => userEvent.click(confirmButton));
