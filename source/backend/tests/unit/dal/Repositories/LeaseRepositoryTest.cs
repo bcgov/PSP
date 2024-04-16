@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Moq;
 using NSubstitute;
 using Pims.Api.Services;
+using Pims.Core.Exceptions;
 using Pims.Core.Test;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
@@ -218,6 +219,37 @@ namespace Pims.Dal.Test.Repositories
             // Assert
             act.Should().Throw<ArgumentNullException>();
         }
+
+        [Fact]
+        public void Add_Lease_WithRetiredProperty_Should_Fail()
+        {
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseAdd, Permissions.LeaseView);
+            helper.CreatePimsContext(user, true);
+
+            var repository = helper.CreateRepository<LeaseRepository>(user);
+
+            var lease = EntityHelper.CreateLease(1);
+            lease.PimsPropertyLeases = new List<PimsPropertyLease>() {
+                new PimsPropertyLease()
+                {
+                    PropertyId = 100,
+                    Property = new PimsProperty()
+                    {
+                        Pid = 1,
+                        IsRetired = true,
+                    }
+                }
+            };
+
+            // Act
+            Action act = () => repository.Add(lease);
+
+            // Assert
+            var ex = act.Should().Throw<BusinessRuleViolationException>();
+            ex.WithMessage("Retired property can not be selected.");
+        }
+
         #endregion
 
         #region GetLastUpdateBy
@@ -366,7 +398,7 @@ namespace Pims.Dal.Test.Repositories
 
             // Act
             lease.LeaseDescription = "updated";
-            Action act = ()=> repository.Update(null);
+            Action act = () => repository.Update(null);
 
             // Assert
             act.Should().Throw<ArgumentNullException>();
@@ -569,14 +601,16 @@ namespace Pims.Dal.Test.Repositories
             var propertyOne = EntityHelper.CreateProperty(1);
             var context = helper.CreatePimsContext(user, true);
             context.AddRange(propertyOne, lease);
+
             var service = helper.Create<LeaseService>(user);
             helper.SaveChanges();
+
             var leaseTwo = context.CreateLease(2, addProperty: false);
             propertyOne.PimsPropertyLeases = new List<PimsPropertyLease>() { new Dal.Entities.PimsPropertyLease() { LeaseId = leaseTwo.LeaseId, Lease = leaseTwo, PropertyId = propertyOne.PropertyId } };
             helper.SaveChanges();
 
             var propertyRepository = helper.GetService<Mock<IPropertyRepository>>();
-            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>())).Returns(propertyOne);
+            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), true)).Returns(propertyOne);
 
             var repository = helper.GetService<Mock<IPropertyLeaseRepository>>();
             repository.Setup(x => x.GetAllByPropertyId(It.IsAny<long>())).Returns(propertyOne.PimsPropertyLeases);
@@ -610,7 +644,7 @@ namespace Pims.Dal.Test.Repositories
             propertyOne.PimsPropertyLeases = new List<PimsPropertyLease>() { new Dal.Entities.PimsPropertyLease() { LeaseId = leaseTwo.LeaseId, PropertyId = propertyOne.PropertyId, Lease = leaseTwo } };
 
             var propertyRepository = helper.GetService<Mock<IPropertyRepository>>();
-            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>())).Returns(propertyOne);
+            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), true)).Returns(propertyOne);
 
             var repository = helper.GetService<Mock<IPropertyLeaseRepository>>();
             repository.Setup(x => x.GetAllByPropertyId(It.IsAny<long>())).Returns(propertyOne.PimsPropertyLeases);
@@ -648,7 +682,7 @@ namespace Pims.Dal.Test.Repositories
             helper.SaveChanges();
 
             var propertyRepository = helper.GetService<Mock<IPropertyRepository>>();
-            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>())).Returns(propertyOne);
+            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), true)).Returns(propertyOne);
 
             var repository = helper.GetService<Mock<IPropertyLeaseRepository>>();
             repository.Setup(x => x.GetAllByPropertyId(It.IsAny<long>())).Returns(new List<PimsPropertyLease>());
@@ -692,14 +726,15 @@ namespace Pims.Dal.Test.Repositories
             var repository = helper.CreateRepository<PropertyLeaseRepository>(user);
             helper.SaveChanges();
 
-            // Act
-            var propertyToUpdate = lease.PimsPropertyLeases.FirstOrDefault();
-            propertyToUpdate.Property = EntityHelper.CreateProperty(2);
+            var propertyLeaseToUpdate = lease.PimsPropertyLeases.FirstOrDefault();
+            propertyLeaseToUpdate.PropertyId = 2;
+            propertyLeaseToUpdate.Property = EntityHelper.CreateProperty(2);
 
             // Act
+            var properties = repository.UpdatePropertyLeases(1, lease.PimsPropertyLeases);
+
             // Assert
-            Assert.Throws<InvalidOperationException>(() =>
-                repository.UpdatePropertyLeases(1, lease.PimsPropertyLeases));
+            properties.Should().HaveCount(1);
         }
 
         [Fact]
@@ -910,9 +945,12 @@ namespace Pims.Dal.Test.Repositories
             var repository = helper.CreateRepository<LeaseRepository>(user);
 
             // Act
-            var addConsultation = new Dal.Entities.PimsLeaseConsultation() { LeaseId = lease.LeaseId,
+            var addConsultation = new Dal.Entities.PimsLeaseConsultation()
+            {
+                LeaseId = lease.LeaseId,
                 ConsultationStatusTypeCodeNavigation = new PimsConsultationStatusType() { Id = "DRAFT", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "Draft" },
-                ConsultationTypeCodeNavigation = new PimsConsultationType() { Id = "HIGHWAY", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "Highway" } };
+                ConsultationTypeCodeNavigation = new PimsConsultationType() { Id = "HIGHWAY", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "Highway" }
+            };
             lease.PimsLeaseConsultations.Add(addConsultation);
             var consultations = repository.UpdateLeaseConsultations(1, 2, lease.PimsLeaseConsultations).PimsLeaseConsultations;
             context.CommitTransaction();

@@ -24,6 +24,7 @@ export const useGeocoderRepository = () => {
       toast.error(
         `Failed to get PIMS property data. error from backend: ${axiosError?.response?.data.error}`,
       );
+      return Promise.resolve();
     }, []),
   });
 
@@ -41,6 +42,7 @@ export const useGeocoderRepository = () => {
       toast.error(
         `Failed to get PIMS property data. error from backend: ${axiosError?.response?.data.error}`,
       );
+      return Promise.resolve();
     }, []),
   });
 
@@ -57,6 +59,7 @@ export const useGeocoderRepository = () => {
       toast.error(
         `Failed to get PIMS property data. error from backend: ${axiosError?.response?.data.error}`,
       );
+      return Promise.resolve();
     }, []),
   });
 

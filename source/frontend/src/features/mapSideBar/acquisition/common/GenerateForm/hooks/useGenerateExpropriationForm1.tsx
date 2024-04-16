@@ -11,6 +11,7 @@ import { useInterestHolderRepository } from '@/hooks/repositories/useInterestHol
 import { ApiGen_CodeTypes_ExternalResponseStatus } from '@/models/api/generated/ApiGen_CodeTypes_ExternalResponseStatus';
 import { Api_GenerateAcquisitionFile } from '@/models/generate/acquisition/GenerateAcquisitionFile';
 import { Api_GenerateExpropriationForm1 } from '@/models/generate/acquisition/GenerateExpropriationForm1';
+import { isValidId } from '@/utils';
 
 export const useGenerateExpropriationForm1 = () => {
   const { getOrganizationConcept, getPersonConcept } = useApiContacts();
@@ -35,7 +36,7 @@ export const useGenerateExpropriationForm1 = () => {
     if (!file) {
       throw Error('Acquisition file not found');
     }
-    file.fileProperties = properties;
+    file.fileProperties = properties ?? null;
 
     // fetch primary contact information for organizations within interest holders
     if (interestHolders) {
@@ -61,7 +62,7 @@ export const useGenerateExpropriationForm1 = () => {
     });
 
     const filePropertyIds = new Set(
-      formModel.impactedProperties.map(fp => fp?.id).filter((p): p is number => !!p),
+      formModel.impactedProperties.map(fp => fp?.id).filter(isValidId),
     );
     const selectedProperties = properties?.filter(fp => filePropertyIds.has(Number(fp.id)));
 

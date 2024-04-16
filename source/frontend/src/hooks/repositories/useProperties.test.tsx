@@ -8,7 +8,7 @@ import configureMockStore, { MockStoreEnhanced } from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
 import * as MOCK from '@/mocks/data.mock';
-import { mockProperties } from '@/mocks/filterData.mock';
+import { getMockApiProperties } from '@/mocks/properties.mock';
 import { networkSlice } from '@/store/slices/network/networkSlice';
 
 import { useProperties } from './useProperties';
@@ -49,7 +49,7 @@ describe('useProperties functions', () => {
   describe('getProperties action creator', () => {
     const url = `/properties/search?`;
     it('Null Params - Request successful, dispatches success with correct response', async () => {
-      const mockResponse = { items: mockProperties };
+      const mockResponse = { items: getMockApiProperties() };
       mockAxios.onGet(url).reply(200, mockResponse);
 
       const {
@@ -65,7 +65,7 @@ describe('useProperties functions', () => {
     });
 
     it('Request failure, dispatches error with correct response', async () => {
-      mockAxios.onGet(url).reply(400, MOCK.ERROR);
+      mockAxios.onGet(url).reply(500, MOCK.ERROR);
 
       const {
         getProperties: { execute },
@@ -75,7 +75,6 @@ describe('useProperties functions', () => {
       });
 
       expect(find(currentStore.getActions(), { type: 'network/logRequest' })).toBeDefined();
-      expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeDefined();
     });
   });
 });

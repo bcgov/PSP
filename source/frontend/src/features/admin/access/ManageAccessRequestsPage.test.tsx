@@ -53,7 +53,7 @@ const successStore = mockStore({
 const componentRender = (store: any) => {
   mockAxios.onGet().reply(200, getMockPagedAccessRequests());
   process.env.REACT_APP_TENANT = 'MOTI';
-  let component = render(<ManageAccessRequestsPage />);
+  const component = render(<ManageAccessRequestsPage />);
   return {
     findFirstRow: () => {
       const rows = component.getAllByRole('row');
@@ -120,7 +120,7 @@ describe('Manage access requests', () => {
       await waitForElementToBeRemoved(getByTitle('table-loading'));
 
       const declineButton = getAllByText('Approve')[0];
-      userEvent.click(declineButton);
+      await act(async () => userEvent.click(declineButton));
 
       await waitFor(() => {
         expect(mockAxios.history.put[0].url).toEqual('/keycloak/access/requests');
@@ -143,7 +143,7 @@ describe('Manage access requests', () => {
       await waitForElementToBeRemoved(getByTitle('table-loading'));
 
       const declineButton = getAllByText('Decline')[0];
-      userEvent.click(declineButton);
+      await act(async () => userEvent.click(declineButton));
 
       await waitFor(() => {
         expect(mockAxios.history.put[0].url).toEqual('/keycloak/access/requests');
@@ -166,7 +166,7 @@ describe('Manage access requests', () => {
       await waitForElementToBeRemoved(getByTitle('table-loading'));
 
       const deleteButton = getAllByText('Delete')[0];
-      userEvent.click(deleteButton);
+      await act(async () => userEvent.click(deleteButton));
 
       await waitFor(() => {
         expect(mockAxios.history.delete[0].url).toEqual('/admin/access/requests/7');
@@ -180,9 +180,9 @@ describe('Manage access requests', () => {
       await waitForElementToBeRemoved(getByTitle('table-loading'));
 
       const searchInput = getByTitle('Search by IDIR/Last Name');
-      userEvent.type(searchInput, 'Smith');
+      await act(async () => userEvent.type(searchInput, 'Smith'));
       const searchButton = getByTitle('search');
-      userEvent.click(searchButton);
+      await act(async () => userEvent.click(searchButton));
 
       await waitFor(() => {
         expect(mockAxios.history.get[1].url).toEqual(
@@ -197,11 +197,11 @@ describe('Manage access requests', () => {
       await waitForElementToBeRemoved(getByTitle('table-loading'));
 
       const searchInput = getByTitle('Search by IDIR/Last Name');
-      act(() => {
+      await act(async () => {
         userEvent.type(searchInput, 'Smith');
       });
       const resetButton = getByTitle('reset');
-      act(() => {
+      await act(async () => {
         userEvent.click(resetButton);
       });
 

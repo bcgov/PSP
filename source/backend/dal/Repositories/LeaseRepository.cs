@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
@@ -62,6 +63,7 @@ namespace Pims.Dal.Repositories
 
             var query = GenerateLeaseQuery(filter, regionCodes, loadPayments);
 
+            // Getting all by the filter will ignore the order by passed and instead use the lease id.
             var leases = query.OrderBy(l => l.LeaseId).ToArray();
 
             return leases;
@@ -760,6 +762,11 @@ namespace Pims.Dal.Repositories
 
             User.ThrowIfNotAuthorized(Permissions.LeaseAdd);
 
+            if (lease.PimsPropertyLeases.Any(x => x.Property != null && x.Property.IsRetired.HasValue && x.Property.IsRetired.Value))
+            {
+                throw new BusinessRuleViolationException("Retired property can not be selected.");
+            }
+
             lease = GenerateLFileNo(lease);
 
             Context.PimsLeases.Add(lease);
@@ -989,11 +996,12 @@ namespace Pims.Dal.Repositories
 
             if (filter.Sort?.Any() == true)
             {
-                MapSortField("ExpiryDate", "OrigExpiryDate", filter.Sort);
-                MapSortField("StatusType", "LeaseStatusTypeCodeNavigation.Description", filter.Sort);
-                MapSortField("ProgramName", "LeaseProgramTypeCodeNavigation.Description", filter.Sort);
+                var sortList = filter.Sort.ToList();
+                MapSortField("ExpiryDate", "OrigExpiryDate", sortList);
+                MapSortField("FileStatusTypeCode", "LeaseStatusTypeCodeNavigation.Description", sortList);
+                MapSortField("ProgramName", "LeaseProgramTypeCodeNavigation.Description", sortList);
 
-                query = query.OrderByProperty(true, filter.Sort);
+                query = query.OrderByProperty(true, sortList.ToArray());
             }
             else
             {
@@ -1030,17 +1038,13 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="sourceField">Sort field name from model.</param>
         /// <param name="targetField">Sort field name from entity.</param>
-        /// <param name="sortDef">Find and replaces the soft field in this array.</param>
-        private void MapSortField(string sourceField, string targetField, string[] sortDef)
+        /// <param name="sortDef">Find and replaces the soft field in this list.</param>
+        private static void MapSortField(string sourceField, string targetField, List<string> sortDef)
         {
-            var sortField = sortDef.FirstOrDefault(x => x.Contains(sourceField));
-            if (sortField != null)
+            var sortFieldIndex = sortDef.FindIndex(s => s.Contains(sourceField));
+            if (sortFieldIndex > -1)
             {
-                var sortFieldIndex = sortDef.ToList().IndexOf(sortField);
-                if (sortFieldIndex > -1)
-                {
-                    sortDef[sortFieldIndex] = sortField.Replace(sourceField, targetField);
-                }
+                sortDef[sortFieldIndex] = sortDef[sortFieldIndex].Replace(sourceField, targetField);
             }
         }
         #endregion

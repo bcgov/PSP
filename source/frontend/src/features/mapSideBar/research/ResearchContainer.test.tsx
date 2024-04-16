@@ -9,9 +9,9 @@ import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { getMockResearchFile } from '@/mocks/researchFile.mock';
-import { Api_ResearchFile } from '@/models/api/ResearchFile';
+import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Concepts_ResearchFile';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { render, RenderOptions, waitForElementToBeRemoved } from '@/utils/test-utils';
+import { act, render, RenderOptions, waitForElementToBeRemoved } from '@/utils/test-utils';
 
 import { SideBarContextProvider, TypedFile } from '../context/sidebarContext';
 import ResearchContainer, { IResearchContainerProps } from './ResearchContainer';
@@ -71,7 +71,7 @@ describe('ResearchContainer component', () => {
     mockAxios.onGet(`/researchFiles/${mockResearchFile?.id}`).reply(200, {
       ...mockResearchFile,
       fileProperties: [{ id: 1 }],
-    } as Api_ResearchFile);
+    } as ApiGen_Concepts_ResearchFile);
     mockAxios
       .onGet(`/researchFiles/${mockResearchFile?.id}/properties`)
       .reply(200, [{ id: 1, property: { pid: '123-456-789' } }]);
@@ -88,14 +88,16 @@ describe('ResearchContainer component', () => {
   });
 
   it('renders a spinner while loading', async () => {
-    const { findByTestId } = setup();
+    const { findByTestId, getByTestId } = setup();
     const spinner = await findByTestId('filter-backdrop-loading');
     expect(spinner).toBeVisible();
+    await waitForElementToBeRemoved(getByTestId('filter-backdrop-loading'));
   });
 
   it('renders research details when file is in context', async () => {
     const typedFile: TypedFile = { ...getMockResearchFile(), fileType: FileTypes.Research };
     const { findByText } = setup({ context: { file: typedFile } });
+    await act(async () => {});
     expect(await findByText('File Summary')).toBeVisible();
   });
 
@@ -104,8 +106,8 @@ describe('ResearchContainer component', () => {
       ...mockAcquisitionFileResponse(),
       fileType: FileTypes.Acquisition,
     };
-    const { findByTestId } = setup({ context: { file: typedFile } });
-    expect(await findByTestId('filter-backdrop-loading')).toBeVisible();
+    const { getByTestId } = setup({ context: { file: typedFile } });
+    await waitForElementToBeRemoved(getByTestId('filter-backdrop-loading'));
   });
 
   it('displays a properties pid if that is the only valid identifier', async () => {

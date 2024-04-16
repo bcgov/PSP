@@ -1,4 +1,5 @@
 import { FieldArray, Formik, FormikProps } from 'formik';
+import React from 'react';
 import { Prompt } from 'react-router';
 import styled from 'styled-components';
 
@@ -43,14 +44,14 @@ export const AddImprovementsForm: React.FunctionComponent<
               <Styled.ImprovementsContainer className="improvements">
                 <FieldArray
                   name="improvements"
-                  render={renderProps =>
+                  render={() =>
                     formikProps.values.improvements.map(
                       (improvement: ILeaseImprovementForm, index) => {
                         const title =
                           sectionTitles.get(improvement.propertyImprovementTypeId) ?? 'N/A';
                         const nameSpace = `improvements.${index}`;
                         return (
-                          <>
+                          <React.Fragment key={nameSpace}>
                             <Section header={title}>
                               <SectionField label="Unit #" labelWidth="3">
                                 <Input field={withNameSpace(nameSpace, 'address')} />{' '}
@@ -67,7 +68,7 @@ export const AddImprovementsForm: React.FunctionComponent<
                                 />
                               </SectionField>
                             </Section>
-                          </>
+                          </React.Fragment>
                         );
                       },
                     )

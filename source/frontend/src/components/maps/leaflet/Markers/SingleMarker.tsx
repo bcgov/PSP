@@ -39,10 +39,11 @@ const SinglePropertyMarker: React.FC<React.PropsWithChildren<SinglePropertyMarke
     >,
     isSelected: boolean,
     showDisposed: boolean,
+    showRetired: boolean,
   ): L.Icon<L.IconOptions> | null => {
     const isOwned = isPimsFeature(feature);
     if (isOwned) {
-      return getMarkerIcon(feature, isSelected, showDisposed);
+      return getMarkerIcon(feature, isSelected, showDisposed, showRetired);
     } else {
       return getNotOwnerMarkerIcon(isSelected);
     }
@@ -80,7 +81,7 @@ const SinglePropertyMarker: React.FC<React.PropsWithChildren<SinglePropertyMarke
     }
   };
 
-  const icon = getIcon(pointFeature, isSelected, mapMachine.showDisposed);
+  const icon = getIcon(pointFeature, isSelected, mapMachine.showDisposed, mapMachine.showRetired);
 
   // render single marker, not in a cluster
   return icon ? (
@@ -89,7 +90,7 @@ const SinglePropertyMarker: React.FC<React.PropsWithChildren<SinglePropertyMarke
       position={markerPosition}
       icon={icon}
       eventHandlers={{
-        click: e => {
+        click: () => {
           onMarkerClicked();
         },
       }}

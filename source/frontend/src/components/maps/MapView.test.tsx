@@ -2,18 +2,18 @@ import userEvent from '@testing-library/user-event';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { FeatureCollection } from 'geojson';
-import React from 'react';
 
 import { Claims } from '@/constants/claims';
 import { useApiGeocoder } from '@/hooks/pims-api/useApiGeocoder';
 import { useApiProperties } from '@/hooks/pims-api/useApiProperties';
 import { IProperty } from '@/interfaces';
-import { mockParcel } from '@/mocks/filterData.mock';
+import { mockApiProperty } from '@/mocks/filterData.mock';
+import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { cleanup, deferred, render, RenderOptions, waitFor } from '@/utils/test-utils';
+import { act, cleanup, deferred, render, RenderOptions, waitFor } from '@/utils/test-utils';
 
-import { createPoints } from './leaflet/Layers/util';
 import MapView from './MapView';
+import { PointFeature } from './types';
 
 const mockAxios = new MockAdapter(axios);
 
@@ -31,11 +31,31 @@ jest.mock('@/hooks/pims-api/useApiProperties');
 // This will spoof the active parcel (the one that will populate the popup details)
 const mockDetails = {
   propertyDetail: {
-    ...mockParcel,
+    ...mockApiProperty,
     latitude: 48,
     longitude: -123,
   },
 };
+
+/**
+ * Creates map points (in GeoJSON format) for further clustering by `supercluster`
+ * @param properties
+ */
+export const createPoints = (properties: IProperty[], type: string = 'Point') =>
+  properties.map(x => {
+    return {
+      type: 'Feature',
+      properties: {
+        ...x,
+        cluster: false,
+        PROPERTY_ID: x.id,
+      },
+      geometry: {
+        type: type,
+        coordinates: [x.longitude, x.latitude],
+      },
+    } as PointFeature;
+  });
 
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: [] },
@@ -64,7 +84,7 @@ const baseMapLayers = {
 
 interface TestProps {
   properties: IProperty[];
-  selectedProperty: IProperty | null;
+  selectedProperty: ApiGen_Concepts_Property | null;
   disableMapFilterBar: boolean;
   zoom?: number;
   done?: () => void;
@@ -177,7 +197,7 @@ xdescribe('MapProperties View', () => {
     expect(layersContainer.className).toContain('closed');
     // clicking the button should open the layer list...
     const layersControlButton = findLayerListButton();
-    userEvent.click(layersControlButton);
+    await act(async () => userEvent.click(layersControlButton));
     await waitFor(() => expect(layersContainer.className).not.toContain('closed'));
   });
 
@@ -248,8 +268,8 @@ xdescribe('MapProperties View', () => {
 
     const nameInput = findPidField();
     const searchButton = findSearchButton();
-    userEvent.type(nameInput, '123-456-789');
-    await waitFor(() => userEvent.click(searchButton));
+    await act(async () => userEvent.type(nameInput, '123-456-789'));
+    await act(async () => userEvent.click(searchButton));
     // check API call params...
     const filter = expect.objectContaining({ PID: '123456789' });
     await waitFor(() => expect(mockLoadProperties).toHaveBeenCalledWith(filter));
@@ -264,7 +284,7 @@ xdescribe('MapProperties View', () => {
     });
     await waitFor(() => ready);
     const searchButton = findSearchButton();
-    await waitFor(() => userEvent.click(searchButton));
+    await act(async () => userEvent.click(searchButton));
     expect(mockLoadProperties).toHaveBeenCalled();
   });
 
@@ -284,13 +304,13 @@ xdescribe('MapProperties View', () => {
     // type something in the filter bar
     const nameInput = findPidField();
     const searchButton = findSearchButton();
-    userEvent.type(nameInput, '123-456-789');
-    await waitFor(() => userEvent.click(searchButton));
+    await act(async () => userEvent.type(nameInput, '123-456-789'));
+    await act(async () => userEvent.click(searchButton));
     // check API call params...
     const filter = expect.objectContaining({ PID: '123456789' });
     await waitFor(() => expect(mockLoadProperties).toHaveBeenCalledWith(filter));
     const resetButton = findResetButton();
-    await waitFor(() => userEvent.click(resetButton));
+    await act(async () => userEvent.click(resetButton));
     const defaultFilter = expect.objectContaining({ PID: undefined });
     await waitFor(() => expect(mockLoadProperties).toHaveBeenCalledWith(defaultFilter));
   });

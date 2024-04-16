@@ -198,7 +198,9 @@ describe('UpdateAcquisitionOwnersSubForm component', () => {
 
     await act(async () => userEvent.click(addRow));
     const organizationsButton = container.querySelector(`#input-true`);
-    await act(async () => organizationsButton && userEvent.click(organizationsButton));
+    await act(async () => {
+      organizationsButton && userEvent.click(organizationsButton);
+    });
 
     expect(getIsPrimaryContactRadioButtonValue()).toEqual('true');
 
@@ -225,7 +227,9 @@ describe('UpdateAcquisitionOwnersSubForm component', () => {
     await act(async () => userEvent.click(addRow));
 
     const organizationsButton = container.querySelector(`#input-true`);
-    await act(async () => organizationsButton && userEvent.click(organizationsButton));
+    await act(async () => {
+      organizationsButton && userEvent.click(organizationsButton);
+    });
 
     let firstOwnerPrimaryFlag = getIsPrimaryContactRadioButton();
     let secondOwnerPrimaryFlag = getIsPrimaryContactRadioButton(1);

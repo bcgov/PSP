@@ -27,8 +27,9 @@ Scenario: 04. Property Management Activity Digital Documents
 	And I delete all activities from the Property Management Tab
 	Then Property Management Tab has been updated successfully
 
-Scenario: 05. Property Map Filters and Details validation
-	Given I search for a Property in the Inventory by different filters from row number 9
+Scenario: 05. Properties Map and List Filters
+	Given I search for a Property in the Map by different filters from row number 9
+	When I search for a Property in the Properties List by different filters from row number 29
 	Then Properties filters works successfully
 
 Scenario: 06. Non-Inventory Property Information

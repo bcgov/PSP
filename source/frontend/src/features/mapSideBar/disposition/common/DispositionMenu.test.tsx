@@ -1,8 +1,8 @@
 import { DispositionFileStatus } from '@/constants/dispositionFileStatus';
 import { Claims, Roles } from '@/constants/index';
 import { mockDispositionFileResponse } from '@/mocks/dispositionFiles.mock';
-import { Api_DispositionFile } from '@/models/api/DispositionFile';
-import { render, RenderOptions, userEvent } from '@/utils/test-utils';
+import { toTypeCode } from '@/utils/formUtils';
+import { act, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import DispositionMenu, { IDispositionMenuProps } from './DispositionMenu';
 
@@ -44,7 +44,7 @@ describe('DispositionMenu component', () => {
 
   it('matches snapshot', () => {
     const { asFragment } = setup({
-      dispositionFile: mockDispositionFileResponse() as unknown as Api_DispositionFile,
+      dispositionFile: mockDispositionFileResponse(),
       items: testData,
       selectedIndex: 0,
     });
@@ -53,7 +53,7 @@ describe('DispositionMenu component', () => {
 
   it('renders the items ', () => {
     const { getByText } = setup({
-      dispositionFile: mockDispositionFileResponse() as unknown as Api_DispositionFile,
+      dispositionFile: mockDispositionFileResponse(),
       items: testData,
       selectedIndex: 0,
     });
@@ -65,7 +65,7 @@ describe('DispositionMenu component', () => {
 
   it('renders selected item with different style', () => {
     const { getByTestId } = setup({
-      dispositionFile: mockDispositionFileResponse() as unknown as Api_DispositionFile,
+      dispositionFile: mockDispositionFileResponse(),
       items: testData,
       selectedIndex: 1,
     });
@@ -75,23 +75,23 @@ describe('DispositionMenu component', () => {
     expect(getByTestId('menu-item-row-2')).not.toHaveClass('selected');
   });
 
-  it('allows the selected item to be changed', () => {
+  it('allows the selected item to be changed', async () => {
     const { getByText } = setup({
-      dispositionFile: mockDispositionFileResponse() as unknown as Api_DispositionFile,
+      dispositionFile: mockDispositionFileResponse(),
       items: testData,
       selectedIndex: 1,
     });
 
     const lastItem = getByText('three');
-    userEvent.click(lastItem);
+    await act(async () => userEvent.click(lastItem));
 
     expect(onChange).toHaveBeenCalledWith(2);
   });
 
-  it(`renders the edit button for users with property edit permissions`, () => {
+  it(`renders the edit button for users with property edit permissions`, async () => {
     const { getByTitle, queryByTestId } = setup(
       {
-        dispositionFile: mockDispositionFileResponse() as unknown as Api_DispositionFile,
+        dispositionFile: mockDispositionFileResponse(),
         items: testData,
         selectedIndex: 1,
       },
@@ -101,7 +101,7 @@ describe('DispositionMenu component', () => {
     const button = getByTitle('Change properties');
     expect(button).toBeVisible();
 
-    userEvent.click(button);
+    await act(async () => userEvent.click(button));
 
     const icon = queryByTestId('tooltip-icon-1-summary-cannot-edit-tooltip');
     expect(onShowPropertySelector).toHaveBeenCalled();
@@ -111,7 +111,7 @@ describe('DispositionMenu component', () => {
   it(`doesn't render the edit button for users without edit permissions`, () => {
     const { queryByTitle, queryByTestId } = setup(
       {
-        dispositionFile: mockDispositionFileResponse() as unknown as Api_DispositionFile,
+        dispositionFile: mockDispositionFileResponse(),
         items: testData,
         selectedIndex: 1,
       },
@@ -128,8 +128,8 @@ describe('DispositionMenu component', () => {
     const { queryByTitle, queryByTestId } = setup(
       {
         dispositionFile: {
-          ...(mockDispositionFileResponse() as unknown as Api_DispositionFile),
-          fileStatusTypeCode: { id: DispositionFileStatus.Complete },
+          ...mockDispositionFileResponse(),
+          fileStatusTypeCode: toTypeCode(DispositionFileStatus.Complete),
         },
         items: testData,
         selectedIndex: 1,
@@ -147,8 +147,8 @@ describe('DispositionMenu component', () => {
     const { queryByTitle, queryByTestId } = setup(
       {
         dispositionFile: {
-          ...(mockDispositionFileResponse() as unknown as Api_DispositionFile),
-          fileStatusTypeCode: { id: DispositionFileStatus.Complete },
+          ...mockDispositionFileResponse(),
+          fileStatusTypeCode: toTypeCode(DispositionFileStatus.Complete),
         },
         items: testData,
         selectedIndex: 1,

@@ -65,7 +65,7 @@ describe('Expropriation Form 1', () => {
 
   it('validates form values before generating', async () => {
     const { getByText } = await setup();
-    await act(() => userEvent.click(getByText('Generate')));
+    await act(async () => userEvent.click(getByText('Generate')));
 
     expect(getByText('Expropriation authority is required')).toBeInTheDocument();
     expect(getByText('At lease one impacted property is required')).toBeInTheDocument();
@@ -75,16 +75,16 @@ describe('Expropriation Form 1', () => {
     const { getByText, getByTestId, getByTitle, getNatureOfInterest, getPurpose } = await setup();
 
     // pick an organization from contact manager
-    await act(() => userEvent.click(getByTitle('Select Contact')));
-    await act(() => userEvent.click(getByTestId('selectrow-O3')));
-    await act(() => userEvent.click(getByText('Select')));
+    await act(async () => userEvent.click(getByTitle('Select Contact')));
+    await act(async () => userEvent.click(getByTestId('selectrow-O3')));
+    await act(async () => userEvent.click(getByText('Select')));
 
     // fill other form fields
-    await act(() => userEvent.click(getByTestId('selectrow-1')));
+    await act(async () => userEvent.click(getByTestId('selectrow-1')));
     await act(async () => userEvent.paste(getNatureOfInterest(), 'foo'));
     await act(async () => userEvent.paste(getPurpose(), 'bar'));
 
-    await act(() => userEvent.click(getByText('Generate')));
+    await act(async () => userEvent.click(getByText('Generate')));
 
     expect(onGenerate).toBeCalled();
     expect(onError).not.toBeCalled();
@@ -93,7 +93,7 @@ describe('Expropriation Form 1', () => {
   it(`clears the form when Cancel button is clicked`, async () => {
     const { getByText, getByTestId, getNatureOfInterest, getPurpose } = await setup();
 
-    await act(() => userEvent.click(getByTestId('selectrow-1')));
+    await act(async () => userEvent.click(getByTestId('selectrow-1')));
     await act(async () => userEvent.paste(getNatureOfInterest(), 'foo'));
     await act(async () => userEvent.paste(getPurpose(), 'bar'));
 
@@ -101,7 +101,7 @@ describe('Expropriation Form 1', () => {
     expect(getNatureOfInterest()).toHaveValue();
     expect(getPurpose()).toHaveValue();
 
-    await act(() => userEvent.click(getByText('Cancel')));
+    await act(async () => userEvent.click(getByText('Cancel')));
 
     expect(getByTestId('selectrow-1')).not.toBeChecked();
     expect(getNatureOfInterest()).not.toHaveValue();
@@ -114,16 +114,16 @@ describe('Expropriation Form 1', () => {
     const { getByText, getByTestId, getByTitle, getNatureOfInterest, getPurpose } = await setup();
 
     // pick an organization from contact manager
-    await act(() => userEvent.click(getByTitle('Select Contact')));
-    await act(() => userEvent.click(getByTestId('selectrow-O3')));
-    await act(() => userEvent.click(getByText('Select')));
+    await act(async () => userEvent.click(getByTitle('Select Contact')));
+    await act(async () => userEvent.click(getByTestId('selectrow-O3')));
+    await act(async () => userEvent.click(getByText('Select')));
 
     // fill other form fields
-    await act(() => userEvent.click(getByTestId('selectrow-1')));
+    await act(async () => userEvent.click(getByTestId('selectrow-1')));
     await act(async () => userEvent.paste(getNatureOfInterest(), 'foo'));
     await act(async () => userEvent.paste(getPurpose(), 'bar'));
 
-    await act(() => userEvent.click(getByText('Generate')));
+    await act(async () => userEvent.click(getByText('Generate')));
 
     expect(onGenerate).toBeCalled();
     expect(onError).toBeCalledWith(error);

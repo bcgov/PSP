@@ -3,8 +3,13 @@ import userEvent from '@testing-library/user-event';
 import { Claims } from '@/constants/index';
 import { useApiLeases } from '@/hooks/pims-api/useApiLeases';
 import { useUserInfoRepository } from '@/hooks/repositories/useUserInfoRepository';
-import { ILeaseSearchResult } from '@/interfaces';
+import { getEmptyAddress } from '@/mocks/address.mock';
+import { getEmptyPerson } from '@/mocks/contacts.mock';
+import { getEmptyLeaseTenant } from '@/mocks/lease.mock';
+import { getEmptyPropertyLease } from '@/mocks/properties.mock';
 import { getUserMock } from '@/mocks/user.mock';
+import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
+import { getEmptyLease, getEmptyProperty } from '@/models/defaultInitializers';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
   act,
@@ -43,7 +48,7 @@ const setup = (renderOptions: RenderOptions = { store: storeState }) => {
   return { searchButton, ...utils };
 };
 
-const setupMockSearch = (searchResults?: ILeaseSearchResult[]) => {
+const setupMockSearch = (searchResults?: ApiGen_Concepts_Lease[]) => {
   const results = searchResults ?? [];
   const len = results.length;
   getLeases.mockResolvedValue({
@@ -65,6 +70,7 @@ describe('Lease and License List View', () => {
   it('matches snapshot', async () => {
     setupMockSearch();
     const { asFragment } = setup();
+    await act(async () => {});
 
     const fragment = await waitFor(() => asFragment());
     expect(fragment).toMatchSnapshot();
@@ -73,15 +79,25 @@ describe('Lease and License List View', () => {
   it('searches by pid/pin', async () => {
     setupMockSearch([
       {
+        ...getEmptyLease(),
         id: 1,
         lFileNo: 'L-123-456',
         programName: 'TRAN-IT',
-        tenantNames: ['Chester Tester'],
-        properties: [
+        tenants: [
           {
-            id: 12,
-            address: '123 mock st',
-            pid: '123',
+            ...getEmptyLeaseTenant(),
+            person: { ...getEmptyPerson(), firstName: 'Chester', surname: 'Tester' },
+          },
+        ],
+        fileProperties: [
+          {
+            ...getEmptyPropertyLease(),
+            property: {
+              ...getEmptyProperty(),
+              id: 12,
+              address: { ...getEmptyAddress(), streetAddress1: '123 mock st' },
+              pin: 123,
+            },
           },
         ],
       },
@@ -89,7 +105,7 @@ describe('Lease and License List View', () => {
     const { container, searchButton, findByText, getByTitle } = setup();
     await waitForElementToBeRemoved(getByTitle('table-loading'));
 
-    act(() => {
+    await act(async () => {
       fillInput(container, 'searchBy', 'pinOrPid', 'select');
       fillInput(container, 'pinOrPid', '123');
     });
@@ -116,11 +132,27 @@ describe('Lease and License List View', () => {
   it('searches by L-file number', async () => {
     setupMockSearch([
       {
+        ...getEmptyLease(),
         id: 1,
         lFileNo: 'L-123-456',
         programName: 'TRAN-IT',
-        tenantNames: ['Chester Tester'],
-        properties: [{ id: 1234, address: '123 mock st', pin: '123' }],
+        tenants: [
+          {
+            ...getEmptyLeaseTenant(),
+            person: { ...getEmptyPerson(), firstName: 'Chester', surname: 'Tester' },
+          },
+        ],
+        fileProperties: [
+          {
+            ...getEmptyPropertyLease(),
+            property: {
+              ...getEmptyProperty(),
+              id: 1234,
+              address: { ...getEmptyAddress(), streetAddress1: '123 mock st' },
+              pin: 123,
+            },
+          },
+        ],
       },
     ]);
     const { container, searchButton, findByText } = setup();
@@ -143,11 +175,27 @@ describe('Lease and License List View', () => {
   it('searches tenant name', async () => {
     setupMockSearch([
       {
+        ...getEmptyLease(),
         id: 1,
         lFileNo: 'L-123-456',
         programName: 'TRAN-IT',
-        tenantNames: ['Chester Tester'],
-        properties: [{ id: 123, address: '123 mock st', pin: '123' }],
+        tenants: [
+          {
+            ...getEmptyLeaseTenant(),
+            person: { ...getEmptyPerson(), firstName: 'Chester', surname: 'Tester' },
+          },
+        ],
+        fileProperties: [
+          {
+            ...getEmptyPropertyLease(),
+            property: {
+              ...getEmptyProperty(),
+              id: 123,
+              address: { ...getEmptyAddress(), streetAddress1: '123 mock st' },
+              pin: 123,
+            },
+          },
+        ],
       },
     ]);
     const { container, searchButton, findByText } = setup();

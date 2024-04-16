@@ -6,8 +6,8 @@ import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledEditWrapper, StyledSummarySection } from '@/components/common/Section/SectionStyles';
 import Claims from '@/constants/claims';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
-import { Api_ResearchFile } from '@/models/api/ResearchFile';
-import { formatApiProjectName, prettyFormatDate } from '@/utils';
+import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Concepts_ResearchFile';
+import { exists, formatApiProjectName, prettyFormatDate } from '@/utils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
 interface DetailResearchFile {
@@ -32,7 +32,7 @@ interface DetailResearchFile {
 }
 
 export interface IResearchSummaryViewProps {
-  researchFile?: Api_ResearchFile;
+  researchFile?: ApiGen_Concepts_ResearchFile;
   setEditMode: (editable: boolean) => void;
 }
 
@@ -40,50 +40,44 @@ const ResearchSummaryView: React.FunctionComponent<IResearchSummaryViewProps> = 
   const keycloak = useKeycloakWrapper();
   const detail: DetailResearchFile = {
     id: props.researchFile?.id,
-    name: props.researchFile?.fileName,
-    roadName: props.researchFile?.roadName,
-    roadAlias: props.researchFile?.roadAlias,
-    rfileNumber: props.researchFile?.fileNumber,
-    statusTypeCodeDescription: props.researchFile?.fileStatusTypeCode?.description,
-    requestDate: props.researchFile?.requestDate,
-    requestDescription: props.researchFile?.requestDescription,
-    requestSourceDescription: props.researchFile?.requestSourceDescription,
-    researchResult: props.researchFile?.researchResult,
-    researchCompletionDate: props.researchFile?.researchCompletionDate,
-    isExpropriation: props.researchFile?.isExpropriation,
-    expropriationNotes: props.researchFile?.expropriationNotes,
-    requestSourceTypeDescription: props.researchFile?.requestSourceType?.description,
+    name: props.researchFile?.fileName ?? undefined,
+    roadName: props.researchFile?.roadName ?? undefined,
+    roadAlias: props.researchFile?.roadAlias ?? undefined,
+    rfileNumber: props.researchFile?.fileNumber ?? undefined,
+    statusTypeCodeDescription: props.researchFile?.fileStatusTypeCode?.description ?? undefined,
+    requestDate: props.researchFile?.requestDate ?? undefined,
+    requestDescription: props.researchFile?.requestDescription ?? undefined,
+    requestSourceDescription: props.researchFile?.requestSourceDescription ?? undefined,
+    researchResult: props.researchFile?.researchResult ?? undefined,
+    researchCompletionDate: props.researchFile?.researchCompletionDate ?? undefined,
+    isExpropriation: props.researchFile?.isExpropriation ?? undefined,
+    expropriationNotes: props.researchFile?.expropriationNotes ?? undefined,
+    requestSourceTypeDescription: props.researchFile?.requestSourceType?.description ?? undefined,
   };
-
-  if (props.researchFile?.requestorPerson !== undefined) {
-    detail.requestorName = formatApiPersonNames(props.researchFile.requestorPerson);
-    var personOrganizations = props.researchFile.requestorPerson.personOrganizations;
-    var organization =
-      personOrganizations !== undefined && personOrganizations.length > 0
+  // todo:the method 'exists' here should allow the compiler to validate the child property. this works correctly in typescropt 5.3 +
+  if (exists(props.researchFile?.requestorPerson)) {
+    detail.requestorName = formatApiPersonNames(props.researchFile!.requestorPerson);
+    const personOrganizations = props.researchFile!.requestorPerson.personOrganizations;
+    const organization =
+      exists(personOrganizations) && personOrganizations.length > 0
         ? personOrganizations[0].organization
         : undefined;
-    detail.requestorOrganization = organization?.name;
-  } else if (props.researchFile?.requestorOrganization !== undefined) {
-    detail.requestorName = props.researchFile.requestorOrganization.name;
+    detail.requestorOrganization = organization?.name ?? undefined;
+  } else if (exists(props.researchFile?.requestorOrganization)) {
+    detail.requestorName = props.researchFile!.requestorOrganization.name ?? undefined;
   }
-
-  function isString(str: string | undefined): str is string {
-    return str !== undefined;
-  }
-
-  detail.researchFilePurposes =
-    props.researchFile?.researchFilePurposes !== undefined
-      ? props.researchFile.researchFilePurposes
-          .map(x => x.researchPurposeTypeCode?.description)
-          .filter(isString)
-      : [];
-
-  detail.researchFileProjects =
-    props.researchFile?.researchFileProjects !== undefined
-      ? props.researchFile.researchFileProjects
-          .filter(rp => rp?.project !== undefined)
-          .map(rp => formatApiProjectName(rp.project))
-      : [];
+  // todo:the method 'exists' here should allow the compiler to validate the child property. this works correctly in typescropt 5.3 +
+  detail.researchFilePurposes = exists(props.researchFile?.researchFilePurposes)
+    ? props
+        .researchFile!.researchFilePurposes.map(x => x.researchPurposeTypeCode!.description)
+        .filter(exists)
+    : [];
+  // todo:the method 'exists' here should allow the compiler to validate the child property. this works correctly in typescropt 5.3 +
+  detail.researchFileProjects = exists(props.researchFile?.researchFileProjects)
+    ? props
+        .researchFile!.researchFileProjects.filter(exists)
+        .map(rp => formatApiProjectName(rp.project))
+    : [];
 
   return (
     <StyledSummarySection>

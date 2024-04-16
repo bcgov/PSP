@@ -1,5 +1,3 @@
-import React from 'react';
-
 import GenericModal, { ModalProps } from '@/components/common/GenericModal';
 
 export type IDuplicateContactModalProps = Omit<

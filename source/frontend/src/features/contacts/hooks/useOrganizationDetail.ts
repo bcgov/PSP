@@ -5,8 +5,8 @@ import { hideLoading, showLoading } from 'react-redux-loading-bar';
 import { toast } from 'react-toastify';
 
 import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
-import { IEditableOrganization } from '@/interfaces/editable-contact';
 import { IApiError } from '@/interfaces/IApiError';
+import { ApiGen_Concepts_Organization } from '@/models/api/generated/ApiGen_Concepts_Organization';
 import { logError } from '@/store/slices/network/networkSlice';
 
 /**
@@ -14,7 +14,7 @@ import { logError } from '@/store/slices/network/networkSlice';
  * @param organizationId
  */
 export const useOrganizationDetail = (organizationId?: number) => {
-  const [organization, setOrganization] = useState<IEditableOrganization>();
+  const [organization, setOrganization] = useState<ApiGen_Concepts_Organization>();
   const { getOrganization } = useApiContacts();
   const dispatch = useDispatch();
 

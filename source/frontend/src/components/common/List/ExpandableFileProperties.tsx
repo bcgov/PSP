@@ -3,11 +3,11 @@ import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
 import { LinkButton } from '@/components/common/buttons';
-import { Api_PropertyFile } from '@/models/api/PropertyFile';
+import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { formatApiAddress } from '@/utils';
 
 export interface IExpandableFilePropertiesProps {
-  fileProperties?: Api_PropertyFile[];
+  fileProperties?: ApiGen_Concepts_FileProperty[];
   maxDisplayCount: number;
 }
 
@@ -17,14 +17,14 @@ const ExpandableFileProperties: React.FunctionComponent<IExpandableFilePropertie
   const fileProperties = props.fileProperties || [];
   const maxDisplayCount = props.maxDisplayCount;
 
-  let displayProperties: Api_PropertyFile[] = [];
+  let displayProperties: ApiGen_Concepts_FileProperty[] = [];
   if (!isExpanded) {
     displayProperties = fileProperties.slice(0, maxDisplayCount);
   } else {
     displayProperties = fileProperties;
   }
 
-  let rowItems = displayProperties.map((property, index) => {
+  const rowItems = displayProperties.map((property, index) => {
     return (
       <PropertyRow key={index} className="mx-0 my-2 border border-secondary">
         <Col md="12">

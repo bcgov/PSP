@@ -8,8 +8,10 @@ import { useUserInfoRepository } from '@/hooks/repositories/useUserInfoRepositor
 import { mockLookups } from '@/mocks/lookups.mock';
 import { mockProjectPostResponse } from '@/mocks/projects.mock';
 import { getUserMock } from '@/mocks/user.mock';
-import { Api_Project } from '@/models/api/Project';
+import { ApiGen_Concepts_Project } from '@/models/api/generated/ApiGen_Concepts_Project';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { toTypeCodeNullable } from '@/utils/formUtils';
 import { act, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
 import { ProjectForm } from '../models';
@@ -47,13 +49,17 @@ jest.mock('@/hooks/repositories/useUserInfoRepository');
         id: 1,
         userId: 5,
         regionCode: 1,
-        region: { id: 1 },
+        region: toTypeCodeNullable(1),
+        user: null,
+        ...getEmptyBaseAudit(),
       },
       {
         id: 2,
         userId: 5,
         regionCode: 2,
-        region: { id: 2 },
+        region: toTypeCodeNullable(2),
+        user: null,
+        ...getEmptyBaseAudit(),
       },
     ],
   },
@@ -104,12 +110,13 @@ describe('AddProjectContainer component', () => {
     jest.clearAllMocks();
   });
 
-  it('renders as expected', () => {
+  it('renders as expected', async () => {
     const { asFragment } = setup();
+    await act(async () => {});
     expect(asFragment()).toMatchSnapshot();
   });
 
-  it('renders the underlying form', () => {
+  it('renders the underlying form', async () => {
     const { getByText, getNameTextbox, getRegionDropdown, getNumberTextbox, getStatusDropdown } =
       setup();
 
@@ -128,6 +135,7 @@ describe('AddProjectContainer component', () => {
     expect(selectRegion.tagName).toBe('SELECT');
     expect(selectStatus).toBeVisible();
     expect(selectStatus.tagName).toBe('SELECT');
+    await act(async () => {});
   });
 
   it('should save the form and navigate to details view when Save button is clicked', async () => {
@@ -171,10 +179,10 @@ describe('AddProjectContainer component', () => {
           formValues.summary,
         ),
       );
-    act(() => userEvent.click(getSaveButton()));
+    await act(async () => userEvent.click(getSaveButton()));
 
     await waitFor(() => {
-      const axiosData: Api_Project = JSON.parse(mockAxios.history.post[0].data);
+      const axiosData: ApiGen_Concepts_Project = JSON.parse(mockAxios.history.post[0].data);
       const expectedValues = formValues.toApi();
 
       expect(mockAxios.history.post[0].url).toBe('/projects?');

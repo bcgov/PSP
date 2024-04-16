@@ -7,7 +7,7 @@ import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
 import { LeaseFormModel } from '@/features/leases/models';
 import { LeasePageProps } from '@/features/mapSideBar/lease/LeaseContainer';
 import { useLeaseTenantRepository } from '@/hooks/repositories/useLeaseTenantRepository';
-import { Api_LeaseTenant } from '@/models/api/LeaseTenant';
+import { ApiGen_Concepts_LeaseTenant } from '@/models/api/generated/ApiGen_Concepts_LeaseTenant';
 
 import AddLeaseTenantContainer from './AddLeaseTenantContainer';
 import AddLeaseTenantForm from './AddLeaseTenantForm';
@@ -28,9 +28,9 @@ const TenantContainer: React.FunctionComponent<React.PropsWithChildren<LeasePage
     lease?.id && getLeaseTenants(lease.id);
   }, [lease, getLeaseTenants]);
 
-  const formTenants = tenants?.map((t: Api_LeaseTenant) => new FormTenant(t)) ?? [];
+  const formTenants = tenants?.map((t: ApiGen_Concepts_LeaseTenant) => new FormTenant(t)) ?? [];
 
-  return !!isEditing ? (
+  return isEditing ? (
     <ProtectedComponent claims={[Claims.LEASE_EDIT]}>
       <AddLeaseTenantContainer
         formikRef={formikRef as React.RefObject<FormikProps<LeaseFormModel>>}

@@ -37,7 +37,7 @@ export const ImprovementsContainer: React.FunctionComponent<
     );
   }
 
-  return !!isEditing ? (
+  return isEditing ? (
     <ProtectedComponent claims={[Claims.LEASE_EDIT]}>
       <AddImprovementsContainer
         formikRef={formikRef as React.RefObject<FormikProps<LeaseFormModel>>}

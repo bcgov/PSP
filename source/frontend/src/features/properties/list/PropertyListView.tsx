@@ -22,7 +22,7 @@ import { useProperties } from '@/hooks/repositories/useProperties';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { useRouterFilter } from '@/hooks/useRouterFilter';
 import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
-import { Api_Property } from '@/models/api/Property';
+import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { generateMultiSortCriteria } from '@/utils';
 import { toFilteredApiPaginateParams } from '@/utils/CommonFunctions';
 
@@ -31,25 +31,26 @@ import { defaultPropertyFilter, IPropertyFilter } from '../filter/IPropertyFilte
 import { SearchToggleOption } from '../filter/PropertySearchToggle';
 import { columns as columnDefinitions } from './columns';
 
-const ownershipFilterOptions: MultiSelectOption[] = [
+export const ownershipFilterOptions: MultiSelectOption[] = [
   { id: 'isCoreInventory', text: 'Core Inventory' },
   { id: 'isPropertyOfInterest', text: 'Property Of Interest' },
   { id: 'isOtherInterest', text: 'Other Interest' },
   { id: 'isDisposed', text: 'Disposed' },
+  { id: 'isRetired', text: 'Retired' },
 ];
-
-//interface SortParams {}
 
 const PropertyListView: React.FC<React.PropsWithChildren<unknown>> = () => {
   const { getByType } = useLookupCodeHelpers();
-  const tableFormRef = useRef<FormikProps<{ properties: Api_Property[] }> | undefined>();
+  const tableFormRef = useRef<
+    FormikProps<{ properties: ApiGen_Concepts_Property[] }> | undefined
+  >();
 
   const municipalities = useMemo(() => getByType(API.ADMINISTRATIVE_AREA_TYPES), [getByType]);
 
   const columns = useMemo(() => columnDefinitions({ municipalities }), [municipalities]);
 
   // We'll start our table without any data
-  const [data, setData] = useState<Api_Property[] | undefined>();
+  const [data, setData] = useState<ApiGen_Concepts_Property[] | undefined>();
 
   // Filtering and pagination state
   const [filter, setFilter] = useState<IPropertyFilter>(defaultPropertyFilter);
@@ -58,7 +59,7 @@ const PropertyListView: React.FC<React.PropsWithChildren<unknown>> = () => {
   const [pageIndex, setPageIndex] = useState(0);
   const [pageCount, setPageCount] = useState(0);
   const [totalItems, setTotalItems] = useState(0);
-  const [sort, setSort] = useState<TableSort<Api_Property>>({});
+  const [sort, setSort] = useState<TableSort<ApiGen_Concepts_Property>>({});
 
   const fetchIdRef = useRef(0);
 
@@ -102,7 +103,7 @@ const PropertyListView: React.FC<React.PropsWithChildren<unknown>> = () => {
       pageIndex: number;
       pageSize: number;
       filter: IPropertyFilter;
-      sort: TableSort<Api_Property>;
+      sort: TableSort<ApiGen_Concepts_Property>;
     }) => {
       // Give this fetch an ID
       const fetchId = ++fetchIdRef.current;
@@ -156,6 +157,7 @@ const PropertyListView: React.FC<React.PropsWithChildren<unknown>> = () => {
   const multiselectOwnershipRef = React.createRef<Multiselect>();
 
   const onSelectedOwnershipChange = (selectedList: MultiSelectOption[]) => {
+    setPageIndex(0);
     const selectedIds = selectedList.map(o => o.id);
     setFilter({ ...filter, ownership: selectedIds.join(',') });
   };
@@ -174,7 +176,6 @@ const PropertyListView: React.FC<React.PropsWithChildren<unknown>> = () => {
           />
         </StyledFilterContainer>
       </Container>
-
       <div className="mt-5 mx-5">
         <StyledPageHeader>Search Results</StyledPageHeader>
         <Row>
@@ -225,7 +226,7 @@ const PropertyListView: React.FC<React.PropsWithChildren<unknown>> = () => {
         </Row>
       </div>
       <div className="ScrollContainer">
-        <Table<Api_Property>
+        <Table<ApiGen_Concepts_Property>
           name="propertiesTable"
           columns={columns}
           data={data || []}

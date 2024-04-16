@@ -7,7 +7,7 @@ import { TableSort } from '@/components/Table/TableSort';
 import { Claims } from '@/constants/claims';
 import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
 import { ResearchSearchResultModel } from '@/interfaces/IResearchSearchResult';
-import { Api_ResearchFileProperty } from '@/models/api/ResearchFile';
+import { ApiGen_Concepts_ResearchFileProperty } from '@/models/api/generated/ApiGen_Concepts_ResearchFileProperty';
 import { stringToFragment } from '@/utils';
 
 const columns: ColumnWithProps<ResearchSearchResultModel>[] = [
@@ -47,7 +47,7 @@ const columns: ColumnWithProps<ResearchSearchResultModel>[] = [
     clickable: true,
     width: 10,
     maxWidth: 20,
-    Cell: ({ value }: CellProps<any, Api_ResearchFileProperty[] | undefined>) => {
+    Cell: ({ value }: CellProps<any, ApiGen_Concepts_ResearchFileProperty[] | undefined>) => {
       const regions = [...new Set(value?.map(pr => pr?.property?.region?.description))];
       return stringToFragment(regions.join(', '));
     },

@@ -1,8 +1,8 @@
 import userEvent from '@testing-library/user-event';
 
-import { FinancialCodeTypes } from '@/constants/financialCodeTypes';
 import { Roles } from '@/constants/index';
 import { mockLookups } from '@/mocks/lookups.mock';
+import { ApiGen_Concepts_FinancialCodeTypes } from '@/models/api/generated/ApiGen_Concepts_FinancialCodeTypes';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, fillInput, render, RenderOptions, waitFor } from '@/utils/test-utils';
 
@@ -54,12 +54,17 @@ describe('Financial Code Filter', () => {
   it('searches by code type', async () => {
     const { container, searchButton } = setup();
 
-    fillInput(container, 'financialCodeType', FinancialCodeTypes.ChartOfAccounts, 'select');
+    fillInput(
+      container,
+      'financialCodeType',
+      ApiGen_Concepts_FinancialCodeTypes.ChartOfAccounts,
+      'select',
+    );
     await act(async () => userEvent.click(searchButton));
 
     expect(setFilter).toHaveBeenCalledWith(
       expect.objectContaining<IFinancialCodeFilter>({
-        financialCodeType: FinancialCodeTypes.ChartOfAccounts,
+        financialCodeType: ApiGen_Concepts_FinancialCodeTypes.ChartOfAccounts,
         codeValueOrDescription: '',
         showExpiredCodes: false,
       }),

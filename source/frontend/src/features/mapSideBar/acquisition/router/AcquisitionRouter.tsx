@@ -5,14 +5,15 @@ import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
 import Claims from '@/constants/claims';
 import { InventoryTabNames } from '@/features/mapSideBar/property/InventoryTabs';
 import { FileTabType } from '@/features/mapSideBar/shared/detail/FileTabs';
-import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
-import { stripTrailingSlash } from '@/utils';
+import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
+import { exists, stripTrailingSlash } from '@/utils';
 import AppRoute from '@/utils/AppRoute';
 
 import { UpdateChecklistForm } from '../../shared/tabs/checklist/update/UpdateChecklistForm';
 import { AcquisitionFileTabs } from '../tabs/AcquisitionFileTabs';
-import { UpdateAgreementsContainer } from '../tabs/agreement/update/UpdateAgreementsContainer';
-import { UpdateAgreementsForm } from '../tabs/agreement/update/UpdateAgreementsForm';
+import AddAcquisitionAgreementContainer from '../tabs/agreement/add/AddAcquisitionAgreementContainer';
+import UpdateAcquisitionAgreementForm from '../tabs/agreement/common/UpdateAcquisitionAgreementForm';
+import UpdateAcquisitionAgreementContainer from '../tabs/agreement/update/UpdateAcquisitionAgreementContainer';
 import { UpdateAcquisitionChecklistContainer } from '../tabs/checklist/update/UpdateAcquisitionChecklistContainer';
 import AddForm8Container from '../tabs/expropriation/form8/add/AddForm8Container';
 import { UpdateForm8Container } from '../tabs/expropriation/form8/update/UpdateForm8Container';
@@ -24,7 +25,7 @@ import { UpdateStakeHolderForm } from '../tabs/stakeholders/update/UpdateStakeHo
 
 export interface IAcquisitionRouterProps {
   formikRef: React.Ref<FormikProps<any>>;
-  acquisitionFile?: Api_AcquisitionFile;
+  acquisitionFile?: ApiGen_Concepts_AcquisitionFile;
   isEditing: boolean;
   setIsEditing: (value: boolean) => void;
   defaultFileTab: FileTabType;
@@ -35,7 +36,7 @@ export interface IAcquisitionRouterProps {
 export const AcquisitionRouter: React.FC<IAcquisitionRouterProps> = props => {
   const { path, url } = useRouteMatch();
 
-  if (props.acquisitionFile === undefined || props.acquisitionFile === null) {
+  if (!exists(props.acquisitionFile)) {
     return null;
   }
 
@@ -57,14 +58,6 @@ export const AcquisitionRouter: React.FC<IAcquisitionRouterProps> = props => {
             acquisitionFile={props.acquisitionFile}
             onSuccess={props.onSuccess}
             View={UpdateChecklistForm}
-          />
-        </Route>
-        <Route exact path={`${stripTrailingSlash(path)}/${FileTabType.AGREEMENTS}`}>
-          <UpdateAgreementsContainer
-            acquisitionFileId={props.acquisitionFile.id || -1}
-            View={UpdateAgreementsForm}
-            formikRef={props.formikRef}
-            onSuccess={props.onSuccess}
           />
         </Route>
         <Route exact path={`${stripTrailingSlash(path)}/${FileTabType.STAKEHOLDERS}`}>
@@ -95,14 +88,48 @@ export const AcquisitionRouter: React.FC<IAcquisitionRouterProps> = props => {
         </Route>
         <AppRoute
           exact
+          path={`${stripTrailingSlash(path)}/${FileTabType.AGREEMENTS}/add`}
+          customRender={() =>
+            props.acquisitionFile?.id ? (
+              <AddAcquisitionAgreementContainer
+                acquisitionFileId={props.acquisitionFile?.id}
+                View={UpdateAcquisitionAgreementForm}
+                onSuccess={props.onSuccess}
+              />
+            ) : null
+          }
+          claim={Claims.ACQUISITION_EDIT}
+          key={'agreement'}
+          title={'Add Agreement'}
+        />
+        <AppRoute
+          path={`${stripTrailingSlash(path)}/${FileTabType.AGREEMENTS}/:agreementId/update`}
+          customRender={({ match }) =>
+            props.acquisitionFile?.id ? (
+              <UpdateAcquisitionAgreementContainer
+                acquisitionFileId={props.acquisitionFile?.id}
+                agreementId={match.params.agreementId}
+                View={UpdateAcquisitionAgreementForm}
+                onSuccess={props.onSuccess}
+              />
+            ) : null
+          }
+          claim={Claims.ACQUISITION_EDIT}
+          key={'updateAgreement'}
+          title={'Update Agreement'}
+        />
+        <AppRoute
+          exact
           path={`${stripTrailingSlash(path)}/${FileTabType.EXPROPRIATION}/add`}
-          customRender={() => (
-            <AddForm8Container
-              acquisitionFileId={props.acquisitionFile?.id!}
-              View={UpdateForm8Form}
-              onSuccess={props.onSuccess}
-            />
-          )}
+          customRender={() =>
+            props.acquisitionFile?.id ? (
+              <AddForm8Container
+                acquisitionFileId={props.acquisitionFile?.id}
+                View={UpdateForm8Form}
+                onSuccess={props.onSuccess}
+              />
+            ) : null
+          }
           claim={Claims.ACQUISITION_EDIT}
           key={'expropriation'}
           title={'Add Expropriation'}

@@ -3,9 +3,8 @@ import L, { DivIcon, GeoJSON, LatLngExpression, Layer, Map, Marker } from 'leafl
 import ReactDOMServer from 'react-dom/server';
 import Supercluster from 'supercluster';
 
-import { ICluster, PointFeature } from '@/components/maps/types';
+import { ICluster } from '@/components/maps/types';
 import { DraftCircleNumber } from '@/components/propertySelector/selectedPropertyList/DraftCircleNumber';
-import { IProperty } from '@/interfaces';
 import { PMBC_Feature_Properties } from '@/models/layers/parcelMapBC';
 import {
   PIMS_Property_Boundary_View,
@@ -101,6 +100,16 @@ export const disposedIconSelect = L.icon({
   shadowSize: [41, 41],
 });
 
+// retired icon (grey)
+export const retiredIcon = L.icon({
+  iconUrl: require('@/assets/images/pins/retired.png') ?? 'assets/images/pins/retired.png',
+  shadowUrl: require('@/assets/images/pins/marker-shadow.png') ?? 'marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41],
+});
+
 // not owned property icon (orange)
 export const notOwnedPropertyIcon = L.icon({
   iconUrl:
@@ -124,27 +133,6 @@ export const notOwnedPropertyIconSelect = L.icon({
   popupAnchor: [1, -34],
   shadowSize: [41, 41],
 });
-
-/**
- * Creates map points (in GeoJSON format) for further clustering by `supercluster`
- * @param properties
- */
-// TODO:is this necessary?
-export const createPoints = (properties: IProperty[], type: string = 'Point') =>
-  properties.map(x => {
-    return {
-      type: 'Feature',
-      properties: {
-        ...x,
-        cluster: false,
-        PROPERTY_ID: x.id,
-      },
-      geometry: {
-        type: type,
-        coordinates: [x.longitude, x.latitude],
-      },
-    } as PointFeature;
-  });
 
 type MarkerFeature =
   | PIMS_Property_Location_View
@@ -173,40 +161,49 @@ export function pointToLayer<P extends MarkerFeature, C extends Supercluster.Clu
 
 /**
  * Get an icon type for the specified cluster property details.
+ *
+ * Precedence (map viewing map markers)
+ *
+ * 1. Retired (only if advanced filter is open). This will take precedence over other ownership statuses.
+ * 2. Core Inventory
+ * 3. Other Interest
+ * 4. Property of Interest
+ * 5. Disposed (only if advanced filter is open)
  */
 export function getMarkerIcon(
   feature: Supercluster.PointFeature<PIMS_Property_Location_View | PIMS_Property_Boundary_View>,
   selected: boolean,
-  showDisposed: boolean = false,
+  showDisposed = false,
+  showRetired = false,
 ): L.Icon<L.IconOptions> | null {
-  if (showDisposed && feature?.properties?.IS_DISPOSED === true) {
-    if (selected) {
-      return disposedIconSelect;
+  if (feature?.properties?.IS_RETIRED === true) {
+    if (showRetired) {
+      return retiredIcon;
     } else {
-      return disposedIcon;
+      return null;
     }
-  }
-
-  if (feature?.properties?.IS_PROPERTY_OF_INTEREST === true) {
+  } else if (feature?.properties?.IS_OWNED === true) {
+    if (selected) {
+      return parcelIconSelect;
+    }
+    return parcelIcon;
+  } else if (feature?.properties?.IS_OTHER_INTEREST === true) {
+    if (selected) {
+      return otherInterestIconSelect;
+    } else {
+      return otherInterestIcon;
+    }
+  } else if (feature?.properties?.IS_PROPERTY_OF_INTEREST === true) {
     if (selected) {
       return propertyOfInterestIconSelect;
     } else {
       return propertyOfInterestIcon;
     }
-  }
-
-  if (feature?.properties?.IS_OWNED === true) {
+  } else if (showDisposed && feature?.properties?.IS_DISPOSED === true) {
     if (selected) {
-      return parcelIconSelect;
-    }
-    return parcelIcon;
-  }
-
-  if (feature?.properties?.IS_OTHER_INTEREST === true) {
-    if (selected) {
-      return otherInterestIconSelect;
+      return disposedIconSelect;
     } else {
-      return otherInterestIcon;
+      return disposedIcon;
     }
   }
 
@@ -303,7 +300,6 @@ export function createClusterMarker<P extends GeoJsonProperties>(
   }
 
   const size = count < 100 ? 'small' : count < 1000 ? 'medium' : 'large';
-  let icon: DivIcon;
 
   if (!iconsCache[count]) {
     iconsCache[count] = new DivIcon({
@@ -313,7 +309,7 @@ export function createClusterMarker<P extends GeoJsonProperties>(
     });
   }
 
-  icon = iconsCache[count];
+  const icon = iconsCache[count];
   return new Marker(latlng, { icon });
 }
 

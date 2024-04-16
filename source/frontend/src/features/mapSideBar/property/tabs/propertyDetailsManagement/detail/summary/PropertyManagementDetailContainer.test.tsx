@@ -1,10 +1,10 @@
+// eslint-disable-next-line simple-import-sort/imports
 import { FormikProps } from 'formik';
 import { createMemoryHistory } from 'history';
 import { forwardRef } from 'react';
 
 import { mockLookups } from '@/mocks/lookups.mock';
 import { getMockApiPropertyManagement } from '@/mocks/propertyManagement.mock';
-import { Api_PropertyManagement } from '@/models/api/Property';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { render, RenderOptions } from '@/utils/test-utils';
 
@@ -13,6 +13,7 @@ import {
   PropertyManagementDetailContainer,
 } from './PropertyManagementDetailContainer';
 import { IPropertyManagementDetailViewProps } from './PropertyManagementDetailView';
+import { ApiGen_Concepts_PropertyManagement } from '@/models/api/generated/ApiGen_Concepts_PropertyManagement';
 
 const history = createMemoryHistory();
 const storeState = {
@@ -21,7 +22,7 @@ const storeState = {
 
 const mockGetApi = {
   error: undefined,
-  response: undefined as Api_PropertyManagement | undefined,
+  response: undefined as ApiGen_Concepts_PropertyManagement | undefined,
   execute: jest.fn(),
   loading: false,
 };

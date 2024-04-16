@@ -1,7 +1,7 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 
-import { render, RenderOptions, waitFor } from '@/utils/test-utils';
+import { act, render, RenderOptions, waitFor } from '@/utils/test-utils';
 
 import DocumentTemplateManagementContainer from './DocumentTemplateManagementContainer';
 
@@ -28,6 +28,7 @@ describe('DocumentTemplateManagementContainer component', () => {
 
   it('matches snapshot', async () => {
     const { asFragment } = setup({});
+    await act(async () => {});
     const fragment = await waitFor(() => asFragment());
     expect(fragment).toMatchSnapshot();
   });

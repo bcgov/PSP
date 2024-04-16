@@ -12,14 +12,13 @@ import TooltipIcon from '@/components/common/TooltipIcon';
 import { Claims, Roles } from '@/constants';
 import { cannotEditMessage } from '@/features/mapSideBar/acquisition/common/constants';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
-import {
-  Api_DispositionFile,
-  Api_DispositionFileAppraisal,
-  Api_DispositionFileOffer,
-} from '@/models/api/DispositionFile';
+import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
+import { ApiGen_Concepts_DispositionFileAppraisal } from '@/models/api/generated/ApiGen_Concepts_DispositionFileAppraisal';
+import { ApiGen_Concepts_DispositionFileOffer } from '@/models/api/generated/ApiGen_Concepts_DispositionFileOffer';
 import { ApiGen_Concepts_DispositionFileSale } from '@/models/api/generated/ApiGen_Concepts_DispositionFileSale';
 import { prettyFormatDate } from '@/utils/dateUtils';
 import { formatMoney } from '@/utils/numberFormatUtils';
+import { exists } from '@/utils/utils';
 
 import {
   calculateNetProceedsAfterSppAmount,
@@ -31,10 +30,10 @@ import DispositionSaleContactDetails from './dispositionOffer/dispositionSaleCon
 
 export interface IOffersAndSaleViewProps {
   loading: boolean;
-  dispositionFile: Api_DispositionFile;
-  dispositionOffers: Api_DispositionFileOffer[];
+  dispositionFile: ApiGen_Concepts_DispositionFile;
+  dispositionOffers: ApiGen_Concepts_DispositionFileOffer[];
   dispositionSale: ApiGen_Concepts_DispositionFileSale | null;
-  dispositionAppraisal: Api_DispositionFileAppraisal | null;
+  dispositionAppraisal: ApiGen_Concepts_DispositionFileAppraisal | null;
   onDispositionOfferDeleted: (offerId: number) => void;
 }
 
@@ -189,16 +188,15 @@ const OffersAndSaleView: React.FunctionComponent<IOffersAndSaleViewProps> = ({
               labelWidth="6"
               valueTestId="disposition-sale.purchasers"
             >
-              {dispositionSale.dispositionPurchasers &&
+              {exists(dispositionSale.dispositionPurchasers) &&
                 dispositionSale.dispositionPurchasers.map((purchaser, index) => (
                   <React.Fragment key={`purchaser-${index}`}>
                     <DispositionSaleContactDetails
                       contactInformation={purchaser}
                     ></DispositionSaleContactDetails>
-                    {dispositionSale.dispositionPurchasers &&
-                      index !== dispositionSale.dispositionPurchasers?.length - 1 && (
-                        <StyledSpacer className="my-3" />
-                      )}
+                    {index !== dispositionSale.dispositionPurchasers!.length - 1 && (
+                      <StyledSpacer className="my-3" />
+                    )}
                   </React.Fragment>
                 ))}
             </SectionField>
@@ -247,7 +245,7 @@ const OffersAndSaleView: React.FunctionComponent<IOffersAndSaleViewProps> = ({
               {dispositionSale.saleFiscalYear}
             </SectionField>
             <SectionField
-              label="Final sale price ($)"
+              label="Final sale price, incl. GST ($)"
               labelWidth="6"
               valueTestId="disposition-sale.finalSaleAmount"
             >
@@ -296,7 +294,7 @@ const OffersAndSaleView: React.FunctionComponent<IOffersAndSaleViewProps> = ({
             <SectionField
               label="Net proceeds before SPP cost ($)"
               labelWidth="6"
-              tooltip="Surplus Property Program (SPP)."
+              tooltip="Net Proceeds before Surplus Property Program (SPP) Cost = Final Sales price, less Commissions, GST Total Cost of Sales, and Net Book Value."
               valueTestId="disposition-sale.netProceedsBeforeSppAmount"
             >
               {formatMoney(calculateNetProceedsBeforeSppAmount(dispositionSale))}

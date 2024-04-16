@@ -8,9 +8,6 @@ namespace PIMS.Tests.Automation.PageObjects
         private By mainMenuAdminToolLink = By.XPath("//label[contains(text(),'Admin Tools')]/parent::a");
 
         private By adminSubmenuManageUserLink = By.XPath("//a[contains(text(),'Manage Users')]");
-        private By adminSubmenuManageAccessLink = By.XPath("//a[contains(text(),'Manage Access Requests')]");
-        private By adminSubmenuCDOGSLink = By.XPath("//a[contains(text(),'Manage Activity Document Templates')]");
-        private By adminSubmenuFinancialCodesLink = By.XPath("//a[contains(text(),'Manage Financial Codes')]");
 
         //User Management List View Elements
         private By userManagementRoleSelect = By.Id("input-role");
@@ -23,15 +20,33 @@ namespace PIMS.Tests.Automation.PageObjects
         private By userManagerShowActiveUserLabel = By.XPath("//span[contains(text(),'Show active users only')]");
         private By userManagerExportExcelBttn = By.CssSelector("div[class='align-items-center d-flex col-md-4'] button");
 
+        //Table Header Elements
         private By userManagerHeaderActiveColumn = By.XPath("//div[@data-testid='usersTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Active')]");
         private By userManagerHeaderIdirColumn = By.XPath("//div[@data-testid='usersTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'IDIR/BCeID')]");
+        private By userManagerHeaderOrderByIDIRBttn = By.CssSelector("div[data-testid='sort-column-businessIdentifierValue']");
         private By userManagerHeaderFirstNameColumn = By.XPath("//div[@data-testid='usersTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'First name')]");
+        private By userManagerHeaderOrderByFirstNameBttn = By.CssSelector("div[data-testid='sort-column-firstName']");
         private By userManagerHeaderLastNameColumn = By.XPath("//div[@data-testid='usersTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Last name')]");
+        private By userManagerHeaderOrderByLastNameBttn = By.CssSelector("div[data-testid='sort-column-surname']");
         private By userManagerHeaderEmailColumn = By.XPath("//div[@data-testid='usersTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Email')]");
+        private By userManagerHeaderOrderByEmailBttn = By.CssSelector("div[data-testid='sort-column-email']");
         private By userManagerHeaderPositionColumn = By.XPath("//div[@data-testid='usersTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Position')]");
+        private By userManagerHeaderOrderByPositionBttn = By.CssSelector("div[data-testid='sort-column-position']");
         private By userManagerHeaderRolesColumn = By.XPath("//div[@data-testid='usersTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Roles')]");
         private By userManagerHeaderRegionColumn = By.XPath("//div[@data-testid='usersTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'MoTI region(s)')]");
         private By userManagerHeaderLastLoginColumn = By.XPath("//div[@data-testid='usersTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Last login')]");
+
+        //Table 1st Result by Column Elements
+        private By userManager1stIDIRContent = By.CssSelector("div[data-testid='usersTable'] div[class='tbody'] div[class='tr-wrapper']:first-child div:nth-child(2) a");
+        private By userManager1stFirstNameContent = By.CssSelector("div[data-testid='usersTable'] div[class='tbody'] div[class='tr-wrapper']:first-child div[class='td clickable']:nth-child(3)");
+        private By userManager1stLastNameContent = By.CssSelector("div[data-testid='usersTable'] div[class='tbody'] div[class='tr-wrapper']:first-child div[class='td clickable']:nth-child(4)");
+        private By userManager1stEmailContent = By.CssSelector("div[data-testid='usersTable'] div[class='tbody'] div[class='tr-wrapper']:first-child div[class='td clickable']:nth-child(5)");
+        private By userManager1stPositionContent = By.CssSelector("div[data-testid='usersTable'] div[class='tbody'] div[class='tr-wrapper']:first-child div[class='td clickable']:nth-child(6)");
+        private By userManager1stUserTypeContent = By.CssSelector("div[data-testid='usersTable'] div[class='tbody'] div[class='tr-wrapper']:first-child div[class='td clickable']:nth-child(7)");
+        private By userManager1stRolesContent = By.CssSelector("div[data-testid='usersTable'] div[class='tbody'] div[class='tr-wrapper']:first-child div[class='td clickable']:nth-child(8)");
+        private By userManager1stMOTIRegionContent = By.CssSelector("div[data-testid='usersTable'] div[class='tbody'] div[class='tr-wrapper']:first-child div[class='td clickable']:nth-child(9)");
+        private By userManager1stLastLoginContent = By.CssSelector("div[data-testid='usersTable'] div[class='tbody'] div[class='tr-wrapper']:first-child div[class='td clickable']:nth-child(10)");
+
         private By userManagerTableResults = By.XPath("//div[@data-testid='usersTable']/div[@class='tbody']/div");
 
         private By userManagerEntriesByPage = By.CssSelector("div[class='align-self-center col-auto'] div[class='Menu-root']");
@@ -59,6 +74,66 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             WaitUntilVisible(userManagementResetButton);
             webDriver.FindElement(userManagementResetButton).Click();
+        }
+
+        public void OrderByUserIDIR()
+        {
+            WaitUntilClickable(userManagerHeaderOrderByIDIRBttn);
+            webDriver.FindElement(userManagerHeaderOrderByIDIRBttn).Click();
+        }
+
+        public void OrderByUserFirstName()
+        {
+            WaitUntilClickable(userManagerHeaderOrderByFirstNameBttn);
+            webDriver.FindElement(userManagerHeaderOrderByFirstNameBttn).Click();
+        }
+
+        public void OrderByUserLastName()
+        {
+            WaitUntilClickable(userManagerHeaderOrderByLastNameBttn);
+            webDriver.FindElement(userManagerHeaderOrderByLastNameBttn).Click();
+        }
+
+        public void OrderByUserMail()
+        {
+            WaitUntilClickable(userManagerHeaderOrderByEmailBttn);
+            webDriver.FindElement(userManagerHeaderOrderByEmailBttn).Click();
+        }
+
+        public void OrderByUserPosition()
+        {
+            WaitUntilClickable(userManagerHeaderOrderByPositionBttn);
+            webDriver.FindElement(userManagerHeaderOrderByPositionBttn).Click();
+        }
+
+        public string FirstUserIDIR()
+        {
+            WaitUntilTableSpinnerDisappear();
+            return webDriver.FindElement(userManager1stIDIRContent).Text;
+        }
+
+        public string FirstUserFirstName()
+        {
+            WaitUntilTableSpinnerDisappear();
+            return webDriver.FindElement(userManager1stFirstNameContent).Text;
+        }
+
+        public string FirstUserLastName()
+        {
+            WaitUntilTableSpinnerDisappear();
+            return webDriver.FindElement(userManager1stLastNameContent).Text;
+        }
+
+        public string FirstUserEmail()
+        {
+            WaitUntilTableSpinnerDisappear();
+            return webDriver.FindElement(userManager1stEmailContent).Text;
+        }
+
+        public string FirstUserPosition()
+        {
+            WaitUntilTableSpinnerDisappear();
+            return webDriver.FindElement(userManager1stPositionContent).Text;
         }
 
         public void FilterUsers(string idir, string region)

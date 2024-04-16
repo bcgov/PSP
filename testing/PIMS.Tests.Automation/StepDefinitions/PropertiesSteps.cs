@@ -12,6 +12,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly PropertyInformation propertyInformation;
         private readonly PropertyManagementTab propertyManagementTab;
         private readonly PropertyPIMSFiles pimsFiles;
+        private readonly SharedPagination sharedPagination;
 
         private readonly GenericSteps genericSteps;
 
@@ -29,6 +30,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             propertyInformation = new PropertyInformation(driver.Current);
             propertyManagementTab = new PropertyManagementTab(driver.Current);
             pimsFiles = new PropertyPIMSFiles(driver.Current);
+            sharedPagination = new SharedPagination(driver.Current);
             genericSteps = new GenericSteps(driver);
 
             property = new Property();
@@ -36,7 +38,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             propertyManagement = new PropertyManagement();
         }
 
-        [StepDefinition(@"I search for a Property in the Inventory by different filters from row number (.*)")]
+        [StepDefinition(@"I search for a Property in the Map by different filters from row number (.*)")]
         public void SearchInventoryPropertyOnMap(int rowNumber)
         {
             /* TEST COVERAGE:  PSP-1546, PSP-5090, PSP-5091, PSP-5092, PSP-6693 */
@@ -46,24 +48,24 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Search for a valid Address with the Search Bar
             PopulateSearchProperty(rowNumber);
-            searchProperties.SearchPropertyByAddress(searchProperty.Address);
+            searchProperties.SearchPropertyByAddressMap(searchProperty.Address);
 
             //Validate that the result gives only one pin
-            Assert.True(searchProperties.PropertiesFoundCount() == 1);
+            Assert.True(searchProperties.PropertiesMapFoundCount() == 1);
 
             //Search for a valid PIN in Inventory
             searchProperties.SearchPropertyReset();
             searchProperties.SearchPropertyByPINPID(searchProperty.PIN);
 
             //Validate that the result gives only one pin
-            Assert.True(searchProperties.PropertiesFoundCount() == 1);
+            Assert.True(searchProperties.PropertiesMapFoundCount() == 1);
 
             //Search for a valid PID in Inventory
             searchProperties.SearchPropertyReset();
             searchProperties.SearchPropertyByPINPID(searchProperty.PID);
 
             //Validate that the result gives only one pin
-            Assert.True(searchProperties.PropertiesFoundCount() == 1);
+            Assert.True(searchProperties.PropertiesMapFoundCount() == 1);
 
             //Search for a valid Plan in Inventory
             searchProperties.SearchPropertyReset();
@@ -99,9 +101,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Navigate to the Inventory List View
             searchProperties.NavigatePropertyListView();
 
-            //Validate List View Elements
-            searchProperties.ValidatePropertyListView();
-
             //Select the first property from the list
             searchProperties.ChooseFirstPropertyFromList();
 
@@ -122,6 +121,101 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         }
 
+        [StepDefinition(@"I search for a Property in the Properties List by different filters from row number (.*)")]
+        public void ReviewPropertyInformation(int rowNumber)
+        {
+            /* TEST COVERAGE: PSP-1558, PSP-3153, PSP-3184, PSP-3589, PSP-4903, PSP-4905, PSP-5163, PSP-7815 */
+
+            //Navigate to the Inventory List View
+            PopulateSearchProperty(rowNumber);
+            searchProperties.NavigatePropertyListView();
+
+            //Validate List View Elements
+            searchProperties.SearchPropertyReset();
+            searchProperties.ValidatePropertyListView();
+
+            //Verify Pagination
+            sharedPagination.ChoosePaginationOption(5);
+            Assert.Equal(5, searchProperties.PropertiesListFoundCount());
+
+            sharedPagination.ChoosePaginationOption(10);
+            Assert.Equal(10, searchProperties.PropertiesListFoundCount());
+
+            sharedPagination.ChoosePaginationOption(20);
+            Assert.Equal(20, searchProperties.PropertiesListFoundCount());
+
+            sharedPagination.ChoosePaginationOption(50);
+            Assert.Equal(50, searchProperties.PropertiesListFoundCount());
+
+            sharedPagination.ChoosePaginationOption(100);
+            Assert.Equal(100, searchProperties.PropertiesListFoundCount());
+
+            //Verify Column Sorting by Location
+            sharedPagination.ChoosePaginationOption(10);
+            searchProperties.OrderByPropertyLocation();
+            var firstLocationDescResult = searchProperties.FirstPropertyLocation();
+
+            searchProperties.OrderByPropertyLocation();
+            var firstLocationAscResult = searchProperties.FirstPropertyLocation();
+
+            Assert.NotEqual(firstLocationDescResult, firstLocationAscResult);
+
+            //Verify Column Sorting by Lot Size
+            searchProperties.OrderByPropertyLotSize();
+            var firstLotSizeDescResult = searchProperties.FirstPropertyLotSize();
+
+            searchProperties.OrderByPropertyLotSize();
+            var firstLotSizeAscResult = searchProperties.FirstPropertyLotSize();
+
+            Assert.NotEqual(firstLotSizeDescResult, firstLotSizeAscResult);
+
+            //Verify Column Sorting by Ownership
+            searchProperties.OrderByPropertyOwnership();
+            var firstOwnershipDescResult = searchProperties.FirstPropertyOwnership();
+
+            searchProperties.OrderByPropertyOwnership();
+            var firstOwnershipAscResult = searchProperties.FirstPropertyOwnership();
+
+            Assert.NotEqual(firstOwnershipDescResult, firstOwnershipAscResult);
+
+            //Verify Pagination display different set of results
+            sharedPagination.ResetSearch();
+
+            var firstPropertyPage1 = searchProperties.FirstPropertyPID();
+            sharedPagination.GoNextPage();
+            var firstPropertyPage2 = searchProperties.FirstPropertyPID();
+            Assert.NotEqual(firstPropertyPage1, firstPropertyPage2);
+
+            sharedPagination.ResetSearch();
+
+            //Search for a valid Address with the Search Bar
+            searchProperties.SearchPropertyByAddressList(searchProperty.Address);
+
+            //Validate that the result gives only one pin
+            Assert.True(searchProperties.PropertiesListFoundCount() == 7);
+
+            //Search for a valid PIN in Inventory
+            searchProperties.SearchPropertyReset();
+            searchProperties.SearchPropertyByPINPID(searchProperty.PIN);
+
+            //Validate that the result gives only one pin
+            Assert.True(searchProperties.PropertiesListFoundCount() == 1);
+
+            //Search for a valid PID in Inventory
+            searchProperties.SearchPropertyReset();
+            searchProperties.SearchPropertyByPINPID(searchProperty.PID);
+
+            //Validate that the result gives only one pin
+            Assert.True(searchProperties.PropertiesListFoundCount() == 2);
+
+            //Search for a valid Plan in Inventory
+            searchProperties.SearchPropertyReset();
+            searchProperties.SearchPropertyByPlan(searchProperty.PlanNumber);
+
+            //Validate that the result gives only one pin
+            Assert.True(searchProperties.PropertiesListFoundCount() == 1);
+        }
+
         [StepDefinition(@"I search for a non MOTI property from row number (.*)")]
         public void NonInventoryProperty(int rowNumber)
         {
@@ -132,10 +226,10 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Look for a non-inventory property
             PopulateSearchProperty(rowNumber);
-            searchProperties.SearchPropertyByAddress(searchProperty.Address);
+            searchProperties.SearchPropertyByAddressMap(searchProperty.Address);
 
             //Validate that the result gives only one pin
-            Assert.True(searchProperties.PropertiesFoundCount() == 1);
+            Assert.True(searchProperties.PropertiesMapFoundCount() == 1);
 
             //Click on the founf property
             searchProperties.SelectFoundPin();
@@ -331,7 +425,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
             /* TEST COVERAGE: PSP-1548 */
 
             //Validate that the result gives only one pin
-            Assert.True(searchProperties.PropertiesFoundCount() == 0);
+            Assert.True(searchProperties.PropertiesMapFoundCount() == 0);
+            searchProperties.Dispose();
         }
 
         [StepDefinition(@"A Property Information is saved successfully")]
@@ -339,6 +434,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         {
             //Validate Property Information View Form after changes
             propertyInformation.VerifyPropertyDetailsView();
+            propertyInformation.Dispose();
         }
 
         [StepDefinition(@"Non-Inventory property renders correctly")]
@@ -349,12 +445,14 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Validate correct tabs are displayed
             propertyInformation.VerifyNonInventoryPropertyTabs();
+            propertyInformation.Dispose();
         }
 
         [StepDefinition(@"Property Management Tab has been updated successfully")]
         public void PropertyManagementSuccess()
         {
             propertyManagementTab.VerifyInitManagementTabView();
+            propertyManagementTab.Dispose();
         }
 
         [StepDefinition(@"PIMS Files Tab has rendered successfully")]
@@ -364,12 +462,15 @@ namespace PIMS.Tests.Automation.StepDefinitions
             Assert.True(pimsFiles.GetAcquisitionFilesCount() > 0);
             Assert.True(pimsFiles.GetLeasesCount() > 0);
             Assert.True(pimsFiles.GetDispositionFilesCount() > 0);
+
+            pimsFiles.Dispose();
         }
 
         [StepDefinition(@"Properties filters works successfully")]
         public void PropertySearchBarSuccess()
         {
             searchProperties.SearchPropertyReset();
+            searchProperties.Dispose();
         }
 
         private void PopulateProperty(int rowNumber)

@@ -19,7 +19,7 @@ export const PropertyActivityRouter: React.FunctionComponent<
   const location = useLocation();
   const history = useHistory();
 
-  let matched = matchPath(location.pathname, {
+  const matched = matchPath(location.pathname, {
     path: '/mapview/sidebar/property/*/activity/*',
     exact: true,
     strict: true,

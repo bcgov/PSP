@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Api_Agreement } from '@/models/api/Agreement';
+import { ApiGen_Concepts_Agreement } from '@/models/api/generated/ApiGen_Concepts_Agreement';
 
 import useAxiosApi from './useApi';
 
@@ -14,9 +14,24 @@ export const useApiAgreements = () => {
   return React.useMemo(
     () => ({
       getAcquisitionAgreementsApi: (acqFileId: number) =>
-        api.get<Api_Agreement[]>(`/acquisitionfiles/${acqFileId}/agreements`),
-      postAcquisitionAgreementsApi: (acqFileId: number, agreements: Api_Agreement[]) =>
-        api.post<Api_Agreement[]>(`/acquisitionfiles/${acqFileId}/agreements`, agreements),
+        api.get<ApiGen_Concepts_Agreement[]>(`/acquisitionfiles/${acqFileId}/agreements`),
+      getAcquisitionAgreementByIdApi: (acqFileId: number, agreementId: number) =>
+        api.get<ApiGen_Concepts_Agreement>(
+          `/acquisitionfiles/${acqFileId}/agreements/${agreementId}`,
+        ),
+      postAcquisitionAgreementApi: (acqFileId: number, agreement: ApiGen_Concepts_Agreement) =>
+        api.post<ApiGen_Concepts_Agreement>(`/acquisitionfiles/${acqFileId}/agreements`, agreement),
+      putAcquisitionAgreementApi: (
+        acqFileId: number,
+        agreementId: number,
+        agreement: ApiGen_Concepts_Agreement,
+      ) =>
+        api.put<ApiGen_Concepts_Agreement>(
+          `/acquisitionfiles/${acqFileId}/agreements/${agreementId}`,
+          agreement,
+        ),
+      deleteAcquisitionAgreementApi: (acqFileId: number, agreementId: number) =>
+        api.delete<boolean>(`/acquisitionfiles/${acqFileId}/agreements/${agreementId}`),
     }),
     [api],
   );

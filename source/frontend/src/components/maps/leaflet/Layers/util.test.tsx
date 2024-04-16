@@ -15,10 +15,10 @@ import {
   PIMS_Property_Location_View,
 } from '@/models/layers/pimsPropertyLocationView';
 
+import { createPoints } from '../../MapView.test';
 import { ICluster } from '../../types';
 import {
   createClusterMarker,
-  createPoints,
   disposedIcon,
   getMarkerIcon,
   otherInterestIcon,
@@ -36,7 +36,7 @@ describe('mapUtils tests', () => {
           type: 'Point',
           coordinates: [1, 2],
         },
-        properties: { ...EmptyPropertyLocation, PROPERTY_ID: '1', IS_OTHER_INTEREST: true },
+        properties: { ...EmptyPropertyLocation, PROPERTY_ID: 1, IS_OTHER_INTEREST: true },
       };
       const latlng: LatLngExpression = { lat: 1, lng: 2 };
 
@@ -105,7 +105,7 @@ describe('mapUtils tests', () => {
         getMarkerIcon(
           {
             ...feature,
-            properties: { ...EmptyPropertyLocation, PROPERTY_ID: '1', IS_OWNED: true },
+            properties: { ...EmptyPropertyLocation, PROPERTY_ID: 1, IS_OWNED: true },
           },
           false,
         ),
@@ -118,7 +118,7 @@ describe('mapUtils tests', () => {
             ...feature,
             properties: {
               ...EmptyPropertyLocation,
-              PROPERTY_ID: '1',
+              PROPERTY_ID: 1,
               IS_PROPERTY_OF_INTEREST: true,
             },
           },
@@ -131,7 +131,7 @@ describe('mapUtils tests', () => {
         getMarkerIcon(
           {
             ...feature,
-            properties: { ...EmptyPropertyLocation, PROPERTY_ID: '1', IS_OTHER_INTEREST: true },
+            properties: { ...EmptyPropertyLocation, PROPERTY_ID: 1, IS_OTHER_INTEREST: true },
           },
           false,
         ),
@@ -142,12 +142,28 @@ describe('mapUtils tests', () => {
         getMarkerIcon(
           {
             ...feature,
-            properties: { ...EmptyPropertyLocation, PROPERTY_ID: '1', IS_DISPOSED: true },
+            properties: { ...EmptyPropertyLocation, PROPERTY_ID: 1, IS_DISPOSED: true },
           },
           false,
           true,
         ),
       ).toEqual(disposedIcon);
+    });
+    it(`follows precedence when property has multiple ownership flags`, () => {
+      expect(
+        getMarkerIcon(
+          {
+            ...feature,
+            properties: {
+              ...EmptyPropertyLocation,
+              PROPERTY_ID: 1,
+              IS_OWNED: true,
+              IS_PROPERTY_OF_INTEREST: true,
+            },
+          },
+          false,
+        ),
+      ).toEqual(parcelIcon);
     });
     it(`returns null when passed feature is not one of: 'Core Inventory', 'Property of Interest', 'Other Interest' or 'Disposed'`, () => {
       expect(
@@ -156,7 +172,7 @@ describe('mapUtils tests', () => {
             ...feature,
             properties: {
               ...EmptyPropertyLocation,
-              PROPERTY_ID: '1',
+              PROPERTY_ID: 1,
               IS_OWNED: null,
               IS_PROPERTY_OF_INTEREST: null,
               IS_OTHER_INTEREST: null,
@@ -275,7 +291,7 @@ describe('mapUtils tests', () => {
 
     it('if force exact param is specified will automatically use = instead of ilike', () => {
       const cql = toCqlFilterValue({ PID: '12345678', PIN: '54321' }, { forceExactMatch: true });
-      expect(cql).toBe("PID = '12345678' AND PIN = '54321'");
+      expect(cql).toBe("PID = '12345678' AND PIN='54321'");
     });
   });
 });

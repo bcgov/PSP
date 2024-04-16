@@ -5,7 +5,8 @@ import { toast } from 'react-toastify';
 import { useApiResearchFile } from '@/hooks/pims-api/useApiResearchFile';
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import { IApiError } from '@/interfaces/IApiError';
-import { Api_ResearchFile, Api_ResearchFileProperty } from '@/models/api/ResearchFile';
+import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Concepts_ResearchFile';
+import { ApiGen_Concepts_ResearchFileProperty } from '@/models/api/generated/ApiGen_Concepts_ResearchFileProperty';
 
 /**
  * hook that updates a property research file.
@@ -14,10 +15,13 @@ export const useUpdatePropertyResearch = () => {
   const { putPropertyResearchFile } = useApiResearchFile();
 
   const { execute } = useApiRequestWrapper<
-    (researchFile: Api_ResearchFileProperty) => Promise<AxiosResponse<Api_ResearchFile, any>>
+    (
+      researchFile: ApiGen_Concepts_ResearchFileProperty,
+    ) => Promise<AxiosResponse<ApiGen_Concepts_ResearchFile, any>>
   >({
     requestFunction: useCallback(
-      async (researchFile: Api_ResearchFileProperty) => await putPropertyResearchFile(researchFile),
+      async (researchFile: ApiGen_Concepts_ResearchFileProperty) =>
+        await putPropertyResearchFile(researchFile),
       [putPropertyResearchFile],
     ),
     requestName: 'UpdatePropertyResearchFile',
@@ -25,8 +29,10 @@ export const useUpdatePropertyResearch = () => {
     onError: useCallback((axiosError: AxiosError<IApiError>) => {
       if (axiosError?.response?.status === 400) {
         toast.error(axiosError?.response.data.error);
+        return Promise.resolve();
       } else {
         toast.error('Save error. Check responses and try again.');
+        return Promise.reject(axiosError);
       }
     }, []),
   });

@@ -4,13 +4,16 @@ import MockAdapter from 'axios-mock-adapter';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { SideBarContextProvider } from '@/features/mapSideBar/context/sidebarContext';
+import { getMockApiAddress } from '@/mocks/address.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
+import { getMockApiProperty } from '@/mocks/properties.mock';
 import { getMockResearchFile } from '@/mocks/researchFile.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { fillInput, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import UpdateProperties, { IUpdatePropertiesProps } from './UpdateProperties';
+import React from 'react';
 
 const mockAxios = new MockAdapter(axios);
 jest.mock('@react-keycloak/web');
@@ -43,7 +46,7 @@ describe('UpdateProperties component', () => {
           onSuccess={onSuccess}
           updateFileProperties={updateFileProperties}
           canRemove={props.canRemove ?? jest.fn()}
-          formikRef={{} as any}
+          formikRef={React.createRef() as any}
         />
       </SideBarContextProvider>,
       {
@@ -83,25 +86,28 @@ describe('UpdateProperties component', () => {
             id: 3,
             propertyId: 443,
             property: {
+              ...getMockApiProperty(),
               id: 443,
               anomalies: [],
               tenures: [],
               roadTypes: [],
-              adjacentLands: [],
               region: {
                 id: 1,
                 description: 'South Coast Region',
                 isDisabled: false,
+                displayOrder: null,
               },
               district: {
                 id: 2,
                 description: 'Vancouver Island District',
                 isDisabled: false,
+                displayOrder: null,
               },
               dataSourceEffectiveDateOnly: '2022-10-05T00:00:00',
               isSensitive: false,
               isRwyBeltDomPatent: false,
               address: {
+                ...getMockApiAddress(),
                 id: 1,
                 streetAddress1: '45 - 904 Hollywood Crescent',
                 streetAddress2: 'Living in a van',
@@ -117,17 +123,21 @@ describe('UpdateProperties component', () => {
               rowVersion: 3,
             },
             rowVersion: 1,
+            displayOrder: null,
+            fileId: 1,
+            propertyName: null,
+            file: null,
           },
         ],
       },
     });
-    expect(getByText(/Address: 45 - 904 Ho/)).toBeVisible();
+    expect(getByText(/45 - 904 Ho/)).toBeVisible();
   });
 
   it('save button displays modal', async () => {
     const { getByText } = setup({});
     const saveButton = getByText('Save');
-    act(() => userEvent.click(saveButton));
+    await act(async () => userEvent.click(saveButton));
 
     expect(
       await screen.findByText(/You have made changes to the properties in this file./),
@@ -138,10 +148,10 @@ describe('UpdateProperties component', () => {
     updateFileProperties.mockResolvedValue(getMockResearchFile());
     const { getByText } = setup({});
     const saveButton = getByText('Save');
-    act(() => userEvent.click(saveButton));
+    await act(async () => userEvent.click(saveButton));
 
     const saveConfirmButton = await screen.findByTitle('ok-modal');
-    act(() => userEvent.click(saveConfirmButton));
+    await act(async () => userEvent.click(saveConfirmButton));
 
     await waitFor(() => {
       expect(updateFileProperties).toHaveBeenCalled();
@@ -157,10 +167,10 @@ describe('UpdateProperties component', () => {
     } as Partial<AxiosError>);
     const { getByText } = setup({});
     const saveButton = getByText('Save');
-    act(() => userEvent.click(saveButton));
+    await act(async () => userEvent.click(saveButton));
 
     const saveConfirmButton = await screen.findByTitle('ok-modal');
-    act(() => userEvent.click(saveConfirmButton));
+    await act(async () => userEvent.click(saveConfirmButton));
 
     await waitFor(() => {
       expect(updateFileProperties).toHaveBeenCalled();
@@ -171,7 +181,7 @@ describe('UpdateProperties component', () => {
   it('cancel button cancels component if no actions taken', async () => {
     const { getByText } = setup({});
     const cancelButton = getByText('Cancel');
-    act(() => userEvent.click(cancelButton));
+    await act(async () => userEvent.click(cancelButton));
 
     expect(setIsShowingPropertySelector).toHaveBeenCalledWith(false);
   });

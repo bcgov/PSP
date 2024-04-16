@@ -140,7 +140,7 @@ export const DocumentListView: React.FunctionComponent<
       const documentToDelete = documentResults.find(x => x?.id === selectedDocument.document?.id);
 
       if (documentToDelete !== undefined) {
-        let result = await props.onDelete(DocumentRow.toApi(documentToDelete));
+        const result = await props.onDelete(DocumentRow.toApi(documentToDelete));
         if (result) {
           setShowDeleteConfirmModal(false);
           setSelectedDocument(undefined);

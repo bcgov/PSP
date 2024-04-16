@@ -10,7 +10,7 @@ import { ApiGen_Concepts_DispositionSalePurchaserSolicitor } from '@/models/api/
 
 export class DispositionSaleContactModel {
   contact: IContactSearchResult | null = null;
-  primaryContactId: string = '';
+  primaryContactId = '';
 
   constructor(
     readonly id: number | null = null,

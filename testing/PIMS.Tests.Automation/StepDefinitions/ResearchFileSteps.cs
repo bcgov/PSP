@@ -1,5 +1,6 @@
 ﻿using PIMS.Tests.Automation.Classes;
 using PIMS.Tests.Automation.Data;
+using PIMS.Tests.Automation.PageObjects;
 using System.Data;
 
 namespace PIMS.Tests.Automation.StepDefinitions
@@ -10,9 +11,10 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly LoginSteps loginSteps;
         private readonly ResearchFiles researchFiles;
         private readonly SharedFileProperties sharedFileProperties;
-        private readonly SearchResearchFiles searchResearchFile;
+        private readonly SearchResearchFiles searchResearchFiles;
         private readonly PropertyInformation propertyInformation;
         private readonly SearchProperties searchProperties;
+        private readonly SharedPagination sharedPagination;
         private readonly Notes notes;
         private readonly GenericSteps genericSteps;
 
@@ -26,12 +28,13 @@ namespace PIMS.Tests.Automation.StepDefinitions
             loginSteps = new LoginSteps(driver);
             researchFiles = new ResearchFiles(driver.Current);
             sharedFileProperties = new SharedFileProperties(driver.Current);
-            searchResearchFile = new SearchResearchFiles(driver.Current);
+            sharedPagination = new SharedPagination(driver.Current);
+            searchResearchFiles = new SearchResearchFiles(driver.Current);
             propertyInformation = new PropertyInformation(driver.Current);
             searchProperties = new SearchProperties(driver.Current);
-            genericSteps = new GenericSteps(driver);
             notes = new Notes(driver.Current);
-
+            genericSteps = new GenericSteps(driver);
+            
             researchFile = new ResearchFile();
         }
 
@@ -234,7 +237,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Open elipsis option
             propertyInformation.OpenMoreOptionsPopUp();
-            propertyInformation.ChooseCreationOptionFromPin("Research File - Create new");
+            propertyInformation.ChooseCreationOptionFromPin("Research File");
 
             //Fill basic Research File information
             researchFiles.CreateResearchFile(researchFile);
@@ -265,13 +268,105 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Navigate to Research File Search
             PopulateResearchFile(rowNumber);
-            searchResearchFile.NavigateToSearchResearchFile();
+            searchResearchFiles.NavigateToSearchResearchFile();
+
+            //Verify Pagination
+            sharedPagination.ChoosePaginationOption(5);
+            Assert.Equal(5, searchResearchFiles.ResearchFileTableResultNumber());
+
+            sharedPagination.ChoosePaginationOption(10);
+            Assert.Equal(10, searchResearchFiles.ResearchFileTableResultNumber());
+
+            sharedPagination.ChoosePaginationOption(20);
+            Assert.Equal(20, searchResearchFiles.ResearchFileTableResultNumber());
+
+            sharedPagination.ChoosePaginationOption(50);
+            Assert.Equal(50, searchResearchFiles.ResearchFileTableResultNumber());
+
+            sharedPagination.ChoosePaginationOption(100);
+            Assert.Equal(100, searchResearchFiles.ResearchFileTableResultNumber());
+
+            //Set view to see all Research files
+            searchResearchFiles.SearchAllResearchFiles();
+
+            //Verify Column Sorting by File Number
+            searchResearchFiles.OrderByResearchFileNumber();
+            var firstFileNbrDescResult = searchResearchFiles.FirstResearchFileNumber();
+
+            searchResearchFiles.OrderByResearchFileNumber();
+            var firstFileNbrAscResult = searchResearchFiles.FirstResearchFileNumber();
+
+            Assert.NotEqual(firstFileNbrDescResult, firstFileNbrAscResult);
+
+            //Verify Column Sorting by File Name
+            searchResearchFiles.OrderByResearchFileName();
+            var firstFileNameDescResult = searchResearchFiles.FirstResearchFileName();
+
+            searchResearchFiles.OrderByResearchFileName();
+            var firstFileNameAscResult = searchResearchFiles.FirstResearchFileName();
+
+            Assert.NotEqual(firstFileNameDescResult, firstFileNameAscResult);
+
+            //Verify Column Sorting by Created By
+            searchResearchFiles.OrderByResearchFileCreatedBy();
+            var firstCreatedByDescResult = searchResearchFiles.FirstResearchCreatedBy();
+
+            searchResearchFiles.OrderByResearchFileCreatedBy();
+            var firstCreatedByAscResult = searchResearchFiles.FirstResearchCreatedBy();
+
+            Assert.NotEqual(firstCreatedByDescResult, firstCreatedByAscResult);
+
+            //Verify Column Sorting by Created Date
+            searchResearchFiles.OrderByResearchCreatedDate();
+            var firstCreatedDateDescResult = searchResearchFiles.FirstResearchCreatedDate();
+
+            searchResearchFiles.OrderByResearchCreatedDate();
+            var firstCreatedDateAscResult = searchResearchFiles.FirstResearchCreatedDate();
+
+            Assert.NotEqual(firstCreatedDateDescResult, firstCreatedDateAscResult);
+
+            //Verify Column Sorting by Last Updated By
+            searchResearchFiles.OrderByResearchLastUpdatedBy();
+            var firstUpdatedByDescResult = searchResearchFiles.FirstResearchUpdatedBy();
+
+            searchResearchFiles.OrderByResearchLastUpdatedBy();
+            var firstUpdatedByAscResult = searchResearchFiles.FirstResearchUpdatedBy();
+
+            Assert.NotEqual(firstUpdatedByDescResult, firstUpdatedByAscResult);
+
+            //Verify Column Sorting by Last Updated Date
+            searchResearchFiles.OrderByResearchUpdatedDate();
+            var firstUpdatedDateDescResult = searchResearchFiles.FirstResearchUpdatedDate();
+
+            searchResearchFiles.OrderByResearchUpdatedDate();
+            var firstUpdatedDateAscResult = searchResearchFiles.FirstResearchUpdatedDate();
+
+            Assert.NotEqual(firstUpdatedDateDescResult, firstUpdatedDateAscResult);
+
+            //Verify Column Sorting by Status
+            searchResearchFiles.OrderByResearchStatus();
+            var firstStatusDescResult = searchResearchFiles.FirstResearchFileStatus();
+
+            searchResearchFiles.OrderByResearchStatus();
+            var firstStatusAscResult = searchResearchFiles.FirstResearchFileStatus();
+
+            Assert.NotEqual(firstStatusDescResult, firstStatusAscResult);
+
+            //Verify Pagination display different set of results
+            sharedPagination.ResetSearch();
+
+            var firstResearchPage1 = searchResearchFiles.FirstResearchFileNumber();
+            sharedPagination.GoNextPage();
+            var firstResearchPage2 = searchResearchFiles.FirstResearchFileNumber();
+            Assert.NotEqual(firstResearchPage1, firstResearchPage2);
+
+            sharedPagination.ResetSearch();
 
             //Filter research Files
-            searchResearchFile.FilterResearchFiles(researchFile.ResearchFileName, researchFile.Status, researchFile.RoadName, "TRANPSP1");
-            Assert.True(searchResearchFile.SearchFoundResults());
+            searchResearchFiles.FilterResearchFiles(researchFile.ResearchFileName, researchFile.Status, researchFile.RoadName, "TRANPSP1");
+            Assert.True(searchResearchFiles.SearchFoundResults());
 
-            searchResearchFile.FilterResearchFiles("Automated", "Closed", "Happy", "TRANPSP1");
+            searchResearchFiles.FilterResearchFiles("Automated", "Closed", "Happy", "TRANPSP1");
         }
 
        [StepDefinition(@"A new Research File is created successfully")]
@@ -279,17 +374,20 @@ namespace PIMS.Tests.Automation.StepDefinitions
        {
            /* TEST COVERAGE: PSP-4556, PSP-3294 */
 
-            searchResearchFile.NavigateToSearchResearchFile();
-            searchResearchFile.SearchResearchFileByRFile(researchFileCode);
+            searchResearchFiles.NavigateToSearchResearchFile();
+            searchResearchFiles.SearchResearchFileByRFile(researchFileCode);
 
-            searchResearchFile.VerifyResearchFileListView();
-            searchResearchFile.VerifyResearchFileTableContent(researchFile, userName);
+            searchResearchFiles.VerifyResearchFileListView();
+            searchResearchFiles.VerifyResearchFileTableContent(researchFile, userName);
+
+            searchResearchFiles.Dispose();
         }
 
         [StepDefinition(@"Research File Properties remain unchanged")]
         public void SearchResearchFileResult()
         {
-            Assert.False(searchResearchFile.SearchFoundResults());
+            Assert.False(searchResearchFiles.SearchFoundResults());
+            searchResearchFiles.Dispose();
         }
 
         private void PopulateResearchFile(int rowNumber)

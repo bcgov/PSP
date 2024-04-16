@@ -3,8 +3,10 @@ import { useHistory } from 'react-router-dom';
 
 import { SideBarContext } from '@/features/mapSideBar/context/sidebarContext';
 import { usePropertyActivityRepository } from '@/hooks/repositories/usePropertyActivityRepository';
-import { Api_PropertyActivity, Api_PropertyActivitySubtype } from '@/models/api/PropertyActivity';
+import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
+import { ApiGen_Concepts_PropertyActivitySubtype } from '@/models/api/generated/ApiGen_Concepts_PropertyActivitySubtype';
 import { SystemConstants, useSystemConstants } from '@/store/slices/systemConstants';
+import { exists, isValidId } from '@/utils/utils';
 
 import useActivityContactRetriever from '../hooks';
 import { IPropertyActivityEditFormProps } from './PropertyActivityEditForm';
@@ -27,9 +29,11 @@ export const PropertyActivityEditContainer: React.FunctionComponent<
 
   const [show, setShow] = useState(true);
 
-  const [loadedActivity, setLoadedActivity] = useState<Api_PropertyActivity | undefined>();
+  const [loadedActivity, setLoadedActivity] = useState<
+    ApiGen_Concepts_PropertyActivity | undefined
+  >();
 
-  const [subtypes, setSubtypes] = useState<Api_PropertyActivitySubtype[]>([]);
+  const [subtypes, setSubtypes] = useState<ApiGen_Concepts_PropertyActivitySubtype[]>([]);
 
   const {
     fetchMinistryContacts,
@@ -63,12 +67,16 @@ export const PropertyActivityEditContainer: React.FunctionComponent<
   const fetchActivity = useCallback(
     async (propertyId: number, activityId: number) => {
       const retrieved = await getActivity(propertyId, activityId);
-      if (retrieved !== undefined) {
-        for (let i = 0; i < retrieved.ministryContacts.length; i++) {
-          await fetchMinistryContacts(retrieved.ministryContacts[i]);
+      if (exists(retrieved)) {
+        if (exists(retrieved.ministryContacts)) {
+          for (let i = 0; i < retrieved.ministryContacts.length; i++) {
+            await fetchMinistryContacts(retrieved.ministryContacts[i]);
+          }
         }
-        for (let i = 0; i < retrieved.involvedParties.length; i++) {
-          await fetchPartiesContact(retrieved.involvedParties[i]);
+        if (exists(retrieved.involvedParties)) {
+          for (let i = 0; i < retrieved.involvedParties.length; i++) {
+            await fetchPartiesContact(retrieved.involvedParties[i]);
+          }
         }
         await fetchProviderContact(retrieved);
 
@@ -81,7 +89,7 @@ export const PropertyActivityEditContainer: React.FunctionComponent<
   );
 
   useEffect(() => {
-    if (propertyId !== undefined && propertyActivityId !== undefined) {
+    if (isValidId(propertyId) && isValidId(propertyActivityId)) {
       fetchActivity(propertyId, propertyActivityId);
     }
   }, [propertyId, propertyActivityId, fetchActivity]);
@@ -91,9 +99,9 @@ export const PropertyActivityEditContainer: React.FunctionComponent<
   const gstDecimal = gstConstant !== undefined ? parseFloat(gstConstant.value) * 0.01 : 0;
   const pstDecimal = pstConstant !== undefined ? parseFloat(pstConstant.value) * 0.01 : 0;
 
-  const onSave = async (model: Api_PropertyActivity) => {
+  const onSave = async (model: ApiGen_Concepts_PropertyActivity) => {
     let result = undefined;
-    if (model.id !== 0) {
+    if (isValidId(model.id)) {
       result = await updateActivity(propertyId, model);
     } else {
       result = await createActivity(propertyId, model);
@@ -106,7 +114,7 @@ export const PropertyActivityEditContainer: React.FunctionComponent<
   };
 
   const onCancelClick = () => {
-    if (propertyActivityId !== undefined) {
+    if (isValidId(propertyActivityId)) {
       history.push(
         `/mapview/sidebar/property/${propertyId}/management/activity/${propertyActivityId}`,
       );

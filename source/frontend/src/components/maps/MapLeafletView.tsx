@@ -219,7 +219,7 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
         <ZoomOutButton />
         <AdvancedFilterButton open={mapMachine.isFiltering} onToggle={mapMachine.toggleMapFilter} />
         <LayersControl open={mapMachine.isShowingMapLayers} onToggle={mapMachine.toggleMapLayer} />
-        <InventoryLayer zoom={zoom} bounds={bounds}></InventoryLayer>
+        <InventoryLayer zoom={zoom} bounds={bounds} maxZoom={MAP_MAX_ZOOM}></InventoryLayer>
       </ReactLeafletMap>
     </Styled.MapContainer>
   );

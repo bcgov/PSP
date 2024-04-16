@@ -58,24 +58,17 @@
 
     public class AcquisitionOwner
     {
-        public string ContactType { get; set; } = null!;
-        public bool isPrimary { get; set; } = false;
-        public string GivenNames { get; set; } = null!;
-        public string LastName { get; set; } = null!;
-        public string OtherName { get; set; } = null!;
-        public string CorporationName { get; set; } = null!;
-        public string IncorporationNumber { get; set; } = null!;
-        public string RegistrationNumber { get; set; } = null!;
-        public string MailAddressLine1 { get; set; } = null!;
-        public string MailAddressLine2 { get; set; } = null!;
-        public string MailAddressLine3 { get; set; } = null!;
-        public string MailCity { get; set; } = null!;
-        public string MailProvince { get; set; } = null!;
-        public string MailCountry { get; set; } = null!;
-        public string MailOtherCountry { get; set; } = null!;
-        public string MailPostalCode { get; set; } = null!;
-        public string Email { get; set; } = null!;
-        public string Phone { get; set; } = null!;
+        public string OwnerContactType { get; set; } = null!;
+        public bool OwnerIsPrimary { get; set; } = false;
+        public string OwnerGivenNames { get; set; } = null!;
+        public string OwnerLastName { get; set; } = null!;
+        public string OwnerOtherName { get; set; } = null!;
+        public string OwnerCorporationName { get; set; } = null!;
+        public string OwnerIncorporationNumber { get; set; } = null!;
+        public string OwnerRegistrationNumber { get; set; } = null!;
+        public Address OwnerMailAddress { get; set; } = new Address();
+        public string OwnerEmail { get; set; } = null!;
+        public string OwnerPhone { get; set; } = null!;
     }
 
     public class AcquisitionFileChecklist
@@ -137,12 +130,14 @@
     public class AcquisitionAgreement
     {
         public string AgreementStatus { get; set; } = null!;
+        public string AgreementCancellationReason { get; set; } = null!;
         public string AgreementLegalSurveyPlan { get; set; } = null!;
         public string AgreementType { get; set; } = null!;
         public string AgreementDate { get; set; } = null!;
         public string AgreementCompletionDate { get; set; } = null!;
         public string AgreementCommencementDate { get; set; } = null!;
         public string AgreementTerminationDate { get; set; } = null!;
+        public string AgreementPossessionDate { get; set; } = null!;
         public string AgreementPurchasePrice { get; set; } = null!;
         public string AgreementDepositDue { get; set; } = null!;
         public string AgreementDepositAmount { get; set; } = null!;

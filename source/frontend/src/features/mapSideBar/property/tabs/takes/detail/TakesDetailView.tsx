@@ -14,22 +14,22 @@ import * as API from '@/constants/API';
 import { Claims } from '@/constants/claims';
 import Roles from '@/constants/roles';
 import { TakesStatusTypes } from '@/constants/takesStatusTypes';
+import { isAcquisitionFile } from '@/features/mapSideBar/acquisition/add/models';
 import { cannotEditMessage } from '@/features/mapSideBar/acquisition/common/constants';
-import { isAcquisitionFile } from '@/features/mapSideBar/acquisition/tabs/agreement/update/models';
 import StatusUpdateSolver from '@/features/mapSideBar/acquisition/tabs/fileDetails/detail/statusUpdateSolver';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
-import { Api_PropertyFile } from '@/models/api/PropertyFile';
-import { Api_Take } from '@/models/api/Take';
+import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
+import { ApiGen_Concepts_Take } from '@/models/api/generated/ApiGen_Concepts_Take';
 import { getApiPropertyName, prettyFormatDate, prettyFormatUTCDate } from '@/utils';
 
 import { StyledBorderSection, StyledNoTabSection } from '../styles';
 
 export interface ITakesDetailViewProps {
-  takes: Api_Take[];
+  takes: ApiGen_Concepts_Take[];
   allTakesCount: number;
   loading: boolean;
-  fileProperty: Api_PropertyFile;
+  fileProperty: ApiGen_Concepts_FileProperty;
   onEdit: (edit: boolean) => void;
 }
 

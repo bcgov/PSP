@@ -1022,7 +1022,7 @@ exports[`Lease and License List View matches snapshot 1`] = `
                 Status
                 <div
                   class="c13"
-                  data-testid="sort-column-statusType"
+                  data-testid="sort-column-fileStatusTypeCode"
                 >
                   <svg
                     class="c14"
@@ -1059,13 +1059,9 @@ exports[`Lease and License List View matches snapshot 1`] = `
           </div>
         </div>
         <div
-          class="table-loading"
+          class="no-rows-message"
         >
-          <div
-            class="spinner-border"
-            role="status"
-            title="table-loading"
-          />
+          Lease / License details do not exist in PIMS inventory
         </div>
       </div>
       <div

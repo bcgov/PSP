@@ -8,11 +8,23 @@ import {
   PropertyStatusTypes,
   PropertyTenureTypes,
 } from '@/constants/index';
-import { IAccessRequest, IAddress, IOrganization, IPerson, IProperty } from '@/interfaces';
+import { IAddress, IOrganization, IPerson } from '@/interfaces';
 import { BillingInfo, LtsaOrders, OrderParent } from '@/interfaces/ltsaModels';
-import { Api_Person } from '@/models/api/Person';
-import { Api_User } from '@/models/api/User';
+import { ApiGen_Concepts_AccessRequest } from '@/models/api/generated/ApiGen_Concepts_AccessRequest';
+import { ApiGen_Concepts_Address } from '@/models/api/generated/ApiGen_Concepts_Address';
+import { ApiGen_Concepts_Organization } from '@/models/api/generated/ApiGen_Concepts_Organization';
+import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_Person';
+import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
+import { ApiGen_Concepts_PropertyLease } from '@/models/api/generated/ApiGen_Concepts_PropertyLease';
+import { ApiGen_Concepts_User } from '@/models/api/generated/ApiGen_Concepts_User';
+import { getEmptyBaseAudit, getEmptyProperty } from '@/models/defaultInitializers';
 import { ILookupCode } from '@/store/slices/lookupCodes';
+import { toTypeCode, toTypeCodeNullable } from '@/utils/formUtils';
+
+import { getEmptyContactMethod, getEmptyPerson } from './contacts.mock';
+import { getEmptyPropertyLease } from './properties.mock';
+import { getEmptyRole } from './role.mock';
+import { getEmptyUser } from './user.mock';
 
 // TODO: PSP-4410 This needs to be removed as Administrative Areas no longer exist.
 export const mockAdministrativeAreaLookups = [
@@ -92,15 +104,43 @@ export const mockOrganization: IOrganization = {
   mobile: '5556667777',
 };
 
-export const mockUser: Api_User = {
+export const mockApiOrganization: ApiGen_Concepts_Organization = {
+  id: 1,
+  name: 'Ministry of Transportation & Infrastructure',
+  isDisabled: false,
+  alias: null,
+  incorporationNumber: null,
+  organizationPersons: null,
+  organizationAddresses: null,
+  contactMethods: null,
+  comment: null,
+  rowVersion: null,
+  parentOrganizationId: null,
+  regionCode: null,
+  districtCode: null,
+  organizationTypeCode: null,
+  identifierTypeCode: null,
+  organizationIdentifier: null,
+  website: null,
+  parentOrganization: null,
+};
+
+export const mockUser: ApiGen_Concepts_User = {
   id: 1,
   guidIdentifierValue: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
   businessIdentifierValue: 'admin',
   position: '',
   userRegions: [],
   userRoles: [],
+  approvedById: 0,
+  userTypeCode: null,
+  note: null,
+  isDisabled: false,
+  lastLogin: null,
+  issueDate: null,
+  person: null,
+  ...getEmptyBaseAudit(1),
   appCreateTimestamp: '2021-05-04T19:07:09.6920606',
-  rowVersion: 1,
 };
 
 export const mockPerson: IPerson = {
@@ -108,11 +148,26 @@ export const mockPerson: IPerson = {
   mobile: '555-666-7777',
 };
 
-export const mockApiPerson: Api_Person = {
+export const mockApiPerson: ApiGen_Concepts_Person = {
+  ...getEmptyPerson(),
   id: 2,
   contactMethods: [
-    { contactMethodType: { id: ContactMethodTypes.WorkPhone }, value: '222-333-4444' },
-    { contactMethodType: { id: ContactMethodTypes.WorkMobile }, value: '555-666-7777' },
+    {
+      contactMethodType: toTypeCodeNullable(ContactMethodTypes.WorkPhone),
+      value: '222-333-4444',
+      id: 1,
+      personId: 0,
+      organizationId: null,
+      rowVersion: null,
+    },
+    {
+      contactMethodType: toTypeCodeNullable(ContactMethodTypes.WorkMobile),
+      value: '555-666-7777',
+      id: 2,
+      personId: 0,
+      organizationId: null,
+      rowVersion: null,
+    },
   ],
 };
 
@@ -569,114 +624,113 @@ export const mockLtsaResponse: LtsaOrders = {
   ],
 };
 
-export const mockProperties = [
-  {
+export const mockApiAddress: ApiGen_Concepts_Address = {
+  id: 1,
+  streetAddress1: '1234 mock Street',
+  streetAddress2: 'N/A',
+  streetAddress3: null,
+  municipality: 'Victoria',
+  provinceStateId: 1,
+  province: {
     id: 1,
-    pid: '000-000-000',
-    pin: '',
-    statusId: PropertyStatusTypes.UnderAdmin,
-    dataSourceId: PropertyDataSourceTypes.PAIMS,
-    dataSourceEffectiveDate: '2021-08-30T17:28:17.655Z',
-    classificationId: PropertyClassificationTypes.CoreOperational,
-    tenureId: PropertyTenureTypes.HighwayRoad,
-    zoning: '',
-    zoningPotential: '',
-    encumbranceReason: '',
-    isSensitive: false,
-    latitude: 48,
-    longitude: 123,
-    name: 'test name',
-    description: 'test',
-    addressId: mockAddress.id,
-    address: mockAddress,
-    landArea: 123,
-    landLegalDescription: 'test description',
+    code: 'BC',
+    description: 'British Columbia',
+    displayOrder: 10,
   },
-  {
-    id: 2,
-    pid: '000-000-001',
-    pin: '',
-    statusId: PropertyStatusTypes.UnderAdmin,
-    dataSourceId: PropertyDataSourceTypes.PAIMS,
-    dataSourceEffectiveDate: '2021-08-30T18:14:13.170Z',
-    classificationId: PropertyClassificationTypes.CoreOperational,
-    tenureId: PropertyTenureTypes.HighwayRoad,
-    zoning: '',
-    zoningPotential: '',
-    encumbranceReason: '',
-    isSensitive: false,
-    latitude: 49,
-    longitude: 123,
-    name: 'test name',
-    description: 'test',
-    addressId: mockAddress.id,
-    address: mockAddress,
-    landArea: 123,
-    landLegalDescription: 'test description',
+  postal: 'V1V1V1',
+  countryId: 1,
+  country: {
+    id: 1,
+    code: 'CA',
+    description: 'Canada',
+    displayOrder: 1,
   },
-  {
-    id: 100,
-    pid: '000-000-002',
-    pin: '',
-    statusId: PropertyStatusTypes.UnderAdmin,
-    dataSourceId: PropertyDataSourceTypes.PAIMS,
-    dataSourceEffectiveDate: '2021-08-30T18:14:13.170Z',
-    classificationId: PropertyClassificationTypes.CoreOperational,
-    tenureId: PropertyTenureTypes.HighwayRoad,
-    zoning: '',
-    zoningPotential: '',
-    encumbranceReason: '',
-    isSensitive: false,
-    latitude: 48,
-    longitude: 123,
-    name: 'test name',
-    description: 'test',
-    addressId: mockAddress.id,
-    address: mockAddress,
-    landArea: 123,
-    landLegalDescription: 'test description',
-  },
-] as IProperty[];
-
-export const mockParcel = mockProperties[0];
-
-export const mockParcelDetail = {
-  propertyDetail: mockParcel,
+  district: null,
+  region: null,
+  countryOther: null,
+  latitude: null,
+  longitude: null,
+  comment: null,
+  rowVersion: null,
+  districtCode: null,
+  regionCode: null,
 };
 
-export const mockAccessRequest: IAccessRequest = {
+export const mockApiProperty: ApiGen_Concepts_Property = {
+  ...getEmptyProperty(),
+  id: 1,
+  pid: 0,
+  pin: null,
+  status: toTypeCode(PropertyStatusTypes.UnderAdmin),
+  dataSource: toTypeCode(PropertyDataSourceTypes.PAIMS),
+  dataSourceEffectiveDateOnly: '2021-08-30T17:28:17.655Z',
+  propertyType: toTypeCode(PropertyClassificationTypes.CoreOperational),
+  tenures: [
+    {
+      id: 1,
+      propertyId: 1,
+      propertyTenureTypeCode: toTypeCode(PropertyTenureTypes.HighwayRoad),
+      ...getEmptyBaseAudit(),
+    },
+  ],
+  zoning: '',
+  zoningPotential: '',
+  isSensitive: false,
+  latitude: 48,
+  longitude: 123,
+  name: 'test name',
+  description: 'test',
+  address: mockApiAddress,
+  landArea: 123,
+  landLegalDescription: 'test description',
+};
+
+export const mockLeaseProperty = (id: number): ApiGen_Concepts_PropertyLease => {
+  return {
+    ...getEmptyPropertyLease(),
+    property: {
+      ...mockApiProperty,
+      id,
+    },
+  };
+};
+
+export const mockAccessRequest: ApiGen_Concepts_AccessRequest = {
   id: 2,
   userId: 1,
-  status: AccessRequestStatus.Received,
+  accessRequestStatusTypeCode: toTypeCode(AccessRequestStatus.Received),
   note: '',
   user: {
+    ...getEmptyUser(),
     id: 1,
-    keycloakUserId: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
-    displayName: 'User, Admin',
-    firstName: 'Admin',
-    surname: 'User',
-    email: 'admin@pims.gov.bc.ca',
+    person: {
+      ...getEmptyPerson(),
+      firstName: 'Admin',
+      surname: 'User',
+      contactMethods: [{ ...getEmptyContactMethod(), value: 'admin@pims.gov.bc.ca' }],
+    },
     businessIdentifierValue: 'admin',
     position: '',
     appCreateTimestamp: '2021-05-04T19:07:09.6920606',
-    hasValidClaims: true,
   },
-  organizationId: mockOrganization.id,
-  organization: mockOrganization,
+  roleId: 1,
   role: {
+    ...getEmptyRole(),
     id: 1,
     name: 'Real Estate Manager',
   },
-
+  regionCode: null,
+  ...getEmptyBaseAudit(),
   appCreateTimestamp: '2021-05-07T00:37:06.2457303',
 };
 
-export const mockApiAccessRequest = {
+export const mockApiAccessRequest: ApiGen_Concepts_AccessRequest = {
   id: 7,
   regionCode: {
     id: 2,
     description: 'Southern Interior Region',
     isDisabled: false,
+    displayOrder: null,
   },
   note: 'a note 2',
   user: {
@@ -697,6 +751,9 @@ export const mockApiAccessRequest = {
     appLastUpdateUserGuid: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
     appCreateUserGuid: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
     rowVersion: 41,
+    note: null,
+    person: null,
+    userTypeCode: null,
   },
   userId: 5,
   role: {
@@ -712,6 +769,10 @@ export const mockApiAccessRequest = {
     appLastUpdateUserid: 'Seed Data',
     appCreateUserid: 'Seed Data',
     rowVersion: 1,
+    appCreateUserGuid: null,
+    appLastUpdateUserGuid: null,
+    keycloakGroupId: null,
+    roleClaims: null,
   },
   roleId: 14,
   appCreateTimestamp: '2022-05-28T01:30:51.633',
@@ -721,6 +782,7 @@ export const mockApiAccessRequest = {
   appLastUpdateUserGuid: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
   appCreateUserGuid: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
   rowVersion: 11,
+  accessRequestStatusTypeCode: null,
 };
 
 export const mockParcelLayerResponse = {

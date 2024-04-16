@@ -9,7 +9,7 @@ import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { UserNameTooltip } from '@/components/common/UserNameTooltip';
 import { Claims } from '@/constants/index';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
-import { Api_Note } from '@/models/api/Note';
+import { ApiGen_Concepts_Note } from '@/models/api/generated/ApiGen_Concepts_Note';
 import { prettyFormatUTCDate } from '@/utils';
 
 export interface INoteDetailsFormModalProps {
@@ -18,11 +18,11 @@ export interface INoteDetailsFormModalProps {
   /** Whether the to show a loading spinner instead of the form */
   loading?: boolean;
   /** The note details to show */
-  note?: Api_Note;
+  note?: ApiGen_Concepts_Note;
   /** Optional - callback to notify when save button is pressed. */
   onCloseClick?: () => void;
   /** Edit note callback */
-  onEdit?: (note?: Api_Note) => void;
+  onEdit?: (note?: ApiGen_Concepts_Note) => void;
 }
 
 export const NoteDetailsFormModal: React.FC<
@@ -72,7 +72,13 @@ export const NoteDetailsFormModal: React.FC<
       ) : null}
       <Row className="no-gutters">
         <Col>
-          <Form.Control as="textarea" title="Note" readOnly rows={15} value={note?.note} />
+          <Form.Control
+            as="textarea"
+            title="Note"
+            readOnly
+            rows={15}
+            value={note?.note ?? undefined}
+          />
         </Col>
       </Row>
     </Container>

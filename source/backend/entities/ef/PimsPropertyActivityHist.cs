@@ -58,18 +58,6 @@ public partial class PimsPropertyActivityHist
     [StringLength(2000)]
     public string RequestSource { get; set; }
 
-    [Column("PRETAX_AMT", TypeName = "money")]
-    public decimal? PretaxAmt { get; set; }
-
-    [Column("GST_AMT", TypeName = "money")]
-    public decimal? GstAmt { get; set; }
-
-    [Column("PST_AMT", TypeName = "money")]
-    public decimal? PstAmt { get; set; }
-
-    [Column("TOTAL_AMT", TypeName = "money")]
-    public decimal? TotalAmt { get; set; }
-
     [Column("IS_DISABLED")]
     public bool? IsDisabled { get; set; }
 

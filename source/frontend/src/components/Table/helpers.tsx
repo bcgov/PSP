@@ -1,7 +1,6 @@
 import { CellProps } from 'react-table';
 
 import { ApiGen_Base_CodeType } from '@/models/api/generated/ApiGen_Base_CodeType';
-import Api_TypeCode from '@/models/api/TypeCode';
 import { formatMoney, formatNumber, prettyFormatDate, stringToFragment } from '@/utils';
 
 /**
@@ -25,7 +24,9 @@ export const renderPercentage = <T extends object>({ cell: { value } }: CellProp
 export const renderBooleanAsYesNo = ({ value }: CellProps<any, boolean | undefined>) =>
   stringToFragment(value ? 'Y' : 'N');
 
-export const renderTypeCode = ({ value }: CellProps<any, Api_TypeCode<any> | undefined | null>) =>
+export const renderTypeCode = ({
+  value,
+}: CellProps<any, ApiGen_Base_CodeType<any> | undefined | null>) =>
   stringToFragment(value?.description ?? '');
 
 export const renderGenTypeCode = ({

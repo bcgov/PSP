@@ -64,6 +64,36 @@ namespace Pims.Dal.Test.Repositories
             result.DispositionFileId.Should().Be(1);
             result.FileNumber.Equals("D-100");
         }
+
+        [Fact]
+        public void Add_WithRetiredProperty_Should_Fail()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.DispositionAdd);
+            var dispositionFile = EntityHelper.CreateDispositionFile();
+
+            dispositionFile.PimsDispositionFileProperties = new List<PimsDispositionFileProperty>()
+            {
+                new PimsDispositionFileProperty()
+                {
+                    PropertyId = 100,
+                    Property = new PimsProperty()
+                    {
+                        IsRetired = true,
+                    }
+                },
+            };
+
+            var repository = helper.CreateRepository<DispositionFileRepository>(user);
+
+            // Act
+            Action act = () => repository.Add(dispositionFile);
+
+            // Assert
+            var ex = act.Should().Throw<BusinessRuleViolationException>();
+            ex.WithMessage("Retired property can not be selected.");
+        }
         #endregion
 
         #region Update
@@ -1003,8 +1033,8 @@ namespace Pims.Dal.Test.Repositories
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.DispositionAdd);
             var dspFile = EntityHelper.CreateDispositionFile();
-            dspFile.FileNumber = "fileNumber";
-            var filter = new DispositionFilter() { FileNameOrNumberOrReference = "fileNumber" };
+            dspFile.FileNumber = "100";
+            var filter = new DispositionFilter() { FileNameOrNumberOrReference = "D-100" };
 
             helper.CreatePimsContext(user, true).AddAndSaveChanges(dspFile);
 

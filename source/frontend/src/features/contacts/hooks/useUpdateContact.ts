@@ -4,8 +4,9 @@ import { toast } from 'react-toastify';
 
 import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
-import { IEditableOrganization, IEditablePerson } from '@/interfaces/editable-contact';
 import { IApiError } from '@/interfaces/IApiError';
+import { ApiGen_Concepts_Organization } from '@/models/api/generated/ApiGen_Concepts_Organization';
+import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_Person';
 
 /**
  * hook that updates a contact.
@@ -17,16 +18,18 @@ export const useUpdateContact = () => {
   const onError = useCallback((axiosError: AxiosError<IApiError>) => {
     if (axiosError?.response?.status === 400) {
       toast.error(axiosError?.response.data.error);
+      return Promise.resolve();
     } else {
       toast.error('Unable to save. Please try again.');
+      return Promise.reject(axiosError);
     }
   }, []);
 
   const { execute: updatePerson } = useApiRequestWrapper<
-    (person: IEditablePerson) => Promise<AxiosResponse<IEditablePerson, any>>
+    (person: ApiGen_Concepts_Person) => Promise<AxiosResponse<ApiGen_Concepts_Person, any>>
   >({
     requestFunction: useCallback(
-      async (person: IEditablePerson) => await putPerson(person),
+      async (person: ApiGen_Concepts_Person) => await putPerson(person),
       [putPerson],
     ),
     requestName: 'UpdatePerson',
@@ -35,10 +38,12 @@ export const useUpdateContact = () => {
   });
 
   const { execute: updateOrganization } = useApiRequestWrapper<
-    (person: IEditableOrganization) => Promise<AxiosResponse<IEditableOrganization, any>>
+    (
+      person: ApiGen_Concepts_Organization,
+    ) => Promise<AxiosResponse<ApiGen_Concepts_Organization, any>>
   >({
     requestFunction: useCallback(
-      async (organization: IEditableOrganization) => await putOrganization(organization),
+      async (organization: ApiGen_Concepts_Organization) => await putOrganization(organization),
       [putOrganization],
     ),
     requestName: 'UpdateOrganization',

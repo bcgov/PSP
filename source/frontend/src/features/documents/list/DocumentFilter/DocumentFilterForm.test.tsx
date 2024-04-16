@@ -73,7 +73,7 @@ describe('DocumentFilterForm component', () => {
       initialValues: { ...defaultDocumentFilter },
     });
 
-    act(() => {
+    await act(async () => {
       fillInput(container, 'documentType', 'Registered', 'select');
     });
 
@@ -87,7 +87,7 @@ describe('DocumentFilterForm component', () => {
       initialValues: { ...defaultDocumentFilter },
     });
 
-    act(() => {
+    await act(async () => {
       fillInput(container, 'documentStatus', 'Draft', 'select');
     });
 
@@ -101,7 +101,7 @@ describe('DocumentFilterForm component', () => {
       initialValues: { ...defaultDocumentFilter },
     });
 
-    act(() => {
+    await act(async () => {
       fillInput(container, 'filename', 'someDocName', 'input');
     });
 

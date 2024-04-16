@@ -1,8 +1,8 @@
-import { Formik, FormikHelpers, FormikProps } from 'formik';
+import { Formik, FormikProps } from 'formik';
 import * as React from 'react';
 import { useEffect, useMemo, useRef } from 'react';
 import { MdTopic } from 'react-icons/md';
-import { Prompt, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
 
@@ -10,7 +10,8 @@ import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineCo
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
 import { useInitialMapSelectorProperties } from '@/hooks/useInitialMapSelectorProperties';
-import { Api_ResearchFile } from '@/models/api/ResearchFile';
+import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
+import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Concepts_ResearchFile';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { featuresetToMapProperty } from '@/utils/mapPropertyUtils';
 
@@ -28,14 +29,17 @@ export interface IAddResearchContainerProps {
 export const AddResearchContainer: React.FunctionComponent<
   React.PropsWithChildren<IAddResearchContainerProps>
 > = props => {
+  const { onClose } = props;
+
   const history = useHistory();
   const formikRef = useRef<FormikProps<ResearchForm>>(null);
   const mapMachine = useMapStateMachine();
   const selectedFeatureDataset = mapMachine.selectedFeatureDataset;
+  const { setModalContent, setDisplayModal } = useModalContext();
 
   const initialForm = useMemo(() => {
     const researchForm = new ResearchForm();
-    if (!!selectedFeatureDataset) {
+    if (selectedFeatureDataset) {
       researchForm.properties = [
         PropertyForm.fromMapProperty(featuresetToMapProperty(selectedFeatureDataset)),
       ];
@@ -59,14 +63,14 @@ export const AddResearchContainer: React.FunctionComponent<
   }, [initialForm]);
 
   const saveResearchFile = async (
-    researchFile: Api_ResearchFile,
+    researchFile: ApiGen_Concepts_ResearchFile,
     userOverrideCodes: UserOverrideCode[],
   ) => {
     formikRef.current?.setSubmitting(true);
     try {
       const response = await addResearchFile(researchFile, userOverrideCodes);
 
-      if (!!response?.fileName) {
+      if (response?.fileName) {
         if (researchFile.fileProperties?.find(fp => !fp.property?.address && !fp.property?.id)) {
           toast.warn(
             'Address could not be retrieved for this property, it will have to be provided manually in property details tab',
@@ -86,16 +90,29 @@ export const AddResearchContainer: React.FunctionComponent<
     return formikRef.current?.submitForm() ?? Promise.resolve();
   };
 
-  const handleCancel = () => {
-    props.onClose();
+  const cancelFunc = (resetForm: () => void, dirty: boolean) => {
+    if (!dirty) {
+      resetForm();
+      onClose();
+    } else {
+      setModalContent({
+        ...getCancelModalProps(),
+        handleOk: () => {
+          resetForm();
+          setDisplayModal(false);
+          onClose();
+        },
+      });
+      setDisplayModal(true);
+    }
   };
 
   return (
     <Formik<ResearchForm>
       innerRef={formikRef}
       initialValues={initialForm}
-      onSubmit={async (values: ResearchForm, formikHelpers: FormikHelpers<ResearchForm>) => {
-        const researchFile: Api_ResearchFile = values.toApi();
+      onSubmit={async (values: ResearchForm) => {
+        const researchFile: ApiGen_Concepts_ResearchFile = values.toApi();
         return withUserOverride((userOverrideCodes: UserOverrideCode[]) =>
           saveResearchFile(researchFile, userOverrideCodes),
         );
@@ -110,26 +127,15 @@ export const AddResearchContainer: React.FunctionComponent<
             <SidebarFooter
               isOkDisabled={formikProps?.isSubmitting || bcaLoading}
               onSave={handleSave}
-              onCancel={handleCancel}
+              onCancel={() => cancelFunc(formikProps.resetForm, formikProps.dirty)}
               displayRequiredFieldError={!formikProps.isValid && !!formikProps.submitCount}
             />
           }
           showCloseButton
-          onClose={handleCancel}
+          onClose={() => cancelFunc(formikProps.resetForm, formikProps.dirty)}
         >
           <StyledFormWrapper>
             <AddResearchForm />
-
-            <Prompt
-              when={
-                (formikProps.dirty ||
-                  (formikProps.values.properties !== initialForm.properties &&
-                    formikProps.submitCount === 0) ||
-                  (!formikProps.values.id && formikProps.values.properties.length > 0)) &&
-                !formikProps.isSubmitting
-              }
-              message="You have made changes on this form. Do you wish to leave without saving?"
-            />
           </StyledFormWrapper>
         </MapSideBarLayout>
       )}

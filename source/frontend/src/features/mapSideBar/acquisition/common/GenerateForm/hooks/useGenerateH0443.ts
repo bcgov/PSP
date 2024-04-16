@@ -4,11 +4,12 @@ import { useDocumentGenerationRepository } from '@/features/documents/hooks/useD
 import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { useProperties } from '@/hooks/repositories/useProperties';
-import { Api_AcquisitionFileOwner } from '@/models/api/AcquisitionFile';
 import { ApiGen_CodeTypes_ExternalResponseStatus } from '@/models/api/generated/ApiGen_CodeTypes_ExternalResponseStatus';
+import { ApiGen_Concepts_AcquisitionFileOwner } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileOwner';
 import { Api_GenerateOwner } from '@/models/generate/GenerateOwner';
 import { Api_GeneratePerson } from '@/models/generate/GeneratePerson';
 import { Api_GenerateProperty } from '@/models/generate/GenerateProperty';
+import { exists, isValidId } from '@/utils';
 
 export const useGenerateH0443 = () => {
   const { getPersonConcept, getOrganizationConcept } = useApiContacts();
@@ -37,11 +38,11 @@ export const useGenerateH0443 = () => {
 
       // Retrieve Properties
       const filePropertiesIds =
-        file.fileProperties?.map(fp => fp.propertyId).filter((p): p is number => !!p) || [];
+        file.fileProperties?.map(fp => fp.propertyId).filter(isValidId) || [];
       const properties = await getMultipleProperties(filePropertiesIds);
 
-      const owners: Api_AcquisitionFileOwner[] =
-        file.acquisitionFileOwners?.filter((x): x is Api_AcquisitionFileOwner => !!x) || [];
+      const owners: ApiGen_Concepts_AcquisitionFileOwner[] =
+        file.acquisitionFileOwners?.filter(exists) || [];
       const contactOwner = owners.find(x => x.isPrimaryContact === true);
 
       const h0443Data: H0443Data = {
@@ -111,7 +112,7 @@ export const useGenerateH0443 = () => {
         templateData: h0443Data,
         convertToType: null,
       });
-      generatedFile?.status === ApiGen_CodeTypes_ExternalResponseStatus.Success!! &&
+      generatedFile?.status === ApiGen_CodeTypes_ExternalResponseStatus.Success &&
         generatedFile?.payload &&
         showFile(generatedFile?.payload);
     }
@@ -119,9 +120,9 @@ export const useGenerateH0443 = () => {
   return generateLetter;
 };
 
-function getOwnerName(owner: Api_AcquisitionFileOwner): string {
+function getOwnerName(owner: ApiGen_Concepts_AcquisitionFileOwner): string {
   if (owner.isOrganization) {
-    var corpName: string = owner.lastNameAndCorpName || '';
+    let corpName: string = owner.lastNameAndCorpName || '';
     if (owner.incorporationNumber) {
       corpName += ` (Inc. No. ${owner.incorporationNumber})`;
     } else {
@@ -129,7 +130,7 @@ function getOwnerName(owner: Api_AcquisitionFileOwner): string {
     }
     return corpName;
   } else {
-    var personName: string = `${owner.givenName} ${owner.lastNameAndCorpName}`;
+    const personName = `${owner.givenName} ${owner.lastNameAndCorpName}`;
     return personName;
   }
 }

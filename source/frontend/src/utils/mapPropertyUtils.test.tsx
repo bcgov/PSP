@@ -7,7 +7,6 @@ import {
   mockFAParcelLayerResponseMultiPolygon,
 } from '@/mocks/faParcelLayerResponse.mock';
 import { getMockLocationFeatureDataset } from '@/mocks/featureset.mock';
-import { Api_PropertyFile } from '@/models/api/PropertyFile';
 
 import {
   featuresetToMapProperty,
@@ -19,11 +18,17 @@ import {
   NameSourceType,
   PropertyName,
 } from './mapPropertyUtils';
+import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
+import { getEmptyFileProperty } from '@/mocks/fileProperty.mock';
+import { getEmptyProperty } from '@/models/defaultInitializers';
+import { AreaUnitTypes } from '@/constants';
 
 const expectedMapProperty = {
   address: '',
+  areaUnit: 'M2',
   district: 2,
   districtName: 'Vancouver Island',
+  landArea: 647.4646,
   latitude: 48.432802005,
   longitude: -123.310041775,
   name: undefined,
@@ -114,17 +119,41 @@ describe('mapPropertyUtils', () => {
   });
 
   it.each([
-    [false, { label: NameSourceType.NONE, value: '' }, {}],
+    [false, { label: NameSourceType.NONE, value: '' }, { ...getEmptyFileProperty() }],
     [false, { label: NameSourceType.NONE, value: '' }, undefined],
-    [false, { label: NameSourceType.NONE, value: '' }, { propertyName: '' }],
-    [false, { label: NameSourceType.NONE, value: '' }, { propertyName: undefined }],
-    [false, { label: NameSourceType.NAME, value: 'name' }, { propertyName: 'name' }],
-    [true, { label: NameSourceType.NONE, value: '' }, { propertyName: 'name' }],
-    [false, { label: NameSourceType.NONE, value: '' }, { property: undefined }],
-    [false, { label: NameSourceType.PID, value: '000-000-001' }, { property: { pid: 1 } }],
+    [
+      false,
+      { label: NameSourceType.NONE, value: '' },
+      { ...getEmptyFileProperty(), propertyName: '' },
+    ],
+    [
+      false,
+      { label: NameSourceType.NONE, value: '' },
+      { ...getEmptyFileProperty(), propertyName: null },
+    ],
+    [
+      false,
+      { label: NameSourceType.NAME, value: 'name' },
+      { ...getEmptyFileProperty(), propertyName: 'name' },
+    ],
+    [
+      true,
+      { label: NameSourceType.NONE, value: '' },
+      { ...getEmptyFileProperty(), propertyName: 'name' },
+    ],
+    [
+      false,
+      { label: NameSourceType.NONE, value: '' },
+      { ...getEmptyFileProperty(), property: null },
+    ],
+    [
+      false,
+      { label: NameSourceType.PID, value: '000-000-001' },
+      { ...getEmptyFileProperty(), property: { ...getEmptyProperty(), pid: 1 } },
+    ],
   ])(
     'getFilePropertyName test with ignore name flag %p expecting %p source %p',
-    (skipName: boolean, expectedName: PropertyName, mapProperty?: Api_PropertyFile) => {
+    (skipName: boolean, expectedName: PropertyName, mapProperty?: ApiGen_Concepts_FileProperty) => {
       const fileName = getFilePropertyName(mapProperty, skipName);
       expect(fileName.label).toEqual(expectedName.label);
       expect(fileName.value).toEqual(expectedName.value);
@@ -139,8 +168,10 @@ describe('mapPropertyUtils', () => {
       [
         {
           address: undefined,
+          areaUnit: AreaUnitTypes.SquareMeters,
           district: undefined,
           districtName: undefined,
+          landArea: 29217,
           latitude: 48.76613749999999,
           longitude: -123.46163749999998,
           name: undefined,
@@ -159,8 +190,10 @@ describe('mapPropertyUtils', () => {
       [
         {
           address: undefined,
+          areaUnit: AreaUnitTypes.SquareMeters,
           district: undefined,
           districtName: undefined,
+          landArea: 29217,
           latitude: 48.76613749999999,
           longitude: -123.46163749999998,
           name: undefined,
@@ -191,7 +224,13 @@ describe('mapPropertyUtils', () => {
     [
       { ...getMockLocationFeatureDataset(), parcelFeature: {} as any },
       '',
-      { ...expectedMapProperty, pid: undefined, planNumber: undefined, polygon: undefined },
+      {
+        ...expectedMapProperty,
+        pid: undefined,
+        planNumber: undefined,
+        polygon: undefined,
+        landArea: 0,
+      },
     ],
     [
       { ...getMockLocationFeatureDataset(), pimsFeature: {} as any },

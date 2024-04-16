@@ -1,13 +1,36 @@
-import { IPagedItems } from '@/interfaces';
-import { Api_User } from '@/models/api/User';
+import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
+import { ApiGen_Concepts_User } from '@/models/api/generated/ApiGen_Concepts_User';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
+import { toTypeCodeNullable } from '@/utils/formUtils';
 
-export const getUserMock = (): Api_User => ({
+import { getEmptyPerson } from './contacts.mock';
+
+export const getEmptyUser = (): ApiGen_Concepts_User => {
+  return {
+    id: 0,
+    guidIdentifierValue: '',
+    businessIdentifierValue: null,
+    approvedById: 0,
+    position: null,
+    userTypeCode: null,
+    note: null,
+    isDisabled: false,
+    lastLogin: null,
+    issueDate: null,
+    userRoles: null,
+    person: null,
+    userRegions: null,
+    ...getEmptyBaseAudit(),
+  };
+};
+
+export const getUserMock = (): ApiGen_Concepts_User => ({
   id: 30,
   guidIdentifierValue: 'e81274eb-a007-4f2e-ada3-2817efcdb0a6',
   businessIdentifierValue: 'desmith@idir',
   approvedById: 0,
   position: 'pos',
-  userTypeCode: { id: 'CONTRACT' },
+  userTypeCode: toTypeCodeNullable('CONTRACT'),
   note: '',
   isDisabled: false,
   lastLogin: '2022-06-14T16:49:27.127',
@@ -33,6 +56,7 @@ export const getUserMock = (): Api_User => ({
         appCreateUserid: 'Seed Data',
         appLastUpdateUserGuid: '1b93f614-91da-4b32-b36e-bd2c6ebd12e2',
         rowVersion: 2,
+        appCreateUserGuid: null,
       },
       appCreateTimestamp: '2022-04-27T19:04:07.18',
       appLastUpdateTimestamp: '2022-04-27T19:04:07.18',
@@ -41,6 +65,7 @@ export const getUserMock = (): Api_User => ({
       appLastUpdateUserGuid: 'e81274eb-a007-4f2e-ada3-2817efcdb0a6',
       appCreateUserGuid: 'e81274eb-a007-4f2e-ada3-2817efcdb0a6',
       rowVersion: 2,
+      user: null,
     },
     {
       id: 58,
@@ -62,6 +87,7 @@ export const getUserMock = (): Api_User => ({
         appCreateUserid: 'Seed Data',
         appLastUpdateUserGuid: '1b93f614-91da-4b32-b36e-bd2c6ebd12e2',
         rowVersion: 5,
+        appCreateUserGuid: null,
       },
       appCreateTimestamp: '2022-04-27T19:04:07.18',
       appLastUpdateTimestamp: '2022-04-27T19:04:07.18',
@@ -70,9 +96,11 @@ export const getUserMock = (): Api_User => ({
       appLastUpdateUserGuid: 'e81274eb-a007-4f2e-ada3-2817efcdb0a6',
       appCreateUserGuid: 'e81274eb-a007-4f2e-ada3-2817efcdb0a6',
       rowVersion: 1,
+      user: null,
     },
   ],
   person: {
+    ...getEmptyPerson(),
     id: 40977,
     isDisabled: false,
     surname: 'Smith',
@@ -86,7 +114,10 @@ export const getUserMock = (): Api_User => ({
           id: 'WORKEMAIL',
           description: 'Work email',
           isDisabled: false,
+          displayOrder: null,
         },
+        personId: 0,
+        organizationId: null,
         value: 'devin.smith@gov.bc.ca',
         rowVersion: 1,
       },
@@ -106,6 +137,7 @@ export const getUserMock = (): Api_User => ({
         issueDate: '2022-06-30T21:07:04.477',
         userRoles: [],
         person: {
+          ...getEmptyPerson(),
           id: 10,
           isDisabled: false,
           surname: 'Analyst',
@@ -120,12 +152,16 @@ export const getUserMock = (): Api_User => ({
         appLastUpdateUserGuid: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
         appCreateUserGuid: 'd64886c0-72d7-48b9-ba4e-ef1506f93308',
         rowVersion: 4,
+        lastLogin: null,
+        note: null,
+        userTypeCode: null,
       },
       userId: 10,
       region: {
         id: 1,
         description: 'South Coast Region',
         isDisabled: false,
+        displayOrder: null,
       },
       regionCode: 1,
       appCreateTimestamp: '2022-06-30T21:14:11.13',
@@ -146,7 +182,7 @@ export const getUserMock = (): Api_User => ({
   rowVersion: 107,
 });
 
-export const getMockPagedUsers = (): IPagedItems<Api_User> => ({
+export const getMockPagedUsers = (): ApiGen_Base_Page<ApiGen_Concepts_User> => ({
   items: [
     {
       id: 30,
@@ -179,6 +215,7 @@ export const getMockPagedUsers = (): IPagedItems<Api_User> => ({
             appCreateUserid: 'Seed Data',
             appLastUpdateUserGuid: '1b93f614-91da-4b32-b36e-bd2c6ebd12e2',
             rowVersion: 2,
+            appCreateUserGuid: null,
           },
           appCreateTimestamp: '2022-04-27T19:04:07.18',
           appLastUpdateTimestamp: '2022-04-27T19:04:07.18',
@@ -187,6 +224,7 @@ export const getMockPagedUsers = (): IPagedItems<Api_User> => ({
           appLastUpdateUserGuid: 'e81274eb-a007-4f2e-ada3-2817efcdb0a6',
           appCreateUserGuid: 'e81274eb-a007-4f2e-ada3-2817efcdb0a6',
           rowVersion: 2,
+          user: null,
         },
         {
           id: 58,
@@ -208,6 +246,7 @@ export const getMockPagedUsers = (): IPagedItems<Api_User> => ({
             appCreateUserid: 'Seed Data',
             appLastUpdateUserGuid: '1b93f614-91da-4b32-b36e-bd2c6ebd12e2',
             rowVersion: 5,
+            appCreateUserGuid: null,
           },
           appCreateTimestamp: '2022-04-27T19:04:07.18',
           appLastUpdateTimestamp: '2022-04-27T19:04:07.18',
@@ -216,9 +255,11 @@ export const getMockPagedUsers = (): IPagedItems<Api_User> => ({
           appLastUpdateUserGuid: 'e81274eb-a007-4f2e-ada3-2817efcdb0a6',
           appCreateUserGuid: 'e81274eb-a007-4f2e-ada3-2817efcdb0a6',
           rowVersion: 1,
+          user: null,
         },
       ],
       person: {
+        ...getEmptyPerson(),
         id: 40977,
         isDisabled: false,
         surname: 'Smith',
@@ -232,7 +273,10 @@ export const getMockPagedUsers = (): IPagedItems<Api_User> => ({
               id: 'WORKEMAIL',
               description: 'Work email',
               isDisabled: false,
+              displayOrder: null,
             },
+            personId: 0,
+            organizationId: null,
             value: 'devin.smith@gov.bc.ca',
             rowVersion: 1,
           },
@@ -247,6 +291,7 @@ export const getMockPagedUsers = (): IPagedItems<Api_User> => ({
       appLastUpdateUserGuid: 'e81274eb-a007-4f2e-ada3-2817efcdb0a6',
       appCreateUserGuid: 'e81274eb-a007-4f2e-ada3-2817efcdb0a6',
       rowVersion: 108,
+      userTypeCode: null,
     },
     {
       id: 31,
@@ -279,6 +324,7 @@ export const getMockPagedUsers = (): IPagedItems<Api_User> => ({
             appCreateUserid: 'Seed Data',
             appLastUpdateUserGuid: '1b93f614-91da-4b32-b36e-bd2c6ebd12e2',
             rowVersion: 2,
+            appCreateUserGuid: null,
           },
           appCreateTimestamp: '2022-04-27T18:58:57.727',
           appLastUpdateTimestamp: '2022-04-27T18:58:57.727',
@@ -287,6 +333,7 @@ export const getMockPagedUsers = (): IPagedItems<Api_User> => ({
           appLastUpdateUserGuid: 'e81274eb-a007-4f2e-ada3-2817efcdb0a6',
           appCreateUserGuid: 'e81274eb-a007-4f2e-ada3-2817efcdb0a6',
           rowVersion: 2,
+          user: null,
         },
         {
           id: 56,
@@ -308,6 +355,7 @@ export const getMockPagedUsers = (): IPagedItems<Api_User> => ({
             appCreateUserid: 'Seed Data',
             appLastUpdateUserGuid: '1b93f614-91da-4b32-b36e-bd2c6ebd12e2',
             rowVersion: 5,
+            appCreateUserGuid: null,
           },
           appCreateTimestamp: '2022-04-27T18:59:41.457',
           appLastUpdateTimestamp: '2022-04-27T18:59:41.457',
@@ -316,9 +364,11 @@ export const getMockPagedUsers = (): IPagedItems<Api_User> => ({
           appLastUpdateUserGuid: 'e81274eb-a007-4f2e-ada3-2817efcdb0a6',
           appCreateUserGuid: 'e81274eb-a007-4f2e-ada3-2817efcdb0a6',
           rowVersion: 1,
+          user: null,
         },
       ],
       person: {
+        ...getEmptyPerson(),
         id: 40978,
         isDisabled: false,
         surname: 'Rodriguez',
@@ -332,7 +382,10 @@ export const getMockPagedUsers = (): IPagedItems<Api_User> => ({
               id: 'WORKEMAIL',
               description: 'Work email',
               isDisabled: false,
+              displayOrder: null,
             },
+            personId: 0,
+            organizationId: null,
             value: 'manuel.1.rodriguez@gov.bc.ca',
             rowVersion: 1,
           },
@@ -347,6 +400,7 @@ export const getMockPagedUsers = (): IPagedItems<Api_User> => ({
       appLastUpdateUserGuid: '0ce12717-b4f3-409d-ac2e-45115275d1b6',
       appCreateUserGuid: '0ce12717-b4f3-409d-ac2e-45115275d1b6',
       rowVersion: 53,
+      userTypeCode: null,
     },
     {
       id: 32,
@@ -379,6 +433,7 @@ export const getMockPagedUsers = (): IPagedItems<Api_User> => ({
             appCreateUserid: 'Seed Data',
             appLastUpdateUserGuid: '1b93f614-91da-4b32-b36e-bd2c6ebd12e2',
             rowVersion: 5,
+            appCreateUserGuid: null,
           },
           appCreateTimestamp: '2022-05-04T17:35:57.743',
           appLastUpdateTimestamp: '2022-05-04T17:35:57.743',
@@ -387,6 +442,7 @@ export const getMockPagedUsers = (): IPagedItems<Api_User> => ({
           appLastUpdateUserGuid: 'f9f99a99-2529-4093-8894-b85e5e880083',
           appCreateUserGuid: 'f9f99a99-2529-4093-8894-b85e5e880083',
           rowVersion: 1,
+          user: null,
         },
         {
           id: 60,
@@ -408,6 +464,7 @@ export const getMockPagedUsers = (): IPagedItems<Api_User> => ({
             appCreateUserid: 'Seed Data',
             appLastUpdateUserGuid: '1b93f614-91da-4b32-b36e-bd2c6ebd12e2',
             rowVersion: 2,
+            appCreateUserGuid: null,
           },
           appCreateTimestamp: '2022-05-16T22:52:06.063',
           appLastUpdateTimestamp: '2022-05-16T22:52:06.063',
@@ -416,9 +473,11 @@ export const getMockPagedUsers = (): IPagedItems<Api_User> => ({
           appLastUpdateUserGuid: 'f9f99a99-2529-4093-8894-b85e5e880083',
           appCreateUserGuid: 'f9f99a99-2529-4093-8894-b85e5e880083',
           rowVersion: 2,
+          user: null,
         },
       ],
       person: {
+        ...getEmptyPerson(),
         id: 40979,
         isDisabled: false,
         surname: 'Bhargava',
@@ -433,7 +492,10 @@ export const getMockPagedUsers = (): IPagedItems<Api_User> => ({
               id: 'WORKMOBIL',
               description: 'Work mobile phone',
               isDisabled: false,
+              displayOrder: null,
             },
+            personId: 0,
+            organizationId: null,
             value: '7780000001',
             rowVersion: 1,
           },
@@ -443,7 +505,10 @@ export const getMockPagedUsers = (): IPagedItems<Api_User> => ({
               id: 'WORKEMAIL',
               description: 'Work email',
               isDisabled: false,
+              displayOrder: null,
             },
+            personId: 0,
+            organizationId: null,
             value: 'devashish.bhargava@gov.bc.ca',
             rowVersion: 1,
           },
@@ -459,6 +524,7 @@ export const getMockPagedUsers = (): IPagedItems<Api_User> => ({
       appLastUpdateUserGuid: 'f9f99a99-2529-4093-8894-b85e5e880083',
       appCreateUserGuid: 'f9f99a99-2529-4093-8894-b85e5e880083',
       rowVersion: 80,
+      userTypeCode: null,
     },
     {
       id: 33,
@@ -469,6 +535,7 @@ export const getMockPagedUsers = (): IPagedItems<Api_User> => ({
       issueDate: '2022-03-29T18:33:43.673',
       userRoles: [],
       person: {
+        ...getEmptyPerson(),
         id: 40980,
         isDisabled: false,
         surname: 'Neitz',
@@ -482,7 +549,10 @@ export const getMockPagedUsers = (): IPagedItems<Api_User> => ({
               id: 'WORKEMAIL',
               description: 'Work email',
               isDisabled: false,
+              displayOrder: null,
             },
+            personId: 0,
+            organizationId: null,
             value: 'brennan.neitz@gov.bc.ca',
             rowVersion: 1,
           },
@@ -497,6 +567,10 @@ export const getMockPagedUsers = (): IPagedItems<Api_User> => ({
       appLastUpdateUserGuid: '0fccde13-e332-4243-b19b-4e7d65edafcb',
       appCreateUserGuid: '0fccde13-e332-4243-b19b-4e7d65edafcb',
       rowVersion: 1,
+      lastLogin: null,
+      note: null,
+      position: null,
+      userTypeCode: null,
     },
     {
       id: 34,
@@ -508,6 +582,7 @@ export const getMockPagedUsers = (): IPagedItems<Api_User> => ({
       issueDate: '2022-03-30T20:06:07.92',
       userRoles: [],
       person: {
+        ...getEmptyPerson(),
         id: 40981,
         isDisabled: false,
         surname: 'Sanchez',
@@ -521,7 +596,10 @@ export const getMockPagedUsers = (): IPagedItems<Api_User> => ({
               id: 'WORKEMAIL',
               description: 'Work email',
               isDisabled: false,
+              displayOrder: null,
             },
+            personId: 0,
+            organizationId: null,
             value: 'alejandro.sanchez@gov.bc.ca',
             rowVersion: 1,
           },
@@ -536,10 +614,12 @@ export const getMockPagedUsers = (): IPagedItems<Api_User> => ({
       appLastUpdateUserGuid: 'fd7b464b-d9a6-4fe1-b540-04d7b90f617e',
       appCreateUserGuid: 'fd7b464b-d9a6-4fe1-b540-04d7b90f617e',
       rowVersion: 61,
+      note: null,
+      position: null,
+      userTypeCode: null,
     },
   ],
   page: 1,
-  pageIndex: 0,
   quantity: 5,
   total: 42,
 });

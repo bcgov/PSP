@@ -6,16 +6,17 @@ import { useOrganizationRepository } from '@/features/contacts/repositories/useO
 import { usePersonRepository } from '@/features/contacts/repositories/usePersonRepository';
 import { useGenerateH120 } from '@/features/mapSideBar/acquisition/common/GenerateForm/hooks/useGenerateH120';
 import { IApiError } from '@/interfaces/IApiError';
-import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
-import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
-import { Api_Organization } from '@/models/api/Organization';
-import { Api_Person } from '@/models/api/Person';
+import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
+import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
+import { ApiGen_Concepts_Organization } from '@/models/api/generated/ApiGen_Concepts_Organization';
+import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_Person';
+import { exists, isValidId } from '@/utils';
 
 import { CompensationRequisitionDetailViewProps } from './CompensationRequisitionDetailView';
 
 export interface CompensationRequisitionDetailContainerProps {
-  compensation: Api_CompensationRequisition;
-  acquisitionFile: Api_AcquisitionFile;
+  compensation: ApiGen_Concepts_CompensationRequisition;
+  acquisitionFile: ApiGen_Concepts_AcquisitionFile;
   clientConstant: string;
   loading: boolean;
   setEditMode: (editMode: boolean) => void;
@@ -27,8 +28,10 @@ export const CompensationRequisitionDetailContainer: React.FunctionComponent<
 > = ({ compensation, setEditMode, View, clientConstant, acquisitionFile, loading }) => {
   const onGenerate = useGenerateH120();
 
-  const [payeePerson, setPayeePerson] = useState<Api_Person | undefined>();
-  const [payeeOrganization, setPayeeOrganization] = useState<Api_Organization | undefined>();
+  const [payeePerson, setPayeePerson] = useState<ApiGen_Concepts_Person | undefined>();
+  const [payeeOrganization, setPayeeOrganization] = useState<
+    ApiGen_Concepts_Organization | undefined
+  >();
 
   const {
     getPersonDetail: { execute: getPerson, loading: loadingPerson },
@@ -39,28 +42,25 @@ export const CompensationRequisitionDetailContainer: React.FunctionComponent<
   } = useOrganizationRepository();
 
   const fetchCompensationPayee = useCallback(async () => {
-    if (compensation.id !== null) {
+    if (isValidId(compensation.id)) {
       try {
-        if (!!compensation.acquisitionFileTeam) {
-          if (!!compensation.acquisitionFileTeam.personId) {
+        if (exists(compensation.acquisitionFileTeam)) {
+          if (isValidId(compensation.acquisitionFileTeam.personId)) {
             const person = await getPerson(compensation.acquisitionFileTeam.personId);
             setPayeePerson(person);
           }
-          if (!!compensation.acquisitionFileTeam.organizationId) {
+          if (isValidId(compensation.acquisitionFileTeam.organizationId)) {
             const organization = await getOrganization(
               compensation.acquisitionFileTeam.organizationId,
             );
             setPayeeOrganization(organization);
           }
-        } else if (!!compensation.interestHolder) {
-          if (
-            compensation.interestHolder.personId !== undefined &&
-            compensation.interestHolder.personId !== null
-          ) {
+        } else if (compensation.interestHolder) {
+          if (isValidId(compensation.interestHolder.personId)) {
             const person = await getPerson(compensation.interestHolder.personId);
             setPayeePerson(person);
           }
-          if (!!compensation.interestHolder.organizationId) {
+          if (isValidId(compensation.interestHolder.organizationId)) {
             const organization = await getOrganization(compensation.interestHolder.organizationId);
             setPayeeOrganization(organization);
           }

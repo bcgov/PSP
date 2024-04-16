@@ -10,13 +10,12 @@ import { catchAxiosError } from '@/customAxios';
 import { IPropertyFilter } from '@/features/properties/filter/IPropertyFilter';
 import { useGeoServer } from '@/hooks/layer-api/useGeoServer';
 import { useApiProperties } from '@/hooks/pims-api/useApiProperties';
-import { IPagedItems } from '@/interfaces';
-import { Api_Property } from '@/models/api/Property';
+import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
+import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
+import { getEmptyProperty } from '@/models/defaultInitializers';
 import { logRequest, logSuccess } from '@/store/slices/network/networkSlice';
 
 import { useApiRequestWrapper } from '../util/useApiRequestWrapper';
-
-const ignoreErrorCodes = [404];
 
 export const useProperties = () => {
   const dispatch = useDispatch();
@@ -30,38 +29,37 @@ export const useProperties = () => {
   const { getPropertyWfs } = useGeoServer();
 
   const fetchProperties = useApiRequestWrapper<
-    (propertyBounds: IPropertyFilter | null) => Promise<AxiosResponse<IPagedItems<Api_Property>>>
+    (
+      propertyBounds: IPropertyFilter | null,
+    ) => Promise<AxiosResponse<ApiGen_Base_Page<ApiGen_Concepts_Property>>>
   >({
     requestFunction: useCallback(
       async (propertyBounds: IPropertyFilter | null) => await getPropertiesPagedApi(propertyBounds),
       [getPropertiesPagedApi],
     ),
     requestName: actionTypes.GET_PARCELS,
-    skipErrorLogCodes: ignoreErrorCodes,
     throwError: true,
   });
 
   const { execute: getPropertyWrapped, loading: getPropertyLoading } = useApiRequestWrapper<
-    (id: number) => Promise<AxiosResponse<Api_Property>>
+    (id: number) => Promise<AxiosResponse<ApiGen_Concepts_Property>>
   >({
     requestFunction: useCallback(
       async (id: number) => await getPropertyConceptWithIdApi(id),
       [getPropertyConceptWithIdApi],
     ),
     requestName: actionTypes.GET_PARCELS,
-    skipErrorLogCodes: ignoreErrorCodes,
     throwError: true,
   });
 
   const getProperties = useApiRequestWrapper<
-    (propertyIds: number[]) => Promise<AxiosResponse<Api_Property[]>>
+    (propertyIds: number[]) => Promise<AxiosResponse<ApiGen_Concepts_Property[]>>
   >({
     requestFunction: useCallback(
       async (propertyIds: number[]) => await getPropertiesApi(propertyIds),
       [getPropertiesApi],
     ),
     requestName: 'getProperties',
-    skipErrorLogCodes: ignoreErrorCodes,
     throwError: true,
   });
 
@@ -70,14 +68,15 @@ export const useProperties = () => {
    * @param params Id of the property
    */
   const fetchPropertyWithId = useCallback(
-    async (id: number): Promise<Api_Property> => {
+    async (id: number): Promise<ApiGen_Concepts_Property> => {
       // Due to spatial information being stored in BC Albers in the database, we need to make TWO requests here:
       //   1. to the REST API to fetch property field attributes (e.g. address, etc)
       //   2. to GeoServer to fetch latitude/longitude in expected web mercator projection (EPSG:4326)
       return Promise.all([getPropertyWrapped(id), getPropertyWfs(id)]).then(
         ([propertyResponse, wfsResponse]) => {
           const [longitude, latitude] = wfsResponse?.geometry?.coordinates || [];
-          const property: Api_Property = {
+          const property: ApiGen_Concepts_Property = {
+            ...getEmptyProperty(),
             ...propertyResponse,
             latitude,
             longitude,

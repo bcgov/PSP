@@ -6,6 +6,7 @@ import { noop } from 'lodash';
 
 import { Claims, LeaseTermStatusTypes } from '@/constants';
 import { LeaseFormModel } from '@/features/leases/models';
+import { toTypeCodeNullable } from '@/utils/formUtils';
 import { act, fillInput, renderAsync, RenderOptions, screen, userEvent } from '@/utils/test-utils';
 import { getAllByRole as getAllByRoleBase } from '@/utils/test-utils';
 
@@ -17,8 +18,8 @@ const history = createMemoryHistory();
 const mockAxios = new MockAdapter(axios);
 export const defaultTestFormLeasePayment: FormLeasePayment = {
   ...defaultFormLeasePayment,
-  leasePaymentMethodType: { id: 'Cheque' },
-  leasePaymentStatusTypeCode: { id: 'Paid' },
+  leasePaymentMethodType: toTypeCodeNullable('Cheque'),
+  leasePaymentStatusTypeCode: toTypeCodeNullable('Paid') ?? undefined,
   amountTotal: 1200,
   amountGst: 100,
   amountPreTax: 1100,
@@ -32,7 +33,7 @@ const defaultLeaseWithTermsPayments: LeaseFormModel = {
   terms: [
     {
       ...defaultFormLeaseTerm,
-      statusTypeCode: { id: LeaseTermStatusTypes.EXERCISED },
+      statusTypeCode: toTypeCodeNullable(LeaseTermStatusTypes.EXERCISED),
       payments: [{ ...defaultTestFormLeasePayment }],
     },
   ],
@@ -258,14 +259,14 @@ describe('PaymentsForm component', () => {
         isReceivable: false,
       });
       const notesButton = await findByTitle('notes');
-      act(() => {
+      await act(async () => {
         userEvent.click(notesButton);
       });
       await act(async () => {
         await fillInput(document.body, 'terms.0.payments.0.note', 'a test note', 'textarea');
       });
       const saveButton = getByText('Yes');
-      act(() => {
+      await act(async () => {
         userEvent.click(saveButton);
       });
       expect(onSave).toHaveBeenCalledWith({ ...defaultTestFormLeasePayment, note: 'a test note' });
@@ -278,7 +279,7 @@ describe('PaymentsForm component', () => {
         isReceivable: false,
       });
       const notesButton = await findByTitle('notes');
-      act(() => {
+      await act(async () => {
         userEvent.click(notesButton);
       });
       await act(async () => {
@@ -286,7 +287,7 @@ describe('PaymentsForm component', () => {
       });
       await screen.findByDisplayValue('a test note');
       const cancelButton = getByText('No');
-      act(() => {
+      await act(async () => {
         userEvent.click(cancelButton);
         userEvent.click(notesButton);
       });
@@ -303,7 +304,7 @@ describe('PaymentsForm component', () => {
         isReceivable: false,
       });
       const editButton = await findAllByTitle('edit actual');
-      userEvent.click(editButton[0]);
+      await act(async () => userEvent.click(editButton[0]));
       expect(onEdit).toHaveBeenCalledWith(defaultTestFormLeasePayment);
     });
 
@@ -316,7 +317,7 @@ describe('PaymentsForm component', () => {
         claims: [Claims.LEASE_EDIT],
       });
       const deleteButton = await findAllByTitle('delete actual');
-      userEvent.click(deleteButton[0]);
+      await act(async () => userEvent.click(deleteButton[0]));
       expect(onDelete).toHaveBeenCalledWith(defaultTestFormLeasePayment);
     });
   });

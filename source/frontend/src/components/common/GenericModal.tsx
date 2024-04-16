@@ -1,7 +1,13 @@
 import classNames from 'classnames';
 import { noop } from 'lodash';
 import React, { useState } from 'react';
-import { Modal, ModalProps as BsModalProps } from 'react-bootstrap';
+import {
+  Modal,
+  ModalDialog,
+  ModalDialogProps as BsModalDialogProps,
+  ModalProps as BsModalProps,
+} from 'react-bootstrap';
+import Draggable from 'react-draggable';
 import { FaExclamationCircle, FaTimesCircle, FaWindowClose } from 'react-icons/fa';
 import styled from 'styled-components';
 
@@ -24,9 +30,9 @@ export interface ModalVisibleState {
 
 export interface ModalContent {
   /** Optional function to control behaviour of cancel button. Default is to close the modal. */
-  handleCancel?: Function;
+  handleCancel?: () => void;
   /** Optional function to control behaviour of ok button. Default is to reload the app. */
-  handleOk?: Function;
+  handleOk?: () => void;
   handleOkDisabled?: boolean;
   /** Optional text to display on the cancel button. Default is Cancel. */
   cancelButtonText?: string;
@@ -68,6 +74,8 @@ export interface ModalContent {
     | 'outline-info'
     | 'outline-dark'
     | 'outline-light';
+  /** Optional href for the OK button. Providing a href will render an <a> element, styled as a button. */
+  okButtonHref?: string;
   /** Optional title to display - no default. */
   title?: string | React.ReactNode;
   /** Optional Heacer Icon to display - no default. */
@@ -85,6 +93,8 @@ export interface ModalContent {
   show?: boolean;
   /** optional override to hide the footer of the modal modal. Default is to show. */
   hideFooter?: boolean;
+  /** optional override to make the modal draggable. Defaults to false. */
+  draggable?: boolean;
 }
 
 export type ModalProps = ModalVisibleState & ModalContent;
@@ -104,6 +114,7 @@ export const GenericModal = (props: Omit<BsModalProps, 'onHide'> & ModalProps) =
     message,
     okButtonVariant,
     okButtonText,
+    okButtonHref,
     cancelButtonVariant,
     cancelButtonText,
     closeButton,
@@ -112,6 +123,7 @@ export const GenericModal = (props: Omit<BsModalProps, 'onHide'> & ModalProps) =
     variant,
     className,
     headerIcon,
+    draggable,
     ...rest
   } = props;
   const [show, setShow] = useState(true);
@@ -192,6 +204,7 @@ export const GenericModal = (props: Omit<BsModalProps, 'onHide'> & ModalProps) =
   return (
     <ModalContainer
       {...rest}
+      draggable={draggable}
       variant={variant}
       show={showState}
       modalSize={modalSize}
@@ -232,6 +245,7 @@ export const GenericModal = (props: Omit<BsModalProps, 'onHide'> & ModalProps) =
               variant={okButtonVariant ?? 'primary'}
               onClick={ok}
               disabled={handleOkDisabled}
+              href={okButtonHref}
               data-testid="ok-modal-button"
             >
               {okButtonText ?? 'Ok'}
@@ -243,16 +257,26 @@ export const GenericModal = (props: Omit<BsModalProps, 'onHide'> & ModalProps) =
   );
 };
 
+const DraggableModalDialog = (props: BsModalDialogProps) => {
+  return (
+    <Draggable handle=".modal-header">
+      <ModalDialog {...props} />
+    </Draggable>
+  );
+};
+
 const ModalContainer = (props: BsModalProps & ModalProps) => {
-  const { modalSize, ...rest } = props;
+  const { modalSize, draggable, ...rest } = props;
 
   return !props.asPopup ? (
     <div>
       <StyledModal
         {...rest}
-        show={props.show}
+        show={!!props.show}
         onHide={props.close}
         dialogClassName={classNames(modalSize, props.className)}
+        dialogAs={draggable ? DraggableModalDialog : ModalDialog}
+        $draggable={draggable}
       >
         {props.children}
       </StyledModal>
@@ -264,7 +288,7 @@ const ModalContainer = (props: BsModalProps & ModalProps) => {
   ) : null;
 };
 
-const StyledModal = styled(Modal)`
+const StyledModal = styled(Modal)<{ $draggable?: boolean }>`
   .modal-header {
     .close {
       color: white;
@@ -284,6 +308,8 @@ const StyledModal = styled(Modal)`
     align-items: center;
     color: ${props => props.theme.css.primaryBackgroundColor};
     background-color: ${props => props.theme.css.primaryColor};
+    /* show move cursor (crosshair) for draggable modals */
+    cursor: ${props => (props.$draggable ? 'move' : 'default')};
 
     .modal-title {
       font-family: BcSans-Bold;
@@ -319,7 +345,7 @@ const StyledModal = styled(Modal)`
       margin-top: 2.4rem;
       margin-bottom: 2.4rem;
 
-      button {
+      .Button {
         margin-right: 2.4rem;
         min-width: 9.5rem;
         height: 3.9rem;

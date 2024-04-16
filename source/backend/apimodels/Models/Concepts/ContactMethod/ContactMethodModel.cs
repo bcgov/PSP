@@ -15,6 +15,16 @@ namespace Pims.Api.Models.Concepts.ContactMethod
         public long Id { get; set; }
 
         /// <summary>
+        /// get/set - The person owner of the contact.
+        /// </summary>
+        public long? PersonId { get; set; }
+
+        /// <summary>
+        /// get/set - The organization owner of the contact.
+        /// </summary>
+        public long? OrganizationId { get; set; }
+
+        /// <summary>
         /// get/set - The contact method type.
         /// </summary>
         public CodeTypeModel<string> ContactMethodType { get; set; }

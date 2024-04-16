@@ -1,11 +1,11 @@
-import { Api_PropertyLease } from '@/models/api/PropertyLease';
+import { ApiGen_Concepts_PropertyLease } from '@/models/api/generated/ApiGen_Concepts_PropertyLease';
 
 import { Api_GenerateProperty } from '../GenerateProperty';
 
 export class Api_GenerateLeaseProperty {
   lease_area: string;
   property: Api_GenerateProperty;
-  constructor(propertyLease: Api_PropertyLease) {
+  constructor(propertyLease: ApiGen_Concepts_PropertyLease) {
     this.lease_area = propertyLease.leaseArea
       ? (propertyLease.leaseArea?.toString() ?? '') +
         ' ' +

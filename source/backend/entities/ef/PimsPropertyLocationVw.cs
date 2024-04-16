@@ -140,6 +140,9 @@ public partial class PimsPropertyLocationVw
     [Column("IS_OTHER_INTEREST")]
     public bool IsOtherInterest { get; set; }
 
+    [Column("IS_RETIRED")]
+    public bool? IsRetired { get; set; }
+
     [Column("IS_VISIBLE_TO_OTHER_AGENCIES")]
     public bool IsVisibleToOtherAgencies { get; set; }
 
@@ -148,7 +151,7 @@ public partial class PimsPropertyLocationVw
     public string Zoning { get; set; }
 
     [Column("ZONING_POTENTIAL")]
-    [StringLength(50)]
+    [StringLength(100)]
     public string ZoningPotential { get; set; }
 
     [Column("IS_PAYABLE_LEASE")]

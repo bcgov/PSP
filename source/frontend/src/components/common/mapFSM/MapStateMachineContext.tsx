@@ -33,10 +33,12 @@ export interface IMapStateMachineContext {
   pendingFitBounds: boolean;
   requestedFitBounds: LatLngBounds;
   isSelecting: boolean;
+  selectingComponentId: string | null;
   isFiltering: boolean;
   isShowingMapLayers: boolean;
   activePimsPropertyIds: number[];
   showDisposed: boolean;
+  showRetired: boolean;
 
   requestFlyToLocation: (latlng: LatLngLiteral) => void;
   requestFlyToBounds: (bounds: LatLngBounds) => void;
@@ -52,7 +54,7 @@ export interface IMapStateMachineContext {
   setMapSearchCriteria: (searchCriteria: IPropertyFilter) => void;
   refreshMapProperties: () => void;
   prepareForCreation: () => void;
-  startSelection: () => void;
+  startSelection: (selectingComponentId?: string) => void;
   finishSelection: () => void;
   toggleMapFilter: () => void;
   toggleMapLayer: () => void;
@@ -60,6 +62,8 @@ export interface IMapStateMachineContext {
 
   setVisiblePimsProperties: (propertyIds: number[]) => void;
   setShowDisposed: (show: boolean) => void;
+  setShowRetired: (show: boolean) => void;
+  changeSidebar: () => void;
 }
 
 const MapStateMachineContext = React.createContext<IMapStateMachineContext>(
@@ -83,7 +87,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
 
   const service = useInterpret(mapMachine, {
     actions: {
-      navigateToProperty: (context, event: any) => {
+      navigateToProperty: context => {
         const selectedFeatureData = context.mapLocationFeatureDataset;
         if (selectedFeatureData?.pimsFeature?.properties?.PROPERTY_ID) {
           const pimsFeature = selectedFeatureData.pimsFeature;
@@ -232,12 +236,19 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
     serviceSend({ type: 'PREPARE_FOR_CREATION' });
   }, [serviceSend]);
 
-  const startSelection = useCallback(() => {
-    serviceSend({ type: 'START_SELECTION' });
-  }, [serviceSend]);
+  const startSelection = useCallback(
+    (selectingComponentId?: string) => {
+      serviceSend({ type: 'START_SELECTION', selectingComponentId });
+    },
+    [serviceSend],
+  );
 
   const finishSelection = useCallback(() => {
     serviceSend({ type: 'FINISH_SELECTION' });
+  }, [serviceSend]);
+
+  const changeSidebar = useCallback(() => {
+    serviceSend({ type: 'CHANGE_SIDEBAR' });
   }, [serviceSend]);
 
   const setFilePropertyLocations = useCallback(
@@ -257,6 +268,13 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
   const setShowDisposed = useCallback(
     (show: boolean) => {
       serviceSend({ type: 'SET_SHOW_DISPOSED', show });
+    },
+    [serviceSend],
+  );
+
+  const setShowRetired = useCallback(
+    (show: boolean) => {
+      serviceSend({ type: 'SET_SHOW_RETIRED', show });
     },
     [serviceSend],
   );
@@ -307,10 +325,12 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         pendingFitBounds: state.matches({ mapVisible: { mapRequest: 'pendingFitBounds' } }),
         requestedFitBounds: state.context.requestedFitBounds,
         isSelecting: state.matches({ mapVisible: { featureView: 'selecting' } }),
+        selectingComponentId: state.context.selectingComponentId,
         isFiltering: isFiltering,
         isShowingMapLayers: isShowingMapLayers,
         activePimsPropertyIds: state.context.activePimsPropertyIds,
         showDisposed: state.context.showDisposed,
+        showRetired: state.context.showRetired,
 
         setMapSearchCriteria,
         refreshMapProperties,
@@ -331,6 +351,8 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         setFilePropertyLocations,
         setVisiblePimsProperties,
         setShowDisposed,
+        setShowRetired,
+        changeSidebar,
       }}
     >
       {children}

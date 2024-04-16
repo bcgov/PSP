@@ -3,19 +3,23 @@ import { createMemoryHistory } from 'history';
 import noop from 'lodash/noop';
 
 import { DetailAdministration, IDetailAdministrationProps } from '@/features/leases';
-import { LeaseFormModel } from '@/features/leases/models';
-import { mockParcel } from '@/mocks/filterData.mock';
+import { mockApiProperty } from '@/mocks/filterData.mock';
+import { getEmptyPropertyLease } from '@/mocks/properties.mock';
+import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
+import { getEmptyLease } from '@/models/defaultInitializers';
+import { toTypeCode } from '@/utils/formUtils';
 import { render, RenderOptions } from '@/utils/test-utils';
 
 const history = createMemoryHistory();
 
 describe('DetailAdministration component', () => {
   const setup = (
-    renderOptions: RenderOptions & IDetailAdministrationProps & { lease?: LeaseFormModel } = {},
+    renderOptions: RenderOptions &
+      IDetailAdministrationProps & { lease?: ApiGen_Concepts_Lease } = {},
   ) => {
     // render component under test
     const component = render(
-      <Formik onSubmit={noop} initialValues={renderOptions.lease ?? new LeaseFormModel()}>
+      <Formik onSubmit={noop} initialValues={renderOptions.lease ?? getEmptyLease()}>
         <DetailAdministration
           disabled={renderOptions.disabled}
           nameSpace={renderOptions.nameSpace}
@@ -34,8 +38,17 @@ describe('DetailAdministration component', () => {
   it('renders minimally as expected', () => {
     const { component } = setup({
       lease: {
-        ...new LeaseFormModel(),
-        properties: [{ ...mockParcel, areaUnitTypeCode: 'test', landArea: '123', leaseId: null }],
+        ...getEmptyLease(),
+        fileProperties: [
+          {
+            ...getEmptyPropertyLease(),
+            property: {
+              ...mockApiProperty,
+              areaUnit: toTypeCode('test'),
+              landArea: 123,
+            },
+          },
+        ],
       },
     });
     expect(component.asFragment()).toMatchSnapshot();
@@ -44,8 +57,17 @@ describe('DetailAdministration component', () => {
   it('renders a complete lease as expected', () => {
     const { component } = setup({
       lease: {
-        ...new LeaseFormModel(),
-        properties: [{ ...mockParcel, areaUnitTypeCode: 'test', landArea: '123', leaseId: null }],
+        ...getEmptyLease(),
+        fileProperties: [
+          {
+            ...getEmptyPropertyLease(),
+            property: {
+              ...mockApiProperty,
+              areaUnit: toTypeCode('test'),
+              landArea: 123,
+            },
+          },
+        ],
         amount: 1,
         description: 'a test description',
         programName: 'A program',
@@ -106,7 +128,7 @@ describe('DetailAdministration component', () => {
       component: { getByDisplayValue },
     } = setup({
       lease: {
-        ...new LeaseFormModel(),
+        ...getEmptyLease(),
         programName: 'A program',
       },
     });

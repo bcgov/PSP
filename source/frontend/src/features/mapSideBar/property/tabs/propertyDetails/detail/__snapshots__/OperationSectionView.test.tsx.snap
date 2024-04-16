@@ -1,0 +1,848 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Operation section view matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div />
+  .c6 {
+  float: right;
+  cursor: pointer;
+}
+
+.c1 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c3 {
+  font-size: 1.0em;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c0 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
+.c2 {
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
+.c5.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c4 {
+  font-weight: bold;
+}
+
+<div
+    class="c0 form-section position-relative"
+  >
+    <h2
+      class="c1"
+    >
+      <div
+        class="no-gutters row"
+      >
+        <div
+          class="col"
+        >
+          Subdivision History
+        </div>
+      </div>
+    </h2>
+    <div
+      class="collapse show"
+    >
+      <div
+        class="c2 form-section"
+      >
+        <h2
+          class="c3"
+        >
+          <div
+            class="no-gutters row"
+          >
+            <div
+              class="col"
+            >
+              <div
+                class="row"
+              >
+                <div
+                  class="pr-0 text-left col-auto"
+                >
+                  <label
+                    class="c4"
+                  >
+                    Created on:
+                  </label>
+                </div>
+                <div
+                  class="c5 text-left col"
+                >
+                  Dec 31, 2019 at 04:00 pm
+                </div>
+              </div>
+            </div>
+            <div
+              class="col-1"
+            >
+              <svg
+                class="c6"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <title>
+                  collapse-section
+                </title>
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M7 14l5-5 5 5z"
+                />
+              </svg>
+            </div>
+          </div>
+        </h2>
+        <div
+          class="collapse show"
+        >
+          <div
+            class="table"
+            data-testid="propertyOperationTable"
+            role="table"
+          >
+            <div
+              class="thead thead-light"
+            >
+              <div
+                class="tr"
+                role="row"
+                style="display: flex; flex: 1 0 auto; min-width: 150px;"
+              >
+                <div
+                  class="th"
+                  style="width: 4.7rem;"
+                />
+                <div
+                  class="th"
+                  colspan="1"
+                  role="columnheader"
+                  style="box-sizing: border-box; flex: 5 0 auto; min-width: 30px; width: 5px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
+                >
+                  <div
+                    class="sortable-column"
+                  >
+                    Parent
+                  </div>
+                </div>
+                <div
+                  class="th"
+                  colspan="1"
+                  role="columnheader"
+                  style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                >
+                  <div
+                    class="sortable-column"
+                  >
+                    Identifier
+                  </div>
+                </div>
+                <div
+                  class="th"
+                  colspan="1"
+                  role="columnheader"
+                  style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                >
+                  <div
+                    class="sortable-column"
+                  >
+                    Plan #
+                  </div>
+                </div>
+                <div
+                  class="th"
+                  colspan="1"
+                  role="columnheader"
+                  style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                >
+                  <div
+                    class="sortable-column"
+                  >
+                    Status
+                  </div>
+                </div>
+                <div
+                  class="th"
+                  colspan="1"
+                  role="columnheader"
+                  style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                >
+                  <div
+                    class="sortable-column"
+                  >
+                    Area
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="tbody"
+              role="rowgroup"
+            >
+              <div
+                class="tr-wrapper"
+              >
+                <div
+                  class="tr"
+                  role="row"
+                  style="display: flex; flex: 1 0 auto; min-width: 150px;"
+                >
+                  <div
+                    class="td expander svg-btn"
+                    data-testid="table-row-expander-1"
+                  >
+                    <svg
+                      fill="currentColor"
+                      height="24"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M10 17l5-5-5-5v10z"
+                      />
+                      <path
+                        d="M0 24V0h24v24H0z"
+                        fill="none"
+                      />
+                    </svg>
+                  </div>
+                  <div
+                    class="td"
+                    role="cell"
+                    style="box-sizing: border-box; flex: 5 0 auto; min-width: 30px; width: 5px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
+                    title=""
+                  >
+                    <span
+                      data-testid="isSource"
+                    >
+                      <svg
+                        color="black"
+                        fill="none"
+                        height="2rem"
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        style="color: black;"
+                        viewBox="0 0 24 24"
+                        width="2rem"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <polyline
+                          points="20 6 9 17 4 12"
+                        />
+                      </svg>
+                    </span>
+                  </div>
+                  <div
+                    class="td clickable"
+                    role="cell"
+                    style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                    title=""
+                  >
+                    <a
+                      href="/mapview/sidebar/property/1"
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    >
+                      Location: 123.000000, 48.000000
+                      <svg
+                        class="ml-2"
+                        fill="currentColor"
+                        height="1rem"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 512 512"
+                        width="1rem"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"
+                        />
+                      </svg>
+                    </a>
+                  </div>
+                  <div
+                    class="td"
+                    role="cell"
+                    style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                    title=""
+                  >
+                      
+                  </div>
+                  <div
+                    class="td"
+                    role="cell"
+                    style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                    title=""
+                  >
+                     Active 
+                  </div>
+                  <div
+                    class="td"
+                    role="cell"
+                    style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                    title=""
+                  >
+                    123 m
+                    <sup>
+                      2
+                    </sup>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="tr-wrapper"
+              >
+                <div
+                  class="tr"
+                  role="row"
+                  style="display: flex; flex: 1 0 auto; min-width: 150px;"
+                >
+                  <div
+                    class="td expander svg-btn"
+                    data-testid="table-row-expander-2"
+                  >
+                    <svg
+                      fill="currentColor"
+                      height="24"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M10 17l5-5-5-5v10z"
+                      />
+                      <path
+                        d="M0 24V0h24v24H0z"
+                        fill="none"
+                      />
+                    </svg>
+                  </div>
+                  <div
+                    class="td"
+                    role="cell"
+                    style="box-sizing: border-box; flex: 5 0 auto; min-width: 30px; width: 5px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
+                    title=""
+                  />
+                  <div
+                    class="td clickable"
+                    role="cell"
+                    style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                    title=""
+                  >
+                    <a
+                      href="/mapview/sidebar/property/2"
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    >
+                      PID: 000-000-001
+                      <svg
+                        class="ml-2"
+                        fill="currentColor"
+                        height="1rem"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 512 512"
+                        width="1rem"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"
+                        />
+                      </svg>
+                    </a>
+                  </div>
+                  <div
+                    class="td"
+                    role="cell"
+                    style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                    title=""
+                  >
+                      
+                  </div>
+                  <div
+                    class="td"
+                    role="cell"
+                    style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                    title=""
+                  >
+                     Active 
+                  </div>
+                  <div
+                    class="td"
+                    role="cell"
+                    style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                    title=""
+                  >
+                    123 m
+                    <sup>
+                      2
+                    </sup>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  .c6 {
+  float: right;
+  cursor: pointer;
+}
+
+.c1 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c3 {
+  font-size: 1.0em;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c0 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
+.c2 {
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
+.c5.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c4 {
+  font-weight: bold;
+}
+
+<div
+    class="c0 form-section position-relative"
+  >
+    <h2
+      class="c1"
+    >
+      <div
+        class="no-gutters row"
+      >
+        <div
+          class="col"
+        >
+          Consolidation History
+        </div>
+      </div>
+    </h2>
+    <div
+      class="collapse show"
+    >
+      <div
+        class="c2 form-section"
+      >
+        <h2
+          class="c3"
+        >
+          <div
+            class="no-gutters row"
+          >
+            <div
+              class="col"
+            >
+              <div
+                class="row"
+              >
+                <div
+                  class="pr-0 text-left col-auto"
+                >
+                  <label
+                    class="c4"
+                  >
+                    Created on:
+                  </label>
+                </div>
+                <div
+                  class="c5 text-left col"
+                >
+                  Dec 31, 2019 at 04:00 pm
+                </div>
+              </div>
+            </div>
+            <div
+              class="col-1"
+            >
+              <svg
+                class="c6"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <title>
+                  collapse-section
+                </title>
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M7 14l5-5 5 5z"
+                />
+              </svg>
+            </div>
+          </div>
+        </h2>
+        <div
+          class="collapse show"
+        >
+          <div
+            class="table"
+            data-testid="propertyOperationTable"
+            role="table"
+          >
+            <div
+              class="thead thead-light"
+            >
+              <div
+                class="tr"
+                role="row"
+                style="display: flex; flex: 1 0 auto; min-width: 150px;"
+              >
+                <div
+                  class="th"
+                  style="width: 4.7rem;"
+                />
+                <div
+                  class="th"
+                  colspan="1"
+                  role="columnheader"
+                  style="box-sizing: border-box; flex: 5 0 auto; min-width: 30px; width: 5px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
+                >
+                  <div
+                    class="sortable-column"
+                  >
+                    Child
+                  </div>
+                </div>
+                <div
+                  class="th"
+                  colspan="1"
+                  role="columnheader"
+                  style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                >
+                  <div
+                    class="sortable-column"
+                  >
+                    Identifier
+                  </div>
+                </div>
+                <div
+                  class="th"
+                  colspan="1"
+                  role="columnheader"
+                  style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                >
+                  <div
+                    class="sortable-column"
+                  >
+                    Plan #
+                  </div>
+                </div>
+                <div
+                  class="th"
+                  colspan="1"
+                  role="columnheader"
+                  style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                >
+                  <div
+                    class="sortable-column"
+                  >
+                    Status
+                  </div>
+                </div>
+                <div
+                  class="th"
+                  colspan="1"
+                  role="columnheader"
+                  style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                >
+                  <div
+                    class="sortable-column"
+                  >
+                    Area
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="tbody"
+              role="rowgroup"
+            >
+              <div
+                class="tr-wrapper"
+              >
+                <div
+                  class="tr"
+                  role="row"
+                  style="display: flex; flex: 1 0 auto; min-width: 150px;"
+                >
+                  <div
+                    class="td expander svg-btn"
+                    data-testid="table-row-expander-1"
+                  >
+                    <svg
+                      fill="currentColor"
+                      height="24"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M10 17l5-5-5-5v10z"
+                      />
+                      <path
+                        d="M0 24V0h24v24H0z"
+                        fill="none"
+                      />
+                    </svg>
+                  </div>
+                  <div
+                    class="td"
+                    role="cell"
+                    style="box-sizing: border-box; flex: 5 0 auto; min-width: 30px; width: 5px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
+                    title=""
+                  />
+                  <div
+                    class="td clickable"
+                    role="cell"
+                    style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                    title=""
+                  >
+                    <a
+                      href="/mapview/sidebar/property/1"
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    >
+                      Location: 123.000000, 48.000000
+                      <svg
+                        class="ml-2"
+                        fill="currentColor"
+                        height="1rem"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 512 512"
+                        width="1rem"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"
+                        />
+                      </svg>
+                    </a>
+                  </div>
+                  <div
+                    class="td"
+                    role="cell"
+                    style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                    title=""
+                  >
+                      
+                  </div>
+                  <div
+                    class="td"
+                    role="cell"
+                    style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                    title=""
+                  >
+                     Active 
+                  </div>
+                  <div
+                    class="td"
+                    role="cell"
+                    style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                    title=""
+                  >
+                    123 m
+                    <sup>
+                      2
+                    </sup>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="tr-wrapper"
+              >
+                <div
+                  class="tr"
+                  role="row"
+                  style="display: flex; flex: 1 0 auto; min-width: 150px;"
+                >
+                  <div
+                    class="td expander svg-btn"
+                    data-testid="table-row-expander-2"
+                  >
+                    <svg
+                      fill="currentColor"
+                      height="24"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M10 17l5-5-5-5v10z"
+                      />
+                      <path
+                        d="M0 24V0h24v24H0z"
+                        fill="none"
+                      />
+                    </svg>
+                  </div>
+                  <div
+                    class="td"
+                    role="cell"
+                    style="box-sizing: border-box; flex: 5 0 auto; min-width: 30px; width: 5px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
+                    title=""
+                  >
+                    <span
+                      data-testid="isSource"
+                    >
+                      <svg
+                        color="black"
+                        fill="none"
+                        height="2rem"
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        style="color: black;"
+                        viewBox="0 0 24 24"
+                        width="2rem"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <polyline
+                          points="20 6 9 17 4 12"
+                        />
+                      </svg>
+                    </span>
+                  </div>
+                  <div
+                    class="td clickable"
+                    role="cell"
+                    style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                    title=""
+                  >
+                    <a
+                      href="/mapview/sidebar/property/2"
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    >
+                      PID: 000-000-001
+                      <svg
+                        class="ml-2"
+                        fill="currentColor"
+                        height="1rem"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 512 512"
+                        width="1rem"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"
+                        />
+                      </svg>
+                    </a>
+                  </div>
+                  <div
+                    class="td"
+                    role="cell"
+                    style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                    title=""
+                  >
+                      
+                  </div>
+                  <div
+                    class="td"
+                    role="cell"
+                    style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                    title=""
+                  >
+                     Active 
+                  </div>
+                  <div
+                    class="td"
+                    role="cell"
+                    style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                    title=""
+                  >
+                    123 m
+                    <sup>
+                      2
+                    </sup>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

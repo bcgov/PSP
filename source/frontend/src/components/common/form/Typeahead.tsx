@@ -35,7 +35,7 @@ export interface ITypeaheadFieldProps<T extends TypeaheadModel> extends Typeahea
   /** used to trigger ref.current.blur where applicable */
   clearSelected?: boolean;
   /** restet clear  state via this component */
-  setClear?: Function;
+  setClear?: (clear: boolean) => void;
   /** get the component to select the item with closest label match to the input provided */
   selectClosest?: boolean;
 }
@@ -54,7 +54,6 @@ export function TypeaheadField<T extends TypeaheadModel>({
   multiSelections,
   onChange,
   setClear,
-  selected,
   clearSelected,
   outerClassName,
   selectClosest,
@@ -98,7 +97,7 @@ export function TypeaheadField<T extends TypeaheadModel>({
     }
   };
   if (!getOptionByValue) {
-    getOptionByValue = (value: T) => (!!value ? ([value] as T[]) : ([] as T[]));
+    getOptionByValue = (value: T) => (value ? ([value] as T[]) : ([] as T[]));
   }
 
   const ref = useRef<any>();
@@ -114,7 +113,7 @@ export function TypeaheadField<T extends TypeaheadModel>({
     }
   }, [clearMenu, clearSelected, setClear, name, setFieldValue]);
   return (
-    <StyledFormGroup className={classNames(!!required ? 'required' : '', outerClassName)}>
+    <StyledFormGroup className={classNames(required ? 'required' : '', outerClassName)}>
       {!!label && <Form.Label>{label}</Form.Label>}
       {!!tooltip && <TooltipIcon toolTipId="typeAhead-tip" toolTip={tooltip} />}
       <TooltipWrapper tooltipId={`${name}-error-tooltip}`} tooltip={errorTooltip}>

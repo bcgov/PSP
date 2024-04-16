@@ -5,7 +5,9 @@ import { Claims } from '@/constants/claims';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { getMockApiPropertyFiles } from '@/mocks/properties.mock';
 import { getMockApiTakes } from '@/mocks/takes.mock';
+import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { toTypeCodeNullable } from '@/utils/formUtils';
 import { act, render, RenderOptions, screen, userEvent, within } from '@/utils/test-utils';
 
 import TakesDetailView, { ITakesDetailViewProps } from './TakesDetailView';
@@ -58,21 +60,25 @@ describe('TakesDetailView component', () => {
     expect(spinner).toBeVisible();
   });
 
-  it('clicking the edit button fires the edit event', () => {
+  it('clicking the edit button fires the edit event', async () => {
     const { getByTitle } = setup({ props: { loading: true }, claims: [Claims.PROPERTY_EDIT] });
     const editButton = getByTitle('Edit takes');
-    act(() => userEvent.click(editButton));
+    await act(async () => userEvent.click(editButton));
     expect(onEdit).toHaveBeenCalled();
   });
 
   it('hides the edit button when the file has been completed', () => {
     const fileProperty = getMockApiPropertyFiles()[0];
+    const file: ApiGen_Concepts_File = fileProperty!.file as ApiGen_Concepts_File;
     const { queryByTitle, getByTestId } = setup({
       props: {
         loading: true,
         fileProperty: {
           ...fileProperty,
-          file: { ...fileProperty.file, fileStatusTypeCode: { id: AcquisitionStatus.Complete } },
+          file: {
+            ...file,
+            fileStatusTypeCode: toTypeCodeNullable(AcquisitionStatus.Complete),
+          },
         },
       },
       claims: [Claims.PROPERTY_EDIT],
@@ -88,8 +94,12 @@ describe('TakesDetailView component', () => {
       props: {
         loading: false,
         takes: [
-          { ...getMockApiTakes()[0], takeStatusTypeCode: { id: 'CANCELLED' }, id: 1 },
-          { ...getMockApiTakes()[0], takeStatusTypeCode: { id: 'INPROGRESS' } },
+          {
+            ...getMockApiTakes()[0],
+            takeStatusTypeCode: toTypeCodeNullable('CANCELLED'),
+            id: 1,
+          },
+          { ...getMockApiTakes()[0], takeStatusTypeCode: toTypeCodeNullable('INPROGRESS') },
         ],
         allTakesCount: 10,
       },
@@ -103,8 +113,12 @@ describe('TakesDetailView component', () => {
       props: {
         loading: false,
         takes: [
-          { ...getMockApiTakes()[0], takeStatusTypeCode: { id: 'CANCELLED' }, id: 1 },
-          { ...getMockApiTakes()[0], takeStatusTypeCode: { id: 'INPROGRESS' } },
+          {
+            ...getMockApiTakes()[0],
+            takeStatusTypeCode: toTypeCodeNullable('CANCELLED'),
+            id: 1,
+          },
+          { ...getMockApiTakes()[0], takeStatusTypeCode: toTypeCodeNullable('INPROGRESS') },
         ],
       },
     });
