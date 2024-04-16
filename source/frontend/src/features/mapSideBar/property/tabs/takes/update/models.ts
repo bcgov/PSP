@@ -53,6 +53,7 @@ export class TakeModel {
   isNewLandAct: 'false' | 'true';
   isNewInterestInSrw: 'false' | 'true';
   isNewLicenseToConstruct: 'false' | 'true';
+  isLeasePayable: 'false' | 'true';
   ltcEndDt: string;
   licenseToConstructArea: number;
   licenseToConstructAreaUnitTypeCode: string;
@@ -73,6 +74,9 @@ export class TakeModel {
   isAcquiredForInventory: 'false' | 'true';
   newHighwayDedicationArea: number;
   newHighwayDedicationAreaUnitTypeCode: string;
+  leasePayableEndDt: string;
+  leasePayableArea: number;
+  leasePayableAreaUnitTypeCode: string;
   rowVersion?: number;
   appCreateTimestamp: UtcIsoDateTime | null;
 
@@ -85,6 +89,7 @@ export class TakeModel {
     this.isNewLandAct = base.isNewLandAct ? 'true' : 'false';
     this.isNewLicenseToConstruct = base.isNewLicenseToConstruct ? 'true' : 'false';
     this.isNewInterestInSrw = base.isNewInterestInSrw ? 'true' : 'false';
+    this.isLeasePayable = base.isLeasePayable ? 'true' : 'false';
     this.licenseToConstructArea = base.licenseToConstructArea ?? 0;
     this.licenseToConstructAreaUnitTypeCode =
       fromTypeCodeNullable(base.areaUnitTypeCode) ?? AreaUnitTypes.SquareMeters.toString();
@@ -97,6 +102,8 @@ export class TakeModel {
     this.statutoryRightOfWayArea = base.statutoryRightOfWayArea ?? 0;
     this.statutoryRightOfWayAreaUnitTypeCode =
       fromTypeCodeNullable(base.areaUnitTypeCode) ?? AreaUnitTypes.SquareMeters.toString();
+    this.leasePayableAreaUnitTypeCode =
+      fromTypeCodeNullable(base.areaUnitTypeCode) ?? AreaUnitTypes.SquareMeters.toString();
     this.takeTypeCode = fromTypeCodeNullable(base.takeTypeCode);
     this.takeStatusTypeCode = fromTypeCodeNullable(base.takeStatusTypeCode);
     this.takeSiteContamTypeCode = base.takeSiteContamTypeCode
@@ -106,6 +113,8 @@ export class TakeModel {
     this.landActEndDt = base.landActEndDt ?? '';
     this.ltcEndDt = base.ltcEndDt ?? '';
     this.srwEndDt = base.srwEndDt ?? '';
+    this.leasePayableEndDt = base.leasePayableEndDt ?? '';
+    this.leasePayableArea = base.leasePayableArea ?? 0;
     this.landActDescription = base.landActTypeCode?.description ?? '';
     this.landActTypeCode = base.landActTypeCode?.id ?? '';
 
@@ -167,6 +176,14 @@ export class TakeModel {
       isNewLandAct: this.isNewLandAct === 'true',
       isNewLicenseToConstruct: this.isNewLicenseToConstruct === 'true',
       isNewInterestInSrw: this.isNewInterestInSrw === 'true',
+      isLeasePayable: this.isLeasePayable === 'true',
+      leasePayableArea:
+        convertArea(
+          parseFloat(this.leasePayableArea.toString()),
+          this.leasePayableAreaUnitTypeCode,
+          AreaUnitTypes.SquareMeters.toString(),
+        ) || null,
+      leasePayableEndDt: stringToNull(this.leasePayableEndDt),
       ...getEmptyBaseAudit(this.rowVersion),
       completionDt: stringToNull(this.completionDt),
     };

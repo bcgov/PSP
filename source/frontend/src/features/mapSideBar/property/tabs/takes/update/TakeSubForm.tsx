@@ -52,6 +52,7 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({
     values,
     withNameSpace(nameSpace, 'isNewLicenseToConstruct'),
   );
+  const isLeasePayable = getIn(values, withNameSpace(nameSpace, 'isLeasePayable'));
   const takeStatusTypeCode = getIn(values, withNameSpace(nameSpace, 'takeStatusTypeCode'));
 
   React.useEffect(() => {
@@ -255,7 +256,7 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({
                   field={withNameSpace(nameSpace, 'statutoryRightOfWayArea')}
                 />
               </SectionField>
-              <SectionField label="SRW end date" contentWidth="4">
+              <SectionField label="SRW end date" labelWidth="3" className="mt-4">
                 <FastDatePicker
                   field={withNameSpace(nameSpace, 'srwEndDt')}
                   formikProps={formikProps}
@@ -265,7 +266,7 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({
           )}
         </StyledBorderSection>
         <StyledBorderSection>
-          <SectionField label="Is a there a new Land Act tenure? *" labelWidth="8">
+          <SectionField label="Is there a new Land Act tenure? *" labelWidth="8">
             <RadioGroup
               radioValues={yesNoRadioGroupValues}
               flexDirection="row"
@@ -304,7 +305,7 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({
                   field={withNameSpace(nameSpace, 'landActArea')}
                 />
               </SectionField>
-              <SectionField label="End date" contentWidth="4">
+              <SectionField label="End date" labelWidth="3" className="mt-4">
                 <FastDatePicker
                   field={withNameSpace(nameSpace, 'landActEndDt')}
                   formikProps={formikProps}
@@ -355,9 +356,52 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({
                 />
               </SectionField>
 
-              <SectionField label="LTC end date" contentWidth="4">
+              <SectionField label="LTC end date" labelWidth="3" className="mt-4">
                 <FastDatePicker
                   field={withNameSpace(nameSpace, 'ltcEndDt')}
+                  formikProps={formikProps}
+                />
+              </SectionField>
+            </>
+          )}
+        </StyledBorderSection>
+        <StyledBorderSection>
+          <SectionField label="Is there a Lease (Payable)? *" labelWidth="8">
+            <RadioGroup
+              radioValues={yesNoRadioGroupValues}
+              flexDirection="row"
+              field={withNameSpace(nameSpace, 'isLeasePayable')}
+              handleChange={getModalWarning(() => {
+                setFieldValue(withNameSpace(nameSpace, 'isLeasePayable'), 'false');
+                setFieldValue(withNameSpace(nameSpace, 'leasePayableArea'), 0);
+                setFieldValue(withNameSpace(nameSpace, 'leasePayableEndDt'), '');
+              })}
+            />
+          </SectionField>
+          {isLeasePayable === 'true' && (
+            <>
+              <SectionField label="Area" labelWidth="12">
+                <AreaContainer
+                  onChange={(landArea, areaUnitTypeCode) => {
+                    formikProps.setFieldValue(
+                      withNameSpace(nameSpace, 'leasePayableArea'),
+                      landArea,
+                    );
+                    formikProps.setFieldValue(
+                      withNameSpace(nameSpace, 'leasePayableAreaUnitTypeCode'),
+                      areaUnitTypeCode,
+                    );
+                  }}
+                  isEditable
+                  unitCode={getIn(values, withNameSpace(nameSpace, 'leasePayableAreaUnitTypeCode'))}
+                  landArea={currentTake.leasePayableArea}
+                  field={withNameSpace(nameSpace, 'leasePayableArea')}
+                />
+              </SectionField>
+
+              <SectionField label="End date" labelWidth="3" className="mt-4">
+                <FastDatePicker
+                  field={withNameSpace(nameSpace, 'leasePayableEndDt')}
                   formikProps={formikProps}
                   disabled={!canEditTake}
                 />

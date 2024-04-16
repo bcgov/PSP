@@ -4,7 +4,7 @@ import { mockLookups } from '@/mocks/lookups.mock';
 import { getMockApiPropertyFiles } from '@/mocks/properties.mock';
 import { getMockApiTakes } from '@/mocks/takes.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { act, render, RenderOptions, screen, userEvent } from '@/utils/test-utils';
+import { act, prettyDOM, render, RenderOptions, screen, userEvent } from '@/utils/test-utils';
 
 import { TakeModel } from './models';
 import TakesUpdateForm, { ITakesUpdateFormProps } from './TakesUpdateForm';
@@ -193,6 +193,19 @@ describe('TakesUpdateForm component', () => {
 
     const noButton = getByTestId('radio-takes.0.istheresurplus-no');
     expect(noButton).toBeDisabled();
+  });
+
+  it('resets isLeasePayable values if radio button toggled from yes to no', async () => {
+    const { getByTestId, queryByDisplayValue } = setup({});
+    const noButton = getByTestId('radio-takes.0.isleasepayable-no');
+    await act(async () => userEvent.click(noButton));
+
+    console.log(prettyDOM(undefined, 999999));
+    expect(queryByDisplayValue('20231.28')).not.toBeNull();
+    const confirmButton = await screen.findByText('Confirm');
+    await act(async () => userEvent.click(confirmButton));
+
+    expect(queryByDisplayValue('20231.28')).toBeNull();
   });
 
   it('shows the edit button when the take has been completed for Admin users', () => {
