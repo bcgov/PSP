@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 const { createProxyMiddleware } = require('http-proxy-middleware');
 
 module.exports = function (app) {
@@ -12,10 +13,10 @@ module.exports = function (app) {
       logLevel: 'debug',
       cookiePathRewrite: '/',
       cookieDomainRewrite: '',
-      pathRewrite: function (path, req) {
+      pathRewrite: function (path) {
         return path;
       },
-      onProxyReq: function (proxyReq, req, res) {
+      onProxyReq: function (proxyReq) {
         proxyReq.setHeader('x-powered-by', 'onProxyReq');
       },
     }),
@@ -34,7 +35,7 @@ module.exports = function (app) {
       pathRewrite: {
         '^/ogs-internal/': '/', // remove base path
       },
-      onProxyReq: function (proxyReq, req, res) {
+      onProxyReq: function (proxyReq) {
         proxyReq.setHeader('x-powered-by', 'onProxyReq');
       },
     }),

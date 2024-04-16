@@ -6,7 +6,7 @@ import {
   getMockApiPropertyManagement,
   getMockApiPropertyManagementPurpose,
 } from '@/mocks/propertyManagement.mock';
-import { Api_PropertyManagement } from '@/models/api/Property';
+import { ApiGen_Concepts_PropertyManagement } from '@/models/api/generated/ApiGen_Concepts_PropertyManagement';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
@@ -54,7 +54,7 @@ describe('PropertyManagementDetailView component', () => {
   });
 
   it('renders as expected when provided valid data object', () => {
-    const apiManagement: Api_PropertyManagement = {
+    const apiManagement: ApiGen_Concepts_PropertyManagement = {
       ...getMockApiPropertyManagement(),
       managementPurposes: [getMockApiPropertyManagementPurpose()],
     };
@@ -69,7 +69,7 @@ describe('PropertyManagementDetailView component', () => {
   });
 
   it('displays existing values if they exist', () => {
-    const apiManagement: Api_PropertyManagement = {
+    const apiManagement: ApiGen_Concepts_PropertyManagement = {
       ...getMockApiPropertyManagement(),
       managementPurposes: [getMockApiPropertyManagementPurpose()],
     };
@@ -78,7 +78,9 @@ describe('PropertyManagementDetailView component', () => {
   });
 
   it('does not throw an exception for an invalid data object', () => {
-    const { getByText } = setup({ props: { propertyManagement: {} as Api_PropertyManagement } });
+    const { getByText } = setup({
+      props: { propertyManagement: {} as ApiGen_Concepts_PropertyManagement },
+    });
     expect(getByText(/property purpose/i)).toBeVisible();
   });
 

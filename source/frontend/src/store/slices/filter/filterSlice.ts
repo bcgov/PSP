@@ -14,7 +14,7 @@ const filterSlice = createSlice({
     builder.addCase(saveFilter, (state: any, action: any) => {
       return action.payload;
     });
-    builder.addCase(clearFilter, (state: any) => {
+    builder.addCase(clearFilter, () => {
       return '';
     });
   },

@@ -8,6 +8,8 @@ import { ApiGen_Base_CodeType } from './ApiGen_Base_CodeType';
 // LINK: @backend/apimodels/Models/Concepts/ContactMethod/ContactMethodModel.cs
 export interface ApiGen_Concepts_ContactMethod extends ApiGen_Base_BaseConcurrent {
   id: number;
+  personId: number | null;
+  organizationId: number | null;
   contactMethodType: ApiGen_Base_CodeType<string> | null;
   value: string | null;
 }

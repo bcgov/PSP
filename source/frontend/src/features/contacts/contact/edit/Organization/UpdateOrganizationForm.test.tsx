@@ -5,9 +5,13 @@ import { ContactMethodTypes } from '@/constants/contactMethodType';
 import { AddressTypes } from '@/constants/index';
 import { useOrganizationDetail } from '@/features/contacts/hooks/useOrganizationDetail';
 import { useUpdateContact } from '@/features/contacts/hooks/useUpdateContact';
-import { IEditableOrganization, IEditableOrganizationAddress } from '@/interfaces/editable-contact';
+import { getEmptyAddress } from '@/mocks/address.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
+import { getEmptyOrganization } from '@/mocks/organization.mock';
+import { ApiGen_Concepts_Organization } from '@/models/api/generated/ApiGen_Concepts_Organization';
+import { ApiGen_Concepts_OrganizationAddress } from '@/models/api/generated/ApiGen_Concepts_OrganizationAddress';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { toTypeCode } from '@/utils/formUtils';
 import { act, fillInput, render, RenderOptions } from '@/utils/test-utils';
 
 import UpdateOrganizationForm from './UpdateOrganizationForm';
@@ -17,39 +21,51 @@ const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
 
-const mockOrganization: IEditableOrganization = {
+const mockOrganization: ApiGen_Concepts_Organization = {
+  ...getEmptyOrganization(),
   id: 1,
   isDisabled: false,
   name: 'FooBarBaz Property Management',
   alias: '',
   incorporationNumber: 'BC123456789',
   comment: 'I got comments for you',
-  persons: undefined,
-  addresses: [],
+  organizationPersons: null,
+  organizationAddresses: null,
   contactMethods: [
-    { contactMethodTypeCode: { id: ContactMethodTypes.WorkEmail }, value: 'foo@bar.com' },
+    {
+      id: 1,
+      rowVersion: 7,
+      contactMethodType: toTypeCode(ContactMethodTypes.WorkEmail),
+      value: 'foo@bar.com',
+      personId: null,
+      organizationId: 1,
+    },
   ],
 };
 
-const mockAddress: IEditableOrganizationAddress = {
-  streetAddress1: 'Test Street',
-  streetAddress2: '',
-  streetAddress3: '',
-  municipality: 'Amsterdam',
-  provinceId: undefined,
-  countryId: 4,
-  countryOther: 'Netherlands',
-  postal: '123456',
-  addressTypeId: { id: AddressTypes.Mailing },
+const mockAddress: ApiGen_Concepts_OrganizationAddress = {
+  id: 1,
+  rowVersion: null,
+  organizationId: 9,
+  addressUsageType: toTypeCode(AddressTypes.Mailing),
+  address: {
+    ...getEmptyAddress(),
+    streetAddress1: 'Test Street',
+    streetAddress2: '',
+    streetAddress3: '',
+    municipality: 'Amsterdam',
+    provinceStateId: null,
+    countryId: 4,
+    countryOther: 'Netherlands',
+    postal: '123456',
+  },
 };
 
 // Mock API service calls
 jest.mock('@/features/contacts/hooks/useOrganizationDetail');
 jest.mock('@/features/contacts/hooks/useUpdateContact');
 
-(useOrganizationDetail as jest.MockedFunction<typeof useOrganizationDetail>).mockReturnValue({
-  organization: mockOrganization,
-});
+const getOrganization = useOrganizationDetail as jest.MockedFunction<typeof useOrganizationDetail>;
 
 const updateOrganization = jest.fn();
 (useUpdateContact as jest.MockedFunction<typeof useUpdateContact>).mockReturnValue({
@@ -74,6 +90,9 @@ describe('UpdateOrganizationForm', () => {
   };
 
   beforeEach(() => {
+    getOrganization.mockReturnValue({
+      organization: mockOrganization,
+    });
     updateOrganization.mockClear();
   });
 
@@ -100,31 +119,37 @@ describe('UpdateOrganizationForm', () => {
     });
 
     it('should save the organization with new values', async () => {
-      const newValues: IEditableOrganization = {
+      const newValues: ApiGen_Concepts_Organization = {
         ...mockOrganization,
         name: 'RandomName Property Management',
         contactMethods: [
           {
-            contactMethodTypeCode: { id: ContactMethodTypes.PersonalEmail },
+            id: 1,
+            contactMethodType: toTypeCode(ContactMethodTypes.PersonalEmail),
             value: 'test@test.com',
+            rowVersion: 7,
+            personId: null,
+            organizationId: mockOrganization.id,
           },
         ],
       };
       const { getSaveButton, container } = setup({ id: 1 });
 
       // change some fields
-      await fillInput(container, 'name', newValues.name);
-      await fillInput(
-        container,
-        'emailContactMethods.0.value',
-        newValues?.contactMethods?.[0].value,
-      );
-      await fillInput(
-        container,
-        'emailContactMethods.0.contactMethodTypeCode',
-        newValues?.contactMethods?.[0].contactMethodTypeCode?.id,
-        'select',
-      );
+      await act(async () => {
+        await fillInput(container, 'name', newValues.name);
+        await fillInput(
+          container,
+          'emailContactMethods.0.value',
+          newValues?.contactMethods?.[0].value,
+        );
+        await fillInput(
+          container,
+          'emailContactMethods.0.contactMethodTypeCode',
+          newValues?.contactMethods?.[0].contactMethodType?.id,
+          'select',
+        );
+      });
 
       const save = getSaveButton();
       await act(async () => userEvent.click(save));
@@ -133,23 +158,45 @@ describe('UpdateOrganizationForm', () => {
     });
 
     it(`should save the form with address information when 'Other' country selected and no province is supplied`, async () => {
-      const newValues: IEditableOrganization = {
+      const retrievedOrganization = {
         ...mockOrganization,
         name: 'RandomName Property Management',
-        addresses: [mockAddress],
+        organizationAddresses: [mockAddress],
       };
+      const newValues: ApiGen_Concepts_Organization = {
+        ...retrievedOrganization,
+        name: 'RandomName Property Management',
+      };
+
+      getOrganization.mockReturnValue({
+        organization: retrievedOrganization,
+      });
       const { getSaveButton, container } = setup({ id: 1 });
 
       // change some fields
-      await fillInput(container, 'name', newValues.name);
-      await fillInput(container, 'mailingAddress.streetAddress1', mockAddress.streetAddress1);
-      await fillInput(container, 'mailingAddress.municipality', mockAddress.municipality);
+      await act(async () => {
+        await fillInput(container, 'name', newValues.name);
+        await fillInput(
+          container,
+          'mailingAddress.streetAddress1',
+          mockAddress.address?.streetAddress1,
+        );
+        await fillInput(
+          container,
+          'mailingAddress.municipality',
+          mockAddress.address?.municipality,
+        );
 
-      // wait for re-render upon changing country to OTHER
-      await act(async () => fillInput(container, 'mailingAddress.countryId', 4, 'select'));
+        // wait for re-render upon changing country to OTHER
+        fillInput(container, 'mailingAddress.countryId', 4, 'select');
 
-      await fillInput(container, 'mailingAddress.countryOther', mockAddress.countryOther);
-      await fillInput(container, 'mailingAddress.postal', mockAddress.postal);
+        await fillInput(
+          container,
+          'mailingAddress.countryOther',
+          mockAddress.address?.countryOther,
+        );
+        await fillInput(container, 'mailingAddress.postal', mockAddress.address?.postal);
+      });
 
       const save = getSaveButton();
       await act(async () => userEvent.click(save));

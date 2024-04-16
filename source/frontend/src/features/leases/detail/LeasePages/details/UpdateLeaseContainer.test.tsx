@@ -13,9 +13,12 @@ import { useLeaseDetail } from '@/features/leases/hooks/useLeaseDetail';
 import { getDefaultFormLease } from '@/features/leases/models';
 import { getMockApiLease } from '@/mocks/lease.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
-import { Api_Lease, defaultApiLease } from '@/models/api/Lease';
+import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
+import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
+import { defaultApiLease, getEmptyLease } from '@/models/defaultInitializers';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { toTypeCodeNullable } from '@/utils/formUtils';
 import { renderAsync, screen } from '@/utils/test-utils';
 
 import UpdateLeaseContainer, { UpdateLeaseContainerProps } from './UpdateLeaseContainer';
@@ -66,7 +69,7 @@ describe('Update lease container component', () => {
   };
 
   beforeEach(() => {
-    mockAxios.onGet().reply(200, { id: 1, ...defaultApiLease });
+    mockAxios.onGet().reply(200, { ...defaultApiLease(), id: 1 });
     mockAxios.resetHistory();
   });
   it('renders as expected', async () => {
@@ -82,7 +85,7 @@ describe('Update lease container component', () => {
       viewProps.onSubmit({ ...getDefaultFormLease(), purposeTypeCode: 'BCFERRIES' }),
     );
 
-    expect(JSON.parse(mockAxios.history.put[0].data)).toEqual(leaseData);
+    expect(JSON.parse(mockAxios.history.put[0].data)).toEqual(expectedLease);
   });
 
   it('triggers the confirm popup', async () => {
@@ -93,7 +96,7 @@ describe('Update lease container component', () => {
       viewProps.onSubmit({ ...getDefaultFormLease(), purposeTypeCode: 'BCFERRIES' }),
     );
 
-    expect(JSON.parse(mockAxios.history.put[0].data)).toEqual(leaseData);
+    expect(JSON.parse(mockAxios.history.put[0].data)).toEqual(expectedLease);
   });
 
   it('clicking on the save anyways popup saves the form', async () => {
@@ -109,22 +112,23 @@ describe('Update lease container component', () => {
     const button = await screen.findByText('Yes');
     await act(async () => userEvent.click(button));
 
-    expect(JSON.parse(mockAxios.history.put[1].data)).toEqual(leaseData);
+    expect(JSON.parse(mockAxios.history.put[1].data)).toEqual(expectedLease);
   });
 });
 
-const leaseData: Api_Lease = {
-  startDate: '',
+const expectedLease: ApiGen_Concepts_Lease = {
+  ...getEmptyLease(),
+  startDate: EpochIsoDateTime,
   amount: 0,
-  paymentReceivableType: { id: 'RCVBL' },
-  purposeType: { id: 'BCFERRIES' },
-  statusType: { id: 'DRAFT' },
+  paymentReceivableType: toTypeCodeNullable('RCVBL'),
+  purposeType: toTypeCodeNullable('BCFERRIES'),
+  fileStatusTypeCode: toTypeCodeNullable('DRAFT'),
   type: null,
   region: null,
   programType: null,
   returnNotes: '',
   motiName: '',
-  properties: [],
+  fileProperties: [],
   isResidential: false,
   isCommercialBuilding: false,
   isOtherImprovement: false,
@@ -145,6 +149,15 @@ const leaseData: Api_Lease = {
   expiryDate: null,
   tenants: [],
   terms: [],
-  insurances: [],
   consultations: [],
+  programName: null,
+  renewalCount: 0,
+  hasPhysicalFile: false,
+  hasDigitalFile: false,
+  hasPhysicalLicense: null,
+  hasDigitalLicense: null,
+  isExpired: false,
+  project: null,
+  id: 0,
+  rowVersion: 0,
 };

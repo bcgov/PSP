@@ -3,7 +3,6 @@ import { createMemoryHistory } from 'history';
 import { Claims } from '@/constants';
 import { mockDispositionFileResponse } from '@/mocks/dispositionFiles.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
-import { Api_DispositionFile } from '@/models/api/DispositionFile';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes/lookupCodesSlice';
 import { render, RenderOptions } from '@/utils/test-utils';
 
@@ -68,10 +67,7 @@ describe('OffersAndSale Container component', () => {
   ) => {
     const component = render(
       <OffersAndSaleContainer
-        dispositionFile={
-          renderOptions?.props?.dispositionFile ??
-          (mockDispositionFileResponse() as unknown as Api_DispositionFile)
-        }
+        dispositionFile={renderOptions?.props?.dispositionFile ?? mockDispositionFileResponse()}
         View={TestView}
         onSuccess={onSuccess}
       />,

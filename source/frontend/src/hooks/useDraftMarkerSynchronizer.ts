@@ -35,7 +35,7 @@ const useDraftMarkerSynchronizer = (modifiedProperties: IMapProperty[]) => {
     (modifiedProperties: IMapProperty[]) => {
       if (isMounted()) {
         const filePropertyLocations = getFilePropertyLocations(modifiedProperties);
-        if (filePropertyLocations.length) {
+        if (filePropertyLocations.length > 0) {
           setFilePropertyLocations(filePropertyLocations);
         } else {
           setFilePropertyLocations([]);

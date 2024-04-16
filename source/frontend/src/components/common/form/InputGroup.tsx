@@ -59,22 +59,19 @@ export const InputGroup: React.FC<React.PropsWithChildren<InputGroupProps>> = ({
   placeholder,
   disabled,
   required,
-  custom,
   preText,
   prepend: PrependComponent,
   postText,
   innerClassName,
   className,
   content,
-  options,
-  autoComplete,
   displayErrorTooltips,
   ...rest
 }) => {
   return (
     <Row
       className={classNames(
-        !!required ? 'required' : '',
+        required ? 'required' : '',
         className,
         disabled ? 'disabled' : '',
         'flex-nowrap',

@@ -68,6 +68,7 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(AcquisitionFileModel), 200)]
         [SwaggerOperation(Tags = new[] { "acquisitionfile" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetAcquisitionFile(long id)
         {
             // RECOMMENDED - Add valuable metadata to logs
@@ -109,6 +110,7 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(AcquisitionFileModel), 200)]
         [SwaggerOperation(Tags = new[] { "acquisitionfile" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult AddAcquisitionFile([FromBody] AcquisitionFileModel model, [FromQuery] string[] userOverrideCodes)
         {
             _logger.LogInformation(
@@ -136,6 +138,7 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         [ProducesResponseType(typeof(AcquisitionFileModel), 200)]
         [ProducesResponseType(typeof(ErrorResponseModel), 409)]
         [SwaggerOperation(Tags = new[] { "acquisitionfile" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult UpdateAcquisitionFile(long id, [FromBody] AcquisitionFileModel model, [FromQuery] string[] userOverrideCodes)
         {
             _logger.LogInformation(
@@ -161,6 +164,7 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(AcquisitionFileModel), 200)]
         [SwaggerOperation(Tags = new[] { "acquisitionfile" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult UpdateAcquisitionFileProperties([FromBody] AcquisitionFileModel acquisitionFileModel, [FromQuery] string[] userOverrideCodes)
         {
             var acquisitionFileEntity = _mapper.Map<Dal.Entities.PimsAcquisitionFile>(acquisitionFileModel);
@@ -177,6 +181,7 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(IEnumerable<AcquisitionFilePropertyModel>), 200)]
         [SwaggerOperation(Tags = new[] { "acquisitionfile" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetAcquisitionFileProperties(long id)
         {
             var acquisitionFileProperties = _acquisitionService.GetProperties(id);
@@ -193,6 +198,7 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(IEnumerable<AcquisitionFileOwnerModel>), 200)]
         [SwaggerOperation(Tags = new[] { "acquisitionfile" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetAcquisitionFileOwners([FromRoute] long id)
         {
             var owners = _acquisitionService.GetOwners(id);
@@ -210,6 +216,7 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(IEnumerable<AcquisitionFileTeamModel>), 200)]
         [SwaggerOperation(Tags = new[] { "acquisitionfile" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetAcquisitionTeamMembers()
         {
             var team = _acquisitionService.GetTeamMembers();
@@ -243,6 +250,7 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(IEnumerable<CompensationFinancialModel>), 200)]
         [SwaggerOperation(Tags = new[] { "comp-req-h120s" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetFileCompReqH120(long id, bool? finalOnly)
         {
             _logger.LogInformation(
@@ -269,6 +277,7 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(CompensationRequisitionModel), 201)]
         [SwaggerOperation(Tags = new[] { "compensation-requisition" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult AddCompensationRequisition([FromRoute] long id, [FromBody] CompensationRequisitionModel compensationRequisition)
         {
             _logger.LogInformation(
@@ -323,6 +332,7 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(ExpropriationPaymentModel), 201)]
         [SwaggerOperation(Tags = new[] { "expropriation-payments" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult AddExpropriationPayment([FromRoute] long id, [FromBody] ExpropriationPaymentModel expropriationPayment)
         {
             _logger.LogInformation(

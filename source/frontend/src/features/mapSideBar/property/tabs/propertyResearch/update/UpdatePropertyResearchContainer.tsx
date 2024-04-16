@@ -2,7 +2,7 @@ import { Formik, FormikProps } from 'formik';
 import * as React from 'react';
 import styled from 'styled-components';
 
-import { Api_ResearchFileProperty } from '@/models/api/ResearchFile';
+import { ApiGen_Concepts_ResearchFileProperty } from '@/models/api/generated/ApiGen_Concepts_ResearchFileProperty';
 
 import { useUpdatePropertyResearch } from '../hooks/useUpdatePropertyResearch';
 import { UpdatePropertyFormModel } from './models';
@@ -10,7 +10,7 @@ import UpdatePropertyForm from './UpdatePropertyForm';
 import { UpdatePropertyYupSchema } from './UpdatePropertyYupSchema';
 
 export interface IUpdatePropertyViewProps {
-  researchFileProperty: Api_ResearchFileProperty;
+  researchFileProperty: ApiGen_Concepts_ResearchFileProperty;
   onSuccess: () => void;
 }
 
@@ -20,13 +20,13 @@ export const UpdatePropertyResearchContainer = React.forwardRef<
 >((props, formikRef) => {
   const { updatePropertyResearchFile } = useUpdatePropertyResearch();
 
-  const savePropertyFile = async (researchFile: Api_ResearchFileProperty) => {
+  const savePropertyFile = async (researchFile: ApiGen_Concepts_ResearchFileProperty) => {
     const response = await updatePropertyResearchFile(researchFile);
     if (typeof formikRef === 'function' || formikRef === null) {
       throw Error('unexpected ref prop');
     }
     formikRef.current?.setSubmitting(false);
-    if (!!response?.fileName) {
+    if (response?.fileName) {
       formikRef.current?.resetForm();
       props.onSuccess();
     }
@@ -39,7 +39,7 @@ export const UpdatePropertyResearchContainer = React.forwardRef<
       initialValues={UpdatePropertyFormModel.fromApi(props.researchFileProperty)}
       validationSchema={UpdatePropertyYupSchema}
       onSubmit={async (values: UpdatePropertyFormModel) => {
-        const researchFile: Api_ResearchFileProperty = values.toApi();
+        const researchFile: ApiGen_Concepts_ResearchFileProperty = values.toApi();
         await savePropertyFile(researchFile);
       }}
     >

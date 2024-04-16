@@ -3,9 +3,10 @@ import { useCallback, useContext, useEffect, useState } from 'react';
 import { SideBarContext } from '@/features/mapSideBar/context/sidebarContext';
 import { useProjectProvider } from '@/hooks/repositories/useProjectProvider';
 import { useCompensationRequisitionRepository } from '@/hooks/repositories/useRequisitionCompensationRepository';
-import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
-import { Api_CompensationRequisition } from '@/models/api/CompensationRequisition';
+import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
+import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
 import { SystemConstants, useSystemConstants } from '@/store/slices/systemConstants';
+import { isValidId } from '@/utils';
 
 import { CompensationRequisitionTrayViewProps } from './CompensationRequisitionTrayView';
 
@@ -30,7 +31,7 @@ export const CompensationRequisitionTrayContainer: React.FunctionComponent<
   } = useProjectProvider();
 
   const [loadedCompensation, setLoadedCompensation] = useState<
-    Api_CompensationRequisition | undefined
+    ApiGen_Concepts_CompensationRequisition | undefined
   >();
 
   const clientConstant = getSystemConstant(SystemConstants.CLIENT);
@@ -42,7 +43,7 @@ export const CompensationRequisitionTrayContainer: React.FunctionComponent<
   } = useCompensationRequisitionRepository();
 
   const fetchCompensationReq = useCallback(async () => {
-    if (!!compensationRequisitionId) {
+    if (isValidId(compensationRequisitionId)) {
       const compensationReq = await getCompensationRequisition(compensationRequisitionId);
       if (compensationReq) {
         setLoadedCompensation(compensationReq);
@@ -54,7 +55,7 @@ export const CompensationRequisitionTrayContainer: React.FunctionComponent<
 
   const fetchProject = useCallback(async () => {
     if (file?.projectId) {
-      var retrieved = await getProject(file?.projectId);
+      const retrieved = await getProject(file?.projectId);
       setProject(retrieved);
     }
   }, [file?.projectId, getProject, setProject]);
@@ -74,7 +75,9 @@ export const CompensationRequisitionTrayContainer: React.FunctionComponent<
   return loadedCompensation ? (
     <View
       compensation={loadedCompensation}
-      acquisitionFile={{ ...file, fileChecklistItems: [] } as Api_AcquisitionFile}
+      acquisitionFile={
+        { ...file, fileChecklistItems: [] } as unknown as ApiGen_Concepts_AcquisitionFile
+      }
       clientConstant={clientConstant?.value ?? ''}
       gstConstant={gstDecimal}
       onClose={onClose}

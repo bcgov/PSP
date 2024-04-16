@@ -5,7 +5,7 @@ import { mockDocumentTypesResponse } from '@/mocks/documents.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { ApiGen_Mayan_DocumentTypeMetadataType } from '@/models/api/generated/ApiGen_Mayan_DocumentTypeMetadataType';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { fireEvent, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
+import { act, fireEvent, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
 import { DocumentUploadFormData } from '../ComposedDocument';
 import DocumentUploadForm from './DocumentUploadForm';
@@ -106,16 +106,18 @@ describe('DocumentUploadView component', () => {
     jest.clearAllMocks();
   });
 
-  it('renders as expected', () => {
+  it('renders as expected', async () => {
     setup({ initialValues });
+    await act(async () => {});
     expect(document.body).toMatchSnapshot();
   });
 
-  it('renders the field', () => {
+  it('renders the field', async () => {
     const { getByTestId } = setup({ initialValues });
     const textarea = getByTestId('document-type');
 
     expect(textarea).toBeVisible();
+    await act(async () => {});
   });
 
   it('displays input for metadata types', async () => {
@@ -123,6 +125,7 @@ describe('DocumentUploadView component', () => {
     const textarea = await getByTestId('metadata-input-Tag');
 
     expect(textarea).toBeVisible();
+    await act(async () => {});
   });
 
   it.skip('should submit form when Submit button is clicked', async () => {
@@ -130,7 +133,7 @@ describe('DocumentUploadView component', () => {
 
     const save = await getByTestId('save');
     // get the upload button
-    let uploader = getByTestId('upload-input');
+    const uploader = getByTestId('upload-input');
 
     // simulate upload event and wait until finish
     await waitFor(() =>
@@ -138,7 +141,7 @@ describe('DocumentUploadView component', () => {
         target: { files: [file] },
       }),
     );
-    userEvent.click(save);
+    await act(async () => userEvent.click(save));
 
     expect(handleSubmit).toBeCalled();
     expect(handleCancelClick).not.toBeCalled();

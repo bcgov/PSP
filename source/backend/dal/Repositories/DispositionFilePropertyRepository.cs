@@ -3,6 +3,7 @@ using System.Linq;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 
@@ -59,6 +60,11 @@ namespace Pims.Dal.Repositories
         public PimsDispositionFileProperty Add(PimsDispositionFileProperty propertyDispositionFile)
         {
             propertyDispositionFile.ThrowIfNull(nameof(propertyDispositionFile));
+
+            if (propertyDispositionFile.Property.IsRetired.HasValue && propertyDispositionFile.Property.IsRetired.Value)
+            {
+                throw new BusinessRuleViolationException("Retired property can not be selected.");
+            }
 
             // Mark the property not to be changed if it did not exist already.
             if (propertyDispositionFile.PropertyId != 0)

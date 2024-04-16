@@ -8,7 +8,9 @@ import {
 } from '@/mocks/acquisitionFiles.mock';
 import { getMockApiDefaultCompensation } from '@/mocks/compensations.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
-import { Api_FinancialCode } from '@/models/api/FinancialCode';
+import { ApiGen_Concepts_FinancialCode } from '@/models/api/generated/ApiGen_Concepts_FinancialCode';
+import { ApiGen_Concepts_FinancialCodeTypes } from '@/models/api/generated/ApiGen_Concepts_FinancialCodeTypes';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { systemConstantsSlice } from '@/store/slices/systemConstants/systemConstantsSlice';
 import { act, render, RenderOptions, waitFor, waitForEffects } from '@/utils/test-utils';
@@ -132,6 +134,7 @@ describe('UpdateCompensationRequisition Container component', () => {
 
   it('renders the underlying form', async () => {
     const { getByText } = await setup();
+    await act(async () => {});
     expect(getByText(/Content Rendered/)).toBeVisible();
   });
 
@@ -178,12 +181,12 @@ describe('UpdateCompensationRequisition Container component', () => {
       props: { compensation: mockCompensationUpdate },
     });
 
-    await waitForEffects();
+    await act(async () => {});
 
     mockCompensationUpdate.detailedRemarks = 'my update';
     mockUpdateCompensation.mockResolvedValue(mockCompensationUpdate);
 
-    let updatedCompensationModel = new CompensationRequisitionFormModel(
+    const updatedCompensationModel = new CompensationRequisitionFormModel(
       mockCompensation.id,
       mockCompensation.acquisitionFileId,
       '',
@@ -196,7 +199,9 @@ describe('UpdateCompensationRequisition Container component', () => {
 
     updatedCompensationModel.payee.payeeKey = testPayeeOption.value;
 
-    await act(async () => viewProps?.onSave(updatedCompensationModel));
+    await act(async () => {
+      viewProps?.onSave(updatedCompensationModel);
+    });
 
     expect(mockUpdateCompensation).toHaveBeenCalledWith(
       updatedCompensationModel.toApi([testPayeeOption]),
@@ -204,26 +209,31 @@ describe('UpdateCompensationRequisition Container component', () => {
   });
 
   it('filters expired financial codes when updating', async () => {
-    const expiredFinancialCodes: Api_FinancialCode[] = [
+    const expiredFinancialCodes: ApiGen_Concepts_FinancialCode[] = [
       {
         id: 1,
-        type: 'expired',
+        type: ApiGen_Concepts_FinancialCodeTypes.Responsibility,
         code: '1',
         description: '1',
         effectiveDate: moment().add(-2, 'days').format('YYYY-MM-DD'),
         expiryDate: moment().add(-1, 'days').format('YYYY-MM-DD'),
+        displayOrder: null,
+        ...getEmptyBaseAudit(),
       },
       {
         id: 2,
-        type: 'non-expired',
+        type: ApiGen_Concepts_FinancialCodeTypes.WorkActivity,
         code: '2',
         description: '2',
         effectiveDate: moment().add(-2, 'days').format('YYYY-MM-DD'),
         expiryDate: moment().add(1, 'days').format('YYYY-MM-DD'),
+        displayOrder: null,
+        ...getEmptyBaseAudit(),
       },
     ];
     mockGetApi.execute = jest.fn().mockResolvedValue(expiredFinancialCodes);
     await setup();
+    await act(async () => {});
 
     await waitFor(async () => {
       expect(viewProps?.financialActivityOptions).toHaveLength(1);

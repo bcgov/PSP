@@ -1,8 +1,8 @@
 import { createMemoryHistory } from 'history';
 
+import { EnumAcquisitionFileType } from '@/constants/acquisitionFileType';
 import Claims from '@/constants/claims';
 import { getMockExpropriationFile } from '@/mocks/index.mock';
-import { EnumAcquisitionFileType } from '@/models/api/AcquisitionFile';
 import { render, RenderOptions } from '@/utils/test-utils';
 
 import {

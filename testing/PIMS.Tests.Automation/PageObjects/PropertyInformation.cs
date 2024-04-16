@@ -22,10 +22,13 @@ namespace PIMS.Tests.Automation.PageObjects
 
         private By propertyCloseWindowBttn = By.XPath("//div[@class='col']/h1[contains(text(),'Property Information')]/parent::div/following-sibling::div");
         private By propertyMoreOptionsMenu = By.CssSelector("div[class='list-group list-group-flush']");
-        private By propertyViewInfoBttn = By.XPath("//button/div[contains(text(),'View more property info')]");
-        private By propertyNewResearchFileBttn = By.XPath("//button/div[contains(text(),'Research File - Create new')]");
-        private By propertyNewAcquisitionFileBttn = By.XPath("//button/div[contains(text(),'Acquisition File - Create new')]");
-        private By propertyNewLeaseFileBttn = By.XPath("//button/div[contains(text(),'Lease/License - Create new')]");
+        private By propertyViewInfoBttn = By.XPath("//button/div[contains(text(),'View Property info')]");
+        private By propertyNewResearchFileBttn = By.XPath("//div[contains(text(),'Research File')]/parent::button");
+        private By propertyNewAcquisitionFileBttn = By.XPath("//div[contains(text(),'Acquisition File')]/parent::button");
+        private By propertyNewLeaseFileBttn = By.XPath("//div[contains(text(),'Lease/License')]/parent::button");
+        private By propertyNewDispositionFileBttn = By.XPath("//div[contains(text(),'Disposition File')]/parent::button");
+        private By propertyNewSubdivisionFileBttn = By.XPath("//div[contains(text(),'Create Subdivision')]/parent::button");
+        private By propertyNewConsolidationFileBttn = By.XPath("//div[contains(text(),'Create Consolidation')]/parent::button");
 
         //Property Information Tabs Elements
         private By propertyInformationTabsTotal = By.CssSelector("nav[role='tablist'] a");
@@ -256,17 +259,26 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
             switch(option)
             {
-                case "View more property info":
+                case "View Property Info":
                     ButtonElement(propertyViewInfoBttn);
                     break;
-                case "Research File - Create new":
+                case "Research File":
                     ButtonElement(propertyNewResearchFileBttn);
                     break;
-                case "Acquisition File - Create new":
+                case "Acquisition File":
                     ButtonElement(propertyNewAcquisitionFileBttn);
                     break;
-                case "Lease/License - Create new":
+                case "Lease/License":
                     ButtonElement(propertyNewLeaseFileBttn);
+                    break;
+                case "Disposition File":
+                    ButtonElement(propertyNewDispositionFileBttn);
+                    break;
+                case "Subdivision":
+                    ButtonElement(propertyNewSubdivisionFileBttn);
+                    break;
+                case "Consolidation":
+                    ButtonElement(propertyNewConsolidationFileBttn);
                     break;
             }
         }

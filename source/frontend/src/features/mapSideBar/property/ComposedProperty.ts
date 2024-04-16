@@ -1,7 +1,8 @@
 import { FeatureCollection, GeoJsonProperties, Geometry } from 'geojson';
 
 import { LtsaOrders } from '@/interfaces/ltsaModels';
-import { Api_Property, Api_PropertyAssociations } from '@/models/api/Property';
+import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
+import { ApiGen_Concepts_PropertyAssociations } from '@/models/api/generated/ApiGen_Concepts_PropertyAssociations';
 import { IBcAssessmentSummary } from '@/models/layers/bcAssesment';
 
 export interface ComposedProperty {
@@ -9,8 +10,8 @@ export interface ComposedProperty {
   pin: string | undefined;
   id: number | undefined;
   ltsaOrders: LtsaOrders | undefined;
-  pimsProperty: Api_Property | undefined;
-  propertyAssociations: Api_PropertyAssociations | undefined;
+  pimsProperty: ApiGen_Concepts_Property | undefined;
+  propertyAssociations: ApiGen_Concepts_PropertyAssociations | undefined;
   parcelMapFeatureCollection: FeatureCollection<Geometry, GeoJsonProperties> | undefined; // TODO: These need to be strongly typed
   geoserverFeatureCollection: FeatureCollection<Geometry, GeoJsonProperties> | undefined; // TODO: These need to be strongly typed
   bcAssessmentSummary: IBcAssessmentSummary | undefined;

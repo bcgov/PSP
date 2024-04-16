@@ -12,12 +12,12 @@ export class PropertyFilterFormModel {
 
   // Tenure Filters
   public tenureStatuses: CodeTypeSelectOption[] = [];
-  public tenurePPH: string = '';
+  public tenurePPH = '';
   public tenureRoadTypes: CodeTypeSelectOption[] = [];
 
   // Lease filters
-  public leaseStatus: string = '';
-  public leasePayRcvblType: string = '';
+  public leaseStatus = '';
+  public leasePayRcvblType = '';
   public leaseTypes: CodeTypeSelectOption[] = [];
   public leasePurposes: CodeTypeSelectOption[] = [];
 
@@ -29,6 +29,7 @@ export class PropertyFilterFormModel {
   public isPropertyOfInterest = true;
   public isOtherInterest = true;
   public isDisposed = false;
+  public isRetired = false;
 
   public toApi(): Api_PropertyFilterCriteria {
     return {
@@ -49,6 +50,7 @@ export class PropertyFilterFormModel {
       isPropertyOfInterest: this.isPropertyOfInterest,
       isOtherInterest: this.isOtherInterest,
       isDisposed: this.isDisposed,
+      isRetired: this.isRetired,
     };
   }
 }

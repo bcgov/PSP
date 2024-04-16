@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 import { InterestHolderType } from '@/constants/interestHolderTypes';
 import { useInterestHolderRepository } from '@/hooks/repositories/useInterestHolderRepository';
 import { IApiError } from '@/interfaces/IApiError';
-import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
+import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 
 import { StakeHolderForm } from './models';
 import { IUpdateStakeHolderFormProps } from './UpdateStakeHolderForm';
@@ -15,7 +15,7 @@ import { IUpdateStakeHolderFormProps } from './UpdateStakeHolderForm';
 export interface IUpdateStakeHolderContainerProps {
   View: React.FC<IUpdateStakeHolderFormProps>;
   formikRef: React.Ref<FormikProps<StakeHolderForm>>;
-  acquisitionFile: Api_AcquisitionFile;
+  acquisitionFile: ApiGen_Concepts_AcquisitionFile;
   onSuccess: () => void;
 }
 

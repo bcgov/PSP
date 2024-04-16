@@ -1,5 +1,6 @@
-import { Api_InterestHolder, Api_InterestHolderProperty } from '@/models/api/InterestHolder';
-import Api_TypeCode from '@/models/api/TypeCode';
+import { ApiGen_Base_CodeType } from '@/models/api/generated/ApiGen_Base_CodeType';
+import { ApiGen_Concepts_InterestHolder } from '@/models/api/generated/ApiGen_Concepts_InterestHolder';
+import { ApiGen_Concepts_InterestHolderProperty } from '@/models/api/generated/ApiGen_Concepts_InterestHolderProperty';
 import { formatNames } from '@/utils/personUtils';
 
 export class Api_GenerateH120InterestHolder {
@@ -8,9 +9,9 @@ export class Api_GenerateH120InterestHolder {
   interestHolderString: string;
 
   constructor(
-    interestHolder: Api_InterestHolder | null,
-    matchingInterestHolderProperty: Api_InterestHolderProperty,
-    interestTypeCode: Api_TypeCode<string>,
+    interestHolder: ApiGen_Concepts_InterestHolder | null,
+    matchingInterestHolderProperty: ApiGen_Concepts_InterestHolderProperty,
+    interestTypeCode: ApiGen_Base_CodeType<string>,
   ) {
     this.interestHolderName = interestHolder?.person
       ? formatNames([

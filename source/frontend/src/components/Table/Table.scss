@@ -35,8 +35,10 @@
           background-color: $selected-color;
         }
       }
-      .tbody {
+      .collapse {
         padding-left: 5rem;
+      }
+      .tbody {
         .tr-wrapper {
           border-bottom: none;
         }

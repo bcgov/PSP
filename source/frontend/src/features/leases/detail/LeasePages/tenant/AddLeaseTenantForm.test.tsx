@@ -1,16 +1,26 @@
-import { act, screen } from '@testing-library/react';
+import {
+  act,
+  getByTestId,
+  prettyDOM,
+  screen,
+  waitForElementToBeRemoved,
+} from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import React from 'react';
 
 import { Claims } from '@/constants/claims';
-import { IPagedItems } from '@/interfaces';
+import { IContactSearchResult } from '@/interfaces';
 import {
+  getEmptyPerson,
   getMockContactOrganizationWithOnePerson,
   getMockContactPerson,
 } from '@/mocks/contacts.mock';
 import { mockLookups } from '@/mocks/index.mock';
+import { getEmptyOrganization } from '@/mocks/organization.mock';
+import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
+import { ApiGen_Concepts_Contact } from '@/models/api/generated/ApiGen_Concepts_Contact';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { mockKeycloak, renderAsync, RenderOptions, userEvent } from '@/utils/test-utils';
+import { mockKeycloak, renderAsync, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
 import AddLeaseTenantForm, { IAddLeaseTenantFormProps } from './AddLeaseTenantForm';
 import { FormTenant } from './models';
@@ -19,7 +29,9 @@ const history = createMemoryHistory();
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
-const mockGetContactsFn = jest.fn().mockResolvedValue({ data: {} as IPagedItems });
+const mockGetContactsFn = jest
+  .fn()
+  .mockResolvedValue({ data: {} as ApiGen_Base_Page<ApiGen_Concepts_Contact> });
 jest.mock('@react-keycloak/web');
 jest.mock('@/hooks/pims-api/useApiContacts', () => ({
   useApiContacts: () => {
@@ -80,27 +92,30 @@ describe('AddLeaseTenantForm component', () => {
     } = await setup({});
 
     const tenantButton = getByText('Select Tenant(s)');
-    act(() => userEvent.click(tenantButton));
+    await act(async () => userEvent.click(tenantButton));
 
     expect(setShowContactManager).toHaveBeenCalledWith(true);
   });
 
-  it('displays modal when prop is set', async () => {
-    await setup({ showContactManager: true });
-
+  it('displays modal when contact prop is set', async () => {
+    await act(async () => {
+      await setup({ showContactManager: true });
+    });
     const modal = screen.getByText('Select a contact');
 
     expect(modal).toBeVisible();
   });
 
   it('confirming the modal sets the tenants', async () => {
-    await setup({ showContactManager: true });
+    await act(async () => {
+      await setup({ showContactManager: true });
+    });
 
     const modal = screen.getByText('Select a contact');
     expect(modal).toBeVisible();
 
     const confirm = screen.getByText('Select');
-    act(() => userEvent.click(confirm));
+    await act(async () => userEvent.click(confirm));
 
     expect(setShowContactManager).toHaveBeenLastCalledWith(false);
     expect(setSelectedTenants).toHaveBeenCalledWith([]);
@@ -108,20 +123,24 @@ describe('AddLeaseTenantForm component', () => {
 
   it('cancelling the modal resets the tenants', async () => {
     const tenants = [new FormTenant(undefined, getMockContactOrganizationWithOnePerson())];
-    await setup({ showContactManager: true, selectedTenants: tenants });
+    await act(async () => {
+      await setup({ showContactManager: true, selectedTenants: tenants });
+    });
 
     const modal = screen.getByText('Select a contact');
     expect(modal).toBeVisible();
 
     const cancel = screen.getByText('Cancel');
-    act(() => userEvent.click(cancel));
+    await act(async () => userEvent.click(cancel));
 
     expect(setShowContactManager).toHaveBeenLastCalledWith(false);
     expect(setSelectedContacts.mock.calls[0][0][0].id).toBe(tenants[0].id);
   });
 
   it('displays modal when prop is set', async () => {
-    await setup({ showContactManager: true });
+    await act(async () => {
+      await setup({ showContactManager: true });
+    });
 
     const modal = screen.getByText('Select a contact');
 
@@ -159,9 +178,14 @@ describe('AddLeaseTenantForm component', () => {
   });
 
   it('displays no contacts available if organization has no contacts', async () => {
-    const organization = {
+    const organization: IContactSearchResult = {
       ...getMockContactOrganizationWithOnePerson(),
-      organization: { organizationPersons: [] },
+      organization: { ...getEmptyOrganization(), organizationPersons: [] },
+      personId: undefined,
+      person: undefined,
+      surname: undefined,
+      firstName: undefined,
+      middleNames: undefined,
     };
 
     await setup({
@@ -174,9 +198,14 @@ describe('AddLeaseTenantForm component', () => {
   });
 
   it('displays no contacts available if organization has no contacts', async () => {
-    const organization = {
+    const organization: IContactSearchResult = {
       ...getMockContactOrganizationWithOnePerson(),
-      organization: { organizationPersons: [] },
+      organization: { ...getEmptyOrganization(), organizationPersons: [] },
+      personId: undefined,
+      person: undefined,
+      surname: undefined,
+      firstName: undefined,
+      middleNames: undefined,
     };
 
     await setup({
@@ -189,9 +218,14 @@ describe('AddLeaseTenantForm component', () => {
   });
 
   it('displays no contacts available if organization has no contacts', async () => {
-    const organization = {
+    const organization: IContactSearchResult = {
       ...getMockContactOrganizationWithOnePerson(),
-      organization: { organizationPersons: [] },
+      organization: { ...getEmptyOrganization(), organizationPersons: [] },
+      personId: undefined,
+      person: undefined,
+      surname: undefined,
+      firstName: undefined,
+      middleNames: undefined,
     };
 
     await setup({
@@ -204,19 +238,26 @@ describe('AddLeaseTenantForm component', () => {
   });
 
   it('displays the primary contact if there is only one', async () => {
-    const organization = {
+    const organization: IContactSearchResult = {
       ...getMockContactOrganizationWithOnePerson(),
       organization: {
+        ...getEmptyOrganization(),
         organizationPersons: [
           {
+            id: 1,
+            organization: null,
             personId: 3,
             organizationId: 3,
-            isDisabled: false,
             rowVersion: 1,
-            person: { firstName: 'test', surname: 'testerson' },
+            person: { ...getEmptyPerson(), firstName: 'test', surname: 'testerson' },
           },
         ],
       },
+      personId: undefined,
+      person: undefined,
+      surname: undefined,
+      firstName: undefined,
+      middleNames: undefined,
     };
 
     await setup({
@@ -229,26 +270,34 @@ describe('AddLeaseTenantForm component', () => {
   });
 
   it('displays a list if there are multiple', async () => {
-    const organization = {
+    const organization: IContactSearchResult = {
       ...getMockContactOrganizationWithOnePerson(),
       organization: {
+        ...getEmptyOrganization(),
         organizationPersons: [
           {
+            id: 1,
+            organization: null,
             personId: 3,
             organizationId: 3,
-            isDisabled: false,
             rowVersion: 1,
-            person: { firstName: 'test', surname: 'testerson' },
+            person: { ...getEmptyPerson(), id: 1, firstName: 'test', surname: 'testerson' },
           },
           {
+            id: 2,
+            organization: null,
             personId: 2,
             organizationId: 3,
-            isDisabled: false,
             rowVersion: 1,
-            person: { firstName: 'second', surname: 'testerson' },
+            person: { ...getEmptyPerson(), id: 2, firstName: 'second', surname: 'testerson' },
           },
         ],
       },
+      personId: undefined,
+      person: undefined,
+      surname: undefined,
+      firstName: undefined,
+      middleNames: undefined,
     };
 
     await setup({
@@ -268,7 +317,7 @@ describe('AddLeaseTenantForm component', () => {
     });
 
     const deleteButton = getByTitle('Click to remove');
-    act(() => userEvent.click(deleteButton));
+    await act(async () => userEvent.click(deleteButton));
 
     expect(setSelectedTenants).toHaveBeenCalledWith([]);
     expect(setSelectedContacts).toHaveBeenCalledWith([]);

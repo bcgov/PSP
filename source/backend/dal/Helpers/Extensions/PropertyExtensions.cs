@@ -4,6 +4,7 @@ using System.Security.Claims;
 using System.Text.RegularExpressions;
 using LinqKit;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 using Pims.Dal.Security;
@@ -38,6 +39,7 @@ namespace Pims.Dal.Helpers.Extensions
                     .ThenInclude(a => a.ProvinceState)
                 .Include(p => p.Address)
                     .ThenInclude(a => a.Country)
+                .Include(p => p.PropertyAreaUnitTypeCodeNavigation)
                 .AsNoTracking();
 
             var predicate = GenerateCommonPropertyQuery(user, filter);
@@ -93,28 +95,36 @@ namespace Pims.Dal.Helpers.Extensions
                 predicateBuilder = predicateBuilder.And(p => p != null && p.SurveyPlanNumber.Equals(filter.PlanNumber));
             }
 
+            var isRetired = filter.Ownership.Contains("isRetired");
+
+            ExpressionStarter<PimsProperty> ownershipBuilder;
+
             if (filter.Ownership.Count > 0)
             {
-                var ownershipBuilder = PredicateBuilder.New<PimsProperty>(p => false);
+                ownershipBuilder = isRetired ? PredicateBuilder.New<PimsProperty>(p => p.IsRetired == true) : PredicateBuilder.New<PimsProperty>(p => false);
                 if (filter.Ownership.Contains("isCoreInventory"))
                 {
-                    ownershipBuilder = ownershipBuilder.Or(p => p.IsOwned);
+                    ownershipBuilder = ownershipBuilder.Or(p => p.IsOwned && p.IsRetired != true);
                 }
                 if (filter.Ownership.Contains("isPropertyOfInterest"))
                 {
-                    ownershipBuilder = ownershipBuilder.Or(p => p.IsPropertyOfInterest);
+                    ownershipBuilder = ownershipBuilder.Or(p => p.IsPropertyOfInterest && p.IsRetired != true);
                 }
                 if (filter.Ownership.Contains("isOtherInterest"))
                 {
-                    ownershipBuilder = ownershipBuilder.Or(p => p.IsOtherInterest);
+                    ownershipBuilder = ownershipBuilder.Or(p => p.IsOtherInterest && p.IsRetired != true);
                 }
                 if (filter.Ownership.Contains("isDisposed"))
                 {
-                    ownershipBuilder = ownershipBuilder.Or(p => p.IsDisposed);
+                    ownershipBuilder = ownershipBuilder.Or(p => p.IsDisposed && p.IsRetired != true);
                 }
-
-                predicateBuilder = predicateBuilder.And(ownershipBuilder);
             }
+            else
+            {
+                // psp-7658 is retired properties should be omitted by default.
+                ownershipBuilder = PredicateBuilder.New<PimsProperty>(p => p.IsRetired != true);
+            }
+            predicateBuilder = predicateBuilder.And(ownershipBuilder);
 
             return predicateBuilder;
         }

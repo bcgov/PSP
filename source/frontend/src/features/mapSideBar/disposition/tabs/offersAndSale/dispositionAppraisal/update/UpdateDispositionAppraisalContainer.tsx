@@ -5,8 +5,9 @@ import { toast } from 'react-toastify';
 
 import { DispositionAppraisalFormModel } from '@/features/mapSideBar/disposition/models/DispositionAppraisalFormModel';
 import { useDispositionProvider } from '@/hooks/repositories/useDispositionProvider';
+import useIsMounted from '@/hooks/util/useIsMounted';
 import { IApiError } from '@/interfaces/IApiError';
-import { Api_DispositionFileAppraisal } from '@/models/api/DispositionFile';
+import { ApiGen_Concepts_DispositionFileAppraisal } from '@/models/api/generated/ApiGen_Concepts_DispositionFileAppraisal';
 
 import { IDispositionAppraisalFormProps } from '../form/DispositionAppraisalForm';
 
@@ -23,6 +24,7 @@ const UpdateDispositionAppraisalContainer: React.FunctionComponent<
   const location = useLocation();
   const backUrl = location.pathname.split(`/appraisal`)[0];
   const initialValues = new DispositionAppraisalFormModel(null, dispositionFileId, null);
+  const isMounted = useIsMounted();
 
   const [dispositionAppraisal, setdispositionAppraisal] =
     useState<DispositionAppraisalFormModel>(initialValues);
@@ -41,10 +43,12 @@ const UpdateDispositionAppraisalContainer: React.FunctionComponent<
       dispositionAppraisalModel = new DispositionAppraisalFormModel(null, dispositionFileId, null);
     }
 
-    setdispositionAppraisal(dispositionAppraisalModel);
-  }, [dispositionFileId, getDispositionAppraisal]);
+    if (isMounted()) {
+      setdispositionAppraisal(dispositionAppraisalModel);
+    }
+  }, [dispositionFileId, getDispositionAppraisal, isMounted]);
 
-  const handleSave = async (appraisal: Api_DispositionFileAppraisal) => {
+  const handleSave = async (appraisal: ApiGen_Concepts_DispositionFileAppraisal) => {
     if (dispositionAppraisal?.id) {
       return putDispositionAppraisal(dispositionFileId, dispositionAppraisal?.id, appraisal);
     } else {

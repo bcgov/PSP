@@ -1,8 +1,5 @@
-﻿
-
-using PIMS.Tests.Automation.Classes;
+﻿using PIMS.Tests.Automation.Classes;
 using PIMS.Tests.Automation.Data;
-using PIMS.Tests.Automation.PageObjects;
 using System.Data;
 
 namespace PIMS.Tests.Automation.StepDefinitions
@@ -10,7 +7,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
     [Binding]
     public class AcquisitionFileSteps
     {
-        private readonly GenericSteps genericSteps;
         private readonly LoginSteps loginSteps;
         private readonly AcquisitionDetails acquisitionFilesDetails;
         private readonly SearchAcquisitionFiles searchAcquisitionFiles;
@@ -35,7 +31,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
         public AcquisitionFileSteps(BrowserDriver driver)
         {
             loginSteps = new LoginSteps(driver);
-            genericSteps = new GenericSteps(driver);
 
             acquisitionFilesDetails = new AcquisitionDetails(driver.Current);
             searchAcquisitionFiles = new SearchAcquisitionFiles(driver.Current);
@@ -86,6 +81,9 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Enter to Edit mode of Acquisition File
             acquisitionFilesDetails.EditAcquisitionFileBttn();
+
+            //Verify Maximum fields
+            acquisitionFilesDetails.VerifyMaximumFields();
 
             //Add Additional Optional information to the acquisition file
             acquisitionFilesDetails.AddAdditionalInformation(acquisitionFile);
@@ -357,17 +355,14 @@ namespace PIMS.Tests.Automation.StepDefinitions
             {
                 for (int i = 0; i < acquisitionFile.AcquisitionAgreements.Count; i++)
                 {
-                    //Edit Agreement button
-                    agreements.EditAgreementButton();
-
                     //Create Agreement button
                     agreements.CreateNewAgreementBttn();
 
                     //Verify Create Agreement form
-                    agreements.VerifyCreateAgreementForm(i);
+                    agreements.VerifyCreateAgreementForm();
 
                     //Add a new Agreement
-                    agreements.CreateNewAgreement(acquisitionFile.AcquisitionAgreements[i], i);
+                    agreements.CreateUpdateAgreement(acquisitionFile.AcquisitionAgreements[i]);
 
                     //Save new agreement
                     agreements.SaveAcquisitionFileAgreement();
@@ -393,50 +388,41 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Navigate to Agreements Tab
             agreements.NavigateAgreementsTab();
 
-            //Edit Agreement button
-            agreements.EditAgreementButton();
-
             //Create Agreement button
             agreements.CreateNewAgreementBttn();
 
             //Verify Create Agreement form
-            agreements.VerifyCreateAgreementForm(0);
+            agreements.VerifyCreateAgreementForm();
 
             //Add a new Agreement
-            agreements.CreateNewAgreement(acquisitionFile.AcquisitionAgreements[0], 4);
+            agreements.CreateUpdateAgreement(acquisitionFile.AcquisitionAgreements[0]);
 
             //Cancel agreements
             agreements.CancelAcquisitionFileAgreement();
-
-            //Edit Agreement button
-            agreements.EditAgreementButton();
 
             //Create Agreement button
             agreements.CreateNewAgreementBttn();
 
             //Add a new Agreement
-            agreements.CreateNewAgreement(acquisitionFile.AcquisitionAgreements[0], 4);
+            agreements.CreateUpdateAgreement(acquisitionFile.AcquisitionAgreements[0]);
 
             //Save new agreement
             agreements.SaveAcquisitionFileAgreement();
 
-            //Verify Edit Agreement form
+            //Verify new added Agreement form
             agreements.VerifyViewAgreementForm(acquisitionFile.AcquisitionAgreements[0], 4);
 
             //Edit Agreement button
-            agreements.EditAgreementButton();
+            agreements.EditAgreementButton(0);
 
             //Update created agreement
-            agreements.UpdateAgreement(acquisitionFile.AcquisitionAgreements[1], 4);
+            agreements.CreateUpdateAgreement(acquisitionFile.AcquisitionAgreements[1]);
 
             //Save new agreement
             agreements.SaveAcquisitionFileAgreement();
 
             //Verify Edit Agreement form
-            agreements.VerifyViewAgreementForm(acquisitionFile.AcquisitionAgreements[1], 4);
-
-            //Edit Agreement button
-            agreements.EditAgreementButton();
+            agreements.VerifyViewAgreementForm(acquisitionFile.AcquisitionAgreements[1], 0);
 
             var agreementsBeforeDelete = agreements.TotalAgreementsCount();
 
@@ -445,9 +431,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             var agreementsAfterDelete = agreements.TotalAgreementsCount();
             Assert.True(agreementsBeforeDelete - agreementsAfterDelete == 1);
-
-            //Save new agreement
-            agreements.SaveAcquisitionFileAgreement();
         }
 
         [StepDefinition(@"I create Stakeholders within an Acquisition File")]
@@ -786,7 +769,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Open elipsis option
             propertyInformation.OpenMoreOptionsPopUp();
-            propertyInformation.ChooseCreationOptionFromPin("Acquisition File - Create new");
+            propertyInformation.ChooseCreationOptionFromPin("Acquisition File");
 
             //Validate Acquisition File Details Create Form
             acquisitionFilesDetails.VerifyAcquisitionFileCreate();
@@ -808,7 +791,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Open elipsis option
             propertyInformation.OpenMoreOptionsPopUp();
-            propertyInformation.ChooseCreationOptionFromPin("Acquisition File - Create new");
+            propertyInformation.ChooseCreationOptionFromPin("Acquisition File");
 
             //Fill basic Acquisition File information
             acquisitionFilesDetails.CreateMinimumAcquisitionFile(acquisitionFile);
@@ -827,7 +810,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Open elipsis option
             propertyInformation.OpenMoreOptionsPopUp();
-            propertyInformation.ChooseCreationOptionFromPin("Acquisition File - Create new");
+            propertyInformation.ChooseCreationOptionFromPin("Acquisition File");
 
             //Fill basic Acquisition File information
             acquisitionFilesDetails.CreateMinimumAcquisitionFile(acquisitionFile);
@@ -903,22 +886,32 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             Assert.NotEqual(firstFileNameDescResult, firstFileNameAscResult);
 
-            //Filter research Files
+            //Verify Pagination display different set of results
+            sharedPagination.ResetSearch();
+
+            var firstAcquisitionPage1 = searchAcquisitionFiles.FirstAcquisitionFileNumber();
+            sharedPagination.GoNextPage();
+            var firstAcquisitionPage2 = searchAcquisitionFiles.FirstAcquisitionFileNumber();
+            Assert.NotEqual(firstAcquisitionPage1, firstAcquisitionPage2);
+
+            sharedPagination.ResetSearch();
+
+            //Filter Acquisition Files
             searchAcquisitionFiles.FilterAcquisitionFiles("003-549-551", "", "", "Acquisition from Jonathan Doe", "", "Cancelled", "");
             Assert.False(searchAcquisitionFiles.SearchFoundResults());
 
-            //Look for the last created research file
+            //Look for the last created Acquisition File
             searchAcquisitionFiles.FilterAcquisitionFiles("", "", "", acquisitionFile.AcquisitionFileName, "", acquisitionFile.AcquisitionStatus, "");
         }
 
         [StepDefinition(@"A new Acquisition file is created successfully")]
         public void NewAcquisitionFileCreated()
         {
-
             searchAcquisitionFiles.NavigateToSearchAcquisitionFile();
             searchAcquisitionFiles.SearchAcquisitionFileByAFile(acquisitionFileCode);
 
             Assert.True(searchAcquisitionFiles.SearchFoundResults());
+            searchAcquisitionFiles.Dispose();
         }
 
         [StepDefinition(@"An existing Acquisition file has been edited successfully")]
@@ -926,6 +919,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         {
             acquisitionFilesDetails.NavigateToFileDetailsTab();
             acquisitionFilesDetails.VerifyAcquisitionFileView(acquisitionFile);
+            searchAcquisitionFiles.Dispose();
         }
 
         [StepDefinition(@"Expected Acquisition File Content is displayed on Acquisition File Table")]
@@ -936,6 +930,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Verify List View
             searchAcquisitionFiles.VerifyAcquisitionFileListView();
             searchAcquisitionFiles.VerifyAcquisitionFileTableContent(acquisitionFile);
+            searchAcquisitionFiles.Dispose();
 
         }
 
@@ -944,6 +939,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         {
             //Verify Checklist Content after update
             checklist.VerifyChecklistViewForm(acquisitionFile.AcquisitionFileChecklist);
+            searchAcquisitionFiles.Dispose();
         }
 
         private void PopulateAcquisitionFile(int rowNumber)
@@ -1128,24 +1124,24 @@ namespace PIMS.Tests.Automation.StepDefinitions
             for (int i = startRow; i < startRow + rowsCount; i++)
             {
                 AcquisitionOwner owner = new AcquisitionOwner();
-                owner.ContactType = ExcelDataContext.ReadData(i, "ContactType");
-                owner.isPrimary = bool.Parse(ExcelDataContext.ReadData(i, "isPrimary"));
-                owner.GivenNames = ExcelDataContext.ReadData(i, "GivenNames");
-                owner.LastName = ExcelDataContext.ReadData(i, "LastName");
-                owner.OtherName = ExcelDataContext.ReadData(i, "OtherName");
-                owner.CorporationName = ExcelDataContext.ReadData(i, "CorporationName");
-                owner.IncorporationNumber = ExcelDataContext.ReadData(i, "IncorporationNumber");
-                owner.RegistrationNumber = ExcelDataContext.ReadData(i, "RegistrationNumber");
-                owner.MailAddressLine1 = ExcelDataContext.ReadData(i, "MailAddressLine1");
-                owner.MailAddressLine2 = ExcelDataContext.ReadData(i, "MailAddressLine2");
-                owner.MailAddressLine3 = ExcelDataContext.ReadData(i, "MailAddressLine3");
-                owner.MailCity = ExcelDataContext.ReadData(i, "MailCity");
-                owner.MailProvince = ExcelDataContext.ReadData(i, "MailProvince");
-                owner.MailCountry = ExcelDataContext.ReadData(i, "MailCountry");
-                owner.MailOtherCountry = ExcelDataContext.ReadData(i, "MailOtherCountry");
-                owner.MailPostalCode = ExcelDataContext.ReadData(i, "MailPostalCode");
-                owner.Email = ExcelDataContext.ReadData(i, "Email");
-                owner.Phone = ExcelDataContext.ReadData(i, "Phone");
+                owner.OwnerContactType = ExcelDataContext.ReadData(i, "OwnerContactType");
+                owner.OwnerIsPrimary = bool.Parse(ExcelDataContext.ReadData(i, "OwnerIsPrimary"));
+                owner.OwnerGivenNames = ExcelDataContext.ReadData(i, "OwnerGivenNames");
+                owner.OwnerLastName = ExcelDataContext.ReadData(i, "OwnerLastName");
+                owner.OwnerOtherName = ExcelDataContext.ReadData(i, "OwnerOtherName");
+                owner.OwnerCorporationName = ExcelDataContext.ReadData(i, "OwnerCorporationName");
+                owner.OwnerIncorporationNumber = ExcelDataContext.ReadData(i, "OwnerIncorporationNumber");
+                owner.OwnerRegistrationNumber = ExcelDataContext.ReadData(i, "OwnerRegistrationNumber");
+                owner.OwnerMailAddress.AddressLine1 = ExcelDataContext.ReadData(i, "OwnerMailAddressLine1");
+                owner.OwnerMailAddress.AddressLine2 = ExcelDataContext.ReadData(i, "OwnerMailAddressLine2");
+                owner.OwnerMailAddress.AddressLine3 = ExcelDataContext.ReadData(i, "OwnerMailAddressLine3");
+                owner.OwnerMailAddress.City = ExcelDataContext.ReadData(i, "OwnerMailCity");
+                owner.OwnerMailAddress.Province = ExcelDataContext.ReadData(i, "OwnerMailProvince");
+                owner.OwnerMailAddress.Country = ExcelDataContext.ReadData(i, "OwnerMailCountry");
+                owner.OwnerMailAddress.OtherCountry = ExcelDataContext.ReadData(i, "OwnerMailOtherCountry");
+                owner.OwnerMailAddress.PostalCode = ExcelDataContext.ReadData(i, "OwnerMailPostalCode");
+                owner.OwnerEmail = ExcelDataContext.ReadData(i, "OwnerEmail");
+                owner.OwnerPhone = ExcelDataContext.ReadData(i, "OwnerPhone");
 
                 acquisitionFile.AcquisitionOwners.Add(owner);
             }
@@ -1201,12 +1197,14 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 AcquisitionAgreement agreement = new AcquisitionAgreement();
 
                 agreement.AgreementStatus = ExcelDataContext.ReadData(i, "AgreementStatus");
+                agreement.AgreementCancellationReason = ExcelDataContext.ReadData(i, "AgreementCancellationReason");
                 agreement.AgreementLegalSurveyPlan = ExcelDataContext.ReadData(i, "AgreementLegalSurveyPlan");
                 agreement.AgreementType = ExcelDataContext.ReadData(i, "AgreementType");
                 agreement.AgreementDate = ExcelDataContext.ReadData(i, "AgreementDate");
                 agreement.AgreementCommencementDate = ExcelDataContext.ReadData(i, "AgreementCommencementDate");
                 agreement.AgreementCompletionDate = ExcelDataContext.ReadData(i, "AgreementCompletionDate");
                 agreement.AgreementTerminationDate = ExcelDataContext.ReadData(i, "AgreementTerminationDate");
+                agreement.AgreementPossessionDate = ExcelDataContext.ReadData(i, "AgreementPossessionDate");
                 agreement.AgreementPurchasePrice = ExcelDataContext.ReadData(i, "AgreementPurchasePrice");
                 agreement.AgreementDepositDue = ExcelDataContext.ReadData(i, "AgreementDepositDue");
                 agreement.AgreementDepositAmount = ExcelDataContext.ReadData(i, "AgreementDepositAmount");

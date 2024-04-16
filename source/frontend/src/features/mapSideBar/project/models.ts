@@ -1,39 +1,44 @@
 import { isNumber } from 'lodash';
 
 import { SelectOption } from '@/components/common/form';
-import { Api_Product, Api_Project, Api_ProjectProduct } from '@/models/api/Project';
+import { ApiGen_Concepts_FinancialCodeTypes } from '@/models/api/generated/ApiGen_Concepts_FinancialCodeTypes';
+import { ApiGen_Concepts_Product } from '@/models/api/generated/ApiGen_Concepts_Product';
+import { ApiGen_Concepts_Project } from '@/models/api/generated/ApiGen_Concepts_Project';
+import { ApiGen_Concepts_ProjectProduct } from '@/models/api/generated/ApiGen_Concepts_ProjectProduct';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { NumberFieldValue } from '@/typings/NumberFieldValue';
-import { stringToUndefined, toTypeCode } from '@/utils/formUtils';
+import { toFinancialCode, toTypeCodeNullable } from '@/utils/formUtils';
+import { exists, isValidIsoDateTime } from '@/utils/utils';
 
 export class ProductForm {
   id: number | null = null;
 
-  code: string = '';
-  description: string = '';
+  code = '';
+  description = '';
   startDate: string | '' = '';
-  costEstimate: string = '';
+  costEstimate = '';
   costEstimateDate: string | '' = '';
   objective: string | '' = '';
   scope: string | '' = '';
   rowVersion: number | null = null;
 
-  toApi(): Api_Product {
+  toApi(): ApiGen_Concepts_Product {
     return {
       id: this.id,
       projectProducts: [],
       code: this.code,
       description: this.description,
-      startDate: stringToUndefined(this.startDate),
-      costEstimate: !!this.costEstimate ? Number(this.costEstimate) : null,
-      costEstimateDate: stringToUndefined(this.costEstimateDate),
+      startDate: isValidIsoDateTime(this.startDate) ? this.startDate : null,
+      costEstimate: this.costEstimate ? Number(this.costEstimate) : null,
+      costEstimateDate: isValidIsoDateTime(this.costEstimateDate) ? this.costEstimateDate : null,
       objective: this.objective,
       scope: this.scope,
-      rowVersion: this.rowVersion,
       acquisitionFiles: [],
+      ...getEmptyBaseAudit(this.rowVersion),
     };
   }
 
-  static fromApi(model: Api_Product): ProductForm {
+  static fromApi(model: ApiGen_Concepts_Product): ProductForm {
     const newForm = new ProductForm();
     newForm.id = model.id ?? null;
     newForm.code = model.code || '';
@@ -62,42 +67,51 @@ export class ProjectForm {
   rowVersion: number | null = null;
   products: ProductForm[] = [];
 
-  toApi(): Api_Project {
+  toApi(): ApiGen_Concepts_Project {
     return {
-      id: this.id,
+      id: this.id ?? 0,
       code: this.projectNumber ?? null,
       description: this.projectName ?? null,
-      projectStatusTypeCode: toTypeCode<string>(this.projectStatusType) ?? null,
-      regionCode: this.region ? toTypeCode<number>(+this.region) ?? null : null,
+      projectStatusTypeCode: toTypeCodeNullable<string>(this.projectStatusType) ?? null,
+      regionCode: this.region ? toTypeCodeNullable<number>(+this.region) ?? null : null,
       note: this.summary ?? null,
-      projectProducts: this.products?.map<Api_ProjectProduct>(x => {
+      projectProducts: this.products?.map<ApiGen_Concepts_ProjectProduct>(x => {
         return {
           id: 0,
           projectId: 0,
           product: x.toApi(),
           productId: 0,
           project: null,
-          rowVersion: 0,
+          ...getEmptyBaseAudit(0),
         };
       }),
-      rowVersion: this.rowVersion ?? null,
       businessFunctionCode:
         !!this.businessFunctionCode?.value && isNumber(this.businessFunctionCode.value)
-          ? toTypeCode<number>(+this.businessFunctionCode.value) ?? null
+          ? toFinancialCode(
+              +this.businessFunctionCode.value,
+              ApiGen_Concepts_FinancialCodeTypes.BusinessFunction,
+            ) ?? null
           : null,
       costTypeCode:
         !!this.costTypeCode?.value && isNumber(this.costTypeCode.value)
-          ? toTypeCode<number>(+this.costTypeCode.value) ?? null
+          ? toFinancialCode(
+              +this.costTypeCode.value,
+              ApiGen_Concepts_FinancialCodeTypes.CostType,
+            ) ?? null
           : null,
       workActivityCode:
         !!this.workActivityCode?.value && isNumber(this.workActivityCode.value)
-          ? toTypeCode<number>(+this.workActivityCode.value) ?? null
+          ? toFinancialCode(
+              +this.workActivityCode.value,
+              ApiGen_Concepts_FinancialCodeTypes.WorkActivity,
+            ) ?? null
           : null,
+      ...getEmptyBaseAudit(this.rowVersion),
     };
   }
 
   static fromApi(
-    model: Api_Project,
+    model: ApiGen_Concepts_Project,
     businessFunctionOptions: SelectOption[] = [],
     costTypeOptions: SelectOption[] = [],
     workActivityOptions: SelectOption[] = [],
@@ -112,8 +126,8 @@ export class ProjectForm {
     newForm.rowVersion = model.rowVersion ?? null;
     newForm.products =
       model.projectProducts
-        .map(x => x.product)
-        ?.filter((x): x is Api_Product => x !== null)
+        ?.map(x => x.product)
+        ?.filter(exists)
         .map(x => ProductForm.fromApi(x)) || [];
     newForm.businessFunctionCode =
       !!model.businessFunctionCode?.id && isNumber(model.businessFunctionCode?.id)

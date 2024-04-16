@@ -1,0 +1,779 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UpdateAcquisitionAgreementView component renders as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div />
+  .c11.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  min-height: 3rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+}
+
+.c11.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c11.btn:focus {
+  outline-width: 0.4rem;
+  outline-style: solid;
+  outline-offset: 1px;
+  box-shadow: none;
+}
+
+.c11.btn.btn-primary {
+  border: none;
+}
+
+.c11.btn.btn-secondary {
+  background: none;
+}
+
+.c11.btn.btn-info {
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c11.btn.btn-info:hover,
+.c11.btn.btn-info:active,
+.c11.btn.btn-info:focus {
+  background: none;
+}
+
+.c11.btn.btn-light {
+  border: none;
+}
+
+.c11.btn.btn-dark {
+  border: none;
+}
+
+.c11.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  text-align: left;
+  padding: 0;
+}
+
+.c11.btn.btn-link:hover,
+.c11.btn.btn-link:active,
+.c11.btn.btn-link:focus {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.c11.btn.btn-link:disabled,
+.c11.btn.btn-link.disabled {
+  background: none;
+  pointer-events: none;
+}
+
+.c11.btn:disabled,
+.c11.btn:disabled:hover {
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.c11.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c11.Button--icon-only:focus {
+  outline: none;
+}
+
+.c11.Button--icon-only .Button__icon {
+  margin-right: 0;
+}
+
+.c5 .react-datepicker__calendar-icon {
+  width: 3rem;
+  height: 3rem;
+  margin-top: 0.5rem;
+  right: 0;
+  pointer-events: none;
+}
+
+.c5 .react-datepicker__view-calendar-icon input {
+  padding: 0.6rem 1rem 0.5rem 0.6rem;
+}
+
+.c5 .react-datepicker-wrapper {
+  max-width: 16rem;
+}
+
+.c6.c6.form-control.is-valid {
+  background-image: none;
+}
+
+.c6.c6.form-control.is-invalid {
+  border-color: #d8292f !important;
+}
+
+.c10 {
+  position: -webkit-sticky;
+  position: sticky;
+  padding-top: 2rem;
+  bottom: 0;
+  background: white;
+  z-index: 10;
+}
+
+.c2 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c1 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
+.c4.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c3 {
+  font-weight: bold;
+}
+
+.c7 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c8 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+}
+
+.c8 label {
+  margin-left: 0.5rem;
+}
+
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  text-align: left;
+  height: 100%;
+  overflow-y: auto;
+  padding-bottom: 1rem;
+}
+
+.c9 {
+  margin-right: 1rem;
+  padding-bottom: 1rem;
+  z-index: 0;
+}
+
+<div
+    class="c0"
+  >
+    <div
+      class=""
+    >
+      <div
+        class="c1 form-section"
+      >
+        <h2
+          class="c2"
+        >
+          <div
+            class="no-gutters row"
+          >
+            <div
+              class="col"
+            >
+              Agreement Details
+            </div>
+          </div>
+        </h2>
+        <div
+          class="collapse show"
+        >
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-5"
+            >
+              <label
+                class="c3"
+              >
+                Agreement status:
+              </label>
+            </div>
+            <div
+              class="c4 text-left col"
+            >
+              <div
+                class="form-group"
+              >
+                <select
+                  class="form-select form-control"
+                  id="input-agreementStatusTypeCode"
+                  name="agreementStatusTypeCode"
+                >
+                  <option
+                    class="option"
+                    data-testid="select-option-CANCELLED"
+                    value="CANCELLED"
+                  >
+                    Cancelled
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-DRAFT"
+                    value="DRAFT"
+                  >
+                    Draft
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-FINAL"
+                    value="FINAL"
+                  >
+                    Final
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-5"
+            >
+              <label
+                class="c3"
+              >
+                Legal survey plan:
+              </label>
+            </div>
+            <div
+              class="c4 text-left col"
+            >
+              <div
+                class="input form-group"
+              >
+                <input
+                  class="form-control"
+                  id="input-legalSurveyPlanNum"
+                  name="legalSurveyPlanNum"
+                  value=""
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-5"
+            >
+              <label
+                class="c3"
+              >
+                Agreement type:
+              </label>
+            </div>
+            <div
+              class="c4 required text-left col"
+            >
+              <div
+                class="form-group"
+              >
+                <select
+                  class="form-select form-control"
+                  id="input-agreementTypeCode"
+                  name="agreementTypeCode"
+                >
+                  <option
+                    value=""
+                  >
+                    Select Agreement Type
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-H179T"
+                    value="H179T"
+                  >
+                    Total Agreement (H179T)
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-H179P"
+                    value="H179P"
+                  >
+                    Partial Agreement (H179P)
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-H179A"
+                    value="H179A"
+                  >
+                    Section 3 Agreement (H179A)
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-H0074"
+                    value="H0074"
+                  >
+                    License Of Occupation (H0074)
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-5"
+            >
+              <label
+                class="c3"
+              >
+                Agreement date:
+              </label>
+            </div>
+            <div
+              class="c4 text-left col"
+            >
+              <div
+                class="c5 form-group"
+              >
+                <div
+                  class="react-datepicker-wrapper d-block"
+                >
+                  <div
+                    class="react-datepicker__input-container react-datepicker__view-calendar-icon"
+                  >
+                    <svg
+                      class="react-datepicker__calendar-icon"
+                      viewBox="0 0 448 512"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                      />
+                    </svg>
+                    <input
+                      autocomplete="off"
+                      class="c6 form-control date-picker"
+                      id="datepicker-agreementDate"
+                      name="agreementDate"
+                      placeholder="MMM DD, YYYY"
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-5"
+            >
+              <label
+                class="c3"
+              >
+                Completion date:
+              </label>
+            </div>
+            <div
+              class="c4 text-left col"
+            >
+              <div
+                class="c5 form-group"
+              >
+                <div
+                  class="react-datepicker-wrapper d-block"
+                >
+                  <div
+                    class="react-datepicker__input-container react-datepicker__view-calendar-icon"
+                  >
+                    <svg
+                      class="react-datepicker__calendar-icon"
+                      viewBox="0 0 448 512"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                      />
+                    </svg>
+                    <input
+                      autocomplete="off"
+                      class="c6 form-control date-picker"
+                      id="datepicker-completionDate"
+                      name="completionDate"
+                      placeholder="MMM DD, YYYY"
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-5"
+            >
+              <label
+                class="c3"
+              >
+                Termination date:
+              </label>
+            </div>
+            <div
+              class="c4 text-left col"
+            >
+              <div
+                class="c5 form-group"
+              >
+                <div
+                  class="react-datepicker-wrapper d-block"
+                >
+                  <div
+                    class="react-datepicker__input-container react-datepicker__view-calendar-icon"
+                  >
+                    <svg
+                      class="react-datepicker__calendar-icon"
+                      viewBox="0 0 448 512"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                      />
+                    </svg>
+                    <input
+                      autocomplete="off"
+                      class="c6 form-control date-picker"
+                      id="datepicker-terminationDate"
+                      name="terminationDate"
+                      placeholder="MMM DD, YYYY"
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-5"
+            >
+              <label
+                class="c3"
+              >
+                Possession date:
+              </label>
+            </div>
+            <div
+              class="c4 text-left col"
+            >
+              <div
+                class="c5 form-group"
+              >
+                <div
+                  class="react-datepicker-wrapper d-block"
+                >
+                  <div
+                    class="react-datepicker__input-container react-datepicker__view-calendar-icon"
+                  >
+                    <svg
+                      class="react-datepicker__calendar-icon"
+                      viewBox="0 0 448 512"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                      />
+                    </svg>
+                    <input
+                      autocomplete="off"
+                      class="c6 form-control date-picker"
+                      id="datepicker-possessionDate"
+                      name="possessionDate"
+                      placeholder="MMM DD, YYYY"
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="c7"
+          >
+            Financial
+          </div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-5"
+            >
+              <label
+                class="c3"
+              >
+                Purchase price:
+              </label>
+            </div>
+            <div
+              class="c4 text-left col"
+            >
+              <div
+                class="form-group"
+              >
+                <div
+                  class="input-tooltip-wrapper"
+                >
+                  <input
+                    class="form-control input-number"
+                    id="input-purchasePrice"
+                    inputmode="numeric"
+                    name="purchasePrice"
+                    placeholder=""
+                    type="text"
+                    value=""
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-5"
+            >
+              <label
+                class="c3"
+              >
+                Deposit due no later than:
+                <span
+                  class="ml-2"
+                >
+                  <span
+                    class="tooltip-icon"
+                    data-testid="tooltip-icon-section-field-tooltip"
+                    id="section-field-tooltip"
+                  >
+                    <svg
+                      class="tooltip-icon"
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 512 512"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                      />
+                    </svg>
+                  </span>
+                </span>
+              </label>
+            </div>
+            <div
+              class="c4 text-left col"
+            >
+              <div
+                class="c8"
+              >
+                <div
+                  class="input form-group"
+                >
+                  <input
+                    class="form-control"
+                    id="input-noLaterThanDays"
+                    name="noLaterThanDays"
+                    value=""
+                  />
+                </div>
+                <label
+                  class="c3"
+                >
+                  days.
+                </label>
+              </div>
+            </div>
+          </div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-5"
+            >
+              <label
+                class="c3"
+              >
+                Deposit amount:
+              </label>
+            </div>
+            <div
+              class="c4 text-left col"
+            >
+              <div
+                class="form-group"
+              >
+                <div
+                  class="input-tooltip-wrapper"
+                >
+                  <input
+                    class="form-control input-number"
+                    id="input-depositAmount"
+                    inputmode="numeric"
+                    name="depositAmount"
+                    placeholder=""
+                    type="text"
+                    value=""
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c9"
+    >
+      <div
+        class="c10 justify-content-end mt-auto no-gutters row"
+      >
+        <div
+          class="pr-3 col-auto"
+        />
+        <div
+          class="pr-4 col-auto"
+        >
+          <button
+            class="c11 Button btn btn-secondary"
+            type="button"
+          >
+            <div
+              class="Button__value"
+            >
+              Cancel
+            </div>
+          </button>
+        </div>
+        <div
+          class="col-auto"
+        >
+          <button
+            class="c11 Button Button--disabled btn btn-primary"
+            disabled=""
+            type="button"
+          >
+            <div
+              class="Button__value"
+            >
+              Save
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

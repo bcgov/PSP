@@ -147,6 +147,9 @@ public partial class PimsPropertyHist
     [Column("IS_SENSITIVE")]
     public bool IsSensitive { get; set; }
 
+    [Column("IS_RETIRED")]
+    public bool? IsRetired { get; set; }
+
     [Column("IS_PROVINCIAL_PUBLIC_HWY")]
     public bool? IsProvincialPublicHwy { get; set; }
 
@@ -168,7 +171,7 @@ public partial class PimsPropertyHist
     public string Zoning { get; set; }
 
     [Column("ZONING_POTENTIAL")]
-    [StringLength(50)]
+    [StringLength(100)]
     public string ZoningPotential { get; set; }
 
     [Column("ADDITIONAL_DETAILS")]

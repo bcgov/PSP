@@ -1,6 +1,6 @@
 import { createMemoryHistory } from 'history';
 
-import { Api_PropertyAssociations } from '@/models/api/Property';
+import { ApiGen_Concepts_PropertyAssociations } from '@/models/api/generated/ApiGen_Concepts_PropertyAssociations';
 import { render, RenderOptions } from '@/utils/test-utils';
 
 import PropertyAssociationTabView, {
@@ -9,8 +9,8 @@ import PropertyAssociationTabView, {
 
 const history = createMemoryHistory();
 
-const fakeAssociations: Api_PropertyAssociations = {
-  id: '168',
+const fakeAssociations: ApiGen_Concepts_PropertyAssociations = {
+  id: 168,
   pid: '26934426',
   acquisitionAssociations: [
     {
@@ -20,6 +20,7 @@ const fakeAssociations: Api_PropertyAssociations = {
       createdDateTime: '2022-05-13T11:51:29.23',
       createdBy: 'Acquisition File Data',
       status: 'Active',
+      createdByGuid: null,
     },
   ],
   leaseAssociations: [
@@ -30,6 +31,7 @@ const fakeAssociations: Api_PropertyAssociations = {
       createdDateTime: '2022-05-13T11:51:29.23',
       createdBy: 'Lease Seed Data',
       status: 'Active',
+      createdByGuid: null,
     },
   ],
   researchAssociations: [
@@ -40,8 +42,10 @@ const fakeAssociations: Api_PropertyAssociations = {
       createdDateTime: '2022-05-17T19:49:16.647',
       createdBy: 'admin',
       status: 'Active',
+      createdByGuid: null,
     },
   ],
+  dispositionAssociations: null,
 };
 
 describe('PropertyAssociationTabView component', () => {

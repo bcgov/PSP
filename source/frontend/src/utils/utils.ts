@@ -1,11 +1,12 @@
-import { AxiosError, AxiosResponse } from 'axios';
+import { AxiosResponse } from 'axios';
 import { FormikProps, getIn } from 'formik';
 import { isEmpty, isNull, isUndefined, lowerFirst, startCase } from 'lodash';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
 
 import { SelectOption } from '@/components/common/form';
 import { TableSort } from '@/components/Table/TableSort';
-import { logError, logRequest, logSuccess } from '@/store/slices/network/networkSlice';
+import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
+import { logRequest, logSuccess } from '@/store/slices/network/networkSlice';
 
 /**
  * Removes a trailing slash from a string.
@@ -28,6 +29,12 @@ export function round(value: number, decimalPlaces = 2): number {
   return Math.round((value + Number.EPSILON) * factorOfTen) / factorOfTen;
 }
 
+export const enumFromValue = <T extends Record<string, string>>(val: string, _enum: T) => {
+  const enumName = (Object.keys(_enum) as Array<keyof T>).find(k => _enum[k] === val);
+  if (!enumName) return undefined;
+  return _enum[enumName];
+};
+
 /**
  * Determine if the specified 'input' value is a positive number of zero.
  * @param input The value to evaluate.
@@ -46,7 +53,7 @@ export const isPositiveNumberOrZero = (input: string | number | undefined | null
 };
 
 export const isNullOrWhitespace = (value: string | null | undefined): boolean => {
-  return value === null || value === undefined || value.trim() === '';
+  return !exists(value) || value.trim() === '';
 };
 
 type FormikMemoProps = {
@@ -94,10 +101,10 @@ export const formikFieldMemo = (
  * @param axiosPromise The result of an axios.get, .put, ..., call.
  */
 export const handleAxiosResponse = <ResponseType>(
+  // eslint-disable-next-line @typescript-eslint/ban-types
   dispatch: Function,
   actionType: string,
   axiosPromise: Promise<AxiosResponse<ResponseType>>,
-  skipErrorLogCodes?: number[],
 ): Promise<AxiosResponse<ResponseType>> => {
   dispatch(logRequest(actionType));
   dispatch(showLoading());
@@ -106,21 +113,6 @@ export const handleAxiosResponse = <ResponseType>(
       dispatch(logSuccess({ name: actionType, status: response.status }));
       dispatch(hideLoading());
       return response;
-    })
-    .catch((axiosError: AxiosError) => {
-      if (
-        !skipErrorLogCodes ||
-        (axiosError?.response?.status && !skipErrorLogCodes.includes(axiosError?.response?.status))
-      ) {
-        dispatch(
-          logError({
-            name: actionType,
-            status: axiosError?.response?.status,
-            error: axiosError ?? {},
-          }),
-        );
-      }
-      throw axiosError;
     })
     .finally(() => {
       dispatch(hideLoading());
@@ -143,7 +135,9 @@ export const generateMultiSortCriteria = (sort: TableSort<any>) => {
  * Convert sort query string to TableSort config
  * ['Name desc'] = {name: 'desc'}
  */
-export const resolveSortCriteriaFromUrl = (input: string[]): TableSort<any> | {} => {
+export const resolveSortCriteriaFromUrl = (
+  input: string[],
+): TableSort<any> | Record<string, never> => {
   if (isEmpty(input)) {
     return {};
   }
@@ -168,6 +162,36 @@ export const getPage = <T>(pageIndex: number, pageSize: number, data: T[]) => {
   const pageStart = (pageIndex ?? 0) * pageSize;
   return data.slice(pageStart, pageStart + pageSize);
 };
+
+export function unique<T>(value: T, index: number, array: T[]) {
+  return array.indexOf(value) === index;
+}
+
+/**
+ * Meant to be used as the function passed during a conditional statement to remove null or undefined entries.
+ * example. myArray.filter(exists);
+ *          if(exists(a?.b?.c)){}
+ */
+export function exists<T>(value: T | null | undefined): value is T {
+  return value === (value ?? !value);
+}
+
+/**
+ * Returns true id an identifier belongs to an existing entry on the backend
+ * @param value the paraneter to be assessed
+ * @returns true if valid, false otherwise
+ */
+export function isValidId(value: number | null | undefined): value is number {
+  return exists(value) && !isNaN(value) && value !== 0;
+}
+
+export function isValidString(value: string | null | undefined): value is string {
+  return exists(value) && value.length > 0;
+}
+
+export function isValidIsoDateTime(value: string | null | undefined): value is string {
+  return isValidString(value) && value !== EpochIsoDateTime;
+}
 
 /**
  * Add a simple retry wrapper to help avoid chunk errors in deployed pims application, recursively calls promise based on attemptsLeft parameter.

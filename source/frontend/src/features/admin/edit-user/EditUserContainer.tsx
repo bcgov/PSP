@@ -4,7 +4,8 @@ import { useHistory } from 'react-router-dom';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { UserTypes } from '@/constants/index';
 import useIsMounted from '@/hooks/util/useIsMounted';
-import { Api_User } from '@/models/api/User';
+import { ApiGen_Concepts_User } from '@/models/api/generated/ApiGen_Concepts_User';
+import { toTypeCode } from '@/utils/formUtils';
 
 import { useUsers } from '../users/hooks/useUsers';
 import { FormUser } from '../users/models';
@@ -16,7 +17,7 @@ export interface IEditUserContainerProps {
 
 const EditUserContainer: React.FunctionComponent<IEditUserContainerProps> = ({ userId }) => {
   const history = useHistory();
-  const [user, setUser] = React.useState<Api_User>();
+  const [user, setUser] = React.useState<ApiGen_Concepts_User>();
   const isMounted = useIsMounted();
   const {
     updateUser: { execute: updateUserDetail },
@@ -50,9 +51,9 @@ const EditUserContainer: React.FunctionComponent<IEditUserContainerProps> = ({ u
     regions: [],
     note: '',
     position: '',
-    userTypeCode: { id: UserTypes.Contractor },
+    userTypeCode: toTypeCode(UserTypes.Contractor),
     lastLogin: '',
-    toApi: () => ({} as Api_User),
+    toApi: () => ({} as ApiGen_Concepts_User),
   };
   const formUser = user !== undefined ? new FormUser(user) : initialValues;
   return (
@@ -60,7 +61,7 @@ const EditUserContainer: React.FunctionComponent<IEditUserContainerProps> = ({ u
       <LoadingBackdrop parentScreen show={loading} />
 
       <EditUserForm
-        updateUserDetail={async (updateUser: Api_User) => {
+        updateUserDetail={async (updateUser: ApiGen_Concepts_User) => {
           const response = await updateUserDetail(updateUser);
           if (isMounted()) {
             setUser(response);

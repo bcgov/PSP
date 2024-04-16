@@ -11,7 +11,7 @@ import {
   getMockApiDefaultCompensation,
 } from '@/mocks/compensations.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
-import { Api_AcquisitionFileOwner } from '@/models/api/AcquisitionFile';
+import { ApiGen_Concepts_AcquisitionFileOwner } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileOwner';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
   act,
@@ -45,7 +45,7 @@ const defaultCompensation = new CompensationRequisitionFormModel(
   '',
 );
 
-const getPayeeOptions = (owners: Api_AcquisitionFileOwner[]): PayeeOption[] => {
+const getPayeeOptions = (owners: ApiGen_Concepts_AcquisitionFileOwner[]): PayeeOption[] => {
   const options: PayeeOption[] = [];
 
   const ownersOptions: PayeeOption[] = owners.map(x => PayeeOption.createOwner(x));
@@ -170,12 +170,12 @@ describe('Compensation Requisition UpdateForm component', () => {
       });
 
     await act(async () => {
-      await waitFor(() => userEvent.paste(getSpecialInstructionsTextbox(), fakeText(2001)));
-      await waitFor(() => userEvent.paste(getDetailedRemarksTextbox(), fakeText(2001)));
+      userEvent.paste(getSpecialInstructionsTextbox(), fakeText(2001));
+      userEvent.paste(getDetailedRemarksTextbox(), fakeText(2001));
     });
 
     const saveButton = getByText('Save');
-    userEvent.click(saveButton);
+    await act(async () => userEvent.click(saveButton));
 
     expect(await findByText(/Special instructions must be at most 2000 characters/i)).toBeVisible();
     expect(await findByText(/Detailed remarks must be at most 2000 characters/i)).toBeVisible();
@@ -208,6 +208,8 @@ describe('Compensation Requisition UpdateForm component', () => {
       getPayeePaymentInTrust,
     } = await setup({ props: { initialValues: compensationWithPayeeInformation } });
 
+    await waitFor(async () => {});
+
     expect(getPayeePaymentInTrust()).toBeChecked();
     expect(getPayeeGSTNumber()).toHaveValue('9999');
     expect(getPayeePreTaxAmount()).toHaveValue('$30,000.00');
@@ -228,9 +230,7 @@ describe('Compensation Requisition UpdateForm component', () => {
       props: { initialValues: mockCompensation },
     });
 
-    await act(async () => {
-      await waitFor(() => userEvent.paste(getSpecialInstructionsTextbox(), 'updated value'));
-    });
+    await waitFor(() => userEvent.paste(getSpecialInstructionsTextbox(), 'updated value'));
 
     const saveButton = screen.getByText('Save');
     await act(async () => userEvent.click(saveButton));

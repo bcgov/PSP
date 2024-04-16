@@ -13,7 +13,7 @@ import { StyledSummarySection } from '@/components/common/Section/SectionStyles'
 import { ContactManagerModal } from '@/components/contact/ContactManagerModal';
 import * as API from '@/constants/API';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
-import { IContactSearchResult } from '@/interfaces';
+import { IContactSearchResult, isPersonResult } from '@/interfaces';
 
 import { ResearchFileNameGuide } from '../../../common/ResearchFileNameGuide';
 import { UpdateProjectsSubForm } from '../../../common/updateProjects/UpdateProjectsSubForm';
@@ -63,8 +63,8 @@ const UpdateSummaryForm: React.FunctionComponent<IUpdateSummaryFormProps> = prop
 
   function onSelectedPurposeChange(selectedList: MultiSelectOption[]) {
     setSelectedPurposes(selectedList);
-    var mapped = selectedList.map<ResearchFilePurposeFormModel>(x => {
-      var purposeType = new ResearchFilePurposeFormModel();
+    const mapped = selectedList.map<ResearchFilePurposeFormModel>(x => {
+      const purposeType = new ResearchFilePurposeFormModel();
       purposeType.researchPurposeTypeCode = x.id;
       purposeType.researchPurposeTypeDescription = x.text;
       return purposeType;
@@ -73,7 +73,7 @@ const UpdateSummaryForm: React.FunctionComponent<IUpdateSummaryFormProps> = prop
   }
 
   function handleRequesterSelected() {
-    var selectedContact = selectedContacts[0];
+    const selectedContact = selectedContacts[0];
     props.formikProps.setFieldValue('requestor', selectedContact);
     setShowContactManager(false);
   }
@@ -162,11 +162,13 @@ const UpdateSummaryForm: React.FunctionComponent<IUpdateSummaryFormProps> = prop
             }}
           />
         </SectionField>
-        {values.requestor?.id.startsWith('P') && (
-          <SectionField label="Organization" className="pb-4">
-            {values.requestor.organizationName ?? 'none'}
-          </SectionField>
-        )}
+        {values.requestor &&
+          isPersonResult(values.requestor) &&
+          values.requestor.person?.personOrganizations?.length !== undefined && (
+            <SectionField label="Organization" className="pb-4">
+              {values.requestor.person.personOrganizations[0].organization?.name ?? 'none'}
+            </SectionField>
+          )}
         <SectionField label="Description of request" />
         <TextArea field="requestDescription" required />
       </Section>

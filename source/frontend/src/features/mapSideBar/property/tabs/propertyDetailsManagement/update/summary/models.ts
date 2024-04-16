@@ -1,18 +1,20 @@
-import { Api_PropertyManagement, Api_PropertyManagementPurpose } from '@/models/api/Property';
+import { ApiGen_Concepts_PropertyManagement } from '@/models/api/generated/ApiGen_Concepts_PropertyManagement';
+import { ApiGen_Concepts_PropertyManagementPurpose } from '@/models/api/generated/ApiGen_Concepts_PropertyManagementPurpose';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { ILookupCode } from '@/store/slices/lookupCodes';
 import { formatApiPropertyManagementLease } from '@/utils';
 import { stringToNull } from '@/utils/formUtils';
 
 export class PropertyManagementFormModel {
-  id: number = 0;
-  rowVersion: number = 0;
+  id = 0;
+  rowVersion = 0;
   managementPurposes: ManagementPurposeModel[] = [];
-  additionalDetails: string = '';
+  additionalDetails = '';
   isUtilitiesPayable: boolean | null = null;
   isTaxesPayable: boolean | null = null;
   formattedLeaseInformation: string | null = null;
 
-  static fromApi(base: Api_PropertyManagement | null): PropertyManagementFormModel {
+  static fromApi(base: ApiGen_Concepts_PropertyManagement | null): PropertyManagementFormModel {
     const newFormModel = new PropertyManagementFormModel();
     newFormModel.id = base?.id || 0;
     newFormModel.rowVersion = base?.rowVersion || 0;
@@ -26,10 +28,9 @@ export class PropertyManagementFormModel {
     return newFormModel;
   }
 
-  toApi(): Api_PropertyManagement {
+  toApi(): ApiGen_Concepts_PropertyManagement {
     return {
       id: this.id,
-      rowVersion: this.rowVersion,
       managementPurposes: this.managementPurposes.map(p => ({
         ...p.toApi(),
         propertyId: this.id,
@@ -39,26 +40,27 @@ export class PropertyManagementFormModel {
       isTaxesPayable: this.isTaxesPayable,
       relatedLeases: 0,
       leaseExpiryDate: null,
+      ...getEmptyBaseAudit(this.rowVersion),
     };
   }
 }
 
 export class ManagementPurposeModel {
-  id: number = 0;
-  rowVersion: number = 0;
+  id = 0;
+  rowVersion = 0;
   propertyId: number | null = null;
-  typeCode: string = '';
-  typeDescription: string = '';
+  typeCode = '';
+  typeDescription = '';
 
   static fromLookup(base: ILookupCode): ManagementPurposeModel {
-    var newModel = new ManagementPurposeModel();
+    const newModel = new ManagementPurposeModel();
     newModel.typeCode = base.id.toString();
     newModel.typeDescription = base.name;
     return newModel;
   }
 
-  static fromApi(base: Api_PropertyManagementPurpose | null): ManagementPurposeModel {
-    var newModel = new ManagementPurposeModel();
+  static fromApi(base: ApiGen_Concepts_PropertyManagementPurpose | null): ManagementPurposeModel {
+    const newModel = new ManagementPurposeModel();
     newModel.id = base?.id || 0;
     newModel.rowVersion = base?.rowVersion || 0;
     newModel.propertyId = base?.propertyId ?? null;
@@ -67,15 +69,17 @@ export class ManagementPurposeModel {
     return newModel;
   }
 
-  toApi(): Api_PropertyManagementPurpose {
+  toApi(): ApiGen_Concepts_PropertyManagementPurpose {
     return {
       id: this.id,
-      rowVersion: this.rowVersion,
-      propertyId: this.propertyId,
+      propertyId: this.propertyId ?? 0,
       propertyPurposeTypeCode: {
         id: this.typeCode,
         description: this.typeDescription,
+        displayOrder: null,
+        isDisabled: false,
       },
+      ...getEmptyBaseAudit(this.rowVersion),
     };
   }
 }

@@ -39,7 +39,7 @@ exports[`ProjectSelector component renders as expected 1`] = `
           aria-hidden="true"
           class="rbt-input-hint"
           readonly=""
-          style="background-color: transparent; border-color: transparent; box-shadow: none; color: rgba(0, 0, 0, 0.35); left: 0px; pointer-events: none; position: absolute; top: 0px; width: 100%;"
+          style="background-color: transparent; border-color: transparent; box-shadow: none; color: rgba(0, 0, 0, 0.54); left: 0px; pointer-events: none; position: absolute; top: 0px; width: 100%;"
           tabindex="-1"
           value=""
         />

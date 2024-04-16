@@ -8,7 +8,7 @@ import styled from 'styled-components';
 import { StyledIconButton } from '@/components/common/buttons';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
-import { pidParser } from '@/utils';
+import { isValidId, pidParser } from '@/utils';
 
 import { LayerPopupContent } from './components/LayerPopupContent';
 import { LayerPopupFlyout } from './components/LayerPopupFlyout';
@@ -34,15 +34,18 @@ export const LayerPopupView: React.FC<React.PropsWithChildren<ILayerPopupViewPro
 
   const mapMachine = useMapStateMachine();
 
+  const pimsPropertyId = featureDataset?.pimsFeature?.properties?.PROPERTY_ID;
+  const isInPims = isValidId(Number(pimsPropertyId));
+  const isRetiredProperty = featureDataset?.pimsFeature?.properties?.IS_RETIRED ?? false;
+
   const onPropertyViewClicked = () => {
-    if (featureDataset?.pimsFeature?.properties.PROPERTY_ID) {
+    if (isInPims) {
       closeFlyout();
-      const pimsFeature = featureDataset.pimsFeature;
-      history.push(`/mapview/sidebar/property/${pimsFeature.properties.PROPERTY_ID}`);
-    } else if (featureDataset?.parcelFeature?.properties.PID) {
+      history.push(`/mapview/sidebar/property/${pimsPropertyId}`);
+    } else if (featureDataset?.parcelFeature?.properties?.PID) {
       closeFlyout();
       const parcelFeature = featureDataset?.parcelFeature;
-      const parsedPid = pidParser(parcelFeature.properties.PID);
+      const parsedPid = pidParser(parcelFeature?.properties?.PID);
       history.push(`/mapview/sidebar/non-inventory-property/${parsedPid}`);
     } else {
       console.warn('Invalid marker when trying to see property information');
@@ -90,6 +93,20 @@ export const LayerPopupView: React.FC<React.PropsWithChildren<ILayerPopupViewPro
     history.push('/mapview/sidebar/disposition/new');
   };
 
+  const handleCreateSubdivision = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
+    event.stopPropagation();
+    mapMachine.prepareForCreation();
+    closeFlyout();
+    history.push('/mapview/sidebar/subdivision/new');
+  };
+
+  const handleCreateConsolidation = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
+    event.stopPropagation();
+    mapMachine.prepareForCreation();
+    closeFlyout();
+    history.push('/mapview/sidebar/consolidation/new');
+  };
+
   return (
     <StyledContainer>
       <StyledRow>
@@ -111,11 +128,15 @@ export const LayerPopupView: React.FC<React.PropsWithChildren<ILayerPopupViewPro
       {showFlyout && (
         <StyledFlyoutContainer>
           <LayerPopupFlyout
+            isInPims={isInPims}
+            isRetiredProperty={isRetiredProperty}
             onViewPropertyInfo={handleViewPropertyInfo}
             onCreateResearchFile={handleCreateResearchFile}
             onCreateAcquisitionFile={handleCreateAcquisitionFile}
             onCreateLeaseLicense={handleCreateLeaseLicence}
             onCreateDispositionFile={handleCreateDispositionFile}
+            onCreateSubdivision={handleCreateSubdivision}
+            onCreateConsolidation={handleCreateConsolidation}
           />
         </StyledFlyoutContainer>
       )}
@@ -156,20 +177,4 @@ const StyledFlyoutContainer = styled.div`
   border: 2px solid #bcbec5;
   box-shadow: 6px 6px 12px rgb(0 0 0 / 40%);
   min-width: 25rem;
-
-  .list-group {
-    .list-group-item {
-      padding: 0.5rem 1rem 0 1rem !important;
-      .btn {
-        width: 100%;
-        border-bottom: 1px solid #bcbec5 !important;
-      }
-      &:last-of-type {
-        padding-bottom: 0.5rem !important;
-        .btn {
-          border-bottom: none !important;
-        }
-      }
-    }
-  }
 `;

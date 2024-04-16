@@ -4758,9 +4758,9 @@ export const mockLookups: ILookupCode[] = [
 ];
 
 export const getMockLookUpsByType = (codeType: string): SelectOption[] => {
-  let codes = mockLookups.reduce(function (filtered: SelectOption[], reg) {
+  const codes = mockLookups.reduce(function (filtered: SelectOption[], reg) {
     if (reg.type === codeType) {
-      let option = mapLookupCode(reg as ILookupCode);
+      const option = mapLookupCode(reg as ILookupCode);
       filtered.push(option);
     }
     return filtered;

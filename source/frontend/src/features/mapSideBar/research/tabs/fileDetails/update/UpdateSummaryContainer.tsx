@@ -2,7 +2,7 @@ import { Formik, FormikProps } from 'formik';
 import * as React from 'react';
 import styled from 'styled-components';
 
-import { Api_ResearchFile } from '@/models/api/ResearchFile';
+import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Concepts_ResearchFile';
 
 import { useUpdateResearch } from '../../../hooks/useUpdateResearch';
 import { UpdateResearchSummaryFormModel } from './models';
@@ -10,7 +10,7 @@ import { UpdateResearchFileYupSchema } from './UpdateResearchFileYupSchema';
 import UpdateResearchForm from './UpdateSummaryForm';
 
 export interface IUpdateResearchViewProps {
-  researchFile: Api_ResearchFile;
+  researchFile: ApiGen_Concepts_ResearchFile;
   onSuccess: () => void;
 }
 
@@ -18,13 +18,13 @@ export const UpdateResearchContainer = React.forwardRef<FormikProps<any>, IUpdat
   (props, formikRef) => {
     const { updateResearchFile } = useUpdateResearch();
 
-    const saveResearchFile = async (researchFile: Api_ResearchFile) => {
+    const saveResearchFile = async (researchFile: ApiGen_Concepts_ResearchFile) => {
       const response = await updateResearchFile(researchFile);
       if (typeof formikRef === 'function' || formikRef === null) {
         throw Error('unexpected ref prop');
       }
       formikRef.current?.setSubmitting(false);
-      if (!!response?.fileName) {
+      if (response?.fileName) {
         formikRef.current?.resetForm();
         props.onSuccess();
       }
@@ -37,7 +37,7 @@ export const UpdateResearchContainer = React.forwardRef<FormikProps<any>, IUpdat
         validationSchema={UpdateResearchFileYupSchema}
         initialValues={UpdateResearchSummaryFormModel.fromApi(props.researchFile)}
         onSubmit={async (values: UpdateResearchSummaryFormModel) => {
-          const researchFile: Api_ResearchFile = values.toApi();
+          const researchFile: ApiGen_Concepts_ResearchFile = values.toApi();
           await saveResearchFile(researchFile);
         }}
       >

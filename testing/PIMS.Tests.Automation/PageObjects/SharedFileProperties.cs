@@ -69,12 +69,10 @@ namespace PIMS.Tests.Automation.PageObjects
 
         //File Confirmation Modal Elements
         private By propertiesFileConfirmationModal = By.CssSelector("div[class='modal-content']");
+        private By propertiesFileMOTIInventoryModal = By.XPath("//div[@role='dialog'][2]/div/div/div[contains(text(),'You have added one or more properties to the disposition file that are not in the MoTI Inventory. Do you want to proceed?')]");
 
         //Toast Element
         private By duplicatePropToast = By.CssSelector("div[id='duplicate-property'] div[class='Toastify__toast-body']");
-
-        //Warning Message Modal
-        private By searchPropertiesModal = By.CssSelector("div[class='modal-content']");
 
         private SharedModals sharedModals;
 
@@ -174,7 +172,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void SelectFirstOptionFromSearch()
         {
-            Wait(2000);
+            Wait();
             FocusAndClick(searchProperties1stResultPropCheckbox);
 
             webDriver.FindElement(searchPropertiesAddSelectionBttn).Click();
@@ -187,7 +185,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 Assert.Equal("A property that the user is trying to select has already been added to the selected properties list", webDriver.FindElement(duplicatePropToast).Text);
             }
 
-            if (webDriver.FindElements(searchPropertiesModal).Count > 0)
+            if (webDriver.FindElements(propertiesFileConfirmationModal).Count > 0)
             {
                 Assert.Equal("Not inventory property", sharedModals.ModalHeader());
                 Assert.Equal("You have selected a property not previously in the inventory. Do you want to add this property to the lease?", sharedModals.ModalContent());
@@ -286,7 +284,7 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(By.XPath("//h2/div/div[contains(text(),'Selected properties')]/parent::div/parent::h2/following-sibling::div/div[@class='align-items-center mb-3 no-gutters row']["+ propertyIndex +"]/div[3]/button")).Click();
 
             Wait(2000);
-            if (webDriver.FindElements(searchPropertiesModal).Count > 0)
+            if (webDriver.FindElements(propertiesFileConfirmationModal).Count > 0)
             {
                 Assert.True(sharedModals.ModalHeader() == "Removing Property from form");
                 Assert.True(sharedModals.ModalContent() == "Are you sure you want to remove this property from this lease/license?");
@@ -300,6 +298,30 @@ namespace PIMS.Tests.Automation.PageObjects
 
         }
 
+        public void DeleteLastPropertyFromLease()
+        {
+            Wait();
+            var propertyIndex = webDriver.FindElements(searchPropertiesPropertiesInFileTotal).Count();
+
+            WaitUntilClickable(By.XPath("//h2/div/div[contains(text(),'Selected properties')]/parent::div/parent::h2/following-sibling::div/div[@class='align-items-center mb-3 no-gutters row']["+ propertyIndex +"]/div[4]/button"));
+            webDriver.FindElement(By.XPath("//h2/div/div[contains(text(),'Selected properties')]/parent::div/parent::h2/following-sibling::div/div[@class='align-items-center mb-3 no-gutters row']["+ propertyIndex +"]/div[4]/button")).Click();
+
+            Wait(2000);
+            if (webDriver.FindElements(propertiesFileConfirmationModal).Count > 0)
+            {
+                Assert.True(sharedModals.ModalHeader() == "Removing Property from form");
+                Assert.True(sharedModals.ModalContent() == "Are you sure you want to remove this property from this lease/license?");
+
+                sharedModals.ModalClickOKBttn();
+            }
+
+            Wait();
+            var propertiesAfterRemove = webDriver.FindElements(searchPropertiesPropertiesInFileTotal).Count();
+            Assert.True(propertiesAfterRemove == propertyIndex - 1);
+
+        }
+
+
         public void SaveFileProperties()
         {
             Wait();
@@ -312,11 +334,18 @@ namespace PIMS.Tests.Automation.PageObjects
             sharedModals.ModalClickOKBttn();
 
             Wait();
-            if (webDriver.FindElements(propertiesFileConfirmationModal).Count() > 0)
+            if (webDriver.FindElements(propertiesFileConfirmationModal).Count() > 1)
             {
                 Assert.Equal("User Override Required", sharedModals.SecondaryModalHeader());
-                Assert.Contains("The selected property already exists in the system's inventory. However, the record is missing spatial details.", sharedModals.SecondaryModalContent());
-                Assert.Contains("To add the property, the spatial details for this property will need to be updated. The system will attempt to update the property record with spatial information from the current selection.", sharedModals.SecondaryModalContent());
+                if (webDriver.FindElements(propertiesFileMOTIInventoryModal).Count > 0)
+                {
+                    Assert.Contains("You have added one or more properties to the disposition file that are not in the MoTI Inventory. Do you want to proceed?", sharedModals.SecondaryModalContent());
+                }
+                else
+                {
+                    Assert.Contains("The selected property already exists in the system's inventory. However, the record is missing spatial details.", sharedModals.SecondaryModalContent());
+                    Assert.Contains("To add the property, the spatial details for this property will need to be updated. The system will attempt to update the property record with spatial information from the current selection.", sharedModals.SecondaryModalContent());
+                }
                 sharedModals.SecondaryModalClickOKBttn();
             }
         }

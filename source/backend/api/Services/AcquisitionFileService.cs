@@ -4,7 +4,6 @@ using System.Linq;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Pims.Api.Constants;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Helpers.Extensions;
 using Pims.Api.Models.CodeTypes;
@@ -228,12 +227,15 @@ namespace Pims.Api.Services
             ValidateStaff(acquisitionFile);
             ValidateOrganizationStaff(acquisitionFile);
 
-            acquisitionFile.AcquisitionFileStatusTypeCode = "ACTIVE";
             MatchProperties(acquisitionFile, userOverrides);
+            ValidatePropertyRegions(acquisitionFile);
+
             PopulateAcquisitionChecklist(acquisitionFile);
 
+            acquisitionFile.AcquisitionFileStatusTypeCode = AcquisitionStatusTypes.ACTIVE.ToString();
             var newAcqFile = _acqFileRepository.Add(acquisitionFile);
             _acqFileRepository.CommitTransaction();
+
             return newAcqFile;
         }
 
@@ -246,9 +248,14 @@ namespace Pims.Api.Services
 
             _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, acquisitionFile.Internal_Id);
             ValidateVersion(acquisitionFile.Internal_Id, acquisitionFile.ConcurrencyControlNumber);
-            ValidateDrafts(acquisitionFile);
 
             AcquisitionStatusTypes? currentAcquisitionStatus = GetCurrentAcquisitionStatus(acquisitionFile.Internal_Id);
+
+            if (currentAcquisitionStatus != AcquisitionStatusTypes.COMPLT && acquisitionFile.AcquisitionFileStatusTypeCode == AcquisitionStatusTypes.COMPLT.ToString())
+            {
+                ValidateDrafts(acquisitionFile);
+            }
+
             if (!_statusSolver.CanEditDetails(currentAcquisitionStatus) && !_user.HasPermission(Permissions.SystemAdmin))
             {
                 throw new BusinessRuleViolationException("The file you are editing is not active or draft, so you cannot save changes. Refresh your browser to see file state.");
@@ -259,7 +266,7 @@ namespace Pims.Api.Services
                 ValidateMinistryRegion(acquisitionFile.Internal_Id, acquisitionFile.RegionCode);
             }
 
-            if (acquisitionFile.AcquisitionFileStatusTypeCode == "COMPLT")
+            if (acquisitionFile.AcquisitionFileStatusTypeCode == AcquisitionStatusTypes.COMPLT.ToString())
             {
                 TransferPropertiesOfInterest(acquisitionFile, userOverrides.Contains(UserOverrideCode.PoiToInventory));
             }
@@ -296,6 +303,8 @@ namespace Pims.Api.Services
             ValidateVersion(acquisitionFile.Internal_Id, acquisitionFile.ConcurrencyControlNumber);
 
             MatchProperties(acquisitionFile, userOverrides);
+
+            ValidatePropertyRegions(acquisitionFile);
 
             AcquisitionStatusTypes? currentAcquisitionStatus = GetCurrentAcquisitionStatus(acquisitionFile.Internal_Id);
             if (!_statusSolver.CanEditProperties(currentAcquisitionStatus) && !_user.HasPermission(Permissions.SystemAdmin))
@@ -354,23 +363,30 @@ namespace Pims.Api.Services
             return _acqFileRepository.GetById(acquisitionFile.Internal_Id);
         }
 
-        public PimsAcquisitionFile UpdateChecklistItems(PimsAcquisitionFile acquisitionFile)
+        public PimsAcquisitionFile UpdateChecklistItems(IList<PimsAcquisitionChecklistItem> checklistItems)
         {
-            acquisitionFile.ThrowIfNull(nameof(acquisitionFile));
-            _logger.LogInformation("Updating acquisition file checklist with AcquisitionFile id: {id}", acquisitionFile.Internal_Id);
-            _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileEdit);
-            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, acquisitionFile.Internal_Id);
+            checklistItems.ThrowIfNull(nameof(checklistItems));
+            if (checklistItems.Count == 0)
+            {
+                throw new BadRequestException("Checklist items must be greater than zero");
+            }
 
-            var currentAcquisitionStatus = GetCurrentAcquisitionStatus(acquisitionFile.Internal_Id);
+            var acquisitionFileId = checklistItems.FirstOrDefault().AcquisitionFileId;
+
+            _logger.LogInformation("Updating acquisition file checklist with AcquisitionFile id: {id}", acquisitionFileId);
+            _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileEdit);
+            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, acquisitionFileId);
+
+            var currentAcquisitionStatus = GetCurrentAcquisitionStatus(acquisitionFileId);
             if (!_statusSolver.CanEditChecklists(currentAcquisitionStatus) && !_user.HasPermission(Permissions.SystemAdmin))
             {
                 throw new BusinessRuleViolationException("The file you are editing is not active or draft, so you cannot save changes. Refresh your browser to see file state.");
             }
 
             // Get the current checklist items for this acquisition file.
-            var currentItems = _checklistRepository.GetAllChecklistItemsByAcquisitionFileId(acquisitionFile.Internal_Id).ToDictionary(ci => ci.Internal_Id);
+            var currentItems = _checklistRepository.GetAllChecklistItemsByAcquisitionFileId(acquisitionFileId).ToDictionary(ci => ci.Internal_Id);
 
-            foreach (var incomingItem in acquisitionFile.PimsAcquisitionChecklistItems)
+            foreach (var incomingItem in checklistItems)
             {
                 if (!currentItems.TryGetValue(incomingItem.Internal_Id, out var existingItem) && incomingItem.Internal_Id != 0)
                 {
@@ -389,7 +405,7 @@ namespace Pims.Api.Services
             }
 
             _checklistRepository.CommitTransaction();
-            return _acqFileRepository.GetById(acquisitionFile.Internal_Id);
+            return _acqFileRepository.GetById(acquisitionFileId);
         }
 
         public IEnumerable<PimsAgreement> GetAgreements(long id)
@@ -399,6 +415,28 @@ namespace Pims.Api.Services
             _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, id);
 
             return _agreementRepository.GetAgreementsByAcquisitionFile(id);
+        }
+
+        public PimsAgreement AddAgreement(long acquisitionFileId, PimsAgreement agreement)
+        {
+            _user.ThrowIfNotAuthorized(Permissions.AgreementView);
+            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, acquisitionFileId);
+
+            ValidateAcquisitionFileStatus(acquisitionFileId, agreement.AgreementStatusTypeCode);
+
+            var newAgreement = _agreementRepository.AddAgreement(agreement);
+            _agreementRepository.CommitTransaction();
+
+            return newAgreement;
+        }
+
+        public PimsAgreement GetAgreementById(long acquisitionFileId, long agreementId)
+        {
+            _logger.LogInformation("Getting acquisition file agreement with Agreement id: {agreementId}", agreementId);
+            _user.ThrowIfNotAuthorized(Permissions.AgreementView);
+            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, acquisitionFileId);
+
+            return _agreementRepository.GetAgreementById(agreementId);
         }
 
         public IEnumerable<PimsAgreement> SearchAgreements(AcquisitionReportFilterModel filter)
@@ -415,39 +453,35 @@ namespace Pims.Api.Services
             return allMatchingAgreements.Where(a => pimsUser.PimsRegionUsers.Any(ur => ur.RegionCode == a.AcquisitionFile.RegionCode));
         }
 
-        public IEnumerable<PimsAgreement> UpdateAgreements(long acquisitionFileId, List<PimsAgreement> agreements)
+        public PimsAgreement UpdateAgreement(long acquisitionFileId, PimsAgreement agreement)
         {
+            _user.ThrowIfNotAuthorized(Permissions.AgreementView);
+            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, acquisitionFileId);
+
+            var currentAgreement = _agreementRepository.GetAgreementById(agreement.AgreementId);
+
+            ValidateAcquisitionFileStatus(acquisitionFileId, currentAgreement.AgreementStatusTypeCode);
+
+            var updatedAgreement = _agreementRepository.UpdateAgreement(agreement);
+            _agreementRepository.CommitTransaction();
+
+            return updatedAgreement;
+        }
+
+        public bool DeleteAgreement(long acquisitionFileId, long agreementId)
+        {
+            _user.ThrowIfNotAuthorized(Permissions.AgreementView);
             _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, acquisitionFileId);
 
             var currentAcquisitionStatus = GetCurrentAcquisitionStatus(acquisitionFileId);
+            var agreement = _agreementRepository.GetAgreementById(agreementId);
 
-            var currentAgreements = _agreementRepository.GetAgreementsByAcquisitionFile(acquisitionFileId);
+            ValidateAcquisitionFileStatus(acquisitionFileId, agreement.AgreementStatusTypeCode);
 
-            var toBeUpdated = currentAgreements.Where(ca => agreements.Any(na => ca.AgreementId == na.AgreementId && !ca.IsEqual(na)));
-            var toBeDeleted = currentAgreements.Where(ca => !agreements.Any(na => ca.AgreementId == na.AgreementId));
-
-            foreach (var agreement in toBeUpdated)
-            {
-                var agreementStatus = Enum.Parse<AgreementStatusTypes>(agreement.AgreementStatusTypeCode);
-                if (!_statusSolver.CanEditOrDeleteAgreement(currentAcquisitionStatus, agreementStatus) && !_user.HasPermission(Permissions.SystemAdmin))
-                {
-                    throw new BusinessRuleViolationException("The file you are editing is not active or draft, so you cannot save changes. Refresh your browser to see file state.");
-                }
-            }
-
-            foreach (var agreement in toBeDeleted)
-            {
-                var agreementStatus = Enum.Parse<AgreementStatusTypes>(agreement.AgreementStatusTypeCode);
-                if (!_statusSolver.CanEditOrDeleteAgreement(currentAcquisitionStatus, agreementStatus) && !_user.HasPermission(Permissions.SystemAdmin))
-                {
-                    throw new BusinessRuleViolationException("The file you are editing is not active or draft, so you cannot save changes. Refresh your browser to see file state.");
-                }
-            }
-
-            var updatedAgreements = _agreementRepository.UpdateAllForAcquisition(acquisitionFileId, agreements);
+            bool deleteResult = _agreementRepository.TryDeleteAgreement(acquisitionFileId, agreementId);
             _agreementRepository.CommitTransaction();
 
-            return updatedAgreements;
+            return deleteResult;
         }
 
         public IEnumerable<PimsInterestHolder> GetInterestHolders(long id)
@@ -592,7 +626,12 @@ namespace Pims.Api.Services
                     var pid = acquisitionProperty.Property.Pid.Value;
                     try
                     {
-                        var foundProperty = _propertyRepository.GetByPid(pid);
+                        var foundProperty = _propertyRepository.GetByPid(pid, true);
+                        if (foundProperty.IsRetired.HasValue && foundProperty.IsRetired.Value)
+                        {
+                            throw new BusinessRuleViolationException("Retired property can not be selected.");
+                        }
+
                         acquisitionProperty.PropertyId = foundProperty.Internal_Id;
                         _propertyService.UpdateLocation(acquisitionProperty.Property, ref foundProperty, userOverrideCodes);
                         acquisitionProperty.Property = foundProperty;
@@ -608,7 +647,12 @@ namespace Pims.Api.Services
                     var pin = acquisitionProperty.Property.Pin.Value;
                     try
                     {
-                        var foundProperty = _propertyRepository.GetByPin(pin);
+                        var foundProperty = _propertyRepository.GetByPin(pin, true);
+                        if (foundProperty.IsRetired.HasValue && foundProperty.IsRetired.Value)
+                        {
+                            throw new BusinessRuleViolationException("Retired property can not be selected.");
+                        }
+
                         acquisitionProperty.PropertyId = foundProperty.Internal_Id;
                         _propertyService.UpdateLocation(acquisitionProperty.Property, ref foundProperty, userOverrideCodes);
                         acquisitionProperty.Property = foundProperty;
@@ -677,11 +721,27 @@ namespace Pims.Api.Services
         {
             var agreements = _agreementRepository.GetAgreementsByAcquisitionFile(incomingFile.AcquisitionFileId);
             var compensations = _compensationRequisitionRepository.GetAllByAcquisitionFileId(incomingFile.AcquisitionFileId);
-            if (incomingFile.AcquisitionFileStatusTypeCode == nameof(AcquisitionStatusTypes.COMPLT) &&
-                (agreements.Any(a => a?.AgreementStatusTypeCode == "DRAFT") || compensations.Any(c => c.IsDraft.HasValue && c.IsDraft.Value)))
+            if (agreements.Any(a => a?.AgreementStatusTypeCode == AgreementStatusTypes.DRAFT.ToString()) || compensations.Any(c => c.IsDraft.HasValue && c.IsDraft.Value))
             {
                 throw new BusinessRuleViolationException("You cannot complete a file when there are one or more draft agreements, or one or more draft compensations requisitions." +
                     "\n\nRemove any draft compensations requisitions. Agreements should be set to final, cancelled, or removed.");
+            }
+
+            var takes = _takeRepository.GetAllByAcquisitionFileId(incomingFile.AcquisitionFileId);
+            if (takes.Any(t => t.TakeStatusTypeCode == AcquisitionTakeStatusTypes.INPROGRESS.ToString()))
+            {
+                throw new BusinessRuleViolationException("Please ensure all in-progress property takes have been completed or canceled before completing an Acquisition File.");
+            }
+        }
+
+        private void ValidateAcquisitionFileStatus(long acquisitionFileId, string agreementCurrentStatusTypeCode)
+        {
+            var currentAcquisitionStatus = GetCurrentAcquisitionStatus(acquisitionFileId);
+            var agreementStatus = Enum.Parse<AgreementStatusTypes>(agreementCurrentStatusTypeCode);
+
+            if (!_statusSolver.CanEditOrDeleteAgreement(currentAcquisitionStatus, agreementStatus) && !_user.HasPermission(Permissions.SystemAdmin))
+            {
+                throw new BusinessRuleViolationException("The file you are editing is not active or draft, so you cannot save changes. Refresh your browser to see file state.");
             }
         }
 
@@ -696,10 +756,10 @@ namespace Pims.Api.Services
         {
             // Get the current properties in the research file
             var currentProperties = _acquisitionFilePropertyRepository.GetPropertiesByAcquisitionFileId(acquisitionFile.Internal_Id);
-            var propertiesOfInterest = currentProperties.Where(p => p.Property.IsPropertyOfInterest);
 
             // PSP-6111 Business rule: Transfer properties of interest to core inventory when acquisition file is completed
-            foreach (var acquisitionProperty in propertiesOfInterest)
+            // PSP-7892 Business rule: Process all properties in the acq file (not only properties of interest).
+            foreach (var acquisitionProperty in currentProperties)
             {
                 var property = acquisitionProperty.Property;
                 var takes = _takeRepository.GetAllByPropertyAcquisitionFileId(acquisitionProperty.Internal_Id);
@@ -727,9 +787,34 @@ namespace Pims.Api.Services
                     isOtherInterest = false;
                 }
 
-                if (!userOverride && (isOwned || isOtherInterest))
+                // PSP-7892: Follow ownership priority when updating an existing property
+                if (property.IsOwned || isOwned)
+                {
+                    isOwned = true;
+                    isOtherInterest = false;
+                    isPropertyOfInterest = false;
+                }
+                else if (property.IsOtherInterest || isOtherInterest)
+                {
+                    isOwned = false;
+                    isOtherInterest = true;
+                    isPropertyOfInterest = false;
+                }
+                else if (property.IsPropertyOfInterest || isPropertyOfInterest)
+                {
+                    isOwned = false;
+                    isOtherInterest = false;
+                    isPropertyOfInterest = true;
+                }
+
+                if (!userOverride && property.IsPropertyOfInterest && (isOwned || isOtherInterest))
                 {
                     throw new UserOverrideException(UserOverrideCode.PoiToInventory, "You have one or more take(s) that will be added to MoTI Inventory. Do you want to acknowledge and proceed?");
+                }
+
+                if (!userOverride && property.IsOtherInterest && isOwned)
+                {
+                    throw new UserOverrideException(UserOverrideCode.PoiToInventory, "You have one or more take(s) that will be changed from 'Other Interest' to 'Core Inventory'. Do you want to acknowledge and proceed?");
                 }
 
                 PropertyOwnershipState ownership = new() { isOwned = isOwned, isPropertyOfInterest = isPropertyOfInterest, isOtherInterest = isOtherInterest, isDisposed = false };
@@ -865,6 +950,19 @@ namespace Pims.Api.Services
                     && currentAcquisitionFile.PimsInterestHolders.Any(x => x.Internal_Id.Equals(compReq.InterestHolderId)))
                 {
                     throw new ForeignKeyDependencyException("Acquisition File Interest Holder can not be removed since it's assigned as a payee for a compensation requisition");
+                }
+            }
+        }
+
+        private void ValidatePropertyRegions(PimsAcquisitionFile acquisitionFile)
+        {
+            var userRegions = _user.GetUserRegions(_userRepository);
+            foreach (var acquisitionProperty in acquisitionFile.PimsPropertyAcquisitionFiles)
+            {
+                var propertyRegion = acquisitionProperty.Property?.RegionCode ?? _propertyRepository.GetPropertyRegion(acquisitionProperty.PropertyId);
+                if (!userRegions.Contains(propertyRegion))
+                {
+                    throw new BadRequestException("You cannot add a property that is outside of your user account region(s).\n\nPlease select a different property or contact admin at pims@gov.bc.ca to add the required region to your user account settings.");
                 }
             }
         }

@@ -17,8 +17,8 @@ import { FileTypes } from '@/constants';
 import FileLayout from '@/features/mapSideBar/layout/FileLayout';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
 import { IApiError } from '@/interfaces/IApiError';
-import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
-import { Api_File } from '@/models/api/File';
+import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
+import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { stripTrailingSlash } from '@/utils';
 import { getFilePropertyName } from '@/utils/mapPropertyUtils';
 
@@ -29,10 +29,10 @@ import { FileTabType } from '../shared/detail/FileTabs';
 import SidebarFooter from '../shared/SidebarFooter';
 import UpdateProperties from '../shared/update/properties/UpdateProperties';
 import { AcquisitionContainerState } from './AcquisitionContainer';
+import { isAcquisitionFile } from './add/models';
 import AcquisitionHeader from './common/AcquisitionHeader';
 import AcquisitionMenu from './common/AcquisitionMenu';
 import { AcquisitionRouter } from './router/AcquisitionRouter';
-import { isAcquisitionFile } from './tabs/agreement/update/models';
 
 export interface IAcquisitionViewProps {
   onClose: (() => void) | undefined;
@@ -42,7 +42,7 @@ export interface IAcquisitionViewProps {
   onShowPropertySelector: () => void;
   onSuccess: () => void;
   onCancelConfirm: () => void;
-  onUpdateProperties: (file: Api_File) => Promise<Api_File | undefined>;
+  onUpdateProperties: (file: ApiGen_Concepts_File) => Promise<ApiGen_Concepts_File | undefined>;
   canRemove: (propertyId: number) => Promise<boolean>;
   isEditing: boolean;
   setIsEditing: (value: boolean) => void;
@@ -74,9 +74,9 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
   const history = useHistory();
   const match = useRouteMatch();
   const { file, lastUpdatedBy } = useContext(SideBarContext);
-  const acquisitionFile: Api_AcquisitionFile = {
+  const acquisitionFile: ApiGen_Concepts_AcquisitionFile = {
     ...file,
-  } as Api_AcquisitionFile;
+  } as ApiGen_Concepts_AcquisitionFile;
 
   // match for property menu routes - eg /property/1/ltsa
   const fileMatch = matchPath<Record<string, string>>(location.pathname, `${match.path}/:tab`);

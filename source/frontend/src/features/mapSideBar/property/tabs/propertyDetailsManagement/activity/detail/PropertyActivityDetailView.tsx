@@ -16,14 +16,15 @@ import { Claims } from '@/constants/index';
 import DocumentListContainer from '@/features/documents/list/DocumentListContainer';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
-import { Api_PropertyActivity, Api_PropertyActivityInvoice } from '@/models/api/PropertyActivity';
+import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
+import { ApiGen_Concepts_PropertyActivityInvoice } from '@/models/api/generated/ApiGen_Concepts_PropertyActivityInvoice';
 import { formatMoney, prettyFormatDate } from '@/utils';
 
 import { InvoiceView } from './InvoiceView';
 
 export interface IPropertyActivityDetailViewProps {
   propertyId: number;
-  activity: Api_PropertyActivity | null;
+  activity: ApiGen_Concepts_PropertyActivity | null;
   onClose: () => void;
   loading: boolean;
   show: boolean;
@@ -42,7 +43,19 @@ export const PropertyActivityDetailView: React.FunctionComponent<
   const history = useHistory();
 
   if (props.activity !== null) {
-    const invoices: Api_PropertyActivityInvoice[] = props.activity.invoices ?? [];
+    const invoices: ApiGen_Concepts_PropertyActivityInvoice[] = props.activity.invoices ?? [];
+
+    let pretaxAmount = 0;
+    let gstAmount = 0;
+    let pstAmount = 0;
+    let totalAmount = 0;
+
+    for (let i = 0; i < invoices.length; i++) {
+      pretaxAmount += invoices[i].pretaxAmount ?? 0;
+      gstAmount += invoices[i].gstAmount ?? 0;
+      pstAmount += invoices[i].pstAmount ?? 0;
+      totalAmount += invoices[i].totalAmount ?? 0;
+    }
     return (
       <ReactVisibilitySensor
         onChange={(isVisible: boolean) => {
@@ -97,7 +110,7 @@ export const PropertyActivityDetailView: React.FunctionComponent<
                   </SectionField>
 
                   <SectionField label="Ministry contacts" contentWidth="7">
-                    {props.activity.ministryContacts?.map((contact, index) => (
+                    {props.activity.ministryContacts?.map(contact => (
                       <>{contact.person !== null && <ContactLink person={contact.person} />}</>
                     ))}
                   </SectionField>
@@ -105,7 +118,7 @@ export const PropertyActivityDetailView: React.FunctionComponent<
                     {props.activity.requestSource}
                   </SectionField>
                   <SectionField label="Involved parties" contentWidth="8">
-                    {props.activity.involvedParties?.map((contact, index) => (
+                    {props.activity.involvedParties?.map(contact => (
                       <>
                         {contact.person !== null && <ContactLink person={contact.person} />}
                         {contact.organization !== null && (
@@ -125,7 +138,7 @@ export const PropertyActivityDetailView: React.FunctionComponent<
                     </>
                   </SectionField>
                 </Section>
-                {invoices.map((x: Api_PropertyActivityInvoice, index: number) => (
+                {invoices.map((x: ApiGen_Concepts_PropertyActivityInvoice, index: number) => (
                   <InvoiceView
                     key={`activity-${x.propertyActivityId}-invoice-${x.id}`}
                     activityInvoice={x}
@@ -134,16 +147,16 @@ export const PropertyActivityDetailView: React.FunctionComponent<
                 ))}
                 <Section header="Invoices Total">
                   <SectionField label="Total (before tax)" contentWidth="7">
-                    {formatMoney(props.activity.pretaxAmt)}
+                    {formatMoney(pretaxAmount)}
                   </SectionField>
                   <SectionField label="GST amount" contentWidth="7">
-                    {formatMoney(props.activity.gstAmt)}
+                    {formatMoney(gstAmount)}
                   </SectionField>
                   <SectionField label="PST amount" contentWidth="7">
-                    {formatMoney(props.activity.pstAmt)}
+                    {formatMoney(pstAmount)}
                   </SectionField>
                   <SectionField label="Total amount" contentWidth="7">
-                    {formatMoney(props.activity.totalAmt)}
+                    {formatMoney(totalAmount)}
                   </SectionField>
                 </Section>
               </StyledSummarySection>

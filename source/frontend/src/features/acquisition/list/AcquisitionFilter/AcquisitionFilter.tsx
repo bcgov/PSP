@@ -8,16 +8,20 @@ import { Form, Input, Multiselect, Select } from '@/components/common/form';
 import { SelectInput } from '@/components/common/List/SelectInput';
 import { ACQUISITION_FILE_STATUS_TYPES } from '@/constants/API';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
-import { Api_AcquisitionFileTeam } from '@/models/api/AcquisitionFile';
-import { mapLookupCode } from '@/utils';
+import { ApiGen_Concepts_AcquisitionFileTeam } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileTeam';
+import { exists, mapLookupCode } from '@/utils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
-import { AcquisitionFilterModel, Api_AcquisitionFilter, MultiSelectOption } from '../interfaces';
+import {
+  AcquisitionFilterModel,
+  ApiGen_Concepts_AcquisitionFilter,
+  MultiSelectOption,
+} from '../interfaces';
 
 export interface IAcquisitionFilterProps {
-  filter?: Api_AcquisitionFilter;
-  setFilter: (filter: Api_AcquisitionFilter) => void;
-  acquisitionTeam: Api_AcquisitionFileTeam[];
+  filter?: ApiGen_Concepts_AcquisitionFilter;
+  setFilter: (filter: ApiGen_Concepts_AcquisitionFilter) => void;
+  acquisitionTeam: ApiGen_Concepts_AcquisitionFileTeam[];
 }
 
 /**
@@ -53,7 +57,7 @@ export const AcquisitionFilter: React.FC<React.PropsWithChildren<IAcquisitionFil
     .map(c => mapLookupCode(c));
 
   const acquisitionTeamOptions = useMemo(() => {
-    if (acquisitionTeam !== undefined) {
+    if (exists(acquisitionTeam)) {
       return acquisitionTeam?.map<MultiSelectOption>(x => ({
         id: x.personId ? `P-${x.personId}` : `O-${x.organizationId}`,
         text: x.personId ? formatApiPersonNames(x.person) : x.organization?.name ?? '',
@@ -88,7 +92,7 @@ export const AcquisitionFilter: React.FC<React.PropsWithChildren<IAcquisitionFil
                       pin: string;
                       pid: string;
                     },
-                    Api_AcquisitionFilter
+                    ApiGen_Concepts_AcquisitionFilter
                   >
                     field="searchBy"
                     defaultKey="address"

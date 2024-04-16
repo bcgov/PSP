@@ -14,7 +14,8 @@ import { useBcaAddress } from '@/features/properties/map/hooks/useBcaAddress';
 import { useProperties } from '@/hooks/repositories/useProperties';
 import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
 import useDeepCompareMemo from '@/hooks/util/useDeepCompareMemo';
-import { Api_Property } from '@/models/api/Property';
+import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
+import { isValidId } from '@/utils';
 
 import { FormLeaseProperty, LeaseFormModel } from '../../models';
 import SelectedPropertyHeaderRow from './selectedPropertyList/SelectedPropertyHeaderRow';
@@ -44,14 +45,16 @@ export const LeasePropertySelector: React.FunctionComponent<LeasePropertySelecto
     (properties: FormLeaseProperty[]) => {
       if (arrayHelpersRef.current !== null && properties.length > 0) {
         properties.forEach(property => {
-          arrayHelpersRef.current!.push(property);
+          arrayHelpersRef.current && arrayHelpersRef.current.push(property);
         });
       }
     },
     [arrayHelpersRef],
   );
 
-  const searchProperty = async (newProperty: IMapProperty): Promise<Api_Property[] | undefined> => {
+  const searchProperty = async (
+    newProperty: IMapProperty,
+  ): Promise<ApiGen_Concepts_Property[] | undefined> => {
     const params: IPropertyFilter = {
       pinOrPid: (newProperty.pid || newProperty.pin || '')?.toString(),
       searchBy: 'pinOrPid',
@@ -64,7 +67,7 @@ export const LeasePropertySelector: React.FunctionComponent<LeasePropertySelecto
     };
 
     const result = await getProperties.execute(params);
-    return result?.items;
+    return result?.items ?? undefined;
   };
 
   const confirmAdd = useCallback(() => {
@@ -101,33 +104,33 @@ export const LeasePropertySelector: React.FunctionComponent<LeasePropertySelecto
     let needsWarning = false;
     const newFormProperties: FormLeaseProperty[] = [];
 
-    await newProperties.reduce(async (promise, property, i) => {
+    await newProperties.reduce(async (promise, property) => {
       return promise.then(async () => {
         const formProperty = FormLeaseProperty.fromMapProperty(property);
 
         const bcaSummary = property?.pid
-          ? await getPrimaryAddressByPid(property.pid, 3000)
+          ? await getPrimaryAddressByPid(property.pid, 30000)
           : undefined;
 
         // Retrieve the pims id of the property if it exists
-        if (formProperty.property !== undefined && formProperty.property.apiId === undefined) {
-          formProperty.property.address = bcaSummary?.address
+        if (isValidId(formProperty.property?.apiId)) {
+          formProperty.property!.address = bcaSummary?.address
             ? AddressForm.fromBcaAddress(bcaSummary?.address)
             : undefined;
 
           const hasPinOrPid =
-            formProperty.property?.pid !== undefined || formProperty.property?.pin !== undefined;
+            formProperty.property!.pid !== undefined || formProperty.property!.pin !== undefined;
           if (hasPinOrPid) {
             const result = await searchProperty(property);
             if (result !== undefined && result.length > 0) {
-              formProperty.property.apiId = result[0].id;
+              formProperty.property!.apiId = result[0].id;
             }
           }
         }
 
         newFormProperties.push(formProperty);
 
-        if (formProperty.property?.apiId === undefined) {
+        if (isValidId(formProperty.property?.apiId)) {
           needsWarning = needsWarning || true;
         } else {
           needsWarning = needsWarning || false;

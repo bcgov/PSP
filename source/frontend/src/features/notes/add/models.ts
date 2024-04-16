@@ -1,21 +1,22 @@
-import { Api_EntityNote } from '@/models/api/Note';
+import { ApiGen_Concepts_EntityNote } from '@/models/api/generated/ApiGen_Concepts_EntityNote';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 
 import { NoteForm } from '../models';
 
 export class EntityNoteForm {
   id?: number;
   note: NoteForm = new NoteForm();
-  parentId: number = 0;
+  parentId = 0;
   rowVersion?: number;
 
-  toApi(): Api_EntityNote {
+  toApi(): ApiGen_Concepts_EntityNote {
     return {
-      id: this.id,
+      id: this.id ?? 0,
       note: this.note.toApi(),
       parent: {
         id: this.parentId,
       },
-      rowVersion: this.rowVersion,
+      ...getEmptyBaseAudit(this.rowVersion),
     };
   }
 }

@@ -3,24 +3,23 @@ import styled from 'styled-components';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledSummarySection } from '@/components/common/Section/SectionStyles';
-import { Api_Product, Api_Project } from '@/models/api/Project';
-import { formatMoney, prettyFormatDate } from '@/utils';
+import { ApiGen_Concepts_Product } from '@/models/api/generated/ApiGen_Concepts_Product';
+import { ApiGen_Concepts_Project } from '@/models/api/generated/ApiGen_Concepts_Project';
+import { exists, formatMoney, prettyFormatDate } from '@/utils';
 
 export interface IProjectProductViewProps {
-  project: Api_Project;
+  project: ApiGen_Concepts_Project;
 }
 
 const ProjectProductView: React.FunctionComponent<
   React.PropsWithChildren<IProjectProductViewProps>
 > = ({ project }) => {
   const productCount = project.projectProducts?.length || 0;
-  const products = project.projectProducts
-    .map(x => x.product)
-    .filter((x): x is Api_Product => x !== null);
+  const products = project.projectProducts?.map(x => x.product).filter(exists);
   return (
     <StyledSummarySection>
       <Section header="Associated Products" isCollapsable initiallyExpanded>
-        {products?.map((product: Api_Product, index: number) => (
+        {products?.map((product: ApiGen_Concepts_Product, index: number) => (
           <div
             className={index === productCount - 1 ? '' : 'pb-5'}
             key={`project-${project.id}-product-${product.id}`}
@@ -31,7 +30,7 @@ const ProjectProductView: React.FunctionComponent<
             </SectionField>
             <SectionField label="Cost estimate" labelWidth={'2'}>
               {formatMoney(product.costEstimate)}
-              {!!product.costEstimateDate
+              {product.costEstimateDate
                 ? ` as of ${prettyFormatDate(product.costEstimateDate)}`
                 : ' no estimate date entered'}
             </SectionField>

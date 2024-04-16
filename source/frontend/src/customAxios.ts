@@ -1,12 +1,12 @@
 import { Dispatch } from '@reduxjs/toolkit';
-import axios, { AxiosError } from 'axios';
+import axios, { AxiosError, AxiosRequestHeaders } from 'axios';
 import { isEmpty } from 'lodash';
 import { hideLoading } from 'react-redux-loading-bar';
 import { toast } from 'react-toastify';
 
 import { IGenericNetworkAction } from '@/store/slices/network/interfaces';
 import { logError } from '@/store/slices/network/networkSlice';
-import { store } from '@/store/store';
+import { RootState, store } from '@/store/store';
 
 export const defaultEnvelope = (x: any) => ({ data: { records: x } });
 
@@ -33,7 +33,7 @@ export const CustomAxios = ({
   baseURL,
 }: {
   lifecycleToasts?: LifecycleToasts;
-  selector?: Function;
+  selector?: (state: RootState) => RootState;
   envelope?: typeof defaultEnvelope;
   baseURL?: string;
 } = {}) => {
@@ -48,7 +48,7 @@ export const CustomAxios = ({
   });
   instance.interceptors.request.use(config => {
     if (config.headers === undefined) {
-      config.headers = {};
+      config.headers = {} as AxiosRequestHeaders;
     }
     config.headers.Authorization = `Bearer ${store.getState().jwt}`;
     if (selector !== undefined) {

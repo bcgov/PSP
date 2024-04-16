@@ -13,6 +13,8 @@ import AppRoute from '@/utils/AppRoute';
 import AcquisitionContainer from '../acquisition/AcquisitionContainer';
 import AcquisitionView from '../acquisition/AcquisitionView';
 import AddAcquisitionContainer from '../acquisition/add/AddAcquisitionContainer';
+import AddConsolidationContainer from '../consolidation/AddConsolidationContainer';
+import AddConsolidationView from '../consolidation/AddConsolidationView';
 import AddDispositionContainer from '../disposition/add/AddDispositionContainer';
 import AddDispositionContainerView from '../disposition/add/AddDispositionContainerView';
 import DispositionContainer from '../disposition/DispositionContainer';
@@ -23,10 +25,10 @@ import ProjectContainer from '../project/ProjectContainer';
 import ProjectContainerView from '../project/ProjectContainerView';
 import AddResearchContainer from '../research/add/AddResearchContainer';
 import ResearchContainer from '../research/ResearchContainer';
+import AddSubdivisionContainer from '../subdivision/AddSubdivisionContainer';
+import AddSubdivisionContainerView from '../subdivision/AddSubdivisionView';
 
-interface IMapRouterProps {}
-
-export const MapRouter: React.FunctionComponent<IMapRouterProps> = memo(props => {
+export const MapRouter: React.FunctionComponent = memo(() => {
   const location = useLocation();
   const history = useHistory();
 
@@ -102,6 +104,26 @@ export const MapRouter: React.FunctionComponent<IMapRouterProps> = memo(props =>
     [location],
   );
 
+  const isSubdivision = useMemo(
+    () =>
+      matchPath(location.pathname, {
+        path: '/mapview/sidebar/subdivision/*',
+        exact: true,
+        strict: true,
+      }),
+    [location],
+  );
+
+  const isConsolidation = useMemo(
+    () =>
+      matchPath(location.pathname, {
+        path: '/mapview/sidebar/consolidation/*',
+        exact: true,
+        strict: true,
+      }),
+    [location],
+  );
+
   useEffect(() => {
     if (matched !== null) {
       let sidebarType: SideBarType = SideBarType.NOT_DEFINED;
@@ -117,6 +139,10 @@ export const MapRouter: React.FunctionComponent<IMapRouterProps> = memo(props =>
         sidebarType = SideBarType.PROPERTY_INFORMATION;
       } else if (isDisposition) {
         sidebarType = SideBarType.DISPOSITION;
+      } else if (isSubdivision) {
+        sidebarType = SideBarType.SUBDIVISION;
+      } else if (isConsolidation) {
+        sidebarType = SideBarType.CONSOLIDATION;
       }
 
       openSidebar(sidebarType);
@@ -133,6 +159,8 @@ export const MapRouter: React.FunctionComponent<IMapRouterProps> = memo(props =>
     openSidebar,
     closeSidebar,
     isDisposition,
+    isSubdivision,
+    isConsolidation,
   ]);
 
   const onClose = () => {
@@ -263,6 +291,24 @@ export const MapRouter: React.FunctionComponent<IMapRouterProps> = memo(props =>
         claim={Claims.LEASE_VIEW}
         key={'LeaseLicense'}
         title={'Lease / License File'}
+      />
+      <AppRoute
+        path={`/mapview/sidebar/subdivision/new`}
+        customRender={() => (
+          <AddSubdivisionContainer onClose={onClose} View={AddSubdivisionContainerView} />
+        )}
+        claim={Claims.PROPERTY_EDIT}
+        key={'NewSubdivision'}
+        title={'Create Subdivision'}
+      />
+      <AppRoute
+        path={`/mapview/sidebar/consolidation/new`}
+        customRender={() => (
+          <AddConsolidationContainer onClose={onClose} View={AddConsolidationView} />
+        )}
+        claim={Claims.PROPERTY_EDIT}
+        key={'NewConsolidation'}
+        title={'Create Consolidation'}
       />
     </Switch>
   );

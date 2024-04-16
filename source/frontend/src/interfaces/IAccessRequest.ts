@@ -1,7 +1,7 @@
 import { AccessRequestStatus } from '@/constants/index';
 import { IOrganization, IRole, IUser } from '@/interfaces';
 
-export interface IAccessRequest {
+export interface IAccessRequest2 {
   id?: number;
   userId: number;
   user: IUser;

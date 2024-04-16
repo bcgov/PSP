@@ -5,7 +5,8 @@ import { toast } from 'react-toastify';
 import { useApiResearchFile } from '@/hooks/pims-api/useApiResearchFile';
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import { IApiError } from '@/interfaces/IApiError';
-import { Api_ResearchFile, Api_ResearchFileProperty } from '@/models/api/ResearchFile';
+import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Concepts_ResearchFile';
+import { ApiGen_Concepts_ResearchFileProperty } from '@/models/api/generated/ApiGen_Concepts_ResearchFileProperty';
 
 /**
  * hook that retrieves a research file.
@@ -13,7 +14,7 @@ import { Api_ResearchFile, Api_ResearchFileProperty } from '@/models/api/Researc
 export const useGetResearch = () => {
   const { getResearchFile } = useApiResearchFile();
   const retrieveResearchFile = useApiRequestWrapper<
-    (researchFileId: number) => Promise<AxiosResponse<Api_ResearchFile, any>>
+    (researchFileId: number) => Promise<AxiosResponse<ApiGen_Concepts_ResearchFile, any>>
   >({
     requestFunction: useCallback(
       async (researchFileId: number) => await getResearchFile(researchFileId),
@@ -23,15 +24,17 @@ export const useGetResearch = () => {
     onError: useCallback((axiosError: AxiosError<IApiError>) => {
       if (axiosError?.response?.status === 400) {
         toast.error(axiosError?.response.data.error);
+        return Promise.resolve();
       } else {
         toast.error('Retrieve research file error. Check responses and try again.');
+        return Promise.reject();
       }
     }, []),
   });
 
   const { getResearchFileProperties } = useApiResearchFile();
   const retrieveResearchFileProperties = useApiRequestWrapper<
-    (researchFileId: number) => Promise<AxiosResponse<Api_ResearchFileProperty[], any>>
+    (researchFileId: number) => Promise<AxiosResponse<ApiGen_Concepts_ResearchFileProperty[], any>>
   >({
     requestFunction: useCallback(
       async (researchFileId: number) => await getResearchFileProperties(researchFileId),
@@ -41,8 +44,10 @@ export const useGetResearch = () => {
     onError: useCallback((axiosError: AxiosError<IApiError>) => {
       if (axiosError?.response?.status === 400) {
         toast.error(axiosError?.response.data.error);
+        return Promise.resolve();
       } else {
         toast.error('Retrieve research file properties error. Check responses and try again.');
+        return Promise.reject(axiosError);
       }
     }, []),
   });

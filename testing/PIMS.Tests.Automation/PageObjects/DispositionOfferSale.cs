@@ -85,8 +85,9 @@ namespace PIMS.Tests.Automation.PageObjects
         private By dispositionSalesDetailsFiscalYearContent = By.XPath("//label[contains(text(),'Fiscal year of sale')]/parent::div/following-sibling::div");
         private By dispositionSalesDetailsFiscalYearInput = By.Id("datepicker-saleFiscalYear");
 
-        private By dispositionSalesDetailsSalePriceLabel = By.XPath("//label[contains(text(),'Final sale price ($)')]");
-        private By dispositionSalesDetailsSalePriceContent = By.XPath("//label[contains(text(),'Final sale price ($)')]/parent::div/following-sibling::div");
+        private By dispositionSalesDetailsSalePriceLabel = By.XPath("//label[contains(text(),'Final sale price, incl. GST ($)')]");
+        private By dispositionSalesDetailsSalePriceLabel2 = By.XPath("//label[contains(text(),'Final sale price ($), incl. GST ($)')]");
+        private By dispositionSalesDetailsSalePriceContent = By.XPath("//label[contains(text(),'Final sale price ($), incl. GST ($)')]/parent::div/following-sibling::div");
         private By dispositionSalesDetailsSalePriceInput = By.Id("input-finalSaleAmount");
 
         private By dispositionSalesDetailsRealtorCommissionLabel = By.XPath("//label[contains(text(),'Realtor commission ($)')]");
@@ -298,7 +299,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void UpdateOffers(DispositionOfferAndSale offerUpdate, int index) {
 
-            Wait();
+            Wait(5000);
             webDriver.FindElement(By.CssSelector("button[data-testid='Offer["+ index +"].edit-btn']")).Click();
 
             Wait();
@@ -627,7 +628,7 @@ namespace PIMS.Tests.Automation.PageObjects
             if(disposition.FiscalYearOfSale != "")
                 AssertTrueContentEquals(dispositionSalesDetailsFiscalYearContent, disposition.FiscalYearOfSale);
 
-            AssertTrueIsDisplayed(dispositionSalesDetailsSalePriceLabel);
+            AssertTrueIsDisplayed(dispositionSalesDetailsSalePriceLabel2);
             if (disposition.FinalSalePrice != "")
                 AssertTrueContentEquals(dispositionSalesDetailsSalePriceContent, TransformCurrencyFormat(disposition.FinalSalePrice));
 

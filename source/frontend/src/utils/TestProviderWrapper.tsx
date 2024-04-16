@@ -16,7 +16,7 @@ const TestProviderWrapper: React.FunctionComponent<
   React.PropsWithChildren<TestProviderWrapperParams>
 > = ({ children, store }) => {
   const mockStore = configureMockStore([thunk]);
-  const mockedStore = !!store?.getState
+  const mockedStore = store?.getState
     ? store
     : mockStore(store ?? { [lookupCodesSlice.name]: mockLookups });
 

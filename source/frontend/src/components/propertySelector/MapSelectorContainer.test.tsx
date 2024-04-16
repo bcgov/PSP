@@ -25,6 +25,7 @@ const store = mockStore({});
 const onSelectedProperties = jest.fn();
 
 const testProperty: IMapProperty = {
+  propertyId: 123,
   pid: '123-456-789',
   planNumber: 'SPS22411',
   address: 'Test address 123',
@@ -109,10 +110,10 @@ describe('MapSelectorContainer component', () => {
       modifiedProperties: [PropertyForm.fromMapProperty(testProperty)],
     });
     await act(async () => {
-      expect(getByText(/SPS22411/g)).toBeVisible();
-      expect(getByText(/Test address 123/g)).toBeVisible();
-      expect(getByText(/1 - South Coast/g)).toBeVisible();
-      expect(getByText(/5 - Okanagan-Shuswap/g)).toBeVisible();
+      expect(getByText(/SPS22411/i)).toBeVisible();
+      expect(getByText(/Test address 123/i)).toBeVisible();
+      expect(getByText(/1 - South Coast/i)).toBeVisible();
+      expect(getByText(/5 - Okanagan-Shuswap/i)).toBeVisible();
     });
   });
 
@@ -137,9 +138,11 @@ describe('MapSelectorContainer component', () => {
     expect(onSelectedProperties).toHaveBeenCalledWith([
       {
         address: '1234 Fake St',
+        areaUnit: 'M2',
         district: 12,
         districtName: 'Cannot determine',
         id: 'PID-009-727-493',
+        landArea: 29217,
         latitude: 48.76613749999999,
         longitude: -123.46163749999998,
         name: undefined,

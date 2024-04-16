@@ -1,15 +1,13 @@
 import * as React from 'react';
 import styled from 'styled-components';
 
-interface IAddLeaseLayoutProps {}
-
 /**
  * layout wrapper for leases, applies styling.
  * @param {IAddLeaseLayoutProps} param0
  */
-export const AddLeaseLayout: React.FunctionComponent<
-  React.PropsWithChildren<IAddLeaseLayoutProps>
-> = ({ children }) => {
+export const AddLeaseLayout: React.FunctionComponent<React.PropsWithChildren<unknown>> = ({
+  children,
+}) => {
   return <DetailScreenGrid>{children}</DetailScreenGrid>;
 };
 

@@ -19,7 +19,9 @@ import { PROP_MGMT_ACTIVITY_STATUS_TYPES, PROP_MGMT_ACTIVITY_TYPES } from '@/con
 import SaveCancelButtons from '@/features/leases/SaveCancelButtons';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { useModalManagement } from '@/hooks/useModalManagement';
-import { Api_PropertyActivity, Api_PropertyActivitySubtype } from '@/models/api/PropertyActivity';
+import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
+import { ApiGen_Concepts_PropertyActivitySubtype } from '@/models/api/generated/ApiGen_Concepts_PropertyActivitySubtype';
+import { exists } from '@/utils';
 import { mapLookupCode } from '@/utils/mapLookupCode';
 
 import { ContactListForm } from './ContactListForm';
@@ -30,15 +32,15 @@ import { PropertyActivityEditFormYupSchema } from './validation';
 
 export interface IPropertyActivityEditFormProps {
   propertyId: number;
-  activity?: Api_PropertyActivity;
-  subtypes: Api_PropertyActivitySubtype[];
+  activity?: ApiGen_Concepts_PropertyActivity;
+  subtypes: ApiGen_Concepts_PropertyActivitySubtype[];
   gstConstant: number;
   pstConstant: number;
   onCancel: () => void;
   loading: boolean;
   show: boolean;
   setShow: (show: boolean) => void;
-  onSave: (model: Api_PropertyActivity) => Promise<void>;
+  onSave: (model: ApiGen_Concepts_PropertyActivity) => Promise<void>;
 }
 
 export const PropertyActivityEditForm: React.FunctionComponent<
@@ -70,10 +72,10 @@ export const PropertyActivityEditForm: React.FunctionComponent<
       .filter(ast => ast.parentTypeCode === activityType)
       .map<SelectOption>(ast => {
         return {
-          label: ast.description,
-          value: ast.typeCode,
-          code: ast.typeCode,
-          parentId: ast.parentTypeCode,
+          label: ast.description ?? '',
+          value: ast.typeCode ?? '',
+          code: ast.typeCode ?? undefined,
+          parentId: ast.parentTypeCode ?? undefined,
         };
       });
   }, [activityType, props.subtypes]);
@@ -84,7 +86,7 @@ export const PropertyActivityEditForm: React.FunctionComponent<
 
   const saveActivity = async (values: PropertyActivityFormModel) => {
     await props.onSave(values.toApi(props.propertyId));
-    if (formikRef.current !== undefined && formikRef.current !== null) {
+    if (exists(formikRef.current)) {
       formikRef.current.isSubmitting = false;
     }
   };

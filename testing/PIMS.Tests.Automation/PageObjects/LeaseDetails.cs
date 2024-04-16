@@ -56,7 +56,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By licenseDetailsProperty1AreaIncludedContent = By.XPath("//h2/div/div[contains(text(),'Property Information')]/parent::div/parent::h2/following-sibling::div/div[1]/div/div/label[contains(text(),'Area included')]/parent::div/following-sibling::div");
         private By licenseDetailsProperty1AddressLabel = By.XPath("//h2/div/div[contains(text(),'Property Information')]/parent::div/parent::h2/following-sibling::div/div[1]/div/div[1]/label[contains(text(),'Address')]");
         private By licenseDetailsProperty1AddressNoContent = By.XPath("//h2/div/div[contains(text(),'Property Information')]/parent::div/parent::h2/following-sibling::div/div[1]/div/div[1]/label[contains(text(),'Address')]/parent::div/following-sibling::div/label");
-        private By licenseDetailsProperty1AddressContent = By.Id("input-properties.0.property.address.streetAddress1");
+        private By licenseDetailsProperty1AddressContent = By.Id("input-fileProperties.0.property.address.streetAddress1");
         private By licenseDetailsProperty1LegalDescripLabel = By.XPath("//h2/div/div[contains(text(),'Property Information')]/parent::div/parent::h2/following-sibling::div/div[1]/div/div/label[contains(text(),'Legal description')]");
         private By licenseDetailsProperty1LegalDescripContent = By.XPath("//h2/div/div[contains(text(),'Property Information')]/parent::div/parent::h2/following-sibling::div/div[1]/div/div/label[contains(text(),'Legal description')]/parent::div/following-sibling::div");
 
@@ -610,27 +610,28 @@ namespace PIMS.Tests.Automation.PageObjects
         public void CancelLicense()
         {
             ButtonElement("Cancel");
+            sharedModals.CancelActionModal();
 
-            try
-            {
-                WebDriverWait wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(3));
-                if (wait.Until(ExpectedConditions.AlertIsPresent()) != null)
-                {
-                    webDriver.SwitchTo().Alert().Accept();
-                }
-            }
-            catch (WebDriverTimeoutException)
-            {
-                //if (webDriver.FindElements(licenseDetailsConfirmationModal).Count() > 0)
-                //{
-                //    Assert.Equal("Confirm Changes", sharedModals.ModalHeader());
-                //    Assert.Contains("If you choose to cancel now, your changes will not be saved.", sharedModals.ModalContent());
-                //    Assert.Contains("Do you want to proceed?", sharedModals.ModalContent());
+            //try
+            //{
+            //    WebDriverWait wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(3));
+            //    if (wait.Until(ExpectedConditions.AlertIsPresent()) != null)
+            //    {
+            //        webDriver.SwitchTo().Alert().Accept();
+            //    }
+            //}
+            //catch (WebDriverTimeoutException)
+            //{
+            //    //if (webDriver.FindElements(licenseDetailsConfirmationModal).Count() > 0)
+            //    //{
+            //    //    Assert.Equal("Confirm Changes", sharedModals.ModalHeader());
+            //    //    Assert.Contains("If you choose to cancel now, your changes will not be saved.", sharedModals.ModalContent());
+            //    //    Assert.Contains("Do you want to proceed?", sharedModals.ModalContent());
 
-                //    sharedModals.ModalClickOKBttn();
-                //}
-                sharedModals.CancelActionModal();
-            }
+            //    //    sharedModals.ModalClickOKBttn();
+            //    //}
+            //    sharedModals.CancelActionModal();
+            //}
         }
 
         public string GetLeaseCode()

@@ -4,9 +4,9 @@ import { forwardRef } from 'react';
 
 import { mockLookups } from '@/mocks/lookups.mock';
 import { getMockApiPropertyManagement } from '@/mocks/propertyManagement.mock';
-import { Api_PropertyManagement } from '@/models/api/Property';
+import { ApiGen_Concepts_PropertyManagement } from '@/models/api/generated/ApiGen_Concepts_PropertyManagement';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { render, RenderOptions } from '@/utils/test-utils';
+import { act, render, RenderOptions } from '@/utils/test-utils';
 
 import {
   IPropertyManagementUpdateContainerProps,
@@ -79,16 +79,18 @@ describe('PropertyManagementUpdateContainer component', () => {
     jest.clearAllMocks();
   });
 
-  it('fetches property management info from the api', () => {
+  it('fetches property management info from the api', async () => {
     mockGetApi.execute.mockResolvedValue(getMockApiPropertyManagement(1));
-    setup({ props: { propertyId: 1 } });
+    await act(async () => {
+      setup({ props: { propertyId: 1 } });
+    });
     expect(mockGetApi.execute).toBeCalled();
   });
 
   it('calls onSuccess when onSave method is called', async () => {
-    mockUpdateApi.execute.mockResolvedValue({ id: 1 } as Api_PropertyManagement);
+    mockUpdateApi.execute.mockResolvedValue({ id: 1 } as ApiGen_Concepts_PropertyManagement);
     setup();
-    await viewProps.onSave(getMockApiPropertyManagement());
+    await act(async () => await viewProps.onSave(getMockApiPropertyManagement()));
     expect(mockUpdateApi.execute).toHaveBeenCalled();
   });
 });

@@ -32,6 +32,7 @@ using Pims.Api.Handlers;
 using Pims.Api.Helpers;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Helpers.Healthchecks;
+using Pims.Api.Helpers.HealthChecks;
 using Pims.Api.Helpers.Logging;
 using Pims.Api.Helpers.Mapping;
 using Pims.Api.Helpers.Middleware;
@@ -229,14 +230,25 @@ namespace Pims.Api
                 x.MultipartBodyLengthLimit = maxFileSize; // In case of multipart
             });
 
+            // Export metrics from all HTTP clients registered in services
+            services.UseHttpClientMetrics();
+
             services.AddHealthChecks()
                 .AddCheck("liveliness", () => HealthCheckResult.Healthy())
-                .AddSqlServer(csBuilder.ConnectionString, tags: new[] { "services" });
+                .AddSqlServer(csBuilder.ConnectionString, tags: new[] { "services" })
+                .ForwardToPrometheus(); // Report health check results in the metrics output.
 
             services.AddHealthChecks()
                 .AddCheck(
                     "PimsDBCollation",
                     new PimsDatabaseHealtcheck(csBuilder.ConnectionString),
+                    HealthStatus.Unhealthy,
+                    new string[] { "services" });
+
+            services.AddHealthChecks()
+                .AddCheck(
+                    "api-metrics",
+                    new PimsMetricsHealthCheck(csBuilder.ConnectionString),
                     HealthStatus.Unhealthy,
                     new string[] { "services" });
 
@@ -339,10 +351,14 @@ namespace Pims.Api
             app.UseMiddleware<ResponseTimeMiddleware>();
             app.UseMiddleware<LogRequestMiddleware>();
             app.UseMiddleware<LogResponseMiddleware>();
-            app.UseMiddleware<ErrorHandlingMiddleware>();
 
             app.UseRouting();
             app.UseCors();
+
+            // Exception handler middleware that changes HTTP response codes must be registered after UseHttpMetrics()
+            // in order to ensure that prometheus-net reports the correct HTTP response status code.
+            app.UseHttpMetrics();
+            app.UseMiddleware<ErrorHandlingMiddleware>();
 
             // Set responses secure headers.
             ConfigureSecureHeaders(app, Configuration);
@@ -367,6 +383,9 @@ namespace Pims.Api
             app.UseEndpoints(config =>
             {
                 config.MapControllers();
+
+                // Enable the /metrics page to export Prometheus metrics
+                config.MapMetrics();
             });
         }
 
@@ -414,6 +433,7 @@ namespace Pims.Api
             services.AddScoped<IAcquisitionStatusSolver, AcquisitionStatusSolver>();
             services.AddScoped<IDispositionFileService, DispositionFileService>();
             services.AddScoped<IDispositionStatusSolver, DispositionStatusSolver>();
+            services.AddScoped<IPropertyOperationService, PropertyOperationService>();
         }
 
         /// <summary>

@@ -622,6 +622,11 @@ exports[`Property list view matches snapshot 1`] = `
                         >
                           Disposed
                         </li>
+                        <li
+                          class="option    "
+                        >
+                          Retired
+                        </li>
                       </ul>
                     </div>
                   </div>
@@ -799,7 +804,7 @@ exports[`Property list view matches snapshot 1`] = `
                 Lot Size (in ha)
                 <div
                   class="c11"
-                  data-testid="sort-column-landArea"
+                  data-testid="sort-column-Lot Size (in ha)"
                 >
                   <svg
                     class="c12"

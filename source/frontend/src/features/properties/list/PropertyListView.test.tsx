@@ -6,25 +6,41 @@ import * as API from '@/constants/API';
 import Claims from '@/constants/claims';
 import { useApiGeocoder } from '@/hooks/pims-api/useApiGeocoder';
 import { useApiProperties } from '@/hooks/pims-api/useApiProperties';
-import { IPagedItems, IProperty } from '@/interfaces';
-import { mockParcel } from '@/mocks/filterData.mock';
+import { mockApiProperty } from '@/mocks/filterData.mock';
+import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
+import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { ILookupCode } from '@/store/slices/lookupCodes';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { cleanup, render, RenderOptions, waitFor } from '@/utils/test-utils';
+import {
+  act,
+  cleanup,
+  focusOptionMultiselect,
+  render,
+  RenderOptions,
+  userEvent,
+  waitFor,
+} from '@/utils/test-utils';
 
-import PropertyListView from './PropertyListView';
+import PropertyListView, { ownershipFilterOptions } from './PropertyListView';
+import { MultiSelectOption } from '@/features/acquisition/list/interfaces';
 
 // Set all module functions to jest.fn
 jest.mock('@react-keycloak/web');
 jest.mock('@/hooks/pims-api/useApiGeocoder');
 jest.mock('@/hooks/pims-api/useApiProperties');
 
-const mockApiGetPropertiesPagedApi = jest.fn<Promise<AxiosResponse<IPagedItems<IProperty>>>, any>();
+const mockApiGetPropertiesPagedApi = jest.fn<
+  Promise<AxiosResponse<ApiGen_Base_Page<ApiGen_Concepts_Property>>>,
+  any
+>();
 (useApiProperties as unknown as jest.Mock<Partial<typeof useApiProperties>>).mockReturnValue({
   getPropertiesPagedApi: mockApiGetPropertiesPagedApi,
 });
 
-const mockApiGetSitePidsApi = jest.fn<Promise<AxiosResponse<IPagedItems<IProperty>>>, any>();
+const mockApiGetSitePidsApi = jest.fn<
+  Promise<AxiosResponse<ApiGen_Base_Page<ApiGen_Concepts_Property>>>,
+  any
+>();
 (useApiGeocoder as unknown as jest.Mock<Partial<typeof useApiGeocoder>>).mockReturnValue({
   getSitePidsApi: mockApiGetSitePidsApi,
 });
@@ -56,7 +72,7 @@ const setup = (renderOptions: RenderOptions = {}) => {
   };
 };
 
-const setupMockApi = (properties?: IProperty[]) => {
+const setupMockApi = (properties?: ApiGen_Concepts_Property[]) => {
   const mockProperties = properties ?? [];
   const len = mockProperties.length;
   mockApiGetPropertiesPagedApi.mockResolvedValue({
@@ -102,7 +118,7 @@ describe('Property list view', () => {
   });
 
   it('displays list of properties', async () => {
-    setupMockApi([mockParcel]);
+    setupMockApi([mockApiProperty]);
     const {
       component: { findByText },
     } = setup();
@@ -126,7 +142,7 @@ describe('Property list view', () => {
   });
 
   it('displays column icons', async () => {
-    setupMockApi([mockParcel]);
+    setupMockApi([mockApiProperty]);
     const {
       component: { getByTestId },
       findSpinner,
@@ -137,5 +153,71 @@ describe('Property list view', () => {
 
     expect(getByTestId('view-prop-tab')).toBeInTheDocument();
     expect(getByTestId('view-prop-ext')).toBeInTheDocument();
+  });
+
+  it('preselects default property ownership state', async () => {
+    setupMockApi([mockApiProperty]);
+    const {
+      component: { getByText },
+      findSpinner,
+    } = setup({});
+
+    // wait for table to finish loading
+    await waitFor(async () => expect(findSpinner()).not.toBeInTheDocument());
+
+    expect(getByText('Core Inventory')).toBeInTheDocument();
+    expect(getByText('Property Of Interest')).toBeInTheDocument();
+    expect(getByText('Disposed')).toBeInTheDocument();
+  });
+
+  it('allows property ownership to be selected', async () => {
+    setupMockApi([mockApiProperty]);
+    const {
+      component: { container },
+      findSpinner,
+    } = setup({});
+
+    // wait for table to finish loading
+    await waitFor(async () => expect(findSpinner()).not.toBeInTheDocument());
+
+    const optionSelected = ownershipFilterOptions.find(
+      o => o.id === 'isDisposed',
+    ) as MultiSelectOption;
+
+    // click on the multi-select to show drop-down list
+    await act(async () =>
+      userEvent.click(container.querySelector(`#properties-selector`) as HTMLInputElement),
+    );
+
+    // select an option from the drop-down
+    await focusOptionMultiselect(container, optionSelected, ownershipFilterOptions);
+
+    await waitFor(() => {
+      expect(mockApiGetPropertiesPagedApi).toHaveBeenCalledWith({
+        address: '',
+        latitude: '',
+        longitude: '',
+        ownership: 'isCoreInventory,isPropertyOfInterest,isOtherInterest,isDisposed',
+        page: 1,
+        pinOrPid: '',
+        planNumber: '',
+        quantity: 10,
+        searchBy: 'pinOrPid',
+        sort: undefined,
+      });
+    });
+  });
+
+  it('displays a tooltip beside properties that are retired', async () => {
+    setupMockApi([{ ...mockApiProperty, isRetired: true }]);
+    const {
+      component: { getByTestId },
+      findSpinner,
+    } = setup({});
+
+    // wait for table to finish loading
+    await waitFor(async () => expect(findSpinner()).not.toBeInTheDocument());
+
+    expect(getByTestId('tooltip-icon-retired-tooltip')).toBeVisible();
   });
 });

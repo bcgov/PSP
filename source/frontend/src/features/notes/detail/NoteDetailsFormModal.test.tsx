@@ -4,9 +4,9 @@ import MockAdapter from 'axios-mock-adapter';
 import { Claims } from '@/constants/index';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { mockNoteResponse } from '@/mocks/noteResponses.mock';
-import { Api_Note } from '@/models/api/Note';
+import { ApiGen_Concepts_Note } from '@/models/api/generated/ApiGen_Concepts_Note';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
+import { act, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
 import { INoteDetailsFormModalProps, NoteDetailsFormModal } from './NoteDetailsFormModal';
 
@@ -78,13 +78,13 @@ describe('NoteDetailsFormModal component', () => {
 
   it('should execute callback when Close button is clicked', async () => {
     const { getModalCloseButton } = setup();
-    userEvent.click(getModalCloseButton());
+    await act(async () => userEvent.click(getModalCloseButton()));
 
     expect(onClose).toBeCalled();
   });
 
   it(`should not display the Last Updated info for system-generated notes`, async () => {
-    const systemNote: Api_Note = {
+    const systemNote: ApiGen_Concepts_Note = {
       ...mockNoteResponse(1),
       isSystemGenerated: true,
     };
@@ -106,7 +106,7 @@ describe('NoteDetailsFormModal component', () => {
 
   it('should execute callback when Edit button is clicked', async () => {
     const { getEditButton } = setup({ ...BASIC_PROPS }, { claims: [Claims.NOTE_EDIT] });
-    await waitFor(() => userEvent.click(getEditButton()));
+    await act(async () => userEvent.click(getEditButton()));
 
     expect(onEdit).toBeCalledWith(mockNoteResponse(1));
     expect(onClose).not.toBeCalled();

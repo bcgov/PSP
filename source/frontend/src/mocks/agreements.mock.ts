@@ -1,6 +1,6 @@
-import { Api_Agreement } from '@/models/api/Agreement';
+import { ApiGen_Concepts_Agreement } from '@/models/api/generated/ApiGen_Concepts_Agreement';
 
-export const mockAgreementsResponse = (): Api_Agreement[] => [
+export const mockAgreementsResponse = (): ApiGen_Concepts_Agreement[] => [
   {
     agreementId: 1,
     acquisitionFileId: 1,
@@ -25,11 +25,8 @@ export const mockAgreementsResponse = (): Api_Agreement[] => [
     inspectionDate: null,
     agreementStatusType: { id: 'DRAFT', description: 'Draft', isDisabled: false, displayOrder: 1 },
     cancellationNote: null,
-    appCreateTimestamp: '2023-04-05T21:53:28.837',
-    appLastUpdateTimestamp: '2023-04-05T21:53:28.837',
-    appLastUpdateUserid: 'dbo',
-    appCreateUserid: 'dbo',
     rowVersion: 1,
+    isDraft: null,
   },
   {
     agreementId: 2,
@@ -55,10 +52,35 @@ export const mockAgreementsResponse = (): Api_Agreement[] => [
     inspectionDate: null,
     agreementStatusType: { id: 'DRAFT', description: 'Draft', isDisabled: false, displayOrder: 1 },
     cancellationNote: null,
-    appCreateTimestamp: '2023-04-05T21:53:28.837',
-    appLastUpdateTimestamp: '2023-04-05T21:53:28.837',
-    appLastUpdateUserid: 'dbo',
-    appCreateUserid: 'dbo',
     rowVersion: 1,
+    isDraft: null,
   },
 ];
+
+export const mockAgreementResponseApi = (acquisitionFileId = 1): ApiGen_Concepts_Agreement => ({
+  agreementId: 10,
+  acquisitionFileId: acquisitionFileId,
+  agreementType: {
+    id: 'H0074',
+    description: 'License Of Occupation (H0074)',
+    isDisabled: false,
+    displayOrder: 4,
+  },
+  agreementDate: null,
+  completionDate: null,
+  terminationDate: null,
+  commencementDate: null,
+  possessionDate: null,
+  depositAmount: null,
+  noLaterThanDays: null,
+  purchasePrice: null,
+  legalSurveyPlanNum: null,
+  offerDate: null,
+  expiryDateTime: null,
+  signedDate: null,
+  inspectionDate: null,
+  agreementStatusType: { id: 'DRAFT', description: 'Draft', isDisabled: false, displayOrder: 1 },
+  cancellationNote: null,
+  rowVersion: 1,
+  isDraft: null,
+});

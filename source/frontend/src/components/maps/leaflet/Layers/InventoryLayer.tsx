@@ -110,6 +110,8 @@ export const getTiles = (bounds: LatLngBounds, zoom: number): ITile[] => {
 export const InventoryLayer: React.FC<React.PropsWithChildren<InventoryLayerProps>> = ({
   bounds,
   zoom,
+  minZoom,
+  maxZoom,
 }) => {
   const mapInstance = useMap();
   const mapMachine = useMapStateMachine();
@@ -123,6 +125,8 @@ export const InventoryLayer: React.FC<React.PropsWithChildren<InventoryLayerProp
   return (
     <PointClusterer
       zoom={zoom}
+      minZoom={minZoom}
+      maxZoom={maxZoom}
       bounds={bbox}
       zoomToBoundsOnClick={true}
       spiderfyOnMaxZoom={true}

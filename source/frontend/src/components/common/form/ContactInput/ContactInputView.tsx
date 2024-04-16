@@ -20,7 +20,7 @@ import { Input } from '../Input';
 export type RequiredAttributes = {
   field: string;
   setShowContactManager: React.Dispatch<React.SetStateAction<boolean>>;
-  onClear: Function;
+  onClear: () => void;
   contactManagerProps: IContactManagerModalProps;
 };
 
@@ -46,7 +46,7 @@ const ContactInputView: React.FunctionComponent<IContactInputViewProps> = ({
   const contactInfo: IContactSearchResult | undefined = getIn(values, field);
   const errorTooltip = error && touch && displayErrorTooltips ? error : undefined;
 
-  var text = 'Select from contacts';
+  let text = 'Select from contacts';
 
   if (contactInfo !== undefined) {
     text = formatContactSearchResult(contactInfo, 'Select from contacts');
@@ -76,6 +76,7 @@ const ContactInputView: React.FunctionComponent<IContactInputViewProps> = ({
                 field={field + '.id'}
                 placeholder="Select from Contacts"
                 className="d-none"
+                defaultValue=""
               ></Input>
             </Col>
             <Col xs="auto" className="pl-0">

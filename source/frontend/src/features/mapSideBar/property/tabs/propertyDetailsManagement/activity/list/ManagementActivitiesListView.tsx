@@ -6,7 +6,7 @@ import { Section } from '@/components/common/Section/Section';
 import { SectionListHeader } from '@/components/common/SectionListHeader';
 import { TableSort } from '@/components/Table/TableSort';
 import Claims from '@/constants/claims';
-import { Api_PropertyActivity } from '@/models/api/PropertyActivity';
+import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
 
 import ManagementActivitiesList from './ManagementActivitiesList';
 import { PropertyActivityRow } from './models/PropertyActivityRow';
@@ -26,7 +26,7 @@ const ManagementActivitiesListView: React.FunctionComponent<IManagementActivitie
   onView,
   onDelete,
 }) => {
-  const [sort, setSort] = React.useState<TableSort<Api_PropertyActivity>>({});
+  const [sort, setSort] = React.useState<TableSort<ApiGen_Concepts_PropertyActivity>>({});
 
   const mapSortField = (sortField: string) => {
     if (sortField === 'activityType') {

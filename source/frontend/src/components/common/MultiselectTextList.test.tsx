@@ -1,12 +1,27 @@
-import Api_TypeCode from '@/models/api/TypeCode';
+import { ApiGen_Base_CodeType } from '@/models/api/generated/ApiGen_Base_CodeType';
 import { render, RenderOptions } from '@/utils/test-utils';
 
 import { IMultiselectTextListProps, MultiselectTextList } from './MultiselectTextList';
 
-const mockOptions: Api_TypeCode<string>[] = [
-  { id: 'FOO', description: 'Foo' },
-  { id: 'BAR', description: 'Bar' },
-  { id: 'BAZ', description: 'Baz' },
+const mockOptions: ApiGen_Base_CodeType<string>[] = [
+  {
+    id: 'FOO',
+    description: 'Foo',
+    isDisabled: false,
+    displayOrder: null,
+  },
+  {
+    id: 'BAR',
+    description: 'Bar',
+    isDisabled: false,
+    displayOrder: null,
+  },
+  {
+    id: 'BAZ',
+    description: 'Baz',
+    isDisabled: false,
+    displayOrder: null,
+  },
 ];
 
 describe('MultiselectTextList component', () => {

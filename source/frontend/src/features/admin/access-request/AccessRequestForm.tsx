@@ -12,7 +12,7 @@ import TooltipWrapper from '@/components/common/TooltipWrapper';
 import * as API from '@/constants/API';
 import { DISCLAIMER_URL, PRIVACY_POLICY_URL } from '@/constants/strings';
 import { useLookupCodeHelpers } from '@/hooks/useLookupCodeHelpers';
-import { Api_AccessRequest } from '@/models/api/AccessRequest';
+import { ApiGen_Concepts_AccessRequest } from '@/models/api/generated/ApiGen_Concepts_AccessRequest';
 import { mapLookupCode } from '@/utils';
 import { AccessRequestSchema } from '@/utils/YupSchema';
 
@@ -21,7 +21,9 @@ import RolesToolTip from './RolesToolTip';
 
 interface IAccessRequestFormProps {
   initialValues: AccessRequestFormModel;
-  addAccessRequest: (accessRequest: Api_AccessRequest) => Promise<Api_AccessRequest | undefined>;
+  addAccessRequest: (
+    accessRequest: ApiGen_Concepts_AccessRequest,
+  ) => Promise<ApiGen_Concepts_AccessRequest | undefined>;
   onCancel?: () => void;
 }
 
@@ -34,6 +36,7 @@ export const AccessRequestForm: React.FunctionComponent<
     region => region.label !== 'Cannot determine',
   );
   const selectRoles = roles.map(c => mapLookupCode(c, initialValues?.roleId));
+
   return (
     <Formik<AccessRequestFormModel>
       enableReinitialize={true}
@@ -42,8 +45,9 @@ export const AccessRequestForm: React.FunctionComponent<
       onSubmit={async (values, { setSubmitting }) => {
         try {
           await addAccessRequest(values.toApi());
-        } catch (error) {}
-        setSubmitting(false);
+        } finally {
+          setSubmitting(false);
+        }
       }}
     >
       <Form className="userInfo">
@@ -108,7 +112,7 @@ export const AccessRequestForm: React.FunctionComponent<
           <Col xs={2}></Col>
           <Col>
             <p>
-              By clicking "Submit" to request access, you agree to our{' '}
+              By clicking &quot;Submit&quot; to request access, you agree to our{' '}
               <a target="_blank" rel="noopener noreferrer" href={DISCLAIMER_URL}>
                 Terms and Conditions
               </a>{' '}

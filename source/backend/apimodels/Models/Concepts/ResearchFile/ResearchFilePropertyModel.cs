@@ -1,27 +1,11 @@
 using System.Collections.Generic;
-using Pims.Api.Models.Base;
-using Pims.Api.Models.Concepts.Property;
+using Pims.Api.Models.Concepts.File;
 
 namespace Pims.Api.Models.Concepts.ResearchFile
 {
-    public class ResearchFilePropertyModel : BaseConcurrentModel
+    public class ResearchFilePropertyModel : FilePropertyModel
     {
         #region Properties
-
-        /// <summary>
-        /// get/set - The relationship id.
-        /// </summary>
-        public long Id { get; set; }
-
-        /// <summary>
-        /// get/set - The name of the property for this research file.
-        /// </summary>
-        public string PropertyName { get; set; }
-
-        /// <summary>
-        /// get/set - The order to display the relationship.
-        /// </summary>
-        public int? DisplayOrder { get; set; }
 
         /// <summary>
         /// get/set - Flag to mark if legal option is required.
@@ -44,14 +28,9 @@ namespace Pims.Api.Models.Concepts.ResearchFile
         public string ResearchSummary { get; set; }
 
         /// <summary>
-        /// get/set - The relationship's property.
-        /// </summary>
-        public PropertyModel Property { get; set; }
-
-        /// <summary>
         /// get/set - The relationship's research file.
         /// </summary>
-        public ResearchFileModel File { get; set; }
+        public new ResearchFileModel File { get; set; }
 
         /// <summary>
         /// get/set - The property's purpose types.

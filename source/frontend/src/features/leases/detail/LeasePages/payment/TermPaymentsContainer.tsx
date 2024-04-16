@@ -13,9 +13,9 @@ import { LeasePageProps } from '@/features/mapSideBar/lease/LeaseContainer';
 import { useLeasePaymentRepository } from '@/hooks/repositories/useLeasePaymentRepository';
 import { useLeaseTermRepository } from '@/hooks/repositories/useLeaseTermRepository';
 import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
-import { defaultApiLease } from '@/models/api/Lease';
-import { Api_LeaseTerm } from '@/models/api/LeaseTerm';
+import { getEmptyLease } from '@/models/defaultInitializers';
 import { SystemConstants, useSystemConstants } from '@/store/slices/systemConstants';
+import { exists, isValidId, isValidIsoDateTime } from '@/utils';
 
 import { useDeleteTermsPayments } from './hooks/useDeleteTermsPayments';
 import PaymentModal from './modal/payment/PaymentModal';
@@ -30,12 +30,11 @@ export const TermPaymentsContainer: React.FunctionComponent<
   React.PropsWithChildren<LeasePageProps>
 > = ({ formikRef, onSuccess }) => {
   const { lease } = useContext(LeaseStateContext);
-  const generateH1005a = useGenerateH1005a(lease);
+  const generateH1005a = useGenerateH1005a();
   const [editModalValues, setEditModalValues] = useState<FormLeaseTerm | undefined>(undefined);
   const [editPaymentModalValues, setEditPaymentModalValues] = useState<
     FormLeasePayment | undefined
   >(undefined);
-  const [terms, setTerms] = useState<Api_LeaseTerm[]>([]);
 
   const { updateLeaseTerm, addLeaseTerm, getLeaseTerms, deleteLeaseTerm } =
     useLeaseTermRepository();
@@ -51,14 +50,13 @@ export const TermPaymentsContainer: React.FunctionComponent<
   const refreshLeaseTerms = useCallback(
     async (leaseId: number) => {
       if (leaseId) {
-        const response = await getLeaseTermsFunc(leaseId);
-        setTerms(response ?? []);
+        await getLeaseTermsFunc(leaseId);
       }
     },
     [getLeaseTermsFunc],
   );
   useDeepCompareEffect(() => {
-    if (!!leaseId) {
+    if (isValidId(leaseId)) {
       refreshLeaseTerms(leaseId);
     }
   }, [refreshLeaseTerms, leaseId]);
@@ -78,12 +76,12 @@ export const TermPaymentsContainer: React.FunctionComponent<
    */
   const onSaveTerm = useCallback(
     async (values: FormLeaseTerm) => {
-      const updatedTerm = values.id
+      const updatedTerm = isValidId(values.id)
         ? await updateLeaseTerm.execute(FormLeaseTerm.toApi(values, gstDecimal))
         : await addLeaseTerm.execute(FormLeaseTerm.toApi(values, gstDecimal));
-      if (!!updatedTerm?.id && leaseId) {
-        const response = await getLeaseTerms.execute(leaseId);
-        setTerms(response ?? []);
+
+      if (isValidId(updatedTerm?.id) && isValidId(leaseId)) {
+        await getLeaseTerms.execute(leaseId);
         setEditModalValues(undefined);
         onSuccess();
       }
@@ -97,13 +95,12 @@ export const TermPaymentsContainer: React.FunctionComponent<
    */
   const onSavePayment = useCallback(
     async (values: FormLeasePayment) => {
-      if (leaseId) {
+      if (isValidId(leaseId)) {
         const updatedLeasePayment = values.id
           ? await updateLeasePayment.execute(leaseId, FormLeasePayment.toApi(values))
           : await addLeasePayment.execute(leaseId, FormLeasePayment.toApi(values));
-        if (!!updatedLeasePayment?.id) {
-          const response = await getLeaseTerms.execute(leaseId);
-          setTerms(response ?? []);
+        if (isValidId(updatedLeasePayment?.id)) {
+          await getLeaseTerms.execute(leaseId);
           setEditPaymentModalValues(undefined);
           onSuccess();
         }
@@ -115,7 +112,10 @@ export const TermPaymentsContainer: React.FunctionComponent<
   const onEdit = useCallback(
     (values: FormLeaseTerm) => {
       if (lease?.terms?.length === 0) {
-        values = { ...values, startDate: lease?.startDate ?? '' };
+        values = {
+          ...values,
+          startDate: isValidIsoDateTime(lease?.startDate) ? lease.startDate : '',
+        };
       }
       setEditModalValues(values);
     },
@@ -127,7 +127,7 @@ export const TermPaymentsContainer: React.FunctionComponent<
   }, []);
 
   const onGenerate = () => {
-    if (lease) {
+    if (exists(lease)) {
       generateH1005a(lease);
     }
   };
@@ -150,8 +150,12 @@ export const TermPaymentsContainer: React.FunctionComponent<
   useEffect(() => {
     setModalContent({
       variant: 'info',
-      headerIcon: !editModalValues?.id ? <FaPlusCircle /> : <FaExclamationCircle size={22} />,
-      title: !editModalValues?.id ? 'Add a Term' : 'Edit a Term',
+      headerIcon: !isValidId(editModalValues?.id) ? (
+        <FaPlusCircle />
+      ) : (
+        <FaExclamationCircle size={22} />
+      ),
+      title: !isValidId(editModalValues?.id) ? 'Add a Term' : 'Edit a Term',
       okButtonText: 'Yes',
       cancelButtonText: 'No',
       handleCancel: onCancelTerm,
@@ -182,8 +186,8 @@ export const TermPaymentsContainer: React.FunctionComponent<
         onGenerate={onGenerate}
         isReceivable={lease?.paymentReceivableType?.id === 'RCVBL'}
         lease={LeaseFormModel.fromApi({
-          ...defaultApiLease,
-          terms: terms,
+          ...getEmptyLease(),
+          terms: getLeaseTerms.response ?? [],
           type: lease?.type ?? null,
         })}
         formikRef={formikRef as React.RefObject<FormikProps<LeaseFormModel>>}
@@ -195,7 +199,7 @@ export const TermPaymentsContainer: React.FunctionComponent<
           setEditPaymentModalValues(undefined);
         }}
         onSave={onSavePayment}
-        terms={terms ?? []}
+        terms={getLeaseTerms.response ?? []}
       />
       <GenericModal
         variant="warning"

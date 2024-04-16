@@ -1,9 +1,9 @@
-import { Api_Project } from '@/models/api/Project';
+import { ApiGen_Concepts_Project } from '@/models/api/generated/ApiGen_Concepts_Project';
 
-import { isNullOrWhitespace } from './utils';
+import { exists, isNullOrWhitespace } from './utils';
 
-export function formatApiProjectName(project?: Api_Project): string {
-  if (!project) {
+export function formatApiProjectName(project: ApiGen_Concepts_Project | null | undefined): string {
+  if (!exists(project)) {
     return '';
   }
   return [project.code, project.description].filter(n => !isNullOrWhitespace(n)).join(' ');

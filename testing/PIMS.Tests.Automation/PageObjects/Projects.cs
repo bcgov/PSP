@@ -10,6 +10,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By projectMenuBttn = By.CssSelector("div[data-testid='nav-tooltip-project'] a");
         private By createProjectButton = By.XPath("//a[contains(text(),'Create Project')]");
 
+        private By projectNavigationTabs = By.CssSelector("nav[role='tablist']");
         private By projectDetailTabLink = By.CssSelector("a[data-rb-event-key='projectDetails]");
 
         //Create Project Form Elements
@@ -307,7 +308,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 sharedModals.ModalClickOKBttn();
             }
 
-            AssertTrueIsDisplayed(projectEditButton);
+            AssertTrueIsDisplayed(projectNavigationTabs);
         }
 
         public void CancelProject()

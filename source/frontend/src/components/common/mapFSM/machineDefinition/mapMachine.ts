@@ -14,6 +14,9 @@ const featureViewStates = {
       on: {
         START_SELECTION: {
           target: 'selecting',
+          actions: [
+            assign({ selectingComponentId: (_, event: any) => event.selectingComponentId }),
+          ],
         },
         TOGGLE_FILTER: {
           target: 'filtering',
@@ -50,7 +53,7 @@ const featureViewStates = {
       on: {
         TOGGLE_FILTER: {
           target: 'browsing',
-          actions: assign({ showDisposed: () => false }),
+          actions: [assign({ showDisposed: () => false }), assign({ showRetired: () => false })],
         },
         TOGGLE_LAYERS: {
           target: 'layerControl',
@@ -60,6 +63,9 @@ const featureViewStates = {
         },
         SET_SHOW_DISPOSED: {
           actions: assign({ showDisposed: (_, event: any) => event.show }),
+        },
+        SET_SHOW_RETIRED: {
+          actions: assign({ showRetired: (_, event: any) => event.show }),
         },
       },
     },
@@ -175,7 +181,7 @@ const selectedFeatureLoaderStates = {
             assign({
               isLoading: () => true,
               mapLocationSelected: (_, event: any) => event.latlng,
-              mapFeatureSelected: (_, event: any) => null,
+              mapFeatureSelected: () => null,
               mapLocationFeatureDataset: () => null,
             }),
           ],
@@ -185,7 +191,7 @@ const selectedFeatureLoaderStates = {
           actions: [
             assign({
               isLoading: () => true,
-              mapLocationSelected: (_, event: any) => null,
+              mapLocationSelected: () => null,
               mapFeatureSelected: (_, event: any) => event.featureSelected,
               mapLocationFeatureDataset: () => null,
             }),
@@ -212,7 +218,12 @@ const selectedFeatureLoaderStates = {
             assign({
               isLoading: () => false,
               showPopup: () => true,
-              mapLocationFeatureDataset: (context, event: any) => event.data,
+              mapLocationFeatureDataset: (context: any, event: any) => {
+                return {
+                  ...event.data,
+                  selectingComponentId: context.selectingComponentId,
+                };
+              },
             }),
             raise('FINISHED_LOCATION_DATA_LOAD'),
           ],
@@ -266,6 +277,13 @@ const sideBarStates = {
           actions: assign({ selectedFeatureDataset: () => null }),
           target: 'fullScreen',
         },
+        CHANGE_SIDEBAR: {
+          actions: [
+            assign({
+              filePropertyLocations: () => [],
+            }),
+          ],
+        },
 
         SET_FILE_PROPERTY_LOCATIONS: {
           actions: [
@@ -305,6 +323,7 @@ export const mapMachine = createMachine<MachineContext>({
   // Machine identifier
   id: 'map',
   initial: 'notMap',
+  predictableActionArguments: true,
 
   // Local context for entire machine
   context: {
@@ -318,12 +337,14 @@ export const mapMachine = createMachine<MachineContext>({
     mapFeatureSelected: null,
     mapLocationFeatureDataset: null,
     selectedFeatureDataset: null,
+    selectingComponentId: null,
     isLoading: false,
     searchCriteria: null,
     mapFeatureData: emptyFeatureData,
     filePropertyLocations: [],
     activePimsPropertyIds: [],
     showDisposed: false,
+    showRetired: false,
   },
 
   // State definitions
@@ -336,7 +357,7 @@ export const mapMachine = createMachine<MachineContext>({
             target: 'mapVisible',
           },
           {
-            cond: (context: MachineContext, event: any) => context.searchCriteria === null,
+            cond: (context: MachineContext) => context.searchCriteria === null,
             actions: assign({ searchCriteria: () => defaultPropertyFilter }),
             target: ['mapVisible.sideBar.sidebarOpen', 'mapVisible.featureDataLoader.loading'],
           },
@@ -346,7 +367,7 @@ export const mapMachine = createMachine<MachineContext>({
         ],
         OPEN_SIDEBAR: [
           {
-            cond: (context: MachineContext, event: any) => context.searchCriteria === null,
+            cond: (context: MachineContext) => context.searchCriteria === null,
             actions: assign({ searchCriteria: () => defaultPropertyFilter }),
             target: ['mapVisible.sideBar.sidebarOpen', 'mapVisible.featureDataLoader.loading'],
           },

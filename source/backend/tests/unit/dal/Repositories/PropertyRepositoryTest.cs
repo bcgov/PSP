@@ -5,6 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Linq;
 using FluentAssertions;
+using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Core.Test;
 using Pims.Dal.Entities;
@@ -31,10 +32,14 @@ namespace Pims.Dal.Test.Repositories
             {
                 new object[] { new PropertyFilter() { PinOrPid = "111-111-111" , Ownership = new List<string>()}, 1 },
                 new object[] { new PropertyFilter() { PinOrPid = "111"  , Ownership = new List<string>()}, 2 },
-                new object[] { new PropertyFilter() { Address = "12342 Test Street"  , Ownership = new List<string>()}, 6 },
-                new object[] { new PropertyFilter() { Page = 1, Quantity = 10 , Ownership = new List<string>() }, 6 },
-                new object[] { new PropertyFilter(), 6 },
+                new object[] { new PropertyFilter() { Address = "12342 Test Street"  , Ownership = new List<string>()}, 7 },
+                new object[] { new PropertyFilter() { PlanNumber = "SP-89TTXY", Ownership = new List<string>()}, 1 },
+                new object[] { new PropertyFilter() { Page = 1, Quantity = 10 , Ownership = new List<string>() }, 7 },
+                new object[] { new PropertyFilter(), 7 },
                 new object[] { new PropertyFilter(){ Ownership = new List<string>(){"isCoreInventory", "isPropertyOfInterest"}}, 4 },
+                new object[] { new PropertyFilter(){ Ownership = new List<string>(){"isDisposed"}}, 1 },
+                new object[] { new PropertyFilter(){ Ownership = new List<string>(){"isRetired"}}, 2 },
+                new object[] { new PropertyFilter(){ Ownership = new List<string>(){"isOtherInterest"}}, 1 },
                 new object[] { new PropertyFilter(){ Ownership = new List<string>(){"isCoreInventory"}}, 3 },
             };
         #endregion
@@ -108,6 +113,13 @@ namespace Pims.Dal.Test.Repositories
             testProperty = init.CreateProperty(6, location: new NetTopologySuite.Geometries.Point(-123.720810, 48.529338));
             testProperty.IsOwned = true;
             testProperty = init.CreateProperty(111111111);
+            testProperty.IsOwned = true;
+            testProperty = init.CreateProperty(22222);
+            testProperty.IsRetired = true;
+            testProperty = init.CreateProperty(33333);
+            testProperty.SurveyPlanNumber = "SP-89TTXY";
+            testProperty = init.CreateProperty(44444);
+            testProperty.IsRetired = true;
             testProperty.IsOwned = true;
 
             init.SaveChanges();
@@ -479,6 +491,39 @@ namespace Pims.Dal.Test.Repositories
             result.Should().NotBeNull();
             result.Pid.Should().Be(pid);
         }
+
+        [Fact]
+        public void GetByPid_Success_Retired()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.PropertyView);
+            var pid = 1111;
+            var property = EntityHelper.CreateProperty(pid);
+            property.IsRetired = true;
+            _helper.AddAndSaveChanges(property);
+
+            // Act
+            var result = repository.GetByPid(pid, true);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Pid.Should().Be(pid);
+        }
+
+        [Fact]
+        public void GetByPid_Filter_Retired()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.PropertyView);
+            var pid = 1111;
+            var property = EntityHelper.CreateProperty(pid);
+            property.IsRetired = true;
+            _helper.AddAndSaveChanges(property);
+
+            // Act
+            Action result = () => repository.GetByPid(pid, false);
+            result.Should().Throw<KeyNotFoundException>();
+        }
         #endregion
 
         #region GetByPin
@@ -498,15 +543,73 @@ namespace Pims.Dal.Test.Repositories
             result.Should().NotBeNull();
             result.Pin.Should().Be(pin);
         }
+
+        [Fact]
+        public void GetByPin_Success_Retired()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.PropertyView);
+            var pin = 1111;
+            var property = EntityHelper.CreateProperty(1, pin);
+            property.IsRetired = true;
+            _helper.AddAndSaveChanges(property);
+
+            // Act
+            var result = repository.GetByPin(pin, true);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Pin.Should().Be(pin);
+        }
+
+        [Fact]
+        public void GetByPin_Filter_Retired()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.PropertyView);
+            var pin = 1111;
+            var property = EntityHelper.CreateProperty(1, pin);
+            property.IsRetired = true;
+            _helper.AddAndSaveChanges(property);
+
+            // Act
+            Action action = () => repository.GetByPin(pin, false);
+
+            // Assert
+            action.Should().Throw<KeyNotFoundException>();
+        }
         #endregion
 
         #region Update
-        [Fact]
-        public void Update_Property_Success()
+        [Theory]
+        [InlineData("test", 200, null)]
+        [InlineData("test", 200, false)]
+        public void Update_Property_Success_Not_Retired(string propertyDescription, int pid, bool? isRetired)
         {
             // Arrange
             var repository = CreateRepositoryWithPermissions(Permissions.PropertyView, Permissions.PropertyEdit);
-            var property = EntityHelper.CreateProperty(1);
+            var property = EntityHelper.CreateProperty(1, isRetired: isRetired);
+            _helper.AddAndSaveChanges(property);
+
+            var newValues = new Entity.PimsProperty();
+            property.CopyValues(newValues);
+            newValues.Description = propertyDescription;
+            newValues.Pid = pid;
+
+            // Act
+            var updatedProperty = repository.Update(newValues);
+
+            // Assert
+            updatedProperty.Description.Should().Be(propertyDescription);
+            updatedProperty.Pid.Should().Be(pid);
+        }
+
+        [Fact]
+        public void Update_Property_Retired_Violation()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.PropertyView, Permissions.PropertyEdit);
+            var property = EntityHelper.CreateProperty(1, isRetired: true);
             _helper.AddAndSaveChanges(property);
 
             var newValues = new Entity.PimsProperty();
@@ -515,11 +618,11 @@ namespace Pims.Dal.Test.Repositories
             newValues.Pid = 200;
 
             // Act
-            var updatedProperty = repository.Update(newValues);
+            Action act = () => repository.Update(newValues);
 
             // Assert
-            updatedProperty.Description.Should().Be("test");
-            updatedProperty.Pid.Should().Be(200);
+            var exception = act.Should().Throw<BusinessRuleViolationException>();
+            exception.WithMessage("Retired records are referenced for historical purposes only and cannot be edited or deleted.");
         }
 
         [Fact]
@@ -582,7 +685,7 @@ namespace Pims.Dal.Test.Repositories
 
 
             // Act
-            var transferredProperty = repository.TransferFileProperty(property, new Models.PropertyOwnershipState() { isPropertyOfInterest = true, isOwned = true});
+            var transferredProperty = repository.TransferFileProperty(property, new Models.PropertyOwnershipState() { isPropertyOfInterest = true, isOwned = true });
             context.CommitTransaction();
 
             // Assert

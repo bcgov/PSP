@@ -6,9 +6,9 @@ import { GenericModal } from '@/components/common/GenericModal';
 import { FormTenant } from './models';
 
 export interface IPrimaryContactWarningModalProps {
-  saveCallback?: Function;
+  saveCallback?: () => void;
   selectedTenants: FormTenant[];
-  onCancel?: Function;
+  onCancel?: () => void;
 }
 
 const PrimaryContactWarningModal: React.FunctionComponent<

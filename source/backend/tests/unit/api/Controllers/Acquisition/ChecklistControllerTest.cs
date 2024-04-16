@@ -10,6 +10,10 @@ using Pims.Core.Test;
 using Pims.Dal.Entities;
 using Pims.Dal.Security;
 using Xunit;
+using Pims.Api.Models.Concepts.File;
+using System;
+using Pims.Api.Helpers.Exceptions;
+using FluentAssertions;
 
 namespace Pims.Api.Test.Controllers
 {
@@ -58,13 +62,33 @@ namespace Pims.Api.Test.Controllers
         {
             // Arrange
             var acqFile = EntityHelper.CreateAcquisitionFile();
-            this._service.Setup(m => m.UpdateChecklistItems(It.IsAny<PimsAcquisitionFile>())).Returns(acqFile);
+            var checklistItems = new List<FileChecklistItemModel>() { new FileChecklistItemModel() { FileId = acqFile.AcquisitionFileId }, new FileChecklistItemModel() { FileId = acqFile.AcquisitionFileId } };
+            this._service.Setup(m => m.UpdateChecklistItems(It.IsAny<IList<PimsAcquisitionChecklistItem>>())).Returns(acqFile);
 
             // Act
-            var result = this._controller.UpdateAcquisitionFileChecklist(this._mapper.Map<AcquisitionFileModel>(acqFile));
+            var result = this._controller.UpdateAcquisitionFileChecklist(acqFile.AcquisitionFileId, checklistItems);
 
             // Assert
-            this._service.Verify(m => m.UpdateChecklistItems(It.IsAny<PimsAcquisitionFile>()), Times.Once());
+            this._service.Verify(m => m.UpdateChecklistItems(It.IsAny<IList<PimsAcquisitionChecklistItem>>()), Times.Once());
+        }
+
+        /// <summary>
+        /// Fails if the checklists items do not belong to the requested acquisition file.
+        /// </summary>
+        [Fact]
+        public void UpdateAcquisitionFileChecklist_InvalidIds()
+        {
+            // Arrange
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+            var checklistItems = new List<FileChecklistItemModel>() { new FileChecklistItemModel() { FileId = acqFile.AcquisitionFileId }, new FileChecklistItemModel() { FileId = acqFile.AcquisitionFileId + 1 } };
+            this._service.Setup(m => m.UpdateChecklistItems(It.IsAny<IList<PimsAcquisitionChecklistItem>>())).Returns(acqFile);
+
+            // Act
+            Action act = () => this._controller.UpdateAcquisitionFileChecklist(acqFile.AcquisitionFileId, checklistItems);
+
+            // Assert
+            act.Should().Throw<BadRequestException>();
+            this._service.Verify(m => m.UpdateChecklistItems(It.IsAny<IList<PimsAcquisitionChecklistItem>>()), Times.Never());
         }
 
         #endregion

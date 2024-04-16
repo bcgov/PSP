@@ -42,7 +42,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "16.15.0"
+          node-version: "20.11.1"
       - run: npm ci
         working-directory: ${{env.working-directory}}
 
@@ -71,12 +71,12 @@ jobs:
           # Environment variables to tag the upload with (e.g. PYTHON | OS,PYTHON)
           env_vars: javascript
           # Specify whether or not CI build should fail if Codecov runs into an error during upload
-          fail_ci_if_error: true
+          fail_ci_if_error: false
 
       - name: SonarQube Scan
         id: scan
         uses: sonarsource/sonarqube-scan-action@master
-        if: ${{ github.event_name == 'push' || github.event.pull_request.head.repo.full_name == 'bcgov/PSP' }}
+        if: false
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_URL }}

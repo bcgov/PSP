@@ -1,16 +1,17 @@
 import { fromApiOrganization, fromApiPerson, IContactSearchResult } from '@/interfaces';
-import { Api_PropertyContact } from '@/models/api/Property';
+import { ApiGen_Concepts_PropertyContact } from '@/models/api/generated/ApiGen_Concepts_PropertyContact';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { stringToNull } from '@/utils/formUtils';
 
 export class PropertyContactFormModel {
-  public id: number = 0;
-  public propertyId: number = 0;
+  public id = 0;
+  public propertyId = 0;
   public contact: IContactSearchResult | undefined = undefined;
-  public primaryContactId: string = '';
-  public purposeDescription: string = '';
-  public rowVersion: number = 0;
+  public primaryContactId = '';
+  public purposeDescription = '';
+  public rowVersion = 0;
 
-  public toApi(): Api_PropertyContact {
+  public toApi(): ApiGen_Concepts_PropertyContact {
     return {
       id: this.id,
       propertyId: this.propertyId,
@@ -21,11 +22,11 @@ export class PropertyContactFormModel {
       primaryContactId: this.primaryContactId !== '' ? Number(this.primaryContactId) : null,
       primaryContact: null,
       purpose: stringToNull(this.purposeDescription),
-      rowVersion: this.rowVersion,
+      ...getEmptyBaseAudit(this.rowVersion),
     };
   }
 
-  static fromApi(model: Api_PropertyContact | null): PropertyContactFormModel {
+  static fromApi(model: ApiGen_Concepts_PropertyContact | null): PropertyContactFormModel {
     const newFormModel = new PropertyContactFormModel();
     newFormModel.id = model?.id || 0;
     newFormModel.propertyId = model?.propertyId || 0;

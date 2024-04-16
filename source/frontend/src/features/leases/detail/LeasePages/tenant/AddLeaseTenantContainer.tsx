@@ -8,9 +8,10 @@ import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
 import { useLeaseTenantRepository } from '@/hooks/repositories/useLeaseTenantRepository';
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import { IContactSearchResult } from '@/interfaces';
-import { Api_Lease } from '@/models/api/Lease';
-import { Api_LeaseTenant } from '@/models/api/LeaseTenant';
-import { Api_Person } from '@/models/api/Person';
+import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
+import { ApiGen_Concepts_LeaseTenant } from '@/models/api/generated/ApiGen_Concepts_LeaseTenant';
+import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_Person';
+import { exists, isValidId } from '@/utils/utils';
 
 import { IAddLeaseTenantFormProps } from './AddLeaseTenantForm';
 import { FormTenant } from './models';
@@ -38,7 +39,7 @@ export const AddLeaseTenantContainer: React.FunctionComponent<
     tenants.map(t => FormTenant.toContactSearchResult(t)) || [],
   );
   const [showContactManager, setShowContactManager] = React.useState<boolean>(false);
-  const [handleSubmit, setHandleSubmit] = useState<Function | undefined>(undefined);
+  const [handleSubmit, setHandleSubmit] = useState<(() => void) | undefined>(undefined);
 
   const {
     updateLeaseTenants,
@@ -50,9 +51,9 @@ export const AddLeaseTenantContainer: React.FunctionComponent<
     const tenantFunc = async () => {
       const tenants = await getLeaseTenants(leaseId ?? 0);
       if (tenants !== undefined) {
-        setTenants(tenants.map((t: Api_LeaseTenant) => new FormTenant(t)));
+        setTenants(tenants.map((t: ApiGen_Concepts_LeaseTenant) => new FormTenant(t)));
         setSelectedContacts(
-          tenants.map((t: Api_LeaseTenant) =>
+          tenants.map((t: ApiGen_Concepts_LeaseTenant) =>
             FormTenant.toContactSearchResult(new FormTenant(t)),
           ) || [],
         );
@@ -90,7 +91,7 @@ export const AddLeaseTenantContainer: React.FunctionComponent<
       newTenants?.map(tenant => {
         tenant?.organization?.organizationPersons?.forEach(op => {
           const matchingPerson = find(allPersons, p => p?.id === op.personId);
-          if (!!matchingPerson) {
+          if (matchingPerson) {
             op.person = matchingPerson;
           }
         });
@@ -101,14 +102,14 @@ export const AddLeaseTenantContainer: React.FunctionComponent<
     setTenants([...formTenants, ...matchingExistingTenants]);
   };
 
-  const submit = async (leaseToUpdate: Api_Lease) => {
-    if (leaseToUpdate?.id) {
+  const submit = async (leaseToUpdate: ApiGen_Concepts_Lease) => {
+    if (isValidId(leaseToUpdate.id)) {
       try {
         const updatedTenants = await updateLeaseTenants.execute(
-          leaseToUpdate?.id,
-          leaseToUpdate.tenants,
+          leaseToUpdate.id,
+          leaseToUpdate.tenants ?? [],
         );
-        if (!!updatedTenants) {
+        if (updatedTenants) {
           formikRef?.current?.resetForm({
             values: LeaseFormModel.fromApi({
               ...leaseToUpdate,
@@ -157,17 +158,17 @@ export const AddLeaseTenantContainer: React.FunctionComponent<
 // get a unique list of all tenant organization person-ids that are associated to organization tenants.
 // in the case of a duplicate organization person, prefers tenants that have the person field non-null.
 const getTenantOrganizationPersonList = (tenants?: IContactSearchResult[]) => {
-  const personList: { person?: Api_Person; personId: number }[] = [];
+  const personList: { person?: ApiGen_Concepts_Person; personId: number }[] = [];
   // put any tenants that have non-null organization person first to ensure that the de-duplication logic below will maintain that value.
   tenants = orderBy(
     tenants,
-    t => some(t?.organization?.organizationPersons, op => op.person !== undefined),
+    t => some(t?.organization?.organizationPersons, op => exists(op.person)),
     'desc',
   );
   tenants?.forEach(tenant =>
     tenant?.organization?.organizationPersons?.forEach(op => {
-      if (op.personId !== undefined && !find(personList, p => p.personId === op.personId)) {
-        personList.push({ person: op?.person, personId: op?.personId });
+      if (isValidId(op.personId) && !find(personList, p => p.personId === op.personId)) {
+        personList.push({ person: op?.person ?? undefined, personId: op?.personId });
       }
     }),
   );

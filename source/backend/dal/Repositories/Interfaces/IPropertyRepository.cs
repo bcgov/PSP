@@ -20,9 +20,9 @@ namespace Pims.Dal.Repositories
 
         PimsProperty GetByPid(string pid);
 
-        PimsProperty GetByPid(int pid);
+        PimsProperty GetByPid(int pid, bool includeRetired = false);
 
-        PimsProperty GetByPin(int pin);
+        PimsProperty GetByPin(int pin, bool includeRetired = false);
 
         PimsProperty GetAllAssociationsById(long id);
 
@@ -33,6 +33,8 @@ namespace Pims.Dal.Repositories
         void Delete(PimsProperty property);
 
         PimsProperty TransferFileProperty(PimsProperty property, PropertyOwnershipState state);
+
+        PimsProperty RetireProperty(PimsProperty property);
 
         HashSet<long> GetMatchingIds(PropertyFilterCriteria filter);
 

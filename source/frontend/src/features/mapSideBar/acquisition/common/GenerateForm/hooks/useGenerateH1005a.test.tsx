@@ -13,16 +13,16 @@ import { usePropertyLeaseRepository } from '@/hooks/repositories/usePropertyLeas
 import { useSecurityDepositRepository } from '@/hooks/repositories/useSecurityDepositRepository';
 import { getMockDeposits } from '@/mocks/deposits.mock';
 import { getMockApiLease } from '@/mocks/lease.mock';
-import { Api_AcquisitionFile } from '@/models/api/AcquisitionFile';
 import { ApiGen_CodeTypes_ExternalResponseStatus } from '@/models/api/generated/ApiGen_CodeTypes_ExternalResponseStatus';
-import { Api_LeaseTenant } from '@/models/api/LeaseTenant';
+import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
+import { ApiGen_Concepts_LeaseTenant } from '@/models/api/generated/ApiGen_Concepts_LeaseTenant';
 
 import { useGenerateH1005a } from './useGenerateH1005a';
 
 const generateFn = jest
   .fn()
   .mockResolvedValue({ status: ApiGen_CodeTypes_ExternalResponseStatus.Success, payload: {} });
-const getLeaseTenantsFn = jest.fn<Promise<Api_LeaseTenant[] | undefined>, any[]>();
+const getLeaseTenantsFn = jest.fn<Promise<ApiGen_Concepts_LeaseTenant[] | null>, any[]>();
 const getSecurityDepositsFn = jest.fn();
 const getInsurancesFn = jest.fn();
 const getPropertyLeasesFn = jest.fn();
@@ -75,7 +75,10 @@ const getWrapper =
   ({ children }: any) =>
     <Provider store={store}>{children}</Provider>;
 
-const setup = (params?: { storeValues?: any; acquisitionResponse?: Api_AcquisitionFile }) => {
+const setup = (params?: {
+  storeValues?: any;
+  acquisitionResponse?: ApiGen_Concepts_AcquisitionFile;
+}) => {
   const { result } = renderHook(useGenerateH1005a, {
     wrapper: getWrapper(getStore(params?.storeValues)),
   });
@@ -91,7 +94,9 @@ describe('useGenerateH10005a functions', () => {
 
   it('makes requests to expected api endpoints', async () => {
     const generate = setup();
-    await act(async () => generate(getMockApiLease()));
+    await act(async () => {
+      generate(getMockApiLease());
+    });
     expect(generateFn).toHaveBeenCalled();
     expect(getLeaseTenantsFn).toHaveBeenCalled();
     expect(getInsurancesFn).toHaveBeenCalled();
@@ -104,8 +109,10 @@ describe('useGenerateH10005a functions', () => {
   it('throws an error if no acquisition file is found', async () => {
     const generate = setup();
     getApiLeaseFn.mockResolvedValue({ data: null });
-    await expect(generate(getMockApiLease())).rejects.toThrow(
-      'Failed to load lease, reload this page to try again.',
+    await act(() =>
+      expect(generate(getMockApiLease())).rejects.toThrow(
+        'Failed to load lease, reload this page to try again.',
+      ),
     );
   });
 
@@ -115,6 +122,6 @@ describe('useGenerateH10005a functions', () => {
       payload: null,
     });
     const generate = setup();
-    await expect(generate(getMockApiLease())).rejects.toThrow('Failed to generate file');
+    await act(() => expect(generate(getMockApiLease())).rejects.toThrow('Failed to generate file'));
   });
 });
