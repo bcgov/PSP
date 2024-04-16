@@ -14,6 +14,7 @@ describe('take model tests', () => {
       isNewLandAct: false,
       isNewInterestInSrw: false,
       isThereSurplus: false,
+      isLeasePayable: false,
     };
     const takeModel = new TakeModel(apiTake);
     expect(takeModel.isAcquiredForInventory).toBe('false');
@@ -22,6 +23,7 @@ describe('take model tests', () => {
     expect(takeModel.isNewLandAct).toBe('false');
     expect(takeModel.isNewInterestInSrw).toBe('false');
     expect(takeModel.isThereSurplus).toBe('false');
+    expect(takeModel.isLeasePayable).toBe('false');
   });
 
   it("converts all true it values to 'true'", () => {
@@ -33,6 +35,7 @@ describe('take model tests', () => {
       isNewLandAct: true,
       isNewInterestInSrw: true,
       isThereSurplus: true,
+      isLeasePayable: true,
     };
     const takeModel = new TakeModel(apiTake);
     expect(takeModel.isAcquiredForInventory).toBe('true');
@@ -41,6 +44,7 @@ describe('take model tests', () => {
     expect(takeModel.isNewLandAct).toBe('true');
     expect(takeModel.isNewInterestInSrw).toBe('true');
     expect(takeModel.isThereSurplus).toBe('true');
+    expect(takeModel.isLeasePayable).toBe('true');
   });
   it('sets all undefined areas to 0', () => {
     const apiTake: ApiGen_Concepts_Take = {
@@ -50,6 +54,7 @@ describe('take model tests', () => {
       surplusArea: null,
       statutoryRightOfWayArea: null,
       licenseToConstructArea: null,
+      leasePayableArea: null,
     };
     const takeModel = new TakeModel(apiTake);
     expect(takeModel.landActArea).toBe(0);
@@ -57,6 +62,7 @@ describe('take model tests', () => {
     expect(takeModel.surplusArea).toBe(0);
     expect(takeModel.statutoryRightOfWayArea).toBe(0);
     expect(takeModel.licenseToConstructArea).toBe(0);
+    expect(takeModel.leasePayableArea).toBe(0);
   });
 
   it('sets all area units to the unit from the backend', () => {
@@ -70,6 +76,7 @@ describe('take model tests', () => {
     expect(takeModel.surplusAreaUnitTypeCode).toBe('FEET2');
     expect(takeModel.statutoryRightOfWayAreaUnitTypeCode).toBe('FEET2');
     expect(takeModel.licenseToConstructAreaUnitTypeCode).toBe('FEET2');
+    expect(takeModel.leasePayableAreaUnitTypeCode).toBe('FEET2');
   });
 
   describe('translating the model to the api format', () => {
@@ -88,6 +95,7 @@ describe('take model tests', () => {
       takeModel.surplusAreaUnitTypeCode = 'HA';
       takeModel.statutoryRightOfWayAreaUnitTypeCode = 'ACRE';
       takeModel.licenseToConstructAreaUnitTypeCode = 'ACRE';
+      takeModel.leasePayableAreaUnitTypeCode = 'ACRE';
 
       const actualApiTake = takeModel.toApi();
       expect(actualApiTake.areaUnitTypeCode?.id).toBe('M2');
@@ -95,6 +103,7 @@ describe('take model tests', () => {
       expect(actualApiTake.newHighwayDedicationArea).toBe(0.18580608);
       expect(actualApiTake.surplusArea).toBe(30000);
       expect(actualApiTake.statutoryRightOfWayArea).toBe(16187.4256896);
+      expect(actualApiTake.licenseToConstructArea).toBe(20234.282112);
       expect(actualApiTake.licenseToConstructArea).toBe(20234.282112);
     });
   });

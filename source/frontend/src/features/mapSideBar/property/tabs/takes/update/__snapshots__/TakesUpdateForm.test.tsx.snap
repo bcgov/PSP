@@ -1206,10 +1206,10 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                   </div>
                 </div>
                 <div
-                  class="pb-2 row"
+                  class="mt-4 row"
                 >
                   <div
-                    class="pr-0 text-left col-4"
+                    class="pr-0 text-left col-3"
                   >
                     <label
                       class="c8"
@@ -1218,7 +1218,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                     </label>
                   </div>
                   <div
-                    class="c9 text-left col-4"
+                    class="c9 text-left col"
                   >
                     <div
                       class="c10 form-group"
@@ -1269,7 +1269,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                     <label
                       class="c8"
                     >
-                      Is a there a new Land Act tenure? *:
+                      Is there a new Land Act tenure? *:
                     </label>
                   </div>
                   <div
@@ -1519,10 +1519,10 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                   </div>
                 </div>
                 <div
-                  class="pb-2 row"
+                  class="mt-4 row"
                 >
                   <div
-                    class="pr-0 text-left col-4"
+                    class="pr-0 text-left col-3"
                   >
                     <label
                       class="c8"
@@ -1531,7 +1531,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                     </label>
                   </div>
                   <div
-                    class="c9 text-left col-4"
+                    class="c9 text-left col"
                   >
                     <div
                       class="c10 form-group"
@@ -1765,10 +1765,10 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                   </div>
                 </div>
                 <div
-                  class="pb-2 row"
+                  class="mt-4 row"
                 >
                   <div
-                    class="pr-0 text-left col-4"
+                    class="pr-0 text-left col-3"
                   >
                     <label
                       class="c8"
@@ -1777,7 +1777,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                     </label>
                   </div>
                   <div
-                    class="c9 text-left col-4"
+                    class="c9 text-left col"
                   >
                     <div
                       class="c10 form-group"
@@ -1805,6 +1805,252 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                             placeholder="MMM DD, YYYY"
                             type="text"
                             value="Jan 01, 2020"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="c3 form-section c13"
+            >
+              <div
+                class="collapse show"
+              >
+                <div
+                  class="pb-2 row"
+                >
+                  <div
+                    class="pr-0 text-left col-8"
+                  >
+                    <label
+                      class="c8"
+                    >
+                      Is there a Lease (Payable)? *:
+                    </label>
+                  </div>
+                  <div
+                    class="c9 text-left col"
+                  >
+                    <div
+                      class="c14 form-group"
+                    >
+                      <div
+                        class="radio-group"
+                      >
+                        <div
+                          class="c15"
+                        >
+                          <div
+                            class="form-check"
+                          >
+                            <input
+                              checked=""
+                              class="form-check-input position-static"
+                              data-testid="radio-takes.0.isleasepayable-yes"
+                              id="input-true"
+                              name="takes.0.isLeasePayable"
+                              type="radio"
+                              value="true"
+                            />
+                          </div>
+                          <label
+                            class="form-check-label form-label"
+                            for="takes.0.isLeasePayable"
+                          >
+                            Yes
+                          </label>
+                        </div>
+                        <div
+                          class="c15"
+                        >
+                          <div
+                            class="form-check"
+                          >
+                            <input
+                              class="form-check-input position-static"
+                              data-testid="radio-takes.0.isleasepayable-no"
+                              id="input-false"
+                              name="takes.0.isLeasePayable"
+                              type="radio"
+                              value="false"
+                            />
+                          </div>
+                          <label
+                            class="form-check-label form-label"
+                            for="takes.0.isLeasePayable"
+                          >
+                            No
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="pb-2 row"
+                >
+                  <div
+                    class="pr-0 text-left col-12"
+                  >
+                    <label
+                      class="c8"
+                    >
+                      Area:
+                    </label>
+                  </div>
+                  <div
+                    class="c9 text-left col"
+                  >
+                    <div
+                      class="row"
+                    >
+                      <div
+                        class="col"
+                      >
+                        <div
+                          class="c16"
+                        >
+                          <div
+                            class="pb-2 row"
+                          >
+                            <div
+                              class="text-right col"
+                            >
+                              <input
+                                aria-label="square metres"
+                                class="c17"
+                                name="area-sq-meters"
+                                step=".01"
+                                type="number"
+                                value="20231.28"
+                              />
+                            </div>
+                            <div
+                              class="col"
+                            >
+                              sq. metres
+                            </div>
+                          </div>
+                          <div
+                            class="row"
+                          >
+                            <div
+                              class="text-right col"
+                            >
+                              <input
+                                aria-label="hectares"
+                                class="c17"
+                                name="area-hectares"
+                                step=".01"
+                                type="number"
+                                value="2.02"
+                              />
+                            </div>
+                            <div
+                              class="col"
+                            >
+                              hectares
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="col"
+                      >
+                        <div
+                          class="c18"
+                        >
+                          <div
+                            class="pb-2 row"
+                          >
+                            <div
+                              class="text-right col"
+                            >
+                              <input
+                                aria-label="square feet"
+                                class="c17"
+                                name="area-sq-feet"
+                                step=".01"
+                                type="number"
+                                value="217767.7"
+                              />
+                            </div>
+                            <div
+                              class="col"
+                            >
+                              sq. feet
+                            </div>
+                          </div>
+                          <div
+                            class="row"
+                          >
+                            <div
+                              class="text-right col"
+                            >
+                              <input
+                                aria-label="acres"
+                                class="c17"
+                                name="area-acres"
+                                step=".01"
+                                type="number"
+                                value="5"
+                              />
+                            </div>
+                            <div
+                              class="col"
+                            >
+                              acres
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="mt-4 row"
+                >
+                  <div
+                    class="pr-0 text-left col-3"
+                  >
+                    <label
+                      class="c8"
+                    >
+                      End date:
+                    </label>
+                  </div>
+                  <div
+                    class="c9 text-left col"
+                  >
+                    <div
+                      class="c10 form-group"
+                    >
+                      <div
+                        class="react-datepicker-wrapper d-block"
+                      >
+                        <div
+                          class="react-datepicker__input-container react-datepicker__view-calendar-icon"
+                        >
+                          <svg
+                            class="react-datepicker__calendar-icon"
+                            viewBox="0 0 448 512"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                            />
+                          </svg>
+                          <input
+                            autocomplete="off"
+                            class="c11 form-control date-picker"
+                            id="datepicker-takes.0.leasePayableEndDt"
+                            name="takes.0.leasePayableEndDt"
+                            placeholder="MMM DD, YYYY"
+                            type="text"
+                            value="Nov 21, 2022"
                           />
                         </div>
                       </div>
