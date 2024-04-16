@@ -32,12 +32,14 @@ namespace Pims.Dal.Repositories
         public IEnumerable<PimsTake> GetAllByAcquisitionFileId(long fileId)
         {
             return Context.PimsTakes
+
                 .Include(t => t.PropertyAcquisitionFile)
                 .Include(t => t.TakeSiteContamTypeCodeNavigation)
                 .Include(t => t.TakeStatusTypeCodeNavigation)
                 .Include(t => t.TakeTypeCodeNavigation)
                 .Include(t => t.LandActTypeCodeNavigation)
-                .Where(t => t.PropertyAcquisitionFile.AcquisitionFileId == fileId);
+                .Where(t => t.PropertyAcquisitionFile.AcquisitionFileId == fileId)
+                .AsNoTracking();
         }
 
         /// <summary>
