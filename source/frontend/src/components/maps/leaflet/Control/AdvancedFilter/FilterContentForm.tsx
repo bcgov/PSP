@@ -49,8 +49,8 @@ export const FilterContentForm: React.FC<React.PropsWithChildren<IFilterContentF
   }, []);
 
   useEffect(() => {
-    const firstLoad = async () => {
-      await onChange(initialFilter);
+    const firstLoad = () => {
+      onChange(initialFilter);
     };
     firstLoad();
   }, [initialFilter, onChange]);
