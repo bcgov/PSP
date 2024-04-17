@@ -14,6 +14,7 @@ import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
 import { ApiGen_CodeTypes_AcquisitionTakeStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_AcquisitionTakeStatusTypes';
+import { ApiGen_CodeTypes_LandActTypes } from '@/models/api/generated/ApiGen_CodeTypes_LandActTypes';
 import { withNameSpace } from '@/utils/formUtils';
 
 import { StyledBorderSection, StyledNoTabSection } from '../styles';
@@ -302,6 +303,16 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({
                   placeholder="Select Land Act"
                   options={takeLandActTypeOptions}
                   disabled={!canEditTake}
+                  onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+                    if (
+                      [
+                        ApiGen_CodeTypes_LandActTypes.TRANSFER_OF_ADMIN_AND_CONTROL.toString(),
+                        ApiGen_CodeTypes_LandActTypes.CROWN_GRANT.toString(),
+                      ].includes(e.target.value)
+                    ) {
+                      setFieldValue(withNameSpace(nameSpace, 'landActEndDt'), '');
+                    }
+                  }}
                 />
               </SectionField>
               <SectionField label="Area" labelWidth="12">
@@ -319,13 +330,20 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({
                   field={withNameSpace(nameSpace, 'landActArea')}
                 />
               </SectionField>
-              <SectionField label="End date" labelWidth="3" className="mt-4">
-                <FastDatePicker
-                  field={withNameSpace(nameSpace, 'landActEndDt')}
-                  formikProps={formikProps}
-                  disabled={!canEditTake}
-                />
-              </SectionField>
+              {/** hide the end date for land act types that result in ownership*/}
+              {![
+                ApiGen_CodeTypes_LandActTypes.TRANSFER_OF_ADMIN_AND_CONTROL.toString(),
+                ApiGen_CodeTypes_LandActTypes.CROWN_GRANT.toString(),
+              ].includes(currentTake.landActTypeCode) && (
+                <SectionField label="End date" labelWidth="3" className="mt-4">
+                  <FastDatePicker
+                    field={withNameSpace(nameSpace, 'landActEndDt')}
+                    formikProps={formikProps}
+                    disabled={!canEditTake}
+                    data-testId={withNameSpace(nameSpace, 'landActEndDt')}
+                  />
+                </SectionField>
+              )}
             </>
           )}
         </StyledBorderSection>
