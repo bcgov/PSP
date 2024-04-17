@@ -64,7 +64,7 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({
     }
   }, [currentTake.completionDt, currentTake.takeStatusTypeCode, nameSpace, setFieldValue]);
 
-  const getModalWarning = (onOk: () => void) => {
+  const getModalWarning = (onOk: () => void, isLeasePayable = false) => {
     return (e: React.ChangeEvent<any>) => {
       if (e.target.value === 'false') {
         setModalContent({
@@ -75,6 +75,20 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({
           cancelButtonText: 'Cancel',
           handleOk: () => {
             onOk();
+            setDisplayModal(false);
+          },
+        });
+        setDisplayModal(true);
+      } else if (isLeasePayable) {
+        setModalContent({
+          variant: 'info',
+          title: 'Follow-up required',
+          message:
+            'You have created a Lease (Payable) Take. You also need to create a Lease/License File.',
+          okButtonText: 'Close',
+          cancelButtonText: null,
+          handleOk: () => {
+            handleChange(e);
             setDisplayModal(false);
           },
         });
@@ -375,7 +389,7 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({
                 setFieldValue(withNameSpace(nameSpace, 'isLeasePayable'), 'false');
                 setFieldValue(withNameSpace(nameSpace, 'leasePayableArea'), 0);
                 setFieldValue(withNameSpace(nameSpace, 'leasePayableEndDt'), '');
-              })}
+              }, true)}
             />
           </SectionField>
           {isLeasePayable === 'true' && (
