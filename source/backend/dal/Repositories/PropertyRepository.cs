@@ -556,7 +556,7 @@ namespace Pims.Dal.Repositories
             }
             if (filter.IsDisposed)
             {
-                ownershipBuilder.Or(p => p.PimsDispositionFileProperties.Any(d => d.DispositionFile.DispositionStatusTypeCode == "COMPLETE"));
+                ownershipBuilder.Or(p => p.PimsDispositionFileProperties.Any(d => d.DispositionFile.DispositionFileStatusTypeCode == "COMPLETE"));
             }
             if (filter.IsRetired)
             {
