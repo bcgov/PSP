@@ -37,7 +37,7 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
   const { execute: getPropertyAssociations } = usePropertyAssociations();
   const [needsUserConfirmation, setNeedsUserConfirmation] = useState<boolean>(true);
 
-  // Warn user that property is part of an existing research file
+  // Warn user that property is part of an existing acquisition file
   const confirmBeforeAdd = useCallback(
     async (propertyId: number) => {
       const response = await getPropertyAssociations(propertyId);
