@@ -41,7 +41,7 @@ namespace Pims.Dal.Repositories
         /// <returns></returns>
         public PimsDocument TryGet(long documentId)
         {
-            return this.Context.PimsDocuments.FirstOrDefault(x => x.DocumentId == documentId);
+            return this.Context.PimsDocuments.AsNoTracking().FirstOrDefault(x => x.DocumentId == documentId);
         }
 
         /// <summary>

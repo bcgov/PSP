@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Security.Claims;
 using Microsoft.Extensions.Logging;
@@ -34,7 +35,7 @@ namespace Pims.Dal.Repositories
         {
             _user.ThrowIfNotAuthorized(Permissions.CompensationRequisitionView);
 
-            return Context.PimsH120Categories.ToArray();
+            return Context.PimsH120Categories.AsNoTracking().ToArray();
         }
     }
 }
