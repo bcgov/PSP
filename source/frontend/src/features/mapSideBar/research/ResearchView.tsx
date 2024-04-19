@@ -15,6 +15,7 @@ import { exists, getFilePropertyName, stripTrailingSlash } from '@/utils';
 import { SideBarContext } from '../context/sidebarContext';
 import FilePropertyRouter from '../router/FilePropertyRouter';
 import { FileTabType } from '../shared/detail/FileTabs';
+import { PropertyForm } from '../shared/models';
 import SidebarFooter from '../shared/SidebarFooter';
 import UpdateProperties from '../shared/update/properties/UpdateProperties';
 import ResearchHeader from './common/ResearchHeader';
@@ -36,7 +37,7 @@ export interface IResearchViewProps {
   onCancel: () => void;
   onMenuChange: (selectedIndex: number) => void;
   onUpdateProperties: (file: ApiGen_Concepts_File) => Promise<ApiGen_Concepts_File | undefined>;
-  confirmBeforeAdd: (propertyId: number) => Promise<boolean>;
+  confirmBeforeAdd: (propertyForm: PropertyForm) => Promise<boolean>;
   canRemove: (propertyId: number) => Promise<boolean>;
   onSuccess: () => void;
 }

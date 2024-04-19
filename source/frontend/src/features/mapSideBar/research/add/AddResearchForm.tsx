@@ -11,7 +11,7 @@ import { UpdateProjectsSubForm } from '../common/updateProjects/UpdateProjectsSu
 import ResearchProperties from './ResearchProperties';
 
 export interface IAddResearchFormProps {
-  confirmBeforeAdd: (formProperty: PropertyForm) => Promise<boolean>;
+  confirmBeforeAdd: (propertyForm: PropertyForm) => Promise<boolean>;
 }
 
 const AddResearchForm: React.FC<IAddResearchFormProps> = props => {

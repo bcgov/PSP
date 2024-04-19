@@ -16,6 +16,7 @@ import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineCo
 import { FileTypes } from '@/constants/index';
 import { InventoryTabNames } from '@/features/mapSideBar/property/InventoryTabs';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
+import { usePimsPropertyRepository } from '@/hooks/repositories/usePimsPropertyRepository';
 import { usePropertyAssociations } from '@/hooks/repositories/usePropertyAssociations';
 import { useQuery } from '@/hooks/use-query';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
@@ -24,10 +25,11 @@ import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
-import { exists, stripTrailingSlash } from '@/utils';
+import { exists, isValidId, isValidString, stripTrailingSlash } from '@/utils';
 
 import { SideBarContext } from '../context/sidebarContext';
 import { FileTabType } from '../shared/detail/FileTabs';
+import { PropertyForm } from '../shared/models';
 import { IAcquisitionViewProps } from './AcquisitionView';
 
 export interface IAcquisitionContainerProps {
@@ -86,10 +88,14 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
 
   const { setModalContent, setDisplayModal } = useModalContext();
   const { execute: getPropertyAssociations } = usePropertyAssociations();
+  const {
+    getPropertyByPidWrapper: { execute: getPropertyByPid },
+    getPropertyByPinWrapper: { execute: getPropertyByPin },
+  } = usePimsPropertyRepository();
+
   const mapMachine = useMapStateMachine();
 
   const formikRef = useRef<FormikProps<any>>(null);
-
   const location = useLocation();
   const history = useHistory();
   const match = useRouteMatch();
@@ -267,15 +273,35 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
 
   // Warn user that property is part of an existing acquisition file
   const confirmBeforeAdd = useCallback(
-    async (propertyId: number) => {
-      const response = await getPropertyAssociations(propertyId);
-      const acquisitionAssociations = response?.acquisitionAssociations ?? [];
-      const otherAcqFiles = acquisitionAssociations.filter(
-        a => exists(a.id) && a.id !== acquisitionFileId,
-      );
-      return otherAcqFiles.length > 0;
+    async (propertyForm: PropertyForm): Promise<boolean> => {
+      let apiId;
+      try {
+        if (isValidId(propertyForm.apiId)) {
+          apiId = propertyForm.apiId;
+        } else if (isValidString(propertyForm.pid)) {
+          const result = await getPropertyByPid(propertyForm.pid);
+          apiId = result?.id;
+        } else if (isValidString(propertyForm.pin)) {
+          const result = await getPropertyByPin(Number(propertyForm.pin));
+          apiId = result?.id;
+        }
+      } catch (e) {
+        apiId = 0;
+      }
+
+      if (isValidId(apiId)) {
+        const response = await getPropertyAssociations(apiId);
+        const acquisitionAssociations = response?.acquisitionAssociations ?? [];
+        const otherAcqFiles = acquisitionAssociations.filter(
+          a => exists(a.id) && a.id !== acquisitionFileId,
+        );
+        return otherAcqFiles.length > 0;
+      } else {
+        // the property is not in PIMS db -> no need to confirm
+        return false;
+      }
     },
-    [getPropertyAssociations, acquisitionFileId],
+    [getPropertyByPid, getPropertyByPin, getPropertyAssociations, acquisitionFileId],
   );
 
   const onUpdateProperties = (

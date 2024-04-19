@@ -32,7 +32,7 @@ export interface IUpdatePropertiesProps {
     userOverrideCodes: UserOverrideCode[],
   ) => Promise<ApiGen_Concepts_File | undefined>;
   canRemove: (propertyId: number) => Promise<boolean>;
-  confirmBeforeAdd: (propertyId: number) => Promise<boolean>;
+  confirmBeforeAdd: (propertyForm: PropertyForm) => Promise<boolean>;
   confirmBeforeAddMessage?: React.ReactNode;
   formikRef?: React.RefObject<FormikProps<any>>;
 }
@@ -169,10 +169,7 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
                                   : undefined;
                               }
 
-                              if (
-                                formProperty.apiId &&
-                                (await props.confirmBeforeAdd(formProperty.apiId))
-                              ) {
+                              if (await props.confirmBeforeAdd(formProperty)) {
                                 // Require user confirmation before adding property to file
                                 setModalContent({
                                   variant: 'warning',

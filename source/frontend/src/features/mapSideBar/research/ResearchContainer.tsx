@@ -5,6 +5,7 @@ import { useHistory, useRouteMatch } from 'react-router-dom';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { FileTypes } from '@/constants/fileTypes';
+import { usePimsPropertyRepository } from '@/hooks/repositories/usePimsPropertyRepository';
 import { usePropertyAssociations } from '@/hooks/repositories/usePropertyAssociations';
 import { useResearchRepository } from '@/hooks/repositories/useResearchRepository';
 import { useQuery } from '@/hooks/use-query';
@@ -13,9 +14,10 @@ import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Concepts_ResearchFile';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
-import { exists, stripTrailingSlash } from '@/utils';
+import { exists, isValidId, isValidString, stripTrailingSlash } from '@/utils';
 
 import { SideBarContext } from '../context/sidebarContext';
+import { PropertyForm } from '../shared/models';
 import { useGetResearch } from './hooks/useGetResearch';
 import { useUpdateResearchProperties } from './hooks/useUpdateResearchProperties';
 import { IResearchViewProps } from './ResearchView';
@@ -41,6 +43,10 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
   } = useResearchRepository();
 
   const { execute: getPropertyAssociations } = usePropertyAssociations();
+  const {
+    getPropertyByPidWrapper: { execute: getPropertyByPid },
+    getPropertyByPinWrapper: { execute: getPropertyByPin },
+  } = usePimsPropertyRepository();
 
   const mapMachine = useMapStateMachine();
   const {
@@ -205,15 +211,35 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
 
   // Warn user that property is part of an existing research file
   const confirmBeforeAdd = useCallback(
-    async (propertyId: number) => {
-      const response = await getPropertyAssociations(propertyId);
-      const researchAssociations = response?.researchAssociations ?? [];
-      const otherResearchFiles = researchAssociations.filter(
-        a => exists(a.id) && a.id !== researchFileId,
-      );
-      return otherResearchFiles.length > 0;
+    async (propertyForm: PropertyForm): Promise<boolean> => {
+      let apiId;
+      try {
+        if (isValidId(propertyForm.apiId)) {
+          apiId = propertyForm.apiId;
+        } else if (isValidString(propertyForm.pid)) {
+          const result = await getPropertyByPid(propertyForm.pid);
+          apiId = result?.id;
+        } else if (isValidString(propertyForm.pin)) {
+          const result = await getPropertyByPin(Number(propertyForm.pin));
+          apiId = result?.id;
+        }
+      } catch (e) {
+        apiId = 0;
+      }
+
+      if (isValidId(apiId)) {
+        const response = await getPropertyAssociations(apiId);
+        const researchAssociations = response?.researchAssociations ?? [];
+        const otherResearchFiles = researchAssociations.filter(
+          a => exists(a.id) && a.id !== researchFileId,
+        );
+        return otherResearchFiles.length > 0;
+      } else {
+        // the property is not in PIMS db -> no need to confirm
+        return false;
+      }
     },
-    [getPropertyAssociations, researchFileId],
+    [getPropertyAssociations, getPropertyByPid, getPropertyByPin, researchFileId],
   );
 
   const onUpdateProperties = (

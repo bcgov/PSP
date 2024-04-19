@@ -14,7 +14,7 @@ import { AddressForm, PropertyForm } from '../../shared/models';
 import { ResearchForm } from './models';
 
 export interface IResearchPropertiesProps {
-  confirmBeforeAdd: (formProperty: PropertyForm) => Promise<boolean>;
+  confirmBeforeAdd: (propertyForm: PropertyForm) => Promise<boolean>;
 }
 
 const ResearchProperties: React.FC<IResearchPropertiesProps> = ({ confirmBeforeAdd }) => {
