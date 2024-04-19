@@ -31,7 +31,7 @@ describe('ResearchProperties component', () => {
   const setup = (
     renderOptions: RenderOptions & {
       initialForm: ResearchForm;
-      confirmBeforeAdd?: (propertyId: number) => Promise<boolean>;
+      confirmBeforeAdd?: (propertyForm: PropertyForm) => Promise<boolean>;
     } & Partial<IMapStateMachineContext>,
   ) => {
     // render component under test

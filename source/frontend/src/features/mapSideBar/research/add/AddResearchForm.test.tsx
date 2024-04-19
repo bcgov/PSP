@@ -9,6 +9,7 @@ import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { fakeText, fillInput, render, RenderOptions } from '@/utils/test-utils';
 
+import { PropertyForm } from '../../shared/models';
 import { AddResearchFileYupSchema } from './AddResearchFileYupSchema';
 import AddResearchForm from './AddResearchForm';
 import { ResearchForm } from './models';
@@ -27,7 +28,7 @@ describe('AddResearchForm component', () => {
   const setup = (
     renderOptions: RenderOptions & {
       initialValues: ResearchForm;
-      confirmBeforeAdd?: (propertyId: number) => Promise<boolean>;
+      confirmBeforeAdd?: (propertyForm: PropertyForm) => Promise<boolean>;
     },
   ) => {
     const component = render(
