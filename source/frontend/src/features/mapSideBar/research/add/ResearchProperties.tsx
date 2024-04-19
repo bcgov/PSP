@@ -14,10 +14,10 @@ import { AddressForm, PropertyForm } from '../../shared/models';
 import { ResearchForm } from './models';
 
 export interface IResearchPropertiesProps {
-  confirmBeforeAdd: (propertyId: number) => Promise<boolean>;
+  confirmBeforeAdd: (formProperty: PropertyForm) => Promise<boolean>;
 }
 
-const ResearchProperties: React.FunctionComponent<IResearchPropertiesProps> = props => {
+const ResearchProperties: React.FC<IResearchPropertiesProps> = ({ confirmBeforeAdd }) => {
   const { values } = useFormikContext<ResearchForm>();
   const { getPrimaryAddressByPid, bcaLoading } = useBcaAddress();
   const { setModalContent, setDisplayModal } = useModalContext();
@@ -47,10 +47,7 @@ const ResearchProperties: React.FunctionComponent<IResearchPropertiesProps> = pr
                             : undefined;
                         }
 
-                        if (
-                          formProperty.apiId &&
-                          (await props.confirmBeforeAdd(formProperty.apiId))
-                        ) {
+                        if (await confirmBeforeAdd(formProperty)) {
                           // Require user confirmation before adding property to file
                           setModalContent({
                             variant: 'warning',

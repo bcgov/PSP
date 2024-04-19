@@ -1,5 +1,4 @@
-import { AxiosError } from 'axios';
-import { AxiosResponse } from 'axios';
+import { AxiosError, AxiosResponse } from 'axios';
 import { useCallback, useMemo } from 'react';
 import { toast } from 'react-toastify';
 
@@ -19,6 +18,7 @@ export const usePimsPropertyRepository = () => {
     putPropertyConceptApi,
     getMatchingPropertiesApi,
     getPropertyConceptWithPidApi,
+    getPropertyConceptWithPinApi,
   } = useApiProperties();
 
   const getPropertyWrapper = useApiRequestWrapper({
@@ -38,6 +38,17 @@ export const usePimsPropertyRepository = () => {
       [getPropertyConceptWithPidApi],
     ),
     requestName: 'getPropertyConceptWithPidApi',
+    throwError: true,
+  });
+
+  const getPropertyByPinWrapper = useApiRequestWrapper<
+    (...args: any[]) => Promise<AxiosResponse<ApiGen_Concepts_Property, any>>
+  >({
+    requestFunction: useCallback(
+      async (pin: number) => await getPropertyConceptWithPinApi(pin),
+      [getPropertyConceptWithPinApi],
+    ),
+    requestName: 'getPropertyConceptWithPinApi',
     throwError: true,
   });
 
@@ -77,7 +88,14 @@ export const usePimsPropertyRepository = () => {
       updatePropertyWrapper,
       getMatchingProperties,
       getPropertyByPidWrapper,
+      getPropertyByPinWrapper,
     }),
-    [getPropertyWrapper, updatePropertyWrapper, getMatchingProperties, getPropertyByPidWrapper],
+    [
+      getPropertyWrapper,
+      updatePropertyWrapper,
+      getMatchingProperties,
+      getPropertyByPidWrapper,
+      getPropertyByPinWrapper,
+    ],
   );
 };

@@ -5,12 +5,13 @@ import styled from 'styled-components';
 import { Input } from '@/components/common/form/';
 import { Section } from '@/components/common/Section/Section';
 
+import { PropertyForm } from '../../shared/models';
 import { ResearchFileNameGuide } from '../common/ResearchFileNameGuide';
 import { UpdateProjectsSubForm } from '../common/updateProjects/UpdateProjectsSubForm';
 import ResearchProperties from './ResearchProperties';
 
 export interface IAddResearchFormProps {
-  confirmBeforeAdd: (propertyId: number) => Promise<boolean>;
+  confirmBeforeAdd: (formProperty: PropertyForm) => Promise<boolean>;
 }
 
 const AddResearchForm: React.FC<IAddResearchFormProps> = props => {
