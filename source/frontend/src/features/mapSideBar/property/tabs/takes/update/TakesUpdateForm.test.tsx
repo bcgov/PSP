@@ -4,7 +4,7 @@ import { mockLookups } from '@/mocks/lookups.mock';
 import { getMockApiPropertyFiles } from '@/mocks/properties.mock';
 import { getMockApiTakes } from '@/mocks/takes.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { act, prettyDOM, render, RenderOptions, screen, userEvent } from '@/utils/test-utils';
+import { act, getByName, render, RenderOptions, screen, userEvent } from '@/utils/test-utils';
 
 import { TakeModel } from './models';
 import TakesUpdateForm, { ITakesUpdateFormProps } from './TakesUpdateForm';
@@ -167,6 +167,18 @@ describe('TakesUpdateForm component', () => {
     await act(async () => userEvent.click(confirmButton));
 
     expect(queryByDisplayValue('12140.57')).toBeNull();
+  });
+
+  it('hides landActEndDt value if radio button toggled from yes to no', async () => {
+    const { queryByTestId } = setup({});
+    await act(async () =>
+      userEvent.selectOptions(
+        getByName('takes.0.landActTypeCode'),
+        screen.getByTestId('select-option-Crown Grant'),
+      ),
+    );
+
+    expect(queryByTestId('takes.0.landActEndDt', { exact: false })).toBeNull();
   });
 
   it('resets isNewLicenseToConstruct values if radio button toggled from yes to no', async () => {

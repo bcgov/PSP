@@ -33,6 +33,7 @@ type OptionalAttributes = {
   required?: boolean;
   /** optional popper modifiers to pass to the datepicker */
   popperModifiers?: Popper.Modifiers | undefined;
+  'data-testId'?: string;
 };
 
 export type FastDatePickerProps = FormControlProps &

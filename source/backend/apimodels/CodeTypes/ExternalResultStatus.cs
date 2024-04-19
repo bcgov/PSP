@@ -12,19 +12,19 @@ namespace Pims.Api.Models.CodeTypes
         /// <summary>
         /// The call was successful.
         /// </summary>
-        [EnumMember(Value = "success")]
+        [EnumMember(Value = "Success")]
         Success,
 
         /// <summary>
         /// Error occured.
         /// </summary>
-        [EnumMember(Value = "error")]
+        [EnumMember(Value = "Error")]
         Error,
 
         /// <summary>
         /// The external call was not executed.
         /// </summary>
-        [EnumMember(Value = "not-executed")]
+        [EnumMember(Value = "NotExecuted")]
         NotExecuted,
     }
 }
