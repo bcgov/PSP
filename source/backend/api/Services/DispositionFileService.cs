@@ -570,6 +570,11 @@ namespace Pims.Api.Services
             var nonEditableStatuses = new List<string>() { EnumDispositionFileStatusTypeCode.COMPLETE.ToString(), EnumDispositionFileStatusTypeCode.ARCHIVED.ToString(), EnumDispositionFileStatusTypeCode.CANCELLED.ToString(), };
             var isFileChangingToNonEditableState = !nonEditableStatuses.Contains(currentDispositionFile.DispositionFileStatusTypeCode) && nonEditableStatuses.Contains(incomingDispositionFile.DispositionFileStatusTypeCode);
 
+            if (isFileClosing && incomingDispositionFile.DispositionStatusTypeCode != EnumDispositionStatusTypeCode.SOLD.ToString())
+            {
+                throw new BusinessRuleViolationException("File Disposition Status has not been set to SOLD, so the related file properties cannot be Disposed. To proceed, set file disposition status to SOLD, or cancel the Disposition file.");
+            }
+
             // confirm user action - file is changing to non-editable state
             if (!userOverrides.Contains(UserOverrideCode.DispositionFileFinalStatus) && isFileChangingToNonEditableState)
             {
