@@ -26,6 +26,7 @@ import { SideBarContext } from '../context/sidebarContext';
 import { InventoryTabNames } from '../property/InventoryTabs';
 import FilePropertyRouter from '../router/FilePropertyRouter';
 import { FileTabType } from '../shared/detail/FileTabs';
+import { PropertyForm } from '../shared/models';
 import SidebarFooter from '../shared/SidebarFooter';
 import UpdateProperties from '../shared/update/properties/UpdateProperties';
 import { DispositionHeader } from './common/DispositionHeader';
@@ -40,6 +41,7 @@ export interface IDispositionViewProps {
   onShowPropertySelector: () => void;
   onSuccess: (updateProperties?: boolean, updateFile?: boolean) => void;
   onUpdateProperties: (file: ApiGen_Concepts_File) => Promise<ApiGen_Concepts_File | undefined>;
+  confirmBeforeAdd: (propertyForm: PropertyForm) => Promise<boolean>;
   canRemove: (propertyId: number) => Promise<boolean>;
   isEditing: boolean;
   setIsEditing: (value: boolean) => void;
@@ -57,6 +59,7 @@ export const DispositionView: React.FunctionComponent<IDispositionViewProps> = (
   onShowPropertySelector,
   onSuccess,
   onUpdateProperties,
+  confirmBeforeAdd,
   canRemove,
   isEditing,
   setIsEditing,
@@ -105,6 +108,7 @@ export const DispositionView: React.FunctionComponent<IDispositionViewProps> = (
             setIsShowingPropertySelector={closePropertySelector}
             onSuccess={onSuccess}
             updateFileProperties={onUpdateProperties}
+            confirmBeforeAdd={confirmBeforeAdd}
             canRemove={canRemove}
             formikRef={formikRef}
           />

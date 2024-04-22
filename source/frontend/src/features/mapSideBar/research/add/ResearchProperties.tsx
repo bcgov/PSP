@@ -8,13 +8,19 @@ import { IMapProperty } from '@/components/propertySelector/models';
 import SelectedPropertyHeaderRow from '@/components/propertySelector/selectedPropertyList/SelectedPropertyHeaderRow';
 import SelectedPropertyRow from '@/components/propertySelector/selectedPropertyList/SelectedPropertyRow';
 import { useBcaAddress } from '@/features/properties/map/hooks/useBcaAddress';
+import { useModalContext } from '@/hooks/useModalContext';
 
 import { AddressForm, PropertyForm } from '../../shared/models';
 import { ResearchForm } from './models';
 
-const ResearchProperties: React.FunctionComponent<React.PropsWithChildren<unknown>> = () => {
+export interface IResearchPropertiesProps {
+  confirmBeforeAdd: (propertyForm: PropertyForm) => Promise<boolean>;
+}
+
+const ResearchProperties: React.FC<IResearchPropertiesProps> = ({ confirmBeforeAdd }) => {
   const { values } = useFormikContext<ResearchForm>();
   const { getPrimaryAddressByPid, bcaLoading } = useBcaAddress();
+  const { setModalContent, setDisplayModal } = useModalContext();
 
   return (
     <Section header="Properties to include in this file:">
@@ -40,7 +46,34 @@ const ResearchProperties: React.FunctionComponent<React.PropsWithChildren<unknow
                             ? AddressForm.fromBcaAddress(bcaSummary?.address)
                             : undefined;
                         }
-                        push(formProperty);
+
+                        if (await confirmBeforeAdd(formProperty)) {
+                          // Require user confirmation before adding property to file
+                          setModalContent({
+                            variant: 'warning',
+                            title: 'User Override Required',
+                            message: (
+                              <>
+                                <p>
+                                  This property has already been added to one or more research
+                                  files.
+                                </p>
+                                <p>Do you want to acknowledge and proceed?</p>
+                              </>
+                            ),
+                            okButtonText: 'Yes',
+                            cancelButtonText: 'No',
+                            handleOk: () => {
+                              push(formProperty);
+                              setDisplayModal(false);
+                            },
+                            handleCancel: () => setDisplayModal(false),
+                          });
+                          setDisplayModal(true);
+                        } else {
+                          // No confirmation needed - just add the property to the file
+                          push(formProperty);
+                        }
                       });
                     }, Promise.resolve());
                   }}

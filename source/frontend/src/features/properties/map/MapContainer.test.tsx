@@ -11,10 +11,10 @@ import {
   useMapStateMachine,
 } from '@/components/common/mapFSM/MapStateMachineContext';
 import {
+  FeatureSelected,
   emptyPimsBoundaryFeatureCollection,
   emptyPimsLocationFeatureCollection,
   emptyPmbcFeatureCollection,
-  FeatureSelected,
 } from '@/components/common/mapFSM/models';
 import {
   Claims,
@@ -32,21 +32,20 @@ import {
 import leafletMouseSlice from '@/store/slices/leafletMouse/LeafletMouseSlice';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
+  RenderOptions,
   act,
   cleanup,
   mockKeycloak,
-  prettyDOM,
   render,
-  RenderOptions,
   screen,
   userEvent,
   waitFor,
 } from '@/utils/test-utils';
 
-import MapContainer from './MapContainer';
 import { useApiProperties } from '@/hooks/pims-api/useApiProperties';
 import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
+import MapContainer from './MapContainer';
 
 const mockAxios = new MockAdapter(axios);
 jest.mock('@react-keycloak/web');
@@ -82,6 +81,7 @@ jest.mock('react-visibility-sensor', () => {
   getPropertyConceptWithIdApi: jest.fn(),
   getPropertyConceptWithPidApi: jest.fn(),
   putPropertyConceptApi: jest.fn(),
+  getPropertyConceptWithPinApi: jest.fn(),
 });
 
 const mockStore = configureMockStore([thunk]);
