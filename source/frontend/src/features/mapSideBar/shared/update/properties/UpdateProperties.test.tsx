@@ -12,8 +12,8 @@ import { getMockResearchFile } from '@/mocks/researchFile.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { fillInput, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
-import UpdateProperties, { IUpdatePropertiesProps } from './UpdateProperties';
 import React from 'react';
+import UpdateProperties, { IUpdatePropertiesProps } from './UpdateProperties';
 
 const mockAxios = new MockAdapter(axios);
 jest.mock('@react-keycloak/web');
@@ -45,6 +45,7 @@ describe('UpdateProperties component', () => {
           setIsShowingPropertySelector={setIsShowingPropertySelector}
           onSuccess={onSuccess}
           updateFileProperties={updateFileProperties}
+          confirmBeforeAdd={props.confirmBeforeAdd ?? jest.fn()}
           canRemove={props.canRemove ?? jest.fn()}
           formikRef={React.createRef() as any}
         />

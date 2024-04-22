@@ -95,9 +95,25 @@ namespace Pims.Api.Areas.Property.Controllers
         [ProducesResponseType(typeof(PropertyModel), 200)]
         [SwaggerOperation(Tags = new[] { "property" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
-        public IActionResult GetConceptPropertyWithId(string pid)
+        public IActionResult GetConceptPropertyWithPid(string pid)
         {
             var property = _propertyService.GetByPid(pid);
+            return new JsonResult(_mapper.Map<PropertyModel>(property));
+        }
+
+        /// <summary>
+        /// Get the property for the specified 'pin'.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("pin/{pin:int}")]
+        [HasPermission(Permissions.PropertyView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(PropertyModel), 200)]
+        [SwaggerOperation(Tags = new[] { "property" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult GetConceptPropertyWithPin(int pin)
+        {
+            var property = _propertyService.GetByPin(pin);
             return new JsonResult(_mapper.Map<PropertyModel>(property));
         }
 

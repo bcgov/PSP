@@ -80,6 +80,20 @@ exports[`ResearchContainer component renders as expected 1`] = `
   cursor: pointer;
 }
 
+.c17 {
+  height: 100%;
+}
+
+.c17 .tab-content {
+  border-radius: 0 0.4rem 0.4rem 0.4rem;
+  height: calc(100% - 2.5rem);
+  overflow-y: auto;
+}
+
+.c17 .tab-content .tab-pane {
+  position: relative;
+}
+
 .c19 {
   padding-top: 1rem;
 }
@@ -111,20 +125,6 @@ exports[`ResearchContainer component renders as expected 1`] = `
 
 .c23 {
   font-weight: bold;
-}
-
-.c17 {
-  height: 100%;
-}
-
-.c17 .tab-content {
-  border-radius: 0 0.4rem 0.4rem 0.4rem;
-  height: calc(100% - 2.5rem);
-  overflow-y: auto;
-}
-
-.c17 .tab-content .tab-pane {
-  position: relative;
 }
 
 .c4 {

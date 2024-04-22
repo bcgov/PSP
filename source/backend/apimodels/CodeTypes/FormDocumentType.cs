@@ -23,7 +23,7 @@ namespace Pims.Api.Models.CodeTypes
         H179T,
 
         // Letter
-        [EnumMember(Value = "Letter")]
+        [EnumMember(Value = "LETTER")]
         LETTER,
 
         // Conditions of Entry (H0443)

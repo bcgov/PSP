@@ -567,6 +567,37 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
+        public void Update_Should_Fail_Not_Sold()
+        {
+            // Arrange
+            var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionEdit);
+            var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
+            var dispFile = EntityHelper.CreateDispositionFile(1);
+            dispFile.DispositionFileStatusTypeCode = EnumDispositionFileStatusTypeCode.ACTIVE.ToString();
+            dispFile.PimsDispositionSales = new List<PimsDispositionSale>() { new PimsDispositionSale() { SaleFinalAmt = 1 } };
+
+            repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
+            repository.Setup(x => x.GetRegion(It.IsAny<long>())).Returns(1);
+            repository.Setup(x => x.Update(It.IsAny<long>(), It.IsAny<PimsDispositionFile>())).Returns(dispFile);
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(dispFile);
+
+            var dispositionFilePropertyRepository = this._helper.GetService<Mock<IDispositionFilePropertyRepository>>();
+            dispositionFilePropertyRepository.Setup(x => x.GetPropertiesByDispositionFileId(It.IsAny<long>())).Returns(new List<PimsDispositionFileProperty>());
+
+            var statusMock = this._helper.GetService<Mock<IDispositionStatusSolver>>();
+            statusMock.Setup(x => x.CanEditDetails(It.IsAny<DispositionStatusTypes>())).Returns(true);
+
+            // Act
+            var updateDispFile = EntityHelper.CreateDispositionFile(1);
+            updateDispFile.DispositionFileStatusTypeCode = EnumDispositionFileStatusTypeCode.COMPLETE.ToString();
+            Action act = () => service.Update(1, updateDispFile, new List<UserOverrideCode>() { UserOverrideCode.UpdateRegion, UserOverrideCode.DispositionFileFinalStatus });
+
+            // Assert
+            var ex = act.Should().Throw<BusinessRuleViolationException>();
+            ex.WithMessage("File Disposition Status has not been set to SOLD, so the related file properties cannot be Disposed. To proceed, set file disposition status to SOLD, or cancel the Disposition file.");
+        }
+
+        [Fact]
         public void Update_UserOverride_Dispose()
         {
             // Arrange
@@ -581,6 +612,7 @@ namespace Pims.Api.Test.Services
             dispFile.PimsDispositionFileProperties = new List<PimsDispositionFileProperty>() { new PimsDispositionFileProperty() };
             var updateDispFile = EntityHelper.CreateDispositionFile(2);
             updateDispFile.DispositionFileStatusTypeCode = EnumDispositionFileStatusTypeCode.COMPLETE.ToString();
+            updateDispFile.DispositionStatusTypeCode = EnumDispositionStatusTypeCode.SOLD.ToString();
             dispFile.PimsDispositionSales = new List<PimsDispositionSale>() { new PimsDispositionSale() { SaleFinalAmt = 1 } };
 
             repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);

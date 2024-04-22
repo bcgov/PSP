@@ -268,6 +268,10 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
     return true;
   };
 
+  const confirmBeforeAdd = async () => {
+    return false;
+  };
+
   // UI components
   const loading =
     loadingDispositionFile ||
@@ -288,6 +292,7 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
         onShowPropertySelector={onShowPropertySelector}
         onUpdateProperties={onUpdateProperties}
         onSuccess={onSuccess}
+        confirmBeforeAdd={confirmBeforeAdd}
         canRemove={canRemove}
         formikRef={formikRef}
         isFormValid={isValid}
