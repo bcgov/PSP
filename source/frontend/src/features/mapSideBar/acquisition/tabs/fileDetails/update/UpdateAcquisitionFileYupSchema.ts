@@ -13,13 +13,6 @@ export const UpdateAcquisitionFileYupSchema = Yup.object()
     acquisitionType: Yup.string().required('Acquisition type is required'),
     region: Yup.string().required('Ministry region is required'),
     legacyFileNumber: Yup.string().max(18, 'Legacy file number must be at most ${max} characters'),
-    completionDate: Yup.date().when('fileStatusTypeCode', {
-      is: (fileStatusTypeCode: string) => fileStatusTypeCode && fileStatusTypeCode === 'COMPLT',
-      then: Yup.date().required(
-        `Acquisition completed date is required when file status is set to "Complete"`,
-      ),
-      otherwise: Yup.date().nullable(),
-    }),
   })
   .concat(UpdateAcquisitionTeamYupSchema)
   .concat(UpdateAcquisitionOwnersYupSchema);
