@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 
 import MapSideBarLayout from '../../layout/MapSideBarLayout';
+import { PropertyForm } from '../../shared/models';
 import SidebarFooter from '../../shared/SidebarFooter';
 import DispositionForm from '../form/DispositionForm';
 import { DispositionFormModel } from '../models/DispositionFormModel';
@@ -20,11 +21,10 @@ export interface IAddDispositionContainerViewProps {
   ) => void | Promise<any>;
   onCancel: () => void;
   onSave: () => void;
+  confirmBeforeAdd: (propertyForm: PropertyForm) => Promise<boolean>;
 }
 
-const AddDispositionContainerView: React.FunctionComponent<
-  React.PropsWithChildren<IAddDispositionContainerViewProps>
-> = ({
+const AddDispositionContainerView: React.FunctionComponent<IAddDispositionContainerViewProps> = ({
   formikRef,
   dispositionInitialValues,
   loading,
@@ -32,6 +32,7 @@ const AddDispositionContainerView: React.FunctionComponent<
   onSubmit,
   onSave,
   onCancel,
+  confirmBeforeAdd,
 }) => {
   return (
     <MapSideBarLayout
@@ -59,9 +60,10 @@ const AddDispositionContainerView: React.FunctionComponent<
       <StyledFormWrapper>
         <LoadingBackdrop show={loading} parentScreen={true} />
         <DispositionForm
-          ref={formikRef}
+          formikRef={formikRef}
           initialValues={dispositionInitialValues}
           onSubmit={onSubmit}
+          confirmBeforeAdd={confirmBeforeAdd}
         ></DispositionForm>
       </StyledFormWrapper>
     </MapSideBarLayout>
