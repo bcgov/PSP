@@ -9,25 +9,25 @@ namespace Pims.Api.Models.Concepts.FinancialCode
     [JsonConverter(typeof(JsonStringEnumMemberConverter))]
     public enum FinancialCodeTypes
     {
-        [EnumMember(Value = "business-function")]
+        [EnumMember(Value = "BusinessFunction")]
         BusinessFunction,
 
-        [EnumMember(Value = "cost-types")]
+        [EnumMember(Value = "CostType")]
         CostType,
 
-        [EnumMember(Value = "work-activity")]
+        [EnumMember(Value = "WorkActivity")]
         WorkActivity,
 
-        [EnumMember(Value = "chart-of-accounts")]
+        [EnumMember(Value = "ChartOfAccounts")]
         ChartOfAccounts,
 
-        [EnumMember(Value = "financial-activity")]
+        [EnumMember(Value = "FinancialActivity")]
         FinancialActivity,
 
-        [EnumMember(Value = "responsibility")]
+        [EnumMember(Value = "Responsibility")]
         Responsibility,
 
-        [EnumMember(Value = "yearly-financial")]
+        [EnumMember(Value = "YearlyFinancial")]
         YearlyFinancial,
     }
 }

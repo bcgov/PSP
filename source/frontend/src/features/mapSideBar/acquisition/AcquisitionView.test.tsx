@@ -20,12 +20,12 @@ import { mockNotesResponse } from '@/mocks/noteResponses.mock';
 import { getUserMock } from '@/mocks/user.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { prettyFormatUTCDate } from '@/utils';
-import { act, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
+import { RenderOptions, act, render, userEvent, waitFor } from '@/utils/test-utils';
 
+import { getMockApiTakes } from '@/mocks/takes.mock';
 import { SideBarContextProvider } from '../context/sidebarContext';
 import { FileTabType } from '../shared/detail/FileTabs';
 import AcquisitionView, { IAcquisitionViewProps } from './AcquisitionView';
-import { getMockApiTakes } from '@/mocks/takes.mock';
 
 // mock auth library
 jest.mock('@react-keycloak/web');
@@ -50,6 +50,7 @@ const onMenuChange = jest.fn();
 const onSuccess = jest.fn();
 const onCancelConfirm = jest.fn();
 const onUpdateProperties = jest.fn();
+const confirmBeforeAdd = jest.fn();
 const canRemove = jest.fn();
 const setContainerState = jest.fn();
 const setIsEditing = jest.fn();
@@ -73,6 +74,7 @@ const DEFAULT_PROPS: IAcquisitionViewProps = {
   onSuccess,
   onCancelConfirm,
   onUpdateProperties,
+  confirmBeforeAdd,
   canRemove,
   isEditing: false,
   setIsEditing,

@@ -9,6 +9,7 @@ import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { fakeText, fillInput, render, RenderOptions } from '@/utils/test-utils';
 
+import { PropertyForm } from '../../shared/models';
 import { AddResearchFileYupSchema } from './AddResearchFileYupSchema';
 import AddResearchForm from './AddResearchForm';
 import { ResearchForm } from './models';
@@ -24,14 +25,21 @@ jest.mock('@/components/common/mapFSM/MapStateMachineContext');
 
 describe('AddResearchForm component', () => {
   // render component under test
-  const setup = (renderOptions: RenderOptions & { initialValues: ResearchForm }) => {
+  const setup = (
+    renderOptions: RenderOptions & {
+      initialValues: ResearchForm;
+      confirmBeforeAdd?: (propertyForm: PropertyForm) => Promise<boolean>;
+    },
+  ) => {
     const component = render(
       <Formik<ResearchForm>
         onSubmit={noop}
         initialValues={renderOptions.initialValues}
         validationSchema={AddResearchFileYupSchema}
       >
-        {formikProps => <AddResearchForm />}
+        {formikProps => (
+          <AddResearchForm confirmBeforeAdd={renderOptions.confirmBeforeAdd ?? jest.fn()} />
+        )}
       </Formik>,
       {
         ...renderOptions,

@@ -82,6 +82,10 @@ namespace Pims.Api.Services
             {
                 throw new BusinessRuleViolationException("A completed take must have a completion date.");
             }
+            else if (takes.Any(t => t.IsNewLandAct && t.LandActEndDt != null && (t.LandActTypeCode == LandActTypes.CROWN_GRANT.ToString() || t.LandActTypeCode == LandActTypes.TRANSFER_OF_ADMIN_AND_CONTROL.ToString())))
+            {
+                throw new BusinessRuleViolationException("'Crown Grant' and 'Transfer' Land Acts cannot have an end date.");
+            }
             else
             {
                 // Complete Takes can only be deleted or set to InProgress by Admins when File is Active/Draft
