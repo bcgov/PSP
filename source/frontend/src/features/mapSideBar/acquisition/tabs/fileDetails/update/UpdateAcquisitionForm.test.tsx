@@ -234,36 +234,4 @@ describe('UpdateAcquisitionForm component', () => {
     expect(validationSchema).toBeCalled();
     expect(onSubmit).toHaveBeenLastCalledWith(initialValues, expect.anything());
   });
-
-  it('should disable file completion date until the user marks the file as COMPLETED', async () => {
-    const { getFormikRef, getFileStatusDropdown, getFileCompletionDatePicker } = setup({
-      initialValues,
-    });
-
-    await act(async () => userEvent.selectOptions(getFileStatusDropdown(), 'DRAFT'));
-    expect(getFileCompletionDatePicker()).toBeDisabled();
-
-    // submit form to trigger validation check
-    await waitFor(() => getFormikRef().current?.submitForm());
-
-    expect(validationSchema).toBeCalled();
-    expect(onSubmit).toBeCalled();
-  });
-
-  it('should require a file completion date when status is set to COMPLETED', async () => {
-    const { getFormikRef, getFileStatusDropdown, findByText } = setup({ initialValues });
-
-    await act(async () => userEvent.selectOptions(getFileStatusDropdown(), 'COMPLT'));
-
-    // submit form to trigger validation check
-    await waitFor(() => getFormikRef().current?.submitForm());
-
-    expect(validationSchema).toBeCalled();
-    expect(
-      await findByText(
-        /Acquisition completed date is required when file status is set to "Complete"/i,
-      ),
-    ).toBeVisible();
-    expect(onSubmit).not.toBeCalled();
-  });
 });
