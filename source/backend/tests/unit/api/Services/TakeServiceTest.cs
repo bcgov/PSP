@@ -147,6 +147,29 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
+        public void Update_TakeComplete_No_Date()
+        {
+            // Arrange
+            var service = this.CreateWithPermissions(Permissions.PropertyView, Permissions.AcquisitionFileView);
+            var takeRepository = this._helper.GetService<Mock<ITakeRepository>>();
+            takeRepository.Setup(x =>
+                x.UpdateAcquisitionPropertyTakes(It.IsAny<long>(), It.IsAny<IEnumerable<PimsTake>>()));
+
+            var acqRepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
+            acqRepository.Setup(x => x.GetByAcquisitionFilePropertyId(It.IsAny<long>())).Returns(new PimsAcquisitionFile() { AcquisitionFileStatusTypeCode = AcquisitionStatusTypes.ACTIVE.ToString() });
+            acqRepository.Setup(x => x.GetProperty(It.IsAny<long>())).Returns(new PimsProperty());
+
+            var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
+            solver.Setup(x => x.CanEditTakes(It.IsAny<AcquisitionStatusTypes?>())).Returns(true);
+
+            // Act
+            var result = service.UpdateAcquisitionPropertyTakes(1, new List<PimsTake>());
+
+            // Assert
+            takeRepository.Verify(x => x.UpdateAcquisitionPropertyTakes(1, new List<PimsTake>()), Times.Once);
+        }
+
+        [Fact]
         public void Update_NoPermission()
         {
             // Arrange
@@ -179,6 +202,80 @@ namespace Pims.Api.Test.Services
 
             // Assert
             act.Should().Throw<BusinessRuleViolationException>().WithMessage("Retired records are referenced for historical purposes only and cannot be edited or deleted. If the take has been added in error, contact your system administrator to re-open the file, which will allow take deletion.");
+        }
+
+        [Fact]
+        public void Update_CompleteTake_No_Date()
+        {
+            // Arrange
+            var service = this.CreateWithPermissions(Permissions.PropertyView, Permissions.AcquisitionFileView);
+
+            var acqRepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
+            acqRepository.Setup(x => x.GetByAcquisitionFilePropertyId(It.IsAny<long>())).Returns(
+                new PimsAcquisitionFile()
+                {
+                    AcquisitionFileStatusTypeCode = AcquisitionStatusTypes.ACTIVE.ToString()
+                }
+            );
+
+            PimsTake completedTake = new()
+            {
+                TakeId = 100,
+                TakeStatusTypeCode = AcquisitionTakeStatusTypes.COMPLETE.ToString(),
+            };
+
+            var takeRepository = this._helper.GetService<Mock<ITakeRepository>>();
+            takeRepository.Setup(x => x.GetAllByPropertyAcquisitionFileId(It.IsAny<long>())).Returns(
+                new List<PimsTake>() { completedTake }
+            );
+
+            var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
+            solver.Setup(x => x.CanEditTakes(It.IsAny<AcquisitionStatusTypes?>())).Returns(true);
+
+            // Act
+            Action act = () => service.UpdateAcquisitionPropertyTakes(1, new List<PimsTake>() { completedTake });
+
+            // Assert
+            act.Should().Throw<BusinessRuleViolationException>().WithMessage("A completed take must have a completion date.");
+        }
+
+        [Fact]
+        public void Update_CompleteTake_LandActType_No_EndDt()
+        {
+            // Arrange
+            var service = this.CreateWithPermissions(Permissions.PropertyView, Permissions.AcquisitionFileView);
+
+            var acqRepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
+            acqRepository.Setup(x => x.GetByAcquisitionFilePropertyId(It.IsAny<long>())).Returns(
+                new PimsAcquisitionFile()
+                {
+                    AcquisitionFileStatusTypeCode = AcquisitionStatusTypes.ACTIVE.ToString()
+                }
+            );
+
+            PimsTake completedTake = new()
+            {
+                TakeId = 100,
+                CompletionDt = DateOnly.FromDateTime(DateTime.Now),
+                TakeStatusTypeCode = AcquisitionTakeStatusTypes.COMPLETE.ToString(),
+                IsNewLandAct = true,
+                LandActTypeCode = LandActTypes.TRANSFER_OF_ADMIN_AND_CONTROL.ToString(),
+                LandActEndDt = DateOnly.FromDateTime(DateTime.Now),
+            };
+
+            var takeRepository = this._helper.GetService<Mock<ITakeRepository>>();
+            takeRepository.Setup(x => x.GetAllByPropertyAcquisitionFileId(It.IsAny<long>())).Returns(
+                new List<PimsTake>() { completedTake }
+            );
+
+            var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
+            solver.Setup(x => x.CanEditTakes(It.IsAny<AcquisitionStatusTypes?>())).Returns(true);
+
+            // Act
+            Action act = () => service.UpdateAcquisitionPropertyTakes(1, new List<PimsTake>() { completedTake });
+
+            // Assert
+            act.Should().Throw<BusinessRuleViolationException>().WithMessage("'Crown Grant' and 'Transfer' Land Acts cannot have an end date.");
         }
 
         [Fact]

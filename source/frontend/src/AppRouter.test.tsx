@@ -23,7 +23,7 @@ import { lookupCodesSlice } from './store/slices/lookupCodes';
 import { networkSlice } from './store/slices/network/networkSlice';
 import { tenantsSlice } from './store/slices/tenants';
 import { defaultTenant } from './tenants/config/defaultTenant';
-import { act, mockKeycloak, render, RenderOptions, screen, waitFor } from './utils/test-utils';
+import { RenderOptions, mockKeycloak, render, screen } from './utils/test-utils';
 
 jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
@@ -97,6 +97,7 @@ jest.mock('./hooks/pims-api/useApiProperties');
   getPropertyConceptWithIdApi: jest.fn(),
   putPropertyConceptApi: jest.fn(),
   getPropertyConceptWithPidApi: jest.fn(),
+  getPropertyConceptWithPinApi: jest.fn(),
 });
 
 jest.mock('./hooks/pims-api/useApiLeases');

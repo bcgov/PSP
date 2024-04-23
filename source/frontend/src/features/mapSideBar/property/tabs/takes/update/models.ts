@@ -1,6 +1,7 @@
 import * as Yup from 'yup';
 
 import { AreaUnitTypes } from '@/constants/areaUnitTypes';
+import { ApiGen_CodeTypes_LandActTypes } from '@/models/api/generated/ApiGen_CodeTypes_LandActTypes';
 import { ApiGen_Concepts_Take } from '@/models/api/generated/ApiGen_Concepts_Take';
 import { UtcIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
@@ -25,8 +26,13 @@ export const TakesYupSchema = Yup.object().shape({
         is: (isNewLicenseToConstruct: boolean) => isNewLicenseToConstruct,
         then: Yup.string().required('End Date is required'),
       }),
-      landActEndDt: Yup.string().when('isNewLandAct', {
-        is: (isNewLandAct: boolean) => isNewLandAct,
+      landActEndDt: Yup.string().when(['isNewLandAct', 'landActTypeCode'], {
+        is: (isNewLandAct: boolean, landActTypeCode: string) =>
+          isNewLandAct &&
+          ![
+            ApiGen_CodeTypes_LandActTypes.TRANSFER_OF_ADMIN_AND_CONTROL.toString(),
+            ApiGen_CodeTypes_LandActTypes.CROWN_GRANT.toString(),
+          ].includes(landActTypeCode),
         then: Yup.string().required('End Date is required'),
       }),
       landActTypeCode: Yup.string().when('isNewLandAct', {

@@ -17,6 +17,7 @@ import StatusUpdateSolver from '@/features/mapSideBar/acquisition/tabs/fileDetai
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { ApiGen_CodeTypes_AcquisitionTakeStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_AcquisitionTakeStatusTypes';
+import { ApiGen_CodeTypes_LandActTypes } from '@/models/api/generated/ApiGen_CodeTypes_LandActTypes';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { ApiGen_Concepts_Take } from '@/models/api/generated/ApiGen_Concepts_Take';
 import { getApiPropertyName, prettyFormatDate, prettyFormatUTCDate } from '@/utils';
@@ -201,9 +202,14 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
                       <AreaContainer landArea={take.landActArea ?? undefined} />
                     </SectionField>
 
-                    <SectionField label="End date" labelWidth="3" contentWidth="4">
-                      {prettyFormatDate(take.landActEndDt ?? undefined)}
-                    </SectionField>
+                    {![
+                      ApiGen_CodeTypes_LandActTypes.TRANSFER_OF_ADMIN_AND_CONTROL.toString(),
+                      ApiGen_CodeTypes_LandActTypes.CROWN_GRANT.toString(),
+                    ].includes(take.landActTypeCode.id) && (
+                      <SectionField label="End date" labelWidth="3" contentWidth="4">
+                        {prettyFormatDate(take.landActEndDt ?? undefined)}
+                      </SectionField>
+                    )}
                   </>
                 )}
               </StyledBorderSection>

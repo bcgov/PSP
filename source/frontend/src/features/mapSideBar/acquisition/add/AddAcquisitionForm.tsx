@@ -45,13 +45,14 @@ export interface IAddAcquisitionFormProps {
     setSubmitting: (isSubmitting: boolean) => void,
     userOverrides: UserOverrideCode[],
   ) => void | Promise<any>;
+  confirmBeforeAdd: (propertyId: number) => Promise<boolean>;
 }
 
 export const AddAcquisitionForm = React.forwardRef<
   FormikProps<AcquisitionForm>,
   IAddAcquisitionFormProps
 >((props, ref) => {
-  const { initialValues, validationSchema, onSubmit } = props;
+  const { initialValues, validationSchema, onSubmit, confirmBeforeAdd } = props;
   const [showDiffMinistryRegionModal, setShowDiffMinistryRegionModal] =
     React.useState<boolean>(false);
 
@@ -75,7 +76,6 @@ export const AddAcquisitionForm = React.forwardRef<
 
   return (
     <Formik<AcquisitionForm>
-      enableReinitialize
       innerRef={ref}
       initialValues={initialValues}
       validationSchema={validationSchema}
@@ -88,6 +88,7 @@ export const AddAcquisitionForm = React.forwardRef<
             onSubmit={onSubmit}
             showDiffMinistryRegionModal={showDiffMinistryRegionModal}
             setShowDiffMinistryRegionModal={setShowDiffMinistryRegionModal}
+            confirmBeforeAdd={confirmBeforeAdd}
           ></AddAcquisitionDetailSubForm>
         );
       }}
@@ -104,7 +105,14 @@ const AddAcquisitionDetailSubForm: React.FC<{
   ) => void | Promise<any>;
   showDiffMinistryRegionModal: boolean;
   setShowDiffMinistryRegionModal: React.Dispatch<React.SetStateAction<boolean>>;
-}> = ({ formikProps, onSubmit, showDiffMinistryRegionModal, setShowDiffMinistryRegionModal }) => {
+  confirmBeforeAdd: (propertyId: number) => Promise<boolean>;
+}> = ({
+  formikProps,
+  onSubmit,
+  showDiffMinistryRegionModal,
+  setShowDiffMinistryRegionModal,
+  confirmBeforeAdd,
+}) => {
   const [projectProducts, setProjectProducts] = React.useState<
     ApiGen_Concepts_Product[] | undefined
   >(undefined);
@@ -218,7 +226,10 @@ const AddAcquisitionDetailSubForm: React.FC<{
           </SectionField>
         </Section>
         <Section header="Properties to include in this file:">
-          <AcquisitionPropertiesSubForm formikProps={formikProps} />
+          <AcquisitionPropertiesSubForm
+            formikProps={formikProps}
+            confirmBeforeAdd={confirmBeforeAdd}
+          />
         </Section>
 
         <Section header="Acquisition Details">
