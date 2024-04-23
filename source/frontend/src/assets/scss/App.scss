@@ -9,6 +9,11 @@
   word-break: break-word;
 }
 
+.Toastify__toast {
+  word-break: break-word;
+  filter: drop-shadow(.2rem .2rem .4rem black);
+}
+
 .Toastify__toast.Toastify__toast--warning {
   color: var(--typography-color-secondary);
   background-color: var(--support-surface-color-warning);
