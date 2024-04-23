@@ -15,7 +15,7 @@ import { AcquisitionForm } from './models';
 
 export interface IAcquisitionPropertiesProps {
   formikProps: FormikProps<AcquisitionForm>;
-  confirmBeforeAdd: (propertyId: number) => Promise<boolean>;
+  confirmBeforeAdd: (propertyForm: PropertyForm) => Promise<boolean>;
 }
 
 export const AcquisitionPropertiesSubForm: React.FunctionComponent<IAcquisitionPropertiesProps> = ({
@@ -51,7 +51,7 @@ export const AcquisitionPropertiesSubForm: React.FunctionComponent<IAcquisitionP
                             : undefined;
                         }
 
-                        if (formProperty.apiId && (await confirmBeforeAdd(formProperty.apiId))) {
+                        if (await confirmBeforeAdd(formProperty)) {
                           // Require user confirmation before adding property to file
                           setModalContent({
                             variant: 'warning',

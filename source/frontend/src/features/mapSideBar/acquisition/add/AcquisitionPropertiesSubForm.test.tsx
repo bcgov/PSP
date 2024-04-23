@@ -23,7 +23,7 @@ describe('AcquisitionProperties component', () => {
   const setup = (
     props: {
       initialForm: AcquisitionForm;
-      confirmBeforeAdd?: (propertyId: number) => Promise<boolean>;
+      confirmBeforeAdd?: (propertyForm: PropertyForm) => Promise<boolean>;
     },
     renderOptions: RenderOptions = {},
   ) => {
