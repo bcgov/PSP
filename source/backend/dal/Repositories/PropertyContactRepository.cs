@@ -46,6 +46,7 @@ namespace Pims.Dal.Repositories
                 .Include(p => p.Organization)
                 .Include(p => p.PrimaryContact)
                 .Where(p => p.PropertyId == propertyId)
+                .AsNoTracking()
                 .ToList() ?? throw new KeyNotFoundException();
             return contacts;
         }
@@ -63,6 +64,7 @@ namespace Pims.Dal.Repositories
                 .Include(p => p.Person)
                 .Include(p => p.Organization)
                 .Include(p => p.PrimaryContact)
+                .AsNoTracking()
                 .FirstOrDefault(p => p.PropertyContactId == contactId) ?? throw new KeyNotFoundException();
             return contact;
         }

@@ -42,7 +42,7 @@ namespace Pims.Dal.Repositories
             {
                 query = query.Where(c => c.CompensationRequisition.IsDraft == false);
             }
-            return query.ToArray();
+            return query.AsNoTracking().ToArray();
         }
 
         public IEnumerable<PimsCompReqFinancial> SearchCompensationRequisitionFinancials(AcquisitionReportFilterModel filter)

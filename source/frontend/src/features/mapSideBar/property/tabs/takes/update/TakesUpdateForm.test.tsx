@@ -4,7 +4,7 @@ import { mockLookups } from '@/mocks/lookups.mock';
 import { getMockApiPropertyFiles } from '@/mocks/properties.mock';
 import { getMockApiTakes } from '@/mocks/takes.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { act, prettyDOM, render, RenderOptions, screen, userEvent } from '@/utils/test-utils';
+import { act, getByName, render, RenderOptions, screen, userEvent } from '@/utils/test-utils';
 
 import { TakeModel } from './models';
 import TakesUpdateForm, { ITakesUpdateFormProps } from './TakesUpdateForm';
@@ -115,6 +115,22 @@ describe('TakesUpdateForm component', () => {
     expect(confirmModal).toBeVisible();
   });
 
+  it('displays a warning if lease payable radio button toggled from no to yes', async () => {
+    const { getByTestId } = setup({});
+    const noButton = getByTestId('radio-takes.0.isleasepayable-no');
+    const yesButton = getByTestId('radio-takes.0.isleasepayable-yes');
+
+    await act(async () => userEvent.click(noButton));
+
+    const confirmModal = await screen.findByText('Confirm');
+    await act(async () => userEvent.click(confirmModal));
+
+    await act(async () => userEvent.click(yesButton));
+
+    const closeModal = await screen.findByText('Close');
+    expect(closeModal).toBeVisible();
+  });
+
   it('resets is new isNewHighwayDedication values if radio button toggled from yes to no', async () => {
     const { getByTestId, queryByDisplayValue } = setup({});
     const noButton = getByTestId('radio-takes.0.isnewhighwaydedication-no');
@@ -151,6 +167,18 @@ describe('TakesUpdateForm component', () => {
     await act(async () => userEvent.click(confirmButton));
 
     expect(queryByDisplayValue('12140.57')).toBeNull();
+  });
+
+  it('hides landActEndDt value if radio button toggled from yes to no', async () => {
+    const { queryByTestId } = setup({});
+    await act(async () =>
+      userEvent.selectOptions(
+        getByName('takes.0.landActTypeCode'),
+        screen.getByTestId('select-option-Crown Grant'),
+      ),
+    );
+
+    expect(queryByTestId('takes.0.landActEndDt', { exact: false })).toBeNull();
   });
 
   it('resets isNewLicenseToConstruct values if radio button toggled from yes to no', async () => {
@@ -200,7 +228,6 @@ describe('TakesUpdateForm component', () => {
     const noButton = getByTestId('radio-takes.0.isleasepayable-no');
     await act(async () => userEvent.click(noButton));
 
-    console.log(prettyDOM(undefined, 999999));
     expect(queryByDisplayValue('20231.28')).not.toBeNull();
     const confirmButton = await screen.findByText('Confirm');
     await act(async () => userEvent.click(confirmButton));

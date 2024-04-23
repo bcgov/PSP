@@ -6,19 +6,19 @@ namespace Pims.Api.Models.CodeTypes
     [JsonConverter(typeof(JsonStringEnumMemberConverter))]
     public enum DocumentRelationType
     {
-        [EnumMember(Value = "templates")]
+        [EnumMember(Value = "Templates")]
         Templates,
-        [EnumMember(Value = "researchfiles")]
+        [EnumMember(Value = "ResearchFiles")]
         ResearchFiles,
-        [EnumMember(Value = "acquisitionfiles")]
+        [EnumMember(Value = "AcquisitionFiles")]
         AcquisitionFiles,
-        [EnumMember(Value = "leases")]
+        [EnumMember(Value = "Leases")]
         Leases,
-        [EnumMember(Value = "projects")]
+        [EnumMember(Value = "Projects")]
         Projects,
-        [EnumMember(Value = "managementfiles")]
+        [EnumMember(Value = "ManagementFiles")]
         ManagementFiles,
-        [EnumMember(Value = "dispositionfiles")]
+        [EnumMember(Value = "DispositionFiles")]
         DispositionFiles,
     }
 }

@@ -15,6 +15,7 @@ import { act, render, RenderOptions, waitForElementToBeRemoved } from '@/utils/t
 
 import { SideBarContextProvider, TypedFile } from '../context/sidebarContext';
 import ResearchContainer, { IResearchContainerProps } from './ResearchContainer';
+import ResearchView from './ResearchView';
 
 const history = createMemoryHistory();
 const mockAxios = new MockAdapter(axios);
@@ -44,7 +45,11 @@ describe('ResearchContainer component', () => {
   ) => {
     const utils = render(
       <SideBarContextProvider {...renderOptions?.context}>
-        <ResearchContainer researchFileId={getMockResearchFile().id as number} onClose={onClose} />
+        <ResearchContainer
+          researchFileId={getMockResearchFile().id as number}
+          onClose={onClose}
+          View={ResearchView}
+        />
       </SideBarContextProvider>,
       {
         ...renderOptions,

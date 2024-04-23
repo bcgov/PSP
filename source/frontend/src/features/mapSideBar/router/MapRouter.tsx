@@ -25,6 +25,7 @@ import ProjectContainer from '../project/ProjectContainer';
 import ProjectContainerView from '../project/ProjectContainerView';
 import AddResearchContainer from '../research/add/AddResearchContainer';
 import ResearchContainer from '../research/ResearchContainer';
+import ResearchView from '../research/ResearchView';
 import AddSubdivisionContainer from '../subdivision/AddSubdivisionContainer';
 import AddSubdivisionContainerView from '../subdivision/AddSubdivisionView';
 
@@ -181,7 +182,11 @@ export const MapRouter: React.FunctionComponent = memo(() => {
       <AppRoute
         path={`/mapview/sidebar/research/:researchId`}
         customRender={({ match }) => (
-          <ResearchContainer researchFileId={Number(match.params.researchId)} onClose={onClose} />
+          <ResearchContainer
+            researchFileId={Number(match.params.researchId)}
+            onClose={onClose}
+            View={ResearchView}
+          />
         )}
         claim={Claims.RESEARCH_VIEW}
         key={'Research'}

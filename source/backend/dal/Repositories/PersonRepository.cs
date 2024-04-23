@@ -62,6 +62,7 @@ namespace Pims.Dal.Repositories
                 .Include(p => p.PimsContactMethods)
                     .ThenInclude(cm => cm.ContactMethodTypeCodeNavigation)
                 .Where(p => p.PersonId == id)
+                .AsNoTracking()
                 .FirstOrDefault() ?? throw new KeyNotFoundException();
         }
 

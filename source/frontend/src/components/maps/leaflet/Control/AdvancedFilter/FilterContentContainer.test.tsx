@@ -2,7 +2,10 @@ import { FormikProps } from 'formik';
 import { createMemoryHistory } from 'history';
 import { forwardRef } from 'react';
 
-import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
+import {
+  IMapStateMachineContext,
+  useMapStateMachine,
+} from '@/components/common/mapFSM/MapStateMachineContext';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
@@ -57,7 +60,14 @@ describe('FilterContentContainer component', () => {
 
   beforeEach(() => {
     jest.resetAllMocks();
-    (useMapStateMachine as jest.Mock).mockImplementation(() => mapMachineBaseMock);
+    const testMockMahine: IMapStateMachineContext = {
+      ...mapMachineBaseMock,
+      isFiltering: true,
+    };
+
+    (useMapStateMachine as unknown as jest.Mock<Partial<IMapStateMachineContext>>).mockReturnValue(
+      testMockMahine,
+    );
   });
 
   afterEach(() => {
