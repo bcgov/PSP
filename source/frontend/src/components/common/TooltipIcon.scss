@@ -3,14 +3,14 @@
 .tooltip-icon {
   min-width: 1.4rem;
   min-height: 1.4rem;
-  color: $secondary-variant-color;
+  color: $link-color;
   margin: 0rem 0.2rem;
 }
 
 .tooltip-icon.warning {
   min-width: 1.4rem;
   min-height: 1.4rem;
-  color: $font-warning-color;
+  color: $text-warning-color;
   margin: 0rem 0.2rem;
 }
 
@@ -19,20 +19,20 @@
   .tooltip-inner {
     text-align: left;
     max-width: 40rem;
-    background-color: $secondary-variant-color;
+    background-color: var(--theme-blue-80);
     color: #ffffff;
   }
   &.bs-tooltip-top .arrow::before {
-    border-top-color: $secondary-variant-color;
+    border-top-color: var(--theme-blue-80);
   }
   &.bs-tooltip-right .arrow::before {
-    border-right-color: $secondary-variant-color;
+    border-right-color: var(--theme-blue-80);
   }
   &.bs-tooltip-left .arrow::before {
-    border-left-color: $secondary-variant-color;
+    border-left-color: var(--theme-blue-80);
   }
   &.bs-tooltip-bottom .arrow::before {
-    border-bottom-color: $secondary-variant-color;
+    border-bottom-color: var(--theme-blue-80);
   }
 }
 
@@ -42,20 +42,20 @@
     text-align: left;
     max-width: 40rem;
     background-color: $warning-background-color;
-    color: $font-warning-color;
+    color: $text-warning-color;
     font-weight: 700;
   }
   &.bs-tooltip-top .arrow::before {
-    border-top-color: $secondary-variant-color;
+    border-top-color: var(--support-surface-color-warning);
   }
   &.bs-tooltip-right .arrow::before {
-    border-right-color: $secondary-variant-color;
+    border-right-color: var(--support-surface-color-warning);
   }
   &.bs-tooltip-left .arrow::before {
-    border-left-color: $secondary-variant-color;
+    border-left-color: var(--support-surface-color-warning);
   }
   &.bs-tooltip-bottom .arrow::before {
-    border-bottom-color: $secondary-variant-color;
+    border-bottom-color: var(--support-surface-color-warning);
   }
 }
 

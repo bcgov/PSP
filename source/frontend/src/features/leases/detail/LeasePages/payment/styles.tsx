@@ -93,7 +93,7 @@ export const StyledPaymentTable = styled(Table)`
           background-color: transparent;
           color: ${props => props.theme.bcTokens.typographyColorPrimary};
           .tooltip-icon {
-            color: ${props => props.theme.css.secondaryVariantColor};
+            color: ${props => props.theme.css.activeActionColor};
             float: right;
             align-self: baseline;
             margin-left: 0.5rem;

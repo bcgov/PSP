@@ -54,7 +54,7 @@ export const LoginStyled = styled(Container)`
       font-weight: 700;
       font-size: 2.4rem;
       font-style: italic;
-      color: ${props => props.theme.bcTokens.surfaceColorPrimaryButtonDefault};
+      color: ${props => props.theme.css.headerTextColor};
     }
     h6 {
       margin-bottom: 2rem;
@@ -106,7 +106,7 @@ export const LoginStyled = styled(Container)`
       margin: 2rem auto;
     }
     .border-dark {
-      border-color: ${props => props.theme.bcTokens.surfaceColorPrimaryButtonDefault} !important;
+      border-color: ${props => props.theme.css.headerBorderColor} !important;
       color: ${props => props.theme.bcTokens.typographyColorSecondary} !important;
     }
     .pims-logo {

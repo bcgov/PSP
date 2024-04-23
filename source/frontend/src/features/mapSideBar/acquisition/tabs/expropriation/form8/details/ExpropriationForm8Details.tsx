@@ -161,7 +161,7 @@ export const ExpropriationForm8Details: React.FunctionComponent<
 export default ExpropriationForm8Details;
 
 const StyledForm8Border = styled.div`
-  border: solid 0.2rem ${props => props.theme.css.actionColor};
+  border: solid 0.2rem ${props => props.theme.css.headerBorderColor};
   margin-bottom: 0.5rem;
 `;
 

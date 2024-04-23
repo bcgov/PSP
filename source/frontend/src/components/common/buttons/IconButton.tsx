@@ -36,7 +36,7 @@ export const StyledIconButton = styled(Button)`
     }
     &.btn-light {
       svg {
-        color: ${({ theme }) => theme.css.secondaryVariantColor};
+        color: ${({ theme }) => theme.css.linkColor};
       }
       svg:hover {
         color: ${({ theme }) => theme.bcTokens.surfaceColorPrimaryDangerButtonDefault};
@@ -44,10 +44,10 @@ export const StyledIconButton = styled(Button)`
     }
     &.btn-info {
       svg {
-        color: ${({ theme }) => theme.css.secondaryVariantColor};
+        color: ${({ theme }) => theme.css.linkColor};
       }
       svg:hover {
-        color: ${({ theme }) => theme.css.linkColor};
+        color: ${({ theme }) => theme.css.linkHoverColor};
       }
     }
   }

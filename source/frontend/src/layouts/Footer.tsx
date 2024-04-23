@@ -22,8 +22,7 @@ interface IFooterProps {
 
 const FooterStyled = styled.footer<IFooterProps>`
   // colors
-  background-color: ${props =>
-    props.backgroundColor ?? props.theme.bcTokens.surfaceColorPrimaryButtonDefault};
+  background-color: ${props => props.backgroundColor ?? props.theme.css.headerBorderColor};
   border: none;
   border-top: 0.2rem solid ${props => props.theme.bcTokens.themeGold100};
   grid-area: footer;

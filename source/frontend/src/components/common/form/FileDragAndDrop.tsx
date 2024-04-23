@@ -114,8 +114,7 @@ const DragDropZone = styled.div<{ isDragging: boolean }>`
 
   border-style: ${({ isDragging }) => (isDragging ? 'solid' : 'dashed')};
 
-  border: ${props =>
-    props.isDragging ? `1px solid ${props.theme.css.secondaryVariantColor}` : ''};
+  border: ${props => (props.isDragging ? `1px solid ${props.theme.css.activeActionColor}` : '')};
 
   background-color: ${props => (props.isDragging ? props.theme.css.filterBoxColor : '')};
 

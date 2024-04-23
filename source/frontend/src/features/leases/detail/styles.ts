@@ -18,7 +18,7 @@ export const LeaseH2 = styled.h2`
   line-height: 4.2rem;
   text-align: left;
   color: ${props => props.theme.bcTokens.typographyColorSecondary};
-  border-bottom: solid 0.4rem ${props => props.theme.bcTokens.surfaceColorPrimaryButtonDefault};
+  border-bottom: solid 0.4rem ${props => props.theme.css.headerBorderColor};
 `;
 
 export const LeaseH3 = styled.h3`
@@ -28,7 +28,7 @@ export const LeaseH3 = styled.h3`
   text-align: left;
   padding: 1rem 0 0.5rem 0;
   color: ${props => props.theme.bcTokens.typographyColorSecondary};
-  border-bottom: solid 0.3rem ${props => props.theme.bcTokens.surfaceColorPrimaryButtonDefault};
+  border-bottom: solid 0.3rem ${props => props.theme.css.headerBorderColor};
 `;
 
 export const LeaseH4 = styled.h4`
@@ -88,7 +88,7 @@ export const ExpiredWarning = styled(InlineFlexDiv)`
 export const LeaseHeader = styled(InlineFlexDiv)`
   border-radius: 1rem 1rem 0 0;
   grid-area: leaseheader;
-  background-color: ${props => props.theme.css.secondaryVariantColor};
+  background-color: ${props => props.theme.css.activeActionColor};
   color: white;
   align-items: center;
   justify-content: center;
@@ -240,7 +240,7 @@ export const NestedInlineField = styled(InlineInput)`
 `;
 
 export const SectionHeader = styled(FormDescriptionLabel)`
-  color: ${props => props.theme.bcTokens.surfaceColorPrimaryButtonDefault};
+  color: ${props => props.theme.css.headerTextColor};
   font-size: 1.8rem;
   margin-bottom: 2rem;
 `;

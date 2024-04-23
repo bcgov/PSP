@@ -93,6 +93,6 @@ const StyledMenuHeaderWrapper = styled.div`
 
 const StyledMenuHeader = styled.span`
   font-size: 1.4rem;
-  color: ${props => props.theme.css.borderOutlineColor};
+  color: ${props => props.theme.css.themeGray70};
   line-height: 2.2rem;
 `;

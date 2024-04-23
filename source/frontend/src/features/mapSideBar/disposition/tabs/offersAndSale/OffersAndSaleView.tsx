@@ -332,7 +332,7 @@ const OffersAndSaleView: React.FunctionComponent<IOffersAndSaleViewProps> = ({
 export default OffersAndSaleView;
 
 const StyledSpacer = styled.div`
-  border-bottom: 0.1rem solid ${props => props.theme.css.formBackgroundColor};
+  border-bottom: 0.1rem solid ${props => props.theme.css.borderOutlineColor};
 `;
 
 const StyledSubHeader = styled.div`

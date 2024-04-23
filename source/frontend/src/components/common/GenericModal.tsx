@@ -316,7 +316,7 @@ const StyledModal = styled(Modal)<{ $draggable?: boolean }>`
     justify-content: flex-start;
 
     color: ${props => props.theme.bcTokens.surfaceColorFormsDefault};
-    background-color: ${props => props.theme.bcTokens.surfaceColorPrimaryButtonDefault};
+    background-color: ${props => props.theme.bcTokens.surfaceColorBackgroundDarkBlue};
 
     /* show move cursor (crosshair) for draggable modals */
     cursor: ${props => (props.$draggable ? 'move' : 'default')};
@@ -418,7 +418,7 @@ const StyledModal = styled(Modal)<{ $draggable?: boolean }>`
 
   &.warning-variant {
     .modal-header {
-      color: ${props => props.theme.css.fontWarningColor};
+      color: ${props => props.theme.css.textWarningColor};
       background-color: ${props => props.theme.css.warningBackgroundColor};
     }
 
@@ -438,7 +438,7 @@ const PopupContainer = styled.div`
   .modal-header {
     height: 3.8rem;
     padding: 0 1rem;
-    background-color: ${({ theme }) => theme.bcTokens.surfaceColorPrimaryButtonDefault};
+    background-color: ${({ theme }) => theme.bcTokens.surfaceColorBackgroundDarkBlue};
     .h4 {
       color: white;
       font-family: BcSans-Bold;

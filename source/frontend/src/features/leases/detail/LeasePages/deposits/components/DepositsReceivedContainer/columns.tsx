@@ -155,13 +155,13 @@ export const getColumns = ({
 const StyledIcons = styled(InlineFlexDiv)`
   align-items: center;
   [id^='edit-deposit'] {
-    color: ${props => props.theme.css.secondaryVariantColor};
+    color: ${props => props.theme.css.activeActionColor};
   }
   [id^='return-deposit'] {
-    color: ${props => props.theme.css.secondaryVariantColor};
+    color: ${props => props.theme.css.activeActionColor};
   }
   [id^='delete-deposit'] {
-    color: ${props => props.theme.css.actionColor};
+    color: ${props => props.theme.css.activeActionColor};
     :hover {
       color: ${({ theme }) => theme.bcTokens.surfaceColorPrimaryDangerButtonDefault};
     }

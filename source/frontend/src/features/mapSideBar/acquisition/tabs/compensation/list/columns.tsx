@@ -148,10 +148,10 @@ const StyledDiv = styled(InlineFlexDiv)`
   width: 100%;
 
   [id^='compensation-view'] {
-    color: ${props => props.theme.css.secondaryVariantColor};
+    color: ${props => props.theme.css.activeActionColor};
   }
   [id^='compensation-delete'] {
-    color: ${props => props.theme.css.actionColor};
+    color: ${props => props.theme.css.activeActionColor};
     :hover {
       color: ${({ theme }) => theme.bcTokens.surfaceColorPrimaryDangerButtonDefault};
     }

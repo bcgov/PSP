@@ -12,13 +12,14 @@
   borderOutlineColor: $border-outline-color;
 
   // Colors
+  warningBackgroundColor: $warning-background-color;
+  numberBackgroundColor: $number-background-color;
   dangerBackgroundColor: $danger-background-color;
-  actionColor: $action-color;
   filterBoxColor: $filter-box-color;
-  fontWarningColor: $font-warning-color;
-  formBackgroundColor: $form-background-color;
+  textWarningColor: $text-warning-color;
   linkColor: $link-color;
   linkHoverColor: $link-hover-color;
-  primaryHoverColor: $primary-hover-color;
-  secondaryVariantColor: $secondary-variant-color;
+  activeActionColor: $active-action-color;
+  headerTextColor: $header-text-color;
+  headerBorderColor: $header-border-color;
 }

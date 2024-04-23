@@ -4,7 +4,7 @@ import styled from 'styled-components';
 export const TrayHeader = styled.h3`
   font-size: 3rem;
   padding-bottom: 0.8rem;
-  border-bottom: 0.4rem solid ${props => props.theme.bcTokens.surfaceColorPrimaryButtonDefault};
+  border-bottom: 0.4rem solid ${props => props.theme.css.headerBorderColor};
   margin-bottom: 3.2rem;
   max-width: 28rem;
 `;
@@ -19,7 +19,7 @@ export const SideNavBar = styled.div`
   position: relative;
   align-items: center;
   grid-area: iconbar;
-  background-color: ${props => props.theme.bcTokens.surfaceColorPrimaryButtonDefault};
+  background-color: ${props => props.theme.tenant.colour};
   transition: 0.5s width;
   width: 6rem;
   label {
@@ -63,7 +63,7 @@ export const CloseButton = styled(FaWindowClose)`
     cursor: pointer;
     fill: ${props => props.theme.bcTokens.typographyColorSecondary};
     &:hover {
-      fill: ${props => props.theme.css.secondaryVariantColor};
+      fill: ${props => props.theme.css.activeActionColor};
     }
   }
 `;
@@ -105,7 +105,7 @@ export const ExportH3 = styled.h3`
   text-align: left;
   padding: 1rem 0 0.5rem 0;
   color: ${props => props.theme.bcTokens.typographyColorSecondary};
-  border-bottom: solid 0.3rem ${props => props.theme.bcTokens.surfaceColorPrimaryButtonDefault};
+  border-bottom: solid 0.3rem ${props => props.theme.css.headerBorderColor};
   display: flex;
   align-items: flex-end;
 `;
@@ -115,5 +115,5 @@ export const ClickableDownload = styled(FaDownload)`
     cursor: pointer;
   }
   align-self: center;
-  color: ${({ theme }) => theme.css.secondaryVariantColor};
+  color: ${({ theme }) => theme.css.activeActionColor};
 `;

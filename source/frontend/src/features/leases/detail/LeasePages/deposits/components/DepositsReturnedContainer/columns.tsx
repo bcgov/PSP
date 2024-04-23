@@ -175,10 +175,10 @@ export const getColumns = ({
 
 const StyledIcons = styled(InlineFlexDiv)`
   [id^='edit-depositreturn'] {
-    color: ${props => props.theme.css.secondaryVariantColor};
+    color: ${props => props.theme.css.activeActionColor};
   }
   [id^='delete-depositreturn'] {
-    color: ${props => props.theme.css.actionColor};
+    color: ${props => props.theme.css.activeActionColor};
     :hover {
       color: ${({ theme }) => theme.bcTokens.surfaceColorPrimaryDangerButtonDefault};
     }

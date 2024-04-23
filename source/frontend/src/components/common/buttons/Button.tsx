@@ -86,7 +86,7 @@ const StyledButton = styled(BootstrapButton)`
     &:focus {
       outline-width: 0.4rem;
       outline-style: solid;
-      outline-color: ${({ theme }) => theme.css.secondaryVariantColor};
+      outline-color: ${({ theme }) => theme.css.linkHoverColor};
       outline-offset: 1px;
       box-shadow: none;
     }
@@ -99,7 +99,7 @@ const StyledButton = styled(BootstrapButton)`
       &:hover,
       &:active,
       &:focus {
-        background-color: ${({ theme }) => theme.css.primaryHoverColor};
+        background-color: ${({ theme }) => theme.bcTokens.surfaceColorPrimaryButtonHover};
       }
     }
 
@@ -118,7 +118,7 @@ const StyledButton = styled(BootstrapButton)`
 
     // INFO buttons
     &.btn-info {
-      color: ${({ theme }) => theme.css.borderOutlineColor};
+      color: ${({ theme }) => theme.bcTokens.themeGray70};
       border: none;
       background: none;
       padding-left: 0.6rem;
@@ -126,7 +126,7 @@ const StyledButton = styled(BootstrapButton)`
       &:hover,
       &:active,
       &:focus {
-        color: ${({ theme }) => theme.css.secondaryVariantColor};
+        color: ${({ theme }) => theme.css.linkHoverColor};
         background: none;
       }
     }

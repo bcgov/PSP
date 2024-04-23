@@ -29,7 +29,7 @@
       }
       .tr {
         &:hover {
-          background-color: $form-background-color;
+          background-color: $highlight-background-color;
         }
         &.selected {
           background-color: $highlight-background-color;
@@ -61,18 +61,18 @@
   }
 
   .svg-btn:hover {
-    color: $secondary-variant-color;
+    color: $link-hover-color;
     text-decoration: none;
     cursor: pointer;
   }
 
   .svg-btn:hover svg {
-    fill: $secondary-variant-color;
+    fill: $link-hover-color;
     stroke: #fff;
   }
 
   .svg-btn.active {
-    color: $secondary-variant-color;
+    color: $link-hover-color;
     border-bottom-style: solid;
     border-bottom-color: var(--theme-gold-100);
     border-bottom-width: 0.1rem;
@@ -80,7 +80,7 @@
   }
 
   .svg-btn.active svg {
-    fill: $secondary-variant-color;
+    fill: $link-hover-color;
     stroke: #fff;
   }
 
@@ -144,7 +144,7 @@
       }
 
       &.active {
-        color: $secondary-variant-color;
+        color: $link-hover-color;
       }
     }
   }

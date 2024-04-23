@@ -41,7 +41,7 @@
   color: var(--typography-color-secondary);
 
   &:hover {
-    background-color: $secondary-variant-color;
+    background-color: $link-hover-color;
     color: #fff;
   }
 }

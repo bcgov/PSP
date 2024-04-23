@@ -11,7 +11,7 @@ export const H2 = styled.h2`
 
 export const H2Primary = styled.h2`
   text-align: left;
-  color: ${props => props.theme.bcTokens.surfaceColorPrimaryButtonDefault};
+  color: ${props => props.theme.css.headerTextColor};
 `;
 
 export const RowAligned = styled(Row)`

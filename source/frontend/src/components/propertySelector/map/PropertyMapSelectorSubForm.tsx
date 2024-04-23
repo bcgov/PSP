@@ -63,7 +63,7 @@ export const StyledFormRow = styled(Row)`
 `;
 
 const GroupHeader = styled(Col)`
-  color: ${props => props.theme.bcTokens.surfaceColorPrimaryButtonDefault};
+  color: ${props => props.theme.css.headerTextColor};
   font-family: 'BcSans-Bold';
   margin-bottom: 1rem;
 `;

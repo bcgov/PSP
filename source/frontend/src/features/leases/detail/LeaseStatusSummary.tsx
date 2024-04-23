@@ -58,15 +58,15 @@ const StyledLeaseStatusSummary = styled.div`
     }
   }
   &.discard {
-    border: 1px solid ${props => props.theme.css.actionColor};
+    border: 1px solid ${props => props.theme.css.activeActionColor};
     b:first-child {
-      color: ${props => props.theme.css.actionColor};
+      color: ${props => props.theme.css.activeActionColor};
     }
   }
   &.draft {
-    border: 1px solid ${props => props.theme.css.secondaryVariantColor};
+    border: 1px solid ${props => props.theme.css.activeActionColor};
     b:first-child {
-      color: ${props => props.theme.css.secondaryVariantColor};
+      color: ${props => props.theme.css.activeActionColor};
     }
   }
 `;

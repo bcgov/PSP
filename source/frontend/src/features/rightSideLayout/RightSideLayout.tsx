@@ -67,7 +67,7 @@ const StyledHeader = styled.div`
   position: relative;
   width: 100%;
   height: 5.2rem;
-  background-color: ${({ theme }) => theme.bcTokens.surfaceColorPrimaryButtonDefault};
+  background-color: ${({ theme }) => theme.tenant.colour};
   color: ${props => props.theme.bcTokens.surfaceColorFormsDefault};
   align-items: center;
   padding: 1rem 1.8rem;

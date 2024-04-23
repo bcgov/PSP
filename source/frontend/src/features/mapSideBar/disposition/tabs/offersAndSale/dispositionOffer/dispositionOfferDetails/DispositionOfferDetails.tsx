@@ -137,7 +137,7 @@ const DispositionOfferDetails: React.FunctionComponent<IDispositionOfferDetailsP
 export default DispositionOfferDetails;
 
 const StyledOfferBorder = styled.div`
-  border: solid 0.2rem ${props => props.theme.css.actionColor};
+  border: solid 0.2rem ${props => props.theme.css.headerBorderColor};
   padding: 1.5rem;
   margin-bottom: 1.5rem;
   border-radius: 0.5rem;
@@ -148,11 +148,11 @@ const StyledSubHeader = styled.div`
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
-  border-bottom: solid 0.2rem ${props => props.theme.bcTokens.surfaceColorPrimaryButtonDefault};
+  border-bottom: solid 0.2rem ${props => props.theme.css.headerBorderColor};
   margin-bottom: 2rem;
 
   label {
-    color: ${props => props.theme.bcTokens.surfaceColorPrimaryButtonDefault};
+    color: ${props => props.theme.css.headerTextColor};
     font-family: 'BCSans-Bold';
     font-size: 1.75rem;
     width: 100%;

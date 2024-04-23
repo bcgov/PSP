@@ -69,7 +69,7 @@ export const FlexBox = styled.div<IFlexBoxProps>`
 
 export const Tabs = styled(BsTabs)`
   background-color: white;
-  color: ${props => props.theme.css.secondaryVariantColor};
+  color: ${props => props.theme.css.linkColor};
   font-size: 1.4rem;
   border-color: transparent;
   .nav-tabs {
@@ -81,14 +81,14 @@ export const Tabs = styled(BsTabs)`
     padding: 0.1rem 0.6rem;
 
     &:hover {
-      color: ${props => props.theme.css.secondaryVariantColor};
+      color: ${props => props.theme.css.linkHoverColor};
       border-color: transparent;
       text-decoration: underline;
     }
     &.active {
       background-color: ${props => props.theme.css.highlightBackgroundColor};
       font-family: 'BCSans-Bold';
-      color: ${props => props.theme.css.secondaryVariantColor};
+      color: ${props => props.theme.css.linkHoverColor};
       border-color: transparent;
     }
   }
@@ -98,24 +98,24 @@ export const H1 = styled.h1`
   color: ${props => props.theme.bcTokens.typographyColorSecondary};
   font-family: 'BCSans-Bold';
   font-size: 3.2rem;
-  border-bottom: solid 0.5rem ${props => props.theme.bcTokens.themeBlue80};
+  border-bottom: solid 0.5rem ${props => props.theme.css.headerBorderColor};
   width: 100%;
   text-align: left;
   margin-bottom: 2rem;
 `;
 
 export const H2 = styled.h2`
-  color: ${props => props.theme.bcTokens.surfaceColorPrimaryButtonDefault};
+  color: ${props => props.theme.css.headerTextColor};
   font-family: 'BCSans-Bold';
   font-size: 2.6rem;
-  border-bottom: solid 0.2rem ${props => props.theme.bcTokens.themeBlue80};
+  border-bottom: solid 0.2rem ${props => props.theme.css.headerBorderColor};
   width: 100%;
   text-align: left;
   margin-bottom: 2rem;
 `;
 
 export const H3 = styled.h3`
-  color: ${props => props.theme.bcTokens.surfaceColorPrimaryButtonDefault};
+  color: ${props => props.theme.css.headerTextColor};
   font-family: 'BCSans-Bold';
   font-size: 2rem;
   border-bottom: solid 0.2rem ${props => props.theme.css.actionColor};
@@ -175,7 +175,7 @@ export const CloseButton = styled(Button)`
     cursor: pointer;
     fill: ${props => props.theme.bcTokens.typographyColorSecondary};
     &:hover {
-      fill: ${props => props.theme.css.secondaryVariantColor};
+      fill: ${props => props.theme.css.typographyColorSecondaryInvert};
     }
   }
 `;

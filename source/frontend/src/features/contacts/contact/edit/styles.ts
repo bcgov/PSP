@@ -11,7 +11,7 @@ export * from '@/features/contacts/styles';
 export const H2 = styled.h2`
   font-size: 2rem;
   font-weight: 700;
-  color: ${props => props.theme.bcTokens.surfaceColorPrimaryButtonDefault};
+  color: ${props => props.theme.css.headerTextColor};
   text-decoration: none solid rgb(0, 51, 102);
   line-height: 2.9rem;
 `;

@@ -2,7 +2,7 @@ import { Col } from 'react-bootstrap';
 import styled from 'styled-components';
 
 export const LabelCol = styled(Col)`
-  border-right: solid 1px ${props => props.theme.bcTokens.surfaceColorPrimaryButtonDefault};
+  border-right: solid 1px ${props => props.theme.css.headerBorderColor};
   padding-bottom: 1rem;
 `;
 
@@ -20,7 +20,7 @@ export const SubTitle = styled.h3`
   text-align: left;
   padding: 1rem 0 0.5rem 0;
   color: ${props => props.theme.bcTokens.typographyColorSecondary};
-  border-bottom: solid 0.3rem ${props => props.theme.bcTokens.surfaceColorPrimaryButtonDefault};
+  border-bottom: solid 0.3rem ${props => props.theme.css.headerBorderColor};
 `;
 
 export const BoldHeader = styled.h3`

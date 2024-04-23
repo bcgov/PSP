@@ -119,9 +119,10 @@ const StyledIconWrapper = styled.div`
     background-color: ${props => props.theme.bcTokens.themeGold100};
   }
 
-  background-color: ${props => props.theme.css.warningBackgroundColor};
+  background-color: ${props => props.theme.css.numberBackgroundColor};
   font-size: 1.5rem;
   border-radius: 50%;
+  opacity: 0.8;
   width: 2.5rem;
   height: 2.5rem;
   padding: 1rem;
@@ -140,6 +141,6 @@ const StyledMenuHeaderWrapper = styled.div`
 
 const StyledMenuHeader = styled.span`
   font-size: 1.4rem;
-  color: ${props => props.theme.css.borderOutlineColor};
+  color: ${props => props.theme.css.themeGray70};
   line-height: 2.2rem;
 `;
