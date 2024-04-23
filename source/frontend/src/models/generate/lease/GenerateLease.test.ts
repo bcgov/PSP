@@ -7,6 +7,7 @@ import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts
 import { ApiGen_Concepts_PropertyLease } from '@/models/api/generated/ApiGen_Concepts_PropertyLease';
 
 import { Api_GenerateLease } from './GenerateLease';
+import { ApiGen_Concepts_SecurityDeposit } from '@/models/api/generated/ApiGen_Concepts_SecurityDeposit';
 
 describe('GenerateLease tests', () => {
   it('generates an empty lease without throwing an error', () => {
@@ -64,6 +65,7 @@ describe('GenerateLease tests', () => {
     );
     expect(lease.land_string).toBe(`Parcel Identifier: 000-000-001\ntest\n1 m²`);
   });
+
   it('generates a lease with no pid', () => {
     const lease = new Api_GenerateLease(
       {} as ApiGen_Concepts_Lease,
@@ -183,6 +185,154 @@ describe('GenerateLease tests', () => {
     expect(lease.marine_liability_limit).toBe(`$0.00`);
     expect(lease.vehicle_liability_limit).toBe(`$1.00`);
     expect(lease.aircraft_liability_limit).toBe(`$0.00`);
+  });
+
+  it('generates a lease with no security deposit information', () => {
+    const lease = new Api_GenerateLease({} as ApiGen_Concepts_Lease, [], [], [], [], []);
+
+    expect(lease.security_amount).toBe(`$0.00`);
+  });
+
+  it('generates a lease with single security deposit information', () => {
+    const lease = new Api_GenerateLease(
+      {} as ApiGen_Concepts_Lease,
+      [],
+      [],
+      [
+        {
+          id: 6,
+          leaseId: 56,
+          description: 'test',
+          amountPaid: 5000.0,
+          depositDateOnly: '2024-04-10',
+          depositType: {
+            id: 'SECURITY',
+            description: 'Security deposit',
+            isDisabled: false,
+            displayOrder: null,
+          },
+          otherTypeDescription: null,
+          depositReturns: [],
+          contactHolder: {
+            id: 'P8',
+            person: {
+              id: 8,
+              surname: 'Herrera',
+              firstName: 'Eduardo',
+              middleNames: null,
+              nameSuffix: null,
+              preferredName: null,
+              birthDate: null,
+              comment: null,
+              addressComment: null,
+              useOrganizationAddress: false,
+              isDisabled: false,
+              propertyActivityId: null,
+              contactMethods: [],
+              personAddresses: [],
+              personOrganizations: [],
+              rowVersion: 1,
+            },
+            organization: null,
+          },
+          rowVersion: 1,
+        },
+      ] as ApiGen_Concepts_SecurityDeposit[],
+      [],
+      [],
+    );
+
+    expect(lease.security_amount).toBe(`$5,000.00`);
+  });
+
+  it('generates a lease with multiple security deposit information', () => {
+    const lease = new Api_GenerateLease(
+      {} as ApiGen_Concepts_Lease,
+      [],
+      [],
+      [
+        {
+          id: 6,
+          leaseId: 56,
+          description: 'test',
+          amountPaid: 5000.0,
+          depositDateOnly: '2024-04-10',
+          depositType: {
+            id: 'SECURITY',
+            description: 'Security deposit',
+            isDisabled: false,
+            displayOrder: null,
+          },
+          otherTypeDescription: null,
+          depositReturns: [],
+          contactHolder: {
+            id: 'P8',
+            person: {
+              id: 8,
+              surname: 'Herrera',
+              firstName: 'Eduardo',
+              middleNames: null,
+              nameSuffix: null,
+              preferredName: null,
+              birthDate: null,
+              comment: null,
+              addressComment: null,
+              useOrganizationAddress: false,
+              isDisabled: false,
+              propertyActivityId: null,
+              contactMethods: [],
+              personAddresses: [],
+              personOrganizations: [],
+              rowVersion: 1,
+            },
+            organization: null,
+          },
+          rowVersion: 1,
+        },
+        {
+          id: 7,
+          leaseId: 56,
+          description: 'test',
+          amountPaid: 5000.0,
+          depositDateOnly: '2024-04-15',
+          depositType: {
+            id: 'SECURITY',
+            description: 'Security deposit',
+            isDisabled: false,
+            displayOrder: null,
+          },
+          otherTypeDescription: null,
+          depositReturns: [],
+          contactHolder: {
+            id: 'P8',
+            person: {
+              id: 8,
+              surname: 'Herrera',
+              firstName: 'Eduardo',
+              middleNames: null,
+              nameSuffix: null,
+              preferredName: null,
+              birthDate: null,
+              comment: null,
+              addressComment: null,
+              useOrganizationAddress: false,
+              isDisabled: false,
+              propertyActivityId: null,
+              contactMethods: [],
+              personAddresses: [],
+              personOrganizations: [],
+              rowVersion: 1,
+            },
+            organization: null,
+          },
+          rowVersion: 1,
+        },
+      ] as ApiGen_Concepts_SecurityDeposit[],
+      [],
+      [],
+    );
+
+    expect(lease.security_amount).toBe(`$10,000.00`);
   });
 
   it('generates a lease with no tenant information', () => {
