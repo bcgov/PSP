@@ -6,6 +6,7 @@ PSP_PIMS | Development Sprint: S79.00 | Design Sprint: 78 | Date: 2024-Apr-23
   - 007_PSP_PIMS_ACQUISITION_FILE_HIST_Add.sql
   - 151_DML_PIMS_FILE_NUMBER_TYPE.sql
 - Altered seed scripts:
+  - 056_DML_PIMS_LEASE_PURPOSE_TYPE.sql
   - 116_DML_PIMS_TAKE_TYPE.sql
 - Altered test scripts:
   - 031_PIMS_ACQUISITION_FILE.sql
