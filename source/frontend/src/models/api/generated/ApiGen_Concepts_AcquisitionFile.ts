@@ -21,7 +21,6 @@ export interface ApiGen_Concepts_AcquisitionFile extends ApiGen_Concepts_FileWit
   legacyFileNumber: string | null;
   assignedDate: UtcIsoDateTime | null;
   deliveryDate: UtcIsoDate | null;
-  completionDate: UtcIsoDate | null;
   acquisitionPhysFileStatusTypeCode: ApiGen_Base_CodeType<string> | null;
   acquisitionTypeCode: ApiGen_Base_CodeType<string> | null;
   productId: number | null;

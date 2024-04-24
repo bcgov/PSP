@@ -6,7 +6,7 @@ import { Api_GenerateAddress } from './GenerateAddress';
 export class Api_GenerateProperty {
   location: ApiGen_Concepts_Geometry | null;
   pid: string;
-  legal_description: string;
+  legal_desc: string;
   region: string;
   address: Api_GenerateAddress | null;
   location_of_land: string;
@@ -16,7 +16,7 @@ export class Api_GenerateProperty {
   constructor(property: ApiGen_Concepts_Property | null | undefined) {
     this.location = exists(property?.location) ? property!.location : null;
     this.pid = pidFormatter(property?.pid?.toString()) ?? '';
-    this.legal_description = property?.landLegalDescription ?? '';
+    this.legal_desc = property?.landLegalDescription ?? '';
     this.address = exists(property?.address) ? new Api_GenerateAddress(property!.address) : null;
     this.region = property?.region?.description ?? '';
     this.district = property?.district?.description ?? '';
