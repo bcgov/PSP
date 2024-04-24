@@ -28,6 +28,7 @@ import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { isValidId, isValidString } from '@/utils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
+import { PropertyForm } from '../../shared/models';
 import { AcquisitionFormModal } from '../common/modals/AcquisitionFormModal';
 import UpdateAcquisitionOwnersSubForm from '../common/update/acquisitionOwners/UpdateAcquisitionOwnersSubForm';
 import { UpdateAcquisitionTeamSubForm } from '../common/update/acquisitionTeam/UpdateAcquisitionTeamSubForm';
@@ -45,7 +46,7 @@ export interface IAddAcquisitionFormProps {
     setSubmitting: (isSubmitting: boolean) => void,
     userOverrides: UserOverrideCode[],
   ) => void | Promise<any>;
-  confirmBeforeAdd: (propertyId: number) => Promise<boolean>;
+  confirmBeforeAdd: (propertyForm: PropertyForm) => Promise<boolean>;
 }
 
 export const AddAcquisitionForm = React.forwardRef<
@@ -105,7 +106,7 @@ const AddAcquisitionDetailSubForm: React.FC<{
   ) => void | Promise<any>;
   showDiffMinistryRegionModal: boolean;
   setShowDiffMinistryRegionModal: React.Dispatch<React.SetStateAction<boolean>>;
-  confirmBeforeAdd: (propertyId: number) => Promise<boolean>;
+  confirmBeforeAdd: (propertyForm: PropertyForm) => Promise<boolean>;
 }> = ({
   formikProps,
   onSubmit,
