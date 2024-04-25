@@ -23,7 +23,7 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="8.0.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.9.0" />
     <PackageReference Include="Selenium.Support" Version="4.18.1" />
-    <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="122.0.6261.11100" />
+    <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="123.0.6312.5800" />
     <PackageReference Include="SpecFlow.Plus.LivingDocPlugin" Version="3.9.57" />
     <PackageReference Include="FluentAssertions" Version="6.12.0" />
     <PackageReference Include="SpecFlow.xUnit" Version="3.9.74" />

@@ -14,8 +14,6 @@ using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Xunit;
 using Entity = Pims.Dal.Entities;
-
-using Pims.Api.Models.Concepts.Property;
 using Pims.Api.Areas.Property.Models.Search;
 
 namespace Pims.Api.Test.Controllers.Property
@@ -61,11 +59,11 @@ namespace Pims.Api.Test.Controllers.Property
             // Arrange
             var controller = this._helper.CreateController<SearchController>(Permissions.PropertyView);
 
-            var properties = new[] { EntityHelper.CreateProperty(1) };
+            var properties = new[] { EntityHelper.CreatePropertyView(1) };
 
             var repository = this._helper.GetService<Mock<IPropertyRepository>>();
             var mapper = this._helper.GetService<IMapper>();
-            var page = new Paged<Entity.PimsProperty>(properties, filter.Page, filter.Quantity);
+            var page = new Paged<Entity.PimsPropertyLocationVw>(properties, filter.Page, filter.Quantity);
 
             repository.Setup(m => m.GetPage(It.IsAny<PropertyFilter>())).Returns(page);
 
@@ -74,8 +72,8 @@ namespace Pims.Api.Test.Controllers.Property
 
             // Assert
             var actionResult = Assert.IsType<JsonResult>(result);
-            var actualResult = Assert.IsType<PageModel<PropertyModel>>(actionResult.Value);
-            var expectedResult = mapper.Map<PropertyModel[]>(properties);
+            var actualResult = Assert.IsType<PageModel<PropertyViewModel>>(actionResult.Value);
+            var expectedResult = mapper.Map<PropertyViewModel[]>(properties);
             expectedResult.Should().BeEquivalentTo(actualResult.Items);
             repository.Verify(m => m.GetPage(It.IsAny<PropertyFilter>()), Times.Once());
         }
@@ -90,11 +88,11 @@ namespace Pims.Api.Test.Controllers.Property
             // Arrange
             var controller = this._helper.CreateController<SearchController>(Permissions.PropertyView, uri);
 
-            var properties = new[] { EntityHelper.CreateProperty(1) };
+            var properties = new[] { EntityHelper.CreatePropertyView(1) };
 
             var repository = this._helper.GetService<Mock<IPropertyRepository>>();
             var mapper = this._helper.GetService<IMapper>();
-            var page = new Paged<Entity.PimsProperty>(properties);
+            var page = new Paged<Entity.PimsPropertyLocationVw>(properties);
 
             repository.Setup(m => m.GetPage(It.IsAny<PropertyFilter>())).Returns(page);
 

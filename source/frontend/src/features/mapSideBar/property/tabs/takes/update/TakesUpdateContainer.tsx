@@ -56,8 +56,10 @@ export const TakesUpdateContainer = React.forwardRef<FormikProps<any>, ITakesDet
               t.propertyAcquisitionFileId = fileProperty.id ?? 0;
               return t.toApi();
             });
-            fileProperty.id && (await updateTakesByPropertyFile(fileProperty.id, takes));
-            onSuccess();
+            if (fileProperty.id) {
+              await updateTakesByPropertyFile(fileProperty.id, takes);
+              onSuccess();
+            }
           } finally {
             formikHelpers.setSubmitting(false);
           }

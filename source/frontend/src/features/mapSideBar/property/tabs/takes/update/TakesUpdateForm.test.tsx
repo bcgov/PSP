@@ -4,10 +4,14 @@ import { mockLookups } from '@/mocks/lookups.mock';
 import { getMockApiPropertyFiles } from '@/mocks/properties.mock';
 import { getMockApiTakes } from '@/mocks/takes.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { act, render, RenderOptions, screen, userEvent } from '@/utils/test-utils';
+import { act, getByName, render, RenderOptions, screen, userEvent } from '@/utils/test-utils';
 
 import { TakeModel } from './models';
 import TakesUpdateForm, { ITakesUpdateFormProps } from './TakesUpdateForm';
+import { ApiGen_CodeTypes_AcquisitionTakeStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_AcquisitionTakeStatusTypes';
+import { Claims, Roles } from '@/constants';
+
+jest.mock('@react-keycloak/web');
 
 const history = createMemoryHistory();
 const storeState = {
@@ -31,6 +35,7 @@ describe('TakesUpdateForm component', () => {
         ...renderOptions,
         store: storeState,
         history,
+        useMockAuthentication: true,
       },
     );
 
@@ -110,6 +115,22 @@ describe('TakesUpdateForm component', () => {
     expect(confirmModal).toBeVisible();
   });
 
+  it('displays a warning if lease payable radio button toggled from no to yes', async () => {
+    const { getByTestId } = setup({});
+    const noButton = getByTestId('radio-takes.0.isleasepayable-no');
+    const yesButton = getByTestId('radio-takes.0.isleasepayable-yes');
+
+    await act(async () => userEvent.click(noButton));
+
+    const confirmModal = await screen.findByText('Confirm');
+    await act(async () => userEvent.click(confirmModal));
+
+    await act(async () => userEvent.click(yesButton));
+
+    const closeModal = await screen.findByText('Close');
+    expect(closeModal).toBeVisible();
+  });
+
   it('resets is new isNewHighwayDedication values if radio button toggled from yes to no', async () => {
     const { getByTestId, queryByDisplayValue } = setup({});
     const noButton = getByTestId('radio-takes.0.isnewhighwaydedication-no');
@@ -148,6 +169,18 @@ describe('TakesUpdateForm component', () => {
     expect(queryByDisplayValue('12140.57')).toBeNull();
   });
 
+  it('hides landActEndDt value if radio button toggled from yes to no', async () => {
+    const { queryByTestId } = setup({});
+    await act(async () =>
+      userEvent.selectOptions(
+        getByName('takes.0.landActTypeCode'),
+        screen.getByTestId('select-option-Crown Grant'),
+      ),
+    );
+
+    expect(queryByTestId('takes.0.landActEndDt', { exact: false })).toBeNull();
+  });
+
   it('resets isNewLicenseToConstruct values if radio button toggled from yes to no', async () => {
     const { getByTestId, queryByDisplayValue } = setup({});
     const noButton = getByTestId('radio-takes.0.isnewlicensetoconstruct-no');
@@ -170,5 +203,52 @@ describe('TakesUpdateForm component', () => {
     await act(async () => userEvent.click(confirmButton));
 
     expect(queryByDisplayValue('20234.28')).toBeNull();
+  });
+
+  it('hides the delete button when the take has been completed', () => {
+    let completeTake = getMockApiTakes()[0];
+    const takeModel = new TakeModel(completeTake);
+    takeModel.takeStatusTypeCode = ApiGen_CodeTypes_AcquisitionTakeStatusTypes.COMPLETE;
+
+    const { queryByTitle, getByTestId } = setup({
+      props: {
+        takes: [takeModel],
+      },
+    });
+
+    const deleteButton = queryByTitle('delete take');
+    expect(deleteButton).toBeNull();
+
+    const noButton = getByTestId('radio-takes.0.istheresurplus-no');
+    expect(noButton).toBeDisabled();
+  });
+
+  it('resets isLeasePayable values if radio button toggled from yes to no', async () => {
+    const { getByTestId, queryByDisplayValue } = setup({});
+    const noButton = getByTestId('radio-takes.0.isleasepayable-no');
+    await act(async () => userEvent.click(noButton));
+
+    expect(queryByDisplayValue('20231.28')).not.toBeNull();
+    const confirmButton = await screen.findByText('Confirm');
+    await act(async () => userEvent.click(confirmButton));
+
+    expect(queryByDisplayValue('20231.28')).toBeNull();
+  });
+
+  it('shows the edit button when the take has been completed for Admin users', () => {
+    let completeTake = getMockApiTakes()[0];
+    const takeModel = new TakeModel(completeTake);
+    takeModel.takeStatusTypeCode = ApiGen_CodeTypes_AcquisitionTakeStatusTypes.COMPLETE;
+
+    const { queryByTitle } = setup({
+      props: {
+        takes: [takeModel],
+      },
+      claims: [Claims.ACQUISITION_EDIT],
+      roles: [Roles.SYSTEM_ADMINISTRATOR],
+    });
+
+    const deleteButton = queryByTitle('delete take');
+    expect(deleteButton).toBeInTheDocument();
   });
 });

@@ -37,6 +37,7 @@ export const FilePropertyRouter: React.FC<IFilePropertyRouterProps> = props => {
   const onChildSuccess = () => {
     props.setIsEditing(false);
     setStaleLastUpdatedBy(true);
+    props.onSuccess();
   };
 
   if (!exists(props.file)) {

@@ -45,6 +45,9 @@ const featureViewStates = {
         TOGGLE_LAYERS: {
           target: 'browsing',
         },
+        SET_MAP_LAYERS: {
+          actions: assign({ activeLayers: (_, event: any) => event.activeLayers }),
+        },
       },
     },
     filtering: {
@@ -345,6 +348,7 @@ export const mapMachine = createMachine<MachineContext>({
     activePimsPropertyIds: [],
     showDisposed: false,
     showRetired: false,
+    activeLayers: [],
   },
 
   // State definitions
@@ -383,6 +387,7 @@ export const mapMachine = createMachine<MachineContext>({
     },
     mapVisible: {
       type: 'parallel',
+      entry: [send({ type: 'REFRESH_PROPERTIES', searchCriteria: defaultPropertyFilter })],
       on: {
         EXIT_MAP: {
           target: 'notMap',

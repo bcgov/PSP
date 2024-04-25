@@ -21,6 +21,7 @@ export class Api_GenerateLease {
   term_end_date: string;
   payment_amount: string;
   payment_due_date: string;
+  security_amount: string;
   cgl_limit: string;
   marine_liability_limit: string;
   vehicle_liability_limit: string;
@@ -60,6 +61,13 @@ export class Api_GenerateLease {
       : '';
     this.payment_amount = formatMoney(firstTerm?.paymentAmount ?? 0);
     this.payment_due_date = firstTerm?.paymentDueDateStr ?? '';
+    this.security_amount =
+      formatMoney(
+        securityDeposits
+          .filter(deposit => deposit.depositType.id === 'SECURITY')
+          .map(d => d.amountPaid ?? 0)
+          .reduce((prev, next) => prev + next, 0),
+      ) ?? '$0.00';
 
     this.cgl_limit =
       formatMoney(insurances.find(i => i?.insuranceType?.id === 'GENERAL')?.coverageLimit) ??

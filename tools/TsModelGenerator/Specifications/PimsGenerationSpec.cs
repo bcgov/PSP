@@ -173,8 +173,7 @@ namespace Pims.Tools.TsModelGenerator.Specifications
             // Convert DateTime to custom date definition
             if (propertyInfo.PropertyType == typeof(System.DateTime?) || propertyInfo.PropertyType == typeof(System.DateTime))
             {
-                //builder.Type("utcIsoDateTime", "@/models/api/UtcIsoDateTime"); Enable when the datetime front end type has been created.
-                builder.Type("string");
+                builder.Type("UtcIsoDateTime", "@/models/api/UtcIsoDateTime");
 
             }
 
@@ -186,9 +185,7 @@ namespace Pims.Tools.TsModelGenerator.Specifications
             // Convert DateOnly to custom date definition
             if (propertyInfo.PropertyType == typeof(System.DateOnly?) || propertyInfo.PropertyType == typeof(System.DateOnly))
             {
-                //builder.Type("utcIsoDateOnly", "@/models/api/UtcIsoDateOnly"); Enable when the datetime front end type has been created.
-                builder.Type("string");
-
+                builder.Type("UtcIsoDate", "@/models/api/UtcIsoDateTime");
             }
 
             return builder;

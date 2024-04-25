@@ -9,8 +9,8 @@ WORKDIR /src
 COPY *.sln .
 COPY Directory.Build.props .
 COPY api/*.csproj api/
-COPY entities/*.csproj entities/
 COPY apimodels/*.csproj apimodels/
+COPY entities/*.csproj entities/
 COPY tests/core/*.csproj tests/core/
 COPY tests/unit/api/*.csproj tests/unit/api/
 COPY tests/unit/dal/*.csproj tests/unit/dal/

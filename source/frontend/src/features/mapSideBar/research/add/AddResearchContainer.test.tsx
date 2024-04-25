@@ -11,7 +11,7 @@ import {
 } from '@/components/common/mapFSM/MapStateMachineContext';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { PMBC_Feature_Properties } from '@/models/layers/parcelMapBC';
-import { act, renderAsync, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
+import { RenderOptions, act, renderAsync, userEvent, waitFor } from '@/utils/test-utils';
 
 import AddResearchContainer, { IAddResearchContainerProps } from './AddResearchContainer';
 
@@ -36,22 +36,41 @@ jest.mock('react-visibility-sensor', () => {
 jest.mock('@/components/common/mapFSM/MapStateMachineContext');
 (useMapStateMachine as jest.Mock).mockImplementation(() => mapMachineBaseMock);
 
+const mockGetByPidWrapper = {
+  error: undefined,
+  response: undefined,
+  execute: jest.fn(),
+  loading: false,
+};
+
+const mockGetByPinWrapper = {
+  error: undefined,
+  response: undefined,
+  execute: jest.fn(),
+  loading: false,
+};
+
+jest.mock('@/hooks/repositories/usePimsPropertyRepository', () => ({
+  usePimsPropertyRepository: () => {
+    return {
+      getPropertyByPidWrapper: mockGetByPidWrapper,
+      getPropertyByPinWrapper: mockGetByPinWrapper,
+    };
+  },
+}));
+
 describe('AddResearchContainer component', () => {
   const setup = async (
     renderOptions: RenderOptions & IAddResearchContainerProps & Partial<IMapStateMachineContext>,
   ) => {
     // render component under test
-    const utils = await renderAsync(
-      <>
-        <AddResearchContainer onClose={renderOptions.onClose} />
-      </>,
-      {
-        ...renderOptions,
-        claims: [],
-        store: store,
-        history: history,
-      },
-    );
+    const utils = await renderAsync(<AddResearchContainer onClose={renderOptions.onClose} />, {
+      claims: [],
+      useMockAuthentication: true,
+      store,
+      history,
+      ...renderOptions,
+    });
 
     return {
       ...utils,

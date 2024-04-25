@@ -28,6 +28,8 @@ namespace Pims.Dal.Repositories
 
         PimsAcquisitionFile GetByAcquisitionFilePropertyId(long acquisitionFilePropertyId);
 
+        PimsProperty GetProperty(long acquisitionFilePropertyId);
+
         List<PimsAcquisitionFile> GetAcquisitionFileExportDeep(AcquisitionFilter filter, HashSet<short> regions, long? contractorPersonId = null);
     }
 }

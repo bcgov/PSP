@@ -46,7 +46,7 @@ exports[`Add Consolidation View matches snapshot 1`] = `
           <svg
             class="c1"
           >
-            subdivisionconsolidation.svg
+            <span />
           </svg>
           Create a Consolidation
         </h1>
@@ -94,6 +94,8 @@ exports[`Add Consolidation View matches snapshot 1`] = `
 
 .c7 .nav-item:hover {
   border-color: transparent;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
 }
 
 .c7 .nav-item.active {
@@ -415,6 +417,7 @@ exports[`Add Consolidation View matches snapshot 1`] = `
   -ms-letter-spacing: 0.1rem;
   letter-spacing: 0.1rem;
   cursor: pointer;
+  height: 3.8rem;
 }
 
 .c1.btn:hover {
@@ -534,13 +537,13 @@ exports[`Add Consolidation View matches snapshot 1`] = `
     class=""
   >
     <div
-      class="c0 justify-content-end mt-auto no-gutters row"
+      class="c0 justify-content-end mb-12 mt-12 p-0 no-gutters row"
     >
       <div
         class="pr-3 col-auto"
       />
       <div
-        class="pr-4 col-auto"
+        class="pr-6 col-auto"
       >
         <button
           class="c1 Button btn btn-secondary"
@@ -557,7 +560,7 @@ exports[`Add Consolidation View matches snapshot 1`] = `
         class="col-auto"
       >
         <button
-          class="c1 Button btn btn-primary"
+          class="c1 Button mr-9 btn btn-primary"
           type="button"
         >
           <div

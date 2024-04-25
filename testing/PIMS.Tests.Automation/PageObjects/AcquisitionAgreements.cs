@@ -15,7 +15,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By agreementsInitMessage = By.XPath("//p[contains(text(),'There are no agreements indicated in this acquisition file.')]");
 
         //Acquisition Files Agreement Create Form Elements
-        private By AgreementsDetailsCreateSubtitle = By.XPath("//h2/div/div[contains(text(),'Agreement details')]");
+        private By AgreementsDetailsCreateSubtitle = By.XPath("//h2/div/div[contains(text(),'Agreement Details')]");
         private By agreementsStatusLabel = By.XPath("//label[contains(text(),'Agreement status')]");
         private By agreementsStatusInput = By.Id("input-agreementStatusTypeCode");
         private By agreementCancellationReasonInput = By.Id("input-cancellationNote");

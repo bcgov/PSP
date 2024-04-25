@@ -12,7 +12,7 @@ import {
 } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { ReactComponent as RealEstateAgent } from '@/assets/images/real-estate-agent.svg';
+import RealEstateAgent from '@/assets/images/real-estate-agent.svg?react';
 import { FileTypes } from '@/constants';
 import FileLayout from '@/features/mapSideBar/layout/FileLayout';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
@@ -26,6 +26,7 @@ import { SideBarContext } from '../context/sidebarContext';
 import { InventoryTabNames } from '../property/InventoryTabs';
 import { FilePropertyRouter } from '../router/FilePropertyRouter';
 import { FileTabType } from '../shared/detail/FileTabs';
+import { PropertyForm } from '../shared/models';
 import SidebarFooter from '../shared/SidebarFooter';
 import UpdateProperties from '../shared/update/properties/UpdateProperties';
 import { AcquisitionContainerState } from './AcquisitionContainer';
@@ -43,6 +44,7 @@ export interface IAcquisitionViewProps {
   onSuccess: () => void;
   onCancelConfirm: () => void;
   onUpdateProperties: (file: ApiGen_Concepts_File) => Promise<ApiGen_Concepts_File | undefined>;
+  confirmBeforeAdd: (propertyForm: PropertyForm) => Promise<boolean>;
   canRemove: (propertyId: number) => Promise<boolean>;
   isEditing: boolean;
   setIsEditing: (value: boolean) => void;
@@ -61,6 +63,7 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
   onShowPropertySelector,
   onSuccess,
   onUpdateProperties,
+  confirmBeforeAdd,
   canRemove,
   isEditing,
   setIsEditing,
@@ -76,7 +79,7 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
   const { file, lastUpdatedBy } = useContext(SideBarContext);
   const acquisitionFile: ApiGen_Concepts_AcquisitionFile = {
     ...file,
-  } as ApiGen_Concepts_AcquisitionFile;
+  } as unknown as ApiGen_Concepts_AcquisitionFile;
 
   // match for property menu routes - eg /property/1/ltsa
   const fileMatch = matchPath<Record<string, string>>(location.pathname, `${match.path}/:tab`);
@@ -112,6 +115,13 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
             setIsShowingPropertySelector={closePropertySelector}
             onSuccess={onSuccess}
             updateFileProperties={onUpdateProperties}
+            confirmBeforeAdd={confirmBeforeAdd}
+            confirmBeforeAddMessage={
+              <>
+                <p>This property has already been added to one or more acquisition files.</p>
+                <p>Do you want to acknowledge and proceed?</p>
+              </>
+            }
             canRemove={canRemove}
             formikRef={formikRef}
           />

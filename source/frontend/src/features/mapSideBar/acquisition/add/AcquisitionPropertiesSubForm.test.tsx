@@ -20,11 +20,22 @@ jest.mock('@/components/common/mapFSM/MapStateMachineContext');
 
 describe('AcquisitionProperties component', () => {
   // render component under test
-  const setup = (props: { initialForm: AcquisitionForm }, renderOptions: RenderOptions = {}) => {
+  const setup = (
+    props: {
+      initialForm: AcquisitionForm;
+      confirmBeforeAdd?: (propertyForm: PropertyForm) => Promise<boolean>;
+    },
+    renderOptions: RenderOptions = {},
+  ) => {
     const utils = render(
       <>
         <Formik initialValues={props.initialForm} onSubmit={noop}>
-          {formikProps => <AcquisitionPropertiesSubForm formikProps={formikProps} />}
+          {formikProps => (
+            <AcquisitionPropertiesSubForm
+              formikProps={formikProps}
+              confirmBeforeAdd={props.confirmBeforeAdd ?? jest.fn()}
+            />
+          )}
         </Formik>
       </>,
       {

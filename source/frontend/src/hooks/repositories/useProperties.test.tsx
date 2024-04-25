@@ -53,7 +53,7 @@ describe('useProperties functions', () => {
       mockAxios.onGet(url).reply(200, mockResponse);
 
       const {
-        getProperties: { execute, loading },
+        getPropertiesFromView: { execute, loading },
       } = setup();
       await act(async () => {
         await execute(null);
@@ -68,7 +68,7 @@ describe('useProperties functions', () => {
       mockAxios.onGet(url).reply(500, MOCK.ERROR);
 
       const {
-        getProperties: { execute },
+        getPropertiesFromView: { execute },
       } = setup();
       await act(async () => {
         await expect(execute(null)).rejects.toThrow();

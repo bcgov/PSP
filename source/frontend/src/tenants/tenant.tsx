@@ -25,7 +25,7 @@ export const { Consumer: TenantConsumer } = TenantContext;
 
 /**
  * Provides a context provider for tenant configuration settings.
- * If "REACT_APP_TENANT" environment variable is set, it will use settings from it.
+ * If "VITE_TENANT" environment variable is set, it will use settings from it.
  * Otherwise it will fetch the public "/public/tenants/tenant.json" environment specific configuration file.
  * @param props TenantProvider properties.
  * @returns TenantProvider component.
@@ -34,21 +34,21 @@ export const TenantProvider: React.FC<React.PropsWithChildren<unknown>> = props 
   const [tenant, setTenant] = React.useState(defaultTenant);
   React.useMemo(async () => {
     // If the env var exists use it.
-    if (process.env.REACT_APP_TENANT) {
+    if (import.meta.env.VITE_TENANT) {
       // If it's a JSON string parse it.
-      if (process.env.REACT_APP_TENANT.startsWith('{')) {
-        const envTenantConfig = JSON.parse(process.env.REACT_APP_TENANT);
+      if (import.meta.env.VITE_TENANT.startsWith('{')) {
+        const envTenantConfig = JSON.parse(import.meta.env.VITE_TENANT);
         setTenant({ ...defaultTenant, ...envTenantConfig });
       } else {
         setTenant(
-          config[process.env.REACT_APP_TENANT]
-            ? { ...defaultTenant, ...config[process.env.REACT_APP_TENANT] }
+          config[import.meta.env.VITE_TENANT]
+            ? { ...defaultTenant, ...config[import.meta.env.VITE_TENANT] }
             : defaultTenant,
         );
       }
     } else {
       // Fetch the configuration file generated for the environment.
-      const r = await axios.get<ITenantConfig>(`${process.env.PUBLIC_URL}/tenants/tenant.json`);
+      const r = await axios.get<ITenantConfig>('/tenants/tenant.json');
       const fileTenantConfig = await r.data;
       setTenant({ ...defaultTenant, ...fileTenantConfig });
     }

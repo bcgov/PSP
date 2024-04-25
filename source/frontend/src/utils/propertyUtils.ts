@@ -49,17 +49,30 @@ export const pidParser = (pid?: string | number | null): number | undefined => {
  * @returns Civic address string value.
  */
 export const formatApiAddress = (address: ApiGen_Concepts_Address | null | undefined) => {
-  const values = [
+  return formatSplitAddress(
     address?.streetAddress1 ?? '',
     address?.streetAddress2 ?? '',
     address?.streetAddress3 ?? '',
     address?.municipality ?? '',
     address?.province?.code ?? '',
-  ];
-  return (
-    values.filter(text => text !== '').join(' ') +
-    (address?.postal ? ', ' + (address?.postal ?? '') : '')
+    address?.postal ?? '',
   );
+};
+
+/**
+ * Provides a formatted address as a string.
+ * @returns Civic address string value.
+ */
+export const formatSplitAddress = (
+  streetAddress1: string,
+  streetAddress2: string,
+  streetAddress3: string,
+  municipality: string,
+  provinceCode: string,
+  postal: string,
+) => {
+  const values = [streetAddress1, streetAddress2, streetAddress3, municipality, provinceCode];
+  return values.filter(text => text !== '').join(' ') + (postal ? ', ' + (postal ?? '') : '');
 };
 
 /**

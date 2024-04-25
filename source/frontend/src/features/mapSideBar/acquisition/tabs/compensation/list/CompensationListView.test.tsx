@@ -1,6 +1,5 @@
 import { createMemoryHistory } from 'history';
 
-import { AcquisitionStatus } from '@/constants/acquisitionFileStatus';
 import Claims from '@/constants/claims';
 import Roles from '@/constants/roles';
 import {
@@ -15,6 +14,7 @@ import { toTypeCode, toTypeCodeNullable } from '@/utils/formUtils';
 import { act, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
 import CompensationListView, { ICompensationListViewProps } from './CompensationListView';
+import { ApiGen_CodeTypes_AcquisitionStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_AcquisitionStatusTypes';
 
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
@@ -118,7 +118,7 @@ describe('compensation list view', () => {
     const { findAllByTitle } = setup({
       acquisitionFile: {
         ...mockAcquisitionFileResponse(),
-        fileStatusTypeCode: toTypeCodeNullable(AcquisitionStatus.Active),
+        fileStatusTypeCode: toTypeCodeNullable(ApiGen_CodeTypes_AcquisitionStatusTypes.ACTIVE),
       },
       compensations: compensations,
       claims: [Claims.COMPENSATION_REQUISITION_DELETE],
@@ -136,7 +136,7 @@ describe('compensation list view', () => {
     const { queryByTestId } = setup({
       acquisitionFile: {
         ...mockAcquisitionFileResponse(),
-        fileStatusTypeCode: toTypeCode(AcquisitionStatus.Active),
+        fileStatusTypeCode: toTypeCode(ApiGen_CodeTypes_AcquisitionStatusTypes.ACTIVE),
       },
       compensations: compensations,
       claims: [Claims.COMPENSATION_REQUISITION_DELETE],
@@ -151,7 +151,7 @@ describe('compensation list view', () => {
     const { queryByTestId } = setup({
       acquisitionFile: {
         ...mockAcquisitionFileResponse(),
-        fileStatusTypeCode: toTypeCode(AcquisitionStatus.Active),
+        fileStatusTypeCode: toTypeCode(ApiGen_CodeTypes_AcquisitionStatusTypes.ACTIVE),
       },
       compensations: compensations,
       claims: [Claims.COMPENSATION_REQUISITION_DELETE],

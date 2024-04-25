@@ -26,6 +26,7 @@ import { LegendControl } from './leaflet/Control/Legend/LegendControl';
 import { ZoomOutButton } from './leaflet/Control/ZoomOut/ZoomOutButton';
 import { LayerPopupContainer } from './leaflet/LayerPopup/LayerPopupContainer';
 import { InventoryLayer } from './leaflet/Layers/InventoryLayer';
+import { LeafletLayerListener } from './leaflet/Layers/LeafletLayerListener';
 import { MapEvents } from './leaflet/MapEvents/MapEvents';
 import * as Styled from './leaflet/styles';
 
@@ -217,9 +218,10 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
 
         <LegendControl />
         <ZoomOutButton />
-        <AdvancedFilterButton open={mapMachine.isFiltering} onToggle={mapMachine.toggleMapFilter} />
-        <LayersControl open={mapMachine.isShowingMapLayers} onToggle={mapMachine.toggleMapLayer} />
+        <AdvancedFilterButton onToggle={mapMachine.toggleMapFilter} />
+        <LayersControl onToggle={mapMachine.toggleMapLayer} />
         <InventoryLayer zoom={zoom} bounds={bounds} maxZoom={MAP_MAX_ZOOM}></InventoryLayer>
+        <LeafletLayerListener />
       </ReactLeafletMap>
     </Styled.MapContainer>
   );

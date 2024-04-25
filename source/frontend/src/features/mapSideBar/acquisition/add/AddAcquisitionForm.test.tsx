@@ -16,7 +16,7 @@ const history = createMemoryHistory();
 const validationSchema = jest.fn().mockReturnValue(AddAcquisitionFileYupSchema);
 const onSubmit = jest.fn();
 
-type TestProps = Pick<IAddAcquisitionFormProps, 'initialValues'>;
+type TestProps = Partial<Pick<IAddAcquisitionFormProps, 'initialValues' | 'confirmBeforeAdd'>>;
 jest.mock('@react-keycloak/web');
 
 describe('AddAcquisitionForm component', () => {
@@ -26,7 +26,8 @@ describe('AddAcquisitionForm component', () => {
     const utils = render(
       <AddAcquisitionForm
         ref={formikRef}
-        initialValues={props.initialValues}
+        initialValues={props.initialValues ?? new AcquisitionForm()}
+        confirmBeforeAdd={props.confirmBeforeAdd ?? jest.fn()}
         validationSchema={validationSchema}
         onSubmit={onSubmit}
       />,

@@ -13,6 +13,8 @@ namespace Pims.Api.Services
 
         PimsProperty GetByPid(string pid);
 
+        PimsProperty GetByPin(int pin);
+
         PimsProperty Update(PimsProperty property, bool commitTransaction = true);
 
         PimsProperty RetireProperty(PimsProperty property, bool commitTransaction = true);

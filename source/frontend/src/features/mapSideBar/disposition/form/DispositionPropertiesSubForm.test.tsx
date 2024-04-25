@@ -17,6 +17,8 @@ const customSetFilePropertyLocations = jest.fn();
 
 jest.mock('@/components/common/mapFSM/MapStateMachineContext');
 
+const confirmBeforeAdd = jest.fn();
+
 describe('DispositionPropertiesSubForm component', () => {
   const setup = async (
     props: { initialForm: DispositionFormModel },
@@ -25,7 +27,12 @@ describe('DispositionPropertiesSubForm component', () => {
     const ref = createRef<FormikProps<DispositionFormModel>>();
     const utils = render(
       <Formik innerRef={ref} initialValues={props.initialForm} onSubmit={jest.fn()}>
-        {formikProps => <DispositionPropertiesSubForm formikProps={formikProps} />}
+        {formikProps => (
+          <DispositionPropertiesSubForm
+            formikProps={formikProps}
+            confirmBeforeAdd={confirmBeforeAdd}
+          />
+        )}
       </Formik>,
       {
         ...renderOptions,

@@ -1,6 +1,6 @@
 import { CellProps } from 'react-table';
 
-import { ColumnWithProps, Table } from '@/components/Table';
+import { ColumnWithProps, IIdentifiedObject, Table } from '@/components/Table';
 import { IBcAssessmentSummary } from '@/models/layers/bcAssesment';
 import { formatMoney, prettyFormatDate, stringToFragment } from '@/utils';
 
@@ -10,7 +10,7 @@ interface ISalesTableProps {
 
 const SalesTable: React.FunctionComponent<ISalesTableProps> = props => {
   return (
-    <Table
+    <Table<BcAssessmentSalesModelType>
       columns={columns}
       data={props.salesData ?? []}
       name="Property Sales"
@@ -20,7 +20,7 @@ const SalesTable: React.FunctionComponent<ISalesTableProps> = props => {
   );
 };
 
-type BcAssessmentSalesModelType = IBcAssessmentSummary['SALES'][0] & { id?: number };
+type BcAssessmentSalesModelType = IBcAssessmentSummary['SALES'][0] & IIdentifiedObject;
 
 const columns: ColumnWithProps<BcAssessmentSalesModelType>[] = [
   {

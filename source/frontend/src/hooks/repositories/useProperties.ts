@@ -12,6 +12,7 @@ import { useGeoServer } from '@/hooks/layer-api/useGeoServer';
 import { useApiProperties } from '@/hooks/pims-api/useApiProperties';
 import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
+import { ApiGen_Concepts_PropertyView } from '@/models/api/generated/ApiGen_Concepts_PropertyView';
 import { getEmptyProperty } from '@/models/defaultInitializers';
 import { logRequest, logSuccess } from '@/store/slices/network/networkSlice';
 
@@ -20,7 +21,7 @@ import { useApiRequestWrapper } from '../util/useApiRequestWrapper';
 export const useProperties = () => {
   const dispatch = useDispatch();
   const {
-    getPropertiesPagedApi,
+    getPropertiesViewPagedApi,
     getPropertiesApi,
     getPropertyConceptWithIdApi,
     exportPropertiesApi: rawApiExportProperties,
@@ -28,14 +29,15 @@ export const useProperties = () => {
 
   const { getPropertyWfs } = useGeoServer();
 
-  const fetchProperties = useApiRequestWrapper<
+  const getPropertiesFromView = useApiRequestWrapper<
     (
       propertyBounds: IPropertyFilter | null,
-    ) => Promise<AxiosResponse<ApiGen_Base_Page<ApiGen_Concepts_Property>>>
+    ) => Promise<AxiosResponse<ApiGen_Base_Page<ApiGen_Concepts_PropertyView>>>
   >({
     requestFunction: useCallback(
-      async (propertyBounds: IPropertyFilter | null) => await getPropertiesPagedApi(propertyBounds),
-      [getPropertiesPagedApi],
+      async (propertyBounds: IPropertyFilter | null) =>
+        await getPropertiesViewPagedApi(propertyBounds),
+      [getPropertiesViewPagedApi],
     ),
     requestName: actionTypes.GET_PARCELS,
     throwError: true,
@@ -52,7 +54,7 @@ export const useProperties = () => {
     throwError: true,
   });
 
-  const getProperties = useApiRequestWrapper<
+  const getPropertiesById = useApiRequestWrapper<
     (propertyIds: number[]) => Promise<AxiosResponse<ApiGen_Concepts_Property[]>>
   >({
     requestFunction: useCallback(
@@ -124,8 +126,8 @@ export const useProperties = () => {
   return {
     getProperty: fetchPropertyWithId,
     getPropertyLoading: getPropertyLoading,
-    getProperties: fetchProperties,
-    getMultiplePropertiesById: getProperties,
+    getPropertiesFromView: getPropertiesFromView,
+    getMultiplePropertiesById: getPropertiesById,
     exportProperties,
   };
 };

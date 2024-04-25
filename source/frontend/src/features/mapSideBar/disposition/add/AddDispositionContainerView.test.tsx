@@ -18,6 +18,7 @@ jest.mock('@react-keycloak/web');
 const onCancel = jest.fn();
 const onSave = jest.fn();
 const onSubmit = jest.fn();
+const confirmBeforeAdd = jest.fn();
 
 const initialValues = new DispositionFormModel();
 
@@ -36,6 +37,7 @@ describe('Add Disposition Container View', () => {
         onCancel={onCancel}
         onSave={onSave}
         onSubmit={onSubmit}
+        confirmBeforeAdd={confirmBeforeAdd}
       />,
       {
         ...renderOptions,

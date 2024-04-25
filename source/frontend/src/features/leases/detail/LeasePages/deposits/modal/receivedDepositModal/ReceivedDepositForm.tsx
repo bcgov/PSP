@@ -46,7 +46,7 @@ export const ReceivedDepositForm: React.FunctionComponent<
       initialValues={initialValues}
     >
       {formikProps => (
-        <StyledFormBody className="px-4">
+        <StyledFormBody>
           <Row>
             <Col>
               <SectionField label="Deposit type" labelWidth="4" contentWidth="5" required>

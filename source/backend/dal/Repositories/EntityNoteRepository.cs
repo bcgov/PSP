@@ -47,31 +47,31 @@ namespace Pims.Dal.Repositories
         public IEnumerable<PimsNote> GetAllAcquisitionNotesById(long acquisitionId)
         {
             return this.Context.PimsAcquisitionFileNotes
-                .Where(x => x.AcquisitionFileId == acquisitionId).Select(x => x.Note).ToList();
+                .Where(x => x.AcquisitionFileId == acquisitionId).AsNoTracking().Select(x => x.Note).ToList();
         }
 
         public IEnumerable<PimsNote> GetAllDispositionNotesById(long dispositionId)
         {
             return this.Context.PimsDispositionFileNotes
-                .Where(x => x.DispositionFileId == dispositionId).Select(x => x.Note).ToList();
+                .Where(x => x.DispositionFileId == dispositionId).AsNoTracking().Select(x => x.Note).ToList();
         }
 
         public IEnumerable<PimsNote> GetAllLeaseNotesById(long leaseId)
         {
             return this.Context.PimsLeaseNotes
-                .Where(x => x.LeaseId == leaseId).Select(x => x.Note).ToList();
+                .Where(x => x.LeaseId == leaseId).AsNoTracking().Select(x => x.Note).ToList();
         }
 
         public IEnumerable<PimsNote> GetAllProjectNotesById(long entityId)
         {
             return this.Context.PimsProjectNotes
-                .Where(x => x.ProjectId == entityId).Select(x => x.Note).ToList();
+                .Where(x => x.ProjectId == entityId).AsNoTracking().Select(x => x.Note).ToList();
         }
 
         public IEnumerable<PimsNote> GetAllResearchNotesById(long entityId)
         {
             return this.Context.PimsResearchFileNotes
-                .Where(x => x.ResearchFileId == entityId).Select(x => x.Note).ToList();
+                .Where(x => x.ResearchFileId == entityId).AsNoTracking().Select(x => x.Note).ToList();
         }
 
         public bool DeleteAcquisitionFileNotes(long noteId)

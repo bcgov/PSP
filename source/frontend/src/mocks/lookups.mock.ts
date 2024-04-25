@@ -3622,6 +3622,13 @@ export const mockLookups: ILookupCode[] = [
     type: 'PimsLandActType',
   },
   {
+    id: 'Crown Grant',
+    name: 'Crown Grant',
+    isDisabled: false,
+    displayOrder: 1,
+    type: 'PimsLandActType',
+  },
+  {
     id: 'Section 16',
     name: 'Map Reserve / Withdrawal',
     isDisabled: false,

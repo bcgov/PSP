@@ -47,7 +47,7 @@ export const DocumentDetailContainer: React.FunctionComponent<
 
   const formikRef = useRef<FormikProps<DocumentUpdateFormData>>(null);
 
-  const deleteModalProps = getCancelModalProps();
+  const deleteModalProps = useMemo(() => getCancelModalProps(), []);
 
   const { setDisplayModal, setModalContent } = useContext(ModalContext);
 

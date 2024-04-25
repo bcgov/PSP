@@ -747,7 +747,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchLeases.VerifySearchLeasesView();
             searchLeases.VerifyLeaseTableContent(lease);
             searchLeases.Dispose();
-
         }
 
         private void PopulateLeaseLicense(int rowNumber)

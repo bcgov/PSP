@@ -58,7 +58,7 @@ namespace Pims.Api.Areas.Property.Controllers
         [HttpGet]
         [HasPermission(Permissions.PropertyView)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(PageModel<PropertyModel>), 200)]
+        [ProducesResponseType(typeof(PageModel<PropertyViewModel>), 200)]
         [SwaggerOperation(Tags = new[] { "property" })]
         public IActionResult GetProperties()
         {
@@ -75,7 +75,7 @@ namespace Pims.Api.Areas.Property.Controllers
         [HttpPost("filter")]
         [HasPermission(Permissions.PropertyView)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(PageModel<PropertyModel>), 200)]
+        [ProducesResponseType(typeof(PageModel<PropertyViewModel>), 200)]
         [SwaggerOperation(Tags = new[] { "property" })]
         public IActionResult GetProperties([FromBody] PropertyFilterModel filter)
         {
@@ -86,7 +86,7 @@ namespace Pims.Api.Areas.Property.Controllers
             }
 
             var page = _propertyRepository.GetPage((PropertyFilter)filter);
-            var result = _mapper.Map<PageModel<PropertyModel>>(page);
+            var result = _mapper.Map<PageModel<PropertyViewModel>>(page);
             return new JsonResult(result);
         }
 

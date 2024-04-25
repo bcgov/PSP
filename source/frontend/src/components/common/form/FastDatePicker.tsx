@@ -25,12 +25,15 @@ type OptionalAttributes = {
   innerClassName?: string;
   /** The minimum data allowable to be chosen in the datepicker */
   minDate?: Date;
+  /** The maximum date allowable to be chosen in the datepicker */
+  maxDate?: Date;
   /** form label */
   label?: string;
   /** Whether the field is required. Makes the field border blue. */
   required?: boolean;
   /** optional popper modifiers to pass to the datepicker */
   popperModifiers?: Popper.Modifiers | undefined;
+  'data-testId'?: string;
 };
 
 export type FastDatePickerProps = FormControlProps &
@@ -48,6 +51,7 @@ const FormikDatePicker: FunctionComponent<React.PropsWithChildren<FastDatePicker
   className,
   innerClassName,
   minDate,
+  maxDate,
   label,
   required,
   popperModifiers,
@@ -100,6 +104,7 @@ const FormikDatePicker: FunctionComponent<React.PropsWithChildren<FastDatePicker
         selected={(value && new Date(value)) || null}
         disabled={disabled}
         minDate={minDate ? moment(minDate, 'YYYY-MM-DD').toDate() : undefined}
+        maxDate={maxDate}
         {...rest}
         popperModifiers={popperModifiers}
         onBlur={() => {

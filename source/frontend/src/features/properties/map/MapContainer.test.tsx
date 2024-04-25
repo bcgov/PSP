@@ -11,10 +11,10 @@ import {
   useMapStateMachine,
 } from '@/components/common/mapFSM/MapStateMachineContext';
 import {
+  FeatureSelected,
   emptyPimsBoundaryFeatureCollection,
   emptyPimsLocationFeatureCollection,
   emptyPmbcFeatureCollection,
-  FeatureSelected,
 } from '@/components/common/mapFSM/models';
 import {
   Claims,
@@ -32,23 +32,24 @@ import {
 import leafletMouseSlice from '@/store/slices/leafletMouse/LeafletMouseSlice';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
+  RenderOptions,
   act,
   cleanup,
   mockKeycloak,
-  prettyDOM,
   render,
-  RenderOptions,
   screen,
   userEvent,
   waitFor,
 } from '@/utils/test-utils';
 
+import { useApiProperties } from '@/hooks/pims-api/useApiProperties';
+import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
+import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import MapContainer from './MapContainer';
 
 const mockAxios = new MockAdapter(axios);
 jest.mock('@react-keycloak/web');
 jest.mock('@/components/maps/leaflet/LayerPopup/components/LayerPopupContent');
-jest.mock('@/features/advancedFilterBar/AdvancedFilterBar');
 jest.mock('@/hooks/pims-api/useApiProperties');
 jest.mock('@/hooks/useLtsa');
 jest.mock('@/hooks/repositories/useComposedProperties');
@@ -67,6 +68,20 @@ jest.mock('react-visibility-sensor', () => {
     }
     return children;
   });
+});
+
+(useApiProperties as jest.MockedFunction<typeof useApiProperties>).mockReturnValue({
+  getPropertiesViewPagedApi: jest
+    .fn()
+    .mockResolvedValue({ data: {} as ApiGen_Base_Page<ApiGen_Concepts_Property> }),
+  getMatchingPropertiesApi: jest.fn(),
+  getPropertyAssociationsApi: jest.fn(),
+  exportPropertiesApi: jest.fn(),
+  getPropertiesApi: jest.fn(),
+  getPropertyConceptWithIdApi: jest.fn(),
+  getPropertyConceptWithPidApi: jest.fn(),
+  putPropertyConceptApi: jest.fn(),
+  getPropertyConceptWithPinApi: jest.fn(),
 });
 
 const mockStore = configureMockStore([thunk]);
