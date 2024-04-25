@@ -11,7 +11,6 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Models.CodeTypes;
-
 using Pims.Api.Models.Requests.Http;
 
 namespace Pims.Api.Repositories.Rest
@@ -230,6 +229,7 @@ namespace Pims.Api.Repositories.Rest
             _logger.LogTrace("Response: {response}", response);
             string payload = await response.Content.ReadAsStringAsync().ConfigureAwait(true);
             result.HttpStatusCode = response.StatusCode;
+
             switch (response.StatusCode)
             {
                 case HttpStatusCode.OK:
@@ -250,7 +250,7 @@ namespace Pims.Api.Repositories.Rest
                     result.Status = ExternalResponseStatus.Success;
                     break;
                 case HttpStatusCode.NoContent:
-                    result.Status = ExternalResponseStatus.Error;
+                    result.Status = ExternalResponseStatus.Success;
                     result.Message = "No content was returned from the call";
                     break;
                 case HttpStatusCode.NotFound:
@@ -271,6 +271,7 @@ namespace Pims.Api.Repositories.Rest
                     result.Message = $"Unable to contact endpoint {response.RequestMessage.RequestUri}. Http status {response.StatusCode}";
                     break;
             }
+
             return result;
         }
     }
