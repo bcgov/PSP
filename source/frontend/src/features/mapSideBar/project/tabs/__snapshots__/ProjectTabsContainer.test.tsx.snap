@@ -6,6 +6,7 @@ exports[`Project Tabs component > matches snapshot 1`] = `
     class="Toastify"
   />
   <div />
+  height: 3.8rem;
   .c1 {
   background-color: white;
   font-size: 1.4rem;
