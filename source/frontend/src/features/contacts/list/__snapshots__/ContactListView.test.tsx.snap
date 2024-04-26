@@ -4,45 +4,7 @@ exports[`Contact List View > matches snapshot 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
-  >
-    <div
-      class="Toastify__toast-container Toastify__toast-container--top-right"
-    >
-      <div
-        class="Toastify__toast Toastify__toast--warning Toastify--animate Toastify__bounce-enter--top-right"
-        id="d4x1ty2qp"
-      >
-        <div
-          class="Toastify__toast-body"
-          role="alert"
-        >
-          Search returned no results
-        </div>
-        <button
-          aria-label="close"
-          class="Toastify__close-button Toastify__close-button--warning"
-          type="button"
-        >
-          <svg
-            aria-hidden="true"
-            viewBox="0 0 14 16"
-          >
-            <path
-              d="M7.71 8.23l3.75 3.75-1.48 1.48-3.75-3.75-3.75 3.75L1 11.98l3.75-3.75L1 4.48 2.48 3l3.75 3.75L9.98 3l1.48 1.48-3.75 3.75z"
-              fill-rule="evenodd"
-            />
-          </svg>
-        </button>
-        <div
-          aria-hidden="true"
-          aria-label="notification timer"
-          class="Toastify__progress-bar Toastify__progress-bar--animated Toastify__progress-bar--warning"
-          role="progressbar"
-          style="animation-duration: 5000ms; animation-play-state: running; opacity: 0;"
-        />
-      </div>
-    </div>
-  </div>
+  />
   <div />
   .c11.btn {
   display: -webkit-box;

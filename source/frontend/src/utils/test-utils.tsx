@@ -14,6 +14,7 @@ import noop from 'lodash/noop';
 import React, { ReactNode } from 'react';
 import { MapContainer } from 'react-leaflet';
 import { Router } from 'react-router-dom/cjs/react-router-dom';
+import { vi } from 'vitest';
 
 import { IMapStateMachineContext } from '@/components/common/mapFSM/MapStateMachineContext';
 import { FilterProvider } from '@/components/maps/providers/FilterProvider';
@@ -299,7 +300,7 @@ function render(
 
   // mock authentication state prior to rendering. Check first that keycloak has been mocked!
   if (!!useMockAuthentication || !!claims || !!roles || !!organizations) {
-    if (typeof (useKeycloak as jest.Mock).mockReturnValue === 'function') {
+    if (typeof vi.mocked(useKeycloak).mockReturnValue === 'function') {
       mockKeycloak(
         keycloakMock?.keycloak ?? {
           claims: claims ?? [],
@@ -341,7 +342,7 @@ async function renderAsync(
 
   // mock authentication state prior to rendering. Check first that keycloak has been mocked!
   if (!!useMockAuthentication || !!claims || !!roles || !!organizations) {
-    if (typeof (useKeycloak as jest.Mock).mockReturnValue === 'function') {
+    if (typeof vi.mocked(useKeycloak).mockReturnValue === 'function') {
       mockKeycloak(
         keycloakMock?.keycloak ?? {
           claims: claims ?? [],

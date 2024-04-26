@@ -50,6 +50,7 @@ describe('FilterContentContainer component', () => {
       ...renderOptions,
       store: storeState,
       history,
+      mockMapMachine: { ...mapMachineBaseMock, isFiltering: true },
     });
 
     return {

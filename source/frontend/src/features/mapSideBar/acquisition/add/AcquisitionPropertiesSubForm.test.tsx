@@ -30,7 +30,7 @@ describe('AcquisitionProperties component', () => {
           {formikProps => (
             <AcquisitionPropertiesSubForm
               formikProps={formikProps}
-              confirmBeforeAdd={props.confirmBeforeAdd ?? jest.fn()}
+              confirmBeforeAdd={props.confirmBeforeAdd ?? vi.fn()}
             />
           )}
         </Formik>

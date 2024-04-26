@@ -15,7 +15,7 @@ const mockStore = configureMockStore([thunk]);
 
 const customSetFilePropertyLocations = vi.fn();
 
-const confirmBeforeAdd = jest.fn();
+const confirmBeforeAdd = vi.fn();
 
 describe('DispositionPropertiesSubForm component', () => {
   const setup = async (

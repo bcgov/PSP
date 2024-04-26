@@ -30,12 +30,7 @@ exports[`LayersMenu View > renders as expected 1`] = `
 .c1 .form-group .form-check label {
   font-weight: bold;
   color: _textColor_6badca;
-  font-size: 1.3rem;
-}
-
-.c1 {
-  margin-right: 1rem;
-  font-size: 1.5rem;
+  font-size: 1.6rem;
 }
 
 .c2 {

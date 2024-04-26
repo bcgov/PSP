@@ -164,7 +164,7 @@ exports[`MapContainer > Renders the map 1`] = `
 
 .c16 .form-group .form-check label {
   font-weight: bold;
-  color: textColor;
+  color: _textColor_6badca;
   font-size: 1.6rem;
 }
 
@@ -295,91 +295,7 @@ exports[`MapContainer > Renders the map 1`] = `
   border-bottom-right-radius: 0;
 }
 
-.c12 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  padding-left: 0rem;
-  border: none;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-}
-
-.c12 .form-group .form-check label {
-  font-weight: bold;
-  color: _textColor_6badca;
-  font-size: 1.3rem;
-}
-
-.c13 {
-  margin-right: 1rem;
-  font-size: 1.5rem;
-}
-
-.c14 {
-  margin-bottom: 0rem;
-}
-
-.c14 .form-check {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-}
-
-.c14 .form-check input {
-  margin-top: 0rem;
-}
-
-.c14 .form-check label {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-}
-
-.c8 {
-  margin-right: -1rem;
-  width: 34.1rem;
-  min-height: 5.2rem;
-  height: 50rem;
-  max-height: 50rem;
-  background-color: #fff;
-  position: relative;
-  border-radius: 0.4rem;
-  box-shadow: -0.2rem 0.1rem 0.4rem rgba(0,0,0,0.2);
-  z-index: 1000;
-}
-
-.c8.closed {
-  width: 0rem;
-  height: 0rem;
-}
-
-.c11 {
-  width: 100%;
-  height: calc(100% - 8rem);
-  padding: 1.6rem;
-}
-
-.c11.open {
-  overflow-y: scroll;
-}
-
-.c10 {
+.c9 {
   font-size: 3rem;
 }
 

@@ -36,7 +36,7 @@ describe('ResearchProperties component', () => {
     // render component under test
     const component = render(
       <Formik initialValues={renderOptions.initialForm} onSubmit={noop}>
-        <ResearchProperties confirmBeforeAdd={jest.fn()} />
+        <ResearchProperties confirmBeforeAdd={vi.fn()} />
       </Formik>,
       {
         ...renderOptions,

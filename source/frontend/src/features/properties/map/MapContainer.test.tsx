@@ -73,18 +73,18 @@ vi.mock('react-visibility-sensor', () => {
   };
 });
 
-(useApiProperties as jest.MockedFunction<typeof useApiProperties>).mockReturnValue({
-  getPropertiesViewPagedApi: jest
+vi.mocked(useApiProperties).mockReturnValue({
+  getPropertiesViewPagedApi: vi
     .fn()
     .mockResolvedValue({ data: {} as ApiGen_Base_Page<ApiGen_Concepts_Property> }),
-  getMatchingPropertiesApi: jest.fn(),
-  getPropertyAssociationsApi: jest.fn(),
-  exportPropertiesApi: jest.fn(),
-  getPropertiesApi: jest.fn(),
-  getPropertyConceptWithIdApi: jest.fn(),
-  getPropertyConceptWithPidApi: jest.fn(),
-  putPropertyConceptApi: jest.fn(),
-  getPropertyConceptWithPinApi: jest.fn(),
+  getMatchingPropertiesApi: vi.fn(),
+  getPropertyAssociationsApi: vi.fn(),
+  exportPropertiesApi: vi.fn(),
+  getPropertiesApi: vi.fn(),
+  getPropertyConceptWithIdApi: vi.fn(),
+  getPropertyConceptWithPidApi: vi.fn(),
+  putPropertyConceptApi: vi.fn(),
+  getPropertyConceptWithPinApi: vi.fn(),
 });
 
 const mockStore = configureMockStore([thunk]);

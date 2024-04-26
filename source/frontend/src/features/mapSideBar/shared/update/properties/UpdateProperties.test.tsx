@@ -10,13 +10,8 @@ import { getMockResearchFile } from '@/mocks/researchFile.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { fillInput, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
-<<<<<<< HEAD
-import React from 'react';
-import UpdateProperties, { IUpdatePropertiesProps } from './UpdateProperties';
-=======
 import UpdateProperties, { IUpdatePropertiesProps } from './UpdateProperties';
 import { createRef } from 'react';
->>>>>>> ec7359c11 (vitest tests with trivial changes - no review required.)
 
 const mockAxios = new MockAdapter(axios);
 
@@ -48,7 +43,7 @@ describe('UpdateProperties component', () => {
           updateFileProperties={updateFileProperties}
           confirmBeforeAdd={props.confirmBeforeAdd ?? vi.fn()}
           canRemove={props.canRemove ?? vi.fn()}
-          formikRef={React.createRef() as any}
+          formikRef={createRef() as any}
         />
       </SideBarContextProvider>,
       {
