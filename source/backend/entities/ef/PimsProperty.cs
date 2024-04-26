@@ -29,55 +29,94 @@ namespace Pims.Dal.Entities;
 [Index("VolumeUnitTypeCode", Name = "PRPRTY_VOLUME_UNIT_TYPE_CODE_IDX")]
 public partial class PimsProperty
 {
+    /// <summary>
+    /// Generated surrogate primary key
+    /// </summary>
     [Key]
     [Column("PROPERTY_ID")]
     public long PropertyId { get; set; }
 
+    /// <summary>
+    /// Foreign key to the proprty type table.
+    /// </summary>
     [Required]
     [Column("PROPERTY_TYPE_CODE")]
     [StringLength(20)]
     public string PropertyTypeCode { get; set; }
 
+    /// <summary>
+    /// Foreign key to the address table.
+    /// </summary>
     [Column("ADDRESS_ID")]
     public long? AddressId { get; set; }
 
+    /// <summary>
+    /// Foreign key to the region table.
+    /// </summary>
     [Column("REGION_CODE")]
     public short RegionCode { get; set; }
 
+    /// <summary>
+    /// Foreign key to the district table.
+    /// </summary>
     [Column("DISTRICT_CODE")]
     public short DistrictCode { get; set; }
 
+    /// <summary>
+    /// Foreign key to the property area unit type table.
+    /// </summary>
     [Column("PROPERTY_AREA_UNIT_TYPE_CODE")]
     [StringLength(20)]
     public string PropertyAreaUnitTypeCode { get; set; }
 
+    /// <summary>
+    /// Foreign key to the property data source type table.
+    /// </summary>
     [Required]
     [Column("PROPERTY_DATA_SOURCE_TYPE_CODE")]
     [StringLength(20)]
     public string PropertyDataSourceTypeCode { get; set; }
 
+    /// <summary>
+    /// Foreign key to the property status type table.
+    /// </summary>
     [Required]
     [Column("PROPERTY_STATUS_TYPE_CODE")]
     [StringLength(20)]
     public string PropertyStatusTypeCode { get; set; }
 
+    /// <summary>
+    /// Foreign key to the surplus declaration type table.
+    /// </summary>
     [Required]
     [Column("SURPLUS_DECLARATION_TYPE_CODE")]
     [StringLength(20)]
     public string SurplusDeclarationTypeCode { get; set; }
 
+    /// <summary>
+    /// Foreign key to the volumetric type table.
+    /// </summary>
     [Column("VOLUMETRIC_TYPE_CODE")]
     [StringLength(20)]
     public string VolumetricTypeCode { get; set; }
 
+    /// <summary>
+    /// Foreign key to the volume unit type table.
+    /// </summary>
     [Column("VOLUME_UNIT_TYPE_CODE")]
     [StringLength(20)]
     public string VolumeUnitTypeCode { get; set; }
 
+    /// <summary>
+    /// Foreign key to the provincial public highway status type table.
+    /// </summary>
     [Column("PPH_STATUS_TYPE_CODE")]
     [StringLength(20)]
     public string PphStatusTypeCode { get; set; }
 
+    /// <summary>
+    /// Foreign key to the proeprty classification type table.
+    /// </summary>
     [Required]
     [Column("PROPERTY_CLASSIFICATION_TYPE_CODE")]
     [StringLength(20)]
@@ -374,6 +413,9 @@ public partial class PimsProperty
 
     [InverseProperty("Property")]
     public virtual ICollection<PimsDispositionFileProperty> PimsDispositionFileProperties { get; set; } = new List<PimsDispositionFileProperty>();
+
+    [InverseProperty("Property")]
+    public virtual ICollection<PimsFileNumber> PimsFileNumbers { get; set; } = new List<PimsFileNumber>();
 
     [InverseProperty("Property")]
     public virtual ICollection<PimsPropPropActivity> PimsPropPropActivities { get; set; } = new List<PimsPropPropActivity>();
