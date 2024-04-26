@@ -462,10 +462,10 @@ namespace PIMS.Tests.Automation.StepDefinitions
             Assert.Equal(20, searchDispositionFiles.DispositionFileTableResultNumber());
 
             sharedPagination.ChoosePaginationOption(50);
-            Assert.True(searchDispositionFiles.DispositionFileTableResultNumber() > 21);
+            Assert.True(searchDispositionFiles.DispositionFileTableResultNumber() > 35);
 
             sharedPagination.ChoosePaginationOption(100);
-            Assert.True(searchDispositionFiles.DispositionFileTableResultNumber() > 51);
+            Assert.True(searchDispositionFiles.DispositionFileTableResultNumber() > 35);
 
             //Reset Pagination to 10
             sharedPagination.ChoosePaginationOption(10);

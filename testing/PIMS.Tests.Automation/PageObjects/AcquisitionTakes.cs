@@ -88,7 +88,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void InsertTake(Take take)
         {
-            Wait(2000);
+            Wait();
 
             var index = take.TakeCounter;
 
@@ -98,6 +98,12 @@ namespace PIMS.Tests.Automation.PageObjects
 
             if (take.TakeStatus != "")
                 ChooseSpecificSelectOption(By.Id("input-takes."+ index +".takeStatusTypeCode"), take.TakeStatus);
+
+            if (take.TakeCompleteDate != "")
+            {
+                webDriver.FindElement(By.Id("datepicker-takes."+ index +".completionDt")).SendKeys(take.TakeCompleteDate);
+                webDriver.FindElement(By.Id("datepicker-takes."+ index +".completionDt")).SendKeys(Keys.Enter);
+            }
 
             if (take.SiteContamination != "")
                 ChooseSpecificSelectOption(By.Id("input-takes."+ index +".takeSiteContamTypeCode"), take.SiteContamination);

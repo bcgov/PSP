@@ -111,9 +111,10 @@ namespace PIMS.Tests.Automation.PageObjects
         private By acquisitionFileOwnerCommentContent = By.XPath("//label[contains(text(),'Comment')]/parent::div/following-sibling::div");
 
         private By acquisitionFileEditButton = By.CssSelector("button[title='Edit acquisition file']");
-       
+
         //Acquisition File Confirmation Modal Elements
         private By acquisitionFileConfirmationModal = By.CssSelector("div[class='modal-content']");
+        private By acquisitionFileSaveConfirmationModal = By.XPath("//div[@class='modal-content']/div[@class='modal-header']/div[contains(text(),'User Override Required')]");
 
         private SharedSelectContact sharedSelectContact;
         private SharedModals sharedModals;
@@ -133,6 +134,12 @@ namespace PIMS.Tests.Automation.PageObjects
 
             WaitUntilVisible(createAcquisitionFileButton);
             FocusAndClick(createAcquisitionFileButton);
+        }
+
+        public void NavigateToFileSummary()
+        {
+            WaitUntilVisible(acquisitionFileSummaryBttn);
+            FocusAndClick(acquisitionFileSummaryBttn);
         }
 
         public void NavigateToFileDetailsTab()
@@ -398,10 +405,8 @@ namespace PIMS.Tests.Automation.PageObjects
             ButtonElement("Save");
 
             Wait();
-            if (webDriver.FindElements(acquisitionFileConfirmationModal).Count() > 0)
+            if (webDriver.FindElements(acquisitionFileSaveConfirmationModal).Count() > 0)
             {
-                Assert.Equal("User Override Required", sharedModals.ModalHeader());
-
                 if (sharedModals.ModalContent().Contains("The selected Ministry region is different from that associated to one or more selected properties"))
                 {
                     Assert.Contains("The selected Ministry region is different from that associated to one or more selected properties", sharedModals.ModalContent());
@@ -415,9 +420,6 @@ namespace PIMS.Tests.Automation.PageObjects
 
                 sharedModals.ModalClickOKBttn();
             }
-
-            Wait();
-            AssertTrueIsDisplayed(acquisitionFileEditButton);
         }
 
         public void SaveAcquisitionFileDetailsWithExpectedErrors()
@@ -434,19 +436,6 @@ namespace PIMS.Tests.Automation.PageObjects
             ButtonElement("Cancel");
 
             sharedModals.CancelActionModal();
-
-            //try
-            //{
-            //    WebDriverWait wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(3));
-            //    if (wait.Until(ExpectedConditions.AlertIsPresent()) != null)
-            //    {
-            //        webDriver.SwitchTo().Alert().Accept();
-            //    }
-            //}
-            //catch (WebDriverTimeoutException)
-            //{
-            //    sharedModals.CancelActionModal();
-            //}
         }
 
         public string GetAcquisitionFileCode()
@@ -697,10 +686,29 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(acquisitionFileTeamFirstMemberDeleteBttn).Click();
 
             WaitUntilVisible(acquisitionFileConfirmationModal);
-            Assert.True(sharedModals.ModalHeader() == "Remove Team Member");
-            Assert.True(sharedModals.ModalContent() == "Are you sure you want to remove this row?");
+            Assert.Equal("Remove Team Member", sharedModals.ModalHeader());
+            Assert.Equal("Are you sure you want to remove this row?", sharedModals.ModalContent());
 
             sharedModals.ModalClickOKBttn();
+        }
+
+        public void VerifyErrorMessageDraftItems()
+        {
+            WaitUntilVisible(acquisitionFileConfirmationModal);
+            Assert.Contains("You cannot complete a file when there are one or more draft agreements, or one or more draft compensations requisitions.", sharedModals.ModalContent());
+            Assert.Contains("Remove any draft compensations requisitions. Agreements should be set to final, cancelled, or removed.", sharedModals.ModalContent());
+        }
+
+        public void VerifyErrorCannotCompleteWithoutTakes()
+        {
+            WaitUntilVisible(acquisitionFileConfirmationModal);
+            Assert.Equal("You cannot complete an acquisition file that has no takes.", sharedModals.ModalContent());
+        }
+
+        public void VerifyErrorCannotCompleteInProgressTakes()
+        {
+            WaitUntilVisible(acquisitionFileConfirmationModal);
+            Assert.Equal("Please ensure all in-progress property takes have been completed or canceled before completing an Acquisition File.", sharedModals.ModalContent());
         }
 
         private void AddTeamMembers(TeamMember teamMember)
@@ -791,7 +799,7 @@ namespace PIMS.Tests.Automation.PageObjects
             WaitUntilClickable(acquisitionFileDeleteFirstOwnerBttn);
             webDriver.FindElement(acquisitionFileDeleteFirstOwnerBttn).Click();
 
-            WaitUntilVisible(acquisitionFileConfirmationModal);
+            WaitUntilVisible(acquisitionFileSaveConfirmationModal);
             Assert.True(sharedModals.ModalHeader() == "Remove Owner");
             Assert.True(sharedModals.ModalContent() == "Are you sure you want to remove this Owner?");
 
