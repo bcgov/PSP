@@ -1,4 +1,4 @@
-import { orderBy } from 'lodash';
+import orderBy from 'lodash/orderBy';
 import React from 'react';
 import { BiListPlus } from 'react-icons/bi';
 

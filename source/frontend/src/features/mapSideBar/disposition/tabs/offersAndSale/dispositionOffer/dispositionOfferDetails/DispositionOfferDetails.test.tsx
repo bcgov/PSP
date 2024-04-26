@@ -13,11 +13,10 @@ import DispositionOfferDetails, { IDispositionOfferDetailsProps } from './Dispos
 import { toTypeCode } from '@/utils/formUtils';
 
 const history = createMemoryHistory();
-jest.mock('@react-keycloak/web');
 
 const mockDispositionOffer = mockDispositionFileOfferApi(100, 1);
 
-const onDelete = jest.fn();
+const onDelete = vi.fn();
 
 describe('Disposition Offer Detail View component', () => {
   const setup = async (
@@ -44,7 +43,7 @@ describe('Disposition Offer Detail View component', () => {
   };
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders as expected', async () => {

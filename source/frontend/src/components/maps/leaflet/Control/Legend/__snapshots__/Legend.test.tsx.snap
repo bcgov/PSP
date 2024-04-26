@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Map Legend View renders correctly 1`] = `
+exports[`Map Legend View > renders correctly 1`] = `
 <DocumentFragment>
   <div
     class="legend-control card"
@@ -21,7 +21,7 @@ exports[`Map Legend View renders correctly 1`] = `
         >
           <img
             class=""
-            src="land-reg.png"
+            src="/src/assets/images/pins/land-reg.png"
             width="32"
           />
         </div>
@@ -39,7 +39,7 @@ exports[`Map Legend View renders correctly 1`] = `
         >
           <img
             class=""
-            src="land-poi.png"
+            src="/src/assets/images/pins/land-poi.png"
             width="32"
           />
         </div>
@@ -57,7 +57,7 @@ exports[`Map Legend View renders correctly 1`] = `
         >
           <img
             class=""
-            src="other-interest.png"
+            src="/src/assets/images/pins/other-interest.png"
             width="32"
           />
         </div>
@@ -75,7 +75,7 @@ exports[`Map Legend View renders correctly 1`] = `
         >
           <img
             class=""
-            src="disposed.png"
+            src="/src/assets/images/pins/disposed.png"
             width="32"
           />
         </div>
@@ -93,7 +93,7 @@ exports[`Map Legend View renders correctly 1`] = `
         >
           <img
             class=""
-            src="retired.png"
+            src="/src/assets/images/pins/retired.png"
             width="32"
           />
         </div>
@@ -111,7 +111,7 @@ exports[`Map Legend View renders correctly 1`] = `
         >
           <img
             class=""
-            src="marker-info-orange.png"
+            src="/src/assets/images/pins/marker-info-orange.png"
             width="32"
           />
         </div>

@@ -1,47 +1,38 @@
 import { renderHook } from '@testing-library/react-hooks';
-import { AxiosResponse } from 'axios';
-import React from 'react';
 import { Provider } from 'react-redux';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
 import { Action } from 'redux';
 import configureMockStore, { MockStoreEnhanced } from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
-import ITenantConfig from '@/hooks/pims-api/interfaces/ITenantConfig';
 import { useApiTenants } from '@/hooks/pims-api/useApiTenants';
 
 import { logError, logRequest, logSuccess } from '../network/networkSlice';
 import { useTenants } from '.';
+import { vi } from 'vitest';
 
-const mockApiGetSettings = jest.fn<Promise<AxiosResponse<ITenantConfig>>, any>();
-jest.mock('@/hooks/pims-api/useApiTenants');
-(useApiTenants as jest.Mock).mockReturnValue({ getSettings: mockApiGetSettings });
+const mockApiGetSettings = vi.fn();
+vi.mock('@/hooks/pims-api/useApiTenants');
+vi.mocked(useApiTenants).mockReturnValue({ getSettings: mockApiGetSettings });
 
-jest.mock('react-redux-loading-bar', () => {
-  const original = jest.requireActual('react-redux-loading-bar');
+vi.mock('react-redux-loading-bar', async importOriginal => {
+  const actual = (await importOriginal()) as any;
   return {
-    ...original,
-    showLoading: jest.fn((scope?: string): Action<any> => ({ type: 'show' })),
-    hideLoading: jest.fn((scope?: string): Action<any> => ({ type: 'hide' })),
+    ...actual,
+    showLoading: vi.fn((scope?: string): Action<any> => ({ type: 'show' })),
+    hideLoading: vi.fn((scope?: string): Action<any> => ({ type: 'hide' })),
   };
 });
 
-const mockHideLoading = showLoading as jest.Mock;
-const mockShowLoading = hideLoading as jest.Mock;
-
-jest.mock('../network/networkSlice', () => {
-  const original = jest.requireActual('../network/networkSlice');
+vi.mock('../network/networkSlice', async importOriginal => {
+  const actual = (await importOriginal()) as any;
   return {
-    ...original,
-    logError: jest.fn(() => ({ type: 'error' })),
-    logRequest: jest.fn(() => ({ type: 'request' })),
-    logSuccess: jest.fn(() => ({ type: 'success' })),
+    ...actual,
+    logError: vi.fn(() => ({ type: 'error' })),
+    logRequest: vi.fn(() => ({ type: 'request' })),
+    logSuccess: vi.fn(() => ({ type: 'success' })),
   };
 });
-
-const mockLogRequest = logRequest as unknown as jest.Mock;
-const mockLogSuccess = logSuccess as unknown as jest.Mock;
-const mockLogError = logError as unknown as jest.Mock;
 
 let currentStore: MockStoreEnhanced<any, {}>;
 const mockStore = configureMockStore([thunk]);
@@ -58,17 +49,11 @@ describe('useTenant slice hook', () => {
   beforeEach(() => {});
 
   afterEach(() => {
-    mockShowLoading.mockClear();
-    mockLogRequest.mockClear();
-    mockLogSuccess.mockClear();
-    mockLogError.mockClear();
-    mockHideLoading.mockClear();
-    mockApiGetSettings.mockClear();
+    vi.clearAllMocks();
   });
 
   afterAll(() => {
-    jest.restoreAllMocks();
-    jest.unmock('react-redux-loading-bar');
+    vi.restoreAllMocks();
   });
 
   it('getSettings reducer + api hook', async () => {
@@ -81,11 +66,11 @@ describe('useTenant slice hook', () => {
     // assertions
     expect(response?.data).toStrictEqual({ code: 'test' });
     expect(mockApiGetSettings).toBeCalledTimes(1);
-    expect(mockShowLoading).toBeCalledTimes(1);
-    expect(mockLogRequest).toBeCalledTimes(1);
-    expect(mockLogSuccess).toBeCalledTimes(1);
-    expect(mockLogError).toBeCalledTimes(0);
-    expect(mockHideLoading).toBeCalledTimes(1);
+    expect(showLoading).toBeCalledTimes(1);
+    expect(logRequest).toBeCalledTimes(1);
+    expect(logSuccess).toBeCalledTimes(1);
+    expect(logError).toBeCalledTimes(0);
+    expect(hideLoading).toBeCalledTimes(1);
   });
 
   it('getSettings reducer + api hook error', async () => {
@@ -98,10 +83,10 @@ describe('useTenant slice hook', () => {
     // assertions
     expect(response?.data).toBeUndefined();
     expect(mockApiGetSettings).toBeCalledTimes(1);
-    expect(mockShowLoading).toBeCalledTimes(1);
-    expect(mockLogRequest).toBeCalledTimes(1);
-    expect(mockLogSuccess).toBeCalledTimes(0);
-    expect(mockLogError).toBeCalledTimes(1);
-    expect(mockHideLoading).toBeCalledTimes(1);
+    expect(showLoading).toBeCalledTimes(1);
+    expect(logRequest).toBeCalledTimes(1);
+    expect(logSuccess).toBeCalledTimes(0);
+    expect(logError).toBeCalledTimes(1);
+    expect(hideLoading).toBeCalledTimes(1);
   });
 });

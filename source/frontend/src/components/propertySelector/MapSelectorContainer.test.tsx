@@ -2,7 +2,7 @@ import { act, screen } from '@testing-library/react';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { Formik } from 'formik';
-import { noop } from 'lodash';
+import noop from 'lodash/noop';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
@@ -22,7 +22,7 @@ const mockAxios = new MockAdapter(axios);
 
 const store = mockStore({});
 
-const onSelectedProperties = jest.fn();
+const onSelectedProperties = vi.fn();
 
 const testProperty: IMapProperty = {
   propertyId: 123,
@@ -35,7 +35,7 @@ const testProperty: IMapProperty = {
   districtName: 'Okanagan-Shuswap',
 };
 
-jest.mock('@/components/common/mapFSM/MapStateMachineContext');
+vi.mock('@/components/common/mapFSM/MapStateMachineContext');
 
 describe('MapSelectorContainer component', () => {
   const setup = (renderOptions: RenderOptions & Partial<IMapSelectorContainerProps>) => {
@@ -69,12 +69,10 @@ describe('MapSelectorContainer component', () => {
       .reply(200, mockFAParcelLayerResponse)
       .onGet(new RegExp('tools/geocoder/nearest*'))
       .reply(200, mockGeocoderOptions[0]);
-
-    (useMapStateMachine as jest.Mock).mockImplementation(() => mapMachineBaseMock);
   });
 
   afterEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
   });
 
   it('renders as expected when provided no properties', async () => {

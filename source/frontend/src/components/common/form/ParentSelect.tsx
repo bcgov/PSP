@@ -1,6 +1,5 @@
 import { getIn, useFormikContext } from 'formik';
-import { groupBy, sortBy } from 'lodash';
-import _ from 'lodash';
+import { groupBy, isEmpty, sortBy } from 'lodash';
 import React, { Fragment, useEffect, useState } from 'react';
 import { Highlighter, Menu, MenuItem } from 'react-bootstrap-typeahead';
 import styled from 'styled-components';
@@ -103,7 +102,7 @@ export const ParentSelect: React.FC<React.PropsWithChildren<IParentSelect>> = ({
     if (value?.value) {
       return [value];
     }
-    if (exists(value) && !_.isEmpty(value?.toString())) {
+    if (exists(value) && !isEmpty(value?.toString())) {
       /** select appropriate organization to set the field value to when present */
       const option = options.find(x => x.value === value?.toString() || x.value === value);
       return option ? [option] : [];

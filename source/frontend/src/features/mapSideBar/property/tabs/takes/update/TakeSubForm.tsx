@@ -1,5 +1,5 @@
 import { getIn, useFormikContext } from 'formik';
-import * as React from 'react';
+import { useEffect } from 'react';
 import { FaTrash } from 'react-icons/fa';
 
 import { StyledRemoveLinkButton } from '@/components/common/buttons';
@@ -56,7 +56,7 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({
   const isLeasePayable = getIn(values, withNameSpace(nameSpace, 'isLeasePayable'));
   const takeStatusTypeCode = getIn(values, withNameSpace(nameSpace, 'takeStatusTypeCode'));
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (
       currentTake.completionDt &&
       currentTake.takeStatusTypeCode !== ApiGen_CodeTypes_AcquisitionTakeStatusTypes.COMPLETE

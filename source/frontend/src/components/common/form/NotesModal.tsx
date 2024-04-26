@@ -1,6 +1,5 @@
 import { getIn, useFormikContext } from 'formik';
-import React from 'react';
-import { useEffect } from 'react';
+import { FunctionComponent, PropsWithChildren, ReactNode, useEffect } from 'react';
 import { useState } from 'react';
 import { FaRegFileAlt } from 'react-icons/fa';
 
@@ -10,14 +9,14 @@ import GenericModal from '@/components/common/GenericModal';
 import { withNameSpace } from '@/utils/formUtils';
 
 export interface INotesModalProps {
-  notesLabel: React.ReactNode;
+  notesLabel: ReactNode;
   title: string;
   nameSpace?: string;
   onSave?: (values: any) => void;
   field?: string;
 }
 
-export const NotesModal: React.FunctionComponent<React.PropsWithChildren<INotesModalProps>> = ({
+export const NotesModal: FunctionComponent<PropsWithChildren<INotesModalProps>> = ({
   nameSpace,
   onSave,
   notesLabel,

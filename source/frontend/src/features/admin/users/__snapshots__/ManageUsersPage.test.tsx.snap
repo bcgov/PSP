@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Manage Users Component Snapshot matches 1`] = `
+exports[`Manage Users Component > Snapshot matches 1`] = `
 <div
   class="Toastify"
 />

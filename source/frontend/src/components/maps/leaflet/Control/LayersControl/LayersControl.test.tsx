@@ -1,5 +1,5 @@
 import L from 'leaflet';
-import { noop } from 'lodash';
+import noop from 'lodash/noop';
 import { useState } from 'react';
 
 import { act, cleanup, render, waitFor } from '@/utils/test-utils';
@@ -7,7 +7,7 @@ import { createMapContainer, deferred, userEvent } from '@/utils/test-utils';
 
 import LayersControl from './LayersControl';
 
-jest.mock('axios');
+vi.mock('axios');
 
 // component under test
 function Template({ openByDefault = false }) {

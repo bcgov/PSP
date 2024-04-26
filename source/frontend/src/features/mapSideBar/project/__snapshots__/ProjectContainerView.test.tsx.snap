@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`ProjectSummaryView component matches snapshot 1`] = `
+exports[`ProjectSummaryView component > matches snapshot 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
@@ -81,6 +81,195 @@ exports[`ProjectSummaryView component matches snapshot 1`] = `
     />
   </div>
   .c0 {
+  position: relative;
+}
+
+.c1 {
+  margin-top: 0.5rem;
+  margin-bottom: 1.5rem;
+  border-bottom-style: solid;
+  border-bottom-color: grey;
+  border-bottom-width: 0.1rem;
+}
+
+.c2 {
+  font-size: 0.87em;
+  line-height: 1.9;
+}
+
+<div
+    class="c0"
+  >
+    <div
+      class="c1 no-gutters row"
+    >
+      <div
+        class="col-7"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            <div
+              class="row"
+            >
+              <div
+                class="pr-0 text-left col-3"
+              >
+                <label>
+                  Project:
+                </label>
+              </div>
+              <div
+                class="pl-1 text-left col-9"
+              >
+                <strong>
+                  771 Project Cool A
+                </strong>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            <div
+              class="row"
+            >
+              <div
+                class="pr-0 text-left col-3"
+              >
+                <label>
+                  MoTI Region:
+                </label>
+              </div>
+              <div
+                class="pl-1 text-left col-9"
+              >
+                <strong>
+                  South Coast Region
+                </strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="col-5"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="text-right col"
+          >
+            <span
+              class="c2"
+            >
+              Created: 
+              <strong>
+                Jan 31, 2023
+              </strong>
+               by 
+              <span
+                class="tooltip-icon"
+                data-testid="tooltip-icon-userNameTooltip"
+                id="userNameTooltip"
+              >
+                <strong>
+                  USER_B
+                </strong>
+              </span>
+            </span>
+          </div>
+        </div>
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="text-right col"
+          >
+            <span
+              class="c2"
+            >
+              Last updated: 
+              <strong>
+                Feb 1, 2023
+              </strong>
+               by 
+              <span
+                class="tooltip-icon"
+                data-testid="tooltip-icon-userNameTooltip"
+                id="userNameTooltip"
+              >
+                <strong>
+                  USER_A
+                </strong>
+              </span>
+            </span>
+          </div>
+        </div>
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            <div
+              class="justify-content-end row"
+            >
+              <div
+                class="pr-0 text-left col-auto"
+              >
+                <label>
+                  Status:
+                </label>
+              </div>
+              <div
+                class="pl-1 text-left col-auto"
+              >
+                <strong>
+                  Active (AC)
+                </strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  .c4 {
+  background-color: white;
+  font-size: 1.4rem;
+  border-color: transparent;
+}
+
+.c4 .nav-tabs {
+  height: auto;
+}
+
+.c4 .nav-item {
+  min-width: 5rem;
+  padding: 0.1rem 0.6rem;
+}
+
+.c4 .nav-item:hover {
+  border-color: transparent;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+}
+
+.c4 .nav-item.active {
+  font-family: 'BCSans-Bold';
+  border-color: transparent;
+}
+
+.c0 {
   width: 100%;
   position: relative;
   overflow: auto;
@@ -94,12 +283,62 @@ exports[`ProjectSummaryView component matches snapshot 1`] = `
   width: 100%;
 }
 
+.c3 {
+  height: 100%;
+}
+
+.c3 .tab-content {
+  border-radius: 0 0.4rem 0.4rem 0.4rem;
+  height: calc(100% - 2.5rem);
+  overflow-y: auto;
+}
+
+.c3 .tab-content .tab-pane {
+  position: relative;
+}
+
+.c2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  text-align: left;
+  height: 100%;
+  overflow-y: auto;
+  padding-right: 1rem;
+  padding-bottom: 1rem;
+}
+
 <div
     class="c0"
   >
     <div
       class="c1"
-    />
+    >
+      <div
+        class="c2"
+      >
+        <div
+          class="c3"
+        >
+          <nav
+            class="c4 nav nav-tabs"
+            role="tablist"
+          />
+          <div
+            class="tab-content"
+          />
+        </div>
+        <div />
+      </div>
+    </div>
   </div>
 </DocumentFragment>
 `;

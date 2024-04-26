@@ -8,14 +8,14 @@ import { act, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import { StakeHolderForm } from './models';
 import UpdateStakeHolderForm, { IUpdateStakeHolderFormProps } from './UpdateStakeHolderForm';
-import React from 'react';
+import { createRef } from 'react';
 
 const history = createMemoryHistory();
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
 
-const onSubmit = jest.fn();
+const onSubmit = vi.fn();
 
 describe('UpdateStakeHolderForm component', () => {
   // render component under test
@@ -26,7 +26,7 @@ describe('UpdateStakeHolderForm component', () => {
       <UpdateStakeHolderForm
         {...renderOptions.props}
         onSubmit={onSubmit}
-        formikRef={React.createRef() as any}
+        formikRef={createRef() as any}
         file={mockAcquisitionFileResponse()}
         interestHolders={
           renderOptions.props?.interestHolders ??
@@ -47,7 +47,7 @@ describe('UpdateStakeHolderForm component', () => {
   };
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders as expected', () => {

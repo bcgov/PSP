@@ -9,7 +9,7 @@ import { ValidationError } from 'yup';
 
 import { NoteTypes } from '@/constants/index';
 import { mockEntityNote } from '@/mocks/noteResponses.mock';
-import { fakeText } from '@/utils/test-utils';
+import { cleanup, fakeText } from '@/utils/test-utils';
 import TestCommonWrapper from '@/utils/TestCommonWrapper';
 
 import { EntityNoteForm } from '../add/models';
@@ -22,7 +22,7 @@ const history = createMemoryHistory();
 const mockAxios = new MockAdapter(axios);
 const mockStore = configureMockStore([thunk]);
 
-const onSuccess = jest.fn();
+const onSuccess = vi.fn();
 
 describe('useAddNotesFormManagement hook', () => {
   const setup = (hookProps: IUseAddNotesFormManagementProps) => {
@@ -51,7 +51,8 @@ describe('useAddNotesFormManagement hook', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
+    cleanup();
   });
 
   it('should return valid initial values', async () => {
@@ -66,7 +67,7 @@ describe('useAddNotesFormManagement hook', () => {
   });
 
   it('should provide form validation schema', async () => {
-    expect.assertions(4);
+    expect.assertions(3);
     const { validationSchema } = setup({ parentId: 1, type: NoteTypes.Activity });
 
     const validForm = new EntityNoteForm();
@@ -87,8 +88,8 @@ describe('useAddNotesFormManagement hook', () => {
     formValues.note.note = 'Test Note';
 
     const formikHelpers: Partial<FormikHelpers<EntityNoteForm>> = {
-      setSubmitting: jest.fn(),
-      resetForm: jest.fn(),
+      setSubmitting: vi.fn(),
+      resetForm: vi.fn(),
     };
 
     await act(async () => handleSubmit(formValues, formikHelpers as any));

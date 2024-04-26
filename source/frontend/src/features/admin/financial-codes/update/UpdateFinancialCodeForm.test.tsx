@@ -19,10 +19,10 @@ import { UpdateFinancialCodeYupSchema } from './UpdateFinancialCodeYupSchema';
 const mockProps: IUpdateFinancialCodeFormProps = {
   financialCode: undefined,
   validationSchema: Yup.object().shape({}),
-  onSave: jest.fn(),
-  onCancel: jest.fn(),
-  onError: jest.fn(),
-  onSuccess: jest.fn(),
+  onSave: vi.fn(),
+  onCancel: vi.fn(),
+  onError: vi.fn(),
+  onSuccess: vi.fn(),
 };
 
 describe('UpdateFinancialCode form', () => {
@@ -47,7 +47,7 @@ describe('UpdateFinancialCode form', () => {
     // reset mock yup validation between tests
     mockProps.validationSchema = Yup.object().shape({});
     mockProps.financialCode = mockFinancialCode();
-    jest.resetAllMocks();
+    vi.resetAllMocks();
   });
 
   it('renders as expected', () => {
@@ -110,7 +110,7 @@ describe('UpdateFinancialCode form', () => {
   });
 
   it('calls onSave and saves form data as expected', async () => {
-    (mockProps.onSave as jest.Mock).mockResolvedValue(mockFinancialCode());
+    vi.mocked(mockProps.onSave).mockResolvedValue(mockFinancialCode());
     setup();
 
     const codeValue = document.querySelector(`input[name="code"]`) as HTMLSelectElement;
@@ -133,7 +133,7 @@ describe('UpdateFinancialCode form', () => {
   });
 
   it('calls onError when it cannot save the form', async () => {
-    (mockProps.onSave as jest.Mock).mockRejectedValue(createAxiosError(500));
+    vi.mocked(mockProps.onSave).mockRejectedValue(createAxiosError(500));
     setup();
 
     const description = document.querySelector(`input[name="description"]`) as HTMLInputElement;

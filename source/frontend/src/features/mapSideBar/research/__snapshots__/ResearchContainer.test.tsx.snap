@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`ResearchContainer component renders as expected 1`] = `
+exports[`ResearchContainer component > renders as expected 1`] = `
 .c18 {
   background-color: white;
   font-size: 1.4rem;

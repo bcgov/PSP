@@ -16,10 +16,9 @@ import CompensationRequisitionDetailView, {
 } from './CompensationRequisitionDetailView';
 import { ApiGen_CodeTypes_AcquisitionStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_AcquisitionStatusTypes';
 
-const setEditMode = jest.fn();
+const setEditMode = vi.fn();
 
 const history = createMemoryHistory();
-jest.mock('@react-keycloak/web');
 
 describe('Compensation Detail View Component', () => {
   const setup = async (
@@ -33,7 +32,7 @@ describe('Compensation Detail View Component', () => {
         loading={renderOptions.props?.loading ?? false}
         setEditMode={setEditMode}
         clientConstant={renderOptions.props?.clientConstant ?? '034'}
-        onGenerate={jest.fn()}
+        onGenerate={vi.fn()}
         compensationContactPerson={undefined}
         compensationContactOrganization={undefined}
       />,
@@ -50,7 +49,7 @@ describe('Compensation Detail View Component', () => {
   };
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders as expected', async () => {

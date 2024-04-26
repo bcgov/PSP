@@ -1,5 +1,4 @@
 import { Formik, FormikProps } from 'formik';
-import * as React from 'react';
 import { useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaExternalLinkAlt } from 'react-icons/fa';

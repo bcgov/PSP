@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`AccessRequestContainer component makes a request based on the access request id 1`] = `
+exports[`AccessRequestContainer component > makes a request based on the access request id 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
@@ -724,7 +724,7 @@ exports[`AccessRequestContainer component makes a request based on the access re
 </DocumentFragment>
 `;
 
-exports[`AccessRequestContainer component makes a request when no id is provided 1`] = `
+exports[`AccessRequestContainer component > makes a request when no id is provided 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"

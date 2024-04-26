@@ -20,18 +20,18 @@ const storeState = {
 const mockGetApi = {
   error: undefined,
   response: [] as ApiGen_Concepts_InterestHolder[],
-  execute: jest.fn().mockResolvedValue(getMockApiInterestHolders()),
+  execute: vi.fn().mockResolvedValue(getMockApiInterestHolders()),
   loading: false,
 };
 
 const mockUpdateApi = {
   error: undefined,
   response: undefined,
-  execute: jest.fn().mockResolvedValue(getMockApiInterestHolders()),
+  execute: vi.fn().mockResolvedValue(getMockApiInterestHolders()),
   loading: false,
 };
 
-jest.mock('@/hooks/repositories/useInterestHolderRepository', () => ({
+vi.mock('@/hooks/repositories/useInterestHolderRepository', () => ({
   useInterestHolderRepository: () => {
     return {
       getAcquisitionInterestHolders: mockGetApi,
@@ -46,7 +46,7 @@ describe('StakeHolderContainer component', () => {
     return <></>;
   });
 
-  const onEdit = jest.fn();
+  const onEdit = vi.fn();
 
   const setup = (
     renderOptions: RenderOptions & { props?: Partial<IStakeHolderContainerProps> },
@@ -71,7 +71,7 @@ describe('StakeHolderContainer component', () => {
   };
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders as expected', () => {

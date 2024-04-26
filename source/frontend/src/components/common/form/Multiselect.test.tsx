@@ -64,7 +64,7 @@ describe('Multiselect component', () => {
   beforeEach(() => {});
 
   afterEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
   });
 
   it('renders as expected', () => {
@@ -81,7 +81,7 @@ describe('Multiselect component', () => {
   });
 
   it('calls onSelect callback when values are selected', async () => {
-    const onSelectSpy = jest.fn();
+    const onSelectSpy = vi.fn();
     const optionSelected = fakeOptions[1];
 
     const { container, getInput, findDropdownOption } = setup({
@@ -102,7 +102,7 @@ describe('Multiselect component', () => {
   });
 
   it('calls onRemove callback when clicking on X next to option', async () => {
-    const onRemoveSpy = jest.fn();
+    const onRemoveSpy = vi.fn();
     const optionToRemove = fakeOptions[1];
     const remainingOptions = fakeOptions.filter(n => n.id !== optionToRemove.id);
 

@@ -2,7 +2,7 @@ import { Feature, FeatureCollection, GeoJsonProperties, Geometry } from 'geojson
 import { LatLngLiteral } from 'leaflet';
 import debounce from 'lodash/debounce';
 import isNumber from 'lodash/isNumber';
-import React, { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { toast } from 'react-toastify';
 
 import { DistrictCodes, RegionCodes } from '@/constants/index';
@@ -50,7 +50,7 @@ export const PropertySelectorSearchContainer: React.FC<IPropertySelectorSearchCo
     findByLoading: isMapLayerLoading,
   } = useParcelMapLayer();
 
-  React.useEffect(() => {
+  useEffect(() => {
     const searchFunc = async () => {
       let result: FeatureCollection<Geometry, PMBC_Feature_Properties> | undefined = undefined;
       if (layerSearch?.searchBy === 'pid' && layerSearch.pid) {
@@ -137,7 +137,7 @@ export const PropertySelectorSearchContainer: React.FC<IPropertySelectorSearchCo
     }
   };
 
-  const debouncedSearch = React.useRef(
+  const debouncedSearch = useRef(
     debounce(
       async (val: string, abort: boolean) => {
         if (!abort) {

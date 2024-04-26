@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { FaHandHoldingUsd, FaMoneyCheckAlt, FaPencilRuler, FaPlus } from 'react-icons/fa';
 import { useHistory, useRouteMatch } from 'react-router';
 import styled from 'styled-components';

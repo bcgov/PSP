@@ -1,4 +1,4 @@
-import { orderBy } from 'lodash';
+import orderBy from 'lodash/orderBy';
 import React, { useEffect, useState } from 'react';
 
 import GenericModal from '@/components/common/GenericModal';

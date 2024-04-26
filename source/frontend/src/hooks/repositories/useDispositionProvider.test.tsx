@@ -16,11 +16,11 @@ import { networkSlice } from '@/store/slices/network/networkSlice';
 
 import { useDispositionProvider } from './useDispositionProvider';
 
-const dispatch = jest.fn();
-const toastErrorSpy = jest.spyOn(toast, 'error');
-const requestSpy = jest.spyOn(networkSlice.actions, 'logRequest');
-const successSpy = jest.spyOn(networkSlice.actions, 'logSuccess');
-const errorSpy = jest.spyOn(networkSlice.actions, 'logError');
+const dispatch = vi.fn();
+const toastErrorSpy = vi.spyOn(toast, 'error');
+const requestSpy = vi.spyOn(networkSlice.actions, 'logRequest');
+const successSpy = vi.spyOn(networkSlice.actions, 'logSuccess');
+const errorSpy = vi.spyOn(networkSlice.actions, 'logError');
 const mockAxios = new MockAdapter(axios);
 
 let currentStore: MockStoreEnhanced<any, {}>;
@@ -52,7 +52,7 @@ describe('useDispositionProvider hook', () => {
   });
 
   afterAll(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
 
   let url: RegExp;

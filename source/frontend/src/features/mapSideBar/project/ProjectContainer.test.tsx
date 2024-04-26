@@ -13,26 +13,24 @@ import ProjectContainer, { IProjectContainerViewProps } from './ProjectContainer
 
 const mockAxios = new MockAdapter(axios);
 // mock auth library
-jest.mock('@react-keycloak/web');
+
 let viewProps: IProjectContainerViewProps | undefined = undefined;
 const TestView: React.FC<IProjectContainerViewProps> = props => {
   viewProps = props;
   return <span>Content Rendered</span>;
 };
 
-jest.mock('@react-keycloak/web');
-
 // Need to mock this library for unit tests
-jest.mock('react-visibility-sensor', () => {
-  return jest.fn().mockImplementation(({ children }) => {
-    if (children instanceof Function) {
-      return children({ isVisible: true });
-    }
-    return children;
-  });
+vi.mock('react-visibility-sensor', () => {
+  return {
+    default: vi.fn().mockImplementation(({ children }) => {
+      if (children instanceof Function) {
+        return children({ isVisible: true });
+      }
+      return children;
+    }),
+  };
 });
-
-jest.mock('@/components/common/mapFSM/MapStateMachineContext');
 
 describe('ProjectContainer component', () => {
   // render component under test
@@ -43,7 +41,7 @@ describe('ProjectContainer component', () => {
           ...mockProjectGetResponse(),
         }}
       >
-        <ProjectContainer projectId={1} View={TestView} onClose={jest.fn()} />
+        <ProjectContainer projectId={1} View={TestView} onClose={vi.fn()} />
       </SideBarContextProvider>,
       {
         store: {
@@ -63,15 +61,14 @@ describe('ProjectContainer component', () => {
   };
 
   beforeEach(() => {
-    jest.resetAllMocks();
-    (useMapStateMachine as jest.Mock).mockImplementation(() => mapMachineBaseMock);
+    vi.resetAllMocks();
     mockAxios.onGet(new RegExp('users/info/*')).reply(200, {});
     mockAxios.onGet(new RegExp('projects/*')).reply(200, mockProjectGetResponse());
   });
 
   afterEach(() => {
     mockAxios.resetHistory();
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders the underlying form', () => {

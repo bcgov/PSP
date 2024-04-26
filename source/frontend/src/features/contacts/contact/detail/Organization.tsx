@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { Col } from 'react-bootstrap';
 import { FaCircle, FaRegBuilding } from 'react-icons/fa';
 import { Link } from 'react-router-dom';

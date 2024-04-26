@@ -5,15 +5,16 @@ import { useTenant } from '@/tenants/useTenant';
 import { render } from '@/utils/test-utils';
 
 import { Header } from './Header';
+import { vi } from 'vitest';
 
-jest.mock('@/tenants/useTenant');
-const mockUseTenant = useTenant as jest.Mock<ITenantConfig2>;
+vi.mock('@/tenants/useTenant');
+const mockUseTenant = vi.mocked(useTenant);
 
 const testRender = () => render(<Header />);
 
 describe('Tenant Header', () => {
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('Header default background', async () => {

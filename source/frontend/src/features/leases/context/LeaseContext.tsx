@@ -1,6 +1,5 @@
-import { noop } from 'lodash';
-import * as React from 'react';
-import { useState } from 'react';
+import noop from 'lodash/noop';
+import { createContext, useState } from 'react';
 
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 
@@ -9,7 +8,7 @@ export interface ILeaseState {
   setLease: (lease: ApiGen_Concepts_Lease) => void;
 }
 
-export const LeaseStateContext = React.createContext<ILeaseState>({
+export const LeaseStateContext = createContext<ILeaseState>({
   lease: undefined,
   setLease: noop,
 });

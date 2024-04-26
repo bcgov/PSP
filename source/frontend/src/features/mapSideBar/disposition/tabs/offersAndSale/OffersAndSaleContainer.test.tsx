@@ -14,34 +14,34 @@ const history = createMemoryHistory();
 const mockGetDispositionFileOffersApi = {
   error: undefined,
   response: undefined,
-  execute: jest.fn(),
+  execute: vi.fn(),
   loading: false,
 };
 
 const mockGetDispositionFileSalesApi = {
   error: undefined,
   response: undefined,
-  execute: jest.fn(),
+  execute: vi.fn(),
   loading: false,
 };
 
 const mockGetDispositionFileAppraisalApi = {
   error: undefined,
   response: undefined,
-  execute: jest.fn(),
+  execute: vi.fn(),
   loading: false,
 };
 
 const mockDeleteDispositionFileOfferApi = {
   error: undefined,
   response: undefined,
-  execute: jest.fn(),
+  execute: vi.fn(),
   loading: false,
 };
 
-const onSuccess = jest.fn();
+const onSuccess = vi.fn();
 
-jest.mock('@/hooks/repositories/useDispositionProvider', () => ({
+vi.mock('@/hooks/repositories/useDispositionProvider', () => ({
   useDispositionProvider: () => {
     return {
       getDispositionFileOffers: mockGetDispositionFileOffersApi,
@@ -89,7 +89,7 @@ describe('OffersAndSale Container component', () => {
 
   beforeEach(() => {
     viewProps = undefined;
-    jest.resetAllMocks();
+    vi.resetAllMocks();
   });
 
   it('Renders the underlying form', async () => {

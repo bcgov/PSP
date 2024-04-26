@@ -31,8 +31,8 @@ import UpdateCompensationRequisitionForm, {
 } from './UpdateCompensationRequisitionForm';
 
 const currentGstPercent = 0.05;
-const onSave = jest.fn();
-const onCancel = jest.fn();
+const onSave = vi.fn();
+const onCancel = vi.fn();
 
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
@@ -54,13 +54,11 @@ const getPayeeOptions = (owners: ApiGen_Concepts_AcquisitionFileOwner[]): PayeeO
   return options;
 };
 
-jest.mock('@/hooks/useProjectTypeahead');
-const mockUseProjectTypeahead = useProjectTypeahead as jest.MockedFunction<
-  typeof useProjectTypeahead
->;
+vi.mock('@/hooks/useProjectTypeahead');
+const mockUseProjectTypeahead = vi.mocked(useProjectTypeahead);
 
-const handleTypeaheadSearch = jest.fn();
-const setShowAltProjectError = jest.fn();
+const handleTypeaheadSearch = vi.fn();
+const setShowAltProjectError = vi.fn();
 
 describe('Compensation Requisition UpdateForm component', () => {
   const payeeOptions = getPayeeOptions(mockAcquisitionFileOwnersResponse());
@@ -149,7 +147,7 @@ describe('Compensation Requisition UpdateForm component', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders as expected', async () => {

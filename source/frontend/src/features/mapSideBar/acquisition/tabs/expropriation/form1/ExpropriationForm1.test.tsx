@@ -6,16 +6,15 @@ import { act, render, RenderOptions, userEvent } from '@/utils/test-utils';
 import ExpropriationForm1, { IExpropriationForm1Props } from './ExpropriationForm1';
 
 // mock auth library
-jest.mock('@react-keycloak/web');
 
-jest.mock('@/hooks/pims-api/useApiContacts');
-const getContacts = jest.fn();
-(useApiContacts as jest.Mock).mockReturnValue({
+vi.mock('@/hooks/pims-api/useApiContacts');
+const getContacts = vi.fn();
+vi.mocked(useApiContacts).mockReturnValue({
   getContacts,
-});
+} as unknown as ReturnType<typeof useApiContacts>);
 
-const onGenerate = jest.fn();
-const onError = jest.fn();
+const onGenerate = vi.fn();
+const onError = vi.fn();
 
 describe('Expropriation Form 1', () => {
   const setup = async (
@@ -56,7 +55,7 @@ describe('Expropriation Form 1', () => {
     });
   });
 
-  afterEach(() => jest.clearAllMocks());
+  afterEach(() => vi.clearAllMocks());
 
   it('matches snapshot', async () => {
     const { asFragment } = await setup();

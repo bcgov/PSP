@@ -1,5 +1,5 @@
 import { Formik } from 'formik';
-import { noop } from 'lodash';
+import noop from 'lodash/noop';
 import { useContext, useEffect, useState } from 'react';
 
 import GenericModal from '@/components/common/GenericModal';

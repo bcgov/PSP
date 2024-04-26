@@ -1,8 +1,7 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { Formik } from 'formik';
-import { noop } from 'lodash';
-import React from 'react';
+import noop from 'lodash/noop';
 
 import { Claims } from '@/constants';
 import { LeaseTermStatusTypes } from '@/constants/leaseStatusTypes';
@@ -31,16 +30,17 @@ import { defaultFormLeaseTerm, FormLeaseTerm } from './models';
 import { defaultTestFormLeasePayment } from './table/payments/PaymentsForm.test';
 import TermPaymentsContainer from './TermPaymentsContainer';
 import { createMemoryHistory } from 'history';
+import { createRef } from 'react';
 
 const defaultRepositoryResponse = {
-  execute: jest.fn(),
+  execute: vi.fn(),
   response: {} as any,
   error: undefined,
   status: undefined,
   loading: false,
 };
 
-const getLeaseTerms = jest.fn();
+const getLeaseTerms = vi.fn();
 const mockGetLeaseTerms = {
   execute: getLeaseTerms,
   response: [
@@ -63,10 +63,9 @@ const defaultLeaseWithTermsPayments: LeaseFormModel = {
   ],
 };
 
-jest.mock('@react-keycloak/web');
-jest.mock('@/hooks/repositories/useUserInfoRepository');
-jest.mock('@/hooks/repositories/useLeaseTermRepository');
-(useLeaseTermRepository as jest.MockedFunction<typeof useLeaseTermRepository>).mockReturnValue({
+vi.mock('@/hooks/repositories/useUserInfoRepository');
+vi.mock('@/hooks/repositories/useLeaseTermRepository');
+vi.mocked(useLeaseTermRepository).mockReturnValue({
   getLeaseTerms: mockGetLeaseTerms,
   updateLeaseTerm: { ...defaultRepositoryResponse },
   addLeaseTerm: { ...defaultRepositoryResponse },
@@ -78,8 +77,8 @@ const mockAxios = new MockAdapter(axios);
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
-const setLease = jest.fn();
-const onSuccessMock = jest.fn();
+const setLease = vi.fn();
+const onSuccessMock = vi.fn();
 
 describe('TermsPaymentsContainer component', () => {
   const setup = async (
@@ -103,7 +102,7 @@ describe('TermsPaymentsContainer component', () => {
       >
         <Formik initialValues={renderOptions.initialValues ?? {}} onSubmit={noop}>
           <TermPaymentsContainer
-            formikRef={React.createRef()}
+            formikRef={createRef()}
             isEditing={false}
             onSuccess={onSuccessMock}
           />

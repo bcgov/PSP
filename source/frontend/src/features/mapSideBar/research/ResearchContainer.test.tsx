@@ -19,22 +19,20 @@ import ResearchView from './ResearchView';
 
 const history = createMemoryHistory();
 const mockAxios = new MockAdapter(axios);
-jest.mock('@react-keycloak/web');
 
 // Need to mock this library for unit tests
-jest.mock('react-visibility-sensor', () => {
-  return jest.fn().mockImplementation(({ children }) => {
-    if (children instanceof Function) {
-      return children({ isVisible: true });
-    }
-    return children;
-  });
+vi.mock('react-visibility-sensor', () => {
+  return {
+    default: vi.fn().mockImplementation(({ children }) => {
+      if (children instanceof Function) {
+        return children({ isVisible: true });
+      }
+      return children;
+    }),
+  };
 });
 
-jest.mock('@/components/common/mapFSM/MapStateMachineContext');
-(useMapStateMachine as jest.Mock).mockImplementation(() => mapMachineBaseMock);
-
-const onClose = jest.fn();
+const onClose = vi.fn();
 
 describe('ResearchContainer component', () => {
   // render component under test
@@ -83,7 +81,7 @@ describe('ResearchContainer component', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders as expected', async () => {

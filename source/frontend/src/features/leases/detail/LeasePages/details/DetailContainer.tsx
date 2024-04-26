@@ -1,5 +1,4 @@
-import { FormikProps } from 'formik';
-import * as React from 'react';
+import { FormikProps } from 'formik/dist/types';
 
 import { ProtectedComponent } from '@/components/common/ProtectedComponent';
 import { Claims } from '@/constants/claims';

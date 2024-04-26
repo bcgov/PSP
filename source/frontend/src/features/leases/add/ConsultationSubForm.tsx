@@ -1,5 +1,4 @@
-import { FormikProps } from 'formik';
-import * as React from 'react';
+import { FormikProps } from 'formik/dist/types';
 import { Col, Row } from 'react-bootstrap';
 
 import { Input, Select } from '@/components/common/form';

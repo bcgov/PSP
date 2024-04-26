@@ -23,28 +23,28 @@ import {
 
 import PropertyListView, { ownershipFilterOptions } from './PropertyListView';
 import { MultiSelectOption } from '@/features/acquisition/list/interfaces';
+import { IGeocoderPidsResponse } from '@/hooks/pims-api/interfaces/IGeocoder';
+import { IPropertyFilter } from '../filter/IPropertyFilter';
 import { ApiGen_Concepts_PropertyView } from '@/models/api/generated/ApiGen_Concepts_PropertyView';
 
-// Set all module functions to jest.fn
-jest.mock('@react-keycloak/web');
-jest.mock('@/hooks/pims-api/useApiGeocoder');
-jest.mock('@/hooks/pims-api/useApiProperties');
+// Set all module functions to vi.fn
 
-const mockApiGetPropertiesViewPagedApi = jest.fn<
-  Promise<AxiosResponse<ApiGen_Base_Page<ApiGen_Concepts_PropertyView>>>,
-  any
->();
-(useApiProperties as unknown as jest.Mock<Partial<typeof useApiProperties>>).mockReturnValue({
-  getPropertiesViewPagedApi: mockApiGetPropertiesViewPagedApi,
-});
+vi.mock('@/hooks/pims-api/useApiGeocoder');
+vi.mock('@/hooks/pims-api/useApiProperties');
 
-const mockApiGetSitePidsApi = jest.fn<
-  Promise<AxiosResponse<ApiGen_Base_Page<ApiGen_Concepts_Property>>>,
-  any
->();
-(useApiGeocoder as unknown as jest.Mock<Partial<typeof useApiGeocoder>>).mockReturnValue({
-  getSitePidsApi: mockApiGetSitePidsApi,
-});
+const mockApiGetPropertiesPagedApi = vi.fn();
+vi.mocked(useApiProperties).mockReturnValue({
+  getPropertiesViewPagedApi: mockApiGetPropertiesPagedApi as (
+    params: IPropertyFilter | null,
+  ) => Promise<AxiosResponse<ApiGen_Base_Page<ApiGen_Concepts_Property>, any>>,
+} as unknown as ReturnType<typeof useApiProperties>);
+
+const mockApiGetSitePidsApi = vi.fn();
+vi.mocked(useApiGeocoder).mockReturnValue({
+  getSitePidsApi: mockApiGetSitePidsApi as unknown as (
+    siteId: string,
+  ) => Promise<AxiosResponse<IGeocoderPidsResponse, any>>,
+} as unknown as ReturnType<typeof useApiGeocoder>);
 
 const mockAxios = new MockAdapter(axios);
 const history = createMemoryHistory();
@@ -76,7 +76,7 @@ const setup = (renderOptions: RenderOptions = {}) => {
 const setupMockApi = (properties?: ApiGen_Concepts_PropertyView[]) => {
   const mockProperties = properties ?? [];
   const len = mockProperties.length;
-  mockApiGetPropertiesViewPagedApi.mockResolvedValue({
+  mockApiGetPropertiesPagedApi.mockResolvedValue({
     data: {
       quantity: len,
       total: len,
@@ -93,7 +93,7 @@ describe('Property list view', () => {
     mockAxios.reset();
     mockAxios.onAny().reply(200, {});
 
-    mockApiGetPropertiesViewPagedApi.mockClear();
+    mockApiGetPropertiesPagedApi.mockClear();
   });
   afterEach(() => {
     history.push({ search: '' });
@@ -194,7 +194,7 @@ describe('Property list view', () => {
     await focusOptionMultiselect(container, optionSelected, ownershipFilterOptions);
 
     await waitFor(() => {
-      expect(mockApiGetPropertiesViewPagedApi).toHaveBeenCalledWith({
+      expect(mockApiGetPropertiesPagedApi).toHaveBeenCalledWith({
         address: '',
         latitude: '',
         longitude: '',

@@ -8,7 +8,6 @@ import { cleanup, render, RenderOptions } from '@/utils/test-utils';
 import PropertyContainer, { IPropertyContainerProps } from './PropertyContainer';
 
 // mock keycloak auth library
-jest.mock('@react-keycloak/web');
 
 describe('PropertyContainer component', () => {
   const history = createMemoryHistory();
@@ -29,7 +28,7 @@ describe('PropertyContainer component', () => {
   };
 
   afterEach(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
     cleanup();
   });
 

@@ -1,5 +1,4 @@
 import { Formik } from 'formik';
-import * as React from 'react';
 import { toast } from 'react-toastify';
 
 import { InlineSelect } from '@/components/common/form/styles';

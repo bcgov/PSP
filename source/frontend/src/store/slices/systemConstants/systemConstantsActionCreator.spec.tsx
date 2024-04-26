@@ -2,7 +2,8 @@ import { waitFor } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { find, values } from 'lodash';
+import find from 'lodash/find';
+import values from 'lodash/values';
 import { Provider } from 'react-redux';
 import configureMockStore, { MockStoreEnhanced } from 'redux-mock-store';
 import thunk from 'redux-thunk';
@@ -12,9 +13,9 @@ import * as MOCK from '@/mocks/data.mock';
 import { networkSlice } from '../network/networkSlice';
 import { useSystemConstants } from '.';
 
-const requestSpy = jest.spyOn(networkSlice.actions, 'logRequest');
-const successSpy = jest.spyOn(networkSlice.actions, 'logSuccess');
-const errorSpy = jest.spyOn(networkSlice.actions, 'logError');
+const requestSpy = vi.spyOn(networkSlice.actions, 'logRequest');
+const successSpy = vi.spyOn(networkSlice.actions, 'logSuccess');
+const errorSpy = vi.spyOn(networkSlice.actions, 'logError');
 const mockAxios = new MockAdapter(axios);
 
 beforeEach(() => {
@@ -37,7 +38,7 @@ const getWrapper =
 
 describe('TODO: SystemConstants slice action creator', () => {
   afterAll(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
 
   const setup = () => {
@@ -54,7 +55,7 @@ describe('TODO: SystemConstants slice action creator', () => {
       },
     ],
   };
-  xit('calls the api with the expected url', async () => {
+  it.skip('calls the api with the expected url', async () => {
     mockAxios.onGet(apiUrl).reply(200, mockResponse);
     const { fetchSystemConstants } = setup();
     fetchSystemConstants();
@@ -66,7 +67,7 @@ describe('TODO: SystemConstants slice action creator', () => {
       { timeout: 5000 },
     );
   });
-  xit('gets all codes when paramaters contains all', async () => {
+  it.skip('gets all codes when paramaters contains all', async () => {
     mockAxios.onGet(apiUrl).reply(200, mockResponse);
     const { fetchSystemConstants } = setup();
     fetchSystemConstants();
@@ -84,7 +85,7 @@ describe('TODO: SystemConstants slice action creator', () => {
     );
   });
 
-  xit('Request failure, dispatches error with correct response', async () => {
+  it.skip('Request failure, dispatches error with correct response', async () => {
     mockAxios.onGet(apiUrl).reply(400, MOCK.ERROR);
     const { fetchSystemConstants } = setup();
     fetchSystemConstants();

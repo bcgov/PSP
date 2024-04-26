@@ -5,10 +5,10 @@
 import '@testing-library/jest-dom';
 import 'jest-styled-components';
 
-import failOnConsole from 'jest-fail-on-console';
 import noop from 'lodash/noop';
-import moment from 'moment-timezone';
+import moment from 'moment';
 import { MockedRequest } from 'msw';
+import failOnConsole from 'vitest-fail-on-console';
 
 import { server } from '@/mocks/msw/server';
 
@@ -48,9 +48,6 @@ const createElementNSOrig = (global as any).document.createElementNS;
   return createElementNSOrig.apply(this, arguments);
 };
 
-// Mock moment timezone to PST in all our tests
-moment.tz.setDefault('America/Vancouver');
-
 // This allows to run unit tests on GitHub Actions which are in GMT timezone by default
 ['Date', 'Day', 'FullYear', 'Hours', 'Minutes', 'Month', 'Seconds'].forEach(prop => {
   (Date.prototype as any)[`get${prop}`] = function () {
@@ -60,14 +57,12 @@ moment.tz.setDefault('America/Vancouver');
   };
 });
 
-window.scrollTo = jest.fn(); // not implemented by jsdom.
-
-jest.setTimeout(10000);
+window.scrollTo = vi.fn() as unknown as any; // not implemented by jsdom.
 
 // Set default tenant for unit tests
 import.meta.env.VITE_TENANT = 'MOTI';
 
-const onUnhandledRequest = jest.fn();
+const onUnhandledRequest = vi.fn();
 
 // Establish API mocking before all tests.
 beforeAll(() => server.listen({ onUnhandledRequest }));

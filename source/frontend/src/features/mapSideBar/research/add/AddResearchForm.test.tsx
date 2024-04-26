@@ -1,7 +1,7 @@
 import { screen } from '@testing-library/react';
 import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
-import { noop } from 'lodash';
+import noop from 'lodash/noop';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { mockLookups } from '@/mocks/lookups.mock';
@@ -15,13 +15,10 @@ import AddResearchForm from './AddResearchForm';
 import { ResearchForm } from './models';
 
 const history = createMemoryHistory();
-jest.mock('@react-keycloak/web');
+
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
-
-jest.mock('@/components/common/mapFSM/MapStateMachineContext');
-(useMapStateMachine as jest.Mock).mockImplementation(() => mapMachineBaseMock);
 
 describe('AddResearchForm component', () => {
   // render component under test
@@ -38,7 +35,7 @@ describe('AddResearchForm component', () => {
         validationSchema={AddResearchFileYupSchema}
       >
         {formikProps => (
-          <AddResearchForm confirmBeforeAdd={renderOptions.confirmBeforeAdd ?? jest.fn()} />
+          <AddResearchForm confirmBeforeAdd={renderOptions.confirmBeforeAdd ?? vi.fn()} />
         )}
       </Formik>,
       {
@@ -53,7 +50,7 @@ describe('AddResearchForm component', () => {
   };
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders as expected', async () => {

@@ -2,7 +2,7 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
-import { noop } from 'lodash';
+import noop from 'lodash/noop';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { useDocumentGenerationRepository } from '@/features/documents/hooks/useDocumentGenerationRepository';
@@ -30,27 +30,30 @@ import { IAcquisitionViewProps } from './AcquisitionView';
 
 const history = createMemoryHistory();
 const mockAxios = new MockAdapter(axios);
-const generateFn = jest.fn();
+const generateFn = vi.fn();
 
 // mock auth library
-jest.mock('@react-keycloak/web');
-jest.mock('@/features/documents/hooks/useDocumentGenerationRepository');
-(useDocumentGenerationRepository as jest.Mock).mockImplementation(() => ({
-  generateDocumentDownloadWrappedRequest: generateFn,
-}));
 
-jest.mock('@/components/common/mapFSM/MapStateMachineContext');
+vi.mock('@/features/documents/hooks/useDocumentGenerationRepository');
+vi.mocked(useDocumentGenerationRepository).mockImplementation(
+  () =>
+    ({
+      generateDocumentDownloadWrappedRequest: generateFn,
+    } as unknown as ReturnType<typeof useDocumentGenerationRepository>),
+);
 
-const onClose = jest.fn();
+const onClose = vi.fn();
 
 // Need to mock this library for unit tests
-jest.mock('react-visibility-sensor', () => {
-  return jest.fn().mockImplementation(({ children }) => {
-    if (children instanceof Function) {
-      return children({ isVisible: true });
-    }
-    return children;
-  });
+vi.mock('react-visibility-sensor', () => {
+  return {
+    default: vi.fn().mockImplementation(({ children }) => {
+      if (children instanceof Function) {
+        return children({ isVisible: true });
+      }
+      return children;
+    }),
+  };
 });
 
 let viewProps: IAcquisitionViewProps = {} as any;
@@ -96,8 +99,6 @@ describe('AcquisitionContainer component', () => {
   };
 
   beforeEach(() => {
-    (useMapStateMachine as jest.Mock).mockImplementation(() => mapMachineBaseMock);
-
     mockAxios.onGet(new RegExp('users/info/*')).reply(200, {});
     mockAxios
       .onGet(new RegExp('acquisitionfiles/1/properties'))
@@ -109,7 +110,7 @@ describe('AcquisitionContainer component', () => {
 
   afterEach(() => {
     mockAxios.resetHistory();
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders as expected', async () => {
@@ -176,7 +177,7 @@ describe('AcquisitionContainer component', () => {
 
   it('displays a warning if form is dirty and menu index changes', async () => {
     const { getByTestId } = setup(undefined, { claims: [] });
-    jest.spyOn(global, 'confirm' as any).mockReturnValueOnce(true);
+    vi.spyOn(global, 'confirm' as any).mockReturnValueOnce(true);
 
     const spinner = getByTestId('filter-backdrop-loading');
     await waitForElementToBeRemoved(spinner);
@@ -193,7 +194,7 @@ describe('AcquisitionContainer component', () => {
 
   it('cancels edit if form is not dirty and menu index changes', async () => {
     const { getByTestId } = setup(undefined, { claims: [] });
-    jest.spyOn(global, 'confirm' as any).mockReturnValueOnce(true);
+    vi.spyOn(global, 'confirm' as any).mockReturnValueOnce(true);
 
     const spinner = getByTestId('filter-backdrop-loading');
     await waitForElementToBeRemoved(spinner);
@@ -207,7 +208,7 @@ describe('AcquisitionContainer component', () => {
 
   it('on success function refetches acq file', async () => {
     const { getByTestId } = setup(undefined, { claims: [] });
-    jest.spyOn(global, 'confirm' as any).mockReturnValueOnce(true);
+    vi.spyOn(global, 'confirm' as any).mockReturnValueOnce(true);
 
     const spinner = getByTestId('filter-backdrop-loading');
     await waitForElementToBeRemoved(spinner);
@@ -219,7 +220,7 @@ describe('AcquisitionContainer component', () => {
 
   it('on success function cancels edit', async () => {
     const { getByTestId } = setup(undefined, { claims: [] });
-    jest.spyOn(global, 'confirm' as any).mockReturnValueOnce(true);
+    vi.spyOn(global, 'confirm' as any).mockReturnValueOnce(true);
 
     const spinner = getByTestId('filter-backdrop-loading');
     await waitForElementToBeRemoved(spinner);
@@ -233,7 +234,7 @@ describe('AcquisitionContainer component', () => {
 
   it('on save function submits the form', async () => {
     const { getByTestId } = setup(undefined, { claims: [] });
-    jest.spyOn(global, 'confirm' as any).mockReturnValueOnce(true);
+    vi.spyOn(global, 'confirm' as any).mockReturnValueOnce(true);
 
     const spinner = getByTestId('filter-backdrop-loading');
     await waitForElementToBeRemoved(spinner);

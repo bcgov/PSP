@@ -1,7 +1,7 @@
 import { useKeycloak } from '@react-keycloak/web';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { noop } from 'lodash';
+import noop from 'lodash/noop';
 
 import Claims from '@/constants/claims';
 import { mockDocumentsResponse, mockDocumentTypesResponse } from '@/mocks/documents.mock';
@@ -26,21 +26,10 @@ const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
 
-const deleteMock = jest.fn().mockResolvedValue(true);
+const deleteMock = vi.fn().mockResolvedValue(true);
 
 const mockDocumentRowResponse = () =>
   mockDocumentsResponse().map(x => (x?.document ? DocumentRow.fromApi(x) : new DocumentRow()));
-
-jest.mock('@react-keycloak/web');
-(useKeycloak as jest.Mock).mockReturnValue({
-  keycloak: {
-    userInfo: {
-      organizations: [1],
-      roles: [],
-    },
-    subject: 'test',
-  },
-});
 
 describe('Document List View', () => {
   const setup = (renderOptions?: RenderOptions & IDocumentListViewProps) => {
@@ -64,6 +53,7 @@ describe('Document List View', () => {
       {
         ...renderOptions,
         store: storeState,
+        useMockAuthentication: true,
       },
     );
 
@@ -81,7 +71,7 @@ describe('Document List View', () => {
     cleanup();
   });
   afterAll(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
 
   it('renders as expected', async () => {

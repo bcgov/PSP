@@ -14,12 +14,11 @@ import UpdateDispositionSaleView, {
 const defaultInitialValues = new DispositionSaleFormModel(null, 1, 0);
 
 const history = createMemoryHistory();
-jest.mock('@react-keycloak/web');
 
-const onSave = jest.fn();
-const onCancel = jest.fn();
-const onSuccess = jest.fn();
-const onError = jest.fn();
+const onSave = vi.fn();
+const onCancel = vi.fn();
+const onSuccess = vi.fn();
+const onError = vi.fn();
 
 describe('Update Disposition Sale View', () => {
   const setup = async (
@@ -59,7 +58,7 @@ describe('Update Disposition Sale View', () => {
   };
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders as expected', async () => {

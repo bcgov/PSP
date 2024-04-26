@@ -2,7 +2,6 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { createMemoryHistory } from 'history';
 import noop from 'lodash/noop';
-import React from 'react';
 
 import { Claims } from '@/constants';
 import { LeaseTermStatusTypes } from '@/constants/leaseStatusTypes';
@@ -18,8 +17,8 @@ import {
 
 import { defaultFormLeaseTerm, FormLeasePayment } from '../../models';
 import TermsForm, { ITermsFormProps } from './TermsForm';
+import { createRef } from 'react';
 
-jest.mock('@react-keycloak/web');
 const history = createMemoryHistory();
 const mockAxios = new MockAdapter(axios);
 const defaultTestFormLeaseTerm = {
@@ -30,7 +29,7 @@ const defaultTestFormLeaseTerm = {
   expiryDate: '2020-12-15T18:00',
   paymentAmount: 1000,
 };
-const onGenerate = jest.fn();
+const onGenerate = vi.fn();
 
 describe('TermsForm component', () => {
   const setup = async (
@@ -51,7 +50,7 @@ describe('TermsForm component', () => {
         onDeletePayment={noop}
         onSavePayment={noop}
         onGenerate={onGenerate}
-        formikRef={React.createRef()}
+        formikRef={createRef()}
         lease={renderOptions.initialValues ?? ({} as any)}
       />,
       {

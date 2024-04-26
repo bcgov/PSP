@@ -1,6 +1,6 @@
 import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
-import { noop } from 'lodash';
+import noop from 'lodash/noop';
 
 import { getEmptyAddress } from '@/mocks/address.mock';
 import { mockLeaseProperty } from '@/mocks/filterData.mock';

@@ -1,6 +1,6 @@
 import './Filter.scss';
 
-import * as React from 'react';
+import { useState } from 'react';
 import { Form } from 'react-bootstrap';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
@@ -24,7 +24,7 @@ export const defaultFilter: IAccessRequestsFilterData = {
 };
 
 export const AccessRequestFilter = (props: IProps) => {
-  const [filterState, setFilterState] = React.useState(props.initialValues || defaultFilter);
+  const [filterState, setFilterState] = useState(props.initialValues || defaultFilter);
 
   const reset = () => {
     setFilterState(defaultFilter);

@@ -1,6 +1,5 @@
 import { getIn, useFormikContext } from 'formik';
 import moment from 'moment';
-import * as React from 'react';
 
 import { InlineInput } from '@/components/common/form/styles';
 import * as Styled from '@/features/leases/detail/styles';

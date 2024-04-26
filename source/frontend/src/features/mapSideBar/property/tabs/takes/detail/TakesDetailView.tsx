@@ -1,4 +1,3 @@
-import * as React from 'react';
 import styled from 'styled-components';
 
 import YesNoButtons from '@/components/common/buttons/YesNoButtons';

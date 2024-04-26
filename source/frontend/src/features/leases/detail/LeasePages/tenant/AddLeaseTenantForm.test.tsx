@@ -6,7 +6,6 @@ import {
   waitForElementToBeRemoved,
 } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
-import React from 'react';
 
 import { Claims } from '@/constants/claims';
 import { IContactSearchResult } from '@/interfaces';
@@ -24,16 +23,17 @@ import { mockKeycloak, renderAsync, RenderOptions, userEvent, waitFor } from '@/
 
 import AddLeaseTenantForm, { IAddLeaseTenantFormProps } from './AddLeaseTenantForm';
 import { FormTenant } from './models';
+import { createRef } from 'react';
 
 const history = createMemoryHistory();
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
-const mockGetContactsFn = jest
+const mockGetContactsFn = vi
   .fn()
   .mockResolvedValue({ data: {} as ApiGen_Base_Page<ApiGen_Concepts_Contact> });
-jest.mock('@react-keycloak/web');
-jest.mock('@/hooks/pims-api/useApiContacts', () => ({
+
+vi.mock('@/hooks/pims-api/useApiContacts', () => ({
   useApiContacts: () => {
     return {
       getContacts: mockGetContactsFn,
@@ -41,10 +41,10 @@ jest.mock('@/hooks/pims-api/useApiContacts', () => ({
   },
 }));
 
-const setSelectedContacts = jest.fn();
-const setShowContactManager = jest.fn();
-const setSelectedTenants = jest.fn();
-const onSubmit = jest.fn();
+const setSelectedContacts = vi.fn();
+const setShowContactManager = vi.fn();
+const setSelectedTenants = vi.fn();
+const onSubmit = vi.fn();
 
 const defaultRenderOptions: IAddLeaseTenantFormProps = {
   selectedContacts: [],
@@ -54,7 +54,7 @@ const defaultRenderOptions: IAddLeaseTenantFormProps = {
   selectedTenants: [],
   showContactManager: false,
   onSubmit,
-  formikRef: React.createRef(),
+  formikRef: createRef(),
 };
 
 describe('AddLeaseTenantForm component', () => {
@@ -77,7 +77,7 @@ describe('AddLeaseTenantForm component', () => {
   };
 
   beforeEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
     mockKeycloak({ claims: [Claims.CONTACT_VIEW] });
   });
   it('renders as expected', async () => {

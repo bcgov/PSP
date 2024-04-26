@@ -14,8 +14,8 @@ import Surplus from './Surplus';
 
 const history = createMemoryHistory();
 
-usePropertyLeaseRepository as jest.MockedFunction<typeof usePropertyLeaseRepository>;
-jest.mock('@/hooks/repositories/usePropertyLeaseRepository');
+vi.mocked(usePropertyLeaseRepository);
+vi.mock('@/hooks/repositories/usePropertyLeaseRepository');
 
 describe('Lease Surplus Declaration', () => {
   const setup = (
@@ -35,9 +35,7 @@ describe('Lease Surplus Declaration', () => {
   };
 
   it('renders as expected', () => {
-    (
-      usePropertyLeaseRepository as jest.MockedFunction<typeof usePropertyLeaseRepository>
-    ).mockReturnValue({
+    vi.mocked(usePropertyLeaseRepository).mockReturnValue({
       getPropertyLeases: {
         execute: noop as any,
         error: undefined,
@@ -55,9 +53,7 @@ describe('Lease Surplus Declaration', () => {
   });
 
   it('Table row count is equal to the number of properties + header', async () => {
-    (
-      usePropertyLeaseRepository as jest.MockedFunction<typeof usePropertyLeaseRepository>
-    ).mockReturnValue({
+    vi.mocked(usePropertyLeaseRepository).mockReturnValue({
       getPropertyLeases: {
         execute: noop as any,
         error: undefined,
@@ -90,9 +86,7 @@ describe('Lease Surplus Declaration', () => {
   it('Default type value is unknown', async () => {
     const testProperty: ApiGen_Concepts_Property = getMockApiProperty();
     testProperty.surplusDeclarationType = null;
-    (
-      usePropertyLeaseRepository as jest.MockedFunction<typeof usePropertyLeaseRepository>
-    ).mockReturnValue({
+    vi.mocked(usePropertyLeaseRepository).mockReturnValue({
       getPropertyLeases: {
         execute: noop as any,
         error: undefined,
@@ -133,9 +127,7 @@ describe('Lease Surplus Declaration', () => {
       displayOrder: null,
     };
     testProperty.surplusDeclarationDate = '2021-01-01';
-    (
-      usePropertyLeaseRepository as jest.MockedFunction<typeof usePropertyLeaseRepository>
-    ).mockReturnValue({
+    vi.mocked(usePropertyLeaseRepository).mockReturnValue({
       getPropertyLeases: {
         execute: noop as any,
         error: undefined,

@@ -15,13 +15,13 @@ import {
   IUseAddAcquisitionFormManagementProps,
   useAddAcquisitionFormManagement,
 } from './useAddAcquisitionFormManagement';
-import React from 'react';
+import { createRef } from 'react';
 
 const history = createMemoryHistory();
 const mockAxios = new MockAdapter(axios);
 const mockStore = configureMockStore([thunk]);
 
-const onSuccess = jest.fn();
+const onSuccess = vi.fn();
 
 describe('useAddAcquisitionFormManagement hook', () => {
   const Wrapper: React.FC<React.PropsWithChildren<unknown>> = props => (
@@ -36,7 +36,7 @@ describe('useAddAcquisitionFormManagement hook', () => {
         useAddAcquisitionFormManagement({
           onSuccess: hookProps.onSuccess,
           selectedFeature: null,
-          formikRef: React.createRef(),
+          formikRef: createRef(),
         }),
       {
         wrapper: Wrapper,
@@ -52,7 +52,7 @@ describe('useAddAcquisitionFormManagement hook', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should return valid initial values', async () => {
@@ -61,7 +61,7 @@ describe('useAddAcquisitionFormManagement hook', () => {
   });
 
   it('should provide form validation schema', async () => {
-    expect.assertions(4);
+    expect.assertions(3);
     const { validationSchema } = setup({ onSuccess, selectedFeature: null, formikRef: {} as any });
 
     const validForm = new AcquisitionForm();

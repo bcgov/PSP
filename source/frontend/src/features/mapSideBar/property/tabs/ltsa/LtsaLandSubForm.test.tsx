@@ -1,5 +1,5 @@
 import { Formik } from 'formik';
-import { noop } from 'lodash';
+import noop from 'lodash/noop';
 
 import { LtsaOrders } from '@/interfaces/ltsaModels';
 import { mockLtsaResponse } from '@/mocks/filterData.mock';

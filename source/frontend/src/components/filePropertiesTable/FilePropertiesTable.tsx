@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { CellProps } from 'react-table';
 
 import OverflowTip from '@/components/common/OverflowTip';
