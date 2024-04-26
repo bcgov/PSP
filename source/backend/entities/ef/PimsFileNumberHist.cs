@@ -6,13 +6,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
-[Table("PIMS_ACQUISITION_FILE_HIST")]
-[Index("AcquisitionFileHistId", "EndDateHist", Name = "PIMS_ACQNFL_H_UK", IsUnique = true)]
-public partial class PimsAcquisitionFileHist
+[Table("PIMS_FILE_NUMBER_HIST")]
+[Index("FileNumberHistId", "EndDateHist", Name = "PIMS_FILNUM_H_UK", IsUnique = true)]
+public partial class PimsFileNumberHist
 {
     [Key]
-    [Column("_ACQUISITION_FILE_HIST_ID")]
-    public long AcquisitionFileHistId { get; set; }
+    [Column("_FILE_NUMBER_HIST_ID")]
+    public long FileNumberHistId { get; set; }
 
     [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
     public DateTime EffectiveDateHist { get; set; }
@@ -20,72 +20,28 @@ public partial class PimsAcquisitionFileHist
     [Column("END_DATE_HIST", TypeName = "datetime")]
     public DateTime? EndDateHist { get; set; }
 
-    [Column("ACQUISITION_FILE_ID")]
-    public long AcquisitionFileId { get; set; }
+    [Column("FILE_NUMBER_ID")]
+    public long FileNumberId { get; set; }
 
-    [Column("PROJECT_ID")]
-    public long? ProjectId { get; set; }
-
-    [Column("PRODUCT_ID")]
-    public long? ProductId { get; set; }
+    [Column("PROPERTY_ID")]
+    public long PropertyId { get; set; }
 
     [Required]
-    [Column("ACQUISITION_FILE_STATUS_TYPE_CODE")]
+    [Column("FILE_NUMBER_TYPE_CODE")]
     [StringLength(20)]
-    public string AcquisitionFileStatusTypeCode { get; set; }
-
-    [Required]
-    [Column("ACQUISITION_TYPE_CODE")]
-    [StringLength(20)]
-    public string AcquisitionTypeCode { get; set; }
-
-    [Column("ACQUISITION_FUNDING_TYPE_CODE")]
-    [StringLength(20)]
-    public string AcquisitionFundingTypeCode { get; set; }
-
-    [Column("ACQ_PHYS_FILE_STATUS_TYPE_CODE")]
-    [StringLength(20)]
-    public string AcqPhysFileStatusTypeCode { get; set; }
-
-    [Column("REGION_CODE")]
-    public short RegionCode { get; set; }
-
-    [Required]
-    [Column("FILE_NAME")]
-    [StringLength(500)]
-    public string FileName { get; set; }
-
-    [Column("FILE_NO")]
-    public int FileNo { get; set; }
+    public string FileNumberTypeCode { get; set; }
 
     [Required]
     [Column("FILE_NUMBER")]
-    [StringLength(18)]
+    [StringLength(500)]
     public string FileNumber { get; set; }
 
-    [Column("LEGACY_FILE_NUMBER")]
-    [StringLength(18)]
-    public string LegacyFileNumber { get; set; }
-
-    [Column("LEGACY_STAKEHOLDER")]
-    [StringLength(4000)]
-    public string LegacyStakeholder { get; set; }
-
-    [Column("FUNDING_OTHER")]
+    [Column("OTHER_FILE_NUMBER_TYPE")]
     [StringLength(200)]
-    public string FundingOther { get; set; }
+    public string OtherFileNumberType { get; set; }
 
-    [Column("ASSIGNED_DATE", TypeName = "datetime")]
-    public DateTime? AssignedDate { get; set; }
-
-    [Column("DELIVERY_DATE", TypeName = "datetime")]
-    public DateTime? DeliveryDate { get; set; }
-
-    [Column("PAIMS_ACQUISITION_FILE_ID")]
-    public int? PaimsAcquisitionFileId { get; set; }
-
-    [Column("TOTAL_ALLOWABLE_COMPENSATION", TypeName = "money")]
-    public decimal? TotalAllowableCompensation { get; set; }
+    [Column("IS_DISABLED")]
+    public bool? IsDisabled { get; set; }
 
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }
@@ -137,7 +93,4 @@ public partial class PimsAcquisitionFileHist
     [Column("DB_LAST_UPDATE_USERID")]
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
-
-    [Column("COMPLETION_DATE", TypeName = "datetime")]
-    public DateTime? CompletionDate { get; set; }
 }
