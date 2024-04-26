@@ -2,7 +2,8 @@ import { waitFor } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { find, values } from 'lodash';
+import find from 'lodash/find';
+import values from 'lodash/values';
 import { Provider } from 'react-redux';
 import configureMockStore, { MockStoreEnhanced } from 'redux-mock-store';
 import thunk from 'redux-thunk';
@@ -13,9 +14,9 @@ import { useLookupCodes } from '@/store/slices/lookupCodes/useLookupCodes';
 
 import { networkSlice } from '../network/networkSlice';
 
-const requestSpy = jest.spyOn(networkSlice.actions, 'logRequest');
-const successSpy = jest.spyOn(networkSlice.actions, 'logSuccess');
-const errorSpy = jest.spyOn(networkSlice.actions, 'logError');
+const requestSpy = vi.spyOn(networkSlice.actions, 'logRequest');
+const successSpy = vi.spyOn(networkSlice.actions, 'logSuccess');
+const errorSpy = vi.spyOn(networkSlice.actions, 'logError');
 const mockAxios = new MockAdapter(axios);
 
 beforeEach(() => {
@@ -38,7 +39,7 @@ const getWrapper =
 
 describe('getFetchLookupCodeAction action creator', () => {
   afterAll(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
 
   const setup = () => {

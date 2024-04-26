@@ -13,6 +13,9 @@ import { useApiProperties } from '@/hooks/pims-api/useApiProperties';
 import { useApiPropertyOperation } from '@/hooks/pims-api/useApiPropertyOperation';
 import { PropertyDetailsTabView } from './PropertyDetailsTabView';
 import { toFormValues } from './PropertyDetailsTabView.helpers';
+import { usePimsPropertyRepository } from '@/hooks/repositories/usePimsPropertyRepository';
+import { IResponseWrapper } from '@/hooks/util/useApiRequestWrapper';
+import { AxiosResponse } from 'axios';
 
 const history = createMemoryHistory();
 const storeState = {
@@ -20,18 +23,32 @@ const storeState = {
 };
 
 // mock keycloak auth library
-jest.mock('@react-keycloak/web');
-jest.mock('@/hooks/pims-api/useApiPropertyOperation');
-const getPropertyOperationsApiMock = jest.fn();
-(useApiPropertyOperation as jest.Mock).mockImplementation(() => ({
-  getPropertyOperationsApi: getPropertyOperationsApiMock,
-}));
 
-jest.mock('@/hooks/pims-api/useApiProperties');
-const getPropertyConceptWithIdApiMock = jest.fn();
-(useApiProperties as jest.Mock).mockImplementation(() => ({
-  getPropertyConceptWithIdApi: getPropertyConceptWithIdApiMock,
-}));
+const mockGetProperty = vi.fn();
+vi.mock('@/hooks/repositories/usePimsPropertyRepository');
+vi.mocked(usePimsPropertyRepository).mockReturnValue({
+  getPropertyWrapper: { execute: mockGetProperty } as unknown as IResponseWrapper<
+    (id: number) => Promise<AxiosResponse<ApiGen_Concepts_Property, any>>
+  >,
+} as unknown as ReturnType<typeof usePimsPropertyRepository>);
+
+vi.mock('@/hooks/pims-api/useApiPropertyOperation');
+const getPropertyOperationsApiMock = vi.fn();
+vi.mocked(useApiPropertyOperation).mockImplementation(
+  () =>
+    ({
+      getPropertyOperationsApi: getPropertyOperationsApiMock,
+    } as unknown as ReturnType<typeof useApiPropertyOperation>),
+);
+
+vi.mock('@/hooks/pims-api/useApiProperties');
+const getPropertyConceptWithIdApiMock = vi.fn();
+vi.mocked(useApiProperties).mockImplementation(
+  () =>
+    ({
+      getPropertyConceptWithIdApi: getPropertyConceptWithIdApiMock,
+    } as unknown as ReturnType<typeof useApiProperties>),
+);
 
 describe('PropertyDetailsTabView component', () => {
   // render component under test
@@ -50,7 +67,7 @@ describe('PropertyDetailsTabView component', () => {
   };
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders as expected when provided valid data object', async () => {

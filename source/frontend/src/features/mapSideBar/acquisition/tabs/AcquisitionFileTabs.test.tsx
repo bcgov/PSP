@@ -8,12 +8,31 @@ import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
 import { render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import AcquisitionFileTabs, { IAcquisitionFileTabsProps } from './AcquisitionFileTabs';
+import { useApiAcquisitionFile } from '@/hooks/pims-api/useApiAcquisitionFile';
+import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
 
 // mock auth library
-jest.mock('@react-keycloak/web');
 
 const history = createMemoryHistory();
-const setIsEditing = jest.fn();
+const setIsEditing = vi.fn();
+
+vi.mock('@/hooks/pims-api/useApiContacts');
+const getPersonConceptFn = vi.fn();
+vi.mocked(useApiContacts).mockImplementation(
+  () =>
+    ({
+      getPersonConcept: getPersonConceptFn,
+    } as any),
+);
+
+vi.mock('@/hooks/pims-api/useApiAcquisitionFile');
+const getAcquisitionFileOwnersFn = vi.fn();
+vi.mocked(useApiAcquisitionFile).mockImplementation(
+  () =>
+    ({
+      getAcquisitionFileOwners: getAcquisitionFileOwnersFn,
+    } as any),
+);
 
 describe('AcquisitionFileTabs component', () => {
   // render component under test
@@ -44,7 +63,7 @@ describe('AcquisitionFileTabs component', () => {
   });
 
   afterEach(() => {
-    jest.resetAllMocks();
+    vi.clearAllMocks();
   });
 
   it('matches snapshot', () => {

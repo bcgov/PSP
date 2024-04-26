@@ -1,4 +1,3 @@
-import * as React from 'react';
 import styled from 'styled-components';
 /**
  * layout wrapper for leases, applies styling.

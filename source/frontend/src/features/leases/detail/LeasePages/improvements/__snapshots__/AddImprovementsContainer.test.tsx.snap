@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Add Improvements container component displays the improvement types in order 1`] = `
+exports[`Add Improvements container component > displays the improvement types in order 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
@@ -429,7 +429,7 @@ exports[`Add Improvements container component displays the improvement types in 
 </DocumentFragment>
 `;
 
-exports[`Add Improvements container component renders as expected 1`] = `
+exports[`Add Improvements container component > renders as expected 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"

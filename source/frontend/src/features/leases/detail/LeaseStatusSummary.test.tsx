@@ -7,7 +7,7 @@ import { render, RenderOptions } from '@/utils/test-utils';
 import { ILeaseStatusSummaryProps, LeaseStatusSummary } from './LeaseStatusSummary';
 
 const history = createMemoryHistory();
-const onClickManagement = jest.fn();
+const onClickManagement = vi.fn();
 
 describe('LeaseStatusSummary component', () => {
   const setup = (renderOptions: RenderOptions & ILeaseStatusSummaryProps) => {

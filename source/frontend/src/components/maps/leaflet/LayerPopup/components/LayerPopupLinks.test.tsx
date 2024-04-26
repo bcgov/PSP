@@ -9,21 +9,20 @@ import { act, cleanup, render } from '@/utils/test-utils';
 
 import { ILayerPopupLinksProps, LayerPopupLinks } from './LayerPopupLinks';
 
-jest.mock('react-leaflet');
+vi.mock('react-leaflet');
 
 // Mock react-leaflet dependencies
 const mapMachineMock: Partial<IMapStateMachineContext> = {
-  requestFlyToBounds: jest.fn(),
+  requestFlyToBounds: vi.fn(),
 };
-
-jest.mock('@/components/common/mapFSM/MapStateMachineContext');
-(useMapStateMachine as jest.Mock).mockImplementation(() => mapMachineMock);
 
 const northEast = new L.LatLng(50.5, -120.7);
 const southWest = new L.LatLng(50.3, -121.2);
 
 const renderLinks = (props: ILayerPopupLinksProps) => {
-  return render(<LayerPopupLinks {...props} />);
+  return render(<LayerPopupLinks {...props} />, {
+    mockMapMachine: mapMachineMock as unknown as any,
+  });
 };
 
 describe('Layer Popup links', () => {

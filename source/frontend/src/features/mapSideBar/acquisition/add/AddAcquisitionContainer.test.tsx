@@ -18,29 +18,29 @@ import { AcquisitionOwnerFormModel, OwnerAddressFormModel } from '../common/mode
 import { AddAcquisitionContainer, IAddAcquisitionContainerProps } from './AddAcquisitionContainer';
 import { AcquisitionForm } from './models';
 
-jest.mock('@react-keycloak/web');
-
 const history = createMemoryHistory();
 
-const onClose = jest.fn();
+const onClose = vi.fn();
 
 const DEFAULT_PROPS: IAddAcquisitionContainerProps = {
   onClose,
 };
 
 // Need to mock this library for unit tests
-jest.mock('react-visibility-sensor', () => {
-  return jest.fn().mockImplementation(({ children }) => {
-    if (children instanceof Function) {
-      return children({ isVisible: true });
-    }
-    return children;
-  });
+vi.mock('react-visibility-sensor', () => {
+  return {
+    default: vi.fn().mockImplementation(({ children }) => {
+      if (children instanceof Function) {
+        return children({ isVisible: true });
+      }
+      return children;
+    }),
+  };
 });
 
-jest.mock('@/hooks/repositories/useUserInfoRepository');
-(useUserInfoRepository as jest.MockedFunction<typeof useUserInfoRepository>).mockReturnValue({
-  retrieveUserInfo: jest.fn(),
+vi.mock('@/hooks/repositories/useUserInfoRepository');
+vi.mocked(useUserInfoRepository).mockReturnValue({
+  retrieveUserInfo: vi.fn(),
   retrieveUserInfoLoading: true,
   retrieveUserInfoResponse: {
     userRegions: [
@@ -62,9 +62,9 @@ jest.mock('@/hooks/repositories/useUserInfoRepository');
 
 // Mock API service calls
 
-jest.mock('@/hooks/repositories/useAcquisitionProvider');
-const addAcquisitionFile = jest.fn();
-(useAcquisitionProvider as jest.MockedFunction<typeof useAcquisitionProvider>).mockReturnValue({
+vi.mock('@/hooks/repositories/useAcquisitionProvider');
+const addAcquisitionFile = vi.fn();
+vi.mocked(useAcquisitionProvider).mockReturnValue({
   addAcquisitionFile: {
     execute: addAcquisitionFile as any,
     error: undefined,
@@ -73,7 +73,19 @@ const addAcquisitionFile = jest.fn();
   },
 } as ReturnType<typeof useAcquisitionProvider>);
 
-jest.mock('@/components/common/mapFSM/MapStateMachineContext');
+const mocks = vi.hoisted(() => {
+  return {
+    useKeycloak: vi.fn(),
+  };
+});
+
+vi.mock('@react-keycloak/web', () => {
+  return {
+    useKeycloak: mocks.useKeycloak,
+  };
+});
+
+vi.mock('@/components/common/mapFSM/MapStateMachineContext');
 
 describe('AddAcquisitionContainer component', () => {
   // render component under test
@@ -81,19 +93,32 @@ describe('AddAcquisitionContainer component', () => {
     props: IAddAcquisitionContainerProps = DEFAULT_PROPS,
     renderOptions: RenderOptions = {},
   ) => {
-    const utils = await renderAsync(
-      <>
-        <AddAcquisitionContainer {...props} />
-      </>,
-      {
-        ...renderOptions,
-        store: {
-          [lookupCodesSlice.name]: { lookupCodes: mockLookups },
-        },
-        claims: [],
-        history,
+    const defaultUserInfo = {
+      organizations: [1],
+      client_roles: [...(renderOptions?.claims ?? []), ...(renderOptions?.roles ?? [])] ?? [],
+      email: 'test@test.com',
+      name: 'Chester Tester',
+      idir_user_guid: '00000000000000000000000000000000',
+    };
+
+    mocks.useKeycloak.mockImplementation(() => ({
+      keycloak: {
+        userInfo: defaultUserInfo,
+        subject: 'test',
+        authenticated: !!renderOptions.claims,
+        loadUserInfo: vi.fn().mockResolvedValue(defaultUserInfo),
+      } as any,
+      initialized: true,
+    }));
+
+    const utils = await renderAsync(<AddAcquisitionContainer {...props} />, {
+      ...renderOptions,
+      store: {
+        [lookupCodesSlice.name]: { lookupCodes: mockLookups },
       },
-    );
+      claims: [],
+      history,
+    });
 
     return {
       ...utils,
@@ -155,11 +180,10 @@ describe('AddAcquisitionContainer component', () => {
     formValues.fundingTypeCode = 'OTHER';
     formValues.fundingTypeOtherDescription = 'A different type of funding';
     addAcquisitionFile.mockResolvedValue(mockAcquisitionFileResponse(1, formValues.fileName));
-    (useMapStateMachine as jest.Mock).mockImplementation(() => mapMachineBaseMock);
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders as expected', async () => {
@@ -222,12 +246,9 @@ describe('AddAcquisitionContainer component', () => {
         selectingComponentId: null,
       },
     };
-    (useMapStateMachine as unknown as jest.Mock<Partial<IMapStateMachineContext>>).mockReturnValue(
-      testMockMahine,
-    );
 
     await act(async () => {
-      setup();
+      setup(undefined, { mockMapMachine: testMockMahine });
     });
     const text = await screen.findByDisplayValue(/South Coast Region/i);
     expect(text).toBeVisible();
@@ -253,12 +274,9 @@ describe('AddAcquisitionContainer component', () => {
         selectingComponentId: null,
       },
     };
-    (useMapStateMachine as unknown as jest.Mock<Partial<IMapStateMachineContext>>).mockReturnValue(
-      testMockMahine,
-    );
 
     await act(async () => {
-      setup();
+      setup(undefined, { mockMapMachine: testMockMahine });
     });
     const text = await screen.findByDisplayValue(/Select region.../i);
     expect(text).toBeVisible();

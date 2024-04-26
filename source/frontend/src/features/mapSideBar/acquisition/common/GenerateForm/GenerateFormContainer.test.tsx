@@ -17,29 +17,28 @@ import { useGenerateH0443 } from './hooks/useGenerateH0443';
 import { useGenerateLetter } from './hooks/useGenerateLetter';
 
 const mockAxios = new MockAdapter(axios);
-const generateLetterFn = jest.fn();
-const generateH0443Fn = jest.fn();
+const generateLetterFn = vi.fn();
+const generateH0443Fn = vi.fn();
 
 // mock auth library
-jest.mock('@react-keycloak/web');
-jest.mock('./hooks/useGenerateLetter');
-(useGenerateLetter as jest.Mock).mockImplementation(() => generateLetterFn);
 
-jest.mock('./hooks/useGenerateH0443');
-(useGenerateH0443 as jest.Mock).mockImplementation(() => generateH0443Fn);
+vi.mock('./hooks/useGenerateLetter');
+vi.mocked(useGenerateLetter).mockImplementation(() => generateLetterFn);
+
+vi.mock('./hooks/useGenerateH0443');
+vi.mocked(useGenerateH0443).mockImplementation(() => generateH0443Fn);
 
 // Need to mock this library for unit tests
-jest.mock('react-visibility-sensor', () => {
-  return jest.fn().mockImplementation(({ children }) => {
-    if (children instanceof Function) {
-      return children({ isVisible: true });
-    }
-    return children;
-  });
+vi.mock('react-visibility-sensor', () => {
+  return {
+    default: vi.fn().mockImplementation(({ children }) => {
+      if (children instanceof Function) {
+        return children({ isVisible: true });
+      }
+      return children;
+    }),
+  };
 });
-
-jest.mock('@/components/common/mapFSM/MapStateMachineContext');
-(useMapStateMachine as jest.Mock).mockImplementation(() => mapMachineBaseMock);
 
 let viewProps: IGenerateFormViewProps = {} as any;
 const GenerateFormViewStub = (props: IGenerateFormViewProps) => {
@@ -85,7 +84,7 @@ describe('GenerateFormContainer component', () => {
 
   afterEach(() => {
     mockAxios.resetHistory();
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders as expected', async () => {
@@ -95,7 +94,7 @@ describe('GenerateFormContainer component', () => {
   });
 
   it('calls document H0443 generation', async () => {
-    jest.spyOn(global, 'confirm' as any).mockReturnValueOnce(true);
+    vi.spyOn(global, 'confirm' as any).mockReturnValueOnce(true);
 
     await act(async () => viewProps.onGenerateClick(FormDocumentType.H0443));
     await waitFor(async () => {
@@ -105,7 +104,7 @@ describe('GenerateFormContainer component', () => {
   });
 
   it('opens document letter generation modal', async () => {
-    jest.spyOn(global, 'confirm' as any).mockReturnValueOnce(true);
+    vi.spyOn(global, 'confirm' as any).mockReturnValueOnce(true);
 
     await act(async () => viewProps.onGenerateClick(FormDocumentType.LETTER));
     await waitFor(async () => {

@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { Tab } from 'react-bootstrap';
 
 import TabView from '@/components/common/TabView';

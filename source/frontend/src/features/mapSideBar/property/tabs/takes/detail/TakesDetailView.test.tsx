@@ -17,8 +17,7 @@ const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
 
-const onEdit = jest.fn();
-jest.mock('@react-keycloak/web');
+const onEdit = vi.fn();
 
 describe('TakesDetailView component', () => {
   // render component under test
@@ -46,7 +45,7 @@ describe('TakesDetailView component', () => {
   };
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders as expected', () => {

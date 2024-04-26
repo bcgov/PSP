@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`ReturnDepositForm component renders as expected 1`] = `
+exports[`ReturnDepositForm component > renders as expected 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
@@ -610,7 +610,7 @@ exports[`ReturnDepositForm component renders as expected 1`] = `
 </DocumentFragment>
 `;
 
-exports[`ReturnDepositForm component renders with data as expected 1`] = `
+exports[`ReturnDepositForm component > renders with data as expected 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"

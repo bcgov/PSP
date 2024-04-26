@@ -14,9 +14,7 @@ import {
   IDispositionSearchResultsProps,
 } from './DispositionSearchResults';
 
-jest.mock('@react-keycloak/web');
-
-const setSort = jest.fn();
+const setSort = vi.fn();
 const mockResults: ApiGen_Concepts_DispositionFile[] = [
   mockDispositionFileResponse(1, 'test disposition'),
 ];

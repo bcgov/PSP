@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`MapContainer Renders the map 1`] = `
+exports[`MapContainer > Renders the map 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
@@ -164,7 +164,7 @@ exports[`MapContainer Renders the map 1`] = `
 
 .c16 .form-group .form-check label {
   font-weight: bold;
-  color: textColor;
+  color: _textColor_6badca;
   font-size: 1.6rem;
 }
 
@@ -437,7 +437,7 @@ exports[`MapContainer Renders the map 1`] = `
 .c0.draft-cursor,
 .c0.draft-cursor .leaflet-grab,
 .c0.draft-cursor .leaflet-interactive {
-  cursor: url("icon-draft.svg") 15 45,pointer;
+  cursor: url("/src/assets/images/pins/icon-draft.svg") 15 45,pointer;
 }
 
 <div

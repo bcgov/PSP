@@ -18,7 +18,7 @@ const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
 
-const onSubmit = jest.fn();
+const onSubmit = vi.fn();
 
 const mockAxios = new MockAdapter(axios);
 const fakeProperty: ApiGen_Concepts_Property = {
@@ -221,7 +221,7 @@ describe('UpdatePropertyDetailsForm component', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders as expected', () => {

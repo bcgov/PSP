@@ -24,14 +24,14 @@ const testRender = () =>
 describe('useTenant hook', () => {
   beforeEach(() => {
     mockAxios.onAny().reply(200);
-    jest.resetModules();
+    vi.resetModules();
     import.meta.env.VITE_TENANT = { ...origEnv };
   });
 
   afterAll(() => {
     import.meta.env.VITE_TENANT = origEnv;
     mockAxios.reset();
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
 
   it('returns default configuration when VITE_TENANT is not set', async () => {

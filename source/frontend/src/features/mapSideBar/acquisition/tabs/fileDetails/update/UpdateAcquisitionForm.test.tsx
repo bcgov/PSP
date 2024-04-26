@@ -17,20 +17,21 @@ import UpdateAcquisitionForm, { IUpdateAcquisitionFormProps } from './UpdateAcqu
 const mockAxios = new MockAdapter(axios);
 
 // mock auth library
-jest.mock('@react-keycloak/web');
 
-const onSubmit = jest.fn();
-const validationSchema = jest.fn().mockReturnValue(UpdateAcquisitionFileYupSchema);
+const onSubmit = vi.fn();
+const validationSchema = vi.fn().mockReturnValue(UpdateAcquisitionFileYupSchema);
 type TestProps = Pick<IUpdateAcquisitionFormProps, 'initialValues'>;
 
 // Need to mock this library for unit tests
-jest.mock('react-visibility-sensor', () => {
-  return jest.fn().mockImplementation(({ children }) => {
-    if (children instanceof Function) {
-      return children({ isVisible: true });
-    }
-    return children;
-  });
+vi.mock('react-visibility-sensor', () => {
+  return {
+    default: vi.fn().mockImplementation(({ children }) => {
+      if (children instanceof Function) {
+        return children({ isVisible: true });
+      }
+      return children;
+    }),
+  };
 });
 
 describe('UpdateAcquisitionForm component', () => {
@@ -122,7 +123,7 @@ describe('UpdateAcquisitionForm component', () => {
 
   afterEach(() => {
     mockAxios.resetHistory();
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders as expected', async () => {

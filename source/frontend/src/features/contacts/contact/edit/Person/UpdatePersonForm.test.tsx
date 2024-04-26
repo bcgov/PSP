@@ -134,17 +134,21 @@ const mockAddress: ApiGen_Concepts_PersonAddress = {
 };
 
 // Mock API service calls
-jest.mock('@/hooks/pims-api/useApiContacts');
-jest.mock('@/features/contacts/hooks/usePersonDetail');
-jest.mock('@/features/contacts/hooks/useUpdateContact');
+vi.mock('@/hooks/pims-api/useApiContacts');
+vi.mock('@/features/contacts/hooks/usePersonDetail');
+vi.mock('@/features/contacts/hooks/useUpdateContact');
 
-const getOrganization = jest.fn(() => mockOrganization);
-(useApiContacts as jest.Mock).mockReturnValue({ getOrganization });
+const getOrganization = vi.fn(() => mockOrganization);
+vi.mocked(useApiContacts).mockReturnValue({ getOrganization } as unknown as ReturnType<
+  typeof useApiContacts
+>);
 
-const mockUsePersonDetail = usePersonDetail as jest.MockedFunction<typeof usePersonDetail>;
+const mockUsePersonDetail = vi.mocked(usePersonDetail);
 
-const updatePerson = jest.fn();
-(useUpdateContact as jest.Mock).mockReturnValue({ updatePerson });
+const updatePerson = vi.fn();
+vi.mocked(useUpdateContact).mockReturnValue({ updatePerson } as unknown as ReturnType<
+  typeof useUpdateContact
+>);
 
 describe('UpdatePersonForm', () => {
   const setup = (renderOptions: RenderOptions & { id: number } = { id: 1 }) => {

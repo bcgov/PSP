@@ -27,16 +27,15 @@ const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: [] },
 };
 
-jest.mock('@react-keycloak/web');
-jest.mock('@/hooks/pims-api/useApiLeases');
-const getLeases = jest.fn();
-(useApiLeases as jest.Mock).mockReturnValue({
+vi.mock('@/hooks/pims-api/useApiLeases');
+const getLeases = vi.fn();
+vi.mocked(useApiLeases).mockReturnValue({
   getLeases,
-});
+} as unknown as ReturnType<typeof useApiLeases>);
 
-jest.mock('@/hooks/repositories/useUserInfoRepository');
-(useUserInfoRepository as jest.Mock).mockReturnValue({
-  retrieveUserInfo: jest.fn(),
+vi.mock('@/hooks/repositories/useUserInfoRepository');
+vi.mocked(useUserInfoRepository).mockReturnValue({
+  retrieveUserInfo: vi.fn(),
   retrieveUserInfoLoading: true,
   retrieveUserInfoResponse: getUserMock(),
 });

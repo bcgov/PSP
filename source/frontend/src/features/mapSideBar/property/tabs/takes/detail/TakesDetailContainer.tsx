@@ -1,5 +1,5 @@
 import orderBy from 'lodash/orderBy';
-import * as React from 'react';
+import { useEffect } from 'react';
 
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 
@@ -38,7 +38,7 @@ const TakesDetailContainer: React.FunctionComponent<ITakesDetailContainerProps> 
     },
   } = useTakesRepository();
 
-  React.useEffect(() => {
+  useEffect(() => {
     fileId && propertyId && executeTakesByFileProperty(fileId, propertyId);
     propertyId && executeTakesCount(propertyId);
   }, [executeTakesByFileProperty, executeTakesCount, fileId, propertyId]);

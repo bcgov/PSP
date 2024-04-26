@@ -1,6 +1,5 @@
-import { noop } from 'lodash';
-import * as React from 'react';
-import { useState } from 'react';
+import noop from 'lodash/noop';
+import { createContext, useState } from 'react';
 
 import { SidebarContextType } from './SideTray';
 
@@ -9,7 +8,7 @@ export interface ISideNavbarState {
   setTrayPage: (trayPage?: SidebarContextType) => void;
 }
 
-export const SidebarStateContext = React.createContext<ISideNavbarState>({
+export const SidebarStateContext = createContext<ISideNavbarState>({
   trayPage: undefined,
   setTrayPage: noop,
 });

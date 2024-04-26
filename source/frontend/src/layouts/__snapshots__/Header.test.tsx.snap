@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Tenant Header Header MOTI background 1`] = `
+exports[`Tenant Header > Header MOTI background 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
@@ -19,7 +19,7 @@ exports[`Tenant Header Header MOTI background 1`] = `
 </DocumentFragment>
 `;
 
-exports[`Tenant Header Header black background 1`] = `
+exports[`Tenant Header > Header black background 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
@@ -38,7 +38,7 @@ exports[`Tenant Header Header black background 1`] = `
 </DocumentFragment>
 `;
 
-exports[`Tenant Header Header default background 1`] = `
+exports[`Tenant Header > Header default background 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"

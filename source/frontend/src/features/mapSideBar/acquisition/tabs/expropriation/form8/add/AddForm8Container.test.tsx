@@ -1,5 +1,5 @@
 import { createMemoryHistory } from 'history';
-import { noop } from 'lodash';
+import noop from 'lodash/noop';
 
 import { Claims } from '@/constants';
 import { mockAcquisitionFileOwnersResponse } from '@/mocks/acquisitionFiles.mock';
@@ -21,25 +21,25 @@ const mockFileOwnersResponse = mockAcquisitionFileOwnersResponse();
 const mockPostApi = {
   error: undefined,
   response: undefined,
-  execute: jest.fn(),
+  execute: vi.fn(),
   loading: false,
 };
 
 const mockGetInterestHoldersApi = {
   error: undefined,
   response: undefined,
-  execute: jest.fn(),
+  execute: vi.fn(),
   loading: false,
 };
 
 const mockGetFileOwnersApi = {
   error: undefined,
   response: undefined,
-  execute: jest.fn(),
+  execute: vi.fn(),
   loading: false,
 };
 
-jest.mock('@/hooks/repositories/useAcquisitionProvider', () => ({
+vi.mock('@/hooks/repositories/useAcquisitionProvider', () => ({
   useAcquisitionProvider: () => {
     return {
       getAcquisitionOwners: mockGetFileOwnersApi,
@@ -48,7 +48,7 @@ jest.mock('@/hooks/repositories/useAcquisitionProvider', () => ({
   },
 }));
 
-jest.mock('@/hooks/repositories/useInterestHolderRepository', () => ({
+vi.mock('@/hooks/repositories/useInterestHolderRepository', () => ({
   useInterestHolderRepository: () => {
     return {
       getAcquisitionInterestHolders: mockGetInterestHoldersApi,
@@ -89,7 +89,7 @@ describe('Add Form8 Container component', () => {
 
   beforeEach(() => {
     viewProps = undefined;
-    jest.resetAllMocks();
+    vi.resetAllMocks();
   });
 
   it('Renders the underlying form', async () => {

@@ -1,5 +1,4 @@
 import { FormikHelpers, FormikProps } from 'formik';
-import * as React from 'react';
 import { useMemo, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';

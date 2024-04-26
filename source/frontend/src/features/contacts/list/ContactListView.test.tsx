@@ -4,18 +4,25 @@ import { defaultFilter } from '@/components/contact/ContactManagerView/ContactFi
 import { Claims } from '@/constants/claims';
 import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
 import { IContactSearchResult } from '@/interfaces';
-import { act, fillInput, mockKeycloak, render, RenderOptions, waitFor } from '@/utils/test-utils';
+import {
+  act,
+  fillInput,
+  mockKeycloak,
+  render,
+  RenderOptions,
+  waitFor,
+  waitForElementToBeRemoved,
+} from '@/utils/test-utils';
 
 import { ContactListPage } from './ContactListPage';
 
 // mock auth library
-jest.mock('@react-keycloak/web');
 
-jest.mock('@/hooks/pims-api/useApiContacts');
-const getContacts = jest.fn();
-(useApiContacts as jest.Mock).mockReturnValue({
+vi.mock('@/hooks/pims-api/useApiContacts');
+const getContacts = vi.fn();
+vi.mocked(useApiContacts).mockReturnValue({
   getContacts,
-});
+} as unknown as ReturnType<typeof useApiContacts>);
 
 // render component under test
 const setup = (renderOptions: RenderOptions = {}) => {
@@ -69,8 +76,9 @@ describe('Contact List View', () => {
 
   it('matches snapshot', async () => {
     setupMockSearch();
-    const { asFragment, findByText } = setup();
+    const { asFragment, getByText } = setup();
     await act(async () => {});
+    setupMockSearch([defaultPersonSearchResult]);
 
     const fragment = await waitFor(() => asFragment());
     expect(fragment).toMatchSnapshot();

@@ -1,5 +1,4 @@
 import { AxiosError } from 'axios';
-import * as React from 'react';
 import { useCallback } from 'react';
 import { toast } from 'react-toastify';
 

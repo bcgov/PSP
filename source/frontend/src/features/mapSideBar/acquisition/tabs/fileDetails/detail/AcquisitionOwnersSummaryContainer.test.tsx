@@ -13,13 +13,13 @@ import AcquisitionOwnersSummaryContainer, {
 const mockApi = {
   error: undefined,
   response: mockAcquisitionFileOwnersResponse(1),
-  execute: jest.fn(),
+  execute: vi.fn(),
   loading: false,
 };
 
 const mockAcquisitionFile = mockAcquisitionFileResponse();
 
-jest.mock('@/hooks/repositories/useAcquisitionProvider', () => ({
+vi.mock('@/hooks/repositories/useAcquisitionProvider', () => ({
   useAcquisitionProvider: () => {
     return {
       getAcquisitionOwners: mockApi,
@@ -30,7 +30,7 @@ jest.mock('@/hooks/repositories/useAcquisitionProvider', () => ({
 const history = createMemoryHistory();
 
 // mock auth library
-jest.mock('@react-keycloak/web');
+
 const TestView: React.FC<IAcquisitionOwnersSummaryViewProps> = () => {
   return <span>Content Rendered</span>;
 };
@@ -51,7 +51,7 @@ describe('Acquisition Owners Summary container', () => {
   };
 
   beforeEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
   });
 
   it('renders the underlying form', () => {

@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`AddProjectContainer component renders as expected 1`] = `
+exports[`AddProjectContainer component > renders as expected 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
@@ -21,7 +21,7 @@ exports[`AddProjectContainer component renders as expected 1`] = `
 }
 
 .c1 {
-  font-size: 30px;
+  font-size: 2.4rem;
   cursor: pointer;
 }
 

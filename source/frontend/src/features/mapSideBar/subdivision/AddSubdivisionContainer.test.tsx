@@ -21,11 +21,9 @@ import { ApiGen_Concepts_PropertyOperation } from '@/models/api/generated/ApiGen
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { Input } from '@/components/common/form';
 
-jest.mock('@react-keycloak/web');
-jest.mock('@/components/common/mapFSM/MapStateMachineContext');
 const history = createMemoryHistory();
 
-const onClose = jest.fn();
+const onClose = vi.fn();
 
 let viewProps: IAddSubdivisionViewProps | undefined;
 const TestView: React.FC<IAddSubdivisionViewProps> = props => {
@@ -46,11 +44,11 @@ const TestView: React.FC<IAddSubdivisionViewProps> = props => {
 const mockAddPropertyOperation = {
   error: undefined,
   response: undefined,
-  execute: jest.fn(),
+  execute: vi.fn(),
   loading: false,
 };
 
-jest.mock('@/hooks/repositories/usePropertyOperationRepository', () => ({
+vi.mock('@/hooks/repositories/usePropertyOperationRepository', () => ({
   usePropertyOperationRepository: () => {
     return {
       addPropertyOperationApi: mockAddPropertyOperation,
@@ -58,7 +56,7 @@ jest.mock('@/hooks/repositories/usePropertyOperationRepository', () => ({
   },
 }));
 
-describe('Add Disposition Container component', () => {
+describe('Add Subdivision Container component', () => {
   const setup = async (
     renderOptions: RenderOptions & {
       props?: Partial<IAddAcquisitionContainerProps>;
@@ -84,12 +82,10 @@ describe('Add Disposition Container component', () => {
   beforeEach(() => {
     viewProps = undefined;
     history.location.pathname = '/';
-    jest.resetAllMocks();
-    (useMapStateMachine as jest.Mock).mockImplementation(() => mapMachineBaseMock);
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('Renders the underlying form', async () => {

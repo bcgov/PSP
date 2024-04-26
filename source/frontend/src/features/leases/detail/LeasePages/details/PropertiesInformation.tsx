@@ -1,6 +1,6 @@
 import { FieldArray, getIn, useFormikContext } from 'formik';
 import { LatLngLiteral } from 'leaflet';
-import * as React from 'react';
+import React, { useEffect, useMemo } from 'react';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { Section } from '@/components/common/Section/Section';
@@ -31,7 +31,7 @@ export const PropertiesInformation: React.FunctionComponent<
 
   const { setFilePropertyLocations } = useMapStateMachine();
 
-  const locations: LatLngLiteral[] = React.useMemo(() => {
+  const locations: LatLngLiteral[] = useMemo(() => {
     return (
       properties
         .map<LatLngLiteral | undefined>(x => {
@@ -45,7 +45,7 @@ export const PropertiesInformation: React.FunctionComponent<
     );
   }, [properties]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     setFilePropertyLocations(locations);
   }, [setFilePropertyLocations, locations]);
 

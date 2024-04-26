@@ -9,19 +9,18 @@ import { cleanup, render, RenderOptions, waitFor } from '@/utils/test-utils';
 
 import MotiInventoryContainer, { IMotiInventoryContainerProps } from './MotiInventoryContainer';
 
-// mock keycloak auth library
-jest.mock('@react-keycloak/web');
-
-const onClose = jest.fn();
+const onClose = vi.fn();
 
 // Need to mock this library for unit tests
-jest.mock('react-visibility-sensor', () => {
-  return jest.fn().mockImplementation(({ children }) => {
-    if (children instanceof Function) {
-      return children({ isVisible: true });
-    }
-    return children;
-  });
+vi.mock('react-visibility-sensor', () => {
+  return {
+    default: vi.fn().mockImplementation(({ children }) => {
+      if (children instanceof Function) {
+        return children({ isVisible: true });
+      }
+      return children;
+    }),
+  };
 });
 
 describe('MotiInventoryContainer component', () => {
@@ -41,6 +40,7 @@ describe('MotiInventoryContainer component', () => {
       />,
       {
         ...renderOptions,
+        useMockAuthentication: true,
         history,
         store: { ...renderOptions.store, ...storeState },
         claims: [Claims.PROPERTY_VIEW],
@@ -52,7 +52,7 @@ describe('MotiInventoryContainer component', () => {
 
   afterEach(() => {
     mockAxios.reset();
-    jest.restoreAllMocks();
+    vi.clearAllMocks();
     cleanup();
     history.replace('');
   });

@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { Col } from 'react-bootstrap';
 
 import { ContactMethodTypes } from '@/constants/contactMethodType';

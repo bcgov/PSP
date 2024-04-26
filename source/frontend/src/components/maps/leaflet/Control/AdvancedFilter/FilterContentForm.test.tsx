@@ -16,11 +16,11 @@ const storeState = {
 const mockGetApi = {
   error: undefined,
   response: undefined as ApiGen_Concepts_PropertyManagement | undefined,
-  execute: jest.fn(),
+  execute: vi.fn(),
   loading: false,
 };
 
-jest.mock('@/hooks/repositories/usePropertyManagementRepository', () => ({
+vi.mock('@/hooks/repositories/usePropertyManagementRepository', () => ({
   usePropertyManagementRepository: () => {
     return {
       getPropertyManagement: mockGetApi,
@@ -29,7 +29,7 @@ jest.mock('@/hooks/repositories/usePropertyManagementRepository', () => ({
 }));
 
 describe('FilterContentForm component', () => {
-  const onChange = jest.fn();
+  const onChange = vi.fn();
 
   const setup = (renderOptions: RenderOptions & { props: IFilterContentFormProps }) => {
     renderOptions = renderOptions ?? ({} as any);
@@ -45,7 +45,7 @@ describe('FilterContentForm component', () => {
   };
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('shows loading spinner when loading', () => {

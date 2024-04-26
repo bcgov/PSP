@@ -1,7 +1,6 @@
 import { render } from '@testing-library/react';
 import { Form, Formik } from 'formik';
-import { noop } from 'lodash';
-import React from 'react';
+import noop from 'lodash/noop';
 
 import { FastCurrencyInput } from './FastCurrencyInput';
 

@@ -10,15 +10,13 @@ import { ILookupCode, lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { tenantsSlice, useTenants } from '@/store/slices/tenants';
 import { config } from '@/tenants';
 import defaultTenant from '@/tenants/config/defaultTenant';
-import { cleanup, mockKeycloak, render } from '@/utils/test-utils';
+import { RenderOptions, cleanup, mockKeycloak, render } from '@/utils/test-utils';
 
 import Header from './Header';
 
-jest.mock('@react-keycloak/web');
-
-jest.mock('@/store/slices/tenants/useTenants');
+vi.mock('@/store/slices/tenants/useTenants');
 (useTenants as any).mockImplementation(() => ({
-  getSettings: jest.fn(),
+  getSettings: vi.fn(),
 }));
 
 const mockStore = configureMockStore([thunk]);
@@ -35,8 +33,13 @@ const store = mockStore({
   [tenantsSlice.name]: { defaultTenant },
 });
 
-const setup = () => {
-  const utils = render(<Header />, { store, history });
+const setup = (renderOptions: RenderOptions = {}) => {
+  const utils = render(<Header />, {
+    store,
+    history,
+    useMockAuthentication: true,
+    keycloakMock: renderOptions.keycloakMock,
+  });
   return { ...utils };
 };
 
@@ -60,8 +63,7 @@ describe('App Header', () => {
   });
 
   it('renders correctly', async () => {
-    mockKeycloak({ authenticated: false });
-    const { asFragment } = setup();
+    const { asFragment } = setup({ keycloakMock: { authenticated: false } });
     expect(asFragment()).toMatchSnapshot();
   });
 
@@ -73,52 +75,52 @@ describe('App Header', () => {
   });
 
   it('User displays default if no user name information found', async () => {
-    (useKeycloak as jest.Mock).mockReturnValue({
-      keycloak: {
-        subject: 'test',
-        authenticated: true,
-        userInfo: {
-          roles: [],
+    const { findByText } = setup({
+      keycloakMock: {
+        keycloak: {
+          subject: 'test',
+          authenticated: true,
+          userInfo: {
+            roles: [],
+          },
         },
       },
     });
-
-    const { findByText } = setup();
     expect(await findByText('default')).toBeVisible();
   });
 
   describe('UserProfile user name display', () => {
     it('Displays keycloak display name if available', async () => {
-      (useKeycloak as jest.Mock).mockReturnValue({
-        keycloak: {
-          subject: 'test',
-          authenticated: true,
-          userInfo: {
-            name: 'display name',
-            firstName: 'name',
-            roles: [],
+      const { findByText } = setup({
+        keycloakMock: {
+          keycloak: {
+            subject: 'test',
+            authenticated: true,
+            userInfo: {
+              name: 'display name',
+              firstName: 'name',
+              roles: [],
+            },
           },
         },
       });
-
-      const { findByText } = setup();
       expect(await findByText('display name')).toBeVisible();
     });
 
     it('Displays first last name if no display name', async () => {
-      (useKeycloak as jest.Mock).mockReturnValue({
-        keycloak: {
-          subject: 'test',
-          authenticated: true,
-          userInfo: {
-            roles: [],
-            firstName: 'firstName',
-            surname: 'surname',
+      const { findByText } = setup({
+        keycloakMock: {
+          keycloak: {
+            subject: 'test',
+            authenticated: true,
+            userInfo: {
+              roles: [],
+              firstName: 'firstName',
+              surname: 'surname',
+            },
           },
         },
       });
-
-      const { findByText } = setup();
       expect(await findByText('firstName surname')).toBeVisible();
     });
   });

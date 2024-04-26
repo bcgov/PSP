@@ -1,6 +1,6 @@
 import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
-import { noop } from 'lodash';
+import noop from 'lodash/noop';
 
 import { getDefaultFormLease, LeaseFormModel } from '@/features/leases/models';
 import { render, RenderOptions } from '@/utils/test-utils';

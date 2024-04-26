@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 import { InlineYesNoSelect } from '@/components/common/form/styles';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';

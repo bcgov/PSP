@@ -1,5 +1,5 @@
 import { FieldArray, getIn, useFormikContext } from 'formik';
-import * as React from 'react';
+import { Fragment } from 'react';
 
 import { Input } from '@/components/common/form';
 import { SectionField } from '@/components/common/Section/SectionField';
@@ -23,11 +23,11 @@ export const LtsaChargeSubForm: React.FunctionComponent<
       <FieldArray
         name={withNameSpace(nameSpace, 'chargesOnTitle')}
         render={() => (
-          <React.Fragment key={`charge-sub-row-${nameSpace}`}>
+          <Fragment key={`charge-sub-row-${nameSpace}`}>
             {charges.map((charge: ChargeOnTitle, index: number) => {
               const innerNameSpace = withNameSpace(nameSpace, `chargesOnTitle.${index}.charge`);
               return (
-                <React.Fragment key={`charge-sub-row-${innerNameSpace}`}>
+                <Fragment key={`charge-sub-row-${innerNameSpace}`}>
                   <SectionField label="Nature">
                     <Input field={`${withNameSpace(innerNameSpace, 'transactionType')}`} />
                   </SectionField>
@@ -39,10 +39,10 @@ export const LtsaChargeSubForm: React.FunctionComponent<
                   </SectionField>
                   <LtsaChargeOwnerSubForm nameSpace={innerNameSpace} />
                   {index < charges.length - 1 && <hr></hr>}
-                </React.Fragment>
+                </Fragment>
               );
             })}
-          </React.Fragment>
+          </Fragment>
         )}
       />
     </div>

@@ -12,71 +12,77 @@ import { render, RenderOptions, userEvent } from '@/utils/test-utils';
 import DispositionFileTabs, { IDispositionFileTabsProps } from './DispositionFileTabs';
 
 // mock auth library
-jest.mock('@react-keycloak/web');
-jest.mock('@/hooks/repositories/useNoteRepository');
-jest.mock('@/hooks/pims-api/useApiNotes');
 
-const getNotes = jest.fn().mockResolvedValue([]);
+vi.mock('@/hooks/repositories/useNoteRepository');
+vi.mock('@/hooks/pims-api/useApiNotes');
+
+const getNotes = vi.fn().mockResolvedValue([]);
 
 const mockGetDispositionFileOffersApi = {
   error: undefined,
   response: undefined,
-  execute: jest.fn(),
+  execute: vi.fn(),
   loading: false,
 };
 
 const mockGetDispositionFileSalesApi = {
   error: undefined,
   response: undefined,
-  execute: jest.fn(),
+  execute: vi.fn(),
   loading: false,
 };
 
 const mockGetDispositionFileAppraisalApi = {
   error: undefined,
   response: undefined,
-  execute: jest.fn(),
+  execute: vi.fn(),
   loading: false,
 };
 
 const mockDeleteDispositionFileOfferApi = {
   error: undefined,
   response: undefined,
-  execute: jest.fn(),
+  execute: vi.fn(),
   loading: false,
 };
 
-(useNoteRepository as jest.Mock).mockImplementation(() => ({
-  addNote: { execute: jest.fn() },
-  getNote: { execute: jest.fn() },
-  updateNote: { execute: jest.fn() },
-}));
+vi.mocked(useNoteRepository).mockImplementation(
+  () =>
+    ({
+      addNote: { execute: vi.fn() },
+      getNote: { execute: vi.fn() },
+      updateNote: { execute: vi.fn() },
+    } as unknown as ReturnType<typeof useNoteRepository>),
+);
 
-(useApiNotes as jest.Mock).mockImplementation(() => ({
-  getNotes,
-}));
+vi.mocked(useApiNotes).mockImplementation(
+  () =>
+    ({
+      getNotes,
+    } as unknown as ReturnType<typeof useApiNotes>),
+);
 
-jest.mock('@/features/documents/hooks/useDocumentRelationshipProvider', () => ({
+vi.mock('@/features/documents/hooks/useDocumentRelationshipProvider', () => ({
   useDocumentRelationshipProvider: () => {
     return {
-      retrieveDocumentRelationship: jest.fn(),
+      retrieveDocumentRelationship: vi.fn(),
       retrieveDocumentRelationshipLoading: false,
     };
   },
 }));
 
-jest.mock('@/features/documents/hooks/useDocumentProvider', () => ({
+vi.mock('@/features/documents/hooks/useDocumentProvider', () => ({
   useDocumentProvider: () => {
     return {
-      getDocumentRelationshipTypes: jest.fn(),
+      getDocumentRelationshipTypes: vi.fn(),
       getDocumentRelationshipTypesLoading: false,
-      getDocumentTypes: jest.fn(),
+      getDocumentTypes: vi.fn(),
       getDocumentTypesLoading: false,
     };
   },
 }));
 
-jest.mock('@/hooks/repositories/useDispositionProvider', () => ({
+vi.mock('@/hooks/repositories/useDispositionProvider', () => ({
   useDispositionProvider: () => {
     return {
       getDispositionFileOffers: mockGetDispositionFileOffersApi,
@@ -88,7 +94,7 @@ jest.mock('@/hooks/repositories/useDispositionProvider', () => ({
 }));
 
 const history = createMemoryHistory();
-const setIsEditing = jest.fn();
+const setIsEditing = vi.fn();
 
 const mockDispositionFileResponseApi = mockDispositionFileResponse();
 

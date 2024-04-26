@@ -1,24 +1,22 @@
 import { FormikHelpers, FormikProps } from 'formik';
-import React from 'react';
 
-import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { SideBarContextProvider } from '@/features/mapSideBar/context/sidebarContext';
-import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { mockProjectGetResponse, mockProjectPostResponse } from '@/mocks/projects.mock';
 import { act, render, RenderOptions } from '@/utils/test-utils';
 
 import { IAddProjectFormProps } from '../../../add/AddProjectForm';
 import { ProjectForm } from '../../../models';
 import UpdateProjectContainer from './UpdateProjectContainer';
+import { forwardRef } from 'react';
 
 const mockApi = {
   error: undefined,
   response: undefined,
-  execute: jest.fn(),
+  execute: vi.fn(),
   loading: false,
 };
 
-jest.mock('@/hooks/repositories/useProjectProvider', () => ({
+vi.mock('@/hooks/repositories/useProjectProvider', () => ({
   useProjectProvider: () => {
     return {
       updateProject: mockApi,
@@ -26,33 +24,29 @@ jest.mock('@/hooks/repositories/useProjectProvider', () => ({
   },
 }));
 
-jest.mock('@/hooks/repositories/useFinancialCodeRepository', () => ({
+vi.mock('@/hooks/repositories/useFinancialCodeRepository', () => ({
   useFinancialCodeRepository: () => {
     return {
       getFinancialCodesByType: {
         error: undefined,
         response: [],
-        execute: jest.fn(),
+        execute: vi.fn(),
         loading: false,
       },
     };
   },
 }));
 
-jest.mock('@/components/common/mapFSM/MapStateMachineContext');
-
 let viewProps: IAddProjectFormProps | undefined;
-const TestView = React.forwardRef<FormikProps<ProjectForm>, IAddProjectFormProps>(
-  (props, formikRef) => {
-    viewProps = props;
-    return <span>Content Rendered</span>;
-  },
-);
+const TestView = forwardRef<FormikProps<ProjectForm>, IAddProjectFormProps>((props, formikRef) => {
+  viewProps = props;
+  return <span>Content Rendered</span>;
+});
 
 const mockProject = mockProjectGetResponse();
 const formValues: ProjectForm = ProjectForm.fromApi(mockProject);
 
-const onSuccess = jest.fn();
+const onSuccess = vi.fn();
 
 describe('UpdateProjectContainer', () => {
   const setup = (renderOptions: RenderOptions = {}) => {
@@ -74,10 +68,9 @@ describe('UpdateProjectContainer', () => {
       businessFunctionOptions: [],
       costTypeOptions: [],
       workActivityOptions: [],
-      onSubmit: jest.fn(),
+      onSubmit: vi.fn(),
     };
-    jest.resetAllMocks();
-    (useMapStateMachine as jest.Mock).mockImplementation(() => mapMachineBaseMock);
+    vi.resetAllMocks();
   });
 
   it('renders the underlying form', async () => {
@@ -99,8 +92,8 @@ describe('UpdateProjectContainer', () => {
   it('makes request to update the Project', async () => {
     setup();
     const formikHelpers: Partial<FormikHelpers<ProjectForm>> = {
-      setSubmitting: jest.fn(),
-      resetForm: jest.fn(),
+      setSubmitting: vi.fn(),
+      resetForm: vi.fn(),
     };
 
     mockApi.execute.mockResolvedValue(

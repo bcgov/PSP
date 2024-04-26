@@ -20,11 +20,10 @@ const storeState = {
 };
 
 const history = createMemoryHistory();
-jest.mock('@react-keycloak/web');
 
-const onCreate = jest.fn();
-const onView = jest.fn();
-const onDelete = jest.fn();
+const onCreate = vi.fn();
+const onView = vi.fn();
+const onDelete = vi.fn();
 
 describe('Activities list view', () => {
   const setup = async (
@@ -53,7 +52,7 @@ describe('Activities list view', () => {
   };
 
   beforeEach(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
 
   it('renders as expected', async () => {

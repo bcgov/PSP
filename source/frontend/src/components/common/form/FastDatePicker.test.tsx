@@ -1,6 +1,6 @@
 import { act } from '@testing-library/react';
 import { Formik } from 'formik';
-import { noop } from 'lodash';
+import noop from 'lodash/noop';
 
 import { fillInput, render } from '@/utils/test-utils';
 

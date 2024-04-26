@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { noop } from 'lodash';
+import noop from 'lodash/noop';
 import React from 'react';
 
 import ITenantConfig, { ITenantConfig2 } from '@/hooks/pims-api/interfaces/ITenantConfig';

@@ -20,12 +20,12 @@ const storeState = {
 };
 
 // Mock API service calls
-jest.mock('@/features/contacts/hooks/useAddContact');
+vi.mock('@/features/contacts/hooks/useAddContact');
 
-const addOrganization = jest.fn();
+const addOrganization = vi.fn();
 
-(useAddContact as jest.MockedFunction<typeof useAddContact>).mockReturnValue({
-  addPerson: jest.fn(),
+vi.mocked(useAddContact).mockReturnValue({
+  addPerson: vi.fn(),
   addOrganization,
 });
 

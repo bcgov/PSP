@@ -20,27 +20,27 @@ const mockAppraisal = mockDispositionAppraisalApi(1);
 const mockGetAppraisalApi = {
   error: undefined,
   response: undefined,
-  execute: jest.fn().mockResolvedValue(mockAppraisal),
+  execute: vi.fn().mockResolvedValue(mockAppraisal),
   loading: false,
 };
 
 const mockPutAppraisalApi = {
   error: undefined,
   response: undefined,
-  execute: jest.fn(),
+  execute: vi.fn(),
   loading: false,
 };
 
 const mockPostAppraisalApi = {
   error: undefined,
   response: undefined,
-  execute: jest.fn(),
+  execute: vi.fn(),
   loading: false,
 };
 
-const onSuccess = jest.fn();
+const onSuccess = vi.fn();
 
-jest.mock('@/hooks/repositories/useDispositionProvider', () => ({
+vi.mock('@/hooks/repositories/useDispositionProvider', () => ({
   useDispositionProvider: () => {
     return {
       getDispositionAppraisal: mockGetAppraisalApi,
@@ -87,7 +87,7 @@ describe('Update Disposition Appraisal Container component', () => {
 
   beforeEach(() => {
     viewProps = undefined;
-    jest.resetAllMocks();
+    vi.resetAllMocks();
   });
 
   it('Renders the underlying form', async () => {

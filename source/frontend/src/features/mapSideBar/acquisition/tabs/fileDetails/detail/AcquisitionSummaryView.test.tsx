@@ -12,23 +12,29 @@ import { toTypeCodeNullable } from '@/utils/formUtils';
 import { act, cleanup, render, RenderOptions, userEvent, waitForEffects } from '@/utils/test-utils';
 
 import AcquisitionSummaryView, { IAcquisitionSummaryViewProps } from './AcquisitionSummaryView';
+import { vi } from 'vitest';
 
 // mock auth library
-jest.mock('@react-keycloak/web');
 
-const onEdit = jest.fn();
+const onEdit = vi.fn();
 
-jest.mock('@/hooks/pims-api/useApiContacts');
-const getPersonConceptFn = jest.fn();
-(useApiContacts as jest.Mock).mockImplementation(() => ({
-  getPersonConcept: getPersonConceptFn,
-}));
+vi.mock('@/hooks/pims-api/useApiContacts');
+const getPersonConceptFn = vi.fn();
+vi.mocked(useApiContacts).mockImplementation(
+  () =>
+    ({
+      getPersonConcept: getPersonConceptFn,
+    } as unknown as ReturnType<typeof useApiContacts>),
+);
 
-jest.mock('@/hooks/pims-api/useApiAcquisitionFile');
-const getAcquisitionFileOwnersFn = jest.fn();
-(useApiAcquisitionFile as jest.Mock).mockImplementation(() => ({
-  getAcquisitionFileOwners: getAcquisitionFileOwnersFn,
-}));
+vi.mock('@/hooks/pims-api/useApiAcquisitionFile');
+const getAcquisitionFileOwnersFn = vi.fn();
+vi.mocked(useApiAcquisitionFile).mockImplementation(
+  () =>
+    ({
+      getAcquisitionFileOwners: getAcquisitionFileOwnersFn,
+    } as unknown as ReturnType<typeof useApiAcquisitionFile>),
+);
 
 describe('AcquisitionSummaryView component', () => {
   // render component under test
@@ -63,7 +69,7 @@ describe('AcquisitionSummaryView component', () => {
 
   afterEach(() => {
     cleanup();
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('matches snapshot', async () => {
