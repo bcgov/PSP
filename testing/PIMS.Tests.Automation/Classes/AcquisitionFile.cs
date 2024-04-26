@@ -193,6 +193,7 @@
     {
         public string TakeType { get; set; } = null!;
         public string TakeStatus { get; set; } = null!;
+        public string TakeCompleteDate { get; set; } = null!;
         public string SiteContamination { get; set; } = null!;
         public string TakeDescription { get; set; } = null!;
         public string IsNewHighwayDedication { get; set; } = null!;
