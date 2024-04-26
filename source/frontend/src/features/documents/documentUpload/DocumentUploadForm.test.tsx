@@ -12,13 +12,13 @@ import DocumentUploadForm from './DocumentUploadForm';
 
 const history = createMemoryHistory();
 
-const submitForm = jest.fn();
-const handleSubmit = jest.fn();
+const submitForm = vi.fn();
+const handleSubmit = vi.fn();
 
-const handleCancelClick = jest.fn();
-const onUploadDocument = jest.fn();
-const onDocumentTypeChange = jest.fn();
-const onDocumentSelected = jest.fn();
+const handleCancelClick = vi.fn();
+const onUploadDocument = vi.fn();
+const onDocumentTypeChange = vi.fn();
+const onDocumentSelected = vi.fn();
 
 const documentStatusOptions: SelectOption[] = [
   { label: '', value: 'NONE' },
@@ -103,7 +103,7 @@ describe('DocumentUploadView component', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders as expected', async () => {

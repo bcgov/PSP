@@ -6,6 +6,7 @@ import { IPropertyFilter } from '@/features/properties/filter/IPropertyFilter';
 import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { ApiGen_Concepts_PropertyAssociations } from '@/models/api/generated/ApiGen_Concepts_PropertyAssociations';
+import { ApiGen_Concepts_PropertyView } from '@/models/api/generated/ApiGen_Concepts_PropertyView';
 import { Api_PropertyFilterCriteria } from '@/models/api/ProjectFilterCriteria';
 
 import useAxiosApi from './useApi';
@@ -19,8 +20,8 @@ export const useApiProperties = () => {
 
   return React.useMemo(
     () => ({
-      getPropertiesPagedApi: (params: IPropertyFilter | null) =>
-        api.get<ApiGen_Base_Page<ApiGen_Concepts_Property>>(
+      getPropertiesViewPagedApi: (params: IPropertyFilter | null) =>
+        api.get<ApiGen_Base_Page<ApiGen_Concepts_PropertyView>>(
           `/properties/search?${params ? queryString.stringify(params) : ''}`,
         ),
       getMatchingPropertiesApi: (params: Api_PropertyFilterCriteria) =>
@@ -43,6 +44,8 @@ export const useApiProperties = () => {
         api.get<ApiGen_Concepts_Property>(`/properties/${id}`),
       getPropertyConceptWithPidApi: (pid: string) =>
         api.get<ApiGen_Concepts_Property>(`/properties/pid/${pid}`),
+      getPropertyConceptWithPinApi: (pin: number) =>
+        api.get<ApiGen_Concepts_Property>(`/properties/pin/${pin}`),
       putPropertyConceptApi: (property: ApiGen_Concepts_Property) =>
         api.put<ApiGen_Concepts_Property>(`/properties/${property.id}`, property),
     }),

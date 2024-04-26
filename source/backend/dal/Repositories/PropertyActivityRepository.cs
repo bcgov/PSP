@@ -63,6 +63,7 @@ namespace Pims.Dal.Repositories
                 .Include(a => a.PropMgmtActivityStatusTypeCodeNavigation)
                 .Include(a => a.PimsPropActMinContacts)
                 .Include(a => a.PimsPropActInvolvedParties)
+                .AsNoTracking()
                 .FirstOrDefault(p => p.PimsPropertyActivityId == activityId) ?? throw new KeyNotFoundException();
             return activity;
         }

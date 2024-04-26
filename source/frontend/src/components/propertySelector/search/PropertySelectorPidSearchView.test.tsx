@@ -14,13 +14,11 @@ import PropertySearchSelectorPidFormView, {
 } from './PropertySelectorPidSearchView';
 import { IAddSubdivisionViewProps } from '@/features/mapSideBar/subdivision/AddSubdivisionView';
 import { SubdivisionFormModel } from '@/features/mapSideBar/subdivision/AddSubdivisionModel';
-import { noop } from 'lodash';
+import noop from 'lodash/noop';
 
-jest.mock('@react-keycloak/web');
-jest.mock('@/components/common/mapFSM/MapStateMachineContext');
 const history = createMemoryHistory();
 
-const onSearch = jest.fn();
+const onSearch = vi.fn();
 
 describe('PropertySearchPidSelector component', () => {
   const setup = async (
@@ -55,8 +53,7 @@ describe('PropertySearchPidSelector component', () => {
   };
 
   beforeEach(() => {
-    jest.resetAllMocks();
-    (useMapStateMachine as jest.Mock).mockImplementation(() => mapMachineBaseMock);
+    vi.resetAllMocks();
   });
 
   it('renders correctly', async () => {

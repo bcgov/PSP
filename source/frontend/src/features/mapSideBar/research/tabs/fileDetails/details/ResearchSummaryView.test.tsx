@@ -4,9 +4,7 @@ import { act, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import ResearchSummaryView, { IResearchSummaryViewProps } from './ResearchSummaryView';
 
-jest.mock('@react-keycloak/web');
-
-const setEditMode = jest.fn();
+const setEditMode = vi.fn();
 
 describe('ResearchSummaryView component', () => {
   const setup = (renderOptions: RenderOptions & IResearchSummaryViewProps) => {
@@ -26,7 +24,7 @@ describe('ResearchSummaryView component', () => {
   };
 
   afterEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
   });
 
   it('renders as expected when research file is provided', () => {

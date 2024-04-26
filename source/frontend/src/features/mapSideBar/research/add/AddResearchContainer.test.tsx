@@ -1,7 +1,7 @@
 import { screen } from '@testing-library/react';
 import { Feature, Geometry } from 'geojson';
 import { createMemoryHistory } from 'history';
-import { noop } from 'lodash';
+import noop from 'lodash/noop';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
@@ -11,47 +11,65 @@ import {
 } from '@/components/common/mapFSM/MapStateMachineContext';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { PMBC_Feature_Properties } from '@/models/layers/parcelMapBC';
-import { act, renderAsync, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
+import { RenderOptions, act, renderAsync, userEvent, waitFor } from '@/utils/test-utils';
 
 import AddResearchContainer, { IAddResearchContainerProps } from './AddResearchContainer';
+import { cleanup } from '@testing-library/react-hooks';
 
 const mockStore = configureMockStore([thunk]);
 
 const store = mockStore({});
 const history = createMemoryHistory();
-jest.mock('@react-keycloak/web');
 
-const onClose = jest.fn();
+const onClose = vi.fn();
 
 // Need to mock this library for unit tests
-jest.mock('react-visibility-sensor', () => {
-  return jest.fn().mockImplementation(({ children }) => {
-    if (children instanceof Function) {
-      return children({ isVisible: true });
-    }
-    return children;
-  });
+vi.mock('react-visibility-sensor', () => {
+  return {
+    default: vi.fn().mockImplementation(({ children }) => {
+      if (children instanceof Function) {
+        return children({ isVisible: true });
+      }
+      return children;
+    }),
+  };
 });
 
-jest.mock('@/components/common/mapFSM/MapStateMachineContext');
-(useMapStateMachine as jest.Mock).mockImplementation(() => mapMachineBaseMock);
+const mockGetByPidWrapper = {
+  error: undefined,
+  response: undefined,
+  execute: vi.fn(),
+  loading: false,
+};
+
+const mockGetByPinWrapper = {
+  error: undefined,
+  response: undefined,
+  execute: vi.fn(),
+  loading: false,
+};
+
+vi.mock('@/hooks/repositories/usePimsPropertyRepository', () => ({
+  usePimsPropertyRepository: () => {
+    return {
+      getPropertyByPidWrapper: mockGetByPidWrapper,
+      getPropertyByPinWrapper: mockGetByPinWrapper,
+    };
+  },
+}));
 
 describe('AddResearchContainer component', () => {
   const setup = async (
     renderOptions: RenderOptions & IAddResearchContainerProps & Partial<IMapStateMachineContext>,
   ) => {
     // render component under test
-    const utils = await renderAsync(
-      <>
-        <AddResearchContainer onClose={renderOptions.onClose} />
-      </>,
-      {
-        ...renderOptions,
-        claims: [],
-        store: store,
-        history: history,
-      },
-    );
+    const utils = await renderAsync(<AddResearchContainer onClose={renderOptions.onClose} />, {
+      claims: [],
+      useMockAuthentication: true,
+      store,
+      history,
+      ...renderOptions,
+    });
 
     return {
       ...utils,
@@ -61,6 +79,10 @@ describe('AddResearchContainer component', () => {
     };
   };
 
+  beforeEach(() => {
+    cleanup();
+  });
+
   it('renders as expected', async () => {
     const { asFragment } = await setup({ onClose: noop });
     await act(async () => {});
@@ -68,20 +90,21 @@ describe('AddResearchContainer component', () => {
   });
 
   it('displays the currently selected property', async () => {
-    (useMapStateMachine as unknown as jest.Mock<Partial<IMapStateMachineContext>>).mockReturnValue({
-      ...mapMachineBaseMock,
-      selectedFeatureDataset: {
-        location: { lat: 0, lng: 0 },
-        pimsFeature: null,
-        parcelFeature: selectedFeature,
-        regionFeature: null,
-        districtFeature: null,
-        municipalityFeature: null,
-        selectingComponentId: null,
+    const { findByText } = await setup({
+      onClose: noop,
+      mockMapMachine: {
+        ...mapMachineBaseMock,
+        selectedFeatureDataset: {
+          location: { lat: 0, lng: 0 },
+          pimsFeature: null,
+          parcelFeature: selectedFeature,
+          regionFeature: null,
+          districtFeature: null,
+          municipalityFeature: null,
+          selectingComponentId: null,
+        },
       },
     });
-
-    const { findByText } = await setup({ onClose: noop });
     await act(async () => {
       const pidText = await findByText('PID: 002-225-255');
       expect(pidText).toBeVisible();
@@ -106,12 +129,10 @@ describe('AddResearchContainer component', () => {
     const testMockMachine: IMapStateMachineContext = {
       ...mapMachineBaseMock,
     };
-    (useMapStateMachine as unknown as jest.Mock<Partial<IMapStateMachineContext>>).mockReturnValue(
-      testMockMachine,
-    );
 
     const { getByTitle } = await setup({
       onClose: noop,
+      mockMapMachine: testMockMachine,
     });
 
     const closeButton = getByTitle('close');

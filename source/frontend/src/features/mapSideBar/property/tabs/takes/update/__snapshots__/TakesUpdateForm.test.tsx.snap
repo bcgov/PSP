@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`TakesUpdateForm component renders as expected 1`] = `
+exports[`TakesUpdateForm component > renders as expected 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
@@ -175,7 +175,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
   line-height: 2rem;
 }
 
-.c17 .react-datepicker__calendar-icon {
+.c10 .react-datepicker__calendar-icon {
   width: 3rem;
   height: 3rem;
   margin-top: 0.5rem;
@@ -183,23 +183,23 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
   pointer-events: none;
 }
 
-.c17 .react-datepicker__view-calendar-icon input {
+.c10 .react-datepicker__view-calendar-icon input {
   padding: 0.6rem 1rem 0.5rem 0.6rem;
 }
 
-.c17 .react-datepicker-wrapper {
+.c10 .react-datepicker-wrapper {
   max-width: 16rem;
 }
 
-.c18.c18.form-control.is-valid {
+.c11.c11.form-control.is-valid {
   background-image: none;
 }
 
-.c18.c18.form-control.is-invalid {
+.c11.c11.form-control.is-invalid {
   border-color: #d8292f !important;
 }
 
-.c13 {
+.c15 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -218,7 +218,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
   padding-top: 1rem;
 }
 
-.c12.form-group {
+.c14.form-group {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -226,7 +226,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
   margin-bottom: 0;
 }
 
-.c12.form-group .radio-group {
+.c14.form-group .radio-group {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -239,7 +239,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
   column-gap: 0.4rem;
 }
 
-.c12.form-group .radio-group .form-check {
+.c14.form-group .radio-group .form-check {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -254,15 +254,15 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
   justify-content: center;
 }
 
-.c12.form-group .radio-group .form-check .form-check-input {
+.c14.form-group .radio-group .form-check .form-check-input {
   margin-left: 0;
 }
 
-.c12.form-group .radio-group .form-check-label {
+.c14.form-group .radio-group .form-check-label {
   margin-left: 1rem;
 }
 
-.c12 .form-label {
+.c14 .form-label {
   margin-bottom: unset;
 }
 
@@ -291,13 +291,6 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
   font-weight: bold;
 }
 
-.c14 {
-  max-width: 25rem;
-  padding: 1rem;
-  border: 1px solid;
-  border-radius: 0.5rem;
-}
-
 .c16 {
   max-width: 25rem;
   padding: 1rem;
@@ -305,18 +298,25 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
   border-radius: 0.5rem;
 }
 
-.c15 {
+.c18 {
+  max-width: 25rem;
+  padding: 1rem;
+  border: 1px solid;
+  border-radius: 0.5rem;
+}
+
+.c17 {
   max-width: 9rem;
 }
 
-.c10.form-section {
+.c12.form-section {
   margin-left: 0;
   margin-right: 0;
   padding-left: 0;
   padding-right: 0;
 }
 
-.c11 {
+.c13 {
   border: 0.1rem solid lightgrey;
   border-radius: 0.5rem;
 }
@@ -534,6 +534,78 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
             <label
               class="c8"
             >
+              Completion date:
+              <span
+                class="ml-2"
+              >
+                <span
+                  class="tooltip-icon"
+                  data-testid="tooltip-icon-section-field-tooltip"
+                  id="section-field-tooltip"
+                >
+                  <svg
+                    class="tooltip-icon"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                    />
+                  </svg>
+                </span>
+              </span>
+            </label>
+          </div>
+          <div
+            class="c9 text-left col-5"
+          >
+            <div
+              class="c10 form-group"
+            >
+              <div
+                class="react-datepicker-wrapper d-block"
+              >
+                <div
+                  class="react-datepicker__input-container react-datepicker__view-calendar-icon"
+                >
+                  <svg
+                    class="react-datepicker__calendar-icon"
+                    viewBox="0 0 448 512"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                    />
+                  </svg>
+                  <input
+                    autocomplete="off"
+                    class="c11 form-control date-picker"
+                    disabled=""
+                    id="datepicker-takes.0.completionDt"
+                    name="takes.0.completionDt"
+                    placeholder="MMM DD, YYYY"
+                    type="text"
+                    value=""
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c8"
+            >
               Site contamination:
             </label>
           </div>
@@ -601,7 +673,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
           </div>
         </div>
         <div
-          class="c3 form-section c10"
+          class="c3 form-section c12"
         >
           <h2
             class="c4"
@@ -620,7 +692,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
             class="collapse show"
           >
             <div
-              class="c3 form-section c11"
+              class="c3 form-section c13"
             >
               <div
                 class="collapse show"
@@ -665,13 +737,13 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                     class="c9 text-left col"
                   >
                     <div
-                      class="c12 form-group"
+                      class="c14 form-group"
                     >
                       <div
                         class="radio-group"
                       >
                         <div
-                          class="c13"
+                          class="c15"
                         >
                           <div
                             class="form-check"
@@ -694,7 +766,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                           </label>
                         </div>
                         <div
-                          class="c13"
+                          class="c15"
                         >
                           <div
                             class="form-check"
@@ -741,7 +813,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                         class="col"
                       >
                         <div
-                          class="c14"
+                          class="c16"
                         >
                           <div
                             class="pb-2 row"
@@ -751,7 +823,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                             >
                               <input
                                 aria-label="square metres"
-                                class="c15"
+                                class="c17"
                                 name="area-sq-meters"
                                 step=".01"
                                 type="number"
@@ -772,7 +844,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                             >
                               <input
                                 aria-label="hectares"
-                                class="c15"
+                                class="c17"
                                 name="area-hectares"
                                 step=".01"
                                 type="number"
@@ -791,7 +863,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                         class="col"
                       >
                         <div
-                          class="c16"
+                          class="c18"
                         >
                           <div
                             class="pb-2 row"
@@ -801,7 +873,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                             >
                               <input
                                 aria-label="square feet"
-                                class="c15"
+                                class="c17"
                                 name="area-sq-feet"
                                 step=".01"
                                 type="number"
@@ -822,7 +894,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                             >
                               <input
                                 aria-label="acres"
-                                class="c15"
+                                class="c17"
                                 name="area-acres"
                                 step=".01"
                                 type="number"
@@ -880,13 +952,13 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                     class="c9 text-left col"
                   >
                     <div
-                      class="c12 form-group"
+                      class="c14 form-group"
                     >
                       <div
                         class="radio-group"
                       >
                         <div
-                          class="c13"
+                          class="c15"
                         >
                           <div
                             class="form-check"
@@ -908,7 +980,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                           </label>
                         </div>
                         <div
-                          class="c13"
+                          class="c15"
                         >
                           <div
                             class="form-check"
@@ -937,7 +1009,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
               </div>
             </div>
             <div
-              class="c3 form-section c11"
+              class="c3 form-section c13"
             >
               <div
                 class="collapse show"
@@ -958,13 +1030,13 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                     class="c9 text-left col"
                   >
                     <div
-                      class="c12 form-group"
+                      class="c14 form-group"
                     >
                       <div
                         class="radio-group"
                       >
                         <div
-                          class="c13"
+                          class="c15"
                         >
                           <div
                             class="form-check"
@@ -987,7 +1059,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                           </label>
                         </div>
                         <div
-                          class="c13"
+                          class="c15"
                         >
                           <div
                             class="form-check"
@@ -1034,7 +1106,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                         class="col"
                       >
                         <div
-                          class="c14"
+                          class="c16"
                         >
                           <div
                             class="pb-2 row"
@@ -1044,7 +1116,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                             >
                               <input
                                 aria-label="square metres"
-                                class="c15"
+                                class="c17"
                                 name="area-sq-meters"
                                 step=".01"
                                 type="number"
@@ -1065,7 +1137,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                             >
                               <input
                                 aria-label="hectares"
-                                class="c15"
+                                class="c17"
                                 name="area-hectares"
                                 step=".01"
                                 type="number"
@@ -1084,7 +1156,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                         class="col"
                       >
                         <div
-                          class="c16"
+                          class="c18"
                         >
                           <div
                             class="pb-2 row"
@@ -1094,7 +1166,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                             >
                               <input
                                 aria-label="square feet"
-                                class="c15"
+                                class="c17"
                                 name="area-sq-feet"
                                 step=".01"
                                 type="number"
@@ -1115,7 +1187,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                             >
                               <input
                                 aria-label="acres"
-                                class="c15"
+                                class="c17"
                                 name="area-acres"
                                 step=".01"
                                 type="number"
@@ -1134,10 +1206,10 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                   </div>
                 </div>
                 <div
-                  class="pb-2 row"
+                  class="mt-4 row"
                 >
                   <div
-                    class="pr-0 text-left col-4"
+                    class="pr-0 text-left col-3"
                   >
                     <label
                       class="c8"
@@ -1146,10 +1218,10 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                     </label>
                   </div>
                   <div
-                    class="c9 text-left col-4"
+                    class="c9 text-left col"
                   >
                     <div
-                      class="c17 form-group"
+                      class="c10 form-group"
                     >
                       <div
                         class="react-datepicker-wrapper d-block"
@@ -1168,7 +1240,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                           </svg>
                           <input
                             autocomplete="off"
-                            class="c18 form-control date-picker"
+                            class="c11 form-control date-picker"
                             id="datepicker-takes.0.srwEndDt"
                             name="takes.0.srwEndDt"
                             placeholder="MMM DD, YYYY"
@@ -1183,7 +1255,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
               </div>
             </div>
             <div
-              class="c3 form-section c11"
+              class="c3 form-section c13"
             >
               <div
                 class="collapse show"
@@ -1197,20 +1269,20 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                     <label
                       class="c8"
                     >
-                      Is a there a new Land Act tenure? *:
+                      Is there a new Land Act tenure? *:
                     </label>
                   </div>
                   <div
                     class="c9 text-left col"
                   >
                     <div
-                      class="c12 form-group"
+                      class="c14 form-group"
                     >
                       <div
                         class="radio-group"
                       >
                         <div
-                          class="c13"
+                          class="c15"
                         >
                           <div
                             class="form-check"
@@ -1233,7 +1305,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                           </label>
                         </div>
                         <div
-                          class="c13"
+                          class="c15"
                         >
                           <div
                             class="form-check"
@@ -1295,6 +1367,13 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                         </option>
                         <option
                           class="option"
+                          data-testid="select-option-Crown Grant"
+                          value="Crown Grant"
+                        >
+                          Crown Grant Crown Grant
+                        </option>
+                        <option
+                          class="option"
                           data-testid="select-option-Section 16"
                           value="Section 16"
                         >
@@ -1347,7 +1426,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                         class="col"
                       >
                         <div
-                          class="c14"
+                          class="c16"
                         >
                           <div
                             class="pb-2 row"
@@ -1357,7 +1436,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                             >
                               <input
                                 aria-label="square metres"
-                                class="c15"
+                                class="c17"
                                 name="area-sq-meters"
                                 step=".01"
                                 type="number"
@@ -1378,7 +1457,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                             >
                               <input
                                 aria-label="hectares"
-                                class="c15"
+                                class="c17"
                                 name="area-hectares"
                                 step=".01"
                                 type="number"
@@ -1397,7 +1476,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                         class="col"
                       >
                         <div
-                          class="c16"
+                          class="c18"
                         >
                           <div
                             class="pb-2 row"
@@ -1407,7 +1486,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                             >
                               <input
                                 aria-label="square feet"
-                                class="c15"
+                                class="c17"
                                 name="area-sq-feet"
                                 step=".01"
                                 type="number"
@@ -1428,7 +1507,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                             >
                               <input
                                 aria-label="acres"
-                                class="c15"
+                                class="c17"
                                 name="area-acres"
                                 step=".01"
                                 type="number"
@@ -1447,10 +1526,10 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                   </div>
                 </div>
                 <div
-                  class="pb-2 row"
+                  class="mt-4 row"
                 >
                   <div
-                    class="pr-0 text-left col-4"
+                    class="pr-0 text-left col-3"
                   >
                     <label
                       class="c8"
@@ -1459,10 +1538,10 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                     </label>
                   </div>
                   <div
-                    class="c9 text-left col-4"
+                    class="c9 text-left col"
                   >
                     <div
-                      class="c17 form-group"
+                      class="c10 form-group"
                     >
                       <div
                         class="react-datepicker-wrapper d-block"
@@ -1481,7 +1560,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                           </svg>
                           <input
                             autocomplete="off"
-                            class="c18 form-control date-picker"
+                            class="c11 form-control date-picker"
                             id="datepicker-takes.0.landActEndDt"
                             name="takes.0.landActEndDt"
                             placeholder="MMM DD, YYYY"
@@ -1496,7 +1575,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
               </div>
             </div>
             <div
-              class="c3 form-section c11"
+              class="c3 form-section c13"
             >
               <div
                 class="collapse show"
@@ -1517,13 +1596,13 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                     class="c9 text-left col"
                   >
                     <div
-                      class="c12 form-group"
+                      class="c14 form-group"
                     >
                       <div
                         class="radio-group"
                       >
                         <div
-                          class="c13"
+                          class="c15"
                         >
                           <div
                             class="form-check"
@@ -1546,7 +1625,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                           </label>
                         </div>
                         <div
-                          class="c13"
+                          class="c15"
                         >
                           <div
                             class="form-check"
@@ -1593,7 +1672,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                         class="col"
                       >
                         <div
-                          class="c14"
+                          class="c16"
                         >
                           <div
                             class="pb-2 row"
@@ -1603,7 +1682,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                             >
                               <input
                                 aria-label="square metres"
-                                class="c15"
+                                class="c17"
                                 name="area-sq-meters"
                                 step=".01"
                                 type="number"
@@ -1624,7 +1703,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                             >
                               <input
                                 aria-label="hectares"
-                                class="c15"
+                                class="c17"
                                 name="area-hectares"
                                 step=".01"
                                 type="number"
@@ -1643,7 +1722,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                         class="col"
                       >
                         <div
-                          class="c16"
+                          class="c18"
                         >
                           <div
                             class="pb-2 row"
@@ -1653,7 +1732,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                             >
                               <input
                                 aria-label="square feet"
-                                class="c15"
+                                class="c17"
                                 name="area-sq-feet"
                                 step=".01"
                                 type="number"
@@ -1674,7 +1753,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                             >
                               <input
                                 aria-label="acres"
-                                class="c15"
+                                class="c17"
                                 name="area-acres"
                                 step=".01"
                                 type="number"
@@ -1693,10 +1772,10 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                   </div>
                 </div>
                 <div
-                  class="pb-2 row"
+                  class="mt-4 row"
                 >
                   <div
-                    class="pr-0 text-left col-4"
+                    class="pr-0 text-left col-3"
                   >
                     <label
                       class="c8"
@@ -1705,10 +1784,10 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                     </label>
                   </div>
                   <div
-                    class="c9 text-left col-4"
+                    class="c9 text-left col"
                   >
                     <div
-                      class="c17 form-group"
+                      class="c10 form-group"
                     >
                       <div
                         class="react-datepicker-wrapper d-block"
@@ -1727,7 +1806,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                           </svg>
                           <input
                             autocomplete="off"
-                            class="c18 form-control date-picker"
+                            class="c11 form-control date-picker"
                             id="datepicker-takes.0.ltcEndDt"
                             name="takes.0.ltcEndDt"
                             placeholder="MMM DD, YYYY"
@@ -1741,10 +1820,256 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                 </div>
               </div>
             </div>
+            <div
+              class="c3 form-section c13"
+            >
+              <div
+                class="collapse show"
+              >
+                <div
+                  class="pb-2 row"
+                >
+                  <div
+                    class="pr-0 text-left col-8"
+                  >
+                    <label
+                      class="c8"
+                    >
+                      Is there a Lease (Payable)? *:
+                    </label>
+                  </div>
+                  <div
+                    class="c9 text-left col"
+                  >
+                    <div
+                      class="c14 form-group"
+                    >
+                      <div
+                        class="radio-group"
+                      >
+                        <div
+                          class="c15"
+                        >
+                          <div
+                            class="form-check"
+                          >
+                            <input
+                              checked=""
+                              class="form-check-input position-static"
+                              data-testid="radio-takes.0.isleasepayable-yes"
+                              id="input-true"
+                              name="takes.0.isLeasePayable"
+                              type="radio"
+                              value="true"
+                            />
+                          </div>
+                          <label
+                            class="form-check-label form-label"
+                            for="takes.0.isLeasePayable"
+                          >
+                            Yes
+                          </label>
+                        </div>
+                        <div
+                          class="c15"
+                        >
+                          <div
+                            class="form-check"
+                          >
+                            <input
+                              class="form-check-input position-static"
+                              data-testid="radio-takes.0.isleasepayable-no"
+                              id="input-false"
+                              name="takes.0.isLeasePayable"
+                              type="radio"
+                              value="false"
+                            />
+                          </div>
+                          <label
+                            class="form-check-label form-label"
+                            for="takes.0.isLeasePayable"
+                          >
+                            No
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="pb-2 row"
+                >
+                  <div
+                    class="pr-0 text-left col-12"
+                  >
+                    <label
+                      class="c8"
+                    >
+                      Area:
+                    </label>
+                  </div>
+                  <div
+                    class="c9 text-left col"
+                  >
+                    <div
+                      class="row"
+                    >
+                      <div
+                        class="col"
+                      >
+                        <div
+                          class="c16"
+                        >
+                          <div
+                            class="pb-2 row"
+                          >
+                            <div
+                              class="text-right col"
+                            >
+                              <input
+                                aria-label="square metres"
+                                class="c17"
+                                name="area-sq-meters"
+                                step=".01"
+                                type="number"
+                                value="20231.28"
+                              />
+                            </div>
+                            <div
+                              class="col"
+                            >
+                              sq. metres
+                            </div>
+                          </div>
+                          <div
+                            class="row"
+                          >
+                            <div
+                              class="text-right col"
+                            >
+                              <input
+                                aria-label="hectares"
+                                class="c17"
+                                name="area-hectares"
+                                step=".01"
+                                type="number"
+                                value="2.02"
+                              />
+                            </div>
+                            <div
+                              class="col"
+                            >
+                              hectares
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="col"
+                      >
+                        <div
+                          class="c18"
+                        >
+                          <div
+                            class="pb-2 row"
+                          >
+                            <div
+                              class="text-right col"
+                            >
+                              <input
+                                aria-label="square feet"
+                                class="c17"
+                                name="area-sq-feet"
+                                step=".01"
+                                type="number"
+                                value="217767.7"
+                              />
+                            </div>
+                            <div
+                              class="col"
+                            >
+                              sq. feet
+                            </div>
+                          </div>
+                          <div
+                            class="row"
+                          >
+                            <div
+                              class="text-right col"
+                            >
+                              <input
+                                aria-label="acres"
+                                class="c17"
+                                name="area-acres"
+                                step=".01"
+                                type="number"
+                                value="5"
+                              />
+                            </div>
+                            <div
+                              class="col"
+                            >
+                              acres
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="mt-4 row"
+                >
+                  <div
+                    class="pr-0 text-left col-3"
+                  >
+                    <label
+                      class="c8"
+                    >
+                      End date:
+                    </label>
+                  </div>
+                  <div
+                    class="c9 text-left col"
+                  >
+                    <div
+                      class="c10 form-group"
+                    >
+                      <div
+                        class="react-datepicker-wrapper d-block"
+                      >
+                        <div
+                          class="react-datepicker__input-container react-datepicker__view-calendar-icon"
+                        >
+                          <svg
+                            class="react-datepicker__calendar-icon"
+                            viewBox="0 0 448 512"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                            />
+                          </svg>
+                          <input
+                            autocomplete="off"
+                            class="c11 form-control date-picker"
+                            id="datepicker-takes.0.leasePayableEndDt"
+                            name="takes.0.leasePayableEndDt"
+                            placeholder="MMM DD, YYYY"
+                            type="text"
+                            value="Nov 21, 2022"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <div
-          class="c3 form-section c10"
+          class="c3 form-section c12"
         >
           <h2
             class="c4"
@@ -1763,7 +2088,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
             class="collapse show"
           >
             <div
-              class="c3 form-section c11"
+              class="c3 form-section c13"
             >
               <div
                 class="collapse show"
@@ -1784,13 +2109,13 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                     class="c9 text-left col"
                   >
                     <div
-                      class="c12 form-group"
+                      class="c14 form-group"
                     >
                       <div
                         class="radio-group"
                       >
                         <div
-                          class="c13"
+                          class="c15"
                         >
                           <div
                             class="form-check"
@@ -1813,7 +2138,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                           </label>
                         </div>
                         <div
-                          class="c13"
+                          class="c15"
                         >
                           <div
                             class="form-check"
@@ -1860,7 +2185,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                         class="col"
                       >
                         <div
-                          class="c14"
+                          class="c16"
                         >
                           <div
                             class="pb-2 row"
@@ -1870,7 +2195,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                             >
                               <input
                                 aria-label="square metres"
-                                class="c15"
+                                class="c17"
                                 name="area-sq-meters"
                                 step=".01"
                                 type="number"
@@ -1891,7 +2216,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                             >
                               <input
                                 aria-label="hectares"
-                                class="c15"
+                                class="c17"
                                 name="area-hectares"
                                 step=".01"
                                 type="number"
@@ -1910,7 +2235,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                         class="col"
                       >
                         <div
-                          class="c16"
+                          class="c18"
                         >
                           <div
                             class="pb-2 row"
@@ -1920,7 +2245,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                             >
                               <input
                                 aria-label="square feet"
-                                class="c15"
+                                class="c17"
                                 name="area-sq-feet"
                                 step=".01"
                                 type="number"
@@ -1941,7 +2266,7 @@ exports[`TakesUpdateForm component renders as expected 1`] = `
                             >
                               <input
                                 aria-label="acres"
-                                class="c15"
+                                class="c17"
                                 name="area-acres"
                                 step=".01"
                                 type="number"

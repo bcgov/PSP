@@ -1,5 +1,5 @@
 import { FieldArray, getIn, useFormikContext } from 'formik';
-import * as React from 'react';
+import { Fragment } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
@@ -28,11 +28,11 @@ export const LtsaOwnershipInformationTitleOwnerForm: React.FunctionComponent<
   };
 
   return (
-    <React.Fragment key={`title-owners-info-main-row-${nameSpace}`}>
+    <Fragment key={`title-owners-info-main-row-${nameSpace}`}>
       <FieldArray
         name={withNameSpace(nameSpace, 'titleOwners')}
         render={() => (
-          <React.Fragment key={`title-owner-info-row-${nameSpace}`}>
+          <Fragment key={`title-owner-info-row-${nameSpace}`}>
             {titleOwners.map((titleOwner: TitleOwner, index: number) => {
               const innerNameSpace = withNameSpace(nameSpace, `titleOwners.${index}`);
               const ownerName = [
@@ -41,7 +41,7 @@ export const LtsaOwnershipInformationTitleOwnerForm: React.FunctionComponent<
                 titleOwner.lastNameOrCorpName2 ?? '',
               ];
               return (
-                <React.Fragment key={`title-owner-info-sub-row-${innerNameSpace}`}>
+                <Fragment key={`title-owner-info-sub-row-${innerNameSpace}`}>
                   <OwnershipTitleInfo>
                     <SectionField label="Owner name">
                       <p>{ownerName.join(' ')}</p>
@@ -101,13 +101,13 @@ export const LtsaOwnershipInformationTitleOwnerForm: React.FunctionComponent<
                     </Row>
                   </OwnershipTitleInfo>
                   {index < titleOwners.length - 1 && <hr></hr>}
-                </React.Fragment>
+                </Fragment>
               );
             })}
-          </React.Fragment>
+          </Fragment>
         )}
       />
-    </React.Fragment>
+    </Fragment>
   );
 };
 

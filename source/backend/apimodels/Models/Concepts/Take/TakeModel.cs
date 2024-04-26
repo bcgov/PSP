@@ -31,13 +31,19 @@ namespace Pims.Api.Models.Concepts.Take
 
         public bool? IsNewInterestInSrw { get; set; }
 
+        public bool? IsLeasePayable { get; set; }
+
         public float? LicenseToConstructArea { get; set; }
 
         public DateOnly? LtcEndDt { get; set; }
 
-        public float? LandActArea { get; set; }
-
         public DateOnly? LandActEndDt { get; set; }
+
+        public DateOnly? CompletionDt { get; set; }
+
+        public DateOnly? SrwEndDt { get; set; }
+
+        public DateOnly? LeasePayableEndDt { get; set; }
 
         public AcquisitionFileModel PropertyAcquisitionFile { get; set; }
 
@@ -45,9 +51,11 @@ namespace Pims.Api.Models.Concepts.Take
 
         public float? StatutoryRightOfWayArea { get; set; }
 
-        public DateOnly? SrwEndDt { get; set; }
+        public float? LandActArea { get; set; }
 
         public float? SurplusArea { get; set; }
+
+        public float? LeasePayableArea { get; set; }
 
         public CodeTypeModel<string> TakeSiteContamTypeCode { get; set; }
 

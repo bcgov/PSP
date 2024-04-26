@@ -1,6 +1,6 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { noop } from 'lodash';
+import noop from 'lodash/noop';
 import { toast } from 'react-toastify';
 
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
@@ -20,16 +20,17 @@ import PropertyFileContainer, { IPropertyFileContainerProps } from './PropertyFi
 const mockAxios = new MockAdapter(axios);
 
 // mock auth library
-jest.mock('@react-keycloak/web');
 
 // Need to mock this library for unit tests
-jest.mock('react-visibility-sensor', () => {
-  return jest.fn().mockImplementation(({ children }) => {
-    if (children instanceof Function) {
-      return children({ isVisible: true });
-    }
-    return children;
-  });
+vi.mock('react-visibility-sensor', () => {
+  return {
+    default: vi.fn().mockImplementation(({ children }) => {
+      if (children instanceof Function) {
+        return children({ isVisible: true });
+      }
+      return children;
+    }),
+  };
 });
 
 let viewProps: IInventoryTabsProps | undefined;
@@ -97,15 +98,15 @@ describe('PropertyFileContainer component', () => {
 
   afterEach(() => {
     mockAxios.resetHistory();
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders as expected', async () => {
     // Need to mock toasts or snapshots will change with each test run
-    jest.spyOn(toast, 'success').mockReturnValue(1);
+    vi.spyOn(toast, 'success').mockReturnValue(1);
     const { asFragment } = await setup();
     expect(asFragment()).toMatchSnapshot();
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
 
   it('sets the default tab using the prop value', async () => {

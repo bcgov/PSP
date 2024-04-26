@@ -18,17 +18,17 @@ import {
 } from '@/utils/test-utils';
 
 import { ResearchListView } from './ResearchListView';
+import { useKeycloak } from '@react-keycloak/web';
 
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
 
-jest.mock('@react-keycloak/web');
-jest.mock('@/hooks/pims-api/useApiResearchFile');
-const getResearchFiles = jest.fn();
-(useApiResearchFile as jest.Mock).mockReturnValue({
+vi.mock('@/hooks/pims-api/useApiResearchFile');
+const getResearchFiles = vi.fn();
+vi.mocked(useApiResearchFile).mockReturnValue({
   getResearchFiles,
-});
+} as unknown as ReturnType<typeof useApiResearchFile>);
 
 // render component under test
 const setup = (renderOptions: RenderOptions = { store: storeState }) => {
@@ -162,7 +162,7 @@ describe('Research List View', () => {
     expect(await findAllByText(/Southern Interior Region/i)).toHaveLength(2);
   });
 
-  it('all  unique regions are listed', async () => {
+  it('all unique regions are listed', async () => {
     setupMockSearch([
       {
         id: 1,

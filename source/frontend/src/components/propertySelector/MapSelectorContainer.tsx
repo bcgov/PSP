@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { useState } from 'react';
+import { FunctionComponent, useState } from 'react';
 import { toast } from 'react-toastify';
 
 import { Button } from '@/components/common/buttons';
@@ -18,7 +17,7 @@ export interface IMapSelectorContainerProps {
   selectedComponentId?: string;
 }
 
-export const MapSelectorContainer: React.FunctionComponent<IMapSelectorContainerProps> = ({
+export const MapSelectorContainer: FunctionComponent<IMapSelectorContainerProps> = ({
   addSelectedProperties,
   modifiedProperties,
   selectedComponentId,
@@ -28,7 +27,7 @@ export const MapSelectorContainer: React.FunctionComponent<IMapSelectorContainer
     SelectorTabNames.map,
   );
   const modifiedMapProperties = modifiedProperties.map(mp => mp.toMapProperty());
-  const [lastSelectedProperty, setLastSelectedProperty] = React.useState<IMapProperty | undefined>(
+  const [lastSelectedProperty, setLastSelectedProperty] = useState<IMapProperty | undefined>(
     modifiedProperties?.length === 1 && isValidId(modifiedProperties[0].apiId) // why? Because create from map needs to show the info differently
       ? modifiedMapProperties[0]
       : undefined,

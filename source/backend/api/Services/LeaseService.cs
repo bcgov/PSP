@@ -212,7 +212,7 @@ namespace Pims.Api.Services
             var currentProperties = _propertyLeaseRepository.GetAllByLeaseId(lease.LeaseId);
             var newPropertiesAdded = lease.PimsPropertyLeases.Where(x => !currentProperties.Any(y => y.Internal_Id == x.Internal_Id)).ToList();
 
-            if(newPropertiesAdded.Any(x => x.Property.IsRetired.HasValue && x.Property.IsRetired.Value))
+            if (newPropertiesAdded.Any(x => x.Property.IsRetired.HasValue && x.Property.IsRetired.Value))
             {
                 throw new BusinessRuleViolationException("Retired property can not be selected.");
             }
@@ -244,21 +244,12 @@ namespace Pims.Api.Services
             List<PimsPropertyLease> differenceSet = currentProperties.Where(x => !lease.PimsPropertyLeases.Any(y => y.Internal_Id == x.Internal_Id)).ToList();
             foreach (var deletedProperty in differenceSet)
             {
-                /*
-                TODO: Fix mapings
-                if (deletedProperty.Property.IsPropertyOfInterest)
+                var totalAssociationCount = _propertyRepository.GetAllAssociationsCountById(deletedProperty.PropertyId);
+                if (totalAssociationCount <= 1)
                 {
-                    PimsProperty propertyWithAssociations = _propertyRepository.GetAllAssociationsById(deletedProperty.PropertyId);
-                    var leaseAssociationCount = propertyWithAssociations.PimsPropertyLeases.Count;
-                    var researchAssociationCount = propertyWithAssociations.PimsPropertyResearchFiles.Count;
-                    var acquisitionAssociationCount = propertyWithAssociations.PimsPropertyAcquisitionFiles.Count;
-                    if (researchAssociationCount + acquisitionAssociationCount == 0 && leaseAssociationCount <= 1 && deletedProperty?.Property?.IsPropertyOfInterest == true)
-                    {
-                        _leaseRepository.CommitTransaction(); // TODO: this can only be removed if cascade deletes are implemented. EF executes deletes in alphabetic order.
-                        _propertyRepository.Delete(deletedProperty.Property);
-                    }
+                    _leaseRepository.CommitTransaction(); // TODO: this can only be removed if cascade deletes are implemented. EF executes deletes in alphabetic order.
+                    _propertyRepository.Delete(deletedProperty.Property);
                 }
-                */
             }
 
             _leaseRepository.CommitTransaction();

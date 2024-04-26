@@ -109,7 +109,7 @@ class StatusUpdateSolver {
       case ApiGen_CodeTypes_AcquisitionStatusTypes.CLOSED:
       case ApiGen_CodeTypes_AcquisitionStatusTypes.COMPLT:
       case ApiGen_CodeTypes_AcquisitionStatusTypes.HOLD:
-        canEdit = agreementStatusCode !== ApiGen_CodeTypes_AgreementStatusTypes.FINAL ?? true;
+        canEdit = agreementStatusCode !== ApiGen_CodeTypes_AgreementStatusTypes.FINAL;
         break;
       default:
         canEdit = false;

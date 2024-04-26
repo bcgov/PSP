@@ -18,14 +18,13 @@ import {
 import { INotesDetailContainerProps, NoteContainer } from './NoteContainer';
 
 // mock auth library
-jest.mock('@react-keycloak/web');
 
 const history = createMemoryHistory();
 const mockAxios = new MockAdapter(axios);
 
-const openModal = jest.fn();
-const closeModal = jest.fn();
-const onSuccess = jest.fn();
+const openModal = vi.fn();
+const closeModal = vi.fn();
+const onSuccess = vi.fn();
 
 const BASIC_PROPS: INotesDetailContainerProps = {
   type: NoteTypes.Activity,
@@ -69,7 +68,7 @@ describe('NoteContainer component', () => {
 
   afterEach(() => {
     mockAxios.resetHistory();
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders as expected', async () => {

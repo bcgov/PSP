@@ -54,7 +54,7 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>
-        public Paged<PimsProperty> GetPage(PropertyFilter filter)
+        public Paged<PimsPropertyLocationVw> GetPage(PropertyFilter filter)
         {
             this.User.ThrowIfNotAuthorized(Permissions.PropertyView);
             filter.ThrowIfNull(nameof(filter));
@@ -77,7 +77,7 @@ namespace Pims.Dal.Repositories
                 items = items.Where(i => i.Pid.ToString().PadLeft(9, '0').Contains(formattedPidPin) || i.Pin.ToString().Contains(formattedPidPin)).ToArray();
             }
 
-            return new Paged<PimsProperty>(items, filter.Page, filter.Quantity, query.Count());
+            return new Paged<PimsPropertyLocationVw>(items, filter.Page, filter.Quantity, query.Count());
         }
 
         /// <summary>
@@ -194,7 +194,7 @@ namespace Pims.Dal.Repositories
 
             var query = Context.PimsProperties.AsNoTracking();
 
-            if(!includeRetired)
+            if (!includeRetired)
             {
                 query = query.Where(r => !r.IsRetired.HasValue || (r.IsRetired.HasValue && !r.IsRetired.Value));
             }
@@ -236,7 +236,7 @@ namespace Pims.Dal.Repositories
 
             var query = Context.PimsProperties.AsNoTracking();
 
-            if(!includeRetired)
+            if (!includeRetired)
             {
                 query = query.Where(r => !r.IsRetired.HasValue || (r.IsRetired.HasValue && !r.IsRetired.Value));
             }
@@ -268,7 +268,7 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
-        /// Get the property for the specified id value.
+        /// Get the property with file associations for the specified id value.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -290,6 +290,22 @@ namespace Pims.Dal.Repositories
                 .FirstOrDefault(p => p.PropertyId == id);
 
             return property;
+        }
+
+        /// <summary>
+        /// Get the total count of associated files for the given property id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public long GetAllAssociationsCountById(long id)
+        {
+            PimsProperty propertyWithAssociations = this.GetAllAssociationsById(id);
+            var leaseAssociationCount = propertyWithAssociations.PimsPropertyLeases.Count;
+            var researchAssociationCount = propertyWithAssociations.PimsPropertyResearchFiles.Count;
+            var acquisitionAssociationCount = propertyWithAssociations.PimsPropertyAcquisitionFiles.Count;
+            var dispositionAssociationCount = propertyWithAssociations.PimsDispositionFileProperties.Count;
+
+            return leaseAssociationCount + researchAssociationCount + acquisitionAssociationCount + dispositionAssociationCount;
         }
 
         /// <summary>
@@ -326,9 +342,7 @@ namespace Pims.Dal.Repositories
             property.SurplusDeclarationTypeCode = existingProperty.SurplusDeclarationTypeCode;
             property.SurplusDeclarationComment = existingProperty.SurplusDeclarationComment;
             property.SurplusDeclarationDate = existingProperty.SurplusDeclarationDate;
-            property.IsOwned = existingProperty.IsOwned;
             property.IsRetired = existingProperty.IsRetired;
-            //property.IsPropertyOfInterest = existingProperty.IsPropertyOfInterest; TODO: Fix mapings
             property.IsVisibleToOtherAgencies = existingProperty.IsVisibleToOtherAgencies;
             property.IsSensitive = existingProperty.IsSensitive;
 
@@ -408,19 +422,16 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="property">The property to update.</param>
         /// <returns>The updated property.</returns>
-        public PimsProperty TransferFileProperty(PimsProperty property, PropertyOwnershipState state)
+        public PimsProperty TransferFileProperty(PimsProperty property, bool isOwned)
         {
             property.ThrowIfNull(nameof(property));
 
             var existingProperty = Context.PimsProperties
                 .FirstOrDefault(p => p.PropertyId == property.Internal_Id) ?? throw new KeyNotFoundException();
 
-            //existingProperty.IsPropertyOfInterest = state.isPropertyOfInterest;
-            existingProperty.IsOwned = state.isOwned;
-            //existingProperty.IsDisposed = state.isDisposed;
-            //existingProperty.IsOtherInterest = state.isOtherInterest;
+            existingProperty.IsOwned = isOwned;
 
-            if (state.isOwned)
+            if (isOwned)
             {
                 existingProperty.PropertyClassificationTypeCode = "COREOPER";
             }
@@ -514,35 +525,56 @@ namespace Pims.Dal.Repositories
                     p.PimsPropPropAnomalyTypes.Any(at => filter.AnomalyIds.Contains(at.PropertyAnomalyTypeCode)));
             }
 
+
+            var authorizationTypes = new List<string>(){
+               "NOI",
+               "Section 15",
+               "Section 16",
+               "Section 17",
+               "Section 66",
+            };
+
             // Property ownership filters
+            // TODO: Instead of doing redoing the query, the view could be used for ownership related queries
             var ownershipBuilder = PredicateBuilder.New<PimsProperty>(p => false);
             if (filter.IsCoreInventory)
             {
                 ownershipBuilder.Or(p => p.IsOwned);
             }
-            /* TODO: Fix mapings
             if (filter.IsPropertyOfInterest)
             {
-                ownershipBuilder.Or(p => p.IsPropertyOfInterest);
+                ownershipBuilder.Or(p => p.PimsPropertyAcquisitionFiles.Any(x => x.AcquisitionFile.AcquisitionFileStatusTypeCode == "DRAFT" || x.AcquisitionFile.AcquisitionFileStatusTypeCode == "ACTIVE"));
+                ownershipBuilder.Or(p => p.PimsPropertyResearchFiles.Any(x => x.ResearchFile.ResearchFileStatusTypeCode == "ACTIVE"));
             }
             if (filter.IsOtherInterest)
             {
-                ownershipBuilder.Or(p => p.IsOtherInterest);
+                var today = DateOnly.FromDateTime(DateTime.Now);
+                ownershipBuilder.Or(p => p.PimsPropertyAcquisitionFiles.Any(x => x.PimsTakes.Any(t => t.TakeStatusTypeCode == "COMPLETE" && t.IsNewLandAct && authorizationTypes.Contains(t.LandActTypeCode) && t.LandActEndDt >= today)));
+                ownershipBuilder.Or(p => p.PimsPropertyAcquisitionFiles.Any(x => x.PimsTakes.Any(t => t.TakeStatusTypeCode == "COMPLETE" && t.IsNewInterestInSrw && t.SrwEndDt >= today)));
+                ownershipBuilder.Or(p => p.PimsPropertyAcquisitionFiles.Any(x => x.PimsTakes.Any(t => t.TakeStatusTypeCode == "COMPLETE" && t.IsNewLicenseToConstruct && t.LtcEndDt >= today)));
+                ownershipBuilder.Or(p => p.PimsPropertyAcquisitionFiles.Any(x => x.PimsTakes.Any(t => t.TakeStatusTypeCode == "COMPLETE" && t.IsActiveLease && t.ActiveLeaseEndDt >= today)));
             }
             if (filter.IsDisposed)
             {
-                ownershipBuilder.Or(p => p.IsDisposed);
+                ownershipBuilder.Or(p => p.PimsDispositionFileProperties.Any(d => d.DispositionFile.DispositionFileStatusTypeCode == "COMPLETE"));
             }
             if (filter.IsRetired)
             {
                 ownershipBuilder.Or(p => p.IsRetired.HasValue && p.IsRetired.Value);
             }
-            */
 
             predicate.And(ownershipBuilder);
 
             return Context.PimsProperties.AsNoTracking()
                 .Where(predicate)
+                .Include(p => p.PimsPropertyResearchFiles)
+                  .ThenInclude(pr => pr.ResearchFile)
+                .Include(p => p.PimsPropertyAcquisitionFiles)
+                  .ThenInclude(pa => pa.AcquisitionFile)
+                .Include(p => p.PimsPropertyAcquisitionFiles)
+                  .ThenInclude(pa => pa.PimsTakes)
+                .Include(p => p.PimsDispositionFileProperties)
+                  .ThenInclude(pd => pd.DispositionFile)
                 .Select(x => x.PropertyId)
                 .ToHashSet();
         }

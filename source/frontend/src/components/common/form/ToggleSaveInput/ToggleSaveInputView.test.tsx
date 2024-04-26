@@ -11,10 +11,10 @@ const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
 
-const setIsEditing = jest.fn();
-const onClick = jest.fn();
-const onSave = jest.fn();
-const setValue = jest.fn();
+const setIsEditing = vi.fn();
+const onClick = vi.fn();
+const onSave = vi.fn();
+const setValue = vi.fn();
 
 describe('TogleSaveInputView component', () => {
   // render component under test
@@ -32,7 +32,7 @@ describe('TogleSaveInputView component', () => {
   };
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders as expected', () => {

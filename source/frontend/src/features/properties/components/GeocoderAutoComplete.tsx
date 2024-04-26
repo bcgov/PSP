@@ -3,7 +3,7 @@ import './GeocoderAutoComplete.scss';
 import classNames from 'classnames';
 import { useFormikContext } from 'formik';
 import debounce from 'lodash/debounce';
-import * as React from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import { FormControlProps } from 'react-bootstrap/FormControl';
 import ClickAwayListener from 'react-click-away-listener';
@@ -51,12 +51,12 @@ export const GeocoderAutoComplete: React.FC<
   outerClassName,
   ...rest
 }) => {
-  const [options, setOptions] = React.useState<IGeocoderResponse[]>([]);
+  const [options, setOptions] = useState<IGeocoderResponse[]>([]);
   const { handleBlur } = useFormikContext<any>();
   const errorTooltip = error && touch && displayErrorTooltips ? error : undefined;
   const { searchAddress } = useGeocoderRepository();
-  const [textValue, setTextValue] = React.useState<string | undefined>(value);
-  const debouncedSearch = React.useRef(
+  const [textValue, setTextValue] = useState<string | undefined>(value);
+  const debouncedSearch = useRef(
     debounce(
       async (val: string, abort: boolean) => {
         if (!abort) {
@@ -78,7 +78,7 @@ export const GeocoderAutoComplete: React.FC<
       setOptions([]);
     }
   };
-  React.useEffect(() => {
+  useEffect(() => {
     return () => {
       debouncedSearch('', true);
     };

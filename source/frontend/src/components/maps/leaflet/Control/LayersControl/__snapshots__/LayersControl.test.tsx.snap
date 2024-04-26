@@ -1,12 +1,12 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`LayersControl View renders correctly 1`] = `
+exports[`LayersControl View > renders correctly 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
   />
   <div />
-  .c1.btn {
+  .c0.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -37,49 +37,49 @@ exports[`LayersControl View renders correctly 1`] = `
   height: 3.8rem;
 }
 
-.c1.btn:hover {
+.c0.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c1.btn:focus {
+.c0.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c1.btn.btn-primary {
+.c0.btn.btn-primary {
   border: none;
 }
 
-.c1.btn.btn-secondary {
+.c0.btn.btn-secondary {
   background: none;
 }
 
-.c1.btn.btn-info {
+.c0.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c1.btn.btn-info:hover,
-.c1.btn.btn-info:active,
-.c1.btn.btn-info:focus {
+.c0.btn.btn-info:hover,
+.c0.btn.btn-info:active,
+.c0.btn.btn-info:focus {
   background: none;
 }
 
-.c1.btn.btn-light {
+.c0.btn.btn-light {
   border: none;
 }
 
-.c1.btn.btn-dark {
+.c0.btn.btn-dark {
   border: none;
 }
 
-.c1.btn.btn-link {
+.c0.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -100,9 +100,9 @@ exports[`LayersControl View renders correctly 1`] = `
   padding: 0;
 }
 
-.c1.btn.btn-link:hover,
-.c1.btn.btn-link:active,
-.c1.btn.btn-link:focus {
+.c0.btn.btn-link:hover,
+.c0.btn.btn-link:active,
+.c0.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -111,14 +111,14 @@ exports[`LayersControl View renders correctly 1`] = `
   outline: none;
 }
 
-.c1.btn.btn-link:disabled,
-.c1.btn.btn-link.disabled {
+.c0.btn.btn-link:disabled,
+.c0.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c1.btn:disabled,
-.c1.btn:disabled:hover {
+.c0.btn:disabled,
+.c0.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -129,118 +129,28 @@ exports[`LayersControl View renders correctly 1`] = `
   opacity: 0.65;
 }
 
-.c1.Button .Button__icon {
+.c0.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c1.Button--icon-only:focus {
+.c0.Button--icon-only:focus {
   outline: none;
 }
 
-.c1.Button--icon-only .Button__icon {
+.c0.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c5 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  padding-left: 0rem;
-  border: none;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-}
-
-.c5 .form-group .form-check label {
-  font-weight: bold;
-  color: textColor;
-  font-size: 1.3rem;
-}
-
-.c6 {
-  margin-right: 1rem;
-  font-size: 1.5rem;
-}
-
-.c7 {
-  margin-bottom: 0rem;
-}
-
-.c7 .form-check {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-}
-
-.c7 .form-check input {
-  margin-top: 0rem;
-}
-
-.c7 .form-check label {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-}
-
-.c0 {
-  margin-right: -1rem;
-  width: 34.1rem;
-  min-height: 5.2rem;
-  height: 50rem;
-  max-height: 50rem;
-  background-color: #fff;
-  position: relative;
-  border-radius: 0.4rem;
-  box-shadow: -0.2rem 0.1rem 0.4rem rgba(0,0,0,0.2);
-  z-index: 1000;
-}
-
-.c0.closed {
-  width: 0rem;
-  height: 0rem;
-}
-
-.c4 {
-  width: 100%;
-  height: calc(100% - 8rem);
-  padding: 1.6rem;
-}
-
-.c4.open {
-  overflow-y: scroll;
-}
-
-.c3 {
+.c2 {
   font-size: 3rem;
 }
 
-.c2.btn {
+.c1.btn {
   width: 5.2rem;
   height: 5.2rem;
   margin-left: -5.1rem;
   background-color: #fff;
   box-shadow: -0.2rem 0.1rem 0.4rem rgba(0,0,0,0.2);
-}
-
-.c2.btn.open {
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-  margin-top: -5.2rem;
 }
 
 <div
@@ -258,24 +168,7 @@ exports[`LayersControl View renders correctly 1`] = `
       >
         <div
           class="leaflet-pane leaflet-tile-pane"
-        >
-          <div
-            class="leaflet-layer "
-            style="z-index: 20; opacity: 0.8;"
-          >
-            <div
-              class="leaflet-tile-container leaflet-zoom-animated"
-              style="z-index: 20; left: 0px; top: 0px;"
-            >
-              <img
-                alt=""
-                class="leaflet-tile"
-                src="https://openmaps.gov.bc.ca/geo/pub/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW/ows?&service=WMS&request=GetMap&layers=pub%3AWHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW&styles=&format=image%2Fpng&transparent=true&version=1.1.1&key=parcelBoundaries&label=Parcel%20Boundaries&on=true&url=https%3A%2F%2Fopenmaps.gov.bc.ca%2Fgeo%2Fpub%2FWHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW%2Fows%3F&id=parcelLayer&color=%23E9AD34&width=256&height=256&srs=EPSG%3A3857&bbox=-13734205.24228047,6178557.870347368,-13731759.257375345,6181003.855252495"
-                style="width: 256px; height: 256px; left: -75px; top: -242px;"
-              />
-            </div>
-          </div>
-        </div>
+        />
         <div
           class="leaflet-pane leaflet-overlay-pane"
         />
@@ -337,273 +230,30 @@ exports[`LayersControl View renders correctly 1`] = `
           <div
             class="leaflet-control"
           >
-            <div
-              class="c0 closed"
-              id="layersContainer"
+            <button
+              class="c0 Button c1 btn btn-outline-secondary"
+              id="layersControlButton"
+              type="button"
             >
-              <button
-                class="c1 Button c2 btn btn-outline-secondary"
-                id="layersControlButton"
-                type="button"
-              >
-                <div
-                  class="Button__value"
-                >
-                  <svg
-                    class="c3"
-                    fill="currentColor"
-                    height="1em"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    viewBox="0 0 512 512"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M12.41 148.02l232.94 105.67c6.8 3.09 14.49 3.09 21.29 0l232.94-105.67c16.55-7.51 16.55-32.52 0-40.03L266.65 2.31a25.607 25.607 0 0 0-21.29 0L12.41 107.98c-16.55 7.51-16.55 32.53 0 40.04zm487.18 88.28l-58.09-26.33-161.64 73.27c-7.56 3.43-15.59 5.17-23.86 5.17s-16.29-1.74-23.86-5.17L70.51 209.97l-58.1 26.33c-16.55 7.5-16.55 32.5 0 40l232.94 105.59c6.8 3.08 14.49 3.08 21.29 0L499.59 276.3c16.55-7.5 16.55-32.5 0-40zm0 127.8l-57.87-26.23-161.86 73.37c-7.56 3.43-15.59 5.17-23.86 5.17s-16.29-1.74-23.86-5.17L70.29 337.87 12.41 364.1c-16.55 7.5-16.55 32.5 0 40l232.94 105.59c6.8 3.08 14.49 3.08 21.29 0L499.59 404.1c16.55-7.5 16.55-32.5 0-40z"
-                    />
-                  </svg>
-                </div>
-              </button>
               <div
-                class="c4"
+                class="Button__value"
               >
-                <form
-                  action="#"
+                <svg
+                  class="c2"
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 512 512"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
                 >
-                  <div
-                    tabindex="0"
-                  >
-                    <div
-                      class="list-group"
-                    >
-                      <div
-                        class="c5 list-group-item"
-                        id="Administrative Boundaries"
-                      >
-                        <svg
-                          class="c6"
-                          fill="currentColor"
-                          height="1em"
-                          stroke="currentColor"
-                          stroke-width="0"
-                          viewBox="0 0 256 512"
-                          width="1em"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"
-                          />
-                        </svg>
-                        <div
-                          class="c7 form-group"
-                        >
-                          <div
-                            class="form-check"
-                          >
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                            />
-                            <label
-                              class="form-check-label"
-                              title=""
-                            >
-                              Administrative Boundaries
-                            </label>
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        class="c5 list-group-item"
-                        id="firstNations"
-                      >
-                        <svg
-                          class="c6"
-                          fill="currentColor"
-                          height="1em"
-                          stroke="currentColor"
-                          stroke-width="0"
-                          viewBox="0 0 256 512"
-                          width="1em"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"
-                          />
-                        </svg>
-                        <div
-                          class="c7 form-group"
-                        >
-                          <div
-                            class="form-check"
-                          >
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                            />
-                            <label
-                              class="form-check-label"
-                              title=""
-                            >
-                              First Nations
-                            </label>
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        class="c5 list-group-item"
-                        id="landOwnership"
-                      >
-                        <svg
-                          class="c6"
-                          fill="currentColor"
-                          height="1em"
-                          stroke="currentColor"
-                          stroke-width="0"
-                          viewBox="0 0 256 512"
-                          width="1em"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"
-                          />
-                        </svg>
-                        <div
-                          class="c7 form-group"
-                        >
-                          <div
-                            class="form-check"
-                          >
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                            />
-                            <label
-                              class="form-check-label"
-                              title=""
-                            >
-                              Land Ownership
-                            </label>
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        class="c5 list-group-item"
-                        id="zoning"
-                      >
-                        <svg
-                          class="c6"
-                          fill="currentColor"
-                          height="1em"
-                          stroke="currentColor"
-                          stroke-width="0"
-                          viewBox="0 0 256 512"
-                          width="1em"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"
-                          />
-                        </svg>
-                        <div
-                          class="c7 form-group"
-                        >
-                          <div
-                            class="form-check"
-                          >
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                            />
-                            <label
-                              class="form-check-label"
-                              title=""
-                            >
-                              Zoning
-                            </label>
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        class="c5 list-group-item"
-                        id="electoral"
-                      >
-                        <svg
-                          class="c6"
-                          fill="currentColor"
-                          height="1em"
-                          stroke="currentColor"
-                          stroke-width="0"
-                          viewBox="0 0 256 512"
-                          width="1em"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"
-                          />
-                        </svg>
-                        <div
-                          class="c7 form-group"
-                        >
-                          <div
-                            class="form-check"
-                          >
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                            />
-                            <label
-                              class="form-check-label"
-                              title=""
-                            >
-                              Electoral
-                            </label>
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        class="c5 list-group-item"
-                        id="federal_bc_parks"
-                      >
-                        <svg
-                          class="c6"
-                          fill="currentColor"
-                          height="1em"
-                          stroke="currentColor"
-                          stroke-width="0"
-                          viewBox="0 0 256 512"
-                          width="1em"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M224.3 273l-136 136c-9.4 9.4-24.6 9.4-33.9 0l-22.6-22.6c-9.4-9.4-9.4-24.6 0-33.9l96.4-96.4-96.4-96.4c-9.4-9.4-9.4-24.6 0-33.9L54.3 103c9.4-9.4 24.6-9.4 33.9 0l136 136c9.5 9.4 9.5 24.6.1 34z"
-                          />
-                        </svg>
-                        <div
-                          class="c7 form-group"
-                        >
-                          <div
-                            class="form-check"
-                          >
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                            />
-                            <label
-                              class="form-check-label"
-                              title=""
-                            >
-                              Federal/BC Parks
-                            </label>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </form>
+                  <path
+                    d="M12.41 148.02l232.94 105.67c6.8 3.09 14.49 3.09 21.29 0l232.94-105.67c16.55-7.51 16.55-32.52 0-40.03L266.65 2.31a25.607 25.607 0 0 0-21.29 0L12.41 107.98c-16.55 7.51-16.55 32.53 0 40.04zm487.18 88.28l-58.09-26.33-161.64 73.27c-7.56 3.43-15.59 5.17-23.86 5.17s-16.29-1.74-23.86-5.17L70.51 209.97l-58.1 26.33c-16.55 7.5-16.55 32.5 0 40l232.94 105.59c6.8 3.08 14.49 3.08 21.29 0L499.59 276.3c16.55-7.5 16.55-32.5 0-40zm0 127.8l-57.87-26.23-161.86 73.37c-7.56 3.43-15.59 5.17-23.86 5.17s-16.29-1.74-23.86-5.17L70.29 337.87 12.41 364.1c-16.55 7.5-16.55 32.5 0 40l232.94 105.59c6.8 3.08 14.49 3.08 21.29 0L499.59 404.1c16.55-7.5 16.55-32.5 0-40z"
+                  />
+                </svg>
               </div>
-            </div>
+            </button>
           </div>
         </div>
         <div

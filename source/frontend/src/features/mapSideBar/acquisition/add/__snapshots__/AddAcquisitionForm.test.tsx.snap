@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`AddAcquisitionForm component renders as expected 1`] = `
+exports[`AddAcquisitionForm component > renders as expected 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
@@ -444,7 +444,7 @@ exports[`AddAcquisitionForm component renders as expected 1`] = `
                     aria-hidden="true"
                     class="rbt-input-hint"
                     readonly=""
-                    style="background-color: transparent; border-color: transparent; box-shadow: none; color: rgba(0, 0, 0, 0.54); left: 0px; pointer-events: none; position: absolute; top: 0px; width: 100%; border-style: inset inset inset inset; border-width: 2px 2px 2px 2px; line-height: normal; padding: 1px 1px 1px 1px;"
+                    style="background-color: transparent; border-color: transparent; box-shadow: none; color: rgba(0, 0, 0, 0.54); left: 0px; pointer-events: none; position: absolute; top: 0px; width: 100%;"
                     tabindex="-1"
                     value=""
                   />
@@ -785,10 +785,24 @@ exports[`AddAcquisitionForm component renders as expected 1`] = `
                             <svg
                               class="c13"
                               height="97"
+                              id="Layer_2"
                               title="Click once to enter property selection mode."
+                              viewBox="0 0 20 30"
                               width="97"
+                              xmlns="http://www.w3.org/2000/svg"
                             >
-                              <span />
+                              <defs>
+                                <style />
+                              </defs>
+                              <g
+                                id="PDF_preview"
+                              >
+                                <path
+                                  class="cls-1"
+                                  d="M.02,9.77c.4,7.19,9.81,20.23,9.81,20.23,0,0,9.14-13.08,9.43-20.23C19.79-3.33-.7-3.19,.02,9.77Zm9.61,5.13c-3.31,0-6-2.69-6-6S6.32,2.91,9.63,2.91s6,2.69,6,6-2.68,6-6,6Z"
+                                  fill="#2a81cb"
+                                />
+                              </g>
                             </svg>
                             <ol>
                               <li>

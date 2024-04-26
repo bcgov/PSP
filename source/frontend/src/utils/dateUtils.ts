@@ -1,4 +1,4 @@
-import moment, { Moment } from 'moment-timezone';
+import moment, { Moment } from 'moment';
 
 import { exists, isValidIsoDateTime } from './utils';
 

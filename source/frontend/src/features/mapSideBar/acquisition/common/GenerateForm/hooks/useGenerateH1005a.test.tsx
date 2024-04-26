@@ -19,50 +19,71 @@ import { ApiGen_Concepts_LeaseTenant } from '@/models/api/generated/ApiGen_Conce
 
 import { useGenerateH1005a } from './useGenerateH1005a';
 
-const generateFn = jest
+const generateFn = vi
   .fn()
   .mockResolvedValue({ status: ApiGen_CodeTypes_ExternalResponseStatus.Success, payload: {} });
-const getLeaseTenantsFn = jest.fn<Promise<ApiGen_Concepts_LeaseTenant[] | null>, any[]>();
-const getSecurityDepositsFn = jest.fn();
-const getInsurancesFn = jest.fn();
-const getPropertyLeasesFn = jest.fn();
-const getApiLeaseFn = jest.fn();
-const getLeaseTermFn = jest.fn();
+const getLeaseTenantsFn = vi.fn();
+const getSecurityDepositsFn = vi.fn();
+const getInsurancesFn = vi.fn();
+const getPropertyLeasesFn = vi.fn();
+const getApiLeaseFn = vi.fn();
+const getLeaseTermFn = vi.fn();
 
-jest.mock('@/features/documents/hooks/useDocumentGenerationRepository');
-(useDocumentGenerationRepository as jest.Mock).mockImplementation(() => ({
-  generateDocumentDownloadWrappedRequest: generateFn,
-}));
+vi.mock('@/features/documents/hooks/useDocumentGenerationRepository');
+vi.mocked(useDocumentGenerationRepository).mockImplementation(
+  () =>
+    ({
+      generateDocumentDownloadWrappedRequest: generateFn,
+    } as unknown as ReturnType<typeof useDocumentGenerationRepository>),
+);
 
-jest.mock('@/hooks/repositories/useSecurityDepositRepository');
-(useSecurityDepositRepository as jest.Mock).mockImplementation(() => ({
-  getSecurityDeposits: { execute: getSecurityDepositsFn },
-}));
+vi.mock('@/hooks/repositories/useSecurityDepositRepository');
+vi.mocked(useSecurityDepositRepository).mockImplementation(
+  () =>
+    ({
+      getSecurityDeposits: { execute: getSecurityDepositsFn },
+    } as unknown as ReturnType<typeof useSecurityDepositRepository>),
+);
 
-jest.mock('@/hooks/repositories/useLeaseTenantRepository');
-(useLeaseTenantRepository as jest.Mock).mockImplementation(() => ({
-  getLeaseTenants: { execute: getLeaseTenantsFn },
-}));
+vi.mock('@/hooks/repositories/useLeaseTenantRepository');
+vi.mocked(useLeaseTenantRepository).mockImplementation(
+  () =>
+    ({
+      getLeaseTenants: { execute: getLeaseTenantsFn },
+    } as unknown as ReturnType<typeof useLeaseTenantRepository>),
+);
 
-jest.mock('@/hooks/repositories/useInsuranceRepository');
-(useInsurancesRepository as jest.Mock).mockImplementation(() => ({
-  getInsurances: { execute: getInsurancesFn },
-}));
+vi.mock('@/hooks/repositories/useInsuranceRepository');
+vi.mocked(useInsurancesRepository).mockImplementation(
+  () =>
+    ({
+      getInsurances: { execute: getInsurancesFn },
+    } as unknown as ReturnType<typeof useInsurancesRepository>),
+);
 
-jest.mock('@/hooks/repositories/usePropertyLeaseRepository');
-(usePropertyLeaseRepository as jest.Mock).mockImplementation(() => ({
-  getPropertyLeases: { execute: getPropertyLeasesFn },
-}));
+vi.mock('@/hooks/repositories/usePropertyLeaseRepository');
+vi.mocked(usePropertyLeaseRepository).mockImplementation(
+  () =>
+    ({
+      getPropertyLeases: { execute: getPropertyLeasesFn },
+    } as unknown as ReturnType<typeof usePropertyLeaseRepository>),
+);
 
-jest.mock('@/hooks/repositories/useLeaseTermRepository');
-(useLeaseTermRepository as jest.Mock).mockImplementation(() => ({
-  getLeaseTerms: { execute: getLeaseTermFn },
-}));
+vi.mock('@/hooks/repositories/useLeaseTermRepository');
+vi.mocked(useLeaseTermRepository).mockImplementation(
+  () =>
+    ({
+      getLeaseTerms: { execute: getLeaseTermFn },
+    } as unknown as ReturnType<typeof useLeaseTermRepository>),
+);
 
-jest.mock('@/hooks/pims-api/useApiLeases');
-(useApiLeases as jest.Mock).mockImplementation(() => ({
-  getApiLease: getApiLeaseFn,
-}));
+vi.mock('@/hooks/pims-api/useApiLeases');
+vi.mocked(useApiLeases).mockImplementation(
+  () =>
+    ({
+      getApiLease: getApiLeaseFn,
+    } as unknown as ReturnType<typeof useApiLeases>),
+);
 
 let currentStore: MockStoreEnhanced<any, {}>;
 const mockStore = configureMockStore([thunk]);

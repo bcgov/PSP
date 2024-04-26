@@ -1,7 +1,7 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`GenerateLetterRecipients modal renders as expected 1`] = `
-.c3.btn {
+exports[`GenerateLetterRecipients modal > renders as expected 1`] = `
+.c5.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -32,49 +32,49 @@ exports[`GenerateLetterRecipients modal renders as expected 1`] = `
   height: 3.8rem;
 }
 
-.c3.btn:hover {
+.c5.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c3.btn:focus {
+.c5.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c3.btn.btn-primary {
+.c5.btn.btn-primary {
   border: none;
 }
 
-.c3.btn.btn-secondary {
+.c5.btn.btn-secondary {
   background: none;
 }
 
-.c3.btn.btn-info {
+.c5.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c3.btn.btn-info:hover,
-.c3.btn.btn-info:active,
-.c3.btn.btn-info:focus {
+.c5.btn.btn-info:hover,
+.c5.btn.btn-info:active,
+.c5.btn.btn-info:focus {
   background: none;
 }
 
-.c3.btn.btn-light {
+.c5.btn.btn-light {
   border: none;
 }
 
-.c3.btn.btn-dark {
+.c5.btn.btn-dark {
   border: none;
 }
 
-.c3.btn.btn-link {
+.c5.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -95,9 +95,9 @@ exports[`GenerateLetterRecipients modal renders as expected 1`] = `
   padding: 0;
 }
 
-.c3.btn.btn-link:hover,
-.c3.btn.btn-link:active,
-.c3.btn.btn-link:focus {
+.c5.btn.btn-link:hover,
+.c5.btn.btn-link:active,
+.c5.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -106,14 +106,14 @@ exports[`GenerateLetterRecipients modal renders as expected 1`] = `
   outline: none;
 }
 
-.c3.btn.btn-link:disabled,
-.c3.btn.btn-link.disabled {
+.c5.btn.btn-link:disabled,
+.c5.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c3.btn:disabled,
-.c3.btn:disabled:hover {
+.c5.btn:disabled,
+.c5.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -124,19 +124,63 @@ exports[`GenerateLetterRecipients modal renders as expected 1`] = `
   opacity: 0.65;
 }
 
-.c3.Button .Button__icon {
+.c5.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c3.Button--icon-only:focus {
+.c5.Button--icon-only:focus {
   outline: none;
 }
 
-.c3.Button--icon-only .Button__icon {
+.c5.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
+.c2 {
+  width: 0.8rem;
+}
+
+.c6 {
+  width: 2.4rem;
+}
+
+.c4 {
+  padding: 0px;
+  margin: 0px;
+  margin-left: 1.6rem;
+  margin-right: 1.6rem;
+}
+
+.c0 .modal-header {
+  height: 4.8rem;
+  padding-left: 1.6rem;
+  padding-right: 1.6rem;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  cursor: default;
+}
+
+.c0 .modal-header .modal-title {
+  font-family: BcSans-Bold;
+  font-size: 2.2rem;
+  -webkit-align-self: center;
+  -ms-flex-item-align: center;
+  align-self: center;
+}
+
+.c0 .modal-header .modal-close-btn {
+  margin-left: auto;
+  cursor: pointer;
+}
+
 .c0 .modal-header .close {
+  margin-left: auto;
   color: white;
   opacity: 1;
   font-size: 3rem;
@@ -145,63 +189,31 @@ exports[`GenerateLetterRecipients modal renders as expected 1`] = `
   font-family: 'Helvetica Narrow';
 }
 
-.c0 .modal-header {
-  height: 4.8rem;
-  padding: 0 1.6rem;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  cursor: default;
-}
-
-.c0 .modal-header .modal-title {
-  font-family: BcSans-Bold;
-  font-size: 2.2rem;
-  height: 2.75rem;
-  height: auto;
-}
-
-.c0 .modal-header .header-icon {
-  margin-right: 8px;
-  display: inline-block;
-}
-
-.c0 .modal-header .modal-close-btn {
-  cursor: pointer;
-}
-
 .c0 .modal-body {
-  padding: 2.4rem 1.8rem;
-  font-size: 1.8rem;
+  padding-top: 2.4rem;
+  padding-bottom: 2.4rem;
+  padding-left: 1.6rem;
+  padding-right: 1.6rem;
 }
 
 .c0 .modal-footer {
-  border-top: none;
-}
-
-.c0 .modal-footer hr {
-  width: 100%;
+  border: 0px;
+  padding-top: 3.6rem;
+  padding-bottom: 3.6rem;
+  padding-left: 1.6rem;
+  padding-right: 3.6rem;
 }
 
 .c0 .modal-footer .button-wrap {
+  margin: 0px;
+  padding: 0px;
   display: -webkit-inline-box;
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
   display: inline-flex;
-  margin-top: 2.4rem;
-  margin-bottom: 2.4rem;
 }
 
 .c0 .modal-footer .button-wrap .Button {
-  margin-right: 2.4rem;
   min-width: 9.5rem;
   height: 3.9rem;
 }
@@ -252,7 +264,7 @@ exports[`GenerateLetterRecipients modal renders as expected 1`] = `
   padding-right: 2rem;
 }
 
-.c2 {
+.c3 {
   border: 0.1rem solid;
   border-radius: 0.5rem;
   max-height: 180px;
@@ -261,16 +273,16 @@ exports[`GenerateLetterRecipients modal renders as expected 1`] = `
   padding: 0.5rem 1.5rem;
 }
 
-.c2 .form-check input {
+.c3 .form-check input {
   margin-top: 0.6rem;
 }
 
-.c2 .form-group label {
+.c3 .form-group label {
   font-family: BcSans-Bold;
   line-height: 1.5rem;
 }
 
-.c2 .form-group label span.type {
+.c3 .form-group label span.type {
   font-size: 1.5rem;
   font-family: BCSans-Italic;
   font-style: italic;
@@ -312,25 +324,28 @@ exports[`GenerateLetterRecipients modal renders as expected 1`] = `
           class="modal-header"
         >
           <div
+            class="header-icon"
+          >
+            <svg
+              fill="currentColor"
+              height="22"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 512 512"
+              width="22"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"
+              />
+            </svg>
+          </div>
+          <span
+            class="c2"
+          />
+          <div
             class="modal-title h4"
           >
-            <div
-              class="header-icon"
-            >
-              <svg
-                fill="currentColor"
-                height="22"
-                stroke="currentColor"
-                stroke-width="0"
-                viewBox="0 0 512 512"
-                width="22"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"
-                />
-              </svg>
-            </div>
             Generate letter
           </div>
           <div
@@ -364,22 +379,24 @@ exports[`GenerateLetterRecipients modal renders as expected 1`] = `
             </strong>
           </p>
           <div
-            class="c2"
+            class="c3"
           >
             <div
               class="form-group"
             />
           </div>
         </div>
+        <hr
+          class="c4"
+        />
         <div
           class="modal-footer"
         >
-          <hr />
           <div
             class="button-wrap"
           >
             <button
-              class="c3 Button btn btn-secondary"
+              class="c5 Button btn btn-secondary"
               data-testid="cancel-modal-button"
               title="cancel-modal"
               type="button"
@@ -390,8 +407,11 @@ exports[`GenerateLetterRecipients modal renders as expected 1`] = `
                 Cancel
               </div>
             </button>
+            <span
+              class="c6"
+            />
             <button
-              class="c3 Button btn btn-primary"
+              class="c5 Button btn btn-primary"
               data-testid="ok-modal-button"
               title="ok-modal"
               type="button"

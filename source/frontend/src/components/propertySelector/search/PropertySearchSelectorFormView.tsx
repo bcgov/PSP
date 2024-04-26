@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 import { Section } from '@/components/common/Section/Section';
 import * as Styled from '@/components/common/styles';
 import { Table } from '@/components/Table';

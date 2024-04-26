@@ -10,9 +10,8 @@ import { act, cleanup, render, RenderOptions, userEvent, waitForEffects } from '
 import DispositionSummaryView, { IDispositionSummaryViewProps } from './DispositionSummaryView';
 
 // mock auth library
-jest.mock('@react-keycloak/web');
 
-const onEdit = jest.fn();
+const onEdit = vi.fn();
 
 const mockDispositionFileApi = mockDispositionFileResponse();
 
@@ -37,7 +36,7 @@ describe('DispositionSummaryView component', () => {
 
   afterEach(() => {
     cleanup();
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('matches snapshot', async () => {

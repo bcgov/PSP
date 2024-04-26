@@ -1,5 +1,5 @@
 import userEvent from '@testing-library/user-event';
-import { noop } from 'lodash';
+import noop from 'lodash/noop';
 
 import { Claims } from '@/constants/claims';
 import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
@@ -16,15 +16,16 @@ import {
 
 import { defaultFilter } from './ContactFilterComponent/ContactFilterComponent';
 import ContactManagerView from './ContactManagerView';
+import { MockedFunction } from 'vitest';
+import { MaybeMocked } from '@vitest/spy';
 
 // mock auth library
-jest.mock('@react-keycloak/web');
 
-jest.mock('@/hooks/pims-api/useApiContacts');
-const getContacts = jest.fn();
-(useApiContacts as jest.Mock).mockReturnValue({
+vi.mock('@/hooks/pims-api/useApiContacts');
+const getContacts = vi.fn();
+vi.mocked(useApiContacts).mockReturnValue({
   getContacts,
-});
+} as unknown as ReturnType<typeof useApiContacts>);
 
 // render component under test
 const setup = (renderOptions: RenderOptions = {}) => {
@@ -83,7 +84,7 @@ describe('ContactManagerView', () => {
     mockKeycloak({ claims: [Claims.CONTACT_VIEW] });
   });
 
-  xit('matches snapshot', async () => {
+  it('matches snapshot', async () => {
     setupMockSearch();
     const { asFragment, getByTitle } = setup();
     await waitForElementToBeRemoved(getByTitle('table-loading'));

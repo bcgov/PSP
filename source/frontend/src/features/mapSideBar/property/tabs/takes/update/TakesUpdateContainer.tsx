@@ -1,6 +1,6 @@
 import { FormikProps } from 'formik';
 import orderBy from 'lodash/orderBy';
-import * as React from 'react';
+import { forwardRef, useEffect, useState } from 'react';
 
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { ApiGen_Concepts_Take } from '@/models/api/generated/ApiGen_Concepts_Take';
@@ -17,9 +17,9 @@ export interface ITakesDetailContainerProps {
   onSuccess: () => void;
 }
 
-export const TakesUpdateContainer = React.forwardRef<FormikProps<any>, ITakesDetailContainerProps>(
+export const TakesUpdateContainer = forwardRef<FormikProps<any>, ITakesDetailContainerProps>(
   ({ fileProperty, View, onSuccess }, ref) => {
-    const [propertyTakes, setPropertyTakes] = React.useState<ApiGen_Concepts_Take[]>([]);
+    const [propertyTakes, setPropertyTakes] = useState<ApiGen_Concepts_Take[]>([]);
 
     if (!fileProperty?.id) {
       throw Error('File property must have id');
@@ -29,7 +29,7 @@ export const TakesUpdateContainer = React.forwardRef<FormikProps<any>, ITakesDet
       updateTakesByAcquisitionPropertyId: { execute: updateTakesByPropertyFile },
     } = useTakesRepository();
 
-    React.useEffect(() => {
+    useEffect(() => {
       const fetchTakes = async () => {
         if (fileProperty.fileId) {
           const fileTakes = await getTakesByFile(fileProperty.fileId);
@@ -56,8 +56,10 @@ export const TakesUpdateContainer = React.forwardRef<FormikProps<any>, ITakesDet
               t.propertyAcquisitionFileId = fileProperty.id ?? 0;
               return t.toApi();
             });
-            fileProperty.id && (await updateTakesByPropertyFile(fileProperty.id, takes));
-            onSuccess();
+            if (fileProperty.id) {
+              await updateTakesByPropertyFile(fileProperty.id, takes);
+              onSuccess();
+            }
           } finally {
             formikHelpers.setSubmitting(false);
           }

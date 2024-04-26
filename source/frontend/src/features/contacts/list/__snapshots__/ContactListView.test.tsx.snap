@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Contact List View matches snapshot 1`] = `
+exports[`Contact List View > matches snapshot 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
@@ -602,8 +602,35 @@ exports[`Contact List View matches snapshot 1`] = `
                           </div>
                         </div>
                       </div>
-                      <svg>
-                        <span />
+                      <svg
+                        height="10"
+                        overflow="visible"
+                        preserveAspectRatio="none"
+                        viewBox="0 0 10 10"
+                        width="10"
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                      >
+                        <g
+                          transform="translate(1, 1)"
+                        >
+                          <defs>
+                            <path
+                              d="M4 0 C6.207660097976 0 8 1.7923399020239998 8 4 C8 6.207660097976 6.207660097976 8 4 8 C1.7923399020239998 8 0 6.207660097976 0 4 C0 1.7923399020239998 1.7923399020239998 0 4 0 Z"
+                              id="path-1635974705144170"
+                              vector-effect="non-scaling-stroke"
+                            />
+                          </defs>
+                          <g
+                            transform="translate(0, 0)"
+                          >
+                            <path
+                              d="M4 0 C6.207660097976 0 8 1.7923399020239998 8 4 C8 6.207660097976 6.207660097976 8 4 8 C1.7923399020239998 8 0 6.207660097976 0 4 C0 1.7923399020239998 1.7923399020239998 0 4 0 Z"
+                              style="stroke: rgb(255, 255, 255); stroke-width: 1; stroke-linecap: butt; stroke-linejoin: miter; fill: rgb(146, 237, 36);"
+                              vector-effect="non-scaling-stroke"
+                            />
+                          </g>
+                        </g>
                       </svg>
                       <span>
                         Show active contacts only

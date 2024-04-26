@@ -16,7 +16,7 @@ export const FilterContentContainer: React.FC<
 > = ({ View }) => {
   const mapMachine = useMapStateMachine();
 
-  const { setVisiblePimsProperties, setShowDisposed, setShowRetired } = mapMachine;
+  const { isFiltering, setVisiblePimsProperties, setShowDisposed, setShowRetired } = mapMachine;
 
   const { getMatchingProperties } = usePimsPropertyRepository();
 
@@ -42,5 +42,10 @@ export const FilterContentContainer: React.FC<
     [filterProperties, setShowDisposed, setShowRetired],
   );
 
-  return <View onChange={onChange} isLoading={getMatchingProperties.loading} />;
+  // Only render if the map state is filtering.
+  if (isFiltering) {
+    return <View onChange={onChange} isLoading={getMatchingProperties.loading} />;
+  } else {
+    return <></>;
+  }
 };

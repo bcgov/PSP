@@ -13,12 +13,34 @@ import { createMemoryHistory, MemoryHistory } from 'history';
 import noop from 'lodash/noop';
 import React, { ReactNode } from 'react';
 import { MapContainer } from 'react-leaflet';
-import { Router } from 'react-router-dom';
+import { Router } from 'react-router-dom/cjs/react-router-dom';
+import { vi } from 'vitest';
 
+import { IMapStateMachineContext } from '@/components/common/mapFSM/MapStateMachineContext';
 import { FilterProvider } from '@/components/maps/providers/FilterProvider';
 import { IApiError } from '@/interfaces/IApiError';
+import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 
 import TestCommonWrapper from './TestCommonWrapper';
+
+const mocks = vi.hoisted(() => {
+  return {
+    useKeycloak: vi.fn(),
+    useMapStateMachine: vi.fn().mockImplementation(() => mapMachineBaseMock),
+  };
+});
+
+vi.mock('@/components/common/mapFSM/MapStateMachineContext', () => {
+  return {
+    useMapStateMachine: mocks.useMapStateMachine,
+  };
+});
+
+vi.mock('@react-keycloak/web', () => {
+  return {
+    useKeycloak: mocks.useKeycloak,
+  };
+});
 
 interface Option {
   id: number | string;
@@ -32,9 +54,10 @@ export const mockKeycloak = (
     organizations?: number[];
     authenticated?: boolean;
     userInfo?: any;
+    subject?: string;
   } = {},
 ) => {
-  const { claims, roles, organizations, authenticated = true, userInfo } = props;
+  const { claims, roles, organizations, authenticated = true, userInfo, subject } = props;
   // mock what would be returned by keycloak userinfo endpoint
   const defaultUserInfo = {
     organizations: organizations ?? [1],
@@ -44,14 +67,15 @@ export const mockKeycloak = (
     idir_user_guid: '00000000000000000000000000000000',
   };
 
-  (useKeycloak as jest.Mock).mockReturnValue({
+  mocks.useKeycloak.mockImplementation(() => ({
     keycloak: {
       userInfo: userInfo ?? defaultUserInfo,
-      subject: 'test',
+      subject: subject ?? 'test',
       authenticated,
-      loadUserInfo: jest.fn().mockResolvedValue(userInfo ?? defaultUserInfo),
-    },
-  });
+      loadUserInfo: vi.fn().mockResolvedValue(userInfo ?? defaultUserInfo),
+    } as any,
+    initialized: true,
+  }));
 };
 
 /**
@@ -254,6 +278,8 @@ export interface RenderOptions extends RtlRenderOptions {
   organizations?: number[];
   claims?: string[];
   roles?: string[];
+  mockMapMachine?: IMapStateMachineContext;
+  keycloakMock?: any;
 }
 
 function render(
@@ -267,20 +293,26 @@ function render(
     organizations,
     claims,
     roles,
+    mockMapMachine = mapMachineBaseMock,
+    keycloakMock,
     ...renderOptions
   } = options;
 
   // mock authentication state prior to rendering. Check first that keycloak has been mocked!
   if (!!useMockAuthentication || !!claims || !!roles || !!organizations) {
-    if (typeof (useKeycloak as jest.Mock).mockReturnValue === 'function') {
-      mockKeycloak({
-        claims: claims ?? [],
-        roles: roles ?? [],
-        organizations: organizations ?? [1],
-        authenticated: true,
-      });
+    if (typeof vi.mocked(useKeycloak).mockReturnValue === 'function') {
+      mockKeycloak(
+        keycloakMock?.keycloak ?? {
+          claims: claims ?? [],
+          roles: roles ?? [],
+          organizations: organizations ?? [1],
+          authenticated: true,
+        },
+      );
     }
   }
+
+  mocks.useMapStateMachine.mockImplementation(() => mockMapMachine);
 
   function AllTheProviders({ children }: PropsWithChildren) {
     return (
@@ -303,20 +335,26 @@ async function renderAsync(
     organizations,
     claims,
     roles,
+    mockMapMachine = mapMachineBaseMock,
+    keycloakMock,
     ...renderOptions
   } = options;
 
   // mock authentication state prior to rendering. Check first that keycloak has been mocked!
   if (!!useMockAuthentication || !!claims || !!roles || !!organizations) {
-    if (typeof (useKeycloak as jest.Mock).mockReturnValue === 'function') {
-      mockKeycloak({
-        claims: claims ?? [],
-        roles: roles ?? [],
-        organizations: organizations ?? [1],
-        authenticated: true,
-      });
+    if (typeof vi.mocked(useKeycloak).mockReturnValue === 'function') {
+      mockKeycloak(
+        keycloakMock?.keycloak ?? {
+          claims: claims ?? [],
+          roles: roles ?? [],
+          organizations: organizations ?? [1],
+          authenticated: true,
+        },
+      );
     }
   }
+
+  mocks.useMapStateMachine.mockImplementation(() => mockMapMachine);
 
   function AllTheProviders({ children }: PropsWithChildren) {
     return (

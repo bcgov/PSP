@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { noop } from 'lodash';
+import noop from 'lodash/noop';
 import React, { useState } from 'react';
 import {
   Modal,
@@ -212,10 +212,13 @@ export const GenericModal = (props: Omit<BsModalProps, 'onHide'> & ModalProps) =
       className={getModalClass()}
     >
       <Modal.Header closeButton={closeButton} onHide={close}>
-        <Modal.Title>
-          {headerIconValue && <div className="header-icon">{headerIconValue}</div>}
-          {title}
-        </Modal.Title>
+        {headerIconValue && (
+          <>
+            <div className="header-icon">{headerIconValue}</div>
+            <Spacing8 />
+          </>
+        )}
+        <Modal.Title>{title}</Modal.Title>
         {!closeButton && (
           <div className="modal-close-btn">
             <FaWindowClose size={24} onClick={close} />
@@ -225,9 +228,9 @@ export const GenericModal = (props: Omit<BsModalProps, 'onHide'> & ModalProps) =
 
       <Modal.Body style={{ whiteSpace: 'pre-line' }}>{message}</Modal.Body>
 
+      <Spacer />
       {!hideFooter && (
         <Modal.Footer>
-          <hr />
           <div className="button-wrap">
             {cancelButtonText && (
               <Button
@@ -239,7 +242,7 @@ export const GenericModal = (props: Omit<BsModalProps, 'onHide'> & ModalProps) =
                 {cancelButtonText}
               </Button>
             )}
-
+            <Spacing24 />
             <Button
               title="ok-modal"
               variant={okButtonVariant ?? 'primary'}
@@ -288,9 +291,53 @@ const ModalContainer = (props: BsModalProps & ModalProps) => {
   ) : null;
 };
 
+const Spacing8 = styled.span`
+  width: 0.8rem;
+`;
+
+const Spacing24 = styled.span`
+  width: 2.4rem;
+`;
+
+const Spacer = styled.hr`
+  padding: 0px;
+  margin: 0px;
+  margin-left: 1.6rem;
+  margin-right: 1.6rem;
+`;
+
 const StyledModal = styled(Modal)<{ $draggable?: boolean }>`
   .modal-header {
+    height: 4.8rem;
+    padding-left: 1.6rem;
+    padding-right: 1.6rem;
+
+    display: flex;
+    justify-content: flex-start;
+
+    color: ${props => props.theme.css.primaryBackgroundColor};
+    background-color: ${props => props.theme.css.primaryColor};
+
+    /* show move cursor (crosshair) for draggable modals */
+    cursor: ${props => (props.$draggable ? 'move' : 'default')};
+
+    .header-icon {
+    }
+
+    .modal-title {
+      font-family: BcSans-Bold;
+      font-size: 2.2rem;
+
+      align-self: center;
+    }
+
+    .modal-close-btn {
+      margin-left: auto;
+      cursor: pointer;
+    }
+
     .close {
+      margin-left: auto;
       color: white;
       opacity: 1;
       font-size: 3rem;
@@ -300,53 +347,25 @@ const StyledModal = styled(Modal)<{ $draggable?: boolean }>`
     }
   }
 
-  .modal-header {
-    height: 4.8rem;
-    padding: 0 1.6rem;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    color: ${props => props.theme.css.primaryBackgroundColor};
-    background-color: ${props => props.theme.css.primaryColor};
-    /* show move cursor (crosshair) for draggable modals */
-    cursor: ${props => (props.$draggable ? 'move' : 'default')};
-
-    .modal-title {
-      font-family: BcSans-Bold;
-      font-size: 2.2rem;
-      height: 2.75rem;
-      height: auto;
-    }
-
-    .header-icon {
-      margin-right: 8px;
-      display: inline-block;
-    }
-
-    .modal-close-btn {
-      cursor: pointer;
-    }
-  }
-
   .modal-body {
-    padding: 2.4rem 1.8rem;
-    font-size: 1.8rem;
+    padding-top: 2.4rem;
+    padding-bottom: 2.4rem;
+    padding-left: 1.6rem;
+    padding-right: 1.6rem;
   }
 
   .modal-footer {
-    border-top: none;
-
-    hr {
-      width: 100%;
-    }
+    border: 0px;
+    padding-top: 3.6rem;
+    padding-bottom: 3.6rem;
+    padding-left: 1.6rem;
+    padding-right: 3.6rem;
 
     .button-wrap {
+      margin: 0px;
+      padding: 0px;
       display: inline-flex;
-      margin-top: 2.4rem;
-      margin-bottom: 2.4rem;
-
       .Button {
-        margin-right: 2.4rem;
         min-width: 9.5rem;
         height: 3.9rem;
       }

@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Contact Search Results Table matches snapshot 1`] = `
+exports[`Contact Search Results Table > matches snapshot 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
@@ -578,8 +578,35 @@ exports[`Contact Search Results Table matches snapshot 1`] = `
             style="box-sizing: border-box; flex: 10 0 auto; min-width: 10px; width: 10px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
             title=""
           >
-            <svg>
-              <span />
+            <svg
+              height="10"
+              overflow="visible"
+              preserveAspectRatio="none"
+              viewBox="0 0 10 10"
+              width="10"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+            >
+              <g
+                transform="translate(1, 1)"
+              >
+                <defs>
+                  <path
+                    d="M4 0 C6.207660097976 0 8 1.7923399020239998 8 4 C8 6.207660097976 6.207660097976 8 4 8 C1.7923399020239998 8 0 6.207660097976 0 4 C0 1.7923399020239998 1.7923399020239998 0 4 0 Z"
+                    id="path-1635974705144170"
+                    vector-effect="non-scaling-stroke"
+                  />
+                </defs>
+                <g
+                  transform="translate(0, 0)"
+                >
+                  <path
+                    d="M4 0 C6.207660097976 0 8 1.7923399020239998 8 4 C8 6.207660097976 6.207660097976 8 4 8 C1.7923399020239998 8 0 6.207660097976 0 4 C0 1.7923399020239998 1.7923399020239998 0 4 0 Z"
+                    style="stroke: rgb(255, 255, 255); stroke-width: 1; stroke-linecap: butt; stroke-linejoin: miter; fill: rgb(146, 237, 36);"
+                    vector-effect="non-scaling-stroke"
+                  />
+                </g>
+              </g>
             </svg>
           </div>
           <div
@@ -742,8 +769,35 @@ exports[`Contact Search Results Table matches snapshot 1`] = `
             style="box-sizing: border-box; flex: 10 0 auto; min-width: 10px; width: 10px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
             title=""
           >
-            <svg>
-              <span />
+            <svg
+              height="10"
+              overflow="visible"
+              preserveAspectRatio="none"
+              viewBox="0 0 10 10"
+              width="10"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+            >
+              <g
+                transform="translate(1, 1)"
+              >
+                <defs>
+                  <path
+                    d="M4 0 C6.207660097976 0 8 1.7923399020239998 8 4 C8 6.207660097976 6.207660097976 8 4 8 C1.7923399020239998 8 0 6.207660097976 0 4 C0 1.7923399020239998 1.7923399020239998 0 4 0 Z"
+                    id="path-1635974705144170"
+                    vector-effect="non-scaling-stroke"
+                  />
+                </defs>
+                <g
+                  transform="translate(0, 0)"
+                >
+                  <path
+                    d="M4 0 C6.207660097976 0 8 1.7923399020239998 8 4 C8 6.207660097976 6.207660097976 8 4 8 C1.7923399020239998 8 0 6.207660097976 0 4 C0 1.7923399020239998 1.7923399020239998 0 4 0 Z"
+                    style="stroke: rgb(255, 255, 255); stroke-width: 1; stroke-linecap: butt; stroke-linejoin: miter; fill: rgb(146, 237, 36);"
+                    vector-effect="non-scaling-stroke"
+                  />
+                </g>
+              </g>
             </svg>
           </div>
           <div
@@ -906,8 +960,35 @@ exports[`Contact Search Results Table matches snapshot 1`] = `
             style="box-sizing: border-box; flex: 10 0 auto; min-width: 10px; width: 10px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
             title=""
           >
-            <svg>
-              <span />
+            <svg
+              height="10"
+              overflow="visible"
+              preserveAspectRatio="none"
+              viewBox="0 0 10.999999999999995 10"
+              width="10.999999999999995"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+            >
+              <g
+                transform="translate(1, 1)"
+              >
+                <defs>
+                  <path
+                    d="M4.499999999999997 0 C6.983617610222995 0 8.999999999999995 1.7923399020239998 8.999999999999995 4 C8.999999999999995 6.207660097976 6.983617610222995 8 4.499999999999997 8 C2.016382389776999 8 0 6.207660097976 0 4 C0 1.7923399020239998 2.016382389776999 0 4.499999999999997 0 Z"
+                    id="path-1636147294005408"
+                    vector-effect="non-scaling-stroke"
+                  />
+                </defs>
+                <g
+                  transform="translate(0, 0)"
+                >
+                  <path
+                    d="M4.499999999999997 0 C6.983617610222995 0 8.999999999999995 1.7923399020239998 8.999999999999995 4 C8.999999999999995 6.207660097976 6.983617610222995 8 4.499999999999997 8 C2.016382389776999 8 0 6.207660097976 0 4 C0 1.7923399020239998 2.016382389776999 0 4.499999999999997 0 Z"
+                    style="stroke: rgb(92, 89, 89); stroke-width: 1; stroke-linecap: butt; stroke-linejoin: miter; fill: rgb(255, 255, 255);"
+                    vector-effect="non-scaling-stroke"
+                  />
+                </g>
+              </g>
             </svg>
           </div>
           <div

@@ -1,5 +1,4 @@
 import clsx from 'classnames';
-import * as React from 'react';
 import styled from 'styled-components';
 
 import { Form } from '@/components/common/form';

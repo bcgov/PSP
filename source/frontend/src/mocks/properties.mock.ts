@@ -7,6 +7,7 @@ import { mockAcquisitionFileResponse, mockAddress } from '@/mocks/index.mock';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { ApiGen_Concepts_PropertyLease } from '@/models/api/generated/ApiGen_Concepts_PropertyLease';
+import { ApiGen_Concepts_PropertyView } from '@/models/api/generated/ApiGen_Concepts_PropertyView';
 import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { toTypeCodeNullable } from '@/utils/formUtils';
 
@@ -40,7 +41,6 @@ const emptyProperty: ApiGen_Concepts_Property = {
   pin: null,
   planNumber: null,
   isOwned: false,
-  isPropertyOfInterest: false,
   isVisibleToOtherAgencies: false,
   areaUnit: null,
   landArea: null,
@@ -60,10 +60,54 @@ const emptyProperty: ApiGen_Concepts_Property = {
   surplusDeclarationType: null,
   surplusDeclarationComment: null,
   surplusDeclarationDate: EpochIsoDateTime,
-  isOtherInterest: false,
-  isDisposed: false,
   rowVersion: null,
 };
+
+export const getEmptyPropertyView = (): ApiGen_Concepts_PropertyView => ({
+  id: 0,
+  pid: 0,
+  pidPadded: '',
+  pin: 0,
+  propertyTypeCode: '',
+  propertyStatusTypeCode: '',
+  propertyDataSourceTypeCode: '',
+  propertyDataSourceEffectiveDate: '',
+  propertyClassificationTypeCode: '',
+  propertyTenureTypeCode: '',
+  streetAddress1: '',
+  streetAddress2: '',
+  streetAddress3: '',
+  municipalityName: '',
+  postalCode: '',
+  provinceStateCode: '',
+  provinceName: '',
+  countryCode: '',
+  countryName: '',
+  name: '',
+  description: '',
+  addressId: 0,
+  regionCode: 0,
+  districtCode: 0,
+  propertyAreaUnitTypeCode: '',
+  landArea: 0,
+  landLegalDescription: '',
+  surveyPlanNumber: '',
+  encumbranceReason: '',
+  isSensitive: false,
+  isOwned: false,
+  isRetired: false,
+  isVisibleToOtherAgencies: false,
+  zoning: '',
+  zoningPotential: '',
+  isDisposed: false,
+  isOtherInterest: false,
+  hasActiveAcquisitionFile: false,
+  hasActiveResearchFile: false,
+  isPayableLease: false,
+  isActivePayableLease: false,
+  isReceivableLease: false,
+  isActiveReceivableLease: false,
+});
 
 export const getMockProperties: () => IProperty[] = () => [
   {

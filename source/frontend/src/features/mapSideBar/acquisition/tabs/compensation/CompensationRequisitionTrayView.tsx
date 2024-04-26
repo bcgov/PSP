@@ -105,7 +105,7 @@ export const CompensationRequisitionTrayView: React.FunctionComponent<
           {editMode ? 'Edit ' : ''}Compensation Requisition (H120)
           <Styled.CloseButton
             id="close-tray"
-            icon={<MdClose size={20} />}
+            icon={<MdClose size={24} />}
             title="close"
             onClick={() => {
               setShow(false);

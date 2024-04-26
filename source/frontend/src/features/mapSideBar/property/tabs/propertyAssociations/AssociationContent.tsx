@@ -1,5 +1,4 @@
-import { orderBy } from 'lodash';
-import * as React from 'react';
+import orderBy from 'lodash/orderBy';
 import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
 

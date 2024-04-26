@@ -1,5 +1,5 @@
 import { FieldArray, Formik, FormikHelpers, FormikProps } from 'formik';
-import * as React from 'react';
+import { forwardRef } from 'react';
 import { FaPlus } from 'react-icons/fa';
 import styled from 'styled-components';
 
@@ -27,7 +27,7 @@ export interface TakesForm {
   takes: TakeModel[];
 }
 
-export const TakesUpdateForm = React.forwardRef<FormikProps<any>, ITakesUpdateFormProps>(
+export const TakesUpdateForm = forwardRef<FormikProps<any>, ITakesUpdateFormProps>(
   ({ takes, loading, fileProperty, onSubmit }, ref) => {
     if (loading) {
       return (
@@ -109,6 +109,7 @@ export const emptyTake: ApiGen_Concepts_Take = {
   isNewHighwayDedication: null,
   isNewLandAct: null,
   isNewInterestInSrw: null,
+  isLeasePayable: null,
   licenseToConstructArea: null,
   ltcEndDt: null,
   landActArea: null,
@@ -118,10 +119,13 @@ export const emptyTake: ApiGen_Concepts_Take = {
   statutoryRightOfWayArea: null,
   srwEndDt: null,
   surplusArea: null,
+  leasePayableArea: null,
+  leasePayableEndDt: null,
   takeSiteContamTypeCode: null,
   takeTypeCode: null,
   takeStatusTypeCode: toTypeCode('INPROGRESS'),
   landActTypeCode: null,
+  completionDt: null,
   ...getEmptyBaseAudit(),
 };
 

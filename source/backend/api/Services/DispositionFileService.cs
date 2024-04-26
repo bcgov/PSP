@@ -521,22 +521,13 @@ namespace Pims.Api.Services
             foreach (var deletedProperty in differenceSet)
             {
                 _dispositionFilePropertyRepository.Delete(deletedProperty);
-                /*
-                TODO: Fix mapings
-                if (deletedProperty.Property.IsPropertyOfInterest)
+
+                var totalAssociationCount = _propertyRepository.GetAllAssociationsCountById(deletedProperty.PropertyId);
+                if (totalAssociationCount <= 1)
                 {
-                    PimsProperty propertyWithAssociations = _propertyRepository.GetAllAssociationsById(deletedProperty.PropertyId);
-                    var leaseAssociationCount = propertyWithAssociations.PimsPropertyLeases.Count;
-                    var researchAssociationCount = propertyWithAssociations.PimsPropertyResearchFiles.Count;
-                    var acquisitionAssociationCount = propertyWithAssociations.PimsPropertyAcquisitionFiles.Count;
-                    var dispositionAssociationCount = propertyWithAssociations.PimsDispositionFileProperties.Count;
-                    if (leaseAssociationCount + researchAssociationCount + acquisitionAssociationCount == 0 && dispositionAssociationCount <= 1 && deletedProperty?.Property?.IsPropertyOfInterest == true)
-                    {
-                        _dispositionFileRepository.CommitTransaction(); // TODO: this can only be removed if cascade deletes are implemented. EF executes deletes in alphabetic order.
-                        _propertyRepository.Delete(deletedProperty.Property);
-                    }
+                    _dispositionFileRepository.CommitTransaction(); // TODO: this can only be removed if cascade deletes are implemented. EF executes deletes in alphabetic order.
+                    _propertyRepository.Delete(deletedProperty.Property);
                 }
-                */
             }
 
             _dispositionFileRepository.CommitTransaction();
@@ -579,6 +570,11 @@ namespace Pims.Api.Services
             var nonEditableStatuses = new List<string>() { EnumDispositionFileStatusTypeCode.COMPLETE.ToString(), EnumDispositionFileStatusTypeCode.ARCHIVED.ToString(), EnumDispositionFileStatusTypeCode.CANCELLED.ToString(), };
             var isFileChangingToNonEditableState = !nonEditableStatuses.Contains(currentDispositionFile.DispositionFileStatusTypeCode) && nonEditableStatuses.Contains(incomingDispositionFile.DispositionFileStatusTypeCode);
 
+            if (isFileClosing && incomingDispositionFile.DispositionStatusTypeCode != EnumDispositionStatusTypeCode.SOLD.ToString())
+            {
+                throw new BusinessRuleViolationException("File Disposition Status has not been set to SOLD, so the related file properties cannot be Disposed. To proceed, set file disposition status to SOLD, or cancel the Disposition file.");
+            }
+
             // confirm user action - file is changing to non-editable state
             if (!userOverrides.Contains(UserOverrideCode.DispositionFileFinalStatus) && isFileChangingToNonEditableState)
             {
@@ -605,7 +601,7 @@ namespace Pims.Api.Services
             foreach (var dispositionProperty in ownedProperties)
             {
                 var property = dispositionProperty.Property;
-                _propertyRepository.TransferFileProperty(property, new Dal.Models.PropertyOwnershipState() { isDisposed = true, isPropertyOfInterest = false, isOtherInterest = false, isOwned = false });
+                _propertyRepository.TransferFileProperty(property, false);
             }
         }
 

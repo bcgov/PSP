@@ -1,5 +1,6 @@
 import { LatLngBounds, LatLngLiteral } from 'leaflet';
 
+import { ILayerItem } from '@/components/maps/leaflet/Control/LayersControl/types';
 import { IPropertyFilter } from '@/features/properties/filter/IPropertyFilter';
 
 import { FeatureSelected, MapFeatureData, RequestedFlyTo } from '../models';
@@ -37,6 +38,7 @@ export type MachineContext = {
   requestedFlyTo: RequestedFlyTo;
   filePropertyLocations: LatLngLiteral[];
   activePimsPropertyIds: number[];
+  activeLayers: ILayerItem[];
   showDisposed: boolean;
   showRetired: boolean;
 };

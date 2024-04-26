@@ -25,7 +25,7 @@ describe('LeaseHeader component', () => {
 
   afterEach(() => {
     mockAxios.reset();
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders as expected when no data is provided', () => {

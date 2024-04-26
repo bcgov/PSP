@@ -1,5 +1,4 @@
 import { getIn, useFormikContext } from 'formik';
-import * as React from 'react';
 import { AiOutlineExclamationCircle } from 'react-icons/ai';
 import styled from 'styled-components';
 

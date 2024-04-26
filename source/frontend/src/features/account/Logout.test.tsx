@@ -1,22 +1,21 @@
 import { useKeycloak } from '@react-keycloak/web';
 import { cleanup, render, waitFor } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
-import React from 'react';
-import { Router } from 'react-router-dom';
+import { Router } from 'react-router-dom/cjs/react-router-dom';
 
 import { useConfiguration } from '@/hooks/useConfiguration';
 
 import { LogoutPage } from './Logout';
-jest.mock('@react-keycloak/web');
-jest.mock('@/hooks/useConfiguration');
 
+vi.mock('@/hooks/useConfiguration');
+vi.mock('@react-keycloak/web');
 describe('logout', () => {
   const history = createMemoryHistory();
   const { location } = window;
 
   beforeAll(() => {
     delete (window as any).location;
-    window.location = { replace: jest.fn() } as any;
+    window.location = { replace: vi.fn() } as any;
   });
 
   afterAll(() => (window.location = location));
@@ -26,8 +25,13 @@ describe('logout', () => {
   });
 
   it('should redirect to login page', () => {
-    (useKeycloak as jest.Mock).mockReturnValue({ keycloak: { authenticated: false } });
-    (useConfiguration as jest.Mock).mockReturnValue({ siteMinderLogoutUrl: undefined });
+    vi.mocked(useKeycloak).mockReturnValue({
+      keycloak: { authenticated: false } as unknown as Keycloak.KeycloakInstance,
+      initialized: true,
+    });
+    vi.mocked(useConfiguration).mockReturnValue({
+      siteMinderLogoutUrl: undefined,
+    } as unknown as ReturnType<typeof useConfiguration>);
 
     render(
       <Router history={history}>
@@ -39,10 +43,13 @@ describe('logout', () => {
   });
 
   it('should redirect to siteminder logout page', async () => {
-    (useKeycloak as jest.Mock).mockReturnValue({ keycloak: { authenticated: false } });
-    (useConfiguration as jest.Mock).mockReturnValue({
-      siteMinderLogoutUrl: 'http://fakesiteminder.com',
+    vi.mocked(useKeycloak).mockReturnValue({
+      keycloak: { authenticated: false } as unknown as Keycloak.KeycloakInstance,
+      initialized: true,
     });
+    vi.mocked(useConfiguration).mockReturnValue({
+      siteMinderLogoutUrl: 'http://fakesiteminder.com',
+    } as unknown as ReturnType<typeof useConfiguration>);
 
     render(
       <Router history={history}>

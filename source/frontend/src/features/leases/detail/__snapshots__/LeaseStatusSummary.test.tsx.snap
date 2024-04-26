@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`LeaseStatusSummary component renders as expected when active 1`] = `
+exports[`LeaseStatusSummary component > renders as expected when active 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
@@ -57,7 +57,7 @@ exports[`LeaseStatusSummary component renders as expected when active 1`] = `
 </DocumentFragment>
 `;
 
-exports[`LeaseStatusSummary component renders as expected when inactive 1`] = `
+exports[`LeaseStatusSummary component > renders as expected when inactive 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"

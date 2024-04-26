@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`AddProjectForm component renders as expected 1`] = `
+exports[`AddProjectForm component > renders as expected 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
@@ -631,7 +631,7 @@ exports[`AddProjectForm component renders as expected 1`] = `
 </DocumentFragment>
 `;
 
-exports[`AddProjectForm component renders as expected with existing data 1`] = `
+exports[`AddProjectForm component > renders as expected with existing data 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"

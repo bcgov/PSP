@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { TabsProps } from 'react-bootstrap';
 import styled from 'styled-components';
 

@@ -1,5 +1,5 @@
 import { AxiosError } from 'axios';
-import { FormikProps } from 'formik';
+import { FormikProps } from 'formik/dist/types';
 import React, { useContext } from 'react';
 import {
   match,
@@ -26,6 +26,7 @@ import { SideBarContext } from '../context/sidebarContext';
 import { InventoryTabNames } from '../property/InventoryTabs';
 import { FilePropertyRouter } from '../router/FilePropertyRouter';
 import { FileTabType } from '../shared/detail/FileTabs';
+import { PropertyForm } from '../shared/models';
 import SidebarFooter from '../shared/SidebarFooter';
 import UpdateProperties from '../shared/update/properties/UpdateProperties';
 import { AcquisitionContainerState } from './AcquisitionContainer';
@@ -43,6 +44,7 @@ export interface IAcquisitionViewProps {
   onSuccess: () => void;
   onCancelConfirm: () => void;
   onUpdateProperties: (file: ApiGen_Concepts_File) => Promise<ApiGen_Concepts_File | undefined>;
+  confirmBeforeAdd: (propertyForm: PropertyForm) => Promise<boolean>;
   canRemove: (propertyId: number) => Promise<boolean>;
   isEditing: boolean;
   setIsEditing: (value: boolean) => void;
@@ -61,6 +63,7 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
   onShowPropertySelector,
   onSuccess,
   onUpdateProperties,
+  confirmBeforeAdd,
   canRemove,
   isEditing,
   setIsEditing,
@@ -112,6 +115,13 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
             setIsShowingPropertySelector={closePropertySelector}
             onSuccess={onSuccess}
             updateFileProperties={onUpdateProperties}
+            confirmBeforeAdd={confirmBeforeAdd}
+            confirmBeforeAddMessage={
+              <>
+                <p>This property has already been added to one or more acquisition files.</p>
+                <p>Do you want to acknowledge and proceed?</p>
+              </>
+            }
             canRemove={canRemove}
             formikRef={formikRef}
           />

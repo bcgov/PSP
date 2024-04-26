@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { Col, Row } from 'react-bootstrap';
 
 import { RemoveButton } from '@/components/common/buttons';
@@ -7,7 +6,7 @@ import OverflowTip from '@/components/common/OverflowTip';
 import DraftCircleNumber from '@/components/propertySelector/selectedPropertyList/DraftCircleNumber';
 import { AreaUnitTypes } from '@/constants';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
-import { convertArea, formatApiAddress, pidFormatter } from '@/utils';
+import { convertArea, formatApiAddress, formatNumber, pidFormatter } from '@/utils';
 
 interface ISelectedOperationPropertyProps {
   property: ApiGen_Concepts_Property;
@@ -20,6 +19,11 @@ interface ISelectedOperationPropertyProps {
 export const SelectedOperationProperty: React.FunctionComponent<
   ISelectedOperationPropertyProps
 > = ({ property, getMarkerIndex, nameSpace, onRemove, isEditable }) => {
+  const getAreaValue = (area: number, unit: string) => {
+    const sqm = convertArea(area, unit, AreaUnitTypes.SquareMeters);
+    return formatNumber(sqm, 0, 3);
+  };
+
   return (
     <Row className="align-items-center mb-3 no-gutters">
       <Col md={3}>
@@ -36,11 +40,7 @@ export const SelectedOperationProperty: React.FunctionComponent<
         {isEditable ? (
           <InlineInput className="w-75" field={`${nameSpace}.landArea`} />
         ) : (
-          convertArea(
-            property.landArea ?? 0,
-            property.areaUnit?.id ?? '',
-            AreaUnitTypes.SquareMeters,
-          )
+          getAreaValue(property.landArea ?? 0, property.areaUnit?.id ?? '')
         )}
       </Col>
       <Col md={3}>{formatApiAddress(property?.address) ?? ''}</Col>

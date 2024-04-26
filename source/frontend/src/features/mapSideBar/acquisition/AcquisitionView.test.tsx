@@ -1,8 +1,6 @@
 import { createMemoryHistory } from 'history';
-import React from 'react';
 import { Route } from 'react-router-dom';
 
-import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { Claims } from '@/constants/claims';
 import { FileTypes } from '@/constants/index';
 import { InventoryTabNames } from '@/features/mapSideBar/property/InventoryTabs';
@@ -14,55 +12,56 @@ import { mockApiPerson } from '@/mocks/filterData.mock';
 import { getMockApiInterestHolders } from '@/mocks/interestHolders.mock';
 import { mockLastUpdatedBy } from '@/mocks/lastUpdatedBy.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
-import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { rest, server } from '@/mocks/msw/server';
 import { mockNotesResponse } from '@/mocks/noteResponses.mock';
 import { getUserMock } from '@/mocks/user.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { prettyFormatUTCDate } from '@/utils';
-import { act, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
+import { RenderOptions, act, render, userEvent, waitFor } from '@/utils/test-utils';
 
+import { getMockApiTakes } from '@/mocks/takes.mock';
 import { SideBarContextProvider } from '../context/sidebarContext';
 import { FileTabType } from '../shared/detail/FileTabs';
 import AcquisitionView, { IAcquisitionViewProps } from './AcquisitionView';
-import { getMockApiTakes } from '@/mocks/takes.mock';
+import { createRef } from 'react';
 
 // mock auth library
-jest.mock('@react-keycloak/web');
 
-jest.mock('@/components/common/mapFSM/MapStateMachineContext');
-jest.mock('@/hooks/repositories/useComposedProperties', () => {
+vi.mock('@/hooks/repositories/useComposedProperties', () => {
   return {
-    useComposedProperties: jest.fn().mockResolvedValue({ apiWrapper: { response: {} } }),
+    useComposedProperties: vi.fn().mockResolvedValue({ apiWrapper: { response: {} } }),
     PROPERTY_TYPES: {},
   };
 });
-jest.mock('@/features/mapSideBar/hooks/usePropertyDetails', () => {
+vi.mock('@/features/mapSideBar/hooks/usePropertyDetails', () => {
   return {
-    usePropertyDetails: jest.fn(),
+    usePropertyDetails: vi.fn(),
   };
 });
 
-const onClose = jest.fn();
-const onSave = jest.fn();
-const onCancel = jest.fn();
-const onMenuChange = jest.fn();
-const onSuccess = jest.fn();
-const onCancelConfirm = jest.fn();
-const onUpdateProperties = jest.fn();
-const canRemove = jest.fn();
-const setContainerState = jest.fn();
-const setIsEditing = jest.fn();
-const onEditFileProperties = jest.fn();
+const onClose = vi.fn();
+const onSave = vi.fn();
+const onCancel = vi.fn();
+const onMenuChange = vi.fn();
+const onSuccess = vi.fn();
+const onCancelConfirm = vi.fn();
+const onUpdateProperties = vi.fn();
+const canRemove = vi.fn();
+const confirmBeforeAdd = vi.fn();
+const setContainerState = vi.fn();
+const setIsEditing = vi.fn();
+const onEditFileProperties = vi.fn();
 
 // Need to mock this library for unit tests
-jest.mock('react-visibility-sensor', () => {
-  return jest.fn().mockImplementation(({ children }) => {
-    if (children instanceof Function) {
-      return children({ isVisible: true });
-    }
-    return children;
-  });
+vi.mock('react-visibility-sensor', () => {
+  return {
+    default: vi.fn().mockImplementation(({ children }) => {
+      if (children instanceof Function) {
+        return children({ isVisible: true });
+      }
+      return children;
+    }),
+  };
 });
 
 const DEFAULT_PROPS: IAcquisitionViewProps = {
@@ -73,6 +72,7 @@ const DEFAULT_PROPS: IAcquisitionViewProps = {
   onSuccess,
   onCancelConfirm,
   onUpdateProperties,
+  confirmBeforeAdd,
   canRemove,
   isEditing: false,
   setIsEditing,
@@ -84,7 +84,7 @@ const DEFAULT_PROPS: IAcquisitionViewProps = {
     defaultFileTab: FileTabType.FILE_DETAILS,
     defaultPropertyTab: InventoryTabNames.property,
   },
-  formikRef: React.createRef(),
+  formikRef: createRef(),
   isFormValid: true,
   error: undefined,
 };
@@ -129,43 +129,41 @@ describe('AcquisitionView component', () => {
   };
 
   beforeEach(() => {
-    (useMapStateMachine as jest.Mock).mockImplementation(() => mapMachineBaseMock);
-
     history.replace(`/mapview/sidebar/acquisition/1`);
     server.use(
-      rest.get('/api/users/info/*', (req, res, ctx) =>
+      rest.get('/users/info/*', (req, res, ctx) =>
         res(ctx.delay(500), ctx.status(200), ctx.json(getUserMock())),
       ),
-      rest.get('/api/notes/*', (req, res, ctx) =>
+      rest.get('/notes/*', (req, res, ctx) =>
         res(ctx.delay(500), ctx.status(200), ctx.json(mockNotesResponse())),
       ),
-      rest.get('/api/acquisitionfiles/:id/owners', (req, res, ctx) =>
+      rest.get('/acquisitionfiles/:id/owners', (req, res, ctx) =>
         res(ctx.delay(500), ctx.status(200), ctx.json(mockAcquisitionFileOwnersResponse())),
       ),
-      rest.get('/api/takes/acquisition/:id/property/:propertyId', (req, res, ctx) =>
+      rest.get('/takes/acquisition/:id/property/:propertyId', (req, res, ctx) =>
         res(ctx.delay(500), ctx.status(200), ctx.json(getMockApiTakes())),
       ),
-      rest.get('/api/takes/property/:id/count', (req, res, ctx) =>
+      rest.get('/takes/property/:id/count', (req, res, ctx) =>
         res(ctx.delay(500), ctx.status(200), ctx.json(1)),
       ),
-      rest.get('/api/persons/concept/:id', (req, res, ctx) =>
+      rest.get('/persons/concept/:id', (req, res, ctx) =>
         res(ctx.delay(500), ctx.status(200), ctx.json(mockApiPerson)),
       ),
-      rest.get('/api/acquisitionfiles/:id/properties', (req, res, ctx) =>
+      rest.get('/acquisitionfiles/:id/properties', (req, res, ctx) =>
         res(
           ctx.delay(500),
           ctx.status(200),
           ctx.json(mockAcquisitionFileResponse().fileProperties),
         ),
       ),
-      rest.get('/api/acquisitionfiles/:id/interestholders', (req, res, ctx) =>
+      rest.get('/acquisitionfiles/:id/interestholders', (req, res, ctx) =>
         res(ctx.delay(500), ctx.status(200), ctx.json(getMockApiInterestHolders())),
       ),
     );
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders as expected', async () => {
@@ -235,7 +233,7 @@ describe('AcquisitionView component', () => {
     expect(tab).toHaveClass('active');
   });
 
-  xit(`should show a toast and redirect to the File Details page when accessing a non-existing property index`, async () => {
+  it.skip(`should show a toast and redirect to the File Details page when accessing a non-existing property index`, async () => {
     history.replace(`/mapview/sidebar/acquisition/1/property/99999`);
     const { getByRole, findByText } = await setup();
     const tab = getByRole('tab', { name: /File details/i });
@@ -253,7 +251,7 @@ describe('AcquisitionView component', () => {
     expect(tab).toHaveClass('active');
   });
 
-  xit('should display the Property Details tab according to routing', async () => {
+  it.skip('should display the Property Details tab according to routing', async () => {
     history.replace(`/mapview/sidebar/acquisition/1/property/1`);
     const { getByRole } = await setup();
     const tab = getByRole('tab', { name: /Property Details/i });
@@ -271,7 +269,7 @@ describe('AcquisitionView component', () => {
     expect(tab).toHaveClass('active');
   });
 
-  xit(`should display the Property Details tab when we are editing and the path doesn't match any route`, async () => {
+  it.skip(`should display the Property Details tab when we are editing and the path doesn't match any route`, async () => {
     history.replace(`/mapview/sidebar/acquisition/1/property/1/unknownTabWhatIsThis?edit=true`);
     const { getByRole } = await setup();
     const tab = getByRole('tab', { name: /Property Details/i });

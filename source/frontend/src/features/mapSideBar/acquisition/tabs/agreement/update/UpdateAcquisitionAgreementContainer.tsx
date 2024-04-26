@@ -1,5 +1,5 @@
 import axios, { AxiosError } from 'axios';
-import { FormikHelpers } from 'formik';
+import { FormikHelpers } from 'formik/dist/types';
 import { useCallback, useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';

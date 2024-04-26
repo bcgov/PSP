@@ -15,8 +15,8 @@ import {
 import AccessRequestForm from './AccessRequestForm';
 import { FormAccessRequest } from './models';
 
-const addAccessRequest = jest.fn();
-const onCancel = jest.fn();
+const addAccessRequest = vi.fn();
+const onCancel = vi.fn();
 
 describe('AccessRequestForm component', () => {
   // render component under test
@@ -51,7 +51,7 @@ describe('AccessRequestForm component', () => {
   });
 
   afterEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
   });
 
   it('renders as expected', async () => {

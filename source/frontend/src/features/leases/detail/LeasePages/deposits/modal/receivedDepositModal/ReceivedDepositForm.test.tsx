@@ -13,8 +13,8 @@ import ReceivedDepositForm from './ReceivedDepositForm';
 const history = createMemoryHistory();
 const mockAxios = new MockAdapter(axios);
 
-const onSave = jest.fn();
-const submitForm = jest.fn();
+const onSave = vi.fn();
+const submitForm = vi.fn();
 
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
@@ -43,7 +43,7 @@ describe('ReceivedDepositForm component', () => {
 
   beforeEach(() => {
     mockAxios.resetHistory();
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     initialValues = FormLeaseDeposit.createEmpty(1);
   });
 

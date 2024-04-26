@@ -8,9 +8,7 @@ import { act, fillInput, render, RenderOptions, waitFor } from '@/utils/test-uti
 import { AcquisitionFilterModel, ApiGen_Concepts_AcquisitionFilter } from '../interfaces';
 import { AcquisitionFilter } from './AcquisitionFilter';
 
-jest.mock('@react-keycloak/web');
-
-const setFilter = jest.fn();
+const setFilter = vi.fn();
 
 // render component under test
 const setup = (renderOptions: RenderOptions = {}) => {

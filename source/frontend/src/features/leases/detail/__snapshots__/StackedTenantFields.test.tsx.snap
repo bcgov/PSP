@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`StackedPidTenantFields component renders as expected when provided data 1`] = `
+exports[`StackedPidTenantFields component > renders as expected when provided data 1`] = `
 <DocumentFragment>
   @media only screen and (max-width:1250px) {
 
@@ -63,7 +63,7 @@ exports[`StackedPidTenantFields component renders as expected when provided data
 </DocumentFragment>
 `;
 
-exports[`StackedPidTenantFields component renders as expected when provided no data 1`] = `
+exports[`StackedPidTenantFields component > renders as expected when provided no data 1`] = `
 <DocumentFragment>
   @media only screen and (max-width:1250px) {
 

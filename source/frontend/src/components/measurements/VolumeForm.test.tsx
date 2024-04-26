@@ -29,7 +29,7 @@ describe('VolumeForm component', () => {
   beforeEach(() => {});
 
   afterEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
   });
 
   it('renders as expected', () => {
@@ -40,7 +40,7 @@ describe('VolumeForm component', () => {
   });
 
   it('calls onChange callback when values are changed', async () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     const { container } = setup({ onChange });
     await fillInput(container, 'volume-cubic-meters', 15000);
     await waitFor(() => expect(onChange).toBeCalledWith(15000, VolumeUnitTypes.CubicMeters));

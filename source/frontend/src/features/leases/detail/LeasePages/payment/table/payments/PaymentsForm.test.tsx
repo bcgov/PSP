@@ -2,7 +2,7 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
-import { noop } from 'lodash';
+import noop from 'lodash/noop';
 
 import { Claims, LeaseTermStatusTypes } from '@/constants';
 import { LeaseFormModel } from '@/features/leases/models';
@@ -13,7 +13,6 @@ import { getAllByRole as getAllByRoleBase } from '@/utils/test-utils';
 import { defaultFormLeasePayment, defaultFormLeaseTerm, FormLeasePayment } from '../../models';
 import PaymentsForm, { IPaymentsFormProps } from './PaymentsForm';
 
-jest.mock('@react-keycloak/web');
 const history = createMemoryHistory();
 const mockAxios = new MockAdapter(axios);
 export const defaultTestFormLeasePayment: FormLeasePayment = {
@@ -39,9 +38,9 @@ const defaultLeaseWithTermsPayments: LeaseFormModel = {
   ],
 };
 
-const onEdit = jest.fn();
-const onDelete = jest.fn();
-const onSave = jest.fn();
+const onEdit = vi.fn();
+const onDelete = vi.fn();
+const onSave = vi.fn();
 
 describe('PaymentsForm component', () => {
   const setup = async (

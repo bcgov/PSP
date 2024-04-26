@@ -15,14 +15,14 @@ import {
 } from '@/utils/test-utils';
 
 export const organizerMock = {
-  canEditOrDeleteAgreement: jest.fn(),
+  canEditOrDeleteAgreement: vi.fn(),
 };
 
 const mockViewProps: IUpdateAcquisitionAgreementViewProps = {
   isLoading: false,
   initialValues: new AcquisitionAgreementFormModel(1),
-  onSubmit: jest.fn(),
-  onCancel: jest.fn(),
+  onSubmit: vi.fn(),
+  onCancel: vi.fn(),
 };
 
 describe('UpdateAcquisitionAgreementView component', () => {
@@ -50,7 +50,7 @@ describe('UpdateAcquisitionAgreementView component', () => {
   };
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders as expected', async () => {

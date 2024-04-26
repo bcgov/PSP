@@ -1,23 +1,21 @@
 import 'react-simple-tree-menu/dist/main.css';
 
 import { Form as FormikForm, Formik, getIn, useFormikContext } from 'formik';
-import L from 'leaflet';
-import flatten from 'lodash/flatten';
 import noop from 'lodash/noop';
 import React, { useContext, useEffect, useMemo } from 'react';
 import Form from 'react-bootstrap/Form';
 import ListGroup from 'react-bootstrap/ListGroup';
-import { FaAngleDown, FaAngleRight } from 'react-icons/fa';
-import { useMap } from 'react-leaflet';
+import { MdArrowDropDown, MdArrowRight } from 'react-icons/md';
 import TreeMenu, { TreeMenuItem, TreeNode } from 'react-simple-tree-menu';
 import styled from 'styled-components';
 
 import variables from '@/assets/scss/_variables.module.scss';
+import { FormSection } from '@/components/common/form/styles';
+import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { TenantContext } from '@/tenants';
 
 import { layersTree } from './data';
 import { ILayerItem } from './types';
-import { wmsHeaders } from './wmsHeaders';
 
 const ParentNode = styled(ListGroup.Item)`
   display: flex;
@@ -31,7 +29,7 @@ const ParentNode = styled(ListGroup.Item)`
       label {
         font-weight: bold;
         color: ${variables.textColor};
-        font-size: 1.3rem;
+        font-size: 1.6rem;
       }
     }
   }
@@ -45,14 +43,14 @@ const LayerNode = styled(ListGroup.Item)`
   padding-bottom: 0.5rem;
 `;
 
-const OpenedIcon = styled(FaAngleDown)`
+const OpenedIcon = styled(MdArrowDropDown)`
   margin-right: 1rem;
-  font-size: 1.5rem;
+  font-size: 2.4rem;
 `;
 
-const ClosedIcon = styled(FaAngleRight)`
+const ClosedIcon = styled(MdArrowRight)`
   margin-right: 1rem;
-  font-size: 1.5rem;
+  font-size: 2.4rem;
 `;
 
 const FormGroup = styled(Form.Group)`
@@ -132,47 +130,13 @@ const LayerNodeCheckbox: React.FC<
   );
 };
 
-const featureGroup = new L.FeatureGroup();
-const LeafletListenerComp = () => {
+const MapLayerSynchronizer = () => {
   const { values } = useFormikContext<{ layers: ILayerItem[] }>();
-  const mapInstance = useMap();
+  const { setMapLayers } = useMapStateMachine();
 
   useEffect(() => {
-    if (mapInstance) {
-      featureGroup.addTo(mapInstance);
-    }
-
-    return () => {
-      mapInstance?.removeLayer(featureGroup);
-    };
-  }, [mapInstance]);
-
-  useEffect(() => {
-    if (mapInstance) {
-      const currentLayers = Object.keys((featureGroup as any)._layers)
-        .map(k => (featureGroup as any)._layers[k])
-        .map(l => l.options)
-        .filter(x => !!x);
-      const mapLayers = flatten(values.layers.map(l => l.nodes)).filter((x: any) => x.on);
-      const layersToAdd = mapLayers.filter(
-        (layer: any) => !currentLayers.find(x => x.key === layer.key),
-      );
-      const layersToRemove = currentLayers.filter(
-        (layer: any) => !mapLayers.find((x: any) => x.key === layer.key),
-      );
-
-      layersToAdd.forEach((node: any) => {
-        const layer = wmsHeaders(node.url, node);
-        featureGroup.addLayer(layer);
-      });
-
-      featureGroup.eachLayer((layer: any) => {
-        if (layersToRemove.find(l => l.key === layer?.options?.key)) {
-          featureGroup.removeLayer(layer);
-        }
-      });
-    }
-  }, [values, mapInstance]);
+    setMapLayers(values.layers ?? []);
+  }, [setMapLayers, values]);
 
   return null;
 };
@@ -258,7 +222,7 @@ const LayersTree: React.FC<React.PropsWithChildren<{ items: TreeMenuItem[] }>> =
 /**
  * This component displays the layers group menu
  */
-const LayersMenu: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const LayersMenu: React.FC<React.PropsWithChildren<unknown>> = () => {
   const {
     tenant: { layers: confLayers },
   } = useContext(TenantContext);
@@ -290,10 +254,14 @@ const LayersMenu: React.FC<React.PropsWithChildren<unknown>> = () => {
     <Formik initialValues={{ layers }} onSubmit={noop}>
       {() => (
         <FormikForm>
-          <LeafletListenerComp />
+          <MapLayerSynchronizer />
           <TreeMenu hasSearch={false} data={layers}>
             {({ items }) => {
-              return <LayersTree items={items} />;
+              return (
+                <FormSection className="bg-white">
+                  <LayersTree items={items} />
+                </FormSection>
+              );
             }}
           </TreeMenu>
         </FormikForm>
@@ -301,5 +269,3 @@ const LayersMenu: React.FC<React.PropsWithChildren<unknown>> = () => {
     </Formik>
   );
 };
-
-export default LayersMenu;

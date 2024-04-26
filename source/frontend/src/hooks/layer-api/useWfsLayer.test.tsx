@@ -34,7 +34,7 @@ describe('useWfsLayer hook', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('fetches all features matching CQL filter', async () => {
@@ -48,7 +48,7 @@ describe('useWfsLayer hook', () => {
     expect(loading).toBe(false);
     expect(mockAxios.history.get).toHaveLength(1);
     expect(mockAxios.history.get[0].url).toBe(
-      'http://localhost/ogs-internal/ows?service=WFS&version=2.0.0&outputFormat=json&typeNames=PMBC_PARCEL_POLYGON_FABRIC&srsName=EPSG%3A4326&request=GetFeature&cql_filter=LEGAL_DESCRIPTION+ilike+%27%25some+legal+description%25%27',
+      'http://localhost:3000/ogs-internal/ows?service=WFS&version=2.0.0&outputFormat=json&typeNames=PMBC_PARCEL_POLYGON_FABRIC&srsName=EPSG%3A4326&request=GetFeature&cql_filter=LEGAL_DESCRIPTION+ilike+%27%25some+legal+description%25%27',
     );
   });
 
@@ -84,7 +84,7 @@ describe('useWfsLayer hook', () => {
     expect(loading).toBe(false);
     expect(mockAxios.history.get).toHaveLength(1);
     expect(mockAxios.history.get[0].url).toBe(
-      'http://localhost/geoserver/psp/ows?service=WFS&version=2.0.0&outputFormat=json&typeNames=PMBC_PARCEL_POLYGON_FABRIC&srsName=EPSG%3A4326&request=GetFeature&cql_filter=PID+%3D+%27000111222%27',
+      'http://localhost:3000/geoserver/psp/ows?service=WFS&version=2.0.0&outputFormat=json&typeNames=PMBC_PARCEL_POLYGON_FABRIC&srsName=EPSG%3A4326&request=GetFeature&cql_filter=PID+%3D+%27000111222%27',
     );
   });
 
@@ -105,7 +105,7 @@ describe('useWfsLayer hook', () => {
     expect(loading).toBe(false);
     expect(mockAxios.history.get).toHaveLength(1);
     expect(mockAxios.history.get[0].url).toBe(
-      'http://localhost/ogs-internal/ows?service=WFS&version=1.3.0&outputFormat=GML3&typeNames=geo%3AFOOBAR&srsName=EPSG%3A3005&request=GetFeature',
+      'http://localhost:3000/ogs-internal/ows?service=WFS&version=1.3.0&outputFormat=GML3&typeNames=geo%3AFOOBAR&srsName=EPSG%3A3005&request=GetFeature',
     );
   });
 
@@ -120,7 +120,7 @@ describe('useWfsLayer hook', () => {
     expect(loading).toBe(false);
     expect(mockAxios.history.get).toHaveLength(1);
     expect(mockAxios.history.get[0].url).toBe(
-      'http://localhost/ogs-internal/ows?service=WFS&version=2.0.0&outputFormat=json&typeNames=PMBC_PARCEL_POLYGON_FABRIC&srsName=EPSG%3A4326&request=GetFeature&count=5&cql_filter=KEY+ilike+%27%25VALUE%25%27',
+      'http://localhost:3000/ogs-internal/ows?service=WFS&version=2.0.0&outputFormat=json&typeNames=PMBC_PARCEL_POLYGON_FABRIC&srsName=EPSG%3A4326&request=GetFeature&count=5&cql_filter=KEY+ilike+%27%25VALUE%25%27',
     );
   });
 

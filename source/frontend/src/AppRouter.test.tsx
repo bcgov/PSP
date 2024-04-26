@@ -2,7 +2,7 @@ import axios from 'axios';
 import { createMemoryHistory } from 'history';
 
 import AppRouter from './AppRouter';
-import { Claims } from './constants';
+import { Claims, Roles } from './constants';
 import { ADD_ACTIVATE_USER, GET_REQUEST_ACCESS } from './constants/actionTypes';
 import { AuthStateContext } from './contexts/authStateContext';
 import { IGeocoderResponse } from './hooks/pims-api/interfaces/IGeocoder';
@@ -23,10 +23,20 @@ import { lookupCodesSlice } from './store/slices/lookupCodes';
 import { networkSlice } from './store/slices/network/networkSlice';
 import { tenantsSlice } from './store/slices/tenants';
 import { defaultTenant } from './tenants/config/defaultTenant';
-import { act, mockKeycloak, render, RenderOptions, screen, waitFor } from './utils/test-utils';
+import {
+  act,
+  mockKeycloak,
+  prettyDOM,
+  render,
+  RenderOptions,
+  screen,
+  waitFor,
+} from './utils/test-utils';
+import { renderDate } from './components/Table';
+import { vi } from 'vitest';
 
-jest.mock('axios');
-const mockedAxios = axios as jest.Mocked<typeof axios>;
+vi.mock('axios');
+const mockedAxios = vi.mocked(axios);
 
 const history = createMemoryHistory();
 const storeState = {
@@ -42,66 +52,67 @@ const storeState = {
   keycloakReady: true,
 };
 
-jest.mock('@react-keycloak/web');
-
 // Mock React.Suspense in tests
-jest.mock('react', () => {
-  const React = jest.requireActual('react');
+vi.mock('react', () => {
+  const React = vi.importActual('react') as any;
   React.Suspense = ({ children }: any) => children;
-  return React;
+  return React as any;
 });
 
 // Need to mock this library for unit tests
-jest.mock('react-visibility-sensor', () => {
-  return jest.fn().mockImplementation(({ children }) => {
-    if (children instanceof Function) {
-      return children({ isVisible: true });
-    }
-    return children;
-  });
+vi.mock('react-visibility-sensor', () => {
+  return {
+    default: vi.fn().mockImplementation(({ children }) => {
+      if (children instanceof Function) {
+        return children({ isVisible: true });
+      }
+      return children;
+    }),
+  };
 });
 
-jest.mock('@/hooks/usePimsIdleTimer');
+vi.mock('@/hooks/usePimsIdleTimer');
 
-jest.mock('@/hooks/pims-api/useApiHealth', () => ({
+vi.mock('@/hooks/pims-api/useApiHealth', () => ({
   useApiHealth: () => ({
-    getVersion: jest
+    getVersion: vi
       .fn()
       .mockResolvedValue({ data: { environment: 'test', informationalVersion: '1.0.0.0' } }),
   }),
 }));
 
-jest.mock('@/store/slices/tenants/useTenants', () => ({
-  useTenants: () => ({ getSettings: jest.fn() }),
+vi.mock('@/store/slices/tenants/useTenants', () => ({
+  useTenants: () => ({ getSettings: vi.fn() }),
 }));
 
-jest.mock('./hooks/pims-api/useApiUsers');
-(useApiUsers as jest.MockedFunction<typeof useApiUsers>).mockReturnValue({
-  activateUser: jest.fn(),
-  getUser: jest.fn().mockResolvedValue({ data: getUserMock() }),
-  getUserInfo: jest.fn().mockResolvedValue({ data: getUserMock() }),
-  getUsersPaged: jest.fn().mockResolvedValue({ data: getMockPagedUsers() }),
-  putUser: jest.fn(),
-  exportUsers: jest.fn(),
+vi.mock('./hooks/pims-api/useApiUsers');
+vi.mocked(useApiUsers).mockReturnValue({
+  activateUser: vi.fn(),
+  getUser: vi.fn().mockResolvedValue({ data: getUserMock() }),
+  getUserInfo: vi.fn().mockResolvedValue({ data: getUserMock() }),
+  getUsersPaged: vi.fn().mockResolvedValue({ data: getMockPagedUsers() }),
+  putUser: vi.fn(),
+  exportUsers: vi.fn(),
 });
 
-jest.mock('./hooks/pims-api/useApiProperties');
-(useApiProperties as jest.MockedFunction<typeof useApiProperties>).mockReturnValue({
-  getPropertiesPagedApi: jest
+vi.mock('./hooks/pims-api/useApiProperties');
+vi.mocked(useApiProperties).mockReturnValue({
+  getPropertiesViewPagedApi: vi
     .fn()
     .mockResolvedValue({ data: {} as ApiGen_Base_Page<ApiGen_Concepts_Property> }),
-  getMatchingPropertiesApi: jest.fn(),
-  getPropertyAssociationsApi: jest.fn(),
-  exportPropertiesApi: jest.fn(),
-  getPropertiesApi: jest.fn(),
-  getPropertyConceptWithIdApi: jest.fn(),
-  putPropertyConceptApi: jest.fn(),
-  getPropertyConceptWithPidApi: jest.fn(),
+  getMatchingPropertiesApi: vi.fn(),
+  getPropertyAssociationsApi: vi.fn(),
+  exportPropertiesApi: vi.fn(),
+  getPropertiesApi: vi.fn(),
+  getPropertyConceptWithIdApi: vi.fn(),
+  putPropertyConceptApi: vi.fn(),
+  getPropertyConceptWithPidApi: vi.fn(),
+  getPropertyConceptWithPinApi: vi.fn(),
 });
 
-jest.mock('./hooks/pims-api/useApiLeases');
-(useApiLeases as jest.MockedFunction<typeof useApiLeases>).mockReturnValue({
-  getLeases: jest.fn().mockResolvedValue({
+vi.mock('./hooks/pims-api/useApiLeases');
+vi.mocked(useApiLeases).mockReturnValue({
+  getLeases: vi.fn().mockResolvedValue({
     data: {
       items: [{ lFileNo: 'l-1234' }],
       page: 1,
@@ -109,18 +120,18 @@ jest.mock('./hooks/pims-api/useApiLeases');
       quantity: 1,
     } as ApiGen_Base_Page<ApiGen_Concepts_Lease>,
   }),
-  getApiLease: jest.fn(),
-  getLastUpdatedByApi: jest.fn(),
-  postLease: jest.fn(),
-  putApiLease: jest.fn(),
-  exportLeases: jest.fn(),
-  exportAggregatedLeases: jest.fn(),
-  exportLeasePayments: jest.fn(),
+  getApiLease: vi.fn(),
+  getLastUpdatedByApi: vi.fn(),
+  postLease: vi.fn(),
+  putApiLease: vi.fn(),
+  exportLeases: vi.fn(),
+  exportAggregatedLeases: vi.fn(),
+  exportLeasePayments: vi.fn(),
 });
 
-jest.mock('./hooks/pims-api/useApiAcquisitionFile');
-(useApiAcquisitionFile as jest.MockedFunction<typeof useApiAcquisitionFile>).mockReturnValue({
-  getAcquisitionFiles: jest.fn().mockResolvedValue({
+vi.mock('./hooks/pims-api/useApiAcquisitionFile');
+vi.mocked(useApiAcquisitionFile).mockReturnValue({
+  getAcquisitionFiles: vi.fn().mockResolvedValue({
     data: {
       items: [{ fileName: 'test acq file' }],
       page: 1,
@@ -128,31 +139,31 @@ jest.mock('./hooks/pims-api/useApiAcquisitionFile');
       quantity: 1,
     } as ApiGen_Base_Page<ApiGen_Concepts_AcquisitionFile>,
   }),
-  getAcquisitionFile: jest.fn(),
-  getLastUpdatedByApi: jest.fn(),
-  getAgreementReport: jest.fn(),
-  getCompensationReport: jest.fn(),
-  exportAcquisitionFiles: jest.fn(),
-  postAcquisitionFile: jest.fn(),
-  putAcquisitionFile: jest.fn(),
-  putAcquisitionFileProperties: jest.fn(),
-  getAcquisitionFileProperties: jest.fn(),
-  getAcquisitionFileOwners: jest.fn(),
-  getAllAcquisitionFileTeamMembers: jest.fn(),
-  getAcquisitionFileProject: jest.fn(),
-  getAcquisitionFileProduct: jest.fn(),
-  getAcquisitionFileChecklist: jest.fn(),
-  putAcquisitionFileChecklist: jest.fn(),
-  getFileCompensationRequisitions: jest.fn(),
-  getFileCompReqH120s: jest.fn(),
-  postFileCompensationRequisition: jest.fn(),
-  getAcquisitionFileForm8s: jest.fn(),
-  postFileForm8: jest.fn(),
+  getAcquisitionFile: vi.fn(),
+  getLastUpdatedByApi: vi.fn(),
+  getAgreementReport: vi.fn(),
+  getCompensationReport: vi.fn(),
+  exportAcquisitionFiles: vi.fn(),
+  postAcquisitionFile: vi.fn(),
+  putAcquisitionFile: vi.fn(),
+  putAcquisitionFileProperties: vi.fn(),
+  getAcquisitionFileProperties: vi.fn(),
+  getAcquisitionFileOwners: vi.fn(),
+  getAllAcquisitionFileTeamMembers: vi.fn(),
+  getAcquisitionFileProject: vi.fn(),
+  getAcquisitionFileProduct: vi.fn(),
+  getAcquisitionFileChecklist: vi.fn(),
+  putAcquisitionFileChecklist: vi.fn(),
+  getFileCompensationRequisitions: vi.fn(),
+  getFileCompReqH120s: vi.fn(),
+  postFileCompensationRequisition: vi.fn(),
+  getAcquisitionFileForm8s: vi.fn(),
+  postFileForm8: vi.fn(),
 });
 
-jest.mock('./hooks/pims-api/useApiResearchFile');
-(useApiResearchFile as jest.MockedFunction<typeof useApiResearchFile>).mockReturnValue({
-  getResearchFiles: jest.fn().mockResolvedValue({
+vi.mock('./hooks/pims-api/useApiResearchFile');
+vi.mocked(useApiResearchFile).mockReturnValue({
+  getResearchFiles: vi.fn().mockResolvedValue({
     data: {
       items: [{ fileName: 'test research file' }],
       page: 1,
@@ -160,25 +171,72 @@ jest.mock('./hooks/pims-api/useApiResearchFile');
       quantity: 1,
     } as ApiGen_Base_Page<IResearchSearchResult>,
   }),
-  getResearchFile: jest.fn(),
-  postResearchFile: jest.fn(),
-  putResearchFile: jest.fn(),
-  getLastUpdatedByApi: jest.fn(),
-  putResearchFileProperties: jest.fn(),
-  putPropertyResearchFile: jest.fn(),
-  getResearchFileProperties: jest.fn(),
+  getResearchFile: vi.fn(),
+  postResearchFile: vi.fn(),
+  putResearchFile: vi.fn(),
+  getLastUpdatedByApi: vi.fn(),
+  putResearchFileProperties: vi.fn(),
+  putPropertyResearchFile: vi.fn(),
+  getResearchFileProperties: vi.fn(),
 });
 
-jest.mock('./hooks/pims-api/useApiGeocoder');
-(useApiGeocoder as jest.MockedFunction<typeof useApiGeocoder>).mockReturnValue({
-  searchAddressApi: jest.fn().mockResolvedValue({ data: [] as IGeocoderResponse[] }),
-  getSitePidsApi: jest.fn(),
-  getNearestToPointApi: jest.fn(),
+vi.mock('./hooks/pims-api/useApiGeocoder');
+vi.mocked(useApiGeocoder).mockReturnValue({
+  searchAddressApi: vi.fn().mockResolvedValue({ data: [] as IGeocoderResponse[] }),
+  getSitePidsApi: vi.fn(),
+  getNearestToPointApi: vi.fn(),
+});
+
+const mocks = vi.hoisted(() => {
+  return {
+    useKeycloak: vi.fn(),
+  };
+});
+
+vi.mock('@react-keycloak/web', () => {
+  return {
+    useKeycloak: mocks.useKeycloak,
+  };
+});
+
+// Need to mock this library for unit tests
+vi.mock('react-visibility-sensor', () => {
+  return {
+    default: vi.fn().mockImplementation(({ children }) => {
+      return children;
+    }),
+  };
 });
 
 describe('PSP routing', () => {
   const setup = (url = '/', renderOptions: RenderOptions = {}) => {
     history.replace(url);
+
+    const defaultUserInfo = {
+      organizations: [1],
+      client_roles:
+        [
+          ...(renderOptions?.claims ?? []),
+          Claims.LEASE_VIEW,
+          Claims.RESEARCH_VIEW,
+          Claims.PROJECT_VIEW,
+          ...(renderOptions?.roles ?? [Roles.ACQUISITION_FUNCTIONAL]),
+        ] ?? [],
+      email: 'test@test.com',
+      name: 'Chester Tester',
+      idir_user_guid: '00000000000000000000000000000000',
+    };
+
+    mocks.useKeycloak.mockImplementation(() => ({
+      keycloak: {
+        userInfo: defaultUserInfo,
+        subject: 'test',
+        authenticated: !!renderOptions.claims,
+        loadUserInfo: vi.fn().mockResolvedValue(defaultUserInfo),
+      } as any,
+      initialized: true,
+    }));
+
     const utils = render(
       <AuthStateContext.Provider value={{ ready: true }}>
         <AppRouter />
@@ -187,6 +245,7 @@ describe('PSP routing', () => {
         ...renderOptions,
         store: storeState,
         history,
+        useMockAuthentication: true,
       },
     );
 
@@ -194,18 +253,14 @@ describe('PSP routing', () => {
   };
 
   beforeEach(() => {
-    mockedAxios.get.mockResolvedValue({ data: {}, status: 200 });
+    vi.mocked(mockedAxios.get).mockResolvedValue({ data: {}, status: 200 });
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   describe('public routes', () => {
-    beforeEach(() => {
-      mockKeycloak({ authenticated: false });
-    });
-
     it('should redirect unauthenticated user to the login page', async () => {
       const { getByText } = setup('/');
       await screen.findByText('v1.0.0.0');

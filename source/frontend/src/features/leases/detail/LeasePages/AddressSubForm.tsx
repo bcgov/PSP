@@ -1,5 +1,4 @@
 import { getIn, useFormikContext } from 'formik';
-import * as React from 'react';
 
 import { Form, Input } from '@/components/common/form';
 import { ApiGen_Concepts_Address } from '@/models/api/generated/ApiGen_Concepts_Address';

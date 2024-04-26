@@ -1,6 +1,6 @@
 import { FormikProps, useFormikContext } from 'formik';
 import Multiselect from 'multiselect-react-dropdown';
-import * as React from 'react';
+import { createRef, useState } from 'react';
 import { FaTimes } from 'react-icons/fa';
 
 import { Input, Select, TextArea } from '@/components/common/form';
@@ -46,20 +46,18 @@ const UpdateSummaryForm: React.FunctionComponent<IUpdateSummaryFormProps> = prop
     values.researchFilePurposes?.map(x => x.researchPurposeTypeCode).includes(x.id),
   );
 
-  const [showContactManager, setShowContactManager] = React.useState(false);
+  const [showContactManager, setShowContactManager] = useState(false);
 
   const initialContacts: IContactSearchResult[] = [];
   if (values.requestor !== undefined) {
     initialContacts.push(values.requestor);
   }
 
-  const [selectedContacts, setSelectedContacts] =
-    React.useState<IContactSearchResult[]>(initialContacts);
+  const [selectedContacts, setSelectedContacts] = useState<IContactSearchResult[]>(initialContacts);
 
-  const [selectedPurposes, setSelectedPurposes] =
-    React.useState<MultiSelectOption[]>(initialPurposeList);
+  const [selectedPurposes, setSelectedPurposes] = useState<MultiSelectOption[]>(initialPurposeList);
 
-  const multiselectProgramRef = React.createRef<Multiselect>();
+  const multiselectProgramRef = createRef<Multiselect>();
 
   function onSelectedPurposeChange(selectedList: MultiSelectOption[]) {
     setSelectedPurposes(selectedList);
