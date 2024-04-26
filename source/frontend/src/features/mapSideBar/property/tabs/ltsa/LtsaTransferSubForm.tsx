@@ -1,5 +1,5 @@
 import { FieldArray, getIn, useFormikContext } from 'formik';
-import * as React from 'react';
+import React, { Fragment } from 'react';
 
 import { Input } from '@/components/common/form';
 import { SectionField } from '@/components/common/Section/SectionField';
@@ -26,7 +26,7 @@ export const LtsaTransferSubForm: React.FunctionComponent<
               `titleTransfersOrDispositions.${index}`,
             );
             return (
-              <React.Fragment key={`transfer-row-${name}-index`}>
+              <Fragment key={`transfer-row-${name}-index`}>
                 <SectionField label="Nature">
                   <Input field={`${withNameSpace(innerNameSpace, 'disposition')}`} />
                 </SectionField>
@@ -40,7 +40,7 @@ export const LtsaTransferSubForm: React.FunctionComponent<
                   <Input field={`${withNameSpace(innerNameSpace, 'landLandDistrict')}`} />
                 </SectionField>
                 {index < transfers.length - 1 && <hr></hr>}
-              </React.Fragment>
+              </Fragment>
             );
           })
         }

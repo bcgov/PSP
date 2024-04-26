@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`AcquisitionView component renders as expected 1`] = `
+exports[`AcquisitionView component > renders as expected 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
@@ -21,7 +21,7 @@ exports[`AcquisitionView component renders as expected 1`] = `
 }
 
 .c1 {
-  font-size: 30px;
+  font-size: 2.4rem;
   cursor: pointer;
 }
 
@@ -39,12 +39,22 @@ exports[`AcquisitionView component renders as expected 1`] = `
         >
           <svg
             class="mr-2"
+            enable-background="new 0 0 24 24"
             fill="currentColor"
             height="2.6rem"
             title="Acquisition file Icon"
+            viewBox="0 0 24 24"
             width="2.6rem"
+            xmlns="http://www.w3.org/2000/svg"
           >
-            <span />
+            <rect
+              fill="none"
+              height="24"
+              width="24"
+            />
+            <path
+              d="M21,6.5V14h-2V7.5L14,4L9,7.5V9H7V6.5l7-5L21,6.5z M15.5,7h-1v1h1V7z M13.5,7h-1v1h1V7z M15.5,9h-1v1h1V9z M13.5,9h-1v1h1V9 z M19,16h-2c0-1.2-0.75-2.28-1.87-2.7L8.97,11H1v11h6v-1.44l7,1.94l8-2.5v-1C22,17.34,20.66,16,19,16z M3,20v-7h2v7H3z M13.97,20.41 L7,18.48V13h1.61l5.82,2.17C14.77,15.3,15,15.63,15,16c0,0-1.99-0.05-2.3-0.15l-2.38-0.79l-0.63,1.9l2.38,0.79 c0.51,0.17,1.04,0.26,1.58,0.26H19c0.39,0,0.74,0.23,0.9,0.56L13.97,20.41z"
+            />
           </svg>
           Acquisition File
         </h1>
@@ -292,9 +302,29 @@ exports[`AcquisitionView component renders as expected 1`] = `
 }
 
 .c20 {
-  font-size: 1.6rem;
-  -webkit-text-decoration: none;
-  text-decoration: none;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  background-color: rgba(0,0,0,0.5);
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-align-content: center;
+  -ms-flex-line-pack: center;
+  align-content: center;
+  justify-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
 }
 
 .c11 {
@@ -768,46 +798,6 @@ exports[`AcquisitionView component renders as expected 1`] = `
                             Jul 29, 2022
                           </div>
                         </div>
-                        <div
-                          class="pb-2 row"
-                        >
-                          <div
-                            class="pr-0 text-left col-4"
-                          >
-                            <label
-                              class="c17"
-                            >
-                              Acquisition completed date:
-                              <span
-                                class="ml-2"
-                              >
-                                <span
-                                  class="tooltip-icon"
-                                  data-testid="tooltip-icon-section-field-tooltip"
-                                  id="section-field-tooltip"
-                                >
-                                  <svg
-                                    class="tooltip-icon"
-                                    fill="currentColor"
-                                    height="1em"
-                                    stroke="currentColor"
-                                    stroke-width="0"
-                                    viewBox="0 0 512 512"
-                                    width="1em"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                  >
-                                    <path
-                                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
-                                    />
-                                  </svg>
-                                </span>
-                              </span>
-                            </label>
-                          </div>
-                          <div
-                            class="c18 text-left col"
-                          />
-                        </div>
                       </div>
                     </div>
                     <div
@@ -1065,11 +1055,14 @@ exports[`AcquisitionView component renders as expected 1`] = `
                       <div
                         class="collapse show"
                       >
-                        <p
+                        <div
                           class="c20"
                         >
-                          Each property in this file should be owned by the owner(s) in this section
-                        </p>
+                          <div
+                            class="spinner-border text-warning"
+                            data-testid="filter-backdrop-loading"
+                          />
+                        </div>
                         <div
                           class="pb-2 row"
                         >

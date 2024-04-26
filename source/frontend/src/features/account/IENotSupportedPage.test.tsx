@@ -1,9 +1,8 @@
 import { cleanup } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
-import React from 'react';
-import { Provider } from 'react-redux';
-import { Router } from 'react-router-dom';
-import renderer from 'react-test-renderer';
+import { Provider } from 'react-redux/dist/react-redux';
+import { Router } from 'react-router-dom/cjs/react-router-dom';
+import renderer from 'react-test-renderer/cjs/react-test-renderer.development';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
@@ -13,8 +12,8 @@ import { TenantProvider } from '@/tenants';
 
 import { IENotSupportedPage } from './IENotSupportedPage';
 
-jest.mock('axios');
-jest.mock('@react-keycloak/web');
+vi.mock('axios');
+
 const mockStore = configureMockStore([thunk]);
 
 const store = mockStore({

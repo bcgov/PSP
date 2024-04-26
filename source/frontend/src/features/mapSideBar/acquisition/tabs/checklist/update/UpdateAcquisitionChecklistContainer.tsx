@@ -1,5 +1,5 @@
 import { AxiosError } from 'axios';
-import { FormikProps } from 'formik';
+import { FormikProps } from 'formik/dist/types';
 import React from 'react';
 import { toast } from 'react-toastify';
 

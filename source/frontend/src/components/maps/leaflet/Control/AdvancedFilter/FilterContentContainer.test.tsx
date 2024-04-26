@@ -2,7 +2,10 @@ import { FormikProps } from 'formik';
 import { createMemoryHistory } from 'history';
 import { forwardRef } from 'react';
 
-import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
+import {
+  IMapStateMachineContext,
+  useMapStateMachine,
+} from '@/components/common/mapFSM/MapStateMachineContext';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
@@ -20,11 +23,10 @@ const storeState = {
 const mockGetApi = {
   error: undefined,
   response: [1] as number[] | undefined,
-  execute: jest.fn().mockResolvedValue([1]),
+  execute: vi.fn().mockResolvedValue([1]),
   loading: false,
 };
-jest.mock('@/components/common/mapFSM/MapStateMachineContext');
-jest.mock('@/hooks/repositories/usePimsPropertyRepository', () => ({
+vi.mock('@/hooks/repositories/usePimsPropertyRepository', () => ({
   usePimsPropertyRepository: () => {
     return {
       getMatchingProperties: mockGetApi,
@@ -48,6 +50,7 @@ describe('FilterContentContainer component', () => {
       ...renderOptions,
       store: storeState,
       history,
+      mockMapMachine: { ...mapMachineBaseMock, isFiltering: true },
     });
 
     return {
@@ -56,12 +59,11 @@ describe('FilterContentContainer component', () => {
   };
 
   beforeEach(() => {
-    jest.resetAllMocks();
-    (useMapStateMachine as jest.Mock).mockImplementation(() => mapMachineBaseMock);
+    vi.resetAllMocks();
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('fetches filter data from the api', async () => {

@@ -12,10 +12,10 @@ import { DispositionFormModel } from '../models/DispositionFormModel';
 import DispositionPropertiesSubForm from './DispositionPropertiesSubForm';
 
 const mockStore = configureMockStore([thunk]);
-jest.mock('@react-keycloak/web');
-const customSetFilePropertyLocations = jest.fn();
 
-jest.mock('@/components/common/mapFSM/MapStateMachineContext');
+const customSetFilePropertyLocations = vi.fn();
+
+const confirmBeforeAdd = vi.fn();
 
 describe('DispositionPropertiesSubForm component', () => {
   const setup = async (
@@ -24,13 +24,22 @@ describe('DispositionPropertiesSubForm component', () => {
   ) => {
     const ref = createRef<FormikProps<DispositionFormModel>>();
     const utils = render(
-      <Formik innerRef={ref} initialValues={props.initialForm} onSubmit={jest.fn()}>
-        {formikProps => <DispositionPropertiesSubForm formikProps={formikProps} />}
+      <Formik innerRef={ref} initialValues={props.initialForm} onSubmit={vi.fn()}>
+        {formikProps => (
+          <DispositionPropertiesSubForm
+            formikProps={formikProps}
+            confirmBeforeAdd={confirmBeforeAdd}
+          />
+        )}
       </Formik>,
       {
         ...renderOptions,
         store: mockStore({}),
         claims: [],
+        mockMapMachine: {
+          ...mapMachineBaseMock,
+          setFilePropertyLocations: customSetFilePropertyLocations,
+        },
       },
     );
 
@@ -48,13 +57,10 @@ describe('DispositionPropertiesSubForm component', () => {
       PropertyForm.fromMapProperty({ pid: '123-456-789' }),
       PropertyForm.fromMapProperty({ pin: '1111222' }),
     ];
-    (useMapStateMachine as jest.Mock).mockImplementation(() => {
-      return { ...mapMachineBaseMock, setFilePropertyLocations: customSetFilePropertyLocations };
-    });
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     customSetFilePropertyLocations.mockReset();
   });
 

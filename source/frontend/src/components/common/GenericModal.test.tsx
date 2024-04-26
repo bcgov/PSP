@@ -26,7 +26,7 @@ it('renders button text based off of prop', () => {
 });
 
 it('calls custom ok on click', async () => {
-  const mockOk = jest.fn();
+  const mockOk = vi.fn();
   const { getByText } = render(
     <GenericModal handleOk={mockOk} okButtonText="Ok Button" variant="info" />,
   );
@@ -38,7 +38,7 @@ it('calls custom ok on click', async () => {
 });
 
 it('calls custom cancel function on click', async () => {
-  const mockCancel = jest.fn();
+  const mockCancel = vi.fn();
   const { getByText } = render(
     <GenericModal handleCancel={mockCancel} cancelButtonText="Cancel Button" variant="info" />,
   );

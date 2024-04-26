@@ -1,5 +1,4 @@
 import { Form, Formik } from 'formik';
-import * as React from 'react';
 
 import { Select, SelectOption } from '@/components/common/form';
 import { SectionField } from '@/components/common/Section/SectionField';

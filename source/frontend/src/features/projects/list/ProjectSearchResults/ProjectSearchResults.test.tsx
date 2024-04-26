@@ -5,7 +5,7 @@ import { ApiGen_Concepts_Project } from '@/models/api/generated/ApiGen_Concepts_
 import { ProjectSearchResultModel } from './models';
 import { IProjectSearchResultsProps, ProjectSearchResults } from './ProjectSearchResults';
 
-const setSort = jest.fn();
+const setSort = vi.fn();
 
 // render component under test
 const setup = (

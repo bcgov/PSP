@@ -171,8 +171,9 @@ namespace Pims.Api.Test.Services
             property.Location.SRID = SpatialReference.WGS84;
             researchFile.PimsPropertyResearchFiles = new List<PimsPropertyResearchFile>() { new PimsPropertyResearchFile() { Property = property } };
 
-            var repository = this._helper.GetService<Mock<IResearchFileRepository>>();
             PimsPropertyResearchFile updatedResearchFileProperty = null;
+
+            var repository = this._helper.GetService<Mock<IResearchFileRepository>>();
             repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
             repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(researchFile);
 
@@ -180,6 +181,18 @@ namespace Pims.Api.Test.Services
             filePropertyRepository.Setup(x => x.GetAllByResearchFileId(It.IsAny<long>())).Returns(researchFile.PimsPropertyResearchFiles.ToList());
             filePropertyRepository.Setup(x => x.Add(It.IsAny<PimsPropertyResearchFile>())).Callback<PimsPropertyResearchFile>(x => updatedResearchFileProperty = x).Returns(researchFile.PimsPropertyResearchFiles.FirstOrDefault());
 
+            var propertyService = this._helper.GetService<Mock<IPropertyService>>();
+            propertyService.Setup(x => x.PopulateNewProperty(It.IsAny<PimsProperty>(), It.IsAny<Boolean>(), It.IsAny<Boolean>())).Returns(new PimsProperty()
+            {
+                PropertyClassificationTypeCode = "UNKNOWN",
+                PropertyDataSourceEffectiveDate = DateOnly.FromDateTime(System.DateTime.Now),
+                PropertyDataSourceTypeCode = "PMBC",
+                PropertyTypeCode = "UNKNOWN",
+                PropertyStatusTypeCode = "UNKNOWN",
+                SurplusDeclarationTypeCode = "UNKNOWN",
+                RegionCode = 1
+            });
+            
             var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
             propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), true)).Throws<KeyNotFoundException>();
 
@@ -198,9 +211,9 @@ namespace Pims.Api.Test.Services
             updatedProperty.SurplusDeclarationTypeCode.Should().Be("UNKNOWN");
             updatedProperty.PropertyDataSourceEffectiveDate.Should().Be(DateOnly.FromDateTime(System.DateTime.Now));
             updatedProperty.PropertyDataSourceTypeCode.Should().Be("PMBC");
-            //updatedProperty.IsPropertyOfInterest.Should().Be(true); TODO: Fix mapings
+            updatedProperty.IsOwned.Should().Be(false);
 
-            coordinateService.Verify(x => x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>()));
+            propertyService.Verify(x => x.PopulateNewProperty(It.IsAny<PimsProperty>(), It.IsAny<Boolean>(), It.IsAny<Boolean>()));
         }
 
         [Fact]
@@ -228,6 +241,18 @@ namespace Pims.Api.Test.Services
 
             var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
             propertyRepository.Setup(x => x.GetByPin(It.IsAny<int>(), true)).Throws<KeyNotFoundException>();
+            
+            var propertyService = this._helper.GetService<Mock<IPropertyService>>();
+            propertyService.Setup(x => x.PopulateNewProperty(It.IsAny<PimsProperty>(), It.IsAny<Boolean>(), It.IsAny<Boolean>())).Returns(new PimsProperty()
+            {
+                PropertyClassificationTypeCode = "UNKNOWN",
+                PropertyDataSourceEffectiveDate = DateOnly.FromDateTime(System.DateTime.Now),
+                PropertyDataSourceTypeCode = "PMBC",
+                PropertyTypeCode = "UNKNOWN",
+                PropertyStatusTypeCode = "UNKNOWN",
+                SurplusDeclarationTypeCode = "UNKNOWN",
+                RegionCode = 1
+            });
 
             var coordinateService = this._helper.GetService<Mock<ICoordinateTransformService>>();
             coordinateService.Setup(x => x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>())).Returns(new Coordinate(924046.3314288399, 1088892.9140135897));
@@ -244,9 +269,9 @@ namespace Pims.Api.Test.Services
             updatedProperty.SurplusDeclarationTypeCode.Should().Be("UNKNOWN");
             updatedProperty.PropertyDataSourceEffectiveDate.Should().Be(DateOnly.FromDateTime(DateTime.Now));
             updatedProperty.PropertyDataSourceTypeCode.Should().Be("PMBC");
-            //updatedProperty.IsPropertyOfInterest.Should().Be(true); TODO: Fix mapings
+            updatedProperty.IsOwned.Should().Be(false);
 
-            coordinateService.Verify(x => x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>()));
+            propertyService.Verify(x => x.PopulateNewProperty(It.IsAny<PimsProperty>(), It.IsAny<Boolean>(), It.IsAny<Boolean>()));
         }
         #endregion
 

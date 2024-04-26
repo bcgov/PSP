@@ -1,7 +1,6 @@
 import { RenderOptions, waitFor } from '@testing-library/react';
 import { useFormikContext } from 'formik';
 import { createMemoryHistory } from 'history';
-import React from 'react';
 import { act } from 'react-test-renderer';
 
 import { Claims } from '@/constants';
@@ -28,17 +27,18 @@ import AddLeaseTenantContainer from './AddLeaseTenantContainer';
 import { IAddLeaseTenantFormProps } from './AddLeaseTenantForm';
 import { FormTenant } from './models';
 import { IPrimaryContactWarningModalProps } from './PrimaryContactWarningModal';
+import { createRef } from 'react';
 
 // mock auth library
-jest.mock('@react-keycloak/web');
-jest.mock('@/hooks/pims-api/useApiContacts');
-jest.mock('@/features/leases/hooks/useUpdateLease');
-jest.mock('@/hooks/repositories/useLeaseTenantRepository');
 
-const getPersonConcept = jest.fn();
-const updateTenants = jest.fn().mockResolvedValue({ ...defaultApiLease(), id: 1 });
-const onEdit = jest.fn();
-const onSuccess = jest.fn();
+vi.mock('@/hooks/pims-api/useApiContacts');
+vi.mock('@/features/leases/hooks/useUpdateLease');
+vi.mock('@/hooks/repositories/useLeaseTenantRepository');
+
+const getPersonConcept = vi.fn();
+const updateTenants = vi.fn().mockResolvedValue({ ...defaultApiLease(), id: 1 });
+const onEdit = vi.fn();
+const onSuccess = vi.fn();
 
 const history = createMemoryHistory();
 const storeState = {
@@ -57,7 +57,7 @@ const View = (props: IAddLeaseTenantFormProps & IPrimaryContactWarningModalProps
 };
 
 const getLeaseTenantsObj = {
-  execute: jest.fn().mockResolvedValue(defaultApiLease().tenants),
+  execute: vi.fn().mockResolvedValue(defaultApiLease().tenants),
   loading: false,
   error: undefined,
   response: [],
@@ -71,7 +71,7 @@ describe('AddLeaseTenantContainer component', () => {
     const component = await renderAsync(
       <LeaseContextProvider initialLease={renderOptions.lease ?? { ...defaultApiLease(), id: 1 }}>
         <AddLeaseTenantContainer
-          formikRef={React.createRef()}
+          formikRef={createRef()}
           View={View}
           onEdit={onEdit}
           tenants={renderOptions.tenants ?? []}
@@ -90,13 +90,15 @@ describe('AddLeaseTenantContainer component', () => {
   };
 
   beforeEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
     mockKeycloak({ claims: [Claims.CONTACT_VIEW] });
-    (useApiContacts as jest.Mock).mockReturnValue({ getPersonConcept: getPersonConcept });
-    (useLeaseTenantRepository as jest.Mock).mockReturnValue({
+    vi.mocked(useApiContacts).mockReturnValue({
+      getPersonConcept: getPersonConcept,
+    } as unknown as ReturnType<typeof useApiContacts>);
+    vi.mocked(useLeaseTenantRepository).mockReturnValue({
       updateLeaseTenants: { execute: updateTenants.mockResolvedValue([]) },
       getLeaseTenants: getLeaseTenantsObj,
-    });
+    } as unknown as ReturnType<typeof useLeaseTenantRepository>);
   });
   it('renders as expected', async () => {
     const { component } = await setup({});

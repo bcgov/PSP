@@ -359,7 +359,6 @@ export const mockAcquisitionFileResponse = (
   appCreateUserGuid: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
   acquisitionPhysFileStatusTypeCode: null,
   compensationRequisitions: null,
-  completionDate: null,
   fileNo: 1,
   fundingOther: null,
   fundingTypeCode: null,

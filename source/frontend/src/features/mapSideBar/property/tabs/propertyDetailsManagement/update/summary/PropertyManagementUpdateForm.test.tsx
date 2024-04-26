@@ -1,6 +1,5 @@
 import { FormikProps } from 'formik';
 import { createMemoryHistory } from 'history';
-import React from 'react';
 
 import { mockLookups } from '@/mocks/lookups.mock';
 import {
@@ -16,20 +15,21 @@ import {
   IPropertyManagementUpdateFormProps,
   PropertyManagementUpdateForm,
 } from './PropertyManagementUpdateForm';
+import { createRef } from 'react';
 
 const history = createMemoryHistory();
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
 
-const onSave = jest.fn();
+const onSave = vi.fn();
 
 describe('PropertyManagementUpdateForm component', () => {
   const setup = (
     renderOptions?: RenderOptions & { props?: Partial<IPropertyManagementUpdateFormProps> },
   ) => {
     renderOptions = renderOptions ?? {};
-    const formikRef = React.createRef<FormikProps<PropertyManagementFormModel>>();
+    const formikRef = createRef<FormikProps<PropertyManagementFormModel>>();
     const utils = render(
       <PropertyManagementUpdateForm
         {...renderOptions.props}
@@ -56,7 +56,7 @@ describe('PropertyManagementUpdateForm component', () => {
   };
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders as expected', () => {

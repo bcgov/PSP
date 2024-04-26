@@ -14,14 +14,13 @@ import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_C
 import { toTypeCode } from '@/utils/formUtils';
 
 const history = createMemoryHistory();
-jest.mock('@react-keycloak/web');
 
 const mockDispositionFileApi = mockDispositionFileResponse(
   1,
 ) as unknown as ApiGen_Concepts_DispositionFile;
 const mockDispositionSaleApi = mockDispositionFileSaleApi(1);
 
-const onDelete = jest.fn();
+const onDelete = vi.fn();
 
 describe('Disposition Offer Detail View component', () => {
   const setup = async (
@@ -51,7 +50,7 @@ describe('Disposition Offer Detail View component', () => {
   };
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders as expected', async () => {

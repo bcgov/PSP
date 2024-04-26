@@ -21,18 +21,18 @@ const storeState = {
 const mockGetApi = {
   error: undefined,
   response: undefined,
-  execute: jest.fn(),
+  execute: vi.fn(),
   loading: false,
 };
 
 const mockUpdateApi = {
   error: undefined,
   response: undefined,
-  execute: jest.fn(),
+  execute: vi.fn(),
   loading: false,
 };
 
-jest.mock('../repositories/useTakesRepository', () => ({
+vi.mock('../repositories/useTakesRepository', () => ({
   useTakesRepository: () => {
     return {
       getTakesByFileId: mockGetApi,
@@ -50,7 +50,7 @@ describe('TakesUpdateContainer component', () => {
     return <></>;
   });
 
-  const onSuccess = jest.fn();
+  const onSuccess = vi.fn();
 
   const setup = (
     renderOptions: RenderOptions & { props?: Partial<ITakesDetailContainerProps> },
@@ -75,7 +75,7 @@ describe('TakesUpdateContainer component', () => {
   };
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders as expected', async () => {
@@ -85,7 +85,7 @@ describe('TakesUpdateContainer component', () => {
   });
 
   it('throws an error if file property is invalid', async () => {
-    jest.spyOn(console, 'error');
+    vi.spyOn(console, 'error');
     (console.error as any).mockImplementation(() => {});
     const render = () => setup({ props: { fileProperty: {} as any } });
 
@@ -95,7 +95,7 @@ describe('TakesUpdateContainer component', () => {
 
   it('calls onSuccess when onSubmit method is called', async () => {
     setup({});
-    const formikHelpers = { setSubmitting: jest.fn() };
+    const formikHelpers = { setSubmitting: vi.fn() };
     await act(async () => {});
     await act(async () =>
       viewProps.onSubmit({ takes: [new TakeModel(getMockApiTakes()[0])] }, formikHelpers as any),

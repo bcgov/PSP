@@ -14,12 +14,12 @@ import { networkSlice } from '@/store/slices/network/networkSlice';
 
 import { useNoteRepository } from './useNoteRepository';
 
-const dispatch = jest.fn();
-const toastSuccessSpy = jest.spyOn(toast, 'success');
-const toastErrorSpy = jest.spyOn(toast, 'error');
-const requestSpy = jest.spyOn(networkSlice.actions, 'logRequest');
-const successSpy = jest.spyOn(networkSlice.actions, 'logSuccess');
-const errorSpy = jest.spyOn(networkSlice.actions, 'logError');
+const dispatch = vi.fn();
+const toastSuccessSpy = vi.spyOn(toast, 'success');
+const toastErrorSpy = vi.spyOn(toast, 'error');
+const requestSpy = vi.spyOn(networkSlice.actions, 'logRequest');
+const successSpy = vi.spyOn(networkSlice.actions, 'logSuccess');
+const errorSpy = vi.spyOn(networkSlice.actions, 'logError');
 const mockAxios = new MockAdapter(axios);
 
 let currentStore: MockStoreEnhanced<any, {}>;
@@ -49,7 +49,7 @@ describe('useNoteRepository hook', () => {
   });
 
   afterAll(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
 
   let url: string;

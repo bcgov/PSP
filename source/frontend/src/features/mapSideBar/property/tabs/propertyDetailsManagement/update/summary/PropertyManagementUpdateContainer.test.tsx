@@ -22,18 +22,18 @@ const storeState = {
 const mockGetApi = {
   error: undefined,
   response: undefined,
-  execute: jest.fn(),
+  execute: vi.fn(),
   loading: false,
 };
 
 const mockUpdateApi = {
   error: undefined,
   response: undefined,
-  execute: jest.fn(),
+  execute: vi.fn(),
   loading: false,
 };
 
-jest.mock('@/hooks/repositories/usePropertyManagementRepository', () => ({
+vi.mock('@/hooks/repositories/usePropertyManagementRepository', () => ({
   usePropertyManagementRepository: () => {
     return {
       getPropertyManagement: mockGetApi,
@@ -50,7 +50,7 @@ describe('PropertyManagementUpdateContainer component', () => {
     return <></>;
   });
 
-  const onSuccess = jest.fn();
+  const onSuccess = vi.fn();
 
   const setup = (
     renderOptions?: RenderOptions & { props?: Partial<IPropertyManagementUpdateContainerProps> },
@@ -76,7 +76,7 @@ describe('PropertyManagementUpdateContainer component', () => {
   };
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('fetches property management info from the api', async () => {

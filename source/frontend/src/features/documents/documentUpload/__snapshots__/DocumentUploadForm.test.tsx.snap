@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`DocumentUploadView component renders as expected 1`] = `
+exports[`DocumentUploadView component > renders as expected 1`] = `
 .c1.required::before {
   content: '*';
   position: absolute;

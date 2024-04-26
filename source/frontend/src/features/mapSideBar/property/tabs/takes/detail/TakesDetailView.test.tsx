@@ -17,8 +17,7 @@ const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
 
-const onEdit = jest.fn();
-jest.mock('@react-keycloak/web');
+const onEdit = vi.fn();
 
 describe('TakesDetailView component', () => {
   // render component under test
@@ -46,7 +45,7 @@ describe('TakesDetailView component', () => {
   };
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders as expected', () => {
@@ -138,6 +137,7 @@ describe('TakesDetailView component', () => {
             isNewLandAct: false,
             isNewInterestInSrw: false,
             isThereSurplus: false,
+            isLeasePayable: false,
           },
         ],
       },
@@ -157,11 +157,12 @@ describe('TakesDetailView component', () => {
             isNewLandAct: true,
             isNewInterestInSrw: true,
             isThereSurplus: true,
+            isLeasePayable: true,
           },
         ],
       },
     });
-    expect(getAllByText('Area:')).toHaveLength(5);
+    expect(getAllByText('Area:')).toHaveLength(6);
   });
 
   it('displays srwEndDt if specified', async () => {
@@ -211,7 +212,26 @@ describe('TakesDetailView component', () => {
         ],
       },
     });
-    const date = await findByText('Is a there a new Land Act tenure', {
+    const date = await findByText('Is there a new Land Act tenure', {
+      exact: false,
+    });
+    expect(date).toBeVisible();
+  });
+
+  it('displays leasePayableEndDt if specified', async () => {
+    const { findByText } = setup({
+      props: {
+        loading: false,
+        takes: [
+          {
+            ...getMockApiTakes()[0],
+            isNewLandAct: true,
+            leasePayableEndDt: '2022-11-21',
+          },
+        ],
+      },
+    });
+    const date = await findByText('Is there a Lease (Payable)', {
       exact: false,
     });
     expect(date).toBeVisible();

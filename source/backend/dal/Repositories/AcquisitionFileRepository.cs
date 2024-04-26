@@ -657,7 +657,7 @@ namespace Pims.Dal.Repositories
             using var scope = Logger.QueryScope();
             acquisitionFile.ThrowIfNull(nameof(acquisitionFile));
 
-            if (acquisitionFile.PimsPropertyAcquisitionFiles.Any(x =>x.Property != null && x.Property.IsRetired.HasValue && x.Property.IsRetired.Value))
+            if (acquisitionFile.PimsPropertyAcquisitionFiles.Any(x => x.Property != null && x.Property.IsRetired.HasValue && x.Property.IsRetired.Value))
             {
                 throw new BusinessRuleViolationException("Retired property can not be selected.");
             }
@@ -753,6 +753,15 @@ namespace Pims.Dal.Repositories
         {
             return this.Context.PimsAcquisitionFiles.AsNoTracking()
                 .FirstOrDefault(a => a.PimsPropertyAcquisitionFiles.Any(x => x.PropertyAcquisitionFileId == acquisitionFilePropertyId));
+        }
+
+        public PimsProperty GetProperty(long acquisitionFilePropertyId)
+        {
+            return this.Context.PimsPropertyAcquisitionFiles.AsNoTracking()
+                .Include(p => p.Property)
+                .Where(p => p.PropertyAcquisitionFileId == acquisitionFilePropertyId)
+                .Select(p => p.Property)
+                .FirstOrDefault();
         }
 
         /// <summary>

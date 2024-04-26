@@ -12,12 +12,12 @@ import { act, createAxiosError, render, RenderOptions, screen } from '@/utils/te
 import { UpdateDispositionChecklistContainer } from './UpdateDispositionChecklistContainer';
 
 // mock API service calls
-jest.mock('@/hooks/repositories/useDispositionProvider');
+vi.mock('@/hooks/repositories/useDispositionProvider');
 
 type Provider = typeof useDispositionProvider;
-const mockUpdateDispositionChecklist = jest.fn();
+const mockUpdateDispositionChecklist = vi.fn();
 
-(useDispositionProvider as jest.MockedFunction<Provider>).mockReturnValue({
+vi.mocked(useDispositionProvider).mockReturnValue({
   putDispositionChecklist: {
     error: undefined,
     response: undefined,
@@ -35,7 +35,7 @@ const TestView: React.FC<IUpdateChecklistFormProps> = props => {
 
 describe('UpdateDispositionChecklist container', () => {
   let dispositionFile: ApiGen_Concepts_DispositionFile | undefined = undefined;
-  const onSuccess = jest.fn();
+  const onSuccess = vi.fn();
 
   const setup = (renderOptions: RenderOptions = {}) => {
     const utils = render(
@@ -67,7 +67,7 @@ describe('UpdateDispositionChecklist container', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders the underlying form', async () => {

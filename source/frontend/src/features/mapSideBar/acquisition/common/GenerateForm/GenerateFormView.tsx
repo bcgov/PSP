@@ -1,4 +1,4 @@
-import { FormikProps } from 'formik';
+import { FormikProps } from 'formik/dist/types';
 import { useRef } from 'react';
 import styled from 'styled-components';
 

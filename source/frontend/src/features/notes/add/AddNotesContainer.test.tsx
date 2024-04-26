@@ -15,9 +15,9 @@ import { EntityNoteForm } from './models';
 const history = createMemoryHistory();
 const mockAxios = new MockAdapter(axios);
 
-const openModal = jest.fn();
-const closeModal = jest.fn();
-const onSuccess = jest.fn();
+const openModal = vi.fn();
+const closeModal = vi.fn();
+const onSuccess = vi.fn();
 
 const BASIC_PROPS: IAddNotesContainerProps = {
   isOpened: true,
@@ -54,7 +54,7 @@ describe('AddNotesContainer component', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders as expected', () => {

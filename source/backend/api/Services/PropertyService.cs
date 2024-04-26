@@ -98,6 +98,21 @@ namespace Pims.Api.Services
             return property;
         }
 
+        public PimsProperty GetByPin(int pin)
+        {
+            _logger.LogInformation("Getting property with pin {pin}", pin);
+            _user.ThrowIfNotAuthorized(Permissions.PropertyView);
+
+            // return property spatial location in lat/long (4326)
+            var property = _propertyRepository.GetByPin(pin);
+            if (property?.Location != null)
+            {
+                var newCoords = _coordinateService.TransformCoordinates(SpatialReference.BCALBERS, SpatialReference.WGS84, property.Location.Coordinate);
+                property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.WGS84);
+            }
+            return property;
+        }
+
         public PimsProperty Update(PimsProperty property, bool commitTransaction = true)
         {
             _logger.LogInformation("Updating property with id {id}", property.Internal_Id);
@@ -307,7 +322,6 @@ namespace Pims.Api.Services
             property.PropertyStatusTypeCode = "UNKNOWN";
             property.SurplusDeclarationTypeCode = "UNKNOWN";
 
-            //property.IsPropertyOfInterest = isPropertyOfInterest; TODO: Fix mapings
             property.IsOwned = isOwned;
 
             if (property.Address != null)

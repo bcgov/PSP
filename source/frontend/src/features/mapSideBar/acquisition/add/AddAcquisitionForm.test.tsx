@@ -5,19 +5,31 @@ import { createRef } from 'react';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { mockProjects } from '@/mocks/projects.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { fakeText, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
+import { cleanup, fakeText, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
 import { AddAcquisitionFileYupSchema } from './AddAcquisitionFileYupSchema';
 import { AddAcquisitionForm, IAddAcquisitionFormProps } from './AddAcquisitionForm';
 import { AcquisitionForm } from './models';
+import { useApiUsers } from '@/hooks/pims-api/useApiUsers';
+import { getUserMock, getMockPagedUsers } from '@/mocks/user.mock';
+import { vi } from 'vitest';
 
 const history = createMemoryHistory();
 
-const validationSchema = jest.fn().mockReturnValue(AddAcquisitionFileYupSchema);
-const onSubmit = jest.fn();
+const validationSchema = vi.fn().mockReturnValue(AddAcquisitionFileYupSchema);
+const onSubmit = vi.fn();
 
-type TestProps = Pick<IAddAcquisitionFormProps, 'initialValues'>;
-jest.mock('@react-keycloak/web');
+type TestProps = Pick<IAddAcquisitionFormProps, 'initialValues' | 'confirmBeforeAdd'>;
+
+vi.mock('@/hooks/pims-api/useApiUsers');
+vi.mocked(useApiUsers).mockReturnValue({
+  activateUser: vi.fn(),
+  getUser: vi.fn().mockResolvedValue({ data: getUserMock() }),
+  getUserInfo: vi.fn().mockResolvedValue({ data: getUserMock() }),
+  getUsersPaged: vi.fn().mockResolvedValue({ data: getMockPagedUsers() }),
+  putUser: vi.fn(),
+  exportUsers: vi.fn(),
+});
 
 describe('AddAcquisitionForm component', () => {
   // render component under test
@@ -26,7 +38,8 @@ describe('AddAcquisitionForm component', () => {
     const utils = render(
       <AddAcquisitionForm
         ref={formikRef}
-        initialValues={props.initialValues}
+        initialValues={props.initialValues ?? new AcquisitionForm()}
+        confirmBeforeAdd={props.confirmBeforeAdd ?? vi.fn()}
         validationSchema={validationSchema}
         onSubmit={onSubmit}
       />,
@@ -60,16 +73,20 @@ describe('AddAcquisitionForm component', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
+    cleanup();
   });
 
   it('renders as expected', () => {
-    const { asFragment } = setup({ initialValues });
+    const { asFragment } = setup({ initialValues, confirmBeforeAdd: vi.fn() });
     expect(asFragment()).toMatchSnapshot();
   });
 
   it('renders form fields as expected', () => {
-    const { getByText, getNameTextbox, getRegionDropdown } = setup({ initialValues });
+    const { getByText, getNameTextbox, getRegionDropdown } = setup({
+      initialValues,
+      confirmBeforeAdd: vi.fn(),
+    });
 
     const formSection = getByText(/Acquisition Details/i);
     const input = getNameTextbox();
@@ -86,7 +103,7 @@ describe('AddAcquisitionForm component', () => {
     initialValues.fileName = 'foo bar baz';
     const apiProject = mockProjects()[0];
     initialValues.project = { id: apiProject.id || 0, text: apiProject.description || '' };
-    const { getNameTextbox } = setup({ initialValues });
+    const { getNameTextbox } = setup({ initialValues, confirmBeforeAdd: vi.fn() });
     const input = getNameTextbox();
 
     expect(input).toBeVisible();
@@ -94,7 +111,10 @@ describe('AddAcquisitionForm component', () => {
   });
 
   it('should validate character limits', async () => {
-    const { getFormikRef, findByText, getNameTextbox } = setup({ initialValues });
+    const { getFormikRef, findByText, getNameTextbox } = setup({
+      initialValues,
+      confirmBeforeAdd: vi.fn(),
+    });
 
     // name cannot exceed 500 characters
     const nameInput = getNameTextbox();
@@ -108,17 +128,17 @@ describe('AddAcquisitionForm component', () => {
   });
 
   it('should display historical field input', async () => {
-    const { getByText } = setup({ initialValues });
+    const { getByText } = setup({ initialValues, confirmBeforeAdd: vi.fn() });
     expect(getByText(/Historical file number/i)).toBeVisible();
   });
 
   it('should display owner solicitor input', async () => {
-    const { getByText } = setup({ initialValues });
+    const { getByText } = setup({ initialValues, confirmBeforeAdd: vi.fn() });
     expect(getByText(/Owner solicitor/i)).toBeVisible();
   });
 
   it('should display owner representative input', async () => {
-    const { getByText } = setup({ initialValues });
+    const { getByText } = setup({ initialValues, confirmBeforeAdd: vi.fn() });
     expect(getByText(/Owner representative/i)).toBeVisible();
   });
 });

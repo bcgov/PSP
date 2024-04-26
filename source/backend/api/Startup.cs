@@ -434,6 +434,7 @@ namespace Pims.Api
             services.AddScoped<IDispositionFileService, DispositionFileService>();
             services.AddScoped<IDispositionStatusSolver, DispositionStatusSolver>();
             services.AddScoped<IPropertyOperationService, PropertyOperationService>();
+            services.AddScoped<ITakeInteractionSolver, TakeInteractionSolver>();
         }
 
         /// <summary>

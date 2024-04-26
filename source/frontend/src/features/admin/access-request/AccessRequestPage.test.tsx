@@ -14,17 +14,6 @@ import { cleanup, render, waitForElementToBeRemoved } from '@/utils/test-utils';
 import * as actionTypes from '../../../constants/actionTypes';
 import AccessRequestPage from './AccessRequestPage';
 
-jest.mock('@react-keycloak/web');
-(useKeycloak as jest.Mock).mockReturnValue({
-  keycloak: {
-    userInfo: {
-      organizations: [1],
-      roles: [],
-    },
-    subject: 'test',
-  },
-});
-
 const lCodes = {
   lookupCodes: [
     { id: 1, name: 'One', code: '', isDisabled: false, type: 'core operational' },
@@ -61,7 +50,7 @@ const successStore = mockStore({
 
 // Render component under test
 const testRender = (mockStore = successStore) =>
-  render(<AccessRequestPage />, { store: mockStore, history });
+  render(<AccessRequestPage />, { store: mockStore, history, useMockAuthentication: true });
 
 describe('AccessRequestPage', () => {
   afterEach(() => {

@@ -1,17 +1,16 @@
 import { render } from '@testing-library/react';
-import { useFormikContext } from 'formik';
-import React from 'react';
+import { FormikContextType, useFormikContext } from 'formik';
 
 import { IPropertyFilter } from '@/features/properties/filter/IPropertyFilter';
 
 import { SelectInput } from './SelectInput';
 
-jest.mock('formik');
+vi.mock('formik');
 
-(useFormikContext as jest.Mock).mockReturnValue({
+vi.mocked(useFormikContext).mockReturnValue({
   values: {},
-  setFieldValue: jest.fn(),
-});
+  setFieldValue: vi.fn(),
+} as unknown as FormikContextType<any>);
 describe('SelectInput tests', () => {
   it('renders correctly...', () => {
     const { asFragment } = render(

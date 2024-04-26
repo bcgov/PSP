@@ -5,6 +5,8 @@ import { prettyFormatUTCDate } from '@/utils';
 import { render, RenderOptions } from '@/utils/test-utils';
 
 import ResearchHeader, { IResearchHeaderProps } from './ResearchHeader';
+import { useApiUsers } from '@/hooks/pims-api/useApiUsers';
+import { vi } from 'vitest';
 
 const testResearchFile: ApiGen_Concepts_ResearchFile = {
   ...getEmptyResearchFile(),
@@ -53,6 +55,12 @@ const testResearchFile: ApiGen_Concepts_ResearchFile = {
   rowVersion: 9,
 };
 
+vi.mock('@/hooks/pims-api/useApiUsers');
+
+vi.mocked(useApiUsers).mockReturnValue({
+  getUserInfo: vi.fn().mockResolvedValue({}),
+} as any);
+
 describe('ResearchHeader component', () => {
   const setup = (renderOptions: RenderOptions & IResearchHeaderProps) => {
     // render component under test
@@ -72,7 +80,7 @@ describe('ResearchHeader component', () => {
   };
 
   afterEach(() => {
-    jest.resetAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders as expected when provided no research file', () => {

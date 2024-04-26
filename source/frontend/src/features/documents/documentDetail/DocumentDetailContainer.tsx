@@ -1,4 +1,4 @@
-import { FormikProps } from 'formik';
+import { FormikProps } from 'formik/dist/types';
 import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 
 import { ModalProps } from '@/components/common/GenericModal';
@@ -47,7 +47,7 @@ export const DocumentDetailContainer: React.FunctionComponent<
 
   const formikRef = useRef<FormikProps<DocumentUpdateFormData>>(null);
 
-  const deleteModalProps = getCancelModalProps();
+  const deleteModalProps = useMemo(() => getCancelModalProps(), []);
 
   const { setDisplayModal, setModalContent } = useContext(ModalContext);
 

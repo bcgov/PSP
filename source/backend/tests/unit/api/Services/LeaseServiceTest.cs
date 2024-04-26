@@ -294,6 +294,7 @@ namespace Pims.Api.Test.Services
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
             propertyLeaseRepository.Setup(x => x.GetAllByLeaseId(It.IsAny<long>())).Returns(lease.PimsPropertyLeases);
             propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), false)).Returns(lease.PimsPropertyLeases.FirstOrDefault().Property);
+            propertyRepository.Setup(x => x.GetAllAssociationsCountById(It.IsAny<long>())).Returns(3);
             leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
             leaseRepository.Setup(x => x.Get(It.IsAny<long>())).Returns(EntityHelper.CreateLease(1));
             userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(new PimsUser());
@@ -305,15 +306,12 @@ namespace Pims.Api.Test.Services
             propertyRepository.Verify(x => x.Delete(It.IsAny<PimsProperty>()), Times.Never());
         }
 
-        /*
-        TODO: Fix mapings
         [Fact]
         public void Update_Properties_Delete_POI_Success()
         {
             // Arrange
             var lease = EntityHelper.CreateLease(1);
             var deletedProperty = lease.PimsPropertyLeases.FirstOrDefault().Property;
-            //deletedProperty.IsPropertyOfInterest = true; TODO: Fix mapings
             var updatedLease = EntityHelper.CreateLease(2, addProperty: false);
 
             var service = this.CreateLeaseService(Permissions.LeaseEdit, Permissions.LeaseView);
@@ -335,7 +333,6 @@ namespace Pims.Api.Test.Services
             // Assert
             propertyRepository.Verify(x => x.Delete(deletedProperty), Times.Once);
         }
-        */
 
         #endregion
 

@@ -1,6 +1,5 @@
 import { createMemoryHistory } from 'history';
-import React from 'react';
-import { Router } from 'react-router-dom';
+import { Router } from 'react-router-dom/cjs/react-router-dom';
 import renderer from 'react-test-renderer';
 
 import AccessDenied from './AccessDenied';

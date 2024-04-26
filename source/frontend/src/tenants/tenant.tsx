@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { noop } from 'lodash';
+import noop from 'lodash/noop';
 import React from 'react';
 
 import ITenantConfig, { ITenantConfig2 } from '@/hooks/pims-api/interfaces/ITenantConfig';
@@ -48,7 +48,7 @@ export const TenantProvider: React.FC<React.PropsWithChildren<unknown>> = props 
       }
     } else {
       // Fetch the configuration file generated for the environment.
-      const r = await axios.get<ITenantConfig>('tenants/tenant.json');
+      const r = await axios.get<ITenantConfig>('/tenants/tenant.json');
       const fileTenantConfig = await r.data;
       setTenant({ ...defaultTenant, ...fileTenantConfig });
     }

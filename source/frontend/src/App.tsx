@@ -1,7 +1,7 @@
 import '@/assets/scss/App.scss';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 
-import React, { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Col from 'react-bootstrap/Col';
 import { ToastContainer } from 'react-toastify';
 
@@ -29,7 +29,7 @@ const App = () => {
     activateUser: { execute: activate },
   } = useUsers();
 
-  const [showRoleModal, setShowRoleModal] = React.useState(false);
+  const [showRoleModal, setShowRoleModal] = useState(false);
 
   useFavicon();
 

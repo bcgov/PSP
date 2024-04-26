@@ -16,10 +16,10 @@ const mockStore = configureMockStore([thunk]);
 
 const store = mockStore({});
 
-const onSelectedProperties = jest.fn();
-const onSearch = jest.fn();
-const onAddressChange = jest.fn();
-const onAddressSelect = jest.fn();
+const onSelectedProperties = vi.fn();
+const onSearch = vi.fn();
+const onAddressChange = vi.fn();
+const onAddressSelect = vi.fn();
 
 describe('PropertySearchSelectorFormView component', () => {
   const setup = (renderOptions: RenderOptions & Partial<IPropertySearchSelectorFormViewProps>) => {
@@ -48,7 +48,7 @@ describe('PropertySearchSelectorFormView component', () => {
   };
 
   afterEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
   });
 
   it('renders as expected when provided no properties', () => {

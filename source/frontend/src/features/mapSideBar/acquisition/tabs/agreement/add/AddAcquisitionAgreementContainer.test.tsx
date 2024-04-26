@@ -16,10 +16,10 @@ const history = createMemoryHistory();
 const mockPostApi = {
   error: undefined,
   response: undefined,
-  execute: jest.fn(),
+  execute: vi.fn(),
   loading: false,
 };
-const onSuccess = jest.fn();
+const onSuccess = vi.fn();
 
 let viewProps: IUpdateAcquisitionAgreementViewProps | undefined;
 const TestView: React.FC<IUpdateAcquisitionAgreementViewProps> = props => {
@@ -27,7 +27,7 @@ const TestView: React.FC<IUpdateAcquisitionAgreementViewProps> = props => {
   return <span>Content Rendered</span>;
 };
 
-jest.mock('@/hooks/repositories/useAgreementProvider', () => ({
+vi.mock('@/hooks/repositories/useAgreementProvider', () => ({
   useAgreementProvider: () => {
     return {
       addAcquisitionAgreement: mockPostApi,
@@ -65,7 +65,7 @@ describe('Add Disposition Offer Container component', () => {
 
   beforeEach(() => {
     viewProps = undefined;
-    jest.resetAllMocks();
+    vi.resetAllMocks();
   });
 
   it('Renders the underlying form', async () => {
@@ -93,7 +93,7 @@ describe('Add Disposition Offer Container component', () => {
     const agreementFormModel = new AcquisitionAgreementFormModel(1);
     agreementFormModel.agreementTypeCode = 'H0074';
     await act(async () => {
-      return viewProps?.onSubmit(agreementFormModel, { setSubmitting: jest.fn() } as any);
+      return viewProps?.onSubmit(agreementFormModel, { setSubmitting: vi.fn() } as any);
     });
 
     expect(mockPostApi.execute).toHaveBeenCalledWith(

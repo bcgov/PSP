@@ -5,8 +5,8 @@ import { render, RenderOptions } from '@/utils/test-utils';
 import ProjectSummaryView, { IProjectSummaryViewProps } from './ProjectSummaryView';
 
 // mock auth library
-jest.mock('@react-keycloak/web');
-const onEdit = jest.fn();
+
+const onEdit = vi.fn();
 
 describe('ProjectSummaryView component', () => {
   // render component under test
@@ -28,7 +28,7 @@ describe('ProjectSummaryView component', () => {
   };
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('matches snapshot', () => {

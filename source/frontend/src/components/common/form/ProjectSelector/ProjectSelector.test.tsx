@@ -6,13 +6,11 @@ import { act, render, RenderOptions, screen, userEvent, waitFor } from '@/utils/
 
 import { ProjectSelector } from './ProjectSelector';
 
-jest.mock('@/hooks/useProjectTypeahead');
-const mockUseProjectTypeahead = useProjectTypeahead as jest.MockedFunction<
-  typeof useProjectTypeahead
->;
+vi.mock('@/hooks/useProjectTypeahead');
+const mockUseProjectTypeahead = vi.mocked(useProjectTypeahead);
 
-const handleTypeaheadSearch = jest.fn();
-const onChange = jest.fn();
+const handleTypeaheadSearch = vi.fn();
+const onChange = vi.fn();
 
 describe('ProjectSelector component', () => {
   // render component under test
@@ -55,7 +53,7 @@ describe('ProjectSelector component', () => {
   });
 
   afterEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
   });
 
   it('renders as expected', () => {

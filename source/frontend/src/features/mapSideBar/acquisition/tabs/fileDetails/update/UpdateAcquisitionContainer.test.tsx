@@ -21,12 +21,12 @@ import { UpdateAcquisitionContainer } from './UpdateAcquisitionContainer';
 import { IUpdateAcquisitionFormProps } from './UpdateAcquisitionForm';
 
 // mock API service calls
-jest.mock('@/hooks/repositories/useAcquisitionProvider');
+vi.mock('@/hooks/repositories/useAcquisitionProvider');
 
 type Provider = typeof useAcquisitionProvider;
-const mockUpdateAcquisitionFile = jest.fn();
+const mockUpdateAcquisitionFile = vi.fn();
 
-(useAcquisitionProvider as jest.MockedFunction<Provider>).mockReturnValue({
+vi.mocked(useAcquisitionProvider).mockReturnValue({
   updateAcquisitionFile: {
     error: undefined,
     response: undefined,
@@ -53,7 +53,7 @@ const TestView: React.FC<IUpdateAcquisitionFormProps> = props => {
 
 describe('UpdateAcquisition container', () => {
   let acquisitionFile: ApiGen_Concepts_AcquisitionFile;
-  const onSuccess = jest.fn();
+  const onSuccess = vi.fn();
 
   const setup = (renderOptions: RenderOptions = {}) => {
     const formikRef = createRef<FormikProps<UpdateAcquisitionSummaryFormModel>>();
@@ -86,7 +86,7 @@ describe('UpdateAcquisition container', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders the underlying form', async () => {

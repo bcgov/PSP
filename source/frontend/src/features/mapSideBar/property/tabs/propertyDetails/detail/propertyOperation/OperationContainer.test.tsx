@@ -13,23 +13,29 @@ import { IOperationSectionViewProps } from './OperationSectionView';
 import { IOperationContainerProps, OperationContainer } from './OperationContainer';
 import { toTypeCode } from '@/utils/formUtils';
 import { ApiGen_CodeTypes_PropertyOperationTypes } from '@/models/api/generated/ApiGen_CodeTypes_PropertyOperationTypes';
+import { IResponseWrapper } from '@/hooks/util/useApiRequestWrapper';
+import { AxiosResponse } from 'axios';
 
 const history = createMemoryHistory();
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
 
-const mockGetPropertyOperations = jest.fn<ApiGen_Concepts_PropertyOperation[], any[]>();
-jest.mock('@/hooks/repositories/usePropertyOperationRepository');
-(usePropertyOperationRepository as jest.Mock).mockReturnValue({
-  getPropertyOperations: { execute: mockGetPropertyOperations },
-});
+const mockGetPropertyOperations = vi.fn();
+vi.mock('@/hooks/repositories/usePropertyOperationRepository');
+vi.mocked(usePropertyOperationRepository).mockReturnValue({
+  getPropertyOperations: { execute: mockGetPropertyOperations } as unknown as IResponseWrapper<
+    (propertyId: number) => Promise<AxiosResponse<ApiGen_Concepts_PropertyOperation[], any>>
+  >,
+} as unknown as ReturnType<typeof usePropertyOperationRepository>);
 
-const mockGetProperty = jest.fn<ApiGen_Concepts_Property | undefined, any[]>();
-jest.mock('@/hooks/repositories/usePimsPropertyRepository');
-(usePimsPropertyRepository as jest.Mock).mockReturnValue({
-  getPropertyWrapper: { execute: mockGetProperty },
-});
+const mockGetProperty = vi.fn();
+vi.mock('@/hooks/repositories/usePimsPropertyRepository');
+vi.mocked(usePimsPropertyRepository).mockReturnValue({
+  getPropertyWrapper: { execute: mockGetProperty } as unknown as IResponseWrapper<
+    (id: number) => Promise<AxiosResponse<ApiGen_Concepts_Property, any>>
+  >,
+} as unknown as ReturnType<typeof usePimsPropertyRepository>);
 
 const mockView: React.FunctionComponent<IOperationSectionViewProps> = props => {
   return (
@@ -56,6 +62,7 @@ describe('OperationContainer component', () => {
     return { ...component };
   };
   beforeEach(() => {
+    vi.clearAllMocks();
     mockGetPropertyOperations.mockReturnValue([]);
     mockGetProperty.mockReturnValue(undefined);
   });

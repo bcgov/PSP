@@ -14,17 +14,6 @@ import { act, render, userEvent, waitFor, waitForElementToBeRemoved } from '@/ut
 
 import ManageAccessRequestsPage from './ManageAccessRequestsPage';
 
-jest.mock('@react-keycloak/web');
-(useKeycloak as jest.Mock).mockReturnValue({
-  keycloak: {
-    userInfo: {
-      organizations: [1],
-      roles: [],
-    },
-    subject: 'test',
-  },
-});
-
 const history = createMemoryHistory();
 history.push('admin');
 const mockStore = configureMockStore([thunk]);
@@ -35,11 +24,6 @@ const lCodes = {
     { name: 'roleVal', id: 1, isDisabled: false, type: API.ROLE_TYPES },
   ] as ILookupCode[],
 };
-
-jest.mock('react-router-dom', () => ({
-  ...(jest.requireActual('react-router-dom') as any), // use actual for all non-hook parts
-  useRouteMatch: () => ({ url: '/admin', path: '/admin' }),
-}));
 
 const successStore = mockStore({
   [networkSlice.name]: {
@@ -65,7 +49,7 @@ const componentRender = (store: any) => {
 
 describe('Manage access requests', () => {
   afterEach(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
     mockAxios.reset();
   });
   it('Snapshot matches', async () => {

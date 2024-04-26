@@ -1,3 +1,4 @@
+/// <reference types="vitest" />
 import react from '@vitejs/plugin-react';
 import path from 'path';
 import { defineConfig } from 'vite';
@@ -8,6 +9,45 @@ import viteTsconfigPaths from 'vite-tsconfig-paths';
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  test: {
+    setupFiles: ['./src/setupTests.ts'],
+    environment: 'jsdom',
+    coverage: {
+      reporter: [['lcov'], ['text'], ['json', { file: 'coverage-final.json' }]],
+      include: ['src/**/*.{js,jsx,ts,tsx}'],
+      exclude: [
+        'node_modules/**',
+        'test-config',
+        'src/interfaces/**',
+        'jestGlobalMocks.ts',
+        '*.module.ts',
+        '<rootDir>/src/index.tsx',
+        '*.mock.ts',
+        '*.ignore.ts',
+        'msw.ts',
+        'setupProxy.js',
+      ],
+    },
+    outputFile: 'coverage/sonar-report.xml',
+    globals: true,
+    testTimeout: 10000,
+    reporters: ['default', ['vitest-sonar-reporter', { outputFile: 'test-report.xml' }]],
+    poolOptions: {
+      threads: {
+        useAtomics: true,
+        isolate: false,
+      },
+    },
+    deps: {
+      optimizer: {
+        web: {
+          enabled: true,
+        },
+      },
+    },
+    pool: 'vmThreads',
+    maxConcurrency: 8,
+  },
   resolve: {
     alias: [{ find: '@', replacement: path.resolve(__dirname, 'src') }],
   },
@@ -64,6 +104,8 @@ export default defineConfig({
     svgr({
       include: '**/*.svg?react',
     }),
-    viteCompression(),
+    viteCompression({
+      filter: /\.(js|mjs|css|html)$/i,
+    }),
   ],
 });

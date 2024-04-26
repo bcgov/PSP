@@ -11,24 +11,54 @@ import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, render, RenderOptions, userEvent, waitFor, waitForEffects } from '@/utils/test-utils';
 
 import UpdateDispositionForm, { IUpdateDispositionFormProps } from './UpdateDispositionForm';
+import { useUserInfoRepository } from '@/hooks/repositories/useUserInfoRepository';
+import { ApiGen_Concepts_RegionUser } from '@/models/api/generated/ApiGen_Concepts_RegionUser';
+import { ApiGen_Concepts_User } from '@/models/api/generated/ApiGen_Concepts_User';
+import { useProjectProvider } from '@/hooks/repositories/useProjectProvider';
 
 const mockAxios = new MockAdapter(axios);
 
 // mock auth library
-jest.mock('@react-keycloak/web');
 
-const onSubmit = jest.fn();
+const onSubmit = vi.fn();
 const ref = createRef<FormikProps<DispositionFormModel>>();
 
 // Need to mock this library for unit tests
-jest.mock('react-visibility-sensor', () => {
-  return jest.fn().mockImplementation(({ children }) => {
-    if (children instanceof Function) {
-      return children({ isVisible: true });
-    }
-    return children;
-  });
+vi.mock('react-visibility-sensor', () => {
+  return {
+    default: vi.fn().mockImplementation(({ children }) => {
+      if (children instanceof Function) {
+        return children({ isVisible: true });
+      }
+      return children;
+    }),
+  };
 });
+
+vi.mock('@/hooks/repositories/useUserInfoRepository');
+vi.mocked(useUserInfoRepository).mockReturnValue({
+  retrieveUserInfo: vi.fn(),
+  retrieveUserInfoLoading: true,
+  retrieveUserInfoResponse: {
+    userRegions: [
+      {
+        id: 1,
+        userId: 5,
+        regionCode: 1,
+      } as ApiGen_Concepts_RegionUser,
+      {
+        id: 2,
+        userId: 5,
+        regionCode: 2,
+      } as ApiGen_Concepts_RegionUser,
+    ],
+  } as ApiGen_Concepts_User,
+});
+
+vi.mock('@/hooks/repositories/useProjectProvider');
+vi.mocked(useProjectProvider).mockReturnValue({
+  retrieveProjectProducts: vi.fn(),
+} as unknown as ReturnType<typeof useProjectProvider>);
 
 describe('UpdateDispositionForm component', () => {
   // render component under test
@@ -76,7 +106,7 @@ describe('UpdateDispositionForm component', () => {
 
   afterEach(() => {
     mockAxios.resetHistory();
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders as expected', async () => {

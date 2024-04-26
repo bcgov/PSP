@@ -15,7 +15,7 @@ describe('useApiProperties api hook', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   const setup = () => {
@@ -31,8 +31,8 @@ describe('useApiProperties api hook', () => {
       total: 10,
     });
 
-    const { getPropertiesPagedApi } = setup();
-    const response = await getPropertiesPagedApi({} as any);
+    const { getPropertiesViewPagedApi } = setup();
+    const response = await getPropertiesViewPagedApi({} as any);
 
     expect(response.status).toBe(200);
     expect(response.data).toStrictEqual({
@@ -46,8 +46,8 @@ describe('useApiProperties api hook', () => {
   it('Gets detailed parcels', async () => {
     mockAxios.onGet(`/properties/search?`).reply(200, mockApiProperty);
 
-    const { getPropertiesPagedApi } = setup();
-    const response = await getPropertiesPagedApi({} as any);
+    const { getPropertiesViewPagedApi } = setup();
+    const response = await getPropertiesViewPagedApi({} as any);
 
     expect(response.status).toBe(200);
     expect(response.data).toEqual(mockApiProperty);

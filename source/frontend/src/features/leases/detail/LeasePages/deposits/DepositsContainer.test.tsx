@@ -2,7 +2,7 @@ import { useKeycloak } from '@react-keycloak/web';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { Formik } from 'formik';
-import { noop } from 'lodash';
+import noop from 'lodash/noop';
 
 import { Claims } from '@/constants';
 import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
@@ -22,19 +22,9 @@ import {
 import DepositsContainer from './DepositsContainer';
 import { FormLeaseDeposit } from './models/FormLeaseDeposit';
 
-const onSuccessMock = jest.fn();
+const onSuccessMock = vi.fn();
 
 const mockAxios = new MockAdapter(axios);
-jest.mock('@react-keycloak/web');
-(useKeycloak as jest.Mock).mockReturnValue({
-  keycloak: {
-    userInfo: {
-      organizations: [1],
-      roles: [],
-    },
-    subject: 'test',
-  },
-});
 
 const setup = (renderOptions: RenderOptions & { lease?: LeaseFormModel } = {}): RenderResult => {
   // render component under test
@@ -51,6 +41,7 @@ const setup = (renderOptions: RenderOptions & { lease?: LeaseFormModel } = {}): 
     </LeaseStateContext.Provider>,
     {
       ...renderOptions,
+      useMockAuthentication: true,
     },
   );
   return { ...result };
@@ -58,14 +49,14 @@ const setup = (renderOptions: RenderOptions & { lease?: LeaseFormModel } = {}): 
 
 describe('DepositsContainer', () => {
   beforeEach(() => {
-    Date.now = jest.fn().mockReturnValue(new Date('2020-10-15T18:33:37.000Z'));
+    Date.now = vi.fn().mockReturnValue(new Date('2020-10-15T18:33:37.000Z'));
   });
   afterEach(() => {
     mockAxios.reset();
     cleanup();
   });
   afterAll(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
   it('renders as expected', () => {
     const result = setup({

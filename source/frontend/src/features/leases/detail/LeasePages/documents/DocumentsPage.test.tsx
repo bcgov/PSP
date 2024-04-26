@@ -6,32 +6,21 @@ import { render, RenderOptions, RenderResult } from '@/utils/test-utils';
 
 import DocumentsPage from './DocumentsPage';
 
-jest.mock('@react-keycloak/web');
-(useKeycloak as jest.Mock).mockReturnValue({
-  keycloak: {
-    subject: 'test',
-    authenticated: true,
-    userInfo: {
-      roles: [],
-    },
-  },
-});
-
-jest.mock('@/features/documents/hooks/useDocumentRelationshipProvider', () => ({
+vi.mock('@/features/documents/hooks/useDocumentRelationshipProvider', () => ({
   useDocumentRelationshipProvider: () => {
     return {
-      retrieveDocumentRelationship: jest.fn(),
+      retrieveDocumentRelationship: vi.fn(),
       retrieveDocumentRelationshipLoading: false,
     };
   },
 }));
 
-jest.mock('@/features/documents/hooks/useDocumentProvider', () => ({
+vi.mock('@/features/documents/hooks/useDocumentProvider', () => ({
   useDocumentProvider: () => {
     return {
-      getDocumentRelationshipTypes: jest.fn(),
+      getDocumentRelationshipTypes: vi.fn(),
       getDocumentRelationshipTypesLoading: false,
-      getDocumentTypes: jest.fn(),
+      getDocumentTypes: vi.fn(),
       getDocumentTypesLoading: false,
     };
   },
@@ -49,6 +38,7 @@ describe('Lease Documents Page', () => {
       ...renderOptions,
       store: storeState,
       history,
+      useMockAuthentication: true,
     });
     return result;
   };

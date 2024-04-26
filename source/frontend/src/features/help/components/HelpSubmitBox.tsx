@@ -1,7 +1,5 @@
 import './HelpSubmitBox.scss';
 
-import * as React from 'react';
-
 import HelpRequestForm from '../forms/HelpRequestForm';
 
 interface IHelpSubmitBoxProps {

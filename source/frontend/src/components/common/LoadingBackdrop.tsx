@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Spinner from 'react-bootstrap/Spinner';
 
 import { Backdrop } from '@/components/common/styles';

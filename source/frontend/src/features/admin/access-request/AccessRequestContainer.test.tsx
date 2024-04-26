@@ -23,8 +23,7 @@ const mockAxios = new MockAdapter(axios);
 const mockStore = configureMockStore([thunk]);
 
 const store = mockStore({ [lookupCodesSlice.name]: { lookupCodes: mockLookups } });
-const onSave = jest.fn();
-jest.mock('@react-keycloak/web');
+const onSave = vi.fn();
 
 describe('AccessRequestContainer component', () => {
   const setup = (renderOptions: RenderOptions & Partial<IAccessRequestContainerProps>) => {
@@ -45,7 +44,7 @@ describe('AccessRequestContainer component', () => {
   };
 
   afterEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
     mockAxios.resetHistory();
   });
 

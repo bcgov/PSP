@@ -11,8 +11,6 @@ const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
 
-jest.mock('@react-keycloak/web');
-
 describe('ModalContainer component', () => {
   const TestComponent = (props: ModalContent, isVisible: boolean) => {
     useModalContext(props, isVisible);

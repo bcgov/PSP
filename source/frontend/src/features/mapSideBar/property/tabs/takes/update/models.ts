@@ -1,6 +1,7 @@
 import * as Yup from 'yup';
 
 import { AreaUnitTypes } from '@/constants/areaUnitTypes';
+import { ApiGen_CodeTypes_LandActTypes } from '@/models/api/generated/ApiGen_CodeTypes_LandActTypes';
 import { ApiGen_Concepts_Take } from '@/models/api/generated/ApiGen_Concepts_Take';
 import { UtcIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
@@ -25,8 +26,13 @@ export const TakesYupSchema = Yup.object().shape({
         is: (isNewLicenseToConstruct: boolean) => isNewLicenseToConstruct,
         then: Yup.string().required('End Date is required'),
       }),
-      landActEndDt: Yup.string().when('isNewLandAct', {
-        is: (isNewLandAct: boolean) => isNewLandAct,
+      landActEndDt: Yup.string().when(['isNewLandAct', 'landActTypeCode'], {
+        is: (isNewLandAct: boolean, landActTypeCode: string) =>
+          isNewLandAct &&
+          ![
+            ApiGen_CodeTypes_LandActTypes.TRANSFER_OF_ADMIN_AND_CONTROL.toString(),
+            ApiGen_CodeTypes_LandActTypes.CROWN_GRANT.toString(),
+          ].includes(landActTypeCode),
         then: Yup.string().required('End Date is required'),
       }),
       landActTypeCode: Yup.string().when('isNewLandAct', {
@@ -53,6 +59,7 @@ export class TakeModel {
   isNewLandAct: 'false' | 'true';
   isNewInterestInSrw: 'false' | 'true';
   isNewLicenseToConstruct: 'false' | 'true';
+  isLeasePayable: 'false' | 'true';
   ltcEndDt: string;
   licenseToConstructArea: number;
   licenseToConstructAreaUnitTypeCode: string;
@@ -73,6 +80,9 @@ export class TakeModel {
   isAcquiredForInventory: 'false' | 'true';
   newHighwayDedicationArea: number;
   newHighwayDedicationAreaUnitTypeCode: string;
+  leasePayableEndDt: string;
+  leasePayableArea: number;
+  leasePayableAreaUnitTypeCode: string;
   rowVersion?: number;
   appCreateTimestamp: UtcIsoDateTime | null;
 
@@ -85,6 +95,7 @@ export class TakeModel {
     this.isNewLandAct = base.isNewLandAct ? 'true' : 'false';
     this.isNewLicenseToConstruct = base.isNewLicenseToConstruct ? 'true' : 'false';
     this.isNewInterestInSrw = base.isNewInterestInSrw ? 'true' : 'false';
+    this.isLeasePayable = base.isLeasePayable ? 'true' : 'false';
     this.licenseToConstructArea = base.licenseToConstructArea ?? 0;
     this.licenseToConstructAreaUnitTypeCode =
       fromTypeCodeNullable(base.areaUnitTypeCode) ?? AreaUnitTypes.SquareMeters.toString();
@@ -97,6 +108,8 @@ export class TakeModel {
     this.statutoryRightOfWayArea = base.statutoryRightOfWayArea ?? 0;
     this.statutoryRightOfWayAreaUnitTypeCode =
       fromTypeCodeNullable(base.areaUnitTypeCode) ?? AreaUnitTypes.SquareMeters.toString();
+    this.leasePayableAreaUnitTypeCode =
+      fromTypeCodeNullable(base.areaUnitTypeCode) ?? AreaUnitTypes.SquareMeters.toString();
     this.takeTypeCode = fromTypeCodeNullable(base.takeTypeCode);
     this.takeStatusTypeCode = fromTypeCodeNullable(base.takeStatusTypeCode);
     this.takeSiteContamTypeCode = base.takeSiteContamTypeCode
@@ -106,6 +119,8 @@ export class TakeModel {
     this.landActEndDt = base.landActEndDt ?? '';
     this.ltcEndDt = base.ltcEndDt ?? '';
     this.srwEndDt = base.srwEndDt ?? '';
+    this.leasePayableEndDt = base.leasePayableEndDt ?? '';
+    this.leasePayableArea = base.leasePayableArea ?? 0;
     this.landActDescription = base.landActTypeCode?.description ?? '';
     this.landActTypeCode = base.landActTypeCode?.id ?? '';
 
@@ -167,6 +182,14 @@ export class TakeModel {
       isNewLandAct: this.isNewLandAct === 'true',
       isNewLicenseToConstruct: this.isNewLicenseToConstruct === 'true',
       isNewInterestInSrw: this.isNewInterestInSrw === 'true',
+      isLeasePayable: this.isLeasePayable === 'true',
+      leasePayableArea:
+        convertArea(
+          parseFloat(this.leasePayableArea.toString()),
+          this.leasePayableAreaUnitTypeCode,
+          AreaUnitTypes.SquareMeters.toString(),
+        ) || null,
+      leasePayableEndDt: stringToNull(this.leasePayableEndDt),
       ...getEmptyBaseAudit(this.rowVersion),
       completionDt: stringToNull(this.completionDt),
     };

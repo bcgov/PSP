@@ -1,7 +1,6 @@
 import { Form, Formik, getIn } from 'formik';
-import { noop } from 'lodash';
+import noop from 'lodash/noop';
 import moment from 'moment';
-import * as React from 'react';
 import styled from 'styled-components';
 
 import { Input, TextArea } from '@/components/common/form';

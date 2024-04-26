@@ -75,9 +75,11 @@ const AddSubdivisionContainer: React.FC<IAddSubdivisionContainerProps> = ({ onCl
           propertyForm.address = selectedFeatureDataset.pimsFeature?.properties
             ? AddressForm.fromPimsView(selectedFeatureDataset.pimsFeature?.properties)
             : undefined;
-          const consolidationFormModel = new SubdivisionFormModel();
-          consolidationFormModel.sourceProperty = propertyForm.toApi();
-          setInitialForm(consolidationFormModel);
+          const subdivisionFormModel = new SubdivisionFormModel();
+          subdivisionFormModel.sourceProperty = propertyForm.toApi();
+          subdivisionFormModel.sourceProperty.isOwned =
+            selectedFeatureDataset.pimsFeature.properties.IS_OWNED;
+          setInitialForm(subdivisionFormModel);
         }
       }
     }

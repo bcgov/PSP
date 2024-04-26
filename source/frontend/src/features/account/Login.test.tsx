@@ -2,7 +2,7 @@ import { useKeycloak } from '@react-keycloak/web';
 import { cleanup, fireEvent, render } from '@testing-library/react';
 import { createMemoryHistory, MemoryHistory } from 'history';
 import { Provider } from 'react-redux';
-import { Router } from 'react-router-dom';
+import { Router } from 'react-router-dom/cjs/react-router-dom';
 import renderer from 'react-test-renderer';
 import configureMockStore, { MockStoreEnhanced } from 'redux-mock-store';
 import thunk from 'redux-thunk';
@@ -17,9 +17,12 @@ import { networkSlice } from '@/store/slices/network/networkSlice';
 import { TenantConsumer, TenantProvider } from '@/tenants';
 
 import Login from './Login';
+import { IKeycloak } from '@/hooks/useKeycloakWrapper';
+import Keycloak from 'keycloak-js';
 
-jest.mock('axios');
-jest.mock('@react-keycloak/web');
+vi.mock('axios');
+vi.mock('@react-keycloak/web');
+
 const mockStore = configureMockStore([thunk]);
 
 const defaultStore = mockStore({
@@ -67,7 +70,10 @@ describe('login', () => {
     cleanup();
   });
   it('login renders correctly', () => {
-    (useKeycloak as jest.Mock).mockReturnValue({ keycloak: { authenticated: false } });
+    vi.mocked(useKeycloak).mockReturnValue({
+      keycloak: { authenticated: false } as unknown as Keycloak.KeycloakInstance,
+      initialized: true,
+    });
     import.meta.env.VITE_TENANT = 'MOTI';
     const history = createMemoryHistory();
     const tree = renderer.create(<TestLogin history={history} />).toJSON();
@@ -76,8 +82,12 @@ describe('login', () => {
 
   it('authenticated users are redirected to the mapview', () => {
     import.meta.env.VITE_TENANT = 'MOTI';
-    (useKeycloak as jest.Mock).mockReturnValue({
-      keycloak: { authenticated: true, userInfo: { client_roles: [Roles.SYSTEM_ADMINISTRATOR] } },
+    vi.mocked(useKeycloak).mockReturnValue({
+      keycloak: {
+        authenticated: true,
+        userInfo: { client_roles: [Roles.SYSTEM_ADMINISTRATOR] },
+      } as unknown as Keycloak.KeycloakInstance,
+      initialized: true,
     });
     const history = createMemoryHistory();
     render(<TestLogin history={history} />);
@@ -86,8 +96,12 @@ describe('login', () => {
 
   it('authenticated lease functional users are redirected to the lease list', () => {
     import.meta.env.VITE_TENANT = 'MOTI';
-    (useKeycloak as jest.Mock).mockReturnValue({
-      keycloak: { authenticated: true, userInfo: { client_roles: [Roles.LEASE_FUNCTIONAL] } },
+    vi.mocked(useKeycloak).mockReturnValue({
+      keycloak: {
+        authenticated: true,
+        userInfo: { client_roles: [Roles.LEASE_FUNCTIONAL] },
+      } as unknown as Keycloak.KeycloakInstance,
+      initialized: true,
     });
     const history = createMemoryHistory();
     render(<TestLogin history={history} />);
@@ -96,8 +110,12 @@ describe('login', () => {
 
   it('new users are sent to the guest page', () => {
     import.meta.env.VITE_TENANT = 'MOTI';
-    (useKeycloak as jest.Mock).mockReturnValue({
-      keycloak: { authenticated: true, realmAccess: { client_roles: [] } },
+    vi.mocked(useKeycloak).mockReturnValue({
+      keycloak: {
+        authenticated: true,
+        realmAccess: { client_roles: [] },
+      } as unknown as Keycloak.KeycloakInstance,
+      initialized: true,
     });
     const history = createMemoryHistory();
     const activatedAction: IGenericNetworkAction = {
@@ -117,7 +135,10 @@ describe('login', () => {
   });
 
   it('unAuthenticated users are shown the login screen', () => {
-    (useKeycloak as jest.Mock).mockReturnValue({ keycloak: { authenticated: false } });
+    vi.mocked(useKeycloak).mockReturnValue({
+      keycloak: { authenticated: false } as unknown as Keycloak.KeycloakInstance,
+      initialized: true,
+    });
     const { getAllByRole } = renderLogin();
     expect(getAllByRole('heading')[0]).toHaveTextContent(
       'MOTI Property Information Management System (PIMS)',
@@ -128,15 +149,16 @@ describe('login', () => {
   });
 
   it('a spinner is displayed if keycloak has not yet been initialized', () => {
-    (useKeycloak as jest.Mock).mockReturnValue({ keycloak: undefined });
+    vi.mocked(useKeycloak).mockReturnValue({ keycloak: undefined, initialized: true });
     const { container } = renderLogin();
     expect(container.firstChild).toHaveClass('spinner-border');
   });
 
   it('the login button calls keycloaks login() method', () => {
-    const login = jest.fn();
-    (useKeycloak as jest.Mock).mockReturnValue({
-      keycloak: { login: login, authenticated: false },
+    const login = vi.fn();
+    vi.mocked(useKeycloak).mockReturnValue({
+      keycloak: { login: login, authenticated: false } as unknown as Keycloak.KeycloakInstance,
+      initialized: true,
     });
 
     const { getByText } = renderLogin();

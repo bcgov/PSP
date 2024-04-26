@@ -8,9 +8,9 @@ import { act, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import ContactInputView, { IContactInputViewProps } from './ContactInputView';
 
-const setSelectedRows = jest.fn();
-const setShowContactManager = jest.fn();
-const clear = jest.fn();
+const setSelectedRows = vi.fn();
+const setShowContactManager = vi.fn();
+const clear = vi.fn();
 
 describe('ContactInputView component', () => {
   // render component under test
@@ -44,7 +44,7 @@ describe('ContactInputView component', () => {
   beforeEach(() => {});
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders as expected', () => {

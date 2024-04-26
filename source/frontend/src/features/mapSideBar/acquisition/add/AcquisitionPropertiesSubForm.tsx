@@ -8,19 +8,23 @@ import { IMapProperty } from '@/components/propertySelector/models';
 import SelectedPropertyHeaderRow from '@/components/propertySelector/selectedPropertyList/SelectedPropertyHeaderRow';
 import SelectedPropertyRow from '@/components/propertySelector/selectedPropertyList/SelectedPropertyRow';
 import { useBcaAddress } from '@/features/properties/map/hooks/useBcaAddress';
+import { useModalContext } from '@/hooks/useModalContext';
 
 import { AddressForm, PropertyForm } from '../../shared/models';
 import { AcquisitionForm } from './models';
 
-interface AcquisitionPropertiesProp {
+export interface IAcquisitionPropertiesProps {
   formikProps: FormikProps<AcquisitionForm>;
+  confirmBeforeAdd: (propertyForm: PropertyForm) => Promise<boolean>;
 }
 
-export const AcquisitionPropertiesSubForm: React.FunctionComponent<
-  React.PropsWithChildren<AcquisitionPropertiesProp>
-> = ({ formikProps }) => {
+export const AcquisitionPropertiesSubForm: React.FunctionComponent<IAcquisitionPropertiesProps> = ({
+  formikProps,
+  confirmBeforeAdd,
+}) => {
   const { values } = formikProps;
   const { getPrimaryAddressByPid, bcaLoading } = useBcaAddress();
+  const { setModalContent, setDisplayModal } = useModalContext();
 
   return (
     <>
@@ -46,14 +50,48 @@ export const AcquisitionPropertiesSubForm: React.FunctionComponent<
                             ? AddressForm.fromBcaAddress(bcaSummary?.address)
                             : undefined;
                         }
-                        if (
-                          values.properties?.length === 0 &&
-                          index === 0 &&
-                          formProperty.regionName !== 'Cannot determine'
-                        ) {
-                          formikProps.setFieldValue(`region`, formProperty.region);
+
+                        if (await confirmBeforeAdd(formProperty)) {
+                          // Require user confirmation before adding property to file
+                          setModalContent({
+                            variant: 'warning',
+                            title: 'User Override Required',
+                            message: (
+                              <>
+                                <p>
+                                  This property has already been added to one or more acquisition
+                                  files.
+                                </p>
+                                <p>Do you want to acknowledge and proceed?</p>
+                              </>
+                            ),
+                            okButtonText: 'Yes',
+                            cancelButtonText: 'No',
+                            handleOk: () => {
+                              if (
+                                values.properties?.length === 0 &&
+                                index === 0 &&
+                                formProperty.regionName !== 'Cannot determine'
+                              ) {
+                                formikProps.setFieldValue(`region`, formProperty.region);
+                              }
+                              push(formProperty);
+                              setDisplayModal(false);
+                            },
+                            handleCancel: () => setDisplayModal(false),
+                          });
+                          setDisplayModal(true);
+                        } else {
+                          // No confirmation needed - just add the property to the file
+                          if (
+                            values.properties?.length === 0 &&
+                            index === 0 &&
+                            formProperty.regionName !== 'Cannot determine'
+                          ) {
+                            formikProps.setFieldValue(`region`, formProperty.region);
+                          }
+                          push(formProperty);
                         }
-                        push(formProperty);
                       });
                     }, Promise.resolve());
                   }}

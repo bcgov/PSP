@@ -1,5 +1,5 @@
 import { Formik } from 'formik';
-import { noop } from 'lodash';
+import noop from 'lodash/noop';
 
 import { mockLookups } from '@/mocks/index.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
@@ -89,7 +89,7 @@ describe('UpdateAcquisitionOwnersSubForm component', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders as expected', () => {

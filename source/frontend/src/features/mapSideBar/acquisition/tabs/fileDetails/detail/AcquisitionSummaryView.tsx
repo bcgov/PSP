@@ -31,10 +31,9 @@ const AcquisitionSummaryView: React.FC<IAcquisitionSummaryViewProps> = ({
   acquisitionFile,
   onEdit,
 }) => {
-  const keycloak = useKeycloakWrapper();
   const detail: DetailAcquisitionFile = DetailAcquisitionFile.fromApi(acquisitionFile);
 
-  const { hasRole } = useKeycloakWrapper();
+  const { hasRole, hasClaim } = useKeycloakWrapper();
 
   const projectName = exists(acquisitionFile?.project)
     ? acquisitionFile?.project?.code + ' - ' + acquisitionFile?.project?.description
@@ -74,7 +73,7 @@ const AcquisitionSummaryView: React.FC<IAcquisitionSummaryViewProps> = ({
   return (
     <StyledSummarySection>
       <StyledEditWrapper className="mr-3 my-1">
-        {keycloak.hasClaim(Claims.ACQUISITION_EDIT) && canEditDetails() ? (
+        {hasClaim(Claims.ACQUISITION_EDIT) && canEditDetails() ? (
           <EditButton title="Edit acquisition file" onClick={onEdit} />
         ) : null}
         {!canEditDetails() && (
@@ -100,12 +99,6 @@ const AcquisitionSummaryView: React.FC<IAcquisitionSummaryViewProps> = ({
           tooltip="Date for delivery of the property to the project"
         >
           {prettyFormatDate(detail.deliveryDate)}
-        </SectionField>
-        <SectionField
-          label="Acquisition completed date"
-          tooltip={`This will be enabled when the file status is set to "Completed"`}
-        >
-          {prettyFormatDate(detail.completionDate)}
         </SectionField>
       </Section>
       <Section header="Acquisition Details">

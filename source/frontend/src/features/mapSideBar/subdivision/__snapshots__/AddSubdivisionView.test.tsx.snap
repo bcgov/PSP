@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Add Subdivision View matches snapshot 1`] = `
+exports[`Add Subdivision View > matches snapshot 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
@@ -45,8 +45,27 @@ exports[`Add Subdivision View matches snapshot 1`] = `
         >
           <svg
             class="c1"
+            data-name="Layer 2"
+            id="Layer_2"
+            viewBox="0 0 21.62 14.48"
+            xmlns="http://www.w3.org/2000/svg"
           >
-            <span />
+            <defs />
+            <g
+              data-name="Layer 1"
+              id="Layer_1-2"
+            >
+              <g>
+                <path
+                  class="cls-1"
+                  d="M12.85,6.88V0H2.16C.97,0,0,.97,0,2.16v10.15c0,1.19.97,2.16,2.16,2.16h2.04l8.65-7.59Z"
+                />
+                <path
+                  class="cls-1"
+                  d="M19.46,0h-3.18v7.24c0,.06,0,.12-.02.18.08.55-.11,1.14-.56,1.53l-6.29,5.53h10.05c1.19,0,2.16-.97,2.16-2.16V2.16C21.62.98,20.65,0,19.46,0Z"
+                />
+              </g>
+            </g>
           </svg>
           Create a Subdivision
         </h1>

@@ -10,9 +10,9 @@ const mockStore = configureMockStore([thunk]);
 
 const store = mockStore({});
 
-const setFilter = jest.fn();
-const onAddressChange = jest.fn();
-const onAddressSelect = jest.fn();
+const setFilter = vi.fn();
+const onAddressChange = vi.fn();
+const onAddressSelect = vi.fn();
 
 describe('LayerFilter component', () => {
   // render component under test
@@ -40,7 +40,7 @@ describe('LayerFilter component', () => {
   };
 
   afterEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
   });
 
   it('renders as expected', () => {

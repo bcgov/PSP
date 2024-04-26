@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`ResearchContainer component renders as expected 1`] = `
+exports[`ResearchContainer component > renders as expected 1`] = `
 .c18 {
   background-color: white;
   font-size: 1.4rem;
@@ -76,8 +76,22 @@ exports[`ResearchContainer component renders as expected 1`] = `
 }
 
 .c1 {
-  font-size: 30px;
+  font-size: 2.4rem;
   cursor: pointer;
+}
+
+.c17 {
+  height: 100%;
+}
+
+.c17 .tab-content {
+  border-radius: 0 0.4rem 0.4rem 0.4rem;
+  height: calc(100% - 2.5rem);
+  overflow-y: auto;
+}
+
+.c17 .tab-content .tab-pane {
+  position: relative;
 }
 
 .c19 {
@@ -111,20 +125,6 @@ exports[`ResearchContainer component renders as expected 1`] = `
 
 .c23 {
   font-weight: bold;
-}
-
-.c17 {
-  height: 100%;
-}
-
-.c17 .tab-content {
-  border-radius: 0 0.4rem 0.4rem 0.4rem;
-  height: calc(100% - 2.5rem);
-  overflow-y: auto;
-}
-
-.c17 .tab-content .tab-pane {
-  position: relative;
 }
 
 .c4 {

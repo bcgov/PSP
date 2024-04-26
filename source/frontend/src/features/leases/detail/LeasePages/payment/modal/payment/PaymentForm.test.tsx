@@ -2,7 +2,7 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
-import { noop } from 'lodash';
+import noop from 'lodash/noop';
 
 import { mockLookups } from '@/mocks/lookups.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
@@ -13,17 +13,17 @@ import { defaultFormLeasePayment } from '../../models';
 import { isActualGstEligible as isActualGstEligibleOriginal } from '../../TermPaymentsContainer';
 import PaymentForm, { IPaymentFormProps } from './PaymentForm';
 
-const isActualGstEligible = isActualGstEligibleOriginal as jest.Mock;
+const isActualGstEligible = vi.mocked(isActualGstEligibleOriginal);
 const history = createMemoryHistory();
 const mockAxios = new MockAdapter(axios);
-const onSave = jest.fn();
-const submitForm = jest.fn();
+const onSave = vi.fn();
+const submitForm = vi.fn();
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
   [systemConstantsSlice.name]: { systemConstants: [{ name: 'GST', value: '5.0' }] },
 };
-jest.mock('../../TermPaymentsContainer', () => ({
-  isActualGstEligible: jest.fn(),
+vi.mock('../../TermPaymentsContainer', () => ({
+  isActualGstEligible: vi.fn(),
 }));
 
 describe('PaymentForm component', () => {
