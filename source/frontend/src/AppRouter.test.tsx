@@ -319,7 +319,7 @@ describe('PSP routing', () => {
       expect(document.title).toMatch(/View Lease & Licenses/i);
     });
 
-    it.skip('should display the acquisition list view', async () => {
+    it('should display the acquisition list view', async () => {
       setup('/acquisition/list', { claims: [Claims.ACQUISITION_VIEW] });
       await screen.findByText('v1.0.0.0');
       const lazyElement = await screen.findByText('test acq file');
@@ -335,7 +335,7 @@ describe('PSP routing', () => {
       expect(document.title).toMatch(/View Research Files/i);
     });
 
-    it.skip('should display the admin users page at the expected route', async () => {
+    it('should display the admin users page at the expected route', async () => {
       setup('/admin/users', { claims: [Claims.ADMIN_USERS] });
       await screen.findByText('v1.0.0.0');
       const lazyElement = await screen.findByText('Smith');
