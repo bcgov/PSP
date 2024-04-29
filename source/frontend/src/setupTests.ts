@@ -6,7 +6,7 @@ import '@testing-library/jest-dom';
 import 'jest-styled-components';
 
 import noop from 'lodash/noop';
-import moment from 'moment';
+import moment from 'moment-timezone';
 import { tz } from 'moment-timezone';
 import { MockedRequest } from 'msw';
 import failOnConsole from 'vitest-fail-on-console';
@@ -25,6 +25,8 @@ const createElementNSOrig = (global as any).document.createElementNS;
   }
   return createElementNSOrig.apply(this, arguments);
 };
+
+moment.tz.setDefault('America/Vancouver');
 
 tz.setDefault('America/Vancouver');
 
