@@ -1,11 +1,10 @@
-using Pims.Api.Constants;
+using Pims.Api.Models.CodeTypes;
 
 namespace Pims.Api.Services
 {
     public class DispositionStatusSolver : IDispositionStatusSolver
     {
-
-        public bool CanEditDetails(DispositionStatusTypes? dispositionStatus)
+        public bool CanEditDetails(DispositionFileStatusTypes? dispositionStatus)
         {
             if (dispositionStatus == null)
             {
@@ -15,73 +14,14 @@ namespace Pims.Api.Services
             bool canEdit;
             switch (dispositionStatus)
             {
-                case DispositionStatusTypes.ACTIVE:
-                case DispositionStatusTypes.DRAFT:
+                case DispositionFileStatusTypes.ACTIVE:
+                case DispositionFileStatusTypes.DRAFT:
+                case DispositionFileStatusTypes.HOLD:
                     canEdit = true;
                     break;
-                case DispositionStatusTypes.ARCHIVED:
-                case DispositionStatusTypes.CANCELLED:
-                case DispositionStatusTypes.CLOSED:
-                case DispositionStatusTypes.COMPLETE:
-                case DispositionStatusTypes.HOLD:
-                    canEdit = false;
-                    break;
-                default:
-                    canEdit = false;
-                    break;
-            }
-
-            return canEdit;
-        }
-
-        public bool CanEditProperties(DispositionStatusTypes? dispositionStatus)
-        {
-            if (dispositionStatus == null)
-            {
-                return false;
-            }
-
-            bool canEdit;
-            switch (dispositionStatus)
-            {
-                case DispositionStatusTypes.ACTIVE:
-                case DispositionStatusTypes.DRAFT:
-                    canEdit = true;
-                    break;
-                case DispositionStatusTypes.ARCHIVED:
-                case DispositionStatusTypes.CANCELLED:
-                case DispositionStatusTypes.CLOSED:
-                case DispositionStatusTypes.COMPLETE:
-                case DispositionStatusTypes.HOLD:
-                    canEdit = false;
-                    break;
-                default:
-                    canEdit = false;
-                    break;
-            }
-
-            return canEdit;
-        }
-
-        public bool CanEditOrDeleteValuesOffersSales(DispositionStatusTypes? dispositionStatus)
-        {
-            if (dispositionStatus == null)
-            {
-                return false;
-            }
-
-            bool canEdit;
-            switch (dispositionStatus)
-            {
-                case DispositionStatusTypes.ACTIVE:
-                case DispositionStatusTypes.DRAFT:
-                    canEdit = true;
-                    break;
-                case DispositionStatusTypes.ARCHIVED:
-                case DispositionStatusTypes.CANCELLED:
-                case DispositionStatusTypes.CLOSED:
-                case DispositionStatusTypes.COMPLETE:
-                case DispositionStatusTypes.HOLD:
+                case DispositionFileStatusTypes.ARCHIVED:
+                case DispositionFileStatusTypes.CANCELLED:
+                case DispositionFileStatusTypes.COMPLETE:
                     canEdit = false;
                     break;
                 default:

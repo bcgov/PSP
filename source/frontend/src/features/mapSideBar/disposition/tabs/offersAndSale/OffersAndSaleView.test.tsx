@@ -1,7 +1,6 @@
 import { createMemoryHistory } from 'history';
 
 import Claims from '@/constants/claims';
-import { DispositionFileStatus } from '@/constants/dispositionFileStatus';
 import Roles from '@/constants/roles';
 import {
   mockDispositionFileResponse,
@@ -12,6 +11,7 @@ import { render, RenderOptions, waitFor, waitForEffects } from '@/utils/test-uti
 import OffersAndSaleView, { IOffersAndSaleViewProps } from './OffersAndSaleView';
 import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
 import { toTypeCode } from '@/utils/formUtils';
+import { ApiGen_CodeTypes_DispositionFileStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_DispositionFileStatusTypes';
 
 const history = createMemoryHistory();
 
@@ -121,7 +121,7 @@ describe('Disposition Offer Detail View component', () => {
       props: {
         dispositionFile: {
           ...(mockDispositionFileResponse() as unknown as ApiGen_Concepts_DispositionFile),
-          fileStatusTypeCode: toTypeCode(DispositionFileStatus.Complete),
+          fileStatusTypeCode: toTypeCode(ApiGen_CodeTypes_DispositionFileStatusTypes.COMPLETE),
         },
       },
       claims: [Claims.DISPOSITION_EDIT],
@@ -140,7 +140,7 @@ describe('Disposition Offer Detail View component', () => {
       props: {
         dispositionFile: {
           ...mockDispositionFileResponse(),
-          fileStatusTypeCode: toTypeCode(DispositionFileStatus.Complete),
+          fileStatusTypeCode: toTypeCode(ApiGen_CodeTypes_DispositionFileStatusTypes.COMPLETE),
         },
       },
       claims: [Claims.DISPOSITION_EDIT],
@@ -189,7 +189,7 @@ describe('Disposition Offer Detail View component', () => {
       props: {
         dispositionFile: {
           ...mockDispositionFileResponse(),
-          fileStatusTypeCode: toTypeCode(DispositionFileStatus.Complete),
+          fileStatusTypeCode: toTypeCode(ApiGen_CodeTypes_DispositionFileStatusTypes.COMPLETE),
         },
       },
       claims: [Claims.DISPOSITION_EDIT],
@@ -208,7 +208,7 @@ describe('Disposition Offer Detail View component', () => {
       props: {
         dispositionFile: {
           ...mockDispositionFileResponse(),
-          fileStatusTypeCode: toTypeCode(DispositionFileStatus.Complete),
+          fileStatusTypeCode: toTypeCode(ApiGen_CodeTypes_DispositionFileStatusTypes.COMPLETE),
         },
       },
       claims: [Claims.DISPOSITION_EDIT],
