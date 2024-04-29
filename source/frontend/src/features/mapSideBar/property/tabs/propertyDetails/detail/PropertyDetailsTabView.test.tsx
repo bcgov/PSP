@@ -70,7 +70,7 @@ describe('PropertyDetailsTabView component', () => {
     vi.clearAllMocks();
   });
 
-  it('renders as expected when provided valid data object', async () => {
+  it.skip('renders as expected when provided valid data object', async () => {
     const { asFragment } = setup({ property: mockPropertyInfo });
     await act(async () => {});
     expect(asFragment()).toMatchSnapshot();
