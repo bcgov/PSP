@@ -254,6 +254,7 @@ describe('PSP routing', () => {
 
   beforeEach(() => {
     vi.mocked(mockedAxios.get).mockResolvedValue({ data: {}, status: 200 });
+    vi.unmock('@/components/common/mapFSM/MapStateMachineContext');
   });
 
   afterEach(() => {
