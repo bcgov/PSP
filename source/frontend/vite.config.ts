@@ -14,6 +14,7 @@ export default defineConfig({
     environment: 'jsdom',
     coverage: {
       reporter: [['lcov'], ['text'], ['json', { file: 'coverage-final.json' }]],
+      reportOnFailure: false,
       include: ['src/**/*.{js,jsx,ts,tsx}'],
       exclude: [
         'node_modules/**',
@@ -46,7 +47,7 @@ export default defineConfig({
       },
     },
     pool: 'vmThreads',
-    maxConcurrency: 8,
+    maxConcurrency: 32,
   },
   resolve: {
     alias: [{ find: '@', replacement: path.resolve(__dirname, 'src') }],

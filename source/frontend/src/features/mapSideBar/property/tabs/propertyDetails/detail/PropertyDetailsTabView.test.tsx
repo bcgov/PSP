@@ -66,7 +66,7 @@ describe('PropertyDetailsTabView component', () => {
     return { ...component };
   };
 
-  afterEach(() => {
+  beforeEach(() => {
     vi.clearAllMocks();
   });
 

@@ -140,7 +140,7 @@
     "test": "tsc && vitest run",
     "test-u": "tsc && vitest run -u",
     "test:watch": "vitest watch",
-    "coverage": "vitest run --coverage --reporter=vitest-sonar-reporter",
+    "coverage": "vitest run --coverage",
     "update-snapshots": "vitest run -u",
     "eject": "react-scripts eject",
     "lint": "eslint src/ --ext .jsx,.js,.ts,.tsx --max-warnings 0",
