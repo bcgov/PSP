@@ -100,6 +100,7 @@
     "happy-dom": "14.7.1",
     "husky": "6.0.0",
     "jest-styled-components": "7.2.0",
+    "moment-timezone": "0.5.45",
     "msw": "1.0.1",
     "prettier": "2.7.1",
     "pretty": "2.0.0",
