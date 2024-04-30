@@ -7,35 +7,13 @@ import 'jest-styled-components';
 
 import noop from 'lodash/noop';
 import moment from 'moment';
+import { tz } from 'moment-timezone';
 import { MockedRequest } from 'msw';
 import failOnConsole from 'vitest-fail-on-console';
 
 import { server } from '@/mocks/msw/server';
 
-const localStorageMock = (function () {
-  let store: any = {};
-
-  return {
-    getKeys: function () {
-      return store;
-    },
-    getItem: function (key: string) {
-      return store[key] || null;
-    },
-    setItem: function (key: string, value: any) {
-      store[key] = value.toString();
-    },
-    removeItem: function (key: string) {
-      store[key] = undefined;
-    },
-    clear: function () {
-      store = {};
-    },
-  };
-})();
-Object.defineProperty(window, 'localStorage', {
-  value: localStorageMock,
-});
+import { cleanup } from './utils/test-utils';
 
 // workaround to allow polyline and other svg map renderers to function correctly in tests.
 const createElementNSOrig = (global as any).document.createElementNS;
@@ -47,6 +25,8 @@ const createElementNSOrig = (global as any).document.createElementNS;
   }
   return createElementNSOrig.apply(this, arguments);
 };
+
+tz.setDefault('America/Vancouver');
 
 // This allows to run unit tests on GitHub Actions which are in GMT timezone by default
 ['Date', 'Day', 'FullYear', 'Hours', 'Minutes', 'Month', 'Seconds'].forEach(prop => {
@@ -85,9 +65,11 @@ afterEach(() => {
   } finally {
     onUnhandledRequest.mockClear();
   }
+  cleanup();
+  vi.clearAllMocks();
 });
 
 // Clean up after the tests are finished.
 afterAll(() => server.close());
 
-failOnConsole({ shouldFailOnWarn: false, shouldFailOnError: false });
+failOnConsole();

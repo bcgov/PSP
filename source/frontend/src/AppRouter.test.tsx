@@ -25,15 +25,16 @@ import { tenantsSlice } from './store/slices/tenants';
 import { defaultTenant } from './tenants/config/defaultTenant';
 import {
   act,
-  mockKeycloak,
+  flushPromises,
   prettyDOM,
   render,
+  renderAsync,
   RenderOptions,
   screen,
   waitFor,
 } from './utils/test-utils';
-import { renderDate } from './components/Table';
 import { vi } from 'vitest';
+import { useApiTenants } from './hooks/pims-api/useApiTenants';
 
 vi.mock('axios');
 const mockedAxios = vi.mocked(axios);
@@ -58,6 +59,9 @@ vi.mock('react', () => {
   React.Suspense = ({ children }: any) => children;
   return React as any;
 });
+
+vi.mock('./hooks/pims-api/useApiTenants');
+vi.mocked(useApiTenants).mockImplementation(() => ({ getSettings: jest.fn() }));
 
 // Need to mock this library for unit tests
 vi.mock('react-visibility-sensor', () => {
@@ -209,7 +213,7 @@ vi.mock('react-visibility-sensor', () => {
 });
 
 describe('PSP routing', () => {
-  const setup = (url = '/', renderOptions: RenderOptions = {}) => {
+  const setup = async (url = '/', renderOptions: RenderOptions = {}) => {
     history.replace(url);
 
     const defaultUserInfo = {
@@ -237,7 +241,7 @@ describe('PSP routing', () => {
       initialized: true,
     }));
 
-    const utils = render(
+    const utils = await renderAsync(
       <AuthStateContext.Provider value={{ ready: true }}>
         <AppRouter />
       </AuthStateContext.Provider>,
@@ -254,6 +258,7 @@ describe('PSP routing', () => {
 
   beforeEach(() => {
     vi.mocked(mockedAxios.get).mockResolvedValue({ data: {}, status: 200 });
+    vi.unmock('@/components/common/mapFSM/MapStateMachineContext');
   });
 
   afterEach(() => {
@@ -262,57 +267,75 @@ describe('PSP routing', () => {
 
   describe('public routes', () => {
     it('should redirect unauthenticated user to the login page', async () => {
-      const { getByText } = setup('/');
+      await waitFor(async () => {
+        await setup('/');
+      });
       await screen.findByText('v1.0.0.0');
-      expect(getByText('Sign into PIMS with your government issued IDIR')).toBeVisible();
+      expect(screen.getByText('Sign into PIMS with your government issued IDIR')).toBeVisible();
     });
 
     it('should show header and footer links', async () => {
-      const { getByRole } = setup('/');
+      await waitFor(async () => {
+        await setup('/');
+      });
       await screen.findByText('v1.0.0.0');
-      expect(getByRole('link', { name: 'Disclaimer' })).toHaveAttribute(
+      expect(screen.getByRole('link', { name: 'Disclaimer' })).toHaveAttribute(
         'href',
         'http://www.gov.bc.ca/gov/content/home/disclaimer',
       );
     });
 
     it('should show a page for non-supported browsers', async () => {
-      const { getByText } = setup('/ienotsupported');
+      await waitFor(async () => {
+        await setup('/ienotsupported');
+      });
       await screen.findByText('v1.0.0.0');
       expect(
-        getByText('Please use a supported internet browser such as Chrome, Firefox or Edge.'),
+        screen.getByText(
+          'Please use a supported internet browser such as Chrome, Firefox or Edge.',
+        ),
       ).toBeVisible();
     });
 
     it('should show the access denied page', async () => {
-      const { getByText, getByRole } = setup('/forbidden');
+      await waitFor(async () => {
+        await setup('/forbidden');
+      });
       await screen.findByText('v1.0.0.0');
-      expect(getByText('You do not have permission to view this page')).toBeVisible();
-      expect(getByRole('link', { name: 'Go back to the map' })).toBeVisible();
+      expect(screen.getByText('You do not have permission to view this page')).toBeVisible();
+      expect(screen.getByRole('link', { name: 'Go back to the map' })).toBeVisible();
     });
 
     it.each(['/page-not-found', '/fake-url'])(
       'should show the not found page when route is %s',
       async url => {
-        const { getByText, getByRole } = setup(url);
+        await waitFor(async () => {
+          await setup(url);
+        });
         await screen.findByText('v1.0.0.0');
-        expect(getByText('Page not found')).toBeVisible();
-        expect(getByRole('link', { name: 'Go back to the map' })).toBeVisible();
+        expect(screen.getByText('Page not found')).toBeVisible();
+        expect(screen.getByRole('link', { name: 'Go back to the map' })).toBeVisible();
       },
     );
   });
 
   describe('authenticated routes', () => {
     it('should display the property list view', async () => {
-      setup('/properties/list', { claims: [Claims.PROPERTY_VIEW] });
+      await act(async () => {
+        await setup('/properties/list', { claims: [Claims.PROPERTY_VIEW] });
+      });
       await screen.findByText('v1.0.0.0');
-      const lazyElement = await screen.findByText('Civic Address');
-      expect(lazyElement).toBeInTheDocument();
-      expect(document.title).toMatch(/View Inventory/i);
+      await waitFor(async () => {
+        const lazyElement = await screen.findByText('Civic Address');
+        expect(lazyElement).toBeInTheDocument();
+        expect(document.title).toMatch(/View Inventory/i);
+      });
     });
 
     it('should display the lease list view', async () => {
-      setup('/lease/list', { claims: [Claims.LEASE_VIEW] });
+      await act(async () => {
+        await setup('/lease/list', { claims: [Claims.LEASE_VIEW] });
+      });
       await screen.findByText('v1.0.0.0');
       const lazyElement = await screen.findByText('l-1234');
       expect(lazyElement).toBeInTheDocument();
@@ -320,7 +343,9 @@ describe('PSP routing', () => {
     });
 
     it('should display the acquisition list view', async () => {
-      setup('/acquisition/list', { claims: [Claims.ACQUISITION_VIEW] });
+      await act(async () => {
+        await setup('/acquisition/list', { claims: [Claims.ACQUISITION_VIEW] });
+      });
       await screen.findByText('v1.0.0.0');
       const lazyElement = await screen.findByText('test acq file');
       expect(lazyElement).toBeInTheDocument();
@@ -328,7 +353,9 @@ describe('PSP routing', () => {
     });
 
     it('should display the research list view', async () => {
-      setup('/research/list', { claims: [Claims.RESEARCH_VIEW] });
+      await act(async () => {
+        await setup('/research/list', { claims: [Claims.RESEARCH_VIEW] });
+      });
       await screen.findByText('v1.0.0.0');
       const lazyElement = await screen.findByText('test research file');
       expect(lazyElement).toBeInTheDocument();
@@ -336,7 +363,9 @@ describe('PSP routing', () => {
     });
 
     it('should display the admin users page at the expected route', async () => {
-      setup('/admin/users', { claims: [Claims.ADMIN_USERS] });
+      await act(async () => {
+        await setup('/admin/users', { claims: [Claims.ADMIN_USERS] });
+      });
       await screen.findByText('v1.0.0.0');
       const lazyElement = await screen.findByText('Smith');
       expect(lazyElement).toBeInTheDocument();
@@ -344,7 +373,9 @@ describe('PSP routing', () => {
     });
 
     it('should display the edit user page at the expected route', async () => {
-      setup('/admin/user/1', { claims: [Claims.ADMIN_USERS] });
+      await act(async () => {
+        await setup('/admin/user/1', { claims: [Claims.ADMIN_USERS] });
+      });
       await screen.findByText('v1.0.0.0');
       const lazyElement = await screen.findByDisplayValue('Smith');
 
