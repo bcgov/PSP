@@ -176,7 +176,7 @@ describe('Add Subdivision View', () => {
     expect(queryByText('111-111-111')).toBeNull();
   });
 
-  it.only('property area only has 3 digits', async () => {
+  it('property area only has 3 digits', async () => {
     const initialFormModel = new SubdivisionFormModel();
     getPrimaryAddressByPid.mockImplementation(() => Promise.resolve(undefined));
     const { queryByDisplayValue } = await setup({

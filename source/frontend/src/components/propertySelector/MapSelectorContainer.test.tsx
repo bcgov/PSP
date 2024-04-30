@@ -35,8 +35,6 @@ const testProperty: IMapProperty = {
   districtName: 'Okanagan-Shuswap',
 };
 
-vi.mock('@/components/common/mapFSM/MapStateMachineContext');
-
 describe('MapSelectorContainer component', () => {
   const setup = (renderOptions: RenderOptions & Partial<IMapSelectorContainerProps>) => {
     // render component under test

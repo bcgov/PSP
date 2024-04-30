@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import React, { CSSProperties, forwardRef, MouseEventHandler } from 'react';
+import { CSSProperties, forwardRef, MouseEventHandler } from 'react';
 import BootstrapButton, { ButtonProps as BootstrapButtonProps } from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
 import styled from 'styled-components';
