@@ -10,6 +10,7 @@ import { render, RenderOptions, userEvent } from '@/utils/test-utils';
 import AcquisitionFileTabs, { IAcquisitionFileTabsProps } from './AcquisitionFileTabs';
 import { useApiAcquisitionFile } from '@/hooks/pims-api/useApiAcquisitionFile';
 import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
+import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 
 // mock auth library
 
@@ -25,14 +26,16 @@ vi.mocked(useApiContacts).mockImplementation(
     } as any),
 );
 
-vi.mock('@/hooks/pims-api/useApiAcquisitionFile');
+vi.mock('@/hooks/repositories/useAcquisitionProvider');
 const getAcquisitionFileOwnersFn = vi.fn();
-vi.mocked(useApiAcquisitionFile).mockImplementation(
-  () =>
-    ({
-      getAcquisitionFileOwners: getAcquisitionFileOwnersFn,
-    } as any),
-);
+vi.mocked(useAcquisitionProvider).mockReturnValue({
+  getAcquisitionOwners: {
+    execute: getAcquisitionFileOwnersFn as any,
+    error: undefined,
+    loading: false,
+    response: undefined,
+  },
+} as ReturnType<typeof useAcquisitionProvider>);
 
 describe('AcquisitionFileTabs component', () => {
   // render component under test
