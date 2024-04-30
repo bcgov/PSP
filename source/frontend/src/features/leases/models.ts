@@ -1,5 +1,5 @@
 import { IMapProperty } from '@/components/propertySelector/models';
-import { PropertyAreaUnitTypes } from '@/constants/index';
+import { AreaUnitTypes } from '@/constants/index';
 import { IAutocompletePrediction } from '@/interfaces';
 import { ApiGen_Concepts_ConsultationLease } from '@/models/api/generated/ApiGen_Concepts_ConsultationLease';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
@@ -193,7 +193,7 @@ export class FormLeaseProperty {
   private constructor(leaseId?: number | null) {
     this.leaseId = leaseId ?? null;
     this.landArea = '0';
-    this.areaUnitTypeCode = PropertyAreaUnitTypes.Meter;
+    this.areaUnitTypeCode = AreaUnitTypes.SquareMeters;
   }
 
   public static fromApi(apiPropertyLease: ApiGen_Concepts_PropertyLease): FormLeaseProperty {
@@ -203,7 +203,7 @@ export class FormLeaseProperty {
     model.rowVersion = apiPropertyLease.rowVersion ?? undefined;
     model.name = apiPropertyLease.propertyName ?? undefined;
     model.landArea = apiPropertyLease.leaseArea?.toString() || '0';
-    model.areaUnitTypeCode = apiPropertyLease.areaUnitType?.id || PropertyAreaUnitTypes.Meter;
+    model.areaUnitTypeCode = apiPropertyLease.areaUnitType?.id || AreaUnitTypes.SquareMeters;
     return model;
   }
 
