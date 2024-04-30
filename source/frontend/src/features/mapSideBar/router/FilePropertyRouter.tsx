@@ -13,8 +13,9 @@ import { exists, isValidId } from '@/utils';
 import { SideBarContext } from '../context/sidebarContext';
 import { UpdatePropertyDetailsContainer } from '../property/tabs/propertyDetails/update/UpdatePropertyDetailsContainer';
 import UpdatePropertyResearchContainer from '../property/tabs/propertyResearch/update/UpdatePropertyResearchContainer';
-import { TakesUpdateContainer } from '../property/tabs/takes/update/TakesUpdateContainer';
-import { TakesUpdateForm } from '../property/tabs/takes/update/TakesUpdateForm';
+import TakesAddContainer from '../property/tabs/takes/add/TakesAddContainer';
+import { TakeForm } from '../property/tabs/takes/update/TakeForm';
+import { TakesUpdateContainer } from '../property/tabs/takes/update/TakeUpdateContainer';
 import { PropertyFileContainer } from '../shared/detail/PropertyFileContainer';
 
 export interface IFilePropertyRouterProps {
@@ -70,10 +71,18 @@ export const FilePropertyRouter: React.FC<IFilePropertyRouterProps> = props => {
             );
           })()}
         </Route>
-        <Route exact path={`${path}/${InventoryTabNames.takes}`}>
+        <Route exact path={`${path}/${InventoryTabNames.takes}/:takeId`}>
           <TakesUpdateContainer
             fileProperty={fileProperty}
-            View={TakesUpdateForm}
+            View={TakeForm}
+            ref={props.formikRef}
+            onSuccess={onChildSuccess}
+          />
+        </Route>
+        <Route exact path={`${path}/${InventoryTabNames.takes}`}>
+          <TakesAddContainer
+            fileProperty={fileProperty}
+            View={TakeForm}
             ref={props.formikRef}
             onSuccess={onChildSuccess}
           />

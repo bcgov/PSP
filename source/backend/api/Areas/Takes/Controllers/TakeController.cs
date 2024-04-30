@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using Azure;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Models.Concepts.Take;
 using Pims.Api.Policies;
 using Pims.Api.Services;
@@ -104,28 +106,98 @@ namespace Pims.Api.Areas.Takes.Controllers
         }
 
         /// <summary>
-        /// Update the list of takes associated to a property within an acquisition file.
+        /// Add the passed take to the acquisition property with the given id.
         /// </summary>
         /// <returns></returns>
-        [HttpPut("acquisition/property/{acquisitionFilePropertyId:long}")]
+        [HttpPost("acquisition/property/{acquisitionFilePropertyId:long}/takes")]
         [HasPermission(Permissions.AcquisitionFileEdit, Permissions.PropertyEdit)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(IEnumerable<TakeModel>), 200)]
+        [ProducesResponseType(typeof(TakeModel), 200)]
         [SwaggerOperation(Tags = new[] { "take" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
-        public IActionResult UpdateAcquisitionPropertyTakes(long acquisitionFilePropertyId, [FromBody] IEnumerable<TakeModel> takes)
+        public IActionResult AddAcquisitionPropertyTake(long acquisitionFilePropertyId, [FromBody] TakeModel take)
         {
             _logger.LogInformation(
                 "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
                 nameof(TakeController),
-                nameof(UpdateAcquisitionPropertyTakes),
+                nameof(AddAcquisitionPropertyTake),
+                User.GetUsername(),
+                DateTime.Now);
+
+            if (acquisitionFilePropertyId != take.PropertyAcquisitionFileId)
+            {
+                throw new BadRequestException("Invalid acquisition file property id.");
+            }
+
+            _logger.LogInformation("Dispatching to service: {Service}", _takeService.GetType());
+
+            var addedTake = _takeService.AddAcquisitionPropertyTake(acquisitionFilePropertyId, _mapper.Map<PimsTake>(take));
+            return new JsonResult(_mapper.Map<TakeModel>(addedTake));
+        }
+
+        /// <summary>
+        /// Update a take with the given take and acquisition file property id with the passed take.
+        /// </summary>
+        /// <returns></returns>
+        [HttpPut("acquisition/property/{acquisitionFilePropertyId:long}/takes/{takeId:long}")]
+        [HasPermission(Permissions.AcquisitionFileEdit, Permissions.PropertyEdit)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(TakeModel), 200)]
+        [SwaggerOperation(Tags = new[] { "take" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult UpdateAcquisitionPropertyTake(long acquisitionFilePropertyId, long takeId, [FromBody] TakeModel take)
+        {
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(TakeController),
+                nameof(UpdateAcquisitionPropertyTake),
+                User.GetUsername(),
+                DateTime.Now);
+
+            if (acquisitionFilePropertyId != take.PropertyAcquisitionFileId)
+            {
+                throw new BadRequestException("Invalid acquisition file property id.");
+            }
+            else if (takeId != take.Id)
+            {
+                throw new BadRequestException("Invalid take id.");
+            }
+
+            _logger.LogInformation("Dispatching to service: {Service}", _takeService.GetType());
+
+            var updatedTake = _takeService.UpdateAcquisitionPropertyTake(acquisitionFilePropertyId, _mapper.Map<PimsTake>(take));
+            return new JsonResult(_mapper.Map<TakeModel>(updatedTake));
+        }
+
+        /// <summary>
+        /// Delete a take with the given take id and acquisition file property id.
+        /// </summary>
+        [HttpDelete("acquisition/property/{acquisitionFilePropertyId:long}/takes/{takeId:long}")]
+        [HasPermission(Permissions.AcquisitionFileEdit, Permissions.PropertyEdit)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(void), 200)]
+        [SwaggerOperation(Tags = new[] { "take" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public void DeleteAcquisitionPropertyTake(long acquisitionFilePropertyId, long takeId)
+        {
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(TakeController),
+                nameof(DeleteAcquisitionPropertyTake),
                 User.GetUsername(),
                 DateTime.Now);
 
             _logger.LogInformation("Dispatching to service: {Service}", _takeService.GetType());
-
-            var updatedTakes = _takeService.UpdateAcquisitionPropertyTakes(acquisitionFilePropertyId, _mapper.Map<IEnumerable<PimsTake>>(takes));
-            return new JsonResult(_mapper.Map<IEnumerable<TakeModel>>(updatedTakes));
+            var existingTake = _takeService.GetById(takeId);
+            if (existingTake.PropertyAcquisitionFileId != acquisitionFilePropertyId)
+            {
+                throw new BadRequestException("Invalid acquisition file property id.");
+            }
+            var deleted = _takeService.DeleteAcquisitionPropertyTake(takeId);
+            if (!deleted)
+            {
+                throw new InvalidOperationException($"Failed to delete take {takeId}.");
+            }
         }
 
         /// <summary>
@@ -150,6 +222,34 @@ namespace Pims.Api.Areas.Takes.Controllers
 
             var count = _takeService.GetCountByPropertyId(propertyId);
             return new JsonResult(count);
+        }
+
+        /// <summary>
+        /// GGet a take by id.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("acquisition/property/{acquisitionFilePropertyId:long}/takes/{takeId:long}")]
+        [HasPermission(Permissions.AcquisitionFileView, Permissions.PropertyView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(int), 200)]
+        [SwaggerOperation(Tags = new[] { "take" })]
+        public IActionResult GetTakeByPropertyFileId(long acquisitionFilePropertyId, long takeId)
+        {
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(TakeController),
+                nameof(GetTakesCountByPropertyId),
+                User.GetUsername(),
+                DateTime.Now);
+
+            _logger.LogInformation("Dispatching to service: {Service}", _takeService.GetType());
+
+            var take = _takeService.GetById(takeId);
+            if(take.PropertyAcquisitionFileId != acquisitionFilePropertyId)
+            {
+                throw new BadRequestException("Invalid acquisition file property id.");
+            }
+            return new JsonResult(_mapper.Map<TakeModel>(take));
         }
 
         #endregion

@@ -6,8 +6,8 @@ import { getMockApiTakes } from '@/mocks/takes.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, getByName, render, RenderOptions, screen, userEvent } from '@/utils/test-utils';
 
-import { TakeModel } from './models';
-import TakesUpdateForm, { ITakesUpdateFormProps } from './TakesUpdateForm';
+import { TakeModel } from '../models';
+import TakeForm, { ITakesFormProps } from './TakeForm';
 import { ApiGen_CodeTypes_AcquisitionTakeStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_AcquisitionTakeStatusTypes';
 import { Claims, Roles } from '@/constants';
 
@@ -18,15 +18,14 @@ const storeState = {
 
 const onSubmit = vi.fn();
 
-describe('TakesUpdateForm component', () => {
+describe('TakeUpdateForm component', () => {
   // render component under test
-  const setup = (renderOptions: RenderOptions & { props?: Partial<ITakesUpdateFormProps> }) => {
+  const setup = (renderOptions: RenderOptions & { props?: Partial<ITakesFormProps> }) => {
     const utils = render(
-      <TakesUpdateForm
+      <TakeForm
         {...renderOptions.props}
         onSubmit={onSubmit}
-        fileProperty={renderOptions.props?.fileProperty ?? getMockApiPropertyFiles()[0]}
-        takes={renderOptions.props?.takes ?? getMockApiTakes().map(t => new TakeModel(t))}
+        take={renderOptions.props?.take ?? getMockApiTakes().map(t => new TakeModel(t))[0]}
         loading={renderOptions.props?.loading ?? false}
       />,
       {
@@ -57,55 +56,9 @@ describe('TakesUpdateForm component', () => {
     expect(spinner).toBeVisible();
   });
 
-  it('displays a title using name from the property name', () => {
-    const { getByText } = setup({});
-    const header = getByText(/007-723-385/);
-    expect(header).toBeVisible();
-  });
-
-  it('adds a take if the create a take button is clicked', async () => {
-    const { getByText } = setup({});
-    const createButton = getByText('Create a Take');
-    await act(async () => userEvent.click(createButton));
-
-    const takeTwo = getByText('New Take');
-    expect(takeTwo).toBeVisible();
-  });
-
-  it('displays modal when delete take button clicked', async () => {
-    const { getAllByTitle } = setup({});
-    const deleteButton = getAllByTitle('delete take')[0];
-    await act(async () => userEvent.click(deleteButton));
-
-    const confirmModal = await screen.findByText('Confirm Delete');
-    expect(confirmModal).toBeVisible();
-  });
-
-  it('removes take when delete is clicked and modal confirmed', async () => {
-    const { getAllByTitle, queryByText } = setup({});
-    const deleteButton = getAllByTitle('delete take')[0];
-    await act(async () => userEvent.click(deleteButton));
-
-    const continueButton = await screen.findAllByText('Yes');
-    await act(async () => userEvent.click(continueButton[continueButton.length - 1]));
-
-    expect(queryByText('Take 1')).toBeNull();
-  });
-
-  it('does not remove take when delete is clicked and modal cancelled', async () => {
-    const { getAllByTitle, queryByText } = setup({});
-    const deleteButton = getAllByTitle('delete take')[0];
-    await act(async () => userEvent.click(deleteButton));
-
-    const cancelButton = await screen.findByTitle('cancel-modal');
-    await act(async () => userEvent.click(cancelButton));
-
-    expect(queryByText('Take 1')).toBeVisible();
-  });
-
   it('displays a warning if radio button toggled from yes to no', async () => {
     const { getByTestId } = setup({});
-    const noButton = getByTestId('radio-takes.0.isnewhighwaydedication-no');
+    const noButton = getByTestId('radio-isnewhighwaydedication-no');
 
     await act(async () => userEvent.click(noButton));
 
@@ -115,8 +68,8 @@ describe('TakesUpdateForm component', () => {
 
   it('displays a warning if lease payable radio button toggled from no to yes', async () => {
     const { getByTestId } = setup({});
-    const noButton = getByTestId('radio-takes.0.isleasepayable-no');
-    const yesButton = getByTestId('radio-takes.0.isleasepayable-yes');
+    const noButton = getByTestId('radio-isleasepayable-no');
+    const yesButton = getByTestId('radio-isleasepayable-yes');
 
     await act(async () => userEvent.click(noButton));
 
@@ -131,7 +84,7 @@ describe('TakesUpdateForm component', () => {
 
   it('resets is new isNewHighwayDedication values if radio button toggled from yes to no', async () => {
     const { getByTestId, queryByDisplayValue } = setup({});
-    const noButton = getByTestId('radio-takes.0.isnewhighwaydedication-no');
+    const noButton = getByTestId('radio-isnewhighwaydedication-no');
     await act(async () => userEvent.click(noButton));
 
     expect(queryByDisplayValue('4046.86')).not.toBeNull();
@@ -143,7 +96,7 @@ describe('TakesUpdateForm component', () => {
 
   it('resets isNewInterestInSrw values if radio button toggled from yes to no', async () => {
     const { getByTestId, queryByDisplayValue } = setup({});
-    const noButton = getByTestId('radio-takes.0.isnewinterestinsrw-no');
+    const noButton = getByTestId('radio-isnewinterestinsrw-no');
     await act(async () => userEvent.click(noButton));
 
     expect(queryByDisplayValue('8093.71')).not.toBeNull();
@@ -157,7 +110,7 @@ describe('TakesUpdateForm component', () => {
 
   it('resets isNewlandAct values if radio button toggled from yes to no', async () => {
     const { getByTestId, queryByDisplayValue } = setup({});
-    const noButton = getByTestId('radio-takes.0.isnewlandact-no');
+    const noButton = getByTestId('radio-isnewlandact-no');
     await act(async () => userEvent.click(noButton));
 
     expect(queryByDisplayValue('12140.57')).not.toBeNull();
@@ -171,17 +124,17 @@ describe('TakesUpdateForm component', () => {
     const { queryByTestId } = setup({});
     await act(async () =>
       userEvent.selectOptions(
-        getByName('takes.0.landActTypeCode'),
+        getByName('landActTypeCode'),
         screen.getByTestId('select-option-Crown Grant'),
       ),
     );
 
-    expect(queryByTestId('takes.0.landActEndDt', { exact: false })).toBeNull();
+    expect(queryByTestId('landActEndDt', { exact: false })).toBeNull();
   });
 
   it('resets isNewLicenseToConstruct values if radio button toggled from yes to no', async () => {
     const { getByTestId, queryByDisplayValue } = setup({});
-    const noButton = getByTestId('radio-takes.0.isnewlicensetoconstruct-no');
+    const noButton = getByTestId('radio-isnewlicensetoconstruct-no');
     await act(async () => userEvent.click(noButton));
 
     expect(queryByDisplayValue('16187.43')).not.toBeNull();
@@ -193,7 +146,7 @@ describe('TakesUpdateForm component', () => {
 
   it('resets isThereSurplus values if radio button toggled from yes to no', async () => {
     const { getByTestId, queryByDisplayValue } = setup({});
-    const noButton = getByTestId('radio-takes.0.istheresurplus-no');
+    const noButton = getByTestId('radio-istheresurplus-no');
     await act(async () => userEvent.click(noButton));
 
     expect(queryByDisplayValue('20234.28')).not.toBeNull();
@@ -210,20 +163,20 @@ describe('TakesUpdateForm component', () => {
 
     const { queryByTitle, getByTestId } = setup({
       props: {
-        takes: [takeModel],
+        take: takeModel,
       },
     });
 
     const deleteButton = queryByTitle('delete take');
     expect(deleteButton).toBeNull();
 
-    const noButton = getByTestId('radio-takes.0.istheresurplus-no');
+    const noButton = getByTestId('radio-istheresurplus-no');
     expect(noButton).toBeDisabled();
   });
 
   it('resets isLeasePayable values if radio button toggled from yes to no', async () => {
     const { getByTestId, queryByDisplayValue } = setup({});
-    const noButton = getByTestId('radio-takes.0.isleasepayable-no');
+    const noButton = getByTestId('radio-isleasepayable-no');
     await act(async () => userEvent.click(noButton));
 
     expect(queryByDisplayValue('20231.28')).not.toBeNull();
@@ -231,22 +184,5 @@ describe('TakesUpdateForm component', () => {
     await act(async () => userEvent.click(confirmButton));
 
     expect(queryByDisplayValue('20231.28')).toBeNull();
-  });
-
-  it('shows the edit button when the take has been completed for Admin users', () => {
-    let completeTake = getMockApiTakes()[0];
-    const takeModel = new TakeModel(completeTake);
-    takeModel.takeStatusTypeCode = ApiGen_CodeTypes_AcquisitionTakeStatusTypes.COMPLETE;
-
-    const { queryByTitle } = setup({
-      props: {
-        takes: [takeModel],
-      },
-      claims: [Claims.ACQUISITION_EDIT],
-      roles: [Roles.SYSTEM_ADMINISTRATOR],
-    });
-
-    const deleteButton = queryByTitle('delete take');
-    expect(deleteButton).toBeInTheDocument();
   });
 });

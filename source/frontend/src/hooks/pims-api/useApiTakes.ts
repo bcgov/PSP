@@ -20,10 +20,22 @@ export const useApiTakes = () => {
         api.get<ApiGen_Concepts_Take[]>(`/takes/acquisition/${fileId}/property/${propertyId}`),
       getTakesCountByPropertyId: (propertyId: number) =>
         api.get<number>(`/takes/property/${propertyId}/count`),
-      updateTakesCountByPropertyId: (
-        acquisitionFilePropertyId: number,
-        takes: ApiGen_Concepts_Take[],
-      ) => api.put<number>(`/takes/acquisition/property/${acquisitionFilePropertyId}`, takes),
+      getTakeById: (acquisitionFilePropertyId: number, takeId: number) =>
+        api.get<ApiGen_Concepts_Take>(
+          `/takes/acquisition/property/${acquisitionFilePropertyId}/takes/${takeId}`,
+        ),
+      addTakeByFilePropertyId: (acquisitionFilePropertyId: number, take: ApiGen_Concepts_Take) =>
+        api.post<ApiGen_Concepts_Take>(
+          `/takes/acquisition/property/${acquisitionFilePropertyId}/takes`,
+          take,
+        ),
+      updateTakeByFilePropertyId: (acquisitionFilePropertyId: number, take: ApiGen_Concepts_Take) =>
+        api.put<ApiGen_Concepts_Take>(
+          `/takes/acquisition/property/${acquisitionFilePropertyId}/takes/${take.id}`,
+          take,
+        ),
+      deleteTakeByFilePropertyId: (acquisitionFilePropertyId: number, takeId: number) =>
+        api.delete(`/takes/acquisition/property/${acquisitionFilePropertyId}/takes/${takeId}`),
     }),
     [api],
   );

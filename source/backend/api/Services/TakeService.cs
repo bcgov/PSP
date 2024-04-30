@@ -43,6 +43,13 @@ namespace Pims.Api.Services
             _propertyRepository = propertyRepository;
         }
 
+        public PimsTake GetById(long takeId)
+        {
+            _logger.LogInformation("Getting take with takeId {takeId}", takeId);
+            _user.ThrowIfNotAuthorized(Permissions.PropertyView, Permissions.AcquisitionFileView);
+            return _takeRepository.GetById(takeId);
+        }
+
         public IEnumerable<PimsTake> GetByFileId(long fileId)
         {
             _logger.LogInformation("Getting takes with fileId {fileId}", fileId);
@@ -64,65 +71,116 @@ namespace Pims.Api.Services
             return _takeRepository.GetCountByPropertyId(propertyId);
         }
 
-        public IEnumerable<PimsTake> UpdateAcquisitionPropertyTakes(long acquisitionFilePropertyId, IEnumerable<PimsTake> takes)
+        public PimsTake AddAcquisitionPropertyTake(long acquisitionFilePropertyId, PimsTake take)
         {
-            _logger.LogInformation("updating takes with propertyFileId {propertyFileId}", acquisitionFilePropertyId);
+            _logger.LogInformation("adding take with propertyFileId {propertyFileId}", acquisitionFilePropertyId);
             _user.ThrowIfNotAuthorized(Permissions.PropertyView, Permissions.AcquisitionFileView);
 
-            var currentAcquistionFile = _acqFileRepository.GetByAcquisitionFilePropertyId(acquisitionFilePropertyId);
+            ValidateTakeRules(acquisitionFilePropertyId, take);
+
+            // Add take
+            var addedTake = _takeRepository.AddTake(take);
+
+            RecalculateOwnership(acquisitionFilePropertyId, take);
+
+            _takeRepository.CommitTransaction();
+            return addedTake;
+        }
+
+        public PimsTake UpdateAcquisitionPropertyTake(long acquisitionFilePropertyId, PimsTake take)
+        {
+            _logger.LogInformation("updating take with propertyFileId {propertyFileId}", acquisitionFilePropertyId);
+            _user.ThrowIfNotAuthorized(Permissions.PropertyView, Permissions.AcquisitionFileView);
+
+            ValidateTakeRules(acquisitionFilePropertyId, take);
+
+            // Update take
+            var updatedTake = _takeRepository.UpdateTake(take);
+
+            RecalculateOwnership(acquisitionFilePropertyId, take);
+
+            _takeRepository.CommitTransaction();
+            return updatedTake;
+        }
+
+        public bool DeleteAcquisitionPropertyTake(long takeId)
+        {
+            _logger.LogInformation("deleting take with {takeId}", takeId);
+            _user.ThrowIfNotAuthorized(Permissions.PropertyView, Permissions.AcquisitionFileView);
+
+            var takeToDelete = _takeRepository.GetById(takeId);
+            var currentAcquisitionFile = _acqFileRepository.GetByAcquisitionFilePropertyId(takeToDelete.PropertyAcquisitionFileId);
+            if ((!_statusSolver.CanEditTakes(Enum.Parse<AcquisitionStatusTypes>(currentAcquisitionFile.AcquisitionFileStatusTypeCode)) || takeToDelete.TakeStatusTypeCode == AcquisitionTakeStatusTypes.COMPLETE.ToString())
+                && !_user.HasPermission(Permissions.SystemAdmin))
+            {
+                throw new BusinessRuleViolationException("Retired records are referenced for historical purposes only and cannot be edited or deleted. If the take has been added in error, contact your system administrator to re-open the file, which will allow take deletion.");
+            }
+            var wasTakeDeleted = _takeRepository.TryDeleteTake(takeId);
+
+            if (wasTakeDeleted)
+            {
+                RecalculateOwnership(takeToDelete.PropertyAcquisitionFileId, null);
+            }
+
+            _takeRepository.CommitTransaction();
+            return wasTakeDeleted;
+        }
+
+        private void ValidateTakeRules(long acquisitionFilePropertyId, PimsTake take)
+        {
             var currentFilePropertyTakes = _takeRepository.GetAllByPropertyAcquisitionFileId(acquisitionFilePropertyId);
 
+            var currentAcquistionFile = _acqFileRepository.GetByAcquisitionFilePropertyId(acquisitionFilePropertyId);
             var currentAcquisitionStatus = Enum.Parse<AcquisitionStatusTypes>(currentAcquistionFile.AcquisitionFileStatusTypeCode);
 
             if (!_statusSolver.CanEditTakes(currentAcquisitionStatus) && !_user.HasPermission(Permissions.SystemAdmin))
             {
                 throw new BusinessRuleViolationException("Retired records are referenced for historical purposes only and cannot be edited or deleted. If the take has been added in error, contact your system administrator to re-open the file, which will allow take deletion.");
             }
-            else if (takes.Any(t => t.TakeStatusTypeCode == AcquisitionTakeStatusTypes.COMPLETE.ToString() && t.CompletionDt == null))
+            else if (take.TakeStatusTypeCode == AcquisitionTakeStatusTypes.COMPLETE.ToString() && take.CompletionDt == null)
             {
                 throw new BusinessRuleViolationException("A completed take must have a completion date.");
             }
-            else if (takes.Any(t => t.IsNewLandAct && t.LandActEndDt != null && (t.LandActTypeCode == LandActTypes.CROWN_GRANT.ToString() || t.LandActTypeCode == LandActTypes.TRANSFER_OF_ADMIN_AND_CONTROL.ToString())))
+            else if (take.IsNewLandAct && take.LandActEndDt != null && (take.LandActTypeCode == LandActTypes.CROWN_GRANT.ToString() || take.LandActTypeCode == LandActTypes.TRANSFER_OF_ADMIN_AND_CONTROL.ToString()))
             {
                 throw new BusinessRuleViolationException("'Crown Grant' and 'Transfer' Land Acts cannot have an end date.");
             }
             else
             {
-                // Complete Takes can only be deleted or set to InProgress by Admins when File is Active/Draft
+                // Complete Takes can only be set to InProgress by Admins when File is Active/Draft
                 var currentCompleteTakes = currentFilePropertyTakes
                     .Where(x => x.TakeStatusTypeCode == AcquisitionTakeStatusTypes.COMPLETE.ToString()).ToList();
 
                 if (currentCompleteTakes.Count > 0)
                 {
-                    foreach (var completeTake in currentCompleteTakes)
+                    var updatedTake = currentCompleteTakes.FirstOrDefault(x => x.TakeId == take.TakeId);
+                    if (!_user.HasPermission(Permissions.SystemAdmin) && (updatedTake is not null && updatedTake.TakeStatusTypeCode != take.TakeStatusTypeCode))
                     {
-                        // Validate that the current completed take can only by updated by a sysadmin
-                        var updatedTake = takes.FirstOrDefault(x => x.TakeId == completeTake.TakeId);
-                        if (!_user.HasPermission(Permissions.SystemAdmin) && (updatedTake is null || (updatedTake is not null && updatedTake.TakeStatusTypeCode != completeTake.TakeStatusTypeCode)))
-                        {
-                            throw new BusinessRuleViolationException("Retired records are referenced for historical purposes only and cannot be edited or deleted. If the take has been added in error, contact your system administrator to re-open the file, which will allow take deletion.");
-                        }
+                        throw new BusinessRuleViolationException("Retired records are referenced for historical purposes only and cannot be edited or deleted. If the take has been added in error, contact your system administrator to re-open the file, which will allow take deletion.");
                     }
                 }
             }
+        }
 
-            // Update takes
-            _takeRepository.UpdateAcquisitionPropertyTakes(acquisitionFilePropertyId, takes);
-
+        private void RecalculateOwnership(long acquisitionFilePropertyId, PimsTake take)
+        {
             // Evaluate if the property needs to be updated
             var currentProperty = _acqFileRepository.GetProperty(acquisitionFilePropertyId);
             var currentTakes = _takeRepository.GetAllByPropertyId(currentProperty.PropertyId);
 
-            var completedTakes = currentTakes.Union(takes)
+            var allTakes = currentTakes;
+            if (take != null)
+            {
+                allTakes = allTakes.Append(take);
+            }
+
+            var completedTakes = allTakes
                 .Where(x => x.TakeStatusTypeCode == AcquisitionTakeStatusTypes.COMPLETE.ToString()).ToList();
 
-            if (_takeInteractionSolver.ResultsInOwnedProperty(completedTakes))
+            if (completedTakes.Count > 0 && _takeInteractionSolver.ResultsInOwnedProperty(completedTakes))
             {
                 _propertyRepository.TransferFileProperty(currentProperty, true);
             }
-
-            _takeRepository.CommitTransaction();
-            return _takeRepository.GetAllByPropertyAcquisitionFileId(acquisitionFilePropertyId);
         }
     }
 }

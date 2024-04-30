@@ -13,9 +13,28 @@ export const useTakesRepository = () => {
   const {
     getTakesByAcqFileId,
     getTakesCountByPropertyId,
-    updateTakesCountByPropertyId,
+    addTakeByFilePropertyId,
+    getTakeById,
+    updateTakeByFilePropertyId,
+    deleteTakeByFilePropertyId,
     getTakesByPropertyId,
   } = useApiTakes();
+
+  const getTakeByIdApi = useApiRequestWrapper<
+    (
+      acquisitionFilePropertyId: number,
+      takeId: number,
+    ) => Promise<AxiosResponse<ApiGen_Concepts_Take, any>>
+  >({
+    requestFunction: useCallback(
+      async (acquisitionFilePropertyId: number, takeId: number) =>
+        await getTakeById(acquisitionFilePropertyId, takeId),
+      [getTakeById],
+    ),
+    requestName: 'GetTakeByIdApi',
+    onSuccess: useAxiosSuccessHandler(),
+    onError: useAxiosErrorHandler(),
+  });
 
   const getTakesByFileIdApi = useApiRequestWrapper<
     (fileId: number) => Promise<AxiosResponse<ApiGen_Concepts_Take[], any>>
@@ -53,16 +72,33 @@ export const useTakesRepository = () => {
     onError: useAxiosErrorHandler(),
   });
 
-  const updateTakesByAcquisitionPropertyIdApi = useApiRequestWrapper<
+  const addTakeByAcquisitionPropertyIdApi = useApiRequestWrapper<
     (
       acquisitionFilePropertyId: number,
-      takes: ApiGen_Concepts_Take[],
-    ) => Promise<AxiosResponse<number, any>>
+      take: ApiGen_Concepts_Take,
+    ) => Promise<AxiosResponse<ApiGen_Concepts_Take, any>>
   >({
     requestFunction: useCallback(
-      async (acquisitionFilePropertyId: number, takes: ApiGen_Concepts_Take[]) =>
-        await updateTakesCountByPropertyId(acquisitionFilePropertyId, takes),
-      [updateTakesCountByPropertyId],
+      async (acquisitionFilePropertyId: number, take: ApiGen_Concepts_Take) =>
+        await addTakeByFilePropertyId(acquisitionFilePropertyId, take),
+      [addTakeByFilePropertyId],
+    ),
+    requestName: 'AddTakeByAcquisitionPropertyIdApi',
+    onSuccess: useAxiosSuccessHandler(),
+    onError: useAxiosErrorHandler(),
+    throwError: true,
+  });
+
+  const updateTakeByAcquisitionPropertyIdApi = useApiRequestWrapper<
+    (
+      acquisitionFilePropertyId: number,
+      take: ApiGen_Concepts_Take,
+    ) => Promise<AxiosResponse<ApiGen_Concepts_Take, any>>
+  >({
+    requestFunction: useCallback(
+      async (acquisitionFilePropertyId: number, take: ApiGen_Concepts_Take) =>
+        await updateTakeByFilePropertyId(acquisitionFilePropertyId, take),
+      [updateTakeByFilePropertyId],
     ),
     requestName: 'UpdateTakesByAcquisitionPropertyId',
     onSuccess: useAxiosSuccessHandler(),
@@ -70,18 +106,38 @@ export const useTakesRepository = () => {
     throwError: true,
   });
 
+  const deleteTakeByAcquisitionPropertyIdApi = useApiRequestWrapper<
+    (acquisitionFilePropertyId: number, takeId: number) => Promise<AxiosResponse<number, any>>
+  >({
+    requestFunction: useCallback(
+      async (acquisitionFilePropertyId: number, takeId: number) =>
+        await deleteTakeByFilePropertyId(acquisitionFilePropertyId, takeId),
+      [deleteTakeByFilePropertyId],
+    ),
+    requestName: 'deleteTakeByAcquisitionPropertyIdApi',
+    onSuccess: useAxiosSuccessHandler(),
+    onError: useAxiosErrorHandler(),
+    throwError: true,
+  });
+
   return useMemo(
     () => ({
+      getTakeById: getTakeByIdApi,
       getTakesByFileId: getTakesByFileIdApi,
       getTakesByPropertyId: getTakesByPropertyApi,
       getTakesCountByPropertyId: getTakesCountByPropertyIdApi,
-      updateTakesByAcquisitionPropertyId: updateTakesByAcquisitionPropertyIdApi,
+      addTakeByAcquisitionPropertyId: addTakeByAcquisitionPropertyIdApi,
+      updateTakeByAcquisitionPropertyId: updateTakeByAcquisitionPropertyIdApi,
+      deleteTakeByAcquisitionPropertyId: deleteTakeByAcquisitionPropertyIdApi,
     }),
     [
+      getTakeByIdApi,
       getTakesByFileIdApi,
       getTakesByPropertyApi,
       getTakesCountByPropertyIdApi,
-      updateTakesByAcquisitionPropertyIdApi,
+      addTakeByAcquisitionPropertyIdApi,
+      updateTakeByAcquisitionPropertyIdApi,
+      deleteTakeByAcquisitionPropertyIdApi,
     ],
   );
 };
