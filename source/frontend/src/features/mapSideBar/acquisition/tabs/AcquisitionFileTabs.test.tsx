@@ -66,7 +66,7 @@ describe('AcquisitionFileTabs component', () => {
     vi.clearAllMocks();
   });
 
-  it('matches snapshot', () => {
+  it('matches snapshot', async () => {
     const { asFragment } = setup(
       {
         acquisitionFile: mockAcquisitionFileResponse(),
@@ -74,10 +74,11 @@ describe('AcquisitionFileTabs component', () => {
       },
       { claims: [Claims.DOCUMENT_VIEW] },
     );
+    await act(async () => {});
     expect(asFragment()).toMatchSnapshot();
   });
 
-  it('has a documents tab', () => {
+  it('has a documents tab', async () => {
     const { getByText } = setup(
       {
         acquisitionFile: mockAcquisitionFileResponse(),
@@ -85,6 +86,7 @@ describe('AcquisitionFileTabs component', () => {
       },
       { claims: [Claims.DOCUMENT_VIEW] },
     );
+    await act(async () => {});
 
     const tab = getByText('Documents');
     expect(tab).toBeVisible();
@@ -106,17 +108,18 @@ describe('AcquisitionFileTabs component', () => {
     expect(history.location.pathname).toBe(`/blah/${FileTabType.DOCUMENTS}`);
   });
 
-  it('hides the expropriation tab when the Acquisition file type is "Consensual Agreement"', () => {
+  it('hides the expropriation tab when the Acquisition file type is "Consensual Agreement"', async () => {
     const { queryByText } = setup({
       acquisitionFile: mockAcquisitionFileResponse(),
       defaultTab: FileTabType.FILE_DETAILS,
     });
+    await act(async () => {});
 
     const expropriationButton = queryByText('Expropriation');
     expect(expropriationButton).not.toBeInTheDocument();
   });
 
-  it('shows the expropriation tab when the Acquisition file type is "Section 3"', () => {
+  it('shows the expropriation tab when the Acquisition file type is "Section 3"', async () => {
     const mockAcquisitionFile = mockAcquisitionFileResponse();
     mockAcquisitionFile.acquisitionTypeCode = {
       id: 'SECTN3',
@@ -129,12 +132,13 @@ describe('AcquisitionFileTabs component', () => {
       acquisitionFile: mockAcquisitionFile,
       defaultTab: FileTabType.FILE_DETAILS,
     });
+    await act(async () => {});
 
     const editButton = queryByText('Expropriation');
     expect(editButton).toBeInTheDocument();
   });
 
-  it('shows the expropriation tab when the Acquisition file type is "Section 6"', () => {
+  it('shows the expropriation tab when the Acquisition file type is "Section 6"', async () => {
     const mockAcquisitionFile = mockAcquisitionFileResponse();
     mockAcquisitionFile.acquisitionTypeCode = {
       id: 'SECTN6',
@@ -147,6 +151,7 @@ describe('AcquisitionFileTabs component', () => {
       acquisitionFile: mockAcquisitionFile,
       defaultTab: FileTabType.FILE_DETAILS,
     });
+    await act(async () => {});
 
     const editButton = queryByText('Expropriation');
     expect(editButton).toBeInTheDocument();
