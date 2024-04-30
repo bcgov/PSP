@@ -25,6 +25,7 @@ import { tenantsSlice } from './store/slices/tenants';
 import { defaultTenant } from './tenants/config/defaultTenant';
 import {
   act,
+  flushPromises,
   renderAsync,
   RenderOptions,
   screen,
