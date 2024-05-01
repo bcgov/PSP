@@ -1,3 +1,5 @@
+import isNumber from 'lodash/isNumber';
+
 import { IMapProperty } from '@/components/propertySelector/models';
 import { AreaUnitTypes } from '@/constants/index';
 import { IAutocompletePrediction } from '@/interfaces';
@@ -8,12 +10,11 @@ import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { ILookupCode } from '@/store/slices/lookupCodes/interfaces/ILookupCode';
 import { NumberFieldValue } from '@/typings/NumberFieldValue';
-import { exists, isValidId, isValidIsoDateTime, isValidString } from '@/utils';
+import { exists, isValidId, isValidIsoDateTime } from '@/utils';
 import {
   emptyStringtoNullable,
   fromTypeCode,
   stringToNull,
-  stringToUndefined,
   toTypeCodeNullable,
 } from '@/utils/formUtils';
 
@@ -187,12 +188,12 @@ export class FormLeaseProperty {
   leaseId: number | null;
   rowVersion?: number;
   name?: string;
-  landArea: string;
+  landArea: number;
   areaUnitTypeCode: string;
 
   private constructor(leaseId?: number | null) {
     this.leaseId = leaseId ?? null;
-    this.landArea = '0';
+    this.landArea = 0;
     this.areaUnitTypeCode = AreaUnitTypes.SquareMeters;
   }
 
@@ -202,7 +203,7 @@ export class FormLeaseProperty {
     model.id = apiPropertyLease.id;
     model.rowVersion = apiPropertyLease.rowVersion ?? undefined;
     model.name = apiPropertyLease.propertyName ?? undefined;
-    model.landArea = apiPropertyLease.leaseArea?.toString() || '0';
+    model.landArea = apiPropertyLease.leaseArea ?? 0;
     model.areaUnitTypeCode = apiPropertyLease.areaUnitType?.id || AreaUnitTypes.SquareMeters;
     return model;
   }
@@ -214,10 +215,6 @@ export class FormLeaseProperty {
   }
 
   public static toApi(formLeaseProperty: FormLeaseProperty): ApiGen_Concepts_PropertyLease {
-    const landArea = stringToUndefined(formLeaseProperty.landArea);
-    const numberLeaseArea: number | undefined = isValidString(landArea)
-      ? Number(landArea)
-      : undefined;
     return {
       id: formLeaseProperty.id ?? 0,
       fileId: formLeaseProperty.leaseId ?? 0,
@@ -225,11 +222,10 @@ export class FormLeaseProperty {
       property: formLeaseProperty.property?.toApi() ?? null,
       propertyId: formLeaseProperty.property?.id ?? 0,
       propertyName: formLeaseProperty.name ?? null,
-      leaseArea: numberLeaseArea ?? null,
-      areaUnitType:
-        numberLeaseArea !== undefined
-          ? toTypeCodeNullable(formLeaseProperty.areaUnitTypeCode) ?? null
-          : null,
+      leaseArea: isNumber(formLeaseProperty.landArea) ? formLeaseProperty.landArea : 0,
+      areaUnitType: isNumber(formLeaseProperty.landArea)
+        ? toTypeCodeNullable(formLeaseProperty.areaUnitTypeCode) ?? null
+        : null,
       displayOrder: null,
       ...getEmptyBaseAudit(formLeaseProperty.rowVersion),
     };
