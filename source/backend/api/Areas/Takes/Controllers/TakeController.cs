@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -114,7 +113,7 @@ namespace Pims.Api.Areas.Takes.Controllers
         [HttpPost("acquisition/property/{acquisitionFilePropertyId:long}/takes")]
         [HasPermission(Permissions.AcquisitionFileEdit, Permissions.PropertyEdit)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(TakeModel), 200)]
+        [ProducesResponseType(typeof(TakeModel), 201)]
         [SwaggerOperation(Tags = new[] { "take" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult AddAcquisitionPropertyTake(long acquisitionFilePropertyId, [FromBody] TakeModel take)

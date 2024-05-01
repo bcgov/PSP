@@ -43,7 +43,7 @@ const mockUpdateApi = {
   response: undefined,
   execute: vi.fn(),
   loading: false,
-  status: 200,
+  status: 201,
 };
 
 vi.mock('../repositories/useTakesRepository');
