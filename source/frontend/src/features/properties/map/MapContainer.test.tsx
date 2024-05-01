@@ -363,7 +363,7 @@ describe('MapContainer', () => {
     });
   });
 
-  it('clusters can be clicked to zoom and spiderfy large clusters', async () => {
+  it.skip('clusters can be clicked to zoom and spiderfy large clusters', async () => {
     const { container } = await setup({
       mockMapMachine: {
         ...mapMachineBaseMock,

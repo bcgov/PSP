@@ -12,6 +12,7 @@ import {
   RenderOptions,
   waitFor,
   waitForElementToBeRemoved,
+  screen,
 } from '@/utils/test-utils';
 
 import { ContactListPage } from './ContactListPage';
@@ -75,10 +76,9 @@ describe('Contact List View', () => {
   });
 
   it('matches snapshot', async () => {
-    setupMockSearch();
-    const { asFragment, getByText } = setup();
-    await act(async () => {});
     setupMockSearch([defaultPersonSearchResult]);
+    const { asFragment } = setup();
+    await act(async () => {});
 
     const fragment = await waitFor(() => asFragment());
     expect(fragment).toMatchSnapshot();

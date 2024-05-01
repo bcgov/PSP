@@ -11,9 +11,11 @@ import viteTsconfigPaths from 'vite-tsconfig-paths';
 export default defineConfig({
   test: {
     setupFiles: ['./src/setupTests.ts'],
+    clearMocks: true,
     environment: 'jsdom',
     coverage: {
       reporter: [['lcov'], ['text'], ['json', { file: 'coverage-final.json' }]],
+      reportOnFailure: false,
       include: ['src/**/*.{js,jsx,ts,tsx}'],
       exclude: [
         'node_modules/**',
@@ -33,9 +35,9 @@ export default defineConfig({
     testTimeout: 10000,
     reporters: ['default', ['vitest-sonar-reporter', { outputFile: 'test-report.xml' }]],
     poolOptions: {
-      threads: {
+      vmThreads: {
+        memoryLimit: '500M',
         useAtomics: true,
-        isolate: false,
       },
     },
     deps: {
@@ -46,7 +48,7 @@ export default defineConfig({
       },
     },
     pool: 'vmThreads',
-    maxConcurrency: 8,
+    maxConcurrency: 32,
   },
   resolve: {
     alias: [{ find: '@', replacement: path.resolve(__dirname, 'src') }],

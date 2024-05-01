@@ -49,7 +49,7 @@ Scenario: 09. Research File Details
 	Then A new Research File is created successfully
 
 Scenario: 10. Research File Properties
-	Given I create a basic Research File from row number 9
+	Given I create a basic Research File from row number 10
 	When I add Properties to a Research File
 	Then A new Research File is created successfully
 

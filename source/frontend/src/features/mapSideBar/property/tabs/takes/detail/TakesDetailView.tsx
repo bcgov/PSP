@@ -1,20 +1,25 @@
+import { Col, Row } from 'react-bootstrap';
+import { FaPlus, FaTrash } from 'react-icons/fa';
 import styled from 'styled-components';
 
+import { StyledRemoveLinkButton } from '@/components/common/buttons';
 import YesNoButtons from '@/components/common/buttons/YesNoButtons';
 import EditButton from '@/components/common/EditButton';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledEditWrapper, StyledSummarySection } from '@/components/common/Section/SectionStyles';
+import { SectionListHeader } from '@/components/common/SectionListHeader';
 import { H2 } from '@/components/common/styles';
 import TooltipIcon from '@/components/common/TooltipIcon';
 import AreaContainer from '@/components/measurements/AreaContainer';
+import { Claims, Roles } from '@/constants';
 import * as API from '@/constants/API';
-import { Claims } from '@/constants/claims';
 import { isAcquisitionFile } from '@/features/mapSideBar/acquisition/add/models';
 import StatusUpdateSolver from '@/features/mapSideBar/acquisition/tabs/fileDetails/detail/statusUpdateSolver';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
+import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
 import { ApiGen_CodeTypes_AcquisitionTakeStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_AcquisitionTakeStatusTypes';
 import { ApiGen_CodeTypes_LandActTypes } from '@/models/api/generated/ApiGen_CodeTypes_LandActTypes';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
@@ -28,7 +33,9 @@ export interface ITakesDetailViewProps {
   allTakesCount: number;
   loading: boolean;
   fileProperty: ApiGen_Concepts_FileProperty;
-  onEdit: (edit: boolean) => void;
+  onEdit: (takeId: number) => void;
+  onAdd: () => void;
+  onDelete: (takeId: number) => void;
 }
 
 export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = ({
@@ -37,6 +44,8 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
   fileProperty,
   loading,
   onEdit,
+  onAdd,
+  onDelete,
 }) => {
   const cancelledTakes = takes?.filter(
     t => t.takeStatusTypeCode?.id === ApiGen_CodeTypes_AcquisitionTakeStatusTypes.CANCELLED,
@@ -47,14 +56,21 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
   const takesNotInFile = allTakesCount - (takes?.length ?? 0);
 
   const { getCodeById } = useLookupCodeHelpers();
-  const { hasClaim } = useKeycloakWrapper();
+  const { hasClaim, hasRole } = useKeycloakWrapper();
+  const { setModalContent, setDisplayModal } = useModalContext();
 
   const file = fileProperty.file;
 
   const statusSolver = new StatusUpdateSolver(isAcquisitionFile(file) ? file : null);
 
-  const canEditDetails = () => {
-    if (statusSolver.canEditDetails()) {
+  const canEditTakes = (take: ApiGen_Concepts_Take) => {
+    if (
+      (statusSolver.canEditTakes() &&
+        take.takeStatusTypeCode.id !==
+          ApiGen_CodeTypes_AcquisitionTakeStatusTypes.COMPLETE.toString() &&
+        hasClaim(Claims.ACQUISITION_EDIT)) ||
+      hasRole(Roles.SYSTEM_ADMINISTRATOR)
+    ) {
       return true;
     }
     return false;
@@ -63,22 +79,6 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
   return (
     <StyledSummarySection>
       <LoadingBackdrop show={loading} parentScreen={true} />
-      <StyledEditWrapper>
-        {onEdit !== undefined && hasClaim(Claims.PROPERTY_EDIT) && canEditDetails() ? (
-          <EditButton
-            title="Edit takes"
-            onClick={() => {
-              onEdit(true);
-            }}
-          />
-        ) : null}
-        {!canEditDetails() && (
-          <TooltipIcon
-            toolTipId={`${fileProperty?.fileId || 0}-summary-cannot-edit-tooltip`}
-            toolTip="Retired records are referenced for historical purposes only and cannot be edited or deleted. If the take has been added in error, contact your system administrator to re-open the file, which will allow take deletion."
-          />
-        )}
-      </StyledEditWrapper>
       <Section>
         <H2>Takes for {getApiPropertyName(fileProperty.property).value}</H2>
         <StyledBlueSection>
@@ -99,182 +99,234 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
           </SectionField>
         </StyledBlueSection>
       </Section>
-      {[...nonCancelledTakes, ...cancelledTakes].map((take, index) => {
-        return (
-          <Section key={take.id} isCollapsable initiallyExpanded data-testid={`take-${index}`}>
-            <H2>Take {index + 1}</H2>
-            <SectionField label="Take added on">
-              {prettyFormatUTCDate(take.appCreateTimestamp)}
-            </SectionField>
-            <SectionField label="Take type *">
-              {take.takeTypeCode?.id ? getCodeById(API.TAKE_TYPES, take.takeTypeCode.id) : ''}
-            </SectionField>
-            <SectionField label="Take status *">
-              {take.takeStatusTypeCode?.id
-                ? getCodeById(API.TAKE_STATUS_TYPES, take.takeStatusTypeCode.id)
-                : ''}
-            </SectionField>
-            {take.completionDt && (
-              <SectionField label="Completion date *">
-                {prettyFormatDate(take.completionDt)}
-              </SectionField>
-            )}
-            <SectionField label="Site contamination">
-              {take.takeSiteContamTypeCode?.id
-                ? getCodeById(API.TAKE_SITE_CONTAM_TYPES, take.takeSiteContamTypeCode.id)
-                : ''}
-            </SectionField>
-            <SectionField label="Description" labelWidth="12">
-              {take.description}
-            </SectionField>
-            <StyledNoTabSection header="Area">
-              <StyledBorderSection>
-                <SectionField
-                  label="Is there a new highway dedication? *"
-                  labelWidth="8"
-                  tooltip="The term new highway dedication includes municipal road or provincial public highway."
-                >
-                  <YesNoButtons
-                    id="newRightOfWayToggle"
-                    disabled
-                    value={take.isNewHighwayDedication ?? undefined}
-                  />
-                </SectionField>
-                {take.isNewHighwayDedication && (
-                  <SectionField label="Area" labelWidth="12">
-                    <AreaContainer landArea={take.newHighwayDedicationArea ?? undefined} />
-                  </SectionField>
-                )}
-                <SectionField
-                  label="Is this being acquired for MoTI inventory? *"
-                  labelWidth="8"
-                  tooltip="The property will be added to inventory."
-                  className="pt-4"
-                >
-                  <YesNoButtons
-                    id="addPropertyToggle"
-                    disabled
-                    value={take.isAcquiredForInventory ?? undefined}
-                  />
-                </SectionField>
-              </StyledBorderSection>
-              <StyledBorderSection>
-                <SectionField
-                  label="Is there a new registered interest in land (SRW, Easement or Covenant)? *"
-                  labelWidth="8"
-                >
-                  <YesNoButtons
-                    id="newInterestInSrwToggle"
-                    disabled
-                    value={take.isNewInterestInSrw ?? undefined}
-                  />
-                </SectionField>
-                {take.isNewInterestInSrw && (
-                  <>
-                    <SectionField label="Area" labelWidth="12">
-                      <AreaContainer landArea={take.statutoryRightOfWayArea ?? undefined} />
-                    </SectionField>
-
-                    <SectionField label="SRW end date" labelWidth="3" contentWidth="4">
-                      {prettyFormatDate(take.srwEndDt ?? undefined)}
-                    </SectionField>
-                  </>
-                )}
-              </StyledBorderSection>
-              <StyledBorderSection>
-                <SectionField label="Is there a new Land Act tenure? *" labelWidth="8">
-                  <YesNoButtons
-                    id="landActToggle"
-                    disabled
-                    value={take.isNewLandAct ?? undefined}
-                  />
-                </SectionField>
-                {take.isNewLandAct && (
-                  <>
-                    <SectionField label="Land Act" labelWidth="3">
-                      {take.landActTypeCode
-                        ? take.landActTypeCode.id + ' ' + take.landActTypeCode.description
-                        : ''}
-                    </SectionField>
-
-                    <SectionField label="Area" labelWidth="12">
-                      <AreaContainer landArea={take.landActArea ?? undefined} />
-                    </SectionField>
-
-                    {![
-                      ApiGen_CodeTypes_LandActTypes.TRANSFER_OF_ADMIN_AND_CONTROL.toString(),
-                      ApiGen_CodeTypes_LandActTypes.CROWN_GRANT.toString(),
-                    ].includes(take.landActTypeCode.id) && (
-                      <SectionField label="End date" labelWidth="3" contentWidth="4">
-                        {prettyFormatDate(take.landActEndDt ?? undefined)}
-                      </SectionField>
+      <Section>
+        <H2 className="mb-8">
+          <SectionListHeader
+            title="Takes"
+            claims={[Claims.PROPERTY_EDIT]}
+            addButtonIcon={<FaPlus />}
+            addButtonText="Add Take"
+            onAdd={onAdd}
+          />
+        </H2>
+        {[...nonCancelledTakes, ...cancelledTakes].map((take, index) => {
+          return (
+            <Section
+              noPadding
+              isCollapsable
+              initiallyExpanded
+              data-testid={`take-${index}`}
+              key={`takes-${index}`}
+              header={
+                <Row>
+                  <Col md="10">Take {index + 1}</Col>
+                  <Col md="2" className="d-flex align-items-center justify-content-end">
+                    <StyledEditWrapper>
+                      {onEdit !== undefined && canEditTakes(take) ? (
+                        <EditButton title="Edit take" onClick={() => onEdit(take.id)} />
+                      ) : null}
+                      {!canEditTakes(take) && (
+                        <TooltipIcon
+                          toolTipId={`${fileProperty?.fileId || 0}-summary-cannot-edit-tooltip`}
+                          toolTip="Retired records are referenced for historical purposes only and cannot be edited or deleted. If the take has been added in error, contact your system administrator to re-open the file, which will allow take deletion."
+                        />
+                      )}
+                    </StyledEditWrapper>
+                    {canEditTakes(take) && (
+                      <StyledRemoveLinkButton
+                        title="Remove take"
+                        variant="light"
+                        onClick={() => {
+                          setModalContent({
+                            ...getDeleteModalProps(),
+                            handleOk: () => {
+                              onDelete(take.id);
+                              setDisplayModal(false);
+                            },
+                          });
+                          setDisplayModal(true);
+                        }}
+                      >
+                        <FaTrash size="2rem" />
+                      </StyledRemoveLinkButton>
                     )}
-                  </>
-                )}
-              </StyledBorderSection>
-              <StyledBorderSection>
-                <SectionField
-                  label="Is there a new License for Construction Access (TLCA/LTC)? *"
-                  labelWidth="8"
-                >
-                  <YesNoButtons
-                    id="licenseToConstructToggle"
-                    disabled
-                    value={take.isNewLicenseToConstruct ?? undefined}
-                  />
+                  </Col>
+                </Row>
+              }
+            >
+              <SectionField label="Take added on">
+                {prettyFormatUTCDate(take.appCreateTimestamp)}
+              </SectionField>
+              <SectionField label="Take type *">
+                {take.takeTypeCode?.id ? getCodeById(API.TAKE_TYPES, take.takeTypeCode.id) : ''}
+              </SectionField>
+              <SectionField label="Take status *">
+                {take.takeStatusTypeCode?.id
+                  ? getCodeById(API.TAKE_STATUS_TYPES, take.takeStatusTypeCode.id)
+                  : ''}
+              </SectionField>
+              {take.completionDt && (
+                <SectionField label="Completion date *">
+                  {prettyFormatDate(take.completionDt)}
                 </SectionField>
-                {take.isNewLicenseToConstruct && (
-                  <>
-                    <SectionField label="Area" labelWidth="12">
-                      <AreaContainer landArea={take.licenseToConstructArea ?? undefined} />
-                    </SectionField>
-
-                    <SectionField label="LTC end date" labelWidth="3" contentWidth="4">
-                      {prettyFormatDate(take.ltcEndDt ?? undefined)}
-                    </SectionField>
-                  </>
-                )}
-              </StyledBorderSection>
-              <StyledBorderSection>
-                <SectionField label="Is there a Lease (Payable)? *" labelWidth="8">
-                  <YesNoButtons
-                    id="leasePayableToggle"
-                    disabled
-                    value={take.isLeasePayable ?? undefined}
-                  />
-                </SectionField>
-                {take.isLeasePayable && (
-                  <>
-                    <SectionField label="Area" labelWidth="12">
-                      <AreaContainer landArea={take.leasePayableArea ?? undefined} />
-                    </SectionField>
-
-                    <SectionField label="End date" labelWidth="3" contentWidth="4">
-                      {prettyFormatDate(take.leasePayableEndDt ?? undefined)}
-                    </SectionField>
-                  </>
-                )}
-              </StyledBorderSection>
-            </StyledNoTabSection>
-            <StyledNoTabSection header="Surplus">
-              <StyledBorderSection>
-                <SectionField label="Is there a Surplus? *" labelWidth="8">
-                  <YesNoButtons
-                    id="surplusToggle"
-                    disabled
-                    value={take.isThereSurplus ?? undefined}
-                  />
-                </SectionField>
-                {take.isThereSurplus && (
-                  <SectionField label="Area" labelWidth="12">
-                    <AreaContainer landArea={take.surplusArea ?? undefined} />
+              )}
+              <SectionField label="Site contamination">
+                {take.takeSiteContamTypeCode?.id
+                  ? getCodeById(API.TAKE_SITE_CONTAM_TYPES, take.takeSiteContamTypeCode.id)
+                  : ''}
+              </SectionField>
+              <SectionField label="Description" labelWidth="12">
+                {take.description}
+              </SectionField>
+              <StyledNoTabSection header="Area">
+                <StyledBorderSection>
+                  <SectionField
+                    label="Is there a new highway dedication? *"
+                    labelWidth="8"
+                    tooltip="The term new highway dedication includes municipal road or provincial public highway."
+                  >
+                    <YesNoButtons
+                      id="newRightOfWayToggle"
+                      disabled
+                      value={take.isNewHighwayDedication ?? undefined}
+                    />
                   </SectionField>
-                )}
-              </StyledBorderSection>
-            </StyledNoTabSection>
-          </Section>
-        );
-      })}
+                  {take.isNewHighwayDedication && (
+                    <SectionField label="Area" labelWidth="12">
+                      <AreaContainer landArea={take.newHighwayDedicationArea ?? undefined} />
+                    </SectionField>
+                  )}
+                  <SectionField
+                    label="Is this being acquired for MoTI inventory? *"
+                    labelWidth="8"
+                    tooltip="The property will be added to inventory."
+                    className="pt-4"
+                  >
+                    <YesNoButtons
+                      id="addPropertyToggle"
+                      disabled
+                      value={take.isAcquiredForInventory ?? undefined}
+                    />
+                  </SectionField>
+                </StyledBorderSection>
+                <StyledBorderSection>
+                  <SectionField
+                    label="Is there a new registered interest in land (SRW, Easement or Covenant)? *"
+                    labelWidth="8"
+                  >
+                    <YesNoButtons
+                      id="newInterestInSrwToggle"
+                      disabled
+                      value={take.isNewInterestInSrw ?? undefined}
+                    />
+                  </SectionField>
+                  {take.isNewInterestInSrw && (
+                    <>
+                      <SectionField label="Area" labelWidth="12">
+                        <AreaContainer landArea={take.statutoryRightOfWayArea ?? undefined} />
+                      </SectionField>
+
+                      <SectionField label="SRW end date" labelWidth="3" contentWidth="4">
+                        {prettyFormatDate(take.srwEndDt ?? undefined)}
+                      </SectionField>
+                    </>
+                  )}
+                </StyledBorderSection>
+                <StyledBorderSection>
+                  <SectionField label="Is there a new Land Act tenure? *" labelWidth="8">
+                    <YesNoButtons
+                      id="landActToggle"
+                      disabled
+                      value={take.isNewLandAct ?? undefined}
+                    />
+                  </SectionField>
+                  {take.isNewLandAct && (
+                    <>
+                      <SectionField label="Land Act" labelWidth="3">
+                        {take.landActTypeCode
+                          ? take.landActTypeCode.id + ' ' + take.landActTypeCode.description
+                          : ''}
+                      </SectionField>
+
+                      <SectionField label="Area" labelWidth="12">
+                        <AreaContainer landArea={take.landActArea ?? undefined} />
+                      </SectionField>
+
+                      {![
+                        ApiGen_CodeTypes_LandActTypes.TRANSFER_OF_ADMIN_AND_CONTROL.toString(),
+                        ApiGen_CodeTypes_LandActTypes.CROWN_GRANT.toString(),
+                      ].includes(take.landActTypeCode.id) && (
+                        <SectionField label="End date" labelWidth="3" contentWidth="4">
+                          {prettyFormatDate(take.landActEndDt ?? undefined)}
+                        </SectionField>
+                      )}
+                    </>
+                  )}
+                </StyledBorderSection>
+                <StyledBorderSection>
+                  <SectionField
+                    label="Is there a new License for Construction Access (TLCA/LTC)? *"
+                    labelWidth="8"
+                  >
+                    <YesNoButtons
+                      id="licenseToConstructToggle"
+                      disabled
+                      value={take.isNewLicenseToConstruct ?? undefined}
+                    />
+                  </SectionField>
+                  {take.isNewLicenseToConstruct && (
+                    <>
+                      <SectionField label="Area" labelWidth="12">
+                        <AreaContainer landArea={take.licenseToConstructArea ?? undefined} />
+                      </SectionField>
+
+                      <SectionField label="LTC end date" labelWidth="3" contentWidth="4">
+                        {prettyFormatDate(take.ltcEndDt ?? undefined)}
+                      </SectionField>
+                    </>
+                  )}
+                </StyledBorderSection>
+                <StyledBorderSection>
+                  <SectionField label="Is there a Lease (Payable)? *" labelWidth="8">
+                    <YesNoButtons
+                      id="leasePayableToggle"
+                      disabled
+                      value={take.isLeasePayable ?? undefined}
+                    />
+                  </SectionField>
+                  {take.isLeasePayable && (
+                    <>
+                      <SectionField label="Area" labelWidth="12">
+                        <AreaContainer landArea={take.leasePayableArea ?? undefined} />
+                      </SectionField>
+
+                      <SectionField label="End date" labelWidth="3" contentWidth="4">
+                        {prettyFormatDate(take.leasePayableEndDt ?? undefined)}
+                      </SectionField>
+                    </>
+                  )}
+                </StyledBorderSection>
+              </StyledNoTabSection>
+              <StyledNoTabSection header="Surplus">
+                <StyledBorderSection>
+                  <SectionField label="Is there a Surplus? *" labelWidth="8">
+                    <YesNoButtons
+                      id="surplusToggle"
+                      disabled
+                      value={take.isThereSurplus ?? undefined}
+                    />
+                  </SectionField>
+                  {take.isThereSurplus && (
+                    <SectionField label="Area" labelWidth="12">
+                      <AreaContainer landArea={take.surplusArea ?? undefined} />
+                    </SectionField>
+                  )}
+                </StyledBorderSection>
+              </StyledNoTabSection>
+            </Section>
+          );
+        })}
+      </Section>
     </StyledSummarySection>
   );
 };

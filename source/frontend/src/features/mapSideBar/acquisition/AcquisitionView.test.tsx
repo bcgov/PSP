@@ -12,18 +12,19 @@ import { mockApiPerson } from '@/mocks/filterData.mock';
 import { getMockApiInterestHolders } from '@/mocks/interestHolders.mock';
 import { mockLastUpdatedBy } from '@/mocks/lastUpdatedBy.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
-import { rest, server } from '@/mocks/msw/server';
 import { mockNotesResponse } from '@/mocks/noteResponses.mock';
 import { getUserMock } from '@/mocks/user.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { prettyFormatUTCDate } from '@/utils';
-import { RenderOptions, act, render, userEvent, waitFor } from '@/utils/test-utils';
+import { RenderOptions, act, render, userEvent, waitFor, screen } from '@/utils/test-utils';
 
 import { getMockApiTakes } from '@/mocks/takes.mock';
 import { SideBarContextProvider } from '../context/sidebarContext';
 import { FileTabType } from '../shared/detail/FileTabs';
 import AcquisitionView, { IAcquisitionViewProps } from './AcquisitionView';
 import { createRef } from 'react';
+import { HttpResponse, http } from 'msw';
+import { server } from '@/mocks/msw/server';
 
 // mock auth library
 
@@ -131,33 +132,21 @@ describe('AcquisitionView component', () => {
   beforeEach(() => {
     history.replace(`/mapview/sidebar/acquisition/1`);
     server.use(
-      rest.get('/users/info/*', (req, res, ctx) =>
-        res(ctx.delay(500), ctx.status(200), ctx.json(getUserMock())),
+      http.get('/api/users/info/*', () => HttpResponse.json(getUserMock())),
+      http.get('/api/notes/*', () => HttpResponse.json(mockNotesResponse())),
+      http.get('/api/acquisitionfiles/:id/owners', () =>
+        HttpResponse.json(mockAcquisitionFileOwnersResponse()),
       ),
-      rest.get('/notes/*', (req, res, ctx) =>
-        res(ctx.delay(500), ctx.status(200), ctx.json(mockNotesResponse())),
+      http.get('/api/takes/acquisition/:id/property/:propertyId', () =>
+        HttpResponse.json(getMockApiTakes()),
       ),
-      rest.get('/acquisitionfiles/:id/owners', (req, res, ctx) =>
-        res(ctx.delay(500), ctx.status(200), ctx.json(mockAcquisitionFileOwnersResponse())),
+      http.get('/api/takes/property/:id/count', () => HttpResponse.json(1)),
+      http.get('/api/persons/concept/:id', () => HttpResponse.json(mockApiPerson)),
+      http.get('/api/acquisitionfiles/:id/properties', () =>
+        HttpResponse.json(mockAcquisitionFileResponse().fileProperties),
       ),
-      rest.get('/takes/acquisition/:id/property/:propertyId', (req, res, ctx) =>
-        res(ctx.delay(500), ctx.status(200), ctx.json(getMockApiTakes())),
-      ),
-      rest.get('/takes/property/:id/count', (req, res, ctx) =>
-        res(ctx.delay(500), ctx.status(200), ctx.json(1)),
-      ),
-      rest.get('/persons/concept/:id', (req, res, ctx) =>
-        res(ctx.delay(500), ctx.status(200), ctx.json(mockApiPerson)),
-      ),
-      rest.get('/acquisitionfiles/:id/properties', (req, res, ctx) =>
-        res(
-          ctx.delay(500),
-          ctx.status(200),
-          ctx.json(mockAcquisitionFileResponse().fileProperties),
-        ),
-      ),
-      rest.get('/acquisitionfiles/:id/interestholders', (req, res, ctx) =>
-        res(ctx.delay(500), ctx.status(200), ctx.json(getMockApiInterestHolders())),
+      http.get('/api/acquisitionfiles/:id/interestholders', () =>
+        HttpResponse.json(getMockApiInterestHolders()),
       ),
     );
   });
@@ -168,7 +157,7 @@ describe('AcquisitionView component', () => {
 
   it('renders as expected', async () => {
     const { asFragment } = await setup();
-    await act(async () => {});
+    await screen.findByText('1-12345-01 - Test ACQ File');
     expect(asFragment()).toMatchSnapshot();
   });
 

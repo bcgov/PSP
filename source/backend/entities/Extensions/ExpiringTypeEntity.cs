@@ -24,7 +24,7 @@ namespace Pims.Dal.Entities.Extensions
         /// <returns>True if the type is expired; false otherwise.</returns>
         public static bool IsExpiredType(this IExpiringTypeEntity<DateOnly, DateOnly?> type, DateTime? currentDate = null)
         {
-            DateOnly now = DateOnly.FromDateTime(currentDate.HasValue ? (DateTime)currentDate?.Date : DateTime.UtcNow.Date);
+            DateOnly now = DateOnly.FromDateTime(currentDate.HasValue ? (DateTime)currentDate?.Date : DateTime.Now.Date);
             return (type.EffectiveDate > now) || (type.ExpiryDate.HasValue && type.ExpiryDate <= now);
         }
     }
