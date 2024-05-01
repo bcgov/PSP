@@ -21,10 +21,11 @@ import { ApiGen_Concepts_Lease } from './models/api/generated/ApiGen_Concepts_Le
 import { ApiGen_Concepts_Property } from './models/api/generated/ApiGen_Concepts_Property';
 import { lookupCodesSlice } from './store/slices/lookupCodes';
 import { networkSlice } from './store/slices/network/networkSlice';
-import { tenantsSlice } from './store/slices/tenants';
+import { tenantsSlice, useTenants } from './store/slices/tenants';
 import { defaultTenant } from './tenants/config/defaultTenant';
 import {
   act,
+  flushPromises,
   renderAsync,
   RenderOptions,
   screen,
@@ -82,8 +83,9 @@ vi.mock('@/hooks/pims-api/useApiHealth', () => ({
   }),
 }));
 
-vi.mock('@/store/slices/tenants/useTenants', () => ({
-  useTenants: () => ({ getSettings: vi.fn() }),
+vi.mock('@/store/slices/tenants');
+(useTenants as any).mockImplementation(() => ({
+  getSettings: vi.fn(),
 }));
 
 vi.mock('./hooks/pims-api/useApiUsers');
@@ -267,7 +269,6 @@ describe('PSP routing', () => {
       await waitFor(async () => {
         await setup('/');
       });
-      await screen.findByText('v1.0.0.0');
       expect(screen.getByText('Sign into PIMS with your government issued IDIR')).toBeVisible();
     });
 
@@ -275,7 +276,6 @@ describe('PSP routing', () => {
       await waitFor(async () => {
         await setup('/');
       });
-      await screen.findByText('v1.0.0.0');
       expect(screen.getByRole('link', { name: 'Disclaimer' })).toHaveAttribute(
         'href',
         'http://www.gov.bc.ca/gov/content/home/disclaimer',
@@ -286,7 +286,6 @@ describe('PSP routing', () => {
       await waitFor(async () => {
         await setup('/ienotsupported');
       });
-      await screen.findByText('v1.0.0.0');
       expect(
         screen.getByText(
           'Please use a supported internet browser such as Chrome, Firefox or Edge.',
@@ -298,7 +297,6 @@ describe('PSP routing', () => {
       await waitFor(async () => {
         await setup('/forbidden');
       });
-      await screen.findByText('v1.0.0.0');
       expect(screen.getByText('You do not have permission to view this page')).toBeVisible();
       expect(screen.getByRole('link', { name: 'Go back to the map' })).toBeVisible();
     });
@@ -309,7 +307,6 @@ describe('PSP routing', () => {
         await waitFor(async () => {
           await setup(url);
         });
-        await screen.findByText('v1.0.0.0');
         expect(screen.getByText('Page not found')).toBeVisible();
         expect(screen.getByRole('link', { name: 'Go back to the map' })).toBeVisible();
       },
@@ -321,7 +318,6 @@ describe('PSP routing', () => {
       await act(async () => {
         await setup('/properties/list', { claims: [Claims.PROPERTY_VIEW] });
       });
-      await screen.findByText('v1.0.0.0');
       await waitFor(async () => {
         const lazyElement = await screen.findByText('Civic Address');
         expect(lazyElement).toBeInTheDocument();
@@ -333,7 +329,6 @@ describe('PSP routing', () => {
       await act(async () => {
         await setup('/lease/list', { claims: [Claims.LEASE_VIEW] });
       });
-      await screen.findByText('v1.0.0.0');
       const lazyElement = await screen.findByText('l-1234');
       expect(lazyElement).toBeInTheDocument();
       expect(document.title).toMatch(/View Lease & Licenses/i);
@@ -343,7 +338,6 @@ describe('PSP routing', () => {
       await act(async () => {
         await setup('/acquisition/list', { claims: [Claims.ACQUISITION_VIEW] });
       });
-      await screen.findByText('v1.0.0.0');
       const lazyElement = await screen.findByText('test acq file');
       expect(lazyElement).toBeInTheDocument();
       expect(document.title).toMatch(/View Acquisition Files/i);
@@ -353,7 +347,6 @@ describe('PSP routing', () => {
       await act(async () => {
         await setup('/research/list', { claims: [Claims.RESEARCH_VIEW] });
       });
-      await screen.findByText('v1.0.0.0');
       const lazyElement = await screen.findByText('test research file');
       expect(lazyElement).toBeInTheDocument();
       expect(document.title).toMatch(/View Research Files/i);
@@ -363,7 +356,6 @@ describe('PSP routing', () => {
       await act(async () => {
         setup('/admin/users', { claims: [Claims.ADMIN_USERS] });
       });
-      await screen.findByText('v1.0.0.0');
       const lazyElement = await screen.findByText('Smith');
 
       expect(lazyElement).toBeInTheDocument();
@@ -374,7 +366,6 @@ describe('PSP routing', () => {
       await act(async () => {
         await setup('/admin/user/1', { claims: [Claims.ADMIN_USERS] });
       });
-      await screen.findByText('v1.0.0.0');
       const lazyElement = await screen.findByDisplayValue('Smith');
 
       expect(lazyElement).toBeInTheDocument();

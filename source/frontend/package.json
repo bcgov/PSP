@@ -104,7 +104,7 @@
     "jest-styled-components": "7.2.0",
     "jsdom": "24.0.0",
     "moment-timezone": "0.5.45",
-    "msw": "1.0.1",
+    "msw": "2.2.14",
     "prettier": "2.7.1",
     "pretty": "2.0.0",
     "pretty-quick": "3.1.0",

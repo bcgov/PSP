@@ -37,6 +37,26 @@ vi.mocked(useAcquisitionProvider).mockReturnValue({
   },
 } as ReturnType<typeof useAcquisitionProvider>);
 
+vi.mock('@/features/documents/hooks/useDocumentRelationshipProvider', () => ({
+  useDocumentRelationshipProvider: () => {
+    return {
+      retrieveDocumentRelationship: vi.fn(),
+      retrieveDocumentRelationshipLoading: false,
+    };
+  },
+}));
+
+vi.mock('@/features/documents/hooks/useDocumentProvider', () => ({
+  useDocumentProvider: () => {
+    return {
+      getDocumentRelationshipTypes: vi.fn(),
+      getDocumentRelationshipTypesLoading: false,
+      getDocumentTypes: vi.fn(),
+      getDocumentTypesLoading: false,
+    };
+  },
+}));
+
 describe('AcquisitionFileTabs component', () => {
   // render component under test
   const setup = (
