@@ -2,7 +2,7 @@ import { ApiGen_Concepts_Take } from '@/models/api/generated/ApiGen_Concepts_Tak
 import { toTypeCode } from '@/utils/formUtils';
 
 import { TakeModel } from './models';
-import { emptyTake } from './TakesUpdateForm';
+import { emptyTake } from './update/TakeForm';
 
 describe('take model tests', () => {
   it("converts all false it values to 'false'", () => {

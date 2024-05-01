@@ -123,7 +123,6 @@ export const PropertyFileContainer: React.FunctionComponent<
       content: (
         <TakesDetailContainer
           fileProperty={props.fileProperty}
-          onEdit={props.setEditing}
           View={TakesDetailView}
         ></TakesDetailContainer>
       ),
