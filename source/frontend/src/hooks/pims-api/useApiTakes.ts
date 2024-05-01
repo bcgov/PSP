@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { ApiGen_Concepts_Take } from '@/models/api/generated/ApiGen_Concepts_Take';
+import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 
 import useAxiosApi from './useApi';
 
@@ -34,8 +35,16 @@ export const useApiTakes = () => {
           `/takes/acquisition/property/${acquisitionFilePropertyId}/takes/${take.id}`,
           take,
         ),
-      deleteTakeByFilePropertyId: (acquisitionFilePropertyId: number, takeId: number) =>
-        api.delete(`/takes/acquisition/property/${acquisitionFilePropertyId}/takes/${takeId}`),
+      deleteTakeByFilePropertyId: (
+        acquisitionFilePropertyId: number,
+        takeId: number,
+        userOverrideCodes: UserOverrideCode[],
+      ) =>
+        api.delete(
+          `/takes/acquisition/property/${acquisitionFilePropertyId}/takes/${takeId}?${userOverrideCodes
+            .map(o => `userOverrideCodes=${o}`)
+            .join('&')}`,
+        ),
     }),
     [api],
   );

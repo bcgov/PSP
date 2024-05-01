@@ -1,9 +1,14 @@
+import { AxiosError } from 'axios';
 import orderBy from 'lodash/orderBy';
 import { useEffect } from 'react';
 import { useCallback } from 'react';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 
+import useApiUserOverride from '@/hooks/useApiUserOverride';
+import { useModalContext } from '@/hooks/useModalContext';
+import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
+import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { stripTrailingSlash } from '@/utils/utils';
 
 import { useTakesRepository } from '../repositories/useTakesRepository';
@@ -51,6 +56,12 @@ const TakesDetailContainer: React.FunctionComponent<ITakesDetailContainerProps> 
     refresh();
   }, [executeTakesByFileProperty, executeTakesCount, fileId, propertyId, refresh]);
 
+  const withUserOverride = useApiUserOverride<
+    (userOverrideCodes: UserOverrideCode[]) => Promise<any | void>
+  >('Failed to add delete take');
+
+  const { setModalContent, setDisplayModal } = useModalContext();
+
   return (
     <View
       onEdit={(takeId: number) => history.push(`${stripTrailingSlash(url)}/${takeId}?edit=true`)}
@@ -59,8 +70,23 @@ const TakesDetailContainer: React.FunctionComponent<ITakesDetailContainerProps> 
       allTakesCount={takesCount ?? 0}
       fileProperty={fileProperty}
       onDelete={async takeId => {
-        await executeTakeDelete(fileProperty.id, takeId);
-        refresh();
+        return await withUserOverride(
+          (userOverrideCodes: UserOverrideCode[]) =>
+            executeTakeDelete(fileProperty.id, takeId, userOverrideCodes).then(response => {
+              refresh();
+              return response;
+            }),
+          [],
+          (axiosError: AxiosError<IApiError>) => {
+            setModalContent({
+              variant: 'error',
+              title: 'Error',
+              message: axiosError?.response?.data.error,
+              okButtonText: 'Close',
+            });
+            setDisplayModal(true);
+          },
+        );
       }}
       onAdd={() => history.push(`${stripTrailingSlash(url)}?edit=true`)}
     />

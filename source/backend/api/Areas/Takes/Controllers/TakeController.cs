@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -12,6 +13,7 @@ using Pims.Api.Services;
 using Pims.Core.Extensions;
 using Pims.Core.Json;
 using Pims.Dal.Entities;
+using Pims.Dal.Exceptions;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -178,7 +180,7 @@ namespace Pims.Api.Areas.Takes.Controllers
         [ProducesResponseType(typeof(void), 200)]
         [SwaggerOperation(Tags = new[] { "take" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
-        public void DeleteAcquisitionPropertyTake(long acquisitionFilePropertyId, long takeId)
+        public void DeleteAcquisitionPropertyTake(long acquisitionFilePropertyId, long takeId, [FromQuery] string[] userOverrideCodes)
         {
             _logger.LogInformation(
                 "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
@@ -193,7 +195,7 @@ namespace Pims.Api.Areas.Takes.Controllers
             {
                 throw new BadRequestException("Invalid acquisition file property id.");
             }
-            var deleted = _takeService.DeleteAcquisitionPropertyTake(takeId);
+            var deleted = _takeService.DeleteAcquisitionPropertyTake(takeId, userOverrideCodes.Select(oc => UserOverrideCode.Parse(oc)));
             if (!deleted)
             {
                 throw new InvalidOperationException($"Failed to delete take {takeId}.");

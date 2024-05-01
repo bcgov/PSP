@@ -627,14 +627,14 @@ namespace Pims.Api.Test.Services
             var service = this.CreateWithPermissions();
 
             // Act
-            Action act = () => service.DeleteAcquisitionPropertyTake(1);
+            Action act = () => service.DeleteAcquisitionPropertyTake(1, new List<UserOverrideCode>());
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
         }
 
         [Fact]
-        public void Delete_InvalidStatus_AcquisitionFile_Active_DeleteCompleteTake_Success()
+        public void Delete_AcquisitionFile_Active_DeleteCompleteTake_Success()
         {
             // Arrange
             var service = this.CreateWithPermissions(Permissions.PropertyView, Permissions.AcquisitionFileView, Permissions.SystemAdmin);
@@ -654,6 +654,7 @@ namespace Pims.Api.Test.Services
             {
                 TakeId = 100,
                 TakeStatusTypeCode = AcquisitionTakeStatusTypes.COMPLETE.ToString(),
+                PropertyAcquisitionFile = new PimsPropertyAcquisitionFile(),
             };
 
             var takeRepository = this._helper.GetService<Mock<ITakeRepository>>();
@@ -669,15 +670,68 @@ namespace Pims.Api.Test.Services
             var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
             solver.Setup(x => x.CanEditTakes(It.IsAny<AcquisitionStatusTypes?>())).Returns(true);
 
+            var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
+
             // Act
-            var deleted = service.DeleteAcquisitionPropertyTake(1);
+            var deleted = service.DeleteAcquisitionPropertyTake(1, new List<UserOverrideCode>() { UserOverrideCode.DeleteCompletedTake });
 
             // Assert
             deleted.Should().BeTrue();
+            propertyRepository.Verify(x => x.TransferFileProperty(It.IsAny<PimsProperty>(), false), Times.Once);
         }
 
         [Fact]
-        public void Delete_InvalidStatus_AcquisitionFile_Active_DeleteCompleteTake_NotAdmin()
+        public void Delete_AcquisitionFile_Active_DeleteCompleteTake_Success_Owned()
+        {
+            // Arrange
+            var service = this.CreateWithPermissions(Permissions.PropertyView, Permissions.AcquisitionFileView, Permissions.SystemAdmin);
+
+            var acqRepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
+            acqRepository.Setup(x => x.GetByAcquisitionFilePropertyId(It.IsAny<long>())).Returns(
+                new PimsAcquisitionFile()
+                {
+                    AcquisitionFileStatusTypeCode = AcquisitionStatusTypes.ACTIVE.ToString()
+                }
+            );
+            acqRepository.Setup(x => x.GetProperty(It.IsAny<long>())).Returns(
+                EntityHelper.CreateProperty(1)
+            );
+
+            PimsTake completedTake = new()
+            {
+                TakeId = 100,
+                TakeStatusTypeCode = AcquisitionTakeStatusTypes.COMPLETE.ToString(),
+                PropertyAcquisitionFile = new PimsPropertyAcquisitionFile(),
+            };
+
+            var takeRepository = this._helper.GetService<Mock<ITakeRepository>>();
+            takeRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(
+                completedTake
+            );
+            takeRepository.Setup(x => x.GetAllByPropertyId(It.IsAny<long>())).Returns(new List<PimsTake>() {
+                completedTake
+            }
+            );
+            takeRepository.Setup(x => x.TryDeleteTake(It.IsAny<long>())).Returns(true);
+
+            var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
+            solver.Setup(x => x.CanEditTakes(It.IsAny<AcquisitionStatusTypes?>())).Returns(true);
+
+            var takeSolver = this._helper.GetService<Mock<ITakeInteractionSolver>>();
+            takeSolver.Setup(x => x.ResultsInOwnedProperty(It.IsAny<IEnumerable<PimsTake>>())).Returns(true);
+
+            var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
+
+            // Act
+            var deleted = service.DeleteAcquisitionPropertyTake(1, new List<UserOverrideCode>() { UserOverrideCode.DeleteCompletedTake });
+
+            // Assert
+            deleted.Should().BeTrue();
+            propertyRepository.Verify(x => x.TransferFileProperty(It.IsAny<PimsProperty>(), true), Times.Once);
+        }
+
+        [Fact]
+        public void Delete_AcquisitionFile_Active_DeleteCompleteTake_NotAdmin()
         {
             // Arrange
             var service = this.CreateWithPermissions(Permissions.PropertyView, Permissions.AcquisitionFileView);
@@ -694,6 +748,7 @@ namespace Pims.Api.Test.Services
             {
                 TakeId = 100,
                 TakeStatusTypeCode = AcquisitionTakeStatusTypes.COMPLETE.ToString(),
+                PropertyAcquisitionFile = new PimsPropertyAcquisitionFile(),
             };
 
             var takeRepository = this._helper.GetService<Mock<ITakeRepository>>();
@@ -705,14 +760,50 @@ namespace Pims.Api.Test.Services
             solver.Setup(x => x.CanEditTakes(It.IsAny<AcquisitionStatusTypes?>())).Returns(true);
 
             // Act
-            Action act = () => service.DeleteAcquisitionPropertyTake(1);
+            Action act = () => service.DeleteAcquisitionPropertyTake(1, new List<UserOverrideCode>());
 
             // Assert
             act.Should().Throw<BusinessRuleViolationException>().WithMessage("Retired records are referenced for historical purposes only and cannot be edited or deleted. If the take has been added in error, contact your system administrator to re-open the file, which will allow take deletion.");
         }
 
         [Fact]
-        public void Delete_InvalidStatus_AcquisitionFile_Active_DeleteTake_CompleteFile_NotAdmin()
+        public void Delete_AcquisitionFile_Active_DeleteTake_CompleteFile_NotAdmin()
+        {
+            // Arrange
+            var service = this.CreateWithPermissions(Permissions.PropertyView, Permissions.AcquisitionFileView);
+
+            var acqRepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
+            acqRepository.Setup(x => x.GetByAcquisitionFilePropertyId(It.IsAny<long>())).Returns(
+                new PimsAcquisitionFile()
+                {
+                    AcquisitionFileStatusTypeCode = AcquisitionStatusTypes.ACTIVE.ToString()
+                }
+            );
+
+            PimsTake completedTake = new()
+            {
+                TakeId = 100,
+                TakeStatusTypeCode = AcquisitionTakeStatusTypes.INPROGRESS.ToString(),
+                PropertyAcquisitionFile = new PimsPropertyAcquisitionFile(),
+            };
+
+            var takeRepository = this._helper.GetService<Mock<ITakeRepository>>();
+            takeRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(
+                completedTake
+            );
+
+            var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
+            solver.Setup(x => x.CanEditTakes(It.IsAny<AcquisitionStatusTypes?>())).Returns(false);
+
+            // Act
+            Action act = () => service.DeleteAcquisitionPropertyTake(1, new List<UserOverrideCode>());
+
+            // Assert
+            act.Should().Throw<BusinessRuleViolationException>().WithMessage("Retired records are referenced for historical purposes only and cannot be edited or deleted. If the take has been added in error, contact your system administrator to re-open the file, which will allow take deletion.");
+        }
+
+        [Fact]
+        public void Delete_AcquisitionFile_Active_DeleteTake_IsRetired()
         {
             // Arrange
             var service = this.CreateWithPermissions(Permissions.PropertyView, Permissions.AcquisitionFileView);
@@ -731,19 +822,134 @@ namespace Pims.Api.Test.Services
                 TakeStatusTypeCode = AcquisitionTakeStatusTypes.INPROGRESS.ToString(),
             };
 
+            var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
+            var property = EntityHelper.CreateProperty(1);
+            property.IsRetired = true;
+            propertyRepository.Setup(x => x.GetAllAssociationsById(It.IsAny<long>())).Returns(property);
+
             var takeRepository = this._helper.GetService<Mock<ITakeRepository>>();
+            completedTake.PropertyAcquisitionFile = new PimsPropertyAcquisitionFile() { Property = property };
             takeRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(
                 completedTake
+            );
+            takeRepository.Setup(x => x.GetAllByPropertyId(It.IsAny<long>())).Returns(
+                new List<PimsTake>() { completedTake }
+            );
+
+            var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
+            solver.Setup(x => x.CanEditTakes(It.IsAny<AcquisitionStatusTypes?>())).Returns(true);
+
+            // Act
+            Action act = () => service.DeleteAcquisitionPropertyTake(1, new List<UserOverrideCode>());
+
+            // Assert
+            act.Should().Throw<BusinessRuleViolationException>().WithMessage("You cannot delete a take from a retired property.");
+        }
+
+        [Fact]
+        public void Delete_InvalidStatus_AcquisitionFile_Active_DeleteTake_CompleteDisposition()
+        {
+            // Arrange
+            var service = this.CreateWithPermissions(Permissions.PropertyView, Permissions.AcquisitionFileView);
+
+            var acqRepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
+            acqRepository.Setup(x => x.GetByAcquisitionFilePropertyId(It.IsAny<long>())).Returns(
+                new PimsAcquisitionFile()
+                {
+                    AcquisitionFileStatusTypeCode = AcquisitionStatusTypes.ACTIVE.ToString()
+                }
+            );
+
+            PimsTake completedTake = new()
+            {
+                TakeId = 100,
+                TakeStatusTypeCode = AcquisitionTakeStatusTypes.INPROGRESS.ToString(),
+            };
+
+            var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
+            var property = EntityHelper.CreateProperty(1);
+            var dispFile = EntityHelper.CreateDispositionFile();
+            dispFile.DispositionFileStatusTypeCode = EnumDispositionFileStatusTypeCode.COMPLETE.ToString();
+            property.PimsDispositionFileProperties = new List<PimsDispositionFileProperty>() { new PimsDispositionFileProperty() { DispositionFile = dispFile } };
+            propertyRepository.Setup(x => x.GetAllAssociationsById(It.IsAny<long>())).Returns(property);
+
+            var takeRepository = this._helper.GetService<Mock<ITakeRepository>>();
+            completedTake.PropertyAcquisitionFile = new PimsPropertyAcquisitionFile() { Property = property };
+            takeRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(
+                completedTake
+            );
+            takeRepository.Setup(x => x.GetAllByPropertyId(It.IsAny<long>())).Returns(
+                new List<PimsTake>() { completedTake }
+            );
+
+            var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
+            solver.Setup(x => x.CanEditTakes(It.IsAny<AcquisitionStatusTypes?>())).Returns(true);
+
+            // Act
+            Action act = () => service.DeleteAcquisitionPropertyTake(1, new List<UserOverrideCode>());
+
+            // Assert
+            act.Should().Throw<BusinessRuleViolationException>().WithMessage("You cannot delete a take that has a completed disposition attached to the same property.");
+        }
+
+        public static IEnumerable<object[]> deleteTakeTestParameters = new List<object[]>() {
+            new object[] { new List<PimsTake>() { new PimsTake() { TakeStatusTypeCode="COMPLETE" }}, UserOverrideCode.DeleteTakeActiveDisposition, true, new List<UserOverrideCode>() },
+            new object[] { new List<PimsTake>() { new PimsTake() { TakeStatusTypeCode="COMPLETE" }}, UserOverrideCode.DeleteCompletedTake, false, new List<UserOverrideCode>()},
+            new object[] { new List<PimsTake>() { new PimsTake() { TakeStatusTypeCode="COMPLETE", TakeId = 1, }}, UserOverrideCode.DeleteLastTake, false, new List<UserOverrideCode>()},
+            new object[] { new List<PimsTake>() { new PimsTake() { TakeStatusTypeCode="COMPLETE", TakeId = 1, }, new PimsTake() { TakeStatusTypeCode = "ACTIVE", TakeId = 2, } }, UserOverrideCode.DeleteLastTake, false, new List<UserOverrideCode>()},
+            new object[] { new List<PimsTake>() { new PimsTake() { TakeStatusTypeCode="COMPLETE", TakeId = 1, }, new PimsTake() { TakeStatusTypeCode = "COMPLETE", IsNewLicenseToConstruct = true, LtcEndDt = DateOnly.FromDateTime(DateTime.Now.AddDays(1)), TakeId = 2, } }, UserOverrideCode.DeleteLastTake, false, new List<UserOverrideCode>()},
+            new object[] { new List<PimsTake>() { new PimsTake() { TakeStatusTypeCode="COMPLETE", TakeId = 1, }, new PimsTake() { TakeStatusTypeCode = "COMPLETE", TakeId = 2, } }, UserOverrideCode.DeleteCompletedTake, false, new List<UserOverrideCode>()},
+            new object[] { new List<PimsTake>() { new PimsTake() { TakeStatusTypeCode="COMPLETE" }}, null, true, new List<UserOverrideCode>() { UserOverrideCode.DeleteTakeActiveDisposition } },
+            new object[] { new List<PimsTake>() { new PimsTake() { TakeStatusTypeCode="COMPLETE" }}, null, false, new List<UserOverrideCode>() { UserOverrideCode.DeleteCompletedTake } },
+            new object[] { new List<PimsTake>() { new PimsTake() { TakeStatusTypeCode="COMPLETE", TakeId = 1, }}, null, false, new List<UserOverrideCode>() { UserOverrideCode.DeleteLastTake } },
+        }.ToArray();
+        [Theory, MemberData(nameof(deleteTakeTestParameters))]
+        public void Delete_UserOverride(List<PimsTake> takes, UserOverrideCode expectedOverride, bool hasDisposition, List<UserOverrideCode> userOverrideCodes)
+        {
+            // Arrange
+            var service = this.CreateWithPermissions(Permissions.SystemAdmin, Permissions.AcquisitionFileView);
+
+            var acqRepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
+            acqRepository.Setup(x => x.GetByAcquisitionFilePropertyId(It.IsAny<long>())).Returns(
+                new PimsAcquisitionFile()
+                {
+                    AcquisitionFileStatusTypeCode = AcquisitionStatusTypes.ACTIVE.ToString()
+                }
+            );
+
+            var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
+            var property = EntityHelper.CreateProperty(1);
+            if (hasDisposition)
+            {
+                var dispFile = EntityHelper.CreateDispositionFile();
+                property.PimsDispositionFileProperties = new List<PimsDispositionFileProperty>() { new PimsDispositionFileProperty() { DispositionFile = dispFile } };
+            }
+            propertyRepository.Setup(x => x.GetAllAssociationsById(It.IsAny<long>())).Returns(property);
+
+            var takeRepository = this._helper.GetService<Mock<ITakeRepository>>();
+            takes.FirstOrDefault().PropertyAcquisitionFile = new PimsPropertyAcquisitionFile() { Property = property };
+            takeRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(
+                takes.FirstOrDefault()
+            );
+            takeRepository.Setup(x => x.GetAllByPropertyId(It.IsAny<long>())).Returns(
+                takes
             );
 
             var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
             solver.Setup(x => x.CanEditTakes(It.IsAny<AcquisitionStatusTypes?>())).Returns(false);
 
             // Act
-            Action act = () => service.DeleteAcquisitionPropertyTake(1);
+            Action act = () => service.DeleteAcquisitionPropertyTake(1, userOverrideCodes);
 
             // Assert
-            act.Should().Throw<BusinessRuleViolationException>().WithMessage("Retired records are referenced for historical purposes only and cannot be edited or deleted. If the take has been added in error, contact your system administrator to re-open the file, which will allow take deletion.");
+            if (expectedOverride != null)
+            {
+                var exception = act.Should().Throw<UserOverrideException>().Which;
+                exception.UserOverride.Should().Be(expectedOverride);
+            } else
+            {
+                var result = act.Should().NotThrow();
+            }
         }
     }
 }

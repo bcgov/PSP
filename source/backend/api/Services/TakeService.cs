@@ -7,6 +7,7 @@ using Pims.Api.Constants;
 using Pims.Api.Models.CodeTypes;
 using Pims.Core.Exceptions;
 using Pims.Dal.Entities;
+using Pims.Dal.Exceptions;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
@@ -103,27 +104,80 @@ namespace Pims.Api.Services
             return updatedTake;
         }
 
-        public bool DeleteAcquisitionPropertyTake(long takeId)
+        public bool DeleteAcquisitionPropertyTake(long takeId, IEnumerable<UserOverrideCode> userOverrides)
         {
             _logger.LogInformation("deleting take with {takeId}", takeId);
             _user.ThrowIfNotAuthorized(Permissions.PropertyView, Permissions.AcquisitionFileView);
 
             var takeToDelete = _takeRepository.GetById(takeId);
+            var propertyWithAssociations = _propertyRepository.GetAllAssociationsById(takeToDelete.PropertyAcquisitionFile.PropertyId);
             var currentAcquisitionFile = _acqFileRepository.GetByAcquisitionFilePropertyId(takeToDelete.PropertyAcquisitionFileId);
+            var allTakesForProperty = _takeRepository.GetAllByPropertyId(takeToDelete.PropertyAcquisitionFile.PropertyId);
             if ((!_statusSolver.CanEditTakes(Enum.Parse<AcquisitionStatusTypes>(currentAcquisitionFile.AcquisitionFileStatusTypeCode)) || takeToDelete.TakeStatusTypeCode == AcquisitionTakeStatusTypes.COMPLETE.ToString())
                 && !_user.HasPermission(Permissions.SystemAdmin))
             {
                 throw new BusinessRuleViolationException("Retired records are referenced for historical purposes only and cannot be edited or deleted. If the take has been added in error, contact your system administrator to re-open the file, which will allow take deletion.");
             }
+            else if(propertyWithAssociations?.PimsDispositionFileProperties?.Any(d => d.DispositionFile.DispositionFileStatusTypeCode == EnumDispositionFileStatusTypeCode.COMPLETE.ToString()) == true)
+            {
+                throw new BusinessRuleViolationException("You cannot delete a take that has a completed disposition attached to the same property.");
+            }
+            else if (propertyWithAssociations?.IsRetired == true)
+            {
+                throw new BusinessRuleViolationException("You cannot delete a take from a retired property.");
+            }
+
+            // user overrides
+            if (takeToDelete.TakeStatusTypeCode == AcquisitionTakeStatusTypes.COMPLETE.ToString() && _user.HasPermission(Permissions.SystemAdmin))
+            {
+                if (propertyWithAssociations?.PimsDispositionFileProperties?.Any(d => d.DispositionFile.DispositionFileStatusTypeCode == EnumDispositionFileStatusTypeCode.ACTIVE.ToString()) == true && !userOverrides.Contains(UserOverrideCode.DeleteTakeActiveDisposition))
+                {
+                    throw new UserOverrideException(UserOverrideCode.DeleteTakeActiveDisposition, "You are deleting a take. Property ownership state will be recalculated based upon any remaining completed takes. It should be noted that one or more related dispositions are in progress that should also be reviewed. \n\nDo you want to acknowledge and proceed?");
+                }
+                else if (allTakesForProperty.Count(t => !IsTakeExpired(t) && t.TakeStatusTypeCode == AcquisitionTakeStatusTypes.COMPLETE.ToString()) == 1 && allTakesForProperty.FirstOrDefault().TakeId == takeId && !userOverrides.Contains(UserOverrideCode.DeleteLastTake))
+                {
+                    throw new UserOverrideException(UserOverrideCode.DeleteLastTake, "You are deleting the last non-expired completed take on this property. This property will become a property of interest.\n\nDo you want to acknowledge and proceed?");
+                }
+                else if (!userOverrides.Contains(UserOverrideCode.DeleteCompletedTake) && !userOverrides.Contains(UserOverrideCode.DeleteLastTake) && !userOverrides.Contains(UserOverrideCode.DeleteTakeActiveDisposition))
+                {
+                    throw new UserOverrideException(UserOverrideCode.DeleteCompletedTake, "You are deleting a completed take. Property ownership state will be recalculated based upon any remaining completed takes.\n\nDo you want to acknowledge and proceed?");
+                }
+            }
+
             var wasTakeDeleted = _takeRepository.TryDeleteTake(takeId);
 
             if (wasTakeDeleted)
             {
-                RecalculateOwnership(takeToDelete.PropertyAcquisitionFileId, null);
+                // Evaluate if the property needs to be updated
+                var currentProperty = _acqFileRepository.GetProperty(takeToDelete.PropertyAcquisitionFileId);
+                var currentTakes = _takeRepository.GetAllByPropertyId(currentProperty.PropertyId);
+
+                var completedTakes = currentTakes
+                    .Where(x => x.TakeStatusTypeCode == AcquisitionTakeStatusTypes.COMPLETE.ToString() && x.TakeId != takeId).ToList();
+
+                if (completedTakes.Count > 0 || takeToDelete.TakeStatusTypeCode == AcquisitionTakeStatusTypes.COMPLETE.ToString())
+                {
+                    if (_takeInteractionSolver.ResultsInOwnedProperty(completedTakes))
+                    {
+                        _propertyRepository.TransferFileProperty(currentProperty, true);
+                    }
+                    else
+                    {
+                        _propertyRepository.TransferFileProperty(currentProperty, false);
+                    }
+                }
             }
 
             _takeRepository.CommitTransaction();
             return wasTakeDeleted;
+        }
+
+        private static bool IsTakeExpired(PimsTake take)
+        {
+            return (take.IsActiveLease && take.ActiveLeaseEndDt > DateOnly.FromDateTime(DateTime.Now))
+                || (take.IsNewLandAct && take.LandActEndDt > DateOnly.FromDateTime(DateTime.Now))
+                || (take.IsNewLicenseToConstruct && take.LtcEndDt > DateOnly.FromDateTime(DateTime.Now))
+                || (take.IsNewInterestInSrw && take.SrwEndDt > DateOnly.FromDateTime(DateTime.Now));
         }
 
         private void ValidateTakeRules(long acquisitionFilePropertyId, PimsTake take)
@@ -177,9 +231,16 @@ namespace Pims.Api.Services
             var completedTakes = allTakes
                 .Where(x => x.TakeStatusTypeCode == AcquisitionTakeStatusTypes.COMPLETE.ToString()).ToList();
 
-            if (completedTakes.Count > 0 && _takeInteractionSolver.ResultsInOwnedProperty(completedTakes))
+            if (completedTakes.Count > 0)
             {
-                _propertyRepository.TransferFileProperty(currentProperty, true);
+                if (_takeInteractionSolver.ResultsInOwnedProperty(completedTakes))
+                {
+                    _propertyRepository.TransferFileProperty(currentProperty, true);
+                }
+                else
+                {
+                    _propertyRepository.TransferFileProperty(currentProperty, false);
+                }
             }
         }
     }

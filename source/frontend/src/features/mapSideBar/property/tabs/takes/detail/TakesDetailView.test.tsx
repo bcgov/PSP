@@ -148,6 +148,8 @@ describe('TakesDetailView component', () => {
     });
     const removeButton = getByTitle('Remove take');
     await act(async () => userEvent.click(removeButton));
+    const yesButton = screen.getByTestId('ok-modal-button');
+    await act(async () => userEvent.click(yesButton));
     expect(onDelete).toHaveBeenCalled();
   });
 

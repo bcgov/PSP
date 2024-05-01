@@ -16,6 +16,7 @@ using Pims.Dal.Security;
 using Xunit;
 using System;
 using Pims.Api.Helpers.Exceptions;
+using Pims.Dal.Exceptions;
 
 namespace Pims.Api.Test.Controllers
 {
@@ -156,7 +157,7 @@ namespace Pims.Api.Test.Controllers
             this._service.Setup(m => m.GetById(It.IsAny<long>())).Returns(new PimsTake() { PropertyAcquisitionFileId = 2 });
 
             // Act
-            Action act = () => this._controller.DeleteAcquisitionPropertyTake(1, 1);
+            Action act = () => this._controller.DeleteAcquisitionPropertyTake(1, 1, new string[0]);
 
             // Assert
             act.Should().Throw<BadRequestException>().WithMessage("Invalid acquisition file property id.");
@@ -167,10 +168,10 @@ namespace Pims.Api.Test.Controllers
         {
             // Arrange
             this._service.Setup(m => m.GetById(It.IsAny<long>())).Returns(new PimsTake() { PropertyAcquisitionFileId = 1 });
-            this._service.Setup(m => m.DeleteAcquisitionPropertyTake(It.IsAny<long>())).Returns(false);
+            this._service.Setup(m => m.DeleteAcquisitionPropertyTake(It.IsAny<long>(), It.IsAny<List<UserOverrideCode>>())).Returns(false);
 
             // Act
-            Action act = () => this._controller.DeleteAcquisitionPropertyTake(1, 1);
+            Action act = () => this._controller.DeleteAcquisitionPropertyTake(1, 1, new string[0]);
 
             // Assert
             act.Should().Throw<InvalidOperationException>().WithMessage("Failed to delete take 1.");
@@ -181,13 +182,13 @@ namespace Pims.Api.Test.Controllers
         {
             // Arrange
             this._service.Setup(m => m.GetById(It.IsAny<long>())).Returns(new PimsTake() { PropertyAcquisitionFileId = 1 });
-            this._service.Setup(m => m.DeleteAcquisitionPropertyTake(It.IsAny<long>())).Returns(true);
+            this._service.Setup(m => m.DeleteAcquisitionPropertyTake(It.IsAny<long>(), It.IsAny<List<UserOverrideCode>>())).Returns(true);
 
             // Act
-            this._controller.DeleteAcquisitionPropertyTake(1, 1);
+            this._controller.DeleteAcquisitionPropertyTake(1, 1, new string[0]);
 
             // Assert
-            this._service.Verify(m => m.DeleteAcquisitionPropertyTake(It.IsAny<long>()));
+            this._service.Verify(m => m.DeleteAcquisitionPropertyTake(It.IsAny<long>(), It.IsAny<List<UserOverrideCode>>()));
         }
 
         [Fact]

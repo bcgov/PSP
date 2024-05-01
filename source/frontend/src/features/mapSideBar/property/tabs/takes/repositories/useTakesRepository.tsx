@@ -4,6 +4,7 @@ import { useCallback, useMemo } from 'react';
 import { useApiTakes } from '@/hooks/pims-api/useApiTakes';
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import { ApiGen_Concepts_Take } from '@/models/api/generated/ApiGen_Concepts_Take';
+import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils';
 
 /**
@@ -107,16 +108,22 @@ export const useTakesRepository = () => {
   });
 
   const deleteTakeByAcquisitionPropertyIdApi = useApiRequestWrapper<
-    (acquisitionFilePropertyId: number, takeId: number) => Promise<AxiosResponse<number, any>>
+    (
+      acquisitionFilePropertyId: number,
+      takeId: number,
+      userOverrideCodes: UserOverrideCode[],
+    ) => Promise<AxiosResponse<number, any>>
   >({
     requestFunction: useCallback(
-      async (acquisitionFilePropertyId: number, takeId: number) =>
-        await deleteTakeByFilePropertyId(acquisitionFilePropertyId, takeId),
+      async (
+        acquisitionFilePropertyId: number,
+        takeId: number,
+        userOverrideCodes: UserOverrideCode[],
+      ) => await deleteTakeByFilePropertyId(acquisitionFilePropertyId, takeId, userOverrideCodes),
       [deleteTakeByFilePropertyId],
     ),
     requestName: 'deleteTakeByAcquisitionPropertyIdApi',
     onSuccess: useAxiosSuccessHandler(),
-    onError: useAxiosErrorHandler(),
     throwError: true,
   });
 

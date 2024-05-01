@@ -34,7 +34,6 @@ export const TakesUpdateContainer = React.forwardRef<FormikProps<any>, ITakesDet
       getTakeById(fileProperty.id, +takeId);
     }, [fileProperty.id, getTakeById, takeId]);
 
-    console.debug(take);
     return (
       <View
         onSubmit={async (values, formikHelpers) => {

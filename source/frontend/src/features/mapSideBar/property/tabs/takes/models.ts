@@ -12,42 +12,38 @@ import { ApiGen_CodeTypes_AcquisitionTakeStatusTypes } from '../../../../../mode
 
 /* eslint-disable no-template-curly-in-string */
 export const TakesYupSchema = Yup.object().shape({
-  takes: Yup.array().of(
-    Yup.object().shape({
-      description: Yup.string().max(4000, 'Description must be at most ${max} characters'),
-      takeTypeCode: Yup.string().required('Take type is required').nullable(),
-      takeStatusTypeCode: Yup.string().required('Take status type is required.'),
-      isThereSurplus: Yup.bool().required('Surplus flag required'),
-      isNewHighwayDedication: Yup.bool().required('New highway dedication flag required'),
-      isNewLandAct: Yup.bool().required('Section 16 flag required'),
-      isNewInterestInSrw: Yup.bool().required('Statutory right of way (SRW) flag required'),
-      isNewLicenseToConstruct: Yup.bool().required('License to construct flag required'),
-      ltcEndDt: Yup.string().when('isNewLicenseToConstruct', {
-        is: (isNewLicenseToConstruct: boolean) => isNewLicenseToConstruct,
-        then: Yup.string().required('End Date is required'),
-      }),
-      landActEndDt: Yup.string().when(['isNewLandAct', 'landActTypeCode'], {
-        is: (isNewLandAct: boolean, landActTypeCode: string) =>
-          isNewLandAct &&
-          ![
-            ApiGen_CodeTypes_LandActTypes.TRANSFER_OF_ADMIN_AND_CONTROL.toString(),
-            ApiGen_CodeTypes_LandActTypes.CROWN_GRANT.toString(),
-          ].includes(landActTypeCode),
-        then: Yup.string().required('End Date is required'),
-      }),
-      landActTypeCode: Yup.string().when('isNewLandAct', {
-        is: (isNewLandAct: boolean) => isNewLandAct,
-        then: Yup.string().required('Land Act is required'),
-      }),
-      completionDt: Yup.string()
-        .nullable()
-        .when('takeStatusTypeCode', {
-          is: (takeStatusTypeCode: string) =>
-            takeStatusTypeCode === ApiGen_CodeTypes_AcquisitionTakeStatusTypes.COMPLETE,
-          then: Yup.string().nullable().required('A completed take must have a completion date.'),
-        }),
+  description: Yup.string().max(4000, 'Description must be at most ${max} characters'),
+  takeTypeCode: Yup.string().required('Take type is required').nullable(),
+  takeStatusTypeCode: Yup.string().required('Take status type is required.'),
+  isThereSurplus: Yup.bool().required('Surplus flag required'),
+  isNewHighwayDedication: Yup.bool().required('New highway dedication flag required'),
+  isNewLandAct: Yup.bool().required('Section 16 flag required'),
+  isNewInterestInSrw: Yup.bool().required('Statutory right of way (SRW) flag required'),
+  isNewLicenseToConstruct: Yup.bool().required('License to construct flag required'),
+  ltcEndDt: Yup.string().when('isNewLicenseToConstruct', {
+    is: (isNewLicenseToConstruct: boolean) => isNewLicenseToConstruct,
+    then: Yup.string().required('End Date is required'),
+  }),
+  landActEndDt: Yup.string().when(['isNewLandAct', 'landActTypeCode'], {
+    is: (isNewLandAct: boolean, landActTypeCode: string) =>
+      isNewLandAct &&
+      ![
+        ApiGen_CodeTypes_LandActTypes.TRANSFER_OF_ADMIN_AND_CONTROL.toString(),
+        ApiGen_CodeTypes_LandActTypes.CROWN_GRANT.toString(),
+      ].includes(landActTypeCode),
+    then: Yup.string().required('End Date is required'),
+  }),
+  landActTypeCode: Yup.string().when('isNewLandAct', {
+    is: (isNewLandAct: boolean) => isNewLandAct,
+    then: Yup.string().required('Land Act is required'),
+  }),
+  completionDt: Yup.string()
+    .nullable()
+    .when('takeStatusTypeCode', {
+      is: (takeStatusTypeCode: string) =>
+        takeStatusTypeCode === ApiGen_CodeTypes_AcquisitionTakeStatusTypes.COMPLETE,
+      then: Yup.string().nullable().required('A completed take must have a completion date.'),
     }),
-  ),
 });
 
 export class TakeModel {

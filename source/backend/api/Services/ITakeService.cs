@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Pims.Dal.Entities;
+using Pims.Dal.Exceptions;
 
 namespace Pims.Api.Services
 {
@@ -12,7 +13,7 @@ namespace Pims.Api.Services
 
         PimsTake UpdateAcquisitionPropertyTake(long acquisitionFilePropertyId, PimsTake take);
 
-        bool DeleteAcquisitionPropertyTake(long takeId);
+        bool DeleteAcquisitionPropertyTake(long takeId, IEnumerable<UserOverrideCode> userOverrides);
 
         IEnumerable<PimsTake> GetByFileId(long fileId);
 
