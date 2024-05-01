@@ -49,14 +49,14 @@ export const PropertyInformation: React.FunctionComponent<
       <SectionField label="Descriptive name" labelWidth="3">
         <Input disabled={disabled} field={withNameSpace(nameSpace, 'propertyName')} />
       </SectionField>
-      <SectionField label="Area included" labelWidth="3">
+      <SectionField label="Area included" labelWidth="3" className="py-4">
         <AreaContainer
           landArea={landArea}
           unitCode={areaUnitType?.id ?? AreaUnitTypes.SquareMeters}
         />
       </SectionField>
       {!hideAddress ? (
-        <SectionField label="Address" labelWidth="3">
+        <SectionField label="Address" labelWidth="3" className="py-2">
           <AddressSubForm
             nameSpace={withNameSpace(nameSpace, 'property.address')}
             disabled={disabled}
