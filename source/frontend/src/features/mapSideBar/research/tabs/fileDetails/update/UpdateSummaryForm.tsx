@@ -164,7 +164,7 @@ const UpdateSummaryForm: React.FunctionComponent<IUpdateSummaryFormProps> = prop
           isPersonResult(values.requestor) &&
           values.requestor.person?.personOrganizations?.length !== undefined && (
             <SectionField label="Organization" className="pb-4">
-              {values.requestor.person.personOrganizations[0].organization?.name ?? 'none'}
+              {values.requestor.person?.personOrganizations[0]?.organization?.name ?? 'none'}
             </SectionField>
           )}
         <SectionField label="Description of request" />
