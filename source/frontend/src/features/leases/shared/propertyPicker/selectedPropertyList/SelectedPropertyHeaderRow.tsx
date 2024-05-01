@@ -16,7 +16,6 @@ export const SelectedPropertyHeaderRow: React.FunctionComponent<
           toolTip="Optionally - provide a user friendly description to identify the property, such as Highway 1"
         />
       </Col>
-      <Col xs={3}>Area included</Col>
     </HeaderRow>
   );
 };
