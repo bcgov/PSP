@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { Input } from '@/components/common/form';
 import { SectionField } from '@/components/common/Section/SectionField';
 import AreaContainer from '@/components/measurements/AreaContainer';
+import { AreaUnitTypes } from '@/constants';
 import { ApiGen_Base_CodeType } from '@/models/api/generated/ApiGen_Base_CodeType';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { isValidId, pidFormatter } from '@/utils';
@@ -49,7 +50,10 @@ export const PropertyInformation: React.FunctionComponent<
         <Input disabled={disabled} field={withNameSpace(nameSpace, 'propertyName')} />
       </SectionField>
       <SectionField label="Area included" labelWidth="3">
-        <AreaContainer landArea={landArea} unitCode={areaUnitType?.id} />
+        <AreaContainer
+          landArea={landArea}
+          unitCode={areaUnitType?.id ?? AreaUnitTypes.SquareMeters}
+        />
       </SectionField>
       {!hideAddress ? (
         <SectionField label="Address" labelWidth="3">

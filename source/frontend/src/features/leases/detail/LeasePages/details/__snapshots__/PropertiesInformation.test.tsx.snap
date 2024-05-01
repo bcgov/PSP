@@ -36,6 +36,20 @@ exports[`PropertiesInformation component > renders as expected 1`] = `
   font-weight: bold;
 }
 
+.c6 {
+  max-width: 25rem;
+  padding: 1rem;
+  border: 1px solid;
+  border-radius: 0.5rem;
+}
+
+.c7 {
+  max-width: 25rem;
+  padding: 1rem;
+  border: 1px solid;
+  border-radius: 0.5rem;
+}
+
 .c3 {
   margin-top: 4rem;
 }
@@ -145,10 +159,82 @@ exports[`PropertiesInformation component > renders as expected 1`] = `
           <div
             class="c5 text-left col"
           >
-            123.00 m
-            <sup>
-              2
-            </sup>
+            <div
+              class="row"
+            >
+              <div
+                class="col"
+              >
+                <div
+                  class="c6"
+                >
+                  <div
+                    class="row"
+                  >
+                    <div
+                      class="text-right col"
+                    >
+                      123
+                    </div>
+                    <div
+                      class="col"
+                    >
+                      sq. metres
+                    </div>
+                  </div>
+                  <div
+                    class="row"
+                  >
+                    <div
+                      class="text-right col"
+                    >
+                      0.01
+                    </div>
+                    <div
+                      class="col"
+                    >
+                      hectares
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="col"
+              >
+                <div
+                  class="c7"
+                >
+                  <div
+                    class="row"
+                  >
+                    <div
+                      class="text-right col"
+                    >
+                      1,323.96
+                    </div>
+                    <div
+                      class="col"
+                    >
+                      sq. feet
+                    </div>
+                  </div>
+                  <div
+                    class="row"
+                  >
+                    <div
+                      class="text-right col"
+                    >
+                      0.03
+                    </div>
+                    <div
+                      class="col"
+                    >
+                      acres
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <div
