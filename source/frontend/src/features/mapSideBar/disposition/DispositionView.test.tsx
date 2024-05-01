@@ -9,7 +9,7 @@ import {
   mockDispositionFileResponse,
 } from '@/mocks/dispositionFiles.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
-import { rest, server } from '@/mocks/msw/server';
+import { server } from '@/mocks/msw/server';
 import { getUserMock } from '@/mocks/user.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { prettyFormatUTCDate } from '@/utils';
@@ -23,6 +23,7 @@ import { vi } from 'vitest';
 import { useLtsa } from '@/hooks/useLtsa';
 import { useProjectProvider } from '@/hooks/repositories/useProjectProvider';
 import { createRef } from 'react';
+import { HttpResponse, http } from 'msw';
 
 // mock auth library
 
@@ -144,9 +145,7 @@ describe('DispositionView component', () => {
 
   beforeEach(() => {
     server.use(
-      rest.get('/api/users/info/*', (req, res, ctx) =>
-        res(ctx.delay(500), ctx.status(200), ctx.json(getUserMock())),
-      ),
+      http.get('/api/users/info/*', () => HttpResponse.json(getUserMock(), { status: 200 })),
     );
 
     vi.mocked(useNoteRepository).mockImplementation(

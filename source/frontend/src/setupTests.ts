@@ -8,11 +8,9 @@ import 'jest-styled-components';
 import noop from 'lodash/noop';
 import moment from 'moment';
 import { tz } from 'moment-timezone';
-import { MockedRequest } from 'msw';
 import failOnConsole from 'vitest-fail-on-console';
 
-import { server } from '@/mocks/msw/server';
-
+import { server } from './mocks/msw/server';
 import { cleanup } from './utils/test-utils';
 
 // workaround to allow polyline and other svg map renderers to function correctly in tests.
@@ -47,7 +45,7 @@ import.meta.env.VITE_TENANT = 'MOTI';
 const onUnhandledRequest = vi.fn();
 
 // Establish API mocking before all tests.
-beforeAll(() => server.listen({ onUnhandledRequest }));
+beforeAll(() => server.listen({ onUnhandledRequest: 'error' }));
 
 // Reset any request handlers that we may add during the tests,
 // so they don't affect other tests.
@@ -56,7 +54,7 @@ afterEach(() => {
   try {
     expect(onUnhandledRequest).not.toHaveBeenCalled();
   } catch (e) {
-    const req = onUnhandledRequest.mock.calls[0][0] as MockedRequest;
+    const req = onUnhandledRequest.mock.calls[0][0];
     const messageTemplate = [
       `[MSW] Error: captured a request without a matching request handler:`,
       `  \u2022 ${req.method} ${req.url.href}`,

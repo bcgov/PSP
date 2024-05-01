@@ -1,4 +1,4 @@
-import { rest } from 'msw';
+import { http, HttpResponse } from 'msw';
 
 import {
   getMockAddresses,
@@ -10,20 +10,20 @@ import {
 } from '@/mocks/bcAssessment.mock';
 
 export const handlers = [
-  rest.get('https://delivery.apps.gov.bc.ca/ext/sgw/geo.bca', (req, res, ctx) => {
-    const search = req.url.search;
+  http.get('https://delivery.apps.gov.bc.ca/ext/sgw/geo.bca', ({ request }) => {
+    const search = new URL(request.url).search;
     if (search.includes('BCA_FOLIO_ADDRESSES_SV')) {
-      return res(ctx.delay(500), ctx.status(200), ctx.json(getMockAddresses()));
+      return HttpResponse.json(getMockAddresses(), { status: 200 });
     } else if (search.includes('BCA_FOLIO_LEGAL_DESCRIPTS_SV')) {
-      return res(ctx.delay(5000), ctx.status(200), ctx.json(getMockLegalDescriptions()));
+      return HttpResponse.json(getMockLegalDescriptions(), { status: 200 });
     } else if (search.includes('BCA_FOLIO_GNRL_PROP_VALUES_SV')) {
-      return res(ctx.delay(500), ctx.status(200), ctx.json(getMockValues()));
+      return HttpResponse.json(getMockValues(), { status: 200 });
     } else if (search.includes('BCA_FOLIO_SALES_SV')) {
-      return res(ctx.delay(500), ctx.status(200), ctx.json(getMockSales()));
+      return HttpResponse.json(getMockSales(), { status: 200 });
     } else if (search.includes('BCA_FOLIO_DESCRIPTIONS_SV')) {
-      return res(ctx.delay(500), ctx.status(200), ctx.json(getMockDescription()));
+      return HttpResponse.json(getMockDescription(), { status: 200 });
     } else if (search.includes('BCA_FOLIO_LAND_CHARS_SV')) {
-      return res(ctx.delay(500), ctx.status(200), ctx.json(getMockLandChars()));
+      return HttpResponse.json(getMockLandChars(), { status: 200 });
     }
   }),
 ];
