@@ -1,5 +1,5 @@
 // 1. Import the library.
-import { setupWorker } from 'msw';
+import { setupWorker } from 'msw/browser';
 
 import { handlers } from './handlers';
 
