@@ -82,13 +82,14 @@ const StyledRow = styled(Row)`
 
 const StyledIconWrapper = styled.div`
   &.selected {
-    background-color: ${props => props.theme.css.accentColor};
+    background-color: ${props => props.theme.bcTokens.themeGold100};
   }
-  background-color: ${props => props.theme.css.lightAccentColor};
+  background-color: ${props => props.theme.css.numberBackgroundColor};
 
   font-size: 1.5rem;
 
   border-radius: 50%;
+  opacity: 0.8;
 
   width: 2.5rem;
   height: 2.5rem;
@@ -104,11 +105,11 @@ const StyledMenuHeaderWrapper = styled.div`
   justify-content: space-between;
   align-items: flex-end;
   width: 100%;
-  border-bottom: 1px solid ${props => props.theme.css.lightVariantColor};
+  border-bottom: 1px solid ${props => props.theme.css.borderOutlineColor};
 `;
 
 const StyledMenuHeader = styled.span`
   font-size: 1.4rem;
-  color: ${props => props.theme.css.lightVariantColor};
+  color: ${props => props.theme.css.themeGray70};
   line-height: 2.2rem;
 `;

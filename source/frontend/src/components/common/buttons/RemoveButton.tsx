@@ -60,7 +60,7 @@ export const StyledRemoveIconButton = styled(StyledIconButton)`
   &&.btn {
     &.btn-primary {
       svg {
-        color: ${({ theme }) => theme.css.subtleColor};
+        color: ${({ theme }) => theme.bcTokens.iconsColorDisabled};
       }
       text-decoration: none;
       line-height: unset;

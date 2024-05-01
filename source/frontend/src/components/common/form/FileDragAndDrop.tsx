@@ -110,11 +110,11 @@ const FileDragAndDrop: FunctionComponent<React.PropsWithChildren<IFileDragAndDro
 export default FileDragAndDrop;
 
 const DragDropZone = styled.div<{ isDragging: boolean }>`
-  border: 1px solid ${({ theme }) => theme.css.lightVariantColor};
+  border: 1px solid ${({ theme }) => theme.css.borderOutlineColor};
 
   border-style: ${({ isDragging }) => (isDragging ? 'solid' : 'dashed')};
 
-  border: ${props => (props.isDragging ? `1px solid ${props.theme.css.draftColor}` : '')};
+  border: ${props => (props.isDragging ? `1px solid ${props.theme.css.activeActionColor}` : '')};
 
   background-color: ${props => (props.isDragging ? props.theme.css.filterBoxColor : '')};
 

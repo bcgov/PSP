@@ -146,7 +146,7 @@ export const LayerPopupView: React.FC<React.PropsWithChildren<ILayerPopupViewPro
 
 const StyledContainer = styled.div`
   padding: 0.5rem 1.2rem;
-  background-color: ${props => props.theme.css.mapPopupBackgroundColor};
+  background-color: ${props => props.theme.css.highlightBackgroundColor};
 
   .btn-link {
     font-size: 1.4rem;
@@ -155,7 +155,7 @@ const StyledContainer = styled.div`
   }
   .list-group {
     .list-group-item {
-      background-color: ${props => props.theme.css.mapPopupBackgroundColor};
+      background-color: ${props => props.theme.css.highlightBackgroundColor};
       font-size: 1.4rem;
       border: none;
       padding: 0;
@@ -166,7 +166,7 @@ const StyledContainer = styled.div`
 
 const StyledRow = styled(Row)`
   margin: 0rem;
-  border-bottom: 0.2rem ${props => props.theme.css.headingBorderColor} solid;
+  border-bottom: 0.2rem ${props => props.theme.css.borderOutlineColor} solid;
 `;
 
 const StyledFlyoutContainer = styled.div`

@@ -244,7 +244,7 @@ const UpdateDispositionForm: React.FC<IUpdateDispositionFormProps> = ({
 export default UpdateDispositionForm;
 
 const Container = styled.div`
-  background-color: ${props => props.theme.css.filterBackgroundColor};
+  background-color: ${props => props.theme.css.highlightBackgroundColor};
   padding-top: 1rem;
 
   .tab-pane {

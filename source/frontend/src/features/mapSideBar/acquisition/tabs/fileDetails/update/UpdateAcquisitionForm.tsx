@@ -306,7 +306,7 @@ const AcquisitionDetailSubForm: React.FC<{
 };
 
 const Container = styled.div`
-  background-color: ${props => props.theme.css.filterBackgroundColor};
+  background-color: ${props => props.theme.css.highlightBackgroundColor};
 
   [name='region'] {
     max-width: 25rem;

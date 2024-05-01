@@ -112,8 +112,8 @@ const StyledDivider = styled.div`
 
 export const RetiredWarning = styled(InlineFlexDiv)`
   text-transform: uppercase;
-  color: ${props => props.theme.css.expiredColor};
-  background-color: ${props => props.theme.css.expiredBackgroundColor};
+  color: ${props => props.theme.css.textWarningColor};
+  background-color: ${props => props.theme.css.warningBackgroundColor};
   border-radius: 0.4rem;
   letter-spacing: 0.1rem;
   padding: 0.2rem 0.5rem;

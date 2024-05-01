@@ -6,61 +6,20 @@
   footerHeight: $footer-height;
   headerHeight: $header-height;
 
-  // table ui
-  tableHoverColor: $table-hover-color;
-  tableHeaderBgColor: $table-header-bg-color;
-  tableHeaderBorderColor: $table-header-border-color;
-  tableColumnBorderColor: $table-column-border-color;
-  tableEvenRowBgColor: $table-even-row-bg-color;
-  tableOddRowBgColor: $table-odd-row-bg-color;
-  // text headings - H1, H2 etc
-  headingTextColor: $heading-text-color;
-  headingBorderColor: $heading-border-color;
   // map popup
-  mapPopupBackgroundColor: $map-popup-background-color;
+  highlightBackgroundColor: $highlight-background-color;
   // buttons
-  buttonOutlineColor: $icon-light-color;
-  buttonInfoColor: $button-info-color;
+  borderOutlineColor: $border-outline-color;
 
   // Colors
-  accentColor: $accent-color;
-  activeColor: $active-color;
-  completedColor: $completed-color;
+  warningBackgroundColor: $warning-background-color;
+  numberBackgroundColor: $number-background-color;
   dangerBackgroundColor: $danger-background-color;
-  dangerColor: $danger-color;
-  darkBlue: $dark-blue;
-  darkVariantColor: $dark-variant-color;
-  disabledColor: $disabled-color;
-  disabledFieldBackgroundColor: $disabled-field-background-color;
-  discardedColor: $discarded-color;
-  draftColor: $draft-color;
-  dropdownBackgroundColor: $dropdown-background-color;
-  filterBackgroundColor: $filter-background-color;
   filterBoxColor: $filter-box-color;
-  fontDangerColor: $font-danger-color;
-  fontWarningColor: $font-warning-color;
-  formBackgroundColor: $form-background-color;
-  formControlTextColor: $form-control-text-color;
-  formTextColor: $form-text-color;
-  iconLightColor: $icon-light-color;
-  lightAccentColor: $light-accent-color;
-  lightDangerColor: $light-danger-color;
-  lightVariantColor: $light-variant-color;
+  textWarningColor: $text-warning-color;
   linkColor: $link-color;
   linkHoverColor: $link-hover-color;
-  primaryBackgroundColor: $primary-background-color;
-  primaryBorderColor: $primary-border-color;
-  primaryColor: $primary-color;
-  primaryHoverColor: $primary-hover-color;
-  primaryLightColor: $primary-light-color;
-  secondaryVariantColor: $secondary-variant-color;
-  selectedColor: $selected-color;
-  slideOutBlue: $slide-out-blue;
-  sresIconColor: $sres-icon-color;
-  subtleColor: $subtle-color;
-  summaryBorderColor: $summary-border-color;
-  summaryColor: $summary-color;
-  textColor: $text-color;
-  expiredColor: $expired-color;
-  expiredBackgroundColor: $expired-background-color;
+  activeActionColor: $active-action-color;
+  headerTextColor: $header-text-color;
+  headerBorderColor: $header-border-color;
 }

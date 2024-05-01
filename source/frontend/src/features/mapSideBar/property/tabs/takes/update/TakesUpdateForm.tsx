@@ -95,7 +95,7 @@ const StyledStickyWrapper = styled.div`
   position: sticky;
   top: 0;
   padding-bottom: 0.5rem;
-  background-color: ${({ theme }) => theme.css.filterBackgroundColor};
+  background-color: ${({ theme }) => theme.css.highlightBackgroundColor};
 `;
 
 export const emptyTake: ApiGen_Concepts_Take = {
