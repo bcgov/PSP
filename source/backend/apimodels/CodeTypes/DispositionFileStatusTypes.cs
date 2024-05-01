@@ -1,10 +1,10 @@
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
-namespace Pims.Api.Constants
+namespace Pims.Api.Models.CodeTypes
 {
     [JsonConverter(typeof(JsonStringEnumMemberConverter))]
-    public enum DispositionStatusTypes
+    public enum DispositionFileStatusTypes
     {
         [EnumMember(Value = "ACTIVE")]
         ACTIVE,
@@ -14,9 +14,6 @@ namespace Pims.Api.Constants
 
         [EnumMember(Value = "CANCELLED")]
         CANCELLED,
-
-        [EnumMember(Value = "CLOSED")]
-        CLOSED,
 
         [EnumMember(Value = "COMPLETE")]
         COMPLETE,

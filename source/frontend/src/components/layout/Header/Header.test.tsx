@@ -14,7 +14,7 @@ import { RenderOptions, cleanup, mockKeycloak, render } from '@/utils/test-utils
 
 import Header from './Header';
 
-vi.mock('@/store/slices/tenants/useTenants');
+vi.mock('@/store/slices/tenants');
 (useTenants as any).mockImplementation(() => ({
   getSettings: vi.fn(),
 }));

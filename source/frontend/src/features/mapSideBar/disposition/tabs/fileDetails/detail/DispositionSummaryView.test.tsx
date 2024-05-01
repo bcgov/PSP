@@ -2,12 +2,12 @@ import Claims from '@/constants/claims';
 import { getEmptyPerson } from '@/mocks/contacts.mock';
 import { getEmptyOrganization } from '@/mocks/organization.mock';
 import { toTypeCode, toTypeCodeNullable } from '@/utils/formUtils';
-import { DispositionFileStatus } from '@/constants/dispositionFileStatus';
 import Roles from '@/constants/roles';
 import { mockDispositionFileResponse } from '@/mocks/dispositionFiles.mock';
 import { act, cleanup, render, RenderOptions, userEvent, waitForEffects } from '@/utils/test-utils';
 
 import DispositionSummaryView, { IDispositionSummaryViewProps } from './DispositionSummaryView';
+import { ApiGen_CodeTypes_DispositionFileStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_DispositionFileStatusTypes';
 
 // mock auth library
 
@@ -80,7 +80,7 @@ describe('DispositionSummaryView component', () => {
       {
         dispositionFile: {
           ...mockDispositionFileResponse(),
-          fileStatusTypeCode: toTypeCode(DispositionFileStatus.Complete),
+          fileStatusTypeCode: toTypeCode(ApiGen_CodeTypes_DispositionFileStatusTypes.COMPLETE),
         },
       },
       { claims: [Claims.DISPOSITION_EDIT] },
@@ -97,7 +97,7 @@ describe('DispositionSummaryView component', () => {
       {
         dispositionFile: {
           ...mockDispositionFileResponse(),
-          fileStatusTypeCode: toTypeCode(DispositionFileStatus.Complete),
+          fileStatusTypeCode: toTypeCode(ApiGen_CodeTypes_DispositionFileStatusTypes.COMPLETE),
         },
       },
       { claims: [Claims.DISPOSITION_EDIT], roles: [Roles.SYSTEM_ADMINISTRATOR] },

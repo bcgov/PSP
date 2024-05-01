@@ -81,9 +81,6 @@ public partial class PimsAcquisitionFileHist
     [Column("DELIVERY_DATE", TypeName = "datetime")]
     public DateTime? DeliveryDate { get; set; }
 
-    [Column("COMPLETION_DATE", TypeName = "datetime")]
-    public DateTime? CompletionDate { get; set; }
-
     [Column("PAIMS_ACQUISITION_FILE_ID")]
     public int? PaimsAcquisitionFileId { get; set; }
 
@@ -140,4 +137,7 @@ public partial class PimsAcquisitionFileHist
     [Column("DB_LAST_UPDATE_USERID")]
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
+
+    [Column("COMPLETION_DATE", TypeName = "datetime")]
+    public DateTime? CompletionDate { get; set; }
 }

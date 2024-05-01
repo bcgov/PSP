@@ -85,8 +85,6 @@ vi.mock('@react-keycloak/web', () => {
   };
 });
 
-vi.mock('@/components/common/mapFSM/MapStateMachineContext');
-
 describe('AddAcquisitionContainer component', () => {
   // render component under test
   const setup = async (
@@ -117,6 +115,7 @@ describe('AddAcquisitionContainer component', () => {
         [lookupCodesSlice.name]: { lookupCodes: mockLookups },
       },
       claims: [],
+      mockMapMachine: renderOptions.mockMapMachine,
       history,
     });
 

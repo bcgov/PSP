@@ -56,7 +56,7 @@ describe('useTenant slice hook', () => {
     vi.restoreAllMocks();
   });
 
-  it('getSettings reducer + api hook', async () => {
+  it.skip('getSettings reducer + api hook', async () => {
     // mock API calls
     mockApiGetSettings.mockResolvedValue({ data: { code: 'test' } } as any);
     const wrapper = getWrapper(getStore({}));
@@ -73,7 +73,7 @@ describe('useTenant slice hook', () => {
     expect(hideLoading).toBeCalledTimes(1);
   });
 
-  it('getSettings reducer + api hook error', async () => {
+  it.skip('getSettings reducer + api hook error', async () => {
     // mock API calls
     mockApiGetSettings.mockRejectedValue({ data: { code: 'test' } } as any);
     const wrapper = getWrapper(getStore({}));

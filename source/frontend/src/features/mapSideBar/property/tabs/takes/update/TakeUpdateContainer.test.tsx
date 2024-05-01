@@ -1,17 +1,20 @@
 import { FormikProps } from 'formik';
 import { createMemoryHistory } from 'history';
-import { forwardRef } from 'react';
+import { createRef, forwardRef } from 'react';
 
 import { mockLookups } from '@/mocks/lookups.mock';
 import { getMockApiPropertyFiles } from '@/mocks/properties.mock';
 import { getMockApiTakes } from '@/mocks/takes.mock';
 import { ApiGen_Concepts_Take } from '@/models/api/generated/ApiGen_Concepts_Take';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { act, render, RenderOptions, waitForEffects } from '@/utils/test-utils';
+import { act, render, RenderOptions, waitFor, waitForEffects } from '@/utils/test-utils';
 
-import { TakeModel } from './models';
-import TakesUpdateContainer, { ITakesDetailContainerProps } from './TakesUpdateContainer';
-import { emptyTake, ITakesUpdateFormProps } from './TakesUpdateForm';
+import { TakeModel } from '../models';
+import TakesUpdateContainer, { ITakesDetailContainerProps } from './TakeUpdateContainer';
+import { emptyTake, ITakesFormProps } from './TakeForm';
+import { useParams } from 'react-router-dom';
+import { useTakesRepository } from '../repositories/useTakesRepository';
+import waitForExpect from 'wait-for-expect';
 
 const history = createMemoryHistory();
 const storeState = {
@@ -23,6 +26,7 @@ const mockGetApi = {
   response: undefined,
   execute: vi.fn(),
   loading: false,
+  status: 200,
 };
 
 const mockUpdateApi = {
@@ -30,22 +34,27 @@ const mockUpdateApi = {
   response: undefined,
   execute: vi.fn(),
   loading: false,
+  status: 200,
 };
+vi.mock('react-router-dom');
+vi.mocked(useParams).mockReturnValue({ takeId: '1' });
 
-vi.mock('../repositories/useTakesRepository', () => ({
-  useTakesRepository: () => {
-    return {
-      getTakesByFileId: mockGetApi,
-      updateTakesByAcquisitionPropertyId: mockUpdateApi,
-    };
-  },
+vi.mock('../repositories/useTakesRepository');
+vi.mocked(useTakesRepository).mockImplementation(() => ({
+  getTakesByFileId: mockGetApi,
+  getTakesByPropertyId: mockGetApi,
+  getTakesCountByPropertyId: mockGetApi,
+  getTakeById: mockGetApi,
+  updateTakeByAcquisitionPropertyId: mockUpdateApi,
+  addTakeByAcquisitionPropertyId: mockUpdateApi,
+  deleteTakeByAcquisitionPropertyId: mockUpdateApi,
 }));
 
-describe('TakesUpdateContainer component', () => {
+describe('TakeUpdateContainer component', () => {
   // render component under test
 
-  let viewProps: ITakesUpdateFormProps;
-  const View = forwardRef<FormikProps<any>, ITakesUpdateFormProps>((props, ref) => {
+  let viewProps: ITakesFormProps;
+  const View = forwardRef<FormikProps<any>, ITakesFormProps>((props, ref) => {
     viewProps = props;
     return <></>;
   });
@@ -61,6 +70,7 @@ describe('TakesUpdateContainer component', () => {
         fileProperty={renderOptions.props?.fileProperty ?? getMockApiPropertyFiles()[0]}
         View={View}
         onSuccess={onSuccess}
+        ref={createRef<FormikProps<any>>()}
       />,
       {
         ...renderOptions,
@@ -78,6 +88,10 @@ describe('TakesUpdateContainer component', () => {
     vi.clearAllMocks();
   });
 
+  beforeEach(() => {
+    history.push('takes/1');
+  });
+
   it('renders as expected', async () => {
     const { asFragment } = setup({});
     await act(async () => {});
@@ -89,7 +103,7 @@ describe('TakesUpdateContainer component', () => {
     (console.error as any).mockImplementation(() => {});
     const render = () => setup({ props: { fileProperty: {} as any } });
 
-    expect(render).toThrow('File property must have id');
+    expect(render).toThrow('Unable to edit take with invalid ids');
     (console.error as any).mockRestore();
   });
 
@@ -98,26 +112,24 @@ describe('TakesUpdateContainer component', () => {
     const formikHelpers = { setSubmitting: vi.fn() };
     await act(async () => {});
     await act(async () =>
-      viewProps.onSubmit({ takes: [new TakeModel(getMockApiTakes()[0])] }, formikHelpers as any),
+      viewProps.onSubmit(new TakeModel(getMockApiTakes()[0]), formikHelpers as any),
     );
 
     expect(mockUpdateApi.execute).toHaveBeenCalled();
     expect(onSuccess).toHaveBeenCalled();
   });
 
-  it('returns an empty takes array if no takes are returned from the api', async () => {
+  it('returns an empty takeif no take are returned from the api', async () => {
     setup({});
     await act(async () => {});
 
-    expect(viewProps.takes).toStrictEqual([new TakeModel(emptyTake)]);
+    expect(viewProps.take).toStrictEqual(new TakeModel(emptyTake));
   });
 
-  it('returns converts takes returned from the api into form models', async () => {
+  it('returns converted take returned from the api into form models', async () => {
     const apiTake: ApiGen_Concepts_Take = { ...getMockApiTakes()[0], propertyAcquisitionFileId: 1 };
-    mockGetApi.execute.mockResolvedValue([apiTake]);
+    mockGetApi.response = apiTake;
     setup({});
-    await waitForEffects();
-
-    expect(viewProps.takes).toStrictEqual([new TakeModel(apiTake)]);
+    await waitForExpect(() => expect(viewProps.take).toStrictEqual(new TakeModel(apiTake)));
   });
 });
