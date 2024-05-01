@@ -281,6 +281,33 @@ namespace PIMS.Tests.Automation.PageObjects
                     ButtonElement(propertyNewConsolidationFileBttn);
                     break;
             }
+
+            Wait();
+            while (webDriver.FindElements(propertyInformationConfirmationModal).Count > 0)
+            {
+                Assert.Equal("User Override Required", sharedModals.ModalHeader());
+
+                if (sharedModals.ModalContent().Contains("This property has already been added to one or more acquisition files."))
+                {
+                    Assert.Contains("This property has already been added to one or more acquisition files.", sharedModals.ModalContent());
+                    Assert.Contains("Do you want to acknowledge and proceed?", sharedModals.ModalContent());
+                    sharedModals.ModalClickOKBttn();
+                }
+                if (sharedModals.ModalContent().Contains("This property has already been added to one or more research files."))
+                {
+                    Assert.Contains("This property has already been added to one or more research files.", sharedModals.ModalContent());
+                    Assert.Contains("Do you want to acknowledge and proceed?", sharedModals.ModalContent());
+                    sharedModals.ModalClickOKBttn();
+                }
+                if (sharedModals.ModalContent().Contains("This property has already been added to one or more disposition files."))
+                {
+                    Assert.Contains("This property has already been added to one or more disposition files.", sharedModals.ModalContent());
+                    Assert.Contains("Do you want to acknowledge and proceed?", sharedModals.ModalContent());
+                    sharedModals.ModalClickOKBttn();
+                }
+
+                Wait();
+            }
         }
 
         public void NavigatePropertyDetailsTab()
