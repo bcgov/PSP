@@ -118,7 +118,7 @@ namespace Pims.Api.Services
             {
                 throw new BusinessRuleViolationException("Retired records are referenced for historical purposes only and cannot be edited or deleted. If the take has been added in error, contact your system administrator to re-open the file, which will allow take deletion.");
             }
-            else if(propertyWithAssociations?.PimsDispositionFileProperties?.Any(d => d.DispositionFile.DispositionFileStatusTypeCode == EnumDispositionFileStatusTypeCode.COMPLETE.ToString()) == true)
+            else if(propertyWithAssociations?.PimsDispositionFileProperties?.Any(d => d.DispositionFile.DispositionFileStatusTypeCode == DispositionFileStatusTypes.COMPLETE.ToString()) == true)
             {
                 throw new BusinessRuleViolationException("You cannot delete a take that has a completed disposition attached to the same property.");
             }
@@ -130,7 +130,7 @@ namespace Pims.Api.Services
             // user overrides
             if (takeToDelete.TakeStatusTypeCode == AcquisitionTakeStatusTypes.COMPLETE.ToString() && _user.HasPermission(Permissions.SystemAdmin))
             {
-                if (propertyWithAssociations?.PimsDispositionFileProperties?.Any(d => d.DispositionFile.DispositionFileStatusTypeCode == EnumDispositionFileStatusTypeCode.ACTIVE.ToString()) == true && !userOverrides.Contains(UserOverrideCode.DeleteTakeActiveDisposition))
+                if (propertyWithAssociations?.PimsDispositionFileProperties?.Any(d => d.DispositionFile.DispositionFileStatusTypeCode == DispositionFileStatusTypes.ACTIVE.ToString()) == true && !userOverrides.Contains(UserOverrideCode.DeleteTakeActiveDisposition))
                 {
                     throw new UserOverrideException(UserOverrideCode.DeleteTakeActiveDisposition, "You are deleting a take. Property ownership state will be recalculated based upon any remaining completed takes. It should be noted that one or more related dispositions are in progress that should also be reviewed. \n\nDo you want to acknowledge and proceed?");
                 }

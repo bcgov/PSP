@@ -869,7 +869,7 @@ namespace Pims.Api.Test.Services
             var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
             var property = EntityHelper.CreateProperty(1);
             var dispFile = EntityHelper.CreateDispositionFile();
-            dispFile.DispositionFileStatusTypeCode = EnumDispositionFileStatusTypeCode.COMPLETE.ToString();
+            dispFile.DispositionFileStatusTypeCode = DispositionFileStatusTypes.COMPLETE.ToString();
             property.PimsDispositionFileProperties = new List<PimsDispositionFileProperty>() { new PimsDispositionFileProperty() { DispositionFile = dispFile } };
             propertyRepository.Setup(x => x.GetAllAssociationsById(It.IsAny<long>())).Returns(property);
 
