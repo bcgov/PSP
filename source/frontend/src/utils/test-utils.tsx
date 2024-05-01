@@ -33,6 +33,7 @@ const mocks = vi.hoisted(() => {
 vi.mock('@/components/common/mapFSM/MapStateMachineContext', () => {
   return {
     useMapStateMachine: mocks.useMapStateMachine,
+    MapStateMachineProvider: vi.fn(),
   };
 });
 

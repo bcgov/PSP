@@ -89,7 +89,7 @@ const Underline = styled.div`
 
 const CloseIcon = styled(FaWindowClose)`
   color: ${props => props.theme.bcTokens.typographyColorSecondary};
-  font-size: 30px;
+  font-size: 2.4rem;
   cursor: pointer;
 `;
 

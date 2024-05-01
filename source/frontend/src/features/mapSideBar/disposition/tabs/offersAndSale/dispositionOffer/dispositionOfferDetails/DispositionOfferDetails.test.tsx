@@ -1,7 +1,6 @@
 import { createMemoryHistory } from 'history';
 
 import Claims from '@/constants/claims';
-import { DispositionFileStatus } from '@/constants/dispositionFileStatus';
 import Roles from '@/constants/roles';
 import {
   mockDispositionFileOfferApi,
@@ -11,6 +10,7 @@ import { act, render, RenderOptions, userEvent, waitFor } from '@/utils/test-uti
 
 import DispositionOfferDetails, { IDispositionOfferDetailsProps } from './DispositionOfferDetails';
 import { toTypeCode } from '@/utils/formUtils';
+import { ApiGen_CodeTypes_DispositionFileStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_DispositionFileStatusTypes';
 
 const history = createMemoryHistory();
 
@@ -86,7 +86,7 @@ describe('Disposition Offer Detail View component', () => {
       props: {
         dispositionFile: {
           ...mockDispositionFileResponse(),
-          fileStatusTypeCode: toTypeCode(DispositionFileStatus.Complete),
+          fileStatusTypeCode: toTypeCode(ApiGen_CodeTypes_DispositionFileStatusTypes.COMPLETE),
         },
       },
     });
@@ -105,7 +105,7 @@ describe('Disposition Offer Detail View component', () => {
       props: {
         dispositionFile: {
           ...mockDispositionFileResponse(),
-          fileStatusTypeCode: toTypeCode(DispositionFileStatus.Complete),
+          fileStatusTypeCode: toTypeCode(ApiGen_CodeTypes_DispositionFileStatusTypes.COMPLETE),
         },
       },
     });

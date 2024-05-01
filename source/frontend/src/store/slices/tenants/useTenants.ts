@@ -14,7 +14,7 @@ import { storeSettings, tenantsSlice } from '.';
  */
 export const useTenants = () => {
   const dispatch = useAppDispatch();
-  const api = useApiTenants();
+  const { getSettings: getApiSettings } = useApiTenants();
 
   /**
    * fetch all of the organizations from the server based on a filter.
@@ -24,7 +24,7 @@ export const useTenants = () => {
     dispatch(logRequest(tenantsSlice.name));
     dispatch(showLoading());
     try {
-      const response = await api.getSettings();
+      const response = await getApiSettings();
 
       dispatch(logSuccess({ name: tenantsSlice.name, status: response.status }));
       dispatch(storeSettings(response.data));
@@ -39,7 +39,7 @@ export const useTenants = () => {
     } finally {
       dispatch(hideLoading());
     }
-  }, [api, dispatch]);
+  }, [getApiSettings, dispatch]);
 
   return {
     getSettings,
