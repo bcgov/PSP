@@ -25,9 +25,6 @@ import { tenantsSlice } from './store/slices/tenants';
 import { defaultTenant } from './tenants/config/defaultTenant';
 import {
   act,
-  flushPromises,
-  prettyDOM,
-  render,
   renderAsync,
   RenderOptions,
   screen,
@@ -364,10 +361,11 @@ describe('PSP routing', () => {
 
     it('should display the admin users page at the expected route', async () => {
       await act(async () => {
-        await setup('/admin/users', { claims: [Claims.ADMIN_USERS] });
+        setup('/admin/users', { claims: [Claims.ADMIN_USERS] });
       });
       await screen.findByText('v1.0.0.0');
       const lazyElement = await screen.findByText('Smith');
+
       expect(lazyElement).toBeInTheDocument();
       expect(document.title).toMatch(/Users Management/i);
     });

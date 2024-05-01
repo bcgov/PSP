@@ -1,8 +1,11 @@
 using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
-namespace Pims.Api.Constants
+namespace Pims.Api.Models.CodeTypes
 {
-    public enum EnumDispositionStatusTypeCode
+    [JsonConverter(typeof(JsonStringEnumMemberConverter))]
+
+    public enum DispositionStatusTypes
     {
         [EnumMember(Value = "LISTED")]
         LISTED,

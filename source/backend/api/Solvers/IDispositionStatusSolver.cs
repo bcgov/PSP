@@ -1,13 +1,9 @@
-using Pims.Api.Constants;
+using Pims.Api.Models.CodeTypes;
 
 namespace Pims.Api.Services
 {
     public interface IDispositionStatusSolver
     {
-        bool CanEditDetails(DispositionStatusTypes? dispositionStatus);
-
-        bool CanEditProperties(DispositionStatusTypes? dispositionStatus);
-
-        bool CanEditOrDeleteValuesOffersSales(DispositionStatusTypes? dispositionStatus);
+        bool CanEditDetails(DispositionFileStatusTypes? dispositionStatus);
     }
 }
