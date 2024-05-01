@@ -52,7 +52,7 @@ jobs:
       - run: npm run build --if-present
         working-directory: ${{env.working-directory}}
 
-      - run: npm run coverage -- --bail 1 --maxWorkers 1 --minWorkers 1
+      - run: npm run coverage -- --bail 1 --maxWorkers 2 --minWorkers 2
         working-directory: ${{env.working-directory}}
         env:
           REACT_APP_TENANT: MOTI
