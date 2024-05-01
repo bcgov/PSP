@@ -182,13 +182,13 @@ namespace Pims.Api.Test.Controllers
         {
             // Arrange
             this._service.Setup(m => m.GetById(It.IsAny<long>())).Returns(new PimsTake() { PropertyAcquisitionFileId = 1 });
-            this._service.Setup(m => m.DeleteAcquisitionPropertyTake(It.IsAny<long>(), It.IsAny<List<UserOverrideCode>>())).Returns(true);
+            this._service.Setup(m => m.DeleteAcquisitionPropertyTake(It.IsAny<long>(), It.IsAny<IEnumerable<UserOverrideCode>>())).Returns(true);
 
             // Act
             this._controller.DeleteAcquisitionPropertyTake(1, 1, new string[0]);
 
             // Assert
-            this._service.Verify(m => m.DeleteAcquisitionPropertyTake(It.IsAny<long>(), It.IsAny<List<UserOverrideCode>>()));
+            this._service.Verify(m => m.DeleteAcquisitionPropertyTake(It.IsAny<long>(), It.IsAny<IEnumerable<UserOverrideCode>>()));
         }
 
         [Fact]
