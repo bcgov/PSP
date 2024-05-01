@@ -17,30 +17,43 @@ import { act, render, RenderOptions, userEvent, waitFor } from '@/utils/test-uti
 import { ProjectForm } from '../models';
 import AddProjectContainer, { IAddProjectContainerProps } from './AddProjectContainer';
 
-jest.mock('@react-keycloak/web');
-
 const history = createMemoryHistory();
 const mockAxios = new MockAdapter(axios);
 
-const onClose = jest.fn();
+const onClose = vi.fn();
 
 const DEFAULT_PROPS: IAddProjectContainerProps = {
   onClose,
 };
 
 // Need to mock this library for unit tests
-jest.mock('react-visibility-sensor', () => {
-  return jest.fn().mockImplementation(({ children }) => {
-    if (children instanceof Function) {
-      return children({ isVisible: true });
-    }
-    return children;
-  });
+vi.mock('react-visibility-sensor', () => {
+  return {
+    default: vi.fn().mockImplementation(({ children }) => {
+      if (children instanceof Function) {
+        return children({ isVisible: true });
+      }
+      return children;
+    }),
+  };
 });
 
-jest.mock('@/hooks/repositories/useUserInfoRepository');
-(useUserInfoRepository as jest.MockedFunction<typeof useUserInfoRepository>).mockReturnValue({
-  retrieveUserInfo: jest.fn(),
+vi.mock('@/hooks/repositories/useFinancialCodeRepository', () => ({
+  useFinancialCodeRepository: () => {
+    return {
+      getFinancialCodesByType: {
+        error: undefined,
+        response: [],
+        execute: vi.fn(),
+        loading: false,
+      },
+    };
+  },
+}));
+
+vi.mock('@/hooks/repositories/useUserInfoRepository');
+vi.mocked(useUserInfoRepository).mockReturnValue({
+  retrieveUserInfo: vi.fn(),
   retrieveUserInfoLoading: true,
   retrieveUserInfoResponse: {
     ...getUserMock(),
@@ -72,19 +85,14 @@ describe('AddProjectContainer component', () => {
     renderOptions: RenderOptions = {},
     selectedProperty: Feature<Geometry, GeoJsonProperties> | null = null,
   ) => {
-    const utils = render(
-      <MapStateMachineProvider>
-        <AddProjectContainer {...props} />
-      </MapStateMachineProvider>,
-      {
-        ...renderOptions,
-        store: {
-          [lookupCodesSlice.name]: { lookupCodes: mockLookups },
-        },
-        claims: [],
-        history,
+    const utils = render(<AddProjectContainer {...props} />, {
+      ...renderOptions,
+      store: {
+        [lookupCodesSlice.name]: { lookupCodes: mockLookups },
       },
-    );
+      claims: [],
+      history,
+    });
 
     return {
       ...utils,
@@ -107,7 +115,7 @@ describe('AddProjectContainer component', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders as expected', async () => {

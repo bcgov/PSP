@@ -39,7 +39,7 @@ export const CompensationListContainer: React.FC<ICompensationListContainerProps
     deleteCompensation: { execute: deleteCompensation },
   } = useCompensationRequisitionRepository();
 
-  const { staleFile, setStaleFile, setFile, setStaleLastUpdatedBy } = useContext(SideBarContext);
+  const sidebar = useContext(SideBarContext);
   const { setModalContent, setDisplayModal } = useModalContext();
 
   const fetchData = useCallback(async () => {
@@ -57,13 +57,13 @@ export const CompensationListContainer: React.FC<ICompensationListContainerProps
       try {
         const response = await putAcquisitionFile(updatedFile, []);
         if (response) {
-          setFile({
+          sidebar.setFile({
             ...updatedFile,
             rowVersion: response.rowVersion,
             fileType: FileTypes.Acquisition,
           });
-          setStaleLastUpdatedBy(true);
-          setStaleFile(true);
+          sidebar.setStaleLastUpdatedBy(true);
+          sidebar.setStaleFile(true);
           return response.totalAllowableCompensation ?? null;
         }
       } catch (e) {
@@ -122,18 +122,18 @@ export const CompensationListContainer: React.FC<ICompensationListContainerProps
     postAcquisitionCompensationRequisition(fileId, defaultCompensationRequisition).then(
       async newCompensationReq => {
         if (newCompensationReq?.id) {
-          setStaleLastUpdatedBy(true);
-          setStaleFile(true);
+          sidebar.setStaleLastUpdatedBy(true);
+          sidebar.setStaleFile(true);
         }
       },
     );
   };
 
   React.useEffect(() => {
-    if (compensations === undefined || staleFile) {
+    if (compensations === undefined || sidebar.staleFile) {
       fetchData();
     }
-  }, [fetchData, staleFile, compensations]);
+  }, [fetchData, sidebar.staleFile, compensations]);
 
   return (
     <View
@@ -147,8 +147,8 @@ export const CompensationListContainer: React.FC<ICompensationListContainerProps
           handleOk: async () => {
             const result = await deleteCompensation(compensationId);
             if (result === true) {
-              setStaleLastUpdatedBy(true);
-              setStaleFile(true);
+              sidebar.setStaleLastUpdatedBy(true);
+              sidebar.setStaleFile(true);
             }
             setDisplayModal(false);
           },

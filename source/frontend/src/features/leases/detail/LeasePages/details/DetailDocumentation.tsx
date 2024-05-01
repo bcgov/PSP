@@ -1,5 +1,4 @@
 import { getIn, useFormikContext } from 'formik';
-import * as React from 'react';
 
 import { Input } from '@/components/common/form';
 import { YesNoSelect } from '@/components/common/form/YesNoSelect';

@@ -24,33 +24,22 @@ import TestCommonWrapper from '@/utils/TestCommonWrapper';
 
 import { PropertyFilter } from '.';
 import { defaultPropertyFilter, IPropertyFilter } from './IPropertyFilter';
+import { IGeocoderPidsResponse } from '@/hooks/pims-api/interfaces/IGeocoder';
 
-const onFilterChange = jest.fn<void, [IPropertyFilter]>();
+const onFilterChange = vi.fn();
 //prevent web calls from being made during tests.
-jest.mock('axios');
-jest.mock('@react-keycloak/web');
-jest.mock('@/hooks/pims-api/useApiGeocoder');
+vi.mock('axios');
 
-const mockApiGetSitePidsApi = jest.fn<
-  Promise<AxiosResponse<ApiGen_Base_Page<ApiGen_Concepts_Property>>>,
-  any
->();
-(useApiGeocoder as unknown as jest.Mock<Partial<typeof useApiGeocoder>>).mockReturnValue({
-  getSitePidsApi: mockApiGetSitePidsApi,
-});
+vi.mock('@/hooks/pims-api/useApiGeocoder');
 
-const mockedAxios = axios as jest.Mocked<typeof axios>;
-const mockKeycloak = (claims: string[]) => {
-  (useKeycloak as jest.Mock).mockReturnValue({
-    keycloak: {
-      subject: 'test',
-      userInfo: {
-        roles: claims,
-        organizations: ['1'],
-      },
-    },
-  });
-};
+const mockApiGetSitePidsApi = vi.fn();
+vi.mocked(useApiGeocoder).mockReturnValue({
+  getSitePidsApi: mockApiGetSitePidsApi as (
+    siteId: string,
+  ) => Promise<AxiosResponse<IGeocoderPidsResponse, any>>,
+} as unknown as ReturnType<typeof useApiGeocoder>);
+
+const mockedAxios = vi.mocked(axios);
 const mockStore = configureMockStore([thunk]);
 let history = createMemoryHistory();
 
@@ -108,12 +97,11 @@ const getUiElement = (
 );
 
 describe('MapFilterBar', () => {
-  mockedAxios.get.mockImplementationOnce(() => Promise.resolve({}));
+  vi.mocked(mockedAxios.get).mockImplementationOnce(() => Promise.resolve({}));
 
   beforeEach(() => {
     import.meta.env.VITE_TENANT = 'MOTI';
     history = createMemoryHistory();
-    mockKeycloak([]);
   });
 
   afterEach(() => {
@@ -122,17 +110,20 @@ describe('MapFilterBar', () => {
   });
 
   it('renders correctly', () => {
-    mockKeycloak(['property-view']);
+    //mockKeycloak(['property-view']);
     // Capture any changes
-    const { container } = render(getUiElement(defaultPropertyFilter));
+    const { container } = render(getUiElement(defaultPropertyFilter), {
+      claims: ['property-view'],
+    });
     expect(container.firstChild).toMatchSnapshot();
   });
 
   it('does not submit if there is no pid/pin for address', async () => {
     // Arrange
-    mockKeycloak(['admin-properties']);
 
-    const { container } = render(getUiElement({ ...defaultPropertyFilter, searchBy: 'address' }));
+    const { container } = render(getUiElement({ ...defaultPropertyFilter, searchBy: 'address' }), {
+      claims: ['admin-properties'],
+    });
     const submit = container.querySelector('button[type="submit"]');
 
     // Act
@@ -149,10 +140,10 @@ describe('MapFilterBar', () => {
 
   it('submits if address set and useGeocoder false', async () => {
     // Arrange
-    mockKeycloak(['admin-properties']);
 
     const { container } = await render(
       getUiElement({ ...defaultPropertyFilter, searchBy: 'address' }, true, false),
+      { claims: ['admin-properties'] },
     );
     const submit = container.querySelector('button[type="submit"]');
 

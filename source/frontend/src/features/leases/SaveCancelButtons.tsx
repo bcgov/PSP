@@ -1,6 +1,5 @@
-import { FormikProps } from 'formik';
+import { FormikProps } from 'formik/dist/types';
 import { isEqual } from 'lodash';
-import * as React from 'react';
 
 import { Button } from '@/components/common/buttons/Button';
 

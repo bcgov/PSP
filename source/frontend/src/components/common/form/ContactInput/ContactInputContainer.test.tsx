@@ -46,7 +46,7 @@ describe('ContactInputContainer component', () => {
   beforeEach(() => {});
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders as expected', () => {

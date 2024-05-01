@@ -12,7 +12,7 @@ describe('useApiTenants testing suite', () => {
   });
 
   afterEach(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
 
   const setup = () => {

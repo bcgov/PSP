@@ -1,5 +1,4 @@
 import { Formik } from 'formik';
-import * as React from 'react';
 import { ButtonToolbar, Col, Row } from 'react-bootstrap';
 import { FaInfoCircle } from 'react-icons/fa';
 import styled from 'styled-components';

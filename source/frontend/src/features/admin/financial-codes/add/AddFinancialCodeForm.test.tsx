@@ -18,10 +18,10 @@ import { AddFinancialCodeYupSchema } from './AddFinancialCodeYupSchema';
 
 const mockProps: IAddFinancialCodeFormProps = {
   validationSchema: Yup.object().shape({}),
-  onSave: jest.fn(),
-  onCancel: jest.fn(),
-  onError: jest.fn(),
-  onSuccess: jest.fn(),
+  onSave: vi.fn(),
+  onCancel: vi.fn(),
+  onError: vi.fn(),
+  onSuccess: vi.fn(),
 };
 
 describe('AddFinancialCode form', () => {
@@ -43,19 +43,19 @@ describe('AddFinancialCode form', () => {
 
   beforeAll(() => {
     // Lock the current datetime as our snapshot has date-dependent fields
-    jest.useFakeTimers('modern');
-    jest.setSystemTime(new Date('04 Dec 2015 10:15:00 GMT').getTime());
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date('04 Dec 2015 10:15:00 GMT').getTime());
   });
 
   beforeEach(() => {
     // reset mock yup validation between tests
     mockProps.validationSchema = Yup.object().shape({});
-    jest.resetAllMocks();
+    vi.resetAllMocks();
   });
 
   afterAll(() => {
     // back to reality...
-    jest.useRealTimers();
+    vi.useRealTimers();
   });
 
   it('renders as expected', () => {
@@ -115,7 +115,7 @@ describe('AddFinancialCode form', () => {
   });
 
   it('calls onSave and saves form data as expected', async () => {
-    (mockProps.onSave as jest.Mock).mockResolvedValue(mockFinancialCode());
+    vi.mocked(mockProps.onSave).mockResolvedValue(mockFinancialCode());
     setup();
 
     const codeType = document.querySelector(`select[name="type"]`) as HTMLSelectElement;
@@ -137,7 +137,7 @@ describe('AddFinancialCode form', () => {
   });
 
   it('calls onError when it cannot save the form', async () => {
-    (mockProps.onSave as jest.Mock).mockRejectedValue(createAxiosError(500));
+    vi.mocked(mockProps.onSave).mockRejectedValue(createAxiosError(500));
     setup();
 
     const codeType = document.querySelector(`select[name="type"]`) as HTMLSelectElement;

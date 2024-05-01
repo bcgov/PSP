@@ -1,5 +1,5 @@
 import { createMemoryHistory } from 'history';
-import { noop } from 'lodash';
+import noop from 'lodash/noop';
 
 import { Claims } from '@/constants';
 import { mockGetExpropriationPaymentApi } from '@/mocks/ExpropriationPayment.mock';
@@ -17,14 +17,14 @@ const mockForm8 = mockGetExpropriationPaymentApi(1, 1);
 const mockGetApi = {
   error: undefined,
   response: undefined,
-  execute: jest.fn(),
+  execute: vi.fn(),
   loading: false,
 };
 
 const mockUpdateApi = {
   error: undefined,
   response: undefined,
-  execute: jest.fn(),
+  execute: vi.fn(),
   loading: false,
 };
 
@@ -34,7 +34,7 @@ const TestView: React.FC<IForm8FormProps> = props => {
   return <span>Content Rendered</span>;
 };
 
-jest.mock('@/hooks/repositories/useForm8Repository', () => ({
+vi.mock('@/hooks/repositories/useForm8Repository', () => ({
   useForm8Repository: () => {
     return {
       getForm8: mockGetApi,
@@ -74,7 +74,7 @@ describe('Update Form8 Container component', () => {
 
   beforeEach(() => {
     viewProps = undefined;
-    jest.resetAllMocks();
+    vi.resetAllMocks();
   });
 
   it('Renders the underlying form', async () => {

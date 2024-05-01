@@ -12,8 +12,8 @@ import ReceivedDepositModal, { IReceivedDepositModalProps } from './ReceivedDepo
 
 const history = createMemoryHistory();
 const mockAxios = new MockAdapter(axios);
-const onSave = jest.fn();
-const onCancel = jest.fn();
+const onSave = vi.fn();
+const onCancel = vi.fn();
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };

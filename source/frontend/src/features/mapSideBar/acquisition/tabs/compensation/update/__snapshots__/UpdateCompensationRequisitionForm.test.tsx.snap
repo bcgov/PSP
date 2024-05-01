@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Compensation Requisition UpdateForm component renders as expected 1`] = `
+exports[`Compensation Requisition UpdateForm component > renders as expected 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
@@ -733,13 +733,6 @@ exports[`Compensation Requisition UpdateForm component renders as expected 1`] =
                   </option>
                   <option
                     class="option"
-                    data-testid="select-option-2022/2023"
-                    value="2022/2023"
-                  >
-                    2022/2023
-                  </option>
-                  <option
-                    class="option"
                     data-testid="select-option-2023/2024"
                     value="2023/2024"
                   >
@@ -751,6 +744,13 @@ exports[`Compensation Requisition UpdateForm component renders as expected 1`] =
                     value="2024/2025"
                   >
                     2024/2025
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-2025/2026"
+                    value="2025/2026"
+                  >
+                    2025/2026
                   </option>
                 </select>
               </div>

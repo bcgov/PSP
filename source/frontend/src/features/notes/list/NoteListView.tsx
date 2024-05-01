@@ -1,4 +1,4 @@
-import { orderBy } from 'lodash';
+import orderBy from 'lodash/orderBy';
 import React, { useCallback } from 'react';
 import { toast } from 'react-toastify';
 

@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { useParams } from 'react-router-dom';
 
 import { FileTypes } from '@/constants/fileTypes';
@@ -124,7 +123,6 @@ export const PropertyFileContainer: React.FunctionComponent<
       content: (
         <TakesDetailContainer
           fileProperty={props.fileProperty}
-          onEdit={props.setEditing}
           View={TakesDetailView}
         ></TakesDetailContainer>
       ),

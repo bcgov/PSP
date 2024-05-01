@@ -23,21 +23,12 @@ import {
 
 import { useAddLease } from '../hooks/useAddLease';
 import AddLeaseContainer, { IAddLeaseContainerProps } from './AddLeaseContainer';
+import { ApiGen_Concepts_RegionUser } from '@/models/api/generated/ApiGen_Concepts_RegionUser';
+import { ApiGen_Concepts_User } from '@/models/api/generated/ApiGen_Concepts_User';
 
-jest.mock('@react-keycloak/web');
-(useKeycloak as jest.Mock).mockReturnValue({
-  keycloak: {
-    subject: 'test',
-    authenticated: true,
-    userInfo: {
-      roles: [],
-    },
-  },
-});
-
-const retrieveUserInfo = jest.fn();
-jest.mock('@/hooks/repositories/useUserInfoRepository');
-(useUserInfoRepository as jest.Mock).mockReturnValue({
+const retrieveUserInfo = vi.fn();
+vi.mock('@/hooks/repositories/useUserInfoRepository');
+vi.mocked(useUserInfoRepository).mockReturnValue({
   retrieveUserInfo,
   retrieveUserInfoLoading: true,
   retrieveUserInfoResponse: {
@@ -46,19 +37,19 @@ jest.mock('@/hooks/repositories/useUserInfoRepository');
         id: 1,
         userId: 5,
         regionCode: 1,
-      },
+      } as ApiGen_Concepts_RegionUser,
       {
         id: 2,
         userId: 5,
         regionCode: 2,
-      },
+      } as ApiGen_Concepts_RegionUser,
     ],
-  },
+  } as ApiGen_Concepts_User,
 });
 
-const addLease = jest.fn();
-jest.mock('../hooks/useAddLease');
-(useAddLease as jest.MockedFunction<typeof useAddLease>).mockReturnValue({
+const addLease = vi.fn();
+vi.mock('../hooks/useAddLease');
+vi.mocked(useAddLease).mockReturnValue({
   addLease: {
     execute: addLease,
     error: undefined,
@@ -69,23 +60,23 @@ jest.mock('../hooks/useAddLease');
 });
 
 // Need to mock this library for unit tests
-jest.mock('react-visibility-sensor', () => {
-  return jest.fn().mockImplementation(({ children }) => {
-    if (children instanceof Function) {
-      return children({ isVisible: true });
-    }
-    return children;
-  });
+vi.mock('react-visibility-sensor', () => {
+  return {
+    default: vi.fn().mockImplementation(({ children }) => {
+      if (children instanceof Function) {
+        return children({ isVisible: true });
+      }
+      return children as Function;
+    }),
+  };
 });
-
-jest.mock('@/components/common/mapFSM/MapStateMachineContext');
 
 const history = createMemoryHistory();
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
 
-const onClose = jest.fn();
+const onClose = vi.fn();
 
 describe('AddLeaseContainer component', () => {
   const setup = async (renderOptions: RenderOptions & Partial<IAddLeaseContainerProps> = {}) => {
@@ -93,6 +84,7 @@ describe('AddLeaseContainer component', () => {
     const utils = await renderAsync(<AddLeaseContainer onClose={onClose} />, {
       ...renderOptions,
       store: storeState,
+      useMockAuthentication: true,
       history,
     });
 
@@ -102,12 +94,8 @@ describe('AddLeaseContainer component', () => {
     };
   };
 
-  beforeEach(() => {
-    (useMapStateMachine as jest.Mock).mockImplementation(() => mapMachineBaseMock);
-  });
-
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders as expected', async () => {

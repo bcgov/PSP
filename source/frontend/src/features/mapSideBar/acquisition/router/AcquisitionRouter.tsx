@@ -1,4 +1,4 @@
-import { FormikProps } from 'formik';
+import { FormikProps } from 'formik/dist/types';
 import React from 'react';
 import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
 

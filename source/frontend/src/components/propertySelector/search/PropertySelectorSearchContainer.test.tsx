@@ -1,7 +1,7 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { Formik } from 'formik';
-import { noop } from 'lodash';
+import noop from 'lodash/noop';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
@@ -26,7 +26,7 @@ const mockStore = configureMockStore([thunk]);
 
 const store = mockStore({});
 
-const onSelectedProperty = jest.fn();
+const onSelectedProperty = vi.fn();
 
 describe('PropertySelectorSearchContainer component', () => {
   const setup = (renderOptions: RenderOptions & Partial<IPropertySelectorSearchContainerProps>) => {
@@ -87,7 +87,7 @@ describe('PropertySelectorSearchContainer component', () => {
   });
 
   afterEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
     mockAxios.resetHistory();
   });
 

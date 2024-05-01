@@ -1,5 +1,4 @@
 import { Formik, FormikProps } from 'formik';
-import React from 'react';
 
 import {
   act,
@@ -12,6 +11,7 @@ import {
 } from '@/utils/test-utils';
 
 import { Select, SelectOption, SelectProps } from './Select';
+import { createRef } from 'react';
 
 const countries: SelectOption[] = [
   { label: 'Austria', value: 'AT' },
@@ -19,7 +19,7 @@ const countries: SelectOption[] = [
   { label: 'Ireland', value: 'IE' },
 ];
 
-const onSubmit = jest.fn();
+const onSubmit = vi.fn();
 
 describe('Select component', () => {
   const setup = (
@@ -27,7 +27,7 @@ describe('Select component', () => {
       initialValues?: { countryId: string };
     } = {},
   ) => {
-    const formikRef = React.createRef<FormikProps<any>>();
+    const formikRef = createRef<FormikProps<any>>();
     const utils = render(
       <Formik
         innerRef={formikRef}
@@ -54,7 +54,7 @@ describe('Select component', () => {
   beforeEach(() => {});
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders as expected', () => {
@@ -79,7 +79,7 @@ describe('Select component', () => {
   });
 
   it('allows the user to change selected value and calls onChange callback', async () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     setup({ props: { onChange } });
 
     await act(async () =>

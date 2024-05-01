@@ -10,6 +10,7 @@ using Moq;
 using NetTopologySuite.Geometries;
 using Pims.Api.Constants;
 using Pims.Api.Helpers.Exceptions;
+using Pims.Api.Models.CodeTypes;
 using Pims.Api.Models.Concepts;
 using Pims.Api.Services;
 using Pims.Core.Exceptions;
@@ -35,18 +36,17 @@ namespace Pims.Api.Test.Services
             new List<object[]>
             {
                 new object[] {null, false},
-                new object[] {DispositionStatusTypes.ACTIVE, true},
-                new object[] {DispositionStatusTypes.DRAFT, true},
-                new object[] {DispositionStatusTypes.ARCHIVED, false},
-                new object[] {DispositionStatusTypes.CANCELLED, false},
-                new object[] {DispositionStatusTypes.CLOSED, false},
-                new object[] {DispositionStatusTypes.COMPLETE, false},
-                new object[] {DispositionStatusTypes.HOLD, false},
+                new object[] {DispositionFileStatusTypes.ACTIVE, true},
+                new object[] {DispositionFileStatusTypes.DRAFT, true},
+                new object[] {DispositionFileStatusTypes.HOLD, true},
+                new object[] {DispositionFileStatusTypes.ARCHIVED, false},
+                new object[] {DispositionFileStatusTypes.CANCELLED, false},
+                new object[] {DispositionFileStatusTypes.COMPLETE, false},
             };
 
         [Theory]
         [MemberData(nameof(CanEditDetailsParameters))]
-        public void CanEditDetails_Parametrized(DispositionStatusTypes? status, bool expectedResult)
+        public void CanEditDetails_Parametrized(DispositionFileStatusTypes? status, bool expectedResult)
         {
             // Arrange
             var solver = new DispositionStatusSolver();
@@ -62,24 +62,23 @@ namespace Pims.Api.Test.Services
             new List<object[]>
             {
                 new object[] {null, false},
-                new object[] {DispositionStatusTypes.ACTIVE, true},
-                new object[] {DispositionStatusTypes.DRAFT, true},
-                new object[] {DispositionStatusTypes.ARCHIVED, false},
-                new object[] {DispositionStatusTypes.CANCELLED, false},
-                new object[] {DispositionStatusTypes.CLOSED, false},
-                new object[] {DispositionStatusTypes.COMPLETE, false},
-                new object[] {DispositionStatusTypes.HOLD, false},
+                new object[] {DispositionFileStatusTypes.ACTIVE, true},
+                new object[] {DispositionFileStatusTypes.DRAFT, true},
+                new object[] {DispositionFileStatusTypes.HOLD, true},
+                new object[] {DispositionFileStatusTypes.ARCHIVED, false},
+                new object[] {DispositionFileStatusTypes.CANCELLED, false},
+                new object[] {DispositionFileStatusTypes.COMPLETE, false},
             };
 
         [Theory]
         [MemberData(nameof(CanEditPropertiesParameters))]
-        public void CanEditProperties_Parametrized(DispositionStatusTypes? status, bool expectedResult)
+        public void CanEditProperties_Parametrized(DispositionFileStatusTypes? status, bool expectedResult)
         {
             // Arrange
             var solver = new DispositionStatusSolver();
 
             // Act
-            var result = solver.CanEditProperties(status);
+            var result = solver.CanEditDetails(status);
 
             // Assert            
             Assert.Equal(expectedResult, result);
@@ -89,24 +88,23 @@ namespace Pims.Api.Test.Services
             new List<object[]>
             {
                 new object[] {null, false},
-                new object[] {DispositionStatusTypes.ACTIVE, true},
-                new object[] {DispositionStatusTypes.DRAFT, true},
-                new object[] {DispositionStatusTypes.ARCHIVED, false},
-                new object[] {DispositionStatusTypes.CANCELLED, false},
-                new object[] {DispositionStatusTypes.CLOSED, false},
-                new object[] {DispositionStatusTypes.COMPLETE, false},
-                new object[] {DispositionStatusTypes.HOLD, false},
+                new object[] {DispositionFileStatusTypes.ACTIVE, true},
+                new object[] {DispositionFileStatusTypes.DRAFT, true},
+                new object[] {DispositionFileStatusTypes.HOLD, true},
+                new object[] {DispositionFileStatusTypes.ARCHIVED, false},
+                new object[] {DispositionFileStatusTypes.CANCELLED, false},
+                new object[] {DispositionFileStatusTypes.COMPLETE, false},
             };
 
         [Theory]
         [MemberData(nameof(CanEditOrDeleteValuesOffersSalesParameters))]
-        public void CanEditOrDeleteValuesOffersSales_Parametrized(DispositionStatusTypes? status, bool expectedResult)
+        public void CanEditOrDeleteValuesOffersSales_Parametrized(DispositionFileStatusTypes? status, bool expectedResult)
         {
             // Arrange
             var solver = new DispositionStatusSolver();
 
             // Act
-            var result = solver.CanEditOrDeleteValuesOffersSales(status);
+            var result = solver.CanEditDetails(status);
 
             // Assert            
             Assert.Equal(expectedResult, result);

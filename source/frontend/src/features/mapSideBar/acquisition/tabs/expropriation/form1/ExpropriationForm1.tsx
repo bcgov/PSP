@@ -1,5 +1,5 @@
 import { Formik, FormikHelpers, FormikProps } from 'formik';
-import React from 'react';
+import { Fragment } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
@@ -62,7 +62,7 @@ export const ExpropriationForm1: React.FC<IExpropriationForm1Props> = ({
       onSubmit={onSubmit}
     >
       {formikProps => (
-        <React.Fragment>
+        <Fragment>
           <SectionField label="Expropriation authority" required>
             <ContactInputContainer
               field="expropriationAuthority.contact"
@@ -104,7 +104,7 @@ export const ExpropriationForm1: React.FC<IExpropriationForm1Props> = ({
               <Button onClick={() => onGenerateClick(formikProps)}>Generate</Button>
             </Col>
           </RightFlexRow>
-        </React.Fragment>
+        </Fragment>
       )}
     </Formik>
   );

@@ -23,11 +23,11 @@ const storeState = {
 const mockGetApi = {
   error: undefined,
   response: undefined as ApiGen_Concepts_PropertyManagement | undefined,
-  execute: jest.fn(),
+  execute: vi.fn(),
   loading: false,
 };
 
-jest.mock('@/hooks/repositories/usePropertyManagementRepository', () => ({
+vi.mock('@/hooks/repositories/usePropertyManagementRepository', () => ({
   usePropertyManagementRepository: () => {
     return {
       getPropertyManagement: mockGetApi,
@@ -66,7 +66,7 @@ describe('PropertyManagementDetailContainer component', () => {
   };
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('fetches property management info from the api', () => {

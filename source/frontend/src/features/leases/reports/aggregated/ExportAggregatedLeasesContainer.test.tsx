@@ -11,8 +11,6 @@ import ExportAggregatedLeasesContainer, {
   IExportAggregatedLeasesContainer,
 } from './ExportAggregatedLeasesContainer';
 
-jest.mock('@react-keycloak/web');
-
 const history = createMemoryHistory();
 const mockAxios = new MockAdapter(axios);
 const storeState = {
@@ -38,11 +36,11 @@ describe('PaymentsContainer component', () => {
     };
   };
   beforeEach(() => {
-    Date.now = jest.fn().mockReturnValue(new Date('2020-10-15T18:33:37.000Z'));
+    Date.now = vi.fn().mockReturnValue(new Date('2020-10-15T18:33:37.000Z'));
     mockAxios.resetHistory();
   });
   afterAll(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
   it('renders as expected', async () => {
     const { component } = await setup();

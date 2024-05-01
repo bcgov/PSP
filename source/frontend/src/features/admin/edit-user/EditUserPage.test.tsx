@@ -3,7 +3,7 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { createMemoryHistory } from 'history';
 import { Provider } from 'react-redux';
-import { Router } from 'react-router-dom';
+import { Router } from 'react-router-dom/cjs/react-router-dom';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
@@ -13,17 +13,6 @@ import { ILookupCode, lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, cleanup, render, waitForElementToBeRemoved } from '@/utils/test-utils';
 
 import EditUserPage from './EditUserPage';
-
-jest.mock('@react-keycloak/web');
-(useKeycloak as jest.Mock).mockReturnValue({
-  keycloak: {
-    userInfo: {
-      organizations: [1],
-      roles: [],
-    },
-    subject: 'test',
-  },
-});
 
 const mockStore = configureMockStore([thunk]);
 const history = createMemoryHistory();
@@ -53,7 +42,7 @@ const renderEditUserPage = () =>
 describe('Edit user page', () => {
   afterEach(() => {
     cleanup();
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
   beforeEach(() => {
     mockAxios.reset();

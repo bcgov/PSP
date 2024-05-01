@@ -1,6 +1,6 @@
 import { cleanup } from '@testing-library/react-hooks';
 import { Formik } from 'formik';
-import { noop } from 'lodash';
+import noop from 'lodash/noop';
 
 import { useUserInfoRepository } from '@/hooks/repositories/useUserInfoRepository';
 import { mockLookups } from '@/mocks/index.mock';
@@ -12,16 +12,18 @@ import {
   IUserRegionSelectContainerProps,
   UserRegionSelectContainer,
 } from './UserRegionSelectContainer';
+import { ApiGen_Concepts_RegionUser } from '@/models/api/generated/ApiGen_Concepts_RegionUser';
+import { ApiGen_Concepts_User } from '@/models/api/generated/ApiGen_Concepts_User';
 
 // mock auth library
-jest.mock('@react-keycloak/web');
-const retrieveUserInfo = jest.fn();
+
+const retrieveUserInfo = vi.fn();
 
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
-jest.mock('@/hooks/repositories/useUserInfoRepository');
-(useUserInfoRepository as jest.Mock).mockReturnValue({
+vi.mock('@/hooks/repositories/useUserInfoRepository');
+vi.mocked(useUserInfoRepository).mockReturnValue({
   retrieveUserInfo,
   retrieveUserInfoLoading: true,
   retrieveUserInfoResponse: {
@@ -30,14 +32,14 @@ jest.mock('@/hooks/repositories/useUserInfoRepository');
         id: 1,
         userId: 5,
         regionCode: 1,
-      },
+      } as ApiGen_Concepts_RegionUser,
       {
         id: 2,
         userId: 5,
         regionCode: 2,
-      },
+      } as ApiGen_Concepts_RegionUser,
     ],
-  },
+  } as ApiGen_Concepts_User,
 });
 
 describe('User Region Select', () => {
@@ -97,13 +99,13 @@ describe('User Region Select', () => {
   });
 
   it('displays a tooltip if user has no regions', async () => {
-    jest.resetAllMocks();
-    (useUserInfoRepository as jest.Mock).mockReturnValue({
+    vi.resetAllMocks();
+    vi.mocked(useUserInfoRepository).mockReturnValue({
       retrieveUserInfo,
       retrieveUserInfoLoading: true,
       retrieveUserInfoResponse: {
         userRegions: [],
-      },
+      } as ApiGen_Concepts_User,
     });
     const { findByTestId } = await setup();
 

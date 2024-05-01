@@ -15,8 +15,6 @@ import {
   PropertyManagementDetailView,
 } from './PropertyManagementDetailView';
 
-jest.mock('@react-keycloak/web');
-
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
@@ -50,7 +48,7 @@ describe('PropertyManagementDetailView component', () => {
   };
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders as expected when provided valid data object', () => {

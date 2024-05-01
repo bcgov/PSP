@@ -1,4 +1,4 @@
-import { FormikProps } from 'formik';
+import { FormikProps } from 'formik/dist/types';
 import { find, noop } from 'lodash';
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { FaExclamationCircle, FaPlusCircle } from 'react-icons/fa';

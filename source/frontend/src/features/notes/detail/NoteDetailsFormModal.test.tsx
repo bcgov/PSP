@@ -11,12 +11,11 @@ import { act, render, RenderOptions, userEvent, waitFor } from '@/utils/test-uti
 import { INoteDetailsFormModalProps, NoteDetailsFormModal } from './NoteDetailsFormModal';
 
 // mock auth library
-jest.mock('@react-keycloak/web');
 
 const mockAxios = new MockAdapter(axios);
 
-const onEdit = jest.fn();
-const onClose = jest.fn();
+const onEdit = vi.fn();
+const onClose = vi.fn();
 
 const BASIC_PROPS: INoteDetailsFormModalProps = {
   isOpened: true,
@@ -53,7 +52,7 @@ describe('NoteDetailsFormModal component', () => {
 
   afterEach(() => {
     mockAxios.reset();
-    jest.resetAllMocks();
+    vi.resetAllMocks();
   });
 
   it('renders as expected', () => {

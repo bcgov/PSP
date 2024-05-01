@@ -1,5 +1,4 @@
 import { FormikProps } from 'formik';
-import * as React from 'react';
 
 import { LeaseFormModel } from '@/features/leases/models';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';

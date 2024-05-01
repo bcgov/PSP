@@ -1,6 +1,5 @@
 import { findIndex } from 'lodash';
-import * as React from 'react';
-import { useCallback, useEffect, useState } from 'react';
+import { createContext, useCallback, useEffect, useState } from 'react';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { FileTypes } from '@/constants/fileTypes';
@@ -38,7 +37,7 @@ export interface ISideBarContext {
   setStaleLastUpdatedBy: (stale: boolean) => void;
 }
 
-export const SideBarContext = React.createContext<ISideBarContext>({
+export const SideBarContext = createContext<ISideBarContext>({
   file: undefined,
   setFile: () => {
     throw Error('setFile function not defined');
@@ -131,9 +130,9 @@ export const SideBarContextProvider = (props: {
         .map(x => getLatLng(x.property?.location))
         .filter(exists);
 
-      setFilePropertyLocations(propertyLocations);
+      setFilePropertyLocations && setFilePropertyLocations(propertyLocations);
     } else {
-      setFilePropertyLocations([]);
+      setFilePropertyLocations && setFilePropertyLocations([]);
     }
   }, [fileProperties, setFilePropertyLocations]);
 

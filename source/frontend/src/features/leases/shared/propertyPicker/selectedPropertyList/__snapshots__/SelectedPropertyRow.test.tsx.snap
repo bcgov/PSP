@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`SelectedPropertyRow component renders as expected 1`] = `
+exports[`SelectedPropertyRow component > renders as expected 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
@@ -209,7 +209,7 @@ exports[`SelectedPropertyRow component renders as expected 1`] = `
 }
 
 <div
-    class="align-items-center mb-3 no-gutters row"
+    class="align-items-center my-3 no-gutters row"
   >
     <div
       class="mb-0 d-flex align-items-center col-md-3"
@@ -289,7 +289,7 @@ exports[`SelectedPropertyRow component renders as expected 1`] = `
       />
     </div>
     <div
-      class="col-md-6"
+      class="col-md-7"
     >
       <div
         class="c3 mb-0 w-100 pr-3 input form-group"
@@ -304,36 +304,6 @@ exports[`SelectedPropertyRow component renders as expected 1`] = `
     </div>
     <div
       class="col-md-2"
-    >
-      <div
-        class="no-gutters align-items-center row"
-      >
-        <div
-          class="col"
-        >
-          <div
-            class="mb-0 w-100 input form-group"
-          >
-            <input
-              class="form-control"
-              id="input-landArea"
-              name="landArea"
-              value=""
-            />
-          </div>
-        </div>
-        <div
-          class="col-auto"
-        >
-          m
-          <sup>
-            2
-          </sup>
-        </div>
-      </div>
-    </div>
-    <div
-      class="col-md-1"
     >
       <button
         class="c4 Button c5 btn btn-link"
@@ -371,6 +341,136 @@ exports[`SelectedPropertyRow component renders as expected 1`] = `
           </span>
         </div>
       </button>
+    </div>
+  </div>
+  .c0 {
+  max-width: 25rem;
+  padding: 1rem;
+  border: 1px solid;
+  border-radius: 0.5rem;
+}
+
+.c2 {
+  max-width: 25rem;
+  padding: 1rem;
+  border: 1px solid;
+  border-radius: 0.5rem;
+}
+
+.c1 {
+  max-width: 9rem;
+}
+
+<div
+    class="align-items-center mb-3 no-gutters row"
+  >
+    <div
+      class="col-md-9 offset-md-3"
+    >
+      <div
+        class="row"
+      >
+        <div
+          class="col"
+        >
+          <div
+            class="c0"
+          >
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="text-right col"
+              >
+                <input
+                  aria-label="square metres"
+                  class="c1"
+                  name="area-sq-meters"
+                  step=".01"
+                  type="number"
+                  value="0"
+                />
+              </div>
+              <div
+                class="col"
+              >
+                sq. metres
+              </div>
+            </div>
+            <div
+              class="row"
+            >
+              <div
+                class="text-right col"
+              >
+                <input
+                  aria-label="hectares"
+                  class="c1"
+                  name="area-hectares"
+                  step=".01"
+                  type="number"
+                  value="0"
+                />
+              </div>
+              <div
+                class="col"
+              >
+                hectares
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="col"
+        >
+          <div
+            class="c2"
+          >
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="text-right col"
+              >
+                <input
+                  aria-label="square feet"
+                  class="c1"
+                  name="area-sq-feet"
+                  step=".01"
+                  type="number"
+                  value="0"
+                />
+              </div>
+              <div
+                class="col"
+              >
+                sq. feet
+              </div>
+            </div>
+            <div
+              class="row"
+            >
+              <div
+                class="text-right col"
+              >
+                <input
+                  aria-label="acres"
+                  class="c1"
+                  name="area-acres"
+                  step=".01"
+                  type="number"
+                  value="0"
+                />
+              </div>
+              <div
+                class="col"
+              >
+                acres
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </DocumentFragment>

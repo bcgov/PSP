@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`DetailDocumentation component renders a complete lease as expected 1`] = `
+exports[`DetailDocumentation component > renders a complete lease as expected 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
@@ -259,7 +259,7 @@ exports[`DetailDocumentation component renders a complete lease as expected 1`] 
 </DocumentFragment>
 `;
 
-exports[`DetailDocumentation component renders minimally as expected 1`] = `
+exports[`DetailDocumentation component > renders minimally as expected 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"

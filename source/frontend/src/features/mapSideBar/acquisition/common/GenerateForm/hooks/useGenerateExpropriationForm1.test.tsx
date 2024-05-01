@@ -17,39 +17,48 @@ import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts
 import { ExpropriationForm1Model } from '../../../tabs/expropriation/models';
 import { useGenerateExpropriationForm1 } from './useGenerateExpropriationForm1';
 
-const generateFn = jest
+const generateFn = vi
   .fn()
   .mockResolvedValue({ status: ApiGen_CodeTypes_ExternalResponseStatus.Success, payload: {} });
-const getAcquisitionFileFn = jest.fn<Promise<ApiGen_Concepts_AcquisitionFile | undefined>, any[]>();
-const getAcquisitionFilePropertiesFn = jest.fn<
-  Promise<ApiGen_Concepts_Property[] | undefined>,
-  any[]
->();
-const getPersonConceptFn = jest.fn();
-const getOrganizationConceptFn = jest.fn();
-const getInterestHoldersFn = jest.fn();
+const getAcquisitionFileFn = vi.fn();
+const getAcquisitionFilePropertiesFn = vi.fn();
+const getPersonConceptFn = vi.fn();
+const getOrganizationConceptFn = vi.fn();
+const getInterestHoldersFn = vi.fn();
 
-jest.mock('@/features/documents/hooks/useDocumentGenerationRepository');
-(useDocumentGenerationRepository as jest.Mock).mockImplementation(() => ({
-  generateDocumentDownloadWrappedRequest: generateFn,
-}));
+vi.mock('@/features/documents/hooks/useDocumentGenerationRepository');
+vi.mocked(useDocumentGenerationRepository).mockImplementation(
+  () =>
+    ({
+      generateDocumentDownloadWrappedRequest: generateFn,
+    } as unknown as ReturnType<typeof useDocumentGenerationRepository>),
+);
 
-jest.mock('@/hooks/repositories/useAcquisitionProvider');
-(useAcquisitionProvider as jest.Mock).mockImplementation(() => ({
-  getAcquisitionFile: { execute: getAcquisitionFileFn },
-  getAcquisitionProperties: { execute: getAcquisitionFilePropertiesFn },
-}));
+vi.mock('@/hooks/repositories/useAcquisitionProvider');
+vi.mocked(useAcquisitionProvider).mockImplementation(
+  () =>
+    ({
+      getAcquisitionFile: { execute: getAcquisitionFileFn } as any,
+      getAcquisitionProperties: { execute: getAcquisitionFilePropertiesFn } as any,
+    } as unknown as ReturnType<typeof useAcquisitionProvider>),
+);
 
-jest.mock('@/hooks/repositories/useInterestHolderRepository');
-(useInterestHolderRepository as jest.Mock).mockImplementation(() => ({
-  getAcquisitionInterestHolders: { execute: getInterestHoldersFn },
-}));
+vi.mock('@/hooks/repositories/useInterestHolderRepository');
+vi.mocked(useInterestHolderRepository).mockImplementation(
+  () =>
+    ({
+      getAcquisitionInterestHolders: { execute: getInterestHoldersFn },
+    } as unknown as ReturnType<typeof useInterestHolderRepository>),
+);
 
-jest.mock('@/hooks/pims-api/useApiContacts');
-(useApiContacts as jest.Mock).mockImplementation(() => ({
-  getPersonConcept: getPersonConceptFn,
-  getOrganizationConcept: getOrganizationConceptFn,
-}));
+vi.mock('@/hooks/pims-api/useApiContacts');
+vi.mocked(useApiContacts).mockImplementation(
+  () =>
+    ({
+      getPersonConcept: getPersonConceptFn,
+      getOrganizationConcept: getOrganizationConceptFn,
+    } as unknown as ReturnType<typeof useApiContacts>),
+);
 
 let currentStore: MockStoreEnhanced<any, {}>;
 const mockStore = configureMockStore([thunk]);

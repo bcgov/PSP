@@ -3,7 +3,7 @@ import { act, render, RenderOptions, userEvent, waitFor } from '@/utils/test-uti
 import { ColumnWithProps, Table, TableProps } from '.';
 import { IIdentifiedObject } from './Table';
 
-const setSort = jest.fn();
+const setSort = vi.fn();
 
 interface test extends IIdentifiedObject {
   name: string;
@@ -123,7 +123,7 @@ describe('Generic table component', () => {
     });
 
     it('does not change the page when manual pagination is set', async () => {
-      const onRequestData = jest.fn();
+      const onRequestData = vi.fn();
       const { getByLabelText, tableRows } = setup({
         props: { pageSize: 5, manualPagination: true, onRequestData },
       });
@@ -162,7 +162,7 @@ describe('Generic table component', () => {
     });
 
     it('page size works as expected when using manual pagination', async () => {
-      const onPageSizeChange = jest.fn();
+      const onPageSizeChange = vi.fn();
       const { getByTitle } = setup({
         props: { pageSize: 10, manualPagination: true, onPageSizeChange },
       });
@@ -192,7 +192,7 @@ describe('Generic table component', () => {
   });
 
   it('can select only one row at a time when single select prop set', async () => {
-    const setSelectedRows = jest.fn();
+    const setSelectedRows = vi.fn();
     const { getByTestId } = setup({
       props: { pageSize: 5, isSingleSelect: true, setSelectedRows, showSelectedRowCount: true },
     });
@@ -214,7 +214,7 @@ describe('Generic table component', () => {
   });
 
   it('can select multiple rows when isSingleSelect is false', async () => {
-    const setSelectedRows = jest.fn();
+    const setSelectedRows = vi.fn();
     const { getByTestId } = setup({
       props: { pageSize: 5, isSingleSelect: false, setSelectedRows, showSelectedRowCount: true },
     });
@@ -237,7 +237,7 @@ describe('Generic table component', () => {
   });
 
   it('can select multiple rows when isSingleSelect is false and page is changed', async () => {
-    const setSelectedRows = jest.fn();
+    const setSelectedRows = vi.fn();
     const { getByTestId, getByLabelText, findByLabelText } = setup({
       props: {
         pageSize: 1,

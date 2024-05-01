@@ -27,21 +27,22 @@ import { getMockApiProperty } from '@/mocks/properties.mock';
 import { AreaUnitTypes } from '@/constants';
 
 const history = createMemoryHistory();
-jest.mock('@react-keycloak/web');
 
-const onCancel = jest.fn();
-const onSave = jest.fn();
-const onSubmit = jest.fn();
-const getPrimaryAddressByPid = jest.fn();
+const onCancel = vi.fn();
+const onSave = vi.fn();
+const onSubmit = vi.fn();
+const getPrimaryAddressByPid = vi.fn();
 
 // Need to mock this library for unit tests
-jest.mock('react-visibility-sensor', () => {
-  return jest.fn().mockImplementation(({ children }) => {
-    if (children instanceof Function) {
-      return children({ isVisible: true });
-    }
-    return children;
-  });
+vi.mock('react-visibility-sensor', () => {
+  return {
+    default: vi.fn().mockImplementation(({ children }) => {
+      if (children instanceof Function) {
+        return children({ isVisible: true });
+      }
+      return children;
+    }),
+  };
 });
 
 const initialValues = new SubdivisionFormModel();
@@ -96,7 +97,7 @@ describe('Add Subdivision View', () => {
   };
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   const testProperty: IMapProperty = {
@@ -175,7 +176,7 @@ describe('Add Subdivision View', () => {
     expect(queryByText('111-111-111')).toBeNull();
   });
 
-  it.only('property area only has 3 digits', async () => {
+  it('property area only has 3 digits', async () => {
     const initialFormModel = new SubdivisionFormModel();
     getPrimaryAddressByPid.mockImplementation(() => Promise.resolve(undefined));
     const { queryByDisplayValue } = await setup({

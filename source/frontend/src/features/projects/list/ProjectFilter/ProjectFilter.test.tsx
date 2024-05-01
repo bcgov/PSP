@@ -5,13 +5,15 @@ import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, fillInput, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import { IProjectFilterProps, ProjectFilter } from './ProjectFilter';
+import { ApiGen_Concepts_UserRole } from '@/models/api/generated/ApiGen_Concepts_UserRole';
+import { ApiGen_Concepts_RegionUser } from '@/models/api/generated/ApiGen_Concepts_RegionUser';
+import { ApiGen_Concepts_User } from '@/models/api/generated/ApiGen_Concepts_User';
 
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
 
-const setFilter = jest.fn();
-jest.mock('@react-keycloak/web');
+const setFilter = vi.fn();
 
 // render component under test
 const setup = (
@@ -27,9 +29,9 @@ const setup = (
   return { searchButton, resetButton, setFilter: setFilterFn, ...utils };
 };
 
-const retrieveUserInfo = jest.fn();
-jest.mock('@/hooks/repositories/useUserInfoRepository');
-(useUserInfoRepository as jest.Mock).mockReturnValue({
+const retrieveUserInfo = vi.fn();
+vi.mock('@/hooks/repositories/useUserInfoRepository');
+vi.mocked(useUserInfoRepository).mockReturnValue({
   retrieveUserInfo,
   retrieveUserInfoLoading: true,
   retrieveUserInfoResponse: {
@@ -38,14 +40,14 @@ jest.mock('@/hooks/repositories/useUserInfoRepository');
         id: 1,
         userId: 5,
         regionCode: 1,
-      },
+      } as ApiGen_Concepts_RegionUser,
       {
         id: 2,
         userId: 5,
         regionCode: 2,
-      },
+      } as ApiGen_Concepts_RegionUser,
     ],
-  },
+  } as ApiGen_Concepts_User,
 });
 
 describe('Project Filter', () => {

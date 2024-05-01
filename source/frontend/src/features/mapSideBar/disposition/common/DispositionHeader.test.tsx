@@ -1,11 +1,12 @@
 import { mockDispositionFileResponse } from '@/mocks/dispositionFiles.mock';
-import { rest, server } from '@/mocks/msw/server';
+import { server } from '@/mocks/msw/server';
 import { getUserMock } from '@/mocks/user.mock';
 import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
 import { prettyFormatUTCDate } from '@/utils/dateUtils';
 import { render, RenderOptions } from '@/utils/test-utils';
 
 import DispositionHeader, { IDispositionHeaderProps } from './DispositionHeader';
+import { http, HttpResponse } from 'msw';
 
 describe('DispositionHeader component', () => {
   // render component under test
@@ -25,14 +26,12 @@ describe('DispositionHeader component', () => {
 
   beforeEach(() => {
     server.use(
-      rest.get('/api/users/info/*', (req, res, ctx) =>
-        res(ctx.delay(500), ctx.status(200), ctx.json(getUserMock())),
-      ),
+      http.get('/api/users/info/*', () => HttpResponse.json(getUserMock(), { status: 200 })),
     );
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders as expected when no data is provided', () => {

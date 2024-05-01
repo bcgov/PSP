@@ -67,7 +67,7 @@ export const PropertyActivityDetailView: React.FunctionComponent<
             Property Activity
             <Styled.CloseButton
               id="close-tray"
-              icon={<MdClose size={20} />}
+              icon={<MdClose size={24} />}
               title="close"
               onClick={onCloseClick}
             />

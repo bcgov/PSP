@@ -1,5 +1,5 @@
 import { FormikProps } from 'formik';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
@@ -59,7 +59,7 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
     setLastUpdatedBy,
     staleLastUpdatedBy,
     setStaleLastUpdatedBy,
-  } = React.useContext(SideBarContext);
+  } = useContext(SideBarContext);
 
   const [isValid, setIsValid] = useState<boolean>(true);
   const [isShowingPropertySelector, setIsShowingPropertySelector] = useState<boolean>(false);
@@ -80,7 +80,7 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
     [loadingLastUpdatedBy, loadingResearchFile, loadingResearchFileProperties, setFileLoading],
   );
 
-  const fetchResearchFile = React.useCallback(async () => {
+  const fetchResearchFile = useCallback(async () => {
     const retrieved = await getResearchFile(props.researchFileId);
     if (exists(retrieved)) {
       const researchProperties = await getResearchFileProperties(props.researchFileId);
@@ -93,7 +93,7 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
     }
   }, [getResearchFile, getResearchFileProperties, props.researchFileId, setFile]);
 
-  const fetchLastUpdatedBy = React.useCallback(async () => {
+  const fetchLastUpdatedBy = useCallback(async () => {
     const retrieved = await getLastUpdatedBy(props.researchFileId);
     if (retrieved !== undefined) {
       setLastUpdatedBy(retrieved);
@@ -104,7 +104,7 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
 
   const push = history.push;
   const query = useQuery();
-  const setIsEditing = React.useCallback(
+  const setIsEditing = useCallback(
     (editing: boolean) => {
       if (editing) {
         query.set('edit', 'true');
@@ -117,20 +117,20 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
     [push, query],
   );
 
-  const onSuccess = React.useCallback(() => {
+  const onSuccess = useCallback(() => {
     setStaleFile(true);
     setStaleLastUpdatedBy(true);
     mapMachine.refreshMapProperties();
     setIsEditing(false);
   }, [mapMachine, setIsEditing, setStaleFile, setStaleLastUpdatedBy]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (researchFile === undefined || researchFileId !== researchFile?.id || staleFile) {
       fetchResearchFile();
     }
   }, [fetchResearchFile, researchFile, researchFileId, staleFile]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (
       !exists(lastUpdatedBy) ||
       researchFileId !== lastUpdatedBy?.parentId ||

@@ -1,5 +1,5 @@
 import { Formik } from 'formik';
-import { noop } from 'lodash';
+import noop from 'lodash/noop';
 
 import { SelectOption } from '@/components/common/form';
 import { getMockApiDefaultCompensation } from '@/mocks/compensations.mock';
@@ -18,7 +18,7 @@ import FinancialActivitiesSubForm, {
   IFinancialActivitiesSubFormProps,
 } from './FinancialActivitiesSubForm';
 
-const activitiesUpdated = jest.fn();
+const activitiesUpdated = vi.fn();
 const defaultApiCompensation = CompensationRequisitionFormModel.fromApi(
   getMockApiDefaultCompensation(),
 );
@@ -71,7 +71,7 @@ describe('FinancialActivitiesSubForm  component', () => {
   };
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders as expected', async () => {

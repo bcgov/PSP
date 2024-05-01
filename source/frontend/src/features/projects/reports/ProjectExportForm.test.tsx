@@ -12,10 +12,8 @@ import ProjectExportForm, { IProjectExportFormProps } from './ProjectExportForm'
 
 const history = createMemoryHistory();
 
-const onExport = jest.fn();
-const onExportTypeSelected = jest.fn();
-
-jest.mock('@react-keycloak/web');
+const onExport = vi.fn();
+const onExportTypeSelected = vi.fn();
 
 describe('ProjectExportForm component', () => {
   // render component under test
@@ -44,7 +42,7 @@ describe('ProjectExportForm component', () => {
   };
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders as expected', () => {

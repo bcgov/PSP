@@ -18,15 +18,14 @@ import { AddProjectYupSchema } from './AddProjectFileYupSchema';
 import AddProjectForm, { IAddProjectFormProps } from './AddProjectForm';
 
 const history = createMemoryHistory();
-const validationSchema = jest.fn().mockReturnValue(AddProjectYupSchema);
-const onSubmit = jest.fn();
+const validationSchema = vi.fn().mockReturnValue(AddProjectYupSchema);
+const onSubmit = vi.fn();
 
 type TestProps = Pick<IAddProjectFormProps, 'initialValues'>;
-jest.mock('@react-keycloak/web');
 
-jest.mock('@/hooks/repositories/useUserInfoRepository');
-(useUserInfoRepository as jest.MockedFunction<typeof useUserInfoRepository>).mockReturnValue({
-  retrieveUserInfo: jest.fn(),
+vi.mock('@/hooks/repositories/useUserInfoRepository');
+vi.mocked(useUserInfoRepository).mockReturnValue({
+  retrieveUserInfo: vi.fn(),
   retrieveUserInfoLoading: true,
   retrieveUserInfoResponse: {
     ...getUserMock(),
@@ -112,7 +111,7 @@ describe('AddProjectForm component', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders as expected', () => {
