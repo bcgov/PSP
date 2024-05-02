@@ -197,6 +197,13 @@ exports[`DocumentDetailForm component > renders as expected 1`] = `
   word-break: break-all;
 }
 
+.c3 div:first-child {
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+}
+
 .c3 label {
   margin-right: 1rem;
 }

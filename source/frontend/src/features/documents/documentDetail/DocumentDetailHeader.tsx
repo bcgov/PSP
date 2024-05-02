@@ -52,6 +52,10 @@ const StyledFileNameRow = styled('div')`
   flex-direction: row;
   word-break: break-all;
 
+  div:first-child {
+    flex-grow: 1;
+  }
+
   label {
     margin-right: 1rem;
   }
