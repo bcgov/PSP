@@ -15891,8 +15891,10 @@ SELECT PROP.PROPERTY_ID
                       WHERE  TAKE.IS_NEW_LICENSE_TO_CONSTRUCT = 1
                          AND TAKE.TAKE_STATUS_TYPE_CODE       = N'COMPLETE') THEN CONVERT([bit],(1))
          WHEN EXISTS (SELECT 1                                                                                                                                    
-                      FROM   PIMS_TAKE
-                      WHERE  IS_ACTIVE_LEASE       = 1
+                      FROM   PIMS_TAKE                      TAKE JOIN
+                             PIMS_PROPERTY_ACQUISITION_FILE PRAF   ON PRAF.PROPERTY_ACQUISITION_FILE_ID = TAKE.PROPERTY_ACQUISITION_FILE_ID    
+                                                                  AND PRAF.PROPERTY_ID                  = PROP.PROPERTY_ID
+                      WHERE  IS_ACTIVE_LEASE       = 1                        
                          AND TAKE_STATUS_TYPE_CODE = N'COMPLETE') THEN CONVERT([bit],(1))
          ELSE CONVERT([bit],(0))
          END AS IS_OTHER_INTEREST                                                                 
@@ -16010,8 +16012,10 @@ SELECT PROP.PROPERTY_ID
                       WHERE  TAKE.IS_NEW_LICENSE_TO_CONSTRUCT = 1
                          AND TAKE.TAKE_STATUS_TYPE_CODE       = N'COMPLETE') THEN CONVERT([bit],(1))
          WHEN EXISTS (SELECT 1                                                                                                                                    
-                      FROM   PIMS_TAKE
-                      WHERE  IS_ACTIVE_LEASE       = 1
+                      FROM   PIMS_TAKE                      TAKE JOIN
+                             PIMS_PROPERTY_ACQUISITION_FILE PRAF   ON PRAF.PROPERTY_ACQUISITION_FILE_ID = TAKE.PROPERTY_ACQUISITION_FILE_ID    
+                                                                  AND PRAF.PROPERTY_ID                  = PROP.PROPERTY_ID
+                      WHERE  IS_ACTIVE_LEASE       = 1                        
                          AND TAKE_STATUS_TYPE_CODE = N'COMPLETE') THEN CONVERT([bit],(1))
          ELSE CONVERT([bit],(0))
          END AS IS_OTHER_INTEREST                                                                 
