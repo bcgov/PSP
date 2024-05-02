@@ -179,114 +179,138 @@ exports[`LeaseHeader component > renders as expected when no data is provided 1`
       class="no-gutters row"
     >
       <div
-        class="col-7"
+        class="col-8"
       >
         <div
-          class="no-gutters row"
+          class="row"
         >
           <div
-            class="col"
+            class="pr-0 text-left col-3"
           >
-            <div
-              class="row"
-            >
+            <label>
+              Lease/License #
+            </label>
+          </div>
+          <div
+            class="pl-1 text-left col-9"
+          >
+            <strong>
               <div
-                class="pr-0 text-left col-3"
+                class="c1 c2"
               >
-                <label>
-                  Lease/License #
-                </label>
+                <span>
+                  L-0000001
+                </span>
+                <span
+                  class=""
+                />
               </div>
-              <div
-                class="pl-1 text-left col-9"
-              >
-                <strong>
+            </strong>
+          </div>
+        </div>
+        <div
+          class="row"
+        >
+          <div
+            class="pr-0 text-left col-3"
+          >
+            <label>
+              Property:
+            </label>
+          </div>
+          <div
+            class="pl-1 text-left col-9"
+          >
+            <strong>
+              <div />
+            </strong>
+          </div>
+        </div>
+        <div
+          class="row"
+        >
+          <div
+            class="pr-0 text-left col-3"
+          >
+            <label>
+              Tenant:
+            </label>
+          </div>
+          <div
+            class="pl-1 text-left col-9"
+          >
+            <strong>
+              <div>
+                <span>
+                  French Mouse Property Management
+                  <br />
+                </span>
+                <button
+                  class="c3 Button btn btn-link"
+                  data-testid="expand"
+                  type="button"
+                >
                   <div
-                    class="c1 c2"
+                    class="Button__value"
                   >
-                    <span>
-                      L-0000001
-                    </span>
-                    <span
-                      class=""
-                    />
+                    [+2 more...]
                   </div>
-                </strong>
+                </button>
               </div>
-            </div>
+            </strong>
           </div>
         </div>
         <div
-          class="no-gutters row"
+          class="row"
         >
           <div
-            class="col"
+            class="pr-0 text-left col-3"
           >
-            <div
-              class="row"
-            >
-              <div
-                class="pr-0 text-left col-3"
-              >
-                <label>
-                  Property:
-                </label>
-              </div>
-              <div
-                class="pl-1 text-left col-9"
-              >
-                <strong>
-                  <div />
-                </strong>
-              </div>
-            </div>
+            <label>
+              Start date:
+            </label>
+          </div>
+          <div
+            class="pl-1 text-left col-3"
+          >
+            <strong />
+          </div>
+          <div
+            class="pr-0 text-left col-auto"
+          >
+            <label>
+              Expiry date:
+            </label>
+          </div>
+          <div
+            class="pl-1 text-left col-auto"
+          >
+            <strong>
+              <span
+                class="pl-2"
+              />
+            </strong>
           </div>
         </div>
         <div
-          class="no-gutters row"
+          class="row"
         >
           <div
-            class="col"
+            class="pr-0 text-left col-3"
           >
-            <div
-              class="row"
-            >
-              <div
-                class="pr-0 text-left col-3"
-              >
-                <label>
-                  Tenant:
-                </label>
-              </div>
-              <div
-                class="pl-1 text-left col-9"
-              >
-                <strong>
-                  <div>
-                    <span>
-                      French Mouse Property Management
-                      <br />
-                    </span>
-                    <button
-                      class="c3 Button btn btn-link"
-                      data-testid="expand"
-                      type="button"
-                    >
-                      <div
-                        class="Button__value"
-                      >
-                        [+2 more...]
-                      </div>
-                    </button>
-                  </div>
-                </strong>
-              </div>
-            </div>
+            <label>
+              Historical File #:
+            </label>
+          </div>
+          <div
+            class="pl-1 text-left col-9"
+          >
+            <strong />
           </div>
         </div>
       </div>
       <div
-        class="col-5"
+        class="text-right col"
       >
         <div
           class="no-gutters row"
@@ -362,58 +386,14 @@ exports[`LeaseHeader component > renders as expected when no data is provided 1`
             </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div
-      class="no-gutters row"
-    >
-      <div
-        class="col-7"
-      >
         <div
-          class="no-gutters row"
+          class="no-gutters align-items-end row"
         >
           <div
-            class="col"
-          >
-            <div
-              class="row"
-            >
-              <div
-                class="pr-0 text-left col-3"
-              >
-                <label>
-                  Start date:
-                </label>
-              </div>
-              <div
-                class="pl-1 text-left col-3"
-              >
-                <strong />
-              </div>
-              <div
-                class="pr-0 text-left col-auto"
-              >
-                <label>
-                  Expiry date:
-                </label>
-              </div>
-              <div
-                class="pl-1 text-left col-auto"
-              >
-                <strong>
-                  <span
-                    class="pl-2"
-                  />
-                </strong>
-              </div>
-            </div>
-          </div>
+            class="text-right col"
+          />
         </div>
       </div>
-      <div
-        class="col-5"
-      />
     </div>
   </div>
 </DocumentFragment>

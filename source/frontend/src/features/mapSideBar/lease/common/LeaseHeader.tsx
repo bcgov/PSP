@@ -28,7 +28,7 @@ export interface ILeaseHeaderProps {
 export const LeaseHeader: React.FC<ILeaseHeaderProps> = ({ lease, lastUpdatedBy }) => {
   const isExpired = moment().isAfter(moment(lease?.expiryDate, 'YYYY-MM-DD'), 'day');
 
-  const propertyIds = lease?.fileProperties.map(fp => fp.propertyId) ?? [];
+  const propertyIds = lease?.fileProperties?.map(fp => fp.propertyId) ?? [];
 
   return (
     <Container>
