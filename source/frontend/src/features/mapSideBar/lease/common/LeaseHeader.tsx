@@ -16,6 +16,8 @@ import { Api_LastUpdatedBy } from '@/models/api/File';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { prettyFormatDate, prettyFormatUTCDate } from '@/utils';
 
+import HistoricalNumbersContainer from '../../shared/header/HistoricalNumberContainer';
+import HistoricalNumberFieldView from '../../shared/header/HistoricalNumberSectionView';
 import { LeaseHeaderTenants } from './LeaseHeaderTenants';
 
 export interface ILeaseHeaderProps {
@@ -26,46 +28,46 @@ export interface ILeaseHeaderProps {
 export const LeaseHeader: React.FC<ILeaseHeaderProps> = ({ lease, lastUpdatedBy }) => {
   const isExpired = moment().isAfter(moment(lease?.expiryDate, 'YYYY-MM-DD'), 'day');
 
+  const propertyIds = lease?.fileProperties.map(fp => fp.propertyId) ?? [];
+
   return (
     <Container>
       <Row className="no-gutters">
-        <Col xs="7">
-          <Row className="no-gutters">
-            <Col>
-              <HeaderField label="Lease/License #" labelWidth="3" contentWidth="9">
-                <StyledInlineDiv>
-                  <span>{lease?.lFileNo ?? ''}</span>
-                  <StyledGreenText>
-                    {lease?.paymentReceivableType?.description ?? ''}
-                  </StyledGreenText>
-                </StyledInlineDiv>
-              </HeaderField>
-            </Col>
+        <Col xs="8">
+          <HeaderField label="Lease/License #" labelWidth="3" contentWidth="9">
+            <StyledInlineDiv>
+              <span>{lease?.lFileNo ?? ''}</span>
+              <StyledGreenText>{lease?.paymentReceivableType?.description ?? ''}</StyledGreenText>
+            </StyledInlineDiv>
+          </HeaderField>
+          <HeaderField label="Property:" labelWidth="3" contentWidth="9">
+            <LeaseHeaderAddresses
+              propertyLeases={lease?.fileProperties ?? []}
+              maxCollapsedLength={1}
+              delimiter={<br />}
+            />
+          </HeaderField>
+          <HeaderField label="Tenant:" labelWidth="3" contentWidth="9">
+            <LeaseHeaderTenants
+              tenants={lease?.tenants ?? []}
+              maxCollapsedLength={1}
+              delimiter={<br />}
+            />
+          </HeaderField>
+          <Row>
+            <HeaderLabelCol label="Start date:" labelWidth="3" />
+            <HeaderContentCol contentWidth="3">
+              {prettyFormatDate(lease?.startDate)}
+            </HeaderContentCol>
+            <HeaderLabelCol label="Expiry date:" />
+            <HeaderContentCol>
+              <span className="pl-2">{prettyFormatDate(lease?.expiryDate)}</span>
+            </HeaderContentCol>
           </Row>
-          <Row className="no-gutters">
-            <Col>
-              <HeaderField label="Property:" labelWidth="3" contentWidth="9">
-                <LeaseHeaderAddresses
-                  propertyLeases={lease?.fileProperties ?? []}
-                  maxCollapsedLength={1}
-                  delimiter={<br />}
-                />
-              </HeaderField>
-            </Col>
-          </Row>
-          <Row className="no-gutters">
-            <Col>
-              <HeaderField label="Tenant:" labelWidth="3" contentWidth="9">
-                <LeaseHeaderTenants
-                  tenants={lease?.tenants ?? []}
-                  maxCollapsedLength={1}
-                  delimiter={<br />}
-                />
-              </HeaderField>
-            </Col>
-          </Row>
+          <HistoricalNumbersContainer propertyIds={propertyIds} View={HistoricalNumberFieldView} />
         </Col>
-        <Col xs="5">
+
+        <Col className="text-right">
           <Row className="no-gutters">
             <Col className="text-right">
               <StyledSmallText>
@@ -96,32 +98,16 @@ export const LeaseHeader: React.FC<ILeaseHeaderProps> = ({ lease, lastUpdatedBy 
               </HeaderField>
             </Col>
           </Row>
-        </Col>
-      </Row>
-      <Row className="no-gutters">
-        <Col xs="7">
-          <Row className="no-gutters">
-            <Col>
-              <Row>
-                <HeaderLabelCol label="Start date:" labelWidth="3" />
-                <HeaderContentCol contentWidth="3">
-                  {prettyFormatDate(lease?.startDate)}
-                </HeaderContentCol>
-                <HeaderLabelCol label="Expiry date:" />
-                <HeaderContentCol>
-                  <span className="pl-2">{prettyFormatDate(lease?.expiryDate)}</span>
-                </HeaderContentCol>
-              </Row>
+          <Row className="no-gutters align-items-end">
+            <Col className="text-right">
+              {isExpired && (
+                <ExpiredWarning className="ml-auto">
+                  <AiOutlineExclamationCircle size={16} />
+                  &nbsp; EXPIRED
+                </ExpiredWarning>
+              )}
             </Col>
           </Row>
-        </Col>
-        <Col xs="5">
-          {isExpired && (
-            <ExpiredWarning>
-              <AiOutlineExclamationCircle size={16} />
-              &nbsp; EXPIRED
-            </ExpiredWarning>
-          )}
         </Col>
       </Row>
     </Container>
