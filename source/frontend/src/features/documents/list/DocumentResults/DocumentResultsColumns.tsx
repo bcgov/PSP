@@ -67,7 +67,7 @@ const renderFileName = (onViewDetails: (values: ApiGen_Concepts_DocumentRelation
   return function (cell: CellProps<DocumentRow, string | undefined>) {
     const { hasClaim } = useKeycloakWrapper();
     return (
-      <>
+      <StyledCellOverflow>
         {hasClaim(Claims.DOCUMENT_VIEW) === true ? (
           <Button
             data-testid="document-view-filename-link"
@@ -81,7 +81,7 @@ const renderFileName = (onViewDetails: (values: ApiGen_Concepts_DocumentRelation
         ) : (
           <span data-testid="document-view-filename-text">{cell.value}</span>
         )}
-      </>
+      </StyledCellOverflow>
     );
   };
 };
@@ -155,5 +155,19 @@ const StyledIconsRow = styled(Row)`
 const StyledIcon = styled.span`
   .tooltip-icon {
     color: ${({ theme }) => theme.bcTokens.iconsColorDisabled};
+  }
+`;
+
+const StyledCellOverflow = styled('div')`
+  display: contents;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+
+  button {
+    display: contents !important;
   }
 `;

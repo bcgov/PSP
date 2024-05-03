@@ -214,11 +214,13 @@ export const LeasePropertySelector: React.FunctionComponent<LeasePropertySelecto
                     if (property !== undefined) {
                       return (
                         <SelectedPropertyRow
+                          formikProps={formikProps}
                           key={`property.${property.latitude}-${property.longitude}-${property.pid}-${property.apiId}`}
                           onRemove={() => onRemoveClick(index)}
                           nameSpace={`properties.${index}`}
                           index={index}
                           property={property}
+                          showSeparator={index < formikProps.values.properties.length - 1}
                         />
                       );
                     }
