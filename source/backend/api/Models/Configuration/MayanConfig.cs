@@ -9,5 +9,7 @@ namespace Pims.Api.Models.Config
         public string ConnectionUser { get; set; }
 
         public string ConnectionPassword { get; set; }
+
+        public int UploadRetries { get; set; }
     }
 }
