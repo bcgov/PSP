@@ -1,7 +1,7 @@
 import './PointClusterer.scss';
 
 import { BBox, Feature, FeatureCollection, Geometry, MultiPolygon, Polygon } from 'geojson';
-import L, { geoJSON, LatLng } from 'leaflet';
+import L, { geoJSON, LatLng, LatLngLiteral } from 'leaflet';
 import { find } from 'lodash';
 import polylabel from 'polylabel';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
@@ -82,7 +82,7 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
     SpiderSet<PIMS_Property_Location_View | PIMS_Property_Boundary_View | PMBC_Feature_Properties>
   >({});
 
-  const draftPoints = useMemo(() => {
+  const draftPoints = useMemo<LatLngLiteral[]>(() => {
     return mapMachine.filePropertyLocations.map(x => {
       // The values on the feature are rounded to the 4th decimal. Do the same to the draft points.
       return {
@@ -343,6 +343,21 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
               position={draftPoint}
               icon={getDraftIcon((index + 1).toString())}
               zIndexOffset={500}
+              eventHandlers={{
+                click: e => {
+                  // stop propagation of 'click' event to the underlying leaflet map
+                  e.originalEvent.preventDefault();
+                  e.originalEvent.stopPropagation();
+
+                  mapMachine.mapMarkerClick({
+                    clusterId: 'NO_ID',
+                    latlng: draftPoint,
+                    pimsLocationFeature: null,
+                    pimsBoundaryFeature: null,
+                    pmbcFeature: null,
+                  });
+                },
+              }}
             ></Marker>
           );
         })}
