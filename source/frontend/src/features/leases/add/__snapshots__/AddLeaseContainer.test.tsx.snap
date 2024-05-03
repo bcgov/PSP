@@ -1343,11 +1343,6 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                       </svg>
                     </span>
                   </div>
-                  <div
-                    class="col-3"
-                  >
-                    Area included
-                  </div>
                 </div>
                 <span>
                   No Properties selected

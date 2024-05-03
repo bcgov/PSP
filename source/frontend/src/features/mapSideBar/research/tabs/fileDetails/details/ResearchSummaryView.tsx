@@ -58,7 +58,7 @@ const ResearchSummaryView: React.FunctionComponent<IResearchSummaryViewProps> = 
     const personOrganizations = props.researchFile!.requestorPerson.personOrganizations;
     const organization =
       exists(personOrganizations) && personOrganizations.length > 0
-        ? personOrganizations[0].organization
+        ? personOrganizations[0]?.organization
         : undefined;
     detail.requestorOrganization = organization?.name ?? undefined;
   } else if (exists(props.researchFile?.requestorOrganization)) {
