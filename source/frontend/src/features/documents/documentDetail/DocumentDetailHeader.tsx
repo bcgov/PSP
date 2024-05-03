@@ -1,4 +1,4 @@
-import { Col, Row } from 'react-bootstrap';
+import styled from 'styled-components';
 
 import { SectionField } from '@/components/common/Section/SectionField';
 
@@ -28,19 +28,35 @@ const DocumentDetailHeader: React.FunctionComponent<
         {documentTypeLabel}
       </SectionField>
       <SectionField label={'File name'} labelWidth="4" className="pb-3">
-        <Row>
-          <Col xs="auto">{documentFileName}</Col>
-          <Col xs="auto">
+        <StyledFileNameRow>
+          <div>
+            <label>{documentFileName}</label>
+          </div>
+          <div>
             <DownloadDocumentButton
               mayanDocumentId={mayanDocumentId}
               mayanFileId={props.document.mayanFileId}
               isFileAvailable={!!props.document?.documentDetail?.file_latest?.id}
             />
-          </Col>
-        </Row>
+          </div>
+        </StyledFileNameRow>
       </SectionField>
     </div>
   );
 };
 
 export default DocumentDetailHeader;
+
+const StyledFileNameRow = styled('div')`
+  display: flex;
+  flex-direction: row;
+  word-break: break-all;
+
+  div:first-child {
+    flex-grow: 1;
+  }
+
+  label {
+    margin-right: 1rem;
+  }
+`;
