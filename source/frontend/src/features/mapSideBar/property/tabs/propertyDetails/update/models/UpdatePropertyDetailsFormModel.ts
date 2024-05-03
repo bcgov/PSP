@@ -1,6 +1,7 @@
 import { GeoJsonProperties } from 'geojson';
 import { isEmpty } from 'lodash';
 
+import { ApiGen_CodeTypes_PropertyPPHStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_PropertyPPHStatusTypes';
 import { ApiGen_Concepts_Address } from '@/models/api/generated/ApiGen_Concepts_Address';
 import { ApiGen_Concepts_CodeType } from '@/models/api/generated/ApiGen_Concepts_CodeType';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
@@ -152,7 +153,8 @@ export class UpdatePropertyDetailsFormModel {
     model.description = base.description ?? undefined;
     model.isSensitive = base.isSensitive;
     model.isRetired = base.isRetired;
-    model.pphStatusTypeCode = base.pphStatusTypeCode ?? 'UNKNOWN';
+    model.pphStatusTypeCode =
+      base.pphStatusTypeCode ?? ApiGen_CodeTypes_PropertyPPHStatusTypes.UNKNOWN.toString();
     model.isRwyBeltDomPatent = base.isRwyBeltDomPatent ?? undefined;
     model.pphStatusUpdateUserid = base.pphStatusUpdateUserid ?? undefined;
     model.pphStatusUpdateUserGuid = base.pphStatusUpdateUserGuid ?? undefined;

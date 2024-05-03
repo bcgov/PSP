@@ -43,6 +43,7 @@
     <None Remove=".env" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\apimodels\Pims.Api.Models.csproj" />
     <ProjectReference Include="..\entities\Pims.Dal.Entities.csproj" />
     <ProjectReference Include="..\core\Pims.Core.csproj" />
   </ItemGroup>
