@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -6,12 +8,13 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using MapsterMapper;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
 using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Models.CodeTypes;
 using Pims.Api.Models.Concepts.Document;
-
+using Pims.Api.Models.Config;
 using Pims.Api.Models.Mayan;
 using Pims.Api.Models.Mayan.Document;
 using Pims.Api.Models.Requests.Document.UpdateMetadata;
@@ -23,6 +26,7 @@ using Pims.Dal.Entities;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
+using Polly;
 
 namespace Pims.Api.Services
 {
@@ -31,6 +35,7 @@ namespace Pims.Api.Services
     /// </summary>
     public class DocumentService : BaseService, IDocumentService
     {
+
         private static readonly string[] ValidExtensions =
         {
                 "txt",
@@ -55,6 +60,9 @@ namespace Pims.Api.Services
                 "msg",
         };
 
+        private static readonly string MayanConfigSectionKey = "Mayan";
+        private readonly MayanConfig _config;
+
         private readonly IDocumentRepository documentRepository;
         private readonly IEdmsDocumentRepository documentStorageRepository;
         private readonly IDocumentTypeRepository documentTypeRepository;
@@ -63,6 +71,7 @@ namespace Pims.Api.Services
 
         public DocumentService(
             ClaimsPrincipal user,
+            IConfiguration configuration,
             ILogger<DocumentService> logger,
             IDocumentRepository documentRepository,
             IEdmsDocumentRepository documentStorageRepository,
@@ -76,6 +85,8 @@ namespace Pims.Api.Services
             this.documentTypeRepository = documentTypeRepository;
             this.avService = avService;
             this.mapper = mapper;
+            _config = new MayanConfig();
+            configuration.Bind(MayanConfigSectionKey, _config);
         }
 
         public IList<PimsDocumentTyp> GetPimsDocumentTypes()
@@ -133,7 +144,20 @@ namespace Pims.Api.Services
             if (externalResponse.Status == ExternalResponseStatus.Success)
             {
                 var externalDocument = externalResponse.Payload;
+                if (externalDocument.FileLatest == null && _config.UploadRetries > 0)
+                {
+                    var retryPolicy = Policy<ExternalResponse<DocumentDetailModel>>
+                        .HandleResult(result => result.HttpStatusCode != HttpStatusCode.OK || result.Payload.FileLatest == null)
+                        .WaitAndRetryAsync(_config.UploadRetries, (int retry) => TimeSpan.FromSeconds(Math.Pow(2, retry)));
+                    var detail = await retryPolicy.ExecuteAsync(async () => await GetStorageDocumentDetail(externalDocument.Id));
+                    if(detail?.Payload?.FileLatest == null)
+                    {
+                        response.DocumentExternalResponse.Status = ExternalResponseStatus.Error;
+                        response.DocumentExternalResponse.Message = "Timed out waiting for Mayan to process document";
+                        return response;
+                    }
 
+                }
                 // Create metadata of document
                 if (uploadRequest.DocumentMetadata != null)
                 {
