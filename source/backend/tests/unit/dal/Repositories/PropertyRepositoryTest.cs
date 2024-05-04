@@ -701,6 +701,7 @@ namespace Pims.Dal.Test.Repositories
         {
             // Arrange
             var repository = CreateRepositoryWithPermissions(Permissions.PropertyView, Permissions.PropertyEdit);
+
             var property = EntityHelper.CreateProperty(1);
             property.PphStatusTypeCode = PropertyPPHStatusTypes.UNKNOWN.ToString();
             property.PphStatusUpdateTimestamp = null;
