@@ -62,6 +62,7 @@ namespace Pims.Core.Test
             var claims = new List<Claim>
             {
                 new Claim("idir_user_guid", Guid.NewGuid().ToString().Replace("-", string.Empty)),
+                new Claim("idir_username", "username@"),
                 new Claim(ClaimTypes.Email, "test@test.com"),
             };
 
