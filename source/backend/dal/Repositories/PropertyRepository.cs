@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using LinqKit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Pims.Api.Models.CodeTypes;
 using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Core.Helpers;
@@ -346,7 +347,8 @@ namespace Pims.Dal.Repositories
             property.IsVisibleToOtherAgencies = existingProperty.IsVisibleToOtherAgencies;
             property.IsSensitive = existingProperty.IsSensitive;
 
-            if (property.PphStatusTypeCode != existingProperty.PphStatusTypeCode)
+            if (property.PphStatusTypeCode != existingProperty.PphStatusTypeCode
+                && (property.PphStatusTypeCode != PropertyPPHStatusTypes.UNKNOWN.ToString() && existingProperty.PphStatusTypeCode != null))
             {
                 property.PphStatusUpdateTimestamp = DateTime.UtcNow;
                 property.PphStatusUpdateUserid = User.GetUsername();

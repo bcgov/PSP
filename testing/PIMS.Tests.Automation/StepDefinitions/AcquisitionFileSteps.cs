@@ -1017,7 +1017,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Schedule
             acquisitionFile.AssignedDate = ExcelDataContext.ReadData(rowNumber, "AssignedDate");
             acquisitionFile.DeliveryDate = ExcelDataContext.ReadData(rowNumber, "DeliveryDate");
-            acquisitionFile.AcquisitionCompletedDate = ExcelDataContext.ReadData(rowNumber, "AcquisitionCompletedDate");
 
             //Acquisition Details
             acquisitionFile.AcquisitionFileName = ExcelDataContext.ReadData(rowNumber, "AcquisitionFileName");
@@ -1232,6 +1231,10 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 take.IsLicenseConstruct = ExcelDataContext.ReadData(i, "IsLicenseConstruct");
                 take.IsLicenseConstructArea = ExcelDataContext.ReadData(i, "IsLicenseConstructArea");
                 take.IsLicenseConstructDate = ExcelDataContext.ReadData(i, "IsLicenseConstructDate");
+
+                take.IsLeasePayable = ExcelDataContext.ReadData(i, "IsLeasePayable");
+                take.IsLeasePayableArea = ExcelDataContext.ReadData(i, "IsLeasePayableArea");
+                take.IsLeasePayableDate = ExcelDataContext.ReadData(i, "IsLeasePayableDate");
 
                 take.IsSurplus = ExcelDataContext.ReadData(i, "IsSurplus");
                 take.IsSurplusArea = ExcelDataContext.ReadData(i, "IsSurplusArea");

@@ -222,7 +222,5 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
             return webDriver.FindElements(searchPropertyFoundCluster).Count();
         }
-
-        
     }
 }

@@ -68,7 +68,11 @@ namespace PIMS.Tests.Automation.Drivers
         public void Dispose()
         {
             if (currentWebDriverLazy.IsValueCreated && closeBrowserOnDispose)
+            {
+                Current.Close();
                 Current.Quit();
+                Current.Dispose();
+            }    
         }
     }
 }
