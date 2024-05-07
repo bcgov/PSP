@@ -24,20 +24,26 @@ import TestCommonWrapper from '@/utils/TestCommonWrapper';
 
 import { PropertyFilter } from '.';
 import { defaultPropertyFilter, IPropertyFilter } from './IPropertyFilter';
-import { IGeocoderPidsResponse } from '@/hooks/pims-api/interfaces/IGeocoder';
+import { IGeocoderPidsResponse, IGeocoderResponse } from '@/hooks/pims-api/interfaces/IGeocoder';
+import { useGeocoderRepository } from '@/hooks/useGeocoderRepository';
 
 const onFilterChange = vi.fn();
 //prevent web calls from being made during tests.
 vi.mock('axios');
 
-vi.mock('@/hooks/pims-api/useApiGeocoder');
-
+vi.mock('@/hooks/useGeocoderRepository');
 const mockApiGetSitePidsApi = vi.fn();
-vi.mocked(useApiGeocoder).mockReturnValue({
-  getSitePidsApi: mockApiGetSitePidsApi as (
-    siteId: string,
-  ) => Promise<AxiosResponse<IGeocoderPidsResponse, any>>,
-} as unknown as ReturnType<typeof useApiGeocoder>);
+const searchAddressApi = vi.fn();
+vi.mocked(useGeocoderRepository).mockReturnValue({
+  getSitePids: mockApiGetSitePidsApi,
+  isLoadingSitePids: false,
+  searchAddress: searchAddressApi,
+  isLoadingSearchAddress: false,
+  getNearestToPoint: function (lng: number, lat: number): Promise<IGeocoderResponse> {
+    throw new Error('Function not implemented.');
+  },
+  isLoadingNearestToPoint: false,
+});
 
 const mockedAxios = vi.mocked(axios);
 const mockStore = configureMockStore([thunk]);
@@ -136,6 +142,94 @@ describe('MapFilterBar', () => {
 
     // Assert
     expect(onFilterChange).not.toHaveBeenCalled();
+  });
+
+  it('does submit if there is pid/pin for address.', async () => {
+    // Arrange
+
+    const { container } = render(getUiElement({ ...defaultPropertyFilter, searchBy: 'address' }), {
+      claims: ['admin-properties'],
+    });
+    const submit = container.querySelector('button[type="submit"]');
+    searchAddressApi.mockResolvedValue([
+      {
+        siteId: '3744cde1-18cd-4c45-9d39-472285295fd3',
+        fullAddress: '510 Catherine St, Victoria, BC',
+        address1: '510 Catherine St',
+        administrativeArea: 'Victoria',
+        provinceCode: 'BC',
+        latitude: 48.4316251,
+        longitude: -123.385134,
+        score: 81,
+      },
+    ]);
+    mockApiGetSitePidsApi.mockResolvedValue({
+      siteId: '3744cde1-18cd-4c45-9d39-472285295fd3',
+      pids: ['000115240'],
+    });
+
+    // Act
+    // Enter values on the form fields, then click the Search button
+    await waitFor(() => fillInput(container, 'address', 'Victoria'));
+
+    const addressButton = await screen.findByText('510 Catherine St', { exact: false });
+
+    await act(async () => {
+      fireEvent.click(addressButton!);
+    });
+
+    await act(async () => {
+      fireEvent.click(submit!);
+    });
+
+    // Assert
+    expect(onFilterChange).toHaveBeenCalled();
+  });
+
+  it('does submit if there is pid/pin for address, and handles multiple pids in the response.', async () => {
+    // Arrange
+
+    const { container } = render(getUiElement({ ...defaultPropertyFilter, searchBy: 'address' }), {
+      claims: ['admin-properties'],
+    });
+    const submit = container.querySelector('button[type="submit"]');
+    searchAddressApi.mockResolvedValue([
+      {
+        siteId: '3744cde1-18cd-4c45-9d39-472285295fd3',
+        fullAddress: '510 Catherine St, Victoria, BC',
+        address1: '510 Catherine St',
+        administrativeArea: 'Victoria',
+        provinceCode: 'BC',
+        latitude: 48.4316251,
+        longitude: -123.385134,
+        score: 81,
+      },
+    ]);
+    mockApiGetSitePidsApi.mockResolvedValue({
+      siteId: '3744cde1-18cd-4c45-9d39-472285295fd3',
+      pids: ['000115240', '000115258'],
+    });
+
+    // Act
+    // Enter values on the form fields, then click the Search button
+    await waitFor(() => fillInput(container, 'address', 'Victoria'));
+
+    const addressButton = await screen.findByText('510 Catherine St', { exact: false });
+
+    await act(async () => {
+      fireEvent.click(addressButton!);
+    });
+
+    await screen.findAllByText('Warning, multiple PIDs found for this address', {
+      exact: false,
+    })[0];
+
+    await act(async () => {
+      fireEvent.click(submit!);
+    });
+
+    // Assert
+    expect(onFilterChange).toHaveBeenCalled();
   });
 
   it('submits if address set and useGeocoder false', async () => {
