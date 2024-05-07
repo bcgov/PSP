@@ -11,7 +11,8 @@ import { useApiHistoricalNumbers } from '../pims-api/useApiHistoricalNumbers';
  * hook that interacts with the Historical Number API.
  */
 export const useHistoricalNumberRepository = () => {
-  const { getByPropertyId: getByPropertyIdApi } = useApiHistoricalNumbers();
+  const { getByPropertyId: getByPropertyIdApi, putHistoricalNumbers: putHistoricalNumbersApi } =
+    useApiHistoricalNumbers();
 
   const getPropertyHistoricalNumbers = useApiRequestWrapper<
     (propertyId: number) => Promise<AxiosResponse<ApiGen_Concepts_HistoricalFileNumber[], any>>
@@ -24,10 +25,26 @@ export const useHistoricalNumberRepository = () => {
     onError: useAxiosErrorHandler('Failed to load property historical numbers'),
   });
 
+  const updatePropertyHistoricalNumbers = useApiRequestWrapper<
+    (
+      propertyId: number,
+      historicalNumbers: ApiGen_Concepts_HistoricalNumber[],
+    ) => Promise<AxiosResponse<ApiGen_Concepts_HistoricalNumber[], any>>
+  >({
+    requestFunction: useCallback(
+      async (propertyId: number, historicalNumbers: ApiGen_Concepts_HistoricalNumber[]) =>
+        await putHistoricalNumbersApi(propertyId, historicalNumbers),
+      [putHistoricalNumbersApi],
+    ),
+    requestName: 'updatePropertyHistoricalNumbers',
+    throwError: true,
+  });
+
   return useMemo(
     () => ({
       getPropertyHistoricalNumbers,
+      updatePropertyHistoricalNumbers,
     }),
-    [getPropertyHistoricalNumbers],
+    [getPropertyHistoricalNumbers, updatePropertyHistoricalNumbers],
   );
 };
