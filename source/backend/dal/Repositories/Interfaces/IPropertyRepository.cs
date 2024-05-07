@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
-using Pims.Dal.Models;
 
 namespace Pims.Dal.Repositories
 {

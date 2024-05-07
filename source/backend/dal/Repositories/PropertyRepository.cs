@@ -12,7 +12,6 @@ using Pims.Core.Helpers;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Helpers.Extensions;
-using Pims.Dal.Models;
 using Pims.Dal.Security;
 
 namespace Pims.Dal.Repositories
