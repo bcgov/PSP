@@ -1,0 +1,475 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="4/18/2024 7:57:19 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="ARIMA-DELL"
+  DTS:CreatorName="ARIMA-DELL\smart"
+  DTS:DTSID="{2D5694EC-F952-4ACD-9643-F82177A0AE06}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5270.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Package"
+  DTS:PackageType="5"
+  DTS:ProtectionLevel="0"
+  DTS:VersionBuild="31"
+  DTS:VersionGUID="{E545B53F-177F-49B9-9F9F-C0A226EBA12E}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[localhost,5433.pims.admin]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{A403C4B4-6865-4E60-8AA6-D8AD90A7F8EE}"
+      DTS:ObjectName="localhost,5433.pims.admin">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=localhost,5433;User ID=admin;Initial Catalog=pims;Provider=SQLOLEDB.1;Persist Security Info=True;Auto Translate=False;Application Name=SSIS-Package-{A403C4B4-6865-4E60-8AA6-D8AD90A7F8EE}localhost,5433.pims.admin;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"></DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Sequence 1"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{671F9AE0-8FD1-4FA7-A9F6-4B3F1542133C}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Sequence 1">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Sequence 1\Step 1"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{21F22A83-9334-43C9-88D7-EDD5F0B2CC00}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Step 1"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{A403C4B4-6865-4E60-8AA6-D8AD90A7F8EE}"
+              SQLTask:BypassPrepare="False"
+              SQLTask:SqlStatementSource="BEGIN&#xA;DROP TABLE if exists etl.SELECTION_OF_DUP_ADDRESSES&#xA;END&#xA;&#xA;BEGIN&#xA;DROP TABLE if exists etl.PIMS_ADDRESS_LEVEL1;&#xA;END&#xA;&#xA;BEGIN&#xA;DROP TABLE if exists etl.PIMS_ADDRESS_LEVEL2;&#xA;END&#xA;&#xA;BEGIN&#xA;DROP TABLE if exists etl.PIMS_ADDRESS_BKP;&#xA;END&#xA;&#xA;BEGIN&#xA;SELECT * INTO etl.PIMS_ADDRESS_BKP FROM dbo.PIMS_ADDRESS;&#xA;END&#xA;&#xA;BEGIN&#xA;DROP TABLE if exists etl.PIMS_ACQUISITION_OWNER_BKP;&#xA;END&#xA;&#xA;BEGIN&#xA;SELECT * INTO etl.PIMS_ACQUISITION_OWNER_BKP FROM dbo.PIMS_ACQUISITION_OWNER;&#xA;END&#xA;&#xA;BEGIN&#xA;DROP TABLE if exists etl.PIMS_ORGANIZATION_ADDRESS_BKP;&#xA;END&#xA;&#xA;BEGIN&#xA;SELECT * INTO etl.PIMS_ORGANIZATION_ADDRESS_BKP FROM dbo.PIMS_ORGANIZATION_ADDRESS;&#xA;END&#xA;&#xA;&#xA;BEGIN&#xA;DROP TABLE if exists etl.PIMS_PERSON_ADDRESS_BKP;&#xA;END&#xA;&#xA;BEGIN&#xA;SELECT * INTO etl.PIMS_PERSON_ADDRESS_BKP FROM dbo.PIMS_PERSON_ADDRESS;&#xA;END&#xA;&#xA;BEGIN&#xA;DROP TABLE if exists etl.PIMS_PROPERTY_BKP;&#xA;END&#xA;&#xA;BEGIN&#xA;SELECT * INTO etl.PIMS_PROPERTY_BKP FROM dbo.PIMS_PROPERTY;&#xA;END" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Sequence 1\Step 2"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{571F0B6F-B92D-4089-A9F4-9E11E3B95EE6}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Step 2"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{A403C4B4-6865-4E60-8AA6-D8AD90A7F8EE}"
+              SQLTask:SqlStatementSource="&#x9;WITH DUPLICATE_PIDs as&#xA;&#x9;&#x9;&#x9;(&#xA;&#x9;&#x9;&#x9;&#x9;SELECT PID, COUNT(1) AS Occurrences FROM dbo.PIMS_PROPERTY &#xA;&#x9;&#x9;&#x9;&#x9;WHERE PID IS NOT NULL&#xA;&#x9;&#x9;&#x9;&#x9;GROUP BY PID &#xA;&#x9;&#x9;&#x9;&#x9;--HAVING COUNT(1) &gt; 1&#xA;&#x9;&#x9;&#x9;),&#xA;&#x9;&#x9;DUP_ADDRESSES AS&#xA;&#x9;&#x9;&#x9;&#x9;(&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;SELECT   CONCAT(TRIM(LOWER(PA.STREET_ADDRESS_1)),  TRIM(LOWER(PA.STREET_ADDRESS_2)),TRIM(LOWER(PA.STREET_ADDRESS_3)),  TRIM(LOWER(PA.POSTAL_CODE)))  AS ADDRESS_, COUNT(1) AS TOTAL FROM dbo.PIMS_ADDRESS PA&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;GROUP BY CONCAT(TRIM(LOWER(PA.STREET_ADDRESS_1)),  TRIM(LOWER(PA.STREET_ADDRESS_2)),TRIM(LOWER(PA.STREET_ADDRESS_3)),  TRIM(LOWER(PA.POSTAL_CODE))) &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;--HAVING COUNT(1) &gt; 1&#x9; &#xA;&#x9;&#x9;&#x9;&#x9;)&#xA;&#xA;&#x9;&#x9;&#x9;&#x9;, X AS (&#xA;&#x9;&#x9;&#x9;&#x9;SELECT DISTINCT&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;PP.PROPERTY_ID,  PP.PID, &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;PA.ADDRESS_ID, PA.STREET_ADDRESS_1, PA.STREET_ADDRESS_2, PA.STREET_ADDRESS_3,PA.MUNICIPALITY_NAME, PA.POSTAL_CODE, CONCAT(TRIM(PA.STREET_ADDRESS_1),  TRIM(PA.STREET_ADDRESS_2),TRIM(PA.STREET_ADDRESS_3),  TRIM(PA.POSTAL_CODE)) AS ADDRESS_,&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;PA.COMMENT,&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;PA.APP_CREATE_USERID,&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;PA.[APP_LAST_UPDATE_TIMESTAMP],&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;PA.APP_LAST_UPDATE_USERID ,&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;PA.[APP_CREATE_USER_DIRECTORY],&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;PA.[APP_LAST_UPDATE_USER_DIRECTORY]&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;FROM  dbo.PIMS_ADDRESS PA &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;JOIN dbo.PIMS_PROPERTY PP ON PA.ADDRESS_ID = PP.ADDRESS_ID&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;&#x9;WHERE &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;CONCAT(TRIM(LOWER(PA.STREET_ADDRESS_1)),  TRIM(LOWER(PA.STREET_ADDRESS_2)),TRIM(LOWER(PA.STREET_ADDRESS_3)),  TRIM(LOWER(PA.POSTAL_CODE))) IN (SELECT ADDRESS_ FROM DUP_ADDRESSES)&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;AND PP.PID IN (SELECT PID FROM DUPLICATE_PIDs)&#xA;&#x9;&#x9;&#x9;&#x9;)&#xA;&#x9;&#x9;&#x9;&#x9;SELECT * &#xA;&#x9;&#x9;&#x9;&#x9;INTO etl.SELECTION_OF_DUP_ADDRESSES&#xA;&#x9;&#x9;&#x9;&#x9;FROM X &#xA;&#x9;&#x9;&#x9;&#x9;&#x9; &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;ORDER BY PID &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Sequence 1\Step 3"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{2883496A-2BC4-4FE2-914A-EC54C61DD41D}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Step 3"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{A403C4B4-6865-4E60-8AA6-D8AD90A7F8EE}"
+              SQLTask:BypassPrepare="False"
+              SQLTask:SqlStatementSource="WITH&#xA;-- 1. REGION_CODE&#xA;EXTRACT_REGION_CODE AS (&#xA;    SELECT * FROM (&#xA;        SELECT DISTINCT         &#xA;&#x9;&#x9;SDP.ADDRESS_,&#xA;            L.ADDRESS_ID,   &#xA;&#x9;&#x9;&#x9;L.REGION_CODE,&#xA;            ROW_NUMBER() OVER (PARTITION BY   SDP.ADDRESS_ ORDER BY&#xA;                CASE&#xA;                    WHEN (L.APP_CREATE_USERID NOT LIKE '%ETL%' AND  L.REGION_CODE  is NOT NULL  ) THEN 1&#xA;                    WHEN ( PP.PROPERTY_DATA_SOURCE_TYPE_CODE = 'OPSS' AND  L.REGION_CODE  is NOT NULL ) THEN 2&#xA;                    WHEN ( PP.PROPERTY_DATA_SOURCE_TYPE_CODE = 'LIS' AND  L.REGION_CODE  is NOT NULL ) THEN 3&#xA;                    WHEN ( PP.PROPERTY_DATA_SOURCE_TYPE_CODE = 'PAIMS' AND  L.REGION_CODE  is NOT NULL ) THEN 4&#xA;                    WHEN L.REGION_CODE IS NOT NULL THEN 5&#xA;                    ELSE 6&#xA;                END  &#xA;                ,L.[APP_LAST_UPDATE_TIMESTAMP] DESC&#xA;            ) AS RowNum&#xA;        FROM dbo.PIMS_ADDRESS L&#xA;          JOIN dbo.PIMS_PROPERTY PP ON L.ADDRESS_ID = PP.ADDRESS_ID &#xA;&#x9;&#x9;&#x9;JOIN etl.SELECTION_OF_DUP_ADDRESSES SDP ON L.ADDRESS_ID = SDP.ADDRESS_ID&#xA;&#x9;&#x9;&#x9; &#xA;    ) AS SubQuery WHERE RowNum = 1&#xA;)&#xA;&#xA;-- 2. DISTRICT_CODE&#xA;,EXTRACT_DISTRICT_CODE AS (&#xA;    SELECT * FROM (&#xA;        SELECT DISTINCT     &#xA;&#x9;&#x9;SDP.ADDRESS_,&#xA;            L.ADDRESS_ID,   &#xA;&#x9;&#x9;&#x9;L.DISTRICT_CODE,&#xA;            ROW_NUMBER() OVER (PARTITION BY   SDP.ADDRESS_ ORDER BY&#xA;                CASE&#xA;                    WHEN (L.APP_CREATE_USERID NOT LIKE '%ETL%' AND  L.DISTRICT_CODE  is NOT NULL  ) THEN 1&#xA;                    WHEN ( PP.PROPERTY_DATA_SOURCE_TYPE_CODE = 'OPSS' AND  L.DISTRICT_CODE  is NOT NULL ) THEN 2&#xA;                    WHEN ( PP.PROPERTY_DATA_SOURCE_TYPE_CODE = 'LIS' AND  L.DISTRICT_CODE  is NOT NULL ) THEN 3&#xA;                    WHEN ( PP.PROPERTY_DATA_SOURCE_TYPE_CODE = 'PAIMS' AND  L.DISTRICT_CODE  is NOT NULL ) THEN 4&#xA;                    WHEN L.DISTRICT_CODE IS NOT NULL THEN 5&#xA;                    ELSE 6&#xA;                END  &#xA;                ,L.[APP_LAST_UPDATE_TIMESTAMP] DESC&#xA;            ) AS RowNum&#xA;        FROM dbo.PIMS_ADDRESS L&#xA;          JOIN dbo.PIMS_PROPERTY PP ON L.ADDRESS_ID = PP.ADDRESS_ID &#xA;&#x9;&#x9;&#x9;JOIN etl.SELECTION_OF_DUP_ADDRESSES SDP ON L.ADDRESS_ID = SDP.ADDRESS_ID&#xA;&#x9;&#x9;&#x9; &#xA;    ) AS SubQuery WHERE RowNum = 1&#xA;)&#xA;&#xA;-- 3. PROVINCE_STATE_ID&#xA;,EXTRACT_PROVINCE_STATE_ID AS (&#xA;    SELECT * FROM (&#xA;        SELECT DISTINCT   &#xA;&#x9;&#x9;SDP.ADDRESS_,&#xA;            L.ADDRESS_ID,   &#xA;&#x9;&#x9;&#x9;L.PROVINCE_STATE_ID,&#xA;            ROW_NUMBER() OVER (PARTITION BY   SDP.ADDRESS_ ORDER BY&#xA;                CASE&#xA;                    WHEN (L.APP_CREATE_USERID NOT LIKE '%ETL%' AND  L.PROVINCE_STATE_ID  is NOT NULL  ) THEN 1&#xA;                    WHEN ( PP.PROPERTY_DATA_SOURCE_TYPE_CODE = 'OPSS' AND  L.PROVINCE_STATE_ID  is NOT NULL ) THEN 2&#xA;                    WHEN ( PP.PROPERTY_DATA_SOURCE_TYPE_CODE = 'LIS' AND  L.PROVINCE_STATE_ID  is NOT NULL ) THEN 3&#xA;                    WHEN ( PP.PROPERTY_DATA_SOURCE_TYPE_CODE = 'PAIMS' AND  L.PROVINCE_STATE_ID  is NOT NULL ) THEN 4&#xA;                    WHEN L.PROVINCE_STATE_ID IS NOT NULL THEN 5&#xA;                    ELSE 6&#xA;                END  &#xA;                ,L.[APP_LAST_UPDATE_TIMESTAMP] DESC&#xA;            ) AS RowNum&#xA;        FROM dbo.PIMS_ADDRESS L&#xA;          JOIN dbo.PIMS_PROPERTY PP ON L.ADDRESS_ID = PP.ADDRESS_ID &#xA;&#x9;&#x9;&#x9;JOIN etl.SELECTION_OF_DUP_ADDRESSES SDP ON L.ADDRESS_ID = SDP.ADDRESS_ID&#xA;&#x9;&#x9;&#x9; &#xA;    ) AS SubQuery WHERE RowNum = 1&#xA;)&#xA;&#xA;-- 4. COUNTRY_ID&#xA;,EXTRACT_COUNTRY_ID AS (&#xA;    SELECT * FROM (&#xA;        SELECT DISTINCT     &#xA;&#x9;&#x9;SDP.ADDRESS_,&#xA;            L.ADDRESS_ID,   &#xA;&#x9;&#x9;&#x9;L.COUNTRY_ID,&#xA;            ROW_NUMBER() OVER (PARTITION BY   SDP.ADDRESS_ ORDER BY&#xA;                CASE&#xA;                    WHEN (L.APP_CREATE_USERID NOT LIKE '%ETL%' AND  L.COUNTRY_ID  is NOT NULL  ) THEN 1&#xA;                    WHEN ( PP.PROPERTY_DATA_SOURCE_TYPE_CODE = 'OPSS' AND  L.COUNTRY_ID  is NOT NULL ) THEN 2&#xA;                    WHEN ( PP.PROPERTY_DATA_SOURCE_TYPE_CODE = 'LIS' AND  L.COUNTRY_ID  is NOT NULL ) THEN 3&#xA;                    WHEN ( PP.PROPERTY_DATA_SOURCE_TYPE_CODE = 'PAIMS' AND  L.COUNTRY_ID  is NOT NULL ) THEN 4&#xA;                    WHEN L.COUNTRY_ID IS NOT NULL THEN 5&#xA;                    ELSE 6&#xA;                END  &#xA;                ,L.[APP_LAST_UPDATE_TIMESTAMP] DESC&#xA;            ) AS RowNum&#xA;        FROM dbo.PIMS_ADDRESS L&#xA;          JOIN dbo.PIMS_PROPERTY PP ON L.ADDRESS_ID = PP.ADDRESS_ID &#xA;&#x9;&#x9;&#x9;JOIN etl.SELECTION_OF_DUP_ADDRESSES SDP ON L.ADDRESS_ID = SDP.ADDRESS_ID&#xA;&#x9;&#x9;&#x9; &#xA;    ) AS SubQuery WHERE RowNum = 1&#xA;)&#xA;-- 5. STREET_ADDRESS_1&#xA;,EXTRACT_STREET_ADDRESS_1 AS (&#xA;    SELECT * FROM (&#xA;        SELECT DISTINCT    &#xA;&#x9;&#x9;SDP.ADDRESS_,&#xA;            L.ADDRESS_ID,   &#xA;&#x9;&#x9;&#x9;CASE WHEN (L.[STREET_ADDRESS_1] IS NULL OR L.[STREET_ADDRESS_1] = '' ) THEN NULL ELSE PP.PROPERTY_DATA_SOURCE_TYPE_CODE + ': ' + L.[STREET_ADDRESS_1] END AS [STREET_ADDRESS_1],&#xA;            ROW_NUMBER() OVER (PARTITION BY   SDP.ADDRESS_ ORDER BY&#xA;                CASE&#xA;                    WHEN (L.APP_CREATE_USERID NOT LIKE '%ETL%' AND  L.STREET_ADDRESS_1  is NOT NULL  ) THEN 1&#xA;                    WHEN ( PP.PROPERTY_DATA_SOURCE_TYPE_CODE = 'OPSS' AND  L.STREET_ADDRESS_1  is NOT NULL ) THEN 2&#xA;                    WHEN ( PP.PROPERTY_DATA_SOURCE_TYPE_CODE = 'LIS' AND  L.STREET_ADDRESS_1  is NOT NULL ) THEN 3&#xA;                    WHEN ( PP.PROPERTY_DATA_SOURCE_TYPE_CODE = 'PAIMS' AND  L.STREET_ADDRESS_1  is NOT NULL ) THEN 4&#xA;                    WHEN L.STREET_ADDRESS_1 IS NOT NULL THEN 5&#xA;                    ELSE 6&#xA;                END  &#xA;                ,L.[APP_LAST_UPDATE_TIMESTAMP] DESC&#xA;            ) AS RowNum&#xA;        FROM dbo.PIMS_ADDRESS L&#xA;          JOIN dbo.PIMS_PROPERTY PP ON L.ADDRESS_ID = PP.ADDRESS_ID &#xA;&#x9;&#x9;&#x9;JOIN etl.SELECTION_OF_DUP_ADDRESSES SDP ON L.ADDRESS_ID = SDP.ADDRESS_ID&#xA;&#x9;&#x9;&#x9; &#xA;    ) AS SubQuery WHERE RowNum = 1&#xA;)&#xA;&#xA;-- 6. STREET_ADDRESS_2&#xA;,EXTRACT_STREET_ADDRESS_2 AS (&#xA;    SELECT * FROM (&#xA;        SELECT DISTINCT      &#xA;&#x9;&#x9;SDP.ADDRESS_,&#xA;            L.ADDRESS_ID,   &#xA;&#x9;&#x9;&#x9;CASE WHEN (L.[STREET_ADDRESS_2] IS NULL OR L.[STREET_ADDRESS_2] = '' ) THEN NULL ELSE PP.PROPERTY_DATA_SOURCE_TYPE_CODE + ': ' + L.[STREET_ADDRESS_2] END AS [STREET_ADDRESS_2],&#xA;            ROW_NUMBER() OVER (PARTITION BY   SDP.ADDRESS_ ORDER BY&#xA;                CASE&#xA;                    WHEN (L.APP_CREATE_USERID NOT LIKE '%ETL%' AND  L.STREET_ADDRESS_2  is NOT NULL  ) THEN 1&#xA;                    WHEN ( PP.PROPERTY_DATA_SOURCE_TYPE_CODE = 'OPSS' AND  L.STREET_ADDRESS_2  is NOT NULL ) THEN 2&#xA;                    WHEN ( PP.PROPERTY_DATA_SOURCE_TYPE_CODE = 'LIS' AND  L.STREET_ADDRESS_2  is NOT NULL ) THEN 3&#xA;                    WHEN ( PP.PROPERTY_DATA_SOURCE_TYPE_CODE = 'PAIMS' AND  L.STREET_ADDRESS_2  is NOT NULL ) THEN 4&#xA;                    WHEN L.STREET_ADDRESS_2 IS NOT NULL THEN 5&#xA;                    ELSE 6&#xA;                END  &#xA;                ,L.[APP_LAST_UPDATE_TIMESTAMP] DESC&#xA;            ) AS RowNum&#xA;        FROM dbo.PIMS_ADDRESS L&#xA;          JOIN dbo.PIMS_PROPERTY PP ON L.ADDRESS_ID = PP.ADDRESS_ID &#xA;&#x9;&#x9;&#x9;JOIN etl.SELECTION_OF_DUP_ADDRESSES SDP ON L.ADDRESS_ID = SDP.ADDRESS_ID&#xA;&#x9;&#x9;&#x9; &#xA;    ) AS SubQuery WHERE RowNum = 1&#xA;)&#xA;-- 7. STREET_ADDRESS_3&#xA;,EXTRACT_STREET_ADDRESS_3 AS (&#xA;    SELECT * FROM (&#xA;        SELECT DISTINCT         &#xA;&#x9;&#x9;SDP.ADDRESS_,&#xA;            L.ADDRESS_ID,   &#xA;&#x9;&#x9;&#x9;CASE WHEN (L.[STREET_ADDRESS_3] IS NULL OR L.[STREET_ADDRESS_3] = '' ) THEN NULL ELSE PP.PROPERTY_DATA_SOURCE_TYPE_CODE + ': ' + L.[STREET_ADDRESS_3] END AS [STREET_ADDRESS_3],&#xA;            ROW_NUMBER() OVER (PARTITION BY   SDP.ADDRESS_ ORDER BY&#xA;                CASE&#xA;                    WHEN (L.APP_CREATE_USERID NOT LIKE '%ETL%' AND  L.STREET_ADDRESS_3  is NOT NULL  ) THEN 1&#xA;                    WHEN ( PP.PROPERTY_DATA_SOURCE_TYPE_CODE = 'OPSS' AND  L.STREET_ADDRESS_3  is NOT NULL ) THEN 2&#xA;                    WHEN ( PP.PROPERTY_DATA_SOURCE_TYPE_CODE = 'LIS' AND  L.STREET_ADDRESS_3  is NOT NULL ) THEN 3&#xA;                    WHEN ( PP.PROPERTY_DATA_SOURCE_TYPE_CODE = 'PAIMS' AND  L.STREET_ADDRESS_3  is NOT NULL ) THEN 4&#xA;                    WHEN L.STREET_ADDRESS_3 IS NOT NULL THEN 5&#xA;                    ELSE 6&#xA;                END  &#xA;                ,L.[APP_LAST_UPDATE_TIMESTAMP] DESC&#xA;            ) AS RowNum&#xA;        FROM dbo.PIMS_ADDRESS L&#xA;          JOIN dbo.PIMS_PROPERTY PP ON L.ADDRESS_ID = PP.ADDRESS_ID &#xA;&#x9;&#x9;&#x9;JOIN etl.SELECTION_OF_DUP_ADDRESSES SDP ON L.ADDRESS_ID = SDP.ADDRESS_ID&#xA;&#x9;&#x9;&#x9; &#xA;    ) AS SubQuery WHERE RowNum = 1&#xA;)&#xA;-- 8. POSTAL_CODE&#xA;,EXTRACT_POSTAL_CODE AS (&#xA;    SELECT * FROM (&#xA;        SELECT DISTINCT       &#xA;&#x9;&#x9;SDP.ADDRESS_,&#xA;            L.ADDRESS_ID,   &#xA;&#x9;&#x9;&#x9;L.POSTAL_CODE,&#xA;            ROW_NUMBER() OVER (PARTITION BY   SDP.ADDRESS_ ORDER BY&#xA;                CASE&#xA;                    WHEN (L.APP_CREATE_USERID NOT LIKE '%ETL%' AND  L.POSTAL_CODE  is NOT NULL  ) THEN 1&#xA;                    WHEN ( PP.PROPERTY_DATA_SOURCE_TYPE_CODE = 'OPSS' AND  L.POSTAL_CODE  is NOT NULL ) THEN 2&#xA;                    WHEN ( PP.PROPERTY_DATA_SOURCE_TYPE_CODE = 'LIS' AND  L.POSTAL_CODE  is NOT NULL ) THEN 3&#xA;                    WHEN ( PP.PROPERTY_DATA_SOURCE_TYPE_CODE = 'PAIMS' AND  L.POSTAL_CODE  is NOT NULL ) THEN 4&#xA;                    WHEN L.POSTAL_CODE IS NOT NULL THEN 5&#xA;                    ELSE 6&#xA;                END  &#xA;                ,L.[APP_LAST_UPDATE_TIMESTAMP] DESC&#xA;            ) AS RowNum&#xA;        FROM dbo.PIMS_ADDRESS L&#xA;          JOIN dbo.PIMS_PROPERTY PP ON L.ADDRESS_ID = PP.ADDRESS_ID &#xA;&#x9;&#x9;&#x9;JOIN etl.SELECTION_OF_DUP_ADDRESSES SDP ON L.ADDRESS_ID = SDP.ADDRESS_ID&#xA;&#x9;&#x9;&#x9; &#xA;    ) AS SubQuery WHERE RowNum = 1&#xA;)&#xA;-- 9. OTHER_COUNTRY&#xA;,EXTRACT_OTHER_COUNTRY AS (&#xA;    SELECT * FROM (&#xA;        SELECT DISTINCT       &#xA;&#x9;&#x9;SDP.ADDRESS_,&#xA;            L.ADDRESS_ID,   &#xA;&#x9;&#x9;&#x9;L.OTHER_COUNTRY,&#xA;            ROW_NUMBER() OVER (PARTITION BY   SDP.ADDRESS_ ORDER BY&#xA;                CASE&#xA;                    WHEN (L.APP_CREATE_USERID NOT LIKE '%ETL%' AND  L.OTHER_COUNTRY  is NOT NULL  ) THEN 1&#xA;                    WHEN ( PP.PROPERTY_DATA_SOURCE_TYPE_CODE = 'OPSS' AND  L.OTHER_COUNTRY  is NOT NULL ) THEN 2&#xA;                    WHEN ( PP.PROPERTY_DATA_SOURCE_TYPE_CODE = 'LIS' AND  L.OTHER_COUNTRY  is NOT NULL ) THEN 3&#xA;                    WHEN ( PP.PROPERTY_DATA_SOURCE_TYPE_CODE = 'PAIMS' AND  L.OTHER_COUNTRY  is NOT NULL ) THEN 4&#xA;                    WHEN L.OTHER_COUNTRY IS NOT NULL THEN 5&#xA;                    ELSE 6&#xA;                END  &#xA;                ,L.[APP_LAST_UPDATE_TIMESTAMP] DESC&#xA;            ) AS RowNum&#xA;        FROM dbo.PIMS_ADDRESS L&#xA;          JOIN dbo.PIMS_PROPERTY PP ON L.ADDRESS_ID = PP.ADDRESS_ID &#xA;&#x9;&#x9;&#x9;JOIN etl.SELECTION_OF_DUP_ADDRESSES SDP ON L.ADDRESS_ID = SDP.ADDRESS_ID&#xA;&#x9;&#x9;&#x9; &#xA;    ) AS SubQuery WHERE RowNum = 1&#xA;)&#xA;-- 10. LATITUDE&#xA;,EXTRACT_LATITUDE AS (&#xA;    SELECT * FROM (&#xA;        SELECT DISTINCT       &#xA;&#x9;&#x9;SDP.ADDRESS_,&#xA;            L.ADDRESS_ID,   &#xA;&#x9;&#x9;&#x9;L.LATITUDE,&#xA;            ROW_NUMBER() OVER (PARTITION BY   SDP.ADDRESS_ ORDER BY&#xA;                CASE&#xA;                    WHEN (L.APP_CREATE_USERID NOT LIKE '%ETL%' AND  L.LATITUDE  is NOT NULL  ) THEN 1&#xA;                    WHEN ( PP.PROPERTY_DATA_SOURCE_TYPE_CODE = 'OPSS' AND  L.LATITUDE  is NOT NULL ) THEN 2&#xA;                    WHEN ( PP.PROPERTY_DATA_SOURCE_TYPE_CODE = 'LIS' AND  L.LATITUDE  is NOT NULL ) THEN 3&#xA;                    WHEN ( PP.PROPERTY_DATA_SOURCE_TYPE_CODE = 'PAIMS' AND  L.LATITUDE  is NOT NULL ) THEN 4&#xA;                    WHEN L.LATITUDE IS NOT NULL THEN 5&#xA;                    ELSE 6&#xA;                END  &#xA;                ,L.[APP_LAST_UPDATE_TIMESTAMP] DESC&#xA;            ) AS RowNum&#xA;        FROM dbo.PIMS_ADDRESS L&#xA;          JOIN dbo.PIMS_PROPERTY PP ON L.ADDRESS_ID = PP.ADDRESS_ID &#xA;&#x9;&#x9;&#x9;JOIN etl.SELECTION_OF_DUP_ADDRESSES SDP ON L.ADDRESS_ID = SDP.ADDRESS_ID&#xA;&#x9;&#x9;&#x9; &#xA;    ) AS SubQuery WHERE RowNum = 1&#xA;)&#xA;-- 11. LONGITUDE&#xA;,EXTRACT_LONGITUDE AS (&#xA;    SELECT * FROM (&#xA;        SELECT DISTINCT   &#xA;&#x9;&#x9;SDP.ADDRESS_,&#xA;            L.ADDRESS_ID,   &#xA;&#x9;&#x9;&#x9;L.LONGITUDE,&#xA;            ROW_NUMBER() OVER (PARTITION BY   SDP.ADDRESS_ ORDER BY&#xA;                CASE&#xA;                    WHEN (L.APP_CREATE_USERID NOT LIKE '%ETL%' AND  L.LONGITUDE  is NOT NULL  ) THEN 1&#xA;                    WHEN ( PP.PROPERTY_DATA_SOURCE_TYPE_CODE = 'OPSS' AND  L.LONGITUDE  is NOT NULL ) THEN 2&#xA;                    WHEN ( PP.PROPERTY_DATA_SOURCE_TYPE_CODE = 'LIS' AND  L.LONGITUDE  is NOT NULL ) THEN 3&#xA;                    WHEN ( PP.PROPERTY_DATA_SOURCE_TYPE_CODE = 'PAIMS' AND  L.LONGITUDE  is NOT NULL ) THEN 4&#xA;                    WHEN L.LONGITUDE IS NOT NULL THEN 5&#xA;                    ELSE 6&#xA;                END  &#xA;                ,L.[APP_LAST_UPDATE_TIMESTAMP] DESC&#xA;            ) AS RowNum&#xA;        FROM dbo.PIMS_ADDRESS L&#xA;          JOIN dbo.PIMS_PROPERTY PP ON L.ADDRESS_ID = PP.ADDRESS_ID &#xA;&#x9;&#x9;&#x9;JOIN etl.SELECTION_OF_DUP_ADDRESSES SDP ON L.ADDRESS_ID = SDP.ADDRESS_ID&#xA;&#x9;&#x9;&#x9; &#xA;    ) AS SubQuery WHERE RowNum = 1&#xA;)&#xA;&#xA;-- 12. MUNCIPALITY_NAME&#xA;&#xA;,EXTRACT_MUNICIPALITY_NAME AS (&#xA;        SELECT DISTINCT   &#xA;            L.ADDRESS_ID,   &#xA;&#x9;&#x9;&#x9;L.MUNICIPALITY_NAME&#xA;        FROM dbo.PIMS_ADDRESS L&#xA;          JOIN dbo.PIMS_PROPERTY PP ON L.ADDRESS_ID = PP.ADDRESS_ID &#xA;&#x9;&#x9;&#x9;JOIN etl.SELECTION_OF_DUP_ADDRESSES SDP ON L.ADDRESS_ID = SDP.ADDRESS_ID&#xA;&#x9;&#x9; &#xA;    &#xA;)&#xA;&#xA;----- ****** LOGIC END ******** ------------------&#xA; &#xA; &#xA;,&#xA;SELECTION_LOGIC AS (&#xA; &#xA;SELECT DISTINCT&#xA;&#x9;CONCAT(TRIM(PA.STREET_ADDRESS_1), TRIM(PA.STREET_ADDRESS_2), TRIM(PA.STREET_ADDRESS_3), TRIM(PA.POSTAL_CODE)) AS ADDRESS_,&#xA;&#x9;PA.ADDRESS_ID,  &#xA;&#x9;EXTRACT_REGION_CODE.REGION_CODE AS REGION_CODE,&#xA;&#x9;EXTRACT_DISTRICT_CODE.DISTRICT_CODE AS DISTRICT_CODE,&#xA;&#x9;EXTRACT_PROVINCE_STATE_ID.PROVINCE_STATE_ID AS PROVINCE_STATE_ID,&#xA;&#x9;EXTRACT_COUNTRY_ID.COUNTRY_ID AS COUNTRY_ID,&#xA;&#x9;EXTRACT_STREET_ADDRESS_1.STREET_ADDRESS_1 AS STREET_ADDRESS_1,&#xA;&#x9;EXTRACT_STREET_ADDRESS_2.STREET_ADDRESS_2 AS STREET_ADDRESS_2,&#xA;&#x9;EXTRACT_STREET_ADDRESS_3.STREET_ADDRESS_3 AS STREET_ADDRESS_3,&#xA;&#x9;EXTRACT_POSTAL_CODE.POSTAL_CODE AS POSTAL_CODE,&#xA;&#x9;EXTRACT_OTHER_COUNTRY.OTHER_COUNTRY AS OTHER_COUNTRY,&#xA;&#x9;EXTRACT_LATITUDE.LATITUDE AS LATITUDE,&#xA;&#x9;EXTRACT_LONGITUDE.LONGITUDE AS LONGITUDE&#xA;&#xA;&#x9;FROM etl.SELECTION_OF_DUP_ADDRESSES PA&#xA;    LEFT JOIN EXTRACT_REGION_CODE ON PA.ADDRESS_ID = EXTRACT_REGION_CODE.ADDRESS_ID&#xA;&#x9;LEFT JOIN EXTRACT_DISTRICT_CODE ON PA.ADDRESS_ID = EXTRACT_DISTRICT_CODE.ADDRESS_ID&#xA;&#x9;LEFT JOIN EXTRACT_PROVINCE_STATE_ID ON PA.ADDRESS_ID = EXTRACT_PROVINCE_STATE_ID.ADDRESS_ID&#xA;&#x9;LEFT JOIN EXTRACT_COUNTRY_ID ON PA.ADDRESS_ID = EXTRACT_COUNTRY_ID.ADDRESS_ID&#xA;&#x9;LEFT JOIN EXTRACT_STREET_ADDRESS_1 ON PA.ADDRESS_ID = EXTRACT_STREET_ADDRESS_1.ADDRESS_ID&#xA;&#x9;LEFT JOIN EXTRACT_STREET_ADDRESS_2 ON PA.ADDRESS_ID = EXTRACT_STREET_ADDRESS_2.ADDRESS_ID&#xA;&#x9;LEFT JOIN EXTRACT_STREET_ADDRESS_3 ON PA.ADDRESS_ID = EXTRACT_STREET_ADDRESS_3.ADDRESS_ID&#xA;&#x9;LEFT JOIN EXTRACT_POSTAL_CODE ON PA.ADDRESS_ID = EXTRACT_POSTAL_CODE.ADDRESS_ID&#xA;&#x9;LEFT JOIN EXTRACT_OTHER_COUNTRY ON PA.ADDRESS_ID = EXTRACT_OTHER_COUNTRY.ADDRESS_ID&#xA;&#x9;LEFT JOIN EXTRACT_LATITUDE ON PA.ADDRESS_ID = EXTRACT_LATITUDE.ADDRESS_ID&#xA;&#x9;LEFT JOIN EXTRACT_LONGITUDE ON PA.ADDRESS_ID = EXTRACT_LONGITUDE.ADDRESS_ID&#xA;    )&#xA;     &#xA;  &#xA;    SELECT *&#xA;&#x9;INTO etl.PIMS_ADDRESS_LEVEL1&#xA;FROM SELECTION_LOGIC &#xA;;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Sequence 1\Step 4"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{1d4c2e98-8843-4d9c-9fe6-dd0051e0fa57}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Step 4"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{A403C4B4-6865-4E60-8AA6-D8AD90A7F8EE}"
+              SQLTask:BypassPrepare="False"
+              SQLTask:SqlStatementSource="&#xA;WITH &#xA;&#xA;DistinctMunicipality AS (&#xA;    SELECT DISTINCT ADDRESS_, &#xA;&#x9;&#x9;CASE &#xA;&#x9;&#x9;&#x9;WHEN ([MUNICIPALITY_NAME] IS NULL OR [MUNICIPALITY_NAME] = '' ) THEN NULL&#xA;&#x9;&#x9;&#x9;ELSE [MUNICIPALITY_NAME]&#xA;&#x9;&#x9;END AS [MUNICIPALITY_NAME]&#xA;    FROM etl.SELECTION_OF_DUP_ADDRESSES&#xA;)&#xA;&#xA;,DistinctComment AS (&#xA;    SELECT DISTINCT ADDRESS_, &#xA;&#x9;&#x9;CASE &#xA;&#x9;&#x9;&#x9;WHEN (COMMENT IS NULL OR COMMENT = '' ) THEN NULL&#xA;&#x9;&#x9;&#x9;ELSE COMMENT&#xA;&#x9;&#x9;END AS COMMENT&#xA;    FROM etl.SELECTION_OF_DUP_ADDRESSES&#xA;)&#xA;&#xA;SELECT &#xA;ADDRESS_,&#xA;MAX(PA.REGION_CODE) AS REGION_CODE,&#xA;MAX(PA.DISTRICT_CODE) AS DISTRICT_CODE,&#xA;MAX(PA.PROVINCE_STATE_ID) AS PROVINCE_STATE_ID,&#xA;MAX(PA.COUNTRY_ID) AS COUNTRY_ID,&#xA;MAX(PA.STREET_ADDRESS_1) as STREET_ADDRESS_1,&#xA;MAX(PA.STREET_ADDRESS_2) AS STREET_ADDRESS_2,&#xA;MAX(PA.STREET_ADDRESS_3) AS STREET_ADDRESS_3,&#xA;&#xA;(SELECT STRING_AGG(ds.[MUNICIPALITY_NAME], ' , ')&#xA;&#x9;&#x9;&#x9;&#x9;FROM DistinctMunicipality ds&#xA;&#x9;&#x9;&#x9;&#x9;WHERE ds.ADDRESS_ = PA.ADDRESS_&#xA;) AS [MUNICIPALITY_NAME],&#xA;&#xA;(SELECT STRING_AGG(ds.[COMMENT], ' , ')&#xA;&#x9;&#x9;&#x9;&#x9;FROM DistinctComment ds&#xA;&#x9;&#x9;&#x9;&#x9;WHERE ds.ADDRESS_ = PA.ADDRESS_&#xA;) AS [COMMENT],&#xA;&#xA;MAX(PA.POSTAL_CODE) AS POSTAL_CODE,&#xA;MAX(PA.OTHER_COUNTRY) AS OTHER_COUNTRY,&#xA;MAX(PA.LATITUDE) AS LATITUDE,&#xA;MAX(PA.LONGITUDE) AS LONGITUDE&#xA;into&#xA; etl.PIMS_ADDRESS_LEVEL2&#xA; FROM etl.PIMS_ADDRESS_LEVEL1 PA &#xA; GROUP BY&#xA;&#x9;ADDRESS_&#xA;;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Sequence 1\Step 5"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{01594d17-05ab-4f1e-8cca-8c2f91a72aee}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Step 5"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{A403C4B4-6865-4E60-8AA6-D8AD90A7F8EE}"
+              SQLTask:BypassPrepare="False"
+              SQLTask:SqlStatementSource="with X as&#xA;(&#xA;&#x9;SELECT &#xA;        ADDRESS_,&#xA;        APP_CREATE_USER_DIRECTORY,&#xA;        APP_LAST_UPDATE_USER_DIRECTORY,&#xA;        ROW_NUMBER() OVER (PARTITION BY ADDRESS_ ORDER BY APP_LAST_UPDATE_TIMESTAMP DESC) AS RowNum&#xA;   FROM etl.SELECTION_OF_DUP_ADDRESSES&#xA;&#xA;)&#xA;INSERT INTO [dbo].[PIMS_ADDRESS]  (&#xA;       [REGION_CODE]&#xA;      ,[DISTRICT_CODE]&#xA;      ,[PROVINCE_STATE_ID]&#xA;      ,[COUNTRY_ID]&#xA;      ,[STREET_ADDRESS_1]&#xA;      ,[STREET_ADDRESS_2]&#xA;      ,[STREET_ADDRESS_3]&#xA;      ,[MUNICIPALITY_NAME]&#xA;      ,[POSTAL_CODE]&#xA;      ,[OTHER_COUNTRY]&#xA;      ,[LATITUDE]&#xA;      ,[LONGITUDE]&#xA;      ,[COMMENT]&#xA;      ,[APP_CREATE_USERID]&#xA;      ,[APP_CREATE_TIMESTAMP]&#xA;      ,[APP_CREATE_USER_DIRECTORY]&#xA;      ,[APP_LAST_UPDATE_TIMESTAMP]&#xA;      ,[APP_LAST_UPDATE_USERID]&#xA;      ,[APP_LAST_UPDATE_USER_DIRECTORY]&#xA;     &#xA;    )&#xA;&#xA;SELECT DISTINCT&#xA;    A.[REGION_CODE],&#xA;    A.[DISTRICT_CODE],&#xA;    A.[PROVINCE_STATE_ID],&#xA;    A.[COUNTRY_ID],&#xA;    LEFT(A.[STREET_ADDRESS_1],200) AS [STREET_ADDRESS_1],&#xA;    A.[STREET_ADDRESS_2],&#xA;    A.[STREET_ADDRESS_3],&#xA;    LEFT(A.[MUNICIPALITY_NAME], 200) AS [MUNICIPALITY_NAME],&#xA;    LEFT(A.[POSTAL_CODE],20) AS [POSTAL_CODE],&#xA;    A.[OTHER_COUNTRY],&#xA;    A.[LATITUDE],&#xA;    A.[LONGITUDE],&#xA;    A.[COMMENT],&#xA;    'PIMS_ETL_USER' as [APP_CREATE_USERID],&#xA;    GETUTCDATE() AS [APP_CREATE_TIMESTAMP],&#xA;   B.APP_CREATE_USER_DIRECTORY,&#xA;    GETUTCDATE() AS [APP_LAST_UPDATE_TIMESTAMP],&#xA;    'PIMS_ETL_USER' as  [APP_LAST_UPDATE_USERID],&#xA;   B.APP_LAST_UPDATE_USER_DIRECTORY&#xA;   from &#xA;   etl.PIMS_ADDRESS_LEVEL2 A&#xA;&#x9;join ( SELECT * FROM X WHERE RowNum = 1 ) B&#xA;&#x9;&#x9;ON A.ADDRESS_ = B.ADDRESS_&#xA;;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Sequence 1.PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{1D3BCCBF-3E4B-4C36-B902-358A6E751315}"
+          DTS:From="Package\Sequence 1\Step 1"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\Sequence 1\Step 2" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Sequence 1.PrecedenceConstraints[Constraint 1]"
+          DTS:CreationName=""
+          DTS:DTSID="{88DE62EC-4729-4634-A85A-E71BF50F3099}"
+          DTS:From="Package\Sequence 1\Step 2"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 1"
+          DTS:To="Package\Sequence 1\Step 3" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Sequence 1.PrecedenceConstraints[Constraint 2]"
+          DTS:CreationName=""
+          DTS:DTSID="{4403612A-51C1-40D2-9C5A-2E7EE3C5918D}"
+          DTS:From="Package\Sequence 1\Step 3"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 2"
+          DTS:To="Package\Sequence 1\Step 4" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Sequence 1.PrecedenceConstraints[Constraint 3]"
+          DTS:CreationName=""
+          DTS:DTSID="{8C166BB8-34D4-4317-BDC2-2BD918694690}"
+          DTS:From="Package\Sequence 1\Step 4"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 3"
+          DTS:To="Package\Sequence 1\Step 5" />
+      </DTS:PrecedenceConstraints>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Sequence 2"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{165491E3-E15A-4E26-B011-00DF76DAD82A}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Sequence 2">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Sequence 2\Step 6 - Update Relationship Tables"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{c63a1276-0f17-48b2-8044-bffd2ed61a54}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Step 6 - Update Relationship Tables"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{A403C4B4-6865-4E60-8AA6-D8AD90A7F8EE}"
+              SQLTask:BypassPrepare="False"
+              SQLTask:SqlStatementSource="DECLARE @tableName NVARCHAR(MAX);&#xA;DECLARE @sql NVARCHAR(MAX);&#xA; &#xA;DECLARE tableCursor CURSOR FOR&#xA;SELECT DISTINCT OBJECT_NAME(fk.parent_object_id) AS RelationTableName &#xA;FROM sys.foreign_keys fk&#xA;INNER JOIN sys.foreign_key_columns fkc ON fk.object_id = fkc.constraint_object_id&#xA;WHERE OBJECT_NAME(fk.referenced_object_id) = 'PIMS_ADDRESS';&#xA; &#xA;OPEN tableCursor;&#xA; &#xA;FETCH NEXT FROM tableCursor INTO @tableName;&#xA; &#xA;WHILE @@FETCH_STATUS = 0&#xA;BEGIN&#xA;    SET @sql = N'&#xA;        UPDATE ' + @tableName + '&#xA;        SET&#xA;            ADDRESS_ID = max_addr_id.max_address_id,&#xA;            [CONCURRENCY_CONTROL_NUMBER] = [CONCURRENCY_CONTROL_NUMBER] + 1&#xA;        FROM ' + @tableName + ' prf&#xA;        JOIN (&#xA;            SELECT&#xA;                t.ADDRESS_ID AS addr_id,&#xA;                max_address_id.max_id AS max_address_id&#xA;            FROM dbo.PIMS_ADDRESS t&#xA;            JOIN (&#xA;                SELECT &#xA;                    CONCAT(&#xA;                        TRIM(REPLACE(REPLACE(REPLACE(REPLACE(STREET_ADDRESS_1, ''PAIMS: '', ''''),''LIS: '', ''''),''PAIMS: '',''''),''PMBC: '','''')),&#xA;                        TRIM(REPLACE(REPLACE(REPLACE(REPLACE(STREET_ADDRESS_2, ''PAIMS: '', ''''),''LIS: '', ''''),''PAIMS: '',''''),''PMBC: '','''')),&#xA;                        TRIM(REPLACE(REPLACE(REPLACE(REPLACE(STREET_ADDRESS_3, ''PAIMS: '', ''''),''LIS: '', ''''),''PAIMS: '',''''),''PMBC: '','''')),&#xA;                        TRIM(REPLACE(REPLACE(REPLACE(REPLACE(POSTAL_CODE, ''PAIMS: '', ''''),''LIS: '', ''''),''PAIMS: '',''''),''PMBC: '',''''))&#xA;                    ) AS ADDRESS_, &#xA;                    MAX(ADDRESS_ID) AS max_id&#xA;                FROM dbo.PIMS_ADDRESS&#xA;                GROUP BY &#xA;                    CONCAT(&#xA;                        TRIM(REPLACE(REPLACE(REPLACE(REPLACE(STREET_ADDRESS_1, ''PAIMS: '', ''''),''LIS: '', ''''),''PAIMS: '',''''),''PMBC: '','''')),&#xA;                        TRIM(REPLACE(REPLACE(REPLACE(REPLACE(STREET_ADDRESS_2, ''PAIMS: '', ''''),''LIS: '', ''''),''PAIMS: '',''''),''PMBC: '','''')),&#xA;                        TRIM(REPLACE(REPLACE(REPLACE(REPLACE(STREET_ADDRESS_3, ''PAIMS: '', ''''),''LIS: '', ''''),''PAIMS: '',''''),''PMBC: '','''')),&#xA;                        TRIM(REPLACE(REPLACE(REPLACE(REPLACE(POSTAL_CODE, ''PAIMS: '', ''''),''LIS: '', ''''),''PAIMS: '',''''),''PMBC: '',''''))&#xA;                    )&#xA;            ) AS max_address_id&#xA;            ON &#xA;                CONCAT(&#xA;                    TRIM(REPLACE(REPLACE(REPLACE(REPLACE(t.STREET_ADDRESS_1, ''PAIMS: '', ''''),''LIS: '', ''''),''PAIMS: '',''''),''PMBC: '','''')),&#xA;                    TRIM(REPLACE(REPLACE(REPLACE(REPLACE(t.STREET_ADDRESS_2, ''PAIMS: '', ''''),''LIS: '', ''''),''PAIMS: '',''''),''PMBC: '','''')),&#xA;                    TRIM(REPLACE(REPLACE(REPLACE(REPLACE(t.STREET_ADDRESS_3, ''PAIMS: '', ''''),''LIS: '', ''''),''PAIMS: '',''''),''PMBC: '','''')),&#xA;                    TRIM(REPLACE(REPLACE(REPLACE(REPLACE(t.POSTAL_CODE, ''PAIMS: '', ''''),''LIS: '', ''''),''PAIMS: '',''''),''PMBC: '',''''))&#xA;                ) = max_address_id.ADDRESS_&#xA;            WHERE &#xA;                address_id IN (SELECT address_id FROM etl.SELECTION_OF_DUP_ADDRESSES)&#xA;        ) AS max_addr_id&#xA;        ON prf.ADDRESS_ID = max_addr_id.addr_id';&#xA;&#x9;&#x9;&#xA;    EXEC sp_executesql @sql;&#xA; &#xA;    FETCH NEXT FROM tableCursor INTO @tableName;&#xA;END;&#xA; &#xA;CLOSE tableCursor;&#xA;DEALLOCATE tableCursor;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Sequence 2\Step 7 - Delete Duplicate Records in PIMS Address"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{e8273e0e-1058-4845-b23b-2841e93b4bbf}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Step 7 - Delete Duplicate Records in PIMS Address"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{A403C4B4-6865-4E60-8AA6-D8AD90A7F8EE}"
+              SQLTask:BypassPrepare="False"
+              SQLTask:SqlStatementSource="WITH &#xA;  X AS (&#xA;SELECT&#xA; ROW_NUMBER() &#xA; OVER(&#xA;&#x9;PARTITION BY &#xA;&#x9;&#x9;CONCAT(&#xA;&#x9;&#x9;&#x9;TRIM(REPLACE(REPLACE(REPLACE(REPLACE(STREET_ADDRESS_1, 'PAIMS: ', ''),'LIS: ', ''),'PAIMS: ',''),'PMBC: ','')),  &#xA;&#x9;&#x9;&#x9;TRIM(REPLACE(REPLACE(REPLACE(REPLACE(STREET_ADDRESS_2, 'PAIMS: ', ''),'LIS: ', ''),'PAIMS: ',''),'PMBC: ','')),&#xA;&#x9;&#x9;&#x9;TRIM(REPLACE(REPLACE(REPLACE(REPLACE(STREET_ADDRESS_3, 'PAIMS: ', ''),'LIS: ', ''),'PAIMS: ',''),'PMBC: ','')),  &#xA;&#x9;&#x9;&#x9;TRIM(REPLACE(REPLACE(REPLACE(REPLACE(POSTAL_CODE, 'PAIMS: ', ''),'LIS: ', ''),'PAIMS: ',''),'PMBC: ',''))&#xA;&#x9;   ) &#xA; &#xA;                        ORDER BY [DB_LAST_UPDATE_TIMESTAMP] desc&#xA;                    ) AS RN , *&#xA;  &#xA;FROM [dbo].[PIMS_ADDRESS]&#xA;--where &#xA;&#x9;-- CONCAT(TRIM((STREET_ADDRESS_1)),  TRIM((STREET_ADDRESS_2)),TRIM((STREET_ADDRESS_3)),  TRIM((POSTAL_CODE))) IN (SELECT ADDRESS_ FROM etl.SELECTION_OF_DUP_ADDRESSES)&#xA;&#x9; -- ADDRESS_ID IN ( SELECT ADDRESS_ID FROM  etl.SELECTION_OF_DUP_ADDRESSES )&#xA;)&#xA;&#xA;DELETE FROM X&#xA;    WHERE &#xA;     RN &gt; 1&#xA;&#x9;AND ADDRESS_ID NOT IN (SELECT COALESCE(ADDRESS_ID,'') FROM  dbo.PIMS_ACQUISITION_OWNER)&#xA;&#x9;AND ADDRESS_ID NOT IN (SELECT COALESCE(ADDRESS_ID,'') FROM  dbo.PIMS_ORGANIZATION_ADDRESS)&#xA;&#x9;AND ADDRESS_ID NOT IN (SELECT COALESCE(ADDRESS_ID,'') FROM  dbo.PIMS_PERSON_ADDRESS)&#xA;&#x9;AND ADDRESS_ID NOT IN (SELECT COALESCE(ADDRESS_ID,'') FROM  dbo.PIMS_PROPERTY)&#x9; &#xA;AND ADDRESS_ID IN ( SELECT ADDRESS_ID FROM  etl.SELECTION_OF_DUP_ADDRESSES )  &#xA;&#x9;--AND [APP_CREATE_USERID] &lt;&gt; 'PIMS_ETL_USER'&#xA; ;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Sequence 2.PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{8FB997AF-4D2F-4BA5-8E2F-F0AF8FAB9A6A}"
+          DTS:From="Package\Sequence 2\Step 6 - Update Relationship Tables"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\Sequence 2\Step 7 - Delete Duplicate Records in PIMS Address" />
+      </DTS:PrecedenceConstraints>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{1BAEBF25-BB35-493B-A555-6A06928F76A1}"
+      DTS:From="Package\Sequence 1"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Sequence 2" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="110.666666666667,42.6666666666667"
+          Id="Package\Sequence 1\Step 1"
+          TopLeft="103.499997504056,25.6140377407039" />
+        <NodeLayout
+          Size="110.666666666667,42.6666666666667"
+          Id="Package\Sequence 1\Step 2"
+          TopLeft="102.249997522682,101.561407591277" />
+        <NodeLayout
+          Size="110.666666666667,42.6666666666667"
+          Id="Package\Sequence 1\Step 3"
+          TopLeft="98.4999975785612,178.87719852024" />
+        <NodeLayout
+          Size="110.666666666667,42.6666666666667"
+          Id="Package\Sequence 1\Step 4"
+          TopLeft="99.7499975599348,269.543864697521" />
+        <NodeLayout
+          Size="110.666666666667,42.6666666666667"
+          Id="Package\Sequence 1\Step 5"
+          TopLeft="100.999997541308,362.964918861649" />
+        <EdgeLayout
+          Id="Package\Sequence 1.PrecedenceConstraints[Constraint]"
+          TopLeft="158.208330846702,68.2807044073705">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,33.2807031839065"
+              Start="0,0"
+              End="0,25.7807031839065">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,25.7807031839065" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence 1.PrecedenceConstraints[Constraint 1]"
+          TopLeft="155.708330883955,144.228074257944">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,34.649124262296"
+              Start="0,0"
+              End="0,27.149124262296">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,27.149124262296" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence 1.PrecedenceConstraints[Constraint 2]"
+          TopLeft="154.458330902581,221.543865186906">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,47.9999995106145"
+              Start="0,0"
+              End="0,40.4999995106145">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,40.4999995106145" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence 1.PrecedenceConstraints[Constraint 3]"
+          TopLeft="155.708330883955,312.210531364187">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,50.7543874974617"
+              Start="0,0"
+              End="0,43.2543874974617">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,43.2543874974617" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <AnnotationLayout
+          Text="create etl.SELECTION_OF_DUP_ADDRESSES"
+          ParentId="Package\Sequence 1"
+          FontInfo="{assembly:Null}"
+          Size="256,40"
+          Id="fce6a16d-81c4-497c-992b-e804e749290a"
+          TopLeft="235.374995538965,98.9122847971384" />
+        <AnnotationLayout
+          Text="create etl.PIMS_ADDRESS_LEVEL1&#xA;(without comments and municipality concatenated fields)"
+          ParentId="Package\Sequence 1"
+          FontInfo="{assembly:Null}"
+          Size="332,56"
+          Id="856a5b34-a658-4c28-a50d-360f6832f2a5"
+          TopLeft="248.499995343387,180.333338961267" />
+        <AnnotationLayout
+          Text="create etl.PIMS_ADDRESS_LEVEL2 &#xA;( final dataset before merge)&#xA;"
+          ParentId="Package\Sequence 1"
+          FontInfo="{assembly:Null}"
+          Size="209.333333333334,72"
+          Id="de40e344-92dc-422e-81dc-22db4eab48a6"
+          TopLeft="248.499995343387,269.280709056533" />
+        <AnnotationLayout
+          Text="insert into PIMS_ADDRESS table"
+          ParentId="Package\Sequence 1"
+          FontInfo="{assembly:Null}"
+          Size="197.333333333334,40"
+          Id="4832288a-bc9b-470e-acf7-d690f1be2f29"
+          TopLeft="249.749995324761,356.85965807341" />
+        <AnnotationLayout
+          Text="remove etl schema tables and backup pims address &#xA;and its relationship tables"
+          ParentId="Package\Sequence 1"
+          FontInfo="{assembly:Null}"
+          Size="305.333333333334,56"
+          Id="d0291803-6a95-4a25-99c0-b625202bc777"
+          TopLeft="227.874995650724,23.6491254857593" />
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="582.666666666667,574.666666666667"
+          Size="582.666666666667,618"
+          Id="Package\Sequence 1"
+          TopLeft="343.749994877726,83.4736857817113" />
+        <NodeLayout
+          Size="250.666666666667,42.6666666666667"
+          Id="Package\Sequence 2\Step 6 - Update Relationship Tables"
+          TopLeft="80.333321635922,16.6666671560521" />
+        <NodeLayout
+          Size="322.666666666667,42.6666666666667"
+          Id="Package\Sequence 2\Step 7 - Delete Duplicate Records in PIMS Address"
+          TopLeft="44.0833221760892,124.807018136274" />
+        <EdgeLayout
+          Id="Package\Sequence 2.PrecedenceConstraints[Constraint]"
+          TopLeft="205.541655239339,59.3333338227188">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,65.4736843135548"
+              Start="0,0"
+              End="0,57.9736843135548">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,57.9736843135548" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="372,266.666666666667"
+          Size="372,309.333333333334"
+          Id="Package\Sequence 2"
+          TopLeft="993.749985191972,232.631583326081" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="926.416661544393,389.885967887229">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="67.3333236475795,0"
+              Start="0,0"
+              End="59.8333236475795,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="59.8333236475795,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <AnnotationLayout
+          Text="PIMS_ADDRESS_MERGE"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="154.666666666667,40"
+          Id="42dbf934-54a9-4df7-bff1-e0fd77f4999f"
+          TopLeft="464.99999307096,1.06581410364015E-14" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
