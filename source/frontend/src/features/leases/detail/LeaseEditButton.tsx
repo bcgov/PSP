@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { FaEdit } from 'react-icons/fa';
 
 import { LinkButton } from '@/components/common/buttons';

@@ -1,6 +1,5 @@
 import { Formik } from 'formik';
-import { noop } from 'lodash';
-import * as React from 'react';
+import noop from 'lodash/noop';
 import Form from 'react-bootstrap/Form';
 import styled from 'styled-components';
 

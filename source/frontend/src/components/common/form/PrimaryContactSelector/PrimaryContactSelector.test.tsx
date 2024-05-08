@@ -1,5 +1,4 @@
 import { Formik, FormikProps } from 'formik';
-import React from 'react';
 
 import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
 import { fromApiOrganization, fromApiPerson } from '@/interfaces/IContactSearchResult';
@@ -11,12 +10,16 @@ import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { getByName, render, RenderOptions, screen, waitForEffects } from '@/utils/test-utils';
 
 import { IPrimaryContactSelectorProps, PrimaryContactSelector } from './PrimaryContactSelector';
+import { createRef } from 'react';
 
-jest.mock('@/hooks/pims-api/useApiContacts');
-const getOrganizationConceptFn = jest.fn();
-(useApiContacts as jest.Mock).mockImplementation(() => ({
-  getOrganizationConcept: getOrganizationConceptFn,
-}));
+vi.mock('@/hooks/pims-api/useApiContacts');
+const getOrganizationConceptFn = vi.fn();
+vi.mocked(useApiContacts).mockImplementation(
+  () =>
+    ({
+      getOrganizationConcept: getOrganizationConceptFn,
+    } as unknown as ReturnType<typeof useApiContacts>),
+);
 
 interface ITestProps extends IPrimaryContactSelectorProps {
   initialForm?: { primaryContactId: string };
@@ -24,12 +27,12 @@ interface ITestProps extends IPrimaryContactSelectorProps {
 
 describe('PrimaryContactSelector component', () => {
   const setup = (options: RenderOptions & { props?: Partial<ITestProps> } = {}) => {
-    const ref = React.createRef<FormikProps<ITestProps>>();
+    const ref = createRef<FormikProps<ITestProps>>();
     const utils = render(
       <Formik
         innerRef={ref}
         initialValues={options.props?.initialForm ?? ({ primaryContactId: '1' } as any)}
-        onSubmit={jest.fn()}
+        onSubmit={vi.fn()}
       >
         <PrimaryContactSelector field="primaryContactId" contactInfo={options.props?.contactInfo} />
       </Formik>,
@@ -77,7 +80,7 @@ describe('PrimaryContactSelector component', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders as expected', async () => {

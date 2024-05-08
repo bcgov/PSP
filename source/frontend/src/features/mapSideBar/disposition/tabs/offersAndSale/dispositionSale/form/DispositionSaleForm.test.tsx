@@ -1,7 +1,6 @@
 import { Formik, FormikProps } from 'formik';
 import { createMemoryHistory } from 'history';
-import { noop } from 'lodash';
-import React from 'react';
+import noop from 'lodash/noop';
 
 import Claims from '@/constants/claims';
 import { DispositionSaleFormModel } from '@/features/mapSideBar/disposition/models/DispositionSaleFormModel';
@@ -21,6 +20,7 @@ import {
 
 import DispositionSaleForm, { IDispositionSaleFormProps } from './DispositionSaleForm';
 import { DispositionSaleFormYupSchema } from './DispositionSaleFormYupSchema';
+import { createRef } from 'react';
 
 const history = createMemoryHistory();
 
@@ -31,7 +31,7 @@ describe('DispositionSaleForm  component', () => {
     renderOptions: RenderOptions & { props?: Partial<IDispositionSaleFormProps> },
   ) => {
     // render component under
-    const ref = React.createRef<FormikProps<DispositionSaleFormModel>>();
+    const ref = createRef<FormikProps<DispositionSaleFormModel>>();
     const utils = await renderAsync(
       <Formik<DispositionSaleFormModel>
         enableReinitialize
@@ -81,7 +81,7 @@ describe('DispositionSaleForm  component', () => {
   };
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders as expected', async () => {

@@ -12,9 +12,7 @@ const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
 
-jest.mock('@react-keycloak/web');
-
-const setFilter = jest.fn();
+const setFilter = vi.fn();
 // render component under test
 const setup = (renderOptions: RenderOptions = { store: storeState }) => {
   const utils = render(<ResearchFilter setFilter={setFilter} />, {

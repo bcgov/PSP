@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { Fragment } from 'react';
 import { FaExternalLinkAlt } from 'react-icons/fa';
 
 import EditButton from '@/components/common/EditButton';
@@ -136,7 +136,7 @@ export const DispositionSummaryView: React.FunctionComponent<IDispositionSummary
       </Section>
       <Section header="Disposition Team">
         {dispositionFile?.dispositionTeam?.map((teamMember, index) => (
-          <React.Fragment key={`disp-team-${index}`}>
+          <Fragment key={`disp-team-${index}`}>
             <SectionField label={teamMember?.teamProfileType?.description || ''} labelWidth="5">
               <StyledLink
                 target="_blank"
@@ -171,7 +171,7 @@ export const DispositionSummaryView: React.FunctionComponent<IDispositionSummary
                 )}
               </SectionField>
             )}
-          </React.Fragment>
+          </Fragment>
         ))}
       </Section>
     </StyledSummarySection>

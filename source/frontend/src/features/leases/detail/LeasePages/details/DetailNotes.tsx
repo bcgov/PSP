@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 import { TextArea } from '@/components/common/form';
 import * as Styled from '@/features/leases/detail/styles';
 import { withNameSpace } from '@/utils/formUtils';

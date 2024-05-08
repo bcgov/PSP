@@ -1,5 +1,5 @@
 import { FieldArrayRenderProps, FormikErrors, getIn, useFormikContext } from 'formik';
-import * as React from 'react';
+import { Fragment, useEffect } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaTrash } from 'react-icons/fa';
 
@@ -45,7 +45,7 @@ export const InterestHolderSubForm: React.FunctionComponent<IInterestHolderProps
     getOrganizationDetail: { execute: fetchOrganization, response: organization },
   } = useOrganizationRepository();
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (interestHolder.contact?.organizationId) {
       fetchOrganization(interestHolder.contact?.organizationId);
     }
@@ -53,7 +53,7 @@ export const InterestHolderSubForm: React.FunctionComponent<IInterestHolderProps
 
   const orgPersons = organization?.organizationPersons;
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (orgPersons?.length === 0) {
       setFieldValue(`interestHolders.${index}.primaryContactId`, null);
     }
@@ -71,7 +71,7 @@ export const InterestHolderSubForm: React.FunctionComponent<IInterestHolderProps
     }) ?? [];
 
   return (
-    <React.Fragment
+    <Fragment
       key={
         interestHolder?.interestHolderId
           ? `interest-holder-${interestHolder?.interestHolderId}`
@@ -159,6 +159,6 @@ export const InterestHolderSubForm: React.FunctionComponent<IInterestHolderProps
           <DisplayError field={`interestHolders.${index}.impactedProperties`} />
         )}
       </SectionField>
-    </React.Fragment>
+    </Fragment>
   );
 };

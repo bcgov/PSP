@@ -31,7 +31,7 @@ describe('Input component', () => {
   beforeEach(() => {});
 
   afterEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
   });
 
   it('renders as expected', () => {
@@ -75,7 +75,7 @@ describe('Input component', () => {
   });
 
   it('calls onChange callback when value changes', async () => {
-    const onChangeSpy = jest.fn();
+    const onChangeSpy = vi.fn();
     const { getByRole } = setup({ ...BASIC_PROPS, onChange: onChangeSpy });
 
     // type some random data into text input

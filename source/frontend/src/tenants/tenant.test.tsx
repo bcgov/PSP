@@ -18,7 +18,7 @@ describe('Tenant configuration', () => {
   const OLD_ENV = import.meta.env.VITE_TENANT;
 
   beforeEach(() => {
-    jest.resetModules();
+    vi.resetModules();
     mockAxios.onAny().reply(200);
     import.meta.env.VITE_TENANT = undefined;
   });
@@ -26,7 +26,7 @@ describe('Tenant configuration', () => {
   afterAll(() => {
     import.meta.env.VITE_TENANT = OLD_ENV;
     mockAxios.reset();
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
 
   it('Tenant returns correct default configuration', async () => {

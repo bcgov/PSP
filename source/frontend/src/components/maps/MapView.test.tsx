@@ -17,16 +17,14 @@ import { PointFeature } from './types';
 
 const mockAxios = new MockAdapter(axios);
 
-jest.mock('@react-keycloak/web');
-
 // This mocks the parcels of land a user can see - should be able to see 2 markers
 const mockParcels = [
   { id: 1, latitude: 53.917065, longitude: -122.749672 },
   { id: 2, latitude: 53.917065, longitude: -122.749672 },
 ] as IProperty[];
 
-jest.mock('@/hooks/pims-api/useApiGeocoder');
-jest.mock('@/hooks/pims-api/useApiProperties');
+vi.mock('@/hooks/pims-api/useApiGeocoder');
+vi.mock('@/hooks/pims-api/useApiProperties');
 
 // This will spoof the active parcel (the one that will populate the popup details)
 const mockDetails = {
@@ -136,23 +134,23 @@ function setup(props: Omit<TestProps, 'done'>) {
   };
 }
 
-xdescribe('MapProperties View', () => {
-  let mockLoadProperties: jest.Mock<Promise<FeatureCollection>>;
-  let mockGetParcel: jest.Mock<Promise<IProperty>>;
+describe.skip('MapProperties View', () => {
+  let mockLoadProperties;
+  let mockGetParcel;
 
   beforeEach(() => {
     mockAxios.reset();
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     mockAxios.onGet('/basemaps.json').reply(200, baseMapLayers);
     mockAxios.onAny().reply(200);
     delete (window as any).ResizeObserver;
-    window.ResizeObserver = jest.fn().mockImplementation(() => ({
-      observe: jest.fn(),
-      unobserve: jest.fn(),
-      disconnect: jest.fn(),
+    window.ResizeObserver = vi.fn().mockImplementation(() => ({
+      observe: vi.fn(),
+      unobserve: vi.fn(),
+      disconnect: vi.fn(),
     }));
 
-    mockLoadProperties = jest.fn(
+    mockLoadProperties = vi.fn(
       async () =>
         ({
           features: createPoints(mockParcels),
@@ -160,21 +158,21 @@ xdescribe('MapProperties View', () => {
           bbox: undefined,
         } as FeatureCollection),
     );
-    mockGetParcel = jest.fn(async () => ({} as IProperty));
+    mockGetParcel = vi.fn(async () => ({} as IProperty));
 
-    (useApiGeocoder as unknown as jest.Mock<Partial<typeof useApiGeocoder>>).mockReturnValue({
+    vi.mocked(useApiGeocoder).mockReturnValue({
       loadProperties: mockLoadProperties,
       getProperty: mockGetParcel,
-    });
+    } as unknown as ReturnType<typeof useApiGeocoder>);
 
-    (useApiProperties as unknown as jest.Mock<Partial<typeof useApiProperties>>).mockReturnValue({
+    vi.mocked(useApiProperties).mockReturnValue({
       getProperty: mockGetParcel,
-    });
+    } as unknown as ReturnType<typeof useApiProperties>);
   });
 
   afterEach(() => {
     window.ResizeObserver = ResizeObserver;
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
     cleanup();
   });
 

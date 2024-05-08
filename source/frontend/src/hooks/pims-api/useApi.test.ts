@@ -11,7 +11,7 @@ const mockAxios = new MockAdapter(axios);
 
 describe('useApi testing suite', () => {
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     mockAxios.resetHistory();
   });
 

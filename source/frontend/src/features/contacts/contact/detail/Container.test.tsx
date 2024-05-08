@@ -6,7 +6,6 @@ import { mockKeycloak, render, RenderOptions } from '@/utils/test-utils';
 import ContactViewContainer from './Container';
 
 // mock auth library
-jest.mock('@react-keycloak/web');
 
 const history = createMemoryHistory();
 

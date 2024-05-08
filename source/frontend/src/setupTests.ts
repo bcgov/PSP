@@ -5,37 +5,13 @@
 import '@testing-library/jest-dom';
 import 'jest-styled-components';
 
-import failOnConsole from 'jest-fail-on-console';
 import noop from 'lodash/noop';
-import moment from 'moment-timezone';
-import { MockedRequest } from 'msw';
+import moment from 'moment';
+import { tz } from 'moment-timezone';
+import failOnConsole from 'vitest-fail-on-console';
 
-import { server } from '@/mocks/msw/server';
-
-const localStorageMock = (function () {
-  let store: any = {};
-
-  return {
-    getKeys: function () {
-      return store;
-    },
-    getItem: function (key: string) {
-      return store[key] || null;
-    },
-    setItem: function (key: string, value: any) {
-      store[key] = value.toString();
-    },
-    removeItem: function (key: string) {
-      store[key] = undefined;
-    },
-    clear: function () {
-      store = {};
-    },
-  };
-})();
-Object.defineProperty(window, 'localStorage', {
-  value: localStorageMock,
-});
+import { server } from './mocks/msw/server';
+import { cleanup } from './utils/test-utils';
 
 // workaround to allow polyline and other svg map renderers to function correctly in tests.
 const createElementNSOrig = (global as any).document.createElementNS;
@@ -48,8 +24,9 @@ const createElementNSOrig = (global as any).document.createElementNS;
   return createElementNSOrig.apply(this, arguments);
 };
 
-// Mock moment timezone to PST in all our tests
-moment.tz.setDefault('America/Vancouver');
+tz.setDefault('America/Vancouver');
+
+tz.setDefault('America/Vancouver');
 
 // This allows to run unit tests on GitHub Actions which are in GMT timezone by default
 ['Date', 'Day', 'FullYear', 'Hours', 'Minutes', 'Month', 'Seconds'].forEach(prop => {
@@ -60,17 +37,15 @@ moment.tz.setDefault('America/Vancouver');
   };
 });
 
-window.scrollTo = jest.fn(); // not implemented by jsdom.
-
-jest.setTimeout(10000);
+window.scrollTo = vi.fn() as unknown as any; // not implemented by jsdom.
 
 // Set default tenant for unit tests
 import.meta.env.VITE_TENANT = 'MOTI';
 
-const onUnhandledRequest = jest.fn();
+const onUnhandledRequest = vi.fn();
 
 // Establish API mocking before all tests.
-beforeAll(() => server.listen({ onUnhandledRequest }));
+beforeAll(() => server.listen({ onUnhandledRequest: 'error' }));
 
 // Reset any request handlers that we may add during the tests,
 // so they don't affect other tests.
@@ -79,7 +54,7 @@ afterEach(() => {
   try {
     expect(onUnhandledRequest).not.toHaveBeenCalled();
   } catch (e) {
-    const req = onUnhandledRequest.mock.calls[0][0] as MockedRequest;
+    const req = onUnhandledRequest.mock.calls[0][0];
     const messageTemplate = [
       `[MSW] Error: captured a request without a matching request handler:`,
       `  \u2022 ${req.method} ${req.url.href}`,
@@ -90,9 +65,11 @@ afterEach(() => {
   } finally {
     onUnhandledRequest.mockClear();
   }
+  cleanup();
+  vi.clearAllMocks();
 });
 
 // Clean up after the tests are finished.
 afterAll(() => server.close());
 
-failOnConsole({ shouldFailOnWarn: false, shouldFailOnError: false });
+failOnConsole();

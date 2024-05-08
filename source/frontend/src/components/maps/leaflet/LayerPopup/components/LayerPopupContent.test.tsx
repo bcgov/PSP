@@ -1,7 +1,6 @@
 import { cleanup, render } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
-import L from 'leaflet';
-import React from 'react';
+import { LatLng } from 'leaflet';
 import { useMap } from 'react-leaflet';
 
 import { createRouteProvider } from '@/utils/test-utils';
@@ -10,16 +9,16 @@ import { IPopupContentProps, LayerPopupContent } from './LayerPopupContent';
 
 const history = createMemoryHistory();
 
-jest.mock('react-leaflet');
+vi.mock('react-leaflet');
 
 // Mock react-leaflet dependencies
 const map: Partial<L.Map> = {
-  getZoom: jest.fn(),
-  getBoundsZoom: jest.fn(),
-  flyToBounds: jest.fn(),
+  getZoom: vi.fn(),
+  getBoundsZoom: vi.fn(),
+  flyToBounds: vi.fn(),
 };
 
-(useMap as jest.Mock).mockReturnValue(map);
+vi.mocked(useMap).mockReturnValue(map as unknown as ReturnType<typeof useMap>);
 
 const mockLayer: IPopupContentProps = {
   layerPopup: {
@@ -42,7 +41,7 @@ const mockLayer: IPopupContentProps = {
       se_anno_cad_data: '',
       when_updated: '2020-01-01',
     },
-    latlng: new L.LatLng(48, -123),
+    latlng: new LatLng(48, -123),
     title: 'Foo Bar',
     feature: undefined,
   },

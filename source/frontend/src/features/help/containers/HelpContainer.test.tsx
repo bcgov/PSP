@@ -7,21 +7,21 @@ import { mockLookups } from '@/mocks/index.mock';
 
 import HelpContainer from './HelpContainer';
 
-jest.mock('@react-keycloak/web');
-
 const mockStore = configureMockStore([thunk]);
 const store = mockStore({});
 const mockData = {
   config: { settings: { helpDeskEmail: 'test@test.com' } },
 };
 
-jest.mock('@/store/hooks', () => ({
+vi.mock('@/store/hooks', () => ({
   useAppSelector: () => mockData,
-  useAppDispatch: () => jest.fn(),
+  useAppDispatch: () => vi.fn(),
 }));
 
-jest.mock('@/hooks/useLookupCodeHelpers');
-(useLookupCodeHelpers as jest.Mock).mockReturnValue({ getByType: () => mockLookups });
+vi.mock('@/hooks/useLookupCodeHelpers');
+vi.mocked(useLookupCodeHelpers).mockReturnValue({
+  getByType: () => mockLookups,
+} as unknown as ReturnType<typeof useLookupCodeHelpers>);
 
 describe('HelpContainer component', () => {
   beforeEach(() => {

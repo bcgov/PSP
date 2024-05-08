@@ -10,7 +10,7 @@ const mockAxios = new MockAdapter(axios);
 
 describe('useApiLtsa testing suite', () => {
   afterEach(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
 
   const setup = () => {

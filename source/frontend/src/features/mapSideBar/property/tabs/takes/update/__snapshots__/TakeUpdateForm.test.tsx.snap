@@ -1,0 +1,2063 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`TakeUpdateForm component > renders as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div />
+  .c6 .react-datepicker__calendar-icon {
+  width: 3rem;
+  height: 3rem;
+  margin-top: 0.5rem;
+  right: 0;
+  pointer-events: none;
+}
+
+.c6 .react-datepicker__view-calendar-icon input {
+  padding: 0.6rem 1rem 0.5rem 0.6rem;
+}
+
+.c6 .react-datepicker-wrapper {
+  max-width: 16rem;
+}
+
+.c7.c7.form-control.is-valid {
+  background-image: none;
+}
+
+.c7.c7.form-control.is-invalid {
+  border-color: #d8292f !important;
+}
+
+.c11 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+}
+
+.c3 {
+  float: right;
+  cursor: pointer;
+}
+
+.c0 {
+  padding-top: 1rem;
+}
+
+.c10.form-group {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin-bottom: 0;
+}
+
+.c10.form-group .radio-group {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  row-gap: unset;
+  -webkit-column-gap: 0.4rem;
+  column-gap: 0.4rem;
+}
+
+.c10.form-group .radio-group .form-check {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+.c10.form-group .radio-group .form-check .form-check-input {
+  margin-left: 0;
+}
+
+.c10.form-group .radio-group .form-check-label {
+  margin-left: 1rem;
+}
+
+.c10 .form-label {
+  margin-bottom: unset;
+}
+
+.c2 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c1 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
+.c5.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c4 {
+  font-weight: bold;
+}
+
+.c12 {
+  max-width: 25rem;
+  padding: 1rem;
+  border: 1px solid;
+  border-radius: 0.5rem;
+}
+
+.c14 {
+  max-width: 25rem;
+  padding: 1rem;
+  border: 1px solid;
+  border-radius: 0.5rem;
+}
+
+.c13 {
+  max-width: 9rem;
+}
+
+.c8.form-section {
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.c9 {
+  border: 0.1rem solid lightgrey;
+  border-radius: 0.5rem;
+}
+
+<div
+    class="c0"
+  >
+    <div
+      class="c1 form-section position-relative"
+    >
+      <h2
+        class="c2"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            Update Take
+          </div>
+          <div
+            class="col-1"
+          >
+            <svg
+              class="c3"
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <title>
+                collapse-section
+              </title>
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="M7 14l5-5 5 5z"
+              />
+            </svg>
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c4"
+            >
+              Take type:
+            </label>
+          </div>
+          <div
+            class="c5 required text-left col-5"
+          >
+            <div
+              class="form-group"
+            >
+              <select
+                class="form-select form-control"
+                id="input-takeTypeCode"
+                name="takeTypeCode"
+              >
+                <option
+                  value=""
+                >
+                  Select take type
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-PARTIAL"
+                  value="PARTIAL"
+                >
+                  Partial
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-TOTAL"
+                  value="TOTAL"
+                >
+                  Total
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c4"
+            >
+              Take status:
+            </label>
+          </div>
+          <div
+            class="c5 required text-left col-5"
+          >
+            <div
+              class="form-group"
+            >
+              <select
+                class="form-select form-control"
+                id="input-takeStatusTypeCode"
+                name="takeStatusTypeCode"
+              >
+                <option
+                  class="option"
+                  data-testid="select-option-CANCELLED"
+                  value="CANCELLED"
+                >
+                  Cancelled
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-COMPLETE"
+                  value="COMPLETE"
+                >
+                  Complete
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-INPROGRESS"
+                  value="INPROGRESS"
+                >
+                  In-progress
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c4"
+            >
+              Completion date:
+              <span
+                class="ml-2"
+              >
+                <span
+                  class="tooltip-icon"
+                  data-testid="tooltip-icon-section-field-tooltip"
+                  id="section-field-tooltip"
+                >
+                  <svg
+                    class="tooltip-icon"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                    />
+                  </svg>
+                </span>
+              </span>
+            </label>
+          </div>
+          <div
+            class="c5 text-left col-5"
+          >
+            <div
+              class="c6 form-group"
+            >
+              <div
+                class="react-datepicker-wrapper d-block"
+              >
+                <div
+                  class="react-datepicker__input-container react-datepicker__view-calendar-icon"
+                >
+                  <svg
+                    class="react-datepicker__calendar-icon"
+                    viewBox="0 0 448 512"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                    />
+                  </svg>
+                  <input
+                    autocomplete="off"
+                    class="c7 form-control date-picker"
+                    disabled=""
+                    id="datepicker-completionDt"
+                    name="completionDt"
+                    placeholder="MMM DD, YYYY"
+                    type="text"
+                    value=""
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c4"
+            >
+              Site contamination:
+            </label>
+          </div>
+          <div
+            class="c5 text-left col-5"
+          >
+            <div
+              class="form-group"
+            >
+              <select
+                class="form-select form-control"
+                id="input-takeSiteContamTypeCode"
+                name="takeSiteContamTypeCode"
+              >
+                <option
+                  class="option"
+                  data-testid="select-option-NO"
+                  value="NO"
+                >
+                  No
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-UNK"
+                  value="UNK"
+                >
+                  Unknown
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-YES"
+                  value="YES"
+                >
+                  Yes
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-12"
+          >
+            <label
+              class="c4"
+            >
+              Description of this Take:
+            </label>
+          </div>
+          <div
+            class="c5 text-left col"
+          >
+            <div
+              class="textarea input form-group"
+            >
+              <textarea
+                class="form-control"
+                id="input-description"
+                name="description"
+                title=""
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="c1 form-section c8"
+        >
+          <h2
+            class="c2"
+          >
+            <div
+              class="no-gutters row"
+            >
+              <div
+                class="col"
+              >
+                Area
+              </div>
+            </div>
+          </h2>
+          <div
+            class="collapse show"
+          >
+            <div
+              class="c1 form-section c9"
+            >
+              <div
+                class="collapse show"
+              >
+                <div
+                  class="pb-2 row"
+                >
+                  <div
+                    class="pr-0 text-left col-8"
+                  >
+                    <label
+                      class="c4"
+                    >
+                      Is there a new highway dedication? *:
+                      <span
+                        class="ml-2"
+                      >
+                        <span
+                          class="tooltip-icon"
+                          data-testid="tooltip-icon-section-field-tooltip"
+                          id="section-field-tooltip"
+                        >
+                          <svg
+                            class="tooltip-icon"
+                            fill="currentColor"
+                            height="1em"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 512 512"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                            />
+                          </svg>
+                        </span>
+                      </span>
+                    </label>
+                  </div>
+                  <div
+                    class="c5 text-left col"
+                  >
+                    <div
+                      class="c10 form-group"
+                    >
+                      <div
+                        class="radio-group"
+                      >
+                        <div
+                          class="c11"
+                        >
+                          <div
+                            class="form-check"
+                          >
+                            <input
+                              checked=""
+                              class="form-check-input position-static"
+                              data-testid="radio-isnewhighwaydedication-yes"
+                              id="input-true"
+                              name="isNewHighwayDedication"
+                              type="radio"
+                              value="true"
+                            />
+                          </div>
+                          <label
+                            class="form-check-label form-label"
+                            for="isNewHighwayDedication"
+                          >
+                            Yes
+                          </label>
+                        </div>
+                        <div
+                          class="c11"
+                        >
+                          <div
+                            class="form-check"
+                          >
+                            <input
+                              class="form-check-input position-static"
+                              data-testid="radio-isnewhighwaydedication-no"
+                              id="input-false"
+                              name="isNewHighwayDedication"
+                              type="radio"
+                              value="false"
+                            />
+                          </div>
+                          <label
+                            class="form-check-label form-label"
+                            for="isNewHighwayDedication"
+                          >
+                            No
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="pb-2 row"
+                >
+                  <div
+                    class="pr-0 text-left col-12"
+                  >
+                    <label
+                      class="c4"
+                    >
+                      Area:
+                    </label>
+                  </div>
+                  <div
+                    class="c5 text-left col"
+                  >
+                    <div
+                      class="row"
+                    >
+                      <div
+                        class="col"
+                      >
+                        <div
+                          class="c12"
+                        >
+                          <div
+                            class="pb-2 row"
+                          >
+                            <div
+                              class="text-right col"
+                            >
+                              <input
+                                aria-label="square metres"
+                                class="c13"
+                                name="area-sq-meters"
+                                step=".01"
+                                type="number"
+                                value="4046.86"
+                              />
+                            </div>
+                            <div
+                              class="col"
+                            >
+                              sq. metres
+                            </div>
+                          </div>
+                          <div
+                            class="row"
+                          >
+                            <div
+                              class="text-right col"
+                            >
+                              <input
+                                aria-label="hectares"
+                                class="c13"
+                                name="area-hectares"
+                                step=".01"
+                                type="number"
+                                value="0.4"
+                              />
+                            </div>
+                            <div
+                              class="col"
+                            >
+                              hectares
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="col"
+                      >
+                        <div
+                          class="c14"
+                        >
+                          <div
+                            class="pb-2 row"
+                          >
+                            <div
+                              class="text-right col"
+                            >
+                              <input
+                                aria-label="square feet"
+                                class="c13"
+                                name="area-sq-feet"
+                                step=".01"
+                                type="number"
+                                value="43560"
+                              />
+                            </div>
+                            <div
+                              class="col"
+                            >
+                              sq. feet
+                            </div>
+                          </div>
+                          <div
+                            class="row"
+                          >
+                            <div
+                              class="text-right col"
+                            >
+                              <input
+                                aria-label="acres"
+                                class="c13"
+                                name="area-acres"
+                                step=".01"
+                                type="number"
+                                value="1"
+                              />
+                            </div>
+                            <div
+                              class="col"
+                            >
+                              acres
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="pt-4 row"
+                >
+                  <div
+                    class="pr-0 text-left col-8"
+                  >
+                    <label
+                      class="c4"
+                    >
+                      Is this being acquired for MoTI inventory? *:
+                      <span
+                        class="ml-2"
+                      >
+                        <span
+                          class="tooltip-icon"
+                          data-testid="tooltip-icon-section-field-tooltip"
+                          id="section-field-tooltip"
+                        >
+                          <svg
+                            class="tooltip-icon"
+                            fill="currentColor"
+                            height="1em"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 512 512"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                            />
+                          </svg>
+                        </span>
+                      </span>
+                    </label>
+                  </div>
+                  <div
+                    class="c5 text-left col"
+                  >
+                    <div
+                      class="c10 form-group"
+                    >
+                      <div
+                        class="radio-group"
+                      >
+                        <div
+                          class="c11"
+                        >
+                          <div
+                            class="form-check"
+                          >
+                            <input
+                              class="form-check-input position-static"
+                              data-testid="radio-isacquiredforinventory-yes"
+                              id="input-true"
+                              name="isAcquiredForInventory"
+                              type="radio"
+                              value="true"
+                            />
+                          </div>
+                          <label
+                            class="form-check-label form-label"
+                            for="isAcquiredForInventory"
+                          >
+                            Yes
+                          </label>
+                        </div>
+                        <div
+                          class="c11"
+                        >
+                          <div
+                            class="form-check"
+                          >
+                            <input
+                              checked=""
+                              class="form-check-input position-static"
+                              data-testid="radio-isacquiredforinventory-no"
+                              id="input-false"
+                              name="isAcquiredForInventory"
+                              type="radio"
+                              value="false"
+                            />
+                          </div>
+                          <label
+                            class="form-check-label form-label"
+                            for="isAcquiredForInventory"
+                          >
+                            No
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="c1 form-section c9"
+            >
+              <div
+                class="collapse show"
+              >
+                <div
+                  class="pb-2 row"
+                >
+                  <div
+                    class="pr-0 text-left col-8"
+                  >
+                    <label
+                      class="c4"
+                    >
+                      Is there a new registered interest in land (SRW, Easement or Covenant)? *:
+                    </label>
+                  </div>
+                  <div
+                    class="c5 text-left col"
+                  >
+                    <div
+                      class="c10 form-group"
+                    >
+                      <div
+                        class="radio-group"
+                      >
+                        <div
+                          class="c11"
+                        >
+                          <div
+                            class="form-check"
+                          >
+                            <input
+                              checked=""
+                              class="form-check-input position-static"
+                              data-testid="radio-isnewinterestinsrw-yes"
+                              id="input-true"
+                              name="isNewInterestInSrw"
+                              type="radio"
+                              value="true"
+                            />
+                          </div>
+                          <label
+                            class="form-check-label form-label"
+                            for="isNewInterestInSrw"
+                          >
+                            Yes
+                          </label>
+                        </div>
+                        <div
+                          class="c11"
+                        >
+                          <div
+                            class="form-check"
+                          >
+                            <input
+                              class="form-check-input position-static"
+                              data-testid="radio-isnewinterestinsrw-no"
+                              id="input-false"
+                              name="isNewInterestInSrw"
+                              type="radio"
+                              value="false"
+                            />
+                          </div>
+                          <label
+                            class="form-check-label form-label"
+                            for="isNewInterestInSrw"
+                          >
+                            No
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="pb-2 row"
+                >
+                  <div
+                    class="pr-0 text-left col-12"
+                  >
+                    <label
+                      class="c4"
+                    >
+                      Area:
+                    </label>
+                  </div>
+                  <div
+                    class="c5 text-left col"
+                  >
+                    <div
+                      class="row"
+                    >
+                      <div
+                        class="col"
+                      >
+                        <div
+                          class="c12"
+                        >
+                          <div
+                            class="pb-2 row"
+                          >
+                            <div
+                              class="text-right col"
+                            >
+                              <input
+                                aria-label="square metres"
+                                class="c13"
+                                name="area-sq-meters"
+                                step=".01"
+                                type="number"
+                                value="8093.71"
+                              />
+                            </div>
+                            <div
+                              class="col"
+                            >
+                              sq. metres
+                            </div>
+                          </div>
+                          <div
+                            class="row"
+                          >
+                            <div
+                              class="text-right col"
+                            >
+                              <input
+                                aria-label="hectares"
+                                class="c13"
+                                name="area-hectares"
+                                step=".01"
+                                type="number"
+                                value="0.81"
+                              />
+                            </div>
+                            <div
+                              class="col"
+                            >
+                              hectares
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="col"
+                      >
+                        <div
+                          class="c14"
+                        >
+                          <div
+                            class="pb-2 row"
+                          >
+                            <div
+                              class="text-right col"
+                            >
+                              <input
+                                aria-label="square feet"
+                                class="c13"
+                                name="area-sq-feet"
+                                step=".01"
+                                type="number"
+                                value="87120"
+                              />
+                            </div>
+                            <div
+                              class="col"
+                            >
+                              sq. feet
+                            </div>
+                          </div>
+                          <div
+                            class="row"
+                          >
+                            <div
+                              class="text-right col"
+                            >
+                              <input
+                                aria-label="acres"
+                                class="c13"
+                                name="area-acres"
+                                step=".01"
+                                type="number"
+                                value="2"
+                              />
+                            </div>
+                            <div
+                              class="col"
+                            >
+                              acres
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="mt-4 row"
+                >
+                  <div
+                    class="pr-0 text-left col-3"
+                  >
+                    <label
+                      class="c4"
+                    >
+                      SRW end date:
+                    </label>
+                  </div>
+                  <div
+                    class="c5 text-left col"
+                  >
+                    <div
+                      class="c6 form-group"
+                    >
+                      <div
+                        class="react-datepicker-wrapper d-block"
+                      >
+                        <div
+                          class="react-datepicker__input-container react-datepicker__view-calendar-icon"
+                        >
+                          <svg
+                            class="react-datepicker__calendar-icon"
+                            viewBox="0 0 448 512"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                            />
+                          </svg>
+                          <input
+                            autocomplete="off"
+                            class="c7 form-control date-picker"
+                            id="datepicker-srwEndDt"
+                            name="srwEndDt"
+                            placeholder="MMM DD, YYYY"
+                            type="text"
+                            value="Nov 20, 2022"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="c1 form-section c9"
+            >
+              <div
+                class="collapse show"
+              >
+                <div
+                  class="pb-2 row"
+                >
+                  <div
+                    class="pr-0 text-left col-8"
+                  >
+                    <label
+                      class="c4"
+                    >
+                      Is there a new Land Act tenure? *:
+                    </label>
+                  </div>
+                  <div
+                    class="c5 text-left col"
+                  >
+                    <div
+                      class="c10 form-group"
+                    >
+                      <div
+                        class="radio-group"
+                      >
+                        <div
+                          class="c11"
+                        >
+                          <div
+                            class="form-check"
+                          >
+                            <input
+                              checked=""
+                              class="form-check-input position-static"
+                              data-testid="radio-isnewlandact-yes"
+                              id="input-true"
+                              name="isNewLandAct"
+                              type="radio"
+                              value="true"
+                            />
+                          </div>
+                          <label
+                            class="form-check-label form-label"
+                            for="isNewLandAct"
+                          >
+                            Yes
+                          </label>
+                        </div>
+                        <div
+                          class="c11"
+                        >
+                          <div
+                            class="form-check"
+                          >
+                            <input
+                              class="form-check-input position-static"
+                              data-testid="radio-isnewlandact-no"
+                              id="input-false"
+                              name="isNewLandAct"
+                              type="radio"
+                              value="false"
+                            />
+                          </div>
+                          <label
+                            class="form-check-label form-label"
+                            for="isNewLandAct"
+                          >
+                            No
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="pb-2 row"
+                >
+                  <div
+                    class="pr-0 text-left col-4"
+                  >
+                    <label
+                      class="c4"
+                    >
+                      Land Act:
+                    </label>
+                  </div>
+                  <div
+                    class="c5 required text-left col-7"
+                  >
+                    <div
+                      class="form-group"
+                    >
+                      <select
+                        class="form-select form-control"
+                        id="input-landActTypeCode"
+                        name="landActTypeCode"
+                      >
+                        <option
+                          value=""
+                        >
+                          Select Land Act
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-Section 15"
+                          value="Section 15"
+                        >
+                          Section 15 Order in Council Reserve
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-Crown Grant"
+                          value="Crown Grant"
+                        >
+                          Crown Grant Crown Grant
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-Section 16"
+                          value="Section 16"
+                        >
+                          Section 16 Map Reserve / Withdrawal
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-Section 17"
+                          value="Section 17"
+                        >
+                          Section 17 Conditional Withdrawal / Designated Use Area
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-NOI"
+                          value="NOI"
+                        >
+                          NOI Notation of Interest
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-Section 66"
+                          value="Section 66"
+                        >
+                          Section 66 Prohibited Use Area
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="pb-2 row"
+                >
+                  <div
+                    class="pr-0 text-left col-12"
+                  >
+                    <label
+                      class="c4"
+                    >
+                      Area:
+                    </label>
+                  </div>
+                  <div
+                    class="c5 text-left col"
+                  >
+                    <div
+                      class="row"
+                    >
+                      <div
+                        class="col"
+                      >
+                        <div
+                          class="c12"
+                        >
+                          <div
+                            class="pb-2 row"
+                          >
+                            <div
+                              class="text-right col"
+                            >
+                              <input
+                                aria-label="square metres"
+                                class="c13"
+                                name="area-sq-meters"
+                                step=".01"
+                                type="number"
+                                value="12140.57"
+                              />
+                            </div>
+                            <div
+                              class="col"
+                            >
+                              sq. metres
+                            </div>
+                          </div>
+                          <div
+                            class="row"
+                          >
+                            <div
+                              class="text-right col"
+                            >
+                              <input
+                                aria-label="hectares"
+                                class="c13"
+                                name="area-hectares"
+                                step=".01"
+                                type="number"
+                                value="1.21"
+                              />
+                            </div>
+                            <div
+                              class="col"
+                            >
+                              hectares
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="col"
+                      >
+                        <div
+                          class="c14"
+                        >
+                          <div
+                            class="pb-2 row"
+                          >
+                            <div
+                              class="text-right col"
+                            >
+                              <input
+                                aria-label="square feet"
+                                class="c13"
+                                name="area-sq-feet"
+                                step=".01"
+                                type="number"
+                                value="130680"
+                              />
+                            </div>
+                            <div
+                              class="col"
+                            >
+                              sq. feet
+                            </div>
+                          </div>
+                          <div
+                            class="row"
+                          >
+                            <div
+                              class="text-right col"
+                            >
+                              <input
+                                aria-label="acres"
+                                class="c13"
+                                name="area-acres"
+                                step=".01"
+                                type="number"
+                                value="3"
+                              />
+                            </div>
+                            <div
+                              class="col"
+                            >
+                              acres
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="mt-4 row"
+                >
+                  <div
+                    class="pr-0 text-left col-3"
+                  >
+                    <label
+                      class="c4"
+                    >
+                      End date:
+                    </label>
+                  </div>
+                  <div
+                    class="c5 text-left col"
+                  >
+                    <div
+                      class="c6 form-group"
+                    >
+                      <div
+                        class="react-datepicker-wrapper d-block"
+                      >
+                        <div
+                          class="react-datepicker__input-container react-datepicker__view-calendar-icon"
+                        >
+                          <svg
+                            class="react-datepicker__calendar-icon"
+                            viewBox="0 0 448 512"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                            />
+                          </svg>
+                          <input
+                            autocomplete="off"
+                            class="c7 form-control date-picker"
+                            id="datepicker-landActEndDt"
+                            name="landActEndDt"
+                            placeholder="MMM DD, YYYY"
+                            type="text"
+                            value="Jan 01, 2020"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="c1 form-section c9"
+            >
+              <div
+                class="collapse show"
+              >
+                <div
+                  class="pb-2 row"
+                >
+                  <div
+                    class="pr-0 text-left col-8"
+                  >
+                    <label
+                      class="c4"
+                    >
+                      Is there a new License for Construction Access (TLCA/LTC)? *:
+                    </label>
+                  </div>
+                  <div
+                    class="c5 text-left col"
+                  >
+                    <div
+                      class="c10 form-group"
+                    >
+                      <div
+                        class="radio-group"
+                      >
+                        <div
+                          class="c11"
+                        >
+                          <div
+                            class="form-check"
+                          >
+                            <input
+                              checked=""
+                              class="form-check-input position-static"
+                              data-testid="radio-isnewlicensetoconstruct-yes"
+                              id="input-true"
+                              name="isNewLicenseToConstruct"
+                              type="radio"
+                              value="true"
+                            />
+                          </div>
+                          <label
+                            class="form-check-label form-label"
+                            for="isNewLicenseToConstruct"
+                          >
+                            Yes
+                          </label>
+                        </div>
+                        <div
+                          class="c11"
+                        >
+                          <div
+                            class="form-check"
+                          >
+                            <input
+                              class="form-check-input position-static"
+                              data-testid="radio-isnewlicensetoconstruct-no"
+                              id="input-false"
+                              name="isNewLicenseToConstruct"
+                              type="radio"
+                              value="false"
+                            />
+                          </div>
+                          <label
+                            class="form-check-label form-label"
+                            for="isNewLicenseToConstruct"
+                          >
+                            No
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="pb-2 row"
+                >
+                  <div
+                    class="pr-0 text-left col-12"
+                  >
+                    <label
+                      class="c4"
+                    >
+                      Area:
+                    </label>
+                  </div>
+                  <div
+                    class="c5 text-left col"
+                  >
+                    <div
+                      class="row"
+                    >
+                      <div
+                        class="col"
+                      >
+                        <div
+                          class="c12"
+                        >
+                          <div
+                            class="pb-2 row"
+                          >
+                            <div
+                              class="text-right col"
+                            >
+                              <input
+                                aria-label="square metres"
+                                class="c13"
+                                name="area-sq-meters"
+                                step=".01"
+                                type="number"
+                                value="16187.43"
+                              />
+                            </div>
+                            <div
+                              class="col"
+                            >
+                              sq. metres
+                            </div>
+                          </div>
+                          <div
+                            class="row"
+                          >
+                            <div
+                              class="text-right col"
+                            >
+                              <input
+                                aria-label="hectares"
+                                class="c13"
+                                name="area-hectares"
+                                step=".01"
+                                type="number"
+                                value="1.62"
+                              />
+                            </div>
+                            <div
+                              class="col"
+                            >
+                              hectares
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="col"
+                      >
+                        <div
+                          class="c14"
+                        >
+                          <div
+                            class="pb-2 row"
+                          >
+                            <div
+                              class="text-right col"
+                            >
+                              <input
+                                aria-label="square feet"
+                                class="c13"
+                                name="area-sq-feet"
+                                step=".01"
+                                type="number"
+                                value="174240"
+                              />
+                            </div>
+                            <div
+                              class="col"
+                            >
+                              sq. feet
+                            </div>
+                          </div>
+                          <div
+                            class="row"
+                          >
+                            <div
+                              class="text-right col"
+                            >
+                              <input
+                                aria-label="acres"
+                                class="c13"
+                                name="area-acres"
+                                step=".01"
+                                type="number"
+                                value="4"
+                              />
+                            </div>
+                            <div
+                              class="col"
+                            >
+                              acres
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="mt-4 row"
+                >
+                  <div
+                    class="pr-0 text-left col-3"
+                  >
+                    <label
+                      class="c4"
+                    >
+                      LTC end date:
+                    </label>
+                  </div>
+                  <div
+                    class="c5 text-left col"
+                  >
+                    <div
+                      class="c6 form-group"
+                    >
+                      <div
+                        class="react-datepicker-wrapper d-block"
+                      >
+                        <div
+                          class="react-datepicker__input-container react-datepicker__view-calendar-icon"
+                        >
+                          <svg
+                            class="react-datepicker__calendar-icon"
+                            viewBox="0 0 448 512"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                            />
+                          </svg>
+                          <input
+                            autocomplete="off"
+                            class="c7 form-control date-picker"
+                            id="datepicker-ltcEndDt"
+                            name="ltcEndDt"
+                            placeholder="MMM DD, YYYY"
+                            type="text"
+                            value="Jan 01, 2020"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="c1 form-section c9"
+            >
+              <div
+                class="collapse show"
+              >
+                <div
+                  class="pb-2 row"
+                >
+                  <div
+                    class="pr-0 text-left col-8"
+                  >
+                    <label
+                      class="c4"
+                    >
+                      Is there a Lease (Payable)? *:
+                    </label>
+                  </div>
+                  <div
+                    class="c5 text-left col"
+                  >
+                    <div
+                      class="c10 form-group"
+                    >
+                      <div
+                        class="radio-group"
+                      >
+                        <div
+                          class="c11"
+                        >
+                          <div
+                            class="form-check"
+                          >
+                            <input
+                              checked=""
+                              class="form-check-input position-static"
+                              data-testid="radio-isleasepayable-yes"
+                              id="input-true"
+                              name="isLeasePayable"
+                              type="radio"
+                              value="true"
+                            />
+                          </div>
+                          <label
+                            class="form-check-label form-label"
+                            for="isLeasePayable"
+                          >
+                            Yes
+                          </label>
+                        </div>
+                        <div
+                          class="c11"
+                        >
+                          <div
+                            class="form-check"
+                          >
+                            <input
+                              class="form-check-input position-static"
+                              data-testid="radio-isleasepayable-no"
+                              id="input-false"
+                              name="isLeasePayable"
+                              type="radio"
+                              value="false"
+                            />
+                          </div>
+                          <label
+                            class="form-check-label form-label"
+                            for="isLeasePayable"
+                          >
+                            No
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="pb-2 row"
+                >
+                  <div
+                    class="pr-0 text-left col-12"
+                  >
+                    <label
+                      class="c4"
+                    >
+                      Area:
+                    </label>
+                  </div>
+                  <div
+                    class="c5 text-left col"
+                  >
+                    <div
+                      class="row"
+                    >
+                      <div
+                        class="col"
+                      >
+                        <div
+                          class="c12"
+                        >
+                          <div
+                            class="pb-2 row"
+                          >
+                            <div
+                              class="text-right col"
+                            >
+                              <input
+                                aria-label="square metres"
+                                class="c13"
+                                name="area-sq-meters"
+                                step=".01"
+                                type="number"
+                                value="20231.28"
+                              />
+                            </div>
+                            <div
+                              class="col"
+                            >
+                              sq. metres
+                            </div>
+                          </div>
+                          <div
+                            class="row"
+                          >
+                            <div
+                              class="text-right col"
+                            >
+                              <input
+                                aria-label="hectares"
+                                class="c13"
+                                name="area-hectares"
+                                step=".01"
+                                type="number"
+                                value="2.02"
+                              />
+                            </div>
+                            <div
+                              class="col"
+                            >
+                              hectares
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="col"
+                      >
+                        <div
+                          class="c14"
+                        >
+                          <div
+                            class="pb-2 row"
+                          >
+                            <div
+                              class="text-right col"
+                            >
+                              <input
+                                aria-label="square feet"
+                                class="c13"
+                                name="area-sq-feet"
+                                step=".01"
+                                type="number"
+                                value="217767.7"
+                              />
+                            </div>
+                            <div
+                              class="col"
+                            >
+                              sq. feet
+                            </div>
+                          </div>
+                          <div
+                            class="row"
+                          >
+                            <div
+                              class="text-right col"
+                            >
+                              <input
+                                aria-label="acres"
+                                class="c13"
+                                name="area-acres"
+                                step=".01"
+                                type="number"
+                                value="5"
+                              />
+                            </div>
+                            <div
+                              class="col"
+                            >
+                              acres
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="mt-4 row"
+                >
+                  <div
+                    class="pr-0 text-left col-3"
+                  >
+                    <label
+                      class="c4"
+                    >
+                      End date:
+                    </label>
+                  </div>
+                  <div
+                    class="c5 text-left col"
+                  >
+                    <div
+                      class="c6 form-group"
+                    >
+                      <div
+                        class="react-datepicker-wrapper d-block"
+                      >
+                        <div
+                          class="react-datepicker__input-container react-datepicker__view-calendar-icon"
+                        >
+                          <svg
+                            class="react-datepicker__calendar-icon"
+                            viewBox="0 0 448 512"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                            />
+                          </svg>
+                          <input
+                            autocomplete="off"
+                            class="c7 form-control date-picker"
+                            id="datepicker-leasePayableEndDt"
+                            name="leasePayableEndDt"
+                            placeholder="MMM DD, YYYY"
+                            type="text"
+                            value="Nov 21, 2022"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="c1 form-section c8"
+        >
+          <h2
+            class="c2"
+          >
+            <div
+              class="no-gutters row"
+            >
+              <div
+                class="col"
+              >
+                Surplus
+              </div>
+            </div>
+          </h2>
+          <div
+            class="collapse show"
+          >
+            <div
+              class="c1 form-section c9"
+            >
+              <div
+                class="collapse show"
+              >
+                <div
+                  class="pb-2 row"
+                >
+                  <div
+                    class="pr-0 text-left col-8"
+                  >
+                    <label
+                      class="c4"
+                    >
+                      Is there a Surplus? *:
+                    </label>
+                  </div>
+                  <div
+                    class="c5 text-left col"
+                  >
+                    <div
+                      class="c10 form-group"
+                    >
+                      <div
+                        class="radio-group"
+                      >
+                        <div
+                          class="c11"
+                        >
+                          <div
+                            class="form-check"
+                          >
+                            <input
+                              checked=""
+                              class="form-check-input position-static"
+                              data-testid="radio-istheresurplus-yes"
+                              id="input-true"
+                              name="isThereSurplus"
+                              type="radio"
+                              value="true"
+                            />
+                          </div>
+                          <label
+                            class="form-check-label form-label"
+                            for="isThereSurplus"
+                          >
+                            Yes
+                          </label>
+                        </div>
+                        <div
+                          class="c11"
+                        >
+                          <div
+                            class="form-check"
+                          >
+                            <input
+                              class="form-check-input position-static"
+                              data-testid="radio-istheresurplus-no"
+                              id="input-false"
+                              name="isThereSurplus"
+                              type="radio"
+                              value="false"
+                            />
+                          </div>
+                          <label
+                            class="form-check-label form-label"
+                            for="isThereSurplus"
+                          >
+                            No
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="pb-2 row"
+                >
+                  <div
+                    class="pr-0 text-left col-12"
+                  >
+                    <label
+                      class="c4"
+                    >
+                      Area:
+                    </label>
+                  </div>
+                  <div
+                    class="c5 text-left col"
+                  >
+                    <div
+                      class="row"
+                    >
+                      <div
+                        class="col"
+                      >
+                        <div
+                          class="c12"
+                        >
+                          <div
+                            class="pb-2 row"
+                          >
+                            <div
+                              class="text-right col"
+                            >
+                              <input
+                                aria-label="square metres"
+                                class="c13"
+                                name="area-sq-meters"
+                                step=".01"
+                                type="number"
+                                value="20234.28"
+                              />
+                            </div>
+                            <div
+                              class="col"
+                            >
+                              sq. metres
+                            </div>
+                          </div>
+                          <div
+                            class="row"
+                          >
+                            <div
+                              class="text-right col"
+                            >
+                              <input
+                                aria-label="hectares"
+                                class="c13"
+                                name="area-hectares"
+                                step=".01"
+                                type="number"
+                                value="2.02"
+                              />
+                            </div>
+                            <div
+                              class="col"
+                            >
+                              hectares
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="col"
+                      >
+                        <div
+                          class="c14"
+                        >
+                          <div
+                            class="pb-2 row"
+                          >
+                            <div
+                              class="text-right col"
+                            >
+                              <input
+                                aria-label="square feet"
+                                class="c13"
+                                name="area-sq-feet"
+                                step=".01"
+                                type="number"
+                                value="217799.99"
+                              />
+                            </div>
+                            <div
+                              class="col"
+                            >
+                              sq. feet
+                            </div>
+                          </div>
+                          <div
+                            class="row"
+                          >
+                            <div
+                              class="text-right col"
+                            >
+                              <input
+                                aria-label="acres"
+                                class="c13"
+                                name="area-acres"
+                                step=".01"
+                                type="number"
+                                value="5"
+                              />
+                            </div>
+                            <div
+                              class="col"
+                            >
+                              acres
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

@@ -222,6 +222,12 @@ public partial class PimsBaseContext : DbContext
 
     public virtual DbSet<PimsFenceType> PimsFenceTypes { get; set; }
 
+    public virtual DbSet<PimsFileNumber> PimsFileNumbers { get; set; }
+
+    public virtual DbSet<PimsFileNumberHist> PimsFileNumberHists { get; set; }
+
+    public virtual DbSet<PimsFileNumberType> PimsFileNumberTypes { get; set; }
+
     public virtual DbSet<PimsFinancialActivityCode> PimsFinancialActivityCodes { get; set; }
 
     public virtual DbSet<PimsFinancialActivityCodeHist> PimsFinancialActivityCodeHists { get; set; }
@@ -471,6 +477,8 @@ public partial class PimsBaseContext : DbContext
     public virtual DbSet<PimsPropertyTenureType> PimsPropertyTenureTypes { get; set; }
 
     public virtual DbSet<PimsPropertyType> PimsPropertyTypes { get; set; }
+
+    public virtual DbSet<PimsPropertyVw> PimsPropertyVws { get; set; }
 
     public virtual DbSet<PimsProvinceState> PimsProvinceStates { get; set; }
 
@@ -878,7 +886,6 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.AssignedDate)
                 .HasDefaultValueSql("(getutcdate())")
                 .HasComment("Date of file assignment.");
-            entity.Property(e => e.CompletionDate).HasComment("Date of acquisition file completion.");
             entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
             entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
             entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
@@ -3505,6 +3512,113 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.IsDisabled).HasComment("Indicates if the code value is inactive.");
         });
 
+        modelBuilder.Entity<PimsFileNumber>(entity =>
+        {
+            entity.HasKey(e => e.FileNumberId).HasName("FILNUM_PK");
+
+            entity.ToTable("PIMS_FILE_NUMBER", tb =>
+                {
+                    tb.HasComment("Table containing the file numbers associated with a property.");
+                    tb.HasTrigger("PIMS_FILNUM_A_S_IUD_TR");
+                    tb.HasTrigger("PIMS_FILNUM_I_S_I_TR");
+                    tb.HasTrigger("PIMS_FILNUM_I_S_U_TR");
+                });
+
+            entity.Property(e => e.FileNumberId)
+                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_FILE_NUMBER_ID_SEQ])")
+                .HasComment("Generated surrogate primary key");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The directory of the user account that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("The GUID of the user account that created the record.");
+            entity.Property(e => e.AppCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user account that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user updated the record.");
+            entity.Property(e => e.AppLastUpdateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The directory of the user account that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("The GUID of the user account that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user account that updated the record.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.FileNumber).HasComment("The file number value.");
+            entity.Property(e => e.FileNumberTypeCode).HasComment("Foreign key describing the file number type.");
+            entity.Property(e => e.IsDisabled)
+                .HasDefaultValue(false)
+                .HasComment("Indicates if the record is disabled.");
+            entity.Property(e => e.OtherFileNumberType).HasComment("Description of file number type that's not currently listed.");
+            entity.Property(e => e.PropertyId).HasComment("Foreign key to the PIMS_PROPERTY table.");
+
+            entity.HasOne(d => d.FileNumberTypeCodeNavigation).WithMany(p => p.PimsFileNumbers)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("PIM_FLNMTY_PIM_FILNUM_FK");
+
+            entity.HasOne(d => d.Property).WithMany(p => p.PimsFileNumbers)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("PIM_PRPRTY_PIM_FILNUM_FK");
+        });
+
+        modelBuilder.Entity<PimsFileNumberHist>(entity =>
+        {
+            entity.HasKey(e => e.FileNumberHistId).HasName("PIMS_FILNUM_H_PK");
+
+            entity.Property(e => e.FileNumberHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_FILE_NUMBER_H_ID_SEQ])");
+            entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
+        });
+
+        modelBuilder.Entity<PimsFileNumberType>(entity =>
+        {
+            entity.HasKey(e => e.FileNumberTypeCode).HasName("FLNMTY_PK");
+
+            entity.ToTable("PIMS_FILE_NUMBER_TYPE", tb =>
+                {
+                    tb.HasComment("Code table to describe the type of property file number.");
+                    tb.HasTrigger("PIMS_FLNMTY_I_S_I_TR");
+                    tb.HasTrigger("PIMS_FLNMTY_I_S_U_TR");
+                });
+
+            entity.Property(e => e.FileNumberTypeCode).HasComment("Code representing the type of file number.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.Description).HasComment("Description of the type of file number.");
+            entity.Property(e => e.DisplayOrder).HasComment("Force the display order of the codes.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the code is disabled.");
+        });
+
         modelBuilder.Entity<PimsFinancialActivityCode>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("FINACT_PK");
@@ -5591,8 +5705,11 @@ public partial class PimsBaseContext : DbContext
                     tb.HasTrigger("PIMS_PRPRTY_I_S_U_TR");
                 });
 
-            entity.Property(e => e.PropertyId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_ID_SEQ])");
+            entity.Property(e => e.PropertyId)
+                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_ID_SEQ])")
+                .HasComment("Generated surrogate primary key");
             entity.Property(e => e.AdditionalDetails).HasComment("Additional details about the property.");
+            entity.Property(e => e.AddressId).HasComment("Foreign key to the address table.");
             entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
             entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
             entity.Property(e => e.BandName).HasComment("Name of the Indian band.");
@@ -5603,6 +5720,7 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
             entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
             entity.Property(e => e.Description).HasComment("Property description");
+            entity.Property(e => e.DistrictCode).HasComment("Foreign key to the district table.");
             entity.Property(e => e.EncumbranceReason).HasComment("reason for property encumbreance");
             entity.Property(e => e.FileNumber).HasComment("The (ARCS/ORCS) number identifying the Property File.");
             entity.Property(e => e.FileNumberSuffix).HasComment("A suffix to distinguish between Property Files with the same number.");
@@ -5630,16 +5748,27 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.Notes).HasComment("Notes about the property");
             entity.Property(e => e.Pid).HasComment("Property ID");
             entity.Property(e => e.Pin).HasComment("Property number");
+            entity.Property(e => e.PphStatusTypeCode).HasComment("Foreign key to the provincial public highway status type table.");
             entity.Property(e => e.PphStatusUpdateTimestamp).HasComment("Date / time that the Provincial Public Highway status was updated.");
             entity.Property(e => e.PphStatusUpdateUserGuid).HasComment("GUID of the user that updated the PPH status.");
             entity.Property(e => e.PphStatusUpdateUserid).HasComment("Userid that updated the Provincial Public Highway status.");
-            entity.Property(e => e.PropertyClassificationTypeCode).HasDefaultValue("UNKNOWN");
+            entity.Property(e => e.PropertyAreaUnitTypeCode).HasComment("Foreign key to the property area unit type table.");
+            entity.Property(e => e.PropertyClassificationTypeCode)
+                .HasDefaultValue("UNKNOWN")
+                .HasComment("Foreign key to the proeprty classification type table.");
             entity.Property(e => e.PropertyDataSourceEffectiveDate).HasComment("Date the property was officially registered");
+            entity.Property(e => e.PropertyDataSourceTypeCode).HasComment("Foreign key to the property data source type table.");
+            entity.Property(e => e.PropertyStatusTypeCode).HasComment("Foreign key to the property status type table.");
+            entity.Property(e => e.PropertyTypeCode).HasComment("Foreign key to the proprty type table.");
+            entity.Property(e => e.RegionCode).HasComment("Foreign key to the region table.");
             entity.Property(e => e.ReserveName).HasComment("Name of the Indian reserve.");
             entity.Property(e => e.SurplusDeclarationComment).HasComment("Comment regarding the surplus declaration");
             entity.Property(e => e.SurplusDeclarationDate).HasComment("Date the property was declared surplus");
+            entity.Property(e => e.SurplusDeclarationTypeCode).HasComment("Foreign key to the surplus declaration type table.");
             entity.Property(e => e.SurveyPlanNumber).HasComment("Property/Land Parcel survey plan number");
+            entity.Property(e => e.VolumeUnitTypeCode).HasComment("Foreign key to the volume unit type table.");
             entity.Property(e => e.VolumetricMeasurement).HasComment("Volumetric measurement of the parcel.");
+            entity.Property(e => e.VolumetricTypeCode).HasComment("Foreign key to the volumetric type table.");
             entity.Property(e => e.Zoning).HasComment("Current property zoning");
             entity.Property(e => e.ZoningPotential).HasComment("Potential property zoning");
 
@@ -6391,6 +6520,11 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
             entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
             entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+        });
+
+        modelBuilder.Entity<PimsPropertyVw>(entity =>
+        {
+            entity.ToView("PIMS_PROPERTY_VW");
         });
 
         modelBuilder.Entity<PimsProvinceState>(entity =>
@@ -7914,6 +8048,12 @@ public partial class PimsBaseContext : DbContext
             .HasMin(1L)
             .HasMax(2147483647L);
         modelBuilder.HasSequence("PIMS_FILE_ENTITY_PERMISSIONS_ID_SEQ")
+            .HasMin(1L)
+            .HasMax(2147483647L);
+        modelBuilder.HasSequence("PIMS_FILE_NUMBER_H_ID_SEQ")
+            .HasMin(1L)
+            .HasMax(2147483647L);
+        modelBuilder.HasSequence("PIMS_FILE_NUMBER_ID_SEQ")
             .HasMin(1L)
             .HasMax(2147483647L);
         modelBuilder.HasSequence("PIMS_FINANCIAL_ACTIVITY_CODE_H_ID_SEQ")

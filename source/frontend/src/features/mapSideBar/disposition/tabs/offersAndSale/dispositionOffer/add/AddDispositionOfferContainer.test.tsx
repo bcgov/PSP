@@ -1,5 +1,4 @@
 import { createMemoryHistory } from 'history';
-import React from 'react';
 
 import { Claims } from '@/constants/claims';
 import { mockDispositionFileOfferApi } from '@/mocks/dispositionFiles.mock';
@@ -18,12 +17,12 @@ const history = createMemoryHistory();
 const mockPostApi = {
   error: undefined,
   response: undefined,
-  execute: jest.fn(),
+  execute: vi.fn(),
   loading: false,
 };
-const onSuccess = jest.fn();
+const onSuccess = vi.fn();
 
-jest.mock('@/hooks/repositories/useDispositionProvider', () => ({
+vi.mock('@/hooks/repositories/useDispositionProvider', () => ({
   useDispositionProvider: () => {
     return {
       postDispositionFileOffer: mockPostApi,
@@ -64,7 +63,7 @@ describe('Add Disposition Offer Container component', () => {
 
   beforeEach(() => {
     viewProps = undefined;
-    jest.resetAllMocks();
+    vi.resetAllMocks();
   });
 
   it('Renders the underlying form', async () => {

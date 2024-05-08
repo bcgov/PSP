@@ -1,5 +1,5 @@
 import { AxiosError } from 'axios';
-import { FormikProps } from 'formik';
+import { FormikProps } from 'formik/dist/types';
 import { useCallback } from 'react';
 
 import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';

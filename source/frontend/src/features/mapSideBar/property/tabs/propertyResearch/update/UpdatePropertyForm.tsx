@@ -1,7 +1,6 @@
 import { FormikProps, useFormikContext } from 'formik';
 import Multiselect from 'multiselect-react-dropdown';
-import * as React from 'react';
-import { useState } from 'react';
+import { createRef, useState } from 'react';
 import { FaTimes } from 'react-icons/fa';
 
 import { Input, Select, SelectOption, TextArea } from '@/components/common/form';
@@ -47,7 +46,7 @@ const UpdatePropertyForm: React.FunctionComponent<
 
   const [selectedPurposes, setSelectedPurposes] = useState<MultiSelectOption[]>(initialPurposeList);
 
-  const multiselectProgramRef = React.createRef<Multiselect>();
+  const multiselectProgramRef = createRef<Multiselect>();
 
   function onSelectedPurposeChange(selectedList: MultiSelectOption[]) {
     setSelectedPurposes(selectedList);

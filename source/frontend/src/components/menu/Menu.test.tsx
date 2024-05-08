@@ -2,7 +2,7 @@ import { fireEvent, render } from '@testing-library/react';
 
 import { IMenuItemProps, Menu } from './Menu';
 
-const mockFunction = jest.fn();
+const mockFunction = vi.fn();
 
 const mockOptions: IMenuItemProps[] = [
   {

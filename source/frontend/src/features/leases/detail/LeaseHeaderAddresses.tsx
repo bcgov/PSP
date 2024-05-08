@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 import ExpandableTextList from '@/components/common/ExpandableTextList';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { ApiGen_Concepts_PropertyLease } from '@/models/api/generated/ApiGen_Concepts_PropertyLease';

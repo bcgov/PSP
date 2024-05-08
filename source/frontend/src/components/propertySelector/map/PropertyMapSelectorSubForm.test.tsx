@@ -8,7 +8,7 @@ import PropertyMapSelectorSubForm, {
   IPropertyMapSelectorSubFormProps,
 } from './PropertyMapSelectorSubForm';
 
-const onClickDraftMarker = jest.fn();
+const onClickDraftMarker = vi.fn();
 
 const testProperty: IMapProperty = {
   pid: '123-456-789',
@@ -45,7 +45,7 @@ describe('PropertySelectorSubForm component', () => {
   };
 
   afterEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
   });
 
   it('renders as expected when provided no properties', () => {

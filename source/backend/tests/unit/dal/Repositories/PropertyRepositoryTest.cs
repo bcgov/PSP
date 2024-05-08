@@ -5,6 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Linq;
 using FluentAssertions;
+using Pims.Api.Models.CodeTypes;
 using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Core.Test;
@@ -668,6 +669,61 @@ namespace Pims.Dal.Test.Repositories
             // Assert
             act.Should().Throw<ArgumentNullException>();
         }
+
+        [Fact]
+        public void Update_Property_DoesNOT_UPDATE_PPH_Audit()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.PropertyView, Permissions.PropertyEdit);
+            var property = EntityHelper.CreateProperty(1);
+            property.PphStatusTypeCode = null;
+            property.PphStatusUpdateTimestamp = null;
+            property.PphStatusUpdateUserid = null;
+            property.PphStatusUpdateUserGuid = null;
+
+            _helper.AddAndSaveChanges(property);
+
+            var updateProperty = new PimsProperty();
+            updateProperty.PropertyId = property.PropertyId;
+            updateProperty.PphStatusTypeCode = PropertyPPHStatusTypes.UNKNOWN.ToString();
+
+            // Act
+            var result = repository.Update(updateProperty);
+
+            // Assert
+            Assert.Null(result.PphStatusUpdateTimestamp);
+            Assert.Null(result.PphStatusUpdateUserid);
+            Assert.Null(result.PphStatusUpdateUserGuid);
+        }
+
+        [Fact]
+        public void Update_Property_Update_PPH_Audit()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.PropertyView, Permissions.PropertyEdit);
+
+            var property = EntityHelper.CreateProperty(1);
+            property.PphStatusTypeCode = PropertyPPHStatusTypes.UNKNOWN.ToString();
+            property.PphStatusUpdateTimestamp = null;
+            property.PphStatusUpdateUserid = null;
+            property.PphStatusUpdateUserGuid = null;
+
+            _helper.AddAndSaveChanges(property);
+
+            var updateProperty = new PimsProperty();
+            updateProperty.PropertyId = property.PropertyId;
+            updateProperty.PphStatusTypeCode = PropertyPPHStatusTypes.COMBO.ToString();
+
+            // Act
+            var result = repository.Update(updateProperty);
+
+            // Assert
+            Assert.Equal(PropertyPPHStatusTypes.COMBO.ToString(), result.PphStatusTypeCode);
+            Assert.NotNull(result.PphStatusUpdateTimestamp);
+            Assert.NotNull(result.PphStatusUpdateUserid);
+            Assert.NotNull(result.PphStatusUpdateUserGuid);
+        }
+
         #endregion
 
         #region Delete

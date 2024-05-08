@@ -1,4 +1,4 @@
-import { rest, server } from '@/mocks/msw/server';
+import { server } from '@/mocks/msw/server';
 import { mockProjectGetResponse } from '@/mocks/projects.mock';
 import { getUserMock } from '@/mocks/user.mock';
 import { ApiGen_Concepts_Project } from '@/models/api/generated/ApiGen_Concepts_Project';
@@ -6,6 +6,7 @@ import { prettyFormatUTCDate } from '@/utils';
 import { render, RenderOptions } from '@/utils/test-utils';
 
 import ProjectHeader, { IProjectHeaderProps } from './ProjectHeader';
+import { http, HttpResponse } from 'msw';
 
 type TestProps = Pick<IProjectHeaderProps, 'project'>;
 
@@ -20,14 +21,14 @@ describe('ProjectHeader component', () => {
   beforeEach(() => {
     project = mockProjectGetResponse();
     server.use(
-      rest.get('/api/users/info/:userId', (req, res, ctx) => {
-        return res(ctx.delay(500), ctx.status(200), ctx.json(getUserMock()));
+      http.get('/api/users/info/:userId', () => {
+        return HttpResponse.json(getUserMock(), { status: 200 });
       }),
     );
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders as expected', () => {

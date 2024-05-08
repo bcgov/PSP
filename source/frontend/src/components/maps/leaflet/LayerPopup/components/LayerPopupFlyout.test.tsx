@@ -7,20 +7,18 @@ import { act, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import { ILayerPopupFlyoutProps, LayerPopupFlyout } from './LayerPopupFlyout';
 
-jest.mock('@react-keycloak/web');
-
 const history = createMemoryHistory();
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
 
-const onViewPropertyInfo = jest.fn();
-const onCreateResearchFile = jest.fn();
-const onCreateAcquisitionFile = jest.fn();
-const onCreateLeaseLicense = jest.fn();
-const onCreateDispositionFile = jest.fn();
-const onCreateSubdivision = jest.fn();
-const onCreateConsolidation = jest.fn();
+const onViewPropertyInfo = vi.fn();
+const onCreateResearchFile = vi.fn();
+const onCreateAcquisitionFile = vi.fn();
+const onCreateLeaseLicense = vi.fn();
+const onCreateDispositionFile = vi.fn();
+const onCreateSubdivision = vi.fn();
+const onCreateConsolidation = vi.fn();
 
 describe('LayerPopupFlyout component', () => {
   const setup = (renderOptions?: RenderOptions & Partial<ILayerPopupFlyoutProps>) => {
@@ -51,7 +49,7 @@ describe('LayerPopupFlyout component', () => {
   };
 
   beforeEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
   });
 
   it('renders property view link by default', async () => {

@@ -1,5 +1,5 @@
 import { screen } from '@testing-library/react';
-import { noop } from 'lodash';
+import noop from 'lodash/noop';
 
 import { Claims } from '@/constants/claims';
 import { mockKeycloak, render, RenderOptions, waitFor } from '@/utils/test-utils';
@@ -7,7 +7,6 @@ import { mockKeycloak, render, RenderOptions, waitFor } from '@/utils/test-utils
 import { AcquisitionTray } from './AcquisitionTray';
 
 // mock auth library
-jest.mock('@react-keycloak/web');
 
 // render component under test
 const setup = (renderOptions: RenderOptions = {}) => {

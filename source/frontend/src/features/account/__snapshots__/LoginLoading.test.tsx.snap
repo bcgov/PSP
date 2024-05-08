@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Empty Header CITZ Login Loading 1`] = `
+exports[`Empty Header > CITZ Login Loading 1`] = `
 .c2.btn {
   display: -webkit-box;
   display: -webkit-flex;
@@ -340,7 +340,7 @@ exports[`Empty Header CITZ Login Loading 1`] = `
 </div>
 `;
 
-exports[`Empty Header MOTI Login Loading 1`] = `
+exports[`Empty Header > MOTI Login Loading 1`] = `
 .c2.btn {
   display: -webkit-box;
   display: -webkit-flex;

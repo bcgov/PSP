@@ -12,11 +12,10 @@ import ExpropriationForm8Details, {
 const mockFom8Api = mockGetExpropriationPaymentApi(1, 1);
 const mockAcquisitionFile = mockAcquisitionFileResponse(1);
 
-const onDelete = jest.fn();
-const onGenerate = jest.fn();
+const onDelete = vi.fn();
+const onGenerate = vi.fn();
 
 const history = createMemoryHistory();
-jest.mock('@react-keycloak/web');
 
 describe('Form 8 Detail View component', () => {
   const setup = async (
@@ -46,7 +45,7 @@ describe('Form 8 Detail View component', () => {
   };
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders as expected', async () => {

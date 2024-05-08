@@ -62,15 +62,15 @@ const mockAddress: ApiGen_Concepts_OrganizationAddress = {
 };
 
 // Mock API service calls
-jest.mock('@/features/contacts/hooks/useOrganizationDetail');
-jest.mock('@/features/contacts/hooks/useUpdateContact');
+vi.mock('@/features/contacts/hooks/useOrganizationDetail');
+vi.mock('@/features/contacts/hooks/useUpdateContact');
 
-const getOrganization = useOrganizationDetail as jest.MockedFunction<typeof useOrganizationDetail>;
+const getOrganization = vi.mocked(useOrganizationDetail);
 
-const updateOrganization = jest.fn();
-(useUpdateContact as jest.MockedFunction<typeof useUpdateContact>).mockReturnValue({
+const updateOrganization = vi.fn();
+vi.mocked(useUpdateContact).mockReturnValue({
   updateOrganization,
-  updatePerson: jest.fn(),
+  updatePerson: vi.fn(),
 });
 
 describe('UpdateOrganizationForm', () => {

@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Empty Header renders 1`] = `
+exports[`Empty Header > renders 1`] = `
 .c1 {
   border-left: 1px solid white;
   font-size: 3.4rem;
@@ -107,7 +107,7 @@ exports[`Empty Header renders 1`] = `
         alt="Government of BC logo"
         class="bc-gov-icon"
         height="43"
-        src="logo-banner.svg"
+        src="/src/assets/images/logo-banner.svg"
         width="156"
       />
     </a>

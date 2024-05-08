@@ -12,7 +12,7 @@ import {
 
 import AdvancedFilterButton, { IAdvanceFilterButtonProps } from './AdvancedFilterButton';
 
-const toggle = jest.fn();
+const toggle = vi.fn();
 
 describe('AdvancedFilterButton', () => {
   const setup = async (

@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`AccessRequestPage renders correctly 1`] = `
+exports[`AccessRequestPage > renders correctly 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
@@ -397,11 +397,11 @@ exports[`AccessRequestPage renders correctly 1`] = `
                   class="form-control"
                   id="input-email"
                   name="email"
-                  placeholder=""
+                  placeholder="test@test.com"
                   readonly=""
-                  title=""
+                  title="test@test.com"
                   type="email"
-                  value=""
+                  value="test@test.com"
                 />
               </div>
             </div>

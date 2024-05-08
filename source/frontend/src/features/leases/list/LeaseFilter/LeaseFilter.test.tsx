@@ -12,13 +12,11 @@ const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: [] },
 };
 
-const setFilter = jest.fn();
+const setFilter = vi.fn();
 
-jest.mock('@react-keycloak/web');
-
-jest.mock('@/hooks/repositories/useUserInfoRepository');
-(useUserInfoRepository as jest.Mock).mockReturnValue({
-  retrieveUserInfo: jest.fn(),
+vi.mock('@/hooks/repositories/useUserInfoRepository');
+vi.mocked(useUserInfoRepository).mockReturnValue({
+  retrieveUserInfo: vi.fn(),
   retrieveUserInfoLoading: true,
   retrieveUserInfoResponse: getUserMock(),
 });

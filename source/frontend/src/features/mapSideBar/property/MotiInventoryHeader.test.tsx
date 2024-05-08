@@ -17,7 +17,7 @@ const defaultComposedProperty: ComposedProperty = {
   bcAssessmentSummary: undefined,
 };
 
-const onZoom = jest.fn();
+const onZoom = vi.fn();
 describe('MotiInventoryHeader component', () => {
   const setup = (
     renderOptions: RenderOptions & IMotiInventoryHeaderProps = {

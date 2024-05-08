@@ -1,4 +1,5 @@
-import _ from 'lodash';
+import difference from 'lodash/difference';
+import map from 'lodash/map';
 import { FaRegTimesCircle } from 'react-icons/fa';
 
 import { ColumnWithProps } from '../components/Table/types';
@@ -25,7 +26,7 @@ export const getColumnsWithRemove = <T extends object>(
         style={{ cursor: 'pointer' }}
         size={16}
         onClick={() => {
-          setRows(_.difference(_.map(props.rows, 'original'), [props.row.original]));
+          setRows(difference(map(props.rows, 'original'), [props.row.original]));
         }}
       />
     ),

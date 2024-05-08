@@ -1,4 +1,3 @@
-import * as React from 'react';
 import styled from 'styled-components';
 
 import DraftMarker from '@/components/maps/leaflet/SvgMarkers/DraftMarker';

@@ -1,4 +1,4 @@
-import { KeycloakInstance } from 'keycloak-js';
+import { KeycloakInstance } from 'keycloak-js/dist/keycloak';
 
 import { clearJwt, saveJwt } from '@/store/slices/jwt/JwtSlice';
 import { setKeycloakReady } from '@/store/slices/keycloakReady/keycloakReadySlice';
@@ -6,18 +6,18 @@ import { store } from '@/store/store';
 
 import getKeycloakEventHandler from './getKeycloakEventHandler';
 
-jest.mock('@/store/slices/jwt/JwtSlice', () => ({
-  saveJwt: jest.fn(),
-  clearJwt: jest.fn(),
+vi.mock('@/store/slices/jwt/JwtSlice', () => ({
+  saveJwt: vi.fn(),
+  clearJwt: vi.fn(),
 }));
-jest.mock('@/store/slices/keycloakReady/keycloakReadySlice');
-jest.mock('@/store/store', () => ({
+vi.mock('@/store/slices/keycloakReady/keycloakReadySlice');
+vi.mock('@/store/store', () => ({
   store: {
-    dispatch: jest.fn(),
+    dispatch: vi.fn(),
   },
 }));
 
-const onRefresh = jest.fn();
+const onRefresh = vi.fn();
 
 const keycloak = {
   subject: 'test',
@@ -30,7 +30,7 @@ const keycloak = {
 const keyclockEventHandler = getKeycloakEventHandler(keycloak, onRefresh);
 describe('KeycloakEventHandler ', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
   it('saves the token when onAuthSuccess event is fired', () => {
     keyclockEventHandler('onAuthSuccess');

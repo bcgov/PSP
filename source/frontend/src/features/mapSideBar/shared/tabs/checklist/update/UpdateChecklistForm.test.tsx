@@ -14,10 +14,10 @@ import { IUpdateChecklistFormProps, UpdateChecklistForm } from './UpdateChecklis
 import { ApiGen_Concepts_FileWithChecklist } from '@/models/api/generated/ApiGen_Concepts_FileWithChecklist';
 
 // mock API service calls
-jest.mock('@/hooks/pims-api/useApiUsers');
+vi.mock('@/hooks/pims-api/useApiUsers');
 
-(useApiUsers as jest.MockedFunction<typeof useApiUsers>).mockReturnValue({
-  getUserInfo: jest.fn().mockResolvedValue({}),
+vi.mocked(useApiUsers).mockReturnValue({
+  getUserInfo: vi.fn().mockResolvedValue({}),
 } as any);
 
 const sectionTypes = mockLookups.filter(
@@ -27,9 +27,9 @@ const sectionTypes = mockLookups.filter(
 const mockViewProps: IUpdateChecklistFormProps = {
   formikRef: null as any,
   initialValues: new ChecklistFormModel(),
-  onSave: jest.fn(),
-  onError: jest.fn(),
-  onSuccess: jest.fn(),
+  onSave: vi.fn(),
+  onError: vi.fn(),
+  onSuccess: vi.fn(),
   sectionTypeName: API.ACQUISITION_CHECKLIST_SECTION_TYPES,
   statusTypeName: API.ACQUISITION_CHECKLIST_ITEM_STATUS_TYPES,
   prefix: 'acq',
@@ -77,7 +77,7 @@ describe('UpdateChecklist form', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders as expected', async () => {
@@ -92,7 +92,7 @@ describe('UpdateChecklist form', () => {
 
   it('saves the form with minimal data', async () => {
     const { formikRef } = setup();
-    (mockViewProps.onSave as jest.Mock).mockResolvedValue(mockDispositionFileResponse());
+    vi.mocked(mockViewProps.onSave).mockResolvedValue(mockDispositionFileResponse());
 
     await act(async () => {
       formikRef.current?.submitForm();
@@ -102,7 +102,7 @@ describe('UpdateChecklist form', () => {
 
   it('saves the form with updated values', async () => {
     const { formikRef } = setup();
-    (mockViewProps.onSave as jest.Mock).mockResolvedValue(mockDispositionFileResponse());
+    vi.mocked(mockViewProps.onSave).mockResolvedValue(mockDispositionFileResponse());
 
     await act(async () => {
       formikRef.current?.submitForm();
@@ -112,7 +112,7 @@ describe('UpdateChecklist form', () => {
 
   it('calls onSuccess when the disposition checklist is saved successfully', async () => {
     const { formikRef } = setup();
-    (mockViewProps.onSave as jest.Mock).mockResolvedValue(mockDispositionFileResponse());
+    vi.mocked(mockViewProps.onSave).mockResolvedValue(mockDispositionFileResponse());
 
     await act(async () => {
       formikRef.current?.submitForm();
@@ -125,7 +125,7 @@ describe('UpdateChecklist form', () => {
   it('calls onError when it cannot save the form', async () => {
     const { formikRef } = setup();
     const error500 = createAxiosError(500);
-    (mockViewProps.onSave as jest.Mock).mockRejectedValue(error500);
+    vi.mocked(mockViewProps.onSave).mockRejectedValue(error500);
 
     await act(async () => {
       formikRef.current?.submitForm();

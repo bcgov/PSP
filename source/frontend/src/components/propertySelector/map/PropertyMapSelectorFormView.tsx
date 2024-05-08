@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { Section } from '@/components/common/Section/Section';
 import * as Styled from '@/components/common/styles';
