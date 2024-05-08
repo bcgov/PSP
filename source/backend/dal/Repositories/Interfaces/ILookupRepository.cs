@@ -155,5 +155,7 @@ namespace Pims.Dal.Repositories
         IEnumerable<PimsDspChklstItemType> GetAllDispositionChecklistItemTypes();
 
         IEnumerable<PimsDspChklstSectionType> GetAllDispositionChecklistSectionTypes();
+
+        IEnumerable<PimsFileNumberType> GetAllHistoricalNumberTypes();
     }
 }

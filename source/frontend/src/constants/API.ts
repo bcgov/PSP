@@ -128,6 +128,7 @@ export const DISPOSITION_INITIATING_BRANCH_TYPES = 'PimsDspInitiatingBranchType'
 export const DISPOSITION_TEAM_PROFILE_TYPES = 'PimsDspFlTeamProfileType';
 export const DISPOSITION_FUNDING_TYPES = 'PimsDispositionFundingType';
 export const DISPOSITION_OFFER_STATUS_TYPES = 'PimsDispositionOfferStatusType';
+export const HISTORICAL_NUMBER_TYPES = 'PimsFileNumberType';
 
 // TODO: PSP-4395 This should all be removed from this and moved to the useApi* hooks.
 // Auth Service
