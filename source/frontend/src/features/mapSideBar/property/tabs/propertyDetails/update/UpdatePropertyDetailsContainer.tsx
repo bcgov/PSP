@@ -1,18 +1,19 @@
 import { Formik, FormikHelpers, FormikProps } from 'formik';
 import isNumber from 'lodash/isNumber';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import * as API from '@/constants/API';
+import { useHistoricalNumberRepository } from '@/hooks/repositories/useHistoricalNumberRepository';
 import { usePimsPropertyRepository } from '@/hooks/repositories/usePimsPropertyRepository';
 import { useQueryMapLayersByLocation } from '@/hooks/repositories/useQueryMapLayersByLocation';
 import { useLookupCodeHelpers } from '@/hooks/useLookupCodeHelpers';
 import useIsMounted from '@/hooks/util/useIsMounted';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
-import { isValidId } from '@/utils';
+import { exists, isValidId } from '@/utils';
 
-import { UpdatePropertyDetailsFormModel } from './models';
+import { HistoricalNumberForm, UpdatePropertyDetailsFormModel } from './models';
 import { UpdatePropertyDetailsForm } from './UpdatePropertyDetailsForm';
 import { UpdatePropertyDetailsYupSchema } from './validation';
 
@@ -25,10 +26,20 @@ export const UpdatePropertyDetailsContainer = React.forwardRef<
   FormikProps<any>,
   IUpdatePropertyDetailsContainerProps
 >((props, ref) => {
+  const { id, onSuccess } = props;
   const isMounted = useIsMounted();
 
-  const { getPropertyWrapper, updatePropertyWrapper } = usePimsPropertyRepository();
-  const executeGetProperty = getPropertyWrapper.execute;
+  const {
+    getPropertyWrapper: { execute: executeGetProperty, loading: loadingGetProperty },
+    updatePropertyWrapper: { execute: executeUpdateProperty },
+  } = usePimsPropertyRepository();
+
+  const {
+    getPropertyHistoricalNumbers: {
+      execute: executeGetHistoricalNumbers,
+      loading: loadingGetHistoricalNumbers,
+    },
+  } = useHistoricalNumberRepository();
 
   const { queryAll } = useQueryMapLayersByLocation();
 
@@ -45,63 +56,74 @@ export const UpdatePropertyDetailsContainer = React.forwardRef<
     [getByType],
   );
 
-  useEffect(() => {
-    async function fetchProperty() {
-      if (isValidId(props.id)) {
-        const retrieved = await executeGetProperty(props.id);
-        if (retrieved !== undefined && isMounted()) {
-          const formValues = UpdatePropertyDetailsFormModel.fromApi(retrieved);
+  const fetchProperty = useCallback(
+    async (id: number) => {
+      const retrieved = await executeGetProperty(id);
+      if (exists(retrieved) && isMounted()) {
+        const apiHistoricalNumbers = await executeGetHistoricalNumbers(id);
 
-          // This triggers API calls to DataBC map layers
-          if (isNumber(retrieved.latitude) && isNumber(retrieved.longitude)) {
-            const layers = await queryAll({ lat: retrieved.latitude, lng: retrieved.longitude });
-            formValues.isALR = !!layers.isALR;
-            formValues.motiRegion = layers.motiRegion;
-            formValues.highwaysDistrict = layers.highwaysDistrict;
-            formValues.electoralDistrict = layers.electoralDistrict;
-            formValues.firstNations = layers.firstNations;
-          }
+        const formValues = UpdatePropertyDetailsFormModel.fromApi(retrieved);
+        formValues.historicalNumbers =
+          apiHistoricalNumbers?.map(hn => HistoricalNumberForm.fromApi(hn)) ?? [];
 
-          setForm(formValues);
+        // This triggers API calls to DataBC map layers
+        if (isNumber(retrieved.latitude) && isNumber(retrieved.longitude)) {
+          const layers = await queryAll({ lat: retrieved.latitude, lng: retrieved.longitude });
+          formValues.isALR = !!layers.isALR;
+          formValues.motiRegion = layers.motiRegion;
+          formValues.highwaysDistrict = layers.highwaysDistrict;
+          formValues.electoralDistrict = layers.electoralDistrict;
+          formValues.firstNations = layers.firstNations;
         }
+
+        setForm(formValues);
       }
+    },
+    [executeGetHistoricalNumbers, executeGetProperty, isMounted, queryAll],
+  );
+
+  useEffect(() => {
+    if (isValidId(id)) {
+      fetchProperty(id);
     }
-    fetchProperty();
-  }, [isMounted, props.id, queryAll, executeGetProperty]);
+  }, [fetchProperty, id]);
 
   // save handler - sends updated property information to backend
-  const savePropertyInformation = async (
-    values: UpdatePropertyDetailsFormModel,
-    formikHelpers: FormikHelpers<UpdatePropertyDetailsFormModel>,
-  ) => {
-    // default province and country to BC, Canada
-    if (values.address !== undefined) {
-      values.address.province = {
-        id: Number(provinceBC?.id),
-        code: null,
-        description: null,
-        displayOrder: null,
-      };
-      values.address.country = {
-        id: Number(countryCA?.id),
-        code: null,
-        description: null,
-        displayOrder: null,
-      };
-    }
+  const savePropertyInformation = useCallback(
+    async (
+      values: UpdatePropertyDetailsFormModel,
+      formikHelpers: FormikHelpers<UpdatePropertyDetailsFormModel>,
+    ) => {
+      // default province and country to BC, Canada
+      if (values.address !== undefined) {
+        values.address.province = {
+          id: Number(provinceBC?.id),
+          code: null,
+          description: null,
+          displayOrder: null,
+        };
+        values.address.country = {
+          id: Number(countryCA?.id),
+          code: null,
+          description: null,
+          displayOrder: null,
+        };
+      }
 
-    const apiProperty: ApiGen_Concepts_Property = values.toApi();
-    const response = await updatePropertyWrapper.execute(apiProperty);
+      const apiProperty: ApiGen_Concepts_Property = values.toApi();
+      const response = await executeUpdateProperty(apiProperty);
 
-    formikHelpers.setSubmitting(false);
+      formikHelpers.setSubmitting(false);
 
-    if (isValidId(response?.id)) {
-      formikHelpers.resetForm();
-      props.onSuccess();
-    }
-  };
+      if (isValidId(response?.id)) {
+        formikHelpers.resetForm();
+        onSuccess();
+      }
+    },
+    [countryCA?.id, executeUpdateProperty, onSuccess, provinceBC?.id],
+  );
 
-  if (getPropertyWrapper?.loading || !initialForm) {
+  if (loadingGetProperty || loadingGetHistoricalNumbers || !initialForm) {
     return <LoadingBackdrop show={true} parentScreen={true}></LoadingBackdrop>;
   }
 
