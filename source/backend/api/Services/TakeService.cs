@@ -224,7 +224,7 @@ namespace Pims.Api.Services
 
             var allTakes = currentTakes;
 
-            // If the take is being modified, update the one in the list to use the incomming one.
+            // If the take is being modified, update the one in the list to use the incoming one.
             var existingTake = allTakes.FirstOrDefault(t => t.TakeId == take.TakeId);
             if (existingTake != null)
             {
