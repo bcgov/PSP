@@ -100,6 +100,22 @@ exports[`AcquisitionHeader component > renders as expected when no data is provi
           </div>
         </div>
       </div>
+      <div
+        class="row"
+      >
+        <div
+          class="pr-0 text-left col-3"
+        >
+          <label>
+            Historical File #:
+          </label>
+        </div>
+        <div
+          class="pl-1 text-left col-9"
+        >
+          <strong />
+        </div>
+      </div>
     </div>
     <div
       class="col-5"
