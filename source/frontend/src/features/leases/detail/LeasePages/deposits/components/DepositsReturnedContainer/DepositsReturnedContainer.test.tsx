@@ -12,17 +12,6 @@ import DepositsReturnedContainer, {
 
 const mockCallback = (id: number): void => {};
 
-jest.mock('@react-keycloak/web');
-(useKeycloak as jest.Mock).mockReturnValue({
-  keycloak: {
-    userInfo: {
-      organizations: [1],
-      roles: [],
-    },
-    subject: 'test',
-  },
-});
-
 // render component under test
 const setup = (renderOptions: RenderOptions & IDepositsReturnedContainerProps) => {
   const result = render(
@@ -34,6 +23,7 @@ const setup = (renderOptions: RenderOptions & IDepositsReturnedContainerProps) =
     />,
     {
       ...renderOptions,
+      useMockAuthentication: true,
     },
   );
 

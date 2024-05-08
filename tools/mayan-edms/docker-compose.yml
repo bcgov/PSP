@@ -19,7 +19,7 @@ x-mayan-container: &mayan-container
     # - /opt/watch_folder:/watch_folder
 
 services:
-  app:
+  mayan-app:
     <<: *mayan-container
     profiles:
       - all_in_one

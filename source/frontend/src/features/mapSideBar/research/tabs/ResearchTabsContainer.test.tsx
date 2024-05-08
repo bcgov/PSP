@@ -11,11 +11,8 @@ import { SideBarContextProvider } from '../../context/sidebarContext';
 import ResearchTabsContainer, { IResearchTabsContainerProps } from './ResearchTabsContainer';
 
 // mock auth library
-jest.mock('@react-keycloak/web');
 
-jest.mock('@/components/common/mapFSM/MapStateMachineContext');
-
-const setIsEditing = jest.fn();
+const setIsEditing = vi.fn();
 const history = createMemoryHistory();
 
 describe('ResearchFileTabs component', () => {
@@ -38,12 +35,8 @@ describe('ResearchFileTabs component', () => {
     return { ...utils };
   };
 
-  beforeEach(() => {
-    (useMapStateMachine as jest.Mock).mockImplementation(() => mapMachineBaseMock);
-  });
-
   afterEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
   });
 
   it('matches snapshot', () => {

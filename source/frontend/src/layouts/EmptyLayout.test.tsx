@@ -1,12 +1,11 @@
 import { act, render } from '@testing-library/react';
-import React from 'react';
 import { ThemeProvider } from 'styled-components';
 
 import { TenantConsumer, TenantProvider } from '@/tenants';
 
 import EmptyLayout from './EmptyLayout';
 
-const mockGetVersion = jest.fn(async () => {
+const mockGetVersion = vi.fn(async () => {
   return Promise.resolve({
     data: {
       environment: 'test',
@@ -15,7 +14,7 @@ const mockGetVersion = jest.fn(async () => {
   });
 });
 
-jest.mock('@/hooks/pims-api/useApiHealth', () => ({
+vi.mock('@/hooks/pims-api/useApiHealth', () => ({
   useApiHealth: () => ({
     getVersion: mockGetVersion,
   }),

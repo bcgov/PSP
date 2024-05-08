@@ -2,6 +2,7 @@ import { Formik } from 'formik';
 import React, { useMemo, useState } from 'react';
 import Col from 'react-bootstrap/Col';
 import { useHistory } from 'react-router';
+import { toast } from 'react-toastify';
 import styled from 'styled-components';
 
 import { ResetButton, SearchButton } from '@/components/common/buttons';
@@ -9,6 +10,7 @@ import { Form, Input, Select } from '@/components/common/form';
 import { TableSort } from '@/components/Table/TableSort';
 import { useGeocoderRepository } from '@/hooks/useGeocoderRepository';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
+import { pidFormatter } from '@/utils';
 import { FilterBarSchema } from '@/utils/YupSchema';
 
 import { GeocoderAutoComplete } from '../components/GeocoderAutoComplete';
@@ -122,6 +124,17 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
                     if (geocoderPidResponse?.pids?.length === 1) {
                       setFieldValue('pinOrPid', geocoderPidResponse?.pids[0]);
                     } else {
+                      if (geocoderPidResponse?.pids?.length > 1) {
+                        toast.warn(
+                          `Warning, multiple PIDs found for this address:\n ${geocoderPidResponse?.pids
+                            .map(x => pidFormatter(x))
+                            .join(
+                              ',',
+                            )} PIMS will search for the lat/lng of the property provided by geocoder instead of the PID.`,
+                        );
+                      } else {
+                        toast.warn('No valid PIDs found for this address, using lat/long instead.');
+                      }
                       setFieldValue('latitude', val.latitude);
                       setFieldValue('longitude', val.longitude);
                     }

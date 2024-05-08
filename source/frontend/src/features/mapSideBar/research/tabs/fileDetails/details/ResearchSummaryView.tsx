@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 import EditButton from '@/components/common/EditButton';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
@@ -60,7 +58,7 @@ const ResearchSummaryView: React.FunctionComponent<IResearchSummaryViewProps> = 
     const personOrganizations = props.researchFile!.requestorPerson.personOrganizations;
     const organization =
       exists(personOrganizations) && personOrganizations.length > 0
-        ? personOrganizations[0].organization
+        ? personOrganizations[0]?.organization
         : undefined;
     detail.requestorOrganization = organization?.name ?? undefined;
   } else if (exists(props.researchFile?.requestorOrganization)) {

@@ -16,7 +16,6 @@ import { ComposedDocument } from '../ComposedDocument';
 import { DocumentDetailForm } from './DocumentDetailForm';
 
 // mock auth library
-jest.mock('@react-keycloak/web');
 
 const history = createMemoryHistory();
 
@@ -137,12 +136,12 @@ describe('DocumentDetailForm component', () => {
   const setup = (renderOptions: RenderOptions) => {
     const utils = render(
       <DocumentDetailForm
-        onUpdate={jest.fn()}
+        onUpdate={vi.fn()}
         document={mockDocument}
         isLoading={false}
         mayanMetadataTypes={documentTypeMetadataType}
-        onCancel={jest.fn()}
-        formikRef={{ current: { submitForm: jest.fn() } } as any}
+        onCancel={vi.fn()}
+        formikRef={{ current: { submitForm: vi.fn() } } as any}
       />,
       {
         ...renderOptions,
@@ -164,7 +163,7 @@ describe('DocumentDetailForm component', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders as expected', () => {

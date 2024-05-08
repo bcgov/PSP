@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Tenant component renders as expected 1`] = `
+exports[`Tenant component > renders as expected 1`] = `
 <DocumentFragment>
   @media only screen and (max-width:1500px) {
 

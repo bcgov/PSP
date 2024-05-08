@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`UpdatePropertyForm component renders as expected when provided no research file 1`] = `
+exports[`UpdatePropertyForm component > renders as expected when provided no research file 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"

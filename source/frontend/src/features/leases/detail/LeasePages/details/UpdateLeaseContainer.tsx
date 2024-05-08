@@ -1,5 +1,4 @@
 import { FormikProps } from 'formik/dist/types';
-import * as React from 'react';
 import { useContext, useEffect } from 'react';
 
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';

@@ -1,5 +1,5 @@
 import { createMemoryHistory } from 'history';
-import { noop } from 'lodash';
+import noop from 'lodash/noop';
 
 import { LeaseFormModel } from '@/features/leases/models';
 import { mockApiOrganization, mockApiPerson } from '@/mocks/filterData.mock';
@@ -45,7 +45,7 @@ describe('PrimaryContactWarningModal component', () => {
     expect(component.asFragment()).toMatchSnapshot();
   });
   it('calls saveCallback on save', async () => {
-    const saveCallback = jest.fn();
+    const saveCallback = vi.fn();
     const { component } = setup({
       saveCallback: saveCallback,
       tenants: LeaseFormModel.fromApi({

@@ -1,5 +1,5 @@
 import noop from 'lodash/noop';
-import * as React from 'react';
+import { FunctionComponent, useEffect, useState } from 'react';
 
 import { useApiUsers } from '@/hooks/pims-api/useApiUsers';
 import useIsMounted from '@/hooks/util/useIsMounted';
@@ -12,14 +12,14 @@ export interface IUserNameTooltipProps {
 }
 
 /** Generic user info tooltip component that displays user name on hover */
-export const UserNameTooltip: React.FunctionComponent<IUserNameTooltipProps> = ({
+export const UserNameTooltip: FunctionComponent<IUserNameTooltipProps> = ({
   userGuid,
   userName,
 }) => {
   const isMounted = useIsMounted();
   const { getUserInfo } = useApiUsers();
-  const [userNameInfo, setUserNameInfo] = React.useState<string>('');
-  React.useEffect(() => {
+  const [userNameInfo, setUserNameInfo] = useState<string>('');
+  useEffect(() => {
     if (userGuid) {
       getUserInfo(userGuid)
         .then(({ data }) => {

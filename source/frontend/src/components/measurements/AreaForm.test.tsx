@@ -32,7 +32,7 @@ describe('LandMeasurementTable component', () => {
   beforeEach(() => {});
 
   afterEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
   });
 
   it('renders as expected', () => {
@@ -45,7 +45,7 @@ describe('LandMeasurementTable component', () => {
   });
 
   it('calls onChange callback when values are changed', async () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     const { container } = setup({
       onChange,
       area: undefined,

@@ -1,4 +1,4 @@
-import { noop } from 'lodash';
+import noop from 'lodash/noop';
 
 import { Claims } from '@/constants/claims';
 import { mockNotesResponse } from '@/mocks/noteResponses.mock';
@@ -6,10 +6,9 @@ import { mockKeycloak, render, RenderOptions } from '@/utils/test-utils';
 
 import { INoteResultProps, NoteResults } from './NoteResults';
 
-const setSort = jest.fn();
+const setSort = vi.fn();
 
 // mock auth library
-jest.mock('@react-keycloak/web');
 
 // render component under test
 const setup = (renderOptions: RenderOptions & Partial<INoteResultProps> = { results: [] }) => {

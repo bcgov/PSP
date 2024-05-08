@@ -4,9 +4,9 @@ import MockAdapter from 'axios-mock-adapter';
 import { act, render, RenderOptions, waitFor } from '@/utils/test-utils';
 
 import DocumentTemplateManagementContainer from './DocumentTemplateManagementContainer';
+import { useFormDocumentRepository } from '@/hooks/repositories/useFormDocumentRepository';
 
 const mockAxios = new MockAdapter(axios);
-jest.mock('@react-keycloak/web');
 
 // render component under test
 const setup = (renderOptions: RenderOptions) => {
@@ -20,12 +20,18 @@ const setup = (renderOptions: RenderOptions) => {
   };
 };
 
-describe('DocumentTemplateManagementContainer component', () => {
-  afterEach(() => {
-    jest.resetAllMocks();
-    mockAxios.resetHistory();
-  });
+vi.mock('@/hooks/repositories/useFormDocumentRepository');
+vi.mocked(useFormDocumentRepository).mockReturnValue({
+  getFormDocumentTypes: {
+    error: null,
+    response: [],
+    execute: vi.fn(),
+    loading: false,
+    status: 200,
+  },
+} as unknown as ReturnType<typeof useFormDocumentRepository>);
 
+describe('DocumentTemplateManagementContainer component', () => {
   it('matches snapshot', async () => {
     const { asFragment } = setup({});
     await act(async () => {});

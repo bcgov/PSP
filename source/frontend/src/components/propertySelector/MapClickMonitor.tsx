@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import useDraftMarkerSynchronizer from '@/hooks/useDraftMarkerSynchronizer';
 import { usePrevious } from '@/hooks/usePrevious';

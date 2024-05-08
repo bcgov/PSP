@@ -7,7 +7,7 @@ import { render, RenderOptions } from '@/utils/test-utils';
 import StackedPidTenantFields, { IStackedTenantFieldsProps } from './StackedTenantFields';
 
 const history = createMemoryHistory();
-const onClickManagement = jest.fn();
+const onClickManagement = vi.fn();
 
 describe('StackedPidTenantFields component', () => {
   const setup = (renderOptions: RenderOptions & IStackedTenantFieldsProps = { tenants: [] }) => {

@@ -11,11 +11,11 @@ const defaultVersion: IApiVersion = {
   informationalVersion: '11.1.1-1.999',
 };
 
-const mockGetVersion = jest.fn(async () => {
+const mockGetVersion = vi.fn(async () => {
   return Promise.resolve({ data: defaultVersion });
 });
 
-jest.mock('@/hooks/pims-api/useApiHealth', () => ({
+vi.mock('@/hooks/pims-api/useApiHealth', () => ({
   useApiHealth: () => ({
     getVersion: mockGetVersion,
   }),

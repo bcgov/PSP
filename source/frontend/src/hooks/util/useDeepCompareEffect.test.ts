@@ -4,7 +4,7 @@ import useDeepCompareEffect from './useDeepCompareEffect';
 
 describe('useDeepCompareEffect hook', () => {
   it('handles changing values as expected', () => {
-    const callback = jest.fn();
+    const callback = vi.fn();
     let deps = [1, { a: 'b' }, true];
     const { rerender } = renderHook(() => useDeepCompareEffect(callback, deps));
 
@@ -47,7 +47,7 @@ describe('useDeepCompareEffect hook', () => {
   });
 
   it('works with deep object similarities/differences', () => {
-    const callback = jest.fn();
+    const callback = vi.fn();
     let deps: any[] = [{ a: { b: { c: 'd' } } }];
     const { rerender } = renderHook(() => useDeepCompareEffect(callback, deps));
     expect(callback).toHaveBeenCalledTimes(1);

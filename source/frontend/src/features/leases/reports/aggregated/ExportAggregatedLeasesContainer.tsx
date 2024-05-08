@@ -1,5 +1,4 @@
 import { Formik } from 'formik';
-import * as React from 'react';
 import { FaDownload } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';

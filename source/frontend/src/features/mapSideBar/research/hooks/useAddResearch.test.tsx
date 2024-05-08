@@ -42,11 +42,11 @@ const testResearchFile: ApiGen_Concepts_ResearchFile = {
   rowVersion: null,
 };
 
-const dispatch = jest.fn();
-const toastSuccessSpy = jest.spyOn(toast, 'success');
-const requestSpy = jest.spyOn(networkSlice.actions, 'logRequest');
-const successSpy = jest.spyOn(networkSlice.actions, 'logSuccess');
-const errorSpy = jest.spyOn(networkSlice.actions, 'logError');
+const dispatch = vi.fn();
+const toastSuccessSpy = vi.spyOn(toast, 'success');
+const requestSpy = vi.spyOn(networkSlice.actions, 'logRequest');
+const successSpy = vi.spyOn(networkSlice.actions, 'logSuccess');
+const errorSpy = vi.spyOn(networkSlice.actions, 'logError');
 const mockAxios = new MockAdapter(axios);
 
 let currentStore: MockStoreEnhanced<any, {}>;
@@ -75,7 +75,7 @@ describe('useAddResearch functions', () => {
   });
 
   afterAll(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
 
   describe('addResearch', () => {

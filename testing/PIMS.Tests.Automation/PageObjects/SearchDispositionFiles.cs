@@ -247,7 +247,7 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(searchDispositionFileSearchButton);
             AssertTrueIsDisplayed(searchDispositionFileCreateNewButton);
 
-            //DIsposition Files List View
+            //Disposition Files List View
             AssertTrueIsDisplayed(searchDispositionFileNumberHeader);
             AssertTrueIsDisplayed(searchDispositionOrderFileNumberBttn);
             AssertTrueIsDisplayed(searchDispositionReferenceHeader);

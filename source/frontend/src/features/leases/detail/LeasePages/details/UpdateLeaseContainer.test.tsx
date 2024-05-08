@@ -4,7 +4,7 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { FormikProps } from 'formik';
 import { createMemoryHistory } from 'history';
-import { noop } from 'lodash';
+import noop from 'lodash/noop';
 import React, { forwardRef } from 'react';
 import { act } from 'react-test-renderer';
 
@@ -29,13 +29,12 @@ const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
 const mockAxios = new MockAdapter(axios);
-jest.mock('@react-keycloak/web');
 
-jest.mock('@/features/leases/hooks/useLeaseDetail');
-(useLeaseDetail as jest.MockedFunction<typeof useLeaseDetail>).mockReturnValue({
+vi.mock('@/features/leases/hooks/useLeaseDetail');
+vi.mocked(useLeaseDetail).mockReturnValue({
   lease: getMockApiLease(),
   setLease: noop,
-  getCompleteLease: jest.fn().mockResolvedValue(getMockApiLease()),
+  getCompleteLease: vi.fn().mockResolvedValue(getMockApiLease()),
   refresh: noop as any,
   loading: false,
 });

@@ -16,12 +16,12 @@ import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_C
 import { ApiGen_Concepts_FileWithChecklist } from '@/models/api/generated/ApiGen_Concepts_FileWithChecklist';
 
 // mock API service calls
-jest.mock('@/hooks/repositories/useAcquisitionProvider');
+vi.mock('@/hooks/repositories/useAcquisitionProvider');
 
 type Provider = typeof useAcquisitionProvider;
-const mockUpdateAcquisitionChecklist = jest.fn();
+const mockUpdateAcquisitionChecklist = vi.fn();
 
-(useAcquisitionProvider as jest.MockedFunction<Provider>).mockReturnValue({
+vi.mocked(useAcquisitionProvider).mockReturnValue({
   updateAcquisitionChecklist: {
     error: undefined,
     response: undefined,
@@ -39,7 +39,7 @@ const TestView: React.FC<IUpdateChecklistFormProps> = props => {
 
 describe('UpdateAcquisitionChecklist container', () => {
   let acquisitionFile: ApiGen_Concepts_AcquisitionFile | undefined = undefined;
-  const onSuccess = jest.fn();
+  const onSuccess = vi.fn();
 
   const setup = (renderOptions: RenderOptions = {}) => {
     const utils = render(
@@ -71,7 +71,7 @@ describe('UpdateAcquisitionChecklist container', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders the underlying form', async () => {

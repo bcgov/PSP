@@ -1,7 +1,6 @@
 import classNames from 'classnames';
 import { getIn, useFormikContext } from 'formik';
-import * as React from 'react';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import Form from 'react-bootstrap/Form';
 import { Typeahead, TypeaheadModel, TypeaheadProps } from 'react-bootstrap-typeahead';
 import styled from 'styled-components';
@@ -101,7 +100,7 @@ export function TypeaheadField<T extends TypeaheadModel>({
   }
 
   const ref = useRef<any>();
-  React.useEffect(() => {
+  useEffect(() => {
     if (clearSelected && ref.current?.clear) {
       ref.current.clear();
       setFieldValue(name, '');

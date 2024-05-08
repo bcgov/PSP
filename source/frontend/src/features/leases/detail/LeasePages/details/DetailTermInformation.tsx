@@ -1,6 +1,5 @@
 import { getIn, useFormikContext } from 'formik';
 import moment from 'moment';
-import * as React from 'react';
 import styled from 'styled-components';
 
 import { Section } from '@/components/common/Section/Section';

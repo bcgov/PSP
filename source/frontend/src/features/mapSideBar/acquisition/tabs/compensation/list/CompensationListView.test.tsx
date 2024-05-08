@@ -21,11 +21,10 @@ const storeState = {
 };
 
 const history = createMemoryHistory();
-jest.mock('@react-keycloak/web');
 
-const onDelete = jest.fn();
-const onAddCompensationRequisition = jest.fn();
-const onUpdateTotalCompensation = jest.fn();
+const onDelete = vi.fn();
+const onAddCompensationRequisition = vi.fn();
+const onUpdateTotalCompensation = vi.fn();
 
 const mockAcquisitionfile = mockAcquisitionFileResponse();
 
@@ -54,7 +53,7 @@ describe('compensation list view', () => {
   };
 
   beforeEach(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
 
   it('renders as expected', async () => {

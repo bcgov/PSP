@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Document Results Table matches snapshot 1`] = `
+exports[`Document Results Table > matches snapshot 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
@@ -35,10 +35,24 @@ exports[`Document Results Table matches snapshot 1`] = `
   height: 1.6rem;
 }
 
-.c3 .btn.btn-primary {
+.c4 .btn.btn-primary {
   background-color: transparent;
   padding: 0;
   margin-left: 0.5rem;
+}
+
+.c3 {
+  display: contents;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.c3 button {
+  display: contents !important;
 }
 
 <div
@@ -278,11 +292,15 @@ exports[`Document Results Table matches snapshot 1`] = `
             style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
             title=""
           >
-            <span
-              data-testid="document-view-filename-text"
+            <div
+              class="c3"
             >
-              DocTest.docx
-            </span>
+              <span
+                data-testid="document-view-filename-text"
+              >
+                DocTest.docx
+              </span>
+            </div>
           </div>
           <div
             class="td"
@@ -342,7 +360,7 @@ exports[`Document Results Table matches snapshot 1`] = `
             title=""
           >
             <div
-              class="c3 no-gutters row"
+              class="c4 no-gutters row"
             />
           </div>
         </div>
@@ -369,11 +387,15 @@ exports[`Document Results Table matches snapshot 1`] = `
             style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
             title=""
           >
-            <span
-              data-testid="document-view-filename-text"
+            <div
+              class="c3"
             >
-              moti_plan.txt
-            </span>
+              <span
+                data-testid="document-view-filename-text"
+              >
+                moti_plan.txt
+              </span>
+            </div>
           </div>
           <div
             class="td"
@@ -433,7 +455,7 @@ exports[`Document Results Table matches snapshot 1`] = `
             title=""
           >
             <div
-              class="c3 no-gutters row"
+              class="c4 no-gutters row"
             />
           </div>
         </div>

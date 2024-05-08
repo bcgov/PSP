@@ -1,5 +1,5 @@
 import { FieldArray, getIn, useFormikContext } from 'formik';
-import * as React from 'react';
+import { Fragment } from 'react';
 
 import { Input } from '@/components/common/form';
 import { SectionField } from '@/components/common/Section/SectionField';
@@ -26,11 +26,11 @@ export const LtsaLandSubForm: React.FunctionComponent<
           <FieldArray
             name={withNameSpace(nameSpace, 'descriptionsOfLand')}
             render={({ name }) => (
-              <React.Fragment key={`land-row-${name}`}>
+              <Fragment key={`land-row-${name}`}>
                 {lands.map((land: DescriptionOfLand, index: number) => {
                   const innerNameSpace = withNameSpace(nameSpace, `descriptionsOfLand.${index}`);
                   return (
-                    <React.Fragment key={`land-row-inner-${innerNameSpace}`}>
+                    <Fragment key={`land-row-inner-${innerNameSpace}`}>
                       <SectionField label="PID">
                         <Input field={`${withNameSpace(innerNameSpace, 'parcelIdentifier')}`} />
                       </SectionField>
@@ -38,10 +38,10 @@ export const LtsaLandSubForm: React.FunctionComponent<
                         <p>{getIn(land, 'fullLegalDescription')}</p>
                       </SectionField>
                       {index < lands.length - 1 && <hr></hr>}
-                    </React.Fragment>
+                    </Fragment>
                   );
                 })}
-              </React.Fragment>
+              </Fragment>
             )}
           />
           <LtsaLegalNotationsSubForm nameSpace={nameSpace} />

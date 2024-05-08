@@ -380,7 +380,7 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 52
- testRunner.Given("I create a basic Research File from row number 9", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("I create a basic Research File from row number 10", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 53
  testRunner.When("I add Properties to a Research File", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");

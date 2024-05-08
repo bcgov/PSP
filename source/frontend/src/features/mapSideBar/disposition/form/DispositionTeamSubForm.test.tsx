@@ -1,5 +1,4 @@
 import { Formik, FormikProps, getIn } from 'formik';
-import React from 'react';
 
 import { mockLookups } from '@/mocks/index.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
@@ -14,6 +13,7 @@ import {
 
 import { WithDispositionTeam } from '../models/DispositionTeamSubFormModel';
 import DispositionTeamSubForm from './DispositionTeamSubForm';
+import { createRef } from 'react';
 
 describe('DispositionTeamSubForm component', () => {
   // render component under test
@@ -21,9 +21,9 @@ describe('DispositionTeamSubForm component', () => {
     props: { initialForm: WithDispositionTeam },
     renderOptions: RenderOptions = {},
   ) => {
-    const ref = React.createRef<FormikProps<WithDispositionTeam>>();
+    const ref = createRef<FormikProps<WithDispositionTeam>>();
     const utils = render(
-      <Formik innerRef={ref} initialValues={props.initialForm} onSubmit={jest.fn()}>
+      <Formik innerRef={ref} initialValues={props.initialForm} onSubmit={vi.fn()}>
         {formikProps => <DispositionTeamSubForm />}
       </Formik>,
       {
@@ -49,7 +49,7 @@ describe('DispositionTeamSubForm component', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders as expected', () => {

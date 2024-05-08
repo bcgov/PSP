@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Footer renders correctly 1`] = `
+exports[`Footer > renders correctly 1`] = `
 .c0 {
   padding: 1rem 20%;
   display: -webkit-box;

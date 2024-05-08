@@ -14,9 +14,7 @@ import { act, getByName, render, RenderOptions, screen } from '@/utils/test-util
 import { DispositionFilterModel } from '../models';
 import DispositionFilter from './DispositionFilter';
 
-jest.mock('@react-keycloak/web');
-
-const setFilter = jest.fn();
+const setFilter = vi.fn();
 
 const fileStatusOptions = getMockLookUpsByType(DISPOSITION_FILE_STATUS_TYPES);
 const dispositionStatusOptions = getMockLookUpsByType(DISPOSITION_STATUS_TYPES);

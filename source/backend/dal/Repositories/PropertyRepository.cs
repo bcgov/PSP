@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using LinqKit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Pims.Api.Models.CodeTypes;
 using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Core.Helpers;
@@ -54,7 +55,7 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>
-        public Paged<PimsPropertyLocationVw> GetPage(PropertyFilter filter)
+        public Paged<PimsPropertyVw> GetPage(PropertyFilter filter)
         {
             this.User.ThrowIfNotAuthorized(Permissions.PropertyView);
             filter.ThrowIfNull(nameof(filter));
@@ -77,7 +78,7 @@ namespace Pims.Dal.Repositories
                 items = items.Where(i => i.Pid.ToString().PadLeft(9, '0').Contains(formattedPidPin) || i.Pin.ToString().Contains(formattedPidPin)).ToArray();
             }
 
-            return new Paged<PimsPropertyLocationVw>(items, filter.Page, filter.Quantity, query.Count());
+            return new Paged<PimsPropertyVw>(items, filter.Page, filter.Quantity, query.Count());
         }
 
         /// <summary>
@@ -346,7 +347,8 @@ namespace Pims.Dal.Repositories
             property.IsVisibleToOtherAgencies = existingProperty.IsVisibleToOtherAgencies;
             property.IsSensitive = existingProperty.IsSensitive;
 
-            if (property.PphStatusTypeCode != existingProperty.PphStatusTypeCode)
+            if (property.PphStatusTypeCode != existingProperty.PphStatusTypeCode
+                && (property.PphStatusTypeCode != PropertyPPHStatusTypes.UNKNOWN.ToString() && existingProperty.PphStatusTypeCode != null))
             {
                 property.PphStatusUpdateTimestamp = DateTime.UtcNow;
                 property.PphStatusUpdateUserid = User.GetUsername();

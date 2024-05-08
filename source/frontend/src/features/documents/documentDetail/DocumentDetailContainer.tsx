@@ -1,4 +1,4 @@
-import { FormikProps } from 'formik';
+import { FormikProps } from 'formik/dist/types';
 import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 
 import { ModalProps } from '@/components/common/GenericModal';

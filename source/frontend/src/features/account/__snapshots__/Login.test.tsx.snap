@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`login login renders correctly 1`] = `
+exports[`login > login renders correctly 1`] = `
 .c1.btn {
   display: -webkit-box;
   display: -webkit-flex;

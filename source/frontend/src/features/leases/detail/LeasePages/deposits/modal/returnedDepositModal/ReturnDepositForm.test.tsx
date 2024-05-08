@@ -2,7 +2,7 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
-import { noop } from 'lodash';
+import noop from 'lodash/noop';
 
 import { getMockDeposits } from '@/mocks/deposits.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
@@ -14,8 +14,8 @@ import ReturnDepositForm, { IReturnDepositFormProps } from './ReturnDepositForm'
 
 const history = createMemoryHistory();
 const mockAxios = new MockAdapter(axios);
-const onSave = jest.fn();
-const submitForm = jest.fn();
+const onSave = vi.fn();
+const submitForm = vi.fn();
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };

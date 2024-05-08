@@ -1,5 +1,5 @@
 import { FieldArray, getIn, useFormikContext } from 'formik';
-import * as React from 'react';
+import { Fragment } from 'react';
 
 import { Input } from '@/components/common/form';
 import { SectionField } from '@/components/common/Section/SectionField';
@@ -21,14 +21,14 @@ export const LtsaDuplicateTitleSubForm: React.FunctionComponent<
       <FieldArray
         name={withNameSpace(nameSpace, 'duplicateCertificatesOfTitle')}
         render={({ name }) => (
-          <React.Fragment key={`certificate-row-${name}`}>
+          <Fragment key={`certificate-row-${name}`}>
             {certificates.map((title: DuplicateCertificate, index: number) => {
               const innerNameSpace = withNameSpace(
                 nameSpace,
                 `duplicateCertificatesOfTitle.${index}`,
               );
               return (
-                <React.Fragment key={`${title}-${index}`}>
+                <Fragment key={`${title}-${index}`}>
                   <SectionField label="To">
                     <Input
                       field={`${withNameSpace(
@@ -62,10 +62,10 @@ export const LtsaDuplicateTitleSubForm: React.FunctionComponent<
                     />
                   </SectionField>
                   {index < certificates.length - 1 && <hr></hr>}
-                </React.Fragment>
+                </Fragment>
               );
             })}
-          </React.Fragment>
+          </Fragment>
         )}
       />
     </>

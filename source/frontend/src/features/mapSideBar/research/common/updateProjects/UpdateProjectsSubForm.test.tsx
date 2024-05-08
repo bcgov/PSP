@@ -1,5 +1,5 @@
 import { Formik } from 'formik';
-import { noop } from 'lodash';
+import noop from 'lodash/noop';
 
 import { getMockResearchFile } from '@/mocks/researchFile.mock';
 import { act, render, RenderOptions, userEvent } from '@/utils/test-utils';
@@ -27,7 +27,7 @@ describe('UpdateProjectsSubForm', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders as expected with minimal form data', () => {

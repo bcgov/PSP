@@ -1,5 +1,5 @@
 import clsx from 'classnames';
-import _ from 'lodash';
+import find from 'lodash/find';
 import { Nav } from 'react-bootstrap';
 import styled from 'styled-components';
 
@@ -23,8 +23,7 @@ interface INavIconProps {
 export const NavIcon = ({ icon, text, showText, onClick, roles, claims }: INavIconProps) => {
   const { hasRole, hasClaim } = useKeycloakWrapper();
   const displayIcon =
-    _.find(roles, (role: Roles) => hasRole(role)) ||
-    _.find(claims, (claim: Claims) => hasClaim(claim));
+    find(roles, (role: Roles) => hasRole(role)) || find(claims, (claim: Claims) => hasClaim(claim));
 
   return (!roles?.length && !claims?.length) || displayIcon ? (
     <StyledNav

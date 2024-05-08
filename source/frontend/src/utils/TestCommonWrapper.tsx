@@ -1,8 +1,10 @@
 import { useKeycloak } from '@react-keycloak/web';
 import { MemoryHistory } from 'history';
+import Keycloak from 'keycloak-js';
 import React from 'react';
 import { ToastContainer } from 'react-toastify';
 import { ThemeProvider } from 'styled-components';
+import { vi } from 'vitest';
 
 import ModalContainer from '@/components/common/ModalContainer';
 import { ModalContextProvider } from '@/contexts/modalContext';
@@ -11,8 +13,6 @@ import { TenantConsumer, TenantProvider } from '@/tenants';
 
 import TestProviderWrapper from './TestProviderWrapper';
 import TestRouterWrapper from './TestRouterWrapper';
-
-jest.mock('@react-keycloak/web');
 
 interface TestProviderWrapperParams {
   store?: any;
@@ -30,7 +30,7 @@ const TestCommonWrapper: React.FunctionComponent<
   React.PropsWithChildren<TestProviderWrapperParams>
 > = ({ children, store, claims, roles, organizations, history }) => {
   if (!!roles || !!claims || !!organizations) {
-    (useKeycloak as jest.Mock).mockReturnValue({
+    vi.mocked(useKeycloak).mockReturnValue({
       keycloak: {
         userInfo: {
           organizations: organizations ?? [1],
@@ -40,7 +40,8 @@ const TestCommonWrapper: React.FunctionComponent<
         },
         subject: 'test',
         authenticated: true,
-      },
+      } as unknown as Keycloak.KeycloakInstance,
+      initialized: true,
     });
   }
 

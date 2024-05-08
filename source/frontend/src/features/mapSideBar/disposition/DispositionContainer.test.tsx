@@ -2,7 +2,7 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
-import { noop } from 'lodash';
+import noop from 'lodash/noop';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import {
@@ -33,19 +33,19 @@ const mockAxios = new MockAdapter(axios);
 const mockDispositionFileApi = mockDispositionFileResponse();
 
 // mock auth library
-jest.mock('@react-keycloak/web');
-jest.mock('@/components/common/mapFSM/MapStateMachineContext');
 
-const onClose = jest.fn();
+const onClose = vi.fn();
 
 // Need to mock this library for unit tests
-jest.mock('react-visibility-sensor', () => {
-  return jest.fn().mockImplementation(({ children }) => {
-    if (children instanceof Function) {
-      return children({ isVisible: true });
-    }
-    return children;
-  });
+vi.mock('react-visibility-sensor', () => {
+  return {
+    default: vi.fn().mockImplementation(({ children }) => {
+      if (children instanceof Function) {
+        return children({ isVisible: true });
+      }
+      return children;
+    }),
+  };
 });
 
 let viewProps!: IDispositionViewProps;
@@ -91,8 +91,6 @@ describe('DispositionContainer component', () => {
   };
 
   beforeEach(() => {
-    (useMapStateMachine as jest.Mock).mockImplementation(() => mapMachineBaseMock);
-
     mockAxios.onGet(new RegExp('users/info/*')).reply(200, {});
     mockAxios
       .onGet(new RegExp('dispositionfiles/1/properties'))
@@ -106,7 +104,7 @@ describe('DispositionContainer component', () => {
 
   afterEach(() => {
     mockAxios.resetHistory();
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders as expected', async () => {
@@ -185,7 +183,7 @@ describe('DispositionContainer component', () => {
 
   it('displays a warning if form is dirty and menu index changes', async () => {
     const { getByTestId, getByText } = setup(undefined, { claims: [] });
-    jest.spyOn(global, 'confirm' as any).mockReturnValueOnce(true);
+    vi.spyOn(global, 'confirm' as any).mockReturnValueOnce(true);
 
     const spinner = getByTestId('filter-backdrop-loading');
     await waitForElementToBeRemoved(spinner);
@@ -203,7 +201,7 @@ describe('DispositionContainer component', () => {
 
   it('Cancels edit if user confirms modal', async () => {
     const { getByTestId, getByText } = setup(undefined, { claims: [] });
-    jest.spyOn(global, 'confirm' as any).mockReturnValueOnce(true);
+    vi.spyOn(global, 'confirm' as any).mockReturnValueOnce(true);
 
     const spinner = getByTestId('filter-backdrop-loading');
     await waitForElementToBeRemoved(spinner);
@@ -225,7 +223,7 @@ describe('DispositionContainer component', () => {
 
   it('cancels edit if form is not dirty and menu index changes', async () => {
     const { getByTestId } = setup(undefined, { claims: [] });
-    jest.spyOn(global, 'confirm' as any).mockReturnValueOnce(true);
+    vi.spyOn(global, 'confirm' as any).mockReturnValueOnce(true);
 
     const spinner = getByTestId('filter-backdrop-loading');
     await waitForElementToBeRemoved(spinner);
@@ -239,7 +237,7 @@ describe('DispositionContainer component', () => {
 
   it('on success function refetches disposition file', async () => {
     const { getByTestId } = setup(undefined, { claims: [] });
-    jest.spyOn(global, 'confirm' as any).mockReturnValueOnce(true);
+    vi.spyOn(global, 'confirm' as any).mockReturnValueOnce(true);
 
     const spinner = getByTestId('filter-backdrop-loading');
     await waitForElementToBeRemoved(spinner);
@@ -251,7 +249,7 @@ describe('DispositionContainer component', () => {
 
   it('on success function cancels edit', async () => {
     const { getByTestId } = setup(undefined, { claims: [] });
-    jest.spyOn(global, 'confirm' as any).mockReturnValueOnce(true);
+    vi.spyOn(global, 'confirm' as any).mockReturnValueOnce(true);
 
     const spinner = getByTestId('filter-backdrop-loading');
     await waitForElementToBeRemoved(spinner);
@@ -265,7 +263,7 @@ describe('DispositionContainer component', () => {
 
   it('on save function submits the form', async () => {
     const { getByTestId } = setup(undefined, { claims: [] });
-    jest.spyOn(global, 'confirm' as any).mockReturnValueOnce(true);
+    vi.spyOn(global, 'confirm' as any).mockReturnValueOnce(true);
 
     const spinner = getByTestId('filter-backdrop-loading');
     await waitForElementToBeRemoved(spinner);

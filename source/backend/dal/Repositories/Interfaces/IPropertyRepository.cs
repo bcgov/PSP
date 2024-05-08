@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
-using Pims.Dal.Models;
 
 namespace Pims.Dal.Repositories
 {
@@ -12,7 +11,7 @@ namespace Pims.Dal.Repositories
     {
         int Count();
 
-        Paged<PimsPropertyLocationVw> GetPage(PropertyFilter filter);
+        Paged<PimsPropertyVw> GetPage(PropertyFilter filter);
 
         PimsProperty GetById(long id);
 

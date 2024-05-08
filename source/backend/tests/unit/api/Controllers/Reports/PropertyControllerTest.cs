@@ -88,7 +88,7 @@ namespace Pims.Api.Test.Controllers.Reports
 
             var properties = new[] { EntityHelper.CreatePropertyView(1) };
 
-            var page = new Paged<Entity.PimsPropertyLocationVw>(properties, filter.Page, filter.Quantity);
+            var page = new Paged<Entity.PimsPropertyVw>(properties, filter.Page, filter.Quantity);
             this._repository.Setup(m => m.GetPage(It.IsAny<Entity.Models.PropertyFilter>())).Returns(page);
 
             // Act
@@ -113,7 +113,7 @@ namespace Pims.Api.Test.Controllers.Reports
 
             var properties = new[] { EntityHelper.CreatePropertyView(1) };
 
-            var page = new Paged<Entity.PimsPropertyLocationVw>(properties);
+            var page = new Paged<Entity.PimsPropertyVw>(properties);
             this._repository.Setup(m => m.GetPage(It.IsAny<Entity.Models.PropertyFilter>())).Returns(page);
 
             // Act
@@ -138,7 +138,7 @@ namespace Pims.Api.Test.Controllers.Reports
 
             var properties = new[] { EntityHelper.CreatePropertyView(1) };
 
-            var page = new Paged<Entity.PimsPropertyLocationVw>(properties, filter.Page, filter.Quantity);
+            var page = new Paged<Entity.PimsPropertyVw>(properties, filter.Page, filter.Quantity);
             this._repository.Setup(m => m.GetPage(It.IsAny<Entity.Models.PropertyFilter>())).Returns(page);
 
             // Act
@@ -164,7 +164,7 @@ namespace Pims.Api.Test.Controllers.Reports
 
             var properties = new[] { EntityHelper.CreatePropertyView(1) };
 
-            var page = new Paged<Entity.PimsPropertyLocationVw>(properties);
+            var page = new Paged<Entity.PimsPropertyVw>(properties);
             this._repository.Setup(m => m.GetPage(It.IsAny<Entity.Models.PropertyFilter>())).Returns(page);
 
             // Act
@@ -190,7 +190,7 @@ namespace Pims.Api.Test.Controllers.Reports
 
             var properties = new[] { EntityHelper.CreatePropertyView(1) };
 
-            var page = new Paged<Entity.PimsPropertyLocationVw>(properties, filter.Page, filter.Quantity);
+            var page = new Paged<Entity.PimsPropertyVw>(properties, filter.Page, filter.Quantity);
             this._repository.Setup(m => m.GetPage(It.IsAny<Entity.Models.PropertyFilter>())).Returns(page);
 
             // Act
@@ -216,7 +216,7 @@ namespace Pims.Api.Test.Controllers.Reports
 
             var properties = new[] { EntityHelper.CreatePropertyView(1) };
 
-            var page = new Paged<Entity.PimsPropertyLocationVw>(properties);
+            var page = new Paged<Entity.PimsPropertyVw>(properties);
             this._repository.Setup(m => m.GetPage(It.IsAny<Entity.Models.PropertyFilter>())).Returns(page);
 
             // Act

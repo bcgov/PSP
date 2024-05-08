@@ -8,7 +8,7 @@ describe('HelpSubmitBox component', () => {
       <HelpSubmitBox
         user="Test User"
         email="test@test.com"
-        setMailto={jest.fn()}
+        setMailto={vi.fn()}
         page="Landing Page"
       />,
     );

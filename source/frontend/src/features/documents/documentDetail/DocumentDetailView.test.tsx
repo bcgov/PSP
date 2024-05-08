@@ -14,7 +14,6 @@ import { ComposedDocument } from '../ComposedDocument';
 import { DocumentDetailView } from './DocumentDetailView';
 
 // mock auth library
-jest.mock('@react-keycloak/web');
 
 const history = createMemoryHistory();
 
@@ -118,7 +117,7 @@ describe('DocumentDetailView component', () => {
       <DocumentDetailView
         document={renderOptions.document ?? mockDocument}
         isLoading={false}
-        setIsEditable={jest.fn()}
+        setIsEditable={vi.fn()}
       />,
       {
         ...renderOptions,
@@ -140,7 +139,7 @@ describe('DocumentDetailView component', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders as expected', () => {

@@ -1,5 +1,4 @@
 import { createMemoryHistory } from 'history';
-import React from 'react';
 
 import { Claims } from '@/constants/claims';
 import { mockDispositionFileOfferApi } from '@/mocks/dispositionFiles.mock';
@@ -20,19 +19,19 @@ const mockDispositionOfferApi = mockDispositionFileOfferApi(10, 1);
 const mockPutOfferApi = {
   error: undefined,
   response: undefined,
-  execute: jest.fn(),
+  execute: vi.fn(),
   loading: false,
 };
 
 const mockGetOfferApi = {
   error: undefined,
   response: undefined,
-  execute: jest.fn().mockResolvedValue(mockDispositionOfferApi),
+  execute: vi.fn().mockResolvedValue(mockDispositionOfferApi),
   loading: false,
 };
-const onSuccess = jest.fn();
+const onSuccess = vi.fn();
 
-jest.mock('@/hooks/repositories/useDispositionProvider', () => ({
+vi.mock('@/hooks/repositories/useDispositionProvider', () => ({
   useDispositionProvider: () => {
     return {
       getDispositionOffer: mockGetOfferApi,
@@ -79,7 +78,7 @@ describe('Update Disposition Offer Container component', () => {
 
   beforeEach(() => {
     viewProps = undefined;
-    jest.resetAllMocks();
+    vi.resetAllMocks();
   });
 
   it('Renders the underlying form', async () => {

@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`App Header renders correctly 1`] = `
+exports[`App Header > renders correctly 1`] = `
 <DocumentFragment>
   @media (min-width:99.2rem) {
 
@@ -19,6 +19,33 @@ exports[`App Header renders correctly 1`] = `
   font-size: 3.4rem;
   margin: 0 36px 0 36px;
   vertical-align: top;
+}
+
+.c4 {
+  cursor: pointer;
+}
+
+.c3 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+}
+
+.c3 label {
+  margin-left: 1rem;
+  margin-bottom: 0;
+}
+
+.c3 label:hover {
+  cursor: pointer;
 }
 
 .c0 {
@@ -93,6 +120,30 @@ exports[`App Header renders correctly 1`] = `
   font-weight: 700;
 }
 
+.c6 {
+  font-size: 16px;
+}
+
+.c6 .dropdown-menu {
+  width: 30rem;
+  padding: 0rem;
+}
+
+.c6 .nav-link {
+  color: #fff;
+  padding: 0.1rem;
+}
+
+.c6 .dropdown-item {
+  background-color: _primaryLightColor_6badca;
+  border-top: 0.2rem solid _accentColor_6badca;
+}
+
+.c5 {
+  cursor: pointer;
+  margin-right: 10px;
+}
+
 .c1 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -138,7 +189,7 @@ exports[`App Header renders correctly 1`] = `
             alt="Government of BC logo"
             class="bc-gov-icon"
             height="43"
-            src="logo-banner.svg"
+            src="/src/assets/images/logo-banner.svg"
             width="156"
           />
         </a>
@@ -173,10 +224,63 @@ exports[`App Header renders correctly 1`] = `
         </div>
       </div>
     </span>
+    <div
+      class="nav-item"
+    >
+      <div
+        class="c3"
+      >
+        <svg
+          class="c4"
+          fill="currentColor"
+          height="24px"
+          stroke="currentColor"
+          stroke-width="0"
+          viewBox="0 0 512 512"
+          width="24px"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zM262.655 90c-54.497 0-89.255 22.957-116.549 63.758-3.536 5.286-2.353 12.415 2.715 16.258l34.699 26.31c5.205 3.947 12.621 3.008 16.665-2.122 17.864-22.658 30.113-35.797 57.303-35.797 20.429 0 45.698 13.148 45.698 32.958 0 14.976-12.363 22.667-32.534 33.976C247.128 238.528 216 254.941 216 296v4c0 6.627 5.373 12 12 12h56c6.627 0 12-5.373 12-12v-1.333c0-28.462 83.186-29.647 83.186-106.667 0-58.002-60.165-102-116.531-102zM256 338c-25.365 0-46 20.635-46 46 0 25.364 20.635 46 46 46s46-20.636 46-46c0-25.365-20.635-46-46-46z"
+          />
+        </svg>
+        <label>
+          Help
+        </label>
+      </div>
+    </div>
     <div>
       <span
         class="c2"
       />
+    </div>
+    <svg
+      class="c5"
+      fill="currentColor"
+      height="24px"
+      stroke="currentColor"
+      stroke-width="0"
+      viewBox="0 0 496 512"
+      width="24px"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zm0 96c48.6 0 88 39.4 88 88s-39.4 88-88 88-88-39.4-88-88 39.4-88 88-88zm0 344c-58.7 0-111.3-26.6-146.5-68.2 18.8-35.4 55.6-59.8 98.5-59.8 2.4 0 4.8.4 7.1 1.1 13 4.2 26.6 6.9 40.9 6.9 14.3 0 28-2.7 40.9-6.9 2.3-.7 4.7-1.1 7.1-1.1 42.9 0 79.7 24.4 98.5 59.8C359.3 421.4 306.7 448 248 448z"
+      />
+    </svg>
+    <div
+      class="c6 px-0 nav-item dropdown"
+    >
+      <a
+        aria-expanded="false"
+        aria-haspopup="true"
+        class="dropdown-toggle nav-link"
+        href="#"
+        id="user-dropdown"
+        role="button"
+      >
+        Chester Tester
+      </a>
     </div>
     <div
       class="other navbar-nav"

@@ -14,8 +14,8 @@ import {
 import { FormUser } from '../users/models';
 import EditUserForm from './EditUserForm';
 
-const onSubmit = jest.fn();
-const onCancel = jest.fn();
+const onSubmit = vi.fn();
+const onCancel = vi.fn();
 
 describe('EditUserForm component', () => {
   // render component under test
@@ -49,7 +49,7 @@ describe('EditUserForm component', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders as expected', () => {

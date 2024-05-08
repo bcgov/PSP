@@ -8,8 +8,6 @@ import { render, RenderOptions } from '@/utils/test-utils';
 import { IAcquisitionOwnersSummaryViewProps } from './AcquisitionOwnersSummaryContainer';
 import AcquisitionOwnersSummaryView from './AcquisitionOwnersSummaryView';
 
-jest.mock('@react-keycloak/web');
-
 const mockAcquisitionFile = mockAcquisitionFileResponse(1);
 
 const mockViewProps: IAcquisitionOwnersSummaryViewProps = {
@@ -49,7 +47,7 @@ describe('Acquisition File Owners View component', () => {
   };
 
   beforeEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
   });
 
   it('Renders Component as expected', () => {

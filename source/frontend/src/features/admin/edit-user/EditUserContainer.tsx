@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { FunctionComponent, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
@@ -15,16 +15,16 @@ export interface IEditUserContainerProps {
   userId?: string;
 }
 
-const EditUserContainer: React.FunctionComponent<IEditUserContainerProps> = ({ userId }) => {
+const EditUserContainer: FunctionComponent<IEditUserContainerProps> = ({ userId }) => {
   const history = useHistory();
-  const [user, setUser] = React.useState<ApiGen_Concepts_User>();
+  const [user, setUser] = useState<ApiGen_Concepts_User>();
   const isMounted = useIsMounted();
   const {
     updateUser: { execute: updateUserDetail },
     fetchUserDetail: { execute: getUserDetail, loading },
   } = useUsers();
 
-  React.useEffect(() => {
+  useEffect(() => {
     const asyncFunc = async () => {
       if (userId) {
         const response = await getUserDetail(userId);

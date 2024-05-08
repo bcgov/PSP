@@ -3,11 +3,11 @@ import { FormikHelpers, FormikProps } from 'formik';
 import React from 'react';
 
 import { ModalSize } from '@/components/common/GenericModal';
-import { DispositionFileStatus } from '@/constants/dispositionFileStatus';
 import { useDispositionProvider } from '@/hooks/repositories/useDispositionProvider';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
 import { useModalContext } from '@/hooks/useModalContext';
 import { IApiError } from '@/interfaces/IApiError';
+import { ApiGen_CodeTypes_DispositionFileStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_DispositionFileStatusTypes';
 import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { isValidId } from '@/utils';
@@ -53,9 +53,9 @@ export const UpdateDispositionContainer = React.forwardRef<
         if (isValidId(response?.id)) {
           formikHelpers?.resetForm();
           const activeTypeCodes = [
-            DispositionFileStatus.Active.toString(),
-            DispositionFileStatus.Draft.toString(),
-            DispositionFileStatus.Hold.toString(),
+            ApiGen_CodeTypes_DispositionFileStatusTypes.ACTIVE.toString(),
+            ApiGen_CodeTypes_DispositionFileStatusTypes.DRAFT.toString(),
+            ApiGen_CodeTypes_DispositionFileStatusTypes.HOLD.toString(),
           ];
           //refresh the map properties if this disposition file was set to a final state.
           onSuccess(

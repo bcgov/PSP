@@ -10,8 +10,6 @@ import DepositsReceivedContainer, {
 const mockVoidCallback = (): void => {};
 const mockCallback = (id: number): void => {};
 
-jest.mock('@react-keycloak/web');
-
 // render component under test
 const setup = (renderOptions: RenderOptions & IDepositsReceivedContainerProps) => {
   const result = render(
@@ -44,10 +42,10 @@ const setup = (renderOptions: RenderOptions & IDepositsReceivedContainerProps) =
 
 describe('DepositsReceivedContainer component', () => {
   beforeEach(() => {
-    Date.now = jest.fn().mockReturnValue(new Date('2020-11-30T18:33:37.000Z'));
+    Date.now = vi.fn().mockReturnValue(new Date('2020-11-30T18:33:37.000Z'));
   });
   afterAll(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
   it('renders as expected', () => {
     const { asFragment } = setup({

@@ -1,5 +1,5 @@
 import { FieldArray, Formik, FormikHelpers, FormikProps, getIn } from 'formik';
-import * as React from 'react';
+import { Fragment } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaTrash } from 'react-icons/fa';
 
@@ -85,7 +85,7 @@ export const UpdateStakeHolderForm: React.FunctionComponent<IUpdateStakeHolderFo
                     ))}
 
                     {legacyStakeHolders.length > 0 && (
-                      <React.Fragment>
+                      <Fragment>
                         <hr />
                         <SectionField
                           label="Legacy interest holders"
@@ -101,7 +101,7 @@ export const UpdateStakeHolderForm: React.FunctionComponent<IUpdateStakeHolderFo
                             </div>
                           ))}
                         </SectionField>
-                      </React.Fragment>
+                      </Fragment>
                     )}
                     <hr />
 
@@ -137,7 +137,7 @@ export const UpdateStakeHolderForm: React.FunctionComponent<IUpdateStakeHolderFo
                       <i>No Non-interest payees to display</i>
                     )}
                     {values.nonInterestPayees.map((interestHolder, index) => (
-                      <React.Fragment
+                      <Fragment
                         key={
                           interestHolder?.interestHolderId
                             ? `non-interest-holder-${interestHolder?.interestHolderId}`
@@ -211,7 +211,7 @@ export const UpdateStakeHolderForm: React.FunctionComponent<IUpdateStakeHolderFo
                         {getIn(errors, `nonInterestPayees.${index}.impactedProperties`) && (
                           <DisplayError field={`nonInterestPayees.${index}.impactedProperties`} />
                         )}
-                      </React.Fragment>
+                      </Fragment>
                     ))}
                     <hr />
                     <Button

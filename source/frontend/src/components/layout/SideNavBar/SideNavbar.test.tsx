@@ -1,35 +1,73 @@
-import { act, render, waitFor } from '@testing-library/react';
+import { act, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { createMemoryHistory } from 'history';
 
 import { Claims, Roles } from '@/constants/index';
-import TestCommonWrapper from '@/utils/TestCommonWrapper';
 
 import { SideNavBar } from './SideNavbar';
+import { render } from '@/utils/test-utils';
+import { useKeycloak } from '@react-keycloak/web';
 import { SidebarStateContextProvider } from './SideNavbarContext';
 
 interface IRenderProps {
   roles?: Roles[];
   claims?: Claims[];
 }
+
+const mocks = vi.hoisted(() => {
+  return {
+    useKeycloak: vi.fn(),
+  };
+});
+
+vi.mock('@react-keycloak/web', () => {
+  return {
+    useKeycloak: mocks.useKeycloak,
+  };
+});
+
+// Need to mock this library for unit tests
+vi.mock('react-visibility-sensor', () => {
+  return {
+    default: vi.fn().mockImplementation(({ children }) => {
+      return children;
+    }),
+  };
+});
+
 const history = createMemoryHistory();
-const renderComponent = (props?: IRenderProps) =>
-  render(
-    <TestCommonWrapper
-      history={history}
-      roles={props?.roles ?? [Roles.ACQUISITION_FUNCTIONAL]}
-      claims={[
+const renderComponent = (props?: IRenderProps) => {
+  const defaultUserInfo = {
+    organizations: [1],
+    client_roles:
+      [
         ...(props?.claims ?? []),
         Claims.LEASE_VIEW,
         Claims.RESEARCH_VIEW,
         Claims.PROJECT_VIEW,
-      ]}
-    >
-      <SidebarStateContextProvider>
-        <SideNavBar />
-      </SidebarStateContextProvider>
-    </TestCommonWrapper>,
+        ...(props?.roles ?? [Roles.ACQUISITION_FUNCTIONAL]),
+      ] ?? [],
+    email: 'test@test.com',
+    name: 'Chester Tester',
+    idir_user_guid: '00000000000000000000000000000000',
+  };
+
+  mocks.useKeycloak.mockImplementation(() => ({
+    keycloak: {
+      userInfo: defaultUserInfo,
+      subject: 'test',
+      authenticated: true,
+      loadUserInfo: vi.fn().mockResolvedValue(defaultUserInfo),
+    } as any,
+    initialized: true,
+  }));
+  return render(
+    <SidebarStateContextProvider>
+      <SideNavBar />
+    </SidebarStateContextProvider>,
+    { history: history },
   );
+};
 
 describe('SideNavbar display and logic', () => {
   it('renders', async () => {
