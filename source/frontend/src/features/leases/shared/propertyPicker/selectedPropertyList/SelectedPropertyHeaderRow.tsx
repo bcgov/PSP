@@ -16,15 +16,14 @@ export const SelectedPropertyHeaderRow: React.FunctionComponent<
           toolTip="Optionally - provide a user friendly description to identify the property, such as Highway 1"
         />
       </Col>
-      <Col xs={3}>Area included</Col>
     </HeaderRow>
   );
 };
 
 const HeaderRow = styled(Row)`
   font-size: 1.6rem;
-  color: ${props => props.theme.css.lightVariantColor};
-  border-bottom: 0.2rem solid ${props => props.theme.css.lightVariantColor};
+  color: ${props => props.theme.css.themeGray70};
+  border-bottom: 0.2rem solid ${props => props.theme.css.borderOutlineColor};
   margin-bottom: 0.9rem;
   padding-bottom: 0.25rem;
   font-family: 'BcSans-Bold';

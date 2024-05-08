@@ -135,11 +135,11 @@ const StyledInlineDiv = styled(InlineFlexDiv)`
 `;
 
 const StyledGreenText = styled.span`
-  color: ${props => props.theme.css.completedColor};
+  color: ${props => props.theme.bcTokens.iconColorSuccess};
 `;
 
 export const ExpiredWarning = styled(InlineFlexDiv)`
-  color: ${props => props.theme.css.dangerColor};
+  color: ${props => props.theme.bcTokens.surfaceColorPrimaryDangerButtonDefault};
   background-color: ${props => props.theme.css.dangerBackgroundColor};
   border-radius: 0.4rem;
   letter-spacing: 0.1rem;

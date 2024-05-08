@@ -161,6 +161,7 @@ exports[`ResearchContainer component > renders as expected 1`] = `
 .c14 {
   font-size: 1.5rem;
   border-radius: 50%;
+  opacity: 0.8;
   width: 2.5rem;
   height: 2.5rem;
   padding: 1rem;

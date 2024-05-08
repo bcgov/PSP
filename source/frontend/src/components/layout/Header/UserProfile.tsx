@@ -19,14 +19,14 @@ const StyleDropDown = styled(NavDropdown)`
     padding: 0.1rem;
   }
   .dropdown-item {
-    background-color: ${variables.primaryLightColor};
+    background-color: ${props => props.theme.bcTokens.surfaceColorBackgroundDarkBlue};
     border-top: 0.2rem solid ${variables.accentColor};
   }
 `;
 
 /** shaded box the users system roles will be displayed in */
 const RolesBox = styled.div`
-  background-color: ${variables.filterBackgroundColor};
+  background-color: ${variables.highlightBackgroundColor};
   margin: 0.5rem;
 `;
 

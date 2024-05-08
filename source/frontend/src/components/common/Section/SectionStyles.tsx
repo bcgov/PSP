@@ -67,7 +67,7 @@ export const ArrowDropUpIcon = styled(MdArrowDropUp)`
 `;
 
 export const StyledSummarySection = styled.div`
-  background-color: ${props => props.theme.css.filterBackgroundColor};
+  background-color: ${props => props.theme.css.highlightBackgroundColor};
   padding-top: 1rem;
 `;
 
@@ -78,6 +78,6 @@ export const StyledEditWrapper = styled.div`
 `;
 
 export const StyledSubtleText = styled.p`
-  color: ${props => props.theme.css.subtleColor};
+  color: ${props => props.theme.bcTokens.iconsColorDisabled};
   text-align: left;
 `;

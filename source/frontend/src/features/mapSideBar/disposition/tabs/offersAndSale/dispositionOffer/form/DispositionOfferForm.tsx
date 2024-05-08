@@ -170,7 +170,7 @@ const StyledFormWrapper = styled.div`
 `;
 
 const StyledContent = styled.div`
-  background-color: ${props => props.theme.css.filterBackgroundColor};
+  background-color: ${props => props.theme.css.highlightBackgroundColor};
 `;
 
 const StyledFooter = styled.div`

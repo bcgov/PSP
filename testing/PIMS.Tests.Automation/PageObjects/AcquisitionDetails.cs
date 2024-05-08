@@ -210,12 +210,6 @@ namespace PIMS.Tests.Automation.PageObjects
                 webDriver.FindElement(acquisitionFileDeliveryDateInput).SendKeys(Keys.Enter);
             }
 
-            if (acquisition.AcquisitionCompletedDate != "")
-            {
-                webDriver.FindElement(acquisitionFileCompletedDateInput).SendKeys(acquisition.AcquisitionCompletedDate);
-                webDriver.FindElement(acquisitionFileCompletedDateInput).SendKeys(Keys.Enter);
-            }
-
             if (acquisition.HistoricalFileNumber != "")
                 webDriver.FindElement(acquisitionFileHistoricalNumberInput).SendKeys(acquisition.HistoricalFileNumber);
            
@@ -336,14 +330,6 @@ namespace PIMS.Tests.Automation.PageObjects
                 webDriver.FindElement(acquisitionFileDeliveryDateInput).SendKeys(Keys.Enter);
             }
 
-            if (acquisition.AcquisitionCompletedDate != "")
-            {
-                WaitUntilClickable(acquisitionFileCompletedDateInput);
-                ClearInput(acquisitionFileCompletedDateInput);
-                webDriver.FindElement(acquisitionFileCompletedDateInput).SendKeys(acquisition.AcquisitionCompletedDate);
-                webDriver.FindElement(acquisitionFileCompletedDateInput).SendKeys(Keys.Enter);
-            }
-
             if (acquisition.HistoricalFileNumber != "")
             {
                 WaitUntilClickable(acquisitionFileHistoricalNumberInput);
@@ -440,7 +426,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public string GetAcquisitionFileCode()
         {
-            WaitUntilVisible(acquisitionFileHeaderCodeContent);
+            Wait();
 
             var totalFileName = webDriver.FindElement(acquisitionFileHeaderCodeContent).Text;
             return Regex.Match(totalFileName, "^[^ ]+").Value;
@@ -453,6 +439,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyAcquisitionFileView(AcquisitionFile acquisition)
         {
+            Wait();
             AssertTrueIsDisplayed(acquisitionFileViewTitle);
 
             //Header
@@ -504,9 +491,6 @@ namespace PIMS.Tests.Automation.PageObjects
 
             if(acquisition.DeliveryDate != "")
                 AssertTrueContentEquals(acquisitionFileScheduleDeliveryDateContent, TransformDateFormat(acquisition.DeliveryDate));
-
-            if (acquisition.AcquisitionCompletedDate != "")
-                AssertTrueContentEquals(acquisitionFileScheduleCompletedDateContent, TransformDateFormat(acquisition.AcquisitionCompletedDate));
 
             //Details
             AssertTrueIsDisplayed(acquisitionFileDetailsSubtitle);
@@ -809,6 +793,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private void VerifyRequiredTeamMemberMessages()
         {
             //Add a new Team member form
+            Wait();
             WaitUntilClickable(acquisitionFileAddAnotherMemberLink);
             webDriver.FindElement(acquisitionFileAddAnotherMemberLink).Click();
 

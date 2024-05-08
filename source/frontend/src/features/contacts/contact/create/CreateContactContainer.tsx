@@ -49,7 +49,7 @@ export const CreateContactContainer: React.FunctionComponent<
 };
 
 const StyledFormWrapper = styled.div`
-  background-color: ${props => props.theme.css.filterBackgroundColor};
+  background-color: ${props => props.theme.css.highlightBackgroundColor};
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
   overflow: inherit;

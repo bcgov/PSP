@@ -8,46 +8,42 @@ import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { convertArea } from '@/utils/convertUtils';
 import { fromTypeCodeNullable, stringToNull, toTypeCodeNullable } from '@/utils/formUtils';
 
-import { ApiGen_CodeTypes_AcquisitionTakeStatusTypes } from './../../../../../../models/api/generated/ApiGen_CodeTypes_AcquisitionTakeStatusTypes';
+import { ApiGen_CodeTypes_AcquisitionTakeStatusTypes } from '../../../../../models/api/generated/ApiGen_CodeTypes_AcquisitionTakeStatusTypes';
 
 /* eslint-disable no-template-curly-in-string */
 export const TakesYupSchema = Yup.object().shape({
-  takes: Yup.array().of(
-    Yup.object().shape({
-      description: Yup.string().max(4000, 'Description must be at most ${max} characters'),
-      takeTypeCode: Yup.string().required('Take type is required').nullable(),
-      takeStatusTypeCode: Yup.string().required('Take status type is required.'),
-      isThereSurplus: Yup.bool().required('Surplus flag required'),
-      isNewHighwayDedication: Yup.bool().required('New highway dedication flag required'),
-      isNewLandAct: Yup.bool().required('Section 16 flag required'),
-      isNewInterestInSrw: Yup.bool().required('Statutory right of way (SRW) flag required'),
-      isNewLicenseToConstruct: Yup.bool().required('License to construct flag required'),
-      ltcEndDt: Yup.string().when('isNewLicenseToConstruct', {
-        is: (isNewLicenseToConstruct: boolean) => isNewLicenseToConstruct,
-        then: Yup.string().required('End Date is required'),
-      }),
-      landActEndDt: Yup.string().when(['isNewLandAct', 'landActTypeCode'], {
-        is: (isNewLandAct: boolean, landActTypeCode: string) =>
-          isNewLandAct &&
-          ![
-            ApiGen_CodeTypes_LandActTypes.TRANSFER_OF_ADMIN_AND_CONTROL.toString(),
-            ApiGen_CodeTypes_LandActTypes.CROWN_GRANT.toString(),
-          ].includes(landActTypeCode),
-        then: Yup.string().required('End Date is required'),
-      }),
-      landActTypeCode: Yup.string().when('isNewLandAct', {
-        is: (isNewLandAct: boolean) => isNewLandAct,
-        then: Yup.string().required('Land Act is required'),
-      }),
-      completionDt: Yup.string()
-        .nullable()
-        .when('takeStatusTypeCode', {
-          is: (takeStatusTypeCode: string) =>
-            takeStatusTypeCode === ApiGen_CodeTypes_AcquisitionTakeStatusTypes.COMPLETE,
-          then: Yup.string().nullable().required('A completed take must have a completion date.'),
-        }),
+  description: Yup.string().max(4000, 'Description must be at most ${max} characters'),
+  takeTypeCode: Yup.string().required('Take type is required').nullable(),
+  takeStatusTypeCode: Yup.string().required('Take status type is required.'),
+  isThereSurplus: Yup.bool().required('Surplus flag required'),
+  isNewHighwayDedication: Yup.bool().required('New highway dedication flag required'),
+  isNewLandAct: Yup.bool().required('Section 16 flag required'),
+  isNewInterestInSrw: Yup.bool().required('Statutory right of way (SRW) flag required'),
+  isNewLicenseToConstruct: Yup.bool().required('License to construct flag required'),
+  ltcEndDt: Yup.string().when('isNewLicenseToConstruct', {
+    is: (isNewLicenseToConstruct: boolean) => isNewLicenseToConstruct,
+    then: Yup.string().required('End Date is required'),
+  }),
+  landActEndDt: Yup.string().when(['isNewLandAct', 'landActTypeCode'], {
+    is: (isNewLandAct: boolean, landActTypeCode: string) =>
+      isNewLandAct &&
+      ![
+        ApiGen_CodeTypes_LandActTypes.TRANSFER_OF_ADMIN_AND_CONTROL.toString(),
+        ApiGen_CodeTypes_LandActTypes.CROWN_GRANT.toString(),
+      ].includes(landActTypeCode),
+    then: Yup.string().required('End Date is required'),
+  }),
+  landActTypeCode: Yup.string().when('isNewLandAct', {
+    is: (isNewLandAct: boolean) => isNewLandAct,
+    then: Yup.string().required('Land Act is required'),
+  }),
+  completionDt: Yup.string()
+    .nullable()
+    .when('takeStatusTypeCode', {
+      is: (takeStatusTypeCode: string) =>
+        takeStatusTypeCode === ApiGen_CodeTypes_AcquisitionTakeStatusTypes.COMPLETE,
+      then: Yup.string().nullable().required('A completed take must have a completion date.'),
     }),
-  ),
 });
 
 export class TakeModel {
@@ -86,50 +82,50 @@ export class TakeModel {
   rowVersion?: number;
   appCreateTimestamp: UtcIsoDateTime | null;
 
-  constructor(base: ApiGen_Concepts_Take) {
-    this.id = base.id;
-    this.rowVersion = base.rowVersion ?? undefined;
-    this.description = base.description ?? '';
-    this.isThereSurplus = base.isThereSurplus ? 'true' : 'false';
-    this.isNewHighwayDedication = base.isNewHighwayDedication ? 'true' : 'false';
-    this.isNewLandAct = base.isNewLandAct ? 'true' : 'false';
-    this.isNewLicenseToConstruct = base.isNewLicenseToConstruct ? 'true' : 'false';
-    this.isNewInterestInSrw = base.isNewInterestInSrw ? 'true' : 'false';
-    this.isLeasePayable = base.isLeasePayable ? 'true' : 'false';
-    this.licenseToConstructArea = base.licenseToConstructArea ?? 0;
+  constructor(base?: ApiGen_Concepts_Take) {
+    this.id = base?.id;
+    this.rowVersion = base?.rowVersion ?? undefined;
+    this.description = base?.description ?? '';
+    this.isThereSurplus = base?.isThereSurplus ? 'true' : 'false';
+    this.isNewHighwayDedication = base?.isNewHighwayDedication ? 'true' : 'false';
+    this.isNewLandAct = base?.isNewLandAct ? 'true' : 'false';
+    this.isNewLicenseToConstruct = base?.isNewLicenseToConstruct ? 'true' : 'false';
+    this.isNewInterestInSrw = base?.isNewInterestInSrw ? 'true' : 'false';
+    this.isLeasePayable = base?.isLeasePayable ? 'true' : 'false';
+    this.licenseToConstructArea = base?.licenseToConstructArea ?? 0;
     this.licenseToConstructAreaUnitTypeCode =
-      fromTypeCodeNullable(base.areaUnitTypeCode) ?? AreaUnitTypes.SquareMeters.toString();
-    this.landActArea = base.landActArea ?? 0;
+      fromTypeCodeNullable(base?.areaUnitTypeCode) ?? AreaUnitTypes.SquareMeters.toString();
+    this.landActArea = base?.landActArea ?? 0;
     this.landActAreaUnitTypeCode =
-      fromTypeCodeNullable(base.areaUnitTypeCode) ?? AreaUnitTypes.SquareMeters.toString();
-    this.surplusArea = base.surplusArea ?? 0;
+      fromTypeCodeNullable(base?.areaUnitTypeCode) ?? AreaUnitTypes.SquareMeters.toString();
+    this.surplusArea = base?.surplusArea ?? 0;
     this.surplusAreaUnitTypeCode =
-      fromTypeCodeNullable(base.areaUnitTypeCode) ?? AreaUnitTypes.SquareMeters.toString();
-    this.statutoryRightOfWayArea = base.statutoryRightOfWayArea ?? 0;
+      fromTypeCodeNullable(base?.areaUnitTypeCode) ?? AreaUnitTypes.SquareMeters.toString();
+    this.statutoryRightOfWayArea = base?.statutoryRightOfWayArea ?? 0;
     this.statutoryRightOfWayAreaUnitTypeCode =
-      fromTypeCodeNullable(base.areaUnitTypeCode) ?? AreaUnitTypes.SquareMeters.toString();
+      fromTypeCodeNullable(base?.areaUnitTypeCode) ?? AreaUnitTypes.SquareMeters.toString();
     this.leasePayableAreaUnitTypeCode =
-      fromTypeCodeNullable(base.areaUnitTypeCode) ?? AreaUnitTypes.SquareMeters.toString();
-    this.takeTypeCode = fromTypeCodeNullable(base.takeTypeCode);
-    this.takeStatusTypeCode = fromTypeCodeNullable(base.takeStatusTypeCode);
-    this.takeSiteContamTypeCode = base.takeSiteContamTypeCode
-      ? fromTypeCodeNullable(base.takeSiteContamTypeCode)
+      fromTypeCodeNullable(base?.areaUnitTypeCode) ?? AreaUnitTypes.SquareMeters.toString();
+    this.takeTypeCode = fromTypeCodeNullable(base?.takeTypeCode);
+    this.takeStatusTypeCode = fromTypeCodeNullable(base?.takeStatusTypeCode);
+    this.takeSiteContamTypeCode = base?.takeSiteContamTypeCode
+      ? fromTypeCodeNullable(base?.takeSiteContamTypeCode)
       : 'UNK';
-    this.propertyAcquisitionFileId = base.propertyAcquisitionFileId;
-    this.landActEndDt = base.landActEndDt ?? '';
-    this.ltcEndDt = base.ltcEndDt ?? '';
-    this.srwEndDt = base.srwEndDt ?? '';
-    this.leasePayableEndDt = base.leasePayableEndDt ?? '';
-    this.leasePayableArea = base.leasePayableArea ?? 0;
-    this.landActDescription = base.landActTypeCode?.description ?? '';
-    this.landActTypeCode = base.landActTypeCode?.id ?? '';
+    this.propertyAcquisitionFileId = base?.propertyAcquisitionFileId;
+    this.landActEndDt = base?.landActEndDt ?? '';
+    this.ltcEndDt = base?.ltcEndDt ?? '';
+    this.srwEndDt = base?.srwEndDt ?? '';
+    this.leasePayableEndDt = base?.leasePayableEndDt ?? '';
+    this.leasePayableArea = base?.leasePayableArea ?? 0;
+    this.landActDescription = base?.landActTypeCode?.description ?? '';
+    this.landActTypeCode = base?.landActTypeCode?.id ?? '';
 
-    this.isAcquiredForInventory = base.isAcquiredForInventory ? 'true' : 'false';
-    this.newHighwayDedicationArea = base.newHighwayDedicationArea ?? 0;
+    this.isAcquiredForInventory = base?.isAcquiredForInventory ? 'true' : 'false';
+    this.newHighwayDedicationArea = base?.newHighwayDedicationArea ?? 0;
     this.newHighwayDedicationAreaUnitTypeCode =
-      fromTypeCodeNullable(base.areaUnitTypeCode) ?? AreaUnitTypes.SquareMeters.toString();
-    this.completionDt = base.completionDt;
-    this.appCreateTimestamp = base.appCreateTimestamp ?? null;
+      fromTypeCodeNullable(base?.areaUnitTypeCode) ?? AreaUnitTypes.SquareMeters.toString();
+    this.completionDt = base?.completionDt;
+    this.appCreateTimestamp = base?.appCreateTimestamp ?? null;
   }
 
   toApi(): ApiGen_Concepts_Take {

@@ -1540,7 +1540,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             var exception = act.Should().Throw<BusinessRuleViolationException>();
-            exception.WithMessage("The file you are editing is not active or draft, so you cannot save changes. Refresh your browser to see file state.");
+            exception.WithMessage("The file you are editing is not active or hold, so you cannot save changes. Refresh your browser to see file state.");
         }
 
         [Fact]

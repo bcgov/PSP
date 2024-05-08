@@ -11,7 +11,7 @@ export const H2 = styled.h2`
 
 export const H2Primary = styled.h2`
   text-align: left;
-  color: ${props => props.theme.css.primaryColor};
+  color: ${props => props.theme.css.headerTextColor};
 `;
 
 export const RowAligned = styled(Row)`
@@ -21,12 +21,12 @@ export const RowAligned = styled(Row)`
 export const StatusIndicators = styled.div`
   border-radius: 1rem;
   background-color: white;
-  border: 1px solid ${props => props.theme.css.lightVariantColor};
+  border: 1px solid ${props => props.theme.css.borderOutlineColor};
   padding: 0.2rem 1rem;
-  color: ${props => props.theme.css.lightVariantColor};
+  color: ${props => props.theme.css.borderOutlineColor};
   &.active {
-    color: ${props => props.theme.css.completedColor};
-    border: 1px solid ${props => props.theme.css.completedColor};
+    color: ${props => props.theme.bcTokens.iconColorSuccess};
+    border: 1px solid ${props => props.theme.bcTokens.iconColorSuccess};
   }
 `;
 

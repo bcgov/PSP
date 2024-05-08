@@ -1,9 +1,11 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
+import '@bcgov/design-tokens/css/variables.css';
 import 'leaflet/dist/leaflet.css';
 import 'react-datepicker/dist/react-datepicker.css';
 import 'react-toastify/dist/ReactToastify.css';
 import './assets/scss/index.scss'; // should be loaded last to allow for overrides without having to resort to "!important"
 
+import * as bcTokens from '@bcgov/design-tokens/js/variables.js';
 import { ReactKeycloakProvider } from '@react-keycloak/web';
 import Keycloak, { KeycloakInstance } from 'keycloak-js';
 import { createRoot } from 'react-dom/client';
@@ -25,7 +27,7 @@ import { ITenantConfig2 } from './hooks/pims-api/interfaces/ITenantConfig';
 import { useRefreshSiteminder } from './hooks/useRefreshSiteminder';
 
 async function prepare() {
-  if (import.meta.env.DEV) {
+  if (process.env.NODE_ENV === 'development') {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const { worker } = await import('./mocks/msw/browser');
     return worker.start({ onUnhandledRequest: 'bypass' });
@@ -47,7 +49,7 @@ const Index = () => {
 const InnerComponent = ({ tenant }: { tenant: ITenantConfig2 }) => {
   const refresh = useRefreshSiteminder();
   return (
-    <ThemeProvider theme={{ tenant, css }}>
+    <ThemeProvider theme={{ tenant, css, bcTokens }}>
       <ReactKeycloakProvider
         initOptions={{ pkceMethod: 'S256' }}
         authClient={keycloak}

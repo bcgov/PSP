@@ -25,8 +25,9 @@ describe('SelectedPropertyRow component', () => {
     // render component under test
     const component = await renderAsync(
       <Formik onSubmit={noop} initialValues={renderOptions.values ?? {}}>
-        {() => (
+        {formikProps => (
           <SelectedPropertyRow
+            formikProps={formikProps}
             property={
               renderOptions.values?.properties
                 ? PropertyForm.fromMapProperty(renderOptions.values?.properties[0])
