@@ -63,7 +63,7 @@ namespace Pims.Api.Test.Controllers.Property
 
             var repository = this._helper.GetService<Mock<IPropertyRepository>>();
             var mapper = this._helper.GetService<IMapper>();
-            var page = new Paged<Entity.PimsPropertyLocationVw>(properties, filter.Page, filter.Quantity);
+            var page = new Paged<Entity.PimsPropertyVw>(properties, filter.Page, filter.Quantity);
 
             repository.Setup(m => m.GetPage(It.IsAny<PropertyFilter>())).Returns(page);
 
@@ -92,7 +92,7 @@ namespace Pims.Api.Test.Controllers.Property
 
             var repository = this._helper.GetService<Mock<IPropertyRepository>>();
             var mapper = this._helper.GetService<IMapper>();
-            var page = new Paged<Entity.PimsPropertyLocationVw>(properties);
+            var page = new Paged<Entity.PimsPropertyVw>(properties);
 
             repository.Setup(m => m.GetPage(It.IsAny<PropertyFilter>())).Returns(page);
 

@@ -18,9 +18,9 @@ namespace Pims.Api.Areas.Tools.Mappers
                 .Map(dest => dest.Pids, src => StringToList(src.Pids));
         }
 
-        private static IEnumerable<string> StringToList(string commaSeparated)
+        private static IEnumerable<string> StringToList(string delimSeperated)
         {
-            return commaSeparated != null ? commaSeparated.Split(",") : Array.Empty<string>();
+            return delimSeperated != null ? delimSeperated.Split('|', ',') : Array.Empty<string>();
         }
     }
 }
