@@ -27,13 +27,13 @@ const mockGetPropertyHistoricalNumbers = {
   response: undefined,
   execute: vi.fn().mockResolvedValue([]),
   loading: false,
-  status: undefined
+  status: undefined,
 };
 
 vi.mock('@/hooks/epositories/useHistoricalNumberRepository', () => ({
   useInterestHolderRepository: () => {
     return {
-      getPropertyHistoricalNumbers: mockGetPropertyHistoricalNumbers
+      getPropertyHistoricalNumbers: mockGetPropertyHistoricalNumbers,
     };
   },
 }));
