@@ -7,7 +7,7 @@ namespace Pims.Api.Models.Concepts.Property
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<Entity.PimsPropertyLocationVw, PropertyViewModel>()
+            config.NewConfig<Entity.PimsPropertyVw, PropertyViewModel>()
                .Map(dest => dest.Id, src => src.PropertyId)
                .Map(dest => dest.Pid, src => src.Pid)
 .Map(dest => dest.PidPadded, src => src.PidPadded)
@@ -52,7 +52,7 @@ namespace Pims.Api.Models.Concepts.Property
 .Map(dest => dest.IsReceivableLease, src => src.IsReceivableLease)
 .Map(dest => dest.IsActiveReceivableLease, src => src.IsActiveReceivableLease);
 
-            config.NewConfig<PropertyViewModel, Entity.PimsPropertyLocationVw>()
+            config.NewConfig<PropertyViewModel, Entity.PimsPropertyVw>()
                 .Map(dest => dest.PropertyId, src => src.Id)
                .Map(dest => dest.Pid, src => src.Pid)
 .Map(dest => dest.PidPadded, src => src.PidPadded)
