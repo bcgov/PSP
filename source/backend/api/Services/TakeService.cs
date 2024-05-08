@@ -118,7 +118,7 @@ namespace Pims.Api.Services
             {
                 throw new BusinessRuleViolationException("Retired records are referenced for historical purposes only and cannot be edited or deleted. If the take has been added in error, contact your system administrator to re-open the file, which will allow take deletion.");
             }
-            else if(propertyWithAssociations?.PimsDispositionFileProperties?.Any(d => d.DispositionFile.DispositionFileStatusTypeCode == DispositionFileStatusTypes.COMPLETE.ToString()) == true)
+            else if (propertyWithAssociations?.PimsDispositionFileProperties?.Any(d => d.DispositionFile.DispositionFileStatusTypeCode == DispositionFileStatusTypes.COMPLETE.ToString()) == true)
             {
                 throw new BusinessRuleViolationException("You cannot delete a take that has a completed disposition attached to the same property.");
             }
@@ -223,7 +223,14 @@ namespace Pims.Api.Services
             var currentTakes = _takeRepository.GetAllByPropertyId(currentProperty.PropertyId);
 
             var allTakes = currentTakes;
-            if (take != null)
+
+            // If the take is being modified, update the one in the list to use the incomming one.
+            var existingTake = allTakes.FirstOrDefault(t => t.TakeId == take.TakeId);
+            if (existingTake != null)
+            {
+                allTakes = allTakes.Select(t => t.TakeId == take.TakeId ? take : t);
+            }
+            else if (take != null)
             {
                 allTakes = allTakes.Append(take);
             }
