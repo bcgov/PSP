@@ -16,9 +16,27 @@ import { act, render, RenderOptions, waitForElementToBeRemoved } from '@/utils/t
 import { SideBarContextProvider, TypedFile } from '../context/sidebarContext';
 import ResearchContainer, { IResearchContainerProps } from './ResearchContainer';
 import ResearchView from './ResearchView';
+import { useHistoricalNumberRepository } from '@/hooks/repositories/useHistoricalNumberRepository';
+import { ApiGen_Concepts_HistoricalNumber } from '@/models/api/generated/ApiGen_Concepts_HistoricalNumber';
 
 const history = createMemoryHistory();
 const mockAxios = new MockAdapter(axios);
+
+const mockGetPropertyHistoricalNumbers = {
+  error: undefined,
+  response: undefined,
+  execute: vi.fn().mockResolvedValue([]),
+  loading: false,
+  status: undefined
+};
+
+vi.mock('@/hooks/epositories/useHistoricalNumberRepository', () => ({
+  useInterestHolderRepository: () => {
+    return {
+      getPropertyHistoricalNumbers: mockGetPropertyHistoricalNumbers
+    };
+  },
+}));
 
 // Need to mock this library for unit tests
 vi.mock('react-visibility-sensor', () => {
