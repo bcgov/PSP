@@ -6,6 +6,7 @@ using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using NSubstitute;
+using Pims.Api.Models.CodeTypes;
 using Pims.Api.Services;
 using Pims.Core.Exceptions;
 using Pims.Core.Test;
@@ -176,6 +177,137 @@ namespace Pims.Dal.Test.Repositories
             Assert.IsAssignableFrom<Paged<Entity.PimsLease>>(result);
             Assert.Equal(expectedCount, result.Items.Count);
         }
+
+        [Fact]
+        public void Get_Leases_Filter_Historical_LISNO()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseView);
+            var elease = EntityHelper.CreateLease(456, lFileNo: "123", tenantLastName: "tenant", addTenant: true, addProperty: true);
+            elease.LeaseId = 1;
+            elease.OrigExpiryDate = new DateTime(2000, 1, 1);
+            elease.OrigStartDate = new DateTime(2000, 1, 1);
+            elease.PsFileNo = "111";
+            elease.LeaseProgramTypeCode = "testProgramType";
+            elease.LeaseStatusTypeCode = "testStatusType";
+            elease.LeaseDescription = "details";
+
+            var context = helper.CreatePimsContext(user, true);
+            context.AddAndSaveChanges(elease);
+
+            var fileNumber = new PimsFileNumber();
+            fileNumber.PropertyId = elease.PimsPropertyLeases.FirstOrDefault().PropertyId;
+            fileNumber.FileNumberTypeCode = FileNumberTypes.LISNO.ToString();
+            fileNumber.FileNumber = "99999";
+            fileNumber.AppCreateUserid = "tester";
+            fileNumber.AppCreateUserDirectory = "PIMS";
+            fileNumber.AppLastUpdateUserDirectory = "PIMS";
+            fileNumber.AppLastUpdateUserid = "tester";
+            fileNumber.DbCreateUserid = "tester";
+            fileNumber.DbLastUpdateUserid = "tester";
+
+            context.AddAndSaveChanges(fileNumber);
+
+            LeaseFilter filter = new LeaseFilter() { Historical = "99999" };
+            var service = helper.CreateRepository<LeaseRepository>(user);
+
+            // Act
+            var result = service.GetPage(filter, new HashSet<short>());
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.IsAssignableFrom<Paged<Entity.PimsLease>>(result);
+            Assert.Equal(1, result.Items.Count);
+        }
+
+        [Fact]
+        public void Get_Leases_Filter_Historical_PSNO()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseView);
+            var elease = EntityHelper.CreateLease(456, lFileNo: "123", tenantLastName: "tenant", addTenant: true, addProperty: true);
+            elease.LeaseId = 1;
+            elease.OrigExpiryDate = new DateTime(2000, 1, 1);
+            elease.OrigStartDate = new DateTime(2000, 1, 1);
+            elease.PsFileNo = "111";
+            elease.LeaseProgramTypeCode = "testProgramType";
+            elease.LeaseStatusTypeCode = "testStatusType";
+            elease.LeaseDescription = "details";
+
+            var context = helper.CreatePimsContext(user, true);
+            context.AddAndSaveChanges(elease);
+
+            var fileNumber = new PimsFileNumber();
+            fileNumber.PropertyId = elease.PimsPropertyLeases.FirstOrDefault().PropertyId;
+            fileNumber.FileNumberTypeCode = FileNumberTypes.PSNO.ToString();
+            fileNumber.FileNumber = "88888";
+            fileNumber.AppCreateUserid = "tester";
+            fileNumber.AppCreateUserDirectory = "PIMS";
+            fileNumber.AppLastUpdateUserDirectory = "PIMS";
+            fileNumber.AppLastUpdateUserid = "tester";
+            fileNumber.DbCreateUserid = "tester";
+            fileNumber.DbLastUpdateUserid = "tester";
+
+            context.AddAndSaveChanges(fileNumber);
+
+            LeaseFilter filter = new LeaseFilter() { Historical = "88888" };
+            var service = helper.CreateRepository<LeaseRepository>(user);
+
+            // Act
+            var result = service.GetPage(filter, new HashSet<short>());
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.IsAssignableFrom<Paged<Entity.PimsLease>>(result);
+            Assert.Equal(1, result.Items.Count);
+        }
+
+        [Fact]
+        public void Get_Leases_Filter_Historical_OTHERNO()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseView);
+            var elease = EntityHelper.CreateLease(456, lFileNo: "123", tenantLastName: "tenant", addTenant: true, addProperty: true);
+            elease.LeaseId = 1;
+            elease.OrigExpiryDate = new DateTime(2000, 1, 1);
+            elease.OrigStartDate = new DateTime(2000, 1, 1);
+            elease.PsFileNo = "111";
+            elease.LeaseProgramTypeCode = "testProgramType";
+            elease.LeaseStatusTypeCode = "testStatusType";
+            elease.LeaseDescription = "details";
+
+            var context = helper.CreatePimsContext(user, true);
+            context.AddAndSaveChanges(elease);
+
+            var fileNumber = new PimsFileNumber();
+            fileNumber.PropertyId = elease.PimsPropertyLeases.FirstOrDefault().PropertyId;
+            fileNumber.FileNumberTypeCode = FileNumberTypes.OTHER.ToString();
+            fileNumber.OtherFileNumberType = FileNumberTypes.OTHER.ToString();
+            fileNumber.FileNumber = "77777";
+            fileNumber.AppCreateUserid = "tester";
+            fileNumber.AppCreateUserDirectory = "PIMS";
+            fileNumber.AppLastUpdateUserDirectory = "PIMS";
+            fileNumber.AppLastUpdateUserid = "tester";
+            fileNumber.DbCreateUserid = "tester";
+            fileNumber.DbLastUpdateUserid = "tester";
+
+            context.AddAndSaveChanges(fileNumber);
+
+            LeaseFilter filter = new LeaseFilter() { Historical = "77777" };
+            var service = helper.CreateRepository<LeaseRepository>(user);
+
+            // Act
+            var result = service.GetPage(filter, new HashSet<short>());
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.IsAssignableFrom<Paged<Entity.PimsLease>>(result);
+            Assert.Equal(1, result.Items.Count);
+        }
+
         #endregion
 
         #region Add Lease

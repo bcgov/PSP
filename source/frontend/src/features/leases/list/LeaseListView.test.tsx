@@ -22,6 +22,7 @@ import {
 
 import { ILeaseFilter } from '..';
 import { LeaseListView } from './LeaseListView';
+import { ApiGen_CodeTypes_FileNumberTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileNumberTypes';
 
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: [] },
@@ -149,6 +150,7 @@ describe('Lease and License List View', () => {
               id: 1234,
               address: { ...getEmptyAddress(), streetAddress1: '123 mock st' },
               pin: 123,
+              fileNumbers: [],
             },
           },
         ],
@@ -169,6 +171,71 @@ describe('Lease and License List View', () => {
     );
 
     expect(await findByText(/L-123-456/i)).toBeInTheDocument();
+  });
+
+  it('searches historical file number', async () => {
+    setupMockSearch([
+      {
+        ...getEmptyLease(),
+        id: 1,
+        lFileNo: 'L-123-456',
+        programName: 'TRAN-IT',
+        tenants: [
+          {
+            ...getEmptyLeaseTenant(),
+            person: { ...getEmptyPerson(), firstName: 'Chester', surname: 'Tester' },
+          },
+        ],
+        fileProperties: [
+          {
+            ...getEmptyPropertyLease(),
+            property: {
+              ...getEmptyProperty(),
+              id: 123,
+              address: { ...getEmptyAddress(), streetAddress1: '123 mock st' },
+              pin: 123,
+              fileNumbers: [
+                {
+                  id: 1000,
+                  fileNumber: '0309-001',
+                  fileNumberTypeCode: {
+                    id: ApiGen_CodeTypes_FileNumberTypes.LISNO.toString(),
+                    description: 'LIS #',
+                    isDisabled: false,
+                    displayOrder: 1,
+                  },
+                  propertyId: 123,
+                  otherFileNumberType: null,
+                  isDisabled: false,
+                  rowVersion: 1,
+                  appCreateTimestamp: '',
+                  appLastUpdateTimestamp: '',
+                  appLastUpdateUserid: '',
+                  appCreateUserid: '',
+                  appLastUpdateUserGuid: '',
+                  appCreateUserGuid: ''
+                },
+              ]
+            },
+          },
+        ],
+      },
+    ]);
+    const { container, searchButton, findByText } = setup();
+
+    fillInput(container, 'searchBy', 'historical', 'select');
+    fillInput(container, 'historical', '0309-001');
+    await act(async () => userEvent.click(searchButton));
+
+    expect(getLeases).toHaveBeenCalledWith(
+      expect.objectContaining({
+        historical: '0309-001',
+        pinOrPid: '',
+        searchBy: 'historical',
+      }),
+    );
+
+    expect(await findByText(/LIS #'s: 0309-001./i)).toBeInTheDocument();
   });
 
   it('searches tenant name', async () => {

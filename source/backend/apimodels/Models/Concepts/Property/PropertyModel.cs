@@ -229,6 +229,8 @@ namespace Pims.Api.Models.Concepts.Property
         /// </summary>
         public IList<PropertyContactModel> PropertyContacts { get; set; }
 
+        public IList<PropertyFileNumberModel> FileNumbers { get; set; }
+
         /// <summary>
         /// get/set - The property notes.
         /// </summary>

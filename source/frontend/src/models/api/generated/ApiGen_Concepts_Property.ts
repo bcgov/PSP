@@ -12,6 +12,7 @@ import { ApiGen_Concepts_Geometry } from './ApiGen_Concepts_Geometry';
 import { ApiGen_Concepts_Polygon } from './ApiGen_Concepts_Polygon';
 import { ApiGen_Concepts_PropertyAnomaly } from './ApiGen_Concepts_PropertyAnomaly';
 import { ApiGen_Concepts_PropertyContact } from './ApiGen_Concepts_PropertyContact';
+import { ApiGen_Concepts_PropertyFileNumber } from './ApiGen_Concepts_PropertyFileNumber';
 import { ApiGen_Concepts_PropertyRoad } from './ApiGen_Concepts_PropertyRoad';
 import { ApiGen_Concepts_PropertyTenure } from './ApiGen_Concepts_PropertyTenure';
 
@@ -59,6 +60,7 @@ export interface ApiGen_Concepts_Property extends ApiGen_Base_BaseConcurrent {
   boundary: ApiGen_Concepts_Polygon | null;
   generalLocation: string | null;
   propertyContacts: ApiGen_Concepts_PropertyContact[] | null;
+  fileNumbers: ApiGen_Concepts_PropertyFileNumber[] | null;
   notes: string | null;
   surplusDeclarationType: ApiGen_Base_CodeType<string> | null;
   surplusDeclarationComment: string | null;

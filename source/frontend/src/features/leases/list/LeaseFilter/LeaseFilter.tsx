@@ -118,6 +118,7 @@ export const LeaseFilter: React.FunctionComponent<React.PropsWithChildren<ILease
                       <SelectInput<ILeaseSearchBy, ILeaseFilter>
                         field="searchBy"
                         defaultKey="pinOrPid"
+                        defaultValue={''}
                         selectOptions={[
                           { label: 'PID/PIN', key: 'pinOrPid', placeholder: 'Enter a PID or PIN' },
                           { label: 'Address', key: 'address', placeholder: 'Enter an address' },
