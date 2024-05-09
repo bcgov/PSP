@@ -1,6 +1,8 @@
+import axios, { AxiosError } from 'axios';
 import { Formik, FormikHelpers, FormikProps } from 'formik';
 import isNumber from 'lodash/isNumber';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { toast } from 'react-toastify';
 import styled from 'styled-components';
 
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
@@ -10,6 +12,7 @@ import { usePimsPropertyRepository } from '@/hooks/repositories/usePimsPropertyR
 import { useQueryMapLayersByLocation } from '@/hooks/repositories/useQueryMapLayersByLocation';
 import { useLookupCodeHelpers } from '@/hooks/useLookupCodeHelpers';
 import useIsMounted from '@/hooks/util/useIsMounted';
+import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { exists, isValidId } from '@/utils';
 
@@ -39,6 +42,7 @@ export const UpdatePropertyDetailsContainer = React.forwardRef<
       execute: executeGetHistoricalNumbers,
       loading: loadingGetHistoricalNumbers,
     },
+    updatePropertyHistoricalNumbers: { execute: executeUpdateHistoricalNumbers },
   } = useHistoricalNumberRepository();
 
   const { queryAll } = useQueryMapLayersByLocation();
@@ -60,8 +64,9 @@ export const UpdatePropertyDetailsContainer = React.forwardRef<
     async (id: number) => {
       const retrieved = await executeGetProperty(id);
       if (exists(retrieved) && isMounted()) {
+        // fetch historical file numbers for the retrieved property
         const apiHistoricalNumbers = await executeGetHistoricalNumbers(id);
-
+        // create formik form model
         const formValues = UpdatePropertyDetailsFormModel.fromApi(retrieved);
         formValues.historicalNumbers =
           apiHistoricalNumbers?.map(hn => HistoricalNumberForm.fromApi(hn)) ?? [];
@@ -94,33 +99,57 @@ export const UpdatePropertyDetailsContainer = React.forwardRef<
       values: UpdatePropertyDetailsFormModel,
       formikHelpers: FormikHelpers<UpdatePropertyDetailsFormModel>,
     ) => {
-      // default province and country to BC, Canada
-      if (values.address !== undefined) {
-        values.address.province = {
-          id: Number(provinceBC?.id),
-          code: null,
-          description: null,
-          displayOrder: null,
-        };
-        values.address.country = {
-          id: Number(countryCA?.id),
-          code: null,
-          description: null,
-          displayOrder: null,
-        };
-      }
+      try {
+        // default province and country to BC, Canada
+        if (values.address !== undefined) {
+          values.address.province = {
+            id: Number(provinceBC?.id),
+            code: null,
+            description: null,
+            displayOrder: null,
+          };
+          values.address.country = {
+            id: Number(countryCA?.id),
+            code: null,
+            description: null,
+            displayOrder: null,
+          };
+        }
 
-      const apiProperty: ApiGen_Concepts_Property = values.toApi();
-      const response = await executeUpdateProperty(apiProperty);
+        // save changes to the concept property
+        const apiProperty: ApiGen_Concepts_Property = values.toApi();
+        const response = await executeUpdateProperty(apiProperty);
 
-      formikHelpers.setSubmitting(false);
+        // update list of historical numbers for this property
+        if (isValidId(apiProperty.id)) {
+          const apiHistoricalNumbers = (values.historicalNumbers ?? []).map(hn => hn.toApi());
+          await executeUpdateHistoricalNumbers(apiProperty.id, apiHistoricalNumbers);
+        }
 
-      if (isValidId(response?.id)) {
-        formikHelpers.resetForm();
-        onSuccess();
+        formikHelpers.setSubmitting(false);
+
+        if (isValidId(response?.id)) {
+          formikHelpers.resetForm();
+          onSuccess();
+        }
+      } catch (e) {
+        if (axios.isAxiosError(e)) {
+          const axiosError = e as AxiosError<IApiError>;
+          if (axiosError?.response?.status === 400) {
+            toast.error(axiosError?.response?.data?.error);
+          } else {
+            toast.error('Unable to save. Please try again.');
+          }
+        }
       }
     },
-    [countryCA?.id, executeUpdateProperty, onSuccess, provinceBC?.id],
+    [
+      countryCA?.id,
+      executeUpdateHistoricalNumbers,
+      executeUpdateProperty,
+      onSuccess,
+      provinceBC?.id,
+    ],
   );
 
   if (loadingGetProperty || loadingGetHistoricalNumbers || !initialForm) {
