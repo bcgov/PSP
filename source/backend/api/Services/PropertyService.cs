@@ -397,6 +397,18 @@ namespace Pims.Api.Services
             return _historicalNumberRepository.GetAllByPropertyId(propertyId);
         }
 
+        public IList<PimsFileNumber> UpdateHistoricalFileNumbers(long propertyId, IEnumerable<PimsFileNumber> pimsHistoricalNumbers)
+        {
+
+            _logger.LogInformation("Updating historical numbers for property with id {id}", propertyId);
+            _user.ThrowIfNotAuthorized(Permissions.PropertyEdit);
+
+            _historicalNumberRepository.UpdateHistoricalFileNumbers(propertyId, pimsHistoricalNumbers);
+            _historicalNumberRepository.CommitTransaction();
+
+            return GetHistoricalNumbersForPropertyId(propertyId);
+        }
+
         private Point TransformCoordinates(Geometry location)
         {
             // return property spatial location in lat/long (4326)

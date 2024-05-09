@@ -1,10 +1,13 @@
+using System;
 using System.Collections.Generic;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Pims.Api.Models.Concepts.Property;
 using Pims.Api.Policies;
 using Pims.Api.Services;
+using Pims.Core.Extensions;
 using Pims.Core.Json;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
@@ -25,6 +28,7 @@ namespace Pims.Api.Areas.HistoricalNumber.Controllers
         #region Variables
         private readonly IPropertyService _propertyService;
         private readonly IMapper _mapper;
+        private readonly ILogger _logger;
         #endregion
 
         #region Constructors
@@ -35,10 +39,11 @@ namespace Pims.Api.Areas.HistoricalNumber.Controllers
         /// <param name="propertyService"></param>
         /// <param name="mapper"></param>
         ///
-        public HistoricalNumberController(IPropertyService propertyService, IMapper mapper)
+        public HistoricalNumberController(IPropertyService propertyService, IMapper mapper, ILogger<HistoricalNumberController> logger)
         {
             _propertyService = propertyService;
             _mapper = mapper;
+            _logger = logger;
         }
 
         /// <summary>
@@ -47,13 +52,44 @@ namespace Pims.Api.Areas.HistoricalNumber.Controllers
         [HttpGet("{propertyId}/historicalNumbers")]
         [HasPermission(Permissions.PropertyView)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(HistoricalFileNumberModel), 200)]
+        [ProducesResponseType(typeof(IEnumerable<HistoricalFileNumberModel>), 200)]
         [SwaggerOperation(Tags = new[] { "property" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetHistoricalNumbersForPropertyId(long propertyId)
         {
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(HistoricalNumberController),
+                nameof(GetHistoricalNumbersForPropertyId),
+                User.GetUsername(),
+                DateTime.Now);
+
             var historicalNumbers = _propertyService.GetHistoricalNumbersForPropertyId(propertyId);
             return new JsonResult(_mapper.Map<List<HistoricalFileNumberModel>>(historicalNumbers));
+        }
+
+        /// <summary>
+        /// Updates the list of historic numbers for a given property id.
+        /// </summary>
+        [HttpPut("{propertyId}/historicalNumbers")]
+        [HasPermission(Permissions.PropertyEdit)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(IEnumerable<HistoricalFileNumberModel>), 200)]
+        [SwaggerOperation(Tags = new[] { "property" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult UpdateHistoricalNumbers(long propertyId, IEnumerable<HistoricalFileNumberModel> historicalNumbers)
+        {
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(HistoricalNumberController),
+                nameof(UpdateHistoricalNumbers),
+                User.GetUsername(),
+                DateTime.Now);
+
+            var historicalEntities = _mapper.Map<IEnumerable<Dal.Entities.PimsFileNumber>>(historicalNumbers);
+            var updatedEntities = _propertyService.UpdateHistoricalFileNumbers(propertyId, historicalEntities);
+
+            return new JsonResult(_mapper.Map<IEnumerable<HistoricalFileNumberModel>>(updatedEntities));
         }
         #endregion
     }
