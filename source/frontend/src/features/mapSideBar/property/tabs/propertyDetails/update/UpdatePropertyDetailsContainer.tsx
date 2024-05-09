@@ -121,16 +121,14 @@ export const UpdatePropertyDetailsContainer = React.forwardRef<
         const response = await executeUpdateProperty(apiProperty);
 
         // update list of historical numbers for this property
-        if (isValidId(apiProperty.id)) {
+        if (isValidId(response?.id)) {
           const apiHistoricalNumbers = (values.historicalNumbers ?? []).map(hn => hn.toApi());
           await executeUpdateHistoricalNumbers(apiProperty.id, apiHistoricalNumbers);
-        }
 
-        formikHelpers.setSubmitting(false);
-
-        if (isValidId(response?.id)) {
           formikHelpers.resetForm();
-          onSuccess();
+          if (typeof onSuccess === 'function') {
+            onSuccess();
+          }
         }
       } catch (e) {
         if (axios.isAxiosError(e)) {
@@ -141,6 +139,8 @@ export const UpdatePropertyDetailsContainer = React.forwardRef<
             toast.error('Unable to save. Please try again.');
           }
         }
+      } finally {
+        formikHelpers.setSubmitting(false);
       }
     },
     [

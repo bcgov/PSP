@@ -17,7 +17,7 @@ export interface IUpdateHistoricalNumbersSubFormProps {
 export const UpdateHistoricalNumbersSubForm: React.FC<IUpdateHistoricalNumbersSubFormProps> = ({
   propertyId,
 }) => {
-  const { values } = useFormikContext<UpdatePropertyDetailsFormModel>();
+  const { values, setFieldValue } = useFormikContext<UpdatePropertyDetailsFormModel>();
   const { getOptionsByType } = useLookupCodeHelpers();
   const historicalNumberTypes = getOptionsByType(API.HISTORICAL_NUMBER_TYPES);
 
@@ -39,6 +39,13 @@ export const UpdateHistoricalNumbersSubForm: React.FC<IUpdateHistoricalNumbersSu
                     field={`historicalNumbers.${index}.historicalNumberType`}
                     options={historicalNumberTypes}
                     value={hn.historicalNumberType}
+                    onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+                      // clear associated fields when historical file # type changes
+                      const selected = e.target.value;
+                      if (selected !== 'OTHER') {
+                        setFieldValue(`historicalNumbers.${index}.otherHistoricalNumberType`, '');
+                      }
+                    }}
                   />
                 </Col>
                 <Col xs="auto" xl="2" className="pl-0">
