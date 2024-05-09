@@ -235,7 +235,7 @@ describe('Lease and License List View', () => {
       }),
     );
 
-    expect(await findByText(/LIS #'s: 0309-001./i)).toBeInTheDocument();
+    expect(await findByText(/LIS: 0309-001;/i)).toBeInTheDocument();
   });
 
   it('searches tenant name', async () => {

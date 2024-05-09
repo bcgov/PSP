@@ -112,7 +112,7 @@ const columns: ColumnWithProps<ApiGen_Concepts_Lease>[] = [
     },
   },
   {
-    Header: 'Historical #',
+    Header: 'Historical File #',
     align: 'left',
     clickable: false,
     sortable: false,
