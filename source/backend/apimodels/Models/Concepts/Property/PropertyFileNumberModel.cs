@@ -10,9 +10,14 @@ namespace Pims.Api.Models.Concepts.Property
         public long Id { get; set; }
 
         /// <summary>
-        /// get/set - The property for the number.
+        /// get/set - The property Id for the number.
         /// </summary>
         public long PropertyId { get; set; }
+
+        /// <summary>
+        /// get/set - The property object for the number.
+        /// </summary>
+        public PropertyModel Property { get; set; }
 
         /// <summary>
         /// get/set - The type of file.
@@ -32,6 +37,6 @@ namespace Pims.Api.Models.Concepts.Property
         /// <summary>
         /// get/set - Whether is disabled.
         /// </summary>
-        public bool IsDisabled { get; set; }
+        public bool? IsDisabled { get; set; }
     }
 }

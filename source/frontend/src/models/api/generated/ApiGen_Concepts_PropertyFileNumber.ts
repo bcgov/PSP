@@ -4,13 +4,15 @@
  */
 import { ApiGen_Base_BaseAudit } from './ApiGen_Base_BaseAudit';
 import { ApiGen_Base_CodeType } from './ApiGen_Base_CodeType';
+import { ApiGen_Concepts_Property } from './ApiGen_Concepts_Property';
 
 // LINK: @backend/apimodels/Models/Concepts/Property/PropertyFileNumberModel.cs
 export interface ApiGen_Concepts_PropertyFileNumber extends ApiGen_Base_BaseAudit {
   id: number;
   propertyId: number;
+  property: ApiGen_Concepts_Property | null;
   fileNumberTypeCode: ApiGen_Base_CodeType<string> | null;
   fileNumber: string | null;
   otherFileNumberType: string | null;
-  isDisabled: boolean;
+  isDisabled: boolean | null;
 }

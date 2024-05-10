@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { useHistoricalNumberRepository } from '@/hooks/repositories/useHistoricalNumberRepository';
-import { ApiGen_Concepts_HistoricalNumber } from '@/models/api/generated/ApiGen_Concepts_HistoricalNumber';
+import { ApiGen_Concepts_PropertyFileNumber } from '@/models/api/generated/ApiGen_Concepts_PropertyFileNumber';
 
 import { IHistoricalNumbersViewProps } from './HistoricalNumberSectionView';
 
@@ -13,7 +13,7 @@ const HistoricalNumbersContainer: React.FC<IHistoricalNumbersContainerProps> = (
   propertyIds,
   View,
 }) => {
-  const [historicalNumbers, setHistoricalNumbers] = useState<ApiGen_Concepts_HistoricalNumber[]>(
+  const [historicalNumbers, setHistoricalNumbers] = useState<ApiGen_Concepts_PropertyFileNumber[]>(
     [],
   );
 
@@ -22,7 +22,7 @@ const HistoricalNumbersContainer: React.FC<IHistoricalNumbersContainerProps> = (
   const getHistoricalExecute = getPropertyHistoricalNumbers.execute;
 
   useEffect(() => {
-    const tasks: Promise<ApiGen_Concepts_HistoricalNumber[]>[] = [];
+    const tasks: Promise<ApiGen_Concepts_PropertyFileNumber[]>[] = [];
 
     for (let i = 0; i < propertyIds.length; i++) {
       tasks.push(getHistoricalExecute(propertyIds[i]));
