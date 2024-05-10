@@ -7,14 +7,19 @@ import {
 
 import { Section } from '@/components/common/Section/Section';
 import { StyledSummarySection } from '@/components/common/Section/SectionStyles';
+import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
+import { ApiGen_Concepts_LeaseTenant } from '@/models/api/generated/ApiGen_Concepts_LeaseTenant';
 import { ApiGen_Concepts_PropertyAssociations } from '@/models/api/generated/ApiGen_Concepts_PropertyAssociations';
 
 import AssociationContent from './AssociationContent';
 import AssociationHeader from './AssociationHeader';
+import { LeaseAssociationContent } from './LeaseAssociationContent';
 
 export interface IPropertyAssociationTabViewProps {
   isLoading: boolean;
   associations?: ApiGen_Concepts_PropertyAssociations;
+  associatedLeases: ApiGen_Concepts_Lease[];
+  associatedLeaseTenants: ApiGen_Concepts_LeaseTenant[];
 }
 
 const PropertyAssociationTabView: React.FunctionComponent<
@@ -66,10 +71,12 @@ const PropertyAssociationTabView: React.FunctionComponent<
         }
         isCollapsable
       >
-        <AssociationContent
+        <LeaseAssociationContent
           associationName="lease"
           associations={props.associations?.leaseAssociations ?? undefined}
           linkUrlMask="/mapview/sidebar/lease/|id|"
+          tenants={props.associatedLeaseTenants}
+          leases={props.associatedLeases}
         />
       </Section>
       <Section
