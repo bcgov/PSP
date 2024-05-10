@@ -583,6 +583,34 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
             <label
               class="c3"
             >
+              Historical File #:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            <button
+              class="c5 Button btn btn-link"
+              data-testid="add-historical-number"
+              type="button"
+            >
+              <div
+                class="Button__value"
+              >
+                + Add historical file #
+              </div>
+            </button>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c3"
+            >
               Legal Description:
             </label>
           </div>

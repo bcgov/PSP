@@ -70,6 +70,13 @@ vi.mocked(useHistoricalNumberRepository).mockReturnValue({
     loading: false,
     status: 200,
   },
+  updatePropertyHistoricalNumbers: {
+    error: null,
+    response: [],
+    execute: vi.fn().mockResolvedValue([]),
+    loading: false,
+    status: 200,
+  },
 });
 
 describe('ResearchHeader component', () => {

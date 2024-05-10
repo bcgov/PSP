@@ -165,7 +165,7 @@ export class UpdatePropertyDetailsFormModel {
   districtTypeCodeDescription?: string;
 
   // historical numbers
-  historicalNumbers: HistoricalNumberForm[];
+  historicalNumbers: HistoricalNumberForm[] = [];
 
   // multi-selects
   anomalies?: PropertyAnomalyFormModel[];

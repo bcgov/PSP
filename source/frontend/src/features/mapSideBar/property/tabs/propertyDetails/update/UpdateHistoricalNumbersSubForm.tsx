@@ -7,6 +7,7 @@ import { Input, Select } from '@/components/common/form';
 import { SectionField } from '@/components/common/Section/SectionField';
 import * as API from '@/constants/API';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
+import { exists } from '@/utils';
 
 import { HistoricalNumberForm, UpdatePropertyDetailsFormModel } from './models';
 
@@ -26,7 +27,7 @@ export const UpdateHistoricalNumbersSubForm: React.FC<IUpdateHistoricalNumbersSu
       name="historicalNumbers"
       render={arrayHelpers => (
         <>
-          {values.historicalNumbers.map((hn, index) => (
+          {values.historicalNumbers?.map((hn, index) => (
             <React.Fragment key={`property-historical-${index}`}>
               <Row className="py-3" data-testid={`historicalNumberRow[${index}]`}>
                 <Col xs="auto" xl="5">
@@ -40,9 +41,9 @@ export const UpdateHistoricalNumbersSubForm: React.FC<IUpdateHistoricalNumbersSu
                     options={historicalNumberTypes}
                     value={hn.historicalNumberType}
                     onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
-                      // clear associated fields when historical file # type changes
-                      const selected = e.target.value;
-                      if (selected !== 'OTHER') {
+                      const selected = e?.target?.value;
+                      if (exists(selected) && selected !== 'OTHER') {
+                        // clear associated field when historical file # type changes
                         setFieldValue(`historicalNumbers.${index}.otherHistoricalNumberType`, '');
                       }
                     }}
@@ -57,7 +58,7 @@ export const UpdateHistoricalNumbersSubForm: React.FC<IUpdateHistoricalNumbersSu
                   />
                 </Col>
               </Row>
-              {values?.historicalNumbers[index]?.historicalNumberType === 'OTHER' && (
+              {values.historicalNumbers[index]?.historicalNumberType === 'OTHER' && (
                 <SectionField label="Describe other" required>
                   <Input field={`historicalNumbers.${index}.otherHistoricalNumberType`} required />
                 </SectionField>
