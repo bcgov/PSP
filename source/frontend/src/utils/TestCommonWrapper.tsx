@@ -51,7 +51,7 @@ const TestCommonWrapper: React.FunctionComponent<
         {({ tenant }) => (
           <TestProviderWrapper store={store}>
             <TestRouterWrapper history={history}>
-              <ThemeProvider theme={{ tenant, css: {} }}>
+              <ThemeProvider theme={{ tenant, css: {}, bcTokens: {} }}>
                 <ModalContextProvider>
                   <ToastContainer
                     autoClose={5000}

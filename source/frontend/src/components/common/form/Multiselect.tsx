@@ -154,8 +154,8 @@ const defaultStyle = {
 const CloseIcon = styled(FaWindowClose)`
   margin-left: 0.5rem;
   cursor: pointer;
-  fill: ${props => props.theme.css.textColor};
+  fill: ${props => props.theme.bcTokens.typographyColorSecondary};
   &:hover {
-    fill: ${props => props.theme.css.dangerColor};
+    fill: ${props => props.theme.bcTokens.surfaceColorPrimaryDangerButtonDefault};
   }
 `;

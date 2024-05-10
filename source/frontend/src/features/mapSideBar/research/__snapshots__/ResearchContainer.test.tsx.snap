@@ -161,6 +161,7 @@ exports[`ResearchContainer component > renders as expected 1`] = `
 .c14 {
   font-size: 1.5rem;
   border-radius: 50%;
+  opacity: 0.8;
   width: 2.5rem;
   height: 2.5rem;
   padding: 1rem;
@@ -394,6 +395,22 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                   <strong />
                 </div>
               </div>
+            </div>
+          </div>
+          <div
+            class="row"
+          >
+            <div
+              class="pr-0 text-left col-3"
+            >
+              <label>
+                Historical File #:
+              </label>
+            </div>
+            <div
+              class="pl-1 text-left col-9"
+            >
+              <strong />
             </div>
           </div>
         </div>
