@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Pims.Dal.Entities
 {
     /// <summary>
-    /// Datamodel to manage File Number types.
+    /// PimsFileNumberType class, provides an entity for the datamodel to manage File Number types.
     /// </summary>
     public partial class PimsFileNumberType : ITypeEntity<string>
     {
