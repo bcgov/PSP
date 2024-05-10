@@ -129,7 +129,7 @@ const StyledModal = styled(GenericModal)`
     label {
       font-family: BcSans-Bold;
       line-height: 2rem;
-      color: ${props => props.theme.css.textColor};
+      color: ${props => props.theme.bcTokens.typographyColorSecondary};
     }
   }
 `;

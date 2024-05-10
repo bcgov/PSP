@@ -8,6 +8,9 @@ import { ApiGen_Base_CodeType } from '@/models/api/generated/ApiGen_Base_CodeTyp
 import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Concepts_ResearchFile';
 import { exists, prettyFormatUTCDate } from '@/utils';
 
+import HistoricalNumbersContainer from '../../shared/header/HistoricalNumberContainer';
+import HistoricalNumberFieldView from '../../shared/header/HistoricalNumberSectionView';
+
 export interface IResearchHeaderProps {
   researchFile?: ApiGen_Concepts_ResearchFile;
   lastUpdatedBy: Api_LastUpdatedBy | null;
@@ -43,6 +46,8 @@ const ResearchHeader: React.FunctionComponent<
       }, []);
   }
 
+  const propertyIds = researchFile?.fileProperties?.map(fp => fp.propertyId) ?? [];
+
   return (
     <StyledRow className="no-gutters">
       <Col xs={leftColumnWidth}>
@@ -74,6 +79,7 @@ const ResearchHeader: React.FunctionComponent<
             </HeaderField>
           </Col>
         </Row>
+        <HistoricalNumbersContainer propertyIds={propertyIds} View={HistoricalNumberFieldView} />
       </Col>
       <Col xs="5">
         <Row className="no-gutters">

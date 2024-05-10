@@ -138,12 +138,12 @@ const renderActions = (
 
 const StyledIconsRow = styled(Row)`
   [id^='document-view'] {
-    color: ${props => props.theme.css.slideOutBlue};
+    color: ${props => props.theme.css.activeActionColor};
   }
   [id^='document-delete'] {
-    color: ${props => props.theme.css.discardedColor};
+    color: ${props => props.theme.css.activeActionColor};
     :hover {
-      color: ${({ theme }) => theme.css.dangerColor};
+      color: ${({ theme }) => theme.bcTokens.surfaceColorPrimaryDangerButtonDefault};
     }
   }
   .btn.btn-primary {
@@ -155,7 +155,7 @@ const StyledIconsRow = styled(Row)`
 
 const StyledIcon = styled.span`
   .tooltip-icon {
-    color: ${({ theme }) => theme.css.subtleColor};
+    color: ${({ theme }) => theme.bcTokens.iconsColorDisabled};
   }
 `;
 

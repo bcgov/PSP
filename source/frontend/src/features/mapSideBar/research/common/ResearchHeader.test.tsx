@@ -2,11 +2,12 @@ import { getEmptyOrganization } from '@/mocks/organization.mock';
 import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Concepts_ResearchFile';
 import { getEmptyResearchFile } from '@/models/defaultInitializers';
 import { prettyFormatUTCDate } from '@/utils';
-import { render, RenderOptions } from '@/utils/test-utils';
+import { act, render, RenderOptions } from '@/utils/test-utils';
 
-import ResearchHeader, { IResearchHeaderProps } from './ResearchHeader';
 import { useApiUsers } from '@/hooks/pims-api/useApiUsers';
+import { useHistoricalNumberRepository } from '@/hooks/repositories/useHistoricalNumberRepository';
 import { vi } from 'vitest';
+import ResearchHeader, { IResearchHeaderProps } from './ResearchHeader';
 
 const testResearchFile: ApiGen_Concepts_ResearchFile = {
   ...getEmptyResearchFile(),
@@ -56,10 +57,20 @@ const testResearchFile: ApiGen_Concepts_ResearchFile = {
 };
 
 vi.mock('@/hooks/pims-api/useApiUsers');
-
 vi.mocked(useApiUsers).mockReturnValue({
   getUserInfo: vi.fn().mockResolvedValue({}),
-} as any);
+} as unknown as ReturnType<typeof useApiUsers>);
+
+vi.mock('@/hooks/repositories/useHistoricalNumberRepository');
+vi.mocked(useHistoricalNumberRepository).mockReturnValue({
+  getPropertyHistoricalNumbers: {
+    error: null,
+    response: [],
+    execute: vi.fn().mockResolvedValue([]),
+    loading: false,
+    status: 200,
+  },
+});
 
 describe('ResearchHeader component', () => {
   const setup = (renderOptions: RenderOptions & IResearchHeaderProps) => {
@@ -83,15 +94,16 @@ describe('ResearchHeader component', () => {
     vi.clearAllMocks();
   });
 
-  it('renders as expected when provided no research file', () => {
+  it('renders as expected when provided no research file', async () => {
     const { component } = setup({ lastUpdatedBy: null });
+    await act(async () => {});
     expect(component.asFragment()).toMatchSnapshot();
   });
 
   it('renders as expected when provided a list of properties', async () => {
     const {
       component: { getByText },
-    } = await setup({
+    } = setup({
       researchFile: testResearchFile,
       lastUpdatedBy: {
         parentId: testResearchFile.id || 0,
@@ -100,6 +112,7 @@ describe('ResearchHeader component', () => {
         appLastUpdateUserid: testResearchFile.appLastUpdateUserid || '',
       },
     });
+    await act(async () => {});
 
     expect(getByText(testResearchFile.fileNumber as string)).toBeVisible();
     expect(getByText(testResearchFile.fileName as string)).toBeVisible();
@@ -112,7 +125,7 @@ describe('ResearchHeader component', () => {
     const lastUpdateTimeStamp = new Date().toISOString();
     const {
       component: { getByText },
-    } = await setup({
+    } = setup({
       researchFile: testResearchFile,
       lastUpdatedBy: {
         parentId: testResearchFile.id || 0,
@@ -121,6 +134,7 @@ describe('ResearchHeader component', () => {
         appLastUpdateUserid: testResearchFile.appLastUpdateUserid || '',
       },
     });
+    await act(async () => {});
 
     expect(getByText(testResearchFile.fileNumber as string)).toBeVisible();
     expect(getByText(testResearchFile.fileName as string)).toBeVisible();

@@ -36,7 +36,7 @@ const StyledLeasePage = styled.div`
   flex-direction: column;
   display: flex;
   text-align: left;
-  background-color: ${props => props.theme.css.filterBackgroundColor};
+  background-color: ${props => props.theme.css.highlightBackgroundColor};
 `;
 
 export default LeaseViewPageForm;

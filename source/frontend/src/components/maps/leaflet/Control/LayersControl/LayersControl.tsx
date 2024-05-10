@@ -18,8 +18,8 @@ const ControlButton = styled(Button)`
     height: 5.2rem;
     margin-left: -5.1rem;
     background-color: #fff;
-    color: ${({ theme }) => theme.css.slideOutBlue};
-    border-color: ${({ theme }) => theme.css.slideOutBlue};
+    color: ${({ theme }) => theme.bcTokens.surfaceColorPrimaryButtonDefault};
+    border-color: ${({ theme }) => theme.bcTokens.surfaceColorPrimaryButtonDefault};
     box-shadow: -0.2rem 0.1rem 0.4rem rgba(0, 0, 0, 0.2);
   }
 `;

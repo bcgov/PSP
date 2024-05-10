@@ -24,6 +24,7 @@ namespace Pims.Api.Services
         private readonly ClaimsPrincipal _user;
         private readonly ILogger _logger;
         private readonly IPropertyRepository _propertyRepository;
+        private readonly IHistoricalNumberRepository _historicalNumberRepository;
         private readonly IPropertyContactRepository _propertyContactRepository;
         private readonly IPropertyActivityRepository _propertyActivityRepository;
         private readonly ICoordinateTransformService _coordinateService;
@@ -35,6 +36,7 @@ namespace Pims.Api.Services
             ClaimsPrincipal user,
             ILogger<PropertyService> logger,
             IPropertyRepository propertyRepository,
+            IHistoricalNumberRepository historicalNumberRepository,
             IPropertyContactRepository propertyContactRepository,
             IPropertyActivityRepository propertyActivityRepository,
             ICoordinateTransformService coordinateService,
@@ -45,6 +47,7 @@ namespace Pims.Api.Services
             _user = user;
             _logger = logger;
             _propertyRepository = propertyRepository;
+            _historicalNumberRepository = historicalNumberRepository;
             _propertyContactRepository = propertyContactRepository;
             _propertyActivityRepository = propertyActivityRepository;
             _coordinateService = coordinateService;
@@ -383,6 +386,15 @@ namespace Pims.Api.Services
                     throw new UserOverrideException(UserOverrideCode.AddLocationToProperty, "The selected property already exists in the system's inventory. However, the record is missing spatial details.\n\n To add the property, the spatial details for this property will need to be updated. The system will attempt to update the property record with spatial information from the current selection.");
                 }
             }
+        }
+
+        public IList<PimsFileNumber> GetHistoricalNumbersForPropertyId(long propertyId)
+        {
+
+            _logger.LogInformation("Retrieving all historical numbers for property with id {id}", propertyId);
+            _user.ThrowIfNotAuthorized(Permissions.PropertyView);
+
+            return _historicalNumberRepository.GetAllByPropertyId(propertyId);
         }
 
         private Point TransformCoordinates(Geometry location)
