@@ -75,6 +75,7 @@ const renderFileName = (onViewDetails: (values: ApiGen_Concepts_DocumentRelation
               cell.row.original?.id && onViewDetails(DocumentRow.toApi(cell.row.original))
             }
             variant="link"
+            title={cell.row.original.fileName}
           >
             {cell.value}
           </Button>
