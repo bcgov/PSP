@@ -64,13 +64,13 @@ namespace Pims.Core.Test
             return property;
         }
 
-        public static PimsPropertyLocationVw CreatePropertyView(int pid, int? pin = null, PimsPropertyType type = null, PimsPropertyClassificationType classification = null, PimsAddress address = null, short? regionCode = null, bool? isCoreInventory = null, bool? isRetired = null)
+        public static PimsPropertyVw CreatePropertyView(int pid, int? pin = null, PimsPropertyType type = null, PimsPropertyClassificationType classification = null, PimsAddress address = null, short? regionCode = null, bool? isCoreInventory = null, bool? isRetired = null)
         {
             type ??= CreatePropertyType($"Land-{pid}");
             classification ??= CreatePropertyClassificationType($"Class-{pid}");
             address ??= CreateAddress(pid);
 
-            var property = new PimsPropertyLocationVw()
+            var property = new PimsPropertyVw()
             {
                 PropertyId = pid,
                 Pin = pin,
@@ -129,14 +129,14 @@ namespace Pims.Core.Test
             return property;
         }
 
-        public static PimsPropertyLocationVw CreatePropertyView(this PimsContext context, int pid, int? pin = null, PimsPropertyType type = null, PimsPropertyClassificationType classification = null, PimsAddress address = null, PimsPropertyTenureType tenure = null, PimsAreaUnitType areaUnit = null, PimsDataSourceType dataSource = null, PimsPropertyStatusType status = null, Geometry location = null, bool isRetired = false)
+        public static PimsPropertyVw CreatePropertyView(this PimsContext context, int pid, int? pin = null, PimsPropertyType type = null, PimsPropertyClassificationType classification = null, PimsAddress address = null, PimsPropertyTenureType tenure = null, PimsAreaUnitType areaUnit = null, PimsDataSourceType dataSource = null, PimsPropertyStatusType status = null, Geometry location = null, bool isRetired = false)
         {
             type ??= context.PimsPropertyTypes.FirstOrDefault() ?? throw new InvalidOperationException("Unable to find a property type.");
             classification ??= context.PimsPropertyClassificationTypes.FirstOrDefault() ?? throw new InvalidOperationException("Unable to find a property classification type.");
             address ??= context.CreateAddress(pid, "12342 Test Street");
             var property = CreatePropertyView(pid, pin, type, classification, address);
             property.IsRetired = isRetired;
-            context.PimsPropertyLocationVws.Add(property);
+            context.PimsPropertyVws.Add(property);
             return property;
         }
     }

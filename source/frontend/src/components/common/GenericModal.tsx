@@ -315,8 +315,8 @@ const StyledModal = styled(Modal)<{ $draggable?: boolean }>`
     display: flex;
     justify-content: flex-start;
 
-    color: ${props => props.theme.css.primaryBackgroundColor};
-    background-color: ${props => props.theme.css.primaryColor};
+    color: ${props => props.theme.bcTokens.surfaceColorFormsDefault};
+    background-color: ${props => props.theme.bcTokens.surfaceColorBackgroundDarkBlue};
 
     /* show move cursor (crosshair) for draggable modals */
     cursor: ${props => (props.$draggable ? 'move' : 'default')};
@@ -394,36 +394,36 @@ const StyledModal = styled(Modal)<{ $draggable?: boolean }>`
 
   &.info-variant {
     .modal-header {
-      color: ${props => props.theme.css.darkBlue};
+      color: ${props => props.theme.bcTokens.surfaceColorBackgroundDarkBlue};
       background-color: ${props => props.theme.css.filterBoxColor};
     }
 
     .modal-close-btn {
-      color: ${props => props.theme.css.textColor};
+      color: ${props => props.theme.bcTokens.typographyColorSecondary};
       cursor: pointer;
     }
   }
 
   &.error-variant {
     .modal-header {
-      color: ${props => props.theme.css.fontDangerColor};
+      color: ${props => props.theme.bcTokens.typographyColorDanger};
       background-color: ${props => props.theme.css.dangerBackgroundColor};
     }
 
     .modal-close-btn {
-      color: ${props => props.theme.css.textColor};
+      color: ${props => props.theme.bcTokens.typographyColorSecondary};
       cursor: pointer;
     }
   }
 
   &.warning-variant {
     .modal-header {
-      color: ${props => props.theme.css.fontWarningColor};
-      background-color: ${props => props.theme.css.summaryColor};
+      color: ${props => props.theme.css.textWarningColor};
+      background-color: ${props => props.theme.css.warningBackgroundColor};
     }
 
     .modal-close-btn {
-      color: ${props => props.theme.css.textColor};
+      color: ${props => props.theme.bcTokens.typographyColorSecondary};
       cursor: pointer;
     }
   }
@@ -438,7 +438,7 @@ const PopupContainer = styled.div`
   .modal-header {
     height: 3.8rem;
     padding: 0 1rem;
-    background-color: ${({ theme }) => theme.css.primaryColor};
+    background-color: ${({ theme }) => theme.bcTokens.surfaceColorBackgroundDarkBlue};
     .h4 {
       color: white;
       font-family: BcSans-Bold;

@@ -99,6 +99,7 @@ namespace Pims.Dal.Test.Repositories
             // Arrange
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.AdminUsers);
+
             var updatedUser = user.AddClaim("idir_username", "username@");
             updatedUser = updatedUser.AddClaim(ClaimTypes.GivenName, "first");
             updatedUser = updatedUser.AddClaim(ClaimTypes.Surname, "last");

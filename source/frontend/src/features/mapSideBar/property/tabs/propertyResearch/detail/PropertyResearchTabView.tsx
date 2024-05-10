@@ -82,7 +82,7 @@ export const PropertyResearchTabView: React.FunctionComponent<
 export default PropertyResearchTabView;
 
 const StyledSummarySection = styled.div`
-  background-color: ${props => props.theme.css.filterBackgroundColor};
+  background-color: ${props => props.theme.css.highlightBackgroundColor};
 `;
 
 const StyledEditWrapper = styled.div`

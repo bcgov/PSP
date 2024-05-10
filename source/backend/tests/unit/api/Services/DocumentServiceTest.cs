@@ -28,6 +28,7 @@ using Pims.Api.Models.CodeTypes;
 using Pims.Api.Models.Requests.Document.Upload;
 using Pims.Api.Models.Requests.Document.UpdateMetadata;
 using Pims.Api.Constants;
+using Microsoft.Extensions.Configuration;
 
 namespace Pims.Api.Test.Services
 {
@@ -59,7 +60,8 @@ namespace Pims.Api.Test.Services
         {
             var user = PrincipalHelper.CreateForPermission(permissions);
             this._helper.CreatePimsContext(user, true);
-            return this._helper.Create<DocumentService>();
+            var builder = new ConfigurationBuilder();
+            return this._helper.Create<DocumentService>(builder.Build());
         }
 
         [Fact]

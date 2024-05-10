@@ -16,15 +16,15 @@ import { mockNotesResponse } from '@/mocks/noteResponses.mock';
 import { getUserMock } from '@/mocks/user.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { prettyFormatUTCDate } from '@/utils';
-import { RenderOptions, act, render, userEvent, waitFor, screen } from '@/utils/test-utils';
+import { RenderOptions, act, render, screen, userEvent, waitFor } from '@/utils/test-utils';
 
+import { server } from '@/mocks/msw/server';
 import { getMockApiTakes } from '@/mocks/takes.mock';
+import { HttpResponse, http } from 'msw';
+import { createRef } from 'react';
 import { SideBarContextProvider } from '../context/sidebarContext';
 import { FileTabType } from '../shared/detail/FileTabs';
 import AcquisitionView, { IAcquisitionViewProps } from './AcquisitionView';
-import { createRef } from 'react';
-import { HttpResponse, http } from 'msw';
-import { server } from '@/mocks/msw/server';
 
 // mock auth library
 
@@ -148,6 +148,7 @@ describe('AcquisitionView component', () => {
       http.get('/api/acquisitionfiles/:id/interestholders', () =>
         HttpResponse.json(getMockApiInterestHolders()),
       ),
+      http.get('/api/properties/:id/historicalNumbers', () => HttpResponse.json([])),
     );
   });
 
@@ -240,7 +241,7 @@ describe('AcquisitionView component', () => {
     expect(tab).toHaveClass('active');
   });
 
-  it.skip('should display the Property Details tab according to routing', async () => {
+  it('should display the Property Details tab according to routing', async () => {
     history.replace(`/mapview/sidebar/acquisition/1/property/1`);
     const { getByRole } = await setup();
     const tab = getByRole('tab', { name: /Property Details/i });
@@ -258,7 +259,7 @@ describe('AcquisitionView component', () => {
     expect(tab).toHaveClass('active');
   });
 
-  it.skip(`should display the Property Details tab when we are editing and the path doesn't match any route`, async () => {
+  it(`should display the Property Details tab when we are editing and the path doesn't match any route`, async () => {
     history.replace(`/mapview/sidebar/acquisition/1/property/1/unknownTabWhatIsThis?edit=true`);
     const { getByRole } = await setup();
     const tab = getByRole('tab', { name: /Property Details/i });

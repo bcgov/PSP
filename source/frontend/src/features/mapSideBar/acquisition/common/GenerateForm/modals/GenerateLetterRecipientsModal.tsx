@@ -157,7 +157,7 @@ const StyledModal = styled(GenericModal)`
 `;
 
 const StyledDiv = styled.div`
-  border: 0.1rem solid ${props => props.theme.css.lightVariantColor};
+  border: 0.1rem solid ${props => props.theme.css.borderOutlineColor};
   border-radius: 0.5rem;
   max-height: 180px;
   overflow-y: auto;
@@ -174,7 +174,7 @@ const StyledDiv = styled.div`
     label {
       font-family: BcSans-Bold;
       line-height: 1.5rem;
-      color: ${props => props.theme.css.textColor};
+      color: ${props => props.theme.bcTokens.typographyColorSecondary};
 
       span.type {
         font-size: 1.5rem;

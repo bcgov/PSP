@@ -46,5 +46,7 @@ namespace Pims.Api.Services
         PimsProperty PopulateNewProperty(PimsProperty property, bool isOwned = false, bool isPropertyOfInterest = true);
 
         void UpdateLocation(PimsProperty acquisitionProperty, ref PimsProperty propertyToUpdate, IEnumerable<UserOverrideCode> overrideCodes);
+
+        IList<PimsFileNumber> GetHistoricalNumbersForPropertyId(long propertyId);
     }
 }

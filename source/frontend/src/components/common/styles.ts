@@ -36,7 +36,7 @@ export const Breadcrumb = styled(BsBreadcrumb)`
 
 export const SelectedText = styled.p`
   font-size: 1.4rem;
-  color: ${props => props.theme.css.completedColor};
+  color: ${props => props.theme.bcTokens.iconColorSuccess};
 `;
 
 /**
@@ -69,55 +69,56 @@ export const FlexBox = styled.div<IFlexBoxProps>`
 
 export const Tabs = styled(BsTabs)`
   background-color: white;
-  color: ${props => props.theme.css.slideOutBlue};
+  color: ${props => props.theme.css.linkColor};
   font-size: 1.4rem;
   border-color: transparent;
   .nav-tabs {
     height: auto;
   }
   .nav-item {
+    color: ${props => props.theme.css.linkColor};
     min-width: 5rem;
     padding: 0.1rem 0.6rem;
 
     &:hover {
-      color: ${props => props.theme.css.secondaryVariantColor};
+      color: ${props => props.theme.css.linkHoverColor};
       border-color: transparent;
       text-decoration: underline;
     }
     &.active {
-      background-color: ${props => props.theme.css.filterBackgroundColor};
+      background-color: ${props => props.theme.css.highlightBackgroundColor};
       font-family: 'BCSans-Bold';
-      color: ${props => props.theme.css.slideOutBlue};
+      color: ${props => props.theme.css.linkHoverColor};
       border-color: transparent;
     }
   }
 `;
 
 export const H1 = styled.h1`
-  color: ${props => props.theme.css.textColor};
+  color: ${props => props.theme.bcTokens.typographyColorSecondary};
   font-family: 'BCSans-Bold';
   font-size: 3.2rem;
-  border-bottom: solid 0.5rem ${props => props.theme.css.primaryLightColor};
+  border-bottom: solid 0.5rem ${props => props.theme.css.headerBorderColor};
   width: 100%;
   text-align: left;
   margin-bottom: 2rem;
 `;
 
 export const H2 = styled.h2`
-  color: ${props => props.theme.css.primaryColor};
+  color: ${props => props.theme.css.headerTextColor};
   font-family: 'BCSans-Bold';
   font-size: 2.6rem;
-  border-bottom: solid 0.2rem ${props => props.theme.css.primaryLightColor};
+  border-bottom: solid 0.2rem ${props => props.theme.css.headerBorderColor};
   width: 100%;
   text-align: left;
   margin-bottom: 2rem;
 `;
 
 export const H3 = styled.h3`
-  color: ${props => props.theme.css.primaryColor};
+  color: ${props => props.theme.css.headerTextColor};
   font-family: 'BCSans-Bold';
   font-size: 2rem;
-  border-bottom: solid 0.2rem ${props => props.theme.css.discardedColor};
+  border-bottom: solid 0.2rem ${props => props.theme.css.actionColor};
   width: 100%;
   text-align: left;
   margin-bottom: 2rem;
@@ -131,7 +132,7 @@ export const FilterBoxForm = styled(Form)`
 export const StyledAddButton = styled(Button)`
   &.btn.btn-primary,
   &.btn.btn-primary:active {
-    background-color: ${props => props.theme.css.completedColor};
+    background-color: ${props => props.theme.bcTokens.iconColorSuccess};
   }
 `;
 
@@ -152,7 +153,7 @@ export const StyledDivider = styled.div`
 `;
 
 export const StyledSectionParagraph = styled.p`
-  color: ${props => props.theme.css.textColor};
+  color: ${props => props.theme.bcTokens.typographyColorSecondary};
   font-size: 1.6rem;
   text-decoration: none;
 `;
@@ -161,7 +162,7 @@ export const TrayHeader = styled.div`
   font-size: 2rem;
   font-weight: bold;
   padding: 1rem;
-  background-color: ${props => props.theme.css.primaryColor};
+  background-color: ${props => props.theme.bcTokens.surfaceColorPrimaryButtonDefault};
   color: white;
 `;
 
@@ -172,9 +173,9 @@ export const CloseButton = styled(Button)`
     float: right;
     padding: 0rem;
     cursor: pointer;
-    fill: ${props => props.theme.css.textColor};
+    fill: ${props => props.theme.bcTokens.typographyColorSecondary};
     &:hover {
-      fill: ${props => props.theme.css.secondaryVariantColor};
+      fill: ${props => props.theme.css.typographyColorSecondaryInvert};
     }
   }
 `;

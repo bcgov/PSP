@@ -37,7 +37,9 @@ export const FileIcon = styled(Button)`
   &&.btn {
     background-color: #fff;
     color: ${({ theme, disabled }) =>
-      disabled ? theme.css.disabledColor : theme.css.primaryColor};
+      disabled
+        ? theme.bcTokens.iconsColorDisabled
+        : theme.bcTokens.surfaceColorPrimaryButtonDefault};
     padding: 6px 0.5rem;
   }
 `;

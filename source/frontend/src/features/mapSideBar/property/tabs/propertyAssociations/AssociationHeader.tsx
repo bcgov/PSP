@@ -27,7 +27,7 @@ export default AssociationHeader;
 
 const StyledIconWrapper = styled.div`
   color: white;
-  background-color: ${props => props.theme.css.iconLightColor};
+  background-color: ${props => props.theme.css.activeActionColor};
 
   font-size: 1.5rem;
 

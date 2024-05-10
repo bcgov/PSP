@@ -332,7 +332,7 @@ const OffersAndSaleView: React.FunctionComponent<IOffersAndSaleViewProps> = ({
 export default OffersAndSaleView;
 
 const StyledSpacer = styled.div`
-  border-bottom: 0.1rem solid ${props => props.theme.css.tableHoverColor};
+  border-bottom: 0.1rem solid ${props => props.theme.css.borderOutlineColor};
 `;
 
 const StyledSubHeader = styled.div`
@@ -342,7 +342,7 @@ const StyledSubHeader = styled.div`
   align-items: center;
 
   label {
-    color: ${props => props.theme.css.primaryColor};
+    color: ${props => props.theme.bcTokens.surfaceColorPrimaryButtonDefault};
     font-family: 'BCSans-Bold';
     font-size: 2rem;
     width: 100%;

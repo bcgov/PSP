@@ -19,8 +19,8 @@ export const PageHeader = styled.h3`
   text-align: left;
   font-family: BcSans-Bold;
   font-size: 2.6rem;
-  color: ${props => props.theme.css.primaryColor};
-  border-bottom: 0.2rem solid ${props => props.theme.css.primaryLightColor};
+  color: ${props => props.theme.css.headerTextColor};
+  border-bottom: 0.2rem solid ${props => props.theme.css.headerBorderColor};
 `;
 
 export const PageToolbar = styled.div`

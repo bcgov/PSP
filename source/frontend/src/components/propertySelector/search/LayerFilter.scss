@@ -24,10 +24,10 @@
   width: 25rem;
   overflow: hidden;
   cursor: pointer;
-  color: $text-color;
+  color: var(--typography-color-secondary);
 
   &:hover {
-    background-color: $active-color;
+    background-color: var(--typography-color-secondary-hover);
     color: #fff;
   }
 }

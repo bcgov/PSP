@@ -1,22 +1,27 @@
 @import './styles.scss';
 
+.Toastify__toast.Toastify__toast--dark {
+  color: #fff;
+  background-color: var(--surface-color-background-dark-blue);
+}
+
 .Toastify__toast .Toastify__toast-body {
   word-break: break-word;
 }
 
-.Toastify__toast.Toastify__toast--dark {
-  color: #fff;
-  background-color: $secondary-variant-color;
+.Toastify__toast {
+  word-break: break-word;
+  filter: drop-shadow(0.2rem 0.2rem 0.4rem black);
 }
 
 .Toastify__toast.Toastify__toast--warning {
-  color: $text-color;
-  background-color: $light-accent-color;
+  color: var(--typography-color-secondary);
+  background-color: var(--support-surface-color-warning);
 }
 
 .Toastify__toast.Toastify__toast--error {
   color: #fff;
-  background-color: $danger-color;
+  background-color: var(--surface-color-primary-danger-button-default);
 }
 
 .tooltip {
@@ -69,20 +74,20 @@
 a {
   color: $link-color;
   &:hover {
-    color: $secondary-variant-color;
+    color: $link-hover-color;
     text-decoration: underline;
   }
+}
+
+.spinner-border {
+  width: 3.2rem;
+  height: 3.2rem;
 }
 
 #root {
   // React-bootstrap toast global styling
   .toast {
     font-size: 1.4rem;
-  }
-
-  .spinner-border {
-    width: 3.2rem;
-    height: 3.2rem;
   }
 
   .page-link {
@@ -92,7 +97,7 @@ a {
     border-top-width: 0.2rem;
     border-bottom-width: 0.2rem;
     &:hover {
-      border-color: $secondary-variant-color;
+      border-color: $link-hover-color;
     }
   }
 
@@ -101,7 +106,7 @@ a {
     background-color: $link-color;
 
     &:hover {
-      background-color: $secondary-variant-color;
+      background-color: $link-hover-color;
     }
   }
 
@@ -115,17 +120,17 @@ a {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
     &:hover {
-      border-color: $secondary-variant-color;
+      border-color: $link-hover-color;
     }
   }
 
   .error {
-    color: $danger-color;
+    color: var(--surface-color-primary-danger-button-default);
   }
 
   .btn.btn-success,
   .btn.btn-success:active {
-    background-color: $completed-color;
+    background-color: --support-border-color-success;
   }
 
   ul.pagination li {
@@ -149,10 +154,10 @@ a {
   //by default, highlight dropdown options blue
   .dropdown-item,
   .dropdown-header {
-    color: $text-color;
+    color: var(--typography-color-secondary);
     &:hover {
       color: #fff;
-      background-color: $active-color;
+      background-color: $link-hover-color;
     }
   }
 }

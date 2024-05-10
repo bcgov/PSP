@@ -41,6 +41,6 @@ export default FormItem;
 const StyledDiv = styled.div`
   background: none;
   &.is-invalid {
-    border: ${props => props.theme.css.dangerColor} solid 0.1rem;
+    border: ${props => props.theme.bcTokens.surfaceColorPrimaryDangerButtonDefault} solid 0.1rem;
   }
 `;

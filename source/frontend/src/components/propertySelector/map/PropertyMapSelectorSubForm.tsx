@@ -57,13 +57,13 @@ export const StyledFormRow = styled(Row)`
     }
     .form-label {
       font-weight: bold;
-      color: ${props => props.theme.css.textColor};
+      color: ${props => props.theme.bcTokens.typographyColorSecondary};
     }
   }
 `;
 
 const GroupHeader = styled(Col)`
-  color: ${props => props.theme.css.primaryColor};
+  color: ${props => props.theme.css.headerTextColor};
   font-family: 'BcSans-Bold';
   margin-bottom: 1rem;
 `;

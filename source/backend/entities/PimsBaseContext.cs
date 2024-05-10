@@ -478,6 +478,8 @@ public partial class PimsBaseContext : DbContext
 
     public virtual DbSet<PimsPropertyType> PimsPropertyTypes { get; set; }
 
+    public virtual DbSet<PimsPropertyVw> PimsPropertyVws { get; set; }
+
     public virtual DbSet<PimsProvinceState> PimsProvinceStates { get; set; }
 
     public virtual DbSet<PimsRegion> PimsRegions { get; set; }
@@ -6518,6 +6520,11 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
             entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
             entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+        });
+
+        modelBuilder.Entity<PimsPropertyVw>(entity =>
+        {
+            entity.ToView("PIMS_PROPERTY_VW");
         });
 
         modelBuilder.Entity<PimsProvinceState>(entity =>

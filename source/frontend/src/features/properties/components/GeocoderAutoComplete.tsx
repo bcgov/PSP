@@ -87,7 +87,7 @@ export const GeocoderAutoComplete: React.FC<
   const suggestionSelected = (val: IGeocoderResponse) => {
     setOptions([]);
     if (onSelectionChanged) {
-      val.fullAddress = (val.fullAddress || '').split(',')[0];
+      val.fullAddress = val.fullAddress || '';
       setTextValue(val.fullAddress);
       onSelectionChanged(val);
     }
