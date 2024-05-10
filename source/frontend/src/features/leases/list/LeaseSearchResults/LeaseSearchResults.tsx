@@ -158,17 +158,17 @@ export function LeaseSearchResults(props: ILeaseSearchResultsProps) {
 }
 
 const ExpiredIcon = styled('span')`
-  color: ${props => props.theme.css.dangerColor};
+  color: ${props => props.theme.bcTokens.surfaceColorPrimaryDangerButtonDefault};
 `;
 
 const ExpiredOverlay = styled(Tooltip)`
   .tooltip-inner {
-    color: ${props => props.theme.css.dangerColor};
+    color: ${props => props.theme.bcTokens.surfaceColorPrimaryDangerButtonDefault};
     background-color: ${props => props.theme.css.dangerBackgroundColor};
   }
 
   .arrow::before {
-    color: ${props => props.theme.css.dangerColor};
+    color: ${props => props.theme.bcTokens.surfaceColorPrimaryDangerButtonDefault};
     background-color: ${props => props.theme.css.dangerBackgroundColor};
   }
 `;

@@ -197,12 +197,12 @@ export const getActualsColumns = ({
 
 const StyledIcons = styled(InlineFlexDiv)`
   [id^='edit-actual'] {
-    color: ${props => props.theme.css.slideOutBlue};
+    color: ${props => props.theme.css.activeActionColor};
   }
   [id^='delete-actual'] {
-    color: ${props => props.theme.css.discardedColor};
+    color: ${props => props.theme.css.activeActionColor};
     :hover {
-      color: ${({ theme }) => theme.css.dangerColor};
+      color: ${({ theme }) => theme.bcTokens.surfaceColorPrimaryDangerButtonDefault};
     }
   }
   .btn.btn-primary {

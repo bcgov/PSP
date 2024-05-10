@@ -9,6 +9,9 @@ import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_C
 import { prettyFormatUTCDate } from '@/utils';
 import { formatMinistryProject } from '@/utils/formUtils';
 
+import HistoricalNumbersContainer from '../../shared/header/HistoricalNumberContainer';
+import HistoricalNumberFieldView from '../../shared/header/HistoricalNumberSectionView';
+
 export interface IAcquisitionHeaderProps {
   acquisitionFile?: ApiGen_Concepts_AcquisitionFile;
   lastUpdatedBy: Api_LastUpdatedBy | null;
@@ -19,6 +22,8 @@ export const AcquisitionHeader: React.FunctionComponent<
 > = ({ acquisitionFile, lastUpdatedBy }) => {
   const leftColumnWidth = '7';
   const leftColumnLabel = '3';
+
+  const propertyIds = acquisitionFile?.fileProperties?.map(fp => fp.propertyId) ?? [];
 
   return (
     <StyledRow className="no-gutters">
@@ -56,6 +61,7 @@ export const AcquisitionHeader: React.FunctionComponent<
             </HeaderField>
           </Col>
         </Row>
+        <HistoricalNumbersContainer propertyIds={propertyIds} View={HistoricalNumberFieldView} />
       </Col>
       <Col xs="5">
         <Row className="no-gutters">

@@ -343,7 +343,7 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<
 };
 
 const StyledSummarySection = styled.div`
-  background-color: ${props => props.theme.css.filterBackgroundColor};
+  background-color: ${props => props.theme.css.highlightBackgroundColor};
 `;
 
 const StyledInfoSection = styled.div`
@@ -353,6 +353,6 @@ const StyledInfoSection = styled.div`
 `;
 
 const StyledSubtleText = styled.p`
-  color: ${props => props.theme.css.subtleColor};
+  color: ${props => props.theme.bcTokens.iconsColorDisabled};
   text-align: left;
 `;

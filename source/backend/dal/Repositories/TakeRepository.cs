@@ -50,7 +50,6 @@ namespace Pims.Dal.Repositories
         public IEnumerable<PimsTake> GetAllByAcquisitionFileId(long fileId)
         {
             return Context.PimsTakes
-
                 .Include(t => t.PropertyAcquisitionFile)
                 .Include(t => t.TakeSiteContamTypeCodeNavigation)
                 .Include(t => t.TakeStatusTypeCodeNavigation)
