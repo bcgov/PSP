@@ -11,6 +11,7 @@ using Pims.Api.Models.Requests.Document.UpdateMetadata;
 using Pims.Api.Models.Requests.Http;
 using Pims.Api.Policies;
 using Pims.Api.Services;
+using Pims.Core.Exceptions;
 using Pims.Core.Json;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
@@ -231,6 +232,52 @@ namespace Pims.Api.Controllers
         {
             var result = await _documentService.GetStorageDocumentMetadata(mayanDocumentId);
             return new JsonResult(result);
+        }
+
+        /// <summary>
+        /// Downloads the list of pages for the file within the desired document.
+        /// </summary>
+        [HttpGet("storage/{mayanDocumentId}/file/{documentFileId}/pages")]
+        [HasPermission(Permissions.DocumentView)]
+        [ProducesResponseType(typeof(ExternalResponse<QueryResponse<FilePageModel>>), 200)]
+        [SwaggerOperation(Tags = new[] { "storage-documents" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public async Task<IActionResult> GetDocumentFilePageList(long mayanDocumentId, long documentFileId)
+        {
+            var result = await _documentService.GetDocumentFilePageListAsync(mayanDocumentId, documentFileId);
+            if(result.HttpStatusCode != System.Net.HttpStatusCode.OK)
+            {
+                throw new HttpClientRequestException(result.Message, result.HttpStatusCode);
+            }
+
+            return new JsonResult(result.Payload.Results);
+        }
+
+        /// <summary>
+        /// Downloads the desired page for the file within the target document.
+        /// </summary>
+        [HttpGet("storage/{mayanDocumentId}/file/{documentFileId}/pages/{documentFilePageId}")]
+        [HasPermission(Permissions.DocumentView)]
+        [ProducesResponseType(typeof(FileContentResult), 200)]
+        [SwaggerOperation(Tags = new[] { "storage-documents" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public async Task<FileStreamResult> DownloadFilePageImage(long mayanDocumentId, long documentFileId, long documentFilePageId)
+        {
+            var response = await _documentService.DownloadFilePageImageAsync(mayanDocumentId, documentFileId, documentFilePageId);
+
+            if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                throw new KeyNotFoundException();
+            }
+            else if (!response.IsSuccessStatusCode)
+            {
+                throw new HttpClientRequestException(response);
+            }
+
+            return new FileStreamResult(response.Content.ReadAsStream(), "application/octet-stream")
+            {
+                FileDownloadName = $"Page {documentFilePageId}",
+            };
         }
 
         #endregion

@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-import { showFile } from '@/features/documents/DownloadDocumentButton';
+import { createFileDownload } from '@/features/documents/DownloadDocumentButton';
 import { useDocumentGenerationRepository } from '@/features/documents/hooks/useDocumentGenerationRepository';
 import { ExpropriationForm9Model } from '@/features/mapSideBar/acquisition/tabs/expropriation/models';
 import { FormTemplateTypes } from '@/features/mapSideBar/shared/content/models';
@@ -66,7 +66,7 @@ export const useGenerateExpropriationForm9 = () => {
     ) {
       const fileExt = generatedFile?.payload?.fileNameExtension ?? 'docx';
       const fileName = `Form 9-${file.fileNumber}-${moment().format('yyyyMMDD_hhmmss')}.${fileExt}`;
-      showFile(generatedFile?.payload, fileName);
+      createFileDownload(generatedFile?.payload, fileName);
     } else {
       throw Error('Failed to generate file');
     }

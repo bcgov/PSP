@@ -10,6 +10,7 @@ import { ApiGen_Concepts_DocumentType } from '@/models/api/generated/ApiGen_Conc
 import { ApiGen_Mayan_DocumentDetail } from '@/models/api/generated/ApiGen_Mayan_DocumentDetail';
 import { ApiGen_Mayan_DocumentMetadata } from '@/models/api/generated/ApiGen_Mayan_DocumentMetadata';
 import { ApiGen_Mayan_DocumentTypeMetadataType } from '@/models/api/generated/ApiGen_Mayan_DocumentTypeMetadataType';
+import { ApiGen_Mayan_FilePage } from '@/models/api/generated/ApiGen_Mayan_FilePage';
 import { ApiGen_Mayan_QueryResponse } from '@/models/api/generated/ApiGen_Mayan_QueryResponse';
 import { ApiGen_Requests_DocumentUpdateRequest } from '@/models/api/generated/ApiGen_Requests_DocumentUpdateRequest';
 import { ApiGen_Requests_DocumentUpdateResponse } from '@/models/api/generated/ApiGen_Requests_DocumentUpdateResponse';
@@ -29,6 +30,8 @@ export const useDocumentProvider = () => {
     downloadWrappedDocumentFileLatestApiCall,
     updateDocumentMetadataApiCall,
     getDocumentTypesApiCall,
+    downloadDocumentFilePageImageApiCall,
+    getDocumentFilePageListApiCall,
   } = useApiDocuments();
 
   // Provides functionality to retrieve document metadata information
@@ -228,6 +231,55 @@ export const useDocumentProvider = () => {
     }, []),
   });
 
+  const { execute: downloadDocumentFilePageImage, loading: downloadDocumentFilePageImageLoading } =
+    useApiRequestWrapper<
+      (
+        documentId: number,
+        documentFileId: number,
+        documentFilePageId: number,
+      ) => Promise<AxiosResponse<Blob, any>>
+    >({
+      requestFunction: useCallback(
+        async (documentId: number, documentFileId: number, documentFilePageId: number) =>
+          await downloadDocumentFilePageImageApiCall(
+            documentId,
+            documentFileId,
+            documentFilePageId,
+          ),
+        [downloadDocumentFilePageImageApiCall],
+      ),
+      requestName: 'DownloadDocumentFilePageImage',
+      onError: useCallback((axiosError: AxiosError<IApiError>) => {
+        if (axiosError?.response?.status === 400) {
+          toast.error(axiosError?.response.data.error);
+          return Promise.resolve();
+        }
+        return Promise.reject(axiosError);
+      }, []),
+    });
+
+  const { execute: getDocumentFilePageList, loading: getDocumentFilePageListLoading } =
+    useApiRequestWrapper<
+      (
+        documentId: number,
+        documentFileId: number,
+      ) => Promise<AxiosResponse<ApiGen_Mayan_FilePage[], any>>
+    >({
+      requestFunction: useCallback(
+        async (documentId: number, documentFileId: number) =>
+          await getDocumentFilePageListApiCall(documentId, documentFileId),
+        [getDocumentFilePageListApiCall],
+      ),
+      requestName: 'GetDocumentFilePageList',
+      onError: useCallback((axiosError: AxiosError<IApiError>) => {
+        if (axiosError?.response?.status === 400) {
+          toast.error(axiosError?.response.data.error);
+          return Promise.resolve();
+        }
+        return Promise.reject(axiosError);
+      }, []),
+    });
+
   return {
     retrieveDocumentMetadata,
     retrieveDocumentMetadataLoading,
@@ -246,5 +298,9 @@ export const useDocumentProvider = () => {
     retrieveDocumentDetailLoading,
     updateDocument,
     updateDocumentLoading,
+    downloadDocumentFilePageImage,
+    downloadDocumentFilePageImageLoading,
+    getDocumentFilePageList,
+    getDocumentFilePageListLoading,
   };
 };

@@ -24,7 +24,7 @@ const DownloadDocumentButton: React.FunctionComponent<
     if (mayanFileId !== undefined) {
       const data = await provider.downloadWrappedDocumentFile(mayanDocumentId, mayanFileId);
       if (data) {
-        showFile(data);
+        createFileDownload(data);
       } else {
         toast.error(
           'Failed to download document. If this error persists, contact a system administrator.',
@@ -33,7 +33,7 @@ const DownloadDocumentButton: React.FunctionComponent<
     } else {
       const data = await provider.downloadWrappedDocumentFileLatest(mayanDocumentId);
       if (data) {
-        showFile(data);
+        createFileDownload(data);
       } else {
         toast.error(
           'Failed to download document. If this error persists, contact a system administrator.',
@@ -81,7 +81,7 @@ const DownloadDocumentButton: React.FunctionComponent<
  * @param response The API file download response.
  * @param fileName Optional file name to override default file name returned from API.
  */
-export const showFile = async (
+export const createFileDownload = async (
   response?: ApiGen_Requests_FileDownloadResponse,
   fileName?: string,
 ) => {
