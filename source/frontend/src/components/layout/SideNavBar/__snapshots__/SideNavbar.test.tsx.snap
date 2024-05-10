@@ -17,6 +17,7 @@ exports[`SideNavbar display and logic > renders 1`] = `
   -ms-flex-align: center;
   align-items: center;
   grid-area: iconbar;
+  background-color: #003366;
   -webkit-transition: 0.5s width;
   transition: 0.5s width;
   width: 6rem;

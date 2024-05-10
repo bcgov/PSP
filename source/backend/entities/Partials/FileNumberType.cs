@@ -14,7 +14,7 @@ namespace Pims.Dal.Entities
         public string Id { get => FileNumberTypeCode; set => FileNumberTypeCode = value; }
 
         /// <summary>
-        /// Create a new instance of a PimsAcqPhysFileStatusType class.
+        /// Create a new instance of a PimsFileNumberType class.
         /// </summary>
         /// <param name="id"></param>
         public PimsFileNumberType(string id)

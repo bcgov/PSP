@@ -179,7 +179,7 @@ export const FormSectionOne = styled(FormSection)`
   }
   min-width: 75rem;
   .form-control {
-    color: ${props => props.theme.css.formTextColor};
+    color: ${props => props.theme.bcTokens.typographyColorPrimary};
   }
 `;
 

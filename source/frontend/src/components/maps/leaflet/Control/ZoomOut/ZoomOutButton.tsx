@@ -12,7 +12,7 @@ import Control from '../Control';
 const ZoomButton = styled(Button)`
   &&.btn {
     background-color: #ffffff;
-    color: ${({ theme }) => theme.css.darkVariantColor};
+    color: ${({ theme }) => theme.bcTokens.typographyColorSecondary};
     width: 4rem;
     height: 4rem;
   }
