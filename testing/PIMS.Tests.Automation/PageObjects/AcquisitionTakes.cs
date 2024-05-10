@@ -244,7 +244,7 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
             if (webDriver.FindElements(acquisitionFileConfirmationModal).Count() > 0)
             {
-                Assert.Contains("Follow-up required", sharedModals.ModalHeader());
+                Assert.Contains("Confirm change", sharedModals.ModalHeader());
                 Assert.Contains("The area, if provided, will be cleared. Do you wish to proceed?", sharedModals.ModalContent());
 
                 sharedModals.ModalClickOKBttn();
@@ -273,12 +273,17 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
             if (webDriver.FindElements(acquisitionFileConfirmationModal).Count() > 0)
             {
-                Assert.Contains("Confirm change", sharedModals.ModalHeader());
-
                 if (sharedModals.ModalContent().Contains("You have created a Lease (Payable) Take"))
+                {
+                    Assert.Contains("Follow-up required", sharedModals.ModalHeader());
                     Assert.Contains("You have created a Lease (Payable) Take. You also need to create a Lease/License File.", sharedModals.ModalContent());
+                }
                 else
+                {
+                    Assert.Contains("Confirm change", sharedModals.ModalHeader());
                     Assert.Contains("The area, if provided, will be cleared. Do you wish to proceed?", sharedModals.ModalContent());
+                }
+                    
 
                 sharedModals.ModalClickOKBttn();
             }
