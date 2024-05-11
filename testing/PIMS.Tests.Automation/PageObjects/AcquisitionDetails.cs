@@ -783,7 +783,7 @@ namespace PIMS.Tests.Automation.PageObjects
             WaitUntilClickable(acquisitionFileDeleteFirstOwnerBttn);
             webDriver.FindElement(acquisitionFileDeleteFirstOwnerBttn).Click();
 
-            WaitUntilVisible(acquisitionFileSaveConfirmationModal);
+            WaitUntilVisible(acquisitionFileConfirmationModal);
             Assert.True(sharedModals.ModalHeader() == "Remove Owner");
             Assert.True(sharedModals.ModalContent() == "Are you sure you want to remove this Owner?");
 

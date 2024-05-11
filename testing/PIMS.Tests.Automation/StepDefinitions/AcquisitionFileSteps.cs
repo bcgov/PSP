@@ -281,20 +281,12 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 //Verify Init form
                 acquisitionTakes.VerifyInitTakesView();
 
-                //Click on Edit button
-                acquisitionTakes.ClickEditTakesButton();
+                //Click on Add Takes button
+                acquisitionTakes.ClickAddTakesButton();
 
                 //Insert Take
-                if (acquisitionFile.AcquisitionTakes[i].TakeCounter.Equals(0))
-                {
-                    acquisitionTakes.VerifyInitCreateForm();
-                    acquisitionTakes.InsertTake(acquisitionFile.AcquisitionTakes[i]);
-                }
-                else
-                {
-                    acquisitionTakes.ClickCreateNewTakeBttn();
-                    acquisitionTakes.InsertTake(acquisitionFile.AcquisitionTakes[i]);
-                }
+                acquisitionTakes.VerifyInitCreateForm();
+                acquisitionTakes.InsertTake(acquisitionFile.AcquisitionTakes[i]);
 
                 //Save Take
                 acquisitionTakes.SaveTake();
@@ -323,7 +315,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             acquisitionTakes.NavigateTakesTab();
 
             //Update Take
-            acquisitionTakes.ClickEditTakesButton();
+            acquisitionTakes.ClickEditTakesButton(acquisitionFile.AcquisitionTakes[0].TakeCounter);
             acquisitionTakes.InsertTake(acquisitionFile.AcquisitionTakes[0]);
 
             //Save Take
@@ -339,11 +331,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             acquisitionTakes.NavigateTakesTab();
 
             //Delete Take
-            acquisitionTakes.ClickEditTakesButton();
             acquisitionTakes.DeleteTake(acquisitionFile.AcquisitionTakes[0].TakeCounter);
-
-            //Save Take
-            acquisitionTakes.SaveTake();
         }
 
         [StepDefinition(@"I insert Checklist information to an Acquisition File")]
