@@ -20,6 +20,9 @@ export const UpdateHistoricalNumbersSubForm: React.FC<IUpdateHistoricalNumbersSu
 }) => {
   const { values, setFieldValue } = useFormikContext<UpdatePropertyDetailsFormModel>();
   const { getOptionsByType } = useLookupCodeHelpers();
+
+  // (sort alpha; exceptions: 1. Other at end, and 2. PS second in list)
+  // The order is set via displayOrder in the DB
   const historicalNumberTypes = getOptionsByType(API.HISTORICAL_NUMBER_TYPES);
 
   return (

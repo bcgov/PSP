@@ -1,6 +1,8 @@
+/* eslint-disable no-template-curly-in-string */
 import * as Yup from 'yup';
 
 import { PropertyTenureTypes } from '@/constants/index';
+import { exists } from '@/utils';
 import { stringToBoolean } from '@/utils/formUtils';
 
 import { PropertyTenureFormModel } from './models';
@@ -35,4 +37,17 @@ export const UpdatePropertyDetailsYupSchema = Yup.object().shape({
     postal: Yup.string().max(20, 'Postal must be at most 20 characters'),
   }),
   generalLocation: Yup.string().max(2000, 'General location must be less than 2000 characters'),
+  historicalNumbers: Yup.array().of(
+    Yup.object().shape({
+      historicalNumber: Yup.string(),
+      historicalNumberType: Yup.string(),
+      otherHistoricalNumberType: Yup.string().when('historicalNumberType', {
+        is: (historicalType: string) => exists(historicalType) && historicalType === 'OTHER',
+        then: Yup.string()
+          .required('Other Description required')
+          .max(200, 'Other Description must be at most ${max} characters'),
+        otherwise: Yup.string().nullable(),
+      }),
+    }),
+  ),
 });
