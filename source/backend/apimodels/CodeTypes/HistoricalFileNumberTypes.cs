@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 namespace Pims.Api.Models.CodeTypes
 {
     [JsonConverter(typeof(JsonStringEnumMemberConverter))]
-    public enum FileNumberTypes
+    public enum HistoricalFileNumberTypes
     {
         [EnumMember(Value = "LISNO")]
         LISNO,

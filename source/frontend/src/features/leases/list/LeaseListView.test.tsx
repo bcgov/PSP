@@ -22,7 +22,7 @@ import {
 
 import { ILeaseFilter } from '..';
 import { LeaseListView } from './LeaseListView';
-import { ApiGen_CodeTypes_FileNumberTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileNumberTypes';
+import { ApiGen_CodeTypes_HistoricalFileNumberTypes } from '@/models/api/generated/ApiGen_CodeTypes_HistoricalFileNumberTypes';
 
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: [] },
@@ -199,7 +199,7 @@ describe('Lease and License List View', () => {
                   id: 1000,
                   fileNumber: '0309-001',
                   fileNumberTypeCode: {
-                    id: ApiGen_CodeTypes_FileNumberTypes.LISNO.toString(),
+                    id: ApiGen_CodeTypes_HistoricalFileNumberTypes.LISNO.toString(),
                     description: 'LIS #',
                     isDisabled: false,
                     displayOrder: 1,
@@ -265,7 +265,7 @@ describe('Lease and License List View', () => {
                   id: 1000,
                   fileNumber: '0309-000',
                   fileNumberTypeCode: {
-                    id: ApiGen_CodeTypes_FileNumberTypes.PSNO.toString(),
+                    id: ApiGen_CodeTypes_HistoricalFileNumberTypes.PSNO.toString(),
                     description: 'PS #',
                     isDisabled: false,
                     displayOrder: 3,
@@ -331,7 +331,7 @@ describe('Lease and License List View', () => {
                   id: 1000,
                   fileNumber: '0309-999',
                   fileNumberTypeCode: {
-                    id: ApiGen_CodeTypes_FileNumberTypes.OTHER.toString(),
+                    id: ApiGen_CodeTypes_HistoricalFileNumberTypes.OTHER.toString(),
                     description: 'Other',
                     isDisabled: false,
                     displayOrder: 99,

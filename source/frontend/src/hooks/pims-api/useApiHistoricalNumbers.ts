@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ApiGen_Concepts_PropertyFileNumber } from '@/models/api/generated/ApiGen_Concepts_PropertyFileNumber';
+import { ApiGen_Concepts_HistoricalFileNumber } from '@/models/api/generated/ApiGen_Concepts_HistoricalFileNumber';
 
 import useAxiosApi from './useApi';
 
@@ -14,7 +14,7 @@ export const useApiHistoricalNumbers = () => {
   return React.useMemo(
     () => ({
       getByPropertyId: (propertyId: number) =>
-        api.get<ApiGen_Concepts_PropertyFileNumber[]>(
+        api.get<ApiGen_Concepts_HistoricalFileNumber[]>(
           `/properties/${propertyId}/historicalNumbers`,
         ),
     }),

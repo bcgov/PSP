@@ -2,7 +2,7 @@ using Pims.Api.Models.Base;
 
 namespace Pims.Api.Models.Concepts.Property
 {
-    public class PropertyFileNumberModel : BaseAuditModel
+    public class HistoricalFileNumberModel : BaseAuditModel
     {
         /// <summary>
         /// get/set - The property for the number.

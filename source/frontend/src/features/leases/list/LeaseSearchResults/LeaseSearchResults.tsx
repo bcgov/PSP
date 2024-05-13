@@ -9,9 +9,9 @@ import styled from 'styled-components';
 import TooltipIcon from '@/components/common/TooltipIcon';
 import { ColumnWithProps, renderTypeCode, Table } from '@/components/Table';
 import { TableSort } from '@/components/Table/TableSort';
-import { ApiGen_CodeTypes_FileNumberTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileNumberTypes';
+import { ApiGen_CodeTypes_HistoricalFileNumberTypes } from '@/models/api/generated/ApiGen_CodeTypes_HistoricalFileNumberTypes';
+import { ApiGen_Concepts_HistoricalFileNumber } from '@/models/api/generated/ApiGen_Concepts_HistoricalFileNumber';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
-import { ApiGen_Concepts_PropertyFileNumber } from '@/models/api/generated/ApiGen_Concepts_PropertyFileNumber';
 import { exists, prettyFormatDate } from '@/utils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
@@ -121,13 +121,13 @@ const columns: ColumnWithProps<ApiGen_Concepts_Lease>[] = [
     Cell: (props: CellProps<ApiGen_Concepts_Lease>) => {
       // File numbers types to display
       const numberTypes: string[] = [
-        ApiGen_CodeTypes_FileNumberTypes.LISNO.toString(),
-        ApiGen_CodeTypes_FileNumberTypes.PSNO.toString(),
-        ApiGen_CodeTypes_FileNumberTypes.OTHER.toString(),
+        ApiGen_CodeTypes_HistoricalFileNumberTypes.LISNO.toString(),
+        ApiGen_CodeTypes_HistoricalFileNumberTypes.PSNO.toString(),
+        ApiGen_CodeTypes_HistoricalFileNumberTypes.OTHER.toString(),
       ];
 
       // Get unique file numbers from lease properties
-      const fileNumbers: ApiGen_Concepts_PropertyFileNumber[] = [];
+      const fileNumbers: ApiGen_Concepts_HistoricalFileNumber[] = [];
       props.row.original.fileProperties?.forEach(fl => {
         fl.property.fileNumbers?.forEach(number => {
           if (numberTypes.includes(number.fileNumberTypeCode.id)) {
@@ -157,20 +157,20 @@ const columns: ColumnWithProps<ApiGen_Concepts_Lease>[] = [
       let lisNumbers = '';
       let psNumbers = '';
       let otherNumbers = '';
-      if (numbersByType[ApiGen_CodeTypes_FileNumberTypes.LISNO.toString()]?.length) {
-        lisNumbers = numbersByType[ApiGen_CodeTypes_FileNumberTypes.LISNO.toString()]
+      if (numbersByType[ApiGen_CodeTypes_HistoricalFileNumberTypes.LISNO.toString()]?.length) {
+        lisNumbers = numbersByType[ApiGen_CodeTypes_HistoricalFileNumberTypes.LISNO.toString()]
           .map(x => x.fileNumber)
           .join(', ');
       }
 
-      if (numbersByType[ApiGen_CodeTypes_FileNumberTypes.PSNO.toString()]?.length) {
-        psNumbers = numbersByType[ApiGen_CodeTypes_FileNumberTypes.PSNO.toString()]
+      if (numbersByType[ApiGen_CodeTypes_HistoricalFileNumberTypes.PSNO.toString()]?.length) {
+        psNumbers = numbersByType[ApiGen_CodeTypes_HistoricalFileNumberTypes.PSNO.toString()]
           .map(x => x.fileNumber)
           .join(', ');
       }
 
-      if (numbersByType[ApiGen_CodeTypes_FileNumberTypes.OTHER.toString()]?.length) {
-        otherNumbers = numbersByType[ApiGen_CodeTypes_FileNumberTypes.OTHER.toString()]
+      if (numbersByType[ApiGen_CodeTypes_HistoricalFileNumberTypes.OTHER.toString()]?.length) {
+        otherNumbers = numbersByType[ApiGen_CodeTypes_HistoricalFileNumberTypes.OTHER.toString()]
           .map(x => x.fileNumber)
           .join(', ');
       }

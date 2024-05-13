@@ -4,11 +4,11 @@ using Entity = Pims.Dal.Entities;
 
 namespace Pims.Api.Models.Concepts.Property
 {
-    public class PropertyFileNumberMap : IRegister
+    public class HistoricalFileNumberMap : IRegister
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<Entity.PimsFileNumber, PropertyFileNumberModel>()
+            config.NewConfig<Entity.PimsFileNumber, HistoricalFileNumberModel>()
                 .Map(dest => dest.Id, src => src.FileNumberId)
                 .Map(dest => dest.PropertyId, src => src.PropertyId)
                 .Map(dest => dest.Property, src => src.Property)
@@ -18,7 +18,7 @@ namespace Pims.Api.Models.Concepts.Property
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
                 .Inherits<Entity.IBaseAppEntity, BaseAuditModel>();
 
-            config.NewConfig<PropertyFileNumberModel, Entity.PimsFileNumber>()
+            config.NewConfig<HistoricalFileNumberModel, Entity.PimsFileNumber>()
                 .Map(dest => dest.FileNumberId, src => src.Id)
                 .Map(dest => dest.PropertyId, src => src.PropertyId)
                 .Map(dest => dest.Property, src => src.Property)

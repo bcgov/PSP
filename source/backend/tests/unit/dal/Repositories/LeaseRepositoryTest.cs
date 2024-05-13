@@ -198,7 +198,7 @@ namespace Pims.Dal.Test.Repositories
 
             var fileNumber = new PimsFileNumber();
             fileNumber.PropertyId = elease.PimsPropertyLeases.FirstOrDefault().PropertyId;
-            fileNumber.FileNumberTypeCode = FileNumberTypes.LISNO.ToString();
+            fileNumber.FileNumberTypeCode = HistoricalFileNumberTypes.LISNO.ToString();
             fileNumber.FileNumber = "99999";
             fileNumber.AppCreateUserid = "tester";
             fileNumber.AppCreateUserDirectory = "PIMS";
@@ -241,7 +241,7 @@ namespace Pims.Dal.Test.Repositories
 
             var fileNumber = new PimsFileNumber();
             fileNumber.PropertyId = elease.PimsPropertyLeases.FirstOrDefault().PropertyId;
-            fileNumber.FileNumberTypeCode = FileNumberTypes.PSNO.ToString();
+            fileNumber.FileNumberTypeCode = HistoricalFileNumberTypes.PSNO.ToString();
             fileNumber.FileNumber = "88888";
             fileNumber.AppCreateUserid = "tester";
             fileNumber.AppCreateUserDirectory = "PIMS";
@@ -284,8 +284,8 @@ namespace Pims.Dal.Test.Repositories
 
             var fileNumber = new PimsFileNumber();
             fileNumber.PropertyId = elease.PimsPropertyLeases.FirstOrDefault().PropertyId;
-            fileNumber.FileNumberTypeCode = FileNumberTypes.OTHER.ToString();
-            fileNumber.OtherFileNumberType = FileNumberTypes.OTHER.ToString();
+            fileNumber.FileNumberTypeCode = HistoricalFileNumberTypes.OTHER.ToString();
+            fileNumber.OtherFileNumberType = HistoricalFileNumberTypes.OTHER.ToString();
             fileNumber.FileNumber = "77777";
             fileNumber.AppCreateUserid = "tester";
             fileNumber.AppCreateUserDirectory = "PIMS";

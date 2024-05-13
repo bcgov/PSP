@@ -1,11 +1,11 @@
 import { useMemo } from 'react';
 
 import { HeaderField } from '@/components/common/HeaderField/HeaderField';
-import { ApiGen_Concepts_PropertyFileNumber } from '@/models/api/generated/ApiGen_Concepts_PropertyFileNumber';
+import { ApiGen_Concepts_HistoricalFileNumber } from '@/models/api/generated/ApiGen_Concepts_HistoricalFileNumber';
 import { exists } from '@/utils';
 
 export interface IHistoricalNumbersViewProps {
-  historicalNumbers: ApiGen_Concepts_PropertyFileNumber[];
+  historicalNumbers: ApiGen_Concepts_HistoricalFileNumber[];
 }
 
 const HistoricalNumberFieldView: React.FC<IHistoricalNumbersViewProps> = ({
