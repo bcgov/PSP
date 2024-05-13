@@ -1,6 +1,4 @@
 ﻿using OpenQA.Selenium;
-using System.Diagnostics;
-using System.Security.Policy;
 
 
 namespace PIMS.Tests.Automation.PageObjects
@@ -196,28 +194,25 @@ namespace PIMS.Tests.Automation.PageObjects
                 {
                     Assert.Contains("This property has already been added to one or more acquisition files.", sharedModals.ModalContent());
                     Assert.Contains("Do you want to acknowledge and proceed?", sharedModals.ModalContent());
-                    sharedModals.ModalClickOKBttn();
                 }
                 if (sharedModals.ModalContent().Contains("This property has already been added to one or more research files."))
                 {
                     Assert.Contains("This property has already been added to one or more research files.", sharedModals.ModalContent());
                     Assert.Contains("Do you want to acknowledge and proceed?", sharedModals.ModalContent());
-                    sharedModals.ModalClickOKBttn();
                 }
                 if (sharedModals.ModalContent().Contains("This property has already been added to one or more disposition files."))
                 {
                     Assert.Contains("This property has already been added to one or more disposition files.", sharedModals.ModalContent());
                     Assert.Contains("Do you want to acknowledge and proceed?", sharedModals.ModalContent());
-                    sharedModals.ModalClickOKBttn();
                 }
 
                 if (sharedModals.ModalContent().Contains("This property has already been added to one or more files."))
                 {
                     Assert.Contains("This property has already been added to one or more files.", sharedModals.ModalContent());
                     Assert.Contains("Do you want to acknowledge and proceed?", sharedModals.ModalContent());
-                    sharedModals.ModalClickOKBttn();
                 }
 
+                sharedModals.ModalClickOKBttn();
                 Wait();
             }
         }
