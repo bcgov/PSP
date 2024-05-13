@@ -22,17 +22,17 @@ namespace Pims.Api.Models.Concepts.Property
         /// <summary>
         /// get/set - The type of file.
         /// </summary>
-        public CodeTypeModel<string> FileNumberTypeCode { get; set; }
+        public CodeTypeModel<string> HistoricalFileNumberTypeCode { get; set; }
 
         /// <summary>
         /// get/set - The number value.
         /// </summary>
-        public string FileNumber { get; set; }
+        public string HistoricalFileNumber { get; set; }
 
         /// <summary>
         /// get/set - Other type that's not registered.
         /// </summary>
-        public string OtherFileNumberType { get; set; }
+        public string OtherHistFileNumberTypeCode { get; set; }
 
         /// <summary>
         /// get/set - Whether is disabled.

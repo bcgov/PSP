@@ -3,11 +3,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Pims.Dal.Entities
 {
     /// <summary>
-    /// PimsFileNumber class, provides an entity for the datamodel to manage Historic File Numbers.
+    /// PimsHistoricalFileNumber class, provides an entity for the datamodel to manage Historical File Numbers.
     /// </summary>
-    public partial class PimsFileNumber : StandardIdentityBaseAppEntity<long>, IBaseAppEntity
+    public partial class PimsHistoricalFileNumber : StandardIdentityBaseAppEntity<long>, IBaseAppEntity
     {
+        #region Properties
         [NotMapped]
-        public override long Internal_Id { get => this.FileNumberId; set => this.FileNumberId = value; }
+        public override long Internal_Id { get => HistoricalFileNumberId; set => HistoricalFileNumberId = value; }
+        #endregion
     }
 }

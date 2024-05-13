@@ -196,10 +196,10 @@ namespace Pims.Dal.Test.Repositories
             var context = helper.CreatePimsContext(user, true);
             context.AddAndSaveChanges(elease);
 
-            var fileNumber = new PimsFileNumber();
+            var fileNumber = new PimsHistoricalFileNumber();
             fileNumber.PropertyId = elease.PimsPropertyLeases.FirstOrDefault().PropertyId;
-            fileNumber.FileNumberTypeCode = HistoricalFileNumberTypes.LISNO.ToString();
-            fileNumber.FileNumber = "99999";
+            fileNumber.HistoricalFileNumberTypeCode = HistoricalFileNumberTypes.LISNO.ToString();
+            fileNumber.HistoricalFileNumber = "99999";
             fileNumber.AppCreateUserid = "tester";
             fileNumber.AppCreateUserDirectory = "PIMS";
             fileNumber.AppLastUpdateUserDirectory = "PIMS";
@@ -239,10 +239,10 @@ namespace Pims.Dal.Test.Repositories
             var context = helper.CreatePimsContext(user, true);
             context.AddAndSaveChanges(elease);
 
-            var fileNumber = new PimsFileNumber();
+            var fileNumber = new PimsHistoricalFileNumber();
             fileNumber.PropertyId = elease.PimsPropertyLeases.FirstOrDefault().PropertyId;
-            fileNumber.FileNumberTypeCode = HistoricalFileNumberTypes.PSNO.ToString();
-            fileNumber.FileNumber = "88888";
+            fileNumber.HistoricalFileNumberTypeCode = HistoricalFileNumberTypes.PSNO.ToString();
+            fileNumber.HistoricalFileNumber = "88888";
             fileNumber.AppCreateUserid = "tester";
             fileNumber.AppCreateUserDirectory = "PIMS";
             fileNumber.AppLastUpdateUserDirectory = "PIMS";
@@ -282,11 +282,11 @@ namespace Pims.Dal.Test.Repositories
             var context = helper.CreatePimsContext(user, true);
             context.AddAndSaveChanges(elease);
 
-            var fileNumber = new PimsFileNumber();
+            var fileNumber = new PimsHistoricalFileNumber();
             fileNumber.PropertyId = elease.PimsPropertyLeases.FirstOrDefault().PropertyId;
-            fileNumber.FileNumberTypeCode = HistoricalFileNumberTypes.OTHER.ToString();
-            fileNumber.OtherFileNumberType = HistoricalFileNumberTypes.OTHER.ToString();
-            fileNumber.FileNumber = "77777";
+            fileNumber.HistoricalFileNumberTypeCode = HistoricalFileNumberTypes.OTHER.ToString();
+            fileNumber.OtherHistFileNumberTypeCode = HistoricalFileNumberTypes.OTHER.ToString();
+            fileNumber.HistoricalFileNumber = "77777";
             fileNumber.AppCreateUserid = "tester";
             fileNumber.AppCreateUserDirectory = "PIMS";
             fileNumber.AppLastUpdateUserDirectory = "PIMS";

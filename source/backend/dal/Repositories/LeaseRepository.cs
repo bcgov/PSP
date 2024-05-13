@@ -875,8 +875,8 @@ namespace Pims.Dal.Repositories
                             .ThenInclude(p => p.AreaUnitTypeCodeNavigation)
                         .Include(pl => pl.PimsPropertyLeases)
                             .ThenInclude(p => p.Property)
-                            .ThenInclude(n => n.PimsFileNumbers)
-                            .ThenInclude(t => t.FileNumberTypeCodeNavigation)
+                            .ThenInclude(n => n.PimsHistoricalFileNumbers)
+                            .ThenInclude(t => t.HistoricalFileNumberTypeCodeNavigation)
                         .Include(l => l.PimsPropertyImprovements)
                         .Include(l => l.LeaseProgramTypeCodeNavigation)
                         .Include(l => l.LeasePurposeTypeCodeNavigation)
@@ -974,14 +974,14 @@ namespace Pims.Dal.Repositories
             {
                 predicateBuilder = predicateBuilder.And(l => EF.Functions.Like(l.PsFileNo, $"%{filter.Historical}%") || EF.Functions.Like(l.TfaFileNumber, $"%{filter.Historical}%"));
 
-                predicateBuilder = predicateBuilder.Or(l => l.PimsPropertyLeases.Any(x => x.Property.PimsFileNumbers
-                        .Any(y => y.FileNumberTypeCode == HistoricalFileNumberTypes.LISNO.ToString() && y.FileNumber.Contains(filter.Historical))));
+                predicateBuilder = predicateBuilder.Or(l => l.PimsPropertyLeases.Any(x => x.Property.PimsHistoricalFileNumbers
+                        .Any(y => y.HistoricalFileNumberTypeCode == HistoricalFileNumberTypes.LISNO.ToString() && y.HistoricalFileNumber.Contains(filter.Historical))));
 
-                predicateBuilder = predicateBuilder.Or(l => l.PimsPropertyLeases.Any(x => x.Property.PimsFileNumbers
-                        .Any(y => y.FileNumberTypeCode == HistoricalFileNumberTypes.PSNO.ToString() && y.FileNumber.Contains(filter.Historical))));
+                predicateBuilder = predicateBuilder.Or(l => l.PimsPropertyLeases.Any(x => x.Property.PimsHistoricalFileNumbers
+                        .Any(y => y.HistoricalFileNumberTypeCode == HistoricalFileNumberTypes.PSNO.ToString() && y.HistoricalFileNumber.Contains(filter.Historical))));
 
-                predicateBuilder = predicateBuilder.Or(l => l.PimsPropertyLeases.Any(x => x.Property.PimsFileNumbers
-                        .Any(y => y.FileNumberTypeCode == HistoricalFileNumberTypes.OTHER.ToString() && y.FileNumber.Contains(filter.Historical))));
+                predicateBuilder = predicateBuilder.Or(l => l.PimsPropertyLeases.Any(x => x.Property.PimsHistoricalFileNumbers
+                        .Any(y => y.HistoricalFileNumberTypeCode == HistoricalFileNumberTypes.OTHER.ToString() && y.HistoricalFileNumber.Contains(filter.Historical))));
             }
 
             if (!string.IsNullOrWhiteSpace(filter.Address))
