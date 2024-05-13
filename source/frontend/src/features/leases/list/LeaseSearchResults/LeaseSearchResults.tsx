@@ -1,3 +1,4 @@
+import { groupBy } from 'lodash';
 import moment from 'moment';
 import { useCallback } from 'react';
 import { Tooltip } from 'react-bootstrap';
@@ -144,33 +145,25 @@ const columns: ColumnWithProps<ApiGen_Concepts_Lease>[] = [
         });
       });
 
-      // group numbers by type
-      const numbersByType = fileNumbers.reduce((acc, number) => {
-        const type = number.historicalFileNumberTypeCode.id;
-        if (!acc[type]) {
-          acc[type] = [];
-        }
-        acc[type].push(number);
-        return acc;
-      }, {});
+      const groupByType = groupBy(fileNumbers, x => x.historicalFileNumberTypeCode.id);
 
       let lisNumbers = '';
       let psNumbers = '';
       let otherNumbers = '';
-      if (numbersByType[ApiGen_CodeTypes_HistoricalFileNumberTypes.LISNO.toString()]?.length) {
-        lisNumbers = numbersByType[ApiGen_CodeTypes_HistoricalFileNumberTypes.LISNO.toString()]
+      if (groupByType[ApiGen_CodeTypes_HistoricalFileNumberTypes.LISNO.toString()]?.length) {
+        lisNumbers = groupByType[ApiGen_CodeTypes_HistoricalFileNumberTypes.LISNO.toString()]
           .map(x => x.historicalFileNumber)
           .join(', ');
       }
 
-      if (numbersByType[ApiGen_CodeTypes_HistoricalFileNumberTypes.PSNO.toString()]?.length) {
-        psNumbers = numbersByType[ApiGen_CodeTypes_HistoricalFileNumberTypes.PSNO.toString()]
+      if (groupByType[ApiGen_CodeTypes_HistoricalFileNumberTypes.PSNO.toString()]?.length) {
+        psNumbers = groupByType[ApiGen_CodeTypes_HistoricalFileNumberTypes.PSNO.toString()]
           .map(x => x.historicalFileNumber)
           .join(', ');
       }
 
-      if (numbersByType[ApiGen_CodeTypes_HistoricalFileNumberTypes.OTHER.toString()]?.length) {
-        otherNumbers = numbersByType[ApiGen_CodeTypes_HistoricalFileNumberTypes.OTHER.toString()]
+      if (groupByType[ApiGen_CodeTypes_HistoricalFileNumberTypes.OTHER.toString()]?.length) {
+        otherNumbers = groupByType[ApiGen_CodeTypes_HistoricalFileNumberTypes.OTHER.toString()]
           .map(x => x.historicalFileNumber)
           .join(', ');
       }
