@@ -171,4 +171,8 @@ public partial class PimsPropertyVw
 
     [Column("IS_ACTIVE_RECEIVABLE_LEASE")]
     public bool? IsActiveReceivableLease { get; set; }
+
+    [Column("HISTORICAL_FILE_NUMBER_STR")]
+    [StringLength(4000)]
+    public string HistoricalFileNumberStr { get; set; }
 }
