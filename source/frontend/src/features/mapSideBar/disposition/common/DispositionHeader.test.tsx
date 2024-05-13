@@ -5,13 +5,20 @@ import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_C
 import { prettyFormatUTCDate } from '@/utils/dateUtils';
 import { act, render, RenderOptions } from '@/utils/test-utils';
 
-import DispositionHeader, { IDispositionHeaderProps } from './DispositionHeader';
-import { http, HttpResponse } from 'msw';
 import { useHistoricalNumberRepository } from '@/hooks/repositories/useHistoricalNumberRepository';
+import { http, HttpResponse } from 'msw';
+import DispositionHeader, { IDispositionHeaderProps } from './DispositionHeader';
 
 vi.mock('@/hooks/repositories/useHistoricalNumberRepository');
 vi.mocked(useHistoricalNumberRepository).mockReturnValue({
   getPropertyHistoricalNumbers: {
+    error: null,
+    response: [],
+    execute: vi.fn().mockResolvedValue([]),
+    loading: false,
+    status: 200,
+  },
+  updatePropertyHistoricalNumbers: {
     error: null,
     response: [],
     execute: vi.fn().mockResolvedValue([]),
@@ -74,7 +81,10 @@ describe('DispositionHeader component', () => {
 
   it('renders the file number and name concatenated', async () => {
     const testDispositionFile = mockDispositionFileResponse();
-    const { getByText } = await setup({ dispositionFile: testDispositionFile, lastUpdatedBy: null });
+    const { getByText } = await setup({
+      dispositionFile: testDispositionFile,
+      lastUpdatedBy: null,
+    });
 
     expect(getByText('File:')).toBeVisible();
     expect(getByText(/FILE_NUMBER 3A8F46B/)).toBeVisible();
@@ -108,7 +118,10 @@ describe('DispositionHeader component', () => {
         isDisabled: false,
       },
     };
-    const { getByText } = await setup({ dispositionFile: testDispositionFile, lastUpdatedBy: null });
+    const { getByText } = await setup({
+      dispositionFile: testDispositionFile,
+      lastUpdatedBy: null,
+    });
 
     expect(getByText('Status:')).toBeVisible();
     expect(getByText(/mock file status/i)).toBeVisible();
