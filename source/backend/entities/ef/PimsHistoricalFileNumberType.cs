@@ -7,21 +7,21 @@ using Microsoft.EntityFrameworkCore;
 namespace Pims.Dal.Entities;
 
 /// <summary>
-/// Describes the source system of the data (PAIMS, LIS, etc.)
+/// Code table to describe the type of historical property file number.
 /// </summary>
-[Table("PIMS_DATA_SOURCE_TYPE")]
-public partial class PimsDataSourceType
+[Table("PIMS_HISTORICAL_FILE_NUMBER_TYPE")]
+public partial class PimsHistoricalFileNumberType
 {
     /// <summary>
-    /// Code value of the source system of the data (PAIMS, LIS, etc.)
+    /// Code representing the type of historical file number.
     /// </summary>
     [Key]
-    [Column("DATA_SOURCE_TYPE_CODE")]
+    [Column("HISTORICAL_FILE_NUMBER_TYPE_CODE")]
     [StringLength(20)]
-    public string DataSourceTypeCode { get; set; }
+    public string HistoricalFileNumberTypeCode { get; set; }
 
     /// <summary>
-    /// Description of the source system of the data (PAIMS, LIS, etc.)
+    /// Description of the type of historical file number.
     /// </summary>
     [Required]
     [Column("DESCRIPTION")]
@@ -29,39 +29,51 @@ public partial class PimsDataSourceType
     public string Description { get; set; }
 
     /// <summary>
-    /// Indicates if the code is still in use
+    /// Indicates if the code is disabled.
     /// </summary>
     [Column("IS_DISABLED")]
     public bool IsDisabled { get; set; }
 
     /// <summary>
-    /// Defines the default display order of the descriptions
+    /// Force the display order of the codes.
     /// </summary>
     [Column("DISPLAY_ORDER")]
     public int? DisplayOrder { get; set; }
 
+    /// <summary>
+    /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o
+    /// </summary>
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }
 
+    /// <summary>
+    /// The date and time the record was created.
+    /// </summary>
     [Column("DB_CREATE_TIMESTAMP", TypeName = "datetime")]
     public DateTime DbCreateTimestamp { get; set; }
 
+    /// <summary>
+    /// The user or proxy account that created the record.
+    /// </summary>
     [Required]
     [Column("DB_CREATE_USERID")]
     [StringLength(30)]
     public string DbCreateUserid { get; set; }
 
+    /// <summary>
+    /// The date and time the record was created or last updated.
+    /// </summary>
     [Column("DB_LAST_UPDATE_TIMESTAMP", TypeName = "datetime")]
     public DateTime DbLastUpdateTimestamp { get; set; }
 
+    /// <summary>
+    /// The user or proxy account that created or last updated the record.
+    /// </summary>
     [Required]
     [Column("DB_LAST_UPDATE_USERID")]
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
 
-    [InverseProperty("DataSourceTypeCodeNavigation")]
+    [InverseProperty("HistoricalFileNumberTypeCodeNavigation")]
     public virtual ICollection<PimsHistoricalFileNumber> PimsHistoricalFileNumbers { get; set; } = new List<PimsHistoricalFileNumber>();
-
-    [InverseProperty("PropertyDataSourceTypeCodeNavigation")]
-    public virtual ICollection<PimsProperty> PimsProperties { get; set; } = new List<PimsProperty>();
 }
