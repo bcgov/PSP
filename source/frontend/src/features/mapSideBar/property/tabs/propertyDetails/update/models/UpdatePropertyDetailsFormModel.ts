@@ -248,6 +248,7 @@ export class UpdatePropertyDetailsFormModel {
       propertyContacts: null,
       surplusDeclarationType: null,
       surplusDeclarationComment: null,
+      historicalFileNumbers: null,
       surplusDeclarationDate: EpochIsoDateTime,
     };
   }

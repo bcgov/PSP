@@ -9,7 +9,7 @@ namespace Pims.Dal.Entities
     {
         #region Properties
         [NotMapped]
-        public override long Internal_Id { get => this.HistoricalFileNumberId; set => this.HistoricalFileNumberId = value; }
+        public override long Internal_Id { get => HistoricalFileNumberId; set => HistoricalFileNumberId = value; }
         #endregion
     }
 }

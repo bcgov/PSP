@@ -1,4 +1,3 @@
-
 using System.Collections.Generic;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -48,13 +47,13 @@ namespace Pims.Api.Areas.HistoricalNumber.Controllers
         [HttpGet("{propertyId}/historicalNumbers")]
         [HasPermission(Permissions.PropertyView)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(HistoricalNumberModel), 200)]
+        [ProducesResponseType(typeof(HistoricalFileNumberModel), 200)]
         [SwaggerOperation(Tags = new[] { "property" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetHistoricalNumbersForPropertyId(long propertyId)
         {
             var historicalNumbers = _propertyService.GetHistoricalNumbersForPropertyId(propertyId);
-            return new JsonResult(_mapper.Map<List<HistoricalNumberModel>>(historicalNumbers));
+            return new JsonResult(_mapper.Map<List<HistoricalFileNumberModel>>(historicalNumbers));
         }
         #endregion
     }
