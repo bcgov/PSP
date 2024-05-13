@@ -51,7 +51,6 @@ export const AddNotesFormModal = React.forwardRef<
               data-testid="note-field"
             ></TextArea>
           }
-          closeButton
           okButtonText="Save"
           cancelButtonText="Cancel"
           handleOk={() => {

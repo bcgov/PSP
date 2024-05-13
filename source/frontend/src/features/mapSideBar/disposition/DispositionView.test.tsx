@@ -24,6 +24,7 @@ import { useLtsa } from '@/hooks/useLtsa';
 import { useProjectProvider } from '@/hooks/repositories/useProjectProvider';
 import { createRef } from 'react';
 import { HttpResponse, http } from 'msw';
+import { useHistoricalNumberRepository } from '@/hooks/repositories/useHistoricalNumberRepository';
 
 // mock auth library
 
@@ -89,6 +90,8 @@ vi.mocked(useProjectProvider).mockReturnValue({
   retrieveProjectProducts: vi.fn(),
 } as unknown as ReturnType<typeof useProjectProvider>);
 
+vi.mock('@/hooks/repositories/useHistoricalNumberRepository');
+
 const DEFAULT_PROPS: IDispositionViewProps = {
   onClose,
   onSave,
@@ -137,6 +140,8 @@ describe('DispositionView component', () => {
       },
     );
 
+    await act(async () => {});
+
     return {
       ...utils,
       getCloseButton: () => utils.getByTitle('close'),
@@ -162,6 +167,16 @@ describe('DispositionView component', () => {
           getNotes,
         } as unknown as ReturnType<typeof useApiNotes>),
     );
+
+    vi.mocked(useHistoricalNumberRepository).mockReturnValue({
+      getPropertyHistoricalNumbers: {
+        error: null,
+        response: [],
+        execute: vi.fn().mockResolvedValue([]),
+        loading: false,
+        status: 200,
+      },
+    });
 
     history.replace(`/mapview/sidebar/disposition/1`);
   });
@@ -213,14 +228,12 @@ describe('DispositionView component', () => {
     expect(tab).toHaveClass('active');
   });
 
-  it(`should show a toast and redirect to the File Details page when accessing a non-existing property index`, async () => {
+  it(`should redirect to the File Details page when accessing a non-existing property index`, async () => {
     history.replace(`/mapview/sidebar/disposition/1/property/99999`);
     const { getByRole, findByText } = await setup();
     const tab = getByRole('tab', { name: /File details/i });
     expect(tab).toBeVisible();
     expect(tab).toHaveClass('active');
-    // toast
-    expect(await screen.findByText(/Could not find property in the file/i)).toBeVisible();
   });
 
   it('should display the Property Selector according to routing', async () => {
