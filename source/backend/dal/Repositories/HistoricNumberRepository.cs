@@ -44,10 +44,10 @@ namespace Pims.Dal.Repositories
             return historicalFileNumbers;
         }
 
-        public IList<PimsFileNumber> UpdateHistoricalFileNumbers(long propertyId, IEnumerable<PimsFileNumber> pimsHistoricalNumbers)
+        public IList<PimsHistoricalFileNumber> UpdateHistoricalFileNumbers(long propertyId, IEnumerable<PimsHistoricalFileNumber> pimsHistoricalNumbers)
         {
             using var scope = Logger.QueryScope();
-            Context.UpdateChild<PimsProperty, long, PimsFileNumber, long>(l => l.PimsFileNumbers, propertyId, pimsHistoricalNumbers.ToArray());
+            Context.UpdateChild<PimsProperty, long, PimsHistoricalFileNumber, long>(l => l.PimsHistoricalFileNumbers, propertyId, pimsHistoricalNumbers.ToArray());
             return GetAllByPropertyId(propertyId);
         }
         #endregion

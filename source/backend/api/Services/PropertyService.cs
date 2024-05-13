@@ -397,7 +397,7 @@ namespace Pims.Api.Services
             return _historicalNumberRepository.GetAllByPropertyId(propertyId);
         }
 
-        public IList<PimsFileNumber> UpdateHistoricalFileNumbers(long propertyId, IEnumerable<PimsFileNumber> pimsHistoricalNumbers)
+        public IList<PimsHistoricalFileNumber> UpdateHistoricalFileNumbers(long propertyId, IEnumerable<PimsHistoricalFileNumber> pimsHistoricalNumbers)
         {
 
             _logger.LogInformation("Updating historical numbers for property with id {id}", propertyId);

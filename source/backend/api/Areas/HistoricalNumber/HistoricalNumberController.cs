@@ -86,7 +86,7 @@ namespace Pims.Api.Areas.HistoricalNumber.Controllers
                 User.GetUsername(),
                 DateTime.Now);
 
-            var historicalEntities = _mapper.Map<IEnumerable<Dal.Entities.PimsFileNumber>>(historicalNumbers);
+            var historicalEntities = _mapper.Map<IEnumerable<Dal.Entities.PimsHistoricalFileNumber>>(historicalNumbers);
             var updatedEntities = _propertyService.UpdateHistoricalFileNumbers(propertyId, historicalEntities);
 
             return new JsonResult(_mapper.Map<IEnumerable<HistoricalFileNumberModel>>(updatedEntities));
