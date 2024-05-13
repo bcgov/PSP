@@ -388,7 +388,7 @@ namespace Pims.Api.Services
             }
         }
 
-        public IList<PimsFileNumber> GetHistoricalNumbersForPropertyId(long propertyId)
+        public IList<PimsHistoricalFileNumber> GetHistoricalNumbersForPropertyId(long propertyId)
         {
 
             _logger.LogInformation("Retrieving all historical numbers for property with id {id}", propertyId);
