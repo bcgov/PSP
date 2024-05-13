@@ -129,13 +129,13 @@ const columns: ColumnWithProps<ApiGen_Concepts_Lease>[] = [
       // Get unique file numbers from lease properties
       const fileNumbers: ApiGen_Concepts_HistoricalFileNumber[] = [];
       props.row.original.fileProperties?.forEach(fl => {
-        fl.property.fileNumbers?.forEach(number => {
-          if (numberTypes.includes(number.fileNumberTypeCode.id)) {
+        fl.property.historicalFileNumbers?.forEach(number => {
+          if (numberTypes.includes(number.historicalFileNumberTypeCode.id)) {
             if (
               !fileNumbers.find(
                 x =>
-                  x.fileNumber === number.fileNumber &&
-                  x.fileNumberTypeCode.id === number.fileNumberTypeCode.id,
+                  x.historicalFileNumber === number.historicalFileNumber &&
+                  x.historicalFileNumberTypeCode.id === number.historicalFileNumberTypeCode.id,
               )
             ) {
               fileNumbers.push(number);
@@ -146,7 +146,7 @@ const columns: ColumnWithProps<ApiGen_Concepts_Lease>[] = [
 
       // group numbers by type
       const numbersByType = fileNumbers.reduce((acc, number) => {
-        const type = number.fileNumberTypeCode.id;
+        const type = number.historicalFileNumberTypeCode.id;
         if (!acc[type]) {
           acc[type] = [];
         }
@@ -159,19 +159,19 @@ const columns: ColumnWithProps<ApiGen_Concepts_Lease>[] = [
       let otherNumbers = '';
       if (numbersByType[ApiGen_CodeTypes_HistoricalFileNumberTypes.LISNO.toString()]?.length) {
         lisNumbers = numbersByType[ApiGen_CodeTypes_HistoricalFileNumberTypes.LISNO.toString()]
-          .map(x => x.fileNumber)
+          .map(x => x.historicalFileNumber)
           .join(', ');
       }
 
       if (numbersByType[ApiGen_CodeTypes_HistoricalFileNumberTypes.PSNO.toString()]?.length) {
         psNumbers = numbersByType[ApiGen_CodeTypes_HistoricalFileNumberTypes.PSNO.toString()]
-          .map(x => x.fileNumber)
+          .map(x => x.historicalFileNumber)
           .join(', ');
       }
 
       if (numbersByType[ApiGen_CodeTypes_HistoricalFileNumberTypes.OTHER.toString()]?.length) {
         otherNumbers = numbersByType[ApiGen_CodeTypes_HistoricalFileNumberTypes.OTHER.toString()]
-          .map(x => x.fileNumber)
+          .map(x => x.historicalFileNumber)
           .join(', ');
       }
 

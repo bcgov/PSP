@@ -232,7 +232,7 @@ export class PropertyForm {
       notes: null,
       surplusDeclarationType: null,
       surplusDeclarationComment: null,
-      fileNumbers: null,
+      historicalFileNumbers: null,
       surplusDeclarationDate: EpochIsoDateTime,
     };
   }

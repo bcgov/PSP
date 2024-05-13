@@ -60,7 +60,7 @@ export interface ApiGen_Concepts_Property extends ApiGen_Base_BaseConcurrent {
   boundary: ApiGen_Concepts_Polygon | null;
   generalLocation: string | null;
   propertyContacts: ApiGen_Concepts_PropertyContact[] | null;
-  fileNumbers: ApiGen_Concepts_HistoricalFileNumber[] | null;
+  historicalFileNumbers: ApiGen_Concepts_HistoricalFileNumber[] | null;
   notes: string | null;
   surplusDeclarationType: ApiGen_Base_CodeType<string> | null;
   surplusDeclarationComment: string | null;

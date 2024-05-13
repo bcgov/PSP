@@ -14,8 +14,8 @@ const HistoricalNumberFieldView: React.FC<IHistoricalNumbersViewProps> = ({
   const uniqueNumbers = useMemo(() => {
     const flatNumberArray = historicalNumbers
       .filter(exists)
-      .sort(h => h.fileNumberTypeCode.displayOrder)
-      .map(h => `${h.fileNumber}[${h.fileNumberTypeCode.description}]`);
+      .sort(h => h.historicalFileNumberTypeCode.displayOrder)
+      .map(h => `${h.historicalFileNumber}[${h.historicalFileNumberTypeCode.description}]`);
 
     const uniqueNumberSet = new Set(flatNumberArray);
     return Array.from(uniqueNumberSet);

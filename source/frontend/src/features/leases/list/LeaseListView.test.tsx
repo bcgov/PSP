@@ -23,6 +23,7 @@ import {
 import { ILeaseFilter } from '..';
 import { LeaseListView } from './LeaseListView';
 import { ApiGen_CodeTypes_HistoricalFileNumberTypes } from '@/models/api/generated/ApiGen_CodeTypes_HistoricalFileNumberTypes';
+import { mockHistoricalFileNumber } from '@/mocks/historicalFileNumber.mock';
 
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: [] },
@@ -150,7 +151,7 @@ describe('Lease and License List View', () => {
               id: 1234,
               address: { ...getEmptyAddress(), streetAddress1: '123 mock st' },
               pin: 123,
-              fileNumbers: [],
+              historicalFileNumbers: [],
             },
           },
         ],
@@ -194,29 +195,15 @@ describe('Lease and License List View', () => {
               id: 123,
               address: { ...getEmptyAddress(), streetAddress1: '123 mock st' },
               pin: 123,
-              fileNumbers: [
-                {
-                  id: 1000,
-                  fileNumber: '0309-001',
-                  fileNumberTypeCode: {
-                    id: ApiGen_CodeTypes_HistoricalFileNumberTypes.LISNO.toString(),
-                    description: 'LIS #',
-                    isDisabled: false,
-                    displayOrder: 1,
-                  },
-                  propertyId: 123,
-                  property: null,
-                  otherFileNumberType: null,
-                  isDisabled: false,
-                  rowVersion: 1,
-                  appCreateTimestamp: '',
-                  appLastUpdateTimestamp: '',
-                  appLastUpdateUserid: '',
-                  appCreateUserid: '',
-                  appLastUpdateUserGuid: '',
-                  appCreateUserGuid: ''
-                },
-              ]
+              historicalFileNumbers: [
+                mockHistoricalFileNumber(
+                  1000,
+                  123,
+                  '0309-001',
+                  ApiGen_CodeTypes_HistoricalFileNumberTypes.LISNO.toString(),
+                  'LIS #',
+                ),
+              ],
             },
           },
         ],
@@ -260,29 +247,15 @@ describe('Lease and License List View', () => {
               id: 123,
               address: { ...getEmptyAddress(), streetAddress1: '123 mock st' },
               pin: 123,
-              fileNumbers: [
-                {
-                  id: 1000,
-                  fileNumber: '0309-000',
-                  fileNumberTypeCode: {
-                    id: ApiGen_CodeTypes_HistoricalFileNumberTypes.PSNO.toString(),
-                    description: 'PS #',
-                    isDisabled: false,
-                    displayOrder: 3,
-                  },
-                  propertyId: 123,
-                  property: null,
-                  otherFileNumberType: null,
-                  isDisabled: false,
-                  rowVersion: 1,
-                  appCreateTimestamp: '',
-                  appLastUpdateTimestamp: '',
-                  appLastUpdateUserid: '',
-                  appCreateUserid: '',
-                  appLastUpdateUserGuid: '',
-                  appCreateUserGuid: ''
-                },
-              ]
+              historicalFileNumbers: [
+                mockHistoricalFileNumber(
+                  1000,
+                  123,
+                  '0309-000',
+                  ApiGen_CodeTypes_HistoricalFileNumberTypes.PSNO.toString(),
+                  'PS #',
+                ),
+              ],
             },
           },
         ],
@@ -326,29 +299,16 @@ describe('Lease and License List View', () => {
               id: 123,
               address: { ...getEmptyAddress(), streetAddress1: '123 mock st' },
               pin: 123,
-              fileNumbers: [
-                {
-                  id: 1000,
-                  fileNumber: '0309-999',
-                  fileNumberTypeCode: {
-                    id: ApiGen_CodeTypes_HistoricalFileNumberTypes.OTHER.toString(),
-                    description: 'Other',
-                    isDisabled: false,
-                    displayOrder: 99,
-                  },
-                  propertyId: 123,
-                  property: null,
-                  otherFileNumberType: null,
-                  isDisabled: false,
-                  rowVersion: 1,
-                  appCreateTimestamp: '',
-                  appLastUpdateTimestamp: '',
-                  appLastUpdateUserid: '',
-                  appCreateUserid: '',
-                  appLastUpdateUserGuid: '',
-                  appCreateUserGuid: ''
-                },
-              ]
+              historicalFileNumbers: [
+                mockHistoricalFileNumber(
+                  1000,
+                  123,
+                  '0309-999',
+                  ApiGen_CodeTypes_HistoricalFileNumberTypes.OTHER.toString(),
+                  'Other',
+                  'OTHER',
+                ),
+              ],
             },
           },
         ],

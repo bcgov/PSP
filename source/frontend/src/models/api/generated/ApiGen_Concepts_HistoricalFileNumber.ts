@@ -11,8 +11,8 @@ export interface ApiGen_Concepts_HistoricalFileNumber extends ApiGen_Base_BaseAu
   id: number;
   propertyId: number;
   property: ApiGen_Concepts_Property | null;
-  fileNumberTypeCode: ApiGen_Base_CodeType<string> | null;
-  fileNumber: string | null;
-  otherFileNumberType: string | null;
+  historicalFileNumberTypeCode: ApiGen_Base_CodeType<string> | null;
+  historicalFileNumber: string | null;
+  otherHistFileNumberTypeCode: string | null;
   isDisabled: boolean | null;
 }
