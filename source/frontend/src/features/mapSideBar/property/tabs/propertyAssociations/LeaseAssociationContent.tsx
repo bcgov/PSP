@@ -40,12 +40,13 @@ const getFormattedTenants = (tenants: ApiGen_Concepts_LeaseTenant[]) => {
   const sortOrder = [
     { type: ApiGen_CodeTypes_LeaseTenantTypes.ASGN, order: 1 },
     { type: ApiGen_CodeTypes_LeaseTenantTypes.TEN, order: 2 },
-    { type: ApiGen_CodeTypes_LeaseTenantTypes.PMGR, order: 3 },
-    { type: ApiGen_CodeTypes_LeaseTenantTypes.REP, order: 4 },
-    { type: ApiGen_CodeTypes_LeaseTenantTypes.UNK, order: 5 },
+    { type: ApiGen_CodeTypes_LeaseTenantTypes.UNK, order: 3 },
   ];
+  const filteredTenants: ApiGen_Concepts_LeaseTenant[] = tenants.filter(t =>
+    sortOrder.map(t => t.type.toString()).includes(t.tenantTypeCode.id),
+  );
   const sortedTenants: ApiGen_Concepts_LeaseTenant[] = sortBy(
-    tenants,
+    filteredTenants,
     tenant => sortOrder.find(s => s.type === tenant.tenantTypeCode.id)?.order,
   );
   const tenantTypeCode = sortedTenants[0]?.tenantTypeCode?.id;
