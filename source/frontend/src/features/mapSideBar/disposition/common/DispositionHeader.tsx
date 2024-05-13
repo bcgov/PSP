@@ -8,6 +8,9 @@ import { Api_LastUpdatedBy } from '@/models/api/File';
 import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
 import { prettyFormatUTCDate } from '@/utils/dateUtils';
 
+import HistoricalNumbersContainer from '../../shared/header/HistoricalNumberContainer';
+import HistoricalNumberFieldView from '../../shared/header/HistoricalNumberSectionView';
+
 export interface IDispositionHeaderProps {
   dispositionFile?: ApiGen_Concepts_DispositionFile;
 
@@ -20,6 +23,8 @@ export const DispositionHeader: React.FunctionComponent<
   const leftColumnWidth = '7';
   const leftColumnLabel = '3';
 
+  const propertyIds = dispositionFile?.fileProperties?.map(fp => fp.propertyId) ?? [];
+
   return (
     <StyledRow className="no-gutters">
       <Col xs={leftColumnWidth}>
@@ -30,6 +35,7 @@ export const DispositionHeader: React.FunctionComponent<
             </HeaderField>
           </Col>
         </Row>
+        <HistoricalNumbersContainer propertyIds={propertyIds} View={HistoricalNumberFieldView} />
       </Col>
       <Col xs="5">
         <Row className="no-gutters">
