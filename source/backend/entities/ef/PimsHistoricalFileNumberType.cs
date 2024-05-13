@@ -7,21 +7,21 @@ using Microsoft.EntityFrameworkCore;
 namespace Pims.Dal.Entities;
 
 /// <summary>
-/// Code table to describe the type of property file number.
+/// Code table to describe the type of historical property file number.
 /// </summary>
-[Table("PIMS_FILE_NUMBER_TYPE")]
-public partial class PimsFileNumberType
+[Table("PIMS_HISTORICAL_FILE_NUMBER_TYPE")]
+public partial class PimsHistoricalFileNumberType
 {
     /// <summary>
-    /// Code representing the type of file number.
+    /// Code representing the type of historical file number.
     /// </summary>
     [Key]
-    [Column("FILE_NUMBER_TYPE_CODE")]
+    [Column("HISTORICAL_FILE_NUMBER_TYPE_CODE")]
     [StringLength(20)]
-    public string FileNumberTypeCode { get; set; }
+    public string HistoricalFileNumberTypeCode { get; set; }
 
     /// <summary>
-    /// Description of the type of file number.
+    /// Description of the type of historical file number.
     /// </summary>
     [Required]
     [Column("DESCRIPTION")]
@@ -74,6 +74,6 @@ public partial class PimsFileNumberType
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
 
-    [InverseProperty("FileNumberTypeCodeNavigation")]
-    public virtual ICollection<PimsFileNumber> PimsFileNumbers { get; set; } = new List<PimsFileNumber>();
+    [InverseProperty("HistoricalFileNumberTypeCodeNavigation")]
+    public virtual ICollection<PimsHistoricalFileNumber> PimsHistoricalFileNumbers { get; set; } = new List<PimsHistoricalFileNumber>();
 }

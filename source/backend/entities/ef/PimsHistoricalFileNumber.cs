@@ -7,19 +7,20 @@ using Microsoft.EntityFrameworkCore;
 namespace Pims.Dal.Entities;
 
 /// <summary>
-/// Table containing the file numbers associated with a property.
+/// Table containing the historical file numbers associated with a property.
 /// </summary>
-[Table("PIMS_FILE_NUMBER")]
-[Index("FileNumber", Name = "FILNUM_FILE_NUMBER_IDX")]
-[Index("PropertyId", Name = "FILNUM_PROPERTY_ID_IDX")]
-public partial class PimsFileNumber
+[Table("PIMS_HISTORICAL_FILE_NUMBER")]
+[Index("DataSourceTypeCode", Name = "HFLNUM_DATA_SOURCE_TYPE_CODE_IDX")]
+[Index("HistoricalFileNumber", Name = "HFLNUM_HISTORICAL_FILE_NUMBER_IDX")]
+[Index("PropertyId", Name = "HFLNUM_PROPERTY_ID_IDX")]
+public partial class PimsHistoricalFileNumber
 {
     /// <summary>
     /// Generated surrogate primary key
     /// </summary>
     [Key]
-    [Column("FILE_NUMBER_ID")]
-    public long FileNumberId { get; set; }
+    [Column("HISTORICAL_FILE_NUMBER_ID")]
+    public long HistoricalFileNumberId { get; set; }
 
     /// <summary>
     /// Foreign key to the PIMS_PROPERTY table.
@@ -28,27 +29,34 @@ public partial class PimsFileNumber
     public long PropertyId { get; set; }
 
     /// <summary>
-    /// Foreign key describing the file number type.
+    /// Foreign key indicating the source of the data.
     /// </summary>
-    [Required]
-    [Column("FILE_NUMBER_TYPE_CODE")]
+    [Column("DATA_SOURCE_TYPE_CODE")]
     [StringLength(20)]
-    public string FileNumberTypeCode { get; set; }
+    public string DataSourceTypeCode { get; set; }
 
     /// <summary>
-    /// The file number value.
+    /// Foreign key describing the historical file number type.
     /// </summary>
     [Required]
-    [Column("FILE_NUMBER")]
-    [StringLength(500)]
-    public string FileNumber { get; set; }
+    [Column("HISTORICAL_FILE_NUMBER_TYPE_CODE")]
+    [StringLength(20)]
+    public string HistoricalFileNumberTypeCode { get; set; }
 
     /// <summary>
-    /// Description of file number type that&apos;s not currently listed.
+    /// The historical file number value.
     /// </summary>
-    [Column("OTHER_FILE_NUMBER_TYPE")]
+    [Required]
+    [Column("HISTORICAL_FILE_NUMBER")]
+    [StringLength(500)]
+    public string HistoricalFileNumber { get; set; }
+
+    /// <summary>
+    /// Description of the historical file number type that&apos;s not currently listed.
+    /// </summary>
+    [Column("OTHER_HIST_FILE_NUMBER_TYPE_CODE")]
     [StringLength(200)]
-    public string OtherFileNumberType { get; set; }
+    public string OtherHistFileNumberTypeCode { get; set; }
 
     /// <summary>
     /// Indicates if the record is disabled.
@@ -146,11 +154,15 @@ public partial class PimsFileNumber
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
 
-    [ForeignKey("FileNumberTypeCode")]
-    [InverseProperty("PimsFileNumbers")]
-    public virtual PimsFileNumberType FileNumberTypeCodeNavigation { get; set; }
+    [ForeignKey("DataSourceTypeCode")]
+    [InverseProperty("PimsHistoricalFileNumbers")]
+    public virtual PimsDataSourceType DataSourceTypeCodeNavigation { get; set; }
+
+    [ForeignKey("HistoricalFileNumberTypeCode")]
+    [InverseProperty("PimsHistoricalFileNumbers")]
+    public virtual PimsHistoricalFileNumberType HistoricalFileNumberTypeCodeNavigation { get; set; }
 
     [ForeignKey("PropertyId")]
-    [InverseProperty("PimsFileNumbers")]
+    [InverseProperty("PimsHistoricalFileNumbers")]
     public virtual PimsProperty Property { get; set; }
 }

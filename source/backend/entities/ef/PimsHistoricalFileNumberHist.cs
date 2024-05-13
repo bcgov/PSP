@@ -6,13 +6,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
-[Table("PIMS_FILE_NUMBER_HIST")]
-[Index("FileNumberHistId", "EndDateHist", Name = "PIMS_FILNUM_H_UK", IsUnique = true)]
-public partial class PimsFileNumberHist
+[Table("PIMS_HISTORICAL_FILE_NUMBER_HIST")]
+[Index("HistoricalFileNumberHistId", "EndDateHist", Name = "PIMS_HFLNUM_H_UK", IsUnique = true)]
+public partial class PimsHistoricalFileNumberHist
 {
     [Key]
-    [Column("_FILE_NUMBER_HIST_ID")]
-    public long FileNumberHistId { get; set; }
+    [Column("_HISTORICAL_FILE_NUMBER_HIST_ID")]
+    public long HistoricalFileNumberHistId { get; set; }
 
     [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
     public DateTime EffectiveDateHist { get; set; }
@@ -20,25 +20,29 @@ public partial class PimsFileNumberHist
     [Column("END_DATE_HIST", TypeName = "datetime")]
     public DateTime? EndDateHist { get; set; }
 
-    [Column("FILE_NUMBER_ID")]
-    public long FileNumberId { get; set; }
+    [Column("HISTORICAL_FILE_NUMBER_ID")]
+    public long HistoricalFileNumberId { get; set; }
 
     [Column("PROPERTY_ID")]
     public long PropertyId { get; set; }
 
-    [Required]
-    [Column("FILE_NUMBER_TYPE_CODE")]
+    [Column("DATA_SOURCE_TYPE_CODE")]
     [StringLength(20)]
-    public string FileNumberTypeCode { get; set; }
+    public string DataSourceTypeCode { get; set; }
 
     [Required]
-    [Column("FILE_NUMBER")]
-    [StringLength(500)]
-    public string FileNumber { get; set; }
+    [Column("HISTORICAL_FILE_NUMBER_TYPE_CODE")]
+    [StringLength(20)]
+    public string HistoricalFileNumberTypeCode { get; set; }
 
-    [Column("OTHER_FILE_NUMBER_TYPE")]
+    [Required]
+    [Column("HISTORICAL_FILE_NUMBER")]
+    [StringLength(500)]
+    public string HistoricalFileNumber { get; set; }
+
+    [Column("OTHER_HIST_FILE_NUMBER_TYPE_CODE")]
     [StringLength(200)]
-    public string OtherFileNumberType { get; set; }
+    public string OtherHistFileNumberTypeCode { get; set; }
 
     [Column("IS_DISABLED")]
     public bool? IsDisabled { get; set; }
