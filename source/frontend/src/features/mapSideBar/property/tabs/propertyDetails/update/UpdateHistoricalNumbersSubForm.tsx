@@ -32,13 +32,13 @@ export const UpdateHistoricalNumbersSubForm: React.FC<IUpdateHistoricalNumbersSu
         <>
           {values.historicalNumbers?.map((hn, index) => (
             <React.Fragment key={`property-historical-${index}`}>
-              <Row className="py-3" data-testid={`historicalNumberRow[${index}]`}>
+              <Row className="py-3" data-testid={`historical-number-row-${index}`}>
                 <Col xs="auto" xl="5">
                   <Input field={`historicalNumbers.${index}.historicalNumber`} />
                 </Col>
                 <Col xs="auto" xl="5" className="pl-0">
                   <Select
-                    data-testid="select-historical-type"
+                    data-testid={`select-historical-type-${index}`}
                     placeholder="Select type..."
                     field={`historicalNumbers.${index}.historicalNumberType`}
                     options={historicalNumberTypes}
@@ -54,7 +54,7 @@ export const UpdateHistoricalNumbersSubForm: React.FC<IUpdateHistoricalNumbersSu
                 </Col>
                 <Col xs="auto" xl="2" className="pl-0">
                   <RemoveButton
-                    dataTestId={`historicalNumbers.${index}.remove-button`}
+                    dataTestId={`historical-number-remove-button-${index}`}
                     onRemove={() => {
                       arrayHelpers.remove(index);
                     }}

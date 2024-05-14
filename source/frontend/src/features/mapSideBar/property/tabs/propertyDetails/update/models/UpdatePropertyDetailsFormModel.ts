@@ -117,6 +117,10 @@ export class HistoricalNumberForm {
       ...getEmptyBaseAudit(this.rowVersion),
     };
   }
+
+  isEmpty(): boolean {
+    return this.historicalNumber.trim() === '' && this.historicalNumberType.trim() === '';
+  }
 }
 
 export class UpdatePropertyDetailsFormModel {

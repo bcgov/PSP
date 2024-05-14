@@ -39,12 +39,14 @@ export const UpdatePropertyDetailsYupSchema = Yup.object().shape({
   generalLocation: Yup.string().max(2000, 'General location must be less than 2000 characters'),
   historicalNumbers: Yup.array().of(
     Yup.object().shape({
-      historicalNumber: Yup.string(),
-      historicalNumberType: Yup.string(),
+      historicalNumber: Yup.string()
+        .required('Historical File # is required')
+        .max(500, 'Historical File # must be at most ${max} characters'),
+      historicalNumberType: Yup.string().required('Historical File # type is required'),
       otherHistoricalNumberType: Yup.string().when('historicalNumberType', {
         is: (historicalType: string) => exists(historicalType) && historicalType === 'OTHER',
         then: Yup.string()
-          .required('Other Description required')
+          .required('Other Description is required')
           .max(200, 'Other Description must be at most ${max} characters'),
         otherwise: Yup.string().nullable(),
       }),

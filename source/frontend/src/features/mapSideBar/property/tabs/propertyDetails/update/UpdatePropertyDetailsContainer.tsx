@@ -122,7 +122,9 @@ export const UpdatePropertyDetailsContainer = React.forwardRef<
 
         // update list of historical numbers for this property
         if (isValidId(response?.id)) {
-          const apiHistoricalNumbers = (values.historicalNumbers ?? []).map(hn => hn.toApi());
+          const apiHistoricalNumbers = (values.historicalNumbers ?? [])
+            .filter(hn => !hn.isEmpty())
+            .map(hn => hn.toApi());
           await executeUpdateHistoricalNumbers(apiProperty.id, apiHistoricalNumbers);
 
           formikHelpers.resetForm();

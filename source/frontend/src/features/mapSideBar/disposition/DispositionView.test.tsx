@@ -13,18 +13,18 @@ import { server } from '@/mocks/msw/server';
 import { getUserMock } from '@/mocks/user.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { prettyFormatUTCDate } from '@/utils';
-import { act, cleanup, render, RenderOptions, userEvent, screen } from '@/utils/test-utils';
+import { RenderOptions, act, cleanup, render, userEvent } from '@/utils/test-utils';
 
-import DispositionView, { IDispositionViewProps } from './DispositionView';
 import { useApiProperties } from '@/hooks/pims-api/useApiProperties';
+import { useHistoricalNumberRepository } from '@/hooks/repositories/useHistoricalNumberRepository';
+import { useProjectProvider } from '@/hooks/repositories/useProjectProvider';
+import { useLtsa } from '@/hooks/useLtsa';
 import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
-import { vi } from 'vitest';
-import { useLtsa } from '@/hooks/useLtsa';
-import { useProjectProvider } from '@/hooks/repositories/useProjectProvider';
-import { createRef } from 'react';
 import { HttpResponse, http } from 'msw';
-import { useHistoricalNumberRepository } from '@/hooks/repositories/useHistoricalNumberRepository';
+import { createRef } from 'react';
+import { vi } from 'vitest';
+import DispositionView, { IDispositionViewProps } from './DispositionView';
 
 // mock auth library
 
@@ -170,6 +170,13 @@ describe('DispositionView component', () => {
 
     vi.mocked(useHistoricalNumberRepository).mockReturnValue({
       getPropertyHistoricalNumbers: {
+        error: null,
+        response: [],
+        execute: vi.fn().mockResolvedValue([]),
+        loading: false,
+        status: 200,
+      },
+      updatePropertyHistoricalNumbers: {
         error: null,
         response: [],
         execute: vi.fn().mockResolvedValue([]),
