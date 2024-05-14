@@ -6,17 +6,17 @@ exports[`DispositionHeader component > renders as expected when no data is provi
     class="Toastify"
   />
   <div />
-  .c0 {
+  .c1 {
+  font-size: 0.87em;
+  line-height: 1.9;
+}
+
+.c0 {
   margin-top: 0.5rem;
   margin-bottom: 1.5rem;
   border-bottom-style: solid;
   border-bottom-color: grey;
   border-bottom-width: 0.1rem;
-}
-
-.c1 {
-  font-size: 0.87em;
-  line-height: 1.9;
 }
 
 <div
@@ -37,16 +37,16 @@ exports[`DispositionHeader component > renders as expected when no data is provi
             <div
               class="pr-0 text-left col-3"
             >
-              <label>
-                File:
-              </label>
+              <strong>
+                <label>
+                  File:
+                </label>
+              </strong>
             </div>
             <div
               class="pl-1 text-left col-9"
             >
-              <strong>
-                D-
-              </strong>
+              D-
             </div>
           </div>
         </div>
@@ -57,14 +57,16 @@ exports[`DispositionHeader component > renders as expected when no data is provi
         <div
           class="pr-0 text-left col-3"
         >
-          <label>
-            Historical File #:
-          </label>
+          <strong>
+            <label>
+              Historical File #:
+            </label>
+          </strong>
         </div>
         <div
           class="pl-1 text-left col-9"
         >
-          <strong />
+          <div />
         </div>
       </div>
     </div>
@@ -77,46 +79,56 @@ exports[`DispositionHeader component > renders as expected when no data is provi
         <div
           class="text-right col"
         >
-          <span
-            class="c1"
+          <div
+            class="no-gutters row"
           >
-            Created: 
-            <strong />
-             by 
-            <span
-              class="tooltip-icon"
-              data-testid="tooltip-icon-userNameTooltip"
-              id="userNameTooltip"
+            <div
+              class="text-right col"
             >
-              <strong>
-                USER
-              </strong>
-            </span>
-          </span>
-        </div>
-      </div>
-      <div
-        class="no-gutters row"
-      >
-        <div
-          class="text-right col"
-        >
-          <span
-            class="c1"
+              <span
+                class="c1"
+              >
+                <strong>
+                  Created: 
+                </strong>
+                 by 
+                <span
+                  class="tooltip-icon"
+                  data-testid="tooltip-icon-userNameTooltip"
+                  id="userNameTooltip"
+                >
+                  <strong>
+                    USER
+                  </strong>
+                </span>
+              </span>
+            </div>
+          </div>
+          <div
+            class="no-gutters row"
           >
-            Last updated: 
-            <strong />
-             by 
-            <span
-              class="tooltip-icon"
-              data-testid="tooltip-icon-userNameTooltip"
-              id="userNameTooltip"
+            <div
+              class="text-right col"
             >
-              <strong>
-                USER
-              </strong>
-            </span>
-          </span>
+              <span
+                class="c1"
+              >
+                <strong>
+                  Updated: 
+                </strong>
+                 by 
+                <span
+                  class="tooltip-icon"
+                  data-testid="tooltip-icon-userNameTooltip"
+                  id="userNameTooltip"
+                >
+                  <strong>
+                    USER
+                  </strong>
+                </span>
+              </span>
+            </div>
+          </div>
         </div>
       </div>
       <div
@@ -131,15 +143,15 @@ exports[`DispositionHeader component > renders as expected when no data is provi
             <div
               class="pr-0 text-left col-auto"
             >
-              <label>
-                Status:
-              </label>
+              <strong>
+                <label>
+                  Status:
+                </label>
+              </strong>
             </div>
             <div
               class="pl-1 text-left col-auto"
-            >
-              <strong />
-            </div>
+            />
           </div>
         </div>
       </div>

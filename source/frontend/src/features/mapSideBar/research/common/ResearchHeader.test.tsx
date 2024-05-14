@@ -117,8 +117,12 @@ describe('ResearchHeader component', () => {
     expect(getByText(testResearchFile.fileNumber as string)).toBeVisible();
     expect(getByText(testResearchFile.fileName as string)).toBeVisible();
 
-    expect(getByText(prettyFormatUTCDate(testResearchFile.appCreateTimestamp))).toBeVisible();
-    expect(getByText(prettyFormatUTCDate(testResearchFile.appLastUpdateTimestamp))).toBeVisible();
+    expect(
+      getByText(new RegExp(prettyFormatUTCDate(testResearchFile.appCreateTimestamp))),
+    ).toBeVisible();
+    expect(
+      getByText(new RegExp(prettyFormatUTCDate(testResearchFile.appLastUpdateTimestamp))),
+    ).toBeVisible();
   });
 
   it('renders as expected when provided a different last-updated information', async () => {
@@ -139,7 +143,9 @@ describe('ResearchHeader component', () => {
     expect(getByText(testResearchFile.fileNumber as string)).toBeVisible();
     expect(getByText(testResearchFile.fileName as string)).toBeVisible();
 
-    expect(getByText(prettyFormatUTCDate(testResearchFile.appCreateTimestamp))).toBeVisible();
-    expect(getByText(prettyFormatUTCDate(lastUpdateTimeStamp))).toBeVisible();
+    expect(
+      getByText(new RegExp(prettyFormatUTCDate(testResearchFile.appCreateTimestamp))),
+    ).toBeVisible();
+    expect(getByText(new RegExp(prettyFormatUTCDate(lastUpdateTimeStamp)))).toBeVisible();
   });
 });

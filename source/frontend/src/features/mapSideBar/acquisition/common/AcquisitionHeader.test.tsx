@@ -54,9 +54,11 @@ describe('AcquisitionHeader component', () => {
     await act(async () => {});
 
     expect(getByText('1-12345-01 - Test ACQ File')).toBeVisible();
-    expect(getByText(prettyFormatUTCDate(testAcquisitionFile.appCreateTimestamp))).toBeVisible();
     expect(
-      getByText(prettyFormatUTCDate(testAcquisitionFile.appLastUpdateTimestamp)),
+      getByText(new RegExp(prettyFormatUTCDate(testAcquisitionFile.appCreateTimestamp))),
+    ).toBeVisible();
+    expect(
+      getByText(new RegExp(prettyFormatUTCDate(testAcquisitionFile.appLastUpdateTimestamp))),
     ).toBeVisible();
   });
 
@@ -124,7 +126,9 @@ describe('AcquisitionHeader component', () => {
     await act(async () => {});
 
     expect(getByText('1-12345-01 - Test ACQ File')).toBeVisible();
-    expect(getByText(prettyFormatUTCDate(testAcquisitionFile.appCreateTimestamp))).toBeVisible();
-    expect(getByText(prettyFormatUTCDate(testDate))).toBeVisible();
+    expect(
+      getByText(new RegExp(prettyFormatUTCDate(testAcquisitionFile.appCreateTimestamp))),
+    ).toBeVisible();
+    expect(getByText(new RegExp(prettyFormatUTCDate(testDate)))).toBeVisible();
   });
 });

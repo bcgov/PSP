@@ -125,7 +125,7 @@ export const FinancialCodeListView: React.FC = () => {
 
 const StyledAddButton = styled(Button)`
   &.btn.btn-primary {
-    background-color: ${props => props.theme.bcTokens.iconColorSuccess};
+    background-color: ${props => props.theme.bcTokens.iconsColorSuccess};
   }
 `;
 

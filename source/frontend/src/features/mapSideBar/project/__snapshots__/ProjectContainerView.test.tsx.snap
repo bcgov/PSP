@@ -118,16 +118,16 @@ exports[`ProjectSummaryView component > matches snapshot 1`] = `
               <div
                 class="pr-0 text-left col-3"
               >
-                <label>
-                  Project:
-                </label>
+                <strong>
+                  <label>
+                    Project:
+                  </label>
+                </strong>
               </div>
               <div
                 class="pl-1 text-left col-9"
               >
-                <strong>
-                  771 Project Cool A
-                </strong>
+                771 Project Cool A
               </div>
             </div>
           </div>
@@ -144,16 +144,16 @@ exports[`ProjectSummaryView component > matches snapshot 1`] = `
               <div
                 class="pr-0 text-left col-3"
               >
-                <label>
-                  MoTI Region:
-                </label>
+                <strong>
+                  <label>
+                    MoTI Region:
+                  </label>
+                </strong>
               </div>
               <div
                 class="pl-1 text-left col-9"
               >
-                <strong>
-                  South Coast Region
-                </strong>
+                South Coast Region
               </div>
             </div>
           </div>
@@ -226,16 +226,16 @@ exports[`ProjectSummaryView component > matches snapshot 1`] = `
               <div
                 class="pr-0 text-left col-auto"
               >
-                <label>
-                  Status:
-                </label>
+                <strong>
+                  <label>
+                    Status:
+                  </label>
+                </strong>
               </div>
               <div
                 class="pl-1 text-left col-auto"
               >
-                <strong>
-                  Active (AC)
-                </strong>
+                Active (AC)
               </div>
             </div>
           </div>

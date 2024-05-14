@@ -46,6 +46,8 @@ const Index = () => {
   );
 };
 
+console.log(bcTokens);
+
 const InnerComponent = ({ tenant }: { tenant: ITenantConfig2 }) => {
   const refresh = useRefreshSiteminder();
   return (
