@@ -28,11 +28,11 @@ export const useHistoricalNumberRepository = () => {
   const updatePropertyHistoricalNumbers = useApiRequestWrapper<
     (
       propertyId: number,
-      historicalNumbers: ApiGen_Concepts_HistoricalNumber[],
-    ) => Promise<AxiosResponse<ApiGen_Concepts_HistoricalNumber[], any>>
+      historicalNumbers: ApiGen_Concepts_HistoricalFileNumber[],
+    ) => Promise<AxiosResponse<ApiGen_Concepts_HistoricalFileNumber[], any>>
   >({
     requestFunction: useCallback(
-      async (propertyId: number, historicalNumbers: ApiGen_Concepts_HistoricalNumber[]) =>
+      async (propertyId: number, historicalNumbers: ApiGen_Concepts_HistoricalFileNumber[]) =>
         await putHistoricalNumbersApi(propertyId, historicalNumbers),
       [putHistoricalNumbersApi],
     ),

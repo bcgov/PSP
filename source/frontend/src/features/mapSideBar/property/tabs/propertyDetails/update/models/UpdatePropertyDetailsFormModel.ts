@@ -4,7 +4,7 @@ import { isEmpty } from 'lodash';
 import { ApiGen_CodeTypes_PropertyPPHStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_PropertyPPHStatusTypes';
 import { ApiGen_Concepts_Address } from '@/models/api/generated/ApiGen_Concepts_Address';
 import { ApiGen_Concepts_CodeType } from '@/models/api/generated/ApiGen_Concepts_CodeType';
-import { ApiGen_Concepts_HistoricalNumber } from '@/models/api/generated/ApiGen_Concepts_HistoricalNumber';
+import { ApiGen_Concepts_HistoricalFileNumber } from '@/models/api/generated/ApiGen_Concepts_HistoricalFileNumber';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
@@ -92,27 +92,28 @@ export class HistoricalNumberForm {
   isDisabled = false;
   rowVersion: number | null = null;
 
-  static fromApi(base: ApiGen_Concepts_HistoricalNumber): HistoricalNumberForm {
+  static fromApi(base: ApiGen_Concepts_HistoricalFileNumber): HistoricalNumberForm {
     const historicalNumberForm = new HistoricalNumberForm();
     historicalNumberForm.id = base.id;
     historicalNumberForm.propertyId = base.propertyId;
-    historicalNumberForm.historicalNumber = base.historicalNumber ?? '';
-    historicalNumberForm.historicalNumberType = fromTypeCode(base.historicalNumberType) ?? '';
-    historicalNumberForm.otherHistoricalNumberType = base.otherHistoricalNumberType ?? '';
+    historicalNumberForm.historicalNumber = base.historicalFileNumber ?? '';
+    historicalNumberForm.historicalNumberType =
+      fromTypeCode(base.historicalFileNumberTypeCode) ?? '';
+    historicalNumberForm.otherHistoricalNumberType = base.otherHistFileNumberTypeCode ?? '';
     historicalNumberForm.isDisabled = base.isDisabled ?? false;
     historicalNumberForm.rowVersion = base.rowVersion ?? null;
 
     return historicalNumberForm;
   }
 
-  toApi(): ApiGen_Concepts_HistoricalNumber {
+  toApi(): ApiGen_Concepts_HistoricalFileNumber {
     return {
       id: this.id ?? 0,
       propertyId: this.propertyId,
       property: null,
-      historicalNumber: emptyStringtoNullable(this.historicalNumber),
-      historicalNumberType: toTypeCodeNullable(this.historicalNumberType),
-      otherHistoricalNumberType: emptyStringtoNullable(this.otherHistoricalNumberType),
+      historicalFileNumber: emptyStringtoNullable(this.historicalNumber),
+      historicalFileNumberTypeCode: toTypeCodeNullable(this.historicalNumberType),
+      otherHistFileNumberTypeCode: emptyStringtoNullable(this.otherHistoricalNumberType),
       isDisabled: this.isDisabled,
       ...getEmptyBaseAudit(this.rowVersion),
     };
