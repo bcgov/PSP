@@ -1,5 +1,4 @@
-import axios, { AxiosResponse } from 'axios';
-import MockAdapter from 'axios-mock-adapter';
+import { AxiosResponse } from 'axios';
 import { FormikProps } from 'formik';
 import { createMemoryHistory } from 'history';
 import { createRef } from 'react';
@@ -16,15 +15,18 @@ import { ApiGen_Concepts_CodeType } from '@/models/api/generated/ApiGen_Concepts
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { getEmptyBaseAudit, getEmptyProperty } from '@/models/defaultInitializers';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { act, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
+import { RenderOptions, act, render, userEvent } from '@/utils/test-utils';
 
-import { UpdatePropertyDetailsFormModel } from './models';
+import { IResponseWrapper } from '@/hooks/util/useApiRequestWrapper';
+import { server } from '@/mocks/msw/server';
+import { getUserMock } from '@/mocks/user.mock';
+import { LatLngLiteral } from 'leaflet';
+import { HttpResponse, http } from 'msw';
 import {
   IUpdatePropertyDetailsContainerProps,
   UpdatePropertyDetailsContainer,
 } from './UpdatePropertyDetailsContainer';
-import { IResponseWrapper } from '@/hooks/util/useApiRequestWrapper';
-import { LatLngLiteral } from 'leaflet';
+import { UpdatePropertyDetailsFormModel } from './models';
 
 const history = createMemoryHistory();
 const storeState = {
@@ -38,7 +40,6 @@ const DEFAULT_PROPS: IUpdatePropertyDetailsContainerProps = {
   onSuccess,
 };
 
-const mockAxios = new MockAdapter(axios);
 const fakeProperty: ApiGen_Concepts_Property = {
   ...getEmptyProperty(),
   id: 205,
@@ -261,7 +262,11 @@ describe('UpdatePropertyDetailsContainer component', () => {
   };
 
   beforeEach(() => {
-    mockAxios.onGet(new RegExp('users/info/*')).reply(200, {});
+    server.use(
+      http.get('/api/users/info/*', () => HttpResponse.json(getUserMock())),
+      http.get('/api/properties/:id/historicalNumbers', () => HttpResponse.json([])),
+      http.put('/api/properties/:id/historicalNumbers', () => HttpResponse.json([])),
+    );
   });
 
   afterEach(() => {
@@ -270,12 +275,14 @@ describe('UpdatePropertyDetailsContainer component', () => {
 
   it('renders as expected', async () => {
     const { asFragment, findByTitle } = setup();
+    await act(async () => {});
     expect(await findByTitle('Down by the River')).toBeInTheDocument();
     expect(asFragment()).toMatchSnapshot();
   });
 
   it('saves the form with minimal data', async () => {
     const { findByTitle, formikRef } = setup();
+    await act(async () => {});
     expect(await findByTitle('Down by the River')).toBeInTheDocument();
     await act(async () => formikRef.current?.submitForm() as Promise<void>);
 
@@ -295,46 +302,44 @@ describe('UpdatePropertyDetailsContainer component', () => {
       }),
     });
 
-    expect(updateProperty).toBeCalledWith(expectedValues);
-    expect(onSuccess).toBeCalled();
+    expect(updateProperty).toHaveBeenCalledWith(expectedValues);
+    expect(onSuccess).toHaveBeenCalled();
   });
 
   it('saves the form with updated values', async () => {
     const { findByTitle, formikRef } = setup();
+    await act(async () => {});
     expect(await findByTitle('Down by the River')).toBeInTheDocument();
 
     const addressLine1 = document.querySelector(
       `input[name='address.streetAddress1']`,
     ) as HTMLElement;
-    await act(async () => {
-      await act(async () => userEvent.clear(addressLine1));
-      await act(async () => userEvent.paste(addressLine1, '123 Mock St'));
-      formikRef.current?.submitForm();
-    });
+    await act(async () => userEvent.clear(addressLine1));
+    await act(async () => userEvent.paste(addressLine1, '123 Mock St'));
+    await act(async () => formikRef.current?.submitForm());
 
-    await waitFor(() => {
-      const expectedValues = expect.objectContaining<Partial<ApiGen_Concepts_Property>>({
-        address: expect.objectContaining<Partial<ApiGen_Concepts_Address>>({
-          streetAddress1: '123 Mock St',
-          streetAddress2: fakeProperty.address?.streetAddress2,
-          streetAddress3: fakeProperty.address?.streetAddress3,
-          municipality: fakeProperty.address?.municipality,
-          postal: fakeProperty.address?.postal,
-          country: expect.objectContaining<Partial<ApiGen_Concepts_CodeType>>({
-            id: fakeProperty.address!.country!.id,
-          }),
-          province: expect.objectContaining<Partial<ApiGen_Concepts_CodeType>>({
-            id: fakeProperty.address!.province!.id,
-          }),
+    const expectedValues = expect.objectContaining<Partial<ApiGen_Concepts_Property>>({
+      address: expect.objectContaining<Partial<ApiGen_Concepts_Address>>({
+        streetAddress1: '123 Mock St',
+        streetAddress2: fakeProperty.address?.streetAddress2,
+        streetAddress3: fakeProperty.address?.streetAddress3,
+        municipality: fakeProperty.address?.municipality,
+        postal: fakeProperty.address?.postal,
+        country: expect.objectContaining<Partial<ApiGen_Concepts_CodeType>>({
+          id: fakeProperty.address!.country!.id,
         }),
-      });
-      expect(updateProperty).toBeCalledWith(expectedValues);
-      expect(onSuccess).toBeCalled();
+        province: expect.objectContaining<Partial<ApiGen_Concepts_CodeType>>({
+          id: fakeProperty.address!.province!.id,
+        }),
+      }),
     });
+    expect(updateProperty).toHaveBeenCalledWith(expectedValues);
+    expect(onSuccess).toHaveBeenCalled();
   });
 
   it('sends no address when all fields are cleared', async () => {
     const { findByTitle, formikRef } = setup();
+    await act(async () => {});
     expect(await findByTitle('Down by the River')).toBeInTheDocument();
 
     const addressLine1 = document.querySelector(
@@ -351,22 +356,18 @@ describe('UpdatePropertyDetailsContainer component', () => {
     ) as HTMLElement;
     const postal = document.querySelector(`input[name='address.postal']`) as HTMLElement;
 
-    await act(async () => {
-      await act(async () => userEvent.clear(addressLine1));
-      await act(async () => userEvent.clear(addressLine2));
-      await act(async () => userEvent.clear(addressLine3));
-      await act(async () => userEvent.clear(municipality));
-      await act(async () => userEvent.clear(postal));
-      formikRef.current?.submitForm() as Promise<void>;
+    await act(async () => userEvent.clear(addressLine1));
+    await act(async () => userEvent.clear(addressLine2));
+    await act(async () => userEvent.clear(addressLine3));
+    await act(async () => userEvent.clear(municipality));
+    await act(async () => userEvent.clear(postal));
+    await act(async () => formikRef.current?.submitForm());
+
+    const expectedValues = expect.objectContaining<Partial<ApiGen_Concepts_Property>>({
+      address: null,
     });
 
-    await waitFor(() => {
-      const expectedValues = expect.objectContaining<Partial<ApiGen_Concepts_Property>>({
-        address: null,
-      });
-
-      expect(updateProperty).toBeCalledWith(expectedValues);
-      expect(onSuccess).toBeCalled();
-    });
+    expect(updateProperty).toHaveBeenCalledWith(expectedValues);
+    expect(onSuccess).toHaveBeenCalled();
   });
 });
