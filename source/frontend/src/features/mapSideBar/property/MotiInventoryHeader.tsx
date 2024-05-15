@@ -39,11 +39,18 @@ export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderPr
     return false;
   }, [apiProperty]);
 
-  console.log(props.composedProperty);
+  let latitude: number | null = null;
+  let longitude: number | null = null;
 
-  const hasLocation = exists(apiProperty?.longitude) && exists(apiProperty?.latitude);
+  if (exists(apiProperty)) {
+    latitude = apiProperty.latitude ?? null;
+    longitude = apiProperty.longitude ?? null;
+  } else if (exists(property)) {
+    latitude = property.latitude ?? null;
+    longitude = property.longitude ?? null;
+  }
 
-  debugger;
+  const hasLocation = exists(longitude) && exists(latitude);
 
   return (
     <>
@@ -91,20 +98,18 @@ export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderPr
           )}
         </Col>
         <Col xs="auto" className="d-flex p-0 align-items-center justify-content-end">
-          <TooltipWrapper tooltipId="property-zoom-map" tooltip="Zoom Map">
-            <StyledIconButton
-              variant="info"
-              disabled={!props.onZoom && !hasLocation}
-              title="Zoom Map"
-              onClick={() =>
-                props?.onZoom &&
-                hasLocation &&
-                props?.onZoom(apiProperty.latitude, apiProperty.longitude)
-              }
-            >
-              <FaSearchPlus size={22} />
-            </StyledIconButton>
-          </TooltipWrapper>
+          {hasLocation && (
+            <TooltipWrapper tooltipId="property-zoom-map" tooltip="Zoom Map">
+              <StyledIconButton
+                variant="info"
+                disabled={!props.onZoom}
+                title="Zoom Map"
+                onClick={() => props?.onZoom && props?.onZoom(latitude, longitude)}
+              >
+                <FaSearchPlus size={22} />
+              </StyledIconButton>
+            </TooltipWrapper>
+          )}
         </Col>
       </Row>
       <StyledDivider />
