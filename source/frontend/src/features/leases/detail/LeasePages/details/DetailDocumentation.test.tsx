@@ -122,16 +122,4 @@ describe('DetailDocumentation component', () => {
     });
     expect(getByText('documentation Reference')).toBeVisible();
   });
-
-  it('renders the PS # name', () => {
-    const {
-      component: { getByDisplayValue },
-    } = setup({
-      lease: {
-        ...getEmptyLease(),
-        psFileNo: 'A PS File No',
-      },
-    });
-    expect(getByDisplayValue('A PS File No')).toBeVisible();
-  });
 });

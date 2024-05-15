@@ -4,13 +4,14 @@ using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Dal.Entities;
+using Pims.Dal.Helpers.Extensions;
 
 namespace Pims.Dal.Repositories
 {
     /// <summary>
     /// HistoricalNumberRepository class, provides a service layer to interact with property Historic Numbers within the datasource.
     /// </summary>
-    public class HistoricalNumberRepository : BaseRepository<PimsFileNumber>, IHistoricalNumberRepository
+    public class HistoricalNumberRepository : BaseRepository<PimsHistoricalFileNumber>, IHistoricalNumberRepository
     {
         #region Constructors
 
@@ -31,16 +32,23 @@ namespace Pims.Dal.Repositories
         /// <summary>
         /// Get all historical file numbers by property id.
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="propertyId"></param>
         /// <returns></returns>
-        public IList<PimsFileNumber> GetAllByPropertyId(long propertyId)
+        public IList<PimsHistoricalFileNumber> GetAllByPropertyId(long propertyId)
         {
-            var fileNumbers = Context.PimsFileNumbers.AsNoTracking()
-                .Include(p => p.FileNumberTypeCodeNavigation)
+            var historicalFileNumbers = Context.PimsHistoricalFileNumbers.AsNoTracking()
+                .Include(p => p.HistoricalFileNumberTypeCodeNavigation)
                 .Where(p => p.PropertyId == propertyId)
-                .OrderBy(p => p.FileNumberTypeCodeNavigation.DisplayOrder)
+                .OrderBy(p => p.HistoricalFileNumberTypeCodeNavigation.DisplayOrder)
                 .ToList();
-            return fileNumbers;
+            return historicalFileNumbers;
+        }
+
+        public IList<PimsHistoricalFileNumber> UpdateHistoricalFileNumbers(long propertyId, IEnumerable<PimsHistoricalFileNumber> pimsHistoricalNumbers)
+        {
+            using var scope = Logger.QueryScope();
+            Context.UpdateChild<PimsProperty, long, PimsHistoricalFileNumber, long>(l => l.PimsHistoricalFileNumbers, propertyId, pimsHistoricalNumbers.ToArray());
+            return GetAllByPropertyId(propertyId);
         }
         #endregion
     }

@@ -39,6 +39,14 @@ exports[`Lease Search Results Table > matches snapshot 1`] = `
   border-radius: 0.4rem;
 }
 
+.c4 label {
+  display: inline-block;
+}
+
+.c4 label span {
+  font-weight: bold;
+}
+
 <div
     class="table"
     data-testid="leasesTable"
@@ -50,7 +58,7 @@ exports[`Lease Search Results Table > matches snapshot 1`] = `
       <div
         class="tr"
         role="row"
-        style="display: flex; flex: 1 0 auto; min-width: 180px;"
+        style="display: flex; flex: 1 0 auto; min-width: 210px;"
       >
         <div
           class="th"
@@ -102,7 +110,7 @@ exports[`Lease Search Results Table > matches snapshot 1`] = `
           class="th"
           colspan="1"
           role="columnheader"
-          style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+          style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
         >
           <div
             class="sortable-column"
@@ -223,6 +231,18 @@ exports[`Lease Search Results Table > matches snapshot 1`] = `
           <div
             class="sortable-column"
           >
+            Historical File #
+          </div>
+        </div>
+        <div
+          class="th"
+          colspan="1"
+          role="columnheader"
+          style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+        >
+          <div
+            class="sortable-column"
+          >
             Status
             <div
               class="c0"
@@ -272,7 +292,7 @@ exports[`Lease Search Results Table > matches snapshot 1`] = `
         <div
           class="tr"
           role="row"
-          style="display: flex; flex: 1 0 auto; min-width: 180px;"
+          style="display: flex; flex: 1 0 auto; min-width: 210px;"
         >
           <div
             class="td clickable"
@@ -289,7 +309,7 @@ exports[`Lease Search Results Table > matches snapshot 1`] = `
           <div
             class="td"
             role="cell"
-            style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
             title=""
           >
             <span />
@@ -366,6 +386,16 @@ exports[`Lease Search Results Table > matches snapshot 1`] = `
             role="cell"
             style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
             title=""
+          >
+            <div
+              class="c4"
+            />
+          </div>
+          <div
+            class="td"
+            role="cell"
+            style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            title=""
           />
         </div>
       </div>
@@ -375,7 +405,7 @@ exports[`Lease Search Results Table > matches snapshot 1`] = `
         <div
           class="tr"
           role="row"
-          style="display: flex; flex: 1 0 auto; min-width: 180px;"
+          style="display: flex; flex: 1 0 auto; min-width: 210px;"
         >
           <div
             class="td clickable"
@@ -392,7 +422,7 @@ exports[`Lease Search Results Table > matches snapshot 1`] = `
           <div
             class="td"
             role="cell"
-            style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
             title=""
           >
             <span />
@@ -463,6 +493,16 @@ exports[`Lease Search Results Table > matches snapshot 1`] = `
                 </div>
               </div>
             </div>
+          </div>
+          <div
+            class="td"
+            role="cell"
+            style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            title=""
+          >
+            <div
+              class="c4"
+            />
           </div>
           <div
             class="td"

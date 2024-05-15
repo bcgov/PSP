@@ -1,6 +1,5 @@
 import { getIn, useFormikContext } from 'formik';
 
-import { Input } from '@/components/common/form';
 import { YesNoSelect } from '@/components/common/form/YesNoSelect';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
@@ -36,12 +35,6 @@ export const DetailDocumentation: React.FunctionComponent<
         </SectionField>
         <SectionField label="Document location" labelWidth="3">
           {documentationReference}
-        </SectionField>
-        <SectionField label="LIS #" labelWidth="3">
-          <Input disabled={disabled} field={withNameSpace(nameSpace, 'tfaFileNumber')} />
-        </SectionField>
-        <SectionField label="PS #" labelWidth="3">
-          <Input disabled={disabled} field={withNameSpace(nameSpace, 'psFileNo')} />
         </SectionField>
         <SectionField label="Lease notes" labelWidth="3">
           {note}

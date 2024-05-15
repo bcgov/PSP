@@ -137,6 +137,22 @@ exports[`DispositionView component > renders as expected 1`] = `
             </div>
           </div>
         </div>
+        <div
+          class="row"
+        >
+          <div
+            class="pr-0 text-left col-3"
+          >
+            <label>
+              Historical File #:
+            </label>
+          </div>
+          <div
+            class="pl-1 text-left col-9"
+          >
+            <strong />
+          </div>
+        </div>
       </div>
       <div
         class="col-5"
@@ -323,6 +339,11 @@ exports[`DispositionView component > renders as expected 1`] = `
   font-weight: bold;
 }
 
+.c19 {
+  padding: 0 0.4rem;
+  display: block;
+}
+
 .c4 {
   text-align: left;
   padding: 0px;
@@ -382,11 +403,6 @@ exports[`DispositionView component > renders as expected 1`] = `
 .c7 {
   font-size: 1.4rem;
   line-height: 2.2rem;
-}
-
-.c19 {
-  padding: 0 0.4rem;
-  display: block;
 }
 
 .c10 {

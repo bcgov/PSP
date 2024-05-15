@@ -1,11 +1,11 @@
 import { useMemo } from 'react';
 
 import { HeaderField } from '@/components/common/HeaderField/HeaderField';
-import { ApiGen_Concepts_HistoricalNumber } from '@/models/api/generated/ApiGen_Concepts_HistoricalNumber';
+import { ApiGen_Concepts_HistoricalFileNumber } from '@/models/api/generated/ApiGen_Concepts_HistoricalFileNumber';
 import { exists } from '@/utils';
 
 export interface IHistoricalNumbersViewProps {
-  historicalNumbers: ApiGen_Concepts_HistoricalNumber[];
+  historicalNumbers: ApiGen_Concepts_HistoricalFileNumber[];
 }
 
 const HistoricalNumberFieldView: React.FC<IHistoricalNumbersViewProps> = ({
@@ -14,8 +14,8 @@ const HistoricalNumberFieldView: React.FC<IHistoricalNumbersViewProps> = ({
   const uniqueNumbers = useMemo(() => {
     const flatNumberArray = historicalNumbers
       .filter(exists)
-      .sort(h => h.historicalNumberType.displayOrder)
-      .map(h => `${h.historicalNumber}[${h.historicalNumberType.description}]`);
+      .sort(h => h.historicalFileNumberTypeCode.displayOrder)
+      .map(h => `${h.historicalFileNumber}[${h.historicalFileNumberTypeCode.description}]`);
 
     const uniqueNumberSet = new Set(flatNumberArray);
     return Array.from(uniqueNumberSet);

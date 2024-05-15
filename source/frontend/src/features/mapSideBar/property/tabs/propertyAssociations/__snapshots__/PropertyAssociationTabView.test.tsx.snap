@@ -641,7 +641,7 @@ exports[`PropertyAssociationTabView component > renders as expected when provide
                 <div
                   class="sortable-column"
                 >
-                  File name
+                  Tenant name
                 </div>
               </div>
               <div
@@ -665,7 +665,7 @@ exports[`PropertyAssociationTabView component > renders as expected when provide
                 <div
                   class="sortable-column"
                 >
-                  Created date
+                  Expiry date
                 </div>
               </div>
               <div
@@ -712,7 +712,7 @@ exports[`PropertyAssociationTabView component > renders as expected when provide
                   style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                   title=""
                 >
-                  -
+                  <p />
                 </div>
                 <div
                   class="td"
@@ -735,9 +735,7 @@ exports[`PropertyAssociationTabView component > renders as expected when provide
                   role="cell"
                   style="box-sizing: border-box; flex: 80 0 auto; min-width: 30px; width: 80px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                   title=""
-                >
-                  May 13, 2022
-                </div>
+                />
                 <div
                   class="td"
                   role="cell"
