@@ -48,5 +48,7 @@ namespace Pims.Api.Services
         void UpdateLocation(PimsProperty acquisitionProperty, ref PimsProperty propertyToUpdate, IEnumerable<UserOverrideCode> overrideCodes);
 
         IList<PimsHistoricalFileNumber> GetHistoricalNumbersForPropertyId(long propertyId);
+
+        IList<PimsHistoricalFileNumber> UpdateHistoricalFileNumbers(long propertyId, IEnumerable<PimsHistoricalFileNumber> pimsHistoricalNumbers);
     }
 }

@@ -27,6 +27,7 @@ import {
   PropertyTenureFormModel,
   UpdatePropertyDetailsFormModel,
 } from './models';
+import UpdateHistoricalNumbersSubForm from './UpdateHistoricalNumbersSubForm';
 
 export interface IUpdatePropertyDetailsFormProps {
   formikProps: FormikProps<UpdatePropertyDetailsFormModel>;
@@ -176,6 +177,9 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<
         </SectionField>
       </Section>
       <Section header="Property Attributes">
+        <SectionField label="Historical File #">
+          <UpdateHistoricalNumbersSubForm propertyId={values?.id ?? 0} />
+        </SectionField>
         <SectionField label="Legal Description">
           <TextArea field="landLegalDescription" />
         </SectionField>

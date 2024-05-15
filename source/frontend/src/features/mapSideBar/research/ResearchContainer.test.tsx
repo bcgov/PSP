@@ -16,8 +16,6 @@ import { act, render, RenderOptions, waitForElementToBeRemoved } from '@/utils/t
 import { SideBarContextProvider, TypedFile } from '../context/sidebarContext';
 import ResearchContainer, { IResearchContainerProps } from './ResearchContainer';
 import ResearchView from './ResearchView';
-import { useHistoricalNumberRepository } from '@/hooks/repositories/useHistoricalNumberRepository';
-import { ApiGen_Concepts_HistoricalNumber } from '@/models/api/generated/ApiGen_Concepts_HistoricalNumber';
 
 const history = createMemoryHistory();
 const mockAxios = new MockAdapter(axios);

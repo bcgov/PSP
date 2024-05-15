@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { Claims } from '@/constants';
@@ -13,7 +13,12 @@ import LtsaTabView from '@/features/mapSideBar/property/tabs/ltsa/LtsaTabView';
 import PropertyAssociationTabView from '@/features/mapSideBar/property/tabs/propertyAssociations/PropertyAssociationTabView';
 import { PropertyDetailsTabView } from '@/features/mapSideBar/property/tabs/propertyDetails/detail/PropertyDetailsTabView';
 import ComposedPropertyState from '@/hooks/repositories/useComposedProperties';
+import { useLeaseRepository } from '@/hooks/repositories/useLeaseRepository';
+import { useLeaseTenantRepository } from '@/hooks/repositories/useLeaseTenantRepository';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import { ApiGen_Concepts_Association } from '@/models/api/generated/ApiGen_Concepts_Association';
+import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
+import { ApiGen_Concepts_LeaseTenant } from '@/models/api/generated/ApiGen_Concepts_LeaseTenant';
 import { isValidId } from '@/utils';
 
 import { PropertyManagementTabView } from './tabs/propertyDetailsManagement/detail/PropertyManagementTabView';
@@ -21,6 +26,36 @@ import { PropertyManagementTabView } from './tabs/propertyDetailsManagement/deta
 export interface IPropertyContainerProps {
   composedPropertyState: ComposedPropertyState;
 }
+
+export interface LeaseAssociationInfo {
+  leaseDetails: ApiGen_Concepts_Lease[];
+  leaseTenants: ApiGen_Concepts_LeaseTenant[];
+  loading: boolean;
+}
+
+export const getLeaseInfo = async (
+  leasesAssociations: ApiGen_Concepts_Association[],
+  getLease: (leaseId: number) => Promise<ApiGen_Concepts_Lease>,
+  getLeaseTenants: (leaseId: number) => Promise<ApiGen_Concepts_LeaseTenant[]>,
+  setLeaseAssociationInfo: (info) => void,
+) => {
+  if (!leasesAssociations) return;
+  setLeaseAssociationInfo({ leaseDetails: [], leaseTenants: [], loading: true });
+  const leaseDetailPromises = leasesAssociations?.map(leaseAssociation =>
+    getLease(leaseAssociation.id),
+  );
+  const leaseTenantPromises = leasesAssociations?.map(leaseAssociation =>
+    getLeaseTenants(leaseAssociation.id),
+  );
+
+  const leaseDetails = (await Promise.all(leaseDetailPromises)).flat();
+  const leaseTenants = (await Promise.all(leaseTenantPromises)).flat();
+  setLeaseAssociationInfo({
+    leaseDetails: leaseDetails,
+    leaseTenants: leaseTenants,
+    loading: false,
+  });
+};
 
 /**
  * container responsible for logic related to map sidebar display. Synchronizes the state of the parcel detail forms with the corresponding query parameters (push/pull).
@@ -30,6 +65,26 @@ export const PropertyContainer: React.FunctionComponent<
 > = ({ composedPropertyState }) => {
   const showPropertyInfoTab = isValidId(composedPropertyState?.id);
   const { hasClaim } = useKeycloakWrapper();
+  const { getLease } = useLeaseRepository();
+  const { getLeaseTenants } = useLeaseTenantRepository();
+  const [LeaseAssociationInfo, setLeaseAssociationInfo] = useState<LeaseAssociationInfo>({
+    leaseDetails: [],
+    leaseTenants: [],
+    loading: false,
+  });
+
+  const leaseAssociations =
+    composedPropertyState?.propertyAssociationWrapper?.response?.leaseAssociations;
+  useMemo(
+    () =>
+      getLeaseInfo(
+        leaseAssociations,
+        getLease.execute,
+        getLeaseTenants.execute,
+        setLeaseAssociationInfo,
+      ),
+    [setLeaseAssociationInfo, leaseAssociations, getLeaseTenants.execute, getLease.execute],
+  );
 
   const tabViews: TabInventoryView[] = [];
 
@@ -93,6 +148,8 @@ export const PropertyContainer: React.FunctionComponent<
         <PropertyAssociationTabView
           isLoading={composedPropertyState.propertyAssociationWrapper!.loading}
           associations={composedPropertyState.propertyAssociationWrapper?.response}
+          associatedLeases={LeaseAssociationInfo?.leaseDetails ?? []}
+          associatedLeaseTenants={LeaseAssociationInfo?.leaseTenants ?? []}
         />
       ),
       key: InventoryTabNames.pims,
@@ -125,7 +182,7 @@ export const PropertyContainer: React.FunctionComponent<
   const activeTab = Object.values(InventoryTabNames).find(t => t === params.tab) ?? defaultTab;
   return (
     <InventoryTabs
-      loading={composedPropertyState.composedLoading}
+      loading={composedPropertyState.composedLoading ?? LeaseAssociationInfo.loading ?? false}
       tabViews={tabViews}
       defaultTabKey={defaultTab}
       activeTab={activeTab}

@@ -10,5 +10,7 @@ namespace Pims.Dal.Repositories
     public interface IHistoricalNumberRepository : IRepository<PimsHistoricalFileNumber>
     {
         IList<PimsHistoricalFileNumber> GetAllByPropertyId(long propertyId);
+
+        IList<PimsHistoricalFileNumber> UpdateHistoricalFileNumbers(long propertyId, IEnumerable<PimsHistoricalFileNumber> pimsHistoricalNumbers);
     }
 }

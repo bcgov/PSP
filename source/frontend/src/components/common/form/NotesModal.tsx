@@ -49,7 +49,7 @@ export const NotesModal: FunctionComponent<PropsWithChildren<INotesModalProps>> 
           <>
             {notesLabel}
             <TextArea field={fieldWithNameSpace} data-testid="note-field"></TextArea>
-            Would you like to save thse notes?
+            Would you like to save these notes?
           </>
         }
         okButtonText="Yes"

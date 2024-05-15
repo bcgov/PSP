@@ -189,62 +189,6 @@ exports[`DetailDocumentation component > renders a complete lease as expected 1`
           <label
             class="c3"
           >
-            LIS #:
-          </label>
-        </div>
-        <div
-          class="c4 text-left col"
-        >
-          <div
-            class="input form-group"
-          >
-            <input
-              class="form-control"
-              id="input-tfaFileNumber"
-              name="tfaFileNumber"
-              title="333"
-              value="333"
-            />
-          </div>
-        </div>
-      </div>
-      <div
-        class="pb-2 row"
-      >
-        <div
-          class="pr-0 text-left col-3"
-        >
-          <label
-            class="c3"
-          >
-            PS #:
-          </label>
-        </div>
-        <div
-          class="c4 text-left col"
-        >
-          <div
-            class="input form-group"
-          >
-            <input
-              class="form-control"
-              id="input-psFileNo"
-              name="psFileNo"
-              title="444"
-              value="444"
-            />
-          </div>
-        </div>
-      </div>
-      <div
-        class="pb-2 row"
-      >
-        <div
-          class="pr-0 text-left col-3"
-        >
-          <label
-            class="c3"
-          >
             Lease notes:
           </label>
         </div>
@@ -438,60 +382,6 @@ exports[`DetailDocumentation component > renders minimally as expected 1`] = `
         <div
           class="c4 text-left col"
         />
-      </div>
-      <div
-        class="pb-2 row"
-      >
-        <div
-          class="pr-0 text-left col-3"
-        >
-          <label
-            class="c3"
-          >
-            LIS #:
-          </label>
-        </div>
-        <div
-          class="c4 text-left col"
-        >
-          <div
-            class="input form-group"
-          >
-            <input
-              class="form-control"
-              id="input-tfaFileNumber"
-              name="tfaFileNumber"
-              value=""
-            />
-          </div>
-        </div>
-      </div>
-      <div
-        class="pb-2 row"
-      >
-        <div
-          class="pr-0 text-left col-3"
-        >
-          <label
-            class="c3"
-          >
-            PS #:
-          </label>
-        </div>
-        <div
-          class="c4 text-left col"
-        >
-          <div
-            class="input form-group"
-          >
-            <input
-              class="form-control"
-              id="input-psFileNo"
-              name="psFileNo"
-              value=""
-            />
-          </div>
-        </div>
       </div>
       <div
         class="pb-2 row"

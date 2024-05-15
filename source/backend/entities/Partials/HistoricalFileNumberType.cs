@@ -7,13 +7,24 @@ namespace Pims.Dal.Entities
     /// </summary>
     public partial class PimsHistoricalFileNumberType : ITypeEntity<string>
     {
-        #region Properties
-
         /// <summary>
-        /// get/set - Primary key to identify File Number type.
+        /// get/set - Primary key to identify the File Number type.
         /// </summary>
         [NotMapped]
         public string Id { get => HistoricalFileNumberTypeCode; set => HistoricalFileNumberTypeCode = value; }
-        #endregion
+
+        /// <summary>
+        /// Create a new instance of a PimsFileNumberType class.
+        /// </summary>
+        /// <param name="id"></param>
+        public PimsHistoricalFileNumberType(string id)
+            : this()
+        {
+            Id = id;
+        }
+
+        public PimsHistoricalFileNumberType()
+        {
+        }
     }
 }

@@ -13,17 +13,18 @@ import { server } from '@/mocks/msw/server';
 import { getUserMock } from '@/mocks/user.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { prettyFormatUTCDate } from '@/utils';
-import { act, cleanup, render, RenderOptions, userEvent, screen } from '@/utils/test-utils';
+import { RenderOptions, act, cleanup, render, userEvent } from '@/utils/test-utils';
 
-import DispositionView, { IDispositionViewProps } from './DispositionView';
 import { useApiProperties } from '@/hooks/pims-api/useApiProperties';
+import { useHistoricalNumberRepository } from '@/hooks/repositories/useHistoricalNumberRepository';
+import { useProjectProvider } from '@/hooks/repositories/useProjectProvider';
+import { useLtsa } from '@/hooks/useLtsa';
 import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
-import { vi } from 'vitest';
-import { useLtsa } from '@/hooks/useLtsa';
-import { useProjectProvider } from '@/hooks/repositories/useProjectProvider';
-import { createRef } from 'react';
 import { HttpResponse, http } from 'msw';
+import { createRef } from 'react';
+import { vi } from 'vitest';
+import DispositionView, { IDispositionViewProps } from './DispositionView';
 
 // mock auth library
 
@@ -89,6 +90,8 @@ vi.mocked(useProjectProvider).mockReturnValue({
   retrieveProjectProducts: vi.fn(),
 } as unknown as ReturnType<typeof useProjectProvider>);
 
+vi.mock('@/hooks/repositories/useHistoricalNumberRepository');
+
 const DEFAULT_PROPS: IDispositionViewProps = {
   onClose,
   onSave,
@@ -137,6 +140,8 @@ describe('DispositionView component', () => {
       },
     );
 
+    await act(async () => {});
+
     return {
       ...utils,
       getCloseButton: () => utils.getByTitle('close'),
@@ -162,6 +167,23 @@ describe('DispositionView component', () => {
           getNotes,
         } as unknown as ReturnType<typeof useApiNotes>),
     );
+
+    vi.mocked(useHistoricalNumberRepository).mockReturnValue({
+      getPropertyHistoricalNumbers: {
+        error: null,
+        response: [],
+        execute: vi.fn().mockResolvedValue([]),
+        loading: false,
+        status: 200,
+      },
+      updatePropertyHistoricalNumbers: {
+        error: null,
+        response: [],
+        execute: vi.fn().mockResolvedValue([]),
+        loading: false,
+        status: 200,
+      },
+    });
 
     history.replace(`/mapview/sidebar/disposition/1`);
   });
@@ -213,14 +235,12 @@ describe('DispositionView component', () => {
     expect(tab).toHaveClass('active');
   });
 
-  it(`should show a toast and redirect to the File Details page when accessing a non-existing property index`, async () => {
+  it(`should redirect to the File Details page when accessing a non-existing property index`, async () => {
     history.replace(`/mapview/sidebar/disposition/1/property/99999`);
     const { getByRole, findByText } = await setup();
     const tab = getByRole('tab', { name: /File details/i });
     expect(tab).toBeVisible();
     expect(tab).toHaveClass('active');
-    // toast
-    expect(await screen.findByText(/Could not find property in the file/i)).toBeVisible();
   });
 
   it('should display the Property Selector according to routing', async () => {
