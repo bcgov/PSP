@@ -258,7 +258,7 @@ namespace Pims.Api.Controllers
         /// </summary>
         [HttpGet("storage/{mayanDocumentId}/file/{documentFileId}/pages/{documentFilePageId}")]
         [HasPermission(Permissions.DocumentView)]
-        [ProducesResponseType(typeof(FileContentResult), 200)]
+        [ProducesResponseType(typeof(FileStreamResult), 200)]
         [SwaggerOperation(Tags = new[] { "storage-documents" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
         public async Task<FileStreamResult> DownloadFilePageImage(long mayanDocumentId, long documentFileId, long documentFilePageId)

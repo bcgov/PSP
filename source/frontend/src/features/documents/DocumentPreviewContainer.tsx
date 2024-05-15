@@ -11,9 +11,10 @@ import { IDocumentPreviewViewProps } from './DocumentPreviewView';
 import { createFileDownload } from './DownloadDocumentButton';
 import { useDocumentProvider } from './hooks/useDocumentProvider';
 
-export interface LoadedPages extends ApiGen_Mayan_FilePage {
+export interface LoadedPage {
   loadedDocumentImageDataUrl?: string;
-  error: string;
+  error?: string;
+  mayanPage: ApiGen_Mayan_FilePage;
 }
 
 export interface IDocumentPreviewContainerProps {
@@ -23,7 +24,7 @@ export interface IDocumentPreviewContainerProps {
 
 export const DocumentPreviewContainer: FC<
   React.PropsWithChildren<IDocumentPreviewContainerProps>
-> = ({ View, createFileUrl }) => {
+> = ({ View, createFileUrl = URL.createObjectURL }) => {
   const { showDocumentPreview, previewDocumentId, setShowDocumentPreview, setPreviewDocumentId } =
     useContext(DocumentViewerContext);
   const { setModalContent, setDisplayModal } = useContext(ModalContext);
@@ -35,13 +36,18 @@ export const DocumentPreviewContainer: FC<
     retrieveDocumentDetailLoading,
     getDocumentFilePageListLoading,
   } = useDocumentProvider();
-  const [documentPages, setDocumentPages] = useState<LoadedPages[]>([]);
+  const [documentPages, setDocumentPages] = useState<LoadedPage[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(0);
 
-  const loadDocumentPageImage = useCallback(
-    async (documentId: number, documentFileId: number, documentFilePageId: number) => {
+  //Load a document page from mayan as a dataUrl (that can be supplied to an <img>)
+  const loadDocumentPageImageUrl = useCallback(
+    async (
+      documentId: number,
+      documentFileId: number,
+      documentFilePageId: number,
+    ): Promise<string> => {
       //todo: handle image failure
-      return (createFileUrl ? createFileUrl : URL.createObjectURL)(
+      return createFileUrl(
         await downloadDocumentFilePageImage(documentId, documentFileId, documentFilePageId),
       );
     },
@@ -61,6 +67,8 @@ export const DocumentPreviewContainer: FC<
       data?.payload?.datetime_created &&
       moment(data.payload.datetime_created).add(1, 'minutes').isAfter(moment())
     ) {
+      // Use case for document preview is a user trying to understand what the contents of a document are.
+      // A user should not need to know the contents of a document they just uploaded. Also mayan likely need at least a minute to process the majority of the pages.
       setModalContent({
         title: 'Document Still Processing',
         message:
@@ -92,14 +100,8 @@ export const DocumentPreviewContainer: FC<
 
       //todo: handle various doc failures.
       if (pages?.length > 0) {
-        const documentPageImage = await loadDocumentPageImage(
-          previewDocumentId,
-          data.payload.file_latest.id,
-          pages[0].id,
-        );
-        const lightboxPages = pages.map(page => ({ ...page } as LoadedPages));
-        lightboxPages[0].loadedDocumentImageDataUrl = documentPageImage;
-        setDocumentPages(lightboxPages);
+        const documentPages = pages.map(page => ({ mayanPage: page } as LoadedPage));
+        setDocumentPages(documentPages);
       } else {
         setModalContent({
           title: 'Document Preview Error',
@@ -116,7 +118,6 @@ export const DocumentPreviewContainer: FC<
     }
   }, [
     getDocumentFilePageList,
-    loadDocumentPageImage,
     previewDocumentId,
     resetDocumentPreview,
     retrieveDocumentDetail,
@@ -131,10 +132,14 @@ export const DocumentPreviewContainer: FC<
   }, [previewDocumentId, loadPagesForDocumentId]);
 
   useEffect(() => {
-    const page = documentPages[currentPage + 1];
+    const page = documentPages[currentPage];
     // lazy load the next page, but do not replace lazy loaded data.
     if (previewDocumentId && page && !page.loadedDocumentImageDataUrl) {
-      loadDocumentPageImage(previewDocumentId, page.document_file_id, page.id)
+      loadDocumentPageImageUrl(
+        previewDocumentId,
+        page.mayanPage.document_file_id,
+        page.mayanPage.id,
+      )
         .then(imageUrl => {
           page.loadedDocumentImageDataUrl = imageUrl;
         })
@@ -143,7 +148,7 @@ export const DocumentPreviewContainer: FC<
           page.error = e.message;
         });
     }
-  }, [currentPage, documentPages, loadDocumentPageImage, previewDocumentId]);
+  }, [currentPage, documentPages, loadDocumentPageImageUrl, previewDocumentId]);
   return (
     <>
       <LoadingBackdrop

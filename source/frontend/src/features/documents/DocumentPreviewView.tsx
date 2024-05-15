@@ -4,13 +4,13 @@ import { GrDocumentMissing } from 'react-icons/gr';
 import Lightbox from 'yet-another-react-lightbox';
 import { Captions, Counter, Download, Fullscreen, Zoom } from 'yet-another-react-lightbox/plugins';
 
-import { LoadedPages } from './DocumentPreviewContainer';
+import { LoadedPage } from './DocumentPreviewContainer';
 
 export interface IDocumentPreviewViewProps {
   currentPage: number;
   setCurrentPage: (page: number) => void;
   showDocumentPreview: boolean;
-  pages: LoadedPages[];
+  pages: LoadedPage[];
   resetDocumentPreview: () => void;
   handleDownload: () => void;
 }
@@ -32,6 +32,8 @@ export const DocumentPreviewView: React.FunctionComponent<IDocumentPreviewViewPr
       }))}
       animation={{ fade: 500, swipe: 750 }}
       render={{
+        buttonPrev: currentPage > 0 ? undefined : () => null,
+        buttonNext: currentPage + 1 === pages.length ? () => null : undefined,
         slide: () => {
           const page = pages[currentPage];
           if (page.error) {
