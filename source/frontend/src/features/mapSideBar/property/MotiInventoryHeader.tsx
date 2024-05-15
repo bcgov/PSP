@@ -11,14 +11,13 @@ import { InlineFlexDiv } from '@/components/common/styles';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
 import { IMapProperty } from '@/components/propertySelector/models';
 import { ComposedProperty } from '@/features/mapSideBar/property/ComposedProperty';
-import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { exists, formatApiAddress, pidFormatter } from '@/utils';
 import { mapFeatureToProperty } from '@/utils/mapPropertyUtils';
 
 export interface IMotiInventoryHeaderProps {
   isLoading: boolean;
   composedProperty: ComposedProperty;
-  onZoom?: (apiProperty?: ApiGen_Concepts_Property | undefined) => void;
+  onZoom?: (latitude: number, longitude: number) => void;
 }
 
 export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderProps> = props => {
@@ -39,6 +38,12 @@ export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderPr
     }
     return false;
   }, [apiProperty]);
+
+  console.log(props.composedProperty);
+
+  const hasLocation = exists(apiProperty?.longitude) && exists(apiProperty?.latitude);
+
+  debugger;
 
   return (
     <>
@@ -89,9 +94,13 @@ export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderPr
           <TooltipWrapper tooltipId="property-zoom-map" tooltip="Zoom Map">
             <StyledIconButton
               variant="info"
-              disabled={!props.onZoom}
+              disabled={!props.onZoom && !hasLocation}
               title="Zoom Map"
-              onClick={() => props?.onZoom && props?.onZoom(apiProperty)}
+              onClick={() =>
+                props?.onZoom &&
+                hasLocation &&
+                props?.onZoom(apiProperty.latitude, apiProperty.longitude)
+              }
             >
               <FaSearchPlus size={22} />
             </StyledIconButton>

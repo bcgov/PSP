@@ -53,7 +53,7 @@ const ResearchHeader: React.FunctionComponent<
       <Col xs={leftColumnWidth}>
         <Row className="no-gutters">
           <Col>
-            <HeaderField label="File #:" labelWidth={leftColumnLabel} contentWidth="9">
+            <HeaderField label="File:" labelWidth={leftColumnLabel} contentWidth="9">
               {researchFile?.fileNumber}
             </HeaderField>
           </Col>
@@ -67,7 +67,7 @@ const ResearchHeader: React.FunctionComponent<
         </Row>
         <Row className="no-gutters">
           <Col>
-            <HeaderField label="MoTI region:" labelWidth={leftColumnLabel} contentWidth="9">
+            <HeaderField label="MOTI region:" labelWidth={leftColumnLabel} contentWidth="9">
               {regions}
             </HeaderField>
           </Col>
