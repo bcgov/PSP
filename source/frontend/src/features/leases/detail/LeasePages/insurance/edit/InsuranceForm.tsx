@@ -1,9 +1,8 @@
 import { getIn, useFormikContext } from 'formik';
 
 import { FastCurrencyInput, FastDatePicker, Input, TextArea } from '@/components/common/form';
-import { Section } from '@/components/common/Section/Section';
-import { SectionField } from '@/components/common/Section/SectionField';
 import { YesNoSelect } from '@/components/common/form/YesNoSelect';
+import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { ApiGen_Base_CodeType } from '@/models/api/generated/ApiGen_Base_CodeType';
 import { withNameSpace } from '@/utils/formUtils';

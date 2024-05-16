@@ -46,7 +46,7 @@ export class FormInsurance {
     model.coverageDescription = baseModel.coverageDescription ?? undefined;
     model.coverageLimit = baseModel.coverageLimit || '';
     model.expiryDate = isValidIsoDateTime(baseModel.expiryDate) ? baseModel.expiryDate : undefined;
-    model.isInsuranceInPlaceSelect = baseModel.isInsuranceInPlace ?? undefined;
+    model.isInsuranceInPlaceSelect = baseModel.isInsuranceInPlace ?? null;
     model.isNew = false;
     model.isShown = true;
     model.rowVersion = baseModel.rowVersion ?? 0;
