@@ -79,7 +79,7 @@ const InsuranceEditContainer: React.FunctionComponent<
                   <Form.Group>
                     {insuranceTypes.map((code: ILookupCode, index: number) => (
                       <Form.Check
-                        id={`insurance-checbox-${index}`}
+                        id={`insurance-checkbox-${index}`}
                         type="checkbox"
                         name="checkedTypes"
                         key={index + '-' + code.id}

@@ -22,7 +22,7 @@ const InsuranceForm: React.FunctionComponent<IInsuranceRowProps> = ({ nameSpace 
   );
 
   return (
-    <Section header={insuranceType.description}>
+    <Section header={insuranceType.description} data-testid="insurance-form">
       {insuranceType.id === 'OTHER' && (
         <SectionField label="Other insurance type">
           <Input
