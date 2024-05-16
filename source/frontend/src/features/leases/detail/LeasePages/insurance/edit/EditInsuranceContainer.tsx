@@ -2,7 +2,9 @@ import { FieldArray, Formik, FormikProps } from 'formik';
 import React from 'react';
 
 import { Form } from '@/components/common/form/Form';
-import { FormSectionClear } from '@/components/common/form/styles';
+import { Section } from '@/components/common/Section/Section';
+import { SectionField } from '@/components/common/Section/SectionField';
+import { StyledSummarySection } from '@/components/common/Section/SectionStyles';
 import { ApiGen_Concepts_Insurance } from '@/models/api/generated/ApiGen_Concepts_Insurance';
 import { ILookupCode } from '@/store/slices/lookupCodes/interfaces';
 import { withNameSpace } from '@/utils/formUtils';
@@ -68,48 +70,46 @@ const InsuranceEditContainer: React.FunctionComponent<
       innerRef={formikRef}
     >
       {formikProps => (
-        <>
-          <h2>Required coverage</h2>
-          <div>Select the coverage types that are required for this lease or license.</div>
-
-          <FormSectionClear>
-            <FieldArray
-              name={withNameSpace('visibleTypes')}
-              render={arrayHelpers => (
-                <Form.Group>
-                  {insuranceTypes.map((code: ILookupCode, index: number) => (
-                    <Form.Check
-                      id={`insurance-checbox-${index}`}
-                      type="checkbox"
-                      name="checkedTypes"
-                      key={index + '-' + code.id}
-                    >
-                      <Form.Check.Input
-                        id={'insurance-' + index}
-                        data-testid="insurance-checkbox"
+        <StyledSummarySection>
+          <Section header="Required Coverage">
+            <SectionField label="Select coverage types">
+              <FieldArray
+                name={withNameSpace('visibleTypes')}
+                render={arrayHelpers => (
+                  <Form.Group>
+                    {insuranceTypes.map((code: ILookupCode, index: number) => (
+                      <Form.Check
+                        id={`insurance-checbox-${index}`}
                         type="checkbox"
                         name="checkedTypes"
-                        value={code.id + ''}
-                        checked={formikProps.values.visibleTypes.includes(code.id + '')}
-                        onChange={(e: any) => {
-                          handleOnChange(e, code, arrayHelpers);
-                        }}
-                      />
-                      <Form.Check.Label htmlFor={'insurance-' + index}>
-                        {code.name}
-                      </Form.Check.Label>
-                    </Form.Check>
-                  ))}
-                </Form.Group>
-              )}
-            />
-          </FormSectionClear>
+                        key={index + '-' + code.id}
+                      >
+                        <Form.Check.Input
+                          id={'insurance-' + index}
+                          data-testid="insurance-checkbox"
+                          type="checkbox"
+                          name="checkedTypes"
+                          value={code.id + ''}
+                          checked={formikProps.values.visibleTypes.includes(code.id + '')}
+                          onChange={(e: any) => {
+                            handleOnChange(e, code, arrayHelpers);
+                          }}
+                        />
+                        <Form.Check.Label htmlFor={'insurance-' + index}>
+                          {code.name}
+                        </Form.Check.Label>
+                      </Form.Check>
+                    ))}
+                  </Form.Group>
+                )}
+              />
+            </SectionField>
+          </Section>
 
-          <h2>Coverage details</h2>
           <FieldArray
             name={withNameSpace('insurances')}
             render={() => (
-              <div>
+              <>
                 {formikProps.values.insurances.map(
                   (insurance: FormInsurance, index: number) =>
                     insurance.isShown && (
@@ -119,10 +119,10 @@ const InsuranceEditContainer: React.FunctionComponent<
                       />
                     ),
                 )}
-              </div>
+              </>
             )}
           />
-        </>
+        </StyledSummarySection>
       )}
     </Formik>
   );
