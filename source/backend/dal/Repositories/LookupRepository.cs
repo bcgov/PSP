@@ -438,6 +438,11 @@ namespace Pims.Dal.Repositories
             return Context.PimsDspChklstSectionTypes.AsNoTracking().ToArray();
         }
 
+        public IEnumerable<PimsHistoricalFileNumberType> GetAllHistoricalNumberTypes()
+        {
+            return Context.PimsHistoricalFileNumberTypes.AsNoTracking().ToArray();
+        }
+
         #endregion
     }
 }
