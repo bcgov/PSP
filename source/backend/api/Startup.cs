@@ -5,7 +5,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Net.Http;
 using System.Reflection;
 using System.Security.Claims;
 using System.Text;
@@ -27,8 +26,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Pims.Api.Handlers;
@@ -54,7 +51,6 @@ using Pims.Dal;
 using Pims.Dal.Keycloak;
 using Pims.Geocoder;
 using Pims.Ltsa;
-using Pims.Ltsa.Configuration;
 using Prometheus;
 
 namespace Pims.Api
@@ -223,8 +219,7 @@ namespace Pims.Api
             services.AddClamAvService(this.Configuration.GetSection("Av"));
             services.AddHttpContextAccessor();
 
-            ClaimsPrincipal systemPrincipal = new ClaimsPrincipal();
-            services.AddTransient<ClaimsPrincipal>(s => s.GetService<IHttpContextAccessor>()?.HttpContext == null ? systemPrincipal : s.GetService<IHttpContextAccessor>().HttpContext.User);
+            services.AddTransient<ClaimsPrincipal>(s => s.GetService<IHttpContextAccessor>()?.HttpContext?.User);
             services.AddScoped<IProxyRequestClient, ProxyRequestClient>();
             services.AddScoped<IOpenIdConnectRequestClient, OpenIdConnectRequestClient>();
             services.AddResponseCaching();
