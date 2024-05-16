@@ -1,6 +1,8 @@
 /* eslint-disable no-template-curly-in-string */
 import * as Yup from 'yup';
 
+import { ApiGen_CodeTypes_LeaseStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStatusTypes';
+
 import { isLeaseCategoryVisible } from './AdministrationSubForm';
 
 export const AddLeaseYupSchema = Yup.object().shape({
@@ -79,4 +81,20 @@ export const AddLeaseYupSchema = Yup.object().shape({
         .max(2000, 'Other Description must be at most ${max} characters'),
     }),
   ),
+  cancellationReason: Yup.string().when('statusTypeCode', {
+    is: (statusTypeCode: string) =>
+      statusTypeCode && statusTypeCode === ApiGen_CodeTypes_LeaseStatusTypes.DISCARD.toString(),
+    then: Yup.string()
+      .required('Cancellation reason is required.')
+      .max(500, 'Cancellation reason must be at most ${max} characters'),
+    otherwise: Yup.string().nullable(),
+  }),
+  terminationReason: Yup.string().when('statusTypeCode', {
+    is: (statusTypeCode: string) =>
+      statusTypeCode && statusTypeCode === ApiGen_CodeTypes_LeaseStatusTypes.TERMINATED.toString(),
+    then: Yup.string()
+      .required('Termination reason is required.')
+      .max(500, 'Termination reason must be at most ${max} characters'),
+    otherwise: Yup.string().nullable(),
+  }),
 });

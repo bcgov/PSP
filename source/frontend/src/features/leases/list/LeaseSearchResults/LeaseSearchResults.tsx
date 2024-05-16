@@ -184,7 +184,7 @@ const columns: ColumnWithProps<ApiGen_Concepts_Lease>[] = [
           ) : null}
           {otherNumbers ? (
             <label>
-              <span>OHER: </span>
+              <span>OTHER: </span>
               {otherNumbers}.
             </label>
           ) : null}

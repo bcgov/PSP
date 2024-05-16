@@ -5,11 +5,20 @@ import noop from 'lodash/noop';
 import { useProjectTypeahead } from '@/hooks/useProjectTypeahead';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { act, fillInput, renderAsync, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
+import {
+  act,
+  fillInput,
+  fireEvent,
+  renderAsync,
+  RenderOptions,
+  userEvent,
+  waitFor,
+} from '@/utils/test-utils';
 
 import { getDefaultFormLease } from '../models';
 import { AddLeaseYupSchema } from './AddLeaseYupSchema';
 import LeaseDetailSubForm, { ILeaseDetailsSubFormProps } from './LeaseDetailSubForm';
+import { ApiGen_CodeTypes_LeaseStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStatusTypes';
 
 const history = createMemoryHistory();
 const storeState = {
@@ -42,11 +51,19 @@ describe('LeaseDetailSubForm component', () => {
     return {
       ...component,
       // Finding elements
+      getStatusDropDown: () =>
+        component.container.querySelector(`select[name="statusTypeCode"]`) as HTMLInputElement,
       getProjectSelector: () => {
         return document.querySelector(`input[name="typeahead-project"]`);
       },
       findProjectSelectorItems: async () => {
         return document.querySelectorAll(`a[id^="typeahead-project-item"]`);
+      },
+      getTerminationReason: () => {
+        return document.querySelector(`textarea[name="terminationReason"]`);
+      },
+      getCancellationReason: () => {
+        return document.querySelector(`textarea[name="cancellationReason"]`);
       },
     };
   };
@@ -93,5 +110,25 @@ describe('LeaseDetailSubForm component', () => {
     expect(items).toHaveLength(2);
     expect(items[0]).toHaveTextContent(/MOCK TEST PROJECT/i);
     expect(items[1]).toHaveTextContent(/ANOTHER MOCK/i);
+  });
+
+  it('displays the cancellation reason textbox whe status is changed to "Cancelled"', async () => {
+    const { container, getCancellationReason } = await setup({});
+
+    await act(async () => {
+      fillInput(container, 'statusTypeCode', ApiGen_CodeTypes_LeaseStatusTypes.DISCARD, 'select');
+    });
+
+    expect(getCancellationReason()).toBeInTheDocument();
+  });
+
+  it('displays the confirmation modal when the status changed from "Cancelled" to other status', async () => {
+    const { container, getCancellationReason } = await setup({});
+
+    await act(async () => {
+      fillInput(container, 'statusTypeCode', ApiGen_CodeTypes_LeaseStatusTypes.DISCARD, 'select');
+    });
+
+    expect(getCancellationReason()).toBeInTheDocument();
   });
 });
