@@ -80,7 +80,7 @@ describe('Lease Insurance', () => {
       insuranceList: [testInsurance],
       insuranceTypes: [mockInsuranceTypeHome, mockInsuranceTypeCar, mockInsuranceTypeOther],
     });
-    expect(result.getByText('alternate insurance type', { exact: false })).toBeInTheDocument();
+    expect(result.getByText('alternate insurance type')).toBeInTheDocument();
   });
 
   it('displays default message when no lease insurances were found', () => {
