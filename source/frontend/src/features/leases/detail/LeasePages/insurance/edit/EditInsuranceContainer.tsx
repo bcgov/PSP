@@ -25,15 +25,15 @@ export interface InsuranceEditContainerProps {
 const InsuranceEditContainer: React.FunctionComponent<
   React.PropsWithChildren<InsuranceEditContainerProps>
 > = ({ leaseId, insuranceList, insuranceTypes, onSave, formikRef }) => {
-  const handleOnChange = (e: any, codeType: any, arrayHelpers: any) => {
+  const handleOnChange = (e: any, codeType: ILookupCode, arrayHelpers: any) => {
     if (formikRef.current) {
       const found = initialInsurances.findIndex(x => x.insuranceType?.id === codeType.id);
 
       if (e.target.checked) {
-        arrayHelpers.push(codeType.id);
+        arrayHelpers.push(codeType.id.toString());
         formikRef.current.values.insurances[found].isShown = true;
       } else {
-        const idx = formikRef.current?.values.visibleTypes.indexOf(codeType.id + '');
+        const idx = formikRef.current?.values.visibleTypes.indexOf(codeType.id.toString());
         arrayHelpers.remove(idx);
         formikRef.current.values.insurances[found].isShown = false;
       }
@@ -82,20 +82,20 @@ const InsuranceEditContainer: React.FunctionComponent<
                         id={`insurance-checkbox-${index}`}
                         type="checkbox"
                         name="checkedTypes"
-                        key={index + '-' + code.id}
+                        key={`${index}-${code.id}`}
                       >
                         <Form.Check.Input
-                          id={'insurance-' + index}
+                          id={`insurance-${index}`}
                           data-testid="insurance-checkbox"
                           type="checkbox"
                           name="checkedTypes"
-                          value={code.id + ''}
-                          checked={formikProps.values.visibleTypes.includes(code.id + '')}
+                          value={code.id.toString()}
+                          checked={formikProps.values.visibleTypes.includes(code.id.toString())}
                           onChange={(e: any) => {
                             handleOnChange(e, code, arrayHelpers);
                           }}
                         />
-                        <Form.Check.Label htmlFor={'insurance-' + index}>
+                        <Form.Check.Label htmlFor={`insurance-${index}`}>
                           {code.name}
                         </Form.Check.Label>
                       </Form.Check>
