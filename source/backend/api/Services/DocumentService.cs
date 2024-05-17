@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -11,7 +10,7 @@ using MapsterMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-
+using Microsoft.Extensions.Options;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Models.CodeTypes;
 using Pims.Api.Models.Concepts.Document;
@@ -23,6 +22,7 @@ using Pims.Api.Models.Requests.Document.Upload;
 using Pims.Api.Models.Requests.Http;
 using Pims.Api.Repositories.Mayan;
 using Pims.Av;
+using Pims.Core.Http.Configuration;
 using Pims.Dal.Entities;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Repositories;
@@ -69,6 +69,7 @@ namespace Pims.Api.Services
         private readonly IDocumentTypeRepository documentTypeRepository;
         private readonly IAvService avService;
         private readonly IMapper mapper;
+        private readonly IOptionsMonitor<AuthClientOptions> keycloakOptions;
 
         public DocumentService(
             ClaimsPrincipal user,
@@ -78,7 +79,8 @@ namespace Pims.Api.Services
             IEdmsDocumentRepository documentStorageRepository,
             IDocumentTypeRepository documentTypeRepository,
             IAvService avService,
-            IMapper mapper)
+            IMapper mapper,
+            IOptionsMonitor<AuthClientOptions> options)
             : base(user, logger)
         {
             this.documentRepository = documentRepository;
@@ -86,6 +88,7 @@ namespace Pims.Api.Services
             this.documentTypeRepository = documentTypeRepository;
             this.avService = avService;
             this.mapper = mapper;
+            this.keycloakOptions = options;
             _config = new MayanConfig();
             configuration.Bind(MayanConfigSectionKey, _config);
         }
@@ -297,7 +300,7 @@ namespace Pims.Api.Services
         public async Task<ExternalResponse<QueryResponse<Models.Mayan.Document.DocumentTypeModel>>> GetStorageDocumentTypes(string ordering = "", int? page = null, int? pageSize = null)
         {
             this.Logger.LogInformation("Retrieving storage document types");
-            this.User.ThrowIfNotAuthorized(Permissions.DocumentView);
+            this.User.ThrowIfNotAuthorizedOrServiceAccount(Permissions.DocumentView, keycloakOptions);
 
             ExternalResponse<QueryResponse<Models.Mayan.Document.DocumentTypeModel>> result = await documentStorageRepository.TryGetDocumentTypesAsync(ordering, page, pageSize);
             return result;
