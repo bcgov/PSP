@@ -92,7 +92,6 @@ export const NoteDetailsFormModal: React.FC<
       okButtonText="Close"
       handleOk={onCloseClick}
       handleCancel={onCloseClick}
-      closeButton
     ></StyledModal>
   );
 };

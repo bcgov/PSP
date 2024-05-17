@@ -55,7 +55,6 @@ export const SideProjectContainer: React.FunctionComponent<ISideProjectContainer
         title: 'Warning',
         message: 'There is no data for the input parameters you entered.',
         okButtonText: 'Close',
-        closeButton: true,
         handleOk: () => setDisplayModal(false),
       });
       setDisplayModal(true);
@@ -75,7 +74,6 @@ export const SideProjectContainer: React.FunctionComponent<ISideProjectContainer
         title: 'Warning',
         message: 'There is no data for the input parameters you entered.',
         okButtonText: 'Close',
-        closeButton: true,
         handleOk: () => setDisplayModal(false),
       });
       setDisplayModal(true);
