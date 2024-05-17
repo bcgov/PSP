@@ -122,13 +122,13 @@ describe('LeaseDetailSubForm component', () => {
     expect(getCancellationReason()).toBeInTheDocument();
   });
 
-  it('displays the confirmation modal when the status changed from "Cancelled" to other status', async () => {
-    const { container, getCancellationReason } = await setup({});
+  it('displays the termination reason textbox whe status is changed to "Terminated"', async () => {
+    const { container, getTerminationReason } = await setup({});
 
     await act(async () => {
-      fillInput(container, 'statusTypeCode', ApiGen_CodeTypes_LeaseStatusTypes.DISCARD, 'select');
+      fillInput(container, 'statusTypeCode', ApiGen_CodeTypes_LeaseStatusTypes.TERMINATED, 'select');
     });
 
-    expect(getCancellationReason()).toBeInTheDocument();
+    expect(getTerminationReason()).toBeInTheDocument();
   });
 });

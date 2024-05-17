@@ -23,18 +23,12 @@ export const LeaseViewPageForm: React.FunctionComponent<
   const { lease } = useContext(LeaseStateContext);
 
   const DisplayLeaseTerminationMessage = () => {
-    if (lease && leasePageName === LeasePageNames.DETAILS) {
-      if (
-        lease.fileStatusTypeCode.id === ApiGen_CodeTypes_LeaseStatusTypes.DISCARD ||
-        lease.fileStatusTypeCode.id === ApiGen_CodeTypes_LeaseStatusTypes.TERMINATED
-      ) {
-        return true;
-      }
-
-      return false;
-    }
-
-    return false;
+    return (
+      lease &&
+      leasePageName === LeasePageNames.DETAILS &&
+      (lease.fileStatusTypeCode.id === ApiGen_CodeTypes_LeaseStatusTypes.DISCARD ||
+        lease.fileStatusTypeCode.id === ApiGen_CodeTypes_LeaseStatusTypes.TERMINATED)
+    );
   };
 
   const getTerminationMessage = (): string => {

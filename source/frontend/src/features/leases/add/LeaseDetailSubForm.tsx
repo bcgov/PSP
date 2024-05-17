@@ -1,5 +1,4 @@
 import { FormikProps } from 'formik/dist/types';
-import { useEffect, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 
 import { FastDatePicker, ProjectSelector, Select, TextArea } from '@/components/common/form';
@@ -24,17 +23,10 @@ export const LeaseDetailSubForm: React.FunctionComponent<ILeaseDetailsSubFormPro
   const { values, setFieldValue } = formikProps;
   const { statusTypeCode, terminationReason, cancellationReason } = values;
 
-  const [currentlLeaseStatus, setLeaseStatus] = useState<string>(statusTypeCode);
   const { setModalContent, setDisplayModal } = useModalContext();
 
   const leaseStatusTypes = getOptionsByType(API.LEASE_STATUS_TYPES);
   const paymentReceivableTypes = getOptionsByType(API.LEASE_PAYMENT_RECEIVABLE_TYPES);
-
-  useEffect(() => {
-    if (statusTypeCode !== currentlLeaseStatus) {
-      setLeaseStatus(statusTypeCode);
-    }
-  }, [currentlLeaseStatus, statusTypeCode]);
 
   const statusChangeModalContent = (status: string): React.ReactNode => {
     return (
@@ -51,31 +43,30 @@ export const LeaseDetailSubForm: React.FunctionComponent<ILeaseDetailsSubFormPro
 
   const onLeaseStatusChanged = (newStatus: string): void => {
     if (
-      (currentlLeaseStatus === ApiGen_CodeTypes_LeaseStatusTypes.DISCARD ||
-        currentlLeaseStatus === ApiGen_CodeTypes_LeaseStatusTypes.TERMINATED) &&
-      (terminationReason || cancellationReason) &&
-      newStatus !== currentlLeaseStatus
+      (statusTypeCode === ApiGen_CodeTypes_LeaseStatusTypes.DISCARD ||
+        statusTypeCode === ApiGen_CodeTypes_LeaseStatusTypes.TERMINATED) &&
+      (terminationReason || cancellationReason)
     ) {
       setModalContent({
         variant: 'info',
         title: 'Are you sure?',
         message:
-          currentlLeaseStatus === ApiGen_CodeTypes_LeaseStatusTypes.DISCARD
+          statusTypeCode === ApiGen_CodeTypes_LeaseStatusTypes.DISCARD
             ? statusChangeModalContent('Cancelled')
             : statusChangeModalContent('Terminated'),
         okButtonText: 'Yes',
         handleOk: () => {
           setFieldValue('statusTypeCode', newStatus);
-          if (currentlLeaseStatus === ApiGen_CodeTypes_LeaseStatusTypes.DISCARD) {
+          if (statusTypeCode === ApiGen_CodeTypes_LeaseStatusTypes.DISCARD) {
             setFieldValue('cancellationReason', '');
-          } else if (currentlLeaseStatus === ApiGen_CodeTypes_LeaseStatusTypes.TERMINATED) {
+          } else if (statusTypeCode === ApiGen_CodeTypes_LeaseStatusTypes.TERMINATED) {
             setFieldValue('terminationReason', '');
           }
           setDisplayModal(false);
         },
         cancelButtonText: 'No',
         handleCancel: () => {
-          setFieldValue('statusTypeCode', currentlLeaseStatus);
+          setFieldValue('statusTypeCode', statusTypeCode);
           setDisplayModal(false);
         },
       });
@@ -94,7 +85,7 @@ export const LeaseDetailSubForm: React.FunctionComponent<ILeaseDetailsSubFormPro
         <Select
           placeholder="Select Status"
           field="statusTypeCode"
-          value={currentlLeaseStatus}
+          value={statusTypeCode}
           options={leaseStatusTypes}
           onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
             const selectedValue = [].slice
