@@ -14,6 +14,9 @@ import { ComposedProperty } from '@/features/mapSideBar/property/ComposedPropert
 import { exists, formatApiAddress, pidFormatter } from '@/utils';
 import { mapFeatureToProperty } from '@/utils/mapPropertyUtils';
 
+import HistoricalNumbersContainer from '../shared/header/HistoricalNumberContainer';
+import HistoricalNumberFieldView from '../shared/header/HistoricalNumberSectionView';
+
 export interface IMotiInventoryHeaderProps {
   isLoading: boolean;
   composedProperty: ComposedProperty;
@@ -56,46 +59,27 @@ export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderPr
     <>
       <LoadingBackdrop show={isLoading} parentScreen={true} />
       <Row className="no-gutters">
-        <Col>
-          <Row className="no-gutters">
-            <Col xs="8">
-              <HeaderField label="Civic Address:" labelWidth={'3'} contentWidth="9">
-                {exists(apiProperty?.address) ? formatApiAddress(apiProperty!.address) : '-'}
-              </HeaderField>
-            </Col>
-            <Col>
-              <HeaderField className="justify-content-end" label="PID:" contentWidth="5">
-                {pid}
-              </HeaderField>
-            </Col>
-          </Row>
-          <Row className="no-gutters">
-            <Col xs="8">
-              <HeaderField label="Plan #:" labelWidth={'3'} contentWidth="9">
-                {property?.planNumber}
-              </HeaderField>
-            </Col>
-            <Col>
-              <HeaderField
-                label="Land parcel type:"
-                contentWidth="5"
-                className="justify-content-end"
-              >
-                {apiProperty?.propertyType?.description}
-              </HeaderField>
-            </Col>
-          </Row>
-          {isRetired && (
-            <Row className="no-gutters">
-              <Col xs="8"></Col>
-              <Col className="d-flex justify-content-end pr-4">
-                <RetiredWarning>
-                  <AiOutlineExclamationCircle size={16} />
-                  RETIRED
-                </RetiredWarning>
-              </Col>
-            </Row>
+        <Col xs="7">
+          <HeaderField label="Civic Address:" labelWidth={'3'} contentWidth="9">
+            {exists(apiProperty?.address) ? formatApiAddress(apiProperty!.address) : '-'}
+          </HeaderField>
+          <HeaderField label="Plan #:" labelWidth={'3'} contentWidth="9">
+            {property?.planNumber}
+          </HeaderField>
+          {exists(apiProperty) && (
+            <HistoricalNumbersContainer
+              View={HistoricalNumberFieldView}
+              propertyIds={[apiProperty?.id]}
+            />
           )}
+        </Col>
+        <Col className="text-right">
+          <HeaderField className="justify-content-end" label="PID:">
+            {pid}
+          </HeaderField>
+          <HeaderField label="Land parcel type:" className="justify-content-end">
+            {apiProperty?.propertyType?.description}
+          </HeaderField>
         </Col>
         <Col xs="auto" className="d-flex p-0 align-items-center justify-content-end">
           {hasLocation && (
@@ -111,6 +95,12 @@ export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderPr
             </TooltipWrapper>
           )}
         </Col>
+        {isRetired && (
+          <RetiredWarning>
+            <AiOutlineExclamationCircle size={16} />
+            RETIRED
+          </RetiredWarning>
+        )}
       </Row>
       <StyledDivider />
     </>
