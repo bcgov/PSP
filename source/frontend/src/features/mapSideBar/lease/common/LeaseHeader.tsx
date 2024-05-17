@@ -10,11 +10,13 @@ import {
   HeaderField,
   HeaderLabelCol,
 } from '@/components/common/HeaderField/HeaderField';
+import StatusField from '@/components/common/HeaderField/StatusField';
+import { StyledFiller } from '@/components/common/HeaderField/styles';
 import { InlineFlexDiv } from '@/components/common/styles';
 import { LeaseHeaderAddresses } from '@/features/leases/detail/LeaseHeaderAddresses';
 import { Api_LastUpdatedBy } from '@/models/api/File';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
-import { prettyFormatDate } from '@/utils';
+import { exists, prettyFormatDate } from '@/utils';
 
 import HistoricalNumbersContainer from '../../shared/header/HistoricalNumberContainer';
 import HistoricalNumberFieldView from '../../shared/header/HistoricalNumberSectionView';
@@ -73,15 +75,13 @@ export const LeaseHeader: React.FC<ILeaseHeaderProps> = ({ lease, lastUpdatedBy 
           <HistoricalNumbersContainer propertyIds={propertyIds} View={HistoricalNumberFieldView} />
         </Col>
 
-        <Col className="text-right">
-          <AuditSection lastUpdatedBy={lastUpdatedBy} baseAudit={lease} />
-          <Row className="no-gutters">
-            <Col>
-              <HeaderField className="justify-content-end" label="Status:">
-                {lease?.fileStatusTypeCode?.description}
-              </HeaderField>
-            </Col>
-          </Row>
+        <Col>
+          <StyledFiller>
+            <AuditSection lastUpdatedBy={lastUpdatedBy} baseAudit={lease} />
+            {exists(lease?.fileStatusTypeCode) && (
+              <StatusField statusCodeType={lease.fileStatusTypeCode} />
+            )}
+          </StyledFiller>
         </Col>
       </Row>
     </Container>
