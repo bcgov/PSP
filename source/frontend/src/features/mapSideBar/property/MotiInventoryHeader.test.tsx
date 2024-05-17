@@ -4,6 +4,7 @@ import { act, render, RenderOptions, RenderResult, userEvent } from '@/utils/tes
 
 import { ComposedProperty } from './ComposedProperty';
 import { IMotiInventoryHeaderProps, MotiInventoryHeader } from './MotiInventoryHeader';
+import { useHistoricalNumberRepository } from '@/hooks/repositories/useHistoricalNumberRepository';
 
 const defaultComposedProperty: ComposedProperty = {
   pid: undefined,
@@ -17,14 +18,32 @@ const defaultComposedProperty: ComposedProperty = {
   bcAssessmentSummary: undefined,
 };
 
+vi.mock('@/hooks/repositories/useHistoricalNumberRepository');
+vi.mocked(useHistoricalNumberRepository).mockReturnValue({
+  getPropertyHistoricalNumbers: {
+    error: null,
+    response: [],
+    execute: vi.fn().mockResolvedValue([]),
+    loading: false,
+    status: 200,
+  },
+  updatePropertyHistoricalNumbers: {
+    error: null,
+    response: [],
+    execute: vi.fn().mockResolvedValue([]),
+    loading: false,
+    status: 200,
+  },
+});
+
 const onZoom = vi.fn();
 describe('MotiInventoryHeader component', () => {
-  const setup = (
+  const setup = async (
     renderOptions: RenderOptions & IMotiInventoryHeaderProps = {
       composedProperty: defaultComposedProperty,
       isLoading: false,
     },
-  ): RenderResult => {
+  ): Promise<RenderResult> => {
     // render component under test
     const result = render(
       <MotiInventoryHeader
@@ -33,6 +52,7 @@ describe('MotiInventoryHeader component', () => {
         isLoading={renderOptions.isLoading}
       />,
     );
+    await act(async () => {});
     return result;
   };
 
@@ -40,13 +60,13 @@ describe('MotiInventoryHeader component', () => {
     onZoom.mockClear();
   });
 
-  it('renders as expected', () => {
-    const result = setup();
+  it('renders as expected', async () => {
+    const result = await setup();
     expect(result.asFragment()).toMatchSnapshot();
   });
 
-  it('renders a spinner when the data is loading', () => {
-    const { getByTestId } = setup({
+  it('renders a spinner when the data is loading', async () => {
+    const { getByTestId } = await setup({
       composedProperty: { ...defaultComposedProperty },
       isLoading: true,
     });
@@ -57,7 +77,7 @@ describe('MotiInventoryHeader component', () => {
 
   it('displays PID', async () => {
     const testPid = '009-212-434';
-    const result = setup({
+    const result = await setup({
       composedProperty: {
         ...defaultComposedProperty,
         pid: testPid,
@@ -78,7 +98,7 @@ describe('MotiInventoryHeader component', () => {
         id: null,
       },
     };
-    const result = setup({
+    const result = await setup({
       composedProperty: {
         ...defaultComposedProperty,
         pimsProperty: testProperty,
@@ -94,7 +114,7 @@ describe('MotiInventoryHeader component', () => {
       ...getEmptyProperty(),
       isRetired: true,
     };
-    const result = setup({
+    const result = await setup({
       composedProperty: {
         ...defaultComposedProperty,
         pimsProperty: testProperty,
@@ -106,9 +126,9 @@ describe('MotiInventoryHeader component', () => {
   });
 
   it('allows the active property to be zoomed in', async () => {
-    const testProperty: ApiGen_Concepts_Property = {} as any;
+    const testProperty: ApiGen_Concepts_Property = { latitude: 1, longitude: 1 } as any;
 
-    const { getByTitle } = setup({
+    const { getByTitle } = await setup({
       composedProperty: {
         ...defaultComposedProperty,
         pimsProperty: testProperty,
@@ -121,7 +141,7 @@ describe('MotiInventoryHeader component', () => {
   });
 
   it('does not allow property zooming if no property is visible', async () => {
-    const { getByTitle } = setup({
+    const { queryByText, container } = await setup({
       composedProperty: {
         ...defaultComposedProperty,
         pimsProperty: undefined,
@@ -129,8 +149,7 @@ describe('MotiInventoryHeader component', () => {
       isLoading: false,
     });
 
-    const zoomButton = getByTitle('Zoom Map');
-    await act(async () => userEvent.click(zoomButton));
-    expect(onZoom).toHaveBeenCalled();
+    expect(queryByText('Zoom Map')).not.toBeInTheDocument();
+    expect(onZoom).not.toHaveBeenCalled();
   });
 });

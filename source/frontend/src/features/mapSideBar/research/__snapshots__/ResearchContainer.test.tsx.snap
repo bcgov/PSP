@@ -311,7 +311,7 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                 >
                   <strong>
                     <label>
-                      File #:
+                      File:
                     </label>
                   </strong>
                 </div>
@@ -363,7 +363,7 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                 >
                   <strong>
                     <label>
-                      MoTI region:
+                      MOTI region:
                     </label>
                   </strong>
                 </div>
