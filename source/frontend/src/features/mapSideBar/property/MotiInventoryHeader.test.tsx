@@ -141,7 +141,7 @@ describe('MotiInventoryHeader component', () => {
   });
 
   it('does not allow property zooming if no property is visible', async () => {
-    const { queryByText, container } = await setup({
+    const { queryByText } = await setup({
       composedProperty: {
         ...defaultComposedProperty,
         pimsProperty: undefined,

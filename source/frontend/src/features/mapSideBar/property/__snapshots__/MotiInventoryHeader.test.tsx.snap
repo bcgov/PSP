@@ -10,97 +10,77 @@ exports[`MotiInventoryHeader component > renders as expected 1`] = `
     class="no-gutters row"
   >
     <div
-      class="col"
+      class="col-7"
     >
       <div
-        class="no-gutters row"
+        class="row"
       >
         <div
-          class="col-8"
+          class="pr-0 text-left col-3"
         >
-          <div
-            class="row"
-          >
-            <div
-              class="pr-0 text-left col-3"
-            >
-              <strong>
-                <label>
-                  Civic Address:
-                </label>
-              </strong>
-            </div>
-            <div
-              class="pl-1 text-left col-9"
-            >
-              -
-            </div>
-          </div>
+          <strong>
+            <label>
+              Civic Address:
+            </label>
+          </strong>
         </div>
         <div
-          class="col"
+          class="pl-1 text-left col-9"
         >
-          <div
-            class="justify-content-end row"
-          >
-            <div
-              class="pr-0 text-left col-auto"
-            >
-              <strong>
-                <label>
-                  PID:
-                </label>
-              </strong>
-            </div>
-            <div
-              class="pl-1 text-left col-5"
-            />
-          </div>
+          -
         </div>
       </div>
       <div
-        class="no-gutters row"
+        class="row"
       >
         <div
-          class="col-8"
+          class="pr-0 text-left col-3"
         >
-          <div
-            class="row"
-          >
-            <div
-              class="pr-0 text-left col-3"
-            >
-              <strong>
-                <label>
-                  Plan #:
-                </label>
-              </strong>
-            </div>
-            <div
-              class="pl-1 text-left col-9"
-            />
-          </div>
+          <strong>
+            <label>
+              Plan #:
+            </label>
+          </strong>
         </div>
         <div
-          class="col"
+          class="pl-1 text-left col-9"
+        />
+      </div>
+    </div>
+    <div
+      class="text-right col"
+    >
+      <div
+        class="justify-content-end row"
+      >
+        <div
+          class="pr-0 text-left col-auto"
         >
-          <div
-            class="justify-content-end row"
-          >
-            <div
-              class="pr-0 text-left col-auto"
-            >
-              <strong>
-                <label>
-                  Land parcel type:
-                </label>
-              </strong>
-            </div>
-            <div
-              class="pl-1 text-left col-5"
-            />
-          </div>
+          <strong>
+            <label>
+              PID:
+            </label>
+          </strong>
         </div>
+        <div
+          class="pl-1 text-left col-auto"
+        />
+      </div>
+      <div
+        class="justify-content-end row"
+      >
+        <div
+          class="pr-0 text-left col-auto"
+        >
+          <strong>
+            <label>
+              Land parcel type:
+            </label>
+          </strong>
+        </div>
+        <div
+          class="pl-1 text-left col-auto"
+        />
       </div>
     </div>
     <div
