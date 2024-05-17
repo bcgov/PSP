@@ -23,7 +23,7 @@ exports[`AcquisitionHeader component > renders as expected when no data is provi
     class="c0 no-gutters row"
   >
     <div
-      class="col-7"
+      class="col-8"
     >
       <div
         class="no-gutters row"
@@ -120,7 +120,7 @@ exports[`AcquisitionHeader component > renders as expected when no data is provi
       </div>
     </div>
     <div
-      class="col-5"
+      class="col-4"
     >
       <div
         class="no-gutters row"

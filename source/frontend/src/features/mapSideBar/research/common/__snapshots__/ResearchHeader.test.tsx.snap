@@ -39,7 +39,7 @@ exports[`ResearchHeader component > renders as expected when provided no researc
             >
               <strong>
                 <label>
-                  File #:
+                  File:
                 </label>
               </strong>
             </div>
@@ -87,7 +87,7 @@ exports[`ResearchHeader component > renders as expected when provided no researc
             >
               <strong>
                 <label>
-                  MoTI region:
+                  MOTI region:
                 </label>
               </strong>
             </div>
