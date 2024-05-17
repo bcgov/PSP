@@ -54,7 +54,7 @@ export const AcquisitionHeader: React.FunctionComponent<
       <Col>
         <StyledFiller>
           <AuditSection lastUpdatedBy={lastUpdatedBy} baseAudit={acquisitionFile} />
-          {exists(acquisitionFile.fileStatusTypeCode) && (
+          {exists(acquisitionFile?.fileStatusTypeCode) && (
             <StatusField statusCodeType={acquisitionFile.fileStatusTypeCode} />
           )}
         </StyledFiller>

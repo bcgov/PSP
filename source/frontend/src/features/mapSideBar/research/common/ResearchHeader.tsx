@@ -72,7 +72,7 @@ const ResearchHeader: React.FunctionComponent<
           <HeaderField className="justify-content-end" label="Status:">
             {researchFile?.fileStatusTypeCode?.description}
           </HeaderField>
-          {exists(researchFile.fileStatusTypeCode) && (
+          {exists(researchFile?.fileStatusTypeCode) && (
             <StatusField statusCodeType={researchFile.fileStatusTypeCode} />
           )}
         </StyledFiller>
