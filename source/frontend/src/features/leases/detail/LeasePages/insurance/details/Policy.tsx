@@ -20,7 +20,12 @@ interface PolicyView {
 
 const Policy: React.FunctionComponent<React.PropsWithChildren<PolicyProps>> = ({ insurance }) => {
   const policy: PolicyView = {
-    insuranceInPlace: insurance.isInsuranceInPlace ? 'Yes' : 'No',
+    insuranceInPlace:
+      insurance.isInsuranceInPlace == null
+        ? 'Unknown'
+        : insurance.isInsuranceInPlace
+        ? 'Yes'
+        : 'No',
     limit: insurance.coverageLimit ? formatMoney(insurance.coverageLimit) : '',
     expiryDate: prettyFormatDate(insurance.expiryDate),
     coverageDescription: insurance.coverageDescription || '',
@@ -38,7 +43,7 @@ const Policy: React.FunctionComponent<React.PropsWithChildren<PolicyProps>> = ({
       <SectionField label="Policy expiry date" labelWidth="3">
         {policy.expiryDate}
       </SectionField>
-      <SectionField label="Description of Coverage" labelWidth="3">
+      <SectionField label="Description of coverage" labelWidth="3">
         {policy.coverageDescription}
       </SectionField>
     </Section>

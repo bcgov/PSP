@@ -1,10 +1,16 @@
+import { sortBy } from 'lodash';
+import find from 'lodash/find';
 import orderBy from 'lodash/orderBy';
 import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
 
 import { UserNameTooltip } from '@/components/common/UserNameTooltip';
 import { ColumnWithProps, renderDate, Table } from '@/components/Table';
+import { ApiGen_CodeTypes_LeaseTenantTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseTenantTypes';
 import { ApiGen_Concepts_Association } from '@/models/api/generated/ApiGen_Concepts_Association';
+import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
+import { ApiGen_Concepts_LeaseTenant } from '@/models/api/generated/ApiGen_Concepts_LeaseTenant';
+import { formatApiPersonNames } from '@/utils/personUtils';
 
 interface IAssociationInfo {
   id: string;
@@ -15,16 +21,44 @@ interface IAssociationInfo {
   createdByGuid: string;
   createdDate: string;
   status: string;
+  tenants: string;
+  expiryDate: string;
 }
 
-export interface IAssociationContentProps {
+export interface ILeaseAssociationContentProps {
   associationName: string;
+  tenants: ApiGen_Concepts_LeaseTenant[];
+  leases: ApiGen_Concepts_Lease[];
   associations?: ApiGen_Concepts_Association[];
   linkUrlMask: string;
 }
 
-const AssociationContent: React.FunctionComponent<
-  React.PropsWithChildren<IAssociationContentProps>
+const getFormattedTenants = (tenants: ApiGen_Concepts_LeaseTenant[]) => {
+  if (tenants.length === 0) {
+    return '';
+  }
+  const sortOrder = [
+    { type: ApiGen_CodeTypes_LeaseTenantTypes.ASGN, order: 1 },
+    { type: ApiGen_CodeTypes_LeaseTenantTypes.TEN, order: 2 },
+    { type: ApiGen_CodeTypes_LeaseTenantTypes.UNK, order: 3 },
+  ];
+  const filteredTenants: ApiGen_Concepts_LeaseTenant[] = tenants.filter(t =>
+    sortOrder.map(t => t.type.toString()).includes(t.tenantTypeCode.id),
+  );
+  const sortedTenants: ApiGen_Concepts_LeaseTenant[] = sortBy(
+    filteredTenants,
+    tenant => sortOrder.find(s => s.type === tenant.tenantTypeCode.id)?.order,
+  );
+  const tenantTypeCode = sortedTenants[0]?.tenantTypeCode?.id;
+
+  return sortedTenants
+    .filter(t => t.tenantTypeCode.id === tenantTypeCode)
+    .map(t => formatApiPersonNames(t.person))
+    .join(', ');
+};
+
+export const LeaseAssociationContent: React.FunctionComponent<
+  React.PropsWithChildren<ILeaseAssociationContentProps>
 > = props => {
   const noDataMessage = `There are no ${props.associationName} files available`;
   if (props.associations === undefined) {
@@ -41,6 +75,10 @@ const AssociationContent: React.FunctionComponent<
         createdByGuid: x.createdByGuid || '',
         createdDate: x.createdDateTime || '',
         status: x.status || '',
+        tenants: getFormattedTenants(props.tenants.filter(tenant => x.id === tenant.leaseId)),
+        expiryDate: find(props.leases, lease => x.id === lease.id)
+          ? find(props.leases, lease => x.id === lease.id)?.expiryDate
+          : '',
       };
     }),
     (association: IAssociationInfo) => {
@@ -72,9 +110,12 @@ const associationColumns: ColumnWithProps<IAssociationInfo>[] = [
     width: 50,
   },
   {
-    Header: 'File name',
-    accessor: 'fileName',
+    Header: 'Tenant name',
+    accessor: 'tenants',
     align: 'left',
+    Cell: (props: CellProps<IAssociationInfo>) => {
+      return <p>{props.row.original.tenants}</p>;
+    },
   },
   {
     Header: 'Created by',
@@ -91,8 +132,8 @@ const associationColumns: ColumnWithProps<IAssociationInfo>[] = [
     },
   },
   {
-    Header: 'Created date',
-    accessor: 'createdDate',
+    Header: 'Expiry date',
+    accessor: 'expiryDate',
     align: 'left',
     Cell: renderDate,
     width: 80,
@@ -104,5 +145,3 @@ const associationColumns: ColumnWithProps<IAssociationInfo>[] = [
     width: 60,
   },
 ];
-
-export default AssociationContent;

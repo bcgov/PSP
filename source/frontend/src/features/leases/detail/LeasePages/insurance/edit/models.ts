@@ -15,7 +15,7 @@ export interface IUpdateFormInsurance {
 export class FormInsurance {
   public isShown!: boolean;
   public isNew!: boolean;
-  public isInsuranceInPlaceRadio!: string;
+  public isInsuranceInPlaceSelect!: boolean;
 
   public id: number | null = null;
   public leaseId: NumberFieldValue = '';
@@ -31,7 +31,7 @@ export class FormInsurance {
     model.leaseId = leaseId;
     model.insuranceType = TypeCodeUtils.createFromLookup(typeCode);
     model.coverageLimit = '';
-    model.isInsuranceInPlaceRadio = 'no';
+    model.isInsuranceInPlaceSelect = null;
     model.isNew = true;
     model.isShown = false;
     return model;
@@ -46,7 +46,7 @@ export class FormInsurance {
     model.coverageDescription = baseModel.coverageDescription ?? undefined;
     model.coverageLimit = baseModel.coverageLimit || '';
     model.expiryDate = isValidIsoDateTime(baseModel.expiryDate) ? baseModel.expiryDate : undefined;
-    model.isInsuranceInPlaceRadio = baseModel.isInsuranceInPlace === true ? 'yes' : 'no';
+    model.isInsuranceInPlaceSelect = baseModel.isInsuranceInPlace ?? undefined;
     model.isNew = false;
     model.isShown = true;
     model.rowVersion = baseModel.rowVersion ?? 0;
@@ -62,14 +62,14 @@ export class FormInsurance {
       coverageDescription: this.coverageDescription ?? null,
       coverageLimit: this.coverageLimit === '' ? null : this.coverageLimit ?? null,
       expiryDate: !isValidIsoDateTime(this.expiryDate) ? null : this.expiryDate ?? null,
-      isInsuranceInPlace: this.isInsuranceInPlaceRadio === 'yes' ? true : false,
+      isInsuranceInPlace: this.isInsuranceInPlaceSelect ?? null,
       ...getEmptyBaseAudit(this.rowVersion),
     };
   }
 
   public isEqual(other: FormInsurance): boolean {
     return (
-      this.isInsuranceInPlaceRadio === other.isInsuranceInPlaceRadio &&
+      this.isInsuranceInPlaceSelect === other.isInsuranceInPlaceSelect &&
       this.id === other.id &&
       this.insuranceType?.id === other.insuranceType?.id &&
       this.otherInsuranceType === other.otherInsuranceType &&

@@ -4,10 +4,13 @@ import { isEmpty } from 'lodash';
 import { ApiGen_CodeTypes_PropertyPPHStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_PropertyPPHStatusTypes';
 import { ApiGen_Concepts_Address } from '@/models/api/generated/ApiGen_Concepts_Address';
 import { ApiGen_Concepts_CodeType } from '@/models/api/generated/ApiGen_Concepts_CodeType';
+import { ApiGen_Concepts_HistoricalFileNumber } from '@/models/api/generated/ApiGen_Concepts_HistoricalFileNumber';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import {
   booleanToString,
+  emptyStringtoNullable,
   fromTypeCode,
   stringToBoolean,
   stringToNull,
@@ -80,6 +83,47 @@ export class AddressFormModel {
   }
 }
 
+export class HistoricalNumberForm {
+  id: number | null = null;
+  propertyId: number;
+  historicalNumber = '';
+  historicalNumberType = '';
+  otherHistoricalNumberType = '';
+  isDisabled = false;
+  rowVersion: number | null = null;
+
+  static fromApi(base: ApiGen_Concepts_HistoricalFileNumber): HistoricalNumberForm {
+    const historicalNumberForm = new HistoricalNumberForm();
+    historicalNumberForm.id = base.id;
+    historicalNumberForm.propertyId = base.propertyId;
+    historicalNumberForm.historicalNumber = base.historicalFileNumber ?? '';
+    historicalNumberForm.historicalNumberType =
+      fromTypeCode(base.historicalFileNumberTypeCode) ?? '';
+    historicalNumberForm.otherHistoricalNumberType = base.otherHistFileNumberTypeCode ?? '';
+    historicalNumberForm.isDisabled = base.isDisabled ?? false;
+    historicalNumberForm.rowVersion = base.rowVersion ?? null;
+
+    return historicalNumberForm;
+  }
+
+  toApi(): ApiGen_Concepts_HistoricalFileNumber {
+    return {
+      id: this.id ?? 0,
+      propertyId: this.propertyId,
+      property: null,
+      historicalFileNumber: emptyStringtoNullable(this.historicalNumber),
+      historicalFileNumberTypeCode: toTypeCodeNullable(this.historicalNumberType),
+      otherHistFileNumberTypeCode: emptyStringtoNullable(this.otherHistoricalNumberType),
+      isDisabled: this.isDisabled,
+      ...getEmptyBaseAudit(this.rowVersion),
+    };
+  }
+
+  isEmpty(): boolean {
+    return this.historicalNumber.trim() === '' && this.historicalNumberType.trim() === '';
+  }
+}
+
 export class UpdatePropertyDetailsFormModel {
   id?: number;
   rowVersion?: number;
@@ -124,6 +168,9 @@ export class UpdatePropertyDetailsFormModel {
 
   districtTypeCode?: number;
   districtTypeCodeDescription?: string;
+
+  // historical numbers
+  historicalNumbers: HistoricalNumberForm[] = [];
 
   // multi-selects
   anomalies?: PropertyAnomalyFormModel[];
