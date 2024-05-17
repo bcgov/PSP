@@ -2,11 +2,10 @@ import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
+import AuditSection from '@/components/common/HeaderField/AuditSection';
 import { HeaderField } from '@/components/common/HeaderField/HeaderField';
-import { UserNameTooltip } from '@/components/common/UserNameTooltip';
 import { Api_LastUpdatedBy } from '@/models/api/File';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
-import { prettyFormatUTCDate } from '@/utils';
 import { formatMinistryProject } from '@/utils/formUtils';
 
 import HistoricalNumbersContainer from '../../shared/header/HistoricalNumberContainer';
@@ -64,30 +63,7 @@ export const AcquisitionHeader: React.FunctionComponent<
         <HistoricalNumbersContainer propertyIds={propertyIds} View={HistoricalNumberFieldView} />
       </Col>
       <Col xs="5">
-        <Row className="no-gutters">
-          <Col className="text-right">
-            <StyleSmallText>
-              Created: <strong>{prettyFormatUTCDate(acquisitionFile?.appCreateTimestamp)}</strong>{' '}
-              by{' '}
-              <UserNameTooltip
-                userName={acquisitionFile?.appCreateUserid}
-                userGuid={acquisitionFile?.appCreateUserGuid}
-              />
-            </StyleSmallText>
-          </Col>
-        </Row>
-        <Row className="no-gutters">
-          <Col className="text-right">
-            <StyleSmallText>
-              Last updated:{' '}
-              <strong>{prettyFormatUTCDate(lastUpdatedBy?.appLastUpdateTimestamp)}</strong> by{' '}
-              <UserNameTooltip
-                userName={lastUpdatedBy?.appLastUpdateUserid}
-                userGuid={lastUpdatedBy?.appLastUpdateUserGuid}
-              />
-            </StyleSmallText>
-          </Col>
-        </Row>
+        <AuditSection lastUpdatedBy={lastUpdatedBy} baseAudit={acquisitionFile} />
         <Row className="no-gutters">
           <Col>
             <HeaderField className="justify-content-end" label="Status:">
@@ -108,9 +84,4 @@ const StyledRow = styled(Row)`
   border-bottom-style: solid;
   border-bottom-color: grey;
   border-bottom-width: 0.1rem;
-`;
-
-const StyleSmallText = styled.span`
-  font-size: 0.87em;
-  line-height: 1.9;
 `;

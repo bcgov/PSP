@@ -182,16 +182,16 @@ exports[`MotiInventoryHeader component > renders as expected 1`] = `
             <div
               class="pr-0 text-left col-3"
             >
-              <label>
-                Civic Address:
-              </label>
+              <strong>
+                <label>
+                  Civic Address:
+                </label>
+              </strong>
             </div>
             <div
               class="pl-1 text-left col-9"
             >
-              <strong>
-                -
-              </strong>
+              -
             </div>
           </div>
         </div>
@@ -204,15 +204,15 @@ exports[`MotiInventoryHeader component > renders as expected 1`] = `
             <div
               class="pr-0 text-left col-auto"
             >
-              <label>
-                PID:
-              </label>
+              <strong>
+                <label>
+                  PID:
+                </label>
+              </strong>
             </div>
             <div
               class="pl-1 text-left col-5"
-            >
-              <strong />
-            </div>
+            />
           </div>
         </div>
       </div>
@@ -228,15 +228,15 @@ exports[`MotiInventoryHeader component > renders as expected 1`] = `
             <div
               class="pr-0 text-left col-3"
             >
-              <label>
-                Plan #:
-              </label>
+              <strong>
+                <label>
+                  Plan #:
+                </label>
+              </strong>
             </div>
             <div
               class="pl-1 text-left col-9"
-            >
-              <strong />
-            </div>
+            />
           </div>
         </div>
         <div
@@ -248,15 +248,15 @@ exports[`MotiInventoryHeader component > renders as expected 1`] = `
             <div
               class="pr-0 text-left col-auto"
             >
-              <label>
-                Land parcel type:
-              </label>
+              <strong>
+                <label>
+                  Land parcel type:
+                </label>
+              </strong>
             </div>
             <div
               class="pl-1 text-left col-5"
-            >
-              <strong />
-            </div>
+            />
           </div>
         </div>
       </div>

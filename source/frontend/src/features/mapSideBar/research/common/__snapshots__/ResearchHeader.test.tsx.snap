@@ -6,17 +6,17 @@ exports[`ResearchHeader component > renders as expected when provided no researc
     class="Toastify"
   />
   <div />
-  .c0 {
+  .c1 {
+  font-size: 0.87em;
+  line-height: 1.9;
+}
+
+.c0 {
   margin-top: 0.5rem;
   margin-bottom: 1.5rem;
   border-bottom-style: solid;
   border-bottom-color: grey;
   border-bottom-width: 0.1rem;
-}
-
-.c1 {
-  font-size: 0.87em;
-  line-height: 1.9;
 }
 
 <div
@@ -37,15 +37,15 @@ exports[`ResearchHeader component > renders as expected when provided no researc
             <div
               class="pr-0 text-left col-3"
             >
-              <label>
-                File #:
-              </label>
+              <strong>
+                <label>
+                  File #:
+                </label>
+              </strong>
             </div>
             <div
               class="pl-1 text-left col-9"
-            >
-              <strong />
-            </div>
+            />
           </div>
         </div>
       </div>
@@ -61,15 +61,15 @@ exports[`ResearchHeader component > renders as expected when provided no researc
             <div
               class="pr-0 text-left col-3"
             >
-              <label>
-                File name:
-              </label>
+              <strong>
+                <label>
+                  File name:
+                </label>
+              </strong>
             </div>
             <div
               class="pl-1 text-left col-9"
-            >
-              <strong />
-            </div>
+            />
           </div>
         </div>
       </div>
@@ -85,15 +85,15 @@ exports[`ResearchHeader component > renders as expected when provided no researc
             <div
               class="pr-0 text-left col-3"
             >
-              <label>
-                MoTI region:
-              </label>
+              <strong>
+                <label>
+                  MoTI region:
+                </label>
+              </strong>
             </div>
             <div
               class="pl-1 text-left col-9"
-            >
-              <strong />
-            </div>
+            />
           </div>
         </div>
       </div>
@@ -109,15 +109,15 @@ exports[`ResearchHeader component > renders as expected when provided no researc
             <div
               class="pr-0 text-left col-3"
             >
-              <label>
-                Ministry district:
-              </label>
+              <strong>
+                <label>
+                  Ministry district:
+                </label>
+              </strong>
             </div>
             <div
               class="pl-1 text-left col-9"
-            >
-              <strong />
-            </div>
+            />
           </div>
         </div>
       </div>
@@ -127,14 +127,16 @@ exports[`ResearchHeader component > renders as expected when provided no researc
         <div
           class="pr-0 text-left col-3"
         >
-          <label>
-            Historical File #:
-          </label>
+          <strong>
+            <label>
+              Historical File #:
+            </label>
+          </strong>
         </div>
         <div
           class="pl-1 text-left col-9"
         >
-          <strong />
+          <div />
         </div>
       </div>
     </div>
@@ -150,8 +152,9 @@ exports[`ResearchHeader component > renders as expected when provided no researc
           <span
             class="c1"
           >
-            Created: 
-            <strong />
+            <strong>
+              Created: 
+            </strong>
              by 
             <span
               class="tooltip-icon"
@@ -174,8 +177,9 @@ exports[`ResearchHeader component > renders as expected when provided no researc
           <span
             class="c1"
           >
-            Last updated: 
-            <strong />
+            <strong>
+              Updated: 
+            </strong>
              by 
             <span
               class="tooltip-icon"
@@ -201,15 +205,15 @@ exports[`ResearchHeader component > renders as expected when provided no researc
             <div
               class="pr-0 text-left col-auto"
             >
-              <label>
-                Status:
-              </label>
+              <strong>
+                <label>
+                  Status:
+                </label>
+              </strong>
             </div>
             <div
               class="pl-1 text-left col-auto"
-            >
-              <strong />
-            </div>
+            />
           </div>
         </div>
       </div>

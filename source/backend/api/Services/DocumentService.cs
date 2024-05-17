@@ -4,6 +4,7 @@ using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using MapsterMapper;
@@ -358,7 +359,6 @@ namespace Pims.Api.Services
         public async Task<ExternalResponse<FileDownloadResponse>> DownloadFileLatestAsync(long mayanDocumentId)
         {
             this.Logger.LogInformation("Downloading storage document latest");
-            this.User.ThrowIfNotAuthorized(Permissions.DocumentView);
 
             ExternalResponse<DocumentDetailModel> documentResult = await documentStorageRepository.TryGetDocumentAsync(mayanDocumentId);
             if (documentResult.Status == ExternalResponseStatus.Success)
@@ -397,6 +397,22 @@ namespace Pims.Api.Services
                     HttpStatusCode = documentResult.HttpStatusCode,
                 };
             }
+        }
+
+        public async Task<ExternalResponse<QueryResponse<FilePageModel>>> GetDocumentFilePageListAsync(long documentId, long documentFileId)
+        {
+            this.Logger.LogInformation("Retrieving pages for document: {documentId} file: {documentFileId}", documentId, documentFileId);
+            this.User.ThrowIfNotAuthorized(Permissions.DocumentView);
+
+            return await documentStorageRepository.TryGetFilePageListAsync(documentId, documentFileId);
+        }
+
+        public async Task<HttpResponseMessage> DownloadFilePageImageAsync(long mayanDocumentId, long mayanFileId, long mayanFilePageId)
+        {
+            this.Logger.LogInformation("Downloading file document page for document: {mayanDocumentId} file: {mayanFileId} page(id): {mayanFilePageId}", mayanDocumentId, mayanFileId, mayanFilePageId);
+            this.User.ThrowIfNotAuthorized(Permissions.DocumentView);
+
+            return await documentStorageRepository.TryGetFilePageImage(mayanDocumentId, mayanFileId, mayanFilePageId);
         }
 
         private static bool IsValidDocumentExtension(string fileName)

@@ -62,6 +62,27 @@ namespace Pims.Api.Repositories.Rest
             }
         }
 
+        public async Task<HttpResponseMessage> GetRawAsync(Uri endpoint, string authenticationToken)
+        {
+            using HttpClient client = _httpClientFactory.CreateClient("Pims.Api.Logging");
+            client.DefaultRequestHeaders.Accept.Clear();
+            AddAuthentication(client, authenticationToken);
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(MediaTypeNames.Application.Json));
+            try
+            {
+                HttpResponseMessage response = await client.GetAsync(endpoint).ConfigureAwait(true);
+                return response;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Unexpected exception during Get {e}", e);
+                return new HttpResponseMessage()
+                {
+                    StatusCode = HttpStatusCode.InternalServerError,
+                };
+            }
+        }
+
         public async Task<ExternalResponse<T>> PostAsync<T>(Uri endpoint, HttpContent content, string authenticationToken = null)
         {
             using HttpClient client = _httpClientFactory.CreateClient("Pims.Api.Logging");

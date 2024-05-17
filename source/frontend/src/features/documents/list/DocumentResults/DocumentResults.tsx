@@ -14,15 +14,16 @@ export interface IDocumentResultProps {
   sort: TableSort<ApiGen_Concepts_Document>;
   setSort: (value: TableSort<ApiGen_Concepts_Document>) => void;
   onViewDetails: (values: ApiGen_Concepts_DocumentRelationship) => void;
+  onPreview: (values: ApiGen_Concepts_DocumentRelationship) => void;
   onDelete: (values: ApiGen_Concepts_DocumentRelationship) => void;
 }
 
 export const DocumentResults: React.FunctionComponent<
   React.PropsWithChildren<IDocumentResultProps>
-> = ({ results, setSort, sort, onViewDetails, onDelete, ...rest }) => {
+> = ({ results, setSort, sort, onViewDetails, onDelete, onPreview, ...rest }) => {
   const columns = useMemo(
-    () => getDocumentColumns({ onViewDetails, onDelete }),
-    [onViewDetails, onDelete],
+    () => getDocumentColumns({ onViewDetails, onDelete, onPreview }),
+    [onViewDetails, onDelete, onPreview],
   );
 
   return (
