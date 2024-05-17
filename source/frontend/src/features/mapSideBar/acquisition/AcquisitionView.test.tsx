@@ -170,9 +170,11 @@ describe('AcquisitionView component', () => {
     expect(getByText('Acquisition File')).toBeVisible();
 
     expect(getByText('1-12345-01 - Test ACQ File')).toBeVisible();
-    expect(getByText(prettyFormatUTCDate(testAcquisitionFile.appCreateTimestamp))).toBeVisible();
     expect(
-      getByText(prettyFormatUTCDate(mockLastUpdatedBy(1).appLastUpdateTimestamp)),
+      getByText(new RegExp(prettyFormatUTCDate(testAcquisitionFile.appCreateTimestamp))),
+    ).toBeVisible();
+    expect(
+      getByText(new RegExp(prettyFormatUTCDate(mockLastUpdatedBy(1).appLastUpdateTimestamp))),
     ).toBeVisible();
   });
 

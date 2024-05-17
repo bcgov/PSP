@@ -44,6 +44,6 @@ export const UserNameTooltip: FunctionComponent<IUserNameTooltipProps> = ({
       innerClassName={'userNameTooltip'}
       toolTip={userNameInfo}
       customToolTipIcon={<strong>{userName ?? 'USER'}</strong>}
-    ></TooltipIcon>
+    />
   );
 };

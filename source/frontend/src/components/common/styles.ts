@@ -36,7 +36,7 @@ export const Breadcrumb = styled(BsBreadcrumb)`
 
 export const SelectedText = styled.p`
   font-size: 1.4rem;
-  color: ${props => props.theme.bcTokens.iconColorSuccess};
+  color: ${props => props.theme.bcTokens.iconsColorSuccess};
 `;
 
 /**
@@ -132,7 +132,7 @@ export const FilterBoxForm = styled(Form)`
 export const StyledAddButton = styled(Button)`
   &.btn.btn-primary,
   &.btn.btn-primary:active {
-    background-color: ${props => props.theme.bcTokens.iconColorSuccess};
+    background-color: ${props => props.theme.bcTokens.iconsColorSuccess};
   }
 `;
 

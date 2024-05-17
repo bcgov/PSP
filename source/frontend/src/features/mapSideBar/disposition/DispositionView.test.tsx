@@ -205,7 +205,9 @@ describe('DispositionView component', () => {
     expect(getByText('Disposition File')).toBeVisible();
 
     expect(getByText(/FILE_NUMBER 3A8F46B/i)).toBeVisible();
-    expect(getByText(prettyFormatUTCDate(testDispositionFile.appCreateTimestamp))).toBeVisible();
+    expect(
+      getByText(new RegExp(prettyFormatUTCDate(testDispositionFile.appCreateTimestamp))),
+    ).toBeVisible();
   });
 
   it('should display the Edit Properties button if the user has permissions', async () => {

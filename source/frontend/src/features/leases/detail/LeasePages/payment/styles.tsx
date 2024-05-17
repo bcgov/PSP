@@ -171,7 +171,7 @@ export const WarningTextBox = styled(InlineFlexDiv)`
 
 export const AddActualButton = styled(Button)`
   &&& {
-    background-color: ${props => props.theme.bcTokens.iconColorSuccess};
+    background-color: ${props => props.theme.bcTokens.iconsColorSuccess};
     color: white;
     &:hover {
       background-color: #3aba53;
