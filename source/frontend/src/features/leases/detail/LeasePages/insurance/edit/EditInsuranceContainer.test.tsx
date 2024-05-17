@@ -7,10 +7,10 @@ import { TypeCodeUtils } from '@/interfaces/ITypeCode';
 import { ApiGen_Concepts_Insurance } from '@/models/api/generated/ApiGen_Concepts_Insurance';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { ILookupCode } from '@/store/slices/lookupCodes';
-import { act, render, RenderOptions, RenderResult } from '@/utils/test-utils';
+import { act, render, RenderOptions, RenderResult, within } from '@/utils/test-utils';
 
-import InsuranceEditContainer, { InsuranceEditContainerProps } from './EditInsuranceContainer';
 import { createRef } from 'react';
+import InsuranceEditContainer, { InsuranceEditContainerProps } from './EditInsuranceContainer';
 
 export const mockInsuranceTypeHome: ILookupCode = {
   id: 'HOME',
@@ -19,12 +19,21 @@ export const mockInsuranceTypeHome: ILookupCode = {
   isDisabled: false,
   displayOrder: 1,
 };
+
 export const mockInsuranceTypeCar: ILookupCode = {
   id: 'CAR',
   name: 'Car insurance',
   type: 'PimsInsuranceType',
   isDisabled: false,
   displayOrder: 2,
+};
+
+export const mockInsuranceTypeOther: ILookupCode = {
+  id: 'OTHER',
+  name: 'Other insurance',
+  type: 'PimsInsuranceType',
+  isDisabled: false,
+  displayOrder: 3,
 };
 
 const mockInsuranceHome: ApiGen_Concepts_Insurance = {
@@ -83,7 +92,7 @@ describe('Edit Lease Insurance', () => {
     expect(result.asFragment()).toMatchSnapshot();
   });
 
-  it('Shows correct comboboxes', () => {
+  it('shows correct checkboxes', () => {
     const result = setup({
       ...defaultProps,
       insuranceList: [mockInsuranceHome],
@@ -98,7 +107,7 @@ describe('Edit Lease Insurance', () => {
     expect(checkboxes[1] as HTMLInputElement).not.toBeChecked();
   });
 
-  it('Updates form lists when clicked', async () => {
+  it('refreshes list of insurances when checkboxes are clicked', async () => {
     const testInsuranceCar: ApiGen_Concepts_Insurance = {
       ...mockInsuranceHome,
       coverageLimit: 888,
@@ -138,7 +147,7 @@ describe('Edit Lease Insurance', () => {
     const updatedForms = result.getAllByTestId('insurance-form');
     expect(updatedForms.length).toBe(1);
 
-    const formTitle = result.getByTestId('insurance-form-title');
-    expect(formTitle.textContent).toBe(mockInsuranceTypeCar.name);
+    const withinForm = within(updatedForms[0]);
+    expect(withinForm.getByText(mockInsuranceTypeCar.name)).toBeVisible();
   });
 });

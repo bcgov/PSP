@@ -3,7 +3,7 @@ import React from 'react';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { ApiGen_Concepts_Insurance } from '@/models/api/generated/ApiGen_Concepts_Insurance';
-import { formatMoney, prettyFormatDate } from '@/utils';
+import { exists, formatMoney, prettyFormatDate } from '@/utils';
 
 interface PolicyProps {
   insurance: ApiGen_Concepts_Insurance;
@@ -18,7 +18,7 @@ interface PolicyView {
   insuranceType?: string;
 }
 
-const Policy: React.FunctionComponent<React.PropsWithChildren<PolicyProps>> = ({ insurance }) => {
+const Policy: React.FunctionComponent<PolicyProps> = ({ insurance }) => {
   const policy: PolicyView = {
     insuranceInPlace:
       insurance.isInsuranceInPlace == null
@@ -34,6 +34,11 @@ const Policy: React.FunctionComponent<React.PropsWithChildren<PolicyProps>> = ({
   };
   return (
     <Section header={policy.insuranceType}>
+      {exists(insurance.insuranceType?.id) && insurance.insuranceType?.id === 'OTHER' && (
+        <SectionField label="Other insurance type" labelWidth="3">
+          {policy.otherInsuranceType}
+        </SectionField>
+      )}
       <SectionField label="Insurance in place" labelWidth="3">
         {policy.insuranceInPlace}
       </SectionField>

@@ -17,11 +17,13 @@ import { prettyFormatUTCDate, stringToFragment } from '@/utils';
 export interface IDocumentColumnProps {
   onViewDetails: (values: ApiGen_Concepts_DocumentRelationship) => void;
   onDelete: (values: ApiGen_Concepts_DocumentRelationship) => void;
+  onPreview: (values: ApiGen_Concepts_DocumentRelationship) => void;
 }
 
 export const getDocumentColumns = ({
   onViewDetails,
   onDelete,
+  onPreview,
 }: IDocumentColumnProps): ColumnWithProps<DocumentRow>[] => {
   return [
     {
@@ -35,7 +37,7 @@ export const getDocumentColumns = ({
       Header: 'File name',
       accessor: 'fileName',
       sortable: true,
-      Cell: renderFileName(onViewDetails),
+      Cell: renderFileName(onPreview),
     },
     {
       Header: 'Uploaded',
