@@ -7,6 +7,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Pims.Api.Constants;
 using Pims.Api.Models.Cdogs;
 using Pims.Api.Models.CodeTypes;
@@ -14,6 +15,7 @@ using Pims.Api.Models.CodeTypes;
 using Pims.Api.Models.Requests.Http;
 using Pims.Api.Repositories.Cdogs;
 using Pims.Av;
+using Pims.Core.Http.Configuration;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Security;
 
@@ -28,6 +30,7 @@ namespace Pims.Api.Services
         private readonly IFormDocumentService _formDocumentService;
         private readonly IDocumentService _documentService;
         private readonly IAvService avService;
+        private readonly IOptionsMonitor<AuthClientOptions> keycloakOptions;
 
         public DocumentGenerationService(
             ClaimsPrincipal user,
@@ -35,12 +38,13 @@ namespace Pims.Api.Services
             IDocumentGenerationRepository documentGenerationRepository,
             IFormDocumentService formDocumentService,
             IDocumentService documentService,
-            IAvService avService)
+            IAvService avService,
+            IOptionsMonitor<AuthClientOptions> options)
             : base(user, logger)
         {
             this._documentGenerationRepository = documentGenerationRepository;
             this.avService = avService;
-
+            this.keycloakOptions = options;
             this._formDocumentService = formDocumentService;
             this._documentService = documentService;
         }
@@ -49,7 +53,7 @@ namespace Pims.Api.Services
         {
             this.Logger.LogInformation("Getting supported file Types");
 
-            this.User.ThrowIfNotAuthorized(Permissions.GenerateDocuments);
+            this.User.ThrowIfNotAuthorizedOrServiceAccount(Permissions.GenerateDocuments, keycloakOptions);
             ExternalResponse<FileTypes> result = await _documentGenerationRepository.TryGetFileTypesAsync();
             return result;
         }
