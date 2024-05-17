@@ -3,6 +3,9 @@ import '@bcgov/design-tokens/css/variables.css';
 import 'leaflet/dist/leaflet.css';
 import 'react-datepicker/dist/react-datepicker.css';
 import 'react-toastify/dist/ReactToastify.css';
+import 'yet-another-react-lightbox/styles.css';
+import 'yet-another-react-lightbox/plugins/captions.css';
+import 'yet-another-react-lightbox/plugins/counter.css';
 import './assets/scss/index.scss'; // should be loaded last to allow for overrides without having to resort to "!important"
 
 import * as bcTokens from '@bcgov/design-tokens/js/variables.js';
@@ -23,6 +26,7 @@ import { TenantConsumer, TenantProvider } from '@/tenants';
 import getKeycloakEventHandler from '@/utils/getKeycloakEventHandler';
 
 import App from './App';
+import { DocumentViewerContextProvider } from './features/documents/context/DocumentViewerContext';
 import { ITenantConfig2 } from './hooks/pims-api/interfaces/ITenantConfig';
 import { useRefreshSiteminder } from './hooks/useRefreshSiteminder';
 
@@ -63,9 +67,11 @@ const InnerComponent = ({ tenant }: { tenant: ITenantConfig2 }) => {
         <Provider store={store}>
           <AuthStateContextProvider>
             <ModalContextProvider>
-              <Router>
-                <App />
-              </Router>
+              <DocumentViewerContextProvider>
+                <Router>
+                  <App />
+                </Router>
+              </DocumentViewerContextProvider>
             </ModalContextProvider>
           </AuthStateContextProvider>
         </Provider>

@@ -1,5 +1,5 @@
 import { FormDocumentType } from '@/constants/formDocumentTypes';
-import { showFile } from '@/features/documents/DownloadDocumentButton';
+import { createFileDownload } from '@/features/documents/DownloadDocumentButton';
 import { useDocumentGenerationRepository } from '@/features/documents/hooks/useDocumentGenerationRepository';
 import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
@@ -114,7 +114,7 @@ export const useGenerateH0443 = () => {
       });
       generatedFile?.status === ApiGen_CodeTypes_ExternalResponseStatus.Success &&
         generatedFile?.payload &&
-        showFile(generatedFile?.payload);
+        createFileDownload(generatedFile?.payload);
     }
   };
   return generateLetter;
