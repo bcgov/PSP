@@ -59,6 +59,8 @@ export class LeaseFormModel {
   documentationReference = '';
   hasPhysicalLicense?: boolean;
   hasDigitalLicense?: boolean;
+  cancellationReason: string | null = null;
+  terminationReason: string | null = null;
   project?: IAutocompletePrediction;
   tenantNotes: string[] = [];
   properties: FormLeaseProperty[] = [];
@@ -116,6 +118,8 @@ export class LeaseFormModel {
       sortedConsultations?.map(c => FormLeaseConsultation.fromApi(c)) || [];
     leaseDetail.terms = apiModel?.terms?.map(t => FormLeaseTerm.fromApi(t)) || [];
     leaseDetail.tenants = apiModel?.tenants?.map(t => new FormTenant(t)) || [];
+    leaseDetail.cancellationReason = apiModel.cancellationReason || '';
+    leaseDetail.terminationReason = apiModel.terminationReason || '';
 
     return leaseDetail;
   }
@@ -166,6 +170,8 @@ export class LeaseFormModel {
       fileNumber: null,
       hasDigitalFile: formLease.hasDigitalLicense ?? false,
       hasPhysicalFile: formLease.hasPhysicalLicense ?? false,
+      cancellationReason: stringToNull(formLease.cancellationReason),
+      terminationReason: stringToNull(formLease.terminationReason),
       isExpired: false,
       programName: null,
       renewalCount: 0,
@@ -320,6 +326,8 @@ export const getDefaultFormLease: () => LeaseFormModel = () =>
     responsibilityEffectiveDate: null,
     hasPhysicalFile: false,
     hasDigitalFile: false,
+    cancellationReason: null,
+    terminationReason: null,
     isExpired: false,
     project: null,
     ...getEmptyBaseAudit(),

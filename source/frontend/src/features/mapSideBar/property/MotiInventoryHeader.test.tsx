@@ -66,7 +66,7 @@ describe('MotiInventoryHeader component', () => {
   });
 
   it('renders a spinner when the data is loading', async () => {
-    const { getByTestId } =await  setup({
+    const { getByTestId } = await setup({
       composedProperty: { ...defaultComposedProperty },
       isLoading: true,
     });
@@ -126,7 +126,7 @@ describe('MotiInventoryHeader component', () => {
   });
 
   it('allows the active property to be zoomed in', async () => {
-    const testProperty: ApiGen_Concepts_Property = {} as any;
+    const testProperty: ApiGen_Concepts_Property = { latitude: 1, longitude: 1 } as any;
 
     const { getByTitle } = await setup({
       composedProperty: {
@@ -141,7 +141,7 @@ describe('MotiInventoryHeader component', () => {
   });
 
   it('does not allow property zooming if no property is visible', async () => {
-    const { getByTitle } = await setup({
+    const { queryByText } = await setup({
       composedProperty: {
         ...defaultComposedProperty,
         pimsProperty: undefined,
@@ -149,8 +149,7 @@ describe('MotiInventoryHeader component', () => {
       isLoading: false,
     });
 
-    const zoomButton = getByTitle('Zoom Map');
-    await act(async () => userEvent.click(zoomButton));
-    expect(onZoom).toHaveBeenCalled();
+    expect(queryByText('Zoom Map')).not.toBeInTheDocument();
+    expect(onZoom).not.toHaveBeenCalled();
   });
 });

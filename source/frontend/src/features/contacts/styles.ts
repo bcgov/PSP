@@ -25,8 +25,8 @@ export const StatusIndicators = styled.div`
   padding: 0.2rem 1rem;
   color: ${props => props.theme.css.borderOutlineColor};
   &.active {
-    color: ${props => props.theme.bcTokens.iconColorSuccess};
-    border: 1px solid ${props => props.theme.bcTokens.iconColorSuccess};
+    color: ${props => props.theme.bcTokens.iconsColorSuccess};
+    border: 1px solid ${props => props.theme.bcTokens.iconsColorSuccess};
   }
 `;
 

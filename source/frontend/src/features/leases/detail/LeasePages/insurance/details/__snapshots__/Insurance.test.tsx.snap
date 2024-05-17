@@ -6,69 +6,36 @@ exports[`Edit Lease Insurance > renders as expected 1`] = `
     class="Toastify"
   />
   <div />
-  <h2>
-    Required coverage
-  </h2>
-  <div>
-    Select the coverage types that are required for this lease or license.
-  </div>
   .c0 {
-  border-radius: 1rem;
-  width: 100%;
   padding-top: 1rem;
-  padding-left: 2.5rem;
-  padding-bottom: 1rem;
 }
 
-<div
-    class="c0"
-  >
-    <div
-      class="form-group"
-    >
-      <div
-        class="form-check"
-      >
-        <input
-          checked=""
-          class="form-check-input"
-          data-testid="insurance-checkbox"
-          id="insurance-0"
-          name="checkedTypes"
-          type="checkbox"
-          value="HOME"
-        />
-        <label
-          class="form-check-label"
-          for="insurance-0"
-        >
-          Home Insurance
-        </label>
-      </div>
-      <div
-        class="form-check"
-      >
-        <input
-          class="form-check-input"
-          data-testid="insurance-checkbox"
-          id="insurance-1"
-          name="checkedTypes"
-          type="checkbox"
-          value="CAR"
-        />
-        <label
-          class="form-check-label"
-          for="insurance-1"
-        >
-          Car insurance
-        </label>
-      </div>
-    </div>
-  </div>
-  <h2>
-    Coverage details
-  </h2>
-  .c3 .react-datepicker__calendar-icon {
+.c2 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c1 {
+  margin: 1.5rem;
+  padding: 1.5rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
+.c4.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c3 {
+  font-weight: bold;
+}
+
+.c5 .react-datepicker__calendar-icon {
   width: 3rem;
   height: 3rem;
   margin-top: 0.5rem;
@@ -76,175 +43,274 @@ exports[`Edit Lease Insurance > renders as expected 1`] = `
   pointer-events: none;
 }
 
-.c3 .react-datepicker__view-calendar-icon input {
+.c5 .react-datepicker__view-calendar-icon input {
   padding: 0.6rem 1rem 0.5rem 0.6rem;
 }
 
-.c3 .react-datepicker-wrapper {
+.c5 .react-datepicker-wrapper {
   max-width: 16rem;
 }
 
-.c4.c4.form-control.is-valid {
+.c6.c6.form-control.is-valid {
   background-image: none;
 }
 
-.c4.c4.form-control.is-invalid {
+.c6.c6.form-control.is-invalid {
   border-color: #d8292f !important;
 }
 
-.c0 {
-  border-radius: 1rem;
-  width: 100%;
-  padding: 2.5rem;
-}
-
-.c2.required::before {
-  content: '*';
-  position: absolute;
-  top: 0.75rem;
-  left: 0rem;
-}
-
-.c1 {
-  font-weight: bold;
-}
-
-<div>
+<div
+    class="c0"
+  >
     <div
-      class="c0 mb-3"
-      data-testid="insurance-form"
+      class="c1 form-section"
     >
       <h2
-        class=""
-        data-testid="insurance-form-title"
-      >
-        Home Insurance
-      </h2>
-      <div
-        class="pb-2 row"
+        class="c2"
       >
         <div
-          class="pr-0 text-left col-3"
-        >
-          <label
-            class="c1"
-          >
-            Insurance in place:
-          </label>
-        </div>
-        <div
-          class="c2 text-left col"
+          class="no-gutters row"
         >
           <div
-            class="form-group"
+            class="col"
           >
-            <select
-              class="form-control"
-              id="input-insurances.0.isInsuranceInPlaceSelect"
-              name="insurances.0.isInsuranceInPlaceSelect"
+            Required Coverage
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c3"
             >
-              <option
-                value="null"
+              Select coverage types:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            <div
+              class="form-group"
+            >
+              <div
+                class="form-check"
               >
-                Unknown
-              </option>
-              <option
-                value="true"
+                <input
+                  checked=""
+                  class="form-check-input"
+                  data-testid="insurance-checkbox"
+                  id="insurance-0"
+                  name="checkedTypes"
+                  type="checkbox"
+                  value="HOME"
+                />
+                <label
+                  class="form-check-label"
+                  for="insurance-0"
+                >
+                  Home Insurance
+                </label>
+              </div>
+              <div
+                class="form-check"
               >
-                Yes
-              </option>
-              <option
-                value="false"
-              >
-                No
-              </option>
-            </select>
+                <input
+                  class="form-check-input"
+                  data-testid="insurance-checkbox"
+                  id="insurance-1"
+                  name="checkedTypes"
+                  type="checkbox"
+                  value="CAR"
+                />
+                <label
+                  class="form-check-label"
+                  for="insurance-1"
+                >
+                  Car insurance
+                </label>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      <div
-        class="row"
+    </div>
+    <div
+      class="c1 form-section"
+      data-testid="insurance-form"
+    >
+      <h2
+        class="c2"
       >
         <div
-          class="col"
+          class="no-gutters row"
         >
-          <div>
-            <strong>
-              Limit ($):
-            </strong>
+          <div
+            class="col"
+          >
+            Home Insurance
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c3"
+            >
+              Insurance in place:
+            </label>
           </div>
           <div
-            class="form-group"
+            class="c4 text-left col"
           >
             <div
-              class="input-tooltip-wrapper"
+              class="form-group"
             >
-              <input
-                class="form-control input-number"
-                id="input-insurances.0.coverageLimit"
-                inputmode="numeric"
-                name="insurances.0.coverageLimit"
-                placeholder=""
-                type="text"
-                value="$777.00"
-              />
+              <select
+                class="form-control"
+                id="input-insurances.0.isInsuranceInPlaceSelect"
+                name="insurances.0.isInsuranceInPlaceSelect"
+              >
+                <option
+                  value="null"
+                >
+                  Unknown
+                </option>
+                <option
+                  value="true"
+                >
+                  Yes
+                </option>
+                <option
+                  value="false"
+                >
+                  No
+                </option>
+              </select>
             </div>
           </div>
-          <div>
-            <strong>
-              Policy expiry date:
-            </strong>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c3"
+            >
+              Limit ($):
+            </label>
           </div>
           <div
-            class="c3 form-group"
+            class="c4 text-left col-3"
           >
             <div
-              class="react-datepicker-wrapper d-block"
+              class="form-group"
             >
               <div
-                class="react-datepicker__input-container react-datepicker__view-calendar-icon"
+                class="input-tooltip-wrapper"
               >
-                <svg
-                  class="react-datepicker__calendar-icon"
-                  viewBox="0 0 448 512"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
-                  />
-                </svg>
                 <input
-                  autocomplete="off"
-                  class="c4 form-control date-picker"
-                  id="datepicker-insurances.0.expiryDate"
-                  name="insurances.0.expiryDate"
-                  placeholder="MMM DD, YYYY"
+                  class="form-control input-number"
+                  id="input-insurances.0.coverageLimit"
+                  inputmode="numeric"
+                  name="insurances.0.coverageLimit"
+                  placeholder=""
                   type="text"
-                  value="Jan 01, 2022"
+                  value="$777.00"
                 />
               </div>
             </div>
           </div>
         </div>
         <div
-          class="col-md-8"
+          class="pb-2 row"
         >
-          <div>
-            <strong>
-              Description of coverage:
-            </strong>
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c3"
+            >
+              Policy expiry:
+            </label>
           </div>
           <div
-            class="textarea input form-group"
+            class="c4 text-left col"
           >
-            <textarea
-              class="form-control"
-              data-testid="insurance-form-description"
-              id="input-insurances.0.coverageDescription"
-              name="insurances.0.coverageDescription"
-              rows="4"
-              title=""
-            />
+            <div
+              class="c5 form-group"
+            >
+              <div
+                class="react-datepicker-wrapper d-block"
+              >
+                <div
+                  class="react-datepicker__input-container react-datepicker__view-calendar-icon"
+                >
+                  <svg
+                    class="react-datepicker__calendar-icon"
+                    viewBox="0 0 448 512"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                    />
+                  </svg>
+                  <input
+                    autocomplete="off"
+                    class="c6 form-control date-picker"
+                    id="datepicker-insurances.0.expiryDate"
+                    name="insurances.0.expiryDate"
+                    placeholder="MMM DD, YYYY"
+                    type="text"
+                    value="Jan 01, 2022"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c3"
+            >
+              Description of coverage:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col-12"
+          >
+            <div
+              class="textarea input form-group"
+            >
+              <textarea
+                class="form-control"
+                data-testid="insurance-form-description"
+                id="input-insurances.0.coverageDescription"
+                name="insurances.0.coverageDescription"
+                rows="4"
+                title=""
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -259,18 +325,7 @@ exports[`Lease Insurance > renders as expected 1`] = `
     class="Toastify"
   />
   <div />
-  .c4.required::before {
-  content: '*';
-  position: absolute;
-  top: 0.75rem;
-  left: 0rem;
-}
-
-.c3 {
-  font-weight: bold;
-}
-
-.c1 {
+  .c1 {
   font-weight: bold;
   border-bottom: 0.2rem solid;
   margin-bottom: 2rem;
@@ -282,6 +337,17 @@ exports[`Lease Insurance > renders as expected 1`] = `
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
+}
+
+.c4.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c3 {
+  font-weight: bold;
 }
 
 .c2 {

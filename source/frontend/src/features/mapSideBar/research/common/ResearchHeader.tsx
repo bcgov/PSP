@@ -1,12 +1,12 @@
 import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
+import AuditSection from '@/components/common/HeaderField/AuditSection';
 import { HeaderField } from '@/components/common/HeaderField/HeaderField';
-import { UserNameTooltip } from '@/components/common/UserNameTooltip';
 import { Api_LastUpdatedBy } from '@/models/api/File';
 import { ApiGen_Base_CodeType } from '@/models/api/generated/ApiGen_Base_CodeType';
 import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Concepts_ResearchFile';
-import { exists, prettyFormatUTCDate } from '@/utils';
+import { exists } from '@/utils';
 
 import HistoricalNumbersContainer from '../../shared/header/HistoricalNumberContainer';
 import HistoricalNumberFieldView from '../../shared/header/HistoricalNumberSectionView';
@@ -53,7 +53,7 @@ const ResearchHeader: React.FunctionComponent<
       <Col xs={leftColumnWidth}>
         <Row className="no-gutters">
           <Col>
-            <HeaderField label="File #:" labelWidth={leftColumnLabel} contentWidth="9">
+            <HeaderField label="File:" labelWidth={leftColumnLabel} contentWidth="9">
               {researchFile?.fileNumber}
             </HeaderField>
           </Col>
@@ -67,7 +67,7 @@ const ResearchHeader: React.FunctionComponent<
         </Row>
         <Row className="no-gutters">
           <Col>
-            <HeaderField label="MoTI region:" labelWidth={leftColumnLabel} contentWidth="9">
+            <HeaderField label="MOTI region:" labelWidth={leftColumnLabel} contentWidth="9">
               {regions}
             </HeaderField>
           </Col>
@@ -82,29 +82,7 @@ const ResearchHeader: React.FunctionComponent<
         <HistoricalNumbersContainer propertyIds={propertyIds} View={HistoricalNumberFieldView} />
       </Col>
       <Col xs="5">
-        <Row className="no-gutters">
-          <Col className="text-right">
-            <StyleSmallText>
-              Created: <strong>{prettyFormatUTCDate(researchFile?.appCreateTimestamp)}</strong> by{' '}
-              <UserNameTooltip
-                userName={researchFile?.appCreateUserid}
-                userGuid={researchFile?.appCreateUserGuid}
-              />
-            </StyleSmallText>
-          </Col>
-        </Row>
-        <Row className="no-gutters">
-          <Col className="text-right">
-            <StyleSmallText>
-              Last updated:{' '}
-              <strong>{prettyFormatUTCDate(props.lastUpdatedBy?.appLastUpdateTimestamp)}</strong> by{' '}
-              <UserNameTooltip
-                userName={props.lastUpdatedBy?.appLastUpdateUserid}
-                userGuid={props.lastUpdatedBy?.appLastUpdateUserGuid}
-              />
-            </StyleSmallText>
-          </Col>
-        </Row>
+        <AuditSection lastUpdatedBy={props.lastUpdatedBy} baseAudit={researchFile} />
         <Row className="no-gutters">
           <Col>
             <HeaderField className="justify-content-end" label="Status:">
@@ -125,9 +103,4 @@ const StyledRow = styled(Row)`
   border-bottom-style: solid;
   border-bottom-color: grey;
   border-bottom-width: 0.1rem;
-`;
-
-const StyleSmallText = styled.span`
-  font-size: 0.87em;
-  line-height: 1.9;
 `;

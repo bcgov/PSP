@@ -127,17 +127,17 @@ exports[`ResearchContainer component > renders as expected 1`] = `
   font-weight: bold;
 }
 
+.c5 {
+  font-size: 0.87em;
+  line-height: 1.9;
+}
+
 .c4 {
   margin-top: 0.5rem;
   margin-bottom: 1.5rem;
   border-bottom-style: solid;
   border-bottom-color: grey;
   border-bottom-width: 0.1rem;
-}
-
-.c5 {
-  font-size: 0.87em;
-  line-height: 1.9;
 }
 
 .c10 {
@@ -309,17 +309,17 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                 <div
                   class="pr-0 text-left col-3"
                 >
-                  <label>
-                    File #:
-                  </label>
-                </div>
-                <div
-                  class="pl-1 text-left col-9"
-                >
                   <strong>
-                    R-109
+                    <label>
+                      File:
+                    </label>
                   </strong>
                 </div>
+                <div
+                  class="pl-1 text-left col-9"
+                >
+                  R-109
+                </div>
               </div>
             </div>
           </div>
@@ -334,41 +334,17 @@ exports[`ResearchContainer component > renders as expected 1`] = `
               >
                 <div
                   class="pr-0 text-left col-3"
-                >
-                  <label>
-                    File name:
-                  </label>
-                </div>
-                <div
-                  class="pl-1 text-left col-9"
                 >
                   <strong>
-                    fsdgsdf
+                    <label>
+                      File name:
+                    </label>
                   </strong>
                 </div>
-              </div>
-            </div>
-          </div>
-          <div
-            class="no-gutters row"
-          >
-            <div
-              class="col"
-            >
-              <div
-                class="row"
-              >
-                <div
-                  class="pr-0 text-left col-3"
-                >
-                  <label>
-                    MoTI region:
-                  </label>
-                </div>
                 <div
                   class="pl-1 text-left col-9"
                 >
-                  <strong />
+                  fsdgsdf
                 </div>
               </div>
             </div>
@@ -385,15 +361,39 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                 <div
                   class="pr-0 text-left col-3"
                 >
-                  <label>
-                    Ministry district:
-                  </label>
+                  <strong>
+                    <label>
+                      MOTI region:
+                    </label>
+                  </strong>
                 </div>
                 <div
                   class="pl-1 text-left col-9"
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="no-gutters row"
+          >
+            <div
+              class="col"
+            >
+              <div
+                class="row"
+              >
+                <div
+                  class="pr-0 text-left col-3"
                 >
-                  <strong />
+                  <strong>
+                    <label>
+                      Ministry district:
+                    </label>
+                  </strong>
                 </div>
+                <div
+                  class="pl-1 text-left col-9"
+                />
               </div>
             </div>
           </div>
@@ -403,14 +403,16 @@ exports[`ResearchContainer component > renders as expected 1`] = `
             <div
               class="pr-0 text-left col-3"
             >
-              <label>
-                Historical File #:
-              </label>
+              <strong>
+                <label>
+                  Historical File #:
+                </label>
+              </strong>
             </div>
             <div
               class="pl-1 text-left col-9"
             >
-              <strong />
+              <div />
             </div>
           </div>
         </div>
@@ -426,10 +428,10 @@ exports[`ResearchContainer component > renders as expected 1`] = `
               <span
                 class="c5"
               >
-                Created: 
                 <strong>
-                  Sep 2, 2022
+                  Created: 
                 </strong>
+                Sep 2, 2022
                  by
                  
                 <span
@@ -453,9 +455,9 @@ exports[`ResearchContainer component > renders as expected 1`] = `
               <span
                 class="c5"
               >
-                Last updated:
-                 
-                <strong />
+                <strong>
+                  Updated: 
+                </strong>
                  by
                  
                 <span
@@ -482,16 +484,16 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                 <div
                   class="pr-0 text-left col-auto"
                 >
-                  <label>
-                    Status:
-                  </label>
+                  <strong>
+                    <label>
+                      Status:
+                    </label>
+                  </strong>
                 </div>
                 <div
                   class="pl-1 text-left col-auto"
                 >
-                  <strong>
-                    Active
-                  </strong>
+                  Active
                 </div>
               </div>
             </div>

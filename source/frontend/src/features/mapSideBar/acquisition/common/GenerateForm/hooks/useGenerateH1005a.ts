@@ -1,4 +1,4 @@
-import { showFile } from '@/features/documents/DownloadDocumentButton';
+import { createFileDownload } from '@/features/documents/DownloadDocumentButton';
 import { useDocumentGenerationRepository } from '@/features/documents/hooks/useDocumentGenerationRepository';
 import { FormTemplateTypes } from '@/features/mapSideBar/shared/content/models';
 import { useApiLeases } from '@/hooks/pims-api/useApiLeases';
@@ -81,7 +81,7 @@ export const useGenerateH1005a = () => {
         generatedFile?.status === ApiGen_CodeTypes_ExternalResponseStatus.Success &&
         generatedFile?.payload
       ) {
-        showFile(generatedFile?.payload);
+        createFileDownload(generatedFile?.payload);
       } else {
         throw Error('Failed to generate file');
       }

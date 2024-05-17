@@ -1,6 +1,8 @@
 using System;
 using System.Linq;
 using System.Security.Claims;
+using System.Security.Cryptography.Xml;
+using System.Text.Json;
 using Microsoft.Extensions.Options;
 using Pims.Core.Extensions;
 using Pims.Core.Http.Configuration;
@@ -34,7 +36,7 @@ namespace Pims.Dal.Helpers.Extensions
             }
 
             var roles = permission.Select(r => r.GetName()).ToArray();
-            return user.Claims.Any(c => c.Type == "client_roles" && roles.Contains(c.Value));
+            return user.Claims.AsEnumerable().Any(c => c.Type == "client_roles" && roles.Contains(c.Value));
         }
 
         /// <summary>
@@ -68,7 +70,7 @@ namespace Pims.Dal.Helpers.Extensions
         /// <returns>True if the user has any of the permission.</returns>
         public static bool IsServiceAccount(this ClaimsPrincipal user, IOptionsMonitor<AuthClientOptions> keycloakOptions)
         {
-            return user.Claims.Any(c => c.Type == "clientId" && c.Value == keycloakOptions.CurrentValue.Client);
+            return user.Claims.AsEnumerable().Any(c => c.Type == "clientId" && c.Value == keycloakOptions.CurrentValue.Client);
         }
 
         /// <summary>

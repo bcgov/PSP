@@ -6,7 +6,12 @@ exports[`AcquisitionHeader component > renders as expected when no data is provi
     class="Toastify"
   />
   <div />
-  .c0 {
+  .c1 {
+  font-size: 0.87em;
+  line-height: 1.9;
+}
+
+.c0 {
   margin-top: 0.5rem;
   margin-bottom: 1.5rem;
   border-bottom-style: solid;
@@ -14,16 +19,11 @@ exports[`AcquisitionHeader component > renders as expected when no data is provi
   border-bottom-width: 0.1rem;
 }
 
-.c1 {
-  font-size: 0.87em;
-  line-height: 1.9;
-}
-
 <div
     class="c0 no-gutters row"
   >
     <div
-      class="col-7"
+      class="col-8"
     >
       <div
         class="no-gutters row"
@@ -37,40 +37,16 @@ exports[`AcquisitionHeader component > renders as expected when no data is provi
             <div
               class="pr-0 text-left col-3"
             >
-              <label>
-                File:
-              </label>
-            </div>
-            <div
-              class="pl-1 text-left col-9"
-            >
               <strong>
-                 - 
+                <label>
+                  File:
+                </label>
               </strong>
             </div>
-          </div>
-        </div>
-      </div>
-      <div
-        class="no-gutters row"
-      >
-        <div
-          class="col"
-        >
-          <div
-            class="row"
-          >
-            <div
-              class="pr-0 text-left col-3"
-            >
-              <label>
-                Ministry project:
-              </label>
-            </div>
             <div
               class="pl-1 text-left col-9"
             >
-              <strong />
+               - 
             </div>
           </div>
         </div>
@@ -87,16 +63,40 @@ exports[`AcquisitionHeader component > renders as expected when no data is provi
             <div
               class="pr-0 text-left col-3"
             >
-              <label>
-                Ministry product:
-              </label>
+              <strong>
+                <label>
+                  Ministry project:
+                </label>
+              </strong>
+            </div>
+            <div
+              class="pl-1 text-left col-9"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="no-gutters row"
+      >
+        <div
+          class="col"
+        >
+          <div
+            class="row"
+          >
+            <div
+              class="pr-0 text-left col-3"
+            >
+              <strong>
+                <label>
+                  Ministry product:
+                </label>
+              </strong>
             </div>
             <div
               class="pl-1 text-left col-9"
               data-testid="acq-header-product-val"
-            >
-              <strong />
-            </div>
+            />
           </div>
         </div>
       </div>
@@ -106,19 +106,21 @@ exports[`AcquisitionHeader component > renders as expected when no data is provi
         <div
           class="pr-0 text-left col-3"
         >
-          <label>
-            Historical File #:
-          </label>
+          <strong>
+            <label>
+              Historical File #:
+            </label>
+          </strong>
         </div>
         <div
           class="pl-1 text-left col-9"
         >
-          <strong />
+          <div />
         </div>
       </div>
     </div>
     <div
-      class="col-5"
+      class="col-4"
     >
       <div
         class="no-gutters row"
@@ -129,8 +131,9 @@ exports[`AcquisitionHeader component > renders as expected when no data is provi
           <span
             class="c1"
           >
-            Created: 
-            <strong />
+            <strong>
+              Created: 
+            </strong>
              by 
             <span
               class="tooltip-icon"
@@ -153,8 +156,9 @@ exports[`AcquisitionHeader component > renders as expected when no data is provi
           <span
             class="c1"
           >
-            Last updated: 
-            <strong />
+            <strong>
+              Updated: 
+            </strong>
              by 
             <span
               class="tooltip-icon"
@@ -180,15 +184,15 @@ exports[`AcquisitionHeader component > renders as expected when no data is provi
             <div
               class="pr-0 text-left col-auto"
             >
-              <label>
-                Status:
-              </label>
+              <strong>
+                <label>
+                  Status:
+                </label>
+              </strong>
             </div>
             <div
               class="pl-1 text-left col-auto"
-            >
-              <strong />
-            </div>
+            />
           </div>
         </div>
       </div>

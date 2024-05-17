@@ -6,16 +6,16 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 namespace Pims.Api.Helpers.Healthchecks
 {
-    public class PimsDatabaseHealtcheck : IHealthCheck
+    public class PimsDatabaseHealthcheck : IHealthCheck
     {
         private const string DefaultProbeExpectedResult = "SQL_Latin1_General_CP1_CI_AS";
 
-        public PimsDatabaseHealtcheck(string connectionString)
+        public PimsDatabaseHealthcheck(string connectionString)
             : this(connectionString, probeExpectedResult: DefaultProbeExpectedResult)
         {
         }
 
-        public PimsDatabaseHealtcheck(string connectionString, string probeExpectedResult)
+        public PimsDatabaseHealthcheck(string connectionString, string probeExpectedResult)
         {
             ConnectionString = connectionString;
             ProbeExpectedResult = probeExpectedResult;

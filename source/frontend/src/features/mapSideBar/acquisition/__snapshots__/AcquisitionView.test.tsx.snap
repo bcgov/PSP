@@ -89,17 +89,17 @@ exports[`AcquisitionView component > renders as expected 1`] = `
   position: relative;
 }
 
+.c2 {
+  font-size: 0.87em;
+  line-height: 1.9;
+}
+
 .c1 {
   margin-top: 0.5rem;
   margin-bottom: 1.5rem;
   border-bottom-style: solid;
   border-bottom-color: grey;
   border-bottom-width: 0.1rem;
-}
-
-.c2 {
-  font-size: 0.87em;
-  line-height: 1.9;
 }
 
 <div
@@ -109,7 +109,7 @@ exports[`AcquisitionView component > renders as expected 1`] = `
       class="c1 no-gutters row"
     >
       <div
-        class="col-7"
+        class="col-8"
       >
         <div
           class="no-gutters row"
@@ -123,16 +123,16 @@ exports[`AcquisitionView component > renders as expected 1`] = `
               <div
                 class="pr-0 text-left col-3"
               >
-                <label>
-                  File:
-                </label>
+                <strong>
+                  <label>
+                    File:
+                  </label>
+                </strong>
               </div>
               <div
                 class="pl-1 text-left col-9"
               >
-                <strong>
-                  1-12345-01 - Test ACQ File
-                </strong>
+                1-12345-01 - Test ACQ File
               </div>
             </div>
           </div>
@@ -149,16 +149,16 @@ exports[`AcquisitionView component > renders as expected 1`] = `
               <div
                 class="pr-0 text-left col-3"
               >
-                <label>
-                  Ministry project:
-                </label>
+                <strong>
+                  <label>
+                    Ministry project:
+                  </label>
+                </strong>
               </div>
               <div
                 class="pl-1 text-left col-9"
               >
-                <strong>
-                  001 - Hwy 14 Expansion - Vancouver Island but it's really long so it can wrap around if it has to
-                </strong>
+                001 - Hwy 14 Expansion - Vancouver Island but it's really long so it can wrap around if it has to
               </div>
             </div>
           </div>
@@ -175,17 +175,17 @@ exports[`AcquisitionView component > renders as expected 1`] = `
               <div
                 class="pr-0 text-left col-3"
               >
-                <label>
-                  Ministry product:
-                </label>
+                <strong>
+                  <label>
+                    Ministry product:
+                  </label>
+                </strong>
               </div>
               <div
                 class="pl-1 text-left col-9"
                 data-testid="acq-header-product-val"
               >
-                <strong>
-                  00048 - MISCELLANEOUS CLAIMS
-                </strong>
+                00048 - MISCELLANEOUS CLAIMS
               </div>
             </div>
           </div>
@@ -196,19 +196,21 @@ exports[`AcquisitionView component > renders as expected 1`] = `
           <div
             class="pr-0 text-left col-3"
           >
-            <label>
-              Historical File #:
-            </label>
+            <strong>
+              <label>
+                Historical File #:
+              </label>
+            </strong>
           </div>
           <div
             class="pl-1 text-left col-9"
           >
-            <strong />
+            <div />
           </div>
         </div>
       </div>
       <div
-        class="col-5"
+        class="col-4"
       >
         <div
           class="no-gutters row"
@@ -219,11 +221,10 @@ exports[`AcquisitionView component > renders as expected 1`] = `
             <span
               class="c2"
             >
-              Created: 
               <strong>
-                May 27, 2022
+                Created: 
               </strong>
-               by 
+              May 27, 2022 by 
               <span
                 class="tooltip-icon"
                 data-testid="tooltip-icon-userNameTooltip"
@@ -245,11 +246,10 @@ exports[`AcquisitionView component > renders as expected 1`] = `
             <span
               class="c2"
             >
-              Last updated: 
               <strong>
-                Oct 6, 2023
+                Updated: 
               </strong>
-               by 
+              Oct 6, 2023 by 
               <span
                 class="tooltip-icon"
                 data-testid="tooltip-icon-userNameTooltip"
@@ -274,16 +274,16 @@ exports[`AcquisitionView component > renders as expected 1`] = `
               <div
                 class="pr-0 text-left col-auto"
               >
-                <label>
-                  Status:
-                </label>
+                <strong>
+                  <label>
+                    Status:
+                  </label>
+                </strong>
               </div>
               <div
                 class="pl-1 text-left col-auto"
               >
-                <strong>
-                  Active
-                </strong>
+                Active
               </div>
             </div>
           </div>

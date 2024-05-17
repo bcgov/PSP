@@ -73,9 +73,11 @@ describe('DispositionHeader component', () => {
     });
 
     expect(getByText(/FILE_NUMBER 3A8F46B/)).toBeVisible();
-    expect(getByText(prettyFormatUTCDate(testDispositionFile.appCreateTimestamp))).toBeVisible();
     expect(
-      getByText(prettyFormatUTCDate(testDispositionFile.appLastUpdateTimestamp)),
+      getByText(new RegExp(prettyFormatUTCDate(testDispositionFile.appCreateTimestamp))),
+    ).toBeVisible();
+    expect(
+      getByText(new RegExp(prettyFormatUTCDate(testDispositionFile.appLastUpdateTimestamp))),
     ).toBeVisible();
   });
 
@@ -104,8 +106,10 @@ describe('DispositionHeader component', () => {
     });
 
     expect(getByText(/FILE_NUMBER 3A8F46B/)).toBeVisible();
-    expect(getByText(prettyFormatUTCDate(testDispositionFile.appCreateTimestamp))).toBeVisible();
-    expect(getByText(prettyFormatUTCDate(testDate))).toBeVisible();
+    expect(
+      getByText(new RegExp(prettyFormatUTCDate(testDispositionFile.appCreateTimestamp))),
+    ).toBeVisible();
+    expect(getByText(new RegExp(prettyFormatUTCDate(testDate)))).toBeVisible();
   });
 
   it('renders the file status when provided', async () => {

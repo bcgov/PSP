@@ -2,11 +2,10 @@ import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
+import AuditSection from '@/components/common/HeaderField/AuditSection';
 import { HeaderField } from '@/components/common/HeaderField/HeaderField';
-import { UserNameTooltip } from '@/components/common/UserNameTooltip';
 import { Api_LastUpdatedBy } from '@/models/api/File';
 import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
-import { prettyFormatUTCDate } from '@/utils/dateUtils';
 
 import HistoricalNumbersContainer from '../../shared/header/HistoricalNumberContainer';
 import HistoricalNumberFieldView from '../../shared/header/HistoricalNumberSectionView';
@@ -40,26 +39,7 @@ export const DispositionHeader: React.FunctionComponent<
       <Col xs="5">
         <Row className="no-gutters">
           <Col className="text-right">
-            <StyleSmallText>
-              Created: <strong>{prettyFormatUTCDate(dispositionFile?.appCreateTimestamp)}</strong>{' '}
-              by{' '}
-              <UserNameTooltip
-                userName={dispositionFile?.appCreateUserid}
-                userGuid={dispositionFile?.appCreateUserGuid}
-              />
-            </StyleSmallText>
-          </Col>
-        </Row>
-        <Row className="no-gutters">
-          <Col className="text-right">
-            <StyleSmallText>
-              Last updated:{' '}
-              <strong>{prettyFormatUTCDate(lastUpdatedBy?.appLastUpdateTimestamp)}</strong> by{' '}
-              <UserNameTooltip
-                userName={lastUpdatedBy?.appLastUpdateUserid}
-                userGuid={lastUpdatedBy?.appLastUpdateUserGuid}
-              />
-            </StyleSmallText>
+            <AuditSection lastUpdatedBy={lastUpdatedBy} baseAudit={dispositionFile} />
           </Col>
         </Row>
         <Row className="no-gutters">
@@ -82,9 +62,4 @@ const StyledRow = styled(Row)`
   border-bottom-style: solid;
   border-bottom-color: grey;
   border-bottom-width: 0.1rem;
-`;
-
-const StyleSmallText = styled.span`
-  font-size: 0.87em;
-  line-height: 1.9;
 `;
