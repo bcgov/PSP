@@ -55,6 +55,7 @@ export interface LeasePageProps {
 }
 
 export interface ILeasePage {
+  pageName: LeasePageNames;
   component: React.FunctionComponent<React.PropsWithChildren<LeasePageProps>>;
   title: string;
   description?: string;
@@ -79,6 +80,7 @@ export const leasePages: Map<LeasePageNames, ILeasePage> = new Map<LeasePageName
   [
     LeasePageNames.DETAILS,
     {
+      pageName: LeasePageNames.DETAILS,
       component: DetailContainer,
       title: 'Details',
       validation: AddLeaseYupSchema,
@@ -87,6 +89,7 @@ export const leasePages: Map<LeasePageNames, ILeasePage> = new Map<LeasePageName
   [
     LeasePageNames.TENANT,
     {
+      pageName: LeasePageNames.TENANT,
       component: TenantContainer,
       title: 'Tenant',
     },
@@ -94,6 +97,7 @@ export const leasePages: Map<LeasePageNames, ILeasePage> = new Map<LeasePageName
   [
     LeasePageNames.PAYMENTS,
     {
+      pageName: LeasePageNames.PAYMENTS,
       component: TermPaymentsContainer,
       title: 'Payments',
       validation: TermPaymentsYupSchema,
@@ -102,6 +106,7 @@ export const leasePages: Map<LeasePageNames, ILeasePage> = new Map<LeasePageName
   [
     LeasePageNames.IMPROVEMENTS,
     {
+      pageName: LeasePageNames.IMPROVEMENTS,
       component: ImprovementsContainer,
       title: 'Improvements',
     },
@@ -109,15 +114,27 @@ export const leasePages: Map<LeasePageNames, ILeasePage> = new Map<LeasePageName
   [
     LeasePageNames.INSURANCE,
     {
+      pageName: LeasePageNames.INSURANCE,
       component: InsuranceContainer,
       title: 'Insurance',
     },
   ],
-  [LeasePageNames.DEPOSIT, { component: DepositsContainer, title: 'Deposit' }],
-  [LeasePageNames.SURPLUS, { component: Surplus, title: 'Surplus Declaration' }],
+  [
+    LeasePageNames.DEPOSIT,
+    { pageName: LeasePageNames.DEPOSIT, component: DepositsContainer, title: 'Deposit' },
+  ],
+  [
+    LeasePageNames.SURPLUS,
+    { pageName: LeasePageNames.SURPLUS, component: Surplus, title: 'Surplus Declaration' },
+  ],
   [
     LeasePageNames.DOCUMENTS,
-    { component: DocumentsPage, title: 'Documents', claims: Claims.DOCUMENT_VIEW },
+    {
+      pageName: LeasePageNames.DOCUMENTS,
+      component: DocumentsPage,
+      title: 'Documents',
+      claims: Claims.DOCUMENT_VIEW,
+    },
   ],
 ]);
 
@@ -142,6 +159,7 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
   const [isValid, setIsValid] = useState<boolean>(true);
 
   const activeTab = containerState.activeTab;
+
   useEffect(() => {
     if (activeTab === LeaseFileTabNames.deposit || activeTab === LeaseFileTabNames.payments) {
       setFullWidth(true);
