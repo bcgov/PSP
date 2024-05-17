@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
 
+import ConfirmNavigation from '@/components/common/ConfirmNavigation';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
 import { usePimsPropertyRepository } from '@/hooks/repositories/usePimsPropertyRepository';
@@ -213,6 +214,12 @@ export const AddResearchContainer: React.FunctionComponent<IAddResearchContainer
           <StyledFormWrapper>
             <AddResearchForm confirmBeforeAdd={confirmBeforeAdd} />
           </StyledFormWrapper>
+          <ConfirmNavigation
+            navigate={history.push}
+            shouldBlockNavigation={() => {
+              return formikProps.dirty && !formikProps.isSubmitting && !initialForm.id;
+            }}
+          />
         </MapSideBarLayout>
       )}
     </Formik>

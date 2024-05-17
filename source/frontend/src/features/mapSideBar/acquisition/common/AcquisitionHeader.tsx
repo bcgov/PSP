@@ -21,14 +21,13 @@ export interface IAcquisitionHeaderProps {
 export const AcquisitionHeader: React.FunctionComponent<
   React.PropsWithChildren<IAcquisitionHeaderProps>
 > = ({ acquisitionFile, lastUpdatedBy }) => {
-  const leftColumnWidth = '7';
   const leftColumnLabel = '3';
 
   const propertyIds = acquisitionFile?.fileProperties?.map(fp => fp.propertyId) ?? [];
 
   return (
     <StyledRow className="no-gutters">
-      <Col xs={leftColumnWidth}>
+      <Col xs="8">
         <HeaderField label="File:" labelWidth={leftColumnLabel} contentWidth="9">
           {acquisitionFile?.fileNumber} - {acquisitionFile?.fileName}
         </HeaderField>
@@ -52,7 +51,7 @@ export const AcquisitionHeader: React.FunctionComponent<
         </HeaderField>
         <HistoricalNumbersContainer propertyIds={propertyIds} View={HistoricalNumberFieldView} />
       </Col>
-      <Col xs="5">
+      <Col>
         <StyledFiller>
           <AuditSection lastUpdatedBy={lastUpdatedBy} baseAudit={acquisitionFile} />
           {exists(acquisitionFile.fileStatusTypeCode) && (
