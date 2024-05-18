@@ -6,7 +6,7 @@ exports[`AcquisitionHeader component > renders as expected when no data is provi
     class="Toastify"
   />
   <div />
-  .c1 {
+  .c2 {
   font-size: 0.87em;
   line-height: 1.9;
 }
@@ -19,6 +19,17 @@ exports[`AcquisitionHeader component > renders as expected when no data is provi
   border-bottom-width: 0.1rem;
 }
 
+.c1 {
+  height: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
 <div
     class="c0 no-gutters row"
   >
@@ -26,79 +37,55 @@ exports[`AcquisitionHeader component > renders as expected when no data is provi
       class="col-8"
     >
       <div
-        class="no-gutters row"
+        class="row"
       >
         <div
-          class="col"
+          class="pr-0 text-left col-3"
         >
-          <div
-            class="row"
-          >
-            <div
-              class="pr-0 text-left col-3"
-            >
-              <strong>
-                <label>
-                  File:
-                </label>
-              </strong>
-            </div>
-            <div
-              class="pl-1 text-left col-9"
-            >
-               - 
-            </div>
-          </div>
+          <strong>
+            <label>
+              File:
+            </label>
+          </strong>
+        </div>
+        <div
+          class="pl-1 text-left col-9"
+        >
+           - 
         </div>
       </div>
       <div
-        class="no-gutters row"
+        class="row"
       >
         <div
-          class="col"
+          class="pr-0 text-left col-3"
         >
-          <div
-            class="row"
-          >
-            <div
-              class="pr-0 text-left col-3"
-            >
-              <strong>
-                <label>
-                  Ministry project:
-                </label>
-              </strong>
-            </div>
-            <div
-              class="pl-1 text-left col-9"
-            />
-          </div>
+          <strong>
+            <label>
+              Ministry project:
+            </label>
+          </strong>
         </div>
+        <div
+          class="pl-1 text-left col-9"
+        />
       </div>
       <div
-        class="no-gutters row"
+        class="row"
       >
         <div
-          class="col"
+          class="pr-0 text-left col-3"
         >
-          <div
-            class="row"
-          >
-            <div
-              class="pr-0 text-left col-3"
-            >
-              <strong>
-                <label>
-                  Ministry product:
-                </label>
-              </strong>
-            </div>
-            <div
-              class="pl-1 text-left col-9"
-              data-testid="acq-header-product-val"
-            />
-          </div>
+          <strong>
+            <label>
+              Ministry product:
+            </label>
+          </strong>
         </div>
+        <div
+          class="pl-1 text-left col-9"
+          data-testid="acq-header-product-val"
+        />
       </div>
       <div
         class="row"
@@ -120,79 +107,59 @@ exports[`AcquisitionHeader component > renders as expected when no data is provi
       </div>
     </div>
     <div
-      class="col-4"
+      class="col"
     >
       <div
-        class="no-gutters row"
+        class="c1"
       >
         <div
-          class="text-right col"
-        >
-          <span
-            class="c1"
-          >
-            <strong>
-              Created: 
-            </strong>
-             by 
-            <span
-              class="tooltip-icon"
-              data-testid="tooltip-icon-userNameTooltip"
-              id="userNameTooltip"
-            >
-              <strong>
-                USER
-              </strong>
-            </span>
-          </span>
-        </div>
-      </div>
-      <div
-        class="no-gutters row"
-      >
-        <div
-          class="text-right col"
-        >
-          <span
-            class="c1"
-          >
-            <strong>
-              Updated: 
-            </strong>
-             by 
-            <span
-              class="tooltip-icon"
-              data-testid="tooltip-icon-userNameTooltip"
-              id="userNameTooltip"
-            >
-              <strong>
-                USER
-              </strong>
-            </span>
-          </span>
-        </div>
-      </div>
-      <div
-        class="no-gutters row"
-      >
-        <div
-          class="col"
+          class="no-gutters row"
         >
           <div
-            class="justify-content-end row"
+            class="text-right col"
           >
-            <div
-              class="pr-0 text-left col-auto"
+            <span
+              class="c2"
             >
               <strong>
-                <label>
-                  Status:
-                </label>
+                Created: 
               </strong>
-            </div>
-            <div
-              class="pl-1 text-left col-auto"
-            />
+               by 
+              <span
+                class="tooltip-icon"
+                data-testid="tooltip-icon-userNameTooltip"
+                id="userNameTooltip"
+              >
+                <strong>
+                  USER
+                </strong>
+              </span>
+            </span>
+          </div>
+        </div>
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="text-right col"
+          >
+            <span
+              class="c2"
+            >
+              <strong>
+                Updated: 
+              </strong>
+               by 
+              <span
+                class="tooltip-icon"
+                data-testid="tooltip-icon-userNameTooltip"
+                id="userNameTooltip"
+              >
+                <strong>
+                  USER
+                </strong>
+              </span>
+            </span>
           </div>
         </div>
       </div>

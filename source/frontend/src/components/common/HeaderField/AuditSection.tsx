@@ -8,7 +8,7 @@ import { prettyFormatUTCDate } from '@/utils';
 
 export interface IAuditSectionProps {
   baseAudit: ApiGen_Base_BaseAudit;
-  lastUpdatedBy: Api_LastUpdatedBy;
+  lastUpdatedBy?: Api_LastUpdatedBy;
 }
 
 export const AuditSection: React.FC<IAuditSectionProps> = ({ baseAudit, lastUpdatedBy }) => {
@@ -30,10 +30,13 @@ export const AuditSection: React.FC<IAuditSectionProps> = ({ baseAudit, lastUpda
         <Col className="text-right">
           <StyledSmallText>
             <strong>Updated: </strong>
-            {prettyFormatUTCDate(lastUpdatedBy?.appLastUpdateTimestamp)} by{' '}
+            {prettyFormatUTCDate(
+              lastUpdatedBy?.appLastUpdateTimestamp ?? baseAudit?.appLastUpdateTimestamp,
+            )}{' '}
+            by{' '}
             <UserNameTooltip
-              userName={lastUpdatedBy?.appLastUpdateUserid}
-              userGuid={lastUpdatedBy?.appLastUpdateUserGuid}
+              userName={lastUpdatedBy?.appLastUpdateUserid ?? baseAudit?.appLastUpdateUserid}
+              userGuid={lastUpdatedBy?.appLastUpdateUserGuid ?? baseAudit?.appLastUpdateUserGuid}
             />
           </StyledSmallText>
         </Col>
