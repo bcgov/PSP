@@ -9,6 +9,6 @@ export interface ApiGen_Mayan_FilePage {
   document_file_id: number;
   document_file_url: string | null;
   image_url: string | null;
-  page_number: string | null;
+  page_number: number;
   url: string | null;
 }
