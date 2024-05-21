@@ -28,7 +28,7 @@ export const LeaseTab: React.FC<ILeaseTabProps> = ({
   const Component = leasePage.component;
 
   return (
-    <LeaseViewPageForm isEditing={isEditing} onEdit={onEdit}>
+    <LeaseViewPageForm isEditing={isEditing} onEdit={onEdit} leasePageName={leasePage.pageName}>
       <Component
         onEdit={onEdit}
         isEditing={isEditing}

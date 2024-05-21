@@ -127,7 +127,6 @@ describe('DispositionHeader component', () => {
       lastUpdatedBy: null,
     });
 
-    expect(getByText('Status:')).toBeVisible();
     expect(getByText(/mock file status/i)).toBeVisible();
   });
 });

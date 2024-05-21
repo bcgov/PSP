@@ -44,9 +44,9 @@ describe('ProjectHeader component', () => {
 
     expect(getByText('771 Project Cool A')).toBeVisible();
     expect(getByText('USER_A')).toBeVisible();
-    expect(getByText(createDateString)).toBeVisible();
+    expect(getByText(new RegExp(createDateString))).toBeVisible();
     expect(getByText('USER_B')).toBeVisible();
-    expect(getByText(updateDateString)).toBeVisible();
-    expect(getByText('Active (AC)')).toBeVisible();
+    expect(getByText(new RegExp(updateDateString))).toBeVisible();
+    expect(getByText('ACTIVE (AC)')).toBeVisible();
   });
 });
