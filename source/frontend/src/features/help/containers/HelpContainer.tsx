@@ -7,6 +7,8 @@ import { H3 } from '@/components/common/styles';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { useModalContext } from '@/hooks/useModalContext';
+import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
+import useIsMounted from '@/hooks/util/useIsMounted';
 import { useAppSelector } from '@/store/hooks';
 import { useTenants } from '@/store/slices/tenants';
 import { useTenant } from '@/tenants/useTenant';
@@ -21,7 +23,8 @@ import HelpModalContentContainer from './HelpModalContentContainer';
  */
 export function HelpContainer() {
   const keycloak = useKeycloakWrapper();
-  const { setModalContent, setDisplayModal } = useModalContext();
+  const { setModalContent, setDisplayModal, modalProps } = useModalContext();
+  const isMounted = useIsMounted();
 
   // this is the tenant info that gets injected into the frontend via a config-map in Openshift
   const tenant = useTenant();
@@ -44,6 +47,18 @@ export function HelpContainer() {
     };
     update();
   }, [getSettings, config]);
+
+  useDeepCompareEffect(() => {
+    if (isMounted()) {
+      setModalContent({
+        ...modalProps,
+        okButtonHref:
+          exists(helpDeskEmail) && exists(mailto)
+            ? `mailto:${helpDeskEmail}?subject=${mailto?.subject}&body=${mailto?.body}`
+            : undefined,
+      });
+    }
+  }, [mailto, isMounted, setModalContent, modalProps, helpDeskEmail]);
 
   return keycloak.obj.authenticated ? (
     <Nav.Item>
