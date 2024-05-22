@@ -111,7 +111,7 @@ const PropertyListView: React.FC<React.PropsWithChildren<unknown>> = () => {
       const { data } = await getPropertiesViewPagedApi(queryParams);
 
       // Fetch historical file numbers
-      const propertiesIds = data?.items.map(x => x.id) || [];
+      const propertiesIds = data?.items?.map(x => x.id) || [];
       const findHistoricalFileNumbersCalls: Promise<
         AxiosResponse<ApiGen_Concepts_HistoricalFileNumber[]>
       >[] = [];
