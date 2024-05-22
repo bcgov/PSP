@@ -18,6 +18,7 @@ using Pims.Api.Models.Mayan.Document;
 using Pims.Api.Models.Mayan.Metadata;
 using Pims.Api.Models.Requests.Http;
 
+
 namespace Pims.Api.Repositories.Mayan
 {
     /// <summary>
@@ -362,6 +363,32 @@ namespace Pims.Api.Repositories.Mayan
             var response = await DeleteAsync(endpoint, authenticationToken);
 
             _logger.LogDebug($"Finished deleting document type's metadata type");
+            return response;
+        }
+
+        public async Task<ExternalResponse<QueryResponse<FilePageModel>>> TryGetFilePageListAsync(long documentId, long documentFileId)
+        {
+            _logger.LogDebug("Retrieving page list for mayan file...");
+            string authenticationToken = await _authRepository.GetTokenAsync();
+
+            Uri endpoint = new($"{_config.BaseUri}/documents/{documentId}/files/{documentFileId}/pages/");
+
+            var response = await GetAsync<QueryResponse<FilePageModel>>(endpoint, authenticationToken);
+
+            _logger.LogDebug("Finished retrieving mayan file pages");
+            return response;
+        }
+
+        public async Task<HttpResponseMessage> TryGetFilePageImage(long documentId, long documentFileId, long documentFilePageId)
+        {
+            _logger.LogDebug("Retrieving page for document {documentId} file {fileId} page (id) {documentFilePageId}", documentId, documentFileId, documentFilePageId);
+            string authenticationToken = await _authRepository.GetTokenAsync();
+
+            Uri endpoint = new($"{_config.BaseUri}/documents/{documentId}/files/{documentFileId}/pages/{documentFilePageId}/image/");
+
+            var response = await GetRawAsync(endpoint, authenticationToken);
+
+            _logger.LogDebug("Finished retrieving mayan file page");
             return response;
         }
     }

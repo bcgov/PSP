@@ -19,6 +19,9 @@ import PublicLayout from '@/layouts/PublicLayout';
 import { useLookupCodes } from '@/store/slices/lookupCodes';
 import { useSystemConstants } from '@/store/slices/systemConstants';
 
+import { DocumentPreviewContainer } from './features/documents/DocumentPreviewContainer';
+import DocumentPreviewView from './features/documents/DocumentPreviewView';
+
 const App = () => {
   const keycloakWrapper = useKeycloakWrapper();
   const keycloak = keycloakWrapper.obj;
@@ -74,6 +77,7 @@ const App = () => {
             />
             <RoleMismatchModal display={showRoleModal} setDisplay={setShowRoleModal} />
             <ModalContainer />
+            <DocumentPreviewContainer View={DocumentPreviewView} />
           </>
         );
       }}

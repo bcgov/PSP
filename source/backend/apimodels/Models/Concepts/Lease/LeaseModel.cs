@@ -186,6 +186,10 @@ namespace Pims.Api.Models.Concepts.Lease
 
         public bool? HasDigitalLicense { get; set; }
 
+        public string CancellationReason { get; set; }
+
+        public string TerminationReason { get; set; }
+
         public bool IsExpired { get; set; }
 
         /// <summary>

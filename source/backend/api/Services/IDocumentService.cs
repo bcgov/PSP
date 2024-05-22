@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Pims.Api.Models.CodeTypes;
 
@@ -39,5 +40,9 @@ namespace Pims.Api.Services
         Task<ExternalResponse<string>> DeleteDocumentAsync(PimsDocument document);
 
         Task<ExternalResponse<DocumentDetailModel>> GetStorageDocumentDetail(long mayanDocumentId);
+
+        Task<ExternalResponse<QueryResponse<FilePageModel>>> GetDocumentFilePageListAsync(long documentId, long documentFileId);
+
+        Task<HttpResponseMessage> DownloadFilePageImageAsync(long mayanDocumentId, long mayanFileId, long mayanFilePageId);
     }
 }

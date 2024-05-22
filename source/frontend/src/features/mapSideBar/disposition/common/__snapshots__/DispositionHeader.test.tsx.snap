@@ -6,7 +6,12 @@ exports[`DispositionHeader component > renders as expected when no data is provi
     class="Toastify"
   />
   <div />
-  .c0 {
+  .c2 {
+  font-size: 0.87em;
+  line-height: 1.9;
+}
+
+.c0 {
   margin-top: 0.5rem;
   margin-bottom: 1.5rem;
   border-bottom-style: solid;
@@ -15,8 +20,14 @@ exports[`DispositionHeader component > renders as expected when no data is provi
 }
 
 .c1 {
-  font-size: 0.87em;
-  line-height: 1.9;
+  height: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
 }
 
 <div
@@ -26,29 +37,39 @@ exports[`DispositionHeader component > renders as expected when no data is provi
       class="col-7"
     >
       <div
-        class="no-gutters row"
+        class="row"
       >
         <div
-          class="col"
+          class="pr-0 text-left col-3"
         >
-          <div
-            class="row"
-          >
-            <div
-              class="pr-0 text-left col-3"
-            >
-              <label>
-                File:
-              </label>
-            </div>
-            <div
-              class="pl-1 text-left col-9"
-            >
-              <strong>
-                D-
-              </strong>
-            </div>
-          </div>
+          <strong>
+            <label>
+              File:
+            </label>
+          </strong>
+        </div>
+        <div
+          class="pl-1 text-left col-9"
+        >
+          D-
+        </div>
+      </div>
+      <div
+        class="row"
+      >
+        <div
+          class="pr-0 text-left col-3"
+        >
+          <strong>
+            <label>
+              Historical File #:
+            </label>
+          </strong>
+        </div>
+        <div
+          class="pl-1 text-left col-9"
+        >
+          <div />
         </div>
       </div>
     </div>
@@ -56,74 +77,56 @@ exports[`DispositionHeader component > renders as expected when no data is provi
       class="col-5"
     >
       <div
-        class="no-gutters row"
+        class="c1"
       >
         <div
-          class="text-right col"
-        >
-          <span
-            class="c1"
-          >
-            Created: 
-            <strong />
-             by 
-            <span
-              class="tooltip-icon"
-              data-testid="tooltip-icon-userNameTooltip"
-              id="userNameTooltip"
-            >
-              <strong>
-                USER
-              </strong>
-            </span>
-          </span>
-        </div>
-      </div>
-      <div
-        class="no-gutters row"
-      >
-        <div
-          class="text-right col"
-        >
-          <span
-            class="c1"
-          >
-            Last updated: 
-            <strong />
-             by 
-            <span
-              class="tooltip-icon"
-              data-testid="tooltip-icon-userNameTooltip"
-              id="userNameTooltip"
-            >
-              <strong>
-                USER
-              </strong>
-            </span>
-          </span>
-        </div>
-      </div>
-      <div
-        class="no-gutters row"
-      >
-        <div
-          class="col"
+          class="no-gutters row"
         >
           <div
-            class="justify-content-end row"
+            class="text-right col"
           >
-            <div
-              class="pr-0 text-left col-auto"
+            <span
+              class="c2"
             >
-              <label>
-                Status:
-              </label>
-            </div>
-            <div
-              class="pl-1 text-left col-auto"
+              <strong>
+                Created: 
+              </strong>
+               by 
+              <span
+                class="tooltip-icon"
+                data-testid="tooltip-icon-userNameTooltip"
+                id="userNameTooltip"
+              >
+                <strong>
+                  USER
+                </strong>
+              </span>
+            </span>
+          </div>
+        </div>
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="text-right col"
+          >
+            <span
+              class="c2"
             >
-              <strong />
-            </div>
+              <strong>
+                Updated: 
+              </strong>
+               by 
+              <span
+                class="tooltip-icon"
+                data-testid="tooltip-icon-userNameTooltip"
+                id="userNameTooltip"
+              >
+                <strong>
+                  USER
+                </strong>
+              </span>
+            </span>
           </div>
         </div>
       </div>

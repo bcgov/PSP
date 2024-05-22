@@ -388,13 +388,25 @@ namespace Pims.Api.Services
             }
         }
 
-        public IList<PimsFileNumber> GetHistoricalNumbersForPropertyId(long propertyId)
+        public IList<PimsHistoricalFileNumber> GetHistoricalNumbersForPropertyId(long propertyId)
         {
 
             _logger.LogInformation("Retrieving all historical numbers for property with id {id}", propertyId);
             _user.ThrowIfNotAuthorized(Permissions.PropertyView);
 
             return _historicalNumberRepository.GetAllByPropertyId(propertyId);
+        }
+
+        public IList<PimsHistoricalFileNumber> UpdateHistoricalFileNumbers(long propertyId, IEnumerable<PimsHistoricalFileNumber> pimsHistoricalNumbers)
+        {
+
+            _logger.LogInformation("Updating historical numbers for property with id {id}", propertyId);
+            _user.ThrowIfNotAuthorized(Permissions.PropertyEdit);
+
+            _historicalNumberRepository.UpdateHistoricalFileNumbers(propertyId, pimsHistoricalNumbers);
+            _historicalNumberRepository.CommitTransaction();
+
+            return GetHistoricalNumbersForPropertyId(propertyId);
         }
 
         private Point TransformCoordinates(Geometry location)

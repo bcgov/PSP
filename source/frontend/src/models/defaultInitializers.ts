@@ -68,6 +68,8 @@ export const getEmptyLease = (): ApiGen_Concepts_Lease => ({
   project: null,
   fileName: null,
   fileNumber: null,
+  cancellationReason: null,
+  terminationReason: null,
   ...getEmptyBaseAudit(),
 });
 
@@ -154,6 +156,7 @@ export const getEmptyProperty = (): ApiGen_Concepts_Property => ({
   surplusDeclarationType: null,
   surplusDeclarationComment: null,
   surplusDeclarationDate: EpochIsoDateTime,
+  historicalFileNumbers: null,
   ...getEmptyBaseAudit(),
 });
 

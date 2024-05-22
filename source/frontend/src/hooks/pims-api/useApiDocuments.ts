@@ -14,6 +14,7 @@ import { ApiGen_Requests_DocumentUploadResponse } from '@/models/api/generated/A
 import { ApiGen_Requests_ExternalResponse } from '@/models/api/generated/ApiGen_Requests_ExternalResponse';
 import { ApiGen_Requests_FileDownloadResponse } from '@/models/api/generated/ApiGen_Requests_FileDownloadResponse';
 
+import { ApiGen_Mayan_FilePage } from './../../models/api/generated/ApiGen_Mayan_FilePage';
 import useAxiosApi from './useApi';
 
 /**
@@ -108,6 +109,21 @@ export const useApiDocuments = () => {
           updateRequest,
         );
       },
+
+      downloadDocumentFilePageImageApiCall: (
+        mayanDocumentId: number,
+        mayanDocumentFileId: number,
+        mayanDocumentFilePageId: number,
+      ) =>
+        api.get<Blob>(
+          `/documents/storage/${mayanDocumentId}/file/${mayanDocumentFileId}/pages/${mayanDocumentFilePageId}`,
+          { responseType: 'blob' },
+        ),
+
+      getDocumentFilePageListApiCall: (mayanDocumentId: number, mayanDocumentFileId: number) =>
+        api.get<ApiGen_Mayan_FilePage[]>(
+          `/documents/storage/${mayanDocumentId}/file/${mayanDocumentFileId}/pages/`,
+        ),
     }),
     [api],
   );
