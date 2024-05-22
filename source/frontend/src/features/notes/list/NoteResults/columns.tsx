@@ -36,8 +36,8 @@ export function createTableColumns(
       accessor: 'appLastUpdateUserid',
       align: 'center',
       sortable: true,
-      minWidth: 28,
-      maxWidth: 28,
+      minWidth: 34,
+      maxWidth: 34,
     },
 
     {

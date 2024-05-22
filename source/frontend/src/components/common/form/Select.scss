@@ -1,6 +1,33 @@
+@import '@/assets/scss/colors.scss';
+
 .form-select {
+  align-items: center;
+
+  // Selects have an extra padding added by the browser. Removing and manually center it prevents letter clipping.
+  padding-top: 0px;
+  padding-bottom: 0px;
+
+
+  // Custom dropdown icon requires clearning the browser's style
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  // Same path as MdArrowDropDown
+  background-image: url("data:image/svg+xml,<svg stroke='currentColor' fill='currentColor' stroke-width='0' viewBox='0 0 24 24' class='sc-jIILKH kTbtSw' height='1.6rem' width='1.6rem' xmlns='http://www.w3.org/2000/svg'><path fill='none' d='M0 0h24v24H0z'></path><path d='M7 10l5 5 5-5z'></path></svg>");
+  background-repeat: no-repeat;
+  // sizes below set by trial-and-error to look good
+  background-position-x: calc(100% - 0.8rem);
+  background-position-y: 6px;
+  padding-right: 3.5rem;
+
   min-width: 9.5rem;
+
   .option {
     padding: 0.5rem;
   }
+}
+
+.form-select:not(.is-invalid),
+.form-control:not(.is-invalid) {
+  border: 0.1rem solid #606060;
 }
