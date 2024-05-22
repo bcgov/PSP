@@ -157,7 +157,7 @@ exports[`Edit user page > EditUserPage renders 1`] = `
   border-bottom: solid 0.5rem;
   width: 100%;
   text-align: left;
-  margin-bottom: 2rem;
+  margin-bottom: 2.4rem;
 }
 
 .c4.form-group {
@@ -519,7 +519,7 @@ exports[`Edit user page > EditUserPage renders 1`] = `
                   >
                     <div
                       class="search-wrapper searchWrapper "
-                      style="background: white; border: 1px solid #606060;"
+                      style="background: white; border: 1px solid #606060; padding-top: 0.8rem; padding-bottom: 0.8rem; padding-left: 1.2rem;"
                     >
                       <input
                         autocomplete="off"
@@ -589,7 +589,7 @@ exports[`Edit user page > EditUserPage renders 1`] = `
                   >
                     <div
                       class="search-wrapper searchWrapper "
-                      style="background: white; border: 1px solid #606060;"
+                      style="background: white; border: 1px solid #606060; padding-top: 0.8rem; padding-bottom: 0.8rem; padding-left: 1.2rem;"
                     >
                       <input
                         autocomplete="off"

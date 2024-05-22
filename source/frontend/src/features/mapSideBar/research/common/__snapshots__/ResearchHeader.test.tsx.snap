@@ -175,22 +175,6 @@ exports[`ResearchHeader component > renders as expected when provided no researc
             </span>
           </div>
         </div>
-        <div
-          class="justify-content-end row"
-        >
-          <div
-            class="pr-0 text-left col-auto"
-          >
-            <strong>
-              <label>
-                Status:
-              </label>
-            </strong>
-          </div>
-          <div
-            class="pl-1 text-left col-auto"
-          />
-        </div>
       </div>
     </div>
   </div>

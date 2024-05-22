@@ -142,19 +142,20 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
 }
 
 .c11 .react-datepicker__calendar-icon {
-  width: 3rem;
+  width: 2.4rem;
   height: 3rem;
   margin-top: 0.5rem;
+  margin-right: 1.2rem;
   right: 0;
   pointer-events: none;
 }
 
 .c11 .react-datepicker__view-calendar-icon input {
-  padding: 0.6rem 1rem 0.5rem 0.6rem;
+  padding: 0.8rem 1.2rem 0.8rem 1.2rem;
 }
 
 .c11 .react-datepicker-wrapper {
-  max-width: 16rem;
+  max-width: 17rem;
 }
 
 .c13.c13.form-control.is-valid {
@@ -194,12 +195,14 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
 
 .c14 {
   position: relative;
-  border-radius: 0.3rem;
-  padding: 0.6rem;
-  padding-right: 2.1rem;
-  min-height: 2.5em;
+  border-radius: 0.4rem;
+  padding-top: 0.8rem;
+  padding-bottom: 0.8rem;
+  padding-left: 1.2rem;
+  padding-right: 2.8rem;
   background-image: none;
   border: solid 0.1rem;
+  cursor: default;
 }
 
 .c14.is-invalid {
@@ -209,7 +212,11 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
 .c15.c15.btn {
   position: absolute;
   top: calc(50% - 1.4rem);
-  right: 0.4rem;
+  padding-top: 0.8rem;
+  padding-bottom: 0.8rem;
+  padding-right: 1.2rem;
+  height: 1.6rem;
+  right: 0rem;
   -webkit-text-decoration: none;
   text-decoration: none;
   line-height: unset;
@@ -286,8 +293,8 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
 }
 
 .c1 {
-  margin: 1.5rem;
-  padding: 1.5rem;
+  margin: 1.6rem;
+  padding: 1.6rem;
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
@@ -688,7 +695,7 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
               >
                 <div
                   class="search-wrapper searchWrapper "
-                  style="background: white; border: 1px solid #606060;"
+                  style="background: white; border: 1px solid #606060; padding-top: 0.8rem; padding-bottom: 0.8rem; padding-left: 1.2rem;"
                 >
                   <input
                     autocomplete="off"

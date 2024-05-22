@@ -77,7 +77,7 @@ const ContactInputView: React.FunctionComponent<IContactInputViewProps> = ({
                     }}
                     title="remove"
                   >
-                    <MdClose size="2rem" title="remove" />
+                    <MdClose size="2rem" />
                   </StyledRemoveLinkButton>
                 )}
               </StyledInputLikeDiv>
