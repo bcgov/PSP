@@ -80,8 +80,9 @@ a {
 }
 
 .spinner-border {
-  width: 3.2rem;
-  height: 3.2rem;
+  max-width: 3.2rem;
+  max-height: 3.2rem;
+  flex-grow: 0 !important;
 }
 
 #root {
