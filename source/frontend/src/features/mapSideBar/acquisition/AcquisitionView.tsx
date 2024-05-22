@@ -10,7 +10,6 @@ import {
   useLocation,
   useRouteMatch,
 } from 'react-router-dom';
-import styled from 'styled-components';
 
 import RealEstateAgent from '@/assets/images/real-estate-agent.svg?react';
 import { FileTypes } from '@/constants';
@@ -28,6 +27,7 @@ import { FilePropertyRouter } from '../router/FilePropertyRouter';
 import { FileTabType } from '../shared/detail/FileTabs';
 import { PropertyForm } from '../shared/models';
 import SidebarFooter from '../shared/SidebarFooter';
+import { StyledFormWrapper } from '../shared/styles';
 import UpdateProperties from '../shared/update/properties/UpdateProperties';
 import { AcquisitionContainerState } from './AcquisitionContainer';
 import { isAcquisitionFile } from './add/models';
@@ -247,16 +247,5 @@ const getEditTitle = (
 
   return 'Acquisition File';
 };
-
-const StyledFormWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  text-align: left;
-  height: 100%;
-  overflow-y: auto;
-  padding-right: 1rem;
-  padding-bottom: 1rem;
-`;
 
 export default AcquisitionView;
