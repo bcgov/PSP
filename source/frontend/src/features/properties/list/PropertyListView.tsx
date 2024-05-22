@@ -126,13 +126,14 @@ const PropertyListView: React.FC<React.PropsWithChildren<unknown>> = () => {
         [],
       );
 
-      const resultRecords = data.items.map(x => {
-        return {
-          id: x.id,
-          property: x,
-          fileNumbers: historicalFileNumbers.filter(y => x.id === y.propertyId),
-        } as IPropertyResultRecord;
-      });
+      const resultRecords =
+        data?.items?.map(x => {
+          return {
+            id: x.id,
+            property: x,
+            fileNumbers: historicalFileNumbers.filter(y => x.id === y.propertyId),
+          } as IPropertyResultRecord;
+        }) || [];
 
       setTotalItems(data.total);
 
