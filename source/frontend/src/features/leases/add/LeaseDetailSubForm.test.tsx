@@ -126,7 +126,12 @@ describe('LeaseDetailSubForm component', () => {
     const { container, getTerminationReason } = await setup({});
 
     await act(async () => {
-      fillInput(container, 'statusTypeCode', ApiGen_CodeTypes_LeaseStatusTypes.TERMINATED, 'select');
+      fillInput(
+        container,
+        'statusTypeCode',
+        ApiGen_CodeTypes_LeaseStatusTypes.TERMINATED,
+        'select',
+      );
     });
 
     expect(getTerminationReason()).toBeInTheDocument();
