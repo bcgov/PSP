@@ -111,12 +111,6 @@ public partial class PimsAcquisitionFile
     public DateTime? DeliveryDate { get; set; }
 
     /// <summary>
-    /// Date of acquisition file completion.
-    /// </summary>
-    [Column("COMPLETION_DATE", TypeName = "datetime")]
-    public DateTime? CompletionDate { get; set; }
-
-    /// <summary>
     /// Legacy Acquisition File ID from the PAIMS system.
     /// </summary>
     [Column("PAIMS_ACQUISITION_FILE_ID")]

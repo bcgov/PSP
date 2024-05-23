@@ -3,9 +3,9 @@ import { cleanup } from '@testing-library/react-hooks';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { createMemoryHistory } from 'history';
-import { noop } from 'lodash';
+import noop from 'lodash/noop';
 import { Provider } from 'react-redux';
-import { Router } from 'react-router-dom';
+import { Router } from 'react-router-dom/cjs/react-router-dom';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 

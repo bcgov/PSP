@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { noop } from 'lodash';
+import noop from 'lodash/noop';
 import React, { useState } from 'react';
 import {
   Modal,
@@ -82,8 +82,6 @@ export interface ModalContent {
   headerIcon?: string | React.ReactNode;
   /** Optional message to display - no default. */
   message?: string | React.ReactNode;
-  /** optional override to control the x button in the top right of the modal. Default is to show. */
-  closeButton?: boolean;
   /** provide the size of the modal, default width is 50.0rem */
   modalSize?: ModalSize;
   variant: 'info' | 'warning' | 'error';
@@ -117,7 +115,6 @@ export const GenericModal = (props: Omit<BsModalProps, 'onHide'> & ModalProps) =
     okButtonHref,
     cancelButtonVariant,
     cancelButtonText,
-    closeButton,
     hideFooter,
     modalSize = ModalSize.MEDIUM,
     variant,
@@ -211,7 +208,7 @@ export const GenericModal = (props: Omit<BsModalProps, 'onHide'> & ModalProps) =
       onHide={noop}
       className={getModalClass()}
     >
-      <Modal.Header closeButton={closeButton} onHide={close}>
+      <Modal.Header onHide={close}>
         {headerIconValue && (
           <>
             <div className="header-icon">{headerIconValue}</div>
@@ -219,11 +216,9 @@ export const GenericModal = (props: Omit<BsModalProps, 'onHide'> & ModalProps) =
           </>
         )}
         <Modal.Title>{title}</Modal.Title>
-        {!closeButton && (
-          <div className="modal-close-btn">
-            <FaWindowClose size={24} onClick={close} />
-          </div>
-        )}
+        <div className="modal-close-btn">
+          <FaWindowClose size={24} onClick={close} />
+        </div>
       </Modal.Header>
 
       <Modal.Body style={{ whiteSpace: 'pre-line' }}>{message}</Modal.Body>
@@ -315,8 +310,8 @@ const StyledModal = styled(Modal)<{ $draggable?: boolean }>`
     display: flex;
     justify-content: flex-start;
 
-    color: ${props => props.theme.css.primaryBackgroundColor};
-    background-color: ${props => props.theme.css.primaryColor};
+    color: ${props => props.theme.bcTokens.surfaceColorFormsDefault};
+    background-color: ${props => props.theme.bcTokens.surfaceColorBackgroundDarkBlue};
 
     /* show move cursor (crosshair) for draggable modals */
     cursor: ${props => (props.$draggable ? 'move' : 'default')};
@@ -394,36 +389,36 @@ const StyledModal = styled(Modal)<{ $draggable?: boolean }>`
 
   &.info-variant {
     .modal-header {
-      color: ${props => props.theme.css.darkBlue};
+      color: ${props => props.theme.bcTokens.surfaceColorBackgroundDarkBlue};
       background-color: ${props => props.theme.css.filterBoxColor};
     }
 
     .modal-close-btn {
-      color: ${props => props.theme.css.textColor};
+      color: ${props => props.theme.bcTokens.typographyColorSecondary};
       cursor: pointer;
     }
   }
 
   &.error-variant {
     .modal-header {
-      color: ${props => props.theme.css.fontDangerColor};
+      color: ${props => props.theme.bcTokens.typographyColorDanger};
       background-color: ${props => props.theme.css.dangerBackgroundColor};
     }
 
     .modal-close-btn {
-      color: ${props => props.theme.css.textColor};
+      color: ${props => props.theme.bcTokens.typographyColorSecondary};
       cursor: pointer;
     }
   }
 
   &.warning-variant {
     .modal-header {
-      color: ${props => props.theme.css.fontWarningColor};
-      background-color: ${props => props.theme.css.summaryColor};
+      color: ${props => props.theme.css.textWarningColor};
+      background-color: ${props => props.theme.css.warningBackgroundColor};
     }
 
     .modal-close-btn {
-      color: ${props => props.theme.css.textColor};
+      color: ${props => props.theme.bcTokens.typographyColorSecondary};
       cursor: pointer;
     }
   }
@@ -438,7 +433,7 @@ const PopupContainer = styled.div`
   .modal-header {
     height: 3.8rem;
     padding: 0 1rem;
-    background-color: ${({ theme }) => theme.css.primaryColor};
+    background-color: ${({ theme }) => theme.bcTokens.surfaceColorBackgroundDarkBlue};
     .h4 {
       color: white;
       font-family: BcSans-Bold;

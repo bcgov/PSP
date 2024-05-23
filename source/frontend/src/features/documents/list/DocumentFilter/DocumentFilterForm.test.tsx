@@ -2,7 +2,7 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
-import { noop } from 'lodash';
+import noop from 'lodash/noop';
 
 import { defaultDocumentFilter } from '@/interfaces/IDocumentResults';
 import { mockDocumentTypesResponse } from '@/mocks/documents.mock';
@@ -14,7 +14,7 @@ import { DocumentFilterForm, IDocumentFilterFormProps } from './DocumentFilterFo
 
 const history = createMemoryHistory();
 const mockAxios = new MockAdapter(axios);
-const onSetFilter = jest.fn();
+const onSetFilter = vi.fn();
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };

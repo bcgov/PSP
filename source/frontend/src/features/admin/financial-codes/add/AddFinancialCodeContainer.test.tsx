@@ -9,11 +9,11 @@ import AddFinancialCodeContainer, { IAddFinancialCodeFormProps } from './AddFina
 const mockApi = {
   error: undefined,
   response: undefined,
-  execute: jest.fn(),
+  execute: vi.fn(),
   loading: false,
 };
 
-jest.mock('@/hooks/repositories/useFinancialCodeRepository', () => ({
+vi.mock('@/hooks/repositories/useFinancialCodeRepository', () => ({
   useFinancialCodeRepository: () => {
     return {
       addFinancialCode: mockApi,
@@ -41,7 +41,7 @@ describe('AddFinancialCode container', () => {
 
   beforeEach(() => {
     viewProps = undefined;
-    jest.resetAllMocks();
+    vi.resetAllMocks();
   });
 
   it('renders the underlying form', () => {

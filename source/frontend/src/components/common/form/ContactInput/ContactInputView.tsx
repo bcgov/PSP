@@ -1,5 +1,4 @@
 import { getIn, useFormikContext } from 'formik';
-import * as React from 'react';
 import { Col, Form, FormControlProps, Row } from 'react-bootstrap';
 import { FaAddressBook } from 'react-icons/fa';
 import { MdClose } from 'react-icons/md';
@@ -116,10 +115,10 @@ const StyledDiv = styled.div`
   border-radius: 0.3rem;
   padding: 0.6rem;
   padding-right: 2.1rem;
-  color: ${props => props.theme.css.formControlTextColor};
-  border: ${props => props.theme.css.lightVariantColor} solid 0.1rem;
+  color: ${props => props.theme.bcTokens.typographyColorSecondary};
+  border: ${props => props.theme.css.borderOutlineColor} solid 0.1rem;
   &.is-invalid {
-    border: ${props => props.theme.css.dangerColor} solid 0.1rem;
+    border: ${props => props.theme.bcTokens.surfaceColorPrimaryDangerButtonDefault} solid 0.1rem;
   }
 `;
 
@@ -128,7 +127,7 @@ const StyledRemoveLinkButton = styled(LinkButton)`
     position: absolute;
     top: calc(50% - 1.4rem);
     right: 0.4rem;
-    color: ${props => props.theme.css.primaryBorderColor};
+    color: ${props => props.theme.bcTokens.iconsColorDisabled};
     text-decoration: none;
     line-height: unset;
     .text {
@@ -137,7 +136,7 @@ const StyledRemoveLinkButton = styled(LinkButton)`
     &:hover,
     &:active,
     &:focus {
-      color: ${props => props.theme.css.dangerColor};
+      color: ${props => props.theme.bcTokens.surfaceColorPrimaryDangerButtonDefault};
       text-decoration: none;
       opacity: unset;
     }

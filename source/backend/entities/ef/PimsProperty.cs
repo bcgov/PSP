@@ -29,55 +29,94 @@ namespace Pims.Dal.Entities;
 [Index("VolumeUnitTypeCode", Name = "PRPRTY_VOLUME_UNIT_TYPE_CODE_IDX")]
 public partial class PimsProperty
 {
+    /// <summary>
+    /// Generated surrogate primary key
+    /// </summary>
     [Key]
     [Column("PROPERTY_ID")]
     public long PropertyId { get; set; }
 
+    /// <summary>
+    /// Foreign key to the proprty type table.
+    /// </summary>
     [Required]
     [Column("PROPERTY_TYPE_CODE")]
     [StringLength(20)]
     public string PropertyTypeCode { get; set; }
 
+    /// <summary>
+    /// Foreign key to the address table.
+    /// </summary>
     [Column("ADDRESS_ID")]
     public long? AddressId { get; set; }
 
+    /// <summary>
+    /// Foreign key to the region table.
+    /// </summary>
     [Column("REGION_CODE")]
     public short RegionCode { get; set; }
 
+    /// <summary>
+    /// Foreign key to the district table.
+    /// </summary>
     [Column("DISTRICT_CODE")]
     public short DistrictCode { get; set; }
 
+    /// <summary>
+    /// Foreign key to the property area unit type table.
+    /// </summary>
     [Column("PROPERTY_AREA_UNIT_TYPE_CODE")]
     [StringLength(20)]
     public string PropertyAreaUnitTypeCode { get; set; }
 
+    /// <summary>
+    /// Foreign key to the property data source type table.
+    /// </summary>
     [Required]
     [Column("PROPERTY_DATA_SOURCE_TYPE_CODE")]
     [StringLength(20)]
     public string PropertyDataSourceTypeCode { get; set; }
 
+    /// <summary>
+    /// Foreign key to the property status type table.
+    /// </summary>
     [Required]
     [Column("PROPERTY_STATUS_TYPE_CODE")]
     [StringLength(20)]
     public string PropertyStatusTypeCode { get; set; }
 
+    /// <summary>
+    /// Foreign key to the surplus declaration type table.
+    /// </summary>
     [Required]
     [Column("SURPLUS_DECLARATION_TYPE_CODE")]
     [StringLength(20)]
     public string SurplusDeclarationTypeCode { get; set; }
 
+    /// <summary>
+    /// Foreign key to the volumetric type table.
+    /// </summary>
     [Column("VOLUMETRIC_TYPE_CODE")]
     [StringLength(20)]
     public string VolumetricTypeCode { get; set; }
 
+    /// <summary>
+    /// Foreign key to the volume unit type table.
+    /// </summary>
     [Column("VOLUME_UNIT_TYPE_CODE")]
     [StringLength(20)]
     public string VolumeUnitTypeCode { get; set; }
 
+    /// <summary>
+    /// Foreign key to the provincial public highway status type table.
+    /// </summary>
     [Column("PPH_STATUS_TYPE_CODE")]
     [StringLength(20)]
     public string PphStatusTypeCode { get; set; }
 
+    /// <summary>
+    /// Foreign key to the proeprty classification type table.
+    /// </summary>
     [Required]
     [Column("PROPERTY_CLASSIFICATION_TYPE_CODE")]
     [StringLength(20)]
@@ -313,52 +352,91 @@ public partial class PimsProperty
     [StringLength(100)]
     public string ReserveName { get; set; }
 
+    /// <summary>
+    /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o
+    /// </summary>
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }
 
+    /// <summary>
+    /// The date and time the user created the record.
+    /// </summary>
     [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
     public DateTime AppCreateTimestamp { get; set; }
 
+    /// <summary>
+    /// The user account that created the record.
+    /// </summary>
     [Required]
     [Column("APP_CREATE_USERID")]
     [StringLength(30)]
     public string AppCreateUserid { get; set; }
 
+    /// <summary>
+    /// The GUID of the user account that created the record.
+    /// </summary>
     [Column("APP_CREATE_USER_GUID")]
     public Guid? AppCreateUserGuid { get; set; }
 
+    /// <summary>
+    /// The directory of the user account that created the record.
+    /// </summary>
     [Required]
     [Column("APP_CREATE_USER_DIRECTORY")]
     [StringLength(30)]
     public string AppCreateUserDirectory { get; set; }
 
+    /// <summary>
+    /// The date and time the user updated the record.
+    /// </summary>
     [Column("APP_LAST_UPDATE_TIMESTAMP", TypeName = "datetime")]
     public DateTime AppLastUpdateTimestamp { get; set; }
 
+    /// <summary>
+    /// The user account that updated the record.
+    /// </summary>
     [Required]
     [Column("APP_LAST_UPDATE_USERID")]
     [StringLength(30)]
     public string AppLastUpdateUserid { get; set; }
 
+    /// <summary>
+    /// The GUID of the user account that updated the record.
+    /// </summary>
     [Column("APP_LAST_UPDATE_USER_GUID")]
     public Guid? AppLastUpdateUserGuid { get; set; }
 
+    /// <summary>
+    /// The directory of the user account that updated the record.
+    /// </summary>
     [Required]
     [Column("APP_LAST_UPDATE_USER_DIRECTORY")]
     [StringLength(30)]
     public string AppLastUpdateUserDirectory { get; set; }
 
+    /// <summary>
+    /// The date and time the record was created.
+    /// </summary>
     [Column("DB_CREATE_TIMESTAMP", TypeName = "datetime")]
     public DateTime DbCreateTimestamp { get; set; }
 
+    /// <summary>
+    /// The user or proxy account that created the record.
+    /// </summary>
     [Required]
     [Column("DB_CREATE_USERID")]
     [StringLength(30)]
     public string DbCreateUserid { get; set; }
 
+    /// <summary>
+    /// The date and time the record was created or last updated.
+    /// </summary>
     [Column("DB_LAST_UPDATE_TIMESTAMP", TypeName = "datetime")]
     public DateTime DbLastUpdateTimestamp { get; set; }
 
+    /// <summary>
+    /// The user or proxy account that created or last updated the record.
+    /// </summary>
     [Required]
     [Column("DB_LAST_UPDATE_USERID")]
     [StringLength(30)]
@@ -374,6 +452,9 @@ public partial class PimsProperty
 
     [InverseProperty("Property")]
     public virtual ICollection<PimsDispositionFileProperty> PimsDispositionFileProperties { get; set; } = new List<PimsDispositionFileProperty>();
+
+    [InverseProperty("Property")]
+    public virtual ICollection<PimsHistoricalFileNumber> PimsHistoricalFileNumbers { get; set; } = new List<PimsHistoricalFileNumber>();
 
     [InverseProperty("Property")]
     public virtual ICollection<PimsPropPropActivity> PimsPropPropActivities { get; set; } = new List<PimsPropPropActivity>();

@@ -15,10 +15,10 @@ import { UpdateNoteYupSchema } from './UpdateNoteYupSchema';
 const history = createMemoryHistory();
 const mockAxios = new MockAdapter(axios);
 
-const validationSchema = jest.fn().mockReturnValue(UpdateNoteYupSchema);
-const onSaveClick = jest.fn();
-const onCancelClick = jest.fn();
-const onSubmit = jest.fn();
+const validationSchema = vi.fn().mockReturnValue(UpdateNoteYupSchema);
+const onSaveClick = vi.fn();
+const onCancelClick = vi.fn();
+const onSubmit = vi.fn();
 
 type TestProps = Pick<IUpdateNoteFormModalProps, 'initialValues' | 'loading'>;
 
@@ -59,7 +59,7 @@ describe('UpdateNoteFormModal component', () => {
 
   afterEach(() => {
     mockAxios.reset();
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders as expected', () => {

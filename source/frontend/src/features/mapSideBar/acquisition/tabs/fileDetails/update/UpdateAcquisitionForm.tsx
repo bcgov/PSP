@@ -69,11 +69,7 @@ export default UpdateAcquisitionForm;
 const AcquisitionDetailSubForm: React.FC<{
   formikProps: FormikProps<UpdateAcquisitionSummaryFormModel>;
 }> = ({ formikProps }) => {
-  const {
-    setFieldValue,
-    initialValues,
-    values: { fileStatusTypeCode },
-  } = formikProps;
+  const { setFieldValue, initialValues } = formikProps;
 
   const [projectProducts, setProjectProducts] = React.useState<
     ApiGen_Concepts_Product[] | undefined
@@ -108,13 +104,6 @@ const AcquisitionDetailSubForm: React.FC<{
       onMinistryProjectSelected([initialValues.project]);
     }
   }, [initialValues, onMinistryProjectSelected]);
-
-  // clear the associated 'Completion Date' field if the corresponding File Status has its value changed from COMPLETE to something else.
-  React.useEffect(() => {
-    if (isValidString(fileStatusTypeCode) && fileStatusTypeCode !== 'COMPLT') {
-      setFieldValue('completionDate', '');
-    }
-  }, [fileStatusTypeCode, setFieldValue]);
 
   const {
     getOrganizationDetail: { execute: fetchOrganization, response: organization },
@@ -226,17 +215,6 @@ const AcquisitionDetailSubForm: React.FC<{
         >
           <FastDatePicker field="deliveryDate" formikProps={formikProps} />
         </SectionField>
-        <SectionField
-          label="Acquisition completed date"
-          tooltip={`This will be enabled when the file status is set to "Completed"`}
-          required={formikProps.values?.fileStatusTypeCode === 'COMPLT'}
-        >
-          <FastDatePicker
-            field="completionDate"
-            formikProps={formikProps}
-            disabled={formikProps.values?.fileStatusTypeCode !== 'COMPLT'}
-          />
-        </SectionField>
       </Section>
 
       <Section header="Acquisition Details">
@@ -328,7 +306,7 @@ const AcquisitionDetailSubForm: React.FC<{
 };
 
 const Container = styled.div`
-  background-color: ${props => props.theme.css.filterBackgroundColor};
+  background-color: ${props => props.theme.css.highlightBackgroundColor};
 
   [name='region'] {
     max-width: 25rem;

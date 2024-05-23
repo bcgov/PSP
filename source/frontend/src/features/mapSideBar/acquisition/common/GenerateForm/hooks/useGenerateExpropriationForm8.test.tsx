@@ -11,24 +11,27 @@ import { ApiGen_Concepts_ExpropriationPayment } from '@/models/api/generated/Api
 
 import { useGenerateExpropriationForm8 } from './useGenerateExpropriationForm8';
 
-const generateFn = jest
+const generateFn = vi
   .fn()
   .mockResolvedValue({ status: ApiGen_CodeTypes_ExternalResponseStatus.Success, payload: {} });
 
-const getExpropriationPaymentApi = jest.fn<
-  Promise<ApiGen_Concepts_ExpropriationPayment | undefined>,
-  any[]
->();
+const getExpropriationPaymentApi = vi.fn();
 
-jest.mock('@/hooks/repositories/useForm8Repository');
-(useForm8Repository as jest.Mock).mockImplementation(() => ({
-  getForm8: { execute: getExpropriationPaymentApi },
-}));
+vi.mock('@/hooks/repositories/useForm8Repository');
+vi.mocked(useForm8Repository).mockImplementation(
+  () =>
+    ({
+      getForm8: { execute: getExpropriationPaymentApi },
+    } as unknown as ReturnType<typeof useForm8Repository>),
+);
 
-jest.mock('@/features/documents/hooks/useDocumentGenerationRepository');
-(useDocumentGenerationRepository as jest.Mock).mockImplementation(() => ({
-  generateDocumentDownloadWrappedRequest: generateFn,
-}));
+vi.mock('@/features/documents/hooks/useDocumentGenerationRepository');
+vi.mocked(useDocumentGenerationRepository).mockImplementation(
+  () =>
+    ({
+      generateDocumentDownloadWrappedRequest: generateFn,
+    } as unknown as ReturnType<typeof useDocumentGenerationRepository>),
+);
 
 let currentStore: MockStoreEnhanced<any, {}>;
 const mockStore = configureMockStore([thunk]);

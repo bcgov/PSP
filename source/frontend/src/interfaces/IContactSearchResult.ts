@@ -110,7 +110,7 @@ export function fromApiPerson(baseModel: ApiGen_Concepts_Person): IContactSearch
     provinceStateId: 0,
     organizationName:
       personOrganizations && personOrganizations.length > 0
-        ? personOrganizations[0].organization?.name ?? undefined
+        ? personOrganizations[0]?.organization?.name ?? undefined
         : '',
   };
 }

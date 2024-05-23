@@ -1,5 +1,5 @@
 import { Formik } from 'formik';
-import { noop } from 'lodash';
+import noop from 'lodash/noop';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
@@ -12,18 +12,15 @@ import { AcquisitionPropertiesSubForm } from './AcquisitionPropertiesSubForm';
 import { AcquisitionForm } from './models';
 
 const mockStore = configureMockStore([thunk]);
-jest.mock('@react-keycloak/web');
 
-const customSetFilePropertyLocations = jest.fn();
-
-jest.mock('@/components/common/mapFSM/MapStateMachineContext');
+const customSetFilePropertyLocations = vi.fn();
 
 describe('AcquisitionProperties component', () => {
   // render component under test
   const setup = (
     props: {
       initialForm: AcquisitionForm;
-      confirmBeforeAdd?: (propertyId: number) => Promise<boolean>;
+      confirmBeforeAdd?: (propertyForm: PropertyForm) => Promise<boolean>;
     },
     renderOptions: RenderOptions = {},
   ) => {
@@ -33,7 +30,7 @@ describe('AcquisitionProperties component', () => {
           {formikProps => (
             <AcquisitionPropertiesSubForm
               formikProps={formikProps}
-              confirmBeforeAdd={props.confirmBeforeAdd ?? jest.fn()}
+              confirmBeforeAdd={props.confirmBeforeAdd ?? vi.fn()}
             />
           )}
         </Formik>
@@ -42,6 +39,10 @@ describe('AcquisitionProperties component', () => {
         ...renderOptions,
         store: mockStore({}),
         claims: [],
+        mockMapMachine: {
+          ...mapMachineBaseMock,
+          setFilePropertyLocations: customSetFilePropertyLocations,
+        },
       },
     );
 
@@ -57,13 +58,10 @@ describe('AcquisitionProperties component', () => {
       PropertyForm.fromMapProperty({ pid: '123-456-789' }),
       PropertyForm.fromMapProperty({ pin: '1111222' }),
     ];
-    (useMapStateMachine as jest.Mock).mockImplementation(() => {
-      return { ...mapMachineBaseMock, setFilePropertyLocations: customSetFilePropertyLocations };
-    });
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     customSetFilePropertyLocations.mockReset();
   });
 

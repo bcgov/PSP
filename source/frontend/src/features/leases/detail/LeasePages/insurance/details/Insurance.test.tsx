@@ -1,27 +1,19 @@
-import { useKeycloak } from '@react-keycloak/web';
 import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
-import { noop } from 'lodash';
+import noop from 'lodash/noop';
 
 import { TypeCodeUtils } from '@/interfaces/ITypeCode';
 import { getMockInsurance } from '@/mocks/insurance.mock';
 import { ApiGen_Concepts_Insurance } from '@/models/api/generated/ApiGen_Concepts_Insurance';
 import { ILookupCode, lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { render, RenderOptions, RenderResult } from '@/utils/test-utils';
+import { RenderOptions, RenderResult, render } from '@/utils/test-utils';
 
-import { mockInsuranceTypeCar, mockInsuranceTypeHome } from '../edit/EditInsuranceContainer.test';
+import {
+  mockInsuranceTypeCar,
+  mockInsuranceTypeHome,
+  mockInsuranceTypeOther,
+} from '../edit/EditInsuranceContainer.test';
 import InsuranceDetailsView from './Insurance';
-
-jest.mock('@react-keycloak/web');
-(useKeycloak as jest.Mock).mockReturnValue({
-  keycloak: {
-    subject: 'test',
-    authenticated: true,
-    userInfo: {
-      roles: [],
-    },
-  },
-});
 
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: [] },
@@ -67,15 +59,37 @@ describe('Lease Insurance', () => {
     expect(result.asFragment()).toMatchSnapshot();
   });
 
-  it('Insurance count is correct', () => {
+  it('displays a list of lease insurances', () => {
     const testInsurance: ApiGen_Concepts_Insurance = { ...getMockInsurance() };
     testInsurance.insuranceType = TypeCodeUtils.createFromLookup(mockInsuranceTypeCar);
 
     const result = setup({
-      insuranceList: [getMockInsurance()],
+      insuranceList: [testInsurance],
       insuranceTypes: [mockInsuranceTypeHome, mockInsuranceTypeCar],
     });
     const titles = result.getAllByTestId('insurance-section');
     expect(titles.length).toBe(2);
+  });
+
+  it('displays information about lease insurance of type OTHER', () => {
+    const testInsurance: ApiGen_Concepts_Insurance = { ...getMockInsurance() };
+    testInsurance.insuranceType = TypeCodeUtils.createFromLookup(mockInsuranceTypeOther);
+    testInsurance.otherInsuranceType = 'alternate insurance type';
+
+    const result = setup({
+      insuranceList: [testInsurance],
+      insuranceTypes: [mockInsuranceTypeHome, mockInsuranceTypeCar, mockInsuranceTypeOther],
+    });
+    expect(result.getByText('alternate insurance type')).toBeInTheDocument();
+  });
+
+  it('displays default message when no lease insurances were found', () => {
+    const result = setup({
+      insuranceList: [],
+      insuranceTypes: [mockInsuranceTypeHome, mockInsuranceTypeCar],
+    });
+    expect(
+      result.getByText('There are no insurance policies indicated with this lease/license'),
+    ).toBeInTheDocument();
   });
 });

@@ -21,50 +21,68 @@ import { ApiGen_Concepts_InterestHolder } from '@/models/api/generated/ApiGen_Co
 
 import { useGenerateH120 } from './useGenerateH120';
 
-const generateFn = jest
+const generateFn = vi
   .fn()
   .mockResolvedValue({ status: ApiGen_CodeTypes_ExternalResponseStatus.Success, payload: {} });
-const getAcquisitionFileFn = jest.fn<Promise<ApiGen_Concepts_AcquisitionFile | undefined>, any[]>();
-const getAcquisitionPropertiesFn = jest.fn();
-const getAcquisitionCompReqH120s = jest.fn();
-const getH120sCategoryFn = jest.fn();
-const getInterestHoldersFn = jest.fn();
-const getPersonConceptFn = jest.fn();
-const getOrganizationConceptFn = jest.fn();
-const findElectoralDistrictFn = jest.fn();
+const getAcquisitionFileFn = vi.fn();
+const getAcquisitionPropertiesFn = vi.fn();
+const getAcquisitionCompReqH120s = vi.fn();
+const getH120sCategoryFn = vi.fn();
+const getInterestHoldersFn = vi.fn();
+const getPersonConceptFn = vi.fn();
+const getOrganizationConceptFn = vi.fn();
+const findElectoralDistrictFn = vi.fn();
 
-jest.mock('@/features/documents/hooks/useDocumentGenerationRepository');
-(useDocumentGenerationRepository as jest.Mock).mockImplementation(() => ({
-  generateDocumentDownloadWrappedRequest: generateFn,
-}));
+vi.mock('@/features/documents/hooks/useDocumentGenerationRepository');
+vi.mocked(useDocumentGenerationRepository).mockImplementation(
+  () =>
+    ({
+      generateDocumentDownloadWrappedRequest: generateFn,
+    } as unknown as ReturnType<typeof useDocumentGenerationRepository>),
+);
 
-jest.mock('@/hooks/repositories/useH120CategoryRepository');
-(useH120CategoryRepository as jest.Mock).mockImplementation(() => ({
-  execute: getH120sCategoryFn,
-}));
+vi.mock('@/hooks/repositories/useH120CategoryRepository');
+vi.mocked(useH120CategoryRepository).mockImplementation(
+  () =>
+    ({
+      execute: getH120sCategoryFn,
+    } as unknown as ReturnType<typeof useH120CategoryRepository>),
+);
 
-jest.mock('@/hooks/repositories/useAcquisitionProvider');
-(useAcquisitionProvider as jest.Mock).mockImplementation(() => ({
-  getAcquisitionFile: { execute: getAcquisitionFileFn },
-  getAcquisitionProperties: { execute: getAcquisitionPropertiesFn },
-  getAcquisitionCompReqH120s: { execute: getAcquisitionCompReqH120s },
-}));
+vi.mock('@/hooks/repositories/useAcquisitionProvider');
+vi.mocked(useAcquisitionProvider).mockImplementation(
+  () =>
+    ({
+      getAcquisitionFile: { execute: getAcquisitionFileFn },
+      getAcquisitionProperties: { execute: getAcquisitionPropertiesFn },
+      getAcquisitionCompReqH120s: { execute: getAcquisitionCompReqH120s },
+    } as unknown as ReturnType<typeof useAcquisitionProvider>),
+);
 
-jest.mock('@/hooks/repositories/useInterestHolderRepository');
-(useInterestHolderRepository as jest.Mock).mockImplementation(() => ({
-  getAcquisitionInterestHolders: { execute: getInterestHoldersFn },
-}));
+vi.mock('@/hooks/repositories/useInterestHolderRepository');
+vi.mocked(useInterestHolderRepository).mockImplementation(
+  () =>
+    ({
+      getAcquisitionInterestHolders: { execute: getInterestHoldersFn },
+    } as unknown as ReturnType<typeof useInterestHolderRepository>),
+);
 
-jest.mock('@/hooks/pims-api/useApiContacts');
-(useApiContacts as jest.Mock).mockImplementation(() => ({
-  getPersonConcept: getPersonConceptFn,
-  getOrganizationConcept: getOrganizationConceptFn,
-}));
+vi.mock('@/hooks/pims-api/useApiContacts');
+vi.mocked(useApiContacts).mockImplementation(
+  () =>
+    ({
+      getPersonConcept: getPersonConceptFn,
+      getOrganizationConcept: getOrganizationConceptFn,
+    } as unknown as ReturnType<typeof useApiContacts>),
+);
 
-jest.mock('@/hooks/repositories/mapLayer/useAdminBoundaryMapLayer');
-(useAdminBoundaryMapLayer as jest.Mock).mockImplementation(() => ({
-  findElectoralDistrict: findElectoralDistrictFn,
-}));
+vi.mock('@/hooks/repositories/mapLayer/useAdminBoundaryMapLayer');
+vi.mocked(useAdminBoundaryMapLayer).mockImplementation(
+  () =>
+    ({
+      findElectoralDistrict: findElectoralDistrictFn,
+    } as unknown as ReturnType<typeof useAdminBoundaryMapLayer>),
+);
 
 let currentStore: MockStoreEnhanced<any, {}>;
 const mockStore = configureMockStore([thunk]);

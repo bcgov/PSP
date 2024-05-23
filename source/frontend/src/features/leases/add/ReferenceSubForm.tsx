@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 import { InlineYesNoSelect } from '@/components/common/form/styles';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
@@ -20,13 +18,6 @@ const ReferenceSubForm: React.FunctionComponent = () => {
         tooltip="Use this space to paste in links or system paths to relevant documents"
       >
         <Styled.MediumTextArea field="documentationReference" />
-      </SectionField>
-
-      <SectionField label="LIS #" labelWidth="2">
-        <Styled.LargeInlineInput field="tfaFileNumber" />
-      </SectionField>
-      <SectionField label="PS #" labelWidth="2">
-        <Styled.LargeInlineInput field="psFileNo" />
       </SectionField>
 
       <SectionField label="Lease notes" labelWidth="2">

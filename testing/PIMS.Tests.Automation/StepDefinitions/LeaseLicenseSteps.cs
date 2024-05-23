@@ -113,11 +113,11 @@ namespace PIMS.Tests.Automation.StepDefinitions
             }
 
             //Search for a property by Legal Description
-            if (lease.SearchProperties.LegalDescription != "")
-            {
-                sharedSearchProperties.SelectPropertyByLegalDescription(lease.SearchProperties.LegalDescription);
-                sharedSearchProperties.SelectFirstOptionFromSearch();
-            }
+            //if (lease.SearchProperties.LegalDescription != "")
+            //{
+            //    sharedSearchProperties.SelectPropertyByLegalDescription(lease.SearchProperties.LegalDescription);
+            //    sharedSearchProperties.SelectFirstOptionFromSearch();
+            //}
 
             //Search for a duplicate property
             if (lease.SearchProperties.PID != "")

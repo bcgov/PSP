@@ -4,9 +4,8 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { useFormikContext } from 'formik';
 import { createMemoryHistory } from 'history';
-import { noop } from 'lodash';
-import React from 'react';
-import { act } from 'react-test-renderer';
+import noop from 'lodash/noop';
+import { act } from 'react-test-renderer/cjs/react-test-renderer.development';
 
 import { IAddLeaseContainerProps } from '@/features/leases/add/AddLeaseContainer';
 import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
@@ -17,6 +16,7 @@ import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { fillInput, renderAsync } from '@/utils/test-utils';
 
 import { AddImprovementsContainer } from './AddImprovementsContainer';
+import { createRef } from 'react';
 
 const history = createMemoryHistory();
 const storeState = {
@@ -24,7 +24,7 @@ const storeState = {
 };
 const mockAxios = new MockAdapter(axios);
 
-const onSuccessMock = jest.fn();
+const onSuccessMock = vi.fn();
 
 const SaveButton = () => {
   const { submitForm } = useFormikContext();
@@ -60,7 +60,7 @@ describe('Add Improvements container component', () => {
         }}
       >
         <AddImprovementsContainer
-          formikRef={React.createRef()}
+          formikRef={createRef()}
           onEdit={noop}
           improvements={renderOptions.improvements ?? []}
           loading={false}

@@ -12,18 +12,18 @@ import UpdateFinancialCodeContainer, {
 const mockGetApi = {
   error: undefined,
   response: undefined,
-  execute: jest.fn(),
+  execute: vi.fn(),
   loading: false,
 };
 
 const mockUpdateApi = {
   error: undefined,
   response: undefined,
-  execute: jest.fn(),
+  execute: vi.fn(),
   loading: false,
 };
 
-jest.mock('@/hooks/repositories/useFinancialCodeRepository', () => ({
+vi.mock('@/hooks/repositories/useFinancialCodeRepository', () => ({
   useFinancialCodeRepository: () => {
     return {
       getFinancialCode: mockGetApi,
@@ -59,7 +59,7 @@ describe('UpdateFinancialCode container', () => {
 
   beforeEach(() => {
     viewProps = undefined;
-    jest.resetAllMocks();
+    vi.resetAllMocks();
   });
 
   it('renders the underlying form and retrieves the financial code to update', async () => {

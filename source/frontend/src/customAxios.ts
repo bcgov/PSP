@@ -1,6 +1,6 @@
 import { Dispatch } from '@reduxjs/toolkit';
 import axios, { AxiosError, AxiosRequestHeaders } from 'axios';
-import { isEmpty } from 'lodash';
+import isEmpty from 'lodash/isEmpty';
 import { hideLoading } from 'react-redux-loading-bar';
 import { toast } from 'react-toastify';
 

@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Contact List View matches snapshot 1`] = `
+exports[`Contact List View > matches snapshot 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
@@ -141,6 +141,29 @@ exports[`Contact List View matches snapshot 1`] = `
   margin-right: 0;
 }
 
+.c16.c16.btn {
+  background-color: unset;
+  border: none;
+}
+
+.c16.c16.btn:hover,
+.c16.c16.btn:focus,
+.c16.c16.btn:active {
+  background-color: unset;
+  outline: none;
+  box-shadow: none;
+}
+
+.c16.c16.btn svg {
+  -webkit-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out;
+}
+
+.c16.c16.btn svg:hover {
+  -webkit-transition: all 0.3s ease-in;
+  transition: all 0.3s ease-in;
+}
+
 .c7 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -186,6 +209,10 @@ exports[`Contact List View matches snapshot 1`] = `
 .c13 {
   width: 1.6rem;
   height: 1.6rem;
+}
+
+.c17 {
+  margin-top: 0.3rem;
 }
 
 .c6 {
@@ -272,6 +299,14 @@ exports[`Contact List View matches snapshot 1`] = `
   -ms-flex-positive: 1;
   flex-grow: 1;
   overflow-y: auto;
+}
+
+.c15 {
+  -webkit-box-pack: space-around;
+  -webkit-justify-content: space-around;
+  -ms-flex-pack: space-around;
+  justify-content: space-around;
+  width: 100%;
 }
 
 .c0 {
@@ -602,8 +637,35 @@ exports[`Contact List View matches snapshot 1`] = `
                           </div>
                         </div>
                       </div>
-                      <svg>
-                        <span />
+                      <svg
+                        height="10"
+                        overflow="visible"
+                        preserveAspectRatio="none"
+                        viewBox="0 0 10 10"
+                        width="10"
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                      >
+                        <g
+                          transform="translate(1, 1)"
+                        >
+                          <defs>
+                            <path
+                              d="M4 0 C6.207660097976 0 8 1.7923399020239998 8 4 C8 6.207660097976 6.207660097976 8 4 8 C1.7923399020239998 8 0 6.207660097976 0 4 C0 1.7923399020239998 1.7923399020239998 0 4 0 Z"
+                              id="path-1635974705144170"
+                              vector-effect="non-scaling-stroke"
+                            />
+                          </defs>
+                          <g
+                            transform="translate(0, 0)"
+                          >
+                            <path
+                              d="M4 0 C6.207660097976 0 8 1.7923399020239998 8 4 C8 6.207660097976 6.207660097976 8 4 8 C1.7923399020239998 8 0 6.207660097976 0 4 C0 1.7923399020239998 1.7923399020239998 0 4 0 Z"
+                              style="stroke: rgb(255, 255, 255); stroke-width: 1; stroke-linecap: butt; stroke-linejoin: miter; fill: rgb(146, 237, 36);"
+                              vector-effect="non-scaling-stroke"
+                            />
+                          </g>
+                        </g>
                       </svg>
                       <span>
                         Show active contacts only
@@ -930,9 +992,184 @@ exports[`Contact List View matches snapshot 1`] = `
               </div>
             </div>
             <div
-              class="no-rows-message"
+              class="tbody"
+              role="rowgroup"
             >
-              No Contacts match the search criteria
+              <div
+                class="tr-wrapper"
+              >
+                <div
+                  class="tr"
+                  role="row"
+                  style="display: flex; flex: 1 0 auto; min-width: 430px;"
+                >
+                  <div
+                    class="td"
+                    role="cell"
+                    style="box-sizing: border-box; flex: 10 0 auto; min-width: 10px; width: 10px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                    title=""
+                  >
+                    <svg
+                      height="10"
+                      overflow="visible"
+                      preserveAspectRatio="none"
+                      viewBox="0 0 10 10"
+                      width="10"
+                      xmlns="http://www.w3.org/2000/svg"
+                      xmlns:xlink="http://www.w3.org/1999/xlink"
+                    >
+                      <g
+                        transform="translate(1, 1)"
+                      >
+                        <defs>
+                          <path
+                            d="M4 0 C6.207660097976 0 8 1.7923399020239998 8 4 C8 6.207660097976 6.207660097976 8 4 8 C1.7923399020239998 8 0 6.207660097976 0 4 C0 1.7923399020239998 1.7923399020239998 0 4 0 Z"
+                            id="path-1635974705144170"
+                            vector-effect="non-scaling-stroke"
+                          />
+                        </defs>
+                        <g
+                          transform="translate(0, 0)"
+                        >
+                          <path
+                            d="M4 0 C6.207660097976 0 8 1.7923399020239998 8 4 C8 6.207660097976 6.207660097976 8 4 8 C1.7923399020239998 8 0 6.207660097976 0 4 C0 1.7923399020239998 1.7923399020239998 0 4 0 Z"
+                            style="stroke: rgb(255, 255, 255); stroke-width: 1; stroke-linecap: butt; stroke-linejoin: miter; fill: rgb(146, 237, 36);"
+                            vector-effect="non-scaling-stroke"
+                          />
+                        </g>
+                      </g>
+                    </svg>
+                  </div>
+                  <div
+                    class="td"
+                    role="cell"
+                    style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                    title=""
+                  >
+                    <svg
+                      fill="currentColor"
+                      height="20"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 448 512"
+                      width="20"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M128 148v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12zm140 12h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm-128 96h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm128 0h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm-76 84v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm76 12h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm180 124v36H0v-36c0-6.6 5.4-12 12-12h19.5V24c0-13.3 10.7-24 24-24h337c13.3 0 24 10.7 24 24v440H436c6.6 0 12 5.4 12 12zM79.5 463H192v-67c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v67h112.5V49L80 48l-.5 415z"
+                      />
+                    </svg>
+                  </div>
+                  <div
+                    class="td clickable"
+                    role="cell"
+                    style="box-sizing: border-box; flex: 80 0 auto; min-width: 30px; width: 80px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                    title=""
+                  >
+                    <a
+                      href="/contact/1"
+                    >
+                      summary
+                    </a>
+                  </div>
+                  <div
+                    class="td"
+                    role="cell"
+                    style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                    title=""
+                  >
+                    first
+                  </div>
+                  <div
+                    class="td"
+                    role="cell"
+                    style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                    title=""
+                  >
+                    last
+                  </div>
+                  <div
+                    class="td"
+                    role="cell"
+                    style="box-sizing: border-box; flex: 80 0 auto; min-width: 30px; width: 80px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                    title=""
+                  />
+                  <div
+                    class="td text-break"
+                    role="cell"
+                    style="box-sizing: border-box; flex: 100 0 auto; min-width: 80px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                    title=""
+                  >
+                    email
+                  </div>
+                  <div
+                    class="td"
+                    role="cell"
+                    style="box-sizing: border-box; flex: 100 0 auto; min-width: 80px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                    title=""
+                  >
+                    123 mock st
+                  </div>
+                  <div
+                    class="td"
+                    role="cell"
+                    style="box-sizing: border-box; flex: 70 0 auto; min-width: 50px; width: 70px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                    title=""
+                  >
+                    city
+                  </div>
+                  <div
+                    class="td"
+                    role="cell"
+                    style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                    title=""
+                  >
+                    province
+                  </div>
+                  <div
+                    class="td"
+                    role="cell"
+                    style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                    title=""
+                  >
+                    <div
+                      class="c6 c15"
+                    >
+                      <button
+                        class="c11 Button c16 btn btn-light"
+                        title="View Contact"
+                        type="button"
+                      >
+                        <div
+                          class="Button__value"
+                        >
+                          <svg
+                            fill="currentColor"
+                            height="22"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 24 24"
+                            width="22"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M0 0h24v24H0z"
+                              fill="none"
+                            />
+                            <path
+                              d="M0 0h24v24H0z"
+                              fill="none"
+                            />
+                            <path
+                              d="M21 8V7l-3 2-3-2v1l3 2 3-2zm1-5H2C.9 3 0 3.9 0 5v14c0 1.1.9 2 2 2h20c1.1 0 1.99-.9 1.99-2L24 5c0-1.1-.9-2-2-2zM8 6c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm6 12H2v-1c0-2 4-3.1 6-3.1s6 1.1 6 3.1v1zm8-6h-8V6h8v6z"
+                            />
+                          </svg>
+                        </div>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           <div
@@ -940,13 +1177,136 @@ exports[`Contact List View matches snapshot 1`] = `
           >
             <div
               class="align-self-center col-auto"
-            />
+            >
+              <span>
+                1 - 1 of 1
+              </span>
+            </div>
             <div
               class="ml-auto align-self-center col-auto"
             />
             <div
               class="align-self-center col-auto"
-            />
+            >
+              <div
+                class="Menu-root"
+              >
+                <div
+                  class="Menu-button"
+                >
+                  <div
+                    style="display: flex;"
+                  >
+                    <span
+                      class="c17"
+                    >
+                      Show
+                    </span>
+                    <input
+                      class="form-control form-control-sm"
+                      disabled=""
+                      style="width: 50px; margin-left: 10px; margin-right: 10px; background-color: white;"
+                      type="number"
+                      value="10"
+                    />
+                    <span
+                      class="c17"
+                    >
+                      Entries
+                    </span>
+                  </div>
+                </div>
+                <div
+                  class="Menu-items"
+                  style="width: 10.0rem;"
+                >
+                  <div
+                    class="Menu-options scrollable list-group"
+                  >
+                    <div
+                      class="Menu-item list-group-item"
+                      title="menu-item-5"
+                    >
+                      5
+                    </div>
+                    <div
+                      class="Menu-item list-group-item"
+                      title="menu-item-10"
+                    >
+                      10
+                    </div>
+                    <div
+                      class="Menu-item list-group-item"
+                      title="menu-item-20"
+                    >
+                      20
+                    </div>
+                    <div
+                      class="Menu-item list-group-item"
+                      title="menu-item-50"
+                    >
+                      50
+                    </div>
+                    <div
+                      class="Menu-item list-group-item"
+                      title="menu-item-100"
+                    >
+                      100
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="align-self-center col-auto"
+            >
+              <ul
+                class="pagination"
+              >
+                <li
+                  class="page-item disabled"
+                >
+                  <a
+                    aria-disabled="true"
+                    aria-label="Previous page"
+                    class="page-link "
+                    rel="prev"
+                    role="button"
+                    tabindex="-1"
+                  >
+                    &lt;
+                  </a>
+                </li>
+                <li
+                  class="page-item active"
+                >
+                  <a
+                    aria-current="page"
+                    aria-label="Page 1 is your current page"
+                    class="page-link"
+                    rel="canonical"
+                    role="button"
+                    tabindex="-1"
+                  >
+                    1
+                  </a>
+                </li>
+                <li
+                  class="page-item disabled"
+                >
+                  <a
+                    aria-disabled="true"
+                    aria-label="Next page"
+                    class="page-link "
+                    rel="next"
+                    role="button"
+                    tabindex="-1"
+                  >
+                    &gt;
+                  </a>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>

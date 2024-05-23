@@ -1,13 +1,11 @@
-import * as React from 'react';
+import { FunctionComponent, PropsWithChildren, useState } from 'react';
 import { Col, Collapse, Row } from 'react-bootstrap';
 import { FaInfoCircle } from 'react-icons/fa';
 import { MdArrowDropDown, MdArrowDropUp } from 'react-icons/md';
 import styled from 'styled-components';
 
-export const ResearchFileNameGuide: React.FunctionComponent<
-  React.PropsWithChildren<unknown>
-> = () => {
-  const [isCollapsed, setIsCollapsed] = React.useState<boolean>(true);
+export const ResearchFileNameGuide: FunctionComponent<PropsWithChildren<unknown>> = () => {
+  const [isCollapsed, setIsCollapsed] = useState<boolean>(true);
   return (
     <>
       <StyledSectionHeader>
@@ -72,7 +70,7 @@ const StyledSection = styled.div`
   background-color: #f0f7fc;
   margin-bottom: 2rem;
   font-size: 16px;
-  color: ${props => props.theme.css.darkBlue};
+  color: ${props => props.theme.bcTokens.surfaceColorBackgroundDarkBlue};
   text-decoration: none solid rgb(49, 49, 50);
   line-height: 24px;
 `;

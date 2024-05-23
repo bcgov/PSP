@@ -1,5 +1,4 @@
 import { useFormikContext } from 'formik';
-import * as React from 'react';
 
 import { FastCurrencyInput, FastDatePicker, Select } from '@/components/common/form';
 import { InlineFlexDiv } from '@/components/common/styles';

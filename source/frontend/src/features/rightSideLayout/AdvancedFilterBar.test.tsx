@@ -2,7 +2,7 @@ import { act, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import RightSideLayout, { IRightSideLayoutProps } from './RightSideLayout';
 
-const toggle = jest.fn();
+const toggle = vi.fn();
 
 describe('AdvancedFilterBar', () => {
   const setup = async (

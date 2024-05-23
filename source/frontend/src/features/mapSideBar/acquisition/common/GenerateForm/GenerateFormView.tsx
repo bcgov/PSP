@@ -1,4 +1,4 @@
-import { FormikProps } from 'formik';
+import { FormikProps } from 'formik/dist/types';
 import { useRef } from 'react';
 import styled from 'styled-components';
 
@@ -88,11 +88,11 @@ const StyledMenuHeaderWrapper = styled.div`
   justify-content: space-between;
   align-items: flex-end;
   width: 100%;
-  border-bottom: 1px solid ${props => props.theme.css.lightVariantColor};
+  border-bottom: 1px solid ${props => props.theme.css.borderOutlineColor};
 `;
 
 const StyledMenuHeader = styled.span`
   font-size: 1.4rem;
-  color: ${props => props.theme.css.lightVariantColor};
+  color: ${props => props.theme.css.themeGray70};
   line-height: 2.2rem;
 `;

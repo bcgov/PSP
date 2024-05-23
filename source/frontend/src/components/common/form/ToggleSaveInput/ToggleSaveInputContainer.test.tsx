@@ -21,7 +21,7 @@ const View = (props: IToggleSaveInputViewProps) => {
   return <></>;
 };
 
-const onSave = jest.fn();
+const onSave = vi.fn();
 
 describe('ToggleSaveInputContainer component', () => {
   // render component under test
@@ -39,7 +39,7 @@ describe('ToggleSaveInputContainer component', () => {
   };
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('works as expected when promise returns success', async () => {

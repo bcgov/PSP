@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { Button } from 'react-bootstrap';
 import { FaEdit } from 'react-icons/fa';
 import styled from 'styled-components';
@@ -83,7 +82,7 @@ export const PropertyResearchTabView: React.FunctionComponent<
 export default PropertyResearchTabView;
 
 const StyledSummarySection = styled.div`
-  background-color: ${props => props.theme.css.filterBackgroundColor};
+  background-color: ${props => props.theme.css.highlightBackgroundColor};
 `;
 
 const StyledEditWrapper = styled.div`

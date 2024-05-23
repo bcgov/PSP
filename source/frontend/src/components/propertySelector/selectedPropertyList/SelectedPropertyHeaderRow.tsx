@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
@@ -23,8 +22,8 @@ export const SelectedPropertyHeaderRow: React.FunctionComponent<
 
 export const HeaderRow = styled(Row)`
   font-size: 1.6rem;
-  color: ${props => props.theme.css.lightVariantColor};
-  border-bottom: 0.2rem solid ${props => props.theme.css.lightVariantColor};
+  color: ${props => props.theme.bcTokens.themeGray70};
+  border-bottom: 0.2rem solid ${props => props.theme.css.borderOutlineColor};
   margin-bottom: 0.9rem;
   padding-bottom: 0.25rem;
   font-family: 'BcSans-Bold';

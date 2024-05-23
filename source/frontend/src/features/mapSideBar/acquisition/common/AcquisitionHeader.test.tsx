@@ -1,13 +1,11 @@
-import axios from 'axios';
-import MockAdapter from 'axios-mock-adapter';
-
 import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
+import { server } from '@/mocks/msw/server';
 import { prettyFormatUTCDate } from '@/utils';
-import { render, RenderOptions } from '@/utils/test-utils';
+import { act, render, RenderOptions } from '@/utils/test-utils';
 
+import { getUserMock } from '@/mocks/user.mock';
+import { http, HttpResponse } from 'msw';
 import { AcquisitionHeader, IAcquisitionHeaderProps } from './AcquisitionHeader';
-
-const mockAxios = new MockAdapter(axios);
 
 describe('AcquisitionHeader component', () => {
   // render component under test
@@ -26,16 +24,19 @@ describe('AcquisitionHeader component', () => {
   };
 
   beforeEach(() => {
-    mockAxios.onGet(new RegExp('users/info/*')).reply(200, {});
+    server.use(
+      http.get('/api/users/info/*', () => HttpResponse.json(getUserMock())),
+      http.get('/api/properties/:id/historicalNumbers', () => HttpResponse.json([])),
+    );
   });
 
   afterEach(() => {
-    mockAxios.reset();
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
-  it('renders as expected when no data is provided', () => {
+  it('renders as expected when no data is provided', async () => {
     const { asFragment } = setup({ lastUpdatedBy: null });
+    await act(async () => {});
     expect(asFragment()).toMatchSnapshot();
   });
 
@@ -50,17 +51,21 @@ describe('AcquisitionHeader component', () => {
         appLastUpdateTimestamp: testAcquisitionFile.appLastUpdateTimestamp || '',
       },
     });
+    await act(async () => {});
 
     expect(getByText('1-12345-01 - Test ACQ File')).toBeVisible();
-    expect(getByText(prettyFormatUTCDate(testAcquisitionFile.appCreateTimestamp))).toBeVisible();
     expect(
-      getByText(prettyFormatUTCDate(testAcquisitionFile.appLastUpdateTimestamp)),
+      getByText(new RegExp(prettyFormatUTCDate(testAcquisitionFile.appCreateTimestamp))),
+    ).toBeVisible();
+    expect(
+      getByText(new RegExp(prettyFormatUTCDate(testAcquisitionFile.appLastUpdateTimestamp))),
     ).toBeVisible();
   });
 
   it('renders the file number and name concatenated', async () => {
     const testAcquisitionFile = mockAcquisitionFileResponse();
     const { getByText } = setup({ acquisitionFile: testAcquisitionFile, lastUpdatedBy: null });
+    await act(async () => {});
 
     expect(getByText('File:')).toBeVisible();
     expect(getByText('1-12345-01 - Test ACQ File')).toBeVisible();
@@ -69,6 +74,7 @@ describe('AcquisitionHeader component', () => {
   it('renders the file Project Number and name concatenated', async () => {
     const testAcquisitionFile = mockAcquisitionFileResponse();
     const { getByText } = setup({ acquisitionFile: testAcquisitionFile, lastUpdatedBy: null });
+    await act(async () => {});
 
     expect(getByText('Ministry project:')).toBeVisible();
     expect(
@@ -81,6 +87,7 @@ describe('AcquisitionHeader component', () => {
   it('renders the file Product code and description concatenated', async () => {
     const testAcquisitionFile = mockAcquisitionFileResponse();
     const { getByText } = setup({ acquisitionFile: testAcquisitionFile, lastUpdatedBy: null });
+    await act(async () => {});
 
     expect(getByText('Ministry product:')).toBeVisible();
     expect(getByText('00048 - MISCELLANEOUS CLAIMS')).toBeVisible();
@@ -98,6 +105,7 @@ describe('AcquisitionHeader component', () => {
       },
       lastUpdatedBy: null,
     });
+    await act(async () => {});
 
     expect(getByText('Ministry product:')).toBeVisible();
     expect(getByTestId('acq-header-product-val')).toHaveTextContent('');
@@ -115,9 +123,12 @@ describe('AcquisitionHeader component', () => {
         appLastUpdateTimestamp: testDate,
       },
     });
+    await act(async () => {});
 
     expect(getByText('1-12345-01 - Test ACQ File')).toBeVisible();
-    expect(getByText(prettyFormatUTCDate(testAcquisitionFile.appCreateTimestamp))).toBeVisible();
-    expect(getByText(prettyFormatUTCDate(testDate))).toBeVisible();
+    expect(
+      getByText(new RegExp(prettyFormatUTCDate(testAcquisitionFile.appCreateTimestamp))),
+    ).toBeVisible();
+    expect(getByText(new RegExp(prettyFormatUTCDate(testDate)))).toBeVisible();
   });
 });

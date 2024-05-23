@@ -1,5 +1,4 @@
-import axios from 'axios';
-import MockAdapter from 'axios-mock-adapter';
+import { AxiosResponse } from 'axios';
 import { FormikProps } from 'formik';
 import { createMemoryHistory } from 'history';
 import { createRef } from 'react';
@@ -16,27 +15,31 @@ import { ApiGen_Concepts_CodeType } from '@/models/api/generated/ApiGen_Concepts
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { getEmptyBaseAudit, getEmptyProperty } from '@/models/defaultInitializers';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { act, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
+import { RenderOptions, act, render, userEvent } from '@/utils/test-utils';
 
-import { UpdatePropertyDetailsFormModel } from './models';
+import { IResponseWrapper } from '@/hooks/util/useApiRequestWrapper';
+import { server } from '@/mocks/msw/server';
+import { getUserMock } from '@/mocks/user.mock';
+import { LatLngLiteral } from 'leaflet';
+import { HttpResponse, http } from 'msw';
 import {
   IUpdatePropertyDetailsContainerProps,
   UpdatePropertyDetailsContainer,
 } from './UpdatePropertyDetailsContainer';
+import { UpdatePropertyDetailsFormModel } from './models';
 
 const history = createMemoryHistory();
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
 
-const onSuccess = jest.fn();
+const onSuccess = vi.fn();
 
 const DEFAULT_PROPS: IUpdatePropertyDetailsContainerProps = {
   id: 205,
   onSuccess,
 };
 
-const mockAxios = new MockAdapter(axios);
 const fakeProperty: ApiGen_Concepts_Property = {
   ...getEmptyProperty(),
   id: 205,
@@ -209,30 +212,34 @@ const fakeProperty: ApiGen_Concepts_Property = {
 };
 
 // Mock API service calls
-jest.mock('@/hooks/repositories/usePimsPropertyRepository');
-jest.mock('@/hooks/repositories/useQueryMapLayersByLocation');
+vi.mock('@/hooks/repositories/usePimsPropertyRepository');
+vi.mock('@/hooks/repositories/useQueryMapLayersByLocation');
 
-const getProperty = jest.fn(() => ({ ...fakeProperty }));
-const updateProperty = jest.fn(() => ({ ...fakeProperty }));
-(usePimsPropertyRepository as jest.Mock).mockReturnValue({
+const getProperty = vi.fn(() => ({ ...fakeProperty }));
+const updateProperty = vi.fn(() => ({ ...fakeProperty }));
+vi.mocked(usePimsPropertyRepository).mockReturnValue({
   getPropertyWrapper: {
-    execute: getProperty,
+    execute: getProperty as unknown as (id: number) => Promise<ApiGen_Concepts_Property>,
     loading: false,
-  },
+  } as IResponseWrapper<(id: number) => Promise<AxiosResponse<ApiGen_Concepts_Property, any>>>,
   updatePropertyWrapper: {
-    execute: updateProperty,
+    execute: updateProperty as unknown as (
+      property: ApiGen_Concepts_Property,
+    ) => Promise<ApiGen_Concepts_Property>,
     updatePropertyLoading: false,
-  },
-});
+  } as unknown as IResponseWrapper<
+    (property: ApiGen_Concepts_Property) => Promise<AxiosResponse<ApiGen_Concepts_Property, any>>
+  >,
+} as ReturnType<typeof usePimsPropertyRepository>);
 
-(useQueryMapLayersByLocation as jest.Mock).mockReturnValue({
-  queryAll: jest.fn<IMapLayerResults, any[]>(() => ({
+vi.mocked(useQueryMapLayersByLocation).mockReturnValue({
+  queryAll: vi.fn(() => ({
     isALR: null,
     motiRegion: null,
     highwaysDistrict: null,
     electoralDistrict: null,
     firstNations: null,
-  })),
+  })) as unknown as (location: LatLngLiteral) => Promise<IMapLayerResults>,
 });
 
 describe('UpdatePropertyDetailsContainer component', () => {
@@ -255,21 +262,27 @@ describe('UpdatePropertyDetailsContainer component', () => {
   };
 
   beforeEach(() => {
-    mockAxios.onGet(new RegExp('users/info/*')).reply(200, {});
+    server.use(
+      http.get('/api/users/info/*', () => HttpResponse.json(getUserMock())),
+      http.get('/api/properties/:id/historicalNumbers', () => HttpResponse.json([])),
+      http.put('/api/properties/:id/historicalNumbers', () => HttpResponse.json([])),
+    );
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders as expected', async () => {
     const { asFragment, findByTitle } = setup();
+    await act(async () => {});
     expect(await findByTitle('Down by the River')).toBeInTheDocument();
     expect(asFragment()).toMatchSnapshot();
   });
 
   it('saves the form with minimal data', async () => {
     const { findByTitle, formikRef } = setup();
+    await act(async () => {});
     expect(await findByTitle('Down by the River')).toBeInTheDocument();
     await act(async () => formikRef.current?.submitForm() as Promise<void>);
 
@@ -289,46 +302,44 @@ describe('UpdatePropertyDetailsContainer component', () => {
       }),
     });
 
-    expect(updateProperty).toBeCalledWith(expectedValues);
-    expect(onSuccess).toBeCalled();
+    expect(updateProperty).toHaveBeenCalledWith(expectedValues);
+    expect(onSuccess).toHaveBeenCalled();
   });
 
   it('saves the form with updated values', async () => {
     const { findByTitle, formikRef } = setup();
+    await act(async () => {});
     expect(await findByTitle('Down by the River')).toBeInTheDocument();
 
     const addressLine1 = document.querySelector(
       `input[name='address.streetAddress1']`,
     ) as HTMLElement;
-    await act(async () => {
-      await act(async () => userEvent.clear(addressLine1));
-      await act(async () => userEvent.paste(addressLine1, '123 Mock St'));
-      formikRef.current?.submitForm();
-    });
+    await act(async () => userEvent.clear(addressLine1));
+    await act(async () => userEvent.paste(addressLine1, '123 Mock St'));
+    await act(async () => formikRef.current?.submitForm());
 
-    await waitFor(() => {
-      const expectedValues = expect.objectContaining<Partial<ApiGen_Concepts_Property>>({
-        address: expect.objectContaining<Partial<ApiGen_Concepts_Address>>({
-          streetAddress1: '123 Mock St',
-          streetAddress2: fakeProperty.address?.streetAddress2,
-          streetAddress3: fakeProperty.address?.streetAddress3,
-          municipality: fakeProperty.address?.municipality,
-          postal: fakeProperty.address?.postal,
-          country: expect.objectContaining<Partial<ApiGen_Concepts_CodeType>>({
-            id: fakeProperty.address!.country!.id,
-          }),
-          province: expect.objectContaining<Partial<ApiGen_Concepts_CodeType>>({
-            id: fakeProperty.address!.province!.id,
-          }),
+    const expectedValues = expect.objectContaining<Partial<ApiGen_Concepts_Property>>({
+      address: expect.objectContaining<Partial<ApiGen_Concepts_Address>>({
+        streetAddress1: '123 Mock St',
+        streetAddress2: fakeProperty.address?.streetAddress2,
+        streetAddress3: fakeProperty.address?.streetAddress3,
+        municipality: fakeProperty.address?.municipality,
+        postal: fakeProperty.address?.postal,
+        country: expect.objectContaining<Partial<ApiGen_Concepts_CodeType>>({
+          id: fakeProperty.address!.country!.id,
         }),
-      });
-      expect(updateProperty).toBeCalledWith(expectedValues);
-      expect(onSuccess).toBeCalled();
+        province: expect.objectContaining<Partial<ApiGen_Concepts_CodeType>>({
+          id: fakeProperty.address!.province!.id,
+        }),
+      }),
     });
+    expect(updateProperty).toHaveBeenCalledWith(expectedValues);
+    expect(onSuccess).toHaveBeenCalled();
   });
 
   it('sends no address when all fields are cleared', async () => {
     const { findByTitle, formikRef } = setup();
+    await act(async () => {});
     expect(await findByTitle('Down by the River')).toBeInTheDocument();
 
     const addressLine1 = document.querySelector(
@@ -345,22 +356,18 @@ describe('UpdatePropertyDetailsContainer component', () => {
     ) as HTMLElement;
     const postal = document.querySelector(`input[name='address.postal']`) as HTMLElement;
 
-    await act(async () => {
-      await act(async () => userEvent.clear(addressLine1));
-      await act(async () => userEvent.clear(addressLine2));
-      await act(async () => userEvent.clear(addressLine3));
-      await act(async () => userEvent.clear(municipality));
-      await act(async () => userEvent.clear(postal));
-      formikRef.current?.submitForm() as Promise<void>;
+    await act(async () => userEvent.clear(addressLine1));
+    await act(async () => userEvent.clear(addressLine2));
+    await act(async () => userEvent.clear(addressLine3));
+    await act(async () => userEvent.clear(municipality));
+    await act(async () => userEvent.clear(postal));
+    await act(async () => formikRef.current?.submitForm());
+
+    const expectedValues = expect.objectContaining<Partial<ApiGen_Concepts_Property>>({
+      address: null,
     });
 
-    await waitFor(() => {
-      const expectedValues = expect.objectContaining<Partial<ApiGen_Concepts_Property>>({
-        address: null,
-      });
-
-      expect(updateProperty).toBeCalledWith(expectedValues);
-      expect(onSuccess).toBeCalled();
-    });
+    expect(updateProperty).toHaveBeenCalledWith(expectedValues);
+    expect(onSuccess).toHaveBeenCalled();
   });
 });

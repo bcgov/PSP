@@ -22,20 +22,18 @@ const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: [] },
 };
 
-jest.mock('@react-keycloak/web');
-
-jest.mock('@/hooks/repositories/useUserInfoRepository');
-(useUserInfoRepository as jest.Mock).mockReturnValue({
-  retrieveUserInfo: jest.fn(),
+vi.mock('@/hooks/repositories/useUserInfoRepository');
+vi.mocked(useUserInfoRepository).mockReturnValue({
+  retrieveUserInfo: vi.fn(),
   retrieveUserInfoLoading: true,
   retrieveUserInfoResponse: getUserMock(),
 });
 
-jest.mock('@/hooks/pims-api/useApiProjects');
-const searchProjects = jest.fn();
-(useApiProjects as jest.Mock).mockReturnValue({
+vi.mock('@/hooks/pims-api/useApiProjects');
+const searchProjects = vi.fn();
+vi.mocked(useApiProjects).mockReturnValue({
   searchProjects,
-});
+} as unknown as ReturnType<typeof useApiProjects>);
 
 const setupMockSearch = (searchResults?: ProjectSearchResultModel[]) => {
   const results = searchResults ?? [];

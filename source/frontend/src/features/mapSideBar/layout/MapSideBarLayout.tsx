@@ -84,12 +84,12 @@ const Footer = styled.div``;
 
 const Underline = styled.div`
   width: 100%;
-  border-bottom: solid 0.5rem ${props => props.theme.css.primaryLightColor};
+  border-bottom: solid 0.5rem ${props => props.theme.bcTokens.themeBlue80};
 `;
 
 const CloseIcon = styled(FaWindowClose)`
   color: ${props => props.theme.css.textColor};
-  font-size: 30px;
+  font-size: 2.4rem;
   cursor: pointer;
 `;
 

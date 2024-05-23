@@ -1,5 +1,5 @@
 import { Formik, FormikProps } from 'formik';
-import * as React from 'react';
+import { forwardRef } from 'react';
 import styled from 'styled-components';
 
 import { ApiGen_Concepts_ResearchFileProperty } from '@/models/api/generated/ApiGen_Concepts_ResearchFileProperty';
@@ -14,7 +14,7 @@ export interface IUpdatePropertyViewProps {
   onSuccess: () => void;
 }
 
-export const UpdatePropertyResearchContainer = React.forwardRef<
+export const UpdatePropertyResearchContainer = forwardRef<
   FormikProps<any>,
   IUpdatePropertyViewProps
 >((props, formikRef) => {

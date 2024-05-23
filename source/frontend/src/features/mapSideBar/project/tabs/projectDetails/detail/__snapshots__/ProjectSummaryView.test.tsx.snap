@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`ProjectSummaryView component matches snapshot 1`] = `
+exports[`ProjectSummaryView component > matches snapshot 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
@@ -93,7 +93,7 @@ exports[`ProjectSummaryView component matches snapshot 1`] = `
                 fill="none"
               />
               <path
-                d="M7 14l5-5 5 5z"
+                d="m7 14 5-5 5 5z"
               />
             </svg>
           </div>
@@ -157,7 +157,7 @@ exports[`ProjectSummaryView component matches snapshot 1`] = `
                 fill="none"
               />
               <path
-                d="M7 14l5-5 5 5z"
+                d="m7 14 5-5 5 5z"
               />
             </svg>
           </div>
@@ -254,7 +254,7 @@ exports[`ProjectSummaryView component matches snapshot 1`] = `
                   fill="none"
                 />
                 <path
-                  d="M7 14l5-5 5 5z"
+                  d="m7 14 5-5 5 5z"
                 />
               </svg>
             </div>

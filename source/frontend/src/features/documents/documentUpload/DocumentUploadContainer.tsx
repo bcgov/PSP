@@ -1,4 +1,4 @@
-import { FormikProps } from 'formik';
+import { FormikProps } from 'formik/dist/types';
 import {
   ChangeEvent,
   forwardRef,
@@ -52,7 +52,6 @@ const DocumentUploadContainer = forwardRef<
 
   const { setDisplayModal } = useModalContext({
     ...deleteModalProps,
-    closeButton: false,
     handleOk: () => {
       handleCancelConfirm();
     },

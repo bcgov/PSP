@@ -29,7 +29,9 @@ export const HeaderField: React.FC<React.PropsWithChildren<IHeaderFieldProps>> =
 
 export const HeaderLabelCol: React.FC<IHeaderLabelColProps> = props => (
   <Col xs={props.labelWidth ?? 'auto'} className="pr-0 text-left">
-    <label>{props.label}</label>
+    <strong>
+      <label>{props.label}</label>
+    </strong>
   </Col>
 );
 
@@ -42,7 +44,7 @@ export const HeaderContentCol: React.FC<
       className="pl-1 text-left"
       data-testid={props.valueTestId}
     >
-      <strong>{props.children}</strong>
+      {props.children}
     </Col>
   );
 };

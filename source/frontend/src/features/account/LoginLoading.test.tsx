@@ -1,5 +1,4 @@
 import { render } from '@testing-library/react';
-import React from 'react';
 import { ThemeProvider } from 'styled-components';
 
 import { TenantConsumer, TenantProvider } from '@/tenants';
@@ -11,7 +10,7 @@ const TestLoginLoading = () => {
     <TenantProvider>
       <TenantConsumer>
         {({ tenant }) => (
-          <ThemeProvider theme={{ tenant, css: {} }}>
+          <ThemeProvider theme={{ tenant, css: {}, bcTokens: {} }}>
             <LoginLoading></LoginLoading>
           </ThemeProvider>
         )}

@@ -1,5 +1,5 @@
 import { Formik } from 'formik';
-import { noop } from 'lodash';
+import noop from 'lodash/noop';
 
 import Claims from '@/constants/claims';
 import { mockLookups } from '@/mocks/lookups.mock';
@@ -79,7 +79,7 @@ describe('FinancialActivitiesSubForm  component', () => {
   };
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders as expected', async () => {

@@ -1,5 +1,4 @@
 import { Formik, FormikHelpers, FormikProps } from 'formik';
-import * as React from 'react';
 import styled from 'styled-components';
 
 import { IMapProperty } from '@/components/propertySelector/models';
@@ -68,7 +67,7 @@ const AddLeaseForm: React.FunctionComponent<React.PropsWithChildren<IAddLeaseFor
 export default AddLeaseForm;
 
 const StyledFormWrapper = styled.div`
-  background-color: ${props => props.theme.css.filterBackgroundColor};
+  background-color: ${props => props.theme.css.highlightBackgroundColor};
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
 `;

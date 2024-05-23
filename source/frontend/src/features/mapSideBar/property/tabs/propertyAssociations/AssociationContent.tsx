@@ -1,5 +1,4 @@
-import { orderBy } from 'lodash';
-import * as React from 'react';
+import orderBy from 'lodash/orderBy';
 import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
 
@@ -53,7 +52,7 @@ const AssociationContent: React.FunctionComponent<
   return (
     <Table<IAssociationInfo>
       name="associationFiles"
-      columns={acquisitionColumns}
+      columns={associationColumns}
       data={tableData ?? []}
       manualSortBy={true}
       noRowsMessage={noDataMessage}
@@ -62,7 +61,7 @@ const AssociationContent: React.FunctionComponent<
   );
 };
 
-const acquisitionColumns: ColumnWithProps<IAssociationInfo>[] = [
+const associationColumns: ColumnWithProps<IAssociationInfo>[] = [
   {
     Header: 'File #',
     accessor: 'fileIdentifier',

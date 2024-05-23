@@ -2,7 +2,7 @@ import axios from 'axios';
 import { createMemoryHistory } from 'history';
 
 import AppRouter from './AppRouter';
-import { Claims } from './constants';
+import { Claims, Roles } from './constants';
 import { ADD_ACTIVATE_USER, GET_REQUEST_ACCESS } from './constants/actionTypes';
 import { AuthStateContext } from './contexts/authStateContext';
 import { IGeocoderResponse } from './hooks/pims-api/interfaces/IGeocoder';
@@ -21,12 +21,21 @@ import { ApiGen_Concepts_Lease } from './models/api/generated/ApiGen_Concepts_Le
 import { ApiGen_Concepts_Property } from './models/api/generated/ApiGen_Concepts_Property';
 import { lookupCodesSlice } from './store/slices/lookupCodes';
 import { networkSlice } from './store/slices/network/networkSlice';
-import { tenantsSlice } from './store/slices/tenants';
+import { tenantsSlice, useTenants } from './store/slices/tenants';
 import { defaultTenant } from './tenants/config/defaultTenant';
-import { RenderOptions, mockKeycloak, render, screen } from './utils/test-utils';
+import {
+  act,
+  flushPromises,
+  renderAsync,
+  RenderOptions,
+  screen,
+  waitFor,
+} from './utils/test-utils';
+import { vi } from 'vitest';
+import { useApiTenants } from './hooks/pims-api/useApiTenants';
 
-jest.mock('axios');
-const mockedAxios = axios as jest.Mocked<typeof axios>;
+vi.mock('axios');
+const mockedAxios = vi.mocked(axios);
 
 const history = createMemoryHistory();
 const storeState = {
@@ -42,67 +51,71 @@ const storeState = {
   keycloakReady: true,
 };
 
-jest.mock('@react-keycloak/web');
-
 // Mock React.Suspense in tests
-jest.mock('react', () => {
-  const React = jest.requireActual('react');
+vi.mock('react', () => {
+  const React = vi.importActual('react') as any;
   React.Suspense = ({ children }: any) => children;
-  return React;
+  return React as any;
 });
+
+vi.mock('./hooks/pims-api/useApiTenants');
+vi.mocked(useApiTenants).mockImplementation(() => ({ getSettings: jest.fn() }));
 
 // Need to mock this library for unit tests
-jest.mock('react-visibility-sensor', () => {
-  return jest.fn().mockImplementation(({ children }) => {
-    if (children instanceof Function) {
-      return children({ isVisible: true });
-    }
-    return children;
-  });
+vi.mock('react-visibility-sensor', () => {
+  return {
+    default: vi.fn().mockImplementation(({ children }) => {
+      if (children instanceof Function) {
+        return children({ isVisible: true });
+      }
+      return children;
+    }),
+  };
 });
 
-jest.mock('@/hooks/usePimsIdleTimer');
+vi.mock('@/hooks/usePimsIdleTimer');
 
-jest.mock('@/hooks/pims-api/useApiHealth', () => ({
+vi.mock('@/hooks/pims-api/useApiHealth', () => ({
   useApiHealth: () => ({
-    getVersion: jest
+    getVersion: vi
       .fn()
       .mockResolvedValue({ data: { environment: 'test', informationalVersion: '1.0.0.0' } }),
   }),
 }));
 
-jest.mock('@/store/slices/tenants/useTenants', () => ({
-  useTenants: () => ({ getSettings: jest.fn() }),
+vi.mock('@/store/slices/tenants');
+(useTenants as any).mockImplementation(() => ({
+  getSettings: vi.fn(),
 }));
 
-jest.mock('./hooks/pims-api/useApiUsers');
-(useApiUsers as jest.MockedFunction<typeof useApiUsers>).mockReturnValue({
-  activateUser: jest.fn(),
-  getUser: jest.fn().mockResolvedValue({ data: getUserMock() }),
-  getUserInfo: jest.fn().mockResolvedValue({ data: getUserMock() }),
-  getUsersPaged: jest.fn().mockResolvedValue({ data: getMockPagedUsers() }),
-  putUser: jest.fn(),
-  exportUsers: jest.fn(),
+vi.mock('./hooks/pims-api/useApiUsers');
+vi.mocked(useApiUsers).mockReturnValue({
+  activateUser: vi.fn(),
+  getUser: vi.fn().mockResolvedValue({ data: getUserMock() }),
+  getUserInfo: vi.fn().mockResolvedValue({ data: getUserMock() }),
+  getUsersPaged: vi.fn().mockResolvedValue({ data: getMockPagedUsers() }),
+  putUser: vi.fn(),
+  exportUsers: vi.fn(),
 });
 
-jest.mock('./hooks/pims-api/useApiProperties');
-(useApiProperties as jest.MockedFunction<typeof useApiProperties>).mockReturnValue({
-  getPropertiesViewPagedApi: jest
+vi.mock('./hooks/pims-api/useApiProperties');
+vi.mocked(useApiProperties).mockReturnValue({
+  getPropertiesViewPagedApi: vi
     .fn()
     .mockResolvedValue({ data: {} as ApiGen_Base_Page<ApiGen_Concepts_Property> }),
-  getMatchingPropertiesApi: jest.fn(),
-  getPropertyAssociationsApi: jest.fn(),
-  exportPropertiesApi: jest.fn(),
-  getPropertiesApi: jest.fn(),
-  getPropertyConceptWithIdApi: jest.fn(),
-  putPropertyConceptApi: jest.fn(),
-  getPropertyConceptWithPidApi: jest.fn(),
-  getPropertyConceptWithPinApi: jest.fn(),
+  getMatchingPropertiesApi: vi.fn(),
+  getPropertyAssociationsApi: vi.fn(),
+  exportPropertiesApi: vi.fn(),
+  getPropertiesApi: vi.fn(),
+  getPropertyConceptWithIdApi: vi.fn(),
+  putPropertyConceptApi: vi.fn(),
+  getPropertyConceptWithPidApi: vi.fn(),
+  getPropertyConceptWithPinApi: vi.fn(),
 });
 
-jest.mock('./hooks/pims-api/useApiLeases');
-(useApiLeases as jest.MockedFunction<typeof useApiLeases>).mockReturnValue({
-  getLeases: jest.fn().mockResolvedValue({
+vi.mock('./hooks/pims-api/useApiLeases');
+vi.mocked(useApiLeases).mockReturnValue({
+  getLeases: vi.fn().mockResolvedValue({
     data: {
       items: [{ lFileNo: 'l-1234' }],
       page: 1,
@@ -110,18 +123,18 @@ jest.mock('./hooks/pims-api/useApiLeases');
       quantity: 1,
     } as ApiGen_Base_Page<ApiGen_Concepts_Lease>,
   }),
-  getApiLease: jest.fn(),
-  getLastUpdatedByApi: jest.fn(),
-  postLease: jest.fn(),
-  putApiLease: jest.fn(),
-  exportLeases: jest.fn(),
-  exportAggregatedLeases: jest.fn(),
-  exportLeasePayments: jest.fn(),
+  getApiLease: vi.fn(),
+  getLastUpdatedByApi: vi.fn(),
+  postLease: vi.fn(),
+  putApiLease: vi.fn(),
+  exportLeases: vi.fn(),
+  exportAggregatedLeases: vi.fn(),
+  exportLeasePayments: vi.fn(),
 });
 
-jest.mock('./hooks/pims-api/useApiAcquisitionFile');
-(useApiAcquisitionFile as jest.MockedFunction<typeof useApiAcquisitionFile>).mockReturnValue({
-  getAcquisitionFiles: jest.fn().mockResolvedValue({
+vi.mock('./hooks/pims-api/useApiAcquisitionFile');
+vi.mocked(useApiAcquisitionFile).mockReturnValue({
+  getAcquisitionFiles: vi.fn().mockResolvedValue({
     data: {
       items: [{ fileName: 'test acq file' }],
       page: 1,
@@ -129,31 +142,31 @@ jest.mock('./hooks/pims-api/useApiAcquisitionFile');
       quantity: 1,
     } as ApiGen_Base_Page<ApiGen_Concepts_AcquisitionFile>,
   }),
-  getAcquisitionFile: jest.fn(),
-  getLastUpdatedByApi: jest.fn(),
-  getAgreementReport: jest.fn(),
-  getCompensationReport: jest.fn(),
-  exportAcquisitionFiles: jest.fn(),
-  postAcquisitionFile: jest.fn(),
-  putAcquisitionFile: jest.fn(),
-  putAcquisitionFileProperties: jest.fn(),
-  getAcquisitionFileProperties: jest.fn(),
-  getAcquisitionFileOwners: jest.fn(),
-  getAllAcquisitionFileTeamMembers: jest.fn(),
-  getAcquisitionFileProject: jest.fn(),
-  getAcquisitionFileProduct: jest.fn(),
-  getAcquisitionFileChecklist: jest.fn(),
-  putAcquisitionFileChecklist: jest.fn(),
-  getFileCompensationRequisitions: jest.fn(),
-  getFileCompReqH120s: jest.fn(),
-  postFileCompensationRequisition: jest.fn(),
-  getAcquisitionFileForm8s: jest.fn(),
-  postFileForm8: jest.fn(),
+  getAcquisitionFile: vi.fn(),
+  getLastUpdatedByApi: vi.fn(),
+  getAgreementReport: vi.fn(),
+  getCompensationReport: vi.fn(),
+  exportAcquisitionFiles: vi.fn(),
+  postAcquisitionFile: vi.fn(),
+  putAcquisitionFile: vi.fn(),
+  putAcquisitionFileProperties: vi.fn(),
+  getAcquisitionFileProperties: vi.fn(),
+  getAcquisitionFileOwners: vi.fn(),
+  getAllAcquisitionFileTeamMembers: vi.fn(),
+  getAcquisitionFileProject: vi.fn(),
+  getAcquisitionFileProduct: vi.fn(),
+  getAcquisitionFileChecklist: vi.fn(),
+  putAcquisitionFileChecklist: vi.fn(),
+  getFileCompensationRequisitions: vi.fn(),
+  getFileCompReqH120s: vi.fn(),
+  postFileCompensationRequisition: vi.fn(),
+  getAcquisitionFileForm8s: vi.fn(),
+  postFileForm8: vi.fn(),
 });
 
-jest.mock('./hooks/pims-api/useApiResearchFile');
-(useApiResearchFile as jest.MockedFunction<typeof useApiResearchFile>).mockReturnValue({
-  getResearchFiles: jest.fn().mockResolvedValue({
+vi.mock('./hooks/pims-api/useApiResearchFile');
+vi.mocked(useApiResearchFile).mockReturnValue({
+  getResearchFiles: vi.fn().mockResolvedValue({
     data: {
       items: [{ fileName: 'test research file' }],
       page: 1,
@@ -161,26 +174,73 @@ jest.mock('./hooks/pims-api/useApiResearchFile');
       quantity: 1,
     } as ApiGen_Base_Page<IResearchSearchResult>,
   }),
-  getResearchFile: jest.fn(),
-  postResearchFile: jest.fn(),
-  putResearchFile: jest.fn(),
-  getLastUpdatedByApi: jest.fn(),
-  putResearchFileProperties: jest.fn(),
-  putPropertyResearchFile: jest.fn(),
-  getResearchFileProperties: jest.fn(),
+  getResearchFile: vi.fn(),
+  postResearchFile: vi.fn(),
+  putResearchFile: vi.fn(),
+  getLastUpdatedByApi: vi.fn(),
+  putResearchFileProperties: vi.fn(),
+  putPropertyResearchFile: vi.fn(),
+  getResearchFileProperties: vi.fn(),
 });
 
-jest.mock('./hooks/pims-api/useApiGeocoder');
-(useApiGeocoder as jest.MockedFunction<typeof useApiGeocoder>).mockReturnValue({
-  searchAddressApi: jest.fn().mockResolvedValue({ data: [] as IGeocoderResponse[] }),
-  getSitePidsApi: jest.fn(),
-  getNearestToPointApi: jest.fn(),
+vi.mock('./hooks/pims-api/useApiGeocoder');
+vi.mocked(useApiGeocoder).mockReturnValue({
+  searchAddressApi: vi.fn().mockResolvedValue({ data: [] as IGeocoderResponse[] }),
+  getSitePidsApi: vi.fn(),
+  getNearestToPointApi: vi.fn(),
+});
+
+const mocks = vi.hoisted(() => {
+  return {
+    useKeycloak: vi.fn(),
+  };
+});
+
+vi.mock('@react-keycloak/web', () => {
+  return {
+    useKeycloak: mocks.useKeycloak,
+  };
+});
+
+// Need to mock this library for unit tests
+vi.mock('react-visibility-sensor', () => {
+  return {
+    default: vi.fn().mockImplementation(({ children }) => {
+      return children;
+    }),
+  };
 });
 
 describe('PSP routing', () => {
-  const setup = (url = '/', renderOptions: RenderOptions = {}) => {
+  const setup = async (url = '/', renderOptions: RenderOptions = {}) => {
     history.replace(url);
-    const utils = render(
+
+    const defaultUserInfo = {
+      organizations: [1],
+      client_roles:
+        [
+          ...(renderOptions?.claims ?? []),
+          Claims.LEASE_VIEW,
+          Claims.RESEARCH_VIEW,
+          Claims.PROJECT_VIEW,
+          ...(renderOptions?.roles ?? [Roles.ACQUISITION_FUNCTIONAL]),
+        ] ?? [],
+      email: 'test@test.com',
+      name: 'Chester Tester',
+      idir_user_guid: '00000000000000000000000000000000',
+    };
+
+    mocks.useKeycloak.mockImplementation(() => ({
+      keycloak: {
+        userInfo: defaultUserInfo,
+        subject: 'test',
+        authenticated: !!renderOptions.claims,
+        loadUserInfo: vi.fn().mockResolvedValue(defaultUserInfo),
+      } as any,
+      initialized: true,
+    }));
+
+    const utils = await renderAsync(
       <AuthStateContext.Provider value={{ ready: true }}>
         <AppRouter />
       </AuthStateContext.Provider>,
@@ -188,6 +248,7 @@ describe('PSP routing', () => {
         ...renderOptions,
         store: storeState,
         history,
+        useMockAuthentication: true,
       },
     );
 
@@ -195,103 +256,116 @@ describe('PSP routing', () => {
   };
 
   beforeEach(() => {
-    mockedAxios.get.mockResolvedValue({ data: {}, status: 200 });
+    vi.mocked(mockedAxios.get).mockResolvedValue({ data: {}, status: 200 });
+    vi.unmock('@/components/common/mapFSM/MapStateMachineContext');
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   describe('public routes', () => {
-    beforeEach(() => {
-      mockKeycloak({ authenticated: false });
-    });
-
-    xit('should redirect unauthenticated user to the login page', async () => {
-      const { getByText } = setup('/');
-      await screen.findByText('v1.0.0.0');
-      expect(getByText('Sign into PIMS with your government issued IDIR')).toBeVisible();
+    it('should redirect unauthenticated user to the login page', async () => {
+      await waitFor(async () => {
+        await setup('/');
+      });
+      expect(screen.getByText('Sign into PIMS with your government issued IDIR')).toBeVisible();
     });
 
     it('should show header and footer links', async () => {
-      const { getByRole } = setup('/');
-      await screen.findByText('v1.0.0.0');
-      expect(getByRole('link', { name: 'Disclaimer' })).toHaveAttribute(
+      await waitFor(async () => {
+        await setup('/');
+      });
+      expect(screen.getByRole('link', { name: 'Disclaimer' })).toHaveAttribute(
         'href',
         'http://www.gov.bc.ca/gov/content/home/disclaimer',
       );
     });
 
     it('should show a page for non-supported browsers', async () => {
-      const { getByText } = setup('/ienotsupported');
-      await screen.findByText('v1.0.0.0');
+      await waitFor(async () => {
+        await setup('/ienotsupported');
+      });
       expect(
-        getByText('Please use a supported internet browser such as Chrome, Firefox or Edge.'),
+        screen.getByText(
+          'Please use a supported internet browser such as Chrome, Firefox or Edge.',
+        ),
       ).toBeVisible();
     });
 
     it('should show the access denied page', async () => {
-      const { getByText, getByRole } = setup('/forbidden');
-      await screen.findByText('v1.0.0.0');
-      expect(getByText('You do not have permission to view this page')).toBeVisible();
-      expect(getByRole('link', { name: 'Go back to the map' })).toBeVisible();
+      await waitFor(async () => {
+        await setup('/forbidden');
+      });
+      expect(screen.getByText('You do not have permission to view this page')).toBeVisible();
+      expect(screen.getByRole('link', { name: 'Go back to the map' })).toBeVisible();
     });
 
     it.each(['/page-not-found', '/fake-url'])(
       'should show the not found page when route is %s',
       async url => {
-        const { getByText, getByRole } = setup(url);
-        await screen.findByText('v1.0.0.0');
-        expect(getByText('Page not found')).toBeVisible();
-        expect(getByRole('link', { name: 'Go back to the map' })).toBeVisible();
+        await waitFor(async () => {
+          await setup(url);
+        });
+        expect(screen.getByText('Page not found')).toBeVisible();
+        expect(screen.getByRole('link', { name: 'Go back to the map' })).toBeVisible();
       },
     );
   });
 
   describe('authenticated routes', () => {
     it('should display the property list view', async () => {
-      setup('/properties/list', { claims: [Claims.PROPERTY_VIEW] });
-      await screen.findByText('v1.0.0.0');
-      const lazyElement = await screen.findByText('Civic Address');
-      expect(lazyElement).toBeInTheDocument();
-      expect(document.title).toMatch(/View Inventory/i);
+      await act(async () => {
+        await setup('/properties/list', { claims: [Claims.PROPERTY_VIEW] });
+      });
+      await waitFor(async () => {
+        const lazyElement = await screen.findByText('Civic Address');
+        expect(lazyElement).toBeInTheDocument();
+        expect(document.title).toMatch(/View Inventory/i);
+      });
     });
 
     it('should display the lease list view', async () => {
-      setup('/lease/list', { claims: [Claims.LEASE_VIEW] });
-      await screen.findByText('v1.0.0.0');
+      await act(async () => {
+        await setup('/lease/list', { claims: [Claims.LEASE_VIEW] });
+      });
       const lazyElement = await screen.findByText('l-1234');
       expect(lazyElement).toBeInTheDocument();
       expect(document.title).toMatch(/View Lease & Licenses/i);
     });
 
     it('should display the acquisition list view', async () => {
-      setup('/acquisition/list', { claims: [Claims.ACQUISITION_VIEW] });
-      await screen.findByText('v1.0.0.0');
+      await act(async () => {
+        await setup('/acquisition/list', { claims: [Claims.ACQUISITION_VIEW] });
+      });
       const lazyElement = await screen.findByText('test acq file');
       expect(lazyElement).toBeInTheDocument();
       expect(document.title).toMatch(/View Acquisition Files/i);
     });
 
     it('should display the research list view', async () => {
-      setup('/research/list', { claims: [Claims.RESEARCH_VIEW] });
-      await screen.findByText('v1.0.0.0');
+      await act(async () => {
+        await setup('/research/list', { claims: [Claims.RESEARCH_VIEW] });
+      });
       const lazyElement = await screen.findByText('test research file');
       expect(lazyElement).toBeInTheDocument();
       expect(document.title).toMatch(/View Research Files/i);
     });
 
     it('should display the admin users page at the expected route', async () => {
-      setup('/admin/users', { claims: [Claims.ADMIN_USERS] });
-      await screen.findByText('v1.0.0.0');
+      await act(async () => {
+        setup('/admin/users', { claims: [Claims.ADMIN_USERS] });
+      });
       const lazyElement = await screen.findByText('Smith');
+
       expect(lazyElement).toBeInTheDocument();
       expect(document.title).toMatch(/Users Management/i);
     });
 
     it('should display the edit user page at the expected route', async () => {
-      setup('/admin/user/1', { claims: [Claims.ADMIN_USERS] });
-      await screen.findByText('v1.0.0.0');
+      await act(async () => {
+        await setup('/admin/user/1', { claims: [Claims.ADMIN_USERS] });
+      });
       const lazyElement = await screen.findByDisplayValue('Smith');
 
       expect(lazyElement).toBeInTheDocument();

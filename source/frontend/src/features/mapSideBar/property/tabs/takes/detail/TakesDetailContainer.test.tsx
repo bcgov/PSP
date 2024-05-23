@@ -9,9 +9,13 @@ import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { render, RenderOptions, waitFor } from '@/utils/test-utils';
 
 import { useTakesRepository } from '../repositories/useTakesRepository';
-import { ITakesDetailContainerProps } from '../update/TakesUpdateContainer';
+import { ITakesDetailContainerProps } from '../update/TakeUpdateContainer';
 import TakesDetailContainer from './TakesDetailContainer';
 import { ITakesDetailViewProps } from './TakesDetailView';
+import { IResponseWrapper } from '@/hooks/util/useApiRequestWrapper';
+import { ApiGen_Concepts_Take } from '@/models/api/generated/ApiGen_Concepts_Take';
+import { AxiosResponse } from 'axios';
+import { vi } from 'vitest';
 
 const history = createMemoryHistory();
 const storeState = {
@@ -21,18 +25,37 @@ const storeState = {
 const mockGetApi = {
   error: undefined,
   response: undefined,
-  execute: jest.fn(),
+  execute: vi.fn(),
   loading: false,
+  status: 200,
 };
 
 const mockCountsApi = {
   error: undefined,
   response: undefined,
-  execute: jest.fn(),
+  execute: vi.fn(),
   loading: false,
+  status: 200,
 };
 
-jest.mock('../repositories/useTakesRepository');
+const mockUpdateApi = {
+  error: undefined,
+  response: undefined,
+  execute: vi.fn(),
+  loading: false,
+  status: 201,
+};
+
+vi.mock('../repositories/useTakesRepository');
+vi.mocked(useTakesRepository).mockImplementation(() => ({
+  getTakesByFileId: mockGetApi,
+  getTakesByPropertyId: mockGetApi,
+  getTakesCountByPropertyId: mockCountsApi,
+  getTakeById: mockGetApi,
+  updateTakeByAcquisitionPropertyId: mockUpdateApi,
+  addTakeByAcquisitionPropertyId: mockUpdateApi,
+  deleteTakeByAcquisitionPropertyId: mockUpdateApi,
+}));
 
 describe('TakesDetailContainer component', () => {
   // render component under test
@@ -43,8 +66,6 @@ describe('TakesDetailContainer component', () => {
     return <></>;
   });
 
-  const onEdit = jest.fn();
-
   const setup = (
     renderOptions: RenderOptions & { props?: Partial<ITakesDetailContainerProps> },
   ) => {
@@ -53,7 +74,6 @@ describe('TakesDetailContainer component', () => {
         {...renderOptions.props}
         fileProperty={renderOptions.props?.fileProperty ?? getMockApiPropertyFiles()[0]}
         View={View}
-        onEdit={onEdit}
       />,
       {
         ...renderOptions,
@@ -67,18 +87,15 @@ describe('TakesDetailContainer component', () => {
     };
   };
 
-  beforeEach(() => {
-    (useTakesRepository as jest.Mock).mockReturnValue({
-      getTakesByPropertyId: mockGetApi,
-      getTakesCountByPropertyId: mockCountsApi,
-    });
-  });
-
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders as expected', () => {
+    mockGetApi.response = [
+      { ...getMockApiTakes(), id: 1 } as unknown as ApiGen_Concepts_Take,
+      { ...getMockApiTakes(), id: 2 } as unknown as ApiGen_Concepts_Take,
+    ];
     const { asFragment } = setup({});
     expect(asFragment()).toMatchSnapshot();
   });
@@ -93,25 +110,19 @@ describe('TakesDetailContainer component', () => {
   });
 
   it('returns the takes sorted by the id', async () => {
-    (useTakesRepository as jest.Mock).mockReturnValue({
-      getTakesByPropertyId: {
-        ...mockGetApi,
-        response: [
-          { ...getMockApiTakes(), id: '1' },
-          { ...getMockApiTakes(), id: '2' },
-        ],
-      },
-      getTakesCountByPropertyId: mockCountsApi,
-    });
+    mockGetApi.response = [
+      { ...getMockApiTakes(), id: 1 } as unknown as ApiGen_Concepts_Take,
+      { ...getMockApiTakes(), id: 2 } as unknown as ApiGen_Concepts_Take,
+    ];
     setup({});
 
     await waitFor(() => {
-      expect(viewProps.takes[0].id).toBe('2');
+      expect(viewProps.takes[0].id).toBe(2);
     });
   });
 
   it('returns empty takes array by default', async () => {
-    mockGetApi.execute.mockResolvedValue(undefined);
+    mockGetApi.response = [];
     setup({});
 
     await waitFor(() => {

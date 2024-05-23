@@ -1,5 +1,5 @@
 import { getIn, useFormikContext } from 'formik';
-import * as React from 'react';
+import { Fragment } from 'react';
 import { Col, Row } from 'react-bootstrap';
 
 import { Input } from '@/components/common/form';
@@ -31,7 +31,7 @@ export const LtsaChargeOwnerSubForm: React.FunctionComponent<
             `chargeOwnershipGroups.${cogIndex}.chargeOwners.${coIndex}`,
           );
           return (
-            <React.Fragment key={`charge-owner-sub-row-${innerNameSpace}`}>
+            <Fragment key={`charge-owner-sub-row-${innerNameSpace}`}>
               {getIn(values, withNameSpace(innerNameSpace, 'lastNameOrCorpName1')) && (
                 <SectionField label="Registered owner">
                   <Input field={`${withNameSpace(innerNameSpace, 'lastNameOrCorpName1')}`} />
@@ -90,7 +90,7 @@ export const LtsaChargeOwnerSubForm: React.FunctionComponent<
                   </Col>
                 </Row>
               )}
-            </React.Fragment>
+            </Fragment>
           );
         });
       })}

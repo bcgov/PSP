@@ -23,5 +23,5 @@ export const Text: React.FC<React.PropsWithChildren<TextProps>> = ({
 };
 
 const StyledSpan = styled.span`
-  color: ${props => props.theme.css.formControlTextColor};
+  color: ${props => props.theme.bcTokens.typographyColorSecondary};
 `;

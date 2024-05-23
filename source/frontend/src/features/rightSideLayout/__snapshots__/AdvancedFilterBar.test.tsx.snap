@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`AdvancedFilterBar renders as expected 1`] = `
+exports[`AdvancedFilterBar > renders as expected 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
@@ -45,6 +45,7 @@ exports[`AdvancedFilterBar renders as expected 1`] = `
   position: relative;
   width: 100%;
   height: 5.2rem;
+  background-color: #003366;
   -webkit-align-items: center;
   -webkit-box-align: center;
   -ms-flex-align: center;

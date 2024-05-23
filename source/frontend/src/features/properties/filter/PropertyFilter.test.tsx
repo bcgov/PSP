@@ -24,33 +24,28 @@ import TestCommonWrapper from '@/utils/TestCommonWrapper';
 
 import { PropertyFilter } from '.';
 import { defaultPropertyFilter, IPropertyFilter } from './IPropertyFilter';
+import { IGeocoderPidsResponse, IGeocoderResponse } from '@/hooks/pims-api/interfaces/IGeocoder';
+import { useGeocoderRepository } from '@/hooks/useGeocoderRepository';
 
-const onFilterChange = jest.fn<void, [IPropertyFilter]>();
+const onFilterChange = vi.fn();
 //prevent web calls from being made during tests.
-jest.mock('axios');
-jest.mock('@react-keycloak/web');
-jest.mock('@/hooks/pims-api/useApiGeocoder');
+vi.mock('axios');
 
-const mockApiGetSitePidsApi = jest.fn<
-  Promise<AxiosResponse<ApiGen_Base_Page<ApiGen_Concepts_Property>>>,
-  any
->();
-(useApiGeocoder as unknown as jest.Mock<Partial<typeof useApiGeocoder>>).mockReturnValue({
-  getSitePidsApi: mockApiGetSitePidsApi,
+vi.mock('@/hooks/useGeocoderRepository');
+const mockApiGetSitePidsApi = vi.fn();
+const searchAddressApi = vi.fn();
+vi.mocked(useGeocoderRepository).mockReturnValue({
+  getSitePids: mockApiGetSitePidsApi,
+  isLoadingSitePids: false,
+  searchAddress: searchAddressApi,
+  isLoadingSearchAddress: false,
+  getNearestToPoint: function (lng: number, lat: number): Promise<IGeocoderResponse> {
+    throw new Error('Function not implemented.');
+  },
+  isLoadingNearestToPoint: false,
 });
 
-const mockedAxios = axios as jest.Mocked<typeof axios>;
-const mockKeycloak = (claims: string[]) => {
-  (useKeycloak as jest.Mock).mockReturnValue({
-    keycloak: {
-      subject: 'test',
-      userInfo: {
-        roles: claims,
-        organizations: ['1'],
-      },
-    },
-  });
-};
+const mockedAxios = vi.mocked(axios);
 const mockStore = configureMockStore([thunk]);
 let history = createMemoryHistory();
 
@@ -108,12 +103,11 @@ const getUiElement = (
 );
 
 describe('MapFilterBar', () => {
-  mockedAxios.get.mockImplementationOnce(() => Promise.resolve({}));
+  vi.mocked(mockedAxios.get).mockImplementationOnce(() => Promise.resolve({}));
 
   beforeEach(() => {
     import.meta.env.VITE_TENANT = 'MOTI';
     history = createMemoryHistory();
-    mockKeycloak([]);
   });
 
   afterEach(() => {
@@ -122,17 +116,20 @@ describe('MapFilterBar', () => {
   });
 
   it('renders correctly', () => {
-    mockKeycloak(['property-view']);
+    //mockKeycloak(['property-view']);
     // Capture any changes
-    const { container } = render(getUiElement(defaultPropertyFilter));
+    const { container } = render(getUiElement(defaultPropertyFilter), {
+      claims: ['property-view'],
+    });
     expect(container.firstChild).toMatchSnapshot();
   });
 
   it('does not submit if there is no pid/pin for address', async () => {
     // Arrange
-    mockKeycloak(['admin-properties']);
 
-    const { container } = render(getUiElement({ ...defaultPropertyFilter, searchBy: 'address' }));
+    const { container } = render(getUiElement({ ...defaultPropertyFilter, searchBy: 'address' }), {
+      claims: ['admin-properties'],
+    });
     const submit = container.querySelector('button[type="submit"]');
 
     // Act
@@ -147,12 +144,100 @@ describe('MapFilterBar', () => {
     expect(onFilterChange).not.toHaveBeenCalled();
   });
 
+  it('does submit if there is pid/pin for address.', async () => {
+    // Arrange
+
+    const { container } = render(getUiElement({ ...defaultPropertyFilter, searchBy: 'address' }), {
+      claims: ['admin-properties'],
+    });
+    const submit = container.querySelector('button[type="submit"]');
+    searchAddressApi.mockResolvedValue([
+      {
+        siteId: '3744cde1-18cd-4c45-9d39-472285295fd3',
+        fullAddress: '510 Catherine St, Victoria, BC',
+        address1: '510 Catherine St',
+        administrativeArea: 'Victoria',
+        provinceCode: 'BC',
+        latitude: 48.4316251,
+        longitude: -123.385134,
+        score: 81,
+      },
+    ]);
+    mockApiGetSitePidsApi.mockResolvedValue({
+      siteId: '3744cde1-18cd-4c45-9d39-472285295fd3',
+      pids: ['000115240'],
+    });
+
+    // Act
+    // Enter values on the form fields, then click the Search button
+    await waitFor(() => fillInput(container, 'address', 'Victoria'));
+
+    const addressButton = await screen.findByText('510 Catherine St', { exact: false });
+
+    await act(async () => {
+      fireEvent.click(addressButton!);
+    });
+
+    await act(async () => {
+      fireEvent.click(submit!);
+    });
+
+    // Assert
+    expect(onFilterChange).toHaveBeenCalled();
+  });
+
+  it('does submit if there is pid/pin for address, and handles multiple pids in the response.', async () => {
+    // Arrange
+
+    const { container } = render(getUiElement({ ...defaultPropertyFilter, searchBy: 'address' }), {
+      claims: ['admin-properties'],
+    });
+    const submit = container.querySelector('button[type="submit"]');
+    searchAddressApi.mockResolvedValue([
+      {
+        siteId: '3744cde1-18cd-4c45-9d39-472285295fd3',
+        fullAddress: '510 Catherine St, Victoria, BC',
+        address1: '510 Catherine St',
+        administrativeArea: 'Victoria',
+        provinceCode: 'BC',
+        latitude: 48.4316251,
+        longitude: -123.385134,
+        score: 81,
+      },
+    ]);
+    mockApiGetSitePidsApi.mockResolvedValue({
+      siteId: '3744cde1-18cd-4c45-9d39-472285295fd3',
+      pids: ['000115240', '000115258'],
+    });
+
+    // Act
+    // Enter values on the form fields, then click the Search button
+    await waitFor(() => fillInput(container, 'address', 'Victoria'));
+
+    const addressButton = await screen.findByText('510 Catherine St', { exact: false });
+
+    await act(async () => {
+      fireEvent.click(addressButton!);
+    });
+
+    await screen.findAllByText('Warning, multiple PIDs found for this address', {
+      exact: false,
+    })[0];
+
+    await act(async () => {
+      fireEvent.click(submit!);
+    });
+
+    // Assert
+    expect(onFilterChange).toHaveBeenCalled();
+  });
+
   it('submits if address set and useGeocoder false', async () => {
     // Arrange
-    mockKeycloak(['admin-properties']);
 
     const { container } = await render(
       getUiElement({ ...defaultPropertyFilter, searchBy: 'address' }, true, false),
+      { claims: ['admin-properties'] },
     );
     const submit = container.querySelector('button[type="submit"]');
 

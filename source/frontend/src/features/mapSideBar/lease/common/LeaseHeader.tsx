@@ -4,18 +4,22 @@ import { Col, Row } from 'react-bootstrap';
 import { AiOutlineExclamationCircle } from 'react-icons/ai';
 import styled from 'styled-components';
 
+import AuditSection from '@/components/common/HeaderField/AuditSection';
 import {
   HeaderContentCol,
   HeaderField,
   HeaderLabelCol,
 } from '@/components/common/HeaderField/HeaderField';
+import StatusField from '@/components/common/HeaderField/StatusField';
+import { StyledFiller } from '@/components/common/HeaderField/styles';
 import { InlineFlexDiv } from '@/components/common/styles';
-import { UserNameTooltip } from '@/components/common/UserNameTooltip';
 import { LeaseHeaderAddresses } from '@/features/leases/detail/LeaseHeaderAddresses';
 import { Api_LastUpdatedBy } from '@/models/api/File';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
-import { prettyFormatDate, prettyFormatUTCDate } from '@/utils';
+import { exists, prettyFormatDate } from '@/utils';
 
+import HistoricalNumbersContainer from '../../shared/header/HistoricalNumberContainer';
+import HistoricalNumberFieldView from '../../shared/header/HistoricalNumberSectionView';
 import { LeaseHeaderTenants } from './LeaseHeaderTenants';
 
 export interface ILeaseHeaderProps {
@@ -26,102 +30,58 @@ export interface ILeaseHeaderProps {
 export const LeaseHeader: React.FC<ILeaseHeaderProps> = ({ lease, lastUpdatedBy }) => {
   const isExpired = moment().isAfter(moment(lease?.expiryDate, 'YYYY-MM-DD'), 'day');
 
+  const propertyIds = lease?.fileProperties?.map(fp => fp.propertyId) ?? [];
+
   return (
     <Container>
       <Row className="no-gutters">
-        <Col xs="7">
-          <Row className="no-gutters">
-            <Col>
-              <HeaderField label="Lease/License #" labelWidth="3" contentWidth="9">
-                <StyledInlineDiv>
-                  <span>{lease?.lFileNo ?? ''}</span>
-                  <StyledGreenText>
-                    {lease?.paymentReceivableType?.description ?? ''}
-                  </StyledGreenText>
-                </StyledInlineDiv>
-              </HeaderField>
-            </Col>
+        <Col xs="8">
+          <HeaderField label="Lease/License #" labelWidth="3" contentWidth="9">
+            <span className="pr-4">{lease?.lFileNo ?? ''}</span>
+            <StyledGreenText>{lease?.paymentReceivableType?.description ?? ''}</StyledGreenText>
+          </HeaderField>
+          <HeaderField label="Property:" labelWidth="3" contentWidth="9">
+            <LeaseHeaderAddresses
+              propertyLeases={lease?.fileProperties ?? []}
+              maxCollapsedLength={1}
+              delimiter={<br />}
+            />
+          </HeaderField>
+          <HeaderField label="Tenant:" labelWidth="3" contentWidth="9">
+            <LeaseHeaderTenants
+              tenants={lease?.tenants ?? []}
+              maxCollapsedLength={1}
+              delimiter={<br />}
+            />
+          </HeaderField>
+          <Row>
+            <HeaderLabelCol label="Lease Start:" labelWidth="3" />
+            <HeaderContentCol contentWidth="3">
+              {prettyFormatDate(lease?.startDate)}
+            </HeaderContentCol>
+            <HeaderLabelCol label="Expiry:" />
+            <HeaderContentCol>
+              <span className="pl-2">{prettyFormatDate(lease?.expiryDate)}</span>
+            </HeaderContentCol>
+            <HeaderContentCol>
+              {isExpired && (
+                <ExpiredWarning className="ml-auto">
+                  <AiOutlineExclamationCircle size={16} />
+                  &nbsp; EXPIRED
+                </ExpiredWarning>
+              )}
+            </HeaderContentCol>
           </Row>
-          <Row className="no-gutters">
-            <Col>
-              <HeaderField label="Property:" labelWidth="3" contentWidth="9">
-                <LeaseHeaderAddresses
-                  propertyLeases={lease?.fileProperties ?? []}
-                  maxCollapsedLength={1}
-                  delimiter={<br />}
-                />
-              </HeaderField>
-            </Col>
-          </Row>
-          <Row className="no-gutters">
-            <Col>
-              <HeaderField label="Tenant:" labelWidth="3" contentWidth="9">
-                <LeaseHeaderTenants
-                  tenants={lease?.tenants ?? []}
-                  maxCollapsedLength={1}
-                  delimiter={<br />}
-                />
-              </HeaderField>
-            </Col>
-          </Row>
+          <HistoricalNumbersContainer propertyIds={propertyIds} View={HistoricalNumberFieldView} />
         </Col>
-        <Col xs="5">
-          <Row className="no-gutters">
-            <Col className="text-right">
-              <StyledSmallText>
-                Created: <strong>{prettyFormatUTCDate(lease?.appCreateTimestamp)}</strong> by{' '}
-                <UserNameTooltip
-                  userName={lease?.appCreateUserid}
-                  userGuid={lease?.appCreateUserGuid}
-                />
-              </StyledSmallText>
-            </Col>
-          </Row>
-          <Row className="no-gutters">
-            <Col className="text-right">
-              <StyledSmallText>
-                Last updated:{' '}
-                <strong>{prettyFormatUTCDate(lastUpdatedBy?.appLastUpdateTimestamp)}</strong> by{' '}
-                <UserNameTooltip
-                  userName={lastUpdatedBy?.appLastUpdateUserid}
-                  userGuid={lastUpdatedBy?.appLastUpdateUserGuid}
-                />
-              </StyledSmallText>
-            </Col>
-          </Row>
-          <Row className="no-gutters">
-            <Col>
-              <HeaderField className="justify-content-end" label="Status:">
-                {lease?.fileStatusTypeCode?.description}
-              </HeaderField>
-            </Col>
-          </Row>
-        </Col>
-      </Row>
-      <Row className="no-gutters">
-        <Col xs="7">
-          <Row className="no-gutters">
-            <Col>
-              <Row>
-                <HeaderLabelCol label="Start date:" labelWidth="3" />
-                <HeaderContentCol contentWidth="3">
-                  {prettyFormatDate(lease?.startDate)}
-                </HeaderContentCol>
-                <HeaderLabelCol label="Expiry date:" />
-                <HeaderContentCol>
-                  <span className="pl-2">{prettyFormatDate(lease?.expiryDate)}</span>
-                </HeaderContentCol>
-              </Row>
-            </Col>
-          </Row>
-        </Col>
-        <Col xs="5">
-          {isExpired && (
-            <ExpiredWarning>
-              <AiOutlineExclamationCircle size={16} />
-              &nbsp; EXPIRED
-            </ExpiredWarning>
-          )}
+
+        <Col>
+          <StyledFiller>
+            <AuditSection lastUpdatedBy={lastUpdatedBy} baseAudit={lease} />
+            {exists(lease?.fileStatusTypeCode) && (
+              <StatusField statusCodeType={lease.fileStatusTypeCode} />
+            )}
+          </StyledFiller>
         </Col>
       </Row>
     </Container>
@@ -138,22 +98,13 @@ const Container = styled.div`
   border-bottom-width: 0.1rem;
 `;
 
-const StyledSmallText = styled.span`
-  font-size: 0.87em;
-  line-height: 1.9;
-`;
-
-const StyledInlineDiv = styled(InlineFlexDiv)`
-  justify-content: space-between;
-  width: 100%;
-`;
-
 const StyledGreenText = styled.span`
-  color: ${props => props.theme.css.completedColor};
+  font-weight: bold;
+  color: ${props => props.theme.bcTokens.iconsColorSuccess};
 `;
 
 export const ExpiredWarning = styled(InlineFlexDiv)`
-  color: ${props => props.theme.css.dangerColor};
+  color: ${props => props.theme.bcTokens.surfaceColorPrimaryDangerButtonDefault};
   background-color: ${props => props.theme.css.dangerBackgroundColor};
   border-radius: 0.4rem;
   letter-spacing: 0.1rem;

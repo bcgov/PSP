@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`ContactManagerView matches snapshot 1`] = `
+exports[`ContactManagerView > matches snapshot 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
@@ -34,6 +34,7 @@ exports[`ContactManagerView matches snapshot 1`] = `
   -ms-letter-spacing: 0.1rem;
   letter-spacing: 0.1rem;
   cursor: pointer;
+  height: 3.8rem;
 }
 
 .c7.btn:hover {
@@ -158,7 +159,7 @@ exports[`ContactManagerView matches snapshot 1`] = `
   flex-shrink: 0;
 }
 
-.c9 {
+.c8 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -177,12 +178,12 @@ exports[`ContactManagerView matches snapshot 1`] = `
   margin-left: 0.5rem;
 }
 
-.c11 {
+.c10 {
   width: 1.6rem;
   height: 1.6rem;
 }
 
-.c10 {
+.c9 {
   width: 1.6rem;
   height: 1.6rem;
 }
@@ -197,7 +198,7 @@ exports[`ContactManagerView matches snapshot 1`] = `
   flex-wrap: nowrap;
 }
 
-.c12 {
+.c11 {
   font-size: 1.4rem;
 }
 
@@ -266,10 +267,6 @@ exports[`ContactManagerView matches snapshot 1`] = `
 
 .c5 {
   max-width: 20rem;
-}
-
-.c8 {
-  overflow: scroll;
 }
 
 <div>
@@ -562,8 +559,35 @@ exports[`ContactManagerView matches snapshot 1`] = `
                       </div>
                     </div>
                   </div>
-                  <svg>
-                    active.svg
+                  <svg
+                    height="10"
+                    overflow="visible"
+                    preserveAspectRatio="none"
+                    viewBox="0 0 10 10"
+                    width="10"
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                  >
+                    <g
+                      transform="translate(1, 1)"
+                    >
+                      <defs>
+                        <path
+                          d="M4 0 C6.207660097976 0 8 1.7923399020239998 8 4 C8 6.207660097976 6.207660097976 8 4 8 C1.7923399020239998 8 0 6.207660097976 0 4 C0 1.7923399020239998 1.7923399020239998 0 4 0 Z"
+                          id="path-1635974705144170"
+                          vector-effect="non-scaling-stroke"
+                        />
+                      </defs>
+                      <g
+                        transform="translate(0, 0)"
+                      >
+                        <path
+                          d="M4 0 C6.207660097976 0 8 1.7923399020239998 8 4 C8 6.207660097976 6.207660097976 8 4 8 C1.7923399020239998 8 0 6.207660097976 0 4 C0 1.7923399020239998 1.7923399020239998 0 4 0 Z"
+                          style="stroke: rgb(255, 255, 255); stroke-width: 1; stroke-linecap: butt; stroke-linejoin: miter; fill: rgb(146, 237, 36);"
+                          vector-effect="non-scaling-stroke"
+                        />
+                      </g>
+                    </g>
                   </svg>
                   <span>
                     Show active contacts only
@@ -575,9 +599,7 @@ exports[`ContactManagerView matches snapshot 1`] = `
         </form>
       </div>
     </div>
-    <div
-      class="c8"
-    >
+    <div>
       <div
         class="table"
         data-testid="contactsTable"
@@ -642,11 +664,11 @@ exports[`ContactManagerView matches snapshot 1`] = `
               >
                 Summary
                 <div
-                  class="c9"
+                  class="c8"
                   data-testid="sort-column-summary"
                 >
                   <svg
-                    class="c10"
+                    class="c9"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -661,7 +683,7 @@ exports[`ContactManagerView matches snapshot 1`] = `
                     />
                   </svg>
                   <svg
-                    class="c11"
+                    class="c10"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -688,11 +710,11 @@ exports[`ContactManagerView matches snapshot 1`] = `
               >
                 First name
                 <div
-                  class="c9"
+                  class="c8"
                   data-testid="sort-column-firstName"
                 >
                   <svg
-                    class="c10"
+                    class="c9"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -707,7 +729,7 @@ exports[`ContactManagerView matches snapshot 1`] = `
                     />
                   </svg>
                   <svg
-                    class="c11"
+                    class="c10"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -734,11 +756,11 @@ exports[`ContactManagerView matches snapshot 1`] = `
               >
                 Last name
                 <div
-                  class="c9"
+                  class="c8"
                   data-testid="sort-column-surname"
                 >
                   <svg
-                    class="c10"
+                    class="c9"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -753,7 +775,7 @@ exports[`ContactManagerView matches snapshot 1`] = `
                     />
                   </svg>
                   <svg
-                    class="c11"
+                    class="c10"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -780,11 +802,11 @@ exports[`ContactManagerView matches snapshot 1`] = `
               >
                 Organization
                 <div
-                  class="c9"
+                  class="c8"
                   data-testid="sort-column-organizationName"
                 >
                   <svg
-                    class="c10"
+                    class="c9"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -799,7 +821,7 @@ exports[`ContactManagerView matches snapshot 1`] = `
                     />
                   </svg>
                   <svg
-                    class="c11"
+                    class="c10"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -850,11 +872,11 @@ exports[`ContactManagerView matches snapshot 1`] = `
               >
                 City
                 <div
-                  class="c9"
+                  class="c8"
                   data-testid="sort-column-municipalityName"
                 >
                   <svg
-                    class="c10"
+                    class="c9"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -869,7 +891,7 @@ exports[`ContactManagerView matches snapshot 1`] = `
                     />
                   </svg>
                   <svg
-                    class="c11"
+                    class="c10"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -901,7 +923,7 @@ exports[`ContactManagerView matches snapshot 1`] = `
               class="th"
               colspan="1"
               role="columnheader"
-              style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
             >
               <div
                 class="sortable-column"
@@ -927,7 +949,7 @@ exports[`ContactManagerView matches snapshot 1`] = `
           class="ml-auto align-self-center col-auto"
         >
           <p
-            class="c12"
+            class="c11"
           >
             0 selected
           </p>

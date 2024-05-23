@@ -28,7 +28,7 @@ const getWrapper =
       </Provider>
     );
 const mockAxios = new MockAdapter(axios);
-const toastErrorSpy = jest.spyOn(toast, 'error');
+const toastErrorSpy = vi.spyOn(toast, 'error');
 
 const getRenderedHook = () => {
   const {

@@ -178,19 +178,42 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(searchPropertiesAddSelectionBttn).Click();
 
 
-            Wait(2000);
+            Wait();
             if (webDriver.FindElements(duplicatePropToast).Count() == 1)
             {
                 WaitUntilVisible(duplicatePropToast);
                 Assert.Equal("A property that the user is trying to select has already been added to the selected properties list", webDriver.FindElement(duplicatePropToast).Text);
             }
 
-            if (webDriver.FindElements(propertiesFileConfirmationModal).Count > 0)
+            Wait();
+            while (webDriver.FindElements(propertiesFileConfirmationModal).Count > 0)
             {
-                Assert.Equal("Not inventory property", sharedModals.ModalHeader());
-                Assert.Equal("You have selected a property not previously in the inventory. Do you want to add this property to the lease?", sharedModals.ModalContent());
+                Assert.Equal("User Override Required", sharedModals.ModalHeader());
+
+                if (sharedModals.ModalContent().Contains("This property has already been added to one or more acquisition files."))
+                {
+                    Assert.Contains("This property has already been added to one or more acquisition files.", sharedModals.ModalContent());
+                    Assert.Contains("Do you want to acknowledge and proceed?", sharedModals.ModalContent());
+                }
+                if (sharedModals.ModalContent().Contains("This property has already been added to one or more research files."))
+                {
+                    Assert.Contains("This property has already been added to one or more research files.", sharedModals.ModalContent());
+                    Assert.Contains("Do you want to acknowledge and proceed?", sharedModals.ModalContent());
+                }
+                if (sharedModals.ModalContent().Contains("This property has already been added to one or more disposition files."))
+                {
+                    Assert.Contains("This property has already been added to one or more disposition files.", sharedModals.ModalContent());
+                    Assert.Contains("Do you want to acknowledge and proceed?", sharedModals.ModalContent());
+                }
+
+                if (sharedModals.ModalContent().Contains("This property has already been added to one or more files."))
+                {
+                    Assert.Contains("This property has already been added to one or more files.", sharedModals.ModalContent());
+                    Assert.Contains("Do you want to acknowledge and proceed?", sharedModals.ModalContent());
+                }
 
                 sharedModals.ModalClickOKBttn();
+                Wait();
             }
         }
 
@@ -320,7 +343,6 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(propertiesAfterRemove == propertyIndex - 1);
 
         }
-
 
         public void SaveFileProperties()
         {

@@ -1,15 +1,35 @@
 import { mockDispositionFileResponse } from '@/mocks/dispositionFiles.mock';
-import { rest, server } from '@/mocks/msw/server';
+import { server } from '@/mocks/msw/server';
 import { getUserMock } from '@/mocks/user.mock';
 import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
 import { prettyFormatUTCDate } from '@/utils/dateUtils';
-import { render, RenderOptions } from '@/utils/test-utils';
+import { act, render, RenderOptions } from '@/utils/test-utils';
 
+import { useHistoricalNumberRepository } from '@/hooks/repositories/useHistoricalNumberRepository';
+import { http, HttpResponse } from 'msw';
 import DispositionHeader, { IDispositionHeaderProps } from './DispositionHeader';
+
+vi.mock('@/hooks/repositories/useHistoricalNumberRepository');
+vi.mocked(useHistoricalNumberRepository).mockReturnValue({
+  getPropertyHistoricalNumbers: {
+    error: null,
+    response: [],
+    execute: vi.fn().mockResolvedValue([]),
+    loading: false,
+    status: 200,
+  },
+  updatePropertyHistoricalNumbers: {
+    error: null,
+    response: [],
+    execute: vi.fn().mockResolvedValue([]),
+    loading: false,
+    status: 200,
+  },
+});
 
 describe('DispositionHeader component', () => {
   // render component under test
-  const setup = (props: IDispositionHeaderProps, renderOptions: RenderOptions = {}) => {
+  const setup = async (props: IDispositionHeaderProps, renderOptions: RenderOptions = {}) => {
     const utils = render(
       <DispositionHeader
         dispositionFile={props.dispositionFile}
@@ -20,29 +40,29 @@ describe('DispositionHeader component', () => {
       },
     );
 
+    await act(async () => {});
+
     return { ...utils };
   };
 
   beforeEach(() => {
     server.use(
-      rest.get('/api/users/info/*', (req, res, ctx) =>
-        res(ctx.delay(500), ctx.status(200), ctx.json(getUserMock())),
-      ),
+      http.get('/api/users/info/*', () => HttpResponse.json(getUserMock(), { status: 200 })),
     );
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
-  it('renders as expected when no data is provided', () => {
-    const { asFragment } = setup({ lastUpdatedBy: null });
+  it('renders as expected when no data is provided', async () => {
+    const { asFragment } = await setup({ lastUpdatedBy: null });
     expect(asFragment()).toMatchSnapshot();
   });
 
   it('renders as expected when a disposition file is provided', async () => {
     const testDispositionFile = mockDispositionFileResponse();
-    const { getByText } = setup({
+    const { getByText } = await setup({
       dispositionFile: testDispositionFile as unknown as ApiGen_Concepts_DispositionFile,
       lastUpdatedBy: {
         parentId: testDispositionFile.id || 0,
@@ -53,15 +73,20 @@ describe('DispositionHeader component', () => {
     });
 
     expect(getByText(/FILE_NUMBER 3A8F46B/)).toBeVisible();
-    expect(getByText(prettyFormatUTCDate(testDispositionFile.appCreateTimestamp))).toBeVisible();
     expect(
-      getByText(prettyFormatUTCDate(testDispositionFile.appLastUpdateTimestamp)),
+      getByText(new RegExp(prettyFormatUTCDate(testDispositionFile.appCreateTimestamp))),
+    ).toBeVisible();
+    expect(
+      getByText(new RegExp(prettyFormatUTCDate(testDispositionFile.appLastUpdateTimestamp))),
     ).toBeVisible();
   });
 
   it('renders the file number and name concatenated', async () => {
     const testDispositionFile = mockDispositionFileResponse();
-    const { getByText } = setup({ dispositionFile: testDispositionFile, lastUpdatedBy: null });
+    const { getByText } = await setup({
+      dispositionFile: testDispositionFile,
+      lastUpdatedBy: null,
+    });
 
     expect(getByText('File:')).toBeVisible();
     expect(getByText(/FILE_NUMBER 3A8F46B/)).toBeVisible();
@@ -70,7 +95,7 @@ describe('DispositionHeader component', () => {
   it('renders the last-update-time when provided', async () => {
     const testDate = new Date().toISOString();
     const testDispositionFile = mockDispositionFileResponse();
-    const { getByText } = setup({
+    const { getByText } = await setup({
       dispositionFile: testDispositionFile,
       lastUpdatedBy: {
         parentId: testDispositionFile.id || 0,
@@ -81,8 +106,10 @@ describe('DispositionHeader component', () => {
     });
 
     expect(getByText(/FILE_NUMBER 3A8F46B/)).toBeVisible();
-    expect(getByText(prettyFormatUTCDate(testDispositionFile.appCreateTimestamp))).toBeVisible();
-    expect(getByText(prettyFormatUTCDate(testDate))).toBeVisible();
+    expect(
+      getByText(new RegExp(prettyFormatUTCDate(testDispositionFile.appCreateTimestamp))),
+    ).toBeVisible();
+    expect(getByText(new RegExp(prettyFormatUTCDate(testDate)))).toBeVisible();
   });
 
   it('renders the file status when provided', async () => {
@@ -95,9 +122,11 @@ describe('DispositionHeader component', () => {
         isDisabled: false,
       },
     };
-    const { getByText } = setup({ dispositionFile: testDispositionFile, lastUpdatedBy: null });
+    const { getByText } = await setup({
+      dispositionFile: testDispositionFile,
+      lastUpdatedBy: null,
+    });
 
-    expect(getByText('Status:')).toBeVisible();
     expect(getByText(/mock file status/i)).toBeVisible();
   });
 });

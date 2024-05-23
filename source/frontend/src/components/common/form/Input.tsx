@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import { getIn, useFormikContext } from 'formik';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import { FormControlProps } from 'react-bootstrap/FormControl';
 import { CSSProperties } from 'styled-components';

@@ -85,7 +85,6 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
         InterestHolderForm.toApi(this.ownerRepresentative, []),
       ].filter(exists),
       fileChecklistItems: this.fileCheckList.map(x => x.toApi()),
-      completionDate: null,
       compensationRequisitions: null,
       fileNo: 0,
       fileNumber: null,

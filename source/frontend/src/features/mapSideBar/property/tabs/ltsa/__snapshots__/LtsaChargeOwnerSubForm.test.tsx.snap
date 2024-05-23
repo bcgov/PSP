@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`LtsaChargeOwnerSubForm component renders charge owner sub form 1`] = `
+exports[`LtsaChargeOwnerSubForm component > renders charge owner sub form 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"

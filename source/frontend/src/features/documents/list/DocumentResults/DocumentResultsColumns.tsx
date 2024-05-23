@@ -17,11 +17,13 @@ import { prettyFormatUTCDate, stringToFragment } from '@/utils';
 export interface IDocumentColumnProps {
   onViewDetails: (values: ApiGen_Concepts_DocumentRelationship) => void;
   onDelete: (values: ApiGen_Concepts_DocumentRelationship) => void;
+  onPreview: (values: ApiGen_Concepts_DocumentRelationship) => void;
 }
 
 export const getDocumentColumns = ({
   onViewDetails,
   onDelete,
+  onPreview,
 }: IDocumentColumnProps): ColumnWithProps<DocumentRow>[] => {
   return [
     {
@@ -35,7 +37,7 @@ export const getDocumentColumns = ({
       Header: 'File name',
       accessor: 'fileName',
       sortable: true,
-      Cell: renderFileName(onViewDetails),
+      Cell: renderFileName(onPreview),
     },
     {
       Header: 'Uploaded',
@@ -67,7 +69,7 @@ const renderFileName = (onViewDetails: (values: ApiGen_Concepts_DocumentRelation
   return function (cell: CellProps<DocumentRow, string | undefined>) {
     const { hasClaim } = useKeycloakWrapper();
     return (
-      <>
+      <StyledCellOverflow>
         {hasClaim(Claims.DOCUMENT_VIEW) === true ? (
           <Button
             data-testid="document-view-filename-link"
@@ -75,13 +77,14 @@ const renderFileName = (onViewDetails: (values: ApiGen_Concepts_DocumentRelation
               cell.row.original?.id && onViewDetails(DocumentRow.toApi(cell.row.original))
             }
             variant="link"
+            title={cell.row.original.fileName}
           >
             {cell.value}
           </Button>
         ) : (
           <span data-testid="document-view-filename-text">{cell.value}</span>
         )}
-      </>
+      </StyledCellOverflow>
     );
   };
 };
@@ -137,12 +140,12 @@ const renderActions = (
 
 const StyledIconsRow = styled(Row)`
   [id^='document-view'] {
-    color: ${props => props.theme.css.slideOutBlue};
+    color: ${props => props.theme.css.activeActionColor};
   }
   [id^='document-delete'] {
-    color: ${props => props.theme.css.discardedColor};
+    color: ${props => props.theme.css.activeActionColor};
     :hover {
-      color: ${({ theme }) => theme.css.dangerColor};
+      color: ${({ theme }) => theme.bcTokens.surfaceColorPrimaryDangerButtonDefault};
     }
   }
   .btn.btn-primary {
@@ -154,6 +157,20 @@ const StyledIconsRow = styled(Row)`
 
 const StyledIcon = styled.span`
   .tooltip-icon {
-    color: ${({ theme }) => theme.css.subtleColor};
+    color: ${({ theme }) => theme.bcTokens.iconsColorDisabled};
+  }
+`;
+
+const StyledCellOverflow = styled('div')`
+  display: contents;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+
+  button {
+    display: contents !important;
   }
 `;

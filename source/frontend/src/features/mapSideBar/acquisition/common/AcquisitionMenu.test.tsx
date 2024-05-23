@@ -7,10 +7,9 @@ import AcquisitionMenu, { IAcquisitionMenuProps } from './AcquisitionMenu';
 import { ApiGen_CodeTypes_AcquisitionStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_AcquisitionStatusTypes';
 
 // mock auth library
-jest.mock('@react-keycloak/web');
 
-const onChange = jest.fn();
-const onShowPropertySelector = jest.fn();
+const onChange = vi.fn();
+const onShowPropertySelector = vi.fn();
 
 const testData = ['one', 'two', 'three'];
 
@@ -39,7 +38,7 @@ describe('AcquisitionMenu component', () => {
   };
 
   afterEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
   });
 
   it('matches snapshot', () => {

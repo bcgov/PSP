@@ -53,7 +53,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By notesCancelOkBttn = By.XPath("//div[contains(text(),'Confirm Changes')]/parent::div/parent::div/div/div[@class='button-wrap']/button[@title='ok-modal']");
 
         //Notes Delete pop-up Elements
-        private By notesDeletePopupHeader = By.CssSelector("div[class='modal-header'] div");
+        private By notesDeletePopupHeader = By.CssSelector("div[class='modal-header'] div[class='modal-title h4']");
         private By notesDeletePopupBody = By.CssSelector("div[class='modal-body']");
         private By notesDeleteOkBttn = By.XPath("//div[contains(text(),'Delete Note')]/parent::div/parent::div/div/div[@class='button-wrap']/button[@title='ok-modal']");
 

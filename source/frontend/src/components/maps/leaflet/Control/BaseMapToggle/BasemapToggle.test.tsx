@@ -2,7 +2,7 @@ import { act, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import BasemapToggle, { BaseLayer, BasemapToggleEvent, BasemapToggleProps } from './BasemapToggle';
 
-const onToggle = jest.fn();
+const onToggle = vi.fn();
 
 const basemaps: BaseLayer[] = [
   {

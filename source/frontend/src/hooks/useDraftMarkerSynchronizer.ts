@@ -1,6 +1,6 @@
 import { LatLngLiteral } from 'leaflet';
 import debounce from 'lodash/debounce';
-import * as React from 'react';
+import { useCallback, useRef } from 'react';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { IMapProperty } from '@/components/propertySelector/models';
@@ -31,7 +31,7 @@ const useDraftMarkerSynchronizer = (modifiedProperties: IMapProperty[]) => {
    * Synchronize the markers that have been updated in the parcel form with the map, adding all new markers.
    * @param modifiedProperties the current properties
    */
-  const synchronizeMarkers = React.useCallback(
+  const synchronizeMarkers = useCallback(
     (modifiedProperties: IMapProperty[]) => {
       if (isMounted()) {
         const filePropertyLocations = getFilePropertyLocations(modifiedProperties);
@@ -45,7 +45,7 @@ const useDraftMarkerSynchronizer = (modifiedProperties: IMapProperty[]) => {
     [setFilePropertyLocations, isMounted],
   );
 
-  const synchronize = React.useRef(
+  const synchronize = useRef(
     debounce((modifiedProperties: IMapProperty[]) => {
       synchronizeMarkers(modifiedProperties);
     }, 400),

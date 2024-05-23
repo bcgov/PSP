@@ -11,15 +11,36 @@ import { DispositionFormModel } from '../models/DispositionFormModel';
 import AddDispositionContainerView, {
   IAddDispositionContainerViewProps,
 } from './AddDispositionContainerView';
+import { useApiUsers } from '@/hooks/pims-api/useApiUsers';
+import { getUserMock, getMockPagedUsers } from '@/mocks/user.mock';
+import { vi } from 'vitest';
 
 const history = createMemoryHistory();
-jest.mock('@react-keycloak/web');
 
-const onCancel = jest.fn();
-const onSave = jest.fn();
-const onSubmit = jest.fn();
+const onCancel = vi.fn();
+const onSave = vi.fn();
+const onSubmit = vi.fn();
+const confirmBeforeAdd = vi.fn();
 
 const initialValues = new DispositionFormModel();
+
+vi.mock('react-visibility-sensor', () => {
+  return {
+    default: vi.fn().mockImplementation(({ children }) => {
+      if (children instanceof Function) {
+        return children({ isVisible: true });
+      }
+      return children;
+    }),
+  };
+});
+
+// mock API service calls
+vi.mock('@/hooks/pims-api/useApiUsers');
+
+vi.mocked(useApiUsers).mockReturnValue({
+  getUserInfo: vi.fn().mockResolvedValue({}),
+} as any);
 
 describe('Add Disposition Container View', () => {
   const setup = async (
@@ -36,6 +57,7 @@ describe('Add Disposition Container View', () => {
         onCancel={onCancel}
         onSave={onSave}
         onSubmit={onSubmit}
+        confirmBeforeAdd={confirmBeforeAdd}
       />,
       {
         ...renderOptions,
@@ -55,7 +77,7 @@ describe('Add Disposition Container View', () => {
   };
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('matches snapshot', async () => {

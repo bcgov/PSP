@@ -1,7 +1,7 @@
 import '@/assets/scss/App.scss';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 
-import React, { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Col from 'react-bootstrap/Col';
 import { ToastContainer } from 'react-toastify';
 
@@ -19,6 +19,9 @@ import PublicLayout from '@/layouts/PublicLayout';
 import { useLookupCodes } from '@/store/slices/lookupCodes';
 import { useSystemConstants } from '@/store/slices/systemConstants';
 
+import { DocumentPreviewContainer } from './features/documents/DocumentPreviewContainer';
+import DocumentPreviewView from './features/documents/DocumentPreviewView';
+
 const App = () => {
   const keycloakWrapper = useKeycloakWrapper();
   const keycloak = keycloakWrapper.obj;
@@ -29,7 +32,7 @@ const App = () => {
     activateUser: { execute: activate },
   } = useUsers();
 
-  const [showRoleModal, setShowRoleModal] = React.useState(false);
+  const [showRoleModal, setShowRoleModal] = useState(false);
 
   useFavicon();
 
@@ -74,6 +77,7 @@ const App = () => {
             />
             <RoleMismatchModal display={showRoleModal} setDisplay={setShowRoleModal} />
             <ModalContainer />
+            <DocumentPreviewContainer View={DocumentPreviewView} />
           </>
         );
       }}

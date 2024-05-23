@@ -21,11 +21,11 @@ import UpdateCompensationRequisitionContainer, {
 } from './UpdateCompensationRequisitionContainer';
 import { CompensationRequisitionFormProps } from './UpdateCompensationRequisitionForm';
 
-jest.mock('@/hooks/repositories/useRequisitionCompensationRepository');
+vi.mock('@/hooks/repositories/useRequisitionCompensationRepository');
 type Provider = typeof useCompensationRequisitionRepository;
 
-const mockUpdateCompensation = jest.fn();
-(useCompensationRequisitionRepository as jest.MockedFunction<Provider>).mockReturnValue({
+const mockUpdateCompensation = vi.fn();
+vi.mocked(useCompensationRequisitionRepository).mockReturnValue({
   updateCompensationRequisition: {
     error: undefined,
     response: undefined,
@@ -34,32 +34,32 @@ const mockUpdateCompensation = jest.fn();
   },
 } as unknown as ReturnType<Provider>);
 
-jest.mock('@/hooks/repositories/useAcquisitionProvider', () => ({
+vi.mock('@/hooks/repositories/useAcquisitionProvider', () => ({
   useAcquisitionProvider: () => {
     return {
       getAcquisitionOwners: {
         error: undefined,
         response: mockAcquisitionFileOwnersResponse(1),
-        execute: jest.fn().mockResolvedValue(mockAcquisitionFileOwnersResponse(1)),
+        execute: vi.fn().mockResolvedValue(mockAcquisitionFileOwnersResponse(1)),
         loading: false,
       },
       getAcquisitionFileSolicitors: {
-        execute: jest.fn(),
+        execute: vi.fn(),
         loading: false,
       },
       getAcquisitionFileRepresentatives: {
-        execute: jest.fn(),
+        execute: vi.fn(),
         loading: false,
       },
     };
   },
 }));
 
-jest.mock('@/hooks/repositories/useInterestHolderRepository', () => ({
+vi.mock('@/hooks/repositories/useInterestHolderRepository', () => ({
   useInterestHolderRepository: () => {
     return {
       getAcquisitionInterestHolders: {
-        execute: jest.fn(),
+        execute: vi.fn(),
         loading: false,
       },
     };
@@ -69,11 +69,11 @@ jest.mock('@/hooks/repositories/useInterestHolderRepository', () => ({
 const mockGetApi = {
   error: undefined,
   response: [],
-  execute: jest.fn(),
+  execute: vi.fn(),
   loading: false,
 };
 
-jest.mock('@/hooks/repositories/useFinancialCodeRepository', () => ({
+vi.mock('@/hooks/repositories/useFinancialCodeRepository', () => ({
   useFinancialCodeRepository: () => {
     return {
       getFinancialActivityCodeTypes: mockGetApi,
@@ -91,8 +91,8 @@ const TestView: React.FC<CompensationRequisitionFormProps> = props => {
 };
 
 const mockCompensation = getMockApiDefaultCompensation();
-const onSuccess = jest.fn();
-const onCancel = jest.fn();
+const onSuccess = vi.fn();
+const onCancel = vi.fn();
 
 describe('UpdateCompensationRequisition Container component', () => {
   const setup = async (
@@ -129,7 +129,7 @@ describe('UpdateCompensationRequisition Container component', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders the underlying form', async () => {
@@ -231,7 +231,7 @@ describe('UpdateCompensationRequisition Container component', () => {
         ...getEmptyBaseAudit(),
       },
     ];
-    mockGetApi.execute = jest.fn().mockResolvedValue(expiredFinancialCodes);
+    mockGetApi.execute = vi.fn().mockResolvedValue(expiredFinancialCodes);
     await setup();
     await act(async () => {});
 

@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Subdivision detail view matches snapshot 1`] = `
+exports[`Subdivision detail view > matches snapshot 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
@@ -86,7 +86,7 @@ exports[`Subdivision detail view matches snapshot 1`] = `
               fill="none"
             />
             <path
-              d="M7 14l5-5 5 5z"
+              d="m7 14 5-5 5 5z"
             />
           </svg>
         </div>
@@ -200,7 +200,7 @@ exports[`Subdivision detail view matches snapshot 1`] = `
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
-                    d="M10 17l5-5-5-5v10z"
+                    d="m10 17 5-5-5-5v10z"
                   />
                   <path
                     d="M0 24V0h24v24H0z"
@@ -315,7 +315,7 @@ exports[`Subdivision detail view matches snapshot 1`] = `
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
-                    d="M10 17l5-5-5-5v10z"
+                    d="m10 17 5-5-5-5v10z"
                   />
                   <path
                     d="M0 24V0h24v24H0z"

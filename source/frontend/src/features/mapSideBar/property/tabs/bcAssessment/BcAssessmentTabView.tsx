@@ -1,5 +1,4 @@
 import moment from 'moment';
-import * as React from 'react';
 import styled from 'styled-components';
 
 import { Button } from '@/components/common/buttons';
@@ -158,7 +157,7 @@ export const StyledForm = styled.div`
 `;
 
 const StyledSubtleText = styled.p`
-  color: ${props => props.theme.css.subtleColor};
+  color: ${props => props.theme.bcTokens.iconsColorDisabled};
   text-align: left;
 `;
 

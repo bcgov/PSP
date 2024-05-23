@@ -17,17 +17,6 @@ import { fillInput, render, userEvent } from '@/utils/test-utils';
 
 import { ManageUsersPage } from './ManageUsersPage';
 
-jest.mock('@react-keycloak/web');
-(useKeycloak as jest.Mock).mockReturnValue({
-  keycloak: {
-    userInfo: {
-      organizations: [1],
-      roles: [],
-    },
-    subject: 'test',
-  },
-});
-
 const history = createMemoryHistory();
 history.push('admin');
 const mockStore = configureMockStore([thunk]);
@@ -40,10 +29,13 @@ const lCodes = {
 };
 const mockAxios = new MockAdapter(axios);
 
-jest.mock('react-router-dom', () => ({
-  ...(jest.requireActual('react-router-dom') as any), // use actual for all non-hook parts
-  useRouteMatch: () => ({ url: '/admin', path: '/admin' }),
-}));
+vi.mock('react-router-dom', async importOriginal => {
+  const actual = await importOriginal();
+  return {
+    ...(actual as any), // use actual for all non-hook parts
+    useRouteMatch: () => ({ url: '/admin', path: '/admin' }),
+  };
+});
 const getStore = (includeDate?: boolean) =>
   mockStore({
     [lookupCodesSlice.name]: lCodes,
@@ -56,7 +48,7 @@ const getStore = (includeDate?: boolean) =>
 
 describe('Manage Users Component', () => {
   afterEach(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
     mockAxios.reset();
   });
   const testRender = (store: any) => {
@@ -96,7 +88,7 @@ describe('Manage Users Component', () => {
     expect(getByText(prettyFormatDateTime('2022-06-08T23:24:56.163'))).toBeVisible();
   });
 
-  xit('downloads data when excel icon clicked', async () => {
+  it.skip('downloads data when excel icon clicked', async () => {
     const { getByTestId, getByTitle } = testRender(getStore());
     await waitForElementToBeRemoved(getByTitle('table-loading'));
     const excelIcon = getByTestId('excel-icon');

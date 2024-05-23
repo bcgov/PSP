@@ -1,5 +1,4 @@
 import { Formik, FormikProps } from 'formik';
-import * as React from 'react';
 import { useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaExternalLinkAlt } from 'react-icons/fa';
@@ -168,7 +167,7 @@ const StyledFormBody = styled.form`
 `;
 
 export const SubHeaderSection = styled.div`
-  background-color: ${props => props.theme.css.filterBackgroundColor};
+  background-color: ${props => props.theme.css.highlightBackgroundColor};
 `;
 
 const StyledReturningDepositLink = styled.a`

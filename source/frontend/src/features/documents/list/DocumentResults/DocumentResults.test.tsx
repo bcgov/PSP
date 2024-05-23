@@ -1,27 +1,18 @@
 import { useKeycloak } from '@react-keycloak/web';
-import { noop } from 'lodash';
+import noop from 'lodash/noop';
 
 import { Claims } from '@/constants/claims';
 import { DocumentRow } from '@/features/documents/ComposedDocument';
 import { mockDocumentResponse, mockDocumentsResponse } from '@/mocks/documents.mock';
-import { cleanup, mockKeycloak, render, RenderOptions } from '@/utils/test-utils';
+import { cleanup, mockKeycloak, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import { DocumentResults, IDocumentResultProps } from './DocumentResults';
 
-const setSort = jest.fn();
+const setSort = vi.fn();
 
-// mock auth library
-jest.mock('@react-keycloak/web');
-
-(useKeycloak as jest.Mock).mockReturnValue({
-  keycloak: {
-    userInfo: {
-      organizations: [1],
-      roles: [],
-    },
-    subject: 'test',
-  },
-});
+const onViewDetails = vi.fn();
+const onDelete = vi.fn();
+const onPreview = vi.fn();
 
 // render component under test
 const setup = (renderOptions: RenderOptions & Partial<IDocumentResultProps> = { results: [] }) => {
@@ -31,11 +22,13 @@ const setup = (renderOptions: RenderOptions & Partial<IDocumentResultProps> = { 
       sort={{}}
       results={results ?? []}
       setSort={setSort}
-      onViewDetails={noop}
-      onDelete={noop}
+      onViewDetails={onViewDetails}
+      onDelete={onDelete}
+      onPreview={onPreview}
     />,
     {
       ...rest,
+      useMockAuthentication: true,
     },
   );
   const tableRows = utils.container.querySelectorAll('.table .tbody .tr-wrapper');
@@ -59,7 +52,7 @@ describe('Document Results Table', () => {
     cleanup();
   });
   afterAll(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
 
   it('matches snapshot', async () => {
@@ -78,9 +71,9 @@ describe('Document Results Table', () => {
   });
 
   it('displays document view button', async () => {
-    mockKeycloak({ claims: [Claims.DOCUMENT_VIEW, Claims.DOCUMENT_EDIT] });
     const { getAllByTestId } = setup({
       results: mockDocumentsResponse().map(x => DocumentRow.fromApi(x)),
+      claims: [Claims.DOCUMENT_VIEW, Claims.DOCUMENT_EDIT],
     });
 
     const viewButtons = await getAllByTestId('document-view-button');
@@ -88,9 +81,9 @@ describe('Document Results Table', () => {
   });
 
   it('displays document filename as link', async () => {
-    mockKeycloak({ claims: [Claims.DOCUMENT_VIEW] });
     const { queryByTestId, getAllByTestId } = setup({
       results: mockDocumentsResponse().map(x => DocumentRow.fromApi(x)),
+      claims: [Claims.DOCUMENT_VIEW],
     });
 
     const filenameLink = await getAllByTestId('document-view-filename-link');
@@ -112,9 +105,9 @@ describe('Document Results Table', () => {
   });
 
   it('displays document delete button', async () => {
-    mockKeycloak({ claims: [Claims.DOCUMENT_VIEW, Claims.DOCUMENT_DELETE] });
     const { getAllByTestId } = setup({
       results: mockDocumentsResponse().map(x => DocumentRow.fromApi(x)),
+      claims: [Claims.DOCUMENT_VIEW, Claims.DOCUMENT_DELETE],
     });
 
     const deleteButtons = await getAllByTestId('document-delete-button');
@@ -122,11 +115,44 @@ describe('Document Results Table', () => {
   });
 
   it('displays default number of entries of 10', async () => {
-    mockKeycloak({ claims: [Claims.DOCUMENT_VIEW] });
     const largeDataset = Array.from({ length: 15 }, (id: number) =>
       DocumentRow.fromApi(mockDocumentResponse(id)),
     );
-    const { findByText } = setup({ results: largeDataset });
+    const { findByText } = setup({ results: largeDataset, claims: [Claims.DOCUMENT_VIEW] });
     expect(await findByText('1 - 10 of 15')).toBeVisible();
+  });
+
+  it('previews a document when text clicked', async () => {
+    const { queryByTestId, getAllByTestId } = setup({
+      results: mockDocumentsResponse().map(x => DocumentRow.fromApi(x)),
+      claims: [Claims.DOCUMENT_VIEW],
+    });
+
+    const filenameLink = getAllByTestId('document-view-filename-link')[0];
+    userEvent.click(filenameLink);
+
+    expect(onPreview).toHaveBeenCalled();
+  });
+
+  it('views a document when eye icon clicked', async () => {
+    const { getAllByTestId } = setup({
+      results: mockDocumentsResponse().map(x => DocumentRow.fromApi(x)),
+      claims: [Claims.DOCUMENT_VIEW, Claims.DOCUMENT_EDIT],
+    });
+
+    const viewButton = getAllByTestId('document-view-button')[0];
+    userEvent.click(viewButton);
+    expect(onViewDetails).toHaveBeenCalled();
+  });
+
+  it('deletes a document when delete icon cliecked', async () => {
+    const { getAllByTestId } = setup({
+      results: mockDocumentsResponse().map(x => DocumentRow.fromApi(x)),
+      claims: [Claims.DOCUMENT_VIEW, Claims.DOCUMENT_DELETE],
+    });
+
+    const deleteButton = getAllByTestId('document-delete-button')[0];
+    userEvent.click(deleteButton);
+    expect(onDelete).toHaveBeenCalled();
   });
 });

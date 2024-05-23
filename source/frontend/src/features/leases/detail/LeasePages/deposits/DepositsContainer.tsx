@@ -1,5 +1,5 @@
 import { Formik } from 'formik';
-import { noop } from 'lodash';
+import noop from 'lodash/noop';
 import { useContext, useEffect, useState } from 'react';
 
 import GenericModal from '@/components/common/GenericModal';
@@ -239,7 +239,6 @@ export const DepositsContainer: React.FunctionComponent<
               message={`Are you sure you want to remove the deposit?`}
               handleOk={() => onDeleteDepositConfirmed()}
               okButtonText="OK"
-              closeButton
               setDisplay={setDeleteModalWarning}
             />
             <GenericModal
@@ -249,7 +248,6 @@ export const DepositsContainer: React.FunctionComponent<
               message={`Are you sure you want to remove this deposit return?`}
               handleOk={() => onDeleteDepositReturnConfirmed()}
               okButtonText="OK"
-              closeButton
               setDisplay={setDeleteReturnModalWarning}
             />
 

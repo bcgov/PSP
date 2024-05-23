@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { FaHandHoldingUsd, FaMoneyCheckAlt, FaPencilRuler, FaPlus } from 'react-icons/fa';
 import { useHistory, useRouteMatch } from 'react-router';
 import styled from 'styled-components';
@@ -146,7 +145,7 @@ export const CompensationListView: React.FunctionComponent<ICompensationListView
 
 const StyledSection = styled(Section)`
   & > {
-    font: ${props => props.theme.css.textColor};
+    font: ${props => props.theme.bcTokens.typographyColorSecondary};
   }
   .summary-row {
     align-items: center;

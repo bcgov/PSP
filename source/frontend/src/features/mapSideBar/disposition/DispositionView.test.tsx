@@ -1,8 +1,6 @@
 import { createMemoryHistory } from 'history';
-import React from 'react';
 import { Route } from 'react-router-dom';
 
-import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { Claims } from '@/constants/claims';
 import { useApiNotes } from '@/hooks/pims-api/useApiNotes';
 import { useNoteRepository } from '@/hooks/repositories/useNoteRepository';
@@ -11,42 +9,88 @@ import {
   mockDispositionFileResponse,
 } from '@/mocks/dispositionFiles.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
-import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
-import { rest, server } from '@/mocks/msw/server';
+import { server } from '@/mocks/msw/server';
 import { getUserMock } from '@/mocks/user.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { prettyFormatUTCDate } from '@/utils';
-import { RenderOptions, act, render, userEvent } from '@/utils/test-utils';
+import { RenderOptions, act, cleanup, render, userEvent } from '@/utils/test-utils';
 
+import { useApiProperties } from '@/hooks/pims-api/useApiProperties';
+import { useHistoricalNumberRepository } from '@/hooks/repositories/useHistoricalNumberRepository';
+import { useProjectProvider } from '@/hooks/repositories/useProjectProvider';
+import { useLtsa } from '@/hooks/useLtsa';
+import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
+import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
+import { HttpResponse, http } from 'msw';
+import { createRef } from 'react';
+import { vi } from 'vitest';
 import DispositionView, { IDispositionViewProps } from './DispositionView';
 
 // mock auth library
-jest.mock('@react-keycloak/web');
-jest.mock('@/components/common/mapFSM/MapStateMachineContext');
-jest.mock('@/hooks/repositories/useNoteRepository');
-jest.mock('@/hooks/pims-api/useApiNotes');
 
-const getNotes = jest.fn().mockResolvedValue([]);
-const onClose = jest.fn();
-const onSave = jest.fn();
-const onCancel = jest.fn();
-const onMenuChange = jest.fn();
-const onSuccess = jest.fn();
-const onUpdateProperties = jest.fn();
-const confirmBeforeAdd = jest.fn();
-const canRemove = jest.fn();
-const setIsEditing = jest.fn();
-const onEditFileProperties = jest.fn();
+vi.mock('@/hooks/repositories/useNoteRepository');
+vi.mock('@/hooks/pims-api/useApiNotes');
+
+const getNotes = vi.fn().mockResolvedValue([]);
+const onClose = vi.fn();
+const onSave = vi.fn();
+const onCancel = vi.fn();
+const onMenuChange = vi.fn();
+const onSuccess = vi.fn();
+const onUpdateProperties = vi.fn();
+const confirmBeforeAdd = vi.fn();
+const canRemove = vi.fn();
+const setIsEditing = vi.fn();
+const onEditFileProperties = vi.fn();
 
 // Need to mock this library for unit tests
-jest.mock('react-visibility-sensor', () => {
-  return jest.fn().mockImplementation(({ children }) => {
-    if (children instanceof Function) {
-      return children({ isVisible: true });
-    }
-    return children;
-  });
+vi.mock('react-visibility-sensor', () => {
+  return {
+    default: vi.fn().mockImplementation(({ children }) => {
+      if (children instanceof Function) {
+        return children({ isVisible: true });
+      }
+      return children;
+    }),
+  };
 });
+
+vi.mock('@/hooks/repositories/useComposedProperties', () => {
+  return {
+    useComposedProperties: vi.fn().mockResolvedValue({ apiWrapper: { response: {} } }),
+    PROPERTY_TYPES: {},
+  };
+});
+
+vi.mock('@/hooks/pims-api/useApiProperties');
+vi.mocked(useApiProperties).mockReturnValue({
+  getPropertiesViewPagedApi: vi
+    .fn()
+    .mockResolvedValue({ data: {} as ApiGen_Base_Page<ApiGen_Concepts_Property> }),
+  getMatchingPropertiesApi: vi.fn(),
+  getPropertyAssociationsApi: vi.fn(),
+  exportPropertiesApi: vi.fn(),
+  getPropertiesApi: vi.fn(),
+  getPropertyConceptWithIdApi: vi.fn(),
+  putPropertyConceptApi: vi.fn(),
+  getPropertyConceptWithPidApi: vi.fn(),
+  getPropertyConceptWithPinApi: vi.fn(),
+});
+
+vi.mock('@/hooks/useLtsa');
+vi.mocked(useLtsa).mockImplementation(
+  () =>
+    ({
+      execute: vi.fn(),
+    } as unknown as ReturnType<typeof useLtsa>),
+);
+
+vi.mock('@/hooks/repositories/useProjectProvider');
+vi.mocked(useProjectProvider).mockReturnValue({
+  retrieveProjectProducts: vi.fn(),
+} as unknown as ReturnType<typeof useProjectProvider>);
+
+vi.mock('@/hooks/repositories/useHistoricalNumberRepository');
 
 const DEFAULT_PROPS: IDispositionViewProps = {
   onClose,
@@ -60,7 +104,7 @@ const DEFAULT_PROPS: IDispositionViewProps = {
   isEditing: false,
   setIsEditing,
   onShowPropertySelector: onEditFileProperties,
-  formikRef: React.createRef(),
+  formikRef: createRef(),
   isFormValid: true,
   error: undefined,
 };
@@ -96,6 +140,8 @@ describe('DispositionView component', () => {
       },
     );
 
+    await act(async () => {});
+
     return {
       ...utils,
       getCloseButton: () => utils.getByTitle('close'),
@@ -103,27 +149,48 @@ describe('DispositionView component', () => {
   };
 
   beforeEach(() => {
-    (useMapStateMachine as jest.Mock).mockImplementation(() => mapMachineBaseMock);
     server.use(
-      rest.get('/api/users/info/*', (req, res, ctx) =>
-        res(ctx.delay(500), ctx.status(200), ctx.json(getUserMock())),
-      ),
+      http.get('/api/users/info/*', () => HttpResponse.json(getUserMock(), { status: 200 })),
     );
 
-    (useNoteRepository as jest.Mock).mockImplementation(() => ({
-      addNote: { execute: jest.fn() },
-      getNote: { execute: jest.fn() },
-      updateNote: { execute: jest.fn() },
-    }));
-    (useApiNotes as jest.Mock).mockImplementation(() => ({
-      getNotes,
-    }));
+    vi.mocked(useNoteRepository).mockImplementation(
+      () =>
+        ({
+          addNote: { execute: vi.fn() },
+          getNote: { execute: vi.fn() },
+          updateNote: { execute: vi.fn() },
+        } as unknown as ReturnType<typeof useNoteRepository>),
+    );
+    vi.mocked(useApiNotes).mockImplementation(
+      () =>
+        ({
+          getNotes,
+        } as unknown as ReturnType<typeof useApiNotes>),
+    );
+
+    vi.mocked(useHistoricalNumberRepository).mockReturnValue({
+      getPropertyHistoricalNumbers: {
+        error: null,
+        response: [],
+        execute: vi.fn().mockResolvedValue([]),
+        loading: false,
+        status: 200,
+      },
+      updatePropertyHistoricalNumbers: {
+        error: null,
+        response: [],
+        execute: vi.fn().mockResolvedValue([]),
+        loading: false,
+        status: 200,
+      },
+    });
 
     history.replace(`/mapview/sidebar/disposition/1`);
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
+    cleanup();
   });
 
   it('renders as expected', async () => {
@@ -138,7 +205,9 @@ describe('DispositionView component', () => {
     expect(getByText('Disposition File')).toBeVisible();
 
     expect(getByText(/FILE_NUMBER 3A8F46B/i)).toBeVisible();
-    expect(getByText(prettyFormatUTCDate(testDispositionFile.appCreateTimestamp))).toBeVisible();
+    expect(
+      getByText(new RegExp(prettyFormatUTCDate(testDispositionFile.appCreateTimestamp))),
+    ).toBeVisible();
   });
 
   it('should display the Edit Properties button if the user has permissions', async () => {
@@ -168,14 +237,12 @@ describe('DispositionView component', () => {
     expect(tab).toHaveClass('active');
   });
 
-  it(`should show a toast and redirect to the File Details page when accessing a non-existing property index`, async () => {
+  it(`should redirect to the File Details page when accessing a non-existing property index`, async () => {
     history.replace(`/mapview/sidebar/disposition/1/property/99999`);
     const { getByRole, findByText } = await setup();
     const tab = getByRole('tab', { name: /File details/i });
     expect(tab).toBeVisible();
     expect(tab).toHaveClass('active');
-    // toast
-    expect(await findByText(/Could not find property in the file/i)).toBeVisible();
   });
 
   it('should display the Property Selector according to routing', async () => {
@@ -219,7 +286,7 @@ describe('DispositionView component', () => {
     ).toBeVisible();
   });
 
-  xit(`should display property edit title when editing`, async () => {
+  it(`should display property edit title when editing`, async () => {
     history.replace(`/mapview/sidebar/disposition/1?edit=true`);
     const { getByText } = await setup({ ...DEFAULT_PROPS, isEditing: true } as any);
     expect(getByText('Update Disposition File')).toBeVisible();

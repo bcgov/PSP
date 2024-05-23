@@ -1,5 +1,4 @@
-import { FormikProps } from 'formik';
-import * as React from 'react';
+import { FormikProps } from 'formik/dist/types';
 import { useRef } from 'react';
 
 import GenericModal from '@/components/common/GenericModal';

@@ -12,7 +12,7 @@ describe('useApiLookupCodes.test.ts api hook', () => {
   });
 
   afterEach(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
 
   const setup = () => {

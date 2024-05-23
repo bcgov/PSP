@@ -1,5 +1,4 @@
-import { FormikProps } from 'formik';
-import * as React from 'react';
+import { FormikProps } from 'formik/dist/types';
 import { useEffect } from 'react';
 import { Col, Row } from 'react-bootstrap';
 

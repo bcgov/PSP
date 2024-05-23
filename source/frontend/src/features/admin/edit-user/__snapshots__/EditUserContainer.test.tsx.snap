@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`EditUserContainer component makes a request based on the user id 1`] = `
+exports[`EditUserContainer component > makes a request based on the user id 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"

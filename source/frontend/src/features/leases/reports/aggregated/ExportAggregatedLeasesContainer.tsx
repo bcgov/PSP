@@ -1,5 +1,4 @@
 import { Formik } from 'formik';
-import * as React from 'react';
 import { FaDownload } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
@@ -64,7 +63,7 @@ const ClickableDownload = styled(FaDownload)`
     cursor: pointer;
   }
   align-self: center;
-  color: ${({ theme }) => theme.css.slideOutBlue};
+  color: ${({ theme }) => theme.css.activeActionColor};
 `;
 
 export default ExportAggregatedLeasesContainer;

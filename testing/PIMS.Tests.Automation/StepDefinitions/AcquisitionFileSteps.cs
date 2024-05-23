@@ -104,6 +104,25 @@ namespace PIMS.Tests.Automation.StepDefinitions
             }
         }
 
+        [StepDefinition(@"I add additional information to complete the Acquisition File")]
+        public void AddAdditionalInfoCompleteAcquisitionFile()
+        {
+            //Go to File Summary
+            acquisitionFilesDetails.NavigateToFileSummary();
+
+            //Go to File Details
+            acquisitionFilesDetails.NavigateToFileDetailsTab();
+
+            //Enter to Edit mode of Acquisition File
+            acquisitionFilesDetails.EditAcquisitionFileBttn();
+
+            //Add Additional Optional information to the acquisition file
+            acquisitionFilesDetails.AddAdditionalInformation(acquisitionFile);
+
+            //Save Acquisition File
+            acquisitionFilesDetails.SaveAcquisitionFileDetails();
+        }
+
         [StepDefinition(@"I update the File details from an existing Acquisition File from row number (.*)")]
         public void UpdateFileDetails(int rowNumber)
         {
@@ -192,7 +211,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //}
 
             //Search for Multiple PIDs
-            if(acquisitionFile.AcquisitionSearchProperties.MultiplePIDS.Count > 0)
+            if(acquisitionFile.AcquisitionSearchProperties.MultiplePIDS.First() != "")
             {
                 foreach (string prop in acquisitionFile.AcquisitionSearchProperties.MultiplePIDS)
                 {
@@ -262,20 +281,12 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 //Verify Init form
                 acquisitionTakes.VerifyInitTakesView();
 
-                //Click on Edit button
-                acquisitionTakes.ClickEditTakesButton();
+                //Click on Add Takes button
+                acquisitionTakes.ClickAddTakesButton();
 
                 //Insert Take
-                if (acquisitionFile.AcquisitionTakes[i].TakeCounter.Equals(0))
-                {
-                    acquisitionTakes.VerifyInitCreateForm();
-                    acquisitionTakes.InsertTake(acquisitionFile.AcquisitionTakes[i]);
-                }
-                else
-                {
-                    acquisitionTakes.ClickCreateNewTakeBttn();
-                    acquisitionTakes.InsertTake(acquisitionFile.AcquisitionTakes[i]);
-                }
+                acquisitionTakes.VerifyInitCreateForm();
+                acquisitionTakes.InsertTake(acquisitionFile.AcquisitionTakes[i]);
 
                 //Save Take
                 acquisitionTakes.SaveTake();
@@ -304,7 +315,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             acquisitionTakes.NavigateTakesTab();
 
             //Update Take
-            acquisitionTakes.ClickEditTakesButton();
+            acquisitionTakes.ClickEditTakesButton(acquisitionFile.AcquisitionTakes[0].TakeCounter);
             acquisitionTakes.InsertTake(acquisitionFile.AcquisitionTakes[0]);
 
             //Save Take
@@ -320,11 +331,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             acquisitionTakes.NavigateTakesTab();
 
             //Delete Take
-            acquisitionTakes.ClickEditTakesButton();
             acquisitionTakes.DeleteTake(acquisitionFile.AcquisitionTakes[0].TakeCounter);
-
-            //Save Take
-            acquisitionTakes.SaveTake();
         }
 
         [StepDefinition(@"I insert Checklist information to an Acquisition File")]
@@ -954,6 +961,30 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchAcquisitionFiles.Dispose();
         }
 
+        [StepDefinition(@"Acquisition File cannot be completed due to Draft items")]
+        public void VerifyCannotCompleteDraftItems()
+        {
+            //TEST COVERAGE:
+            acquisitionFilesDetails.VerifyErrorMessageDraftItems();
+            acquisitionFilesDetails.Dispose();
+        }
+
+        [StepDefinition(@"Acquisition File cannot be completed without Takes")]
+        public void VerifyCannotCompleteWithoutTakes()
+        {
+            //TEST COVERAGE: PSP-8209
+            acquisitionFilesDetails.VerifyErrorCannotCompleteWithoutTakes();
+            acquisitionFilesDetails.Dispose();
+        }
+
+        [StepDefinition(@"Acquisition File cannot be completed due to In-Progress Takes")]
+        public void VerifyCannotCompleteInprogressTakes()
+        {
+            //TEST COVERAGE: PSP-7991
+            acquisitionFilesDetails.VerifyErrorCannotCompleteInProgressTakes();
+            acquisitionFilesDetails.Dispose();
+        }
+
         private void PopulateAcquisitionFile(int rowNumber)
         {
             DataTable acquisitionSheet = ExcelDataContext.GetInstance().Sheets["AcquisitionFiles"]!;
@@ -974,7 +1005,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Schedule
             acquisitionFile.AssignedDate = ExcelDataContext.ReadData(rowNumber, "AssignedDate");
             acquisitionFile.DeliveryDate = ExcelDataContext.ReadData(rowNumber, "DeliveryDate");
-            acquisitionFile.AcquisitionCompletedDate = ExcelDataContext.ReadData(rowNumber, "AcquisitionCompletedDate");
 
             //Acquisition Details
             acquisitionFile.AcquisitionFileName = ExcelDataContext.ReadData(rowNumber, "AcquisitionFileName");
@@ -1169,6 +1199,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
                 take.TakeType = ExcelDataContext.ReadData(i, "TakeType");
                 take.TakeStatus = ExcelDataContext.ReadData(i, "TakeStatus");
+                take.TakeCompleteDate = ExcelDataContext.ReadData(i, "TakeCompleteDate");
                 take.SiteContamination = ExcelDataContext.ReadData(i, "SiteContamination");
                 take.TakeDescription = ExcelDataContext.ReadData(i, "TakeDescription");
 
@@ -1188,6 +1219,10 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 take.IsLicenseConstruct = ExcelDataContext.ReadData(i, "IsLicenseConstruct");
                 take.IsLicenseConstructArea = ExcelDataContext.ReadData(i, "IsLicenseConstructArea");
                 take.IsLicenseConstructDate = ExcelDataContext.ReadData(i, "IsLicenseConstructDate");
+
+                take.IsLeasePayable = ExcelDataContext.ReadData(i, "IsLeasePayable");
+                take.IsLeasePayableArea = ExcelDataContext.ReadData(i, "IsLeasePayableArea");
+                take.IsLeasePayableDate = ExcelDataContext.ReadData(i, "IsLeasePayableDate");
 
                 take.IsSurplus = ExcelDataContext.ReadData(i, "IsSurplus");
                 take.IsSurplusArea = ExcelDataContext.ReadData(i, "IsSurplusArea");

@@ -1,5 +1,5 @@
 import { getIn, useFormikContext } from 'formik';
-import * as React from 'react';
+import { FunctionComponent, PropsWithChildren, useState } from 'react';
 import { FaPencilAlt } from 'react-icons/fa';
 import styled from 'styled-components';
 
@@ -20,7 +20,7 @@ export interface IDepositNotesProps {
  * Displays all deposit notes directly associated with this lease.
  * @param {IDepositNotesProps} param0
  */
-export const DepositNotes: React.FunctionComponent<React.PropsWithChildren<IDepositNotesProps>> = ({
+export const DepositNotes: FunctionComponent<PropsWithChildren<IDepositNotesProps>> = ({
   disabled,
   onEdit,
   onSave,
@@ -29,7 +29,7 @@ export const DepositNotes: React.FunctionComponent<React.PropsWithChildren<IDepo
   const { hasClaim } = useKeycloakWrapper();
   const formikProps = useFormikContext();
   const notes = getIn(formikProps.values, 'returnNotes');
-  const [collapsed, setCollapsed] = React.useState<boolean>(true);
+  const [collapsed, setCollapsed] = useState<boolean>(true);
   return (
     <Section
       isCollapsable={collapsed}

@@ -1,7 +1,6 @@
 import { createMemoryHistory } from 'history';
 
 import Claims from '@/constants/claims';
-import { DispositionFileStatus } from '@/constants/dispositionFileStatus';
 import Roles from '@/constants/roles';
 import {
   mockDispositionFileOfferApi,
@@ -11,13 +10,13 @@ import { act, render, RenderOptions, userEvent, waitFor } from '@/utils/test-uti
 
 import DispositionOfferDetails, { IDispositionOfferDetailsProps } from './DispositionOfferDetails';
 import { toTypeCode } from '@/utils/formUtils';
+import { ApiGen_CodeTypes_DispositionFileStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_DispositionFileStatusTypes';
 
 const history = createMemoryHistory();
-jest.mock('@react-keycloak/web');
 
 const mockDispositionOffer = mockDispositionFileOfferApi(100, 1);
 
-const onDelete = jest.fn();
+const onDelete = vi.fn();
 
 describe('Disposition Offer Detail View component', () => {
   const setup = async (
@@ -44,7 +43,7 @@ describe('Disposition Offer Detail View component', () => {
   };
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders as expected', async () => {
@@ -87,7 +86,7 @@ describe('Disposition Offer Detail View component', () => {
       props: {
         dispositionFile: {
           ...mockDispositionFileResponse(),
-          fileStatusTypeCode: toTypeCode(DispositionFileStatus.Complete),
+          fileStatusTypeCode: toTypeCode(ApiGen_CodeTypes_DispositionFileStatusTypes.COMPLETE),
         },
       },
     });
@@ -106,7 +105,7 @@ describe('Disposition Offer Detail View component', () => {
       props: {
         dispositionFile: {
           ...mockDispositionFileResponse(),
-          fileStatusTypeCode: toTypeCode(DispositionFileStatus.Complete),
+          fileStatusTypeCode: toTypeCode(ApiGen_CodeTypes_DispositionFileStatusTypes.COMPLETE),
         },
       },
     });

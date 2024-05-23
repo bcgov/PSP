@@ -1,4 +1,4 @@
-import { DispositionFileStatus } from '@/constants/dispositionFileStatus';
+import { ApiGen_CodeTypes_DispositionFileStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_DispositionFileStatusTypes';
 import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
 
 class DispositionStatusUpdateSolver {
@@ -17,15 +17,14 @@ class DispositionStatusUpdateSolver {
     let canEdit = false;
 
     switch (statusCode) {
-      case DispositionFileStatus.Active:
-      case DispositionFileStatus.Draft:
+      case ApiGen_CodeTypes_DispositionFileStatusTypes.ACTIVE:
+      case ApiGen_CodeTypes_DispositionFileStatusTypes.DRAFT:
+      case ApiGen_CodeTypes_DispositionFileStatusTypes.HOLD:
         canEdit = true;
         break;
-      case DispositionFileStatus.Archived:
-      case DispositionFileStatus.Cancelled:
-      case DispositionFileStatus.Closed:
-      case DispositionFileStatus.Complete:
-      case DispositionFileStatus.Hold:
+      case ApiGen_CodeTypes_DispositionFileStatusTypes.ARCHIVED:
+      case ApiGen_CodeTypes_DispositionFileStatusTypes.CANCELLED:
+      case ApiGen_CodeTypes_DispositionFileStatusTypes.COMPLETE:
         canEdit = false;
         break;
       default:
@@ -45,15 +44,14 @@ class DispositionStatusUpdateSolver {
     let canEdit = false;
 
     switch (statusCode) {
-      case DispositionFileStatus.Active:
-      case DispositionFileStatus.Draft:
+      case ApiGen_CodeTypes_DispositionFileStatusTypes.ACTIVE:
+      case ApiGen_CodeTypes_DispositionFileStatusTypes.DRAFT:
+      case ApiGen_CodeTypes_DispositionFileStatusTypes.HOLD:
         canEdit = true;
         break;
-      case DispositionFileStatus.Archived:
-      case DispositionFileStatus.Cancelled:
-      case DispositionFileStatus.Closed:
-      case DispositionFileStatus.Complete:
-      case DispositionFileStatus.Hold:
+      case ApiGen_CodeTypes_DispositionFileStatusTypes.ARCHIVED:
+      case ApiGen_CodeTypes_DispositionFileStatusTypes.CANCELLED:
+      case ApiGen_CodeTypes_DispositionFileStatusTypes.COMPLETE:
         canEdit = false;
         break;
       default:
@@ -73,13 +71,12 @@ class DispositionStatusUpdateSolver {
     let canEdit = false;
 
     switch (statusCode) {
-      case DispositionFileStatus.Active:
-      case DispositionFileStatus.Draft:
-      case DispositionFileStatus.Archived:
-      case DispositionFileStatus.Cancelled:
-      case DispositionFileStatus.Closed:
-      case DispositionFileStatus.Complete:
-      case DispositionFileStatus.Hold:
+      case ApiGen_CodeTypes_DispositionFileStatusTypes.ACTIVE:
+      case ApiGen_CodeTypes_DispositionFileStatusTypes.DRAFT:
+      case ApiGen_CodeTypes_DispositionFileStatusTypes.ARCHIVED:
+      case ApiGen_CodeTypes_DispositionFileStatusTypes.CANCELLED:
+      case ApiGen_CodeTypes_DispositionFileStatusTypes.COMPLETE:
+      case ApiGen_CodeTypes_DispositionFileStatusTypes.HOLD:
       default:
         canEdit = true;
         break;
@@ -97,13 +94,12 @@ class DispositionStatusUpdateSolver {
     let canEdit = false;
 
     switch (statusCode) {
-      case DispositionFileStatus.Active:
-      case DispositionFileStatus.Draft:
-      case DispositionFileStatus.Archived:
-      case DispositionFileStatus.Cancelled:
-      case DispositionFileStatus.Closed:
-      case DispositionFileStatus.Complete:
-      case DispositionFileStatus.Hold:
+      case ApiGen_CodeTypes_DispositionFileStatusTypes.ACTIVE:
+      case ApiGen_CodeTypes_DispositionFileStatusTypes.DRAFT:
+      case ApiGen_CodeTypes_DispositionFileStatusTypes.ARCHIVED:
+      case ApiGen_CodeTypes_DispositionFileStatusTypes.CANCELLED:
+      case ApiGen_CodeTypes_DispositionFileStatusTypes.COMPLETE:
+      case ApiGen_CodeTypes_DispositionFileStatusTypes.HOLD:
       default:
         canEdit = true;
         break;
@@ -121,13 +117,12 @@ class DispositionStatusUpdateSolver {
     let canEdit = false;
 
     switch (statusCode) {
-      case DispositionFileStatus.Active:
-      case DispositionFileStatus.Draft:
-      case DispositionFileStatus.Archived:
-      case DispositionFileStatus.Cancelled:
-      case DispositionFileStatus.Closed:
-      case DispositionFileStatus.Complete:
-      case DispositionFileStatus.Hold:
+      case ApiGen_CodeTypes_DispositionFileStatusTypes.ACTIVE:
+      case ApiGen_CodeTypes_DispositionFileStatusTypes.DRAFT:
+      case ApiGen_CodeTypes_DispositionFileStatusTypes.ARCHIVED:
+      case ApiGen_CodeTypes_DispositionFileStatusTypes.CANCELLED:
+      case ApiGen_CodeTypes_DispositionFileStatusTypes.COMPLETE:
+      case ApiGen_CodeTypes_DispositionFileStatusTypes.HOLD:
       default:
         canEdit = true;
         break;
@@ -145,15 +140,14 @@ class DispositionStatusUpdateSolver {
     let canEdit = false;
 
     switch (statusCode) {
-      case DispositionFileStatus.Active:
-      case DispositionFileStatus.Draft:
+      case ApiGen_CodeTypes_DispositionFileStatusTypes.ACTIVE:
+      case ApiGen_CodeTypes_DispositionFileStatusTypes.DRAFT:
+      case ApiGen_CodeTypes_DispositionFileStatusTypes.HOLD:
         canEdit = true;
         break;
-      case DispositionFileStatus.Archived:
-      case DispositionFileStatus.Cancelled:
-      case DispositionFileStatus.Closed:
-      case DispositionFileStatus.Complete:
-      case DispositionFileStatus.Hold:
+      case ApiGen_CodeTypes_DispositionFileStatusTypes.ARCHIVED:
+      case ApiGen_CodeTypes_DispositionFileStatusTypes.CANCELLED:
+      case ApiGen_CodeTypes_DispositionFileStatusTypes.COMPLETE:
         canEdit = false;
         break;
       default:

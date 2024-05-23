@@ -1,6 +1,6 @@
 import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
-import { noop } from 'lodash';
+import noop from 'lodash/noop';
 
 import { mockApiProperty } from '@/mocks/filterData.mock';
 import { getEmptyPropertyLease } from '@/mocks/properties.mock';
@@ -121,17 +121,5 @@ describe('DetailDocumentation component', () => {
       },
     });
     expect(getByText('documentation Reference')).toBeVisible();
-  });
-
-  it('renders the PS # name', () => {
-    const {
-      component: { getByDisplayValue },
-    } = setup({
-      lease: {
-        ...getEmptyLease(),
-        psFileNo: 'A PS File No',
-      },
-    });
-    expect(getByDisplayValue('A PS File No')).toBeVisible();
   });
 });

@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { FaMailBulk, FaPlus, FaTrash } from 'react-icons/fa';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import styled from 'styled-components';
@@ -218,14 +217,14 @@ const StyledHeaderContainer = styled.div`
 `;
 
 const StyledAgreementBorder = styled.div`
-  border: solid 0.2rem ${props => props.theme.css.discardedColor};
+  border: solid 0.2rem ${props => props.theme.css.headerBorderColor};
   margin-bottom: 1.5rem;
   border-radius: 0.5rem;
 `;
 
 export const StyledAgreementSubheader = styled.div`
   font-weight: bold;
-  border-bottom: 0.2rem ${props => props.theme.css.discardedColor} solid;
+  border-bottom: 0.2rem ${props => props.theme.css.headerBorderColor} solid;
   margin-top: 2rem;
   margin-bottom: 2rem;
 `;

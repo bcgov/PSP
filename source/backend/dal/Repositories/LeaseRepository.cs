@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
+using LinqKit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Pims.Api.Models.CodeTypes;
 using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
@@ -861,13 +863,55 @@ namespace Pims.Dal.Repositories
         /// <param name="regionCodes"></param>
         /// <param name="loadPayments"></param>
         /// <returns></returns>
-        public IQueryable<Entities.PimsLease> GenerateLeaseQuery(LeaseFilter filter, HashSet<short> regionCodes, bool loadPayments = false)
+        public IQueryable<PimsLease> GenerateLeaseQuery(LeaseFilter filter, HashSet<short> regionCodes, bool loadPayments = false)
         {
             filter.ThrowIfNull(nameof(filter));
 
-            var query = this.Context.PimsLeases.AsNoTracking();
+            var query = Context.PimsLeases
+                        .Include(l => l.PimsPropertyLeases)
+                            .ThenInclude(p => p.Property)
+                            .ThenInclude(p => p.Address)
+                        .Include(l => l.PimsPropertyLeases)
+                            .ThenInclude(p => p.AreaUnitTypeCodeNavigation)
+                        .Include(pl => pl.PimsPropertyLeases)
+                            .ThenInclude(p => p.Property)
+                            .ThenInclude(n => n.PimsHistoricalFileNumbers)
+                            .ThenInclude(t => t.HistoricalFileNumberTypeCodeNavigation)
+                        .Include(l => l.PimsPropertyImprovements)
+                        .Include(l => l.LeaseProgramTypeCodeNavigation)
+                        .Include(l => l.LeasePurposeTypeCodeNavigation)
+                        .Include(l => l.LeaseStatusTypeCodeNavigation)
+                        .Include(l => l.LeaseLicenseTypeCodeNavigation)
+                        .Include(l => l.PimsLeaseTenants)
+                            .ThenInclude(t => t.Person)
+                        .Include(l => l.PimsLeaseTenants)
+                            .ThenInclude(t => t.Organization)
+                        .Include(p => p.RegionCodeNavigation)
+                        .Include(l => l.PimsLeaseTerms)
+                        .AsNoTracking();
 
-            query = GenerateCommonLeaseQuery(query, filter, regionCodes, loadPayments);
+            if (loadPayments)
+            {
+                query = query.Include(l => l.PimsLeaseTerms)
+                    .ThenInclude(l => l.PimsLeasePayments);
+            }
+
+            var predicate = GenerateCommonLeaseQuery(filter, regionCodes);
+            query = query.Where(predicate);
+
+            if (filter.Sort?.Any() == true)
+            {
+                var sortList = filter.Sort.ToList();
+                MapSortField("ExpiryDate", "OrigExpiryDate", sortList);
+                MapSortField("FileStatusTypeCode", "LeaseStatusTypeCodeNavigation.Description", sortList);
+                MapSortField("ProgramName", "LeaseProgramTypeCodeNavigation.Description", sortList);
+
+                query = query.OrderByProperty(true, sortList.ToArray());
+            }
+            else
+            {
+                query = query.OrderBy(l => l.LFileNo);
+            }
 
             return query;
         }
@@ -898,39 +942,51 @@ namespace Pims.Dal.Repositories
         /// <param name="query"></param>
         /// <param name="filter"></param>
         /// <returns></returns>
-        private IQueryable<Entities.PimsLease> GenerateCommonLeaseQuery(IQueryable<Entities.PimsLease> query, LeaseFilter filter, HashSet<short> regions, bool loadPayments = false)
+        private static ExpressionStarter<PimsLease> GenerateCommonLeaseQuery(LeaseFilter filter, HashSet<short> regions)
         {
             filter.ThrowIfNull(nameof(filter));
 
-            query = query.Where(l => !l.RegionCode.HasValue || regions.Contains(l.RegionCode.Value));
+            var predicateBuilder = PredicateBuilder.New<PimsLease>(l => true);
+
+            predicateBuilder = predicateBuilder.And(l => !l.RegionCode.HasValue || regions.Contains(l.RegionCode.Value));
 
             if (!string.IsNullOrWhiteSpace(filter.TenantName))
             {
-                query = query.Where(l => l.PimsLeaseTenants.Any(tenant => tenant.Person != null && EF.Functions.Like(
+                predicateBuilder = predicateBuilder.And(l => l.PimsLeaseTenants.Any(tenant => tenant.Person != null && EF.Functions.Like(
                     ((!string.IsNullOrWhiteSpace(tenant.Person.FirstName) ? tenant.Person.FirstName + " " : string.Empty) +
                     (!string.IsNullOrWhiteSpace(tenant.Person.MiddleNames) ? tenant.Person.MiddleNames + " " : string.Empty) +
                     (tenant.Person.Surname ?? string.Empty)).Trim(), $"%{filter.TenantName}%"))
                  || l.PimsLeaseTenants.Any(tenant => tenant.Organization != null && EF.Functions.Like(tenant.Organization.OrganizationName, $"%{filter.TenantName}%")));
             }
+
             if (!string.IsNullOrWhiteSpace(filter.PinOrPid))
             {
                 var pinOrPidValue = filter.PinOrPid.Replace("-", string.Empty).Trim().TrimStart('0');
-                query = query.Where(l => l.PimsPropertyLeases.Any(pl => pl != null && (EF.Functions.Like(pl.Property.Pid.ToString(), $"%{pinOrPidValue}%") || EF.Functions.Like(pl.Property.Pin.ToString(), $"%{pinOrPidValue}%"))));
+                predicateBuilder = predicateBuilder.And(l => l.PimsPropertyLeases.Any(pl => pl != null && (EF.Functions.Like(pl.Property.Pid.ToString(), $"%{pinOrPidValue}%") || EF.Functions.Like(pl.Property.Pin.ToString(), $"%{pinOrPidValue}%"))));
             }
 
             if (!string.IsNullOrWhiteSpace(filter.LFileNo))
             {
-                query = query.Where(l => EF.Functions.Like(l.LFileNo, $"%{filter.LFileNo}%"));
+                predicateBuilder = predicateBuilder.And(l => EF.Functions.Like(l.LFileNo, $"%{filter.LFileNo}%"));
             }
 
             if (!string.IsNullOrWhiteSpace(filter.Historical))
             {
-                query = query.Where(l => EF.Functions.Like(l.PsFileNo, $"%{filter.Historical}%") || EF.Functions.Like(l.TfaFileNumber, $"%{filter.Historical}%"));
+                predicateBuilder = predicateBuilder.And(l => EF.Functions.Like(l.PsFileNo, $"%{filter.Historical}%") || EF.Functions.Like(l.TfaFileNumber, $"%{filter.Historical}%"));
+
+                predicateBuilder = predicateBuilder.Or(l => l.PimsPropertyLeases.Any(x => x.Property.PimsHistoricalFileNumbers
+                        .Any(y => y.HistoricalFileNumberTypeCode == HistoricalFileNumberTypes.LISNO.ToString() && y.HistoricalFileNumber.Contains(filter.Historical))));
+
+                predicateBuilder = predicateBuilder.Or(l => l.PimsPropertyLeases.Any(x => x.Property.PimsHistoricalFileNumbers
+                        .Any(y => y.HistoricalFileNumberTypeCode == HistoricalFileNumberTypes.PSNO.ToString() && y.HistoricalFileNumber.Contains(filter.Historical))));
+
+                predicateBuilder = predicateBuilder.Or(l => l.PimsPropertyLeases.Any(x => x.Property.PimsHistoricalFileNumbers
+                        .Any(y => y.HistoricalFileNumberTypeCode == HistoricalFileNumberTypes.OTHER.ToString() && y.HistoricalFileNumber.Contains(filter.Historical))));
             }
 
             if (!string.IsNullOrWhiteSpace(filter.Address))
             {
-                query = query.Where(l => l.PimsPropertyLeases.Any(pl => pl != null &&
+                predicateBuilder = predicateBuilder.And(l => l.PimsPropertyLeases.Any(pl => pl != null &&
                     (EF.Functions.Like(pl.Property.Address.StreetAddress1, $"%{filter.Address}%") ||
                     EF.Functions.Like(pl.Property.Address.StreetAddress2, $"%{filter.Address}%") ||
                     EF.Functions.Like(pl.Property.Address.StreetAddress3, $"%{filter.Address}%") ||
@@ -939,98 +995,61 @@ namespace Pims.Dal.Repositories
 
             if (filter.IsReceivable == true)
             {
-                query = query.Where(l => l.LeasePayRvblTypeCode == "RCVBL");
+                predicateBuilder = predicateBuilder.And(l => l.LeasePayRvblTypeCode == "RCVBL");
             }
 
             if (filter.NotInStatus.Count > 0)
             {
-                query = query.Where(l => !filter.NotInStatus.Contains(l.LeaseStatusTypeCode));
+                predicateBuilder = predicateBuilder.And(l => !filter.NotInStatus.Contains(l.LeaseStatusTypeCode));
             }
 
             if (filter.ExpiryAfterDate.HasValue)
             {
-                // additional terms may "extend" the original expiry date.
-                query = query.Where(l => (l.OrigExpiryDate >= filter.ExpiryAfterDate.Value || l.OrigExpiryDate == null)
+                predicateBuilder = predicateBuilder.And(l => (l.OrigExpiryDate >= filter.ExpiryAfterDate.Value || l.OrigExpiryDate == null)
                     || l.PimsLeaseTerms.Any(t => t.TermExpiryDate >= filter.ExpiryAfterDate.Value || t.TermExpiryDate == null));
             }
 
             if (filter.StartBeforeDate.HasValue)
             {
-                query = query.Where(l => l.OrigStartDate <= filter.StartBeforeDate);
+                predicateBuilder = predicateBuilder.And(l => l.OrigStartDate <= filter.StartBeforeDate);
             }
 
             if (filter.Programs.Count > 0)
             {
-                query = query.Where(l => filter.Programs.Any(p => p == l.LeaseProgramTypeCode));
+                predicateBuilder = predicateBuilder.And(l => filter.Programs.Any(p => p == l.LeaseProgramTypeCode));
             }
 
             if (filter.LeaseStatusTypes.Count > 0)
             {
-                query = query.Where(l => filter.LeaseStatusTypes.Any(p => p == l.LeaseStatusTypeCode));
+                predicateBuilder = predicateBuilder.And(l => filter.LeaseStatusTypes.Any(p => p == l.LeaseStatusTypeCode));
             }
 
             var expiryStartDate = filter.ExpiryStartDate.ToNullableDateTime();
             var expiryEndDate = filter.ExpiryEndDate.ToNullableDateTime();
             if (filter.ExpiryStartDate != null && filter.ExpiryEndDate != null)
             {
-                query = query.Where(l => l.OrigExpiryDate >= expiryStartDate && l.OrigExpiryDate <= expiryEndDate);
+                predicateBuilder.And(l => l.OrigExpiryDate >= expiryStartDate && l.OrigExpiryDate <= expiryEndDate);
             }
             else if (filter.ExpiryStartDate != null)
             {
-                query = query.Where(l => l.OrigExpiryDate >= expiryStartDate);
+                predicateBuilder = predicateBuilder.And(l => l.OrigExpiryDate >= expiryStartDate);
             }
             else if (filter.ExpiryEndDate != null)
             {
-                query = query.Where(l => l.OrigExpiryDate <= expiryEndDate);
+                predicateBuilder = predicateBuilder.And(l => l.OrigExpiryDate <= expiryEndDate);
             }
 
             if (filter.RegionType.HasValue)
             {
-                query = query.Where(l => l.RegionCode == filter.RegionType);
+                predicateBuilder = predicateBuilder.And(l => l.RegionCode == filter.RegionType);
             }
 
             if (!string.IsNullOrWhiteSpace(filter.Details))
             {
-                query = query.Where(l => EF.Functions.Like(l.LeaseDescription, $"%{filter.Details}%") || EF.Functions.Like(l.LeaseNotes, $"%{filter.Details}%"));
+                predicateBuilder = predicateBuilder.And(l => EF.Functions.Like(l.LeaseDescription, $"%{filter.Details}%") || EF.Functions.Like(l.LeaseNotes, $"%{filter.Details}%"));
             }
 
-            if (filter.Sort?.Any() == true)
-            {
-                var sortList = filter.Sort.ToList();
-                MapSortField("ExpiryDate", "OrigExpiryDate", sortList);
-                MapSortField("FileStatusTypeCode", "LeaseStatusTypeCodeNavigation.Description", sortList);
-                MapSortField("ProgramName", "LeaseProgramTypeCodeNavigation.Description", sortList);
-
-                query = query.OrderByProperty(true, sortList.ToArray());
-            }
-            else
-            {
-                query = query.OrderBy(l => l.LFileNo);
-            }
-
-            query = query.Include(l => l.PimsPropertyLeases)
-                    .ThenInclude(p => p.Property)
-                    .ThenInclude(p => p.Address)
-                .Include(l => l.PimsPropertyLeases)
-                    .ThenInclude(p => p.AreaUnitTypeCodeNavigation)
-                .Include(l => l.PimsPropertyImprovements)
-                .Include(l => l.LeaseProgramTypeCodeNavigation)
-                .Include(l => l.LeasePurposeTypeCodeNavigation)
-                .Include(l => l.LeaseStatusTypeCodeNavigation)
-                .Include(l => l.LeaseLicenseTypeCodeNavigation)
-                .Include(l => l.PimsLeaseTenants)
-                    .ThenInclude(t => t.Person)
-                .Include(l => l.PimsLeaseTenants)
-                    .ThenInclude(t => t.Organization)
-                .Include(p => p.RegionCodeNavigation)
-                .Include(l => l.PimsLeaseTerms);
-
-            if (loadPayments)
-            {
-                query = query.Include(l => l.PimsLeaseTerms)
-                    .ThenInclude(l => l.PimsLeasePayments);
-            }
-            return query;
+            return predicateBuilder;
         }
 
         /// <summary>

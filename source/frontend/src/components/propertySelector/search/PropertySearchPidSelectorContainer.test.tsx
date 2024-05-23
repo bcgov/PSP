@@ -13,11 +13,9 @@ import { IPropertySearchSelectorPidFormViewProps } from './PropertySelectorPidSe
 import { IAddSubdivisionViewProps } from '@/features/mapSideBar/subdivision/AddSubdivisionView';
 import { SubdivisionFormModel } from '@/features/mapSideBar/subdivision/AddSubdivisionModel';
 
-jest.mock('@react-keycloak/web');
-jest.mock('@/components/common/mapFSM/MapStateMachineContext');
 const history = createMemoryHistory();
 
-const onClose = jest.fn();
+const onClose = vi.fn();
 
 let viewProps: IPropertySearchSelectorPidFormViewProps | undefined;
 const TestView: React.FunctionComponent<
@@ -30,13 +28,13 @@ const TestView: React.FunctionComponent<
 const mockGetByPidWrapper = {
   error: undefined,
   response: undefined,
-  execute: jest.fn(),
+  execute: vi.fn(),
   loading: false,
 };
 
-const setSelectProperty = jest.fn();
+const setSelectProperty = vi.fn();
 
-jest.mock('@/hooks/repositories/usePimsPropertyRepository', () => ({
+vi.mock('@/hooks/repositories/usePimsPropertyRepository', () => ({
   usePimsPropertyRepository: () => {
     return {
       getPropertyByPidWrapper: mockGetByPidWrapper,
@@ -73,12 +71,11 @@ describe('PropertySearchPidSelector component', () => {
   beforeEach(() => {
     viewProps = undefined;
     history.location.pathname = '/';
-    jest.resetAllMocks();
-    (useMapStateMachine as jest.Mock).mockImplementation(() => mapMachineBaseMock);
+    vi.resetAllMocks();
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('calls setSelectedProperty when onSearch', async () => {

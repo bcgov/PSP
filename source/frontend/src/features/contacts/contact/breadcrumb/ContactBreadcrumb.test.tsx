@@ -7,7 +7,7 @@ import { act, render, RenderOptions } from '@/utils/test-utils';
 import { ContactBreadcrumb } from '../..';
 
 const history = createMemoryHistory();
-const onClickManagement = jest.fn();
+const onClickManagement = vi.fn();
 
 describe('ContactBreadCrumb component', () => {
   const setup = (renderOptions: RenderOptions & { breadcrumb?: ReactElement } = {}) => {

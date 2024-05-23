@@ -17,7 +17,7 @@ import { PropertySelectorPidSearchContainerProps } from '@/components/propertySe
 import PropertySearchSelectorPidFormView from '@/components/propertySelector/search/PropertySelectorPidSearchView';
 import { AreaUnitTypes } from '@/constants/areaUnitTypes';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
-import { convertArea, exists, formatNumber } from '@/utils';
+import { convertArea, exists } from '@/utils';
 
 import MapSideBarLayout from '../layout/MapSideBarLayout';
 import { AddressForm, PropertyForm } from '../shared/models';
@@ -70,11 +70,6 @@ const AddConsolidationView: React.FunctionComponent<
   MapSelectorComponent,
   PropertySelectorPidSearchComponent,
 }) => {
-  const getAreaValue = (area: number, unit: string): number => {
-    const sqm = convertArea(area, unit, AreaUnitTypes.SquareMeters);
-    return Number(formatNumber(sqm, 0, 3));
-  };
-
   return (
     <MapSideBarLayout
       showCloseButton
@@ -157,7 +152,11 @@ const AddConsolidationView: React.FunctionComponent<
                         const formProperty = PropertyForm.fromMapProperty(property);
                         formProperty.landArea =
                           property.landArea && property.areaUnit
-                            ? getAreaValue(property.landArea, property.areaUnit)
+                            ? convertArea(
+                                property.landArea,
+                                property.areaUnit.toLocaleLowerCase(),
+                                AreaUnitTypes.SquareMeters,
+                              )
                             : 0;
                         formProperty.areaUnit = AreaUnitTypes.SquareMeters;
                         if (property.pid) {
@@ -221,12 +220,12 @@ const StyledFormWrapper = styled.div`
   overflow-y: auto;
   padding-right: 1rem;
   padding-bottom: 1rem;
-  background-color: ${props => props.theme.css.filterBackgroundColor};
+  background-color: ${props => props.theme.css.highlightBackgroundColor};
 `;
 
 const StyledSubdivideConsolidateIcon = styled(ConsolidateSubdivideIcon)`
   width: 3rem;
   height: 3rem;
   margin-right: 1rem;
-  fill: ${props => props.theme.css.textColor};
+  fill: ${props => props.theme.bcTokens.typographyColorSecondary};
 `;
