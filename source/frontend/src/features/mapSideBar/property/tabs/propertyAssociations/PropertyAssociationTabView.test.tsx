@@ -10,6 +10,7 @@ import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_P
 import { ApiGen_Base_CodeType } from '@/models/api/generated/ApiGen_Base_CodeType';
 import { ApiGen_Concepts_LeaseTenant } from '@/models/api/generated/ApiGen_Concepts_LeaseTenant';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
+import { ApiGen_Concepts_Organization } from '@/models/api/generated/ApiGen_Concepts_Organization';
 
 const history = createMemoryHistory();
 
@@ -92,11 +93,13 @@ describe('PropertyAssociationTabView component', () => {
           leaseId: 34,
           person: { firstName: 'John', surname: 'Doe' } as ApiGen_Concepts_Person,
           tenantTypeCode: { id: 'ASGN' } as ApiGen_Base_CodeType<string>,
+          lessorType: { id: 'PER' } as ApiGen_Base_CodeType<string>,
         } as ApiGen_Concepts_LeaseTenant,
         {
           leaseId: 34,
           person: { firstName: 'John2', surname: 'Doe2' } as ApiGen_Concepts_Person,
           tenantTypeCode: { id: 'TEN' } as ApiGen_Base_CodeType<string>,
+          lessorType: { id: 'PER' } as ApiGen_Base_CodeType<string>,
         } as ApiGen_Concepts_LeaseTenant,
       ],
     });
@@ -114,15 +117,41 @@ describe('PropertyAssociationTabView component', () => {
           leaseId: 34,
           person: { firstName: 'John', surname: 'Doe' } as ApiGen_Concepts_Person,
           tenantTypeCode: { id: 'ASGN' } as ApiGen_Base_CodeType<string>,
+          lessorType: { id: 'PER' } as ApiGen_Base_CodeType<string>,
         } as ApiGen_Concepts_LeaseTenant,
         {
           leaseId: 34,
           person: { firstName: 'John2', surname: 'Doe2' } as ApiGen_Concepts_Person,
           tenantTypeCode: { id: 'ASGN' } as ApiGen_Base_CodeType<string>,
+          lessorType: { id: 'PER' } as ApiGen_Base_CodeType<string>,
         } as ApiGen_Concepts_LeaseTenant,
       ],
     });
     expect(getByText('John Doe', { exact: false })).toBeVisible();
+    expect(getByText('John2 Doe2', { exact: false })).toBeVisible();
+  });
+
+  it('renders multiple lease tenants of different types', () => {
+    const { getByText } = setup({
+      isLoading: false,
+      associations: fakeAssociations,
+      associatedLeases: [],
+      associatedLeaseTenants: [
+        {
+          leaseId: 34,
+          organization: { name: 'Org' } as ApiGen_Concepts_Organization,
+          tenantTypeCode: { id: 'ASGN' } as ApiGen_Base_CodeType<string>,
+          lessorType: { id: 'ORG' } as ApiGen_Base_CodeType<string>,
+        } as ApiGen_Concepts_LeaseTenant,
+        {
+          leaseId: 34,
+          person: { firstName: 'John2', surname: 'Doe2' } as ApiGen_Concepts_Person,
+          tenantTypeCode: { id: 'ASGN' } as ApiGen_Base_CodeType<string>,
+          lessorType: { id: 'PER' } as ApiGen_Base_CodeType<string>,
+        } as ApiGen_Concepts_LeaseTenant,
+      ],
+    });
+    expect(getByText('Org', { exact: false })).toBeVisible();
     expect(getByText('John2 Doe2', { exact: false })).toBeVisible();
   });
 
