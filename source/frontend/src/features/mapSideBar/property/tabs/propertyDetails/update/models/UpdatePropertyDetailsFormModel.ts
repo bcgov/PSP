@@ -136,6 +136,8 @@ export class UpdatePropertyDetailsFormModel {
   municipalZoning?: string;
   notes?: string;
 
+  isOwned: boolean;
+
   name?: string;
   description?: string;
   isSensitive?: boolean;
@@ -241,6 +243,8 @@ export class UpdatePropertyDetailsFormModel {
     model.regionTypeCode = fromTypeCode(base.region) ?? undefined;
     model.regionTypeCodeDescription = base.region?.description ?? undefined;
 
+    model.isOwned = base.isOwned;
+
     // multi-selects
     model.anomalies = base.anomalies?.map(e => PropertyAnomalyFormModel.fromApi(e));
     model.tenures = base.tenures?.map(e => PropertyTenureFormModel.fromApi(e));
@@ -282,6 +286,7 @@ export class UpdatePropertyDetailsFormModel {
       region: toTypeCodeNullable(this.regionTypeCode),
       address: exists(this.address) ? this.address.toApi() : null,
       generalLocation: stringToNull(this.generalLocation),
+      isOwned: this.isOwned,
       // multi-selects
       anomalies: this.anomalies?.map(e => e.toApi()) ?? null,
       tenures: this.tenures?.map(e => e.toApi()) ?? null,
@@ -294,7 +299,6 @@ export class UpdatePropertyDetailsFormModel {
       pphStatusUpdateUserid: null,
       pphStatusUpdateTimestamp: null,
       pphStatusUpdateUserGuid: null,
-      isOwned: false,
       isVisibleToOtherAgencies: false,
       propertyContacts: null,
       surplusDeclarationType: null,
