@@ -83,7 +83,7 @@ namespace Pims.Api.Areas.Leases.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [HasPermission(Permissions.LeaseEdit)]
+        [HasPermission(Permissions.LeaseView)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(IEnumerable<InsuranceModel>), 200)]
         [SwaggerOperation(Tags = new[] { "insurance" })]

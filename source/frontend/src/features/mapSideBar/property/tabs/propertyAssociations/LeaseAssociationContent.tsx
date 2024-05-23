@@ -53,7 +53,7 @@ const getFormattedTenants = (tenants: ApiGen_Concepts_LeaseTenant[]) => {
 
   return sortedTenants
     .filter(t => t.tenantTypeCode.id === tenantTypeCode)
-    .map(t => formatApiPersonNames(t.person))
+    .map(t => (t.lessorType?.id === 'PER' ? formatApiPersonNames(t.person) : t.organization?.name))
     .join(', ');
 };
 

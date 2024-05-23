@@ -46,10 +46,13 @@ export const DocumentPreviewContainer: FC<
       documentFileId: number,
       documentFilePageId: number,
     ): Promise<string> => {
-      //todo: handle image failure
-      return createFileUrl(
-        await downloadDocumentFilePageImage(documentId, documentFileId, documentFilePageId),
+      const blob = await downloadDocumentFilePageImage(
+        documentId,
+        documentFileId,
+        documentFilePageId,
       );
+
+      return createFileUrl(blob);
     },
     [downloadDocumentFilePageImage, createFileUrl],
   );
@@ -135,6 +138,7 @@ export const DocumentPreviewContainer: FC<
     const page = documentPages[currentPage];
     // lazy load the next page, but do not replace lazy loaded data.
     if (previewDocumentId && page && !page.loadedDocumentImageDataUrl) {
+      page.error = undefined;
       loadDocumentPageImageUrl(
         previewDocumentId,
         page.mayanPage.document_file_id,

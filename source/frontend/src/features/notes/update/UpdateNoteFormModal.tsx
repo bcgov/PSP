@@ -57,7 +57,6 @@ export const UpdateNoteFormModal = React.forwardRef<
           display={isOpened}
           title="Notes"
           message={loading ? spinner : <FormBody {...formikProps}></FormBody>}
-          closeButton
           okButtonText="Save"
           cancelButtonText="Cancel"
           handleOk={() => {
