@@ -18,7 +18,6 @@ using Pims.Api.Models.Mayan.Metadata;
 using Pims.Api.Models.Requests.Http;
 using Pims.Core.Exceptions;
 
-
 namespace Pims.Api.Repositories.Mayan
 {
     /// <summary>
@@ -61,13 +60,7 @@ namespace Pims.Api.Repositories.Mayan
             if (response.Status == ExternalResponseStatus.Error)
             {
                 _logger.LogDebug("Error while Creating document type");
-
-                if (_config.ExposeErrors.HasValue && _config.ExposeErrors.Value)
-                {
-                    throw new MayanRepositoryException(response.Message);
-                }
-
-                throw new MayanRepositoryException(MayanGenericErrorMessage);
+                ThrowMayanResponseError(response.Message);
             }
             _logger.LogDebug($"Finished creating a document type");
 
@@ -87,20 +80,11 @@ namespace Pims.Api.Repositories.Mayan
 
             var response = await PutAsync<DocumentTypeModel>(endpoint, content, authenticationToken);
 
-            if(response.Status == ExternalResponseStatus.Error)
+            if (response.Status == ExternalResponseStatus.Error)
             {
-                _logger.LogDebug("Error while updating a document type");
-
-                if (_config.ExposeErrors.HasValue && _config.ExposeErrors.Value)
-                {
-                    throw new MayanRepositoryException(response.Message);
-                }
-
-                throw new MayanRepositoryException(MayanGenericErrorMessage);
+                ThrowMayanResponseError(response.Message);
+                _logger.LogDebug($"Finished updating a document type");
             }
-
-            _logger.LogDebug($"Finished updating a document type");
-
             return response;
         }
 
@@ -116,13 +100,7 @@ namespace Pims.Api.Repositories.Mayan
             if (response.Status == ExternalResponseStatus.Error)
             {
                 _logger.LogDebug("Error while Deleting document type");
-
-                if (_config.ExposeErrors.HasValue && _config.ExposeErrors.Value)
-                {
-                    throw new MayanRepositoryException(response.Message);
-                }
-
-                throw new MayanRepositoryException(MayanGenericErrorMessage);
+                ThrowMayanResponseError(response.Message);
             }
             _logger.LogDebug($"Finished deleting document type");
             return response;
@@ -142,13 +120,7 @@ namespace Pims.Api.Repositories.Mayan
             if (response.Status == ExternalResponseStatus.Error)
             {
                 _logger.LogDebug("Error while Retrieving document types");
-
-                if (_config.ExposeErrors.HasValue && _config.ExposeErrors.Value)
-                {
-                    throw new MayanRepositoryException(response.Message);
-                }
-
-                throw new MayanRepositoryException(MayanGenericErrorMessage);
+                ThrowMayanResponseError(response.Message);
             }
 
             _logger.LogDebug("Finished retrieving document types");
@@ -168,13 +140,7 @@ namespace Pims.Api.Repositories.Mayan
             if (response.Status == ExternalResponseStatus.Error)
             {
                 _logger.LogDebug("Error while Retrieving document type metadata types");
-
-                if (_config.ExposeErrors.HasValue && _config.ExposeErrors.Value)
-                {
-                    throw new MayanRepositoryException(response.Message);
-                }
-
-                throw new MayanRepositoryException(MayanGenericErrorMessage);
+                ThrowMayanResponseError(response.Message);
             }
 
             _logger.LogDebug("Finished retrieving document type's metadata types");
@@ -195,13 +161,7 @@ namespace Pims.Api.Repositories.Mayan
             if (response.Status == ExternalResponseStatus.Error)
             {
                 _logger.LogDebug("Error while Retrieving document list");
-
-                if (_config.ExposeErrors.HasValue && _config.ExposeErrors.Value)
-                {
-                    throw new MayanRepositoryException(response.Message);
-                }
-
-                throw new MayanRepositoryException(MayanGenericErrorMessage);
+                ThrowMayanResponseError(response.Message);
             }
             _logger.LogDebug("Finished retrieving document list");
 
@@ -219,13 +179,7 @@ namespace Pims.Api.Repositories.Mayan
             if (response.Status == ExternalResponseStatus.Error)
             {
                 _logger.LogDebug("Error while Retrieving document");
-
-                if (_config.ExposeErrors.HasValue && _config.ExposeErrors.Value)
-                {
-                    throw new MayanRepositoryException(response.Message);
-                }
-
-                throw new MayanRepositoryException(MayanGenericErrorMessage);
+                ThrowMayanResponseError(response.Message);
             }
             _logger.LogDebug("Finished retrieving document");
 
@@ -246,13 +200,7 @@ namespace Pims.Api.Repositories.Mayan
             if (response.Status == ExternalResponseStatus.Error)
             {
                 _logger.LogDebug("Error while Retrieving document metadata");
-
-                if (_config.ExposeErrors.HasValue && _config.ExposeErrors.Value)
-                {
-                    throw new MayanRepositoryException(response.Message);
-                }
-
-                throw new MayanRepositoryException(MayanGenericErrorMessage);
+                ThrowMayanResponseError(response.Message);
             }
             _logger.LogDebug("Finished retrieving document metadata");
 
@@ -283,13 +231,7 @@ namespace Pims.Api.Repositories.Mayan
                 if (response.Status == ExternalResponseStatus.Error)
                 {
                     _logger.LogDebug("Error while Downloading file");
-
-                    if (_config.ExposeErrors.HasValue && _config.ExposeErrors.Value)
-                    {
-                        throw new MayanRepositoryException(response.Message);
-                    }
-
-                    throw new MayanRepositoryException(MayanGenericErrorMessage);
+                    ThrowMayanResponseError(response.Message);
                 }
 
                 return response;
@@ -318,13 +260,7 @@ namespace Pims.Api.Repositories.Mayan
             if (response.Status == ExternalResponseStatus.Error)
             {
                 _logger.LogDebug("Error while Deleting document");
-
-                if (_config.ExposeErrors.HasValue && _config.ExposeErrors.Value)
-                {
-                    throw new MayanRepositoryException(response.Message);
-                }
-
-                throw new MayanRepositoryException(MayanGenericErrorMessage);
+                ThrowMayanResponseError(response.Message);
             }
             _logger.LogDebug($"Finished deleting document");
 
@@ -354,12 +290,7 @@ namespace Pims.Api.Repositories.Mayan
             if (response.Status == ExternalResponseStatus.Error)
             {
                 _logger.LogDebug($"Error while updating a file");
-                if (_config.ExposeErrors.HasValue && _config.ExposeErrors.Value)
-                {
-                    throw new MayanRepositoryException(response.Message);
-                }
-
-                throw new MayanRepositoryException(MayanGenericErrorMessage);
+                ThrowMayanResponseError(response.Message);
             }
 
             _logger.LogDebug($"Finished uploading file");
@@ -380,12 +311,7 @@ namespace Pims.Api.Repositories.Mayan
             if (response.Status == ExternalResponseStatus.Error)
             {
                 _logger.LogDebug($"Error while Retrieving metadata types");
-                if (_config.ExposeErrors.HasValue && _config.ExposeErrors.Value)
-                {
-                    throw new MayanRepositoryException(response.Message);
-                }
-
-                throw new MayanRepositoryException(MayanGenericErrorMessage);
+                ThrowMayanResponseError(response.Message);
             }
             _logger.LogDebug("Finished retrieving metadata types");
 
@@ -408,12 +334,7 @@ namespace Pims.Api.Repositories.Mayan
             if (response.Status == ExternalResponseStatus.Error)
             {
                 _logger.LogDebug($"Error while Creating document type's metadata type");
-                if (_config.ExposeErrors.HasValue && _config.ExposeErrors.Value)
-                {
-                    throw new MayanRepositoryException(response.Message);
-                }
-
-                throw new MayanRepositoryException(MayanGenericErrorMessage);
+                ThrowMayanResponseError(response.Message);
             }
             _logger.LogDebug($"Finished creating document type's metadata type");
 
@@ -436,12 +357,7 @@ namespace Pims.Api.Repositories.Mayan
             if (response.Status == ExternalResponseStatus.Error)
             {
                 _logger.LogDebug("Add existing metadata type with value");
-                if (_config.ExposeErrors.HasValue && _config.ExposeErrors.Value)
-                {
-                    throw new MayanRepositoryException(response.Message);
-                }
-
-                throw new MayanRepositoryException(MayanGenericErrorMessage);
+                ThrowMayanResponseError(response.Message);
             }
 
             _logger.LogDebug($"Finished adding existing metadata value to a  document");
@@ -464,12 +380,7 @@ namespace Pims.Api.Repositories.Mayan
             if (response.Status == ExternalResponseStatus.Error)
             {
                 _logger.LogDebug("Update existing metadata type");
-                if (_config.ExposeErrors.HasValue && _config.ExposeErrors.Value)
-                {
-                    throw new MayanRepositoryException(response.Message);
-                }
-
-                throw new MayanRepositoryException(MayanGenericErrorMessage);
+                ThrowMayanResponseError(response.Message);
             }
             _logger.LogDebug($"Finished updating existing metadata value to a document");
 
@@ -487,12 +398,7 @@ namespace Pims.Api.Repositories.Mayan
             if (response.Status == ExternalResponseStatus.Error)
             {
                 _logger.LogDebug("Delete existing metadata type");
-                if (_config.ExposeErrors.HasValue && _config.ExposeErrors.Value)
-                {
-                    throw new MayanRepositoryException(response.Message);
-                }
-
-                throw new MayanRepositoryException(MayanGenericErrorMessage);
+                ThrowMayanResponseError(response.Message);
             }
 
             _logger.LogDebug($"Finished deleting existing metadata from a document");
@@ -515,12 +421,7 @@ namespace Pims.Api.Repositories.Mayan
             if (response.Status == ExternalResponseStatus.Error)
             {
                 _logger.LogDebug("Updating document type and metadata type");
-                if (_config.ExposeErrors.HasValue && _config.ExposeErrors.Value)
-                {
-                    throw new MayanRepositoryException(response.Message);
-                }
-
-                throw new MayanRepositoryException(MayanGenericErrorMessage);
+                ThrowMayanResponseError(response.Message);
             }
 
             _logger.LogDebug($"Finished update document type with a metadata type");
@@ -539,12 +440,7 @@ namespace Pims.Api.Repositories.Mayan
             if (response.Status == ExternalResponseStatus.Error)
             {
                 _logger.LogDebug("Deleting document type's metadata type");
-                if (_config.ExposeErrors.HasValue && _config.ExposeErrors.Value)
-                {
-                    throw new MayanRepositoryException(response.Message);
-                }
-
-                throw new MayanRepositoryException(MayanGenericErrorMessage);
+                ThrowMayanResponseError(response.Message);
             }
             _logger.LogDebug($"Finished deleting document type's metadata type");
 
@@ -575,6 +471,16 @@ namespace Pims.Api.Repositories.Mayan
 
             _logger.LogDebug("Finished retrieving mayan file page");
             return response;
+        }
+
+        private void ThrowMayanResponseError(string errorMesage)
+        {
+            if(_config.ExposeErrors)
+            {
+                throw new MayanRepositoryException(errorMesage);
+            }
+
+            throw new MayanRepositoryException(MayanGenericErrorMessage);
         }
     }
 }
