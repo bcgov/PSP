@@ -142,10 +142,6 @@ exports[`UpdatePersonForm > renders as expected 1`] = `
   margin-right: 0;
 }
 
-.c8 button.close {
-  font-size: 2.4rem;
-}
-
 .c11.c11.btn {
   font-size: 1.3rem;
   color: #aaaaaa;
@@ -179,6 +175,10 @@ exports[`UpdatePersonForm > renders as expected 1`] = `
 .c11.c11.btn:focus .text {
   display: inline;
   line-height: 2rem;
+}
+
+.c8 button.close {
+  font-size: 2.4rem;
 }
 
 .c2 {

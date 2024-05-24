@@ -78,7 +78,7 @@ describe('AddLeaseTenantForm component', () => {
 
   beforeEach(() => {
     vi.resetAllMocks();
-    mockKeycloak({ claims: [Claims.CONTACT_VIEW] });
+    mockKeycloak({ claims: [Claims.CONTACT_VIEW, Claims.LEASE_EDIT] });
   });
   it('renders as expected', async () => {
     const { component } = await setup({});
@@ -91,7 +91,7 @@ describe('AddLeaseTenantForm component', () => {
       component: { getByText },
     } = await setup({});
 
-    const tenantButton = getByText('Select Tenant(s)');
+    const tenantButton = getByText(/Select Tenant/i);
     await act(async () => userEvent.click(tenantButton));
 
     expect(setShowContactManager).toHaveBeenCalledWith(true);

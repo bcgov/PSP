@@ -296,10 +296,6 @@ exports[`UpdateProjectsSubForm > renders as expected with pre-existing form data
   margin-right: 0;
 }
 
-.c2 button.close {
-  font-size: 2.4rem;
-}
-
 .c4.c4.btn {
   color: #aaaaaa;
   -webkit-text-decoration: none;
@@ -332,6 +328,10 @@ exports[`UpdateProjectsSubForm > renders as expected with pre-existing form data
 .c4.c4.btn:focus .text {
   display: inline;
   line-height: 2rem;
+}
+
+.c2 button.close {
+  font-size: 2.4rem;
 }
 
 .c1.required::before {
