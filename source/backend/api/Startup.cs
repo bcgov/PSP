@@ -120,6 +120,7 @@ namespace Pims.Api
                 options.WriteIndented = jsonSerializerOptions.WriteIndented;
                 options.Converters.Add(new JsonStringEnumMemberConverter());
                 options.Converters.Add(new Int32ToStringJsonConverter());
+                options.Converters.Add(new NetTopologySuite.IO.Converters.GeoJsonConverterFactory());
             });
             services.Configure<Core.Http.Configuration.AuthClientOptions>(this.Configuration.GetSection("Keycloak"));
             services.Configure<Core.Http.Configuration.OpenIdConnectOptions>(this.Configuration.GetSection("OpenIdConnect"));
