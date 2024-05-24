@@ -3,7 +3,7 @@ import { Col, Row } from 'react-bootstrap';
 import { FaCaretRight } from 'react-icons/fa';
 import styled from 'styled-components';
 
-import EditMapMarker from '@/assets/images/edit-map-marker.svg?react';
+import { EditPropertiesIcon } from '@/components/common/buttons/EditPropertiesButton';
 import EditButton from '@/components/common/EditButton';
 import TooltipIcon from '@/components/common/TooltipIcon';
 import { Claims, Roles } from '@/constants/index';
@@ -56,7 +56,7 @@ const DispositionMenu: React.FunctionComponent<
                   {hasClaim(Claims.DISPOSITION_EDIT) && canEditDetails() && (
                     <EditButton
                       title="Change properties"
-                      icon={<EditMapMarker width="2.4rem" height="2.4rem" />}
+                      icon={<EditPropertiesIcon />}
                       onClick={props.onShowPropertySelector}
                     />
                   )}
