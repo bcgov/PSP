@@ -1,6 +1,5 @@
 import './PropertyListView.scss';
 
-import { AxiosResponse } from 'axios';
 import isEmpty from 'lodash/isEmpty';
 import Multiselect from 'multiselect-react-dropdown';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
@@ -16,12 +15,10 @@ import { Table } from '@/components/Table';
 import { TableSort } from '@/components/Table/TableSort';
 import * as API from '@/constants/API';
 import { MultiSelectOption } from '@/features/acquisition/list/interfaces';
-import { useApiHistoricalNumbers } from '@/hooks/pims-api/useApiHistoricalNumbers';
 import { useApiProperties } from '@/hooks/pims-api/useApiProperties';
 import { useProperties } from '@/hooks/repositories/useProperties';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
-import { ApiGen_Concepts_HistoricalFileNumber } from '@/models/api/generated/ApiGen_Concepts_HistoricalFileNumber';
 import { ApiGen_Concepts_PropertyView } from '@/models/api/generated/ApiGen_Concepts_PropertyView';
 import { generateMultiSortCriteria } from '@/utils';
 import { toFilteredApiPaginateParams } from '@/utils/CommonFunctions';
@@ -39,12 +36,6 @@ export const ownershipFilterOptions: MultiSelectOption[] = [
   { id: 'isRetired', text: 'Retired' },
 ];
 
-export interface IPropertyResultRecord {
-  id: number;
-  property: ApiGen_Concepts_PropertyView;
-  fileNumbers: ApiGen_Concepts_HistoricalFileNumber[];
-}
-
 const PropertyListView: React.FC<React.PropsWithChildren<unknown>> = () => {
   const { getByType } = useLookupCodeHelpers();
   const municipalities = useMemo(() => getByType(API.ADMINISTRATIVE_AREA_TYPES), [getByType]);
@@ -52,7 +43,9 @@ const PropertyListView: React.FC<React.PropsWithChildren<unknown>> = () => {
   const columns = useMemo(() => columnDefinitions({ municipalities }), [municipalities]);
 
   // We'll start our table without any data
-  const [pageResultRecords, setPageResultRecords] = useState<IPropertyResultRecord[] | undefined>();
+  const [pageResultRecords, setPageResultRecords] = useState<
+    ApiGen_Concepts_PropertyView[] | undefined
+  >();
 
   // Filtering and pagination state
   const [filter, setFilter] = useState<IPropertyFilter>(defaultPropertyFilter);
@@ -83,7 +76,6 @@ const PropertyListView: React.FC<React.PropsWithChildren<unknown>> = () => {
   );
 
   const { getPropertiesViewPagedApi } = useApiProperties();
-  const { getByPropertyId } = useApiHistoricalNumbers();
 
   const fetchData = useCallback(
     async ({
@@ -110,41 +102,16 @@ const PropertyListView: React.FC<React.PropsWithChildren<unknown>> = () => {
       );
       const { data } = await getPropertiesViewPagedApi(queryParams);
 
-      // Fetch historical file numbers
-      const propertiesIds = data?.items?.map(x => x.id) || [];
-      const findHistoricalFileNumbersCalls: Promise<
-        AxiosResponse<ApiGen_Concepts_HistoricalFileNumber[]>
-      >[] = [];
-
-      propertiesIds.forEach(async (id: number) => {
-        findHistoricalFileNumbersCalls.push(getByPropertyId(id));
-      });
-
-      const historicNumberResponses = await Promise.all(findHistoricalFileNumbersCalls);
-      const historicalFileNumbers = historicNumberResponses.reduce(
-        (accumulator, value) => accumulator.concat(value.data),
-        [],
-      );
-
-      const resultRecords =
-        data?.items?.map(x => {
-          return {
-            id: x.id,
-            property: x,
-            fileNumbers: historicalFileNumbers.filter(y => x.id === y.propertyId),
-          } as IPropertyResultRecord;
-        }) || [];
-
       setTotalItems(data.total);
 
       // The server could send back total page count.
       // For now we'll just calculate it.
       if (fetchId === fetchIdRef.current && data?.items) {
-        setPageResultRecords(resultRecords);
+        setPageResultRecords(data.items);
         setPageCount(Math.ceil(data.total / pageSize));
       }
     },
-    [getPropertiesViewPagedApi, getByPropertyId],
+    [setPageResultRecords, setPageCount, getPropertiesViewPagedApi],
   );
 
   // Listen for changes in pagination and use the state to fetch our new data
@@ -244,7 +211,7 @@ const PropertyListView: React.FC<React.PropsWithChildren<unknown>> = () => {
         </Row>
       </div>
       <div className="ScrollContainer">
-        <Table<IPropertyResultRecord>
+        <Table<ApiGen_Concepts_PropertyView>
           name="propertiesTable"
           columns={columns}
           data={pageResultRecords || []}

@@ -1,4 +1,3 @@
-import { groupBy } from 'lodash';
 import { FaExternalLinkAlt, FaEye } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
@@ -11,12 +10,12 @@ import { InlineFlexDiv } from '@/components/common/styles';
 import TooltipIcon from '@/components/common/TooltipIcon';
 import { ColumnWithProps } from '@/components/Table';
 import { AreaUnitTypes, Claims } from '@/constants/index';
+import HistoricalNumbersContainer from '@/features/mapSideBar/shared/header/HistoricalNumberContainer';
+import HistoricalNumberFieldView from '@/features/mapSideBar/shared/header/HistoricalNumberSectionView';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
-import { ApiGen_CodeTypes_HistoricalFileNumberTypes } from '@/models/api/generated/ApiGen_CodeTypes_HistoricalFileNumberTypes';
+import { ApiGen_Concepts_PropertyView } from '@/models/api/generated/ApiGen_Concepts_PropertyView';
 import { ILookupCode } from '@/store/slices/lookupCodes';
 import { convertArea, formatNumber, formatSplitAddress, mapLookupCode } from '@/utils';
-
-import { IPropertyResultRecord } from './PropertyListView';
 
 export const ColumnDiv = styled.div`
   display: flex;
@@ -28,17 +27,19 @@ type Props = {
   municipalities: ILookupCode[];
 };
 
-export const columns = ({ municipalities }: Props): ColumnWithProps<IPropertyResultRecord>[] => [
+export const columns = ({
+  municipalities,
+}: Props): ColumnWithProps<ApiGen_Concepts_PropertyView>[] => [
   {
     Header: 'PID',
     align: 'right',
     width: 30,
-    Cell: (props: CellProps<IPropertyResultRecord>) => {
+    Cell: (props: CellProps<ApiGen_Concepts_PropertyView>) => {
       return (
         <>
-          {props.row.original.property.pid}
+          {props.row.original.pid}
           <span style={{ width: '2rem' }}>
-            {props.row.original.property.isRetired ? (
+            {props.row.original.isRetired ? (
               <TooltipIcon
                 variant="warning"
                 toolTipId="retired-tooltip"
@@ -53,7 +54,7 @@ export const columns = ({ municipalities }: Props): ColumnWithProps<IPropertyRes
   },
   {
     Header: 'PIN',
-    accessor: p => p.property.pin,
+    accessor: p => p.pin,
     align: 'right',
     width: 25,
   },
@@ -62,64 +63,16 @@ export const columns = ({ municipalities }: Props): ColumnWithProps<IPropertyRes
     align: 'left',
     clickable: false,
     sortable: false,
-    width: 30,
+    width: 40,
     maxWidth: 50,
-    Cell: (props: CellProps<IPropertyResultRecord>) => {
-      // File numbers types to display
-      const numberTypes: string[] = [
-        ApiGen_CodeTypes_HistoricalFileNumberTypes.LISNO.toString(),
-        ApiGen_CodeTypes_HistoricalFileNumberTypes.PSNO.toString(),
-        ApiGen_CodeTypes_HistoricalFileNumberTypes.OTHER.toString(),
-      ];
-
-      const filteredNumberTypes = props.row.original.fileNumbers.filter(x =>
-        numberTypes.includes(x.historicalFileNumberTypeCode.id),
-      );
-
-      const groupByType = groupBy(filteredNumberTypes, x => x.historicalFileNumberTypeCode.id);
-
-      let lisNumbers = '';
-      let psNumbers = '';
-      let otherNumbers = '';
-      if (groupByType[ApiGen_CodeTypes_HistoricalFileNumberTypes.LISNO.toString()]?.length) {
-        lisNumbers = groupByType[ApiGen_CodeTypes_HistoricalFileNumberTypes.LISNO.toString()]
-          .map(x => x.historicalFileNumber)
-          .join(', ');
-      }
-
-      if (groupByType[ApiGen_CodeTypes_HistoricalFileNumberTypes.PSNO.toString()]?.length) {
-        psNumbers = groupByType[ApiGen_CodeTypes_HistoricalFileNumberTypes.PSNO.toString()]
-          .map(x => x.historicalFileNumber)
-          .join(', ');
-      }
-
-      if (groupByType[ApiGen_CodeTypes_HistoricalFileNumberTypes.OTHER.toString()]?.length) {
-        otherNumbers = groupByType[ApiGen_CodeTypes_HistoricalFileNumberTypes.OTHER.toString()]
-          .map(x => x.historicalFileNumber)
-          .join(', ');
-      }
-
+    Cell: (props: CellProps<ApiGen_Concepts_PropertyView>) => {
+      const propertyArrayId = [props.row.original.id];
       return (
-        <FileNumbersDiv>
-          {lisNumbers ? (
-            <label>
-              <span>LIS: </span>
-              {lisNumbers};
-            </label>
-          ) : null}
-          {psNumbers ? (
-            <label>
-              <span>PS: </span>
-              {psNumbers};
-            </label>
-          ) : null}
-          {otherNumbers ? (
-            <label>
-              <span>OTHER: </span>
-              {otherNumbers}.
-            </label>
-          ) : null}
-        </FileNumbersDiv>
+        <HistoricalNumbersContainer
+          propertyIds={propertyArrayId}
+          displayValuesOnly={true}
+          View={HistoricalNumberFieldView}
+        />
       );
     },
   },
@@ -127,20 +80,20 @@ export const columns = ({ municipalities }: Props): ColumnWithProps<IPropertyRes
     Header: 'Civic Address',
     accessor: p =>
       formatSplitAddress(
-        p.property.streetAddress1,
-        p.property.streetAddress2,
-        p.property.streetAddress3,
-        p.property.municipalityName,
-        p.property.provinceName,
-        p.property.postalCode,
+        p.streetAddress1,
+        p.streetAddress2,
+        p.streetAddress3,
+        p.municipalityName,
+        p.provinceName,
+        p.postalCode,
       ),
     align: 'left',
     minWidth: 100,
-    width: 150,
+    width: 125,
   },
   {
     Header: 'Location',
-    accessor: p => p.property.municipalityName,
+    accessor: p => p.municipalityName,
     align: 'left',
     width: 50,
     sortable: true,
@@ -158,9 +111,9 @@ export const columns = ({ municipalities }: Props): ColumnWithProps<IPropertyRes
   },
   {
     Header: 'Lot Size (in\u00A0ha)',
-    Cell: (props: CellProps<IPropertyResultRecord>) => {
-      const landArea = props.row.original.property.landArea ?? 0;
-      const landUnitCode = props.row.original.property.propertyAreaUnitTypeCode;
+    Cell: (props: CellProps<ApiGen_Concepts_PropertyView>) => {
+      const landArea = props.row.original.landArea ?? 0;
+      const landUnitCode = props.row.original.propertyAreaUnitTypeCode;
       const hectars = convertArea(
         landArea,
         landUnitCode ?? AreaUnitTypes.SquareMeters,
@@ -187,10 +140,10 @@ export const columns = ({ municipalities }: Props): ColumnWithProps<IPropertyRes
     align: 'left',
     sortable: true,
     width: 20,
-    Cell: (cellProps: CellProps<IPropertyResultRecord>) => {
+    Cell: (cellProps: CellProps<ApiGen_Concepts_PropertyView>) => {
       const { hasClaim } = useKeycloakWrapper();
 
-      const property = cellProps.row.original.property;
+      const property = cellProps.row.original;
       const ownershipText = property.isOwned
         ? 'Core Inventory'
         : property.hasActiveResearchFile || property.hasActiveResearchFile
@@ -217,9 +170,9 @@ export const columns = ({ municipalities }: Props): ColumnWithProps<IPropertyRes
     align: 'right',
     sortable: false,
     width: 20,
-    Cell: (cellProps: CellProps<IPropertyResultRecord, number>) => {
+    Cell: (cellProps: CellProps<ApiGen_Concepts_PropertyView, number>) => {
       const { hasClaim } = useKeycloakWrapper();
-      const property = cellProps.row.original.property;
+      const property = cellProps.row.original;
 
       return (
         <StyledDiv>
@@ -255,14 +208,4 @@ export const columns = ({ municipalities }: Props): ColumnWithProps<IPropertyRes
 const StyledDiv = styled(InlineFlexDiv)`
   justify-content: space-around;
   width: 100%;
-`;
-
-const FileNumbersDiv = styled('div')`
-  label {
-    display: inline-block;
-
-    span {
-      font-weight: bold;
-    }
-  }
 `;

@@ -131,6 +131,7 @@ describe('Property list view', () => {
     mockAxios.onAny().reply(200, {});
 
     mockApiGetPropertiesPagedApi.mockClear();
+    mockApiGetHistoricalFileNumbersApi.mockClear();
   });
 
   afterEach(() => {
@@ -211,13 +212,10 @@ describe('Property list view', () => {
 
   it('allows property ownership to be selected', async () => {
     setupMockApi([mockApiPropertyView()]);
+
     const {
       component: { container },
-      findSpinner,
     } = setup({});
-
-    // wait for table to finish loading
-    await waitFor(async () => expect(findSpinner()).not.toBeInTheDocument());
 
     const optionSelected = ownershipFilterOptions.find(
       o => o.id === 'isDisposed',
@@ -231,20 +229,18 @@ describe('Property list view', () => {
     // select an option from the drop-down
     await focusOptionMultiselect(container, optionSelected, ownershipFilterOptions);
 
-    await waitFor(() => {
-      expect(mockApiGetPropertiesPagedApi).toHaveBeenCalledWith({
-        address: '',
-        latitude: '',
-        longitude: '',
-        ownership: 'isCoreInventory,isPropertyOfInterest,isOtherInterest,isDisposed',
-        page: 1,
-        pinOrPid: '',
-        planNumber: '',
-        historical: '',
-        quantity: 10,
-        searchBy: 'pinOrPid',
-        sort: undefined,
-      });
+    expect(mockApiGetPropertiesPagedApi).toHaveBeenCalledWith({
+      address: '',
+      latitude: '',
+      longitude: '',
+      ownership: 'isCoreInventory,isPropertyOfInterest,isOtherInterest,isDisposed',
+      page: 1,
+      pinOrPid: '',
+      planNumber: '',
+      historical: '',
+      quantity: 10,
+      searchBy: 'pinOrPid',
+      sort: undefined,
     });
   });
 
