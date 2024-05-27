@@ -1,12 +1,13 @@
 import React from 'react';
-import { Col, Row } from 'react-bootstrap';
-import styled from 'styled-components';
+import { Col } from 'react-bootstrap';
 
+import AuditSection from '@/components/common/HeaderField/AuditSection';
 import { HeaderField } from '@/components/common/HeaderField/HeaderField';
-import { UserNameTooltip } from '@/components/common/UserNameTooltip';
+import StatusField from '@/components/common/HeaderField/StatusField';
+import { StyledFiller, StyledRow } from '@/components/common/HeaderField/styles';
 import { Api_LastUpdatedBy } from '@/models/api/File';
 import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
-import { prettyFormatUTCDate } from '@/utils/dateUtils';
+import { exists } from '@/utils';
 
 import HistoricalNumbersContainer from '../../shared/header/HistoricalNumberContainer';
 import HistoricalNumberFieldView from '../../shared/header/HistoricalNumberSectionView';
@@ -28,63 +29,21 @@ export const DispositionHeader: React.FunctionComponent<
   return (
     <StyledRow className="no-gutters">
       <Col xs={leftColumnWidth}>
-        <Row className="no-gutters">
-          <Col>
-            <HeaderField label="File:" labelWidth={leftColumnLabel} contentWidth="9">
-              D-{dispositionFile?.fileNumber}
-            </HeaderField>
-          </Col>
-        </Row>
+        <HeaderField label="File:" labelWidth={leftColumnLabel} contentWidth="9">
+          D-{dispositionFile?.fileNumber}
+        </HeaderField>
         <HistoricalNumbersContainer propertyIds={propertyIds} View={HistoricalNumberFieldView} />
       </Col>
       <Col xs="5">
-        <Row className="no-gutters">
-          <Col className="text-right">
-            <StyleSmallText>
-              Created: <strong>{prettyFormatUTCDate(dispositionFile?.appCreateTimestamp)}</strong>{' '}
-              by{' '}
-              <UserNameTooltip
-                userName={dispositionFile?.appCreateUserid}
-                userGuid={dispositionFile?.appCreateUserGuid}
-              />
-            </StyleSmallText>
-          </Col>
-        </Row>
-        <Row className="no-gutters">
-          <Col className="text-right">
-            <StyleSmallText>
-              Last updated:{' '}
-              <strong>{prettyFormatUTCDate(lastUpdatedBy?.appLastUpdateTimestamp)}</strong> by{' '}
-              <UserNameTooltip
-                userName={lastUpdatedBy?.appLastUpdateUserid}
-                userGuid={lastUpdatedBy?.appLastUpdateUserGuid}
-              />
-            </StyleSmallText>
-          </Col>
-        </Row>
-        <Row className="no-gutters">
-          <Col>
-            <HeaderField className="justify-content-end" label="Status:">
-              {dispositionFile?.fileStatusTypeCode?.description}
-            </HeaderField>
-          </Col>
-        </Row>
+        <StyledFiller>
+          <AuditSection lastUpdatedBy={lastUpdatedBy} baseAudit={dispositionFile} />
+          {exists(dispositionFile?.fileStatusTypeCode) && (
+            <StatusField statusCodeType={dispositionFile.fileStatusTypeCode} />
+          )}
+        </StyledFiller>
       </Col>
     </StyledRow>
   );
 };
 
 export default DispositionHeader;
-
-const StyledRow = styled(Row)`
-  margin-top: 0.5rem;
-  margin-bottom: 1.5rem;
-  border-bottom-style: solid;
-  border-bottom-color: grey;
-  border-bottom-width: 0.1rem;
-`;
-
-const StyleSmallText = styled.span`
-  font-size: 0.87em;
-  line-height: 1.9;
-`;

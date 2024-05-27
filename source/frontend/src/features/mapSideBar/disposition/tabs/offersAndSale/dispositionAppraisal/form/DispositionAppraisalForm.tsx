@@ -9,6 +9,7 @@ import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { DispositionAppraisalFormModel } from '@/features/mapSideBar/disposition/models/DispositionAppraisalFormModel';
 import SidebarFooter from '@/features/mapSideBar/shared/SidebarFooter';
+import { StyledFormWrapper } from '@/features/mapSideBar/shared/styles';
 import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
 import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_Concepts_DispositionFileAppraisal } from '@/models/api/generated/ApiGen_Concepts_DispositionFileAppraisal';
@@ -124,16 +125,6 @@ const DispositionAppraisalForm: React.FC<IDispositionAppraisalFormProps> = ({
 };
 
 export default DispositionAppraisalForm;
-
-const StyledFormWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  text-align: left;
-  height: 100%;
-  overflow-y: auto;
-  padding-bottom: 1rem;
-`;
 
 const StyledContent = styled.div`
   background-color: ${props => props.theme.css.highlightBackgroundColor};

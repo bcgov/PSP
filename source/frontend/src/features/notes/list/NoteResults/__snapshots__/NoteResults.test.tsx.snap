@@ -233,7 +233,7 @@ exports[`Note Results Table > matches snapshot 1`] = `
       <div
         class="tr"
         role="row"
-        style="display: flex; flex: 1 0 auto; min-width: 112px;"
+        style="display: flex; flex: 1 0 auto; min-width: 118px;"
       >
         <div
           class="th"
@@ -297,7 +297,7 @@ exports[`Note Results Table > matches snapshot 1`] = `
           class="th"
           colspan="1"
           role="columnheader"
-          style="box-sizing: border-box; flex: 28 0 auto; min-width: 28px; width: 28px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
+          style="box-sizing: border-box; flex: 34 0 auto; min-width: 34px; width: 34px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
         >
           <div
             class="sortable-column"
@@ -343,7 +343,7 @@ exports[`Note Results Table > matches snapshot 1`] = `
           class="th"
           colspan="1"
           role="columnheader"
-          style="box-sizing: border-box; flex: 10 0 auto; min-width: 30px; width: 10px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
+          style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
         >
           <div
             class="sortable-column"
@@ -363,7 +363,7 @@ exports[`Note Results Table > matches snapshot 1`] = `
         <div
           class="tr"
           role="row"
-          style="display: flex; flex: 1 0 auto; min-width: 112px;"
+          style="display: flex; flex: 1 0 auto; min-width: 118px;"
         >
           <div
             class="td"
@@ -384,7 +384,7 @@ exports[`Note Results Table > matches snapshot 1`] = `
           <div
             class="td"
             role="cell"
-            style="box-sizing: border-box; flex: 28 0 auto; min-width: 28px; width: 28px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 34 0 auto; min-width: 34px; width: 34px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
             title=""
           >
             test user1
@@ -392,7 +392,7 @@ exports[`Note Results Table > matches snapshot 1`] = `
           <div
             class="td"
             role="cell"
-            style="box-sizing: border-box; flex: 10 0 auto; min-width: 30px; width: 10px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
             title=""
           >
             <div
@@ -431,7 +431,7 @@ exports[`Note Results Table > matches snapshot 1`] = `
         <div
           class="tr"
           role="row"
-          style="display: flex; flex: 1 0 auto; min-width: 112px;"
+          style="display: flex; flex: 1 0 auto; min-width: 118px;"
         >
           <div
             class="td"
@@ -452,7 +452,7 @@ exports[`Note Results Table > matches snapshot 1`] = `
           <div
             class="td"
             role="cell"
-            style="box-sizing: border-box; flex: 28 0 auto; min-width: 28px; width: 28px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 34 0 auto; min-width: 34px; width: 34px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
             title=""
           >
             test user2
@@ -460,7 +460,7 @@ exports[`Note Results Table > matches snapshot 1`] = `
           <div
             class="td"
             role="cell"
-            style="box-sizing: border-box; flex: 10 0 auto; min-width: 30px; width: 10px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
             title=""
           >
             <div
@@ -499,7 +499,7 @@ exports[`Note Results Table > matches snapshot 1`] = `
         <div
           class="tr"
           role="row"
-          style="display: flex; flex: 1 0 auto; min-width: 112px;"
+          style="display: flex; flex: 1 0 auto; min-width: 118px;"
         >
           <div
             class="td"
@@ -520,7 +520,7 @@ exports[`Note Results Table > matches snapshot 1`] = `
           <div
             class="td"
             role="cell"
-            style="box-sizing: border-box; flex: 28 0 auto; min-width: 28px; width: 28px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 34 0 auto; min-width: 34px; width: 34px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
             title=""
           >
             test user4
@@ -528,7 +528,7 @@ exports[`Note Results Table > matches snapshot 1`] = `
           <div
             class="td"
             role="cell"
-            style="box-sizing: border-box; flex: 10 0 auto; min-width: 30px; width: 10px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
             title=""
           >
             <div
@@ -567,7 +567,7 @@ exports[`Note Results Table > matches snapshot 1`] = `
         <div
           class="tr"
           role="row"
-          style="display: flex; flex: 1 0 auto; min-width: 112px;"
+          style="display: flex; flex: 1 0 auto; min-width: 118px;"
         >
           <div
             class="td"
@@ -588,7 +588,7 @@ exports[`Note Results Table > matches snapshot 1`] = `
           <div
             class="td"
             role="cell"
-            style="box-sizing: border-box; flex: 28 0 auto; min-width: 28px; width: 28px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 34 0 auto; min-width: 34px; width: 34px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
             title=""
           >
             test user2
@@ -596,7 +596,7 @@ exports[`Note Results Table > matches snapshot 1`] = `
           <div
             class="td"
             role="cell"
-            style="box-sizing: border-box; flex: 10 0 auto; min-width: 30px; width: 10px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
             title=""
           >
             <div

@@ -1,13 +1,13 @@
 import { FormikProps } from 'formik';
 import { useCallback, useRef } from 'react';
 import { FaBriefcase } from 'react-icons/fa';
-import styled from 'styled-components';
 
 import GenericModal from '@/components/common/GenericModal';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
 
 import SidebarFooter from '../shared/SidebarFooter';
+import { StyledFormWrapper } from '../shared/styles';
 import ProjectHeader from './common/ProjectHeader';
 import { IProjectContainerViewProps } from './ProjectContainer';
 import ViewSelector from './ViewSelector';
@@ -117,14 +117,3 @@ const ProjectContainerView: React.FC<IProjectContainerViewProps> = ({
 };
 
 export default ProjectContainerView;
-
-const StyledFormWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  text-align: left;
-  height: 100%;
-  overflow-y: auto;
-  padding-right: 1rem;
-  padding-bottom: 1rem;
-`;

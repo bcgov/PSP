@@ -12,7 +12,7 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
   border-bottom: solid 0.5rem;
   width: 100%;
   text-align: left;
-  margin-bottom: 2rem;
+  margin-bottom: 2.4rem;
 }
 
 .c2 {
@@ -225,19 +225,20 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
 }
 
 .c9 .react-datepicker__calendar-icon {
-  width: 3rem;
+  width: 2.4rem;
   height: 3rem;
   margin-top: 0.5rem;
+  margin-right: 1.2rem;
   right: 0;
   pointer-events: none;
 }
 
 .c9 .react-datepicker__view-calendar-icon input {
-  padding: 0.6rem 1rem 0.5rem 0.6rem;
+  padding: 0.8rem 1.2rem 0.8rem 1.2rem;
 }
 
 .c9 .react-datepicker-wrapper {
-  max-width: 16rem;
+  max-width: 17rem;
 }
 
 .c10.c10.form-control.is-valid {
@@ -270,39 +271,13 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
   font-size: 1.4rem;
 }
 
-.c13 {
-  background-color: white;
-  font-size: 1.4rem;
-  border-color: transparent;
-}
-
-.c13 .nav-tabs {
-  height: auto;
-}
-
-.c13 .nav-item {
-  min-width: 5rem;
-  padding: 0.1rem 0.6rem;
-}
-
-.c13 .nav-item:hover {
-  border-color: transparent;
-  -webkit-text-decoration: underline;
-  text-decoration: underline;
-}
-
-.c13 .nav-item.active {
-  font-family: 'BCSans-Bold';
-  border-color: transparent;
-}
-
 .c14 {
   font-family: 'BCSans-Bold';
-  font-size: 2rem;
+  font-size: 2.2rem;
   border-bottom: solid 0.2rem;
   width: 100%;
   text-align: left;
-  margin-bottom: 2rem;
+  margin-bottom: 2.4rem;
 }
 
 .c25 {
@@ -325,38 +300,37 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
   width: 100%;
 }
 
+.c2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  text-align: left;
+  height: 100%;
+  overflow-y: auto;
+}
+
 .c26 {
-  background: none;
   position: relative;
-  border-radius: 0.3rem;
-  padding: 0.6rem;
-  padding-right: 2.1rem;
+  border-radius: 0.4rem;
+  padding-top: 0.8rem;
+  padding-bottom: 0.8rem;
+  padding-left: 1.2rem;
+  padding-right: 2.8rem;
+  background-image: none;
   border: solid 0.1rem;
+  cursor: pointer;
 }
 
 .c26.is-invalid {
   border: solid 0.1rem;
-}
-
-.c27.c27.btn {
-  position: absolute;
-  top: calc(50% - 1.4rem);
-  right: 0.4rem;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  line-height: unset;
-}
-
-.c27.c27.btn .text {
-  display: none;
-}
-
-.c27.c27.btn:hover,
-.c27.c27.btn:active,
-.c27.c27.btn:focus {
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  opacity: unset;
 }
 
 .c5 {
@@ -366,8 +340,8 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
 }
 
 .c4 {
-  margin: 1.5rem;
-  padding: 1.5rem;
+  margin: 1.6rem;
+  padding: 1.6rem;
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
@@ -423,6 +397,32 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
   position: relative;
 }
 
+.c13 {
+  background-color: white;
+  font-size: 1.4rem;
+  border-color: transparent;
+}
+
+.c13 .nav-tabs {
+  height: auto;
+}
+
+.c13 .nav-item {
+  min-width: 5rem;
+  padding: 0.1rem 1.2rem;
+}
+
+.c13 .nav-item:hover {
+  border-color: transparent;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+}
+
+.c13 .nav-item.active {
+  font-family: 'BCSans-Bold';
+  border-color: transparent;
+}
+
 .c12 {
   height: auto;
 }
@@ -469,25 +469,6 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
 
 .c3 [name='region'] {
   max-width: 25rem;
-}
-
-.c2 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-box-flex: 1;
-  -webkit-flex-grow: 1;
-  -ms-flex-positive: 1;
-  flex-grow: 1;
-  text-align: left;
-  height: 100%;
-  overflow-y: auto;
-  padding-right: 1rem;
-  padding-bottom: 1rem;
 }
 
 <div
@@ -571,17 +552,17 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
                         />
                       </div>
                       <div
-                        class="rbt-aux"
+                        class="rbt-aux pr-3"
                       >
                         <svg
                           color="#bcbec5"
                           fill="currentColor"
-                          height="2.5rem"
+                          height="1.6rem"
                           stroke="currentColor"
                           stroke-width="0"
                           style="color: rgb(188, 190, 197);"
                           viewBox="0 0 512 512"
-                          width="2.5rem"
+                          width="1.6rem"
                           xmlns="http://www.w3.org/2000/svg"
                         >
                           <path
@@ -1746,33 +1727,6 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
                           class="c26"
                         >
                           Select from contacts
-                          <button
-                            class="c21 Button c27 btn btn-link"
-                            title="remove"
-                            type="button"
-                          >
-                            <div
-                              class="Button__value"
-                            >
-                              <svg
-                                fill="currentColor"
-                                height="2rem"
-                                stroke="currentColor"
-                                stroke-width="0"
-                                viewBox="0 0 24 24"
-                                width="2rem"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M0 0h24v24H0z"
-                                  fill="none"
-                                />
-                                <path
-                                  d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                                />
-                              </svg>
-                            </div>
-                          </button>
                         </div>
                         <div
                           class="d-none input form-group"
@@ -1847,33 +1801,6 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
                           class="c26"
                         >
                           Select from contacts
-                          <button
-                            class="c21 Button c27 btn btn-link"
-                            title="remove"
-                            type="button"
-                          >
-                            <div
-                              class="Button__value"
-                            >
-                              <svg
-                                fill="currentColor"
-                                height="2rem"
-                                stroke="currentColor"
-                                stroke-width="0"
-                                viewBox="0 0 24 24"
-                                width="2rem"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M0 0h24v24H0z"
-                                  fill="none"
-                                />
-                                <path
-                                  d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                                />
-                              </svg>
-                            </div>
-                          </button>
                         </div>
                         <div
                           class="d-none input form-group"

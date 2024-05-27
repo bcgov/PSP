@@ -1,12 +1,12 @@
 import { FormikHelpers, FormikProps } from 'formik';
 import { MdAirlineStops } from 'react-icons/md';
-import styled from 'styled-components';
 
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 
 import MapSideBarLayout from '../../layout/MapSideBarLayout';
 import { PropertyForm } from '../../shared/models';
 import SidebarFooter from '../../shared/SidebarFooter';
+import { StyledFormWrapper } from '../../shared/styles';
 import DispositionForm from '../form/DispositionForm';
 import { DispositionFormModel } from '../models/DispositionFormModel';
 
@@ -71,14 +71,3 @@ const AddDispositionContainerView: React.FunctionComponent<IAddDispositionContai
 };
 
 export default AddDispositionContainerView;
-
-const StyledFormWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  text-align: left;
-  height: 100%;
-  overflow-y: auto;
-  padding-right: 1rem;
-  padding-bottom: 1rem;
-`;

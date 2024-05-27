@@ -1,7 +1,7 @@
 import chunk from 'lodash/chunk';
 
 import { ConvertToTypes } from '@/constants/convertToTypes';
-import { showFile } from '@/features/documents/DownloadDocumentButton';
+import { createFileDownload } from '@/features/documents/DownloadDocumentButton';
 import { useDocumentGenerationRepository } from '@/features/documents/hooks/useDocumentGenerationRepository';
 import { FormTemplateTypes } from '@/features/mapSideBar/shared/content/models';
 import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
@@ -131,7 +131,7 @@ export const useGenerateH120 = () => {
       generatedFile?.status === ApiGen_CodeTypes_ExternalResponseStatus.Success &&
       generatedFile?.payload
     ) {
-      showFile(generatedFile?.payload);
+      createFileDownload(generatedFile?.payload);
     } else {
       throw Error('Failed to generate file');
     }

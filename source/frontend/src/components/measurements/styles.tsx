@@ -4,7 +4,7 @@ export const StyledGreenCol = styled.div`
   max-width: 25rem;
   padding: 1rem;
   background-color: ${props => props.theme.css.highlightBackgroundColor};
-  border: 1px solid ${props => props.theme.bcTokens.iconColorSuccess};
+  border: 1px solid ${props => props.theme.bcTokens.iconsColorSuccess};
   border-radius: 0.5rem;
 `;
 

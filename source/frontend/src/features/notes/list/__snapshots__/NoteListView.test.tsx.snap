@@ -18,8 +18,8 @@ exports[`Note List View > renders as expected 1`] = `
 }
 
 .c3 {
-  margin: 1.5rem;
-  padding: 1.5rem;
+  margin: 1.6rem;
+  padding: 1.6rem;
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
@@ -158,7 +158,7 @@ exports[`Note List View > renders as expected 1`] = `
                   fill="none"
                 />
                 <path
-                  d="M7 14l5-5 5 5z"
+                  d="m7 14 5-5 5 5z"
                 />
               </svg>
             </div>
@@ -178,7 +178,7 @@ exports[`Note List View > renders as expected 1`] = `
               <div
                 class="tr"
                 role="row"
-                style="display: flex; flex: 1 0 auto; min-width: 112px;"
+                style="display: flex; flex: 1 0 auto; min-width: 118px;"
               >
                 <div
                   class="th"
@@ -227,7 +227,7 @@ exports[`Note List View > renders as expected 1`] = `
                   class="th"
                   colspan="1"
                   role="columnheader"
-                  style="box-sizing: border-box; flex: 28 0 auto; min-width: 28px; width: 28px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
+                  style="box-sizing: border-box; flex: 34 0 auto; min-width: 34px; width: 34px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
                 >
                   <div
                     class="sortable-column"
@@ -273,7 +273,7 @@ exports[`Note List View > renders as expected 1`] = `
                   class="th"
                   colspan="1"
                   role="columnheader"
-                  style="box-sizing: border-box; flex: 10 0 auto; min-width: 30px; width: 10px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
+                  style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
                 >
                   <div
                     class="sortable-column"

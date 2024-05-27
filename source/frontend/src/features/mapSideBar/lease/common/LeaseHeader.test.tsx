@@ -51,8 +51,12 @@ describe('LeaseHeader component', () => {
     expect(getByText(testLease.lFileNo!)).toBeVisible();
     expect(getByText(testLease.appCreateUserid!)).toBeVisible();
     expect(getByText(testLease.appLastUpdateUserid!)).toBeVisible();
-    expect(getAllByText(prettyFormatUTCDate(testLease.appCreateTimestamp))[0]).toBeVisible();
-    expect(getAllByText(prettyFormatUTCDate(testLease.appLastUpdateTimestamp))[0]).toBeVisible();
+    expect(
+      getAllByText(new RegExp(prettyFormatUTCDate(testLease.appCreateTimestamp)))[0],
+    ).toBeVisible();
+    expect(
+      getAllByText(new RegExp(prettyFormatUTCDate(testLease.appLastUpdateTimestamp)))[0],
+    ).toBeVisible();
   });
 
   it('renders the last-update-time when provided', async () => {
@@ -69,7 +73,11 @@ describe('LeaseHeader component', () => {
     });
     await act(async () => {});
 
-    expect(getAllByText(prettyFormatUTCDate(testLease.appCreateTimestamp))[0]).toBeVisible();
-    expect(getAllByText(prettyFormatUTCDate(testLease.appLastUpdateTimestamp))[0]).toBeVisible();
+    expect(
+      getAllByText(new RegExp(prettyFormatUTCDate(testLease.appCreateTimestamp)))[0],
+    ).toBeVisible();
+    expect(
+      getAllByText(new RegExp(prettyFormatUTCDate(testLease.appLastUpdateTimestamp)))[0],
+    ).toBeVisible();
   });
 });

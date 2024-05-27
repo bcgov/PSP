@@ -46,6 +46,6 @@ namespace Pims.Api.Models.Concepts.Lease
         /// <summary>
         /// get/set - The insurance's is in place flag indicator.
         /// </summary>
-        public bool IsInsuranceInPlace { get; set; }
+        public bool? IsInsuranceInPlace { get; set; }
     }
 }

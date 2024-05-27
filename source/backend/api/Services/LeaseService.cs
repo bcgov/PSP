@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
+using System.Text;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Models.CodeTypes;
 using Pims.Core.Exceptions;
@@ -31,6 +32,7 @@ namespace Pims.Api.Services
         private readonly ILeaseTenantRepository _tenantRepository;
         private readonly IUserRepository _userRepository;
         private readonly IPropertyService _propertyService;
+        private readonly ILookupRepository _lookupRepository;
 
         public LeaseService(
             ClaimsPrincipal user,
@@ -44,7 +46,8 @@ namespace Pims.Api.Services
             IInsuranceRepository insuranceRepository,
             ILeaseTenantRepository tenantRepository,
             IUserRepository userRepository,
-            IPropertyService propertyService)
+            IPropertyService propertyService,
+            ILookupRepository lookupRepository)
             : base(user, logger)
         {
             _logger = logger;
@@ -59,6 +62,7 @@ namespace Pims.Api.Services
             _tenantRepository = tenantRepository;
             _userRepository = userRepository;
             _propertyService = propertyService;
+            _lookupRepository = lookupRepository;
         }
 
         public bool IsRowVersionEqual(long leaseId, long rowVersion)
@@ -219,20 +223,9 @@ namespace Pims.Api.Services
 
             if (currentLease.LeaseStatusTypeCode != lease.LeaseStatusTypeCode)
             {
-                _entityNoteRepository.Add(
-                    new PimsLeaseNote()
-                    {
-                        LeaseId = currentLease.LeaseId,
-                        AppCreateTimestamp = System.DateTime.Now,
-                        AppCreateUserid = this.User.GetUsername(),
-                        Note = new PimsNote()
-                        {
-                            IsSystemGenerated = true,
-                            NoteTxt = $"Lease status changed from {currentLease.LeaseStatusTypeCode} to {lease.LeaseStatusTypeCode}",
-                            AppCreateTimestamp = System.DateTime.Now,
-                            AppCreateUserid = this.User.GetUsername(),
-                        },
-                    });
+                PimsLeaseNote newLeaseNote = GeneratePimsLeaseNote(currentLease, lease);
+
+                _entityNoteRepository.Add(newLeaseNote);
             }
 
             _leaseRepository.Update(lease, false);
@@ -254,6 +247,45 @@ namespace Pims.Api.Services
 
             _leaseRepository.CommitTransaction();
             return _leaseRepository.GetNoTracking(lease.LeaseId);
+        }
+
+        private PimsLeaseNote GeneratePimsLeaseNote(PimsLease currentLease, PimsLease lease)
+        {
+            var leaseStatuses = _lookupRepository.GetAllLeaseStatusTypes();
+            string currentStatusDescription = leaseStatuses.FirstOrDefault(x => x.Id == currentLease.LeaseStatusTypeCode).Description.ToUpper();
+            string newStatusDescription = leaseStatuses.FirstOrDefault(x => x.Id == lease.LeaseStatusTypeCode).Description.ToUpper();
+
+            StringBuilder leaseNoteTextValue = new();
+            PimsLeaseNote leaseNote = new()
+            {
+                LeaseId = currentLease.LeaseId,
+                AppCreateTimestamp = DateTime.Now,
+                AppCreateUserid = User.GetUsername(),
+                Note = new PimsNote()
+                {
+                    IsSystemGenerated = true,
+                    NoteTxt = leaseNoteTextValue.Append($"Lease status changed from {currentStatusDescription} to {newStatusDescription}").ToString(),
+                    AppCreateTimestamp = DateTime.Now,
+                    AppCreateUserid = User.GetUsername(),
+                },
+            };
+
+            if (lease.LeaseStatusTypeCode == LeaseStatusTypes.DISCARD.ToString() || lease.LeaseStatusTypeCode == LeaseStatusTypes.TERMINATED.ToString())
+            {
+                leaseNoteTextValue.Append(". Reason: ");
+                if (lease.LeaseStatusTypeCode == LeaseStatusTypes.DISCARD.ToString())
+                {
+                    leaseNoteTextValue.Append($"{lease.CancellationReason}.");
+                }
+                else
+                {
+                    leaseNoteTextValue.Append($"{lease.TerminationReason}.");
+                }
+
+                leaseNote.Note.NoteTxt = leaseNoteTextValue.ToString();
+            }
+
+            return leaseNote;
         }
 
         private IEnumerable<PimsPropertyLease> ReprojectPropertyLocationsToWgs84(IEnumerable<PimsPropertyLease> propertyLeases)

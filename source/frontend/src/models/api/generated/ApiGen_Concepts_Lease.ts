@@ -51,6 +51,8 @@ export interface ApiGen_Concepts_Lease extends ApiGen_Concepts_File {
   hasDigitalFile: boolean;
   hasPhysicalLicense: boolean | null;
   hasDigitalLicense: boolean | null;
+  cancellationReason: string | null;
+  terminationReason: string | null;
   isExpired: boolean;
   project: ApiGen_Concepts_Project | null;
 }

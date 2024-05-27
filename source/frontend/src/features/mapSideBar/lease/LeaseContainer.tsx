@@ -1,6 +1,5 @@
 import { FormikProps } from 'formik';
 import React, { useCallback, useContext, useEffect, useReducer, useRef, useState } from 'react';
-import styled from 'styled-components';
 import * as Yup from 'yup';
 
 import Fence from '@/assets/images/fence.svg?react';
@@ -23,6 +22,7 @@ import { LeaseFormModel } from '@/features/leases/models';
 import { SideBarContext } from '../context/sidebarContext';
 import MapSideBarLayout from '../layout/MapSideBarLayout';
 import SidebarFooter from '../shared/SidebarFooter';
+import { StyledFormWrapper } from '../shared/styles';
 import LeaseHeader from './common/LeaseHeader';
 import { LeaseFileTabNames } from './detail/LeaseFileTabs';
 import ViewSelector from './ViewSelector';
@@ -55,6 +55,7 @@ export interface LeasePageProps {
 }
 
 export interface ILeasePage {
+  pageName: LeasePageNames;
   component: React.FunctionComponent<React.PropsWithChildren<LeasePageProps>>;
   title: string;
   description?: string;
@@ -79,6 +80,7 @@ export const leasePages: Map<LeasePageNames, ILeasePage> = new Map<LeasePageName
   [
     LeasePageNames.DETAILS,
     {
+      pageName: LeasePageNames.DETAILS,
       component: DetailContainer,
       title: 'Details',
       validation: AddLeaseYupSchema,
@@ -87,6 +89,7 @@ export const leasePages: Map<LeasePageNames, ILeasePage> = new Map<LeasePageName
   [
     LeasePageNames.TENANT,
     {
+      pageName: LeasePageNames.TENANT,
       component: TenantContainer,
       title: 'Tenant',
     },
@@ -94,6 +97,7 @@ export const leasePages: Map<LeasePageNames, ILeasePage> = new Map<LeasePageName
   [
     LeasePageNames.PAYMENTS,
     {
+      pageName: LeasePageNames.PAYMENTS,
       component: TermPaymentsContainer,
       title: 'Payments',
       validation: TermPaymentsYupSchema,
@@ -102,6 +106,7 @@ export const leasePages: Map<LeasePageNames, ILeasePage> = new Map<LeasePageName
   [
     LeasePageNames.IMPROVEMENTS,
     {
+      pageName: LeasePageNames.IMPROVEMENTS,
       component: ImprovementsContainer,
       title: 'Improvements',
     },
@@ -109,15 +114,27 @@ export const leasePages: Map<LeasePageNames, ILeasePage> = new Map<LeasePageName
   [
     LeasePageNames.INSURANCE,
     {
+      pageName: LeasePageNames.INSURANCE,
       component: InsuranceContainer,
       title: 'Insurance',
     },
   ],
-  [LeasePageNames.DEPOSIT, { component: DepositsContainer, title: 'Deposit' }],
-  [LeasePageNames.SURPLUS, { component: Surplus, title: 'Surplus Declaration' }],
+  [
+    LeasePageNames.DEPOSIT,
+    { pageName: LeasePageNames.DEPOSIT, component: DepositsContainer, title: 'Deposit' },
+  ],
+  [
+    LeasePageNames.SURPLUS,
+    { pageName: LeasePageNames.SURPLUS, component: Surplus, title: 'Surplus Declaration' },
+  ],
   [
     LeasePageNames.DOCUMENTS,
-    { component: DocumentsPage, title: 'Documents', claims: Claims.DOCUMENT_VIEW },
+    {
+      pageName: LeasePageNames.DOCUMENTS,
+      component: DocumentsPage,
+      title: 'Documents',
+      claims: Claims.DOCUMENT_VIEW,
+    },
   ],
 ]);
 
@@ -142,6 +159,7 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
   const [isValid, setIsValid] = useState<boolean>(true);
 
   const activeTab = containerState.activeTab;
+
   useEffect(() => {
     if (activeTab === LeaseFileTabNames.deposit || activeTab === LeaseFileTabNames.payments) {
       setFullWidth(true);
@@ -263,14 +281,3 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
 };
 
 export default LeaseContainer;
-
-const StyledFormWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  text-align: left;
-  height: 100%;
-  overflow-y: auto;
-  padding-right: 2rem;
-  padding-bottom: 1rem;
-`;

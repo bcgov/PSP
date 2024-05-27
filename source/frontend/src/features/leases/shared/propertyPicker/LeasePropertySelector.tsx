@@ -15,7 +15,7 @@ import { useProperties } from '@/hooks/repositories/useProperties';
 import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
 import useDeepCompareMemo from '@/hooks/util/useDeepCompareMemo';
 import { ApiGen_Concepts_PropertyView } from '@/models/api/generated/ApiGen_Concepts_PropertyView';
-import { isValidId } from '@/utils';
+import { exists, isValidId, isValidString } from '@/utils';
 
 import { FormLeaseProperty, LeaseFormModel } from '../../models';
 import SelectedPropertyHeaderRow from './selectedPropertyList/SelectedPropertyHeaderRow';
@@ -113,28 +113,25 @@ export const LeasePropertySelector: React.FunctionComponent<LeasePropertySelecto
           : undefined;
 
         // Retrieve the pims id of the property if it exists
-        if (isValidId(formProperty.property?.apiId)) {
-          formProperty.property!.address = bcaSummary?.address
+        if (exists(formProperty.property) && !isValidId(formProperty.property.apiId)) {
+          needsWarning = true;
+
+          formProperty.property.address = bcaSummary?.address
             ? AddressForm.fromBcaAddress(bcaSummary?.address)
             : undefined;
 
-          const hasPinOrPid =
-            formProperty.property!.pid !== undefined || formProperty.property!.pin !== undefined;
-          if (hasPinOrPid) {
+          if (
+            isValidString(formProperty.property.pid) ||
+            isValidString(formProperty.property.pin)
+          ) {
             const result = await searchProperty(property);
             if (result !== undefined && result.length > 0) {
-              formProperty.property!.apiId = result[0].id;
+              formProperty.property.apiId = result[0].id;
             }
           }
         }
 
         newFormProperties.push(formProperty);
-
-        if (isValidId(formProperty.property?.apiId)) {
-          needsWarning = needsWarning || true;
-        } else {
-          needsWarning = needsWarning || false;
-        }
       });
     }, Promise.resolve());
 

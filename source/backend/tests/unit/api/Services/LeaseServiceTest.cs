@@ -211,9 +211,23 @@ namespace Pims.Api.Test.Services
 
             var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            var lookupRepository = this._helper.GetService<Mock<ILookupRepository>>();
+
             leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(currentLeaseEntity);
             leaseRepository.Setup(x => x.Get(It.IsAny<long>())).Returns(EntityHelper.CreateLease(1));
             userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(new PimsUser());
+            lookupRepository.Setup(x => x.GetAllLeaseStatusTypes()).Returns(new List<PimsLeaseStatusType>() {
+                new PimsLeaseStatusType()
+                {
+                   LeaseStatusTypeCode= "STATUS_A",
+                   Description = "STATUS_A",
+                },
+                new PimsLeaseStatusType()
+                {
+                   LeaseStatusTypeCode= "STATUS_B",
+                   Description = "STATUS_B",
+                },
+            });
 
             var noteRepository = this._helper.GetService<Mock<IEntityNoteRepository>>();
 

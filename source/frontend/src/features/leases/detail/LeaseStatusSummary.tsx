@@ -46,9 +46,9 @@ const StyledLeaseStatusSummary = styled.div`
     }
   }
   &.active {
-    border: 1px solid ${props => props.theme.bcTokens.iconColorSuccess};
+    border: 1px solid ${props => props.theme.bcTokens.iconsColorSuccess};
     b:first-child {
-      color: ${props => props.theme.bcTokens.iconColorSuccess};
+      color: ${props => props.theme.bcTokens.iconsColorSuccess};
     }
   }
   &.terminated {

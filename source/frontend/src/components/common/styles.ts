@@ -1,6 +1,5 @@
 import { CSSProperties } from 'react';
 import { Breadcrumb as BsBreadcrumb } from 'react-bootstrap';
-import { Tabs as BsTabs } from 'react-bootstrap';
 import styled, { css } from 'styled-components';
 
 import { LoadingBackdropProps } from '@/components/common/LoadingBackdrop';
@@ -36,7 +35,7 @@ export const Breadcrumb = styled(BsBreadcrumb)`
 
 export const SelectedText = styled.p`
   font-size: 1.4rem;
-  color: ${props => props.theme.bcTokens.iconColorSuccess};
+  color: ${props => props.theme.bcTokens.iconsColorSuccess};
 `;
 
 /**
@@ -67,33 +66,6 @@ export const FlexBox = styled.div<IFlexBoxProps>`
     `}
 `;
 
-export const Tabs = styled(BsTabs)`
-  background-color: white;
-  color: ${props => props.theme.css.linkColor};
-  font-size: 1.4rem;
-  border-color: transparent;
-  .nav-tabs {
-    height: auto;
-  }
-  .nav-item {
-    color: ${props => props.theme.css.linkColor};
-    min-width: 5rem;
-    padding: 0.1rem 0.6rem;
-
-    &:hover {
-      color: ${props => props.theme.css.linkHoverColor};
-      border-color: transparent;
-      text-decoration: underline;
-    }
-    &.active {
-      background-color: ${props => props.theme.css.highlightBackgroundColor};
-      font-family: 'BCSans-Bold';
-      color: ${props => props.theme.css.linkHoverColor};
-      border-color: transparent;
-    }
-  }
-`;
-
 export const H1 = styled.h1`
   color: ${props => props.theme.bcTokens.typographyColorSecondary};
   font-family: 'BCSans-Bold';
@@ -101,7 +73,7 @@ export const H1 = styled.h1`
   border-bottom: solid 0.5rem ${props => props.theme.css.headerBorderColor};
   width: 100%;
   text-align: left;
-  margin-bottom: 2rem;
+  margin-bottom: 2.4rem;
 `;
 
 export const H2 = styled.h2`
@@ -111,17 +83,17 @@ export const H2 = styled.h2`
   border-bottom: solid 0.2rem ${props => props.theme.css.headerBorderColor};
   width: 100%;
   text-align: left;
-  margin-bottom: 2rem;
+  margin-bottom: 2.4rem;
 `;
 
 export const H3 = styled.h3`
   color: ${props => props.theme.css.headerTextColor};
   font-family: 'BCSans-Bold';
-  font-size: 2rem;
+  font-size: 2.2rem;
   border-bottom: solid 0.2rem ${props => props.theme.css.actionColor};
   width: 100%;
   text-align: left;
-  margin-bottom: 2rem;
+  margin-bottom: 2.4rem;
 `;
 
 export const FilterBoxForm = styled(Form)`
@@ -132,7 +104,7 @@ export const FilterBoxForm = styled(Form)`
 export const StyledAddButton = styled(Button)`
   &.btn.btn-primary,
   &.btn.btn-primary:active {
-    background-color: ${props => props.theme.bcTokens.iconColorSuccess};
+    background-color: ${props => props.theme.bcTokens.iconsColorSuccess};
   }
 `;
 

@@ -140,7 +140,7 @@ export const AcquisitionListView: React.FunctionComponent<
 
 const StyledAddButton = styled(Button)`
   &.btn.btn-primary {
-    background-color: ${props => props.theme.bcTokens.iconColorSuccess};
+    background-color: ${props => props.theme.bcTokens.iconsColorSuccess};
   }
 `;
 

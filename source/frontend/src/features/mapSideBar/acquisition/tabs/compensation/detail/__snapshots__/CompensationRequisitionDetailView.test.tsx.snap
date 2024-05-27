@@ -157,8 +157,8 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
 }
 
 .c1 {
-  margin: 1.5rem;
-  padding: 1.5rem;
+  margin: 1.6rem;
+  padding: 1.6rem;
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
@@ -254,17 +254,17 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
               <div
                 class="pr-0 text-left col-8"
               >
-                <label>
-                  Client:
-                </label>
+                <strong>
+                  <label>
+                    Client:
+                  </label>
+                </strong>
               </div>
               <div
                 class="pl-1 text-left col-auto"
                 data-testid="compensation-client"
               >
-                <strong>
-                  034
-                </strong>
+                034
               </div>
             </div>
             <div
@@ -273,17 +273,17 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
               <div
                 class="pr-0 text-left col-8"
               >
-                <label>
-                  Requisition number:
-                </label>
+                <strong>
+                  <label>
+                    Requisition number:
+                  </label>
+                </strong>
               </div>
               <div
                 class="pl-1 text-left col-auto"
                 data-testid="compensation-number"
               >
-                <strong>
-                  1
-                </strong>
+                1
               </div>
             </div>
           </div>
@@ -296,21 +296,21 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
               <div
                 class="pr-0 text-left col-8"
               >
-                <label>
-                  Compensation amount:
-                </label>
+                <strong>
+                  <label>
+                    Compensation amount:
+                  </label>
+                </strong>
               </div>
               <div
                 class="pl-1 text-left col-4"
                 data-testid="header-pretax-amount"
               >
-                <strong>
-                  <p
-                    class="mb-0 text-right"
-                  >
-                    $0.00
-                  </p>
-                </strong>
+                <p
+                  class="mb-0 text-right"
+                >
+                  $0.00
+                </p>
               </div>
             </div>
             <div
@@ -319,21 +319,21 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
               <div
                 class="pr-0 text-left col-8"
               >
-                <label>
-                  Applicable GST:
-                </label>
+                <strong>
+                  <label>
+                    Applicable GST:
+                  </label>
+                </strong>
               </div>
               <div
                 class="pl-1 text-left col-4"
                 data-testid="header-tax-amount"
               >
-                <strong>
-                  <p
-                    class="mb-0 text-right"
-                  >
-                    $0.00
-                  </p>
-                </strong>
+                <p
+                  class="mb-0 text-right"
+                >
+                  $0.00
+                </p>
               </div>
             </div>
             <div
@@ -342,21 +342,21 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
               <div
                 class="pr-0 text-left col-8"
               >
-                <label>
-                  Total cheque amount:
-                </label>
+                <strong>
+                  <label>
+                    Total cheque amount:
+                  </label>
+                </strong>
               </div>
               <div
                 class="pl-1 text-left col-4"
                 data-testid="header-total-amount"
               >
-                <strong>
-                  <p
-                    class="mb-0 text-right"
-                  >
-                    $0.00
-                  </p>
-                </strong>
+                <p
+                  class="mb-0 text-right"
+                >
+                  $0.00
+                </p>
               </div>
             </div>
           </div>
@@ -604,7 +604,7 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
                 fill="none"
               />
               <path
-                d="M7 14l5-5 5 5z"
+                d="m7 14 5-5 5 5z"
               />
             </svg>
           </div>
@@ -780,7 +780,7 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
                 fill="none"
               />
               <path
-                d="M7 14l5-5 5 5z"
+                d="m7 14 5-5 5 5z"
               />
             </svg>
           </div>
@@ -902,7 +902,7 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
                 fill="none"
               />
               <path
-                d="M7 14l5-5 5 5z"
+                d="m7 14 5-5 5 5z"
               />
             </svg>
           </div>
