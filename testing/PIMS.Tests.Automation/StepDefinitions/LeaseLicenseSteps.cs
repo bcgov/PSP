@@ -77,7 +77,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Add Additional information to the lease
             leaseDetails.EditLeaseFileDetailsBttn();
-            leaseDetails.AddAdditionalLicenseDetailsInformation(lease);
+            leaseDetails.UpdateLeaseFileDetails(lease);
 
             //Add Several Properties
             //Verify UI/UX from Search By Component
@@ -332,10 +332,13 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Edit Improvement Section
             insurance.EditInsuranceButton();
-
-            //Add Aircraft Insurance
             insurance.VerifyInsuranceInitForm();
 
+            //Add Accidental Insurance
+            if (lease.AccidentalDescriptionCoverage != "")
+                insurance.AddAccidentalInsurance(lease);
+
+            //Add Aircraft Insurance
             if (lease.AircraftDescriptionCoverage != "")
                 insurance.AddAircraftInsurance(lease);
 
@@ -346,6 +349,10 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Add Marine Insurance
             if (lease.MarineDescriptionCoverage != "")
                 insurance.AddMarineInsurance(lease);
+
+            //Add Unmmaned Air Vehicle Insurance
+            if (lease.UnmannedAirVehicleDescriptionCoverage != "")
+                insurance.AddUnmannedAirVehicleInsurance(lease);
 
             //Add Vehicle Insurance
             if (lease.VehicleDescriptionCoverage != "")
@@ -391,7 +398,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             insurance.VerifyInsuranceViewForm(lease);
 
             //Verify Insurance Total count
-            Assert.True(insurance.TotalInsuranceCount().Equals(lease.TotalInsuranceCount));
+            Assert.Equal(lease.TotalInsuranceCount, insurance.TotalInsuranceCount());
         }
 
         [StepDefinition(@"I add Deposits to the Lease")]
@@ -580,7 +587,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             leaseDetails.SaveLicense();
 
             //Verify Header with Expired Flag
-            leaseDetails.VerifyLicenseHeader();
+            leaseDetails.VerifyLicenseHeader(lease);
 
             //Insert an update
             leaseDetails.EditLeaseFileDetailsBttn();
@@ -719,7 +726,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchLeases.FilterLeasesFiles("", "", "Progressive Motor Sports", "");
             Assert.True(searchLeases.SearchFoundResults());
 
-            searchLeases.FilterLeasesFiles("003-549-551", "05/12/1987", "Jonathan Doe", "Discarded");
+            searchLeases.FilterLeasesFiles("003-549-551", "05/12/1987", "Jonathan Doe", "Duplicate");
             Assert.False(searchLeases.SearchFoundResults());
 
             searchLeases.FilterLeasesFiles("", "03/22/2024", "", "Terminated");
@@ -760,6 +767,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
             lease.MinistryProjectCode = ExcelDataContext.ReadData(rowNumber, "MinistryProjectCode");
             lease.MinistryProject = ExcelDataContext.ReadData(rowNumber, "MinistryProject");
             lease.LeaseStatus = ExcelDataContext.ReadData(rowNumber, "LeaseStatus");
+            lease.LeaseTerminationReason = ExcelDataContext.ReadData(rowNumber, "LeaseTerminationReason");
+            lease.LeaseCancellationReason = ExcelDataContext.ReadData(rowNumber, "LeaseCancellationReason");
             lease.AccountType = ExcelDataContext.ReadData(rowNumber, "AccountType");
             lease.LeaseStartDate = ExcelDataContext.ReadData(rowNumber, "LeaseStartDate");
             lease.LeaseExpiryDate = ExcelDataContext.ReadData(rowNumber, "LeaseExpiryDate");
@@ -791,8 +800,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
             lease.PhysicalLeaseExist = ExcelDataContext.ReadData(rowNumber, "PhysicalLeaseExist");
             lease.DigitalLeaseExist = ExcelDataContext.ReadData(rowNumber, "DigitalLeaseExist");
             lease.DocumentLocation = ExcelDataContext.ReadData(rowNumber, "DocumentLocation");
-            lease.LISNumber = ExcelDataContext.ReadData(rowNumber, "LISNumber");
-            lease.PSNumber = ExcelDataContext.ReadData(rowNumber, "PSNumber");
             lease.LeaseNotes = ExcelDataContext.ReadData(rowNumber, "LeaseNotes");
             lease.SearchPropertiesIndex = int.Parse(ExcelDataContext.ReadData(rowNumber, "LeaseSearchPropertiesIndex"));
 
@@ -836,6 +843,11 @@ namespace PIMS.Tests.Automation.StepDefinitions
             lease.TotalImprovementCount = int.Parse(ExcelDataContext.ReadData(rowNumber, "TotalImprovementCount"));
 
             //Insurance
+            lease.AccidentalInsuranceInPlace = ExcelDataContext.ReadData(rowNumber, "AccidentalInsuranceInPlace");
+            lease.AccidentalLimit = ExcelDataContext.ReadData(rowNumber, "AccidentalLimit");
+            lease.AccidentalPolicyExpiryDate = ExcelDataContext.ReadData(rowNumber, "AccidentalPolicyExpiryDate");
+            lease.AccidentalDescriptionCoverage = ExcelDataContext.ReadData(rowNumber, "AccidentalDescriptionCoverage");
+
             lease.AircraftInsuranceInPlace = ExcelDataContext.ReadData(rowNumber, "AircraftInsuranceInPlace");
             lease.AircraftLimit = ExcelDataContext.ReadData(rowNumber, "AircraftLimit");
             lease.AircraftPolicyExpiryDate = ExcelDataContext.ReadData(rowNumber, "AircraftPolicyExpiryDate");
@@ -850,6 +862,11 @@ namespace PIMS.Tests.Automation.StepDefinitions
             lease.MarineLimit = ExcelDataContext.ReadData(rowNumber, "MarineLimit");
             lease.MarinePolicyExpiryDate = ExcelDataContext.ReadData(rowNumber, "MarinePolicyExpiryDate");
             lease.MarineDescriptionCoverage = ExcelDataContext.ReadData(rowNumber, "MarineDescriptionCoverage");
+
+            lease.UnmannedAirVehicleInsuranceInPlace = ExcelDataContext.ReadData(rowNumber, "UnmannedAirVehicleInsuranceInPlace");
+            lease.UnmannedAirVehicleLimit = ExcelDataContext.ReadData(rowNumber, "UnmannedAirVehicleLimit");
+            lease.UnmannedAirVehiclePolicyExpiryDate = ExcelDataContext.ReadData(rowNumber, "UnmannedAirVehiclePolicyExpiryDate");
+            lease.UnmannedAirVehicleDescriptionCoverage = ExcelDataContext.ReadData(rowNumber, "UnmannedAirVehicleDescriptionCoverage");
 
             lease.VehicleInsuranceInPlace = ExcelDataContext.ReadData(rowNumber, "VehicleInsuranceInPlace");
             lease.VehicleLimit = ExcelDataContext.ReadData(rowNumber, "VehicleLimit");
