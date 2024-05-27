@@ -143,11 +143,11 @@ exports[`Form 8 Detail View component > renders as expected 1`] = `
 
 .c9 {
   font-family: 'BCSans-Bold';
-  font-size: 2rem;
+  font-size: 2.2rem;
   border-bottom: solid 0.2rem;
   width: 100%;
   text-align: left;
-  margin-bottom: 2rem;
+  margin-bottom: 2.4rem;
 }
 
 .c4.c4 {
@@ -157,8 +157,8 @@ exports[`Form 8 Detail View component > renders as expected 1`] = `
 }
 
 .c1 {
-  margin: 1.5rem;
-  padding: 1.5rem;
+  margin: 1.6rem;
+  padding: 1.6rem;
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;

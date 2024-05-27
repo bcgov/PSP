@@ -3,7 +3,6 @@ import React from 'react';
 import { MdClose } from 'react-icons/md';
 import { useHistory } from 'react-router-dom';
 import ReactVisibilitySensor from 'react-visibility-sensor';
-import styled from 'styled-components';
 
 import ContactLink from '@/components/common/ContactLink';
 import EditButton from '@/components/common/EditButton';
@@ -14,6 +13,7 @@ import { StyledEditWrapper, StyledSummarySection } from '@/components/common/Sec
 import * as Styled from '@/components/common/styles';
 import { Claims } from '@/constants/index';
 import DocumentListContainer from '@/features/documents/list/DocumentListContainer';
+import { StyledFormWrapper } from '@/features/mapSideBar/shared/styles';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
 import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
@@ -176,12 +176,3 @@ export const PropertyActivityDetailView: React.FunctionComponent<
     return <></>;
   }
 };
-
-const StyledFormWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  text-align: left;
-  height: 100%;
-  overflow-y: auto;
-`;

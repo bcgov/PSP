@@ -17,8 +17,8 @@ exports[`PropertyManagementUpdateForm component > renders as expected 1`] = `
 }
 
 .c2 {
-  margin: 1.5rem;
-  padding: 1.5rem;
+  margin: 1.6rem;
+  padding: 1.6rem;
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
@@ -50,8 +50,6 @@ exports[`PropertyManagementUpdateForm component > renders as expected 1`] = `
   text-align: left;
   height: 100%;
   overflow-y: auto;
-  padding-right: 1rem;
-  padding-bottom: 1rem;
 }
 
 <div
@@ -105,7 +103,7 @@ exports[`PropertyManagementUpdateForm component > renders as expected 1`] = `
                   >
                     <div
                       class="search-wrapper searchWrapper "
-                      style="background: white; border: 1px solid #606060;"
+                      style="background: white; border: 1px solid #606060; padding-top: 0.8rem; padding-bottom: 0.8rem; padding-left: 1.2rem;"
                     >
                       <input
                         autocomplete="off"

@@ -1,7 +1,7 @@
 import { Formik, FormikProps } from 'formik';
 import { forwardRef } from 'react';
-import styled from 'styled-components';
 
+import { StyledFormWrapper } from '@/features/mapSideBar/shared/styles';
 import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Concepts_ResearchFile';
 
 import { useUpdateResearch } from '../../../hooks/useUpdateResearch';
@@ -52,14 +52,3 @@ export const UpdateResearchContainer = forwardRef<FormikProps<any>, IUpdateResea
 );
 
 export default UpdateResearchContainer;
-
-const StyledFormWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  text-align: left;
-  height: 100%;
-  overflow-y: auto;
-  padding-right: 1rem;
-  padding-bottom: 1rem;
-`;
