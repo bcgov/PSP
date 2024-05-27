@@ -340,8 +340,8 @@ exports[`TermsPaymentsContainer component > renders as expected 1`] = `
 }
 
 .c0 {
-  margin: 1.5rem;
-  padding: 1.5rem;
+  margin: 1.6rem;
+  padding: 1.6rem;
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
@@ -996,8 +996,8 @@ exports[`TermsPaymentsContainer component > renders with data as expected 1`] = 
 }
 
 .c0 {
-  margin: 1.5rem;
-  padding: 1.5rem;
+  margin: 1.6rem;
+  padding: 1.6rem;
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;

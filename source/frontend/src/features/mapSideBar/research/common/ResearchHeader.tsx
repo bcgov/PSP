@@ -69,9 +69,6 @@ const ResearchHeader: React.FunctionComponent<
       <Col>
         <StyledFiller>
           <AuditSection lastUpdatedBy={props.lastUpdatedBy} baseAudit={researchFile} />
-          <HeaderField className="justify-content-end" label="Status:">
-            {researchFile?.fileStatusTypeCode?.description}
-          </HeaderField>
           {exists(researchFile?.fileStatusTypeCode) && (
             <StatusField statusCodeType={researchFile.fileStatusTypeCode} />
           )}

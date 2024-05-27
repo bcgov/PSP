@@ -141,129 +141,38 @@ exports[`Update Disposition Sale View > renders as expected 1`] = `
   margin-right: 0;
 }
 
-.c8 .react-datepicker__calendar-icon {
-  width: 3rem;
+.c7 .react-datepicker__calendar-icon {
+  width: 2.4rem;
   height: 3rem;
   margin-top: 0.5rem;
+  margin-right: 1.2rem;
   right: 0;
   pointer-events: none;
 }
 
-.c8 .react-datepicker__view-calendar-icon input {
-  padding: 0.6rem 1rem 0.5rem 0.6rem;
+.c7 .react-datepicker__view-calendar-icon input {
+  padding: 0.8rem 1.2rem 0.8rem 1.2rem;
 }
 
-.c8 .react-datepicker-wrapper {
-  max-width: 16rem;
+.c7 .react-datepicker-wrapper {
+  max-width: 17rem;
 }
 
-.c9.c9.form-control.is-valid {
+.c8.c8.form-control.is-valid {
   background-image: none;
 }
 
-.c9.c9.form-control.is-invalid {
+.c8.c8.form-control.is-invalid {
   border-color: #d8292f !important;
 }
 
-.c13 {
+.c12 {
   position: -webkit-sticky;
   position: sticky;
   padding-top: 2rem;
   bottom: 0;
   background: white;
   z-index: 10;
-}
-
-.c6 {
-  background: none;
-  position: relative;
-  border-radius: 0.3rem;
-  padding: 0.6rem;
-  padding-right: 2.1rem;
-  border: solid 0.1rem;
-}
-
-.c6.is-invalid {
-  border: solid 0.1rem;
-}
-
-.c7.c7.btn {
-  position: absolute;
-  top: calc(50% - 1.4rem);
-  right: 0.4rem;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  line-height: unset;
-}
-
-.c7.c7.btn .text {
-  display: none;
-}
-
-.c7.c7.btn:hover,
-.c7.c7.btn:active,
-.c7.c7.btn:focus {
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  opacity: unset;
-}
-
-.c10 .react-datepicker__calendar-icon {
-  width: 3rem;
-  height: 3rem;
-  margin-top: 0.5rem;
-  right: 0;
-  pointer-events: none;
-}
-
-.c10 .react-datepicker__view-calendar-icon input {
-  padding: 0.6rem 1rem 0.5rem 0.6rem;
-}
-
-.c10 .react-datepicker-wrapper {
-  max-width: 16rem;
-}
-
-.c10 .react-datepicker-year-header {
-  font-size: 1.6rem;
-  padding: 0.55rem 0;
-}
-
-.c10 .react-datepicker__navigation {
-  top: 0.39rem;
-}
-
-.c11.c11.form-control.is-valid {
-  background-image: none;
-}
-
-.c11.c11.form-control.is-invalid {
-  border-color: #d8292f !important;
-}
-
-.c2 {
-  font-weight: bold;
-  border-bottom: 0.2rem solid;
-  margin-bottom: 2rem;
-}
-
-.c1 {
-  margin: 1.5rem;
-  padding: 1.5rem;
-  background-color: white;
-  text-align: left;
-  border-radius: 0.5rem;
-}
-
-.c4.required::before {
-  content: '*';
-  position: absolute;
-  top: 0.75rem;
-  left: 0rem;
-}
-
-.c3 {
-  font-weight: bold;
 }
 
 .c0 {
@@ -281,10 +190,83 @@ exports[`Update Disposition Sale View > renders as expected 1`] = `
   text-align: left;
   height: 100%;
   overflow-y: auto;
-  padding-bottom: 1rem;
 }
 
-.c12 {
+.c6 {
+  position: relative;
+  border-radius: 0.4rem;
+  padding-top: 0.8rem;
+  padding-bottom: 0.8rem;
+  padding-left: 1.2rem;
+  padding-right: 2.8rem;
+  background-image: none;
+  border: solid 0.1rem;
+  cursor: pointer;
+}
+
+.c6.is-invalid {
+  border: solid 0.1rem;
+}
+
+.c9 .react-datepicker__calendar-icon {
+  width: 3rem;
+  height: 3rem;
+  margin-top: 0.5rem;
+  right: 0;
+  pointer-events: none;
+}
+
+.c9 .react-datepicker__view-calendar-icon input {
+  padding: 0.6rem 1rem 0.5rem 0.6rem;
+}
+
+.c9 .react-datepicker-wrapper {
+  max-width: 16rem;
+}
+
+.c9 .react-datepicker-year-header {
+  font-size: 1.6rem;
+  padding: 0.55rem 0;
+}
+
+.c9 .react-datepicker__navigation {
+  top: 0.39rem;
+}
+
+.c10.c10.form-control.is-valid {
+  background-image: none;
+}
+
+.c10.c10.form-control.is-invalid {
+  border-color: #d8292f !important;
+}
+
+.c2 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c1 {
+  margin: 1.6rem;
+  padding: 1.6rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
+.c4.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c3 {
+  font-weight: bold;
+}
+
+.c11 {
   margin-right: 1rem;
   padding-bottom: 1rem;
   z-index: 0;
@@ -371,33 +353,6 @@ exports[`Update Disposition Sale View > renders as expected 1`] = `
                       class="c6"
                     >
                       Select from contacts
-                      <button
-                        class="c5 Button c7 btn btn-link"
-                        title="remove"
-                        type="button"
-                      >
-                        <div
-                          class="Button__value"
-                        >
-                          <svg
-                            fill="currentColor"
-                            height="2rem"
-                            stroke="currentColor"
-                            stroke-width="0"
-                            viewBox="0 0 24 24"
-                            width="2rem"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M0 0h24v24H0z"
-                              fill="none"
-                            />
-                            <path
-                              d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                            />
-                          </svg>
-                        </div>
-                      </button>
                     </div>
                     <div
                       class="d-none input form-group"
@@ -471,33 +426,6 @@ exports[`Update Disposition Sale View > renders as expected 1`] = `
                       class="c6"
                     >
                       Select from contacts
-                      <button
-                        class="c5 Button c7 btn btn-link"
-                        title="remove"
-                        type="button"
-                      >
-                        <div
-                          class="Button__value"
-                        >
-                          <svg
-                            fill="currentColor"
-                            height="2rem"
-                            stroke="currentColor"
-                            stroke-width="0"
-                            viewBox="0 0 24 24"
-                            width="2rem"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M0 0h24v24H0z"
-                              fill="none"
-                            />
-                            <path
-                              d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                            />
-                          </svg>
-                        </div>
-                      </button>
                     </div>
                     <div
                       class="d-none input form-group"
@@ -583,7 +511,7 @@ exports[`Update Disposition Sale View > renders as expected 1`] = `
               class="c4 text-left col-5"
             >
               <div
-                class="c8 form-group"
+                class="c7 form-group"
               >
                 <div
                   class="react-datepicker-wrapper d-block"
@@ -602,7 +530,7 @@ exports[`Update Disposition Sale View > renders as expected 1`] = `
                     </svg>
                     <input
                       autocomplete="off"
-                      class="c9 form-control date-picker"
+                      class="c8 form-control date-picker"
                       id="datepicker-finalConditionRemovalDate"
                       name="finalConditionRemovalDate"
                       placeholder="MMM DD, YYYY"
@@ -630,7 +558,7 @@ exports[`Update Disposition Sale View > renders as expected 1`] = `
               class="c4 text-left col-5"
             >
               <div
-                class="c8 form-group"
+                class="c7 form-group"
               >
                 <div
                   class="react-datepicker-wrapper d-block"
@@ -649,7 +577,7 @@ exports[`Update Disposition Sale View > renders as expected 1`] = `
                     </svg>
                     <input
                       autocomplete="off"
-                      class="c9 form-control date-picker"
+                      class="c8 form-control date-picker"
                       id="datepicker-saleCompletionDate"
                       name="saleCompletionDate"
                       placeholder="MMM DD, YYYY"
@@ -677,7 +605,7 @@ exports[`Update Disposition Sale View > renders as expected 1`] = `
               class="c4 text-left col-5"
             >
               <div
-                class="c10 form-group"
+                class="c9 form-group"
               >
                 <div
                   class="react-datepicker-wrapper d-block"
@@ -695,7 +623,7 @@ exports[`Update Disposition Sale View > renders as expected 1`] = `
                       />
                     </svg>
                     <input
-                      class="c11 form-control"
+                      class="c10 form-control"
                       id="datepicker-saleFiscalYear"
                       name="saleFiscalYear"
                       placeholder="YYYY"
@@ -1118,10 +1046,10 @@ exports[`Update Disposition Sale View > renders as expected 1`] = `
       </div>
     </div>
     <div
-      class="c12"
+      class="c11"
     >
       <div
-        class="c13 justify-content-end mb-12 mt-12 p-0 no-gutters row"
+        class="c12 justify-content-end mb-12 mt-12 p-0 no-gutters row"
       >
         <div
           class="pr-3 col-auto"

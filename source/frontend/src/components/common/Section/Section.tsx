@@ -83,8 +83,8 @@ export const StyledSectionHeader = styled.h2<{ isStyledHeader?: boolean }>`
 `;
 
 const StyledFormSection = styled.div<{ noPadding?: boolean }>`
-  margin: ${props => (props.noPadding === true ? '' : '1.5rem')};
-  padding: ${props => (props.noPadding === true ? '' : '1.5rem')};
+  margin: ${props => (props.noPadding === true ? '' : '1.6rem')};
+  padding: ${props => (props.noPadding === true ? '' : '1.6rem')};
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;

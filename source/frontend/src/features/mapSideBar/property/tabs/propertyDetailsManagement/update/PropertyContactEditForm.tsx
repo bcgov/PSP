@@ -1,6 +1,5 @@
 import { Formik, FormikProps } from 'formik';
 import React, { useMemo, useState } from 'react';
-import styled from 'styled-components';
 
 import { Input, Select, SelectOption, TextArea } from '@/components/common/form';
 import { ContactInputContainer } from '@/components/common/form/ContactInput/ContactInputContainer';
@@ -11,6 +10,7 @@ import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledSummarySection } from '@/components/common/Section/SectionStyles';
 import { formatContactSearchResult } from '@/features/contacts/contactUtils';
 import { useOrganizationRepository } from '@/features/contacts/repositories/useOrganizationRepository';
+import { StyledFormWrapper } from '@/features/mapSideBar/shared/styles';
 import { IContactSearchResult } from '@/interfaces';
 import { ApiGen_Concepts_PersonOrganization } from '@/models/api/generated/ApiGen_Concepts_PersonOrganization';
 import { ApiGen_Concepts_PropertyContact } from '@/models/api/generated/ApiGen_Concepts_PropertyContact';
@@ -133,14 +133,3 @@ export const PropertyContactEditForm = React.forwardRef<
     </StyledFormWrapper>
   );
 });
-
-const StyledFormWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  text-align: left;
-  height: 100%;
-  overflow-y: auto;
-  padding-right: 1rem;
-  padding-bottom: 1rem;
-`;

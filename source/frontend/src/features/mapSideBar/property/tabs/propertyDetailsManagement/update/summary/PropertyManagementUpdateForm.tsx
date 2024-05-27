@@ -1,6 +1,5 @@
 import { Formik, FormikProps } from 'formik';
 import React from 'react';
-import styled from 'styled-components';
 
 import { Multiselect, TextArea } from '@/components/common/form';
 import { YesNoSelect } from '@/components/common/form/YesNoSelect';
@@ -9,6 +8,7 @@ import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledSummarySection } from '@/components/common/Section/SectionStyles';
 import * as API from '@/constants/API';
+import { StyledFormWrapper } from '@/features/mapSideBar/shared/styles';
 import { useLookupCodeHelpers } from '@/hooks/useLookupCodeHelpers';
 import { ApiGen_Concepts_PropertyManagement } from '@/models/api/generated/ApiGen_Concepts_PropertyManagement';
 
@@ -80,14 +80,3 @@ export const PropertyManagementUpdateForm = React.forwardRef<
     </StyledFormWrapper>
   );
 });
-
-const StyledFormWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  text-align: left;
-  height: 100%;
-  overflow-y: auto;
-  padding-right: 1rem;
-  padding-bottom: 1rem;
-`;

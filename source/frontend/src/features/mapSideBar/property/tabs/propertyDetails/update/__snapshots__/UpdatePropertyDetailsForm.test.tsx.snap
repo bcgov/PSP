@@ -245,8 +245,8 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
 }
 
 .c0 {
-  margin: 1.5rem;
-  padding: 1.5rem;
+  margin: 1.6rem;
+  padding: 1.6rem;
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
@@ -1034,7 +1034,7 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
                 >
                   <div
                     class="search-wrapper searchWrapper "
-                    style="background: white; border: 1px solid #606060;"
+                    style="background: white; border: 1px solid #606060; padding-top: 0.8rem; padding-bottom: 0.8rem; padding-left: 1.2rem;"
                   >
                     <span
                       class="chip  false false"
@@ -1209,7 +1209,7 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
                 >
                   <div
                     class="search-wrapper searchWrapper "
-                    style="background: white; border: 1px solid #606060;"
+                    style="background: white; border: 1px solid #606060; padding-top: 0.8rem; padding-bottom: 0.8rem; padding-left: 1.2rem;"
                   >
                     <span
                       class="chip  false false"
@@ -1470,7 +1470,7 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
                 >
                   <div
                     class="search-wrapper searchWrapper "
-                    style="background: white; border: 1px solid #606060;"
+                    style="background: white; border: 1px solid #606060; padding-top: 0.8rem; padding-bottom: 0.8rem; padding-left: 1.2rem;"
                   >
                     <span
                       class="chip  false false"

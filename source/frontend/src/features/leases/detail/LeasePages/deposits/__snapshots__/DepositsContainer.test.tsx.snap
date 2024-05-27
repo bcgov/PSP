@@ -153,8 +153,8 @@ exports[`DepositsContainer > renders as expected 1`] = `
 }
 
 .c1 {
-  margin: 1.5rem;
-  padding: 1.5rem;
+  margin: 1.6rem;
+  padding: 1.6rem;
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
