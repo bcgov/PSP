@@ -11,19 +11,20 @@ exports[`LeaseDetailSubForm component > renders as expected 1`] = `
 }
 
 .c4 .react-datepicker__calendar-icon {
-  width: 3rem;
+  width: 2.4rem;
   height: 3rem;
   margin-top: 0.5rem;
+  margin-right: 1.2rem;
   right: 0;
   pointer-events: none;
 }
 
 .c4 .react-datepicker__view-calendar-icon input {
-  padding: 0.6rem 1rem 0.5rem 0.6rem;
+  padding: 0.8rem 1.2rem 0.8rem 1.2rem;
 }
 
 .c4 .react-datepicker-wrapper {
-  max-width: 16rem;
+  max-width: 17rem;
 }
 
 .c5.c5.form-control.is-valid {
@@ -35,8 +36,8 @@ exports[`LeaseDetailSubForm component > renders as expected 1`] = `
 }
 
 .c0 {
-  margin: 1.5rem;
-  padding: 1.5rem;
+  margin: 1.6rem;
+  padding: 1.6rem;
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
@@ -109,17 +110,17 @@ exports[`LeaseDetailSubForm component > renders as expected 1`] = `
                 />
               </div>
               <div
-                class="rbt-aux"
+                class="rbt-aux pr-3"
               >
                 <svg
                   color="#bcbec5"
                   fill="currentColor"
-                  height="2.5rem"
+                  height="1.6rem"
                   stroke="currentColor"
                   stroke-width="0"
                   style="color: rgb(188, 190, 197);"
                   viewBox="0 0 512 512"
-                  width="2.5rem"
+                  width="1.6rem"
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <path

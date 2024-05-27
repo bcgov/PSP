@@ -163,44 +163,18 @@ exports[`MapSelectorContainer component > renders as expected when provided no p
   font-size: 1.4rem;
 }
 
-.c2 {
-  background-color: white;
-  font-size: 1.4rem;
-  border-color: transparent;
-}
-
-.c2 .nav-tabs {
-  height: auto;
-}
-
-.c2 .nav-item {
-  min-width: 5rem;
-  padding: 0.1rem 0.6rem;
-}
-
-.c2 .nav-item:hover {
-  border-color: transparent;
-  -webkit-text-decoration: underline;
-  text-decoration: underline;
-}
-
-.c2 .nav-item.active {
-  font-family: 'BCSans-Bold';
-  border-color: transparent;
-}
-
 .c4 {
   font-family: 'BCSans-Bold';
-  font-size: 2rem;
+  font-size: 2.2rem;
   border-bottom: solid 0.2rem;
   width: 100%;
   text-align: left;
-  margin-bottom: 2rem;
+  margin-bottom: 2.4rem;
 }
 
 .c3 {
-  margin: 1.5rem;
-  padding: 1.5rem;
+  margin: 1.6rem;
+  padding: 1.6rem;
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
@@ -254,6 +228,32 @@ exports[`MapSelectorContainer component > renders as expected when provided no p
 
 .c0 .tab-content .tab-pane {
   position: relative;
+}
+
+.c2 {
+  background-color: white;
+  font-size: 1.4rem;
+  border-color: transparent;
+}
+
+.c2 .nav-tabs {
+  height: auto;
+}
+
+.c2 .nav-item {
+  min-width: 5rem;
+  padding: 0.1rem 1.2rem;
+}
+
+.c2 .nav-item:hover {
+  border-color: transparent;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+}
+
+.c2 .nav-item.active {
+  font-family: 'BCSans-Bold';
+  border-color: transparent;
 }
 
 .c1 {

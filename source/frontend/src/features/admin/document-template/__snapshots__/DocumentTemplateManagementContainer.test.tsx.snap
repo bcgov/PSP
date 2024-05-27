@@ -16,8 +16,8 @@ exports[`DocumentTemplateManagementContainer component > matches snapshot 1`] = 
 }
 
 .c4 {
-  margin: 1.5rem;
-  padding: 1.5rem;
+  margin: 1.6rem;
+  padding: 1.6rem;
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;

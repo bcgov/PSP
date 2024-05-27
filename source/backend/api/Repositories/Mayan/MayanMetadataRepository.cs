@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-
 using Pims.Api.Models.Mayan;
 using Pims.Api.Models.Mayan.Metadata;
 using Pims.Api.Models.Requests.Http;
@@ -19,6 +18,7 @@ namespace Pims.Api.Repositories.Mayan
     /// </summary>
     public class MayanMetadataRepository : MayanBaseRepository, IEdmsMetadataRepository
     {
+        private static readonly JsonSerializerOptions SerializerOptions = new() { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull };
         private readonly IEdmsAuthRepository _authRepository;
 
         /// <summary>
@@ -49,8 +49,8 @@ namespace Pims.Api.Repositories.Mayan
             Uri endpoint = new(QueryHelpers.AddQueryString(endpointString, queryParams));
 
             var response = await GetAsync<QueryResponse<MetadataTypeModel>>(endpoint, authenticationToken).ConfigureAwait(true);
-
             _logger.LogDebug("Finished retrieving metadata types");
+
             return response;
         }
 
@@ -59,20 +59,15 @@ namespace Pims.Api.Repositories.Mayan
             _logger.LogDebug("Creating metadata type...");
 
             string authenticationToken = await _authRepository.GetTokenAsync();
-
-            JsonSerializerOptions serializerOptions = new()
-            {
-                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
-            };
-            string serializedMetadataType = JsonSerializer.Serialize(metadataType, serializerOptions);
+            string serializedMetadataType = JsonSerializer.Serialize(metadataType, SerializerOptions);
             using HttpContent content = new StringContent(serializedMetadataType);
             content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
-            Uri endpoint = new($"{this._config.BaseUri}/metadata_types/");
+            Uri endpoint = new($"{_config.BaseUri}/metadata_types/");
 
             var response = await PostAsync<MetadataTypeModel>(endpoint, content, authenticationToken).ConfigureAwait(true);
+            _logger.LogDebug($"Finished creating a metadata type");
 
-            this._logger.LogDebug($"Finished creating a metadata type");
             return response;
         }
 
@@ -81,20 +76,15 @@ namespace Pims.Api.Repositories.Mayan
             _logger.LogDebug("Updating metadata type {id}...", metadataType.Id);
 
             string authenticationToken = await _authRepository.GetTokenAsync();
-
-            JsonSerializerOptions serializerOptions = new()
-            {
-                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
-            };
-            string serializedMetadataType = JsonSerializer.Serialize(metadataType, serializerOptions);
+            string serializedMetadataType = JsonSerializer.Serialize(metadataType, SerializerOptions);
             using HttpContent content = new StringContent(serializedMetadataType);
             content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
-            Uri endpoint = new($"{this._config.BaseUri}/metadata_types/{metadataType.Id}/");
+            Uri endpoint = new($"{_config.BaseUri}/metadata_types/{metadataType.Id}/");
 
             var response = await PutAsync<MetadataTypeModel>(endpoint, content, authenticationToken).ConfigureAwait(true);
+            _logger.LogDebug("Finished updating a metadata type {id}...", metadataType.Id);
 
-            this._logger.LogDebug($"Finished updating a metadata type", metadataType.Id);
             return response;
         }
 
@@ -103,12 +93,11 @@ namespace Pims.Api.Repositories.Mayan
             _logger.LogDebug("Deleting metadata type...");
 
             string authenticationToken = await _authRepository.GetTokenAsync();
-
-            Uri endpoint = new($"{this._config.BaseUri}/metadata_types/{metadataTypeId}/");
+            Uri endpoint = new($"{_config.BaseUri}/metadata_types/{metadataTypeId}/");
 
             var response = await DeleteAsync(endpoint, authenticationToken);
+            _logger.LogDebug("Finished deleting metadata type");
 
-            _logger.LogDebug($"Finished deleting metadata type");
             return response;
         }
     }

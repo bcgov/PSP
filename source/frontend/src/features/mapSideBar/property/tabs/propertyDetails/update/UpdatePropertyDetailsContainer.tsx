@@ -3,10 +3,10 @@ import { Formik, FormikHelpers, FormikProps } from 'formik';
 import isNumber from 'lodash/isNumber';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { toast } from 'react-toastify';
-import styled from 'styled-components';
 
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import * as API from '@/constants/API';
+import { StyledFormWrapper } from '@/features/mapSideBar/shared/styles';
 import { useHistoricalNumberRepository } from '@/hooks/repositories/useHistoricalNumberRepository';
 import { usePimsPropertyRepository } from '@/hooks/repositories/usePimsPropertyRepository';
 import { useQueryMapLayersByLocation } from '@/hooks/repositories/useQueryMapLayersByLocation';
@@ -174,14 +174,3 @@ export const UpdatePropertyDetailsContainer = React.forwardRef<
     </Formik>
   );
 });
-
-const StyledFormWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  text-align: left;
-  height: 100%;
-  overflow-y: auto;
-  padding-right: 1rem;
-  padding-bottom: 1rem;
-`;

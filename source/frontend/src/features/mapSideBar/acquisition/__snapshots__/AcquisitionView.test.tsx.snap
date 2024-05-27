@@ -12,7 +12,7 @@ exports[`AcquisitionView component > renders as expected 1`] = `
   border-bottom: solid 0.5rem;
   width: 100%;
   text-align: left;
-  margin-bottom: 2rem;
+  margin-bottom: 2.4rem;
 }
 
 .c2 {
@@ -323,7 +323,21 @@ exports[`AcquisitionView component > renders as expected 1`] = `
       </div>
     </div>
   </div>
-  .c12 {
+  .c11 {
+  height: 100%;
+}
+
+.c11 .tab-content {
+  border-radius: 0 0.4rem 0.4rem 0.4rem;
+  height: calc(100% - 2.5rem);
+  overflow-y: auto;
+}
+
+.c11 .tab-content .tab-pane {
+  position: relative;
+}
+
+.c12 {
   background-color: white;
   font-size: 1.4rem;
   border-color: transparent;
@@ -335,7 +349,7 @@ exports[`AcquisitionView component > renders as expected 1`] = `
 
 .c12 .nav-item {
   min-width: 5rem;
-  padding: 0.1rem 0.6rem;
+  padding: 0.1rem 1.2rem;
 }
 
 .c12 .nav-item:hover {
@@ -347,6 +361,22 @@ exports[`AcquisitionView component > renders as expected 1`] = `
 .c12 .nav-item.active {
   font-family: 'BCSans-Bold';
   border-color: transparent;
+}
+
+.c2 {
+  height: 100%;
+}
+
+.c3 {
+  overflow: auto;
+  height: 100%;
+  width: 100%;
+}
+
+.c9 {
+  overflow: auto;
+  height: 100%;
+  width: 100%;
 }
 
 .c20 {
@@ -375,36 +405,6 @@ exports[`AcquisitionView component > renders as expected 1`] = `
   justify-content: center;
 }
 
-.c11 {
-  height: 100%;
-}
-
-.c11 .tab-content {
-  border-radius: 0 0.4rem 0.4rem 0.4rem;
-  height: calc(100% - 2.5rem);
-  overflow-y: auto;
-}
-
-.c11 .tab-content .tab-pane {
-  position: relative;
-}
-
-.c2 {
-  height: 100%;
-}
-
-.c3 {
-  overflow: auto;
-  height: 100%;
-  width: 100%;
-}
-
-.c9 {
-  overflow: auto;
-  height: 100%;
-  width: 100%;
-}
-
 .c0 {
   width: 100%;
   position: relative;
@@ -417,6 +417,23 @@ exports[`AcquisitionView component > renders as expected 1`] = `
 .c1 {
   height: 100%;
   width: 100%;
+}
+
+.c10 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  text-align: left;
+  height: 100%;
+  overflow-y: auto;
 }
 
 .c13 {
@@ -434,8 +451,8 @@ exports[`AcquisitionView component > renders as expected 1`] = `
 }
 
 .c15 {
-  margin: 1.5rem;
-  padding: 1.5rem;
+  margin: 1.6rem;
+  padding: 1.6rem;
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
@@ -522,25 +539,6 @@ exports[`AcquisitionView component > renders as expected 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-}
-
-.c10 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-box-flex: 1;
-  -webkit-flex-grow: 1;
-  -ms-flex-positive: 1;
-  flex-grow: 1;
-  text-align: left;
-  height: 100%;
-  overflow-y: auto;
-  padding-right: 1rem;
-  padding-bottom: 1rem;
 }
 
 <div

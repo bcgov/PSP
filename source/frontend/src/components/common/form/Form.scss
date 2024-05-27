@@ -36,23 +36,26 @@ $fc-invalid-bg: #f2f2f2;
   text-align: right;
 }
 
+.form-group {
+  margin-bottom: 1.2rem;
+  //padding-bottom: 0px;
+}
+
 .form-control-sm {
   height: calc(1.5em + 0.8rem + 2px);
   padding: 0.4rem 0.58rem;
   font-size: 1.4rem;
   line-height: 1.5;
   border-radius: 0.3rem;
+  text-indent: 20px;
 }
 
 .form-control {
   font-size: 1.6rem;
-  padding: 0.6rem 1.2rem;
-  height: calc(1.5em + 1.2rem + 2px);
+  padding-left: 1.2rem;
+  padding-top: 0.8rem;
+  padding-bottom: 0.8rem;
+  height: 3.8rem;
   border-radius: 0.4rem;
   text-overflow: ellipsis;
-}
-
-.form-select:not(.is-invalid),
-.form-control:not(.is-invalid) {
-  border: 0.1rem solid #606060;
 }
