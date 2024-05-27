@@ -215,7 +215,7 @@ describe('MapContainer', () => {
           mapFeatureData: {
             pimsLocationFeatures: createPimsFeatures(mockParcels),
             pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
-            pmbcFeatures: emptyPmbcFeatureCollection,
+            fullyAttributedFeatures: emptyPmbcFeatureCollection,
           },
         },
         ...renderOptions,
@@ -295,7 +295,7 @@ describe('MapContainer', () => {
         mapFeatureData: {
           pimsLocationFeatures: createPimsFeatures(smallMockParcels),
           pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
-          pmbcFeatures: emptyPmbcFeatureCollection,
+          fullyAttributedFeatures: emptyPmbcFeatureCollection,
         },
       },
     });
@@ -317,7 +317,7 @@ describe('MapContainer', () => {
         mapFeatureData: {
           pimsLocationFeatures: emptyPimsLocationFeatureCollection,
           pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
-          pmbcFeatures: emptyPmbcFeatureCollection,
+          fullyAttributedFeatures: emptyPmbcFeatureCollection,
         },
       },
     });
@@ -370,7 +370,7 @@ describe('MapContainer', () => {
         mapFeatureData: {
           pimsLocationFeatures: createPimsFeatures(largeMockParcels),
           pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
-          pmbcFeatures: emptyPmbcFeatureCollection,
+          fullyAttributedFeatures: emptyPmbcFeatureCollection,
         },
       },
     });
@@ -393,7 +393,7 @@ describe('MapContainer', () => {
       clusterId: feature.id?.toString() || '',
       pimsLocationFeature: feature.properties,
       pimsBoundaryFeature: null,
-      pmbcFeature: null,
+      fullyAttributedFeature: null,
       latlng: { lng: longitude, lat: latitude },
     };
     const testMapMock: IMapStateMachineContext = {
@@ -401,7 +401,7 @@ describe('MapContainer', () => {
       mapFeatureData: {
         pimsLocationFeatures: pimsFeatures,
         pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
-        pmbcFeatures: emptyPmbcFeatureCollection,
+        fullyAttributedFeatures: emptyPmbcFeatureCollection,
       },
     };
 
@@ -428,7 +428,7 @@ describe('MapContainer', () => {
       clusterId: feature.id?.toString() || '',
       pimsLocationFeature: feature.properties,
       pimsBoundaryFeature: null,
-      pmbcFeature: null,
+      fullyAttributedFeature: null,
       latlng: { lng: longitude, lat: latitude },
     };
     const testMapMock: IMapStateMachineContext = {
@@ -436,7 +436,7 @@ describe('MapContainer', () => {
       mapFeatureData: {
         pimsLocationFeatures: pimsFeatures,
         pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
-        pmbcFeatures: emptyPmbcFeatureCollection,
+        fullyAttributedFeatures: emptyPmbcFeatureCollection,
       },
     };
 
@@ -477,7 +477,7 @@ describe('MapContainer', () => {
       mapFeatureData: {
         pimsLocationFeatures: pimsFeatures,
         pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
-        pmbcFeatures: emptyPmbcFeatureCollection,
+        fullyAttributedFeatures: emptyPmbcFeatureCollection,
       },
       isFiltering: false,
     };
@@ -501,7 +501,7 @@ describe('MapContainer', () => {
       clusterId: feature.id?.toString() || '',
       pimsLocationFeature: feature.properties,
       pimsBoundaryFeature: null,
-      pmbcFeature: null,
+      fullyAttributedFeature: null,
       latlng: { lng: longitude, lat: latitude },
     };
 
@@ -511,7 +511,7 @@ describe('MapContainer', () => {
       mapFeatureData: {
         pimsLocationFeatures: pimsFeatures,
         pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
-        pmbcFeatures: emptyPmbcFeatureCollection,
+        fullyAttributedFeatures: emptyPmbcFeatureCollection,
       },
       activePimsPropertyIds: activeIds,
       isFiltering: true,

@@ -15,7 +15,7 @@ import { IWfsGetAllFeaturesOptions } from '../layer-api/useWfsLayer';
 import { useLtsa } from '../useLtsa';
 import { IResponseWrapper } from '../util/useApiRequestWrapper';
 import useDeepCompareCallback from '../util/useDeepCompareCallback';
-import { useParcelMapLayer } from './mapLayer/useParcelMapLayer';
+import { useFullyAttributedParcelMapLayer } from './mapLayer/useFullyAttributedParcelMapLayer';
 import { useBcAssessmentLayer } from './useBcAssessmentLayer';
 import { usePimsPropertyRepository } from './usePimsPropertyRepository';
 import { usePropertyAssociations } from './usePropertyAssociations';
@@ -74,7 +74,7 @@ export const useComposedProperties = ({
   const getLtsaWrapper = useLtsa();
   const getPropertyAssociationsWrapper = usePropertyAssociations();
   const { bcAssessment } = useTenant();
-  const { findByPid, findByPin, findByWrapper } = useParcelMapLayer();
+  const { findByPid, findByPin, findByWrapper } = useFullyAttributedParcelMapLayer();
   const { getSummaryWrapper } = useBcAssessmentLayer(bcAssessment.url, bcAssessment.names);
   const retrievedPid = getPropertyWrapper?.response?.pid?.toString() ?? pid?.toString();
   const retrievedPin = getPropertyWrapper?.response?.pin?.toString();

@@ -1,17 +1,24 @@
 import axios from 'axios';
+import { KeycloakInstance } from 'keycloak-js';
 import { useCallback } from 'react';
 
 import { useTenant } from '@/tenants';
 
-export const useRefreshSiteminder = () => {
-  const { parcelsLayerUrl } = useTenant();
+export const useRefreshSiteminder = (keycloak: KeycloakInstance) => {
+  const { parcelMapFullyAttributed } = useTenant();
+  const logout = keycloak.logout;
 
-  const refresh = useCallback(() => {
-    axios.get(
-      parcelsLayerUrl +
-        '?outputFormat=application%2Fjson&request=GetFeature&maxFeatures=0&typeName=geo.allgov%3AWHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_FA_SVW&service=WFS&version=1.0.0',
+  const refresh = useCallback(async () => {
+    const response = await axios.get(
+      parcelMapFullyAttributed.url +
+        `?outputFormat=application%2Fjson&request=GetFeature&maxFeatures=0&typeName=${parcelMapFullyAttributed.name}&service=WFS&version=1.0.0`,
+      { withCredentials: true },
     );
-  }, [parcelsLayerUrl]);
+    if (response.status !== 200) {
+      console.error('Unable to refresh Siteminder cookie');
+      logout();
+    }
+  }, [parcelMapFullyAttributed, logout]);
 
   return refresh;
 };

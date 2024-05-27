@@ -51,7 +51,7 @@ const Index = () => {
 };
 
 const InnerComponent = ({ tenant }: { tenant: ITenantConfig2 }) => {
-  const refresh = useRefreshSiteminder();
+  const refresh = useRefreshSiteminder(keycloak);
   return (
     <ThemeProvider theme={{ tenant, css, bcTokens }}>
       <ReactKeycloakProvider

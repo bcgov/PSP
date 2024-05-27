@@ -29,6 +29,7 @@ const testProperty: IMapProperty = {
   pid: '123-456-789',
   planNumber: 'SPS22411',
   address: 'Test address 123',
+  legalDescription: 'Test Legal Description',
   region: 1,
   regionName: 'South Coast',
   district: 5,
@@ -110,6 +111,7 @@ describe('MapSelectorContainer component', () => {
       expect(getByText(/Test address 123/i)).toBeVisible();
       expect(getByText(/1 - South Coast/i)).toBeVisible();
       expect(getByText(/5 - Okanagan-Shuswap/i)).toBeVisible();
+      expect(getByText(/Test Legal Description/i)).toBeVisible();
     });
   });
 
@@ -141,6 +143,8 @@ describe('MapSelectorContainer component', () => {
         landArea: 29217,
         latitude: 48.76613749999999,
         longitude: -123.46163749999998,
+        legalDescription:
+          'THAT PART OF SECTION 13, RANGE 1, SOUTH SALT SPRING ISLAND, COWICHAN DISTRICT',
         name: undefined,
         pid: '9727493',
         pin: undefined,
