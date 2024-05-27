@@ -1,12 +1,13 @@
 import axios from 'axios';
-import { KeycloakInstance } from 'keycloak-js';
 import { useCallback } from 'react';
 
 import { useTenant } from '@/tenants';
 
-export const useRefreshSiteminder = (keycloak: KeycloakInstance) => {
+import { useModalContext } from './useModalContext';
+
+export const useRefreshSiteminder = () => {
   const { parcelMapFullyAttributed } = useTenant();
-  const logout = keycloak.logout;
+  const { setModalContent, setDisplayModal } = useModalContext();
 
   const refresh = useCallback(async () => {
     const response = await axios.get(
@@ -15,10 +16,17 @@ export const useRefreshSiteminder = (keycloak: KeycloakInstance) => {
       { withCredentials: true },
     );
     if (response.status !== 200) {
+      setModalContent({
+        title: 'Session Expired',
+        message:
+          'Your SITEMINDER session has expired. Please save any in-progress work and log out of the PIMS application.',
+        okButtonText: 'OK',
+        variant: 'warning',
+      });
+      setDisplayModal(true);
       console.error('Unable to refresh Siteminder cookie');
-      logout();
     }
-  }, [parcelMapFullyAttributed, logout]);
+  }, [parcelMapFullyAttributed, setModalContent, setDisplayModal]);
 
   return refresh;
 };
