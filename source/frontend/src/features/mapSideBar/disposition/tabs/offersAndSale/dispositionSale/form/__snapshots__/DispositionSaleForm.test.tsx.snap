@@ -141,65 +141,48 @@ exports[`DispositionSaleForm  component > renders as expected 1`] = `
   margin-right: 0;
 }
 
-.c7 .react-datepicker__calendar-icon {
-  width: 3rem;
+.c6 .react-datepicker__calendar-icon {
+  width: 2.4rem;
   height: 3rem;
   margin-top: 0.5rem;
+  margin-right: 1.2rem;
   right: 0;
   pointer-events: none;
 }
 
-.c7 .react-datepicker__view-calendar-icon input {
-  padding: 0.6rem 1rem 0.5rem 0.6rem;
+.c6 .react-datepicker__view-calendar-icon input {
+  padding: 0.8rem 1.2rem 0.8rem 1.2rem;
 }
 
-.c7 .react-datepicker-wrapper {
-  max-width: 16rem;
+.c6 .react-datepicker-wrapper {
+  max-width: 17rem;
 }
 
-.c8.c8.form-control.is-valid {
+.c7.c7.form-control.is-valid {
   background-image: none;
 }
 
-.c8.c8.form-control.is-invalid {
+.c7.c7.form-control.is-invalid {
   border-color: #d8292f !important;
 }
 
 .c5 {
-  background: none;
   position: relative;
-  border-radius: 0.3rem;
-  padding: 0.6rem;
-  padding-right: 2.1rem;
+  border-radius: 0.4rem;
+  padding-top: 0.8rem;
+  padding-bottom: 0.8rem;
+  padding-left: 1.2rem;
+  padding-right: 2.8rem;
+  background-image: none;
   border: solid 0.1rem;
+  cursor: pointer;
 }
 
 .c5.is-invalid {
   border: solid 0.1rem;
 }
 
-.c6.c6.btn {
-  position: absolute;
-  top: calc(50% - 1.4rem);
-  right: 0.4rem;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  line-height: unset;
-}
-
-.c6.c6.btn .text {
-  display: none;
-}
-
-.c6.c6.btn:hover,
-.c6.c6.btn:active,
-.c6.c6.btn:focus {
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  opacity: unset;
-}
-
-.c9 .react-datepicker__calendar-icon {
+.c8 .react-datepicker__calendar-icon {
   width: 3rem;
   height: 3rem;
   margin-top: 0.5rem;
@@ -207,28 +190,28 @@ exports[`DispositionSaleForm  component > renders as expected 1`] = `
   pointer-events: none;
 }
 
-.c9 .react-datepicker__view-calendar-icon input {
+.c8 .react-datepicker__view-calendar-icon input {
   padding: 0.6rem 1rem 0.5rem 0.6rem;
 }
 
-.c9 .react-datepicker-wrapper {
+.c8 .react-datepicker-wrapper {
   max-width: 16rem;
 }
 
-.c9 .react-datepicker-year-header {
+.c8 .react-datepicker-year-header {
   font-size: 1.6rem;
   padding: 0.55rem 0;
 }
 
-.c9 .react-datepicker__navigation {
+.c8 .react-datepicker__navigation {
   top: 0.39rem;
 }
 
-.c10.c10.form-control.is-valid {
+.c9.c9.form-control.is-valid {
   background-image: none;
 }
 
-.c10.c10.form-control.is-invalid {
+.c9.c9.form-control.is-invalid {
   border-color: #d8292f !important;
 }
 
@@ -239,8 +222,8 @@ exports[`DispositionSaleForm  component > renders as expected 1`] = `
 }
 
 .c0 {
-  margin: 1.5rem;
-  padding: 1.5rem;
+  margin: 1.6rem;
+  padding: 1.6rem;
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
@@ -332,33 +315,6 @@ exports[`DispositionSaleForm  component > renders as expected 1`] = `
                   class="c5"
                 >
                   Select from contacts
-                  <button
-                    class="c4 Button c6 btn btn-link"
-                    title="remove"
-                    type="button"
-                  >
-                    <div
-                      class="Button__value"
-                    >
-                      <svg
-                        fill="currentColor"
-                        height="2rem"
-                        stroke="currentColor"
-                        stroke-width="0"
-                        viewBox="0 0 24 24"
-                        width="2rem"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M0 0h24v24H0z"
-                          fill="none"
-                        />
-                        <path
-                          d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                        />
-                      </svg>
-                    </div>
-                  </button>
                 </div>
                 <div
                   class="d-none input form-group"
@@ -432,33 +388,6 @@ exports[`DispositionSaleForm  component > renders as expected 1`] = `
                   class="c5"
                 >
                   Select from contacts
-                  <button
-                    class="c4 Button c6 btn btn-link"
-                    title="remove"
-                    type="button"
-                  >
-                    <div
-                      class="Button__value"
-                    >
-                      <svg
-                        fill="currentColor"
-                        height="2rem"
-                        stroke="currentColor"
-                        stroke-width="0"
-                        viewBox="0 0 24 24"
-                        width="2rem"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M0 0h24v24H0z"
-                          fill="none"
-                        />
-                        <path
-                          d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                        />
-                      </svg>
-                    </div>
-                  </button>
                 </div>
                 <div
                   class="d-none input form-group"
@@ -544,7 +473,7 @@ exports[`DispositionSaleForm  component > renders as expected 1`] = `
           class="c3 text-left col-5"
         >
           <div
-            class="c7 form-group"
+            class="c6 form-group"
           >
             <div
               class="react-datepicker-wrapper d-block"
@@ -563,7 +492,7 @@ exports[`DispositionSaleForm  component > renders as expected 1`] = `
                 </svg>
                 <input
                   autocomplete="off"
-                  class="c8 form-control date-picker"
+                  class="c7 form-control date-picker"
                   id="datepicker-finalConditionRemovalDate"
                   name="finalConditionRemovalDate"
                   placeholder="MMM DD, YYYY"
@@ -591,7 +520,7 @@ exports[`DispositionSaleForm  component > renders as expected 1`] = `
           class="c3 text-left col-5"
         >
           <div
-            class="c7 form-group"
+            class="c6 form-group"
           >
             <div
               class="react-datepicker-wrapper d-block"
@@ -610,7 +539,7 @@ exports[`DispositionSaleForm  component > renders as expected 1`] = `
                 </svg>
                 <input
                   autocomplete="off"
-                  class="c8 form-control date-picker"
+                  class="c7 form-control date-picker"
                   id="datepicker-saleCompletionDate"
                   name="saleCompletionDate"
                   placeholder="MMM DD, YYYY"
@@ -638,7 +567,7 @@ exports[`DispositionSaleForm  component > renders as expected 1`] = `
           class="c3 text-left col-5"
         >
           <div
-            class="c9 form-group"
+            class="c8 form-group"
           >
             <div
               class="react-datepicker-wrapper d-block"
@@ -656,7 +585,7 @@ exports[`DispositionSaleForm  component > renders as expected 1`] = `
                   />
                 </svg>
                 <input
-                  class="c10 form-control"
+                  class="c9 form-control"
                   id="datepicker-saleFiscalYear"
                   name="saleFiscalYear"
                   placeholder="YYYY"

@@ -203,8 +203,8 @@ exports[`UpdatePersonForm > renders as expected 1`] = `
 }
 
 .c3 {
-  margin: 1.5rem;
-  padding: 1.5rem;
+  margin: 1.6rem;
+  padding: 1.6rem;
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;

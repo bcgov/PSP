@@ -1,6 +1,5 @@
 import { FormikProps } from 'formik';
 import React, { useCallback, useContext, useEffect, useReducer, useRef, useState } from 'react';
-import styled from 'styled-components';
 import * as Yup from 'yup';
 
 import Fence from '@/assets/images/fence.svg?react';
@@ -23,6 +22,7 @@ import { LeaseFormModel } from '@/features/leases/models';
 import { SideBarContext } from '../context/sidebarContext';
 import MapSideBarLayout from '../layout/MapSideBarLayout';
 import SidebarFooter from '../shared/SidebarFooter';
+import { StyledFormWrapper } from '../shared/styles';
 import LeaseHeader from './common/LeaseHeader';
 import { LeaseFileTabNames } from './detail/LeaseFileTabs';
 import ViewSelector from './ViewSelector';
@@ -281,14 +281,3 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
 };
 
 export default LeaseContainer;
-
-const StyledFormWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  text-align: left;
-  height: 100%;
-  overflow-y: auto;
-  padding-right: 2rem;
-  padding-bottom: 1rem;
-`;
