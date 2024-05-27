@@ -130,6 +130,13 @@ namespace Pims.Api.Helpers.Middleware
 
                 _logger.LogWarning(ex, ex.Message);
             }
+            else if (ex is MayanRepositoryException)
+            {
+                code = HttpStatusCode.InternalServerError;
+                message = ex.Message;
+
+                _logger.LogError(ex, ex.Message);
+            }
             else if (ex is Core.Exceptions.ConfigurationException)
             {
                 code = HttpStatusCode.InternalServerError;

@@ -104,7 +104,7 @@ export const useDocumentRelationshipProvider = () => {
         toast.error(axiosError?.response.data.error);
         return Promise.resolve();
       } else {
-        toast.error('Upload document relationship error. Check responses and try again.');
+        toast.error(axiosError?.response.data.error);
         return Promise.reject(axiosError);
       }
     }, []),
