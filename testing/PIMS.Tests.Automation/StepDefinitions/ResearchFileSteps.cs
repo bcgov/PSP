@@ -365,7 +365,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchResearchFiles.FilterResearchFiles(researchFile.ResearchFileName, researchFile.Status, researchFile.RoadName, "TRANPSP1");
             Assert.True(searchResearchFiles.SearchFoundResults());
 
-            searchResearchFiles.FilterResearchFiles("Automated", "Closed", "Happy", "TRANPSP1");
+            searchResearchFiles.FilterResearchFiles("Automated", "Archived", "Happy", "TRANPSP1");
         }
 
        [StepDefinition(@"A new Research File is created successfully")]

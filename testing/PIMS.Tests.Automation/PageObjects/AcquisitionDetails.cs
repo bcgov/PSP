@@ -18,20 +18,22 @@ namespace PIMS.Tests.Automation.PageObjects
         
         private By acquisitionFileCreateTitle = By.XPath("//h1[contains(text(),'Create Acquisition File')]");
         private By acquisitionFileHeaderCodeLabel = By.XPath("//label[contains(text(), 'File:')]");
-        private By acquisitionFileHeaderCodeContent = By.XPath("//label[contains(text(), 'File:')]/parent::div/following-sibling::div[1]/strong");
+        private By acquisitionFileHeaderCodeContent = By.XPath("//label[contains(text(), 'File:')]/parent::strong/parent::div/following-sibling::div[1]");
 
         private By acquisitionFileHeaderProjectLabel = By.XPath("//label[contains(text(), 'Ministry project')]");
-        private By acquisitionFileHeaderProjectContent = By.XPath("//label[contains(text(), 'Ministry project')]/parent::div/following-sibling::div[1]/strong");
-        private By acquisitionFileHeaderCreatedDateLabel = By.XPath("//span[contains(text(), 'Created')]");
-        private By acquisitionFileHeaderCreatedDateContent = By.XPath("//span[contains(text(), 'Created')]/strong");
-        private By acquisitionFileHeaderCreatedByContent = By.XPath("//span[contains(text(),'Created')]/span[@id='userNameTooltip']/strong");
-        private By acquisitionFileHeaderLastUpdateLabel = By.XPath("//span[contains(text(), 'Last updated')]");
-        private By acquisitionFileHeaderLastUpdateContent = By.XPath("//span[contains(text(), 'Last updated')]/strong");
-        private By acquisitionFileHeaderLastUpdateByContent = By.XPath("//span[contains(text(), 'Last updated')]//span[@id='userNameTooltip']/strong");
-        private By acquisitionFileHeaderStatusLabel = By.XPath("//label[contains(text(),'Status')]");
-        private By acquisitionFileStatusSelect = By.Id("input-fileStatusTypeCode");
-        private By acquisitionFileHeaderStatusContent = By.XPath("//label[contains(text(),'Status')]/parent::div/following-sibling::div[1]/strong");
+        private By acquisitionFileHeaderProjectContent = By.XPath("//label[contains(text(), 'Ministry project')]/parent::strong/parent::div/following-sibling::div[1]");
+        private By acquisitionFileHeaderProductLabel = By.XPath("//label[contains(text(), 'Ministry product')]");
+        private By acquisitionFileHeaderProductContent = By.XPath("//label[contains(text(), 'Ministry product')]/parent::strong/parent::div/following-sibling::div[1]");
+        private By acquisitionFileHeaderCreatedDateLabel = By.XPath("//strong[contains(text(), 'Created')]");
+        private By acquisitionFileHeaderCreatedDateContent = By.XPath("//strong[contains(text(), 'Created')]/parent::span");
+        private By acquisitionFileHeaderCreatedByContent = By.XPath("//strong[contains(text(),'Created')]/parent::span/span[@id='userNameTooltip']/strong");
+        private By acquisitionFileHeaderLastUpdateLabel = By.XPath("//strong[contains(text(), 'Updated')]");
+        private By acquisitionFileHeaderLastUpdateContent = By.XPath("//strong[contains(text(), 'Updated')]/parent::span");
+        private By acquisitionFileHeaderLastUpdateByContent = By.XPath("//strong[contains(text(), 'Updated')]/parent::span/span[@id='userNameTooltip']/strong");
+        private By acquisitionFileHeaderHistoricalFileLabel = By.XPath("//label[contains(text(),'Historical File')]");
+        private By acquisitionHeaderStatusContent = By.XPath("//div[@class='col']/div/div[3]/div/div");
 
+        private By acquisitionFileStatusSelect = By.Id("input-fileStatusTypeCode");
         private By acquisitionFileProjectSubtitle = By.XPath("//h2/div/div[contains(text(), 'Project')]");
         private By acquisitionFileProjectLabel = By.XPath("//div[@class='collapse show']/div/div/label[contains(text(),'Ministry project')]");
         private By acquisitionFileProjectInput = By.CssSelector("input[id='typeahead-project']");
@@ -164,104 +166,16 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(acquisitionFileEditButton).Click();
         }
 
-        public void AddAdditionalInformation(AcquisitionFile acquisition)
-        {
-            if (acquisition.AcquisitionStatus != "")
-            {
-                WaitUntilClickable(acquisitionFileStatusSelect);
-                ChooseSpecificSelectOption(acquisitionFileStatusSelect, acquisition.AcquisitionStatus);
-            }
-
-            if (acquisition.AcquisitionProject != "")
-            {
-                WaitUntilVisible(acquisitionFileProjectInput);
-
-                webDriver.FindElement(acquisitionFileProjectInput).SendKeys(acquisition.AcquisitionProject);
-
-                Wait();
-                webDriver.FindElement(acquisitionFileProjectInput).SendKeys(Keys.Space);
-
-                Wait();
-                webDriver.FindElement(acquisitionFileProjectInput).SendKeys(Keys.Backspace);
-
-                Wait();
-                FocusAndClick(acquisitionFileProject1stOption); 
-            }
-
-            if (acquisition.AcquisitionProjProduct != "")
-            {
-                WaitUntilVisible(acquisitionFileProjectProductSelect);
-                webDriver.FindElement(acquisitionFileProjectProductSelect).Click();
-
-                ChooseSpecificSelectOption(acquisitionFileProjectProductSelect, acquisition.AcquisitionProjProductCode + " " + acquisition.AcquisitionProjProduct);
-            }
-                
-            if(acquisition.AcquisitionProjFunding != "")
-                ChooseSpecificSelectOption(acquisitionFileProjectFundingInput, acquisition.AcquisitionProjFunding);
-
-            if (webDriver.FindElements(acquisitionFileProjectOtherFundingLabel).Count > 0)
-            {
-                webDriver.FindElement(acquisitionFileProjectOtherFundingInput).SendKeys(acquisition.AcquisitionFundingOther);
-            }
-
-            if (acquisition.DeliveryDate != "")
-            {
-                webDriver.FindElement(acquisitionFileDeliveryDateInput).SendKeys(acquisition.DeliveryDate);
-                webDriver.FindElement(acquisitionFileDeliveryDateInput).SendKeys(Keys.Enter);
-            }
-
-            if (acquisition.HistoricalFileNumber != "")
-                webDriver.FindElement(acquisitionFileHistoricalNumberInput).SendKeys(acquisition.HistoricalFileNumber);
-           
-            if(acquisition.PhysicalFileStatus != "")
-                ChooseSpecificSelectOption(acquisitionFilePhysicalStatusSelect, acquisition.PhysicalFileStatus);
-
-            if (acquisition.AcquisitionTeam!.Count > 0)
-            {
-                for (var i = 0; i < acquisition.AcquisitionTeam.Count; i++)
-                {
-                    AddTeamMembers(acquisition.AcquisitionTeam[i]);
-                }
-            }
-
-            if (acquisition.AcquisitionOwners!.Count > 0)
-            {
-                for (var i = 0; i < acquisition.AcquisitionOwners.Count; i++)
-                {
-                    AddOwners(acquisition.AcquisitionOwners[i], i);
-                }
-            }
-
-            if (acquisition.OwnerSolicitor != "")
-            {
-                WaitUntilVisible(acquisitionFileOwnerSolicitorButton);
-                webDriver.FindElement(acquisitionFileOwnerSolicitorButton).Click();
-                sharedSelectContact.SelectContact(acquisition.OwnerSolicitor, "");
-            }
-
-            if (acquisition.OwnerRepresentative != "")
-            {
-                WaitUntilVisible(acquisitionFileOwnerRepresentativeButton);
-                webDriver.FindElement(acquisitionFileOwnerRepresentativeButton).Click();
-                sharedSelectContact.SelectContact(acquisition.OwnerRepresentative, "");
-            }
-
-            if (acquisition.OwnerComment != "")
-            {
-                Wait();
-                webDriver.FindElement(acquisitionFileOwnerCommentTextArea).Click();
-                webDriver.FindElement(acquisitionFileOwnerCommentTextArea).SendKeys(acquisition.OwnerComment);
-            }
-        }
-
         public void UpdateAcquisitionFile(AcquisitionFile acquisition)
         {
+            //Status
             if (acquisition.AcquisitionStatus != "")
             {
                 WaitUntilClickable(acquisitionFileStatusSelect);
                 ChooseSpecificSelectOption(acquisitionFileStatusSelect, acquisition.AcquisitionStatus);
             }
 
+            //Project
             if (acquisition.AcquisitionProject != "")
             {
                 WaitUntilVisible(acquisitionFileProjectInput);
@@ -295,25 +209,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 webDriver.FindElement(acquisitionFileProjectOtherFundingInput).SendKeys(acquisition.AcquisitionFundingOther);
             }
 
-            if (acquisition.AcquisitionFileName != "")
-            {
-                WaitUntilVisible(acquisitionFileNameInput);
-                ClearInput(acquisitionFileNameInput);
-                webDriver.FindElement(acquisitionFileNameInput).SendKeys(acquisition.AcquisitionFileName);
-            }
-
-            if (acquisition.AcquisitionType != "")
-            {
-                WaitUntilClickable(acquisitionFileDetailsTypeSelect);
-                ChooseSpecificSelectOption(acquisitionFileDetailsTypeSelect, acquisition.AcquisitionType);
-            }
- 
-            if (acquisition.AcquisitionMOTIRegion != "")
-            {
-                WaitUntilClickable(acquisitionFileDetailsRegionSelect);
-                ChooseSpecificSelectOption(acquisitionFileDetailsRegionSelect, acquisition.AcquisitionMOTIRegion);
-            }
-               
+            //Schedule
             if (acquisition.AssignedDate != "")
             {
                 WaitUntilClickable(acquisitionFileAssignedDateInput);
@@ -330,6 +226,14 @@ namespace PIMS.Tests.Automation.PageObjects
                 webDriver.FindElement(acquisitionFileDeliveryDateInput).SendKeys(Keys.Enter);
             }
 
+            //Details
+            if (acquisition.AcquisitionFileName != "")
+            {
+                WaitUntilVisible(acquisitionFileNameInput);
+                ClearInput(acquisitionFileNameInput);
+                webDriver.FindElement(acquisitionFileNameInput).SendKeys(acquisition.AcquisitionFileName);
+            }
+
             if (acquisition.HistoricalFileNumber != "")
             {
                 WaitUntilClickable(acquisitionFileHistoricalNumberInput);
@@ -337,29 +241,40 @@ namespace PIMS.Tests.Automation.PageObjects
                 webDriver.FindElement(acquisitionFileHistoricalNumberInput).SendKeys(acquisition.HistoricalFileNumber);
             }
 
-            if (acquisition.PhysicalFileStatus != "") 
+            if (acquisition.PhysicalFileStatus != "")
                 ChooseSpecificSelectOption(acquisitionFilePhysicalStatusSelect, acquisition.PhysicalFileStatus);
+            
+            if (acquisition.AcquisitionType != "")
+            {
+                WaitUntilClickable(acquisitionFileDetailsTypeSelect);
+                ChooseSpecificSelectOption(acquisitionFileDetailsTypeSelect, acquisition.AcquisitionType);
+            }
+ 
+            if (acquisition.AcquisitionMOTIRegion != "")
+            {
+                WaitUntilClickable(acquisitionFileDetailsRegionSelect);
+                ChooseSpecificSelectOption(acquisitionFileDetailsRegionSelect, acquisition.AcquisitionMOTIRegion);
+            }
 
+            //Team
             if (acquisition.AcquisitionTeam!.Count > 0)
             {
                 while (webDriver.FindElements(acquisitionFileTeamMembersGroup).Count > 0)
                     DeleteFirstStaffMember();
 
                 for (var i = 0; i < acquisition.AcquisitionTeam.Count; i++)
-                {
                     AddTeamMembers(acquisition.AcquisitionTeam[i]);
-                }
+                
             }
 
+            //Owners
             if (acquisition.AcquisitionOwners!.Count > 0)
             {
                 while (webDriver.FindElements(acquisitionFileOwnersGroup).Count > 0)
                     DeleteOwner();
 
                 for (var i = 0; i < acquisition.AcquisitionOwners.Count; i++)
-                {
                     AddOwners(acquisition.AcquisitionOwners[i], i);
-                }
             }
 
             if (acquisition.OwnerSolicitor != "")
@@ -450,17 +365,21 @@ namespace PIMS.Tests.Automation.PageObjects
             if(acquisition.AcquisitionProject != "")
                 AssertTrueContentEquals(acquisitionFileHeaderProjectContent, acquisition.AcquisitionProjCode + " - "  + acquisition.AcquisitionProject);
 
+            AssertTrueIsDisplayed(acquisitionFileHeaderProductLabel);
+            if (acquisition.AcquisitionProject != "")
+                AssertTrueContentEquals(acquisitionFileHeaderProductContent, acquisition.AcquisitionProjProductCode + " - " + acquisition.AcquisitionProjProduct);
+
+            AssertTrueIsDisplayed(acquisitionFileHeaderHistoricalFileLabel);
+
             AssertTrueIsDisplayed(acquisitionFileHeaderCreatedDateLabel);
             AssertTrueContentNotEquals(acquisitionFileHeaderCreatedDateContent, "");
             AssertTrueContentNotEquals(acquisitionFileHeaderCreatedByContent, "");
             AssertTrueIsDisplayed(acquisitionFileHeaderLastUpdateLabel);
             AssertTrueContentNotEquals(acquisitionFileHeaderLastUpdateContent, "");
-            AssertTrueContentNotEquals(acquisitionFileHeaderLastUpdateByContent, "");
-            AssertTrueIsDisplayed(acquisitionFileHeaderStatusLabel);
+            AssertTrueContentNotEquals(acquisitionFileHeaderLastUpdateByContent, "");  
 
-            //Status
             if (acquisition.AcquisitionStatus != "")
-                AssertTrueContentEquals(acquisitionFileHeaderStatusContent, acquisition.AcquisitionStatus);
+                AssertTrueContentEquals(acquisitionHeaderStatusContent, GetUppercaseString(acquisition.AcquisitionStatus));
 
             //Project
             AssertTrueIsDisplayed(acquisitionFileProjectSubtitle);
@@ -485,7 +404,13 @@ namespace PIMS.Tests.Automation.PageObjects
             //Schedule
             AssertTrueIsDisplayed(acquisitionFileScheduleSubtitle);
             AssertTrueIsDisplayed(acquisitionFileScheduleAssignedDateLabel);
-            //AssertTrueContentEquals(acquisitionFileScheduleAssignedDateContent, DateTime.Now.ToString("MMM d, yyyy"));
+
+            if (acquisition.AssignedDate != "")
+                AssertTrueContentEquals(acquisitionFileScheduleAssignedDateContent, TransformDateFormat(acquisition.AssignedDate));
+            else
+            {
+                AssertTrueContentEquals(acquisitionFileScheduleAssignedDateContent, DateTime.Now.ToString("MMM dd, yyyy"));
+            }
 
             AssertTrueIsDisplayed(acquisitionFileScheduleDeliveryDateLabel);
 

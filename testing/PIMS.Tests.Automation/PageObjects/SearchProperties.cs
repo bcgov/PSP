@@ -144,7 +144,7 @@ namespace PIMS.Tests.Automation.PageObjects
         public void OrderByPropertyLotSize()
         {
             WaitUntilClickable(searchPropertyListLotSizeSortBttn);
-            webDriver.FindElement(searchPropertyListLotSizeSortBttn).Click();
+            FocusAndClick(searchPropertyListLotSizeSortBttn);
         }
 
         public void OrderByPropertyOwnership()
