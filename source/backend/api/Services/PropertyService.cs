@@ -349,9 +349,7 @@ namespace Pims.Api.Services
             var boundaryGeom = property.Boundary;
             if (boundaryGeom != null && boundaryGeom.SRID != SpatialReference.BCALBERS)
             {
-                var newCoords = property.Boundary.Coordinates.Select(coord => _coordinateService.TransformCoordinates(boundaryGeom.SRID, SpatialReference.BCALBERS, coord));
-                var gf = NetTopologySuite.NtsGeometryServices.Instance.CreateGeometryFactory(SpatialReference.BCALBERS);
-                property.Boundary = gf.CreatePolygon(newCoords.ToArray());
+                _coordinateService.TransformGeometry(boundaryGeom.SRID, SpatialReference.BCALBERS, boundaryGeom);
             }
 
             return property;
@@ -363,22 +361,29 @@ namespace Pims.Api.Services
             {
                 if (overrideCodes.Contains(UserOverrideCode.AddLocationToProperty))
                 {
+                    var needsUpdate = false;
+
                     // convert spatial location from lat/long (4326) to BC Albers (3005) for database storage
                     var geom = incomingProperty.Location;
                     if (geom.SRID != SpatialReference.BCALBERS)
                     {
                         var newCoords = _coordinateService.TransformCoordinates(geom.SRID, SpatialReference.BCALBERS, geom.Coordinate);
                         propertyToUpdate.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.BCALBERS);
-                        _propertyRepository.Update(propertyToUpdate, overrideLocation: true);
+                        needsUpdate = true;
                     }
 
                     // apply similar logic to the boundary
                     var boundaryGeom = incomingProperty.Boundary;
                     if (boundaryGeom != null && boundaryGeom.SRID != SpatialReference.BCALBERS)
                     {
-                        var newCoords = boundaryGeom.Coordinates.Select(coord => _coordinateService.TransformCoordinates(boundaryGeom.SRID, SpatialReference.BCALBERS, coord));
-                        var gf = NetTopologySuite.NtsGeometryServices.Instance.CreateGeometryFactory(SpatialReference.BCALBERS);
-                        incomingProperty.Boundary = gf.CreatePolygon(newCoords.ToArray());
+                        _coordinateService.TransformGeometry(boundaryGeom.SRID, SpatialReference.BCALBERS, boundaryGeom);
+                        propertyToUpdate.Boundary = boundaryGeom;
+                        needsUpdate = true;
+                    }
+
+                    if (needsUpdate)
+                    {
+                        _propertyRepository.Update(propertyToUpdate, overrideLocation: true);
                     }
                 }
                 else
