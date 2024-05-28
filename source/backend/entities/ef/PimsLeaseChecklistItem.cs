@@ -7,63 +7,43 @@ using Microsoft.EntityFrameworkCore;
 namespace Pims.Dal.Entities;
 
 /// <summary>
-/// Table containing the historical file numbers associated with a property.
+/// Table that contains the lease &amp; license checklist items.
 /// </summary>
-[Table("PIMS_HISTORICAL_FILE_NUMBER")]
-[Index("DataSourceTypeCode", Name = "HFLNUM_DATA_SOURCE_TYPE_CODE_IDX")]
-[Index("HistoricalFileNumber", Name = "HFLNUM_HISTORICAL_FILE_NUMBER_IDX")]
-[Index("PropertyId", Name = "HFLNUM_PROPERTY_ID_IDX")]
-[Index("PropertyId", "HistoricalFileNumberTypeCode", "HistoricalFileNumber", "OtherHistFileNumberTypeCode", "IsDisabled", Name = "HFLNUM_PROPERTY_ID_UK", IsUnique = true)]
-public partial class PimsHistoricalFileNumber
+[Table("PIMS_LEASE_CHECKLIST_ITEM")]
+[Index("LeaseChklstItemStatusTypeCode", Name = "LCHKLI_LEASE_CHKLST_ITEM_STATUS_TYPE_CODE_IDX")]
+[Index("LeaseChklstItemTypeCode", Name = "LCHKLI_LEASE_CHKLST_ITEM_TYPE_CODE_IDX")]
+[Index("LeaseId", Name = "LCHKLI_LEASE_ID_IDX")]
+[Index("LeaseId", "LeaseChklstItemTypeCode", Name = "LCHKLI_LEASE_ID_UK", IsUnique = true)]
+public partial class PimsLeaseChecklistItem
 {
     /// <summary>
     /// Generated surrogate primary key
     /// </summary>
     [Key]
-    [Column("HISTORICAL_FILE_NUMBER_ID")]
-    public long HistoricalFileNumberId { get; set; }
+    [Column("LEASE_CHECKLIST_ITEM_ID")]
+    public long LeaseChecklistItemId { get; set; }
 
     /// <summary>
-    /// Foreign key to the PIMS_PROPERTY table.
+    /// Foreign key to the PIMS_LEASE table.
     /// </summary>
-    [Column("PROPERTY_ID")]
-    public long PropertyId { get; set; }
+    [Column("LEASE_ID")]
+    public long LeaseId { get; set; }
 
     /// <summary>
-    /// Foreign key indicating the source of the data.
-    /// </summary>
-    [Column("DATA_SOURCE_TYPE_CODE")]
-    [StringLength(20)]
-    public string DataSourceTypeCode { get; set; }
-
-    /// <summary>
-    /// Foreign key describing the historical file number type.
+    /// Foreign key to the PIMS_LEASE_CHKLST_ITEM_TYPE table.
     /// </summary>
     [Required]
-    [Column("HISTORICAL_FILE_NUMBER_TYPE_CODE")]
+    [Column("LEASE_CHKLST_ITEM_TYPE_CODE")]
     [StringLength(20)]
-    public string HistoricalFileNumberTypeCode { get; set; }
+    public string LeaseChklstItemTypeCode { get; set; }
 
     /// <summary>
-    /// The historical file number value.
+    /// Foreign key to the PIMS_LEASE_CHKLST_ITEM_STATUS_TYPE table.
     /// </summary>
     [Required]
-    [Column("HISTORICAL_FILE_NUMBER")]
-    [StringLength(500)]
-    public string HistoricalFileNumber { get; set; }
-
-    /// <summary>
-    /// Description of the historical file number type that&apos;s not currently listed.
-    /// </summary>
-    [Column("OTHER_HIST_FILE_NUMBER_TYPE_CODE")]
-    [StringLength(200)]
-    public string OtherHistFileNumberTypeCode { get; set; }
-
-    /// <summary>
-    /// Indicates if the record is disabled.
-    /// </summary>
-    [Column("IS_DISABLED")]
-    public bool? IsDisabled { get; set; }
+    [Column("LEASE_CHKLST_ITEM_STATUS_TYPE_CODE")]
+    [StringLength(20)]
+    public string LeaseChklstItemStatusTypeCode { get; set; }
 
     /// <summary>
     /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o
@@ -155,15 +135,15 @@ public partial class PimsHistoricalFileNumber
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
 
-    [ForeignKey("DataSourceTypeCode")]
-    [InverseProperty("PimsHistoricalFileNumbers")]
-    public virtual PimsDataSourceType DataSourceTypeCodeNavigation { get; set; }
+    [ForeignKey("LeaseId")]
+    [InverseProperty("PimsLeaseChecklistItems")]
+    public virtual PimsLease Lease { get; set; }
 
-    [ForeignKey("HistoricalFileNumberTypeCode")]
-    [InverseProperty("PimsHistoricalFileNumbers")]
-    public virtual PimsHistoricalFileNumberType HistoricalFileNumberTypeCodeNavigation { get; set; }
+    [ForeignKey("LeaseChklstItemStatusTypeCode")]
+    [InverseProperty("PimsLeaseChecklistItems")]
+    public virtual PimsLeaseChklstItemStatusType LeaseChklstItemStatusTypeCodeNavigation { get; set; }
 
-    [ForeignKey("PropertyId")]
-    [InverseProperty("PimsHistoricalFileNumbers")]
-    public virtual PimsProperty Property { get; set; }
+    [ForeignKey("LeaseChklstItemTypeCode")]
+    [InverseProperty("PimsLeaseChecklistItems")]
+    public virtual PimsLeaseChklstItemType LeaseChklstItemTypeCodeNavigation { get; set; }
 }

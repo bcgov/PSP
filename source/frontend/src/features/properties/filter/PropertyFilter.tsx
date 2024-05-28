@@ -96,6 +96,10 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
                   { label: 'PID/PIN', value: 'pinOrPid' },
                   { label: 'Address', value: 'address' },
                   { label: 'Plan #', value: 'planNumber' },
+                  {
+                    label: 'Historical File #',
+                    value: 'historical',
+                  },
                 ]}
                 className="idir-input-group"
                 onChange={() => {
@@ -103,6 +107,7 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
                   setFieldValue('longitude', null);
                   setFieldValue('pinOrPid', null);
                   setFieldValue('planNumber', null);
+                  setFieldValue('historical', null);
                 }}
               />
             </NoRightPaddingColumn>
@@ -149,6 +154,9 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
               {values.searchBy === 'planNumber' && (
                 <Input field="planNumber" placeholder="Enter a plan number"></Input>
               )}
+              {values.searchBy === 'historical' && (
+                <Input field="historical" placeholder="Enter a LIS or PS file Number"></Input>
+              )}
             </StyledCol>
             <Col xs="auto">
               <SearchButton
@@ -159,7 +167,8 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
                     values.latitude ||
                     values.longitude ||
                     values.planNumber ||
-                    values.address
+                    values.address ||
+                    values.historical
                   )
                 }
               />
