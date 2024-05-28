@@ -19,61 +19,89 @@ namespace Pims.Dal.Entities;
 [Index("LeaseResponsibilityTypeCode", Name = "LEASE_LEASE_RESPONSIBILITY_TYPE_CODE_IDX")]
 [Index("LeaseStatusTypeCode", Name = "LEASE_LEASE_STATUS_TYPE_CODE_IDX")]
 [Index("LFileNo", Name = "LEASE_L_FILE_NO_IDX")]
+[Index("ProjectId", Name = "LEASE_PROJECT_ID_IDX")]
 [Index("PsFileNo", Name = "LEASE_PS_FILE_NO_IDX")]
 [Index("RegionCode", Name = "LEASE_REGION_CODE_IDX")]
 [Index("TfaFileNo", Name = "LEASE_TFA_FILE_NO_IDX")]
 [Index("TfaFileNumber", Name = "LEASE_TFA_FILE_NUMBER_IDX")]
 public partial class PimsLease
 {
+    /// <summary>
+    /// Generated surrogate primary key.
+    /// </summary>
     [Key]
     [Column("LEASE_ID")]
     public long LeaseId { get; set; }
 
+    /// <summary>
+    /// Foreign key to the PIMS_LEASE_PAY_RVBL_TYPE table.
+    /// </summary>
     [Required]
     [Column("LEASE_PAY_RVBL_TYPE_CODE")]
     [StringLength(20)]
     public string LeasePayRvblTypeCode { get; set; }
 
+    /// <summary>
+    /// Foreign key to the PIMS_LEASE_LICENSE_TYPE table.
+    /// </summary>
     [Required]
     [Column("LEASE_LICENSE_TYPE_CODE")]
     [StringLength(20)]
     public string LeaseLicenseTypeCode { get; set; }
 
+    /// <summary>
+    /// Foreign key to the PIMS_LEASE_CATEGORY_TYPE table.
+    /// </summary>
     [Column("LEASE_CATEGORY_TYPE_CODE")]
     [StringLength(20)]
     public string LeaseCategoryTypeCode { get; set; }
 
+    /// <summary>
+    /// Foreign key to the PIMS_LEASE_PURPOSE_TYPE table.
+    /// </summary>
     [Required]
     [Column("LEASE_PURPOSE_TYPE_CODE")]
     [StringLength(20)]
     public string LeasePurposeTypeCode { get; set; }
 
+    /// <summary>
+    /// Foreign key to the PIMS_LEASE_PROGRAM_TYPE table.
+    /// </summary>
     [Required]
     [Column("LEASE_PROGRAM_TYPE_CODE")]
     [StringLength(20)]
     public string LeaseProgramTypeCode { get; set; }
 
+    /// <summary>
+    /// Foreign key to the PIMS_LEASE_INITIATOR_TYPE table.
+    /// </summary>
     [Column("LEASE_INITIATOR_TYPE_CODE")]
     [StringLength(20)]
     public string LeaseInitiatorTypeCode { get; set; }
 
+    /// <summary>
+    /// Foreign key to the PIMS_LEASE_RESPONSIBILITY_TYPE table.
+    /// </summary>
     [Column("LEASE_RESPONSIBILITY_TYPE_CODE")]
     [StringLength(20)]
     public string LeaseResponsibilityTypeCode { get; set; }
 
+    /// <summary>
+    /// Foreign key to the PIMS_LEASE_STATUS_TYPE table.
+    /// </summary>
     [Required]
     [Column("LEASE_STATUS_TYPE_CODE")]
     [StringLength(20)]
     public string LeaseStatusTypeCode { get; set; }
 
     /// <summary>
-    /// MoTI region associated with the lease
+    /// Foreign key to the PIMS_REGION table.
     /// </summary>
     [Column("REGION_CODE")]
     public short? RegionCode { get; set; }
 
     /// <summary>
-    /// Project associated with this lease.
+    /// Foreign key to the PIMS_PROJECT table.
     /// </summary>
     [Column("PROJECT_ID")]
     public long? ProjectId { get; set; }
@@ -394,6 +422,9 @@ public partial class PimsLease
 
     [InverseProperty("Lease")]
     public virtual ICollection<PimsInsurance> PimsInsurances { get; set; } = new List<PimsInsurance>();
+
+    [InverseProperty("Lease")]
+    public virtual ICollection<PimsLeaseChecklistItem> PimsLeaseChecklistItems { get; set; } = new List<PimsLeaseChecklistItem>();
 
     [InverseProperty("Lease")]
     public virtual ICollection<PimsLeaseConsultation> PimsLeaseConsultations { get; set; } = new List<PimsLeaseConsultation>();
