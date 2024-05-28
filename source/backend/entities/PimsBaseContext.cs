@@ -266,6 +266,16 @@ public partial class PimsBaseContext : DbContext
 
     public virtual DbSet<PimsLeaseCategoryType> PimsLeaseCategoryTypes { get; set; }
 
+    public virtual DbSet<PimsLeaseChecklistItem> PimsLeaseChecklistItems { get; set; }
+
+    public virtual DbSet<PimsLeaseChecklistItemHist> PimsLeaseChecklistItemHists { get; set; }
+
+    public virtual DbSet<PimsLeaseChklstItemStatusType> PimsLeaseChklstItemStatusTypes { get; set; }
+
+    public virtual DbSet<PimsLeaseChklstItemType> PimsLeaseChklstItemTypes { get; set; }
+
+    public virtual DbSet<PimsLeaseChklstSectionType> PimsLeaseChklstSectionTypes { get; set; }
+
     public virtual DbSet<PimsLeaseConsultation> PimsLeaseConsultations { get; set; }
 
     public virtual DbSet<PimsLeaseConsultationHist> PimsLeaseConsultationHists { get; set; }
@@ -4032,7 +4042,9 @@ public partial class PimsBaseContext : DbContext
                     tb.HasTrigger("PIMS_LEASE_I_S_U_TR");
                 });
 
-            entity.Property(e => e.LeaseId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_LEASE_ID_SEQ])");
+            entity.Property(e => e.LeaseId)
+                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_LEASE_ID_SEQ])")
+                .HasComment("Generated surrogate primary key.");
             entity.Property(e => e.AppCreateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
                 .HasComment("The date and time the user created the record.");
@@ -4089,18 +4101,26 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.LFileNo).HasComment("Generated identifying lease/licence number");
             entity.Property(e => e.LeaseAmount).HasComment("Lease/licence amount");
             entity.Property(e => e.LeaseCategoryOtherDesc).HasComment("User-specified lease category description not included in standard set of lease purposes");
+            entity.Property(e => e.LeaseCategoryTypeCode).HasComment("Foreign key to the PIMS_LEASE_CATEGORY_TYPE table.");
             entity.Property(e => e.LeaseDescription).HasComment("Manually etered lease description, not the legal description");
+            entity.Property(e => e.LeaseInitiatorTypeCode).HasComment("Foreign key to the PIMS_LEASE_INITIATOR_TYPE table.");
+            entity.Property(e => e.LeaseLicenseTypeCode).HasComment("Foreign key to the PIMS_LEASE_LICENSE_TYPE table.");
             entity.Property(e => e.LeaseNotes).HasComment("Notes accompanying lease");
+            entity.Property(e => e.LeasePayRvblTypeCode).HasComment("Foreign key to the PIMS_LEASE_PAY_RVBL_TYPE table.");
+            entity.Property(e => e.LeaseProgramTypeCode).HasComment("Foreign key to the PIMS_LEASE_PROGRAM_TYPE table.");
             entity.Property(e => e.LeasePurposeOtherDesc).HasComment("User-specified lease purpose description not included in standard set of lease purposes");
+            entity.Property(e => e.LeasePurposeTypeCode).HasComment("Foreign key to the PIMS_LEASE_PURPOSE_TYPE table.");
+            entity.Property(e => e.LeaseResponsibilityTypeCode).HasComment("Foreign key to the PIMS_LEASE_RESPONSIBILITY_TYPE table.");
+            entity.Property(e => e.LeaseStatusTypeCode).HasComment("Foreign key to the PIMS_LEASE_STATUS_TYPE table.");
             entity.Property(e => e.MotiContact).HasComment("Contact of the MoTI person associated with the lease");
             entity.Property(e => e.OrigExpiryDate).HasComment("Original expiry date of the lease/license");
             entity.Property(e => e.OrigStartDate).HasComment("Original start date of the lease/license");
             entity.Property(e => e.OtherLeaseLicenseType).HasComment("Description of a non-standard lease/license type");
             entity.Property(e => e.OtherLeaseProgramType).HasComment("Description of a non-standard lease program type");
             entity.Property(e => e.OtherLeasePurposeType).HasComment("Description of a non-standard lease purpose type");
-            entity.Property(e => e.ProjectId).HasComment("Project associated with this lease.");
+            entity.Property(e => e.ProjectId).HasComment("Foreign key to the PIMS_PROJECT table.");
             entity.Property(e => e.PsFileNo).HasComment("Sourced from t_fileSubOverrideData.PSFile_No");
-            entity.Property(e => e.RegionCode).HasComment("MoTI region associated with the lease");
+            entity.Property(e => e.RegionCode).HasComment("Foreign key to the PIMS_REGION table.");
             entity.Property(e => e.ResponsibilityEffectiveDate).HasComment("Date current responsibility came into effect for this lease");
             entity.Property(e => e.ReturnNotes).HasComment("Notes accompanying lease");
             entity.Property(e => e.TerminationReason).HasComment("Reason for the termination of the lease.  For example, \"The tenant is in violation of the terms of the agreement.\"");
@@ -4153,6 +4173,196 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
             entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
             entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+        });
+
+        modelBuilder.Entity<PimsLeaseChecklistItem>(entity =>
+        {
+            entity.HasKey(e => e.LeaseChecklistItemId).HasName("LCHKLI_PK");
+
+            entity.ToTable("PIMS_LEASE_CHECKLIST_ITEM", tb =>
+                {
+                    tb.HasComment("Table that contains the lease & license checklist items.");
+                    tb.HasTrigger("PIMS_LCHKLI_A_S_IUD_TR");
+                    tb.HasTrigger("PIMS_LCHKLI_I_S_I_TR");
+                    tb.HasTrigger("PIMS_LCHKLI_I_S_U_TR");
+                });
+
+            entity.Property(e => e.LeaseChecklistItemId)
+                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_LEASE_CHECKLIST_ITEM_ID_SEQ])")
+                .HasComment("Generated surrogate primary key");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The directory of the user account that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("The GUID of the user account that created the record.");
+            entity.Property(e => e.AppCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user account that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user updated the record.");
+            entity.Property(e => e.AppLastUpdateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The directory of the user account that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("The GUID of the user account that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user account that updated the record.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.LeaseChklstItemStatusTypeCode)
+                .HasDefaultValue("INCOMP")
+                .HasComment("Foreign key to the PIMS_LEASE_CHKLST_ITEM_STATUS_TYPE table.");
+            entity.Property(e => e.LeaseChklstItemTypeCode).HasComment("Foreign key to the PIMS_LEASE_CHKLST_ITEM_TYPE table.");
+            entity.Property(e => e.LeaseId).HasComment("Foreign key to the PIMS_LEASE table.");
+
+            entity.HasOne(d => d.LeaseChklstItemStatusTypeCodeNavigation).WithMany(p => p.PimsLeaseChecklistItems)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("PIM_LCISTY_PIM_LCHKLI_FK");
+
+            entity.HasOne(d => d.LeaseChklstItemTypeCodeNavigation).WithMany(p => p.PimsLeaseChecklistItems)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("PIM_LCKITY_PIM_LCHKLI_FK");
+
+            entity.HasOne(d => d.Lease).WithMany(p => p.PimsLeaseChecklistItems)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("PIM_LEASE_PIM_LCHKLI_FK");
+        });
+
+        modelBuilder.Entity<PimsLeaseChecklistItemHist>(entity =>
+        {
+            entity.HasKey(e => e.LeaseChecklistItemHistId).HasName("PIMS_LCHKLI_H_PK");
+
+            entity.Property(e => e.LeaseChecklistItemHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_LEASE_CHECKLIST_ITEM_H_ID_SEQ])");
+            entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
+        });
+
+        modelBuilder.Entity<PimsLeaseChklstItemStatusType>(entity =>
+        {
+            entity.HasKey(e => e.LeaseChklstItemStatusTypeCode).HasName("LCISTY_PK");
+
+            entity.ToTable("PIMS_LEASE_CHKLST_ITEM_STATUS_TYPE", tb =>
+                {
+                    tb.HasComment("Tables that contains the codes and associated descriptions of the lease & license checklist item status types.");
+                    tb.HasTrigger("PIMS_LCISTY_I_S_I_TR");
+                    tb.HasTrigger("PIMS_LCISTY_I_S_U_TR");
+                });
+
+            entity.Property(e => e.LeaseChklstItemStatusTypeCode).HasComment("Codified version of the lease & license checklist item status type.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.Description).HasComment("Description of the lease & license checklist item status type.");
+            entity.Property(e => e.DisplayOrder).HasComment("Display order of the codes.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the code value is inactive.");
+        });
+
+        modelBuilder.Entity<PimsLeaseChklstItemType>(entity =>
+        {
+            entity.HasKey(e => e.LeaseChklstItemTypeCode).HasName("LCKITY_PK");
+
+            entity.ToTable("PIMS_LEASE_CHKLST_ITEM_TYPE", tb =>
+                {
+                    tb.HasComment("Table that contains the lease & license checklist items that are presented to the user through dynamically building the input form.");
+                    tb.HasTrigger("PIMS_LCKITY_I_S_I_TR");
+                    tb.HasTrigger("PIMS_LCKITY_I_S_U_TR");
+                });
+
+            entity.Property(e => e.LeaseChklstItemTypeCode).HasComment("Lease & license checklist item code value.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.Description).HasComment("Lease & license checklist item descriptive text presented to the user.");
+            entity.Property(e => e.DisplayOrder).HasComment("Specifies the order that the lease & license checklist items are presented to the user.");
+            entity.Property(e => e.EffectiveDate)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("Date the lease & license checklist item is able to be presented to the user via the input form.");
+            entity.Property(e => e.ExpiryDate).HasComment("Date the lease & license checklist item is removed from the input form.");
+            entity.Property(e => e.Hint).HasComment("Lease & license checklist item descriptive tooltip presented to the user.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the code is currently active.");
+            entity.Property(e => e.IsRequired)
+                .HasDefaultValue(false)
+                .HasComment("Indicates if the lease & license checklist item is a required field.");
+            entity.Property(e => e.LeaseChklstSectionTypeCode).HasComment("Foreign key to the PIMS_LEASE_CHKLST_SECTION_TYPE table.");
+
+            entity.HasOne(d => d.LeaseChklstSectionTypeCodeNavigation).WithMany(p => p.PimsLeaseChklstItemTypes)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("PIM_LCKSTY_PIM_LCKITY_FK");
+        });
+
+        modelBuilder.Entity<PimsLeaseChklstSectionType>(entity =>
+        {
+            entity.HasKey(e => e.LeaseChklstSectionTypeCode).HasName("LCKSTY_PK");
+
+            entity.ToTable("PIMS_LEASE_CHKLST_SECTION_TYPE", tb =>
+                {
+                    tb.HasComment("Table that contains the lease & license checklist sctions that are presented to the user through dynamically building the input form.");
+                    tb.HasTrigger("PIMS_LCKSTY_I_S_I_TR");
+                    tb.HasTrigger("PIMS_LCKSTY_I_S_U_TR");
+                });
+
+            entity.Property(e => e.LeaseChklstSectionTypeCode).HasComment("Lease & license checklist section code value.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.Description).HasComment("Lease & license checklist section descriptive text presented to the user.");
+            entity.Property(e => e.DisplayOrder).HasComment("Specifies the order that the lease & license checklist sections are presented to the user.");
+            entity.Property(e => e.EffectiveDate)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("Date the lease & license checklist section is able to be presented to the user via the input form.");
+            entity.Property(e => e.ExpiryDate).HasComment("Date the lease & license checklist section is removed from the input form.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the code is currently active.");
         });
 
         modelBuilder.Entity<PimsLeaseConsultation>(entity =>
@@ -8188,6 +8398,12 @@ public partial class PimsBaseContext : DbContext
             .HasMin(1L)
             .HasMax(2147483647L);
         modelBuilder.HasSequence("PIMS_LEASE_ACTIVITY_PERIOD_ID_SEQ")
+            .HasMin(1L)
+            .HasMax(2147483647L);
+        modelBuilder.HasSequence("PIMS_LEASE_CHECKLIST_ITEM_H_ID_SEQ")
+            .HasMin(1L)
+            .HasMax(2147483647L);
+        modelBuilder.HasSequence("PIMS_LEASE_CHECKLIST_ITEM_ID_SEQ")
             .HasMin(1L)
             .HasMax(2147483647L);
         modelBuilder.HasSequence("PIMS_LEASE_CONSULTATION_H_ID_SEQ")

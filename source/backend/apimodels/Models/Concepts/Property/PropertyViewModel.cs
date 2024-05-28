@@ -95,6 +95,8 @@ namespace Pims.Api.Models.Concepts.Property
 
         public bool? IsActiveReceivableLease { get; set; }
 
+        public string HistoricalFileNumberStr { get; set; }
+
         #endregion
     }
 }
