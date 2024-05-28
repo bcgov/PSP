@@ -1,18 +1,19 @@
+import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { Section } from '@/components/common/Section/Section';
 import * as Styled from '@/components/common/styles';
 import { Table } from '@/components/Table';
 import { IGeocoderResponse } from '@/hooks/pims-api/interfaces/IGeocoder';
-import { getPropertyName } from '@/utils/mapPropertyUtils';
+import { featuresetToMapProperty, getPropertyName } from '@/utils/mapPropertyUtils';
 
 import { ILayerSearchCriteria, IMapProperty, SearchResultProperty } from '../models';
 import LayerFilter from './LayerFilter';
 import mapPropertyColumns from './mapPropertyColumns';
 
 export interface IPropertySearchSelectorFormViewProps {
-  onSelectedProperties: (properties: IMapProperty[]) => void;
-  selectedProperties: IMapProperty[];
+  onSelectedProperties: (properties: LocationFeatureDataset[]) => void;
+  selectedProperties: LocationFeatureDataset[];
   onSearch: (search: ILayerSearchCriteria) => void;
-  searchResults: IMapProperty[];
+  searchResults: LocationFeatureDataset[];
   search?: ILayerSearchCriteria;
   loading: boolean;
   addressResults?: IGeocoderResponse[];
@@ -35,13 +36,16 @@ export const PropertySearchSelectorFormView: React.FunctionComponent<
 }) => {
   const tableData =
     searchResults?.length <= 15
-      ? searchResults.map<SearchResultProperty>(x => {
-          return { ...x, id: generatePropertyId(x) };
+      ? searchResults.map(x => {
+          return {
+            ...featuresetToMapProperty(x),
+            id: generatePropertyId(featuresetToMapProperty(x)),
+          };
         })
       : [];
 
   const selectedData = selectedProperties.map<SearchResultProperty>(x => {
-    return { ...x, id: generatePropertyId(x) };
+    return { ...x, id: generatePropertyId(featuresetToMapProperty(x)) };
   });
 
   function generatePropertyId(mapProperty: IMapProperty): string {
@@ -68,7 +72,20 @@ export const PropertySearchSelectorFormView: React.FunctionComponent<
           name="map-properties"
           columns={mapPropertyColumns}
           data={tableData}
-          setSelectedRows={searchResults?.length <= 15 ? onSelectedProperties : undefined}
+          setSelectedRows={
+            searchResults?.length <= 15
+              ? (selectedResult: SearchResultProperty[]) =>
+                  onSelectedProperties(
+                    selectedResult.map(sr =>
+                      selectedProperties.find(
+                        sp =>
+                          generatePropertyId(featuresetToMapProperty(sp)) ===
+                          generatePropertyId(sr),
+                      ),
+                    ),
+                  )
+              : undefined
+          }
           selectedRows={selectedData}
           loading={loading}
           lockPageSize={true}

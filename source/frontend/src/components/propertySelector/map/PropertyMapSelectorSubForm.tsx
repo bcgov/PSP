@@ -1,27 +1,28 @@
 import { Col, Form as BsForm, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
+import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { SelectProperty } from '@/components/common/mapping/SelectProperty';
 import { SectionField } from '@/components/common/Section/SectionField';
-
-import { IMapProperty } from '../models';
+import { featuresetToMapProperty } from '@/utils';
 
 export interface IPropertyMapSelectorSubFormProps {
   onClickDraftMarker: () => void;
-  selectedProperty?: IMapProperty;
+  selectedProperty?: LocationFeatureDataset;
 }
 
 export const PropertyMapSelectorSubForm: React.FunctionComponent<
   React.PropsWithChildren<IPropertyMapSelectorSubFormProps>
 > = ({ onClickDraftMarker, selectedProperty }) => {
-  const pid = selectedProperty?.pid;
-  const planNumber = selectedProperty?.planNumber;
-  const address = selectedProperty?.address;
+  const selectedMapProperty = featuresetToMapProperty(selectedProperty);
+  const pid = selectedMapProperty?.pid;
+  const planNumber = selectedMapProperty?.planNumber;
   const legalDescription = selectedProperty?.legalDescription;
-  const region = selectedProperty?.region;
-  const regionName = selectedProperty?.regionName;
-  const district = selectedProperty?.district;
-  const districtName = selectedProperty?.districtName;
+  const address = selectedMapProperty?.address;
+  const region = selectedMapProperty?.region;
+  const regionName = selectedMapProperty?.regionName;
+  const district = selectedMapProperty?.district;
+  const districtName = selectedMapProperty?.districtName;
   return (
     <StyledFormRow>
       <Col md={4}>

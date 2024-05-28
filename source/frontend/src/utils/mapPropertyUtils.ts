@@ -132,28 +132,32 @@ export const featuresToIdentifiedMapProperty = (
         feature?.geometry?.type === ApiGen_CodeTypes_GeoJsonTypes.MultiPolygon,
     )
     .map((feature): IMapProperty => {
-      if (feature?.geometry?.type === ApiGen_CodeTypes_GeoJsonTypes.Polygon) {
-        const boundedCenter = polylabel(
-          (feature.geometry as Polygon).coordinates,
-          ONE_HUNDRED_METER_PRECISION,
-        );
-        return toMapProperty(feature, address, boundedCenter[1], boundedCenter[0]);
-      } else if (feature?.geometry?.type === ApiGen_CodeTypes_GeoJsonTypes.MultiPolygon) {
-        const boundedCenter = polylabel(
-          (feature.geometry as MultiPolygon).coordinates[0],
-          ONE_HUNDRED_METER_PRECISION,
-        );
-        //TODO: calculate the center of the polygon with the largest area.
-        return toMapProperty(feature, address, boundedCenter[1], boundedCenter[0]);
-      } else {
-        toast.error(
-          'Unsupported geometry type, unable to determine bounded center. You will need to drop a pin instead.',
-        );
-        throw Error(
-          'Unsupported geometry type, unable to determine bounded center. You will need to drop a pin instead.',
-        );
-      }
+      const boundedCenter = getFeatureBoundedCenter(feature);
+      return toMapProperty(feature, address, boundedCenter[1], boundedCenter[0]);
     });
+
+export const getFeatureBoundedCenter = (feature: Feature<Geometry, GeoJsonProperties>) => {
+  if (feature?.geometry?.type === ApiGen_CodeTypes_GeoJsonTypes.Polygon) {
+    const boundedCenter = polylabel(
+      (feature.geometry as Polygon).coordinates,
+      ONE_HUNDRED_METER_PRECISION,
+    );
+    return boundedCenter;
+      } else if (feature?.geometry?.type === ApiGen_CodeTypes_GeoJsonTypes.MultiPolygon) {
+    const boundedCenter = polylabel(
+      (feature.geometry as MultiPolygon).coordinates[0],
+      ONE_HUNDRED_METER_PRECISION,
+    );
+    return boundedCenter;
+  } else {
+    toast.error(
+      'Unsupported geometry type, unable to determine bounded center. You will need to drop a pin instead.',
+    );
+    throw Error(
+      'Unsupported geometry type, unable to determine bounded center. You will need to drop a pin instead.',
+    );
+  }
+};
 
 function toMapProperty(
   feature: Feature<Geometry, GeoJsonProperties>,

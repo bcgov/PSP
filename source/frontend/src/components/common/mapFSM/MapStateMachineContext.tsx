@@ -2,6 +2,14 @@ import { useInterpret, useSelector } from '@xstate/react';
 import { LatLngBounds, LatLngLiteral } from 'leaflet';
 import React, { useCallback, useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
+import {
+  AnyEventObject,
+  BaseActionObject,
+  ResolveTypegenMeta,
+  ServiceMap,
+  State,
+  TypegenDisabled,
+} from 'xstate';
 
 import { ILayerItem } from '@/components/maps/leaflet/Control/LayersControl/types';
 import { IGeoSearchParams } from '@/constants/API';
@@ -88,69 +96,87 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
   const locationLoader = useLocationFeatureLoader();
   const mapSearch = useMapSearch();
   const history = useHistory();
-
-  const service = useInterpret(mapMachine, {
-    actions: {
-      navigateToProperty: context => {
-        const selectedFeatureData = context.mapLocationFeatureDataset;
-        if (selectedFeatureData?.pimsFeature?.properties?.PROPERTY_ID) {
-          const pimsFeature = selectedFeatureData.pimsFeature;
-          history.push(`/mapview/sidebar/property/${pimsFeature.properties.PROPERTY_ID}`);
-        } else if (selectedFeatureData?.parcelFeature?.properties?.PID) {
-          const parcelFeature = selectedFeatureData.parcelFeature;
-          const parsedPid = pidParser(parcelFeature.properties.PID);
-          history.push(`/mapview/sidebar/non-inventory-property/${parsedPid}`);
-        }
+  const [currentMachineState, setCurrentMachineState] = React.useState<
+    State<
+      MachineContext,
+      AnyEventObject,
+      any,
+      {
+        value: any;
+        context: MachineContext;
       },
-    },
-    services: {
-      loadLocationData: (context: MachineContext, event: any) => {
-        const result = locationLoader.loadLocationDetails(
-          event.type === 'MAP_CLICK' ? event.latlng : event.featureSelected.latlng,
-        );
-        if (event.type === 'MAP_MARKER_CLICK') {
-          // In the case of the map marker being clicked, always used the clicked marker instead of the search result.
-          // TODO: refactor loadLocationDetails method to allow for optional loading of various feature types.
-          result.then(data => {
-            data.pimsFeature = {
-              properties: event.featureSelected?.pimsLocationFeature,
-              type: 'Feature',
-              geometry: {
-                type: 'Point',
-                coordinates: [event.featureSelected.latlng.lng, event.featureSelected.latlng.lat],
-              },
-            };
-          });
-        }
+      ResolveTypegenMeta<TypegenDisabled, AnyEventObject, BaseActionObject, ServiceMap>
+    >
+  >(null);
 
-        return result;
+  const service = useInterpret(
+    mapMachine,
+    {
+      actions: {
+        navigateToProperty: context => {
+          const selectedFeatureData = context.mapLocationFeatureDataset;
+          if (selectedFeatureData?.pimsFeature?.properties?.PROPERTY_ID) {
+            const pimsFeature = selectedFeatureData.pimsFeature;
+            history.push(`/mapview/sidebar/property/${pimsFeature.properties.PROPERTY_ID}`);
+          } else if (selectedFeatureData?.parcelFeature?.properties?.PID) {
+            const parcelFeature = selectedFeatureData.parcelFeature;
+            const parsedPid = pidParser(parcelFeature.properties.PID);
+            history.push(`/mapview/sidebar/non-inventory-property/${parsedPid}`);
+          }
+        },
       },
-      loadFeatures: (context: MachineContext, event: any) => {
-        // If there is data in the event, use that criteria.
-        // Otherwise, use the stored one in the context.
-        let searchCriteria = context.searchCriteria || defaultPropertyFilter;
-        if (event.searchCriteria !== undefined) {
-          searchCriteria = event.searchCriteria;
-        }
+      services: {
+        loadLocationData: (context: MachineContext, event: any) => {
+          const result = locationLoader.loadLocationDetails(
+            event.type === 'MAP_CLICK' ? event.latlng : event.featureSelected.latlng,
+          );
+          if (event.type === 'MAP_MARKER_CLICK') {
+            // In the case of the map marker being clicked, always used the clicked marker instead of the search result.
+            // TODO: refactor loadLocationDetails method to allow for optional loading of various feature types.
+            result.then(data => {
+              data.pimsFeature = {
+                properties: event.featureSelected?.pimsLocationFeature,
+                type: 'Feature',
+                geometry: {
+                  type: 'Point',
+                  coordinates: [event.featureSelected.latlng.lng, event.featureSelected.latlng.lat],
+                },
+              };
+            });
+          }
 
-        const geoFilter = getQueryParams(searchCriteria);
-        if (geoFilter?.PID || geoFilter?.PID_PADDED || geoFilter?.PIN) {
-          return mapSearch.searchMany(geoFilter);
-        } else if (geoFilter?.latitude && geoFilter?.longitude) {
-          const geoLat = Number(geoFilter.latitude);
-          const geoLng = Number(geoFilter.longitude);
-          return mapSearch.searchOneLocation(geoLat, geoLng);
-        } else if (geoFilter?.SURVEY_PLAN_NUMBER && !geoFilter?.PID && !geoFilter?.PIN) {
-          return mapSearch.searchByPlanNumber(geoFilter);
+          return result;
+        },
+        loadFeatures: (context: MachineContext, event: any) => {
+          // If there is data in the event, use that criteria.
+          // Otherwise, use the stored one in the context.
+          let searchCriteria = context.searchCriteria || defaultPropertyFilter;
+          if (event.searchCriteria !== undefined) {
+            searchCriteria = event.searchCriteria;
+          }
+
+          const geoFilter = getQueryParams(searchCriteria);
+          if (geoFilter?.PID || geoFilter?.PID_PADDED || geoFilter?.PIN) {
+            return mapSearch.searchMany(geoFilter);
+          } else if (geoFilter?.latitude && geoFilter?.longitude) {
+            const geoLat = Number(geoFilter.latitude);
+            const geoLng = Number(geoFilter.longitude);
+            return mapSearch.searchOneLocation(geoLat, geoLng);
+          } else if (geoFilter?.SURVEY_PLAN_NUMBER && !geoFilter?.PID && !geoFilter?.PIN) {
+            return mapSearch.searchByPlanNumber(geoFilter);
         } else if (geoFilter?.HISTORICAL_FILE_NUMBER_STR) {
           geoFilter.forceExactMatch = false;
           return mapSearch.searchByHistorical(geoFilter);
-        } else {
-          return mapSearch.searchMany(geoFilter);
-        }
+          } else {
+            return mapSearch.searchMany(geoFilter);
+          }
+        },
       },
     },
-  });
+    state => {
+      setCurrentMachineState(state);
+    },
+  );
 
   const state = useSelector(service, state => state);
   const serviceSend = service.send;

@@ -1,15 +1,15 @@
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
+import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { Section } from '@/components/common/Section/Section';
 import * as Styled from '@/components/common/styles';
 
 import MapClickMonitor from '../MapClickMonitor';
-import { IMapProperty } from '../models';
 import PropertyMapSelectorSubForm from './PropertyMapSelectorSubForm';
 
 export interface IPropertyMapSelectorFormViewProps {
-  onSelectedProperty: (property: IMapProperty) => void;
-  lastSelectedProperty?: IMapProperty;
-  selectedProperties: IMapProperty[];
+  onSelectedProperty: (property: LocationFeatureDataset) => void;
+  lastSelectedProperty?: LocationFeatureDataset;
+  selectedProperties: LocationFeatureDataset[];
   selectedComponentId?: string | null;
 }
 

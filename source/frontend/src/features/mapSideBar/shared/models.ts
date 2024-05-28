@@ -1,7 +1,9 @@
 import { MultiPolygon, Polygon } from 'geojson';
+import { isNumber } from 'lodash';
 
+import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { IMapProperty } from '@/components/propertySelector/models';
-import { AreaUnitTypes } from '@/constants';
+import { AreaUnitTypes, DistrictCodes, RegionCodes } from '@/constants';
 import { ApiGen_Concepts_Address } from '@/models/api/generated/ApiGen_Concepts_Address';
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
@@ -10,7 +12,7 @@ import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { IBcAssessmentSummary } from '@/models/layers/bcAssesment';
 import { PIMS_Property_Location_View } from '@/models/layers/pimsPropertyLocationView';
-import { exists, formatApiAddress, formatBcaAddress, pidParser } from '@/utils';
+import { enumFromValue, exists, formatApiAddress, formatBcaAddress, pidParser } from '@/utils';
 import { toTypeCodeNullable } from '@/utils/formUtils';
 
 export class FileForm {
@@ -105,6 +107,43 @@ export class PropertyForm {
       formattedAddress: model.address,
       landArea: model.landArea,
       areaUnit: model.areaUnit,
+    });
+  }
+
+  public static fromFeatureDataset(model: LocationFeatureDataset): PropertyForm {
+    return new PropertyForm({
+      apiId: +(model.pimsFeature?.id ?? 0),
+      pid:
+        model.pimsFeature?.properties?.PID.toString() ?? model.parcelFeature?.properties?.PID ?? '',
+      pin:
+        model.pimsFeature?.properties?.PIN.toString() ??
+        model.parcelFeature?.properties?.PIN.toString() ??
+        '',
+      latitude: model.location?.lat,
+      longitude: model.location?.lng,
+      planNumber:
+        model.pimsFeature?.properties?.SURVEY_PLAN_NUMBER.toString() ??
+        model.parcelFeature?.properties?.PLAN_NUMBER ??
+        '',
+      polygon:
+        model?.parcelFeature?.geometry?.type === 'Polygon'
+          ? (model?.parcelFeature?.geometry as Polygon)
+          : undefined,
+      region: isNumber(model?.regionFeature?.properties?.REGION_NUMBER)
+        ? model?.regionFeature?.properties?.REGION_NUMBER
+        : RegionCodes.Unknown,
+      regionName: model?.regionFeature?.properties?.REGION_NAME ?? 'Cannot determine',
+      district: isNumber(model?.districtFeature?.properties?.DISTRICT_NUMBER)
+        ? model?.districtFeature?.properties?.DISTRICT_NUMBER
+        : DistrictCodes.Unknown,
+      districtName: model?.districtFeature?.properties?.DISTRICT_NAME ?? 'Cannot determine',
+      formattedAddress: 'unknown',
+      landArea: model?.pimsFeature?.properties?.LAND_AREA
+        ? +model?.pimsFeature?.properties?.LAND_AREA
+        : model?.parcelFeature?.properties?.FEATURE_AREA_SQM ?? 0,
+      areaUnit: model?.pimsFeature?.properties?.PROPERTY_AREA_UNIT_TYPE_CODE
+        ? enumFromValue(model?.pimsFeature?.properties?.PROPERTY_AREA_UNIT_TYPE_CODE, AreaUnitTypes)
+        : AreaUnitTypes.SquareMeters,
     });
   }
 

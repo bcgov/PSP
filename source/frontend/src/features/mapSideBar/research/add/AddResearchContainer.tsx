@@ -15,7 +15,6 @@ import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
 import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Concepts_ResearchFile';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { exists, isValidId, isValidString } from '@/utils';
-import { featuresetToMapProperty } from '@/utils/mapPropertyUtils';
 
 import { PropertyForm } from '../../shared/models';
 import SidebarFooter from '../../shared/SidebarFooter';
@@ -77,9 +76,7 @@ export const AddResearchContainer: React.FunctionComponent<IAddResearchContainer
   const initialForm = useMemo(() => {
     const researchForm = new ResearchForm();
     if (selectedFeatureDataset) {
-      researchForm.properties = [
-        PropertyForm.fromMapProperty(featuresetToMapProperty(selectedFeatureDataset)),
-      ];
+      researchForm.properties = [PropertyForm.fromFeatureDataset(selectedFeatureDataset)];
     }
     return researchForm;
   }, [selectedFeatureDataset]);
