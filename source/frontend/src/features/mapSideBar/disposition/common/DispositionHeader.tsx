@@ -32,7 +32,11 @@ export const DispositionHeader: React.FunctionComponent<
         <HeaderField label="File:" labelWidth={leftColumnLabel} contentWidth="9">
           D-{dispositionFile?.fileNumber}
         </HeaderField>
-        <HistoricalNumbersContainer propertyIds={propertyIds} View={HistoricalNumberFieldView} />
+        <HistoricalNumbersContainer
+          propertyIds={propertyIds}
+          displayValuesOnly={false}
+          View={HistoricalNumberFieldView}
+        />
       </Col>
       <Col xs="5">
         <StyledFiller>
