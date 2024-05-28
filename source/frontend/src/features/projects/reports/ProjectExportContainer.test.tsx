@@ -13,8 +13,6 @@ import { IProjectExportFormProps } from './ProjectExportForm';
 
 const history = createMemoryHistory();
 
-jest.mock('@react-keycloak/web');
-
 let viewProps: IProjectExportFormProps = {} as any;
 const ProjectExportContainerView = (props: IProjectExportFormProps) => {
   viewProps = props;
@@ -22,29 +20,29 @@ const ProjectExportContainerView = (props: IProjectExportFormProps) => {
 };
 
 const defaultRepositoryResponse = () => ({
-  execute: jest.fn(),
+  execute: vi.fn(),
   response: {} as any,
   error: undefined,
   status: undefined,
   loading: false,
 });
 
-jest.mock('@/hooks/repositories/useAcquisitionProvider');
-(useAcquisitionProvider as jest.MockedFunction<typeof useAcquisitionProvider>).mockReturnValue({
+vi.mock('@/hooks/repositories/useAcquisitionProvider');
+vi.mocked(useAcquisitionProvider).mockReturnValue({
   getAllAcquisitionFileTeamMembers: { ...defaultRepositoryResponse() },
   getAgreementsReport: { ...defaultRepositoryResponse() },
   getCompensationReport: { ...defaultRepositoryResponse() },
 } as unknown as ReturnType<typeof useAcquisitionProvider>);
 
-jest.mock('@/hooks/repositories/useProjectProvider');
-(useProjectProvider as jest.MockedFunction<typeof useProjectProvider>).mockReturnValue({
+vi.mock('@/hooks/repositories/useProjectProvider');
+vi.mocked(useProjectProvider).mockReturnValue({
   getAllProjects: { ...defaultRepositoryResponse() },
 } as unknown as ReturnType<typeof useProjectProvider>);
 
-jest.mock('js-file-download', () => {
+vi.mock('js-file-download', () => {
   return {
     __esModule: true,
-    default: jest.fn(),
+    default: vi.fn(),
   };
 });
 
@@ -66,7 +64,7 @@ describe('ProjectExportContainer component', () => {
   };
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('does not load project and team member information by default', () => {
@@ -97,7 +95,7 @@ describe('ProjectExportContainer component', () => {
   });
 
   it('displays warning when there are no records to be returned by agreement export function', async () => {
-    (useAcquisitionProvider as jest.MockedFunction<typeof useAcquisitionProvider>).mockReturnValue({
+    vi.mocked(useAcquisitionProvider).mockReturnValue({
       ...useAcquisitionProvider(),
       getAgreementsReport: {
         ...defaultRepositoryResponse(),
@@ -124,7 +122,7 @@ describe('ProjectExportContainer component', () => {
   });
 
   it('displays warning when there are no records to be returned by export function', async () => {
-    (useAcquisitionProvider as jest.MockedFunction<typeof useAcquisitionProvider>).mockReturnValue({
+    vi.mocked(useAcquisitionProvider).mockReturnValue({
       ...useAcquisitionProvider(),
       getCompensationReport: {
         ...defaultRepositoryResponse(),
@@ -143,7 +141,7 @@ describe('ProjectExportContainer component', () => {
   });
 
   it('triggers a file download of generated excel file', async () => {
-    (useAcquisitionProvider as jest.MockedFunction<typeof useAcquisitionProvider>).mockReturnValue({
+    vi.mocked(useAcquisitionProvider).mockReturnValue({
       ...useAcquisitionProvider(),
       getCompensationReport: {
         ...defaultRepositoryResponse(),

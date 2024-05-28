@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Compensation Detail View Component renders as expected 1`] = `
+exports[`Compensation Detail View Component > renders as expected 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
@@ -34,6 +34,7 @@ exports[`Compensation Detail View Component renders as expected 1`] = `
   -ms-letter-spacing: 0.1rem;
   letter-spacing: 0.1rem;
   cursor: pointer;
+  height: 3.8rem;
 }
 
 .c6.btn:hover {

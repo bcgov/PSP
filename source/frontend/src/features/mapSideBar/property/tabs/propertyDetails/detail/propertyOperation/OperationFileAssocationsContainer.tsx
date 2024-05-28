@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { useEffect } from 'react';
 
 import { StyledSectionHeader } from '@/components/common/Section/Section';
@@ -39,6 +38,7 @@ export const OperationFileAssociationsContainer: React.FunctionComponent<
         name="PropertyOperationAssociations"
         loading={loading}
         noRowsMessage="There are no files associated to the property."
+        hideToolbar
       />
     </>
   );

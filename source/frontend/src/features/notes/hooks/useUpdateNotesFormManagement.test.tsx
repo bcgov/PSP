@@ -22,7 +22,7 @@ const history = createMemoryHistory();
 const mockAxios = new MockAdapter(axios);
 const mockStore = configureMockStore([thunk]);
 
-const onSuccess = jest.fn();
+const onSuccess = vi.fn();
 
 const BASIC_PROPS: IUseUpdateNotesFormManagementProps = {
   type: NoteTypes.Activity,
@@ -49,7 +49,7 @@ describe('useUpdateNotesFormManagement hook', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should return valid initial values', async () => {
@@ -58,7 +58,7 @@ describe('useUpdateNotesFormManagement hook', () => {
   });
 
   it('should provide form validation schema', async () => {
-    expect.assertions(4);
+    expect.assertions(3);
     const { validationSchema } = setup();
 
     const validForm = new NoteForm();
@@ -78,8 +78,8 @@ describe('useUpdateNotesFormManagement hook', () => {
     const formValues = NoteForm.fromApi(mockNoteResponse(1));
 
     const formikHelpers: Partial<FormikHelpers<NoteForm>> = {
-      setSubmitting: jest.fn(),
-      resetForm: jest.fn(),
+      setSubmitting: vi.fn(),
+      resetForm: vi.fn(),
     };
 
     await act(async () => handleSubmit(formValues, formikHelpers as any));

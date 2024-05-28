@@ -17,20 +17,20 @@ const mockAcquisitionAgreementApi = mockAgreementResponseApi(1);
 const mockPutAgreementApi = {
   error: undefined,
   response: undefined,
-  execute: jest.fn(),
+  execute: vi.fn(),
   loading: false,
 };
 
 const mockGetAgreementApi = {
   error: undefined,
   response: undefined,
-  execute: jest.fn().mockResolvedValue(mockAcquisitionAgreementApi),
+  execute: vi.fn().mockResolvedValue(mockAcquisitionAgreementApi),
   loading: false,
 };
 
-const onSuccess = jest.fn();
+const onSuccess = vi.fn();
 
-jest.mock('@/hooks/repositories/useAgreementProvider', () => ({
+vi.mock('@/hooks/repositories/useAgreementProvider', () => ({
   useAgreementProvider: () => {
     return {
       getAcquisitionAgreementById: mockGetAgreementApi,
@@ -76,7 +76,7 @@ describe('Update AcquisitionAgreementContainer component', () => {
 
   beforeEach(() => {
     viewProps = undefined;
-    jest.resetAllMocks();
+    vi.resetAllMocks();
   });
 
   it('Renders the underlying form', async () => {
@@ -107,7 +107,7 @@ describe('Update AcquisitionAgreementContainer component', () => {
     agreementFormModel.agreementStatusTypeCode = 'FINAL';
 
     await act(async () => {
-      return viewProps?.onSubmit(agreementFormModel, { setSubmitting: jest.fn() } as any);
+      return viewProps?.onSubmit(agreementFormModel, { setSubmitting: vi.fn() } as any);
     });
 
     expect(mockPutAgreementApi.execute).toHaveBeenCalledWith(

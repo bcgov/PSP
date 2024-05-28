@@ -1,0 +1,734 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="1/24/2024 3:55:44 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="ARIMA-DELL"
+  DTS:CreatorName="ARIMA-DELL\smart"
+  DTS:DTSID="{8025F2FD-D9A2-4353-9157-A87C7B09C318}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5270.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="sd"
+  DTS:PackageType="5"
+  DTS:ProtectionLevel="0"
+  DTS:VersionBuild="138"
+  DTS:VersionGUID="{019D3EAF-BB8C-4D79-BDBD-BA41B85631B2}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[PIMS]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{A4157154-8FF2-477B-A4CA-636A021C5560}"
+      DTS:ObjectName="PIMS">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=sqldevtst.th.gov.bc.ca;User ID=PIMS_TST;Initial Catalog=PIMS_TST;Provider=SQLOLEDB.1;Persist Security Info=True;Auto Translate=False;Application Name=SSIS-Package-{A4157154-8FF2-477B-A4CA-636A021C5560}localhost,5433.pims.admin;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\create DuplicatePIDs table"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{1d45afe6-a3e5-4909-84db-494048464247}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="create DuplicatePIDs table">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\create DuplicatePIDs table\create index"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{931f27d5-1f14-4cf2-87b9-9068ae018632}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="create index"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{A4157154-8FF2-477B-A4CA-636A021C5560}"
+              SQLTask:SqlStatementSource="BEGIN&#xA;CREATE UNIQUE NONCLUSTERED INDEX IX_PID_List&#xA;ON etl.DuplicatePIDs (PID);&#xA;END" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\create DuplicatePIDs table\create table"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{9bc80f4f-328f-44a1-9651-962c9d4344f1}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="create table"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{A4157154-8FF2-477B-A4CA-636A021C5560}"
+              SQLTask:SqlStatementSource="WITH &#xA;&#xA;-- REASON FOR BELOW SELECT STATEMENTS IS BECAUSE OF 2 CONSTRAINTS&#xA;-- CONSTRAINT 1 : PRACQF_PROP_ACQ_TUC --should be unique&#xA;&#x9;-- PROPERTY_ID&#xA;&#x9;-- ACQUISITION_FILE_ID &#xA;-- CONSTRAINT 2 : PROPLS_PROPERTY_LEASE_TUC --should be unique&#xA;&#x9;-- PROPERTY_ID&#xA;&#x9;-- LEASE_ID &#xA;&#xA;-- SO WE EXCLUDE PROPERTY_IDS THAT EXISTS MORE THAN ONCE IN THESE 2 RELATIONSHIP TABLES IN OUR MERGE RULES&#xA;&#xA; SELECT_PIMS_PROPERTY_LEASE_DUPLICATE_PIDS AS (&#xA;        SELECT A.LEASE_ID, A.PROPERTY_ID, B.PID &#xA;        FROM dbo.PIMS_PROPERTY_LEASE A &#xA;        JOIN dbo.PIMS_PROPERTY B ON A.PROPERTY_ID = B.PROPERTY_ID&#xA;    ), &#xA;    FILTER_PIMS_PROPERTY_LEASE_DUPLICATE_PIDS AS (&#xA;        SELECT LEASE_ID, PID, COUNT(1) AS DuplicateCount     &#xA;        FROM SELECT_PIMS_PROPERTY_LEASE_DUPLICATE_PIDS &#xA;        GROUP BY LEASE_ID, PID    &#xA;        HAVING COUNT(1) &gt; 1&#xA;    )&#xA;&#xA;,SELECT_PIMS_PROPERTY_ACQ_DUPLICATE_PIDS AS (&#xA;        SELECT A.ACQUISITION_FILE_ID, A.PROPERTY_ID, B.PID &#xA;        FROM dbo.PIMS_PROPERTY_ACQUISITION_FILE A &#xA;        JOIN dbo.PIMS_PROPERTY B ON A.PROPERTY_ID = B.PROPERTY_ID&#xA;    ), &#xA;    FILTER_PIMS_PROPERTY_ACQ_DUPLICATE_PIDS AS (&#xA;        SELECT ACQUISITION_FILE_ID, PID, COUNT(1) AS DuplicateCount     &#xA;        FROM SELECT_PIMS_PROPERTY_ACQ_DUPLICATE_PIDS &#xA;        GROUP BY ACQUISITION_FILE_ID, PID    &#xA;        HAVING COUNT(1) &gt; 1&#xA;    ),&#xA;&#x9;EXCLUDE_PID AS (&#xA;&#x9;SELECT PID FROM FILTER_PIMS_PROPERTY_LEASE_DUPLICATE_PIDS&#xA;&#x9;UNION&#xA;&#x9;SELECT PID FROM FILTER_PIMS_PROPERTY_ACQ_DUPLICATE_PIDS&#xA;&#x9;&#xA;&#x9;),&#xA;    DuplicatePIDs AS (&#xA;        SELECT PID &#xA;        FROM DBO.PIMS_PROPERTY &#xA;        WHERE PID IS NOT NULL&#xA;        AND PID NOT IN (&#xA;            SELECT PID &#xA;            FROM EXCLUDE_PID &#xA;            WHERE PID IS NOT NULL&#xA;        )  &#xA;&#x9;&#x9;  &#xA;        GROUP BY PID &#xA;        HAVING COUNT(*) &gt; 1&#xA;    )&#xA;SELECT * INTO etl.DuplicatePIDs  FROM DuplicatePIDs where PID   IN (SELECT PID FROM dbo.PIMS_PROPERTY  where  [APP_CREATE_USERID] &lt;&gt; 'PIMS_ETL_USER') ;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\create DuplicatePIDs table\Drop index and table if exists and create BKP table"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{8544c9d2-03b4-4df1-a13d-71256b710640}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Drop index and table if exists and create BKP table"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{A4157154-8FF2-477B-A4CA-636A021C5560}"
+              SQLTask:SqlStatementSource="IF EXISTS (SELECT * FROM sys.indexes WHERE object_id = OBJECT_ID('etl.DuplicatePIDs') AND name = 'IX_PID_List')&#xA;BEGIN&#xA;    DROP INDEX IX_PID_List ON etl.DuplicatePIDs;&#xA;END&#xA;&#xA;&#xA;BEGIN&#xA;DROP TABLE if exists etl.DuplicatePIDs;&#xA;END&#xA;&#xA;BEGIN&#xA;DROP TABLE if exists etl.PIMS_PROPERTY_MERGED;&#xA;END&#xA;&#xA;BEGIN&#xA;DROP TABLE if exists etl.PIMS_PROPERTY_BKP_2;&#xA;END&#xA;&#xA;BEGIN&#xA;SELECT * INTO etl.PIMS_PROPERTY_BKP_2 FROM dbo.PIMS_PROPERTY;&#xA;END" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\create DuplicatePIDs table.PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{8e504a8f-d631-4193-a94c-2036d7160db5}"
+          DTS:From="Package\create DuplicatePIDs table\Drop index and table if exists and create BKP table"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\create DuplicatePIDs table\create table" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\create DuplicatePIDs table.PrecedenceConstraints[Constraint 1]"
+          DTS:CreationName=""
+          DTS:DTSID="{d5ffb76f-d3be-48b4-b979-e0510681bd8c}"
+          DTS:From="Package\create DuplicatePIDs table\create table"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 1"
+          DTS:To="Package\create DuplicatePIDs table\create index" />
+      </DTS:PrecedenceConstraints>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Drop index and table if exists_after_ETL"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{646c4fb7-ca7f-45c7-aaef-92aae2642aee}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Drop index and table if exists_after_ETL"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{A4157154-8FF2-477B-A4CA-636A021C5560}"
+          SQLTask:SqlStatementSource="IF EXISTS (SELECT * FROM sys.indexes WHERE object_id = OBJECT_ID('etl.DuplicatePIDs') AND name = 'IX_PID_List')&#xA;BEGIN&#xA;    DROP INDEX IX_PID_List ON etl.DuplicatePIDs;&#xA;END&#xA;&#xA;&#xA;BEGIN&#xA;DROP TABLE if exists etl.DuplicatePIDs;&#xA;END" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\seq"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{AA169741-A0B3-40F9-A651-4514F6B860A9}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="seq">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\seq\insert into PIMS_PROPERTY"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{A9829F21-1ADC-45B1-BADF-E8FC9CD64AC9}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="insert into PIMS_PROPERTY"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{A4157154-8FF2-477B-A4CA-636A021C5560}"
+              SQLTask:SqlStatementSource="with x as (&#xA;SELECT &#xA;&#xA;[PROPERTY_TYPE_CODE] ,&#xA;ISNULL([PROPERTY_CLASSIFICATION_TYPE_CODE],0) AS [PROPERTY_CLASSIFICATION_TYPE_CODE] ,&#xA;[ADDRESS_ID] ,&#xA;ISNULL([REGION_CODE],0) AS [REGION_CODE],&#xA;ISNULL([DISTRICT_CODE],0) AS [DISTRICT_CODE],&#xA;[PROPERTY_AREA_UNIT_TYPE_CODE],&#xA;CASE&#xA;&#x9;WHEN CHARINDEX('LIS', [PROPERTY_DATA_SOURCE_TYPE_CODE]) &gt; 0 AND&#xA;&#x9;&#x9; CHARINDEX('OPSS', [PROPERTY_DATA_SOURCE_TYPE_CODE]) &gt; 0 AND&#xA;&#x9;&#x9; CHARINDEX('PAIMS', [PROPERTY_DATA_SOURCE_TYPE_CODE]) &gt; 0 AND&#xA;&#x9;&#x9; CHARINDEX('PMBC', [PROPERTY_DATA_SOURCE_TYPE_CODE]) &gt; 0 THEN 'LIS_OPSS_PAIMS_PMBC'&#xA;&#x9;&#xA;&#x9;WHEN CHARINDEX('LIS', [PROPERTY_DATA_SOURCE_TYPE_CODE]) &gt; 0 AND&#xA;&#x9;&#x9; CHARINDEX('OPSS', [PROPERTY_DATA_SOURCE_TYPE_CODE]) &gt; 0 AND&#xA;&#x9;&#x9; CHARINDEX('PAIMS', [PROPERTY_DATA_SOURCE_TYPE_CODE]) &gt; 0 THEN 'LIS_OPSS_PAIMS'&#xA;&#x9;&#xA;&#x9;WHEN CHARINDEX('LIS', [PROPERTY_DATA_SOURCE_TYPE_CODE]) &gt; 0 AND&#xA;&#x9;&#x9; CHARINDEX('PAIMS', [PROPERTY_DATA_SOURCE_TYPE_CODE]) &gt; 0 AND&#xA;&#x9;&#x9; CHARINDEX('PMBC', [PROPERTY_DATA_SOURCE_TYPE_CODE]) &gt; 0 THEN 'LIS_PAIMS_PMBC'&#xA;&#x9;&#xA;&#x9;WHEN CHARINDEX('PAIMS', [PROPERTY_DATA_SOURCE_TYPE_CODE]) &gt; 0 AND&#xA;&#x9;&#x9; CHARINDEX('PMBC', [PROPERTY_DATA_SOURCE_TYPE_CODE]) &gt; 0 THEN 'PAIMS_PMBC'&#xA;&#x9;&#xA;&#x9;WHEN CHARINDEX('LIS', [PROPERTY_DATA_SOURCE_TYPE_CODE]) &gt; 0 AND&#xA;&#x9;&#x9; CHARINDEX('PMBC', [PROPERTY_DATA_SOURCE_TYPE_CODE]) &gt; 0 THEN 'LIS_PMBC'&#xA;&#x9;&#xA;&#x9;WHEN CHARINDEX('LIS', [PROPERTY_DATA_SOURCE_TYPE_CODE]) &gt; 0 AND&#xA;&#x9;&#x9; CHARINDEX('OPSS', [PROPERTY_DATA_SOURCE_TYPE_CODE]) &gt; 0 THEN 'LIS_OPSS'&#xA;&#x9;&#xA;&#x9;WHEN CHARINDEX('OPSS', [PROPERTY_DATA_SOURCE_TYPE_CODE]) &gt; 0 AND&#xA;&#x9;&#x9; CHARINDEX('PAIMS', [PROPERTY_DATA_SOURCE_TYPE_CODE]) &gt; 0 THEN 'OPSS_PAIMS'&#xA;&#x9;&#xA;&#x9;WHEN CHARINDEX('PAIMS', [PROPERTY_DATA_SOURCE_TYPE_CODE]) &gt; 0 THEN 'PAIMS'&#xA;&#x9;&#xA;&#x9;WHEN CHARINDEX('OPSS', [PROPERTY_DATA_SOURCE_TYPE_CODE]) &gt; 0 THEN 'OPSS'&#xA;&#x9;&#xA;&#x9;WHEN CHARINDEX('PMBC', [PROPERTY_DATA_SOURCE_TYPE_CODE]) &gt; 0 THEN 'PMBC'&#xA;&#x9;&#xA;&#x9;WHEN CHARINDEX('LIS', [PROPERTY_DATA_SOURCE_TYPE_CODE]) &gt; 0 THEN 'LIS'&#xA;&#x9;&#xA;&#x9;ELSE [PROPERTY_DATA_SOURCE_TYPE_CODE]&#xA;END AS [PROPERTY_DATA_SOURCE_TYPE_CODE],&#xA;ISNULL([PROPERTY_STATUS_TYPE_CODE],0) AS [PROPERTY_STATUS_TYPE_CODE], &#xA;ISNULL([SURPLUS_DECLARATION_TYPE_CODE],0) AS [SURPLUS_DECLARATION_TYPE_CODE],&#xA;[VOLUMETRIC_TYPE_CODE],&#xA;[VOLUME_UNIT_TYPE_CODE],&#xA;[PPH_STATUS_TYPE_CODE],&#xA;ISNULL([PROPERTY_DATA_SOURCE_EFFECTIVE_DATE],'1900-01-01') AS [PROPERTY_DATA_SOURCE_EFFECTIVE_DATE],&#xA;[NAME],&#xA;[DESCRIPTION],&#xA;[PID],&#xA;[PIN],&#xA;[FILE_NUMBER],&#xA;[FILE_NUMBER_SUFFIX],&#xA;[LAND_AREA],&#xA;[LAND_LEGAL_DESCRIPTION],&#xA;[BOUNDARY],&#xA;[LOCATION],&#xA;[GENERAL_LOCATION],&#xA;[SURVEY_PLAN_NUMBER],&#xA;[ENCUMBRANCE_REASON] ,&#xA;[SURPLUS_DECLARATION_COMMENT],&#xA;[SURPLUS_DECLARATION_DATE],&#xA;[NOTES],[MUNICIPAL_ZONING],&#xA;[IS_VOLUMETRIC_PARCEL],&#xA;[VOLUMETRIC_MEASUREMENT],&#xA;ISNULL([IS_OWNED],0) AS [IS_OWNED],&#xA;--ISNULL([IS_PROPERTY_OF_INTEREST],0) AS [IS_PROPERTY_OF_INTEREST],&#xA;ISNULL([IS_VISIBLE_TO_OTHER_AGENCIES],0) AS [IS_VISIBLE_TO_OTHER_AGENCIES],&#xA;ISNULL([IS_SENSITIVE],0) AS [IS_SENSITIVE],&#xA;[IS_PROVINCIAL_PUBLIC_HWY],&#xA;[PPH_STATUS_UPDATE_USERID],&#xA;[PPH_STATUS_UPDATE_TIMESTAMP],&#xA;[PPH_STATUS_UPDATE_USER_GUID],&#xA;[IS_RWY_BELT_DOM_PATENT],&#xA;[ZONING],&#xA;[ZONING_POTENTIAL],&#xA;[APP_CREATE_TIMESTAMP],&#xA;[APP_CREATE_USERID],&#xA;[APP_LAST_UPDATE_TIMESTAMP],&#xA;[APP_LAST_UPDATE_USERID],&#xA;[APP_CREATE_USER_DIRECTORY],&#xA;[APP_LAST_UPDATE_USER_DIRECTORY],&#xA;[ADDITIONAL_DETAILS],&#xA;[IS_UTILITIES_PAYABLE],&#xA;[IS_TAXES_PAYABLE],&#xA;[BAND_NAME],&#xA;[RESERVE_NAME],&#xA;--[IS_OTHER_INTEREST],&#xA;--ISNULL([IS_DISPOSED],0) AS [IS_DISPOSED],&#xA;ISNULL([IS_RETIRED],0) AS [IS_RETIRED]&#xA;FROM etl.PIMS_PROPERTY_MERGED&#xA;)&#xA;INSERT INTO dbo.PIMS_PROPERTY (&#xA;[PROPERTY_TYPE_CODE] ,&#xA;[PROPERTY_CLASSIFICATION_TYPE_CODE] ,&#xA;[ADDRESS_ID] ,&#xA;[REGION_CODE],&#xA;[DISTRICT_CODE],&#xA;[PROPERTY_AREA_UNIT_TYPE_CODE],&#xA;[PROPERTY_DATA_SOURCE_TYPE_CODE],&#xA;[PROPERTY_STATUS_TYPE_CODE],&#xA;[SURPLUS_DECLARATION_TYPE_CODE],&#xA;[VOLUMETRIC_TYPE_CODE],&#xA;[VOLUME_UNIT_TYPE_CODE],&#xA;[PPH_STATUS_TYPE_CODE],&#xA;[PROPERTY_DATA_SOURCE_EFFECTIVE_DATE],&#xA;[NAME],&#xA;[DESCRIPTION],&#xA;[PID],&#xA;[PIN],&#xA;[FILE_NUMBER],&#xA;[FILE_NUMBER_SUFFIX],&#xA;[LAND_AREA],&#xA;[LAND_LEGAL_DESCRIPTION],&#xA;[BOUNDARY],&#xA;[LOCATION],&#xA;[GENERAL_LOCATION],&#xA;[SURVEY_PLAN_NUMBER],&#xA;[ENCUMBRANCE_REASON] ,&#xA;[SURPLUS_DECLARATION_COMMENT],&#xA;[SURPLUS_DECLARATION_DATE],&#xA;[NOTES],[MUNICIPAL_ZONING],&#xA;[IS_VOLUMETRIC_PARCEL],&#xA;[VOLUMETRIC_MEASUREMENT],&#xA;[IS_OWNED],&#xA;--[IS_PROPERTY_OF_INTEREST],&#xA;[IS_VISIBLE_TO_OTHER_AGENCIES],&#xA;[IS_SENSITIVE],&#xA;[IS_PROVINCIAL_PUBLIC_HWY],&#xA;[PPH_STATUS_UPDATE_USERID],&#xA;[PPH_STATUS_UPDATE_TIMESTAMP],&#xA;[PPH_STATUS_UPDATE_USER_GUID],&#xA;[IS_RWY_BELT_DOM_PATENT],&#xA;[ZONING],&#xA;[ZONING_POTENTIAL],&#xA;[APP_CREATE_TIMESTAMP],&#xA;[APP_CREATE_USERID],&#xA;[APP_LAST_UPDATE_TIMESTAMP],&#xA;[APP_LAST_UPDATE_USERID],&#xA;[APP_CREATE_USER_DIRECTORY],&#xA;[APP_LAST_UPDATE_USER_DIRECTORY],&#xA;[ADDITIONAL_DETAILS],&#xA;[IS_UTILITIES_PAYABLE],&#xA;[IS_TAXES_PAYABLE],&#xA;[BAND_NAME],&#xA;[RESERVE_NAME],&#xA;--[IS_OTHER_INTEREST],&#xA;--[IS_DISPOSED], &#xA;[IS_RETIRED]&#xA;) &#xA;select * from x&#xA;;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\seq\STEP 2 - INSERT INTO ETL PIMS_PROPERTY_MERGED"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{C33670C4-A31C-48F8-98B7-F0CFE9CC94BC}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="STEP 2 - INSERT INTO ETL PIMS_PROPERTY_MERGED"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{A4157154-8FF2-477B-A4CA-636A021C5560}"
+              SQLTask:BypassPrepare="False"
+              SQLTask:SqlStatementSource="-- Step 1: Find Duplicate PIDs&#xA;WITH duplicatePIDs AS (&#xA;    SELECT PID &#xA;    FROM etl.duplicatePIDs&#xA;)&#xA;,EXTRACT_VOLUMETRIC_TYPE_CODE AS (&#xA;    SELECT * &#xA;    FROM (&#xA;        SELECT &#xA;            PP.PID, &#xA;            PP.VOLUMETRIC_TYPE_CODE,             &#xA;            ROW_NUMBER() OVER (&#xA;                PARTITION BY PP.PID &#xA;                ORDER BY &#xA;                    CASE &#xA;                        WHEN PP.APP_LAST_UPDATE_USERID NOT LIKE '%ETL%' AND PP.VOLUMETRIC_TYPE_CODE IS NOT NULL THEN 1 &#xA;                        WHEN PP.VOLUMETRIC_TYPE_CODE IS NOT NULL THEN 2 &#xA;                        ELSE 3 &#xA;                    END, &#xA;                    PP.APP_LAST_UPDATE_TIMESTAMP DESC&#xA;            ) AS RowNum &#xA;        FROM &#xA;            DBO.PIMS_PROPERTY PP &#xA;            JOIN etl.DuplicatePIDs pis ON PP.PID = PIS.PID&#xA;    ) AS SubQuery &#xA;    WHERE RowNum = 1&#xA;)&#xA;&#xA;,EXTRACT_VOLUME_UNIT_TYPE_CODE AS (&#xA;    SELECT * &#xA;    FROM (&#xA;        SELECT &#xA;            PP.PID, &#xA;            PP.VOLUME_UNIT_TYPE_CODE,             &#xA;            ROW_NUMBER() OVER (&#xA;                PARTITION BY PP.PID &#xA;                ORDER BY &#xA;                    CASE &#xA;                        WHEN PP.APP_LAST_UPDATE_USERID NOT LIKE '%ETL%' AND PP.VOLUME_UNIT_TYPE_CODE IS NOT NULL THEN 1 &#xA;                        WHEN PP.VOLUME_UNIT_TYPE_CODE IS NOT NULL THEN 2 &#xA;                        ELSE 3 &#xA;                    END, &#xA;                    PP.APP_LAST_UPDATE_TIMESTAMP DESC&#xA;            ) AS RowNum &#xA;        FROM &#xA;            DBO.PIMS_PROPERTY PP &#xA;            JOIN etl.DuplicatePIDs pis ON PP.PID = PIS.PID&#xA;    ) AS SubQuery &#xA;    WHERE RowNum = 1&#xA;)&#xA;,EXTRACT_PROPERTY_DATA_SOURCE_EFFECTIVE_DATE AS (&#xA;    SELECT * &#xA;    FROM (&#xA;        SELECT &#xA;            PP.PID, &#xA;            PP.PROPERTY_DATA_SOURCE_EFFECTIVE_DATE,             &#xA;            ROW_NUMBER() OVER (&#xA;                PARTITION BY PP.PID &#xA;                ORDER BY &#xA;                    CASE &#xA;                        WHEN PP.APP_LAST_UPDATE_USERID NOT LIKE '%ETL%' AND PP.PROPERTY_DATA_SOURCE_EFFECTIVE_DATE IS NOT NULL THEN 1 &#xA;                        WHEN PP.PROPERTY_DATA_SOURCE_EFFECTIVE_DATE IS NOT NULL THEN 2 &#xA;                        ELSE 3 &#xA;                    END, &#xA;                    PP.APP_LAST_UPDATE_TIMESTAMP DESC&#xA;            ) AS RowNum &#xA;        FROM &#xA;            DBO.PIMS_PROPERTY PP &#xA;            JOIN etl.DuplicatePIDs pis ON PP.PID = PIS.PID&#xA;    ) AS SubQuery &#xA;    WHERE RowNum = 1&#xA;)&#xA;,EXTRACT_FILE_NUMBER AS (&#xA;    SELECT * &#xA;    FROM (&#xA;        SELECT &#xA;            PP.PID, &#xA;            PP.FILE_NUMBER,             &#xA;            ROW_NUMBER() OVER (&#xA;                PARTITION BY PP.PID &#xA;                ORDER BY &#xA;                    CASE &#xA;                        WHEN PP.APP_LAST_UPDATE_USERID NOT LIKE '%ETL%' AND PP.FILE_NUMBER IS NOT NULL THEN 1 &#xA;                        WHEN PP.FILE_NUMBER IS NOT NULL THEN 2 &#xA;                        ELSE 3 &#xA;                    END, &#xA;                    PP.APP_LAST_UPDATE_TIMESTAMP DESC&#xA;            ) AS RowNum &#xA;        FROM &#xA;            DBO.PIMS_PROPERTY PP &#xA;            JOIN etl.DuplicatePIDs pis ON PP.PID = PIS.PID&#xA;    ) AS SubQuery &#xA;    WHERE RowNum = 1&#xA;)&#xA;,EXTRACT_FILE_NUMBER_SUFFIX AS (&#xA;    SELECT * &#xA;    FROM (&#xA;        SELECT &#xA;            PP.PID, &#xA;            PP.FILE_NUMBER_SUFFIX,             &#xA;            ROW_NUMBER() OVER (&#xA;                PARTITION BY PP.PID &#xA;                ORDER BY &#xA;                    CASE &#xA;                        WHEN PP.APP_LAST_UPDATE_USERID NOT LIKE '%ETL%' AND PP.FILE_NUMBER_SUFFIX IS NOT NULL THEN 1 &#xA;                        WHEN PP.FILE_NUMBER_SUFFIX IS NOT NULL THEN 2 &#xA;                        ELSE 3 &#xA;                    END, &#xA;                    PP.APP_LAST_UPDATE_TIMESTAMP DESC&#xA;            ) AS RowNum &#xA;        FROM &#xA;            DBO.PIMS_PROPERTY PP &#xA;            JOIN etl.DuplicatePIDs pis ON PP.PID = PIS.PID&#xA;    ) AS SubQuery &#xA;    WHERE RowNum = 1&#xA;)&#xA;&#xA;,EXTRACT_IS_RETIRED AS (&#xA;    SELECT * &#xA;    FROM (&#xA;        SELECT &#xA;            PP.PID, &#xA;            CASE &#xA;                WHEN PP.IS_RETIRED = 1 THEN 1 &#xA;                WHEN (PP.IS_RETIRED = 0 OR PP.IS_RETIRED IS NULL) THEN 0 &#xA;                ELSE NULL &#xA;            END AS IS_RETIRED,             &#xA;            ROW_NUMBER() OVER (&#xA;                PARTITION BY PP.PID &#xA;                ORDER BY &#xA;                    CASE &#xA;                        WHEN PP.APP_LAST_UPDATE_USERID NOT LIKE '%ETL%' AND PP.IS_RETIRED IS NOT NULL THEN 1 &#xA;                        WHEN PP.IS_RETIRED IS NOT NULL THEN 2 &#xA;                        ELSE 3 &#xA;                    END, &#xA;                    PP.APP_LAST_UPDATE_TIMESTAMP DESC&#xA;            ) AS RowNum &#xA;        FROM &#xA;            DBO.PIMS_PROPERTY PP &#xA;            JOIN etl.DuplicatePIDs pis ON PP.PID = PIS.PID&#xA;    ) AS SubQuery &#xA;    WHERE RowNum = 1&#xA;)&#xA;,EXTRACT_ADDRESS_ID AS (SELECT * FROM (SELECT PP.PID, PP.ADDRESS_ID, ROW_NUMBER() OVER (PARTITION BY PP.PID ORDER BY CASE WHEN PA.STREET_ADDRESS_1 IS NOT NULL THEN 1 WHEN PP.APP_LAST_UPDATE_USERID = 'PIMS_ETL_USER' AND PP.ADDRESS_ID IS NOT NULL THEN 2 WHEN PP.ADDRESS_ID IS NOT NULL THEN 3 ELSE 4 END, PP.APP_LAST_UPDATE_TIMESTAMP DESC) AS RowNum FROM DBO.PIMS_PROPERTY PP JOIN etl.DuplicatePIDs pis ON PP.PID = PIS.PID LEFT JOIN dbo.PIMS_ADDRESS PA on PP.ADDRESS_ID =  PA.ADDRESS_ID) AS SubQuery WHERE RowNum = 1)&#xA;,EXTRACT_PROPERTY_TYPE_CODE AS ( SELECT * FROM (&#x9;SELECT&#x9;PID, PROPERTY_TYPE_CODE,ROW_NUMBER() OVER (PARTITION BY PID ORDER BY CASE WHEN APP_LAST_UPDATE_USERID NOT LIKE '%ETL%' THEN 1 WHEN PROPERTY_TYPE_CODE &lt;&gt; 'LAND' THEN 2 ELSE 3 END, APP_LAST_UPDATE_TIMESTAMP DESC) AS RowNum FROM DBO.PIMS_PROPERTY  WHERE PID IN (SELECT pis.PID FROM etl.DuplicatePIDs pis) ) AS SubQuery WHERE RowNum = 1),&#xA;EXTRACT_PROPERTY_CLASSIFICATION_TYPE_CODE AS (SELECT * FROM (SELECT &#x9;PID, PROPERTY_CLASSIFICATION_TYPE_CODE, ROW_NUMBER() OVER (PARTITION BY PID ORDER BY CASE WHEN APP_LAST_UPDATE_USERID NOT LIKE '%ETL%' AND PROPERTY_CLASSIFICATION_TYPE_CODE IS NOT NULL  THEN 1 WHEN PROPERTY_CLASSIFICATION_TYPE_CODE = 'COREOPER' THEN 2&#x9;WHEN  PROPERTY_CLASSIFICATION_TYPE_CODE IS NOT NULL THEN 3 ELSE 4 END, APP_LAST_UPDATE_TIMESTAMP DESC ) AS RowNum FROM DBO.PIMS_PROPERTY WHERE PID IN (SELECT pis.PID FROM etl.DuplicatePIDs pis) ) AS SubQuery WHERE RowNum = 1),&#xA;EXTRACT_REGION_CODE AS (SELECT * FROM (&#x9;SELECT PID,&#x9;REGION_CODE, ROW_NUMBER() OVER (PARTITION BY PID ORDER BY CASE WHEN APP_LAST_UPDATE_USERID NOT LIKE '%ETL%' AND REGION_CODE IS NOT NULL THEN 1 WHEN PROPERTY_DATA_SOURCE_TYPE_CODE = 'PAIMS'  AND REGION_CODE IS NOT NULL THEN 2 WHEN PROPERTY_DATA_SOURCE_TYPE_CODE = 'OPSS'  AND REGION_CODE IS NOT NULL THEN 3 WHEN REGION_CODE IS NOT NULL THEN 4 ELSE 5 END, APP_LAST_UPDATE_TIMESTAMP DESC) AS RowNum FROM DBO.PIMS_PROPERTY WHERE PID IN (SELECT pis.PID FROM etl.DuplicatePIDs pis) ) AS SubQuery WHERE RowNum = 1),&#xA;EXTRACT_DISTRICT_CODE AS (SELECT * FROM ( SELECT PID, DISTRICT_CODE, ROW_NUMBER() OVER (PARTITION BY PID ORDER BY  CASE WHEN APP_LAST_UPDATE_USERID NOT LIKE '%ETL%' AND DISTRICT_CODE IS NOT NULL THEN 1 WHEN PROPERTY_DATA_SOURCE_TYPE_CODE = 'PAIMS' AND DISTRICT_CODE IS NOT NULL THEN 2 WHEN PROPERTY_DATA_SOURCE_TYPE_CODE = 'OPSS' AND DISTRICT_CODE IS NOT NULL THEN 3 WHEN DISTRICT_CODE IS NOT NULL THEN 4 ELSE 5 END, APP_LAST_UPDATE_TIMESTAMP DESC) AS RowNum FROM DBO.PIMS_PROPERTY WHERE  PID IN (SELECT pis.PID FROM etl.DuplicatePIDs pis) ) AS SubQuery WHERE RowNum = 1),&#xA;EXTRACT_PROPERTY_AREA_UNIT_TYPE_CODE AS (SELECT * FROM (SELECT PID, CASE WHEN (APP_LAST_UPDATE_USERID LIKE '%ETL%' AND LAND_AREA IS NULL) THEN NULL ELSE PROPERTY_AREA_UNIT_TYPE_CODE END AS PROPERTY_AREA_UNIT_TYPE_CODE, APP_LAST_UPDATE_USERID, APP_LAST_UPDATE_TIMESTAMP, ROW_NUMBER() OVER (PARTITION BY PID ORDER BY CASE WHEN APP_LAST_UPDATE_USERID NOT LIKE '%ETL%' THEN 1 WHEN (LAND_AREA &lt;&gt; 0 OR LAND_AREA IS NOT NULL) THEN 2 ELSE 3 END, APP_LAST_UPDATE_TIMESTAMP DESC) AS RowNum FROM DBO.PIMS_PROPERTY WHERE PID IN (SELECT pis.PID FROM etl.DuplicatePIDs pis)) AS SubQuery WHERE RowNum = 1)&#xA;,DistinctDataSources AS (&#xA;    SELECT DISTINCT pid, PROPERTY_DATA_SOURCE_TYPE_CODE&#xA;    FROM PIMS_PROPERTY&#xA;    where pid is not null&#xA;),EXTRACT_PROPERTY_DATA_SOURCE_TYPE_CODE AS (SELECT pp.PID, (SELECT STRING_AGG(ds.PROPERTY_DATA_SOURCE_TYPE_CODE, ', ') FROM DistinctDataSources ds WHERE ds.pid = pp.pid) AS PROPERTY_DATA_SOURCE_TYPE_CODE FROM DBO.PIMS_PROPERTY pp JOIN etl.DuplicatePIDs pis ON pp.pid = pis.pid GROUP BY pp.PID)&#xA;,EXTRACT_PROPERTY_STATUS_TYPE_CODE AS (SELECT * FROM (SELECT pp.PID, CASE WHEN PROPERTY_DATA_SOURCE_TYPE_CODE = 'PAIMS' THEN PROPERTY_STATUS_TYPE_CODE ELSE 'UNKNOWN' END AS PROPERTY_STATUS_TYPE_CODE, ROW_NUMBER() OVER (PARTITION BY PID ORDER BY CASE WHEN (PROPERTY_DATA_SOURCE_TYPE_CODE = 'PAIMS' AND PROPERTY_STATUS_TYPE_CODE &lt;&gt; 'UNKNOWN' AND PROPERTY_STATUS_TYPE_CODE IS NOT NULL) THEN 1 WHEN PROPERTY_STATUS_TYPE_CODE IS NOT NULL THEN 2 ELSE 3 END, APP_LAST_UPDATE_TIMESTAMP DESC) AS RowNum FROM DBO.PIMS_PROPERTY pp WHERE pp.PID IN (SELECT pis.PID FROM DuplicatePIDs pis)) AS SubQuery WHERE RowNum = 1)&#xA;,EXTRACT_SURPLUS_DECLARATION_TYPE_CODE AS (SELECT * FROM (SELECT pp.PID, SURPLUS_DECLARATION_TYPE_CODE, ROW_NUMBER() OVER (PARTITION BY PID ORDER BY CASE WHEN SURPLUS_DECLARATION_TYPE_CODE = 'YES' THEN 1 WHEN (SURPLUS_DECLARATION_TYPE_CODE = 'NO' OR SURPLUS_DECLARATION_TYPE_CODE = 'UNKNOWN') THEN 2 ELSE 3 END, APP_LAST_UPDATE_TIMESTAMP DESC) AS RowNum FROM DBO.PIMS_PROPERTY pp WHERE pp.PID IN (SELECT pis.PID FROM etl.DuplicatePIDs pis)) AS SubQuery WHERE RowNum = 1)&#xA;,EXTRACT_PPH_STATUS_TYPE_CODE AS (SELECT * FROM (SELECT pp.PID, PPH_STATUS_TYPE_CODE, ROW_NUMBER() OVER (PARTITION BY PID ORDER BY CASE WHEN PPH_STATUS_UPDATE_USERID IS NOT NULL THEN 1 WHEN (PPH_STATUS_UPDATE_USERID IS NULL OR PPH_STATUS_UPDATE_USERID = 'UNKNOWN') THEN 2 ELSE 3 END, APP_LAST_UPDATE_TIMESTAMP DESC) AS RowNum FROM DBO.PIMS_PROPERTY pp WHERE pp.PID IN (SELECT pis.PID FROM etl.DuplicatePIDs pis)) AS SubQuery WHERE RowNum = 1)&#xA;,DistinctNames AS (&#xA;    SELECT DISTINCT pid, &#xA;&#x9;&#x9;CASE &#xA;&#x9;&#x9;&#x9;WHEN ([NAME] IS NULL OR [NAME] = '' ) THEN NULL&#xA;&#x9;&#x9;&#x9;WHEN [NAME] = '.' THEN NULL &#xA;&#x9;&#x9;&#x9;ELSE PROPERTY_DATA_SOURCE_TYPE_CODE+': '+[NAME]&#xA;&#x9;&#x9;END AS [NAME]&#xA;    FROM PIMS_PROPERTY&#xA;    where pid is not null&#xA;),DistinctDescription AS (&#xA;    SELECT DISTINCT pid, &#xA;&#x9;&#x9;CASE &#xA;&#x9;&#x9;&#x9;WHEN ([DESCRIPTION] IS NULL OR [DESCRIPTION] = '' ) THEN NULL&#xA;&#x9;&#x9;&#x9;ELSE PROPERTY_DATA_SOURCE_TYPE_CODE+': '+[DESCRIPTION]&#xA;&#x9;&#x9;END AS [DESCRIPTION]&#xA;    FROM PIMS_PROPERTY&#xA;    where pid is not null&#xA;),EXTRACT_PIN AS (SELECT * FROM (SELECT pp.PID, PIN, ROW_NUMBER() OVER (PARTITION BY PID ORDER BY CASE WHEN PIN IS NOT NULL THEN 1 ELSE 2 END, APP_LAST_UPDATE_TIMESTAMP DESC) AS RowNum FROM DBO.PIMS_PROPERTY pp WHERE pp.PID IN (SELECT pis.PID FROM etl.DuplicatePIDs pis)) AS SubQuery WHERE RowNum = 1)&#xA;,DistinctLandLegalDescription AS (&#xA;    SELECT DISTINCT pid, &#xA;&#x9;&#x9;CASE &#xA;&#x9;&#x9;&#x9;WHEN (LAND_LEGAL_DESCRIPTION IS NULL OR LAND_LEGAL_DESCRIPTION = '') THEN NULL&#xA;&#x9;&#x9;&#x9;WHEN (PROPERTY_DATA_SOURCE_TYPE_CODE ='OPSS'   ) THEN PROPERTY_DATA_SOURCE_TYPE_CODE+': '+LAND_LEGAL_DESCRIPTION&#xA;&#x9;&#x9;&#x9;ELSE PROPERTY_DATA_SOURCE_TYPE_CODE+': '+LAND_LEGAL_DESCRIPTION&#xA;&#x9;&#x9;END AS LAND_LEGAL_DESCRIPTION&#xA;    FROM PIMS_PROPERTY&#xA;    where pid is not null&#xA;),DistinctSurplusDeclarationComment AS (&#xA;    SELECT DISTINCT pid, &#xA;&#x9;&#x9;CASE &#xA;&#x9;&#x9;&#x9;WHEN (SURPLUS_DECLARATION_COMMENT IS NULL OR SURPLUS_DECLARATION_COMMENT = '' ) THEN NULL&#xA;&#x9;&#x9;&#x9;ELSE PROPERTY_DATA_SOURCE_TYPE_CODE+': '+SURPLUS_DECLARATION_COMMENT&#xA;&#x9;&#x9;END AS SURPLUS_DECLARATION_COMMENT&#xA;    FROM PIMS_PROPERTY&#xA;    where pid is not null&#xA;),EXTRACT_SURPLUS_DECLARATION_DATE AS (SELECT * FROM (SELECT pp.PID, CASE WHEN PROPERTY_DATA_SOURCE_TYPE_CODE = 'LIS' THEN SURPLUS_DECLARATION_DATE ELSE NULL END AS SURPLUS_DECLARATION_DATE, ROW_NUMBER() OVER (PARTITION BY PID ORDER BY CASE WHEN (PROPERTY_DATA_SOURCE_TYPE_CODE = 'LIS' AND SURPLUS_DECLARATION_DATE IS NOT NULL) THEN 1 WHEN SURPLUS_DECLARATION_DATE IS NOT NULL THEN 2 ELSE 3 END, APP_LAST_UPDATE_TIMESTAMP DESC) AS RowNum FROM DBO.PIMS_PROPERTY pp WHERE pp.PID IN (SELECT pis.PID FROM etl.DuplicatePIDs pis)) AS SubQuery WHERE RowNum = 1)&#xA;,DistinctNotes AS (&#xA;    SELECT DISTINCT pid, &#xA;&#x9;&#x9;CASE &#xA;&#x9;&#x9;&#x9;WHEN (NOTES IS NULL OR NOTES = '' ) THEN NULL&#xA;&#x9;&#x9;&#x9;ELSE PROPERTY_DATA_SOURCE_TYPE_CODE+': '+NOTES&#xA;&#x9;&#x9;END AS NOTES&#xA;    FROM PIMS_PROPERTY&#xA;    where pid is not null&#xA;),DistinctNotesSelection AS (&#xA;SELECT dp.pid,&#xA;    LEFT(&#xA;        STRING_AGG(dn.NOTES, ' ||| '), &#xA;        LEN(STRING_AGG(dn.NOTES, ' ||| ')) - 0&#xA;    ) AS NOTES&#xA;FROM etl.DuplicatePIDs dp&#xA;LEFT JOIN DistinctNotes dn ON dp.pid = dn.pid&#xA;GROUP BY dp.pid&#xA; ),EXTRACT_IS_VOLUMETRIC_PARCEL AS (SELECT * FROM (SELECT pp.PID, CASE WHEN PROPERTY_DATA_SOURCE_TYPE_CODE = 'PAIMS' THEN IS_VOLUMETRIC_PARCEL ELSE 0 END AS IS_VOLUMETRIC_PARCEL, ROW_NUMBER() OVER (PARTITION BY PID ORDER BY CASE WHEN (PROPERTY_DATA_SOURCE_TYPE_CODE = 'PAIMS' AND IS_VOLUMETRIC_PARCEL IS NOT NULL) THEN 1 WHEN IS_VOLUMETRIC_PARCEL IS NOT NULL THEN 2 ELSE 3 END, APP_LAST_UPDATE_TIMESTAMP DESC) AS RowNum FROM DBO.PIMS_PROPERTY pp WHERE pp.PID IN (SELECT pis.PID FROM DuplicatePIDs pis)) AS SubQuery WHERE RowNum = 1)&#xA;,EXTRACT_VOLUMETRIC_MEASUREMENT AS (SELECT * FROM (SELECT pp.PID, CASE WHEN IS_VOLUMETRIC_PARCEL = 1 THEN VOLUMETRIC_MEASUREMENT ELSE VOLUMETRIC_MEASUREMENT END AS VOLUMETRIC_MEASUREMENT, ROW_NUMBER() OVER (PARTITION BY PID ORDER BY CASE WHEN (IS_VOLUMETRIC_PARCEL = 1) THEN 1 ELSE 2 END, APP_LAST_UPDATE_TIMESTAMP DESC) AS RowNum FROM DBO.PIMS_PROPERTY pp WHERE pp.PID IN (SELECT pis.PID FROM etl.DuplicatePIDs pis)) AS SubQuery WHERE RowNum = 1)&#xA;,EXTRACT_IS_OWNED AS (SELECT * FROM (SELECT pp.PID, CASE WHEN IS_OWNED = 1 THEN 1 ELSE 0 END AS IS_OWNED, ROW_NUMBER() OVER (PARTITION BY PID ORDER BY CASE WHEN (IS_OWNED = 1) THEN 1 ELSE 2 END, APP_LAST_UPDATE_TIMESTAMP DESC) AS RowNum FROM DBO.PIMS_PROPERTY pp WHERE pp.PID IN (SELECT pis.PID FROM etl.DuplicatePIDs pis)) AS SubQuery WHERE RowNum = 1)&#xA;,EXTRACT_IS_PROVINCIAL_PUBLIC_HWY AS (SELECT * FROM (SELECT pp.PID, CASE WHEN IS_PROVINCIAL_PUBLIC_HWY = 1 THEN 1 WHEN (IS_PROVINCIAL_PUBLIC_HWY = 0 OR IS_PROVINCIAL_PUBLIC_HWY IS NULL) THEN 0 ELSE NULL END AS IS_PROVINCIAL_PUBLIC_HWY, ROW_NUMBER() OVER (PARTITION BY PID ORDER BY CASE WHEN IS_PROVINCIAL_PUBLIC_HWY = 1 THEN 1 WHEN (IS_PROVINCIAL_PUBLIC_HWY = 0 OR IS_PROVINCIAL_PUBLIC_HWY IS NULL) THEN 2 ELSE 3 END, APP_LAST_UPDATE_TIMESTAMP DESC) AS RowNum FROM DBO.PIMS_PROPERTY pp WHERE pp.PID IN (SELECT pis.PID FROM etl.DuplicatePIDs pis)) AS SubQuery WHERE RowNum = 1)&#xA;,EXTRACT_PPH_STATUS_UPDATE_USERID AS (SELECT * FROM (SELECT pp.PID, CASE WHEN PPH_STATUS_UPDATE_USERID IS NULL THEN NULL ELSE PPH_STATUS_UPDATE_USERID END AS PPH_STATUS_UPDATE_USERID, ROW_NUMBER() OVER (PARTITION BY PID ORDER BY CASE WHEN PPH_STATUS_UPDATE_USERID IS NOT NULL THEN 1 WHEN (PPH_STATUS_UPDATE_USERID IS NULL OR PPH_STATUS_UPDATE_USERID = 'UNKNOWN') THEN 2 ELSE 3 END, PPH_STATUS_UPDATE_TIMESTAMP DESC) AS RowNum FROM DBO.PIMS_PROPERTY pp WHERE pp.PID IN (SELECT pis.PID FROM etl.DuplicatePIDs pis)) AS SubQuery WHERE RowNum = 1)&#xA;,&#xA;EXTRACT_PPH_STATUS_UPDATE_TIMESTAMP AS (&#xA;SELECT * FROM (&#xA;&#x9;&#x9;SELECT&#xA;        pp.PID,  &#xA;        CASE WHEN PPH_STATUS_UPDATE_TIMESTAMP IS NULL THEN NULL &#xA;&#x9;&#x9;ELSE PPH_STATUS_UPDATE_TIMESTAMP END AS PPH_STATUS_UPDATE_TIMESTAMP,&#xA;&#x9;&#x9; &#xA;        ROW_NUMBER() OVER (PARTITION BY PID ORDER BY &#xA;&#x9;&#x9;&#x9;&#x9;CASE &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;WHEN PPH_STATUS_UPDATE_TIMESTAMP  IS NOT NULL THEN 1&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;ELSE 2&#xA;&#x9;&#x9;&#x9;&#x9;END,&#xA;&#x9;&#x9;&#x9;&#x9;PPH_STATUS_UPDATE_TIMESTAMP  DESC&#xA;&#x9;&#x9;&#x9;) AS RowNum&#xA;            &#xA;    FROM DBO.PIMS_PROPERTY pp &#xA;    WHERE pp.PID IN (SELECT pis.PID FROM etl.DuplicatePIDs pis)  &#xA;) AS SubQuery WHERE RowNum = 1&#xA;)&#xA;,EXTRACT_PPH_STATUS_UPDATE_USER_GUID AS (&#xA;SELECT * FROM (&#xA;&#x9;&#x9;SELECT&#xA;        pp.PID,  &#xA;        CASE WHEN PPH_STATUS_UPDATE_USER_GUID IS NULL THEN NULL &#xA;&#x9;&#x9;ELSE PPH_STATUS_UPDATE_USER_GUID END AS PPH_STATUS_UPDATE_USER_GUID,&#xA;&#x9;&#x9; &#xA;        ROW_NUMBER() OVER (PARTITION BY PID ORDER BY &#xA;&#x9;&#x9;&#x9;&#x9;CASE &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;WHEN PPH_STATUS_UPDATE_USER_GUID  IS NOT NULL THEN 1&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;ELSE 2&#xA;&#x9;&#x9;&#x9;&#x9;END,&#xA;&#x9;&#x9;&#x9;&#x9;PPH_STATUS_UPDATE_TIMESTAMP  DESC&#xA;&#x9;&#x9;&#x9;) AS RowNum&#xA;            &#xA;    FROM DBO.PIMS_PROPERTY pp &#xA;    WHERE pp.PID IN (SELECT pis.PID FROM etl.DuplicatePIDs pis)  &#xA;) AS SubQuery WHERE RowNum = 1&#xA;),EXTRACT_IS_RWY_BELT_DOM_PATENT AS (&#xA;SELECT * FROM (&#xA;&#x9;&#x9;SELECT&#xA;        pp.PID,  &#xA;        case &#xA;&#x9;&#x9;&#x9;when IS_RWY_BELT_DOM_PATENT = 1 then 1&#xA;&#x9;&#x9;&#x9;ELSE 0&#xA;&#x9;&#x9;&#x9;END AS IS_RWY_BELT_DOM_PATENT,&#xA;        ROW_NUMBER() OVER (PARTITION BY PID ORDER BY &#xA;            CASE &#xA;                 &#xA;&#x9;&#x9;&#x9;&#x9;WHEN (  IS_RWY_BELT_DOM_PATENT = 1 ) THEN 1&#xA;&#x9;&#x9;&#x9;&#x9; &#xA;                ELSE 2&#xA;            END,&#xA;            APP_LAST_UPDATE_TIMESTAMP DESC&#xA;        ) AS RowNum&#xA;    FROM DBO.PIMS_PROPERTY pp &#xA;    WHERE pp.PID IN (SELECT pis.PID FROM etl.DuplicatePIDs pis)  &#xA;) AS SubQuery WHERE RowNum = 1&#xA;),DistinctZoning AS (&#xA;    SELECT DISTINCT pid, &#xA;&#x9;&#x9;CASE &#xA;&#x9;&#x9;&#x9;WHEN (ZONING IS NULL OR ZONING = '' ) THEN NULL&#xA;&#x9;&#x9;&#x9;ELSE PROPERTY_DATA_SOURCE_TYPE_CODE+': '+ZONING&#xA;&#x9;&#x9;END AS ZONING&#xA;    FROM PIMS_PROPERTY&#xA;    where pid is not null&#xA;),DistinctZoningPotential AS (&#xA;    SELECT DISTINCT pid, &#xA;&#x9;&#x9;CASE &#xA;&#x9;&#x9;&#x9;WHEN (ZONING_POTENTIAL IS NULL OR ZONING_POTENTIAL = '' ) THEN NULL&#xA;&#x9;&#x9;&#x9;ELSE PROPERTY_DATA_SOURCE_TYPE_CODE+': '+ZONING_POTENTIAL&#xA;&#x9;&#x9;END AS ZONING_POTENTIAL&#xA;    FROM PIMS_PROPERTY&#xA;    where pid is not null&#xA;),DistinctGeneralLocation AS (&#xA;    SELECT DISTINCT pid, &#xA;&#x9;&#x9;CASE &#xA;&#x9;&#x9;&#x9;WHEN (GENERAL_LOCATION IS NULL OR GENERAL_LOCATION = '' ) THEN NULL&#xA;&#x9;&#x9;&#x9;ELSE PROPERTY_DATA_SOURCE_TYPE_CODE+': '+GENERAL_LOCATION&#xA;&#x9;&#x9;END AS GENERAL_LOCATION&#xA;    FROM PIMS_PROPERTY&#xA;    where pid is not null&#xA;),DistinctAdditionalDetails AS (&#xA;    SELECT DISTINCT pid, &#xA;&#x9;&#x9;CASE &#xA;&#x9;&#x9;&#x9;WHEN (ADDITIONAL_DETAILS IS NULL OR ADDITIONAL_DETAILS = '' ) THEN NULL&#xA;&#x9;&#x9;&#x9;ELSE PROPERTY_DATA_SOURCE_TYPE_CODE+': '+ADDITIONAL_DETAILS&#xA;&#x9;&#x9;END AS ADDITIONAL_DETAILS&#xA;    FROM PIMS_PROPERTY&#xA;    where pid is not null&#xA;),EXTRACT_IS_UTILITIES_PAYABLE  AS (&#xA;SELECT * FROM (&#xA;&#x9;&#x9;SELECT&#xA;        pp.PID,  &#xA;        CASE &#xA;&#x9;&#x9;&#x9;WHEN IS_UTILITIES_PAYABLE = 1 THEN 1&#xA;&#x9;&#x9;&#x9;WHEN (IS_UTILITIES_PAYABLE = 0 OR IS_UTILITIES_PAYABLE IS NULL) THEN 0&#xA;&#x9;&#x9;&#x9;ELSE NULL&#xA;&#x9;&#x9;&#x9;END AS IS_UTILITIES_PAYABLE,&#xA;        ROW_NUMBER() OVER (PARTITION BY PID ORDER BY &#xA;&#x9;&#x9;&#x9;&#x9;CASE &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;WHEN IS_UTILITIES_PAYABLE = 1 THEN 1&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;WHEN (IS_UTILITIES_PAYABLE = 0 OR IS_UTILITIES_PAYABLE IS NULL )  THEN 2&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;ELSE 3&#xA;&#x9;&#x9;&#x9;&#x9;END,&#xA;&#x9;&#x9;&#x9;&#x9;APP_LAST_UPDATE_TIMESTAMP DESC&#xA;&#x9;&#x9;&#x9;) AS RowNum&#xA;            &#xA;    FROM DBO.PIMS_PROPERTY pp &#xA;    WHERE pp.PID IN (SELECT pis.PID FROM etl.DuplicatePIDs pis)  &#xA;) AS SubQuery WHERE RowNum = 1&#xA;),EXTRACT_IS_TAXES_PAYABLE  AS (&#xA;SELECT * FROM (&#xA;&#x9;&#x9;SELECT&#xA;        pp.PID,  &#xA;        CASE &#xA;&#x9;&#x9;&#x9;WHEN IS_TAXES_PAYABLE = 1 THEN 1&#xA;&#x9;&#x9;&#x9;WHEN (IS_TAXES_PAYABLE = 0 OR IS_TAXES_PAYABLE IS NULL) THEN 0&#xA;&#x9;&#x9;&#x9;ELSE NULL&#xA;&#x9;&#x9;&#x9;END AS IS_TAXES_PAYABLE,&#xA;        ROW_NUMBER() OVER (PARTITION BY PID ORDER BY &#xA;&#x9;&#x9;&#x9;&#x9;CASE &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;WHEN IS_TAXES_PAYABLE = 1 THEN 1&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;WHEN (IS_TAXES_PAYABLE = 0 OR IS_TAXES_PAYABLE IS NULL )  THEN 2&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;ELSE 3&#xA;&#x9;&#x9;&#x9;&#x9;END,&#xA;&#x9;&#x9;&#x9;&#x9;APP_LAST_UPDATE_TIMESTAMP DESC&#xA;&#x9;&#x9;&#x9;) AS RowNum&#xA;            &#xA;    FROM DBO.PIMS_PROPERTY pp &#xA;    WHERE pp.PID IN (SELECT pis.PID FROM etl.DuplicatePIDs pis)  &#xA;) AS SubQuery WHERE RowNum = 1&#xA;),DistinctBandName AS (&#xA;    SELECT DISTINCT pid, &#xA;&#x9;&#x9;CASE &#xA;&#x9;&#x9;&#x9;WHEN (BAND_NAME IS NULL OR BAND_NAME = '' ) THEN NULL&#xA;&#x9;&#x9;&#x9;ELSE PROPERTY_DATA_SOURCE_TYPE_CODE+': '+BAND_NAME&#xA;&#x9;&#x9;END AS BAND_NAME&#xA;    FROM PIMS_PROPERTY&#xA;    where pid is not null&#xA;),DistinctReserveName AS (&#xA;    SELECT DISTINCT pid, &#xA;&#x9;&#x9;CASE &#xA;&#x9;&#x9;&#x9;WHEN (RESERVE_NAME IS NULL OR RESERVE_NAME = '' ) THEN NULL&#xA;&#x9;&#x9;&#x9;ELSE PROPERTY_DATA_SOURCE_TYPE_CODE+': '+RESERVE_NAME&#xA;&#x9;&#x9;END AS RESERVE_NAME&#xA;    FROM PIMS_PROPERTY pp &#xA;    WHERE pp.PID IN (SELECT pis.PID FROM etl.DuplicatePIDs pis)&#xA;),MaxLocationCTE AS (&#xA;    SELECT&#xA;        PID,&#xA;        [LOCATION],&#xA;&#x9;&#x9;[BOUNDARY],&#xA;&#x9;&#x9;APP_LAST_UPDATE_TIMESTAMP,&#xA;&#x9;&#x9;APP_LAST_UPDATE_USERID,&#xA;        ROW_NUMBER() OVER (PARTITION BY PID ORDER BY (SELECT CASE &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;WHEN APP_LAST_UPDATE_USERID NOT LIKE '%ETL%' AND [LOCATION] IS NOT NULL THEN 1&#x9;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;WHEN [LOCATION] IS NOT NULL THEN 2&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;ELSE 3&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;END)&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;,            APP_LAST_UPDATE_TIMESTAMP DESC&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;) AS RowNum&#xA;    FROM dbo.PIMS_PROPERTY&#xA;    WHERE PID IN (SELECT distinct PID FROM etl.DuplicatePIDs)&#xA;),geometryFields AS&#xA;(&#xA;SELECT PID,[LOCATION],[BOUNDARY], MaxLocationText, MaxBoundaryText&#xA;FROM ( SELECT&#xA;        m.PID,&#xA;        m.[LOCATION],&#xA;&#x9;&#x9;m.[BOUNDARY],&#xA;        MAX(CONVERT(NVARCHAR(MAX), m.[LOCATION].STAsText())) OVER (PARTITION BY m.PID) AS MaxLocationText,&#xA;&#x9;&#x9;MAX(CONVERT(NVARCHAR(MAX), m.[BOUNDARY].STAsText())) OVER (PARTITION BY m.PID) AS MaxBoundaryText,&#xA;        ROW_NUMBER() OVER (PARTITION BY PID ORDER BY (SELECT CASE &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;WHEN APP_LAST_UPDATE_USERID NOT LIKE '%ETL%' AND [LOCATION] IS NOT NULL THEN 1&#x9;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;WHEN [LOCATION] IS NOT NULL THEN 2&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;ELSE 3&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;END)&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;,            APP_LAST_UPDATE_TIMESTAMP DESC&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;) AS RowNum&#xA;    FROM MaxLocationCTE m&#xA;) AS Subquery WHERE RowNum = 1),&#xA;SELECTION_LOGIC AS (&#xA;SELECT &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#xA;&#x9;NULL AS PROPERTY_MANAGER_ID&#xA;&#x9;,NULL AS PROP_MGMT_ORG_ID&#xA;&#x9;,MAX(EXTRACT_PROPERTY_TYPE_CODE.PROPERTY_TYPE_CODE) AS PROPERTY_TYPE_CODE&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#xA;&#x9;,MAX(EXTRACT_PROPERTY_CLASSIFICATION_TYPE_CODE.PROPERTY_CLASSIFICATION_TYPE_CODE) AS PROPERTY_CLASSIFICATION_TYPE_CODE&#xA;&#x9;,MAX(EXTRACT_ADDRESS_ID.ADDRESS_ID) AS ADDRESS_ID&#xA;&#x9;,MAX(EXTRACT_REGION_CODE.REGION_CODE) AS REGION_CODE&#xA;&#x9;,MAX(EXTRACT_DISTRICT_CODE.DISTRICT_CODE) AS DISTRICT_CODE&#xA;&#x9;,MAX(EXTRACT_PROPERTY_AREA_UNIT_TYPE_CODE.PROPERTY_AREA_UNIT_TYPE_CODE) AS PROPERTY_AREA_UNIT_TYPE_CODE&#x9;&#xA;&#x9;,(&#xA;&#x9;&#x9;&#x9;&#x9;SELECT STRING_AGG(ds.PROPERTY_DATA_SOURCE_TYPE_CODE, ' ||| ')&#xA;&#x9;&#x9;&#x9;&#x9;FROM DistinctDataSources ds&#xA;&#x9;&#x9;&#x9;&#x9;WHERE ds.pid = dp.pid&#xA;&#x9;&#x9;&#x9;) AS PROPERTY_DATA_SOURCE_TYPE_CODE&#xA;&#x9;,MAX(EXTRACT_PROPERTY_STATUS_TYPE_CODE.PROPERTY_STATUS_TYPE_CODE) AS PROPERTY_STATUS_TYPE_CODE&#xA;&#x9;,MAX(EXTRACT_SURPLUS_DECLARATION_TYPE_CODE.SURPLUS_DECLARATION_TYPE_CODE) AS SURPLUS_DECLARATION_TYPE_CODE&#xA;&#x9;,MAX(EXTRACT_VOLUMETRIC_TYPE_CODE.VOLUMETRIC_TYPE_CODE) AS VOLUMETRIC_TYPE_CODE&#xA;&#x9;,MAX(EXTRACT_VOLUME_UNIT_TYPE_CODE.VOLUME_UNIT_TYPE_CODE) AS VOLUME_UNIT_TYPE_CODE&#xA;&#x9;,MAX(EXTRACT_PPH_STATUS_TYPE_CODE.PPH_STATUS_TYPE_CODE) AS PPH_STATUS_TYPE_CODE&#xA;&#x9;,MAX(EXTRACT_PROPERTY_DATA_SOURCE_EFFECTIVE_DATE.PROPERTY_DATA_SOURCE_EFFECTIVE_DATE) AS PROPERTY_DATA_SOURCE_EFFECTIVE_DATE&#xA;&#x9;,(&#xA;&#x9;&#x9;&#x9;&#x9;SELECT STRING_AGG(ds.[NAME], ' ||| ')&#xA;&#x9;&#x9;&#x9;&#x9;FROM DistinctNames ds&#xA;&#x9;&#x9;&#x9;&#x9;WHERE ds.pid = dp.pid&#xA;&#x9;&#x9;&#x9;) AS [NAME]&#xA;&#x9;,(&#xA;&#x9;&#x9;&#x9;&#x9;SELECT STRING_AGG(ds.[DESCRIPTION], ' ||| ')&#xA;&#x9;&#x9;&#x9;&#x9;FROM DistinctDescription ds&#xA;&#x9;&#x9;&#x9;&#x9;WHERE ds.pid = dp.pid&#xA;&#x9;&#x9;&#x9;) AS [DESCRIPTION]&#xA;&#x9;, dp.PID&#xA;&#x9;,MAX(EXTRACT_PIN.PIN) AS PIN&#xA;&#x9;,MAX(EXTRACT_FILE_NUMBER.FILE_NUMBER) AS FILE_NUMBER&#xA;&#x9;,MAX(EXTRACT_FILE_NUMBER_SUFFIX.FILE_NUMBER_SUFFIX) AS FILE_NUMBER_SUFFIX&#x9;&#xA;&#x9;,MAX(LAND_AREA) AS LAND_AREA&#xA;&#x9;,(&#xA;&#x9;&#x9;&#x9;&#x9;SELECT STRING_AGG(ds.LAND_LEGAL_DESCRIPTION, ' ||| ')&#xA;&#x9;&#x9;&#x9;&#x9;FROM DistinctLandLegalDescription ds&#xA;&#x9;&#x9;&#x9;&#x9;WHERE ds.pid = dp.pid&#xA;&#x9;) AS LAND_LEGAL_DESCRIPTION&#xA;&#x9;,MAX(SURVEY_PLAN_NUMBER) AS SURVEY_PLAN_NUMBER&#xA;&#x9;,MAX(ENCUMBRANCE_REASON) AS ENCUMBRANCE_REASON&#xA;&#x9;,(&#xA;&#x9;&#x9;&#x9;&#x9;SELECT STRING_AGG(ds.SURPLUS_DECLARATION_COMMENT, ' ||| ')&#xA;&#x9;&#x9;&#x9;&#x9;FROM DistinctSurplusDeclarationComment ds&#xA;&#x9;&#x9;&#x9;&#x9;WHERE ds.pid = dp.pid&#xA;&#x9;&#x9;&#x9;) AS SURPLUS_DECLARATION_COMMENT&#xA;&#x9;,MAX(EXTRACT_SURPLUS_DECLARATION_DATE.SURPLUS_DECLARATION_DATE) AS SURPLUS_DECLARATION_DATE&#xA;&#x9;,MAX(dsn.NOTES)  as NOTES&#xA;&#x9;,MAX(MUNICIPAL_ZONING) as MUNICIPAL_ZONING&#xA;&#x9;,MAX(EXTRACT_IS_VOLUMETRIC_PARCEL.IS_VOLUMETRIC_PARCEL) AS IS_VOLUMETRIC_PARCEL&#xA;&#x9;,MAX(EXTRACT_VOLUMETRIC_MEASUREMENT.VOLUMETRIC_MEASUREMENT) AS VOLUMETRIC_MEASUREMENT&#xA;&#x9;,MAX(EXTRACT_IS_OWNED.IS_OWNED) AS IS_OWNED&#xA;&#x9;--,MAX(EXTRACT_IS_PROPERTY_OF_INTEREST.IS_PROPERTY_OF_INTEREST) AS IS_PROPERTY_OF_INTEREST&#xA;&#x9;,0 as IS_VISIBLE_TO_OTHER_AGENCIES&#xA;&#x9;,0 as IS_SENSITIVE&#xA;&#x9;,MAX(EXTRACT_IS_PROVINCIAL_PUBLIC_HWY.IS_PROVINCIAL_PUBLIC_HWY ) AS IS_PROVINCIAL_PUBLIC_HWY &#xA;&#x9;,MAX(EXTRACT_PPH_STATUS_UPDATE_USERID.PPH_STATUS_UPDATE_USERID ) AS PPH_STATUS_UPDATE_USERID&#xA;&#x9;,MAX(EXTRACT_PPH_STATUS_UPDATE_TIMESTAMP.PPH_STATUS_UPDATE_TIMESTAMP ) AS PPH_STATUS_UPDATE_TIMESTAMP &#xA;&#x9;,MAX(EXTRACT_PPH_STATUS_UPDATE_USER_GUID.PPH_STATUS_UPDATE_USER_GUID ) AS PPH_STATUS_UPDATE_USER_GUID &#xA;&#x9;,MAX(EXTRACT_IS_RWY_BELT_DOM_PATENT.IS_RWY_BELT_DOM_PATENT) AS IS_RWY_BELT_DOM_PATENT&#xA;&#x9;,(&#xA;&#x9;&#x9;&#x9;&#x9;SELECT STRING_AGG(ds.ZONING, ' ||| ')&#xA;&#x9;&#x9;&#x9;&#x9;FROM DistinctZoning ds&#xA;&#x9;&#x9;&#x9;&#x9;WHERE ds.pid = dp.pid&#xA;&#x9;&#x9;&#x9;) AS ZONING&#xA;&#x9;,(&#xA;&#x9;&#x9;&#x9;&#x9;SELECT STRING_AGG(ds.ZONING_POTENTIAL, ' ||| ')&#xA;&#x9;&#x9;&#x9;&#x9;FROM DistinctZoningPotential ds&#xA;&#x9;&#x9;&#x9;&#x9;WHERE ds.pid = dp.pid&#xA;&#x9;&#x9;&#x9;) AS ZONING_POTENTIAL&#xA;&#x9;,(&#xA;&#x9;&#x9;&#x9;&#x9;SELECT STRING_AGG(ds.GENERAL_LOCATION, ' ||| ')&#xA;&#x9;&#x9;&#x9;&#x9;FROM DistinctGeneralLocation ds&#xA;&#x9;&#x9;&#x9;&#x9;WHERE ds.pid = dp.pid&#xA;&#x9;&#x9;&#x9;) AS GENERAL_LOCATION&#xA;&#x9;,(&#xA;&#x9;&#x9;&#x9;&#x9;SELECT STRING_AGG(ds.ADDITIONAL_DETAILS, ' ||| ')&#xA;&#x9;&#x9;&#x9;&#x9;FROM DistinctAdditionalDetails ds&#xA;&#x9;&#x9;&#x9;&#x9;WHERE ds.pid = dp.pid&#xA;&#x9;&#x9;&#x9;) AS ADDITIONAL_DETAILS&#xA;&#x9;,MAX(EXTRACT_IS_UTILITIES_PAYABLE.IS_UTILITIES_PAYABLE ) AS IS_UTILITIES_PAYABLE &#xA;&#x9;,MAX(EXTRACT_IS_TAXES_PAYABLE.IS_TAXES_PAYABLE ) AS IS_TAXES_PAYABLE &#xA;&#x9;,(&#xA;&#x9;&#x9;&#x9;&#x9;SELECT STRING_AGG(ds.BAND_NAME, ' ||| ')&#xA;&#x9;&#x9;&#x9;&#x9;FROM DistinctBandName ds&#xA;&#x9;&#x9;&#x9;&#x9;WHERE ds.pid = dp.pid&#xA;&#x9;&#x9;&#x9;) AS BAND_NAME&#xA;&#x9;,(&#xA;&#x9;&#x9;&#x9;&#x9;SELECT STRING_AGG(ds.RESERVE_NAME, ' ||| ')&#xA;&#x9;&#x9;&#x9;&#x9;FROM DistinctReserveName ds&#xA;&#x9;&#x9;&#x9;&#x9;WHERE ds.pid = dp.pid&#xA;&#x9;&#x9;&#x9;) AS RESERVE_NAME&#xA;   ,MAX(APP_CREATE_USER_DIRECTORY) AS [APP_CREATE_USER_DIRECTORY]&#xA;   ,MAX(APP_LAST_UPDATE_USER_DIRECTORY) AS [APP_LAST_UPDATE_USER_DIRECTORY]&#xA;   --,MAX(EXTRACT_IS_OTHER_INTEREST.IS_OTHER_INTEREST ) AS IS_OTHER_INTEREST&#xA;   --,MAX(EXTRACT_IS_DISPOSED.IS_DISPOSED) AS IS_DISPOSED&#xA;   ,MAX(EXTRACT_IS_RETIRED.IS_RETIRED) AS IS_RETIRED&#xA;FROM DBO.PIMS_PROPERTY pp &#xA;&#x9;JOIN etl.DuplicatePIDs dp on pp.PID = dp.PID JOIN EXTRACT_PROPERTY_TYPE_CODE on EXTRACT_PROPERTY_TYPE_CODE.PID = pp.PID JOIN EXTRACT_PROPERTY_CLASSIFICATION_TYPE_CODE on EXTRACT_PROPERTY_CLASSIFICATION_TYPE_CODE.PID = pp.PID JOIN EXTRACT_ADDRESS_ID ON EXTRACT_ADDRESS_ID.PID = pp.PID JOIN EXTRACT_REGION_CODE ON EXTRACT_REGION_CODE.PID = pp.PID&#xA;&#x9;JOIN EXTRACT_DISTRICT_CODE ON EXTRACT_DISTRICT_CODE.PID = pp.PID JOIN EXTRACT_PROPERTY_AREA_UNIT_TYPE_CODE ON EXTRACT_PROPERTY_AREA_UNIT_TYPE_CODE.PID = pp.PID JOIN EXTRACT_PROPERTY_STATUS_TYPE_CODE ON EXTRACT_PROPERTY_STATUS_TYPE_CODE.PID = pp.PID JOIN EXTRACT_SURPLUS_DECLARATION_TYPE_CODE ON EXTRACT_SURPLUS_DECLARATION_TYPE_CODE.PID = pp.PID&#xA;&#x9;JOIN EXTRACT_VOLUMETRIC_TYPE_CODE ON EXTRACT_VOLUMETRIC_TYPE_CODE.PID = pp.PID&#xA;JOIN EXTRACT_VOLUME_UNIT_TYPE_CODE ON EXTRACT_VOLUME_UNIT_TYPE_CODE.PID = pp.PID&#xA;JOIN EXTRACT_PROPERTY_DATA_SOURCE_EFFECTIVE_DATE ON EXTRACT_PROPERTY_DATA_SOURCE_EFFECTIVE_DATE.PID = pp.PID&#xA;JOIN EXTRACT_FILE_NUMBER ON EXTRACT_FILE_NUMBER.PID = pp.PID&#xA;JOIN EXTRACT_FILE_NUMBER_SUFFIX ON EXTRACT_FILE_NUMBER_SUFFIX.PID = pp.PID&#xA;--JOIN EXTRACT_IS_DISPOSED ON EXTRACT_IS_DISPOSED.PID = pp.PID&#xA;JOIN EXTRACT_IS_RETIRED ON EXTRACT_IS_RETIRED.PID = pp.PID  JOIN EXTRACT_PPH_STATUS_TYPE_CODE ON EXTRACT_PPH_STATUS_TYPE_CODE.PID = pp.PID &#xA;&#x9;JOIN EXTRACT_PIN ON EXTRACT_PIN.PID = pp.PID JOIN EXTRACT_SURPLUS_DECLARATION_DATE ON EXTRACT_SURPLUS_DECLARATION_DATE.PID = pp.PID&#xA;&#x9;JOIN EXTRACT_IS_VOLUMETRIC_PARCEL ON EXTRACT_IS_VOLUMETRIC_PARCEL.PID = pp.PID &#x9;JOIN EXTRACT_VOLUMETRIC_MEASUREMENT ON EXTRACT_VOLUMETRIC_MEASUREMENT.PID = pp.PID &#x9;JOIN EXTRACT_IS_OWNED ON EXTRACT_IS_OWNED.PID = pp.PID &#x9;&#xA;&#x9;--JOIN EXTRACT_IS_PROPERTY_OF_INTEREST ON EXTRACT_IS_PROPERTY_OF_INTEREST.PID = pp.PID&#xA;&#x9;JOIN EXTRACT_IS_PROVINCIAL_PUBLIC_HWY ON EXTRACT_IS_PROVINCIAL_PUBLIC_HWY.PID = pp.PID &#x9;JOIN EXTRACT_PPH_STATUS_UPDATE_USERID ON EXTRACT_PPH_STATUS_UPDATE_USERID.PID = pp.PID JOIN EXTRACT_PPH_STATUS_UPDATE_TIMESTAMP ON EXTRACT_PPH_STATUS_UPDATE_TIMESTAMP.PID = pp.PID&#x9;JOIN EXTRACT_PPH_STATUS_UPDATE_USER_GUID ON EXTRACT_PPH_STATUS_UPDATE_USER_GUID.PID = pp.PID&#xA;&#x9;JOIN EXTRACT_IS_RWY_BELT_DOM_PATENT ON EXTRACT_IS_RWY_BELT_DOM_PATENT.PID = pp.PID &#x9;JOIN EXTRACT_IS_UTILITIES_PAYABLE ON EXTRACT_IS_UTILITIES_PAYABLE.PID = pp.PID &#x9;JOIN EXTRACT_IS_TAXES_PAYABLE ON EXTRACT_IS_TAXES_PAYABLE.PID = pp.PID &#xA;&#x9;--JOIN EXTRACT_IS_OTHER_INTEREST ON EXTRACT_IS_OTHER_INTEREST.PID = pp.PID &#xA;&#x9;JOIN DistinctNotesSelection dsn on dsn.PID = pp.PID&#xA;GROUP BY dp.PID &#xA;)&#xA;&#xA;SELECT &#xA;&#xA;A.[PROPERTY_TYPE_CODE],&#xA;A.[PROPERTY_CLASSIFICATION_TYPE_CODE],&#xA;A.[ADDRESS_ID],&#xA;A.[REGION_CODE], &#xA;A.[DISTRICT_CODE], &#xA;A.[PROPERTY_AREA_UNIT_TYPE_CODE],&#xA;A.[PROPERTY_DATA_SOURCE_TYPE_CODE],&#xA;A.[PROPERTY_STATUS_TYPE_CODE], &#xA;A.[SURPLUS_DECLARATION_TYPE_CODE],&#xA;A.[VOLUMETRIC_TYPE_CODE],A.[VOLUME_UNIT_TYPE_CODE],A.[PPH_STATUS_TYPE_CODE],&#xA;A.[PROPERTY_DATA_SOURCE_EFFECTIVE_DATE],&#xA;A.[NAME],A.[DESCRIPTION],A.[PID],A.[PIN],A.[FILE_NUMBER],A.[FILE_NUMBER_SUFFIX],A.[LAND_AREA],A.[LAND_LEGAL_DESCRIPTION],B.[BOUNDARY],B.[LOCATION],A.[GENERAL_LOCATION],A.[SURVEY_PLAN_NUMBER],A.[ENCUMBRANCE_REASON],A.[SURPLUS_DECLARATION_COMMENT],A.[SURPLUS_DECLARATION_DATE],A.[NOTES],A.[MUNICIPAL_ZONING],A.[IS_VOLUMETRIC_PARCEL],A.[VOLUMETRIC_MEASUREMENT],&#xA;A.[IS_OWNED],&#xA;--A.[IS_PROPERTY_OF_INTEREST],&#xA;A.[IS_VISIBLE_TO_OTHER_AGENCIES],&#xA;A.[IS_SENSITIVE],&#xA;A.[IS_PROVINCIAL_PUBLIC_HWY],A.[PPH_STATUS_UPDATE_USERID],A.[PPH_STATUS_UPDATE_TIMESTAMP],A.[PPH_STATUS_UPDATE_USER_GUID],A.[IS_RWY_BELT_DOM_PATENT],A.[ZONING],A.[ZONING_POTENTIAL],GETUTCDATE() AS APP_CREATE_TIMESTAMP,'PIMS_ETL_USER' AS APP_CREATE_USERID, GETUTCDATE() AS [APP_LAST_UPDATE_TIMESTAMP],'PIMS_ETL_USER' AS  APP_LAST_UPDATE_USERID , A.[APP_CREATE_USER_DIRECTORY],A.[APP_LAST_UPDATE_USER_DIRECTORY],A.[ADDITIONAL_DETAILS],A.[IS_UTILITIES_PAYABLE],A.[IS_TAXES_PAYABLE],A.[BAND_NAME],A.[RESERVE_NAME],&#xA;--A.[IS_OTHER_INTEREST],&#xA;--A.[IS_DISPOSED],&#xA;A.[IS_RETIRED]&#xA;INTO etl.PIMS_PROPERTY_MERGED&#xA;FROM SELECTION_LOGIC A JOIN geometryFields B ON A.PID = B.PID&#xA;;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\seq\STEP4-KEEP-ONLY-MERGED-RECORD"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{C254913B-6401-4DE6-A657-B1A4EFCFC8E9}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="STEP4-KEEP-ONLY-MERGED-RECORD"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{A4157154-8FF2-477B-A4CA-636A021C5560}"
+              SQLTask:SqlStatementSource="WITH &#xA;&#xA;-- REASON FOR BELOW SELECT STATEMENTS IS BECAUSE OF 2 CONSTRAINTS&#xA;-- CONSTRAINT 1 : PRACQF_PROP_ACQ_TUC --should be unique&#xA;&#x9;-- PROPERTY_ID&#xA;&#x9;-- ACQUISITION_FILE_ID &#xA;-- CONSTRAINT 2 : PROPLS_PROPERTY_LEASE_TUC --should be unique&#xA;&#x9;-- PROPERTY_ID&#xA;&#x9;-- LEASE_ID &#xA;&#xA;-- SO WE EXCLUDE PROPERTY_IDS THAT EXISTS MORE THAN ONCE IN THESE 2 RELATIONSHIP TABLES IN OUR MERGE RULES&#xA;&#xA; SELECT_PIMS_PROPERTY_LEASE_DUPLICATE_PIDS AS (&#xA;        SELECT A.LEASE_ID, A.PROPERTY_ID, B.PID &#xA;        FROM dbo.PIMS_PROPERTY_LEASE A &#xA;        JOIN dbo.PIMS_PROPERTY B ON A.PROPERTY_ID = B.PROPERTY_ID&#xA;    ), &#xA;    FILTER_PIMS_PROPERTY_LEASE_DUPLICATE_PIDS AS (&#xA;        SELECT LEASE_ID, PID, COUNT(1) AS DuplicateCount     &#xA;        FROM SELECT_PIMS_PROPERTY_LEASE_DUPLICATE_PIDS &#xA;        GROUP BY LEASE_ID, PID    &#xA;        HAVING COUNT(1) &gt; 1&#xA;    )&#xA;&#xA;,SELECT_PIMS_PROPERTY_ACQ_DUPLICATE_PIDS AS (&#xA;        SELECT A.ACQUISITION_FILE_ID, A.PROPERTY_ID, B.PID &#xA;        FROM dbo.PIMS_PROPERTY_ACQUISITION_FILE A &#xA;        JOIN dbo.PIMS_PROPERTY B ON A.PROPERTY_ID = B.PROPERTY_ID&#xA;    ), &#xA;    FILTER_PIMS_PROPERTY_ACQ_DUPLICATE_PIDS AS (&#xA;        SELECT ACQUISITION_FILE_ID, PID, COUNT(1) AS DuplicateCount     &#xA;        FROM SELECT_PIMS_PROPERTY_ACQ_DUPLICATE_PIDS &#xA;        GROUP BY ACQUISITION_FILE_ID, PID    &#xA;        HAVING COUNT(1) &gt; 1&#xA;    ),&#xA;&#x9;EXCLUDE_PID AS (&#xA;&#x9;SELECT PID FROM FILTER_PIMS_PROPERTY_LEASE_DUPLICATE_PIDS&#xA;&#x9;UNION&#xA;&#x9;SELECT PID FROM FILTER_PIMS_PROPERTY_ACQ_DUPLICATE_PIDS&#xA;&#x9;&#xA;&#x9;)&#xA;&#xA;, X AS (&#xA;SELECT&#xA; ROW_NUMBER() OVER(PARTITION BY PID&#xA;                        ORDER BY [DB_LAST_UPDATE_TIMESTAMP] desc&#xA;                    ) AS RN , *&#xA;  &#xA;FROM [dbo].[PIMS_PROPERTY]&#xA;where &#xA;&#x9;pid is not null AND&#x9;    &#xA;&#x9; PID NOT IN (&#xA;            SELECT PID &#xA;            FROM EXCLUDE_PID &#xA;            WHERE PID IS NOT NULL&#xA;        ) &#xA;&#x9; &#xA;)&#xA;&#xA;DELETE FROM X&#xA;    WHERE &#xA;     RN &gt; 1&#xA;&#x9;AND PROPERTY_ID NOT IN (SELECT PROPERTY_ID FROM  PIMS_DISPOSITION_FILE_PROPERTY)&#xA;&#x9;AND PROPERTY_ID NOT IN (SELECT PROPERTY_ID FROM  PIMS_PROP_PROP_ACTIVITY)&#xA;&#x9;AND PROPERTY_ID NOT IN (SELECT PROPERTY_ID FROM  PIMS_PROP_PROP_ANOMALY_TYPE)&#xA;&#x9;AND PROPERTY_ID NOT IN (SELECT PROPERTY_ID FROM  PIMS_PROP_PROP_PURPOSE)&#xA;&#x9;AND PROPERTY_ID NOT IN (SELECT PROPERTY_ID FROM  PIMS_PROP_PROP_ROAD_TYPE)&#xA;&#x9;AND PROPERTY_ID NOT IN (SELECT PROPERTY_ID FROM  PIMS_PROP_PROP_TENURE_TYPE)&#xA;&#x9;AND PROPERTY_ID NOT IN (SELECT PROPERTY_ID FROM  PIMS_PROPERTY_ACQUISITION_FILE)&#xA;&#x9;AND PROPERTY_ID NOT IN (SELECT PROPERTY_ID FROM  PIMS_PROPERTY_CONTACT)&#xA;&#x9;AND PROPERTY_ID NOT IN (SELECT PROPERTY_ID FROM  PIMS_PROPERTY_LEASE)&#xA;&#x9;AND PROPERTY_ID NOT IN (SELECT PROPERTY_ID FROM  PIMS_PROPERTY_ORGANIZATION)&#xA;&#x9;AND PROPERTY_ID NOT IN (SELECT PROPERTY_ID FROM  PIMS_PROPERTY_RESEARCH_FILE)&#xA;&#x9;AND PROPERTY_ID NOT IN (SELECT SOURCE_PROPERTY_ID FROM  PIMS_PROPERTY_OPERATION)&#xA;&#x9;AND PROPERTY_ID NOT IN (SELECT DESTINATION_PROPERTY_ID FROM  PIMS_PROPERTY_OPERATION)&#xA;&#x9;AND [APP_CREATE_USERID] &lt;&gt; 'PIMS_ETL_USER'&#xA; ;&#xA; &#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\seq\UPDATE-PIMS_PROPERTY_ACQUISITION_FILE"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{17d22fa1-ac85-408c-ade0-6c80b24c5acc}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="UPDATE-PIMS_PROPERTY_ACQUISITION_FILE"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{A4157154-8FF2-477B-A4CA-636A021C5560}"
+              SQLTask:SqlStatementSource="WITH &#xA;SELECT_PIMS_PROPERTY_ACQ_DUPLICATE_PIDS AS (&#xA;    SELECT A.ACQUISITION_FILE_ID, A.PROPERTY_ID, B.PID &#xA;    FROM dbo.PIMS_PROPERTY_ACQUISITION_FILE A &#xA;    JOIN dbo.PIMS_PROPERTY B ON A.PROPERTY_ID = B.PROPERTY_ID&#xA;),&#xA;FILTER_PIMS_PROPERTY_ACQ_DUPLICATE_PIDS AS (&#xA;    SELECT ACQUISITION_FILE_ID, PID, COUNT(1) AS DuplicateCount&#xA;    FROM SELECT_PIMS_PROPERTY_ACQ_DUPLICATE_PIDS&#xA;    GROUP BY ACQUISITION_FILE_ID, PID&#xA;    HAVING COUNT(1) &gt; 1&#xA;),&#xA;FILTER_PIMS_PROPERTY_IDS AS&#xA;(&#xA;SELECT DISTINCT PROPERTY_ID FROM SELECT_PIMS_PROPERTY_ACQ_DUPLICATE_PIDS WHERE PID IN (SELECT PID FROM FILTER_PIMS_PROPERTY_ACQ_DUPLICATE_PIDS)&#xA;)&#xA;&#xA; &#xA;&#xA;  UPDATE dbo.PIMS_PROPERTY_ACQUISITION_FILE&#xA;        SET&#xA;            property_id = max_prop_id.max_property_id,&#xA;            [CONCURRENCY_CONTROL_NUMBER] = [CONCURRENCY_CONTROL_NUMBER] + 1&#xA;        FROM dbo.PIMS_PROPERTY_ACQUISITION_FILE prf&#xA;   JOIN (&#xA;            SELECT&#xA;                t.property_id as prop_id,&#xA;                max_property_id.max_id AS max_property_id&#xA;            FROM dbo.PIMS_PROPERTY t&#xA;            JOIN (&#xA;                SELECT pid, MAX(property_id) AS max_id&#xA;                FROM dbo.PIMS_PROPERTY&#xA;                GROUP BY pid&#xA;            ) AS max_property_id&#xA;            ON t.pid = max_property_id.pid&#xA;        ) AS max_prop_id&#xA;        ON prf.property_id = max_prop_id.prop_id  &#xA;  WHERE prf.property_id NOT IN ( SELECT PROPERTY_ID FROM FILTER_PIMS_PROPERTY_IDS )&#xA;&#xA;;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\seq\UPDATE-PIMS_PROPERTY_LEASE"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{3F395D16-FE6D-4AD4-8D55-2DF6D6184E20}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="UPDATE-PIMS_PROPERTY_LEASE"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{A4157154-8FF2-477B-A4CA-636A021C5560}"
+              SQLTask:SqlStatementSource="WITH &#xA;SELECT_PIMS_PROPERTY_LEASE_DUPLICATE_PIDS AS (&#xA;    SELECT A.LEASE_ID, A.PROPERTY_ID, B.PID &#xA;    FROM dbo.PIMS_PROPERTY_LEASE A &#xA;    JOIN dbo.PIMS_PROPERTY B ON A.PROPERTY_ID = B.PROPERTY_ID&#xA;),&#xA;FILTER_PIMS_PROPERTY_LEASE_DUPLICATE_PIDS AS (&#xA;    SELECT LEASE_ID, PID, COUNT(1) AS DuplicateCount&#xA;    FROM SELECT_PIMS_PROPERTY_LEASE_DUPLICATE_PIDS&#xA;    GROUP BY LEASE_ID, PID&#xA;    HAVING COUNT(1) &gt; 1&#xA;),&#xA;FILTER_PIMS_PROPERTY_IDS AS&#xA;(&#xA;SELECT DISTINCT PROPERTY_ID FROM SELECT_PIMS_PROPERTY_LEASE_DUPLICATE_PIDS WHERE PID IN (SELECT PID FROM FILTER_PIMS_PROPERTY_LEASE_DUPLICATE_PIDS)&#xA;)&#xA;&#xA; &#xA;&#xA;&#x9;&#x9;UPDATE dbo.PIMS_PROPERTY_LEASE&#xA;        SET&#xA;            property_id = max_prop_id.max_property_id,&#xA;            [CONCURRENCY_CONTROL_NUMBER] = [CONCURRENCY_CONTROL_NUMBER] + 1&#xA;        FROM dbo.PIMS_PROPERTY_LEASE prf&#xA;&#x9;&#x9; JOIN (&#xA;            SELECT&#xA;                t.property_id as prop_id,&#xA;                max_property_id.max_id AS max_property_id&#xA;            FROM dbo.PIMS_PROPERTY t&#xA;            JOIN (&#xA;                SELECT pid, MAX(property_id) AS max_id&#xA;                FROM dbo.PIMS_PROPERTY&#xA;                GROUP BY pid&#xA;            ) AS max_property_id&#xA;            ON t.pid = max_property_id.pid&#xA;        ) AS max_prop_id&#xA;        ON prf.property_id = max_prop_id.prop_id  &#xA;&#x9;&#x9;WHERE prf.property_id NOT IN ( SELECT PROPERTY_ID FROM FILTER_PIMS_PROPERTY_IDS )&#xA;&#xA;;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\seq\UPDATE-PIMS_PROPERTY_OPERATION_DEST"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{6f49460f-a696-4086-bb28-3ff1013023a7}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="UPDATE-PIMS_PROPERTY_OPERATION_DEST"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{A4157154-8FF2-477B-A4CA-636A021C5560}"
+              SQLTask:SqlStatementSource="DECLARE @tableName NVARCHAR(MAX);&#xA;DECLARE @sql NVARCHAR(MAX);&#xA; &#xA;DECLARE tableCursor CURSOR FOR&#xA;SELECT distinct OBJECT_NAME(fk.parent_object_id) AS RelationTableName &#xA;FROM sys.foreign_keys fk&#xA;INNER JOIN sys.foreign_key_columns fkc ON fk.object_id = fkc.constraint_object_id&#xA;where OBJECT_NAME(fk.referenced_object_id) = 'PIMS_PROPERTY'&#xA;and OBJECT_NAME(fk.parent_object_id) = 'PIMS_PROPERTY_OPERATION';&#xA;&#x9;;&#xA; &#xA;OPEN tableCursor;&#xA; &#xA;FETCH NEXT FROM tableCursor INTO @tableName;&#xA; &#xA;WHILE @@FETCH_STATUS = 0&#xA;BEGIN&#xA;    SET @sql = N'&#xA;        UPDATE ' + @tableName + '&#xA;        SET&#xA;            DESTINATION_PROPERTY_ID = max_prop_id.max_property_id,&#xA;            [CONCURRENCY_CONTROL_NUMBER] = [CONCURRENCY_CONTROL_NUMBER] + 1&#xA;        FROM ' + @tableName + ' prf&#xA;        JOIN (&#xA;            SELECT&#xA;                t.property_id as prop_id,&#xA;                max_property_id.max_id AS max_property_id&#xA;            FROM dbo.PIMS_PROPERTY t&#xA;            JOIN (&#xA;                SELECT pid, MAX(property_id) AS max_id&#xA;                FROM dbo.PIMS_PROPERTY&#xA;                GROUP BY pid&#xA;            ) AS max_property_id&#xA;            ON t.pid = max_property_id.pid&#xA;        ) AS max_prop_id&#xA;        ON prf.DESTINATION_PROPERTY_ID = max_prop_id.prop_id';&#xA;&#x9;&#x9;&#xA;&#xA;    EXEC sp_executesql @sql;&#xA; &#xA;    FETCH NEXT FROM tableCursor INTO @tableName;&#xA;END;&#xA; &#xA;CLOSE tableCursor;&#xA;DEALLOCATE tableCursor;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\seq\UPDATE-PIMS_PROPERTY_OPERATION_SRC"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{6ee93316-4cca-48d4-a438-9572b92a61a1}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="UPDATE-PIMS_PROPERTY_OPERATION_SRC"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{A4157154-8FF2-477B-A4CA-636A021C5560}"
+              SQLTask:SqlStatementSource="DECLARE @tableName NVARCHAR(MAX);&#xA;DECLARE @sql NVARCHAR(MAX);&#xA; &#xA;DECLARE tableCursor CURSOR FOR&#xA;SELECT distinct OBJECT_NAME(fk.parent_object_id) AS RelationTableName &#xA;FROM sys.foreign_keys fk&#xA;INNER JOIN sys.foreign_key_columns fkc ON fk.object_id = fkc.constraint_object_id&#xA;where OBJECT_NAME(fk.referenced_object_id) = 'PIMS_PROPERTY'&#xA;and OBJECT_NAME(fk.parent_object_id) = 'PIMS_PROPERTY_OPERATION';&#xA;&#x9;;&#xA; &#xA;OPEN tableCursor;&#xA; &#xA;FETCH NEXT FROM tableCursor INTO @tableName;&#xA; &#xA;WHILE @@FETCH_STATUS = 0&#xA;BEGIN&#xA;    SET @sql = N'&#xA;        UPDATE ' + @tableName + '&#xA;        SET&#xA;            SOURCE_PROPERTY_ID = max_prop_id.max_property_id,&#xA;            [CONCURRENCY_CONTROL_NUMBER] = [CONCURRENCY_CONTROL_NUMBER] + 1&#xA;        FROM ' + @tableName + ' prf&#xA;        JOIN (&#xA;            SELECT&#xA;                t.property_id as prop_id,&#xA;                max_property_id.max_id AS max_property_id&#xA;            FROM dbo.PIMS_PROPERTY t&#xA;            JOIN (&#xA;                SELECT pid, MAX(property_id) AS max_id&#xA;                FROM dbo.PIMS_PROPERTY&#xA;                GROUP BY pid&#xA;            ) AS max_property_id&#xA;            ON t.pid = max_property_id.pid&#xA;        ) AS max_prop_id&#xA;        ON prf.SOURCE_PROPERTY_ID = max_prop_id.prop_id';&#xA;&#x9;&#x9;&#xA;&#xA;    EXEC sp_executesql @sql;&#xA; &#xA;    FETCH NEXT FROM tableCursor INTO @tableName;&#xA;END;&#xA; &#xA;CLOSE tableCursor;&#xA;DEALLOCATE tableCursor;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\seq\UPDATE-RELATION-TABLES-PART1"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{07F49640-C2B2-4AF4-A67B-CF85ECA59C9E}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="UPDATE-RELATION-TABLES-PART1"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{A4157154-8FF2-477B-A4CA-636A021C5560}"
+              SQLTask:BypassPrepare="False"
+              SQLTask:SqlStatementSource="DECLARE @tableName NVARCHAR(MAX);&#xA;DECLARE @sql NVARCHAR(MAX);&#xA; &#xA;DECLARE tableCursor CURSOR FOR&#xA;SELECT distinct OBJECT_NAME(fk.parent_object_id) AS RelationTableName &#xA;FROM sys.foreign_keys fk&#xA;INNER JOIN sys.foreign_key_columns fkc ON fk.object_id = fkc.constraint_object_id&#xA;where OBJECT_NAME(fk.referenced_object_id) = 'PIMS_PROPERTY'&#xA;and OBJECT_NAME(fk.parent_object_id) not in ( 'PIMS_PROPERTY_OPERATION','PIMS_PROPERTY_ACQUISITION_FILE','PIMS_PROPERTY_LEASE');&#xA;&#x9;;&#xA; &#xA;OPEN tableCursor;&#xA; &#xA;FETCH NEXT FROM tableCursor INTO @tableName;&#xA; &#xA;WHILE @@FETCH_STATUS = 0&#xA;BEGIN&#xA;    SET @sql = N'&#xA;        UPDATE ' + @tableName + '&#xA;        SET&#xA;            PROPERTY_ID = max_prop_id.max_property_id,&#xA;            [CONCURRENCY_CONTROL_NUMBER] = [CONCURRENCY_CONTROL_NUMBER] + 1&#xA;        FROM ' + @tableName + ' prf&#xA;        JOIN (&#xA;            SELECT&#xA;                t.property_id as prop_id,&#xA;                max_property_id.max_id AS max_property_id&#xA;            FROM dbo.PIMS_PROPERTY t&#xA;            JOIN (&#xA;                SELECT pid, MAX(property_id) AS max_id&#xA;                FROM dbo.PIMS_PROPERTY&#xA;                GROUP BY pid&#xA;            ) AS max_property_id&#xA;            ON t.pid = max_property_id.pid&#xA;        ) AS max_prop_id&#xA;        ON prf.PROPERTY_ID = max_prop_id.prop_id';&#xA;&#x9;&#x9;&#xA;&#xA;    EXEC sp_executesql @sql;&#xA; &#xA;    FETCH NEXT FROM tableCursor INTO @tableName;&#xA;END;&#xA; &#xA;CLOSE tableCursor;&#xA;DEALLOCATE tableCursor;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\seq.PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{E4EE073B-5F46-4D1D-8D35-D3D5B483A9EF}"
+          DTS:From="Package\seq\STEP 2 - INSERT INTO ETL PIMS_PROPERTY_MERGED"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\seq\insert into PIMS_PROPERTY" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\seq.PrecedenceConstraints[Constraint 1]"
+          DTS:CreationName=""
+          DTS:DTSID="{958575B6-E5BC-4AFA-AB66-454AB2629D48}"
+          DTS:From="Package\seq\UPDATE-RELATION-TABLES-PART1"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 1"
+          DTS:To="Package\seq\UPDATE-PIMS_PROPERTY_LEASE" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\seq.PrecedenceConstraints[Constraint 2]"
+          DTS:CreationName=""
+          DTS:DTSID="{368E0204-44EB-4DED-9BA2-F1C50FD7E1B3}"
+          DTS:From="Package\seq\UPDATE-PIMS_PROPERTY_LEASE"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 2"
+          DTS:To="Package\seq\UPDATE-PIMS_PROPERTY_ACQUISITION_FILE" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\seq.PrecedenceConstraints[Constraint 3]"
+          DTS:CreationName=""
+          DTS:DTSID="{0CF4926F-E8C4-4A2A-9796-A84DB50A5406}"
+          DTS:From="Package\seq\insert into PIMS_PROPERTY"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 3"
+          DTS:To="Package\seq\UPDATE-RELATION-TABLES-PART1" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\seq.PrecedenceConstraints[Constraint 4]"
+          DTS:CreationName=""
+          DTS:DTSID="{4518C9DE-D796-4437-BEF9-DE2EC227B0A6}"
+          DTS:From="Package\seq\UPDATE-PIMS_PROPERTY_ACQUISITION_FILE"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 4"
+          DTS:To="Package\seq\UPDATE-PIMS_PROPERTY_OPERATION_SRC" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\seq.PrecedenceConstraints[Constraint 5]"
+          DTS:CreationName=""
+          DTS:DTSID="{DB4ACF86-4443-47CB-812C-1CFE0EBC481C}"
+          DTS:From="Package\seq\UPDATE-PIMS_PROPERTY_OPERATION_SRC"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 5"
+          DTS:To="Package\seq\UPDATE-PIMS_PROPERTY_OPERATION_DEST" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\seq.PrecedenceConstraints[Constraint 6]"
+          DTS:CreationName=""
+          DTS:DTSID="{BFA3BF48-86C8-45F2-AA36-C1BA048EC4F4}"
+          DTS:From="Package\seq\UPDATE-PIMS_PROPERTY_OPERATION_DEST"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 6"
+          DTS:To="Package\seq\STEP4-KEEP-ONLY-MERGED-RECORD" />
+      </DTS:PrecedenceConstraints>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{694B436A-FF97-488F-82A6-BA81D47E5F8C}"
+      DTS:From="Package\create DuplicatePIDs table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\seq" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{8BBD9314-5D51-4508-AF2B-803C4EF72F44}"
+      DTS:From="Package\seq"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Drop index and table if exists_after_ETL" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="137.333333333334,42.6666666666667"
+          Id="Package\create DuplicatePIDs table\create index"
+          TopLeft="107.124997122213,211.771936019152" />
+        <NodeLayout
+          Size="136,42.6666666666667"
+          Id="Package\create DuplicatePIDs table\create table"
+          TopLeft="107.124997122214,129.631585528316" />
+        <NodeLayout
+          Size="320,42.6666666666667"
+          Id="Package\create DuplicatePIDs table\Drop index and table if exists and create BKP table"
+          TopLeft="13.374998519197,23.5789519531905" />
+        <EdgeLayout
+          Id="Package\create DuplicatePIDs table.PrecedenceConstraints[Constraint]"
+          TopLeft="174.249997820706,66.2456186198571">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,63.3859669084589"
+              Start="0,0"
+              End="0,55.8859669084589">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,55.8859669084589" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\create DuplicatePIDs table.PrecedenceConstraints[Constraint 1]"
+          TopLeft="175.458330455547,172.298252194983">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,39.4736838241688"
+              Start="0,0"
+              End="0,31.9736838241688">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,31.9736838241688" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="468,414.666666666667"
+          Size="468,457.333333333334"
+          Id="Package\create DuplicatePIDs table"
+          TopLeft="34.958333398526,179.947371808115" />
+        <NodeLayout
+          Size="216,42.6666666666667"
+          Id="Package\Drop index and table if exists_after_ETL"
+          TopLeft="1323.83331466963,444.157899257219" />
+        <NodeLayout
+          Size="220,42.6666666666667"
+          Id="Package\seq\insert into PIMS_PROPERTY"
+          TopLeft="95.4166586386662,90.0877252352643" />
+        <NodeLayout
+          Size="361.333333333334,42.6666666666667"
+          Id="Package\seq\STEP 2 - INSERT INTO ETL PIMS_PROPERTY_MERGED"
+          TopLeft="19.4999887123712,19.877196807391" />
+        <NodeLayout
+          Size="278.666666666667,46"
+          Id="Package\seq\STEP4-KEEP-ONLY-MERGED-RECORD"
+          TopLeft="72.6249879207472,559.719312231737" />
+        <NodeLayout
+          Size="321.333333333334,42.6666666666667"
+          Id="Package\seq\UPDATE-PIMS_PROPERTY_ACQUISITION_FILE"
+          TopLeft="53.2499926798048,332.070184788435" />
+        <NodeLayout
+          Size="257.333333333334,42.6666666666667"
+          Id="Package\seq\UPDATE-PIMS_PROPERTY_LEASE"
+          TopLeft="81.3749877903612,253.877201211859" />
+        <NodeLayout
+          Size="320,42.6666666666667"
+          Id="Package\seq\UPDATE-PIMS_PROPERTY_OPERATION_DEST"
+          TopLeft="45.3749913666398,478.771937242615" />
+        <NodeLayout
+          Size="314.666666666667,42.6666666666667"
+          Id="Package\seq\UPDATE-PIMS_PROPERTY_OPERATION_SRC"
+          TopLeft="51.2083240666739,410.719308561345" />
+        <NodeLayout
+          Size="262.666666666667,42.6666666666667"
+          Id="Package\seq\UPDATE-RELATION-TABLES-PART1"
+          TopLeft="71.3749879393725,164.929831116594" />
+        <EdgeLayout
+          Id="Package\seq.PrecedenceConstraints[Constraint]"
+          TopLeft="202.791657008852,62.5438634740577">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,27.5438617612066"
+              Start="0,0"
+              End="0,20.0438617612066">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,20.0438617612066" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\seq.PrecedenceConstraints[Constraint 1]"
+          TopLeft="206.374987864867,207.59649778326">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,46.280703428599"
+              Start="0,0"
+              End="0,38.780703428599">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,38.780703428599" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\seq.PrecedenceConstraints[Constraint 2]"
+          TopLeft="211.97915690175,296.543867878526">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,35.5263169099089"
+              Start="0,0"
+              End="0,28.0263169099089">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,28.0263169099089" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\seq.PrecedenceConstraints[Constraint 3]"
+          TopLeft="204.062489955686,132.754391901931">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,32.1754392146628"
+              Start="0,0"
+              End="0,24.6754392146628">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,24.6754392146628" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\seq.PrecedenceConstraints[Constraint 4]"
+          TopLeft="211.229158373239,374.736851455102">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,35.9824571062432"
+              Start="0,0"
+              End="0,28.4824571062432">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,28.4824571062432" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\seq.PrecedenceConstraints[Constraint 5]"
+          TopLeft="206.958324383324,453.385975228012">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,25.3859620146031"
+              Start="0,0"
+              End="0,17.8859620146031">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,17.8859620146031" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\seq.PrecedenceConstraints[Constraint 6]"
+          TopLeft="208.66665631036,521.438603909282">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,38.2807083224557"
+              Start="0,0"
+              End="0,30.7807083224557">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,30.7807083224557" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <AnnotationLayout
+          Text="PRACQF_PROP_ACQ_TUC&#xA;- PROPERTY_ID&#xA;- ACQUISITION_FILE_ID &#xA;should be unique&#xA;"
+          ParentId="Package\seq"
+          FontInfo="{assembly:Null}"
+          Size="162.666666666667,104"
+          Id="0172841e-6a32-435f-a5ef-c6068a19c451"
+          TopLeft="425.083320462456,187.228074502637" />
+        <AnnotationLayout
+          Text="PROPLS_PROPERTY_LEASE_TUC&#xA;- PROPERTY_ID&#xA;-LEASE_ID&#xA;should be unique"
+          ParentId="Package\seq"
+          FontInfo="{assembly:Null}"
+          Size="194.666666666667,88"
+          Id="00e4c97d-859c-4db7-9ef8-f7d0fce802a7"
+          TopLeft="425.708320453142,309.017550479232" />
+        <AnnotationLayout
+          Text="TAKES 40 MINS"
+          ParentId="Package\seq"
+          FontInfo="{assembly:Null}"
+          Size="110.666666666667,40"
+          Id="e3d1755b-7ef5-4082-9f90-7fd5eaf3430d"
+          TopLeft="392.583320946743,19.5964924000197" />
+        <AnnotationLayout
+          Text="PIMS_OPERATION is separated because&#xA; of field name having prefix&#xA;SOURCE_ and DESTINATION_&#xA; before PROPERTY_ID"
+          ParentId="Package\seq"
+          FontInfo="{assembly:Null}"
+          Size="237.333333333334,88"
+          Id="83d60220-b7c6-40db-83bc-4f76b34a1da6"
+          TopLeft="439.791651569928,445.122818118868" />
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="682.666666666667,660"
+          Size="682.666666666667,702.666666666667"
+          Id="Package\seq"
+          TopLeft="573.152769276872,113.1228091468" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="502.958333398526,408.614038474782">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="70.1944358783461,55.8421040053516"
+              Start="0,0"
+              End="62.6944358783461,55.8421040053516">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="31.097217939173,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="31.097217939173,0"
+                    Point2="35.097217939173,0"
+                    Point3="35.097217939173,4" />
+                  <mssgle:LineSegment
+                    End="35.097217939173,51.8421040053516" />
+                  <mssgle:CubicBezierSegment
+                    Point1="35.097217939173,51.8421040053516"
+                    Point2="35.097217939173,55.8421040053516"
+                    Point3="39.097217939173,55.8421040053516" />
+                  <mssgle:LineSegment
+                    End="62.6944358783461,55.8421040053516" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="1255.81943594354,464.973687535343">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="68.0138787260937,0"
+              Start="0,0"
+              End="60.5138787260937,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="60.5138787260937,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <AnnotationLayout
+          Text="Note on 2 Exclusions&#xA;-----------------------&#xA;&#xA;Exclusion 1 : not NULL PIDs will not be merged&#xA;Reason - PID is the uniquie identifier for merging&#xA;&#xA;Exclusion 2 : Property ID for duplicate PIDs in PIMS_PROPERTY_LEASE table will not be merged&#xA;&#xA;Reason - EXCLUDING PIMS_PROPERTY_LEASE&#xA;( BECAUSE of Violation of UNIQUE KEY constraint 'PROPLS_PROPERTY_LEASE_TUC' &#xA; ( LEASE_ID, PROPERTY_ID HAS TO BE UNIQUE). &#xA;IF there are PROPERTY_IDs for same PIDs then this constraint doesn't allow us to assign Maximum Property_ID value. &#xA;Error throw as Cannot insert duplicate key in object 'dbo.PIMS_PROPERTY_LEASE' )&#xA;"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="648,247.333333333334"
+          Id="8afd86fb-9d46-4b7b-97a9-747344c8621f"
+          TopLeft="426.208327568446,829.947384042753" />
+        <AnnotationLayout
+          Text="Donot run this package before running PIMS_ADDRESS MERGE ETL"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="384,40"
+          Id="db7675d5-8452-407d-b9c1-f94da3cd5a99"
+          TopLeft="24.0178567849633,126.090227937246" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

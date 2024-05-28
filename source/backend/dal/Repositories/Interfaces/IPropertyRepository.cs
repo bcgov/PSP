@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
-using Pims.Dal.Models;
 
 namespace Pims.Dal.Repositories
 {
@@ -12,7 +11,7 @@ namespace Pims.Dal.Repositories
     {
         int Count();
 
-        Paged<PimsProperty> GetPage(PropertyFilter filter);
+        Paged<PimsPropertyVw> GetPage(PropertyFilter filter);
 
         PimsProperty GetById(long id);
 
@@ -26,13 +25,15 @@ namespace Pims.Dal.Repositories
 
         PimsProperty GetAllAssociationsById(long id);
 
+        long GetAllAssociationsCountById(long id);
+
         PimsProperty Update(PimsProperty property, bool overrideLocation = false);
 
         PimsProperty UpdatePropertyManagement(PimsProperty property);
 
         void Delete(PimsProperty property);
 
-        PimsProperty TransferFileProperty(PimsProperty property, PropertyOwnershipState state);
+        PimsProperty TransferFileProperty(PimsProperty property, bool isOwned);
 
         PimsProperty RetireProperty(PimsProperty property);
 

@@ -9,15 +9,15 @@ import TestCommonWrapper from '@/utils/TestCommonWrapper';
 import { GeocoderAutoComplete } from './GeocoderAutoComplete';
 
 const mockAxios = new MockAdapter(axios);
-jest.mock('formik');
+vi.mock('formik');
 
 afterEach(() => {
   mockAxios.reset();
 });
 
-(useFormikContext as jest.Mock).mockReturnValue({
-  handleBlur: jest.fn(),
-});
+vi.mocked(useFormikContext).mockReturnValue({
+  handleBlur: vi.fn(),
+} as unknown as ReturnType<typeof useFormikContext>);
 
 const mockGeocoderOptions: IGeocoderResponse[] = [
   {
@@ -74,7 +74,7 @@ describe('geocoder auto complete tests', () => {
     expect(getByText(toolTipString)).toBeInTheDocument();
   });
 
-  xit('renders options while user types...', async () => {
+  it.skip('renders options while user types...', async () => {
     mockAxios.onGet().reply(200, mockGeocoderOptions);
     const { container, getByText } = render(
       <TestCommonWrapper>

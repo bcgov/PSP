@@ -1,15 +1,12 @@
 import { FormikProps } from 'formik';
-import * as React from 'react';
-import { useEffect, useRef, useState } from 'react';
-import { MdTopic } from 'react-icons/md';
-import { matchPath, useHistory, useRouteMatch } from 'react-router-dom';
-import styled from 'styled-components';
+import { useCallback, useContext, useEffect, useRef, useState } from 'react';
+import { useHistory, useRouteMatch } from 'react-router-dom';
 
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { FileTypes } from '@/constants/fileTypes';
-import FileLayout from '@/features/mapSideBar/layout/FileLayout';
-import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
+import { usePimsPropertyRepository } from '@/hooks/repositories/usePimsPropertyRepository';
+import { usePropertyAssociations } from '@/hooks/repositories/usePropertyAssociations';
 import { useResearchRepository } from '@/hooks/repositories/useResearchRepository';
 import { useQuery } from '@/hooks/use-query';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
@@ -17,27 +14,22 @@ import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Concepts_ResearchFile';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
-import { exists, stripTrailingSlash } from '@/utils';
-import { getFilePropertyName } from '@/utils/mapPropertyUtils';
+import { exists, isValidId, isValidString, stripTrailingSlash } from '@/utils';
 
 import { SideBarContext } from '../context/sidebarContext';
-import SidebarFooter from '../shared/SidebarFooter';
-import { UpdateProperties } from '../shared/update/properties/UpdateProperties';
-import ResearchHeader from './common/ResearchHeader';
-import ResearchMenu from './common/ResearchMenu';
+import { PropertyForm } from '../shared/models';
 import { useGetResearch } from './hooks/useGetResearch';
 import { useUpdateResearchProperties } from './hooks/useUpdateResearchProperties';
-import ResearchView from './ResearchView';
+import { IResearchViewProps } from './ResearchView';
 
 export interface IResearchContainerProps {
   researchFileId: number;
   onClose: () => void;
+  View: React.FunctionComponent<React.PropsWithChildren<IResearchViewProps>>;
 }
 
-export const ResearchContainer: React.FunctionComponent<
-  React.PropsWithChildren<IResearchContainerProps>
-> = props => {
-  const researchFileId = props.researchFileId;
+export const ResearchContainer: React.FunctionComponent<IResearchContainerProps> = props => {
+  const { researchFileId, onClose, View } = props;
   const {
     retrieveResearchFile: { execute: getResearchFile, loading: loadingResearchFile },
     retrieveResearchFileProperties: {
@@ -50,6 +42,12 @@ export const ResearchContainer: React.FunctionComponent<
     getLastUpdatedBy: { execute: getLastUpdatedBy, loading: loadingLastUpdatedBy },
   } = useResearchRepository();
 
+  const { execute: getPropertyAssociations } = usePropertyAssociations();
+  const {
+    getPropertyByPidWrapper: { execute: getPropertyByPid },
+    getPropertyByPinWrapper: { execute: getPropertyByPin },
+  } = usePimsPropertyRepository();
+
   const mapMachine = useMapStateMachine();
   const {
     setFile,
@@ -61,22 +59,18 @@ export const ResearchContainer: React.FunctionComponent<
     setLastUpdatedBy,
     staleLastUpdatedBy,
     setStaleLastUpdatedBy,
-  } = React.useContext(SideBarContext);
+  } = useContext(SideBarContext);
 
   const [isValid, setIsValid] = useState<boolean>(true);
   const [isShowingPropertySelector, setIsShowingPropertySelector] = useState<boolean>(false);
   const { setModalContent, setDisplayModal } = useModalContext();
 
   const formikRef = useRef<FormikProps<any>>(null);
-
   const history = useHistory();
   const match = useRouteMatch();
-
-  const menuItems = researchFile?.fileProperties?.map(x => getFilePropertyName(x).value) || [];
-  menuItems.unshift('File Summary');
-
   const { updateResearchFileProperties } = useUpdateResearchProperties();
-  const wrapWithOverride = useApiUserOverride<
+
+  const withUserOverride = useApiUserOverride<
     (userOverrideCodes: UserOverrideCode[]) => Promise<ApiGen_Concepts_ResearchFile | undefined>
   >('Failed to update Research File');
 
@@ -86,7 +80,7 @@ export const ResearchContainer: React.FunctionComponent<
     [loadingLastUpdatedBy, loadingResearchFile, loadingResearchFileProperties, setFileLoading],
   );
 
-  const fetchResearchFile = React.useCallback(async () => {
+  const fetchResearchFile = useCallback(async () => {
     const retrieved = await getResearchFile(props.researchFileId);
     if (exists(retrieved)) {
       const researchProperties = await getResearchFileProperties(props.researchFileId);
@@ -99,7 +93,7 @@ export const ResearchContainer: React.FunctionComponent<
     }
   }, [getResearchFile, getResearchFileProperties, props.researchFileId, setFile]);
 
-  const fetchLastUpdatedBy = React.useCallback(async () => {
+  const fetchLastUpdatedBy = useCallback(async () => {
     const retrieved = await getLastUpdatedBy(props.researchFileId);
     if (retrieved !== undefined) {
       setLastUpdatedBy(retrieved);
@@ -110,7 +104,7 @@ export const ResearchContainer: React.FunctionComponent<
 
   const push = history.push;
   const query = useQuery();
-  const setIsEditing = React.useCallback(
+  const setIsEditing = useCallback(
     (editing: boolean) => {
       if (editing) {
         query.set('edit', 'true');
@@ -123,20 +117,20 @@ export const ResearchContainer: React.FunctionComponent<
     [push, query],
   );
 
-  const onSuccess = React.useCallback(() => {
+  const onSuccess = useCallback(() => {
     setStaleFile(true);
     setStaleLastUpdatedBy(true);
     mapMachine.refreshMapProperties();
     setIsEditing(false);
   }, [mapMachine, setIsEditing, setStaleFile, setStaleLastUpdatedBy]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (researchFile === undefined || researchFileId !== researchFile?.id || staleFile) {
       fetchResearchFile();
     }
   }, [fetchResearchFile, researchFile, researchFileId, staleFile]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (
       !exists(lastUpdatedBy) ||
       researchFileId !== lastUpdatedBy?.parentId ||
@@ -152,11 +146,6 @@ export const ResearchContainer: React.FunctionComponent<
     const route = selectedIndex === 0 ? '' : `/property/${selectedIndex}`;
     history.push(`${stripTrailingSlash(match.url)}${route}`);
   };
-  const propertiesMatch = matchPath<Record<string, string>>(
-    history.location.pathname,
-    `${stripTrailingSlash(match.path)}/property/:menuIndex/:tab?`,
-  );
-  const selectedMenuIndex = propertiesMatch !== null ? Number(propertiesMatch.params.menuIndex) : 0;
 
   const onMenuChange = (selectedIndex: number) => {
     if (isEditing) {
@@ -177,10 +166,16 @@ export const ResearchContainer: React.FunctionComponent<
   };
 
   const handleSaveClick = async () => {
+    await formikRef?.current?.validateForm();
+    if (!formikRef?.current?.isValid) {
+      setIsValid(false);
+    } else {
+      setIsValid(true);
+    }
+
     if (formikRef !== undefined) {
       formikRef.current?.setSubmitting(true);
       formikRef.current?.submitForm();
-      setIsValid(formikRef.current?.isValid || false);
     }
   };
 
@@ -211,8 +206,55 @@ export const ResearchContainer: React.FunctionComponent<
     setIsEditing(false);
   };
 
-  const showPropertiesSelector = () => {
-    setIsShowingPropertySelector(true);
+  //TODO: add this if we need this check for the research file.
+  const canRemove = async () => true;
+
+  // Warn user that property is part of an existing research file
+  const confirmBeforeAdd = useCallback(
+    async (propertyForm: PropertyForm): Promise<boolean> => {
+      let apiId;
+      try {
+        if (isValidId(propertyForm.apiId)) {
+          apiId = propertyForm.apiId;
+        } else if (isValidString(propertyForm.pid)) {
+          const result = await getPropertyByPid(propertyForm.pid);
+          apiId = result?.id;
+        } else if (isValidString(propertyForm.pin)) {
+          const result = await getPropertyByPin(Number(propertyForm.pin));
+          apiId = result?.id;
+        }
+      } catch (e) {
+        apiId = 0;
+      }
+
+      if (isValidId(apiId)) {
+        const response = await getPropertyAssociations(apiId);
+        const researchAssociations = response?.researchAssociations ?? [];
+        const otherResearchFiles = researchAssociations.filter(
+          a => exists(a.id) && a.id !== researchFileId,
+        );
+        return otherResearchFiles.length > 0;
+      } else {
+        // the property is not in PIMS db -> no need to confirm
+        return false;
+      }
+    },
+    [getPropertyAssociations, getPropertyByPid, getPropertyByPin, researchFileId],
+  );
+
+  const onUpdateProperties = (
+    file: ApiGen_Concepts_File,
+  ): Promise<ApiGen_Concepts_File | undefined> => {
+    return withUserOverride((userOverrideCodes: UserOverrideCode[]) => {
+      return updateResearchFileProperties(
+        file as ApiGen_Concepts_ResearchFile,
+        userOverrideCodes,
+      ).then(response => {
+        onSuccess();
+        setIsShowingPropertySelector(false);
+        return response;
+      });
+    });
   };
 
   if (
@@ -224,89 +266,25 @@ export const ResearchContainer: React.FunctionComponent<
     return <LoadingBackdrop show={true} parentScreen={true}></LoadingBackdrop>;
   }
 
-  if (isShowingPropertySelector && researchFile) {
-    return (
-      <UpdateProperties
-        file={researchFile}
-        setIsShowingPropertySelector={setIsShowingPropertySelector}
-        onSuccess={onSuccess}
-        updateFileProperties={(file: ApiGen_Concepts_File) =>
-          wrapWithOverride((userOverrideCodes: UserOverrideCode[]) =>
-            updateResearchFileProperties(
-              file as ApiGen_Concepts_ResearchFile,
-              userOverrideCodes,
-            ).then(response => {
-              onSuccess();
-              setIsShowingPropertySelector(false);
-              return response;
-            }),
-          )
-        }
-        canRemove={() => Promise.resolve(true)} //TODO: add this if we need this check for the research file.
-        formikRef={formikRef}
-      />
-    );
-  } else {
-    return (
-      <MapSideBarLayout
-        title={isEditing ? 'Update Research File' : 'Research File'}
-        icon={<MdTopic title="User Profile" size="2.5rem" className="mr-2" />}
-        header={
-          <ResearchHeader
-            researchFile={researchFile as unknown as ApiGen_Concepts_ResearchFile}
-            lastUpdatedBy={lastUpdatedBy}
-          />
-        }
-        footer={
-          isEditing && (
-            <SidebarFooter
-              isOkDisabled={formikRef?.current?.isSubmitting}
-              onSave={handleSaveClick}
-              onCancel={handleCancelClick}
-              displayRequiredFieldError={!isValid}
-            />
-          )
-        }
-        onClose={props.onClose}
-        showCloseButton
-      >
-        <FileLayout
-          leftComponent={
-            <>
-              <ResearchMenu
-                items={menuItems}
-                selectedIndex={selectedMenuIndex}
-                onChange={onMenuChange}
-                onEdit={showPropertiesSelector}
-              />
-            </>
-          }
-          bodyComponent={
-            <StyledFormWrapper>
-              <ResearchView
-                researchFile={researchFile as unknown as ApiGen_Concepts_ResearchFile}
-                onSuccess={onSuccess}
-                setEditMode={setIsEditing}
-                ref={formikRef}
-                isEditing={isEditing}
-              />
-            </StyledFormWrapper>
-          }
-        ></FileLayout>
-      </MapSideBarLayout>
-    );
-  }
+  return (
+    <View
+      researchFile={researchFile as unknown as ApiGen_Concepts_ResearchFile}
+      formikRef={formikRef}
+      isEditing={isEditing}
+      setEditMode={setIsEditing}
+      isShowingPropertySelector={isShowingPropertySelector}
+      setIsShowingPropertySelector={setIsShowingPropertySelector}
+      onClose={onClose}
+      onSave={handleSaveClick}
+      onCancel={handleCancelClick}
+      onMenuChange={onMenuChange}
+      onUpdateProperties={onUpdateProperties}
+      confirmBeforeAdd={confirmBeforeAdd}
+      canRemove={canRemove}
+      onSuccess={onSuccess}
+      isFormValid={isValid}
+    ></View>
+  );
 };
 
 export default ResearchContainer;
-
-const StyledFormWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  text-align: left;
-  height: 100%;
-  overflow-y: auto;
-  padding-right: 1rem;
-  padding-bottom: 1rem;
-`;

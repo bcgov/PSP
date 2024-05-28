@@ -4,7 +4,6 @@ using System.Security.Claims;
 using System.Text.RegularExpressions;
 using LinqKit;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 using Pims.Dal.Security;
@@ -25,21 +24,12 @@ namespace Pims.Dal.Helpers.Extensions
         /// <param name="user"></param>
         /// <param name="filter"></param>
         /// <returns></returns>
-        public static IQueryable<Entity.PimsProperty> GeneratePropertyQuery(this PimsContext context, ClaimsPrincipal user, Entity.Models.PropertyFilter filter)
+        public static IQueryable<Entity.PimsPropertyVw> GeneratePropertyQuery(this PimsContext context, ClaimsPrincipal user, Entity.Models.PropertyFilter filter)
         {
             filter.ThrowIfNull(nameof(filter));
             filter.ThrowIfNull(nameof(user));
 
-            var query = context.PimsProperties
-                .Include(p => p.Address)
-                    .ThenInclude(a => a.RegionCodeNavigation)
-                .Include(p => p.Address)
-                    .ThenInclude(a => a.DistrictCodeNavigation)
-                .Include(p => p.Address)
-                    .ThenInclude(a => a.ProvinceState)
-                .Include(p => p.Address)
-                    .ThenInclude(a => a.Country)
-                .Include(p => p.PropertyAreaUnitTypeCodeNavigation)
+            var query = context.PimsPropertyVws
                 .AsNoTracking();
 
             var predicate = GenerateCommonPropertyQuery(user, filter);
@@ -63,7 +53,7 @@ namespace Pims.Dal.Helpers.Extensions
         /// <param name="user"></param>
         /// <param name="filter"></param>
         /// <returns></returns>
-        private static ExpressionStarter<PimsProperty> GenerateCommonPropertyQuery(ClaimsPrincipal user, Entity.Models.PropertyFilter filter)
+        private static ExpressionStarter<PimsPropertyVw> GenerateCommonPropertyQuery(ClaimsPrincipal user, Entity.Models.PropertyFilter filter)
         {
             filter.ThrowIfNull(nameof(filter));
             filter.ThrowIfNull(nameof(user));
@@ -71,7 +61,7 @@ namespace Pims.Dal.Helpers.Extensions
             // Check if user has the ability to view sensitive properties.
             var viewSensitive = user.HasPermission(Permissions.SensitiveView);
 
-            var predicateBuilder = PredicateBuilder.New<PimsProperty>(p => true);
+            var predicateBuilder = PredicateBuilder.New<PimsPropertyVw>(p => true);
 
             // Users are not allowed to view sensitive properties outside of their organization or sub-organizations.
             if (!viewSensitive)
@@ -84,45 +74,47 @@ namespace Pims.Dal.Helpers.Extensions
                 // note - 2 part search required. all matches found by removing leading 0's, then matches filtered in subsequent step. This is because EF core does not support an lpad method.
                 Regex nonInteger = new Regex("[^\\d]");
                 var formattedPidPin = Convert.ToInt32(nonInteger.Replace(filter.PinOrPid, string.Empty)).ToString();
-                predicateBuilder = predicateBuilder.And(p => p != null && (EF.Functions.Like(p.Pid.ToString(), $"%{formattedPidPin}%") || EF.Functions.Like(p.Pin.ToString(), $"%{formattedPidPin}%")));
+                predicateBuilder = predicateBuilder.And(p => EF.Functions.Like(p.Pid.ToString(), $"%{formattedPidPin}%") || EF.Functions.Like(p.Pin.ToString(), $"%{formattedPidPin}%"));
             }
             if (!string.IsNullOrWhiteSpace(filter.Address))
             {
-                predicateBuilder = predicateBuilder.And(p => EF.Functions.Like(p.Address.StreetAddress1, $"%{filter.Address}%") || EF.Functions.Like(p.Address.MunicipalityName, $"%{filter.Address}%"));
+                predicateBuilder = predicateBuilder.And(p => EF.Functions.Like(p.StreetAddress1, $"%{filter.Address}%") || EF.Functions.Like(p.MunicipalityName, $"%{filter.Address}%"));
             }
             if (!string.IsNullOrWhiteSpace(filter.PlanNumber))
             {
-                predicateBuilder = predicateBuilder.And(p => p != null && p.SurveyPlanNumber.Equals(filter.PlanNumber));
+                predicateBuilder = predicateBuilder.And(p => p.SurveyPlanNumber.Equals(filter.PlanNumber));
             }
 
             var isRetired = filter.Ownership.Contains("isRetired");
 
-            ExpressionStarter<PimsProperty> ownershipBuilder;
+            ExpressionStarter<PimsPropertyVw> ownershipBuilder;
 
             if (filter.Ownership.Count > 0)
             {
-                ownershipBuilder = isRetired ? PredicateBuilder.New<PimsProperty>(p => p.IsRetired == true) : PredicateBuilder.New<PimsProperty>(p => false);
+                // Property ownership filters
+                ownershipBuilder = isRetired ? PredicateBuilder.New<PimsPropertyVw>(p => p.IsRetired == true) : PredicateBuilder.New<PimsPropertyVw>(p => false);
                 if (filter.Ownership.Contains("isCoreInventory"))
                 {
                     ownershipBuilder = ownershipBuilder.Or(p => p.IsOwned && p.IsRetired != true);
                 }
                 if (filter.Ownership.Contains("isPropertyOfInterest"))
                 {
-                    ownershipBuilder = ownershipBuilder.Or(p => p.IsPropertyOfInterest && p.IsRetired != true);
+                    ownershipBuilder.Or(p => p.IsRetired != true && p.HasActiveAcquisitionFile.HasValue && p.HasActiveAcquisitionFile.Value);
+                    ownershipBuilder.Or(p => p.IsRetired != true && p.HasActiveResearchFile.HasValue && p.HasActiveResearchFile.Value);
                 }
                 if (filter.Ownership.Contains("isOtherInterest"))
                 {
-                    ownershipBuilder = ownershipBuilder.Or(p => p.IsOtherInterest && p.IsRetired != true);
+                    ownershipBuilder.Or(p => p.IsRetired != true && p.IsOtherInterest.HasValue && p.IsOtherInterest.Value);
                 }
                 if (filter.Ownership.Contains("isDisposed"))
                 {
-                    ownershipBuilder = ownershipBuilder.Or(p => p.IsDisposed && p.IsRetired != true);
+                    ownershipBuilder.Or(p => p.IsRetired != true && p.IsDisposed.HasValue && p.IsDisposed.Value);
                 }
             }
             else
             {
                 // psp-7658 is retired properties should be omitted by default.
-                ownershipBuilder = PredicateBuilder.New<PimsProperty>(p => p.IsRetired != true);
+                ownershipBuilder = PredicateBuilder.New<PimsPropertyVw>(p => p.IsRetired != true);
             }
             predicateBuilder = predicateBuilder.And(ownershipBuilder);
 

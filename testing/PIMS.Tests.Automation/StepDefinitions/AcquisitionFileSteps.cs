@@ -8,6 +8,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
     public class AcquisitionFileSteps
     {
         private readonly LoginSteps loginSteps;
+        private readonly GenericSteps genericSteps;
         private readonly AcquisitionDetails acquisitionFilesDetails;
         private readonly SearchAcquisitionFiles searchAcquisitionFiles;
         private readonly SharedFileProperties sharedFileProperties;
@@ -31,6 +32,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         public AcquisitionFileSteps(BrowserDriver driver)
         {
             loginSteps = new LoginSteps(driver);
+            genericSteps = new GenericSteps(driver);
 
             acquisitionFilesDetails = new AcquisitionDetails(driver.Current);
             searchAcquisitionFiles = new SearchAcquisitionFiles(driver.Current);
@@ -100,6 +102,25 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 notes.NavigateNotesTab();
                 notes.VerifyAutomaticNotes("Acquisition File", "Active", acquisitionFile.AcquisitionStatus);
             }
+        }
+
+        [StepDefinition(@"I add additional information to complete the Acquisition File")]
+        public void AddAdditionalInfoCompleteAcquisitionFile()
+        {
+            //Go to File Summary
+            acquisitionFilesDetails.NavigateToFileSummary();
+
+            //Go to File Details
+            acquisitionFilesDetails.NavigateToFileDetailsTab();
+
+            //Enter to Edit mode of Acquisition File
+            acquisitionFilesDetails.EditAcquisitionFileBttn();
+
+            //Add Additional Optional information to the acquisition file
+            acquisitionFilesDetails.AddAdditionalInformation(acquisitionFile);
+
+            //Save Acquisition File
+            acquisitionFilesDetails.SaveAcquisitionFileDetails();
         }
 
         [StepDefinition(@"I update the File details from an existing Acquisition File from row number (.*)")]
@@ -188,6 +209,16 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //    sharedSearchProperties.SelectPropertyByLegalDescription(acquisitionFile.SearchProperties.LegalDescription);
             //    sharedSearchProperties.SelectFirstOption();
             //}
+
+            //Search for Multiple PIDs
+            if(acquisitionFile.AcquisitionSearchProperties.MultiplePIDS.First() != "")
+            {
+                foreach (string prop in acquisitionFile.AcquisitionSearchProperties.MultiplePIDS)
+                {
+                    sharedFileProperties.SelectPropertyByPID(prop);
+                    sharedFileProperties.SelectFirstOptionFromSearch();
+                }
+            }
 
             //Search for a duplicate property
             if (acquisitionFile.AcquisitionSearchProperties.PID != "")
@@ -942,6 +973,30 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchAcquisitionFiles.Dispose();
         }
 
+        [StepDefinition(@"Acquisition File cannot be completed due to Draft items")]
+        public void VerifyCannotCompleteDraftItems()
+        {
+            //TEST COVERAGE:
+            acquisitionFilesDetails.VerifyErrorMessageDraftItems();
+            acquisitionFilesDetails.Dispose();
+        }
+
+        [StepDefinition(@"Acquisition File cannot be completed without Takes")]
+        public void VerifyCannotCompleteWithoutTakes()
+        {
+            //TEST COVERAGE: PSP-8209
+            acquisitionFilesDetails.VerifyErrorCannotCompleteWithoutTakes();
+            acquisitionFilesDetails.Dispose();
+        }
+
+        [StepDefinition(@"Acquisition File cannot be completed due to In-Progress Takes")]
+        public void VerifyCannotCompleteInprogressTakes()
+        {
+            //TEST COVERAGE: PSP-7991
+            acquisitionFilesDetails.VerifyErrorCannotCompleteInProgressTakes();
+            acquisitionFilesDetails.Dispose();
+        }
+
         private void PopulateAcquisitionFile(int rowNumber)
         {
             DataTable acquisitionSheet = ExcelDataContext.GetInstance().Sheets["AcquisitionFiles"]!;
@@ -962,7 +1017,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Schedule
             acquisitionFile.AssignedDate = ExcelDataContext.ReadData(rowNumber, "AssignedDate");
             acquisitionFile.DeliveryDate = ExcelDataContext.ReadData(rowNumber, "DeliveryDate");
-            acquisitionFile.AcquisitionCompletedDate = ExcelDataContext.ReadData(rowNumber, "AcquisitionCompletedDate");
 
             //Acquisition Details
             acquisitionFile.AcquisitionFileName = ExcelDataContext.ReadData(rowNumber, "AcquisitionFileName");
@@ -984,10 +1038,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
             acquisitionFile.OwnerStartRow = int.Parse(ExcelDataContext.ReadData(rowNumber, "OwnerStartRow"));
             acquisitionFile.OwnerCount = int.Parse(ExcelDataContext.ReadData(rowNumber, "OwnerCount"));
             if (acquisitionFile.OwnerStartRow != 0 && acquisitionFile.OwnerCount != 0)
-            {
                 PopulateOwnersCollection(acquisitionFile.OwnerStartRow, acquisitionFile.OwnerCount);
-            }
-
+            
             acquisitionFile.OwnerSolicitor = ExcelDataContext.ReadData(rowNumber, "OwnerSolicitor");
             acquisitionFile.OwnerRepresentative = ExcelDataContext.ReadData(rowNumber, "OwnerRepresentative");
             acquisitionFile.OwnerComment = ExcelDataContext.ReadData(rowNumber, "OwnerComment");
@@ -1004,6 +1056,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 acquisitionFile.AcquisitionSearchProperties.Address = ExcelDataContext.ReadData(acquisitionFile.AcquisitionSearchPropertiesIndex, "Address");
                 acquisitionFile.AcquisitionSearchProperties.PlanNumber = ExcelDataContext.ReadData(acquisitionFile.AcquisitionSearchPropertiesIndex, "PlanNumber");
                 acquisitionFile.AcquisitionSearchProperties.LegalDescription = ExcelDataContext.ReadData(acquisitionFile.AcquisitionSearchPropertiesIndex, "LegalDescription");
+                acquisitionFile.AcquisitionSearchProperties.MultiplePIDS = genericSteps.PopulateLists(ExcelDataContext.ReadData(acquisitionFile.AcquisitionSearchPropertiesIndex, "MultiplePIDS"));
             }
 
             //Acquisition's Properties' Takes
@@ -1158,6 +1211,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
                 take.TakeType = ExcelDataContext.ReadData(i, "TakeType");
                 take.TakeStatus = ExcelDataContext.ReadData(i, "TakeStatus");
+                take.TakeCompleteDate = ExcelDataContext.ReadData(i, "TakeCompleteDate");
                 take.SiteContamination = ExcelDataContext.ReadData(i, "SiteContamination");
                 take.TakeDescription = ExcelDataContext.ReadData(i, "TakeDescription");
 
@@ -1167,6 +1221,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
                 take.IsNewInterestLand = ExcelDataContext.ReadData(i, "IsNewInterestLand");
                 take.IsNewInterestLandArea = ExcelDataContext.ReadData(i, "IsNewInterestLandArea");
+                take.IsNewInterestLandDate = ExcelDataContext.ReadData(i, "IsNewInterestLandDate");
 
                 take.IsLandActTenure = ExcelDataContext.ReadData(i, "IsLandActTenure");
                 take.IsLandActTenureDetail = ExcelDataContext.ReadData(i, "IsLandActTenureDetail");
@@ -1176,6 +1231,10 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 take.IsLicenseConstruct = ExcelDataContext.ReadData(i, "IsLicenseConstruct");
                 take.IsLicenseConstructArea = ExcelDataContext.ReadData(i, "IsLicenseConstructArea");
                 take.IsLicenseConstructDate = ExcelDataContext.ReadData(i, "IsLicenseConstructDate");
+
+                take.IsLeasePayable = ExcelDataContext.ReadData(i, "IsLeasePayable");
+                take.IsLeasePayableArea = ExcelDataContext.ReadData(i, "IsLeasePayableArea");
+                take.IsLeasePayableDate = ExcelDataContext.ReadData(i, "IsLeasePayableDate");
 
                 take.IsSurplus = ExcelDataContext.ReadData(i, "IsSurplus");
                 take.IsSurplusArea = ExcelDataContext.ReadData(i, "IsSurplusArea");

@@ -1,6 +1,6 @@
 import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
-import { noop } from 'lodash';
+import noop from 'lodash/noop';
 
 import { IMapProperty } from '@/components/propertySelector/models';
 import { PropertyForm } from '@/features/mapSideBar/shared/models';
@@ -15,7 +15,7 @@ const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
 
-const onRemove = jest.fn();
+const onRemove = vi.fn();
 
 describe('SelectedPropertyRow component', () => {
   const setup = async (
@@ -25,8 +25,9 @@ describe('SelectedPropertyRow component', () => {
     // render component under test
     const component = await renderAsync(
       <Formik onSubmit={noop} initialValues={renderOptions.values ?? {}}>
-        {() => (
+        {formikProps => (
           <SelectedPropertyRow
+            formikProps={formikProps}
             property={
               renderOptions.values?.properties
                 ? PropertyForm.fromMapProperty(renderOptions.values?.properties[0])

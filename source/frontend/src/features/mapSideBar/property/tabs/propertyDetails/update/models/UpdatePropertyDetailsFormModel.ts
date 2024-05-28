@@ -1,6 +1,7 @@
 import { GeoJsonProperties } from 'geojson';
 import { isEmpty } from 'lodash';
 
+import { ApiGen_CodeTypes_PropertyPPHStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_PropertyPPHStatusTypes';
 import { ApiGen_Concepts_Address } from '@/models/api/generated/ApiGen_Concepts_Address';
 import { ApiGen_Concepts_CodeType } from '@/models/api/generated/ApiGen_Concepts_CodeType';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
@@ -90,6 +91,8 @@ export class UpdatePropertyDetailsFormModel {
   municipalZoning?: string;
   notes?: string;
 
+  isOwned: boolean;
+
   name?: string;
   description?: string;
   isSensitive?: boolean;
@@ -152,7 +155,8 @@ export class UpdatePropertyDetailsFormModel {
     model.description = base.description ?? undefined;
     model.isSensitive = base.isSensitive;
     model.isRetired = base.isRetired;
-    model.pphStatusTypeCode = base.pphStatusTypeCode ?? 'UNKNOWN';
+    model.pphStatusTypeCode =
+      base.pphStatusTypeCode ?? ApiGen_CodeTypes_PropertyPPHStatusTypes.UNKNOWN.toString();
     model.isRwyBeltDomPatent = base.isRwyBeltDomPatent ?? undefined;
     model.pphStatusUpdateUserid = base.pphStatusUpdateUserid ?? undefined;
     model.pphStatusUpdateUserGuid = base.pphStatusUpdateUserGuid ?? undefined;
@@ -187,6 +191,8 @@ export class UpdatePropertyDetailsFormModel {
 
     model.regionTypeCode = fromTypeCode(base.region) ?? undefined;
     model.regionTypeCodeDescription = base.region?.description ?? undefined;
+
+    model.isOwned = base.isOwned;
 
     // multi-selects
     model.anomalies = base.anomalies?.map(e => PropertyAnomalyFormModel.fromApi(e));
@@ -229,6 +235,7 @@ export class UpdatePropertyDetailsFormModel {
       region: toTypeCodeNullable(this.regionTypeCode),
       address: exists(this.address) ? this.address.toApi() : null,
       generalLocation: stringToNull(this.generalLocation),
+      isOwned: this.isOwned,
       // multi-selects
       anomalies: this.anomalies?.map(e => e.toApi()) ?? null,
       tenures: this.tenures?.map(e => e.toApi()) ?? null,
@@ -241,10 +248,6 @@ export class UpdatePropertyDetailsFormModel {
       pphStatusUpdateUserid: null,
       pphStatusUpdateTimestamp: null,
       pphStatusUpdateUserGuid: null,
-      isOwned: false,
-      isOtherInterest: false,
-      isDisposed: false,
-      isPropertyOfInterest: false,
       isVisibleToOtherAgencies: false,
       propertyContacts: null,
       surplusDeclarationType: null,

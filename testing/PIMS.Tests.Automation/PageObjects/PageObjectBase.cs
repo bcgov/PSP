@@ -1,6 +1,7 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
+using System.Globalization;
 
 namespace PIMS.Tests.Automation.PageObjects
 {
@@ -237,6 +238,22 @@ namespace PIMS.Tests.Automation.PageObjects
             }
         }
 
+        protected string TransformNumberFormat(string amount)
+        {
+            NumberFormatInfo nfi = new CultureInfo("en-US", false).NumberFormat;
+            
+
+            if (amount == "")
+            {
+                return "";
+            }
+            else
+            {
+                decimal value = decimal.Parse(amount);
+                return value.ToString("#,##0.##");        
+            }
+        }
+
         protected string TransformProjectFormat(string project)
         {
             var splittedProject = project.Split(' ', 2);
@@ -308,6 +325,11 @@ namespace PIMS.Tests.Automation.PageObjects
             return input.Substring(startIndex, endIndex);
         }
 
-        public void Dispose() => webDriver.Dispose();
+        public void Dispose()
+        {
+            webDriver.Close();
+            webDriver.Quit();
+            webDriver.Dispose();
+        }
     }
 }

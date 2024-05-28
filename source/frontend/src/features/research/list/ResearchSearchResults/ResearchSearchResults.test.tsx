@@ -3,7 +3,7 @@ import { render, RenderOptions } from '@/utils/test-utils';
 
 import { IResearchSearchResultsProps, ResearchSearchResults } from './ResearchSearchResults';
 
-const setSort = jest.fn();
+const setSort = vi.fn();
 
 // render component under test
 const setup = (

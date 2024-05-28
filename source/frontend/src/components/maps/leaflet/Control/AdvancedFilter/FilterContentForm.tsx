@@ -1,5 +1,5 @@
 import { Form, Formik, useFormikContext } from 'formik';
-import { noop } from 'lodash';
+import noop from 'lodash/noop';
 import React, { useEffect, useMemo } from 'react';
 import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
@@ -49,8 +49,8 @@ export const FilterContentForm: React.FC<React.PropsWithChildren<IFilterContentF
   }, []);
 
   useEffect(() => {
-    const firstLoad = async () => {
-      await onChange(initialFilter);
+    const firstLoad = () => {
+      onChange(initialFilter);
     };
     firstLoad();
   }, [initialFilter, onChange]);

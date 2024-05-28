@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`ResearchSummaryView component renders as expected when research file is provided 1`] = `
+exports[`ResearchSummaryView component > renders as expected when research file is provided 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"

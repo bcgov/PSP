@@ -5,12 +5,12 @@ import { useTenant } from '@/tenants';
 import { ITenantConfig2 } from './pims-api/interfaces/ITenantConfig';
 import { useFavicon } from './useFavicon';
 
-jest.mock('@/tenants', () => ({
-  useTenant: jest.fn(),
+vi.mock('@/tenants', () => ({
+  useTenant: vi.fn(),
 }));
 
-const mockUseTenant = useTenant as jest.Mock;
-const baseUrl = 'http://localhost/';
+const mockUseTenant = vi.mocked(useTenant);
+const baseUrl = 'http://localhost:3000/';
 
 describe('useFavicon hook', () => {
   beforeAll(() => {
@@ -21,7 +21,7 @@ describe('useFavicon hook', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('returns empty link when tenant data is unavailable', () => {
@@ -31,7 +31,7 @@ describe('useFavicon hook', () => {
   });
 
   it('returns valid icon link from tenant', () => {
-    mockUseTenant.mockReturnValue({ logo: { favicon: 'test.ico' } });
+    mockUseTenant.mockReturnValue({ logo: { favicon: 'test.ico' } } as ITenantConfig2);
     const { result } = renderHook(useFavicon);
     expect(result.current.href).toBe(`${baseUrl}test.ico`);
   });

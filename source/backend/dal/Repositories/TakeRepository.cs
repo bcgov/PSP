@@ -25,6 +25,24 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
+        /// Get take by id.
+        /// </summary>
+        /// <param name="takeId"></param>
+        /// <returns></returns>
+        public PimsTake GetById(long takeId)
+        {
+            return Context.PimsTakes
+
+                .Include(t => t.PropertyAcquisitionFile)
+                .Include(t => t.TakeSiteContamTypeCodeNavigation)
+                .Include(t => t.TakeStatusTypeCodeNavigation)
+                .Include(t => t.TakeTypeCodeNavigation)
+                .Include(t => t.LandActTypeCodeNavigation)
+                .AsNoTracking()
+                .FirstOrDefault(t => t.TakeId == takeId) ?? throw new KeyNotFoundException($"Unable to find take with id {takeId}");
+        }
+
+        /// <summary>
         /// Get all of the takes that are associated to a given acquisition file by its id.
         /// </summary>
         /// <param name="fileId"></param>
@@ -32,21 +50,23 @@ namespace Pims.Dal.Repositories
         public IEnumerable<PimsTake> GetAllByAcquisitionFileId(long fileId)
         {
             return Context.PimsTakes
+
                 .Include(t => t.PropertyAcquisitionFile)
                 .Include(t => t.TakeSiteContamTypeCodeNavigation)
                 .Include(t => t.TakeStatusTypeCodeNavigation)
                 .Include(t => t.TakeTypeCodeNavigation)
                 .Include(t => t.LandActTypeCodeNavigation)
-                .Where(t => t.PropertyAcquisitionFile.AcquisitionFileId == fileId);
+                .Where(t => t.PropertyAcquisitionFile.AcquisitionFileId == fileId)
+                .AsNoTracking();
         }
 
         /// <summary>
         /// Get all Takes for a Property in the Acquisition File.
         /// </summary>
         /// <param name="fileId"></param>
-        /// <param name="acquisitionFilePropertyId"></param>
+        /// <param name="propertyId"></param>
         /// <returns></returns>
-        public IEnumerable<PimsTake> GetAllByPropertyId(long fileId, long acquisitionFilePropertyId)
+        public IEnumerable<PimsTake> GetAllByAcqPropertyId(long fileId, long propertyId)
         {
             return Context.PimsTakes
                 .Include(t => t.PropertyAcquisitionFile)
@@ -55,7 +75,19 @@ namespace Pims.Dal.Repositories
                 .Include(t => t.TakeTypeCodeNavigation)
                 .Include(t => t.LandActTypeCodeNavigation)
                 .Where(t => t.PropertyAcquisitionFile.AcquisitionFileId == fileId
-                        && t.PropertyAcquisitionFile.PropertyId == acquisitionFilePropertyId)
+                        && t.PropertyAcquisitionFile.PropertyId == propertyId)
+                .AsNoTracking();
+        }
+
+        /// <summary>
+        /// Get all Takes for a Property.
+        /// </summary>
+        /// <param name="propertyId"></param>
+        /// <returns></returns>
+        public IEnumerable<PimsTake> GetAllByPropertyId(long propertyId)
+        {
+            return Context.PimsTakes
+                .Where(t => t.PropertyAcquisitionFile.PropertyId == propertyId)
                 .AsNoTracking();
         }
 
@@ -73,14 +105,44 @@ namespace Pims.Dal.Repositories
                 .Count();
         }
 
-        /// <summary>
-        /// Sets the passed list of takes as the takes associated to the given acquisition property, adding, deleting and updating as necessary.
-        /// </summary>
-        /// <param name="acquisitionFilePropertyId"></param>
-        /// <param name="takes"></param>
-        public void UpdateAcquisitionPropertyTakes(long acquisitionFilePropertyId, IEnumerable<PimsTake> takes)
+        public PimsTake AddTake(PimsTake take)
         {
-            Context.UpdateChild<PimsPropertyAcquisitionFile, long, PimsTake, long>(p => p.PimsTakes, acquisitionFilePropertyId, takes.ToArray(), true);
+            using var scope = Logger.QueryScope();
+
+            Context.PimsTakes.Add(take);
+
+            return take;
+        }
+
+        /// <summary>
+        /// Update the passed take.
+        /// </summary>
+        /// <param name="take"></param>
+        public PimsTake UpdateTake(PimsTake take)
+        {
+            using var scope = Logger.QueryScope();
+
+            var existingTake = Context.PimsTakes.FirstOrDefault(x => x.TakeId == take.TakeId) ?? throw new KeyNotFoundException();
+
+            take.PropertyAcquisitionFileId = existingTake.PropertyAcquisitionFileId; // A take cannot be migrated between properties.
+            Context.Entry(existingTake).CurrentValues.SetValues(take);
+
+            return existingTake;
+        }
+
+        public bool TryDeleteTake(long takeId)
+        {
+            using var scope = Logger.QueryScope();
+
+            var deletedEntity = Context.PimsTakes.Where(x => x.TakeId == takeId).FirstOrDefault();
+            if (deletedEntity is not null)
+            {
+                Context.PimsTakes.Remove(deletedEntity);
+
+                return true;
+            }
+
+            return false;
         }
 
         public IEnumerable<PimsTake> GetAllByPropertyAcquisitionFileId(long acquisitionFilePropertyId)

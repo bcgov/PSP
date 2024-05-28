@@ -35,6 +35,7 @@ exclude: # exclude matching issues
       - "*.ico"
       - "*.css"
       - "*.scss"
+      - "*.config.ts"
   - message: Ignore integrity hashes on Openshift config files
     pattern: sha256:.*
     paths:

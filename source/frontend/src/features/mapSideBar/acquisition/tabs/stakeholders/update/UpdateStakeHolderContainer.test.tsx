@@ -22,18 +22,18 @@ const storeState = {
 const mockGetApi = {
   error: undefined,
   response: undefined,
-  execute: jest.fn().mockResolvedValue(getMockApiInterestHolders()),
+  execute: vi.fn().mockResolvedValue(getMockApiInterestHolders()),
   loading: false,
 };
 
 const mockUpdateApi = {
   error: undefined,
   response: undefined,
-  execute: jest.fn().mockResolvedValue(getMockApiInterestHolders()),
+  execute: vi.fn().mockResolvedValue(getMockApiInterestHolders()),
   loading: false,
 };
 
-jest.mock('@/hooks/repositories/useInterestHolderRepository', () => ({
+vi.mock('@/hooks/repositories/useInterestHolderRepository', () => ({
   useInterestHolderRepository: () => {
     return {
       getAcquisitionInterestHolders: mockGetApi,
@@ -51,7 +51,7 @@ describe('InterestHolder component', () => {
     return <></>;
   });
 
-  const onSuccess = jest.fn();
+  const onSuccess = vi.fn();
 
   const setup = (
     renderOptions: RenderOptions & { props?: Partial<IUpdateStakeHolderContainerProps> },
@@ -80,7 +80,7 @@ describe('InterestHolder component', () => {
   };
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders as expected', () => {
@@ -90,7 +90,7 @@ describe('InterestHolder component', () => {
 
   it('calls onSuccess when onSubmit method is called', async () => {
     setup({});
-    const formikHelpers = { setSubmitting: jest.fn() };
+    const formikHelpers = { setSubmitting: vi.fn() };
     viewProps.onSubmit(StakeHolderForm.fromApi(getMockApiInterestHolders()), formikHelpers as any);
 
     expect(mockUpdateApi.execute).toHaveBeenCalled();

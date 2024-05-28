@@ -1,4 +1,4 @@
-import { FormikProps } from 'formik';
+import { FormikProps } from 'formik/dist/types';
 import { filter, find, orderBy, some } from 'lodash';
 import React, { useContext, useEffect, useState } from 'react';
 

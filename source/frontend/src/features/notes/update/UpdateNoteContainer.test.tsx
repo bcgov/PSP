@@ -15,9 +15,9 @@ import { IUpdateNoteContainerProps, UpdateNoteContainer } from './UpdateNoteCont
 const history = createMemoryHistory();
 const mockAxios = new MockAdapter(axios);
 
-const onSaveClick = jest.fn();
-const onCancelClick = jest.fn();
-const onSuccess = jest.fn();
+const onSaveClick = vi.fn();
+const onCancelClick = vi.fn();
+const onSuccess = vi.fn();
 
 const BASIC_PROPS: IUpdateNoteContainerProps = {
   isOpened: true,
@@ -56,7 +56,7 @@ describe('UpdateNoteContainer component', () => {
 
   afterEach(() => {
     mockAxios.reset();
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders as expected', () => {

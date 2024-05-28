@@ -71,8 +71,8 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.DispositionAdd);
             dispositionFile.ThrowMissingContractorInTeam(_user, _userRepository);
 
-            dispositionFile.DispositionStatusTypeCode ??= EnumDispositionStatusTypeCode.UNKNOWN.ToString();
-            dispositionFile.DispositionFileStatusTypeCode ??= EnumDispositionFileStatusTypeCode.ACTIVE.ToString();
+            dispositionFile.DispositionStatusTypeCode ??= DispositionStatusTypes.UNKNOWN.ToString();
+            dispositionFile.DispositionFileStatusTypeCode ??= DispositionFileStatusTypes.ACTIVE.ToString();
             ValidateStaff(dispositionFile);
 
             MatchProperties(dispositionFile, userOverrides);
@@ -108,10 +108,10 @@ namespace Pims.Api.Services
                 throw new BadRequestException("Invalid dispositionFileId.");
             }
 
-            DispositionStatusTypes? currentDispositionStatus = GetCurrentDispositionStatus(dispositionFile.Internal_Id);
+            DispositionFileStatusTypes? currentDispositionStatus = GetCurrentDispositionStatus(dispositionFile.Internal_Id);
             if (!_dispositionStatusSolver.CanEditDetails(currentDispositionStatus) && !_user.HasPermission(Permissions.SystemAdmin))
             {
-                throw new BusinessRuleViolationException("The file you are editing is not active or draft, so you cannot save changes. Refresh your browser to see file state.");
+                throw new BusinessRuleViolationException("The file you are editing is not active or hold, so you cannot save changes. Refresh your browser to see file state.");
             }
 
             ValidateVersion(id, dispositionFile.ConcurrencyControlNumber);
@@ -120,8 +120,8 @@ namespace Pims.Api.Services
             var currentDispositionFile = _dispositionFileRepository.GetById(id);
             ValidateFileBeforeUpdate(dispositionFile, currentDispositionFile, userOverrides);
 
-            var isFileClosing = currentDispositionFile.DispositionFileStatusTypeCode != EnumDispositionFileStatusTypeCode.COMPLETE.ToString() &&
-                                dispositionFile.DispositionFileStatusTypeCode == EnumDispositionFileStatusTypeCode.COMPLETE.ToString();
+            var isFileClosing = currentDispositionFile.DispositionFileStatusTypeCode != DispositionFileStatusTypes.COMPLETE.ToString() &&
+                                dispositionFile.DispositionFileStatusTypeCode == DispositionFileStatusTypes.COMPLETE.ToString();
 
             if (isFileClosing && currentDispositionFile.PimsDispositionFileProperties?.Count > 0)
             {
@@ -218,10 +218,10 @@ namespace Pims.Api.Services
                 throw new BadRequestException("Invalid dispositionFileId.");
             }
 
-            DispositionStatusTypes? currentDispositionStatus = GetCurrentDispositionStatus(dispositionFileParent.Internal_Id);
-            if (!_dispositionStatusSolver.CanEditOrDeleteValuesOffersSales(currentDispositionStatus) && !_user.HasPermission(Permissions.SystemAdmin))
+            DispositionFileStatusTypes? currentDispositionStatus = GetCurrentDispositionStatus(dispositionFileParent.Internal_Id);
+            if (!_dispositionStatusSolver.CanEditDetails(currentDispositionStatus) && !_user.HasPermission(Permissions.SystemAdmin))
             {
-                throw new BusinessRuleViolationException("The file you are editing is not active or draft, so you cannot save changes. Refresh your browser to see file state.");
+                throw new BusinessRuleViolationException("The file you are editing is not active or hold, so you cannot save changes. Refresh your browser to see file state.");
             }
 
             ValidateDispositionOfferStatus(dispositionFileParent, dispositionOffer);
@@ -243,10 +243,10 @@ namespace Pims.Api.Services
                 throw new BadRequestException("Invalid dispositionFileId.");
             }
 
-            DispositionStatusTypes? currentDispositionStatus = GetCurrentDispositionStatus(dispositionFileParent.Internal_Id);
-            if (!_dispositionStatusSolver.CanEditOrDeleteValuesOffersSales(currentDispositionStatus) && !_user.HasPermission(Permissions.SystemAdmin))
+            DispositionFileStatusTypes? currentDispositionStatus = GetCurrentDispositionStatus(dispositionFileParent.Internal_Id);
+            if (!_dispositionStatusSolver.CanEditDetails(currentDispositionStatus) && !_user.HasPermission(Permissions.SystemAdmin))
             {
-                throw new BusinessRuleViolationException("The file you are editing is not active or draft, so you cannot save changes. Refresh your browser to see file state.");
+                throw new BusinessRuleViolationException("The file you are editing is not active or hold, so you cannot save changes. Refresh your browser to see file state.");
             }
 
             ValidateDispositionOfferStatus(dispositionFileParent, dispositionOffer);
@@ -263,10 +263,10 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.DispositionEdit);
 
             var dispositionFile = _dispositionFileRepository.GetById(dispositionFileId);
-            DispositionStatusTypes? currentDispositionStatus = GetCurrentDispositionStatus(dispositionFile.Internal_Id);
-            if (!_dispositionStatusSolver.CanEditOrDeleteValuesOffersSales(currentDispositionStatus) && !_user.HasPermission(Permissions.SystemAdmin))
+            DispositionFileStatusTypes? currentDispositionStatus = GetCurrentDispositionStatus(dispositionFile.Internal_Id);
+            if (!_dispositionStatusSolver.CanEditDetails(currentDispositionStatus) && !_user.HasPermission(Permissions.SystemAdmin))
             {
-                throw new BusinessRuleViolationException("The file you are editing is not active or draft, so you cannot save changes. Refresh your browser to see file state.");
+                throw new BusinessRuleViolationException("The file you are editing is not active or hold, so you cannot save changes. Refresh your browser to see file state.");
             }
 
             var deleteResult = _dispositionFileRepository.TryDeleteDispositionOffer(dispositionFileId, offerId);
@@ -288,10 +288,10 @@ namespace Pims.Api.Services
             _logger.LogInformation("Updating disposition file Sale with DispositionFileId: {id}", dispositionSale.DispositionSaleId);
             _user.ThrowIfNotAuthorized(Permissions.DispositionEdit);
 
-            DispositionStatusTypes? currentDispositionStatus = GetCurrentDispositionStatus(dispositionSale.DispositionFileId);
-            if (!_dispositionStatusSolver.CanEditOrDeleteValuesOffersSales(currentDispositionStatus) && !_user.HasPermission(Permissions.SystemAdmin))
+            DispositionFileStatusTypes? currentDispositionStatus = GetCurrentDispositionStatus(dispositionSale.DispositionFileId);
+            if (!_dispositionStatusSolver.CanEditDetails(currentDispositionStatus) && !_user.HasPermission(Permissions.SystemAdmin))
             {
-                throw new BusinessRuleViolationException("The file you are editing is not active or draft, so you cannot save changes. Refresh your browser to see file state.");
+                throw new BusinessRuleViolationException("The file you are editing is not active or hold, so you cannot save changes. Refresh your browser to see file state.");
             }
 
             var updatedSale = _dispositionFileRepository.UpdateDispositionFileSale(dispositionSale);
@@ -306,10 +306,10 @@ namespace Pims.Api.Services
             _logger.LogInformation("Adding disposition file Sale to Disposition File with Id: {id}", dispositionSale.DispositionFileId);
             _user.ThrowIfNotAuthorized(Permissions.DispositionEdit);
 
-            DispositionStatusTypes? currentDispositionStatus = GetCurrentDispositionStatus(dispositionSale.DispositionFileId);
-            if (!_dispositionStatusSolver.CanEditOrDeleteValuesOffersSales(currentDispositionStatus) && !_user.HasPermission(Permissions.SystemAdmin))
+            DispositionFileStatusTypes? currentDispositionStatus = GetCurrentDispositionStatus(dispositionSale.DispositionFileId);
+            if (!_dispositionStatusSolver.CanEditDetails(currentDispositionStatus) && !_user.HasPermission(Permissions.SystemAdmin))
             {
-                throw new BusinessRuleViolationException("The file you are editing is not active or draft, so you cannot save changes. Refresh your browser to see file state.");
+                throw new BusinessRuleViolationException("The file you are editing is not active or hold, so you cannot save changes. Refresh your browser to see file state.");
             }
 
             var dispositionFileParent = _dispositionFileRepository.GetById(dispositionSale.DispositionFileId);
@@ -348,10 +348,10 @@ namespace Pims.Api.Services
                 throw new DuplicateEntityException("Invalid Disposition Appraisal. An Appraisal has been already created for this Disposition File");
             }
 
-            DispositionStatusTypes? currentDispositionStatus = GetCurrentDispositionStatus(dispositionFileParent.Internal_Id);
-            if (!_dispositionStatusSolver.CanEditOrDeleteValuesOffersSales(currentDispositionStatus) && !_user.HasPermission(Permissions.SystemAdmin))
+            DispositionFileStatusTypes? currentDispositionStatus = GetCurrentDispositionStatus(dispositionFileParent.Internal_Id);
+            if (!_dispositionStatusSolver.CanEditDetails(currentDispositionStatus) && !_user.HasPermission(Permissions.SystemAdmin))
             {
-                throw new BusinessRuleViolationException("The file you are editing is not active or draft, so you cannot save changes. Refresh your browser to see file state.");
+                throw new BusinessRuleViolationException("The file you are editing is not active or hold, so you cannot save changes. Refresh your browser to see file state.");
             }
 
             var newAppraisal = _dispositionFileRepository.AddDispositionFileAppraisal(dispositionAppraisal);
@@ -371,10 +371,10 @@ namespace Pims.Api.Services
                 throw new BadRequestException("Invalid dispositionFileId.");
             }
 
-            DispositionStatusTypes? currentDispositionStatus = GetCurrentDispositionStatus(dispositionFileParent.Internal_Id);
-            if (!_dispositionStatusSolver.CanEditOrDeleteValuesOffersSales(currentDispositionStatus) && !_user.HasPermission(Permissions.SystemAdmin))
+            DispositionFileStatusTypes? currentDispositionStatus = GetCurrentDispositionStatus(dispositionFileParent.Internal_Id);
+            if (!_dispositionStatusSolver.CanEditDetails(currentDispositionStatus) && !_user.HasPermission(Permissions.SystemAdmin))
             {
-                throw new BusinessRuleViolationException("The file you are editing is not active or draft, so you cannot save changes. Refresh your browser to see file state.");
+                throw new BusinessRuleViolationException("The file you are editing is not active or hold, so you cannot save changes. Refresh your browser to see file state.");
             }
 
             var updatedAppraisal = _dispositionFileRepository.UpdateDispositionFileAppraisal(appraisalId, dispositionAppraisal);
@@ -521,89 +521,17 @@ namespace Pims.Api.Services
             foreach (var deletedProperty in differenceSet)
             {
                 _dispositionFilePropertyRepository.Delete(deletedProperty);
-                if (deletedProperty.Property.IsPropertyOfInterest)
+
+                var totalAssociationCount = _propertyRepository.GetAllAssociationsCountById(deletedProperty.PropertyId);
+                if (totalAssociationCount <= 1)
                 {
-                    PimsProperty propertyWithAssociations = _propertyRepository.GetAllAssociationsById(deletedProperty.PropertyId);
-                    var leaseAssociationCount = propertyWithAssociations.PimsPropertyLeases.Count;
-                    var researchAssociationCount = propertyWithAssociations.PimsPropertyResearchFiles.Count;
-                    var acquisitionAssociationCount = propertyWithAssociations.PimsPropertyAcquisitionFiles.Count;
-                    var dispositionAssociationCount = propertyWithAssociations.PimsDispositionFileProperties.Count;
-                    if (leaseAssociationCount + researchAssociationCount + acquisitionAssociationCount == 0 && dispositionAssociationCount <= 1 && deletedProperty?.Property?.IsPropertyOfInterest == true)
-                    {
-                        _dispositionFileRepository.CommitTransaction(); // TODO: this can only be removed if cascade deletes are implemented. EF executes deletes in alphabetic order.
-                        _propertyRepository.Delete(deletedProperty.Property);
-                    }
+                    _dispositionFileRepository.CommitTransaction(); // TODO: this can only be removed if cascade deletes are implemented. EF executes deletes in alphabetic order.
+                    _propertyRepository.Delete(deletedProperty.Property);
                 }
             }
 
             _dispositionFileRepository.CommitTransaction();
             return _dispositionFileRepository.GetById(dispositionFile.Internal_Id);
-        }
-
-        private void ValidateFileBeforeUpdate(PimsDispositionFile incomingDispositionFile, PimsDispositionFile currentDispositionFile, IEnumerable<UserOverrideCode> userOverrides)
-        {
-            // Implement file validation logic before proceeding to update. This includes file closing validation.
-            // The order of validation checks is important as it has been requested by business users.
-            var isFileClosing = currentDispositionFile.DispositionFileStatusTypeCode != EnumDispositionFileStatusTypeCode.COMPLETE.ToString() &&
-                                incomingDispositionFile.DispositionFileStatusTypeCode == EnumDispositionFileStatusTypeCode.COMPLETE.ToString();
-
-            var currentProperties = _dispositionFilePropertyRepository.GetPropertiesByDispositionFileId(incomingDispositionFile.Internal_Id);
-
-            // The following checks result in hard STOP errors
-            if (isFileClosing)
-            {
-                if (currentProperties.Any(p => !p.Property.IsOwned))
-                {
-                    throw new BusinessRuleViolationException("You have one or more properties attached to this Disposition file that is NOT in the \"Core Inventory\" (i.e. owned by BCTFA and/or HMK). To complete this file you must either, remove these non \"Non-Core Inventory\" properties, OR make sure the property is added to the PIMS inventory first.");
-                }
-
-                if (currentDispositionFile.PimsDispositionSales?.FirstOrDefault()?.SaleFinalAmt == null)
-                {
-                    throw new BusinessRuleViolationException("You have not added a Sales Price. Please add a Sales Price before completion.");
-                }
-            }
-
-            ValidateStaff(incomingDispositionFile);
-            incomingDispositionFile.ThrowContractorRemovedFromTeam(_user, _userRepository);
-
-            // From here on - these checks result in warnings that require user confirmation
-            if (!userOverrides.Contains(UserOverrideCode.UpdateRegion))
-            {
-                // confirm user action - file region was changed
-                ValidateMinistryRegion(incomingDispositionFile.Internal_Id, incomingDispositionFile.RegionCode);
-            }
-
-            var nonEditableStatuses = new List<string>() { EnumDispositionFileStatusTypeCode.COMPLETE.ToString(), EnumDispositionFileStatusTypeCode.ARCHIVED.ToString(), EnumDispositionFileStatusTypeCode.CANCELLED.ToString(), };
-            var isFileChangingToNonEditableState = !nonEditableStatuses.Contains(currentDispositionFile.DispositionFileStatusTypeCode) && nonEditableStatuses.Contains(incomingDispositionFile.DispositionFileStatusTypeCode);
-
-            // confirm user action - file is changing to non-editable state
-            if (!userOverrides.Contains(UserOverrideCode.DispositionFileFinalStatus) && isFileChangingToNonEditableState)
-            {
-                throw new UserOverrideException(UserOverrideCode.DispositionFileFinalStatus, "You are changing this file to a non-editable state. (Only system administrators can edit the file when set to Archived, Cancelled or Completed state). Do you wish to continue?");
-            }
-
-            if (isFileClosing && !userOverrides.Contains(UserOverrideCode.DisposeOfProperties))
-            {
-                throw new UserOverrideException(UserOverrideCode.DisposeOfProperties, "You are completing this Disposition File with owned PIMS inventory properties. All properties will be removed from the PIMS inventory (any Other Interests will remain). Do you wish to proceed?");
-            }
-        }
-
-        /// <summary>
-        /// Attempt to dispose of any properties if all business rules are met.
-        /// </summary>
-        /// <param name="dispositionFile">The disposition file entity.</param>
-        private void DisposeOfProperties(PimsDispositionFile dispositionFile)
-        {
-            // Get the current properties in the disposition file
-            var currentProperties = _dispositionFilePropertyRepository.GetPropertiesByDispositionFileId(dispositionFile.Internal_Id);
-            var ownedProperties = currentProperties.Where(p => p.Property.IsOwned);
-
-            // PSP-7275 Business rule: Transfer properties of interest to disposed when disposition file is completed
-            foreach (var dispositionProperty in ownedProperties)
-            {
-                var property = dispositionProperty.Property;
-                _propertyRepository.TransferFileProperty(property, new Dal.Models.PropertyOwnershipState() { isDisposed = true, isPropertyOfInterest = false, isOtherInterest = false, isOwned = false });
-            }
         }
 
         private static decimal CalculateNetProceedsBeforeSpp(PimsDispositionSale sale)
@@ -639,6 +567,77 @@ namespace Pims.Api.Services
             if (offerAlreadyAccepted && !string.IsNullOrEmpty(newOffer.DispositionOfferStatusTypeCode) && newOffer.DispositionOfferStatusTypeCode == EnumDispositionOfferStatusTypeCode.ACCCEPTED.ToString())
             {
                 throw new DuplicateEntityException("Invalid Disposition Offer, an Offer has been already accepted for this Disposition File");
+            }
+        }
+
+        private void ValidateFileBeforeUpdate(PimsDispositionFile incomingDispositionFile, PimsDispositionFile currentDispositionFile, IEnumerable<UserOverrideCode> userOverrides)
+        {
+            // Implement file validation logic before proceeding to update. This includes file closing validation.
+            // The order of validation checks is important as it has been requested by business users.
+            var isFileClosing = currentDispositionFile.DispositionFileStatusTypeCode != DispositionFileStatusTypes.COMPLETE.ToString() &&
+                                incomingDispositionFile.DispositionFileStatusTypeCode == DispositionFileStatusTypes.COMPLETE.ToString();
+
+            var currentProperties = _dispositionFilePropertyRepository.GetPropertiesByDispositionFileId(incomingDispositionFile.Internal_Id);
+
+            // The following checks result in hard STOP errors
+            if (isFileClosing)
+            {
+                if (currentProperties.Any(p => !p.Property.IsOwned))
+                {
+                    throw new BusinessRuleViolationException("You have one or more properties attached to this Disposition file that is NOT in the \"Core Inventory\" (i.e. owned by BCTFA and/or HMK). To complete this file you must either, remove these non \"Non-Core Inventory\" properties, OR make sure the property is added to the PIMS inventory first.");
+                }
+
+                if (currentDispositionFile.PimsDispositionSales?.FirstOrDefault()?.SaleFinalAmt == null)
+                {
+                    throw new BusinessRuleViolationException("You have not added a Sales Price. Please add a Sales Price before completion.");
+                }
+            }
+
+            ValidateStaff(incomingDispositionFile);
+            incomingDispositionFile.ThrowContractorRemovedFromTeam(_user, _userRepository);
+
+            // From here on - these checks result in warnings that require user confirmation
+            if (!userOverrides.Contains(UserOverrideCode.UpdateRegion))
+            {
+                // confirm user action - file region was changed
+                ValidateMinistryRegion(incomingDispositionFile.Internal_Id, incomingDispositionFile.RegionCode);
+            }
+
+            var nonEditableStatuses = new List<string>() { DispositionFileStatusTypes.COMPLETE.ToString(), DispositionFileStatusTypes.ARCHIVED.ToString(), DispositionFileStatusTypes.CANCELLED.ToString(), };
+            var isFileChangingToNonEditableState = !nonEditableStatuses.Contains(currentDispositionFile.DispositionFileStatusTypeCode) && nonEditableStatuses.Contains(incomingDispositionFile.DispositionFileStatusTypeCode);
+
+            if (isFileClosing && incomingDispositionFile.DispositionStatusTypeCode != DispositionStatusTypes.SOLD.ToString())
+            {
+                throw new BusinessRuleViolationException("File Disposition Status has not been set to SOLD, so the related file properties cannot be Disposed. To proceed, set file disposition status to SOLD, or cancel the Disposition file.");
+            }
+
+            // confirm user action - file is changing to non-editable state
+            if (!userOverrides.Contains(UserOverrideCode.DispositionFileFinalStatus) && isFileChangingToNonEditableState)
+            {
+                throw new UserOverrideException(UserOverrideCode.DispositionFileFinalStatus, "You are changing this file to a non-editable state. (Only system administrators can edit the file when set to Archived, Cancelled or Completed state). Do you wish to continue?");
+            }
+
+            if (isFileClosing && !userOverrides.Contains(UserOverrideCode.DisposeOfProperties))
+            {
+                throw new UserOverrideException(UserOverrideCode.DisposeOfProperties, "You are completing this Disposition File with owned PIMS inventory properties. All properties will be removed from the PIMS inventory (any Other Interests will remain). Do you wish to proceed?");
+            }
+        }
+
+        /// <summary>
+        /// Attempt to dispose of any properties if all business rules are met.
+        /// </summary>
+        /// <param name="dispositionFile">The disposition file entity.</param>
+        private void DisposeOfProperties(PimsDispositionFile dispositionFile)
+        {
+            // Get the current properties in the disposition file
+            var currentProperties = _dispositionFilePropertyRepository.GetPropertiesByDispositionFileId(dispositionFile.Internal_Id);
+            var ownedProperties = currentProperties.Where(p => p.Property.IsOwned);
+
+            // PSP-7275 Business rule: Transfer properties of interest to disposed when disposition file is completed
+            foreach (var dispositionProperty in ownedProperties)
+            {
+                var property = dispositionProperty.Property;
+                _propertyRepository.TransferFileProperty(property, false);
             }
         }
 
@@ -816,17 +815,17 @@ namespace Pims.Api.Services
             }
         }
 
-        private DispositionStatusTypes? GetCurrentDispositionStatus(long dispositionFileId)
+        private DispositionFileStatusTypes? GetCurrentDispositionStatus(long dispositionFileId)
         {
             var currentDispositionFile = _dispositionFileRepository.GetById(dispositionFileId);
-            DispositionStatusTypes currentDispositionStatus;
+            DispositionFileStatusTypes currentDispositionFileStatus;
 
-            if (Enum.TryParse(currentDispositionFile.DispositionFileStatusTypeCode, out currentDispositionStatus))
+            if (Enum.TryParse(currentDispositionFile.DispositionFileStatusTypeCode, out currentDispositionFileStatus))
             {
-                return currentDispositionStatus;
+                return currentDispositionFileStatus;
             }
 
-            return currentDispositionStatus;
+            return currentDispositionFileStatus;
         }
     }
 }

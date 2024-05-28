@@ -1,6 +1,5 @@
 import { createMemoryHistory } from 'history';
 
-import { AcquisitionStatus } from '@/constants/acquisitionFileStatus';
 import { Claims } from '@/constants/claims';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { getMockApiPropertyFiles } from '@/mocks/properties.mock';
@@ -11,14 +10,19 @@ import { toTypeCodeNullable } from '@/utils/formUtils';
 import { act, render, RenderOptions, screen, userEvent, within } from '@/utils/test-utils';
 
 import TakesDetailView, { ITakesDetailViewProps } from './TakesDetailView';
+import { ApiGen_CodeTypes_AcquisitionStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_AcquisitionStatusTypes';
+import { TAKE_STATUS_TYPES } from '@/constants/API';
+import { ApiGen_CodeTypes_AcquisitionTakeStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_AcquisitionTakeStatusTypes';
+import Roles from '@/constants/roles';
 
 const history = createMemoryHistory();
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
 
-const onEdit = jest.fn();
-jest.mock('@react-keycloak/web');
+const onEdit = vi.fn();
+const onAdd = vi.fn();
+const onDelete = vi.fn();
 
 describe('TakesDetailView component', () => {
   // render component under test
@@ -31,6 +35,8 @@ describe('TakesDetailView component', () => {
         loading={renderOptions.props?.loading ?? false}
         fileProperty={renderOptions.props?.fileProperty ?? getMockApiPropertyFiles()[0]}
         onEdit={onEdit}
+        onAdd={onAdd}
+        onDelete={onDelete}
       />,
       {
         ...renderOptions,
@@ -46,7 +52,7 @@ describe('TakesDetailView component', () => {
   };
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders as expected', () => {
@@ -61,8 +67,11 @@ describe('TakesDetailView component', () => {
   });
 
   it('clicking the edit button fires the edit event', async () => {
-    const { getByTitle } = setup({ props: { loading: true }, claims: [Claims.PROPERTY_EDIT] });
-    const editButton = getByTitle('Edit takes');
+    const { getByTitle } = setup({
+      props: { loading: true, takes: getMockApiTakes() },
+      claims: [Claims.PROPERTY_EDIT, Claims.ACQUISITION_EDIT],
+    });
+    const editButton = getByTitle('Edit take');
     await act(async () => userEvent.click(editButton));
     expect(onEdit).toHaveBeenCalled();
   });
@@ -77,16 +86,131 @@ describe('TakesDetailView component', () => {
           ...fileProperty,
           file: {
             ...file,
-            fileStatusTypeCode: toTypeCodeNullable(AcquisitionStatus.Complete),
+            fileStatusTypeCode: toTypeCodeNullable(ApiGen_CodeTypes_AcquisitionStatusTypes.COMPLT),
           },
         },
+        takes: getMockApiTakes(),
       },
       claims: [Claims.PROPERTY_EDIT],
     });
-    const editButton = queryByTitle('Edit takes');
+    const editButton = queryByTitle('Edit take');
     expect(editButton).toBeNull();
     const tooltip = getByTestId('tooltip-icon-1-summary-cannot-edit-tooltip');
     expect(tooltip).toBeVisible();
+  });
+
+  it('hides the edit button when the take has been completed', () => {
+    const { queryByTitle, getByTestId } = setup({
+      props: {
+        loading: true,
+        takes: [
+          {
+            ...getMockApiTakes()[0],
+            takeStatusTypeCode: toTypeCodeNullable(
+              ApiGen_CodeTypes_AcquisitionTakeStatusTypes.COMPLETE.toString(),
+            ),
+          },
+        ],
+      },
+      claims: [Claims.PROPERTY_EDIT, Claims.ACQUISITION_EDIT],
+    });
+    const editButton = queryByTitle('Edit take');
+    expect(editButton).toBeNull();
+    const tooltip = getByTestId('tooltip-icon-1-summary-cannot-edit-tooltip');
+    expect(tooltip).toBeVisible();
+  });
+
+  it('does not hide the edit button when the user is an admin even if the take is complete', async () => {
+    const { getByTitle } = setup({
+      props: {
+        loading: true,
+        takes: [
+          {
+            ...getMockApiTakes()[0],
+            takeStatusTypeCode: toTypeCodeNullable(
+              ApiGen_CodeTypes_AcquisitionTakeStatusTypes.COMPLETE.toString(),
+            ),
+          },
+        ],
+      },
+      claims: [Claims.PROPERTY_EDIT],
+      roles: [Roles.SYSTEM_ADMINISTRATOR],
+    });
+    const editButton = getByTitle('Edit take');
+    await act(async () => userEvent.click(editButton));
+    expect(onEdit).toHaveBeenCalled();
+  });
+
+  it('clicking the delete button fires the edit event', async () => {
+    const { getByTitle } = setup({
+      props: { loading: true, takes: getMockApiTakes() },
+      claims: [Claims.PROPERTY_EDIT, Claims.ACQUISITION_EDIT],
+    });
+    const removeButton = getByTitle('Remove take');
+    await act(async () => userEvent.click(removeButton));
+    const yesButton = screen.getByTestId('ok-modal-button');
+    await act(async () => userEvent.click(yesButton));
+    expect(onDelete).toHaveBeenCalled();
+  });
+
+  it('hides the delete button when the file has been completed', () => {
+    const fileProperty = getMockApiPropertyFiles()[0];
+    const file: ApiGen_Concepts_File = fileProperty!.file as ApiGen_Concepts_File;
+    const { queryByTitle, getByTestId } = setup({
+      props: {
+        loading: true,
+        fileProperty: {
+          ...fileProperty,
+          file: {
+            ...file,
+            fileStatusTypeCode: toTypeCodeNullable(ApiGen_CodeTypes_AcquisitionStatusTypes.COMPLT),
+          },
+        },
+        takes: getMockApiTakes(),
+      },
+      claims: [Claims.PROPERTY_EDIT],
+    });
+    const removeButton = queryByTitle('Remove take');
+    expect(removeButton).toBeNull();
+  });
+
+  it('hides the delete button when the take has been completed', () => {
+    const { queryByTitle, getByTestId } = setup({
+      props: {
+        loading: true,
+        takes: [
+          {
+            ...getMockApiTakes()[0],
+            takeStatusTypeCode: toTypeCodeNullable(
+              ApiGen_CodeTypes_AcquisitionTakeStatusTypes.COMPLETE.toString(),
+            ),
+          },
+        ],
+      },
+      claims: [Claims.PROPERTY_EDIT],
+    });
+    const removeButton = queryByTitle('Remove take');
+    expect(removeButton).toBeNull();
+  });
+
+  it('does not hide delete button when the take has been completed and user is an admin', () => {
+    const { queryByTitle, getByTestId } = setup({
+      props: {
+        loading: true,
+        takes: [
+          {
+            ...getMockApiTakes()[0],
+            takeStatusTypeCode: toTypeCodeNullable(
+              ApiGen_CodeTypes_AcquisitionTakeStatusTypes.COMPLETE.toString(),
+            ),
+          },
+        ],
+      },
+      claims: [Claims.PROPERTY_EDIT],
+      roles: [Roles.SYSTEM_ADMINISTRATOR],
+    });
+    const removeButton = queryByTitle('Remove take');
+    expect(removeButton).toBeVisible();
   });
 
   it('displays the number of takes in other files', () => {
@@ -138,6 +262,7 @@ describe('TakesDetailView component', () => {
             isNewLandAct: false,
             isNewInterestInSrw: false,
             isThereSurplus: false,
+            isLeasePayable: false,
           },
         ],
       },
@@ -157,11 +282,12 @@ describe('TakesDetailView component', () => {
             isNewLandAct: true,
             isNewInterestInSrw: true,
             isThereSurplus: true,
+            isLeasePayable: true,
           },
         ],
       },
     });
-    expect(getAllByText('Area:')).toHaveLength(5);
+    expect(getAllByText('Area:')).toHaveLength(6);
   });
 
   it('displays srwEndDt if specified', async () => {
@@ -211,7 +337,26 @@ describe('TakesDetailView component', () => {
         ],
       },
     });
-    const date = await findByText('Is a there a new Land Act tenure', {
+    const date = await findByText('Is there a new Land Act tenure', {
+      exact: false,
+    });
+    expect(date).toBeVisible();
+  });
+
+  it('displays leasePayableEndDt if specified', async () => {
+    const { findByText } = setup({
+      props: {
+        loading: false,
+        takes: [
+          {
+            ...getMockApiTakes()[0],
+            isNewLandAct: true,
+            leasePayableEndDt: '2022-11-21',
+          },
+        ],
+      },
+    });
+    const date = await findByText('Is there a Lease (Payable)', {
       exact: false,
     });
     expect(date).toBeVisible();

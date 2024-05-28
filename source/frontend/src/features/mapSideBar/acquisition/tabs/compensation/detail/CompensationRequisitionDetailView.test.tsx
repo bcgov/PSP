@@ -1,6 +1,5 @@
 import { createMemoryHistory } from 'history';
 
-import { AcquisitionStatus } from '@/constants/acquisitionFileStatus';
 import Claims from '@/constants/claims';
 import { Roles } from '@/constants/index';
 import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
@@ -15,11 +14,11 @@ import { act, render, RenderOptions, userEvent, waitFor } from '@/utils/test-uti
 import CompensationRequisitionDetailView, {
   CompensationRequisitionDetailViewProps,
 } from './CompensationRequisitionDetailView';
+import { ApiGen_CodeTypes_AcquisitionStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_AcquisitionStatusTypes';
 
-const setEditMode = jest.fn();
+const setEditMode = vi.fn();
 
 const history = createMemoryHistory();
-jest.mock('@react-keycloak/web');
 
 describe('Compensation Detail View Component', () => {
   const setup = async (
@@ -33,7 +32,7 @@ describe('Compensation Detail View Component', () => {
         loading={renderOptions.props?.loading ?? false}
         setEditMode={setEditMode}
         clientConstant={renderOptions.props?.clientConstant ?? '034'}
-        onGenerate={jest.fn()}
+        onGenerate={vi.fn()}
         compensationContactPerson={undefined}
         compensationContactOrganization={undefined}
       />,
@@ -50,7 +49,7 @@ describe('Compensation Detail View Component', () => {
   };
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders as expected', async () => {
@@ -128,7 +127,7 @@ describe('Compensation Detail View Component', () => {
       props: {
         acquisitionFile: {
           ...acquistionFile,
-          fileStatusTypeCode: toTypeCodeNullable(AcquisitionStatus.Active),
+          fileStatusTypeCode: toTypeCodeNullable(ApiGen_CodeTypes_AcquisitionStatusTypes.ACTIVE),
         },
         compensation: { ...mockFinalCompensation, isDraft: true },
       },
@@ -164,7 +163,7 @@ describe('Compensation Detail View Component', () => {
       props: {
         acquisitionFile: {
           ...acquistionFile,
-          fileStatusTypeCode: toTypeCodeNullable(AcquisitionStatus.Complete),
+          fileStatusTypeCode: toTypeCodeNullable(ApiGen_CodeTypes_AcquisitionStatusTypes.COMPLT),
         },
         compensation: { ...mockFinalCompensation, isDraft: false },
       },

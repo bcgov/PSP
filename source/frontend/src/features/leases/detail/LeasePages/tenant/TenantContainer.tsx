@@ -1,4 +1,4 @@
-import { FormikProps } from 'formik';
+import { FormikProps } from 'formik/dist/types';
 import { useContext, useEffect } from 'react';
 
 import ProtectedComponent from '@/components/common/ProtectedComponent';

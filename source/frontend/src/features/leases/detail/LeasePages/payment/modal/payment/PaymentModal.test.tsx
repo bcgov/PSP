@@ -2,7 +2,6 @@ import userEvent from '@testing-library/user-event';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { createMemoryHistory } from 'history';
-import React from 'react';
 
 import { mockLookups } from '@/mocks/lookups.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
@@ -13,8 +12,8 @@ import { IPaymentModalProps, PaymentModal } from './PaymentModal';
 
 const history = createMemoryHistory();
 const mockAxios = new MockAdapter(axios);
-const onSave = jest.fn();
-const onCancel = jest.fn();
+const onSave = vi.fn();
+const onCancel = vi.fn();
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };

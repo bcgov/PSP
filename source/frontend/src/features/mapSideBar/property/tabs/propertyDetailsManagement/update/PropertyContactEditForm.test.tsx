@@ -1,5 +1,5 @@
 import { createMemoryHistory } from 'history';
-import { noop } from 'lodash';
+import noop from 'lodash/noop';
 
 import { Claims } from '@/constants/index';
 import { getEmptyPerson } from '@/mocks/contacts.mock';
@@ -17,7 +17,6 @@ const storeState = {
 };
 
 // mock keycloak auth library
-jest.mock('@react-keycloak/web');
 
 describe('PropertyContactEditForm component', () => {
   // render component under test

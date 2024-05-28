@@ -1,5 +1,4 @@
 import { Formik, FormikProps } from 'formik';
-import * as React from 'react';
 import { useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
@@ -46,7 +45,7 @@ export const ReceivedDepositForm: React.FunctionComponent<
       initialValues={initialValues}
     >
       {formikProps => (
-        <StyledFormBody className="px-4">
+        <StyledFormBody>
           <Row>
             <Col>
               <SectionField label="Deposit type" labelWidth="4" contentWidth="5" required>

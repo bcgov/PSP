@@ -15,7 +15,6 @@ using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Helpers;
 using Pims.Dal.Helpers.Extensions;
-using Pims.Dal.Models;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 
@@ -23,8 +22,6 @@ namespace Pims.Api.Services
 {
     public class AcquisitionFileService : IAcquisitionFileService
     {
-        private static readonly string[] COREINVENTORYINTERESTCODES = { "Section 15", "Section 17", "NOI", "Section 66" };
-
         private readonly ClaimsPrincipal _user;
         private readonly ILogger _logger;
         private readonly IAcquisitionFileRepository _acqFileRepository;
@@ -127,7 +124,7 @@ namespace Pims.Api.Services
                     FileFunding = fileProperty.file.AcquisitionFundingTypeCodeNavigation is not null ? fileProperty.file.AcquisitionFundingTypeCodeNavigation.Description : string.Empty,
                     FileAssignedDate = fileProperty.file.AssignedDate.HasValue ? fileProperty.file.AssignedDate.Value.ToString("dd-MMM-yyyy") : string.Empty,
                     FileDeliveryDate = fileProperty.file.DeliveryDate.HasValue ? fileProperty.file.DeliveryDate.Value.ToString("dd-MMM-yyyy") : string.Empty,
-                    FileAcquisitionCompleted = fileProperty.file.CompletionDate.HasValue ? fileProperty.file.CompletionDate.Value.ToString("dd-MMM-yyyy") : string.Empty,
+                    //FileAcquisitionCompleted = fileProperty.file.CompletionDate.HasValue ? fileProperty.file.CompletionDate.Value.ToString("dd-MMM-yyyy") : string.Empty, TODO: Fix mappings
                     FilePhysicalStatus = fileProperty.file.AcqPhysFileStatusTypeCodeNavigation is not null ? fileProperty.file.AcqPhysFileStatusTypeCodeNavigation.Description : string.Empty,
                     FileAcquisitionType = fileProperty.file.AcquisitionTypeCodeNavigation is not null ? fileProperty.file.AcquisitionTypeCodeNavigation.Description : string.Empty,
                     FileAcquisitionTeam = string.Join(", ", fileProperty.file.PimsAcquisitionFileTeams.Select(x => x.PersonId.HasValue ? x.Person.GetFullName(true) : x.Organization.Name)),
@@ -253,22 +250,17 @@ namespace Pims.Api.Services
 
             if (currentAcquisitionStatus != AcquisitionStatusTypes.COMPLT && acquisitionFile.AcquisitionFileStatusTypeCode == AcquisitionStatusTypes.COMPLT.ToString())
             {
-                ValidateDrafts(acquisitionFile);
+                ValidateDraftsOnComplete(acquisitionFile);
             }
 
             if (!_statusSolver.CanEditDetails(currentAcquisitionStatus) && !_user.HasPermission(Permissions.SystemAdmin))
             {
-                throw new BusinessRuleViolationException("The file you are editing is not active or draft, so you cannot save changes. Refresh your browser to see file state.");
+                throw new BusinessRuleViolationException("The file you are editing is not active or hold, so you cannot save changes. Refresh your browser to see file state.");
             }
 
             if (!userOverrides.Contains(UserOverrideCode.UpdateRegion))
             {
                 ValidateMinistryRegion(acquisitionFile.Internal_Id, acquisitionFile.RegionCode);
-            }
-
-            if (acquisitionFile.AcquisitionFileStatusTypeCode == AcquisitionStatusTypes.COMPLT.ToString())
-            {
-                TransferPropertiesOfInterest(acquisitionFile, userOverrides.Contains(UserOverrideCode.PoiToInventory));
             }
 
             ValidateStaff(acquisitionFile);
@@ -309,7 +301,7 @@ namespace Pims.Api.Services
             AcquisitionStatusTypes? currentAcquisitionStatus = GetCurrentAcquisitionStatus(acquisitionFile.Internal_Id);
             if (!_statusSolver.CanEditProperties(currentAcquisitionStatus) && !_user.HasPermission(Permissions.SystemAdmin))
             {
-                throw new BusinessRuleViolationException("The file you are editing is not active or draft, so you cannot save changes. Refresh your browser to see file state.");
+                throw new BusinessRuleViolationException("The file you are editing is not active or hold, so you cannot save changes. Refresh your browser to see file state.");
             }
 
             // Get the current properties in the research file
@@ -345,18 +337,14 @@ namespace Pims.Api.Services
                     throw new BusinessRuleViolationException("You must remove all takes and interest holders from an acquisition file property before removing that property from an acquisition file");
                 }
                 _acquisitionFilePropertyRepository.Delete(deletedProperty);
-                if (deletedProperty.Property.IsPropertyOfInterest)
+
+                var totalAssociationCount = _propertyRepository.GetAllAssociationsCountById(deletedProperty.PropertyId);
+                if (totalAssociationCount <= 1)
                 {
-                    PimsProperty propertyWithAssociations = _propertyRepository.GetAllAssociationsById(deletedProperty.PropertyId);
-                    var leaseAssociationCount = propertyWithAssociations.PimsPropertyLeases.Count;
-                    var researchAssociationCount = propertyWithAssociations.PimsPropertyResearchFiles.Count;
-                    var acquisitionAssociationCount = propertyWithAssociations.PimsPropertyAcquisitionFiles.Count;
-                    if (leaseAssociationCount + researchAssociationCount == 0 && acquisitionAssociationCount <= 1 && deletedProperty?.Property?.IsPropertyOfInterest == true)
-                    {
-                        _acqFileRepository.CommitTransaction(); // TODO: this can only be removed if cascade deletes are implemented. EF executes deletes in alphabetic order.
-                        _propertyRepository.Delete(deletedProperty.Property);
-                    }
+                    _acqFileRepository.CommitTransaction(); // TODO: this can only be removed if cascade deletes are implemented. EF executes deletes in alphabetic order.
+                    _propertyRepository.Delete(deletedProperty.Property);
                 }
+
             }
 
             _acqFileRepository.CommitTransaction();
@@ -380,7 +368,7 @@ namespace Pims.Api.Services
             var currentAcquisitionStatus = GetCurrentAcquisitionStatus(acquisitionFileId);
             if (!_statusSolver.CanEditChecklists(currentAcquisitionStatus) && !_user.HasPermission(Permissions.SystemAdmin))
             {
-                throw new BusinessRuleViolationException("The file you are editing is not active or draft, so you cannot save changes. Refresh your browser to see file state.");
+                throw new BusinessRuleViolationException("The file you are editing is not active or hold, so you cannot save changes. Refresh your browser to see file state.");
             }
 
             // Get the current checklist items for this acquisition file.
@@ -502,7 +490,7 @@ namespace Pims.Api.Services
             var currentAcquisitionStatus = GetCurrentAcquisitionStatus(acquisitionFileId);
             if (!_statusSolver.CanEditStakeholders(currentAcquisitionStatus) && !_user.HasPermission(Permissions.SystemAdmin))
             {
-                throw new BusinessRuleViolationException("The file you are editing is not active or draft, so you cannot save changes. Refresh your browser to see file state.");
+                throw new BusinessRuleViolationException("The file you are editing is not active or hold, so you cannot save changes. Refresh your browser to see file state.");
             }
 
             var currentInterestHolders = _interestHolderRepository.GetInterestHoldersByAcquisitionFile(acquisitionFileId);
@@ -717,7 +705,7 @@ namespace Pims.Api.Services
             }
         }
 
-        private void ValidateDrafts(PimsAcquisitionFile incomingFile)
+        private void ValidateDraftsOnComplete(PimsAcquisitionFile incomingFile)
         {
             var agreements = _agreementRepository.GetAgreementsByAcquisitionFile(incomingFile.AcquisitionFileId);
             var compensations = _compensationRequisitionRepository.GetAllByAcquisitionFileId(incomingFile.AcquisitionFileId);
@@ -728,6 +716,12 @@ namespace Pims.Api.Services
             }
 
             var takes = _takeRepository.GetAllByAcquisitionFileId(incomingFile.AcquisitionFileId);
+
+            if (!takes.Any())
+            {
+                throw new BusinessRuleViolationException("You cannot complete an acquisition file that has no takes.");
+            }
+
             if (takes.Any(t => t.TakeStatusTypeCode == AcquisitionTakeStatusTypes.INPROGRESS.ToString()))
             {
                 throw new BusinessRuleViolationException("Please ensure all in-progress property takes have been completed or canceled before completing an Acquisition File.");
@@ -741,84 +735,7 @@ namespace Pims.Api.Services
 
             if (!_statusSolver.CanEditOrDeleteAgreement(currentAcquisitionStatus, agreementStatus) && !_user.HasPermission(Permissions.SystemAdmin))
             {
-                throw new BusinessRuleViolationException("The file you are editing is not active or draft, so you cannot save changes. Refresh your browser to see file state.");
-            }
-        }
-
-        /// <summary>
-        /// Attempt to transfer properties of interest to core inventory when an acquisition file is deemed to be completed.
-        ///
-        /// By default, do not allow a property of interest to be modified unless the userOverride flag is true.
-        /// </summary>
-        /// <param name="acquisitionFile"></param>
-        /// <param name="userOverride"></param>
-        private void TransferPropertiesOfInterest(PimsAcquisitionFile acquisitionFile, bool userOverride = false)
-        {
-            // Get the current properties in the research file
-            var currentProperties = _acquisitionFilePropertyRepository.GetPropertiesByAcquisitionFileId(acquisitionFile.Internal_Id);
-
-            // PSP-6111 Business rule: Transfer properties of interest to core inventory when acquisition file is completed
-            // PSP-7892 Business rule: Process all properties in the acq file (not only properties of interest).
-            foreach (var acquisitionProperty in currentProperties)
-            {
-                var property = acquisitionProperty.Property;
-                var takes = _takeRepository.GetAllByPropertyAcquisitionFileId(acquisitionProperty.Internal_Id);
-
-                var activeTakes = takes.Where(t =>
-                    !(t.IsNewLandAct && t.LandActEndDt.HasValue && t.LandActEndDt.Value < DateOnly.FromDateTime(DateTime.Now)) &&
-                    !(t.IsNewLicenseToConstruct && t.LtcEndDt.HasValue && t.LtcEndDt.Value < DateOnly.FromDateTime(DateTime.Now)) &&
-                    !(t.IsNewInterestInSrw && t.SrwEndDt.HasValue && t.SrwEndDt.Value < DateOnly.FromDateTime(DateTime.Now)));
-
-                // see psp-6589 for business rules.
-                var isOwned = !(activeTakes.All(t => (t.IsNewLandAct && COREINVENTORYINTERESTCODES.Contains(t.LandActTypeCode))
-                    || t.IsNewInterestInSrw
-                    || t.IsNewLicenseToConstruct) && activeTakes.Any()) || activeTakes.Any(x => x.IsThereSurplus);
-                var isPropertyOfInterest = false;
-                var isOtherInterest = !isOwned;
-
-                // Override for dedication psp-7048.
-                var doNotAcquire = takes.All(t =>
-                    t.IsNewHighwayDedication && !t.IsAcquiredForInventory);
-
-                if (doNotAcquire)
-                {
-                    isOwned = false;
-                    isPropertyOfInterest = true;
-                    isOtherInterest = false;
-                }
-
-                // PSP-7892: Follow ownership priority when updating an existing property
-                if (property.IsOwned || isOwned)
-                {
-                    isOwned = true;
-                    isOtherInterest = false;
-                    isPropertyOfInterest = false;
-                }
-                else if (property.IsOtherInterest || isOtherInterest)
-                {
-                    isOwned = false;
-                    isOtherInterest = true;
-                    isPropertyOfInterest = false;
-                }
-                else if (property.IsPropertyOfInterest || isPropertyOfInterest)
-                {
-                    isOwned = false;
-                    isOtherInterest = false;
-                    isPropertyOfInterest = true;
-                }
-
-                if (!userOverride && property.IsPropertyOfInterest && (isOwned || isOtherInterest))
-                {
-                    throw new UserOverrideException(UserOverrideCode.PoiToInventory, "You have one or more take(s) that will be added to MoTI Inventory. Do you want to acknowledge and proceed?");
-                }
-
-                if (!userOverride && property.IsOtherInterest && isOwned)
-                {
-                    throw new UserOverrideException(UserOverrideCode.PoiToInventory, "You have one or more take(s) that will be changed from 'Other Interest' to 'Core Inventory'. Do you want to acknowledge and proceed?");
-                }
-
-                PropertyOwnershipState ownership = new() { isOwned = isOwned, isPropertyOfInterest = isPropertyOfInterest, isOtherInterest = isOtherInterest, isDisposed = false };
-                _propertyRepository.TransferFileProperty(property, ownership);
+                throw new BusinessRuleViolationException("The file you are editing is not active or hold, so you cannot save changes. Refresh your browser to see file state.");
             }
         }
 

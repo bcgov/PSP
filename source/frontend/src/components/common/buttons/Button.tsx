@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import React, { CSSProperties, forwardRef, MouseEventHandler } from 'react';
+import { CSSProperties, forwardRef, MouseEventHandler } from 'react';
 import BootstrapButton, { ButtonProps as BootstrapButtonProps } from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
 import styled from 'styled-components';
@@ -76,6 +76,7 @@ const StyledButton = styled(BootstrapButton)`
     font-weight: 700;
     letter-spacing: 0.1rem;
     cursor: pointer;
+    height: 3.8rem;
 
     &:hover {
       text-decoration: underline;
@@ -95,6 +96,11 @@ const StyledButton = styled(BootstrapButton)`
       color: ${({ theme }) => theme.css.primaryBackgroundColor};
       background-color: ${({ theme }) => theme.css.primaryColor};
       border: none;
+      &:hover,
+      &:active,
+      &:focus {
+        background-color: ${({ theme }) => theme.css.primaryHoverColor};
+      }
     }
 
     // SECONDARY buttons

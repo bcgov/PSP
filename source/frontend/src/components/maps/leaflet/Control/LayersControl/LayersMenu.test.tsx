@@ -1,14 +1,22 @@
-import { noop } from 'lodash';
-import React from 'react';
+import noop from 'lodash/noop';
 
 import { TenantProvider } from '@/tenants';
 import { cleanup, render } from '@/utils/test-utils';
 import { createMapContainer, deferred } from '@/utils/test-utils';
 
-import LayersMenu from './LayersMenu';
+import { LayersMenu } from './LayersMenu';
+import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
+import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
+import { vi } from 'vitest';
+
+vi.mock('@/components/common/mapFSM/MapStateMachineContext');
 
 describe('LayersMenu View', () => {
   afterEach(cleanup);
+
+  beforeEach(() => {
+    vi.mocked(useMapStateMachine).mockImplementation(() => mapMachineBaseMock);
+  });
 
   const setup = (setMap = noop) => {
     // render component under test

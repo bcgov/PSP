@@ -66,19 +66,57 @@
   right: 1em;
 }
 
+a {
+  color: $link-color;
+  &:hover {
+    color: $secondary-variant-color;
+    text-decoration: underline;
+  }
+}
+
+.spinner-border {
+  width: 3.2rem;
+  height: 3.2rem;
+}
+
 #root {
   // React-bootstrap toast global styling
   .toast {
     font-size: 1.4rem;
   }
 
-  .spinner-border {
-    width: 3.2rem;
-    height: 3.2rem;
-  }
-
   .page-link {
     padding: 0.8rem 1.2rem;
+    color: $link-color;
+    border-color: $link-color;
+    border-top-width: 0.2rem;
+    border-bottom-width: 0.2rem;
+    &:hover {
+      border-color: $secondary-variant-color;
+    }
+  }
+
+  .page-item.active .page-link {
+    color: #fff;
+    background-color: $link-color;
+
+    &:hover {
+      background-color: $secondary-variant-color;
+    }
+  }
+
+  .page-item:last-child .page-link,
+  .page-item:first-child .page-link {
+    color: $link-color;
+    border-color: $link-color;
+    font-weight: 700;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    &:hover {
+      border-color: $secondary-variant-color;
+    }
   }
 
   .error {

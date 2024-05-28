@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`LtsaTabView component renders as expected when provided valid ltsa data object and requested on datetime 1`] = `
+exports[`LtsaTabView component > renders as expected when provided valid ltsa data object and requested on datetime 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"

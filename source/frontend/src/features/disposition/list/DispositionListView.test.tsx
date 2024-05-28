@@ -23,17 +23,15 @@ import {
 import DispositionListView from './DispositionListView';
 import { DispositionFilterModel } from './models';
 
-jest.mock('@react-keycloak/web');
-
-jest.mock('@/hooks/pims-api/useApiDispositionFile');
-const getDispositionFilesPagedApiFn = jest.fn();
-const getAllDispositionFileTeamMembersFn = jest.fn();
-const exportDispositionFilesFn = jest.fn();
-(useApiDispositionFile as jest.Mock).mockReturnValue({
+vi.mock('@/hooks/pims-api/useApiDispositionFile');
+const getDispositionFilesPagedApiFn = vi.fn();
+const getAllDispositionFileTeamMembersFn = vi.fn();
+const exportDispositionFilesFn = vi.fn();
+vi.mocked(useApiDispositionFile).mockReturnValue({
   getDispositionFilesPagedApi: getDispositionFilesPagedApiFn,
   getAllDispositionFileTeamMembers: getAllDispositionFileTeamMembersFn,
   exportDispositionFiles: exportDispositionFilesFn,
-});
+} as unknown as ReturnType<typeof useApiDispositionFile>);
 
 const mockPagedResults = (
   searchResults?: ApiGen_Concepts_DispositionFile[],
@@ -69,7 +67,7 @@ describe('Disposition List View', () => {
   };
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('matches snapshot', async () => {

@@ -519,6 +519,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchProperty.Address = ExcelDataContext.ReadData(rowNumber, "Address");
             searchProperty.PlanNumber = ExcelDataContext.ReadData(rowNumber, "PlanNumber");
             searchProperty.LegalDescription = ExcelDataContext.ReadData(rowNumber, "LegalDescription");
+            searchProperty.MultiplePIDS = genericSteps.PopulateLists(ExcelDataContext.ReadData(rowNumber, "MultiplePIDS"));
         }
 
         private void PopulateManagementProperty(int rowNumber)

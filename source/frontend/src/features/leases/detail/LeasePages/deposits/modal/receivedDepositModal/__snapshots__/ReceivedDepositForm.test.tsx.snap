@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`ReceivedDepositForm component renders as expected 1`] = `
+exports[`ReceivedDepositForm component > renders as expected 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
@@ -34,6 +34,7 @@ exports[`ReceivedDepositForm component renders as expected 1`] = `
   -ms-letter-spacing: 0.1rem;
   letter-spacing: 0.1rem;
   cursor: pointer;
+  height: 3.8rem;
 }
 
 .c7.btn:hover {
@@ -242,7 +243,7 @@ exports[`ReceivedDepositForm component renders as expected 1`] = `
 }
 
 <form
-    class="c0 px-4"
+    class="c0"
   >
     <div
       class="row"
@@ -521,7 +522,7 @@ exports[`ReceivedDepositForm component renders as expected 1`] = `
 </DocumentFragment>
 `;
 
-exports[`ReceivedDepositForm component renders with data as expected 1`] = `
+exports[`ReceivedDepositForm component > renders with data as expected 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
@@ -555,6 +556,7 @@ exports[`ReceivedDepositForm component renders with data as expected 1`] = `
   -ms-letter-spacing: 0.1rem;
   letter-spacing: 0.1rem;
   cursor: pointer;
+  height: 3.8rem;
 }
 
 .c7.btn:hover {
@@ -763,7 +765,7 @@ exports[`ReceivedDepositForm component renders with data as expected 1`] = `
 }
 
 <form
-    class="c0 px-4"
+    class="c0"
   >
     <div
       class="row"

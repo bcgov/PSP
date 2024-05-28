@@ -1,12 +1,12 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`TakesDetailView component renders as expected 1`] = `
+exports[`TakesDetailView component > renders as expected 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
   />
   <div />
-  .c3 {
+  .c2 {
   font-family: 'BCSans-Bold';
   font-size: 2.6rem;
   border-bottom: solid 0.2rem;
@@ -20,10 +20,6 @@ exports[`TakesDetailView component renders as expected 1`] = `
 }
 
 .c1 {
-  text-align: right;
-}
-
-.c2 {
   margin: 1.5rem;
   padding: 1.5rem;
   background-color: white;
@@ -31,18 +27,34 @@ exports[`TakesDetailView component renders as expected 1`] = `
   border-radius: 0.5rem;
 }
 
-.c6.required::before {
+.c5.required::before {
   content: '*';
   position: absolute;
   top: 0.75rem;
   left: 0rem;
 }
 
-.c5 {
+.c4 {
   font-weight: bold;
 }
 
-.c4 {
+.c6 {
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-align-items: end;
+  -webkit-box-align: end;
+  -ms-flex-align: end;
+  align-items: end;
+  min-height: 4.5rem;
+}
+
+.c6 .btn {
+  margin: 0;
+}
+
+.c3 {
   border-radius: 0.5rem;
   padding: 1rem;
 }
@@ -51,21 +63,18 @@ exports[`TakesDetailView component renders as expected 1`] = `
     class="c0"
   >
     <div
-      class="c1"
-    />
-    <div
-      class="c2 form-section"
+      class="c1 form-section"
     >
       <div
         class="collapse show"
       >
         <h2
-          class="c3"
+          class="c2"
         >
           Takes for 007-723-385
         </h2>
         <div
-          class="c4"
+          class="c3"
         >
           <div
             class="pb-2 row"
@@ -74,7 +83,7 @@ exports[`TakesDetailView component renders as expected 1`] = `
               class="pr-0 text-left col-8"
             >
               <label
-                class="c5"
+                class="c4"
               >
                 Takes for this property in the current file:
                 <span
@@ -104,7 +113,7 @@ exports[`TakesDetailView component renders as expected 1`] = `
               </label>
             </div>
             <div
-              class="c6 text-left col"
+              class="c5 text-left col"
             >
               0
             </div>
@@ -116,7 +125,7 @@ exports[`TakesDetailView component renders as expected 1`] = `
               class="pr-0 text-left col-8"
             >
               <label
-                class="c5"
+                class="c4"
               >
                 Takes for this property in other files:
                 <span
@@ -146,13 +155,37 @@ exports[`TakesDetailView component renders as expected 1`] = `
               </label>
             </div>
             <div
-              class="c6 text-left col"
+              class="c5 text-left col"
               data-testid="takes-in-other-files"
             >
               0
             </div>
           </div>
         </div>
+      </div>
+    </div>
+    <div
+      class="c1 form-section"
+    >
+      <div
+        class="collapse show"
+      >
+        <h2
+          class="c2 mb-8"
+        >
+          <div
+            class="c6 no-gutters row"
+          >
+            <div
+              class="px-2 my-1 col-auto"
+            >
+              Takes
+            </div>
+            <div
+              class="my-1 col-auto"
+            />
+          </div>
+        </h2>
       </div>
     </div>
   </div>

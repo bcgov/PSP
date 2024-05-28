@@ -23,18 +23,18 @@ const TestView: React.FC<IManagementActivitiesListViewProps> = props => {
 const mockGetApi = {
   error: undefined,
   response: undefined,
-  execute: jest.fn(),
+  execute: vi.fn(),
   loading: false,
 };
 
 const mockDeleteApi = {
   error: undefined,
   response: undefined,
-  execute: jest.fn(),
+  execute: vi.fn(),
   loading: false,
 };
 
-jest.mock('@/hooks/repositories/usePropertyActivityRepository', () => ({
+vi.mock('@/hooks/repositories/usePropertyActivityRepository', () => ({
   usePropertyActivityRepository: () => {
     return {
       getActivities: mockGetApi,
@@ -68,7 +68,7 @@ describe('ManagementActivitiesListContainer component', () => {
   };
 
   beforeEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
   });
 
   it('renders as expected', async () => {

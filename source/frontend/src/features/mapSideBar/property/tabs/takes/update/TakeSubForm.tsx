@@ -1,36 +1,32 @@
 import { getIn, useFormikContext } from 'formik';
-import * as React from 'react';
-import { FaTrash } from 'react-icons/fa';
+import { useEffect } from 'react';
 
-import { StyledRemoveLinkButton } from '@/components/common/buttons';
 import { FastDatePicker, Select, TextArea } from '@/components/common/form';
 import { RadioGroup, yesNoRadioGroupValues } from '@/components/common/form/RadioGroup';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import AreaContainer from '@/components/measurements/AreaContainer';
+import { Roles } from '@/constants';
 import * as API from '@/constants/API';
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
-import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
-import { withNameSpace } from '@/utils/formUtils';
+import { useModalContext } from '@/hooks/useModalContext';
+import { ApiGen_CodeTypes_AcquisitionTakeStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_AcquisitionTakeStatusTypes';
+import { ApiGen_CodeTypes_LandActTypes } from '@/models/api/generated/ApiGen_CodeTypes_LandActTypes';
 
+import { TakeModel } from '../models';
 import { StyledBorderSection, StyledNoTabSection } from '../styles';
 
 interface ITakeSubFormProps {
-  takeIndex: number;
-  nameSpace: string;
-  onRemove: (index: number) => void;
+  take: TakeModel;
 }
 
-const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({
-  takeIndex,
-  nameSpace,
-  onRemove,
-}) => {
+const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({ take }) => {
   const formikProps = useFormikContext();
   const { values, setFieldValue, handleChange } = formikProps;
-  const currentTake = getIn(values, withNameSpace(nameSpace));
   const { getOptionsByType } = useLookupCodeHelpers();
   const { setModalContent, setDisplayModal } = useModalContext();
+  const { hasRole } = useKeycloakWrapper();
 
   const takeTypeOptions = getOptionsByType(API.TAKE_TYPES);
   const takeStatusTypeOptions = getOptionsByType(API.TAKE_STATUS_TYPES);
@@ -40,16 +36,16 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({
     label: landAct.value + ' ' + landAct.label,
   }));
 
-  const isThereSurplus = getIn(values, withNameSpace(nameSpace, 'isThereSurplus'));
-  const isNewHighwayDedication = getIn(values, withNameSpace(nameSpace, 'isNewHighwayDedication'));
-  const isNewInterestInSrw = getIn(values, withNameSpace(nameSpace, 'isNewInterestInSrw'));
-  const isNewLandAct = getIn(values, withNameSpace(nameSpace, 'isNewLandAct'));
-  const isNewLicenseToConstruct = getIn(
-    values,
-    withNameSpace(nameSpace, 'isNewLicenseToConstruct'),
-  );
+  useEffect(() => {
+    if (
+      take.completionDt &&
+      take.takeStatusTypeCode !== ApiGen_CodeTypes_AcquisitionTakeStatusTypes.COMPLETE
+    ) {
+      setFieldValue('completionDt', '');
+    }
+  }, [take.completionDt, take.takeStatusTypeCode, setFieldValue]);
 
-  const getModalWarning = (onOk: () => void) => {
+  const getModalWarning = (onOk: () => void, isLeasePayable = false) => {
     return (e: React.ChangeEvent<any>) => {
       if (e.target.value === 'false') {
         setModalContent({
@@ -64,56 +60,78 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({
           },
         });
         setDisplayModal(true);
+      } else if (isLeasePayable) {
+        setModalContent({
+          variant: 'info',
+          title: 'Follow-up required',
+          message:
+            'You have created a Lease (Payable) Take. You also need to create a Lease/License File.',
+          okButtonText: 'Close',
+          cancelButtonText: null,
+          handleOk: () => {
+            handleChange(e);
+            setDisplayModal(false);
+          },
+        });
+        setDisplayModal(true);
       } else {
         handleChange(e);
       }
     };
   };
 
+  const canEditTake =
+    take?.id === 0 ||
+    take.takeStatusTypeCode !== ApiGen_CodeTypes_AcquisitionTakeStatusTypes.COMPLETE ||
+    hasRole(Roles.SYSTEM_ADMINISTRATOR);
+
   return (
     <Section
       className="position-relative"
-      header={currentTake?.id ? `Take ${takeIndex + 1}` : 'New Take'}
+      header={take?.id ? `Update Take` : 'New Take'}
       isCollapsable={true}
       initiallyExpanded={true}
     >
-      <StyledRemoveLinkButton
-        style={{ position: 'absolute', right: '1rem' }}
-        title="delete take"
-        data-testid="take-delete-button"
-        icon={<FaTrash size={24} id={`take-delete-${takeIndex}`} title="delete take" />}
-        onClick={() => {
-          setModalContent({
-            ...getDeleteModalProps(),
-            handleOk: () => {
-              onRemove(takeIndex);
-              setDisplayModal(false);
-            },
-          });
-          setDisplayModal(true);
-        }}
-      ></StyledRemoveLinkButton>
       <SectionField label="Take type" required labelWidth="4" contentWidth="5">
         <Select
-          field={withNameSpace(nameSpace, 'takeTypeCode')}
+          field="takeTypeCode"
           options={takeTypeOptions}
           placeholder="Select take type"
+          disabled={!canEditTake}
         />
       </SectionField>
       <SectionField label="Take status" required labelWidth="4" contentWidth="5">
         <Select
-          field={withNameSpace(nameSpace, 'takeStatusTypeCode')}
+          field="takeStatusTypeCode"
           options={takeStatusTypeOptions}
+          disabled={!canEditTake}
+        />
+      </SectionField>
+      <SectionField
+        label="Completion date"
+        required={take.takeStatusTypeCode === ApiGen_CodeTypes_AcquisitionTakeStatusTypes.COMPLETE}
+        tooltip={`This will be enabled when the file status is set to "Completed"`}
+        labelWidth="4"
+        contentWidth="5"
+      >
+        <FastDatePicker
+          formikProps={formikProps}
+          field="completionDt"
+          maxDate={new Date()}
+          disabled={
+            take.takeStatusTypeCode !== ApiGen_CodeTypes_AcquisitionTakeStatusTypes.COMPLETE
+          }
         />
       </SectionField>
       <SectionField label="Site contamination" labelWidth="4" contentWidth="5">
         <Select
-          field={withNameSpace(nameSpace, 'takeSiteContamTypeCode')}
+          field="takeSiteContamTypeCode"
           options={takeSiteContamTypeOptions}
+          disabled={!canEditTake}
         />
       </SectionField>
       <SectionField label="Description of this Take" labelWidth="12">
-        <TextArea field={withNameSpace(nameSpace, 'description')} />
+        <TextArea field="description" disabled={!canEditTake} />
       </SectionField>
       <StyledNoTabSection header="Area">
         <StyledBorderSection>
@@ -123,36 +141,31 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({
             tooltip="The term new highway dedication includes municipal road or provincial public highway."
           >
             <RadioGroup
-              field={withNameSpace(nameSpace, 'isNewHighwayDedication')}
+              field="isNewHighwayDedication"
               radioValues={yesNoRadioGroupValues}
               flexDirection="row"
               handleChange={getModalWarning(() => {
-                setFieldValue(withNameSpace(nameSpace, 'isNewHighwayDedication'), 'false');
-                setFieldValue(withNameSpace(nameSpace, 'newHighwayDedicationArea'), 0);
+                setFieldValue('isNewHighwayDedication', 'false');
+                setFieldValue('newHighwayDedicationArea', 0);
               })}
+              disabled={!canEditTake}
             />
           </SectionField>
-          {isNewHighwayDedication === 'true' && (
+          {take.isNewHighwayDedication === 'true' && (
             <>
               <SectionField label="Area" labelWidth="12">
                 <AreaContainer
                   onChange={(landArea, areaUnitTypeCode) => {
+                    formikProps.setFieldValue('newHighwayDedicationArea', landArea);
                     formikProps.setFieldValue(
-                      withNameSpace(nameSpace, 'newHighwayDedicationArea'),
-                      landArea,
-                    );
-                    formikProps.setFieldValue(
-                      withNameSpace(nameSpace, 'newHighwayDedicationAreaUnitTypeCode'),
+                      'newHighwayDedicationAreaUnitTypeCode',
                       areaUnitTypeCode,
                     );
                   }}
                   isEditable
-                  unitCode={getIn(
-                    values,
-                    withNameSpace(nameSpace, 'newHighwayDedicationAreaUnitTypeCode'),
-                  )}
-                  landArea={currentTake.newHighwayDedicationArea}
-                  field={withNameSpace(nameSpace, 'newHighwayDedicationArea')}
+                  unitCode={getIn(values, 'newHighwayDedicationAreaUnitTypeCode')}
+                  landArea={take.newHighwayDedicationArea}
+                  field="newHighwayDedicationArea"
                 />
               </SectionField>
             </>
@@ -164,9 +177,10 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({
             className="pt-4"
           >
             <RadioGroup
-              field={withNameSpace(nameSpace, 'isAcquiredForInventory')}
+              field="isAcquiredForInventory"
               radioValues={yesNoRadioGroupValues}
               flexDirection="row"
+              disabled={!canEditTake}
             />
           </SectionField>
         </StyledBorderSection>
@@ -178,90 +192,99 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({
             <RadioGroup
               radioValues={yesNoRadioGroupValues}
               flexDirection="row"
-              field={withNameSpace(nameSpace, 'isNewInterestInSrw')}
+              field="isNewInterestInSrw"
               handleChange={getModalWarning(() => {
-                setFieldValue(withNameSpace(nameSpace, 'isNewInterestInSrw'), 'false');
-                setFieldValue(withNameSpace(nameSpace, 'statutoryRightOfWayArea'), 0);
-                setFieldValue(withNameSpace(nameSpace, 'srwEndDt'), '');
+                setFieldValue('isNewInterestInSrw', 'false');
+                setFieldValue('statutoryRightOfWayArea', 0);
+                setFieldValue('srwEndDt', '');
               })}
+              disabled={!canEditTake}
             />
           </SectionField>
-          {isNewInterestInSrw === 'true' && (
+          {take.isNewInterestInSrw === 'true' && (
             <>
               <SectionField label="Area" labelWidth="12">
                 <AreaContainer
                   onChange={(landArea, areaUnitTypeCode) => {
+                    formikProps.setFieldValue('statutoryRightOfWayArea', landArea);
                     formikProps.setFieldValue(
-                      withNameSpace(nameSpace, 'statutoryRightOfWayArea'),
-                      landArea,
-                    );
-                    formikProps.setFieldValue(
-                      withNameSpace(nameSpace, 'statutoryRightOfWayAreaUnitTypeCode'),
+                      'statutoryRightOfWayAreaUnitTypeCode',
                       areaUnitTypeCode,
                     );
                   }}
-                  isEditable
-                  unitCode={getIn(
-                    values,
-                    withNameSpace(nameSpace, 'statutoryRightOfWayAreaUnitTypeCode'),
-                  )}
-                  landArea={currentTake.statutoryRightOfWayArea}
-                  field={withNameSpace(nameSpace, 'statutoryRightOfWayArea')}
+                  isEditable={canEditTake}
+                  unitCode={getIn(values, 'statutoryRightOfWayAreaUnitTypeCode')}
+                  landArea={take.statutoryRightOfWayArea}
+                  field="statutoryRightOfWayArea"
                 />
               </SectionField>
-              <SectionField label="SRW end date" contentWidth="4">
-                <FastDatePicker
-                  field={withNameSpace(nameSpace, 'srwEndDt')}
-                  formikProps={formikProps}
-                />
+              <SectionField label="SRW end date" labelWidth="3" className="mt-4">
+                <FastDatePicker field="srwEndDt" formikProps={formikProps} />
               </SectionField>
             </>
           )}
         </StyledBorderSection>
         <StyledBorderSection>
-          <SectionField label="Is a there a new Land Act tenure? *" labelWidth="8">
+          <SectionField label="Is there a new Land Act tenure? *" labelWidth="8">
             <RadioGroup
               radioValues={yesNoRadioGroupValues}
               flexDirection="row"
-              field={withNameSpace(nameSpace, 'isNewLandAct')}
+              field="isNewLandAct"
               handleChange={getModalWarning(() => {
-                setFieldValue(withNameSpace(nameSpace, 'isNewLandAct'), 'false');
-                setFieldValue(withNameSpace(nameSpace, 'landActArea'), 0);
-                setFieldValue(withNameSpace(nameSpace, 'landActEndDt'), '');
-                setFieldValue(withNameSpace(nameSpace, 'landActTypeCode'), '');
+                setFieldValue('isNewLandAct', 'false');
+                setFieldValue('landActArea', 0);
+                setFieldValue('landActEndDt', '');
+                setFieldValue('landActTypeCode', '');
               })}
+              disabled={!canEditTake}
             />
           </SectionField>
-          {isNewLandAct === 'true' && (
+          {take.isNewLandAct === 'true' && (
             <>
               <SectionField label="Land Act" required contentWidth="7">
                 <Select
-                  field={withNameSpace(nameSpace, 'landActTypeCode')}
+                  field="landActTypeCode"
                   placeholder="Select Land Act"
                   options={takeLandActTypeOptions}
+                  disabled={!canEditTake}
+                  onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+                    if (
+                      [
+                        ApiGen_CodeTypes_LandActTypes.TRANSFER_OF_ADMIN_AND_CONTROL.toString(),
+                        ApiGen_CodeTypes_LandActTypes.CROWN_GRANT.toString(),
+                      ].includes(e.target.value)
+                    ) {
+                      setFieldValue('landActEndDt', '');
+                    }
+                  }}
                 />
               </SectionField>
               <SectionField label="Area" labelWidth="12">
                 <AreaContainer
                   onChange={(landArea, areaUnitTypeCode) => {
-                    formikProps.setFieldValue(withNameSpace(nameSpace, 'landActArea'), landArea);
-                    formikProps.setFieldValue(
-                      withNameSpace(nameSpace, 'landActAreaUnitTypeCode'),
-                      areaUnitTypeCode,
-                    );
+                    formikProps.setFieldValue('landActArea', landArea);
+                    formikProps.setFieldValue('landActAreaUnitTypeCode', areaUnitTypeCode);
                   }}
-                  isEditable
-                  unitCode={getIn(values, withNameSpace(nameSpace, 'landActAreaUnitTypeCode'))}
-                  landArea={currentTake.landActArea}
-                  field={withNameSpace(nameSpace, 'landActArea')}
+                  isEditable={canEditTake}
+                  unitCode={getIn(values, 'landActAreaUnitTypeCode')}
+                  landArea={take.landActArea}
+                  field="landActArea"
                 />
               </SectionField>
-              <SectionField label="End date" contentWidth="4">
-                <FastDatePicker
-                  field={withNameSpace(nameSpace, 'landActEndDt')}
-                  formikProps={formikProps}
-                />
-              </SectionField>
+              {/** hide the end date for land act types that result in ownership*/}
+              {![
+                ApiGen_CodeTypes_LandActTypes.TRANSFER_OF_ADMIN_AND_CONTROL.toString(),
+                ApiGen_CodeTypes_LandActTypes.CROWN_GRANT.toString(),
+              ].includes(take.landActTypeCode) && (
+                <SectionField label="End date" labelWidth="3" className="mt-4">
+                  <FastDatePicker
+                    field="landActEndDt"
+                    formikProps={formikProps}
+                    disabled={!canEditTake}
+                    data-testId="landActEndDt"
+                  />
+                </SectionField>
+              )}
             </>
           )}
         </StyledBorderSection>
@@ -273,42 +296,72 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({
             <RadioGroup
               radioValues={yesNoRadioGroupValues}
               flexDirection="row"
-              field={withNameSpace(nameSpace, 'isNewLicenseToConstruct')}
+              field="isNewLicenseToConstruct"
               handleChange={getModalWarning(() => {
-                setFieldValue(withNameSpace(nameSpace, 'isNewLicenseToConstruct'), 'false');
-                setFieldValue(withNameSpace(nameSpace, 'licenseToConstructArea'), 0);
-                setFieldValue(withNameSpace(nameSpace, 'ltcEndDt'), '');
+                setFieldValue('isNewLicenseToConstruct', 'false');
+                setFieldValue('licenseToConstructArea', 0);
+                setFieldValue('ltcEndDt', '');
               })}
+              disabled={!canEditTake}
             />
           </SectionField>
-          {isNewLicenseToConstruct === 'true' && (
+          {take.isNewLicenseToConstruct === 'true' && (
             <>
               <SectionField label="Area" labelWidth="12">
                 <AreaContainer
                   onChange={(landArea, areaUnitTypeCode) => {
+                    formikProps.setFieldValue('licenseToConstructArea', landArea);
                     formikProps.setFieldValue(
-                      withNameSpace(nameSpace, 'licenseToConstructArea'),
-                      landArea,
-                    );
-                    formikProps.setFieldValue(
-                      withNameSpace(nameSpace, 'licenseToConstructAreaUnitTypeCode'),
+                      'licenseToConstructAreaUnitTypeCode',
                       areaUnitTypeCode,
                     );
                   }}
-                  isEditable
-                  unitCode={getIn(
-                    values,
-                    withNameSpace(nameSpace, 'licenseToConstructAreaUnitTypeCode'),
-                  )}
-                  landArea={currentTake.licenseToConstructArea}
-                  field={withNameSpace(nameSpace, 'licenseToConstructArea')}
+                  isEditable={canEditTake}
+                  unitCode={getIn(values, 'licenseToConstructAreaUnitTypeCode')}
+                  landArea={take.licenseToConstructArea}
+                  field="licenseToConstructArea"
                 />
               </SectionField>
 
-              <SectionField label="LTC end date" contentWidth="4">
+              <SectionField label="LTC end date" labelWidth="3" className="mt-4">
+                <FastDatePicker field="ltcEndDt" formikProps={formikProps} />
+              </SectionField>
+            </>
+          )}
+        </StyledBorderSection>
+        <StyledBorderSection>
+          <SectionField label="Is there a Lease (Payable)? *" labelWidth="8">
+            <RadioGroup
+              radioValues={yesNoRadioGroupValues}
+              flexDirection="row"
+              field="isLeasePayable"
+              handleChange={getModalWarning(() => {
+                setFieldValue('isLeasePayable', 'false');
+                setFieldValue('leasePayableArea', 0);
+                setFieldValue('leasePayableEndDt', '');
+              }, true)}
+            />
+          </SectionField>
+          {take.isLeasePayable === 'true' && (
+            <>
+              <SectionField label="Area" labelWidth="12">
+                <AreaContainer
+                  onChange={(landArea, areaUnitTypeCode) => {
+                    formikProps.setFieldValue('leasePayableArea', landArea);
+                    formikProps.setFieldValue('leasePayableAreaUnitTypeCode', areaUnitTypeCode);
+                  }}
+                  isEditable
+                  unitCode={getIn(values, 'leasePayableAreaUnitTypeCode')}
+                  landArea={take.leasePayableArea}
+                  field="leasePayableArea"
+                />
+              </SectionField>
+
+              <SectionField label="End date" labelWidth="3" className="mt-4">
                 <FastDatePicker
-                  field={withNameSpace(nameSpace, 'ltcEndDt')}
+                  field="leasePayableEndDt"
                   formikProps={formikProps}
+                  disabled={!canEditTake}
                 />
               </SectionField>
             </>
@@ -319,30 +372,28 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({
         <StyledBorderSection>
           <SectionField label="Is there a Surplus? *" labelWidth="8">
             <RadioGroup
-              field={withNameSpace(nameSpace, 'isThereSurplus')}
+              field="isThereSurplus"
               radioValues={yesNoRadioGroupValues}
               flexDirection="row"
               handleChange={getModalWarning(() => {
-                setFieldValue(withNameSpace(nameSpace, 'isThereSurplus'), 'false');
-                setFieldValue(withNameSpace(nameSpace, 'surplusArea'), 0);
+                setFieldValue('isThereSurplus', 'false');
+                setFieldValue('surplusArea', 0);
               })}
+              disabled={!canEditTake}
             />
           </SectionField>
-          {isThereSurplus === 'true' && (
+          {take.isThereSurplus === 'true' && (
             <>
               <SectionField label="Area" labelWidth="12">
                 <AreaContainer
                   onChange={(landArea, areaUnitTypeCode) => {
-                    formikProps.setFieldValue(withNameSpace(nameSpace, 'surplusArea'), landArea);
-                    formikProps.setFieldValue(
-                      withNameSpace(nameSpace, 'surplusAreaUnitTypeCode'),
-                      areaUnitTypeCode,
-                    );
+                    formikProps.setFieldValue('surplusArea', landArea);
+                    formikProps.setFieldValue('surplusAreaUnitTypeCode', areaUnitTypeCode);
                   }}
-                  isEditable
-                  unitCode={getIn(values, withNameSpace(nameSpace, 'surplusAreaUnitTypeCode'))}
-                  landArea={currentTake.surplusArea}
-                  field={withNameSpace(nameSpace, 'surplusArea')}
+                  isEditable={canEditTake}
+                  unitCode={getIn(values, 'surplusAreaUnitTypeCode')}
+                  landArea={take.surplusArea}
+                  field="surplusArea"
                 />
               </SectionField>
             </>

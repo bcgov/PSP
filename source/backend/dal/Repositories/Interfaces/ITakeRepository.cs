@@ -10,11 +10,19 @@ namespace Pims.Dal.Repositories
     {
         IEnumerable<PimsTake> GetAllByAcquisitionFileId(long fileId);
 
-        IEnumerable<PimsTake> GetAllByPropertyId(long fileId, long acquisitionFilePropertyId);
+        IEnumerable<PimsTake> GetAllByAcqPropertyId(long fileId, long propertyId);
+
+        IEnumerable<PimsTake> GetAllByPropertyId(long propertyId);
+
+        PimsTake GetById(long takeId);
+
+        PimsTake AddTake(PimsTake take);
+
+        PimsTake UpdateTake(PimsTake take);
+
+        bool TryDeleteTake(long takeId);
 
         int GetCountByPropertyId(long propertyId);
-
-        void UpdateAcquisitionPropertyTakes(long acquisitionFilePropertyId, IEnumerable<PimsTake> takes);
 
         IEnumerable<PimsTake> GetAllByPropertyAcquisitionFileId(long acquisitionFilePropertyId);
     }

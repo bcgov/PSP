@@ -135,7 +135,6 @@ export const getEmptyProperty = (): ApiGen_Concepts_Property => ({
   pin: null,
   planNumber: null,
   isOwned: false,
-  isPropertyOfInterest: false,
   isVisibleToOtherAgencies: false,
   areaUnit: null,
   landArea: null,
@@ -155,8 +154,6 @@ export const getEmptyProperty = (): ApiGen_Concepts_Property => ({
   surplusDeclarationType: null,
   surplusDeclarationComment: null,
   surplusDeclarationDate: EpochIsoDateTime,
-  isDisposed: false,
-  isOtherInterest: false,
   ...getEmptyBaseAudit(),
 });
 
@@ -200,7 +197,6 @@ export const getEmptyAcquisitionFile = (): ApiGen_Concepts_AcquisitionFile => {
     legacyFileNumber: null,
     assignedDate: null,
     deliveryDate: null,
-    completionDate: null,
     acquisitionPhysFileStatusTypeCode: null,
     acquisitionTypeCode: null,
     productId: null,

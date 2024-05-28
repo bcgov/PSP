@@ -12,9 +12,7 @@ import {
   IFinancialCodeFilter,
 } from './FinancialCodeFilter';
 
-jest.mock('@react-keycloak/web');
-
-const setFilter = jest.fn();
+const setFilter = vi.fn();
 
 // render component under test
 const setup = (renderOptions: RenderOptions = {}) => {

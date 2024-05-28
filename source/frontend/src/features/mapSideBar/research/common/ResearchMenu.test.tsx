@@ -4,10 +4,9 @@ import { act, render, RenderOptions, userEvent, waitFor } from '@/utils/test-uti
 import ResearchMenu, { IResearchMenuProps } from './ResearchMenu';
 
 // mock auth library
-jest.mock('@react-keycloak/web');
 
-const onChange = jest.fn();
-const onEdit = jest.fn();
+const onChange = vi.fn();
+const onEdit = vi.fn();
 const testItems = ['First label', 'Second', 'Third'];
 
 describe('ResearchMenu component', () => {
@@ -31,7 +30,7 @@ describe('ResearchMenu component', () => {
   };
 
   afterEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
   });
 
   it('renders as expected when provided no research file', () => {

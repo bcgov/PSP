@@ -7,14 +7,13 @@ import AgreementView, { IAgreementViewProps } from './AgreementView';
 import StatusUpdateSolver from '../../fileDetails/detail/statusUpdateSolver';
 
 // mock auth library
-jest.mock('@react-keycloak/web');
 
 const mockViewProps: IAgreementViewProps = {
   agreements: [],
   statusUpdateSolver: new StatusUpdateSolver(),
-  onGenerate: jest.fn(),
+  onGenerate: vi.fn(),
   loading: false,
-  onDelete: jest.fn(),
+  onDelete: vi.fn(),
 };
 
 describe('AgreementView component', () => {
@@ -47,7 +46,7 @@ describe('AgreementView component', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders as expected', async () => {

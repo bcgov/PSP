@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`DocumentFilterForm component renders as expected 1`] = `
+exports[`DocumentFilterForm component > renders as expected 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
@@ -34,6 +34,7 @@ exports[`DocumentFilterForm component renders as expected 1`] = `
   -ms-letter-spacing: 0.1rem;
   letter-spacing: 0.1rem;
   cursor: pointer;
+  height: 3.8rem;
 }
 
 .c2.btn:hover {
@@ -361,7 +362,7 @@ exports[`DocumentFilterForm component renders as expected 1`] = `
 </DocumentFragment>
 `;
 
-exports[`DocumentFilterForm component renders with data as expected 1`] = `
+exports[`DocumentFilterForm component > renders with data as expected 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
@@ -395,6 +396,7 @@ exports[`DocumentFilterForm component renders with data as expected 1`] = `
   -ms-letter-spacing: 0.1rem;
   letter-spacing: 0.1rem;
   cursor: pointer;
+  height: 3.8rem;
 }
 
 .c2.btn:hover {

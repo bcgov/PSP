@@ -17,7 +17,6 @@ import {
 import { INoteListViewProps, NoteListView } from './NoteListView';
 
 // mock auth library
-jest.mock('@react-keycloak/web');
 
 describe('Note List View', () => {
   const mockAxios = new MockAdapter(axios);

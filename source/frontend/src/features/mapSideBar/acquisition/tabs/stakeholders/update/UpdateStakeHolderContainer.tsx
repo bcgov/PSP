@@ -1,6 +1,5 @@
 import axios, { AxiosError } from 'axios';
 import { FormikHelpers, FormikProps } from 'formik';
-import * as React from 'react';
 import { useEffect } from 'react';
 import { toast } from 'react-toastify';
 

@@ -12,14 +12,13 @@ import {
 
 import AdvancedFilterButton, { IAdvanceFilterButtonProps } from './AdvancedFilterButton';
 
-const toggle = jest.fn();
+const toggle = vi.fn();
 
 describe('AdvancedFilterButton', () => {
   const setup = async (
     renderOptions: RenderOptions & { props?: IAdvanceFilterButtonProps } = {},
   ) => {
     const props: IAdvanceFilterButtonProps = renderOptions.props || {
-      open: false,
       onToggle: toggle,
     };
 
@@ -57,20 +56,9 @@ describe('AdvancedFilterButton', () => {
     expect(button.className).not.toContain('open');
   });
 
-  it(`renders the advanced filter button in the 'open' state based on 'isOpen' prop`, async () => {
-    const { mapReady, getAdvancedFilterButton } = await setup({
-      props: { open: true, onToggle: toggle },
-    });
-    await waitFor(() => mapReady);
-
-    const button = getAdvancedFilterButton();
-    expect(button).toBeInTheDocument();
-    expect(button.className).toContain('open');
-  });
-
   it(`when filter bar is closed, clicking the button calls 'toggle' callback`, async () => {
     const { mapReady, getAdvancedFilterButton } = await setup({
-      props: { open: false, onToggle: toggle },
+      props: { onToggle: toggle },
     });
     await waitFor(() => mapReady);
 
@@ -82,7 +70,7 @@ describe('AdvancedFilterButton', () => {
 
   it(`when filter bar is open, clicking the button calls 'toggle' callback`, async () => {
     const { mapReady, getAdvancedFilterButton } = await setup({
-      props: { open: true, onToggle: toggle },
+      props: { onToggle: toggle },
     });
     await waitFor(() => mapReady);
 

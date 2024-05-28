@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 import DocumentListContainer from '@/features/documents/list/DocumentListContainer';
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
 

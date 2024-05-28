@@ -1,7 +1,7 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`DocumentDetailForm component renders as expected 1`] = `
-.c8.btn {
+exports[`DocumentDetailForm component > renders as expected 1`] = `
+.c9.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -29,51 +29,52 @@ exports[`DocumentDetailForm component renders as expected 1`] = `
   -ms-letter-spacing: 0.1rem;
   letter-spacing: 0.1rem;
   cursor: pointer;
+  height: 3.8rem;
 }
 
-.c8.btn:hover {
+.c9.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c8.btn:focus {
+.c9.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c8.btn.btn-primary {
+.c9.btn.btn-primary {
   border: none;
 }
 
-.c8.btn.btn-secondary {
+.c9.btn.btn-secondary {
   background: none;
 }
 
-.c8.btn.btn-info {
+.c9.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c8.btn.btn-info:hover,
-.c8.btn.btn-info:active,
-.c8.btn.btn-info:focus {
+.c9.btn.btn-info:hover,
+.c9.btn.btn-info:active,
+.c9.btn.btn-info:focus {
   background: none;
 }
 
-.c8.btn.btn-light {
+.c9.btn.btn-light {
   border: none;
 }
 
-.c8.btn.btn-dark {
+.c9.btn.btn-dark {
   border: none;
 }
 
-.c8.btn.btn-link {
+.c9.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -94,9 +95,9 @@ exports[`DocumentDetailForm component renders as expected 1`] = `
   padding: 0;
 }
 
-.c8.btn.btn-link:hover,
-.c8.btn.btn-link:active,
-.c8.btn.btn-link:focus {
+.c9.btn.btn-link:hover,
+.c9.btn.btn-link:active,
+.c9.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -105,14 +106,14 @@ exports[`DocumentDetailForm component renders as expected 1`] = `
   outline: none;
 }
 
-.c8.btn.btn-link:disabled,
-.c8.btn.btn-link.disabled {
+.c9.btn.btn-link:disabled,
+.c9.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c8.btn:disabled,
-.c8.btn:disabled:hover {
+.c9.btn:disabled,
+.c9.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -123,25 +124,25 @@ exports[`DocumentDetailForm component renders as expected 1`] = `
   opacity: 0.65;
 }
 
-.c8.Button .Button__icon {
+.c9.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c8.Button--icon-only:focus {
+.c9.Button--icon-only:focus {
   outline: none;
 }
 
-.c8.Button--icon-only .Button__icon {
+.c9.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c4 {
+.c5 {
   font-weight: bold;
   border-bottom: 0.2rem solid;
   margin-bottom: 2rem;
 }
 
-.c3 {
+.c4 {
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
@@ -158,7 +159,7 @@ exports[`DocumentDetailForm component renders as expected 1`] = `
   font-weight: bold;
 }
 
-.c5 {
+.c6 {
   width: 100%;
   -webkit-box-flex: 1;
   -webkit-flex-grow: 1;
@@ -167,7 +168,7 @@ exports[`DocumentDetailForm component renders as expected 1`] = `
   overflow-y: auto;
 }
 
-.c7 {
+.c8 {
   font-weight: 700;
   font-size: 1.7rem;
   margin-bottom: 1rem;
@@ -176,13 +177,35 @@ exports[`DocumentDetailForm component renders as expected 1`] = `
   border-bottom: solid 0.1rem;
 }
 
-.c6 {
+.c7 {
   overflow-x: hidden;
   max-height: 50rem;
 }
 
 .c0 {
   padding: 1rem;
+}
+
+.c3 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  word-break: break-all;
+}
+
+.c3 div:first-child {
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+}
+
+.c3 label {
+  margin-right: 1rem;
 }
 
 <body>
@@ -233,16 +256,14 @@ exports[`DocumentDetailForm component renders as expected 1`] = `
             class="c2 text-left col"
           >
             <div
-              class="row"
+              class="c3"
             >
-              <div
-                class="col-auto"
-              >
-                NewFile.doc
+              <div>
+                <label>
+                  NewFile.doc
+                </label>
               </div>
-              <div
-                class="col-auto"
-              >
+              <div>
                 <span
                   class="tooltip-icon"
                   data-testid="tooltip-icon-document-not-available-tooltip"
@@ -269,10 +290,10 @@ exports[`DocumentDetailForm component renders as expected 1`] = `
         </div>
       </div>
       <div
-        class="c3 form-section"
+        class="c4 form-section"
       >
         <h2
-          class="c4"
+          class="c5"
         >
           <div
             class="no-gutters row"
@@ -309,7 +330,7 @@ exports[`DocumentDetailForm component renders as expected 1`] = `
           class="collapse show"
         >
           <div
-            class="c5 c6"
+            class="c6 c7"
           >
             <div
               class="pb-2 row"
@@ -389,7 +410,7 @@ exports[`DocumentDetailForm component renders as expected 1`] = `
               </div>
             </div>
             <h3
-              class="c7"
+              class="c8"
             >
               Details
             </h3>
@@ -439,7 +460,7 @@ exports[`DocumentDetailForm component renders as expected 1`] = `
                 class="col-auto"
               >
                 <button
-                  class="c8 Button px-5 btn btn-secondary"
+                  class="c9 Button px-5 btn btn-secondary"
                   type="button"
                 >
                   <div
@@ -453,7 +474,7 @@ exports[`DocumentDetailForm component renders as expected 1`] = `
                 class="col-auto"
               >
                 <button
-                  class="c8 Button px-5 btn btn-primary"
+                  class="c9 Button px-5 btn btn-primary"
                   type="submit"
                 >
                   <div

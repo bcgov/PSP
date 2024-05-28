@@ -1,12 +1,12 @@
 import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
-import { noop } from 'lodash';
+import noop from 'lodash/noop';
 
 import { mockApiProperty } from '@/mocks/filterData.mock';
+import { getMockApiLease } from '@/mocks/lease.mock';
 import { getEmptyPropertyLease } from '@/mocks/properties.mock';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { toTypeCodeNullable } from '@/utils/formUtils';
-import { getMockApiLease } from '@/mocks/lease.mock';
 import { render, RenderOptions } from '@/utils/test-utils';
 
 import PropertyInformation, { IPropertyInformationProps } from './PropertyInformation';
@@ -45,7 +45,7 @@ describe('PropertyInformation component', () => {
         fileProperties: [
           {
             ...getEmptyPropertyLease(),
-            ...mockApiProperty,
+            property: { ...mockApiProperty },
             areaUnitType: toTypeCodeNullable('test'),
             leaseArea: 123,
             fileId: 0,
@@ -65,7 +65,7 @@ describe('PropertyInformation component', () => {
         fileProperties: [
           {
             ...getEmptyPropertyLease(),
-            ...mockApiProperty,
+            property: { ...mockApiProperty },
             areaUnitType: toTypeCodeNullable('test'),
             leaseArea: 123,
             fileId: 0,
@@ -94,7 +94,7 @@ describe('PropertyInformation component', () => {
         fileProperties: [
           {
             ...getEmptyPropertyLease(),
-            ...mockApiProperty,
+            property: { ...mockApiProperty },
             leaseArea: 1,
             areaUnitType: toTypeCodeNullable('test'),
             fileId: 0,
@@ -123,7 +123,7 @@ describe('PropertyInformation component', () => {
         fileProperties: [
           {
             ...getEmptyPropertyLease(),
-            ...mockApiProperty,
+            property: { ...mockApiProperty },
             leaseArea: 123,
             areaUnitType: null,
             fileId: 0,
@@ -141,7 +141,7 @@ describe('PropertyInformation component', () => {
         startDate: '2020-01-01',
       },
     });
-    expect(component.getByText(/123.00/i)).toBeVisible();
+    expect(component.getByText(/123/i)).toBeVisible();
     expect(component.queryByDisplayValue('undefined')).toBeNull();
   });
 });

@@ -32,6 +32,10 @@ namespace Pims.Api.Models.Concepts.Take
                 .Map(dest => dest.TakeTypeCode, src => src.TakeTypeCodeNavigation)
                 .Map(dest => dest.TakeStatusTypeCode, src => src.TakeStatusTypeCodeNavigation)
                 .Map(dest => dest.LandActTypeCode, src => src.LandActTypeCodeNavigation)
+                .Map(dest => dest.CompletionDt, src => src.CompletionDt)
+                .Map(dest => dest.IsLeasePayable, src => src.IsActiveLease)
+                .Map(dest => dest.LeasePayableArea, src => src.ActiveLeaseArea)
+                .Map(dest => dest.LeasePayableEndDt, src => src.ActiveLeaseEndDt)
                 .Inherits<Entity.IBaseAppEntity, BaseAuditModel>();
 
             config.NewConfig<TakeModel, Entity.PimsTake>()
@@ -58,6 +62,10 @@ namespace Pims.Api.Models.Concepts.Take
                 .Map(dest => dest.TakeTypeCode, src => src.TakeTypeCode.Id)
                 .Map(dest => dest.TakeStatusTypeCode, src => src.TakeStatusTypeCode.Id)
                 .Map(dest => dest.LandActTypeCode, src => src.LandActTypeCode.Id)
+                .Map(dest => dest.CompletionDt, src => src.CompletionDt)
+                .Map(dest => dest.IsActiveLease, src => src.IsLeasePayable)
+                .Map(dest => dest.ActiveLeaseArea, src => src.LeasePayableArea)
+                .Map(dest => dest.ActiveLeaseEndDt, src => src.LeasePayableEndDt)
                 .Inherits<BaseAuditModel, Entity.IBaseAppEntity>();
         }
     }

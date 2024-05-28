@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { ReactComponent as MapSvg } from '@/assets/images/icon-map.svg';
-import { ReactComponent as TableSvg } from '@/assets/images/icon-table.svg';
+import MapSvg from '@/assets/images/icon-map.svg?react';
+import TableSvg from '@/assets/images/icon-table.svg?react';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
 
 export enum SearchToggleOption {

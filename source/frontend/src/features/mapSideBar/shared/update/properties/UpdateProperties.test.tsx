@@ -2,38 +2,34 @@ import { act, screen, waitFor } from '@testing-library/react';
 import axios, { AxiosError } from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 
-import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { SideBarContextProvider } from '@/features/mapSideBar/context/sidebarContext';
 import { getMockApiAddress } from '@/mocks/address.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
-import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { getMockApiProperty } from '@/mocks/properties.mock';
 import { getMockResearchFile } from '@/mocks/researchFile.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { fillInput, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import UpdateProperties, { IUpdatePropertiesProps } from './UpdateProperties';
-import React from 'react';
+import { createRef } from 'react';
 
 const mockAxios = new MockAdapter(axios);
-jest.mock('@react-keycloak/web');
 
 // Need to mock this library for unit tests
-jest.mock('react-visibility-sensor', () => {
-  return jest.fn().mockImplementation(({ children }) => {
-    if (children instanceof Function) {
-      return children({ isVisible: true });
-    }
-    return children;
-  });
+vi.mock('react-visibility-sensor', () => {
+  return {
+    default: vi.fn().mockImplementation(({ children }) => {
+      if (children instanceof Function) {
+        return children({ isVisible: true });
+      }
+      return children;
+    }),
+  };
 });
 
-jest.mock('@/components/common/mapFSM/MapStateMachineContext');
-(useMapStateMachine as jest.Mock).mockImplementation(() => mapMachineBaseMock);
-
-const setIsShowingPropertySelector = jest.fn();
-const onSuccess = jest.fn();
-const updateFileProperties = jest.fn();
+const setIsShowingPropertySelector = vi.fn();
+const onSuccess = vi.fn();
+const updateFileProperties = vi.fn();
 
 describe('UpdateProperties component', () => {
   // render component under test
@@ -45,8 +41,9 @@ describe('UpdateProperties component', () => {
           setIsShowingPropertySelector={setIsShowingPropertySelector}
           onSuccess={onSuccess}
           updateFileProperties={updateFileProperties}
-          canRemove={props.canRemove ?? jest.fn()}
-          formikRef={React.createRef() as any}
+          confirmBeforeAdd={props.confirmBeforeAdd ?? vi.fn()}
+          canRemove={props.canRemove ?? vi.fn()}
+          formikRef={createRef() as any}
         />
       </SideBarContextProvider>,
       {
@@ -69,7 +66,7 @@ describe('UpdateProperties component', () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('renders as expected', async () => {
@@ -220,7 +217,7 @@ describe('UpdateProperties component', () => {
 
   it('removes property index if canRemove returns true', async () => {
     updateFileProperties.mockResolvedValue(getMockResearchFile());
-    const canRemove = jest.fn().mockResolvedValue(true);
+    const canRemove = vi.fn().mockResolvedValue(true);
     const { getByTestId, getByText } = setup({ canRemove });
 
     const removeButton = getByTestId('remove-button');
@@ -234,7 +231,7 @@ describe('UpdateProperties component', () => {
 
   it('displays warning modal if canRemove returns false', async () => {
     updateFileProperties.mockResolvedValue(getMockResearchFile());
-    const canRemove = jest.fn().mockResolvedValue(false);
+    const canRemove = vi.fn().mockResolvedValue(false);
     const { getByTestId } = setup({ canRemove });
 
     const removeButton = getByTestId('remove-button');

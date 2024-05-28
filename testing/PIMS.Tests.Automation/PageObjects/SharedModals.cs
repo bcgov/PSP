@@ -7,13 +7,13 @@ namespace PIMS.Tests.Automation.PageObjects
     public class SharedModals : PageObjectBase
     {
         private By generalModal = By.CssSelector("div[class='modal-content']");
-        private By generalModalHeader = By.CssSelector("div[class='modal-header'] div");
+        private By generalModalHeader = By.CssSelector("div[class='modal-header'] div[class='modal-title h4']");
         private By generalModalContent = By.CssSelector("div[class='modal-body']");
         private By generalModalOkBttn = By.CssSelector("button[title='ok-modal']");
         private By generalModalCancelBttn = By.CssSelector("button[title='cancel-modal']");
 
         private By secondaryModal = By.XPath("//div[@role='dialog'][2]/div/div[@class='modal-content']");
-        private By secondaryModalHeader = By.XPath("//div[@role='dialog'][2]/div/div/div[@class='modal-header']/div[1]");
+        private By secondaryModalHeader = By.XPath("//div[@role='dialog'][2]/div/div/div[@class='modal-header']/div[2]");
         private By secondaryModalContent = By.XPath("//div[@role='dialog'][2]/div/div/div[@class='modal-body']");
         private By secondaryModalOkBttn = By.XPath("//div[@role='dialog'][2]/div/div/div[@class='modal-footer']/div/button[@title='ok-modal']");
         private By secondaryModalCancelBttn = By.XPath("//div[@role='dialog'][2]/div/div/div[@class='modal-footer']/div/button[@title='cancel-modal']");
@@ -39,7 +39,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void ModalClickOKBttn()
         {
-            Wait(2000);
+            Wait();
             webDriver.FindElement(generalModalOkBttn).Click();
         }
 

@@ -499,6 +499,142 @@ this.ScenarioInitialize(scenarioInfo);
             this.ScenarioCleanup();
         }
         
+        [Xunit.SkippableFactAttribute(DisplayName="13. Acquisition File Property Takes Logic")]
+        [Xunit.TraitAttribute("FeatureTitle", "AcquisitionFiles")]
+        [Xunit.TraitAttribute("Description", "13. Acquisition File Property Takes Logic")]
+        public void _13_AcquisitionFilePropertyTakesLogic()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("13. Acquisition File Property Takes Logic", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 81
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 82
+ testRunner.Given("I create a new Acquisition File from row number 19", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 83
+ testRunner.When("I add Properties to the Acquisition File", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 84
+ testRunner.And("I create Takes within Acquisition File\'s Properties", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 85
+ testRunner.Then("A new Acquisition file is created successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="14. Acquisition File Error Message - Draft Items")]
+        [Xunit.TraitAttribute("FeatureTitle", "AcquisitionFiles")]
+        [Xunit.TraitAttribute("Description", "14. Acquisition File Error Message - Draft Items")]
+        public void _14_AcquisitionFileErrorMessage_DraftItems()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("14. Acquisition File Error Message - Draft Items", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 87
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 88
+ testRunner.Given("I create a new Acquisition File from row number 20", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 89
+ testRunner.When("I create Agreements within an Acquisition File", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 90
+ testRunner.And("I add additional information to complete the Acquisition File", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 91
+ testRunner.Then("Acquisition File cannot be completed due to Draft items", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="15. Acquisition File Error Message - No Takes")]
+        [Xunit.TraitAttribute("FeatureTitle", "AcquisitionFiles")]
+        [Xunit.TraitAttribute("Description", "15. Acquisition File Error Message - No Takes")]
+        public void _15_AcquisitionFileErrorMessage_NoTakes()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("15. Acquisition File Error Message - No Takes", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 93
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 94
+ testRunner.Given("I create a new Acquisition File from row number 20", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 95
+ testRunner.When("I add additional information to complete the Acquisition File", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 96
+ testRunner.Then("Acquisition File cannot be completed without Takes", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="16. Acquisition File Error Message - Takes In-Progress")]
+        [Xunit.TraitAttribute("FeatureTitle", "AcquisitionFiles")]
+        [Xunit.TraitAttribute("Description", "16. Acquisition File Error Message - Takes In-Progress")]
+        public void _16_AcquisitionFileErrorMessage_TakesIn_Progress()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("16. Acquisition File Error Message - Takes In-Progress", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 98
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 99
+ testRunner.Given("I create a new Acquisition File from row number 21", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 100
+ testRunner.When("I add Properties to the Acquisition File", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 101
+ testRunner.And("I create Takes within Acquisition File\'s Properties", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 102
+ testRunner.And("I add additional information to complete the Acquisition File", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 103
+ testRunner.Then("Acquisition File cannot be completed due to In-Progress Takes", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
         [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.9.0.0")]
         [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
         public class FixtureData : System.IDisposable

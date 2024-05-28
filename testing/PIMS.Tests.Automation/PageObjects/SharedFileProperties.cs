@@ -1,4 +1,6 @@
 ﻿using OpenQA.Selenium;
+using System.Diagnostics;
+using System.Security.Policy;
 
 
 namespace PIMS.Tests.Automation.PageObjects
@@ -69,7 +71,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         //File Confirmation Modal Elements
         private By propertiesFileConfirmationModal = By.CssSelector("div[class='modal-content']");
-        private By propertiesFileMOTIInventoryModal = By.XPath("//div[@role='dialog'][2]/div/div/div[contains(text(),'You have added one or more properties to the disposition file that are not in the MoTI Inventory. Do you want to proceed?')]");
+        //private By propertiesFileMOTIInventoryModal = By.XPath("//div[@role='dialog'][2]/div/div/div[contains(text(),'You have added one or more properties to the disposition file that are not in the MoTI Inventory. Do you want to proceed?')]");
 
         //Toast Element
         private By duplicatePropToast = By.CssSelector("div[id='duplicate-property'] div[class='Toastify__toast-body']");
@@ -178,19 +180,45 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(searchPropertiesAddSelectionBttn).Click();
 
 
-            Wait(2000);
+            Wait();
             if (webDriver.FindElements(duplicatePropToast).Count() == 1)
             {
                 WaitUntilVisible(duplicatePropToast);
                 Assert.Equal("A property that the user is trying to select has already been added to the selected properties list", webDriver.FindElement(duplicatePropToast).Text);
             }
 
-            if (webDriver.FindElements(propertiesFileConfirmationModal).Count > 0)
+            Wait();
+            while (webDriver.FindElements(propertiesFileConfirmationModal).Count > 0)
             {
-                Assert.Equal("Not inventory property", sharedModals.ModalHeader());
-                Assert.Equal("You have selected a property not previously in the inventory. Do you want to add this property to the lease?", sharedModals.ModalContent());
+                Assert.Equal("User Override Required", sharedModals.ModalHeader());
 
-                sharedModals.ModalClickOKBttn();
+                if (sharedModals.ModalContent().Contains("This property has already been added to one or more acquisition files."))
+                {
+                    Assert.Contains("This property has already been added to one or more acquisition files.", sharedModals.ModalContent());
+                    Assert.Contains("Do you want to acknowledge and proceed?", sharedModals.ModalContent());
+                    sharedModals.ModalClickOKBttn();
+                }
+                if (sharedModals.ModalContent().Contains("This property has already been added to one or more research files."))
+                {
+                    Assert.Contains("This property has already been added to one or more research files.", sharedModals.ModalContent());
+                    Assert.Contains("Do you want to acknowledge and proceed?", sharedModals.ModalContent());
+                    sharedModals.ModalClickOKBttn();
+                }
+                if (sharedModals.ModalContent().Contains("This property has already been added to one or more disposition files."))
+                {
+                    Assert.Contains("This property has already been added to one or more disposition files.", sharedModals.ModalContent());
+                    Assert.Contains("Do you want to acknowledge and proceed?", sharedModals.ModalContent());
+                    sharedModals.ModalClickOKBttn();
+                }
+
+                if (sharedModals.ModalContent().Contains("This property has already been added to one or more files."))
+                {
+                    Assert.Contains("This property has already been added to one or more files.", sharedModals.ModalContent());
+                    Assert.Contains("Do you want to acknowledge and proceed?", sharedModals.ModalContent());
+                    sharedModals.ModalClickOKBttn();
+                }
+
+                Wait();
             }
         }
 
@@ -321,7 +349,6 @@ namespace PIMS.Tests.Automation.PageObjects
 
         }
 
-
         public void SaveFileProperties()
         {
             Wait();
@@ -334,10 +361,10 @@ namespace PIMS.Tests.Automation.PageObjects
             sharedModals.ModalClickOKBttn();
 
             Wait();
-            if (webDriver.FindElements(propertiesFileConfirmationModal).Count() > 1)
+            while (webDriver.FindElements(propertiesFileConfirmationModal).Count() > 0)
             {
                 Assert.Equal("User Override Required", sharedModals.SecondaryModalHeader());
-                if (webDriver.FindElements(propertiesFileMOTIInventoryModal).Count > 0)
+                if (sharedModals.SecondaryModalContent().Contains("You have added one or more properties to the disposition file that are not in the MoTI Inventory"))
                 {
                     Assert.Contains("You have added one or more properties to the disposition file that are not in the MoTI Inventory. Do you want to proceed?", sharedModals.SecondaryModalContent());
                 }
@@ -347,6 +374,7 @@ namespace PIMS.Tests.Automation.PageObjects
                     Assert.Contains("To add the property, the spatial details for this property will need to be updated. The system will attempt to update the property record with spatial information from the current selection.", sharedModals.SecondaryModalContent());
                 }
                 sharedModals.SecondaryModalClickOKBttn();
+                Wait();
             }
         }
     }

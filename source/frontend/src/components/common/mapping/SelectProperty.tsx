@@ -1,7 +1,6 @@
-import * as React from 'react';
 import styled from 'styled-components';
 
-import { ReactComponent as DraftSvg } from '@/assets/images/pins/icon-draft.svg';
+import DraftSvg from '@/assets/images/pins/icon-draft.svg?react';
 
 interface ISelectPropertyProps {
   onClick: () => void;

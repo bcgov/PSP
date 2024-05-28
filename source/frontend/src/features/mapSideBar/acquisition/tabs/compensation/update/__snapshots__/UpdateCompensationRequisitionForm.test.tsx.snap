@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Compensation Requisition UpdateForm component renders as expected 1`] = `
+exports[`Compensation Requisition UpdateForm component > renders as expected 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
@@ -34,6 +34,7 @@ exports[`Compensation Requisition UpdateForm component renders as expected 1`] =
   -ms-letter-spacing: 0.1rem;
   letter-spacing: 0.1rem;
   cursor: pointer;
+  height: 3.8rem;
 }
 
 .c11.btn:hover {
@@ -732,13 +733,6 @@ exports[`Compensation Requisition UpdateForm component renders as expected 1`] =
                   </option>
                   <option
                     class="option"
-                    data-testid="select-option-2022/2023"
-                    value="2022/2023"
-                  >
-                    2022/2023
-                  </option>
-                  <option
-                    class="option"
                     data-testid="select-option-2023/2024"
                     value="2023/2024"
                   >
@@ -750,6 +744,13 @@ exports[`Compensation Requisition UpdateForm component renders as expected 1`] =
                     value="2024/2025"
                   >
                     2024/2025
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-2025/2026"
+                    value="2025/2026"
+                  >
+                    2025/2026
                   </option>
                 </select>
               </div>
@@ -1325,13 +1326,13 @@ exports[`Compensation Requisition UpdateForm component renders as expected 1`] =
       class="c12"
     >
       <div
-        class="c13 justify-content-end mt-auto no-gutters row"
+        class="c13 justify-content-end mb-12 mt-12 p-0 no-gutters row"
       >
         <div
           class="pr-3 col-auto"
         />
         <div
-          class="pr-4 col-auto"
+          class="pr-6 col-auto"
         >
           <button
             class="c11 Button btn btn-secondary"
@@ -1348,7 +1349,7 @@ exports[`Compensation Requisition UpdateForm component renders as expected 1`] =
           class="col-auto"
         >
           <button
-            class="c11 Button Button--disabled btn btn-primary"
+            class="c11 Button Button--disabled mr-9 btn btn-primary"
             disabled=""
             type="button"
           >

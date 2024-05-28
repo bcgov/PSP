@@ -11,7 +11,6 @@
         public string AcquisitionFundingOther { get; set; } = null!;
         public string AssignedDate { get; set; } = null!;
         public string DeliveryDate { get; set; } = null!;
-        public string AcquisitionCompletedDate { get; set; } = null!;
         public string AcquisitionFileName { get; set; } = null!;
         public string HistoricalFileNumber { get; set; } = null!;
         public string PhysicalFileStatus { get; set; } = null!;
@@ -193,6 +192,7 @@
     {
         public string TakeType { get; set; } = null!;
         public string TakeStatus { get; set; } = null!;
+        public string TakeCompleteDate { get; set; } = null!;
         public string SiteContamination { get; set; } = null!;
         public string TakeDescription { get; set; } = null!;
         public string IsNewHighwayDedication { get; set; } = null!;
@@ -200,6 +200,7 @@
         public string IsMotiInventory { get; set; } = null!;
         public string IsNewInterestLand { get; set; } = null!;
         public string IsNewInterestLandArea { get; set; } = null!;
+        public string IsNewInterestLandDate { get; set; } = null!;
         public string IsLandActTenure { get; set; } = null!;
         public string IsLandActTenureDetail { get; set; } = null!;
         public string IsLandActTenureArea { get; set; } = null!;
@@ -207,6 +208,9 @@
         public string IsLicenseConstruct { get; set; } = null!;
         public string IsLicenseConstructArea { get; set; } = null!;
         public string IsLicenseConstructDate { get; set; } = null!;
+        public string IsLeasePayable { get; set; } = null!;
+        public string IsLeasePayableArea { get; set; } = null!;
+        public string IsLeasePayableDate { get; set; } = null!;
         public string IsSurplus { get; set; } = null!;
         public string IsSurplusArea { get; set; } = null!;
         public int FromProperty { get; set; } = 0;

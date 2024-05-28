@@ -113,11 +113,11 @@ namespace PIMS.Tests.Automation.StepDefinitions
             }
 
             //Search for a property by Legal Description
-            if (lease.SearchProperties.LegalDescription != "")
-            {
-                sharedSearchProperties.SelectPropertyByLegalDescription(lease.SearchProperties.LegalDescription);
-                sharedSearchProperties.SelectFirstOptionFromSearch();
-            }
+            //if (lease.SearchProperties.LegalDescription != "")
+            //{
+            //    sharedSearchProperties.SelectPropertyByLegalDescription(lease.SearchProperties.LegalDescription);
+            //    sharedSearchProperties.SelectFirstOptionFromSearch();
+            //}
 
             //Search for a duplicate property
             if (lease.SearchProperties.PID != "")
@@ -747,7 +747,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchLeases.VerifySearchLeasesView();
             searchLeases.VerifyLeaseTableContent(lease);
             searchLeases.Dispose();
-
         }
 
         private void PopulateLeaseLicense(int rowNumber)

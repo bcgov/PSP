@@ -12,7 +12,7 @@ import { defaultApiLease } from '@/models/defaultInitializers';
 import { useAddLease } from './useAddLease';
 import { act } from '@testing-library/react';
 
-const dispatch = jest.fn();
+const dispatch = vi.fn();
 const mockAxios = new MockAdapter(axios);
 
 beforeEach(() => {
@@ -37,7 +37,7 @@ const setup = (values?: any) => {
 
 describe('useAddLease functions', () => {
   afterAll(() => {
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
   describe('addLease', () => {
     it('Request successful, dispatches success with correct response', async () => {

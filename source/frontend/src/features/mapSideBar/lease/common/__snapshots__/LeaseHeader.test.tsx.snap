@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`LeaseHeader component renders as expected when no data is provided 1`] = `
+exports[`LeaseHeader component > renders as expected when no data is provided 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
@@ -34,6 +34,7 @@ exports[`LeaseHeader component renders as expected when no data is provided 1`] 
   -ms-letter-spacing: 0.1rem;
   letter-spacing: 0.1rem;
   cursor: pointer;
+  height: 3.8rem;
 }
 
 .c3.btn:hover {

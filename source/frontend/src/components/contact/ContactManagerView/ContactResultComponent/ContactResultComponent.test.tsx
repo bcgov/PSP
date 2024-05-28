@@ -1,5 +1,5 @@
 import userEvent from '@testing-library/user-event';
-import { noop } from 'lodash';
+import noop from 'lodash/noop';
 
 import { Claims } from '@/constants/claims';
 import { IContactSearchResult } from '@/interfaces';
@@ -8,9 +8,8 @@ import { act, mockKeycloak, render, RenderOptions, waitFor } from '@/utils/test-
 import { ContactResultComponent, IContactResultComponentProps } from './ContactResultComponent';
 
 // mock auth library
-jest.mock('@react-keycloak/web');
 
-const setSort = jest.fn();
+const setSort = vi.fn();
 
 // render component under test
 const setup = (

@@ -1,7 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'leaflet/dist/leaflet.css';
-import 'react-app-polyfill/ie11';
-import 'react-app-polyfill/stable';
 import 'react-datepicker/dist/react-datepicker.css';
 import 'react-toastify/dist/ReactToastify.css';
 import './assets/scss/index.scss'; // should be loaded last to allow for overrides without having to resort to "!important"
@@ -27,7 +25,7 @@ import { ITenantConfig2 } from './hooks/pims-api/interfaces/ITenantConfig';
 import { useRefreshSiteminder } from './hooks/useRefreshSiteminder';
 
 async function prepare() {
-  if (process.env.NODE_ENV === 'development') {
+  if (import.meta.env.DEV) {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const { worker } = await import('./mocks/msw/browser');
     return worker.start({ onUnhandledRequest: 'bypass' });

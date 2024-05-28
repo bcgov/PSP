@@ -2,8 +2,7 @@ import { Feature, FeatureCollection, GeoJsonProperties, Geometry } from 'geojson
 import { LatLngLiteral } from 'leaflet';
 import debounce from 'lodash/debounce';
 import isNumber from 'lodash/isNumber';
-import * as React from 'react';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { toast } from 'react-toastify';
 
 import { DistrictCodes, RegionCodes } from '@/constants/index';
@@ -24,9 +23,10 @@ export interface IPropertySelectorSearchContainerProps {
   setSelectedProperties: (properties: IMapProperty[]) => void;
 }
 
-export const PropertySelectorSearchContainer: React.FunctionComponent<
-  React.PropsWithChildren<IPropertySelectorSearchContainerProps>
-> = ({ selectedProperties, setSelectedProperties }) => {
+export const PropertySelectorSearchContainer: React.FC<IPropertySelectorSearchContainerProps> = ({
+  selectedProperties,
+  setSelectedProperties,
+}) => {
   const [layerSearch, setLayerSearch] = useState<ILayerSearchCriteria | undefined>();
   const [searchResults, setSearchResults] = useState<IMapProperty[]>([]);
   const [addressResults, setAddressResults] = useState<IGeocoderResponse[]>([]);
@@ -50,7 +50,7 @@ export const PropertySelectorSearchContainer: React.FunctionComponent<
     findByLoading: isMapLayerLoading,
   } = useParcelMapLayer();
 
-  React.useEffect(() => {
+  useEffect(() => {
     const searchFunc = async () => {
       let result: FeatureCollection<Geometry, PMBC_Feature_Properties> | undefined = undefined;
       if (layerSearch?.searchBy === 'pid' && layerSearch.pid) {
@@ -137,7 +137,7 @@ export const PropertySelectorSearchContainer: React.FunctionComponent<
     }
   };
 
-  const debouncedSearch = React.useRef(
+  const debouncedSearch = useRef(
     debounce(
       async (val: string, abort: boolean) => {
         if (!abort) {
@@ -163,26 +163,24 @@ export const PropertySelectorSearchContainer: React.FunctionComponent<
   };
 
   return (
-    <>
-      <PropertySearchSelectorFormView
-        onSearch={setLayerSearch}
-        selectedProperties={selectedProperties}
-        search={layerSearch}
-        searchResults={searchResults}
-        loading={
-          isMapLayerLoading ||
-          isLoadingSearchAddress ||
-          isLoadingNearestToPoint ||
-          isLoadingSitePids ||
-          findRegionLoading ||
-          findDistrictLoading
-        }
-        onSelectedProperties={setSelectedProperties}
-        addressResults={addressResults}
-        onAddressChange={handleOnAddressChange}
-        onAddressSelect={handleOnAddressSelect}
-      />
-    </>
+    <PropertySearchSelectorFormView
+      onSearch={setLayerSearch}
+      selectedProperties={selectedProperties}
+      search={layerSearch}
+      searchResults={searchResults}
+      loading={
+        isMapLayerLoading ||
+        isLoadingSearchAddress ||
+        isLoadingNearestToPoint ||
+        isLoadingSitePids ||
+        findRegionLoading ||
+        findDistrictLoading
+      }
+      onSelectedProperties={setSelectedProperties}
+      addressResults={addressResults}
+      onAddressChange={handleOnAddressChange}
+      onAddressSelect={handleOnAddressSelect}
+    />
   );
 };
 

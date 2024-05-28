@@ -5,7 +5,7 @@ import MockAdapter from 'axios-mock-adapter';
 import { config, TenantProvider, useTenant } from '.';
 import defaultTenant from './config/defaultTenant';
 
-const origEnv = process.env;
+const origEnv = import.meta.env.VITE_TENANT;
 
 const mockAxios = new MockAdapter(axios);
 
@@ -24,18 +24,18 @@ const testRender = () =>
 describe('useTenant hook', () => {
   beforeEach(() => {
     mockAxios.onAny().reply(200);
-    jest.resetModules();
-    process.env = { ...origEnv };
+    vi.resetModules();
+    import.meta.env.VITE_TENANT = { ...origEnv };
   });
 
   afterAll(() => {
-    process.env = origEnv;
+    import.meta.env.VITE_TENANT = origEnv;
     mockAxios.reset();
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
 
-  it('returns default configuration when REACT_APP_TENANT is not set', async () => {
-    process.env.REACT_APP_TENANT = undefined;
+  it('returns default configuration when VITE_TENANT is not set', async () => {
+    import.meta.env.VITE_TENANT = undefined;
     const { findByTestId } = testRender();
     await act(async () => {});
     const title = await findByTestId('tenant');
@@ -46,8 +46,8 @@ describe('useTenant hook', () => {
     });
   });
 
-  it('returns default configuration when REACT_APP_TENANT is invalid', async () => {
-    process.env.REACT_APP_TENANT = 'FAKE_I_DONT_EXIST';
+  it('returns default configuration when VITE_TENANT is invalid', async () => {
+    import.meta.env.VITE_TENANT = 'FAKE_I_DONT_EXIST';
     const { findByTestId } = testRender();
     const title = await findByTestId('tenant');
     const tenant = title.innerHTML.replace(/&amp;/g, '&');
@@ -58,7 +58,7 @@ describe('useTenant hook', () => {
   });
 
   it('returns correct MOTI tenant configuration', async () => {
-    process.env.REACT_APP_TENANT = 'MOTI';
+    import.meta.env.VITE_TENANT = 'MOTI';
     const { findByTestId } = testRender();
     const title = await findByTestId('tenant');
     const tenant = title.innerHTML.replace(/&amp;/g, '&');

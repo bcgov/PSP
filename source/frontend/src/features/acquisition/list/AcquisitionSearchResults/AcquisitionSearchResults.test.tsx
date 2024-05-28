@@ -11,8 +11,7 @@ import {
 } from './AcquisitionSearchResults';
 import { AcquisitionSearchResultModel } from './models';
 
-const setSort = jest.fn();
-jest.mock('@react-keycloak/web');
+const setSort = vi.fn();
 
 // render component under test
 const setup = (

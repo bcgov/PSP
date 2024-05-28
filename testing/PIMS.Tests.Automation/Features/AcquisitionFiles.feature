@@ -77,3 +77,27 @@ Scenario: 11. Acquisition File from Pin
 Scenario: 12. Acquisition Files List View
 	Given I search for an existing Acquisition File from row number 2
 	Then Expected Acquisition File Content is displayed on Acquisition File Table
+
+Scenario: 13. Acquisition File Property Takes Logic
+	Given I create a new Acquisition File from row number 19
+	When I add Properties to the Acquisition File
+	And I create Takes within Acquisition File's Properties
+	Then A new Acquisition file is created successfully
+
+Scenario: 14. Acquisition File Error Message - Draft Items
+	Given I create a new Acquisition File from row number 20
+	When I create Agreements within an Acquisition File
+	And I add additional information to complete the Acquisition File
+	Then Acquisition File cannot be completed due to Draft items
+
+Scenario: 15. Acquisition File Error Message - No Takes
+	Given I create a new Acquisition File from row number 20
+	When I add additional information to complete the Acquisition File
+	Then Acquisition File cannot be completed without Takes
+
+Scenario: 16. Acquisition File Error Message - Takes In-Progress
+	Given I create a new Acquisition File from row number 21
+	When I add Properties to the Acquisition File
+	And I create Takes within Acquisition File's Properties
+	And I add additional information to complete the Acquisition File
+	Then Acquisition File cannot be completed due to In-Progress Takes

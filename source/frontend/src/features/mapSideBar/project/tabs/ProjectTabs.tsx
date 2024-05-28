@@ -29,6 +29,7 @@ export const ProjectTabs: React.FC<IProjectTabsProps> = ({
 }) => {
   return (
     <TabView
+      mountOnEnter
       defaultActiveKey={defaultTabKey}
       activeKey={activeTab}
       onSelect={(eventKey: string | null) => {

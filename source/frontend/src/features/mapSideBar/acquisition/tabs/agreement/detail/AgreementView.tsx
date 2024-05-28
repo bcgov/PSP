@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { FaMailBulk, FaPlus, FaTrash } from 'react-icons/fa';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import styled from 'styled-components';

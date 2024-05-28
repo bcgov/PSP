@@ -1,6 +1,4 @@
 declare module 'react-draggable' {
-  import * as React from 'react';
-
   export interface DraggableBounds {
     left?: number;
     right?: number;

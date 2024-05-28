@@ -1,16 +1,15 @@
 import { Formik } from 'formik';
-import { noop } from 'lodash';
+import noop from 'lodash/noop';
 
 import { Claims } from '@/constants/claims';
 import { LeaseFormModel } from '@/features/leases/models';
 import { act, fillInput, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import { DepositNotes, IDepositNotesProps } from './DepositNotes';
-jest.mock('@react-keycloak/web');
 
-const onCancel = jest.fn();
-const onSave = jest.fn();
-const onEdit = jest.fn();
+const onCancel = vi.fn();
+const onSave = vi.fn();
+const onEdit = vi.fn();
 
 const setup = (
   renderOptions: RenderOptions & Partial<IDepositNotesProps> & { lease?: LeaseFormModel } = {},

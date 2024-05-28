@@ -6,31 +6,38 @@ import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
 import Row from 'react-bootstrap/Row';
 
+import disposedIcon from '@/assets/images/pins/disposed.png';
+import landPoiIcon from '@/assets/images/pins/land-poi.png';
+import landRegIcon from '@/assets/images/pins/land-reg.png';
+import infoIcon from '@/assets/images/pins/marker-info-orange.png';
+import otherInterestIcon from '@/assets/images/pins/other-interest.png';
+import retiredIcon from '@/assets/images/pins/retired.png';
+
 export const Legend = () => {
   const keys = React.useMemo(() => {
     return [
       {
-        pin: require('@/assets/images/pins/land-reg.png'),
+        pin: landRegIcon,
         label: 'Core Inventory',
       },
       {
-        pin: require('@/assets/images/pins/land-poi.png'),
+        pin: landPoiIcon,
         label: 'Property of Interest',
       },
       {
-        pin: require('@/assets/images/pins/other-interest.png'),
+        pin: otherInterestIcon,
         label: 'Other Interest',
       },
       {
-        pin: require('@/assets/images/pins/disposed.png'),
+        pin: disposedIcon,
         label: 'Disposed',
       },
       {
-        pin: require('@/assets/images/pins/retired.png'),
+        pin: retiredIcon,
         label: 'Retired (Subdivided/consolidated)',
       },
       {
-        pin: require('@/assets/images/pins/marker-info-orange.png'),
+        pin: infoIcon,
         label: 'Search result (not in inventory)',
       },
     ];
@@ -44,8 +51,8 @@ export const Legend = () => {
         {keys.map((item, index) => {
           return (
             <Row key={index}>
-              <Col xs={2}>
-                <Image height={25} src={item.pin} />
+              <Col xs={3} className="d-flex justify-content-center">
+                <Image width={32} src={item.pin} />
               </Col>
               <Col className="label">{item.label}</Col>
             </Row>

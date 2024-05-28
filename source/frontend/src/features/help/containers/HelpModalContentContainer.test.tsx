@@ -4,20 +4,18 @@ import thunk from 'redux-thunk';
 
 import HelpModalContentContainer from './HelpModalContentContainer';
 
-jest.mock('@react-keycloak/web');
-
 const mockStore = configureMockStore([thunk]);
 const store = mockStore({});
 
 describe('HelpModalContentContainer component', () => {
   const setup = () =>
-    render(<HelpModalContentContainer setMailto={jest.fn()} />, {
+    render(<HelpModalContentContainer setMailto={vi.fn()} />, {
       useMockAuthentication: true,
       store,
     });
 
   beforeEach(() => {
-    process.env.REACT_APP_TENANT = 'MOTI';
+    import.meta.env.VITE_TENANT = 'MOTI';
   });
 
   it('renders correctly', async () => {

@@ -8,7 +8,7 @@ import {
   IContactFilterComponentProps,
 } from './ContactFilterComponent';
 
-const setFilter = jest.fn();
+const setFilter = vi.fn();
 
 // render component under test
 const setup = (renderOptions: RenderOptions & IContactFilterComponentProps = { setFilter }) => {

@@ -155,21 +155,6 @@ namespace Pims.Api.Models.Concepts.Property
         public bool IsOwned { get; set; }
 
         /// <summary>
-        /// get/set - Whether this parcel is a property of interest to the ministry.
-        /// </summary>
-        public bool IsPropertyOfInterest { get; set; }
-
-        /// <summary>
-        /// get/set - Whether this parcel is part of other types of interests for the ministry. i.e legal rights.
-        /// </summary>
-        public bool IsOtherInterest { get; set; }
-
-        /// <summary>
-        /// get/set - Whether this parcel is part has been disposed.
-        /// </summary>
-        public bool IsDisposed { get; set; }
-
-        /// <summary>
         /// get/set - Whether or not other agencies can view this property.
         /// </summary>
         public bool IsVisibleToOtherAgencies { get; set; }

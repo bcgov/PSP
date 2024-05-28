@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`AccessRequestContainer component makes a request based on the access request id 1`] = `
+exports[`AccessRequestContainer component > makes a request based on the access request id 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
@@ -40,6 +40,7 @@ exports[`AccessRequestContainer component makes a request based on the access re
   -ms-letter-spacing: 0.1rem;
   letter-spacing: 0.1rem;
   cursor: pointer;
+  height: 3.8rem;
 }
 
 .c5.btn:hover {
@@ -723,7 +724,7 @@ exports[`AccessRequestContainer component makes a request based on the access re
 </DocumentFragment>
 `;
 
-exports[`AccessRequestContainer component makes a request when no id is provided 1`] = `
+exports[`AccessRequestContainer component > makes a request when no id is provided 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
@@ -763,6 +764,7 @@ exports[`AccessRequestContainer component makes a request when no id is provided
   -ms-letter-spacing: 0.1rem;
   letter-spacing: 0.1rem;
   cursor: pointer;
+  height: 3.8rem;
 }
 
 .c5.btn:hover {

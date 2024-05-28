@@ -1,6 +1,6 @@
 import { Dispatch } from '@reduxjs/toolkit';
 import axios, { AxiosError, AxiosRequestHeaders } from 'axios';
-import { isEmpty } from 'lodash';
+import isEmpty from 'lodash/isEmpty';
 import { hideLoading } from 'react-redux-loading-bar';
 import { toast } from 'react-toastify';
 
@@ -43,7 +43,7 @@ export const CustomAxios = ({
     baseURL,
     headers: {
       'Access-Control-Allow-Origin': '*',
-      'Cache-Control': process.env.NODE_ENV === 'development' ? 'no-cache' : '',
+      'Cache-Control': import.meta.env.DEV ? 'no-cache' : '',
     },
   });
   instance.interceptors.request.use(config => {

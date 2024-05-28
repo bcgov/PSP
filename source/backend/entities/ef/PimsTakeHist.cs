@@ -52,6 +52,9 @@ public partial class PimsTakeHist
     [StringLength(4000)]
     public string Description { get; set; }
 
+    [Column("COMPLETION_DT")]
+    public DateOnly? CompletionDt { get; set; }
+
     [Column("IS_NEW_HIGHWAY_DEDICATION")]
     public bool IsNewHighwayDedication { get; set; }
 
@@ -93,6 +96,15 @@ public partial class PimsTakeHist
 
     [Column("SURPLUS_AREA")]
     public float? SurplusArea { get; set; }
+
+    [Column("IS_ACTIVE_LEASE")]
+    public bool IsActiveLease { get; set; }
+
+    [Column("ACTIVE_LEASE_AREA")]
+    public float? ActiveLeaseArea { get; set; }
+
+    [Column("ACTIVE_LEASE_END_DT")]
+    public DateOnly? ActiveLeaseEndDt { get; set; }
 
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }

@@ -1,16 +1,15 @@
-import { DispositionFileStatus } from '@/constants/dispositionFileStatus';
 import { Claims, Roles } from '@/constants/index';
 import { mockDispositionFileResponse } from '@/mocks/dispositionFiles.mock';
 import { toTypeCode } from '@/utils/formUtils';
 import { act, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import DispositionMenu, { IDispositionMenuProps } from './DispositionMenu';
+import { ApiGen_CodeTypes_DispositionFileStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_DispositionFileStatusTypes';
 
 // mock auth library
-jest.mock('@react-keycloak/web');
 
-const onChange = jest.fn();
-const onShowPropertySelector = jest.fn();
+const onChange = vi.fn();
+const onShowPropertySelector = vi.fn();
 
 const testData = ['one', 'two', 'three'];
 
@@ -39,7 +38,7 @@ describe('DispositionMenu component', () => {
   };
 
   afterEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
   });
 
   it('matches snapshot', () => {
@@ -129,7 +128,7 @@ describe('DispositionMenu component', () => {
       {
         dispositionFile: {
           ...mockDispositionFileResponse(),
-          fileStatusTypeCode: toTypeCode(DispositionFileStatus.Complete),
+          fileStatusTypeCode: toTypeCode(ApiGen_CodeTypes_DispositionFileStatusTypes.COMPLETE),
         },
         items: testData,
         selectedIndex: 1,
@@ -148,7 +147,7 @@ describe('DispositionMenu component', () => {
       {
         dispositionFile: {
           ...mockDispositionFileResponse(),
-          fileStatusTypeCode: toTypeCode(DispositionFileStatus.Complete),
+          fileStatusTypeCode: toTypeCode(ApiGen_CodeTypes_DispositionFileStatusTypes.COMPLETE),
         },
         items: testData,
         selectedIndex: 1,
