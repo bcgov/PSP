@@ -162,8 +162,7 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.PropertyView);
 
             var properties = _dispositionFilePropertyRepository.GetPropertiesByDispositionFileId(id);
-            ReprojectPropertyLocationsToWgs84(properties);
-            return properties;
+            return _propertyService.TransformPropertyLocationsToWgs84(properties);
         }
 
         public IEnumerable<PimsDispositionFileTeam> GetTeamMembers()
@@ -676,19 +675,6 @@ namespace Pims.Api.Services
             if (currentRegion != updatedRegion)
             {
                 throw new UserOverrideException(UserOverrideCode.UpdateRegion, "The Ministry region has been changed, this will result in a change to the file's prefix. This requires user confirmation.");
-            }
-        }
-
-        private void ReprojectPropertyLocationsToWgs84(IEnumerable<PimsDispositionFileProperty> dispositionPropertyFiles)
-        {
-            foreach (var dispositionProperty in dispositionPropertyFiles)
-            {
-                if (dispositionProperty.Property.Location != null)
-                {
-                    var oldCoords = dispositionProperty.Property.Location.Coordinate;
-                    var newCoords = _coordinateService.TransformCoordinates(SpatialReference.BCALBERS, SpatialReference.WGS84, oldCoords);
-                    dispositionProperty.Property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.WGS84);
-                }
             }
         }
 

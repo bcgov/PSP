@@ -159,8 +159,7 @@ namespace Pims.Api.Services
             _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, id);
 
             var properties = _acquisitionFilePropertyRepository.GetPropertiesByAcquisitionFileId(id);
-            ReprojectPropertyLocationsToWgs84(properties);
-            return properties;
+            return _propertyService.TransformPropertyLocationsToWgs84(properties);
         }
 
         public IEnumerable<PimsAcquisitionOwner> GetOwners(long id)
@@ -655,19 +654,6 @@ namespace Pims.Api.Services
                 {
                     _logger.LogDebug("Adding new property without a pid");
                     acquisitionProperty.Property = _propertyService.PopulateNewProperty(acquisitionProperty.Property);
-                }
-            }
-        }
-
-        private void ReprojectPropertyLocationsToWgs84(IEnumerable<PimsPropertyAcquisitionFile> propertyAcquisitionFiles)
-        {
-            foreach (var acquisitionProperty in propertyAcquisitionFiles)
-            {
-                if (acquisitionProperty.Property.Location != null)
-                {
-                    var oldCoords = acquisitionProperty.Property.Location.Coordinate;
-                    var newCoords = _coordinateService.TransformCoordinates(SpatialReference.BCALBERS, SpatialReference.WGS84, oldCoords);
-                    acquisitionProperty.Property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.WGS84);
                 }
             }
         }

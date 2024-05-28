@@ -199,7 +199,7 @@ namespace Pims.Api.Services
             pimsUser.ThrowInvalidAccessToLeaseFile(_leaseRepository.GetNoTracking(leaseId).RegionCode);
 
             var propertyLeases = _propertyLeaseRepository.GetAllByLeaseId(leaseId);
-            return ReprojectPropertyLocationsToWgs84(propertyLeases);
+            return _propertyService.TransformPropertyLocationsToWgs84(propertyLeases.ToList());
         }
 
         public PimsLease Update(PimsLease lease, IEnumerable<UserOverrideCode> userOverrides)
@@ -286,22 +286,6 @@ namespace Pims.Api.Services
             }
 
             return leaseNote;
-        }
-
-        private IEnumerable<PimsPropertyLease> ReprojectPropertyLocationsToWgs84(IEnumerable<PimsPropertyLease> propertyLeases)
-        {
-            List<PimsPropertyLease> reprojectedProperties = new List<PimsPropertyLease>();
-            foreach (var leaseProperty in propertyLeases)
-            {
-                if (leaseProperty.Property.Location != null)
-                {
-                    var oldCoords = leaseProperty.Property.Location.Coordinate;
-                    var newCoords = _coordinateService.TransformCoordinates(SpatialReference.BCALBERS, SpatialReference.WGS84, oldCoords);
-                    leaseProperty.Property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.WGS84);
-                    reprojectedProperties.Add(leaseProperty);
-                }
-            }
-            return reprojectedProperties;
         }
 
         /// <summary>

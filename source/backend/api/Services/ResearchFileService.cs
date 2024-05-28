@@ -67,9 +67,7 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.PropertyView);
 
             var propertyResearchFiles = _researchFilePropertyRepository.GetAllByResearchFileId(researchFileId);
-            ReprojectPropertyLocationsToWgs84(propertyResearchFiles);
-
-            return propertyResearchFiles;
+            return _propertyService.TransformPropertyLocationsToWgs84(propertyResearchFiles);
         }
 
         public PimsResearchFile Add(PimsResearchFile researchFile, IEnumerable<UserOverrideCode> userOverrideCodes)
@@ -258,19 +256,6 @@ namespace Pims.Api.Services
             if (currentRowVersion != researchFileVersion)
             {
                 throw new DbUpdateConcurrencyException("You are working with an older version of this research file, please refresh the application and retry.");
-            }
-        }
-
-        private void ReprojectPropertyLocationsToWgs84(IEnumerable<PimsPropertyResearchFile> propertyResearchFiles)
-        {
-            foreach (var researchProperty in propertyResearchFiles)
-            {
-                if (researchProperty.Property.Location != null)
-                {
-                    var oldCoords = researchProperty.Property.Location.Coordinate;
-                    var newCoords = _coordinateService.TransformCoordinates(SpatialReference.BCALBERS, SpatialReference.WGS84, oldCoords);
-                    researchProperty.Property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.WGS84);
-                }
             }
         }
 

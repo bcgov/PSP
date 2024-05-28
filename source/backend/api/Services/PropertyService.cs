@@ -414,6 +414,30 @@ namespace Pims.Api.Services
             return GetHistoricalNumbersForPropertyId(propertyId);
         }
 
+        /// <inheritdoc />
+        public List<T> TransformPropertyLocationsToWgs84<T>(List<T> fileProperties)
+            where T : IWithPropertyEntity
+        {
+            foreach (var fileProperty in fileProperties)
+            {
+                var property = fileProperty.Property;
+
+                // transform property location (map pin)
+                if (property?.Location != null)
+                {
+                    property.Location = TransformCoordinates(property.Location);
+                }
+
+                // transform property boundary (polygon/multipolygon)
+                if (property?.Boundary != null)
+                {
+                    _coordinateService.TransformGeometry(SpatialReference.BCALBERS, SpatialReference.WGS84, property.Boundary);
+                }
+            }
+
+            return fileProperties;
+        }
+
         private Point TransformCoordinates(Geometry location)
         {
             // return property spatial location in lat/long (4326)
