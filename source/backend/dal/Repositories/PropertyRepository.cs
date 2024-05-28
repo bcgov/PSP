@@ -563,7 +563,10 @@ namespace Pims.Dal.Repositories
             {
                 ownershipBuilder.Or(p => p.IsRetired.HasValue && p.IsRetired.Value);
             }
-
+            if (filter.IsDisposed || filter.IsRetired || filter.IsCoreInventory || filter.IsPropertyOfInterest || filter.IsOtherInterest)
+            {
+                predicate.And(ownershipBuilder); // Only apply ownership filter if at least one type is specified.
+            }
             predicate.And(ownershipBuilder);
 
             return Context.PimsProperties.AsNoTracking()

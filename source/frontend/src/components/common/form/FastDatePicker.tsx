@@ -123,18 +123,19 @@ const FormikDatePicker: FunctionComponent<React.PropsWithChildren<FastDatePicker
 
 const StyledGroup = styled(Form.Group)`
   .react-datepicker__calendar-icon {
-    width: 3rem;
+    width: 2.4rem;
     height: 3rem;
     margin-top: 0.5rem;
+    margin-right: 1.2rem;
     right: 0;
     fill: ${props => props.theme.css.linkColor};
     pointer-events: none;
   }
   .react-datepicker__view-calendar-icon input {
-    padding: 0.6rem 1rem 0.5rem 0.6rem;
+    padding: 0.8rem 1.2rem 0.8rem 1.2rem;
   }
   .react-datepicker-wrapper {
-    max-width: 16rem;
+    max-width: 17rem;
   }
 `;
 

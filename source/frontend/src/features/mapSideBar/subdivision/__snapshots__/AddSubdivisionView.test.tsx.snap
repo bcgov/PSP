@@ -12,7 +12,7 @@ exports[`Add Subdivision View > matches snapshot 1`] = `
   border-bottom: solid 0.5rem;
   width: 100%;
   text-align: left;
-  margin-bottom: 2rem;
+  margin-bottom: 2.4rem;
 }
 
 .c3 {
@@ -57,11 +57,9 @@ exports[`Add Subdivision View > matches snapshot 1`] = `
             >
               <g>
                 <path
-                  class="cls-1"
                   d="M12.85,6.88V0H2.16C.97,0,0,.97,0,2.16v10.15c0,1.19.97,2.16,2.16,2.16h2.04l8.65-7.59Z"
                 />
                 <path
-                  class="cls-1"
                   d="M19.46,0h-3.18v7.24c0,.06,0,.12-.02.18.08.55-.11,1.14-.56,1.53l-6.29,5.53h10.05c1.19,0,2.16-.97,2.16-2.16V2.16C21.62.98,20.65,0,19.46,0Z"
                 />
               </g>
@@ -96,39 +94,13 @@ exports[`Add Subdivision View > matches snapshot 1`] = `
       class="c3"
     />
   </div>
-  .c7 {
-  background-color: white;
-  font-size: 1.4rem;
-  border-color: transparent;
-}
-
-.c7 .nav-tabs {
-  height: auto;
-}
-
-.c7 .nav-item {
-  min-width: 5rem;
-  padding: 0.1rem 0.6rem;
-}
-
-.c7 .nav-item:hover {
-  border-color: transparent;
-  -webkit-text-decoration: underline;
-  text-decoration: underline;
-}
-
-.c7 .nav-item.active {
-  font-family: 'BCSans-Bold';
-  border-color: transparent;
-}
-
-.c4 {
+  .c4 {
   font-family: 'BCSans-Bold';
   font-size: 2.6rem;
   border-bottom: solid 0.2rem;
   width: 100%;
   text-align: left;
-  margin-bottom: 2rem;
+  margin-bottom: 2.4rem;
 }
 
 .c9 {
@@ -138,8 +110,8 @@ exports[`Add Subdivision View > matches snapshot 1`] = `
 }
 
 .c3 {
-  margin: 1.5rem;
-  padding: 1.5rem;
+  margin: 1.6rem;
+  padding: 1.6rem;
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
@@ -163,6 +135,32 @@ exports[`Add Subdivision View > matches snapshot 1`] = `
 
 .c5 .tab-content .tab-pane {
   position: relative;
+}
+
+.c7 {
+  background-color: white;
+  font-size: 1.4rem;
+  border-color: transparent;
+}
+
+.c7 .nav-tabs {
+  height: auto;
+}
+
+.c7 .nav-item {
+  min-width: 5rem;
+  padding: 0.1rem 1.2rem;
+}
+
+.c7 .nav-item:hover {
+  border-color: transparent;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+}
+
+.c7 .nav-item.active {
+  font-family: 'BCSans-Bold';
+  border-color: transparent;
 }
 
 .c6 {

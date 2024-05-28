@@ -215,39 +215,13 @@ exports[`ResearchProperties component > renders as expected when provided no pro
   font-size: 1.4rem;
 }
 
-.c4 {
-  background-color: white;
-  font-size: 1.4rem;
-  border-color: transparent;
-}
-
-.c4 .nav-tabs {
-  height: auto;
-}
-
-.c4 .nav-item {
-  min-width: 5rem;
-  padding: 0.1rem 0.6rem;
-}
-
-.c4 .nav-item:hover {
-  border-color: transparent;
-  -webkit-text-decoration: underline;
-  text-decoration: underline;
-}
-
-.c4 .nav-item.active {
-  font-family: 'BCSans-Bold';
-  border-color: transparent;
-}
-
 .c5 {
   font-family: 'BCSans-Bold';
-  font-size: 2rem;
+  font-size: 2.2rem;
   border-bottom: solid 0.2rem;
   width: 100%;
   text-align: left;
-  margin-bottom: 2rem;
+  margin-bottom: 2.4rem;
 }
 
 .c1 {
@@ -257,8 +231,8 @@ exports[`ResearchProperties component > renders as expected when provided no pro
 }
 
 .c0 {
-  margin: 1.5rem;
-  padding: 1.5rem;
+  margin: 1.6rem;
+  padding: 1.6rem;
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
@@ -312,6 +286,32 @@ exports[`ResearchProperties component > renders as expected when provided no pro
 
 .c2 .tab-content .tab-pane {
   position: relative;
+}
+
+.c4 {
+  background-color: white;
+  font-size: 1.4rem;
+  border-color: transparent;
+}
+
+.c4 .nav-tabs {
+  height: auto;
+}
+
+.c4 .nav-item {
+  min-width: 5rem;
+  padding: 0.1rem 1.2rem;
+}
+
+.c4 .nav-item:hover {
+  border-color: transparent;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+}
+
+.c4 .nav-item.active {
+  font-family: 'BCSans-Bold';
+  border-color: transparent;
 }
 
 .c3 {
@@ -1040,7 +1040,7 @@ exports[`ResearchProperties component > renders as expected when provided no pro
                       fill="none"
                     />
                     <path
-                      d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                      d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
                     />
                   </svg>
                    
@@ -1181,7 +1181,7 @@ exports[`ResearchProperties component > renders as expected when provided no pro
                       fill="none"
                     />
                     <path
-                      d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                      d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
                     />
                   </svg>
                    

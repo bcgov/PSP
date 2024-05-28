@@ -13,6 +13,7 @@ namespace Pims.Dal.Entities;
 [Index("DataSourceTypeCode", Name = "HFLNUM_DATA_SOURCE_TYPE_CODE_IDX")]
 [Index("HistoricalFileNumber", Name = "HFLNUM_HISTORICAL_FILE_NUMBER_IDX")]
 [Index("PropertyId", Name = "HFLNUM_PROPERTY_ID_IDX")]
+[Index("PropertyId", "HistoricalFileNumberTypeCode", "HistoricalFileNumber", "OtherHistFileNumberTypeCode", "IsDisabled", Name = "HFLNUM_PROPERTY_ID_UK", IsUnique = true)]
 public partial class PimsHistoricalFileNumber
 {
     /// <summary>

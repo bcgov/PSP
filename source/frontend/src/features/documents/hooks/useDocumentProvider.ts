@@ -256,6 +256,7 @@ export const useDocumentProvider = () => {
         }
         return Promise.reject(axiosError);
       }, []),
+      throwError: true,
     });
 
   const { execute: getDocumentFilePageList, loading: getDocumentFilePageListLoading } =

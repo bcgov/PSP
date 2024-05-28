@@ -36,8 +36,8 @@ export function createTableColumns(
       accessor: 'appLastUpdateUserid',
       align: 'center',
       sortable: true,
-      minWidth: 28,
-      maxWidth: 28,
+      minWidth: 34,
+      maxWidth: 34,
     },
 
     {
@@ -45,8 +45,8 @@ export function createTableColumns(
       accessor: 'controls' as any, // this column is not part of the data model
       align: 'center',
       sortable: false,
-      width: 10,
-      maxWidth: 10,
+      width: 20,
+      maxWidth: 20,
       Cell: (cellProps: CellProps<ApiGen_Concepts_Note>) => {
         const { hasClaim } = useKeycloakWrapper();
 
@@ -57,6 +57,7 @@ export function createTableColumns(
                 title="View Note"
                 variant="light"
                 onClick={() => onShowDetails(cellProps.row.original)}
+                className="pl-0"
               >
                 <ImFileText2 size="2rem" />
               </StyledIconButton>

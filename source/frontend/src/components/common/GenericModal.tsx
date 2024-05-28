@@ -82,8 +82,6 @@ export interface ModalContent {
   headerIcon?: string | React.ReactNode;
   /** Optional message to display - no default. */
   message?: string | React.ReactNode;
-  /** optional override to control the x button in the top right of the modal. Default is to show. */
-  closeButton?: boolean;
   /** provide the size of the modal, default width is 50.0rem */
   modalSize?: ModalSize;
   variant: 'info' | 'warning' | 'error';
@@ -117,7 +115,6 @@ export const GenericModal = (props: Omit<BsModalProps, 'onHide'> & ModalProps) =
     okButtonHref,
     cancelButtonVariant,
     cancelButtonText,
-    closeButton,
     hideFooter,
     modalSize = ModalSize.MEDIUM,
     variant,
@@ -211,7 +208,7 @@ export const GenericModal = (props: Omit<BsModalProps, 'onHide'> & ModalProps) =
       onHide={noop}
       className={getModalClass()}
     >
-      <Modal.Header closeButton={closeButton} onHide={close}>
+      <Modal.Header onHide={close}>
         {headerIconValue && (
           <>
             <div className="header-icon">{headerIconValue}</div>
@@ -219,11 +216,9 @@ export const GenericModal = (props: Omit<BsModalProps, 'onHide'> & ModalProps) =
           </>
         )}
         <Modal.Title>{title}</Modal.Title>
-        {!closeButton && (
-          <div className="modal-close-btn">
-            <FaWindowClose size={24} onClick={close} />
-          </div>
-        )}
+        <div className="modal-close-btn">
+          <FaWindowClose size={24} onClick={close} />
+        </div>
       </Modal.Header>
 
       <Modal.Body style={{ whiteSpace: 'pre-line' }}>{message}</Modal.Body>

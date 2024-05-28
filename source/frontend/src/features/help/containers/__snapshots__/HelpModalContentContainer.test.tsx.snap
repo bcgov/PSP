@@ -8,11 +8,11 @@ exports[`HelpModalContentContainer component > renders correctly 1`] = `
   <div />
   .c0 {
   font-family: 'BCSans-Bold';
-  font-size: 2rem;
+  font-size: 2.2rem;
   border-bottom: solid 0.2rem;
   width: 100%;
   text-align: left;
-  margin-bottom: 2rem;
+  margin-bottom: 2.4rem;
 }
 
 .c1 {

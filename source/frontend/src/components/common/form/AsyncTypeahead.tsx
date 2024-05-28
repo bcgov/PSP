@@ -139,8 +139,8 @@ function AsyncTypeaheadInner<T extends TypeaheadModel>(
           {/* hide the search icon when user is interacting with typeahead control */}
           {({ selected, isMenuShown }: TypeaheadManagerChildProps) =>
             isLoading || isMenuShown || selected.length > 0 ? null : (
-              <div className="rbt-aux">
-                <FaSearch size="2.5rem" color="#bcbec5" />
+              <div className="rbt-aux pr-3">
+                <FaSearch size="1.6rem" color="#bcbec5" />
               </div>
             )
           }
