@@ -1,4 +1,4 @@
-import { Polygon, Position } from 'geojson';
+import { Polygon } from 'geojson';
 
 import { IMapProperty } from '@/components/propertySelector/models';
 import { AreaUnitTypes } from '@/constants';
@@ -185,13 +185,7 @@ export class PropertyForm {
       pin: this.pin !== undefined ? Number(this.pin) : null,
       planNumber: this.planNumber ?? null,
       location: { coordinate: { x: this.longitude ?? 0, y: this.latitude ?? 0 } },
-      boundary: this.polygon
-        ? {
-            coordinates: this.polygon.coordinates.flatMap(positions =>
-              positions.map((p: Position) => ({ x: p[0], y: p[1] })),
-            ),
-          }
-        : null,
+      boundary: this.polygon ? this.polygon : null,
       region: toTypeCodeNullable(this.region),
       district: toTypeCodeNullable(this.district),
       rowVersion: this.propertyRowVersion ?? null,
