@@ -10,6 +10,8 @@ import { InlineFlexDiv } from '@/components/common/styles';
 import TooltipIcon from '@/components/common/TooltipIcon';
 import { ColumnWithProps } from '@/components/Table';
 import { AreaUnitTypes, Claims } from '@/constants/index';
+import HistoricalNumbersContainer from '@/features/mapSideBar/shared/header/HistoricalNumberContainer';
+import HistoricalNumberFieldView from '@/features/mapSideBar/shared/header/HistoricalNumberSectionView';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_Concepts_PropertyView } from '@/models/api/generated/ApiGen_Concepts_PropertyView';
 import { ILookupCode } from '@/store/slices/lookupCodes';
@@ -30,9 +32,8 @@ export const columns = ({
 }: Props): ColumnWithProps<ApiGen_Concepts_PropertyView>[] => [
   {
     Header: 'PID',
-    accessor: 'pid',
     align: 'right',
-    width: 40,
+    width: 30,
     Cell: (props: CellProps<ApiGen_Concepts_PropertyView>) => {
       return (
         <>
@@ -53,9 +54,27 @@ export const columns = ({
   },
   {
     Header: 'PIN',
-    accessor: 'pin',
+    accessor: p => p.pin,
     align: 'right',
+    width: 25,
+  },
+  {
+    Header: 'Historical File #',
+    align: 'left',
+    clickable: false,
+    sortable: false,
     width: 40,
+    maxWidth: 50,
+    Cell: (props: CellProps<ApiGen_Concepts_PropertyView>) => {
+      const propertyArrayId = [props.row.original.id];
+      return (
+        <HistoricalNumbersContainer
+          propertyIds={propertyArrayId}
+          displayValuesOnly={true}
+          View={HistoricalNumberFieldView}
+        />
+      );
+    },
   },
   {
     Header: 'Civic Address',
@@ -70,7 +89,7 @@ export const columns = ({
       ),
     align: 'left',
     minWidth: 100,
-    width: 150,
+    width: 125,
   },
   {
     Header: 'Location',

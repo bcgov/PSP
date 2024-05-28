@@ -7,10 +7,12 @@ import { IHistoricalNumbersViewProps } from './HistoricalNumberSectionView';
 
 export interface IHistoricalNumbersContainerProps {
   propertyIds: number[];
+  displayValuesOnly: boolean;
   View: React.FunctionComponent<IHistoricalNumbersViewProps>;
 }
 const HistoricalNumbersContainer: React.FC<IHistoricalNumbersContainerProps> = ({
   propertyIds,
+  displayValuesOnly,
   View,
 }) => {
   const [historicalNumbers, setHistoricalNumbers] = useState<
@@ -34,6 +36,6 @@ const HistoricalNumbersContainer: React.FC<IHistoricalNumbersContainerProps> = (
     });
   }, [propertyIds, getHistoricalExecute]);
 
-  return <View historicalNumbers={historicalNumbers} />;
+  return <View historicalNumbers={historicalNumbers} valuesOnly={displayValuesOnly} />;
 };
 export default HistoricalNumbersContainer;

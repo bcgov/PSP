@@ -49,7 +49,11 @@ export const AcquisitionHeader: React.FunctionComponent<
             </>
           )}
         </HeaderField>
-        <HistoricalNumbersContainer propertyIds={propertyIds} View={HistoricalNumberFieldView} />
+        <HistoricalNumbersContainer
+          propertyIds={propertyIds}
+          displayValuesOnly={false}
+          View={HistoricalNumberFieldView}
+        />
       </Col>
       <Col>
         <StyledFiller>
