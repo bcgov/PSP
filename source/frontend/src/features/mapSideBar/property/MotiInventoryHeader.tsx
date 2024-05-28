@@ -69,6 +69,7 @@ export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderPr
           {exists(apiProperty) && (
             <HistoricalNumbersContainer
               View={HistoricalNumberFieldView}
+              displayValuesOnly={false}
               propertyIds={[apiProperty?.id]}
             />
           )}

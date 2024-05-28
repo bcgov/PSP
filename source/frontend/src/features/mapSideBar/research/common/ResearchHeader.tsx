@@ -64,7 +64,11 @@ const ResearchHeader: React.FunctionComponent<
         <HeaderField label="Ministry district:" labelWidth={leftColumnLabel} contentWidth="9">
           {districts}
         </HeaderField>
-        <HistoricalNumbersContainer propertyIds={propertyIds} View={HistoricalNumberFieldView} />
+        <HistoricalNumbersContainer
+          propertyIds={propertyIds}
+          displayValuesOnly={false}
+          View={HistoricalNumberFieldView}
+        />
       </Col>
       <Col>
         <StyledFiller>

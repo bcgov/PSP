@@ -72,7 +72,11 @@ export const LeaseHeader: React.FC<ILeaseHeaderProps> = ({ lease, lastUpdatedBy 
               )}
             </HeaderContentCol>
           </Row>
-          <HistoricalNumbersContainer propertyIds={propertyIds} View={HistoricalNumberFieldView} />
+          <HistoricalNumbersContainer
+            propertyIds={propertyIds}
+            displayValuesOnly={false}
+            View={HistoricalNumberFieldView}
+          />
         </Col>
 
         <Col>
