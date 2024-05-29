@@ -1,9 +1,16 @@
-import { FunctionComponent, useState } from 'react';
+import { FunctionComponent, useCallback, useState } from 'react';
 import { toast } from 'react-toastify';
 
 import { Button } from '@/components/common/buttons';
+import { useMapProperties } from '@/hooks/repositories/useMapProperties';
 import { isValidId } from '@/utils';
-import { featuresetToMapProperty, getPropertyName, NameSourceType } from '@/utils/mapPropertyUtils';
+import {
+  featuresetToMapProperty,
+  getPropertyName,
+  NameSourceType,
+  pidFromFeatureSet,
+  pinFromFeatureSet,
+} from '@/utils/mapPropertyUtils';
 
 import { LocationFeatureDataset } from '../common/mapFSM/useLocationFeatureLoader';
 import PropertyMapSelectorFormView from './map/PropertyMapSelectorFormView';
@@ -35,6 +42,29 @@ export const MapSelectorContainer: FunctionComponent<IMapSelectorContainerProps>
       ? modifiedMapProperties[0]
       : undefined,
   );
+  const {
+    loadProperties: { execute: loadProperties },
+  } = useMapProperties();
+
+  const addWithPimsFeature = useCallback(
+    async (properties: LocationFeatureDataset[]) => {
+      const updatedPropertiesPromises = properties.map(async property => {
+        if (property.pimsFeature?.properties?.PROPERTY_ID) {
+          return property;
+        }
+        const pid = pidFromFeatureSet(property);
+        const pin = pinFromFeatureSet(property);
+        const pimsProperty = await loadProperties({ PID: pid, PIN: pin });
+        if (pimsProperty.features.length > 0) {
+          property.pimsFeature = pimsProperty.features[0];
+        }
+        return property;
+      });
+      const updatedProperties = await Promise.all(updatedPropertiesPromises);
+      addSelectedProperties(updatedProperties);
+    },
+    [addSelectedProperties, loadProperties],
+  );
 
   return (
     <>
@@ -45,7 +75,7 @@ export const MapSelectorContainer: FunctionComponent<IMapSelectorContainerProps>
           <PropertyMapSelectorFormView
             onSelectedProperty={(property: LocationFeatureDataset) => {
               setLastSelectedProperty(property);
-              addProperties([property], modifiedMapProperties, addSelectedProperties);
+              addProperties([property], modifiedMapProperties, addWithPimsFeature);
             }}
             selectedProperties={modifiedMapProperties}
             selectedComponentId={selectedComponentId}
@@ -71,7 +101,7 @@ export const MapSelectorContainer: FunctionComponent<IMapSelectorContainerProps>
         <Button
           variant="secondary"
           onClick={() => {
-            addProperties(searchSelectedProperties, modifiedMapProperties, addSelectedProperties);
+            addProperties(searchSelectedProperties, modifiedMapProperties, addWithPimsFeature);
             setSearchSelectedProperties([]);
           }}
         >

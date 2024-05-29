@@ -4,6 +4,7 @@ import { Col, Row } from 'react-bootstrap';
 
 import { ModalProps } from '@/components/common/GenericModal';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
+import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { Section } from '@/components/common/Section/Section';
 import MapSelectorContainer from '@/components/propertySelector/MapSelectorContainer';
 import { IMapProperty } from '@/components/propertySelector/models';
@@ -101,16 +102,16 @@ export const LeasePropertySelector: React.FunctionComponent<LeasePropertySelecto
     setModalContent(addModalProps);
   }, [addModalProps]);
 
-  const processAddedProperties = async (newProperties: IMapProperty[]) => {
+  const processAddedProperties = async (newProperties: LocationFeatureDataset[]) => {
     let needsWarning = false;
     const newFormProperties: FormLeaseProperty[] = [];
 
     await newProperties.reduce(async (promise, property) => {
       return promise.then(async () => {
-        const formProperty = FormLeaseProperty.fromMapProperty(property);
+        const formProperty = FormLeaseProperty.fromFeatureDataset(property);
 
-        const bcaSummary = property?.pid
-          ? await getPrimaryAddressByPid(property.pid, 30000)
+        const bcaSummary = formProperty?.property?.pid
+          ? await getPrimaryAddressByPid(formProperty?.property?.pid, 30000)
           : undefined;
 
         // Retrieve the pims id of the property if it exists
@@ -122,10 +123,10 @@ export const LeasePropertySelector: React.FunctionComponent<LeasePropertySelecto
             : undefined;
 
           if (
-            isValidString(formProperty.property.pid) ||
-            isValidString(formProperty.property.pin)
+            isValidString(formProperty?.property?.pid) ||
+            isValidString(formProperty?.property?.pin)
           ) {
-            const result = await searchProperty(property);
+            const result = await searchProperty(formProperty.property.toMapProperty());
             if (result !== undefined && result.length > 0) {
               formProperty.property.apiId = result[0].id;
             }
@@ -201,7 +202,9 @@ export const LeasePropertySelector: React.FunctionComponent<LeasePropertySelecto
                   <Col>
                     <MapSelectorContainer
                       addSelectedProperties={processAddedProperties}
-                      modifiedProperties={LeaseFormModel.getPropertiesAsForm(values)}
+                      modifiedProperties={LeaseFormModel.getPropertiesAsForm(values).map(p =>
+                        p.toFeatureDataset(),
+                      )}
                     />
                   </Col>
                 </Row>

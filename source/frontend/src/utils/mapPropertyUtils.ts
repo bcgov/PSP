@@ -18,6 +18,7 @@ import { AreaUnitTypes } from '@/constants';
 import { DistrictCodes } from '@/constants/districtCodes';
 import { RegionCodes } from '@/constants/regionCodes';
 import { ApiGen_CodeTypes_GeoJsonTypes } from '@/models/api/generated/ApiGen_CodeTypes_GeoJsonTypes';
+import { AddressForm } from '@/features/mapSideBar/shared/models';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { ApiGen_Concepts_Geometry } from '@/models/api/generated/ApiGen_Concepts_Geometry';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
@@ -39,18 +40,18 @@ export interface PropertyName {
 }
 
 export const getPropertyName = (property: IMapProperty): PropertyName => {
-  if (!!property.pid && property.pid?.toString().length > 0 && property.pid !== '0') {
-    return { label: NameSourceType.PID, value: pidFormatter(property.pid.toString()) };
-  } else if (!!property.pin && property.pin?.toString()?.length > 0 && property.pin !== '0') {
+  if (!!property?.pid && property?.pid?.toString().length > 0 && property?.pid !== '0') {
+    return { label: NameSourceType.PID, value: pidFormatter(property?.pid.toString()) };
+  } else if (!!property?.pin && property?.pin?.toString()?.length > 0 && property?.pin !== '0') {
     return { label: NameSourceType.PIN, value: property.pin.toString() };
-  } else if (!!property.planNumber && property.planNumber?.length > 0) {
+  } else if (!!property?.planNumber && property?.planNumber?.length > 0) {
     return { label: NameSourceType.PLAN, value: property.planNumber };
-  } else if (!!property.latitude && !!property.longitude) {
+  } else if (!!property?.latitude && !!property?.longitude) {
     return {
       label: NameSourceType.LOCATION,
       value: compact([property.longitude?.toFixed(6), property.latitude?.toFixed(6)]).join(', '),
     };
-  } else if (property.address) {
+  } else if (property?.address) {
     return {
       label: NameSourceType.ADDRESS,
       value: property.address,
@@ -186,30 +187,39 @@ function toMapProperty(
 
 export function featuresetToMapProperty(
   featureSet: LocationFeatureDataset,
-  address = 'unknown',
+  address?: string,
 ): IMapProperty {
-  const pimsFeature = featureSet.pimsFeature;
-  const parcelFeature = featureSet.parcelFeature;
-  const regionFeature = featureSet.regionFeature;
-  const districtFeature = featureSet.districtFeature;
+  const pimsFeature = featureSet?.pimsFeature;
+  const parcelFeature = featureSet?.parcelFeature;
+  const regionFeature = featureSet?.regionFeature;
+  const districtFeature = featureSet?.districtFeature;
 
   const propertyId = pimsFeature?.properties?.PROPERTY_ID;
   const pid = pidFromFeatureSet(featureSet);
   const pin = pinFromFeatureSet(featureSet);
+  const formattedAddress = pimsFeature?.properties?.STREET_ADDRESS_1
+    ? formatApiAddress(AddressForm.fromPimsView(pimsFeature.properties).toApi())
+    : undefined;
+  if (featureSet === undefined) {
+    return undefined;
+  }
   return {
     propertyId: propertyId ? Number.parseInt(propertyId?.toString()) : undefined,
     pid: pid ?? undefined,
     pin: pin ?? undefined,
-    latitude: featureSet.location.lat,
-    longitude: featureSet.location.lng,
+    latitude: featureSet?.location?.lat,
+    longitude: featureSet?.location?.lng,
     polygon:
       parcelFeature?.geometry?.type === ApiGen_CodeTypes_GeoJsonTypes.Polygon
         ? (parcelFeature.geometry as Polygon)
         : parcelFeature?.geometry?.type === ApiGen_CodeTypes_GeoJsonTypes.MultiPolygon
         ? (parcelFeature.geometry as MultiPolygon)
         : undefined,
-    planNumber: parcelFeature?.properties?.PLAN_NUMBER?.toString() ?? undefined,
-    address: address,
+    planNumber:
+      pimsFeature?.properties?.SURVEY_PLAN_NUMBER ??
+      parcelFeature?.properties?.PLAN_NUMBER ??
+      undefined,
+    address: address ?? formattedAddress ?? undefined,
     legalDescription: parcelFeature?.properties?.LEGAL_DESCRIPTION ?? undefined,
     region: isNumber(regionFeature?.properties?.REGION_NUMBER)
       ? regionFeature?.properties?.REGION_NUMBER
@@ -231,16 +241,16 @@ export function featuresetToMapProperty(
 
 export function pidFromFeatureSet(featureset: LocationFeatureDataset): string | null {
   return (
-    featureset.pimsFeature?.properties?.PID?.toString() ??
-    featureset.parcelFeature?.properties?.PID ??
+    featureset?.pimsFeature?.properties?.PID?.toString() ??
+    featureset?.parcelFeature?.properties?.PID ??
     null
   );
 }
 
 export function pinFromFeatureSet(featureset: LocationFeatureDataset): string | null {
   return (
-    featureset.pimsFeature?.properties?.PIN?.toString() ??
-    featureset.parcelFeature?.properties?.PIN?.toString() ??
+    featureset?.pimsFeature?.properties?.PIN?.toString() ??
+    featureset?.parcelFeature?.properties?.PIN?.toString() ??
     null
   );
 }

@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { SelectProperty } from '@/components/common/mapping/SelectProperty';
 import { SectionField } from '@/components/common/Section/SectionField';
-import { featuresetToMapProperty } from '@/utils';
+import { featuresetToMapProperty, pidFormatter } from '@/utils';
 
 export interface IPropertyMapSelectorSubFormProps {
   onClickDraftMarker: () => void;
@@ -32,7 +32,7 @@ export const PropertyMapSelectorSubForm: React.FunctionComponent<
         <Row>
           <GroupHeader>Selected property attributes</GroupHeader>
         </Row>
-        <SectionField label="PID">{pid}</SectionField>
+        <SectionField label="PID">{pidFormatter(pid)}</SectionField>
         <SectionField label="Plan #">{planNumber}</SectionField>
         <SectionField label="Address">{address}</SectionField>
         <SectionField label="Region">

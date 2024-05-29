@@ -11,8 +11,19 @@ import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts
 import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { IBcAssessmentSummary } from '@/models/layers/bcAssesment';
-import { PIMS_Property_Location_View } from '@/models/layers/pimsPropertyLocationView';
-import { enumFromValue, exists, formatApiAddress, formatBcaAddress, pidParser } from '@/utils';
+import {
+  EmptyPropertyLocation,
+  PIMS_Property_Location_View,
+} from '@/models/layers/pimsPropertyLocationView';
+import {
+  enumFromValue,
+  exists,
+  formatApiAddress,
+  formatBcaAddress,
+  pidFromFeatureSet,
+  pidParser,
+  pinFromFeatureSet,
+} from '@/utils';
 import { toTypeCodeNullable } from '@/utils/formUtils';
 
 export class FileForm {
@@ -111,18 +122,15 @@ export class PropertyForm {
   }
 
   public static fromFeatureDataset(model: LocationFeatureDataset): PropertyForm {
+    console.log(model);
     return new PropertyForm({
-      apiId: +(model.pimsFeature?.id ?? 0),
-      pid:
-        model.pimsFeature?.properties?.PID.toString() ?? model.parcelFeature?.properties?.PID ?? '',
-      pin:
-        model.pimsFeature?.properties?.PIN.toString() ??
-        model.parcelFeature?.properties?.PIN.toString() ??
-        '',
+      apiId: +(model.pimsFeature?.properties?.PROPERTY_ID ?? 0),
+      pid: pidFromFeatureSet(model),
+      pin: pinFromFeatureSet(model),
       latitude: model.location?.lat,
       longitude: model.location?.lng,
       planNumber:
-        model.pimsFeature?.properties?.SURVEY_PLAN_NUMBER.toString() ??
+        model.pimsFeature?.properties?.SURVEY_PLAN_NUMBER ??
         model.parcelFeature?.properties?.PLAN_NUMBER ??
         '',
       polygon:
@@ -144,6 +152,8 @@ export class PropertyForm {
       areaUnit: model?.pimsFeature?.properties?.PROPERTY_AREA_UNIT_TYPE_CODE
         ? enumFromValue(model?.pimsFeature?.properties?.PROPERTY_AREA_UNIT_TYPE_CODE, AreaUnitTypes)
         : AreaUnitTypes.SquareMeters,
+      isRetired: model?.pimsFeature?.properties?.IS_RETIRED ?? false,
+      legalDescription: model?.pimsFeature?.properties?.LAND_LEGAL_DESCRIPTION ?? '',
     });
   }
 
@@ -160,6 +170,65 @@ export class PropertyForm {
       districtName: this.districtName,
       legalDescription: this.legalDescription,
       address: this.address ? formatApiAddress(this.address.toApi()) : this.formattedAddress,
+    };
+  }
+
+  public toFeatureDataset(): LocationFeatureDataset {
+    return {
+      parcelFeature: null,
+      selectingComponentId: null,
+      pimsFeature: {
+        properties: {
+          ...EmptyPropertyLocation,
+          PROPERTY_ID: this.apiId,
+          NAME: this.name,
+          PID: +this.pid ? +this.pid : null,
+          PID_PADDED: this.pid.padStart(9, '0'),
+          PIN: +this.pin ? +this.pin : null,
+          SURVEY_PLAN_NUMBER: this.planNumber,
+          REGION_CODE: this.region,
+          DISTRICT_CODE: this.district,
+          LAND_AREA: this.landArea,
+          PROPERTY_AREA_UNIT_TYPE_CODE: this.areaUnit,
+          STREET_ADDRESS_1: this.address?.streetAddress1,
+          STREET_ADDRESS_2: this.address?.streetAddress2,
+          STREET_ADDRESS_3: this.address?.streetAddress3,
+          MUNICIPALITY_NAME: this.address?.municipality,
+          POSTAL_CODE: this.address?.postalCode,
+          IS_RETIRED: this.isRetired,
+          LAND_LEGAL_DESCRIPTION: this.legalDescription,
+        },
+        type: 'Feature',
+        geometry: null,
+      },
+      location: { lat: this.latitude, lng: this.longitude },
+      regionFeature: {
+        properties: {
+          REGION_NAME: this.regionName,
+          REGION_NUMBER: this.region,
+          FEATURE_AREA_SQM: this.landArea,
+          FEATURE_CODE: null,
+          OBJECTID: null,
+          SE_ANNO_CAD_DATA: null,
+          FEATURE_LENGTH_M: null,
+        },
+        type: 'Feature',
+        geometry: null,
+      },
+      districtFeature: {
+        properties: {
+          DISTRICT_NAME: this.districtName,
+          DISTRICT_NUMBER: this.district,
+          FEATURE_AREA_SQM: this.landArea,
+          FEATURE_CODE: null,
+          OBJECTID: null,
+          SE_ANNO_CAD_DATA: null,
+          FEATURE_LENGTH_M: null,
+        },
+        type: 'Feature',
+        geometry: null,
+      },
+      municipalityFeature: null,
     };
   }
 

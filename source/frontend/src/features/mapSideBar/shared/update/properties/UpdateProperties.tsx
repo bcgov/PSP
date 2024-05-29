@@ -192,7 +192,9 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
                             });
                           }, Promise.resolve());
                         }}
-                        modifiedProperties={formikProps.values.properties}
+                        modifiedProperties={formikProps.values.properties.map(p =>
+                          p.toFeatureDataset(),
+                        )}
                       />
                     </Col>
                   </Row>

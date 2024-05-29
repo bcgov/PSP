@@ -15,6 +15,7 @@ import { PropertyForm } from '../../features/mapSideBar/shared/models';
 import { useMapStateMachine } from '../common/mapFSM/MapStateMachineContext';
 import MapSelectorContainer, { IMapSelectorContainerProps } from './MapSelectorContainer';
 import { IMapProperty } from './models';
+import { getMockLocationFeatureDataset } from '@/mocks/featureset.mock';
 
 const mockStore = configureMockStore([thunk]);
 
@@ -104,7 +105,7 @@ describe('MapSelectorContainer component', () => {
 
   it('displays all selected property attributes', async () => {
     const { getByText } = setup({
-      modifiedProperties: [PropertyForm.fromMapProperty(testProperty)],
+      modifiedProperties: [getMockLocationFeatureDataset()],
     });
     await act(async () => {
       expect(getByText(/SPS22411/i)).toBeVisible();
@@ -158,9 +159,7 @@ describe('MapSelectorContainer component', () => {
 
   it('selected properties display a warning if added multiple times', async () => {
     const { getByText, getByTitle, findByTestId, container } = setup({
-      modifiedProperties: featuresToIdentifiedMapProperty(mockFAParcelLayerResponse as any)?.map(
-        p => PropertyForm.fromMapProperty(p),
-      ),
+      modifiedProperties: [getMockLocationFeatureDataset()],
     });
 
     const searchTab = getByText('Search');

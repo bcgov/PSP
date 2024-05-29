@@ -147,14 +147,14 @@ const AddSubdivisionView: React.FunctionComponent<
                     const allProperties = [...values.destinationProperties];
                     await properties.reduce(async (promise, property) => {
                       return promise.then(async () => {
-                        const formProperty = PropertyForm.fromMapProperty(property);
+                        const formProperty = PropertyForm.fromFeatureDataset(property);
                         formProperty.landArea =
-                          property.landArea && property.areaUnit
-                            ? getAreaValue(property.landArea, property.areaUnit)
+                          formProperty.landArea && formProperty.areaUnit
+                            ? getAreaValue(formProperty.landArea, formProperty.areaUnit)
                             : 0;
                         formProperty.areaUnit = AreaUnitTypes.SquareMeters;
-                        if (property.pid) {
-                          formProperty.address = await getPrimaryAddressByPid(property.pid);
+                        if (formProperty.pid) {
+                          formProperty.address = await getPrimaryAddressByPid(formProperty.pid);
                           allProperties.push(formProperty.toApi());
                         } else {
                           toast.error('Selected property must have a PID');
@@ -165,7 +165,7 @@ const AddSubdivisionView: React.FunctionComponent<
                   }}
                   selectedComponentId="destination-property-selector"
                   modifiedProperties={values.destinationProperties.map(dp =>
-                    PropertyForm.fromPropertyApi(dp),
+                    PropertyForm.fromPropertyApi(dp).toFeatureDataset(),
                   )}
                 />
                 <FieldArray name="destinationProperties">

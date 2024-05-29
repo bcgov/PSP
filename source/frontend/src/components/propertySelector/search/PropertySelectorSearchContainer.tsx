@@ -82,7 +82,7 @@ export const PropertySelectorSearchContainer: React.FC<IPropertySelectorSearchCo
         const getAddressTasks = result.features.map(p => {
           const latLngArray = getFeatureBoundedCenter(p);
           return getPropertyAddress(
-            { latitude: latLngArray[0], longitude: latLngArray[1] },
+            { latitude: latLngArray[1], longitude: latLngArray[0] },
             getNearestToPoint,
           );
         });
@@ -94,7 +94,9 @@ export const PropertySelectorSearchContainer: React.FC<IPropertySelectorSearchCo
           foundProperty.regionFeature = regionDistrictResults[i]?.regionFeature;
           foundProperty.districtFeature = regionDistrictResults[i]?.districtFeature;
           foundProperty.pimsFeature = {
-            properties: { STREET_ADDRESS_1: addressResults[i].fullAddress },
+            properties: {
+              STREET_ADDRESS_1: addressResults[i]?.fullAddress,
+            },
           } as Feature<Geometry, PIMS_Property_Location_View>;
           return foundProperty;
         }) as LocationFeatureDataset[];
