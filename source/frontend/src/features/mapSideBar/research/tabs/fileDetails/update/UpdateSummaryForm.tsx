@@ -134,6 +134,9 @@ const UpdateSummaryForm: React.FunctionComponent<IUpdateSummaryFormProps> = prop
               searchBox: {
                 background: 'white',
                 border: '1px solid #606060',
+                paddingTop: '0.8rem',
+                paddingBottom: '0.8rem',
+                paddingLeft: '1.2rem',
               },
             }}
           />

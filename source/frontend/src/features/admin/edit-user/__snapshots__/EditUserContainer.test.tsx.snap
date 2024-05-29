@@ -471,7 +471,7 @@ exports[`EditUserContainer component > makes a request based on the user id 1`] 
             >
               <div
                 class="search-wrapper searchWrapper "
-                style="background: white; border: 1px solid #606060;"
+                style="background: white; border: 1px solid #606060; padding-top: 0.8rem; padding-bottom: 0.8rem; padding-left: 1.2rem;"
               >
                 <input
                   autocomplete="off"
@@ -601,7 +601,7 @@ exports[`EditUserContainer component > makes a request based on the user id 1`] 
             >
               <div
                 class="search-wrapper searchWrapper "
-                style="background: white; border: 1px solid #606060;"
+                style="background: white; border: 1px solid #606060; padding-top: 0.8rem; padding-bottom: 0.8rem; padding-left: 1.2rem;"
               >
                 <input
                   autocomplete="off"

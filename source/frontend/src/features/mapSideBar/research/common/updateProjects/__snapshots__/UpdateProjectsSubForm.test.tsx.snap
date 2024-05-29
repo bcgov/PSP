@@ -364,7 +364,7 @@ exports[`UpdateProjectsSubForm > renders as expected with pre-existing form data
         class="row"
       >
         <div
-          class="col-xl-9 col-auto"
+          class="col-9"
         >
           <div
             class="c2 form-group"
@@ -424,7 +424,7 @@ exports[`UpdateProjectsSubForm > renders as expected with pre-existing form data
           </div>
         </div>
         <div
-          class="pl-0 mt-2 col-xl-3 col-auto"
+          class="p-0 m-0 col-auto"
         >
           <button
             class="c3 Button c4 btn btn-link"

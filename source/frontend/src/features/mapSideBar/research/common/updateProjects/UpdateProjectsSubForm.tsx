@@ -29,10 +29,10 @@ export const UpdateProjectsSubForm: React.FC<IUpdateProjectsSubFormProps> = ({ f
           {projects.map((_, index) => (
             <SectionField key={`project-row-${index}`} label="Ministry project">
               <Row>
-                <Col xs="auto" xl="9">
+                <Col xs="9">
                   <ProjectSelector field={`${field}[${index}].project`} />
                 </Col>
-                <Col xs="auto" xl="3" className="pl-0 mt-2">
+                <Col xs="auto" className="p-0 m-0">
                   <RemoveButton onRemove={() => arrayHelpers.remove(index)} />
                 </Col>
               </Row>

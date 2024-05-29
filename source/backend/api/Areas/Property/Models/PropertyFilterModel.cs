@@ -29,6 +29,11 @@ namespace Pims.Api.Areas.Property.Models.Search
         public string PlanNumber { get; set; }
 
         /// <summary>
+        /// get/set - Search by historical LIS or PS file numbers.
+        /// </summary>
+        public string Historical { get; set; }
+
+        /// <summary>
         /// get/set - The property ownership status.
         /// </summary>
         public IList<string> Ownership { get; set; }
@@ -54,11 +59,11 @@ namespace Pims.Api.Areas.Property.Models.Search
             // We want case-insensitive query parameter properties.
             var filter = new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>(query, StringComparer.OrdinalIgnoreCase);
 
-            this.Sort = filter.GetStringArrayValue(nameof(this.Sort));
-            var tempSort = this.Sort.ToList();
+            Sort = filter.GetStringArrayValue(nameof(Sort));
+            var tempSort = Sort.ToList();
 
             // Convert sort to db format
-            for (int i = 0; i < this.Sort.Length; i++)
+            for (int i = 0; i < Sort.Length; i++)
             {
                 if (tempSort[i].StartsWith("Location"))
                 {
@@ -72,20 +77,21 @@ namespace Pims.Api.Areas.Property.Models.Search
                 {
                     // The order will affect the display in the frontend. For now in alphabetical order.
                     // i.e. [Core Inventory, Disposed, Other Interest, Property of Interest]
-                    var direction = this.Sort[i].Split(' ')[1];
-                    tempSort[i] = this.Sort[i].Replace("Ownership", "IsOwned");
+                    var direction = Sort[i].Split(' ')[1];
+                    tempSort[i] = Sort[i].Replace("Ownership", "IsOwned");
                     tempSort.Add($"IsDisposed {direction}");
                     tempSort.Add($"IsOtherInterest {direction}");
                     tempSort.Add($"HasActiveAcquisitionFile {direction}");
                     tempSort.Add($"HasActiveResearchFile {direction}");
                 }
             }
-            this.Sort = tempSort.ToArray();
+            Sort = tempSort.ToArray();
 
-            this.PinOrPid = filter.GetStringValue(nameof(this.PinOrPid));
-            this.Address = filter.GetStringValue(nameof(this.Address));
-            this.PlanNumber = filter.GetStringValue(nameof(this.PlanNumber));
-            this.Ownership = filter.GetStringArrayValue(nameof(this.Ownership));
+            PinOrPid = filter.GetStringValue(nameof(PinOrPid));
+            Address = filter.GetStringValue(nameof(Address));
+            PlanNumber = filter.GetStringValue(nameof(PlanNumber));
+            Historical = filter.GetStringValue(nameof(Historical));
+            Ownership = filter.GetStringArrayValue(nameof(Ownership));
         }
         #endregion
 
@@ -106,6 +112,7 @@ namespace Pims.Api.Areas.Property.Models.Search
                 PinOrPid = model.PinOrPid,
                 Address = model.Address,
                 PlanNumber = model.PlanNumber,
+                Historical = model.Historical,
                 Ownership = model.Ownership,
             };
 
@@ -119,8 +126,9 @@ namespace Pims.Api.Areas.Property.Models.Search
         public override bool IsValid()
         {
             return base.IsValid()
-                || !string.IsNullOrWhiteSpace(this.PinOrPid)
-                || !string.IsNullOrWhiteSpace(this.Address);
+                || !string.IsNullOrWhiteSpace(PinOrPid)
+                || !string.IsNullOrWhiteSpace(Historical)
+                || !string.IsNullOrWhiteSpace(Address);
         }
         #endregion
     }

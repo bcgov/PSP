@@ -10,6 +10,8 @@ export interface IPropertyFilter {
   quantity: string | undefined;
   /** The pin or pid property identifiers. */
   pinOrPid: string;
+  /** The historical file number property identifiers. */
+  historical: string;
   /** The address of the property. */
   address: string;
   latitude: number | string | undefined;
@@ -27,6 +29,7 @@ export const defaultPropertyFilter: IPropertyFilter = {
   planNumber: '',
   latitude: '',
   longitude: '',
+  historical: '',
   page: undefined,
   quantity: undefined,
   ownership: 'isCoreInventory,isPropertyOfInterest,isOtherInterest',

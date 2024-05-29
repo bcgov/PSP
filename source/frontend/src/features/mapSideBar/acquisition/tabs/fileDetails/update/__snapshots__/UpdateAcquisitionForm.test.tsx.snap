@@ -215,19 +215,20 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
 }
 
 .c6 .react-datepicker__calendar-icon {
-  width: 3rem;
+  width: 2.4rem;
   height: 3rem;
   margin-top: 0.5rem;
+  margin-right: 1.2rem;
   right: 0;
   pointer-events: none;
 }
 
 .c6 .react-datepicker__view-calendar-icon input {
-  padding: 0.6rem 1rem 0.5rem 0.6rem;
+  padding: 0.8rem 1.2rem 0.8rem 1.2rem;
 }
 
 .c6 .react-datepicker-wrapper {
-  max-width: 16rem;
+  max-width: 17rem;
 }
 
 .c7.c7.form-control.is-valid {
@@ -303,12 +304,15 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
 }
 
 .c8 {
-  background: none;
   position: relative;
-  border-radius: 0.3rem;
-  padding: 0.6rem;
-  padding-right: 2.1rem;
+  border-radius: 0.4rem;
+  padding-top: 0.8rem;
+  padding-bottom: 0.8rem;
+  padding-left: 1.2rem;
+  padding-right: 2.8rem;
+  background-image: none;
   border: solid 0.1rem;
+  cursor: default;
 }
 
 .c8.is-invalid {
@@ -318,7 +322,11 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
 .c10.c10.btn {
   position: absolute;
   top: calc(50% - 1.4rem);
-  right: 0.4rem;
+  padding-top: 0.8rem;
+  padding-bottom: 0.8rem;
+  padding-right: 1.2rem;
+  height: 1.6rem;
+  right: 0rem;
   -webkit-text-decoration: none;
   text-decoration: none;
   line-height: unset;
@@ -343,8 +351,8 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
 }
 
 .c1 {
-  margin: 1.5rem;
-  padding: 1.5rem;
+  margin: 1.6rem;
+  padding: 1.6rem;
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;

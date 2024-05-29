@@ -64,7 +64,7 @@ namespace Pims.Dal.Repositories
             }
 
             var skip = (filter.Page - 1) * filter.Quantity;
-            var query = this.Context.GeneratePropertyQuery(this.User, filter);
+            var query = Context.GeneratePropertyQuery(this.User, filter);
             var items = query
                 .Skip(skip)
                 .Take(filter.Quantity)

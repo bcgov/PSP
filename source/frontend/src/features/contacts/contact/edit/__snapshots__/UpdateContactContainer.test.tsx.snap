@@ -206,7 +206,7 @@ exports[`UpdateContactContainer > renders as expected 1`] = `
   border-bottom: solid 0.5rem;
   width: 100%;
   text-align: left;
-  margin-bottom: 2rem;
+  margin-bottom: 2.4rem;
 }
 
 .c4 {
@@ -270,8 +270,8 @@ exports[`UpdateContactContainer > renders as expected 1`] = `
 }
 
 .c9 {
-  margin: 1.5rem;
-  padding: 1.5rem;
+  margin: 1.6rem;
+  padding: 1.6rem;
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
@@ -689,17 +689,17 @@ exports[`UpdateContactContainer > renders as expected 1`] = `
                           />
                         </div>
                         <div
-                          class="rbt-aux"
+                          class="rbt-aux pr-3"
                         >
                           <svg
                             color="#bcbec5"
                             fill="currentColor"
-                            height="2.5rem"
+                            height="1.6rem"
                             stroke="currentColor"
                             stroke-width="0"
                             style="color: rgb(188, 190, 197);"
                             viewBox="0 0 512 512"
-                            width="2.5rem"
+                            width="1.6rem"
                             xmlns="http://www.w3.org/2000/svg"
                           >
                             <path

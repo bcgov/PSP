@@ -157,7 +157,7 @@ exports[`AccessRequestPage > renders correctly 1`] = `
   border-bottom: solid 0.5rem;
   width: 100%;
   text-align: left;
-  margin-bottom: 2rem;
+  margin-bottom: 2.4rem;
 }
 
 .c4.form-group {

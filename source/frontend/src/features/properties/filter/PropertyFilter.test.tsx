@@ -272,6 +272,7 @@ describe('MapFilterBar', () => {
       quantity: undefined,
       latitude: '',
       longitude: '',
+      historical: '',
       ownership: 'isCoreInventory,isPropertyOfInterest,isOtherInterest',
     });
   });
