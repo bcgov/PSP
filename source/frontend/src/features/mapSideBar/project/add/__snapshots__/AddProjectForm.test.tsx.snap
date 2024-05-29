@@ -772,31 +772,6 @@ exports[`AddProjectForm component > renders as expected with existing data 1`] =
   margin-right: 0;
 }
 
-.c9 .react-datepicker__calendar-icon {
-  width: 2.4rem;
-  height: 3rem;
-  margin-top: 0.5rem;
-  margin-right: 1.2rem;
-  right: 0;
-  pointer-events: none;
-}
-
-.c9 .react-datepicker__view-calendar-icon input {
-  padding: 0.8rem 1.2rem 0.8rem 1.2rem;
-}
-
-.c9 .react-datepicker-wrapper {
-  max-width: 17rem;
-}
-
-.c10.c10.form-control.is-valid {
-  background-image: none;
-}
-
-.c10.c10.form-control.is-invalid {
-  border-color: #d8292f !important;
-}
-
 .c8.c8.btn {
   color: #aaaaaa;
   -webkit-text-decoration: none;
@@ -829,6 +804,31 @@ exports[`AddProjectForm component > renders as expected with existing data 1`] =
 .c8.c8.btn:focus .text {
   display: inline;
   line-height: 2rem;
+}
+
+.c9 .react-datepicker__calendar-icon {
+  width: 2.4rem;
+  height: 3rem;
+  margin-top: 0.5rem;
+  margin-right: 1.2rem;
+  right: 0;
+  pointer-events: none;
+}
+
+.c9 .react-datepicker__view-calendar-icon input {
+  padding: 0.8rem 1.2rem 0.8rem 1.2rem;
+}
+
+.c9 .react-datepicker-wrapper {
+  max-width: 17rem;
+}
+
+.c10.c10.form-control.is-valid {
+  background-image: none;
+}
+
+.c10.c10.form-control.is-invalid {
+  border-color: #d8292f !important;
 }
 
 .c6 button.close {
