@@ -7,7 +7,7 @@ namespace Pims.Api.Models.CodeTypes
     /// Defines the GeoJSON Objects types.
     /// </summary>
     [JsonConverter(typeof(JsonStringEnumMemberConverter))]
-    public enum GeoJSONObjectTypes
+    public enum GeoJsonTypes
     {
 
         [EnumMember(Value = "Point")]
