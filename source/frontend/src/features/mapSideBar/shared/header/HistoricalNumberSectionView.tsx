@@ -1,13 +1,13 @@
 import { HeaderField } from '@/components/common/HeaderField/HeaderField';
 import { ApiGen_Concepts_HistoricalFileNumber } from '@/models/api/generated/ApiGen_Concepts_HistoricalFileNumber';
 
-import HistoricalNumberFieldView from './HistoricalNumberFieldView';
+import { HistoricalNumberFieldView } from './HistoricalNumberFieldView';
 
 export interface IHistoricalNumbersViewProps {
   historicalNumbers: ApiGen_Concepts_HistoricalFileNumber[];
 }
 
-const HistoricalNumberSectionView: React.FC<IHistoricalNumbersViewProps> = ({
+export const HistoricalNumberSectionView: React.FC<IHistoricalNumbersViewProps> = ({
   historicalNumbers,
 }) => {
   return (
@@ -16,5 +16,3 @@ const HistoricalNumberSectionView: React.FC<IHistoricalNumbersViewProps> = ({
     </HeaderField>
   );
 };
-
-export default HistoricalNumberSectionView;

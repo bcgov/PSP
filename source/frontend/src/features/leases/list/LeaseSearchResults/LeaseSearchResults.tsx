@@ -9,7 +9,7 @@ import styled from 'styled-components';
 import TooltipIcon from '@/components/common/TooltipIcon';
 import { ColumnWithProps, renderTypeCode, Table } from '@/components/Table';
 import { TableSort } from '@/components/Table/TableSort';
-import HistoricalNumberFieldView from '@/features/mapSideBar/shared/header/HistoricalNumberFieldView';
+import { HistoricalNumberFieldView } from '@/features/mapSideBar/shared/header/HistoricalNumberFieldView';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { exists, prettyFormatDate } from '@/utils';
 import { formatApiPersonNames } from '@/utils/personUtils';
@@ -119,7 +119,6 @@ const columns: ColumnWithProps<ApiGen_Concepts_Lease>[] = [
     maxWidth: 30,
     Cell: (props: CellProps<ApiGen_Concepts_Lease>) => {
       // Get unique file numbers from lease properties
-      //const fileNumbers: ApiGen_Concepts_HistoricalFileNumber[] = [];
       const fileNumbers = props.row.original.fileProperties?.flatMap(
         fl => fl.property.historicalFileNumbers,
       );
@@ -174,16 +173,6 @@ export function LeaseSearchResults(props: ILeaseSearchResultsProps) {
     ></Table>
   );
 }
-
-const FileNumbersDiv = styled('div')`
-  label {
-    display: inline-block;
-
-    span {
-      font-weight: bold;
-    }
-  }
-`;
 
 const ExpiredIcon = styled('span')`
   color: ${props => props.theme.bcTokens.surfaceColorPrimaryDangerButtonDefault};

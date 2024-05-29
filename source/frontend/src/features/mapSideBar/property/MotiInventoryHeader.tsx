@@ -15,7 +15,7 @@ import { exists, formatApiAddress, pidFormatter } from '@/utils';
 import { mapFeatureToProperty } from '@/utils/mapPropertyUtils';
 
 import HistoricalNumbersContainer from '../shared/header/HistoricalNumberContainer';
-import HistoricalNumberFieldView from '../shared/header/HistoricalNumberSectionView';
+import { HistoricalNumberSectionView } from '../shared/header/HistoricalNumberSectionView';
 
 export interface IMotiInventoryHeaderProps {
   isLoading: boolean;
@@ -68,7 +68,7 @@ export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderPr
           </HeaderField>
           {exists(apiProperty) && (
             <HistoricalNumbersContainer
-              View={HistoricalNumberFieldView}
+              View={HistoricalNumberSectionView}
               propertyIds={[apiProperty?.id]}
             />
           )}

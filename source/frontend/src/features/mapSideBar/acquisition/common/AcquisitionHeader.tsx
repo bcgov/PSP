@@ -11,7 +11,7 @@ import { exists } from '@/utils';
 import { formatMinistryProject } from '@/utils/formUtils';
 
 import HistoricalNumbersContainer from '../../shared/header/HistoricalNumberContainer';
-import HistoricalNumberFieldView from '../../shared/header/HistoricalNumberSectionView';
+import { HistoricalNumberSectionView } from '../../shared/header/HistoricalNumberSectionView';
 
 export interface IAcquisitionHeaderProps {
   acquisitionFile?: ApiGen_Concepts_AcquisitionFile;
@@ -49,7 +49,7 @@ export const AcquisitionHeader: React.FunctionComponent<
             </>
           )}
         </HeaderField>
-        <HistoricalNumbersContainer propertyIds={propertyIds} View={HistoricalNumberFieldView} />
+        <HistoricalNumbersContainer propertyIds={propertyIds} View={HistoricalNumberSectionView} />
       </Col>
       <Col>
         <StyledFiller>

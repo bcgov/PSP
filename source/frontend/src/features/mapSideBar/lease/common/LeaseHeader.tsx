@@ -19,7 +19,7 @@ import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Le
 import { exists, prettyFormatDate } from '@/utils';
 
 import HistoricalNumbersContainer from '../../shared/header/HistoricalNumberContainer';
-import HistoricalNumberFieldView from '../../shared/header/HistoricalNumberSectionView';
+import { HistoricalNumberSectionView } from '../../shared/header/HistoricalNumberSectionView';
 import { LeaseHeaderTenants } from './LeaseHeaderTenants';
 
 export interface ILeaseHeaderProps {
@@ -72,7 +72,10 @@ export const LeaseHeader: React.FC<ILeaseHeaderProps> = ({ lease, lastUpdatedBy 
               )}
             </HeaderContentCol>
           </Row>
-          <HistoricalNumbersContainer propertyIds={propertyIds} View={HistoricalNumberFieldView} />
+          <HistoricalNumbersContainer
+            propertyIds={propertyIds}
+            View={HistoricalNumberSectionView}
+          />
         </Col>
 
         <Col>

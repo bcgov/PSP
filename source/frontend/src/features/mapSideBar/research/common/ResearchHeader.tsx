@@ -10,7 +10,7 @@ import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Conc
 import { exists } from '@/utils';
 
 import HistoricalNumbersContainer from '../../shared/header/HistoricalNumberContainer';
-import HistoricalNumberFieldView from '../../shared/header/HistoricalNumberSectionView';
+import { HistoricalNumberSectionView } from '../../shared/header/HistoricalNumberSectionView';
 
 export interface IResearchHeaderProps {
   researchFile?: ApiGen_Concepts_ResearchFile;
@@ -64,7 +64,7 @@ const ResearchHeader: React.FunctionComponent<
         <HeaderField label="Ministry district:" labelWidth={leftColumnLabel} contentWidth="9">
           {districts}
         </HeaderField>
-        <HistoricalNumbersContainer propertyIds={propertyIds} View={HistoricalNumberFieldView} />
+        <HistoricalNumbersContainer propertyIds={propertyIds} View={HistoricalNumberSectionView} />
       </Col>
       <Col>
         <StyledFiller>
