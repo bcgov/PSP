@@ -53,9 +53,10 @@ namespace PIMS.Tests.Automation.PageObjects
         private By searchLicense1stResultProgramContent = By.XPath("//div[@data-testid='leasesTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[3]");
         private By searchLicense1stResultTenantsContent = By.XPath("//div[@data-testid='leasesTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[4]/div/div");
         private By searchLicense1stResultPropertiesContent = By.XPath("//div[@data-testid='leasesTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[5]/div/div");
-        private By searchLicense1stResultStatusContent = By.XPath("//div[@data-testid='leasesTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[6]");
+        private By searchLicense1stResultHistoricalFileContent = By.XPath("//div[@data-testid='leasesTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[6]");
+        private By searchLicense1stResultStatusContent = By.XPath("//div[@data-testid='leasesTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[7]");
 
-        private By searchLicenseFileHeaderCode = By.XPath("//label[contains(text(),'Lease/License #')]/parent::div/following-sibling::div/strong/div/span[1]");
+        private By searchLicenseFileHeaderCode = By.XPath("//label[contains(text(),'Lease/License #')]/parent::strong/parent::div/following-sibling::div/span[1]");
 
         //Search Leases Pagination
         private By searchLeasesPaginationMenu = By.CssSelector("div[class='Menu-root']");
@@ -265,6 +266,9 @@ namespace PIMS.Tests.Automation.PageObjects
 
             if (lease.SearchProperties.PID != "")
                 Assert.True(webDriver.FindElements(searchLicense1stResultPropertiesContent).Count > 0);
+
+            //TO-DO: HISTORICAL FILE
+
 
             if(lease.LeaseStatus != "")
                 AssertTrueContentEquals(searchLicense1stResultStatusContent, lease.LeaseStatus);
