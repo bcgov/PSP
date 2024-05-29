@@ -1,6 +1,8 @@
 import difference from 'lodash/difference';
 import map from 'lodash/map';
-import { FaRegTimesCircle } from 'react-icons/fa';
+import { FaTrash } from 'react-icons/fa';
+
+import { StyledRemoveLinkButton } from '@/components/common/buttons/RemoveButton';
 
 import { ColumnWithProps } from '../components/Table/types';
 
@@ -15,20 +17,22 @@ export const getColumnsWithRemove = <T extends object>(
   if (idIndex >= 0) {
     cols.splice(idIndex, 1);
   }
-  cols.unshift({
+  cols.push({
     Header: '',
     align: 'center',
     accessor: 'id' as any,
     maxWidth: 20,
     Cell: (props: any) => (
-      <FaRegTimesCircle
+      <StyledRemoveLinkButton
         title="Click to remove"
         style={{ cursor: 'pointer' }}
-        size={16}
+        variant="light"
         onClick={() => {
           setRows(difference(map(props.rows, 'original'), [props.row.original]));
         }}
-      />
+      >
+        <FaTrash size="1.6rem" />
+      </StyledRemoveLinkButton>
     ),
   });
   return cols;
