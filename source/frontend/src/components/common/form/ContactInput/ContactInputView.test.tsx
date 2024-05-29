@@ -22,7 +22,8 @@ describe('ContactInputView component', () => {
       <Formik
         onSubmit={noop}
         initialValues={
-          props.initialValues ?? ({ test: { id:'234', firstName: 'blah', surname: 'blah' } } as any)
+          props.initialValues ??
+          ({ test: { id: '234', firstName: 'blah', surname: 'blah' } } as any)
         }
       >
         <ContactInputView {...{ ...props }} />

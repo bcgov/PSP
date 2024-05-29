@@ -111,7 +111,7 @@ exports[`PropertyInformation component > renders a complete lease as expected 1`
                 <div
                   class="text-right col"
                 >
-                  123
+                  123.0000
                 </div>
                 <div
                   class="col"
@@ -125,7 +125,7 @@ exports[`PropertyInformation component > renders a complete lease as expected 1`
                 <div
                   class="text-right col"
                 >
-                  0.01
+                  0.0123
                 </div>
                 <div
                   class="col"
@@ -147,7 +147,7 @@ exports[`PropertyInformation component > renders a complete lease as expected 1`
                 <div
                   class="text-right col"
                 >
-                  1,323.96
+                  1,323.9610
                 </div>
                 <div
                   class="col"
@@ -161,7 +161,7 @@ exports[`PropertyInformation component > renders a complete lease as expected 1`
                 <div
                   class="text-right col"
                 >
-                  0.03
+                  0.0304
                 </div>
                 <div
                   class="col"
@@ -391,7 +391,7 @@ exports[`PropertyInformation component > renders minimally as expected 1`] = `
                 <div
                   class="text-right col"
                 >
-                  123
+                  123.0000
                 </div>
                 <div
                   class="col"
@@ -405,7 +405,7 @@ exports[`PropertyInformation component > renders minimally as expected 1`] = `
                 <div
                   class="text-right col"
                 >
-                  0.01
+                  0.0123
                 </div>
                 <div
                   class="col"
@@ -427,7 +427,7 @@ exports[`PropertyInformation component > renders minimally as expected 1`] = `
                 <div
                   class="text-right col"
                 >
-                  1,323.96
+                  1,323.9610
                 </div>
                 <div
                   class="col"
@@ -441,7 +441,7 @@ exports[`PropertyInformation component > renders minimally as expected 1`] = `
                 <div
                   class="text-right col"
                 >
-                  0.03
+                  0.0304
                 </div>
                 <div
                   class="col"
