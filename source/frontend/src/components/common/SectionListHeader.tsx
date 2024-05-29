@@ -12,6 +12,7 @@ export interface ISectionListHeaderProps {
   addButtonIcon?: JSX.Element;
   onAdd?: () => void;
   claims: Claims[];
+  dataTestid?: string;
 }
 
 export const SectionListHeader: React.FunctionComponent<
@@ -27,7 +28,7 @@ export const SectionListHeader: React.FunctionComponent<
       </Col>
       <Col xs="auto" className="my-1">
         {hasClaim(props.claims) && (
-          <StyledSectionAddButton onClick={onClick}>
+          <StyledSectionAddButton onClick={onClick} data-testid={props.dataTestid}>
             {props.addButtonIcon}
             &nbsp;{props.addButtonText ?? 'Add'}
           </StyledSectionAddButton>
