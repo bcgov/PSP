@@ -25,8 +25,8 @@ namespace PIMS.Tests.Automation.PageObjects
         private By helpDeskFooterQuestion = By.XPath("//p[contains(text(),'Do you want to proceed and send the email?')]");
 
         //Help Desk Buttons Elements
-        private By noButton = By.XPath("//div[contains(text(), 'No')]/parent::button");
-        private By yesButton = By.XPath("//div[contains(text(), 'Yes')]/parent::button");
+        private By noButton = By.CssSelector("button[data-testid='cancel-modal-button']");
+        private By yesButton = By.CssSelector("a[data-testid='ok-modal-button']");
 
         public HelpDesk(IWebDriver webDriver) : base(webDriver)
         {}

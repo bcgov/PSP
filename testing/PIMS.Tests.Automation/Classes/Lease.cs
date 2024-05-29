@@ -5,6 +5,8 @@
         public string MinistryProjectCode { get; set; } = null!;
         public string MinistryProject { get; set; } = null!;    
         public string LeaseStatus { get; set; } = null!;
+        public string LeaseTerminationReason { get; set; } = null!;
+        public string LeaseCancellationReason { get; set; } = null!;
         public string AccountType { get; set; } = null!;
         public string LeaseStartDate { get; set; } = null!;
         public string LeaseExpiryDate { get; set; } = null!;
@@ -33,8 +35,6 @@
         public string PhysicalLeaseExist { get; set; } = null!;
         public string DigitalLeaseExist { get; set; } = null!;
         public string DocumentLocation { get; set; } = null!;
-        public string LISNumber { get; set; } = null!;
-        public string PSNumber { get; set; } = null!;
         public string LeaseNotes { get; set; } = null!;
         public int SearchPropertiesIndex { get; set; } = 0;
         public SearchProperty SearchProperties { get; set; } = new SearchProperty();
@@ -56,8 +56,12 @@
         public string OtherImprovementDescription { get; set; } = null!;
         public int TotalImprovementCount { get; set; } = 0;
 
-        public string AircraftInsuranceInPlace { get; set; } = null!;
 
+        public string AccidentalInsuranceInPlace { get; set; } = null!;
+        public string AccidentalLimit { get; set; } = null!;
+        public string AccidentalPolicyExpiryDate { get; set; } = null!;
+        public string AccidentalDescriptionCoverage { get; set; } = null!;
+        public string AircraftInsuranceInPlace { get; set; } = null!;
         public string AircraftLimit { get; set; } = null!;
         public string AircraftPolicyExpiryDate { get; set; } = null!;
         public string AircraftDescriptionCoverage { get; set; } = null!;
@@ -69,6 +73,10 @@
         public string MarineLimit { get; set; } = null!;
         public string MarinePolicyExpiryDate { get; set; } = null!;
         public string MarineDescriptionCoverage { get; set; } = null!;
+        public string UnmannedAirVehicleInsuranceInPlace { get; set; } = null!;
+        public string UnmannedAirVehicleLimit { get; set; } = null!;
+        public string UnmannedAirVehiclePolicyExpiryDate { get; set; } = null!;
+        public string UnmannedAirVehicleDescriptionCoverage { get; set; } = null!;
         public string VehicleInsuranceInPlace { get; set; } = null!;
         public string VehicleLimit { get; set; } = null!;
         public string VehiclePolicyExpiryDate { get; set; } = null!;
