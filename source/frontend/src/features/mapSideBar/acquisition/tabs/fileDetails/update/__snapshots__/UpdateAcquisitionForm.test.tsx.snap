@@ -141,35 +141,6 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
   margin-right: 0;
 }
 
-.c5 button.close {
-  font-size: 2.4rem;
-}
-
-.c6 .react-datepicker__calendar-icon {
-  width: 2.4rem;
-  height: 3rem;
-  margin-top: 0.5rem;
-  margin-right: 1.2rem;
-  right: 0;
-  pointer-events: none;
-}
-
-.c6 .react-datepicker__view-calendar-icon input {
-  padding: 0.8rem 1.2rem 0.8rem 1.2rem;
-}
-
-.c6 .react-datepicker-wrapper {
-  max-width: 17rem;
-}
-
-.c7.c7.form-control.is-valid {
-  background-image: none;
-}
-
-.c7.c7.form-control.is-invalid {
-  border-color: #d8292f !important;
-}
-
 .c11.c11.btn {
   color: #aaaaaa;
   -webkit-text-decoration: none;
@@ -237,6 +208,35 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
 .c19.c19.btn:focus .text {
   display: inline;
   line-height: 2rem;
+}
+
+.c5 button.close {
+  font-size: 2.4rem;
+}
+
+.c6 .react-datepicker__calendar-icon {
+  width: 2.4rem;
+  height: 3rem;
+  margin-top: 0.5rem;
+  margin-right: 1.2rem;
+  right: 0;
+  pointer-events: none;
+}
+
+.c6 .react-datepicker__view-calendar-icon input {
+  padding: 0.8rem 1.2rem 0.8rem 1.2rem;
+}
+
+.c6 .react-datepicker-wrapper {
+  max-width: 17rem;
+}
+
+.c7.c7.form-control.is-valid {
+  background-image: none;
+}
+
+.c7.c7.form-control.is-invalid {
+  border-color: #d8292f !important;
 }
 
 .c15 {
