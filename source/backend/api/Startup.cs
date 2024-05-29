@@ -139,7 +139,6 @@ namespace Pims.Api
                     options.JsonSerializerOptions.WriteIndented = jsonSerializerOptions.WriteIndented;
                     options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
                     options.JsonSerializerOptions.Converters.Add(new Int32ToStringJsonConverter());
-                    // options.JsonSerializerOptions.Converters.Add(new GeometryJsonConverter());  // TODO: remove obsolete custom geojson serializer
                     options.JsonSerializerOptions.Converters.Add(new DateOnlyJsonConverter());
                     options.JsonSerializerOptions.Converters.Add(new NetTopologySuite.IO.Converters.GeoJsonConverterFactory());
                 });
@@ -153,8 +152,8 @@ namespace Pims.Api
                     options.JsonSerializerOptions.WriteIndented = jsonSerializerOptions.WriteIndented;
                     options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
                     options.JsonSerializerOptions.Converters.Add(new Int32ToStringJsonConverter());
-                    options.JsonSerializerOptions.Converters.Add(new GeometryJsonConverter());
                     options.JsonSerializerOptions.Converters.Add(new DateOnlyJsonConverter());
+                    options.JsonSerializerOptions.Converters.Add(new NetTopologySuite.IO.Converters.GeoJsonConverterFactory());
                 });
 
             services.AddAuthentication(options =>
