@@ -66,10 +66,10 @@ export const HistoricalNumberFieldView: React.FC<IHistoricalNumbersViewProps> = 
 
           {Object.values(p.historicalValues).map((historicalValue, index) => {
             return (
-              <>
+              <span key={index}>
                 {historicalValue.historicalFileNumber}
                 {index + 1 < Object.values(p.historicalValues).length && <span>, </span>}
-              </>
+              </span>
             );
           })}
         </>

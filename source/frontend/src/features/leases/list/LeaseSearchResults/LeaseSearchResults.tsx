@@ -119,9 +119,10 @@ const columns: ColumnWithProps<ApiGen_Concepts_Lease>[] = [
     maxWidth: 30,
     Cell: (props: CellProps<ApiGen_Concepts_Lease>) => {
       // Get unique file numbers from lease properties
-      const fileNumbers = props.row.original.fileProperties?.flatMap(
-        fl => fl.property.historicalFileNumbers,
-      );
+      const fileNumbers =
+        props.row.original?.fileProperties
+          ?.flatMap(fl => fl?.property?.historicalFileNumbers)
+          .filter(exists) ?? [];
 
       return <HistoricalNumberFieldView historicalNumbers={fileNumbers} />;
     },
