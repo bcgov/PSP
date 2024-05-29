@@ -162,7 +162,7 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.PropertyView);
 
             var properties = _dispositionFilePropertyRepository.GetPropertiesByDispositionFileId(id);
-            return _propertyService.TransformPropertyLocationsToWgs84(properties);
+            return _propertyService.TransformAllPropertiesToLatLong(properties);
         }
 
         public IEnumerable<PimsDispositionFileTeam> GetTeamMembers()

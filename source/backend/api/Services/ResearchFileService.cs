@@ -67,7 +67,7 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.PropertyView);
 
             var propertyResearchFiles = _researchFilePropertyRepository.GetAllByResearchFileId(researchFileId);
-            return _propertyService.TransformPropertyLocationsToWgs84(propertyResearchFiles);
+            return _propertyService.TransformAllPropertiesToLatLong(propertyResearchFiles);
         }
 
         public PimsResearchFile Add(PimsResearchFile researchFile, IEnumerable<UserOverrideCode> userOverrideCodes)

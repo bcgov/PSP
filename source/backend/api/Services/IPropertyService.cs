@@ -52,12 +52,20 @@ namespace Pims.Api.Services
         IList<PimsHistoricalFileNumber> UpdateHistoricalFileNumbers(long propertyId, IEnumerable<PimsHistoricalFileNumber> pimsHistoricalNumbers);
 
         /// <summary>
+        /// Returns the spatial location and boundary polygons in lat/long (4326) for a given property.
+        /// The spatial values will be modified in-place.
+        /// </summary>
+        /// <param name="property">The property to re-project.</param>
+        /// <returns>The property with transformed spatial locations.</returns>
+        PimsProperty TransformPropertyToLatLong(PimsProperty property);
+
+        /// <summary>
         /// Returns the spatial location and boundary polygons in lat/long (4326) for a list of file properties.
         /// The spatial values will be modified in-place.
         /// </summary>
         /// <param name="fileProperties">The file properties to re-project.</param>
         /// <returns>The file properties with transformed spatial locations.</returns>
-        List<T> TransformPropertyLocationsToWgs84<T>(List<T> fileProperties)
+        List<T> TransformAllPropertiesToLatLong<T>(List<T> fileProperties)
             where T : IWithPropertyEntity;
     }
 }

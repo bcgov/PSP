@@ -199,7 +199,7 @@ namespace Pims.Api.Services
             pimsUser.ThrowInvalidAccessToLeaseFile(_leaseRepository.GetNoTracking(leaseId).RegionCode);
 
             var propertyLeases = _propertyLeaseRepository.GetAllByLeaseId(leaseId);
-            return _propertyService.TransformPropertyLocationsToWgs84(propertyLeases.ToList());
+            return _propertyService.TransformAllPropertiesToLatLong(propertyLeases.ToList());
         }
 
         public PimsLease Update(PimsLease lease, IEnumerable<UserOverrideCode> userOverrides)

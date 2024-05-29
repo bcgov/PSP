@@ -159,7 +159,7 @@ namespace Pims.Api.Services
             _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, id);
 
             var properties = _acquisitionFilePropertyRepository.GetPropertiesByAcquisitionFileId(id);
-            return _propertyService.TransformPropertyLocationsToWgs84(properties);
+            return _propertyService.TransformAllPropertiesToLatLong(properties);
         }
 
         public IEnumerable<PimsAcquisitionOwner> GetOwners(long id)
