@@ -4,11 +4,14 @@ using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using Microsoft.Extensions.Logging;
+using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Models.CodeTypes;
 using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
+using Pims.Dal.Entities.Extensions;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Helpers;
@@ -88,6 +91,11 @@ namespace Pims.Api.Services
                     property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.WGS84);
                 }
             }
+
+            var checkListItems = lease.PimsLeaseChecklistItems.ToList();
+            AppendNewItemsToChecklist(lease, ref checkListItems);
+            lease.PimsLeaseChecklistItems = checkListItems;
+
             return lease;
         }
 
@@ -188,6 +196,8 @@ namespace Pims.Api.Services
 
             var leasesWithProperties = AssociatePropertyLeases(lease, userOverrides);
 
+            lease.PimsLeaseChecklistItems = GetActiveChecklistItemsForLease();
+
             return _leaseRepository.Add(leasesWithProperties);
         }
 
@@ -247,6 +257,58 @@ namespace Pims.Api.Services
 
             _leaseRepository.CommitTransaction();
             return _leaseRepository.GetNoTracking(lease.LeaseId);
+        }
+
+        public IEnumerable<PimsLeaseChecklistItem> GetChecklistItems(long id)
+        {
+            _logger.LogInformation("Getting Lease checklist with Id: {id}", id);
+            _user.ThrowIfNotAuthorized(Permissions.LeaseView);
+
+            var pimsUser = _userRepository.GetByKeycloakUserId(_user.GetUserKey());
+            pimsUser.ThrowInvalidAccessToLeaseFile(_leaseRepository.GetNoTracking(id).RegionCode);
+
+            var checklistItems = _leaseRepository.GetAllChecklistItemsByLeaseId(id);
+
+            var lease = _leaseRepository.Get(id);
+            AppendNewItemsToChecklist(lease, ref checklistItems);
+
+            return checklistItems;
+        }
+
+        public PimsLease UpdateChecklistItems(long leaseId, IList<PimsLeaseChecklistItem> checklistItems)
+        {
+            checklistItems.ThrowIfNull(nameof(checklistItems));
+
+            _logger.LogInformation("Updating Lease checklist with id: {leaseId}", leaseId);
+            _user.ThrowIfNotAuthorized(Permissions.LeaseEdit);
+
+            var pimsUser = _userRepository.GetByKeycloakUserId(_user.GetUserKey());
+            pimsUser.ThrowInvalidAccessToLeaseFile(_leaseRepository.GetNoTracking(leaseId).RegionCode);
+
+            // Get the current checklist items for this acquisition file.
+            var currentItems = _leaseRepository.GetAllChecklistItemsByLeaseId(leaseId).ToDictionary(ci => ci.LeaseChecklistItemId);
+
+            foreach (var incomingItem in checklistItems)
+            {
+                if (!currentItems.TryGetValue(incomingItem.LeaseChecklistItemId, out var existingItem) && incomingItem.LeaseChecklistItemId != 0)
+                {
+                    throw new BadRequestException($"Cannot update checklist item. Item with Id: {incomingItem.LeaseChecklistItemId} not found.");
+                }
+
+                // Only update checklist items that changed.
+                if (existingItem == null)
+                {
+                    _leaseRepository.AddChecklistItem(incomingItem);
+                }
+                else if (existingItem.LeaseChklstItemStatusTypeCode != incomingItem.LeaseChklstItemStatusTypeCode)
+                {
+                    _leaseRepository.UpdateChecklistItem(incomingItem);
+                }
+            }
+
+            _leaseRepository.CommitTransaction();
+
+            return _leaseRepository.Get(leaseId);
         }
 
         private PimsLeaseNote GeneratePimsLeaseNote(PimsLease currentLease, PimsLease lease)
@@ -432,6 +494,50 @@ namespace Pims.Api.Services
                 {
                     _logger.LogDebug("Adding new property without a pid or pin");
                     _propertyService.PopulateNewProperty(leaseProperty.Property, true, false);
+                }
+            }
+        }
+
+        private List<PimsLeaseChecklistItem> GetActiveChecklistItemsForLease()
+        {
+            List<PimsLeaseChecklistItem> chklistItems = new();
+            foreach (var itemType in _leaseRepository.GetAllChecklistItemTypes().Where(x => !x.IsExpiredType() && !x.IsDisabled))
+            {
+                PimsLeaseChecklistItem checklistItem = new ()
+                {
+                    LeaseChklstItemTypeCode = itemType.LeaseChklstItemTypeCode,
+                    LeaseChklstItemStatusTypeCode = LeaseChecklistItemStatusTypes.INCOMP.ToString(),
+                };
+
+                chklistItems.Add(checklistItem);
+            }
+
+            return chklistItems;
+        }
+
+        private void AppendNewItemsToChecklist(PimsLease lease, ref List<PimsLeaseChecklistItem> pimsLeaseChecklistItems)
+        {
+            var doNotAddToStatuses = new List<string>() { LeaseStatusTypes.DISCARD.ToString(), LeaseStatusTypes.ARCHIVED.ToString() };
+            if (doNotAddToStatuses.Contains(lease.LeaseStatusTypeCode))
+            {
+                return;
+            }
+
+            PimsLeaseChklstItemStatusType incompleteStatusType = _lookupRepository.GetAllLeaseChecklistItemStatusTypes().FirstOrDefault(cst => cst.Id == LeaseChecklistItemStatusTypes.INCOMP.ToString());
+            foreach (var itemType in _leaseRepository.GetAllChecklistItemTypes().Where(x => !x.IsExpiredType() && !x.IsDisabled))
+            {
+                if (!pimsLeaseChecklistItems.Any(cli => cli.LeaseChklstItemTypeCode == itemType.LeaseChklstItemTypeCode) && DateOnly.FromDateTime(lease.AppCreateTimestamp) >= itemType.EffectiveDate)
+                {
+                    var checklistItem = new PimsLeaseChecklistItem
+                    {
+                        LeaseChklstItemTypeCode = itemType.LeaseChklstItemTypeCode,
+                        LeaseChklstItemTypeCodeNavigation = itemType,
+                        LeaseChklstItemStatusTypeCode = incompleteStatusType.Id,
+                        LeaseId = lease.LeaseId,
+                        LeaseChklstItemStatusTypeCodeNavigation = incompleteStatusType,
+                    };
+
+                    pimsLeaseChecklistItems.Add(checklistItem);
                 }
             }
         }

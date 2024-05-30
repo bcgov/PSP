@@ -3,6 +3,7 @@ import { useCallback, useMemo } from 'react';
 
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import { Api_LastUpdatedBy } from '@/models/api/File';
+import { ApiGen_Concepts_FileWithChecklist } from '@/models/api/generated/ApiGen_Concepts_FileWithChecklist';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils';
 
@@ -12,7 +13,7 @@ import { useApiLeases } from '../pims-api/useApiLeases';
  * hook that interacts with the Lease API.
  */
 export const useLeaseRepository = () => {
-  const { getLastUpdatedByApi, getApiLease } = useApiLeases();
+  const { getLastUpdatedByApi, getApiLease, putLeaseChecklist } = useApiLeases();
 
   const getLastUpdatedBy = useApiRequestWrapper<
     (leaseId: number) => Promise<AxiosResponse<Api_LastUpdatedBy, any>>
@@ -38,11 +39,24 @@ export const useLeaseRepository = () => {
     onError: useAxiosErrorHandler('Failed to retreive lease.'),
   });
 
+  const updateLeaseChecklistApi = useApiRequestWrapper<
+    (lease: ApiGen_Concepts_FileWithChecklist) => Promise<AxiosResponse<ApiGen_Concepts_Lease, any>>
+  >({
+    requestFunction: useCallback(
+      async (lease: ApiGen_Concepts_FileWithChecklist) => await putLeaseChecklist(lease),
+      [putLeaseChecklist],
+    ),
+    requestName: 'UpdateLeaseChecklist',
+    onError: useAxiosErrorHandler('Failed to update Lease Checklist'),
+    throwError: true,
+  });
+
   return useMemo(
     () => ({
       getLastUpdatedBy: getLastUpdatedBy,
       getLease: getLease,
+      putLeaseChecklist: updateLeaseChecklistApi,
     }),
-    [getLastUpdatedBy, getLease],
+    [getLastUpdatedBy, getLease, updateLeaseChecklistApi],
   );
 };

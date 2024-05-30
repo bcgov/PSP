@@ -53,6 +53,7 @@ const emptyLease: ApiGen_Concepts_Lease = {
   fileName: null,
   fileNumber: null,
   terms: null,
+  fileChecklistItems: [],
 };
 
 export const getMockApiLease: () => ApiGen_Concepts_Lease = () => ({

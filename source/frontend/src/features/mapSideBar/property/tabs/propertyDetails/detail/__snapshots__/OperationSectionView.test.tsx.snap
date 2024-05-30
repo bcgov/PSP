@@ -119,7 +119,7 @@ exports[`Operation section view > matches snapshot 1`] = `
                   fill="none"
                 />
                 <path
-                  d="m7 14 5-5 5 5z"
+                  d="M7 14l5-5 5 5z"
                 />
               </svg>
             </div>
@@ -233,7 +233,7 @@ exports[`Operation section view > matches snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                     >
                       <path
-                        d="m10 17 5-5-5-5v10z"
+                        d="M10 17l5-5-5-5v10z"
                       />
                       <path
                         d="M0 24V0h24v24H0z"
@@ -348,7 +348,7 @@ exports[`Operation section view > matches snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                     >
                       <path
-                        d="m10 17 5-5-5-5v10z"
+                        d="M10 17l5-5-5-5v10z"
                       />
                       <path
                         d="M0 24V0h24v24H0z"
@@ -538,7 +538,7 @@ exports[`Operation section view > matches snapshot 1`] = `
                   fill="none"
                 />
                 <path
-                  d="m7 14 5-5 5 5z"
+                  d="M7 14l5-5 5 5z"
                 />
               </svg>
             </div>
@@ -652,7 +652,7 @@ exports[`Operation section view > matches snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                     >
                       <path
-                        d="m10 17 5-5-5-5v10z"
+                        d="M10 17l5-5-5-5v10z"
                       />
                       <path
                         d="M0 24V0h24v24H0z"
@@ -745,7 +745,7 @@ exports[`Operation section view > matches snapshot 1`] = `
                       xmlns="http://www.w3.org/2000/svg"
                     >
                       <path
-                        d="m10 17 5-5-5-5v10z"
+                        d="M10 17l5-5-5-5v10z"
                       />
                       <path
                         d="M0 24V0h24v24H0z"

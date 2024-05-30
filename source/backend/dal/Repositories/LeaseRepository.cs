@@ -10,6 +10,7 @@ using Pims.Api.Models.CodeTypes;
 using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
+using Pims.Dal.Entities.Extensions;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Security;
@@ -93,6 +94,11 @@ namespace Pims.Dal.Repositories
                 .Include(l => l.LeaseCategoryTypeCodeNavigation)
                 .Include(l => l.LeaseStatusTypeCodeNavigation)
                 .Include(l => l.PimsLeaseTenants)
+                .Include(l => l.PimsLeaseChecklistItems)
+                    .ThenInclude(t => t.LeaseChklstItemTypeCodeNavigation)
+                    .ThenInclude(s => s.LeaseChklstSectionTypeCodeNavigation)
+                .Include(l => l.PimsLeaseChecklistItems)
+                    .ThenInclude(st => st.LeaseChklstItemStatusTypeCodeNavigation)
                 .Include(t => t.PimsPropertyImprovements)
                 .Include(l => l.PimsInsurances)
                 .Include(l => l.PimsSecurityDeposits)
@@ -937,6 +943,65 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
+        /// Get all Checklist Items for a Lease.
+        /// </summary>
+        /// <param name="leaseId"></param>
+        /// <returns></returns>
+        public List<PimsLeaseChecklistItem> GetAllChecklistItemsByLeaseId(long leaseId)
+        {
+            using var scope = Logger.QueryScope();
+
+            return Context.PimsLeaseChecklistItems
+                .Where(ci => ci.LeaseId == leaseId)
+                .Include(ci => ci.LeaseChklstItemStatusTypeCodeNavigation)
+                .Include(ci => ci.LeaseChklstItemTypeCodeNavigation)
+                    .ThenInclude(it => it.LeaseChklstSectionTypeCodeNavigation)
+                .AsNoTracking()
+                .ToList();
+        }
+
+        /// <summary>
+        /// Get Checklist Item Types for Lease.
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<PimsLeaseChklstItemType> GetAllChecklistItemTypes()
+        {
+            return Context.PimsLeaseChklstItemTypes
+                    .Include(it => it.LeaseChklstSectionTypeCodeNavigation)
+                    .OrderBy(it => it.DisplayOrder)
+                    .AsNoTracking()
+                    .ToList();
+        }
+
+        /// <summary>
+        /// Add a new cehclist item to the lease.
+        /// </summary>
+        /// <param name="checklistItem"></param>
+        /// <returns>New Checklist Item.</returns>
+        public PimsLeaseChecklistItem AddChecklistItem(PimsLeaseChecklistItem checklistItem)
+        {
+            using var scope = Logger.QueryScope();
+            Context.PimsLeaseChecklistItems.Add(checklistItem);
+
+            return checklistItem;
+        }
+
+        /// <summary>
+        /// Uppdate a lease checklist item.
+        /// </summary>
+        /// <param name="checklistItem"></param>
+        /// <returns>The updated checklist item.</returns>
+        public PimsLeaseChecklistItem UpdateChecklistItem(PimsLeaseChecklistItem checklistItem)
+        {
+            checklistItem.ThrowIfNull(nameof(checklistItem));
+
+            Context.Entry(checklistItem).CurrentValues.SetValues(checklistItem);
+            Context.Entry(checklistItem).State = EntityState.Modified;
+
+            return checklistItem;
+        }
+
+        /// <summary>
         /// Generate an SQL statement for the specified 'user' and 'filter'.
         /// </summary>
         /// <param name="query"></param>
@@ -1066,6 +1131,7 @@ namespace Pims.Dal.Repositories
                 sortDef[sortFieldIndex] = sortDef[sortFieldIndex].Replace(sourceField, targetField);
             }
         }
+
         #endregion
     }
 }

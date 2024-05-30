@@ -604,7 +604,7 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
                 fill="none"
               />
               <path
-                d="m7 14 5-5 5 5z"
+                d="M7 14l5-5 5 5z"
               />
             </svg>
           </div>
@@ -780,7 +780,7 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
                 fill="none"
               />
               <path
-                d="m7 14 5-5 5 5z"
+                d="M7 14l5-5 5 5z"
               />
             </svg>
           </div>
@@ -902,7 +902,7 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
                 fill="none"
               />
               <path
-                d="m7 14 5-5 5 5z"
+                d="M7 14l5-5 5 5z"
               />
             </svg>
           </div>
