@@ -79,15 +79,6 @@ namespace Pims.Api.Services
             pimsUser.ThrowInvalidAccessToLeaseFile(_leaseRepository.GetNoTracking(leaseId).RegionCode);
 
             var lease = _leaseRepository.Get(leaseId);
-            foreach (PimsPropertyLease propertyLease in lease.PimsPropertyLeases)
-            {
-                var property = propertyLease.Property;
-                if (property?.Location != null)
-                {
-                    var newCoords = _coordinateService.TransformCoordinates(SpatialReference.BCALBERS, SpatialReference.WGS84, property.Location.Coordinate);
-                    property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.WGS84);
-                }
-            }
             return lease;
         }
 
