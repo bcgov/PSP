@@ -176,7 +176,7 @@ describe('Add Consolidation View', () => {
     expect(queryByText('111-111-111')).toBeNull();
   });
 
-  it('property area only has 3 digits', async () => {
+  it('property area only has at most 4 digits', async () => {
     const initialFormModel = new ConsolidationFormModel();
     const { queryByText } = await setup({
       props: {
@@ -190,8 +190,9 @@ describe('Add Consolidation View', () => {
       pidSelectorProps.setSelectProperty(property);
     });
 
-    expect(queryByText('1.1234')).toBeNull();
-    expect(queryByText('1.123')).toBeVisible();
     expect(queryByText('1.12')).toBeNull();
+    expect(queryByText('1.123')).toBeNull();
+    expect(queryByText('1.1235')).toBeVisible();
+    expect(queryByText('1.12345')).toBeNull();
   });
 });
