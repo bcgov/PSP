@@ -4,12 +4,10 @@ using System.Linq;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Pims.Api.Models.CodeTypes;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
-using Pims.Dal.Helpers;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
@@ -23,7 +21,6 @@ namespace Pims.Api.Services
         private readonly IResearchFileRepository _researchFileRepository;
         private readonly IResearchFilePropertyRepository _researchFilePropertyRepository;
         private readonly IPropertyRepository _propertyRepository;
-        private readonly ICoordinateTransformService _coordinateService;
         private readonly ILookupRepository _lookupRepository;
         private readonly IEntityNoteRepository _entityNoteRepository;
         private readonly IPropertyService _propertyService;
@@ -44,7 +41,6 @@ namespace Pims.Api.Services
             _researchFileRepository = researchFileRepository;
             _researchFilePropertyRepository = researchFilePropertyRepository;
             _propertyRepository = propertyRepository;
-            _coordinateService = coordinateService;
             _lookupRepository = lookupRepository;
             _entityNoteRepository = entityNoteRepository;
             _propertyService = propertyService;

@@ -1,4 +1,4 @@
-import { Polygon } from 'geojson';
+import { MultiPolygon, Polygon } from 'geojson';
 
 import { IMapProperty } from '@/components/propertySelector/models';
 import { AreaUnitTypes } from '@/constants';
@@ -66,7 +66,7 @@ export class PropertyForm {
   public pin?: string;
   public latitude?: number;
   public longitude?: number;
-  public polygon?: Polygon;
+  public polygon?: Polygon | MultiPolygon;
   public planNumber?: string;
   public name?: string;
   public region?: number;

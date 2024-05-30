@@ -15,7 +15,6 @@ using Pims.Dal.Entities;
 using Pims.Dal.Entities.Extensions;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
-using Pims.Dal.Helpers;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
@@ -29,7 +28,6 @@ namespace Pims.Api.Services
         private readonly IUserRepository _userRepository;
         private readonly IDispositionFileRepository _dispositionFileRepository;
         private readonly IDispositionFilePropertyRepository _dispositionFilePropertyRepository;
-        private readonly ICoordinateTransformService _coordinateService;
         private readonly IPropertyRepository _propertyRepository;
         private readonly IPropertyService _propertyService;
         private readonly ILookupRepository _lookupRepository;
@@ -55,7 +53,6 @@ namespace Pims.Api.Services
             _logger = logger;
             _dispositionFileRepository = dispositionFileRepository;
             _dispositionFilePropertyRepository = dispositionFilePropertyRepository;
-            _coordinateService = coordinateService;
             _propertyRepository = propertyRepository;
             _propertyService = propertyService;
             _lookupRepository = lookupRepository;
