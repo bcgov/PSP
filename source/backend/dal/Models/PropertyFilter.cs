@@ -27,6 +27,11 @@ namespace Pims.Dal.Entities.Models
         public string PlanNumber { get; set; }
 
         /// <summary>
+        /// get/set - Search by historical LIS or PS file numbers.
+        /// </summary>
+        public string Historical { get; set; }
+
+        /// <summary>
         /// get/set - The property ownership status.
         /// </summary>
         public IList<string> Ownership { get; set; }

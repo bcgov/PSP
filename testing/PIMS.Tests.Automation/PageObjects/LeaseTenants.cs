@@ -1,7 +1,5 @@
 ﻿using OpenQA.Selenium;
-using OpenQA.Selenium.Support.UI;
 using PIMS.Tests.Automation.Classes;
-using SeleniumExtras.WaitHelpers;
 
 namespace PIMS.Tests.Automation.PageObjects
 {
@@ -11,7 +9,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By licenseTenantLink = By.XPath("//a[contains(text(),'Tenant')]");
 
         //Tenants Edit Element
-        private By tenantEditIcon = By.XPath("//div[@role='tabpanel']/div/div/button");
+        private By tenantEditIcon = By.XPath("//div[@role='tabpanel']/div/div/div/button");
 
         //Tenants Add Tenant(s) button
         private By tenantAddTenantsBttn = By.XPath("//div[contains(text(),'Select Tenant(s)')]/parent::button");
@@ -64,7 +62,7 @@ namespace PIMS.Tests.Automation.PageObjects
         public void NavigateToTenantSection()
         {
             WaitUntilClickable(licenseTenantLink);
-            webDriver.FindElement(licenseTenantLink).Click();
+            FocusAndClick(licenseTenantLink);
         }
 
         //Edit Tenant section

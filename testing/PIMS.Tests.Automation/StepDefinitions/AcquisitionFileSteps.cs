@@ -88,7 +88,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             acquisitionFilesDetails.VerifyMaximumFields();
 
             //Add Additional Optional information to the acquisition file
-            acquisitionFilesDetails.AddAdditionalInformation(acquisitionFile);
+            acquisitionFilesDetails.UpdateAcquisitionFile(acquisitionFile);
 
             //Save Acquisition File
             acquisitionFilesDetails.SaveAcquisitionFileDetails();
@@ -117,7 +117,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             acquisitionFilesDetails.EditAcquisitionFileBttn();
 
             //Add Additional Optional information to the acquisition file
-            acquisitionFilesDetails.AddAdditionalInformation(acquisitionFile);
+            acquisitionFilesDetails.UpdateAcquisitionFile(acquisitionFile);
 
             //Save Acquisition File
             acquisitionFilesDetails.SaveAcquisitionFileDetails();
@@ -844,7 +844,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             acquisitionFilesDetails.EditAcquisitionFileBttn();
 
             //Add additional information
-            acquisitionFilesDetails.AddAdditionalInformation(acquisitionFile);
+            acquisitionFilesDetails.UpdateAcquisitionFile(acquisitionFile);
 
             //Save Acquisition File
             acquisitionFilesDetails.SaveAcquisitionFileDetails();
@@ -1043,7 +1043,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 acquisitionFile.AcquisitionSearchProperties.PIN = ExcelDataContext.ReadData(acquisitionFile.AcquisitionSearchPropertiesIndex, "PIN");
                 acquisitionFile.AcquisitionSearchProperties.Address = ExcelDataContext.ReadData(acquisitionFile.AcquisitionSearchPropertiesIndex, "Address");
                 acquisitionFile.AcquisitionSearchProperties.PlanNumber = ExcelDataContext.ReadData(acquisitionFile.AcquisitionSearchPropertiesIndex, "PlanNumber");
-                acquisitionFile.AcquisitionSearchProperties.LegalDescription = ExcelDataContext.ReadData(acquisitionFile.AcquisitionSearchPropertiesIndex, "LegalDescription");
+                //acquisitionFile.AcquisitionSearchProperties.LegalDescription = ExcelDataContext.ReadData(acquisitionFile.AcquisitionSearchPropertiesIndex, "LegalDescription");
                 acquisitionFile.AcquisitionSearchProperties.MultiplePIDS = genericSteps.PopulateLists(ExcelDataContext.ReadData(acquisitionFile.AcquisitionSearchPropertiesIndex, "MultiplePIDS"));
             }
 

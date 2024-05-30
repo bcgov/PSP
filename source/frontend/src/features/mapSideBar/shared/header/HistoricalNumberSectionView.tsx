@@ -9,6 +9,7 @@ import { ApiGen_Concepts_HistoricalFileNumber } from '@/models/api/generated/Api
 import { exists } from '@/utils';
 
 export interface IHistoricalNumbersViewProps {
+  valuesOnly: boolean;
   historicalNumbers: ApiGen_Concepts_HistoricalFileNumber[];
 }
 
@@ -19,6 +20,7 @@ interface HistoricalGroup {
 
 const HistoricalNumberFieldView: React.FC<IHistoricalNumbersViewProps> = ({
   historicalNumbers,
+  valuesOnly,
 }) => {
   const uniqueNumbers = useMemo(() => {
     const flatNumberArray: Dictionary<HistoricalGroup> = historicalNumbers
@@ -40,6 +42,33 @@ const HistoricalNumberFieldView: React.FC<IHistoricalNumbersViewProps> = ({
     return Object.values(flatNumberArray).sort(p => p.historicalType.displayOrder);
   }, [historicalNumbers]);
 
+  if (valuesOnly) {
+    return (
+      <ExpandableTextList<HistoricalGroup>
+        items={uniqueNumbers}
+        keyFunction={(p, index: number) => `historical-number-${p.historicalType.id}-${index}`}
+        renderFunction={p => (
+          <>
+            <StyledLabel key={`historical-group-${p.historicalType.id}`} className="pr-2">
+              {p.historicalType.description}:
+            </StyledLabel>
+
+            {Object.values(p.historicalValues).map((historicalValue, index) => {
+              return (
+                <span key={index}>
+                  {historicalValue.historicalFileNumber}
+                  {index + 1 < Object.values(p.historicalValues).length && <span>, </span>}
+                </span>
+              );
+            })}
+          </>
+        )}
+        delimiter={'; '}
+        maxCollapsedLength={2}
+      />
+    );
+  }
+
   return (
     <HeaderField label="Historical File #:" labelWidth="3" contentWidth="9">
       <>
@@ -48,16 +77,16 @@ const HistoricalNumberFieldView: React.FC<IHistoricalNumbersViewProps> = ({
           keyFunction={(p, index: number) => `historical-number-${p.historicalType.id}-${index}`}
           renderFunction={p => (
             <>
-              <StyledLabel key={`historical-group-{p.historicalType.id}`} className="pr-2">
+              <StyledLabel key={`historical-group-${p.historicalType.id}`} className="pr-2">
                 {p.historicalType.description}:
               </StyledLabel>
 
               {Object.values(p.historicalValues).map((historicalValue, index) => {
                 return (
-                  <>
+                  <span key={index}>
                     {historicalValue.historicalFileNumber}
                     {index + 1 < Object.values(p.historicalValues).length && <span>, </span>}
-                  </>
+                  </span>
                 );
               })}
             </>

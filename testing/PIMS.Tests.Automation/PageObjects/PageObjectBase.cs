@@ -320,6 +320,11 @@ namespace PIMS.Tests.Automation.PageObjects
             return thisDay.ToString("MMM d, yyyy");
         }
 
+        protected string GetUppercaseString(string elementValue)
+        {
+            return elementValue.ToUpper();
+        }
+
         protected string GetSubstring(string input, int startIndex, int endIndex)
         {
             return input.Substring(startIndex, endIndex);

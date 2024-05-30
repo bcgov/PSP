@@ -36,16 +36,16 @@ namespace PIMS.Tests.Automation.PageObjects
         //Compensation Requisition Details Elements
         private By compensationDetailsTitle = By.XPath("//div[contains(text(),'Compensation Requisition (H120)')]");
         private By compensationClientLabel = By.XPath("//label[contains(text(),'Client')]");
-        private By compensationClientContent = By.CssSelector("div[data-testid='compensation-client'] strong");
+        private By compensationClientContent = By.CssSelector("div[data-testid='compensation-client']");
 
         private By compensationRequisitionNumberLabel = By.XPath("//label[contains(text(),'Requisition number')]");
-        private By compensationRequisitionNumberContent = By.CssSelector("div[data-testid='compensation-number'] strong");
+        private By compensationRequisitionNumberContent = By.CssSelector("div[data-testid='compensation-number']");
         private By compensationAmountLabel = By.XPath("//label[contains(text(),'Compensation amount')]");
-        private By compensationAmountContent = By.CssSelector("div[data-testid='header-pretax-amount'] strong p");
+        private By compensationAmountContent = By.CssSelector("div[data-testid='header-pretax-amount'] p");
         private By compensationGSTLabel = By.XPath("//label[contains(text(),'Applicable GST')]");
-        private By compensationGSTContent = By.CssSelector("div[data-testid='header-tax-amount'] strong p");
+        private By compensationGSTContent = By.CssSelector("div[data-testid='header-tax-amount'] p");
         private By compensationTotalChequeAmountLabel = By.XPath("//label[contains(text(),'Total cheque amount')]");
-        private By compensationTotalChequeAmountContent = By.CssSelector("div[data-testid='header-total-amount'] strong p");
+        private By compensationTotalChequeAmountContent = By.CssSelector("div[data-testid='header-total-amount'] p");
 
         private By requisitionDetailsViewSubtitle = By.XPath("//div[contains(text(),'Requisition Details')]");
         private By requisitionDetailsCreateSubtitle = By.XPath("//div[contains(text(),'Requisition details')]");

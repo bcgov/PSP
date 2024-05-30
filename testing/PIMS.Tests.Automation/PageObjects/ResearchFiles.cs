@@ -1,7 +1,5 @@
 ﻿using OpenQA.Selenium;
-using OpenQA.Selenium.Support.UI;
 using PIMS.Tests.Automation.Classes;
-using SeleniumExtras.WaitHelpers;
 
 namespace PIMS.Tests.Automation.PageObjects
 {
@@ -55,22 +53,23 @@ namespace PIMS.Tests.Automation.PageObjects
         //Research File View Form Elements
         //Header
         private By researchFileViewTitle = By.XPath("//h1[contains(text(),'Research File')]");
-        private By researchFileHeaderNbrLabel = By.XPath("//label[contains(text(),'File #')]");
-        private By researchFileHeaderNbrContent = By.XPath("//label[contains(text(),'File #')]/parent::div/following-sibling::div/strong");
+        private By researchFileHeaderNbrLabel = By.XPath("(//label[contains(text(),'File #')])[1]");
+        private By researchFileHeaderNbrContent = By.XPath("(//label[contains(text(),'File #')]/parent::strong/parent::div/following-sibling::div)[1]");
         private By researchFileHeaderNameLabel = By.XPath("//label[contains(text(),'File name')]");
-        private By researchFileHeaderNameContent = By.XPath("//label[contains(text(),'File name')]/parent::div/following-sibling::div/strong");
+        private By researchFileHeaderNameContent = By.XPath("//label[contains(text(),'File name')]/parent::strong/parent::div/following-sibling::div");
         private By researchFileHeaderMOTIRegionLabel = By.XPath("//label[contains(text(),'MoTI region')]");
-        private By researchFileHeaderMOTIRegionContent = By.XPath("//label[contains(text(),'MoTI region')]/parent::div/following-sibling::div/strong");
+        private By researchFileHeaderMOTIRegionContent = By.XPath("//label[contains(text(),'MoTI region')]/parent::strong/parent::div/following-sibling::div");
         private By researchFileHeaderDistrictLabel = By.XPath("//label[contains(text(),'Ministry district')]");
-        private By researchFileHeaderDistrictContent = By.XPath("//label[contains(text(),'Ministry district')]/parent::div/following-sibling::div/strong");
-        private By researchFileHeaderCreatedLabel = By.XPath("//span[contains(text(),'Created')]");
-        private By researchFileHeaderCreatedDateContent = By.XPath("//span[contains(text(),'Created')]/strong");
-        private By researchFileHeaderCreatedByContent = By.XPath("//span[contains(text(),'Created')]/span/strong");
-        private By researchFileHeaderLastUpdatedLabel = By.XPath("//span[contains(text(),'Last updated')]");
-        private By researchFileHeaderLastUpdatedDateContent = By.XPath("//span[contains(text(),'Last updated')]/strong");
-        private By researchFileHeaderLastUpdatedByContent = By.XPath("//span[contains(text(),'Last updated')]/span/strong");
-        private By researchFileHeaderStatusLabel = By.XPath("//label[contains(text(),'Status')]");
-        private By researchFileHeaderStatusContent = By.XPath("//label[contains(text(),'Status')]/parent::div/following-sibling::div/strong");
+        private By researchFileHeaderDistrictContent = By.XPath("//label[contains(text(),'Ministry district')]/parent::strong/parent::div/following-sibling::div");
+        private By researchFileHistoricalFileLabel = By.XPath("//label[contains(text(),'Historical File')]");
+        private By researchFileHistoricalFileContent = By.XPath("//label[contains(text(),'Historical File')]/parent::strong/parent::div/following-sibling::div/div");
+        private By researchFileHeaderCreatedLabel = By.XPath("//strong[contains(text(),'Created')]");
+        private By researchFileHeaderCreatedDateContent = By.XPath("//strong[contains(text(),'Created')]/parent::span");
+        private By researchFileHeaderCreatedByContent = By.XPath("//strong[contains(text(),'Created')]/parent::span/span[@data-testid='tooltip-icon-userNameTooltip']");
+        private By researchFileHeaderLastUpdatedLabel = By.XPath("//strong[contains(text(),'Updated')]");
+        private By researchFileHeaderLastUpdatedDateContent = By.XPath("//strong[contains(text(),'Updated')]/parent::span");
+        private By researchFileHeaderLastUpdatedByContent = By.XPath("//strong[contains(text(),'Updated')]/parent::span/span[@data-testid='tooltip-icon-userNameTooltip']");
+        private By researchFileHeaderStatusContent = By.XPath("//div[@class='col']/div/div[4]/div/div");
 
         //Research File Details Tab View Elements
         private By researchFileDetailsProjectSubtitle = By.XPath("//h2/div/div[contains(text(),'Project')]");
@@ -106,8 +105,6 @@ namespace PIMS.Tests.Automation.PageObjects
         private By researchFileDetailsExpropriationNotesLabel = By.XPath("//label[contains(text(),'Expropriation notes')]");
 
         private By selectContactButton = By.CssSelector("div[class='pl-0 col-auto'] button");
-
-        private By researchFileHeaderCode = By.XPath("//label[contains(text(),'File #:')]/parent::div/following-sibling::div/strong");
 
         //Research File - Properties Elements
         private By researchProperty1stPropLink = By.CssSelector("div[data-testid='menu-item-row-1'] div:nth-child(3)");
@@ -539,31 +536,13 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             ButtonElement("Cancel");
             sharedModals.CancelActionModal();
-
-            //try {
-            //    WebDriverWait wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(3));
-            //    if (wait.Until(ExpectedConditions.AlertIsPresent()) != null)
-            //    {
-            //        webDriver.SwitchTo().Alert().Accept();
-            //    }
-            //} catch (WebDriverTimeoutException)
-            //{
-            //    if (webDriver.FindElements(researchFileConfirmationModal).Count() > 0)
-            //    {
-            //        Assert.Equal("Confirm Changes", sharedModals.ModalHeader());
-            //        Assert.Contains("If you choose to cancel now, your changes will not be saved.", sharedModals.ModalContent());
-            //        Assert.Contains("Do you want to proceed?", sharedModals.ModalContent());
-
-            //        sharedModals.ModalClickOKBttn();
-            //    }
-            //}
         }
 
         //Get the research file number
         public string GetResearchFileCode()
         {
             Wait(2000);
-            return webDriver.FindElement(researchFileHeaderCode).Text;
+            return webDriver.FindElement(researchFileHeaderNbrContent).Text;
         }
 
         //Verify Create Research Init Form
@@ -592,7 +571,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
             //Header
             VerifyResearchFileHeader(researchFile, user);
-            AssertTrueContentEquals(researchFileHeaderStatusContent,"Active");
+            AssertTrueContentEquals(researchFileHeaderStatusContent,GetUppercaseString(researchFile.Status));
 
             //Left Bar Elements
             AssertTrueIsDisplayed(researchFileSummaryBttn);
@@ -640,7 +619,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
             //Header
             VerifyResearchFileHeader(researchFile, user);
-            AssertTrueContentEquals(researchFileHeaderStatusContent, researchFile.Status);
+            AssertTrueContentEquals(researchFileHeaderStatusContent, GetUppercaseString(researchFile.Status));
 
             //Project
             AssertTrueIsDisplayed(researchFileDetailsProjectSubtitle);
@@ -679,13 +658,10 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(researchFileDetailsResultSubtitle);
             AssertTrueIsDisplayed(researchFileDetailsResultCompleteLabel);
             if (researchFile.ResearchCompletedDate != "")
-            {
                 AssertTrueContentEquals(researchFileDetailsResultCompleteInput, TransformDateFormat(researchFile.ResearchCompletedDate));
-            }
-            else
-            {
+            else 
                 AssertTrueContentEquals(researchFileDetailsResultCompleteInput,"not complete");
-            }
+            
             AssertTrueIsDisplayed(researchFileDetailsResultRequestLabel);
 
             //Expropriation
@@ -693,13 +669,10 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(researchFileDetailsExpropriationLabel);
 
             if (researchFile.Expropriation)
-            {
                 AssertTrueContentEquals(researchFileDetailsExpropriationInput, "Yes");
-            }
             else
-            {
                 AssertTrueContentEquals(researchFileDetailsExpropriationInput, "No");
-            }
+
             AssertTrueIsDisplayed(researchFileDetailsExpropriationNotesLabel);
         }
 
@@ -719,8 +692,7 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(researchPropertyLegalReqLabel);
 
             if (propertyResearch.LegalOpinionRequest == "Unknown")
-                AssertTrueContentEquals(researchPropertyLegalReqViewInput,"");
-           
+                AssertTrueContentEquals(researchPropertyLegalReqViewInput,""); 
             else
                 AssertTrueContentEquals(researchPropertyLegalReqViewInput, propertyResearch.LegalOpinionRequest);
             
@@ -728,7 +700,6 @@ namespace PIMS.Tests.Automation.PageObjects
 
             if (propertyResearch.LegalOpinionObtained == "Unknown")
                 AssertTrueContentEquals(researchPropertyLegalObtViewInput, "");
-
             else
                 AssertTrueContentEquals(researchPropertyLegalObtViewInput, propertyResearch.LegalOpinionObtained);
 
@@ -752,16 +723,19 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(researchFileHeaderMOTIRegionLabel);
             AssertTrueIsDisplayed(researchFileHeaderDistrictLabel);
 
+            AssertTrueIsDisplayed(researchFileHistoricalFileLabel);
+            //AssertTrueIsDisplayed(researchFileHistoricalFileContent);
+
             AssertTrueIsDisplayed(researchFileHeaderCreatedLabel);
-            AssertTrueContentEquals(researchFileHeaderCreatedDateContent, GetTodayFormattedDate());
+            AssertTrueElementContains(researchFileHeaderCreatedDateContent, GetTodayFormattedDate());
 
             AssertTrueContentEquals(researchFileHeaderCreatedByContent,user);
 
             AssertTrueIsDisplayed(researchFileHeaderLastUpdatedLabel);
-            AssertTrueContentEquals(researchFileHeaderLastUpdatedDateContent,GetTodayFormattedDate());
+            AssertTrueElementContains(researchFileHeaderLastUpdatedDateContent,GetTodayFormattedDate());
             AssertTrueContentEquals(researchFileHeaderLastUpdatedByContent, user);
 
-            AssertTrueIsDisplayed(researchFileHeaderStatusLabel);
+            AssertTrueContentEquals(researchFileHeaderStatusContent, GetUppercaseString(researchFile.Status));
         }
 
     }
