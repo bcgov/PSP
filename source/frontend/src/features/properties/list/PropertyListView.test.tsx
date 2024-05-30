@@ -267,5 +267,4 @@ describe('Property list view', () => {
     const results = await findByText(/301-9999/i);
     expect(results).toBeInTheDocument();
   });
-
 });
