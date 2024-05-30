@@ -124,7 +124,7 @@ describe('PropertyInformation component', () => {
           {
             ...getEmptyPropertyLease(),
             property: { ...mockApiProperty },
-            leaseArea: 1230,
+            leaseArea: 1230.0900,
             areaUnitType: null,
             fileId: 0,
             file: null,
