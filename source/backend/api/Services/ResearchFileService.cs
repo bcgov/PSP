@@ -175,37 +175,6 @@ namespace Pims.Api.Services
             return _researchFileRepository.GetLastUpdateBy(researchFileId);
         }
 
-        private void UpdateLocation(PimsProperty researchProperty, ref PimsProperty propertyToUpdate, IEnumerable<UserOverrideCode> userOverrideCodes)
-        {
-            if (propertyToUpdate.Location == null)
-            {
-                if (userOverrideCodes.Contains(UserOverrideCode.AddLocationToProperty))
-                {
-                    // convert spatial location from lat/long (4326) to BC Albers (3005) for database storage
-                    var geom = researchProperty.Location;
-                    if (geom.SRID != SpatialReference.BCALBERS)
-                    {
-                        var newCoords = _coordinateService.TransformCoordinates(geom.SRID, SpatialReference.BCALBERS, geom.Coordinate);
-                        propertyToUpdate.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.BCALBERS);
-                        _propertyRepository.Update(propertyToUpdate, overrideLocation: true);
-                    }
-
-                    // apply similar logic to the boundary
-                    var boundaryGeom = researchProperty.Boundary;
-                    if (boundaryGeom != null && boundaryGeom.SRID != SpatialReference.BCALBERS)
-                    {
-                        var newCoords = boundaryGeom.Coordinates.Select(coord => _coordinateService.TransformCoordinates(boundaryGeom.SRID, SpatialReference.BCALBERS, coord));
-                        var gf = NetTopologySuite.NtsGeometryServices.Instance.CreateGeometryFactory(SpatialReference.BCALBERS);
-                        researchProperty.Boundary = gf.CreatePolygon(newCoords.ToArray());
-                    }
-                }
-                else
-                {
-                    throw new UserOverrideException(UserOverrideCode.AddLocationToProperty, "The selected property already exists in the system's inventory. However, the record is missing spatial details.\n\n To add the property, the spatial details for this property will need to be updated. The system will attempt to update the property record with spatial information from the current selection.");
-                }
-            }
-        }
-
         private void MatchProperties(PimsResearchFile researchFile, IEnumerable<UserOverrideCode> userOverrideCodes)
         {
             foreach (var researchProperty in researchFile.PimsPropertyResearchFiles)
@@ -217,7 +186,7 @@ namespace Pims.Api.Services
                     {
                         var foundProperty = _propertyRepository.GetByPid(pid, true);
                         researchProperty.PropertyId = foundProperty.Internal_Id;
-                        UpdateLocation(researchProperty.Property, ref foundProperty, userOverrideCodes);
+                        _propertyService.UpdateLocation(researchProperty.Property, ref foundProperty, userOverrideCodes);
                         researchProperty.Property = foundProperty;
                     }
                     catch (KeyNotFoundException)
@@ -233,7 +202,7 @@ namespace Pims.Api.Services
                     {
                         var foundProperty = _propertyRepository.GetByPin(pin, true);
                         researchProperty.PropertyId = foundProperty.Internal_Id;
-                        UpdateLocation(researchProperty.Property, ref foundProperty, userOverrideCodes);
+                        _propertyService.UpdateLocation(researchProperty.Property, ref foundProperty, userOverrideCodes);
                         researchProperty.Property = foundProperty;
                     }
                     catch (KeyNotFoundException)

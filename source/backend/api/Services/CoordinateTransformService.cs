@@ -99,6 +99,7 @@ namespace Pims.Api.Services
 
             // Apply the transformation filter. This will modify the coordinates of the geometry.
             geometry.Apply(filter);
+            geometry.SRID = targetSrid;
         }
     }
 }

@@ -62,11 +62,7 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.PropertyView);
 
             var property = _propertyRepository.GetById(id);
-            if (property?.Location != null)
-            {
-                property.Location = TransformCoordinates(property.Location);
-            }
-            return property;
+            return TransformPropertyToLatLong(property);
         }
 
         public List<PimsProperty> GetMultipleById(List<long> ids)
@@ -77,10 +73,7 @@ namespace Pims.Api.Services
             List<PimsProperty> properties = _propertyRepository.GetAllByIds(ids);
             foreach (PimsProperty property in properties)
             {
-                if (property?.Location != null)
-                {
-                    property.Location = TransformCoordinates(property.Location);
-                }
+                TransformPropertyToLatLong(property);
             }
 
             return properties;
@@ -93,12 +86,7 @@ namespace Pims.Api.Services
 
             // return property spatial location in lat/long (4326)
             var property = _propertyRepository.GetByPid(pid);
-            if (property?.Location != null)
-            {
-                var newCoords = _coordinateService.TransformCoordinates(SpatialReference.BCALBERS, SpatialReference.WGS84, property.Location.Coordinate);
-                property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.WGS84);
-            }
-            return property;
+            return TransformPropertyToLatLong(property);
         }
 
         public PimsProperty GetByPin(int pin)
@@ -108,12 +96,7 @@ namespace Pims.Api.Services
 
             // return property spatial location in lat/long (4326)
             var property = _propertyRepository.GetByPin(pin);
-            if (property?.Location != null)
-            {
-                var newCoords = _coordinateService.TransformCoordinates(SpatialReference.BCALBERS, SpatialReference.WGS84, property.Location.Coordinate);
-                property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.WGS84);
-            }
-            return property;
+            return TransformPropertyToLatLong(property);
         }
 
         public PimsProperty Update(PimsProperty property, bool commitTransaction = true)
@@ -357,7 +340,7 @@ namespace Pims.Api.Services
 
         public void UpdateLocation(PimsProperty incomingProperty, ref PimsProperty propertyToUpdate, IEnumerable<UserOverrideCode> overrideCodes)
         {
-            if (propertyToUpdate.Location == null)
+            if (propertyToUpdate.Location == null || propertyToUpdate.Boundary == null)
             {
                 if (overrideCodes.Contains(UserOverrideCode.AddLocationToProperty))
                 {
