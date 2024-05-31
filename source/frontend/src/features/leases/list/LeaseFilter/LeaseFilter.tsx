@@ -130,7 +130,7 @@ export const LeaseFilter: React.FunctionComponent<React.PropsWithChildren<ILease
                           {
                             label: 'Historical File #',
                             key: 'historical',
-                            placeholder: 'Enter a LIS or PS file Number',
+                            placeholder: 'Enter a Historical file# (LIS, PS, etc.)',
                           },
                         ]}
                         className="idir-input-group"
