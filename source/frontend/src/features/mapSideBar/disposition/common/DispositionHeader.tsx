@@ -38,7 +38,7 @@ export const DispositionHeader: React.FunctionComponent<
         <StyledFiller>
           <AuditSection lastUpdatedBy={lastUpdatedBy} baseAudit={dispositionFile} />
           {exists(dispositionFile?.fileStatusTypeCode) && (
-            <StatusField statusCodeType={dispositionFile.fileStatusTypeCode} />
+            <StatusField preText="File:" statusCodeType={dispositionFile.fileStatusTypeCode} />
           )}
         </StyledFiller>
       </Col>

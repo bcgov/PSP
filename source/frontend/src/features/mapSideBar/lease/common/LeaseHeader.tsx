@@ -82,7 +82,7 @@ export const LeaseHeader: React.FC<ILeaseHeaderProps> = ({ lease, lastUpdatedBy 
           <StyledFiller>
             <AuditSection lastUpdatedBy={lastUpdatedBy} baseAudit={lease} />
             {exists(lease?.fileStatusTypeCode) && (
-              <StatusField statusCodeType={lease.fileStatusTypeCode} />
+              <StatusField preText="File:" statusCodeType={lease.fileStatusTypeCode} />
             )}
           </StyledFiller>
         </Col>

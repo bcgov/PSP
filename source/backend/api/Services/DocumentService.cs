@@ -160,7 +160,14 @@ namespace Pims.Api.Services
                         response.DocumentExternalResponse.Message = "Timed out waiting for Mayan to process document";
                         return response;
                     }
-
+                    else
+                    {
+                        _ = PrecacheDocumentPreviews(externalDocument.Id, detail.Payload.FileLatest.Id);
+                    }
+                }
+                else if (externalDocument.FileLatest != null)
+                {
+                    _ = PrecacheDocumentPreviews(externalDocument.Id, externalDocument.FileLatest.Id);
                 }
                 // Create metadata of document
                 if (uploadRequest.DocumentMetadata != null)
@@ -407,7 +414,7 @@ namespace Pims.Api.Services
             this.Logger.LogInformation("Retrieving pages for document: {documentId} file: {documentFileId}", documentId, documentFileId);
             this.User.ThrowIfNotAuthorized(Permissions.DocumentView);
 
-            return await documentStorageRepository.TryGetFilePageListAsync(documentId, documentFileId);
+            return await documentStorageRepository.TryGetFilePageListAsync(documentId, documentFileId, _config.PreviewPages, 1);
         }
 
         public async Task<HttpResponseMessage> DownloadFilePageImageAsync(long mayanDocumentId, long mayanFileId, long mayanFilePageId)
@@ -415,13 +422,42 @@ namespace Pims.Api.Services
             this.Logger.LogInformation("Downloading file document page for document: {mayanDocumentId} file: {mayanFileId} page(id): {mayanFilePageId}", mayanDocumentId, mayanFileId, mayanFilePageId);
             this.User.ThrowIfNotAuthorized(Permissions.DocumentView);
 
-            return await documentStorageRepository.TryGetFilePageImage(mayanDocumentId, mayanFileId, mayanFilePageId);
+            var retryPolicy = Policy<HttpResponseMessage>
+                        .HandleResult(result => result?.StatusCode != HttpStatusCode.OK || result?.Content == null)
+                        .WaitAndRetryAsync(_config.ImageRetries, (int retry) => TimeSpan.FromSeconds(Math.Pow(2, retry)));
+
+            return await retryPolicy.ExecuteAsync(async () => await documentStorageRepository.TryGetFilePageImage(mayanDocumentId, mayanFileId, mayanFilePageId));
         }
 
         private static bool IsValidDocumentExtension(string fileName)
         {
             var fileNameExtension = Path.GetExtension(fileName).Replace(".", string.Empty).ToLower();
             return ValidExtensions.Contains(fileNameExtension);
+        }
+
+        private async Task PrecacheDocumentPreviews(long documentId, long documentFileId)
+        {
+            this.Logger.LogInformation("Precaching the first {_config.PreviewPages} pages in document {documentId}, file {documentFileId}", _config.PreviewPages, documentId, documentFileId);
+
+            // Note that Mayan must generate a list of pages from an uploaded file, so retry if that is not available right away.
+            var retryPolicy = Policy<ExternalResponse<QueryResponse<FilePageModel>>>
+                        .HandleResult(result => result.HttpStatusCode != HttpStatusCode.OK || result?.Payload?.Results?.Any() == false)
+                        .WaitAndRetryAsync(_config.UploadRetries, (int retry) => TimeSpan.FromSeconds(Math.Pow(2, retry)));
+            var pages = await retryPolicy.ExecuteAsync(async () => await documentStorageRepository.TryGetFilePageListAsync(documentId, documentFileId, _config.PreviewPages, 1));
+
+            if (pages?.Payload?.Results != null)
+            {
+                this.Logger.LogInformation("Detected {count} pages to cache", pages.Payload.Results.Count);
+
+                // requesting a document page image forces it to be retrieved faster.
+                for (var i = 0; i < pages.Payload.Results.Count - 1; i++)
+                {
+                    var page = pages.Payload.Results[i];
+
+                    // resulting images are not displayed, just requested in order to populate cache.
+                    _ = documentStorageRepository.TryGetFilePageImage(documentId, documentFileId, page.Id);
+                }
+            }
         }
 
         private async Task<ExternalResponse<DocumentDetailModel>> UploadDocumentAsync(long documentType, IFormFile fileRaw)
