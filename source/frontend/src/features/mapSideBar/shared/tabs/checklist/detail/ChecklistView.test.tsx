@@ -32,7 +32,7 @@ describe('ChecklistView component', () => {
     const utils = render(
       <ChecklistView
         apiFile={mockViewProps.apiFile}
-        showEditButton={true}
+        showEditButton={mockViewProps.showEditButton}
         onEdit={mockViewProps.onEdit}
         sectionTypeName={API.ACQUISITION_CHECKLIST_SECTION_TYPES}
         editClaim={Claims.ACQUISITION_EDIT}

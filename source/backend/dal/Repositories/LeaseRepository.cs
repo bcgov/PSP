@@ -94,11 +94,6 @@ namespace Pims.Dal.Repositories
                 .Include(l => l.LeaseCategoryTypeCodeNavigation)
                 .Include(l => l.LeaseStatusTypeCodeNavigation)
                 .Include(l => l.PimsLeaseTenants)
-                .Include(l => l.PimsLeaseChecklistItems)
-                    .ThenInclude(t => t.LeaseChklstItemTypeCodeNavigation)
-                    .ThenInclude(s => s.LeaseChklstSectionTypeCodeNavigation)
-                .Include(l => l.PimsLeaseChecklistItems)
-                    .ThenInclude(st => st.LeaseChklstItemStatusTypeCodeNavigation)
                 .Include(t => t.PimsPropertyImprovements)
                 .Include(l => l.PimsInsurances)
                 .Include(l => l.PimsSecurityDeposits)
@@ -974,7 +969,7 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
-        /// Add a new cehclist item to the lease.
+        /// Add a new checklist item to the lease.
         /// </summary>
         /// <param name="checklistItem"></param>
         /// <returns>New Checklist Item.</returns>

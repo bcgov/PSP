@@ -19,9 +19,6 @@ const LeaseChecklistContainer: React.FunctionComponent<React.PropsWithChildren<L
   onSuccess,
 }) => {
   const { lease } = React.useContext(LeaseStateContext);
-  // const handleEdit = () => {
-  //   onEdit(true);
-  // };
 
   return !!isEditing && !!onEdit ? (
     <ProtectedComponent claims={[Claims.LEASE_EDIT]}>

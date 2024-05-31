@@ -4,7 +4,6 @@ using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using DocumentFormat.OpenXml.Office2010.Excel;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Models.CodeTypes;
@@ -91,10 +90,6 @@ namespace Pims.Api.Services
                     property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.WGS84);
                 }
             }
-
-            var checkListItems = lease.PimsLeaseChecklistItems.ToList();
-            AppendNewItemsToChecklist(lease, ref checkListItems);
-            lease.PimsLeaseChecklistItems = checkListItems;
 
             return lease;
         }
