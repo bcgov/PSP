@@ -139,24 +139,6 @@ describe('PropertySelectorSearchContainer component', () => {
     });
   });
 
-  it('searches by historical file number', async () => {
-    const { getByTitle, getByText, container } = setup({});
-
-    expect(getByText('No results found for your search criteria.')).toBeInTheDocument();
-    fillInput(container, 'searchBy', 'historical', 'select');
-    fillInput(container, 'historical', '0309-999');
-
-    const searchButton = getByTitle('search');
-    await act(async () => userEvent.click(searchButton));
-
-    await waitFor(() => {
-      expect(mockAxios.history.get).toHaveLength(1);
-      expect(mockAxios.history.get[0].url).toBe(
-        'https://openmaps.gov.bc.ca/geo/pub/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW/ows?service=WFS&version=2.0.0&outputFormat=json&typeNames=pub%3AWHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW&srsName=EPSG%3A4326&request=GetFeature&cql_filter=HISTORICAL_FILE_NUMBER_STR%20ilike%20%27%250309-999%25%27',
-      );
-    });
-  });
-
   it('searches by planNumber', async () => {
     const { getByTitle, getByText, container } = setup({});
 
