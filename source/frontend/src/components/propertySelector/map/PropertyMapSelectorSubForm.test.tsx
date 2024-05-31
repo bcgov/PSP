@@ -14,6 +14,7 @@ const testProperty: IMapProperty = {
   pid: '123-456-789',
   planNumber: '123546',
   address: 'Test address 123',
+  legalDescription: 'Test Legal Description',
   region: 2,
   regionName: 'South Coast',
   district: 2,
@@ -66,6 +67,7 @@ describe('PropertySelectorSubForm component', () => {
     expect(getByText(`${testProperty.pid}`)).toBeVisible();
     expect(getByText(`${testProperty.planNumber}`)).toBeVisible();
     expect(getByText(`${testProperty.address}`)).toBeVisible();
+    expect(getByText(`${testProperty.legalDescription}`)).toBeVisible();
     expect(getByText(`${testProperty.region} - ${testProperty.regionName}`)).toBeVisible();
     expect(getByText(`${testProperty.district} - ${testProperty.districtName}`)).toBeVisible();
   });
