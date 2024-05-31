@@ -52,6 +52,7 @@ export const PropertySelectorSearchContainer: React.FC<IPropertySelectorSearchCo
 
   useEffect(() => {
     const searchFunc = async () => {
+      console.log(layerSearch);
       let result: FeatureCollection<Geometry, PMBC_Feature_Properties> | undefined = undefined;
       if (layerSearch?.searchBy === 'pid' && layerSearch.pid) {
         result = await findByPid(layerSearch.pid);

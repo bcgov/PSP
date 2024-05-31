@@ -181,6 +181,66 @@ export const useMapSearch = () => {
     [pmbcServiceFindByPlanNumber, loadPimsProperties, logout, setDisplayModal, setModalContent],
   );
 
+  const searchByHistorical = useCallback(
+    async (filter?: IGeoSearchParams) => {
+      let result: MapFeatureData = emptyFeatureData;
+      try {
+        const loadPropertiesTask = loadPimsProperties(filter);
+
+        let planNumberInventoryData:
+          | FeatureCollection<Geometry, PIMS_Property_Location_View>
+          | undefined;
+        try {
+          planNumberInventoryData = await loadPropertiesTask;
+        } catch (err) {
+          setModalContent({
+            variant: 'error',
+            title: 'Unable to connect to PIMS Inventory',
+            message:
+              'PIMS is unable to connect to connect to the PIMS Inventory map service. You may need to log out and log into the application in order to restore this functionality. If this error persists, contact a site administrator.',
+            okButtonText: 'Log out',
+            cancelButtonText: 'Continue working',
+            handleOk: () => {
+              logout();
+            },
+            handleCancel: () => {
+              setDisplayModal(false);
+            },
+          });
+          setDisplayModal(true);
+        }
+
+        // If the property was found on the pims inventory, use that.
+        if (planNumberInventoryData?.features && planNumberInventoryData?.features?.length > 0) {
+          const validFeatures = planNumberInventoryData.features.filter(
+            feature => !!feature?.geometry,
+          );
+
+          result = {
+            pimsLocationFeatures: {
+              type: planNumberInventoryData.type,
+              bbox: planNumberInventoryData.bbox,
+              features: validFeatures,
+            },
+            pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
+            pmbcFeatures: emptyPmbcFeatureCollection,
+          };
+
+          if (validFeatures.length === 0) {
+            toast.info('No search results found');
+          } else {
+            toast.info(`${validFeatures.length} properties found`);
+          }
+        }
+      } catch (error) {
+        toast.error((error as Error).message, { autoClose: 7000 });
+      }
+
+      return result;
+    },
+    [loadPimsProperties, setModalContent, setDisplayModal, logout],
+  );
+
   const searchMany = useCallback(
     async (filter?: IGeoSearchParams) => {
       let result: MapFeatureData = emptyFeatureData;
@@ -290,6 +350,7 @@ export const useMapSearch = () => {
     searchOneLocation,
     searchByPlanNumber,
     searchMany,
+    searchByHistorical,
     loadingPimsProperties: pimsPropertyLayerService.loadPropertyLayer,
     loadingPimsPropertiesResponse: pimsPropertyLayerService.loadPropertyLayer.response,
   };

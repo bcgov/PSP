@@ -34,4 +34,5 @@ export interface ILayerSearchCriteria {
   planNumber?: string;
   searchBy?: string;
   address?: string;
+  historical?: string;
 }
