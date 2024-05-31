@@ -73,6 +73,7 @@ function depositActions(
           <TooltipIcon
             toolTipId={`no-delete-tooltip-${original.id}`}
             toolTip="A deposit with associated return(s) cannot be deleted. To delete this deposit first delete any associated return(s)."
+            innerClassName="mt-3"
           />
         )}
         {hasClaim(Claims.LEASE_EDIT) && (
@@ -81,14 +82,14 @@ function depositActions(
         {hasClaim(Claims.LEASE_ADD) && (
           <LinkButton
             title="return deposit"
-            icon={<MdUndo size={24} id={`return-deposit-${index}`} title="return deposit" />}
+            icon={<MdUndo size={20} id={`return-deposit-${index}`} title="return deposit" />}
             onClick={() => onReturn(original.id)}
           />
         )}
         {hasClaim(Claims.LEASE_EDIT) && original.depositReturnCount === 0 && (
           <StyledRemoveLinkButton
             title="delete deposit"
-            icon={<FaTrash size={24} id={`delete-deposit-${index}`} title="document deposit" />}
+            icon={<FaTrash size={20} id={`delete-deposit-${index}`} title="document deposit" />}
             onClick={() => original?.id && onDelete(original.id)}
           />
         )}
