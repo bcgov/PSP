@@ -15,7 +15,6 @@ using Pims.Dal.Entities;
 using Pims.Dal.Entities.Extensions;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
-using Pims.Dal.Helpers;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
@@ -29,7 +28,6 @@ namespace Pims.Api.Services
         private readonly IUserRepository _userRepository;
         private readonly IDispositionFileRepository _dispositionFileRepository;
         private readonly IDispositionFilePropertyRepository _dispositionFilePropertyRepository;
-        private readonly ICoordinateTransformService _coordinateService;
         private readonly IPropertyRepository _propertyRepository;
         private readonly IPropertyService _propertyService;
         private readonly ILookupRepository _lookupRepository;
@@ -55,7 +53,6 @@ namespace Pims.Api.Services
             _logger = logger;
             _dispositionFileRepository = dispositionFileRepository;
             _dispositionFilePropertyRepository = dispositionFilePropertyRepository;
-            _coordinateService = coordinateService;
             _propertyRepository = propertyRepository;
             _propertyService = propertyService;
             _lookupRepository = lookupRepository;
@@ -162,8 +159,7 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.PropertyView);
 
             var properties = _dispositionFilePropertyRepository.GetPropertiesByDispositionFileId(id);
-            ReprojectPropertyLocationsToWgs84(properties);
-            return properties;
+            return _propertyService.TransformAllPropertiesToLatLong(properties);
         }
 
         public IEnumerable<PimsDispositionFileTeam> GetTeamMembers()
@@ -676,19 +672,6 @@ namespace Pims.Api.Services
             if (currentRegion != updatedRegion)
             {
                 throw new UserOverrideException(UserOverrideCode.UpdateRegion, "The Ministry region has been changed, this will result in a change to the file's prefix. This requires user confirmation.");
-            }
-        }
-
-        private void ReprojectPropertyLocationsToWgs84(IEnumerable<PimsDispositionFileProperty> dispositionPropertyFiles)
-        {
-            foreach (var dispositionProperty in dispositionPropertyFiles)
-            {
-                if (dispositionProperty.Property.Location != null)
-                {
-                    var oldCoords = dispositionProperty.Property.Location.Coordinate;
-                    var newCoords = _coordinateService.TransformCoordinates(SpatialReference.BCALBERS, SpatialReference.WGS84, oldCoords);
-                    dispositionProperty.Property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.WGS84);
-                }
             }
         }
 

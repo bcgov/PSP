@@ -330,9 +330,9 @@ namespace Pims.Dal.Repositories
             }
 
             // ignore a number of properties that we don't the frontend to override - for now
-            property.Boundary = existingProperty.Boundary;
             if (!overrideLocation)
             {
+                property.Boundary = existingProperty.Boundary;
                 property.Location = existingProperty.Location;
             }
             property.AddressId = existingProperty.AddressId;

@@ -17,6 +17,7 @@ import { IMapProperty } from '@/components/propertySelector/models';
 import { AreaUnitTypes } from '@/constants';
 import { DistrictCodes } from '@/constants/districtCodes';
 import { RegionCodes } from '@/constants/regionCodes';
+import { ApiGen_CodeTypes_GeoJsonTypes } from '@/models/api/generated/ApiGen_CodeTypes_GeoJsonTypes';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { ApiGen_Concepts_Geometry } from '@/models/api/generated/ApiGen_Concepts_Geometry';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
@@ -127,16 +128,17 @@ export const featuresToIdentifiedMapProperty = (
   values?.features
     ?.filter(
       feature =>
-        feature?.geometry?.type === 'Polygon' || feature?.geometry?.type === 'MultiPolygon',
+        feature?.geometry?.type === ApiGen_CodeTypes_GeoJsonTypes.Polygon ||
+        feature?.geometry?.type === ApiGen_CodeTypes_GeoJsonTypes.MultiPolygon,
     )
     .map((feature): IMapProperty => {
-      if (feature?.geometry?.type === 'Polygon') {
+      if (feature?.geometry?.type === ApiGen_CodeTypes_GeoJsonTypes.Polygon) {
         const boundedCenter = polylabel(
           (feature.geometry as Polygon).coordinates,
           ONE_HUNDRED_METER_PRECISION,
         );
         return toMapProperty(feature, address, boundedCenter[1], boundedCenter[0]);
-      } else if (feature?.geometry?.type === 'MultiPolygon') {
+      } else if (feature?.geometry?.type === ApiGen_CodeTypes_GeoJsonTypes.MultiPolygon) {
         const boundedCenter = polylabel(
           (feature.geometry as MultiPolygon).coordinates[0],
           ONE_HUNDRED_METER_PRECISION,
@@ -197,7 +199,11 @@ export function featuresetToMapProperty(
     latitude: featureSet.location.lat,
     longitude: featureSet.location.lng,
     polygon:
-      parcelFeature?.geometry?.type === 'Polygon' ? (parcelFeature.geometry as Polygon) : undefined,
+      parcelFeature?.geometry?.type === ApiGen_CodeTypes_GeoJsonTypes.Polygon
+        ? (parcelFeature.geometry as Polygon)
+        : parcelFeature?.geometry?.type === ApiGen_CodeTypes_GeoJsonTypes.MultiPolygon
+        ? (parcelFeature.geometry as MultiPolygon)
+        : undefined,
     planNumber: parcelFeature?.properties?.PLAN_NUMBER?.toString() ?? undefined,
     address: address,
     legalDescription: parcelFeature?.properties?.LEGAL_DESCRIPTION ?? undefined,

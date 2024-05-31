@@ -7,6 +7,7 @@ import { Input } from '@/components/common/form';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
+import { PropertyImprovementTypes } from '@/constants/propertyImprovementTypes';
 import { withNameSpace } from '@/utils/formUtils';
 
 import { AddImprovementsYupSchema } from './AddImprovementsYupSchema';
@@ -56,17 +57,24 @@ export const AddImprovementsForm: React.FunctionComponent<
                               <SectionField label="Unit #" labelWidth="3">
                                 <Input field={withNameSpace(nameSpace, 'address')} />{' '}
                               </SectionField>
-                              <SectionField label="Building size" labelWidth="3">
+                              <SectionField
+                                label={
+                                  improvement.propertyImprovementTypeId ===
+                                  PropertyImprovementTypes.Residential
+                                    ? 'House size'
+                                    : 'Building size'
+                                }
+                                labelWidth="3"
+                              >
                                 <Input field={withNameSpace(nameSpace, 'structureSize')} />
                               </SectionField>
-                              <SectionField label="Description" labelWidth="3">
-                                <Styled.FormDescriptionBody
-                                  innerClassName="description"
-                                  rows={5}
-                                  field={withNameSpace(nameSpace, 'description')}
-                                  placeholder="Reason for improvement and improvement details"
-                                />
-                              </SectionField>
+                              <SectionField label="Description" labelWidth="3"></SectionField>
+                              <Styled.FormDescriptionBody
+                                innerClassName="description"
+                                rows={5}
+                                field={withNameSpace(nameSpace, 'description')}
+                                placeholder="Reason for improvement and improvement details"
+                              />
                             </Section>
                           </React.Fragment>
                         );
