@@ -10,21 +10,20 @@ import { useLeaseRepository } from "@/hooks/repositories/useLeaseRepository";
 import { mockLeaseChecklistItemsResponse } from "@/mocks/lease.mock";
 import { ApiGen_Concepts_FileWithChecklist } from "@/models/api/generated/ApiGen_Concepts_FileWithChecklist";
 
+const mockPutChecklistItemsApi = {
+  error: undefined,
+  response: undefined,
+  execute: vi.fn(),
+  loading: false,
+};
 
-// mock API service calls
-vi.mock('@/hooks/repositories/useLeaseRepository');
-
-type Provider = typeof useLeaseRepository;
-const mockUpdateLeaseChecklist = vi.fn();
-
-vi.mocked(useLeaseRepository).mockReturnValue({
-  putLeaseChecklist: {
-    error: undefined,
-    response: undefined,
-    execute: mockUpdateLeaseChecklist,
-    loading: false,
+vi.mock('@/hooks/repositories/useLeaseRepository', () => ({
+  useLeaseRepository: () => {
+    return {
+      putLeaseChecklist: mockPutChecklistItemsApi,
+    };
   },
-} as unknown as ReturnType<Provider>);
+}));
 
 let viewProps: IUpdateChecklistFormProps | undefined;
 const TestView: React.FC<IUpdateChecklistFormProps> = props => {
@@ -65,22 +64,27 @@ describe('Update Lease Checklist Item Container', () => {
     vi.resetAllMocks();
   });
 
+  afterEach(() => {
+    vi.clearAllMocks();
+  });
+
   it('renders the underlying form', async () => {
     const { getByText } = await setup();
+    await act(async () => {});
     expect(getByText(/Content Rendered/)).toBeVisible();
   });
 
   it('makes request to update the disposition checklist and returns the response', async () => {
     await setup();
-    mockUpdateLeaseChecklist.mockResolvedValue(mockLeaseChecklistItemsResponse());
+
+    mockPutChecklistItemsApi.execute.mockReturnValue(mockLeaseChecklistItemsResponse());
 
     let updatedChecklist: ApiGen_Concepts_FileWithChecklist | undefined;
     await act(async () => {
       updatedChecklist = await viewProps?.onSave({} as ApiGen_Concepts_FileWithChecklist);
     });
 
-    expect(mockUpdateLeaseChecklist).toHaveBeenCalled();
+    expect(mockPutChecklistItemsApi.execute).toHaveBeenCalled();
     expect(updatedChecklist).toStrictEqual([...mockLeaseChecklistItemsResponse()]);
   });
-
 });
