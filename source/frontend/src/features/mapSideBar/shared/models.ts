@@ -101,6 +101,7 @@ export class PropertyForm {
       regionName: model.regionName,
       district: model.district,
       districtName: model.districtName,
+      legalDescription: model.legalDescription,
       formattedAddress: model.address,
       landArea: model.landArea,
       areaUnit: model.areaUnit,
@@ -118,6 +119,7 @@ export class PropertyForm {
       regionName: this.regionName,
       district: this.district,
       districtName: this.districtName,
+      legalDescription: this.legalDescription,
       address: this.address ? formatApiAddress(this.address.toApi()) : this.formattedAddress,
     };
   }
