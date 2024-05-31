@@ -47,7 +47,7 @@ export const AuditSection: React.FC<IAuditSectionProps> = ({ baseAudit, lastUpda
 
 export default AuditSection;
 
-const StyledSmallText = styled.span`
+export const StyledSmallText = styled.span`
   font-size: 0.87em;
   line-height: 1.9;
 `;

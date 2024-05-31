@@ -72,7 +72,7 @@ const AddSubdivisionView: React.FunctionComponent<
 }) => {
   const getAreaValue = (area: number, unit: string): number => {
     const sqm = convertArea(area, unit, AreaUnitTypes.SquareMeters);
-    return Number(sqm.toFixed(3));
+    return Number(sqm.toFixed(4));
   };
   return (
     <MapSideBarLayout

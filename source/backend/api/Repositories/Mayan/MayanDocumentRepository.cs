@@ -447,12 +447,12 @@ namespace Pims.Api.Repositories.Mayan
             return response;
         }
 
-        public async Task<ExternalResponse<QueryResponse<FilePageModel>>> TryGetFilePageListAsync(long documentId, long documentFileId)
+        public async Task<ExternalResponse<QueryResponse<FilePageModel>>> TryGetFilePageListAsync(long documentId, long documentFileId, int pageSize, int pageNumber)
         {
             _logger.LogDebug("Retrieving page list for mayan file...");
             string authenticationToken = await _authRepository.GetTokenAsync();
 
-            Uri endpoint = new($"{_config.BaseUri}/documents/{documentId}/files/{documentFileId}/pages/");
+            Uri endpoint = new($"{_config.BaseUri}/documents/{documentId}/files/{documentFileId}/pages/?page_size={pageSize}&page={pageNumber}");
 
             var response = await GetAsync<QueryResponse<FilePageModel>>(endpoint, authenticationToken);
 

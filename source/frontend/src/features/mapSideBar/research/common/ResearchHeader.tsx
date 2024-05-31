@@ -74,7 +74,7 @@ const ResearchHeader: React.FunctionComponent<
         <StyledFiller>
           <AuditSection lastUpdatedBy={props.lastUpdatedBy} baseAudit={researchFile} />
           {exists(researchFile?.fileStatusTypeCode) && (
-            <StatusField statusCodeType={researchFile.fileStatusTypeCode} />
+            <StatusField preText="File:" statusCodeType={researchFile.fileStatusTypeCode} />
           )}
         </StyledFiller>
       </Col>
