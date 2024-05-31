@@ -124,7 +124,7 @@ describe('PropertyInformation component', () => {
           {
             ...getEmptyPropertyLease(),
             property: { ...mockApiProperty },
-            leaseArea: 123,
+            leaseArea: 1230.09,
             areaUnitType: null,
             fileId: 0,
             file: null,
@@ -141,7 +141,7 @@ describe('PropertyInformation component', () => {
         startDate: '2020-01-01',
       },
     });
-    expect(component.getByText(/123/i)).toBeVisible();
+    expect(component.getByText(/1230/i)).toBeVisible();
     expect(component.queryByDisplayValue('undefined')).toBeNull();
   });
 });
