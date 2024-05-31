@@ -36,9 +36,11 @@ export const HistoricalNumberFieldView: React.FC<IHistoricalNumbersViewProps> = 
           };
         }
 
-        const historicalValueKey = `[${h.id}][${h.historicalFileNumberTypeCode.id}][${h.otherHistFileNumberTypeCode}][${h.historicalFileNumber}]`;
-        accumulator[historicalTypeKey].historicalValues[historicalValueKey] = h;
-        accumulator[historicalTypeKey].key += h.propertyId;
+        const historicalValueKey = `[${h.historicalFileNumber}][${h.historicalFileNumberTypeCode.id}][${h.otherHistFileNumberTypeCode}]`;
+        if (!(historicalValueKey in accumulator[historicalTypeKey])) {
+          accumulator[historicalTypeKey].historicalValues[historicalValueKey] = h;
+          accumulator[historicalTypeKey].key += h.propertyId;
+        }
         return accumulator;
       }, {});
 
