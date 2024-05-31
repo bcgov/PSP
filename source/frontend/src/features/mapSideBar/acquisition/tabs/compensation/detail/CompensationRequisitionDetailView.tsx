@@ -352,7 +352,7 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
 
       <Section>
         <SectionField label="Detailed remarks" labelWidth="12">
-          {compensation.detailedRemarks}
+          <p style={{ whiteSpace: 'pre-wrap' }}>{compensation.detailedRemarks}</p>
         </SectionField>
       </Section>
 
