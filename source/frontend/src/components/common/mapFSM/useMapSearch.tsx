@@ -192,11 +192,11 @@ export const useMapSearch = () => {
       try {
         const loadPropertiesTask = loadPimsProperties(filter);
 
-        let planNumberInventoryData:
+        let historicalNumberInventoryData:
           | FeatureCollection<Geometry, PIMS_Property_Location_View>
           | undefined;
         try {
-          planNumberInventoryData = await loadPropertiesTask;
+          historicalNumberInventoryData = await loadPropertiesTask;
         } catch (err) {
           setModalContent({
             variant: 'error',
@@ -216,19 +216,22 @@ export const useMapSearch = () => {
         }
 
         // If the property was found on the pims inventory, use that.
-        if (planNumberInventoryData?.features && planNumberInventoryData?.features?.length > 0) {
-          const validFeatures = planNumberInventoryData.features.filter(
+        if (
+          historicalNumberInventoryData?.features &&
+          historicalNumberInventoryData?.features?.length > 0
+        ) {
+          const validFeatures = historicalNumberInventoryData.features.filter(
             feature => !!feature?.geometry,
           );
 
           result = {
             pimsLocationFeatures: {
-              type: planNumberInventoryData.type,
-              bbox: planNumberInventoryData.bbox,
+              type: historicalNumberInventoryData.type,
+              bbox: historicalNumberInventoryData.bbox,
               features: validFeatures,
             },
             pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
-            pmbcFeatures: emptyPmbcFeatureCollection,
+            fullyAttributedFeatures: emptyPmbcFeatureCollection,
           };
 
           if (validFeatures.length === 0) {
