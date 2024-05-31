@@ -564,8 +564,12 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c8 text-left col"
-          />
+            class="c8 pre-wrap col"
+          >
+            <p
+              style="white-space: pre-wrap;"
+            />
+          </div>
         </div>
       </div>
     </div>

@@ -84,7 +84,7 @@ const getPropertyOperationColumns: (
         const meters = convertArea(landArea, landUnitCode, AreaUnitTypes.SquareMeters);
         return (
           <>
-            {formatNumber(meters, 0, 2)} m<sup>2</sup>
+            {formatNumber(meters, 0, 4)} m<sup>2</sup>
           </>
         );
       },

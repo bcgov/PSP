@@ -44,6 +44,7 @@ export interface IGeoSearchParams {
   PID_PADDED?: string;
   PIN?: string;
   SURVEY_PLAN_NUMBER?: string;
+  HISTORICAL_FILE_NUMBER_STR?: string;
   BBOX?: string;
   latitude?: number | string;
   longitude?: number | string;
