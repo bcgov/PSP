@@ -1,10 +1,11 @@
 import { getIn, useFormikContext } from 'formik';
 import { FunctionComponent, PropsWithChildren, useState } from 'react';
-import { FaPencilAlt } from 'react-icons/fa';
+import { FaEdit } from 'react-icons/fa';
 import styled from 'styled-components';
 
 import { TextArea } from '@/components/common/form';
 import { Section } from '@/components/common/Section/Section';
+import { SectionListHeader } from '@/components/common/SectionListHeader';
 import { Claims } from '@/constants/index';
 import SaveCancelButtons from '@/features/leases/SaveCancelButtons';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
@@ -35,19 +36,21 @@ export const DepositNotes: FunctionComponent<PropsWithChildren<IDepositNotesProp
       isCollapsable={collapsed}
       initiallyExpanded={false}
       header={
-        <>
+        hasClaim(Claims.LEASE_EDIT) && disabled ? (
+          <SectionListHeader
+            claims={[Claims.LEASE_EDIT]}
+            title="Deposit Notes"
+            addButtonText="Edit Notes"
+            addButtonIcon={<FaEdit size={'2rem'} />}
+            data-testId="edit-notes"
+            onAdd={() => {
+              onEdit();
+              setCollapsed(false);
+            }}
+          />
+        ) : (
           <span>Deposit Notes</span>
-          {hasClaim(Claims.LEASE_EDIT) && disabled && (
-            <EditButton
-              data-testid="edit-notes"
-              className="ml-2"
-              onClick={() => {
-                onEdit();
-                setCollapsed(false);
-              }}
-            />
-          )}
-        </>
+        )
       }
     >
       <TextArea rows={5} disabled={disabled} field="returnNotes" />
@@ -64,12 +67,6 @@ export const DepositNotes: FunctionComponent<PropsWithChildren<IDepositNotesProp
     </Section>
   );
 };
-
-const EditButton = styled(FaPencilAlt)`
-  &:hover {
-    cursor: pointer;
-  }
-`;
 
 const StyledButtons = styled(SaveCancelButtons)`
   background-color: transparent;
