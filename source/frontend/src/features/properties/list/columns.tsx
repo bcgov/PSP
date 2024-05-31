@@ -11,7 +11,7 @@ import TooltipIcon from '@/components/common/TooltipIcon';
 import { ColumnWithProps } from '@/components/Table';
 import { AreaUnitTypes, Claims } from '@/constants/index';
 import HistoricalNumbersContainer from '@/features/mapSideBar/shared/header/HistoricalNumberContainer';
-import HistoricalNumberFieldView from '@/features/mapSideBar/shared/header/HistoricalNumberSectionView';
+import { HistoricalNumberFieldView } from '@/features/mapSideBar/shared/header/HistoricalNumberFieldView';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_Concepts_PropertyView } from '@/models/api/generated/ApiGen_Concepts_PropertyView';
 import { ILookupCode } from '@/store/slices/lookupCodes';
@@ -70,7 +70,6 @@ export const columns = ({
       return (
         <HistoricalNumbersContainer
           propertyIds={propertyArrayId}
-          displayValuesOnly={true}
           View={HistoricalNumberFieldView}
         />
       );
