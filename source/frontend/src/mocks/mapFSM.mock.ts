@@ -11,7 +11,7 @@ export const mapMachineBaseMock: IMapStateMachineContext = {
   mapFeatureData: {
     pimsLocationFeatures: emptyPimsLocationFeatureCollection,
     pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
-    pmbcFeatures: emptyPmbcFeatureCollection,
+    fullyAttributedFeatures: emptyPmbcFeatureCollection,
   },
 
   isSidebarOpen: false,
