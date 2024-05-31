@@ -275,7 +275,7 @@ export const isPimsBoundary = (
 export const isFaParcelMap = (
   feature: Supercluster.PointFeature<MarkerFeature>,
 ): feature is Supercluster.PointFeature<PMBC_FullyAttributed_Feature_Properties> => {
-  return feature.id?.toString().startsWith('WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_FA_SVW') ?? false;
+  return feature.id?.toString().startsWith('WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_') ?? false;
 };
 
 // Internal cache of cluster icons to avoid re-creating the same icon over and over again.
