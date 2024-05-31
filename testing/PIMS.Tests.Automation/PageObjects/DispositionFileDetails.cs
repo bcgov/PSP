@@ -21,21 +21,20 @@ namespace PIMS.Tests.Automation.PageObjects
         private By dispositionFileMainFormDiv = By.XPath("//h1[contains(text(),'Create Disposition File')]/parent::div/parent::div/parent::div/parent::div");
 
         private By dispositionFileCreateTitle = By.XPath("//h1[contains(text(),'Create Disposition File')]");
+
         private By dispositionFileHeaderCodeLabel = By.XPath("//label[contains(text(), 'File:')]");
-        private By dispositionFileHeaderCodeContent = By.XPath("//label[contains(text(), 'File:')]/parent::div/following-sibling::div[1]/strong");
+        private By dispositionFileHeaderCodeContent = By.XPath("//label[contains(text(), 'File:')]/parent::strong/parent::div/following-sibling::div");
+        private By dispositionFileHistoricalLabel = By.XPath("//label[contains(text(), 'Historical File')]");
+        private By dispositionFileHistoricalContent = By.XPath("//label[contains(text(), 'Historical File')]/parent::strong/parent::div/following-sibling::div/div/span");
+        private By dispositionFileHeaderCreatedDateLabel = By.XPath("//span/strong[contains(text(), 'Created')]");
+        private By dispositionFileHeaderCreatedDateContent = By.XPath("//strong[contains(text(), 'Created')]/parent::span");
+        private By dispositionFileHeaderCreatedByContent = By.XPath("//strong[contains(text(),'Created')]/parent::span/span[@id='userNameTooltip']/strong");
+        private By dispositionFileHeaderLastUpdateLabel = By.XPath("//span/strong[contains(text(), 'Updated')]");
+        private By dispositionFileHeaderLastUpdateContent = By.XPath("//strong[contains(text(), 'Updated')]/parent::span");
+        private By dispositionFileHeaderLastUpdateByContent = By.XPath("//strong[contains(text(), 'Updated')]/parent::span/span[@id='userNameTooltip']/strong");
+        private By dispositionFileHeaderStatusContent = By.XPath("//div[@class='col-5']/div/div[3]/div/div");
 
-        private By dispositionFileHeaderProjectLabel = By.XPath("//label[contains(text(), 'Ministry project')]");
-        private By dispositionFileHeaderProjectContent = By.XPath("//label[contains(text(), 'Ministry project')]/parent::div/following-sibling::div[1]/strong");
-        private By dispositionFileHeaderCreatedDateLabel = By.XPath("//span[contains(text(), 'Created')]");
-        private By dispositionFileHeaderCreatedDateContent = By.XPath("//span[contains(text(), 'Created')]/strong");
-        private By dispositionFileHeaderCreatedByContent = By.XPath("//span[contains(text(),'Created')]/span[@id='userNameTooltip']/strong");
-        private By dispositionFileHeaderLastUpdateLabel = By.XPath("//span[contains(text(), 'Last updated')]");
-        private By dispositionFileHeaderLastUpdateContent = By.XPath("//span[contains(text(), 'Last updated')]/strong");
-        private By dispositionFileHeaderLastUpdateByContent = By.XPath("//span[contains(text(), 'Last updated')]//span[@id='userNameTooltip']/strong");
-        private By dispositionFileHeaderStatusLabel = By.XPath("//label[contains(text(),'Status')]");
         private By dispositionFileStatusSelect = By.Id("input-fileStatusTypeCode");
-        private By dispositionFileHeaderStatusContent = By.XPath("//label[contains(text(),'Status')]/parent::div/following-sibling::div[1]/strong");
-
         private By dispositionFileProjectSubtitle = By.XPath("//h2/div/div[contains(text(), 'Project')]");
         private By dispositionFileProjectLabel = By.XPath("//div[@class='collapse show']/div/div/label[contains(text(),'Ministry project')]");
         private By dispositionFileProjectInput = By.CssSelector("input[id='typeahead-project']");
@@ -415,15 +414,6 @@ namespace PIMS.Tests.Automation.PageObjects
             ButtonElement("Cancel");
 
             sharedModals.CancelActionModal();
-
-
-            //if (webDriver.FindElements(dispositionFileConfirmationModal).Count() > 0)
-            //{
-            //    Assert.Equal("Confirm Changes", sharedModals.ModalHeader());
-            //    Assert.Contains("If you choose to cancel now, your changes will not be saved.", sharedModals.ModalContent());
-            //    Assert.Contains("Do you want to proceed?", sharedModals.ModalContent());
-            //    sharedModals.ModalClickOKBttn();
-            //}
         }
 
         public int IsCreateDispositionFileFormVisible()
@@ -495,17 +485,21 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(dispositionFileHeaderCodeLabel);
             AssertTrueContentNotEquals(dispositionFileHeaderCodeContent, "");
 
+            AssertTrueIsDisplayed(dispositionFileHistoricalLabel);
+            //AssertTrueIsDisplayed(dispositionFileHistoricalContent);
+
             AssertTrueIsDisplayed(dispositionFileHeaderCreatedDateLabel);
             AssertTrueContentNotEquals(dispositionFileHeaderCreatedDateContent, "");
             AssertTrueContentNotEquals(dispositionFileHeaderCreatedByContent, "");
             AssertTrueIsDisplayed(dispositionFileHeaderLastUpdateLabel);
             AssertTrueContentNotEquals(dispositionFileHeaderLastUpdateContent, "");
             AssertTrueContentNotEquals(dispositionFileHeaderLastUpdateByContent, "");
-            AssertTrueIsDisplayed(dispositionFileHeaderStatusLabel);
+
+            AssertTrueIsDisplayed(dispositionFileHeaderStatusContent);
 
             //Status
             if (disposition.DispositionFileStatus != "")
-                AssertTrueContentEquals(dispositionFileHeaderStatusContent, disposition.DispositionFileStatus);
+                AssertTrueContentEquals(dispositionFileHeaderStatusContent, GetUppercaseString(disposition.DispositionFileStatus));
 
             //Project
             AssertTrueIsDisplayed(dispositionFileProjectSubtitle);

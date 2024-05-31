@@ -8,11 +8,11 @@ import { toast } from 'react-toastify';
 import { DistrictCodes, RegionCodes } from '@/constants/index';
 import { IGeocoderResponse } from '@/hooks/pims-api/interfaces/IGeocoder';
 import { useAdminBoundaryMapLayer } from '@/hooks/repositories/mapLayer/useAdminBoundaryMapLayer';
-import { useParcelMapLayer } from '@/hooks/repositories/mapLayer/useParcelMapLayer';
+import { useFullyAttributedParcelMapLayer } from '@/hooks/repositories/mapLayer/useFullyAttributedParcelMapLayer';
 import { useGeocoderRepository } from '@/hooks/useGeocoderRepository';
 import { MOT_DistrictBoundary_Feature_Properties } from '@/models/layers/motDistrictBoundary';
 import { MOT_RegionalBoundary_Feature_Properties } from '@/models/layers/motRegionalBoundary';
-import { PMBC_Feature_Properties } from '@/models/layers/parcelMapBC';
+import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
 import { featuresToIdentifiedMapProperty } from '@/utils/mapPropertyUtils';
 
 import { ILayerSearchCriteria, IMapProperty } from '../models';
@@ -47,12 +47,14 @@ export const PropertySelectorSearchContainer: React.FC<IPropertySelectorSearchCo
     findByPid,
     findByPin,
     findByPlanNumber,
+    findByLegalDescription,
     findByLoading: isMapLayerLoading,
-  } = useParcelMapLayer();
+  } = useFullyAttributedParcelMapLayer();
 
   useEffect(() => {
     const searchFunc = async () => {
-      let result: FeatureCollection<Geometry, PMBC_Feature_Properties> | undefined = undefined;
+      let result: FeatureCollection<Geometry, PMBC_FullyAttributed_Feature_Properties> | undefined =
+        undefined;
       if (layerSearch?.searchBy === 'pid' && layerSearch.pid) {
         result = await findByPid(layerSearch.pid);
       } else if (
@@ -63,6 +65,8 @@ export const PropertySelectorSearchContainer: React.FC<IPropertySelectorSearchCo
         result = await findByPin(layerSearch.pin);
       } else if (layerSearch?.searchBy === 'planNumber' && layerSearch.planNumber) {
         result = await findByPlanNumber(layerSearch.planNumber);
+      } else if (layerSearch?.searchBy === 'legalDescription' && layerSearch.legalDescription) {
+        result = await findByLegalDescription(layerSearch.legalDescription);
       } else if (layerSearch?.searchBy === 'address' && layerSearch.address) {
         // Ignore address searches
         return;
@@ -88,6 +92,7 @@ export const PropertySelectorSearchContainer: React.FC<IPropertySelectorSearchCo
     };
     searchFunc();
   }, [
+    findByLegalDescription,
     findByPid,
     findByPin,
     findByPlanNumber,

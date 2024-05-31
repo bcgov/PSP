@@ -176,7 +176,7 @@ describe('Add Subdivision View', () => {
     expect(queryByText('111-111-111')).toBeNull();
   });
 
-  it('property area only has 3 digits', async () => {
+  it('property area only has at most 4 digits', async () => {
     const initialFormModel = new SubdivisionFormModel();
     getPrimaryAddressByPid.mockImplementation(() => Promise.resolve(undefined));
     const { queryByDisplayValue } = await setup({
@@ -204,8 +204,9 @@ describe('Add Subdivision View', () => {
 
     expect(getPrimaryAddressByPid).toHaveBeenCalledWith(testProperty.pid);
 
-    expect(queryByDisplayValue('1.1234')).toBeNull();
-    expect(queryByDisplayValue('1.123')).toBeVisible();
     expect(queryByDisplayValue('1.12')).toBeNull();
+    expect(queryByDisplayValue('1.123')).toBeNull();
+    expect(queryByDisplayValue('1.1235')).toBeVisible();
+    expect(queryByDisplayValue('1.12345')).toBeNull();
   });
 });

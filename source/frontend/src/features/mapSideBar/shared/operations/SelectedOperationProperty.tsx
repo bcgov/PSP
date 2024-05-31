@@ -21,7 +21,7 @@ export const SelectedOperationProperty: React.FunctionComponent<
 > = ({ property, getMarkerIndex, nameSpace, onRemove, isEditable }) => {
   const getAreaValue = (area: number, unit: string) => {
     const sqm = convertArea(area, unit, AreaUnitTypes.SquareMeters);
-    return formatNumber(sqm, 0, 3);
+    return formatNumber(sqm, 0, 4);
   };
 
   return (

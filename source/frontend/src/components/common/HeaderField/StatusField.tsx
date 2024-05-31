@@ -9,9 +9,11 @@ import { Dictionary } from '@/interfaces/Dictionary';
 import { ApiGen_Base_CodeType } from '@/models/api/generated/ApiGen_Base_CodeType';
 
 import { InlineFlexDiv } from '../styles';
+import { StyledSmallText } from './AuditSection';
 
 interface IStatusFieldProps {
   statusCodeType: ApiGen_Base_CodeType<string>;
+  preText?: string;
 }
 
 interface StatusStyle {
@@ -32,6 +34,7 @@ const statusDictionary: Dictionary<StatusStyle> = {
 
 const StatusField: React.FunctionComponent<React.PropsWithChildren<IStatusFieldProps>> = ({
   statusCodeType,
+  preText,
 }) => {
   const translateStatusCode = (statusCodeType: ApiGen_Base_CodeType<string>) => {
     switch (statusCodeType.id.toLowerCase()) {
@@ -73,7 +76,8 @@ const StatusField: React.FunctionComponent<React.PropsWithChildren<IStatusFieldP
   return (
     <StyledBottomRow className="no-gutters justify-content-end align-items-end">
       <Col />
-      <Col xs="auto" className="align-self-end">
+      <Col xs="auto" className="align-self-end d-flex">
+        <StyledSmallText>{preText}</StyledSmallText>
         <RetiredWarning $variant={statusFound.colorVariant}>
           <statusFound.icon size={16} />
           {statusCodeType?.description.toUpperCase()}
@@ -96,6 +100,7 @@ const RetiredWarning = styled(InlineFlexDiv)<{ $variant: string }>`
   align-items: center;
 
   padding: 0.2rem 0.5rem;
+  margin-left: 0.4rem;
 
   gap: 0.5rem;
 

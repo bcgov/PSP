@@ -38,13 +38,13 @@ namespace PIMS.Tests.Automation.PageObjects
         //Property Information Header Elements
         private By propertyInformationHeaderTitle = By.XPath("//div[@class='col']/h1[contains(text(),'Property Information')]");
         private By propertyInformationHeaderAddressLabel = By.XPath("//label[contains(text(),'Civic Address')]");
-        private By propertyInformationHeaderAddressContent = By.XPath("//label[contains(text(),'Civic Address')]/parent::div/following-sibling::div");
+        private By propertyInformationHeaderAddressContent = By.XPath("//label[contains(text(),'Civic Address')]/parent::strong/parent::div/following-sibling::div");
         private By propertyInformationHeaderPlanLabel = By.XPath("//label[contains(text(),'Plan')]");
-        private By propertyInformationHeaderPlanContent = By.XPath("//label[contains(text(),'Plan')]/parent::div/following-sibling::div");
+        private By propertyInformationHeaderPlanContent = By.XPath("//label[contains(text(),'Plan #')]/parent::strong/parent::div/following-sibling::div");
         private By propertyInformationHeaderPIDLabel = By.XPath("//label[contains(text(),'PID')]");
-        private By propertyInformationHeaderPIDContent = By.XPath("//label[contains(text(),'PID')]/parent::div/following-sibling::div");
-        private By propertyInformationHeaderLandTypeLabel = By.XPath("//div[@class='no-gutters row']/div[@class='col']/div/div//label[contains(text(),'Land parcel type')]");
-        private By propertyInformationHeaderLandTypeContent = By.XPath("//div[@class='no-gutters row']/div[@class='col']/div/div//label[contains(text(),'Land parcel type')]/parent::div/following-sibling::div");
+        private By propertyInformationHeaderPIDContent = By.XPath("//label[contains(text(),'PID')]/parent::strong/parent::div/following-sibling::div");
+        private By propertyInformationHeaderLandTypeLabel = By.XPath("//strong/label[contains(text(),'Land parcel type')]");
+        private By propertyInformationHeaderLandTypeContent = By.XPath("//label[contains(text(),'Land parcel type')]/parent::strong/parent::div/following-sibling::div");
         private By propertyInformationHeaderZoomBttn = By.CssSelector("button[title='Zoom Map']");
 
         //Title Tab Elements
@@ -606,7 +606,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyPropertyInformationHeader()
         {
-            Wait(2000);
+            Wait();
 
             Assert.True(webDriver.FindElement(propertyInformationHeaderTitle).Displayed);
             Assert.True(webDriver.FindElement(propertyInformationHeaderAddressLabel).Displayed);
