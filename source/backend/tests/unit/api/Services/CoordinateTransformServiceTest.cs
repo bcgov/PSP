@@ -28,7 +28,7 @@ namespace Pims.Api.Test.Services
 
         #region Tests
         [Fact]
-        public void Transform_Wgs84_BcAlbers()
+        public void TransformCoordinates_Wgs84_BcAlbers()
         {
             // Arrange
             var expected = new Coordinate(924303.6196359333, 1088419.4036716279);
@@ -42,7 +42,7 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
-        public void Transform_BcAlbers_Wgs84()
+        public void TransformCoordinates_BcAlbers_Wgs84()
         {
             // Arrange
             var expected = new Coordinate(-127.18432267731438, 54.793830114524795);
@@ -56,15 +56,61 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
-        public void Transform_Not_Supported()
+        public void TransformCoordinates_NotSupported()
         {
             // Arrange
             var location = new Coordinate(924033.50, 1088851.50);
 
             // Act
+            Action act = () => this._service.TransformCoordinates(900913, 4326, location);
+
             // Assert
             this._service.IsCoordinateSystemSupported(900913).Should().BeFalse();
-            Assert.Throws<InvalidOperationException>(() => this._service.TransformCoordinates(900913, 4326, location));
+            act.Should().Throw<InvalidOperationException>();
+        }
+
+
+        [Fact]
+        public void TransformGeometry_Wgs84_BcAlbers()
+        {
+            // Arrange
+            var boundary = EntityHelper.CreatePolygon(4396);
+
+            // Act
+            this._service.TransformGeometry(4326, 3005, boundary);
+
+            // Assert
+            boundary.SRID.Should().Be(3005);
+            boundary.ExteriorRing.GetCoordinateN(0).Should().Be(new Coordinate(3021312.0903253276, 375417.28211033065));
+        }
+
+        [Fact]
+        public void TransformGeometry_BcAlbers_Wgs84()
+        {
+            // Arrange
+            var boundary = EntityHelper.CreatePolygon(3005);
+
+            // Act
+            this._service.TransformGeometry(3005, 4326, boundary);
+
+            // Assert
+            boundary.SRID.Should().Be(4326);
+            boundary.ExteriorRing.GetCoordinateN(0).Should().Be(new Coordinate(-138.4471772534371, 44.199680362622246));
+        }
+
+        [Fact]
+        public void TransformGeometry_NotSupported()
+        {
+            // Arrange
+            // Arrange
+            var boundary = EntityHelper.CreatePolygon(900913);
+
+            // Act
+            Action act = () => this._service.TransformGeometry(900913, 4326, boundary);
+
+            // Assert
+            this._service.IsCoordinateSystemSupported(900913).Should().BeFalse();
+            act.Should().Throw<InvalidOperationException>();
         }
         #endregion
     }
