@@ -116,6 +116,34 @@ describe('PropertySearchSelectorFormView component', () => {
       });
     });
 
+    it('can search for a legal description', async () => {
+      const { getByTitle, getByText, container } = setup({
+        search: { ...defaultLayerFilter, searchBy: 'legalDescription' },
+      });
+
+      expect(getByText('No results found for your search criteria.')).toBeInTheDocument();
+      await act(async () => {
+        await fillInput(container, 'searchBy', 'legalDescription', 'select');
+        await fillInput(
+          container,
+          'legalDescription',
+          'SECTION 13, RANGE 1, SOUTH SALT SPRING ISLAND',
+          'textarea',
+        );
+      });
+
+      const searchButton = getByTitle('search');
+      act(() => userEvent.click(searchButton));
+
+      await waitFor(() => {
+        expect(onSearch).toHaveBeenCalledWith({
+          ...defaultLayerFilter,
+          searchBy: 'legalDescription',
+          legalDescription: 'SECTION 13, RANGE 1, SOUTH SALT SPRING ISLAND',
+        });
+      });
+    });
+
     it('can reset the search criteria', async () => {
       const { getByTitle, findByText, queryByDisplayValue, container } = setup({});
       expect(await findByText('No results found for your search criteria.')).toBeInTheDocument();
@@ -184,6 +212,7 @@ describe('PropertySearchSelectorFormView component', () => {
           districtName: undefined,
           id: 'PID-006-772-331',
           landArea: 4478.6462,
+          legalDescription: undefined,
           latitude: 55.706191605,
           longitude: -121.60790412,
           name: undefined,

@@ -249,8 +249,8 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
         >
           {prettyFormatDate(compensation.advancedPaymentServedDate)}
         </SectionField>
-        <SectionField label="Special instructions" labelWidth={'12'}>
-          {compensation.specialInstruction}
+        <SectionField label="Special instructions" labelWidth={'12'} valueClassName="pre-wrap">
+          <p style={{ whiteSpace: 'pre-wrap' }}>{compensation.specialInstruction}</p>
         </SectionField>
       </Section>
 
@@ -352,7 +352,7 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
 
       <Section>
         <SectionField label="Detailed remarks" labelWidth="12">
-          {compensation.detailedRemarks}
+          <p style={{ whiteSpace: 'pre-wrap' }}>{compensation.detailedRemarks}</p>
         </SectionField>
       </Section>
 

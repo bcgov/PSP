@@ -45,7 +45,9 @@ const keycloak: KeycloakInstance = new Keycloak('/keycloak.json');
 const Index = () => {
   return (
     <TenantProvider>
-      <TenantConsumer>{({ tenant }) => <InnerComponent tenant={tenant} />}</TenantConsumer>
+      <ModalContextProvider>
+        <TenantConsumer>{({ tenant }) => <InnerComponent tenant={tenant} />}</TenantConsumer>
+      </ModalContextProvider>
     </TenantProvider>
   );
 };
@@ -66,13 +68,11 @@ const InnerComponent = ({ tenant }: { tenant: ITenantConfig2 }) => {
       >
         <Provider store={store}>
           <AuthStateContextProvider>
-            <ModalContextProvider>
-              <DocumentViewerContextProvider>
-                <Router>
-                  <App />
-                </Router>
-              </DocumentViewerContextProvider>
-            </ModalContextProvider>
+            <DocumentViewerContextProvider>
+              <Router>
+                <App />
+              </Router>
+            </DocumentViewerContextProvider>
           </AuthStateContextProvider>
         </Provider>
       </ReactKeycloakProvider>

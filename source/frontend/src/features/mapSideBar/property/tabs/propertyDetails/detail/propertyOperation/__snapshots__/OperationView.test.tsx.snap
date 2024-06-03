@@ -66,7 +66,7 @@ exports[`Subdivision detail view > matches snapshot 1`] = `
           </div>
         </div>
         <div
-          class="col-1"
+          class="pl-8 col-auto"
         >
           <svg
             class="c4"
