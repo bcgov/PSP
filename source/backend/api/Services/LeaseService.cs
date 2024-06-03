@@ -512,16 +512,10 @@ namespace Pims.Api.Services
 
         private void AppendNewItemsToChecklist(PimsLease lease, ref List<PimsLeaseChecklistItem> pimsLeaseChecklistItems)
         {
-            var doNotAddToStatuses = new List<string>() { LeaseStatusTypes.DISCARD.ToString(), LeaseStatusTypes.ARCHIVED.ToString() };
-            if (doNotAddToStatuses.Contains(lease.LeaseStatusTypeCode))
-            {
-                return;
-            }
-
             PimsLeaseChklstItemStatusType incompleteStatusType = _lookupRepository.GetAllLeaseChecklistItemStatusTypes().FirstOrDefault(cst => cst.Id == LeaseChecklistItemStatusTypes.INCOMP.ToString());
             foreach (var itemType in _leaseRepository.GetAllChecklistItemTypes().Where(x => !x.IsExpiredType() && !x.IsDisabled))
             {
-                if (!pimsLeaseChecklistItems.Any(cli => cli.LeaseChklstItemTypeCode == itemType.LeaseChklstItemTypeCode) && DateOnly.FromDateTime(lease.AppCreateTimestamp) >= itemType.EffectiveDate)
+                if (!pimsLeaseChecklistItems.Any(cli => cli.LeaseChklstItemTypeCode == itemType.LeaseChklstItemTypeCode))
                 {
                     var checklistItem = new PimsLeaseChecklistItem
                     {
