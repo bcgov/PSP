@@ -530,7 +530,7 @@ namespace Pims.Dal.Test.Repositories
 
             // Act
             lease.LeaseDescription = "updated";
-            Action act = () => repository.Update(null);
+            Action act = () => repository.UpdateChecklistItem(null);
 
             // Assert
             act.Should().Throw<ArgumentNullException>();

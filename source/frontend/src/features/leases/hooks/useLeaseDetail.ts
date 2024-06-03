@@ -32,6 +32,7 @@ export function useLeaseDetail(leaseId?: number) {
 
   const {
     getLastUpdatedBy: { execute: getLastUpdatedBy, loading: getLastUpdatedByLoading },
+    getLeaseChecklist: { execute: getLeaseChecklist, loading: getLeaseChecklistLoading },
   } = useLeaseRepository();
 
   const getApiLeaseById = useApiRequestWrapper({
@@ -48,25 +49,38 @@ export function useLeaseDetail(leaseId?: number) {
       const leaseTenantsPromise = getLeaseTenants(leaseId);
       const propertyLeasesPromise = getPropertyLeases(leaseId);
       const leaseTermsPromise = getLeaseTerms(leaseId);
-      const [lease, leaseTenants, propertyLeases, leaseTerms] = await Promise.all([
-        leasePromise,
-        leaseTenantsPromise,
-        propertyLeasesPromise,
-        leaseTermsPromise,
-      ]);
+      const leaseChecklistPromise = getLeaseChecklist(leaseId);
+
+      const [lease, leaseTenants, propertyLeases, leaseTerms, leaseChecklistItems] =
+        await Promise.all([
+          leasePromise,
+          leaseTenantsPromise,
+          propertyLeasesPromise,
+          leaseTermsPromise,
+          leaseChecklistPromise,
+        ]);
       if (lease) {
         const mergedLeases: ApiGen_Concepts_Lease = {
           ...lease,
           tenants: leaseTenants ?? [],
           fileProperties: propertyLeases ?? [],
           terms: leaseTerms ?? [],
+          fileChecklistItems: leaseChecklistItems ?? [],
         };
         setLease(mergedLeases);
         return mergedLeases;
       }
       return undefined;
     }
-  }, [leaseId, getApiLeaseByIdFunc, setLease, getLeaseTenants, getPropertyLeases, getLeaseTerms]);
+  }, [
+    leaseId,
+    getApiLeaseByIdFunc,
+    getLeaseTenants,
+    getPropertyLeases,
+    getLeaseTerms,
+    getLeaseChecklist,
+    setLease,
+  ]);
 
   const fetchLastUpdatedBy = useCallback(async () => {
     if (leaseId) {
@@ -90,7 +104,8 @@ export function useLeaseDetail(leaseId?: number) {
     propertyLeasesLoading ||
     leaseTenantsLoading ||
     leaseTermsLoading ||
-    getLastUpdatedByLoading;
+    getLastUpdatedByLoading ||
+    getLeaseChecklistLoading;
 
   useDeepCompareEffect(() => {
     if (!lease) {

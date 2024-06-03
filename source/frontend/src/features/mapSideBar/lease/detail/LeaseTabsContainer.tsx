@@ -27,6 +27,7 @@ export interface ILeaseTabsContainerProps {
 export const LeaseTabsContainer: React.FC<ILeaseTabsContainerProps> = ({
   lease,
   setContainerState,
+  refreshLease,
   isEditing,
   activeTab,
   formikRef,
@@ -134,6 +135,23 @@ export const LeaseTabsContainer: React.FC<ILeaseTabsContainerProps> = ({
     ),
     key: LeaseFileTabNames.surplusDeclaration,
     name: 'Surplus Declaration',
+  });
+
+  tabViews.push({
+    content: (
+      <LeaseTab
+        leasePage={leasePages.get(LeasePageNames.CHECKLIST)}
+        onEdit={() => setContainerState({ isEditing: true })}
+        isEditing={isEditing}
+        formikRef={formikRef}
+        onSuccess={() => {
+          setContainerState({ isEditing: false });
+          refreshLease();
+        }}
+      />
+    ),
+    key: LeaseFileTabNames.checklist,
+    name: 'Checklist',
   });
 
   if (lease?.id && hasClaim(Claims.DOCUMENT_VIEW)) {
