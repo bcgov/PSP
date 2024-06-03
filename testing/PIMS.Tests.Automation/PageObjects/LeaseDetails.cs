@@ -25,7 +25,8 @@ namespace PIMS.Tests.Automation.PageObjects
         private By licenseHeaderExpiryDateLabel = By.XPath("//label[contains(text(),'Lease Start')]/parent::strong/parent::div/following-sibling::div[2]/strong/label[contains(text(),'Expiry')]");
         private By licenseHeaderExpiryDateContent = By.XPath("//label[contains(text(),'Lease Start')]/parent::strong/parent::div/following-sibling::div[3]/span");
         private By licenseHeaderHistoricalFileLabel = By.XPath("//label[contains(text(),'Historical File')]");
-        private By licenseHeaderHistoricalFileContent = By.XPath("//label[contains(text(),'Historical File')]/parent::div/following-sibling::div/strong");
+        private By licenseHeaderHistoricalFileContent = By.XPath("//label[contains(text(),'Historical File #:')]/parent::strong/parent::div/following-sibling::div/div/span");
+
         private By licenseHeaderCreatedLabel = By.XPath("//span/strong[contains(text(),'Created')]");
         private By licenseHeaderCreatedContent = By.XPath("//strong[contains(text(),'Created')]/parent::span");
         private By licenseHeaderCreatedByContent = By.XPath("//strong[contains(text(),'Created')]/parent::span/span[@data-testid='tooltip-icon-userNameTooltip']");
@@ -175,7 +176,6 @@ namespace PIMS.Tests.Automation.PageObjects
         //Leases Modal Element
         private By licenseDetailsConfirmationModal = By.CssSelector("div[class='modal-content']");
         private By licenseDetailsConfirmationContent = By.CssSelector("div[class='modal-content'] p");
-        //private By licenseDetailsAcknowledgeContinueBttn = By.XPath("//button/div[contains(text(),'Acknowledge & Continue')]");
 
         private SharedFileProperties sharedSearchProperties;
         private SharedModals sharedModals;
@@ -617,7 +617,7 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(licenseHeaderExpiryDateLabel);
             AssertTrueIsDisplayed(licenseHeaderExpiryDateContent);
             AssertTrueIsDisplayed(licenseHeaderHistoricalFileLabel);
-            //AssertTrueIsDisplayed(licenseHeaderHistoricalFileContent);
+            Assert.True(webDriver.FindElements(licenseHeaderHistoricalFileContent).Count > 0);
             AssertTrueIsDisplayed(licenseHeaderCreatedLabel);
             AssertTrueContentNotEquals(licenseHeaderCreatedContent, "");
             AssertTrueContentNotEquals(licenseHeaderCreatedByContent, "");
