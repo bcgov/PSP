@@ -104,6 +104,7 @@ export const LeaseDetailSubForm: React.FunctionComponent<ILeaseDetailsSubFormPro
                 <li>Archived: File to be archived as per ARCS/ORCS.</li>
               </ul>
             }
+            placement="right"
           ></TooltipIcon>
         }
         required

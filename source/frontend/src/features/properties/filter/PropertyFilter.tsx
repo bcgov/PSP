@@ -155,7 +155,10 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
                 <Input field="planNumber" placeholder="Enter a plan number"></Input>
               )}
               {values.searchBy === 'historical' && (
-                <Input field="historical" placeholder="Enter a LIS or PS file Number"></Input>
+                <Input
+                  field="historical"
+                  placeholder="Enter a historical file# (LIS, PS, etc.)"
+                ></Input>
               )}
             </StyledCol>
             <Col xs="auto">

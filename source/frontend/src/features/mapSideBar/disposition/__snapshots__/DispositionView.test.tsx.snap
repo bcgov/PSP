@@ -268,7 +268,9 @@ exports[`DispositionView component > renders as expected 1`] = `
               <span
                 class="c3"
               >
-                File:
+                <b>
+                  File:
+                </b>
               </span>
               <div
                 class="c5 c6"
