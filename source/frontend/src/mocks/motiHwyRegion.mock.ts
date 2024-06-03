@@ -1,4 +1,4 @@
-export const mockMotiRegionLayerResponse = {
+export const getMockMotiHwy = () => ({
   type: 'FeatureCollection',
   features: [
     {
@@ -28,4 +28,4 @@ export const mockMotiRegionLayerResponse = {
     },
   },
   bbox: [-129.43013603, 48.22452676, -120.49999404, 52.00000245],
-};
+});

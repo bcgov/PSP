@@ -9,6 +9,9 @@ import {
   getMockValues,
 } from '@/mocks/bcAssessment.mock';
 
+import { mockDistrictLayerResponse } from '../districtLayerResponse.mock';
+import { mockMotiRegionLayerResponse } from '../index.mock';
+
 export const handlers = [
   http.get('https://delivery.apps.gov.bc.ca/ext/sgw/geo.bca', ({ request }) => {
     const search = new URL(request.url).search;
@@ -24,6 +27,14 @@ export const handlers = [
       return HttpResponse.json(getMockDescription(), { status: 200 });
     } else if (search.includes('BCA_FOLIO_LAND_CHARS_SV')) {
       return HttpResponse.json(getMockLandChars(), { status: 200 });
+    }
+  }),
+  http.get('https://maps.th.gov.bc.ca/geoV05', ({ request }) => {
+    const search = new URL(request.url).search;
+    if (search.includes('hwy:DSA_REGION_BOUNDARY')) {
+      return HttpResponse.json(mockMotiRegionLayerResponse, { status: 200 });
+    } else if (search.includes('hwy:DSA_DISTRICT_BOUNDARY')) {
+      return HttpResponse.json(mockDistrictLayerResponse, { status: 200 });
     }
   }),
 ];
