@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 
 import { useLayerQuery } from '@/hooks/layer-api/useLayerQuery';
 import { useWfsLayer } from '@/hooks/layer-api/useWfsLayer';
-import { PMBC_Feature_Properties } from '@/models/layers/parcelMapBC';
+import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
 import { useTenant } from '@/tenants';
 
 /**
@@ -14,20 +14,33 @@ import { useTenant } from '@/tenants';
  * Note: according to https://catalogue.data.gov.bc.ca/dataset/parcelmap-bc-parcel-fabric-fully-attributed/resource/59d9964f-bc93-496f-8039-b83ab8f24a41
  */
 
-export const useParcelMapLayer = () => {
-  const { parcelMap, parcelsLayerUrl } = useTenant();
+export const useFullyAttributedParcelMapLayer = () => {
+  const { parcelMapFullyAttributed, fullyAttributedParcelsLayerUrl } = useTenant();
 
-  const getAllFeaturesWrapper = useWfsLayer(parcelMap.url, {
-    name: parcelMap.name,
+  const getAllFeaturesWrapper = useWfsLayer(parcelMapFullyAttributed.url, {
+    name: parcelMapFullyAttributed.name,
+    withCredentials: true,
   });
 
-  const { findOneWhereContains } = useLayerQuery(parcelsLayerUrl);
+  const { findOneWhereContains } = useLayerQuery(fullyAttributedParcelsLayerUrl);
 
   const { execute: getAllFeatures, loading: getAllFeaturesLoading } = getAllFeaturesWrapper;
 
   const handleError = useCallback(() => {
     toast.error('Unable to contact Parcel Map');
   }, []);
+
+  const findByLegalDescription = useCallback(
+    async (legalDesc: string) => {
+      const data = await getAllFeatures({ LEGAL_DESCRIPTION: legalDesc }, { timeout: 40000 });
+
+      // TODO: Enhance useLayerQuery to allow generics to match the Property types
+      return data as
+        | FeatureCollection<Geometry, PMBC_FullyAttributed_Feature_Properties>
+        | undefined;
+    },
+    [getAllFeatures],
+  );
 
   const findByPid = useCallback(
     async (pid: string, forceExactMatch = false) => {
@@ -39,7 +52,9 @@ export const useParcelMapLayer = () => {
           { forceExactMatch: forceExactMatch, timeout: 30000 },
         );
         // TODO: Enhance useLayerQuery to allow generics to match the Property types
-        return data as FeatureCollection<Geometry, PMBC_Feature_Properties> | undefined;
+        return data as
+          | FeatureCollection<Geometry, PMBC_FullyAttributed_Feature_Properties>
+          | undefined;
       } catch (e: unknown) {
         handleError();
         return undefined;
@@ -56,7 +71,9 @@ export const useParcelMapLayer = () => {
           { forceExactMatch: forceExactMatch, timeout: 30000 },
         );
         // TODO: Enhance useLayerQuery to allow generics to match the Property types
-        return data as FeatureCollection<Geometry, PMBC_Feature_Properties> | undefined;
+        return data as
+          | FeatureCollection<Geometry, PMBC_FullyAttributed_Feature_Properties>
+          | undefined;
       } catch (e: unknown) {
         handleError();
         return undefined;
@@ -73,7 +90,9 @@ export const useParcelMapLayer = () => {
           { forceExactMatch: forceExactMatch, timeout: 30000 },
         );
         // TODO: Enhance useLayerQuery to allow generics to match the Property types
-        return data as FeatureCollection<Geometry, PMBC_Feature_Properties> | undefined;
+        return data as
+          | FeatureCollection<Geometry, PMBC_FullyAttributed_Feature_Properties>
+          | undefined;
       } catch (e: unknown) {
         handleError();
         return undefined;
@@ -93,7 +112,7 @@ export const useParcelMapLayer = () => {
 
         // TODO: Enhance useLayerQuery to allow generics to match the Property types
         const forceCasted = featureCollection as
-          | FeatureCollection<Geometry, PMBC_Feature_Properties>
+          | FeatureCollection<Geometry, PMBC_FullyAttributed_Feature_Properties>
           | undefined;
         return forceCasted !== undefined && forceCasted.features.length > 0
           ? forceCasted.features[0]
@@ -107,6 +126,7 @@ export const useParcelMapLayer = () => {
   );
 
   return {
+    findByLegalDescription,
     findByPid,
     findByPin,
     findByPlanNumber,

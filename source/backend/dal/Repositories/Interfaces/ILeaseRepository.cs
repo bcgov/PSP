@@ -34,5 +34,13 @@ namespace Pims.Dal.Repositories
         PimsLease Update(PimsLease lease, bool commitTransaction = true);
 
         PimsLease UpdateLeaseConsultations(long leaseId, long? rowVersion, ICollection<PimsLeaseConsultation> pimsLeaseConsultations);
+
+        IEnumerable<PimsLeaseChklstItemType> GetAllChecklistItemTypes();
+
+        List<PimsLeaseChecklistItem> GetAllChecklistItemsByLeaseId(long leaseId);
+
+        PimsLeaseChecklistItem AddChecklistItem(PimsLeaseChecklistItem checklistItem);
+
+        PimsLeaseChecklistItem UpdateChecklistItem(PimsLeaseChecklistItem checklistItem);
     }
 }

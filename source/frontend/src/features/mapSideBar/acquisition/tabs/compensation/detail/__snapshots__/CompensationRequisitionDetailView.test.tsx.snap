@@ -564,8 +564,12 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c8 text-left col"
-          />
+            class="c8 pre-wrap col"
+          >
+            <p
+              style="white-space: pre-wrap;"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -584,7 +588,7 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
             Financial Coding
           </div>
           <div
-            class="col-1"
+            class="pl-8 col-auto"
           >
             <svg
               class="c9"
@@ -760,7 +764,7 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
             Payment
           </div>
           <div
-            class="col-1"
+            class="pl-8 col-auto"
           >
             <svg
               class="c9"
@@ -882,7 +886,7 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
             Financial Activities
           </div>
           <div
-            class="col-1"
+            class="pl-8 col-auto"
           >
             <svg
               class="c9"
@@ -932,7 +936,11 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
           </div>
           <div
             class="c8 text-left col"
-          />
+          >
+            <p
+              style="white-space: pre-wrap;"
+            />
+          </div>
         </div>
       </div>
     </div>

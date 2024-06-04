@@ -23,6 +23,7 @@ export interface IChecklistViewProps {
   prefix?: string;
   sectionTypeName: string;
   editClaim: Claims;
+  showEditButton: boolean;
 }
 
 export const ChecklistView: React.FC<IChecklistViewProps> = ({
@@ -31,6 +32,7 @@ export const ChecklistView: React.FC<IChecklistViewProps> = ({
   onEdit,
   sectionTypeName,
   editClaim,
+  showEditButton,
 }) => {
   const keycloak = useKeycloakWrapper();
   const { getByType } = useLookupCodeHelpers();
@@ -41,11 +43,13 @@ export const ChecklistView: React.FC<IChecklistViewProps> = ({
 
   return (
     <StyledSummarySection>
-      <StyledEditWrapper className="mr-3 my-1">
-        {keycloak.hasClaim(editClaim) ? (
-          <EditButton title="Edit checklist" onClick={onEdit} />
-        ) : null}
-      </StyledEditWrapper>
+      {showEditButton && (
+        <StyledEditWrapper className="mr-3 my-1">
+          {keycloak.hasClaim(editClaim) ? (
+            <EditButton title="Edit checklist" onClick={onEdit} />
+          ) : null}
+        </StyledEditWrapper>
+      )}
       {lastUpdated && (
         <StyledSectionCentered>
           <em>

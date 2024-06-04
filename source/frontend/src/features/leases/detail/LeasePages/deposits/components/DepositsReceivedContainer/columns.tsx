@@ -1,10 +1,10 @@
 import { FaTrash } from 'react-icons/fa';
-import { MdEdit, MdUndo } from 'react-icons/md';
+import { MdUndo } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
-import styled from 'styled-components';
 
-import { Button } from '@/components/common/buttons/Button';
+import { LinkButton, StyledRemoveLinkButton } from '@/components/common/buttons';
+import EditButton from '@/components/common/EditButton';
 import { InlineFlexDiv } from '@/components/common/styles';
 import TooltipIcon from '@/components/common/TooltipIcon';
 import { ColumnWithProps, renderDate, renderMoney } from '@/components/Table';
@@ -68,35 +68,32 @@ function depositActions(
   return function ({ row: { original, index } }: CellProps<DepositListEntry, string>) {
     const { hasClaim } = useKeycloakWrapper();
     return (
-      <StyledIcons>
-        {hasClaim(Claims.LEASE_EDIT) && original.depositReturnCount === 0 && (
-          <Button
-            title="delete deposit"
-            icon={<FaTrash size={24} id={`delete-deposit-${index}`} title="delete deposit" />}
-            onClick={() => original.id && onDelete(original.id)}
-          ></Button>
-        )}
+      <InlineFlexDiv>
         {hasClaim(Claims.LEASE_EDIT) && original.depositReturnCount > 0 && (
           <TooltipIcon
             toolTipId={`no-delete-tooltip-${original.id}`}
             toolTip="A deposit with associated return(s) cannot be deleted. To delete this deposit first delete any associated return(s)."
+            innerClassName="mt-3"
           />
         )}
         {hasClaim(Claims.LEASE_EDIT) && (
-          <Button
-            title="edit deposit"
-            icon={<MdEdit size={24} id={`edit-deposit-${index}`} title="edit deposit" />}
-            onClick={() => onEdit(original.id)}
-          ></Button>
+          <EditButton title="edit deposit" onClick={() => onEdit(original.id)} />
         )}
         {hasClaim(Claims.LEASE_ADD) && (
-          <Button
+          <LinkButton
             title="return deposit"
-            icon={<MdUndo size={24} id={`return-deposit-${index}`} title="return deposit" />}
+            icon={<MdUndo size={20} id={`return-deposit-${index}`} title="return deposit" />}
             onClick={() => onReturn(original.id)}
-          ></Button>
+          />
         )}
-      </StyledIcons>
+        {hasClaim(Claims.LEASE_EDIT) && original.depositReturnCount === 0 && (
+          <StyledRemoveLinkButton
+            title="delete deposit"
+            icon={<FaTrash size={20} id={`delete-deposit-${index}`} title="document deposit" />}
+            onClick={() => original?.id && onDelete(original.id)}
+          />
+        )}
+      </InlineFlexDiv>
     );
   };
 }
@@ -151,23 +148,3 @@ export const getColumns = ({
     },
   ];
 };
-
-const StyledIcons = styled(InlineFlexDiv)`
-  align-items: center;
-  [id^='edit-deposit'] {
-    color: ${props => props.theme.css.activeActionColor};
-  }
-  [id^='return-deposit'] {
-    color: ${props => props.theme.css.activeActionColor};
-  }
-  [id^='delete-deposit'] {
-    color: ${props => props.theme.css.activeActionColor};
-    :hover {
-      color: ${({ theme }) => theme.bcTokens.surfaceColorPrimaryDangerButtonDefault};
-    }
-  }
-  .btn.btn-primary {
-    background-color: transparent;
-    padding: 0;
-  }
-`;

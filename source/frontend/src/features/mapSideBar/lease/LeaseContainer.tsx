@@ -8,6 +8,7 @@ import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Claims } from '@/constants';
 import { useLeaseDetail } from '@/features/leases';
 import { AddLeaseYupSchema } from '@/features/leases/add/AddLeaseYupSchema';
+import LeaseChecklistContainer from '@/features/leases/detail/LeasePages/checklist/LeaseChecklistContainer';
 import DepositsContainer from '@/features/leases/detail/LeasePages/deposits/DepositsContainer';
 import DetailContainer from '@/features/leases/detail/LeasePages/details/DetailContainer';
 import DocumentsPage from '@/features/leases/detail/LeasePages/documents/DocumentsPage';
@@ -73,6 +74,7 @@ export enum LeasePageNames {
   INSURANCE = 'insurance',
   DEPOSIT = 'deposit',
   SURPLUS = 'surplus',
+  CHECKLIST = 'checklist',
   DOCUMENTS = 'documents',
 }
 
@@ -126,6 +128,14 @@ export const leasePages: Map<LeasePageNames, ILeasePage> = new Map<LeasePageName
   [
     LeasePageNames.SURPLUS,
     { pageName: LeasePageNames.SURPLUS, component: Surplus, title: 'Surplus Declaration' },
+  ],
+  [
+    LeasePageNames.CHECKLIST,
+    {
+      pageName: LeasePageNames.CHECKLIST,
+      component: LeaseChecklistContainer,
+      title: 'Checklist',
+    },
   ],
   [
     LeasePageNames.DOCUMENTS,

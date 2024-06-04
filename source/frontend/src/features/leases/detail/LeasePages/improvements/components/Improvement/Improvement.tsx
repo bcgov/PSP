@@ -33,7 +33,10 @@ export const Improvement: React.FunctionComponent<React.PropsWithChildren<IImpro
         <SectionField label="Unit #" labelWidth="3">
           {improvement.address}
         </SectionField>
-        <SectionField label="Building size" labelWidth="3">
+        <SectionField
+          label={typeId === PropertyImprovementTypes.Residential ? 'House size' : 'Building size'}
+          labelWidth="3"
+        >
           {improvement.structureSize}
         </SectionField>
         <SectionField label="Description" labelWidth="3">

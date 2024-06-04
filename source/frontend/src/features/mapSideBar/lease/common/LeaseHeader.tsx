@@ -19,7 +19,7 @@ import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Le
 import { exists, prettyFormatDate } from '@/utils';
 
 import HistoricalNumbersContainer from '../../shared/header/HistoricalNumberContainer';
-import HistoricalNumberFieldView from '../../shared/header/HistoricalNumberSectionView';
+import { HistoricalNumberSectionView } from '../../shared/header/HistoricalNumberSectionView';
 import { LeaseHeaderTenants } from './LeaseHeaderTenants';
 
 export interface ILeaseHeaderProps {
@@ -74,8 +74,7 @@ export const LeaseHeader: React.FC<ILeaseHeaderProps> = ({ lease, lastUpdatedBy 
           </Row>
           <HistoricalNumbersContainer
             propertyIds={propertyIds}
-            displayValuesOnly={false}
-            View={HistoricalNumberFieldView}
+            View={HistoricalNumberSectionView}
           />
         </Col>
 
@@ -83,7 +82,7 @@ export const LeaseHeader: React.FC<ILeaseHeaderProps> = ({ lease, lastUpdatedBy 
           <StyledFiller>
             <AuditSection lastUpdatedBy={lastUpdatedBy} baseAudit={lease} />
             {exists(lease?.fileStatusTypeCode) && (
-              <StatusField statusCodeType={lease.fileStatusTypeCode} />
+              <StatusField preText="File:" statusCodeType={lease.fileStatusTypeCode} />
             )}
           </StyledFiller>
         </Col>

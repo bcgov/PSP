@@ -138,7 +138,7 @@ exports[`Note List View > renders as expected 1`] = `
               </div>
             </div>
             <div
-              class="col-1"
+              class="pl-8 col-auto"
             >
               <svg
                 class="c6"

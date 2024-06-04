@@ -19,6 +19,7 @@ import {
 } from '@/utils/formUtils';
 
 import { PropertyForm } from '../mapSideBar/shared/models';
+import { ChecklistItemFormModel } from '../mapSideBar/shared/tabs/checklist/update/models';
 import { FormLeaseDeposit } from './detail/LeasePages/deposits/models/FormLeaseDeposit';
 import { FormLeaseDepositReturn } from './detail/LeasePages/deposits/models/FormLeaseDepositReturn';
 import { FormLeaseTerm } from './detail/LeasePages/payment/models';
@@ -69,6 +70,7 @@ export class LeaseFormModel {
   securityDepositReturns: FormLeaseDepositReturn[] = [];
   terms: FormLeaseTerm[] = [];
   tenants: FormTenant[] = [];
+  fileChecklist: ChecklistItemFormModel[] = [];
   rowVersion = 0;
 
   static fromApi(apiModel?: ApiGen_Concepts_Lease): LeaseFormModel {
@@ -172,6 +174,7 @@ export class LeaseFormModel {
       hasPhysicalFile: formLease.hasPhysicalLicense ?? false,
       cancellationReason: stringToNull(formLease.cancellationReason),
       terminationReason: stringToNull(formLease.terminationReason),
+      fileChecklistItems: formLease.fileChecklist.map(ck => ck.toApi()),
       isExpired: false,
       programName: null,
       renewalCount: 0,
@@ -333,4 +336,5 @@ export const getDefaultFormLease: () => LeaseFormModel = () =>
     ...getEmptyBaseAudit(),
     fileName: null,
     fileNumber: null,
+    fileChecklistItems: [],
   });
