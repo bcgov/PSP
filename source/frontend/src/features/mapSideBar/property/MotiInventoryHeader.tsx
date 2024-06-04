@@ -6,6 +6,7 @@ import styled from 'styled-components';
 
 import { StyledIconButton } from '@/components/common/buttons';
 import { HeaderField } from '@/components/common/HeaderField/HeaderField';
+import { StyledFiller } from '@/components/common/HeaderField/styles';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { InlineFlexDiv } from '@/components/common/styles';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
@@ -15,7 +16,7 @@ import { exists, formatApiAddress, pidFormatter } from '@/utils';
 import { mapFeatureToProperty } from '@/utils/mapPropertyUtils';
 
 import HistoricalNumbersContainer from '../shared/header/HistoricalNumberContainer';
-import HistoricalNumberFieldView from '../shared/header/HistoricalNumberSectionView';
+import { HistoricalNumberSectionView } from '../shared/header/HistoricalNumberSectionView';
 
 export interface IMotiInventoryHeaderProps {
   isLoading: boolean;
@@ -68,19 +69,28 @@ export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderPr
           </HeaderField>
           {exists(apiProperty) && (
             <HistoricalNumbersContainer
-              View={HistoricalNumberFieldView}
-              displayValuesOnly={false}
+              View={HistoricalNumberSectionView}
               propertyIds={[apiProperty?.id]}
             />
           )}
         </Col>
         <Col className="text-right">
-          <HeaderField className="justify-content-end" label="PID:">
-            {pid}
-          </HeaderField>
-          <HeaderField label="Land parcel type:" className="justify-content-end">
-            {apiProperty?.propertyType?.description}
-          </HeaderField>
+          <StyledFiller>
+            <HeaderField className="justify-content-end" label="PID:">
+              {pid}
+            </HeaderField>
+            <HeaderField label="Land parcel type:" className="justify-content-end">
+              {apiProperty?.propertyType?.description}
+            </HeaderField>
+            {isRetired && (
+              <HeaderField label="" className="justify-content-end align-items-end mt-auto">
+                <RetiredWarning>
+                  <AiOutlineExclamationCircle size={16} />
+                  RETIRED
+                </RetiredWarning>
+              </HeaderField>
+            )}
+          </StyledFiller>
         </Col>
         <Col xs="auto" className="d-flex p-0 align-items-center justify-content-end">
           {hasLocation && (
@@ -96,12 +106,6 @@ export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderPr
             </TooltipWrapper>
           )}
         </Col>
-        {isRetired && (
-          <RetiredWarning>
-            <AiOutlineExclamationCircle size={16} />
-            RETIRED
-          </RetiredWarning>
-        )}
       </Row>
       <StyledDivider />
     </>

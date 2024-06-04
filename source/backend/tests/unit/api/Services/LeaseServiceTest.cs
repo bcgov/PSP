@@ -7,6 +7,7 @@ using Humanizer;
 using MapsterMapper;
 using Moq;
 using Pims.Api.Constants;
+using Pims.Api.Models.CodeTypes;
 using Pims.Api.Models.Concepts;
 using Pims.Api.Services;
 using Pims.Core.Exceptions;
@@ -56,6 +57,20 @@ namespace Pims.Api.Test.Services
 
             var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
             leaseRepository.Setup(x => x.Add(It.IsAny<PimsLease>())).Returns(lease);
+            leaseRepository.Setup(x => x.GetAllChecklistItemTypes()).Returns(new List<PimsLeaseChklstItemType>() {
+                new PimsLeaseChklstItemType()
+                {
+                    LeaseChklstItemTypeCode = "VALID-ITEM",
+                    LeaseChklstSectionTypeCode = LeaseChecklistItemSectionTypes.FILEINIT.ToString(),
+                    Description = "MY VALID CHECKLIST ITEM",
+                    IsRequired = false,
+                    EffectiveDate = DateOnly.MinValue,
+                    ExpiryDate = null,
+                    IsDisabled = false,
+                    DisplayOrder = 1,
+                    ConcurrencyControlNumber = 1,
+                },
+            });
 
             var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
             propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), true)).Returns(lease.PimsPropertyLeases.FirstOrDefault().Property);
@@ -70,6 +85,7 @@ namespace Pims.Api.Test.Services
             result.Should().NotBeNull();
             result.Should().BeAssignableTo<PimsLease>();
             result.LeaseId.Should().Be(1);
+            result.PimsLeaseChecklistItems.Should().HaveCount(1);
             leaseRepository.Verify(x => x.Add(It.IsAny<PimsLease>()), Times.Once);
         }
 

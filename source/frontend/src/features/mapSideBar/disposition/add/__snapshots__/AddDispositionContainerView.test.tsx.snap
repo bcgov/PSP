@@ -862,6 +862,22 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
                                     class="c7 text-left col"
                                   />
                                 </div>
+                                <div
+                                  class="row"
+                                >
+                                  <div
+                                    class="col-md-12"
+                                  >
+                                    <label
+                                      class="form-label"
+                                    >
+                                      Legal Description:
+                                    </label>
+                                  </div>
+                                  <div
+                                    class="col-md-12"
+                                  />
+                                </div>
                               </div>
                             </div>
                           </div>
@@ -937,6 +953,13 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
                                               value="planNumber"
                                             >
                                               Plan #
+                                            </option>
+                                            <option
+                                              class="option"
+                                              data-testid="select-option-legalDescription"
+                                              value="legalDescription"
+                                            >
+                                              Legal Description
                                             </option>
                                           </select>
                                         </div>
@@ -1048,7 +1071,7 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
                                 <div
                                   class="tr"
                                   role="row"
-                                  style="display: flex; flex: 1 0 auto; min-width: 120px;"
+                                  style="display: flex; flex: 1 0 auto; min-width: 150px;"
                                 >
                                   <div
                                     class="th"
@@ -1116,6 +1139,18 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
                                       class="sortable-column"
                                     >
                                       Address
+                                    </div>
+                                  </div>
+                                  <div
+                                    class="th"
+                                    colspan="1"
+                                    role="columnheader"
+                                    style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                                  >
+                                    <div
+                                      class="sortable-column"
+                                    >
+                                      Legal Description
                                     </div>
                                   </div>
                                 </div>
