@@ -46,6 +46,7 @@ export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderPr
 
   const isDisposed = React.useMemo(() => {
     if (
+      geoserverMapData?.features?.length &&
       exists(geoserverMapData?.features[0]) &&
       geoserverMapData?.features[0]?.properties?.IS_DISPOSED
     ) {
