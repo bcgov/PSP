@@ -20,7 +20,7 @@ export const SideNavBar = styled.div`
   align-items: center;
   grid-area: iconbar;
   background-color: ${props => props.theme.tenant.colour};
-  transition: 0.5s width;
+  transition: 0.3s width;
   width: 6rem;
   label {
     color: white;
@@ -79,7 +79,7 @@ export const SideTray = styled.div`
   width: 64rem;
   padding: 0.8rem 1.6rem;
   text-align: left;
-  transition: transform 0.5s ease-in-out;
+  transition: transform 0.3s ease-in-out;
   box-shadow: 0.3rem 0 0.4rem rgba(0, 0, 0, 0.2);
   &.show {
     transform: translateX(64rem);
