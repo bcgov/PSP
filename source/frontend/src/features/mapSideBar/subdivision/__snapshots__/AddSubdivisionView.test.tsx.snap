@@ -46,8 +46,10 @@ exports[`Add Subdivision View > matches snapshot 1`] = `
           <svg
             class="c1"
             data-name="Layer 2"
+            height="24px"
             id="Layer_2"
             viewBox="0 0 21.62 14.48"
+            width="24px"
             xmlns="http://www.w3.org/2000/svg"
           >
             <defs />
