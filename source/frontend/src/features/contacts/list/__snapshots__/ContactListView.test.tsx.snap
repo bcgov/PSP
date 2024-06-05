@@ -215,6 +215,16 @@ exports[`Contact List View > matches snapshot 1`] = `
   margin-top: 0.3rem;
 }
 
+.c18 {
+  width: 7.5rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.c18:disabled {
+  background: white;
+}
+
 .c6 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -1195,7 +1205,7 @@ exports[`Contact List View > matches snapshot 1`] = `
                   class="Menu-button"
                 >
                   <div
-                    style="display: flex;"
+                    class="d-flex"
                   >
                     <span
                       class="c17"
@@ -1203,9 +1213,8 @@ exports[`Contact List View > matches snapshot 1`] = `
                       Show
                     </span>
                     <input
-                      class="form-control form-control-sm"
+                      class="c18 form-control form-control-sm"
                       disabled=""
-                      style="width: 50px; margin-left: 10px; margin-right: 10px; background-color: white;"
                       type="number"
                       value="10"
                     />

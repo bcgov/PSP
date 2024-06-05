@@ -79,6 +79,7 @@ namespace Pims.Api.Services
 
             var lease = _leaseRepository.Get(leaseId);
 
+
             return lease;
         }
 

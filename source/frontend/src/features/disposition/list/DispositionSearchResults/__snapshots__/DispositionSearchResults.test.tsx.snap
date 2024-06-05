@@ -465,6 +465,16 @@ exports[`Disposition search results table > matches snapshot 1`] = `
   margin-top: 0.3rem;
 }
 
+.c1 {
+  width: 7.5rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.c1:disabled {
+  background: white;
+}
+
 <div
     class="row"
   >
@@ -488,7 +498,7 @@ exports[`Disposition search results table > matches snapshot 1`] = `
           class="Menu-button"
         >
           <div
-            style="display: flex;"
+            class="d-flex"
           >
             <span
               class="c0"
@@ -496,9 +506,8 @@ exports[`Disposition search results table > matches snapshot 1`] = `
               Show
             </span>
             <input
-              class="form-control form-control-sm"
+              class="c1 form-control form-control-sm"
               disabled=""
-              style="width: 50px; margin-left: 10px; margin-right: 10px; background-color: white;"
               type="number"
               value="10"
             />
