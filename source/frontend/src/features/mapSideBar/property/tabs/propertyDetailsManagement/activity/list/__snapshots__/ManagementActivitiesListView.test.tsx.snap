@@ -193,6 +193,16 @@ exports[`Activities list view > renders as expected 1`] = `
   margin-top: 0.3rem;
 }
 
+.c9 {
+  width: 7.5rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.c9:disabled {
+  background: white;
+}
+
 .c2 {
   -webkit-box-pack: justify;
   -webkit-justify-content: space-between;
@@ -668,7 +678,7 @@ exports[`Activities list view > renders as expected 1`] = `
               class="Menu-button"
             >
               <div
-                style="display: flex;"
+                class="d-flex"
               >
                 <span
                   class="c8"
@@ -676,9 +686,8 @@ exports[`Activities list view > renders as expected 1`] = `
                   Show
                 </span>
                 <input
-                  class="form-control form-control-sm"
+                  class="c9 form-control form-control-sm"
                   disabled=""
-                  style="width: 50px; margin-left: 10px; margin-right: 10px; background-color: white;"
                   type="number"
                   value="10"
                 />
