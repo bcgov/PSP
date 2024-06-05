@@ -6,7 +6,6 @@ import { Claims, Roles } from '@/constants/index';
 
 import { SideNavBar } from './SideNavbar';
 import { render } from '@/utils/test-utils';
-import { useKeycloak } from '@react-keycloak/web';
 import { SidebarStateContextProvider } from './SideNavbarContext';
 
 interface IRenderProps {
@@ -88,7 +87,7 @@ describe('SideNavbar display and logic', () => {
     const { getByTitle, queryByText, getByTestId } = renderComponent();
     await waitFor(async () => {
       expect(getByTitle('expand')).toBeInTheDocument();
-      expect(queryByText('Leases & Licenses')?.clientWidth).toBe(0);
+      expect(queryByText('Leases & Licenses')).not.toBeInTheDocument();
       expect(getByTestId('nav-tooltip-leases&licenses')).toContainHTML('svg');
     });
   });
