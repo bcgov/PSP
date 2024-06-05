@@ -501,7 +501,9 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                 <span
                   class="c6"
                 >
-                  File:
+                  <b>
+                    File:
+                  </b>
                 </span>
                 <div
                   class="c8 c9"

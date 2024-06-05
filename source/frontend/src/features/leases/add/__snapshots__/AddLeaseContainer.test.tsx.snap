@@ -2330,7 +2330,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                 Consultation
               </div>
               <div
-                class="col-1"
+                class="pl-8 col-auto"
               >
                 <svg
                   class="c25"

@@ -130,6 +130,8 @@ vi.mocked(useApiLeases).mockReturnValue({
   exportLeases: vi.fn(),
   exportAggregatedLeases: vi.fn(),
   exportLeasePayments: vi.fn(),
+  putLeaseChecklist: vi.fn(),
+  getLeaseChecklist: vi.fn(),
 });
 
 vi.mock('./hooks/pims-api/useApiAcquisitionFile');

@@ -16,7 +16,7 @@ import { exists, formatApiAddress, pidFormatter } from '@/utils';
 import { mapFeatureToProperty } from '@/utils/mapPropertyUtils';
 
 import HistoricalNumbersContainer from '../shared/header/HistoricalNumberContainer';
-import HistoricalNumberFieldView from '../shared/header/HistoricalNumberSectionView';
+import { HistoricalNumberSectionView } from '../shared/header/HistoricalNumberSectionView';
 
 export interface IMotiInventoryHeaderProps {
   isLoading: boolean;
@@ -27,6 +27,7 @@ export interface IMotiInventoryHeaderProps {
 export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderProps> = props => {
   const pid = pidFormatter(props.composedProperty.pid);
   const parcelMapData = props.composedProperty.parcelMapFeatureCollection;
+  const geoserverMapData = props.composedProperty.geoserverFeatureCollection;
   const apiProperty = props.composedProperty.pimsProperty;
   let property: IMapProperty | null = null;
 
@@ -42,6 +43,17 @@ export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderPr
     }
     return false;
   }, [apiProperty]);
+
+  const isDisposed = React.useMemo(() => {
+    if (
+      geoserverMapData?.features?.length &&
+      exists(geoserverMapData?.features[0]) &&
+      geoserverMapData?.features[0]?.properties?.IS_DISPOSED
+    ) {
+      return true;
+    }
+    return false;
+  }, [geoserverMapData?.features]);
 
   let latitude: number | null = null;
   let longitude: number | null = null;
@@ -69,8 +81,7 @@ export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderPr
           </HeaderField>
           {exists(apiProperty) && (
             <HistoricalNumbersContainer
-              View={HistoricalNumberFieldView}
-              displayValuesOnly={false}
+              View={HistoricalNumberSectionView}
               propertyIds={[apiProperty?.id]}
             />
           )}
@@ -83,11 +94,11 @@ export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderPr
             <HeaderField label="Land parcel type:" className="justify-content-end">
               {apiProperty?.propertyType?.description}
             </HeaderField>
-            {isRetired && (
+            {(isRetired || isDisposed) && (
               <HeaderField label="" className="justify-content-end align-items-end mt-auto">
                 <RetiredWarning>
                   <AiOutlineExclamationCircle size={16} />
-                  RETIRED
+                  {isRetired ? 'RETIRED' : isDisposed ? 'DISPOSED' : 'UNKNOWN STATUS'}
                 </RetiredWarning>
               </HeaderField>
             )}
