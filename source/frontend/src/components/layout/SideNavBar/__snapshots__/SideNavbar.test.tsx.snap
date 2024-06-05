@@ -408,3 +408,412 @@ exports[`SideNavbar display and logic > renders 1`] = `
   </div>
 </div>
 `;
+
+exports[`SideNavbar display and logic > renders 2`] = `
+.c1 {
+  height: calc( 100vh - -  );
+  overflow-y: auto;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  position: relative;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  grid-area: iconbar;
+  background-color: #003366;
+  -webkit-transition: 0.5s width;
+  transition: 0.5s width;
+  width: 6rem;
+}
+
+.c1 label {
+  color: white;
+}
+
+.c1.expanded {
+  width: 16rem;
+}
+
+.c1 svg {
+  fill: white;
+}
+
+.c1 .chevron {
+  margin-top: auto;
+  -webkit-align-self: flex-end;
+  -ms-flex-item-align: end;
+  align-self: flex-end;
+  cursor: pointer;
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+}
+
+.c1 .nav-link {
+  padding: 0.8rem 1.6rem;
+}
+
+.c0 {
+  z-index: 1000;
+  position: relative;
+}
+
+.c6 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  height: 100%;
+}
+
+.c6 a {
+  font-size: 1.7rem;
+}
+
+.c5#close-tray {
+  float: right;
+  cursor: pointer;
+}
+
+.c4 {
+  height: 100%;
+  overflow-y: auto;
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: white;
+  z-index: -1;
+  width: 64rem;
+  padding: 0.8rem 1.6rem;
+  text-align: left;
+  -webkit-transition: -webkit-transform 0.3s ease-in-out;
+  -webkit-transition: transform 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out;
+  box-shadow: 0.3rem 0 0.4rem rgba(0,0,0,0.2);
+}
+
+.c4.show {
+  -webkit-transform: translateX(64rem);
+  -ms-transform: translateX(64rem);
+  transform: translateX(64rem);
+}
+
+.c2 {
+  width: 100%;
+}
+
+.c3 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c3 svg {
+  min-width: -webkit-max-content;
+  min-width: -moz-max-content;
+  min-width: max-content;
+}
+
+@media (max-width:1225px) {
+  .c4 {
+    width: 32rem;
+  }
+
+  .c4.show {
+    -webkit-transform: translateX(32rem);
+    -ms-transform: translateX(32rem);
+    transform: translateX(32rem);
+  }
+}
+
+<div>
+  <div
+    class="Toastify"
+  />
+  <div />
+  <div
+    class="c0"
+  >
+    <div
+      class="c1"
+    >
+      <div
+        class="c2 nav-item"
+        data-testid="nav-tooltip-home"
+      >
+        <a
+          class="c3 nav-link"
+          href="#"
+          role="button"
+        >
+          <svg
+            fill="currentColor"
+            height="24"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 24 24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M0 0h24v24H0z"
+              fill="none"
+            />
+            <path
+              d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"
+            />
+          </svg>
+        </a>
+      </div>
+      <div
+        class="c2 nav-item"
+        data-testid="nav-tooltip-project"
+      >
+        <a
+          class="c3 nav-link"
+          href="#"
+          role="button"
+        >
+          <svg
+            fill="currentColor"
+            height="24"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 512 512"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M320 336c0 8.84-7.16 16-16 16h-96c-8.84 0-16-7.16-16-16v-48H0v144c0 25.6 22.4 48 48 48h416c25.6 0 48-22.4 48-48V288H320v48zm144-208h-80V80c0-25.6-22.4-48-48-48H176c-25.6 0-48 22.4-48 48v48H48c-25.6 0-48 22.4-48 48v80h512v-80c0-25.6-22.4-48-48-48zm-144 0H192V96h128v32z"
+            />
+          </svg>
+        </a>
+      </div>
+      <div
+        class="c2 nav-item"
+        data-testid="nav-tooltip-research"
+      >
+        <a
+          class="c3 nav-link"
+          href="#"
+          role="button"
+        >
+          <svg
+            enable-background="new 0 0 24 24"
+            fill="#FFFFFF"
+            height="24px"
+            viewBox="0 0 24 24"
+            width="24px"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <g>
+              <rect
+                fill="none"
+                height="24"
+                width="24"
+              />
+              <path
+                d="M20,6h-8l-2-2H4C2.9,4,2.01,4.9,2.01,6L2,18c0,1.1,0.9,2,2,2h16c1.1,0,2-0.9,2-2V8C22,6.9,21.1,6,20,6z M20,18L4,18V6h5.17 l2,2H20V18z M18,12H6v-2h12V12z M14,16H6v-2h8V16z"
+              />
+            </g>
+          </svg>
+        </a>
+      </div>
+      <div
+        class="c2 nav-item"
+        data-testid="nav-tooltip-acquisition"
+      >
+        <a
+          class="c3 nav-link"
+          href="#"
+          role="button"
+        >
+          <svg
+            enable-background="new 0 0 24 24"
+            fill="#FFFFFF"
+            height="24px"
+            viewBox="0 0 24 24"
+            width="24px"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect
+              fill="none"
+              height="24"
+              width="24"
+            />
+            <path
+              d="M21,6.5V14h-2V7.5L14,4L9,7.5V9H7V6.5l7-5L21,6.5z M15.5,7h-1v1h1V7z M13.5,7h-1v1h1V7z M15.5,9h-1v1h1V9z M13.5,9h-1v1h1V9 z M19,16h-2c0-1.2-0.75-2.28-1.87-2.7L8.97,11H1v11h6v-1.44l7,1.94l8-2.5v-1C22,17.34,20.66,16,19,16z M3,20v-7h2v7H3z M13.97,20.41 L7,18.48V13h1.61l5.82,2.17C14.77,15.3,15,15.63,15,16c0,0-1.99-0.05-2.3-0.15l-2.38-0.79l-0.63,1.9l2.38,0.79 c0.51,0.17,1.04,0.26,1.58,0.26H19c0.39,0,0.74,0.23,0.9,0.56L13.97,20.41z"
+            />
+          </svg>
+        </a>
+      </div>
+      <div
+        class="c2 nav-item"
+        data-testid="nav-tooltip-leases&licenses"
+      >
+        <a
+          class="c3 nav-link"
+          href="#"
+          role="button"
+        >
+          <svg
+            enable-background="new 0 0 24 24"
+            fill="#000000"
+            height="24px"
+            viewBox="0 0 24 24"
+            width="24px"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <g>
+              <rect
+                fill="none"
+                height="24"
+                width="24"
+              />
+            </g>
+            <g>
+              <path
+                d="M21,12v-2h-2V7l-3-3l-2,2l-2-2l-2,2L8,4L5,7v3H3v2h2v2H3v2h2v4h14v-4h2v-2h-2v-2H21z M16,6.83l1,1V10h-2V7.83l0.41-0.41 L16,6.83z M12,6.83l0.59,0.59L13,7.83V10h-2V7.83l0.41-0.41L12,6.83z M11,14v-2h2v2H11z M13,16v2h-2v-2H13z M7,7.83l1-1l0.59,0.59 L9,7.83V10H7V7.83z M7,12h2v2H7V12z M7,16h2v2H7V16z M17,18h-2v-2h2V18z M17,14h-2v-2h2V14z"
+              />
+            </g>
+          </svg>
+        </a>
+      </div>
+      <div
+        class="c2 nav-item"
+        data-testid="nav-tooltip-disposition"
+      >
+        <a
+          class="c3 nav-link"
+          href="#"
+          role="button"
+        >
+          <svg
+            color="white"
+            fill="none"
+            fill-opacity="0"
+            height="24"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            style="color: white;"
+            viewBox="0 0 24 24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M10 18h4"
+            />
+            <path
+              d="M3 8a9 9 0 0 1 9 9v1l1.428 -4.285a12 12 0 0 1 6.018 -6.938l.554 -.277"
+            />
+            <path
+              d="M15 6h5v5"
+            />
+          </svg>
+        </a>
+      </div>
+      <div
+        class="c2 nav-item"
+        data-testid="nav-tooltip-subdivision&consolidation"
+      >
+        <a
+          class="c3 nav-link"
+          href="#"
+          role="button"
+        >
+          <svg
+            class="mr-1"
+            data-name="Layer 2"
+            height="24px"
+            id="Layer_2"
+            viewBox="0 0 24 24"
+            width="24px"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <defs />
+            <g
+              data-name="Layer 1"
+              id="Layer_1-2"
+            >
+              <g>
+                <path
+                  d="M12.85,6.88V0H2.16C.97,0,0,.97,0,2.16v10.15c0,1.19.97,2.16,2.16,2.16h2.04l8.65-7.59Z"
+                />
+                <path
+                  d="M19.46,0h-3.18v7.24c0,.06,0,.12-.02.18.08.55-.11,1.14-.56,1.53l-6.29,5.53h10.05c1.19,0,2.16-.97,2.16-2.16V2.16C21.62.98,20.65,0,19.46,0Z"
+                />
+              </g>
+            </g>
+          </svg>
+        </a>
+      </div>
+      <svg
+        class="chevron"
+        fill="currentColor"
+        height="24"
+        stroke="currentColor"
+        stroke-width="0"
+        viewBox="0 0 24 24"
+        width="24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <title>
+          expand
+        </title>
+        <path
+          d="M0 0h24v24H0z"
+          fill="none"
+        />
+        <path
+          d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
+        />
+      </svg>
+    </div>
+    <div
+      class="c4"
+      data-testid="side-tray"
+    >
+      <svg
+        class="c5"
+        fill="currentColor"
+        height="32"
+        id="close-tray"
+        stroke="currentColor"
+        stroke-width="0"
+        viewBox="0 0 512 512"
+        width="32"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <title>
+          close
+        </title>
+        <path
+          d="M464 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-83.6 290.5c4.8 4.8 4.8 12.6 0 17.4l-40.5 40.5c-4.8 4.8-12.6 4.8-17.4 0L256 313.3l-66.5 67.1c-4.8 4.8-12.6 4.8-17.4 0l-40.5-40.5c-4.8-4.8-4.8-12.6 0-17.4l67.1-66.5-67.1-66.5c-4.8-4.8-4.8-12.6 0-17.4l40.5-40.5c4.8-4.8 12.6-4.8 17.4 0l66.5 67.1 66.5-67.1c4.8-4.8 12.6-4.8 17.4 0l40.5 40.5c4.8 4.8 4.8 12.6 0 17.4L313.3 256l67.1 66.5z"
+        />
+      </svg>
+      <div
+        class="c6"
+      />
+    </div>
+  </div>
+</div>
+`;

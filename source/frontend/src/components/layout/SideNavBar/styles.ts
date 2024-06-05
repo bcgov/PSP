@@ -20,7 +20,7 @@ export const SideNavBar = styled.div`
   align-items: center;
   grid-area: iconbar;
   background-color: ${props => props.theme.tenant.colour};
-  transition: 0.3s width;
+  transition: 0.5s width;
   width: 6rem;
   label {
     color: white;
