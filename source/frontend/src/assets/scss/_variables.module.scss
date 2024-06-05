@@ -24,16 +24,14 @@
   headerTextColor: $header-text-color;
   headerBorderColor: $header-border-color;
 
-  disabledColor: $disabled-color;
-  disabledFieldBackgroundColor: $disabled-field-background-color;
+  fileStatusGreyColor: $file-status-grey-color;
+  fileStatusGreyBackgroundColor: $file-status-grey-background-color;
 
-  slideOutBlue: $slide-out-blue;
-  filterBoxColor: $filter-box-color;
-
+  fileStatusBlueColor: $file-status-blue-color;
   filterBoxColor: $filter-box-color;
 
   completedColor: $completed-color;
-  selectedColor: $selected-color;
+  completedBackgroundColor: $completed-background-color;
 
   fontDangerColor: $font-danger-color;
 }
