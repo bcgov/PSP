@@ -62,7 +62,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By researchFileHeaderDistrictLabel = By.XPath("//label[contains(text(),'Ministry district')]");
         private By researchFileHeaderDistrictContent = By.XPath("//label[contains(text(),'Ministry district')]/parent::strong/parent::div/following-sibling::div");
         private By researchFileHistoricalFileLabel = By.XPath("//label[contains(text(),'Historical File')]");
-        private By researchFileHistoricalFileContent = By.XPath("//label[contains(text(),'Historical File')]/parent::strong/parent::div/following-sibling::div/div");
+        private By researchFileHistoricalFileContent = By.XPath("//label[contains(text(),'Historical File')]/parent::strong/parent::div/following-sibling::div/div/span");
         private By researchFileHeaderCreatedLabel = By.XPath("//strong[contains(text(),'Created')]");
         private By researchFileHeaderCreatedDateContent = By.XPath("//strong[contains(text(),'Created')]/parent::span");
         private By researchFileHeaderCreatedByContent = By.XPath("//strong[contains(text(),'Created')]/parent::span/span[@data-testid='tooltip-icon-userNameTooltip']");
@@ -724,7 +724,7 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(researchFileHeaderDistrictLabel);
 
             AssertTrueIsDisplayed(researchFileHistoricalFileLabel);
-            //AssertTrueIsDisplayed(researchFileHistoricalFileContent);
+            Assert.True(webDriver.FindElements(researchFileHistoricalFileContent).Count > 0);
 
             AssertTrueIsDisplayed(researchFileHeaderCreatedLabel);
             AssertTrueElementContains(researchFileHeaderCreatedDateContent, GetTodayFormattedDate());
