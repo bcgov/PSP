@@ -9,7 +9,7 @@ namespace Pims.Api.Models.Concepts.Lease
     /// <summary>
     /// Provides a lease-oriented model.
     /// </summary>
-    public class LeaseModel : FileModel
+    public class LeaseModel : FileWithChecklistModel
     {
         #region Properties
 

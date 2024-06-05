@@ -256,7 +256,9 @@ exports[`ProjectSummaryView component > matches snapshot 1`] = `
             >
               <span
                 class="c3"
-              />
+              >
+                <b />
+              </span>
               <div
                 class="c5 c6"
               >

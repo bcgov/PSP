@@ -175,7 +175,9 @@ exports[`ProjectHeader component > renders as expected 1`] = `
           >
             <span
               class="c2"
-            />
+            >
+              <b />
+            </span>
             <div
               class="c4 c5"
             >

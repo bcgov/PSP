@@ -1070,7 +1070,7 @@ exports[`UpdateContactContainer > renders as expected 1`] = `
                     </div>
                   </div>
                   <div
-                    class="col-1"
+                    class="pl-8 col-auto"
                   >
                     <svg
                       class="c19"
@@ -1324,7 +1324,7 @@ exports[`UpdateContactContainer > renders as expected 1`] = `
                     Property Address
                   </div>
                   <div
-                    class="col-1"
+                    class="pl-8 col-auto"
                   >
                     <svg
                       class="c19"
@@ -1578,7 +1578,7 @@ exports[`UpdateContactContainer > renders as expected 1`] = `
                     Billing Address
                   </div>
                   <div
-                    class="col-1"
+                    class="pl-8 col-auto"
                   >
                     <svg
                       class="c19"

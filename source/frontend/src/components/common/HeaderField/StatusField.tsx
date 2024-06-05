@@ -77,7 +77,9 @@ const StatusField: React.FunctionComponent<React.PropsWithChildren<IStatusFieldP
     <StyledBottomRow className="no-gutters justify-content-end align-items-end">
       <Col />
       <Col xs="auto" className="align-self-end d-flex">
-        <StyledSmallText>{preText}</StyledSmallText>
+        <StyledSmallText>
+          <b>{preText}</b>
+        </StyledSmallText>
         <RetiredWarning $variant={statusFound.colorVariant}>
           <statusFound.icon size={16} />
           {statusCodeType?.description.toUpperCase()}

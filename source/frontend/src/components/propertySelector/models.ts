@@ -36,4 +36,5 @@ export interface ILayerSearchCriteria {
   legalDescription?: string;
   searchBy?: string;
   address?: string;
+  historical?: string;
 }

@@ -443,6 +443,16 @@ namespace Pims.Dal.Repositories
             return Context.PimsHistoricalFileNumberTypes.AsNoTracking().ToArray();
         }
 
+        public IEnumerable<PimsLeaseChklstItemStatusType> GetAllLeaseChecklistItemStatusTypes()
+        {
+            return Context.PimsLeaseChklstItemStatusTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ToArray();
+        }
+
+        public IEnumerable<PimsLeaseChklstSectionType> GetAllLeaseChecklistSectionTypes()
+        {
+            return Context.PimsLeaseChklstSectionTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ToArray();
+        }
+
         #endregion
     }
 }

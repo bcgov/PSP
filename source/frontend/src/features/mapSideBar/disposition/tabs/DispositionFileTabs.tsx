@@ -71,6 +71,7 @@ export const DispositionFileTabs: React.FC<IDispositionFileTabsProps> = ({
     content: (
       <ChecklistView
         onEdit={() => setIsEditing(true)}
+        showEditButton={true}
         sectionTypeName={API.DISPOSITION_CHECKLIST_SECTION_TYPES}
         editClaim={Claims.DISPOSITION_EDIT}
         prefix="dsp"
