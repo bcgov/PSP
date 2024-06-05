@@ -179,16 +179,22 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(webDriver.FindElement(elementBy).Displayed);
         }
 
-        protected void AssertTrueContentEquals(By elementBy, string text)
+        protected void AssertTrueContentEquals(By elementBy, string text = "")
         {
             WaitUntilVisible(elementBy);
             Assert.Equal(text, webDriver.FindElement(elementBy).Text);
         }
 
-        protected void AssertTrueElementValueEquals(By elementBy, string text)
+        protected void AssertTrueElementValueEquals(By elementBy, string text = "")
         {
             WaitUntilVisible(elementBy);
             Assert.Equal(text, webDriver.FindElement(elementBy).GetAttribute("Value"));
+        }
+
+        protected void AssertTrueContentNotEquals(By elementBy, string text)
+        {
+            WaitUntilVisible(elementBy);
+            Assert.True(webDriver.FindElement(elementBy).Text != text);
         }
 
         protected void AssertTrueDoublesEquals(By elementBy, double number2)
@@ -198,12 +204,6 @@ namespace PIMS.Tests.Automation.PageObjects
             var number1 = double.Parse(numberFromElement);
 
             Assert.True(number1.Equals(number2));
-        }
-
-        protected void AssertTrueContentNotEquals(By elementBy, string text)
-        {
-            WaitUntilVisible(elementBy);
-            Assert.True(webDriver.FindElement(elementBy).Text != text);
         }
 
         protected void AssertTrueElementContains(By elementBy, string text)
@@ -244,9 +244,7 @@ namespace PIMS.Tests.Automation.PageObjects
             
 
             if (amount == "")
-            {
                 return "";
-            }
             else
             {
                 decimal value = decimal.Parse(amount);
@@ -327,7 +325,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         protected string GetSubstring(string input, int startIndex, int endIndex)
         {
-            return input.Substring(startIndex, endIndex);
+            return input.Substring(startIndex, endIndex - startIndex);
         }
 
         public void Dispose()
