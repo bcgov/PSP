@@ -60,7 +60,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By searchDispositionFile1stResultStatus = By.CssSelector("div[data-testid='dispositionFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td clickable']:nth-child(8)");
         private By searchDispositionFile1stResultStatusFile = By.CssSelector("div[data-testid='dispositionFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td clickable']:nth-child(9)");
 
-        private By searchDispositionFileHeaderCode = By.XPath("//label[contains(text(), 'File:')]/parent::div/following-sibling::div[1]/strong");
+        private By searchDispositionFileHeaderCode = By.XPath("//label[contains(text(), 'File:')]/parent::strong/parent::div/following-sibling::div");
 
         public SearchDispositionFiles(IWebDriver webDriver) : base(webDriver)
         {}
@@ -230,7 +230,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyDispositionFileListView()
         {
-            Wait();
+            Wait(4000);
 
             //Disposition File Title
             AssertTrueIsDisplayed(searchAcquisitionFileTitle);

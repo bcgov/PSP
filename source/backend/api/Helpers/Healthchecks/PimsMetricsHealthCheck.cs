@@ -7,11 +7,11 @@ using Prometheus;
 
 namespace Pims.Api.Helpers.HealthChecks
 {
-    public class PimsMetricsHealthCheck : IHealthCheck
+    public class PimsMetricsHealthcheck : IHealthCheck
     {
         private static readonly Gauge AppDeploymentInfo = Metrics.CreateGauge("api_deployment_info", "Deployment information of the running PSP application", labelNames: new[] { "app_version", "db_version", "runtime_version" });
 
-        public PimsMetricsHealthCheck(string connectionString)
+        public PimsMetricsHealthcheck(string connectionString)
         {
             ConnectionString = connectionString;
         }

@@ -37,7 +37,7 @@ export const TableSelect = <T extends { id?: string | number }>({
   const columnsWithRemove = getColumnsWithRemove<T>((rows: T[]) => onRemove(rows), [...columns]);
 
   return (
-    <Container className="col-md-12">
+    <Container className="p-0 m-0">
       <Styled.SaveTableWrapper>
         <SelectedTableHeader selectedCount={selectedItems.length} />
         <Table<T>

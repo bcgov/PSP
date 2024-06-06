@@ -1,5 +1,5 @@
 import orderBy from 'lodash/orderBy';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import GenericModal from '@/components/common/GenericModal';
 import { Section } from '@/components/common/Section/Section';
@@ -14,6 +14,7 @@ import { ApiGen_Concepts_DocumentRelationship } from '@/models/api/generated/Api
 import { ApiGen_Concepts_DocumentType } from '@/models/api/generated/ApiGen_Concepts_DocumentType';
 
 import { DocumentRow } from '../ComposedDocument';
+import { DocumentViewerContext } from '../context/DocumentViewerContext';
 import { DocumentDetailModal } from '../documentDetail/DocumentDetailModal';
 import { DocumentUploadModal } from '../documentUpload/DocumentUploadModal';
 import { useDocumentProvider } from '../hooks/useDocumentProvider';
@@ -52,6 +53,8 @@ export const DocumentListView: React.FunctionComponent<
   );
 
   const { getDocumentRelationshipTypes, getDocumentTypes } = useDocumentProvider();
+
+  const { setPreviewDocumentId, setShowDocumentPreview } = useContext(DocumentViewerContext);
 
   useEffect(() => {
     const fetch = async () => {
@@ -110,6 +113,11 @@ export const DocumentListView: React.FunctionComponent<
     return [];
   }, [documentResults, sort, filters]);
 
+  async function previewDocumentFile(mayanDocumentId: number) {
+    setPreviewDocumentId(mayanDocumentId);
+    setShowDocumentPreview(true);
+  }
+
   const [isDetailsVisible, setIsDetailsVisible] = useState(false);
   const [isUploadVisible, setIsUploadVisible] = useState(false);
   const [selectedDocument, setSelectedDocument] = useState<
@@ -118,6 +126,10 @@ export const DocumentListView: React.FunctionComponent<
 
   const handleModalUploadClose = () => {
     setIsUploadVisible(false);
+  };
+
+  const handlePreview = (documentRelationship: ApiGen_Concepts_DocumentRelationship) => {
+    previewDocumentFile(documentRelationship?.document?.mayanDocumentId);
   };
 
   const handleViewDetails = (document: ApiGen_Concepts_DocumentRelationship) => {
@@ -188,6 +200,7 @@ export const DocumentListView: React.FunctionComponent<
           sort={sort}
           setSort={setSort}
           onViewDetails={handleViewDetails}
+          onPreview={handlePreview}
           onDelete={handleDeleteClick}
         />
       </Section>

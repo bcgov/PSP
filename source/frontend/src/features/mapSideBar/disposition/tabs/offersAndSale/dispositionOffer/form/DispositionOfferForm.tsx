@@ -14,6 +14,7 @@ import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import * as API from '@/constants/API';
 import SidebarFooter from '@/features/mapSideBar/shared/SidebarFooter';
+import { StyledFormWrapper } from '@/features/mapSideBar/shared/styles';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
 import { IApiError } from '@/interfaces/IApiError';
@@ -159,18 +160,8 @@ const DispositionOfferForm: React.FC<IDispositionOfferFormProps> = ({
 
 export default DispositionOfferForm;
 
-const StyledFormWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  text-align: left;
-  height: 100%;
-  overflow-y: auto;
-  padding-bottom: 1rem;
-`;
-
 const StyledContent = styled.div`
-  background-color: ${props => props.theme.css.filterBackgroundColor};
+  background-color: ${props => props.theme.css.highlightBackgroundColor};
 `;
 
 const StyledFooter = styled.div`

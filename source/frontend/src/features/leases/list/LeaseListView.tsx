@@ -128,7 +128,7 @@ export const LeaseListView: React.FunctionComponent<React.PropsWithChildren<unkn
 const StyledAddButton = styled(Button)`
   &.btn.btn-primary,
   &.btn.btn-primary:active {
-    background-color: ${props => props.theme.css.completedColor};
+    background-color: ${props => props.theme.bcTokens.iconsColorSuccess};
   }
 `;
 

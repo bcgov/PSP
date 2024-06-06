@@ -2,8 +2,15 @@
 {
     public class Property
     {
+        public string PID { get; set; } = null!;
+        public string PlanNumber { get; set; } = null!;
         public string PropertyName { get; set; } = null!;
         public Address Address { get; set; } = new Address();
+        public string GeneralLocation { get; set; } = null!;
+        public int HistoricalFileStartRow { get; set; } = 0;
+        public int HistoricalFileCount { get; set; } = 0;
+        public List<HistoricalFile> PropertyHistoricalFiles { get; set; } = new List<HistoricalFile>();
+        public string LegalDescription { get; set; } = null!;
         public string MOTIRegion { get; set; } = null!;
         public string HighwaysDistrict { get; set; } = null!;
         public string ElectoralDistrict { get; set; } = null!;
@@ -15,7 +22,6 @@
         public List<string> TenureStatus { get; set; } = new List<string>();
         public string ProvincialPublicHwy { get; set; } = null!;
         public List<string> HighwayEstablishedBy { get; set; } = new List<string>();
-        public List<string> AdjacentLandType { get; set; } = new List<string>();
         public string SqrMeters { get; set; } = null!;
         public Boolean IsVolumetric { get; set; } = false;
         public string Volume { get; set; } = null!;
@@ -35,6 +41,13 @@
         public string Country { get; set; } = null!;
         public string OtherCountry { get; set; } = null!;
         public string PostalCode { get; set; } = null!;
+    }
+
+    public class HistoricalFile
+    {
+        public string HistoricalFileNumber { get; set; } = null!;
+        public string HistoricalFileType { get; set; } = null!;
+        public string HistoricalFileOtherDetails { get; set; } = null!;
     }
 
     public class SearchProperty

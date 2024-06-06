@@ -52,7 +52,6 @@ const DocumentUploadContainer = forwardRef<
 
   const { setDisplayModal } = useModalContext({
     ...deleteModalProps,
-    closeButton: false,
     handleOk: () => {
       handleCancelConfirm();
     },

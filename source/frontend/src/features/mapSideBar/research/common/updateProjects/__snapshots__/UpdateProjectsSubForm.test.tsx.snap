@@ -296,10 +296,6 @@ exports[`UpdateProjectsSubForm > renders as expected with pre-existing form data
   margin-right: 0;
 }
 
-.c2 button.close {
-  font-size: 2.4rem;
-}
-
 .c4.c4.btn {
   color: #aaaaaa;
   -webkit-text-decoration: none;
@@ -334,6 +330,10 @@ exports[`UpdateProjectsSubForm > renders as expected with pre-existing form data
   line-height: 2rem;
 }
 
+.c2 button.close {
+  font-size: 2.4rem;
+}
+
 .c1.required::before {
   content: '*';
   position: absolute;
@@ -364,7 +364,7 @@ exports[`UpdateProjectsSubForm > renders as expected with pre-existing form data
         class="row"
       >
         <div
-          class="col-xl-9 col-auto"
+          class="col-9"
         >
           <div
             class="c2 form-group"
@@ -424,7 +424,7 @@ exports[`UpdateProjectsSubForm > renders as expected with pre-existing form data
           </div>
         </div>
         <div
-          class="pl-0 mt-2 col-xl-3 col-auto"
+          class="p-0 m-0 col-auto"
         >
           <button
             class="c3 Button c4 btn btn-link"
@@ -451,7 +451,7 @@ exports[`UpdateProjectsSubForm > renders as expected with pre-existing form data
                   fill="none"
                 />
                 <path
-                  d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                  d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
                 />
               </svg>
                

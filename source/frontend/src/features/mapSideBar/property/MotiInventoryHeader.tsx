@@ -6,24 +6,28 @@ import styled from 'styled-components';
 
 import { StyledIconButton } from '@/components/common/buttons';
 import { HeaderField } from '@/components/common/HeaderField/HeaderField';
+import { StyledFiller } from '@/components/common/HeaderField/styles';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { InlineFlexDiv } from '@/components/common/styles';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
 import { IMapProperty } from '@/components/propertySelector/models';
 import { ComposedProperty } from '@/features/mapSideBar/property/ComposedProperty';
-import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { exists, formatApiAddress, pidFormatter } from '@/utils';
 import { mapFeatureToProperty } from '@/utils/mapPropertyUtils';
+
+import HistoricalNumbersContainer from '../shared/header/HistoricalNumberContainer';
+import { HistoricalNumberSectionView } from '../shared/header/HistoricalNumberSectionView';
 
 export interface IMotiInventoryHeaderProps {
   isLoading: boolean;
   composedProperty: ComposedProperty;
-  onZoom?: (apiProperty?: ApiGen_Concepts_Property | undefined) => void;
+  onZoom?: (latitude: number, longitude: number) => void;
 }
 
 export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderProps> = props => {
   const pid = pidFormatter(props.composedProperty.pid);
   const parcelMapData = props.composedProperty.parcelMapFeatureCollection;
+  const geoserverMapData = props.composedProperty.geoserverFeatureCollection;
   const apiProperty = props.composedProperty.pimsProperty;
   let property: IMapProperty | null = null;
 
@@ -40,62 +44,79 @@ export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderPr
     return false;
   }, [apiProperty]);
 
+  const isDisposed = React.useMemo(() => {
+    if (
+      geoserverMapData?.features?.length &&
+      exists(geoserverMapData?.features[0]) &&
+      geoserverMapData?.features[0]?.properties?.IS_DISPOSED
+    ) {
+      return true;
+    }
+    return false;
+  }, [geoserverMapData?.features]);
+
+  let latitude: number | null = null;
+  let longitude: number | null = null;
+
+  if (exists(apiProperty)) {
+    latitude = apiProperty.latitude ?? null;
+    longitude = apiProperty.longitude ?? null;
+  } else if (exists(property)) {
+    latitude = property.latitude ?? null;
+    longitude = property.longitude ?? null;
+  }
+
+  const hasLocation = exists(longitude) && exists(latitude);
+
   return (
     <>
       <LoadingBackdrop show={isLoading} parentScreen={true} />
       <Row className="no-gutters">
-        <Col>
-          <Row className="no-gutters">
-            <Col xs="8">
-              <HeaderField label="Civic Address:" labelWidth={'3'} contentWidth="9">
-                {exists(apiProperty?.address) ? formatApiAddress(apiProperty!.address) : '-'}
-              </HeaderField>
-            </Col>
-            <Col>
-              <HeaderField className="justify-content-end" label="PID:" contentWidth="5">
-                {pid}
-              </HeaderField>
-            </Col>
-          </Row>
-          <Row className="no-gutters">
-            <Col xs="8">
-              <HeaderField label="Plan #:" labelWidth={'3'} contentWidth="9">
-                {property?.planNumber}
-              </HeaderField>
-            </Col>
-            <Col>
-              <HeaderField
-                label="Land parcel type:"
-                contentWidth="5"
-                className="justify-content-end"
-              >
-                {apiProperty?.propertyType?.description}
-              </HeaderField>
-            </Col>
-          </Row>
-          {isRetired && (
-            <Row className="no-gutters">
-              <Col xs="8"></Col>
-              <Col className="d-flex justify-content-end pr-4">
-                <RetiredWarning>
-                  <AiOutlineExclamationCircle size={16} />
-                  RETIRED
-                </RetiredWarning>
-              </Col>
-            </Row>
+        <Col xs="7">
+          <HeaderField label="Civic Address:" labelWidth={'3'} contentWidth="9">
+            {exists(apiProperty?.address) ? formatApiAddress(apiProperty!.address) : '-'}
+          </HeaderField>
+          <HeaderField label="Plan #:" labelWidth={'3'} contentWidth="9">
+            {property?.planNumber}
+          </HeaderField>
+          {exists(apiProperty) && (
+            <HistoricalNumbersContainer
+              View={HistoricalNumberSectionView}
+              propertyIds={[apiProperty?.id]}
+            />
           )}
         </Col>
+        <Col className="text-right">
+          <StyledFiller>
+            <HeaderField className="justify-content-end" label="PID:">
+              {pid}
+            </HeaderField>
+            <HeaderField label="Land parcel type:" className="justify-content-end">
+              {apiProperty?.propertyType?.description}
+            </HeaderField>
+            {(isRetired || isDisposed) && (
+              <HeaderField label="" className="justify-content-end align-items-end mt-auto">
+                <RetiredWarning>
+                  <AiOutlineExclamationCircle size={16} />
+                  {isRetired ? 'RETIRED' : isDisposed ? 'DISPOSED' : 'UNKNOWN STATUS'}
+                </RetiredWarning>
+              </HeaderField>
+            )}
+          </StyledFiller>
+        </Col>
         <Col xs="auto" className="d-flex p-0 align-items-center justify-content-end">
-          <TooltipWrapper tooltipId="property-zoom-map" tooltip="Zoom Map">
-            <StyledIconButton
-              variant="info"
-              disabled={!props.onZoom}
-              title="Zoom Map"
-              onClick={() => props?.onZoom && props?.onZoom(apiProperty)}
-            >
-              <FaSearchPlus size={22} />
-            </StyledIconButton>
-          </TooltipWrapper>
+          {hasLocation && (
+            <TooltipWrapper tooltipId="property-zoom-map" tooltip="Zoom Map">
+              <StyledIconButton
+                variant="info"
+                disabled={!props.onZoom}
+                title="Zoom Map"
+                onClick={() => props?.onZoom && props?.onZoom(latitude, longitude)}
+              >
+                <FaSearchPlus size={22} />
+              </StyledIconButton>
+            </TooltipWrapper>
+          )}
         </Col>
       </Row>
       <StyledDivider />
@@ -112,8 +133,8 @@ const StyledDivider = styled.div`
 
 export const RetiredWarning = styled(InlineFlexDiv)`
   text-transform: uppercase;
-  color: ${props => props.theme.css.expiredColor};
-  background-color: ${props => props.theme.css.expiredBackgroundColor};
+  color: ${props => props.theme.css.textWarningColor};
+  background-color: ${props => props.theme.css.warningBackgroundColor};
   border-radius: 0.4rem;
   letter-spacing: 0.1rem;
   padding: 0.2rem 0.5rem;

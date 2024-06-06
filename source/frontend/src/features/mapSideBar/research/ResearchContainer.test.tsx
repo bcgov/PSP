@@ -20,6 +20,22 @@ import ResearchView from './ResearchView';
 const history = createMemoryHistory();
 const mockAxios = new MockAdapter(axios);
 
+const mockGetPropertyHistoricalNumbers = {
+  error: undefined,
+  response: undefined,
+  execute: vi.fn().mockResolvedValue([]),
+  loading: false,
+  status: undefined,
+};
+
+vi.mock('@/hooks/epositories/useHistoricalNumberRepository', () => ({
+  useInterestHolderRepository: () => {
+    return {
+      getPropertyHistoricalNumbers: mockGetPropertyHistoricalNumbers,
+    };
+  },
+}));
+
 // Need to mock this library for unit tests
 vi.mock('react-visibility-sensor', () => {
   return {

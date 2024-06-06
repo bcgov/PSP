@@ -50,7 +50,7 @@ export const StyledMapSideBar = styled.div<{ show: boolean }>`
   max-width: ${props => (props.show ? `34.1rem` : `0`)};
   width: ${props => (props.show ? `100%` : `0`)};
   margin-left: ${props => (props.show ? `-1rem` : `0`)};
-  background-color: ${props => props.theme.css.primaryBackgroundColor};
+  background-color: ${props => props.theme.bcTokens.surfaceColorFormsDefault};
   visibility: ${props => (props.show ? `visible` : `hidden`)};
   opacity: ${props => (props.show ? 1 : 0)};
   border-radius: 0.4rem;
@@ -67,8 +67,8 @@ const StyledHeader = styled.div`
   position: relative;
   width: 100%;
   height: 5.2rem;
-  background-color: ${({ theme }) => theme.css.primaryColor};
-  color: ${props => props.theme.css.primaryBackgroundColor};
+  background-color: ${({ theme }) => theme.tenant.colour};
+  color: ${props => props.theme.bcTokens.surfaceColorFormsDefault};
   align-items: center;
   padding: 1rem 1.8rem;
   gap: 1.5rem;
@@ -76,7 +76,7 @@ const StyledHeader = styled.div`
 
 const StyledTitle = styled.p`
   font-size: 1.8rem;
-  color: ${props => props.theme.css.primaryBackgroundColor};
+  color: ${props => props.theme.bcTokens.surfaceColorFormsDefault};
   text-decoration: none solid rgb(255, 255, 255);
   line-height: 1.8rem;
   font-weight: bold;
@@ -87,7 +87,7 @@ const CloseIcon = styled(FaWindowClose)`
   position: absolute;
   top: 0.6rem;
   right: 0.8rem;
-  color: ${props => props.theme.css.primaryBackgroundColor};
+  color: ${props => props.theme.bcTokens.surfaceColorFormsDefault};
   font-size: 22px;
   cursor: pointer;
 `;

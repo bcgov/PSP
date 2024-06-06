@@ -165,19 +165,20 @@ exports[`Lease and License List View > matches snapshot 1`] = `
 }
 
 .c8 .react-datepicker__calendar-icon {
-  width: 3rem;
+  width: 2.4rem;
   height: 3rem;
   margin-top: 0.5rem;
+  margin-right: 1.2rem;
   right: 0;
   pointer-events: none;
 }
 
 .c8 .react-datepicker__view-calendar-icon input {
-  padding: 0.6rem 1rem 0.5rem 0.6rem;
+  padding: 0.8rem 1.2rem 0.8rem 1.2rem;
 }
 
 .c8 .react-datepicker-wrapper {
-  max-width: 16rem;
+  max-width: 17rem;
 }
 
 .c9.c9.form-control.is-valid {
@@ -847,7 +848,7 @@ exports[`Lease and License List View > matches snapshot 1`] = `
           <div
             class="tr"
             role="row"
-            style="display: flex; flex: 1 0 auto; min-width: 180px;"
+            style="display: flex; flex: 1 0 auto; min-width: 210px;"
           >
             <div
               class="th"
@@ -899,7 +900,7 @@ exports[`Lease and License List View > matches snapshot 1`] = `
               class="th"
               colspan="1"
               role="columnheader"
-              style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
             >
               <div
                 class="sortable-column"
@@ -1009,6 +1010,18 @@ exports[`Lease and License List View > matches snapshot 1`] = `
                 class="sortable-column"
               >
                 Properties
+              </div>
+            </div>
+            <div
+              class="th"
+              colspan="1"
+              role="columnheader"
+              style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            >
+              <div
+                class="sortable-column"
+              >
+                Historical File #
               </div>
             </div>
             <div

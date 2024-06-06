@@ -3,13 +3,13 @@
 .table {
   .thead-light {
     .th {
-      color: $table-header-text-color;
-      background-color: $table-header-bg-color;
+      color: var(--typography-color-secondary);
+      background-color: var(--surface-color-forms-default);
     }
   }
   .thead {
     .th {
-      border-bottom: 0.2rem solid $table-header-border-color;
+      border-bottom: 0.2rem solid $border-outline-color;
       cursor: pointer;
       font-size: 1.6rem;
       font-weight: bold;
@@ -19,20 +19,20 @@
   .tbody {
     .tr-wrapper {
       &:nth-child(even) {
-        background-color: $table-even-row-bg-color;
+        background-color: $highlight-background-color;
       }
       &:nth-child(odd) {
-        background-color: $table-odd-row-bg-color;
+        background-color: var(--surface-color-forms-default);
         &:last-child {
-          border-bottom: 0.1rem solid $table-column-border-color;
+          border-bottom: 0.1rem solid $highlight-background-color;
         }
       }
       .tr {
         &:hover {
-          background-color: $table-hover-color;
+          background-color: $highlight-background-color;
         }
         &.selected {
-          background-color: $selected-color;
+          background-color: $highlight-background-color;
         }
       }
       .collapse {
@@ -57,30 +57,30 @@
   }
 
   .svg-btn {
-    color: $text-color;
+    color: var(--typography-color-secondary);
   }
 
   .svg-btn:hover {
-    color: $icon-light-color;
+    color: $link-hover-color;
     text-decoration: none;
     cursor: pointer;
   }
 
   .svg-btn:hover svg {
-    fill: $icon-light-color;
+    fill: $link-hover-color;
     stroke: #fff;
   }
 
   .svg-btn.active {
-    color: $icon-light-color;
+    color: $link-hover-color;
     border-bottom-style: solid;
-    border-bottom-color: $accent-color;
+    border-bottom-color: var(--theme-gold-100);
     border-bottom-width: 0.1rem;
     background-color: none !important;
   }
 
   .svg-btn.active svg {
-    fill: $icon-light-color;
+    fill: $link-hover-color;
     stroke: #fff;
   }
 
@@ -89,17 +89,17 @@
     min-height: 5rem;
     padding: 0.5rem 1.1rem;
     align-items: center;
-    border-right: 0.1rem solid $table-column-border-color;
+    border-right: 0.1rem solid $highlight-background-color;
     &:last-child {
       border-right: none;
     }
     &.svg-btn.expander:hover,
     &.svg-btn.expander:hover svg {
-      fill: $accent-color;
+      fill: var(--theme-gold-100);
     }
     &.svg-btn.reset-filter:hover,
     &.svg-btn.reset-filter:hover svg {
-      fill: $accent-color;
+      fill: var(--theme-gold-100);
     }
     &.expander,
     &.reset-filter {
@@ -144,7 +144,7 @@
       }
 
       &.active {
-        color: $active-color;
+        color: $link-hover-color;
       }
     }
   }

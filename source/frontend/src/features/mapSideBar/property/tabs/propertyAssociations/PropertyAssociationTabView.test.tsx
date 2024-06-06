@@ -6,6 +6,11 @@ import { render, RenderOptions } from '@/utils/test-utils';
 import PropertyAssociationTabView, {
   IPropertyAssociationTabViewProps,
 } from './PropertyAssociationTabView';
+import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_Person';
+import { ApiGen_Base_CodeType } from '@/models/api/generated/ApiGen_Base_CodeType';
+import { ApiGen_Concepts_LeaseTenant } from '@/models/api/generated/ApiGen_Concepts_LeaseTenant';
+import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
+import { ApiGen_Concepts_Organization } from '@/models/api/generated/ApiGen_Concepts_Organization';
 
 const history = createMemoryHistory();
 
@@ -55,6 +60,8 @@ describe('PropertyAssociationTabView component', () => {
       <PropertyAssociationTabView
         isLoading={renderOptions.isLoading}
         associations={renderOptions.associations}
+        associatedLeaseTenants={renderOptions.associatedLeaseTenants}
+        associatedLeases={renderOptions.associatedLeases}
       />,
       {
         history,
@@ -67,7 +74,94 @@ describe('PropertyAssociationTabView component', () => {
   };
 
   it('renders as expected when provided valid data object', () => {
-    const { asFragment } = setup({ isLoading: false, associations: fakeAssociations });
+    const { asFragment } = setup({
+      isLoading: false,
+      associations: fakeAssociations,
+      associatedLeases: [],
+      associatedLeaseTenants: [],
+    });
     expect(asFragment()).toMatchSnapshot();
+  });
+
+  it('renders only the highest priority lease tenants', () => {
+    const { getByText, queryByText } = setup({
+      isLoading: false,
+      associations: fakeAssociations,
+      associatedLeases: [],
+      associatedLeaseTenants: [
+        {
+          leaseId: 34,
+          person: { firstName: 'John', surname: 'Doe' } as ApiGen_Concepts_Person,
+          tenantTypeCode: { id: 'ASGN' } as ApiGen_Base_CodeType<string>,
+          lessorType: { id: 'PER' } as ApiGen_Base_CodeType<string>,
+        } as ApiGen_Concepts_LeaseTenant,
+        {
+          leaseId: 34,
+          person: { firstName: 'John2', surname: 'Doe2' } as ApiGen_Concepts_Person,
+          tenantTypeCode: { id: 'TEN' } as ApiGen_Base_CodeType<string>,
+          lessorType: { id: 'PER' } as ApiGen_Base_CodeType<string>,
+        } as ApiGen_Concepts_LeaseTenant,
+      ],
+    });
+    expect(getByText('John Doe')).toBeVisible();
+    expect(queryByText('John2 Doe2')).toBeNull();
+  });
+
+  it('renders multiple lease tenants', () => {
+    const { getByText } = setup({
+      isLoading: false,
+      associations: fakeAssociations,
+      associatedLeases: [],
+      associatedLeaseTenants: [
+        {
+          leaseId: 34,
+          person: { firstName: 'John', surname: 'Doe' } as ApiGen_Concepts_Person,
+          tenantTypeCode: { id: 'ASGN' } as ApiGen_Base_CodeType<string>,
+          lessorType: { id: 'PER' } as ApiGen_Base_CodeType<string>,
+        } as ApiGen_Concepts_LeaseTenant,
+        {
+          leaseId: 34,
+          person: { firstName: 'John2', surname: 'Doe2' } as ApiGen_Concepts_Person,
+          tenantTypeCode: { id: 'ASGN' } as ApiGen_Base_CodeType<string>,
+          lessorType: { id: 'PER' } as ApiGen_Base_CodeType<string>,
+        } as ApiGen_Concepts_LeaseTenant,
+      ],
+    });
+    expect(getByText('John Doe', { exact: false })).toBeVisible();
+    expect(getByText('John2 Doe2', { exact: false })).toBeVisible();
+  });
+
+  it('renders multiple lease tenants of different types', () => {
+    const { getByText } = setup({
+      isLoading: false,
+      associations: fakeAssociations,
+      associatedLeases: [],
+      associatedLeaseTenants: [
+        {
+          leaseId: 34,
+          organization: { name: 'Org' } as ApiGen_Concepts_Organization,
+          tenantTypeCode: { id: 'ASGN' } as ApiGen_Base_CodeType<string>,
+          lessorType: { id: 'ORG' } as ApiGen_Base_CodeType<string>,
+        } as ApiGen_Concepts_LeaseTenant,
+        {
+          leaseId: 34,
+          person: { firstName: 'John2', surname: 'Doe2' } as ApiGen_Concepts_Person,
+          tenantTypeCode: { id: 'ASGN' } as ApiGen_Base_CodeType<string>,
+          lessorType: { id: 'PER' } as ApiGen_Base_CodeType<string>,
+        } as ApiGen_Concepts_LeaseTenant,
+      ],
+    });
+    expect(getByText('Org', { exact: false })).toBeVisible();
+    expect(getByText('John2 Doe2', { exact: false })).toBeVisible();
+  });
+
+  it('renders lease expiry', () => {
+    const { getByText } = setup({
+      isLoading: false,
+      associations: fakeAssociations,
+      associatedLeases: [{ id: 34, expiryDate: '2024-01-01' } as ApiGen_Concepts_Lease],
+      associatedLeaseTenants: [],
+    });
+    expect(getByText('Jan 1, 2024')).toBeVisible();
   });
 });

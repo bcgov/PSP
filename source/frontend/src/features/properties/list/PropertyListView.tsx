@@ -1,8 +1,6 @@
 import './PropertyListView.scss';
 
-import { Form, Formik, FormikProps } from 'formik';
 import isEmpty from 'lodash/isEmpty';
-import noop from 'lodash/noop';
 import Multiselect from 'multiselect-react-dropdown';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { Row } from 'react-bootstrap';
@@ -21,6 +19,7 @@ import { useApiProperties } from '@/hooks/pims-api/useApiProperties';
 import { useProperties } from '@/hooks/repositories/useProperties';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
+import useDeepCompareMemo from '@/hooks/util/useDeepCompareMemo';
 import { ApiGen_Concepts_PropertyView } from '@/models/api/generated/ApiGen_Concepts_PropertyView';
 import { generateMultiSortCriteria } from '@/utils';
 import { toFilteredApiPaginateParams } from '@/utils/CommonFunctions';
@@ -40,16 +39,14 @@ export const ownershipFilterOptions: MultiSelectOption[] = [
 
 const PropertyListView: React.FC<React.PropsWithChildren<unknown>> = () => {
   const { getByType } = useLookupCodeHelpers();
-  const tableFormRef = useRef<
-    FormikProps<{ properties: ApiGen_Concepts_PropertyView[] }> | undefined
-  >();
-
   const municipalities = useMemo(() => getByType(API.ADMINISTRATIVE_AREA_TYPES), [getByType]);
 
   const columns = useMemo(() => columnDefinitions({ municipalities }), [municipalities]);
 
   // We'll start our table without any data
-  const [data, setData] = useState<ApiGen_Concepts_PropertyView[] | undefined>();
+  const [pageResultRecords, setPageResultRecords] = useState<
+    ApiGen_Concepts_PropertyView[] | undefined
+  >();
 
   // Filtering and pagination state
   const [filter, setFilter] = useState<IPropertyFilter>(defaultPropertyFilter);
@@ -70,6 +67,7 @@ const PropertyListView: React.FC<React.PropsWithChildren<unknown>> = () => {
     },
     [setFilter, setPageIndex],
   );
+
   // This will get called when the table needs new data
   const onRequestData = useCallback(
     ({ pageIndex }: { pageIndex: number }) => {
@@ -94,7 +92,8 @@ const PropertyListView: React.FC<React.PropsWithChildren<unknown>> = () => {
     }) => {
       // Give this fetch an ID
       const fetchId = ++fetchIdRef.current;
-      setData(undefined);
+      setPageResultRecords(undefined);
+
       // Call API with appropriate search parameters
       const queryParams = toFilteredApiPaginateParams<IPropertyFilter>(
         pageIndex,
@@ -109,11 +108,11 @@ const PropertyListView: React.FC<React.PropsWithChildren<unknown>> = () => {
       // The server could send back total page count.
       // For now we'll just calculate it.
       if (fetchId === fetchIdRef.current && data?.items) {
-        setData(data.items);
+        setPageResultRecords(data.items);
         setPageCount(Math.ceil(data.total / pageSize));
       }
     },
-    [setData, setPageCount, getPropertiesViewPagedApi],
+    [setPageResultRecords, setPageCount, getPropertiesViewPagedApi],
   );
 
   // Listen for changes in pagination and use the state to fetch our new data
@@ -149,12 +148,22 @@ const PropertyListView: React.FC<React.PropsWithChildren<unknown>> = () => {
     setFilter({ ...filter, ownership: selectedIds.join(',') });
   };
 
+  const ownership = useDeepCompareMemo(
+    () =>
+      filter.ownership
+        .split(',')
+        .map<MultiSelectOption | undefined>(o => ownershipFilterOptions.find(op => op.id === o))
+        .filter((x): x is MultiSelectOption => x !== undefined),
+    [filter.ownership],
+  );
+
   return (
     <Container fluid className="PropertyListView">
       <Container fluid className="filter-container border-bottom">
         <StyledFilterContainer fluid className="px-0">
           <PropertyFilter
             useGeocoder={false}
+            propertyFilter={filter}
             defaultFilter={defaultPropertyFilter}
             onChange={handleFilterChange}
             sort={sort}
@@ -177,12 +186,7 @@ const PropertyListView: React.FC<React.PropsWithChildren<unknown>> = () => {
                     id="properties-selector"
                     ref={multiselectOwnershipRef}
                     options={ownershipFilterOptions}
-                    selectedValues={filter.ownership
-                      .split(',')
-                      .map<MultiSelectOption | undefined>(o =>
-                        ownershipFilterOptions.find(op => op.id === o),
-                      )
-                      .filter((x): x is MultiSelectOption => x !== undefined)}
+                    selectedValues={ownership}
                     onSelect={onSelectedOwnershipChange}
                     onRemove={onSelectedOwnershipChange}
                     displayValue="text"
@@ -216,8 +220,8 @@ const PropertyListView: React.FC<React.PropsWithChildren<unknown>> = () => {
         <Table<ApiGen_Concepts_PropertyView>
           name="propertiesTable"
           columns={columns}
-          data={data || []}
-          loading={data === undefined}
+          data={pageResultRecords || []}
+          loading={pageResultRecords === undefined}
           externalSort={{ sort: sort, setSort: setSort }}
           totalItems={totalItems}
           pageIndex={pageIndex}
@@ -229,15 +233,6 @@ const PropertyListView: React.FC<React.PropsWithChildren<unknown>> = () => {
             setFilter({ ...filter, ...values });
           }}
           onPageSizeChange={newSize => setPageSize(newSize)}
-          renderBodyComponent={({ body }) => (
-            <Formik
-              innerRef={tableFormRef as any}
-              initialValues={{ properties: data || [] }}
-              onSubmit={noop}
-            >
-              <Form>{body}</Form>
-            </Formik>
-          )}
         />
       </div>
     </Container>

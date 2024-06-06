@@ -4,6 +4,7 @@ using System.Security.Claims;
 using System.Text.RegularExpressions;
 using LinqKit;
 using Microsoft.EntityFrameworkCore;
+using Pims.Api.Models.CodeTypes;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 using Pims.Dal.Security;
@@ -32,7 +33,7 @@ namespace Pims.Dal.Helpers.Extensions
             var query = context.PimsPropertyVws
                 .AsNoTracking();
 
-            var predicate = GenerateCommonPropertyQuery(user, filter);
+            var predicate = GenerateCommonPropertyQuery(context, user, filter);
             query = query.Where(predicate);
 
             if (filter.Sort?.Any() == true)
@@ -53,7 +54,7 @@ namespace Pims.Dal.Helpers.Extensions
         /// <param name="user"></param>
         /// <param name="filter"></param>
         /// <returns></returns>
-        private static ExpressionStarter<PimsPropertyVw> GenerateCommonPropertyQuery(ClaimsPrincipal user, Entity.Models.PropertyFilter filter)
+        private static ExpressionStarter<PimsPropertyVw> GenerateCommonPropertyQuery(PimsContext context, ClaimsPrincipal user, Entity.Models.PropertyFilter filter)
         {
             filter.ThrowIfNull(nameof(filter));
             filter.ThrowIfNull(nameof(user));
@@ -80,9 +81,23 @@ namespace Pims.Dal.Helpers.Extensions
             {
                 predicateBuilder = predicateBuilder.And(p => EF.Functions.Like(p.StreetAddress1, $"%{filter.Address}%") || EF.Functions.Like(p.MunicipalityName, $"%{filter.Address}%"));
             }
+
             if (!string.IsNullOrWhiteSpace(filter.PlanNumber))
             {
                 predicateBuilder = predicateBuilder.And(p => p.SurveyPlanNumber.Equals(filter.PlanNumber));
+            }
+
+            if (!string.IsNullOrWhiteSpace(filter.Historical))
+            {
+                var predicateBuilderHistorical = PredicateBuilder.New<PimsProperty>(p => true);
+                predicateBuilderHistorical = predicateBuilderHistorical.And(x => x.PimsHistoricalFileNumbers
+                                                     .Any(y => y.HistoricalFileNumberTypeCode == HistoricalFileNumberTypes.LISNO.ToString() && y.HistoricalFileNumber.Contains(filter.Historical)));
+                predicateBuilderHistorical = predicateBuilderHistorical.Or(x => x.PimsHistoricalFileNumbers
+                                                     .Any(y => y.HistoricalFileNumberTypeCode == HistoricalFileNumberTypes.PSNO.ToString() && y.HistoricalFileNumber.Contains(filter.Historical)));
+                predicateBuilderHistorical = predicateBuilderHistorical.Or(x => x.PimsHistoricalFileNumbers
+                                                     .Any(y => y.HistoricalFileNumberTypeCode == HistoricalFileNumberTypes.OTHER.ToString() && y.HistoricalFileNumber.Contains(filter.Historical)));
+
+                predicateBuilder = predicateBuilder.And(x => context.PimsProperties.Where(predicateBuilderHistorical).AsExpandable().Where(b => b.PropertyId == x.PropertyId).Any());
             }
 
             var isRetired = filter.Ownership.Contains("isRetired");
@@ -116,6 +131,7 @@ namespace Pims.Dal.Helpers.Extensions
                 // psp-7658 is retired properties should be omitted by default.
                 ownershipBuilder = PredicateBuilder.New<PimsPropertyVw>(p => p.IsRetired != true);
             }
+
             predicateBuilder = predicateBuilder.And(ownershipBuilder);
 
             return predicateBuilder;

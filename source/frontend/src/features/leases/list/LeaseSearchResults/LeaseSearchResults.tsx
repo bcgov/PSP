@@ -9,6 +9,7 @@ import styled from 'styled-components';
 import TooltipIcon from '@/components/common/TooltipIcon';
 import { ColumnWithProps, renderTypeCode, Table } from '@/components/Table';
 import { TableSort } from '@/components/Table/TableSort';
+import { HistoricalNumberFieldView } from '@/features/mapSideBar/shared/header/HistoricalNumberFieldView';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { exists, prettyFormatDate } from '@/utils';
 import { formatApiPersonNames } from '@/utils/personUtils';
@@ -38,7 +39,7 @@ const columns: ColumnWithProps<ApiGen_Concepts_Lease>[] = [
     accessor: 'expiryDate',
     align: 'left',
     sortable: true,
-    width: 40,
+    width: 20,
     Cell: (props: CellProps<ApiGen_Concepts_Lease>) => {
       const expiryDate = props.row.original.expiryDate;
       const isExpired = moment().isAfter(moment(expiryDate, 'YYYY-MM-DD'), 'day');
@@ -110,6 +111,23 @@ const columns: ColumnWithProps<ApiGen_Concepts_Lease>[] = [
     },
   },
   {
+    Header: 'Historical File #',
+    align: 'left',
+    clickable: false,
+    sortable: false,
+    width: 30,
+    maxWidth: 30,
+    Cell: (props: CellProps<ApiGen_Concepts_Lease>) => {
+      // Get unique file numbers from lease properties
+      const fileNumbers =
+        props.row.original?.fileProperties
+          ?.flatMap(fl => fl?.property?.historicalFileNumbers)
+          .filter(exists) ?? [];
+
+      return <HistoricalNumberFieldView historicalNumbers={fileNumbers} />;
+    },
+  },
+  {
     Header: 'Status',
     align: 'left',
     sortable: true,
@@ -158,17 +176,17 @@ export function LeaseSearchResults(props: ILeaseSearchResultsProps) {
 }
 
 const ExpiredIcon = styled('span')`
-  color: ${props => props.theme.css.dangerColor};
+  color: ${props => props.theme.bcTokens.surfaceColorPrimaryDangerButtonDefault};
 `;
 
 const ExpiredOverlay = styled(Tooltip)`
   .tooltip-inner {
-    color: ${props => props.theme.css.dangerColor};
+    color: ${props => props.theme.bcTokens.surfaceColorPrimaryDangerButtonDefault};
     background-color: ${props => props.theme.css.dangerBackgroundColor};
   }
 
   .arrow::before {
-    color: ${props => props.theme.css.dangerColor};
+    color: ${props => props.theme.bcTokens.surfaceColorPrimaryDangerButtonDefault};
     background-color: ${props => props.theme.css.dangerBackgroundColor};
   }
 `;

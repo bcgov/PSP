@@ -83,7 +83,7 @@ namespace PIMS.Tests.Automation.PageObjects
             ChooseSpecificSelectOption(searchResearchStatusSelect, "All Status");
 
             WaitUntilClickable(searchResearchFileButton);
-            webDriver.FindElement(searchResearchFileButton).Click();
+            FocusAndClick(searchResearchFileButton);
         }
 
         public void SearchAllResearchFiles()

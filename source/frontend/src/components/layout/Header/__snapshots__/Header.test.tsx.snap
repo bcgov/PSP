@@ -135,7 +135,6 @@ exports[`App Header > renders correctly 1`] = `
 }
 
 .c6 .dropdown-item {
-  background-color: _primaryLightColor_6badca;
   border-top: 0.2rem solid _accentColor_6badca;
 }
 

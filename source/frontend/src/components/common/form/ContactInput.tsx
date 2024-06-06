@@ -11,7 +11,7 @@ import styled from 'styled-components';
 import { Button } from '@/components/common/buttons/Button';
 import { Input } from '@/components/common/form';
 import { IContactSearchResult } from '@/interfaces';
-import { isValidId } from '@/utils';
+import { exists, isValidId } from '@/utils';
 import { formatNames } from '@/utils/personUtils';
 
 import { LinkButton } from '../buttons';
@@ -66,17 +66,26 @@ export const ContactInput: React.FC<React.PropsWithChildren<ContactInputProps>> 
       <TooltipWrapper tooltipId={`${field}-error-tooltip}`} tooltip={errorTooltip}>
         <Row>
           <Col>
-            <StyledDiv className={error ? 'is-invalid' : ''}>
+            <StyledInputLikeDiv
+              className={error ? 'is-invalid' : ''}
+              $hasContact={exists(contactInfo)}
+              onClick={() => {
+                if (!exists(contactInfo)) {
+                  setShowContactManager(true);
+                }
+              }}
+            >
               {text}
-              <StyledRemoveLinkButton
-                onClick={() => {
-                  onClear();
-                }}
-                disabled={contactInfo === undefined}
-              >
-                <MdClose size="2rem" title="remove" />
-              </StyledRemoveLinkButton>
-            </StyledDiv>
+              {exists(contactInfo) && (
+                <StyledRemoveLinkButton
+                  onClick={() => {
+                    onClear();
+                  }}
+                >
+                  <MdClose size="2rem" title="remove" />
+                </StyledRemoveLinkButton>
+              )}
+            </StyledInputLikeDiv>
             <Input
               field={field + '.id'}
               placeholder="Select from Contacts"
@@ -100,35 +109,48 @@ export const ContactInput: React.FC<React.PropsWithChildren<ContactInputProps>> 
   );
 };
 
-const StyledDiv = styled.div`
+const StyledInputLikeDiv = styled.div<{ $hasContact: boolean }>`
   position: relative;
-  border-radius: 0.3rem;
-  padding: 0.6rem;
-  padding-right: 2.1rem;
-  min-height: 2.5em;
+  border-radius: 0.4rem;
+  padding-top: 0.8rem;
+  padding-bottom: 0.8rem;
+  padding-left: 1.2rem;
+  padding-right: 2.8rem;
+
   background-image: none;
-  color: ${props => props.theme.css.formControlTextColor};
-  border: ${props => props.theme.css.lightVariantColor} solid 0.1rem;
+  color: ${props =>
+    props.$hasContact
+      ? props.theme.bcTokens.typographyColorSecondary
+      : props.theme.bcTokens.typographyColorPlaceholder};
+  border: ${props => props.theme.css.borderOutlineColor} solid 0.1rem;
   &.is-invalid {
-    border: ${props => props.theme.css.dangerColor} solid 0.1rem;
+    border: ${props => props.theme.bcTokens.surfaceColorPrimaryDangerButtonDefault} solid 0.1rem;
   }
+
+  cursor: ${props => (props.$hasContact ? 'default' : 'pointer')};
 `;
 
 export const StyledRemoveLinkButton = styled(LinkButton)`
   &&.btn {
     position: absolute;
     top: calc(50% - 1.4rem);
-    right: 0.4rem;
-    color: ${props => props.theme.css.primaryBorderColor};
+    padding-top: 0.8rem;
+    padding-bottom: 0.8rem;
+    padding-right: 1.2rem;
+    height: 1.6rem;
+    right: 0rem;
+
+    color: ${props => props.theme.bcTokens.iconsColorDisabled};
     text-decoration: none;
     line-height: unset;
     .text {
       display: none;
     }
+
     &:hover,
     &:active,
     &:focus {
-      color: ${props => props.theme.css.dangerColor};
+      color: ${props => props.theme.bcTokens.surfaceColorPrimaryDangerButtonDefault};
       text-decoration: none;
       opacity: unset;
     }

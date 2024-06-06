@@ -9,86 +9,121 @@ namespace PIMS.Tests.Automation.PageObjects
     {
         //Insurance Menu Elements
         private By licenseInsuranceLink = By.XPath("//a[contains(text(),'Insurance')]");
-        private By insuranceEditIcon = By.XPath("//div[@role='tabpanel']/div/div/button");
+        private By insuranceEditIcon = By.XPath("//div[@role='tabpanel']/div/div/div/button");
 
         //Insurance Create Form Elements
-        private By insuranceSubtitle = By.XPath("//h2[contains(text(),'Required coverage')]");
-        private By insuranceInstructions = By.XPath("//div[contains(text(),'Select the coverage types that are required for this lease or license.')]");
+        private By insuranceSubtitle = By.XPath("//div[contains(text(),'Required Coverage')]");
+        private By insuranceSelectionLabel = By.XPath("//label[contains(text(),'Select coverage types')]");
 
+        private By insuranceAccidentalLabel = By.XPath("//label[contains(text(),'Accidental Coverage')]");
+        private By insuranceAccidentalCheckbox = By.Id("insurance-0");
         private By insuranceAircraftLabel = By.XPath("//label[contains(text(),'Aircraft Liability Coverage')]");
-        private By insuranceAircraftCheckbox = By.Id("insurance-0");
+        private By insuranceAircraftCheckbox = By.Id("insurance-1");
         private By insuranceCGLLabel = By.XPath("//label[contains(text(),'Commercial General Liability (CGL)')]");
-        private By insuranceCGLCheckbox = By.Id("insurance-1");
+        private By insuranceCGLCheckbox = By.Id("insurance-2");
         private By insuranceMarineLabel = By.XPath("//label[contains(text(),'Marine Liability Coverage')]");
-        private By insuranceMarineCheckbox = By.Id("insurance-2");
+        private By insuranceMarineCheckbox = By.Id("insurance-3");
+        private By insuranceUnmannedAirVehicleLabel = By.XPath("//label[contains(text(),'Unmanned Air Vehicle (UAV/Drone) Coverage')]");
+        private By insuranceUnmannedAirVehicleCheckbox = By.Id("insurance-4");
         private By insuranceVehicleLabel = By.XPath("//label[contains(text(),'Vehicle Liability Coverage')]");
-        private By insuranceVehicleCheckbox = By.Id("insurance-3");
+        private By insuranceVehicleCheckbox = By.Id("insurance-5");
         private By insuranceOtherLabel = By.XPath("//label[contains(text(),'Other Insurance Coverage')]");
-        private By insuranceOtherCheckbox = By.Id("insurance-4");
+        private By insuranceOtherCheckbox = By.Id("insurance-6");
 
-        private By insuranceDetailsSubtitle = By.XPath("//h2[contains(text(),'Coverage details')]");
-        private By insuranceEditTotal = By.XPath("//h2[contains(text(),'Coverage details')]/following-sibling::div/div");
+        private By insuranceEditTotal = By.CssSelector("div[data-testid='insurance-form']");
         private By insuranceViewTotal = By.XPath("//div[@data-testid='insurance-section']/div[@data-testid='insurance-section']");
 
-        private By insuranceAircraftSubtitle = By.XPath("//h2[contains(text(),'Aircraft Liability Coverage')]");
-        private By insuranceAircraftInPlaceLabel = By.XPath("//h2[contains(text(),'Aircraft Liability Coverage')]/following-sibling::div[1]/div/strong[contains(text(), 'Insurance In Place')]");
-        private By insuranceAircraftInPlaceRadioBttnGroup = By.XPath("//input[@name='insurances.0.isInsuranceInPlaceRadio']");
-        private By insuranceAircraftLimitLabel = By.XPath("//h2[contains(text(),'Aircraft Liability Coverage')]/following-sibling::div[2]/div/div/strong[contains(text(), 'Limit ($)')]");
-        private By insuranceAircraftLimitInput = By.Id("input-insurances.0.coverageLimit");
-        private By insuranceAircraftExpiryDateLabel = By.XPath("//h2[contains(text(),'Aircraft Liability Coverage')]/following-sibling::div[2]/div/div/strong[contains(text(), 'Policy Expiry date')]");
-        private By insuranceAircraftExpiryDateInput = By.Id("datepicker-insurances.0.expiryDate");
-        private By insuranceAircraftDescriptionLabel = By.XPath("//h2[contains(text(),'Aircraft Liability Coverage')]/following-sibling::div[2]/div/div/strong[contains(text(), 'Description of Coverage')]");
-        private By insuranceAircraftDescriptionTextarea = By.Id("input-insurances.0.coverageDescription");
+        private By insuranceAccidentalSubtitle = By.XPath("//div[contains(text(),'Accidental Coverage')]");
+        private By insuranceAccidentalInPlaceLabel = By.XPath("//div[contains(text(),'Accidental Coverage')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(), 'Insurance in place')]");
+        private By insuranceAccidentalInPlaceSelect = By.Id("input-insurances.0.isInsuranceInPlaceSelect");
+        private By insuranceAccidentalLimitLabel = By.XPath("//div[contains(text(),'Accidental Coverage')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(), 'Limit ($)')]");
+        private By insuranceAccidentalLimitInput = By.Id("input-insurances.0.coverageLimit");
+        private By insuranceAccidentalExpiryDateLabel = By.XPath("//div[contains(text(),'Accidental Coverage')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(), 'Policy expiry')]");
+        private By insuranceAccidentalExpiryDateInput = By.Id("datepicker-insurances.0.expiryDate");
+        private By insuranceAccidentalDescriptionLabel = By.XPath("//div[contains(text(),'Accidental Coverage')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(), 'Description of coverage')]");
+        private By insuranceAccidentalDescriptionTextarea = By.Id("input-insurances.0.coverageDescription");
 
-        private By insuranceCGLSubtitle = By.XPath("//h2[contains(text(),'Commercial General Liability (CGL)')]");
-        private By insuranceCGLInPlaceLabel = By.XPath("//h2[contains(text(),'Commercial General Liability (CGL)')]/following-sibling::div[1]/div/strong[contains(text(), 'Insurance In Place')]");
-        private By insuranceCGLInPlaceRadioBttnGroup = By.XPath("//input[@name='insurances.1.isInsuranceInPlaceRadio']");
-        private By insuranceCGLLimitLabel = By.XPath("//h2[contains(text(),'Commercial General Liability (CGL)')]/following-sibling::div[2]/div/div/strong[contains(text(), 'Limit ($)')]");
-        private By insuranceCGLLimitInput = By.Id("input-insurances.1.coverageLimit");
-        private By insuranceCGLExpiryDateLabel = By.XPath("//h2[contains(text(),'Commercial General Liability (CGL)')]/following-sibling::div[2]/div/div/strong[contains(text(), 'Policy Expiry date')]");
-        private By insuranceCGLExpiryDateInput = By.Id("datepicker-insurances.1.expiryDate");
-        private By insuranceCGLDescriptionLabel = By.XPath("//h2[contains(text(),'Commercial General Liability (CGL)')]/following-sibling::div[2]/div/div/strong[contains(text(), 'Description of Coverage')]");
-        private By insuranceCGLDescriptionTextarea = By.Id("input-insurances.1.coverageDescription");
+        private By insuranceAircraftSubtitle = By.XPath("//div[contains(text(),'Aircraft Liability Coverage')]");
+        private By insuranceAircraftInPlaceLabel = By.XPath("//div[contains(text(),'Aircraft Liability Coverage')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(), 'Insurance in place')]");
+        private By insuranceAircraftInPlaceSelect = By.Id("input-insurances.1.isInsuranceInPlaceSelect");
+        private By insuranceAircraftLimitLabel = By.XPath("//div[contains(text(),'Aircraft Liability Coverage')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(), 'Limit ($)')]");
+        private By insuranceAircraftLimitInput = By.Id("input-insurances.1.coverageLimit");
+        private By insuranceAircraftExpiryDateLabel = By.XPath("//div[contains(text(),'Aircraft Liability Coverage')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(), 'Policy expiry')]");
+        private By insuranceAircraftExpiryDateInput = By.Id("datepicker-insurances.1.expiryDate");
+        private By insuranceAircraftDescriptionLabel = By.XPath("//div[contains(text(),'Aircraft Liability Coverage')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(), 'Description of coverage')]");
+        private By insuranceAircraftDescriptionTextarea = By.Id("input-insurances.1.coverageDescription");
 
-        private By insuranceMarineSubtitle = By.XPath("//h2[contains(text(),'Marine Liability Coverage')]");
-        private By insuranceMarineInPlaceLabel = By.XPath("//h2[contains(text(),'Marine Liability Coverage')]/following-sibling::div[1]/div/strong[contains(text(), 'Insurance In Place')]");
-        private By insuranceMarineInPlaceRadioBttnGroup = By.XPath("//input[@name='insurances.2.isInsuranceInPlaceRadio']");
-        private By insuranceMarineLimitLabel = By.XPath("//h2[contains(text(),'Marine Liability Coverage')]/following-sibling::div[2]/div/div/strong[contains(text(), 'Limit ($)')]");
-        private By insuranceMarineLimitInput = By.Id("input-insurances.2.coverageLimit");
-        private By insuranceMarineExpiryDateLabel = By.XPath("//h2[contains(text(),'Marine Liability Coverage')]/following-sibling::div[2]/div/div/strong[contains(text(), 'Policy Expiry date')]");
-        private By insuranceMarineExpiryDateInput = By.Id("datepicker-insurances.2.expiryDate");
-        private By insuranceMarineDescriptionLabel = By.XPath("//h2[contains(text(),'Marine Liability Coverage')]/following-sibling::div[2]/div/div/strong[contains(text(), 'Description of Coverage')]");
-        private By insuranceMarineDescriptionTextarea = By.Id("input-insurances.2.coverageDescription");
+        private By insuranceCGLSubtitle = By.XPath("//div[contains(text(),'Commercial General Liability (CGL)')]");
+        private By insuranceCGLInPlaceLabel = By.XPath("//div[contains(text(),'Commercial General Liability (CGL)')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(), 'Insurance in place')]");
+        private By insuranceCGLInPlaceSelect = By.Id("input-insurances.2.isInsuranceInPlaceSelect");
+        private By insuranceCGLLimitLabel = By.XPath("//div[contains(text(),'Commercial General Liability (CGL)')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(), 'Limit ($)')]");
+        private By insuranceCGLLimitInput = By.Id("input-insurances.2.coverageLimit");
+        private By insuranceCGLExpiryDateLabel = By.XPath("//div[contains(text(),'Commercial General Liability (CGL)')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(), 'Policy expiry')]");
+        private By insuranceCGLExpiryDateInput = By.Id("datepicker-insurances.2.expiryDate");
+        private By insuranceCGLDescriptionLabel = By.XPath("//div[contains(text(),'Commercial General Liability (CGL)')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(), 'Description of coverage')]");
+        private By insuranceCGLDescriptionTextarea = By.Id("input-insurances.2.coverageDescription");
 
-        private By insuranceVehicleSubtitle = By.XPath("//h2[contains(text(),'Vehicle Liability Coverage')]");
-        private By insuranceVehicleInPlaceLabel = By.XPath("//h2[contains(text(),'Vehicle Liability Coverage')]/following-sibling::div[1]/div/strong[contains(text(), 'Insurance In Place')]");
-        private By insuranceVehicleInPlaceRadioBttnGroup = By.XPath("//input[@name='insurances.3.isInsuranceInPlaceRadio']");
-        private By insuranceVehicleLimitLabel = By.XPath("//h2[contains(text(),'Vehicle Liability Coverage')]/following-sibling::div[2]/div/div/strong[contains(text(), 'Limit ($)')]");
-        private By insuranceVehicleLimitInput = By.Id("input-insurances.3.coverageLimit");
-        private By insuranceVehicleExpiryDateLabel = By.XPath("//h2[contains(text(),'Vehicle Liability Coverage')]/following-sibling::div[2]/div/div/strong[contains(text(), 'Policy Expiry date')]");
-        private By insuranceVehicleExpiryDateInput = By.Id("datepicker-insurances.3.expiryDate");
-        private By insuranceVehicleDescriptionLabel = By.XPath("//h2[contains(text(),'Vehicle Liability Coverage')]/following-sibling::div[2]/div/div/strong[contains(text(), 'Description of Coverage')]");
-        private By insuranceVehicleDescriptionTextarea = By.Id("input-insurances.3.coverageDescription");
+        private By insuranceMarineSubtitle = By.XPath("//div[contains(text(),'Marine Liability Coverage')]");
+        private By insuranceMarineInPlaceLabel = By.XPath("//div[contains(text(),'Marine Liability Coverage')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(), 'Insurance in place')]");
+        private By insuranceMarineInPlaceSelect = By.Id("input-insurances.3.isInsuranceInPlaceSelect");
+        private By insuranceMarineLimitLabel = By.XPath("//div[contains(text(),'Marine Liability Coverage')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(), 'Limit ($)')]");
+        private By insuranceMarineLimitInput = By.Id("input-insurances.3.coverageLimit");
+        private By insuranceMarineExpiryDateLabel = By.XPath("//div[contains(text(),'Marine Liability Coverage')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(), 'Policy expiry')]");
+        private By insuranceMarineExpiryDateInput = By.Id("datepicker-insurances.3.expiryDate");
+        private By insuranceMarineDescriptionLabel = By.XPath("//div[contains(text(),'Marine Liability Coverage')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(), 'Description of coverage')]");
+        private By insuranceMarineDescriptionTextarea = By.Id("input-insurances.3.coverageDescription");
 
-        private By insuranceOtherSubtitle = By.XPath("//h2[contains(text(),'Other Insurance Coverage')]");
-        private By insuranceOtherTypeLabel = By.XPath("//h2[contains(text(),'Other Insurance Coverage')]/following-sibling::div[1]/div/div/strong[contains(text(), 'Insurance Type')]");
-        private By insuranceOtherTypeInput = By.Id("input-insurances.4.otherInsuranceType");
-        private By insuranceOtherInPlaceLabel = By.XPath("//h2[contains(text(),'Other Insurance Coverage')]/following-sibling::div[2]/div/strong[contains(text(), 'Insurance In Place')]");
-        private By insuranceOtherInPlaceRadioBttnGroup = By.XPath("//input[@name='insurances.4.isInsuranceInPlaceRadio']");
-        private By insuranceOtherLimitLabel = By.XPath("//h2[contains(text(),'Other Insurance Coverage')]/following-sibling::div[3]/div/div/strong[contains(text(), 'Limit ($)')]");
-        private By insuranceOtherLimitInput = By.Id("input-insurances.4.coverageLimit");
-        private By insuranceOtherExpiryDateLabel = By.XPath("//h2[contains(text(),'Other Insurance Coverage')]/following-sibling::div[3]/div/div/strong[contains(text(), 'Policy Expiry date:')]");
-        private By insuranceOtherExpiryDateInput = By.Id("datepicker-insurances.4.expiryDate");
-        private By insuranceOtherDescriptionLabel = By.XPath("//h2[contains(text(),'Other Insurance Coverage')]/following-sibling::div[3]/div/div/strong[contains(text(), 'Description of Coverage')]");
-        private By insuranceOtherDescriptionTextarea = By.Id("input-insurances.4.coverageDescription");
+        private By insuranceUnmannedAirVehicleSubtitle = By.XPath("//div[contains(text(),'Unmanned Air Vehicle (UAV/Drone) Coverage')]");
+        private By insuranceUnmannedAirVehicleInPlaceLabel = By.XPath("//div[contains(text(),'Unmanned Air Vehicle (UAV/Drone) Coverage')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(), 'Insurance in place')]");
+        private By insuranceUnmannedAirVehicleInPlaceSelect = By.Id("input-insurances.4.isInsuranceInPlaceSelect");
+        private By insuranceUnmannedAirVehicleLimitLabel = By.XPath("//div[contains(text(),'Unmanned Air Vehicle (UAV/Drone) Coverage')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(), 'Limit ($)')]");
+        private By insuranceUnmannedAirVehicleLimitInput = By.Id("input-insurances.4.coverageLimit");
+        private By insuranceUnmannedAirVehicleExpiryDateLabel = By.XPath("//div[contains(text(),'Unmanned Air Vehicle (UAV/Drone) Coverage')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(), 'Policy expiry')]");
+        private By insuranceUnmannedAirVehicleExpiryDateInput = By.Id("datepicker-insurances.4.expiryDate");
+        private By insuranceUnmannedAirVehicleDescriptionLabel = By.XPath("//div[contains(text(),'Unmanned Air Vehicle (UAV/Drone) Coverage')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(), 'Description of coverage')]");
+        private By insuranceUnmannedAirVehicleDescriptionTextarea = By.Id("input-insurances.4.coverageDescription");
+
+        private By insuranceVehicleSubtitle = By.XPath("//div[contains(text(),'Vehicle Liability Coverage')]");
+        private By insuranceVehicleInPlaceLabel = By.XPath("//div[contains(text(),'Vehicle Liability Coverage')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(), 'Insurance in place')]");
+        private By insuranceVehicleInPlaceSelect = By.Id("input-insurances.5.isInsuranceInPlaceSelect");
+        private By insuranceVehicleLimitLabel = By.XPath("//div[contains(text(),'Vehicle Liability Coverage')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(), 'Limit ($)')]");
+        private By insuranceVehicleLimitInput = By.Id("input-insurances.5.coverageLimit");
+        private By insuranceVehicleExpiryDateLabel = By.XPath("//div[contains(text(),'Vehicle Liability Coverage')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(), 'Policy expiry')]");
+        private By insuranceVehicleExpiryDateInput = By.Id("datepicker-insurances.5.expiryDate");
+        private By insuranceVehicleDescriptionLabel = By.XPath("//div[contains(text(),'Vehicle Liability Coverage')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(), 'Description of coverage')]");
+        private By insuranceVehicleDescriptionTextarea = By.Id("input-insurances.5.coverageDescription");
+
+        private By insuranceOtherSubtitle = By.XPath("//div[contains(text(),'Other Insurance Coverage')]");
+        private By insuranceOtherTypeLabel = By.XPath("//div[contains(text(),'Other Insurance Coverage')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(), 'Other insurance type')]");
+        private By insuranceOtherTypeInput = By.Id("input-insurances.6.otherInsuranceType");
+        private By insuranceOtherInPlaceLabel = By.XPath("//div[contains(text(),'Other Insurance Coverage')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(), 'Insurance in place')]");
+        private By insuranceOtherInPlaceSelect = By.Id("input-insurances.6.isInsuranceInPlaceSelect");
+        private By insuranceOtherLimitLabel = By.XPath("//div[contains(text(),'Other Insurance Coverage')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(), 'Limit ($)')]");
+        private By insuranceOtherLimitInput = By.Id("input-insurances.6.coverageLimit");
+        private By insuranceOtherExpiryDateLabel = By.XPath("//div[contains(text(),'Other Insurance Coverage')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(), 'Policy expiry')]");
+        private By insuranceOtherExpiryDateInput = By.Id("datepicker-insurances.6.expiryDate");
+        private By insuranceOtherDescriptionLabel = By.XPath("//div[contains(text(),'Other Insurance Coverage')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(), 'Description of coverage')]");
+        private By insuranceOtherDescriptionTextarea = By.Id("input-insurances.6.coverageDescription");
 
         //Insurance View Form Elements
         private By insuranceRequiredLabel = By.XPath("//div[contains(text(),'Required insurance')]");
+        private By insuranceAccidentalListOption = By.XPath("//li[contains(text(),'Accidental Coverage')]");
         private By insuranceAircraftListOption = By.XPath("//li[contains(text(),'Aircraft Liability Coverage')]");
         private By insuranceCGLListOption = By.XPath("//li[contains(text(),'Commercial General Liability (CGL)')]");
         private By insuranceMarineListOption = By.XPath("//li[contains(text(),'Marine Liability Coverage')]");
+        private By insuranceUnmannedAirListOption = By.XPath("//li[contains(text(),'Unmanned Air Vehicle Coverage')]");
         private By insuranceVehicleListOption = By.XPath("//li[contains(text(),'Vehicle Liability Coverage')]");
         private By insuranceOtherListOption = By.XPath("//li[contains(text(),'Other Insurance Coverage')]");
+
+        private By insuranceAccidentalViewSubtitle = By.XPath("//div[contains(text(),'Accidental Coverage')]");
+        private By insuranceAccidentalViewInPlaceLabel = By.XPath("//div[contains(text(),'Accidental Coverage')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Insurance in place')]");
+        private By insuranceAccidentalViewInPlaceContent = By.XPath("//div[contains(text(),'Accidental Coverage')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Insurance in place')]/parent::div/following-sibling::div");
+        private By insuranceAccidentalViewLimitLabel = By.XPath("//div[contains(text(),'Accidental Coverage')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Limit')]");
+        private By insuranceAccidentalViewLimitContent = By.XPath("//div[contains(text(),'Accidental Coverage')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Limit')]/parent::div/following-sibling::div");
+        private By insuranceAccidentalViewExpiryDateLabel = By.XPath("//div[contains(text(),'Accidental Coverage')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Policy expiry date')]");
+        private By insuranceAccidentalViewExpiryDateContent = By.XPath("//div[contains(text(),'Accidental Coverage')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Policy expiry date')]/parent::div/following-sibling::div");
+        private By insuranceAccidentalViewDescriptionLabel = By.XPath("//div[contains(text(),'Accidental Coverage')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Description of Coverage')]");
+        private By insuranceAccidentalViewDescriptionContent = By.XPath("//div[contains(text(),'Accidental Coverage')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Description of Coverage')]/parent::div/following-sibling::div");
 
         private By insuranceAircraftViewSubtitle = By.XPath("//div[contains(text(),'Aircraft Liability Coverage')]");
         private By insuranceAircraftViewInPlaceLabel = By.XPath("//div[contains(text(),'Aircraft Liability Coverage')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Insurance in place')]");
@@ -119,6 +154,16 @@ namespace PIMS.Tests.Automation.PageObjects
         private By insuranceMarineViewExpiryDateContent = By.XPath("//div[contains(text(),'Marine Liability Coverage')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Policy expiry date')]/parent::div/following-sibling::div");
         private By insuranceMarineViewDescriptionLabel = By.XPath("//div[contains(text(),'Marine Liability Coverage')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Description of Coverage')]");
         private By insuranceMarineViewDescriptionContent = By.XPath("//div[contains(text(),'Marine Liability Coverage')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Description of Coverage')]/parent::div/following-sibling::div");
+
+        private By insuranceUnmmaedAirVehicleViewSubtitle = By.XPath("//div[contains(text(),'Unmanned Air Vehicle (UAV/Drone) Coverage')]");
+        private By insuranceUnmmaedAirVehicleViewInPlaceLabel = By.XPath("//div[contains(text(),'Unmanned Air Vehicle (UAV/Drone) Coverage')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Insurance in place')]");
+        private By insuranceUnmmaedAirVehicleViewInPlaceContent = By.XPath("//div[contains(text(),'Unmanned Air Vehicle (UAV/Drone) Coverage')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Insurance in place')]/parent::div/following-sibling::div");
+        private By insuranceUnmmaedAirVehicleViewLimitLabel = By.XPath("//div[contains(text(),'Unmanned Air Vehicle (UAV/Drone) Coverage')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Limit')]");
+        private By insuranceUnmmaedAirVehicleViewLimitContent = By.XPath("//div[contains(text(),'Unmanned Air Vehicle (UAV/Drone) Coverage')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Limit')]/parent::div/following-sibling::div");
+        private By insuranceUnmmaedAirVehicleViewExpiryDateLabel = By.XPath("//div[contains(text(),'Unmanned Air Vehicle (UAV/Drone) Coverage')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Policy expiry date')]");
+        private By insuranceUnmmaedAirVehicleViewExpiryDateContent = By.XPath("//div[contains(text(),'Unmanned Air Vehicle (UAV/Drone) Coverage')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Policy expiry date')]/parent::div/following-sibling::div");
+        private By insuranceUnmmaedAirVehicleViewDescriptionLabel = By.XPath("//div[contains(text(),'Unmanned Air Vehicle (UAV/Drone) Coverage')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Description of Coverage')]");
+        private By insuranceUnmmaedAirVehicleViewDescriptionContent = By.XPath("//div[contains(text(),'Unmanned Air Vehicle (UAV/Drone) Coverage')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Description of Coverage')]/parent::div/following-sibling::div");
 
         private By insuranceVehicleViewSubtitle = By.XPath("//div[contains(text(),'Vehicle Liability Coverage')]");
         private By insuranceVehicleViewInPlaceLabel = By.XPath("//div[contains(text(),'Vehicle Liability Coverage')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Insurance in place')]");
@@ -160,6 +205,43 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(insuranceEditIcon).Click();
         }
 
+        //Add Accidental Coverage
+        public void AddAccidentalInsurance(Lease lease)
+        {
+            FocusAndClick(insuranceAccidentalCheckbox);
+
+            //Verify Presence of elements on the form
+            AssertTrueIsDisplayed(insuranceAccidentalSubtitle);
+            AssertTrueIsDisplayed(insuranceAccidentalInPlaceLabel);
+            AssertTrueIsDisplayed(insuranceAccidentalInPlaceSelect);
+            AssertTrueIsDisplayed(insuranceAccidentalLimitLabel);
+            AssertTrueIsDisplayed(insuranceAccidentalLimitInput);
+            AssertTrueIsDisplayed(insuranceAccidentalExpiryDateLabel);
+            AssertTrueIsDisplayed(insuranceAccidentalExpiryDateInput);
+            AssertTrueIsDisplayed(insuranceAccidentalDescriptionLabel);
+            AssertTrueIsDisplayed(insuranceAccidentalDescriptionTextarea); 
+
+            //Fill out form
+            if (lease.AccidentalInsuranceInPlace != "")
+                ChooseSpecificSelectOption(insuranceAccidentalInPlaceSelect, lease.AccidentalInsuranceInPlace);
+
+            if (lease.AccidentalLimit != "")
+                webDriver.FindElement(insuranceAccidentalLimitInput).SendKeys(lease.AccidentalLimit);
+
+            if (lease.AccidentalPolicyExpiryDate != "")
+            {
+                webDriver.FindElement(insuranceAccidentalExpiryDateInput).Click();
+                webDriver.FindElement(insuranceAccidentalExpiryDateInput).SendKeys(lease.AccidentalPolicyExpiryDate);
+                webDriver.FindElement(insuranceAccidentalExpiryDateInput).SendKeys(Keys.Enter);
+            }                
+
+            if (lease.AccidentalDescriptionCoverage != "")
+            {
+                webDriver.FindElement(insuranceAccidentalDescriptionTextarea).Click();
+                webDriver.FindElement(insuranceAccidentalDescriptionTextarea).SendKeys(lease.AccidentalDescriptionCoverage);
+            }    
+        }
+
         //Add Aircraft Insurance
         public void AddAircraftInsurance(Lease lease)
         {
@@ -177,20 +259,22 @@ namespace PIMS.Tests.Automation.PageObjects
 
             //Fill out form
             if(lease.AircraftInsuranceInPlace != "")
-                ChooseSpecificRadioButton(insuranceAircraftInPlaceRadioBttnGroup, lease.AircraftInsuranceInPlace);
+                ChooseSpecificSelectOption(insuranceAircraftInPlaceSelect, lease.AircraftInsuranceInPlace);
 
             if (lease.AircraftLimit != "")
                 webDriver.FindElement(insuranceAircraftLimitInput).SendKeys(lease.AircraftLimit);
 
-            webDriver.FindElement(insuranceAircraftExpiryDateInput).Click();
-
-            if(lease.AircraftPolicyExpiryDate != "")
+            if (lease.AircraftPolicyExpiryDate != "")
+            {
+                webDriver.FindElement(insuranceAircraftExpiryDateInput).Click();
                 webDriver.FindElement(insuranceAircraftExpiryDateInput).SendKeys(lease.AircraftPolicyExpiryDate);
-
-            webDriver.FindElement(insuranceAircraftDescriptionTextarea).Click();
-
-            if(lease.AircraftDescriptionCoverage != "")
+                webDriver.FindElement(insuranceAircraftExpiryDateInput).SendKeys(Keys.Enter);
+            }                
+            if (lease.AircraftDescriptionCoverage != "")
+            {
+                webDriver.FindElement(insuranceAircraftDescriptionTextarea).Click();
                 webDriver.FindElement(insuranceAircraftDescriptionTextarea).SendKeys(lease.AircraftDescriptionCoverage);
+            }
         }
 
         //Add CGL Insurance
@@ -214,8 +298,8 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
             if (lease.CGLInsuranceInPlace != "")
             {
-                WaitUntilClickable(insuranceCGLInPlaceRadioBttnGroup);
-                ChooseSpecificRadioButton(insuranceCGLInPlaceRadioBttnGroup, lease.CGLInsuranceInPlace);
+                WaitUntilClickable(insuranceCGLInPlaceSelect);
+                ChooseSpecificSelectOption(insuranceCGLInPlaceSelect, lease.CGLInsuranceInPlace);
             }
             if (lease.CGLLimit != "")
             {
@@ -229,8 +313,6 @@ namespace PIMS.Tests.Automation.PageObjects
                 webDriver.FindElement(insuranceCGLExpiryDateInput).SendKeys(lease.CGLPolicyExpiryDate);
                 webDriver.FindElement(insuranceCGLExpiryDateInput).SendKeys(Keys.Enter);
             }
-                
-            
             if (lease.CGLDescriptionCoverage != "")
             {
                 WaitUntilClickable(insuranceCGLDescriptionTextarea);
@@ -259,8 +341,8 @@ namespace PIMS.Tests.Automation.PageObjects
 
             if (lease.MarineInsuranceInPlace != "")
             {
-                WaitUntilClickable(insuranceMarineInPlaceRadioBttnGroup);
-                ChooseSpecificRadioButton(insuranceMarineInPlaceRadioBttnGroup, lease.MarineInsuranceInPlace);
+                WaitUntilClickable(insuranceMarineInPlaceSelect);
+                ChooseSpecificSelectOption(insuranceMarineInPlaceSelect, lease.MarineInsuranceInPlace);
             }
                 
             if (lease.MarineLimit != "")
@@ -276,15 +358,60 @@ namespace PIMS.Tests.Automation.PageObjects
                 webDriver.FindElement(insuranceMarineExpiryDateInput).SendKeys(lease.MarinePolicyExpiryDate);
                 webDriver.FindElement(insuranceMarineExpiryDateInput).SendKeys(Keys.Enter);
             }
-                
-            
+
             if (lease.MarineDescriptionCoverage != "")
             {
                 WaitUntilClickable(insuranceMarineDescriptionTextarea);
                 webDriver.FindElement(insuranceMarineDescriptionTextarea).Click();
                 webDriver.FindElement(insuranceMarineDescriptionTextarea).SendKeys(lease.MarineDescriptionCoverage);
+            }     
+        }
+
+        //Add Unmanned Air Vehicle Insurance
+        public void AddUnmannedAirVehicleInsurance(Lease lease)
+        {
+            WaitUntilClickable(insuranceUnmannedAirVehicleCheckbox);
+            FocusAndClick(insuranceUnmannedAirVehicleCheckbox);
+
+            //Verify Presence of elements on the form
+            AssertTrueIsDisplayed(insuranceUnmannedAirVehicleSubtitle);
+            AssertTrueIsDisplayed(insuranceUnmannedAirVehicleInPlaceLabel);
+            AssertTrueIsDisplayed(insuranceUnmannedAirVehicleInPlaceSelect);
+            AssertTrueIsDisplayed(insuranceUnmannedAirVehicleLimitLabel);
+            AssertTrueIsDisplayed(insuranceUnmannedAirVehicleLimitInput);
+            AssertTrueIsDisplayed(insuranceUnmannedAirVehicleExpiryDateLabel);
+            AssertTrueIsDisplayed(insuranceUnmannedAirVehicleExpiryDateInput);
+            AssertTrueIsDisplayed(insuranceUnmannedAirVehicleDescriptionLabel);
+            AssertTrueIsDisplayed(insuranceUnmannedAirVehicleDescriptionTextarea);  
+
+            //Fill out form
+
+            if (lease.UnmannedAirVehicleInsuranceInPlace != "")
+            {
+                WaitUntilClickable(insuranceUnmannedAirVehicleInPlaceSelect);
+                ChooseSpecificSelectOption(insuranceUnmannedAirVehicleInPlaceSelect, lease.UnmannedAirVehicleInsuranceInPlace);
             }
-                
+
+            if (lease.UnmannedAirVehicleLimit != "")
+            {
+                WaitUntilClickable(insuranceUnmannedAirVehicleLimitInput);
+                webDriver.FindElement(insuranceUnmannedAirVehicleLimitInput).SendKeys(lease.UnmannedAirVehicleLimit);
+            }   
+
+            if (lease.UnmannedAirVehiclePolicyExpiryDate != "")
+            {
+                WaitUntilClickable(insuranceUnmannedAirVehicleExpiryDateInput);
+                webDriver.FindElement(insuranceUnmannedAirVehicleExpiryDateInput).Click();
+                webDriver.FindElement(insuranceUnmannedAirVehicleExpiryDateInput).SendKeys(lease.UnmannedAirVehiclePolicyExpiryDate);
+                webDriver.FindElement(insuranceUnmannedAirVehicleExpiryDateInput).SendKeys(Keys.Enter);
+            }
+
+            if (lease.UnmannedAirVehicleDescriptionCoverage != "")
+            {
+                WaitUntilClickable(insuranceUnmannedAirVehicleDescriptionTextarea);
+                webDriver.FindElement(insuranceUnmannedAirVehicleDescriptionTextarea).Click();
+                webDriver.FindElement(insuranceUnmannedAirVehicleDescriptionTextarea).SendKeys(lease.UnmannedAirVehicleDescriptionCoverage);
+            }
         }
 
         //Add Vehicle Insurance
@@ -305,8 +432,8 @@ namespace PIMS.Tests.Automation.PageObjects
             //Fill out form
             if (lease.VehicleInsuranceInPlace != "")
             {
-                WaitUntilClickable(insuranceVehicleInPlaceRadioBttnGroup);
-                ChooseSpecificRadioButton(insuranceVehicleInPlaceRadioBttnGroup, lease.VehicleInsuranceInPlace);
+                WaitUntilClickable(insuranceVehicleInPlaceSelect);
+                ChooseSpecificSelectOption(insuranceVehicleInPlaceSelect, lease.VehicleInsuranceInPlace);
             }
                 
             if (lease.VehicleLimit != "")
@@ -338,6 +465,8 @@ namespace PIMS.Tests.Automation.PageObjects
 
             //Verify Presence of elements on the form
             AssertTrueIsDisplayed(insuranceOtherSubtitle);
+            AssertTrueIsDisplayed(insuranceOtherTypeLabel);
+            AssertTrueIsDisplayed(insuranceOtherTypeInput);
             AssertTrueIsDisplayed(insuranceOtherInPlaceLabel);
             AssertTrueIsDisplayed(insuranceOtherLimitLabel);
             AssertTrueIsDisplayed(insuranceOtherLimitInput);
@@ -355,13 +484,13 @@ namespace PIMS.Tests.Automation.PageObjects
                 
             if (lease.OtherInsuranceInPlace != "")
             {
-                WaitUntilVisible(insuranceOtherInPlaceRadioBttnGroup);
-                ChooseSpecificRadioButton(insuranceOtherInPlaceRadioBttnGroup, lease.OtherInsuranceInPlace);
+                WaitUntilVisible(insuranceOtherInPlaceSelect);
+                ChooseSpecificSelectOption(insuranceOtherInPlaceSelect, lease.OtherInsuranceInPlace);
             }
                 
             if (lease.OtherLimit != "")
             {
-                WaitUntilVisible(insuranceOtherInPlaceRadioBttnGroup);
+                WaitUntilVisible(insuranceOtherInPlaceSelect);
                 webDriver.FindElement(insuranceOtherLimitInput).SendKeys(lease.OtherLimit);
             }
                
@@ -382,8 +511,7 @@ namespace PIMS.Tests.Automation.PageObjects
         public void DeleteLastInsurance()
         {
             WaitUntilVisible(insuranceEditTotal);
-            var totalInsertedInsurance = webDriver.FindElements(insuranceEditTotal).Count;
-            var lastInsuranceInserted = webDriver.FindElement(By.XPath("//h2[contains(text(),'Coverage details')]/following-sibling::div/div[" + totalInsertedInsurance + "]/h2")).Text;
+            var lastInsuranceInserted = webDriver.FindElement(By.CssSelector("div[data-testid='insurance-form']:last-child h2")).Text;
             
             switch (lastInsuranceInserted)
             {
@@ -408,26 +536,54 @@ namespace PIMS.Tests.Automation.PageObjects
         public void VerifyInsuranceInitForm()
         {
             AssertTrueIsDisplayed(insuranceSubtitle);
-            AssertTrueIsDisplayed(insuranceInstructions);
+            AssertTrueIsDisplayed(insuranceSelectionLabel);
 
+            AssertTrueIsDisplayed(insuranceAccidentalLabel);
+            AssertTrueIsDisplayed(insuranceAccidentalCheckbox);
             AssertTrueIsDisplayed(insuranceAircraftLabel);
             AssertTrueIsDisplayed(insuranceAircraftCheckbox);
             AssertTrueIsDisplayed(insuranceCGLLabel);
             AssertTrueIsDisplayed(insuranceCGLCheckbox);
             AssertTrueIsDisplayed(insuranceMarineLabel);
             AssertTrueIsDisplayed(insuranceMarineCheckbox);
+            AssertTrueIsDisplayed(insuranceUnmannedAirVehicleLabel);
+            AssertTrueIsDisplayed(insuranceUnmannedAirVehicleCheckbox);
             AssertTrueIsDisplayed(insuranceVehicleLabel);
             AssertTrueIsDisplayed(insuranceVehicleCheckbox);
             AssertTrueIsDisplayed(insuranceOtherLabel);
             AssertTrueIsDisplayed(insuranceOtherCheckbox);
-
-            AssertTrueIsDisplayed(insuranceDetailsSubtitle);
         }
 
         public void VerifyInsuranceViewForm(Lease lease)
         {
             AssertTrueIsDisplayed(insuranceRequiredLabel);
 
+            //Accidental Coverage
+            if (webDriver.FindElements(insuranceAccidentalListOption).Count > 1)
+            {
+                AssertTrueIsDisplayed(insuranceAccidentalViewSubtitle);
+                AssertTrueIsDisplayed(insuranceAccidentalViewInPlaceLabel);
+
+                if (lease.AccidentalInsuranceInPlace != "")
+                    AssertTrueContentEquals(insuranceAccidentalViewInPlaceContent, lease.AccidentalInsuranceInPlace);
+
+                AssertTrueIsDisplayed(insuranceAccidentalViewLimitLabel);
+
+                if (lease.AccidentalLimit != "")
+                    AssertTrueContentEquals(insuranceAccidentalViewLimitContent, lease.AccidentalLimit);
+
+                AssertTrueIsDisplayed(insuranceAccidentalViewExpiryDateLabel);
+
+                if (lease.AccidentalPolicyExpiryDate != "")
+                    AssertTrueContentEquals(insuranceAccidentalViewExpiryDateContent, TransformDateFormat(lease.AccidentalPolicyExpiryDate));
+
+                if (lease.AccidentalDescriptionCoverage != "")
+                    AssertTrueIsDisplayed(insuranceAircraftViewDescriptionLabel);
+
+                AssertTrueContentEquals(insuranceAccidentalViewDescriptionContent, lease.AccidentalDescriptionCoverage);
+            }
+
+            //Aircraft Liability Coverage
             if (webDriver.FindElements(insuranceAircraftListOption).Count > 1)
             {
                 AssertTrueIsDisplayed(insuranceAircraftViewSubtitle);
@@ -452,6 +608,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 AssertTrueContentEquals(insuranceAircraftViewDescriptionContent, lease.AircraftInsuranceInPlace);
             }
 
+            //CGL Coverage
             if (webDriver.FindElements(insuranceCGLListOption).Count > 1)
             {
                 AssertTrueIsDisplayed(insuranceCGLViewSubtitle);
@@ -476,6 +633,7 @@ namespace PIMS.Tests.Automation.PageObjects
                     AssertTrueContentEquals(insuranceCGLViewDescriptionContent,lease.CGLDescriptionCoverage);
             }
 
+            //Marine Coverage
             if (webDriver.FindElements(insuranceMarineListOption).Count > 1)
             {
                 AssertTrueIsDisplayed(insuranceMarineViewSubtitle);
@@ -500,6 +658,32 @@ namespace PIMS.Tests.Automation.PageObjects
                     AssertTrueContentEquals(insuranceMarineViewDescriptionContent, lease.MarineDescriptionCoverage);
             }
 
+            //Unmanned Air Vehicle Coverage
+            if (webDriver.FindElements(insuranceUnmannedAirListOption).Count > 1)
+            { 
+                AssertTrueIsDisplayed(insuranceUnmmaedAirVehicleViewSubtitle);
+                AssertTrueIsDisplayed(insuranceUnmmaedAirVehicleViewInPlaceLabel);
+
+                if (lease.UnmannedAirVehicleInsuranceInPlace != "")
+                    AssertTrueContentEquals(insuranceUnmmaedAirVehicleViewInPlaceContent, lease.UnmannedAirVehicleInsuranceInPlace);
+
+                AssertTrueIsDisplayed(insuranceUnmmaedAirVehicleViewLimitLabel);
+
+                if (lease.UnmannedAirVehicleLimit != "")
+                    AssertTrueContentEquals(insuranceUnmmaedAirVehicleViewLimitContent, lease.UnmannedAirVehicleLimit);
+
+                AssertTrueIsDisplayed(insuranceUnmmaedAirVehicleViewExpiryDateLabel);
+
+                if (lease.UnmannedAirVehiclePolicyExpiryDate != "")
+                    AssertTrueContentEquals(insuranceUnmmaedAirVehicleViewExpiryDateContent, TransformDateFormat(lease.UnmannedAirVehiclePolicyExpiryDate));
+
+                AssertTrueIsDisplayed(insuranceUnmmaedAirVehicleViewDescriptionLabel);
+
+                if (lease.UnmannedAirVehicleDescriptionCoverage != "")
+                    AssertTrueContentEquals(insuranceUnmmaedAirVehicleViewDescriptionContent, lease.UnmannedAirVehicleDescriptionCoverage);
+            }
+
+            //Vehicle Liability Coverage
             if (webDriver.FindElements(insuranceVehicleListOption).Count > 1)
             {
                 AssertTrueIsDisplayed(insuranceVehicleViewSubtitle);
@@ -524,6 +708,7 @@ namespace PIMS.Tests.Automation.PageObjects
                     AssertTrueContentEquals(insuranceVehicleViewDescriptionContent,lease.VehicleDescriptionCoverage);
             }
 
+            //Other Coverage
             if (webDriver.FindElements(insuranceOtherListOption).Count > 1)
             {
                 AssertTrueIsDisplayed(insuranceOtherViewSubtitle);
@@ -551,6 +736,8 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public int TotalInsuranceCount()
         {
+            Wait();
+            System.Diagnostics.Debug.WriteLine(insuranceViewTotal);
             return webDriver.FindElements(insuranceViewTotal).Count;
         }
             

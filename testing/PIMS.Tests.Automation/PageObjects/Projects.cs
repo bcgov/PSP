@@ -60,18 +60,17 @@ namespace PIMS.Tests.Automation.PageObjects
 
         //View Project Form Elements
         private By projectViewTitle = By.XPath("//h1[contains(text(),'Project')]");
-        private By projectHeaderProjectNameLabel = By.XPath("//h1[contains(text(),'Project')]/parent::div/parent::div/parent::div/following-sibling::div/div/div/div/div/div/div/label[contains(text(),'Project:')]");
-        private By projectHeaderProjectNameContent = By.XPath("//label[contains(text(),'Project')]/parent::div/following-sibling::div/strong");
-        private By projectHeaderMoTIRegionLabel = By.XPath("//label[contains(text(),'MoTI Region')]");
-        private By projectHeaderMoTIRegionContent = By.XPath("//label[contains(text(),'MoTI Region')]/parent::div/following-sibling::div/strong");
-        private By projectHeaderCreatedLabel = By.XPath("//span[contains(text(),'Created')]");
-        private By projectHeaderCreatedContent = By.XPath("//span[contains(text(),'Created')]/strong");
-        private By projectHeaderCreatedBy = By.XPath("//span[contains(text(),'Created')]/span[@data-testid='tooltip-icon-userNameTooltip']");
-        private By projectHeaderLastUpdatedLabel = By.XPath("//span[contains(text(),'Last updated')]");
-        private By projectHeaderLastUpdatedContent = By.XPath("//span[contains(text(),'Last updated')]/strong");
-        private By projectHeaderLastUpdatedBy = By.XPath("//span[contains(text(),'Last updated')]/span[@data-testid='tooltip-icon-userNameTooltip']");
-        private By projectHeaderStatusLabel = By.XPath("//label[contains(text(),'Status')]");
-        private By projectHeaderStatusContent = By.XPath("//label[contains(text(),'Status')]/parent::div/following-sibling::div/strong");
+        private By projectHeaderProjectNameLabel = By.XPath("//label[contains(text(),'Project')]/parent::strong");
+        private By projectHeaderProjectNameContent = By.XPath("//label[contains(text(),'Project')]/parent::strong/parent::div/following-sibling::div");
+        private By projectHeaderMoTIRegionLabel = By.XPath("//label[contains(text(),'MoTI Region')]/parent::strong");
+        private By projectHeaderMoTIRegionContent = By.XPath("//label[contains(text(),'MoTI Region')]/parent::strong/parent::div/following-sibling::div");
+        private By projectHeaderCreatedLabel = By.XPath("//strong[contains(text(),'Created')]");
+        private By projectHeaderCreatedContent = By.XPath("//strong[contains(text(),'Created')]/parent::span");
+        private By projectHeaderCreatedBy = By.XPath("//strong[contains(text(),'Created')]/parent::span/span[@data-testid='tooltip-icon-userNameTooltip']");
+        private By projectHeaderLastUpdatedLabel = By.XPath("//strong[contains(text(),'Updated')]");
+        private By projectHeaderLastUpdatedContent = By.XPath("//strong[contains(text(),'Updated')]/parent::span");
+        private By projectHeaderLastUpdatedBy = By.XPath("//strong[contains(text(),'Updated')]/parent::span/span[@data-testid='tooltip-icon-userNameTooltip']");
+        private By projectHeaderStatusContent = By.XPath("//div[@class='col']/div/div[3]/div/div");
 
         private By projectEditButton = By.CssSelector("button[title='Edit project']");
         private By projectDetailsSubtitle = By.XPath("//div[contains(text(),'Project Details')]");
@@ -319,7 +318,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyCreateProjectForm()
         {
-            Wait(2000);
+            Wait();
 
             AssertTrueIsDisplayed(projectCreateTitle);
             AssertTrueIsDisplayed(projectInstructionParagraph);
@@ -386,13 +385,12 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(projectHeaderMoTIRegionLabel);
             AssertTrueContentEquals(projectHeaderMoTIRegionContent,project.ProjectMOTIRegion);
             AssertTrueIsDisplayed(projectHeaderCreatedLabel);
-            AssertTrueContentEquals(projectHeaderCreatedContent,today);
+            AssertTrueElementContains(projectHeaderCreatedContent,today);
             AssertTrueContentEquals(projectHeaderCreatedBy,project.CreatedBy);
             AssertTrueIsDisplayed(projectHeaderLastUpdatedLabel);
-            AssertTrueContentEquals(projectHeaderLastUpdatedContent,today);
+            AssertTrueElementContains(projectHeaderLastUpdatedContent,today);
             AssertTrueContentEquals(projectHeaderLastUpdatedBy,project.UpdatedBy);
-            AssertTrueIsDisplayed(projectHeaderStatusLabel);
-            AssertTrueContentEquals(projectHeaderStatusContent,project.ProjectStatus);
+            AssertTrueContentEquals(projectHeaderStatusContent, GetUppercaseString(project.ProjectStatus));
 
             //Edit Button
             AssertTrueIsDisplayed(projectEditButton);

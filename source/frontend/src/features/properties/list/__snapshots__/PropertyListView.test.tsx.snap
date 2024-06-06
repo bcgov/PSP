@@ -378,6 +378,13 @@ exports[`Property list view > matches snapshot 1`] = `
                   >
                     Plan #
                   </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-historical"
+                    value="historical"
+                  >
+                    Historical File #
+                  </option>
                 </select>
               </div>
             </div>
@@ -733,13 +740,13 @@ exports[`Property list view > matches snapshot 1`] = `
           <div
             class="tr"
             role="row"
-            style="display: flex; flex: 1 0 auto; min-width: 280px;"
+            style="display: flex; flex: 1 0 auto; min-width: 310px;"
           >
             <div
               class="th"
               colspan="1"
               role="columnheader"
-              style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+              style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
             >
               <div
                 class="sortable-column"
@@ -751,7 +758,7 @@ exports[`Property list view > matches snapshot 1`] = `
               class="th"
               colspan="1"
               role="columnheader"
-              style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+              style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
             >
               <div
                 class="sortable-column"
@@ -763,7 +770,19 @@ exports[`Property list view > matches snapshot 1`] = `
               class="th"
               colspan="1"
               role="columnheader"
-              style="box-sizing: border-box; flex: 150 0 auto; min-width: 100px; width: 150px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            >
+              <div
+                class="sortable-column"
+              >
+                Historical File #
+              </div>
+            </div>
+            <div
+              class="th"
+              colspan="1"
+              role="columnheader"
+              style="box-sizing: border-box; flex: 125 0 auto; min-width: 100px; width: 125px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
             >
               <div
                 class="sortable-column"

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import SidebarFooter from '@/features/mapSideBar/shared/SidebarFooter';
+import { StyledFormWrapper } from '@/features/mapSideBar/shared/styles';
 import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
 
 import AcquisitionAgreementForm from '../form/AcquisitionAgreementForm';
@@ -81,18 +82,8 @@ const UpdateAcquisitionAgreementForm: React.FunctionComponent<
 
 export default UpdateAcquisitionAgreementForm;
 
-const StyledFormWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  text-align: left;
-  height: 100%;
-  overflow-y: auto;
-  padding-bottom: 1rem;
-`;
-
 const StyledContent = styled.div`
-  background-color: ${props => props.theme.css.filterBackgroundColor};
+  background-color: ${props => props.theme.css.highlightBackgroundColor};
 `;
 
 const StyledFooter = styled.div`

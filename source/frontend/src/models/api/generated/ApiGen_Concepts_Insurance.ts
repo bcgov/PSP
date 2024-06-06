@@ -16,5 +16,5 @@ export interface ApiGen_Concepts_Insurance extends ApiGen_Base_BaseAudit {
   coverageDescription: string | null;
   coverageLimit: number | null;
   expiryDate: UtcIsoDate | null;
-  isInsuranceInPlace: boolean;
+  isInsuranceInPlace: boolean | null;
 }

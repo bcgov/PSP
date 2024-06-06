@@ -1,7 +1,6 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using PIMS.Tests.Automation.Classes;
-using SeleniumExtras.WaitHelpers;
 
 namespace PIMS.Tests.Automation.PageObjects
 {
@@ -12,30 +11,32 @@ namespace PIMS.Tests.Automation.PageObjects
         private By createLicenseButton = By.XPath("//a[contains(text(),'Create a Lease/License File')]");
 
         //File Details Edit Icon
-        private By licenseDetailsEditIcon = By.XPath("//div[@role='tabpanel']/div/div/button");
+        private By licenseDetailsEditIcon = By.XPath("//div[@role='tabpanel']/div/div/div/button");
 
         //Lease Header Elements
         private By licenseHeaderNbrLabel = By.XPath("//label[contains(text(),'Lease/License #')]");
-        private By licenseHeaderNbrContent = By.XPath("//label[contains(text(),'Lease/License #')]/parent::div/following-sibling::div/strong/div/span[1]");
-        private By licenseHeaderAccountType = By.XPath("//label[contains(text(),'Lease/License #')]/parent::div/following-sibling::div/strong/div/span[2]");
+        private By licenseHeaderNbrContent = By.XPath("//label[contains(text(),'Lease/License #')]/parent::strong/parent::div/following-sibling::div/span[1]");
+        private By licenseHeaderAccountType = By.XPath("//label[contains(text(),'Lease/License #')]/parent::strong/parent::div/following-sibling::div/span[2]");
         private By licenseHeaderProperty = By.XPath("//label[contains(text(),'Property')]");
-        private By licenseHeaderPropertyContent = By.XPath("//label[contains(text(),'Property')]/parent::div/following-sibling::div/strong/div");
+        private By licenseHeaderPropertyContent = By.XPath("//label[contains(text(),'Property')]/parent::strong/parent::div/following-sibling::div/div/span");
         private By licenseHeaderTenantLabel = By.XPath("//label[contains(text(),'Tenant')]");
-        private By licenseHeaderStartDateLabel = By.XPath("//div/div/div/div/div/div/div/div/div/div/div/div/label[contains(text(),'Start date')]");
-        private By licenseHeaderStartDateContent = By.XPath("//div/div/div/div/div/div/div/div/div/div/div/div/label[contains(text(),'Start date')]/parent::div/following-sibling::div[1]");
-        private By licenseHeaderExpiryDateLabel = By.XPath("//label[contains(text(),'Expiry date')]");
-        private By licenseHeaderExpiryDateContent = By.XPath("//label[contains(text(),'Expiry date')]/parent::div/following-sibling::div");
-        private By licenseHeaderCreatedLabel = By.XPath("//span[contains(text(),'Created')]");
-        private By licenseHeaderCreatedContent = By.XPath("//span[contains(text(),'Created')]/strong");
-        private By licenseHeaderCreatedByContent = By.XPath("//span[contains(text(),'Created')]/span");
-        private By licenseHeaderLastUpdatedLabel = By.XPath("//span[contains(text(),'Last updated')]");
-        private By licenseHeaderLastUpdatedContent = By.XPath("//span[contains(text(),'Last updated')]/strong");
-        private By licenseHeaderLastUpdatedByContent = By.XPath("//span[contains(text(),'Last updated')]/span");
-        private By licenseHeaderStatusLabel = By.XPath("//Label[contains(text(),'Status')]");
-        private By licenseHeaderStatusContent = By.XPath("//Label[contains(text(),'Status')]/parent::div/following-sibling::div");
-        private By licenseHeaderExpiredFlag = By.XPath("//label[contains(text(),'Expiry date')]/parent::div/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div");
+        private By licenseHeaderStartDateLabel = By.XPath("//label[contains(text(),'Lease Start')]");
+        private By licenseHeaderStartDateContent = By.XPath("//label[contains(text(),'Lease Start')]/parent::strong/parent::div/following-sibling::div[1]");
+        private By licenseHeaderExpiryDateLabel = By.XPath("//label[contains(text(),'Lease Start')]/parent::strong/parent::div/following-sibling::div[2]/strong/label[contains(text(),'Expiry')]");
+        private By licenseHeaderExpiryDateContent = By.XPath("//label[contains(text(),'Lease Start')]/parent::strong/parent::div/following-sibling::div[3]/span");
+        private By licenseHeaderHistoricalFileLabel = By.XPath("//label[contains(text(),'Historical File')]");
+        private By licenseHeaderHistoricalFileContent = By.XPath("//label[contains(text(),'Historical File #:')]/parent::strong/parent::div/following-sibling::div/div/span");
 
-        //Lease and Current Term Info Elements
+        private By licenseHeaderCreatedLabel = By.XPath("//span/strong[contains(text(),'Created')]");
+        private By licenseHeaderCreatedContent = By.XPath("//strong[contains(text(),'Created')]/parent::span");
+        private By licenseHeaderCreatedByContent = By.XPath("//strong[contains(text(),'Created')]/parent::span/span[@data-testid='tooltip-icon-userNameTooltip']");
+        private By licenseHeaderLastUpdatedLabel = By.XPath("//span/strong[contains(text(),'Updated')]");
+        private By licenseHeaderLastUpdatedContent = By.XPath("//strong[contains(text(),'Updated')]/parent::span");
+        private By licenseHeaderLastUpdatedByContent = By.XPath("//strong[contains(text(),'Updated')]/parent::span/span[@data-testid='tooltip-icon-userNameTooltip']");
+        private By licenseHeaderStatusContent = By.XPath("//div[@class='col']/div/div[3]/div/div");
+        private By licenseHeaderExpiredFlag = By.XPath("//label[contains(text(),'Lease Start')]/parent::strong/parent::div/following-sibling::div[4]/div");
+
+        //Lease Details Elements
         private By licenseDetailsLeaseDateSubtitle = By.XPath("//form/div/div/div/div/h4[contains(text(),'Lease / License')]");
         private By licenseDetailsLeaseDateStartLabel = By.XPath("//form/div/div/div/div/h4[contains(text(),'Lease / License')]/parent::div/div/label[contains(text(),'Start date')]");
         private By licenseDetailsLeaseDateStartContent = By.XPath("//form/div/div/div/div/h4[contains(text(),'Lease / License')]/parent::div/div/label[contains(text(),'Start date')]/following-sibling::div");
@@ -71,6 +72,8 @@ namespace PIMS.Tests.Automation.PageObjects
 
         private By licenseDetailsStatusLabel = By.XPath("//div/div/div/div/div/label[contains(text(),'Status')]");
         private By licenseDetailsStatusSelector = By.Id("input-statusTypeCode");
+        private By licenseDetailsTerminateReasonInput = By.Id("input-terminationReason");
+        private By licenseDetailsCancelReasonInput = By.Id("input-cancellationReason");
         private By licenseDetailsAccountTypeLabel = By.XPath("//label[contains(text(),'Account type')]");
         private By licenseDetailsAccountTypeSelector = By.Id("input-paymentReceivableTypeCode");
         private By licenseDetailsStartDateLabel = By.XPath("//label[contains(text(),'Start date')]");
@@ -152,21 +155,15 @@ namespace PIMS.Tests.Automation.PageObjects
 
         private By licenseDetailsDocsSubtitle = By.XPath("//div[contains(text(),'Documentation')]");
         private By licenseDetailsPhysicalLeaseExistViewLabel = By.XPath("//label[contains(text(),'Physical copy exists')]");
-        //private By licenseDetailsPhysicalLeaseExistContent = By.Id("input-hasPhysicalLicense");
         private By licenseDetailsPhysicalLeaseExistLabel = By.XPath("//label[contains(text(),'Physical lease/license exists')]");
         private By licenseDetailsPhysicalLeaseExistSelector = By.Id("input-hasPhysicalLicense");
         private By licenseDetailsDigitalLeaseExistViewLabel = By.XPath("//label[contains(text(),'Digital copy exists')]");
-        //private By licenseDetailsDigitalLeaseExistContent = By.Id("input-hasDigitalLicense");
         private By licenseDetailsDigitalLeaseExistLabel = By.XPath("//label[contains(text(),'Digital lease/license exists')]");
         private By licenseDetailsDigitalLeaseExistSelector = By.Id("input-hasDigitalLicense");
         private By licenseDetailsLocationDocsLabel = By.XPath("//label[contains(text(),'Document location')]");
         private By licenseDetailsLocationDocsTooltip = By.XPath("//label[contains(text(),'Document location')]/span/span[@data-testid='tooltip-icon-section-field-tooltip']");
         private By licenseDetailsLocationDocsTextarea = By.Id("input-documentationReference");
         private By licenseDetailsLocationDocsContent = By.XPath("//label[contains(text(),'Document location')]/parent::div/following-sibling::div");
-        private By licenseDetailsLISNbrLabel = By.XPath("//label[contains(text(),'LIS #')]");
-        private By licenseDetailsLISNbrInput = By.Id("input-tfaFileNumber");
-        private By licenseDetailsPSNbrLabel = By.XPath("//label[contains(text(),'PS #')]");
-        private By licenseDetailsPSNbrInput = By.Id("input-psFileNo");
         private By licenseDetailsNotesLabel = By.XPath("//label[contains(text(),'Lease notes')]");
         private By licenseDetailsNotesTextarea = By.Id("input-note");
         private By licenseDetailsNotesContent = By.XPath("//label[contains(text(),'Lease notes')]/parent::div/following-sibling::div");
@@ -178,7 +175,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         //Leases Modal Element
         private By licenseDetailsConfirmationModal = By.CssSelector("div[class='modal-content']");
-        //private By licenseDetailsAcknowledgeContinueBttn = By.XPath("//button/div[contains(text(),'Acknowledge & Continue')]");
+        private By licenseDetailsConfirmationContent = By.CssSelector("div[class='modal-content'] p");
 
         private SharedFileProperties sharedSearchProperties;
         private SharedModals sharedModals;
@@ -265,141 +262,56 @@ namespace PIMS.Tests.Automation.PageObjects
             }
         }
 
-        public void AddAdditionalLicenseDetailsInformation(Lease lease)
-        {
-            //MAIN DETAILS
-            //Project
-            if (lease.MinistryProject != "")
-            {
-                webDriver.FindElement(licenseDetailsProjectInput).SendKeys(lease.MinistryProject);
-
-                Wait();
-                webDriver.FindElement(licenseDetailsProjectInput).SendKeys(Keys.Space);
-
-                Wait();
-                webDriver.FindElement(licenseDetailsProjectInput).SendKeys(Keys.Backspace);
-
-                Wait(2000);
-                webDriver.FindElement(licenseDetailsProject1stOption).Click();
-            }
-
-            //Status
-            if (lease.LeaseStatus != "")
-                ChooseSpecificSelectOption(licenseDetailsStatusSelector, lease.LeaseStatus);
-
-            //Account Type
-            if (lease.AccountType != "")
-            {
-                webDriver.FindElement(licenseDetailsAccountTypeSelector).Click();
-                ChooseSpecificSelectOption(licenseDetailsAccountTypeSelector, lease.AccountType);
-            }
-
-            //Expiry Date
-            if (lease.LeaseExpiryDate != "")
-            {
-                webDriver.FindElement(licenseDetailsExpiryDateInput).Click();
-                webDriver.FindElement(licenseDetailsExpiryDateInput).SendKeys(lease.LeaseExpiryDate);
-                webDriver.FindElement(licenseDetailsExpiryDateInput).SendKeys(Keys.Enter);
-            }
-
-            //Administration Details
-            //MOTI Contact
-            if (lease.MOTIContact != "")
-                webDriver.FindElement(licenseDetailsMotiContactInput).SendKeys(lease.MOTIContact);
-
-            //Initiator
-            if (lease.Initiator != "")
-                ChooseSpecificSelectOption(licenseDetailsInitiatorSelector, lease.Initiator);
-
-            //Responsibility
-            if (lease.Responsibility != "")
-                ChooseSpecificSelectOption(licenseDetailsResposibilitySelector, lease.Responsibility);
-
-            //Effective date of responsibility
-            if (lease.EffectiveDate != "")
-            {
-                webDriver.FindElement(licenseDetailsEffectiveDateInput).SendKeys(lease.EffectiveDate);
-                webDriver.FindElement(licenseDetailsEffectiveDateInput).SendKeys(Keys.Enter);
-            }
-
-            //Intended use
-            if (lease.IntendedUse != "")
-                webDriver.FindElement(licenseDetailsIntendedUseTextarea).SendKeys(lease.IntendedUse);
-
-            //CONSULTATION DETAILS
-            //First Nation
-            if (lease.FirstNation != "")
-                ChooseSpecificSelectOption(licenseDetailsFirstNationSelect, lease.FirstNation);
-
-            //Startegic Real Estate
-            if (lease.StrategicRealEstate != "")
-                ChooseSpecificSelectOption(licenseDetailsSRESelect, lease.StrategicRealEstate);
-
-            //Regional planning
-            if (lease.RegionalPlanning != "")
-                ChooseSpecificSelectOption(licenseDetailsRegionalPlanningSelect, lease.RegionalPlanning);
-
-            //Regional property services
-            if (lease.RegionalPropertyService != "")
-                ChooseSpecificSelectOption(licenseDetailsRegionalPropertyServicesSelect, lease.RegionalPropertyService);
-
-            //District
-            if (lease.District != "")
-                ChooseSpecificSelectOption(licenseDetailsDistrictSelect, lease.District);
-
-            //Headquarters
-            if (lease.Headquarter != "")
-                ChooseSpecificSelectOption(licenseDetailsHeadquarterSelect, lease.Headquarter);
-
-            //Other
-            if (lease.ConsultationOther != "")
-                ChooseSpecificSelectOption(licenseDetailsOtherSelect, lease.ConsultationOther);
-
-            //Describe other
-            if (lease.ConsultationOtherDetails != "")
-                webDriver.FindElement(licenseDetailsOtherDetailsInput).SendKeys(lease.ConsultationOtherDetails);
-
-            //DOCUMENTATION
-            //Selecting Physical lease exists
-            if (lease.PhysicalLeaseExist != "")
-                ChooseSpecificSelectOption(licenseDetailsPhysicalLeaseExistSelector, lease.PhysicalLeaseExist);
-
-            //Selecting Digital lease exists
-            if (lease.DigitalLeaseExist != "")
-                ChooseSpecificSelectOption(licenseDetailsDigitalLeaseExistSelector, lease.DigitalLeaseExist);
-
-            //Inserting Location of documents
-            if (lease.DocumentLocation != "")
-                webDriver.FindElement(licenseDetailsLocationDocsTextarea).SendKeys(lease.DocumentLocation);
-
-            //Inserting LIS#
-            if (lease.LISNumber != "")
-                webDriver.FindElement(licenseDetailsLISNbrInput).SendKeys(lease.LISNumber);
-
-            //Inserting PS#
-            if (lease.PSNumber != "")
-                webDriver.FindElement(licenseDetailsPSNbrInput).SendKeys(lease.PSNumber);
-
-            //Inserting Notes
-            if (lease.LeaseNotes != "")
-                webDriver.FindElement(licenseDetailsNotesTextarea).SendKeys(lease.LeaseNotes);
-        }
-
         public void UpdateLeaseFileDetails(Lease lease)
         {
             //MAIN DETAILS
             //Project
+            Wait();
             if (lease.MinistryProject != "")
             {
                 ClearInput(licenseDetailsProjectInput);
                 webDriver.FindElement(licenseDetailsProjectInput).SendKeys(lease.MinistryProject);
-                WaitUntilClickable(licenseDetailsProject1stOption);
+                webDriver.FindElement(licenseDetailsProjectInput).SendKeys(Keys.Enter);
+                webDriver.FindElement(licenseDetailsProjectInput).SendKeys(Keys.Backspace);
+
+                Wait();
                 webDriver.FindElement(licenseDetailsProject1stOption).Click();
             }
 
             //Status
             if (lease.LeaseStatus != "")
+            {
+                SelectElement selectStatusElement = new SelectElement(webDriver.FindElement(licenseDetailsStatusSelector));
+                IWebElement selectedStatus = selectStatusElement.SelectedOption;
+                string previousStatus = selectedStatus.Text;
+
                 ChooseSpecificSelectOption(licenseDetailsStatusSelector, lease.LeaseStatus);
+
+                Wait();
+                if (webDriver.FindElements(licenseDetailsConfirmationModal).Count() > 0)
+                {
+                    Assert.Equal("Are you sure?", sharedModals.ModalHeader());
+                    Assert.Contains("The lease is no longer in " + previousStatus + " state. The reason for doing so will be cleared from the file details and can only be viewed in the notes tab.", webDriver.FindElement(licenseDetailsConfirmationContent).Text);
+                    Assert.Contains("Do you want to proceed?", webDriver.FindElement(licenseDetailsConfirmationContent).Text);
+                    sharedModals.ModalClickOKBttn();
+                }
+            }
+            
+            //Termination reason
+            if (lease.LeaseTerminationReason != "")
+            {
+                ClearInput(licenseDetailsTerminateReasonInput);
+                webDriver.FindElement(licenseDetailsTerminateReasonInput).Click();
+                webDriver.FindElement(licenseDetailsTerminateReasonInput).SendKeys(lease.LeaseTerminationReason);
+            }
+
+            //Cancellation reason
+            if (lease.LeaseCancellationReason != "")
+            {
+                ClearInput(licenseDetailsCancelReasonInput);
+                webDriver.FindElement(licenseDetailsCancelReasonInput).Click();
+                webDriver.FindElement(licenseDetailsCancelReasonInput).SendKeys(lease.LeaseCancellationReason);
+            }
 
             //Account Type
             if (lease.AccountType != "")
@@ -556,20 +468,6 @@ namespace PIMS.Tests.Automation.PageObjects
             if (lease.DocumentLocation != "")
                 webDriver.FindElement(licenseDetailsLocationDocsTextarea).SendKeys(lease.DocumentLocation);
 
-            //Inserting LIS#
-            if (lease.LISNumber != "")
-            {
-                ClearInput(licenseDetailsLISNbrInput);
-                webDriver.FindElement(licenseDetailsLISNbrInput).SendKeys(lease.LISNumber);
-            }
-
-            //Inserting PS#
-            if (lease.PSNumber != "")
-            {
-                ClearInput(licenseDetailsPSNbrInput);
-                webDriver.FindElement(licenseDetailsPSNbrInput).SendKeys(lease.PSNumber);
-            }
-
             //Inserting Notes
             if (lease.LeaseNotes != "")
             {
@@ -611,27 +509,6 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             ButtonElement("Cancel");
             sharedModals.CancelActionModal();
-
-            //try
-            //{
-            //    WebDriverWait wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(3));
-            //    if (wait.Until(ExpectedConditions.AlertIsPresent()) != null)
-            //    {
-            //        webDriver.SwitchTo().Alert().Accept();
-            //    }
-            //}
-            //catch (WebDriverTimeoutException)
-            //{
-            //    //if (webDriver.FindElements(licenseDetailsConfirmationModal).Count() > 0)
-            //    //{
-            //    //    Assert.Equal("Confirm Changes", sharedModals.ModalHeader());
-            //    //    Assert.Contains("If you choose to cancel now, your changes will not be saved.", sharedModals.ModalContent());
-            //    //    Assert.Contains("Do you want to proceed?", sharedModals.ModalContent());
-
-            //    //    sharedModals.ModalClickOKBttn();
-            //    //}
-            //    sharedModals.CancelActionModal();
-            //}
         }
 
         public string GetLeaseCode()
@@ -719,10 +596,6 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(licenseDetailsLocationDocsLabel);
             AssertTrueIsDisplayed(licenseDetailsLocationDocsTooltip);
             AssertTrueIsDisplayed(licenseDetailsLocationDocsTextarea);
-            AssertTrueIsDisplayed(licenseDetailsLISNbrLabel);
-            AssertTrueIsDisplayed(licenseDetailsLISNbrInput);
-            AssertTrueIsDisplayed(licenseDetailsPSNbrLabel);
-            AssertTrueIsDisplayed(licenseDetailsPSNbrInput);
             AssertTrueIsDisplayed(licenseDetailsNotesLabel);
             AssertTrueIsDisplayed(licenseDetailsNotesTextarea);
 
@@ -731,26 +604,29 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(licenseDetailsCancelButton);
         }
 
-        public void VerifyLicenseHeader()
+        public void VerifyLicenseHeader(Lease lease)
         {
             AssertTrueIsDisplayed(licenseHeaderNbrLabel);
-            AssertTrueIsDisplayed(licenseHeaderNbrContent);
-            AssertTrueIsDisplayed(licenseHeaderAccountType);
+            AssertTrueContentNotEquals(licenseHeaderNbrContent, "");
+            AssertTrueContentNotEquals(licenseHeaderAccountType, "");
             AssertTrueIsDisplayed(licenseHeaderProperty);
             AssertTrueIsDisplayed(licenseHeaderPropertyContent);
             AssertTrueIsDisplayed(licenseHeaderTenantLabel);
             AssertTrueIsDisplayed(licenseHeaderStartDateLabel);
-            AssertTrueIsDisplayed(licenseHeaderStartDateContent);
+            AssertTrueContentNotEquals(licenseHeaderStartDateContent, "");
             AssertTrueIsDisplayed(licenseHeaderExpiryDateLabel);
             AssertTrueIsDisplayed(licenseHeaderExpiryDateContent);
+            AssertTrueIsDisplayed(licenseHeaderHistoricalFileLabel);
+            Assert.True(webDriver.FindElements(licenseHeaderHistoricalFileContent).Count > 0);
             AssertTrueIsDisplayed(licenseHeaderCreatedLabel);
-            AssertTrueIsDisplayed(licenseHeaderCreatedContent);
-            AssertTrueIsDisplayed(licenseHeaderCreatedByContent);
+            AssertTrueContentNotEquals(licenseHeaderCreatedContent, "");
+            AssertTrueContentNotEquals(licenseHeaderCreatedByContent, "");
             AssertTrueIsDisplayed(licenseHeaderLastUpdatedLabel);
-            AssertTrueIsDisplayed(licenseHeaderLastUpdatedContent);
-            AssertTrueIsDisplayed(licenseHeaderLastUpdatedByContent);
-            AssertTrueIsDisplayed(licenseHeaderStatusLabel);
-            AssertTrueIsDisplayed(licenseHeaderStatusContent);
+            AssertTrueContentNotEquals(licenseHeaderLastUpdatedContent, "");
+            AssertTrueContentNotEquals(licenseHeaderLastUpdatedByContent, "");
+
+            if (lease.LeaseStatus != "")
+                AssertTrueContentEquals(licenseHeaderStatusContent, GetUppercaseString(lease.LeaseStatus));
 
             //Verify Expired Flag on Header
             if (webDriver.FindElement(licenseHeaderExpiryDateContent).Text != "")
@@ -765,7 +641,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyLicenseDetailsViewForm(Lease lease)
         {
-            VerifyLicenseHeader();
+            VerifyLicenseHeader(lease);
 
             //Edit Icon
             AssertTrueIsDisplayed(licenseDetailsEditIcon);
@@ -938,16 +814,6 @@ namespace PIMS.Tests.Automation.PageObjects
             if (lease.DocumentLocation != "")
                 AssertTrueContentEquals(licenseDetailsLocationDocsContent, lease.DocumentLocation);
 
-            AssertTrueIsDisplayed(licenseDetailsLISNbrLabel);
-
-            if (lease.LISNumber != "")
-                AssertTrueElementValueEquals(licenseDetailsLISNbrInput, lease.LISNumber);
-
-            AssertTrueIsDisplayed(licenseDetailsPSNbrLabel);
-
-            if (lease.PSNumber != "")
-                AssertTrueElementValueEquals(licenseDetailsPSNbrInput, lease.PSNumber);
-
             AssertTrueIsDisplayed(licenseDetailsNotesLabel);
 
             if (lease.LeaseNotes != "")
@@ -957,7 +823,6 @@ namespace PIMS.Tests.Automation.PageObjects
         public void VerifyLicenseDetailsUpdateForm()
         {
             WaitUntilVisible (licenseDetailsStatusLabel);
-            VerifyLicenseHeader();
 
             //Details
             AssertTrueIsDisplayed(licenseDetailsStatusLabel);
@@ -1019,10 +884,6 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(licenseDetailsLocationDocsLabel);
             AssertTrueIsDisplayed(licenseDetailsLocationDocsTooltip);
             AssertTrueIsDisplayed(licenseDetailsLocationDocsTextarea);
-            AssertTrueIsDisplayed(licenseDetailsLISNbrLabel);
-            AssertTrueIsDisplayed(licenseDetailsLISNbrInput);
-            AssertTrueIsDisplayed(licenseDetailsPSNbrLabel);
-            AssertTrueIsDisplayed(licenseDetailsPSNbrInput);
             AssertTrueIsDisplayed(licenseDetailsNotesLabel);
             AssertTrueIsDisplayed(licenseDetailsNotesTextarea);
         }

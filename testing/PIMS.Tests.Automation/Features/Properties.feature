@@ -4,8 +4,8 @@ Feature: Properties
 Property Inventory and Information Details test cases
 
 Scenario: 01. Property Information Tab
-	Given I review a Property's Information
-	When I update a Property details from row number 3
+	Given I review a Property's Information from row number 3
+	When I update a Property details
 	Then A Property Information is saved successfully
 
 Scenario: 02. Property PIMS Files Tab

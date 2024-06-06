@@ -1,3 +1,4 @@
+import { useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { FileTypes } from '@/constants/fileTypes';
@@ -14,10 +15,13 @@ import { PropertyDetailsTabView } from '@/features/mapSideBar/property/tabs/prop
 import TakesDetailContainer from '@/features/mapSideBar/property/tabs/takes/detail/TakesDetailContainer';
 import TakesDetailView from '@/features/mapSideBar/property/tabs/takes/detail/TakesDetailView';
 import { PROPERTY_TYPES, useComposedProperties } from '@/hooks/repositories/useComposedProperties';
+import { useLeaseRepository } from '@/hooks/repositories/useLeaseRepository';
+import { useLeaseTenantRepository } from '@/hooks/repositories/useLeaseTenantRepository';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { ApiGen_Concepts_ResearchFileProperty } from '@/models/api/generated/ApiGen_Concepts_ResearchFileProperty';
 import { isValidId } from '@/utils';
 
+import { getLeaseInfo, LeaseAssociationInfo } from '../../property/PropertyContainer';
 import PropertyResearchTabView from '../../property/tabs/propertyResearch/detail/PropertyResearchTabView';
 
 export interface IPropertyFileContainerProps {
@@ -45,6 +49,27 @@ export const PropertyFileContainer: React.FunctionComponent<
       PROPERTY_TYPES.BC_ASSESSMENT,
     ],
   });
+
+  const { getLease } = useLeaseRepository();
+  const { getLeaseTenants } = useLeaseTenantRepository();
+  const [LeaseAssociationInfo, setLeaseAssociationInfo] = useState<LeaseAssociationInfo>({
+    leaseDetails: [],
+    leaseTenants: [],
+    loading: false,
+  });
+
+  const leaseAssociations =
+    composedProperties?.propertyAssociationWrapper?.response?.leaseAssociations;
+  useMemo(
+    () =>
+      getLeaseInfo(
+        leaseAssociations,
+        getLease.execute,
+        getLeaseTenants.execute,
+        setLeaseAssociationInfo,
+      ),
+    [setLeaseAssociationInfo, leaseAssociations, getLeaseTenants.execute, getLease.execute],
+  );
 
   // After API property object has been received, we query relevant map layers to find
   // additional information which we store in a different model (IPropertyDetailsForm)
@@ -109,8 +134,14 @@ export const PropertyFileContainer: React.FunctionComponent<
     tabViews.push({
       content: (
         <PropertyAssociationTabView
-          isLoading={composedProperties.propertyAssociationWrapper?.loading ?? false}
+          isLoading={
+            composedProperties.propertyAssociationWrapper?.loading ??
+            LeaseAssociationInfo.loading ??
+            false
+          }
           associations={composedProperties.propertyAssociationWrapper?.response}
+          associatedLeaseTenants={LeaseAssociationInfo.leaseTenants}
+          associatedLeases={LeaseAssociationInfo.leaseDetails}
         />
       ),
       key: InventoryTabNames.pims,

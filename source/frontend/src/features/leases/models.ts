@@ -19,6 +19,7 @@ import {
 } from '@/utils/formUtils';
 
 import { PropertyForm } from '../mapSideBar/shared/models';
+import { ChecklistItemFormModel } from '../mapSideBar/shared/tabs/checklist/update/models';
 import { FormLeaseDeposit } from './detail/LeasePages/deposits/models/FormLeaseDeposit';
 import { FormLeaseDepositReturn } from './detail/LeasePages/deposits/models/FormLeaseDepositReturn';
 import { FormLeaseTerm } from './detail/LeasePages/payment/models';
@@ -59,6 +60,8 @@ export class LeaseFormModel {
   documentationReference = '';
   hasPhysicalLicense?: boolean;
   hasDigitalLicense?: boolean;
+  cancellationReason: string | null = null;
+  terminationReason: string | null = null;
   project?: IAutocompletePrediction;
   tenantNotes: string[] = [];
   properties: FormLeaseProperty[] = [];
@@ -67,6 +70,7 @@ export class LeaseFormModel {
   securityDepositReturns: FormLeaseDepositReturn[] = [];
   terms: FormLeaseTerm[] = [];
   tenants: FormTenant[] = [];
+  fileChecklist: ChecklistItemFormModel[] = [];
   rowVersion = 0;
 
   static fromApi(apiModel?: ApiGen_Concepts_Lease): LeaseFormModel {
@@ -116,6 +120,8 @@ export class LeaseFormModel {
       sortedConsultations?.map(c => FormLeaseConsultation.fromApi(c)) || [];
     leaseDetail.terms = apiModel?.terms?.map(t => FormLeaseTerm.fromApi(t)) || [];
     leaseDetail.tenants = apiModel?.tenants?.map(t => new FormTenant(t)) || [];
+    leaseDetail.cancellationReason = apiModel.cancellationReason || '';
+    leaseDetail.terminationReason = apiModel.terminationReason || '';
 
     return leaseDetail;
   }
@@ -166,6 +172,9 @@ export class LeaseFormModel {
       fileNumber: null,
       hasDigitalFile: formLease.hasDigitalLicense ?? false,
       hasPhysicalFile: formLease.hasPhysicalLicense ?? false,
+      cancellationReason: stringToNull(formLease.cancellationReason),
+      terminationReason: stringToNull(formLease.terminationReason),
+      fileChecklistItems: formLease.fileChecklist.map(ck => ck.toApi()),
       isExpired: false,
       programName: null,
       renewalCount: 0,
@@ -320,9 +329,12 @@ export const getDefaultFormLease: () => LeaseFormModel = () =>
     responsibilityEffectiveDate: null,
     hasPhysicalFile: false,
     hasDigitalFile: false,
+    cancellationReason: null,
+    terminationReason: null,
     isExpired: false,
     project: null,
     ...getEmptyBaseAudit(),
     fileName: null,
     fileNumber: null,
+    fileChecklistItems: [],
   });
