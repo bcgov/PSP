@@ -4,12 +4,10 @@ using System.Linq;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Pims.Api.Models.CodeTypes;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
-using Pims.Dal.Helpers;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
@@ -23,7 +21,6 @@ namespace Pims.Api.Services
         private readonly IResearchFileRepository _researchFileRepository;
         private readonly IResearchFilePropertyRepository _researchFilePropertyRepository;
         private readonly IPropertyRepository _propertyRepository;
-        private readonly ICoordinateTransformService _coordinateService;
         private readonly ILookupRepository _lookupRepository;
         private readonly IEntityNoteRepository _entityNoteRepository;
         private readonly IPropertyService _propertyService;
@@ -44,7 +41,6 @@ namespace Pims.Api.Services
             _researchFileRepository = researchFileRepository;
             _researchFilePropertyRepository = researchFilePropertyRepository;
             _propertyRepository = propertyRepository;
-            _coordinateService = coordinateService;
             _lookupRepository = lookupRepository;
             _entityNoteRepository = entityNoteRepository;
             _propertyService = propertyService;
@@ -67,9 +63,7 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.PropertyView);
 
             var propertyResearchFiles = _researchFilePropertyRepository.GetAllByResearchFileId(researchFileId);
-            ReprojectPropertyLocationsToWgs84(propertyResearchFiles);
-
-            return propertyResearchFiles;
+            return _propertyService.TransformAllPropertiesToLatLong(propertyResearchFiles);
         }
 
         public PimsResearchFile Add(PimsResearchFile researchFile, IEnumerable<UserOverrideCode> userOverrideCodes)
@@ -177,37 +171,6 @@ namespace Pims.Api.Services
             return _researchFileRepository.GetLastUpdateBy(researchFileId);
         }
 
-        private void UpdateLocation(PimsProperty researchProperty, ref PimsProperty propertyToUpdate, IEnumerable<UserOverrideCode> userOverrideCodes)
-        {
-            if (propertyToUpdate.Location == null)
-            {
-                if (userOverrideCodes.Contains(UserOverrideCode.AddLocationToProperty))
-                {
-                    // convert spatial location from lat/long (4326) to BC Albers (3005) for database storage
-                    var geom = researchProperty.Location;
-                    if (geom.SRID != SpatialReference.BCALBERS)
-                    {
-                        var newCoords = _coordinateService.TransformCoordinates(geom.SRID, SpatialReference.BCALBERS, geom.Coordinate);
-                        propertyToUpdate.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.BCALBERS);
-                        _propertyRepository.Update(propertyToUpdate, overrideLocation: true);
-                    }
-
-                    // apply similar logic to the boundary
-                    var boundaryGeom = researchProperty.Boundary;
-                    if (boundaryGeom != null && boundaryGeom.SRID != SpatialReference.BCALBERS)
-                    {
-                        var newCoords = boundaryGeom.Coordinates.Select(coord => _coordinateService.TransformCoordinates(boundaryGeom.SRID, SpatialReference.BCALBERS, coord));
-                        var gf = NetTopologySuite.NtsGeometryServices.Instance.CreateGeometryFactory(SpatialReference.BCALBERS);
-                        researchProperty.Boundary = gf.CreatePolygon(newCoords.ToArray());
-                    }
-                }
-                else
-                {
-                    throw new UserOverrideException(UserOverrideCode.AddLocationToProperty, "The selected property already exists in the system's inventory. However, the record is missing spatial details.\n\n To add the property, the spatial details for this property will need to be updated. The system will attempt to update the property record with spatial information from the current selection.");
-                }
-            }
-        }
-
         private void MatchProperties(PimsResearchFile researchFile, IEnumerable<UserOverrideCode> userOverrideCodes)
         {
             foreach (var researchProperty in researchFile.PimsPropertyResearchFiles)
@@ -219,7 +182,7 @@ namespace Pims.Api.Services
                     {
                         var foundProperty = _propertyRepository.GetByPid(pid, true);
                         researchProperty.PropertyId = foundProperty.Internal_Id;
-                        UpdateLocation(researchProperty.Property, ref foundProperty, userOverrideCodes);
+                        _propertyService.UpdateLocation(researchProperty.Property, ref foundProperty, userOverrideCodes);
                         researchProperty.Property = foundProperty;
                     }
                     catch (KeyNotFoundException)
@@ -235,7 +198,7 @@ namespace Pims.Api.Services
                     {
                         var foundProperty = _propertyRepository.GetByPin(pin, true);
                         researchProperty.PropertyId = foundProperty.Internal_Id;
-                        UpdateLocation(researchProperty.Property, ref foundProperty, userOverrideCodes);
+                        _propertyService.UpdateLocation(researchProperty.Property, ref foundProperty, userOverrideCodes);
                         researchProperty.Property = foundProperty;
                     }
                     catch (KeyNotFoundException)
@@ -258,19 +221,6 @@ namespace Pims.Api.Services
             if (currentRowVersion != researchFileVersion)
             {
                 throw new DbUpdateConcurrencyException("You are working with an older version of this research file, please refresh the application and retry.");
-            }
-        }
-
-        private void ReprojectPropertyLocationsToWgs84(IEnumerable<PimsPropertyResearchFile> propertyResearchFiles)
-        {
-            foreach (var researchProperty in propertyResearchFiles)
-            {
-                if (researchProperty.Property.Location != null)
-                {
-                    var oldCoords = researchProperty.Property.Location.Coordinate;
-                    var newCoords = _coordinateService.TransformCoordinates(SpatialReference.BCALBERS, SpatialReference.WGS84, oldCoords);
-                    researchProperty.Property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.WGS84);
-                }
             }
         }
 

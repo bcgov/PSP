@@ -129,15 +129,19 @@ namespace Pims.Api.Test.Services
             var dispFile = EntityHelper.CreateDispositionFile();
 
             var repository = this._helper.GetService<Mock<IDispositionFilePropertyRepository>>();
-            repository.Setup(x => x.GetPropertiesByDispositionFileId(It.IsAny<long>())).Returns(new List<PimsDispositionFileProperty>() { new PimsDispositionFileProperty() { Property = new PimsProperty() { Location = new Point(1, 1) } } });
-            var coordinateService = this._helper.GetService<Mock<ICoordinateTransformService>>();
-            coordinateService.Setup(x => x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>())).Returns(new Coordinate(1, 1));
+            repository.Setup(x => x.GetPropertiesByDispositionFileId(It.IsAny<long>()))
+                .Returns(new List<PimsDispositionFileProperty>() { new PimsDispositionFileProperty() { Property = new PimsProperty() { Location = new Point(1, 1) } } });
+
+            var propertyService = this._helper.GetService<Mock<IPropertyService>>();
+            propertyService.Setup(x => x.TransformAllPropertiesToLatLong(It.IsAny<List<PimsDispositionFileProperty>>()))
+                .Returns<List<PimsDispositionFileProperty>>(x => x);
+
             // Act
             var properties = service.GetProperties(1);
 
             // Assert
             repository.Verify(x => x.GetPropertiesByDispositionFileId(It.IsAny<long>()), Times.Once);
-            coordinateService.Verify(x => x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>()), Times.Once);
+            propertyService.Verify(x => x.TransformAllPropertiesToLatLong(It.IsAny<List<PimsDispositionFileProperty>>()), Times.Once);
             properties.FirstOrDefault().Property.Location.Coordinates.Should().BeEquivalentTo(new Coordinate[] { new Coordinate(1, 1) });
         }
         #endregion
