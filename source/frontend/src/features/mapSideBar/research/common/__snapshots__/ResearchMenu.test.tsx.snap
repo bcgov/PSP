@@ -111,6 +111,7 @@ exports[`ResearchMenu component > renders as expected when provided no research 
           type="button"
         >
           <svg
+            class=""
             data-name="Layer 2"
             height="2.4rem"
             id="Layer_2"
@@ -118,15 +119,7 @@ exports[`ResearchMenu component > renders as expected when provided no research 
             width="2.4rem"
             xmlns="http://www.w3.org/2000/svg"
           >
-            <defs>
-              <style>
-                
-      .cls-1 {
-        fill: #036;
-      }
-    
-              </style>
-            </defs>
+            <defs />
             <g
               data-name="PDF preview"
               id="PDF_preview"
