@@ -57,6 +57,7 @@ namespace Pims.Api.Models.Concepts.Lease
                 .Map(dest => dest.TerminationReason, src => src.TerminationReason)
                 .Map(dest => dest.Project, src => src.Project)
                 .Map(dest => dest.Tenants, src => src.PimsLeaseTenants)
+                .Map(dest => dest.FileChecklistItems, src => src.PimsLeaseChecklistItems)
                 .Map(dest => dest.Terms, src => src.PimsLeaseTerms);
 
             config.NewConfig<LeaseModel, PimsLease>()
@@ -97,6 +98,7 @@ namespace Pims.Api.Models.Concepts.Lease
                 .Map(dest => dest.HasDigitalLicense, src => src.HasDigitalLicense)
                 .Map(dest => dest.CancellationReason, src => src.CancellationReason)
                 .Map(dest => dest.TerminationReason, src => src.TerminationReason)
+                .Map(dest => dest.PimsLeaseChecklistItems, src => src.FileChecklistItems)
                 .Map(dest => dest.ProjectId, src => src.Project != null ? src.Project.Id : (long?)null)
                 .IgnoreNullValues(true);
         }

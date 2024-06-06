@@ -121,8 +121,6 @@ namespace Pims.Tools.TsModelGenerator.Specifications
             var linkHeader = $"\n// LINK: @backend/{path}.cs\n";
             var interfaceBuilder = AddInterface(type).CustomHeader(linkHeader);
 
-            //System.Console.WriteLine(type.FullName);
-
             var properties = type.GetProperties();
             foreach (var property in properties)
             {
@@ -133,6 +131,7 @@ namespace Pims.Tools.TsModelGenerator.Specifications
                 memberBuilder = ProcessDateTime(memberBuilder, property);
                 memberBuilder = ProcessDateOnly(memberBuilder, property);
                 memberBuilder = ProcessFile(memberBuilder, property);
+                memberBuilder = ProcessNtsGeometry(memberBuilder, property);
             }
 
             return interfaceBuilder;
@@ -197,6 +196,17 @@ namespace Pims.Tools.TsModelGenerator.Specifications
             if (propertyInfo.PropertyType == typeof(IFormFile))
             {
                 builder.NotNull().Type("File");
+            }
+
+            return builder;
+        }
+
+        private InterfaceSpecBuilder ProcessNtsGeometry(InterfaceSpecBuilder builder, PropertyInfo propertyInfo)
+        {
+            // Convert NTS Geometry to GeoJson type for TS
+            if (propertyInfo.PropertyType == typeof(NetTopologySuite.Geometries.Geometry))
+            {
+                builder.Type("Geometry", "geojson");
             }
 
             return builder;

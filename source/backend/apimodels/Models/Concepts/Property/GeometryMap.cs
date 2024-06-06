@@ -18,6 +18,12 @@ namespace Pims.Api.Models.Concepts.Property
             config.NewConfig<Coordinate, CoordinateModel>()
                 .Map(dest => dest.X, src => src.X)
                 .Map(dest => dest.Y, src => src.Y);
+
+            // This mapping is needed to copy the NTS Geometry instance rather than deep copy the object.
+            // The NTS geometry is deserialized automatically from GeoJSON by the NetTopologySuite.IO.GeoJSON4STJ library
+            // see: https://github.com/MapsterMapper/Mapster/wiki/Custom-conversion-logic
+            config.NewConfig<Geometry, Geometry>()
+               .MapWith(geom => geom);
         }
     }
 }

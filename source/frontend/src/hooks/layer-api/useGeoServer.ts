@@ -9,7 +9,7 @@ import { useApiRequestWrapper } from '../util/useApiRequestWrapper';
 import { toCqlFilter } from './layerUtils';
 
 function buildUrl(inputUrl: string, cqlFilter: Record<string, any>) {
-  return `${inputUrl}${toCqlFilter(cqlFilter)}`;
+  return `${inputUrl}${toCqlFilter(cqlFilter, true)}`;
 }
 
 /**

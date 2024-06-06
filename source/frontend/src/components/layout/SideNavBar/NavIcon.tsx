@@ -34,7 +34,7 @@ export const NavIcon = ({ icon, text, showText, onClick, roles, claims }: INavIc
         <TooltipWrapper tooltipId={`nav-tooltip-${text}`} tooltip={text}>
           {icon}
         </TooltipWrapper>
-        <StyledLabel className={clsx({ show: showText })}>{text}</StyledLabel>
+        {showText && <StyledLabel className={clsx({ show: showText })}>{text}</StyledLabel>}
       </StyledLink>
     </StyledNav>
   ) : null;
@@ -58,7 +58,8 @@ const StyledLabel = styled.label`
   margin-bottom: 0;
   font-size: 1.2rem;
   color: white;
-  white-space: nowrap;
+  word-break: break-word;
+  white-space: break-spaces;
   transition: width 0.25s;
   width: 0;
   overflow: hidden;
