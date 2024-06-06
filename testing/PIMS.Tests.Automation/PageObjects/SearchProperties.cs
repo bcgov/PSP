@@ -39,7 +39,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By searchPropertyListContent1stLocation = By.XPath("//div[@data-testid='propertiesTable']/form/div/div[1]/div/div[4]");
         private By searchPropertyListContent1stLotSize = By.XPath("//div[@data-testid='propertiesTable']/form/div/div[1]/div/div[5]");
         private By searchPropertyListContent1stOwnership = By.XPath("//div[@data-testid='propertiesTable']/form/div/div[1]/div/div[6]");
-        private By searchPropertyListContent1stViewTabBttn = By.XPath("//div[@data-testid='propertiesTable']/form/div/div[1]/div/div[7]/div/button[@data-testid='view-prop-tab']");
+        private By searchPropertyListContent1stViewTabBttn = By.CssSelector("div[data-testid='propertiesTable'] div[class='tbody'] div[class='tr-wrapper']:first-child button[data-testid='view-prop-tab']");
         private By searchPropertyListContent1stViewWindowBttn = By.XPath("//div[@data-testid='propertiesTable']/form/div/div[1]/div/div[7]/div/button[@data-testid='view-prop-ext']");
         private By searchPropertyListPaginationMenu = By.CssSelector("div[class='Menu-root']");
         private By searchPropertyListPaginationMenuBttn = By.CssSelector("div[class='Menu-button']");
