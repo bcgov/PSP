@@ -250,5 +250,5 @@ export const FilterContentForm: React.FC<React.PropsWithChildren<IFilterContentF
 };
 
 const StyledSpan = styled.span`
-  color: ${props => props.theme.css.textColor};
+  color: ${props => props.theme.bcTokens.typographyColorSecondary};
 `;

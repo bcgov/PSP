@@ -17,8 +17,8 @@ exports[`UpdatePropertyForm component > renders as expected when provided no res
 }
 
 .c1 {
-  margin: 1.5rem;
-  padding: 1.5rem;
+  margin: 1.6rem;
+  padding: 1.6rem;
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;

@@ -17,7 +17,7 @@ export const ImprovementsContainer = styled.div`
 `;
 
 export const ImprovementsListHeader = styled(FormDescriptionLabel)`
-  color: ${props => props.theme.css.primaryColor};
+  color: ${props => props.theme.css.headerTextColor};
   font-size: 1.8rem;
   margin-bottom: 2rem;
 `;

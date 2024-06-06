@@ -3,8 +3,8 @@ import { FormikHelpers, FormikProps } from 'formik';
 import React from 'react';
 import { FaExclamationCircle } from 'react-icons/fa';
 import { toast } from 'react-toastify';
-import styled from 'styled-components';
 
+import { StyledFormWrapper } from '@/features/mapSideBar/shared/styles';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
 import { useModalContext } from '@/hooks/useModalContext';
@@ -107,14 +107,3 @@ export const UpdateAcquisitionContainer = React.forwardRef<
 });
 
 export default UpdateAcquisitionContainer;
-
-const StyledFormWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  text-align: left;
-  height: 100%;
-  overflow-y: auto;
-  padding-right: 1rem;
-  padding-bottom: 1rem;
-`;

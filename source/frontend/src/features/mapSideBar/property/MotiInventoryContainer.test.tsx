@@ -71,7 +71,7 @@ describe('MotiInventoryContainer component', () => {
     mockAxios
       .onGet(
         new RegExp(
-          'https://openmaps.gov.bc.ca/geo/pub/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW/ows*',
+          'https://openmaps.gov.bc.ca/geo/pub/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_FA_SVW/ows*',
         ),
       )
       .reply(200, {

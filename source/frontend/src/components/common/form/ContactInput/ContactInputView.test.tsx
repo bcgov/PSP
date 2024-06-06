@@ -22,7 +22,8 @@ describe('ContactInputView component', () => {
       <Formik
         onSubmit={noop}
         initialValues={
-          props.initialValues ?? ({ test: { firstName: 'blah', surname: 'blah' } } as any)
+          props.initialValues ??
+          ({ test: { id: '234', firstName: 'blah', surname: 'blah' } } as any)
         }
       >
         <ContactInputView {...{ ...props }} />
@@ -102,25 +103,25 @@ describe('ContactInputView component', () => {
   });
 
   it('calls onClear when cancel clicked', async () => {
-    const { getByTitle } = setup({
+    const { queryByTitle } = setup({
       contactManagerProps: { display: false, setSelectedRows: setSelectedRows, selectedRows: [] },
       field: 'test',
       setShowContactManager: setShowContactManager,
       onClear: clear,
     });
-    const icon = getByTitle('remove');
+    const icon = queryByTitle('remove');
     await act(async () => userEvent.click(icon));
     expect(clear).toHaveBeenCalled();
   });
 
-  it('remove button disabled when no contact selected', async () => {
-    const { getByTitle } = setup({
+  it('remove button not present when no contact selected', async () => {
+    const { queryByTitle } = setup({
       contactManagerProps: { display: false, setSelectedRows: setSelectedRows, selectedRows: [] },
       field: 'invalid',
       setShowContactManager: setShowContactManager,
       onClear: clear,
     });
-    const icon = getByTitle('remove');
-    expect(icon).toBeDisabled();
+    const icon = queryByTitle('remove');
+    expect(icon).not.toBeInTheDocument();
   });
 });

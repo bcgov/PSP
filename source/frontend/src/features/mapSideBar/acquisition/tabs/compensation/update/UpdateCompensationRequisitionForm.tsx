@@ -21,6 +21,7 @@ import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { PayeeOption } from '@/features/mapSideBar/acquisition/models/PayeeOptionModel';
 import SidebarFooter from '@/features/mapSideBar/shared/SidebarFooter';
+import { StyledFormWrapper } from '@/features/mapSideBar/shared/styles';
 import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
 import { IAutocompletePrediction } from '@/interfaces/IAutocomplete';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
@@ -392,18 +393,8 @@ const generateFiscalYearOptions = () => {
   return options;
 };
 
-const StyledFormWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  text-align: left;
-  height: 100%;
-  overflow-y: auto;
-  padding-bottom: 1rem;
-`;
-
 const StyledContent = styled.div`
-  background-color: ${props => props.theme.css.filterBackgroundColor};
+  background-color: ${props => props.theme.css.highlightBackgroundColor};
 `;
 
 const StyledFooter = styled.div`

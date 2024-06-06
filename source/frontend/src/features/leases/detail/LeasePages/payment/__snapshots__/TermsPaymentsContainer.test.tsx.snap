@@ -340,8 +340,8 @@ exports[`TermsPaymentsContainer component > renders as expected 1`] = `
 }
 
 .c0 {
-  margin: 1.5rem;
-  padding: 1.5rem;
+  margin: 1.6rem;
+  padding: 1.6rem;
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
@@ -665,7 +665,7 @@ exports[`TermsPaymentsContainer component > renders as expected 1`] = `
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
-                    d="M10 17l5-5-5-5v10z"
+                    d="m10 17 5-5-5-5v10z"
                   />
                   <path
                     d="M0 24V0h24v24H0z"
@@ -792,7 +792,7 @@ exports[`TermsPaymentsContainer component > renders as expected 1`] = `
                           fill="none"
                         />
                         <path
-                          d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a.996.996 0 000-1.41l-2.34-2.34a.996.996 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
+                          d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a.996.996 0 0 0 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
                         />
                       </svg>
                     </div>
@@ -996,8 +996,8 @@ exports[`TermsPaymentsContainer component > renders with data as expected 1`] = 
 }
 
 .c0 {
-  margin: 1.5rem;
-  padding: 1.5rem;
+  margin: 1.6rem;
+  padding: 1.6rem;
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
@@ -1321,7 +1321,7 @@ exports[`TermsPaymentsContainer component > renders with data as expected 1`] = 
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
-                    d="M10 17l5-5-5-5v10z"
+                    d="m10 17 5-5-5-5v10z"
                   />
                   <path
                     d="M0 24V0h24v24H0z"
@@ -1448,7 +1448,7 @@ exports[`TermsPaymentsContainer component > renders with data as expected 1`] = 
                           fill="none"
                         />
                         <path
-                          d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a.996.996 0 000-1.41l-2.34-2.34a.996.996 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
+                          d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a.996.996 0 0 0 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
                         />
                       </svg>
                     </div>

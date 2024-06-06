@@ -148,14 +148,17 @@ const defaultStyle = {
   searchBox: {
     background: 'white',
     border: '1px solid #606060',
+    paddingTop: '0.8rem',
+    paddingBottom: '0.8rem',
+    paddingLeft: '1.2rem',
   },
 };
 
 const CloseIcon = styled(FaWindowClose)`
   margin-left: 0.5rem;
   cursor: pointer;
-  fill: ${props => props.theme.css.textColor};
+  fill: ${props => props.theme.bcTokens.typographyColorSecondary};
   &:hover {
-    fill: ${props => props.theme.css.dangerColor};
+    fill: ${props => props.theme.bcTokens.surfaceColorPrimaryDangerButtonDefault};
   }
 `;

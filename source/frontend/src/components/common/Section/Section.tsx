@@ -42,7 +42,7 @@ export const Section: React.FC<
           <Row className="no-gutters">
             <Col>{header}</Col>
             {isCollapsable && (
-              <Col xs="1">
+              <Col xs="auto" className="pl-8">
                 {isCollapsed && (
                   <ArrowDropDownIcon
                     title={`expand-${title ?? 'section'}`}
@@ -77,14 +77,14 @@ export const Section: React.FC<
 export const StyledSectionHeader = styled.h2<{ isStyledHeader?: boolean }>`
   font-size: ${props => (props.isStyledHeader === true ? '1.0em' : '')};
   font-weight: ${props => (props.isStyledHeader === true ? '' : 'bold')};
-  color: ${props => props.theme.css.primaryColor};
-  border-bottom: 0.2rem ${props => props.theme.css.primaryColor} solid;
+  color: ${props => props.theme.css.headerTextColor};
+  border-bottom: 0.2rem ${props => props.theme.css.headerBorderColor} solid;
   margin-bottom: 2rem;
 `;
 
 const StyledFormSection = styled.div<{ noPadding?: boolean }>`
-  margin: ${props => (props.noPadding === true ? '' : '1.5rem')};
-  padding: ${props => (props.noPadding === true ? '' : '1.5rem')};
+  margin: ${props => (props.noPadding === true ? '' : '1.6rem')};
+  padding: ${props => (props.noPadding === true ? '' : '1.6rem')};
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;

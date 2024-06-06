@@ -4,6 +4,8 @@ import React from 'react';
 import { ILeaseFilter } from '@/features/leases';
 import { Api_LastUpdatedBy } from '@/models/api/File';
 import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
+import { ApiGen_Concepts_FileChecklistItem } from '@/models/api/generated/ApiGen_Concepts_FileChecklistItem';
+import { ApiGen_Concepts_FileWithChecklist } from '@/models/api/generated/ApiGen_Concepts_FileWithChecklist';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 
@@ -59,6 +61,10 @@ export const useApiLeases = () => {
             Accept: 'application/vnd.ms-excel',
           },
         }),
+      getLeaseChecklist: (leaseId: number) =>
+        api.get<ApiGen_Concepts_FileChecklistItem[]>(`/leases/${leaseId}/checklist`),
+      putLeaseChecklist: (lease: ApiGen_Concepts_FileWithChecklist) =>
+        api.put<ApiGen_Concepts_Lease>(`/leases/${lease?.id}/checklist`, lease.fileChecklistItems),
     }),
     [api],
   );

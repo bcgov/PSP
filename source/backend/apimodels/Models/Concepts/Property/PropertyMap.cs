@@ -66,6 +66,8 @@ namespace Pims.Api.Models.Concepts.Property
                 .Map(dest => dest.SurplusDeclarationDate, src => src.SurplusDeclarationDate.ToNullableDateOnly())
                 .Map(dest => dest.SurplusDeclarationType, src => src.SurplusDeclarationTypeCodeNavigation)
 
+                .Map(dest => dest.HistoricalFileNumbers, src => src.PimsHistoricalFileNumbers)
+
                 .Inherits<Entity.IBaseEntity, BaseConcurrentModel>();
 
             config.NewConfig<PropertyModel, Entity.PimsProperty>()

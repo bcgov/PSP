@@ -215,6 +215,16 @@ exports[`Disposition List View > matches snapshot 1`] = `
   margin-top: 0.3rem;
 }
 
+.c16 {
+  width: 7.5rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.c16:disabled {
+  background: white;
+}
+
 .c8 button.close {
   font-size: 2.4rem;
 }
@@ -1164,7 +1174,7 @@ exports[`Disposition List View > matches snapshot 1`] = `
               class="Menu-button"
             >
               <div
-                style="display: flex;"
+                class="d-flex"
               >
                 <span
                   class="c15"
@@ -1172,9 +1182,8 @@ exports[`Disposition List View > matches snapshot 1`] = `
                   Show
                 </span>
                 <input
-                  class="form-control form-control-sm"
+                  class="c16 form-control form-control-sm"
                   disabled=""
-                  style="width: 50px; margin-left: 10px; margin-right: 10px; background-color: white;"
                   type="number"
                   value="10"
                 />

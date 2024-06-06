@@ -2,7 +2,6 @@ import clsx from 'classnames';
 import { Formik, FormikProps } from 'formik';
 import React, { ChangeEvent, useMemo, useRef, useState } from 'react';
 import ReactVisibilitySensor from 'react-visibility-sensor';
-import styled from 'styled-components';
 
 import { CancelConfirmationModal } from '@/components/common/CancelConfirmationModal';
 import { FastDatePicker, Input, Select, SelectOption } from '@/components/common/form';
@@ -17,6 +16,7 @@ import * as Styled from '@/components/common/styles';
 import { RestrictContactType } from '@/components/contact/ContactManagerView/ContactFilterComponent/ContactFilterComponent';
 import { PROP_MGMT_ACTIVITY_STATUS_TYPES, PROP_MGMT_ACTIVITY_TYPES } from '@/constants/API';
 import SaveCancelButtons from '@/features/leases/SaveCancelButtons';
+import { StyledFormWrapper } from '@/features/mapSideBar/shared/styles';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { useModalManagement } from '@/hooks/useModalManagement';
 import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
@@ -215,12 +215,3 @@ export const PropertyActivityEditForm: React.FunctionComponent<
     </ReactVisibilitySensor>
   );
 };
-
-const StyledFormWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  text-align: left;
-  height: 100%;
-  overflow-y: auto;
-`;

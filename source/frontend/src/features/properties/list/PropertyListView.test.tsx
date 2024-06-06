@@ -26,11 +26,16 @@ import { MultiSelectOption } from '@/features/acquisition/list/interfaces';
 import { IGeocoderPidsResponse } from '@/hooks/pims-api/interfaces/IGeocoder';
 import { IPropertyFilter } from '../filter/IPropertyFilter';
 import { ApiGen_Concepts_PropertyView } from '@/models/api/generated/ApiGen_Concepts_PropertyView';
+import { useApiHistoricalNumbers } from '@/hooks/pims-api/useApiHistoricalNumbers';
+import { ApiGen_Concepts_HistoricalFileNumber } from '@/models/api/generated/ApiGen_Concepts_HistoricalFileNumber';
+import { ApiGen_CodeTypes_HistoricalFileNumberTypes } from '@/models/api/generated/ApiGen_CodeTypes_HistoricalFileNumberTypes';
+import { useHistoricalNumberRepository } from '@/hooks/repositories/useHistoricalNumberRepository';
 
 // Set all module functions to vi.fn
 
 vi.mock('@/hooks/pims-api/useApiGeocoder');
 vi.mock('@/hooks/pims-api/useApiProperties');
+vi.mock('@/hooks/pims-api/useApiHistoricalNumbers');
 
 const mockApiGetPropertiesPagedApi = vi.fn();
 vi.mocked(useApiProperties).mockReturnValue({
@@ -45,6 +50,26 @@ vi.mocked(useApiGeocoder).mockReturnValue({
     siteId: string,
   ) => Promise<AxiosResponse<IGeocoderPidsResponse, any>>,
 } as unknown as ReturnType<typeof useApiGeocoder>);
+
+const mockGetPropertyHistoricalNumbersExecute = vi.fn().mockResolvedValue([]);
+
+vi.mock('@/hooks/repositories/useHistoricalNumberRepository');
+vi.mocked(useHistoricalNumberRepository).mockReturnValue({
+  getPropertyHistoricalNumbers: {
+    error: null,
+    response: [],
+    execute: mockGetPropertyHistoricalNumbersExecute,
+    loading: false,
+    status: 200,
+  },
+  updatePropertyHistoricalNumbers: {
+    error: null,
+    response: [],
+    execute: vi.fn().mockResolvedValue([]),
+    loading: false,
+    status: 200,
+  },
+});
 
 const mockAxios = new MockAdapter(axios);
 const history = createMemoryHistory();
@@ -85,6 +110,32 @@ const setupMockApi = (properties?: ApiGen_Concepts_PropertyView[]) => {
       items: mockProperties,
     },
   } as any);
+
+  for (let i = 0; i < mockProperties.length; i++) {
+    mockGetPropertyHistoricalNumbersExecute.mockResolvedValueOnce([
+      {
+        id: mockProperties[i].id * 100,
+        propertyId: mockProperties[i].id,
+        property: null,
+        historicalFileNumberTypeCode: {
+          id: ApiGen_CodeTypes_HistoricalFileNumberTypes.LISNO.toString(),
+          description: 'LIS',
+          isDisabled: false,
+          displayOrder: 1,
+        },
+        historicalFileNumber: '301-9999',
+        otherHistFileNumberTypeCode: null,
+        isDisabled: false,
+        appCreateTimestamp: '2024-05-14T20:04:00.82',
+        appLastUpdateTimestamp: '2024-05-14T20:04:00.82',
+        appLastUpdateUserid: 'dbo',
+        appCreateUserid: 'dbo',
+        appLastUpdateUserGuid: null,
+        appCreateUserGuid: null,
+        rowVersion: 1,
+      },
+    ]);
+  }
 };
 
 describe('Property list view', () => {
@@ -94,7 +145,9 @@ describe('Property list view', () => {
     mockAxios.onAny().reply(200, {});
 
     mockApiGetPropertiesPagedApi.mockClear();
+    mockGetPropertyHistoricalNumbersExecute.mockClear();
   });
+
   afterEach(() => {
     history.push({ search: '' });
     cleanup();
@@ -173,13 +226,10 @@ describe('Property list view', () => {
 
   it('allows property ownership to be selected', async () => {
     setupMockApi([mockApiPropertyView()]);
+
     const {
       component: { container },
-      findSpinner,
     } = setup({});
-
-    // wait for table to finish loading
-    await waitFor(async () => expect(findSpinner()).not.toBeInTheDocument());
 
     const optionSelected = ownershipFilterOptions.find(
       o => o.id === 'isDisposed',
@@ -193,19 +243,18 @@ describe('Property list view', () => {
     // select an option from the drop-down
     await focusOptionMultiselect(container, optionSelected, ownershipFilterOptions);
 
-    await waitFor(() => {
-      expect(mockApiGetPropertiesPagedApi).toHaveBeenCalledWith({
-        address: '',
-        latitude: '',
-        longitude: '',
-        ownership: 'isCoreInventory,isPropertyOfInterest,isOtherInterest,isDisposed',
-        page: 1,
-        pinOrPid: '',
-        planNumber: '',
-        quantity: 10,
-        searchBy: 'pinOrPid',
-        sort: undefined,
-      });
+    expect(mockApiGetPropertiesPagedApi).toHaveBeenCalledWith({
+      address: '',
+      latitude: '',
+      longitude: '',
+      ownership: 'isCoreInventory,isPropertyOfInterest,isOtherInterest,isDisposed',
+      page: 1,
+      pinOrPid: '',
+      planNumber: '',
+      historical: '',
+      quantity: 10,
+      searchBy: 'pinOrPid',
+      sort: undefined,
     });
   });
 
@@ -220,5 +269,16 @@ describe('Property list view', () => {
     await waitFor(async () => expect(findSpinner()).not.toBeInTheDocument());
 
     expect(getByTestId('tooltip-icon-retired-tooltip')).toBeVisible();
+  });
+
+  it('displays the historical file number for LIS', async () => {
+    setupMockApi([mockApiPropertyView()]);
+
+    const {
+      component: { findByText },
+    } = setup();
+
+    const results = await findByText(/301-9999/i);
+    expect(results).toBeInTheDocument();
   });
 });

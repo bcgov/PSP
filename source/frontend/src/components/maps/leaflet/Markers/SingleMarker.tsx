@@ -3,7 +3,7 @@ import { Marker } from 'react-leaflet';
 import { PointFeature } from 'supercluster';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
-import { PMBC_Feature_Properties } from '@/models/layers/parcelMapBC';
+import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
 import {
   PIMS_Property_Boundary_View,
   PIMS_Property_Location_View,
@@ -12,7 +12,7 @@ import {
 import {
   getMarkerIcon,
   getNotOwnerMarkerIcon,
-  isParcelMap,
+  isFaParcelMap,
   isPimsBoundary,
   isPimsFeature,
   isPimsLocation,
@@ -20,7 +20,9 @@ import {
 
 interface SinglePropertyMarkerProps {
   pointFeature: PointFeature<
-    PIMS_Property_Location_View | PIMS_Property_Boundary_View | PMBC_Feature_Properties
+    | PIMS_Property_Location_View
+    | PIMS_Property_Boundary_View
+    | PMBC_FullyAttributed_Feature_Properties
   >;
   markerPosition: LatLngLiteral;
   isSelected: boolean;
@@ -35,7 +37,9 @@ const SinglePropertyMarker: React.FC<React.PropsWithChildren<SinglePropertyMarke
 
   const getIcon = (
     feature: PointFeature<
-      PIMS_Property_Location_View | PIMS_Property_Boundary_View | PMBC_Feature_Properties
+      | PIMS_Property_Location_View
+      | PIMS_Property_Boundary_View
+      | PMBC_FullyAttributed_Feature_Properties
     >,
     isSelected: boolean,
     showDisposed: boolean,
@@ -60,7 +64,7 @@ const SinglePropertyMarker: React.FC<React.PropsWithChildren<SinglePropertyMarke
         latlng: latlng,
         pimsLocationFeature: pointFeature.properties,
         pimsBoundaryFeature: null,
-        pmbcFeature: null,
+        fullyAttributedFeature: null,
       });
     } else if (isPimsBoundary(pointFeature)) {
       mapMachine.mapMarkerClick({
@@ -68,15 +72,15 @@ const SinglePropertyMarker: React.FC<React.PropsWithChildren<SinglePropertyMarke
         latlng: latlng,
         pimsLocationFeature: null,
         pimsBoundaryFeature: pointFeature.properties,
-        pmbcFeature: null,
+        fullyAttributedFeature: null,
       });
-    } else if (isParcelMap(pointFeature)) {
+    } else if (isFaParcelMap(pointFeature)) {
       mapMachine.mapMarkerClick({
         clusterId: clusterId,
         latlng: latlng,
         pimsLocationFeature: null,
         pimsBoundaryFeature: null,
-        pmbcFeature: pointFeature.properties,
+        fullyAttributedFeature: pointFeature.properties,
       });
     }
   };

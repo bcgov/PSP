@@ -2,7 +2,6 @@ import { FormikProps } from 'formik/dist/types';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import styled from 'styled-components';
 
 import RealEstateAgent from '@/assets/images/real-estate-agent.svg?react';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
@@ -17,6 +16,7 @@ import { featuresetToMapProperty } from '@/utils/mapPropertyUtils';
 
 import { PropertyForm } from '../../shared/models';
 import SidebarFooter from '../../shared/SidebarFooter';
+import { StyledFormWrapper } from '../../shared/styles';
 import { useAddAcquisitionFormManagement } from '../hooks/useAddAcquisitionFormManagement';
 import { AddAcquisitionForm } from './AddAcquisitionForm';
 import { AcquisitionForm } from './models';
@@ -228,14 +228,3 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
 };
 
 export default AddAcquisitionContainer;
-
-const StyledFormWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  text-align: left;
-  height: 100%;
-  overflow-y: auto;
-  padding-right: 1rem;
-  padding-bottom: 1rem;
-`;

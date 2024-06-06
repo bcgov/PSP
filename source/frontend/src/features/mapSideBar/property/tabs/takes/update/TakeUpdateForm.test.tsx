@@ -87,11 +87,11 @@ describe('TakeUpdateForm component', () => {
     const noButton = getByTestId('radio-isnewhighwaydedication-no');
     await act(async () => userEvent.click(noButton));
 
-    expect(queryByDisplayValue('4046.86')).not.toBeNull();
+    expect(queryByDisplayValue('4046.8564')).not.toBeNull();
     const confirmButton = await screen.findByText('Confirm');
     await act(async () => userEvent.click(confirmButton));
 
-    expect(queryByDisplayValue('4046.86')).toBeNull();
+    expect(queryByDisplayValue('4046.8564')).toBeNull();
   });
 
   it('resets isNewInterestInSrw values if radio button toggled from yes to no', async () => {
@@ -99,12 +99,12 @@ describe('TakeUpdateForm component', () => {
     const noButton = getByTestId('radio-isnewinterestinsrw-no');
     await act(async () => userEvent.click(noButton));
 
-    expect(queryByDisplayValue('8093.71')).not.toBeNull();
+    expect(queryByDisplayValue('8093.713')).not.toBeNull();
     expect(queryByDisplayValue('Nov 20, 2022')).not.toBeNull();
     const confirmButton = await screen.findByText('Confirm');
     await act(async () => userEvent.click(confirmButton));
 
-    expect(queryByDisplayValue('8093.71')).toBeNull();
+    expect(queryByDisplayValue('8093.713')).toBeNull();
     expect(queryByDisplayValue('Nov 20, 2022')).toBeNull();
   });
 
@@ -113,11 +113,11 @@ describe('TakeUpdateForm component', () => {
     const noButton = getByTestId('radio-isnewlandact-no');
     await act(async () => userEvent.click(noButton));
 
-    expect(queryByDisplayValue('12140.57')).not.toBeNull();
+    expect(queryByDisplayValue('12140.569')).not.toBeNull();
     const confirmButton = await screen.findByText('Confirm');
     await act(async () => userEvent.click(confirmButton));
 
-    expect(queryByDisplayValue('12140.57')).toBeNull();
+    expect(queryByDisplayValue('12140.569')).toBeNull();
   });
 
   it('hides landActEndDt value if radio button toggled from yes to no', async () => {
@@ -137,11 +137,11 @@ describe('TakeUpdateForm component', () => {
     const noButton = getByTestId('radio-isnewlicensetoconstruct-no');
     await act(async () => userEvent.click(noButton));
 
-    expect(queryByDisplayValue('16187.43')).not.toBeNull();
+    expect(queryByDisplayValue('16187.426')).not.toBeNull();
     const confirmButton = await screen.findByText('Confirm');
     await act(async () => userEvent.click(confirmButton));
 
-    expect(queryByDisplayValue('16187.43')).toBeNull();
+    expect(queryByDisplayValue('16187.426')).toBeNull();
   });
 
   it('resets isThereSurplus values if radio button toggled from yes to no', async () => {
@@ -149,11 +149,11 @@ describe('TakeUpdateForm component', () => {
     const noButton = getByTestId('radio-istheresurplus-no');
     await act(async () => userEvent.click(noButton));
 
-    expect(queryByDisplayValue('20234.28')).not.toBeNull();
+    expect(queryByDisplayValue('20234.281')).not.toBeNull();
     const confirmButton = await screen.findByText('Confirm');
     await act(async () => userEvent.click(confirmButton));
 
-    expect(queryByDisplayValue('20234.28')).toBeNull();
+    expect(queryByDisplayValue('20234.281')).toBeNull();
   });
 
   it('hides the delete button when the take has been completed', () => {
@@ -179,10 +179,10 @@ describe('TakeUpdateForm component', () => {
     const noButton = getByTestId('radio-isleasepayable-no');
     await act(async () => userEvent.click(noButton));
 
-    expect(queryByDisplayValue('20231.28')).not.toBeNull();
+    expect(queryByDisplayValue('20231.281')).not.toBeNull();
     const confirmButton = await screen.findByText('Confirm');
     await act(async () => userEvent.click(confirmButton));
 
-    expect(queryByDisplayValue('20231.28')).toBeNull();
+    expect(queryByDisplayValue('20231.281')).toBeNull();
   });
 });

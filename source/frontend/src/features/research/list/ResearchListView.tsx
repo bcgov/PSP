@@ -98,7 +98,7 @@ export const ResearchListView: React.FunctionComponent<React.PropsWithChildren<u
 
 const StyledAddButton = styled(Button)`
   &.btn.btn-primary {
-    background-color: ${props => props.theme.css.completedColor};
+    background-color: ${props => props.theme.bcTokens.iconsColorSuccess};
   }
 `;
 

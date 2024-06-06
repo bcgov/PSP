@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { DispositionSaleFormModel } from '@/features/mapSideBar/disposition/models/DispositionSaleFormModel';
 import SidebarFooter from '@/features/mapSideBar/shared/SidebarFooter';
+import { StyledFormWrapper } from '@/features/mapSideBar/shared/styles';
 import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
 import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_Concepts_DispositionFileSale } from '@/models/api/generated/ApiGen_Concepts_DispositionFileSale';
@@ -102,18 +103,8 @@ const UpdateDispositionSaleView: React.FC<IUpdateDispositionSaleViewProps> = ({
 
 export default UpdateDispositionSaleView;
 
-const StyledFormWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  text-align: left;
-  height: 100%;
-  overflow-y: auto;
-  padding-bottom: 1rem;
-`;
-
 const StyledContent = styled.div`
-  background-color: ${props => props.theme.css.filterBackgroundColor};
+  background-color: ${props => props.theme.css.highlightBackgroundColor};
 `;
 
 const StyledFooter = styled.div`

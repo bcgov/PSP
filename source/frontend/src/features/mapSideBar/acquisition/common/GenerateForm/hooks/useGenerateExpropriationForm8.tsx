@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-import { showFile } from '@/features/documents/DownloadDocumentButton';
+import { createFileDownload } from '@/features/documents/DownloadDocumentButton';
 import { useDocumentGenerationRepository } from '@/features/documents/hooks/useDocumentGenerationRepository';
 import { FormTemplateTypes } from '@/features/mapSideBar/shared/content/models';
 import { useForm8Repository } from '@/hooks/repositories/useForm8Repository';
@@ -33,7 +33,7 @@ export const useGenerateExpropriationForm8 = () => {
         const fileName = `Form 8-${acquisitionFileNumber}-${moment().format(
           'yyyyMMDD_hhmmss',
         )}.${fileExt}`;
-        showFile(generatedFile?.payload, fileName);
+        createFileDownload(generatedFile?.payload, fileName);
       } else {
         throw Error('Failed to generate file');
       }

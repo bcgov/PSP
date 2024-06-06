@@ -13,7 +13,6 @@ using Pims.Core.Helpers;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Helpers.Extensions;
-using Pims.Dal.Models;
 using Pims.Dal.Security;
 
 namespace Pims.Dal.Repositories
@@ -65,7 +64,7 @@ namespace Pims.Dal.Repositories
             }
 
             var skip = (filter.Page - 1) * filter.Quantity;
-            var query = this.Context.GeneratePropertyQuery(this.User, filter);
+            var query = Context.GeneratePropertyQuery(this.User, filter);
             var items = query
                 .Skip(skip)
                 .Take(filter.Quantity)

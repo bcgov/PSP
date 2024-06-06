@@ -50,11 +50,11 @@ const StyledTermInformationBox = styled.div`
   border-radius: 0.4rem;
   &.inverted {
     background: white;
-    color: ${props => props.theme.css.primaryColor};
+    color: ${props => props.theme.css.headerTextColor};
     border: 0.1rem solid;
     h4 {
       font-weight: 700;
-      color: ${props => props.theme.css.primaryColor};
+      color: ${props => props.theme.css.headerTextColor};
     }
   }
 `;

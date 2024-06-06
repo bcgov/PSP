@@ -6,7 +6,7 @@ exports[`LeaseHeader component > renders as expected when no data is provided 1`
     class="Toastify"
   />
   <div />
-  .c3.btn {
+  .c2.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -37,49 +37,49 @@ exports[`LeaseHeader component > renders as expected when no data is provided 1`
   height: 3.8rem;
 }
 
-.c3.btn:hover {
+.c2.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c3.btn:focus {
+.c2.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c3.btn.btn-primary {
+.c2.btn.btn-primary {
   border: none;
 }
 
-.c3.btn.btn-secondary {
+.c2.btn.btn-secondary {
   background: none;
 }
 
-.c3.btn.btn-info {
+.c2.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c3.btn.btn-info:hover,
-.c3.btn.btn-info:active,
-.c3.btn.btn-info:focus {
+.c2.btn.btn-info:hover,
+.c2.btn.btn-info:active,
+.c2.btn.btn-info:focus {
   background: none;
 }
 
-.c3.btn.btn-light {
+.c2.btn.btn-light {
   border: none;
 }
 
-.c3.btn.btn-dark {
+.c2.btn.btn-dark {
   border: none;
 }
 
-.c3.btn.btn-link {
+.c2.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -100,9 +100,9 @@ exports[`LeaseHeader component > renders as expected when no data is provided 1`
   padding: 0;
 }
 
-.c3.btn.btn-link:hover,
-.c3.btn.btn-link:active,
-.c3.btn.btn-link:focus {
+.c2.btn.btn-link:hover,
+.c2.btn.btn-link:active,
+.c2.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -111,14 +111,14 @@ exports[`LeaseHeader component > renders as expected when no data is provided 1`
   outline: none;
 }
 
-.c3.btn.btn-link:disabled,
-.c3.btn.btn-link.disabled {
+.c2.btn.btn-link:disabled,
+.c2.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c3.btn:disabled,
-.c3.btn:disabled:hover {
+.c2.btn:disabled,
+.c2.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -129,26 +129,32 @@ exports[`LeaseHeader component > renders as expected when no data is provided 1`
   opacity: 0.65;
 }
 
-.c3.Button .Button__icon {
+.c2.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c3.Button--icon-only:focus {
+.c2.Button--icon-only:focus {
   outline: none;
 }
 
-.c3.Button--icon-only .Button__icon {
+.c2.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c1 {
+.c4 {
+  font-size: 0.87em;
+  line-height: 1.9;
+}
+
+.c3 {
+  height: 100%;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  -webkit-flex-wrap: nowrap;
-  -ms-flex-wrap: nowrap;
-  flex-wrap: nowrap;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
 }
 
 .c0 {
@@ -159,17 +165,8 @@ exports[`LeaseHeader component > renders as expected when no data is provided 1`
   border-bottom-width: 0.1rem;
 }
 
-.c4 {
-  font-size: 0.87em;
-  line-height: 1.9;
-}
-
-.c2 {
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  width: 100%;
+.c1 {
+  font-weight: bold;
 }
 
 <div
@@ -179,241 +176,197 @@ exports[`LeaseHeader component > renders as expected when no data is provided 1`
       class="no-gutters row"
     >
       <div
-        class="col-7"
+        class="col-8"
       >
         <div
-          class="no-gutters row"
+          class="row"
         >
           <div
-            class="col"
+            class="pr-0 text-left col-3"
           >
-            <div
-              class="row"
-            >
-              <div
-                class="pr-0 text-left col-3"
-              >
-                <label>
-                  Lease/License #
-                </label>
-              </div>
-              <div
-                class="pl-1 text-left col-9"
-              >
-                <strong>
-                  <div
-                    class="c1 c2"
-                  >
-                    <span>
-                      L-0000001
-                    </span>
-                    <span
-                      class=""
-                    />
-                  </div>
-                </strong>
-              </div>
-            </div>
+            <strong>
+              <label>
+                Lease/License #
+              </label>
+            </strong>
           </div>
-        </div>
-        <div
-          class="no-gutters row"
-        >
           <div
-            class="col"
-          >
-            <div
-              class="row"
-            >
-              <div
-                class="pr-0 text-left col-3"
-              >
-                <label>
-                  Property:
-                </label>
-              </div>
-              <div
-                class="pl-1 text-left col-9"
-              >
-                <strong>
-                  <div />
-                </strong>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div
-          class="no-gutters row"
-        >
-          <div
-            class="col"
-          >
-            <div
-              class="row"
-            >
-              <div
-                class="pr-0 text-left col-3"
-              >
-                <label>
-                  Tenant:
-                </label>
-              </div>
-              <div
-                class="pl-1 text-left col-9"
-              >
-                <strong>
-                  <div>
-                    <span>
-                      French Mouse Property Management
-                      <br />
-                    </span>
-                    <button
-                      class="c3 Button btn btn-link"
-                      data-testid="expand"
-                      type="button"
-                    >
-                      <div
-                        class="Button__value"
-                      >
-                        [+2 more...]
-                      </div>
-                    </button>
-                  </div>
-                </strong>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div
-        class="col-5"
-      >
-        <div
-          class="no-gutters row"
-        >
-          <div
-            class="text-right col"
+            class="pl-1 text-left col-9"
           >
             <span
-              class="c4"
+              class="pr-4"
             >
-              Created: 
-              <strong>
-                Dec 31, 2021
-              </strong>
-               by 
-              <span
-                class="tooltip-icon"
-                data-testid="tooltip-icon-userNameTooltip"
-                id="userNameTooltip"
-              >
-                <strong>
-                  USER_B
-                </strong>
-              </span>
+              L-0000001
             </span>
+            <span
+              class="c1"
+            />
           </div>
         </div>
         <div
-          class="no-gutters row"
+          class="row"
         >
           <div
-            class="text-right col"
+            class="pr-0 text-left col-3"
+          >
+            <strong>
+              <label>
+                Property:
+              </label>
+            </strong>
+          </div>
+          <div
+            class="pl-1 text-left col-9"
+          >
+            <div />
+          </div>
+        </div>
+        <div
+          class="row"
+        >
+          <div
+            class="pr-0 text-left col-3"
+          >
+            <strong>
+              <label>
+                Tenant:
+              </label>
+            </strong>
+          </div>
+          <div
+            class="pl-1 text-left col-9"
+          >
+            <div>
+              <span>
+                French Mouse Property Management
+                <br />
+              </span>
+              <button
+                class="c2 Button btn btn-link"
+                data-testid="expand"
+                type="button"
+              >
+                <div
+                  class="Button__value"
+                >
+                  [+2 more...]
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div
+          class="row"
+        >
+          <div
+            class="pr-0 text-left col-3"
+          >
+            <strong>
+              <label>
+                Lease Start:
+              </label>
+            </strong>
+          </div>
+          <div
+            class="pl-1 text-left col-3"
+          />
+          <div
+            class="pr-0 text-left col-auto"
+          >
+            <strong>
+              <label>
+                Expiry:
+              </label>
+            </strong>
+          </div>
+          <div
+            class="pl-1 text-left col-auto"
           >
             <span
-              class="c4"
-            >
-              Last updated: 
-              <strong />
-               by 
-              <span
-                class="tooltip-icon"
-                data-testid="tooltip-icon-userNameTooltip"
-                id="userNameTooltip"
-              >
-                <strong>
-                  USER
-                </strong>
-              </span>
-            </span>
+              class="pl-2"
+            />
           </div>
+          <div
+            class="pl-1 text-left col-auto"
+          />
         </div>
         <div
-          class="no-gutters row"
+          class="row"
         >
           <div
-            class="col"
+            class="pr-0 text-left col-3"
           >
-            <div
-              class="justify-content-end row"
-            >
-              <div
-                class="pr-0 text-left col-auto"
-              >
-                <label>
-                  Status:
-                </label>
-              </div>
-              <div
-                class="pl-1 text-left col-auto"
-              >
-                <strong />
-              </div>
-            </div>
+            <strong>
+              <label>
+                Historical File #:
+              </label>
+            </strong>
+          </div>
+          <div
+            class="pl-1 text-left col-9"
+          >
+            <div />
           </div>
         </div>
       </div>
-    </div>
-    <div
-      class="no-gutters row"
-    >
       <div
-        class="col-7"
+        class="col"
       >
         <div
-          class="no-gutters row"
+          class="c3"
         >
           <div
-            class="col"
+            class="no-gutters row"
           >
             <div
-              class="row"
+              class="text-right col"
             >
-              <div
-                class="pr-0 text-left col-3"
-              >
-                <label>
-                  Start date:
-                </label>
-              </div>
-              <div
-                class="pl-1 text-left col-3"
-              >
-                <strong />
-              </div>
-              <div
-                class="pr-0 text-left col-auto"
-              >
-                <label>
-                  Expiry date:
-                </label>
-              </div>
-              <div
-                class="pl-1 text-left col-auto"
+              <span
+                class="c4"
               >
                 <strong>
-                  <span
-                    class="pl-2"
-                  />
+                  Created: 
                 </strong>
-              </div>
+                Dec 31, 2021 by 
+                <span
+                  class="tooltip-icon"
+                  data-testid="tooltip-icon-userNameTooltip"
+                  id="userNameTooltip"
+                >
+                  <strong>
+                    USER_B
+                  </strong>
+                </span>
+              </span>
+            </div>
+          </div>
+          <div
+            class="no-gutters row"
+          >
+            <div
+              class="text-right col"
+            >
+              <span
+                class="c4"
+              >
+                <strong>
+                  Updated: 
+                </strong>
+                Dec 31, 2021 by 
+                <span
+                  class="tooltip-icon"
+                  data-testid="tooltip-icon-userNameTooltip"
+                  id="userNameTooltip"
+                >
+                  <strong>
+                    USER_A
+                  </strong>
+                </span>
+              </span>
             </div>
           </div>
         </div>
       </div>
-      <div
-        class="col-5"
-      />
     </div>
   </div>
 </DocumentFragment>

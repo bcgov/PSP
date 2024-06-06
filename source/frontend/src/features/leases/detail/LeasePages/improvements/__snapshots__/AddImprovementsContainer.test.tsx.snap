@@ -13,8 +13,8 @@ exports[`Add Improvements container component > displays the improvement types i
 }
 
 .c2 {
-  margin: 1.5rem;
-  padding: 1.5rem;
+  margin: 1.6rem;
+  padding: 1.6rem;
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
@@ -190,20 +190,19 @@ exports[`Add Improvements container component > displays the improvement types i
             </div>
             <div
               class="c5 text-left col"
-            >
-              <div
-                class="c6 textarea input form-group"
-              >
-                <textarea
-                  class="description form-control"
-                  id="input-improvements.0.description"
-                  name="improvements.0.description"
-                  placeholder="Reason for improvement and improvement details"
-                  rows="5"
-                  title=""
-                />
-              </div>
-            </div>
+            />
+          </div>
+          <div
+            class="c6 textarea input form-group"
+          >
+            <textarea
+              class="description form-control"
+              id="input-improvements.0.description"
+              name="improvements.0.description"
+              placeholder="Reason for improvement and improvement details"
+              rows="5"
+              title=""
+            />
           </div>
         </div>
       </div>
@@ -264,7 +263,7 @@ exports[`Add Improvements container component > displays the improvement types i
               <label
                 class="c4"
               >
-                Building size:
+                House size:
               </label>
             </div>
             <div
@@ -297,20 +296,19 @@ exports[`Add Improvements container component > displays the improvement types i
             </div>
             <div
               class="c5 text-left col"
-            >
-              <div
-                class="c6 textarea input form-group"
-              >
-                <textarea
-                  class="description form-control"
-                  id="input-improvements.1.description"
-                  name="improvements.1.description"
-                  placeholder="Reason for improvement and improvement details"
-                  rows="5"
-                  title=""
-                />
-              </div>
-            </div>
+            />
+          </div>
+          <div
+            class="c6 textarea input form-group"
+          >
+            <textarea
+              class="description form-control"
+              id="input-improvements.1.description"
+              name="improvements.1.description"
+              placeholder="Reason for improvement and improvement details"
+              rows="5"
+              title=""
+            />
           </div>
         </div>
       </div>
@@ -404,20 +402,19 @@ exports[`Add Improvements container component > displays the improvement types i
             </div>
             <div
               class="c5 text-left col"
-            >
-              <div
-                class="c6 textarea input form-group"
-              >
-                <textarea
-                  class="description form-control"
-                  id="input-improvements.2.description"
-                  name="improvements.2.description"
-                  placeholder="Reason for improvement and improvement details"
-                  rows="5"
-                  title=""
-                />
-              </div>
-            </div>
+            />
+          </div>
+          <div
+            class="c6 textarea input form-group"
+          >
+            <textarea
+              class="description form-control"
+              id="input-improvements.2.description"
+              name="improvements.2.description"
+              placeholder="Reason for improvement and improvement details"
+              rows="5"
+              title=""
+            />
           </div>
         </div>
       </div>
@@ -442,8 +439,8 @@ exports[`Add Improvements container component > renders as expected 1`] = `
 }
 
 .c2 {
-  margin: 1.5rem;
-  padding: 1.5rem;
+  margin: 1.6rem;
+  padding: 1.6rem;
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
@@ -619,20 +616,19 @@ exports[`Add Improvements container component > renders as expected 1`] = `
             </div>
             <div
               class="c5 text-left col"
-            >
-              <div
-                class="c6 textarea input form-group"
-              >
-                <textarea
-                  class="description form-control"
-                  id="input-improvements.0.description"
-                  name="improvements.0.description"
-                  placeholder="Reason for improvement and improvement details"
-                  rows="5"
-                  title=""
-                />
-              </div>
-            </div>
+            />
+          </div>
+          <div
+            class="c6 textarea input form-group"
+          >
+            <textarea
+              class="description form-control"
+              id="input-improvements.0.description"
+              name="improvements.0.description"
+              placeholder="Reason for improvement and improvement details"
+              rows="5"
+              title=""
+            />
           </div>
         </div>
       </div>
@@ -693,7 +689,7 @@ exports[`Add Improvements container component > renders as expected 1`] = `
               <label
                 class="c4"
               >
-                Building size:
+                House size:
               </label>
             </div>
             <div
@@ -726,20 +722,19 @@ exports[`Add Improvements container component > renders as expected 1`] = `
             </div>
             <div
               class="c5 text-left col"
-            >
-              <div
-                class="c6 textarea input form-group"
-              >
-                <textarea
-                  class="description form-control"
-                  id="input-improvements.1.description"
-                  name="improvements.1.description"
-                  placeholder="Reason for improvement and improvement details"
-                  rows="5"
-                  title=""
-                />
-              </div>
-            </div>
+            />
+          </div>
+          <div
+            class="c6 textarea input form-group"
+          >
+            <textarea
+              class="description form-control"
+              id="input-improvements.1.description"
+              name="improvements.1.description"
+              placeholder="Reason for improvement and improvement details"
+              rows="5"
+              title=""
+            />
           </div>
         </div>
       </div>
@@ -833,20 +828,19 @@ exports[`Add Improvements container component > renders as expected 1`] = `
             </div>
             <div
               class="c5 text-left col"
-            >
-              <div
-                class="c6 textarea input form-group"
-              >
-                <textarea
-                  class="description form-control"
-                  id="input-improvements.2.description"
-                  name="improvements.2.description"
-                  placeholder="Reason for improvement and improvement details"
-                  rows="5"
-                  title=""
-                />
-              </div>
-            </div>
+            />
+          </div>
+          <div
+            class="c6 textarea input form-group"
+          >
+            <textarea
+              class="description form-control"
+              id="input-improvements.2.description"
+              name="improvements.2.description"
+              placeholder="Reason for improvement and improvement details"
+              rows="5"
+              title=""
+            />
           </div>
         </div>
       </div>

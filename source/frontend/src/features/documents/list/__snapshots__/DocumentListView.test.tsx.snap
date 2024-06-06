@@ -153,8 +153,8 @@ exports[`Document List View > renders as expected 1`] = `
 }
 
 .c0 {
-  margin: 1.5rem;
-  padding: 1.5rem;
+  margin: 1.6rem;
+  padding: 1.6rem;
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
@@ -191,6 +191,16 @@ exports[`Document List View > renders as expected 1`] = `
 
 .c12 {
   margin-top: 0.3rem;
+}
+
+.c13 {
+  width: 7.5rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.c13:disabled {
+  background: white;
 }
 
 .c2 {
@@ -263,7 +273,7 @@ exports[`Document List View > renders as expected 1`] = `
           </div>
         </div>
         <div
-          class="col-1"
+          class="pl-8 col-auto"
         >
           <svg
             class="c3"
@@ -283,7 +293,7 @@ exports[`Document List View > renders as expected 1`] = `
               fill="none"
             />
             <path
-              d="M7 14l5-5 5 5z"
+              d="m7 14 5-5 5 5z"
             />
           </svg>
         </div>
@@ -918,7 +928,7 @@ exports[`Document List View > renders as expected 1`] = `
               class="Menu-button"
             >
               <div
-                style="display: flex;"
+                class="d-flex"
               >
                 <span
                   class="c12"
@@ -926,9 +936,8 @@ exports[`Document List View > renders as expected 1`] = `
                   Show
                 </span>
                 <input
-                  class="form-control form-control-sm"
+                  class="c13 form-control form-control-sm"
                   disabled=""
-                  style="width: 50px; margin-left: 10px; margin-right: 10px; background-color: white;"
                   type="number"
                   value="10"
                 />

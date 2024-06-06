@@ -1,13 +1,11 @@
-import axios from 'axios';
-import MockAdapter from 'axios-mock-adapter';
-
 import { getMockApiLease } from '@/mocks/lease.mock';
 import { prettyFormatUTCDate } from '@/utils';
-import { render, RenderOptions } from '@/utils/test-utils';
+import { act, render, RenderOptions } from '@/utils/test-utils';
 
+import { server } from '@/mocks/msw/server';
+import { getUserMock } from '@/mocks/user.mock';
+import { http, HttpResponse } from 'msw';
 import { ILeaseHeaderProps, LeaseHeader } from './LeaseHeader';
-
-const mockAxios = new MockAdapter(axios);
 
 describe('LeaseHeader component', () => {
   // render component under test
@@ -20,17 +18,20 @@ describe('LeaseHeader component', () => {
   };
 
   beforeEach(() => {
-    mockAxios.onGet(new RegExp('users/info/*')).reply(200, {});
+    server.use(
+      http.get('/api/users/info/*', () => HttpResponse.json(getUserMock())),
+      http.get('/api/properties/:id/historicalNumbers', () => HttpResponse.json([])),
+    );
   });
 
   afterEach(() => {
-    mockAxios.reset();
     vi.clearAllMocks();
   });
 
-  it('renders as expected when no data is provided', () => {
+  it('renders as expected when no data is provided', async () => {
     const testLease = getMockApiLease();
     const { asFragment } = setup({ lease: testLease, lastUpdatedBy: null });
+    await act(async () => {});
     expect(asFragment()).toMatchSnapshot();
   });
 
@@ -45,12 +46,17 @@ describe('LeaseHeader component', () => {
         appLastUpdateTimestamp: testLease.appLastUpdateTimestamp || '',
       },
     });
+    await act(async () => {});
 
     expect(getByText(testLease.lFileNo!)).toBeVisible();
     expect(getByText(testLease.appCreateUserid!)).toBeVisible();
     expect(getByText(testLease.appLastUpdateUserid!)).toBeVisible();
-    expect(getAllByText(prettyFormatUTCDate(testLease.appCreateTimestamp))[0]).toBeVisible();
-    expect(getAllByText(prettyFormatUTCDate(testLease.appLastUpdateTimestamp))[0]).toBeVisible();
+    expect(
+      getAllByText(new RegExp(prettyFormatUTCDate(testLease.appCreateTimestamp)))[0],
+    ).toBeVisible();
+    expect(
+      getAllByText(new RegExp(prettyFormatUTCDate(testLease.appLastUpdateTimestamp)))[0],
+    ).toBeVisible();
   });
 
   it('renders the last-update-time when provided', async () => {
@@ -65,8 +71,13 @@ describe('LeaseHeader component', () => {
         appLastUpdateTimestamp: testDate,
       },
     });
+    await act(async () => {});
 
-    expect(getAllByText(prettyFormatUTCDate(testLease.appCreateTimestamp))[0]).toBeVisible();
-    expect(getAllByText(prettyFormatUTCDate(testLease.appLastUpdateTimestamp))[0]).toBeVisible();
+    expect(
+      getAllByText(new RegExp(prettyFormatUTCDate(testLease.appCreateTimestamp)))[0],
+    ).toBeVisible();
+    expect(
+      getAllByText(new RegExp(prettyFormatUTCDate(testLease.appLastUpdateTimestamp)))[0],
+    ).toBeVisible();
   });
 });

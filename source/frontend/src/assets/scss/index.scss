@@ -89,7 +89,7 @@ input::-webkit-inner-spin-button {
 //by default, invalid fields are outlined in red
 .form-row .form-control.is-invalid {
   background-image: none;
-  border-color: $danger-color;
+  border-color: var(--surface-color-primary-danger-button-default);
 }
 
 .react-datepicker-wrapper,

@@ -141,21 +141,6 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
   margin-right: 0;
 }
 
-.c7 {
-  margin-left: 0.5rem;
-  cursor: pointer;
-}
-
-.c12 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-wrap: nowrap;
-  -ms-flex-wrap: nowrap;
-  flex-wrap: nowrap;
-}
-
 .c6.c6.btn {
   color: #aaaaaa;
   -webkit-text-decoration: none;
@@ -188,6 +173,21 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
 .c6.c6.btn:focus .text {
   display: inline;
   line-height: 2rem;
+}
+
+.c7 {
+  margin-left: 0.5rem;
+  cursor: pointer;
+}
+
+.c12 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
 }
 
 .c11.form-group {
@@ -245,8 +245,8 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
 }
 
 .c0 {
-  margin: 1.5rem;
-  padding: 1.5rem;
+  margin: 1.6rem;
+  padding: 1.6rem;
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
@@ -455,7 +455,7 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
                         fill="none"
                       />
                       <path
-                        d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                        d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
                       />
                     </svg>
                      
@@ -574,6 +574,34 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
       <div
         class="collapse show"
       >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c3"
+            >
+              Historical File #:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            <button
+              class="c5 Button btn btn-link"
+              data-testid="add-historical-number"
+              type="button"
+            >
+              <div
+                class="Button__value"
+              >
+                + Add historical file #
+              </div>
+            </button>
+          </div>
+        </div>
         <div
           class="pb-2 row"
         >
@@ -1006,7 +1034,7 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
                 >
                   <div
                     class="search-wrapper searchWrapper "
-                    style="background: white; border: 1px solid #606060;"
+                    style="background: white; border: 1px solid #606060; padding-top: 0.8rem; padding-bottom: 0.8rem; padding-left: 1.2rem;"
                   >
                     <span
                       class="chip  false false"
@@ -1181,7 +1209,7 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
                 >
                   <div
                     class="search-wrapper searchWrapper "
-                    style="background: white; border: 1px solid #606060;"
+                    style="background: white; border: 1px solid #606060; padding-top: 0.8rem; padding-bottom: 0.8rem; padding-left: 1.2rem;"
                   >
                     <span
                       class="chip  false false"
@@ -1442,7 +1470,7 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
                 >
                   <div
                     class="search-wrapper searchWrapper "
-                    style="background: white; border: 1px solid #606060;"
+                    style="background: white; border: 1px solid #606060; padding-top: 0.8rem; padding-bottom: 0.8rem; padding-left: 1.2rem;"
                   >
                     <span
                       class="chip  false false"
@@ -1702,7 +1730,7 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
                         name="area-sq-feet"
                         step=".01"
                         type="number"
-                        value="269097.76"
+                        value="269097.7604"
                       />
                     </div>
                     <div
@@ -1723,7 +1751,7 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
                         name="area-acres"
                         step=".01"
                         type="number"
-                        value="6.18"
+                        value="6.1776"
                       />
                     </div>
                     <div

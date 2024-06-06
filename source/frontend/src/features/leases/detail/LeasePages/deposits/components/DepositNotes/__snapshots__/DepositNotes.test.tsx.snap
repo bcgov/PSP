@@ -18,8 +18,8 @@ exports[`DepositNotes component > renders as expected 1`] = `
 }
 
 .c0 {
-  margin: 1.5rem;
-  padding: 1.5rem;
+  margin: 1.6rem;
+  padding: 1.6rem;
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
@@ -42,7 +42,7 @@ exports[`DepositNotes component > renders as expected 1`] = `
           </span>
         </div>
         <div
-          class="col-1"
+          class="pl-8 col-auto"
         >
           <svg
             class="c2"
@@ -62,7 +62,7 @@ exports[`DepositNotes component > renders as expected 1`] = `
               fill="none"
             />
             <path
-              d="M7 10l5 5 5-5z"
+              d="m7 10 5 5 5-5z"
             />
           </svg>
         </div>

@@ -220,12 +220,12 @@ const StyledFormWrapper = styled.div`
   overflow-y: auto;
   padding-right: 1rem;
   padding-bottom: 1rem;
-  background-color: ${props => props.theme.css.filterBackgroundColor};
+  background-color: ${props => props.theme.css.highlightBackgroundColor};
 `;
 
 const StyledSubdivideConsolidateIcon = styled(ConsolidateSubdivideIcon)`
   width: 3rem;
   height: 3rem;
   margin-right: 1rem;
-  fill: ${props => props.theme.css.textColor};
+  fill: ${props => props.theme.bcTokens.typographyColorSecondary};
 `;
