@@ -53,8 +53,8 @@ const useLocationFeatureLoader = () => {
 
       // call these APIs in parallel - notice there is no "await"
       const fullyAttributedTask = fullyAttributedServiceFindOne(latLng);
-      const regionTask = adminBoundaryLayerServiceFindRegion(latLng, 'GEOMETRY');
-      const districtTask = adminBoundaryLayerServiceFindDistrict(latLng, 'GEOMETRY');
+      const regionTask = adminBoundaryLayerServiceFindRegion(latLng, 'SHAPE');
+      const districtTask = adminBoundaryLayerServiceFindDistrict(latLng, 'SHAPE');
 
       const [parcelFeature, regionFeature, districtFeature] = await Promise.all([
         fullyAttributedTask,
