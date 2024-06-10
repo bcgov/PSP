@@ -16,6 +16,7 @@ import {
 import { Claims } from '@/constants';
 import { LeaseTermStatusTypes } from '@/constants/leaseStatusTypes';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import { ApiGen_CodeTypes_LeaseLicenceTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseLicenceTypes';
 import { ISystemConstant } from '@/store/slices/systemConstants';
 import { NumberFieldValue } from '@/typings/NumberFieldValue';
 import { prettyFormatDate } from '@/utils';
@@ -123,10 +124,25 @@ const termActions = (
         {hasClaim(Claims.LEASE_VIEW) &&
           index === 0 &&
           !!leaseTypeCode &&
-          ['LIOCCACCS', 'LIOCCTTLD', 'LIOCCUSE', 'LIOCCUTIL'].includes(leaseTypeCode) && (
+          [
+            ApiGen_CodeTypes_LeaseLicenceTypes.LIOCCACCS.toString(),
+            ApiGen_CodeTypes_LeaseLicenceTypes.LIOCCTTLD.toString(),
+            ApiGen_CodeTypes_LeaseLicenceTypes.LIOCCUSE.toString(),
+            ApiGen_CodeTypes_LeaseLicenceTypes.LIOCCUTIL.toString(),
+          ].includes(leaseTypeCode) && (
             <Button
               title="Generate H1005(a)"
               icon={<GenerateIcon size={24} id={`generate-h1005-a`} title="Generate H1005(a)" />}
+              onClick={() => onGenerate()}
+            ></Button>
+          )}
+
+        {hasClaim(Claims.LEASE_VIEW) &&
+          index === 0 &&
+          leaseTypeCode === ApiGen_CodeTypes_LeaseLicenceTypes.LIPPUBHWY && (
+            <Button
+              title="Generate H1005"
+              icon={<GenerateIcon size={24} id={`generate-h1005`} title="Generate H1005" />}
               onClick={() => onGenerate()}
             ></Button>
           )}
