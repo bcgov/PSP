@@ -25,12 +25,12 @@ namespace Pims.Api.Helpers.Healthchecks
                 var titleSummary = await _ltsaService.GetTitleSummariesAsync(_pid);
                 if (titleSummary.TitleSummaries.Count == 0)
                 {
-                    return new HealthCheckResult(HealthStatus.Unhealthy, $"received invalid title summary response for pid: {_pid}");
+                    return new HealthCheckResult(HealthStatus.Degraded, $"received invalid title summary response for pid: {_pid}");
                 }
             }
             catch(LtsaException e)
             {
-                return new HealthCheckResult(HealthStatus.Degraded, $"LTSA error response: {e.Message}");
+                return new HealthCheckResult(context.Registration.FailureStatus, $"LTSA error response: {e.Message}");
             }
             return HealthCheckResult.Healthy();
         }

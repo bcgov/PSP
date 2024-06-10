@@ -416,7 +416,7 @@ namespace Pims.Api
             });
             app.UseHealthChecks(this.Configuration.GetValue<string>("HealthChecks:ReadyPath"), healthPort, new HealthCheckOptions
             {
-                Predicate = r => r.Tags.Contains("services"),
+                Predicate = r => r.Tags.Contains("services") && !r.Tags.Contains("external"),
                 ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse,
             });
 
