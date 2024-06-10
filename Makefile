@@ -217,7 +217,11 @@ clean: ## Removes all local containers, images, volumes, etc
 	@docker volume rm -f psp-api-db-data
 
 restart-mayan: 
-	@docker-compose --profile mayan up --build -d
+	@docker-compose --profile mayan up --build --force-recreate -d
+
+mayan-up: ## Calls the docker compose up for the mayan images
+	@echo "$(P) Create or start mayan-edms system"
+	@docker-compose --profile mayan up -d
 
 logs: ## Shows logs for running containers (n=service name)
 	@docker-compose logs -f $(n)
@@ -310,10 +314,6 @@ frontend-coverage: ## Generate coverage report for frontend
 env: ## Generate env files
 	@echo "$(P) Generate/Regenerate env files required for application (generated passwords only match if database .env file does not already exist)"
 	@./tools/cicd/scripts/gen-env-files.sh;
-
-mayan-up: ## Calls the docker compose up for the mayan images
-	@echo "$(P) Create or start mayan-edms system"
-	@cd tools/mayan-edms; docker-compose --profile all up -d
 
 generate-tsapi: ## Generates the pims API typescript files
 	@echo "$(P) Generating pims api Ts files..."
