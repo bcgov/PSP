@@ -213,8 +213,8 @@ async function matchRegionAndDistrict(
   };
 
   // call these APIs in parallel - notice there is no "await"
-  const regionTask = regionSearch(latLng, 'GEOMETRY');
-  const districtTask = districtSearch(latLng, 'GEOMETRY');
+  const regionTask = regionSearch(latLng, 'SHAPE');
+  const districtTask = districtSearch(latLng, 'SHAPE');
 
   const regionFeature = await regionTask;
   const districtFeature = await districtTask;
