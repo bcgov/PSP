@@ -315,7 +315,7 @@ namespace Pims.Api
             {
                 services.AddHealthChecks().Add(new HealthCheckRegistration(
                     "Ltsa",
-                    sp => new PimsLtsaHealthcheck(this.Configuration, sp.GetService<ILtsaService>()),
+                    sp => new PimsLtsaHealthcheck(allHealthCheckOptions.Ltsa, sp.GetService<ILtsaService>()),
                     null,
                     new string[] { "services", "external" })
                 { Period = TimeSpan.FromMinutes(allHealthCheckOptions.Ltsa.Period) });
