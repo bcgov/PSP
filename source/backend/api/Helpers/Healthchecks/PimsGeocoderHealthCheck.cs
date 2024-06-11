@@ -26,12 +26,12 @@ namespace Pims.Api.Helpers.Healthchecks
                 var sites = await _geocoderService.GetSiteAddressesAsync(_address);
                 if (sites == null || !sites.Features.Any())
                 {
-                    return new HealthCheckResult(HealthStatus.Unhealthy, $"received invalid file types response from Geocoder");
+                    return new HealthCheckResult(HealthStatus.Degraded, $"received invalid file types response from Geocoder");
                 }
             }
             catch (Exception e)
             {
-                return new HealthCheckResult(HealthStatus.Degraded, $"Mayan error response: {e.Message}");
+                return new HealthCheckResult(context.Registration.FailureStatus, $"Mayan error response: {e.Message}");
             }
             return HealthCheckResult.Healthy();
         }
