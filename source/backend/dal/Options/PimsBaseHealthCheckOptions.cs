@@ -1,4 +1,4 @@
-namespace Pims.Dal.Options
+namespace Pims.Dal
 {
     public class PimsBaseHealthCheckOptions
     {
