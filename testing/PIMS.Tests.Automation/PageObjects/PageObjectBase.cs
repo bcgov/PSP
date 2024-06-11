@@ -248,7 +248,7 @@ namespace PIMS.Tests.Automation.PageObjects
             else
             {
                 decimal value = decimal.Parse(amount);
-                return value.ToString("#,##0.##");        
+                return value.ToString("#,##0.####");        
             }
         }
 

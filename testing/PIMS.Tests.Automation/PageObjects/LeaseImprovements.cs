@@ -23,12 +23,12 @@ namespace PIMS.Tests.Automation.PageObjects
         private By licenseImprovResidentialUnitNbrLabel = By.XPath("//div[contains(text(),'Residential')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Unit #')]");
         private By licenceImprovResidentialUnitNbrInput = By.Id("input-improvements.1.address");
         private By licenseImprovResidentialUnitContent = By.XPath("//div[contains(text(),'Residential')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Unit #')]/parent::div/following-sibling::div");
-        private By licenseImprovResidentialSizeLabel = By.XPath("//div[contains(text(),'Residential')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Building size')]");
+        private By licenseImprovResidentialSizeLabel = By.XPath("//div[contains(text(),'Residential Improvements')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'House size')]");
         private By licenceImprovResidentialSizeInput = By.Id("input-improvements.1.structureSize");
-        private By licenseImprovResidentialSizeContent = By.XPath("//div[contains(text(),'Residential')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Building size')]/parent::div/following-sibling::div");
-        private By licenseImprovResidentialDescriptionLabel = By.XPath("//div[contains(text(),'Residential')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Description')]");
+        private By licenseImprovResidentialSizeContent = By.XPath("//div[contains(text(),'Residential Improvements')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'House size')]/parent::div/following-sibling::div");
+        private By licenseImprovResidentialDescriptionLabel = By.XPath("//div[contains(text(),'Residential Improvements')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Description')]");
         private By licenseImprovResidentialDescriptionTextarea = By.Id("input-improvements.1.description");
-        private By licenseImprovResidentialDescriptionContent = By.XPath("//div[contains(text(),'Residential')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Description')]/parent::div/following-sibling::div");
+        private By licenseImprovResidentialDescriptionContent = By.XPath("//div[contains(text(),'Residential Improvements')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Description')]/parent::div/following-sibling::div");
 
         private By licenseImprovOtherSubtitle = By.XPath("//div[contains(text(),'Other Improvements')]/parent::div/parent::h2");
         private By licenseImprovOtherlUnitNbrLabel = By.XPath("//div[contains(text(),'Other Improvements')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Unit #')]");

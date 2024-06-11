@@ -12,7 +12,7 @@ Scenario: 01. Research File Details
 Scenario: 02. Research File Properties
 	Given I create a basic Research File from row number 2
 	When I add Properties to a Research File
-	And I update a Research File Properties from row number 5
+	And I update a Property details from a file from row number 5
 	Then A new Research File is created successfully
 
 Scenario: 03. Research File Documents

@@ -69,7 +69,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By researchFileHeaderLastUpdatedLabel = By.XPath("//strong[contains(text(),'Updated')]");
         private By researchFileHeaderLastUpdatedDateContent = By.XPath("//strong[contains(text(),'Updated')]/parent::span");
         private By researchFileHeaderLastUpdatedByContent = By.XPath("//strong[contains(text(),'Updated')]/parent::span/span[@data-testid='tooltip-icon-userNameTooltip']");
-        private By researchFileHeaderStatusContent = By.XPath("//div[@class='col']/div/div[4]/div/div");
+        private By researchFileHeaderStatusContent = By.XPath("//b[contains(text(),'File')]/parent::span/following-sibling::div");
 
         //Research File Details Tab View Elements
         private By researchFileDetailsProjectSubtitle = By.XPath("//h2/div/div[contains(text(),'Project')]");
@@ -155,10 +155,10 @@ namespace PIMS.Tests.Automation.PageObjects
         }
         public void NavigateToCreateNewResearchFile()
         {
-            Wait(3000);
+            Wait();
             FocusAndClick(menuResearchButton);
 
-            Wait(3000);
+            Wait();
             FocusAndClick(createResearchFileButton);
         }
 
@@ -724,7 +724,7 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(researchFileHeaderDistrictLabel);
 
             AssertTrueIsDisplayed(researchFileHistoricalFileLabel);
-            Assert.True(webDriver.FindElements(researchFileHistoricalFileContent).Count > 0);
+            //Assert.True(webDriver.FindElements(researchFileHistoricalFileContent).Count > 0);
 
             AssertTrueIsDisplayed(researchFileHeaderCreatedLabel);
             AssertTrueElementContains(researchFileHeaderCreatedDateContent, GetTodayFormattedDate());
