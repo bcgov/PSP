@@ -17,7 +17,16 @@ namespace Pims.Api.Services
         /// <param name="sourceSrid">The identifier for the source spatial reference system.</param>
         /// <param name="targetSrid">The identifier for the target spatial reference system.</param>
         /// <param name="location">The coordinates to re-project.</param>
-        /// <returns></returns>
+        /// <returns>A new Coordinate object with the transformed values.</returns>
         Coordinate TransformCoordinates(int sourceSrid, int targetSrid, Coordinate location);
+
+        /// <summary>
+        /// Transforms (re-projects) the supplied Geometry between two spatial reference systems, defined by their identifiers.
+        /// This method is used to perform in-place coordinate transformation for Polygons and MultiPolygons.
+        /// </summary>
+        /// <param name="sourceSrid">The identifier for the source spatial reference system.</param>
+        /// <param name="targetSrid">The identifier for the target spatial reference system.</param>
+        /// <param name="geometry">The geometry to re-project.</param>
+        void TransformGeometry(int sourceSrid, int targetSrid, Geometry geometry);
     }
 }

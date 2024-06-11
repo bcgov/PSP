@@ -1,19 +1,36 @@
-import { create } from 'react-test-renderer/cjs/react-test-renderer.development';
+import { act, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
-import { TablePageSizeSelector } from './PageSizeSelector';
+import { ITablePageSizeSelectorProps, TablePageSizeSelector } from './PageSizeSelector';
 
-const componentRender = () => {
-  const component = create(
-    <div>
-      <TablePageSizeSelector alignTop value={1} options={[1, 2, 3, 4, 5]} onChange={() => {}} />
-    </div>,
+const setup = (
+  renderOptions: RenderOptions & { props?: Partial<ITablePageSizeSelectorProps> } = {},
+) => {
+  const { props: selectorProps, ...rest } = renderOptions;
+  const utils = render(
+    <TablePageSizeSelector
+      alignTop
+      value={selectorProps?.value ?? 10}
+      options={selectorProps?.options ?? [5, 10, 20, 50, 100]}
+      onChange={selectorProps?.onChange ?? vi.fn}
+    />,
   );
-  return component;
+  return { ...utils };
 };
 
 describe('Page size selector', () => {
-  it('Snapshot matches', () => {
-    const component = componentRender();
-    expect(component.toJSON()).toMatchSnapshot();
+  it('matches snapshot', () => {
+    const { asFragment } = setup();
+    expect(asFragment()).toMatchSnapshot();
+  });
+
+  it(`calls 'onChange' when page size is changed`, async () => {
+    const onChange = vi.fn();
+    const { getByTitle } = setup({ props: { onChange } });
+
+    await act(async () => {
+      userEvent.click(getByTitle('menu-item-5'));
+    });
+
+    expect(onChange).toHaveBeenCalledWith(5);
   });
 });

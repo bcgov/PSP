@@ -3,41 +3,29 @@ export const mockDistrictLayerResponse = {
   features: [
     {
       type: 'Feature',
-      id: 'WHSE_ADMIN_BOUNDARIES.TADM_MOT_DISTRICT_BNDRY_POLY.2',
+      id: 'DSA_DISTRICT_BOUNDARY.2',
       geometry: {
         type: 'Polygon',
-        coordinates: [
-          [
-            [-122.64209928, 49.10436194],
-            [-122.64211348, 49.10396936],
-            [-122.64085839, 49.10394959],
-            [-122.64083912, 49.10447851],
-            [-122.64201075, 49.10449689],
-            [-122.64201384, 49.10441544],
-            [-122.64209928, 49.10436194],
-          ],
-        ],
+        coordinates: [],
       },
-      geometry_name: 'GEOMETRY',
+      geometry_name: 'SHAPE',
       properties: {
+        OBJECTID: 2,
         DISTRICT_NUMBER: 2,
         DISTRICT_NAME: 'Vancouver Island',
-        FEATURE_CODE: null,
-        OBJECTID: 30215,
-        SE_ANNO_CAD_DATA: null,
-        FEATURE_AREA_SQM: 65831400828.9239,
-        FEATURE_LENGTH_M: 1340187.9529,
       },
+      bbox: [-129.43013603, 48.22452676, -123.00728678, 51.00005479],
     },
   ],
   totalFeatures: 1,
   numberMatched: 1,
   numberReturned: 1,
-  timeStamp: '2022-06-16T22:38:59.099Z',
+  timeStamp: '2024-05-31T23:46:24.270Z',
   crs: {
     type: 'name',
     properties: {
       name: 'urn:ogc:def:crs:EPSG::4326',
     },
   },
+  bbox: [-129.43013603, 48.22452676, -123.00728678, 51.00005479],
 };

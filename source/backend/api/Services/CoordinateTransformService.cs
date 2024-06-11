@@ -6,7 +6,10 @@ using ProjNet.CoordinateSystems.Transformations;
 
 namespace Pims.Api.Services
 {
-    public class CoordinateTransformService : ICoordinateTransformService
+    /// <summary>
+    /// CoordinateTransformService implementation provides capabilities to transform geographic coordinates between various coordinate systems.
+    /// </summary>
+    public partial class CoordinateTransformService : ICoordinateTransformService
     {
         private readonly CoordinateSystemFactory _coordinateSystemFactory = new CoordinateSystemFactory();
         private readonly CoordinateTransformationFactory _coordinateTransformationFactory = new CoordinateTransformationFactory();
@@ -72,6 +75,31 @@ namespace Pims.Api.Services
             (var projectedX, var projectedY) = ct.MathTransform.Transform(location.X, location.Y);
 
             return new Coordinate(projectedX, projectedY);
+        }
+
+        /// <inheritdoc />
+        public void TransformGeometry(int sourceSrid, int targetSrid, Geometry geometry)
+        {
+            if (!IsCoordinateSystemSupported(sourceSrid))
+            {
+                throw new InvalidOperationException($"Spatial Reference {sourceSrid} not supported");
+            }
+            if (!IsCoordinateSystemSupported(targetSrid))
+            {
+                throw new InvalidOperationException($"Spatial Reference {targetSrid} not supported");
+            }
+
+            var source = _projections[sourceSrid];
+            var target = _projections[targetSrid];
+
+            var ct = _coordinateTransformationFactory.CreateFromCoordinateSystems(source, target);
+
+            // Create the transformation filter
+            var filter = new TransformationFilter(ct.MathTransform);
+
+            // Apply the transformation filter. This will modify the coordinates of the geometry.
+            geometry.Apply(filter);
+            geometry.SRID = targetSrid;
         }
     }
 }

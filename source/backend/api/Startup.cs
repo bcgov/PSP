@@ -120,6 +120,7 @@ namespace Pims.Api
                 options.WriteIndented = jsonSerializerOptions.WriteIndented;
                 options.Converters.Add(new JsonStringEnumMemberConverter());
                 options.Converters.Add(new Int32ToStringJsonConverter());
+                options.Converters.Add(new NetTopologySuite.IO.Converters.GeoJsonConverterFactory());
             });
             services.Configure<Core.Http.Configuration.AuthClientOptions>(this.Configuration.GetSection("Keycloak"));
             services.Configure<Core.Http.Configuration.OpenIdConnectOptions>(this.Configuration.GetSection("OpenIdConnect"));
@@ -138,8 +139,8 @@ namespace Pims.Api
                     options.JsonSerializerOptions.WriteIndented = jsonSerializerOptions.WriteIndented;
                     options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
                     options.JsonSerializerOptions.Converters.Add(new Int32ToStringJsonConverter());
-                    options.JsonSerializerOptions.Converters.Add(new GeometryJsonConverter());
                     options.JsonSerializerOptions.Converters.Add(new DateOnlyJsonConverter());
+                    options.JsonSerializerOptions.Converters.Add(new NetTopologySuite.IO.Converters.GeoJsonConverterFactory());
                 });
 
             services.AddMvcCore()
@@ -151,8 +152,8 @@ namespace Pims.Api
                     options.JsonSerializerOptions.WriteIndented = jsonSerializerOptions.WriteIndented;
                     options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
                     options.JsonSerializerOptions.Converters.Add(new Int32ToStringJsonConverter());
-                    options.JsonSerializerOptions.Converters.Add(new GeometryJsonConverter());
                     options.JsonSerializerOptions.Converters.Add(new DateOnlyJsonConverter());
+                    options.JsonSerializerOptions.Converters.Add(new NetTopologySuite.IO.Converters.GeoJsonConverterFactory());
                 });
 
             services.AddAuthentication(options =>
@@ -415,7 +416,7 @@ namespace Pims.Api
             });
             app.UseHealthChecks(this.Configuration.GetValue<string>("HealthChecks:ReadyPath"), healthPort, new HealthCheckOptions
             {
-                Predicate = r => r.Tags.Contains("services"),
+                Predicate = r => r.Tags.Contains("services") && !r.Tags.Contains("external"),
                 ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse,
             });
 
