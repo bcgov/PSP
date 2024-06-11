@@ -78,8 +78,6 @@ namespace Pims.Api.Services
             pimsUser.ThrowInvalidAccessToLeaseFile(_leaseRepository.GetNoTracking(leaseId).RegionCode);
 
             var lease = _leaseRepository.Get(leaseId);
-
-
             return lease;
         }
 
@@ -441,7 +439,7 @@ namespace Pims.Api.Services
             List<PimsLeaseChecklistItem> chklistItems = new();
             foreach (var itemType in _leaseRepository.GetAllChecklistItemTypes().Where(x => !x.IsExpiredType() && !x.IsDisabled))
             {
-                PimsLeaseChecklistItem checklistItem = new ()
+                PimsLeaseChecklistItem checklistItem = new()
                 {
                     LeaseChklstItemTypeCode = itemType.LeaseChklstItemTypeCode,
                     LeaseChklstItemStatusTypeCode = LeaseChecklistItemStatusTypes.INCOMP.ToString(),
