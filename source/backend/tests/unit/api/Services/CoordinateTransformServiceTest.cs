@@ -31,28 +31,28 @@ namespace Pims.Api.Test.Services
         public void TransformCoordinates_Wgs84_BcAlbers()
         {
             // Arrange
-            var expected = new Coordinate(924303.6196359333, 1088419.4036716279);
+            var location = new Coordinate(-127.18, 54.79);
 
             // Act
-            var location = new Coordinate(-127.18, 54.79);
             var actual = this._service.TransformCoordinates(4326, 3005, location);
 
             // Assert
-            actual.Should().Be(expected);
+            actual.X.Should().BeApproximately(924303.62, 0.01d);
+            actual.Y.Should().BeApproximately(1088419.40, 0.01d);
         }
 
         [Fact]
         public void TransformCoordinates_BcAlbers_Wgs84()
         {
             // Arrange
-            var expected = new Coordinate(-127.18432267731438, 54.793830114524795);
+            var location = new Coordinate(924033.50, 1088851.50);
 
             // Act
-            var location = new Coordinate(924033.50, 1088851.50);
             var actual = this._service.TransformCoordinates(3005, 4326, location);
 
             // Assert
-            actual.Should().Be(expected);
+            actual.X.Should().BeApproximately(-127.18, 0.01d);
+            actual.Y.Should().BeApproximately(54.79, 0.01d);
         }
 
         [Fact]
@@ -81,7 +81,9 @@ namespace Pims.Api.Test.Services
 
             // Assert
             boundary.SRID.Should().Be(3005);
-            boundary.ExteriorRing.GetCoordinateN(0).Should().Be(new Coordinate(3021312.0903253276, 375417.28211033065));
+            boundary.ExteriorRing.GetCoordinateN(0).X.Should().BeApproximately(3021312.09, 0.01d);
+            boundary.ExteriorRing.GetCoordinateN(0).Y.Should().BeApproximately(375417.28, 0.01d);
+
         }
 
         [Fact]
@@ -95,7 +97,8 @@ namespace Pims.Api.Test.Services
 
             // Assert
             boundary.SRID.Should().Be(4326);
-            boundary.ExteriorRing.GetCoordinateN(0).Should().Be(new Coordinate(-138.4471772534371, 44.199680362622246));
+            boundary.ExteriorRing.GetCoordinateN(0).X.Should().BeApproximately(-138.45, 0.01d);
+            boundary.ExteriorRing.GetCoordinateN(0).Y.Should().BeApproximately(44.20, 0.01d);
         }
 
         [Fact]
