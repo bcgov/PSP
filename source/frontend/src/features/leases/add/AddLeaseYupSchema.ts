@@ -7,7 +7,12 @@ import { isLeaseCategoryVisible } from './AdministrationSubForm';
 
 export const AddLeaseYupSchema = Yup.object().shape({
   statusTypeCode: Yup.string().required('Required'),
-  startDate: Yup.date().required('Required'),
+  startDate: Yup.string().when('statusTypeCode', {
+    is: (statusTypeCode: string) =>
+      statusTypeCode && statusTypeCode === ApiGen_CodeTypes_LeaseStatusTypes.ACTIVE.toString(),
+    then: Yup.string().required('Required'),
+    otherwise: Yup.string().nullable(),
+  }),
   expiryDate: Yup.date().min(Yup.ref('startDate'), 'Expiry Date must be after Start Date'),
   paymentReceivableTypeCode: Yup.string().required('Payment Receivable Type is required'),
   regionId: Yup.string().required('MOTI Region Type is required'),
