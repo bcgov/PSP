@@ -7,11 +7,11 @@ import * as Styled from './styles';
 const ReferenceSubForm: React.FunctionComponent = () => {
   return (
     <Section header="Documentation">
-      <SectionField label="Physical lease/license exists" contentWidth="5">
-        <InlineYesNoSelect field="hasPhysicalLicense" />
+      <SectionField label="Physical lease/licence exists" contentWidth="5">
+        <InlineYesNoSelect field="hasPhysicalLicence" />
       </SectionField>
-      <SectionField label="Digital lease/license exists" contentWidth="5">
-        <InlineYesNoSelect field="hasDigitalLicense" />
+      <SectionField label="Digital lease/licence exists" contentWidth="5">
+        <InlineYesNoSelect field="hasDigitalLicence" />
       </SectionField>
       <SectionField
         label="Document location"

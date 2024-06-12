@@ -155,7 +155,7 @@ exports[`PropertyManagementDetailView component > renders as expected when provi
           <label
             class="c4"
           >
-            Lease/Licensed:
+            Lease/Licenced:
           </label>
         </div>
         <div

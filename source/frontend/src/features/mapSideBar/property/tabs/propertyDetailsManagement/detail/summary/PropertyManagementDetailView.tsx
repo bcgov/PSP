@@ -48,7 +48,7 @@ export const PropertyManagementDetailView: React.FC<IPropertyManagementDetailVie
           }
         />
       </SectionField>
-      <SectionField label="Lease/Licensed">
+      <SectionField label="Lease/Licenced">
         {formatApiPropertyManagementLease(propertyManagement)}
       </SectionField>
       <SectionField label="Utilities payable">

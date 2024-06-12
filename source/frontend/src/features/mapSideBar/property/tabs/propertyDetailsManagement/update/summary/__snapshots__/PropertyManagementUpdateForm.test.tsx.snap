@@ -267,7 +267,7 @@ exports[`PropertyManagementUpdateForm component > renders as expected 1`] = `
               <label
                 class="c4"
               >
-                Lease/Licensed:
+                Lease/Licenced:
               </label>
             </div>
             <div
