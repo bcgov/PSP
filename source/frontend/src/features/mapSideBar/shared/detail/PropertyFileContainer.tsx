@@ -123,7 +123,7 @@ export const PropertyFileContainer: React.FunctionComponent<
       content: (
         <PropertyDetailsTabView
           property={propertyViewForm}
-          loading={composedProperties.composedLoading ?? false}
+          loading={composedProperties?.apiWrapper?.loading ?? false}
         />
       ),
       key: InventoryTabNames.property,

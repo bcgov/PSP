@@ -62,6 +62,7 @@ export interface IMapStateMachineContext {
   toggleMapLayer: () => void;
   setFilePropertyLocations: (locations: LatLngLiteral[]) => void;
   setMapLayers: (layers: ILayerItem[]) => void;
+  setDefaultMapLayers: (layers: ILayerItem[]) => void;
 
   setVisiblePimsProperties: (propertyIds: number[]) => void;
   setShowDisposed: (show: boolean) => void;
@@ -270,6 +271,13 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
     [serviceSend],
   );
 
+  const setDefaultMapLayers = useCallback(
+    (activeLayers: ILayerItem[]) => {
+      serviceSend({ type: 'DEFAULT_MAP_LAYERS', activeLayers });
+    },
+    [serviceSend],
+  );
+
   const setVisiblePimsProperties = useCallback(
     (propertyIds: number[]) => {
       serviceSend({ type: 'SET_VISIBLE_PROPERTIES', propertyIds });
@@ -366,6 +374,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         setShowDisposed,
         setShowRetired,
         setMapLayers,
+        setDefaultMapLayers,
         changeSidebar,
       }}
     >
