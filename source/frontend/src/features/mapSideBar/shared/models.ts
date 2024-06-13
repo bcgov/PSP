@@ -4,6 +4,7 @@ import { isNumber } from 'lodash';
 import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { IMapProperty } from '@/components/propertySelector/models';
 import { AreaUnitTypes, DistrictCodes, RegionCodes } from '@/constants';
+import { ApiGen_CodeTypes_GeoJsonTypes } from '@/models/api/generated/ApiGen_CodeTypes_GeoJsonTypes';
 import { ApiGen_Concepts_Address } from '@/models/api/generated/ApiGen_Concepts_Address';
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
@@ -122,7 +123,6 @@ export class PropertyForm {
   }
 
   public static fromFeatureDataset(model: LocationFeatureDataset): PropertyForm {
-    console.log(model);
     return new PropertyForm({
       apiId: +(model.pimsFeature?.properties?.PROPERTY_ID ?? 0),
       pid: pidFromFeatureSet(model),
@@ -134,8 +134,10 @@ export class PropertyForm {
         model.parcelFeature?.properties?.PLAN_NUMBER ??
         '',
       polygon:
-        model?.parcelFeature?.geometry?.type === 'Polygon'
+        model?.parcelFeature?.geometry?.type === ApiGen_CodeTypes_GeoJsonTypes.Polygon
           ? (model?.parcelFeature?.geometry as Polygon)
+          : model?.parcelFeature?.geometry?.type === ApiGen_CodeTypes_GeoJsonTypes.MultiPolygon
+          ? (model?.parcelFeature?.geometry as MultiPolygon)
           : undefined,
       region: isNumber(model?.regionFeature?.properties?.REGION_NUMBER)
         ? model?.regionFeature?.properties?.REGION_NUMBER
@@ -164,6 +166,7 @@ export class PropertyForm {
       latitude: this.latitude,
       longitude: this.longitude,
       planNumber: this.planNumber,
+      polygon: this.polygon,
       region: this.region,
       regionName: this.regionName,
       district: this.district,
