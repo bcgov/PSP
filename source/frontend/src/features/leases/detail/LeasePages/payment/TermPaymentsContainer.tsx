@@ -13,6 +13,7 @@ import { LeasePageProps } from '@/features/mapSideBar/lease/LeaseContainer';
 import { useLeasePaymentRepository } from '@/hooks/repositories/useLeasePaymentRepository';
 import { useLeaseTermRepository } from '@/hooks/repositories/useLeaseTermRepository';
 import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
+import { ApiGen_CodeTypes_LeaseAccountTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseAccountTypes';
 import { getEmptyLease } from '@/models/defaultInitializers';
 import { SystemConstants, useSystemConstants } from '@/store/slices/systemConstants';
 import { exists, isValidId, isValidIsoDateTime } from '@/utils';
@@ -184,7 +185,9 @@ export const TermPaymentsContainer: React.FunctionComponent<
         onDeletePayment={onDeletePayment}
         onSavePayment={onSavePayment}
         onGenerate={onGenerate}
-        isReceivable={lease?.paymentReceivableType?.id === 'RCVBL'}
+        isReceivable={
+          lease?.paymentReceivableType?.id === ApiGen_CodeTypes_LeaseAccountTypes.RCVBL.toString()
+        }
         lease={LeaseFormModel.fromApi({
           ...getEmptyLease(),
           terms: getLeaseTerms.response ?? [],
