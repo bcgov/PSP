@@ -92,8 +92,8 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
     return mapMachine.filePropertyLocations.map(x => {
       // The values on the feature are rounded to the 4th decimal. Do the same to the draft points.
       return {
-        lat: parseFloat(x.lat.toFixed(4)),
-        lng: parseFloat(x.lng.toFixed(4)),
+        lat: x.lat,
+        lng: x.lng,
       };
     });
   }, [mapMachine.filePropertyLocations]);

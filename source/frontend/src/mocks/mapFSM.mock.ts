@@ -5,6 +5,7 @@ import {
   emptyPmbcFeatureCollection,
 } from '@/components/common/mapFSM/models';
 import { defaultBounds } from '@/components/maps/constants';
+import { layersTree } from '@/components/maps/leaflet/Control/LayersControl/data';
 
 export const mapMachineBaseMock: IMapStateMachineContext = {
   requestFlyToBounds: vi.fn(),
@@ -34,7 +35,7 @@ export const mapMachineBaseMock: IMapStateMachineContext = {
 
   filePropertyLocations: [],
   activePimsPropertyIds: [],
-  activeLayers: [],
+  activeLayers: layersTree,
   isSelecting: false,
   isFiltering: false,
   isShowingMapLayers: false,
@@ -64,4 +65,5 @@ export const mapMachineBaseMock: IMapStateMachineContext = {
   setShowRetired: vi.fn(),
   changeSidebar: vi.fn(),
   setMapLayers: vi.fn(),
+  setDefaultMapLayers: vi.fn(),
 };
