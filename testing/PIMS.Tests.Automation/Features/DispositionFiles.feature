@@ -13,7 +13,7 @@ Scenario: 02. Disposition File Properties
 	Given I create a new Disposition File from row number 5
 	When I add Properties to the Disposition File
 	And I update a Disposition File's Properties from row number 6
-	And I update a Property details from row number 5
+	And I update a Property details from a file from row number 5
 	Then A new Disposition file is created successfully
 
 Scenario: 03. Disposition Checklist Tab
