@@ -30,7 +30,7 @@ namespace Pims.Api.Models.Mayan.Document
         /// get/set - uid of the file.
         /// </summary>
         [JsonPropertyName("file")]
-        public string File { get; set; }
+        public string FileUuid { get; set; }
 
         /// <summary>
         /// get/set - Name of the file.

@@ -41,7 +41,7 @@ namespace Pims.Api.Models.Mayan.Document
         /// get/set - If document stubs should be removed automatically when above expiry interval reached.
         /// </summary>
         [JsonPropertyName("document_stub_pruning_enabled")]
-        public int? DocumentStubPruningEnabled { get; set; }
+        public bool? DocumentStubPruningEnabled { get; set; }
 
         /// <summary>
         /// get/set - The trash time period.
