@@ -2,15 +2,13 @@ import { FormikProps } from 'formik';
 import { createMemoryHistory } from 'history';
 import { createRef } from 'react';
 
-import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
-import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
-import { renderAsync, RenderOptions } from '@/utils/test-utils';
+
+import { createAxiosError, renderAsync, RenderOptions, screen } from '@/utils/test-utils';
 import PropertySelectorPidSearchContainer, {
   PropertySelectorPidSearchContainerProps,
 } from './PropertySelectorPidSearchContainer';
-import { IPropertySearchSelectorFormViewProps } from './PropertySearchSelectorFormView';
+
 import { IPropertySearchSelectorPidFormViewProps } from './PropertySelectorPidSearchView';
-import { IAddSubdivisionViewProps } from '@/features/mapSideBar/subdivision/AddSubdivisionView';
 import { SubdivisionFormModel } from '@/features/mapSideBar/subdivision/AddSubdivisionModel';
 
 const history = createMemoryHistory();
@@ -85,5 +83,29 @@ describe('PropertySearchPidSelector component', () => {
     mockGetByPidWrapper.execute.mockResolvedValue({ id: 1 });
 
     expect(mockGetByPidWrapper.execute).toHaveBeenCalledWith('111-111-111');
+  });
+
+  it('displays an error modal when the property is not owned', async () => {
+    mockGetByPidWrapper.execute.mockResolvedValue({ id: 1, isOwned: false });
+
+    await setup();
+    viewProps?.onSearch({ pid: '111-111-111' });
+
+    const modal = await screen.findByText('Error');
+
+    expect(modal).toBeVisible();
+  });
+
+  it('displays an error when the property is not found', async () => {
+    mockGetByPidWrapper.execute.mockRejectedValue(
+      createAxiosError(404, 'Some error'),
+    );
+
+    await setup();
+    viewProps?.onSearch({ pid: '111-111-111' });
+
+    const modal = await screen.findByText('Error');
+
+    expect(modal).toBeVisible();
   });
 });
