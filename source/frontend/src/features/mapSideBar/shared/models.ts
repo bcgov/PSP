@@ -202,7 +202,7 @@ export class PropertyForm {
           LAND_LEGAL_DESCRIPTION: this.legalDescription,
         },
         type: 'Feature',
-        geometry: null,
+        geometry: this.polygon ? this.polygon : null,
       },
       location: { lat: this.latitude, lng: this.longitude },
       regionFeature: {
