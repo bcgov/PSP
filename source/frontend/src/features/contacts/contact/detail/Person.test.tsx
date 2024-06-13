@@ -1,4 +1,3 @@
-
 import { createMemoryHistory } from 'history';
 
 import { ContactMethodTypes } from '@/constants/contactMethodType';
