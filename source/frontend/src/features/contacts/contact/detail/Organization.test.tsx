@@ -1,3 +1,4 @@
+
 import { createMemoryHistory } from 'history';
 
 import { ContactMethodTypes } from '@/constants/contactMethodType';
@@ -73,7 +74,7 @@ describe('Contact OrganizationView component', () => {
     const statusElement = component.getByTestId('contact-organization-status');
     expect(statusElement.textContent).toBe('ACTIVE');
 
-    const nameElement = component.getByTestId('contact-organization-fullname');
+    const nameElement = component.getByTestId('contact-organization-organizationName');
     expect(nameElement.textContent).toBe(testName);
 
     const aliasElement = component.getByTestId('contact-organization-alias');
