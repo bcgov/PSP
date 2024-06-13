@@ -125,10 +125,10 @@ const termActions = (
           index === 0 &&
           !!leaseTypeCode &&
           [
-            ApiGen_CodeTypes_LeaseLicenceTypes.LIOCCACCS,
-            ApiGen_CodeTypes_LeaseLicenceTypes.LIOCCTTLD,
-            ApiGen_CodeTypes_LeaseLicenceTypes.LIOCCUSE,
-            ApiGen_CodeTypes_LeaseLicenceTypes.LIOCCUTIL,
+            ApiGen_CodeTypes_LeaseLicenceTypes.LIOCCACCS.toString(),
+            ApiGen_CodeTypes_LeaseLicenceTypes.LIOCCTTLD.toString(),
+            ApiGen_CodeTypes_LeaseLicenceTypes.LIOCCUSE.toString(),
+            ApiGen_CodeTypes_LeaseLicenceTypes.LIOCCUTIL.toString(),
           ].includes(leaseTypeCode) && (
             <Button
               title="Generate H1005(a)"
@@ -139,7 +139,7 @@ const termActions = (
 
         {hasClaim(Claims.LEASE_VIEW) &&
           index === 0 &&
-          leaseTypeCode === ApiGen_CodeTypes_LeaseLicenceTypes.LIPPUBHWY && (
+          leaseTypeCode === ApiGen_CodeTypes_LeaseLicenceTypes.LIPPUBHWY.toString() && (
             <Button
               title="Generate H1005"
               icon={<GenerateIcon size={24} id={`generate-h1005`} title="Generate H1005" />}
