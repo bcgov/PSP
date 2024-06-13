@@ -24,6 +24,9 @@ const featureViewStates = {
         TOGGLE_LAYERS: {
           target: 'layerControl',
         },
+        DEFAULT_MAP_LAYERS: {
+          actions: assign({ activeLayers: (_, event: any) => event.activeLayers }),
+        },
       },
     },
     selecting: {
