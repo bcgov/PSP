@@ -55,6 +55,23 @@ export const LeaseTabsContainer: React.FC<ILeaseTabsContainerProps> = ({
   tabViews.push({
     content: (
       <LeaseTab
+        leasePage={leasePages.get(LeasePageNames.CHECKLIST)}
+        onEdit={() => setContainerState({ isEditing: true })}
+        isEditing={isEditing}
+        formikRef={formikRef}
+        onSuccess={() => {
+          setContainerState({ isEditing: false });
+          refreshLease();
+        }}
+      />
+    ),
+    key: LeaseFileTabNames.checklist,
+    name: 'Checklist',
+  });
+
+  tabViews.push({
+    content: (
+      <LeaseTab
         leasePage={leasePages.get(LeasePageNames.TENANT)}
         onEdit={() => setContainerState({ activeEditForm: LeasePageNames.TENANT, isEditing: true })}
         isEditing={isEditing}
@@ -135,23 +152,6 @@ export const LeaseTabsContainer: React.FC<ILeaseTabsContainerProps> = ({
     ),
     key: LeaseFileTabNames.surplusDeclaration,
     name: 'Surplus Declaration',
-  });
-
-  tabViews.push({
-    content: (
-      <LeaseTab
-        leasePage={leasePages.get(LeasePageNames.CHECKLIST)}
-        onEdit={() => setContainerState({ isEditing: true })}
-        isEditing={isEditing}
-        formikRef={formikRef}
-        onSuccess={() => {
-          setContainerState({ isEditing: false });
-          refreshLease();
-        }}
-      />
-    ),
-    key: LeaseFileTabNames.checklist,
-    name: 'Checklist',
   });
 
   if (lease?.id && hasClaim(Claims.DOCUMENT_VIEW)) {

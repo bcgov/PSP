@@ -102,89 +102,6 @@ export const FilterContentForm: React.FC<React.PropsWithChildren<IFilterContentF
       <Form>
         <FormObserver onChange={onChange} />
         <LoadingBackdrop show={isLoading} parentScreen />
-        <Section header="Project" isCollapsable initiallyExpanded>
-          <SectionField label={null} contentWidth="12">
-            <ProjectSelector field="projectPrediction" />
-          </SectionField>
-        </Section>
-        <Section header="Tenure" isCollapsable initiallyExpanded>
-          <SectionField label="Status" contentWidth="12">
-            <Multiselect
-              field="tenureStatuses"
-              displayValue="codeTypeDescription"
-              placeholder=""
-              hidePlaceholder
-              options={tenureStatusOptions}
-            />
-          </SectionField>
-          <SectionField label="Province Public Highway" labelWidth="12" contentWidth="12">
-            <Select
-              field="tenurePPH"
-              options={tenureProvincePublicHigwayTypeOptions}
-              placeholder="Select a highway"
-            />
-          </SectionField>
-
-          <SectionField label="Highway / Road Details" labelWidth="12" contentWidth="12">
-            <Multiselect
-              field="tenureRoadTypes"
-              displayValue="codeTypeDescription"
-              placeholder=""
-              hidePlaceholder
-              options={tenureRoadTypeOptions}
-            />
-          </SectionField>
-        </Section>
-        <Section header="Lease / License" isCollapsable initiallyExpanded>
-          <SectionField
-            label="Lease Transaction"
-            contentWidth="12"
-            tooltip="Selecting the Payable and Receivable lease transaction option will display properties that have both a payable and a receivable lease on them."
-          >
-            <Select
-              field="leasePayRcvblType"
-              placeholder="Select Lease Transaction"
-              options={leasePaymentRcvblOptions}
-              data-testid="leasePayRcvblType"
-            />
-          </SectionField>
-          <SectionField label="Status" contentWidth="12">
-            <Select
-              field="leaseStatus"
-              options={leaseStatusOptions}
-              placeholder="Select a Lease Status"
-            />
-          </SectionField>
-          <SectionField label="Type(s)" contentWidth="12">
-            <Multiselect
-              field="leaseTypes"
-              displayValue="codeTypeDescription"
-              placeholder=""
-              hidePlaceholder
-              options={leaseTypeOptions}
-            />
-          </SectionField>
-          <SectionField label="Purpose(s)" contentWidth="12">
-            <Multiselect
-              field="leasePurposes"
-              displayValue="codeTypeDescription"
-              placeholder=""
-              hidePlaceholder
-              options={leasePurposeOptions}
-            />
-          </SectionField>
-        </Section>
-        <Section header="Anomaly" isCollapsable initiallyExpanded>
-          <SectionField label={null} contentWidth="12">
-            <Multiselect
-              field="anomalies"
-              displayValue="codeTypeDescription"
-              placeholder=""
-              hidePlaceholder
-              options={anomalyOptions}
-            />
-          </SectionField>
-        </Section>
         <Section header="Show Ownership" isCollapsable initiallyExpanded>
           <SectionField label={null} contentWidth="12">
             <Row>
@@ -242,6 +159,90 @@ export const FilterContentForm: React.FC<React.PropsWithChildren<IFilterContentF
                 <StyledSpan className="mb-3">Retired</StyledSpan>
               </Col>
             </Row>
+          </SectionField>
+        </Section>
+        <Section header="Project" isCollapsable initiallyExpanded>
+          <SectionField label={null} contentWidth="12">
+            <ProjectSelector field="projectPrediction" />
+          </SectionField>
+        </Section>
+        <Section header="Tenure" isCollapsable initiallyExpanded>
+          <SectionField label="Status" contentWidth="12">
+            <Multiselect
+              field="tenureStatuses"
+              displayValue="codeTypeDescription"
+              placeholder=""
+              hidePlaceholder
+              options={tenureStatusOptions}
+            />
+          </SectionField>
+          <SectionField label="Province Public Highway" labelWidth="12" contentWidth="12">
+            <Select
+              field="tenurePPH"
+              options={tenureProvincePublicHigwayTypeOptions}
+              placeholder="Select a highway"
+            />
+          </SectionField>
+
+          <SectionField label="Highway / Road Details" labelWidth="12" contentWidth="12">
+            <Multiselect
+              field="tenureRoadTypes"
+              displayValue="codeTypeDescription"
+              placeholder=""
+              hidePlaceholder
+              options={tenureRoadTypeOptions}
+            />
+          </SectionField>
+        </Section>
+        <Section header="Lease / Licence" isCollapsable initiallyExpanded>
+          <SectionField
+            label="Lease Transaction"
+            labelWidth="12"
+            contentWidth="12"
+            tooltip="Selecting the Payable and Receivable lease transaction option will display properties that have both a payable and a receivable lease on them."
+          >
+            <Select
+              field="leasePayRcvblType"
+              placeholder="Select Lease Transaction"
+              options={leasePaymentRcvblOptions}
+              data-testid="leasePayRcvblType"
+            />
+          </SectionField>
+          <SectionField label="Status" contentWidth="12">
+            <Select
+              field="leaseStatus"
+              options={leaseStatusOptions}
+              placeholder="Select a Lease Status"
+            />
+          </SectionField>
+          <SectionField label="Type(s)" contentWidth="12">
+            <Multiselect
+              field="leaseTypes"
+              displayValue="codeTypeDescription"
+              placeholder=""
+              hidePlaceholder
+              options={leaseTypeOptions}
+            />
+          </SectionField>
+          <SectionField label="Purpose(s)" contentWidth="12">
+            <Multiselect
+              field="leasePurposes"
+              displayValue="codeTypeDescription"
+              placeholder=""
+              hidePlaceholder
+              options={leasePurposeOptions}
+            />
+          </SectionField>
+        </Section>
+        <Section header="Anomaly" isCollapsable initiallyExpanded>
+          <SectionField label={null} contentWidth="12">
+            <Multiselect
+              field="anomalies"
+              displayValue="codeTypeDescription"
+              placeholder=""
+              hidePlaceholder
+              options={anomalyOptions}
+            />
           </SectionField>
         </Section>
       </Form>

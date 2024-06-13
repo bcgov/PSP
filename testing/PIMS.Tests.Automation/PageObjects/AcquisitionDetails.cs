@@ -7,7 +7,7 @@ namespace PIMS.Tests.Automation.PageObjects
     public class AcquisitionDetails : PageObjectBase
     {
         //Acquisition Files Menu Elements
-        private By menuAcquisitionButton = By.CssSelector("div[data-testid='nav-tooltip-acquisition'] a");
+        private readonly By menuAcquisitionButton = By.CssSelector("div[data-testid='nav-tooltip-acquisition'] a");
         private By createAcquisitionFileButton = By.XPath("//a[contains(text(),'Create an Acquisition File')]");
 
         private By acquisitionFileSummaryBttn = By.XPath("//div[contains(text(),'File Summary')]");
@@ -31,7 +31,8 @@ namespace PIMS.Tests.Automation.PageObjects
         private By acquisitionFileHeaderLastUpdateContent = By.XPath("//strong[contains(text(), 'Updated')]/parent::span");
         private By acquisitionFileHeaderLastUpdateByContent = By.XPath("//strong[contains(text(), 'Updated')]/parent::span/span[@id='userNameTooltip']/strong");
         private By acquisitionFileHeaderHistoricalFileLabel = By.XPath("//label[contains(text(),'Historical File')]");
-        private By acquisitionHeaderStatusContent = By.XPath("//div[@class='col']/div/div[3]/div/div");
+        private By acquisitionFileHeaderHistoricalFileContent = By.XPath("//label[contains(text(),'Historical File #:')]/parent::strong/parent::div/following-sibling::div/div/span");
+        private By acquisitionHeaderStatusContent = By.XPath("//b[contains(text(),'File')]/parent::span/following-sibling::div");
 
         private By acquisitionFileStatusSelect = By.Id("input-fileStatusTypeCode");
         private By acquisitionFileProjectSubtitle = By.XPath("//h2/div/div[contains(text(), 'Project')]");
@@ -370,6 +371,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 AssertTrueContentEquals(acquisitionFileHeaderProductContent, acquisition.AcquisitionProjProductCode + " - " + acquisition.AcquisitionProjProduct);
 
             AssertTrueIsDisplayed(acquisitionFileHeaderHistoricalFileLabel);
+            Assert.True(webDriver.FindElements(acquisitionFileHeaderHistoricalFileContent).Count > 0);
 
             AssertTrueIsDisplayed(acquisitionFileHeaderCreatedDateLabel);
             AssertTrueContentNotEquals(acquisitionFileHeaderCreatedDateContent, "");

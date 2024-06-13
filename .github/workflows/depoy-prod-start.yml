@@ -96,7 +96,9 @@ jobs:
       - name: call scripts to upgrade database
         shell: bash
         run: |
-          oc process -f ./openshift/4.0/templates/jobs/db-deploy.yaml -p DB_SECRET_NAME=pims-database -p GIT_BRANCH=master -p SERVER_NAME=sqlprd.th.gov.bc.ca -p DB_NAME=PIMS_PRD -p NAMESPACE=3cd915-prod | oc create -f - | grep -oP "(?<=job\.batch/)[^\s]*" | (read JOB_NAME; oc wait --for=condition=complete job/$JOB_NAME --timeout=120s)
+          JOB_NAME=$(oc process -f ./openshift/4.0/templates/jobs/db-deploy.yaml -p DB_SECRET_NAME=pims-database -p GIT_BRANCH=master -p SERVER_NAME=sqlprd.th.gov.bc.ca -p DB_NAME=PIMS_PRD -p NAMESPACE=3cd915-prod | oc create -f - | grep -oP "(?<=job\.batch/)[^\s]*")
+          oc wait --for=condition=complete job/$JOB_NAME --timeout=120s 
+          oc get pods | grep -Eo $JOB_NAME-[^\s]{5} | (read POD_NAME; oc logs $POD_NAME)
 
   ## Call the mayan sync task three times, once for each mayan sync endpoint. The task will wait for the job to complete before exiting.
   ## Note: this depends on the mayan-sync configmap for the target namespace being up to date.

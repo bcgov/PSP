@@ -4,9 +4,5 @@
 export interface MOT_DistrictBoundary_Feature_Properties {
   readonly DISTRICT_NUMBER: number | null;
   readonly DISTRICT_NAME: string | null;
-  readonly FEATURE_CODE: string | null;
   readonly OBJECTID: number | null;
-  readonly SE_ANNO_CAD_DATA: Blob | null;
-  readonly FEATURE_AREA_SQM: number | null;
-  readonly FEATURE_LENGTH_M: number | null;
 }

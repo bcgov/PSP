@@ -145,6 +145,16 @@ exports[`Manage access requests > Snapshot matches 1`] = `
   margin-top: 0.3rem;
 }
 
+.c6 {
+  width: 7.5rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.c6:disabled {
+  background: white;
+}
+
 .c0 {
   padding: 1.6rem 3.2rem;
   -webkit-box-flex: 1;
@@ -714,7 +724,7 @@ exports[`Manage access requests > Snapshot matches 1`] = `
             class="Menu-button"
           >
             <div
-              style="display: flex;"
+              class="d-flex"
             >
               <span
                 class="c5"
@@ -722,9 +732,8 @@ exports[`Manage access requests > Snapshot matches 1`] = `
                 Show
               </span>
               <input
-                class="form-control form-control-sm"
+                class="c6 form-control form-control-sm"
                 disabled=""
-                style="width: 50px; margin-left: 10px; margin-right: 10px; background-color: white;"
                 type="number"
                 value="10"
               />

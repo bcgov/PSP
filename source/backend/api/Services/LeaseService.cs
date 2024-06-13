@@ -13,7 +13,6 @@ using Pims.Dal.Entities;
 using Pims.Dal.Entities.Extensions;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
-using Pims.Dal.Helpers;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
@@ -26,7 +25,6 @@ namespace Pims.Api.Services
         private readonly ILogger _logger;
         private readonly ILeaseRepository _leaseRepository;
         private readonly IPropertyImprovementRepository _propertyImprovementRepository;
-        private readonly ICoordinateTransformService _coordinateService;
         private readonly IPropertyRepository _propertyRepository;
         private readonly IPropertyLeaseRepository _propertyLeaseRepository;
         private readonly IEntityNoteRepository _entityNoteRepository;
@@ -55,7 +53,6 @@ namespace Pims.Api.Services
             _logger = logger;
             _user = user;
             _leaseRepository = leaseRepository;
-            _coordinateService = coordinateTransformService;
             _propertyRepository = propertyRepository;
             _propertyLeaseRepository = propertyLeaseRepository;
             _entityNoteRepository = entityNoteRepository;
@@ -81,16 +78,6 @@ namespace Pims.Api.Services
             pimsUser.ThrowInvalidAccessToLeaseFile(_leaseRepository.GetNoTracking(leaseId).RegionCode);
 
             var lease = _leaseRepository.Get(leaseId);
-            foreach (PimsPropertyLease propertyLease in lease.PimsPropertyLeases)
-            {
-                var property = propertyLease.Property;
-                if (property?.Location != null)
-                {
-                    var newCoords = _coordinateService.TransformCoordinates(SpatialReference.BCALBERS, SpatialReference.WGS84, property.Location.Coordinate);
-                    property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.WGS84);
-                }
-            }
-
             return lease;
         }
 
@@ -204,7 +191,7 @@ namespace Pims.Api.Services
             pimsUser.ThrowInvalidAccessToLeaseFile(_leaseRepository.GetNoTracking(leaseId).RegionCode);
 
             var propertyLeases = _propertyLeaseRepository.GetAllByLeaseId(leaseId);
-            return ReprojectPropertyLocationsToWgs84(propertyLeases);
+            return _propertyService.TransformAllPropertiesToLatLong(propertyLeases.ToList());
         }
 
         public PimsLease Update(PimsLease lease, IEnumerable<UserOverrideCode> userOverrides)
@@ -345,22 +332,6 @@ namespace Pims.Api.Services
             return leaseNote;
         }
 
-        private IEnumerable<PimsPropertyLease> ReprojectPropertyLocationsToWgs84(IEnumerable<PimsPropertyLease> propertyLeases)
-        {
-            List<PimsPropertyLease> reprojectedProperties = new List<PimsPropertyLease>();
-            foreach (var leaseProperty in propertyLeases)
-            {
-                if (leaseProperty.Property.Location != null)
-                {
-                    var oldCoords = leaseProperty.Property.Location.Coordinate;
-                    var newCoords = _coordinateService.TransformCoordinates(SpatialReference.BCALBERS, SpatialReference.WGS84, oldCoords);
-                    leaseProperty.Property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.WGS84);
-                    reprojectedProperties.Add(leaseProperty);
-                }
-            }
-            return reprojectedProperties;
-        }
-
         /// <summary>
         /// Attempt to associate property leases with real properties in the system using the pid/pin identifiers.
         /// Do not attempt to update any preexisiting properties, simply refer to them by id.
@@ -409,36 +380,6 @@ namespace Pims.Api.Services
             return lease;
         }
 
-        private void UpdateLocation(PimsProperty leaseProperty, ref PimsProperty propertyToUpdate, IEnumerable<UserOverrideCode> userOverrides)
-        {
-            if (propertyToUpdate.Location == null)
-            {
-                if (userOverrides.Contains(UserOverrideCode.AddLocationToProperty))
-                {
-                    // convert spatial location from lat/long (4326) to BC Albers (3005) for database storage
-                    var geom = leaseProperty.Location;
-                    if (geom.SRID != SpatialReference.BCALBERS)
-                    {
-                        var newCoords = _coordinateService.TransformCoordinates(geom.SRID, SpatialReference.BCALBERS, geom.Coordinate);
-                        propertyToUpdate.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.BCALBERS);
-                        _propertyRepository.Update(propertyToUpdate, overrideLocation: true);
-                    }
-
-                    var boundaryGeom = leaseProperty.Boundary;
-                    if (boundaryGeom != null && boundaryGeom.SRID != SpatialReference.BCALBERS)
-                    {
-                        var newCoords = boundaryGeom.Coordinates.Select(coord => _coordinateService.TransformCoordinates(boundaryGeom.SRID, SpatialReference.BCALBERS, coord));
-                        var gf = NetTopologySuite.NtsGeometryServices.Instance.CreateGeometryFactory(SpatialReference.BCALBERS);
-                        leaseProperty.Boundary = gf.CreatePolygon(newCoords.ToArray());
-                    }
-                }
-                else
-                {
-                    throw new UserOverrideException(UserOverrideCode.AddLocationToProperty, "The selected property already exists in the system's inventory. However, the record is missing spatial details.\n\n To add the property, the spatial details for this property will need to be updated. The system will attempt to update the property record with spatial information from the current selection.");
-                }
-            }
-        }
-
         private void MatchProperties(PimsLease lease, IEnumerable<UserOverrideCode> userOverrides)
         {
             foreach (var leaseProperty in lease.PimsPropertyLeases)
@@ -455,7 +396,7 @@ namespace Pims.Api.Services
                         }
 
                         leaseProperty.PropertyId = foundProperty.Internal_Id;
-                        UpdateLocation(leaseProperty.Property, ref foundProperty, userOverrides);
+                        _propertyService.UpdateLocation(leaseProperty.Property, ref foundProperty, userOverrides);
                         leaseProperty.Property = foundProperty;
                     }
                     catch (KeyNotFoundException)
@@ -476,7 +417,7 @@ namespace Pims.Api.Services
                         }
 
                         leaseProperty.PropertyId = foundProperty.Internal_Id;
-                        UpdateLocation(leaseProperty.Property, ref foundProperty, userOverrides);
+                        _propertyService.UpdateLocation(leaseProperty.Property, ref foundProperty, userOverrides);
                         leaseProperty.Property = foundProperty;
                     }
                     catch (KeyNotFoundException)
@@ -498,7 +439,7 @@ namespace Pims.Api.Services
             List<PimsLeaseChecklistItem> chklistItems = new();
             foreach (var itemType in _leaseRepository.GetAllChecklistItemTypes().Where(x => !x.IsExpiredType() && !x.IsDisabled))
             {
-                PimsLeaseChecklistItem checklistItem = new ()
+                PimsLeaseChecklistItem checklistItem = new()
                 {
                     LeaseChklstItemTypeCode = itemType.LeaseChklstItemTypeCode,
                     LeaseChklstItemStatusTypeCode = LeaseChecklistItemStatusTypes.INCOMP.ToString(),

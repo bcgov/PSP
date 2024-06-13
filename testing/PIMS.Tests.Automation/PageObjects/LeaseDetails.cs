@@ -25,14 +25,15 @@ namespace PIMS.Tests.Automation.PageObjects
         private By licenseHeaderExpiryDateLabel = By.XPath("//label[contains(text(),'Lease Start')]/parent::strong/parent::div/following-sibling::div[2]/strong/label[contains(text(),'Expiry')]");
         private By licenseHeaderExpiryDateContent = By.XPath("//label[contains(text(),'Lease Start')]/parent::strong/parent::div/following-sibling::div[3]/span");
         private By licenseHeaderHistoricalFileLabel = By.XPath("//label[contains(text(),'Historical File')]");
-        private By licenseHeaderHistoricalFileContent = By.XPath("//label[contains(text(),'Historical File')]/parent::div/following-sibling::div/strong");
+        private By licenseHeaderHistoricalFileContent = By.XPath("//label[contains(text(),'Historical File #:')]/parent::strong/parent::div/following-sibling::div/div/span");
+
         private By licenseHeaderCreatedLabel = By.XPath("//span/strong[contains(text(),'Created')]");
         private By licenseHeaderCreatedContent = By.XPath("//strong[contains(text(),'Created')]/parent::span");
         private By licenseHeaderCreatedByContent = By.XPath("//strong[contains(text(),'Created')]/parent::span/span[@data-testid='tooltip-icon-userNameTooltip']");
         private By licenseHeaderLastUpdatedLabel = By.XPath("//span/strong[contains(text(),'Updated')]");
         private By licenseHeaderLastUpdatedContent = By.XPath("//strong[contains(text(),'Updated')]/parent::span");
         private By licenseHeaderLastUpdatedByContent = By.XPath("//strong[contains(text(),'Updated')]/parent::span/span[@data-testid='tooltip-icon-userNameTooltip']");
-        private By licenseHeaderStatusContent = By.XPath("//div[@class='col']/div/div[3]/div/div");
+        private By licenseHeaderStatusContent = By.XPath("//b[contains(text(),'File')]/parent::span/following-sibling::div");
         private By licenseHeaderExpiredFlag = By.XPath("//label[contains(text(),'Lease Start')]/parent::strong/parent::div/following-sibling::div[4]/div");
 
         //Lease Details Elements
@@ -175,7 +176,6 @@ namespace PIMS.Tests.Automation.PageObjects
         //Leases Modal Element
         private By licenseDetailsConfirmationModal = By.CssSelector("div[class='modal-content']");
         private By licenseDetailsConfirmationContent = By.CssSelector("div[class='modal-content'] p");
-        //private By licenseDetailsAcknowledgeContinueBttn = By.XPath("//button/div[contains(text(),'Acknowledge & Continue')]");
 
         private SharedFileProperties sharedSearchProperties;
         private SharedModals sharedModals;
@@ -498,9 +498,16 @@ namespace PIMS.Tests.Automation.PageObjects
                 if (webDriver.FindElements(licenseDetailsConfirmationModal).Count() > 0)
                 {
                     Assert.Equal("User Override Required", sharedModals.ModalHeader());
-                    Assert.Contains("The selected property already exists in the system's inventory. However, the record is missing spatial details.", sharedModals.ModalContent());
-                    Assert.Contains("To add the property, the spatial details for this property will need to be updated. The system will attempt to update the property record with spatial information from the current selection.", sharedModals.ModalContent());
-                    sharedModals.SecondaryModalClickOKBttn();
+
+                    if (sharedModals.ModalContent().Contains("he selected property already exists in the system's inventory"))
+                    {
+                        Assert.Contains("The selected property already exists in the system's inventory. However, the record is missing spatial details.", sharedModals.ModalContent());
+                        Assert.Contains("To add the property, the spatial details for this property will need to be updated. The system will attempt to update the property record with spatial information from the current selection.", sharedModals.ModalContent());
+                    }
+                    else
+                        Assert.Contains("is attached to L-File #", sharedModals.ModalContent());
+                    
+                    sharedModals.ModalClickOKBttn();
                 }
             }
         }
@@ -617,7 +624,7 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(licenseHeaderExpiryDateLabel);
             AssertTrueIsDisplayed(licenseHeaderExpiryDateContent);
             AssertTrueIsDisplayed(licenseHeaderHistoricalFileLabel);
-            //AssertTrueIsDisplayed(licenseHeaderHistoricalFileContent);
+            //Assert.True(webDriver.FindElements(licenseHeaderHistoricalFileContent).Count > 0);
             AssertTrueIsDisplayed(licenseHeaderCreatedLabel);
             AssertTrueContentNotEquals(licenseHeaderCreatedContent, "");
             AssertTrueContentNotEquals(licenseHeaderCreatedByContent, "");
