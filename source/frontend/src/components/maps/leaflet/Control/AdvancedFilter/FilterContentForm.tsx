@@ -102,6 +102,65 @@ export const FilterContentForm: React.FC<React.PropsWithChildren<IFilterContentF
       <Form>
         <FormObserver onChange={onChange} />
         <LoadingBackdrop show={isLoading} parentScreen />
+        <Section header="Show Ownership" isCollapsable initiallyExpanded>
+          <SectionField label={null} contentWidth="12">
+            <Row>
+              <Col xs={1}>
+                <Check field="isCoreInventory" />
+              </Col>
+              <Col xs={1}>
+                <Image height={36} src={CoreInventoryPng} />
+              </Col>
+              <Col className="pl-5">
+                <StyledSpan className="mb-3">Core Inventory</StyledSpan>
+              </Col>
+            </Row>
+            <Row className="pt-4">
+              <Col xs={1}>
+                <Check field="isPropertyOfInterest" />
+              </Col>
+              <Col xs={1}>
+                <Image height={36} src={PropertyOfInterestPng} />
+              </Col>
+              <Col className="pl-5">
+                <StyledSpan className="mb-3">Property of Interest</StyledSpan>
+              </Col>
+            </Row>
+            <Row className="pt-4">
+              <Col xs={1}>
+                <Check field="isOtherInterest" />
+              </Col>
+              <Col xs={1}>
+                <Image height={36} src={OtherInterestPng} />
+              </Col>
+              <Col className="pl-5">
+                <StyledSpan className="mb-3">Other Interest</StyledSpan>
+              </Col>
+            </Row>
+            <Row className="pt-4">
+              <Col xs={1}>
+                <Check field="isDisposed" />
+              </Col>
+              <Col xs={1}>
+                <Image height={36} src={DisposedPng} />
+              </Col>
+              <Col className="pl-5">
+                <StyledSpan className="mb-3">Disposed</StyledSpan>
+              </Col>
+            </Row>
+            <Row className="pt-4">
+              <Col xs={1}>
+                <Check field="isRetired" />
+              </Col>
+              <Col xs={1}>
+                <Image height={36} src={RetiredPng} />
+              </Col>
+              <Col className="pl-5">
+                <StyledSpan className="mb-3">Retired</StyledSpan>
+              </Col>
+            </Row>
+          </SectionField>
+        </Section>
         <Section header="Project" isCollapsable initiallyExpanded>
           <SectionField label={null} contentWidth="12">
             <ProjectSelector field="projectPrediction" />
@@ -184,65 +243,6 @@ export const FilterContentForm: React.FC<React.PropsWithChildren<IFilterContentF
               hidePlaceholder
               options={anomalyOptions}
             />
-          </SectionField>
-        </Section>
-        <Section header="Show Ownership" isCollapsable initiallyExpanded>
-          <SectionField label={null} contentWidth="12">
-            <Row>
-              <Col xs={1}>
-                <Check field="isCoreInventory" />
-              </Col>
-              <Col xs={1}>
-                <Image height={36} src={CoreInventoryPng} />
-              </Col>
-              <Col className="pl-5">
-                <StyledSpan className="mb-3">Core Inventory</StyledSpan>
-              </Col>
-            </Row>
-            <Row className="pt-4">
-              <Col xs={1}>
-                <Check field="isPropertyOfInterest" />
-              </Col>
-              <Col xs={1}>
-                <Image height={36} src={PropertyOfInterestPng} />
-              </Col>
-              <Col className="pl-5">
-                <StyledSpan className="mb-3">Property of Interest</StyledSpan>
-              </Col>
-            </Row>
-            <Row className="pt-4">
-              <Col xs={1}>
-                <Check field="isOtherInterest" />
-              </Col>
-              <Col xs={1}>
-                <Image height={36} src={OtherInterestPng} />
-              </Col>
-              <Col className="pl-5">
-                <StyledSpan className="mb-3">Other Interest</StyledSpan>
-              </Col>
-            </Row>
-            <Row className="pt-4">
-              <Col xs={1}>
-                <Check field="isDisposed" />
-              </Col>
-              <Col xs={1}>
-                <Image height={36} src={DisposedPng} />
-              </Col>
-              <Col className="pl-5">
-                <StyledSpan className="mb-3">Disposed</StyledSpan>
-              </Col>
-            </Row>
-            <Row className="pt-4">
-              <Col xs={1}>
-                <Check field="isRetired" />
-              </Col>
-              <Col xs={1}>
-                <Image height={36} src={RetiredPng} />
-              </Col>
-              <Col className="pl-5">
-                <StyledSpan className="mb-3">Retired</StyledSpan>
-              </Col>
-            </Row>
           </SectionField>
         </Section>
       </Form>
