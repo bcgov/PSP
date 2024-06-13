@@ -125,10 +125,10 @@ const termActions = (
           index === 0 &&
           !!leaseTypeCode &&
           [
-            ApiGen_CodeTypes_LeaseLicenceTypes.LIOCCACCS.toString(),
-            ApiGen_CodeTypes_LeaseLicenceTypes.LIOCCTTLD.toString(),
-            ApiGen_CodeTypes_LeaseLicenceTypes.LIOCCUSE.toString(),
-            ApiGen_CodeTypes_LeaseLicenceTypes.LIOCCUTIL.toString(),
+            ApiGen_CodeTypes_LeaseLicenceTypes.LIOCCACCS,
+            ApiGen_CodeTypes_LeaseLicenceTypes.LIOCCTTLD,
+            ApiGen_CodeTypes_LeaseLicenceTypes.LIOCCUSE,
+            ApiGen_CodeTypes_LeaseLicenceTypes.LIOCCUTIL,
           ].includes(leaseTypeCode) && (
             <Button
               title="Generate H1005(a)"
