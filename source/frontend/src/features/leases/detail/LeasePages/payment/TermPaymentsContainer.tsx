@@ -27,9 +27,10 @@ import TermsForm from './table/terms/TermsForm';
 /**
  * Orchestrates the display and modification of lease terms and payments.
  */
-export const TermPaymentsContainer: React.FunctionComponent<
-  React.PropsWithChildren<LeasePageProps>
-> = ({ formikRef, onSuccess }) => {
+export const TermPaymentsContainer: React.FunctionComponent<LeasePageProps> = ({
+  formikRef,
+  onSuccess,
+}) => {
   const { lease } = useContext(LeaseStateContext);
   const generateH1005a = useGenerateLicenceOfOccupation();
   const [editModalValues, setEditModalValues] = useState<FormLeaseTerm | undefined>(undefined);
