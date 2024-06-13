@@ -190,7 +190,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
             ButtonElement(licensePaymentSaveBttn);
 
-            WaitUntilClickable(licensePaymentsTableTotal);
+            Wait();
             totalPaymentInTerm = webDriver.FindElements(licensePaymentsTableTotal).Count;
         }
 
@@ -329,7 +329,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyPaymentTableHeader()
         {
-            WaitUntilVisible(licensePaymentsSendPaymentTooltip);
+            Wait();
 
             if (leaseDetails.GetLeaseAccountType() == "Receivable")
             {

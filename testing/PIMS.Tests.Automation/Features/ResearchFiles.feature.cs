@@ -141,7 +141,7 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.When("I add Properties to a Research File", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 15
- testRunner.And("I update a Research File Properties from row number 5", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I update a Property details from a file from row number 5", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 16
  testRunner.Then("A new Research File is created successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");

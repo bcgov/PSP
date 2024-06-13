@@ -16,13 +16,17 @@ namespace PIMS.Tests.Automation.PageObjects
         private By searchBySelect = By.Id("input-searchBy");
         private By searchLicenseLFileInput = By.Id("input-lFileNo");
         private By searchLicensePIDInput = By.Id("input-pinOrPid");
+        private By searchLicenseAddressInput = By.Id("input-address");
+        private By searchLicenseHistoricalFile = By.Id("input-historical");
+        private By searchLicenseProgramSelect = By.Id("properties-selector_input");
         private By searchLicenseStatusInput = By.Id("status-selector_input");
         private By searchLicenseStatusOptions = By.XPath("//input[@id='status-selector_input']/parent::div/following-sibling::div/ul[@class='optionContainer']");
         private By searchLicenseActiveStatusDeleteBttn = By.CssSelector("div[class='search-wrapper searchWrapper '] span i");
         private By searchLicenseProgramInput = By.Id("properties-selector_input");
+        private By searchLicenseProgramOptions = By.XPath("//input[@id='properties-selector_input']/parent::div/following-sibling::div/ul[@class='optionContainer']");
         private By searchLicenceTenantInput = By.Id("input-tenantName");
         private By searchLicenceFromDateInput = By.Id("datepicker-expiryStartDate");
-        private By searchLicenseToDateInput = By.Id("datepicker-expiryStartDate");
+        private By searchLicenseToDateInput = By.Id("datepicker-expiryEndDate");
         private By searchLicenseRegionsSelect = By.Id("input-regionType");
         private By searchLicenseKeywordInput = By.Id("input-details");
         private By searchLicenseKeywordTooltip = By.Id("lease-search-keyword-tooltip");
@@ -175,24 +179,94 @@ namespace PIMS.Tests.Automation.PageObjects
             return webDriver.FindElement(searchLicense1stResultStatusContent).Text;
         }
 
-        public void FilterLeasesFiles(string pid, string expiryDate, string tenant, string status)
+        public void FilterLeasesFiles(string pid = "", string pin = "", string address = "", string lfile = "", string historicalFile = "", string program = "",
+            string status = "", string tenant = "", string expiryDateFrom = "", string expiryDateTo = "", string region = "", string keyword = "")
         {
             Wait();
             webDriver.FindElement(searchLicenseResetButton).Click();
             webDriver.FindElement(searchLicenseActiveStatusDeleteBttn).Click();
 
-            WaitUntilClickable(searchBySelect);
-            ChooseSpecificSelectOption(searchBySelect, "PID/PIN");
-            webDriver.FindElement(searchLicensePIDInput).SendKeys(pid);
-            webDriver.FindElement(searchLicenceFromDateInput).SendKeys(expiryDate);
-            webDriver.FindElement(searchLicenceTenantInput).SendKeys(tenant);
+            if (pid != "")
+            {
+                WaitUntilClickable(searchBySelect);
+                ChooseSpecificSelectOption(searchBySelect, "PID/PIN");
+                webDriver.FindElement(searchLicensePIDInput).SendKeys(pid);
+            }
+
+            if (pin != "")
+            {
+                WaitUntilClickable(searchBySelect);
+                ChooseSpecificSelectOption(searchBySelect, "PID/PIN");
+                webDriver.FindElement(searchLicensePIDInput).SendKeys(pin);
+            }
+
+            if (address != "")
+            {
+                WaitUntilClickable(searchBySelect);
+                ChooseSpecificSelectOption(searchBySelect, "Address");
+                webDriver.FindElement(searchLicenseAddressInput).SendKeys(address);
+            }
+
+            if (lfile != "")
+            {
+                WaitUntilClickable(searchBySelect);
+                ChooseSpecificSelectOption(searchBySelect, "L-File #");
+                webDriver.FindElement(searchLicenseLFileInput).SendKeys(lfile);
+            }
+
+            if (historicalFile != "")
+            {
+                WaitUntilClickable(searchBySelect);
+                ChooseSpecificSelectOption(searchBySelect, "Historical File #");
+                webDriver.FindElement(searchLicenseHistoricalFile).SendKeys(historicalFile);
+            }
+
+            if (program != "")
+            {
+                WaitUntilClickable(searchLicenseProgramSelect);
+
+                webDriver.FindElement(searchLicenseProgramSelect).Click();
+                WaitUntilClickable(searchLicenseProgramOptions);
+                ChooseMultiSelectSpecificOption(searchLicenseProgramOptions, program);
+            }
 
             if (status != "")
             {
-                webDriver.FindElement(searchLicenseStatusInput).Click();
+                WaitUntilClickable(searchLicenseStatusInput);
 
+                webDriver.FindElement(searchLicenseStatusInput).Click();
                 WaitUntilClickable(searchLicenseStatusOptions);
                 ChooseMultiSelectSpecificOption(searchLicenseStatusOptions, status);
+            }
+
+            if (tenant != "")
+            {
+                WaitUntilClickable(searchLicenceTenantInput);
+                webDriver.FindElement(searchLicenceTenantInput).SendKeys(tenant);
+            }
+
+            if (expiryDateFrom != "")
+            {
+                WaitUntilClickable(searchLicenceFromDateInput);
+                webDriver.FindElement(searchLicenceFromDateInput).SendKeys(expiryDateFrom);
+            }
+
+            if (expiryDateTo != "")
+            {
+                WaitUntilClickable(searchLicenseToDateInput);
+                webDriver.FindElement(searchLicenseToDateInput).SendKeys(address);
+            }
+
+            if (region != "")
+            {
+                WaitUntilClickable(searchLicenseRegionsSelect);
+                ChooseSpecificSelectOption(searchLicenseRegionsSelect, region);
+            }
+
+            if (keyword != "")
+            {
+                WaitUntilClickable(searchLicenseKeywordInput);
+                webDriver.FindElement(searchLicenseKeywordInput).SendKeys(keyword);
             }
              
             WaitUntilClickable(searchLicenseSearchButton);
