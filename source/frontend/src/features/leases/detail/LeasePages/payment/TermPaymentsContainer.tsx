@@ -118,6 +118,17 @@ export const TermPaymentsContainer: React.FunctionComponent<
           startDate: isValidIsoDateTime(lease?.startDate) ? lease.startDate : '',
         };
       }
+
+      // For new terms, adjust the "Requires GST" field based on whether the lease is receivable or payable.
+      if (!isValidId(values?.id)) {
+        const isReceivableLease =
+          lease?.paymentReceivableType?.id === ApiGen_CodeTypes_LeaseAccountTypes.RCVBL.toString();
+        values = {
+          ...values,
+          isGstEligible: isReceivableLease ? true : false,
+        };
+      }
+
       setEditModalValues(values);
     },
     [lease],
