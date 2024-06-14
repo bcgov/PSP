@@ -23,6 +23,7 @@ import { renderAsync, screen } from '@/utils/test-utils';
 
 import UpdateLeaseContainer, { UpdateLeaseContainerProps } from './UpdateLeaseContainer';
 import { IUpdateLeaseFormProps } from './UpdateLeaseForm';
+import { ApiGen_CodeTypes_LeaseAccountTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseAccountTypes';
 
 const history = createMemoryHistory();
 const storeState = {
@@ -119,7 +120,7 @@ const expectedLease: ApiGen_Concepts_Lease = {
   ...getEmptyLease(),
   startDate: EpochIsoDateTime,
   amount: 0,
-  paymentReceivableType: toTypeCodeNullable('RCVBL'),
+  paymentReceivableType: toTypeCodeNullable(ApiGen_CodeTypes_LeaseAccountTypes.RCVBL),
   purposeType: toTypeCodeNullable('BCFERRIES'),
   fileStatusTypeCode: toTypeCodeNullable('DRAFT'),
   type: null,
