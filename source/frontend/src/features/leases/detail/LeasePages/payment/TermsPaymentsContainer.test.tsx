@@ -21,9 +21,6 @@ import {
   screen,
   userEvent,
   waitFor,
-  prettyDOM,
-  waitForElementToBeRemoved,
-  getByTestId,
 } from '@/utils/test-utils';
 
 import { defaultFormLeaseTerm, FormLeaseTerm } from './models';
@@ -123,12 +120,14 @@ describe('TermsPaymentsContainer component', () => {
   beforeEach(() => {
     mockAxios.resetHistory();
   });
+
   it('renders as expected', async () => {
     const { component } = await setup({ claims: [Claims.LEASE_EDIT] });
     await act(async () => {});
 
     expect(component.asFragment()).toMatchSnapshot();
   });
+
   it('renders with data as expected', async () => {
     const { component } = await setup({
       claims: [Claims.LEASE_EDIT],
@@ -152,6 +151,7 @@ describe('TermsPaymentsContainer component', () => {
 
       expect(getByDisplayValue('Jan 01, 2020')).toBeVisible();
     });
+
     it('makes a post request when adding a new term', async () => {
       const {
         component: { getAllByText, getByText },
@@ -282,10 +282,12 @@ describe('TermsPaymentsContainer component', () => {
       expect(useLeaseTermRepository().deleteLeaseTerm.execute).toHaveBeenCalled();
     });
   });
+
   describe('payments logic tests', () => {
     mockGetLeaseTerms.execute.mockResolvedValue(
       defaultLeaseWithTermsPayments.terms.map(t => FormLeaseTerm.toApi(t)),
     );
+
     it('makes a post request when adding a new payment', async () => {
       mockGetLeaseTerms.execute.mockResolvedValue(
         (mockGetLeaseTerms.response = defaultLeaseWithTermsPayments.terms.map(t =>
@@ -339,6 +341,7 @@ describe('TermsPaymentsContainer component', () => {
       await act(async () => userEvent.click(saveButton));
       expect(mockAxios.history.put.length).toBe(1);
     });
+    
     it('asks for confirmation when deleting a payment', async () => {
       mockGetLeaseTerms.execute.mockResolvedValue(
         (mockGetLeaseTerms.response = defaultLeaseWithTermsPayments.terms.map(t =>
