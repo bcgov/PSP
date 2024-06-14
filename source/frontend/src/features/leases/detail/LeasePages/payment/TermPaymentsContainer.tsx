@@ -8,7 +8,7 @@ import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { ModalContext } from '@/contexts/modalContext';
 import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
 import { LeaseFormModel } from '@/features/leases/models';
-import { useGenerateH1005a } from '@/features/mapSideBar/acquisition/common/GenerateForm/hooks/useGenerateH1005a';
+import { useGenerateLicenceOfOccupation } from '@/features/mapSideBar/acquisition/common/GenerateForm/hooks/useGenerateLicenceOfOccupation';
 import { LeasePageProps } from '@/features/mapSideBar/lease/LeaseContainer';
 import { useLeasePaymentRepository } from '@/hooks/repositories/useLeasePaymentRepository';
 import { useLeaseTermRepository } from '@/hooks/repositories/useLeaseTermRepository';
@@ -30,7 +30,7 @@ export const TermPaymentsContainer: React.FunctionComponent<
   React.PropsWithChildren<LeasePageProps>
 > = ({ formikRef, onSuccess }) => {
   const { lease } = useContext(LeaseStateContext);
-  const generateH1005a = useGenerateH1005a();
+  const generateH1005a = useGenerateLicenceOfOccupation();
   const [editModalValues, setEditModalValues] = useState<FormLeaseTerm | undefined>(undefined);
   const [editPaymentModalValues, setEditPaymentModalValues] = useState<
     FormLeasePayment | undefined

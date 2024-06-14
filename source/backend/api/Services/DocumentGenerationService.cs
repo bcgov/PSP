@@ -68,7 +68,7 @@ namespace Pims.Api.Services
             return result;
         }
 
-        public async Task<ExternalResponse<FileDownloadResponse>> GenerateDocument(FormDocumentType templateType, JsonElement templateData, ConvertToTypes? convertTo)
+        public async Task<ExternalResponse<FileDownloadResponse>> GenerateDocument(FormTypes templateType, JsonElement templateData, ConvertToTypes? convertTo)
         {
             this.Logger.LogInformation("Generating document");
 
