@@ -3,11 +3,11 @@ import moment from 'moment';
 import { createFileDownload } from '@/features/documents/DownloadDocumentButton';
 import { useDocumentGenerationRepository } from '@/features/documents/hooks/useDocumentGenerationRepository';
 import { ExpropriationForm9Model } from '@/features/mapSideBar/acquisition/tabs/expropriation/models';
-import { FormTemplateTypes } from '@/features/mapSideBar/shared/content/models';
 import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { useInterestHolderRepository } from '@/hooks/repositories/useInterestHolderRepository';
 import { ApiGen_CodeTypes_ExternalResponseStatus } from '@/models/api/generated/ApiGen_CodeTypes_ExternalResponseStatus';
+import { ApiGen_CodeTypes_FormTypes } from '@/models/api/generated/ApiGen_CodeTypes_FormTypes';
 import { Api_GenerateAcquisitionFile } from '@/models/generate/acquisition/GenerateAcquisitionFile';
 import { Api_GenerateExpropriationForm9 } from '@/models/generate/acquisition/GenerateExpropriationForm9';
 import { isValidId } from '@/utils';
@@ -56,7 +56,7 @@ export const useGenerateExpropriationForm9 = () => {
     });
 
     const generatedFile = await generate({
-      templateType: FormTemplateTypes.EXPROP_FORM_9,
+      templateType: ApiGen_CodeTypes_FormTypes.FORM9.toString(),
       templateData: expropriationData,
       convertToType: null,
     });

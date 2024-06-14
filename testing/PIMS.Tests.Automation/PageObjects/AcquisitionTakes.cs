@@ -479,9 +479,9 @@ namespace PIMS.Tests.Automation.PageObjects
         private double TransformSqMtToSqFt(string sqmt)
         {
             double sqmtNbr = double.Parse(sqmt) * 10.76391041671;
-            double sqftRounded = Math.Round(sqmtNbr, 2, MidpointRounding.ToEven);
+            double sqftRounded = Math.Round(sqmtNbr, 4, MidpointRounding.ToEven);
 
-            if (sqftRounded.Equals(0.00))
+            if (sqftRounded.Equals(0.0000))
                 return 0;
             else
                 return sqftRounded;
@@ -490,9 +490,9 @@ namespace PIMS.Tests.Automation.PageObjects
         private double TransformSqMtToHectares(string sqmt)
         {
             double sqmtNbr = double.Parse(sqmt) * 0.0001;
-            double hectaresRounded = Math.Round(sqmtNbr, 2, MidpointRounding.ToEven);
+            double hectaresRounded = Math.Round(sqmtNbr, 4, MidpointRounding.ToEven);
 
-            if (hectaresRounded.Equals(0.00))
+            if (hectaresRounded.Equals(0.0000))
                 return 0;
             else
                 return hectaresRounded;
@@ -501,9 +501,9 @@ namespace PIMS.Tests.Automation.PageObjects
         private double TransformSqMtToAcres(string sqmt)
         {
             double sqmtNbr = double.Parse(sqmt) * 0.000247105;
-            double acresRounded = Math.Round(sqmtNbr, 2, MidpointRounding.ToEven);
+            double acresRounded = Math.Round(sqmtNbr, 4, MidpointRounding.ToEven);
 
-            if (acresRounded.Equals(0.00))
+            if (acresRounded.Equals(0.0000))
                 return 0;
             else
                 return acresRounded;
