@@ -66,7 +66,7 @@ const StyledButton = styled(BootstrapButton)`
     align-items: center;
     justify-content: center;
     padding: 0.4rem 1.2rem;
-    min-height: 2.4rem;
+    min-height: 3rem;
     border: 0.2rem solid transparent;
     border-radius: 0.4rem;
     text-align: center;

@@ -202,7 +202,7 @@ exports[`TermsPaymentsContainer component > renders as expected 1`] = `
   -ms-flex-pack: center;
   justify-content: center;
   padding: 0.4rem 1.2rem;
-  min-height: 2.4rem;
+  min-height: 3rem;
   border: 0.2rem solid transparent;
   border-radius: 0.4rem;
   text-align: center;
@@ -858,7 +858,7 @@ exports[`TermsPaymentsContainer component > renders with data as expected 1`] = 
   -ms-flex-pack: center;
   justify-content: center;
   padding: 0.4rem 1.2rem;
-  min-height: 2.4rem;
+  min-height: 3rem;
   border: 0.2rem solid transparent;
   border-radius: 0.4rem;
   text-align: center;
