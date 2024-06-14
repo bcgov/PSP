@@ -294,7 +294,7 @@ export const MapRouter: React.FunctionComponent = memo(() => {
           </LeaseContextProvider>
         )}
         claim={Claims.LEASE_VIEW}
-        key={'LeaseLicence'}
+        key={'LeaseLicense'}
         title={'Lease / Licence File'}
       />
       <AppRoute

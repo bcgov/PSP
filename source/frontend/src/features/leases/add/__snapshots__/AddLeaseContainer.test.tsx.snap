@@ -2882,8 +2882,8 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                 >
                   <select
                     class="form-control"
-                    id="input-hasPhysicalLicence"
-                    name="hasPhysicalLicence"
+                    id="input-hasPhysicalLicense"
+                    name="hasPhysicalLicense"
                   >
                     <option
                       value="null"
@@ -2924,8 +2924,8 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                 >
                   <select
                     class="form-control"
-                    id="input-hasDigitalLicence"
-                    name="hasDigitalLicence"
+                    id="input-hasDigitalLicense"
+                    name="hasDigitalLicense"
                   >
                     <option
                       value="null"

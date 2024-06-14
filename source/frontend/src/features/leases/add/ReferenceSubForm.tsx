@@ -8,10 +8,10 @@ const ReferenceSubForm: React.FunctionComponent = () => {
   return (
     <Section header="Documentation">
       <SectionField label="Physical lease/licence exists" contentWidth="5">
-        <InlineYesNoSelect field="hasPhysicalLicence" />
+        <InlineYesNoSelect field="hasPhysicalLicense" />
       </SectionField>
       <SectionField label="Digital lease/licence exists" contentWidth="5">
-        <InlineYesNoSelect field="hasDigitalLicence" />
+        <InlineYesNoSelect field="hasDigitalLicense" />
       </SectionField>
       <SectionField
         label="Document location"
