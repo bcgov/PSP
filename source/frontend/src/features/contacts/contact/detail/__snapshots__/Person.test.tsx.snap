@@ -161,23 +161,6 @@ exports[`Contact PersonView component > renders as expected 1`] = `
           </p>
         </div>
       </div>
-      <div
-        class="pb-2 row"
-      >
-        <div
-          class="pr-0 text-left col-4"
-        >
-          <label
-            class="c3"
-          >
-            Linked organization:
-          </label>
-        </div>
-        <div
-          class="c4 text-left col"
-          data-testid="contact-person-organization"
-        />
-      </div>
       <h3
         class="c5 mt-10"
       >

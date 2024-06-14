@@ -104,7 +104,6 @@ const OrganizationView: React.FunctionComponent<OrganizationViewProps> = ({ orga
                 <div>{field.municipalityAndProvince} </div>
                 {field.postal && <div>{field.postal} </div>}
                 {field.country && <div>{field.country}</div>}
-                {index + 1 !== organizationAddresses.length && <hr></hr>}
               </Col>
             </Row>
           </React.Fragment>

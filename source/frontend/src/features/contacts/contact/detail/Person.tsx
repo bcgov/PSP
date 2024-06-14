@@ -53,22 +53,21 @@ const PersonFormView: React.FunctionComponent<React.PropsWithChildren<PersonForm
           <p>{person.preferredName}</p>
         </SectionField>
 
-        <SectionField
-          label="Linked organization"
-          labelWidth="4"
-          valueTestId="contact-person-organization"
-        >
-          {person.organizations &&
-            person.organizations.map((organization: IContactOrganization, index: number) => (
-              <>
-                <Link to={'/contact/O' + organization.id} key={'person-org-' + index}>
-                  <FaRegBuilding size={20} className="mr-2" />
-                  {organization.name}
-                </Link>
+        {person.organizations &&
+          person.organizations.map((organization: IContactOrganization, index: number) => (
+            <React.Fragment key={'contact-person-' + person.id + '-organization'}>
+              <SectionField
+                key={'person-org-' + index}
+                label="Organization name"
+                labelWidth="4"
+                valueTestId="contact-person-organization"
+              >
+                <FaRegBuilding size={20} className="mr-2" />
+                <Link to={'/contact/O' + organization.id}>{organization.name}</Link>
                 <br />
-              </>
-            ))}
-        </SectionField>
+              </SectionField>
+            </React.Fragment>
+          ))}
 
         <H3 className="mt-10">Contact Info</H3>
         <ContactInfoSubForm contactEntity={person} />
