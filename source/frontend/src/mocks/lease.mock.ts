@@ -1,3 +1,4 @@
+import { ApiGen_CodeTypes_LeaseLicenceTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseLicenceTypes';
 import { ApiGen_Concepts_FileChecklistItem } from '@/models/api/generated/ApiGen_Concepts_FileChecklistItem';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { ApiGen_Concepts_LeaseTenant } from '@/models/api/generated/ApiGen_Concepts_LeaseTenant';
@@ -79,7 +80,12 @@ export const getMockApiLease: () => ApiGen_Concepts_Lease = () => ({
   statusType: null,
   programType: null,
   region: null,
-  type: null,
+  type: {
+    id: ApiGen_CodeTypes_LeaseLicenceTypes.LIOCCACCS.toString(),
+    description: 'License of Occupation (access)',
+    isDisabled: false,
+    displayOrder: 1,
+  },
   otherCategoryType: null,
   otherProgramType: null,
   otherPurposeType: null,

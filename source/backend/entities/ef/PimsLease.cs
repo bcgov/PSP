@@ -204,7 +204,7 @@ public partial class PimsLease
     /// Original start date of the lease/license
     /// </summary>
     [Column("ORIG_START_DATE", TypeName = "datetime")]
-    public DateTime OrigStartDate { get; set; }
+    public DateTime? OrigStartDate { get; set; }
 
     /// <summary>
     /// Original expiry date of the lease/license

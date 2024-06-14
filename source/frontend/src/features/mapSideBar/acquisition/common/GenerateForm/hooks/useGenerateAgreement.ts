@@ -1,11 +1,11 @@
 import { InterestHolderType } from '@/constants/interestHolderTypes';
 import { createFileDownload } from '@/features/documents/DownloadDocumentButton';
 import { useDocumentGenerationRepository } from '@/features/documents/hooks/useDocumentGenerationRepository';
-import { FormTemplateTypes } from '@/features/mapSideBar/shared/content/models';
 import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { ApiGen_CodeTypes_AgreementTypes } from '@/models/api/generated/ApiGen_CodeTypes_AgreementTypes';
 import { ApiGen_CodeTypes_ExternalResponseStatus } from '@/models/api/generated/ApiGen_CodeTypes_ExternalResponseStatus';
+import { ApiGen_CodeTypes_FormTypes } from '@/models/api/generated/ApiGen_CodeTypes_FormTypes';
 import { ApiGen_Concepts_AcquisitionFileTeam } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileTeam';
 import { ApiGen_Concepts_Agreement } from '@/models/api/generated/ApiGen_Concepts_Agreement';
 import { ApiGen_Concepts_Organization } from '@/models/api/generated/ApiGen_Concepts_Organization';
@@ -115,16 +115,16 @@ export const useGenerateAgreement = () => {
  * @param agreementType
  * @returns
  */
-const getTemplateTypeFromAgreementType = (agreementType: string | null) => {
+const getTemplateTypeFromAgreementType = (agreementType: string | null): string => {
   switch (agreementType) {
     case ApiGen_CodeTypes_AgreementTypes.H179A:
-      return FormTemplateTypes.H179A;
+      return ApiGen_CodeTypes_FormTypes.H179A.toString();
     case ApiGen_CodeTypes_AgreementTypes.H179P:
-      return FormTemplateTypes.H179P;
+      return ApiGen_CodeTypes_FormTypes.H179P.toString();
     case ApiGen_CodeTypes_AgreementTypes.H179T:
-      return FormTemplateTypes.H179T;
+      return ApiGen_CodeTypes_FormTypes.H179T.toString();
     case ApiGen_CodeTypes_AgreementTypes.H0074:
-      return FormTemplateTypes.H0074;
+      return ApiGen_CodeTypes_FormTypes.H0074.toString();
     default:
       throw Error(`Unable to find form type for agreement type: ${agreementType}`);
   }
