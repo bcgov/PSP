@@ -154,7 +154,7 @@ exports[`Contact OrganizationView component > renders as expected 1`] = `
         </div>
         <div
           class="c4 text-left col"
-          data-testid="contact-organization-incorporationNumber"
+          data-testid="contact-organization-alias"
         >
           Fake Inc
         </div>
@@ -173,7 +173,7 @@ exports[`Contact OrganizationView component > renders as expected 1`] = `
         </div>
         <div
           class="c4 text-left col"
-          data-testid="contact-organization-alias"
+          data-testid="contact-organization-incorporationNumber"
         >
           987
         </div>
