@@ -2,7 +2,6 @@ import { FormikProps } from 'formik';
 import { createMemoryHistory } from 'history';
 import { createRef } from 'react';
 
-
 import { createAxiosError, renderAsync, RenderOptions, screen } from '@/utils/test-utils';
 import PropertySelectorPidSearchContainer, {
   PropertySelectorPidSearchContainerProps,
@@ -97,9 +96,7 @@ describe('PropertySearchPidSelector component', () => {
   });
 
   it('displays an error when the property is not found', async () => {
-    mockGetByPidWrapper.execute.mockRejectedValue(
-      createAxiosError(404, 'Some error'),
-    );
+    mockGetByPidWrapper.execute.mockRejectedValue(createAxiosError(404, 'Some error'));
 
     await setup();
     viewProps?.onSearch({ pid: '111-111-111' });
