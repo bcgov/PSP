@@ -138,7 +138,6 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
               width="2.6rem"
               height="2.6rem"
               fill="currentColor"
-              className="mr-2"
             />
           }
           header={

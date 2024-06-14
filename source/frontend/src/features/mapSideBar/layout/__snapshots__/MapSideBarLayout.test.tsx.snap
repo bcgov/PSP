@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`LayerPopupView component > renders as expected with layer popup content 1`] = `
+exports[`MapSideBarLayout component > matches snapshot 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
@@ -141,168 +141,154 @@ exports[`LayerPopupView component > renders as expected with layer popup content
   margin-right: 0;
 }
 
-.c4.c4.btn {
-  background-color: unset;
-  border: none;
-}
-
-.c4.c4.btn:hover,
-.c4.c4.btn:focus,
-.c4.c4.btn:active {
-  background-color: unset;
-  outline: none;
-  box-shadow: none;
-}
-
-.c4.c4.btn svg {
-  -webkit-transition: all 0.3s ease-out;
-  transition: all 0.3s ease-out;
-}
-
-.c4.c4.btn svg:hover {
-  -webkit-transition: all 0.3s ease-in;
-  transition: all 0.3s ease-in;
+.c1 {
+  font-family: 'BCSans-Bold';
+  font-size: 3.2rem;
+  border-bottom: solid 0.5rem;
+  width: 100%;
+  text-align: left;
+  margin-bottom: 2.4rem;
 }
 
 .c5 {
+  border-left: 0.1rem solid;
+  width: 0.1rem;
+  height: 80%;
+  margin: auto;
+}
+
+.c4.btn.btn-light.Button {
+  padding: 0;
+  border: 0.1rem solid;
+  background-color: white;
+}
+
+.c4.btn.btn-light.Button:focus,
+.c4.btn.btn-light.Button:active {
+  background-color: white;
+}
+
+.c4.btn,
+.c4 .Button__icon,
+.c4 svg {
+  max-width: 2.4rem;
+  min-width: 2.4rem;
+  max-height: 2.4rem;
+  min-height: 2.4rem;
+  font-size: 1.4rem;
+}
+
+.c0 {
+  min-width: 90rem;
+  height: 100%;
+  position: relative;
+  padding: 1.6rem;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.c2 {
+  gap: 1.5rem;
   -webkit-align-items: center;
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  border-top: 1px solid #bcbec5;
-  margin-top: 0.8rem;
 }
 
-.c2 {
-  font-weight: bold;
-  font-size: 1.6rem;
-  line-height: 2.4rem;
+.c7 {
+  width: 100%;
+  position: relative;
+  overflow: auto;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
 }
 
-.c0 {
-  padding: 0.5rem 1.2rem;
+.c8 {
+  height: 100%;
+  width: 100%;
 }
 
-.c0 .btn-link {
-  font-size: 1.4rem;
-  line-height: 2.2rem;
-  padding: 0;
-}
-
-.c0 .list-group .list-group-item {
-  font-size: 1.4rem;
-  border: none;
-  padding: 0;
-  padding-top: 0.8rem;
-}
-
-.c1 {
-  margin: 0rem;
-  border-bottom: 0.2rem solid;
+.c6 {
+  width: 100%;
+  border-bottom: solid 0.5rem;
 }
 
 <div
     class="c0"
   >
     <div
-      class="c1 row"
+      class="row"
     >
       <div
-        class="p-0 m-0 col"
+        class="col"
       >
-        <h5
-          class="c2"
+        <h1
+          class="c1 mr-auto"
+        >
+          <span
+            class="mr-2"
+          >
+            icon
+          </span>
+          title
+        </h1>
+      </div>
+      <div
+        class="c2 d-flex col-auto"
+      >
+        <span>
+          <button
+            class="c3 Button Button--icon-only c4 btn btn-light"
+            title="collapse"
+            type="button"
+          >
+            <div
+              class="Button__icon"
+            >
+              <svg
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M17.59 18 19 16.59 14.42 12 19 7.41 17.59 6l-6 6z"
+                />
+                <path
+                  d="m11 18 1.41-1.41L7.83 12l4.58-4.59L11 6l-6 6z"
+                />
+              </svg>
+            </div>
+          </button>
+        </span>
+        <div
+          class="c5"
         />
       </div>
+    </div>
+    <div
+      class="c6"
+    />
+    <div
+      class="c7"
+    >
       <div
-        class="p-0 m-0 col-1"
-      >
-        <button
-          class="c3 Button c4 p-0 m-0 btn btn-primary"
-          type="button"
-        >
-          <div
-            class="Button__value"
-          >
-            <svg
-              fill="none"
-              height="1.5rem"
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              viewBox="0 0 24 24"
-              width="1.5rem"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <line
-                x1="18"
-                x2="6"
-                y1="6"
-                y2="18"
-              />
-              <line
-                x1="6"
-                x2="18"
-                y1="6"
-                y2="18"
-              />
-            </svg>
-          </div>
-        </button>
-      </div>
-    </div>
-    <div
-      class="list-group"
-    >
-      <b>
-        No layer information at this location
-      </b>
-    </div>
-    <div
-      class="c5"
-    >
-      <button
-        class="c3 Button btn btn-link"
-        type="button"
-      >
-        <div
-          class="Button__value"
-        >
-          Zoom map
-        </div>
-      </button>
-      <button
-        class="c3 Button btn btn-link"
-        data-testid="fly-out-ellipsis"
-        type="button"
-      >
-        <div
-          class="Button__value"
-        >
-          <svg
-            fill="currentColor"
-            height="1em"
-            stroke="currentColor"
-            stroke-width="0"
-            viewBox="0 0 512 512"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z"
-            />
-          </svg>
-        </div>
-      </button>
+        class="c8"
+      />
     </div>
   </div>
 </DocumentFragment>

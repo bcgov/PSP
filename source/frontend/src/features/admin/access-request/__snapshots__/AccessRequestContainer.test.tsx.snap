@@ -26,7 +26,7 @@ exports[`AccessRequestContainer component > makes a request based on the access 
   -ms-flex-pack: center;
   justify-content: center;
   padding: 0.4rem 1.2rem;
-  min-height: 3rem;
+  min-height: 2.4rem;
   border: 0.2rem solid transparent;
   border-radius: 0.4rem;
   text-align: center;
@@ -750,7 +750,7 @@ exports[`AccessRequestContainer component > makes a request when no id is provid
   -ms-flex-pack: center;
   justify-content: center;
   padding: 0.4rem 1.2rem;
-  min-height: 3rem;
+  min-height: 2.4rem;
   border: 0.2rem solid transparent;
   border-radius: 0.4rem;
   text-align: center;

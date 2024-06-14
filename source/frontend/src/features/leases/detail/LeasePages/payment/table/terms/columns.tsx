@@ -146,6 +146,7 @@ const termActions = (
               onClick={() => onGenerate()}
             ></Button>
           )}
+          leaseTypeCode === ApiGen_CodeTypes_LeaseLicenceTypes.LIPPUBHWY.toString() && (
         {hasClaim(Claims.LEASE_EDIT) && (
           <Button
             title="edit term"
