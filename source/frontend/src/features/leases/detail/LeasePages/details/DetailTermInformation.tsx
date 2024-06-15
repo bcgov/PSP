@@ -39,7 +39,7 @@ export const DetailTermInformation: React.FunctionComponent<
       <Section>
         <StyledDiv>
           <DetailTermInformationBox
-            title="Lease / License"
+            title="Lease / Licence"
             startDate={startDate}
             expiryDate={expiryDate}
           />

@@ -106,7 +106,7 @@ export const AddLeaseContainer: React.FunctionComponent<
 
   return (
     <MapSideBarLayout
-      title="Create Lease/License"
+      title="Create Lease/Licence"
       icon={<Fence />}
       footer={
         <SidebarFooter
