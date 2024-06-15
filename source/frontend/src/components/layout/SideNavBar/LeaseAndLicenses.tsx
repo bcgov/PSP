@@ -19,15 +19,15 @@ export const LeaseAndLicenses = ({ onLinkClick }: ISideTrayPageProps) => {
   return (
     <>
       <HalfHeightDiv>
-        <Styled.TrayHeader>Leases & Licenses</Styled.TrayHeader>
+        <Styled.TrayHeader>Leases & Licences</Styled.TrayHeader>
         {hasClaim(Claims.LEASE_VIEW) && (
           <Link onClick={onLinkClick} to="/lease/list">
-            Manage Lease/License Files
+            Manage Lease/Licence Files
           </Link>
         )}
         {hasClaim(Claims.LEASE_ADD) && (
           <Link onClick={onLinkClick} to="/mapview/sidebar/lease/new">
-            Create a Lease/License File
+            Create a Lease/Licence File
           </Link>
         )}
       </HalfHeightDiv>
@@ -36,9 +36,9 @@ export const LeaseAndLicenses = ({ onLinkClick }: ISideTrayPageProps) => {
           <ExportH3>
             <FaFileExcel /> Exports
           </ExportH3>
-          <p>Aggregated Lease & License Payments</p>
+          <p>Aggregated Lease & Licence Payments</p>
           <ExportAggregatedLeasesContainer />
-          <p>Lease & License Payments by Fiscal Year</p>
+          <p>Lease & Licence Payments by Fiscal Year</p>
           <ExportLeasePaymentsContainer />
         </HalfHeightDiv>
       )}

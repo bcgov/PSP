@@ -403,7 +403,7 @@ describe('Lease and License List View', () => {
         details: '',
       }),
     );
-    const toasts = await findAllByText('Lease / License details do not exist in PIMS inventory');
+    const toasts = await findAllByText('Lease / Licence details do not exist in PIMS inventory');
     expect(toasts[0]).toBeVisible();
   });
 

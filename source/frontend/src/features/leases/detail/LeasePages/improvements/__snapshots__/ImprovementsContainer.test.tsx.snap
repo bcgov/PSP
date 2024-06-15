@@ -21,7 +21,7 @@ exports[`Improvements Container component > renders as expected 1`] = `
       class="collapse show"
     >
       <p>
-        There are no commercial, residential, or other improvements indicated with this lease/license.
+        There are no commercial, residential, or other improvements indicated with this lease/licence.
       </p>
     </div>
   </div>
