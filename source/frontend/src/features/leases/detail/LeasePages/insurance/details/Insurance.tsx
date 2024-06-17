@@ -53,7 +53,7 @@ const InsuranceDetailsView: React.FunctionComponent<
     </div>
   ) : (
     <Section>
-      <p>There are no insurance policies indicated with this lease/license</p>
+      <p>There are no insurance policies indicated with this lease/licence</p>
     </Section>
   );
 };

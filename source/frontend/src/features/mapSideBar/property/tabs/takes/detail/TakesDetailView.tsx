@@ -265,7 +265,7 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
                 </StyledBorderSection>
                 <StyledBorderSection>
                   <SectionField
-                    label="Is there a new License for Construction Access (TLCA/LTC)? *"
+                    label="Is there a new Licence for Construction Access (TLCA/LTC)? *"
                     labelWidth="8"
                   >
                     <YesNoButtons

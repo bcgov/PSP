@@ -86,7 +86,7 @@ namespace Pims.Api.Models.Concepts.Lease
         /// <summary>
         /// get/set - The original start date of the lease.
         /// </summary>
-        public DateOnly StartDate { get; set; }
+        public DateOnly? StartDate { get; set; }
 
         /// <summary>
         /// get/set - The lease renewal count.
@@ -158,7 +158,7 @@ namespace Pims.Api.Models.Concepts.Lease
         /// </summary>
         public IEnumerable<LeaseTenantModel> Tenants { get; set; }
 
-         /// <summary>
+        /// <summary>
         /// get/set - A collection of the terms for this lease.
         /// </summary>
         public IEnumerable<LeaseTermModel> Terms { get; set; }

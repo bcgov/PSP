@@ -3810,8 +3810,7 @@ public partial class PimsBaseContext : DbContext
                 .HasComment("The user or proxy account that updated the record.");
             entity.Property(e => e.ExpiryDate).HasComment("Date the insurance expires");
             entity.Property(e => e.InsuranceTypeCode).HasComment("Foreign key indicating the type of insurance on the lease.");
-            entity.Property(e => e.IsInsuranceInPlace)
-                .HasComment("Indicator that insurance is in place.  TRUE if insurance is in place, FALSE if insurance is not in place, and NULL if it is unknown if insurance is in place.");
+            entity.Property(e => e.IsInsuranceInPlace).HasComment("Indicator that insurance is in place.  TRUE if insurance is in place, FALSE if insurance is not in place, and NULL if it is unknown if insurance is in place.");
             entity.Property(e => e.LeaseId).HasComment("Foreign key to the PIMS_LEASE table.");
             entity.Property(e => e.OtherInsuranceType).HasComment("Description of the non-standard insurance coverage type");
 
