@@ -19,10 +19,7 @@ export const SectionListHeader: React.FunctionComponent<
   React.PropsWithChildren<ISectionListHeaderProps>
 > = props => {
   const { hasClaim } = useKeycloakWrapper();
-  const onClick = (e): void => {
-    e.currentTarget.blur();
-    props.onAdd && props.onAdd();
-  };
+  const onClick = () => props.onAdd && props.onAdd();
 
   return (
     <StyledRow className="no-gutters">
