@@ -739,6 +739,78 @@ namespace Pims.Api.Test.Services
         }
         #endregion
 
+        [Fact]
+        public void Update_HistoricalFileNumbers_NoPermission()
+        {
+            // Arrange
+            var property = EntityHelper.CreateProperty(1);
+
+            var service = this.CreatePropertyServiceWithPermissions(Permissions.PropertyView);
+            var repository = this._helper.GetService<Mock<IHistoricalNumberRepository>>();
+
+            List<PimsHistoricalFileNumber> historicalNumbers = new() { };
+
+            // Assert
+            Assert.Throws<NotAuthorizedException>(() => service.UpdateHistoricalFileNumbers(property.PropertyId, historicalNumbers));
+            repository.Verify(x => x.UpdateHistoricalFileNumbers(It.IsAny<long>(), It.IsAny<IEnumerable<PimsHistoricalFileNumber>>()), Times.Never);
+        }
+
+        [Fact]
+        public void Update_HistoricalFileNumbers_Duplicate_FileNumberType()
+        {
+            // Arrange
+            var property = EntityHelper.CreateProperty(1);
+
+            var service = this.CreatePropertyServiceWithPermissions(Permissions.PropertyEdit);
+            var repository = this._helper.GetService<Mock<IHistoricalNumberRepository>>();
+
+            List<PimsHistoricalFileNumber> historicalNumbers = new() {
+                new()
+                {
+                    HistoricalFileNumber = "123",
+                    HistoricalFileNumberTypeCode = HistoricalFileNumberTypes.LISNO.ToString(),
+                },
+                new()
+                {
+                    HistoricalFileNumber = "123",
+                    HistoricalFileNumberTypeCode = HistoricalFileNumberTypes.LISNO.ToString(),
+                }
+            };
+
+            // Assert
+            Assert.Throws<DuplicateEntityException>(() => service.UpdateHistoricalFileNumbers(property.PropertyId, historicalNumbers));
+            repository.Verify(x => x.UpdateHistoricalFileNumbers(It.IsAny<long>(), It.IsAny<IEnumerable<PimsHistoricalFileNumber>>()), Times.Never);
+        }
+
+        [Fact]
+        public void Update_HistoricalFileNumbers_Duplicate_OTHER_FileNumberType()
+        {
+            // Arrange
+            var property = EntityHelper.CreateProperty(1);
+
+            var service = this.CreatePropertyServiceWithPermissions(Permissions.PropertyEdit);
+            var repository = this._helper.GetService<Mock<IHistoricalNumberRepository>>();
+
+            List<PimsHistoricalFileNumber> historicalNumbers = new() {
+                new()
+                {
+                    HistoricalFileNumber = "123",
+                    HistoricalFileNumberTypeCode = HistoricalFileNumberTypes.OTHER.ToString(),
+                    OtherHistFileNumberTypeCode = "TEST",
+                },
+                new()
+                {
+                    HistoricalFileNumber = "123",
+                    HistoricalFileNumberTypeCode = HistoricalFileNumberTypes.OTHER.ToString(),
+                    OtherHistFileNumberTypeCode = "TEST",
+                }
+            };
+
+            // Assert
+            Assert.Throws<DuplicateEntityException>(() => service.UpdateHistoricalFileNumbers(property.PropertyId, historicalNumbers));
+            repository.Verify(x => x.UpdateHistoricalFileNumbers(It.IsAny<long>(), It.IsAny<IEnumerable<PimsHistoricalFileNumber>>()), Times.Never);
+        }
+
         #endregion
     }
 }
