@@ -295,7 +295,7 @@ export const MapRouter: React.FunctionComponent = memo(() => {
         )}
         claim={Claims.LEASE_VIEW}
         key={'LeaseLicense'}
-        title={'Lease / License File'}
+        title={'Lease / Licence File'}
       />
       <AppRoute
         path={`/mapview/sidebar/subdivision/new`}

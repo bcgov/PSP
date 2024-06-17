@@ -17,7 +17,9 @@ import { ApiGen_CodeTypes_ExternalResponseStatus } from '@/models/api/generated/
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { ApiGen_Concepts_LeaseTenant } from '@/models/api/generated/ApiGen_Concepts_LeaseTenant';
 
-import { useGenerateH1005a } from './useGenerateH1005a';
+import { useGenerateLicenceOfOccupation } from './useGenerateLicenceOfOccupation';
+import { ApiGen_CodeTypes_LeaseLicenceTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseLicenceTypes';
+import { ApiGen_CodeTypes_FormTypes } from '@/models/api/generated/ApiGen_CodeTypes_FormTypes';
 
 const generateFn = vi
   .fn()
@@ -100,17 +102,21 @@ const setup = (params?: {
   storeValues?: any;
   acquisitionResponse?: ApiGen_Concepts_AcquisitionFile;
 }) => {
-  const { result } = renderHook(useGenerateH1005a, {
+  const { result } = renderHook(useGenerateLicenceOfOccupation, {
     wrapper: getWrapper(getStore(params?.storeValues)),
   });
   return result.current;
 };
 
-describe('useGenerateH10005a functions', () => {
+describe('useGenerateLicenceOfOccupation functions', () => {
   beforeEach(() => {
     getSecurityDepositsFn.mockResolvedValue(getMockDeposits());
     getLeaseTenantsFn.mockResolvedValue(getMockApiLease().tenants);
     getApiLeaseFn.mockResolvedValue({ data: getMockApiLease() });
+  });
+
+  afterEach(() => {
+    vi.clearAllMocks();
   });
 
   it('makes requests to expected api endpoints', async () => {
@@ -137,6 +143,24 @@ describe('useGenerateH10005a functions', () => {
     );
   });
 
+  it('throws an error if licence type is not valid', async () => {
+    const mockLease = getMockApiLease();
+    mockLease.type = {
+      id: ApiGen_CodeTypes_LeaseLicenceTypes.OTHER.toString(),
+      description: 'OTHER',
+      isDisabled: false,
+      displayOrder: 10,
+    };
+
+    const generate = setup();
+    await act(async () => {
+      generate(mockLease);
+    });
+
+    getApiLeaseFn.mockResolvedValue({ data: mockLease });
+    await act(() => expect(generate(mockLease)).rejects.toThrow('Invalid licence type.'));
+  });
+
   it('throws an error if generation api call is unsuccessful', async () => {
     generateFn.mockResolvedValue({
       status: ApiGen_CodeTypes_ExternalResponseStatus.Error,
@@ -144,5 +168,59 @@ describe('useGenerateH10005a functions', () => {
     });
     const generate = setup();
     await act(() => expect(generate(getMockApiLease())).rejects.toThrow('Failed to generate file'));
+  });
+
+  it('it generates the form with template for H1005A', async () => {
+    const mockLease = getMockApiLease();
+    const generate = setup();
+    getApiLeaseFn.mockResolvedValue({ data: mockLease });
+    generateFn.mockResolvedValue({
+      status: ApiGen_CodeTypes_ExternalResponseStatus.Success,
+      payload: {},
+    });
+
+    await act(async () => {
+      generate(mockLease);
+    });
+
+    expect(generateFn).toHaveBeenCalledWith(
+      expect.objectContaining({
+        templateType: ApiGen_CodeTypes_FormTypes.H1005A,
+      }),
+    );
+    expect(getLeaseTenantsFn).toHaveBeenCalled();
+    expect(getInsurancesFn).toHaveBeenCalled();
+    expect(getSecurityDepositsFn).toHaveBeenCalled();
+    expect(getLeaseTermFn).toHaveBeenCalled();
+    expect(getPropertyLeasesFn).toHaveBeenCalled();
+    expect(getApiLeaseFn).toHaveBeenCalled();
+  });
+
+  it('it generates the form with template for H1005 - Public Highway', async () => {
+    const mockLease = getMockApiLease();
+    mockLease.type.id = ApiGen_CodeTypes_LeaseLicenceTypes.LIPPUBHWY;
+
+    getApiLeaseFn.mockResolvedValue({ data: mockLease });
+    generateFn.mockResolvedValue({
+      status: ApiGen_CodeTypes_ExternalResponseStatus.Success,
+      payload: {},
+    });
+
+    const generate = setup();
+    await act(async () => {
+      generate(mockLease);
+    });
+
+    expect(generateFn).toHaveBeenCalledWith(
+      expect.objectContaining({
+        templateType: ApiGen_CodeTypes_FormTypes.H1005,
+      }),
+    );
+    expect(getLeaseTenantsFn).toHaveBeenCalled();
+    expect(getInsurancesFn).toHaveBeenCalled();
+    expect(getSecurityDepositsFn).toHaveBeenCalled();
+    expect(getLeaseTermFn).toHaveBeenCalled();
+    expect(getPropertyLeasesFn).toHaveBeenCalled();
+    expect(getApiLeaseFn).toHaveBeenCalled();
   });
 });

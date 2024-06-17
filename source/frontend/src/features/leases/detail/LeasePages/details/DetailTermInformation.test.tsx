@@ -30,7 +30,7 @@ describe('DetailTermInformation component', () => {
     const { getByText } = setup({
       lease: new LeaseFormModel(),
     });
-    expect(getByText('Lease / License')).toBeVisible();
+    expect(getByText('Lease / Licence')).toBeVisible();
   });
 
   it('renders the start date in the expected format', () => {
