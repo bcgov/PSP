@@ -15,14 +15,14 @@ namespace PIMS.Tests.Automation.PageObjects
         private By insuranceSubtitle = By.XPath("//div[contains(text(),'Required Coverage')]");
         private By insuranceSelectionLabel = By.XPath("//label[contains(text(),'Select coverage types')]");
 
-        private By insuranceAccidentalLabel = By.XPath("//label[contains(text(),'Accidental Coverage')]");
-        private By insuranceAccidentalCheckbox = By.Id("insurance-0");
         private By insuranceAircraftLabel = By.XPath("//label[contains(text(),'Aircraft Liability Coverage')]");
-        private By insuranceAircraftCheckbox = By.Id("insurance-1");
+        private By insuranceAircraftCheckbox = By.Id("insurance-0");
         private By insuranceCGLLabel = By.XPath("//label[contains(text(),'Commercial General Liability (CGL)')]");
-        private By insuranceCGLCheckbox = By.Id("insurance-2");
+        private By insuranceCGLCheckbox = By.Id("insurance-1");
         private By insuranceMarineLabel = By.XPath("//label[contains(text(),'Marine Liability Coverage')]");
-        private By insuranceMarineCheckbox = By.Id("insurance-3");
+        private By insuranceMarineCheckbox = By.Id("insurance-2");
+        private By insuranceAccidentalLabel = By.XPath("//label[contains(text(),'Sudden and Accidental Coverage')]");
+        private By insuranceAccidentalCheckbox = By.Id("insurance-3");
         private By insuranceUnmannedAirVehicleLabel = By.XPath("//label[contains(text(),'Unmanned Air Vehicle (UAV/Drone) Coverage')]");
         private By insuranceUnmannedAirVehicleCheckbox = By.Id("insurance-4");
         private By insuranceVehicleLabel = By.XPath("//label[contains(text(),'Vehicle Liability Coverage')]");
@@ -33,45 +33,45 @@ namespace PIMS.Tests.Automation.PageObjects
         private By insuranceEditTotal = By.CssSelector("div[data-testid='insurance-form']");
         private By insuranceViewTotal = By.XPath("//div[@data-testid='insurance-section']/div[@data-testid='insurance-section']");
 
-        private By insuranceAccidentalSubtitle = By.XPath("//div[contains(text(),'Accidental Coverage')]");
-        private By insuranceAccidentalInPlaceLabel = By.XPath("//div[contains(text(),'Accidental Coverage')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(), 'Insurance in place')]");
-        private By insuranceAccidentalInPlaceSelect = By.Id("input-insurances.0.isInsuranceInPlaceSelect");
-        private By insuranceAccidentalLimitLabel = By.XPath("//div[contains(text(),'Accidental Coverage')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(), 'Limit ($)')]");
-        private By insuranceAccidentalLimitInput = By.Id("input-insurances.0.coverageLimit");
-        private By insuranceAccidentalExpiryDateLabel = By.XPath("//div[contains(text(),'Accidental Coverage')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(), 'Policy expiry')]");
-        private By insuranceAccidentalExpiryDateInput = By.Id("datepicker-insurances.0.expiryDate");
-        private By insuranceAccidentalDescriptionLabel = By.XPath("//div[contains(text(),'Accidental Coverage')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(), 'Description of coverage')]");
-        private By insuranceAccidentalDescriptionTextarea = By.Id("input-insurances.0.coverageDescription");
-
         private By insuranceAircraftSubtitle = By.XPath("//div[contains(text(),'Aircraft Liability Coverage')]");
         private By insuranceAircraftInPlaceLabel = By.XPath("//div[contains(text(),'Aircraft Liability Coverage')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(), 'Insurance in place')]");
-        private By insuranceAircraftInPlaceSelect = By.Id("input-insurances.1.isInsuranceInPlaceSelect");
+        private By insuranceAircraftInPlaceSelect = By.Id("input-insurances.0.isInsuranceInPlaceSelect");
         private By insuranceAircraftLimitLabel = By.XPath("//div[contains(text(),'Aircraft Liability Coverage')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(), 'Limit ($)')]");
-        private By insuranceAircraftLimitInput = By.Id("input-insurances.1.coverageLimit");
+        private By insuranceAircraftLimitInput = By.Id("input-insurances.0.coverageLimit");
         private By insuranceAircraftExpiryDateLabel = By.XPath("//div[contains(text(),'Aircraft Liability Coverage')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(), 'Policy expiry')]");
-        private By insuranceAircraftExpiryDateInput = By.Id("datepicker-insurances.1.expiryDate");
+        private By insuranceAircraftExpiryDateInput = By.Id("datepicker-insurances.0.expiryDate");
         private By insuranceAircraftDescriptionLabel = By.XPath("//div[contains(text(),'Aircraft Liability Coverage')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(), 'Description of coverage')]");
-        private By insuranceAircraftDescriptionTextarea = By.Id("input-insurances.1.coverageDescription");
+        private By insuranceAircraftDescriptionTextarea = By.Id("input-insurances.0.coverageDescription");
 
         private By insuranceCGLSubtitle = By.XPath("//div[contains(text(),'Commercial General Liability (CGL)')]");
         private By insuranceCGLInPlaceLabel = By.XPath("//div[contains(text(),'Commercial General Liability (CGL)')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(), 'Insurance in place')]");
-        private By insuranceCGLInPlaceSelect = By.Id("input-insurances.2.isInsuranceInPlaceSelect");
+        private By insuranceCGLInPlaceSelect = By.Id("input-insurances.1.isInsuranceInPlaceSelect");
         private By insuranceCGLLimitLabel = By.XPath("//div[contains(text(),'Commercial General Liability (CGL)')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(), 'Limit ($)')]");
-        private By insuranceCGLLimitInput = By.Id("input-insurances.2.coverageLimit");
+        private By insuranceCGLLimitInput = By.Id("input-insurances.1.coverageLimit");
         private By insuranceCGLExpiryDateLabel = By.XPath("//div[contains(text(),'Commercial General Liability (CGL)')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(), 'Policy expiry')]");
-        private By insuranceCGLExpiryDateInput = By.Id("datepicker-insurances.2.expiryDate");
+        private By insuranceCGLExpiryDateInput = By.Id("datepicker-insurances.1.expiryDate");
         private By insuranceCGLDescriptionLabel = By.XPath("//div[contains(text(),'Commercial General Liability (CGL)')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(), 'Description of coverage')]");
-        private By insuranceCGLDescriptionTextarea = By.Id("input-insurances.2.coverageDescription");
+        private By insuranceCGLDescriptionTextarea = By.Id("input-insurances.1.coverageDescription");
 
         private By insuranceMarineSubtitle = By.XPath("//div[contains(text(),'Marine Liability Coverage')]");
         private By insuranceMarineInPlaceLabel = By.XPath("//div[contains(text(),'Marine Liability Coverage')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(), 'Insurance in place')]");
-        private By insuranceMarineInPlaceSelect = By.Id("input-insurances.3.isInsuranceInPlaceSelect");
+        private By insuranceMarineInPlaceSelect = By.Id("input-insurances.2.isInsuranceInPlaceSelect");
         private By insuranceMarineLimitLabel = By.XPath("//div[contains(text(),'Marine Liability Coverage')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(), 'Limit ($)')]");
-        private By insuranceMarineLimitInput = By.Id("input-insurances.3.coverageLimit");
+        private By insuranceMarineLimitInput = By.Id("input-insurances.2.coverageLimit");
         private By insuranceMarineExpiryDateLabel = By.XPath("//div[contains(text(),'Marine Liability Coverage')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(), 'Policy expiry')]");
-        private By insuranceMarineExpiryDateInput = By.Id("datepicker-insurances.3.expiryDate");
+        private By insuranceMarineExpiryDateInput = By.Id("datepicker-insurances.2.expiryDate");
         private By insuranceMarineDescriptionLabel = By.XPath("//div[contains(text(),'Marine Liability Coverage')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(), 'Description of coverage')]");
-        private By insuranceMarineDescriptionTextarea = By.Id("input-insurances.3.coverageDescription");
+        private By insuranceMarineDescriptionTextarea = By.Id("input-insurances.2.coverageDescription");
+
+        private By insuranceAccidentalSubtitle = By.XPath("//div[contains(text(),'Sudden and Accidental Coverage')]");
+        private By insuranceAccidentalInPlaceLabel = By.XPath("//div[contains(text(),'Sudden and Accidental Coverage')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(), 'Insurance in place')]");
+        private By insuranceAccidentalInPlaceSelect = By.Id("input-insurances.3.isInsuranceInPlaceSelect");
+        private By insuranceAccidentalLimitLabel = By.XPath("//div[contains(text(),'Sudden and Accidental Coverage')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(), 'Limit ($)')]");
+        private By insuranceAccidentalLimitInput = By.Id("input-insurances.3.coverageLimit");
+        private By insuranceAccidentalExpiryDateLabel = By.XPath("//div[contains(text(),'Sudden and Accidental Coverage')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(), 'Policy expiry')]");
+        private By insuranceAccidentalExpiryDateInput = By.Id("datepicker-insurances.3.expiryDate");
+        private By insuranceAccidentalDescriptionLabel = By.XPath("//div[contains(text(),'Accidental Coverage')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(), 'Description of coverage')]");
+        private By insuranceAccidentalDescriptionTextarea = By.Id("input-insurances.3.coverageDescription");
 
         private By insuranceUnmannedAirVehicleSubtitle = By.XPath("//div[contains(text(),'Unmanned Air Vehicle (UAV/Drone) Coverage')]");
         private By insuranceUnmannedAirVehicleInPlaceLabel = By.XPath("//div[contains(text(),'Unmanned Air Vehicle (UAV/Drone) Coverage')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(), 'Insurance in place')]");

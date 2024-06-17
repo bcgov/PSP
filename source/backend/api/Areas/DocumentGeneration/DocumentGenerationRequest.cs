@@ -17,7 +17,7 @@ namespace Pims.Api.Models.DocumentGeneration
         /// <summary>
         /// get/set - The template type to use for generation.
         /// </summary>
-        public FormDocumentType TemplateType { get; set; }
+        public FormTypes TemplateType { get; set; }
 
         /// <summary>
         /// get/set - the type the document template should be converted to when returned from cdogs.

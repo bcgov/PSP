@@ -18,6 +18,7 @@ import {
 import { defaultFormLeaseTerm, FormLeasePayment } from '../../models';
 import TermsForm, { ITermsFormProps } from './TermsForm';
 import { createRef } from 'react';
+import { ApiGen_CodeTypes_LeaseLicenceTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseLicenceTypes';
 
 const history = createMemoryHistory();
 const mockAxios = new MockAdapter(axios);
@@ -111,6 +112,7 @@ describe('TermsForm component', () => {
 
     expect(component.asFragment()).toMatchSnapshot();
   });
+
   test.each([
     ['ANNUAL', '$1,000.00', '$1,050.00'],
     ['SEMIANN', '$1,000.00', '$2,100.00'],
@@ -135,6 +137,7 @@ describe('TermsForm component', () => {
       expect(findCell(row, 8)?.textContent).toBe(total);
     },
   );
+
   it('Does not display certain fields if the end date is not supplied', async () => {
     const { findFirstRow, findCell } = await setup({
       store: undefined,
@@ -462,13 +465,13 @@ describe('TermsForm component', () => {
     expect(findCell(row, 11)?.textContent).toContain('Generate H1005(a)');
   });
 
-  it('calls onGenerate when generation button is clicked', async () => {
+  it('calls onGenerate H1005A when generation button is clicked', async () => {
     const {
       component: { queryAllByTitle },
     } = await setup({
       initialValues: {
         ...new LeaseFormModel(),
-        leaseTypeCode: 'LIOCCUTIL',
+        leaseTypeCode: ApiGen_CodeTypes_LeaseLicenceTypes.LIOCCUTIL,
         terms: [
           {
             ...defaultTestFormLeaseTerm,
@@ -480,6 +483,30 @@ describe('TermsForm component', () => {
     });
 
     const generateButton = queryAllByTitle('Generate H1005(a)')[0];
+    expect(generateButton).toBeVisible();
+
+    await act(async () => userEvent.click(generateButton));
+    expect(onGenerate).toHaveBeenCalled();
+  });
+
+  it('calls onGenerate H1005 when generation button is clicked', async () => {
+    const {
+      component: { queryAllByTitle },
+    } = await setup({
+      initialValues: {
+        ...new LeaseFormModel(),
+        leaseTypeCode: ApiGen_CodeTypes_LeaseLicenceTypes.LIPPUBHWY,
+        terms: [
+          {
+            ...defaultTestFormLeaseTerm,
+            isTermExercised: false,
+            payments: [{ amountTotal: 1, receivedDate: '2020-01-01T18:00' }] as FormLeasePayment[],
+          },
+        ],
+      },
+    });
+
+    const generateButton = queryAllByTitle('Generate H1005')[0];
     expect(generateButton).toBeVisible();
 
     await act(async () => userEvent.click(generateButton));

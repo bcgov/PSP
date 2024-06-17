@@ -13,24 +13,15 @@ import { mockLookups } from '@/mocks/lookups.mock';
 import { defaultApiLease } from '@/models/defaultInitializers';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes/lookupCodesSlice';
 import { toTypeCodeNullable } from '@/utils/formUtils';
-import {
-  act,
-  fillInput,
-  renderAsync,
-  RenderOptions,
-  screen,
-  userEvent,
-  waitFor,
-  prettyDOM,
-  waitForElementToBeRemoved,
-  getByTestId,
-} from '@/utils/test-utils';
+import { act, fillInput, renderAsync, RenderOptions, screen, userEvent } from '@/utils/test-utils';
 
 import { defaultFormLeaseTerm, FormLeaseTerm } from './models';
 import { defaultTestFormLeasePayment } from './table/payments/PaymentsForm.test';
 import TermPaymentsContainer from './TermPaymentsContainer';
 import { createMemoryHistory } from 'history';
 import { createRef } from 'react';
+import { ApiGen_CodeTypes_LeaseAccountTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseAccountTypes';
+import { Mock } from 'vitest';
 
 const defaultRepositoryResponse = {
   execute: vi.fn(),
@@ -123,12 +114,14 @@ describe('TermsPaymentsContainer component', () => {
   beforeEach(() => {
     mockAxios.resetHistory();
   });
+
   it('renders as expected', async () => {
     const { component } = await setup({ claims: [Claims.LEASE_EDIT] });
     await act(async () => {});
 
     expect(component.asFragment()).toMatchSnapshot();
   });
+
   it('renders with data as expected', async () => {
     const { component } = await setup({
       claims: [Claims.LEASE_EDIT],
@@ -152,7 +145,33 @@ describe('TermsPaymentsContainer component', () => {
 
       expect(getByDisplayValue('Jan 01, 2020')).toBeVisible();
     });
+
+    it(`doesn't make any request when cancelling the term modal`, async () => {
+      const {
+        component: { getAllByText, getByText },
+      } = await setup({ claims: [Claims.LEASE_EDIT, Claims.LEASE_ADD] });
+
+      const addButton = getAllByText('Add a Term')[0];
+      await act(async () => {
+        userEvent.click(addButton);
+      });
+
+      const cancelButton = getByText('No');
+      await act(async () => userEvent.click(cancelButton));
+
+      expect(useLeaseTermRepository().addLeaseTerm.execute).not.toHaveBeenCalled();
+      expect(onSuccessMock).not.toHaveBeenCalled();
+    });
+
     it('makes a post request when adding a new term', async () => {
+      (useLeaseTermRepository().updateLeaseTerm.execute as Mock).mockResolvedValue(
+        FormLeaseTerm.toApi({ ...defaultFormLeaseTerm, id: 1 }),
+      );
+      mockGetLeaseTerms.execute.mockResolvedValue(
+        (mockGetLeaseTerms.response = [
+          FormLeaseTerm.toApi({ ...defaultFormLeaseTerm, payments: [], id: 1 }),
+        ]),
+      );
       const {
         component: { getAllByText, getByText },
       } = await setup({ claims: [Claims.LEASE_EDIT, Claims.LEASE_ADD] });
@@ -166,12 +185,20 @@ describe('TermsPaymentsContainer component', () => {
       await fillInput(document.body, 'startDate', '2020-01-01', 'datepicker');
       const saveButton = getByText('Yes');
       await act(async () => userEvent.click(saveButton));
-      await waitFor(async () => {
-        expect(useLeaseTermRepository().addLeaseTerm.execute).toHaveBeenCalled();
-      });
+
+      expect(useLeaseTermRepository().addLeaseTerm.execute).toHaveBeenCalled();
+      expect(onSuccessMock).toHaveBeenCalled();
     });
 
     it('makes a put request when updating a term', async () => {
+      (useLeaseTermRepository().updateLeaseTerm.execute as Mock).mockResolvedValue(
+        FormLeaseTerm.toApi({ ...defaultFormLeaseTerm, id: 1 }),
+      );
+      mockGetLeaseTerms.execute.mockResolvedValue(
+        (mockGetLeaseTerms.response = [
+          FormLeaseTerm.toApi({ ...defaultFormLeaseTerm, payments: [], id: 1 }),
+        ]),
+      );
       const {
         component: { findAllByTitle, getByText },
       } = await setup({
@@ -188,7 +215,9 @@ describe('TermsPaymentsContainer component', () => {
       await fillInput(document.body, 'startDate', '2020-01-01', 'datepicker');
       const saveButton = getByText('Yes');
       await act(async () => userEvent.click(saveButton));
+
       expect(useLeaseTermRepository().updateLeaseTerm.execute).toHaveBeenCalled();
+      expect(onSuccessMock).toHaveBeenCalled();
     });
 
     it('deleting a term with payments is not possible', async () => {
@@ -279,13 +308,48 @@ describe('TermsPaymentsContainer component', () => {
       expect(warning).toBeVisible();
       const continueButton = getByText('Continue');
       await act(async () => userEvent.click(continueButton));
+
       expect(useLeaseTermRepository().deleteLeaseTerm.execute).toHaveBeenCalled();
     });
+
+    it.each([
+      [ApiGen_CodeTypes_LeaseAccountTypes.RCVBL, true],
+      [ApiGen_CodeTypes_LeaseAccountTypes.PYBLBCTFA, false],
+      [ApiGen_CodeTypes_LeaseAccountTypes.PYBLMOTI, false],
+    ])(
+      'when adding a new term, the GST field is defaulted based on lease type - %s',
+      async (leaseType: string, gstDefault: boolean) => {
+        const {
+          component: { getAllByText, getByLabelText },
+        } = await setup({
+          initialValues: {
+            ...defaultApiLease(),
+            paymentReceivableType: { id: leaseType },
+          },
+          claims: [Claims.LEASE_EDIT, Claims.LEASE_ADD],
+        });
+
+        const addButton = getAllByText('Add a Term')[0];
+        await act(async () => {
+          userEvent.click(addButton);
+        });
+
+        if (gstDefault) {
+          // For Receivable Leases: Yes
+          expect(getByLabelText('Y')).toBeChecked();
+        } else {
+          // For Payable leases: No
+          expect(getByLabelText('N')).toBeChecked();
+        }
+      },
+    );
   });
+
   describe('payments logic tests', () => {
     mockGetLeaseTerms.execute.mockResolvedValue(
       defaultLeaseWithTermsPayments.terms.map(t => FormLeaseTerm.toApi(t)),
     );
+
     it('makes a post request when adding a new payment', async () => {
       mockGetLeaseTerms.execute.mockResolvedValue(
         (mockGetLeaseTerms.response = defaultLeaseWithTermsPayments.terms.map(t =>
@@ -311,6 +375,33 @@ describe('TermsPaymentsContainer component', () => {
       const saveButton = getByText('Save payment');
       await act(async () => userEvent.click(saveButton));
       expect(mockAxios.history.post.length).toBe(1);
+    });
+
+    it(`doesn't make any request when payment modal is cancelled`, async () => {
+      mockGetLeaseTerms.execute.mockResolvedValue(
+        (mockGetLeaseTerms.response = defaultLeaseWithTermsPayments.terms.map(t =>
+          FormLeaseTerm.toApi(t),
+        )),
+      );
+      const {
+        component: { findByText, getByText, findByTestId },
+      } = await setup({
+        claims: [Claims.LEASE_EDIT, Claims.LEASE_ADD],
+        initialValues: defaultLeaseWithTermsPayments,
+      });
+      mockAxios.onPost().reply(200, { id: 1 });
+
+      const expander = await findByTestId('table-row-expander-');
+      await act(async () => userEvent.click(expander));
+      const addButton = await findByText('Record a Payment');
+      await act(async () => {
+        userEvent.click(addButton);
+      });
+
+      await fillInput(document.body, 'receivedDate', '2020-01-01', 'datepicker');
+      const cancelButton = getByText('Cancel');
+      await act(async () => userEvent.click(cancelButton));
+      expect(mockAxios.history.post.length).toBe(0);
     });
 
     it('makes a put request when updating a payment', async () => {
@@ -339,6 +430,7 @@ describe('TermsPaymentsContainer component', () => {
       await act(async () => userEvent.click(saveButton));
       expect(mockAxios.history.put.length).toBe(1);
     });
+
     it('asks for confirmation when deleting a payment', async () => {
       mockGetLeaseTerms.execute.mockResolvedValue(
         (mockGetLeaseTerms.response = defaultLeaseWithTermsPayments.terms.map(t =>

@@ -30,7 +30,7 @@ export const ImprovementsContainer: React.FunctionComponent<
       <Section>
         <p>
           There are no commercial, residential, or other improvements indicated with this
-          lease/license.
+          lease/licence.
         </p>
       </Section>
     );

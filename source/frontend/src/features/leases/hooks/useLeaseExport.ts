@@ -75,7 +75,7 @@ export const useLeaseExport = () => {
         // trigger file download in client browser
         fileDownload(
           data,
-          `LeaseLicense_Payment details-${fiscalYearStart}-${fiscalYearStart + 1}_${moment().format(
+          `LeaseLicence_Payment details-${fiscalYearStart}-${fiscalYearStart + 1}_${moment().format(
             'DD-MM-yyyy_hh-mm-ss',
           )}.xlsx`,
         );

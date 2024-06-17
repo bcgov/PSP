@@ -2,7 +2,7 @@ import 'react-simple-tree-menu/dist/main.css';
 
 import { Form as FormikForm, Formik, getIn, useFormikContext } from 'formik';
 import noop from 'lodash/noop';
-import React, { useContext, useEffect, useMemo } from 'react';
+import React, { useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import ListGroup from 'react-bootstrap/ListGroup';
 import { MdArrowDropDown, MdArrowRight } from 'react-icons/md';
@@ -12,9 +12,7 @@ import styled from 'styled-components';
 import variables from '@/assets/scss/_variables.module.scss';
 import { FormSection } from '@/components/common/form/styles';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
-import { TenantContext } from '@/tenants';
 
-import { layersTree } from './data';
 import { ILayerItem } from './types';
 
 const ParentNode = styled(ListGroup.Item)`
@@ -223,35 +221,10 @@ const LayersTree: React.FC<React.PropsWithChildren<{ items: TreeMenuItem[] }>> =
  * This component displays the layers group menu
  */
 export const LayersMenu: React.FC<React.PropsWithChildren<unknown>> = () => {
-  const {
-    tenant: { layers: confLayers },
-  } = useContext(TenantContext);
-  const layers = useMemo(
-    () =>
-      layersTree.map((parent, parentIndex) => {
-        //add any layers defined in the configuration.
-        const layer = confLayers?.find(cl => cl.key === parent.key);
-
-        const layerNodes = [...(layer?.nodes ?? [])];
-        const parentNodes =
-          parent?.nodes?.filter(node => !layerNodes.find(layerNode => layerNode.id === node.id)) ??
-          [];
-        const allNodes = [...parentNodes, ...layerNodes];
-
-        return {
-          ...parent,
-          nodes: allNodes?.map((node: any, index) => ({
-            ...node,
-            zIndex: (parentIndex + 1) * index,
-            opacity: node?.opacity !== undefined ? Number(node?.opacity) : 0.8,
-          })),
-        };
-      }),
-    [confLayers],
-  );
+  const { activeLayers: layers } = useMapStateMachine();
 
   return (
-    <Formik initialValues={{ layers }} onSubmit={noop}>
+    <Formik initialValues={{ layers }} onSubmit={noop} enableReinitialize>
       {() => (
         <FormikForm>
           <MapLayerSynchronizer />
