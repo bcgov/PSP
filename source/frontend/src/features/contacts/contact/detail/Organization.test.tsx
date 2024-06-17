@@ -335,7 +335,7 @@ describe('Contact OrganizationView component', () => {
       },
     });
 
-    const personElements = component.getAllByTestId('contact-organization-person');
+    const personElements = component.getAllByTestId(`contact-organization-person`);
     expect(personElements.length).toBe(3);
 
     // Verify that the display is in the correct order

@@ -35,7 +35,7 @@ const PersonFormView: React.FunctionComponent<React.PropsWithChildren<PersonForm
             <Col>Contact Details</Col>
             <Col md={3} className="d-flex justify-content-end">
               <Styled.StatusIndicators className={person.isDisabled ? 'inactive' : 'active'}>
-                <FaRegUser size={14} className="mr-2 mb-1" />
+                <FaRegUser size={15} className="mr-2 mb-1" />
                 <span data-testid="contact-person-status">
                   {person.isDisabled ? 'INACTIVE' : 'ACTIVE'}
                 </span>
@@ -53,21 +53,21 @@ const PersonFormView: React.FunctionComponent<React.PropsWithChildren<PersonForm
           <p>{person.preferredName}</p>
         </SectionField>
 
-        {person.organizations &&
-          person.organizations.map((organization: IContactOrganization, index: number) => (
-            <React.Fragment key={'contact-person-' + person.id + '-organization'}>
-              <SectionField
-                key={'person-org-' + index}
-                label="Organization name"
-                labelWidth="4"
-                valueTestId="contact-person-organization"
-              >
+        <SectionField
+          label="Linked organization"
+          labelWidth="4"
+          valueTestId="contact-person-organization"
+        >
+          {person.organizations &&
+            person.organizations.map((organization: IContactOrganization, index: number) => (
+              <Styled.ContactLink key={'contact-person-' + person.id + '-organization'}>
                 <FaRegBuilding size={20} className="mr-2" />
-                <Link to={'/contact/O' + organization.id}>{organization.name}</Link>
-                <br />
-              </SectionField>
-            </React.Fragment>
-          ))}
+                <Link to={'/contact/O' + organization.id} key={'person-org-' + index}>
+                  {organization.name}
+                </Link>
+              </Styled.ContactLink>
+            ))}
+        </SectionField>
 
         <H3 className="mt-10">Contact Info</H3>
         <ContactInfoSubForm contactEntity={person} />

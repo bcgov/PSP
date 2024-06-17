@@ -41,7 +41,7 @@ const OrganizationView: React.FunctionComponent<OrganizationViewProps> = ({ orga
             <Col>Contact Details</Col>
             <Col md={3} className="d-flex justify-content-end">
               <Styled.StatusIndicators className={organization.isDisabled ? 'inactive' : 'active'}>
-                <FaRegBuilding size={14} className="mr-2 mb-1" />
+                <FaRegBuilding size={15} className="mr-2 mb-1" />
                 <span data-testid="contact-organization-status">
                   {organization.isDisabled ? 'INACTIVE' : 'ACTIVE'}
                 </span>
@@ -51,18 +51,19 @@ const OrganizationView: React.FunctionComponent<OrganizationViewProps> = ({ orga
         </H2>
         <SectionField
           valueTestId="contact-organization-organizationName"
-          label="Organization Name"
+          label="Organization name"
           labelWidth="3"
         >
           <FaRegBuilding size={20} className="mr-2" />
           <b>{organization.name}</b>
         </SectionField>
+
         <SectionField valueTestId="contact-organization-alias" label="Alias" labelWidth="3">
           {organization.alias}
         </SectionField>
         <SectionField
           valueTestId="contact-organization-incorporationNumber"
-          label="Incorporation Number"
+          label="Incorporation number"
           labelWidth="3"
         >
           {organization.incorporationNumber}
@@ -74,18 +75,26 @@ const OrganizationView: React.FunctionComponent<OrganizationViewProps> = ({ orga
         <H3 className="mt-10">Individual Contact(s)</H3>
         <Row>
           <Col>
-            {organization.persons &&
-              organization.persons.map((person: IContactPerson, index: number) => (
-                <SectionField
-                  label={<>Connected to this organization</>}
-                  key={`organization-person-${index}`}
-                  labelWidth="3"
-                  valueTestId="contact-organization-person"
-                >
-                  <Link to={'/contact/P' + person.id}>{person.fullName}</Link>
-                  <br />
-                </SectionField>
-              ))}
+            <SectionField
+              label="Connected to this organization"
+              labelWidth="3"
+              valueTestId="contact-organization-person-list"
+              tooltip="To unlink a contact from this organization, or edit a contact's information, click on the name and unlink from the individual contact page."
+            >
+              {organization.persons &&
+                organization.persons.map((person: IContactPerson, index: number) => (
+                  <Styled.ContactLink key={'organization-person-' + person.id + '-contact'}>
+                    <Link
+                      to={'/contact/P' + person.id}
+                      key={`organization-person-${index}`}
+                      className="d-block"
+                      data-testid={`contact-organization-person`}
+                    >
+                      {person.fullName}
+                    </Link>
+                  </Styled.ContactLink>
+                ))}
+            </SectionField>
           </Col>
         </Row>
       </Section>

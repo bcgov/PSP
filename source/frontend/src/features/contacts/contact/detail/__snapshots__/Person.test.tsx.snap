@@ -51,8 +51,8 @@ exports[`Contact PersonView component > renders as expected 1`] = `
   border-radius: 0.5rem;
   background-color: white;
   border: 1px solid;
-  padding: 0.5rem 1rem;
-  font-size: 1.4rem;
+  padding: 0.5rem 1.5rem;
+  font-size: 1.6rem;
 }
 
 .c2.active {
@@ -85,11 +85,11 @@ exports[`Contact PersonView component > renders as expected 1`] = `
               <svg
                 class="mr-2 mb-1"
                 fill="currentColor"
-                height="14"
+                height="15"
                 stroke="currentColor"
                 stroke-width="0"
                 viewBox="0 0 448 512"
-                width="14"
+                width="15"
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
@@ -160,6 +160,23 @@ exports[`Contact PersonView component > renders as expected 1`] = `
             Preferred
           </p>
         </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="pr-0 text-left col-4"
+        >
+          <label
+            class="c3"
+          >
+            Linked organization:
+          </label>
+        </div>
+        <div
+          class="c4 text-left col"
+          data-testid="contact-person-organization"
+        />
       </div>
       <h3
         class="c5 mt-10"
