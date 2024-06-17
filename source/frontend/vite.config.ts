@@ -13,6 +13,9 @@ export default defineConfig({
     setupFiles: ['./src/setupTests.ts'],
     clearMocks: true,
     environment: 'jsdom',
+    env: {
+      DEBUG_PRINT_LIMIT: '999999',
+    },
     coverage: {
       reporter: [['lcov'], ['text'], ['json', { file: 'coverage-final.json' }]],
       reportOnFailure: false,

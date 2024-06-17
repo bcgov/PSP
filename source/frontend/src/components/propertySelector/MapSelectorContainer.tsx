@@ -38,7 +38,8 @@ export const MapSelectorContainer: FunctionComponent<IMapSelectorContainerProps>
   const [lastSelectedProperty, setLastSelectedProperty] = useState<
     LocationFeatureDataset | undefined
   >(
-    modifiedProperties?.length === 1 && isValidId(+modifiedProperties[0]?.pimsFeature?.id) // why? Because create from map needs to show the info differently
+    modifiedProperties?.length === 1 &&
+      isValidId(+modifiedProperties[0]?.pimsFeature?.properties?.PROPERTY_ID) // why? Because create from map needs to show the info differently
       ? modifiedMapProperties[0]
       : undefined,
   );

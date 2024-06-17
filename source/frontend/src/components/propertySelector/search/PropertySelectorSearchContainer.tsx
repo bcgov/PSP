@@ -159,26 +159,6 @@ export const PropertySelectorSearchContainer: React.FC<IPropertySelectorSearchCo
     }
   };
 
-  const featureToLocationFeatureDataset = (
-    feature: Feature<
-      Geometry,
-      {
-        [name: string]: any;
-      }
-    >,
-  ) => {
-    const center = getFeatureBoundedCenter(feature);
-    return {
-      parcelFeature: feature,
-      selectingComponentId: null,
-      pimsFeature: null,
-      location: { lat: center[1], lng: center[0] },
-      regionFeature: null,
-      districtFeature: null,
-      municipalityFeature: null,
-    } as LocationFeatureDataset;
-  };
-
   const debouncedSearch = useRef(
     debounce(
       async (val: string, abort: boolean) => {
@@ -224,6 +204,26 @@ export const PropertySelectorSearchContainer: React.FC<IPropertySelectorSearchCo
       onAddressSelect={handleOnAddressSelect}
     />
   );
+};
+
+export const featureToLocationFeatureDataset = (
+  feature: Feature<
+    Geometry,
+    {
+      [name: string]: any;
+    }
+  >,
+) => {
+  const center = getFeatureBoundedCenter(feature);
+  return {
+    parcelFeature: feature,
+    selectingComponentId: null,
+    pimsFeature: null,
+    location: { lat: center[1], lng: center[0] },
+    regionFeature: null,
+    districtFeature: null,
+    municipalityFeature: null,
+  } as LocationFeatureDataset;
 };
 
 // Not thread safe. Modifies the passed property.
