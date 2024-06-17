@@ -146,7 +146,7 @@ describe('LayerPopupFlyout component', () => {
     expect(queryByText('Research File')).toBeInTheDocument();
 
     expect(queryByText('Acquisition File')).not.toBeInTheDocument();
-    expect(queryByText('Lease/License')).not.toBeInTheDocument();
+    expect(queryByText('Lease/Licence')).not.toBeInTheDocument();
     expect(queryByText('Disposition File')).not.toBeInTheDocument();
     expect(queryByText('Create Subdivision')).not.toBeInTheDocument();
     expect(queryByText('Create Consolidation')).not.toBeInTheDocument();

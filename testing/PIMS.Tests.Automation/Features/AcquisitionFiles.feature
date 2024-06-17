@@ -13,7 +13,7 @@ Scenario: 02. Acquisition File Properties
 	Given I create a new Acquisition File from row number 3
 	When I add Properties to the Acquisition File
 	And I update an Acquisition File's Properties from row number 4
-	And I update a Property details from row number 4
+	And I update a Property details from a file from row number 4
 	Then A new Acquisition file is created successfully
 
 Scenario: 03. Acquisition File Property Takes

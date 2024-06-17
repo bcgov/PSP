@@ -8,11 +8,12 @@ import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { ModalContext } from '@/contexts/modalContext';
 import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
 import { LeaseFormModel } from '@/features/leases/models';
-import { useGenerateH1005a } from '@/features/mapSideBar/acquisition/common/GenerateForm/hooks/useGenerateH1005a';
+import { useGenerateLicenceOfOccupation } from '@/features/mapSideBar/acquisition/common/GenerateForm/hooks/useGenerateLicenceOfOccupation';
 import { LeasePageProps } from '@/features/mapSideBar/lease/LeaseContainer';
 import { useLeasePaymentRepository } from '@/hooks/repositories/useLeasePaymentRepository';
 import { useLeaseTermRepository } from '@/hooks/repositories/useLeaseTermRepository';
 import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
+import { ApiGen_CodeTypes_LeaseAccountTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseAccountTypes';
 import { getEmptyLease } from '@/models/defaultInitializers';
 import { SystemConstants, useSystemConstants } from '@/store/slices/systemConstants';
 import { exists, isValidId, isValidIsoDateTime } from '@/utils';
@@ -26,11 +27,12 @@ import TermsForm from './table/terms/TermsForm';
 /**
  * Orchestrates the display and modification of lease terms and payments.
  */
-export const TermPaymentsContainer: React.FunctionComponent<
-  React.PropsWithChildren<LeasePageProps>
-> = ({ formikRef, onSuccess }) => {
+export const TermPaymentsContainer: React.FunctionComponent<LeasePageProps> = ({
+  formikRef,
+  onSuccess,
+}) => {
   const { lease } = useContext(LeaseStateContext);
-  const generateH1005a = useGenerateH1005a();
+  const generateH1005a = useGenerateLicenceOfOccupation();
   const [editModalValues, setEditModalValues] = useState<FormLeaseTerm | undefined>(undefined);
   const [editPaymentModalValues, setEditPaymentModalValues] = useState<
     FormLeasePayment | undefined
@@ -117,6 +119,17 @@ export const TermPaymentsContainer: React.FunctionComponent<
           startDate: isValidIsoDateTime(lease?.startDate) ? lease.startDate : '',
         };
       }
+
+      // For new terms, adjust the "Requires GST" field based on whether the lease is receivable or payable.
+      if (!isValidId(values?.id)) {
+        const isReceivableLease =
+          lease?.paymentReceivableType?.id === ApiGen_CodeTypes_LeaseAccountTypes.RCVBL.toString();
+        values = {
+          ...values,
+          isGstEligible: isReceivableLease ? true : false,
+        };
+      }
+
       setEditModalValues(values);
     },
     [lease],
@@ -184,7 +197,9 @@ export const TermPaymentsContainer: React.FunctionComponent<
         onDeletePayment={onDeletePayment}
         onSavePayment={onSavePayment}
         onGenerate={onGenerate}
-        isReceivable={lease?.paymentReceivableType?.id === 'RCVBL'}
+        isReceivable={
+          lease?.paymentReceivableType?.id === ApiGen_CodeTypes_LeaseAccountTypes.RCVBL.toString()
+        }
         lease={LeaseFormModel.fromApi({
           ...getEmptyLease(),
           terms: getLeaseTerms.response ?? [],

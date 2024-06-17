@@ -15,7 +15,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         //Deposit Initial Form Elements
         private By licenseDepositsReceivedSubtitle = By.XPath("//div[contains(text(),'Deposits Received')]");
-        private By licenseDepositAddBttn = By.XPath("//button/div[contains(text(),'Add a deposit')]/ancestor::button");
+        private By licenseDepositAddBttn = By.XPath("//div[contains(text(),'Deposits Received')]/following-sibling::div/button");
         private By licenseDepositTypeColumn = By.XPath("//div[@data-testid='securityDepositsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Deposit type')]");
         private By licenseDepositDescriptionColumn = By.XPath("//div[@data-testid='securityDepositsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Description')]");
         private By licenseDepositAmountPaidColumn = By.XPath("//div[@data-testid='securityDepositsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Amount paid')]");
@@ -36,8 +36,8 @@ namespace PIMS.Tests.Automation.PageObjects
         private By licenseDepositReturnActionsColumn = By.XPath("//div[@data-testid='securityDepositReturnsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Actions')]");
         private By licenseDepositNoReturnsData = By.XPath("//div[@data-testid='securityDepositReturnsTable']/div[contains(text(),'There is no corresponding data')]");
 
-        private By licenseDepositNotesSubtitle = By.XPath("//span[contains(text(),'Deposit Notes')]");
-        private By licenseDepositEditNotesBttn = By.CssSelector("svg[data-testid='edit-notes']");
+        private By licenseDepositNotesSubtitle = By.XPath("//div[contains(text(),'Deposit Notes')]");
+        private By licenseDepositEditNotesBttn = By.CssSelector("button[data-testid='edit-notes']");
 
         //Deposit Add Deposit Elements
         private By licenseDepositAddTypeLabel = By.XPath("//label[contains(text(),'Deposit type')]");
@@ -73,7 +73,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By licenseDepositRerturnPayeeNameInput = By.Id("input-contactHolder.id");
 
         //Deposit Table Results Elements
-        private By licenseDepositTableTotal = By.XPath("//div[contains(text(),'Deposits Received')]/parent::div/parent::h2/parent::div/div/div[@data-testid='securityDepositsTable']/div[@class='tbody']/div[@class='tr-wrapper']");
+        private By licenseDepositTableTotal = By.XPath("//div[@data-testid='securityDepositsTable']/div[@class='tbody']/div[@class='tr-wrapper']");
 
         private By licenseDepositTable1stRowDepositTypeContent = By.CssSelector("div[data-testid='securityDepositsTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td']:nth-child(1)");
         private By licenseDepositTable1stRowDescriptionContent = By.CssSelector("div[data-testid='securityDepositsTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td']:nth-child(2)");
@@ -289,7 +289,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyCreatedDepositTable(Deposit deposit)
         {
-            Wait(3000);
+            Wait(5000);
             var totalDeposits = webDriver.FindElements(licenseDepositTableTotal).Count;
 
             var licenseDepositTableLastRowDepositTypeContent = By.CssSelector("div[data-testid='securityDepositsTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ totalDeposits +") div[class='td']:nth-child(1)");

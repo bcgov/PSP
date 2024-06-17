@@ -282,7 +282,7 @@ exports[`AddLeaseTenantForm component > renders as expected 1`] = `
               <p
                 class="c8"
               >
-                0 Tenants associated with this Lease/License
+                0 Tenants associated with this Lease/Licence
               </p>
               <div
                 class="table"
