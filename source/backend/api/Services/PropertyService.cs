@@ -9,6 +9,7 @@ using Pims.Api.Constants;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Models.CodeTypes;
 using Pims.Api.Models.Concepts.Property;
+using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 using Pims.Dal.Exceptions;
@@ -390,6 +391,17 @@ namespace Pims.Api.Services
 
             _logger.LogInformation("Updating historical numbers for property with id {id}", propertyId);
             _user.ThrowIfNotAuthorized(Permissions.PropertyEdit);
+
+            bool duplicateType = pimsHistoricalNumbers.Where(x => x.HistoricalFileNumberTypeCode != HistoricalFileNumberTypes.OTHER.ToString())
+                .GroupBy(p => (p.HistoricalFileNumberTypeCode, p.HistoricalFileNumber)).Any(g => g.Count() > 1);
+
+            bool duplicateOtherType = pimsHistoricalNumbers.Where(x => x.HistoricalFileNumberTypeCode == HistoricalFileNumberTypes.OTHER.ToString())
+                .GroupBy(p => (p.OtherHistFileNumberTypeCode, p.HistoricalFileNumber)).Any(g => g.Count() > 1);
+
+            if (duplicateType || duplicateOtherType)
+            {
+                throw new DuplicateEntityException("You cannot add a duplicate historical number.");
+            }
 
             _historicalNumberRepository.UpdateHistoricalFileNumbers(propertyId, pimsHistoricalNumbers);
             _historicalNumberRepository.CommitTransaction();
