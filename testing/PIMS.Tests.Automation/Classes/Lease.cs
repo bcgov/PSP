@@ -37,7 +37,9 @@
         public string DocumentLocation { get; set; } = null!;
         public string LeaseNotes { get; set; } = null!;
         public int SearchPropertiesIndex { get; set; } = 0;
-        public SearchProperty SearchProperties { get; set; } = new SearchProperty();
+        public SearchProperty SearchProperties { get; set; } = new SearchProperty() { };
+        public int LeaseChecklistIndex { get; set; } = 0;
+        public LeaseChecklist LeaseChecklist { get; set; } = new LeaseChecklist() { };
         public int TenantsStartRow { get; set; } = 0;
         public int TenantsQuantity { get; set; } = 0;
         public int TenantsNumber { get; set; } = 0;
@@ -97,6 +99,42 @@
         public int PaymentsStartRow { get; set; } = 0;
         public int PaymentsCount { get; set; } = 0;
         public List<Payment> TermPayments { get; set; } = new List<Payment>();
+    }
+
+    public class LeaseChecklist
+    {
+        public string FileInitiationSelect1 { get; set; } = null!;
+        public string FileInitiationSelect2 { get; set; } = null!;
+        public string FileInitiationSelect3 { get; set; } = null!;
+        public string FileInitiationSelect4 { get; set; } = null!;
+        public string FileInitiationSelect5 { get; set; } = null!;
+        public string FileInitiationSelect6 { get; set; } = null!;
+
+        public string ReferralsApprovalsSelect1 { get; set; } = null!;
+        public string ReferralsApprovalsSelect2 { get; set; } = null!;
+        public string ReferralsApprovalsSelect3 { get; set; } = null!;
+        public string ReferralsApprovalsSelect4 { get; set; } = null!;
+        public string ReferralsApprovalsSelect5 { get; set; } = null!;
+        public string ReferralsApprovalsSelect6 { get; set; } = null!;
+        public string ReferralsApprovalsSelect7 { get; set; } = null!;
+        public string ReferralsApprovalsSelect8 { get; set; } = null!;
+
+        public string AgreementPreparationSelect1 { get; set; } = null!;
+        public string AgreementPreparationSelect2 { get; set; } = null!;
+        public string AgreementPreparationSelect3 { get; set; } = null!;
+        public string AgreementPreparationSelect4 { get; set; } = null!;
+        public string AgreementPreparationSelect5 { get; set; } = null!;
+        public string AgreementPreparationSelect6 { get; set; } = null!;
+        public string AgreementPreparationSelect7 { get; set; } = null!;
+        public string AgreementPreparationSelect8 { get; set; } = null!;
+        public string AgreementPreparationSelect9 { get; set; } = null!;
+        public string AgreementPreparationSelect10 { get; set; } = null!;
+        public string AgreementPreparationSelect11 { get; set; } = null!;
+        public string AgreementPreparationSelect12 { get; set; } = null!;
+        public string AgreementPreparationSelect13 { get; set; } = null!;
+
+        public string LeaseLicenceCompletionSelect1 { get; set; } = null!;
+        public string LeaseLicenceCompletionSelect2 { get; set; } = null!;        
     }
 
     public class Tenant

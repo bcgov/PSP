@@ -32,7 +32,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By acquisitionFileHeaderLastUpdateByContent = By.XPath("//strong[contains(text(), 'Updated')]/parent::span/span[@id='userNameTooltip']/strong");
         private By acquisitionFileHeaderHistoricalFileLabel = By.XPath("//label[contains(text(),'Historical File')]");
         private By acquisitionFileHeaderHistoricalFileContent = By.XPath("//label[contains(text(),'Historical File #:')]/parent::strong/parent::div/following-sibling::div/div/span");
-        private By acquisitionHeaderStatusContent = By.XPath("//div[@class='col']/div/div[3]/div/div");
+        private By acquisitionHeaderStatusContent = By.XPath("//b[contains(text(),'File')]/parent::span/following-sibling::div");
 
         private By acquisitionFileStatusSelect = By.Id("input-fileStatusTypeCode");
         private By acquisitionFileProjectSubtitle = By.XPath("//h2/div/div[contains(text(), 'Project')]");

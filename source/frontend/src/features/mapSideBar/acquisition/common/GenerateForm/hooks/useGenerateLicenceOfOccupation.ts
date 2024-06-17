@@ -1,6 +1,5 @@
 import { createFileDownload } from '@/features/documents/DownloadDocumentButton';
 import { useDocumentGenerationRepository } from '@/features/documents/hooks/useDocumentGenerationRepository';
-import { FormTemplateTypes } from '@/features/mapSideBar/shared/content/models';
 import { useApiLeases } from '@/hooks/pims-api/useApiLeases';
 import { useInsurancesRepository } from '@/hooks/repositories/useInsuranceRepository';
 import { useLeaseTenantRepository } from '@/hooks/repositories/useLeaseTenantRepository';
@@ -9,11 +8,13 @@ import { usePropertyLeaseRepository } from '@/hooks/repositories/usePropertyLeas
 import { useSecurityDepositRepository } from '@/hooks/repositories/useSecurityDepositRepository';
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import { ApiGen_CodeTypes_ExternalResponseStatus } from '@/models/api/generated/ApiGen_CodeTypes_ExternalResponseStatus';
+import { ApiGen_CodeTypes_FormTypes } from '@/models/api/generated/ApiGen_CodeTypes_FormTypes';
+import { ApiGen_CodeTypes_LeaseLicenceTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseLicenceTypes';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { Api_GenerateLease } from '@/models/generate/lease/GenerateLease';
 import { exists, useAxiosErrorHandler } from '@/utils';
 
-export const useGenerateH1005a = () => {
+export const useGenerateLicenceOfOccupation = () => {
   const { generateDocumentDownloadWrappedRequest: generate } = useDocumentGenerationRepository();
   const {
     getInsurances: { execute: getInsurances },
@@ -42,7 +43,15 @@ export const useGenerateH1005a = () => {
     onError: useAxiosErrorHandler('Failed to load lease, reload this page to try again.'),
   });
 
-  const generateH1005a = async (lease: ApiGen_Concepts_Lease) => {
+  const VALID_LICENCE_TYPES = [
+    ApiGen_CodeTypes_LeaseLicenceTypes.LIOCCACCS.toString(),
+    ApiGen_CodeTypes_LeaseLicenceTypes.LIOCCTTLD.toString(),
+    ApiGen_CodeTypes_LeaseLicenceTypes.LIOCCUSE.toString(),
+    ApiGen_CodeTypes_LeaseLicenceTypes.LIOCCUTIL.toString(),
+    ApiGen_CodeTypes_LeaseLicenceTypes.LIPPUBHWY.toString(),
+  ];
+
+  const generateLicenceOfOccupation = async (lease: ApiGen_Concepts_Lease) => {
     if (lease?.id) {
       const updatedLeasePromise = getLease(lease.id);
       const insurancesPromise = getInsurances(lease.id);
@@ -59,8 +68,13 @@ export const useGenerateH1005a = () => {
           termsPromise,
           propertyLeasesPromise,
         ]);
+
       if (!exists(updatedLease)) {
         throw new Error('Failed to load lease, reload this page to try again.');
+      }
+
+      if (!updatedLease.type?.id || !VALID_LICENCE_TYPES.includes(updatedLease.type.id)) {
+        throw new Error('Invalid licence type.');
       }
 
       const leaseData = new Api_GenerateLease(
@@ -72,8 +86,23 @@ export const useGenerateH1005a = () => {
         terms ?? [],
       );
 
+      let formTemplateType: ApiGen_CodeTypes_FormTypes;
+      switch (updatedLease.type.id) {
+        case ApiGen_CodeTypes_LeaseLicenceTypes.LIOCCACCS:
+        case ApiGen_CodeTypes_LeaseLicenceTypes.LIOCCTTLD:
+        case ApiGen_CodeTypes_LeaseLicenceTypes.LIOCCUSE:
+        case ApiGen_CodeTypes_LeaseLicenceTypes.LIOCCUTIL:
+          formTemplateType = ApiGen_CodeTypes_FormTypes.H1005A;
+          break;
+        case ApiGen_CodeTypes_LeaseLicenceTypes.LIPPUBHWY:
+          formTemplateType = ApiGen_CodeTypes_FormTypes.H1005;
+          break;
+        default:
+          throw new Error('Invalid licence type.');
+      }
+
       const generatedFile = await generate({
-        templateType: FormTemplateTypes.H1005A,
+        templateType: formTemplateType.toString(),
         templateData: leaseData,
         convertToType: null,
       });
@@ -88,5 +117,5 @@ export const useGenerateH1005a = () => {
       return generatedFile;
     }
   };
-  return generateH1005a;
+  return generateLicenceOfOccupation;
 };

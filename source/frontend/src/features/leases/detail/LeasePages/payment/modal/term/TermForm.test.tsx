@@ -1,41 +1,31 @@
-import { RenderOptions, act } from '@testing-library/react';
-import axios from 'axios';
-import MockAdapter from 'axios-mock-adapter';
-import { Formik } from 'formik';
+import { FormikProps } from 'formik';
 import { createMemoryHistory } from 'history';
-import noop from 'lodash/noop';
 
 import { mockLookups } from '@/mocks/lookups.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { fillInput, renderAsync } from '@/utils/test-utils';
+import { fillInput, render, RenderOptions, act } from '@/utils/test-utils';
 
-import { defaultFormLeaseTerm } from '../../models';
+import { FormLeaseTerm, defaultFormLeaseTerm } from '../../models';
 import TermForm, { ITermFormProps } from './TermForm';
+import { createRef } from 'react';
 
 const history = createMemoryHistory();
-const mockAxios = new MockAdapter(axios);
 const onSave = vi.fn();
-const submitForm = vi.fn();
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
 
 describe('TermForm component', () => {
-  const setup = async (
-    renderOptions: RenderOptions &
-      Partial<ITermFormProps> & {
-        initialValues?: any;
-      } = {},
-  ) => {
+  const setup = (renderOptions: RenderOptions & Partial<ITermFormProps> = {}) => {
+    const formikRef = createRef<FormikProps<FormLeaseTerm>>();
     // render component under test
-    const component = await renderAsync(
-      <Formik initialValues={renderOptions.initialValues ?? {}} onSubmit={noop}>
-        <TermForm
-          onSave={onSave}
-          formikRef={{ current: { submitForm } } as any}
-          lease={{} as any}
-        />
-      </Formik>,
+    const utils = render(
+      <TermForm
+        onSave={onSave}
+        formikRef={formikRef}
+        initialValues={renderOptions?.initialValues ?? { ...defaultFormLeaseTerm }}
+        lease={{} as any}
+      />,
       {
         ...renderOptions,
         store: storeState,
@@ -44,56 +34,62 @@ describe('TermForm component', () => {
     );
 
     return {
-      component,
+      ...utils,
+      getFormikRef: () => formikRef,
     };
   };
 
-  beforeEach(() => {
-    mockAxios.resetHistory();
-  });
   it('renders as expected', async () => {
-    const { component } = await setup({});
-
-    expect(component.asFragment()).toMatchSnapshot();
+    const { asFragment } = setup({});
+    expect(asFragment()).toMatchSnapshot();
   });
+
   it('renders with data as expected', async () => {
-    const { component } = await setup({
-      initialValues: { ...defaultFormLeaseTerm },
-    });
-
-    expect(component.asFragment()).toMatchSnapshot();
+    const { asFragment } = setup({ initialValues: { ...defaultFormLeaseTerm } });
+    expect(asFragment()).toMatchSnapshot();
   });
-  it('The end date must be after the start date', async () => {
-    const {
-      component: { container, findByText },
-    } = await setup({});
+
+  it('validates that the end date must be after the start date', async () => {
+    const { container, findByText } = setup({});
 
     await act(async () => {
-      await fillInput(container, 'startDate', '2020-01-02', 'datepicker');
-      await fillInput(container, 'expiryDate', '2020-01-01', 'datepicker');
+      fillInput(container, 'startDate', '2020-01-02', 'datepicker');
     });
+    await act(async () => {
+      fillInput(container, 'expiryDate', '2020-01-01', 'datepicker');
+    });
+
     const error = await findByText('Expiry Date must be after Start Date');
     expect(error).toBeVisible();
   });
 
-  it('The start date is required', async () => {
-    const {
-      component: { container, findByDisplayValue },
-    } = await setup({});
+  it('validates that the start date is required', async () => {
+    const { container, findByDisplayValue } = setup({});
 
     await act(async () => {
-      await fillInput(container, 'expiryDate', '2020-01-02', 'datepicker');
+      fillInput(container, 'startDate', '2020-01-02', 'datepicker');
     });
+
     const input = await findByDisplayValue('Jan 02, 2020');
-    expect(input).toHaveProperty('required');
+    expect(input).toHaveAttribute('required');
   });
 
-  it('The default term status is NEXER', async () => {
-    const {
-      component: { findByDisplayValue },
-    } = await setup({});
+  it(`validates that the default term status is 'Not Exercised'`, async () => {
+    const { findByDisplayValue } = setup({});
 
     const termStatus = await findByDisplayValue('Not Exercised');
     expect(termStatus).toBeVisible();
+  });
+
+  it('calls onSave when form is submitted', async () => {
+    const { container, getFormikRef } = setup({});
+    const formikRef = getFormikRef();
+
+    await act(async () => {
+      fillInput(container, 'startDate', '2020-01-02', 'datepicker');
+    });
+    await act(() => formikRef.current.submitForm());
+
+    expect(onSave).toHaveBeenCalled();
   });
 });

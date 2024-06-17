@@ -163,7 +163,7 @@ export const LeasePropertySelector: React.FunctionComponent<LeasePropertySelecto
     return {
       variant: 'info',
       title: 'Removing Property from form',
-      message: 'Are you sure you want to remove this property from this lease/license?',
+      message: 'Are you sure you want to remove this property from this lease/licence?',
       display: false,
       closeButton: false,
       okButtonText: 'Remove',
@@ -187,7 +187,7 @@ export const LeasePropertySelector: React.FunctionComponent<LeasePropertySelecto
       <LoadingBackdrop show={bcaLoading} />
       <Section header="Properties to include in this file:">
         <div className="py-2">
-          Select one or more properties that you want to include in this lease/license file. You can
+          Select one or more properties that you want to include in this lease/licence file. You can
           choose a location from the map, or search by other criteria.
         </div>
 

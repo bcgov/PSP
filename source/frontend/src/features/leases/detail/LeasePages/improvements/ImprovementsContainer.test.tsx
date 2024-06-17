@@ -83,7 +83,7 @@ describe('Improvements Container component', () => {
     await act(async () => {});
     expect(
       getByText(
-        'There are no commercial, residential, or other improvements indicated with this lease/license.',
+        'There are no commercial, residential, or other improvements indicated with this lease/licence.',
       ),
     ).toBeVisible();
   });

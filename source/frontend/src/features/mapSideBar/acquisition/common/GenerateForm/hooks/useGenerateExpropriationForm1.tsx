@@ -4,11 +4,11 @@ import { InterestHolderType } from '@/constants/interestHolderTypes';
 import { createFileDownload } from '@/features/documents/DownloadDocumentButton';
 import { useDocumentGenerationRepository } from '@/features/documents/hooks/useDocumentGenerationRepository';
 import { ExpropriationForm1Model } from '@/features/mapSideBar/acquisition/tabs/expropriation/models';
-import { FormTemplateTypes } from '@/features/mapSideBar/shared/content/models';
 import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { useInterestHolderRepository } from '@/hooks/repositories/useInterestHolderRepository';
 import { ApiGen_CodeTypes_ExternalResponseStatus } from '@/models/api/generated/ApiGen_CodeTypes_ExternalResponseStatus';
+import { ApiGen_CodeTypes_FormTypes } from '@/models/api/generated/ApiGen_CodeTypes_FormTypes';
 import { Api_GenerateAcquisitionFile } from '@/models/generate/acquisition/GenerateAcquisitionFile';
 import { Api_GenerateExpropriationForm1 } from '@/models/generate/acquisition/GenerateExpropriationForm1';
 import { isValidId } from '@/utils';
@@ -76,7 +76,7 @@ export const useGenerateExpropriationForm1 = () => {
     });
 
     const generatedFile = await generate({
-      templateType: FormTemplateTypes.EXPROP_FORM_1,
+      templateType: ApiGen_CodeTypes_FormTypes.FORM1.toString(),
       templateData: expropriationData,
       convertToType: null,
     });
