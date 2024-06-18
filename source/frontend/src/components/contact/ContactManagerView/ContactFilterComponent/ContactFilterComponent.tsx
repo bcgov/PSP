@@ -80,7 +80,7 @@ export const ContactFilterComponent: React.FunctionComponent<
                 radioValues={getRestrictedRadioValues(restrictContactType)}
               />
             </Col>
-            <Col>
+            <Col xl="auto">
               <Row className="ml-5">
                 <Col className="pl-0">
                   <StyledNameInput field="summary" placeholder="Name of person or organization" />
@@ -110,14 +110,14 @@ export const ContactFilterComponent: React.FunctionComponent<
                 </Col>
               </Row>
             </Col>
-            <Col xs="auto" className="ml-2">
+            <Col md="auto" className="ml-2">
               <Row>
-                <Col className="pr-0">
+                <Col className="pr-0" xs="auto">
                   <VerticalBar />
                 </Col>
                 <Col>
                   <Row>
-                    <StyledColButton>
+                    <StyledColButton xs="auto">
                       <SearchButton
                         type="button"
                         disabled={isSubmitting}
@@ -126,7 +126,7 @@ export const ContactFilterComponent: React.FunctionComponent<
                         }}
                       />
                     </StyledColButton>
-                    <StyledColButton>
+                    <StyledColButton xs="auto">
                       <ResetButton
                         type=""
                         disabled={isSubmitting}
@@ -209,7 +209,7 @@ const StyledFilterBoxForm = styled(Form)`
   background-color: ${({ theme }) => theme.css.filterBoxColor};
   border-radius: 0.4rem;
   padding: 1rem;
-  max-width: 110em;
+  max-width: 85%;
 `;
 
 const StyledColButton = styled(Col)`
@@ -218,11 +218,11 @@ const StyledColButton = styled(Col)`
 `;
 
 export const StyledNameInput = styled(InlineInput)`
-  max-width: 32em;
+  max-width: 30em;
 `;
 
 export const StyledCityInput = styled(InlineInput)`
-  max-width: 40rem;
+  max-width: 25rem;
 `;
 
 export const ActiveIndicator = styled.div`

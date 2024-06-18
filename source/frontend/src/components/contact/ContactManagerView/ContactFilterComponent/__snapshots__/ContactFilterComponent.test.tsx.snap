@@ -227,7 +227,7 @@ exports[`ContactFilterComponent > matches snapshot 1`] = `
 .c0 {
   border-radius: 0.4rem;
   padding: 1rem;
-  max-width: 110em;
+  max-width: 85%;
 }
 
 .c8 {
@@ -236,11 +236,11 @@ exports[`ContactFilterComponent > matches snapshot 1`] = `
 }
 
 .c4 {
-  max-width: 32em;
+  max-width: 30em;
 }
 
 .c5 {
-  max-width: 40rem;
+  max-width: 25rem;
 }
 
 .c6 {
@@ -401,7 +401,7 @@ exports[`ContactFilterComponent > matches snapshot 1`] = `
         </div>
       </div>
       <div
-        class="col"
+        class="col-xl-auto"
       >
         <div
           class="ml-5 row"
@@ -494,13 +494,13 @@ exports[`ContactFilterComponent > matches snapshot 1`] = `
         </div>
       </div>
       <div
-        class="ml-2 col-auto"
+        class="ml-2 col-md-auto"
       >
         <div
           class="row"
         >
           <div
-            class="pr-0 col"
+            class="pr-0 col-auto"
           >
             <span
               class="c7"
@@ -513,7 +513,7 @@ exports[`ContactFilterComponent > matches snapshot 1`] = `
               class="row"
             >
               <div
-                class="c8 col"
+                class="c8 col-auto"
               >
                 <button
                   class="c9 Button Button--icon-only primary btn btn-primary"
@@ -542,7 +542,7 @@ exports[`ContactFilterComponent > matches snapshot 1`] = `
                 </button>
               </div>
               <div
-                class="c8 col"
+                class="c8 col-auto"
               >
                 <button
                   class="c9 Button Button--icon-only btn btn-info"

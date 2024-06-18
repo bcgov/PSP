@@ -293,7 +293,7 @@ exports[`Contact List View > matches snapshot 1`] = `
 .c4 {
   border-radius: 0.4rem;
   padding: 1rem;
-  max-width: 110em;
+  max-width: 85%;
 }
 
 .c12 {
@@ -302,11 +302,11 @@ exports[`Contact List View > matches snapshot 1`] = `
 }
 
 .c8 {
-  max-width: 32em;
+  max-width: 30em;
 }
 
 .c9 {
-  max-width: 40rem;
+  max-width: 25rem;
 }
 
 .c10 {
@@ -534,7 +534,7 @@ exports[`Contact List View > matches snapshot 1`] = `
                   </div>
                 </div>
                 <div
-                  class="col"
+                  class="col-xl-auto"
                 >
                   <div
                     class="ml-5 row"
@@ -627,13 +627,13 @@ exports[`Contact List View > matches snapshot 1`] = `
                   </div>
                 </div>
                 <div
-                  class="ml-2 col-auto"
+                  class="ml-2 col-md-auto"
                 >
                   <div
                     class="row"
                   >
                     <div
-                      class="pr-0 col"
+                      class="pr-0 col-auto"
                     >
                       <span
                         class="c11"
@@ -646,7 +646,7 @@ exports[`Contact List View > matches snapshot 1`] = `
                         class="row"
                       >
                         <div
-                          class="c12 col"
+                          class="c12 col-auto"
                         >
                           <button
                             class="c13 Button Button--icon-only primary btn btn-primary"
@@ -675,7 +675,7 @@ exports[`Contact List View > matches snapshot 1`] = `
                           </button>
                         </div>
                         <div
-                          class="c12 col"
+                          class="c12 col-auto"
                         >
                           <button
                             class="c13 Button Button--icon-only btn btn-info"
@@ -1071,19 +1071,23 @@ exports[`Contact List View > matches snapshot 1`] = `
                     style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
                     title=""
                   >
-                    <svg
-                      fill="currentColor"
-                      height="20"
-                      stroke="currentColor"
-                      stroke-width="0"
-                      viewBox="0 0 448 512"
-                      width="20"
-                      xmlns="http://www.w3.org/2000/svg"
+                    <div
+                      class="active"
                     >
-                      <path
-                        d="M128 148v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12zm140 12h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm-128 96h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm128 0h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm-76 84v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm76 12h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm180 124v36H0v-36c0-6.6 5.4-12 12-12h19.5V24c0-13.3 10.7-24 24-24h337c13.3 0 24 10.7 24 24v440H436c6.6 0 12 5.4 12 12zM79.5 463H192v-67c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v67h112.5V49L80 48l-.5 415z"
-                      />
-                    </svg>
+                      <svg
+                        fill="currentColor"
+                        height="20"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 448 512"
+                        width="20"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M128 148v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12zm140 12h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm-128 96h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm128 0h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm-76 84v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm76 12h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm180 124v36H0v-36c0-6.6 5.4-12 12-12h19.5V24c0-13.3 10.7-24 24-24h337c13.3 0 24 10.7 24 24v440H436c6.6 0 12 5.4 12 12zM79.5 463H192v-67c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v67h112.5V49L80 48l-.5 415z"
+                        />
+                      </svg>
+                    </div>
                   </div>
                   <div
                     class="td clickable"

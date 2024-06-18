@@ -35,7 +35,15 @@ const columns: ColumnWithProps<IContactSearchResult>[] = [
     width: 20,
     maxWidth: 20,
     Cell: (props: CellProps<IContactSearchResult>) =>
-      isPersonResult(props.row.original) ? <FaRegUser size={20} /> : <FaRegBuilding size={20} />,
+      isPersonResult(props.row.original) ? (
+        <StatusIndicators className={props.row.original.isDisabled ? 'inactive' : 'active'}>
+          <FaRegUser size={20} />
+        </StatusIndicators>
+      ) : (
+        <StatusIndicators className={props.row.original.isDisabled ? 'inactive' : 'active'}>
+          <FaRegBuilding size={20} />
+        </StatusIndicators>
+      ),
   },
   {
     Header: 'Summary',
