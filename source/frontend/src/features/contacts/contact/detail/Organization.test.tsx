@@ -73,7 +73,7 @@ describe('Contact OrganizationView component', () => {
     const statusElement = component.getByTestId('contact-organization-status');
     expect(statusElement.textContent).toBe('ACTIVE');
 
-    const nameElement = component.getByTestId('contact-organization-fullname');
+    const nameElement = component.getByTestId('contact-organization-organizationName');
     expect(nameElement.textContent).toBe(testName);
 
     const aliasElement = component.getByTestId('contact-organization-alias');
@@ -335,7 +335,7 @@ describe('Contact OrganizationView component', () => {
       },
     });
 
-    const personElements = component.getAllByTestId('contact-organization-person');
+    const personElements = component.getAllByTestId(`contact-organization-person`);
     expect(personElements.length).toBe(3);
 
     // Verify that the display is in the correct order
