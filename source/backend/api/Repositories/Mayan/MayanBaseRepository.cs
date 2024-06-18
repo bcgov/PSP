@@ -13,7 +13,6 @@ namespace Pims.Api.Repositories.Mayan
     /// </summary>
     public abstract class MayanBaseRepository : BaseRestRepository
     {
-        protected const string MayanGenericErrorMessage = "Error response received from Mayan Document Service";
         protected readonly MayanConfig _config;
         private const string MayanConfigSectionKey = "Mayan";
 
