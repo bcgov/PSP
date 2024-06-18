@@ -4,6 +4,7 @@ import { IMapProperty } from '@/components/propertySelector/models';
 import { AreaUnitTypes } from '@/constants/index';
 import { IAutocompletePrediction } from '@/interfaces';
 import { ApiGen_CodeTypes_LeaseAccountTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseAccountTypes';
+import { ApiGen_CodeTypes_LeaseStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStatusTypes';
 import { ApiGen_Concepts_ConsultationLease } from '@/models/api/generated/ApiGen_Concepts_ConsultationLease';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { ApiGen_Concepts_PropertyLease } from '@/models/api/generated/ApiGen_Concepts_PropertyLease';
@@ -306,7 +307,7 @@ export const getDefaultFormLease: () => LeaseFormModel = () =>
     returnNotes: '',
     hasDigitalLicense: null,
     hasPhysicalLicense: null,
-    fileStatusTypeCode: toTypeCodeNullable('DRAFT'),
+    fileStatusTypeCode: toTypeCodeNullable(ApiGen_CodeTypes_LeaseStatusTypes.DRAFT),
     paymentReceivableType: toTypeCodeNullable(ApiGen_CodeTypes_LeaseAccountTypes.RCVBL),
     categoryType: null,
     purposeType: null,
