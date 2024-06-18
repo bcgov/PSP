@@ -22,6 +22,7 @@ using Pims.Api.Models.Requests.Document.Upload;
 using Pims.Api.Models.Requests.Http;
 using Pims.Api.Repositories.Mayan;
 using Pims.Av;
+using Pims.Core.Exceptions;
 using Pims.Core.Http.Configuration;
 using Pims.Dal.Entities;
 using Pims.Dal.Helpers.Extensions;
@@ -36,7 +37,7 @@ namespace Pims.Api.Services
     /// </summary>
     public class DocumentService : BaseService, IDocumentService
     {
-
+        protected const string MayanGenericErrorMessage = "Error response received from Mayan Document Service";
         private static readonly string[] ValidExtensions =
         {
                 "txt",
@@ -198,19 +199,23 @@ namespace Pims.Api.Services
 
                 response.Document = mapper.Map<DocumentModel>(newPimsDocument);
             }
+            else
+            {
+                throw GetMayanResponseError(externalResponse.Message);
+            }
             return response;
         }
 
         public async Task<DocumentUpdateResponse> UpdateDocumentAsync(DocumentUpdateRequest updateRequest)
         {
-            this.Logger.LogInformation("Updating document");
+            this.Logger.LogInformation("Updating document {documentId}", updateRequest.DocumentId);
             this.User.ThrowIfNotAuthorized(Permissions.DocumentEdit);
 
             // update the pims document status
             PimsDocument existingDocument = documentRepository.TryGet(updateRequest.DocumentId);
             if (existingDocument == null)
             {
-                throw new BadRequestException("Document Id not found.");
+                throw new BadRequestException($"Document Id {updateRequest.DocumentId} not found.");
             }
             existingDocument.DocumentStatusTypeCode = updateRequest.DocumentStatusCode;
             documentRepository.Update(existingDocument);
@@ -282,7 +287,9 @@ namespace Pims.Api.Services
             }
             else
             {
-                this.Logger.LogError("Metadata & Status for Document with id {id} update aborted", updateRequest.DocumentId);
+                string error = $"Metadata & Status for Document with id {updateRequest.DocumentId} update aborted. {existingMetadata.Message}";
+                this.Logger.LogError(error);
+                throw GetMayanResponseError(error);
             }
 
             return response;
@@ -290,7 +297,7 @@ namespace Pims.Api.Services
 
         public async Task<ExternalResponse<string>> DeleteDocumentAsync(PimsDocument document)
         {
-            this.Logger.LogInformation("Deleting document");
+            this.Logger.LogInformation("Deleting document {documentId}", document.Internal_Id);
             this.User.ThrowIfNotAuthorized(Permissions.DocumentDelete);
 
             // If the storage deletion was successful or the id was not found on the storage (already deleted) delete the pims reference.
@@ -299,6 +306,10 @@ namespace Pims.Api.Services
             {
                 documentRepository.Delete(document);
                 documentRepository.CommitTransaction();
+            }
+            else
+            {
+                throw GetMayanResponseError(result.Message);
             }
 
             return result;
@@ -310,6 +321,10 @@ namespace Pims.Api.Services
             this.User.ThrowIfNotAuthorizedOrServiceAccount(Permissions.DocumentView, keycloakOptions);
 
             ExternalResponse<QueryResponse<Models.Mayan.Document.DocumentTypeModel>> result = await documentStorageRepository.TryGetDocumentTypesAsync(ordering, page, pageSize);
+            if (result.Status != ExternalResponseStatus.Success)
+            {
+                throw GetMayanResponseError(result.Message);
+            }
             return result;
         }
 
@@ -319,41 +334,64 @@ namespace Pims.Api.Services
             this.User.ThrowIfNotAuthorized(Permissions.DocumentView);
 
             ExternalResponse<QueryResponse<DocumentDetailModel>> result = await documentStorageRepository.TryGetDocumentsListAsync(ordering, page, pageSize);
+            if (result.Status != ExternalResponseStatus.Success)
+            {
+                throw GetMayanResponseError(result.Message);
+            }
             return result;
         }
 
         public async Task<ExternalResponse<QueryResponse<DocumentTypeMetadataTypeModel>>> GetDocumentTypeMetadataType(long mayanDocumentTypeId, string ordering = "", int? page = null, int? pageSize = null)
         {
+            this.Logger.LogInformation("Retrieving document type metadata type {mayanDocumentTypeId}", mayanDocumentTypeId);
+            this.User.ThrowIfNotAuthorized(Permissions.DocumentView);
+
             ExternalResponse<QueryResponse<DocumentTypeMetadataTypeModel>> result = await documentStorageRepository.TryGetDocumentTypeMetadataTypesAsync(mayanDocumentTypeId, ordering, page, pageSize);
+            if (result.Status != ExternalResponseStatus.Success)
+            {
+                throw GetMayanResponseError(result.Message);
+            }
             return result;
         }
 
         public async Task<ExternalResponse<QueryResponse<DocumentMetadataModel>>> GetStorageDocumentMetadata(long mayanDocumentId, string ordering = "", int? page = null, int? pageSize = null)
         {
-            this.Logger.LogInformation("Retrieving storage document metadata");
+            this.Logger.LogInformation("Retrieving storage document metadata {mayanDocumentId}", mayanDocumentId);
             this.User.ThrowIfNotAuthorized(Permissions.DocumentView);
 
             ExternalResponse<QueryResponse<DocumentMetadataModel>> result = await documentStorageRepository.TryGetDocumentMetadataAsync(mayanDocumentId, ordering, page, pageSize);
+            if (result.Status != ExternalResponseStatus.Success)
+            {
+                throw GetMayanResponseError(result.Message);
+            }
             return result;
         }
 
         public async Task<ExternalResponse<DocumentDetailModel>> GetStorageDocumentDetail(long mayanDocumentId)
         {
-            this.Logger.LogInformation("Retrieving storage document");
+            this.Logger.LogInformation("Retrieving storage document, {mayanDocumentId}", mayanDocumentId);
             this.User.ThrowIfNotAuthorized(Permissions.DocumentView);
 
             ExternalResponse<DocumentDetailModel> result = await documentStorageRepository.TryGetDocumentAsync(mayanDocumentId);
+            if (result.Status != ExternalResponseStatus.Success)
+            {
+                throw GetMayanResponseError(result.Message);
+            }
             return result;
         }
 
         public async Task<ExternalResponse<FileDownloadResponse>> DownloadFileAsync(long mayanDocumentId, long mayanFileId)
         {
-            this.Logger.LogInformation("Downloading storage document");
+            this.Logger.LogInformation("Downloading storage document {mayanDocumentId} {mayanFileId}", mayanDocumentId, mayanFileId);
             this.User.ThrowIfNotAuthorized(Permissions.DocumentView);
 
             ExternalResponse<FileDownloadResponse> downloadResult = await documentStorageRepository.TryDownloadFileAsync(mayanDocumentId, mayanFileId);
             if (IsValidDocumentExtension(downloadResult.Payload.FileName))
             {
+                if (downloadResult.Status != ExternalResponseStatus.Success)
+                {
+                    throw GetMayanResponseError(downloadResult.Message);
+                }
                 return downloadResult;
             }
             else
@@ -368,7 +406,7 @@ namespace Pims.Api.Services
 
         public async Task<ExternalResponse<FileDownloadResponse>> DownloadFileLatestAsync(long mayanDocumentId)
         {
-            this.Logger.LogInformation("Downloading storage document latest");
+            this.Logger.LogInformation("Downloading storage document latest {mayanDocumentId}", mayanDocumentId);
 
             ExternalResponse<DocumentDetailModel> documentResult = await documentStorageRepository.TryGetDocumentAsync(mayanDocumentId);
             if (documentResult.Status == ExternalResponseStatus.Success)
@@ -400,12 +438,7 @@ namespace Pims.Api.Services
             }
             else
             {
-                return new ExternalResponse<FileDownloadResponse>()
-                {
-                    Status = documentResult.Status,
-                    Message = documentResult.Message,
-                    HttpStatusCode = documentResult.HttpStatusCode,
-                };
+                throw GetMayanResponseError(documentResult.Message);
             }
         }
 
@@ -414,7 +447,12 @@ namespace Pims.Api.Services
             this.Logger.LogInformation("Retrieving pages for document: {documentId} file: {documentFileId}", documentId, documentFileId);
             this.User.ThrowIfNotAuthorized(Permissions.DocumentView);
 
-            return await documentStorageRepository.TryGetFilePageListAsync(documentId, documentFileId, _config.PreviewPages, 1);
+            var result = await documentStorageRepository.TryGetFilePageListAsync(documentId, documentFileId, _config.PreviewPages, 1);
+            if (result.Status != ExternalResponseStatus.Success)
+            {
+                throw GetMayanResponseError(result.Message);
+            }
+            return result;
         }
 
         public async Task<HttpResponseMessage> DownloadFilePageImageAsync(long mayanDocumentId, long mayanFileId, long mayanFilePageId)
@@ -426,7 +464,13 @@ namespace Pims.Api.Services
                         .HandleResult(result => result?.StatusCode != HttpStatusCode.OK || result?.Content == null)
                         .WaitAndRetryAsync(_config.ImageRetries, (int retry) => TimeSpan.FromSeconds(Math.Pow(2, retry)));
 
-            return await retryPolicy.ExecuteAsync(async () => await documentStorageRepository.TryGetFilePageImage(mayanDocumentId, mayanFileId, mayanFilePageId));
+            var result = await retryPolicy.ExecuteAsync(async () => await documentStorageRepository.TryGetFilePageImage(mayanDocumentId, mayanFileId, mayanFilePageId));
+
+            if (result.StatusCode != HttpStatusCode.OK)
+            {
+                throw GetMayanResponseError(await result.Content.ReadAsStringAsync());
+            }
+            return result;
         }
 
         private static bool IsValidDocumentExtension(string fileName)
@@ -462,7 +506,7 @@ namespace Pims.Api.Services
 
         private async Task<ExternalResponse<DocumentDetailModel>> UploadDocumentAsync(long documentType, IFormFile fileRaw)
         {
-            this.Logger.LogInformation("Uploading storage document");
+            this.Logger.LogInformation("Uploading storage document {documentType}", documentType);
             this.User.ThrowIfNotAuthorized(Permissions.DocumentAdd);
 
             await this.avService.ScanAsync(fileRaw);
@@ -480,7 +524,7 @@ namespace Pims.Api.Services
         private async Task<List<ExternalResponse<DocumentMetadataModel>>> CreateMetadata(long mayanDocumentId, List<DocumentMetadataUpdateModel> metadataRequest)
         {
             // Save metadata of document
-            IList<Task<ExternalResponse<DocumentMetadataModel>>> metadataCreateTasks = new List<Task<ExternalResponse<DocumentMetadataModel>>>();
+            List<Task<ExternalResponse<DocumentMetadataModel>>> metadataCreateTasks = new List<Task<ExternalResponse<DocumentMetadataModel>>>();
             foreach (var metadata in metadataRequest)
             {
                 metadataCreateTasks.Add(documentStorageRepository.TryCreateDocumentMetadataAsync(mayanDocumentId, metadata.MetadataTypeId, metadata.Value));
@@ -502,7 +546,7 @@ namespace Pims.Api.Services
         private async Task<List<ExternalResponse<DocumentMetadataModel>>> UpdateMetadata(long mayanDocumentId, List<DocumentMetadataUpdateModel> metadataRequest)
         {
             // Save metadata of document
-            IList<Task<ExternalResponse<DocumentMetadataModel>>> metadataUpdateTasks = new List<Task<ExternalResponse<DocumentMetadataModel>>>();
+            List<Task<ExternalResponse<DocumentMetadataModel>>> metadataUpdateTasks = new List<Task<ExternalResponse<DocumentMetadataModel>>>();
             foreach (var metadata in metadataRequest)
             {
                 metadataUpdateTasks.Add(documentStorageRepository.TryUpdateDocumentMetadataAsync(mayanDocumentId, metadata.Id, metadata.Value));
@@ -524,7 +568,7 @@ namespace Pims.Api.Services
         private async Task<List<ExternalResponse<DocumentMetadataModel>>> DeleteMetadata(long mayanDocumentId, List<DocumentMetadataUpdateModel> metadataRequest)
         {
             // Save metadata of document
-            IList<Task<ExternalResponse<string>>> metadataDeleteTasks = new List<Task<ExternalResponse<string>>>();
+            List<Task<ExternalResponse<string>>> metadataDeleteTasks = new List<Task<ExternalResponse<string>>>();
             foreach (var metadata in metadataRequest)
             {
                 metadataDeleteTasks.Add(documentStorageRepository.TryDeleteDocumentMetadataAsync(mayanDocumentId, metadata.Id));
@@ -546,6 +590,16 @@ namespace Pims.Api.Services
             }
 
             return result;
+        }
+
+        private MayanRepositoryException GetMayanResponseError(string errorMesage)
+        {
+            if (_config.ExposeErrors)
+            {
+                return new MayanRepositoryException(errorMesage);
+            }
+
+            return new MayanRepositoryException(MayanGenericErrorMessage);
         }
     }
 }
