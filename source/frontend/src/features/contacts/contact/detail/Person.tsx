@@ -1,8 +1,11 @@
-import { Col } from 'react-bootstrap';
-import { FaCircle, FaRegBuilding, FaRegUser } from 'react-icons/fa';
+import * as React from 'react';
+import { Col, Row } from 'react-bootstrap';
+import { FaRegBuilding, FaRegUser } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
-import { FormSection } from '@/components/common/form/styles';
+import { Section } from '@/components/common/Section/Section';
+import { SectionField } from '@/components/common/Section/SectionField';
+import { H2, H3 } from '@/components/common/styles';
 import { AddressField } from '@/features/contacts/interfaces';
 import { IContactOrganization, IContactPerson } from '@/interfaces/IContact';
 
@@ -10,11 +13,11 @@ import * as Styled from '../../styles';
 import { toAddressFields } from '../utils/contactUtils';
 import ContactInfoSubForm from './ContactInfoSubForm';
 
-export interface PersonViewProps {
+export interface PersonFormViewProps {
   person: IContactPerson;
 }
 
-const PersonView: React.FunctionComponent<React.PropsWithChildren<PersonViewProps>> = ({
+const PersonFormView: React.FunctionComponent<React.PropsWithChildren<PersonFormViewProps>> = ({
   person,
 }) => {
   let personAddresses: AddressField[];
@@ -26,90 +29,80 @@ const PersonView: React.FunctionComponent<React.PropsWithChildren<PersonViewProp
 
   return (
     <>
-      <FormSection key={'contact-person-' + person.id + '-names'} className="mb-4">
-        <Styled.RowAligned>
-          <Col>
-            <Styled.H2 data-testid="contact-person-fullname">
-              <FaRegUser size={20} className="mr-2" />
-              {person.fullName}
-            </Styled.H2>
-          </Col>
-          <Col md="auto" className="ml-auto">
-            <Styled.StatusIndicators className={person.isDisabled ? 'inactive' : 'active'}>
-              <FaCircle size={7} className="mr-2" />
-              <span data-testid="contact-person-status">
-                {person.isDisabled ? 'INACTIVE' : 'ACTIVE'}
-              </span>
-            </Styled.StatusIndicators>
-          </Col>
-        </Styled.RowAligned>
-        <Styled.RowAligned>
-          <Col md="auto">
-            <strong>Preferred name:</strong>
-          </Col>
-          <Col md="auto">
-            <span data-testid="contact-person-preferred">{person.preferredName}</span>
-          </Col>
-        </Styled.RowAligned>
-      </FormSection>
-      <FormSection key={'contact-person-' + person.id + '-organization'} className="mb-4">
-        <Styled.RowAligned>
-          <Col md="auto">
-            <FaRegBuilding className="mr-2" />
-            <strong>Organization(s):</strong>
-          </Col>
-          <Col md="auto">
-            {person.organizations &&
-              person.organizations.map((organization: IContactOrganization, index: number) => (
-                <span key={'person-org-' + index}>
-                  <Link
-                    to={'/contact/O' + organization.id}
-                    data-testid="contact-person-organization"
-                  >
-                    {organization.name}
-                  </Link>
-                  <br />
+      <Section key={'contact-person-' + person.id + '-names'} className="mb-4">
+        <H2>
+          <Row className="mb-1">
+            <Col>Contact Details</Col>
+            <Col md={3} className="d-flex justify-content-end">
+              <Styled.StatusIndicators className={person.isDisabled ? 'inactive' : 'active'}>
+                <FaRegUser size={15} className="mr-2 mb-1" />
+                <span data-testid="contact-person-status">
+                  {person.isDisabled ? 'INACTIVE' : 'ACTIVE'}
                 </span>
-              ))}
-          </Col>
-        </Styled.RowAligned>
-      </FormSection>
-      <FormSection key={'contact-person-' + person.id + '-contacts'} className="mb-4">
+              </Styled.StatusIndicators>
+            </Col>
+          </Row>
+        </H2>
+
+        <SectionField label="Individual name" labelWidth="4" valueTestId="contact-person-fullname">
+          <FaRegUser size={20} className="mr-2" />
+          <b>{person.fullName}</b>
+        </SectionField>
+
+        <SectionField label="Preferred name" labelWidth="4" valueTestId="contact-person-preferred">
+          <p>{person.preferredName}</p>
+        </SectionField>
+
+        <SectionField
+          label="Linked organization"
+          labelWidth="4"
+          valueTestId="contact-person-organization"
+        >
+          {person.organizations &&
+            person.organizations.map((organization: IContactOrganization, index: number) => (
+              <Styled.ContactLink key={'contact-person-' + person.id + '-organization'}>
+                <FaRegBuilding size={20} className="mr-2" />
+                <Link to={'/contact/O' + organization.id} key={'person-org-' + index}>
+                  {organization.name}
+                </Link>
+              </Styled.ContactLink>
+            ))}
+        </SectionField>
+
+        <H3 className="mt-10">Contact Info</H3>
         <ContactInfoSubForm contactEntity={person} />
-      </FormSection>
-      <FormSection key={'contact-person-' + person.id + '-address'} className="mb-4">
-        <Styled.H2Primary>Address</Styled.H2Primary>
+      </Section>
+
+      <Section>
+        <H2>Address</H2>
         {personAddresses.map((field: AddressField, index: number) => (
-          <Styled.RowAligned className="pb-3" key={'person-address-' + index}>
-            <Col>
-              <div className="pb-2">
-                <strong>{field.label}</strong>
-              </div>
-              <span data-testid="contact-person-address">
+          <React.Fragment key={'contact-person-' + person.id + '-address-' + index}>
+            <H3 className="mt-10">{field.label}</H3>
+            <Row className="pt-4" key={'person-address-' + index}>
+              <Col md="3"></Col>
+              <Col data-testid="contact-person-address">
                 {field.streetAddress1 && <div>{field.streetAddress1} </div>}
                 {field.streetAddress2 && <div>{field.streetAddress2} </div>}
                 {field.streetAddress3 && <div>{field.streetAddress3} </div>}
                 <div>{field.municipalityAndProvince} </div>
                 {field.postal && <div>{field.postal} </div>}
                 {field.country && <div>{field.country}</div>}
-                {index + 1 !== personAddresses.length && <hr></hr>}
-              </span>
-            </Col>
-          </Styled.RowAligned>
+              </Col>
+            </Row>
+          </React.Fragment>
         ))}
-      </FormSection>
-      <FormSection key={'contact-person-' + person.id + '-comments'}>
-        <Styled.RowAligned>
+      </Section>
+
+      <Section key={'contact-person-' + person.id + '-comments'}>
+        <H2>Comments</H2>
+        <Row>
           <Col>
-            <div>
-              <strong>Comments:</strong>
-            </div>
-            <span data-testid="contact-person-comment">{person.comment}</span>
+            <div data-testid="contact-person-comment">{person.comment}</div>
           </Col>
-        </Styled.RowAligned>
-      </FormSection>
+        </Row>
+      </Section>
     </>
   );
 };
 
-export default PersonView;
+export default PersonFormView;
