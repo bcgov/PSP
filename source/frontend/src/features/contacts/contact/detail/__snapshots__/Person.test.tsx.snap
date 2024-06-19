@@ -7,41 +7,118 @@ exports[`Contact PersonView component > renders as expected 1`] = `
   />
   <div />
   .c0 {
-  border-radius: 1rem;
-  width: 100%;
-  padding: 2.5rem;
+  margin: 1.6rem;
+  padding: 1.6rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
 }
 
-.c2 {
-  text-align: left;
-}
-
-.c1 {
-  text-align: left;
+.c4.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
 }
 
 .c3 {
-  border-radius: 1rem;
-  background-color: white;
-  border: 1px solid;
-  padding: 0.2rem 1rem;
+  font-weight: bold;
 }
 
-.c3.active {
+.c1 {
+  font-family: 'BCSans-Bold';
+  font-size: 2.6rem;
+  border-bottom: solid 0.2rem;
+  width: 100%;
+  text-align: left;
+  margin-bottom: 2.4rem;
+}
+
+.c5 {
+  font-family: 'BCSans-Bold';
+  font-size: 2.2rem;
+  border-bottom: solid 0.2rem;
+  width: 100%;
+  text-align: left;
+  margin-bottom: 2.4rem;
+}
+
+.c6 {
+  text-align: left;
+}
+
+.c2 {
+  border-radius: 0.5rem;
+  background-color: white;
+  border: 1px solid;
+  padding: 0.5rem 1.5rem;
+  font-size: 1.6rem;
+}
+
+.c2.active {
   border: 1px solid;
 }
 
 <div
-    class="c0 mb-4"
+    class="c0 form-section mb-4"
   >
     <div
-      class="c1 row"
+      class="collapse show"
     >
-      <div
-        class="col"
+      <h2
+        class="c1"
       >
-        <h2
-          class="c2"
+        <div
+          class="mb-1 row"
+        >
+          <div
+            class="col"
+          >
+            Contact Details
+          </div>
+          <div
+            class="d-flex justify-content-end col-md-3"
+          >
+            <div
+              class="c2 active"
+            >
+              <svg
+                class="mr-2 mb-1"
+                fill="currentColor"
+                height="15"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 448 512"
+                width="15"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M313.6 304c-28.7 0-42.5 16-89.6 16-47.1 0-60.8-16-89.6-16C60.2 304 0 364.2 0 438.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-25.6c0-74.2-60.2-134.4-134.4-134.4zM400 464H48v-25.6c0-47.6 38.8-86.4 86.4-86.4 14.6 0 38.3 16 89.6 16 51.7 0 74.9-16 89.6-16 47.6 0 86.4 38.8 86.4 86.4V464zM224 288c79.5 0 144-64.5 144-144S303.5 0 224 0 80 64.5 80 144s64.5 144 144 144zm0-240c52.9 0 96 43.1 96 96s-43.1 96-96 96-96-43.1-96-96 43.1-96 96-96z"
+                />
+              </svg>
+              <span
+                data-testid="contact-person-status"
+              >
+                ACTIVE
+              </span>
+            </div>
+          </div>
+        </div>
+      </h2>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="pr-0 text-left col-4"
+        >
+          <label
+            class="c3"
+          >
+            Individual name:
+          </label>
+        </div>
+        <div
+          class="c4 text-left col"
           data-testid="contact-person-fullname"
         >
           <svg
@@ -58,205 +135,160 @@ exports[`Contact PersonView component > renders as expected 1`] = `
               d="M313.6 304c-28.7 0-42.5 16-89.6 16-47.1 0-60.8-16-89.6-16C60.2 304 0 364.2 0 438.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-25.6c0-74.2-60.2-134.4-134.4-134.4zM400 464H48v-25.6c0-47.6 38.8-86.4 86.4-86.4 14.6 0 38.3 16 89.6 16 51.7 0 74.9-16 89.6-16 47.6 0 86.4 38.8 86.4 86.4V464zM224 288c79.5 0 144-64.5 144-144S303.5 0 224 0 80 64.5 80 144s64.5 144 144 144zm0-240c52.9 0 96 43.1 96 96s-43.1 96-96 96-96-43.1-96-96 43.1-96 96-96z"
             />
           </svg>
-          Test name full
-        </h2>
+          <b>
+            Test name full
+          </b>
+        </div>
       </div>
       <div
-        class="ml-auto col-md-auto"
+        class="pb-2 row"
       >
         <div
-          class="c3 active"
+          class="pr-0 text-left col-4"
         >
-          <svg
-            class="mr-2"
-            fill="currentColor"
-            height="7"
-            stroke="currentColor"
-            stroke-width="0"
-            viewBox="0 0 512 512"
-            width="7"
-            xmlns="http://www.w3.org/2000/svg"
+          <label
+            class="c3"
           >
-            <path
-              d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8z"
-            />
-          </svg>
-          <span
-            data-testid="contact-person-status"
+            Preferred name:
+          </label>
+        </div>
+        <div
+          class="c4 text-left col"
+          data-testid="contact-person-preferred"
+        >
+          <p>
+            Preferred
+          </p>
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="pr-0 text-left col-4"
+        >
+          <label
+            class="c3"
           >
-            ACTIVE
+            Linked organization:
+          </label>
+        </div>
+        <div
+          class="c4 text-left col"
+          data-testid="contact-person-organization"
+        />
+      </div>
+      <h3
+        class="c5 mt-10"
+      >
+        Contact Info
+      </h3>
+      <div
+        class="c6 pb-4 row"
+      >
+        <div
+          class="col-md-3"
+        >
+          <strong>
+            Email:
+          </strong>
+        </div>
+        <div
+          class="col-md-9"
+        >
+          <span>
+            N.A
+          </span>
+        </div>
+      </div>
+      <div
+        class="c6 row"
+      >
+        <div
+          class="col-md-3"
+        >
+          <strong>
+            Phone:
+          </strong>
+        </div>
+        <div
+          class="col-md-9"
+        >
+          <span>
+            N.A
           </span>
         </div>
       </div>
     </div>
-    <div
-      class="c1 row"
-    >
-      <div
-        class="col-md-auto"
-      >
-        <strong>
-          Preferred name:
-        </strong>
-      </div>
-      <div
-        class="col-md-auto"
-      >
-        <span
-          data-testid="contact-person-preferred"
-        >
-          Preferred
-        </span>
-      </div>
-    </div>
   </div>
   .c0 {
-  border-radius: 1rem;
-  width: 100%;
-  padding: 2.5rem;
+  margin: 1.6rem;
+  padding: 1.6rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
 }
 
 .c1 {
+  font-family: 'BCSans-Bold';
+  font-size: 2.6rem;
+  border-bottom: solid 0.2rem;
+  width: 100%;
   text-align: left;
+  margin-bottom: 2.4rem;
 }
 
 <div
-    class="c0 mb-4"
+    class="c0 form-section"
   >
     <div
-      class="c1 row"
+      class="collapse show"
     >
-      <div
-        class="col-md-auto"
+      <h2
+        class="c1"
       >
-        <svg
-          class="mr-2"
-          fill="currentColor"
-          height="1em"
-          stroke="currentColor"
-          stroke-width="0"
-          viewBox="0 0 448 512"
-          width="1em"
-          xmlns="http://www.w3.org/2000/svg"
+        Address
+      </h2>
+    </div>
+  </div>
+  .c0 {
+  margin: 1.6rem;
+  padding: 1.6rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
+.c1 {
+  font-family: 'BCSans-Bold';
+  font-size: 2.6rem;
+  border-bottom: solid 0.2rem;
+  width: 100%;
+  text-align: left;
+  margin-bottom: 2.4rem;
+}
+
+<div
+    class="c0 form-section"
+  >
+    <div
+      class="collapse show"
+    >
+      <h2
+        class="c1"
+      >
+        Comments
+      </h2>
+      <div
+        class="row"
+      >
+        <div
+          class="col"
         >
-          <path
-            d="M128 148v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12zm140 12h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm-128 96h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm128 0h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm-76 84v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm76 12h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm180 124v36H0v-36c0-6.6 5.4-12 12-12h19.5V24c0-13.3 10.7-24 24-24h337c13.3 0 24 10.7 24 24v440H436c6.6 0 12 5.4 12 12zM79.5 463H192v-67c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v67h112.5V49L80 48l-.5 415z"
+          <div
+            data-testid="contact-person-comment"
           />
-        </svg>
-        <strong>
-          Organization(s):
-        </strong>
-      </div>
-      <div
-        class="col-md-auto"
-      />
-    </div>
-  </div>
-  .c0 {
-  border-radius: 1rem;
-  width: 100%;
-  padding: 2.5rem;
-}
-
-.c1 {
-  text-align: left;
-}
-
-.c2 {
-  text-align: left;
-}
-
-<div
-    class="c0 mb-4"
-  >
-    <h2
-      class="c1"
-    >
-      Contact info
-    </h2>
-    <div
-      class="c2 pb-4 row"
-    >
-      <div
-        class="col-md-2"
-      >
-        <strong>
-          Email:
-        </strong>
-      </div>
-      <div
-        class="col-md-10"
-      >
-        <span>
-          N.A
-        </span>
-      </div>
-    </div>
-    <div
-      class="c2 row"
-    >
-      <div
-        class="col-md-2"
-      >
-        <strong>
-          Phone:
-        </strong>
-      </div>
-      <div
-        class="col-md-10"
-      >
-        <span>
-          N.A
-        </span>
-      </div>
-    </div>
-  </div>
-  .c0 {
-  border-radius: 1rem;
-  width: 100%;
-  padding: 2.5rem;
-}
-
-.c1 {
-  text-align: left;
-}
-
-<div
-    class="c0 mb-4"
-  >
-    <h2
-      class="c1"
-    >
-      Address
-    </h2>
-  </div>
-  .c0 {
-  border-radius: 1rem;
-  width: 100%;
-  padding: 2.5rem;
-}
-
-.c1 {
-  text-align: left;
-}
-
-<div
-    class="c0"
-  >
-    <div
-      class="c1 row"
-    >
-      <div
-        class="col"
-      >
-        <div>
-          <strong>
-            Comments:
-          </strong>
         </div>
-        <span
-          data-testid="contact-person-comment"
-        />
       </div>
     </div>
   </div>
