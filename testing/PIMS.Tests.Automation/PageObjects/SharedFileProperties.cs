@@ -342,7 +342,7 @@ namespace PIMS.Tests.Automation.PageObjects
             if (webDriver.FindElements(propertiesFileConfirmationModal).Count > 0)
             {
                 Assert.True(sharedModals.ModalHeader() == "Removing Property from form");
-                Assert.True(sharedModals.ModalContent() == "Are you sure you want to remove this property from this lease/license?");
+                Assert.True(sharedModals.ModalContent() == "Are you sure you want to remove this property from this lease/licence?");
 
                 sharedModals.ModalClickOKBttn();
             }

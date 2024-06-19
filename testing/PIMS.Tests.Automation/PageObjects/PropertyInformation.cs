@@ -25,7 +25,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By propertyViewInfoBttn = By.XPath("//button/div[contains(text(),'View Property info')]");
         private By propertyNewResearchFileBttn = By.XPath("//div[contains(text(),'Research File')]/parent::button");
         private By propertyNewAcquisitionFileBttn = By.XPath("//div[contains(text(),'Acquisition File')]/parent::button");
-        private By propertyNewLeaseFileBttn = By.XPath("//div[contains(text(),'Lease/License')]/parent::button");
+        private By propertyNewLeaseFileBttn = By.XPath("//div[contains(text(),'Lease/Licence')]/parent::button");
         private By propertyNewDispositionFileBttn = By.XPath("//div[contains(text(),'Disposition File')]/parent::button");
         private By propertyNewSubdivisionFileBttn = By.XPath("//div[contains(text(),'Create Subdivision')]/parent::button");
         private By propertyNewConsolidationFileBttn = By.XPath("//div[contains(text(),'Create Consolidation')]/parent::button");

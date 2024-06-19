@@ -32,7 +32,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By researchFileNameInput = By.Id("input-name");
         private By researchRoadNameInput = By.Id("input-roadName");
         private By researchRoadAliasInput = By.Id("input-roadAlias");
-        private By researchPurposeMultiselect = By.Id("purpose-selector");
+        private By researchPurposeMultiselect = By.Id("purpose-selector_input");
         private By researchRequestPurposeOptions = By.CssSelector("ul[class='optionContainer']");
         private By researchRequestDateInput = By.Id("datepicker-requestDate");
         private By researchRequestSourceSelect = By.Id("input-requestSourceTypeCode");
@@ -257,6 +257,8 @@ namespace PIMS.Tests.Automation.PageObjects
                 foreach (string purpose in researchFile.ResearchPurpose)
                 {
                     webDriver.FindElement(researchPurposeMultiselect).Click();
+
+                    Wait();
                     ChooseMultiSelectSpecificOption(researchRequestPurposeOptions, purpose);
                 }
             }

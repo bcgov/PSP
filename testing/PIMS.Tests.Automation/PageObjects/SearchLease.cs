@@ -8,9 +8,9 @@ namespace PIMS.Tests.Automation.PageObjects
     public class SearchLease : PageObjectBase
     {
         //Main Menu Elements
-        private By menuManagementButton = By.CssSelector("div[data-testid='nav-tooltip-leases&licenses'] a");
-        private By searchLicenseButton = By.XPath("//a[contains(text(),'Manage Lease/License Files')]");
-        private By searchLicenseTitle = By.XPath("//h3[contains(text(),'Leases & Licenses')]");
+        private By menuManagementButton = By.CssSelector("div[data-testid='nav-tooltip-leases&licences'] a");
+        private By searchLicenseButton = By.XPath("//a[contains(text(),'Manage Lease/Licence Files')]");
+        private By searchLicenseTitle = By.XPath("//h3[contains(text(),'Leases & Licences')]");
 
         //Search Filter Elements
         private By searchBySelect = By.Id("input-searchBy");
@@ -60,7 +60,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By searchLicense1stResultHistoricalFileContent = By.XPath("//div[@data-testid='leasesTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[6]");
         private By searchLicense1stResultStatusContent = By.XPath("//div[@data-testid='leasesTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[7]");
 
-        private By searchLicenseFileHeaderCode = By.XPath("//label[contains(text(),'Lease/License #')]/parent::strong/parent::div/following-sibling::div/span[1]");
+        private By searchLicenseFileHeaderCode = By.XPath("//label[contains(text(),'Lease/Licence #')]/parent::strong/parent::div/following-sibling::div/span[1]");
 
         //Search Leases Pagination
         private By searchLeasesPaginationMenu = By.CssSelector("div[class='Menu-root']");
@@ -294,7 +294,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
             //Search Leases Filters
             AssertTrueIsDisplayed(searchBySelect);
-            AssertTrueIsDisplayed(searchLicensePIDInput);
+            AssertTrueIsDisplayed(searchLicenseLFileInput);
             AssertTrueIsDisplayed(searchLicenseStatusInput);
             AssertTrueIsDisplayed(searchLicenseProgramInput);
             AssertTrueIsDisplayed(searchLicenceTenantInput);

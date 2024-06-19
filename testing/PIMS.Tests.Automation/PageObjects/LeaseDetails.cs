@@ -7,16 +7,16 @@ namespace PIMS.Tests.Automation.PageObjects
     public class LeaseDetails : PageObjectBase
     {
         //Main Menu links Elements
-        private By menuManagementButton = By.CssSelector("div[data-testid='nav-tooltip-leases&licenses'] a");
-        private By createLicenseButton = By.XPath("//a[contains(text(),'Create a Lease/License File')]");
+        private By menuManagementButton = By.CssSelector("div[data-testid='nav-tooltip-leases&licences'] a");
+        private By createLicenseButton = By.XPath("//a[contains(text(),'Create a Lease/Licence File')]");
 
         //File Details Edit Icon
         private By licenseDetailsEditIcon = By.XPath("//div[@role='tabpanel']/div/div/div/button");
 
         //Lease Header Elements
-        private By licenseHeaderNbrLabel = By.XPath("//label[contains(text(),'Lease/License #')]");
-        private By licenseHeaderNbrContent = By.XPath("//label[contains(text(),'Lease/License #')]/parent::strong/parent::div/following-sibling::div/span[1]");
-        private By licenseHeaderAccountType = By.XPath("//label[contains(text(),'Lease/License #')]/parent::strong/parent::div/following-sibling::div/span[2]");
+        private By licenseHeaderNbrLabel = By.XPath("//label[contains(text(),'Lease/Licence #')]");
+        private By licenseHeaderNbrContent = By.XPath("//label[contains(text(),'Lease/Licence #')]/parent::strong/parent::div/following-sibling::div/span[1]");
+        private By licenseHeaderAccountType = By.XPath("//label[contains(text(),'Lease/Licence #')]/parent::strong/parent::div/following-sibling::div/span[2]");
         private By licenseHeaderProperty = By.XPath("//label[contains(text(),'Property')]");
         private By licenseHeaderPropertyContent = By.XPath("//label[contains(text(),'Property')]/parent::strong/parent::div/following-sibling::div/div/span");
         private By licenseHeaderTenantLabel = By.XPath("//label[contains(text(),'Tenant')]");
@@ -37,11 +37,11 @@ namespace PIMS.Tests.Automation.PageObjects
         private By licenseHeaderExpiredFlag = By.XPath("//label[contains(text(),'Lease Start')]/parent::strong/parent::div/following-sibling::div[4]/div");
 
         //Lease Details Elements
-        private By licenseDetailsLeaseDateSubtitle = By.XPath("//form/div/div/div/div/h4[contains(text(),'Lease / License')]");
-        private By licenseDetailsLeaseDateStartLabel = By.XPath("//form/div/div/div/div/h4[contains(text(),'Lease / License')]/parent::div/div/label[contains(text(),'Start date')]");
-        private By licenseDetailsLeaseDateStartContent = By.XPath("//form/div/div/div/div/h4[contains(text(),'Lease / License')]/parent::div/div/label[contains(text(),'Start date')]/following-sibling::div");
-        private By licenseDetailsLeaseDateEndLabel = By.XPath("//form/div/div/div/div/h4[contains(text(),'Lease / License')]/parent::div/div/label[contains(text(),'Expiry')]");
-        private By licenseDetailsLeaseDateEndContent = By.XPath("//form/div/div/div/div/h4[contains(text(),'Lease / License')]/parent::div/div/label[contains(text(),'Expiry')]/following-sibling::div");
+        private By licenseDetailsLeaseDateSubtitle = By.XPath("//form/div/div/div/div/h4[contains(text(),'Lease / Licence')]");
+        private By licenseDetailsLeaseDateStartLabel = By.XPath("//form/div/div/div/div/h4[contains(text(),'Lease / Licence')]/parent::div/div/label[contains(text(),'Start date')]");
+        private By licenseDetailsLeaseDateStartContent = By.XPath("//form/div/div/div/div/h4[contains(text(),'Lease / Licence')]/parent::div/div/label[contains(text(),'Start date')]/following-sibling::div");
+        private By licenseDetailsLeaseDateEndLabel = By.XPath("//form/div/div/div/div/h4[contains(text(),'Lease / Licence')]/parent::div/div/label[contains(text(),'Expiry')]");
+        private By licenseDetailsLeaseDateEndContent = By.XPath("//form/div/div/div/div/h4[contains(text(),'Lease / Licence')]/parent::div/div/label[contains(text(),'Expiry')]/following-sibling::div");
         private By licenseDetailsCurrentTermSubtitle = By.XPath("//form/div/div/div/div/h4[contains(text(),'Current Term')]");
         private By licenseDetailsCurrentTermStartLabel = By.XPath("//form/div/div/div/div/h4[contains(text(),'Current Term')]/parent::div/div/label[contains(text(),'Start date')]");
         private By licenseDetailsCurrentTermStartContent = By.XPath("//form/div/div/div/div/h4[contains(text(),'Current Term')]/parent::div/div/label[contains(text(),'Start date')]/following-sibling::div");
@@ -62,7 +62,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By licenseDetailsProperty1LegalDescripContent = By.XPath("//h2/div/div[contains(text(),'Property Information')]/parent::div/parent::h2/following-sibling::div/div[1]/div/div/label[contains(text(),'Legal description')]/parent::div/following-sibling::div");
 
         //Create Lease Details Elements
-        private By licenseCreateTitle = By.XPath("//h1[contains(text(),'Create Lease/License')]");
+        private By licenseCreateTitle = By.XPath("//h1[contains(text(),'Create Lease/Licence')]");
 
         private By licenseDetailsProjectSubtitle = By.XPath("//h2/div/div[contains(text(), 'Project')]");
         private By licenseDetailsProjectLabel = By.XPath("//label[contains(text(),'Ministry project')]");
@@ -155,10 +155,10 @@ namespace PIMS.Tests.Automation.PageObjects
 
         private By licenseDetailsDocsSubtitle = By.XPath("//div[contains(text(),'Documentation')]");
         private By licenseDetailsPhysicalLeaseExistViewLabel = By.XPath("//label[contains(text(),'Physical copy exists')]");
-        private By licenseDetailsPhysicalLeaseExistLabel = By.XPath("//label[contains(text(),'Physical lease/license exists')]");
+        private By licenseDetailsPhysicalLeaseExistLabel = By.XPath("//label[contains(text(),'Physical lease/licence exists')]");
         private By licenseDetailsPhysicalLeaseExistSelector = By.Id("input-hasPhysicalLicense");
         private By licenseDetailsDigitalLeaseExistViewLabel = By.XPath("//label[contains(text(),'Digital copy exists')]");
-        private By licenseDetailsDigitalLeaseExistLabel = By.XPath("//label[contains(text(),'Digital lease/license exists')]");
+        private By licenseDetailsDigitalLeaseExistLabel = By.XPath("//label[contains(text(),'Digital lease/licence exists')]");
         private By licenseDetailsDigitalLeaseExistSelector = By.Id("input-hasDigitalLicense");
         private By licenseDetailsLocationDocsLabel = By.XPath("//label[contains(text(),'Document location')]");
         private By licenseDetailsLocationDocsTooltip = By.XPath("//label[contains(text(),'Document location')]/span/span[@data-testid='tooltip-icon-section-field-tooltip']");
