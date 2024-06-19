@@ -17,12 +17,14 @@ import { IUpdateLeaseFormProps } from './UpdateLeaseForm';
 export interface UpdateLeaseContainerProps {
   formikRef: React.RefObject<FormikProps<LeaseFormModel>>;
   onEdit: (isEditing: boolean) => void;
-  View: React.FunctionComponent<React.PropsWithChildren<IUpdateLeaseFormProps>>;
+  View: React.FunctionComponent<IUpdateLeaseFormProps>;
 }
 
-export const UpdateLeaseContainer: React.FunctionComponent<
-  React.PropsWithChildren<UpdateLeaseContainerProps>
-> = ({ formikRef, onEdit, View }) => {
+export const UpdateLeaseContainer: React.FunctionComponent<UpdateLeaseContainerProps> = ({
+  formikRef,
+  onEdit,
+  View,
+}) => {
   const { lease } = useContext(LeaseStateContext);
   const { getCompleteLease, refresh, loading } = useLeaseDetail(lease?.id ?? undefined);
   const { updateApiLease } = useUpdateLease();

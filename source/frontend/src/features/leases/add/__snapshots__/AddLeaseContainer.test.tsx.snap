@@ -612,6 +612,13 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                       data-testid="select-option-ACTIVE"
                       value="ACTIVE"
                     >
+                      Archived
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-ARCHIVED"
+                      value="ARCHIVED"
+                    >
                       Active
                     </option>
                     <option
@@ -720,10 +727,10 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                     </label>
                   </div>
                   <div
-                    class="c5 required text-left col"
+                    class="c5 text-left col"
                   >
                     <div
-                      class="c7 required form-group"
+                      class="c7 form-group"
                     >
                       <div
                         class="react-datepicker-wrapper d-block"
@@ -746,7 +753,6 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                             id="datepicker-startDate"
                             name="startDate"
                             placeholder="MMM DD, YYYY"
-                            required=""
                             type="text"
                             value=""
                           />
