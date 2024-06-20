@@ -141,8 +141,15 @@ export const LeaseDetailSubForm: React.FunctionComponent<ILeaseDetailsSubFormPro
       </SectionField>
       <Row>
         <Col>
-          <SectionField label="Start date" required>
-            <FastDatePicker formikProps={formikProps} field="startDate" required />
+          <SectionField
+            label="Start date"
+            required={statusTypeCode === ApiGen_CodeTypes_LeaseStatusTypes.ACTIVE}
+          >
+            <FastDatePicker
+              formikProps={formikProps}
+              field="startDate"
+              required={statusTypeCode === ApiGen_CodeTypes_LeaseStatusTypes.ACTIVE}
+            />
           </SectionField>
         </Col>
         <Col>

@@ -50,13 +50,11 @@ const AddLeaseForm: React.FunctionComponent<React.PropsWithChildren<IAddLeaseFor
       >
         {formikProps => (
           <>
-            <>
-              <LeaseDetailSubForm formikProps={formikProps}></LeaseDetailSubForm>
-              <LeasePropertySelector formikProps={formikProps} />
-              <AdministrationSubForm formikProps={formikProps}></AdministrationSubForm>
-              <ConsultationSubForm formikProps={formikProps}></ConsultationSubForm>
-              <DocumentationSubForm />
-            </>
+            <LeaseDetailSubForm formikProps={formikProps}></LeaseDetailSubForm>
+            <LeasePropertySelector formikProps={formikProps} />
+            <AdministrationSubForm formikProps={formikProps}></AdministrationSubForm>
+            <ConsultationSubForm formikProps={formikProps}></ConsultationSubForm>
+            <DocumentationSubForm />
           </>
         )}
       </Formik>
