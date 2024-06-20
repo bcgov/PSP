@@ -216,9 +216,12 @@ exports[`Contact List View > matches snapshot 1`] = `
 }
 
 .c21 {
-  width: 7.5rem;
+  min-width: 5rem;
+  max-width: 5rem;
   margin-left: 1rem;
   margin-right: 1rem;
+  text-align: center;
+  padding: 0;
 }
 
 .c21:disabled {
@@ -1236,8 +1239,7 @@ exports[`Contact List View > matches snapshot 1`] = `
                       Show
                     </span>
                     <input
-                      class="c21 form-control form-control-sm"
-                      disabled=""
+                      class="c21 form-control"
                       type="number"
                       value="10"
                     />

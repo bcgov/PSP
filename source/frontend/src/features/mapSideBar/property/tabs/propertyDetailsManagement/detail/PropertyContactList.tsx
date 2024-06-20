@@ -172,10 +172,7 @@ const PropertyContactList: React.FunctionComponent<IPropertyContactListProps> = 
     <Table<ApiGen_Concepts_PropertyContact>
       name="PropertyContactsTable"
       manualSortBy={false}
-      lockPageSize={true}
-      manualPagination={true}
-      hidePagination
-      hideToolbar
+      manualPagination={false}
       totalItems={propertyContacts.length}
       columns={createContactTableColumns(onEdit, onDelete)}
       data={propertyContacts ?? []}
