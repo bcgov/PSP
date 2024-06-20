@@ -12,6 +12,14 @@ export const AddAcquisitionFileYupSchema = Yup.object()
     acquisitionType: Yup.string().required('Acquisition type is required'),
     region: Yup.string().required('Ministry region is required'),
     legacyFileNumber: Yup.string().max(18, 'Legacy file number must be at most ${max} characters'),
+    properties: Yup.array().of(
+      Yup.object().shape({
+        isRetired: Yup.boolean().notOneOf(
+          [true],
+          'Selected property is retired and can not be added to the file',
+        ),
+      }),
+    ),
   })
   .concat(UpdateAcquisitionTeamYupSchema)
   .concat(UpdateAcquisitionOwnersYupSchema);

@@ -385,7 +385,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
 
 const getQueryParams = (filter: IPropertyFilter): IGeoSearchParams => {
   // The map will search for either identifier.
-  const pinOrPidValue = filter.pinOrPid ? filter.pinOrPid?.replace(/-/g, '') : undefined;
+  const pinOrPidValue = filter.pinOrPid ? filter.pinOrPid?.replaceAll(/-/g, '') : undefined;
   return {
     PID_PADDED: pinOrPidValue,
     PID: pinOrPidValue,

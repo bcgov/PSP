@@ -76,6 +76,37 @@ describe('useLayerQuery hook tests', () => {
     });
   });
 
+  describe('findOneWhereContainsWrapped tests', () => {
+    it('Displays a warning when a warehouse request fails', async () => {
+      const { findOneWhereContainsWrapped } = getRenderedHook();
+      mockAxios.onGet().reply(500);
+      try {
+        await findOneWhereContainsWrapped.execute({ lat: 1, lng: 1 } as any);
+      } catch (err) {}
+
+      expect(toastErrorSpy).toHaveBeenCalledTimes(1);
+    });
+    it('retries failed wfs requests', async () => {
+      const { findOneWhereContainsWrapped } = getRenderedHook();
+      mockAxios.onGet().reply(500);
+      try {
+        await findOneWhereContainsWrapped.execute({ lat: 1, lng: 1 } as any);
+      } catch (err) {}
+
+      expect(mockAxios.history.get.length).toBe(3);
+    });
+    it('does not show the data warehouse error if the retry passes', async () => {
+      const { findOneWhereContainsWrapped } = getRenderedHook();
+      mockAxios.onGet().replyOnce(500).onAny().reply(200);
+      try {
+        await findOneWhereContainsWrapped.execute({ lat: 1, lng: 1 } as any);
+      } catch (err) {}
+
+      expect(mockAxios.history.get.length).toBe(2);
+      expect(toastErrorSpy).not.toHaveBeenCalled();
+    });
+  });
+
   describe('findByPid tests', () => {
     it('Displays a warning when a warehouse request fails', async () => {
       const { findByPid } = getRenderedHook();
