@@ -212,9 +212,12 @@ exports[`Generic table component > matches snapshot 1`] = `
 }
 
 .c1 {
-  width: 7.5rem;
+  min-width: 5rem;
+  max-width: 5rem;
   margin-left: 1rem;
   margin-right: 1rem;
+  text-align: center;
+  padding: 0;
 }
 
 .c1:disabled {
@@ -252,8 +255,7 @@ exports[`Generic table component > matches snapshot 1`] = `
               Show
             </span>
             <input
-              class="c1 form-control form-control-sm"
-              disabled=""
+              class="c1 form-control"
               type="number"
               value="10"
             />
