@@ -35,7 +35,7 @@ export const TablePageSizeSelector: React.FC<ITablePageSizeSelectorProps> = ({
     <Menu options={pageSizeOptions} alignTop={alignTop}>
       <div className="d-flex">
         <StyledText>Show</StyledText>
-        <StyledInput size="sm" value={`${selected}`} type="number" disabled />
+        <StyledInput defaultValue={`${selected}`} type="number" />
         <StyledText>Entries</StyledText>
       </div>
     </Menu>
@@ -48,10 +48,13 @@ const StyledText = styled.span`
 `;
 
 const StyledInput = styled(Form.Control)`
-  width: 7.5rem;
+  min-width: 5rem;
+  max-width: 5rem;
   margin-left: 1rem;
   margin-right: 1rem;
   &:disabled {
     background: white;
   }
+  text-align: center;
+  padding: 0;
 `;

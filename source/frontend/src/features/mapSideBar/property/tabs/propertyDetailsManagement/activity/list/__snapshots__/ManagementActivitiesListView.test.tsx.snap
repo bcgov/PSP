@@ -194,9 +194,12 @@ exports[`Activities list view > renders as expected 1`] = `
 }
 
 .c9 {
-  width: 7.5rem;
+  min-width: 5rem;
+  max-width: 5rem;
   margin-left: 1rem;
   margin-right: 1rem;
+  text-align: center;
+  padding: 0;
 }
 
 .c9:disabled {
@@ -686,8 +689,7 @@ exports[`Activities list view > renders as expected 1`] = `
                   Show
                 </span>
                 <input
-                  class="c9 form-control form-control-sm"
-                  disabled=""
+                  class="c9 form-control"
                   type="number"
                   value="10"
                 />

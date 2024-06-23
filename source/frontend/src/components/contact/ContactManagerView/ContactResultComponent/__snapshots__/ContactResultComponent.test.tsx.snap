@@ -1125,9 +1125,12 @@ exports[`Contact Search Results Table > matches snapshot 1`] = `
 }
 
 .c2 {
-  width: 7.5rem;
+  min-width: 5rem;
+  max-width: 5rem;
   margin-left: 1rem;
   margin-right: 1rem;
+  text-align: center;
+  padding: 0;
 }
 
 .c2:disabled {
@@ -1171,8 +1174,7 @@ exports[`Contact Search Results Table > matches snapshot 1`] = `
               Show
             </span>
             <input
-              class="c2 form-control form-control-sm"
-              disabled=""
+              class="c2 form-control"
               type="number"
               value="10"
             />
