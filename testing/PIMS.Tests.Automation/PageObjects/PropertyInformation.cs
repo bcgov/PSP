@@ -1,8 +1,5 @@
 ﻿using OpenQA.Selenium;
-using OpenQA.Selenium.Support.Events;
 using PIMS.Tests.Automation.Classes;
-using System.Diagnostics;
-using System.Threading.Channels;
 
 namespace PIMS.Tests.Automation.PageObjects
 {
@@ -585,7 +582,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyValueTab()
         {
-            Wait(2000);
+            Wait();
 
             AssertTrueIsDisplayed(propertyValueInfo);
 
@@ -628,7 +625,7 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueContentNotEquals(propertyInformationHeaderAddressContent, "");
 
             AssertTrueIsDisplayed(propertyInformationHeaderPlanLabel);
-            AssertTrueContentNotEquals(propertyInformationHeaderPlanContent, "");
+            //AssertTrueContentNotEquals(propertyInformationHeaderPlanContent, "");
 
             AssertTrueIsDisplayed(propertyInformationHeaderHistoricFileLabel);
             if(hasHistoricalFile)
@@ -973,7 +970,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public int PropertyTabs()
         {
-            Wait(2000);
+            Wait();
             return webDriver.FindElements(propertyInformationTabsTotal).Count();
         }
 

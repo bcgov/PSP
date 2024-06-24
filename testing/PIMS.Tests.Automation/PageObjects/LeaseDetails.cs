@@ -478,7 +478,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void EditLeaseFileDetailsBttn()
         {
-            WaitUntilClickable(licenseDetailsEditIcon);
+            Wait();
             webDriver.FindElement(licenseDetailsEditIcon).Click();
         }
 
