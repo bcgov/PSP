@@ -1034,14 +1034,7 @@ namespace Pims.Dal.Repositories
             {
                 predicateBuilder = predicateBuilder.And(l => EF.Functions.Like(l.PsFileNo, $"%{filter.Historical}%") || EF.Functions.Like(l.TfaFileNumber, $"%{filter.Historical}%"));
 
-                predicateBuilder = predicateBuilder.Or(l => l.PimsPropertyLeases.Any(x => x.Property.PimsHistoricalFileNumbers
-                        .Any(y => y.HistoricalFileNumberTypeCode == HistoricalFileNumberTypes.LISNO.ToString() && y.HistoricalFileNumber.Contains(filter.Historical))));
-
-                predicateBuilder = predicateBuilder.Or(l => l.PimsPropertyLeases.Any(x => x.Property.PimsHistoricalFileNumbers
-                        .Any(y => y.HistoricalFileNumberTypeCode == HistoricalFileNumberTypes.PSNO.ToString() && y.HistoricalFileNumber.Contains(filter.Historical))));
-
-                predicateBuilder = predicateBuilder.Or(l => l.PimsPropertyLeases.Any(x => x.Property.PimsHistoricalFileNumbers
-                        .Any(y => y.HistoricalFileNumberTypeCode == HistoricalFileNumberTypes.OTHER.ToString() && y.HistoricalFileNumber.Contains(filter.Historical))));
+                predicateBuilder = predicateBuilder.Or(l => l.PimsPropertyLeases.Any(x => x.Property.PimsHistoricalFileNumbers.Any(y => y.HistoricalFileNumber.Contains(filter.Historical))));
             }
 
             if (!string.IsNullOrWhiteSpace(filter.Address))

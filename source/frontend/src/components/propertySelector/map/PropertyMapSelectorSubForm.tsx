@@ -1,27 +1,30 @@
 import { Col, Form as BsForm, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
+import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { SelectProperty } from '@/components/common/mapping/SelectProperty';
 import { SectionField } from '@/components/common/Section/SectionField';
-
-import { IMapProperty } from '../models';
+import { featuresetToMapProperty, pidFormatter } from '@/utils';
 
 export interface IPropertyMapSelectorSubFormProps {
   onClickDraftMarker: () => void;
-  selectedProperty?: IMapProperty;
+  selectedProperty?: LocationFeatureDataset;
 }
 
 export const PropertyMapSelectorSubForm: React.FunctionComponent<
   React.PropsWithChildren<IPropertyMapSelectorSubFormProps>
 > = ({ onClickDraftMarker, selectedProperty }) => {
-  const pid = selectedProperty?.pid;
-  const planNumber = selectedProperty?.planNumber;
-  const address = selectedProperty?.address;
-  const legalDescription = selectedProperty?.legalDescription;
-  const region = selectedProperty?.region;
-  const regionName = selectedProperty?.regionName;
-  const district = selectedProperty?.district;
-  const districtName = selectedProperty?.districtName;
+  const selectedMapProperty = featuresetToMapProperty(selectedProperty);
+  const pid = selectedMapProperty?.pid;
+  const planNumber = selectedMapProperty?.planNumber;
+  const legalDescription =
+    selectedProperty?.pimsFeature?.properties?.LAND_LEGAL_DESCRIPTION ??
+    selectedProperty?.parcelFeature?.properties?.LEGAL_DESCRIPTION;
+  const address = selectedMapProperty?.address;
+  const region = selectedMapProperty?.region;
+  const regionName = selectedMapProperty?.regionName;
+  const district = selectedMapProperty?.district;
+  const districtName = selectedMapProperty?.districtName;
   return (
     <StyledFormRow>
       <Col md={4}>
@@ -31,7 +34,7 @@ export const PropertyMapSelectorSubForm: React.FunctionComponent<
         <Row>
           <GroupHeader>Selected property attributes</GroupHeader>
         </Row>
-        <SectionField label="PID">{pid}</SectionField>
+        <SectionField label="PID">{pidFormatter(pid)}</SectionField>
         <SectionField label="Plan #">{planNumber}</SectionField>
         <SectionField label="Address">{address}</SectionField>
         <SectionField label="Region">

@@ -47,6 +47,8 @@ type OptionalAttributes = {
   style?: CSSProperties;
   /** override for the autoComplete attribute */
   autoSetting?: string;
+  /** extra error keys to display */
+  errorKeys?: string[];
 };
 
 // only "field" is required for <Input>, the rest are optional
@@ -74,14 +76,19 @@ export const Input: React.FC<React.PropsWithChildren<InputProps>> = ({
   displayErrorTooltips,
   onChange,
   autoSetting,
+  errorKeys,
   ...rest
 }) => {
   const { handleChange, handleBlur, errors, touched, values, setFieldValue } =
     useFormikContext<any>();
   const error = getIn(errors, field);
+  const extraErrors = errorKeys?.map(key => getIn(errors, key)).filter(e => e) ?? [];
   const touch = getIn(touched, field);
   const value = getIn(values, field);
-  const errorTooltip = error && touch && displayErrorTooltips ? error : undefined;
+  const errorTooltip =
+    (error || extraErrors) && touch && displayErrorTooltips
+      ? (error ? [error, ...extraErrors] : extraErrors).join('\n')
+      : undefined;
   const asElement: any = is || 'input';
   const [restricted, setRestricted] = useState(onBlurFormatter ? onBlurFormatter(value) : value);
   const handleRestrictedChange = (event: any) => {
@@ -131,7 +138,7 @@ export const Input: React.FC<React.PropsWithChildren<InputProps>> = ({
           style={style}
           disabled={disabled}
           custom={custom}
-          isInvalid={!!touch && !!error}
+          isInvalid={!!touch && (!!error || extraErrors.length > 0)}
           {...rest}
           isValid={false}
           value={pattern ? restricted : rest.value ?? value ?? defaultValue}

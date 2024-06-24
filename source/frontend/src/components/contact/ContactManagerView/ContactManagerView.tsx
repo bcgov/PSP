@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { IoMdPersonAdd } from 'react-icons/io';
+import { FaPlus } from 'react-icons/fa';
 import { useHistory } from 'react-router';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
@@ -96,11 +96,13 @@ const ContactManagerView = ({
             restrictContactType={restrictContactType}
           />
         </Col>
+      </Row>
+      <Row>
         {showAddButton && hasClaim(Claims.CONTACT_ADD) && (
           <Col xs="auto" xl="3" className="pl-0">
             <StyledPrimaryButton onClick={() => history.push('/contact/new')}>
-              <IoMdPersonAdd color="white" className="mr-3" />
-              <span>Add new contact</span>
+              <FaPlus className="mr-3" />
+              &nbsp;Add new contact
             </StyledPrimaryButton>
           </Col>
         )}
@@ -131,8 +133,8 @@ const ContactManagerView = ({
 export default ContactManagerView;
 
 const StyledPrimaryButton = styled(Button)`
-  margin: 0.4rem 0.6rem;
-  white-space: nowrap;
-  display: inline-block;
-  gap: 1rem;
+  margin: 2rem 1.5rem;
+  &.btn.btn-primary {
+    background-color: ${props => props.theme.bcTokens.iconsColorSuccess};
+  }
 `;
