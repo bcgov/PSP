@@ -22,15 +22,14 @@ import { useDeleteTermsPayments } from './hooks/useDeleteTermsPayments';
 import PaymentModal from './modal/payment/PaymentModal';
 import TermForm from './modal/term/TermForm';
 import { FormLeasePayment, FormLeaseTerm } from './models';
-import TermsForm from './table/terms/TermsForm';
+import { IPaymentPeriodsViewProps } from './table/terms/PaymentPeriodsView';
 
 /**
  * Orchestrates the display and modification of lease terms and payments.
  */
-export const TermPaymentsContainer: React.FunctionComponent<LeasePageProps> = ({
-  formikRef,
-  onSuccess,
-}) => {
+export const PaymentPeriodsContainer: React.FunctionComponent<
+  LeasePageProps<IPaymentPeriodsViewProps>
+> = ({ formikRef, onSuccess, componentView }) => {
   const { lease } = useContext(LeaseStateContext);
   const generateH1005a = useGenerateLicenceOfOccupation();
   const [editModalValues, setEditModalValues] = useState<FormLeaseTerm | undefined>(undefined);
@@ -161,22 +160,24 @@ export const TermPaymentsContainer: React.FunctionComponent<LeasePageProps> = ({
     [editModalValues, formikRef, onSaveTerm, lease],
   );
   useEffect(() => {
-    setModalContent({
-      variant: 'info',
-      headerIcon: !isValidId(editModalValues?.id) ? (
-        <FaPlusCircle />
-      ) : (
-        <FaExclamationCircle size={22} />
-      ),
-      title: !isValidId(editModalValues?.id) ? 'Add a Term' : 'Edit a Term',
-      okButtonText: 'Yes',
-      cancelButtonText: 'No',
-      handleCancel: onCancelTerm,
-      handleOk: () => formikRef?.current?.submitForm(),
-      message: TermFormComp,
-      modalSize: ModalSize.MEDIUM,
-    });
-    setDisplayModal(!!editModalValues);
+    if (editModalValues) {
+      setModalContent({
+        variant: 'info',
+        headerIcon: !isValidId(editModalValues?.id) ? (
+          <FaPlusCircle />
+        ) : (
+          <FaExclamationCircle size={22} />
+        ),
+        title: !isValidId(editModalValues?.id) ? 'Add a Term' : 'Edit a Term',
+        okButtonText: 'Yes',
+        cancelButtonText: 'No',
+        handleCancel: onCancelTerm,
+        handleOk: () => formikRef?.current?.submitForm(),
+        message: TermFormComp,
+        modalSize: ModalSize.MEDIUM,
+      });
+      setDisplayModal(!!editModalValues);
+    }
   }, [
     setModalContent,
     setDisplayModal,
@@ -187,10 +188,11 @@ export const TermPaymentsContainer: React.FunctionComponent<LeasePageProps> = ({
     lease,
   ]);
 
+  const View = componentView;
   return (
     <>
       <LoadingBackdrop show={getLeaseTerms.loading} parentScreen />
-      <TermsForm
+      <View
         onEdit={onEdit}
         onEditPayment={onEditPayment}
         onDelete={onDeleteTerm}
@@ -206,7 +208,7 @@ export const TermPaymentsContainer: React.FunctionComponent<LeasePageProps> = ({
           type: lease?.type ?? null,
         })}
         formikRef={formikRef as React.RefObject<FormikProps<LeaseFormModel>>}
-      ></TermsForm>
+      ></View>
       <PaymentModal
         displayModal={!!editPaymentModalValues}
         initialValues={editPaymentModalValues}
@@ -242,4 +244,4 @@ export const isActualGstEligible = (termId: number, terms: FormLeaseTerm[]) => {
   return !!find(terms, (term: FormLeaseTerm) => term.id === termId)?.isGstEligible;
 };
 
-export default TermPaymentsContainer;
+export default PaymentPeriodsContainer;

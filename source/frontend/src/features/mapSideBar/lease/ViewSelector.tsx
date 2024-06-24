@@ -32,6 +32,7 @@ export const ViewSelector: React.FunctionComponent<IViewSelectorProps> = props =
         onEdit={(isEditing: boolean) => props.setContainerState({ isEditing: isEditing })}
         formikRef={props.formikRef}
         onSuccess={props.onSuccess}
+        componentView={activeLeasePage.componentView}
       />
     );
   } else {

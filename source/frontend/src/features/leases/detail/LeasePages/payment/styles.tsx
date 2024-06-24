@@ -173,6 +173,7 @@ export const AddActualButton = styled(Button)`
   &&& {
     background-color: ${props => props.theme.bcTokens.iconsColorSuccess};
     color: white;
+    min-height: 5rem;
     &:hover {
       background-color: #3aba53;
     }

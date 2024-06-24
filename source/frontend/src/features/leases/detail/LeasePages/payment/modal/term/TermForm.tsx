@@ -1,7 +1,14 @@
 import { Formik, FormikProps } from 'formik';
 import { Col, Row } from 'react-bootstrap';
 
-import { Check, FastCurrencyInput, FastDatePicker, Input, Select } from '@/components/common/form';
+import {
+  Check,
+  FastCurrencyInput,
+  FastDatePicker,
+  Input,
+  Select,
+  SelectOption,
+} from '@/components/common/form';
 import { LeaseTermStatusTypes } from '@/constants';
 import * as API from '@/constants/API';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
@@ -33,8 +40,12 @@ export const TermForm: React.FunctionComponent<React.PropsWithChildren<ITermForm
   const lookups = useLookupCodeHelpers();
   const paymentFrequencyOptions = lookups.getOptionsByType(API.LEASE_PAYMENT_FREQUENCY_TYPES);
   const leaseTermStatusOptions = lookups.getOptionsByType(API.LEASE_TERM_STATUS_TYPES);
+  const flexiblePeriodOptions: SelectOption[] = [
+    { label: 'Fixed', value: 0 },
+    { label: 'Flexible', value: 1 },
+  ];
   return (
-    <Formik
+    <Formik<FormLeaseTerm>
       innerRef={formikRef}
       enableReinitialize
       validationSchema={LeaseTermSchema}
@@ -53,6 +64,14 @@ export const TermForm: React.FunctionComponent<React.PropsWithChildren<ITermForm
       {formikProps => (
         <StyledFormBody>
           <Row>
+            <Select
+              label="Period duration:"
+              field="isFlexible"
+              tooltip="Fixed Payment Period Duration has end date. Select Flexible payment period duration to track hold over payments."
+              options={flexiblePeriodOptions}
+            />
+          </Row>
+          <Row>
             <Col>
               <FastDatePicker
                 required
@@ -62,7 +81,11 @@ export const TermForm: React.FunctionComponent<React.PropsWithChildren<ITermForm
               />
             </Col>
             <Col>
-              <FastDatePicker label="End date:" field="expiryDate" formikProps={formikProps} />
+              <FastDatePicker
+                label={formikProps.values.isFlexible ? 'End date (Anticipated):' : 'End date:'}
+                field="expiryDate"
+                formikProps={formikProps}
+              />
             </Col>
           </Row>
           <Row>

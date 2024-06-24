@@ -1,43 +1,37 @@
-import { getIn, useFormikContext } from 'formik';
 import { useMemo } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { MdReceipt } from 'react-icons/md';
 
 import { TableProps } from '@/components/Table';
 import { Claims } from '@/constants';
-import { LeaseFormModel } from '@/features/leases/models';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
-import { withNameSpace } from '@/utils/formUtils';
 
 import { defaultFormLeasePayment, FormLeasePayment } from '../../models';
 import * as PaymentStyles from '../../styles';
 import { getActualsColumns } from './paymentsColumns';
 
-export interface IPaymentsFormProps {
+export interface IPaymentsViewProps {
   onEdit: (values: FormLeasePayment) => void;
   onDelete: (values: FormLeasePayment) => void;
   onSave: (values: FormLeasePayment) => void;
-  nameSpace?: string;
   isExercised?: boolean;
   isGstEligible?: boolean;
   isReceivable?: boolean;
   termId?: number;
+  payments: FormLeasePayment[];
 }
 
-export const PaymentsForm: React.FunctionComponent<React.PropsWithChildren<IPaymentsFormProps>> = ({
+export const PaymentsView: React.FunctionComponent<React.PropsWithChildren<IPaymentsViewProps>> = ({
   onEdit,
   onDelete,
   onSave,
-  nameSpace,
   isExercised,
   isGstEligible,
   isReceivable,
   termId,
+  payments,
 }) => {
-  const formikProps = useFormikContext<LeaseFormModel>();
   const { hasClaim } = useKeycloakWrapper();
-  const field = useMemo(() => withNameSpace(nameSpace, 'payments'), [nameSpace]);
-  const payments: FormLeasePayment[] = getIn(formikProps.values, field);
   const columns = useMemo(
     () =>
       getActualsColumns({
@@ -46,9 +40,9 @@ export const PaymentsForm: React.FunctionComponent<React.PropsWithChildren<IPaym
         isReceivable,
         isGstEligible,
         onSave,
-        nameSpace: withNameSpace(nameSpace, 'payments'),
+        payments,
       }),
-    [onEdit, onDelete, isReceivable, isGstEligible, onSave, nameSpace],
+    [onEdit, onDelete, isReceivable, isGstEligible, onSave, payments],
   );
 
   return (
@@ -90,4 +84,4 @@ export const PaymentsForm: React.FunctionComponent<React.PropsWithChildren<IPaym
   );
 };
 
-export default PaymentsForm;
+export default PaymentsView;

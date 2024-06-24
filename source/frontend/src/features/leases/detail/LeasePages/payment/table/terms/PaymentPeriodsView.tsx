@@ -1,4 +1,4 @@
-import { Formik, FormikProps } from 'formik';
+import { FormikProps } from 'formik';
 import { find, noop, orderBy } from 'lodash';
 import { useMemo } from 'react';
 import { MdArrowDropDown, MdArrowRight } from 'react-icons/md';
@@ -13,10 +13,10 @@ import useDeepCompareMemo from '@/hooks/util/useDeepCompareMemo';
 import { prettyFormatDate } from '@/utils';
 
 import { defaultFormLeaseTerm, FormLeasePayment, FormLeaseTerm } from '../../models';
-import PaymentsForm from '../payments/PaymentsForm';
+import PaymentsView from '../payments/PaymentsView';
 import { getLeaseTermColumns } from './columns';
 
-export interface ITermsFormProps {
+export interface IPaymentPeriodsViewProps {
   onEdit: (values: FormLeaseTerm) => void;
   onEditPayment: (values: FormLeasePayment) => void;
   onDelete: (values: FormLeaseTerm) => void;
@@ -28,7 +28,9 @@ export interface ITermsFormProps {
   formikRef: React.RefObject<FormikProps<LeaseFormModel>>;
 }
 
-export const TermsForm: React.FunctionComponent<React.PropsWithChildren<ITermsFormProps>> = ({
+export const PaymentPeriodsView: React.FunctionComponent<
+  React.PropsWithChildren<IPaymentPeriodsViewProps>
+> = ({
   onEdit,
   onEditPayment,
   onDelete,
@@ -37,7 +39,6 @@ export const TermsForm: React.FunctionComponent<React.PropsWithChildren<ITermsFo
   onGenerate,
   isReceivable,
   lease,
-  formikRef,
 }) => {
   const columns = useMemo(
     () =>
@@ -65,11 +66,11 @@ export const TermsForm: React.FunctionComponent<React.PropsWithChildren<ITermsFo
     () => (row: FormLeaseTerm) => {
       const matchingTerm = leaseForm.terms.find(t => t.id === row.id);
       return (
-        <PaymentsForm
+        <PaymentsView
           onSave={onSavePayment}
           onEdit={onEditPayment}
           onDelete={onDeletePayment}
-          nameSpace={`terms.${matchingTerm ? leaseForm.terms.indexOf(matchingTerm) : 0}`}
+          payments={matchingTerm?.payments ?? []}
           isExercised={row?.statusTypeCode?.id === LeaseTermStatusTypes.EXERCISED}
           isGstEligible={row.isGstEligible}
           isReceivable={isReceivable}
@@ -81,41 +82,32 @@ export const TermsForm: React.FunctionComponent<React.PropsWithChildren<ITermsFo
   );
 
   return (
-    <Formik<LeaseFormModel>
-      initialValues={leaseForm}
-      enableReinitialize={true}
-      innerRef={formikRef}
-      onSubmit={noop}
-    >
-      {formikProps => (
-        <Section header="Payments by Term">
-          {hasClaim(Claims.LEASE_ADD) && (
-            <Button variant="secondary" onClick={() => onEdit(defaultFormLeaseTerm)}>
-              Add a Term
-            </Button>
-          )}
-          {lastPaymentDate && <b>last payment received: {prettyFormatDate(lastPaymentDate)}</b>}
-          <Table<FormLeaseTerm>
-            name="leasePaymentsTable"
-            columns={columns}
-            data={formikProps.values.terms ?? []}
-            manualPagination
-            hideToolbar
-            noRowsMessage="There is no corresponding data"
-            canRowExpand={() => true}
-            detailsPanel={{
-              render: renderPayments,
-              onExpand: noop,
-              checkExpanded: (row: FormLeaseTerm, state: FormLeaseTerm[]) =>
-                !!find(state, term => term.id === row.id),
-              getRowId: (row: FormLeaseTerm) => row.id,
-              icons: { open: <MdArrowDropDown size={24} />, closed: <MdArrowRight size={24} /> },
-            }}
-          />
-        </Section>
+    <Section header="Payments by Term">
+      {hasClaim(Claims.LEASE_ADD) && (
+        <Button variant="secondary" onClick={() => onEdit(defaultFormLeaseTerm)}>
+          Add a Term
+        </Button>
       )}
-    </Formik>
+      {lastPaymentDate && <b>last payment received: {prettyFormatDate(lastPaymentDate)}</b>}
+      <Table<FormLeaseTerm>
+        name="leasePaymentsTable"
+        columns={columns}
+        data={leaseForm.terms ?? []}
+        manualPagination
+        hideToolbar
+        noRowsMessage="There is no corresponding data"
+        canRowExpand={() => true}
+        detailsPanel={{
+          render: renderPayments,
+          onExpand: noop,
+          checkExpanded: (row: FormLeaseTerm, state: FormLeaseTerm[]) =>
+            !!find(state, term => term.id === row.id),
+          getRowId: (row: FormLeaseTerm) => row.id,
+          icons: { open: <MdArrowDropDown size={24} />, closed: <MdArrowRight size={24} /> },
+        }}
+      />
+    </Section>
   );
 };
 
-export default TermsForm;
+export default PaymentPeriodsView;

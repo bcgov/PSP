@@ -34,6 +34,7 @@ export const LeaseTab: React.FC<ILeaseTabProps> = ({
         isEditing={isEditing}
         formikRef={formikRef}
         onSuccess={onSuccess}
+        componentView={leasePage.componentView}
       />
     </LeaseViewPageForm>
   );

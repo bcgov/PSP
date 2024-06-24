@@ -22,6 +22,7 @@ export class FormLeaseTerm {
   paymentNote = '';
   isGstEligible?: boolean;
   isTermExercised?: boolean;
+  isFlexible = false;
   payments: FormLeasePayment[] = [];
   rowVersion?: number;
 
@@ -31,6 +32,7 @@ export class FormLeaseTerm {
   ): ApiGen_Concepts_LeaseTerm {
     return {
       ...formLeaseTerm,
+      isFlexible: formLeaseTerm.isFlexible ?? false,
       leaseId: formLeaseTerm.leaseId ?? 0,
       startDate: isValidIsoDateTime(formLeaseTerm.startDate) ? formLeaseTerm.startDate : null,
       renewalDate: null,
@@ -55,6 +57,7 @@ export class FormLeaseTerm {
   public static fromApi(apiLeaseTerm: ApiGen_Concepts_LeaseTerm): FormLeaseTerm {
     return {
       ...apiLeaseTerm,
+      isFlexible: apiLeaseTerm.isFlexible ?? false,
       startDate: isValidIsoDateTime(apiLeaseTerm.startDate) ? apiLeaseTerm.startDate : '',
       expiryDate: isValidIsoDateTime(apiLeaseTerm.expiryDate) ? apiLeaseTerm.expiryDate : '',
       renewalDate: isValidIsoDateTime(apiLeaseTerm.renewalDate) ? apiLeaseTerm.renewalDate : '',
@@ -86,6 +89,7 @@ export const defaultFormLeaseTerm: FormLeaseTerm = {
   paymentNote: '',
   isGstEligible: false,
   isTermExercised: false,
+  isFlexible: false,
   effectiveDateHist: '',
   statusTypeCode: defaultTypeCode(),
   leasePmtFreqTypeCode: defaultTypeCode(),

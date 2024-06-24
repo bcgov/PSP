@@ -16,7 +16,7 @@ import {
 } from '@/utils/test-utils';
 
 import { defaultFormLeaseTerm, FormLeasePayment } from '../../models';
-import TermsForm, { ITermsFormProps } from './TermsForm';
+import PaymentPeriodsView, { IPaymentPeriodsViewProps } from './PaymentPeriodsView';
 import { createRef } from 'react';
 import { ApiGen_CodeTypes_LeaseLicenceTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseLicenceTypes';
 
@@ -35,7 +35,7 @@ const onGenerate = vi.fn();
 describe('TermsForm component', () => {
   const setup = async (
     renderOptions: RenderOptions &
-      Partial<ITermsFormProps> & {
+      Partial<IPaymentPeriodsViewProps> & {
         initialValues?: Partial<LeaseFormModel>;
         selectedTenants?: IContactSearchResult[];
         onCancel?: () => void;
@@ -44,7 +44,7 @@ describe('TermsForm component', () => {
   ) => {
     // render component under test
     const component = await renderAsync(
-      <TermsForm
+      <PaymentPeriodsView
         onEdit={noop}
         onDelete={noop}
         onEditPayment={noop}

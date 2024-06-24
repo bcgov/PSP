@@ -4,7 +4,7 @@ import { ApiGen_Concepts_LeaseTerm } from '@/models/api/generated/ApiGen_Concept
 import { toTypeCodeNullable } from '@/utils/formUtils';
 
 import { defaultFormLeasePayment, FormLeasePayment, FormLeaseTerm } from '../../models';
-import { isActualGstEligible } from '../../TermPaymentsContainer';
+import { isActualGstEligible } from '../../PaymentsPeriodContainer';
 import PaymentFormContent from './PaymentFormContent';
 import { PaymentsYupSchema } from './PaymentsYupSchema';
 

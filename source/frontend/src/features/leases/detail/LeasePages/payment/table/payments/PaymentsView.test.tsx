@@ -11,7 +11,7 @@ import { act, fillInput, renderAsync, RenderOptions, screen, userEvent } from '@
 import { getAllByRole as getAllByRoleBase } from '@/utils/test-utils';
 
 import { defaultFormLeasePayment, defaultFormLeaseTerm, FormLeasePayment } from '../../models';
-import PaymentsForm, { IPaymentsFormProps } from './PaymentsForm';
+import PaymentsView, { IPaymentsViewProps } from './PaymentsView';
 
 const history = createMemoryHistory();
 const mockAxios = new MockAdapter(axios);
@@ -45,7 +45,7 @@ const onSave = vi.fn();
 describe('PaymentsForm component', () => {
   const setup = async (
     renderOptions: RenderOptions &
-      Partial<IPaymentsFormProps> & {
+      Partial<IPaymentsViewProps> & {
         initialValues?: any;
         onCancel?: () => void;
       } = {},
@@ -53,7 +53,7 @@ describe('PaymentsForm component', () => {
     // render component under test
     const component = await renderAsync(
       <Formik initialValues={renderOptions.initialValues ?? {}} onSubmit={noop}>
-        <PaymentsForm
+        <PaymentsView
           onEdit={onEdit}
           onDelete={onDelete}
           onSave={onSave}

@@ -16,12 +16,13 @@ import { toTypeCodeNullable } from '@/utils/formUtils';
 import { act, fillInput, renderAsync, RenderOptions, screen, userEvent } from '@/utils/test-utils';
 
 import { defaultFormLeaseTerm, FormLeaseTerm } from './models';
-import { defaultTestFormLeasePayment } from './table/payments/PaymentsForm.test';
-import TermPaymentsContainer from './TermPaymentsContainer';
+import { defaultTestFormLeasePayment } from './table/payments/PaymentsView.test';
+import PaymentPeriodsContainer from './PaymentsPeriodContainer';
 import { createMemoryHistory } from 'history';
 import { createRef } from 'react';
 import { ApiGen_CodeTypes_LeaseAccountTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseAccountTypes';
 import { Mock } from 'vitest';
+import { IPaymentPeriodsViewProps } from './table/terms/PaymentPeriodsView';
 
 const defaultRepositoryResponse = {
   execute: vi.fn(),
@@ -71,10 +72,20 @@ const storeState = {
 const setLease = vi.fn();
 const onSuccessMock = vi.fn();
 
+let viewProps!: IPaymentPeriodsViewProps;
+const TermsView = (props: IPaymentPeriodsViewProps) => {
+  viewProps = props;
+  return (
+    <Formik innerRef={props.formikRef} onSubmit={noop} initialValues={{ value: 0 }}>
+      {({ values }) => <>{values.value}</>}
+    </Formik>
+  );
+};
+
 describe('TermsPaymentsContainer component', () => {
   const setup = async (
     renderOptions: RenderOptions &
-      Partial<LeasePageProps> & {
+      Partial<LeasePageProps<IPaymentPeriodsViewProps>> & {
         initialValues?: any;
       } = {},
   ) => {
@@ -92,10 +103,11 @@ describe('TermsPaymentsContainer component', () => {
         }}
       >
         <Formik initialValues={renderOptions.initialValues ?? {}} onSubmit={noop}>
-          <TermPaymentsContainer
+          <PaymentPeriodsContainer
             formikRef={createRef()}
             isEditing={false}
             onSuccess={onSuccessMock}
+            View={TermsView}
           />
         </Formik>
       </LeaseStateContext.Provider>,
