@@ -31,7 +31,7 @@ exports[`MotiInventoryHeader component > renders as expected 1`] = `
         >
           <strong>
             <label>
-              Civic Address:
+              Civic address:
             </label>
           </strong>
         </div>

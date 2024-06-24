@@ -108,7 +108,7 @@ exports[`ResearchHeader component > renders as expected when provided no researc
         >
           <strong>
             <label>
-              Historical File #:
+              Historical file #:
             </label>
           </strong>
         </div>

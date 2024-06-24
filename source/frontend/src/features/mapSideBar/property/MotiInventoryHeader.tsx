@@ -74,7 +74,7 @@ export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderPr
       <LoadingBackdrop show={isLoading} parentScreen={true} />
       <Row className="no-gutters">
         <Col xs="7">
-          <HeaderField label="Civic Address:" labelWidth={'3'} contentWidth="9">
+          <HeaderField label="Civic address:" labelWidth={'3'} contentWidth="9">
             {exists(apiProperty?.address) ? formatApiAddress(apiProperty!.address) : '-'}
           </HeaderField>
           <HeaderField label="Plan #:" labelWidth={'3'} contentWidth="9">
@@ -108,11 +108,11 @@ export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderPr
         </Col>
         <Col xs="auto" className="d-flex p-0 align-items-center justify-content-end">
           {hasLocation && (
-            <TooltipWrapper tooltipId="property-zoom-map" tooltip="Zoom Map">
+            <TooltipWrapper tooltipId="property-zoom-map" tooltip="Zoom map">
               <StyledIconButton
                 variant="info"
                 disabled={!props.onZoom}
-                title="Zoom Map"
+                title="Zoom map"
                 onClick={() => props?.onZoom && props?.onZoom(latitude, longitude)}
               >
                 <FaSearchPlus size={22} />

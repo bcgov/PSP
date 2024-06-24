@@ -263,7 +263,7 @@ exports[`LeaseHeader component > renders as expected when no data is provided 1`
           >
             <strong>
               <label>
-                Lease Start:
+                Lease start:
               </label>
             </strong>
           </div>
@@ -298,7 +298,7 @@ exports[`LeaseHeader component > renders as expected when no data is provided 1`
           >
             <strong>
               <label>
-                Historical File #:
+                Historical file #:
               </label>
             </strong>
           </div>

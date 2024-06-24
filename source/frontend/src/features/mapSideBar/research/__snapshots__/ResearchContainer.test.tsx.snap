@@ -417,7 +417,7 @@ exports[`ResearchContainer component > renders as expected 1`] = `
             >
               <strong>
                 <label>
-                  Historical File #:
+                  Historical file #:
                 </label>
               </strong>
             </div>

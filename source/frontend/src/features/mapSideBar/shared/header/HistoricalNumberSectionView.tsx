@@ -11,7 +11,7 @@ export const HistoricalNumberSectionView: React.FC<IHistoricalNumbersViewProps> 
   historicalNumbers,
 }) => {
   return (
-    <HeaderField label="Historical File #:" labelWidth="3" contentWidth="9">
+    <HeaderField label="Historical file #:" labelWidth="3" contentWidth="9">
       <HistoricalNumberFieldView historicalNumbers={historicalNumbers} />
     </HeaderField>
   );

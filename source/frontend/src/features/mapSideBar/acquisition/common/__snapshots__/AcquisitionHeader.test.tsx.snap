@@ -95,7 +95,7 @@ exports[`AcquisitionHeader component > renders as expected when no data is provi
         >
           <strong>
             <label>
-              Historical File #:
+              Historical file #:
             </label>
           </strong>
         </div>
