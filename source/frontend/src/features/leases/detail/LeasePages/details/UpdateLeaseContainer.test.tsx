@@ -149,7 +149,7 @@ const expectedLease: ApiGen_Concepts_Lease = {
   documentationReference: null,
   expiryDate: null,
   tenants: [],
-  terms: [],
+  periods: [],
   consultations: [],
   programName: null,
   renewalCount: 0,
