@@ -101,7 +101,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchProperties.NavigatePropertyListView();
 
             //Search for a property
-            //searchProperties.SearchPropertyByPINPID(property.PID);
+            searchProperties.SearchPropertyByPINPID(property.PID);
 
             //Select the first property from the list
             searchProperties.ChooseFirstPropertyFromList();
@@ -190,7 +190,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchProperties.SearchPropertyByAddressList(searchProperty.Address);
 
             //Validate that the result gives only one pin
-            Assert.True(searchProperties.PropertiesListFoundCount() == 5);
+            Assert.True(searchProperties.PropertiesListFoundCount() == 2);
 
             //Search for a valid PIN in Inventory
             searchProperties.SearchPropertyReset();

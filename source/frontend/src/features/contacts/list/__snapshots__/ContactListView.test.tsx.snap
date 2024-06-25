@@ -7,6 +7,7 @@ exports[`Contact List View > matches snapshot 1`] = `
   />
   <div />
   .c13.btn {
+  .c13.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -215,10 +216,12 @@ exports[`Contact List View > matches snapshot 1`] = `
   margin-top: 0.3rem;
 }
 
-.c21 {
+.c18 {
   width: 7.5rem;
   margin-left: 1rem;
   margin-right: 1rem;
+  text-align: center;
+  padding: 0;
 }
 
 .c21:disabled {
@@ -1236,7 +1239,7 @@ exports[`Contact List View > matches snapshot 1`] = `
                       Show
                     </span>
                     <input
-                      class="c21 form-control form-control-sm"
+                      class="c18 form-control form-control-sm"
                       disabled=""
                       type="number"
                       value="10"

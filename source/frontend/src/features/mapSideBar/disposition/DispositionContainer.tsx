@@ -6,7 +6,6 @@ import { matchPath, useHistory, useLocation, useRouteMatch } from 'react-router-
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { useDispositionProvider } from '@/hooks/repositories/useDispositionProvider';
-import { usePimsPropertyRepository } from '@/hooks/repositories/usePimsPropertyRepository';
 import { usePropertyAssociations } from '@/hooks/repositories/usePropertyAssociations';
 import { useQuery } from '@/hooks/use-query';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
@@ -15,7 +14,7 @@ import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
-import { exists, isValidId, isValidString, stripTrailingSlash } from '@/utils';
+import { exists, isValidId, stripTrailingSlash } from '@/utils';
 
 import { SideBarContext } from '../context/sidebarContext';
 import { PropertyForm } from '../shared/models';
@@ -58,10 +57,6 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
     getLastUpdatedBy: { execute: getLastUpdatedBy, loading: loadingGetLastUpdatedBy },
   } = useDispositionProvider();
   const { execute: getPropertyAssociations } = usePropertyAssociations();
-  const {
-    getPropertyByPidWrapper: { execute: getPropertyByPid },
-    getPropertyByPinWrapper: { execute: getPropertyByPin },
-  } = usePimsPropertyRepository();
 
   const { setModalContent, setDisplayModal } = useModalContext();
 
@@ -280,23 +275,8 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
   // Warn user that property is part of an existing disposition file
   const confirmBeforeAdd = useCallback(
     async (propertyForm: PropertyForm): Promise<boolean> => {
-      let apiId;
-      try {
-        if (isValidId(propertyForm.apiId)) {
-          apiId = propertyForm.apiId;
-        } else if (isValidString(propertyForm.pid)) {
-          const result = await getPropertyByPid(propertyForm.pid);
-          apiId = result?.id;
-        } else if (isValidString(propertyForm.pin)) {
-          const result = await getPropertyByPin(Number(propertyForm.pin));
-          apiId = result?.id;
-        }
-      } catch (e) {
-        apiId = 0;
-      }
-
-      if (isValidId(apiId)) {
-        const response = await getPropertyAssociations(apiId);
+      if (isValidId(propertyForm.apiId)) {
+        const response = await getPropertyAssociations(propertyForm.apiId);
         const fileAssociations = response?.dispositionAssociations ?? [];
         const otherFiles = fileAssociations.filter(a => exists(a.id) && a.id !== dispositionFileId);
         return otherFiles.length > 0;
@@ -305,7 +285,7 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
         return false;
       }
     },
-    [dispositionFileId, getPropertyAssociations, getPropertyByPid, getPropertyByPin],
+    [dispositionFileId, getPropertyAssociations],
   );
 
   // UI components

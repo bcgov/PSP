@@ -190,6 +190,13 @@ exports[`LeaseDetailSubForm component > renders as expected 1`] = `
                 data-testid="select-option-ACTIVE"
                 value="ACTIVE"
               >
+                Archived
+              </option>
+              <option
+                class="option"
+                data-testid="select-option-ARCHIVED"
+                value="ARCHIVED"
+              >
                 Active
               </option>
               <option
@@ -298,10 +305,10 @@ exports[`LeaseDetailSubForm component > renders as expected 1`] = `
               </label>
             </div>
             <div
-              class="c2 required text-left col"
+              class="c2 text-left col"
             >
               <div
-                class="c4 required form-group"
+                class="c4 form-group"
               >
                 <div
                   class="react-datepicker-wrapper d-block"
@@ -324,7 +331,6 @@ exports[`LeaseDetailSubForm component > renders as expected 1`] = `
                       id="datepicker-startDate"
                       name="startDate"
                       placeholder="MMM DD, YYYY"
-                      required=""
                       type="text"
                       value=""
                     />

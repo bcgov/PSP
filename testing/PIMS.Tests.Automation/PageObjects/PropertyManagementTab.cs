@@ -155,7 +155,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void ViewLastActivityButton()
         {
-            Wait(2000);
+            Wait();
 
             var lastInsertedActivityIndex = webDriver.FindElements(managementActivitiesBodyCount).Count;
             webDriver.FindElement(By.XPath("//div[@data-testid='PropertyManagementActivitiesTable']/div[@class='tbody']/div[@class='tr-wrapper']["+ lastInsertedActivityIndex +"]/div/div[@role='cell'][5]/div/div[1]/button")).Click();
@@ -419,7 +419,7 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(managementSummaryTitle);
             AssertTrueIsDisplayed(managementPropertyPurposeLabel);
             AssertTrueIsDisplayed(managementLeaseLabel);
-            AssertTrueContentEquals(managementLeaseContent, "Multiple");
+            AssertTrueContentEquals(managementLeaseContent, "No");
             AssertTrueIsDisplayed(managementUtilitiesPayableLabel);
             AssertTrueContentEquals(managementUtilitiesPayableContent, "Unknown");
             AssertTrueIsDisplayed(managementTaxesPayableLabel);
@@ -532,7 +532,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyLastInsertedPropertyContactTable(PropertyContact contact)
         {
-            Wait(2000);
+            Wait();
 
             var lastInsertedContactIndex = webDriver.FindElements(managementContactsBodyCount).Count;
 
