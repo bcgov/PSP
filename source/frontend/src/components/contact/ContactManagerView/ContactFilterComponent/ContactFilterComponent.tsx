@@ -71,20 +71,22 @@ export const ContactFilterComponent: React.FunctionComponent<
             }
           }}
         >
-          <Row>
-            <Col xs="auto">
-              <RadioGroup
-                label="Search by:"
-                field="searchBy"
-                radioGroupClassName="pb-3"
-                radioValues={getRestrictedRadioValues(restrictContactType)}
-              />
-            </Col>
+          <Row className="p-5">
+            <Row className="pb-5">
+              <Col xs="auto">
+                <RadioGroup
+                  label="Search by:"
+                  field="searchBy"
+                  radioGroupClassName="pb-3"
+                  radioValues={getRestrictedRadioValues(restrictContactType)}
+                />
+              </Col>
+              <Col lg="auto" className="pl-0">
+                <StyledNameInput field="summary" placeholder="Name of person or organization" />
+              </Col>
+            </Row>
             <Col xl="auto">
-              <Row className="ml-5">
-                <Col className="pl-0">
-                  <StyledNameInput field="summary" placeholder="Name of person or organization" />
-                </Col>
+              <Row className="ml-10">
                 <Col className="pl-0">
                   <StyledCityInput
                     field="municipality"
@@ -210,6 +212,8 @@ const StyledFilterBoxForm = styled(Form)`
   border-radius: 0.4rem;
   padding: 1rem;
   max-width: 85%;
+  @media only screen and (max-width: 1199px) {
+  max-width: 50%;
 `;
 
 const StyledColButton = styled(Col)`
