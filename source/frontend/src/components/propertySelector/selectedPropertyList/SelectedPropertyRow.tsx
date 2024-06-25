@@ -49,6 +49,7 @@ export const SelectedPropertyRow: React.FunctionComponent<
           field={withNameSpace(nameSpace, 'name')}
           displayErrorTooltips={true}
           defaultValue=""
+          errorKeys={[withNameSpace(nameSpace, 'isRetired')]}
         />
       </Col>
       <Col md={2}>

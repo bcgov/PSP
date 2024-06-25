@@ -89,7 +89,7 @@ describe('Lease Insurance', () => {
       insuranceTypes: [mockInsuranceTypeHome, mockInsuranceTypeCar],
     });
     expect(
-      result.getByText('There are no insurance policies indicated with this lease/license'),
+      result.getByText('There are no insurance policies indicated with this lease/licence'),
     ).toBeInTheDocument();
   });
 });

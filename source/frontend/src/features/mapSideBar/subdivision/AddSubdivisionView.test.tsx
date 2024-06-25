@@ -25,6 +25,7 @@ import MapSelectorContainer, {
 import { IMapProperty } from '@/components/propertySelector/models';
 import { getMockApiProperty } from '@/mocks/properties.mock';
 import { AreaUnitTypes } from '@/constants';
+import { PropertyForm } from '../shared/models';
 
 const history = createMemoryHistory();
 
@@ -119,15 +120,19 @@ describe('Add Subdivision View', () => {
   it('calls getPrimaryAddressByPid when destination property is activated', async () => {
     await setup();
     await act(async () => {
-      mapSelectorProps.addSelectedProperties([testProperty]);
+      mapSelectorProps.addSelectedProperties([
+        PropertyForm.fromMapProperty(testProperty).toFeatureDataset(),
+      ]);
     });
-    expect(getPrimaryAddressByPid).toHaveBeenCalledWith(testProperty.pid);
+    expect(getPrimaryAddressByPid).toHaveBeenCalledWith('123456789');
   });
 
   it('does not call for address if property has no pid', async () => {
     await setup();
     await act(async () => {
-      mapSelectorProps.addSelectedProperties([{ ...testProperty, pid: undefined }]);
+      mapSelectorProps.addSelectedProperties([
+        PropertyForm.fromMapProperty({ ...testProperty, pid: undefined }).toFeatureDataset(),
+      ]);
     });
     const text = await screen.findByText('Selected property must have a PID');
     expect(text).toBeVisible();
@@ -199,10 +204,12 @@ describe('Add Subdivision View', () => {
     };
 
     await act(async () => {
-      mapSelectorProps.addSelectedProperties([mapProperty]);
+      mapSelectorProps.addSelectedProperties([
+        PropertyForm.fromMapProperty(mapProperty).toFeatureDataset(),
+      ]);
     });
 
-    expect(getPrimaryAddressByPid).toHaveBeenCalledWith(testProperty.pid);
+    expect(getPrimaryAddressByPid).toHaveBeenCalledWith(testProperty.pid.replaceAll('-', ''));
 
     expect(queryByDisplayValue('1.12')).toBeNull();
     expect(queryByDisplayValue('1.123')).toBeNull();

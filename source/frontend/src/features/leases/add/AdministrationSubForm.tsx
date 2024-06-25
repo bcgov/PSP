@@ -142,7 +142,7 @@ const AdministrationSubForm: React.FunctionComponent<
       </Row>
       <SectionField
         label="Initiator"
-        tooltip="Where did this lease/license initiate?"
+        tooltip="Where did this lease/licence initiate?"
         labelWidth="2"
         contentWidth="4"
       >

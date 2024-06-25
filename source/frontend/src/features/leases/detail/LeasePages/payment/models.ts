@@ -91,6 +91,7 @@ export const defaultFormLeaseTerm: FormLeaseTerm = {
   leasePmtFreqTypeCode: defaultTypeCode(),
   payments: [],
 };
+
 export class FormLeasePayment {
   id?: number;
   leaseTermId = 0;

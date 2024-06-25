@@ -24,7 +24,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         //Selected tenants
         private By tenantSelectedTenantsRows = By.CssSelector("div[data-testid='selected-items'] div[class='tr-wrapper']");
-        private By tenantPrimaryContact1stCell = By.CssSelector("div[data-testid='selected-items'] div[class='tr-wrapper']:nth-child(1) div[class='td']:nth-child(5) p");
+        private By tenantPrimaryContact1stCell = By.CssSelector("div[data-testid='selected-items'] div[class='tr-wrapper']:nth-child(1) div[class='td']:nth-child(4) p");
         private By tenantPrimaryContact1stSelect = By.Id("input-tenants.0.primaryContactId");
         private By tenantType1stSelect = By.Id("input-tenants.0.tenantType");
 
@@ -75,10 +75,10 @@ namespace PIMS.Tests.Automation.PageObjects
         //Search and add a new tenant
         public void AddIndividualTenant(Tenant tenant)
         {
-            WaitUntilClickable(tenantAddTenantsBttn);
+            Wait();
             webDriver.FindElement(tenantAddTenantsBttn).Click();
 
-            Wait(3000);
+            Wait();
             sharedSelectContact.SelectContact(tenant.Summary, "Individual");
 
             //Choose tenant type

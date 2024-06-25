@@ -4,11 +4,11 @@ import { usePrevious } from '@/hooks/usePrevious';
 import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
 import { featuresetToMapProperty } from '@/utils/mapPropertyUtils';
 
-import { IMapProperty } from './models';
+import { LocationFeatureDataset } from '../common/mapFSM/useLocationFeatureLoader';
 
 interface IMapClickMonitorProps {
-  addProperty: (property: IMapProperty) => void; // TODO: This should be a featureDataset
-  modifiedProperties: IMapProperty[]; // TODO: this should be just a list of lat longs
+  addProperty: (property: LocationFeatureDataset) => void; // TODO: This should be a featureDataset
+  modifiedProperties: LocationFeatureDataset[]; // TODO: this should be just a list of lat longs
   selectedComponentId: string | null;
 }
 
@@ -18,7 +18,8 @@ export const MapClickMonitor: React.FunctionComponent<
   const mapMachine = useMapStateMachine();
 
   const previous = usePrevious(mapMachine.mapLocationFeatureDataset);
-  useDraftMarkerSynchronizer(selectedComponentId ? [] : modifiedProperties); // disable the draft marker synchronizer if the selecting component is set - the parent will need to control the draft markers.
+  const modifiedMapProperties = modifiedProperties.map(mp => featuresetToMapProperty(mp));
+  useDraftMarkerSynchronizer(selectedComponentId ? [] : modifiedMapProperties); // disable the draft marker synchronizer if the selecting component is set - the parent will need to control the draft markers.
 
   useDeepCompareEffect(() => {
     if (
@@ -29,7 +30,7 @@ export const MapClickMonitor: React.FunctionComponent<
       (!selectedComponentId ||
         selectedComponentId === mapMachine.mapLocationFeatureDataset.selectingComponentId)
     ) {
-      addProperty(featuresetToMapProperty(mapMachine.mapLocationFeatureDataset));
+      addProperty(mapMachine.mapLocationFeatureDataset);
     }
   }, [addProperty, mapMachine.isSelecting, mapMachine.mapLocationFeatureDataset, previous]);
   return <></>;

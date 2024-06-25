@@ -149,18 +149,18 @@ const AddConsolidationView: React.FunctionComponent<
                     const allProperties: ApiGen_Concepts_Property[] = [];
                     await properties.reduce(async (promise, property) => {
                       return promise.then(async () => {
-                        const formProperty = PropertyForm.fromMapProperty(property);
+                        const formProperty = PropertyForm.fromFeatureDataset(property);
                         formProperty.landArea =
-                          property.landArea && property.areaUnit
+                          formProperty.landArea && formProperty.areaUnit
                             ? convertArea(
-                                property.landArea,
-                                property.areaUnit.toLocaleLowerCase(),
+                                formProperty.landArea,
+                                formProperty.areaUnit.toLocaleLowerCase(),
                                 AreaUnitTypes.SquareMeters,
                               )
                             : 0;
                         formProperty.areaUnit = AreaUnitTypes.SquareMeters;
-                        if (property.pid) {
-                          formProperty.address = await getPrimaryAddressByPid(property.pid);
+                        if (formProperty.pid) {
+                          formProperty.address = await getPrimaryAddressByPid(formProperty.pid);
                           allProperties.push(formProperty.toApi());
                         } else {
                           toast.error('Selected property must have a PID');

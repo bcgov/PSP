@@ -19,10 +19,11 @@ export const RowAligned = styled(Row)`
 `;
 
 export const StatusIndicators = styled.div`
-  border-radius: 1rem;
+  border-radius: 0.5rem;
   background-color: white;
   border: 1px solid ${props => props.theme.css.borderOutlineColor};
-  padding: 0.2rem 1rem;
+  padding: 0.5rem 1.5rem;
+  font-size: 1.6rem;
   color: ${props => props.theme.css.borderOutlineColor};
   &.active {
     color: ${props => props.theme.bcTokens.iconsColorSuccess};
@@ -48,4 +49,12 @@ export const ScrollingFormLayout = styled.div`
   width: 100%;
   overflow: auto;
   padding-right: 1rem;
+`;
+
+export const ContactLink = styled.div`
+  color: ${props => props.theme.css.activeActionColor};
+  a {
+    font-weight: bold;
+    color: ${props => props.theme.css.activeActionColor} !important;
+  }
 `;

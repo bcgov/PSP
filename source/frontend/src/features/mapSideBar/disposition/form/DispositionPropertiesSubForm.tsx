@@ -2,9 +2,9 @@ import { FieldArray, FormikProps } from 'formik';
 import { Col, Row } from 'react-bootstrap';
 
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
+import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { Section } from '@/components/common/Section/Section';
 import MapSelectorContainer from '@/components/propertySelector/MapSelectorContainer';
-import { IMapProperty } from '@/components/propertySelector/models';
 import SelectedPropertyHeaderRow from '@/components/propertySelector/selectedPropertyList/SelectedPropertyHeaderRow';
 import SelectedPropertyRow from '@/components/propertySelector/selectedPropertyList/SelectedPropertyRow';
 import { useBcaAddress } from '@/features/properties/map/hooks/useBcaAddress';
@@ -40,12 +40,12 @@ const DispositionPropertiesSubForm: React.FunctionComponent<DispositionPropertie
             <Row className="py-3 no-gutters">
               <Col>
                 <MapSelectorContainer
-                  addSelectedProperties={(newProperties: IMapProperty[]) => {
+                  addSelectedProperties={(newProperties: LocationFeatureDataset[]) => {
                     newProperties.reduce(async (promise, property, index) => {
                       return promise.then(async () => {
-                        const formProperty = PropertyForm.fromMapProperty(property);
-                        if (property.pid) {
-                          const bcaSummary = await getPrimaryAddressByPid(property.pid, 30000);
+                        const formProperty = PropertyForm.fromFeatureDataset(property);
+                        if (formProperty.pid) {
+                          const bcaSummary = await getPrimaryAddressByPid(formProperty.pid, 30000);
                           formProperty.address = bcaSummary?.address
                             ? AddressForm.fromBcaAddress(bcaSummary?.address)
                             : undefined;
@@ -89,7 +89,7 @@ const DispositionPropertiesSubForm: React.FunctionComponent<DispositionPropertie
                       });
                     }, Promise.resolve());
                   }}
-                  modifiedProperties={values.fileProperties}
+                  modifiedProperties={values.fileProperties.map(p => p.toFeatureDataset())}
                 />
               </Col>
             </Row>

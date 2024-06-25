@@ -94,7 +94,7 @@ describe('Lease Search Results Table', () => {
     const { tableRows, findAllByText } = setup({ results: [] });
 
     expect(tableRows.length).toBe(0);
-    const toasts = await findAllByText('Lease / License details do not exist in PIMS inventory');
+    const toasts = await findAllByText('Lease / Licence details do not exist in PIMS inventory');
     expect(toasts[0]).toBeVisible();
   });
 });

@@ -11,7 +11,7 @@ import {
 import { phoneFormatter } from '@/utils/formUtils';
 import { render, RenderOptions } from '@/utils/test-utils';
 
-import PersonView, { PersonViewProps } from './Person';
+import PersonFormView, { PersonFormViewProps } from './Person';
 import { fakeAddresses } from './utils';
 
 const fakePerson: IContactPerson = {
@@ -28,9 +28,9 @@ const fakePerson: IContactPerson = {
 const history = createMemoryHistory();
 
 describe('Contact PersonView component', () => {
-  const setup = (renderOptions: RenderOptions & PersonViewProps) => {
+  const setup = (renderOptions: RenderOptions & PersonFormViewProps) => {
     // render component under test
-    const component = render(<PersonView person={renderOptions.person} />, {
+    const component = render(<PersonFormView person={renderOptions.person} />, {
       ...renderOptions,
       history,
     });
