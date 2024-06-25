@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom';
 
 import { ILayerItem } from '@/components/maps/leaflet/Control/LayersControl/types';
 import { IGeoSearchParams } from '@/constants/API';
+import { IMapSideBarViewState } from '@/features/mapSideBar/MapSideBar';
 import {
   defaultPropertyFilter,
   IPropertyFilter,
@@ -18,7 +19,7 @@ import useLocationFeatureLoader, { LocationFeatureDataset } from './useLocationF
 import { useMapSearch } from './useMapSearch';
 
 export interface IMapStateMachineContext {
-  isSidebarOpen: boolean;
+  mapSideBarViewState: IMapSideBarViewState;
   isShowingSearchBar: boolean;
   pendingFlyTo: boolean;
   requestedFlyTo: RequestedFlyTo;
@@ -48,6 +49,7 @@ export interface IMapStateMachineContext {
   processFitBounds: () => void;
   openSidebar: (sidebarType: SideBarType) => void;
   closeSidebar: () => void;
+  toggleSidebarDisplay: () => void;
   closePopup: () => void;
 
   mapClick: (latlng: LatLngLiteral) => void;
@@ -67,7 +69,7 @@ export interface IMapStateMachineContext {
   setVisiblePimsProperties: (propertyIds: number[]) => void;
   setShowDisposed: (show: boolean) => void;
   setShowRetired: (show: boolean) => void;
-  changeSidebar: () => void;
+  setFullWidthSideBar: (fullWidth: boolean) => void;
 }
 
 const MapStateMachineContext = React.createContext<IMapStateMachineContext>(
@@ -253,10 +255,6 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
     serviceSend({ type: 'FINISH_SELECTION' });
   }, [serviceSend]);
 
-  const changeSidebar = useCallback(() => {
-    serviceSend({ type: 'CHANGE_SIDEBAR' });
-  }, [serviceSend]);
-
   const setFilePropertyLocations = useCallback(
     (locations: LatLngLiteral[]) => {
       serviceSend({ type: 'SET_FILE_PROPERTY_LOCATIONS', locations });
@@ -299,6 +297,17 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
     [serviceSend],
   );
 
+  const setFullWidthSideBar = useCallback(
+    (show: boolean) => {
+      serviceSend({ type: 'SET_FULL_WIDTH_SIDEBAR', show });
+    },
+    [serviceSend],
+  );
+
+  const toggleSidebarDisplay = useCallback(() => {
+    serviceSend({ type: 'TOGGLE_SIDEBAR_SIZE' });
+  }, [serviceSend]);
+
   const toggleMapFilter = useCallback(() => {
     serviceSend({ type: 'TOGGLE_FILTER' });
   }, [serviceSend]);
@@ -311,13 +320,6 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
     return state.context.mapLocationFeatureDataset !== null;
   }, [state.context.mapLocationFeatureDataset]);
 
-  const isSidebarOpen = useMemo(() => {
-    return [
-      { mapVisible: { sideBar: 'sidebarOpen' } },
-      { mapVisible: { sideBar: 'selecting' } },
-    ].some(state.matches);
-  }, [state.matches]);
-
   const isFiltering = useMemo(() => {
     return state.matches({ mapVisible: { featureView: 'filtering' } });
   }, [state]);
@@ -329,8 +331,8 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
   return (
     <MapStateMachineContext.Provider
       value={{
-        isSidebarOpen: isSidebarOpen,
-        isShowingSearchBar: !isSidebarOpen && !isFiltering,
+        mapSideBarViewState: state.context.mapSideBarState,
+        isShowingSearchBar: !state.context.mapSideBarState.isOpen && !isFiltering,
         pendingFlyTo: state.matches({ mapVisible: { mapRequest: 'pendingFlyTo' } }),
         requestedFlyTo: state.context.requestedFlyTo,
         mapFeatureSelected: state.context.mapFeatureSelected,
@@ -369,13 +371,14 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         finishSelection,
         toggleMapFilter,
         toggleMapLayer,
+        toggleSidebarDisplay,
         setFilePropertyLocations,
         setVisiblePimsProperties,
         setShowDisposed,
         setShowRetired,
         setMapLayers,
         setDefaultMapLayers,
-        changeSidebar,
+        setFullWidthSideBar,
       }}
     >
       {children}

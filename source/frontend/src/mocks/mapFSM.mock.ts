@@ -1,3 +1,4 @@
+import { SideBarType } from '@/components/common/mapFSM/machineDefinition/types';
 import { IMapStateMachineContext } from '@/components/common/mapFSM/MapStateMachineContext';
 import {
   emptyPimsBoundaryFeatureCollection,
@@ -14,8 +15,12 @@ export const mapMachineBaseMock: IMapStateMachineContext = {
     pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
     fullyAttributedFeatures: emptyPmbcFeatureCollection,
   },
-
-  isSidebarOpen: false,
+  mapSideBarViewState: {
+    isCollapsed: false,
+    type: SideBarType.NOT_DEFINED,
+    isOpen: false,
+    isFullWidth: false,
+  },
   isShowingSearchBar: false,
   pendingFlyTo: false,
   pendingFitBounds: false,
@@ -63,7 +68,8 @@ export const mapMachineBaseMock: IMapStateMachineContext = {
   toggleMapLayer: vi.fn(),
   setShowDisposed: vi.fn(),
   setShowRetired: vi.fn(),
-  changeSidebar: vi.fn(),
   setMapLayers: vi.fn(),
   setDefaultMapLayers: vi.fn(),
+  toggleSidebarDisplay: vi.fn(),
+  setFullWidthSideBar: vi.fn(),
 };
