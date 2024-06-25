@@ -57,6 +57,7 @@ exports[`TakesDetailView component > renders as expected 1`] = `
 
 .c4 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .c6 {
@@ -133,9 +134,7 @@ exports[`TakesDetailView component > renders as expected 1`] = `
                 class="c4"
               >
                 Takes for this property in the current file:
-                <span
-                  class="ml-2"
-                >
+                <span>
                   <span
                     class="tooltip-icon"
                     data-testid="tooltip-icon-section-field-tooltip"
@@ -175,9 +174,7 @@ exports[`TakesDetailView component > renders as expected 1`] = `
                 class="c4"
               >
                 Takes for this property in other files:
-                <span
-                  class="ml-2"
-                >
+                <span>
                   <span
                     class="tooltip-icon"
                     data-testid="tooltip-icon-section-field-tooltip"
@@ -437,9 +434,7 @@ exports[`TakesDetailView component > renders as expected 1`] = `
                           class="c4"
                         >
                           Is there a new highway dedication? *:
-                          <span
-                            class="ml-2"
-                          >
+                          <span>
                             <span
                               class="tooltip-icon"
                               data-testid="tooltip-icon-section-field-tooltip"
@@ -572,9 +567,7 @@ exports[`TakesDetailView component > renders as expected 1`] = `
                           class="c4"
                         >
                           Is this being acquired for MoTI inventory? *:
-                          <span
-                            class="ml-2"
-                          >
+                          <span>
                             <span
                               class="tooltip-icon"
                               data-testid="tooltip-icon-section-field-tooltip"

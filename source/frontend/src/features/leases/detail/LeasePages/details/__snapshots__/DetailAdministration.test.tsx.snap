@@ -34,6 +34,7 @@ exports[`DetailAdministration component > renders a complete lease as expected 1
 
 .c3 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .c5 input.form-control {
@@ -385,6 +386,7 @@ exports[`DetailAdministration component > renders minimally as expected 1`] = `
 
 .c3 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .c5 input.form-control {

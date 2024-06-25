@@ -37,6 +37,7 @@ exports[`ResearchSummaryView component > renders as expected when research file 
 
 .c4 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 <div

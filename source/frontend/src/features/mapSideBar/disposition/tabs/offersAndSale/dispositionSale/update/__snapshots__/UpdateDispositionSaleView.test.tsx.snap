@@ -264,6 +264,7 @@ exports[`Update Disposition Sale View > renders as expected 1`] = `
 
 .c3 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .c11 {
@@ -481,9 +482,7 @@ exports[`Update Disposition Sale View > renders as expected 1`] = `
                 class="c3"
               >
                 Last condition removal date:
-                <span
-                  class="ml-2"
-                >
+                <span>
                   <span
                     class="tooltip-icon"
                     data-testid="tooltip-icon-section-field-tooltip"
@@ -784,9 +783,7 @@ exports[`Update Disposition Sale View > renders as expected 1`] = `
                 class="c3"
               >
                 Total cost of sales ($):
-                <span
-                  class="ml-2"
-                >
+                <span>
                   <span
                     class="tooltip-icon"
                     data-testid="tooltip-icon-section-field-tooltip"
@@ -842,9 +839,7 @@ exports[`Update Disposition Sale View > renders as expected 1`] = `
                 class="c3"
               >
                 Net proceeds before SPP cost ($):
-                <span
-                  class="ml-2"
-                >
+                <span>
                   <span
                     class="tooltip-icon"
                     data-testid="tooltip-icon-section-field-tooltip"
@@ -901,9 +896,7 @@ exports[`Update Disposition Sale View > renders as expected 1`] = `
                 class="c3"
               >
                 SPP Amount ($):
-                <span
-                  class="ml-2"
-                >
+                <span>
                   <span
                     class="tooltip-icon"
                     data-testid="tooltip-icon-section-field-tooltip"
@@ -959,9 +952,7 @@ exports[`Update Disposition Sale View > renders as expected 1`] = `
                 class="c3"
               >
                 Net proceeds after SPP cost ($):
-                <span
-                  class="ml-2"
-                >
+                <span>
                   <span
                     class="tooltip-icon"
                     data-testid="tooltip-icon-section-field-tooltip"

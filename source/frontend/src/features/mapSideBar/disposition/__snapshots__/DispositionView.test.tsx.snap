@@ -418,6 +418,7 @@ exports[`DispositionView component > renders as expected 1`] = `
 
 .c16 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .c19 {
@@ -821,9 +822,7 @@ exports[`DispositionView component > renders as expected 1`] = `
                               class="c16"
                             >
                               Reference number:
-                              <span
-                                class="ml-2"
-                              >
+                              <span>
                                 <span
                                   class="tooltip-icon"
                                   data-testid="tooltip-icon-section-field-tooltip"
@@ -897,9 +896,7 @@ exports[`DispositionView component > renders as expected 1`] = `
                               class="c16"
                             >
                               Initiating document:
-                              <span
-                                class="ml-2"
-                              >
+                              <span>
                                 <span
                                   class="tooltip-icon"
                                   data-testid="tooltip-icon-section-field-tooltip"
@@ -939,9 +936,7 @@ exports[`DispositionView component > renders as expected 1`] = `
                               class="c16"
                             >
                               Initiating document date:
-                              <span
-                                class="ml-2"
-                              >
+                              <span>
                                 <span
                                   class="tooltip-icon"
                                   data-testid="tooltip-icon-section-field-tooltip"

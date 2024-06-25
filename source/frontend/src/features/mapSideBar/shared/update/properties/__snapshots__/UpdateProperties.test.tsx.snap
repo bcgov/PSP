@@ -255,6 +255,7 @@ exports[`UpdateProperties component > renders as expected 1`] = `
 
 .c12 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .c9.c9.c9 input,

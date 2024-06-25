@@ -256,6 +256,7 @@ exports[`AddProjectContainer component > renders as expected 1`] = `
 
 .c6 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .c2 {

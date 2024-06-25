@@ -25,12 +25,11 @@ export const SectionField: React.FunctionComponent<
       <Col xs={props.labelWidth ?? '4'} className="pr-0 text-left">
         {props.label && (
           <StyledFieldLabel>
-            {props.label}:
-            {props.tooltip && <span className="ml-2">{renderTooltip(props.tooltip)}</span>}
+            {props.label}:{props.tooltip && <span>{renderTooltip(props.tooltip)}</span>}
           </StyledFieldLabel>
         )}
       </Col>
-      <StyledCol
+      <ContentCol
         xs={props.contentWidth ?? true}
         className={cx(props.valueClassName, {
           required: props.required,
@@ -39,7 +38,7 @@ export const SectionField: React.FunctionComponent<
         data-testid={props.valueTestId}
       >
         {props.children}
-      </StyledCol>
+      </ContentCol>
     </Row>
   );
 };
@@ -55,7 +54,7 @@ function renderTooltip(tooltip?: React.ReactNode): React.ReactNode {
   return tooltip;
 }
 
-export const StyledCol = styled(Col)`
+export const ContentCol = styled(Col)`
   &.required::before {
     content: '*';
     position: absolute;
@@ -66,4 +65,5 @@ export const StyledCol = styled(Col)`
 
 export const StyledFieldLabel = styled.label`
   font-weight: bold;
+  white-space: nowrap;
 `;

@@ -33,6 +33,7 @@ exports[`PropertyManagementUpdateForm component > renders as expected 1`] = `
 
 .c4 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .c0 {
@@ -370,9 +371,7 @@ exports[`PropertyManagementUpdateForm component > renders as expected 1`] = `
                 class="c4"
               >
                 Additional details:
-                <span
-                  class="ml-2"
-                >
+                <span>
                   <span
                     class="tooltip-icon"
                     data-testid="tooltip-icon-section-field-tooltip"

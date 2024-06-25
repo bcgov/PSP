@@ -286,6 +286,7 @@ exports[`UpdateContactContainer > renders as expected 1`] = `
 
 .c10 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .c15 {

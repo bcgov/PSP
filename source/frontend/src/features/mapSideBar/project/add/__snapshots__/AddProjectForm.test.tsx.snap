@@ -168,6 +168,7 @@ exports[`AddProjectForm component > renders as expected 1`] = `
 
 .c3 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .c0 {
@@ -858,6 +859,7 @@ exports[`AddProjectForm component > renders as expected with existing data 1`] =
 
 .c3 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .c11 textarea.form-control {

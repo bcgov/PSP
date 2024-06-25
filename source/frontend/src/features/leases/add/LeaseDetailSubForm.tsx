@@ -96,7 +96,8 @@ export const LeaseDetailSubForm: React.FunctionComponent<ILeaseDetailsSubFormPro
                   Active: Finalized and all requirements met. Lease/Licence being actively managed.
                 </li>
                 <li>
-                  Terminated: Lease/Licence ended due to violation of terms / no further renewals.
+                  Terminated: The expiry date of the last agreement if by effluxion of time or the
+                  early termination date for cause.
                 </li>
                 <li>Cancelled: Request cancelled by requestor or MOTI.</li>
                 <li>Duplicate: Duplicate file created by accident or data transfer.</li>

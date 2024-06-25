@@ -475,6 +475,7 @@ exports[`AcquisitionView component > renders as expected 1`] = `
 
 .c17 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .c4 {
@@ -821,9 +822,7 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                               class="c17"
                             >
                               Delivery date:
-                              <span
-                                class="ml-2"
-                              >
+                              <span>
                                 <span
                                   class="tooltip-icon"
                                   data-testid="tooltip-icon-section-field-tooltip"
@@ -902,9 +901,7 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                               class="c17"
                             >
                               Historical file number:
-                              <span
-                                class="ml-2"
-                              >
+                              <span>
                                 <span
                                   class="tooltip-icon"
                                   data-testid="tooltip-icon-section-field-tooltip"

@@ -23,6 +23,7 @@ exports[`Contact OrganizationView component > renders as expected 1`] = `
 
 .c3 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .c1 {
@@ -240,9 +241,7 @@ exports[`Contact OrganizationView component > renders as expected 1`] = `
                 class="c3"
               >
                 Connected to this organization:
-                <span
-                  class="ml-2"
-                >
+                <span>
                   <span
                     class="tooltip-icon"
                     data-testid="tooltip-icon-section-field-tooltip"

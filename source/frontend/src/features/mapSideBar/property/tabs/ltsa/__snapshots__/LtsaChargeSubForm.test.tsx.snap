@@ -15,6 +15,7 @@ exports[`LtsaChargeSubForm component > renders charge sub form 1`] = `
 
 .c0 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 <div>
