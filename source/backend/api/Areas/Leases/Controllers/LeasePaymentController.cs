@@ -89,7 +89,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         {
             _logger.LogInformation(
                 "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
-                nameof(LeasePeriodController),
+                nameof(LeasePaymentController),
                 nameof(UpdatePayment),
                 User.GetUsername(),
                 DateTime.Now);
@@ -114,7 +114,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         {
             _logger.LogInformation(
                 "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
-                nameof(LeasePeriodController),
+                nameof(LeasePaymentController),
                 nameof(DeletePayment),
                 User.GetUsername(),
                 DateTime.Now);
