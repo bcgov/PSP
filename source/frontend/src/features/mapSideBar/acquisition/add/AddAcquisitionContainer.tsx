@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-import RealEstateAgent from '@/assets/images/real-estate-agent.svg?react';
+import AcquisitionFileIcon from '@/assets/images/acquisition-icon.svg?react';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
@@ -175,7 +175,7 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
       showCloseButton
       title="Create Acquisition File"
       icon={
-        <RealEstateAgent
+        <AcquisitionFileIcon
           title="Acquisition file Icon"
           width="2.6rem"
           height="2.6rem"

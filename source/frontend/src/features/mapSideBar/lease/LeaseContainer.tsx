@@ -2,7 +2,7 @@ import { FormikProps } from 'formik';
 import React, { useCallback, useContext, useEffect, useReducer, useRef, useState } from 'react';
 import * as Yup from 'yup';
 
-import Fence from '@/assets/images/fence.svg?react';
+import LeaseIcon from '@/assets/images/lease-icon.svg?react';
 import GenericModal from '@/components/common/GenericModal';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Claims } from '@/constants';
@@ -236,7 +236,7 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
       onClose={close}
       title={containerState.isEditing ? 'Update Lease / Licence' : 'Lease / Licence'}
       icon={
-        <Fence
+        <LeaseIcon
           title="Lease file icon"
           width="2.6rem"
           height="2.6rem"
