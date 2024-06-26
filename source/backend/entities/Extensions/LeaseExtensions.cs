@@ -66,19 +66,19 @@ namespace Pims.Dal.Helpers.Extensions
         /// <returns></returns>
         public static DateTime? GetExpiryDate(this Pims.Dal.Entities.PimsLease lease)
         {
-            if (lease.PimsLeasePeriods != null && lease.PimsLeasePeriods.Any(t => t.PeriodExpiryDate == null))
+            if (lease.PimsLeasePeriods != null && lease.PimsLeasePeriods.Any(p => p.PeriodExpiryDate == null && !p.PeriodDuration))
             {
                 return null;
             }
             if (lease.OrigExpiryDate != null)
             {
-                if (lease.PimsLeasePeriods != null && lease.PimsLeasePeriods.Any(t => t.PeriodExpiryDate > lease.OrigExpiryDate))
+                if (lease.PimsLeasePeriods != null && lease.PimsLeasePeriods.Any(p => p.PeriodExpiryDate > lease.OrigExpiryDate && !p.PeriodDuration))
                 {
-                    return lease.PimsLeasePeriods.OrderByDescending(t => t.PeriodExpiryDate).FirstOrDefault().PeriodExpiryDate;
+                    return lease.PimsLeasePeriods.OrderByDescending(p => p.PeriodExpiryDate).FirstOrDefault().PeriodExpiryDate;
                 }
                 return lease.OrigExpiryDate;
             }
-            return lease.PimsLeasePeriods?.OrderByDescending(t => t.PeriodExpiryDate).FirstOrDefault()?.PeriodExpiryDate;
+            return lease.PimsLeasePeriods?.OrderByDescending(p => p.PeriodExpiryDate).FirstOrDefault(p => !p.PeriodDuration)?.PeriodExpiryDate;
         }
     }
 }

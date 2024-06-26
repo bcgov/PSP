@@ -96,6 +96,9 @@ input::-webkit-inner-spin-button {
 .react-datepicker__input-container {
   input {
     width: 100%;
+    &.is-invalid {
+      background-image: none;
+    }
   }
 }
 

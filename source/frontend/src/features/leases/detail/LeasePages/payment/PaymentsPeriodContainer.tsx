@@ -84,10 +84,19 @@ export const PeriodPaymentsContainer: React.FunctionComponent<
       if (isValidId(updatedPeriod?.id) && isValidId(leaseId)) {
         await getLeasePeriods.execute(leaseId);
         setEditModalValues(undefined);
+        setDisplayModal(false);
         onSuccess();
       }
     },
-    [addLeasePeriod, getLeasePeriods, gstDecimal, leaseId, updateLeasePeriod, onSuccess],
+    [
+      addLeasePeriod,
+      getLeasePeriods,
+      gstDecimal,
+      leaseId,
+      updateLeasePeriod,
+      onSuccess,
+      setDisplayModal,
+    ],
   );
 
   /**
@@ -103,11 +112,12 @@ export const PeriodPaymentsContainer: React.FunctionComponent<
         if (isValidId(updatedLeasePayment?.id)) {
           await getLeasePeriods.execute(leaseId);
           setEditPaymentModalValues(undefined);
+          setDisplayModal(false);
           onSuccess();
         }
       }
     },
-    [leaseId, updateLeasePayment, addLeasePayment, getLeasePeriods, onSuccess],
+    [leaseId, updateLeasePayment, addLeasePayment, getLeasePeriods, onSuccess, setDisplayModal],
   );
 
   const onEdit = useCallback(
@@ -146,7 +156,8 @@ export const PeriodPaymentsContainer: React.FunctionComponent<
 
   const onCancelPeriod = useCallback(() => {
     setEditModalValues(undefined);
-  }, []);
+    setDisplayModal(false);
+  }, [setDisplayModal]);
 
   const PeriodFormComp = useMemo(
     () => (
@@ -168,7 +179,7 @@ export const PeriodPaymentsContainer: React.FunctionComponent<
         ) : (
           <FaExclamationCircle size={22} />
         ),
-        title: !isValidId(editModalValues?.id) ? 'Add a Term' : 'Edit a Term',
+        title: !isValidId(editModalValues?.id) ? 'Add a Period' : 'Edit a Period',
         okButtonText: 'Yes',
         cancelButtonText: 'No',
         handleCancel: onCancelPeriod,

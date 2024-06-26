@@ -14,15 +14,14 @@ import { defaultApiLease } from '@/models/defaultInitializers';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes/lookupCodesSlice';
 import { toTypeCodeNullable } from '@/utils/formUtils';
 import { act, fillInput, renderAsync, RenderOptions, screen, userEvent } from '@/utils/test-utils';
-
-import { defaultFormLeaseTerm, FormLeaseTerm } from './models';
-import { defaultTestFormLeasePayment } from './table/payments/PaymentsView.test';
-import PaymentPeriodsContainer from './PaymentsPeriodContainer';
-import { createMemoryHistory } from 'history';
-import { createRef } from 'react';
-import { ApiGen_CodeTypes_LeaseAccountTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseAccountTypes';
+import { defaultFormLeasePeriod, FormLeasePeriod } from './models';
 import { Mock } from 'vitest';
-import { IPaymentPeriodsViewProps } from './table/terms/PaymentPeriodsView';
+import { ApiGen_CodeTypes_LeaseAccountTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseAccountTypes';
+import PeriodPaymentsView, { IPeriodPaymentsViewProps } from './table/periods/PaymentPeriodsView';
+import { createRef } from 'react';
+import PeriodPaymentsContainer from './PaymentsPeriodContainer';
+import { defaultTestFormLeasePayment } from './table/payments/PaymentsView.test';
+import { createMemoryHistory } from 'history';
 
 const defaultRepositoryResponse = {
   execute: vi.fn(),
@@ -72,8 +71,8 @@ const storeState = {
 const setLease = vi.fn();
 const onSuccessMock = vi.fn();
 
-let viewProps!: IPaymentPeriodsViewProps;
-const TermsView = (props: IPaymentPeriodsViewProps) => {
+let viewProps!: IPeriodPaymentsViewProps;
+const TermsView = (props: IPeriodPaymentsViewProps) => {
   viewProps = props;
   return (
     <Formik innerRef={props.formikRef} onSubmit={noop} initialValues={{ value: 0 }}>
@@ -85,7 +84,7 @@ const TermsView = (props: IPaymentPeriodsViewProps) => {
 describe('TermsPaymentsContainer component', () => {
   const setup = async (
     renderOptions: RenderOptions &
-      Partial<LeasePageProps<IPaymentPeriodsViewProps>> & {
+      Partial<LeasePageProps<IPeriodPaymentsViewProps>> & {
         initialValues?: any;
       } = {},
   ) => {
@@ -103,11 +102,11 @@ describe('TermsPaymentsContainer component', () => {
         }}
       >
         <Formik initialValues={renderOptions.initialValues ?? {}} onSubmit={noop}>
-          <PaymentPeriodsContainer
+          <PeriodPaymentsContainer
             formikRef={createRef()}
             isEditing={false}
             onSuccess={onSuccessMock}
-            View={TermsView}
+            componentView={PeriodPaymentsView}
           />
         </Formik>
       </LeaseStateContext.Provider>,

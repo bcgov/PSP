@@ -1,16 +1,19 @@
 import moment from 'moment';
 import { FaFileContract, FaTrash } from 'react-icons/fa';
 import { MdEdit } from 'react-icons/md';
+import { TbArrowWaveRightUp } from 'react-icons/tb';
 import { CellProps } from 'react-table';
 import styled from 'styled-components';
 
 import { Button } from '@/components/common/buttons/Button';
 import { InlineFlexDiv } from '@/components/common/styles';
 import TooltipIcon from '@/components/common/TooltipIcon';
+import TooltipWrapper from '@/components/common/TooltipWrapper';
 import {
   ColumnWithProps,
   renderBooleanAsYesNo,
   renderMoney,
+  renderStringOrDash,
   renderTypeCode,
 } from '@/components/Table';
 import { Claims } from '@/constants';
@@ -26,12 +29,23 @@ import { formatMoney } from '@/utils/numberFormatUtils';
 import { FormLeasePeriod } from '../../models';
 
 function initialOrRenewalPeriod({ row: { index } }: CellProps<FormLeasePeriod, unknown>) {
-  return stringToFragment(index === 0 ? 'Initial period' : `Renewal ${index}`);
+  return <b>Period {index + 1}</b>;
 }
 
 function startAndEndDate({ row: { original } }: CellProps<FormLeasePeriod, string>) {
-  return stringToFragment(
-    `${prettyFormatDate(original.startDate)} - ${prettyFormatDate(original.expiryDate)}`,
+  return original.isFlexible ? (
+    <>
+      {prettyFormatDate(original.startDate)} - {prettyFormatDate(original.expiryDate)}
+      <StyledBreak />
+      <i>(anticipated)</i>
+      <TooltipWrapper tooltipId="flexible-period-icon" tooltip="Flexible Period">
+        <StyledFlexibleIcon size={24} />
+      </TooltipWrapper>
+    </>
+  ) : (
+    stringToFragment(
+      `${prettyFormatDate(original.startDate)} - ${prettyFormatDate(original.expiryDate)}`,
+    )
   );
 }
 
@@ -198,7 +212,7 @@ export const getLeasePeriodColumns = ({
       Cell: initialOrRenewalPeriod,
     },
     {
-      Header: 'Start date - End date',
+      Header: 'Start date - end date',
       align: 'center',
       minWidth: 60,
       Cell: startAndEndDate,
@@ -215,6 +229,7 @@ export const getLeasePeriodColumns = ({
       accessor: 'paymentDueDateStr',
       align: 'left',
       maxWidth: 50,
+      Cell: renderStringOrDash,
     },
     {
       Header: () => (
@@ -330,4 +345,14 @@ const StyledIcons = styled(InlineFlexDiv)`
 
 const GenerateIcon = styled(FaFileContract)`
   color: ${props => props.theme.css.activeActionColor};
+`;
+
+const StyledFlexibleIcon = styled(TbArrowWaveRightUp)`
+  color: ${props => props.theme.css.completedColor};
+  margin-left: 0.5rem;
+`;
+
+const StyledBreak = styled.div`
+  height: 0;
+  flex-basis: 100%;
 `;

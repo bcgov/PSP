@@ -58,7 +58,6 @@ export const getActualsColumns = ({
   onSave,
   isReceivable,
   isGstEligible,
-  payments,
 }: IPaymentColumnProps): ColumnWithProps<
   FormLeasePayment,
   { properties: ApiGen_Concepts_Payment[] }

@@ -34,7 +34,7 @@ export const StyledFormBody = styled.div`
   .form-control {
     font-family: 'BcSans';
   }
-  .required .form-label:after {
+  .required .datepicker-label:after {
     content: ' *';
   }
 `;
