@@ -31,10 +31,11 @@ export class FormLeasePeriod {
     gstConstant?: number,
   ): ApiGen_Concepts_LeasePeriod {
     return {
-      ...formLeaseTerm,
-      isFlexible: formLeaseTerm.isFlexible ?? false,
-      leaseId: formLeaseTerm.leaseId ?? 0,
-      startDate: isValidIsoDateTime(formLeaseTerm.startDate) ? formLeaseTerm.startDate : null,
+      ...formLeasePeriod,
+      isFlexible: formLeasePeriod.isFlexible ?? false,
+      isVariable: false, //TODO:
+      leaseId: formLeasePeriod.leaseId ?? 0,
+      startDate: isValidIsoDateTime(formLeasePeriod.startDate) ? formLeasePeriod.startDate : null,
       renewalDate: null,
       expiryDate: isValidIsoDateTime(formLeasePeriod.expiryDate)
         ? formLeasePeriod.expiryDate
@@ -58,15 +59,15 @@ export class FormLeasePeriod {
 
   public static fromApi(apiLeasePeriod: ApiGen_Concepts_LeasePeriod): FormLeasePeriod {
     return {
-      ...apiLeaseTerm,
-      isFlexible: apiLeaseTerm.isFlexible ?? false,
-      startDate: isValidIsoDateTime(apiLeaseTerm.startDate) ? apiLeaseTerm.startDate : '',
-      expiryDate: isValidIsoDateTime(apiLeaseTerm.expiryDate) ? apiLeaseTerm.expiryDate : '',
-      renewalDate: isValidIsoDateTime(apiLeaseTerm.renewalDate) ? apiLeaseTerm.renewalDate : '',
-      paymentAmount: apiLeaseTerm.paymentAmount ?? '',
-      gstAmount: apiLeaseTerm.gstAmount ?? '',
-      paymentDueDateStr: apiLeaseTerm.paymentDueDateStr ?? '',
-      paymentNote: apiLeaseTerm.paymentNote ?? '',
+      ...apiLeasePeriod,
+      isFlexible: apiLeasePeriod.isFlexible ?? false,
+      startDate: isValidIsoDateTime(apiLeasePeriod.startDate) ? apiLeasePeriod.startDate : '',
+      expiryDate: isValidIsoDateTime(apiLeasePeriod.expiryDate) ? apiLeasePeriod.expiryDate : '',
+      renewalDate: isValidIsoDateTime(apiLeasePeriod.renewalDate) ? apiLeasePeriod.renewalDate : '',
+      paymentAmount: apiLeasePeriod.paymentAmount ?? '',
+      gstAmount: apiLeasePeriod.gstAmount ?? '',
+      paymentDueDateStr: apiLeasePeriod.paymentDueDateStr ?? '',
+      paymentNote: apiLeasePeriod.paymentNote ?? '',
       payments:
         apiLeasePeriod.payments?.map((payment: ApiGen_Concepts_Payment) =>
           FormLeasePayment.fromApi(payment),

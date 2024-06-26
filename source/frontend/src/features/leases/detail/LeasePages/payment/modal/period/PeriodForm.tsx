@@ -9,8 +9,8 @@ import {
   Select,
   SelectOption,
 } from '@/components/common/form';
-import { LeaseTermStatusTypes } from '@/constants';
 import * as API from '@/constants/API';
+import { LeasePeriodStatusTypes } from '@/constants/leaseStatusTypes';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { toTypeCodeNullable } from '@/utils/formUtils';
@@ -39,13 +39,13 @@ export const PeriodForm: React.FunctionComponent<React.PropsWithChildren<IPeriod
 }) => {
   const lookups = useLookupCodeHelpers();
   const paymentFrequencyOptions = lookups.getOptionsByType(API.LEASE_PAYMENT_FREQUENCY_TYPES);
-  const leaseTermStatusOptions = lookups.getOptionsByType(API.LEASE_TERM_STATUS_TYPES);
+  const leasePeriodStatusOptions = lookups.getOptionsByType(API.LEASE_PERIOD_STATUS_TYPES);
   const flexiblePeriodOptions: SelectOption[] = [
     { label: 'Fixed', value: 0 },
     { label: 'Flexible', value: 1 },
   ];
   return (
-    <Formik<FormLeaseTerm>
+    <Formik<FormLeasePeriod>
       innerRef={formikRef}
       enableReinitialize
       validationSchema={LeasePeriodSchema}

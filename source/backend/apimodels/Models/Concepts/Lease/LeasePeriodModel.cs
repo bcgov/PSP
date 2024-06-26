@@ -77,6 +77,16 @@ namespace Pims.Api.Models.Concepts.Lease
         public bool IsTermExercised { get; set; }
 
         /// <summary>
+        /// get/set - True if this period has a flexible duration. False for a fixed duration.
+        /// </summary>
+        public bool IsFlexible { get; set; }
+
+        /// <summary>
+        /// get/set - True if this period has flexible payments. False for base rent payments only.
+        /// </summary>
+        public bool IsVariable { get; set; }
+
+        /// <summary>
         /// get/set - An (optional) list of payments associated to this period. Should only be set if the period is excercised.
         /// </summary>
         public ICollection<PaymentModel> Payments { get; set; }

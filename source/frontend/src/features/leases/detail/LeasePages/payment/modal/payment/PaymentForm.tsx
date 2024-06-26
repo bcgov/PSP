@@ -3,7 +3,7 @@ import { Formik, FormikProps } from 'formik';
 import { ApiGen_Concepts_LeasePeriod } from '@/models/api/generated/ApiGen_Concepts_LeasePeriod';
 import { toTypeCodeNullable } from '@/utils/formUtils';
 
-import { defaultFormLeasePayment, FormLeasePayment, FormLeaseTerm } from '../../models';
+import { defaultFormLeasePayment, FormLeasePayment, FormLeasePeriod } from '../../models';
 import { isActualGstEligible } from '../../PaymentsPeriodContainer';
 import PaymentFormContent from './PaymentFormContent';
 import { PaymentsYupSchema } from './PaymentsYupSchema';

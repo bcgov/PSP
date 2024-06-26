@@ -14,11 +14,11 @@ import DetailContainer from '@/features/leases/detail/LeasePages/details/DetailC
 import DocumentsPage from '@/features/leases/detail/LeasePages/documents/DocumentsPage';
 import { ImprovementsContainer } from '@/features/leases/detail/LeasePages/improvements/ImprovementsContainer';
 import InsuranceContainer from '@/features/leases/detail/LeasePages/insurance/InsuranceContainer';
-import PaymentPeriodsContainer from '@/features/leases/detail/LeasePages/payment/PaymentsPeriodContainer';
+import PeriodPaymentsContainer from '@/features/leases/detail/LeasePages/payment/PaymentsPeriodContainer';
 import { PaymentsPeriodYupSchema } from '@/features/leases/detail/LeasePages/payment/PaymentsPeriodYupSchema';
-import PaymentPeriodsView, {
-  IPaymentPeriodsViewProps,
-} from '@/features/leases/detail/LeasePages/payment/table/terms/PaymentPeriodsView';
+import PeriodPaymentsView, {
+  IPeriodPaymentsViewProps,
+} from '@/features/leases/detail/LeasePages/payment/table/periods/PaymentPeriodsView';
 import Surplus from '@/features/leases/detail/LeasePages/surplus/Surplus';
 import TenantContainer from '@/features/leases/detail/LeasePages/tenant/TenantContainer';
 import { LeaseFormModel } from '@/features/leases/models';
@@ -108,11 +108,11 @@ export const leasePages: Map<LeasePageNames, ILeasePage<any>> = new Map<
     LeasePageNames.PAYMENTS,
     {
       pageName: LeasePageNames.PAYMENTS,
-      component: PaymentPeriodsContainer,
+      component: PeriodPaymentsContainer,
       title: 'Payments',
       validation: PaymentsPeriodYupSchema,
-      componentView: PaymentPeriodsView,
-    } as ILeasePage<IPaymentPeriodsViewProps>,
+      componentView: PeriodPaymentsView,
+    } as ILeasePage<IPeriodPaymentsViewProps>,
   ],
   [
     LeasePageNames.IMPROVEMENTS,

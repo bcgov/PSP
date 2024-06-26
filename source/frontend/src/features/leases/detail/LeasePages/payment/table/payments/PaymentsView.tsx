@@ -17,7 +17,7 @@ export interface IPaymentsViewProps {
   isExercised?: boolean;
   isGstEligible?: boolean;
   isReceivable?: boolean;
-  termId?: number;
+  periodId?: number;
   payments: FormLeasePayment[];
 }
 
@@ -28,7 +28,7 @@ export const PaymentsView: React.FunctionComponent<React.PropsWithChildren<IPaym
   isExercised,
   isGstEligible,
   isReceivable,
-  termId,
+  periodId,
   payments,
 }) => {
   const { hasClaim } = useKeycloakWrapper();

@@ -27,7 +27,7 @@ import { IPeriodPaymentsViewProps } from './table/periods/PaymentPeriodsView';
 /**
  * Orchestrates the display and modification of lease periods and payments.
  */
-export const PeriodPaymentsContainer: React.FunctionComponent<
+export const PaymentPeriodsContainer: React.FunctionComponent<
   LeasePageProps<IPeriodPaymentsViewProps>
 > = ({ formikRef, onSuccess, componentView }) => {
   const { lease } = useContext(LeaseStateContext);
@@ -168,7 +168,7 @@ export const PeriodPaymentsContainer: React.FunctionComponent<
         ) : (
           <FaExclamationCircle size={22} />
         ),
-        title: !isValidId(editModalValues?.id) ? 'Add a Term' : 'Edit a Term',
+        title: !isValidId(editModalValues?.id) ? 'Add a Period' : 'Edit a Period',
         okButtonText: 'Yes',
         cancelButtonText: 'No',
         handleCancel: onCancelPeriod,
@@ -244,4 +244,4 @@ export const isActualGstEligible = (periodId: number, periods: FormLeasePeriod[]
   return !!find(periods, (period: FormLeasePeriod) => period.id === periodId)?.isGstEligible;
 };
 
-export default PeriodPaymentsContainer;
+export default PaymentPeriodsContainer;

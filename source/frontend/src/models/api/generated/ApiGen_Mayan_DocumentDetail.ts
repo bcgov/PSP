@@ -17,5 +17,4 @@ export interface ApiGen_Mayan_DocumentDetail {
   uuid: string | null;
   file_latest: ApiGen_Mayan_FileLatest | null;
   document_type: ApiGen_Mayan_DocumentType | null;
-  file: ApiGen_Mayan_FileLatest | null;
 }

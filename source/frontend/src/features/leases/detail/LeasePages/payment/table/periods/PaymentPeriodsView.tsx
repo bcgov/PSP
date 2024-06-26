@@ -12,12 +12,12 @@ import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import useDeepCompareMemo from '@/hooks/util/useDeepCompareMemo';
 import { prettyFormatDate } from '@/utils';
 
-import { defaultFormLeaseTerm, FormLeasePayment, FormLeaseTerm } from '../../models';
+import { defaultFormLeasePeriod, FormLeasePayment, FormLeasePeriod } from '../../models';
 import PaymentsView from '../payments/PaymentsView';
-import { getLeaseTermColumns } from './columns';
+import { getLeasePeriodColumns } from './columns';
 
-export interface IPaymentPeriodsViewProps {
-  onEdit: (values: FormLeaseTerm) => void;
+export interface IPeriodPaymentsViewProps {
+  onEdit: (values: FormLeasePeriod) => void;
   onEditPayment: (values: FormLeasePayment) => void;
   onDelete: (values: FormLeasePeriod) => void;
   onDeletePayment: (values: FormLeasePayment) => void;
@@ -28,8 +28,8 @@ export interface IPaymentPeriodsViewProps {
   formikRef: React.RefObject<FormikProps<LeaseFormModel>>;
 }
 
-export const PaymentPeriodsView: React.FunctionComponent<
-  React.PropsWithChildren<IPaymentPeriodsViewProps>
+export const PeriodPaymentsView: React.FunctionComponent<
+  React.PropsWithChildren<IPeriodPaymentsViewProps>
 > = ({
   onEdit,
   onEditPayment,
@@ -70,8 +70,8 @@ export const PaymentPeriodsView: React.FunctionComponent<
           onSave={onSavePayment}
           onEdit={onEditPayment}
           onDelete={onDeletePayment}
-          payments={matchingTerm?.payments ?? []}
-          isExercised={row?.statusTypeCode?.id === LeaseTermStatusTypes.EXERCISED}
+          payments={matchingPeriod?.payments ?? []}
+          isExercised={row?.statusTypeCode?.id === LeasePeriodStatusTypes.EXERCISED}
           isGstEligible={row.isGstEligible}
           isReceivable={isReceivable}
           periodId={row.id ?? undefined}
@@ -84,15 +84,15 @@ export const PaymentPeriodsView: React.FunctionComponent<
   return (
     <Section header="Payments by Term">
       {hasClaim(Claims.LEASE_ADD) && (
-        <Button variant="secondary" onClick={() => onEdit(defaultFormLeaseTerm)}>
+        <Button variant="secondary" onClick={() => onEdit(defaultFormLeasePeriod)}>
           Add a Term
         </Button>
       )}
       {lastPaymentDate && <b>last payment received: {prettyFormatDate(lastPaymentDate)}</b>}
-      <Table<FormLeaseTerm>
+      <Table<FormLeasePeriod>
         name="leasePaymentsTable"
         columns={columns}
-        data={leaseForm.terms ?? []}
+        data={leaseForm.periods ?? []}
         manualPagination
         hideToolbar
         noRowsMessage="There is no corresponding data"
@@ -100,9 +100,9 @@ export const PaymentPeriodsView: React.FunctionComponent<
         detailsPanel={{
           render: renderPayments,
           onExpand: noop,
-          checkExpanded: (row: FormLeaseTerm, state: FormLeaseTerm[]) =>
+          checkExpanded: (row: FormLeasePeriod, state: FormLeasePeriod[]) =>
             !!find(state, term => term.id === row.id),
-          getRowId: (row: FormLeaseTerm) => row.id,
+          getRowId: (row: FormLeasePeriod) => row.id,
           icons: { open: <MdArrowDropDown size={24} />, closed: <MdArrowRight size={24} /> },
         }}
       />
@@ -110,4 +110,4 @@ export const PaymentPeriodsView: React.FunctionComponent<
   );
 };
 
-export default PaymentPeriodsView;
+export default PeriodPaymentsView;
