@@ -22,7 +22,7 @@ const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
   [systemConstantsSlice.name]: { systemConstants: [{ name: 'GST', value: '5.0' }] },
 };
-vi.mock('../../TermPaymentsContainer', () => ({
+vi.mock('../../PeriodPaymentsContainer', () => ({
   isActualGstEligible: vi.fn(),
 }));
 
@@ -37,7 +37,7 @@ describe('PaymentForm component', () => {
     const component = await renderAsync(
       <Formik initialValues={renderOptions.initialValues ?? {}} onSubmit={noop}>
         <PaymentForm
-          terms={[]}
+          periods={[]}
           initialValues={renderOptions.initialValues}
           onSave={onSave}
           formikRef={{ current: { submitForm } } as any}
@@ -75,7 +75,7 @@ describe('PaymentForm component', () => {
     isActualGstEligible.mockReturnValue(true);
     const {
       component: { container, findByLabelText },
-    } = await setup({ initialValues: { ...defaultFormLeasePayment, leaseTermId: 1 } });
+    } = await setup({ initialValues: { ...defaultFormLeasePayment, leasePeriodId: 1 } });
 
     await act(async () => {
       await fillInput(container, 'amountTotal', '1050');
@@ -90,7 +90,7 @@ describe('PaymentForm component', () => {
     isActualGstEligible.mockReturnValue(false);
     const {
       component: { container, findByLabelText },
-    } = await setup({ initialValues: { ...defaultFormLeasePayment, leaseTermId: 1 } });
+    } = await setup({ initialValues: { ...defaultFormLeasePayment, leasePeriodId: 1 } });
 
     await act(async () => {
       await fillInput(container, 'amountTotal', '1000');
@@ -107,7 +107,7 @@ describe('PaymentForm component', () => {
       store: {
         ...storeState,
         systemConstant: {},
-        initialValues: { ...defaultFormLeasePayment, leaseTermId: 1 },
+        initialValues: { ...defaultFormLeasePayment, leasePeriodId: 1 },
       },
     });
 

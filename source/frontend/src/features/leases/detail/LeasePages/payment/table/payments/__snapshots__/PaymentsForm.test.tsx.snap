@@ -83,7 +83,7 @@ exports[`PaymentsForm component > renders as expected 1`] = `
         class="c2 c3"
       >
         <p>
-          There are no recorded payments for this term.
+          There are no recorded payments for this period.
         </p>
       </div>
     </div>
@@ -174,7 +174,7 @@ exports[`PaymentsForm component > renders with data as expected 1`] = `
         class="c2 c3"
       >
         <p>
-          There are no recorded payments for this term.
+          There are no recorded payments for this period.
         </p>
       </div>
     </div>

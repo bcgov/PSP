@@ -159,9 +159,9 @@ namespace Pims.Api.Models.Concepts.Lease
         public IEnumerable<LeaseTenantModel> Tenants { get; set; }
 
         /// <summary>
-        /// get/set - A collection of the terms for this lease.
+        /// get/set - A collection of the periods for this lease.
         /// </summary>
-        public IEnumerable<LeaseTermModel> Terms { get; set; }
+        public IEnumerable<LeasePeriodModel> Periods { get; set; }
 
         /// <summary>
         /// get/set - Whether this improvement contains a building that is subject to RTA (Residential Tenancy Act).

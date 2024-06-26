@@ -47,7 +47,7 @@ namespace Pims.Api.Test.Mappings
             lease.PimsPropertyLeases.FirstOrDefault().Property.Pid = 111111111;
             var leasePayment = new PimsLeasePayment() { };
 
-            leasePayment.LeaseTerm = new PimsLeaseTerm() { Lease = lease, PimsLeasePayments = new List<PimsLeasePayment>() };
+            leasePayment.LeasePeriod = new PimsLeasePeriod() { Lease = lease, PimsLeasePayments = new List<PimsLeasePayment>() };
 
             // Arrange
             var mapped = this._mapper.Map<LeasePaymentReportModel>(leasePayment);
@@ -63,7 +63,7 @@ namespace Pims.Api.Test.Mappings
             lease.PimsPropertyLeases.Add(new PimsPropertyLease() { Property = new PimsProperty() { Pid = 222222222 } });
             var leasePayment = new PimsLeasePayment() { };
 
-            leasePayment.LeaseTerm = new PimsLeaseTerm() { Lease = lease, PimsLeasePayments = new List<PimsLeasePayment>() };
+            leasePayment.LeasePeriod = new PimsLeasePeriod() { Lease = lease, PimsLeasePayments = new List<PimsLeasePayment>() };
 
             // Arrange
             var mapped = this._mapper.Map<LeasePaymentReportModel>(leasePayment);
@@ -79,7 +79,7 @@ namespace Pims.Api.Test.Mappings
             lease.PimsPropertyLeases.FirstOrDefault().Property.Pid = null;
             var leasePayment = new PimsLeasePayment() { };
 
-            leasePayment.LeaseTerm = new PimsLeaseTerm() { Lease = lease, PimsLeasePayments = new List<PimsLeasePayment>() };
+            leasePayment.LeasePeriod = new PimsLeasePeriod() { Lease = lease, PimsLeasePayments = new List<PimsLeasePayment>() };
 
             // Arrange
             var mapped = this._mapper.Map<LeasePaymentReportModel>(leasePayment);
@@ -96,7 +96,7 @@ namespace Pims.Api.Test.Mappings
             lease.PimsPropertyLeases.Add(new PimsPropertyLease() { Property = new PimsProperty() { Pin = 2 } });
             var leasePayment = new PimsLeasePayment() { };
 
-            leasePayment.LeaseTerm = new PimsLeaseTerm() { Lease = lease, PimsLeasePayments = new List<PimsLeasePayment>() };
+            leasePayment.LeasePeriod = new PimsLeasePeriod() { Lease = lease, PimsLeasePayments = new List<PimsLeasePayment>() };
 
             // Arrange
             var mapped = this._mapper.Map<LeasePaymentReportModel>(leasePayment);
@@ -111,7 +111,7 @@ namespace Pims.Api.Test.Mappings
             lease.PimsPropertyLeases.Add(new PimsPropertyLease() { Property = new PimsProperty() { Address = new PimsAddress() { StreetAddress1 = "street address 1", MunicipalityName = "Victoria" } } });
             var leasePayment = new PimsLeasePayment() { };
 
-            leasePayment.LeaseTerm = new PimsLeaseTerm() { Lease = lease, PimsLeasePayments = new List<PimsLeasePayment>() };
+            leasePayment.LeasePeriod = new PimsLeasePeriod() { Lease = lease, PimsLeasePayments = new List<PimsLeasePayment>() };
 
             // Arrange
             var mapped = this._mapper.Map<LeasePaymentReportModel>(leasePayment);
@@ -127,7 +127,7 @@ namespace Pims.Api.Test.Mappings
             lease.PimsPropertyLeases.Add(new PimsPropertyLease() { Property = new PimsProperty() { Address = new PimsAddress() { StreetAddress1 = "street address 2", MunicipalityName = "Victoria" } } });
             var leasePayment = new PimsLeasePayment() { };
 
-            leasePayment.LeaseTerm = new PimsLeaseTerm() { Lease = lease, PimsLeasePayments = new List<PimsLeasePayment>() };
+            leasePayment.LeasePeriod = new PimsLeasePeriod() { Lease = lease, PimsLeasePayments = new List<PimsLeasePayment>() };
 
             // Arrange
             var mapped = this._mapper.Map<LeasePaymentReportModel>(leasePayment);
@@ -142,7 +142,7 @@ namespace Pims.Api.Test.Mappings
             lease.PimsPropertyLeases.Add(new PimsPropertyLease() { Name = "descriptive name", Property = new PimsProperty() { Address = new PimsAddress() { StreetAddress1 = string.Empty, MunicipalityName = "Victoria" } } });
             var leasePayment = new PimsLeasePayment() { };
 
-            leasePayment.LeaseTerm = new PimsLeaseTerm() { Lease = lease, PimsLeasePayments = new List<PimsLeasePayment>() };
+            leasePayment.LeasePeriod = new PimsLeasePeriod() { Lease = lease, PimsLeasePayments = new List<PimsLeasePayment>() };
 
             // Arrange
             var mapped = this._mapper.Map<LeasePaymentReportModel>(leasePayment);
@@ -157,7 +157,7 @@ namespace Pims.Api.Test.Mappings
             lease.PimsPropertyLeases.Add(new PimsPropertyLease() { Name = "Property Name" });
             var leasePayment = new PimsLeasePayment() { };
 
-            leasePayment.LeaseTerm = new PimsLeaseTerm() { Lease = lease, PimsLeasePayments = new List<PimsLeasePayment>() };
+            leasePayment.LeasePeriod = new PimsLeasePeriod() { Lease = lease, PimsLeasePayments = new List<PimsLeasePayment>() };
 
             // Arrange
             var mapped = this._mapper.Map<LeasePaymentReportModel>(leasePayment);
@@ -173,7 +173,7 @@ namespace Pims.Api.Test.Mappings
             lease.PimsPropertyLeases.Add(new PimsPropertyLease() { Name = "Property Name 2" });
             var leasePayment = new PimsLeasePayment() { };
 
-            leasePayment.LeaseTerm = new PimsLeaseTerm() { Lease = lease, PimsLeasePayments = new List<PimsLeasePayment>() };
+            leasePayment.LeasePeriod = new PimsLeasePeriod() { Lease = lease, PimsLeasePayments = new List<PimsLeasePayment>() };
 
             // Arrange
             var mapped = this._mapper.Map<LeasePaymentReportModel>(leasePayment);
@@ -188,7 +188,7 @@ namespace Pims.Api.Test.Mappings
             lease.PimsPropertyLeases.Add(new PimsPropertyLease() { Name = string.Empty });
             var leasePayment = new PimsLeasePayment() { };
 
-            leasePayment.LeaseTerm = new PimsLeaseTerm() { Lease = lease, PimsLeasePayments = new List<PimsLeasePayment>() };
+            leasePayment.LeasePeriod = new PimsLeasePeriod() { Lease = lease, PimsLeasePayments = new List<PimsLeasePayment>() };
 
             // Arrange
             var mapped = this._mapper.Map<LeasePaymentReportModel>(leasePayment);
@@ -203,7 +203,7 @@ namespace Pims.Api.Test.Mappings
             lease.PimsPropertyLeases.Add(new PimsPropertyLease() { Property = new PimsProperty() { Location = GeometryHelper.CreatePoint(1, 2, SpatialReference.WGS84) } });
             var leasePayment = new PimsLeasePayment() { };
 
-            leasePayment.LeaseTerm = new PimsLeaseTerm() { Lease = lease, PimsLeasePayments = new List<PimsLeasePayment>() };
+            leasePayment.LeasePeriod = new PimsLeasePeriod() { Lease = lease, PimsLeasePayments = new List<PimsLeasePayment>() };
 
             // Arrange
             var mapped = this._mapper.Map<LeasePaymentReportModel>(leasePayment);
@@ -219,7 +219,7 @@ namespace Pims.Api.Test.Mappings
             lease.PimsPropertyLeases.Add(new PimsPropertyLease() { Property = new PimsProperty() { Location = GeometryHelper.CreatePoint(3, 4, SpatialReference.WGS84) } });
             var leasePayment = new PimsLeasePayment() { };
 
-            leasePayment.LeaseTerm = new PimsLeaseTerm() { Lease = lease, PimsLeasePayments = new List<PimsLeasePayment>() };
+            leasePayment.LeasePeriod = new PimsLeasePeriod() { Lease = lease, PimsLeasePayments = new List<PimsLeasePayment>() };
 
             // Arrange
             var mapped = this._mapper.Map<LeasePaymentReportModel>(leasePayment);
@@ -234,7 +234,7 @@ namespace Pims.Api.Test.Mappings
             lease.PimsPropertyLeases.Add(new PimsPropertyLease() { Property = new PimsProperty() { } });
             var leasePayment = new PimsLeasePayment() { };
 
-            leasePayment.LeaseTerm = new PimsLeaseTerm() { Lease = lease, PimsLeasePayments = new List<PimsLeasePayment>() };
+            leasePayment.LeasePeriod = new PimsLeasePeriod() { Lease = lease, PimsLeasePayments = new List<PimsLeasePayment>() };
 
             // Arrange
             var mapped = this._mapper.Map<LeasePaymentReportModel>(leasePayment);
@@ -249,7 +249,7 @@ namespace Pims.Api.Test.Mappings
             lease.PimsPropertyLeases.Add(new PimsPropertyLease() { Name = "test", Property = new PimsProperty() { Pid = 1, Pin = 2, Address = new PimsAddress() { StreetAddress1 = "test" }, Location = GeometryHelper.CreatePoint(1, 2, SpatialReference.WGS84) } });
             var leasePayment = new PimsLeasePayment() { };
 
-            leasePayment.LeaseTerm = new PimsLeaseTerm() { Lease = lease, PimsLeasePayments = new List<PimsLeasePayment>() };
+            leasePayment.LeasePeriod = new PimsLeasePeriod() { Lease = lease, PimsLeasePayments = new List<PimsLeasePayment>() };
 
             // Arrange
             var mapped = this._mapper.Map<LeasePaymentReportModel>(leasePayment);
@@ -264,7 +264,7 @@ namespace Pims.Api.Test.Mappings
             lease.PimsPropertyLeases.Add(new PimsPropertyLease() { Name = "test", Property = new PimsProperty() { Pin = 2, Address = new PimsAddress() { StreetAddress1 = "test" }, Location = GeometryHelper.CreatePoint(1, 2, SpatialReference.WGS84) } });
             var leasePayment = new PimsLeasePayment() { };
 
-            leasePayment.LeaseTerm = new PimsLeaseTerm() { Lease = lease, PimsLeasePayments = new List<PimsLeasePayment>() };
+            leasePayment.LeasePeriod = new PimsLeasePeriod() { Lease = lease, PimsLeasePayments = new List<PimsLeasePayment>() };
 
             // Arrange
             var mapped = this._mapper.Map<LeasePaymentReportModel>(leasePayment);
@@ -279,7 +279,7 @@ namespace Pims.Api.Test.Mappings
             lease.PimsPropertyLeases.Add(new PimsPropertyLease() { Name = "test", Property = new PimsProperty() { Address = new PimsAddress() { StreetAddress1 = "address" }, Location = GeometryHelper.CreatePoint(1, 2, SpatialReference.WGS84) } });
             var leasePayment = new PimsLeasePayment() { };
 
-            leasePayment.LeaseTerm = new PimsLeaseTerm() { Lease = lease, PimsLeasePayments = new List<PimsLeasePayment>() };
+            leasePayment.LeasePeriod = new PimsLeasePeriod() { Lease = lease, PimsLeasePayments = new List<PimsLeasePayment>() };
 
             // Arrange
             var mapped = this._mapper.Map<LeasePaymentReportModel>(leasePayment);
@@ -294,7 +294,7 @@ namespace Pims.Api.Test.Mappings
             lease.PimsPropertyLeases.Add(new PimsPropertyLease() { Name = "test", Property = new PimsProperty() { Location = GeometryHelper.CreatePoint(1, 2, SpatialReference.WGS84) } });
             var leasePayment = new PimsLeasePayment() { };
 
-            leasePayment.LeaseTerm = new PimsLeaseTerm() { Lease = lease, PimsLeasePayments = new List<PimsLeasePayment>() };
+            leasePayment.LeasePeriod = new PimsLeasePeriod() { Lease = lease, PimsLeasePayments = new List<PimsLeasePayment>() };
 
             // Arrange
             var mapped = this._mapper.Map<LeasePaymentReportModel>(leasePayment);
@@ -309,7 +309,7 @@ namespace Pims.Api.Test.Mappings
             lease.PimsPropertyLeases.Add(new PimsPropertyLease() { Property = new PimsProperty() { Location = GeometryHelper.CreatePoint(1, 2, SpatialReference.WGS84) } });
             var leasePayment = new PimsLeasePayment() { };
 
-            leasePayment.LeaseTerm = new PimsLeaseTerm() { Lease = lease, PimsLeasePayments = new List<PimsLeasePayment>() };
+            leasePayment.LeasePeriod = new PimsLeasePeriod() { Lease = lease, PimsLeasePayments = new List<PimsLeasePayment>() };
 
             // Arrange
             var mapped = this._mapper.Map<LeasePaymentReportModel>(leasePayment);
@@ -326,7 +326,7 @@ namespace Pims.Api.Test.Mappings
             lease.PimsLeaseTenants.Add(new PimsLeaseTenant() { TenantTypeCode = "NOT", Organization = new PimsOrganization() { OrganizationName = "test org" } });
             var leasePayment = new PimsLeasePayment() { };
 
-            leasePayment.LeaseTerm = new PimsLeaseTerm() { Lease = lease, PimsLeasePayments = new List<PimsLeasePayment>() };
+            leasePayment.LeasePeriod = new PimsLeasePeriod() { Lease = lease, PimsLeasePayments = new List<PimsLeasePayment>() };
 
             // Arrange
             var mapped = this._mapper.Map<LeasePaymentReportModel>(leasePayment);
@@ -343,7 +343,7 @@ namespace Pims.Api.Test.Mappings
             lease.OtherLeaseProgramType = "DESC";
             var leasePayment = new PimsLeasePayment() { };
 
-            leasePayment.LeaseTerm = new PimsLeaseTerm() { Lease = lease, PimsLeasePayments = new List<PimsLeasePayment>() };
+            leasePayment.LeasePeriod = new PimsLeasePeriod() { Lease = lease, PimsLeasePayments = new List<PimsLeasePayment>() };
 
             // Arrange
             var mapped = this._mapper.Map<LeasePaymentReportModel>(leasePayment);
@@ -360,7 +360,7 @@ namespace Pims.Api.Test.Mappings
             lease.OtherLeasePurposeType = "DESC";
             var leasePayment = new PimsLeasePayment() { };
 
-            leasePayment.LeaseTerm = new PimsLeaseTerm() { Lease = lease, PimsLeasePayments = new List<PimsLeasePayment>() };
+            leasePayment.LeasePeriod = new PimsLeasePeriod() { Lease = lease, PimsLeasePayments = new List<PimsLeasePayment>() };
 
             // Arrange
             var mapped = this._mapper.Map<LeasePaymentReportModel>(leasePayment);
@@ -377,7 +377,7 @@ namespace Pims.Api.Test.Mappings
             var leasePaymentOld = new PimsLeasePayment() { PaymentReceivedDate = DateTime.Now.AddDays(-1) };
             var leasePaymentOlder = new PimsLeasePayment() { PaymentReceivedDate = DateTime.Now.AddDays(-2) };
 
-            leasePayment.LeaseTerm = new PimsLeaseTerm() { Lease = lease, PimsLeasePayments = new List<PimsLeasePayment>() { leasePaymentOld, leasePayment, leasePaymentOlder } };
+            leasePayment.LeasePeriod = new PimsLeasePeriod() { Lease = lease, PimsLeasePayments = new List<PimsLeasePayment>() { leasePaymentOld, leasePayment, leasePaymentOlder } };
 
             // Arrange
             var mapped = this._mapper.Map<LeasePaymentReportModel>(leasePayment);

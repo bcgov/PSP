@@ -2,27 +2,27 @@ import { CellProps } from 'react-table';
 
 import { ColumnWithProps, DateCell } from '@/components/Table';
 import { ApiGen_Base_CodeType } from '@/models/api/generated/ApiGen_Base_CodeType';
-import { ApiGen_Concepts_LeaseTerm } from '@/models/api/generated/ApiGen_Concepts_LeaseTerm';
+import { ApiGen_Concepts_LeasePeriod } from '@/models/api/generated/ApiGen_Concepts_LeasePeriod';
 import { stringToFragment } from '@/utils';
 
-export const leaseTermColumns: ColumnWithProps<ApiGen_Concepts_LeaseTerm>[] = [
+export const leasePeriodColumns: ColumnWithProps<ApiGen_Concepts_LeasePeriod>[] = [
   {
-    Header: 'Term ID',
+    Header: 'Period ID',
     accessor: 'id',
     align: 'left',
     sortable: false,
-    Cell: ({ cell }: CellProps<ApiGen_Concepts_LeaseTerm, number | null>) =>
-      stringToFragment(cell.row.index === 0 ? 'initial term' : `renewal ${cell.row.index}`),
+    Cell: ({ cell }: CellProps<ApiGen_Concepts_LeasePeriod, number | null>) =>
+      stringToFragment(cell.row.index === 0 ? 'initial period' : `renewal ${cell.row.index}`),
   },
   {
-    Header: 'Term Start Date',
+    Header: 'Period Start Date',
     accessor: 'startDate',
     Cell: DateCell,
     align: 'left',
     sortable: false,
   },
   {
-    Header: 'Term End Date',
+    Header: 'Period End Date',
     accessor: 'expiryDate',
     Cell: DateCell,
     align: 'left',
@@ -36,13 +36,13 @@ export const leaseTermColumns: ColumnWithProps<ApiGen_Concepts_LeaseTerm>[] = [
     sortable: false,
   },
   {
-    Header: 'Term Status',
+    Header: 'Period Status',
     accessor: 'statusTypeCode',
     align: 'left',
     sortable: false,
     Cell: ({
       cell: { value },
-    }: CellProps<ApiGen_Concepts_LeaseTerm, ApiGen_Base_CodeType<string> | null>) =>
+    }: CellProps<ApiGen_Concepts_LeasePeriod, ApiGen_Base_CodeType<string> | null>) =>
       stringToFragment(value?.description ?? ''),
   },
 ];

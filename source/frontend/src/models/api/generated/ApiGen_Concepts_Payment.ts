@@ -10,7 +10,7 @@ import { ApiGen_Base_CodeType } from './ApiGen_Base_CodeType';
 // LINK: @backend/apimodels/Models/Concepts/Lease/PaymentModel.cs
 export interface ApiGen_Concepts_Payment extends ApiGen_Base_BaseAudit {
   id: number | null;
-  leaseTermId: number;
+  leasePeriodId: number;
   leasePaymentMethodType: ApiGen_Base_CodeType<string> | null;
   leasePaymentStatusTypeCode: ApiGen_Base_CodeType<string> | null;
   receivedDate: UtcIsoDate;

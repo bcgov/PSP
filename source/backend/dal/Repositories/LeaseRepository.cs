@@ -97,7 +97,7 @@ namespace Pims.Dal.Repositories
                 .Include(t => t.PimsPropertyImprovements)
                 .Include(l => l.PimsInsurances)
                 .Include(l => l.PimsSecurityDeposits)
-                .Include(l => l.PimsLeaseTerms)
+                .Include(l => l.PimsLeasePeriods)
                 .Include(l => l.PimsLeaseConsultations)
                     .ThenInclude(lc => lc.ConsultationStatusTypeCodeNavigation)
                 .Include(l => l.PimsLeaseConsultations)
@@ -107,7 +107,7 @@ namespace Pims.Dal.Repositories
 
             lease.LeasePurposeTypeCodeNavigation = this.Context.PimsLeasePurposeTypes.Single(type => type.LeasePurposeTypeCode == lease.LeasePurposeTypeCode);
             lease.PimsPropertyImprovements = lease.PimsPropertyImprovements.OrderBy(i => i.PropertyImprovementTypeCode).ToArray();
-            lease.PimsLeaseTerms = lease.PimsLeaseTerms.OrderBy(t => t.TermStartDate).ThenBy(t => t.LeaseTermId).Select(t =>
+            lease.PimsLeasePeriods = lease.PimsLeasePeriods.OrderBy(t => t.PeriodStartDate).ThenBy(t => t.LeasePeriodId).Select(t =>
             {
                 t.PimsLeasePayments = t.PimsLeasePayments.OrderBy(p => p.PaymentReceivedDate).ThenBy(p => p.LeasePaymentId).ToArray();
                 return t;
@@ -432,8 +432,8 @@ namespace Pims.Dal.Repositories
             .ToList();
             lastUpdatedByAggregate.AddRange(returnHoldersHistoryLastUpdatedBy);
 
-            // Lease Terms
-            var termLastUpdatedBy = this.Context.PimsLeaseTerms.AsNoTracking()
+            // Lease Periods
+            var periodLastUpdatedBy = this.Context.PimsLeasePeriods.AsNoTracking()
                 .Where(ap => ap.LeaseId == leaseId)
                 .Select(ap => new LastUpdatedByModel()
                 {
@@ -445,16 +445,16 @@ namespace Pims.Dal.Repositories
                 .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
                 .Take(1)
                 .ToList();
-            lastUpdatedByAggregate.AddRange(termLastUpdatedBy);
+            lastUpdatedByAggregate.AddRange(periodLastUpdatedBy);
 
-            // Lease Deleted Terms
-            // This is needed to get the lease terms last-updated-by when deleted
-            var deletedTerms = this.Context.PimsLeaseTermHists.AsNoTracking()
+            // Lease Deleted Periods
+            // This is needed to get the lease periods last-updated-by when deleted
+            var deletedTerms = this.Context.PimsLeasePeriodHists.AsNoTracking()
                 .Where(aph => aph.LeaseId == leaseId)
-                .GroupBy(aph => aph.LeaseTermId)
+                .GroupBy(aph => aph.LeasePeriodId)
                 .Select(gaph => gaph.OrderByDescending(a => a.EffectiveDateHist).FirstOrDefault()).ToList();
 
-            var termHistoryLastUpdatedBy = deletedTerms
+            var periodHistoryLastUpdatedBy = deletedTerms
             .Select(aph => new LastUpdatedByModel()
             {
                 ParentId = leaseId,
@@ -465,12 +465,12 @@ namespace Pims.Dal.Repositories
             .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
             .Take(1)
             .ToList();
-            lastUpdatedByAggregate.AddRange(termHistoryLastUpdatedBy);
+            lastUpdatedByAggregate.AddRange(periodHistoryLastUpdatedBy);
 
-            // Lease Term Payment
-            var termPaymentReturnsLastUpdatedBy = this.Context.PimsLeasePayments.AsNoTracking()
-                .Include(l => l.LeaseTerm)
-                .Where(ap => ap.LeaseTerm.LeaseId == leaseId)
+            // Lease Period Payment
+            var periodPaymentReturnsLastUpdatedBy = this.Context.PimsLeasePayments.AsNoTracking()
+                .Include(l => l.LeasePeriod)
+                .Where(ap => ap.LeasePeriod.LeaseId == leaseId)
                 .Select(ap => new LastUpdatedByModel()
                 {
                     ParentId = leaseId,
@@ -481,22 +481,22 @@ namespace Pims.Dal.Repositories
                 .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
                 .Take(1)
                 .ToList();
-            lastUpdatedByAggregate.AddRange(termPaymentReturnsLastUpdatedBy);
+            lastUpdatedByAggregate.AddRange(periodPaymentReturnsLastUpdatedBy);
 
-            // Lease Deleted Term Payment
-            // This is needed to get the term payments last-updated-by when deleted
-            var termPaymentHistory = this.Context.PimsLeasePaymentHists.AsNoTracking();
-            var deletedTermPaymentHistory = this.Context.PimsLeaseTermHists.AsNoTracking()
+            // Lease Deleted Period Payments
+            // This is needed to get the period payments last-updated-by when deleted
+            var periodPaymentHistory = this.Context.PimsLeasePaymentHists.AsNoTracking();
+            var deletedPeriodPaymentHistory = this.Context.PimsLeasePeriodHists.AsNoTracking()
                 .Where(at => at.LeaseId == leaseId)
                 .Join(
-                    termPaymentHistory,
-                    leaseTermHist => leaseTermHist.LeaseTermId,
-                    leasePaymentHist => leasePaymentHist.LeaseTermId,
-                    (leaseTermHist, leasePaymentHist) => leasePaymentHist)
+                    periodPaymentHistory,
+                    leasePeriodHist => leasePeriodHist.LeasePeriodId,
+                    leasePaymentHist => leasePaymentHist.LeasePeriodId,
+                    (leasePeriodHist, leasePaymentHist) => leasePaymentHist)
                 .GroupBy(aph => aph.LeasePaymentId)
                 .Select(gaph => gaph.OrderByDescending(a => a.EffectiveDateHist).FirstOrDefault()).ToList();
 
-            var termPaymentHistoryLastUpdatedBy = deletedTermPaymentHistory
+            var periodPaymentHistoryLastUpdatedBy = deletedPeriodPaymentHistory
             .Select(rdh => new LastUpdatedByModel()
             {
                 ParentId = leaseId,
@@ -507,7 +507,7 @@ namespace Pims.Dal.Repositories
             .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
             .Take(1)
             .ToList();
-            lastUpdatedByAggregate.AddRange(termPaymentHistoryLastUpdatedBy);
+            lastUpdatedByAggregate.AddRange(periodPaymentHistoryLastUpdatedBy);
 
             // Lease Documents
             var documentsUpdatedBy = this.Context.PimsLeaseDocuments.AsNoTracking()
@@ -682,14 +682,14 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(r => r.PimsSecurityDepositReturnHolder)
                     .ThenInclude(s => s.Organization)
 
-                .Include(l => l.PimsLeaseTerms)
+                .Include(l => l.PimsLeasePeriods)
                      .ThenInclude(t => t.LeasePmtFreqTypeCodeNavigation)
-                .Include(t => t.PimsLeaseTerms)
-                     .ThenInclude(t => t.LeaseTermStatusTypeCodeNavigation)
-                .Include(t => t.PimsLeaseTerms)
+                .Include(t => t.PimsLeasePeriods)
+                     .ThenInclude(t => t.LeasePeriodStatusTypeCodeNavigation)
+                .Include(t => t.PimsLeasePeriods)
                     .ThenInclude(t => t.PimsLeasePayments)
                     .ThenInclude(t => t.LeasePaymentMethodTypeCodeNavigation)
-                .Include(t => t.PimsLeaseTerms)
+                .Include(t => t.PimsLeasePeriods)
                     .ThenInclude(t => t.PimsLeasePayments)
                     .ThenInclude(t => t.LeasePaymentStatusTypeCodeNavigation)
 
@@ -701,7 +701,7 @@ namespace Pims.Dal.Repositories
 
             lease.LeasePurposeTypeCodeNavigation = this.Context.PimsLeasePurposeTypes.Single(type => type.LeasePurposeTypeCode == lease.LeasePurposeTypeCode);
             lease.PimsPropertyImprovements = lease.PimsPropertyImprovements.OrderBy(i => i.PropertyImprovementTypeCode).ToArray();
-            lease.PimsLeaseTerms = lease.PimsLeaseTerms.OrderBy(t => t.TermStartDate).ThenBy(t => t.LeaseTermId).Select(t =>
+            lease.PimsLeasePeriods = lease.PimsLeasePeriods.OrderBy(t => t.PeriodStartDate).ThenBy(t => t.LeasePeriodId).Select(t =>
             {
                 t.PimsLeasePayments = t.PimsLeasePayments.OrderBy(p => p.PaymentReceivedDate).ThenBy(p => p.LeasePaymentId).ToArray();
                 return t;
@@ -888,12 +888,12 @@ namespace Pims.Dal.Repositories
                         .Include(l => l.PimsLeaseTenants)
                             .ThenInclude(t => t.Organization)
                         .Include(p => p.RegionCodeNavigation)
-                        .Include(l => l.PimsLeaseTerms)
+                        .Include(l => l.PimsLeasePeriods)
                         .AsNoTracking();
 
             if (loadPayments)
             {
-                query = query.Include(l => l.PimsLeaseTerms)
+                query = query.Include(l => l.PimsLeasePeriods)
                     .ThenInclude(l => l.PimsLeasePayments);
             }
 
@@ -1034,14 +1034,7 @@ namespace Pims.Dal.Repositories
             {
                 predicateBuilder = predicateBuilder.And(l => EF.Functions.Like(l.PsFileNo, $"%{filter.Historical}%") || EF.Functions.Like(l.TfaFileNumber, $"%{filter.Historical}%"));
 
-                predicateBuilder = predicateBuilder.Or(l => l.PimsPropertyLeases.Any(x => x.Property.PimsHistoricalFileNumbers
-                        .Any(y => y.HistoricalFileNumberTypeCode == HistoricalFileNumberTypes.LISNO.ToString() && y.HistoricalFileNumber.Contains(filter.Historical))));
-
-                predicateBuilder = predicateBuilder.Or(l => l.PimsPropertyLeases.Any(x => x.Property.PimsHistoricalFileNumbers
-                        .Any(y => y.HistoricalFileNumberTypeCode == HistoricalFileNumberTypes.PSNO.ToString() && y.HistoricalFileNumber.Contains(filter.Historical))));
-
-                predicateBuilder = predicateBuilder.Or(l => l.PimsPropertyLeases.Any(x => x.Property.PimsHistoricalFileNumbers
-                        .Any(y => y.HistoricalFileNumberTypeCode == HistoricalFileNumberTypes.OTHER.ToString() && y.HistoricalFileNumber.Contains(filter.Historical))));
+                predicateBuilder = predicateBuilder.Or(l => l.PimsPropertyLeases.Any(x => x.Property.PimsHistoricalFileNumbers.Any(y => y.HistoricalFileNumber.Contains(filter.Historical))));
             }
 
             if (!string.IsNullOrWhiteSpace(filter.Address))
@@ -1066,7 +1059,7 @@ namespace Pims.Dal.Repositories
             if (filter.ExpiryAfterDate.HasValue)
             {
                 predicateBuilder = predicateBuilder.And(l => (l.OrigExpiryDate >= filter.ExpiryAfterDate.Value || l.OrigExpiryDate == null)
-                    || l.PimsLeaseTerms.Any(t => t.TermExpiryDate >= filter.ExpiryAfterDate.Value || t.TermExpiryDate == null));
+                    || l.PimsLeasePeriods.Any(t => t.PeriodExpiryDate >= filter.ExpiryAfterDate.Value || t.PeriodExpiryDate == null));
             }
 
             if (filter.StartBeforeDate.HasValue)

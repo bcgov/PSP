@@ -11,34 +11,34 @@ import { LeaseFormModel } from '@/features/leases/models';
 import { useGenerateLicenceOfOccupation } from '@/features/mapSideBar/acquisition/common/GenerateForm/hooks/useGenerateLicenceOfOccupation';
 import { LeasePageProps } from '@/features/mapSideBar/lease/LeaseContainer';
 import { useLeasePaymentRepository } from '@/hooks/repositories/useLeasePaymentRepository';
-import { useLeaseTermRepository } from '@/hooks/repositories/useLeaseTermRepository';
+import { useLeasePeriodRepository } from '@/hooks/repositories/useLeasePeriodRepository';
 import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
 import { ApiGen_CodeTypes_LeaseAccountTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseAccountTypes';
 import { getEmptyLease } from '@/models/defaultInitializers';
 import { SystemConstants, useSystemConstants } from '@/store/slices/systemConstants';
 import { exists, isValidId, isValidIsoDateTime } from '@/utils';
 
-import { useDeleteTermsPayments } from './hooks/useDeleteTermsPayments';
+import { useDeletePeriodsPayments } from './hooks/useDeletePeriodsPayments';
 import PaymentModal from './modal/payment/PaymentModal';
 import TermForm from './modal/term/TermForm';
 import { FormLeasePayment, FormLeaseTerm } from './models';
 import { IPaymentPeriodsViewProps } from './table/terms/PaymentPeriodsView';
 
 /**
- * Orchestrates the display and modification of lease terms and payments.
+ * Orchestrates the display and modification of lease periods and payments.
  */
 export const PaymentPeriodsContainer: React.FunctionComponent<
   LeasePageProps<IPaymentPeriodsViewProps>
 > = ({ formikRef, onSuccess, componentView }) => {
   const { lease } = useContext(LeaseStateContext);
   const generateH1005a = useGenerateLicenceOfOccupation();
-  const [editModalValues, setEditModalValues] = useState<FormLeaseTerm | undefined>(undefined);
+  const [editModalValues, setEditModalValues] = useState<FormLeasePeriod | undefined>(undefined);
   const [editPaymentModalValues, setEditPaymentModalValues] = useState<
     FormLeasePayment | undefined
   >(undefined);
 
-  const { updateLeaseTerm, addLeaseTerm, getLeaseTerms, deleteLeaseTerm } =
-    useLeaseTermRepository();
+  const { updateLeasePeriod, addLeasePeriod, getLeasePeriods, deleteLeasePeriod } =
+    useLeasePeriodRepository();
 
   const { setModalContent, setDisplayModal } = useContext(ModalContext);
   const { updateLeasePayment, addLeasePayment } = useLeasePaymentRepository();
@@ -47,47 +47,47 @@ export const PaymentPeriodsContainer: React.FunctionComponent<
   const gstDecimal = gstConstant !== undefined ? parseFloat(gstConstant.value) : undefined;
 
   const leaseId = lease?.id;
-  const getLeaseTermsFunc = getLeaseTerms.execute;
-  const refreshLeaseTerms = useCallback(
+  const getLeasePeriodsFunc = getLeasePeriods.execute;
+  const refreshLeasePeriods = useCallback(
     async (leaseId: number) => {
       if (leaseId) {
-        await getLeaseTermsFunc(leaseId);
+        await getLeasePeriodsFunc(leaseId);
       }
     },
-    [getLeaseTermsFunc],
+    [getLeasePeriodsFunc],
   );
   useDeepCompareEffect(() => {
     if (isValidId(leaseId)) {
-      refreshLeaseTerms(leaseId);
+      refreshLeasePeriods(leaseId);
     }
-  }, [refreshLeaseTerms, leaseId]);
+  }, [refreshLeasePeriods, leaseId]);
 
   const {
-    onDeleteTerm,
+    onDeletePeriod,
     onDeletePayment,
     deleteModalWarning,
     setDeleteModalWarning,
     setConfirmDeleteModalValues,
     comfirmDeleteModalValues,
-  } = useDeleteTermsPayments(deleteLeaseTerm, refreshLeaseTerms, onSuccess);
+  } = useDeletePeriodsPayments(deleteLeasePeriod, refreshLeasePeriods, onSuccess);
 
   /**
    * Send the save request (either an update or an add). Use the response to update the parent lease.
    * @param values
    */
-  const onSaveTerm = useCallback(
-    async (values: FormLeaseTerm) => {
-      const updatedTerm = isValidId(values.id)
-        ? await updateLeaseTerm.execute(FormLeaseTerm.toApi(values, gstDecimal))
-        : await addLeaseTerm.execute(FormLeaseTerm.toApi(values, gstDecimal));
+  const onSavePeriod = useCallback(
+    async (values: FormLeasePeriod) => {
+      const updatedPeriod = isValidId(values.id)
+        ? await updateLeasePeriod.execute(FormLeasePeriod.toApi(values, gstDecimal))
+        : await addLeasePeriod.execute(FormLeasePeriod.toApi(values, gstDecimal));
 
-      if (isValidId(updatedTerm?.id) && isValidId(leaseId)) {
-        await getLeaseTerms.execute(leaseId);
+      if (isValidId(updatedPeriod?.id) && isValidId(leaseId)) {
+        await getLeasePeriods.execute(leaseId);
         setEditModalValues(undefined);
         onSuccess();
       }
     },
-    [addLeaseTerm, getLeaseTerms, gstDecimal, leaseId, updateLeaseTerm, onSuccess],
+    [addLeasePeriod, getLeasePeriods, gstDecimal, leaseId, updateLeasePeriod, onSuccess],
   );
 
   /**
@@ -101,25 +101,25 @@ export const PaymentPeriodsContainer: React.FunctionComponent<
           ? await updateLeasePayment.execute(leaseId, FormLeasePayment.toApi(values))
           : await addLeasePayment.execute(leaseId, FormLeasePayment.toApi(values));
         if (isValidId(updatedLeasePayment?.id)) {
-          await getLeaseTerms.execute(leaseId);
+          await getLeasePeriods.execute(leaseId);
           setEditPaymentModalValues(undefined);
           onSuccess();
         }
       }
     },
-    [leaseId, updateLeasePayment, addLeasePayment, getLeaseTerms, onSuccess],
+    [leaseId, updateLeasePayment, addLeasePayment, getLeasePeriods, onSuccess],
   );
 
   const onEdit = useCallback(
-    (values: FormLeaseTerm) => {
-      if (lease?.terms?.length === 0) {
+    (values: FormLeasePeriod) => {
+      if (lease?.periods?.length === 0) {
         values = {
           ...values,
           startDate: isValidIsoDateTime(lease?.startDate) ? lease.startDate : '',
         };
       }
 
-      // For new terms, adjust the "Requires GST" field based on whether the lease is receivable or payable.
+      // For new periods, adjust the "Requires GST" field based on whether the lease is receivable or payable.
       if (!isValidId(values?.id)) {
         const isReceivableLease =
           lease?.paymentReceivableType?.id === ApiGen_CodeTypes_LeaseAccountTypes.RCVBL.toString();
@@ -144,20 +144,20 @@ export const PaymentPeriodsContainer: React.FunctionComponent<
     }
   };
 
-  const onCancelTerm = useCallback(() => {
+  const onCancelPeriod = useCallback(() => {
     setEditModalValues(undefined);
   }, []);
 
-  const TermFormComp = useMemo(
+  const PeriodFormComp = useMemo(
     () => (
-      <TermForm
+      <PeriodForm
         formikRef={formikRef as any}
         initialValues={editModalValues}
-        onSave={onSaveTerm}
+        onSave={onSavePeriod}
         lease={lease}
       />
     ),
-    [editModalValues, formikRef, onSaveTerm, lease],
+    [editModalValues, formikRef, onSavePeriod, lease],
   );
   useEffect(() => {
     if (editModalValues) {
@@ -181,8 +181,8 @@ export const PaymentPeriodsContainer: React.FunctionComponent<
   }, [
     setModalContent,
     setDisplayModal,
-    onCancelTerm,
-    TermFormComp,
+    onCancelPeriod,
+    PeriodFormComp,
     editModalValues,
     formikRef,
     lease,
@@ -195,7 +195,7 @@ export const PaymentPeriodsContainer: React.FunctionComponent<
       <View
         onEdit={onEdit}
         onEditPayment={onEditPayment}
-        onDelete={onDeleteTerm}
+        onDelete={onDeletePeriod}
         onDeletePayment={onDeletePayment}
         onSavePayment={onSavePayment}
         onGenerate={onGenerate}
@@ -204,7 +204,7 @@ export const PaymentPeriodsContainer: React.FunctionComponent<
         }
         lease={LeaseFormModel.fromApi({
           ...getEmptyLease(),
-          terms: getLeaseTerms.response ?? [],
+          periods: getLeasePeriods.response ?? [],
           type: lease?.type ?? null,
         })}
         formikRef={formikRef as React.RefObject<FormikProps<LeaseFormModel>>}
@@ -216,7 +216,7 @@ export const PaymentPeriodsContainer: React.FunctionComponent<
           setEditPaymentModalValues(undefined);
         }}
         onSave={onSavePayment}
-        terms={getLeaseTerms.response ?? []}
+        periods={getLeasePeriods.response ?? []}
       />
       <GenericModal
         variant="warning"
@@ -240,8 +240,8 @@ export const PaymentPeriodsContainer: React.FunctionComponent<
   );
 };
 
-export const isActualGstEligible = (termId: number, terms: FormLeaseTerm[]) => {
-  return !!find(terms, (term: FormLeaseTerm) => term.id === termId)?.isGstEligible;
+export const isActualGstEligible = (periodId: number, periods: FormLeasePeriod[]) => {
+  return !!find(periods, (period: FormLeasePeriod) => period.id === periodId)?.isGstEligible;
 };
 
 export default PaymentPeriodsContainer;

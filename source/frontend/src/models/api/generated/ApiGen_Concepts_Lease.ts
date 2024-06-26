@@ -7,8 +7,8 @@ import { UtcIsoDate } from '@/models/api/UtcIsoDateTime';
 import { ApiGen_Base_CodeType } from './ApiGen_Base_CodeType';
 import { ApiGen_Concepts_ConsultationLease } from './ApiGen_Concepts_ConsultationLease';
 import { ApiGen_Concepts_FileWithChecklist } from './ApiGen_Concepts_FileWithChecklist';
+import { ApiGen_Concepts_LeasePeriod } from './ApiGen_Concepts_LeasePeriod';
 import { ApiGen_Concepts_LeaseTenant } from './ApiGen_Concepts_LeaseTenant';
-import { ApiGen_Concepts_LeaseTerm } from './ApiGen_Concepts_LeaseTerm';
 import { ApiGen_Concepts_Project } from './ApiGen_Concepts_Project';
 import { ApiGen_Concepts_PropertyLease } from './ApiGen_Concepts_PropertyLease';
 
@@ -43,7 +43,7 @@ export interface ApiGen_Concepts_Lease extends ApiGen_Concepts_FileWithChecklist
   fileProperties: ApiGen_Concepts_PropertyLease[] | null;
   consultations: ApiGen_Concepts_ConsultationLease[] | null;
   tenants: ApiGen_Concepts_LeaseTenant[] | null;
-  terms: ApiGen_Concepts_LeaseTerm[] | null;
+  periods: ApiGen_Concepts_LeasePeriod[] | null;
   isResidential: boolean;
   isCommercialBuilding: boolean;
   isOtherImprovement: boolean;
