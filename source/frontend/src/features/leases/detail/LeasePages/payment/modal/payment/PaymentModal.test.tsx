@@ -27,7 +27,7 @@ describe('PaymentModal component', () => {
   ) => {
     // render component under test
     const component = await renderAsync(
-      <PaymentModal onSave={onSave} onCancel={onCancel} displayModal={true} terms={[]} />,
+      <PaymentModal onSave={onSave} onCancel={onCancel} displayModal={true} periods={[]} />,
       {
         ...renderOptions,
         history,

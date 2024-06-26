@@ -54,7 +54,7 @@ const emptyLease: ApiGen_Concepts_Lease = {
   ...getEmptyBaseAudit(),
   fileName: null,
   fileNumber: null,
-  terms: null,
+  periods: null,
   fileChecklistItems: [],
 };
 
@@ -63,7 +63,7 @@ export const getMockApiLease: () => ApiGen_Concepts_Lease = () => ({
   id: 1,
   rowVersion: 2,
   lFileNo: 'L-0000001',
-  terms: [],
+  periods: [],
   tenantNotes: ['a note', '', ''],
   persons: [],
   organizations: [],

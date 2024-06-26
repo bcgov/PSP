@@ -8,7 +8,7 @@ import { useDocumentGenerationRepository } from '@/features/documents/hooks/useD
 import { useApiLeases } from '@/hooks/pims-api/useApiLeases';
 import { useInsurancesRepository } from '@/hooks/repositories/useInsuranceRepository';
 import { useLeaseTenantRepository } from '@/hooks/repositories/useLeaseTenantRepository';
-import { useLeaseTermRepository } from '@/hooks/repositories/useLeaseTermRepository';
+import { useLeasePeriodRepository } from '@/hooks/repositories/useLeasePeriodRepository';
 import { usePropertyLeaseRepository } from '@/hooks/repositories/usePropertyLeaseRepository';
 import { useSecurityDepositRepository } from '@/hooks/repositories/useSecurityDepositRepository';
 import { getMockDeposits } from '@/mocks/deposits.mock';
@@ -29,7 +29,7 @@ const getSecurityDepositsFn = vi.fn();
 const getInsurancesFn = vi.fn();
 const getPropertyLeasesFn = vi.fn();
 const getApiLeaseFn = vi.fn();
-const getLeaseTermFn = vi.fn();
+const getLeasePeriodFn = vi.fn();
 
 vi.mock('@/features/documents/hooks/useDocumentGenerationRepository');
 vi.mocked(useDocumentGenerationRepository).mockImplementation(
@@ -71,12 +71,12 @@ vi.mocked(usePropertyLeaseRepository).mockImplementation(
     } as unknown as ReturnType<typeof usePropertyLeaseRepository>),
 );
 
-vi.mock('@/hooks/repositories/useLeaseTermRepository');
-vi.mocked(useLeaseTermRepository).mockImplementation(
+vi.mock('@/hooks/repositories/useLeasePeriodRepository');
+vi.mocked(useLeasePeriodRepository).mockImplementation(
   () =>
     ({
-      getLeaseTerms: { execute: getLeaseTermFn },
-    } as unknown as ReturnType<typeof useLeaseTermRepository>),
+      getLeasePeriods: { execute: getLeasePeriodFn },
+    } as unknown as ReturnType<typeof useLeasePeriodRepository>),
 );
 
 vi.mock('@/hooks/pims-api/useApiLeases');
@@ -128,7 +128,7 @@ describe('useGenerateLicenceOfOccupation functions', () => {
     expect(getLeaseTenantsFn).toHaveBeenCalled();
     expect(getInsurancesFn).toHaveBeenCalled();
     expect(getSecurityDepositsFn).toHaveBeenCalled();
-    expect(getLeaseTermFn).toHaveBeenCalled();
+    expect(getLeasePeriodFn).toHaveBeenCalled();
     expect(getPropertyLeasesFn).toHaveBeenCalled();
     expect(getApiLeaseFn).toHaveBeenCalled();
   });
@@ -191,7 +191,7 @@ describe('useGenerateLicenceOfOccupation functions', () => {
     expect(getLeaseTenantsFn).toHaveBeenCalled();
     expect(getInsurancesFn).toHaveBeenCalled();
     expect(getSecurityDepositsFn).toHaveBeenCalled();
-    expect(getLeaseTermFn).toHaveBeenCalled();
+    expect(getLeasePeriodFn).toHaveBeenCalled();
     expect(getPropertyLeasesFn).toHaveBeenCalled();
     expect(getApiLeaseFn).toHaveBeenCalled();
   });
@@ -219,7 +219,7 @@ describe('useGenerateLicenceOfOccupation functions', () => {
     expect(getLeaseTenantsFn).toHaveBeenCalled();
     expect(getInsurancesFn).toHaveBeenCalled();
     expect(getSecurityDepositsFn).toHaveBeenCalled();
-    expect(getLeaseTermFn).toHaveBeenCalled();
+    expect(getLeasePeriodFn).toHaveBeenCalled();
     expect(getPropertyLeasesFn).toHaveBeenCalled();
     expect(getApiLeaseFn).toHaveBeenCalled();
   });

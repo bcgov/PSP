@@ -189,7 +189,7 @@ export const TableHeadFields = styled(InlineFlexDiv)`
   }
 `;
 
-export const TermsTable = styled(Table)`
+export const PeriodsTable = styled(Table)`
   background-color: white;
   padding-left: 8rem;
   &.table .thead .th {
