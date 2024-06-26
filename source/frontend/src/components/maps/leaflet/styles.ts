@@ -23,6 +23,10 @@ export const MapContainer = styled.div`
       font-size: 1.1rem;
     }
 
+    a {
+      text-decoration: none;
+    }
+
     .leaflet-popup-content-wrapper {
       border-radius: 0;
     }

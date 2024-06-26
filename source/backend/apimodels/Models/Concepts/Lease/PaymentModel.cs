@@ -16,9 +16,9 @@ namespace Pims.Api.Models.Concepts.Lease
         public long? Id { get; set; }
 
         /// <summary>
-        /// get/set - The primary key to identify the associated lease term.
+        /// get/set - The primary key to identify the associated lease period.
         /// </summary>
-        public long LeaseTermId { get; set; }
+        public long LeasePeriodId { get; set; }
 
         /// <summary>
         /// get/set - The payment method, such as cheque, transfer.

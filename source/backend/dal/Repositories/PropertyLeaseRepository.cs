@@ -47,7 +47,7 @@ namespace Pims.Dal.Repositories
                 .Include(pl => pl.Lease)
                     .ThenInclude(l => l.LeaseStatusTypeCodeNavigation)
                 .Include(pl => pl.Lease)
-                    .ThenInclude(l => l.PimsLeaseTerms)
+                    .ThenInclude(l => l.PimsLeasePeriods)
                 .Where(p => p.PropertyId == propertyId);
         }
 

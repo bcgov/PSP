@@ -90,7 +90,7 @@ namespace Pims.Api.Controllers
                 var leasePurposeTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllLeasePurposeTypes());
                 var leaseResponsibilityTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllLeaseResponsibilityTypes());
                 var leaseStatusTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllLeaseStatusTypes());
-                var leaseTermStatusTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllLeaseTermStatusTypes());
+                var leasePeriodStatusTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllLeasePeriodStatusTypes());
                 var leaseTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllLeaseTypes());
                 var organizationTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllOrganizationTypes());
                 var propertyImprovementTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllPropertyImprovementTypes());
@@ -167,7 +167,7 @@ namespace Pims.Api.Controllers
                 codes.AddRange(leasePurposeTypes);
                 codes.AddRange(leaseResponsibilityTypes);
                 codes.AddRange(leaseStatusTypes);
-                codes.AddRange(leaseTermStatusTypes);
+                codes.AddRange(leasePeriodStatusTypes);
                 codes.AddRange(leaseTypes);
                 codes.AddRange(organizationTypes);
                 codes.AddRange(propertyImprovementTypes);

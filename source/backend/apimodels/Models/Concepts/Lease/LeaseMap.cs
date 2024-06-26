@@ -16,7 +16,7 @@ namespace Pims.Api.Models.Concepts.Lease
                 .Map(dest => dest.Id, src => src.LeaseId)
                 .Map(dest => dest.RowVersion, src => src.ConcurrencyControlNumber)
                 .Map(dest => dest.Amount, src => src.LeaseAmount)
-                .Map(dest => dest.RenewalCount, src => src.PimsLeaseTerms.Count)
+                .Map(dest => dest.RenewalCount, src => src.PimsLeasePeriods.Count)
                 .Map(dest => dest.FileProperties, src => src.PimsPropertyLeases)
                 .Map(dest => dest.LFileNo, src => src.LFileNo)
                 .Map(dest => dest.TfaFileNumber, src => src.TfaFileNumber)
@@ -57,7 +57,7 @@ namespace Pims.Api.Models.Concepts.Lease
                 .Map(dest => dest.Project, src => src.Project)
                 .Map(dest => dest.Tenants, src => src.PimsLeaseTenants)
                 .Map(dest => dest.FileChecklistItems, src => src.PimsLeaseChecklistItems)
-                .Map(dest => dest.Terms, src => src.PimsLeaseTerms);
+                .Map(dest => dest.Periods, src => src.PimsLeasePeriods);
 
             config.NewConfig<LeaseModel, PimsLease>()
                 .PreserveReference(true)

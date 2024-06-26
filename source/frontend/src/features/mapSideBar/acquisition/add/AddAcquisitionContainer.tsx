@@ -180,7 +180,6 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
           width="2.6rem"
           height="2.6rem"
           fill="currentColor"
-          className="mr-2"
         />
       }
       onClose={cancelFunc}
