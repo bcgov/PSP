@@ -72,7 +72,7 @@ const ProjectContainerView: React.FC<IProjectContainerViewProps> = ({
       showCloseButton
       onClose={close}
       title={viewTitle}
-      icon={<FaBriefcase className="mr-2 mb-2" size={32} />}
+      icon={<FaBriefcase size={26} />}
       header={<ProjectHeader project={project} />}
       footer={
         isEditing && (

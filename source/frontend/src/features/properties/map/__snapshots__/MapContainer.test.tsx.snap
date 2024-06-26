@@ -229,6 +229,11 @@ exports[`MapContainer > Renders the map 1`] = `
   font-size: 1.1rem;
 }
 
+.c3 .leaflet-container a {
+  -webkit-text-decoration: none;
+  text-decoration: none;
+}
+
 .c3 .leaflet-container .leaflet-popup-content-wrapper {
   border-radius: 0;
 }
@@ -336,13 +341,13 @@ exports[`MapContainer > Renders the map 1`] = `
   -webkit-flex-flow: column;
   -ms-flex-flow: column;
   flex-flow: column;
-  min-width: 93rem;
-  margin-left: -93rem;
-  padding: 1.6rem;
   overflow: hidden;
   -webkit-transition: 1s;
   transition: 1s;
-  width: 0;
+  min-width: 0rem;
+  max-width: 0rem;
+  width: 0rem;
+  padding: 0;
 }
 
 .c1 h1 {
