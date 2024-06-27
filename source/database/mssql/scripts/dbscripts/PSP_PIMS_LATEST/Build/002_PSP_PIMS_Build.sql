@@ -954,6 +954,26 @@ CREATE SEQUENCE [dbo].[PIMS_FILE_ENTITY_PERMISSIONS_ID_SEQ]
 	CACHE 50
 GO
 
+CREATE SEQUENCE [dbo].[PIMS_FILE_NUMBER_H_ID_SEQ]
+	AS bigint
+	START WITH 1
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 2147483647
+	NO CYCLE
+	CACHE 50
+GO
+
+CREATE SEQUENCE [dbo].[PIMS_FILE_NUMBER_ID_SEQ]
+	AS bigint
+	START WITH 1
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 2147483647
+	NO CYCLE
+	CACHE 50
+GO
+
 CREATE SEQUENCE [dbo].[PIMS_FINANCIAL_ACTIVITY_CODE_H_ID_SEQ]
 	AS bigint
 	START WITH 1
@@ -10083,6 +10103,249 @@ EXEC sp_addextendedproperty
 	@level1type = N'Table', @level1name = N'PIMS_FENCE_TYPE'
 GO
 
+CREATE TABLE [dbo].[PIMS_FILE_NUMBER_TYPE]  ( 
+	[FILE_NUMBER_TYPE_CODE]     	nvarchar(20) NOT NULL,
+	[DESCRIPTION]               	nvarchar(200) NOT NULL,
+	[IS_DISABLED]               	bit NOT NULL CONSTRAINT [FLNMTY_IS_DISABLED_DEF]  DEFAULT (CONVERT([bit],(0))),
+	[DISPLAY_ORDER]             	int NULL,
+	[CONCURRENCY_CONTROL_NUMBER]	bigint NOT NULL CONSTRAINT [FLNMTY_CONCURRENCY_CONTROL_NUMBER_DEF]  DEFAULT ((1)),
+	[DB_CREATE_TIMESTAMP]       	datetime NOT NULL CONSTRAINT [FLNMTY_DB_CREATE_TIMESTAMP_DEF]  DEFAULT (getutcdate()),
+	[DB_CREATE_USERID]          	nvarchar(30) NOT NULL CONSTRAINT [FLNMTY_DB_CREATE_USERID_DEF]  DEFAULT (user_name()),
+	[DB_LAST_UPDATE_TIMESTAMP]  	datetime NOT NULL CONSTRAINT [FLNMTY_DB_LAST_UPDATE_TIMESTAMP_DEF]  DEFAULT (getutcdate()),
+	[DB_LAST_UPDATE_USERID]     	nvarchar(30) NOT NULL CONSTRAINT [FLNMTY_DB_LAST_UPDATE_USERID_DEF]  DEFAULT (user_name()),
+	CONSTRAINT [FLNMTY_PK] PRIMARY KEY CLUSTERED([FILE_NUMBER_TYPE_CODE])
+)
+GO
+EXEC sp_addextendedproperty 
+	@name = N'MS_Description', @value = N'Code representing the type of file number.' , 
+	@level0type = N'Schema', @level0name = N'dbo', 
+	@level1type = N'Table', @level1name = N'PIMS_FILE_NUMBER_TYPE', 
+	@level2type = N'Column', @level2name = N'FILE_NUMBER_TYPE_CODE'
+GO
+EXEC sp_addextendedproperty 
+	@name = N'MS_Description', @value = N'Description of the type of file number.' , 
+	@level0type = N'Schema', @level0name = N'dbo', 
+	@level1type = N'Table', @level1name = N'PIMS_FILE_NUMBER_TYPE', 
+	@level2type = N'Column', @level2name = N'DESCRIPTION'
+GO
+EXEC sp_addextendedproperty 
+	@name = N'MS_Description', @value = N'Indicates if the code is disabled.' , 
+	@level0type = N'Schema', @level0name = N'dbo', 
+	@level1type = N'Table', @level1name = N'PIMS_FILE_NUMBER_TYPE', 
+	@level2type = N'Column', @level2name = N'IS_DISABLED'
+GO
+EXEC sp_addextendedproperty 
+	@name = N'MS_Description', @value = N'Force the display order of the codes.' , 
+	@level0type = N'Schema', @level0name = N'dbo', 
+	@level1type = N'Table', @level1name = N'PIMS_FILE_NUMBER_TYPE', 
+	@level2type = N'Column', @level2name = N'DISPLAY_ORDER'
+GO
+EXEC sp_addextendedproperty 
+	@name = N'MS_Description', @value = N'Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o' , 
+	@level0type = N'Schema', @level0name = N'dbo', 
+	@level1type = N'Table', @level1name = N'PIMS_FILE_NUMBER_TYPE', 
+	@level2type = N'Column', @level2name = N'CONCURRENCY_CONTROL_NUMBER'
+GO
+EXEC sp_addextendedproperty 
+	@name = N'MS_Description', @value = N'The date and time the record was created.' , 
+	@level0type = N'Schema', @level0name = N'dbo', 
+	@level1type = N'Table', @level1name = N'PIMS_FILE_NUMBER_TYPE', 
+	@level2type = N'Column', @level2name = N'DB_CREATE_TIMESTAMP'
+GO
+EXEC sp_addextendedproperty 
+	@name = N'MS_Description', @value = N'The user or proxy account that created the record.' , 
+	@level0type = N'Schema', @level0name = N'dbo', 
+	@level1type = N'Table', @level1name = N'PIMS_FILE_NUMBER_TYPE', 
+	@level2type = N'Column', @level2name = N'DB_CREATE_USERID'
+GO
+EXEC sp_addextendedproperty 
+	@name = N'MS_Description', @value = N'The date and time the record was created or last updated.' , 
+	@level0type = N'Schema', @level0name = N'dbo', 
+	@level1type = N'Table', @level1name = N'PIMS_FILE_NUMBER_TYPE', 
+	@level2type = N'Column', @level2name = N'DB_LAST_UPDATE_TIMESTAMP'
+GO
+EXEC sp_addextendedproperty 
+	@name = N'MS_Description', @value = N'The user or proxy account that created or last updated the record.' , 
+	@level0type = N'Schema', @level0name = N'dbo', 
+	@level1type = N'Table', @level1name = N'PIMS_FILE_NUMBER_TYPE', 
+	@level2type = N'Column', @level2name = N'DB_LAST_UPDATE_USERID'
+GO
+EXEC sp_addextendedproperty 
+	@name = N'MS_Description', @value = N'Code table to describe the type of property file number.' , 
+	@level0type = N'Schema', @level0name = N'dbo', 
+	@level1type = N'Table', @level1name = N'PIMS_FILE_NUMBER_TYPE'
+GO
+
+CREATE TABLE [dbo].[PIMS_FILE_NUMBER]  ( 
+	[FILE_NUMBER_ID]                	bigint NOT NULL CONSTRAINT [FILNUM_FILE_NUMBER_ID_DEF]  DEFAULT (NEXT VALUE FOR [PIMS_FILE_NUMBER_ID_SEQ]),
+	[PROPERTY_ID]                   	bigint NOT NULL,
+	[FILE_NUMBER_TYPE_CODE]         	nvarchar(20) NOT NULL,
+	[FILE_NUMBER]                   	nvarchar(500) NOT NULL,
+	[OTHER_FILE_NUMBER_TYPE]        	nvarchar(200) NULL,
+	[IS_DISABLED]                   	bit NULL CONSTRAINT [FILNUM_IS_DISABLED_DEF]  DEFAULT (CONVERT([bit],(0))),
+	[CONCURRENCY_CONTROL_NUMBER]    	bigint NOT NULL CONSTRAINT [FILNUM_CONCURRENCY_CONTROL_NUMBER_DEF]  DEFAULT ((1)),
+	[APP_CREATE_TIMESTAMP]          	datetime NOT NULL CONSTRAINT [FILNUM_APP_CREATE_TIMESTAMP_DEF]  DEFAULT (getutcdate()),
+	[APP_CREATE_USERID]             	nvarchar(30) NOT NULL CONSTRAINT [FILNUM_APP_CREATE_USERID_DEF]  DEFAULT (user_name()),
+	[APP_CREATE_USER_GUID]          	uniqueidentifier NULL,
+	[APP_CREATE_USER_DIRECTORY]     	nvarchar(30) NOT NULL CONSTRAINT [FILNUM_APP_CREATE_USER_DIRECTORY_DEF]  DEFAULT (user_name()),
+	[APP_LAST_UPDATE_TIMESTAMP]     	datetime NOT NULL CONSTRAINT [FILNUM_APP_LAST_UPDATE_TIMESTAMP_DEF]  DEFAULT (getutcdate()),
+	[APP_LAST_UPDATE_USERID]        	nvarchar(30) NOT NULL CONSTRAINT [FILNUM_APP_LAST_UPDATE_USERID_DEF]  DEFAULT (user_name()),
+	[APP_LAST_UPDATE_USER_GUID]     	uniqueidentifier NULL,
+	[APP_LAST_UPDATE_USER_DIRECTORY]	nvarchar(30) NOT NULL CONSTRAINT [FILNUM_APP_LAST_UPDATE_USER_DIRECTORY_DEF]  DEFAULT (user_name()),
+	[DB_CREATE_TIMESTAMP]           	datetime NOT NULL CONSTRAINT [FILNUM_DB_CREATE_TIMESTAMP_DEF]  DEFAULT (getutcdate()),
+	[DB_CREATE_USERID]              	nvarchar(30) NOT NULL CONSTRAINT [FILNUM_DB_CREATE_USERID_DEF]  DEFAULT (user_name()),
+	[DB_LAST_UPDATE_TIMESTAMP]      	datetime NOT NULL CONSTRAINT [FILNUM_DB_LAST_UPDATE_TIMESTAMP_DEF]  DEFAULT (getutcdate()),
+	[DB_LAST_UPDATE_USERID]         	nvarchar(30) NOT NULL CONSTRAINT [FILNUM_DB_LAST_UPDATE_USERID_DEF]  DEFAULT (user_name()),
+	CONSTRAINT [FILNUM_PK] PRIMARY KEY CLUSTERED([FILE_NUMBER_ID])
+)
+GO
+EXEC sp_addextendedproperty 
+	@name = N'MS_Description', @value = N'Generated surrogate primary key' , 
+	@level0type = N'Schema', @level0name = N'dbo', 
+	@level1type = N'Table', @level1name = N'PIMS_FILE_NUMBER', 
+	@level2type = N'Column', @level2name = N'FILE_NUMBER_ID'
+GO
+EXEC sp_addextendedproperty 
+	@name = N'MS_Description', @value = N'Foreign key to the PIMS_PROPERTY table.' , 
+	@level0type = N'Schema', @level0name = N'dbo', 
+	@level1type = N'Table', @level1name = N'PIMS_FILE_NUMBER', 
+	@level2type = N'Column', @level2name = N'PROPERTY_ID'
+GO
+EXEC sp_addextendedproperty 
+	@name = N'MS_Description', @value = N'Foreign key describing the file number type.' , 
+	@level0type = N'Schema', @level0name = N'dbo', 
+	@level1type = N'Table', @level1name = N'PIMS_FILE_NUMBER', 
+	@level2type = N'Column', @level2name = N'FILE_NUMBER_TYPE_CODE'
+GO
+EXEC sp_addextendedproperty 
+	@name = N'MS_Description', @value = N'The file number value.' , 
+	@level0type = N'Schema', @level0name = N'dbo', 
+	@level1type = N'Table', @level1name = N'PIMS_FILE_NUMBER', 
+	@level2type = N'Column', @level2name = N'FILE_NUMBER'
+GO
+EXEC sp_addextendedproperty 
+	@name = N'MS_Description', @value = N'Description of file number type that''s not currently listed.' , 
+	@level0type = N'Schema', @level0name = N'dbo', 
+	@level1type = N'Table', @level1name = N'PIMS_FILE_NUMBER', 
+	@level2type = N'Column', @level2name = N'OTHER_FILE_NUMBER_TYPE'
+GO
+EXEC sp_addextendedproperty 
+	@name = N'MS_Description', @value = N'Indicates if the record is disabled.' , 
+	@level0type = N'Schema', @level0name = N'dbo', 
+	@level1type = N'Table', @level1name = N'PIMS_FILE_NUMBER', 
+	@level2type = N'Column', @level2name = N'IS_DISABLED'
+GO
+EXEC sp_addextendedproperty 
+	@name = N'MS_Description', @value = N'Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o' , 
+	@level0type = N'Schema', @level0name = N'dbo', 
+	@level1type = N'Table', @level1name = N'PIMS_FILE_NUMBER', 
+	@level2type = N'Column', @level2name = N'CONCURRENCY_CONTROL_NUMBER'
+GO
+EXEC sp_addextendedproperty 
+	@name = N'MS_Description', @value = N'The date and time the user created the record.' , 
+	@level0type = N'Schema', @level0name = N'dbo', 
+	@level1type = N'Table', @level1name = N'PIMS_FILE_NUMBER', 
+	@level2type = N'Column', @level2name = N'APP_CREATE_TIMESTAMP'
+GO
+EXEC sp_addextendedproperty 
+	@name = N'MS_Description', @value = N'The user account that created the record.' , 
+	@level0type = N'Schema', @level0name = N'dbo', 
+	@level1type = N'Table', @level1name = N'PIMS_FILE_NUMBER', 
+	@level2type = N'Column', @level2name = N'APP_CREATE_USERID'
+GO
+EXEC sp_addextendedproperty 
+	@name = N'MS_Description', @value = N'The GUID of the user account that created the record.' , 
+	@level0type = N'Schema', @level0name = N'dbo', 
+	@level1type = N'Table', @level1name = N'PIMS_FILE_NUMBER', 
+	@level2type = N'Column', @level2name = N'APP_CREATE_USER_GUID'
+GO
+EXEC sp_addextendedproperty 
+	@name = N'MS_Description', @value = N'The directory of the user account that created the record.' , 
+	@level0type = N'Schema', @level0name = N'dbo', 
+	@level1type = N'Table', @level1name = N'PIMS_FILE_NUMBER', 
+	@level2type = N'Column', @level2name = N'APP_CREATE_USER_DIRECTORY'
+GO
+EXEC sp_addextendedproperty 
+	@name = N'MS_Description', @value = N'The date and time the user updated the record.' , 
+	@level0type = N'Schema', @level0name = N'dbo', 
+	@level1type = N'Table', @level1name = N'PIMS_FILE_NUMBER', 
+	@level2type = N'Column', @level2name = N'APP_LAST_UPDATE_TIMESTAMP'
+GO
+EXEC sp_addextendedproperty 
+	@name = N'MS_Description', @value = N'The user account that updated the record.' , 
+	@level0type = N'Schema', @level0name = N'dbo', 
+	@level1type = N'Table', @level1name = N'PIMS_FILE_NUMBER', 
+	@level2type = N'Column', @level2name = N'APP_LAST_UPDATE_USERID'
+GO
+EXEC sp_addextendedproperty 
+	@name = N'MS_Description', @value = N'The GUID of the user account that updated the record.' , 
+	@level0type = N'Schema', @level0name = N'dbo', 
+	@level1type = N'Table', @level1name = N'PIMS_FILE_NUMBER', 
+	@level2type = N'Column', @level2name = N'APP_LAST_UPDATE_USER_GUID'
+GO
+EXEC sp_addextendedproperty 
+	@name = N'MS_Description', @value = N'The directory of the user account that updated the record.' , 
+	@level0type = N'Schema', @level0name = N'dbo', 
+	@level1type = N'Table', @level1name = N'PIMS_FILE_NUMBER', 
+	@level2type = N'Column', @level2name = N'APP_LAST_UPDATE_USER_DIRECTORY'
+GO
+EXEC sp_addextendedproperty 
+	@name = N'MS_Description', @value = N'The date and time the record was created.' , 
+	@level0type = N'Schema', @level0name = N'dbo', 
+	@level1type = N'Table', @level1name = N'PIMS_FILE_NUMBER', 
+	@level2type = N'Column', @level2name = N'DB_CREATE_TIMESTAMP'
+GO
+EXEC sp_addextendedproperty 
+	@name = N'MS_Description', @value = N'The user or proxy account that created the record.' , 
+	@level0type = N'Schema', @level0name = N'dbo', 
+	@level1type = N'Table', @level1name = N'PIMS_FILE_NUMBER', 
+	@level2type = N'Column', @level2name = N'DB_CREATE_USERID'
+GO
+EXEC sp_addextendedproperty 
+	@name = N'MS_Description', @value = N'The date and time the record was created or last updated.' , 
+	@level0type = N'Schema', @level0name = N'dbo', 
+	@level1type = N'Table', @level1name = N'PIMS_FILE_NUMBER', 
+	@level2type = N'Column', @level2name = N'DB_LAST_UPDATE_TIMESTAMP'
+GO
+EXEC sp_addextendedproperty 
+	@name = N'MS_Description', @value = N'The user or proxy account that created or last updated the record.' , 
+	@level0type = N'Schema', @level0name = N'dbo', 
+	@level1type = N'Table', @level1name = N'PIMS_FILE_NUMBER', 
+	@level2type = N'Column', @level2name = N'DB_LAST_UPDATE_USERID'
+GO
+EXEC sp_addextendedproperty 
+	@name = N'MS_Description', @value = N'Table containing the file numbers associated with a property.' , 
+	@level0type = N'Schema', @level0name = N'dbo', 
+	@level1type = N'Table', @level1name = N'PIMS_FILE_NUMBER'
+GO
+
+CREATE TABLE [dbo].[PIMS_FILE_NUMBER_HIST]  ( 
+	[_FILE_NUMBER_HIST_ID]          	bigint NOT NULL DEFAULT (NEXT VALUE FOR [PIMS_FILE_NUMBER_H_ID_SEQ]),
+	[EFFECTIVE_DATE_HIST]           	datetime NOT NULL DEFAULT (getutcdate()),
+	[END_DATE_HIST]                 	datetime NULL,
+	[FILE_NUMBER_ID]                	bigint NOT NULL,
+	[PROPERTY_ID]                   	bigint NOT NULL,
+	[FILE_NUMBER_TYPE_CODE]         	nvarchar(20) NOT NULL,
+	[FILE_NUMBER]                   	nvarchar(500) NOT NULL,
+	[OTHER_FILE_NUMBER_TYPE]        	nvarchar(200) NULL,
+	[IS_DISABLED]                   	bit NULL,
+	[CONCURRENCY_CONTROL_NUMBER]    	bigint NOT NULL,
+	[APP_CREATE_TIMESTAMP]          	datetime NOT NULL,
+	[APP_CREATE_USERID]             	nvarchar(30) NOT NULL,
+	[APP_CREATE_USER_GUID]          	uniqueidentifier NULL,
+	[APP_CREATE_USER_DIRECTORY]     	nvarchar(30) NOT NULL,
+	[APP_LAST_UPDATE_TIMESTAMP]     	datetime NOT NULL,
+	[APP_LAST_UPDATE_USERID]        	nvarchar(30) NOT NULL,
+	[APP_LAST_UPDATE_USER_GUID]     	uniqueidentifier NULL,
+	[APP_LAST_UPDATE_USER_DIRECTORY]	nvarchar(30) NOT NULL,
+	[DB_CREATE_TIMESTAMP]           	datetime NOT NULL,
+	[DB_CREATE_USERID]              	nvarchar(30) NOT NULL,
+	[DB_LAST_UPDATE_TIMESTAMP]      	datetime NOT NULL,
+	[DB_LAST_UPDATE_USERID]         	nvarchar(30) NOT NULL,
+	CONSTRAINT [PIMS_FILNUM_H_PK] PRIMARY KEY CLUSTERED([_FILE_NUMBER_HIST_ID])
+)
+GO
+
 CREATE TABLE [dbo].[PIMS_FINANCIAL_ACTIVITY_CODE_HIST]  ( 
 	[_FINANCIAL_ACTIVITY_CODE_HIST_ID]	bigint NOT NULL DEFAULT (NEXT VALUE FOR [PIMS_FINANCIAL_ACTIVITY_CODE_H_ID_SEQ]),
 	[EFFECTIVE_DATE_HIST]             	datetime NOT NULL DEFAULT (getutcdate()),
@@ -17485,6 +17748,14 @@ CREATE NONCLUSTERED INDEX [EXPPMT_INTEREST_HOLDER_ID_IDX]
 	ON [dbo].[PIMS_EXPROPRIATION_PAYMENT]([INTEREST_HOLDER_ID])
 GO
 
+CREATE NONCLUSTERED INDEX [FILNUM_FILE_NUMBER_IDX]
+	ON [dbo].[PIMS_FILE_NUMBER]([FILE_NUMBER])
+GO
+
+CREATE NONCLUSTERED INDEX [FILNUM_PROPERTY_ID_IDX]
+	ON [dbo].[PIMS_FILE_NUMBER]([PROPERTY_ID])
+GO
+
 CREATE NONCLUSTERED INDEX [FINACT_CODE_IDX]
 	ON [dbo].[PIMS_FINANCIAL_ACTIVITY_CODE]([CODE])
 GO
@@ -18291,10 +18562,82 @@ BEGIN TRY
       "APP_LAST_UPDATE_USERID",
       "APP_LAST_UPDATE_USER_GUID",
       "APP_LAST_UPDATE_USER_DIRECTORY")
-    select "ACQUISITION_FILE_FORM_ID",
-      "ACQUISITION_FILE_ID",
-      "FORM_TYPE_CODE",
-      "FORM_JSON",
+    select "PROPERTY_IMPROVEMENT_ID",
+      "LEASE_ID",
+      "PROPERTY_IMPROVEMENT_TYPE_CODE",
+      "IMPROVEMENT_DESCRIPTION",
+      "STRUCTURE_SIZE",
+      "ADDRESS",
+      "CONCURRENCY_CONTROL_NUMBER",
+      "APP_CREATE_TIMESTAMP",
+      "APP_CREATE_USERID",
+      "APP_CREATE_USER_GUID",
+      "APP_CREATE_USER_DIRECTORY",
+      "APP_LAST_UPDATE_TIMESTAMP",
+      "APP_LAST_UPDATE_USERID",
+      "APP_LAST_UPDATE_USER_GUID",
+      "APP_LAST_UPDATE_USER_DIRECTORY"
+    from inserted;
+
+END TRY
+BEGIN CATCH
+   IF @@trancount > 0 ROLLBACK TRANSACTION
+   EXEC pims_error_handling
+END CATCH;
+GO
+
+CREATE TRIGGER [dbo].[PIMS_ACQNFL_I_S_I_TR] ON PIMS_ACQUISITION_FILE INSTEAD OF INSERT AS
+SET NOCOUNT ON
+BEGIN TRY
+  IF NOT EXISTS(SELECT * FROM inserted) 
+    RETURN;
+
+  
+  insert into PIMS_ACQUISITION_FILE ("ACQUISITION_FILE_ID",
+      "PROJECT_ID",
+      "PRODUCT_ID",
+      "ACQUISITION_FILE_STATUS_TYPE_CODE",
+      "ACQUISITION_TYPE_CODE",
+      "ACQUISITION_FUNDING_TYPE_CODE",
+      "ACQ_PHYS_FILE_STATUS_TYPE_CODE",
+      "REGION_CODE",
+      "FILE_NAME",
+      "FILE_NO",
+      "FILE_NUMBER",
+      "LEGACY_FILE_NUMBER",
+      "LEGACY_STAKEHOLDER",
+      "FUNDING_OTHER",
+      "ASSIGNED_DATE",
+      "DELIVERY_DATE",
+      "PAIMS_ACQUISITION_FILE_ID",
+      "TOTAL_ALLOWABLE_COMPENSATION",
+      "CONCURRENCY_CONTROL_NUMBER",
+      "APP_CREATE_TIMESTAMP",
+      "APP_CREATE_USERID",
+      "APP_CREATE_USER_GUID",
+      "APP_CREATE_USER_DIRECTORY",
+      "APP_LAST_UPDATE_TIMESTAMP",
+      "APP_LAST_UPDATE_USERID",
+      "APP_LAST_UPDATE_USER_GUID",
+      "APP_LAST_UPDATE_USER_DIRECTORY")
+    select "ACQUISITION_FILE_ID",
+      "PROJECT_ID",
+      "PRODUCT_ID",
+      "ACQUISITION_FILE_STATUS_TYPE_CODE",
+      "ACQUISITION_TYPE_CODE",
+      "ACQUISITION_FUNDING_TYPE_CODE",
+      "ACQ_PHYS_FILE_STATUS_TYPE_CODE",
+      "REGION_CODE",
+      "FILE_NAME",
+      "FILE_NO",
+      "FILE_NUMBER",
+      "LEGACY_FILE_NUMBER",
+      "LEGACY_STAKEHOLDER",
+      "FUNDING_OTHER",
+      "ASSIGNED_DATE",
+      "DELIVERY_DATE",
+      "PAIMS_ACQUISITION_FILE_ID",
+      "TOTAL_ALLOWABLE_COMPENSATION",
       "CONCURRENCY_CONTROL_NUMBER",
       "APP_CREATE_TIMESTAMP",
       "APP_CREATE_USERID",
@@ -18481,11 +18824,8 @@ BEGIN TRY
       "HISTORICAL_FILE_NUMBER" = inserted."HISTORICAL_FILE_NUMBER",
       "OTHER_HIST_FILE_NUMBER_TYPE_CODE" = inserted."OTHER_HIST_FILE_NUMBER_TYPE_CODE",
       "IS_DISABLED" = inserted."IS_DISABLED",
-      "CONCURRENCY_CONTROL_NUMBER" = inserted."CONCURRENCY_CONTROL_NUMBER",
-      "APP_LAST_UPDATE_TIMESTAMP" = inserted."APP_LAST_UPDATE_TIMESTAMP",
-      "APP_LAST_UPDATE_USERID" = inserted."APP_LAST_UPDATE_USERID",
-      "APP_LAST_UPDATE_USER_GUID" = inserted."APP_LAST_UPDATE_USER_GUID",
-      "APP_LAST_UPDATE_USER_DIRECTORY" = inserted."APP_LAST_UPDATE_USER_DIRECTORY"
+      "DISPLAY_ORDER" = inserted."DISPLAY_ORDER",
+      "CONCURRENCY_CONTROL_NUMBER" = inserted."CONCURRENCY_CONTROL_NUMBER"
     , DB_LAST_UPDATE_TIMESTAMP = getutcdate()
     , DB_LAST_UPDATE_USERID = user_name()
     from PIMS_HISTORICAL_FILE_NUMBER
@@ -21897,9 +22237,9 @@ BEGIN TRY
       "APP_CREATE_USERID",
       "APP_CREATE_USER_GUID",
       "APP_CREATE_USER_DIRECTORY",
-      "APP_LAST_UPDATE_TIMESTAMP",
-      "APP_LAST_UPDATE_USERID",
       "APP_LAST_UPDATE_USER_GUID",
+      "APP_LAST_UPDATE_USERID",
+      "APP_LAST_UPDATE_TIMESTAMP",
       "APP_LAST_UPDATE_USER_DIRECTORY")
     select "ROLE_CLAIM_ID",
       "ROLE_ID",
@@ -21910,9 +22250,9 @@ BEGIN TRY
       "APP_CREATE_USERID",
       "APP_CREATE_USER_GUID",
       "APP_CREATE_USER_DIRECTORY",
-      "APP_LAST_UPDATE_TIMESTAMP",
-      "APP_LAST_UPDATE_USERID",
       "APP_LAST_UPDATE_USER_GUID",
+      "APP_LAST_UPDATE_USERID",
+      "APP_LAST_UPDATE_TIMESTAMP",
       "APP_LAST_UPDATE_USER_DIRECTORY"
     from inserted;
 
@@ -22973,13 +23313,13 @@ BEGIN TRY
   
   insert into PIMS_SURVEY_PLAN_TYPE ("SURVEY_PLAN_TYPE_CODE",
       "DESCRIPTION",
-      "IS_DISABLED",
       "DISPLAY_ORDER",
+      "IS_DISABLED",
       "CONCURRENCY_CONTROL_NUMBER")
     select "SURVEY_PLAN_TYPE_CODE",
       "DESCRIPTION",
-      "IS_DISABLED",
       "DISPLAY_ORDER",
+      "IS_DISABLED",
       "CONCURRENCY_CONTROL_NUMBER"
     from inserted;
 
@@ -25741,19 +26081,19 @@ BEGIN CATCH
 END CATCH;
 GO
 
-CREATE TRIGGER [dbo].[PIMS_FINACT_I_S_I_TR] ON PIMS_FINANCIAL_ACTIVITY_CODE INSTEAD OF INSERT AS
+CREATE TRIGGER [dbo].[PIMS_FILNUM_I_S_I_TR] ON PIMS_FILE_NUMBER INSTEAD OF INSERT AS
 SET NOCOUNT ON
 BEGIN TRY
   IF NOT EXISTS(SELECT * FROM inserted) 
     RETURN;
 
   
-  insert into PIMS_FINANCIAL_ACTIVITY_CODE ("ID",
-      "CODE",
-      "DESCRIPTION",
-      "DISPLAY_ORDER",
-      "EFFECTIVE_DATE",
-      "EXPIRY_DATE",
+  insert into PIMS_FILE_NUMBER ("FILE_NUMBER_ID",
+      "PROPERTY_ID",
+      "FILE_NUMBER_TYPE_CODE",
+      "FILE_NUMBER",
+      "OTHER_FILE_NUMBER_TYPE",
+      "IS_DISABLED",
       "CONCURRENCY_CONTROL_NUMBER",
       "APP_CREATE_TIMESTAMP",
       "APP_CREATE_USERID",
@@ -25763,12 +26103,12 @@ BEGIN TRY
       "APP_LAST_UPDATE_USERID",
       "APP_LAST_UPDATE_USER_GUID",
       "APP_LAST_UPDATE_USER_DIRECTORY")
-    select "ID",
-      "CODE",
-      "DESCRIPTION",
-      "DISPLAY_ORDER",
-      "EFFECTIVE_DATE",
-      "EXPIRY_DATE",
+    select "FILE_NUMBER_ID",
+      "PROPERTY_ID",
+      "FILE_NUMBER_TYPE_CODE",
+      "FILE_NUMBER",
+      "OTHER_FILE_NUMBER_TYPE",
+      "IS_DISABLED",
       "CONCURRENCY_CONTROL_NUMBER",
       "APP_CREATE_TIMESTAMP",
       "APP_CREATE_USERID",
@@ -35015,6 +35355,14 @@ ALTER TABLE [dbo].[PIMS_EXPROP_PMT_PMT_ITEM_HIST]
 	) ON [PRIMARY]
 GO
 
+ALTER TABLE [dbo].[PIMS_FILE_NUMBER_HIST]
+	ADD CONSTRAINT [PIMS_FILNUM_H_UK]
+	UNIQUE ([_FILE_NUMBER_HIST_ID], [END_DATE_HIST]) 
+	WITH (
+		DATA_COMPRESSION = NONE
+	) ON [PRIMARY]
+GO
+
 ALTER TABLE [dbo].[PIMS_FINANCIAL_ACTIVITY_CODE_HIST]
 	ADD CONSTRAINT [PIMS_FINACT_H_UK]
 	UNIQUE ([_FINANCIAL_ACTIVITY_CODE_HIST_ID], [END_DATE_HIST]) 
@@ -36831,6 +37179,22 @@ ALTER TABLE [dbo].[PIMS_EXPROP_PMT_PMT_ITEM]
 	ADD CONSTRAINT [PIM_EXPPMT_PIM_XPMTITY_FK]
 	FOREIGN KEY([EXPROPRIATION_PAYMENT_ID])
 	REFERENCES [dbo].[PIMS_EXPROPRIATION_PAYMENT]([EXPROPRIATION_PAYMENT_ID])
+	ON DELETE NO ACTION 
+	ON UPDATE NO ACTION 
+GO
+
+ALTER TABLE [dbo].[PIMS_FILE_NUMBER]
+	ADD CONSTRAINT [PIM_PRPRTY_PIM_FILNUM_FK]
+	FOREIGN KEY([PROPERTY_ID])
+	REFERENCES [dbo].[PIMS_PROPERTY]([PROPERTY_ID])
+	ON DELETE NO ACTION 
+	ON UPDATE NO ACTION 
+GO
+
+ALTER TABLE [dbo].[PIMS_FILE_NUMBER]
+	ADD CONSTRAINT [PIM_FLNMTY_PIM_FILNUM_FK]
+	FOREIGN KEY([FILE_NUMBER_TYPE_CODE])
+	REFERENCES [dbo].[PIMS_FILE_NUMBER_TYPE]([FILE_NUMBER_TYPE_CODE])
 	ON DELETE NO ACTION 
 	ON UPDATE NO ACTION 
 GO
