@@ -2,10 +2,18 @@
 
 exports[`ContactFilterComponent > matches snapshot 1`] = `
 <DocumentFragment>
-  <div
+  @media only screen and (max-width:1199px) {
+
+}
+
+<div
     class="Toastify"
   />
-  <div />
+  @media only screen and (max-width:1199px) {
+
+}
+
+<div />
   .c9.btn {
   display: -webkit-box;
   display: -webkit-flex;
@@ -249,154 +257,180 @@ exports[`ContactFilterComponent > matches snapshot 1`] = `
   padding: 0.2rem;
 }
 
+@media only screen and (max-width:1199px) {
+  .c0 {
+    max-width: 50%;
+  }
+}
+
 <form
     action="#"
     class="c0"
   >
     <div
-      class="row"
+      class="p-5 row"
     >
       <div
-        class="col-auto"
+        class="pb-5 row"
       >
         <div
-          class="c1 form-group"
+          class="col-auto"
         >
-          <label
-            class="form-label"
-            for="searchBy"
-          >
-            Search by:
-          </label>
           <div
-            class="radio-group"
+            class="c1 form-group"
           >
+            <label
+              class="form-label"
+              for="searchBy"
+            >
+              Search by:
+            </label>
             <div
-              class="c2 pb-3"
+              class="radio-group"
             >
               <div
-                class="form-check"
+                class="c2 pb-3"
               >
-                <input
-                  class="form-check-input position-static"
-                  data-testid="radio-searchby-[object object]"
-                  id="input-organizations"
-                  name="searchBy"
-                  type="radio"
-                  value="organizations"
-                />
-              </div>
-              <label
-                class="form-check-label form-label"
-                for="searchBy"
-              >
-                <svg
-                  fill="currentColor"
-                  height="20"
-                  stroke="currentColor"
-                  stroke-width="0"
-                  viewBox="0 0 448 512"
-                  width="20"
-                  xmlns="http://www.w3.org/2000/svg"
+                <div
+                  class="form-check"
                 >
-                  <path
-                    d="M128 148v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12zm140 12h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm-128 96h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm128 0h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm-76 84v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm76 12h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm180 124v36H0v-36c0-6.6 5.4-12 12-12h19.5V24c0-13.3 10.7-24 24-24h337c13.3 0 24 10.7 24 24v440H436c6.6 0 12 5.4 12 12zM79.5 463H192v-67c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v67h112.5V49L80 48l-.5 415z"
+                  <input
+                    class="form-check-input position-static"
+                    data-testid="radio-searchby-[object object]"
+                    id="input-organizations"
+                    name="searchBy"
+                    type="radio"
+                    value="organizations"
                   />
-                </svg>
-                <span>
-                  Organizations
-                </span>
-              </label>
-            </div>
-            <div
-              class="c2 pb-3"
-            >
+                </div>
+                <label
+                  class="form-check-label form-label"
+                  for="searchBy"
+                >
+                  <svg
+                    fill="currentColor"
+                    height="20"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 448 512"
+                    width="20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M128 148v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12zm140 12h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm-128 96h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm128 0h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm-76 84v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm76 12h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm180 124v36H0v-36c0-6.6 5.4-12 12-12h19.5V24c0-13.3 10.7-24 24-24h337c13.3 0 24 10.7 24 24v440H436c6.6 0 12 5.4 12 12zM79.5 463H192v-67c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v67h112.5V49L80 48l-.5 415z"
+                    />
+                  </svg>
+                  <span>
+                    Organizations
+                  </span>
+                </label>
+              </div>
               <div
-                class="form-check"
+                class="c2 pb-3"
               >
-                <input
-                  class="form-check-input position-static"
-                  data-testid="radio-searchby-[object object]"
-                  id="input-persons"
-                  name="searchBy"
-                  type="radio"
-                  value="persons"
-                />
-              </div>
-              <label
-                class="form-check-label form-label"
-                for="searchBy"
-              >
-                <svg
-                  fill="currentColor"
-                  height="20"
-                  stroke="currentColor"
-                  stroke-width="0"
-                  viewBox="0 0 448 512"
-                  width="20"
-                  xmlns="http://www.w3.org/2000/svg"
+                <div
+                  class="form-check"
                 >
-                  <path
-                    d="M313.6 304c-28.7 0-42.5 16-89.6 16-47.1 0-60.8-16-89.6-16C60.2 304 0 364.2 0 438.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-25.6c0-74.2-60.2-134.4-134.4-134.4zM400 464H48v-25.6c0-47.6 38.8-86.4 86.4-86.4 14.6 0 38.3 16 89.6 16 51.7 0 74.9-16 89.6-16 47.6 0 86.4 38.8 86.4 86.4V464zM224 288c79.5 0 144-64.5 144-144S303.5 0 224 0 80 64.5 80 144s64.5 144 144 144zm0-240c52.9 0 96 43.1 96 96s-43.1 96-96 96-96-43.1-96-96 43.1-96 96-96z"
+                  <input
+                    class="form-check-input position-static"
+                    data-testid="radio-searchby-[object object]"
+                    id="input-persons"
+                    name="searchBy"
+                    type="radio"
+                    value="persons"
                   />
-                </svg>
-                <span>
-                  Individuals
-                </span>
-              </label>
-            </div>
-            <div
-              class="c2 pb-3"
-            >
+                </div>
+                <label
+                  class="form-check-label form-label"
+                  for="searchBy"
+                >
+                  <svg
+                    fill="currentColor"
+                    height="20"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 448 512"
+                    width="20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M313.6 304c-28.7 0-42.5 16-89.6 16-47.1 0-60.8-16-89.6-16C60.2 304 0 364.2 0 438.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-25.6c0-74.2-60.2-134.4-134.4-134.4zM400 464H48v-25.6c0-47.6 38.8-86.4 86.4-86.4 14.6 0 38.3 16 89.6 16 51.7 0 74.9-16 89.6-16 47.6 0 86.4 38.8 86.4 86.4V464zM224 288c79.5 0 144-64.5 144-144S303.5 0 224 0 80 64.5 80 144s64.5 144 144 144zm0-240c52.9 0 96 43.1 96 96s-43.1 96-96 96-96-43.1-96-96 43.1-96 96-96z"
+                    />
+                  </svg>
+                  <span>
+                    Individuals
+                  </span>
+                </label>
+              </div>
               <div
-                class="form-check"
+                class="c2 pb-3"
               >
-                <input
-                  checked=""
-                  class="form-check-input position-static"
-                  data-testid="radio-searchby-[object object]"
-                  id="input-all"
-                  name="searchBy"
-                  type="radio"
-                  value="all"
-                />
+                <div
+                  class="form-check"
+                >
+                  <input
+                    checked=""
+                    class="form-check-input position-static"
+                    data-testid="radio-searchby-[object object]"
+                    id="input-all"
+                    name="searchBy"
+                    type="radio"
+                    value="all"
+                  />
+                </div>
+                <label
+                  class="form-check-label form-label"
+                  for="searchBy"
+                >
+                  <svg
+                    fill="currentColor"
+                    height="20"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 448 512"
+                    width="20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M128 148v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12zm140 12h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm-128 96h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm128 0h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm-76 84v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm76 12h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm180 124v36H0v-36c0-6.6 5.4-12 12-12h19.5V24c0-13.3 10.7-24 24-24h337c13.3 0 24 10.7 24 24v440H436c6.6 0 12 5.4 12 12zM79.5 463H192v-67c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v67h112.5V49L80 48l-.5 415z"
+                    />
+                  </svg>
+                  +
+                  <svg
+                    fill="currentColor"
+                    height="20"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 448 512"
+                    width="20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M313.6 304c-28.7 0-42.5 16-89.6 16-47.1 0-60.8-16-89.6-16C60.2 304 0 364.2 0 438.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-25.6c0-74.2-60.2-134.4-134.4-134.4zM400 464H48v-25.6c0-47.6 38.8-86.4 86.4-86.4 14.6 0 38.3 16 89.6 16 51.7 0 74.9-16 89.6-16 47.6 0 86.4 38.8 86.4 86.4V464zM224 288c79.5 0 144-64.5 144-144S303.5 0 224 0 80 64.5 80 144s64.5 144 144 144zm0-240c52.9 0 96 43.1 96 96s-43.1 96-96 96-96-43.1-96-96 43.1-96 96-96z"
+                    />
+                  </svg>
+                  <span>
+                    All
+                  </span>
+                </label>
               </div>
-              <label
-                class="form-check-label form-label"
-                for="searchBy"
-              >
-                <svg
-                  fill="currentColor"
-                  height="20"
-                  stroke="currentColor"
-                  stroke-width="0"
-                  viewBox="0 0 448 512"
-                  width="20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M128 148v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12zm140 12h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm-128 96h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm128 0h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm-76 84v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm76 12h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm180 124v36H0v-36c0-6.6 5.4-12 12-12h19.5V24c0-13.3 10.7-24 24-24h337c13.3 0 24 10.7 24 24v440H436c6.6 0 12 5.4 12 12zM79.5 463H192v-67c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v67h112.5V49L80 48l-.5 415z"
-                  />
-                </svg>
-                +
-                <svg
-                  fill="currentColor"
-                  height="20"
-                  stroke="currentColor"
-                  stroke-width="0"
-                  viewBox="0 0 448 512"
-                  width="20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M313.6 304c-28.7 0-42.5 16-89.6 16-47.1 0-60.8-16-89.6-16C60.2 304 0 364.2 0 438.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-25.6c0-74.2-60.2-134.4-134.4-134.4zM400 464H48v-25.6c0-47.6 38.8-86.4 86.4-86.4 14.6 0 38.3 16 89.6 16 51.7 0 74.9-16 89.6-16 47.6 0 86.4 38.8 86.4 86.4V464zM224 288c79.5 0 144-64.5 144-144S303.5 0 224 0 80 64.5 80 144s64.5 144 144 144zm0-240c52.9 0 96 43.1 96 96s-43.1 96-96 96-96-43.1-96-96 43.1-96 96-96z"
-                  />
-                </svg>
-                <span>
-                  All
-                </span>
-              </label>
             </div>
+          </div>
+        </div>
+        <div
+          class="pl-0 col-lg-auto"
+        >
+          <div
+            class="c3 c4 input form-group"
+          >
+            <input
+              class="form-control"
+              id="input-summary"
+              name="summary"
+              placeholder="Name of person or organization"
+              title=""
+              value=""
+            />
           </div>
         </div>
       </div>
@@ -404,24 +438,8 @@ exports[`ContactFilterComponent > matches snapshot 1`] = `
         class="col-xl-auto"
       >
         <div
-          class="ml-5 row"
+          class="ml-10 row"
         >
-          <div
-            class="pl-0 col"
-          >
-            <div
-              class="c3 c4 input form-group"
-            >
-              <input
-                class="form-control"
-                id="input-summary"
-                name="summary"
-                placeholder="Name of person or organization"
-                title=""
-                value=""
-              />
-            </div>
-          </div>
           <div
             class="pl-0 col"
           >

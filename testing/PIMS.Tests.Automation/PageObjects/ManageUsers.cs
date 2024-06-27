@@ -5,7 +5,7 @@ namespace PIMS.Tests.Automation.PageObjects
     public class ManageUsers : PageObjectBase
     {
         //Admin Tool Menu Elements
-        private By mainMenuAdminToolLink = By.XPath("//label[contains(text(),'Admin Tools')]/parent::a");
+        private By mainMenuAdminToolLink = By.CssSelector("div[data-testid='nav-tooltip-admintools'] a");
 
         private By adminSubmenuManageUserLink = By.XPath("//a[contains(text(),'Manage Users')]");
 

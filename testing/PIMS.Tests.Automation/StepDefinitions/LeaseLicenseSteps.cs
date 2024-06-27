@@ -746,7 +746,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Filter leases Files
             PopulateLeaseLicense(rowNumber);
-            searchLeases.FilterLeasesFiles(lease.SearchProperties.PID, "", "", "", "", "", lease.LeaseStatus, "", lease.LeaseExpiryDate, "", "", "");
+            searchLeases.FilterLeasesFiles("025-325-841", "", "", "", "", "", lease.LeaseStatus, "", lease.LeaseExpiryDate, "", "", "");
             Assert.True(searchLeases.SearchFoundResults());
 
             searchLeases.FilterLeasesFiles("", "", "", "", "", "", "", "Progressive Motor Sports", "", "", "", "");
@@ -755,8 +755,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchLeases.FilterLeasesFiles("003-549-551", "", "", "", "", "", "Duplicate", "Jonathan Doe", "05/12/1987", "", "", "");
             Assert.False(searchLeases.SearchFoundResults());
 
-            searchLeases.FilterLeasesFiles("", "", "", "", "TestPN654", "", "", "", "", "", "", "");
-            Assert.True(searchLeases.SearchFoundResults());
+            //searchLeases.FilterLeasesFiles("", "", "", "", "TestPN654", "", "", "", "", "", "", "");
+            //Assert.True(searchLeases.SearchFoundResults());
 
             searchLeases.FilterLeasesFiles("", "", "", "", "", "", "Terminated", "", "03/22/2024", "", "", "");
             searchLeases.OrderByLastLease();

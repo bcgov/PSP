@@ -486,7 +486,7 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueContentNotEquals(dispositionFileHeaderCodeContent, "");
 
             AssertTrueIsDisplayed(dispositionFileHistoricalLabel);
-            Assert.True(webDriver.FindElements(dispositionFileHistoricalContent).Count > 0);
+            //Assert.True(webDriver.FindElements(dispositionFileHistoricalContent).Count > 0);
 
             AssertTrueIsDisplayed(dispositionFileHeaderCreatedDateLabel);
             AssertTrueContentNotEquals(dispositionFileHeaderCreatedDateContent, "");

@@ -21,7 +21,7 @@ export interface IPaymentsFormProps {
   isExercised?: boolean;
   isGstEligible?: boolean;
   isReceivable?: boolean;
-  termId?: number;
+  periodId?: number;
 }
 
 export const PaymentsForm: React.FunctionComponent<React.PropsWithChildren<IPaymentsFormProps>> = ({
@@ -32,7 +32,7 @@ export const PaymentsForm: React.FunctionComponent<React.PropsWithChildren<IPaym
   isExercised,
   isGstEligible,
   isReceivable,
-  termId,
+  periodId,
 }) => {
   const formikProps = useFormikContext<LeaseFormModel>();
   const { hasClaim } = useKeycloakWrapper();
@@ -59,7 +59,7 @@ export const PaymentsForm: React.FunctionComponent<React.PropsWithChildren<IPaym
           <b>{isReceivable ? 'Payments Received' : 'Payments Sent'}</b>
           {isExercised && hasClaim(Claims.LEASE_ADD) && (
             <PaymentStyles.AddActualButton
-              onClick={() => onEdit({ ...defaultFormLeasePayment, leaseTermId: termId ?? 0 })}
+              onClick={() => onEdit({ ...defaultFormLeasePayment, leasePeriodId: periodId ?? 0 })}
             >
               Record a Payment
             </PaymentStyles.AddActualButton>
@@ -81,8 +81,8 @@ export const PaymentsForm: React.FunctionComponent<React.PropsWithChildren<IPaym
           </>
         ) : (
           <PaymentStyles.WarningTextBox>
-            {!payments?.length && <p>There are no recorded payments for this term.</p>}
-            {!isExercised && <p>Term must be exercised to add payments.</p>}
+            {!payments?.length && <p>There are no recorded payments for this period.</p>}
+            {!isExercised && <p>Period must be exercised to add payments.</p>}
           </PaymentStyles.WarningTextBox>
         )}
       </Col>

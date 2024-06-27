@@ -11,7 +11,7 @@ namespace Pims.Api.Models.Concepts.Lease
         {
             config.NewConfig<Entity.PimsLeasePayment, PaymentModel>()
                 .Map(dest => dest.Id, src => src.LeasePaymentId)
-                .Map(dest => dest.LeaseTermId, src => src.LeaseTermId)
+                .Map(dest => dest.LeasePeriodId, src => src.LeasePeriodId)
                 .Map(dest => dest.LeasePaymentMethodType, src => src.LeasePaymentMethodTypeCodeNavigation)
                 .Map(dest => dest.LeasePaymentStatusTypeCode, src => src.LeasePaymentStatusTypeCodeNavigation)
                 .Map(dest => dest.AmountGst, src => src.PaymentAmountGst)
@@ -24,7 +24,7 @@ namespace Pims.Api.Models.Concepts.Lease
 
             config.NewConfig<PaymentModel, Entity.PimsLeasePayment>()
                 .Map(dest => dest.LeasePaymentId, src => src.Id)
-                .Map(dest => dest.LeaseTermId, src => src.LeaseTermId)
+                .Map(dest => dest.LeasePeriodId, src => src.LeasePeriodId)
                 .Map(dest => dest.LeasePaymentMethodTypeCode, src => src.LeasePaymentMethodType.Id)
                 .Map(dest => dest.LeasePaymentStatusTypeCode, src => src.LeasePaymentStatusTypeCode.Id)
                 .Map(dest => dest.PaymentAmountGst, src => src.AmountGst)

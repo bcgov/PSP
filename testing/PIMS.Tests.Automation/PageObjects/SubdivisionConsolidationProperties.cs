@@ -135,7 +135,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void SaveSubdivision()
         {
-            WaitUntilClickable(subdivisionPropertiesCreateButton);
+            Wait();
             webDriver.FindElement(subdivisionPropertiesCreateButton).Click();
 
             Wait();
@@ -151,7 +151,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void SaveConsolidation()
         {
-            WaitUntilClickable(consolidationPropertiesCreateButton);
+            Wait();
             webDriver.FindElement(consolidationPropertiesCreateButton).Click();
 
             Wait();
@@ -348,7 +348,7 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueContentEquals(subdivisionParentIdentifier, "PID: " + subdivision.SubdivisionSource.PropertyHistoryIdentifier);
             AssertTrueContentEquals(subdivisionParentPlan, subdivision.SubdivisionSource.PropertyHistoryPlan);
             AssertTrueContentEquals(subdivisionParentStatus, subdivision.SubdivisionSource.PropertyHistoryStatus);
-            AssertTrueElementContains(subdivisionParentArea, TransformNumberFormat(subdivision.SubdivisionSource.PropertyHistoryArea));
+            AssertTrueContentEquals(subdivisionParentArea, TranformSqMtsFormat(subdivision.SubdivisionSource.PropertyHistoryArea));
 
             for (int i = 0; i < subdivision.SubdivisionDestination.Count; i++)
             {
@@ -356,7 +356,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 AssertTrueContentEquals(By.CssSelector("div[data-testid='propertyOperationTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ childElementNbr +") div[role='cell']:nth-child(3) a"), "PID: " + subdivision.SubdivisionDestination[i].PropertyHistoryIdentifier);
                 AssertTrueContentEquals(By.CssSelector("div[data-testid='propertyOperationTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ childElementNbr +") div[role='cell']:nth-child(4)"), subdivision.SubdivisionDestination[i].PropertyHistoryPlan);
                 AssertTrueContentEquals(By.CssSelector("div[data-testid='propertyOperationTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ childElementNbr +") div[role='cell']:nth-child(5)"), subdivision.SubdivisionDestination[i].PropertyHistoryStatus);
-                AssertTrueElementContains(By.CssSelector("div[data-testid='propertyOperationTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ childElementNbr +") div[role='cell']:nth-child(6)"), TransformNumberFormat(subdivision.SubdivisionDestination[i].PropertyHistoryArea));
+                AssertTrueContentEquals(By.CssSelector("div[data-testid='propertyOperationTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ childElementNbr +") div[role='cell']:nth-child(6)"), TranformSqMtsFormat(subdivision.SubdivisionDestination[i].PropertyHistoryArea));
             }  
         }
 
@@ -380,14 +380,14 @@ namespace PIMS.Tests.Automation.PageObjects
                 AssertTrueContentEquals(By.CssSelector("div[data-testid='propertyOperationTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ parentsElementNbr +") div[role='cell']:nth-child(3) a"), "PID: " + consolidation.ConsolidationSource[i].PropertyHistoryIdentifier);
                 AssertTrueContentEquals(By.CssSelector("div[data-testid='propertyOperationTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ parentsElementNbr +") div[role='cell']:nth-child(4)"), consolidation.ConsolidationSource[i].PropertyHistoryPlan);
                 AssertTrueContentEquals(By.CssSelector("div[data-testid='propertyOperationTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ parentsElementNbr +") div[role='cell']:nth-child(5)"), consolidation.ConsolidationSource[i].PropertyHistoryStatus);
-                AssertTrueElementContains(By.CssSelector("div[data-testid='propertyOperationTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ parentsElementNbr +") div[role='cell']:nth-child(6)"), TransformNumberFormat(consolidation.ConsolidationSource[i].PropertyHistoryArea));
+                AssertTrueContentEquals(By.CssSelector("div[data-testid='propertyOperationTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ parentsElementNbr +") div[role='cell']:nth-child(6)"), TranformSqMtsFormat(consolidation.ConsolidationSource[i].PropertyHistoryArea));
             }
 
             var childElement = webDriver.FindElements(subconTableContent).Count;
             AssertTrueContentEquals(By.CssSelector("div[data-testid='propertyOperationTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ childElement +") div[role='cell']:nth-child(3) a"), "PID: " + consolidation.ConsolidationDestination.PropertyHistoryIdentifier);
             AssertTrueContentEquals(By.CssSelector("div[data-testid='propertyOperationTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ childElement +") div[role='cell']:nth-child(4)"), consolidation.ConsolidationDestination.PropertyHistoryPlan);
             AssertTrueContentEquals(By.CssSelector("div[data-testid='propertyOperationTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ childElement +") div[role='cell']:nth-child(5)"), consolidation.ConsolidationDestination.PropertyHistoryStatus);
-            AssertTrueElementContains(By.CssSelector("div[data-testid='propertyOperationTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ childElement +") div[role='cell']:nth-child(6)"), TransformNumberFormat(consolidation.ConsolidationDestination.PropertyHistoryArea));
+            AssertTrueContentEquals(By.CssSelector("div[data-testid='propertyOperationTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ childElement +") div[role='cell']:nth-child(6)"), TranformSqMtsFormat(consolidation.ConsolidationDestination.PropertyHistoryArea));
         }
     }
 }

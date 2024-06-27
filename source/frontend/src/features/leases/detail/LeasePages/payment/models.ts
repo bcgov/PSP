@@ -1,13 +1,13 @@
 import { defaultTypeCode } from '@/interfaces/ITypeCode';
 import { ApiGen_Base_CodeType } from '@/models/api/generated/ApiGen_Base_CodeType';
-import { ApiGen_Concepts_LeaseTerm } from '@/models/api/generated/ApiGen_Concepts_LeaseTerm';
+import { ApiGen_Concepts_LeasePeriod } from '@/models/api/generated/ApiGen_Concepts_LeasePeriod';
 import { ApiGen_Concepts_Payment } from '@/models/api/generated/ApiGen_Concepts_Payment';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { NumberFieldValue } from '@/typings/NumberFieldValue';
 import { isValidIsoDateTime } from '@/utils';
 import { stringToNumber, stringToNumberOrNull } from '@/utils/formUtils';
 
-export class FormLeaseTerm {
+export class FormLeasePeriod {
   id: number | null = null;
   leaseId: number | null = null;
   statusTypeCode: ApiGen_Base_CodeType<string> | null = null;
@@ -26,55 +26,57 @@ export class FormLeaseTerm {
   rowVersion?: number;
 
   public static toApi(
-    formLeaseTerm: FormLeaseTerm,
+    formLeasePeriod: FormLeasePeriod,
     gstConstant?: number,
-  ): ApiGen_Concepts_LeaseTerm {
+  ): ApiGen_Concepts_LeasePeriod {
     return {
-      ...formLeaseTerm,
-      leaseId: formLeaseTerm.leaseId ?? 0,
-      startDate: isValidIsoDateTime(formLeaseTerm.startDate) ? formLeaseTerm.startDate : null,
+      ...formLeasePeriod,
+      leaseId: formLeasePeriod.leaseId ?? 0,
+      startDate: isValidIsoDateTime(formLeasePeriod.startDate) ? formLeasePeriod.startDate : null,
       renewalDate: null,
-      expiryDate: isValidIsoDateTime(formLeaseTerm.expiryDate) ? formLeaseTerm.expiryDate : null,
-      paymentAmount: stringToNumberOrNull(formLeaseTerm.paymentAmount),
+      expiryDate: isValidIsoDateTime(formLeasePeriod.expiryDate)
+        ? formLeasePeriod.expiryDate
+        : null,
+      paymentAmount: stringToNumberOrNull(formLeasePeriod.paymentAmount),
       gstAmount: stringToNumberOrNull(
-        formLeaseTerm.isGstEligible && gstConstant !== undefined
-          ? (formLeaseTerm.paymentAmount as number) * (gstConstant / 100)
+        formLeasePeriod.isGstEligible && gstConstant !== undefined
+          ? (formLeasePeriod.paymentAmount as number) * (gstConstant / 100)
           : null,
       ),
-      leasePmtFreqTypeCode: formLeaseTerm.leasePmtFreqTypeCode?.id
-        ? formLeaseTerm.leasePmtFreqTypeCode
+      leasePmtFreqTypeCode: formLeasePeriod.leasePmtFreqTypeCode?.id
+        ? formLeasePeriod.leasePmtFreqTypeCode
         : null,
-      statusTypeCode: formLeaseTerm.statusTypeCode?.id ? formLeaseTerm.statusTypeCode : null,
-      payments: formLeaseTerm.payments.map(payment => FormLeasePayment.toApi(payment)),
-      isGstEligible: formLeaseTerm.isGstEligible ?? false,
-      isTermExercised: formLeaseTerm.isTermExercised ?? false,
-      ...getEmptyBaseAudit(formLeaseTerm.rowVersion),
+      statusTypeCode: formLeasePeriod.statusTypeCode?.id ? formLeasePeriod.statusTypeCode : null,
+      payments: formLeasePeriod.payments.map(payment => FormLeasePayment.toApi(payment)),
+      isGstEligible: formLeasePeriod.isGstEligible ?? false,
+      isTermExercised: formLeasePeriod.isTermExercised ?? false,
+      ...getEmptyBaseAudit(formLeasePeriod.rowVersion),
     };
   }
 
-  public static fromApi(apiLeaseTerm: ApiGen_Concepts_LeaseTerm): FormLeaseTerm {
+  public static fromApi(apiLeasePeriod: ApiGen_Concepts_LeasePeriod): FormLeasePeriod {
     return {
-      ...apiLeaseTerm,
-      startDate: isValidIsoDateTime(apiLeaseTerm.startDate) ? apiLeaseTerm.startDate : '',
-      expiryDate: isValidIsoDateTime(apiLeaseTerm.expiryDate) ? apiLeaseTerm.expiryDate : '',
-      renewalDate: isValidIsoDateTime(apiLeaseTerm.renewalDate) ? apiLeaseTerm.renewalDate : '',
-      paymentAmount: apiLeaseTerm.paymentAmount ?? '',
-      gstAmount: apiLeaseTerm.gstAmount ?? '',
-      paymentDueDateStr: apiLeaseTerm.paymentDueDateStr ?? '',
-      paymentNote: apiLeaseTerm.paymentNote ?? '',
+      ...apiLeasePeriod,
+      startDate: isValidIsoDateTime(apiLeasePeriod.startDate) ? apiLeasePeriod.startDate : '',
+      expiryDate: isValidIsoDateTime(apiLeasePeriod.expiryDate) ? apiLeasePeriod.expiryDate : '',
+      renewalDate: isValidIsoDateTime(apiLeasePeriod.renewalDate) ? apiLeasePeriod.renewalDate : '',
+      paymentAmount: apiLeasePeriod.paymentAmount ?? '',
+      gstAmount: apiLeasePeriod.gstAmount ?? '',
+      paymentDueDateStr: apiLeasePeriod.paymentDueDateStr ?? '',
+      paymentNote: apiLeasePeriod.paymentNote ?? '',
       payments:
-        apiLeaseTerm.payments?.map((payment: ApiGen_Concepts_Payment) =>
+        apiLeasePeriod.payments?.map((payment: ApiGen_Concepts_Payment) =>
           FormLeasePayment.fromApi(payment),
         ) ?? [],
-      isGstEligible: apiLeaseTerm.isGstEligible ?? undefined,
-      isTermExercised: apiLeaseTerm.isTermExercised ?? undefined,
+      isGstEligible: apiLeasePeriod.isGstEligible ?? undefined,
+      isTermExercised: apiLeasePeriod.isTermExercised ?? undefined,
       effectiveDateHist: null,
-      rowVersion: apiLeaseTerm.rowVersion ?? undefined,
+      rowVersion: apiLeasePeriod.rowVersion ?? undefined,
     };
   }
 }
 
-export const defaultFormLeaseTerm: FormLeaseTerm = {
+export const defaultFormLeasePeriod: FormLeasePeriod = {
   leaseId: 0,
   id: null,
   startDate: '',
@@ -94,7 +96,7 @@ export const defaultFormLeaseTerm: FormLeaseTerm = {
 
 export class FormLeasePayment {
   id?: number;
-  leaseTermId = 0;
+  leasePeriodId = 0;
   leasePaymentMethodType: ApiGen_Base_CodeType<string> | null = null;
   receivedDate = '';
   note?: string;
@@ -125,7 +127,7 @@ export class FormLeasePayment {
   public static fromApi(apiLeasePayment: ApiGen_Concepts_Payment): FormLeasePayment {
     const leasePayment = new FormLeasePayment();
     leasePayment.id = apiLeasePayment.id ?? undefined;
-    leasePayment.leaseTermId = apiLeasePayment.leaseTermId;
+    leasePayment.leasePeriodId = apiLeasePayment.leasePeriodId;
     leasePayment.leasePaymentMethodType = apiLeasePayment.leasePaymentMethodType ?? null;
     leasePayment.receivedDate = isValidIsoDateTime(apiLeasePayment.receivedDate)
       ? apiLeasePayment.receivedDate
@@ -144,7 +146,7 @@ export class FormLeasePayment {
 
 export const defaultFormLeasePayment: FormLeasePayment = {
   id: 0,
-  leaseTermId: 0,
+  leasePeriodId: 0,
   leasePaymentMethodType: defaultTypeCode(),
   receivedDate: '',
   amountPreTax: '',

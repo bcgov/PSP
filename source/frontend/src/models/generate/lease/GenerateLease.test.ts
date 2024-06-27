@@ -2,7 +2,7 @@ import { ContactMethodTypes } from '@/constants/contactMethodType';
 import { ApiGen_Concepts_Insurance } from '@/models/api/generated/ApiGen_Concepts_Insurance';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { ApiGen_Concepts_LeaseTenant } from '@/models/api/generated/ApiGen_Concepts_LeaseTenant';
-import { ApiGen_Concepts_LeaseTerm } from '@/models/api/generated/ApiGen_Concepts_LeaseTerm';
+import { ApiGen_Concepts_LeasePeriod } from '@/models/api/generated/ApiGen_Concepts_LeasePeriod';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { ApiGen_Concepts_PropertyLease } from '@/models/api/generated/ApiGen_Concepts_PropertyLease';
 
@@ -23,8 +23,8 @@ describe('GenerateLease tests', () => {
       [],
       [],
       [
-        { startDate: '2020-01-01' } as ApiGen_Concepts_LeaseTerm,
-        { startDate: '2022-02-02' } as ApiGen_Concepts_LeaseTerm,
+        { startDate: '2020-01-01' } as ApiGen_Concepts_LeasePeriod,
+        { startDate: '2022-02-02' } as ApiGen_Concepts_LeasePeriod,
       ],
     );
     expect(lease.commencement_date).toBe(`January 01, 2020`);

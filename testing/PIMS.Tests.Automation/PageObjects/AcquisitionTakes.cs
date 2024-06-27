@@ -58,7 +58,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By takeLandActAcresInput = By.XPath("//input[@data-testid='radio-isnewlandact-yes']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/div/div/div/div/input[@name='area-acres']");
         private By takeLandActEndDateInput = By.Id("datepicker-landActEndDt");
 
-        private By takeLicenseConstructLabel = By.XPath("//label[contains(text(),'Is there a new License for Construction Access (TLCA/LTC)?')]");
+        private By takeLicenseConstructLabel = By.XPath("//label[contains(text(),'Is there a new Licence for Construction Access (TLCA/LTC)?')]");
         private By takeLicenseConstructRadioBttnGroup = By.CssSelector("input[name='isNewLicenseToConstruct']");
         private By takeLicenseConstructSqMetresInput = By.XPath("//input[@data-testid='radio-isnewlicensetoconstruct-yes']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/div/div/div/div/input[@name='area-sq-meters']");
         private By takeLicenseConstructSqFeetInput = By.XPath("//input[@data-testid='radio-isnewlicensetoconstruct-yes']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/div/div/div/div/input[@name='area-sq-feet']");
@@ -282,7 +282,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 if (sharedModals.ModalContent().Contains("You have created a Lease (Payable) Take"))
                 {
                     Assert.Contains("Follow-up required", sharedModals.ModalHeader());
-                    Assert.Contains("You have created a Lease (Payable) Take. You also need to create a Lease/License File.", sharedModals.ModalContent());
+                    Assert.Contains("You have created a Lease (Payable) Take. You also need to create a Lease/Licence File.", sharedModals.ModalContent());
                 }
                 else
                 {
@@ -487,7 +487,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
 
             //License for Construction
-            AssertTrueIsDisplayed(By.XPath("//div[@data-testid='take-"+ index +"']/div/div/div/div/div/div/div/label[contains(text(),'Is there a new License for Construction Access (TLCA/LTC)')]"));
+            AssertTrueIsDisplayed(By.XPath("//div[@data-testid='take-"+ index +"']/div/div/div/div/div/div/div/label[contains(text(),'Is there a new Licence for Construction Access (TLCA/LTC)?')]"));
             Assert.Equal(2, webDriver.FindElements(By.XPath("//div[@data-testid='take-"+ index +"']/div/div/div/div/div/div/div/div/div/div/div/input[@id='input-licenseToConstructToggle']")).Count);
             if (take.IsLicenseConstruct.Equals("true"))
             {
