@@ -12,6 +12,7 @@ import {
 import * as API from '@/constants/API';
 import { LeasePeriodStatusTypes } from '@/constants/leaseStatusTypes';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
+import { useModalContext } from '@/hooks/useModalContext';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { toTypeCodeNullable } from '@/utils/formUtils';
 
@@ -37,6 +38,7 @@ export const PeriodForm: React.FunctionComponent<React.PropsWithChildren<IPeriod
   onSave,
   lease,
 }) => {
+  const { setModalContent, setDisplayModal } = useModalContext();
   const lookups = useLookupCodeHelpers();
   const paymentFrequencyOptions = lookups.getOptionsByType(API.LEASE_PAYMENT_FREQUENCY_TYPES);
   const leasePeriodStatusOptions = lookups.getOptionsByType(API.LEASE_PERIOD_STATUS_TYPES);
@@ -73,6 +75,16 @@ export const PeriodForm: React.FunctionComponent<React.PropsWithChildren<IPeriod
                   options={flexiblePeriodOptions}
                   onChange={e => {
                     formikProps.setFieldValue('isFlexible', e.target.value === 'true');
+                    if (formikProps.values.isFlexible && e.target.value === 'false') {
+                      setModalContent({
+                        title: 'Warning',
+                        message:
+                          'You are changing the period duration from flexible to fixed. Your end date will no longer be anticipated.',
+                        okButtonText: 'Ok',
+                        variant: 'info',
+                      });
+                    }
+                    setDisplayModal(true);
                   }}
                 />
               </Col>

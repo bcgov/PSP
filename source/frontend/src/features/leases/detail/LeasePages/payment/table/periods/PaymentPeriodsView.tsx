@@ -1,14 +1,14 @@
 import { FormikProps } from 'formik';
 import { find, noop, orderBy } from 'lodash';
 import { useMemo } from 'react';
+import { FaPlus } from 'react-icons/fa';
 import { MdArrowDropDown, MdArrowRight } from 'react-icons/md';
 
-import { Button } from '@/components/common/buttons';
 import { Section } from '@/components/common/Section/Section';
+import { SectionListHeader } from '@/components/common/SectionListHeader';
 import { Table } from '@/components/Table';
 import { Claims, LeasePeriodStatusTypes } from '@/constants';
 import { LeaseFormModel } from '@/features/leases/models';
-import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import useDeepCompareMemo from '@/hooks/util/useDeepCompareMemo';
 import { prettyFormatDate } from '@/utils';
 
@@ -50,7 +50,6 @@ export const PeriodPaymentsView: React.FunctionComponent<
       }),
     [onEdit, onDelete, onGenerate, lease?.leaseTypeCode],
   );
-  const { hasClaim } = useKeycloakWrapper();
   const leaseForm = { ...new LeaseFormModel(), ...lease };
 
   //Get the most recent payment for display, if one exists.
@@ -82,12 +81,17 @@ export const PeriodPaymentsView: React.FunctionComponent<
   );
 
   return (
-    <Section header="Payment Periods">
-      {hasClaim(Claims.LEASE_ADD) && (
-        <Button variant="secondary" onClick={() => onEdit(defaultFormLeasePeriod)}>
-          Add a Period
-        </Button>
-      )}
+    <Section
+      header={
+        <SectionListHeader
+          title="Payment Periods"
+          addButtonText="Add a Period"
+          addButtonIcon={<FaPlus size="2rem" />}
+          claims={[Claims.LEASE_EDIT]}
+          onAdd={() => onEdit(defaultFormLeasePeriod)}
+        />
+      }
+    >
       {lastPaymentDate && <b>last payment received: {prettyFormatDate(lastPaymentDate)}</b>}
       <Table<FormLeasePeriod>
         name="leasePaymentsTable"

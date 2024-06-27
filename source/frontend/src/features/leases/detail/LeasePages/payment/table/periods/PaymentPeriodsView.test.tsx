@@ -14,16 +14,10 @@ import {
   RenderOptions,
   userEvent,
 } from '@/utils/test-utils';
-
-<<<<<<<< HEAD:source/frontend/src/features/leases/detail/LeasePages/payment/table/periods/PaymentPeriodsView.test.tsx
-import { defaultFormLeaseTerm, FormLeasePayment } from '../../models';
-import PeriodPaymentsView, { IPeriodPaymentsViewProps } from './PaymentPeriodsView';
-========
-import { defaultFormLeasePeriod, FormLeasePayment } from '../../models';
-import PeriodsForm, { IPeriodsFormProps } from './PeriodsForm';
->>>>>>>> upstream/dev:source/frontend/src/features/leases/detail/LeasePages/payment/table/periods/PeriodsForm.test.tsx
 import { createRef } from 'react';
 import { ApiGen_CodeTypes_LeaseLicenceTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseLicenceTypes';
+import PeriodPaymentsView, { IPeriodPaymentsViewProps } from './PaymentPeriodsView';
+import { defaultFormLeasePeriod, FormLeasePayment } from '../../models';
 
 const history = createMemoryHistory();
 const mockAxios = new MockAdapter(axios);
@@ -40,11 +34,7 @@ const onGenerate = vi.fn();
 describe('PeriodsForm component', () => {
   const setup = async (
     renderOptions: RenderOptions &
-<<<<<<<< HEAD:source/frontend/src/features/leases/detail/LeasePages/payment/table/periods/PaymentPeriodsView.test.tsx
       Partial<IPeriodPaymentsViewProps> & {
-========
-      Partial<IPeriodsFormProps> & {
->>>>>>>> upstream/dev:source/frontend/src/features/leases/detail/LeasePages/payment/table/periods/PeriodsForm.test.tsx
         initialValues?: Partial<LeaseFormModel>;
         selectedTenants?: IContactSearchResult[];
         onCancel?: () => void;
@@ -53,11 +43,7 @@ describe('PeriodsForm component', () => {
   ) => {
     // render component under test
     const component = await renderAsync(
-<<<<<<<< HEAD:source/frontend/src/features/leases/detail/LeasePages/payment/table/periods/PaymentPeriodsView.test.tsx
       <PeriodPaymentsView
-========
-      <PeriodsForm
->>>>>>>> upstream/dev:source/frontend/src/features/leases/detail/LeasePages/payment/table/periods/PeriodsForm.test.tsx
         onEdit={noop}
         onDelete={noop}
         onEditPayment={noop}

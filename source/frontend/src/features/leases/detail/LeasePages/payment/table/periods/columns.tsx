@@ -208,13 +208,13 @@ export const getLeasePeriodColumns = ({
       Header: '',
       id: 'initialOrRenewal',
       align: 'left',
-      maxWidth: 50,
+      maxWidth: 30,
       Cell: initialOrRenewalPeriod,
     },
     {
       Header: 'Start date - end date',
       align: 'center',
-      minWidth: 60,
+      minWidth: 55,
       Cell: startAndEndDate,
     },
     {
@@ -228,7 +228,7 @@ export const getLeasePeriodColumns = ({
       Header: 'Payment due',
       accessor: 'paymentDueDateStr',
       align: 'left',
-      maxWidth: 50,
+      maxWidth: 60,
       Cell: renderStringOrDash,
     },
     {
@@ -243,7 +243,7 @@ export const getLeasePeriodColumns = ({
       ),
       align: 'right',
       accessor: 'paymentAmount',
-      maxWidth: 70,
+      maxWidth: 50,
       Cell: renderMoney,
     },
     {
@@ -280,7 +280,7 @@ export const getLeasePeriodColumns = ({
       ),
       id: 'expectedTotal',
       align: 'right',
-      maxWidth: 60,
+      maxWidth: 45,
       Cell: renderExpectedTotal(),
     },
     {
@@ -295,7 +295,7 @@ export const getLeasePeriodColumns = ({
       ),
       id: 'expectedPeriod',
       align: 'right',
-      maxWidth: 60,
+      maxWidth: 50,
       Cell: renderExpectedPeriod(),
     },
     {
@@ -307,7 +307,7 @@ export const getLeasePeriodColumns = ({
       ),
       id: 'actualTotal',
       align: 'right',
-      maxWidth: 55,
+      maxWidth: 40,
       Cell: renderActualTotal,
     },
     {
