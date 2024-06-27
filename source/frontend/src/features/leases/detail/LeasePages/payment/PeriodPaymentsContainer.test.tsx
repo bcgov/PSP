@@ -19,7 +19,7 @@ import { Mock } from 'vitest';
 import { ApiGen_CodeTypes_LeaseAccountTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseAccountTypes';
 import PeriodPaymentsView, { IPeriodPaymentsViewProps } from './table/periods/PaymentPeriodsView';
 import { createRef } from 'react';
-import PeriodPaymentsContainer from './PaymentsPeriodContainer';
+import PeriodPaymentsContainer from './PeriodPaymentsContainer';
 import { defaultTestFormLeasePayment } from './table/payments/PaymentsView.test';
 import { createMemoryHistory } from 'history';
 

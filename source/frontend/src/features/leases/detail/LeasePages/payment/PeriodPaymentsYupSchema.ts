@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 
-export const PaymentsPeriodYupSchema = Yup.object().shape({
+export const PeriodPaymentsYupSchema = Yup.object().shape({
   terms: Yup.array().of(
     Yup.object().shape({
       payments: Yup.array().of(

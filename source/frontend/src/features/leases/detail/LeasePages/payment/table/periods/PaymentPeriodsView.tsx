@@ -82,10 +82,10 @@ export const PeriodPaymentsView: React.FunctionComponent<
   );
 
   return (
-    <Section header="Payments by Term">
+    <Section header="Payment Periods">
       {hasClaim(Claims.LEASE_ADD) && (
         <Button variant="secondary" onClick={() => onEdit(defaultFormLeasePeriod)}>
-          Add a Term
+          Add a Period
         </Button>
       )}
       {lastPaymentDate && <b>last payment received: {prettyFormatDate(lastPaymentDate)}</b>}
