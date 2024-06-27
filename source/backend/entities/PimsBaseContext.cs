@@ -4820,7 +4820,7 @@ public partial class PimsBaseContext : DbContext
         {
             entity.HasKey(e => e.LeasePeriodHistId).HasName("PIMS_LSTERM_H_PK");
 
-            entity.Property(e => e.LeasePeriodHistId).ValueGeneratedNever();
+            entity.Property(e => e.LeasePeriodHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_LEASE_PERIOD_H_ID_SEQ])");
             entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
         });
 
@@ -8682,7 +8682,6 @@ public partial class PimsBaseContext : DbContext
             .HasMin(1L)
             .HasMax(2147483647L);
         modelBuilder.HasSequence("PIMS_LEASE_PERIOD_H_ID_SEQ")
-            .StartsAt(56L)
             .HasMin(1L)
             .HasMax(2147483647L);
         modelBuilder.HasSequence("PIMS_LEASE_TENANT_H_ID_SEQ")

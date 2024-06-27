@@ -35,6 +35,14 @@ public partial class PimsLeasePaymentHist
     [StringLength(20)]
     public string LeasePaymentStatusTypeCode { get; set; }
 
+    [Column("LEASE_PAYMENT_CATEGORY_TYPE_CODE")]
+    [StringLength(20)]
+    public string LeasePaymentCategoryTypeCode { get; set; }
+
+    [Column("LEASE_PMT_FREQ_TYPE_CODE")]
+    [StringLength(20)]
+    public string LeasePmtFreqTypeCode { get; set; }
+
     [Column("PAYMENT_RECEIVED_DATE", TypeName = "datetime")]
     public DateTime PaymentReceivedDate { get; set; }
 
@@ -104,12 +112,4 @@ public partial class PimsLeasePaymentHist
     [Column("DB_LAST_UPDATE_USERID")]
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
-
-    [Column("LEASE_PAYMENT_CATEGORY_TYPE_CODE")]
-    [StringLength(20)]
-    public string LeasePaymentCategoryTypeCode { get; set; }
-
-    [Column("LEASE_PMT_FREQ_TYPE_CODE")]
-    [StringLength(20)]
-    public string LeasePmtFreqTypeCode { get; set; }
 }
