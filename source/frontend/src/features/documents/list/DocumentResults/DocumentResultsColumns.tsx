@@ -174,17 +174,3 @@ const StyledCellOverflow = styled('div')`
     display: contents !important;
   }
 `;
-
-const StyledCellOverflow = styled('div')`
-  display: contents;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
-  -webkit-box-orient: vertical;
-
-  button {
-    display: contents !important;
-  }
-`;
