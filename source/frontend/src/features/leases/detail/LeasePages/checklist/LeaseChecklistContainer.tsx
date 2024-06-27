@@ -12,12 +12,9 @@ import { UpdateChecklistForm } from '@/features/mapSideBar/shared/tabs/checklist
 
 import UpdateLeaseChecklistContainer from './update/UpdateLeaseChecklistContainer';
 
-const LeaseChecklistContainer: React.FunctionComponent<React.PropsWithChildren<LeasePageProps>> = ({
-  isEditing,
-  formikRef,
-  onEdit,
-  onSuccess,
-}) => {
+const LeaseChecklistContainer: React.FunctionComponent<
+  React.PropsWithChildren<LeasePageProps<void>>
+> = ({ isEditing, formikRef, onEdit, onSuccess }) => {
   const { lease } = React.useContext(LeaseStateContext);
 
   return !!isEditing && !!onEdit ? (

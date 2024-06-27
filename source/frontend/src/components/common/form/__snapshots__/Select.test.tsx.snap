@@ -13,7 +13,12 @@ exports[`Select component > renders as expected 1`] = `
       class="form-label"
       for="input-countryId"
     >
-      Test Dropdown 
+      <span
+        class="control-label"
+      >
+        Test Dropdown
+      </span>
+       
     </label>
     <select
       class="form-select form-control"

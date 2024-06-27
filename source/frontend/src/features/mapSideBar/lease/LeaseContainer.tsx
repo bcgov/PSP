@@ -17,6 +17,9 @@ import { ImprovementsContainer } from '@/features/leases/detail/LeasePages/impro
 import InsuranceContainer from '@/features/leases/detail/LeasePages/insurance/InsuranceContainer';
 import PeriodPaymentsContainer from '@/features/leases/detail/LeasePages/payment/PeriodPaymentsContainer';
 import { PeriodPaymentsYupSchema } from '@/features/leases/detail/LeasePages/payment/PeriodPaymentsYupSchema';
+import PeriodPaymentsView, {
+  IPeriodPaymentsViewProps,
+} from '@/features/leases/detail/LeasePages/payment/table/periods/PaymentPeriodsView';
 import Surplus from '@/features/leases/detail/LeasePages/surplus/Surplus';
 import TenantContainer from '@/features/leases/detail/LeasePages/tenant/TenantContainer';
 import { LeaseFormModel } from '@/features/leases/models';
@@ -49,16 +52,18 @@ const initialState: LeaseContainerState = {
   showConfirmModal: false,
 };
 
-export interface LeasePageProps {
+export interface LeasePageProps<T> {
   isEditing: boolean;
   onEdit?: (isEditing: boolean) => void;
   formikRef: React.RefObject<FormikProps<LeaseFormModel>>;
   onSuccess: () => void;
+  componentView: React.FunctionComponent<React.PropsWithChildren<T>>;
 }
 
-export interface ILeasePage {
+export interface ILeasePage<T> {
   pageName: LeasePageNames;
-  component: React.FunctionComponent<React.PropsWithChildren<LeasePageProps>>;
+  component: React.FunctionComponent<React.PropsWithChildren<LeasePageProps<T>>>;
+  componentView?: React.FunctionComponent<React.PropsWithChildren<T>>;
   title: string;
   description?: string;
   validation?: Yup.ObjectSchema<any>;
@@ -79,7 +84,10 @@ export enum LeasePageNames {
   DOCUMENTS = 'documents',
 }
 
-export const leasePages: Map<LeasePageNames, ILeasePage> = new Map<LeasePageNames, ILeasePage>([
+export const leasePages: Map<LeasePageNames, ILeasePage<any>> = new Map<
+  LeasePageNames,
+  ILeasePage<any>
+>([
   [
     LeasePageNames.DETAILS,
     {
@@ -104,7 +112,8 @@ export const leasePages: Map<LeasePageNames, ILeasePage> = new Map<LeasePageName
       component: PeriodPaymentsContainer,
       title: 'Payments',
       validation: PeriodPaymentsYupSchema,
-    },
+      componentView: PeriodPaymentsView,
+    } as ILeasePage<IPeriodPaymentsViewProps>,
   ],
   [
     LeasePageNames.IMPROVEMENTS,

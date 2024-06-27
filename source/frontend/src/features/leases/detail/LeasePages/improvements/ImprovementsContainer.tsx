@@ -14,7 +14,7 @@ import { AddImprovementsContainer } from './AddImprovementsContainer';
 import { Improvements } from './Improvements';
 
 export const ImprovementsContainer: React.FunctionComponent<
-  React.PropsWithChildren<LeasePageProps>
+  React.PropsWithChildren<LeasePageProps<void>>
 > = ({ isEditing, formikRef, onEdit, onSuccess }) => {
   const { lease } = useContext(LeaseStateContext);
   const {

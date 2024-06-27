@@ -1,16 +1,19 @@
 import moment from 'moment';
 import { FaFileContract, FaTrash } from 'react-icons/fa';
 import { MdEdit } from 'react-icons/md';
+import { TbArrowWaveRightUp } from 'react-icons/tb';
 import { CellProps } from 'react-table';
 import styled from 'styled-components';
 
 import { Button } from '@/components/common/buttons/Button';
 import { InlineFlexDiv } from '@/components/common/styles';
 import TooltipIcon from '@/components/common/TooltipIcon';
+import TooltipWrapper from '@/components/common/TooltipWrapper';
 import {
   ColumnWithProps,
   renderBooleanAsYesNo,
   renderMoney,
+  renderStringOrDash,
   renderTypeCode,
 } from '@/components/Table';
 import { Claims } from '@/constants';
@@ -26,12 +29,23 @@ import { formatMoney } from '@/utils/numberFormatUtils';
 import { FormLeasePeriod } from '../../models';
 
 function initialOrRenewalPeriod({ row: { index } }: CellProps<FormLeasePeriod, unknown>) {
-  return stringToFragment(index === 0 ? 'Initial period' : `Renewal ${index}`);
+  return <b>Period {index + 1}</b>;
 }
 
 function startAndEndDate({ row: { original } }: CellProps<FormLeasePeriod, string>) {
-  return stringToFragment(
-    `${prettyFormatDate(original.startDate)} - ${prettyFormatDate(original.expiryDate)}`,
+  return original.isFlexible ? (
+    <>
+      {prettyFormatDate(original.startDate)} - {prettyFormatDate(original.expiryDate)}
+      <StyledBreak />
+      <i>(anticipated)</i>
+      <TooltipWrapper tooltipId="flexible-period-icon" tooltip="Flexible Period">
+        <StyledFlexibleIcon size={24} />
+      </TooltipWrapper>
+    </>
+  ) : (
+    stringToFragment(
+      `${prettyFormatDate(original.startDate)} - ${prettyFormatDate(original.expiryDate)}`,
+    )
   );
 }
 
@@ -194,13 +208,13 @@ export const getLeasePeriodColumns = ({
       Header: '',
       id: 'initialOrRenewal',
       align: 'left',
-      maxWidth: 50,
+      maxWidth: 30,
       Cell: initialOrRenewalPeriod,
     },
     {
-      Header: 'Start date - End date',
+      Header: 'Start date - end date',
       align: 'center',
-      minWidth: 60,
+      minWidth: 55,
       Cell: startAndEndDate,
     },
     {
@@ -214,7 +228,8 @@ export const getLeasePeriodColumns = ({
       Header: 'Payment due',
       accessor: 'paymentDueDateStr',
       align: 'left',
-      maxWidth: 50,
+      maxWidth: 60,
+      Cell: renderStringOrDash,
     },
     {
       Header: () => (
@@ -228,7 +243,7 @@ export const getLeasePeriodColumns = ({
       ),
       align: 'right',
       accessor: 'paymentAmount',
-      maxWidth: 70,
+      maxWidth: 50,
       Cell: renderMoney,
     },
     {
@@ -265,7 +280,7 @@ export const getLeasePeriodColumns = ({
       ),
       id: 'expectedTotal',
       align: 'right',
-      maxWidth: 60,
+      maxWidth: 45,
       Cell: renderExpectedTotal(),
     },
     {
@@ -280,7 +295,7 @@ export const getLeasePeriodColumns = ({
       ),
       id: 'expectedPeriod',
       align: 'right',
-      maxWidth: 60,
+      maxWidth: 50,
       Cell: renderExpectedPeriod(),
     },
     {
@@ -292,7 +307,7 @@ export const getLeasePeriodColumns = ({
       ),
       id: 'actualTotal',
       align: 'right',
-      maxWidth: 55,
+      maxWidth: 40,
       Cell: renderActualTotal,
     },
     {
@@ -330,4 +345,14 @@ const StyledIcons = styled(InlineFlexDiv)`
 
 const GenerateIcon = styled(FaFileContract)`
   color: ${props => props.theme.css.activeActionColor};
+`;
+
+const StyledFlexibleIcon = styled(TbArrowWaveRightUp)`
+  color: ${props => props.theme.css.completedColor};
+  margin-left: 0.5rem;
+`;
+
+const StyledBreak = styled.div`
+  height: 0;
+  flex-basis: 100%;
 `;

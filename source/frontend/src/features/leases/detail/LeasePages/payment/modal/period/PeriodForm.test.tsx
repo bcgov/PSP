@@ -87,6 +87,7 @@ describe('PeriodForm component', () => {
 
     await act(async () => {
       fillInput(container, 'startDate', '2020-01-02', 'datepicker');
+      fillInput(container, 'expiryDate', '2020-01-02', 'datepicker');
     });
     await act(() => formikRef.current.submitForm());
 

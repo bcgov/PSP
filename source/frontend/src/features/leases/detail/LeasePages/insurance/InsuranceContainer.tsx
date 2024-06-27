@@ -17,12 +17,9 @@ import { isValidId } from '@/utils';
 import InsuranceDetailsView from './details/Insurance';
 import InsuranceEditContainer from './edit/EditInsuranceContainer';
 
-const InsuranceContainer: React.FunctionComponent<React.PropsWithChildren<LeasePageProps>> = ({
-  isEditing,
-  onEdit,
-  formikRef,
-  onSuccess,
-}) => {
+const InsuranceContainer: React.FunctionComponent<
+  React.PropsWithChildren<LeasePageProps<void>>
+> = ({ isEditing, onEdit, formikRef, onSuccess }) => {
   const { hasClaim } = useKeycloakWrapper();
   const [showCancelModal, setShowCancelModal] = useState(false);
   const {

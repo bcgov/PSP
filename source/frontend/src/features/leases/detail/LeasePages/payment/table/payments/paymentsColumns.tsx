@@ -1,4 +1,3 @@
-import { getIn } from 'formik';
 import { FaTrash } from 'react-icons/fa';
 import { MdEdit, MdReceipt } from 'react-icons/md';
 import { CellProps } from 'react-table';
@@ -14,7 +13,6 @@ import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_Concepts_Payment } from '@/models/api/generated/ApiGen_Concepts_Payment';
 import { NumberFieldValue } from '@/typings/NumberFieldValue';
 import { formatMoney, stringToFragment } from '@/utils';
-import { withNameSpace } from '@/utils/formUtils';
 
 import { FormLeasePayment } from '../../models';
 
@@ -51,7 +49,7 @@ export interface IPaymentColumnProps {
   onDelete: (values: FormLeasePayment) => void;
   isReceivable?: boolean;
   isGstEligible?: boolean;
-  nameSpace?: string;
+  payments: FormLeasePayment[];
 }
 
 export const getActualsColumns = ({
@@ -60,7 +58,6 @@ export const getActualsColumns = ({
   onSave,
   isReceivable,
   isGstEligible,
-  nameSpace,
 }: IPaymentColumnProps): ColumnWithProps<
   FormLeasePayment,
   { properties: ApiGen_Concepts_Payment[] }
@@ -178,10 +175,11 @@ export const getActualsColumns = ({
             title="Payment Notes"
             notesLabel="Notes:"
             onSave={(values: FormLeasePayment) => {
-              const valuesToSave = getIn(values, withNameSpace(nameSpace, `${row.index}`));
+              const valuesToSave = row.original;
+              valuesToSave.note = values.note;
               onSave(valuesToSave);
             }}
-            nameSpace={withNameSpace(nameSpace, `${row.index}`)}
+            initialValues={row.original}
           />
         );
       },

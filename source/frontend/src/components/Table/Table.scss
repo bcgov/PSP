@@ -101,6 +101,9 @@
     &.svg-btn.reset-filter:hover svg {
       fill: var(--theme-gold-100);
     }
+    &.expander {
+      color: var(--surface-color-primary-button-default);
+    }
     &.expander,
     &.reset-filter {
       display: flex;
