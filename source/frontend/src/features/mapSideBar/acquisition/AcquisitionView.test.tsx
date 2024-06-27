@@ -17,10 +17,9 @@ import { getUserMock } from '@/mocks/user.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { prettyFormatUTCDate } from '@/utils';
 import { RenderOptions, act, render, screen, userEvent, waitFor } from '@/utils/test-utils';
-
 import { server } from '@/mocks/msw/server';
 import { getMockApiTakes } from '@/mocks/takes.mock';
-import { HttpResponse, http } from 'msw';
+import { http, HttpResponse } from 'msw';
 import { createRef } from 'react';
 import { SideBarContextProvider } from '../context/sidebarContext';
 import { FileTabType } from '../shared/detail/FileTabs';
