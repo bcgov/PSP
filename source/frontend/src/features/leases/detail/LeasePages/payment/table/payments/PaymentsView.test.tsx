@@ -10,7 +10,7 @@ import { toTypeCodeNullable } from '@/utils/formUtils';
 import { act, fillInput, renderAsync, RenderOptions, screen, userEvent } from '@/utils/test-utils';
 import { getAllByRole as getAllByRoleBase } from '@/utils/test-utils';
 
-import { defaultFormLeasePayment, defaultFormLeaseTerm, FormLeasePayment } from '../../models';
+import { defaultFormLeasePayment, defaultFormLeasePeriod, FormLeasePayment } from '../../models';
 import PaymentsView, { IPaymentsViewProps } from './PaymentsView';
 
 const history = createMemoryHistory();
@@ -57,7 +57,7 @@ describe('PaymentsForm component', () => {
           onEdit={onEdit}
           onDelete={onDelete}
           onSave={onSave}
-          nameSpace="periods.0"
+          payments={renderOptions.initialValues.periods?.[0]?.payments ?? []}
           isExercised={renderOptions?.isExercised ?? true}
           isReceivable={renderOptions?.isReceivable ?? true}
           isGstEligible={renderOptions?.isGstEligible ?? true}
