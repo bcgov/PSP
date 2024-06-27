@@ -267,6 +267,45 @@ namespace PIMS.Tests.Automation.PageObjects
                 webDriver.FindElement(takeLicenseConstructEndDateInput).SendKeys(Keys.Enter);
             }
 
+            //Lease Payable
+            ChooseSpecificRadioButton(takeLeaseRadioBttnGroup, take.IsLeasePayable);
+
+            Wait();
+            if (webDriver.FindElements(acquisitionFileConfirmationModal).Count() > 0)
+            {
+                if (sharedModals.ModalContent().Contains("You have created a Lease (Payable) Take"))
+                {
+                    Assert.Contains("Follow-up required", sharedModals.ModalHeader());
+                    Assert.Contains("You have created a Lease (Payable) Take. You also need to create a Lease/Licence File.", sharedModals.ModalContent());
+                }
+                else
+                {
+                    Assert.Contains("Confirm change", sharedModals.ModalHeader());
+                    Assert.Contains("The area, if provided, will be cleared. Do you wish to proceed?", sharedModals.ModalContent());
+                }
+
+
+                sharedModals.ModalClickOKBttn();
+            }
+
+            Wait();
+            if (take.IsLeasePayable.Equals("true"))
+            {
+                if (take.IsLeasePayableArea != "")
+                {
+                    ClearDigitsInput(takeLeaseSqMetresInput);
+                    webDriver.FindElement(takeLeaseSqMetresInput).SendKeys(take.IsLeasePayableArea);
+
+                    AssertTrueDoublesEquals(takeLeaseHectaresInput, TransformSqMtToHectares(take.IsLeasePayableArea));
+                    AssertTrueDoublesEquals(takeLeaseSqFeetInput, TransformSqMtToSqFt(take.IsLeasePayableArea));
+                    AssertTrueDoublesEquals(takeLeaseAcresInput, TransformSqMtToAcres(take.IsLeasePayableArea));
+                }
+
+                ClearInput(takeLeaseEndDateInput);
+                webDriver.FindElement(takeLeaseEndDateInput).SendKeys(take.IsLeasePayableDate);
+                webDriver.FindElement(takeLeaseEndDateInput).SendKeys(Keys.Enter);
+            }
+
             //Surplus
             ChooseSpecificRadioButton(takeSurplusRadioBttnGroup, take.IsSurplus);
 
