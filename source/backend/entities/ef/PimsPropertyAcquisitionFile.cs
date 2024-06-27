@@ -43,6 +43,12 @@ public partial class PimsPropertyAcquisitionFile
     public string PropertyName { get; set; }
 
     /// <summary>
+    /// Geospatial location (pin) of property
+    /// </summary>
+    [Column("LOCATION", TypeName = "geometry")]
+    public Geometry Location { get; set; }
+
+    /// <summary>
     /// Force the display order of the codes.
     /// </summary>
     [Column("DISPLAY_ORDER")]
@@ -137,12 +143,6 @@ public partial class PimsPropertyAcquisitionFile
     [Column("DB_LAST_UPDATE_USERID")]
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
-
-    /// <summary>
-    /// Geospatial location (pin) of property
-    /// </summary>
-    [Column("LOCATION", TypeName = "geometry")]
-    public Geometry Location { get; set; }
 
     [ForeignKey("AcquisitionFileId")]
     [InverseProperty("PimsPropertyAcquisitionFiles")]

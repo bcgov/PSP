@@ -46,6 +46,27 @@ public partial class PimsLeasePeriod
     public string LeasePmtFreqTypeCode { get; set; }
 
     /// <summary>
+    /// Foreign key reference to the PIMS_LEASE_PMT_FREQ_TYPE table.
+    /// </summary>
+    [Column("BASE_RENT_FREQ")]
+    [StringLength(20)]
+    public string BaseRentFreq { get; set; }
+
+    /// <summary>
+    /// Foreign key reference to the PIMS_LEASE_PMT_FREQ_TYPE table.
+    /// </summary>
+    [Column("ADDL_RENT_FREQ")]
+    [StringLength(20)]
+    public string AddlRentFreq { get; set; }
+
+    /// <summary>
+    /// Foreign key reference to the PIMS_LEASE_PMT_FREQ_TYPE table.
+    /// </summary>
+    [Column("VBL_RENT_FREQ")]
+    [StringLength(20)]
+    public string VblRentFreq { get; set; }
+
+    /// <summary>
     /// Start date of the current period of the lease/licence
     /// </summary>
     [Column("PERIOD_START_DATE", TypeName = "datetime")]
@@ -100,6 +121,54 @@ public partial class PimsLeasePeriod
     /// </summary>
     [Column("IS_PERIOD_EXERCISED")]
     public bool? IsPeriodExercised { get; set; }
+
+    /// <summary>
+    /// Indicates whether the payment type is predetermined (FALSE) or variable (TRUE).  Predetermined (FALSE) is the default value.
+    /// </summary>
+    [Column("PAYMENT_TYPE")]
+    public bool PaymentType { get; set; }
+
+    /// <summary>
+    /// Indicates whether the period duration is fixed (FALSE) or flexible (TRUE).  Fixed (FALSE) is the default value.
+    /// </summary>
+    [Column("PERIOD_DURATION")]
+    public bool PeriodDuration { get; set; }
+
+    /// <summary>
+    /// Indicates the agreed-to variable base rent payment amount.
+    /// </summary>
+    [Column("BASE_RENT_AGREED_PMT", TypeName = "money")]
+    public decimal? BaseRentAgreedPmt { get; set; }
+
+    /// <summary>
+    /// Is the variable base rent payment subject to GST?
+    /// </summary>
+    [Column("IS_BASE_RENT_SUBJECT_TO_GST")]
+    public bool? IsBaseRentSubjectToGst { get; set; }
+
+    /// <summary>
+    /// Indicates the agreed-to variable additional rent payment amount.
+    /// </summary>
+    [Column("ADDL_RENT_AGREED_PMT", TypeName = "money")]
+    public decimal? AddlRentAgreedPmt { get; set; }
+
+    /// <summary>
+    /// Is the variable additional rent payment subject to GST?
+    /// </summary>
+    [Column("IS_ADDL_RENT_SUBJECT_TO_GST")]
+    public bool? IsAddlRentSubjectToGst { get; set; }
+
+    /// <summary>
+    /// Indicates the agreed-to variable rent payment amount.
+    /// </summary>
+    [Column("VBL_RENT_AGREED_PMT", TypeName = "money")]
+    public decimal? VblRentAgreedPmt { get; set; }
+
+    /// <summary>
+    /// Is the variable rent payment subject to GST?
+    /// </summary>
+    [Column("IS_VBL_RENT_SUBJECT_TO_GST")]
+    public bool? IsVblRentSubjectToGst { get; set; }
 
     /// <summary>
     /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o
@@ -190,75 +259,6 @@ public partial class PimsLeasePeriod
     [Column("DB_LAST_UPDATE_USERID")]
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
-
-    /// <summary>
-    /// Foreign key reference to the PIMS_LEASE_PMT_FREQ_TYPE table.
-    /// </summary>
-    [Column("BASE_RENT_FREQ")]
-    [StringLength(20)]
-    public string BaseRentFreq { get; set; }
-
-    /// <summary>
-    /// Foreign key reference to the PIMS_LEASE_PMT_FREQ_TYPE table.
-    /// </summary>
-    [Column("ADDL_RENT_FREQ")]
-    [StringLength(20)]
-    public string AddlRentFreq { get; set; }
-
-    /// <summary>
-    /// Foreign key reference to the PIMS_LEASE_PMT_FREQ_TYPE table.
-    /// </summary>
-    [Column("VBL_RENT_FREQ")]
-    [StringLength(20)]
-    public string VblRentFreq { get; set; }
-
-    /// <summary>
-    /// Indicates whether the payment type is predetermined (FALSE) or variable (TRUE).  Predetermined (FALSE) is the default value.
-    /// </summary>
-    [Column("PAYMENT_TYPE")]
-    public bool PaymentType { get; set; }
-
-    /// <summary>
-    /// Indicates whether the period duration is fixed (FALSE) or flexible (TRUE).  Fixed (FALSE) is the default value.
-    /// </summary>
-    [Column("PERIOD_DURATION")]
-    public bool PeriodDuration { get; set; }
-
-    /// <summary>
-    /// Indicates the agreed-to variable base rent payment amount.
-    /// </summary>
-    [Column("BASE_RENT_AGREED_PMT", TypeName = "money")]
-    public decimal? BaseRentAgreedPmt { get; set; }
-
-    /// <summary>
-    /// Is the variable base rent payment subject to GST?
-    /// </summary>
-    [Column("IS_BASE_RENT_SUBJECT_TO_GST")]
-    public bool? IsBaseRentSubjectToGst { get; set; }
-
-    /// <summary>
-    /// Indicates the agreed-to variable additional rent payment amount.
-    /// </summary>
-    [Column("ADDL_RENT_AGREED_PMT", TypeName = "money")]
-    public decimal? AddlRentAgreedPmt { get; set; }
-
-    /// <summary>
-    /// Is the variable additional rent payment subject to GST?
-    /// </summary>
-    [Column("IS_ADDL_RENT_SUBJECT_TO_GST")]
-    public bool? IsAddlRentSubjectToGst { get; set; }
-
-    /// <summary>
-    /// Indicates the agreed-to variable rent payment amount.
-    /// </summary>
-    [Column("VBL_RENT_AGREED_PMT", TypeName = "money")]
-    public decimal? VblRentAgreedPmt { get; set; }
-
-    /// <summary>
-    /// Is the variable rent payment subject to GST?
-    /// </summary>
-    [Column("IS_VBL_RENT_SUBJECT_TO_GST")]
-    public bool? IsVblRentSubjectToGst { get; set; }
 
     [ForeignKey("AddlRentFreq")]
     [InverseProperty("PimsLeasePeriodAddlRentFreqNavigations")]
