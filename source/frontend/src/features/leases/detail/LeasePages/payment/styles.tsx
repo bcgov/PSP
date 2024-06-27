@@ -14,7 +14,7 @@ export const StyledFormBody = styled.div`
   .check-field {
     label {
       width: 100%;
-      color: ${props => props.theme.css.textColor};
+      color: ${props => props.theme.bcTokens.typographyColorSecondary};
     }
     display: flex;
     flex-wrap: wrap;
@@ -48,7 +48,7 @@ export const StyledTable = styled(Table)`
           padding: 0.5rem 0.5rem;
           font-size: 1.4rem;
           position: relative;
-          background-color: ${props => props.theme.css.primaryLightColor};
+          background-color: ${props => props.theme.bcTokens.surfaceColorBackgroundDarkBlue};
           color: white;
           .tooltip-icon {
             color: white;
@@ -72,10 +72,10 @@ export const StyledTable = styled(Table)`
       word-break: normal;
     }
     .collapse {
-      background-color: ${props => props.theme.css.selectedColor};
-      color: ${props => props.theme.css.textColor};
+      background-color: ${props => props.theme.css.highlightBackgroundColor};
+      color: ${props => props.theme.bcTokens.typographyColorSecondary};
       .receipt {
-        color: ${props => props.theme.css.lightVariantColor};
+        color: ${props => props.theme.css.borderOutlineColor};
       }
     }
   }
@@ -91,9 +91,9 @@ export const StyledPaymentTable = styled(Table)`
           font-size: 1.4rem;
           position: relative;
           background-color: transparent;
-          color: ${props => props.theme.css.formTextColor};
+          color: ${props => props.theme.bcTokens.typographyColorPrimary};
           .tooltip-icon {
-            color: ${props => props.theme.css.slideOutBlue};
+            color: ${props => props.theme.css.activeActionColor};
             float: right;
             align-self: baseline;
             margin-left: 0.5rem;
@@ -110,11 +110,11 @@ export const StyledPaymentTable = styled(Table)`
       }
     }
     .tfoot {
-      background-color: ${props => props.theme.css.summaryColor};
-      border-top: 0.1rem solid ${props => props.theme.css.summaryBorderColor};
-      border-bottom: 0.1rem solid ${props => props.theme.css.summaryBorderColor};
+      background-color: ${props => props.theme.css.warningBackgroundColor};
+      border-top: 0.1rem solid ${props => props.theme.bcTokens.themeGold100};
+      border-bottom: 0.1rem solid ${props => props.theme.bcTokens.themeGold100};
       font-family: 'BCSans-Bold';
-      color: ${props => props.theme.css.textColor};
+      color: ${props => props.theme.bcTokens.typographyColorSecondary};
     }
   }
 `;
@@ -141,7 +141,7 @@ export const ActualPaymentBox = styled(InlineFlexDiv)`
   input {
     width: 100%;
   }
-  background-color: ${props => props.theme.css.filterBackgroundColor};
+  background-color: ${props => props.theme.css.highlightBackgroundColor};
 `;
 
 export const FlexRight = styled.div`
@@ -171,7 +171,7 @@ export const WarningTextBox = styled(InlineFlexDiv)`
 
 export const AddActualButton = styled(Button)`
   &&& {
-    background-color: ${props => props.theme.css.completedColor};
+    background-color: ${props => props.theme.bcTokens.iconsColorSuccess};
     color: white;
     &:hover {
       background-color: #3aba53;

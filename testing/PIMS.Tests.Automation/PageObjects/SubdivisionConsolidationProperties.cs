@@ -108,7 +108,6 @@ namespace PIMS.Tests.Automation.PageObjects
 
         private By subconTableContent = By.XPath("//div[@data-testid='propertyOperationTable']/div[@class='tbody']/div[@class='tr-wrapper']");
 
-
         private SharedModals sharedModals;
 
         public SubdivisionConsolidationProperties(IWebDriver webDriver) : base(webDriver)

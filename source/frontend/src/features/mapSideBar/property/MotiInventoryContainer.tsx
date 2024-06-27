@@ -8,8 +8,6 @@ import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineCo
 import { PROPERTY_TYPES, useComposedProperties } from '@/hooks/repositories/useComposedProperties';
 import { useQuery } from '@/hooks/use-query';
 import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
-import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
-import { exists } from '@/utils/utils';
 
 import MapSideBarLayout from '../layout/MapSideBarLayout';
 import SidebarFooter from '../shared/SidebarFooter';
@@ -50,6 +48,7 @@ export const MotiInventoryContainer: React.FunctionComponent<
       PROPERTY_TYPES.PIMS_API,
       PROPERTY_TYPES.BC_ASSESSMENT,
       PROPERTY_TYPES.PARCEL_MAP,
+      PROPERTY_TYPES.PIMS_GEOSERVER,
     ],
   });
 
@@ -108,11 +107,8 @@ export const MotiInventoryContainer: React.FunctionComponent<
     push(path, { search: query.toString() });
   };
 
-  const handleZoom = (apiProperty: ApiGen_Concepts_Property | undefined) => {
-    // todo:the method 'exists' here should allow the compiler to validate the child property. this works correctly in typescropt 5.3 +
-    if (exists(apiProperty?.longitude) && exists(apiProperty?.latitude)) {
-      mapMachine.requestFlyToLocation({ lat: apiProperty!.latitude, lng: apiProperty!.longitude });
-    }
+  const handleZoom = (latitude: number, longitude: number) => {
+    mapMachine.requestFlyToLocation({ lat: latitude, lng: longitude });
   };
 
   return (

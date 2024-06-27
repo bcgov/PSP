@@ -1,22 +1,19 @@
 import { getIn, useFormikContext } from 'formik';
-import { Col, Row } from 'react-bootstrap';
 
 import { FastCurrencyInput, FastDatePicker, Input, TextArea } from '@/components/common/form';
-import { RadioGroup } from '@/components/common/form/RadioGroup';
-import { FormSection } from '@/components/common/form/styles';
+import { YesNoSelect } from '@/components/common/form/YesNoSelect';
+import { Section } from '@/components/common/Section/Section';
+import { SectionField } from '@/components/common/Section/SectionField';
 import { ApiGen_Base_CodeType } from '@/models/api/generated/ApiGen_Base_CodeType';
 import { withNameSpace } from '@/utils/formUtils';
 
 import { FormInsurance } from './models';
-import { SubTitle } from './styles';
 
 interface IInsuranceRowProps {
   nameSpace: string;
 }
 
-const InsuranceForm: React.FunctionComponent<React.PropsWithChildren<IInsuranceRowProps>> = ({
-  nameSpace,
-}) => {
+const InsuranceForm: React.FunctionComponent<IInsuranceRowProps> = ({ nameSpace }) => {
   const formikProps = useFormikContext<FormInsurance>();
   const insuranceType: ApiGen_Base_CodeType<string> = getIn(
     formikProps.values,
@@ -24,68 +21,35 @@ const InsuranceForm: React.FunctionComponent<React.PropsWithChildren<IInsuranceR
   );
 
   return (
-    <FormSection className="mb-3" data-testid="insurance-form">
-      <SubTitle data-testid="insurance-form-title">{insuranceType.description}</SubTitle>
+    <Section header={insuranceType.description} data-testid="insurance-form">
       {insuranceType.id === 'OTHER' && (
-        <Row>
-          <Col md="4">
-            <div>
-              <strong>Insurance Type:</strong>
-            </div>
-            <Input field={withNameSpace(nameSpace, 'otherInsuranceType')} />
-          </Col>
-        </Row>
+        <SectionField label="Other insurance type">
+          <Input
+            field={withNameSpace(nameSpace, 'otherInsuranceType')}
+            placeholder="Description of the other insurance coverage"
+          />
+        </SectionField>
       )}
-      <Row className="py-4">
-        <Col md="auto">
-          <strong>Insurance In Place:</strong>
-        </Col>
-        <Col>
-          <RadioGroup
-            field={withNameSpace(nameSpace, 'isInsuranceInPlaceRadio')}
-            flexDirection="row"
-            radioValues={[
-              {
-                radioValue: 'yes',
-                radioLabel: 'Yes',
-              },
-              {
-                radioValue: 'no',
-                radioLabel: 'No',
-              },
-            ]}
-          />
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          <div>
-            <strong>Limit ($)</strong>
-          </div>
-          <FastCurrencyInput
-            formikProps={formikProps}
-            field={withNameSpace(nameSpace, 'coverageLimit')}
-          />
-          <div>
-            <strong>Policy Expiry date:</strong>
-          </div>
-          <FastDatePicker
-            field={withNameSpace(nameSpace, 'expiryDate')}
-            formikProps={formikProps}
-          />
-        </Col>
-        <Col md={8}>
-          <div>
-            <strong>Description of Coverage</strong>
-          </div>
-          <TextArea
-            rows={4}
-            field={withNameSpace(nameSpace, 'coverageDescription')}
-            data-testid="insurance-form-description"
-          />
-        </Col>
-      </Row>
-    </FormSection>
+      <SectionField label="Insurance in place">
+        <YesNoSelect field={withNameSpace(nameSpace, 'isInsuranceInPlaceSelect')} />
+      </SectionField>
+      <SectionField label="Limit ($)" contentWidth="3">
+        <FastCurrencyInput
+          formikProps={formikProps}
+          field={withNameSpace(nameSpace, 'coverageLimit')}
+        />
+      </SectionField>
+      <SectionField label="Policy expiry">
+        <FastDatePicker field={withNameSpace(nameSpace, 'expiryDate')} formikProps={formikProps} />
+      </SectionField>
+      <SectionField label="Description of coverage" contentWidth="12">
+        <TextArea
+          rows={4}
+          field={withNameSpace(nameSpace, 'coverageDescription')}
+          data-testid="insurance-form-description"
+        />
+      </SectionField>
+    </Section>
   );
 };
 

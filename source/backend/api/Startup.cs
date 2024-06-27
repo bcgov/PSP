@@ -218,7 +218,8 @@ namespace Pims.Api
             services.AddLtsaService(this.Configuration.GetSection("Ltsa"));
             services.AddClamAvService(this.Configuration.GetSection("Av"));
             services.AddHttpContextAccessor();
-            services.AddTransient<ClaimsPrincipal>(s => s.GetService<IHttpContextAccessor>().HttpContext.User);
+
+            services.AddTransient<ClaimsPrincipal>(s => s.GetService<IHttpContextAccessor>()?.HttpContext?.User);
             services.AddScoped<IProxyRequestClient, ProxyRequestClient>();
             services.AddScoped<IOpenIdConnectRequestClient, OpenIdConnectRequestClient>();
             services.AddResponseCaching();
@@ -241,16 +242,54 @@ namespace Pims.Api
             services.AddHealthChecks()
                 .AddCheck(
                     "PimsDBCollation",
-                    new PimsDatabaseHealtcheck(csBuilder.ConnectionString),
+                    new PimsDatabaseHealthcheck(csBuilder.ConnectionString),
                     HealthStatus.Unhealthy,
                     new string[] { "services" });
 
             services.AddHealthChecks()
                 .AddCheck(
                     "api-metrics",
-                    new PimsMetricsHealthCheck(csBuilder.ConnectionString),
+                    new PimsMetricsHealthcheck(csBuilder.ConnectionString),
                     HealthStatus.Unhealthy,
                     new string[] { "services" });
+
+            services.AddHealthChecks()
+                .AddCheck(
+                    "PmbcExternalApi",
+                    new PimsExternalApiHealthcheck(this.Configuration.GetSection("HealthChecks:PmbcExternalApi")),
+                    null,
+                    new string[] { "services", "external" });
+
+            services.AddHealthChecks()
+                .AddCheck(
+                    "Geoserver",
+                    new PimsGeoserverHealthCheck(this.Configuration),
+                    null,
+                    new string[] { "services" });
+
+            services.AddHealthChecks()
+                .AddCheck<PimsMayanHealthcheck>(
+                    "Mayan",
+                    null,
+                    new string[] { "services" });
+
+            services.AddHealthChecks()
+                .AddCheck<PimsLtsaHealthcheck>(
+                    "Ltsa",
+                    null,
+                    new string[] { "services", "external" });
+
+            services.AddHealthChecks()
+                .AddCheck<PimsGeocoderHealthcheck>(
+                    "Geocoder",
+                    null,
+                    new string[] { "services", "external" });
+
+            services.AddHealthChecks()
+                .AddCheck<PimsCdogsHealthcheck>(
+                    "Cdogs",
+                    null,
+                    new string[] { "services", "external" });
 
             services.AddApiVersioning(options =>
             {
@@ -376,7 +415,7 @@ namespace Pims.Api
             });
             app.UseHealthChecks(this.Configuration.GetValue<string>("HealthChecks:ReadyPath"), healthPort, new HealthCheckOptions
             {
-                Predicate = r => r.Tags.Contains("services"),
+                Predicate = r => r.Tags.Contains("services") && !r.Tags.Contains("external"),
                 ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse,
             });
 

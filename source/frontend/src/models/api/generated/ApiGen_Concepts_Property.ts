@@ -9,6 +9,7 @@ import { ApiGen_Base_BaseConcurrent } from './ApiGen_Base_BaseConcurrent';
 import { ApiGen_Base_CodeType } from './ApiGen_Base_CodeType';
 import { ApiGen_Concepts_Address } from './ApiGen_Concepts_Address';
 import { ApiGen_Concepts_Geometry } from './ApiGen_Concepts_Geometry';
+import { ApiGen_Concepts_HistoricalFileNumber } from './ApiGen_Concepts_HistoricalFileNumber';
 import { ApiGen_Concepts_Polygon } from './ApiGen_Concepts_Polygon';
 import { ApiGen_Concepts_PropertyAnomaly } from './ApiGen_Concepts_PropertyAnomaly';
 import { ApiGen_Concepts_PropertyContact } from './ApiGen_Concepts_PropertyContact';
@@ -59,6 +60,7 @@ export interface ApiGen_Concepts_Property extends ApiGen_Base_BaseConcurrent {
   boundary: ApiGen_Concepts_Polygon | null;
   generalLocation: string | null;
   propertyContacts: ApiGen_Concepts_PropertyContact[] | null;
+  historicalFileNumbers: ApiGen_Concepts_HistoricalFileNumber[] | null;
   notes: string | null;
   surplusDeclarationType: ApiGen_Base_CodeType<string> | null;
   surplusDeclarationComment: string | null;

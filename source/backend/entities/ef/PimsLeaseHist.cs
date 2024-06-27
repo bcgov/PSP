@@ -148,6 +148,14 @@ public partial class PimsLeaseHist
     [Column("HAS_DIGITAL_LICENSE")]
     public bool? HasDigitalLicense { get; set; }
 
+    [Column("CANCELLATION_REASON")]
+    [StringLength(500)]
+    public string CancellationReason { get; set; }
+
+    [Column("TERMINATION_REASON")]
+    [StringLength(500)]
+    public string TerminationReason { get; set; }
+
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }
 

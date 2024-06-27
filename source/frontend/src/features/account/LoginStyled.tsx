@@ -40,7 +40,7 @@ export const LoginStyled = styled(Container)`
       justify-content: center;
     }
     .block {
-      background-color: ${props => props.theme.css.filterBackgroundColor};
+      background-color: ${props => props.theme.css.highlightBackgroundColor};
       padding: 2rem 0;
       max-width: 65rem;
       max-height: 47.5rem;
@@ -54,14 +54,14 @@ export const LoginStyled = styled(Container)`
       font-weight: 700;
       font-size: 2.4rem;
       font-style: italic;
-      color: ${props => props.theme.css.primaryColor};
+      color: ${props => props.theme.css.headerTextColor};
     }
     h6 {
       margin-bottom: 2rem;
     }
     p {
       font-size: 1.2rem;
-      color: ${props => props.theme.css.textColor};
+      color: ${props => props.theme.bcTokens.typographyColorSecondary};
       font-family: 'BCSans', Fallback, sans-serif;
       line-height: 130%;
       margin-left: 3rem;
@@ -106,8 +106,8 @@ export const LoginStyled = styled(Container)`
       margin: 2rem auto;
     }
     .border-dark {
-      border-color: ${props => props.theme.css.primaryColor} !important;
-      color: ${props => props.theme.css.textColor} !important;
+      border-color: ${props => props.theme.css.headerBorderColor} !important;
+      color: ${props => props.theme.bcTokens.typographyColorSecondary} !important;
     }
     .pims-logo {
       margin-bottom: 1rem;

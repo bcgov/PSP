@@ -12,6 +12,7 @@ import {
 } from '@/components/contact/ContactManagerModal';
 import { formatContactSearchResult } from '@/features/contacts/contactUtils';
 import { IContactSearchResult } from '@/interfaces';
+import { isValidString } from '@/utils';
 
 import { DisplayError } from '../DisplayError';
 import { Input } from '../Input';
@@ -59,18 +60,27 @@ const ContactInputView: React.FunctionComponent<IContactInputViewProps> = ({
         <TooltipWrapper tooltipId={`${field}-error-tooltip}`} tooltip={errorTooltip}>
           <Row>
             <Col>
-              <StyledDiv className={!!error && !!touch ? 'is-invalid' : ''}>
+              <StyledInputLikeDiv
+                className={!!error && !!touch ? 'is-invalid' : ''}
+                $hasContact={isValidString(contactInfo?.id)}
+                onClick={() => {
+                  if (!isValidString(contactInfo?.id)) {
+                    setShowContactManager(true);
+                  }
+                }}
+              >
                 {text}
-                <StyledRemoveLinkButton
-                  onClick={() => {
-                    onClear();
-                  }}
-                  disabled={contactInfo === undefined}
-                  title="remove"
-                >
-                  <MdClose size="2rem" />
-                </StyledRemoveLinkButton>
-              </StyledDiv>
+                {isValidString(contactInfo?.id) && (
+                  <StyledRemoveLinkButton
+                    onClick={() => {
+                      onClear();
+                    }}
+                    title="remove"
+                  >
+                    <MdClose size="2rem" />
+                  </StyledRemoveLinkButton>
+                )}
+              </StyledInputLikeDiv>
               <Input
                 field={field + '.id'}
                 placeholder="Select from Contacts"
@@ -109,34 +119,48 @@ const ContactInputView: React.FunctionComponent<IContactInputViewProps> = ({
 
 export default ContactInputView;
 
-const StyledDiv = styled.div`
-  background: none;
+const StyledInputLikeDiv = styled.div<{ $hasContact: boolean }>`
   position: relative;
-  border-radius: 0.3rem;
-  padding: 0.6rem;
-  padding-right: 2.1rem;
-  color: ${props => props.theme.css.formControlTextColor};
-  border: ${props => props.theme.css.lightVariantColor} solid 0.1rem;
+  border-radius: 0.4rem;
+  padding-top: 0.8rem;
+  padding-bottom: 0.8rem;
+  padding-left: 1.2rem;
+  padding-right: 2.8rem;
+
+  background-image: none;
+  color: ${props =>
+    props.$hasContact
+      ? props.theme.bcTokens.typographyColorSecondary
+      : props.theme.bcTokens.typographyColorPlaceholder};
+  border: ${props => props.theme.css.borderOutlineColor} solid 0.1rem;
   &.is-invalid {
-    border: ${props => props.theme.css.dangerColor} solid 0.1rem;
+    border: ${props => props.theme.bcTokens.surfaceColorPrimaryDangerButtonDefault} solid 0.1rem;
   }
+
+  cursor: ${props => (props.$hasContact ? 'default' : 'pointer')};
 `;
 
 const StyledRemoveLinkButton = styled(LinkButton)`
   &&.btn {
     position: absolute;
     top: calc(50% - 1.4rem);
-    right: 0.4rem;
-    color: ${props => props.theme.css.primaryBorderColor};
+    padding-top: 0.8rem;
+    padding-bottom: 0.8rem;
+    padding-right: 1.2rem;
+    height: 1.6rem;
+    right: 0rem;
+
+    color: ${props => props.theme.bcTokens.iconsColorDisabled};
     text-decoration: none;
     line-height: unset;
     .text {
       display: none;
     }
+
     &:hover,
     &:active,
     &:focus {
-      color: ${props => props.theme.css.dangerColor};
+      color: ${props => props.theme.bcTokens.surfaceColorPrimaryDangerButtonDefault};
       text-decoration: none;
       opacity: unset;
     }

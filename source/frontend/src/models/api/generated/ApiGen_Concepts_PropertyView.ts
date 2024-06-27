@@ -49,4 +49,5 @@ export interface ApiGen_Concepts_PropertyView {
   isActivePayableLease: boolean | null;
   isReceivableLease: boolean | null;
   isActiveReceivableLease: boolean | null;
+  historicalFileNumberStr: string | null;
 }

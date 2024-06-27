@@ -18,8 +18,8 @@ exports[`DetailDocumentation component > renders a complete lease as expected 1`
 }
 
 .c0 {
-  margin: 1.5rem;
-  padding: 1.5rem;
+  margin: 1.6rem;
+  padding: 1.6rem;
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
@@ -51,7 +51,7 @@ exports[`DetailDocumentation component > renders a complete lease as expected 1`
           Documentation
         </div>
         <div
-          class="col-1"
+          class="pl-8 col-auto"
         >
           <svg
             class="c2"
@@ -71,7 +71,7 @@ exports[`DetailDocumentation component > renders a complete lease as expected 1`
               fill="none"
             />
             <path
-              d="M7 14l5-5 5 5z"
+              d="m7 14 5-5 5 5z"
             />
           </svg>
         </div>
@@ -179,62 +179,6 @@ exports[`DetailDocumentation component > renders a complete lease as expected 1`
         <div
           class="c4 text-left col"
         />
-      </div>
-      <div
-        class="pb-2 row"
-      >
-        <div
-          class="pr-0 text-left col-3"
-        >
-          <label
-            class="c3"
-          >
-            LIS #:
-          </label>
-        </div>
-        <div
-          class="c4 text-left col"
-        >
-          <div
-            class="input form-group"
-          >
-            <input
-              class="form-control"
-              id="input-tfaFileNumber"
-              name="tfaFileNumber"
-              title="333"
-              value="333"
-            />
-          </div>
-        </div>
-      </div>
-      <div
-        class="pb-2 row"
-      >
-        <div
-          class="pr-0 text-left col-3"
-        >
-          <label
-            class="c3"
-          >
-            PS #:
-          </label>
-        </div>
-        <div
-          class="c4 text-left col"
-        >
-          <div
-            class="input form-group"
-          >
-            <input
-              class="form-control"
-              id="input-psFileNo"
-              name="psFileNo"
-              title="444"
-              value="444"
-            />
-          </div>
-        </div>
       </div>
       <div
         class="pb-2 row"
@@ -277,8 +221,8 @@ exports[`DetailDocumentation component > renders minimally as expected 1`] = `
 }
 
 .c0 {
-  margin: 1.5rem;
-  padding: 1.5rem;
+  margin: 1.6rem;
+  padding: 1.6rem;
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
@@ -310,7 +254,7 @@ exports[`DetailDocumentation component > renders minimally as expected 1`] = `
           Documentation
         </div>
         <div
-          class="col-1"
+          class="pl-8 col-auto"
         >
           <svg
             class="c2"
@@ -330,7 +274,7 @@ exports[`DetailDocumentation component > renders minimally as expected 1`] = `
               fill="none"
             />
             <path
-              d="M7 14l5-5 5 5z"
+              d="m7 14 5-5 5 5z"
             />
           </svg>
         </div>
@@ -438,60 +382,6 @@ exports[`DetailDocumentation component > renders minimally as expected 1`] = `
         <div
           class="c4 text-left col"
         />
-      </div>
-      <div
-        class="pb-2 row"
-      >
-        <div
-          class="pr-0 text-left col-3"
-        >
-          <label
-            class="c3"
-          >
-            LIS #:
-          </label>
-        </div>
-        <div
-          class="c4 text-left col"
-        >
-          <div
-            class="input form-group"
-          >
-            <input
-              class="form-control"
-              id="input-tfaFileNumber"
-              name="tfaFileNumber"
-              value=""
-            />
-          </div>
-        </div>
-      </div>
-      <div
-        class="pb-2 row"
-      >
-        <div
-          class="pr-0 text-left col-3"
-        >
-          <label
-            class="c3"
-          >
-            PS #:
-          </label>
-        </div>
-        <div
-          class="c4 text-left col"
-        >
-          <div
-            class="input form-group"
-          >
-            <input
-              class="form-control"
-              id="input-psFileNo"
-              name="psFileNo"
-              value=""
-            />
-          </div>
-        </div>
       </div>
       <div
         class="pb-2 row"

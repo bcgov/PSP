@@ -62,6 +62,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By searchPropertiesSelectedToolTipIcon = By.CssSelector("span[data-testid='tooltip-icon-property-selector-tooltip']");
         private By searchPropertiesSelectedDefault = By.XPath("//span[contains(text(),'No Properties selected')]");
         private By searchPropertiesPropertiesInFileTotal = By.CssSelector("div[class='align-items-center mb-3 no-gutters row']");
+        private By searchPropertiesPropertiesInLeaseTotal = By.CssSelector("div[class='align-items-center my-3 no-gutters row']");
 
         //File - Edit Properties button
         private By fileEditPropertiesBttn = By.CssSelector("button[title='Change properties']");
@@ -190,34 +191,39 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
             while (webDriver.FindElements(propertiesFileConfirmationModal).Count > 0)
             {
-                Assert.Equal("User Override Required", sharedModals.ModalHeader());
-
                 if (sharedModals.ModalContent().Contains("This property has already been added to one or more acquisition files."))
                 {
+                    Assert.Equal("User Override Required", sharedModals.ModalHeader());
                     Assert.Contains("This property has already been added to one or more acquisition files.", sharedModals.ModalContent());
                     Assert.Contains("Do you want to acknowledge and proceed?", sharedModals.ModalContent());
-                    sharedModals.ModalClickOKBttn();
                 }
                 if (sharedModals.ModalContent().Contains("This property has already been added to one or more research files."))
                 {
+                    Assert.Equal("User Override Required", sharedModals.ModalHeader());
                     Assert.Contains("This property has already been added to one or more research files.", sharedModals.ModalContent());
                     Assert.Contains("Do you want to acknowledge and proceed?", sharedModals.ModalContent());
-                    sharedModals.ModalClickOKBttn();
                 }
                 if (sharedModals.ModalContent().Contains("This property has already been added to one or more disposition files."))
                 {
+                    Assert.Equal("User Override Required", sharedModals.ModalHeader());
                     Assert.Contains("This property has already been added to one or more disposition files.", sharedModals.ModalContent());
                     Assert.Contains("Do you want to acknowledge and proceed?", sharedModals.ModalContent());
-                    sharedModals.ModalClickOKBttn();
                 }
 
                 if (sharedModals.ModalContent().Contains("This property has already been added to one or more files."))
                 {
+                    Assert.Equal("User Override Required", sharedModals.ModalHeader());
                     Assert.Contains("This property has already been added to one or more files.", sharedModals.ModalContent());
                     Assert.Contains("Do you want to acknowledge and proceed?", sharedModals.ModalContent());
-                    sharedModals.ModalClickOKBttn();
                 }
 
+                if (sharedModals.ModalContent().Contains("You have selected a property not previously in the inventory."))
+                {
+                    Assert.Equal("Not inventory property", sharedModals.ModalHeader());
+                    Assert.Contains("You have selected a property not previously in the inventory. Do you want to add this property to the lease?", sharedModals.ModalContent());
+                }
+
+                sharedModals.ModalClickOKBttn();
                 Wait();
             }
         }
@@ -311,7 +317,7 @@ namespace PIMS.Tests.Automation.PageObjects
             WaitUntilClickable(By.XPath("//h2/div/div[contains(text(),'Selected properties')]/parent::div/parent::h2/following-sibling::div/div[@class='align-items-center mb-3 no-gutters row']["+ propertyIndex +"]/div[3]/button"));
             webDriver.FindElement(By.XPath("//h2/div/div[contains(text(),'Selected properties')]/parent::div/parent::h2/following-sibling::div/div[@class='align-items-center mb-3 no-gutters row']["+ propertyIndex +"]/div[3]/button")).Click();
 
-            Wait(2000);
+            Wait();
             if (webDriver.FindElements(propertiesFileConfirmationModal).Count > 0)
             {
                 Assert.True(sharedModals.ModalHeader() == "Removing Property from form");
@@ -329,10 +335,10 @@ namespace PIMS.Tests.Automation.PageObjects
         public void DeleteLastPropertyFromLease()
         {
             Wait();
-            var propertyIndex = webDriver.FindElements(searchPropertiesPropertiesInFileTotal).Count();
+            var propertyIndex = webDriver.FindElements(searchPropertiesPropertiesInLeaseTotal).Count();
 
-            WaitUntilClickable(By.XPath("//h2/div/div[contains(text(),'Selected properties')]/parent::div/parent::h2/following-sibling::div/div[@class='align-items-center mb-3 no-gutters row']["+ propertyIndex +"]/div[4]/button"));
-            webDriver.FindElement(By.XPath("//h2/div/div[contains(text(),'Selected properties')]/parent::div/parent::h2/following-sibling::div/div[@class='align-items-center mb-3 no-gutters row']["+ propertyIndex +"]/div[4]/button")).Click();
+            WaitUntilClickable(By.XPath("//h2/div/div[contains(text(),'Selected properties')]/parent::div/parent::h2/following-sibling::div/div[@class='align-items-center my-3 no-gutters row']["+ propertyIndex +"]/div[3]/button"));
+            webDriver.FindElement(By.XPath("//h2/div/div[contains(text(),'Selected properties')]/parent::div/parent::h2/following-sibling::div/div[@class='align-items-center my-3 no-gutters row']["+ propertyIndex +"]/div[3]/button")).Click();
 
             Wait(2000);
             if (webDriver.FindElements(propertiesFileConfirmationModal).Count > 0)
@@ -344,7 +350,7 @@ namespace PIMS.Tests.Automation.PageObjects
             }
 
             Wait();
-            var propertiesAfterRemove = webDriver.FindElements(searchPropertiesPropertiesInFileTotal).Count();
+            var propertiesAfterRemove = webDriver.FindElements(searchPropertiesPropertiesInLeaseTotal).Count();
             Assert.True(propertiesAfterRemove == propertyIndex - 1);
 
         }

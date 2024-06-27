@@ -77,7 +77,7 @@ namespace Pims.Api.Areas.Lease.Controllers
                 User.GetUsername(),
                 DateTime.Now);
 
-            var uri = new Uri(this.Request.GetDisplayUrl());
+            var uri = new Uri(Request.GetDisplayUrl());
             var query = Microsoft.AspNetCore.WebUtilities.QueryHelpers.ParseQuery(uri.Query);
             return GetLeases(new LeaseFilterModel(query));
         }

@@ -118,6 +118,7 @@ export const LeaseFilter: React.FunctionComponent<React.PropsWithChildren<ILease
                       <SelectInput<ILeaseSearchBy, ILeaseFilter>
                         field="searchBy"
                         defaultKey="pinOrPid"
+                        defaultValue={''}
                         selectOptions={[
                           { label: 'PID/PIN', key: 'pinOrPid', placeholder: 'Enter a PID or PIN' },
                           { label: 'Address', key: 'address', placeholder: 'Enter an address' },
@@ -129,7 +130,7 @@ export const LeaseFilter: React.FunctionComponent<React.PropsWithChildren<ILease
                           {
                             label: 'Historical File #',
                             key: 'historical',
-                            placeholder: 'Enter a LIS or PS file Number',
+                            placeholder: 'Enter a Historical file# (LIS, PS, etc.)',
                           },
                         ]}
                         className="idir-input-group"

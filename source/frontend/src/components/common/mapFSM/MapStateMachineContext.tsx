@@ -62,6 +62,7 @@ export interface IMapStateMachineContext {
   toggleMapLayer: () => void;
   setFilePropertyLocations: (locations: LatLngLiteral[]) => void;
   setMapLayers: (layers: ILayerItem[]) => void;
+  setDefaultMapLayers: (layers: ILayerItem[]) => void;
 
   setVisiblePimsProperties: (propertyIds: number[]) => void;
   setShowDisposed: (show: boolean) => void;
@@ -133,7 +134,6 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         }
 
         const geoFilter = getQueryParams(searchCriteria);
-
         if (geoFilter?.PID || geoFilter?.PID_PADDED || geoFilter?.PIN) {
           return mapSearch.searchMany(geoFilter);
         } else if (geoFilter?.latitude && geoFilter?.longitude) {
@@ -142,6 +142,9 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
           return mapSearch.searchOneLocation(geoLat, geoLng);
         } else if (geoFilter?.SURVEY_PLAN_NUMBER && !geoFilter?.PID && !geoFilter?.PIN) {
           return mapSearch.searchByPlanNumber(geoFilter);
+        } else if (geoFilter?.HISTORICAL_FILE_NUMBER_STR) {
+          geoFilter.forceExactMatch = false;
+          return mapSearch.searchByHistorical(geoFilter);
         } else {
           return mapSearch.searchMany(geoFilter);
         }
@@ -268,6 +271,13 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
     [serviceSend],
   );
 
+  const setDefaultMapLayers = useCallback(
+    (activeLayers: ILayerItem[]) => {
+      serviceSend({ type: 'DEFAULT_MAP_LAYERS', activeLayers });
+    },
+    [serviceSend],
+  );
+
   const setVisiblePimsProperties = useCallback(
     (propertyIds: number[]) => {
       serviceSend({ type: 'SET_VISIBLE_PROPERTIES', propertyIds });
@@ -364,6 +374,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         setShowDisposed,
         setShowRetired,
         setMapLayers,
+        setDefaultMapLayers,
         changeSidebar,
       }}
     >
@@ -381,6 +392,7 @@ const getQueryParams = (filter: IPropertyFilter): IGeoSearchParams => {
     PIN: pinOrPidValue,
     STREET_ADDRESS_1: filter.address,
     SURVEY_PLAN_NUMBER: filter.planNumber,
+    HISTORICAL_FILE_NUMBER_STR: filter.historical,
     latitude: filter.latitude,
     longitude: filter.longitude,
     forceExactMatch: true,

@@ -3,8 +3,7 @@ Alter the data in the PIMS_TAKE_TYPE table.
 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
 Author        Date         Comment
 ------------  -----------  -----------------------------------------------------
-Doug Filteau  2024-Mar-27  Initial version
-Doug Filteau  2024-Apr-18  Add 'IMPORTED' take type.
+Doug Filteau  2024-May-21  Initial version.  Add/enable PIMS.
 ----------------------------------------------------------------------------- */
 
 SET XACT_ABORT ON
@@ -16,21 +15,23 @@ GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
 
--- Disable the "IMPORTED" type
+-- Insert/enable the "PIMS" type
 DECLARE @CurrCd NVARCHAR(20)
-SET     @CurrCd = N'IMPORTED'
+SET     @CurrCd = N'PIMS'
 
 SELECT TAKE_TYPE_CODE
 FROM   PIMS_TAKE_TYPE
 WHERE  TAKE_TYPE_CODE = @CurrCd;
 
-IF @@ROWCOUNT = 1
-  BEGIN
-  UPDATE PIMS_TAKE_TYPE
-  SET    IS_DISABLED                = 1
+IF @@ROWCOUNT = 0
+  INSERT INTO PIMS_DATA_SOURCE_TYPE (DATA_SOURCE_TYPE_CODE, DESCRIPTION)
+    VALUES
+      (N'PIMS', N'PIMS');
+ELSE  
+  UPDATE PIMS_DATA_SOURCE_TYPE
+  SET    IS_DISABLED                = 0
        , CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER + 1
-  WHERE  TAKE_TYPE_CODE = @CurrCd;
-  END
+  WHERE  DATA_SOURCE_TYPE_CODE = @CurrCd;
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
@@ -48,4 +49,3 @@ ELSE BEGIN
    PRINT 'The database update failed'
 END
 GO
-

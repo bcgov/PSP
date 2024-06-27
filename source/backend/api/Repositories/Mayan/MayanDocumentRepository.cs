@@ -12,7 +12,6 @@ using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Models.CodeTypes;
-
 using Pims.Api.Models.Mayan;
 using Pims.Api.Models.Mayan.Document;
 using Pims.Api.Models.Mayan.Metadata;
@@ -25,6 +24,7 @@ namespace Pims.Api.Repositories.Mayan
     /// </summary>
     public class MayanDocumentRepository : MayanBaseRepository, IEdmsDocumentRepository
     {
+        private static readonly JsonSerializerOptions SerializerOptions = new() { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull };
         private readonly IEdmsAuthRepository _authRepository;
 
         /// <summary>
@@ -46,36 +46,27 @@ namespace Pims.Api.Repositories.Mayan
 
         public async Task<ExternalResponse<DocumentTypeModel>> TryCreateDocumentTypeAsync(DocumentTypeModel documentType)
         {
-            _logger.LogDebug("Creating document type...");
+            _logger.LogDebug("Creating document type {documentType}...", documentType);
 
             string authenticationToken = await _authRepository.GetTokenAsync();
-            JsonSerializerOptions serializerOptions = new()
-            {
-                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
-            };
-            string serializedDocumentType = JsonSerializer.Serialize(documentType, serializerOptions);
+            string serializedDocumentType = JsonSerializer.Serialize(documentType, SerializerOptions);
             using HttpContent content = new StringContent(serializedDocumentType);
             content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
             Uri endpoint = new($"{_config.BaseUri}/document_types/");
 
             var response = await PostAsync<DocumentTypeModel>(endpoint, content, authenticationToken);
-
-            _logger.LogDebug($"Finished creating a document type");
+            _logger.LogDebug($"Finished creating a document type {documentType} ", documentType);
 
             return response;
         }
 
         public async Task<ExternalResponse<DocumentTypeModel>> TryUpdateDocumentTypeAsync(DocumentTypeModel documentType)
         {
-            _logger.LogDebug("Updating document type...");
+            _logger.LogDebug("Updating document type {documentType}...", documentType);
 
             string authenticationToken = await _authRepository.GetTokenAsync();
-            JsonSerializerOptions serializerOptions = new()
-            {
-                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
-            };
-            string serializedDocumentType = JsonSerializer.Serialize(documentType, serializerOptions);
+            string serializedDocumentType = JsonSerializer.Serialize(documentType, SerializerOptions);
             using HttpContent content = new StringContent(serializedDocumentType);
             content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
@@ -83,22 +74,19 @@ namespace Pims.Api.Repositories.Mayan
 
             var response = await PutAsync<DocumentTypeModel>(endpoint, content, authenticationToken);
 
-            _logger.LogDebug($"Finished updating a document type");
-
             return response;
         }
 
         public async Task<ExternalResponse<string>> TryDeleteDocumentTypeAsync(long documentTypeId)
         {
-            _logger.LogDebug("Deleting document type...");
+            _logger.LogDebug("Deleting document type {documentTypeId}...", documentTypeId);
 
             string authenticationToken = await _authRepository.GetTokenAsync();
 
             Uri endpoint = new($"{this._config.BaseUri}/document_types/{documentTypeId}/");
 
             var response = await DeleteAsync(endpoint, authenticationToken);
-
-            _logger.LogDebug($"Finished deleting document type");
+            _logger.LogDebug($"Finished deleting document type {documentTypeId}", documentTypeId);
             return response;
         }
 
@@ -120,7 +108,7 @@ namespace Pims.Api.Repositories.Mayan
 
         public async Task<ExternalResponse<QueryResponse<DocumentTypeMetadataTypeModel>>> TryGetDocumentTypeMetadataTypesAsync(long documentTypeId, string ordering = "", int? page = null, int? pageSize = null)
         {
-            _logger.LogDebug("Retrieving document type metadata types...");
+            _logger.LogDebug("Retrieving document type metadata types {documentTypeId}...", documentTypeId);
             string authenticationToken = await _authRepository.GetTokenAsync();
 
             var queryParams = GenerateQueryParams(ordering, page, pageSize);
@@ -129,7 +117,7 @@ namespace Pims.Api.Repositories.Mayan
             Uri endpoint = new(QueryHelpers.AddQueryString(endpointString, queryParams));
             var response = await GetAsync<QueryResponse<DocumentTypeMetadataTypeModel>>(endpoint, authenticationToken).ConfigureAwait(true);
 
-            _logger.LogDebug("Finished retrieving document type's metadata types");
+            _logger.LogDebug("Finished retrieving document type's metadata types {documentTypeId}", documentTypeId);
             return response;
         }
 
@@ -144,27 +132,27 @@ namespace Pims.Api.Repositories.Mayan
             string endpointString = $"{_config.BaseUri}/documents/";
             Uri endpoint = new(QueryHelpers.AddQueryString(endpointString, queryParams));
             var response = await GetAsync<QueryResponse<DocumentDetailModel>>(endpoint, authenticationToken).ConfigureAwait(true);
-
             _logger.LogDebug("Finished retrieving document list");
+
             return response;
         }
 
         public async Task<ExternalResponse<DocumentDetailModel>> TryGetDocumentAsync(long documentId)
         {
-            _logger.LogDebug("Retrieving document...");
+            _logger.LogDebug("Retrieving document {documentId}...", documentId);
 
             string authenticationToken = await _authRepository.GetTokenAsync();
 
             Uri endpoint = new($"{this._config.BaseUri}/documents/{documentId}/");
             var response = await GetAsync<DocumentDetailModel>(endpoint, authenticationToken).ConfigureAwait(true);
+            _logger.LogDebug("Finished retrieving document {documentId}", documentId);
 
-            _logger.LogDebug("Finished retrieving document");
             return response;
         }
 
         public async Task<ExternalResponse<QueryResponse<DocumentMetadataModel>>> TryGetDocumentMetadataAsync(long documentId, string ordering = "", int? page = null, int? pageSize = null)
         {
-            _logger.LogDebug("Retrieving document metadata...");
+            _logger.LogDebug("Retrieving document metadata {documentId}...", documentId);
 
             string authenticationToken = await _authRepository.GetTokenAsync();
 
@@ -174,13 +162,14 @@ namespace Pims.Api.Repositories.Mayan
             Uri endpoint = new(QueryHelpers.AddQueryString(endpointString, queryParams));
             var response = await GetAsync<QueryResponse<DocumentMetadataModel>>(endpoint, authenticationToken).ConfigureAwait(true);
 
-            _logger.LogDebug("Finished retrieving document metadata");
+            _logger.LogDebug("Finished retrieving document metadata {documentId}", documentId);
+
             return response;
         }
 
         public async Task<ExternalResponse<FileDownloadResponse>> TryDownloadFileAsync(long documentId, long fileId)
         {
-            _logger.LogDebug("Downloading file...");
+            _logger.LogDebug("Downloading file {documentId}, {fileId}...", documentId, fileId);
             string authenticationToken = await _authRepository.GetTokenAsync();
 
             using HttpClient client = _httpClientFactory.CreateClient("Pims.Api.Logging");
@@ -196,8 +185,11 @@ namespace Pims.Api.Repositories.Mayan
             try
             {
                 Uri endpoint = new($"{this._config.BaseUri}/documents/{documentId}/files/{fileId}/download/");
-                HttpResponseMessage response = await client.GetAsync(endpoint).ConfigureAwait(true);
-                return await ProcessDownloadResponse(response);
+                HttpResponseMessage httpResponse = await client.GetAsync(endpoint).ConfigureAwait(true);
+
+                var response = await ProcessDownloadResponse(httpResponse);
+
+                return response;
             }
             catch (Exception e)
             {
@@ -212,22 +204,21 @@ namespace Pims.Api.Repositories.Mayan
 
         public async Task<ExternalResponse<string>> TryDeleteDocument(long documentId)
         {
-            _logger.LogDebug("Deleting document...");
-            _logger.LogTrace("Document id {documentId}", documentId);
+            _logger.LogDebug("Deleting document {documentId}...", documentId);
 
             string authenticationToken = await _authRepository.GetTokenAsync();
 
             Uri endpoint = new($"{this._config.BaseUri}/documents/{documentId}/");
 
             var response = await DeleteAsync(endpoint, authenticationToken);
+            _logger.LogDebug($"Finished deleting document {documentId}", documentId);
 
-            _logger.LogDebug($"Finished deleting document");
             return response;
         }
 
         public async Task<ExternalResponse<DocumentDetailModel>> TryUploadDocumentAsync(long documentType, IFormFile file)
         {
-            _logger.LogDebug("Uploading document...");
+            _logger.LogDebug("Uploading document {documentType}...", documentType);
             string authenticationToken = await _authRepository.GetTokenAsync();
 
             byte[] fileData;
@@ -235,7 +226,7 @@ namespace Pims.Api.Repositories.Mayan
             fileData = byteReader.ReadBytes((int)file.OpenReadStream().Length);
 
             // Add the file data to the content
-            using ByteArrayContent fileBytes = new ByteArrayContent(fileData);
+            using ByteArrayContent fileBytes = new(fileData);
             using MultipartFormDataContent multiContent = new MultipartFormDataContent();
             multiContent.Add(fileBytes, "file", file.FileName);
 
@@ -243,12 +234,12 @@ namespace Pims.Api.Repositories.Mayan
             using HttpContent content = new StringContent(documentType.ToString(CultureInfo.InvariantCulture));
             multiContent.Add(content, "document_type_id");
 
-            Uri endpoint = new($"{this._config.BaseUri}/documents/upload/");
+            Uri endpoint = new($"{_config.BaseUri}/documents/upload/");
+            ExternalResponse<DocumentDetailModel> response = await PostAsync<DocumentDetailModel>(endpoint, multiContent, authenticationToken);
 
-            ExternalResponse<DocumentDetailModel> result = await PostAsync<DocumentDetailModel>(endpoint, multiContent, authenticationToken);
+            _logger.LogDebug($"Finished uploading file of type {documentType}", documentType);
 
-            _logger.LogDebug($"Finished uploading file");
-            return result;
+            return response;
         }
 
         public async Task<ExternalResponse<QueryResponse<MetadataTypeModel>>> TryGetMetadataTypesAsync(string ordering = "", int? page = null, int? pageSize = null)
@@ -261,14 +252,14 @@ namespace Pims.Api.Repositories.Mayan
             Uri endpoint = new(QueryHelpers.AddQueryString(endpointString, queryParams));
 
             var response = await GetAsync<QueryResponse<MetadataTypeModel>>(endpoint, authenticationToken);
-
             _logger.LogDebug("Finished retrieving metadata types");
+
             return response;
         }
 
         public async Task<ExternalResponse<DocumentTypeMetadataTypeModel>> TryCreateDocumentTypeMetadataTypeAsync(long documentTypeId, long metadataTypeId, bool isRequired)
         {
-            _logger.LogDebug("Creating document type's metadata type...");
+            _logger.LogDebug("Creating document type's metadata type {documentTypeId}, {metadataTypeId}, {isRequired}...", documentTypeId, metadataTypeId, isRequired);
 
             string authenticationToken = await _authRepository.GetTokenAsync();
 
@@ -279,14 +270,14 @@ namespace Pims.Api.Repositories.Mayan
             Uri endpoint = new($"{this._config.BaseUri}/document_types/{documentTypeId}/metadata_types/");
 
             var response = await PostAsync<DocumentTypeMetadataTypeModel>(endpoint, content, authenticationToken);
+            _logger.LogDebug($"Finished creating document type's metadata type {documentTypeId}, {metadataTypeId}, {isRequired}...", documentTypeId, metadataTypeId, isRequired);
 
-            _logger.LogDebug($"Finished creating document type's metadata type");
             return response;
         }
 
         public async Task<ExternalResponse<DocumentMetadataModel>> TryCreateDocumentMetadataAsync(long documentId, long metadataTypeId, string value)
         {
-            _logger.LogDebug("Add existing metadata type with value to an existing document");
+            _logger.LogDebug("Add existing metadata type with value to an existing document {documentId}, {metadataTypeId}, {value}", documentId, metadataTypeId, value);
 
             string authenticationToken = await _authRepository.GetTokenAsync();
 
@@ -298,13 +289,13 @@ namespace Pims.Api.Repositories.Mayan
 
             var response = await PostAsync<DocumentMetadataModel>(endpoint, content, authenticationToken);
 
-            _logger.LogDebug($"Finished adding existing metadata value to a  document");
+            _logger.LogDebug($"Finished adding existing metadata value to a  document, {documentId}, {metadataTypeId}, {value}", documentId, metadataTypeId, value);
             return response;
         }
 
         public async Task<ExternalResponse<DocumentMetadataModel>> TryUpdateDocumentMetadataAsync(long documentId, long metadataId, string value)
         {
-            _logger.LogDebug("Update existing metadata type with value to an existing document");
+            _logger.LogDebug("Update existing metadata type with value to an existing document {documentId}, {metadataId}, {value}", documentId, metadataId, value);
 
             string authenticationToken = await _authRepository.GetTokenAsync();
 
@@ -315,27 +306,27 @@ namespace Pims.Api.Repositories.Mayan
             Uri endpoint = new($"{this._config.BaseUri}/documents/{documentId}/metadata/{metadataId}/");
 
             var response = await PutAsync<DocumentMetadataModel>(endpoint, content, authenticationToken);
+            _logger.LogDebug($"Finished updating existing metadata value to a document {documentId}, {metadataId}, {value}", documentId, metadataId, value);
 
-            _logger.LogDebug($"Finished updating existing metadata value to a document");
             return response;
         }
 
         public async Task<ExternalResponse<string>> TryDeleteDocumentMetadataAsync(long documentId, long metadataId)
         {
-            _logger.LogDebug("Delete existing metadata type from an existing document");
+            _logger.LogDebug("Delete existing metadata type from an existing document {documentId} {metadataId}", documentId, metadataId);
 
             string authenticationToken = await _authRepository.GetTokenAsync();
             Uri endpoint = new($"{this._config.BaseUri}/documents/{documentId}/metadata/{metadataId}/");
 
             var response = await DeleteAsync(endpoint, authenticationToken);
 
-            _logger.LogDebug($"Finished deleting existing metadata from a document");
+            _logger.LogDebug($"Finished deleting existing metadata from a document {documentId}, {metadataId}", documentId, metadataId);
             return response;
         }
 
         public async Task<ExternalResponse<DocumentTypeMetadataTypeModel>> TryUpdateDocumentTypeMetadataTypeAsync(long documentTypeId, long documentTypeMetadataTypeId, bool isRequired)
         {
-            _logger.LogDebug("Updating document type and metadata type...");
+            _logger.LogDebug("Updating document type and metadata type {documentTypeId} {documentTypeMetadataTypeId} {isRequired}...", documentTypeId, documentTypeMetadataTypeId, isRequired);
 
             string authenticationToken = await _authRepository.GetTokenAsync();
 
@@ -347,21 +338,47 @@ namespace Pims.Api.Repositories.Mayan
 
             var response = await PutAsync<DocumentTypeMetadataTypeModel>(endpoint, form, authenticationToken);
 
-            _logger.LogDebug($"Finished update document type with a metadata type");
+            _logger.LogDebug($"Finished update document type with a metadata type {documentTypeId} {documentTypeMetadataTypeId} {isRequired}", documentTypeId, documentTypeMetadataTypeId, isRequired);
             return response;
         }
 
         public async Task<ExternalResponse<string>> TryDeleteDocumentTypeMetadataTypeAsync(long documentTypeId, long documentTypeMetadataTypeId)
         {
-            _logger.LogDebug("Deleting document type's metadata type...");
+            _logger.LogDebug("Deleting document type's metadata {documentTypeId} {documentTypeMetadataTypeId}...", documentTypeId, documentTypeMetadataTypeId);
 
             string authenticationToken = await _authRepository.GetTokenAsync();
 
             Uri endpoint = new($"{this._config.BaseUri}/document_types/{documentTypeId}/metadata_types/{documentTypeMetadataTypeId}/");
 
             var response = await DeleteAsync(endpoint, authenticationToken);
+            _logger.LogDebug($"Finished deleting document type's metadata type {documentTypeId} {documentTypeMetadataTypeId}", documentTypeId, documentTypeMetadataTypeId);
 
-            _logger.LogDebug($"Finished deleting document type's metadata type");
+            return response;
+        }
+
+        public async Task<ExternalResponse<QueryResponse<FilePageModel>>> TryGetFilePageListAsync(long documentId, long documentFileId, int pageSize, int pageNumber)
+        {
+            _logger.LogDebug("Retrieving page list for mayan file {documentId} {documentFileId}...", documentId, documentFileId);
+            string authenticationToken = await _authRepository.GetTokenAsync();
+
+            Uri endpoint = new($"{_config.BaseUri}/documents/{documentId}/files/{documentFileId}/pages/?page_size={pageSize}&page={pageNumber}");
+
+            var response = await GetAsync<QueryResponse<FilePageModel>>(endpoint, authenticationToken);
+
+            _logger.LogDebug("Finished retrieving mayan file pages {documentId} {documentFileId}", documentId, documentFileId);
+            return response;
+        }
+
+        public async Task<HttpResponseMessage> TryGetFilePageImage(long documentId, long documentFileId, long documentFilePageId)
+        {
+            _logger.LogDebug("Retrieving page for document {documentId} file {fileId} page (id) {documentFilePageId}", documentId, documentFileId, documentFilePageId);
+            string authenticationToken = await _authRepository.GetTokenAsync();
+
+            Uri endpoint = new($"{_config.BaseUri}/documents/{documentId}/files/{documentFileId}/pages/{documentFilePageId}/image/");
+
+            var response = await GetRawAsync(endpoint, authenticationToken);
+
+            _logger.LogDebug("Finished retrieving mayan file page");
             return response;
         }
     }

@@ -26,13 +26,13 @@ interface Props {
 }
 
 const Down = styled(IoMdArrowDropdown)<Props>`
-  color: ${props => (props.$active ? variables.activeColor : undefined)};
+  color: ${props => (props.$active ? variables.linkColor : undefined)};
   width: 1.6rem;
   height: 1.6rem;
 `;
 
 const Up = styled(IoMdArrowDropup)<Props>`
-  color: ${props => (props.$active ? variables.activeColor : undefined)};
+  color: ${props => (props.$active ? variables.linkColor : undefined)};
   width: 1.6rem;
   height: 1.6rem;
 `;

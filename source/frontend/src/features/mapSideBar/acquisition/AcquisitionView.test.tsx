@@ -16,9 +16,12 @@ import { mockNotesResponse } from '@/mocks/noteResponses.mock';
 import { getUserMock } from '@/mocks/user.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { prettyFormatUTCDate } from '@/utils';
-import { RenderOptions, act, render, userEvent, waitFor, screen } from '@/utils/test-utils';
+import { RenderOptions, act, render, screen, userEvent, waitFor } from '@/utils/test-utils';
 
+import { server } from '@/mocks/msw/server';
 import { getMockApiTakes } from '@/mocks/takes.mock';
+import { HttpResponse, http } from 'msw';
+import { createRef } from 'react';
 import { SideBarContextProvider } from '../context/sidebarContext';
 import { FileTabType } from '../shared/detail/FileTabs';
 import AcquisitionView, { IAcquisitionViewProps } from './AcquisitionView';
@@ -148,6 +151,7 @@ describe('AcquisitionView component', () => {
       http.get('/api/acquisitionfiles/:id/interestholders', () =>
         HttpResponse.json(getMockApiInterestHolders()),
       ),
+      http.get('/api/properties/:id/historicalNumbers', () => HttpResponse.json([])),
     );
   });
 
@@ -169,9 +173,11 @@ describe('AcquisitionView component', () => {
     expect(getByText('Acquisition File')).toBeVisible();
 
     expect(getByText('1-12345-01 - Test ACQ File')).toBeVisible();
-    expect(getByText(prettyFormatUTCDate(testAcquisitionFile.appCreateTimestamp))).toBeVisible();
     expect(
-      getByText(prettyFormatUTCDate(mockLastUpdatedBy(1).appLastUpdateTimestamp)),
+      getByText(new RegExp(prettyFormatUTCDate(testAcquisitionFile.appCreateTimestamp))),
+    ).toBeVisible();
+    expect(
+      getByText(new RegExp(prettyFormatUTCDate(mockLastUpdatedBy(1).appLastUpdateTimestamp))),
     ).toBeVisible();
   });
 

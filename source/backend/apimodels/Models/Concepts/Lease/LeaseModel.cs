@@ -9,7 +9,7 @@ namespace Pims.Api.Models.Concepts.Lease
     /// <summary>
     /// Provides a lease-oriented model.
     /// </summary>
-    public class LeaseModel : FileModel
+    public class LeaseModel : FileWithChecklistModel
     {
         #region Properties
 
@@ -185,6 +185,10 @@ namespace Pims.Api.Models.Concepts.Lease
         public bool? HasPhysicalLicense { get; set; }
 
         public bool? HasDigitalLicense { get; set; }
+
+        public string CancellationReason { get; set; }
+
+        public string TerminationReason { get; set; }
 
         public bool IsExpired { get; set; }
 

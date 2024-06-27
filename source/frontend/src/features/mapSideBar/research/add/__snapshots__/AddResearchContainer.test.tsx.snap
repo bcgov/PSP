@@ -12,7 +12,7 @@ exports[`AddResearchContainer component > renders as expected 1`] = `
   border-bottom: solid 0.5rem;
   width: 100%;
   text-align: left;
-  margin-bottom: 2rem;
+  margin-bottom: 2.4rem;
 }
 
 .c2 {
@@ -244,39 +244,13 @@ exports[`AddResearchContainer component > renders as expected 1`] = `
   font-size: 1.4rem;
 }
 
-.c15 {
-  background-color: white;
-  font-size: 1.4rem;
-  border-color: transparent;
-}
-
-.c15 .nav-tabs {
-  height: auto;
-}
-
-.c15 .nav-item {
-  min-width: 5rem;
-  padding: 0.1rem 0.6rem;
-}
-
-.c15 .nav-item:hover {
-  border-color: transparent;
-  -webkit-text-decoration: underline;
-  text-decoration: underline;
-}
-
-.c15 .nav-item.active {
-  font-family: 'BCSans-Bold';
-  border-color: transparent;
-}
-
 .c16 {
   font-family: 'BCSans-Bold';
-  font-size: 2rem;
+  font-size: 2.2rem;
   border-bottom: solid 0.2rem;
   width: 100%;
   text-align: left;
-  margin-bottom: 2rem;
+  margin-bottom: 2.4rem;
 }
 
 .c0 {
@@ -293,6 +267,23 @@ exports[`AddResearchContainer component > renders as expected 1`] = `
   width: 100%;
 }
 
+.c2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  text-align: left;
+  height: 100%;
+  overflow-y: auto;
+}
+
 .c11 {
   font-weight: bold;
   border-bottom: 0.2rem solid;
@@ -300,8 +291,8 @@ exports[`AddResearchContainer component > renders as expected 1`] = `
 }
 
 .c4 {
-  margin: 1.5rem;
-  padding: 1.5rem;
+  margin: 1.6rem;
+  padding: 1.6rem;
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
@@ -395,6 +386,32 @@ exports[`AddResearchContainer component > renders as expected 1`] = `
   position: relative;
 }
 
+.c15 {
+  background-color: white;
+  font-size: 1.4rem;
+  border-color: transparent;
+}
+
+.c15 .nav-tabs {
+  height: auto;
+}
+
+.c15 .nav-item {
+  min-width: 5rem;
+  padding: 0.1rem 1.2rem;
+}
+
+.c15 .nav-item:hover {
+  border-color: transparent;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+}
+
+.c15 .nav-item.active {
+  font-family: 'BCSans-Bold';
+  border-color: transparent;
+}
+
 .c14 {
   height: auto;
 }
@@ -432,25 +449,6 @@ exports[`AddResearchContainer component > renders as expected 1`] = `
 .c3 {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
-}
-
-.c2 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-box-flex: 1;
-  -webkit-flex-grow: 1;
-  -ms-flex-positive: 1;
-  flex-grow: 1;
-  text-align: left;
-  height: 100%;
-  overflow-y: auto;
-  padding-right: 1rem;
-  padding-bottom: 1rem;
 }
 
 <div
@@ -542,7 +540,7 @@ exports[`AddResearchContainer component > renders as expected 1`] = `
                         fill="none"
                       />
                       <path
-                        d="M7 10l5 5 5-5z"
+                        d="m7 10 5 5 5-5z"
                       />
                     </svg>
                   </div>
@@ -830,6 +828,22 @@ exports[`AddResearchContainer component > renders as expected 1`] = `
                                     class="c21 text-left col"
                                   />
                                 </div>
+                                <div
+                                  class="row"
+                                >
+                                  <div
+                                    class="col-md-12"
+                                  >
+                                    <label
+                                      class="form-label"
+                                    >
+                                      Legal Description:
+                                    </label>
+                                  </div>
+                                  <div
+                                    class="col-md-12"
+                                  />
+                                </div>
                               </div>
                             </div>
                           </div>
@@ -905,6 +919,13 @@ exports[`AddResearchContainer component > renders as expected 1`] = `
                                               value="planNumber"
                                             >
                                               Plan #
+                                            </option>
+                                            <option
+                                              class="option"
+                                              data-testid="select-option-legalDescription"
+                                              value="legalDescription"
+                                            >
+                                              Legal Description
                                             </option>
                                           </select>
                                         </div>
@@ -1016,7 +1037,7 @@ exports[`AddResearchContainer component > renders as expected 1`] = `
                                 <div
                                   class="tr"
                                   role="row"
-                                  style="display: flex; flex: 1 0 auto; min-width: 120px;"
+                                  style="display: flex; flex: 1 0 auto; min-width: 150px;"
                                 >
                                   <div
                                     class="th"
@@ -1084,6 +1105,18 @@ exports[`AddResearchContainer component > renders as expected 1`] = `
                                       class="sortable-column"
                                     >
                                       Address
+                                    </div>
+                                  </div>
+                                  <div
+                                    class="th"
+                                    colspan="1"
+                                    role="columnheader"
+                                    style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                                  >
+                                    <div
+                                      class="sortable-column"
+                                    >
+                                      Legal Description
                                     </div>
                                   </div>
                                 </div>

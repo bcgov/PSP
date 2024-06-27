@@ -88,7 +88,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             acquisitionFilesDetails.VerifyMaximumFields();
 
             //Add Additional Optional information to the acquisition file
-            acquisitionFilesDetails.AddAdditionalInformation(acquisitionFile);
+            acquisitionFilesDetails.UpdateAcquisitionFile(acquisitionFile);
 
             //Save Acquisition File
             acquisitionFilesDetails.SaveAcquisitionFileDetails();
@@ -117,7 +117,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             acquisitionFilesDetails.EditAcquisitionFileBttn();
 
             //Add Additional Optional information to the acquisition file
-            acquisitionFilesDetails.AddAdditionalInformation(acquisitionFile);
+            acquisitionFilesDetails.UpdateAcquisitionFile(acquisitionFile);
 
             //Save Acquisition File
             acquisitionFilesDetails.SaveAcquisitionFileDetails();
@@ -281,20 +281,12 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 //Verify Init form
                 acquisitionTakes.VerifyInitTakesView();
 
-                //Click on Edit button
-                acquisitionTakes.ClickEditTakesButton();
+                //Click on Add Takes button
+                acquisitionTakes.ClickAddTakesButton();
 
                 //Insert Take
-                if (acquisitionFile.AcquisitionTakes[i].TakeCounter.Equals(0))
-                {
-                    acquisitionTakes.VerifyInitCreateForm();
-                    acquisitionTakes.InsertTake(acquisitionFile.AcquisitionTakes[i]);
-                }
-                else
-                {
-                    acquisitionTakes.ClickCreateNewTakeBttn();
-                    acquisitionTakes.InsertTake(acquisitionFile.AcquisitionTakes[i]);
-                }
+                acquisitionTakes.VerifyInitCreateForm();
+                acquisitionTakes.InsertTake(acquisitionFile.AcquisitionTakes[i]);
 
                 //Save Take
                 acquisitionTakes.SaveTake();
@@ -323,7 +315,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             acquisitionTakes.NavigateTakesTab();
 
             //Update Take
-            acquisitionTakes.ClickEditTakesButton();
+            acquisitionTakes.ClickEditTakesButton(acquisitionFile.AcquisitionTakes[0].TakeCounter);
             acquisitionTakes.InsertTake(acquisitionFile.AcquisitionTakes[0]);
 
             //Save Take
@@ -339,11 +331,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             acquisitionTakes.NavigateTakesTab();
 
             //Delete Take
-            acquisitionTakes.ClickEditTakesButton();
             acquisitionTakes.DeleteTake(acquisitionFile.AcquisitionTakes[0].TakeCounter);
-
-            //Save Take
-            acquisitionTakes.SaveTake();
         }
 
         [StepDefinition(@"I insert Checklist information to an Acquisition File")]
@@ -856,7 +844,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             acquisitionFilesDetails.EditAcquisitionFileBttn();
 
             //Add additional information
-            acquisitionFilesDetails.AddAdditionalInformation(acquisitionFile);
+            acquisitionFilesDetails.UpdateAcquisitionFile(acquisitionFile);
 
             //Save Acquisition File
             acquisitionFilesDetails.SaveAcquisitionFileDetails();
@@ -1055,7 +1043,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 acquisitionFile.AcquisitionSearchProperties.PIN = ExcelDataContext.ReadData(acquisitionFile.AcquisitionSearchPropertiesIndex, "PIN");
                 acquisitionFile.AcquisitionSearchProperties.Address = ExcelDataContext.ReadData(acquisitionFile.AcquisitionSearchPropertiesIndex, "Address");
                 acquisitionFile.AcquisitionSearchProperties.PlanNumber = ExcelDataContext.ReadData(acquisitionFile.AcquisitionSearchPropertiesIndex, "PlanNumber");
-                acquisitionFile.AcquisitionSearchProperties.LegalDescription = ExcelDataContext.ReadData(acquisitionFile.AcquisitionSearchPropertiesIndex, "LegalDescription");
+                //acquisitionFile.AcquisitionSearchProperties.LegalDescription = ExcelDataContext.ReadData(acquisitionFile.AcquisitionSearchPropertiesIndex, "LegalDescription");
                 acquisitionFile.AcquisitionSearchProperties.MultiplePIDS = genericSteps.PopulateLists(ExcelDataContext.ReadData(acquisitionFile.AcquisitionSearchPropertiesIndex, "MultiplePIDS"));
             }
 

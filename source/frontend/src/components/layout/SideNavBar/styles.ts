@@ -4,7 +4,7 @@ import styled from 'styled-components';
 export const TrayHeader = styled.h3`
   font-size: 3rem;
   padding-bottom: 0.8rem;
-  border-bottom: 0.4rem solid ${props => props.theme.css.primaryColor};
+  border-bottom: 0.4rem solid ${props => props.theme.css.headerBorderColor};
   margin-bottom: 3.2rem;
   max-width: 28rem;
 `;
@@ -19,7 +19,7 @@ export const SideNavBar = styled.div`
   position: relative;
   align-items: center;
   grid-area: iconbar;
-  background-color: ${props => props.theme.css.primaryColor};
+  background-color: ${props => props.theme.tenant.colour};
   transition: 0.5s width;
   width: 6rem;
   label {
@@ -61,9 +61,9 @@ export const CloseButton = styled(FaWindowClose)`
   &#close-tray {
     float: right;
     cursor: pointer;
-    fill: ${props => props.theme.css.textColor};
+    fill: ${props => props.theme.bcTokens.typographyColorSecondary};
     &:hover {
-      fill: ${props => props.theme.css.secondaryVariantColor};
+      fill: ${props => props.theme.css.activeActionColor};
     }
   }
 `;
@@ -79,7 +79,7 @@ export const SideTray = styled.div`
   width: 64rem;
   padding: 0.8rem 1.6rem;
   text-align: left;
-  transition: transform 0.5s ease-in-out;
+  transition: transform 0.3s ease-in-out;
   box-shadow: 0.3rem 0 0.4rem rgba(0, 0, 0, 0.2);
   &.show {
     transform: translateX(64rem);
@@ -104,8 +104,8 @@ export const ExportH3 = styled.h3`
   margin-bottom: 1rem;
   text-align: left;
   padding: 1rem 0 0.5rem 0;
-  color: ${props => props.theme.css.textColor};
-  border-bottom: solid 0.3rem ${props => props.theme.css.primaryColor};
+  color: ${props => props.theme.bcTokens.typographyColorSecondary};
+  border-bottom: solid 0.3rem ${props => props.theme.css.headerBorderColor};
   display: flex;
   align-items: flex-end;
 `;
@@ -115,5 +115,5 @@ export const ClickableDownload = styled(FaDownload)`
     cursor: pointer;
   }
   align-self: center;
-  color: ${({ theme }) => theme.css.slideOutBlue};
+  color: ${({ theme }) => theme.css.activeActionColor};
 `;

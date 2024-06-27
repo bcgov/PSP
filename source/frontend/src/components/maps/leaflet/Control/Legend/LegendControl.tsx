@@ -16,7 +16,7 @@ import { Legend } from './Legend';
 const LegendButton = styled(Button as any)`
   &&.btn {
     background-color: #ffffff;
-    color: ${({ theme }) => theme.css.darkVariantColor};
+    color: ${({ theme }) => theme.bcTokens.typographyColorSecondary};
     width: 4rem;
     height: 4rem;
     display: flex;

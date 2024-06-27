@@ -1,6 +1,7 @@
 import { AxiosError } from 'axios';
 import { FormikProps } from 'formik';
 import React, { useContext } from 'react';
+import { TbArrowBounce } from 'react-icons/tb';
 import {
   match,
   matchPath,
@@ -10,9 +11,7 @@ import {
   useLocation,
   useRouteMatch,
 } from 'react-router-dom';
-import styled from 'styled-components';
 
-import RealEstateAgent from '@/assets/images/real-estate-agent.svg?react';
 import { FileTypes } from '@/constants';
 import FileLayout from '@/features/mapSideBar/layout/FileLayout';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
@@ -28,6 +27,7 @@ import FilePropertyRouter from '../router/FilePropertyRouter';
 import { FileTabType } from '../shared/detail/FileTabs';
 import { PropertyForm } from '../shared/models';
 import SidebarFooter from '../shared/SidebarFooter';
+import { StyledFormWrapper } from '../shared/styles';
 import UpdateProperties from '../shared/update/properties/UpdateProperties';
 import { DispositionHeader } from './common/DispositionHeader';
 import DispositionMenu from './common/DispositionMenu';
@@ -126,11 +126,10 @@ export const DispositionView: React.FunctionComponent<IDispositionViewProps> = (
           onClose={onClose}
           title={formTitle}
           icon={
-            <RealEstateAgent
+            <TbArrowBounce
               title="Disposition file Icon"
               width="2.6rem"
               height="2.6rem"
-              fill="currentColor"
               className="mr-2"
             />
           }
@@ -230,16 +229,5 @@ const getEditTitle = (
 
   return 'Disposition File';
 };
-
-const StyledFormWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  text-align: left;
-  height: 100%;
-  overflow-y: auto;
-  padding-right: 1rem;
-  padding-bottom: 1rem;
-`;
 
 export default DispositionView;

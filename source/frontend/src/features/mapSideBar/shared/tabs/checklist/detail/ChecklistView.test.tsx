@@ -21,6 +21,7 @@ vi.mocked(useApiUsers).mockReturnValue({
 
 const mockViewProps: IChecklistViewProps = {
   apiFile: undefined,
+  showEditButton: true,
   onEdit: vi.fn(),
   sectionTypeName: API.ACQUISITION_CHECKLIST_SECTION_TYPES,
   editClaim: Claims.ACQUISITION_EDIT,
@@ -31,6 +32,7 @@ describe('ChecklistView component', () => {
     const utils = render(
       <ChecklistView
         apiFile={mockViewProps.apiFile}
+        showEditButton={mockViewProps.showEditButton}
         onEdit={mockViewProps.onEdit}
         sectionTypeName={API.ACQUISITION_CHECKLIST_SECTION_TYPES}
         editClaim={Claims.ACQUISITION_EDIT}

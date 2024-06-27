@@ -3,8 +3,8 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { MdTopic } from 'react-icons/md';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import styled from 'styled-components';
 
+import ConfirmNavigation from '@/components/common/ConfirmNavigation';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
 import { usePimsPropertyRepository } from '@/hooks/repositories/usePimsPropertyRepository';
@@ -19,6 +19,7 @@ import { featuresetToMapProperty } from '@/utils/mapPropertyUtils';
 
 import { PropertyForm } from '../../shared/models';
 import SidebarFooter from '../../shared/SidebarFooter';
+import { StyledFormWrapper } from '../../shared/styles';
 import { useAddResearch } from '../hooks/useAddResearch';
 import { AddResearchFileYupSchema } from './AddResearchFileYupSchema';
 import AddResearchForm from './AddResearchForm';
@@ -213,6 +214,12 @@ export const AddResearchContainer: React.FunctionComponent<IAddResearchContainer
           <StyledFormWrapper>
             <AddResearchForm confirmBeforeAdd={confirmBeforeAdd} />
           </StyledFormWrapper>
+          <ConfirmNavigation
+            navigate={history.push}
+            shouldBlockNavigation={() => {
+              return formikProps.dirty && !formikProps.isSubmitting && !initialForm.id;
+            }}
+          />
         </MapSideBarLayout>
       )}
     </Formik>
@@ -220,14 +227,3 @@ export const AddResearchContainer: React.FunctionComponent<IAddResearchContainer
 };
 
 export default AddResearchContainer;
-
-const StyledFormWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  text-align: left;
-  height: 100%;
-  overflow-y: auto;
-  padding-right: 1rem;
-  padding-bottom: 1rem;
-`;

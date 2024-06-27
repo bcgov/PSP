@@ -59,6 +59,9 @@ public partial class PimsDataSourceType
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
 
+    [InverseProperty("DataSourceTypeCodeNavigation")]
+    public virtual ICollection<PimsHistoricalFileNumber> PimsHistoricalFileNumbers { get; set; } = new List<PimsHistoricalFileNumber>();
+
     [InverseProperty("PropertyDataSourceTypeCodeNavigation")]
     public virtual ICollection<PimsProperty> PimsProperties { get; set; } = new List<PimsProperty>();
 }

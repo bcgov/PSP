@@ -60,6 +60,7 @@ const emptyProperty: ApiGen_Concepts_Property = {
   surplusDeclarationType: null,
   surplusDeclarationComment: null,
   surplusDeclarationDate: EpochIsoDateTime,
+  historicalFileNumbers: null,
   rowVersion: null,
 };
 
@@ -107,6 +108,7 @@ export const getEmptyPropertyView = (): ApiGen_Concepts_PropertyView => ({
   isActivePayableLease: false,
   isReceivableLease: false,
   isActiveReceivableLease: false,
+  historicalFileNumberStr: '',
 });
 
 export const getMockProperties: () => IProperty[] = () => [

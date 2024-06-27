@@ -32,5 +32,9 @@ namespace Pims.Api.Services
         IEnumerable<PimsLeaseTenant> GetTenantsByLeaseId(long leaseId);
 
         IEnumerable<PimsLeaseTenant> UpdateTenantsByLeaseId(long leaseId, IEnumerable<PimsLeaseTenant> pimsLeaseTenants);
+
+        IEnumerable<PimsLeaseChecklistItem> GetChecklistItems(long id);
+
+        PimsLease UpdateChecklistItems(long leaseId, IList<PimsLeaseChecklistItem> checklistItems);
     }
 }

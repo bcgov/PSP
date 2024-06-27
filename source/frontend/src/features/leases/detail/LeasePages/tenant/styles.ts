@@ -7,7 +7,7 @@ export const TenantH2 = styled.h2`
   font-family: BcSans-Bold;
   line-height: 2.8rem;
   text-align: left;
-  color: ${props => props.theme.css.textColor};
+  color: ${props => props.theme.bcTokens.typographyColorSecondary};
 `;
 
 export const ContactListViewWrapper = styled(ContactManagerView)`
