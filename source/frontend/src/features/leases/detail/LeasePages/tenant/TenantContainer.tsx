@@ -14,7 +14,7 @@ import AddLeaseTenantForm from './AddLeaseTenantForm';
 import { FormTenant } from './models';
 import ViewTenantForm from './ViewTenantForm';
 
-const TenantContainer: React.FunctionComponent<React.PropsWithChildren<LeasePageProps>> = ({
+const TenantContainer: React.FunctionComponent<React.PropsWithChildren<LeasePageProps<void>>> = ({
   isEditing,
   formikRef,
   onEdit,

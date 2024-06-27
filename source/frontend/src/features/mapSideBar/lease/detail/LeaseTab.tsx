@@ -7,7 +7,7 @@ import { LeaseFormModel } from '@/features/leases/models';
 import { ILeasePage } from '../LeaseContainer';
 
 export interface ILeaseTabProps {
-  leasePage?: ILeasePage;
+  leasePage?: ILeasePage<any>;
   onEdit?: () => void;
   isEditing: boolean;
   formikRef: React.RefObject<FormikProps<LeaseFormModel>>;

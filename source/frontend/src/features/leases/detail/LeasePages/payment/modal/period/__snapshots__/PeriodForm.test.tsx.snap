@@ -78,13 +78,76 @@ exports[`PeriodForm component > renders as expected 1`] = `
   font-family: 'BcSans';
 }
 
-.c0 .required .form-label:after {
+.c0 .required .datepicker-label:after {
   content: ' *';
 }
 
 <div
     class="c0"
   >
+    <div
+      class="row"
+    >
+      <div
+        class="col-md-6"
+      >
+        <div
+          class="form-group"
+        >
+          <label
+            class="form-label"
+            for="input-isFlexible"
+          >
+            <span
+              class="control-label"
+            >
+              Period duration:
+            </span>
+             
+            <span
+              class="tooltip-icon"
+              data-testid="tooltip-icon-isFlexible-tooltip"
+              id="isFlexible-tooltip"
+            >
+              <svg
+                class="tooltip-icon"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 512 512"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                />
+              </svg>
+            </span>
+          </label>
+          <select
+            class="form-select form-control"
+            id="input-isFlexible"
+            name="isFlexible"
+          >
+            <option
+              class="option"
+              data-testid="select-option-false"
+              value="false"
+            >
+              Fixed
+            </option>
+            <option
+              class="option"
+              data-testid="select-option-true"
+              value="true"
+            >
+              Flexible
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
     <div
       class="row"
     >
@@ -98,7 +161,32 @@ exports[`PeriodForm component > renders as expected 1`] = `
             class="form-label"
             for="datepicker-startDate"
           >
-            Start date:
+            <span
+              class="datepicker-label"
+            >
+              Start date:
+            </span>
+             
+            <span
+              class="tooltip-icon"
+              data-testid="tooltip-icon-startDate-tooltip"
+              id="startDate-tooltip"
+            >
+              <svg
+                class="tooltip-icon"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 512 512"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                />
+              </svg>
+            </span>
           </label>
           <div
             class="react-datepicker-wrapper d-block"
@@ -133,13 +221,38 @@ exports[`PeriodForm component > renders as expected 1`] = `
         class="col"
       >
         <div
-          class="c1 form-group"
+          class="c1 required form-group"
         >
           <label
             class="form-label"
             for="datepicker-expiryDate"
           >
-            End date:
+            <span
+              class="datepicker-label"
+            >
+              End date:
+            </span>
+             
+            <span
+              class="tooltip-icon"
+              data-testid="tooltip-icon-expiryDate-tooltip"
+              id="expiryDate-tooltip"
+            >
+              <svg
+                class="tooltip-icon"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 512 512"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                />
+              </svg>
+            </span>
           </label>
           <div
             class="react-datepicker-wrapper d-block"
@@ -162,6 +275,7 @@ exports[`PeriodForm component > renders as expected 1`] = `
                 id="datepicker-expiryDate"
                 name="expiryDate"
                 placeholder="MMM DD, YYYY"
+                required=""
                 type="text"
                 value=""
               />
@@ -183,7 +297,12 @@ exports[`PeriodForm component > renders as expected 1`] = `
             class="form-label"
             for="input-leasePmtFreqTypeCode.id"
           >
-            Payment frequency: 
+            <span
+              class="control-label"
+            >
+              Payment frequency:
+            </span>
+             
           </label>
           <select
             class="form-select form-control"
@@ -278,7 +397,7 @@ exports[`PeriodForm component > renders as expected 1`] = `
             class="form-label"
             for="input-paymentAmount"
           >
-            Agreed payment ($) 
+            Agreed payment ($): 
           </label>
           <div
             class="input-tooltip-wrapper"
@@ -309,7 +428,7 @@ exports[`PeriodForm component > renders as expected 1`] = `
             class="form-label"
             for="input-paymentDueDateStr"
           >
-            Payments due 
+            Payments due: 
             <span
               class="tooltip-icon"
               data-testid="tooltip-icon-paymentDueDateStr-tooltip"
@@ -409,7 +528,12 @@ exports[`PeriodForm component > renders as expected 1`] = `
             class="form-label"
             for="input-statusTypeCode.id"
           >
-            Period Status 
+            <span
+              class="control-label"
+            >
+              Period Status:
+            </span>
+             
           </label>
           <select
             class="form-select form-control"
@@ -534,13 +658,76 @@ exports[`PeriodForm component > renders with data as expected 1`] = `
   font-family: 'BcSans';
 }
 
-.c0 .required .form-label:after {
+.c0 .required .datepicker-label:after {
   content: ' *';
 }
 
 <div
     class="c0"
   >
+    <div
+      class="row"
+    >
+      <div
+        class="col-md-6"
+      >
+        <div
+          class="form-group"
+        >
+          <label
+            class="form-label"
+            for="input-isFlexible"
+          >
+            <span
+              class="control-label"
+            >
+              Period duration:
+            </span>
+             
+            <span
+              class="tooltip-icon"
+              data-testid="tooltip-icon-isFlexible-tooltip"
+              id="isFlexible-tooltip"
+            >
+              <svg
+                class="tooltip-icon"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 512 512"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                />
+              </svg>
+            </span>
+          </label>
+          <select
+            class="form-select form-control"
+            id="input-isFlexible"
+            name="isFlexible"
+          >
+            <option
+              class="option"
+              data-testid="select-option-false"
+              value="false"
+            >
+              Fixed
+            </option>
+            <option
+              class="option"
+              data-testid="select-option-true"
+              value="true"
+            >
+              Flexible
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
     <div
       class="row"
     >
@@ -554,7 +741,32 @@ exports[`PeriodForm component > renders with data as expected 1`] = `
             class="form-label"
             for="datepicker-startDate"
           >
-            Start date:
+            <span
+              class="datepicker-label"
+            >
+              Start date:
+            </span>
+             
+            <span
+              class="tooltip-icon"
+              data-testid="tooltip-icon-startDate-tooltip"
+              id="startDate-tooltip"
+            >
+              <svg
+                class="tooltip-icon"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 512 512"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                />
+              </svg>
+            </span>
           </label>
           <div
             class="react-datepicker-wrapper d-block"
@@ -589,13 +801,38 @@ exports[`PeriodForm component > renders with data as expected 1`] = `
         class="col"
       >
         <div
-          class="c1 form-group"
+          class="c1 required form-group"
         >
           <label
             class="form-label"
             for="datepicker-expiryDate"
           >
-            End date:
+            <span
+              class="datepicker-label"
+            >
+              End date:
+            </span>
+             
+            <span
+              class="tooltip-icon"
+              data-testid="tooltip-icon-expiryDate-tooltip"
+              id="expiryDate-tooltip"
+            >
+              <svg
+                class="tooltip-icon"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 512 512"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                />
+              </svg>
+            </span>
           </label>
           <div
             class="react-datepicker-wrapper d-block"
@@ -618,6 +855,7 @@ exports[`PeriodForm component > renders with data as expected 1`] = `
                 id="datepicker-expiryDate"
                 name="expiryDate"
                 placeholder="MMM DD, YYYY"
+                required=""
                 type="text"
                 value=""
               />
@@ -639,7 +877,12 @@ exports[`PeriodForm component > renders with data as expected 1`] = `
             class="form-label"
             for="input-leasePmtFreqTypeCode.id"
           >
-            Payment frequency: 
+            <span
+              class="control-label"
+            >
+              Payment frequency:
+            </span>
+             
           </label>
           <select
             class="form-select form-control"
@@ -734,7 +977,7 @@ exports[`PeriodForm component > renders with data as expected 1`] = `
             class="form-label"
             for="input-paymentAmount"
           >
-            Agreed payment ($) 
+            Agreed payment ($): 
           </label>
           <div
             class="input-tooltip-wrapper"
@@ -765,7 +1008,7 @@ exports[`PeriodForm component > renders with data as expected 1`] = `
             class="form-label"
             for="input-paymentDueDateStr"
           >
-            Payments due 
+            Payments due: 
             <span
               class="tooltip-icon"
               data-testid="tooltip-icon-paymentDueDateStr-tooltip"
@@ -865,7 +1108,12 @@ exports[`PeriodForm component > renders with data as expected 1`] = `
             class="form-label"
             for="input-statusTypeCode.id"
           >
-            Period Status 
+            <span
+              class="control-label"
+            >
+              Period Status:
+            </span>
+             
           </label>
           <select
             class="form-select form-control"

@@ -10,7 +10,7 @@ import { systemConstantsSlice } from '@/store/slices/systemConstants';
 import { act, fillInput, renderAsync, RenderOptions } from '@/utils/test-utils';
 
 import { defaultFormLeasePayment } from '../../models';
-import { isActualGstEligible as isActualGstEligibleOriginal } from '../../PaymentsPeriodContainer';
+import { isActualGstEligible as isActualGstEligibleOriginal } from '../../PeriodPaymentsContainer';
 import PaymentForm, { IPaymentFormProps } from './PaymentForm';
 
 const isActualGstEligible = vi.mocked(isActualGstEligibleOriginal);

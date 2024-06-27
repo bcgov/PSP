@@ -9,7 +9,7 @@ import { LeasePageProps } from '@/features/mapSideBar/lease/LeaseContainer';
 import LeaseDetailsForm from './LeaseDetailsForm';
 import UpdateLeaseForm from './UpdateLeaseForm';
 
-const DetailContainer: React.FunctionComponent<React.PropsWithChildren<LeasePageProps>> = ({
+const DetailContainer: React.FunctionComponent<React.PropsWithChildren<LeasePageProps<void>>> = ({
   isEditing,
   onEdit,
   formikRef,
