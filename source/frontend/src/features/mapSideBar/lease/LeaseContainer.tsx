@@ -1,10 +1,11 @@
 import { FormikProps } from 'formik';
 import React, { useCallback, useContext, useEffect, useReducer, useRef, useState } from 'react';
+import { MdFence } from 'react-icons/md';
 import * as Yup from 'yup';
 
-import Fence from '@/assets/images/fence.svg?react';
 import GenericModal from '@/components/common/GenericModal';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
+import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { Claims } from '@/constants';
 import { useLeaseDetail } from '@/features/leases';
 import { AddLeaseYupSchema } from '@/features/leases/add/AddLeaseYupSchema';
@@ -171,22 +172,22 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
 
   const close = useCallback(() => onClose && onClose(), [onClose]);
   const { lease, setLease, refresh, loading } = useLeaseDetail(leaseId);
-
-  const { setFullWidth, setStaleFile, staleFile, setStaleLastUpdatedBy, lastUpdatedBy } =
+  const { setStaleFile, staleFile, setStaleLastUpdatedBy, lastUpdatedBy } =
     useContext(SideBarContext);
 
   const [isValid, setIsValid] = useState<boolean>(true);
 
   const activeTab = containerState.activeTab;
+  const { setFullWidthSideBar } = useMapStateMachine();
 
   useEffect(() => {
     if (activeTab === LeaseFileTabNames.deposit || activeTab === LeaseFileTabNames.payments) {
-      setFullWidth(true);
+      setFullWidthSideBar(true);
     } else {
-      setFullWidth(false);
+      setFullWidthSideBar(false);
     }
-    return () => setFullWidth(false);
-  }, [activeTab, setFullWidth]);
+    return () => setFullWidthSideBar(false);
+  }, [activeTab, setFullWidthSideBar]);
 
   useEffect(() => {
     const refreshLease = async () => {
@@ -244,15 +245,7 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
       showCloseButton
       onClose={close}
       title={containerState.isEditing ? 'Update Lease / Licence' : 'Lease / Licence'}
-      icon={
-        <Fence
-          title="Lease file icon"
-          width="2.6rem"
-          height="2.6rem"
-          fill="currentColor"
-          className="mr-2"
-        />
-      }
+      icon={<MdFence title="Lease file icon" size={26} />}
       header={<LeaseHeader lease={lease} lastUpdatedBy={lastUpdatedBy} />}
       footer={
         containerState.isEditing && (
