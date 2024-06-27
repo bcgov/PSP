@@ -8,7 +8,6 @@ import { act, render, RenderOptions } from '@/utils/test-utils';
 import { useHistoricalNumberRepository } from '@/hooks/repositories/useHistoricalNumberRepository';
 import { http, HttpResponse } from 'msw';
 import DispositionHeader, { IDispositionHeaderProps } from './DispositionHeader';
-import { http, HttpResponse } from 'msw';
 
 vi.mock('@/hooks/repositories/useHistoricalNumberRepository');
 vi.mocked(useHistoricalNumberRepository).mockReturnValue({
