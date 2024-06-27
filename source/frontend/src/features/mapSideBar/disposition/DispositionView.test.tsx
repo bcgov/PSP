@@ -25,14 +25,6 @@ import { HttpResponse, http } from 'msw';
 import { createRef } from 'react';
 import { vi } from 'vitest';
 import DispositionView, { IDispositionViewProps } from './DispositionView';
-import { useApiProperties } from '@/hooks/pims-api/useApiProperties';
-import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
-import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
-import { vi } from 'vitest';
-import { useLtsa } from '@/hooks/useLtsa';
-import { useProjectProvider } from '@/hooks/repositories/useProjectProvider';
-import { createRef } from 'react';
-import { HttpResponse, http } from 'msw';
 
 // mock auth library
 

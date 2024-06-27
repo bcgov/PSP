@@ -25,9 +25,6 @@ import { createRef } from 'react';
 import { SideBarContextProvider } from '../context/sidebarContext';
 import { FileTabType } from '../shared/detail/FileTabs';
 import AcquisitionView, { IAcquisitionViewProps } from './AcquisitionView';
-import { createRef } from 'react';
-import { HttpResponse, http } from 'msw';
-import { server } from '@/mocks/msw/server';
 
 // mock auth library
 

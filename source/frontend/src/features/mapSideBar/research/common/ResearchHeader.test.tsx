@@ -8,8 +8,6 @@ import { useApiUsers } from '@/hooks/pims-api/useApiUsers';
 import { useHistoricalNumberRepository } from '@/hooks/repositories/useHistoricalNumberRepository';
 import { vi } from 'vitest';
 import ResearchHeader, { IResearchHeaderProps } from './ResearchHeader';
-import { useApiUsers } from '@/hooks/pims-api/useApiUsers';
-import { vi } from 'vitest';
 
 const testResearchFile: ApiGen_Concepts_ResearchFile = {
   ...getEmptyResearchFile(),
