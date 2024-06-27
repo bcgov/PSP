@@ -224,7 +224,7 @@ describe('AcquisitionView component', () => {
     expect(tab).toHaveClass('active');
   });
 
-  it.skip(`should show a toast and redirect to the File Details page when accessing a non-existing property index`, async () => {
+  it(`should show a toast and redirect to the File Details page when accessing a non-existing property index`, async () => {
     history.replace(`/mapview/sidebar/acquisition/1/property/99999`);
     const { getByRole, findByText } = await setup();
     const tab = getByRole('tab', { name: /File details/i });
@@ -242,7 +242,7 @@ describe('AcquisitionView component', () => {
     expect(tab).toHaveClass('active');
   });
 
-  it.skip('should display the Property Details tab according to routing', async () => {
+  it('should display the Property Details tab according to routing', async () => {
     history.replace(`/mapview/sidebar/acquisition/1/property/1`);
     const { getByRole } = await setup();
     const tab = getByRole('tab', { name: /Property Details/i });
