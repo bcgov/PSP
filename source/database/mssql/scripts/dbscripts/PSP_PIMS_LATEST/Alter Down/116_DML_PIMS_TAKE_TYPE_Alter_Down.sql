@@ -1,5 +1,5 @@
 /* -----------------------------------------------------------------------------
-Alter the data in the PIMS_DATA_SOURCE_TYPE table.
+Alter the data in the PIMS_TAKE_TYPE table.
 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
 Author        Date         Comment
 ------------  -----------  -----------------------------------------------------
@@ -19,9 +19,9 @@ GO
 DECLARE @CurrCd NVARCHAR(20)
 SET     @CurrCd = N'PIMS'
 
-SELECT DATA_SOURCE_TYPE_CODE
-FROM   PIMS_DATA_SOURCE_TYPE
-WHERE  DATA_SOURCE_TYPE_CODE = @CurrCd;
+SELECT TAKE_TYPE_CODE
+FROM   PIMS_TAKE_TYPE
+WHERE  TAKE_TYPE_CODE = @CurrCd;
 
 IF @@ROWCOUNT = 0
   INSERT INTO PIMS_DATA_SOURCE_TYPE (DATA_SOURCE_TYPE_CODE, DESCRIPTION)

@@ -143,6 +143,12 @@ namespace PIMS.Tests.Automation.PageObjects
                 webDriver.FindElement(takeCompletionDateInput).SendKeys(Keys.Enter);
             }
 
+            if (take.TakeCompleteDate != "")
+            {
+                webDriver.FindElement(By.Id("datepicker-takes."+ index +".completionDt")).SendKeys(take.TakeCompleteDate);
+                webDriver.FindElement(By.Id("datepicker-takes."+ index +".completionDt")).SendKeys(Keys.Enter);
+            }
+
             if (take.SiteContamination != "")
                 ChooseSpecificSelectOption(takeSiteContaminationSelect, take.SiteContamination);
 
@@ -159,7 +165,7 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
             if (webDriver.FindElements(acquisitionFileConfirmationModal).Count() > 0)
             {
-                Assert.Contains("Confirm change", sharedModals.ModalHeader());
+                Assert.Contains("Follow-up required", sharedModals.ModalHeader());
                 Assert.Contains("The area, if provided, will be cleared. Do you wish to proceed?", sharedModals.ModalContent());
 
                 sharedModals.ModalClickOKBttn();
@@ -184,7 +190,7 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
             if (webDriver.FindElements(acquisitionFileConfirmationModal).Count() > 0)
             {
-                Assert.Contains("Confirm change", sharedModals.ModalHeader());
+                Assert.Contains("Follow-up required", sharedModals.ModalHeader());
                 Assert.Contains("The area, if provided, will be cleared. Do you wish to proceed?", sharedModals.ModalContent());
 
                 sharedModals.ModalClickOKBttn();
@@ -210,7 +216,7 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
             if (webDriver.FindElements(acquisitionFileConfirmationModal).Count() > 0)
             {
-                Assert.Contains("Confirm change", sharedModals.ModalHeader());
+                Assert.Contains("Follow-up required", sharedModals.ModalHeader());
                 Assert.Contains("The area, if provided, will be cleared. Do you wish to proceed?", sharedModals.ModalContent());
 
                 sharedModals.ModalClickOKBttn();
@@ -244,7 +250,7 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
             if (webDriver.FindElements(acquisitionFileConfirmationModal).Count() > 0)
             {
-                Assert.Contains("Confirm change", sharedModals.ModalHeader());
+                Assert.Contains("Follow-up required", sharedModals.ModalHeader());
                 Assert.Contains("The area, if provided, will be cleared. Do you wish to proceed?", sharedModals.ModalContent());
 
                 sharedModals.ModalClickOKBttn();
@@ -306,13 +312,47 @@ namespace PIMS.Tests.Automation.PageObjects
                 webDriver.FindElement(takeLeaseEndDateInput).SendKeys(Keys.Enter);
             }
 
+            //Lease Payable
+            ChooseSpecificRadioButton(By.Name("takes."+ index +".isLeasePayable"), take.IsLeasePayable);
+
+            Wait();
+            if (webDriver.FindElements(acquisitionFileConfirmationModal).Count() > 0)
+            {
+                Assert.Contains("Follow-up required", sharedModals.ModalHeader());
+
+                if (sharedModals.ModalContent().Contains("You have created a Lease (Payable) Take"))
+                    Assert.Contains("You have created a Lease (Payable) Take. You also need to create a Lease/License File.", sharedModals.ModalContent());
+                else
+                    Assert.Contains("The area, if provided, will be cleared. Do you wish to proceed?", sharedModals.ModalContent());
+
+                sharedModals.ModalClickOKBttn();
+            }
+
+            Wait();
+            if (take.IsLeasePayable.Equals("true"))
+            {
+                if (take.IsLeasePayableArea != "")
+                {
+                    ClearDigitsInput(By.XPath("//input[@data-testid='radio-takes."+ index +".isleasepayable-yes']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/div/div/div/div/input[@name='area-sq-meters']"));
+                    webDriver.FindElement(By.XPath("//input[@data-testid='radio-takes."+ index +".isleasepayable-yes']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/div/div/div/div/input[@name='area-sq-meters']")).SendKeys(take.IsLeasePayableArea);
+
+                    AssertTrueDoublesEquals(By.XPath("//input[@data-testid='radio-takes."+ index +".isleasepayable-yes']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/div/div/div/div/input[@name='area-hectares']"), TransformSqMtToHectares(take.IsLeasePayableArea));
+                    AssertTrueDoublesEquals(By.XPath("//input[@data-testid='radio-takes."+ index +".isleasepayable-yes']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/div/div/div/div/input[@name='area-sq-feet']"), TransformSqMtToSqFt(take.IsLeasePayableArea));
+                    AssertTrueDoublesEquals(By.XPath("//input[@data-testid='radio-takes."+ index +".isleasepayable-yes']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/div/div/div/div/input[@name='area-acres']"), TransformSqMtToAcres(take.IsLeasePayableArea));
+                }
+
+                ClearInput(By.Id("datepicker-takes."+ index +".leasePayableEndDt"));
+                webDriver.FindElement(By.Id("datepicker-takes."+ index +".leasePayableEndDt")).SendKeys(take.IsLeasePayableDate);
+                webDriver.FindElement(By.Id("datepicker-takes."+ index +".leasePayableEndDt")).SendKeys(Keys.Enter);
+            }
+
             //Surplus
             ChooseSpecificRadioButton(takeSurplusRadioBttnGroup, take.IsSurplus);
 
             Wait();
             if (webDriver.FindElements(acquisitionFileConfirmationModal).Count() > 0)
             {
-                Assert.Contains("Confirm change", sharedModals.ModalHeader());
+                Assert.Contains("Follow-up required", sharedModals.ModalHeader());
                 Assert.Contains("The area, if provided, will be cleared. Do you wish to proceed?", sharedModals.ModalContent());
 
                 sharedModals.ModalClickOKBttn();
