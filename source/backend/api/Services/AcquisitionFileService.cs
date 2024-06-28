@@ -307,11 +307,24 @@ namespace Pims.Api.Services
                 // If the property is not new, check if the name has been updated.
                 if (incomingAcquisitionProperty.Internal_Id != 0)
                 {
+                    var needsUpdate = false;
                     PimsPropertyAcquisitionFile existingFileProperty = currentFileProperties.FirstOrDefault(x => x.Internal_Id == incomingAcquisitionProperty.Internal_Id);
-                    if (existingFileProperty.PropertyName != incomingAcquisitionProperty.PropertyName || !existingFileProperty.Location.EqualsExact(incomingAcquisitionProperty.Location))
+                    if (existingFileProperty.PropertyName != incomingAcquisitionProperty.PropertyName)
                     {
                         existingFileProperty.PropertyName = incomingAcquisitionProperty.PropertyName;
+                        needsUpdate = true;
+                    }
+
+                    var incomingGeom = incomingAcquisitionProperty.Location;
+                    var existingGeom = existingFileProperty.Location;
+                    if (existingGeom is null || (incomingGeom is not null && !existingGeom.EqualsExact(incomingGeom)))
+                    {
                         _propertyService.UpdateFilePropertyLocation(incomingAcquisitionProperty, existingFileProperty);
+                        needsUpdate = true;
+                    }
+
+                    if (needsUpdate)
+                    {
                         _acquisitionFilePropertyRepository.Update(existingFileProperty);
                     }
                 }
