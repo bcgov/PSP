@@ -1,4 +1,5 @@
 import { MultiPolygon, Polygon } from 'geojson';
+import { LatLngLiteral } from 'leaflet';
 
 import { AreaUnitTypes } from '@/constants';
 
@@ -8,6 +9,7 @@ export interface IMapProperty {
   pin?: string;
   latitude?: number;
   longitude?: number;
+  fileLocation?: LatLngLiteral;
   polygon?: Polygon | MultiPolygon;
   planNumber?: string;
   address?: string;

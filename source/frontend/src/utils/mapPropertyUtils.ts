@@ -209,6 +209,7 @@ export function featuresetToMapProperty(
     pin: pin ?? undefined,
     latitude: featureSet?.location?.lat,
     longitude: featureSet?.location?.lng,
+    fileLocation: featureSet?.fileLocation ?? undefined,
     polygon:
       parcelFeature?.geometry?.type === ApiGen_CodeTypes_GeoJsonTypes.Polygon
         ? (parcelFeature.geometry as Polygon)
