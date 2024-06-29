@@ -52,17 +52,6 @@ const documentTypeMetadata: ApiGen_Mayan_DocumentMetadata[] = [
       description: '',
       language: '',
       uuid: '',
-      file: {
-        id: 2,
-        comment: '',
-        encoding: '',
-        filename: '',
-        mimetype: '',
-        size: 12,
-        timestamp: '',
-        checksum: '',
-        file: '',
-      },
       file_latest: {
         id: 2,
         comment: '',

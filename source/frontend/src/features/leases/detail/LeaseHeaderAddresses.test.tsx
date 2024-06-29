@@ -65,6 +65,7 @@ describe('LeaseHeaderAddresses component', () => {
           id: 0,
           propertyId: 0,
           propertyName: null,
+          location: null,
           rowVersion: null,
         },
         {
@@ -77,6 +78,7 @@ describe('LeaseHeaderAddresses component', () => {
           id: 0,
           propertyId: 0,
           propertyName: null,
+          location: null,
           rowVersion: null,
         },
         {
@@ -89,6 +91,7 @@ describe('LeaseHeaderAddresses component', () => {
           id: 0,
           propertyId: 0,
           propertyName: null,
+          location: null,
           rowVersion: null,
         },
         {
@@ -101,6 +104,7 @@ describe('LeaseHeaderAddresses component', () => {
           id: 0,
           propertyId: 0,
           propertyName: null,
+          location: null,
           rowVersion: null,
         },
         {
@@ -113,6 +117,7 @@ describe('LeaseHeaderAddresses component', () => {
           id: 0,
           propertyId: 0,
           propertyName: null,
+          location: null,
           rowVersion: null,
         },
       ],
