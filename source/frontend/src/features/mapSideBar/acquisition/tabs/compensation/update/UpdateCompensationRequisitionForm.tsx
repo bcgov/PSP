@@ -19,6 +19,8 @@ import GenericModal from '@/components/common/GenericModal';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
+import TooltipIcon from '@/components/common/TooltipIcon';
+import FilePropertiesTable from '@/components/filePropertiesTable/FilePropertiesTable';
 import { PayeeOption } from '@/features/mapSideBar/acquisition/models/PayeeOptionModel';
 import SidebarFooter from '@/features/mapSideBar/shared/SidebarFooter';
 import { StyledFormWrapper } from '@/features/mapSideBar/shared/styles';
@@ -26,10 +28,12 @@ import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
 import { IAutocompletePrediction } from '@/interfaces/IAutocomplete';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
-import { isValidId } from '@/utils';
+import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
+import { exists, isValidId } from '@/utils';
 import { prettyFormatDate } from '@/utils/dateUtils';
 import { withNameSpace } from '@/utils/formUtils';
 
+import { CompensationRequisitionPropertyForm } from '../models/CompensationRequisitionPropertyForm';
 import { CompensationRequisitionYupSchema } from './CompensationRequisitionYupSchema';
 import FinancialActivitiesSubForm from './financials/FinancialActivitiesSubForm';
 import { CompensationRequisitionFormModel } from './models';
@@ -201,6 +205,47 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
                 </SectionField>
                 <SectionField label="Special instructions" labelWidth="12">
                   <MediumTextArea field="specialInstruction" />
+                </SectionField>
+              </Section>
+
+              <Section
+                header={
+                  <div className="d-flex align-items-center">
+                    <span>Select File Properties</span>
+                    <TooltipIcon
+                      toolTipId="contactInfoToolTip"
+                      innerClassName="ml-4 mb-1"
+                      toolTip="Select the properties for this compensation requisition."
+                    />
+                  </div>
+                }
+              >
+                <SectionField label="Selected Properties" labelWidth="5">
+                  <FilePropertiesTable
+                    disabledSelection={false}
+                    fileProperties={acquisitionFile.fileProperties ?? []}
+                    selectedFileProperties={
+                      initialValues.selectedProperties
+                        .map(p =>
+                          acquisitionFile.fileProperties?.find(
+                            fp => fp.id === p.propertyAcquisitionFileId,
+                          ),
+                        )
+                        .filter(exists) ?? []
+                    }
+                    setSelectedFileProperties={(fileProperties: ApiGen_Concepts_FileProperty[]) => {
+                      const compReqProperties = fileProperties.map(x => {
+                        return new CompensationRequisitionPropertyForm(
+                          null,
+                          initialValues.id,
+                          x.id,
+                        );
+                      });
+
+                      console.log(compReqProperties);
+                      formikProps.setFieldValue('selectedProperties', compReqProperties);
+                    }}
+                  ></FilePropertiesTable>
                 </SectionField>
               </Section>
 

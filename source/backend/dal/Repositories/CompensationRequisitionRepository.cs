@@ -54,6 +54,9 @@ namespace Pims.Dal.Repositories
                 .Include(x => x.AcquisitionFileTeam)
                 .Include(x => x.InterestHolder)
                 .Include(x => x.AlternateProject)
+                .Include(x => x.PimsPropAcqFlCompReqs)
+                    .ThenInclude(y => y.PropertyAcquisitionFile)
+                        .ThenInclude(z => z.Property)
                 .AsNoTracking()
                 .FirstOrDefault(x => x.CompensationRequisitionId.Equals(compensationRequisitionId)) ?? throw new KeyNotFoundException();
 
@@ -70,6 +73,8 @@ namespace Pims.Dal.Repositories
 
             Context.Entry(existingCompensationRequisition).CurrentValues.SetValues(compensationRequisition);
             Context.UpdateChild<PimsCompensationRequisition, long, PimsCompReqFinancial, long>(a => a.PimsCompReqFinancials, compensationRequisition.CompensationRequisitionId, compensationRequisition.PimsCompReqFinancials.ToArray(), true);
+            Context.UpdateChild<PimsCompensationRequisition, long, PimsPropAcqFlCompReq, long>(a => a.PimsPropAcqFlCompReqs, compensationRequisition.CompensationRequisitionId, compensationRequisition.PimsPropAcqFlCompReqs.ToArray(), true);
+
             return compensationRequisition;
         }
 

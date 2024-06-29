@@ -13,6 +13,7 @@ import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledSummarySection } from '@/components/common/Section/SectionStyles';
 import { StyledAddButton } from '@/components/common/styles';
 import TooltipIcon from '@/components/common/TooltipIcon';
+import FilePropertiesTable from '@/components/filePropertiesTable/FilePropertiesTable';
 import { Claims, Roles } from '@/constants';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
@@ -251,6 +252,19 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
         </SectionField>
         <SectionField label="Special instructions" labelWidth={'12'} valueClassName="pre-wrap">
           <p style={{ whiteSpace: 'pre-wrap' }}>{compensation.specialInstruction}</p>
+        </SectionField>
+      </Section>
+
+      <Section header="Selected File Properties">
+        <SectionField label="Properties" labelWidth="4">
+          <FilePropertiesTable
+            fileProperties={acquisitionFile.fileProperties}
+            setSelectedFileProperties={null}
+            selectedFileProperties={compensation.compensationRequisitionProperties.map(x => {
+              return x.acquisitionFileProperty;
+            })}
+            disabledSelection={true}
+          ></FilePropertiesTable>
         </SectionField>
       </Section>
 
