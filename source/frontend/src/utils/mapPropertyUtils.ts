@@ -266,3 +266,18 @@ export function pinFromFeatureSet(featureset: LocationFeatureDataset): string | 
     null
   );
 }
+
+export function locationFromFileProperty(
+  fileProperty: ApiGen_Concepts_FileProperty | undefined | null,
+): ApiGen_Concepts_Geometry | null {
+  return fileProperty?.location ?? fileProperty?.property?.location ?? null;
+}
+
+export function latLngFromMapProperty(
+  mapProperty: IMapProperty | undefined | null,
+): LatLngLiteral | null {
+  return {
+    lat: Number(mapProperty?.fileLocation?.lat ?? mapProperty?.latitude ?? 0),
+    lng: Number(mapProperty?.fileLocation?.lng ?? mapProperty?.longitude ?? 0),
+  };
+}
