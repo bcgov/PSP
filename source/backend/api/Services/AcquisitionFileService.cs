@@ -223,6 +223,12 @@ namespace Pims.Api.Services
 
             PopulateAcquisitionChecklist(acquisitionFile);
 
+            // Update file specific marker locations
+            foreach (var incomingAcquisitionProperty in acquisitionFile.PimsPropertyAcquisitionFiles)
+            {
+                _propertyService.PopulateNewFileProperty(incomingAcquisitionProperty);
+            }
+
             acquisitionFile.AcquisitionFileStatusTypeCode = AcquisitionStatusTypes.ACTIVE.ToString();
             var newAcqFile = _acqFileRepository.Add(acquisitionFile);
             _acqFileRepository.CommitTransaction();
