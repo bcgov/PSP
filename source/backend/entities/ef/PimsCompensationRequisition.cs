@@ -218,6 +218,9 @@ public partial class PimsCompensationRequisition
     [InverseProperty("CompensationRequisition")]
     public virtual ICollection<PimsCompReqFinancial> PimsCompReqFinancials { get; set; } = new List<PimsCompReqFinancial>();
 
+    [InverseProperty("CompensationRequisition")]
+    public virtual ICollection<PimsPropAcqFlCompReq> PimsPropAcqFlCompReqs { get; set; } = new List<PimsPropAcqFlCompReq>();
+
     [ForeignKey("ResponsibilityId")]
     [InverseProperty("PimsCompensationRequisitions")]
     public virtual PimsResponsibilityCode Responsibility { get; set; }

@@ -14,16 +14,14 @@ import { getUserMock } from '@/mocks/user.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { prettyFormatUTCDate } from '@/utils';
 import { RenderOptions, act, cleanup, render, userEvent } from '@/utils/test-utils';
-
 import { useApiProperties } from '@/hooks/pims-api/useApiProperties';
 import { useHistoricalNumberRepository } from '@/hooks/repositories/useHistoricalNumberRepository';
 import { useProjectProvider } from '@/hooks/repositories/useProjectProvider';
 import { useLtsa } from '@/hooks/useLtsa';
 import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
-import { HttpResponse, http } from 'msw';
+import { http, HttpResponse } from 'msw';
 import { createRef } from 'react';
-import { vi } from 'vitest';
 import DispositionView, { IDispositionViewProps } from './DispositionView';
 
 // mock auth library

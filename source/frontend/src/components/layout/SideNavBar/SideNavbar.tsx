@@ -1,15 +1,16 @@
 import clsx from 'classnames';
 import { useContext, useState } from 'react';
 import { FaBriefcase } from 'react-icons/fa';
-import { MdChevronLeft, MdChevronRight, MdContactMail, MdHome } from 'react-icons/md';
+import { MdContactMail, MdFence, MdHome } from 'react-icons/md';
 import { TbArrowBounce } from 'react-icons/tb';
 import { useHistory } from 'react-router-dom';
 
 import AdminPanelSettings from '@/assets/images/admin-panel-settings.svg?react';
-import Fence from '@/assets/images/fence.svg?react';
 import RealEstateAgent from '@/assets/images/real-estate-agent.svg?react';
 import Source from '@/assets/images/source.svg?react';
 import ConsolidateSubdivideIcon from '@/assets/images/subdivisionconsolidation.svg?react';
+import { ExpandCollapseButton } from '@/components/common/buttons/ExpandCollapseButton';
+import TooltipWrapper from '@/components/common/TooltipWrapper';
 import { NavIcon } from '@/components/layout';
 import { Claims, Roles } from '@/constants/index';
 
@@ -55,7 +56,7 @@ export const SideNavBar = () => {
         />
         <NavIcon
           onClick={() => setTrayPage(SidebarContextType.LEASE)}
-          icon={<Fence />}
+          icon={<MdFence size={24} />}
           text="Leases & Licences"
           showText={expanded}
         />
@@ -85,21 +86,17 @@ export const SideNavBar = () => {
           showText={expanded}
           roles={[Roles.SYSTEM_ADMINISTRATOR]}
         />
-        {expanded ? (
-          <MdChevronLeft
-            title="collapse"
-            className="chevron"
-            size={24}
-            onClick={() => setExpanded(false)}
-          />
-        ) : (
-          <MdChevronRight
-            title="expand"
-            className="chevron"
-            size={24}
-            onClick={() => setExpanded(true)}
-          />
-        )}
+        <TooltipWrapper
+          tooltipId="expand-navbar"
+          tooltip={expanded ? 'Collapse Menu' : 'Expand Menu'}
+        >
+          <span className="to-bottom">
+            <ExpandCollapseButton
+              expanded={expanded}
+              toggleExpanded={() => setExpanded(!expanded)}
+            />
+          </span>
+        </TooltipWrapper>
       </Styled.SideNavBar>
       <SideTray context={trayPage} setContext={setTrayPage} />
     </Styled.ZIndexWrapper>
