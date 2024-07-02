@@ -2,8 +2,8 @@ import { createFileDownload } from '@/features/documents/DownloadDocumentButton'
 import { useDocumentGenerationRepository } from '@/features/documents/hooks/useDocumentGenerationRepository';
 import { useApiLeases } from '@/hooks/pims-api/useApiLeases';
 import { useInsurancesRepository } from '@/hooks/repositories/useInsuranceRepository';
+import { useLeasePeriodRepository } from '@/hooks/repositories/useLeasePeriodRepository';
 import { useLeaseTenantRepository } from '@/hooks/repositories/useLeaseTenantRepository';
-import { useLeaseTermRepository } from '@/hooks/repositories/useLeaseTermRepository';
 import { usePropertyLeaseRepository } from '@/hooks/repositories/usePropertyLeaseRepository';
 import { useSecurityDepositRepository } from '@/hooks/repositories/useSecurityDepositRepository';
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
@@ -29,8 +29,8 @@ export const useGenerateLicenceOfOccupation = () => {
   } = useSecurityDepositRepository();
 
   const {
-    getLeaseTerms: { execute: getLeaseTerms },
-  } = useLeaseTermRepository();
+    getLeasePeriods: { execute: getLeasePeriods },
+  } = useLeasePeriodRepository();
 
   const {
     getPropertyLeases: { execute: getPropertyLeases },
@@ -57,15 +57,15 @@ export const useGenerateLicenceOfOccupation = () => {
       const insurancesPromise = getInsurances(lease.id);
       const tenantsPromise = getLeaseTenants(lease.id);
       const securityDepositsPromise = getLeaseDeposits(lease.id);
-      const termsPromise = getLeaseTerms(lease.id);
+      const periodsPromise = getLeasePeriods(lease.id);
       const propertyLeasesPromise = getPropertyLeases(lease.id);
-      const [updatedLease, insurances, tenants, securityDeposits, terms, propertyLeases] =
+      const [updatedLease, insurances, tenants, securityDeposits, periods, propertyLeases] =
         await Promise.all([
           updatedLeasePromise,
           insurancesPromise,
           tenantsPromise,
           securityDepositsPromise,
-          termsPromise,
+          periodsPromise,
           propertyLeasesPromise,
         ]);
 
@@ -83,7 +83,7 @@ export const useGenerateLicenceOfOccupation = () => {
         tenants ?? [],
         securityDeposits ?? [],
         propertyLeases ?? [],
-        terms ?? [],
+        periods ?? [],
       );
 
       let formTemplateType: ApiGen_CodeTypes_FormTypes;

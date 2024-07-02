@@ -230,8 +230,8 @@ const StyledFormWrapper = styled.div`
 `;
 
 const StyledSubdivideConsolidateIcon = styled(ConsolidateSubdivideIcon)`
-  width: 3rem;
-  height: 3rem;
+  width: 2.6rem;
+  height: 2.6rem;
   margin-right: 1rem;
   fill: ${props => props.theme.bcTokens.typographyColorSecondary};
 `;
