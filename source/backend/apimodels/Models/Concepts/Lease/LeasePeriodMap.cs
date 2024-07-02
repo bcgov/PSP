@@ -26,6 +26,14 @@ namespace Pims.Api.Models.Concepts.Lease
                 .Map(dest => dest.PaymentNote, src => src.PaymentNote)
                 .Map(dest => dest.PaymentDueDateStr, src => src.PaymentDueDate)
                 .Map(dest => dest.Payments, src => src.PimsLeasePayments)
+                .Map(dest => dest.IsFlexible, src => src.PeriodDuration)
+                .Map(dest => dest.IsVariable, src => src.PaymentType)
+                .Map(dest => dest.AdditionalRentPaymentAmount, src => src.AddlRentAgreedPmt)
+                .Map(dest => dest.AdditionalRentFreqTypeCode, src => src.AddlRentFreqNavigation)
+                .Map(dest => dest.IsAdditionalRentGstEligible, src => src.IsAddlRentSubjectToGst)
+                .Map(dest => dest.VariableRentPaymentAmount, src => src.VblRentAgreedPmt)
+                .Map(dest => dest.VariableRentFreqTypeCode, src => src.VblRentFreqNavigation)
+                .Map(dest => dest.IsVariableRentGstEligible, src => src.IsVblRentSubjectToGst)
                 .Inherits<Entity.IBaseAppEntity, BaseAuditModel>();
 
             config.NewConfig<LeasePeriodModel, Entity.PimsLeasePeriod>()
@@ -43,6 +51,14 @@ namespace Pims.Api.Models.Concepts.Lease
                 .Map(dest => dest.PaymentNote, src => src.PaymentNote)
                 .Map(dest => dest.PaymentDueDate, src => src.PaymentDueDateStr)
                 .Map(dest => dest.PimsLeasePayments, src => src.Payments)
+                .Map(dest => dest.PeriodDuration, src => src.IsFlexible)
+                .Map(dest => dest.PaymentType, src => src.IsVariable)
+                .Map(dest => dest.AddlRentAgreedPmt, src => src.AdditionalRentPaymentAmount)
+                .Map(dest => dest.AddlRentFreq, src => src.AdditionalRentFreqTypeCode != null ? src.AdditionalRentFreqTypeCode.Id : null)
+                .Map(dest => dest.IsAddlRentSubjectToGst, src => src.IsAdditionalRentGstEligible)
+                .Map(dest => dest.VblRentAgreedPmt, src => src.VariableRentPaymentAmount)
+                .Map(dest => dest.VblRentFreq, src => src.VariableRentFreqTypeCode != null ? src.VariableRentFreqTypeCode.Id : null)
+                .Map(dest => dest.IsVblRentSubjectToGst, src => src.IsVariableRentGstEligible)
                 .Inherits<BaseAuditModel, Entity.IBaseAppEntity>();
         }
     }

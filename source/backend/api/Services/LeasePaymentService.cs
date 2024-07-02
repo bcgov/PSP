@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
+using Pims.Api.Models.CodeTypes;
 using Pims.Dal.Entities;
 using Pims.Dal.Repositories;
 using static Pims.Dal.Entities.PimsLeasePaymentStatusType;
@@ -11,11 +13,13 @@ namespace Pims.Api.Services
     {
         private readonly ILeasePeriodRepository _leasePeriodRepository;
         private readonly ILeasePaymentRepository _leasePaymentRepository;
+        private readonly ISystemConstantRepository _systemConstantRepository;
 
-        public LeasePaymentService(ILeasePeriodRepository leasePeriodRepository, ILeasePaymentRepository leasePaymentRepository, ClaimsPrincipal user)
+        public LeasePaymentService(ILeasePeriodRepository leasePeriodRepository, ILeasePaymentRepository leasePaymentRepository, ISystemConstantRepository systemConstantRepository, ClaimsPrincipal user)
         {
             _leasePeriodRepository = leasePeriodRepository;
             _leasePaymentRepository = leasePaymentRepository;
+            _systemConstantRepository = systemConstantRepository;
         }
 
         public IEnumerable<PimsLeasePayment> GetAllByDateRange(DateTime startDate, DateTime endDate)
@@ -52,9 +56,31 @@ namespace Pims.Api.Services
             return updatedPayment;
         }
 
-        private static string GetPaymentStatus(PimsLeasePayment payment, PimsLeasePeriod parent)
+        private string GetPaymentStatus(PimsLeasePayment payment, PimsLeasePeriod parent)
         {
-            decimal? expectedTotal = (parent.PaymentAmount ?? 0) + (parent.GstAmount ?? 0);
+            if (!Enum.TryParse(payment.LeasePaymentCategoryTypeCode, out LeasePaymentCategoryTypes leasePaymentCategoryType))
+            {
+                throw new InvalidOperationException();
+            }
+            decimal? expectedTotal;
+            decimal gstMultiplier;
+            decimal gstDecimal = GetGstDecimal();
+            switch (leasePaymentCategoryType)
+            {
+                case LeasePaymentCategoryTypes.VBL:
+                    gstMultiplier = parent.IsVblRentSubjectToGst == true ? (1 + (gstDecimal / 100)) : 1.0m;
+                    expectedTotal = (parent.VblRentAgreedPmt ?? 0) * gstMultiplier;
+                    break;
+                case LeasePaymentCategoryTypes.ADDL:
+                    gstMultiplier = parent.IsAddlRentSubjectToGst == true ? (1 + (gstDecimal / 100)) : 1.0m;
+                    expectedTotal = (parent.AddlRentAgreedPmt ?? 0) * gstMultiplier;
+                    break;
+                case LeasePaymentCategoryTypes.BASE:
+                    expectedTotal = (parent.PaymentAmount ?? 0) + (parent.GstAmount ?? 0);
+                    break;
+                default:
+                    throw new InvalidOperationException();
+            }
             if (payment.PaymentAmountTotal == 0)
             {
                 return PimsLeasePaymentStatusTypes.UNPAID;
@@ -75,6 +101,16 @@ namespace Pims.Api.Services
             {
                 throw new InvalidOperationException("Invalid payment value provided");
             }
+        }
+
+        private decimal GetGstDecimal()
+        {
+            var constants = _systemConstantRepository.GetAll();
+            if (!decimal.TryParse(constants.FirstOrDefault(c => c.StaticVariableName == "GST")?.StaticVariableValue, out decimal gstConstant))
+            {
+                throw new InvalidOperationException("Unable to determine GST constant");
+            }
+            return gstConstant;
         }
 
         /// <summary>

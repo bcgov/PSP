@@ -96,6 +96,10 @@ namespace Pims.Api.Services
             {
                 throw new InvalidOperationException("Period must be 'exercised' if payments have been made.");
             }
+            if(leasePeriodToUpdate.PaymentType != period.PaymentType)
+            {
+                throw new InvalidOperationException("Period payment variability may not be changed after period creation.");
+            }
         }
 
         /// <summary>

@@ -6,7 +6,7 @@ exports[`PeriodForm component > renders as expected 1`] = `
     class="Toastify"
   />
   <div />
-  .c1 .react-datepicker__calendar-icon {
+  .c6 .react-datepicker__calendar-icon {
   width: 2.4rem;
   height: 3rem;
   margin-top: 0.5rem;
@@ -15,20 +15,89 @@ exports[`PeriodForm component > renders as expected 1`] = `
   pointer-events: none;
 }
 
-.c1 .react-datepicker__view-calendar-icon input {
+.c6 .react-datepicker__view-calendar-icon input {
   padding: 0.8rem 1.2rem 0.8rem 1.2rem;
 }
 
-.c1 .react-datepicker-wrapper {
+.c6 .react-datepicker-wrapper {
   max-width: 17rem;
 }
 
-.c2.c2.form-control.is-valid {
+.c7.c7.form-control.is-valid {
   background-image: none;
 }
 
-.c2.c2.form-control.is-invalid {
+.c7.c7.form-control.is-invalid {
   border-color: #d8292f !important;
+}
+
+.c5 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+}
+
+.c3.form-group {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin-bottom: 0;
+}
+
+.c3.form-group .radio-group {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  row-gap: unset;
+  -webkit-column-gap: 0.4rem;
+  column-gap: 0.4rem;
+}
+
+.c3.form-group .radio-group .form-check {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+.c3.form-group .radio-group .form-check .form-check-input {
+  margin-left: 0;
+}
+
+.c3.form-group .radio-group .form-check-label {
+  margin-left: 1rem;
+}
+
+.c3 .form-label {
+  margin-bottom: unset;
+}
+
+.c2.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c1 {
+  font-weight: bold;
 }
 
 .c0 {
@@ -78,8 +147,17 @@ exports[`PeriodForm component > renders as expected 1`] = `
   font-family: 'BcSans';
 }
 
-.c0 .required .form-label:after {
+.c0 .required .datepicker-label:after {
   content: ' *';
+}
+
+.c4.form-group {
+  padding-top: 0.5rem;
+  padding-bottom: 1rem;
+}
+
+.c4 .radio-group div:first-child .form-check {
+  padding-left: 0;
 }
 
 <div
@@ -89,16 +167,206 @@ exports[`PeriodForm component > renders as expected 1`] = `
       class="row"
     >
       <div
+        class="col-md-6"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-12"
+          >
+            <label
+              class="c1"
+            >
+              Select payment type:
+              <span
+                class="ml-2"
+              >
+                <span
+                  class="tooltip-icon"
+                  data-testid="tooltip-icon-section-field-tooltip"
+                  id="section-field-tooltip"
+                >
+                  <svg
+                    class="tooltip-icon"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                    />
+                  </svg>
+                </span>
+              </span>
+            </label>
+          </div>
+          <div
+            class="c2 text-left col"
+          >
+            <div
+              class="c3 c4 form-group"
+            >
+              <div
+                class="radio-group"
+              >
+                <div
+                  class="c5"
+                >
+                  <div
+                    class="form-check"
+                  >
+                    <input
+                      checked=""
+                      class="form-check-input position-static"
+                      data-testid="radio-isvariable-predetermined"
+                      id="input-false"
+                      name="isVariable"
+                      type="radio"
+                      value="false"
+                    />
+                  </div>
+                  <label
+                    class="form-check-label form-label"
+                    for="isVariable"
+                  >
+                    Predetermined
+                  </label>
+                </div>
+                <div
+                  class="c5"
+                >
+                  <div
+                    class="form-check"
+                  >
+                    <input
+                      class="form-check-input position-static"
+                      data-testid="radio-isvariable-variable"
+                      id="input-true"
+                      name="isVariable"
+                      type="radio"
+                      value="true"
+                    />
+                  </div>
+                  <label
+                    class="form-check-label form-label"
+                    for="isVariable"
+                  >
+                    Variable
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col-md-6"
+      >
+        <div
+          class="form-group"
+        >
+          <label
+            class="form-label"
+            for="input-isFlexible"
+          >
+            <span
+              class="control-label"
+            >
+              Period duration:
+            </span>
+             
+            <span
+              class="tooltip-icon"
+              data-testid="tooltip-icon-isFlexible-tooltip"
+              id="isFlexible-tooltip"
+            >
+              <svg
+                class="tooltip-icon"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 512 512"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                />
+              </svg>
+            </span>
+          </label>
+          <select
+            class="form-select form-control"
+            id="input-isFlexible"
+            name="isFlexible"
+          >
+            <option
+              class="option"
+              data-testid="select-option-false"
+              value="false"
+            >
+              Fixed
+            </option>
+            <option
+              class="option"
+              data-testid="select-option-true"
+              value="true"
+            >
+              Flexible
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
         class="col"
       >
         <div
-          class="c1 required form-group"
+          class="c6 required form-group"
         >
           <label
             class="form-label"
             for="datepicker-startDate"
           >
-            Start date:
+            <span
+              class="datepicker-label"
+            >
+              Start date:
+            </span>
+             
+            <span
+              class="tooltip-icon"
+              data-testid="tooltip-icon-startDate-tooltip"
+              id="startDate-tooltip"
+            >
+              <svg
+                class="tooltip-icon"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 512 512"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                />
+              </svg>
+            </span>
           </label>
           <div
             class="react-datepicker-wrapper d-block"
@@ -117,7 +385,7 @@ exports[`PeriodForm component > renders as expected 1`] = `
               </svg>
               <input
                 autocomplete="off"
-                class="c2 form-control date-picker"
+                class="c7 form-control date-picker"
                 id="datepicker-startDate"
                 name="startDate"
                 placeholder="MMM DD, YYYY"
@@ -133,13 +401,38 @@ exports[`PeriodForm component > renders as expected 1`] = `
         class="col"
       >
         <div
-          class="c1 form-group"
+          class="c6 required form-group"
         >
           <label
             class="form-label"
             for="datepicker-expiryDate"
           >
-            End date:
+            <span
+              class="datepicker-label"
+            >
+              End date:
+            </span>
+             
+            <span
+              class="tooltip-icon"
+              data-testid="tooltip-icon-expiryDate-tooltip"
+              id="expiryDate-tooltip"
+            >
+              <svg
+                class="tooltip-icon"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 512 512"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                />
+              </svg>
+            </span>
           </label>
           <div
             class="react-datepicker-wrapper d-block"
@@ -158,10 +451,11 @@ exports[`PeriodForm component > renders as expected 1`] = `
               </svg>
               <input
                 autocomplete="off"
-                class="c2 form-control date-picker"
+                class="c7 form-control date-picker"
                 id="datepicker-expiryDate"
                 name="expiryDate"
                 placeholder="MMM DD, YYYY"
+                required=""
                 type="text"
                 value=""
               />
@@ -183,7 +477,12 @@ exports[`PeriodForm component > renders as expected 1`] = `
             class="form-label"
             for="input-leasePmtFreqTypeCode.id"
           >
-            Payment frequency: 
+            <span
+              class="control-label"
+            >
+              Payment frequency:
+            </span>
+             
           </label>
           <select
             class="form-select form-control"
@@ -309,7 +608,7 @@ exports[`PeriodForm component > renders as expected 1`] = `
             class="form-label"
             for="input-paymentDueDateStr"
           >
-            Payments due 
+            Payment due 
             <span
               class="tooltip-icon"
               data-testid="tooltip-icon-paymentDueDateStr-tooltip"
@@ -400,7 +699,7 @@ exports[`PeriodForm component > renders as expected 1`] = `
       class="row"
     >
       <div
-        class="col"
+        class="col-md-6"
       >
         <div
           class="form-group"
@@ -409,7 +708,12 @@ exports[`PeriodForm component > renders as expected 1`] = `
             class="form-label"
             for="input-statusTypeCode.id"
           >
-            Period Status 
+            <span
+              class="control-label"
+            >
+              Term status
+            </span>
+             
           </label>
           <select
             class="form-select form-control"
@@ -433,9 +737,6 @@ exports[`PeriodForm component > renders as expected 1`] = `
           </select>
         </div>
       </div>
-      <div
-        class="col"
-      />
     </div>
     <div
       class="row"
@@ -453,6 +754,7 @@ exports[`PeriodForm component > renders as expected 1`] = `
       </div>
     </div>
   </div>
+  <div />
 </DocumentFragment>
 `;
 
@@ -462,7 +764,7 @@ exports[`PeriodForm component > renders with data as expected 1`] = `
     class="Toastify"
   />
   <div />
-  .c1 .react-datepicker__calendar-icon {
+  .c6 .react-datepicker__calendar-icon {
   width: 2.4rem;
   height: 3rem;
   margin-top: 0.5rem;
@@ -471,20 +773,89 @@ exports[`PeriodForm component > renders with data as expected 1`] = `
   pointer-events: none;
 }
 
-.c1 .react-datepicker__view-calendar-icon input {
+.c6 .react-datepicker__view-calendar-icon input {
   padding: 0.8rem 1.2rem 0.8rem 1.2rem;
 }
 
-.c1 .react-datepicker-wrapper {
+.c6 .react-datepicker-wrapper {
   max-width: 17rem;
 }
 
-.c2.c2.form-control.is-valid {
+.c7.c7.form-control.is-valid {
   background-image: none;
 }
 
-.c2.c2.form-control.is-invalid {
+.c7.c7.form-control.is-invalid {
   border-color: #d8292f !important;
+}
+
+.c5 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+}
+
+.c3.form-group {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin-bottom: 0;
+}
+
+.c3.form-group .radio-group {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  row-gap: unset;
+  -webkit-column-gap: 0.4rem;
+  column-gap: 0.4rem;
+}
+
+.c3.form-group .radio-group .form-check {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+.c3.form-group .radio-group .form-check .form-check-input {
+  margin-left: 0;
+}
+
+.c3.form-group .radio-group .form-check-label {
+  margin-left: 1rem;
+}
+
+.c3 .form-label {
+  margin-bottom: unset;
+}
+
+.c2.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c1 {
+  font-weight: bold;
 }
 
 .c0 {
@@ -534,8 +905,17 @@ exports[`PeriodForm component > renders with data as expected 1`] = `
   font-family: 'BcSans';
 }
 
-.c0 .required .form-label:after {
+.c0 .required .datepicker-label:after {
   content: ' *';
+}
+
+.c4.form-group {
+  padding-top: 0.5rem;
+  padding-bottom: 1rem;
+}
+
+.c4 .radio-group div:first-child .form-check {
+  padding-left: 0;
 }
 
 <div
@@ -545,16 +925,206 @@ exports[`PeriodForm component > renders with data as expected 1`] = `
       class="row"
     >
       <div
+        class="col-md-6"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-12"
+          >
+            <label
+              class="c1"
+            >
+              Select payment type:
+              <span
+                class="ml-2"
+              >
+                <span
+                  class="tooltip-icon"
+                  data-testid="tooltip-icon-section-field-tooltip"
+                  id="section-field-tooltip"
+                >
+                  <svg
+                    class="tooltip-icon"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                    />
+                  </svg>
+                </span>
+              </span>
+            </label>
+          </div>
+          <div
+            class="c2 text-left col"
+          >
+            <div
+              class="c3 c4 form-group"
+            >
+              <div
+                class="radio-group"
+              >
+                <div
+                  class="c5"
+                >
+                  <div
+                    class="form-check"
+                  >
+                    <input
+                      checked=""
+                      class="form-check-input position-static"
+                      data-testid="radio-isvariable-predetermined"
+                      id="input-false"
+                      name="isVariable"
+                      type="radio"
+                      value="false"
+                    />
+                  </div>
+                  <label
+                    class="form-check-label form-label"
+                    for="isVariable"
+                  >
+                    Predetermined
+                  </label>
+                </div>
+                <div
+                  class="c5"
+                >
+                  <div
+                    class="form-check"
+                  >
+                    <input
+                      class="form-check-input position-static"
+                      data-testid="radio-isvariable-variable"
+                      id="input-true"
+                      name="isVariable"
+                      type="radio"
+                      value="true"
+                    />
+                  </div>
+                  <label
+                    class="form-check-label form-label"
+                    for="isVariable"
+                  >
+                    Variable
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col-md-6"
+      >
+        <div
+          class="form-group"
+        >
+          <label
+            class="form-label"
+            for="input-isFlexible"
+          >
+            <span
+              class="control-label"
+            >
+              Period duration:
+            </span>
+             
+            <span
+              class="tooltip-icon"
+              data-testid="tooltip-icon-isFlexible-tooltip"
+              id="isFlexible-tooltip"
+            >
+              <svg
+                class="tooltip-icon"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 512 512"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                />
+              </svg>
+            </span>
+          </label>
+          <select
+            class="form-select form-control"
+            id="input-isFlexible"
+            name="isFlexible"
+          >
+            <option
+              class="option"
+              data-testid="select-option-false"
+              value="false"
+            >
+              Fixed
+            </option>
+            <option
+              class="option"
+              data-testid="select-option-true"
+              value="true"
+            >
+              Flexible
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
         class="col"
       >
         <div
-          class="c1 required form-group"
+          class="c6 required form-group"
         >
           <label
             class="form-label"
             for="datepicker-startDate"
           >
-            Start date:
+            <span
+              class="datepicker-label"
+            >
+              Start date:
+            </span>
+             
+            <span
+              class="tooltip-icon"
+              data-testid="tooltip-icon-startDate-tooltip"
+              id="startDate-tooltip"
+            >
+              <svg
+                class="tooltip-icon"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 512 512"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                />
+              </svg>
+            </span>
           </label>
           <div
             class="react-datepicker-wrapper d-block"
@@ -573,7 +1143,7 @@ exports[`PeriodForm component > renders with data as expected 1`] = `
               </svg>
               <input
                 autocomplete="off"
-                class="c2 form-control date-picker"
+                class="c7 form-control date-picker"
                 id="datepicker-startDate"
                 name="startDate"
                 placeholder="MMM DD, YYYY"
@@ -589,13 +1159,38 @@ exports[`PeriodForm component > renders with data as expected 1`] = `
         class="col"
       >
         <div
-          class="c1 form-group"
+          class="c6 required form-group"
         >
           <label
             class="form-label"
             for="datepicker-expiryDate"
           >
-            End date:
+            <span
+              class="datepicker-label"
+            >
+              End date:
+            </span>
+             
+            <span
+              class="tooltip-icon"
+              data-testid="tooltip-icon-expiryDate-tooltip"
+              id="expiryDate-tooltip"
+            >
+              <svg
+                class="tooltip-icon"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 512 512"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                />
+              </svg>
+            </span>
           </label>
           <div
             class="react-datepicker-wrapper d-block"
@@ -614,10 +1209,11 @@ exports[`PeriodForm component > renders with data as expected 1`] = `
               </svg>
               <input
                 autocomplete="off"
-                class="c2 form-control date-picker"
+                class="c7 form-control date-picker"
                 id="datepicker-expiryDate"
                 name="expiryDate"
                 placeholder="MMM DD, YYYY"
+                required=""
                 type="text"
                 value=""
               />
@@ -639,7 +1235,12 @@ exports[`PeriodForm component > renders with data as expected 1`] = `
             class="form-label"
             for="input-leasePmtFreqTypeCode.id"
           >
-            Payment frequency: 
+            <span
+              class="control-label"
+            >
+              Payment frequency:
+            </span>
+             
           </label>
           <select
             class="form-select form-control"
@@ -765,7 +1366,7 @@ exports[`PeriodForm component > renders with data as expected 1`] = `
             class="form-label"
             for="input-paymentDueDateStr"
           >
-            Payments due 
+            Payment due 
             <span
               class="tooltip-icon"
               data-testid="tooltip-icon-paymentDueDateStr-tooltip"
@@ -856,7 +1457,7 @@ exports[`PeriodForm component > renders with data as expected 1`] = `
       class="row"
     >
       <div
-        class="col"
+        class="col-md-6"
       >
         <div
           class="form-group"
@@ -865,7 +1466,12 @@ exports[`PeriodForm component > renders with data as expected 1`] = `
             class="form-label"
             for="input-statusTypeCode.id"
           >
-            Period Status 
+            <span
+              class="control-label"
+            >
+              Term status
+            </span>
+             
           </label>
           <select
             class="form-select form-control"
@@ -889,9 +1495,6 @@ exports[`PeriodForm component > renders with data as expected 1`] = `
           </select>
         </div>
       </div>
-      <div
-        class="col"
-      />
     </div>
     <div
       class="row"
@@ -909,5 +1512,6 @@ exports[`PeriodForm component > renders with data as expected 1`] = `
       </div>
     </div>
   </div>
+  <div />
 </DocumentFragment>
 `;

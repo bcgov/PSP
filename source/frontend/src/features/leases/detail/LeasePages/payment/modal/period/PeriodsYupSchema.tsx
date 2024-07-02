@@ -5,7 +5,13 @@ import { LeasePeriodStatusTypes } from '@/constants/index';
 
 export const LeasePeriodSchema = Yup.object().shape({
   startDate: Yup.date().required('Required'),
-  expiryDate: Yup.date().min(Yup.ref('startDate'), 'Expiry Date must be after Start Date'),
+  expiryDate: Yup.date().when('isFlexible', (isFlexible, schema) =>
+    isFlexible === 'true'
+      ? schema.min(Yup.ref('startDate'), 'Expiry Date must be after Start Date')
+      : schema
+          .min(Yup.ref('startDate'), 'Expiry Date must be after Start Date')
+          .required('Required'),
+  ),
   paymentAmount: Yup.number().max(MAX_SQL_MONEY_SIZE),
   paymentDueDateStr: Yup.string().max(200),
   paymentNote: Yup.string().max(2000),

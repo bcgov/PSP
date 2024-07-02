@@ -77,6 +77,46 @@ namespace Pims.Api.Models.Concepts.Lease
         public bool IsTermExercised { get; set; }
 
         /// <summary>
+        /// get/set - True if this period has a flexible duration. False for a fixed duration.
+        /// </summary>
+        public bool IsFlexible { get; set; }
+
+        /// <summary>
+        /// get/set - True if this period has flexible payments. False for base rent payments only.
+        /// </summary>
+        public bool IsVariable { get; set; }
+
+        /// <summary>
+        /// get/set - Additional rent payment amount
+        /// </summary>
+        public decimal? AdditionalRentPaymentAmount { get; set; }
+
+        /// <summary>
+        /// get/set - Is the additional rent subject to GST.
+        /// </summary>
+        public bool? IsAdditionalRentGstEligible { get; set; }
+
+        /// <summary>
+        /// get/set - Frequency type code for additional rent.
+        /// </summary>
+        public CodeTypeModel<string> AdditionalRentFreqTypeCode { get; set; }
+
+        /// <summary>
+        /// get/set - Variable rent payment amount
+        /// </summary>
+        public decimal? VariableRentPaymentAmount { get; set; }
+
+        /// <summary>
+        /// get/set - Is the variable rent subject to GST.
+        /// </summary>
+        public bool? IsVariableRentGstEligible { get; set; }
+
+        /// <summary>
+        /// get/set - Frequency type code for variable rent.
+        /// </summary>
+        public CodeTypeModel<string> VariableRentFreqTypeCode { get; set; }
+
+        /// <summary>
         /// get/set - An (optional) list of payments associated to this period. Should only be set if the period is excercised.
         /// </summary>
         public ICollection<PaymentModel> Payments { get; set; }

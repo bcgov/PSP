@@ -161,5 +161,7 @@ namespace Pims.Dal.Repositories
         IEnumerable<PimsLeaseChklstItemStatusType> GetAllLeaseChecklistItemStatusTypes();
 
         IEnumerable<PimsLeaseChklstSectionType> GetAllLeaseChecklistSectionTypes();
+
+        IEnumerable<PimsLeasePaymentCategoryType> GetAllLeasePaymentCategoryTypes();
     }
 }

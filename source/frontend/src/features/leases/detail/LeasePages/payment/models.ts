@@ -7,21 +7,31 @@ import { NumberFieldValue } from '@/typings/NumberFieldValue';
 import { isValidIsoDateTime } from '@/utils';
 import { stringToNumber, stringToNumberOrNull } from '@/utils/formUtils';
 
+import { ApiGen_CodeTypes_LeasePaymentCategoryTypes } from './../../../../../models/api/generated/ApiGen_CodeTypes_LeasePaymentCategoryTypes';
+
 export class FormLeasePeriod {
   id: number | null = null;
   leaseId: number | null = null;
   statusTypeCode: ApiGen_Base_CodeType<string> | null = null;
   leasePmtFreqTypeCode: ApiGen_Base_CodeType<string> | null = null;
+  additionalRentFreqTypeCode: ApiGen_Base_CodeType<string> | null = null;
+  variableRentFreqTypeCode: ApiGen_Base_CodeType<string> | null = null;
   startDate = '';
   effectiveDateHist: string | null = null;
   expiryDate = '';
   renewalDate = '';
   paymentAmount: NumberFieldValue = '';
+  additionalRentPaymentAmount: NumberFieldValue = '';
+  variableRentPaymentAmount: NumberFieldValue = '';
   gstAmount: NumberFieldValue = '';
   paymentDueDateStr = '';
   paymentNote = '';
   isGstEligible?: boolean;
+  isVariableRentGstEligible?: boolean;
+  isAdditionalRentGstEligible?: boolean;
   isTermExercised?: boolean;
+  isFlexible: 'true' | 'false' = 'false';
+  isVariable: 'true' | 'false' = 'false';
   payments: FormLeasePayment[] = [];
   rowVersion?: number;
 
@@ -31,6 +41,8 @@ export class FormLeasePeriod {
   ): ApiGen_Concepts_LeasePeriod {
     return {
       ...formLeasePeriod,
+      isFlexible: formLeasePeriod.isFlexible === 'true',
+      isVariable: formLeasePeriod.isVariable === 'true',
       leaseId: formLeasePeriod.leaseId ?? 0,
       startDate: isValidIsoDateTime(formLeasePeriod.startDate) ? formLeasePeriod.startDate : null,
       renewalDate: null,
@@ -38,6 +50,10 @@ export class FormLeasePeriod {
         ? formLeasePeriod.expiryDate
         : null,
       paymentAmount: stringToNumberOrNull(formLeasePeriod.paymentAmount),
+      additionalRentPaymentAmount: stringToNumberOrNull(
+        formLeasePeriod.additionalRentPaymentAmount,
+      ),
+      variableRentPaymentAmount: stringToNumberOrNull(formLeasePeriod.variableRentPaymentAmount),
       gstAmount: stringToNumberOrNull(
         formLeasePeriod.isGstEligible && gstConstant !== undefined
           ? (formLeasePeriod.paymentAmount as number) * (gstConstant / 100)
@@ -46,9 +62,17 @@ export class FormLeasePeriod {
       leasePmtFreqTypeCode: formLeasePeriod.leasePmtFreqTypeCode?.id
         ? formLeasePeriod.leasePmtFreqTypeCode
         : null,
+      additionalRentFreqTypeCode: formLeasePeriod.additionalRentFreqTypeCode?.id
+        ? formLeasePeriod.additionalRentFreqTypeCode
+        : null,
+      variableRentFreqTypeCode: formLeasePeriod.variableRentFreqTypeCode?.id
+        ? formLeasePeriod.variableRentFreqTypeCode
+        : null,
       statusTypeCode: formLeasePeriod.statusTypeCode?.id ? formLeasePeriod.statusTypeCode : null,
       payments: formLeasePeriod.payments.map(payment => FormLeasePayment.toApi(payment)),
       isGstEligible: formLeasePeriod.isGstEligible ?? false,
+      isAdditionalRentGstEligible: formLeasePeriod.isAdditionalRentGstEligible,
+      isVariableRentGstEligible: formLeasePeriod.isVariableRentGstEligible,
       isTermExercised: formLeasePeriod.isTermExercised ?? false,
       ...getEmptyBaseAudit(formLeasePeriod.rowVersion),
     };
@@ -57,6 +81,8 @@ export class FormLeasePeriod {
   public static fromApi(apiLeasePeriod: ApiGen_Concepts_LeasePeriod): FormLeasePeriod {
     return {
       ...apiLeasePeriod,
+      isFlexible: apiLeasePeriod.isFlexible ? 'true' : 'false',
+      isVariable: apiLeasePeriod.isVariable ? 'true' : 'false',
       startDate: isValidIsoDateTime(apiLeasePeriod.startDate) ? apiLeasePeriod.startDate : '',
       expiryDate: isValidIsoDateTime(apiLeasePeriod.expiryDate) ? apiLeasePeriod.expiryDate : '',
       renewalDate: isValidIsoDateTime(apiLeasePeriod.renewalDate) ? apiLeasePeriod.renewalDate : '',
@@ -69,9 +95,14 @@ export class FormLeasePeriod {
           FormLeasePayment.fromApi(payment),
         ) ?? [],
       isGstEligible: apiLeasePeriod.isGstEligible ?? undefined,
+      isAdditionalRentGstEligible: apiLeasePeriod.isAdditionalRentGstEligible ?? undefined,
+      isVariableRentGstEligible: apiLeasePeriod.isVariableRentGstEligible ?? undefined,
       isTermExercised: apiLeasePeriod.isTermExercised ?? undefined,
       effectiveDateHist: null,
       rowVersion: apiLeasePeriod.rowVersion ?? undefined,
+      leasePmtFreqTypeCode: apiLeasePeriod.leasePmtFreqTypeCode,
+      additionalRentFreqTypeCode: apiLeasePeriod.additionalRentFreqTypeCode,
+      variableRentFreqTypeCode: apiLeasePeriod.variableRentFreqTypeCode,
     };
   }
 }
@@ -83,24 +114,33 @@ export const defaultFormLeasePeriod: FormLeasePeriod = {
   expiryDate: '',
   renewalDate: '',
   paymentAmount: '',
+  variableRentPaymentAmount: '',
+  additionalRentPaymentAmount: '',
   gstAmount: '',
   paymentDueDateStr: '',
   paymentNote: '',
   isGstEligible: false,
+  isVariableRentGstEligible: false,
+  isAdditionalRentGstEligible: false,
   isTermExercised: false,
+  isFlexible: 'false',
+  isVariable: 'false',
   effectiveDateHist: '',
   statusTypeCode: defaultTypeCode(),
   leasePmtFreqTypeCode: defaultTypeCode(),
+  additionalRentFreqTypeCode: defaultTypeCode(),
+  variableRentFreqTypeCode: defaultTypeCode(),
   payments: [],
 };
 
 export class FormLeasePayment {
   id?: number;
   leasePeriodId = 0;
-  leasePaymentMethodType: ApiGen_Base_CodeType<string> | null = null;
+  leasePaymentMethodType: ApiGen_Base_CodeType<string>;
   receivedDate = '';
   note?: string;
   leasePaymentStatusTypeCode?: ApiGen_Base_CodeType<string>;
+  leasePaymentCategoryTypeCode?: ApiGen_Base_CodeType<string>;
   amountPreTax: NumberFieldValue = '';
   amountGst: NumberFieldValue = '';
   amountPst: NumberFieldValue = '';
@@ -118,7 +158,11 @@ export class FormLeasePayment {
       leasePaymentStatusTypeCode: formLeasePayment.leasePaymentStatusTypeCode?.id
         ? formLeasePayment.leasePaymentStatusTypeCode
         : null,
+      leasePaymentCategoryTypeCode: formLeasePayment.leasePaymentCategoryTypeCode?.id
+        ? formLeasePayment.leasePaymentCategoryTypeCode
+        : null,
       leasePaymentMethodType: formLeasePayment.leasePaymentMethodType,
+
       note: formLeasePayment.note ?? null,
       ...getEmptyBaseAudit(formLeasePayment.rowVersion),
     };
@@ -139,15 +183,23 @@ export class FormLeasePayment {
     leasePayment.note = apiLeasePayment.note ?? undefined;
     leasePayment.leasePaymentStatusTypeCode =
       apiLeasePayment.leasePaymentStatusTypeCode ?? undefined;
+    leasePayment.leasePaymentCategoryTypeCode = apiLeasePayment.leasePaymentCategoryTypeCode ?? {
+      ...defaultTypeCode(),
+      id: ApiGen_CodeTypes_LeasePaymentCategoryTypes.BASE,
+    };
     leasePayment.rowVersion = apiLeasePayment.rowVersion ?? undefined;
     return leasePayment;
   }
 }
 
+export class FormLeasePeriodWithCategory extends FormLeasePeriod {
+  category: ApiGen_CodeTypes_LeasePaymentCategoryTypes;
+}
+
 export const defaultFormLeasePayment: FormLeasePayment = {
   id: 0,
   leasePeriodId: 0,
-  leasePaymentMethodType: defaultTypeCode(),
+  leasePaymentMethodType: { ...defaultTypeCode(), id: 'CHEQ' },
   receivedDate: '',
   amountPreTax: '',
   amountPst: '',
@@ -155,4 +207,8 @@ export const defaultFormLeasePayment: FormLeasePayment = {
   amountTotal: '',
   note: '',
   leasePaymentStatusTypeCode: defaultTypeCode(),
+  leasePaymentCategoryTypeCode: {
+    ...defaultTypeCode(),
+    id: ApiGen_CodeTypes_LeasePaymentCategoryTypes.BASE,
+  },
 };

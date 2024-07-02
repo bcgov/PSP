@@ -1,42 +1,69 @@
 import moment from 'moment';
 import { FaFileContract, FaTrash } from 'react-icons/fa';
+import { IoMdRefreshCircle } from 'react-icons/io';
 import { MdEdit } from 'react-icons/md';
+import { TbArrowWaveRightUp } from 'react-icons/tb';
 import { CellProps } from 'react-table';
 import styled from 'styled-components';
 
 import { Button } from '@/components/common/buttons/Button';
 import { InlineFlexDiv } from '@/components/common/styles';
 import TooltipIcon from '@/components/common/TooltipIcon';
+import TooltipWrapper from '@/components/common/TooltipWrapper';
 import {
   ColumnWithProps,
   renderBooleanAsYesNo,
   renderMoney,
+  renderStringOrDash,
   renderTypeCode,
 } from '@/components/Table';
 import { Claims } from '@/constants';
 import { LeasePeriodStatusTypes } from '@/constants/leaseStatusTypes';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_CodeTypes_LeaseLicenceTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseLicenceTypes';
+import { ApiGen_CodeTypes_LeasePaymentCategoryTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeasePaymentCategoryTypes';
 import { ISystemConstant } from '@/store/slices/systemConstants';
 import { NumberFieldValue } from '@/typings/NumberFieldValue';
 import { prettyFormatDate } from '@/utils';
 import { stringToFragment } from '@/utils/columnUtils';
 import { formatMoney } from '@/utils/numberFormatUtils';
 
-import { FormLeasePeriod } from '../../models';
+import { FormLeasePeriod, FormLeasePeriodWithCategory } from '../../models';
 
-function initialOrRenewalPeriod({ row: { index } }: CellProps<FormLeasePeriod, unknown>) {
-  return stringToFragment(index === 0 ? 'Initial period' : `Renewal ${index}`);
+function getPeriodName({ row: { index, original } }: CellProps<FormLeasePeriod, unknown>) {
+  return (
+    <InlineFlexDiv className="align-items-center">
+      <b>{stringToFragment(`Period ${index + 1}`)}</b>&nbsp;
+      {original.isVariable === 'true' && (
+        <TooltipWrapper tooltipId="variable-period-tooltip" tooltip="Variable Payments">
+          <StyledRefreshIcon size={16} />
+        </TooltipWrapper>
+      )}
+    </InlineFlexDiv>
+  );
 }
 
 function startAndEndDate({ row: { original } }: CellProps<FormLeasePeriod, string>) {
-  return stringToFragment(
-    `${prettyFormatDate(original.startDate)} - ${prettyFormatDate(original.expiryDate)}`,
+  return original.isFlexible === 'true' ? (
+    <>
+      {prettyFormatDate(original.startDate)} - {prettyFormatDate(original.expiryDate)}
+      <StyledBreak />
+      <i>(anticipated)</i>
+      <TooltipWrapper tooltipId="flexible-period-icon" tooltip="Flexible Period">
+        <StyledFlexibleIcon size={24} />
+      </TooltipWrapper>
+    </>
+  ) : (
+    stringToFragment(
+      `${prettyFormatDate(original.startDate)} - ${prettyFormatDate(original.expiryDate)}`,
+    )
   );
 }
 
 const renderExpectedTotal = () =>
-  function ({ row: { original } }: CellProps<FormLeasePeriod, string>) {
+  function ({
+    row: { original },
+  }: CellProps<FormLeasePeriod, string> | CellProps<FormLeasePeriodWithCategory, string>) {
     return stringToFragment(
       original.paymentAmount !== undefined
         ? formatMoney((original.paymentAmount as number) + ((original?.gstAmount as number) ?? 0))
@@ -50,9 +77,11 @@ function renderGstAmount({ row: { original } }: CellProps<FormLeasePeriod, Numbe
   );
 }
 
-function renderActualTotal({ row: { original } }: CellProps<FormLeasePeriod, string>) {
+function renderActualTotal({ row: { original } }: CellProps<FormLeasePeriodWithCategory, string>) {
   const total = formatMoney(
-    (original.payments ?? []).reduce((sum: number, p) => (sum += p.amountTotal as number), 0),
+    (original.payments ?? [])
+      .filter(p => p.leasePaymentCategoryTypeCode?.id === original.category)
+      .reduce((sum: number, p) => (sum += p.amountTotal as number), 0),
   );
   return stringToFragment(original.isTermExercised ? total : '-');
 }
@@ -70,6 +99,40 @@ const renderExpectedPeriod = () =>
       (original.gstAmount as number) ?? 0,
     );
     return stringToFragment(expectedPeriod !== undefined ? formatMoney(expectedPeriod) : '-');
+  };
+
+const renderCategory = () =>
+  function ({ row: { original } }: CellProps<FormLeasePeriodWithCategory, string>) {
+    let rowProps: { categoryName: string; tooltipText: string };
+    switch (original.category) {
+      case ApiGen_CodeTypes_LeasePaymentCategoryTypes.ADDL:
+        rowProps = {
+          categoryName: 'Additional Rent',
+          tooltipText: 'Operating Expenses and Taxes Payable by the Tenant.',
+        };
+        break;
+      case ApiGen_CodeTypes_LeasePaymentCategoryTypes.VBL:
+        rowProps = {
+          categoryName: 'Variable Rent',
+          tooltipText: 'Percentage Rent payable by Tenant.',
+        };
+        break;
+      default:
+        rowProps = {
+          categoryName: 'Base Rent',
+          tooltipText:
+            'Fixed Amount of Rent per Payment Payment Period, excluding Operating Expenses.',
+        };
+    }
+    return (
+      <>
+        {rowProps.categoryName}
+        <TooltipIcon
+          toolTipId={`variable-period-${original.category}`}
+          toolTip={rowProps.tooltipText}
+        />
+      </>
+    );
   };
 
 function getNumberOfIntervals(frequency: string, startDate: string, endDate: string) {
@@ -183,6 +246,63 @@ export interface IPaymentColumnProps {
   gstConstant?: ISystemConstant;
 }
 
+export const getLeaseVariablePeriodColumns = (): ColumnWithProps<FormLeasePeriodWithCategory>[] => [
+  {
+    Header: 'Category',
+    accessor: 'category',
+    align: 'left',
+    maxWidth: 70,
+    Cell: renderCategory(),
+  },
+  {
+    Header: 'Payment Fequency',
+    accessor: 'leasePmtFreqTypeCode',
+    align: 'left',
+    maxWidth: 40,
+    Cell: renderTypeCode,
+  },
+  {
+    Header: 'Expected Payment ($)',
+    accessor: 'paymentAmount',
+    align: 'right',
+    maxWidth: 90,
+    Cell: renderMoney,
+  },
+  {
+    Header: 'GST?',
+    accessor: 'isGstEligible',
+    align: 'left',
+    maxWidth: 30,
+    Cell: renderBooleanAsYesNo,
+  },
+  {
+    Header: 'GST ($)',
+    accessor: 'gstAmount',
+    align: 'right',
+    maxWidth: 40,
+    Cell: renderMoney,
+  },
+  {
+    Header: 'Expected total ($)',
+    id: 'expectedTotal',
+    align: 'right',
+    maxWidth: 50,
+    Cell: renderExpectedTotal(),
+  },
+  {
+    Header: 'Actual total ($)',
+    id: 'actualTotal',
+    align: 'right',
+    maxWidth: 50,
+    Cell: renderActualTotal,
+  },
+  {
+    id: 'id',
+    align: 'left',
+    maxWidth: 150,
+  },
+];
+
 export const getLeasePeriodColumns = ({
   onEdit,
   onDelete,
@@ -195,12 +315,12 @@ export const getLeasePeriodColumns = ({
       id: 'initialOrRenewal',
       align: 'left',
       maxWidth: 50,
-      Cell: initialOrRenewalPeriod,
+      Cell: getPeriodName,
     },
     {
-      Header: 'Start date - End date',
+      Header: 'Start date - end date',
       align: 'center',
-      minWidth: 60,
+      minWidth: 55,
       Cell: startAndEndDate,
     },
     {
@@ -214,7 +334,8 @@ export const getLeasePeriodColumns = ({
       Header: 'Payment due',
       accessor: 'paymentDueDateStr',
       align: 'left',
-      maxWidth: 50,
+      maxWidth: 60,
+      Cell: renderStringOrDash,
     },
     {
       Header: () => (
@@ -228,7 +349,7 @@ export const getLeasePeriodColumns = ({
       ),
       align: 'right',
       accessor: 'paymentAmount',
-      maxWidth: 70,
+      maxWidth: 50,
       Cell: renderMoney,
     },
     {
@@ -265,7 +386,7 @@ export const getLeasePeriodColumns = ({
       ),
       id: 'expectedTotal',
       align: 'right',
-      maxWidth: 60,
+      maxWidth: 45,
       Cell: renderExpectedTotal(),
     },
     {
@@ -280,7 +401,7 @@ export const getLeasePeriodColumns = ({
       ),
       id: 'expectedPeriod',
       align: 'right',
-      maxWidth: 60,
+      maxWidth: 50,
       Cell: renderExpectedPeriod(),
     },
     {
@@ -292,7 +413,7 @@ export const getLeasePeriodColumns = ({
       ),
       id: 'actualTotal',
       align: 'right',
-      maxWidth: 55,
+      maxWidth: 40,
       Cell: renderActualTotal,
     },
     {
@@ -330,4 +451,17 @@ const StyledIcons = styled(InlineFlexDiv)`
 
 const GenerateIcon = styled(FaFileContract)`
   color: ${props => props.theme.css.activeActionColor};
+`;
+
+const StyledRefreshIcon = styled(IoMdRefreshCircle)`
+  color: ${props => props.theme.css.variableColor};
+`;
+const StyledFlexibleIcon = styled(TbArrowWaveRightUp)`
+  color: ${props => props.theme.css.completedColor};
+  margin-left: 0.5rem;
+`;
+
+const StyledBreak = styled.div`
+  height: 0;
+  flex-basis: 100%;
 `;

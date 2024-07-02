@@ -4769,6 +4769,27 @@ export const mockLookups: ILookupCode[] = [
     displayOrder: 0,
     type: 'PimsDispositionStatusType',
   },
+  {
+    id: 'BASE',
+    name: 'Base Rent',
+    isDisabled: false,
+    displayOrder: 1,
+    type: 'PimsLeasePaymentCategoryType',
+  },
+  {
+    id: 'ADDL',
+    name: 'Additional Rent',
+    isDisabled: false,
+    displayOrder: 2,
+    type: 'PimsLeasePaymentCategoryType',
+  },
+  {
+    id: 'VBL',
+    name: 'Variable Rent',
+    isDisabled: false,
+    displayOrder: 3,
+    type: 'PimsLeasePaymentCategoryType',
+  },
 ];
 
 export const getMockLookUpsByType = (codeType: string): SelectOption[] => {

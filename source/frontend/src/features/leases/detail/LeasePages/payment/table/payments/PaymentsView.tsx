@@ -1,13 +1,23 @@
+import { round } from 'lodash';
 import { useMemo } from 'react';
-import { Col, Row } from 'react-bootstrap';
-import { MdReceipt } from 'react-icons/md';
+import { FaPlus } from 'react-icons/fa';
+import styled from 'styled-components';
 
+import { Section } from '@/components/common/Section/Section';
+import { SectionListHeader } from '@/components/common/SectionListHeader';
 import { TableProps } from '@/components/Table';
-import { Claims } from '@/constants';
-import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import Claims from '@/constants/claims';
+import { ApiGen_CodeTypes_LeasePaymentCategoryTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeasePaymentCategoryTypes';
+import { SystemConstants, useSystemConstants } from '@/store/slices/systemConstants';
 
-import { defaultFormLeasePayment, FormLeasePayment } from '../../models';
+import {
+  defaultFormLeasePayment,
+  FormLeasePayment,
+  FormLeasePeriod,
+  FormLeasePeriodWithCategory,
+} from '../../models';
 import * as PaymentStyles from '../../styles';
+import { getLeaseVariablePeriodColumns } from '../periods/columns';
 import { getActualsColumns } from './paymentsColumns';
 
 export interface IPaymentsViewProps {
@@ -18,7 +28,7 @@ export interface IPaymentsViewProps {
   isGstEligible?: boolean;
   isReceivable?: boolean;
   periodId?: number;
-  payments: FormLeasePayment[];
+  period: FormLeasePeriod;
 }
 
 export const PaymentsView: React.FunctionComponent<React.PropsWithChildren<IPaymentsViewProps>> = ({
@@ -28,10 +38,31 @@ export const PaymentsView: React.FunctionComponent<React.PropsWithChildren<IPaym
   isExercised,
   isGstEligible,
   isReceivable,
-  periodId,
-  payments,
+  period,
 }) => {
-  const { hasClaim } = useKeycloakWrapper();
+  const { getSystemConstant } = useSystemConstants();
+  const gstConstant = getSystemConstant(SystemConstants.GST);
+  const gstDecimal = gstConstant !== undefined ? parseFloat(gstConstant.value) : undefined;
+  const variablePaymentColumns = getLeaseVariablePeriodColumns();
+  const variablePaymentData: FormLeasePeriodWithCategory[] = [
+    { category: ApiGen_CodeTypes_LeasePaymentCategoryTypes.BASE, ...period },
+    {
+      category: ApiGen_CodeTypes_LeasePaymentCategoryTypes.ADDL,
+      ...period,
+      isGstEligible: period?.isAdditionalRentGstEligible,
+      paymentAmount: period?.additionalRentPaymentAmount ?? 0,
+      leasePmtFreqTypeCode: period?.additionalRentFreqTypeCode,
+      gstAmount: round(+period?.additionalRentPaymentAmount * (gstDecimal / 100), 2),
+    },
+    {
+      category: ApiGen_CodeTypes_LeasePaymentCategoryTypes.VBL,
+      ...period,
+      isGstEligible: period?.isVariableRentGstEligible,
+      paymentAmount: period?.variableRentPaymentAmount ?? 0,
+      leasePmtFreqTypeCode: period?.variableRentFreqTypeCode,
+      gstAmount: round(+period?.variableRentPaymentAmount * (gstDecimal / 100), 2),
+    },
+  ];
   const columns = useMemo(
     () =>
       getActualsColumns({
@@ -40,32 +71,46 @@ export const PaymentsView: React.FunctionComponent<React.PropsWithChildren<IPaym
         isReceivable,
         isGstEligible,
         onSave,
+        payments: period?.payments ?? [],
       }),
-    [onEdit, onDelete, isReceivable, isGstEligible, onSave],
+    [onEdit, onDelete, isReceivable, isGstEligible, onSave, period],
   );
 
   return (
-    <Row>
-      <PaymentStyles.InlineCol md={2}>
-        <MdReceipt className="receipt" size={24} />
-        <PaymentStyles.FlexColDiv>
-          <b>{isReceivable ? 'Payments Received' : 'Payments Sent'}</b>
-          {isExercised && hasClaim(Claims.LEASE_ADD) && (
-            <PaymentStyles.AddActualButton
-              onClick={() => onEdit({ ...defaultFormLeasePayment, leasePeriodId: periodId ?? 0 })}
-            >
-              Record a Payment
-            </PaymentStyles.AddActualButton>
-          )}
-        </PaymentStyles.FlexColDiv>
-      </PaymentStyles.InlineCol>
-      <Col md={10}>
-        {!!payments?.length && isExercised ? (
+    <>
+      {period?.isVariable === 'true' && (
+        <Section className="ml-10 p-0">
+          <PaymentStyles.StyledPaymentTable<React.FC<TableProps<FormLeasePeriodWithCategory>>>
+            name="variablePeriodTable"
+            columns={variablePaymentColumns}
+            data={variablePaymentData ?? []}
+            manualPagination
+            hideToolbar
+          />
+        </Section>
+      )}
+      <Section
+        className="ml-20 p-0"
+        header={
+          <StyledSectionListHeader
+            title="Payments"
+            addButtonText="Add a Payment"
+            onAdd={
+              isExercised
+                ? () => onEdit({ ...defaultFormLeasePayment, leasePeriodId: period?.id ?? 0 })
+                : undefined
+            }
+            claims={[Claims.LEASE_EDIT]}
+            addButtonIcon={<FaPlus size={'2rem'} />}
+          />
+        }
+      >
+        {!!period?.payments?.length && isExercised ? (
           <>
             <PaymentStyles.StyledPaymentTable<React.FC<TableProps<FormLeasePayment>>>
-              name="securityDepositsTable"
+              name="paymentsTable"
               columns={columns}
-              data={payments ?? []}
+              data={period?.payments ?? []}
               manualPagination
               hideToolbar
               noRowsMessage="There is no corresponding data"
@@ -74,13 +119,17 @@ export const PaymentsView: React.FunctionComponent<React.PropsWithChildren<IPaym
           </>
         ) : (
           <PaymentStyles.WarningTextBox>
-            {!payments?.length && <p>There are no recorded payments for this period.</p>}
+            {!period?.payments?.length && <p>There are no recorded payments for this period.</p>}
             {!isExercised && <p>Period must be exercised to add payments.</p>}
           </PaymentStyles.WarningTextBox>
         )}
-      </Col>
-    </Row>
+      </Section>
+    </>
   );
 };
 
 export default PaymentsView;
+
+const StyledSectionListHeader = styled(SectionListHeader)`
+  font-size: 1.8rem;
+`;

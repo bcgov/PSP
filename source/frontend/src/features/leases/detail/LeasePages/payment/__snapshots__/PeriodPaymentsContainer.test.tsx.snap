@@ -6,188 +6,6 @@ exports[`PaymentsForm component > renders as expected 1`] = `
     class="Toastify"
   />
   <div />
-  .c2 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-wrap: nowrap;
-  -ms-flex-wrap: nowrap;
-  flex-wrap: nowrap;
-}
-
-.c0 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  gap: 2rem;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-}
-
-.c1 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  gap: 1rem;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-}
-
-.c3 {
-  gap: 3rem;
-  background-color: white;
-  min-height: 6rem;
-}
-
-<div
-    class="row"
-  >
-    <div
-      class="c0 col-md-2"
-    >
-      <svg
-        class="receipt"
-        fill="currentColor"
-        height="24"
-        stroke="currentColor"
-        stroke-width="0"
-        viewBox="0 0 24 24"
-        width="24"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M0 0h24v24H0z"
-          fill="none"
-        />
-        <path
-          d="M18 17H6v-2h12v2zm0-4H6v-2h12v2zm0-4H6V7h12v2zM3 22l1.5-1.5L6 22l1.5-1.5L9 22l1.5-1.5L12 22l1.5-1.5L15 22l1.5-1.5L18 22l1.5-1.5L21 22V2l-1.5 1.5L18 2l-1.5 1.5L15 2l-1.5 1.5L12 2l-1.5 1.5L9 2 7.5 3.5 6 2 4.5 3.5 3 2v20z"
-        />
-      </svg>
-      <div
-        class="c1"
-      >
-        <b>
-          Payments Received
-        </b>
-      </div>
-    </div>
-    <div
-      class="col-md-10"
-    >
-      <div
-        class="c2 c3"
-      >
-        <p>
-          There are no recorded payments for this period.
-        </p>
-      </div>
-    </div>
-  </div>
-</DocumentFragment>
-`;
-
-exports[`PaymentsForm component > renders with data as expected 1`] = `
-<DocumentFragment>
-  <div
-    class="Toastify"
-  />
-  <div />
-  .c2 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-wrap: nowrap;
-  -ms-flex-wrap: nowrap;
-  flex-wrap: nowrap;
-}
-
-.c0 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  gap: 2rem;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-}
-
-.c1 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  gap: 1rem;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-}
-
-.c3 {
-  gap: 3rem;
-  background-color: white;
-  min-height: 6rem;
-}
-
-<div
-    class="row"
-  >
-    <div
-      class="c0 col-md-2"
-    >
-      <svg
-        class="receipt"
-        fill="currentColor"
-        height="24"
-        stroke="currentColor"
-        stroke-width="0"
-        viewBox="0 0 24 24"
-        width="24"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M0 0h24v24H0z"
-          fill="none"
-        />
-        <path
-          d="M18 17H6v-2h12v2zm0-4H6v-2h12v2zm0-4H6V7h12v2zM3 22l1.5-1.5L6 22l1.5-1.5L9 22l1.5-1.5L12 22l1.5-1.5L15 22l1.5-1.5L18 22l1.5-1.5L21 22V2l-1.5 1.5L18 2l-1.5 1.5L15 2l-1.5 1.5L12 2l-1.5 1.5L9 2 7.5 3.5 6 2 4.5 3.5 3 2v20z"
-        />
-      </svg>
-      <div
-        class="c1"
-      >
-        <b>
-          Payments Received
-        </b>
-      </div>
-    </div>
-    <div
-      class="col-md-10"
-    >
-      <div
-        class="c2 c3"
-      >
-        <p>
-          There are no recorded payments for this period.
-        </p>
-      </div>
-    </div>
-  </div>
-</DocumentFragment>
-`;
-
-exports[`PeriodsPaymentsContainer component > renders as expected 1`] = `
-<DocumentFragment>
-  <div
-    class="Toastify"
-  />
-  <div />
   .c4.btn {
   display: -webkit-box;
   display: -webkit-flex;
@@ -217,6 +35,12 @@ exports[`PeriodsPaymentsContainer component > renders as expected 1`] = `
   letter-spacing: 0.1rem;
   cursor: pointer;
   height: 3.8rem;
+}
+
+.c4.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
 }
 
 .c4.btn:hover {
@@ -323,7 +147,21 @@ exports[`PeriodsPaymentsContainer component > renders as expected 1`] = `
   margin-right: 0;
 }
 
-.c2 {
+.c1 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c0 {
+  margin: 1.6rem;
+  padding: 1.6rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
+.c6 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -331,6 +169,251 @@ exports[`PeriodsPaymentsContainer component > renders as expected 1`] = `
   -webkit-flex-wrap: nowrap;
   -ms-flex-wrap: nowrap;
   flex-wrap: nowrap;
+}
+
+.c5.c5 {
+  display: inline-block;
+  margin-left: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.c2 {
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-align-items: end;
+  -webkit-box-align: end;
+  -ms-flex-align: end;
+  align-items: end;
+  min-height: 4.5rem;
+}
+
+.c2 .btn {
+  margin: 0;
+}
+
+.c7 {
+  gap: 3rem;
+  background-color: white;
+  min-height: 6rem;
+}
+
+.c3 {
+  font-size: 1.8rem;
+}
+
+<div
+    class="c0 form-section ml-20 p-0"
+  >
+    <h2
+      class="c1"
+    >
+      <div
+        class="no-gutters row"
+      >
+        <div
+          class="col"
+        >
+          <div
+            class="c2 no-gutters c3 row"
+          >
+            <div
+              class="px-2 my-1 col-auto"
+            >
+              Payments
+            </div>
+            <div
+              class="my-1 col-auto"
+            >
+              <button
+                class="c4 Button c5 btn btn-primary"
+                type="button"
+              >
+                <div
+                  class="Button__value"
+                >
+                  <svg
+                    fill="currentColor"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 448 512"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
+                    />
+                  </svg>
+                   Add a Payment
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </h2>
+    <div
+      class="collapse show"
+    >
+      <div
+        class="c6 c7"
+      >
+        <p>
+          There are no recorded payments for this period.
+        </p>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`PaymentsForm component > renders with data as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div />
+  .c4.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  min-height: 3rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+  height: 3.8rem;
+}
+
+.c4.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
+.c4.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c4.btn:focus {
+  outline-width: 0.4rem;
+  outline-style: solid;
+  outline-offset: 1px;
+  box-shadow: none;
+}
+
+.c4.btn.btn-primary {
+  border: none;
+}
+
+.c4.btn.btn-secondary {
+  background: none;
+}
+
+.c4.btn.btn-info {
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c4.btn.btn-info:hover,
+.c4.btn.btn-info:active,
+.c4.btn.btn-info:focus {
+  background: none;
+}
+
+.c4.btn.btn-light {
+  border: none;
+}
+
+.c4.btn.btn-dark {
+  border: none;
+}
+
+.c4.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  text-align: left;
+  padding: 0;
+}
+
+.c4.btn.btn-link:hover,
+.c4.btn.btn-link:active,
+.c4.btn.btn-link:focus {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.c4.btn.btn-link:disabled,
+.c4.btn.btn-link.disabled {
+  background: none;
+  pointer-events: none;
+}
+
+.c4.btn:disabled,
+.c4.btn:disabled:hover {
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.c4.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c4.Button--icon-only:focus {
+  outline: none;
+}
+
+.c4.Button--icon-only .Button__icon {
+  margin-right: 0;
 }
 
 .c1 {
@@ -347,14 +430,315 @@ exports[`PeriodsPaymentsContainer component > renders as expected 1`] = `
   border-radius: 0.5rem;
 }
 
+.c6 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+}
+
+.c5.c5 {
+  display: inline-block;
+  margin-left: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.c2 {
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-align-items: end;
+  -webkit-box-align: end;
+  -ms-flex-align: end;
+  align-items: end;
+  min-height: 4.5rem;
+}
+
+.c2 .btn {
+  margin: 0;
+}
+
+.c7 {
+  gap: 3rem;
+  background-color: white;
+  min-height: 6rem;
+}
+
 .c3 {
+  font-size: 1.8rem;
+}
+
+<div
+    class="c0 form-section ml-20 p-0"
+  >
+    <h2
+      class="c1"
+    >
+      <div
+        class="no-gutters row"
+      >
+        <div
+          class="col"
+        >
+          <div
+            class="c2 no-gutters c3 row"
+          >
+            <div
+              class="px-2 my-1 col-auto"
+            >
+              Payments
+            </div>
+            <div
+              class="my-1 col-auto"
+            >
+              <button
+                class="c4 Button c5 btn btn-primary"
+                type="button"
+              >
+                <div
+                  class="Button__value"
+                >
+                  <svg
+                    fill="currentColor"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 448 512"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
+                    />
+                  </svg>
+                   Add a Payment
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </h2>
+    <div
+      class="collapse show"
+    >
+      <div
+        class="c6 c7"
+      >
+        <p>
+          There are no recorded payments for this period.
+        </p>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`TermsPaymentsContainer component > renders as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div />
+  .c3.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  min-height: 3rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+  height: 3.8rem;
+}
+
+.c3.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
+.c3.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c3.btn:focus {
+  outline-width: 0.4rem;
+  outline-style: solid;
+  outline-offset: 1px;
+  box-shadow: none;
+}
+
+.c3.btn.btn-primary {
+  border: none;
+}
+
+.c3.btn.btn-secondary {
+  background: none;
+}
+
+.c3.btn.btn-info {
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c3.btn.btn-info:hover,
+.c3.btn.btn-info:active,
+.c3.btn.btn-info:focus {
+  background: none;
+}
+
+.c3.btn.btn-light {
+  border: none;
+}
+
+.c3.btn.btn-dark {
+  border: none;
+}
+
+.c3.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  text-align: left;
+  padding: 0;
+}
+
+.c3.btn.btn-link:hover,
+.c3.btn.btn-link:active,
+.c3.btn.btn-link:focus {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.c3.btn.btn-link:disabled,
+.c3.btn.btn-link.disabled {
+  background: none;
+  pointer-events: none;
+}
+
+.c3.btn:disabled,
+.c3.btn:disabled:hover {
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.c3.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c3.Button--icon-only:focus {
+  outline: none;
+}
+
+.c3.Button--icon-only .Button__icon {
+  margin-right: 0;
+}
+
+.c1 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c0 {
+  margin: 1.6rem;
+  padding: 1.6rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
+.c5 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+}
+
+.c4.c4 {
+  display: inline-block;
+  margin-left: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.c2 {
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-align-items: end;
+  -webkit-box-align: end;
+  -ms-flex-align: end;
+  align-items: end;
+  min-height: 4.5rem;
+}
+
+.c2 .btn {
+  margin: 0;
+}
+
+.c6 {
   -webkit-align-items: center;
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
 }
 
-.c3 .btn.btn-primary {
+.c6 .btn.btn-primary {
   background-color: transparent;
   padding: 0;
 }
@@ -371,7 +755,42 @@ exports[`PeriodsPaymentsContainer component > renders as expected 1`] = `
         <div
           class="col"
         >
-          Payments by Period
+          <div
+            class="c2 no-gutters row"
+          >
+            <div
+              class="px-2 my-1 col-auto"
+            >
+              Payment Periods
+            </div>
+            <div
+              class="my-1 col-auto"
+            >
+              <button
+                class="c3 Button c4 btn btn-primary"
+                type="button"
+              >
+                <div
+                  class="Button__value"
+                >
+                  <svg
+                    fill="currentColor"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 448 512"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
+                    />
+                  </svg>
+                   Add a Period
+                </div>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </h2>
@@ -389,7 +808,7 @@ exports[`PeriodsPaymentsContainer component > renders as expected 1`] = `
           <div
             class="tr"
             role="row"
-            style="display: flex; flex: 1 0 auto; min-width: 390px;"
+            style="display: flex; flex: 1 0 auto; min-width: 385px;"
           >
             <div
               class="th"
@@ -409,12 +828,12 @@ exports[`PeriodsPaymentsContainer component > renders as expected 1`] = `
               class="th"
               colspan="1"
               role="columnheader"
-              style="box-sizing: border-box; flex: 100 0 auto; min-width: 60px; width: 100px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
+              style="box-sizing: border-box; flex: 100 0 auto; min-width: 55px; width: 100px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
             >
               <div
                 class="sortable-column"
               >
-                Start date - End date
+                Start date - end date
               </div>
             </div>
             <div
@@ -433,7 +852,7 @@ exports[`PeriodsPaymentsContainer component > renders as expected 1`] = `
               class="th"
               colspan="1"
               role="columnheader"
-              style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
             >
               <div
                 class="sortable-column"
@@ -445,7 +864,7 @@ exports[`PeriodsPaymentsContainer component > renders as expected 1`] = `
               class="th"
               colspan="1"
               role="columnheader"
-              style="box-sizing: border-box; flex: 70 0 auto; min-width: 30px; width: 70px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+              style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
             >
               <div
                 class="sortable-column"
@@ -521,7 +940,7 @@ exports[`PeriodsPaymentsContainer component > renders as expected 1`] = `
               class="th"
               colspan="1"
               role="columnheader"
-              style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+              style="box-sizing: border-box; flex: 45 0 auto; min-width: 30px; width: 45px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
             >
               <div
                 class="sortable-column"
@@ -553,7 +972,7 @@ exports[`PeriodsPaymentsContainer component > renders as expected 1`] = `
               class="th"
               colspan="1"
               role="columnheader"
-              style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+              style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
             >
               <div
                 class="sortable-column"
@@ -585,7 +1004,7 @@ exports[`PeriodsPaymentsContainer component > renders as expected 1`] = `
               class="th"
               colspan="1"
               role="columnheader"
-              style="box-sizing: border-box; flex: 55 0 auto; min-width: 30px; width: 55px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+              style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
             >
               <div
                 class="sortable-column"
@@ -649,7 +1068,7 @@ exports[`PeriodsPaymentsContainer component > renders as expected 1`] = `
             <div
               class="tr"
               role="row"
-              style="display: flex; flex: 1 0 auto; min-width: 390px;"
+              style="display: flex; flex: 1 0 auto; min-width: 385px;"
             >
               <div
                 class="td expander svg-btn"
@@ -679,12 +1098,19 @@ exports[`PeriodsPaymentsContainer component > renders as expected 1`] = `
                 style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
-                Initial period
+                <div
+                  class="c5 align-items-center"
+                >
+                  <b>
+                    Period 1
+                  </b>
+                   
+                </div>
               </div>
               <div
                 class="td"
                 role="cell"
-                style="box-sizing: border-box; flex: 100 0 auto; min-width: 60px; width: 100px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
+                style="box-sizing: border-box; flex: 100 0 auto; min-width: 55px; width: 100px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
                  - Jan 1, 2020
@@ -698,13 +1124,15 @@ exports[`PeriodsPaymentsContainer component > renders as expected 1`] = `
               <div
                 class="td"
                 role="cell"
-                style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
-              />
+              >
+                -
+              </div>
               <div
                 class="td"
                 role="cell"
-                style="box-sizing: border-box; flex: 70 0 auto; min-width: 30px; width: 70px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
                 $0.00
@@ -728,7 +1156,7 @@ exports[`PeriodsPaymentsContainer component > renders as expected 1`] = `
               <div
                 class="td"
                 role="cell"
-                style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                style="box-sizing: border-box; flex: 45 0 auto; min-width: 30px; width: 45px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
                 $0.00
@@ -736,7 +1164,7 @@ exports[`PeriodsPaymentsContainer component > renders as expected 1`] = `
               <div
                 class="td"
                 role="cell"
-                style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
                 -
@@ -744,7 +1172,7 @@ exports[`PeriodsPaymentsContainer component > renders as expected 1`] = `
               <div
                 class="td"
                 role="cell"
-                style="box-sizing: border-box; flex: 55 0 auto; min-width: 30px; width: 55px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
                 -
@@ -764,10 +1192,10 @@ exports[`PeriodsPaymentsContainer component > renders as expected 1`] = `
                 title=""
               >
                 <div
-                  class="c2 c3"
+                  class="c5 c6"
                 >
                   <button
-                    class="c4 Button Button--icon-only btn btn-primary"
+                    class="c3 Button Button--icon-only btn btn-primary"
                     title="edit period"
                     type="button"
                   >
@@ -798,7 +1226,7 @@ exports[`PeriodsPaymentsContainer component > renders as expected 1`] = `
                     </div>
                   </button>
                   <button
-                    class="c4 Button Button--icon-only btn btn-primary"
+                    class="c3 Button Button--icon-only btn btn-primary"
                     title="delete period"
                     type="button"
                   >
@@ -838,13 +1266,13 @@ exports[`PeriodsPaymentsContainer component > renders as expected 1`] = `
 </DocumentFragment>
 `;
 
-exports[`PeriodsPaymentsContainer component > renders with data as expected 1`] = `
+exports[`TermsPaymentsContainer component > renders with data as expected 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
   />
   <div />
-  .c4.btn {
+  .c3.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -875,49 +1303,55 @@ exports[`PeriodsPaymentsContainer component > renders with data as expected 1`] 
   height: 3.8rem;
 }
 
-.c4.btn:hover {
+.c3.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
+.c3.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c4.btn:focus {
+.c3.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c4.btn.btn-primary {
+.c3.btn.btn-primary {
   border: none;
 }
 
-.c4.btn.btn-secondary {
+.c3.btn.btn-secondary {
   background: none;
 }
 
-.c4.btn.btn-info {
+.c3.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c4.btn.btn-info:hover,
-.c4.btn.btn-info:active,
-.c4.btn.btn-info:focus {
+.c3.btn.btn-info:hover,
+.c3.btn.btn-info:active,
+.c3.btn.btn-info:focus {
   background: none;
 }
 
-.c4.btn.btn-light {
+.c3.btn.btn-light {
   border: none;
 }
 
-.c4.btn.btn-dark {
+.c3.btn.btn-dark {
   border: none;
 }
 
-.c4.btn.btn-link {
+.c3.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -938,9 +1372,9 @@ exports[`PeriodsPaymentsContainer component > renders with data as expected 1`] 
   padding: 0;
 }
 
-.c4.btn.btn-link:hover,
-.c4.btn.btn-link:active,
-.c4.btn.btn-link:focus {
+.c3.btn.btn-link:hover,
+.c3.btn.btn-link:active,
+.c3.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -949,14 +1383,14 @@ exports[`PeriodsPaymentsContainer component > renders with data as expected 1`] 
   outline: none;
 }
 
-.c4.btn.btn-link:disabled,
-.c4.btn.btn-link.disabled {
+.c3.btn.btn-link:disabled,
+.c3.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c4.btn:disabled,
-.c4.btn:disabled:hover {
+.c3.btn:disabled,
+.c3.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -967,26 +1401,16 @@ exports[`PeriodsPaymentsContainer component > renders with data as expected 1`] 
   opacity: 0.65;
 }
 
-.c4.Button .Button__icon {
+.c3.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c4.Button--icon-only:focus {
+.c3.Button--icon-only:focus {
   outline: none;
 }
 
-.c4.Button--icon-only .Button__icon {
+.c3.Button--icon-only .Button__icon {
   margin-right: 0;
-}
-
-.c2 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-wrap: nowrap;
-  -ms-flex-wrap: nowrap;
-  flex-wrap: nowrap;
 }
 
 .c1 {
@@ -1003,14 +1427,46 @@ exports[`PeriodsPaymentsContainer component > renders with data as expected 1`] 
   border-radius: 0.5rem;
 }
 
-.c3 {
+.c5 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+}
+
+.c4.c4 {
+  display: inline-block;
+  margin-left: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.c2 {
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-align-items: end;
+  -webkit-box-align: end;
+  -ms-flex-align: end;
+  align-items: end;
+  min-height: 4.5rem;
+}
+
+.c2 .btn {
+  margin: 0;
+}
+
+.c6 {
   -webkit-align-items: center;
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
 }
 
-.c3 .btn.btn-primary {
+.c6 .btn.btn-primary {
   background-color: transparent;
   padding: 0;
 }
@@ -1027,7 +1483,42 @@ exports[`PeriodsPaymentsContainer component > renders with data as expected 1`] 
         <div
           class="col"
         >
-          Payments by Period
+          <div
+            class="c2 no-gutters row"
+          >
+            <div
+              class="px-2 my-1 col-auto"
+            >
+              Payment Periods
+            </div>
+            <div
+              class="my-1 col-auto"
+            >
+              <button
+                class="c3 Button c4 btn btn-primary"
+                type="button"
+              >
+                <div
+                  class="Button__value"
+                >
+                  <svg
+                    fill="currentColor"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 448 512"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
+                    />
+                  </svg>
+                   Add a Period
+                </div>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </h2>
@@ -1045,7 +1536,7 @@ exports[`PeriodsPaymentsContainer component > renders with data as expected 1`] 
           <div
             class="tr"
             role="row"
-            style="display: flex; flex: 1 0 auto; min-width: 390px;"
+            style="display: flex; flex: 1 0 auto; min-width: 385px;"
           >
             <div
               class="th"
@@ -1065,12 +1556,12 @@ exports[`PeriodsPaymentsContainer component > renders with data as expected 1`] 
               class="th"
               colspan="1"
               role="columnheader"
-              style="box-sizing: border-box; flex: 100 0 auto; min-width: 60px; width: 100px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
+              style="box-sizing: border-box; flex: 100 0 auto; min-width: 55px; width: 100px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
             >
               <div
                 class="sortable-column"
               >
-                Start date - End date
+                Start date - end date
               </div>
             </div>
             <div
@@ -1089,7 +1580,7 @@ exports[`PeriodsPaymentsContainer component > renders with data as expected 1`] 
               class="th"
               colspan="1"
               role="columnheader"
-              style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
             >
               <div
                 class="sortable-column"
@@ -1101,7 +1592,7 @@ exports[`PeriodsPaymentsContainer component > renders with data as expected 1`] 
               class="th"
               colspan="1"
               role="columnheader"
-              style="box-sizing: border-box; flex: 70 0 auto; min-width: 30px; width: 70px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+              style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
             >
               <div
                 class="sortable-column"
@@ -1177,7 +1668,7 @@ exports[`PeriodsPaymentsContainer component > renders with data as expected 1`] 
               class="th"
               colspan="1"
               role="columnheader"
-              style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+              style="box-sizing: border-box; flex: 45 0 auto; min-width: 30px; width: 45px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
             >
               <div
                 class="sortable-column"
@@ -1209,7 +1700,7 @@ exports[`PeriodsPaymentsContainer component > renders with data as expected 1`] 
               class="th"
               colspan="1"
               role="columnheader"
-              style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+              style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
             >
               <div
                 class="sortable-column"
@@ -1241,7 +1732,7 @@ exports[`PeriodsPaymentsContainer component > renders with data as expected 1`] 
               class="th"
               colspan="1"
               role="columnheader"
-              style="box-sizing: border-box; flex: 55 0 auto; min-width: 30px; width: 55px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+              style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
             >
               <div
                 class="sortable-column"
@@ -1305,7 +1796,7 @@ exports[`PeriodsPaymentsContainer component > renders with data as expected 1`] 
             <div
               class="tr"
               role="row"
-              style="display: flex; flex: 1 0 auto; min-width: 390px;"
+              style="display: flex; flex: 1 0 auto; min-width: 385px;"
             >
               <div
                 class="td expander svg-btn"
@@ -1335,12 +1826,19 @@ exports[`PeriodsPaymentsContainer component > renders with data as expected 1`] 
                 style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
-                Initial period
+                <div
+                  class="c5 align-items-center"
+                >
+                  <b>
+                    Period 1
+                  </b>
+                   
+                </div>
               </div>
               <div
                 class="td"
                 role="cell"
-                style="box-sizing: border-box; flex: 100 0 auto; min-width: 60px; width: 100px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
+                style="box-sizing: border-box; flex: 100 0 auto; min-width: 55px; width: 100px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
                  - Jan 1, 2020
@@ -1354,13 +1852,15 @@ exports[`PeriodsPaymentsContainer component > renders with data as expected 1`] 
               <div
                 class="td"
                 role="cell"
-                style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
-              />
+              >
+                -
+              </div>
               <div
                 class="td"
                 role="cell"
-                style="box-sizing: border-box; flex: 70 0 auto; min-width: 30px; width: 70px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
                 $0.00
@@ -1384,7 +1884,7 @@ exports[`PeriodsPaymentsContainer component > renders with data as expected 1`] 
               <div
                 class="td"
                 role="cell"
-                style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                style="box-sizing: border-box; flex: 45 0 auto; min-width: 30px; width: 45px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
                 $0.00
@@ -1392,7 +1892,7 @@ exports[`PeriodsPaymentsContainer component > renders with data as expected 1`] 
               <div
                 class="td"
                 role="cell"
-                style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
                 -
@@ -1400,7 +1900,7 @@ exports[`PeriodsPaymentsContainer component > renders with data as expected 1`] 
               <div
                 class="td"
                 role="cell"
-                style="box-sizing: border-box; flex: 55 0 auto; min-width: 30px; width: 55px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
                 -
@@ -1420,10 +1920,10 @@ exports[`PeriodsPaymentsContainer component > renders with data as expected 1`] 
                 title=""
               >
                 <div
-                  class="c2 c3"
+                  class="c5 c6"
                 >
                   <button
-                    class="c4 Button Button--icon-only btn btn-primary"
+                    class="c3 Button Button--icon-only btn btn-primary"
                     title="edit period"
                     type="button"
                   >
@@ -1454,7 +1954,7 @@ exports[`PeriodsPaymentsContainer component > renders with data as expected 1`] 
                     </div>
                   </button>
                   <button
-                    class="c4 Button Button--icon-only btn btn-primary"
+                    class="c3 Button Button--icon-only btn btn-primary"
                     title="delete period"
                     type="button"
                   >

@@ -5,7 +5,15 @@ import { createMemoryHistory } from 'history';
 
 import { mockLookups } from '@/mocks/lookups.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { act, fillInput, renderAsync, RenderOptions, waitFor } from '@/utils/test-utils';
+import {
+  act,
+  fillInput,
+  renderAsync,
+  RenderOptions,
+  waitFor,
+  screen,
+  getByName,
+} from '@/utils/test-utils';
 
 import { defaultFormLeasePayment } from '../../models';
 import { IPaymentModalProps, PaymentModal } from './PaymentModal';
@@ -59,29 +67,36 @@ describe('PaymentModal component', () => {
   });
 
   it('submits all filled out fields as expected', async () => {
-    const {
-      component: { getByText },
-    } = await setup({});
+    const { component } = await setup({});
+    const { findByDisplayValue, getByText, container } = component;
 
     await fillInput(document.body, 'receivedDate', '2020-01-01', 'datepicker');
-    await fillInput(document.body, 'leasePaymentMethodType.id', 'CHEQ', 'select');
-    await fillInput(document.body, 'amountPreTax', '1150');
-    await fillInput(document.body, 'amountGst', '50');
+    await act(async () =>
+      userEvent.selectOptions(
+        getByName('leasePaymentMethodType.id'),
+        screen.getByRole('option', { name: 'Cheque' }),
+      ),
+    );
+    await act(async () =>
+      userEvent.selectOptions(
+        getByName('leasePaymentCategoryTypeCode.id'),
+        screen.getByRole('option', { name: 'Base Rent' }),
+      ),
+    );
     await fillInput(document.body, 'amountTotal', '1200');
     const saveButton = getByText('Save payment');
     await act(async () => userEvent.click(saveButton));
     await waitFor(() => expect(onSave).toHaveBeenCalled());
     expect(onSave).toHaveBeenCalledWith({
-      ...defaultFormLeasePayment,
       receivedDate: '2020-01-01',
       amountTotal: 1200,
       amountPreTax: 1200,
       amountGst: '',
+      leasePaymentCategoryTypeCode: {
+        id: 'BASE',
+      },
       leasePaymentMethodType: {
         id: 'CHEQ',
-        displayOrder: null,
-        description: null,
-        isDisabled: false,
       },
     });
   });

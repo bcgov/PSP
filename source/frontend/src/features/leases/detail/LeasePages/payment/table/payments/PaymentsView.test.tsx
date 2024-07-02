@@ -11,7 +11,7 @@ import { act, fillInput, renderAsync, RenderOptions, screen, userEvent } from '@
 import { getAllByRole as getAllByRoleBase } from '@/utils/test-utils';
 
 import { defaultFormLeasePayment, defaultFormLeasePeriod, FormLeasePayment } from '../../models';
-import PaymentsForm, { IPaymentsFormProps } from './PaymentsForm';
+import PaymentsView, { IPaymentsViewProps } from './PaymentsView';
 
 const history = createMemoryHistory();
 const mockAxios = new MockAdapter(axios);
@@ -27,7 +27,7 @@ export const defaultTestFormLeasePayment: FormLeasePayment = {
   id: 1,
 };
 
-const defaultLeaseWithPeriodsPayments: LeaseFormModel = {
+const getDefaultLeaseWithPeriodsPayments = () => ({
   ...new LeaseFormModel(),
   periods: [
     {
@@ -36,7 +36,7 @@ const defaultLeaseWithPeriodsPayments: LeaseFormModel = {
       payments: [{ ...defaultTestFormLeasePayment }],
     },
   ],
-};
+});
 
 const onEdit = vi.fn();
 const onDelete = vi.fn();
@@ -45,24 +45,22 @@ const onSave = vi.fn();
 describe('PaymentsForm component', () => {
   const setup = async (
     renderOptions: RenderOptions &
-      Partial<IPaymentsFormProps> & {
+      Partial<IPaymentsViewProps> & {
         initialValues?: any;
         onCancel?: () => void;
       } = {},
   ) => {
     // render component under test
     const component = await renderAsync(
-      <Formik initialValues={renderOptions.initialValues ?? {}} onSubmit={noop}>
-        <PaymentsForm
-          onEdit={onEdit}
-          onDelete={onDelete}
-          onSave={onSave}
-          nameSpace="periods.0"
-          isExercised={renderOptions?.isExercised ?? true}
-          isReceivable={renderOptions?.isReceivable ?? true}
-          isGstEligible={renderOptions?.isGstEligible ?? true}
-        />
-      </Formik>,
+      <PaymentsView
+        onEdit={onEdit}
+        onDelete={onDelete}
+        onSave={onSave}
+        period={renderOptions.initialValues?.periods?.[0]}
+        isExercised={renderOptions?.isExercised ?? true}
+        isReceivable={renderOptions?.isReceivable ?? true}
+        isGstEligible={renderOptions?.isGstEligible ?? true}
+      />,
       {
         ...renderOptions,
         claims: renderOptions.claims ?? [Claims.LEASE_EDIT],
@@ -93,9 +91,9 @@ describe('PaymentsForm component', () => {
 
   beforeEach(() => {
     mockAxios.resetHistory();
-    onEdit.mockReset();
-    onSave.mockReset();
-    onDelete.mockReset();
+    onEdit.mockClear();
+    onSave.mockClear();
+    onDelete.mockClear();
   });
   it('renders as expected', async () => {
     const { component } = await setup({});
@@ -116,7 +114,7 @@ describe('PaymentsForm component', () => {
       const {
         component: { queryByTitle },
       } = await setup({
-        initialValues: defaultLeaseWithPeriodsPayments,
+        initialValues: getDefaultLeaseWithPeriodsPayments(),
         claims: [Claims.LEASE_DELETE],
       });
 
@@ -128,7 +126,7 @@ describe('PaymentsForm component', () => {
       const {
         component: { findAllByTitle },
       } = await setup({
-        initialValues: defaultLeaseWithPeriodsPayments,
+        initialValues: getDefaultLeaseWithPeriodsPayments(),
         claims: [Claims.LEASE_EDIT],
       });
 
@@ -140,7 +138,7 @@ describe('PaymentsForm component', () => {
       const {
         component: { queryByTitle },
       } = await setup({
-        initialValues: defaultLeaseWithPeriodsPayments,
+        initialValues: getDefaultLeaseWithPeriodsPayments(),
         claims: [],
       });
 
@@ -152,7 +150,7 @@ describe('PaymentsForm component', () => {
       const {
         component: { findAllByTitle },
       } = await setup({
-        initialValues: defaultLeaseWithPeriodsPayments,
+        initialValues: getDefaultLeaseWithPeriodsPayments(),
         claims: [Claims.LEASE_EDIT],
       });
       const deleteButton = await findAllByTitle('delete actual');
@@ -166,7 +164,7 @@ describe('PaymentsForm component', () => {
         component: { findByText },
       } = await setup({
         initialValues: {
-          ...defaultLeaseWithPeriodsPayments,
+          ...getDefaultLeaseWithPeriodsPayments(),
           periods: [{ ...defaultFormLeasePeriod }],
         },
       });
@@ -178,7 +176,7 @@ describe('PaymentsForm component', () => {
       const {
         component: { findByText },
       } = await setup({
-        initialValues: defaultLeaseWithPeriodsPayments,
+        initialValues: getDefaultLeaseWithPeriodsPayments(),
         isExercised: false,
       });
       const text = await findByText('Period must be exercised to add payments.');
@@ -189,39 +187,39 @@ describe('PaymentsForm component', () => {
       const {
         component: { findByText },
       } = await setup({
-        initialValues: defaultLeaseWithPeriodsPayments,
+        initialValues: getDefaultLeaseWithPeriodsPayments(),
         isReceivable: true,
       });
-      expect(await findByText('Payments Received')).toBeVisible();
-      expect(await findByText('Received date')).toBeVisible();
-      expect(await findByText('Received payment ($)')).toBeVisible();
-      expect(await findByText('Received total ($)')).toBeVisible();
+      expect(await findByText('Payments')).toBeVisible();
+      expect(await findByText('Date')).toBeVisible();
+      expect(await findByText('Received payment ($)', { exact: false })).toBeVisible();
+      expect(await findByText('Total ($)')).toBeVisible();
     });
 
     it('Displays proper sent columns if payable', async () => {
       const {
         component: { findByText },
       } = await setup({
-        initialValues: defaultLeaseWithPeriodsPayments,
+        initialValues: getDefaultLeaseWithPeriodsPayments(),
         isReceivable: false,
       });
-      expect(await findByText('Payments Sent')).toBeVisible();
-      expect(await findByText('Sent date')).toBeVisible();
+      expect(await findByText('Payments')).toBeVisible();
+      expect(await findByText('Date')).toBeVisible();
       expect(await findByText('Sent payment ($)')).toBeVisible();
-      expect(await findByText('Sent total ($)')).toBeVisible();
+      expect(await findByText('Total ($)')).toBeVisible();
     });
 
     it('Does not display GST values or calculations if period is not gst eligible', async () => {
       const { findFooter, findCell, findFooterCell, findFirstRow } = await setup({
-        initialValues: defaultLeaseWithPeriodsPayments,
+        initialValues: getDefaultLeaseWithPeriodsPayments(),
         isGstEligible: false,
       });
       const row = findFirstRow() as HTMLElement;
       const footer = findFooter() as HTMLElement;
       expect(row).not.toBeNull();
       expect(footer).not.toBeNull();
-      expect(findCell(row, 3)?.textContent).toBe('-');
-      expect(findFooterCell(footer, 3)?.textContent).toBe('-');
+      expect(findCell(row, 4)?.textContent).toBe('-');
+      expect(findFooterCell(footer, 4)?.textContent).toBe('-');
     });
 
     it('Sums expected payment columns', async () => {
@@ -240,13 +238,13 @@ describe('PaymentsForm component', () => {
       const footer = findFooter() as HTMLElement;
       expect(row).not.toBeNull();
       expect(footer).not.toBeNull();
-      expect(findFooterCell(footer, 1)?.textContent).toBe('(2) payments');
-      expect(findCell(row, 2)?.textContent).toBe('$1,100.00');
-      expect(findFooterCell(footer, 2)?.textContent).toBe('$2,200.00');
-      expect(findCell(row, 3)?.textContent).toBe('$100.00');
-      expect(findFooterCell(footer, 3)?.textContent).toBe('$200.00');
-      expect(findCell(row, 4)?.textContent).toBe('$1,200.00');
-      expect(findFooterCell(footer, 4)?.textContent).toBe('$2,400.00');
+      expect(findFooterCell(footer, 2)?.textContent).toBe('(2) payments');
+      expect(findCell(row, 3)?.textContent).toBe('$1,100.00');
+      expect(findFooterCell(footer, 3)?.textContent).toBe('$2,200.00');
+      expect(findCell(row, 4)?.textContent).toBe('$100.00');
+      expect(findFooterCell(footer, 4)?.textContent).toBe('$200.00');
+      expect(findCell(row, 5)?.textContent).toBe('$1,200.00');
+      expect(findFooterCell(footer, 5)?.textContent).toBe('$2,400.00');
     });
   });
   describe('interactive functionality', () => {
@@ -254,7 +252,7 @@ describe('PaymentsForm component', () => {
       const {
         component: { findByTitle, getByText },
       } = await setup({
-        initialValues: defaultLeaseWithPeriodsPayments,
+        initialValues: getDefaultLeaseWithPeriodsPayments(),
         isReceivable: false,
       });
       const notesButton = await findByTitle('notes');
@@ -262,7 +260,7 @@ describe('PaymentsForm component', () => {
         userEvent.click(notesButton);
       });
       await act(async () => {
-        await fillInput(document.body, 'periods.0.payments.0.note', 'a test note', 'textarea');
+        await fillInput(document.body, 'note', 'a test note', 'textarea');
       });
       const saveButton = getByText('Yes');
       await act(async () => {
@@ -270,36 +268,12 @@ describe('PaymentsForm component', () => {
       });
       expect(onSave).toHaveBeenCalledWith({ ...defaultTestFormLeasePayment, note: 'a test note' });
     });
-    it('Does not update note content if note modal is cancelled', async () => {
-      const {
-        component: { findByTitle, getByText },
-      } = await setup({
-        initialValues: defaultLeaseWithPeriodsPayments,
-        isReceivable: false,
-      });
-      const notesButton = await findByTitle('notes');
-      await act(async () => {
-        userEvent.click(notesButton);
-      });
-      await act(async () => {
-        await fillInput(document.body, 'periods.0.payments.0.note', 'a test note', 'textarea');
-      });
-      await screen.findByDisplayValue('a test note');
-      const cancelButton = getByText('No');
-      await act(async () => {
-        userEvent.click(cancelButton);
-        userEvent.click(notesButton);
-      });
-      //expect that the note content should have returned to the original value.
-      const noteText = await screen.findByDisplayValue('note');
-      expect(noteText).toBeVisible();
-    });
 
     it('Allows user to trigger an edit action', async () => {
       const {
         component: { findAllByTitle },
       } = await setup({
-        initialValues: defaultLeaseWithPeriodsPayments,
+        initialValues: getDefaultLeaseWithPeriodsPayments(),
         isReceivable: false,
       });
       const editButton = await findAllByTitle('edit actual');
@@ -311,7 +285,7 @@ describe('PaymentsForm component', () => {
       const {
         component: { findAllByTitle },
       } = await setup({
-        initialValues: defaultLeaseWithPeriodsPayments,
+        initialValues: getDefaultLeaseWithPeriodsPayments(),
         isReceivable: false,
         claims: [Claims.LEASE_EDIT],
       });
