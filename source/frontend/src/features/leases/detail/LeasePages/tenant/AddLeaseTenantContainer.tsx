@@ -54,7 +54,6 @@ export const AddLeaseTenantContainer: React.FunctionComponent<
     const tenantFunc = async () => {
       const tenants = await getLeaseTenants(leaseId ?? 0);
       if (tenants !== undefined) {
-        console.log(tenants);
         setTenants(tenants.map((t: ApiGen_Concepts_LeaseTenant) => new FormTenant(t)));
         setSelectedContacts(
           tenants.map((t: ApiGen_Concepts_LeaseTenant) =>
