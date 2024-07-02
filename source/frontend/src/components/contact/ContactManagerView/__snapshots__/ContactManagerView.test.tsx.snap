@@ -950,7 +950,7 @@ exports[`ContactManagerView > matches snapshot 1`] = `
               <div
                 class="sortable-column"
               >
-                Update/View
+                Edit/View
               </div>
             </div>
           </div>

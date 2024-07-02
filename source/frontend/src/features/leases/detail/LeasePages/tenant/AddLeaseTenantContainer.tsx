@@ -1,17 +1,16 @@
 import { FormikProps } from 'formik/dist/types';
-import { filter, find, orderBy, some } from 'lodash';
+import { find } from 'lodash';
 import React, { useContext, useEffect, useState } from 'react';
 
+import { useOrganizationRepository } from '@/features/contacts/repositories/useOrganizationRepository';
 import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
 import { LeaseFormModel } from '@/features/leases/models';
-import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
 import { useLeaseTenantRepository } from '@/hooks/repositories/useLeaseTenantRepository';
-import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import { IContactSearchResult } from '@/interfaces';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { ApiGen_Concepts_LeaseTenant } from '@/models/api/generated/ApiGen_Concepts_LeaseTenant';
-import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_Person';
-import { exists, isValidId } from '@/utils/utils';
+import { ApiGen_Concepts_PersonOrganization } from '@/models/api/generated/ApiGen_Concepts_PersonOrganization';
+import { isValidId } from '@/utils/utils';
 
 import { IAddLeaseTenantFormProps } from './AddLeaseTenantForm';
 import { FormTenant } from './models';
@@ -43,14 +42,19 @@ export const AddLeaseTenantContainer: React.FunctionComponent<
 
   const {
     updateLeaseTenants,
-    getLeaseTenants: { execute: getLeaseTenants, loading },
+    getLeaseTenants: { execute: getLeaseTenants, loading: loadingTenants },
   } = useLeaseTenantRepository();
+
+  const {
+    getOrganizationDetail: { execute: getOrganizationDetail },
+  } = useOrganizationRepository();
 
   const leaseId = lease?.id;
   useEffect(() => {
     const tenantFunc = async () => {
       const tenants = await getLeaseTenants(leaseId ?? 0);
       if (tenants !== undefined) {
+        console.log(tenants);
         setTenants(tenants.map((t: ApiGen_Concepts_LeaseTenant) => new FormTenant(t)));
         setSelectedContacts(
           tenants.map((t: ApiGen_Concepts_LeaseTenant) =>
@@ -62,43 +66,32 @@ export const AddLeaseTenantContainer: React.FunctionComponent<
     tenantFunc();
   }, [leaseId, getLeaseTenants]);
 
-  const { getPersonConcept } = useApiContacts();
-  const { execute } = useApiRequestWrapper({
-    requestFunction: getPersonConcept,
-    requestName: 'get person by id',
-  });
+  // get a unique list of all tenant organization person-ids that are associated to organization tenants.
+  // in the case of a duplicate organization person, prefers tenants that have the person field non-null.
+  const getTenantOrganizationPersonList = async (tenants?: IContactSearchResult[]) => {
+    const personList: ApiGen_Concepts_PersonOrganization[] = [];
+    tenants?.forEach(async tenant => {
+      if (tenant.id.startsWith('O') === true) {
+        const organizationDetails = await getOrganizationDetail(tenant.organizationId);
+        organizationDetails?.organizationPersons?.forEach(op => {
+          if (isValidId(op.personId) && !find(personList, p => p.personId === op.personId)) {
+            personList.push(op);
+          }
+        });
+        tenant.organization.organizationPersons = personList;
+      }
+    });
+    return tenants;
+  };
 
   const setSelectedTenantsWithPersonData = async (updatedTenants?: IContactSearchResult[]) => {
     const allExistingTenantIds = tenants.map(t => t.id);
     const updatedTenantIds = updatedTenants?.map(t => t.id) ?? [];
     const newTenants = updatedTenants?.filter(t => !allExistingTenantIds.includes(t.id));
-    const matchingExistingTenants = tenants?.filter(t => updatedTenantIds.includes(t?.id ?? ''));
+    const matchingExistingTenants = tenants?.filter(t => updatedTenantIds.includes(t?.id ?? null));
 
-    const personPersonIdList = getTenantOrganizationPersonList(newTenants);
-    // break the list up into the parts that have already been fetched and the parts that haven't been fetched.
-    const unprocessedPersons = filter(personPersonIdList, p => p.person === undefined);
-    const processedPersons = filter(personPersonIdList, p => p.person !== undefined).map(
-      p => p.person,
-    );
-
-    // fetch any person ids that we do not have person information for.
-    const personQueries = unprocessedPersons.map(person => execute(person.personId));
-    const personResponses = await Promise.all(personQueries);
-    const allPersons = personResponses.concat(processedPersons);
-
-    // append the fetched person data onto the selected tenant list.
-    const tenantsWithPersons =
-      newTenants?.map(tenant => {
-        tenant?.organization?.organizationPersons?.forEach(op => {
-          const matchingPerson = find(allPersons, p => p?.id === op.personId);
-          if (matchingPerson) {
-            op.person = matchingPerson;
-          }
-        });
-        tenant.tenantType = tenant.tenantType ? tenant.tenantType : 'TEN';
-        return tenant;
-      }) ?? [];
-    const formTenants = tenantsWithPersons?.map(t => new FormTenant(undefined, t)) ?? [];
+    const orgTenants = await getTenantOrganizationPersonList(newTenants);
+    const formTenants = orgTenants?.map(t => new FormTenant(undefined, t)) ?? [];
     setTenants([...formTenants, ...matchingExistingTenants]);
   };
 
@@ -128,6 +121,7 @@ export const AddLeaseTenantContainer: React.FunctionComponent<
   const onSubmit = async (lease: LeaseFormModel) => {
     const leaseToUpdate = LeaseFormModel.toApi(lease);
     if (getOrgsWithNoPrimaryContact(lease.tenants)?.length > 0) {
+      console.log(lease.tenants);
       setHandleSubmit(() => () => submit(leaseToUpdate));
     } else {
       submit(leaseToUpdate);
@@ -147,32 +141,13 @@ export const AddLeaseTenantContainer: React.FunctionComponent<
       setShowContactManager={setShowContactManager}
       saveCallback={handleSubmit}
       onCancel={() => setHandleSubmit(undefined)}
-      loading={loading}
+      loading={loadingTenants}
     >
       {children}
     </View>
   ) : (
     <></>
   );
-};
-// get a unique list of all tenant organization person-ids that are associated to organization tenants.
-// in the case of a duplicate organization person, prefers tenants that have the person field non-null.
-const getTenantOrganizationPersonList = (tenants?: IContactSearchResult[]) => {
-  const personList: { person?: ApiGen_Concepts_Person; personId: number }[] = [];
-  // put any tenants that have non-null organization person first to ensure that the de-duplication logic below will maintain that value.
-  tenants = orderBy(
-    tenants,
-    t => some(t?.organization?.organizationPersons, op => exists(op.person)),
-    'desc',
-  );
-  tenants?.forEach(tenant =>
-    tenant?.organization?.organizationPersons?.forEach(op => {
-      if (isValidId(op.personId) && !find(personList, p => p.personId === op.personId)) {
-        personList.push({ person: op?.person ?? undefined, personId: op?.personId });
-      }
-    }),
-  );
-  return personList;
 };
 
 export default AddLeaseTenantContainer;
