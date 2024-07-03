@@ -14,11 +14,10 @@ import {
   RenderOptions,
   userEvent,
 } from '@/utils/test-utils';
-
-import { defaultFormLeasePeriod, FormLeasePayment } from '../../models';
-import PeriodsForm, { IPeriodsFormProps } from './PeriodsForm';
 import { createRef } from 'react';
 import { ApiGen_CodeTypes_LeaseLicenceTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseLicenceTypes';
+import PeriodPaymentsView, { IPeriodPaymentsViewProps } from './PaymentPeriodsView';
+import { defaultFormLeasePeriod, FormLeasePayment } from '../../models';
 
 const history = createMemoryHistory();
 const mockAxios = new MockAdapter(axios);
@@ -35,7 +34,7 @@ const onGenerate = vi.fn();
 describe('PeriodsForm component', () => {
   const setup = async (
     renderOptions: RenderOptions &
-      Partial<IPeriodsFormProps> & {
+      Partial<IPeriodPaymentsViewProps> & {
         initialValues?: Partial<LeaseFormModel>;
         selectedTenants?: IContactSearchResult[];
         onCancel?: () => void;
@@ -44,7 +43,7 @@ describe('PeriodsForm component', () => {
   ) => {
     // render component under test
     const component = await renderAsync(
-      <PeriodsForm
+      <PeriodPaymentsView
         onEdit={noop}
         onDelete={noop}
         onEditPayment={noop}
@@ -305,8 +304,8 @@ describe('PeriodsForm component', () => {
     });
     const rows = component.getAllByRole('row');
     expect(rows).toHaveLength(3);
-    expect(findCell(rows[1], 0)?.textContent).toBe('Initial period');
-    expect(findCell(rows[2], 0)?.textContent).toBe('Renewal 1');
+    expect(findCell(rows[1], 0)?.textContent).toBe('Period 1');
+    expect(findCell(rows[2], 0)?.textContent).toBe('Period 2');
   });
 
   it('displays the last payment date correctly', async () => {
