@@ -526,8 +526,8 @@ namespace Pims.Dal.Repositories
                     p.PimsPropPropAnomalyTypes.Any(at => filter.AnomalyIds.Contains(at.PropertyAnomalyTypeCode)));
             }
 
-
-            var authorizationTypes = new List<string>(){
+            var authorizationTypes = new List<string>()
+            {
                "NOI",
                "Section 15",
                "Section 16",
@@ -567,7 +567,6 @@ namespace Pims.Dal.Repositories
             {
                 predicate.And(ownershipBuilder); // Only apply ownership filter if at least one type is specified.
             }
-            predicate.And(ownershipBuilder);
 
             return Context.PimsProperties.AsNoTracking()
                 .Where(predicate)
