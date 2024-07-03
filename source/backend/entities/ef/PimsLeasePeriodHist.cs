@@ -34,6 +34,18 @@ public partial class PimsLeasePeriodHist
     [StringLength(20)]
     public string LeasePmtFreqTypeCode { get; set; }
 
+    [Column("BASE_RENT_FREQ")]
+    [StringLength(20)]
+    public string BaseRentFreq { get; set; }
+
+    [Column("ADDL_RENT_FREQ")]
+    [StringLength(20)]
+    public string AddlRentFreq { get; set; }
+
+    [Column("VBL_RENT_FREQ")]
+    [StringLength(20)]
+    public string VblRentFreq { get; set; }
+
     [Column("PERIOD_START_DATE", TypeName = "datetime")]
     public DateTime PeriodStartDate { get; set; }
 
@@ -62,6 +74,30 @@ public partial class PimsLeasePeriodHist
 
     [Column("IS_PERIOD_EXERCISED")]
     public bool? IsPeriodExercised { get; set; }
+
+    [Column("PAYMENT_TYPE")]
+    public bool PaymentType { get; set; }
+
+    [Column("PERIOD_DURATION")]
+    public bool PeriodDuration { get; set; }
+
+    [Column("BASE_RENT_AGREED_PMT", TypeName = "money")]
+    public decimal? BaseRentAgreedPmt { get; set; }
+
+    [Column("IS_BASE_RENT_SUBJECT_TO_GST")]
+    public bool? IsBaseRentSubjectToGst { get; set; }
+
+    [Column("ADDL_RENT_AGREED_PMT", TypeName = "money")]
+    public decimal? AddlRentAgreedPmt { get; set; }
+
+    [Column("IS_ADDL_RENT_SUBJECT_TO_GST")]
+    public bool? IsAddlRentSubjectToGst { get; set; }
+
+    [Column("VBL_RENT_AGREED_PMT", TypeName = "money")]
+    public decimal? VblRentAgreedPmt { get; set; }
+
+    [Column("IS_VBL_RENT_SUBJECT_TO_GST")]
+    public bool? IsVblRentSubjectToGst { get; set; }
 
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }
@@ -113,40 +149,4 @@ public partial class PimsLeasePeriodHist
     [Column("DB_LAST_UPDATE_USERID")]
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
-
-    [Column("BASE_RENT_FREQ")]
-    [StringLength(20)]
-    public string BaseRentFreq { get; set; }
-
-    [Column("ADDL_RENT_FREQ")]
-    [StringLength(20)]
-    public string AddlRentFreq { get; set; }
-
-    [Column("VBL_RENT_FREQ")]
-    [StringLength(20)]
-    public string VblRentFreq { get; set; }
-
-    [Column("PAYMENT_TYPE")]
-    public bool PaymentType { get; set; }
-
-    [Column("PERIOD_DURATION")]
-    public bool PeriodDuration { get; set; }
-
-    [Column("BASE_RENT_AGREED_PMT", TypeName = "money")]
-    public decimal? BaseRentAgreedPmt { get; set; }
-
-    [Column("IS_BASE_RENT_SUBJECT_TO_GST")]
-    public bool? IsBaseRentSubjectToGst { get; set; }
-
-    [Column("ADDL_RENT_AGREED_PMT", TypeName = "money")]
-    public decimal? AddlRentAgreedPmt { get; set; }
-
-    [Column("IS_ADDL_RENT_SUBJECT_TO_GST")]
-    public bool? IsAddlRentSubjectToGst { get; set; }
-
-    [Column("VBL_RENT_AGREED_PMT", TypeName = "money")]
-    public decimal? VblRentAgreedPmt { get; set; }
-
-    [Column("IS_VBL_RENT_SUBJECT_TO_GST")]
-    public bool? IsVblRentSubjectToGst { get; set; }
 }
