@@ -16,11 +16,12 @@ import * as Styled from '../../styles';
 interface IPaymentFormContentProps {
   isReceived: boolean;
   isGstEligible: boolean;
+  isVariable: boolean;
 }
 
 const PaymentFormContent: React.FunctionComponent<
   React.PropsWithChildren<IPaymentFormContentProps>
-> = ({ isReceived, isGstEligible }) => {
+> = ({ isReceived, isGstEligible, isVariable }) => {
   const formikProps = useFormikContext<FormLeasePayment>();
   const lookups = useLookupCodeHelpers();
   const paymentMethodOptions = lookups.getOptionsByType(API.LEASE_PAYMENT_METHOD_TYPES);
@@ -52,15 +53,17 @@ const PaymentFormContent: React.FunctionComponent<
           />
         </Col>
       </Row>
-      <Row>
-        <Col md={6}>
-          <Select
-            label="Payment category:"
-            field="leasePaymentCategoryTypeCode.id"
-            options={categoryOptions}
-          />
-        </Col>
-      </Row>
+      {isVariable && (
+        <Row>
+          <Col md={6}>
+            <Select
+              label="Payment category:"
+              field="leasePaymentCategoryTypeCode.id"
+              options={categoryOptions}
+            />
+          </Col>
+        </Row>
+      )}
       <Row>
         <Col md={6}>
           <FastCurrencyInput
