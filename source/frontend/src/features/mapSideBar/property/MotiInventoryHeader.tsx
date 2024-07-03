@@ -2,6 +2,7 @@ import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { AiOutlineExclamationCircle } from 'react-icons/ai';
 import { FaSearchPlus } from 'react-icons/fa';
+import { HiCube } from 'react-icons/hi2';
 import styled from 'styled-components';
 
 import { StyledIconButton } from '@/components/common/buttons';
@@ -96,10 +97,11 @@ export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderPr
             </HeaderField>
             {(isRetired || isDisposed) && (
               <HeaderField label="" className="justify-content-end align-items-end mt-auto">
-                <RetiredWarning>
-                  <AiOutlineExclamationCircle size={16} />
+                <PropertyStyleStatus className={isRetired ? 'retired' : 'disposed'}>
+                  {isRetired && <AiOutlineExclamationCircle size={16} />}
+                  {isDisposed && <HiCube size={16} />}
                   {isRetired ? 'RETIRED' : isDisposed ? 'DISPOSED' : 'UNKNOWN STATUS'}
-                </RetiredWarning>
+                </PropertyStyleStatus>
               </HeaderField>
             )}
           </StyledFiller>
@@ -131,7 +133,7 @@ const StyledDivider = styled.div`
   border-bottom-width: 0.1rem;
 `;
 
-export const RetiredWarning = styled(InlineFlexDiv)`
+export const PropertyStyleStatus = styled(InlineFlexDiv)`
   text-transform: uppercase;
   color: ${props => props.theme.css.textWarningColor};
   background-color: ${props => props.theme.css.warningBackgroundColor};
@@ -143,4 +145,8 @@ export const RetiredWarning = styled(InlineFlexDiv)`
   font-size: 1.4rem;
   align-items: center;
   width: fit-content;
+  &.disposed {
+    color: ${props => props.theme.css.fileStatusGreyColor};
+    background-color: ${props => props.theme.css.fileStatusGreyBackgroundColor};
+  }
 `;

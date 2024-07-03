@@ -110,7 +110,7 @@ public partial class PimsLeaseHist
     public string OtherLeasePurposeType { get; set; }
 
     [Column("ORIG_START_DATE", TypeName = "datetime")]
-    public DateTime OrigStartDate { get; set; }
+    public DateTime? OrigStartDate { get; set; }
 
     [Column("ORIG_EXPIRY_DATE", TypeName = "datetime")]
     public DateTime? OrigExpiryDate { get; set; }

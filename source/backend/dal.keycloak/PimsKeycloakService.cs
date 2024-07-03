@@ -64,7 +64,7 @@ namespace Pims.Dal.Keycloak
         /// <returns></returns>
         public async Task<Entity.PimsUser> UpdateUserAsync(Entity.PimsUser user)
         {
-            var kuser = await _keycloakRepository.GetUserAsync(user.GuidIdentifierValue.Value) ?? throw new KeyNotFoundException("User does not exist in Keycloak");
+            var kuser = await _keycloakRepository.GetUserAsync(user.GuidIdentifierValue.Value);
             var euser = _userRepository.GetTrackingById(user.Internal_Id);
 
             return await SaveUserChanges(user, euser, kuser, true);
@@ -133,12 +133,15 @@ namespace Pims.Dal.Keycloak
             }
 
             // Update PIMS
-            var idirUsername = kuser.Attributes?.FirstOrDefault(a => a.Key == "idir_username").Value.FirstOrDefault();
-            if (idirUsername == null)
+            if (kuser != null)
             {
-                throw new KeyNotFoundException("keycloak user missing required idir_username attribute");
+                var idirUsername = kuser.Attributes?.FirstOrDefault(a => a.Key == "idir_username").Value.FirstOrDefault();
+                if (idirUsername == null)
+                {
+                    throw new KeyNotFoundException("keycloak user missing required idir_username attribute");
+                }
+                euser.BusinessIdentifierValue = idirUsername; // PIMS must use whatever username is set in keycloak.
             }
-            euser.BusinessIdentifierValue = idirUsername; // PIMS must use whatever username is set in keycloak.
             euser.Person.FirstName = update.Person.FirstName;
             euser.Person.MiddleNames = update.Person.MiddleNames;
             euser.Person.Surname = update.Person.Surname;
@@ -170,13 +173,17 @@ namespace Pims.Dal.Keycloak
             var roles = update.IsDisabled.HasValue && update.IsDisabled.Value ? System.Array.Empty<PimsRole>() : euser.PimsUserRoles.Select(ur => _roleRepository.Find(ur.RoleId));
 
             // Now update keycloak
-            var keycloakUserGroups = await _keycloakRepository.GetUserGroupsAsync(euser.GuidIdentifierValue.Value);
-            var newRolesToAdd = roles.Where(r => keycloakUserGroups.All(crr => crr.Name != r.Name));
-            var rolesToRemove = keycloakUserGroups.Where(r => roles.All(crr => crr.Name != r.Name));
-            var addOperations = newRolesToAdd.Select(nr => new UserRoleOperation() { Operation = "add", RoleName = nr.Name, Username = update.GetIdirUsername() });
-            var removeOperations = rolesToRemove.Select(rr => new UserRoleOperation() { Operation = "del", RoleName = rr.Name, Username = update.GetIdirUsername() });
+            if (kuser != null)
+            {
+                var keycloakUserGroups = await _keycloakRepository.GetUserGroupsAsync(euser.GuidIdentifierValue.Value);
+                var newRolesToAdd = roles.Where(r => keycloakUserGroups.All(crr => crr.Name != r.Name));
+                var rolesToRemove = keycloakUserGroups.Where(r => roles.All(crr => crr.Name != r.Name));
+                var addOperations = newRolesToAdd.Select(nr => new UserRoleOperation() { Operation = "add", RoleName = nr.Name, Username = update.GetIdirUsername() });
+                var removeOperations = rolesToRemove.Select(rr => new UserRoleOperation() { Operation = "del", RoleName = rr.Name, Username = update.GetIdirUsername() });
 
-            await _keycloakRepository.ModifyUserRoleMappings(addOperations.Concat(removeOperations));
+
+                await _keycloakRepository.ModifyUserRoleMappings(addOperations.Concat(removeOperations));
+            }
             _userRepository.CommitTransaction();
 
             return _userRepository.GetById(euser.Internal_Id);

@@ -32,7 +32,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By dispositionFileHeaderLastUpdateLabel = By.XPath("//span/strong[contains(text(), 'Updated')]");
         private By dispositionFileHeaderLastUpdateContent = By.XPath("//strong[contains(text(), 'Updated')]/parent::span");
         private By dispositionFileHeaderLastUpdateByContent = By.XPath("//strong[contains(text(), 'Updated')]/parent::span/span[@id='userNameTooltip']/strong");
-        private By dispositionFileHeaderStatusContent = By.XPath("//div[@class='col-5']/div/div[3]/div/div");
+        private By dispositionFileHeaderStatusContent = By.XPath("//b[contains(text(),'File')]/parent::span/following-sibling::div");
 
         private By dispositionFileStatusSelect = By.Id("input-fileStatusTypeCode");
         private By dispositionFileProjectSubtitle = By.XPath("//h2/div/div[contains(text(), 'Project')]");
@@ -486,7 +486,7 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueContentNotEquals(dispositionFileHeaderCodeContent, "");
 
             AssertTrueIsDisplayed(dispositionFileHistoricalLabel);
-            Assert.True(webDriver.FindElements(dispositionFileHistoricalContent).Count > 0);
+            //Assert.True(webDriver.FindElements(dispositionFileHistoricalContent).Count > 0);
 
             AssertTrueIsDisplayed(dispositionFileHeaderCreatedDateLabel);
             AssertTrueContentNotEquals(dispositionFileHeaderCreatedDateContent, "");

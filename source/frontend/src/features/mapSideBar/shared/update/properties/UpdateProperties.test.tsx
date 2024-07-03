@@ -128,7 +128,7 @@ describe('UpdateProperties component', () => {
         ],
       },
     });
-    expect(getByText(/45 - 904 Ho/)).toBeVisible();
+    expect(getByText(/45 - 904 Ho/, { exact: false })).toBeVisible();
   });
 
   it('save button displays modal', async () => {

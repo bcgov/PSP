@@ -15,7 +15,6 @@ import { getMockApiLease } from '@/mocks/lease.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
-import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { defaultApiLease, getEmptyLease } from '@/models/defaultInitializers';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { toTypeCodeNullable } from '@/utils/formUtils';
@@ -23,6 +22,8 @@ import { renderAsync, screen } from '@/utils/test-utils';
 
 import UpdateLeaseContainer, { UpdateLeaseContainerProps } from './UpdateLeaseContainer';
 import { IUpdateLeaseFormProps } from './UpdateLeaseForm';
+import { ApiGen_CodeTypes_LeaseAccountTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseAccountTypes';
+import { ApiGen_CodeTypes_LeaseStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStatusTypes';
 
 const history = createMemoryHistory();
 const storeState = {
@@ -71,6 +72,7 @@ describe('Update lease container component', () => {
     mockAxios.onGet().reply(200, { ...defaultApiLease(), id: 1 });
     mockAxios.resetHistory();
   });
+
   it('renders as expected', async () => {
     const { component } = await setup({});
     expect(component.asFragment()).toMatchSnapshot();
@@ -117,11 +119,11 @@ describe('Update lease container component', () => {
 
 const expectedLease: ApiGen_Concepts_Lease = {
   ...getEmptyLease(),
-  startDate: EpochIsoDateTime,
+  startDate: null,
   amount: 0,
-  paymentReceivableType: toTypeCodeNullable('RCVBL'),
+  paymentReceivableType: toTypeCodeNullable(ApiGen_CodeTypes_LeaseAccountTypes.RCVBL),
   purposeType: toTypeCodeNullable('BCFERRIES'),
-  fileStatusTypeCode: toTypeCodeNullable('DRAFT'),
+  fileStatusTypeCode: toTypeCodeNullable(ApiGen_CodeTypes_LeaseStatusTypes.DRAFT),
   type: null,
   region: null,
   programType: null,
@@ -147,7 +149,7 @@ const expectedLease: ApiGen_Concepts_Lease = {
   documentationReference: null,
   expiryDate: null,
   tenants: [],
-  terms: [],
+  periods: [],
   consultations: [],
   programName: null,
   renewalCount: 0,

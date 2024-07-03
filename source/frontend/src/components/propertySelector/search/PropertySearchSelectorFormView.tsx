@@ -1,18 +1,23 @@
+import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { Section } from '@/components/common/Section/Section';
 import * as Styled from '@/components/common/styles';
 import { Table } from '@/components/Table';
 import { IGeocoderResponse } from '@/hooks/pims-api/interfaces/IGeocoder';
-import { getPropertyName } from '@/utils/mapPropertyUtils';
+import { featuresetToMapProperty, getPropertyName } from '@/utils/mapPropertyUtils';
 
-import { ILayerSearchCriteria, IMapProperty, SearchResultProperty } from '../models';
+import { ILayerSearchCriteria, IMapProperty } from '../models';
 import LayerFilter from './LayerFilter';
 import mapPropertyColumns from './mapPropertyColumns';
 
+export interface IIdentifiedLocationFeatureDataset extends LocationFeatureDataset {
+  id: string;
+}
+
 export interface IPropertySearchSelectorFormViewProps {
-  onSelectedProperties: (properties: IMapProperty[]) => void;
-  selectedProperties: IMapProperty[];
+  onSelectedProperties: (properties: LocationFeatureDataset[]) => void;
+  selectedProperties: LocationFeatureDataset[];
   onSearch: (search: ILayerSearchCriteria) => void;
-  searchResults: IMapProperty[];
+  searchResults: LocationFeatureDataset[];
   search?: ILayerSearchCriteria;
   loading: boolean;
   addressResults?: IGeocoderResponse[];
@@ -33,20 +38,20 @@ export const PropertySearchSelectorFormView: React.FunctionComponent<
   onAddressChange,
   onAddressSelect,
 }) => {
-  const tableData =
+  const selectedData = selectedProperties.map<IIdentifiedLocationFeatureDataset>(x => {
+    return { ...x, id: generatePropertyId(featuresetToMapProperty(x)) };
+  });
+
+  const identifiedSearchResults =
     searchResults?.length <= 15
-      ? searchResults.map<SearchResultProperty>(x => {
-          return { ...x, id: generatePropertyId(x) };
+      ? searchResults.map<IIdentifiedLocationFeatureDataset>(x => {
+          return { ...x, id: generatePropertyId(featuresetToMapProperty(x)) };
         })
       : [];
 
-  const selectedData = selectedProperties.map<SearchResultProperty>(x => {
-    return { ...x, id: generatePropertyId(x) };
-  });
-
   function generatePropertyId(mapProperty: IMapProperty): string {
     const propertyName = getPropertyName(mapProperty);
-    return `${propertyName.label}-${propertyName.value}`;
+    return `${propertyName.label}-${propertyName.value}-${mapProperty.latitude}-${mapProperty.longitude}`;
   }
 
   return (
@@ -63,11 +68,11 @@ export const PropertySearchSelectorFormView: React.FunctionComponent<
         />
       </Section>
       <Section header={undefined}>
-        <Table<SearchResultProperty>
+        <Table<IIdentifiedLocationFeatureDataset>
           manualPagination={false}
           name="map-properties"
           columns={mapPropertyColumns}
-          data={tableData}
+          data={identifiedSearchResults}
           setSelectedRows={searchResults?.length <= 15 ? onSelectedProperties : undefined}
           selectedRows={selectedData}
           loading={loading}

@@ -110,16 +110,16 @@ const RetiredWarning = styled(InlineFlexDiv)<{ $variant: string }>`
     if (props.$variant === 'green') {
       return `
   color: ${props.theme.css.completedColor};
-  background-color: ${props.theme.css.selectedColor};
+  background-color: ${props.theme.css.completedBackgroundColor};
     `;
     } else if (props.$variant === 'grey') {
       return `
-  color: ${props.theme.css.disabledColor};
-  background-color: ${props.theme.css.disabledFieldBackgroundColor};
+  color: ${props.theme.css.fileStatusGreyColor};
+  background-color: ${props.theme.css.fileStatusGreyBackgroundColor};
     `;
     } else if (props.$variant === 'blue') {
       return `
-  color: ${props.theme.css.slideOutBlue};
+  color: ${props.theme.css.fileStatusBlueColor};
   background-color: ${props.theme.css.filterBoxColor};
     `;
     } else if (props.$variant === 'yellow') {

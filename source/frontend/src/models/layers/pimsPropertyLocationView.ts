@@ -1,3 +1,5 @@
+import { Geometry } from 'geojson';
+
 export type stringDate = string;
 
 // Source : Pims Geoserverview
@@ -125,7 +127,7 @@ export interface PIMS_Property_Boundary_View {
   readonly ADDRESS_ID: number | null;
   readonly REGION_CODE: number | null;
   readonly DISTRICT_CODE: number | null;
-  //readonly GEOMETRY: Geometry | null;
+  readonly GEOMETRY: Geometry | null;
   readonly PROPERTY_AREA_UNIT_TYPE_CODE: string | null;
   readonly LAND_AREA: number | null;
   readonly LAND_LEGAL_DESCRIPTION: string | null;

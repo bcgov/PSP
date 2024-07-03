@@ -182,9 +182,9 @@ namespace Pims.Dal.Repositories
             return this.Context.PimsLeaseInitiatorTypes.AsNoTracking().OrderBy(a => a.LeaseInitiatorTypeCode).ToArray();
         }
 
-        public IEnumerable<PimsLeaseTermStatusType> GetAllLeaseTermStatusTypes()
+        public IEnumerable<PimsLeasePeriodStatusType> GetAllLeasePeriodStatusTypes()
         {
-            return this.Context.PimsLeaseTermStatusTypes.AsNoTracking().OrderBy(a => a.LeaseTermStatusTypeCode).ToArray();
+            return this.Context.PimsLeasePeriodStatusTypes.AsNoTracking().OrderBy(a => a.LeasePeriodStatusTypeCode).ToArray();
         }
 
         public IEnumerable<PimsLeasePmtFreqType> GetAllLeasePmtFreqTypes()
