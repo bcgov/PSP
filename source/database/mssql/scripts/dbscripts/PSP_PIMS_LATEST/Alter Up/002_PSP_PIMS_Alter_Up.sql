@@ -2388,60 +2388,6 @@ CREATE TABLE [dbo].[ADS_SSDATA_1719942371910]  (
 	CONSTRAINT [PRACIN_PK] PRIMARY KEY CLUSTERED([PROPERTY_ACTIVITY_INVOICE_ID])
  ON [PRIMARY])
 GO
---EXEC sp_updateextendedproperty 
---	@name = N'MS_Description', @value = N'Date of the invoice' , 
---	@level0type = N'Schema', @level0name = N'dbo', 
---	@level1type = N'Table', @level1name = N'PIMS_PROPERTY_ACTIVITY_INVOICE', 
---	@level2type = N'Column', @level2name = N'INVOICE_DT'
---GO
---EXEC sp_updateextendedproperty 
---	@name = N'MS_Description', @value = N'Number assigned to the invoice.' , 
---	@level0type = N'Schema', @level0name = N'dbo', 
---	@level1type = N'Table', @level1name = N'PIMS_PROPERTY_ACTIVITY_INVOICE', 
---	@level2type = N'Column', @level2name = N'INVOICE_NUM'
---GO
---EXEC sp_updateextendedproperty 
---	@name = N'MS_Description', @value = N'Description of the invoice.' , 
---	@level0type = N'Schema', @level0name = N'dbo', 
---	@level1type = N'Table', @level1name = N'PIMS_PROPERTY_ACTIVITY_INVOICE', 
---	@level2type = N'Column', @level2name = N'DESCRIPTION'
---GO
---EXEC sp_updateextendedproperty 
---	@name = N'MS_Description', @value = N'Subtotal of the invoice,' , 
---	@level0type = N'Schema', @level0name = N'dbo', 
---	@level1type = N'Table', @level1name = N'PIMS_PROPERTY_ACTIVITY_INVOICE', 
---	@level2type = N'Column', @level2name = N'PRETAX_AMT'
---GO
---EXEC sp_updateextendedproperty 
---	@name = N'MS_Description', @value = N'GST on the invoice.' , 
---	@level0type = N'Schema', @level0name = N'dbo', 
---	@level1type = N'Table', @level1name = N'PIMS_PROPERTY_ACTIVITY_INVOICE', 
---	@level2type = N'Column', @level2name = N'GST_AMT'
---GO
---EXEC sp_updateextendedproperty 
---	@name = N'MS_Description', @value = N'PST on the invoice.' , 
---	@level0type = N'Schema', @level0name = N'dbo', 
---	@level1type = N'Table', @level1name = N'PIMS_PROPERTY_ACTIVITY_INVOICE', 
---	@level2type = N'Column', @level2name = N'PST_AMT'
---GO
---EXEC sp_updateextendedproperty 
---	@name = N'MS_Description', @value = N'Total cost of the invoice.' , 
---	@level0type = N'Schema', @level0name = N'dbo', 
---	@level1type = N'Table', @level1name = N'PIMS_PROPERTY_ACTIVITY_INVOICE', 
---	@level2type = N'Column', @level2name = N'TOTAL_AMT'
---GO
---EXEC sp_updateextendedproperty 
---	@name = N'MS_Description', @value = N'Indicates if the invoice requires PST.' , 
---	@level0type = N'Schema', @level0name = N'dbo', 
---	@level1type = N'Table', @level1name = N'PIMS_PROPERTY_ACTIVITY_INVOICE', 
---	@level2type = N'Column', @level2name = N'IS_PST_REQUIRED'
---GO
---EXEC sp_updateextendedproperty 
---	@name = N'MS_Description', @value = N'Indicates if the invoice is disabled.' , 
---	@level0type = N'Schema', @level0name = N'dbo', 
---	@level1type = N'Table', @level1name = N'PIMS_PROPERTY_ACTIVITY_INVOICE', 
---	@level2type = N'Column', @level2name = N'IS_DISABLED'
---GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
 INSERT INTO [dbo].[ADS_SSDATA_1719942371910]([PROPERTY_ACTIVITY_INVOICE_ID], [PIMS_PROPERTY_ACTIVITY_ID], [INVOICE_DT], [INVOICE_NUM], [DESCRIPTION], [PRETAX_AMT], [GST_AMT], [PST_AMT], [TOTAL_AMT], [IS_PST_REQUIRED], [IS_DISABLED], [CONCURRENCY_CONTROL_NUMBER], [APP_CREATE_TIMESTAMP], [APP_CREATE_USERID], [APP_CREATE_USER_GUID], [APP_CREATE_USER_DIRECTORY], [APP_LAST_UPDATE_TIMESTAMP], [APP_LAST_UPDATE_USERID], [APP_LAST_UPDATE_USER_GUID], [APP_LAST_UPDATE_USER_DIRECTORY], [DB_CREATE_TIMESTAMP], [DB_CREATE_USERID], [DB_LAST_UPDATE_TIMESTAMP], [DB_LAST_UPDATE_USERID]) 
