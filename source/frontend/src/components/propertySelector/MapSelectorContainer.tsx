@@ -55,6 +55,9 @@ export const MapSelectorContainer: FunctionComponent<IMapSelectorContainerProps>
         }
         const pid = pidFromFeatureSet(property);
         const pin = pinFromFeatureSet(property);
+        if (!pid || !pin) {
+          return property;
+        }
         const pimsProperty = await loadProperties({ PID: pid, PIN: pin });
         if (pimsProperty.features.length > 0) {
           property.pimsFeature = pimsProperty.features[0];
@@ -138,7 +141,14 @@ const addProperties = (
 const isSameProperty = (lhs: LocationFeatureDataset, rhs: LocationFeatureDataset) => {
   const lhsName = getPropertyName(featuresetToMapProperty(lhs));
   const rhsName = getPropertyName(featuresetToMapProperty(rhs));
-  if (lhsName.label === rhsName.label && lhsName.label !== NameSourceType.NONE) {
+  if (
+    (lhsName.label === rhsName.label &&
+      lhsName.label !== NameSourceType.NONE &&
+      lhsName.label !== NameSourceType.PLAN) ||
+    (lhsName.label === NameSourceType.PLAN &&
+      lhs.location.lat === rhs.location.lat &&
+      lhs.location.lng === rhs.location.lng)
+  ) {
     return lhsName.value === rhsName.value;
   }
   return false;

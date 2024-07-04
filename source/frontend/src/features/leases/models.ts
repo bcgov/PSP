@@ -25,7 +25,7 @@ import { PropertyForm } from '../mapSideBar/shared/models';
 import { ChecklistItemFormModel } from '../mapSideBar/shared/tabs/checklist/update/models';
 import { FormLeaseDeposit } from './detail/LeasePages/deposits/models/FormLeaseDeposit';
 import { FormLeaseDepositReturn } from './detail/LeasePages/deposits/models/FormLeaseDepositReturn';
-import { FormLeaseTerm } from './detail/LeasePages/payment/models';
+import { FormLeasePeriod } from './detail/LeasePages/payment/models';
 import { FormTenant } from './detail/LeasePages/tenant/models';
 
 export class LeaseFormModel {
@@ -71,7 +71,7 @@ export class LeaseFormModel {
   consultations: FormLeaseConsultation[] = [];
   securityDeposits: FormLeaseDeposit[] = [];
   securityDepositReturns: FormLeaseDepositReturn[] = [];
-  terms: FormLeaseTerm[] = [];
+  periods: FormLeasePeriod[] = [];
   tenants: FormTenant[] = [];
   fileChecklist: ChecklistItemFormModel[] = [];
   rowVersion = 0;
@@ -121,7 +121,7 @@ export class LeaseFormModel {
     );
     leaseDetail.consultations =
       sortedConsultations?.map(c => FormLeaseConsultation.fromApi(c)) || [];
-    leaseDetail.terms = apiModel?.terms?.map(t => FormLeaseTerm.fromApi(t)) || [];
+    leaseDetail.periods = apiModel?.periods?.map(t => FormLeasePeriod.fromApi(t)) || [];
     leaseDetail.tenants = apiModel?.tenants?.map(t => new FormTenant(t)) || [];
     leaseDetail.cancellationReason = apiModel.cancellationReason || '';
     leaseDetail.terminationReason = apiModel.terminationReason || '';
@@ -170,7 +170,7 @@ export class LeaseFormModel {
       project: isValidId(formLease.project?.id) ? ({ id: formLease.project?.id } as any) : null,
       consultations: formLease.consultations.map(x => x.toApi()),
       tenants: formLease.tenants.map(t => FormTenant.toApi(t)),
-      terms: formLease.terms.map(t => FormLeaseTerm.toApi(t)),
+      periods: formLease.periods.map(t => FormLeasePeriod.toApi(t)),
       fileName: null,
       fileNumber: null,
       hasDigitalFile: formLease.hasDigitalLicense ?? false,
@@ -328,7 +328,7 @@ export const getDefaultFormLease: () => LeaseFormModel = () =>
     otherPurposeType: null,
     otherProgramType: null,
     consultations: [],
-    terms: [],
+    periods: [],
     id: 0,
     programName: null,
     documentationReference: null,

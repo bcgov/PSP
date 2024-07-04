@@ -52,6 +52,7 @@ describe('Improvements Container component', () => {
           isEditing={false}
           formikRef={createRef()}
           onSuccess={onSuccessMock}
+          componentView={null}
         ></ImprovementsContainer>
       </LeaseStateContext.Provider>,
       {

@@ -15,8 +15,11 @@ import DetailContainer from '@/features/leases/detail/LeasePages/details/DetailC
 import DocumentsPage from '@/features/leases/detail/LeasePages/documents/DocumentsPage';
 import { ImprovementsContainer } from '@/features/leases/detail/LeasePages/improvements/ImprovementsContainer';
 import InsuranceContainer from '@/features/leases/detail/LeasePages/insurance/InsuranceContainer';
-import TermPaymentsContainer from '@/features/leases/detail/LeasePages/payment/TermPaymentsContainer';
-import { TermPaymentsYupSchema } from '@/features/leases/detail/LeasePages/payment/TermPaymentsYupSchema';
+import PeriodPaymentsContainer from '@/features/leases/detail/LeasePages/payment/PeriodPaymentsContainer';
+import { PeriodPaymentsYupSchema } from '@/features/leases/detail/LeasePages/payment/PeriodPaymentsYupSchema';
+import PeriodPaymentsView, {
+  IPeriodPaymentsViewProps,
+} from '@/features/leases/detail/LeasePages/payment/table/periods/PaymentPeriodsView';
 import Surplus from '@/features/leases/detail/LeasePages/surplus/Surplus';
 import TenantContainer from '@/features/leases/detail/LeasePages/tenant/TenantContainer';
 import { LeaseFormModel } from '@/features/leases/models';
@@ -49,16 +52,18 @@ const initialState: LeaseContainerState = {
   showConfirmModal: false,
 };
 
-export interface LeasePageProps {
+export interface LeasePageProps<T> {
   isEditing: boolean;
   onEdit?: (isEditing: boolean) => void;
   formikRef: React.RefObject<FormikProps<LeaseFormModel>>;
   onSuccess: () => void;
+  componentView: React.FunctionComponent<React.PropsWithChildren<T>>;
 }
 
-export interface ILeasePage {
+export interface ILeasePage<T> {
   pageName: LeasePageNames;
-  component: React.FunctionComponent<React.PropsWithChildren<LeasePageProps>>;
+  component: React.FunctionComponent<React.PropsWithChildren<LeasePageProps<T>>>;
+  componentView?: React.FunctionComponent<React.PropsWithChildren<T>>;
   title: string;
   description?: string;
   validation?: Yup.ObjectSchema<any>;
@@ -79,7 +84,10 @@ export enum LeasePageNames {
   DOCUMENTS = 'documents',
 }
 
-export const leasePages: Map<LeasePageNames, ILeasePage> = new Map<LeasePageNames, ILeasePage>([
+export const leasePages: Map<LeasePageNames, ILeasePage<any>> = new Map<
+  LeasePageNames,
+  ILeasePage<any>
+>([
   [
     LeasePageNames.DETAILS,
     {
@@ -101,10 +109,11 @@ export const leasePages: Map<LeasePageNames, ILeasePage> = new Map<LeasePageName
     LeasePageNames.PAYMENTS,
     {
       pageName: LeasePageNames.PAYMENTS,
-      component: TermPaymentsContainer,
+      component: PeriodPaymentsContainer,
       title: 'Payments',
-      validation: TermPaymentsYupSchema,
-    },
+      validation: PeriodPaymentsYupSchema,
+      componentView: PeriodPaymentsView,
+    } as ILeasePage<IPeriodPaymentsViewProps>,
   ],
   [
     LeasePageNames.IMPROVEMENTS,

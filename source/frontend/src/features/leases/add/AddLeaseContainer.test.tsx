@@ -242,7 +242,7 @@ const leaseData: ApiGen_Concepts_Lease = {
   documentationReference: null,
   expiryDate: '2020-01-02',
   tenants: [],
-  terms: [],
+  periods: [],
   consultations: [
     {
       id: 0,
