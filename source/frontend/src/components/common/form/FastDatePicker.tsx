@@ -9,6 +9,8 @@ import styled from 'styled-components';
 
 import { formikFieldMemo } from '@/utils';
 
+import TooltipIcon from '../TooltipIcon';
+
 type RequiredAttributes = {
   /** The field name */
   field: string;
@@ -23,6 +25,8 @@ type OptionalAttributes = {
   className?: string;
   /** Class name of the date picker */
   innerClassName?: string;
+  /** optional tooltip text to display after the label */
+  tooltip?: string;
   /** The minimum data allowable to be chosen in the datepicker */
   minDate?: Date;
   /** The maximum date allowable to be chosen in the datepicker */
@@ -64,6 +68,7 @@ const FormikDatePicker: FunctionComponent<React.PropsWithChildren<FastDatePicker
     unregisterField,
     setFieldTouched,
   },
+  tooltip,
   ...rest
 }) => {
   const error = getIn(errors, field);
@@ -88,7 +93,25 @@ const FormikDatePicker: FunctionComponent<React.PropsWithChildren<FastDatePicker
       className={classNames(required ? 'required' : '', className)}
       controlId={`datepicker-${field}`}
     >
-      {!!label && <Form.Label>{label}</Form.Label>}
+      {!!label && (
+        <Form.Label>
+          <span className="datepicker-label">{label}</span>{' '}
+          {!!tooltip && (
+            <TooltipIcon
+              data-testid={`${field}-tooltip`}
+              toolTipId={`${field}-tooltip`}
+              toolTip={tooltip}
+            />
+          )}
+        </Form.Label>
+      )}
+      {!!tooltip && !label && (
+        <TooltipIcon
+          data-testid={`${field}-tooltip`}
+          toolTipId={`${field}-tooltip`}
+          toolTip={tooltip}
+        />
+      )}
 
       <StyledDatePicker
         id={`datepicker-${field}`}

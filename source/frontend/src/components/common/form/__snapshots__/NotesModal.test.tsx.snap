@@ -165,7 +165,7 @@ exports[`NotesModal component > renders as expected 1`] = `
 }
 
 <button
-    class="c0 Button c1 btn btn-light"
+    class="c0 Button c1 btn btn-primary"
     title="notes"
     type="button"
   >
@@ -187,6 +187,5 @@ exports[`NotesModal component > renders as expected 1`] = `
       </svg>
     </div>
   </button>
-  <div />
 </DocumentFragment>
 `;

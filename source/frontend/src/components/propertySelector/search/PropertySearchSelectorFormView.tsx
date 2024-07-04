@@ -51,7 +51,7 @@ export const PropertySearchSelectorFormView: React.FunctionComponent<
 
   function generatePropertyId(mapProperty: IMapProperty): string {
     const propertyName = getPropertyName(mapProperty);
-    return `${propertyName.label}-${propertyName.value}`;
+    return `${propertyName.label}-${propertyName.value}-${mapProperty.latitude}-${mapProperty.longitude}`;
   }
 
   return (
