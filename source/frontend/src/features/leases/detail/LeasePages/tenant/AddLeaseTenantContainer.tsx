@@ -120,7 +120,6 @@ export const AddLeaseTenantContainer: React.FunctionComponent<
   const onSubmit = async (lease: LeaseFormModel) => {
     const leaseToUpdate = LeaseFormModel.toApi(lease);
     if (getOrgsWithNoPrimaryContact(lease.tenants)?.length > 0) {
-      console.log(lease.tenants);
       setHandleSubmit(() => () => submit(leaseToUpdate));
     } else {
       submit(leaseToUpdate);

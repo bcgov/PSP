@@ -16,7 +16,7 @@ import {
 } from '@/mocks/contacts.mock';
 import { getMockApiLease } from '@/mocks/lease.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
-import { getEmptyOrganization } from '@/mocks/organization.mock';
+import { getEmptyOrganization, getMockOrganization } from '@/mocks/organization.mock';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { ApiGen_Concepts_LeaseTenant } from '@/models/api/generated/ApiGen_Concepts_LeaseTenant';
 import { defaultApiLease, getEmptyBaseAudit } from '@/models/defaultInitializers';
@@ -30,15 +30,19 @@ import { IPrimaryContactWarningModalProps } from './PrimaryContactWarningModal';
 import { createRef } from 'react';
 
 // mock auth library
-
-vi.mock('@/hooks/pims-api/useApiContacts');
 vi.mock('@/features/leases/hooks/useUpdateLease');
 vi.mock('@/hooks/repositories/useLeaseTenantRepository');
 
-const getPersonConcept = vi.fn();
 const updateTenants = vi.fn().mockResolvedValue({ ...defaultApiLease(), id: 1 });
 const onEdit = vi.fn();
 const onSuccess = vi.fn();
+const getOrganizationConceptFn = vi.fn();
+vi.mocked(useApiContacts).mockImplementation(
+  () =>
+    ({
+      getOrganizationConcept: getOrganizationConceptFn,
+    } as unknown as ReturnType<typeof useApiContacts>),
+);
 
 const history = createMemoryHistory();
 const storeState = {
@@ -92,17 +96,16 @@ describe('AddLeaseTenantContainer component', () => {
   beforeEach(() => {
     vi.resetAllMocks();
     mockKeycloak({ claims: [Claims.CONTACT_VIEW] });
-    vi.mocked(useApiContacts).mockReturnValue({
-      getPersonConcept: getPersonConcept,
-    } as unknown as ReturnType<typeof useApiContacts>);
     vi.mocked(useLeaseTenantRepository).mockReturnValue({
       updateLeaseTenants: { execute: updateTenants.mockResolvedValue([]) },
       getLeaseTenants: getLeaseTenantsObj,
     } as unknown as ReturnType<typeof useLeaseTenantRepository>);
+    getOrganizationConceptFn.mockResolvedValue({
+      data: getMockOrganization(),
+    });
   });
   it('renders as expected', async () => {
     const { component } = await setup({});
-
     expect(component.asFragment()).toMatchSnapshot();
   });
 
@@ -112,19 +115,8 @@ describe('AddLeaseTenantContainer component', () => {
     await act(async () => {
       viewProps.setSelectedTenants([getMockContactOrganizationWithOnePerson()]);
     });
+    expect(getOrganizationConceptFn).toHaveBeenCalled();
     expect(viewProps.selectedTenants[0].organizationPersons).toHaveLength(1);
-  });
-
-  it('does not request duplicate person ids', async () => {
-    await setup({});
-
-    await waitFor(() => {
-      viewProps.setSelectedTenants([
-        getMockContactOrganizationWithOnePerson(),
-        getMockContactOrganizationWithOnePerson(),
-      ]);
-      expect(viewProps.selectedTenants[0].organizationPersons).toHaveLength(1);
-    });
   });
 
   it('does not request previously requested data', async () => {
@@ -155,7 +147,7 @@ describe('AddLeaseTenantContainer component', () => {
     await act(async () => {
       viewProps.setSelectedTenants([contact]);
     });
-    expect(getPersonConcept).not.toHaveBeenCalled();
+    expect(getOrganizationConceptFn).not.toHaveBeenCalled();
   });
 
   it('does not overwrite an existing primary contact if the selection does not change', async () => {
@@ -164,6 +156,7 @@ describe('AddLeaseTenantContainer component', () => {
     //setup
     await waitFor(() => {
       viewProps.setSelectedTenants([getMockContactOrganizationWithOnePerson()]);
+      expect(getOrganizationConceptFn).not.toHaveBeenCalled();
       expect(viewProps.selectedTenants).toHaveLength(1);
     });
 
@@ -172,7 +165,7 @@ describe('AddLeaseTenantContainer component', () => {
       viewProps.setSelectedTenants([getMockContactOrganizationWithOnePerson()]);
     });
     //assert
-    //expect(getPersonConcept).toHaveBeenCalledTimes(1);
+    expect(getOrganizationConceptFn).toHaveBeenCalledTimes(1);
     expect(viewProps.selectedTenants).toHaveLength(1);
   });
 
@@ -181,6 +174,7 @@ describe('AddLeaseTenantContainer component', () => {
 
     await waitFor(() => {
       viewProps.setSelectedTenants([getMockContactOrganizationWithMultiplePeople()]);
+      expect(getOrganizationConceptFn).toHaveBeenCalledTimes(1);
       expect(viewProps.selectedTenants).toHaveLength(1);
     });
     await act(async () => {
@@ -260,6 +254,7 @@ describe('AddLeaseTenantContainer component', () => {
     //setup
     await waitFor(() => {
       viewProps.setSelectedTenants([getMockContactOrganizationWithMultiplePeople()]);
+      //expect(getOrganizationConcept).toHaveBeenCalledTimes(1);
       expect(viewProps.selectedTenants).toHaveLength(1);
       expect(viewProps.saveCallback).not.toBeNull();
     });
