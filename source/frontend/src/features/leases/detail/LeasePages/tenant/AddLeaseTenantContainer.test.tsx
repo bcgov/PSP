@@ -32,6 +32,7 @@ import { createRef } from 'react';
 // mock auth library
 vi.mock('@/features/leases/hooks/useUpdateLease');
 vi.mock('@/hooks/repositories/useLeaseTenantRepository');
+vi.mock('@/hooks/pims-api/useApiContacts');
 
 const updateTenants = vi.fn().mockResolvedValue({ ...defaultApiLease(), id: 1 });
 const onEdit = vi.fn();
