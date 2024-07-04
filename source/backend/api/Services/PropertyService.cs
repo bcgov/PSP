@@ -9,6 +9,7 @@ using Pims.Api.Constants;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Models.CodeTypes;
 using Pims.Api.Models.Concepts.Property;
+using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 using Pims.Dal.Exceptions;
@@ -62,11 +63,7 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.PropertyView);
 
             var property = _propertyRepository.GetById(id);
-            if (property?.Location != null)
-            {
-                property.Location = TransformCoordinates(property.Location);
-            }
-            return property;
+            return TransformPropertyToLatLong(property);
         }
 
         public List<PimsProperty> GetMultipleById(List<long> ids)
@@ -77,10 +74,7 @@ namespace Pims.Api.Services
             List<PimsProperty> properties = _propertyRepository.GetAllByIds(ids);
             foreach (PimsProperty property in properties)
             {
-                if (property?.Location != null)
-                {
-                    property.Location = TransformCoordinates(property.Location);
-                }
+                TransformPropertyToLatLong(property);
             }
 
             return properties;
@@ -93,12 +87,7 @@ namespace Pims.Api.Services
 
             // return property spatial location in lat/long (4326)
             var property = _propertyRepository.GetByPid(pid);
-            if (property?.Location != null)
-            {
-                var newCoords = _coordinateService.TransformCoordinates(SpatialReference.BCALBERS, SpatialReference.WGS84, property.Location.Coordinate);
-                property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.WGS84);
-            }
-            return property;
+            return TransformPropertyToLatLong(property);
         }
 
         public PimsProperty GetByPin(int pin)
@@ -108,12 +97,7 @@ namespace Pims.Api.Services
 
             // return property spatial location in lat/long (4326)
             var property = _propertyRepository.GetByPin(pin);
-            if (property?.Location != null)
-            {
-                var newCoords = _coordinateService.TransformCoordinates(SpatialReference.BCALBERS, SpatialReference.WGS84, property.Location.Coordinate);
-                property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.WGS84);
-            }
-            return property;
+            return TransformPropertyToLatLong(property);
         }
 
         public PimsProperty Update(PimsProperty property, bool commitTransaction = true)
@@ -349,36 +333,41 @@ namespace Pims.Api.Services
             var boundaryGeom = property.Boundary;
             if (boundaryGeom != null && boundaryGeom.SRID != SpatialReference.BCALBERS)
             {
-                var newCoords = property.Boundary.Coordinates.Select(coord => _coordinateService.TransformCoordinates(boundaryGeom.SRID, SpatialReference.BCALBERS, coord));
-                var gf = NetTopologySuite.NtsGeometryServices.Instance.CreateGeometryFactory(SpatialReference.BCALBERS);
-                property.Boundary = gf.CreatePolygon(newCoords.ToArray());
+                _coordinateService.TransformGeometry(boundaryGeom.SRID, SpatialReference.BCALBERS, boundaryGeom);
             }
 
             return property;
         }
 
-        public void UpdateLocation(PimsProperty acquisitionProperty, ref PimsProperty propertyToUpdate, IEnumerable<UserOverrideCode> overrideCodes)
+        public void UpdateLocation(PimsProperty incomingProperty, ref PimsProperty propertyToUpdate, IEnumerable<UserOverrideCode> overrideCodes)
         {
-            if (propertyToUpdate.Location == null)
+            if (propertyToUpdate.Location == null || propertyToUpdate.Boundary == null)
             {
                 if (overrideCodes.Contains(UserOverrideCode.AddLocationToProperty))
                 {
+                    var needsUpdate = false;
+
                     // convert spatial location from lat/long (4326) to BC Albers (3005) for database storage
-                    var geom = acquisitionProperty.Location;
+                    var geom = incomingProperty.Location;
                     if (geom.SRID != SpatialReference.BCALBERS)
                     {
                         var newCoords = _coordinateService.TransformCoordinates(geom.SRID, SpatialReference.BCALBERS, geom.Coordinate);
                         propertyToUpdate.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.BCALBERS);
-                        _propertyRepository.Update(propertyToUpdate, overrideLocation: true);
+                        needsUpdate = true;
                     }
 
                     // apply similar logic to the boundary
-                    var boundaryGeom = acquisitionProperty.Boundary;
+                    var boundaryGeom = incomingProperty.Boundary;
                     if (boundaryGeom != null && boundaryGeom.SRID != SpatialReference.BCALBERS)
                     {
-                        var newCoords = boundaryGeom.Coordinates.Select(coord => _coordinateService.TransformCoordinates(boundaryGeom.SRID, SpatialReference.BCALBERS, coord));
-                        var gf = NetTopologySuite.NtsGeometryServices.Instance.CreateGeometryFactory(SpatialReference.BCALBERS);
-                        acquisitionProperty.Boundary = gf.CreatePolygon(newCoords.ToArray());
+                        _coordinateService.TransformGeometry(boundaryGeom.SRID, SpatialReference.BCALBERS, boundaryGeom);
+                        propertyToUpdate.Boundary = boundaryGeom;
+                        needsUpdate = true;
+                    }
+
+                    if (needsUpdate)
+                    {
+                        _propertyRepository.Update(propertyToUpdate, overrideLocation: true);
                     }
                 }
                 else
@@ -403,10 +392,51 @@ namespace Pims.Api.Services
             _logger.LogInformation("Updating historical numbers for property with id {id}", propertyId);
             _user.ThrowIfNotAuthorized(Permissions.PropertyEdit);
 
+            bool duplicateType = pimsHistoricalNumbers.Where(x => x.HistoricalFileNumberTypeCode != HistoricalFileNumberTypes.OTHER.ToString())
+                .GroupBy(p => (p.HistoricalFileNumberTypeCode, p.HistoricalFileNumber)).Any(g => g.Count() > 1);
+
+            bool duplicateOtherType = pimsHistoricalNumbers.Where(x => x.HistoricalFileNumberTypeCode == HistoricalFileNumberTypes.OTHER.ToString())
+                .GroupBy(p => (p.OtherHistFileNumberTypeCode, p.HistoricalFileNumber)).Any(g => g.Count() > 1);
+
+            if (duplicateType || duplicateOtherType)
+            {
+                throw new DuplicateEntityException("You cannot add a duplicate historical number.");
+            }
+
             _historicalNumberRepository.UpdateHistoricalFileNumbers(propertyId, pimsHistoricalNumbers);
             _historicalNumberRepository.CommitTransaction();
 
             return GetHistoricalNumbersForPropertyId(propertyId);
+        }
+
+        /// <inheritdoc />
+        public List<T> TransformAllPropertiesToLatLong<T>(List<T> fileProperties)
+            where T : IWithPropertyEntity
+        {
+            foreach (var fileProperty in fileProperties)
+            {
+                TransformPropertyToLatLong(fileProperty.Property);
+            }
+
+            return fileProperties;
+        }
+
+        /// <inheritdoc />
+        public PimsProperty TransformPropertyToLatLong(PimsProperty property)
+        {
+            // transform property location (map pin)
+            if (property?.Location != null)
+            {
+                property.Location = TransformCoordinates(property.Location);
+            }
+
+            // transform property boundary in-place (polygon/multipolygon)
+            if (property?.Boundary != null)
+            {
+                _coordinateService.TransformGeometry(SpatialReference.BCALBERS, SpatialReference.WGS84, property.Boundary);
+            }
+
+            return property;
         }
 
         private Point TransformCoordinates(Geometry location)

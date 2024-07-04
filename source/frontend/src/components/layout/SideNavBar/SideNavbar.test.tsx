@@ -87,8 +87,8 @@ describe('SideNavbar display and logic', () => {
     const { getByTitle, queryByText, getByTestId } = renderComponent();
     await waitFor(async () => {
       expect(getByTitle('expand')).toBeInTheDocument();
-      expect(queryByText('Leases & Licenses')).not.toBeInTheDocument();
-      expect(getByTestId('nav-tooltip-leases&licenses')).toContainHTML('svg');
+      expect(queryByText('Leases & Licences')).not.toBeInTheDocument();
+      expect(getByTestId('nav-tooltip-leases&licences')).toContainHTML('svg');
     });
   });
 
@@ -110,8 +110,8 @@ describe('SideNavbar display and logic', () => {
       userEvent.click(expandButton);
     });
     await waitFor(async () => {
-      expect(getByTestId('nav-tooltip-leases&licenses')).toContainHTML('svg');
-      expect(getByText('Leases & Licenses')).toBeInTheDocument();
+      expect(getByTestId('nav-tooltip-leases&licences')).toContainHTML('svg');
+      expect(getByText('Leases & Licences')).toBeInTheDocument();
     });
   });
 
@@ -155,12 +155,12 @@ describe('SideNavbar display and logic', () => {
       const { getByText, getByTestId } = renderComponent({
         roles: [Roles.SYSTEM_ADMINISTRATOR],
       });
-      const managementButton = getByTestId('nav-tooltip-leases&licenses');
+      const managementButton = getByTestId('nav-tooltip-leases&licences');
       await act(async () => {
         userEvent.click(managementButton);
       });
       await waitFor(async () => {
-        expect(getByText('Manage Lease/License Files')).toBeInTheDocument();
+        expect(getByText('Manage Lease/Licence Files')).toBeInTheDocument();
       });
     });
 
@@ -168,7 +168,7 @@ describe('SideNavbar display and logic', () => {
       const { getByTestId, getByTitle } = renderComponent({
         roles: [Roles.SYSTEM_ADMINISTRATOR],
       });
-      const managementButton = getByTestId('nav-tooltip-leases&licenses');
+      const managementButton = getByTestId('nav-tooltip-leases&licences');
       await act(async () => {
         userEvent.click(managementButton);
       });
@@ -185,7 +185,7 @@ describe('SideNavbar display and logic', () => {
       const { getByTestId, getByTitle } = renderComponent({
         roles: [Roles.SYSTEM_ADMINISTRATOR],
       });
-      const managementButton = getByTestId('nav-tooltip-leases&licenses');
+      const managementButton = getByTestId('nav-tooltip-leases&licences');
       await act(async () => {
         userEvent.click(managementButton);
       });

@@ -204,7 +204,7 @@ public partial class PimsLease
     /// Original start date of the lease/license
     /// </summary>
     [Column("ORIG_START_DATE", TypeName = "datetime")]
-    public DateTime OrigStartDate { get; set; }
+    public DateTime? OrigStartDate { get; set; }
 
     /// <summary>
     /// Original expiry date of the lease/license
@@ -436,10 +436,10 @@ public partial class PimsLease
     public virtual ICollection<PimsLeaseNote> PimsLeaseNotes { get; set; } = new List<PimsLeaseNote>();
 
     [InverseProperty("Lease")]
-    public virtual ICollection<PimsLeaseTenant> PimsLeaseTenants { get; set; } = new List<PimsLeaseTenant>();
+    public virtual ICollection<PimsLeasePeriod> PimsLeasePeriods { get; set; } = new List<PimsLeasePeriod>();
 
     [InverseProperty("Lease")]
-    public virtual ICollection<PimsLeaseTerm> PimsLeaseTerms { get; set; } = new List<PimsLeaseTerm>();
+    public virtual ICollection<PimsLeaseTenant> PimsLeaseTenants { get; set; } = new List<PimsLeaseTenant>();
 
     [InverseProperty("Lease")]
     public virtual ICollection<PimsPropertyImprovement> PimsPropertyImprovements { get; set; } = new List<PimsPropertyImprovement>();

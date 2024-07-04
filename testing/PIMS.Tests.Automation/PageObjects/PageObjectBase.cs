@@ -1,7 +1,6 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
-using System.Globalization;
 
 namespace PIMS.Tests.Automation.PageObjects
 {
@@ -21,7 +20,7 @@ namespace PIMS.Tests.Automation.PageObjects
             wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(120));
         }
 
-        protected virtual void Wait(int milliseconds = 3000) => Thread.Sleep(milliseconds);
+        protected virtual void Wait(int milliseconds = 2000) => Thread.Sleep(milliseconds);
 
         protected void WaitUntilSpinnerDisappear()
         {
@@ -59,13 +58,13 @@ namespace PIMS.Tests.Automation.PageObjects
             {
                 wait.Until(ExpectedConditions.ElementExists(saveButton));
                 wait.Until(ExpectedConditions.ElementToBeClickable(saveButton));
-                webDriver.FindElement(saveButton).Click();
+                FocusAndClick(saveButton);
             }
             else
             {
                 wait.Until(ExpectedConditions.ElementExists(cancelButton));
                 wait.Until(ExpectedConditions.ElementToBeClickable(cancelButton));
-                webDriver.FindElement(cancelButton).Click();
+                FocusAndClick(cancelButton);
             }
         }
 
@@ -240,15 +239,23 @@ namespace PIMS.Tests.Automation.PageObjects
 
         protected string TransformNumberFormat(string amount)
         {
-            NumberFormatInfo nfi = new CultureInfo("en-US", false).NumberFormat;
-            
-
             if (amount == "")
                 return "";
             else
             {
                 decimal value = decimal.Parse(amount);
-                return value.ToString("#,##0.##");        
+                return value.ToString("#,##0.0000");        
+            }
+        }
+
+        protected string TranformSqMtsFormat(string area)
+        {
+            if (area == "")
+                return "";
+            else
+            {
+                decimal value = decimal.Parse(area);
+                return value.ToString("#,##0.####") + " m\r\n2";
             }
         }
 

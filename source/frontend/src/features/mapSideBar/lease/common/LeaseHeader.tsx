@@ -36,7 +36,7 @@ export const LeaseHeader: React.FC<ILeaseHeaderProps> = ({ lease, lastUpdatedBy 
     <Container>
       <Row className="no-gutters">
         <Col xs="8">
-          <HeaderField label="Lease/License #" labelWidth="3" contentWidth="9">
+          <HeaderField label="Lease/Licence #" labelWidth="3" contentWidth="9">
             <span className="pr-4">{lease?.lFileNo ?? ''}</span>
             <StyledGreenText>{lease?.paymentReceivableType?.description ?? ''}</StyledGreenText>
           </HeaderField>

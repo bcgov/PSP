@@ -31,7 +31,7 @@ import { ITenantConfig2 } from './hooks/pims-api/interfaces/ITenantConfig';
 import { useRefreshSiteminder } from './hooks/useRefreshSiteminder';
 
 async function prepare() {
-  if (import.meta.env.DEV) {
+  if (process.env.NODE_ENV === 'development') {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const { worker } = await import('./mocks/msw/browser');
     return worker.start({ onUnhandledRequest: 'bypass' });

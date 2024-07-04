@@ -168,7 +168,7 @@ export function LeaseSearchResults(props: ILeaseSearchResultsProps) {
       externalSort={{ sort: sort, setSort: setSort }}
       onRequestData={updateCurrentPage}
       onPageSizeChange={setPageSize}
-      noRowsMessage="Lease / License details do not exist in PIMS inventory"
+      noRowsMessage="Lease / Licence details do not exist in PIMS inventory"
       totalItems={props.totalItems}
       {...rest}
     ></Table>

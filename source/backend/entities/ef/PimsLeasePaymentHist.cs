@@ -23,8 +23,8 @@ public partial class PimsLeasePaymentHist
     [Column("LEASE_PAYMENT_ID")]
     public long LeasePaymentId { get; set; }
 
-    [Column("LEASE_TERM_ID")]
-    public long LeaseTermId { get; set; }
+    [Column("LEASE_PERIOD_ID")]
+    public long LeasePeriodId { get; set; }
 
     [Required]
     [Column("LEASE_PAYMENT_METHOD_TYPE_CODE")]
@@ -34,6 +34,14 @@ public partial class PimsLeasePaymentHist
     [Column("LEASE_PAYMENT_STATUS_TYPE_CODE")]
     [StringLength(20)]
     public string LeasePaymentStatusTypeCode { get; set; }
+
+    [Column("LEASE_PAYMENT_CATEGORY_TYPE_CODE")]
+    [StringLength(20)]
+    public string LeasePaymentCategoryTypeCode { get; set; }
+
+    [Column("LEASE_PMT_FREQ_TYPE_CODE")]
+    [StringLength(20)]
+    public string LeasePmtFreqTypeCode { get; set; }
 
     [Column("PAYMENT_RECEIVED_DATE", TypeName = "datetime")]
     public DateTime PaymentReceivedDate { get; set; }

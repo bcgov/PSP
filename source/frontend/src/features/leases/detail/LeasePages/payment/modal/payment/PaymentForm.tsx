@@ -1,10 +1,10 @@
 import { Formik, FormikProps } from 'formik';
 
-import { ApiGen_Concepts_LeaseTerm } from '@/models/api/generated/ApiGen_Concepts_LeaseTerm';
+import { ApiGen_Concepts_LeasePeriod } from '@/models/api/generated/ApiGen_Concepts_LeasePeriod';
 import { toTypeCodeNullable } from '@/utils/formUtils';
 
-import { defaultFormLeasePayment, FormLeasePayment, FormLeaseTerm } from '../../models';
-import { isActualGstEligible } from '../../TermPaymentsContainer';
+import { defaultFormLeasePayment, FormLeasePayment, FormLeasePeriod } from '../../models';
+import { isActualGstEligible } from '../../PeriodPaymentsContainer';
 import PaymentFormContent from './PaymentFormContent';
 import { PaymentsYupSchema } from './PaymentsYupSchema';
 
@@ -13,7 +13,7 @@ export interface IPaymentFormProps {
   onSave: (values: FormLeasePayment) => void;
   initialValues?: FormLeasePayment;
   isReceived?: boolean;
-  terms: ApiGen_Concepts_LeaseTerm[];
+  periods: ApiGen_Concepts_LeasePeriod[];
 }
 
 /**
@@ -26,13 +26,13 @@ export const PaymentForm: React.FunctionComponent<React.PropsWithChildren<IPayme
   formikRef,
   onSave,
   isReceived,
-  terms,
+  periods,
 }: IPaymentFormProps) => {
   let isGstEligible = false;
-  if (initialValues?.leaseTermId) {
+  if (initialValues?.leasePeriodId) {
     isGstEligible = isActualGstEligible(
-      initialValues?.leaseTermId,
-      terms?.map(t => FormLeaseTerm.fromApi(t)) ?? [],
+      initialValues?.leasePeriodId,
+      periods?.map(t => FormLeasePeriod.fromApi(t)) ?? [],
     );
   }
 

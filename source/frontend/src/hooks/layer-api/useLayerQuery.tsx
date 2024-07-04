@@ -55,6 +55,7 @@ export interface IUserLayerQuery {
       latlng: LatLngLiteral,
       geometryName?: string,
       spatialReferenceId?: number,
+      sortBy?: string,
     ) => Promise<AxiosResponse<FeatureCollection<Geometry, GeoJsonProperties>>>
   >;
   findOneWhereExactWrapped: IResponseWrapper<
@@ -62,6 +63,7 @@ export interface IUserLayerQuery {
       latlng: LatLngLiteral,
       geometryName?: string,
       spatialReferenceId?: number,
+      sortBy?: string,
     ) => Promise<AxiosResponse<FeatureCollection<Geometry, GeoJsonProperties>>>
   >;
 }
@@ -109,17 +111,23 @@ export const useLayerQuery = (url: string, authenticated?: boolean): IUserLayerQ
     [baseAllUrl, baseUrl, authenticated],
   );
 
+  // NOTE: sortby is used here to ensure that if there are multiple features at a given location the non-retired feature will be returned first.
   const findOneWhereContainsWrapped = useApiRequestWrapper({
     requestFunction: useCallback(
       async (
         latlng: LatLngLiteral,
         geometryName = 'SHAPE',
         spatialReferenceId = 4326,
+        sortBy = '',
       ): Promise<AxiosResponse<FeatureCollection<Geometry, GeoJsonProperties>>> => {
         const data = await wfsAxios2({ authenticated }).get<
           FeatureCollection<Geometry, GeoJsonProperties>
         >(
-          `${baseUrl}&cql_filter=CONTAINS(${geometryName},SRID=${spatialReferenceId};POINT ( ${latlng.lng} ${latlng.lat}))`,
+          `${baseUrl}${
+            sortBy ? '&' + sortBy : ''
+          }&cql_filter=CONTAINS(${geometryName},SRID=${spatialReferenceId};POINT ( ${latlng.lng} ${
+            latlng.lat
+          }))`,
         );
         return data;
       },
@@ -134,11 +142,16 @@ export const useLayerQuery = (url: string, authenticated?: boolean): IUserLayerQ
         latlng: LatLngLiteral,
         geometryName = 'POINT',
         spatialReferenceId = 4326,
+        sortBy = '',
       ): Promise<AxiosResponse<FeatureCollection<Geometry, GeoJsonProperties>>> => {
         const data = await wfsAxios2({ authenticated }).get<
           FeatureCollection<Geometry, GeoJsonProperties>
         >(
-          `${baseUrl}&cql_filter=DWITHIN(${geometryName},SRID=${spatialReferenceId};POINT(${latlng.lng} ${latlng.lat}), .001, meters)`,
+          `${baseUrl}${
+            sortBy ? '&' + sortBy : ''
+          }&cql_filter=DWITHIN(${geometryName},SRID=${spatialReferenceId};POINT(${latlng.lng} ${
+            latlng.lat
+          }), .001, meters)`,
         );
         return data;
       },

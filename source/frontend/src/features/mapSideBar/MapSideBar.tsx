@@ -1,19 +1,23 @@
-import { useContext } from 'react';
 import styled from 'styled-components';
 
+import { SideBarType } from '@/components/common/mapFSM/machineDefinition/types';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { Backdrop } from '@/components/common/styles';
 
-import { SideBarContext } from './context/sidebarContext';
 import MapRouter from './router/MapRouter';
 
-const MapSideBar: React.FunctionComponent<React.PropsWithChildren<unknown>> = () => {
-  const { fullWidth } = useContext(SideBarContext);
+export interface IMapSideBarViewState {
+  isFullWidth?: boolean;
+  isCollapsed?: boolean;
+  isOpen?: boolean;
+  type: SideBarType;
+}
 
+const MapSideBar: React.FunctionComponent<React.PropsWithChildren<unknown>> = () => {
   const mapMachine = useMapStateMachine();
 
   return (
-    <StyledMapSideBar show={mapMachine.isSidebarOpen} fullWidth={fullWidth}>
+    <StyledMapSideBar sideBarState={mapMachine.mapSideBarViewState}>
       {mapMachine.isSelecting && (
         <StyledBackdrop parentScreen onClick={() => mapMachine.finishSelection()}>
           <StyledSelectingText
@@ -41,7 +45,7 @@ const StyledSelectingText = styled.p`
   font-size: 2.5rem;
 `;
 
-const StyledMapSideBar = styled.div<{ show: boolean; fullWidth: boolean }>`
+const StyledMapSideBar = styled.div<{ sideBarState: IMapSideBarViewState }>`
   display: flex;
   position: relative;
   flex-flow: column;
@@ -49,10 +53,37 @@ const StyledMapSideBar = styled.div<{ show: boolean; fullWidth: boolean }>`
     border-bottom: none;
     margin-bottom: 0.2rem;
   }
-  min-width: ${props => (props.fullWidth ? `100%` : `93rem`)};
-  margin-left: ${props => (props.show ? `0rem` : `-93rem`)};
-  padding: 1.6rem;
   overflow: hidden;
   transition: 1s;
-  width: ${props => (props.show ? `100%` : `0`)};
+  ${({ sideBarState }) => {
+    if (sideBarState.isOpen) {
+      if (sideBarState.isCollapsed) {
+        return `
+          min-width: 7.4rem;
+          max-width: 7.4rem;
+          margin-left: 0rem;
+          width: 100%;
+        `;
+      } else if (sideBarState.isFullWidth) {
+        return `
+          min-width: 100%;
+          max-width: 100%;
+          margin-left: 0rem;
+        `;
+      } else {
+        return `
+          min-width: 93rem;
+          margin-left: 0rem;
+          max-width: 93rem;
+        `;
+      }
+    } else {
+      return `
+          min-width: 0rem;
+          max-width: 0rem;
+          width: 0rem;
+          padding: 0;
+        `;
+    }
+  }}
 `;

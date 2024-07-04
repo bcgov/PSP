@@ -242,7 +242,7 @@ describe('AcquisitionView component', () => {
     expect(tab).toHaveClass('active');
   });
 
-  it.skip('should display the Property Details tab according to routing', async () => {
+  it('should display the Property Details tab according to routing', async () => {
     history.replace(`/mapview/sidebar/acquisition/1/property/1`);
     const { getByRole } = await setup();
     const tab = getByRole('tab', { name: /Property Details/i });
@@ -260,7 +260,7 @@ describe('AcquisitionView component', () => {
     expect(tab).toHaveClass('active');
   });
 
-  it.skip(`should display the Property Details tab when we are editing and the path doesn't match any route`, async () => {
+  it(`should display the Property Details tab when we are editing and the path doesn't match any route`, async () => {
     history.replace(`/mapview/sidebar/acquisition/1/property/1/unknownTabWhatIsThis?edit=true`);
     const { getByRole } = await setup();
     const tab = getByRole('tab', { name: /Property Details/i });

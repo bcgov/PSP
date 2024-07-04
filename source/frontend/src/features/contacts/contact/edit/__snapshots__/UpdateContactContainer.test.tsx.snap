@@ -619,27 +619,6 @@ exports[`UpdateContactContainer > renders as expected 1`] = `
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
-            <div
-              class="c9 form-section"
-            >
-              <h2
-                class="c13"
-              >
-                <div
-                  class="no-gutters row"
-                >
-                  <div
-                    class="col"
-                  >
-                    Organization
-                  </div>
-                </div>
-              </h2>
-              <div
-                class="collapse show"
-              >
                 <div
                   class="pb-2 row"
                 >

@@ -5,7 +5,7 @@ import isNumber from 'lodash/isNumber';
 import { useEffect, useRef, useState } from 'react';
 import { toast } from 'react-toastify';
 
-import { DistrictCodes, RegionCodes } from '@/constants/index';
+import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { IGeocoderResponse } from '@/hooks/pims-api/interfaces/IGeocoder';
 import { useAdminBoundaryMapLayer } from '@/hooks/repositories/mapLayer/useAdminBoundaryMapLayer';
 import { useFullyAttributedParcelMapLayer } from '@/hooks/repositories/mapLayer/useFullyAttributedParcelMapLayer';
@@ -13,14 +13,15 @@ import { useGeocoderRepository } from '@/hooks/useGeocoderRepository';
 import { MOT_DistrictBoundary_Feature_Properties } from '@/models/layers/motDistrictBoundary';
 import { MOT_RegionalBoundary_Feature_Properties } from '@/models/layers/motRegionalBoundary';
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
-import { featuresToIdentifiedMapProperty } from '@/utils/mapPropertyUtils';
+import { PIMS_Property_Location_View } from '@/models/layers/pimsPropertyLocationView';
+import { getFeatureBoundedCenter } from '@/utils';
 
 import { ILayerSearchCriteria, IMapProperty } from '../models';
 import PropertySearchSelectorFormView from './PropertySearchSelectorFormView';
 
 export interface IPropertySelectorSearchContainerProps {
-  selectedProperties: IMapProperty[];
-  setSelectedProperties: (properties: IMapProperty[]) => void;
+  selectedProperties: LocationFeatureDataset[];
+  setSelectedProperties: (properties: LocationFeatureDataset[]) => void;
 }
 
 export const PropertySelectorSearchContainer: React.FC<IPropertySelectorSearchContainerProps> = ({
@@ -28,7 +29,7 @@ export const PropertySelectorSearchContainer: React.FC<IPropertySelectorSearchCo
   setSelectedProperties,
 }) => {
   const [layerSearch, setLayerSearch] = useState<ILayerSearchCriteria | undefined>();
-  const [searchResults, setSearchResults] = useState<IMapProperty[]>([]);
+  const [searchResults, setSearchResults] = useState<LocationFeatureDataset[]>([]);
   const [addressResults, setAddressResults] = useState<IGeocoderResponse[]>([]);
 
   const {
@@ -72,23 +73,38 @@ export const PropertySelectorSearchContainer: React.FC<IPropertySelectorSearchCo
         return;
       }
 
-      const foundProperties = featuresToIdentifiedMapProperty(result) ?? [];
       // match the region and district for all found properties
       if (result?.features?.length !== undefined && result?.features?.length <= 15) {
-        const matchTask = foundProperties.map(p =>
-          matchRegionAndDistrict(p, findRegion, findDistrict),
+        const matchTasks = result.features.map(p =>
+          matchRegionAndDistrict(featureToLocationFeatureDataset(p), findRegion, findDistrict),
         );
 
-        const getAddressTasks = foundProperties.map(p => getPropertyAddress(p, getNearestToPoint));
-
-        const addresses = await Promise.all(getAddressTasks);
-        await Promise.all(matchTask);
-        foundProperties.forEach((p, i) => {
-          p.address = addresses[i]?.fullAddress;
+        const getAddressTasks = result.features.map(p => {
+          const latLngArray = getFeatureBoundedCenter(p);
+          return getPropertyAddress(
+            { latitude: latLngArray[1], longitude: latLngArray[0] },
+            getNearestToPoint,
+          );
         });
-      }
 
-      setSearchResults(foundProperties);
+        const addressResults = await Promise.all(getAddressTasks);
+        const regionDistrictResults = await Promise.all(matchTasks);
+        const locations = result.features.map((p, i) => {
+          const foundProperty = featureToLocationFeatureDataset(p);
+          foundProperty.regionFeature = regionDistrictResults[i]?.regionFeature;
+          foundProperty.districtFeature = regionDistrictResults[i]?.districtFeature;
+          foundProperty.pimsFeature = {
+            properties: {
+              STREET_ADDRESS_1: addressResults[i]?.fullAddress,
+            },
+          } as Feature<Geometry, PIMS_Property_Location_View>;
+          return foundProperty;
+        }) as LocationFeatureDataset[];
+        setSearchResults(locations);
+      } else {
+        const locations = result?.features?.map(p => featureToLocationFeatureDataset(p));
+        setSearchResults(locations ?? []);
+      }
     };
     searchFunc();
   }, [
@@ -123,12 +139,14 @@ export const PropertySelectorSearchContainer: React.FC<IPropertySelectorSearchCo
 
       const responses = await Promise.all(findByPidCalls);
 
-      let propertyResults: IMapProperty[] = [];
+      let propertyResults: LocationFeatureDataset[] = [];
       responses?.forEach((item: FeatureCollection<Geometry, GeoJsonProperties> | undefined) => {
         if (item) {
-          propertyResults = propertyResults.concat(
-            featuresToIdentifiedMapProperty(item, selectedItem.fullAddress) ?? [],
-          );
+          item.features.forEach(feature => {
+            if (feature) {
+              propertyResults = propertyResults.concat(featureToLocationFeatureDataset(feature));
+            }
+          });
         }
       });
 
@@ -189,9 +207,29 @@ export const PropertySelectorSearchContainer: React.FC<IPropertySelectorSearchCo
   );
 };
 
+export const featureToLocationFeatureDataset = (
+  feature: Feature<
+    Geometry,
+    {
+      [name: string]: any;
+    }
+  >,
+) => {
+  const center = getFeatureBoundedCenter(feature);
+  return {
+    parcelFeature: feature,
+    selectingComponentId: null,
+    pimsFeature: null,
+    location: { lat: center[1], lng: center[0] },
+    regionFeature: null,
+    districtFeature: null,
+    municipalityFeature: null,
+  } as LocationFeatureDataset;
+};
+
 // Not thread safe. Modifies the passed property.
 async function matchRegionAndDistrict(
-  property: IMapProperty,
+  property: LocationFeatureDataset,
   regionSearch: (
     latlng: LatLngLiteral,
     geometryName?: string | undefined,
@@ -203,33 +241,26 @@ async function matchRegionAndDistrict(
     spatialReferenceId?: number | undefined,
   ) => Promise<Feature<Geometry, MOT_DistrictBoundary_Feature_Properties> | undefined>,
 ) {
-  if (property?.latitude === undefined || property?.longitude === undefined) {
+  if (property?.location?.lat === undefined || property?.location?.lng === undefined) {
     return;
   }
 
   const latLng: LatLngLiteral = {
-    lat: property.latitude,
-    lng: property.longitude,
+    lat: property?.location?.lat,
+    lng: property?.location?.lng,
   };
 
   // call these APIs in parallel - notice there is no "await"
-  const regionTask = regionSearch(latLng, 'GEOMETRY');
-  const districtTask = districtSearch(latLng, 'GEOMETRY');
+  const regionTask = regionSearch(latLng, 'SHAPE');
+  const districtTask = districtSearch(latLng, 'SHAPE');
 
   const regionFeature = await regionTask;
   const districtFeature = await districtTask;
-
-  const regionProperties = regionFeature?.properties;
-  const districtProperties = districtFeature?.properties;
-
-  property.region = isNumber(regionProperties?.REGION_NUMBER)
-    ? regionProperties?.REGION_NUMBER
-    : RegionCodes.Unknown;
-  property.regionName = regionProperties?.REGION_NAME ?? 'Cannot determine';
-  property.district = isNumber(districtProperties?.DISTRICT_NUMBER)
-    ? districtProperties?.DISTRICT_NUMBER
-    : DistrictCodes.Unknown;
-  property.districtName = districtProperties?.DISTRICT_NAME ?? 'Cannot determine';
+  return {
+    ...property,
+    regionFeature: { ...regionFeature },
+    districtFeature: { ...districtFeature },
+  };
 }
 
 async function getPropertyAddress(

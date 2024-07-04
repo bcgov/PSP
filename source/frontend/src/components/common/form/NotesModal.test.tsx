@@ -19,13 +19,15 @@ const mockAxios = new MockAdapter(axios);
 describe('NotesModal component', () => {
   const setup = async (
     renderOptions: RenderOptions &
-      Partial<INotesModalProps> & { initialValues?: { note: string } } = {},
+      Partial<INotesModalProps<any>> & { initialValues?: { note: string } } = {},
   ) => {
     // render component under test
     const component = await renderAsync(
-      <Formik initialValues={renderOptions.initialValues ?? {}} onSubmit={noop}>
-        <NotesModal notesLabel="test label" title="test title" />
-      </Formik>,
+      <NotesModal
+        notesLabel="test label"
+        title="test title"
+        initialValues={renderOptions.initialValues}
+      />,
       {
         ...renderOptions,
         store: storeState,
@@ -60,7 +62,7 @@ describe('NotesModal component', () => {
   it('saves note in formik field if modal saved', async () => {
     const {
       component: { getByTitle, getByText, findByTestId },
-    } = await setup({});
+    } = await setup({ initialValues: { note: '' } });
     await act(async () => {
       userEvent.click(getByTitle('notes'));
     });

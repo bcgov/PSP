@@ -55,7 +55,7 @@ export const LayerPopupFlyout: React.FC<React.PropsWithChildren<ILayerPopupFlyou
           )}
           {keycloak.hasClaim(Claims.LEASE_ADD) && (
             <ListGroup.Item>
-              <LinkButton onClick={onCreateLeaseLicense}>Lease/License</LinkButton>
+              <LinkButton onClick={onCreateLeaseLicense}>Lease/Licence</LinkButton>
             </ListGroup.Item>
           )}
           {keycloak.hasClaim(Claims.DISPOSITION_ADD) && (

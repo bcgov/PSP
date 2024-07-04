@@ -7,14 +7,13 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
 import { mockFAParcelLayerResponse, mockGeocoderOptions } from '@/mocks/index.mock';
-import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
-import { featuresToIdentifiedMapProperty } from '@/utils/mapPropertyUtils';
 import { fillInput, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import { PropertyForm } from '../../features/mapSideBar/shared/models';
-import { useMapStateMachine } from '../common/mapFSM/MapStateMachineContext';
 import MapSelectorContainer, { IMapSelectorContainerProps } from './MapSelectorContainer';
 import { IMapProperty } from './models';
+import { getMockLocationFeatureDataset } from '@/mocks/featureset.mock';
+import { useMapProperties } from '@/hooks/repositories/useMapProperties';
 
 const mockStore = configureMockStore([thunk]);
 
@@ -35,6 +34,19 @@ const testProperty: IMapProperty = {
   district: 5,
   districtName: 'Okanagan-Shuswap',
 };
+
+vi.mock('@/hooks/repositories/useMapProperties');
+vi.mocked(useMapProperties).mockReturnValue({
+  loadProperties: {
+    error: null,
+    response: { features: [] } as any,
+    execute: vi.fn().mockResolvedValue({
+      features: [PropertyForm.fromMapProperty(testProperty).toFeatureDataset().pimsFeature],
+    }),
+    loading: false,
+    status: 200,
+  },
+});
 
 describe('MapSelectorContainer component', () => {
   const setup = (renderOptions: RenderOptions & Partial<IMapSelectorContainerProps>) => {
@@ -70,10 +82,6 @@ describe('MapSelectorContainer component', () => {
       .reply(200, mockGeocoderOptions[0]);
   });
 
-  afterEach(() => {
-    vi.resetAllMocks();
-  });
-
   it('renders as expected when provided no properties', async () => {
     const { asFragment } = setup({});
     await act(async () => {
@@ -104,14 +112,14 @@ describe('MapSelectorContainer component', () => {
 
   it('displays all selected property attributes', async () => {
     const { getByText } = setup({
-      modifiedProperties: [PropertyForm.fromMapProperty(testProperty)],
+      modifiedProperties: [PropertyForm.fromMapProperty(testProperty).toFeatureDataset()],
     });
     await act(async () => {
-      expect(getByText(/SPS22411/i)).toBeVisible();
-      expect(getByText(/Test address 123/i)).toBeVisible();
-      expect(getByText(/1 - South Coast/i)).toBeVisible();
-      expect(getByText(/5 - Okanagan-Shuswap/i)).toBeVisible();
-      expect(getByText(/Test Legal Description/i)).toBeVisible();
+      expect(getByText(/SPS22411/i, { exact: false })).toBeVisible();
+      expect(getByText(/Test address 123/i, { exact: false })).toBeVisible();
+      expect(getByText(/1 - South Coast/i, { exact: false })).toBeVisible();
+      expect(getByText(/5 - Okanagan-Shuswap/i, { exact: false })).toBeVisible();
+      expect(getByText(/Test Legal Description/i, { exact: false })).toBeVisible();
     });
   });
 
@@ -128,39 +136,94 @@ describe('MapSelectorContainer component', () => {
     await fillInput(container, 'pid', '123-456-789');
     const searchButton = getByTitle('search');
     await act(async () => userEvent.click(searchButton));
-    const checkbox = await findByTestId('selectrow-PID-009-727-493');
+    const checkbox = await findByTestId(
+      'selectrow-PID-009-727-493-48.76613749999999--123.46163749999998',
+    );
     await act(async () => userEvent.click(checkbox));
     const addButton = getByText('Add to selection');
     await act(async () => userEvent.click(addButton));
 
     expect(onSelectedProperties).toHaveBeenCalledWith([
       {
-        address: '1234 Fake St',
-        areaUnit: 'M2',
-        district: 12,
-        districtName: 'Cannot determine',
-        id: 'PID-009-727-493',
-        landArea: 29217,
-        latitude: 48.76613749999999,
-        longitude: -123.46163749999998,
-        legalDescription:
-          'THAT PART OF SECTION 13, RANGE 1, SOUTH SALT SPRING ISLAND, COWICHAN DISTRICT',
-        name: undefined,
-        pid: '9727493',
-        pin: undefined,
-        planNumber: 'NO_PLAN',
-        propertyId: undefined,
-        region: 4,
-        regionName: 'Cannot determine',
+        parcelFeature: {
+          type: 'Feature',
+          id: 'PMBC_PARCEL_POLYGON_FABRIC.551',
+          geometry: {
+            type: 'Polygon',
+            coordinates: [
+              [
+                [-123.46, 48.767],
+                [-123.4601, 48.7668],
+                [-123.461, 48.7654],
+                [-123.4623, 48.7652],
+                [-123.4627, 48.7669],
+                [-123.4602, 48.7672],
+                [-123.4601, 48.7672],
+                [-123.4601, 48.7672],
+                [-123.46, 48.767],
+              ],
+            ],
+          },
+          geometry_name: 'SHAPE',
+          properties: {
+            GLOBAL_UID: '{4C4D758A-1261-44C1-8835-0FEB93150495}',
+            PARCEL_NAME: '009727493',
+            PLAN_ID: 3,
+            PLAN_NUMBER: 'NO_PLAN',
+            PIN: null,
+            PID: '9727493',
+            PID_NUMBER: null,
+            SOURCE_PARCEL_ID: null,
+            PARCEL_STATUS: 'ACTIVE',
+            PARCEL_CLASS: 'SUBDIVISION',
+            OWNER_TYPE: 'CROWN PROVINCIAL',
+            PARCEL_START_DATE: null,
+            SURVEY_DESIGNATION_1: 'PART 13',
+            SURVEY_DESIGNATION_2: 'SOUTH SALT SPRING,1',
+            SURVEY_DESIGNATION_3: '',
+            LEGAL_DESCRIPTION:
+              'THAT PART OF SECTION 13, RANGE 1, SOUTH SALT SPRING ISLAND, COWICHAN DISTRICT',
+            MUNICIPALITY: '0163',
+            REGIONAL_DISTRICT: '0005',
+            IS_REMAINDER_IND: 'NO',
+            GEOMETRY_SOURCE: 'MODIFIED-ICIS',
+            POSITIONAL_ERROR: 2,
+            ERROR_REPORTED_BY: 'DATACOMPILATION',
+            CAPTURE_METHOD: 'UNKNOWN',
+            COMPILED_IND: '1',
+            STATED_AREA: null,
+            WHEN_CREATED: '2016-01-06T17:44:42Z',
+            WHEN_UPDATED: '2019-01-05T10:21:32Z',
+            FEATURE_AREA_SQM: 29217,
+            FEATURE_LENGTH_M: 702,
+            OBJECTID: 551,
+            SE_ANNO_CAD_DATA: null,
+          },
+          bbox: [-123.4627, 48.7652, -123.46, 48.7672],
+        },
+        selectingComponentId: null,
+        pimsFeature: {
+          properties: {
+            STREET_ADDRESS_1: '1234 Fake St',
+          },
+        },
+        location: {
+          lat: 48.76613749999999,
+          lng: -123.46163749999998,
+        },
+        regionFeature: {},
+        districtFeature: {},
+        municipalityFeature: null,
+        id: 'PID-009-727-493-48.76613749999999--123.46163749999998',
       },
     ]);
   });
 
   it('selected properties display a warning if added multiple times', async () => {
     const { getByText, getByTitle, findByTestId, container } = setup({
-      modifiedProperties: featuresToIdentifiedMapProperty(mockFAParcelLayerResponse as any)?.map(
-        p => PropertyForm.fromMapProperty(p),
-      ),
+      modifiedProperties: [
+        PropertyForm.fromMapProperty({ ...testProperty, pid: '009-727-493' }).toFeatureDataset(),
+      ],
     });
 
     const searchTab = getByText('Search');
@@ -173,7 +236,9 @@ describe('MapSelectorContainer component', () => {
 
     await act(async () => userEvent.click(searchButton));
 
-    const checkbox = await findByTestId('selectrow-PID-009-727-493');
+    const checkbox = await findByTestId(
+      'selectrow-PID-009-727-493-48.76613749999999--123.46163749999998',
+    );
     await act(async () => userEvent.click(checkbox));
     const addButton = getByText('Add to selection');
     await act(async () => userEvent.click(addButton));

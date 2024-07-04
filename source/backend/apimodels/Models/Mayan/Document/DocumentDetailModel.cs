@@ -21,6 +21,12 @@ namespace Pims.Api.Models.Mayan.Document
         public string Label { get; set; }
 
         /// <summary>
+        /// get/set - Document language.
+        /// </summary>
+        [JsonPropertyName("language")]
+        public string Language { get; set; }
+
+        /// <summary>
         /// get/set - Total number of results.
         /// </summary>
         [JsonPropertyName("datetime_created")]
@@ -31,6 +37,12 @@ namespace Pims.Api.Models.Mayan.Document
         /// </summary>
         [JsonPropertyName("description")]
         public string Description { get; set; }
+
+        /// <summary>
+        /// get/set - The document uid.
+        /// </summary>
+        [JsonPropertyName("uuid")]
+        public string Uuid { get; set; }
 
         /// <summary>
         /// get/set - The results of the query.

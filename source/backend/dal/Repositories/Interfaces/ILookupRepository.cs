@@ -48,7 +48,7 @@ namespace Pims.Dal.Repositories
 
         IEnumerable<PimsLeaseInitiatorType> GetAllLeaseInitiatorTypes();
 
-        IEnumerable<PimsLeaseTermStatusType> GetAllLeaseTermStatusTypes();
+        IEnumerable<PimsLeasePeriodStatusType> GetAllLeasePeriodStatusTypes();
 
         IEnumerable<PimsLeasePmtFreqType> GetAllLeasePmtFreqTypes();
 

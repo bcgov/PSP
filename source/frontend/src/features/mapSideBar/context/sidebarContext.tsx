@@ -28,8 +28,6 @@ export interface ISideBarContext {
   setProject: (project?: ApiGen_Concepts_Project) => void;
   setProjectLoading: (loading: boolean) => void;
   getFilePropertyIndexById: (filePropertyId: number) => number;
-  fullWidth: boolean;
-  setFullWidth: (fullWidth: boolean) => void;
 
   lastUpdatedBy: Api_LastUpdatedBy | null;
   setLastUpdatedBy: (lastUpdatedBy: Api_LastUpdatedBy | null) => void;
@@ -55,10 +53,6 @@ export const SideBarContext = createContext<ISideBarContext>({
   },
   getFilePropertyIndexById: () => {
     throw Error('setStaleFile function not defined');
-  },
-  fullWidth: false,
-  setFullWidth: () => {
-    throw Error('setFullWidth function not defined');
   },
   setProject: () => {
     throw Error('setProject function not defined');
@@ -92,7 +86,6 @@ export const SideBarContextProvider = (props: {
   const [staleLastUpdatedBy, setStaleLastUpdatedBy] = useState<boolean>(false);
   const [fileLoading, setFileLoading] = useState<boolean>(false);
   const [projectLoading, setProjectLoading] = useState<boolean>(false);
-  const [fullWidth, setFullWidth] = useState<boolean>(false);
 
   const setFileAndStale = useCallback(
     (file?: TypedFile) => {
@@ -157,8 +150,6 @@ export const SideBarContextProvider = (props: {
         staleFile,
         setStaleFile,
         getFilePropertyIndexById,
-        fullWidth,
-        setFullWidth,
         projectLoading,
         setProject: setProjectInstance,
         setProjectLoading: setProjectLoading,

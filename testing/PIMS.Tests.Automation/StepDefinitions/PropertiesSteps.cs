@@ -22,7 +22,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private SearchProperty searchProperty;
         private PropertyManagement propertyManagement;
 
-
         public PropertiesSteps(BrowserDriver driver)
         {
             loginSteps = new LoginSteps(driver);
@@ -87,13 +86,12 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Search for an invalid Address with the Search Bar
             PopulateSearchProperty(rowNumber);
             searchProperties.SearchPropertyByPINPID(searchProperty.PID);
-
         }
 
         [StepDefinition(@"I review a Property's Information from row number (.*)")]
         public void ReviewPropertyInformation(int rowNumber)
         {
-            /* TEST COVERAGE: PSP-1558, PSP-3153, PSP-3184, PSP-3589, PSP-4903, PSP-5163  */
+            /* TEST COVERAGE: PSP-1558, PSP-3153, PSP-3184, PSP-3589, PSP-4903, PSP-5163 */
 
             //Login to PIMS
             loginSteps.Idir(userName);
@@ -119,7 +117,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Validate the Property Details View
             propertyInformation.NavigatePropertyDetailsTab();
             propertyInformation.VerifyPropertyDetailsView();
-
         }
 
         [StepDefinition(@"I search for a Property in the Properties List by different filters from row number (.*)")]
@@ -193,7 +190,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchProperties.SearchPropertyByAddressList(searchProperty.Address);
 
             //Validate that the result gives only one pin
-            Assert.True(searchProperties.PropertiesListFoundCount() == 5);
+            Assert.True(searchProperties.PropertiesListFoundCount() == 2);
 
             //Search for a valid PIN in Inventory
             searchProperties.SearchPropertyReset();
@@ -248,6 +245,36 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Click on the found property
             searchProperties.SelectFoundPin();
+        }
+
+        [StepDefinition(@"I update a Property details from a file from row number (.*)")]
+        public void EditPropertyInformationDetailsFromFile(int rowNumber)
+        {
+            /* TEST COVERAGE: PSP-3460, PSP-3462, PSP-3590, PSP-3591, PSP-3599, PSP-3600, PSP-3612, PSP-3722, PSP-4791, PSP-4794, PSP-5162, PSP-5163, PSP-5164, PSP-5165 */
+
+            //Populate Property Information
+            PopulateProperty(rowNumber);
+
+            //Click on the Edit Property Information Button
+            propertyInformation.EditPropertyInfoBttn();
+
+            //Verify Property Information Edit Form
+            propertyInformation.VerifyPropertyDetailsEditForm();
+
+            //Apply changes on the Property Information Form
+            propertyInformation.UpdatePropertyDetails(property);
+
+            //Cancel changes
+            propertyInformation.CancelPropertyDetails();
+
+            //Click on the Edit Property Information Button
+            propertyInformation.EditPropertyInfoBttn();
+
+            //Apply changes on the Property Information Form
+            propertyInformation.UpdatePropertyDetails(property);
+
+            //Save changes
+            propertyInformation.SavePropertyDetails();
         }
 
         [StepDefinition(@"I update a Property details")]

@@ -914,6 +914,13 @@ export const mockLookups: ILookupCode[] = [
   },
   {
     id: 'ACTIVE',
+    name: 'Archived',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsLeaseStatusType',
+  },
+  {
+    id: 'ARCHIVED',
     name: 'Active',
     isDisabled: false,
     displayOrder: 0,
@@ -966,14 +973,14 @@ export const mockLookups: ILookupCode[] = [
     name: 'Exercised',
     isDisabled: false,
     displayOrder: 0,
-    type: 'PimsLeaseTermStatusType',
+    type: 'PimsLeasePeriodStatusType',
   },
   {
     id: 'NEXER',
     name: 'Not Exercised',
     isDisabled: false,
     displayOrder: 0,
-    type: 'PimsLeaseTermStatusType',
+    type: 'PimsLeasePeriodStatusType',
   },
   {
     id: 'LICONSTRC',

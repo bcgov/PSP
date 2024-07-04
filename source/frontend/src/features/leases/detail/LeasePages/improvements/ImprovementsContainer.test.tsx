@@ -52,6 +52,7 @@ describe('Improvements Container component', () => {
           isEditing={false}
           formikRef={createRef()}
           onSuccess={onSuccessMock}
+          componentView={null}
         ></ImprovementsContainer>
       </LeaseStateContext.Provider>,
       {
@@ -83,7 +84,7 @@ describe('Improvements Container component', () => {
     await act(async () => {});
     expect(
       getByText(
-        'There are no commercial, residential, or other improvements indicated with this lease/license.',
+        'There are no commercial, residential, or other improvements indicated with this lease/licence.',
       ),
     ).toBeVisible();
   });

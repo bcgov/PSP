@@ -297,7 +297,7 @@ exports[`Lease and License List View > matches snapshot 1`] = `
       <h3
         class="c3"
       >
-        Leases & Licenses
+        Leases & Licences
       </h3>
       <div
         class="c4"
@@ -1075,7 +1075,7 @@ exports[`Lease and License List View > matches snapshot 1`] = `
         <div
           class="no-rows-message"
         >
-          Lease / License details do not exist in PIMS inventory
+          Lease / Licence details do not exist in PIMS inventory
         </div>
       </div>
       <div

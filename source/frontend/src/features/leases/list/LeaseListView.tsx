@@ -80,7 +80,7 @@ export const LeaseListView: React.FunctionComponent<React.PropsWithChildren<unkn
   return (
     <Styled.ListPage>
       <Styled.Scrollable>
-        <Styled.PageHeader>Leases &amp; Licenses</Styled.PageHeader>
+        <Styled.PageHeader>Leases &amp; Licences</Styled.PageHeader>
         <Styled.PageToolbar>
           <Row>
             <Col>
@@ -105,7 +105,7 @@ export const LeaseListView: React.FunctionComponent<React.PropsWithChildren<unkn
         {hasClaim(Claims.LEASE_ADD) && (
           <StyledAddButton onClick={() => history.push('/mapview/sidebar/lease/new')}>
             <FaPlus />
-            &nbsp;Create a Lease/License
+            &nbsp;Create a Lease/Licence
           </StyledAddButton>
         )}
         <LeaseSearchResults

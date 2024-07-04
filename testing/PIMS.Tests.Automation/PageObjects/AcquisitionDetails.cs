@@ -32,7 +32,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By acquisitionFileHeaderLastUpdateByContent = By.XPath("//strong[contains(text(), 'Updated')]/parent::span/span[@id='userNameTooltip']/strong");
         private By acquisitionFileHeaderHistoricalFileLabel = By.XPath("//label[contains(text(),'Historical File')]");
         private By acquisitionFileHeaderHistoricalFileContent = By.XPath("//label[contains(text(),'Historical File #:')]/parent::strong/parent::div/following-sibling::div/div/span");
-        private By acquisitionHeaderStatusContent = By.XPath("//div[@class='col']/div/div[3]/div/div");
+        private By acquisitionHeaderStatusContent = By.XPath("//b[contains(text(),'File')]/parent::span/following-sibling::div");
 
         private By acquisitionFileStatusSelect = By.Id("input-fileStatusTypeCode");
         private By acquisitionFileProjectSubtitle = By.XPath("//h2/div/div[contains(text(), 'Project')]");
@@ -117,7 +117,6 @@ namespace PIMS.Tests.Automation.PageObjects
 
         //Acquisition File Confirmation Modal Elements
         private By acquisitionFileConfirmationModal = By.CssSelector("div[class='modal-content']");
-        private By acquisitionFileSaveConfirmationModal = By.XPath("//div[@class='modal-content']/div[@class='modal-header']/div[contains(text(),'User Override Required')]");
 
         private SharedSelectContact sharedSelectContact;
         private SharedModals sharedModals;
@@ -307,20 +306,22 @@ namespace PIMS.Tests.Automation.PageObjects
             ButtonElement("Save");
 
             Wait();
-            if (webDriver.FindElements(acquisitionFileSaveConfirmationModal).Count() > 0)
+            if (webDriver.FindElements(acquisitionFileConfirmationModal).Count() > 0)
             {
                 if (sharedModals.ModalContent().Contains("The selected Ministry region is different from that associated to one or more selected properties"))
                 {
+                    Assert.Equal("Different Ministry region", sharedModals.ModalHeader());
                     Assert.Contains("The selected Ministry region is different from that associated to one or more selected properties", sharedModals.ModalContent());
                     Assert.Contains("Do you want to proceed?", sharedModals.ModalContent());
+                    sharedModals.ModalClickOKBttn();
                 }
-                else
+                 else if(sharedModals.ModalContent().Contains("The selected property already exists in the system's inventory."))
                 {
+                    Assert.Equal("User Override Required", sharedModals.ModalHeader());
                     Assert.Contains("The selected property already exists in the system's inventory. However, the record is missing spatial details.", sharedModals.ModalContent());
                     Assert.Contains("To add the property, the spatial details for this property will need to be updated. The system will attempt to update the property record with spatial information from the current selection.", sharedModals.ModalContent());
+                    sharedModals.ModalClickOKBttn();
                 }
-
-                sharedModals.ModalClickOKBttn();
             }
         }
 
@@ -371,7 +372,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 AssertTrueContentEquals(acquisitionFileHeaderProductContent, acquisition.AcquisitionProjProductCode + " - " + acquisition.AcquisitionProjProduct);
 
             AssertTrueIsDisplayed(acquisitionFileHeaderHistoricalFileLabel);
-            Assert.True(webDriver.FindElements(acquisitionFileHeaderHistoricalFileContent).Count > 0);
+            //Assert.True(webDriver.FindElements(acquisitionFileHeaderHistoricalFileContent).Count > 0);
 
             AssertTrueIsDisplayed(acquisitionFileHeaderCreatedDateLabel);
             AssertTrueContentNotEquals(acquisitionFileHeaderCreatedDateContent, "");

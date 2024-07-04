@@ -25,6 +25,7 @@ import { useAddLease } from '../hooks/useAddLease';
 import AddLeaseContainer, { IAddLeaseContainerProps } from './AddLeaseContainer';
 import { ApiGen_Concepts_RegionUser } from '@/models/api/generated/ApiGen_Concepts_RegionUser';
 import { ApiGen_Concepts_User } from '@/models/api/generated/ApiGen_Concepts_User';
+import { ApiGen_CodeTypes_LeaseAccountTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseAccountTypes';
 
 const retrieveUserInfo = vi.fn();
 vi.mock('@/hooks/repositories/useUserInfoRepository');
@@ -119,7 +120,9 @@ describe('AddLeaseContainer component', () => {
     const { getByText, container } = await setup({});
 
     await act(async () => selectOptions('statusTypeCode', 'DRAFT'));
-    await act(async () => selectOptions('paymentReceivableTypeCode', 'RCVBL'));
+    await act(async () =>
+      selectOptions('paymentReceivableTypeCode', ApiGen_CodeTypes_LeaseAccountTypes.RCVBL),
+    );
     await act(async () => selectOptions('regionId', '1'));
     await act(async () => selectOptions('programTypeCode', 'BCFERRIES'));
     await act(async () => selectOptions('leaseTypeCode', 'LIOCCTTLD'));
@@ -145,7 +148,9 @@ describe('AddLeaseContainer component', () => {
     const { getByText, findByText, container } = await setup({});
 
     await act(async () => selectOptions('statusTypeCode', 'DRAFT'));
-    await act(async () => selectOptions('paymentReceivableTypeCode', 'RCVBL'));
+    await act(async () =>
+      selectOptions('paymentReceivableTypeCode', ApiGen_CodeTypes_LeaseAccountTypes.RCVBL),
+    );
     await act(async () => selectOptions('regionId', '1'));
     await act(async () => selectOptions('programTypeCode', 'BCFERRIES'));
     await act(async () => selectOptions('leaseTypeCode', 'LIOCCTTLD'));
@@ -172,7 +177,9 @@ describe('AddLeaseContainer component', () => {
     const { getByText, container } = await setup({});
 
     await act(async () => selectOptions('statusTypeCode', 'DRAFT'));
-    await act(async () => selectOptions('paymentReceivableTypeCode', 'RCVBL'));
+    await act(async () =>
+      selectOptions('paymentReceivableTypeCode', ApiGen_CodeTypes_LeaseAccountTypes.RCVBL),
+    );
     await act(async () => selectOptions('regionId', '1'));
     await act(async () => selectOptions('programTypeCode', 'BCFERRIES'));
     await act(async () => selectOptions('leaseTypeCode', 'LIOCCTTLD'));
@@ -207,7 +214,7 @@ const leaseData: ApiGen_Concepts_Lease = {
   rowVersion: 0,
   startDate: '2020-01-01',
   amount: 0,
-  paymentReceivableType: toTypeCodeNullable('RCVBL'),
+  paymentReceivableType: toTypeCodeNullable(ApiGen_CodeTypes_LeaseAccountTypes.RCVBL),
   purposeType: toTypeCodeNullable('BCFERRIES'),
   fileStatusTypeCode: toTypeCodeNullable('DRAFT'),
   type: toTypeCodeNullable('LIOCCTTLD'),
@@ -235,7 +242,7 @@ const leaseData: ApiGen_Concepts_Lease = {
   documentationReference: null,
   expiryDate: '2020-01-02',
   tenants: [],
-  terms: [],
+  periods: [],
   consultations: [
     {
       id: 0,

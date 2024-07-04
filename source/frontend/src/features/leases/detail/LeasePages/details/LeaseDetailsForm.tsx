@@ -9,7 +9,7 @@ import { defaultApiLease } from '@/models/defaultInitializers';
 import DetailAdministration from './DetailAdministration';
 import DetailConsultation from './DetailConsultation';
 import DetailDocumentation from './DetailDocumentation';
-import DetailTermInformation from './DetailTermInformation';
+import DetailPeriodInformation from './DetailPeriodInformation';
 import PropertiesInformation from './PropertiesInformation';
 
 export const LeaseDetailsForm: React.FunctionComponent<React.PropsWithChildren<unknown>> = () => {
@@ -21,7 +21,7 @@ export const LeaseDetailsForm: React.FunctionComponent<React.PropsWithChildren<u
       onSubmit={noop}
     >
       <StyledDetails>
-        <DetailTermInformation />
+        <DetailPeriodInformation />
         <PropertiesInformation disabled={true} />
         <DetailAdministration disabled={true} />
         <DetailConsultation />

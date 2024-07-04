@@ -216,9 +216,12 @@ exports[`Disposition List View > matches snapshot 1`] = `
 }
 
 .c16 {
-  width: 7.5rem;
+  min-width: 5rem;
+  max-width: 5rem;
   margin-left: 1rem;
   margin-right: 1rem;
+  text-align: center;
+  padding: 0;
 }
 
 .c16:disabled {
@@ -1182,8 +1185,7 @@ exports[`Disposition List View > matches snapshot 1`] = `
                   Show
                 </span>
                 <input
-                  class="c16 form-control form-control-sm"
-                  disabled=""
+                  class="c16 form-control"
                   type="number"
                   value="10"
                 />

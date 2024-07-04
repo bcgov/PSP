@@ -205,6 +205,7 @@ export const GenericModal = (props: Omit<BsModalProps, 'onHide'> & ModalProps) =
       variant={variant}
       show={showState}
       modalSize={modalSize}
+      restoreFocus={false}
       onHide={noop}
       className={getModalClass()}
     >

@@ -13,7 +13,6 @@ using Pims.Dal.Entities;
 using Pims.Dal.Entities.Extensions;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
-using Pims.Dal.Helpers;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
@@ -28,7 +27,6 @@ namespace Pims.Api.Services
         private readonly IAcquisitionFilePropertyRepository _acquisitionFilePropertyRepository;
         private readonly IUserRepository _userRepository;
         private readonly IPropertyRepository _propertyRepository;
-        private readonly ICoordinateTransformService _coordinateService;
         private readonly ILookupRepository _lookupRepository;
         private readonly IEntityNoteRepository _entityNoteRepository;
         private readonly IAcquisitionFileChecklistRepository _checklistRepository;
@@ -48,7 +46,6 @@ namespace Pims.Api.Services
             IAcquisitionFilePropertyRepository acqFilePropertyRepository,
             IUserRepository userRepository,
             IPropertyRepository propertyRepository,
-            ICoordinateTransformService coordinateService,
             ILookupRepository lookupRepository,
             IEntityNoteRepository entityNoteRepository,
             IAcquisitionFileChecklistRepository checklistRepository,
@@ -67,7 +64,6 @@ namespace Pims.Api.Services
             _acquisitionFilePropertyRepository = acqFilePropertyRepository;
             _userRepository = userRepository;
             _propertyRepository = propertyRepository;
-            _coordinateService = coordinateService;
             _lookupRepository = lookupRepository;
             _entityNoteRepository = entityNoteRepository;
             _checklistRepository = checklistRepository;
@@ -159,8 +155,7 @@ namespace Pims.Api.Services
             _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, id);
 
             var properties = _acquisitionFilePropertyRepository.GetPropertiesByAcquisitionFileId(id);
-            ReprojectPropertyLocationsToWgs84(properties);
-            return properties;
+            return _propertyService.TransformAllPropertiesToLatLong(properties);
         }
 
         public IEnumerable<PimsAcquisitionOwner> GetOwners(long id)
@@ -655,19 +650,6 @@ namespace Pims.Api.Services
                 {
                     _logger.LogDebug("Adding new property without a pid");
                     acquisitionProperty.Property = _propertyService.PopulateNewProperty(acquisitionProperty.Property);
-                }
-            }
-        }
-
-        private void ReprojectPropertyLocationsToWgs84(IEnumerable<PimsPropertyAcquisitionFile> propertyAcquisitionFiles)
-        {
-            foreach (var acquisitionProperty in propertyAcquisitionFiles)
-            {
-                if (acquisitionProperty.Property.Location != null)
-                {
-                    var oldCoords = acquisitionProperty.Property.Location.Coordinate;
-                    var newCoords = _coordinateService.TransformCoordinates(SpatialReference.BCALBERS, SpatialReference.WGS84, oldCoords);
-                    acquisitionProperty.Property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.WGS84);
                 }
             }
         }

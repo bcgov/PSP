@@ -333,7 +333,7 @@ describe('PSP routing', () => {
       });
       const lazyElement = await screen.findByText('l-1234');
       expect(lazyElement).toBeInTheDocument();
-      expect(document.title).toMatch(/View Lease & Licenses/i);
+      expect(document.title).toMatch(/View Lease & Licences/i);
     });
 
     it('should display the acquisition list view', async () => {

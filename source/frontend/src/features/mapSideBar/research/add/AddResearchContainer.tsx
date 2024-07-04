@@ -7,15 +7,13 @@ import { toast } from 'react-toastify';
 import ConfirmNavigation from '@/components/common/ConfirmNavigation';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
-import { usePimsPropertyRepository } from '@/hooks/repositories/usePimsPropertyRepository';
 import { usePropertyAssociations } from '@/hooks/repositories/usePropertyAssociations';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
 import { useInitialMapSelectorProperties } from '@/hooks/useInitialMapSelectorProperties';
 import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
 import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Concepts_ResearchFile';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
-import { exists, isValidId, isValidString } from '@/utils';
-import { featuresetToMapProperty } from '@/utils/mapPropertyUtils';
+import { exists, isValidId } from '@/utils';
 
 import { PropertyForm } from '../../shared/models';
 import SidebarFooter from '../../shared/SidebarFooter';
@@ -37,32 +35,14 @@ export const AddResearchContainer: React.FunctionComponent<IAddResearchContainer
   const selectedFeatureDataset = mapMachine.selectedFeatureDataset;
   const { setModalContent, setDisplayModal } = useModalContext();
   const { execute: getPropertyAssociations } = usePropertyAssociations();
-  const {
-    getPropertyByPidWrapper: { execute: getPropertyByPid },
-    getPropertyByPinWrapper: { execute: getPropertyByPin },
-  } = usePimsPropertyRepository();
+
   const [needsUserConfirmation, setNeedsUserConfirmation] = useState<boolean>(true);
 
   // Warn user that property is part of an existing research file
   const confirmBeforeAdd = useCallback(
     async (propertyForm: PropertyForm): Promise<boolean> => {
-      let apiId;
-      try {
-        if (isValidId(propertyForm.apiId)) {
-          apiId = propertyForm.apiId;
-        } else if (isValidString(propertyForm.pid)) {
-          const result = await getPropertyByPid(propertyForm.pid);
-          apiId = result?.id;
-        } else if (isValidString(propertyForm.pin)) {
-          const result = await getPropertyByPin(Number(propertyForm.pin));
-          apiId = result?.id;
-        }
-      } catch (e) {
-        apiId = 0;
-      }
-
-      if (isValidId(apiId)) {
-        const response = await getPropertyAssociations(apiId);
+      if (isValidId(propertyForm.apiId)) {
+        const response = await getPropertyAssociations(propertyForm.apiId);
         const researchAssociations = response?.researchAssociations ?? [];
         const otherResearchFiles = researchAssociations.filter(a => exists(a.id));
         return otherResearchFiles.length > 0;
@@ -71,15 +51,13 @@ export const AddResearchContainer: React.FunctionComponent<IAddResearchContainer
         return false;
       }
     },
-    [getPropertyAssociations, getPropertyByPid, getPropertyByPin],
+    [getPropertyAssociations],
   );
 
   const initialForm = useMemo(() => {
     const researchForm = new ResearchForm();
     if (selectedFeatureDataset) {
-      researchForm.properties = [
-        PropertyForm.fromMapProperty(featuresetToMapProperty(selectedFeatureDataset)),
-      ];
+      researchForm.properties = [PropertyForm.fromFeatureDataset(selectedFeatureDataset)];
     }
     return researchForm;
   }, [selectedFeatureDataset]);
@@ -199,7 +177,7 @@ export const AddResearchContainer: React.FunctionComponent<IAddResearchContainer
       {formikProps => (
         <MapSideBarLayout
           title="Create Research File"
-          icon={<MdTopic title="User Profile" size="2.5rem" className="mr-2" />}
+          icon={<MdTopic title="User Profile" size="2.5rem" />}
           footer={
             <SidebarFooter
               isOkDisabled={formikProps?.isSubmitting || bcaLoading}

@@ -5,7 +5,6 @@ import { useHistory } from 'react-router-dom';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { useDispositionProvider } from '@/hooks/repositories/useDispositionProvider';
-import { usePimsPropertyRepository } from '@/hooks/repositories/usePimsPropertyRepository';
 import { usePropertyAssociations } from '@/hooks/repositories/usePropertyAssociations';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
 import { useInitialMapSelectorProperties } from '@/hooks/useInitialMapSelectorProperties';
@@ -13,7 +12,7 @@ import { useModalContext } from '@/hooks/useModalContext';
 import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
-import { exists, featuresetToMapProperty, isValidId, isValidString } from '@/utils';
+import { exists, featuresetToMapProperty, isValidId } from '@/utils';
 
 import { PropertyForm } from '../../shared/models';
 import { DispositionFormModel } from '../models/DispositionFormModel';
@@ -33,10 +32,6 @@ const AddDispositionContainer: React.FC<IAddDispositionContainerProps> = ({ onCl
 
   const { setModalContent, setDisplayModal } = useModalContext();
   const { execute: getPropertyAssociations } = usePropertyAssociations();
-  const {
-    getPropertyByPidWrapper: { execute: getPropertyByPid },
-    getPropertyByPinWrapper: { execute: getPropertyByPin },
-  } = usePimsPropertyRepository();
   const [needsUserConfirmation, setNeedsUserConfirmation] = useState<boolean>(true);
 
   const {
@@ -46,23 +41,8 @@ const AddDispositionContainer: React.FC<IAddDispositionContainerProps> = ({ onCl
   // Warn user that property is part of an existing disposition file
   const confirmBeforeAdd = useCallback(
     async (propertyForm: PropertyForm): Promise<boolean> => {
-      let apiId;
-      try {
-        if (isValidId(propertyForm.apiId)) {
-          apiId = propertyForm.apiId;
-        } else if (isValidString(propertyForm.pid)) {
-          const result = await getPropertyByPid(propertyForm.pid);
-          apiId = result?.id;
-        } else if (isValidString(propertyForm.pin)) {
-          const result = await getPropertyByPin(Number(propertyForm.pin));
-          apiId = result?.id;
-        }
-      } catch (e) {
-        apiId = 0;
-      }
-
-      if (isValidId(apiId)) {
-        const response = await getPropertyAssociations(apiId);
+      if (isValidId(propertyForm.apiId)) {
+        const response = await getPropertyAssociations(propertyForm.apiId);
         const fileAssociations = response?.dispositionAssociations ?? [];
         const otherFiles = fileAssociations.filter(a => exists(a.id));
         return otherFiles.length > 0;
@@ -71,7 +51,7 @@ const AddDispositionContainer: React.FC<IAddDispositionContainerProps> = ({ onCl
         return false;
       }
     },
-    [getPropertyAssociations, getPropertyByPid, getPropertyByPin],
+    [getPropertyAssociations],
   );
 
   const initialForm = useMemo(() => {

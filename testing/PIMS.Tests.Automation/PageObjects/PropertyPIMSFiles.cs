@@ -19,10 +19,10 @@ namespace PIMS.Tests.Automation.PageObjects
         private By propertyAcquisitionTable = By.XPath("//div[contains(text(),'Acquisition Files')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='associationFiles']");
         private By propertyAcquisitionExpandTableBttn = By.XPath("//div[contains(text(),'Acquisition Files')]/parent::div/parent::div/following-sibling::div/*[1]");
 
-        private By propertyLeasesSubtitle = By.XPath("//div[contains(text(),'Leases/Licenses')]");
-        private By propertyLeaseCountLabel = By.XPath("//div[contains(text(),'Leases/Licenses')]/following-sibling::div[@class='my-1 col-auto']/div");
-        private By propertyLeaseTable = By.XPath("//div[contains(text(),'Leases/Licenses')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='associationFiles']");
-        private By propertyLeaseExpandTableBttn = By.XPath("//div[contains(text(),'Leases/Licenses')]/parent::div/parent::div/following-sibling::div/*[1]");
+        private By propertyLeasesSubtitle = By.XPath("//div[contains(text(),'Leases/Licences')]");
+        private By propertyLeaseCountLabel = By.XPath("//div[contains(text(),'Leases/Licences')]/following-sibling::div[@class='my-1 col-auto']/div");
+        private By propertyLeaseTable = By.XPath("//div[contains(text(),'Leases/Licences')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='associationFiles']");
+        private By propertyLeaseExpandTableBttn = By.XPath("//div[contains(text(),'Leases/Licences')]/parent::div/parent::div/following-sibling::div/*[1]");
 
         private By propertyDispositionFileSubtitle = By.XPath("//div[contains(text(),'Disposition Files')]");
         private By propertyDispositionCountLabel = By.XPath("//div[contains(text(),'Disposition Files')]/following-sibling::div[@class='my-1 col-auto']/div");
