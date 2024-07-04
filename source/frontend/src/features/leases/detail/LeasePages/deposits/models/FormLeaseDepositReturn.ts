@@ -7,6 +7,11 @@ import { NumberFieldValue } from '@/typings/NumberFieldValue';
 import { isValidIsoDateTime } from '@/utils';
 import { numberFieldToRequiredNumber } from '@/utils/formUtils';
 
+export class FormLeaseRenewal {
+  startDate: string;
+  endDate: string;
+}
+
 export class FormLeaseDepositReturn {
   public id?: number;
   public parentDepositId: number;

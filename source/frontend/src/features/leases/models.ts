@@ -20,7 +20,10 @@ import {
 
 import { PropertyForm } from '../mapSideBar/shared/models';
 import { FormLeaseDeposit } from './detail/LeasePages/deposits/models/FormLeaseDeposit';
-import { FormLeaseDepositReturn } from './detail/LeasePages/deposits/models/FormLeaseDepositReturn';
+import {
+  FormLeaseDepositReturn,
+  FormLeaseRenewal,
+} from './detail/LeasePages/deposits/models/FormLeaseDepositReturn';
 import { FormLeaseTerm } from './detail/LeasePages/payment/models';
 import { FormTenant } from './detail/LeasePages/tenant/models';
 
@@ -32,6 +35,8 @@ export class LeaseFormModel {
   expiryDate = '';
   renewalDate = '';
   startDate = '';
+  renewals: FormLeaseRenewal[] = [];
+
   responsibilityEffectiveDate = '';
   paymentReceivableTypeCode = '';
   categoryTypeCode = '';
