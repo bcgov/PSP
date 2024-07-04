@@ -1,4 +1,5 @@
 import { ApiGen_Concepts_CompensationRequisitionProperty } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisitionProperty';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 
 export class CompensationRequisitionPropertyForm {
   constructor(
@@ -13,7 +14,7 @@ export class CompensationRequisitionPropertyForm {
     this.propertyAcquisitionFileId = propertyAcquisitionFileId;
   }
 
-  static fromApi(
+  public static fromApi(
     apiModel: ApiGen_Concepts_CompensationRequisitionProperty,
   ): CompensationRequisitionPropertyForm {
     const formModel = new CompensationRequisitionPropertyForm(
@@ -26,12 +27,14 @@ export class CompensationRequisitionPropertyForm {
     return formModel;
   }
 
-  toApi(): ApiGen_Concepts_CompensationRequisitionProperty {
+  public toApi(): ApiGen_Concepts_CompensationRequisitionProperty {
     return {
       compensationRequisitionPropertyId: this.id,
       compensationRequisitionId: this.compensationRequisitionId,
       propertyAcquisitionFileId: this.propertyAcquisitionFileId,
+      acquisitionFileProperty: null,
       rowVersion: this.rowVersion,
-    } as ApiGen_Concepts_CompensationRequisitionProperty;
+      ...getEmptyBaseAudit(this.rowVersion),
+    };
   }
 }

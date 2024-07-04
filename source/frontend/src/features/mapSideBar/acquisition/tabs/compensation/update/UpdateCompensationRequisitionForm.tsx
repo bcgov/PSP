@@ -242,7 +242,6 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
                         );
                       });
 
-                      console.log(compReqProperties);
                       formikProps.setFieldValue('selectedProperties', compReqProperties);
                     }}
                   ></FilePropertiesTable>

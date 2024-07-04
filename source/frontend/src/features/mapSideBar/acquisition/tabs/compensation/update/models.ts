@@ -162,14 +162,9 @@ export class CompensationRequisitionFormModel {
     compensation.payee.pretaxAmount = payeePretaxAmount;
     compensation.payee.taxAmount = payeeTaxAmount;
     compensation.payee.totalAmount = payeeTotalAmount;
-    compensation.selectedProperties = apiModel.compensationRequisitionProperties.map(x => {
-      return {
-        id: x.compensationRequisitionPropertyId,
-        compensationRequisitionId: x.compensationRequisitionId,
-        propertyAcquisitionFileId: x.propertyAcquisitionFileId,
-        rowVersion: x.rowVersion,
-      } as CompensationRequisitionPropertyForm;
-    });
+    compensation.selectedProperties = apiModel.compensationRequisitionProperties.map(x =>
+      CompensationRequisitionPropertyForm.fromApi(x),
+    );
 
     return compensation;
   }

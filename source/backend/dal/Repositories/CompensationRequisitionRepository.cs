@@ -99,5 +99,28 @@ namespace Pims.Dal.Repositories
             }
             return false;
         }
+
+        public List<PimsPropertyAcquisitionFile> GetPropertiesByCompRequisitionId(long compensationRequisitionId)
+        {
+            return Context.PimsPropAcqFlCompReqs
+                .Where(x => x.CompensationRequisitionId == compensationRequisitionId)
+                .Include(pa => pa.PropertyAcquisitionFile)
+                    .ThenInclude(p => p.Property)
+                        .ThenInclude(rp => rp.RegionCodeNavigation)
+                .Include(pa => pa.PropertyAcquisitionFile)
+                    .ThenInclude(p => p.Property)
+                        .ThenInclude(rp => rp.DistrictCodeNavigation)
+                .Include(pa => pa.PropertyAcquisitionFile)
+                    .ThenInclude(p => p.Property)
+                        .ThenInclude(rp => rp.Address)
+                            .ThenInclude(a => a.Country)
+                .Include(pa => pa.PropertyAcquisitionFile)
+                    .ThenInclude(p => p.Property)
+                        .ThenInclude(rp => rp.Address)
+                            .ThenInclude(a => a.Country)
+                .AsNoTracking()
+                .Select(x => x.PropertyAcquisitionFile)
+                .ToList();
+        }
     }
 }
