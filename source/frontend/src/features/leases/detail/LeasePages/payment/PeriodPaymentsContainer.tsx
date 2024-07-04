@@ -22,15 +22,14 @@ import { useDeletePeriodsPayments } from './hooks/useDeletePeriodsPayments';
 import PaymentModal from './modal/payment/PaymentModal';
 import PeriodForm from './modal/period/PeriodForm';
 import { FormLeasePayment, FormLeasePeriod } from './models';
-import PeriodsForm from './table/periods/PeriodsForm';
+import { IPeriodPaymentsViewProps } from './table/periods/PaymentPeriodsView';
 
 /**
  * Orchestrates the display and modification of lease periods and payments.
  */
-export const PeriodPaymentsContainer: React.FunctionComponent<LeasePageProps> = ({
-  formikRef,
-  onSuccess,
-}) => {
+export const PeriodPaymentsContainer: React.FunctionComponent<
+  LeasePageProps<IPeriodPaymentsViewProps>
+> = ({ formikRef, onSuccess, componentView }) => {
   const { lease } = useContext(LeaseStateContext);
   const generateH1005a = useGenerateLicenceOfOccupation();
   const [editModalValues, setEditModalValues] = useState<FormLeasePeriod | undefined>(undefined);
@@ -85,10 +84,19 @@ export const PeriodPaymentsContainer: React.FunctionComponent<LeasePageProps> = 
       if (isValidId(updatedPeriod?.id) && isValidId(leaseId)) {
         await getLeasePeriods.execute(leaseId);
         setEditModalValues(undefined);
+        setDisplayModal(false);
         onSuccess();
       }
     },
-    [addLeasePeriod, getLeasePeriods, gstDecimal, leaseId, updateLeasePeriod, onSuccess],
+    [
+      addLeasePeriod,
+      getLeasePeriods,
+      gstDecimal,
+      leaseId,
+      updateLeasePeriod,
+      onSuccess,
+      setDisplayModal,
+    ],
   );
 
   /**
@@ -104,11 +112,12 @@ export const PeriodPaymentsContainer: React.FunctionComponent<LeasePageProps> = 
         if (isValidId(updatedLeasePayment?.id)) {
           await getLeasePeriods.execute(leaseId);
           setEditPaymentModalValues(undefined);
+          setDisplayModal(false);
           onSuccess();
         }
       }
     },
-    [leaseId, updateLeasePayment, addLeasePayment, getLeasePeriods, onSuccess],
+    [leaseId, updateLeasePayment, addLeasePayment, getLeasePeriods, onSuccess, setDisplayModal],
   );
 
   const onEdit = useCallback(
@@ -147,7 +156,8 @@ export const PeriodPaymentsContainer: React.FunctionComponent<LeasePageProps> = 
 
   const onCancelPeriod = useCallback(() => {
     setEditModalValues(undefined);
-  }, []);
+    setDisplayModal(false);
+  }, [setDisplayModal]);
 
   const PeriodFormComp = useMemo(
     () => (
@@ -161,22 +171,24 @@ export const PeriodPaymentsContainer: React.FunctionComponent<LeasePageProps> = 
     [editModalValues, formikRef, onSavePeriod, lease],
   );
   useEffect(() => {
-    setModalContent({
-      variant: 'info',
-      headerIcon: !isValidId(editModalValues?.id) ? (
-        <FaPlusCircle />
-      ) : (
-        <FaExclamationCircle size={22} />
-      ),
-      title: !isValidId(editModalValues?.id) ? 'Add a Period' : 'Edit a Period',
-      okButtonText: 'Yes',
-      cancelButtonText: 'No',
-      handleCancel: onCancelPeriod,
-      handleOk: () => formikRef?.current?.submitForm(),
-      message: PeriodFormComp,
-      modalSize: ModalSize.MEDIUM,
-    });
-    setDisplayModal(!!editModalValues);
+    if (editModalValues) {
+      setModalContent({
+        variant: 'info',
+        headerIcon: !isValidId(editModalValues?.id) ? (
+          <FaPlusCircle />
+        ) : (
+          <FaExclamationCircle size={22} />
+        ),
+        title: !isValidId(editModalValues?.id) ? 'Add a Period' : 'Edit a Period',
+        okButtonText: 'Yes',
+        cancelButtonText: 'No',
+        handleCancel: onCancelPeriod,
+        handleOk: () => formikRef?.current?.submitForm(),
+        message: PeriodFormComp,
+        modalSize: ModalSize.MEDIUM,
+      });
+      setDisplayModal(!!editModalValues);
+    }
   }, [
     setModalContent,
     setDisplayModal,
@@ -187,10 +199,11 @@ export const PeriodPaymentsContainer: React.FunctionComponent<LeasePageProps> = 
     lease,
   ]);
 
+  const View = componentView;
   return (
     <>
       <LoadingBackdrop show={getLeasePeriods.loading} parentScreen />
-      <PeriodsForm
+      <View
         onEdit={onEdit}
         onEditPayment={onEditPayment}
         onDelete={onDeletePeriod}
@@ -206,7 +219,7 @@ export const PeriodPaymentsContainer: React.FunctionComponent<LeasePageProps> = 
           type: lease?.type ?? null,
         })}
         formikRef={formikRef as React.RefObject<FormikProps<LeaseFormModel>>}
-      ></PeriodsForm>
+      ></View>
       <PaymentModal
         displayModal={!!editPaymentModalValues}
         initialValues={editPaymentModalValues}

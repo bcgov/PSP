@@ -18,7 +18,7 @@
   left: 12.2rem;
 }
 
-.suggestionList option {
+.suggestionList li {
   padding: 1rem 0.5rem;
   word-wrap: break-word;
   width: 25rem;
@@ -27,7 +27,7 @@
   color: var(--typography-color-secondary);
 
   &:hover {
-    background-color: var(--typography-color-secondary-hover);
+    background-color: var(--surface-color-primary-button-hover);
     color: #fff;
   }
 }
