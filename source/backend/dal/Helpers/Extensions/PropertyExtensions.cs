@@ -98,7 +98,7 @@ namespace Pims.Dal.Helpers.Extensions
 
             ExpressionStarter<PimsPropertyVw> ownershipBuilder;
 
-            if (filter.Ownership.Count > 0)
+            if (filter.Ownership.Count > 0 && filter.Ownership.FirstOrDefault() != string.Empty)
             {
                 // Property ownership filters
                 ownershipBuilder = isRetired ? PredicateBuilder.New<PimsPropertyVw>(p => p.IsRetired == true) : PredicateBuilder.New<PimsPropertyVw>(p => false);
