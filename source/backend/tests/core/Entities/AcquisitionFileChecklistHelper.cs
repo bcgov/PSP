@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using Pims.Api.Models.CodeTypes;
 using Pims.Dal;
 using Pims.Dal.Entities;
 using Entity = Pims.Dal.Entities;
@@ -15,7 +16,7 @@ namespace Pims.Core.Test
         /// Create a new instance of an Acquisition File checklist item.
         /// </summary>
         /// <returns></returns>
-        public static Entity.PimsAcquisitionChecklistItem CreateAcquisitionChecklistItem(long? id = null, long? acquisitionFileId = null, PimsAcqChklstItemStatusType statusType = null, PimsAcqChklstItemType itemType = null)
+        public static Entity.PimsAcquisitionChecklistItem CreateAcquisitionChecklistItem(long? id = null, long? acquisitionFileId = null, PimsChklstItemStatusType statusType = null, PimsAcqChklstItemType itemType = null)
         {
             var checklistItem = new Entity.PimsAcquisitionChecklistItem()
             {
@@ -30,8 +31,8 @@ namespace Pims.Core.Test
                 DbLastUpdateUserid = string.Empty,
                 ConcurrencyControlNumber = 1,
             };
-            checklistItem.AcqChklstItemStatusTypeCodeNavigation = statusType ?? new Entity.PimsAcqChklstItemStatusType() { Id = "INCOMP", Description = "Incomplete", DbCreateUserid = "test", DbLastUpdateUserid = "test", DbLastUpdateTimestamp = System.DateTime.Now };
-            checklistItem.AcqChklstItemStatusTypeCode = checklistItem.AcqChklstItemStatusTypeCodeNavigation.Id;
+            checklistItem.ChklstItemStatusTypeCodeNavigation = statusType ?? new Entity.PimsChklstItemStatusType() { Id = ChecklistItemStatusTypes.INCOMP.ToString(), Description = "Incomplete", DbCreateUserid = "test", DbLastUpdateUserid = "test", DbLastUpdateTimestamp = System.DateTime.Now };
+            checklistItem.ChklstItemStatusTypeCode = checklistItem.ChklstItemStatusTypeCodeNavigation.Id;
             checklistItem.AcqChklstItemTypeCodeNavigation = itemType ?? new Entity.PimsAcqChklstItemType() { Id = "APPRAISE", Description = "Appraisals and reviews", DbCreateUserid = "test", DbLastUpdateUserid = "test", DbLastUpdateTimestamp = System.DateTime.Now, AcqChklstSectionTypeCode = "section" };
             checklistItem.AcqChklstItemTypeCode = checklistItem.AcqChklstItemTypeCodeNavigation.Id;
 
@@ -44,7 +45,7 @@ namespace Pims.Core.Test
         /// <returns></returns>
         public static Entity.PimsAcquisitionChecklistItem CreateAcquisitionChecklistItem(this PimsContext context, long? id = null, long? acquisitionFileId = null)
         {
-            var statusType = context.PimsAcqChklstItemStatusTypes.FirstOrDefault() ?? throw new InvalidOperationException("Unable to find checklist item status type.");
+            var statusType = context.PimsChklstItemStatusTypes.FirstOrDefault() ?? throw new InvalidOperationException("Unable to find checklist item status type.");
             var itemType = context.PimsAcqChklstItemTypes.FirstOrDefault() ?? throw new InvalidOperationException("Unable to find checklist item type.");
             var checklistItem = EntityHelper.CreateAcquisitionChecklistItem(id: id, acquisitionFileId: acquisitionFileId, statusType: statusType, itemType: itemType);
             context.PimsAcquisitionChecklistItems.Add(checklistItem);
