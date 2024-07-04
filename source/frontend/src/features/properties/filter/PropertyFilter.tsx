@@ -126,7 +126,10 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
                   placeholder="Enter an address"
                   onSelectionChanged={async val => {
                     const geocoderPidResponse = await getSitePids(val.siteId);
-                    if (geocoderPidResponse?.pids?.length === 1) {
+                    if (
+                      geocoderPidResponse?.pids?.length === 1 &&
+                      geocoderPidResponse?.pids[0] !== ''
+                    ) {
                       setFieldValue('pinOrPid', geocoderPidResponse?.pids[0]);
                     } else {
                       if (geocoderPidResponse?.pids?.length > 1) {

@@ -302,11 +302,11 @@ namespace Pims.Dal.Test.Repositories
             var property = EntityHelper.CreateProperty(100, isCoreInventory: true);
             var lease = EntityHelper.CreateLease(1, addProperty: false);
             lease.OrigExpiryDate = DateTime.Now.AddDays(10);
-            lease.PimsLeaseTerms = new List<PimsLeaseTerm>()
+            lease.PimsLeasePeriods = new List<PimsLeasePeriod>()
             {
-                new PimsLeaseTerm()
+                new PimsLeasePeriod()
                 {
-                    TermExpiryDate= null,
+                    PeriodExpiryDate= null,
                 }
             };
             property.PimsPropertyLeases.Add(new PimsPropertyLease() { PropertyId = property.Internal_Id, LeaseId = lease.Internal_Id, Lease = lease });
@@ -328,11 +328,11 @@ namespace Pims.Dal.Test.Repositories
             var property = EntityHelper.CreateProperty(100, isCoreInventory: true);
             var lease = EntityHelper.CreateLease(1, addProperty: false);
             lease.OrigExpiryDate = DateTime.Now.AddDays(10);
-            lease.PimsLeaseTerms = new List<PimsLeaseTerm>()
+            lease.PimsLeasePeriods = new List<PimsLeasePeriod>()
             {
-                new PimsLeaseTerm()
+                new PimsLeasePeriod()
                 {
-                    TermExpiryDate= DateTime.Now.AddDays(10),
+                    PeriodExpiryDate= DateTime.Now.AddDays(10),
                 }
             };
             property.PimsPropertyLeases.Add(new PimsPropertyLease() { PropertyId = property.Internal_Id, LeaseId = lease.Internal_Id, Lease = lease });

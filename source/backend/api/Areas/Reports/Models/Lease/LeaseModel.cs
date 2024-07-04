@@ -27,7 +27,7 @@ namespace Pims.Api.Areas.Reports.Models.Lease
 
         [DisplayName("Current Term Start Date")]
         [CsvHelper.Configuration.Attributes.Name("Current Term Start Date")]
-        public DateOnly? CurrentTermStartDate { get; set; }
+        public DateOnly? CurrentPeriodStartDate { get; set; }
 
         [DisplayName("Current Term End Date")]
         [CsvHelper.Configuration.Attributes.Name("Current Term End Date")]
@@ -79,15 +79,15 @@ namespace Pims.Api.Areas.Reports.Models.Lease
 
         [DisplayName("Term Start Date")]
         [CsvHelper.Configuration.Attributes.Name("Term Start Date")]
-        public DateOnly? TermStartDate { get; set; }
+        public DateOnly? PeriodStartDate { get; set; }
 
         [DisplayName("Term Renewal Date")]
         [CsvHelper.Configuration.Attributes.Name("Term Renewal Date")]
-        public DateOnly? TermRenewalDate { get; set; }
+        public DateOnly? PeriodRenewalDate { get; set; }
 
         [DisplayName("Term Expiry Date")]
         [CsvHelper.Configuration.Attributes.Name("Term Expiry Date")]
-        public DateOnly? TermExpiryDate { get; set; }
+        public DateOnly? PeriodExpiryDate { get; set; }
 
         [DisplayName("Lease Payment Frequency")]
         [CsvHelper.Configuration.Attributes.Name("Lease Payment Frequency")]

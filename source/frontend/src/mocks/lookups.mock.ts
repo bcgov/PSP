@@ -973,14 +973,14 @@ export const mockLookups: ILookupCode[] = [
     name: 'Exercised',
     isDisabled: false,
     displayOrder: 0,
-    type: 'PimsLeaseTermStatusType',
+    type: 'PimsLeasePeriodStatusType',
   },
   {
     id: 'NEXER',
     name: 'Not Exercised',
     isDisabled: false,
     displayOrder: 0,
-    type: 'PimsLeaseTermStatusType',
+    type: 'PimsLeasePeriodStatusType',
   },
   {
     id: 'LICONSTRC',

@@ -1,9 +1,9 @@
 import { FormikHelpers, FormikProps } from 'formik';
 import { useMemo, useRef, useState } from 'react';
+import { MdFence } from 'react-icons/md';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-import Fence from '@/assets/images/fence.svg?react';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { IMapProperty } from '@/components/propertySelector/models';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
@@ -107,7 +107,7 @@ export const AddLeaseContainer: React.FunctionComponent<
   return (
     <MapSideBarLayout
       title="Create Lease/Licence"
-      icon={<Fence />}
+      icon={<MdFence size={26} />}
       footer={
         <SidebarFooter
           isOkDisabled={formikRef.current?.isSubmitting || bcaLoading}

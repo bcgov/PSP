@@ -28,7 +28,7 @@ namespace Pims.Api.Test.Services
     {
         public TestHelper helper;
         public ILeasePaymentService paymentService;
-        public Mock<ILeaseTermRepository> leaseTermRepository;
+        public Mock<ILeasePeriodRepository> LeasePeriodRepository;
         public Mock<ILeasePaymentRepository> leasePaymentRepository;
 
         public LeaseServicePaymentTest()
@@ -38,14 +38,14 @@ namespace Pims.Api.Test.Services
 
         public void Dispose()
         {
-            this.leaseTermRepository = null;
+            this.LeasePeriodRepository = null;
             this.leasePaymentRepository = null;
         }
 
         private void MockCommonServices()
         {
             this.paymentService = this.helper.Create<LeasePaymentService>();
-            this.leaseTermRepository = this.helper.GetService<Mock<ILeaseTermRepository>>();
+            this.LeasePeriodRepository = this.helper.GetService<Mock<ILeasePeriodRepository>>();
             this.leasePaymentRepository = this.helper.GetService<Mock<ILeasePaymentRepository>>();
         }
 
@@ -59,10 +59,10 @@ namespace Pims.Api.Test.Services
 
             var lease = EntityHelper.CreateLease(1);
             this.helper.CreatePimsContext(user, true).AddAndSaveChanges(lease);
-            var term = new PimsLeaseTerm() { TermStartDate = DateTime.Now, TermExpiryDate = DateTime.Now.AddDays(10) };
+            var period = new PimsLeasePeriod() { PeriodStartDate = DateTime.Now, PeriodExpiryDate = DateTime.Now.AddDays(10) };
 
             this.MockCommonServices();
-            this.leaseTermRepository.Setup(x => x.GetById(It.IsAny<long>(), true)).Returns(term);
+            this.LeasePeriodRepository.Setup(x => x.GetById(It.IsAny<long>(), true)).Returns(period);
 
             // Act
             var payment = new PimsLeasePayment() { PaymentReceivedDate = DateTime.Now };
@@ -81,10 +81,10 @@ namespace Pims.Api.Test.Services
 
             var lease = EntityHelper.CreateLease(1);
             this.helper.CreatePimsContext(user, true).AddAndSaveChanges(lease);
-            var term = new PimsLeaseTerm() { TermStartDate = DateTime.Now, TermExpiryDate = DateTime.Now.AddDays(10), GstAmount = 1, PaymentAmount = 1 };
+            var period = new PimsLeasePeriod() { PeriodStartDate = DateTime.Now, PeriodExpiryDate = DateTime.Now.AddDays(10), GstAmount = 1, PaymentAmount = 1 };
 
             this.MockCommonServices();
-            this.leaseTermRepository.Setup(x => x.GetById(It.IsAny<long>(), true)).Returns(term);
+            this.LeasePeriodRepository.Setup(x => x.GetById(It.IsAny<long>(), true)).Returns(period);
 
             // Act
             var unpaidPayment = new PimsLeasePayment() { PaymentReceivedDate = DateTime.Now, PaymentAmountTotal = 0, };
@@ -111,17 +111,17 @@ namespace Pims.Api.Test.Services
             var user = PrincipalHelper.CreateForPermission(Permissions.LeaseEdit);
 
             var lease = EntityHelper.CreateLease(1);
-            var term = new PimsLeaseTerm() { TermStartDate = DateTime.Now, TermExpiryDate = DateTime.Now.AddDays(10) };
+            var period = new PimsLeasePeriod() { PeriodStartDate = DateTime.Now, PeriodExpiryDate = DateTime.Now.AddDays(10) };
             this.helper.CreatePimsContext(user, true).AddAndSaveChanges(lease);
 
             this.MockCommonServices();
-            this.leaseTermRepository.Setup(x => x.GetById(It.IsAny<long>(), true)).Returns(term);
+            this.LeasePeriodRepository.Setup(x => x.GetById(It.IsAny<long>(), true)).Returns(period);
 
             // Act
             var addPayment = new PimsLeasePayment() { PaymentReceivedDate = DateTime.Now.AddDays(30) };
 
             var ex = Assert.Throws<InvalidOperationException>(() => this.paymentService.AddPayment(lease.Internal_Id, addPayment));
-            ex.Message.Should().Be("Payment received date must be within the start and expiry date of the term.");
+            ex.Message.Should().Be("Payment received date must be within the start and expiry date of the period.");
         }
         #endregion
 
@@ -134,11 +134,11 @@ namespace Pims.Api.Test.Services
 
             var lease = EntityHelper.CreateLease(1);
             var originalPayment = new PimsLeasePayment() { PaymentReceivedDate = DateTime.Now };
-            var term = new PimsLeaseTerm() { TermStartDate = DateTime.Now, TermExpiryDate = DateTime.Now.AddDays(10) };
+            var period = new PimsLeasePeriod() { PeriodStartDate = DateTime.Now, PeriodExpiryDate = DateTime.Now.AddDays(10) };
             this.helper.CreatePimsContext(user, true).AddAndSaveChanges(lease);
 
             this.MockCommonServices();
-            this.leaseTermRepository.Setup(x => x.GetById(It.IsAny<long>(), true)).Returns(term);
+            this.LeasePeriodRepository.Setup(x => x.GetById(It.IsAny<long>(), true)).Returns(period);
 
             // Act
             var payment = new PimsLeasePayment() { LeasePaymentId = originalPayment.LeasePaymentId, PaymentReceivedDate = DateTime.Now };
@@ -157,17 +157,17 @@ namespace Pims.Api.Test.Services
 
             var lease = EntityHelper.CreateLease(1);
             var originalPayment = new PimsLeasePayment() { PaymentReceivedDate = DateTime.Now };
-            var term = new PimsLeaseTerm() { TermStartDate = DateTime.Now, TermExpiryDate = DateTime.Now.AddDays(10) };
+            var period = new PimsLeasePeriod() { PeriodStartDate = DateTime.Now, PeriodExpiryDate = DateTime.Now.AddDays(10) };
             this.helper.CreatePimsContext(user, true).AddAndSaveChanges(lease);
 
             this.MockCommonServices();
-            this.leaseTermRepository.Setup(x => x.GetById(It.IsAny<long>(), It.IsAny<bool>())).Returns(term);
+            this.LeasePeriodRepository.Setup(x => x.GetById(It.IsAny<long>(), It.IsAny<bool>())).Returns(period);
 
             // Act
             var payment = new PimsLeasePayment() { LeasePaymentId = originalPayment.LeasePaymentId, PaymentReceivedDate = DateTime.Now.AddDays(30) };
 
             var ex = Assert.Throws<InvalidOperationException>(() => this.paymentService.UpdatePayment(lease.Internal_Id, 1, payment));
-            ex.Message.Should().Be("Payment received date must be within the start and expiry date of the term.");
+            ex.Message.Should().Be("Payment received date must be within the start and expiry date of the period.");
         }
         #endregion
 
@@ -179,7 +179,7 @@ namespace Pims.Api.Test.Services
             var user = PrincipalHelper.CreateForPermission(Permissions.LeaseEdit, Permissions.LeaseView);
 
             var lease = EntityHelper.CreateLease(1);
-            var term = new PimsLeaseTerm() { TermStartDate = DateTime.Now, TermExpiryDate = DateTime.Now.AddDays(10) };
+            var period = new PimsLeasePeriod() { PeriodStartDate = DateTime.Now, PeriodExpiryDate = DateTime.Now.AddDays(10) };
             this.helper.CreatePimsContext(user, true).AddAndSaveChanges(lease);
 
             this.MockCommonServices();

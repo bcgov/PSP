@@ -75,6 +75,26 @@ describe('TakesDetailView component', () => {
     expect(onEdit).toHaveBeenCalled();
   });
 
+  it('hides the add button when the file has been completed', () => {
+    const fileProperty = getMockApiPropertyFiles()[0];
+    const file: ApiGen_Concepts_File = fileProperty.file as ApiGen_Concepts_File;
+    const { queryByTitle, getByTestId } = setup({
+      props: {
+        fileProperty: {
+          ...fileProperty,
+          file: {
+            ...file,
+            fileStatusTypeCode: toTypeCodeNullable(ApiGen_CodeTypes_AcquisitionStatusTypes.COMPLT),
+          },
+        },
+        takes: getMockApiTakes(),
+      },
+      claims: [Claims.PROPERTY_EDIT],
+    });
+    const addButton = queryByTitle('Add take');
+    expect(addButton).toBeNull();
+  });
+
   it('hides the edit button when the file has been completed', () => {
     const fileProperty = getMockApiPropertyFiles()[0];
     const file: ApiGen_Concepts_File = fileProperty.file as ApiGen_Concepts_File;
