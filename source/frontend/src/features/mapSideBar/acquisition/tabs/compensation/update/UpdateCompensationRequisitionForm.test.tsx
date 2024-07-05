@@ -56,7 +56,6 @@ const getPayeeOptions = (owners: ApiGen_Concepts_AcquisitionFileOwner[]): PayeeO
 
 vi.mock('@/hooks/useProjectTypeahead');
 const mockUseProjectTypeahead = vi.mocked(useProjectTypeahead);
-
 const handleTypeaheadSearch = vi.fn();
 const setShowAltProjectError = vi.fn();
 

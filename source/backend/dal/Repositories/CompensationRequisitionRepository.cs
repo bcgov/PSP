@@ -104,7 +104,7 @@ namespace Pims.Dal.Repositories
         {
             return Context.PimsPropAcqFlCompReqs
                 .Where(x => x.CompensationRequisitionId == compensationRequisitionId)
-                .Include(pa => pa.PropertyAcquisitionFile)
+                    .Include(pa => pa.PropertyAcquisitionFile)
                     .ThenInclude(p => p.Property)
                         .ThenInclude(rp => rp.RegionCodeNavigation)
                 .Include(pa => pa.PropertyAcquisitionFile)

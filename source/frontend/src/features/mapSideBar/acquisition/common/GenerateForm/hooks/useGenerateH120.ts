@@ -122,7 +122,7 @@ export const useGenerateH120 = () => {
 
     const compensationData = new Api_GenerateCompensation(
       compensation,
-      compReqProperties,
+      compReqProperties ?? [],
       fileData,
       h120Categories ?? [],
       compReqFinalH120s ?? [],
