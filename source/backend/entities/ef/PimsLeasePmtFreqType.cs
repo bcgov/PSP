@@ -80,9 +80,6 @@ public partial class PimsLeasePmtFreqType
     [InverseProperty("AddlRentFreqNavigation")]
     public virtual ICollection<PimsLeasePeriod> PimsLeasePeriodAddlRentFreqNavigations { get; set; } = new List<PimsLeasePeriod>();
 
-    [InverseProperty("BaseRentFreqNavigation")]
-    public virtual ICollection<PimsLeasePeriod> PimsLeasePeriodBaseRentFreqNavigations { get; set; } = new List<PimsLeasePeriod>();
-
     [InverseProperty("LeasePmtFreqTypeCodeNavigation")]
     public virtual ICollection<PimsLeasePeriod> PimsLeasePeriodLeasePmtFreqTypeCodeNavigations { get; set; } = new List<PimsLeasePeriod>();
 

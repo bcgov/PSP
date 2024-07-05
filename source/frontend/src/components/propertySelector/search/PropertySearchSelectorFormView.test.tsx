@@ -208,13 +208,15 @@ describe('PropertySearchSelectorFormView component', () => {
           featureToLocationFeatureDataset(f as any),
         ),
       });
-      const checkbox = await findByTestId('selectrow-PID-006-772-331');
+      const checkbox = await findByTestId(
+        'selectrow-PID-006-772-331-55.706230240625004--121.60834946062499',
+      );
       await act(async () => userEvent.click(checkbox));
       expect(checkbox).toBeChecked();
       expect(onSelectedProperties).toHaveBeenCalledWith([
         {
           districtFeature: null,
-          id: 'PID-006-772-331',
+          id: 'PID-006-772-331-55.706230240625004--121.60834946062499',
           location: {
             lat: 55.706230240625004,
             lng: -121.60834946062499,

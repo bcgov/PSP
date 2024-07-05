@@ -7,15 +7,14 @@ using Microsoft.EntityFrameworkCore;
 namespace Pims.Dal.Entities;
 
 /// <summary>
-/// Describes a term period for the associated lease.
+/// Describes a duration period for the associated lease.
 /// </summary>
 [Table("PIMS_LEASE_PERIOD")]
-[Index("AddlRentFreq", Name = "LSTERM_ADDL_RENT_FREQ_IDX")]
-[Index("BaseRentFreq", Name = "LSTERM_BASE_RENT_FREQ_IDX")]
-[Index("LeaseId", Name = "LSTERM_LEASE_ID_IDX")]
-[Index("LeasePeriodStatusTypeCode", Name = "LSTERM_LEASE_PERIOD_STATUS_TYPE_CODE_IDX")]
-[Index("LeasePmtFreqTypeCode", Name = "LSTERM_LEASE_PMT_FREQ_TYPE_CODE_IDX")]
-[Index("VblRentFreq", Name = "LSTERM_VBL_RENT_FREQ_IDX")]
+[Index("AddlRentFreq", Name = "LSPERD_ADDL_RENT_FREQ_IDX")]
+[Index("LeaseId", Name = "LSPERD_LEASE_ID_IDX")]
+[Index("LeasePeriodStatusTypeCode", Name = "LSPERD_LEASE_PERIOD_STATUS_TYPE_CODE_IDX")]
+[Index("LeasePmtFreqTypeCode", Name = "LSPERD_LEASE_PMT_FREQ_TYPE_CODE_IDX")]
+[Index("VblRentFreq", Name = "LSPERD_VBL_RENT_FREQ_IDX")]
 public partial class PimsLeasePeriod
 {
     /// <summary>
@@ -44,13 +43,6 @@ public partial class PimsLeasePeriod
     [Column("LEASE_PMT_FREQ_TYPE_CODE")]
     [StringLength(20)]
     public string LeasePmtFreqTypeCode { get; set; }
-
-    /// <summary>
-    /// Foreign key reference to the PIMS_LEASE_PMT_FREQ_TYPE table.
-    /// </summary>
-    [Column("BASE_RENT_FREQ")]
-    [StringLength(20)]
-    public string BaseRentFreq { get; set; }
 
     /// <summary>
     /// Foreign key reference to the PIMS_LEASE_PMT_FREQ_TYPE table.
@@ -125,32 +117,26 @@ public partial class PimsLeasePeriod
     /// <summary>
     /// Indicates whether the payment type is predetermined (FALSE) or variable (TRUE).  Predetermined (FALSE) is the default value.
     /// </summary>
-    [Column("PAYMENT_TYPE")]
-    public bool PaymentType { get; set; }
+    [Column("IS_VARIABLE_PAYMENT")]
+    public bool IsVariablePayment { get; set; }
 
     /// <summary>
     /// Indicates whether the period duration is fixed (FALSE) or flexible (TRUE).  Fixed (FALSE) is the default value.
     /// </summary>
-    [Column("PERIOD_DURATION")]
-    public bool PeriodDuration { get; set; }
-
-    /// <summary>
-    /// Indicates the agreed-to variable base rent payment amount.
-    /// </summary>
-    [Column("BASE_RENT_AGREED_PMT", TypeName = "money")]
-    public decimal? BaseRentAgreedPmt { get; set; }
-
-    /// <summary>
-    /// Is the variable base rent payment subject to GST?
-    /// </summary>
-    [Column("IS_BASE_RENT_SUBJECT_TO_GST")]
-    public bool? IsBaseRentSubjectToGst { get; set; }
+    [Column("IS_FLEXIBLE_DURATION")]
+    public bool IsFlexibleDuration { get; set; }
 
     /// <summary>
     /// Indicates the agreed-to variable additional rent payment amount.
     /// </summary>
     [Column("ADDL_RENT_AGREED_PMT", TypeName = "money")]
     public decimal? AddlRentAgreedPmt { get; set; }
+
+    /// <summary>
+    /// GST dollar amount for the additional rent.
+    /// </summary>
+    [Column("ADDL_RENT_GST_AMOUNT", TypeName = "money")]
+    public decimal? AddlRentGstAmount { get; set; }
 
     /// <summary>
     /// Is the variable additional rent payment subject to GST?
@@ -163,6 +149,12 @@ public partial class PimsLeasePeriod
     /// </summary>
     [Column("VBL_RENT_AGREED_PMT", TypeName = "money")]
     public decimal? VblRentAgreedPmt { get; set; }
+
+    /// <summary>
+    /// GST dollar amount for the variable rent.
+    /// </summary>
+    [Column("VBL_RENT_GST_AMOUNT", TypeName = "money")]
+    public decimal? VblRentGstAmount { get; set; }
 
     /// <summary>
     /// Is the variable rent payment subject to GST?
@@ -263,10 +255,6 @@ public partial class PimsLeasePeriod
     [ForeignKey("AddlRentFreq")]
     [InverseProperty("PimsLeasePeriodAddlRentFreqNavigations")]
     public virtual PimsLeasePmtFreqType AddlRentFreqNavigation { get; set; }
-
-    [ForeignKey("BaseRentFreq")]
-    [InverseProperty("PimsLeasePeriodBaseRentFreqNavigations")]
-    public virtual PimsLeasePmtFreqType BaseRentFreqNavigation { get; set; }
 
     [ForeignKey("LeaseId")]
     [InverseProperty("PimsLeasePeriods")]

@@ -99,13 +99,13 @@ export const GeocoderAutoComplete: React.FC<
     }
     if (options !== undefined) {
       return (
-        <div className="suggestionList">
+        <ul className="suggestionList">
           {options.map((x: IGeocoderResponse, index: number) => (
-            <option key={index} onClick={() => suggestionSelected(x)}>
+            <li key={index} onClick={() => suggestionSelected(x)}>
               {x.fullAddress}
-            </option>
+            </li>
           ))}
-        </div>
+        </ul>
       );
     }
     return null;

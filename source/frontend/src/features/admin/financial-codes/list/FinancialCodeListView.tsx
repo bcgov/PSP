@@ -3,9 +3,8 @@ import React, { useCallback, useEffect, useMemo } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaPlus } from 'react-icons/fa';
 import { useHistory } from 'react-router';
-import styled from 'styled-components';
 
-import { Button } from '@/components/common/buttons/Button';
+import { StyledAddButton } from '@/components/common/styles';
 import { TableSort } from '@/components/Table/TableSort';
 import { Roles } from '@/constants/roles';
 import { useFinancialCodeRepository } from '@/hooks/repositories/useFinancialCodeRepository';
@@ -122,11 +121,5 @@ export const FinancialCodeListView: React.FC = () => {
     </Styled.ListPage>
   );
 };
-
-const StyledAddButton = styled(Button)`
-  &.btn.btn-primary {
-    background-color: ${props => props.theme.bcTokens.iconsColorSuccess};
-  }
-`;
 
 export default FinancialCodeListView;
