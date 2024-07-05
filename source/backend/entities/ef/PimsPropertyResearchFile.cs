@@ -64,12 +64,6 @@ public partial class PimsPropertyResearchFile
     [Column("RESEARCH_SUMMARY")]
     public string ResearchSummary { get; set; }
 
-    /// <summary>
-    /// Geospatial location (pin) of property
-    /// </summary>
-    [Column("LOCATION", TypeName = "geometry")]
-    public Geometry Location { get; set; }
-
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }
 
@@ -120,6 +114,12 @@ public partial class PimsPropertyResearchFile
     [Column("DB_LAST_UPDATE_USERID")]
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
+
+    /// <summary>
+    /// Geospatial location (pin) of property
+    /// </summary>
+    [Column("LOCATION", TypeName = "geometry")]
+    public Geometry Location { get; set; }
 
     [InverseProperty("PropertyResearchFile")]
     public virtual ICollection<PimsPrfPropResearchPurposeType> PimsPrfPropResearchPurposeTypes { get; set; } = new List<PimsPrfPropResearchPurposeType>();
