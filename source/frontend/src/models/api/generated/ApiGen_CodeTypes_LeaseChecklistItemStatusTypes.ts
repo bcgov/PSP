@@ -5,5 +5,5 @@
 export enum ApiGen_CodeTypes_LeaseChecklistItemStatusTypes {
   COMPLT = 'COMPLT',
   INCOMP = 'INCOMP',
-  NA = 'NA',
+  NOTAPP = 'NOTAPP',
 }

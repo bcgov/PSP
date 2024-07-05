@@ -380,7 +380,7 @@ namespace Pims.Api.Services
                 {
                     _checklistRepository.Add(incomingItem);
                 }
-                else if (existingItem.AcqChklstItemStatusTypeCode != incomingItem.AcqChklstItemStatusTypeCode)
+                else if (existingItem.ChklstItemStatusTypeCode != incomingItem.ChklstItemStatusTypeCode)
                 {
                     _checklistRepository.Update(incomingItem);
                 }
@@ -759,7 +759,7 @@ namespace Pims.Api.Services
                 var checklistItem = new PimsAcquisitionChecklistItem
                 {
                     AcqChklstItemTypeCode = itemType.AcqChklstItemTypeCode,
-                    AcqChklstItemStatusTypeCode = "INCOMP",
+                    ChklstItemStatusTypeCode = ChecklistItemStatusTypes.INCOMP.ToString(),
                 };
 
                 acquisitionFile.PimsAcquisitionChecklistItems.Add(checklistItem);
@@ -773,7 +773,7 @@ namespace Pims.Api.Services
             {
                 return;
             }
-            var checklistStatusTypes = _lookupRepository.GetAllAcquisitionChecklistItemStatusTypes();
+            var checklistStatusTypes = _lookupRepository.GetAllChecklistItemStatusTypes();
             foreach (var itemType in _checklistRepository.GetAllChecklistItemTypes().Where(x => !x.IsExpiredType()))
             {
                 if (!pimsAcquisitionChecklistItems.Any(cli => cli.AcqChklstItemTypeCode == itemType.AcqChklstItemTypeCode) && DateOnly.FromDateTime(acquisitionFile.AppCreateTimestamp) >= itemType.EffectiveDate)
@@ -782,9 +782,9 @@ namespace Pims.Api.Services
                     {
                         AcqChklstItemTypeCode = itemType.AcqChklstItemTypeCode,
                         AcqChklstItemTypeCodeNavigation = itemType,
-                        AcqChklstItemStatusTypeCode = "INCOMP",
+                        ChklstItemStatusTypeCode = ChecklistItemStatusTypes.INCOMP.ToString(),
                         AcquisitionFileId = acquisitionFile.AcquisitionFileId,
-                        AcqChklstItemStatusTypeCodeNavigation = checklistStatusTypes.FirstOrDefault(cst => cst.Id == "INCOMP"),
+                        ChklstItemStatusTypeCodeNavigation = checklistStatusTypes.FirstOrDefault(cst => cst.Id == ChecklistItemStatusTypes.INCOMP.ToString()),
                     };
 
                     pimsAcquisitionChecklistItems.Add(checklistItem);
