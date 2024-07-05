@@ -150,6 +150,7 @@ export const PeriodForm: React.FunctionComponent<React.PropsWithChildren<IPeriod
                   label="Period Status:"
                   field="statusTypeCode.id"
                   options={leasePeriodStatusOptions}
+                  tooltip="Exercised period to add payments."
                 />
               </Col>
               <Col></Col>
