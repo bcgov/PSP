@@ -1,3 +1,4 @@
+using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Pims.Api.Models.Cdogs;
@@ -16,5 +17,7 @@ namespace Pims.Api.Repositories.Cdogs
         Task<ExternalResponse<FileTypes>> TryGetFileTypesAsync();
 
         Task<ExternalResponse<FileDownloadResponse>> UploadAndGenerate(RenderRequest request);
+
+        Task<HttpResponseMessage> TryGetHealthAsync();
     }
 }
