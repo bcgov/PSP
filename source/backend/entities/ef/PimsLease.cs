@@ -213,12 +213,6 @@ public partial class PimsLease
     public DateTime? OrigExpiryDate { get; set; }
 
     /// <summary>
-    /// Date that the lease was terminated.
-    /// </summary>
-    [Column("TERMINATION_DATE", TypeName = "datetime")]
-    public DateTime? TerminationDate { get; set; }
-
-    /// <summary>
     /// Lease/licence amount
     /// </summary>
     [Column("LEASE_AMOUNT", TypeName = "money")]
@@ -303,32 +297,6 @@ public partial class PimsLease
     [Column("TERMINATION_REASON")]
     [StringLength(500)]
     public string TerminationReason { get; set; }
-
-    /// <summary>
-    /// Is there an associated public benefit with this lease?  TRUE = Yes, FALSE = No, and NULL = Unknown.  The default is NULL (Unknown).
-    /// </summary>
-    [Column("IS_PUBLIC_BENEFIT")]
-    public bool? IsPublicBenefit { get; set; }
-
-    /// <summary>
-    /// Is there an associated financial gain with this lease?  TRUE = Yes, FALSE = No, and NULL = Unknown.  The default is NULL (Unknown).
-    /// </summary>
-    [Column("IS_FINANCIAL_GAIN")]
-    public bool? IsFinancialGain { get; set; }
-
-    /// <summary>
-    /// Note associated with fee determination.
-    /// </summary>
-    [Column("FEE_DETERMINATION_NOTE")]
-    [StringLength(1000)]
-    public string FeeDeterminationNote { get; set; }
-
-    /// <summary>
-    /// The location in which primary arbtration of the lease occurred.
-    /// </summary>
-    [Column("PRIMARY_ARBITRATION_CITY")]
-    [StringLength(200)]
-    public string PrimaryArbitrationCity { get; set; }
 
     /// <summary>
     /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o
@@ -419,6 +387,38 @@ public partial class PimsLease
     [Column("DB_LAST_UPDATE_USERID")]
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
+
+    /// <summary>
+    /// Date that the lease was terminated.
+    /// </summary>
+    [Column("TERMINATION_DATE", TypeName = "datetime")]
+    public DateTime? TerminationDate { get; set; }
+
+    /// <summary>
+    /// Is there an associated public benefit with this lease?  TRUE = Yes, FALSE = No, and NULL = Unknown.  The default is NULL (Unknown).
+    /// </summary>
+    [Column("IS_PUBLIC_BENEFIT")]
+    public bool? IsPublicBenefit { get; set; }
+
+    /// <summary>
+    /// Is there an associated financial gain with this lease?  TRUE = Yes, FALSE = No, and NULL = Unknown.  The default is NULL (Unknown).
+    /// </summary>
+    [Column("IS_FINANCIAL_GAIN")]
+    public bool? IsFinancialGain { get; set; }
+
+    /// <summary>
+    /// Note associated with fee determination.
+    /// </summary>
+    [Column("FEE_DETERMINATION_NOTE")]
+    [StringLength(1000)]
+    public string FeeDeterminationNote { get; set; }
+
+    /// <summary>
+    /// The location in which primary arbtration of the lease occurred.
+    /// </summary>
+    [Column("PRIMARY_ARBITRATION_CITY")]
+    [StringLength(200)]
+    public string PrimaryArbitrationCity { get; set; }
 
     [ForeignKey("LeaseCategoryTypeCode")]
     [InverseProperty("PimsLeases")]
