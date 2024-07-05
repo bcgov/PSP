@@ -13,14 +13,14 @@ namespace Pims.Api.Models.Models.Concepts.Lease
                 .Map(dest => dest.Id, src => src.LeaseChecklistItemId)
                 .Map(dest => dest.FileId, src => src.LeaseId)
                 .Map(dest => dest.ItemType, src => src.LeaseChklstItemTypeCodeNavigation)
-                .Map(dest => dest.StatusTypeCode, src => src.LeaseChklstItemStatusTypeCodeNavigation)
+                .Map(dest => dest.StatusTypeCode, src => src.ChklstItemStatusTypeCodeNavigation)
                 .Inherits<Entity.IBaseAppEntity, BaseAuditModel>();
 
             config.NewConfig<FileChecklistItemModel, Entity.PimsLeaseChecklistItem>()
                 .Map(dest => dest.LeaseChecklistItemId, src => src.Id)
                 .Map(dest => dest.LeaseId, src => src.FileId)
                 .Map(dest => dest.LeaseChklstItemTypeCode, src => src.ItemType.Code)
-                .Map(dest => dest.LeaseChklstItemStatusTypeCode, src => src.StatusTypeCode.Id)
+                .Map(dest => dest.ChklstItemStatusTypeCode, src => src.StatusTypeCode.Id)
                 .Inherits<BaseAuditModel, Entity.IBaseAppEntity>();
         }
     }

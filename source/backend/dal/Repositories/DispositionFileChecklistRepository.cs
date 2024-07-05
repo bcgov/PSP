@@ -46,7 +46,7 @@ namespace Pims.Dal.Repositories
 
             return Context.PimsDispositionChecklistItems
                 .Where(ci => ci.DispositionFileId == dispositionFileId)
-                .Include(ci => ci.DspChklstItemStatusTypeCodeNavigation)
+                .Include(ci => ci.ChklstItemStatusTypeCodeNavigation)
                 .Include(ci => ci.DspChklstItemTypeCodeNavigation)
                     .ThenInclude(it => it.DspChklstSectionTypeCodeNavigation)
                 .AsNoTracking()

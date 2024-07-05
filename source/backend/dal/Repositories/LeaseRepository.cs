@@ -948,7 +948,7 @@ namespace Pims.Dal.Repositories
 
             return Context.PimsLeaseChecklistItems
                 .Where(ci => ci.LeaseId == leaseId)
-                .Include(ci => ci.LeaseChklstItemStatusTypeCodeNavigation)
+                .Include(ci => ci.ChklstItemStatusTypeCodeNavigation)
                 .Include(ci => ci.LeaseChklstItemTypeCodeNavigation)
                     .ThenInclude(it => it.LeaseChklstSectionTypeCodeNavigation)
                 .AsNoTracking()

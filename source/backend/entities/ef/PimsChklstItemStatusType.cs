@@ -7,21 +7,21 @@ using Microsoft.EntityFrameworkCore;
 namespace Pims.Dal.Entities;
 
 /// <summary>
-/// Tables that contains the codes and associated descriptions of the lease &amp; license checklist item status types.
+/// Common table that contains the codes and associated descriptions of the various checklist item status types.
 /// </summary>
-[Table("PIMS_LEASE_CHKLST_ITEM_STATUS_TYPE")]
-public partial class PimsLeaseChklstItemStatusType
+[Table("PIMS_CHKLST_ITEM_STATUS_TYPE")]
+public partial class PimsChklstItemStatusType
 {
     /// <summary>
-    /// Codified version of the lease &amp; license checklist item status type.
+    /// Codified version of the various checklist item status types.
     /// </summary>
     [Key]
-    [Column("LEASE_CHKLST_ITEM_STATUS_TYPE_CODE")]
+    [Column("CHKLST_ITEM_STATUS_TYPE_CODE")]
     [StringLength(20)]
-    public string LeaseChklstItemStatusTypeCode { get; set; }
+    public string ChklstItemStatusTypeCode { get; set; }
 
     /// <summary>
-    /// Description of the lease &amp; license checklist item status type.
+    /// Description of the various checklist item status type.
     /// </summary>
     [Required]
     [Column("DESCRIPTION")]
@@ -74,6 +74,12 @@ public partial class PimsLeaseChklstItemStatusType
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
 
-    [InverseProperty("LeaseChklstItemStatusTypeCodeNavigation")]
+    [InverseProperty("ChklstItemStatusTypeCodeNavigation")]
+    public virtual ICollection<PimsAcquisitionChecklistItem> PimsAcquisitionChecklistItems { get; set; } = new List<PimsAcquisitionChecklistItem>();
+
+    [InverseProperty("ChklstItemStatusTypeCodeNavigation")]
+    public virtual ICollection<PimsDispositionChecklistItem> PimsDispositionChecklistItems { get; set; } = new List<PimsDispositionChecklistItem>();
+
+    [InverseProperty("ChklstItemStatusTypeCodeNavigation")]
     public virtual ICollection<PimsLeaseChecklistItem> PimsLeaseChecklistItems { get; set; } = new List<PimsLeaseChecklistItem>();
 }
