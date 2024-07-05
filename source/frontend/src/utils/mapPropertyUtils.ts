@@ -22,7 +22,7 @@ import { ApiGen_CodeTypes_GeoJsonTypes } from '@/models/api/generated/ApiGen_Cod
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { ApiGen_Concepts_Geometry } from '@/models/api/generated/ApiGen_Concepts_Geometry';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
-import { enumFromValue, exists, formatApiAddress, pidFormatter } from '@/utils';
+import { exists, formatApiAddress, isValidId, pidFormatter } from '@/utils';
 
 export enum NameSourceType {
   PID = 'PID',
@@ -260,11 +260,9 @@ export function pidFromFeatureSet(featureset: LocationFeatureDataset): string | 
 }
 
 export function pinFromFeatureSet(featureset: LocationFeatureDataset): string | null {
-  return (
-    featureset?.pimsFeature?.properties?.PIN?.toString() ??
-    featureset?.parcelFeature?.properties?.PIN?.toString() ??
-    null
-  );
+  return isValidId(featureset?.pimsFeature?.properties?.PIN)
+    ? featureset?.parcelFeature?.properties?.PIN?.toString()
+    : null;
 }
 
 export function locationFromFileProperty(
