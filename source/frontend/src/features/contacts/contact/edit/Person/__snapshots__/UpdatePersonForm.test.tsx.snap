@@ -475,27 +475,6 @@ exports[`UpdatePersonForm > renders as expected 1`] = `
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-        <div
-          class="c3 form-section"
-        >
-          <h2
-            class="c7"
-          >
-            <div
-              class="no-gutters row"
-            >
-              <div
-                class="col"
-              >
-                Organization
-              </div>
-            </div>
-          </h2>
-          <div
-            class="collapse show"
-          >
             <div
               class="pb-2 row"
             >
@@ -926,7 +905,7 @@ exports[`UpdatePersonForm > renders as expected 1`] = `
                 </div>
               </div>
               <div
-                class="col-1"
+                class="pl-8 col-auto"
               >
                 <svg
                   class="c13"
@@ -1180,7 +1159,7 @@ exports[`UpdatePersonForm > renders as expected 1`] = `
                 Property Address
               </div>
               <div
-                class="col-1"
+                class="pl-8 col-auto"
               >
                 <svg
                   class="c13"
@@ -1434,7 +1413,7 @@ exports[`UpdatePersonForm > renders as expected 1`] = `
                 Billing Address
               </div>
               <div
-                class="col-1"
+                class="pl-8 col-auto"
               >
                 <svg
                   class="c13"

@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom';
 
 import { ILayerItem } from '@/components/maps/leaflet/Control/LayersControl/types';
 import { IGeoSearchParams } from '@/constants/API';
+import { IMapSideBarViewState } from '@/features/mapSideBar/MapSideBar';
 import {
   defaultPropertyFilter,
   IPropertyFilter,
@@ -18,7 +19,7 @@ import useLocationFeatureLoader, { LocationFeatureDataset } from './useLocationF
 import { useMapSearch } from './useMapSearch';
 
 export interface IMapStateMachineContext {
-  isSidebarOpen: boolean;
+  mapSideBarViewState: IMapSideBarViewState;
   isShowingSearchBar: boolean;
   pendingFlyTo: boolean;
   requestedFlyTo: RequestedFlyTo;
@@ -48,6 +49,7 @@ export interface IMapStateMachineContext {
   processFitBounds: () => void;
   openSidebar: (sidebarType: SideBarType) => void;
   closeSidebar: () => void;
+  toggleSidebarDisplay: () => void;
   closePopup: () => void;
 
   mapClick: (latlng: LatLngLiteral) => void;
@@ -62,11 +64,12 @@ export interface IMapStateMachineContext {
   toggleMapLayer: () => void;
   setFilePropertyLocations: (locations: LatLngLiteral[]) => void;
   setMapLayers: (layers: ILayerItem[]) => void;
+  setDefaultMapLayers: (layers: ILayerItem[]) => void;
 
   setVisiblePimsProperties: (propertyIds: number[]) => void;
   setShowDisposed: (show: boolean) => void;
   setShowRetired: (show: boolean) => void;
-  changeSidebar: () => void;
+  setFullWidthSideBar: (fullWidth: boolean) => void;
 }
 
 const MapStateMachineContext = React.createContext<IMapStateMachineContext>(
@@ -133,7 +136,6 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         }
 
         const geoFilter = getQueryParams(searchCriteria);
-
         if (geoFilter?.PID || geoFilter?.PID_PADDED || geoFilter?.PIN) {
           return mapSearch.searchMany(geoFilter);
         } else if (geoFilter?.latitude && geoFilter?.longitude) {
@@ -142,6 +144,9 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
           return mapSearch.searchOneLocation(geoLat, geoLng);
         } else if (geoFilter?.SURVEY_PLAN_NUMBER && !geoFilter?.PID && !geoFilter?.PIN) {
           return mapSearch.searchByPlanNumber(geoFilter);
+        } else if (geoFilter?.HISTORICAL_FILE_NUMBER_STR) {
+          geoFilter.forceExactMatch = false;
+          return mapSearch.searchByHistorical(geoFilter);
         } else {
           return mapSearch.searchMany(geoFilter);
         }
@@ -250,10 +255,6 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
     serviceSend({ type: 'FINISH_SELECTION' });
   }, [serviceSend]);
 
-  const changeSidebar = useCallback(() => {
-    serviceSend({ type: 'CHANGE_SIDEBAR' });
-  }, [serviceSend]);
-
   const setFilePropertyLocations = useCallback(
     (locations: LatLngLiteral[]) => {
       serviceSend({ type: 'SET_FILE_PROPERTY_LOCATIONS', locations });
@@ -264,6 +265,13 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
   const setMapLayers = useCallback(
     (activeLayers: ILayerItem[]) => {
       serviceSend({ type: 'SET_MAP_LAYERS', activeLayers });
+    },
+    [serviceSend],
+  );
+
+  const setDefaultMapLayers = useCallback(
+    (activeLayers: ILayerItem[]) => {
+      serviceSend({ type: 'DEFAULT_MAP_LAYERS', activeLayers });
     },
     [serviceSend],
   );
@@ -289,6 +297,17 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
     [serviceSend],
   );
 
+  const setFullWidthSideBar = useCallback(
+    (show: boolean) => {
+      serviceSend({ type: 'SET_FULL_WIDTH_SIDEBAR', show });
+    },
+    [serviceSend],
+  );
+
+  const toggleSidebarDisplay = useCallback(() => {
+    serviceSend({ type: 'TOGGLE_SIDEBAR_SIZE' });
+  }, [serviceSend]);
+
   const toggleMapFilter = useCallback(() => {
     serviceSend({ type: 'TOGGLE_FILTER' });
   }, [serviceSend]);
@@ -301,13 +320,6 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
     return state.context.mapLocationFeatureDataset !== null;
   }, [state.context.mapLocationFeatureDataset]);
 
-  const isSidebarOpen = useMemo(() => {
-    return [
-      { mapVisible: { sideBar: 'sidebarOpen' } },
-      { mapVisible: { sideBar: 'selecting' } },
-    ].some(state.matches);
-  }, [state.matches]);
-
   const isFiltering = useMemo(() => {
     return state.matches({ mapVisible: { featureView: 'filtering' } });
   }, [state]);
@@ -319,8 +331,8 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
   return (
     <MapStateMachineContext.Provider
       value={{
-        isSidebarOpen: isSidebarOpen,
-        isShowingSearchBar: !isSidebarOpen && !isFiltering,
+        mapSideBarViewState: state.context.mapSideBarState,
+        isShowingSearchBar: !state.context.mapSideBarState.isOpen && !isFiltering,
         pendingFlyTo: state.matches({ mapVisible: { mapRequest: 'pendingFlyTo' } }),
         requestedFlyTo: state.context.requestedFlyTo,
         mapFeatureSelected: state.context.mapFeatureSelected,
@@ -359,12 +371,14 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         finishSelection,
         toggleMapFilter,
         toggleMapLayer,
+        toggleSidebarDisplay,
         setFilePropertyLocations,
         setVisiblePimsProperties,
         setShowDisposed,
         setShowRetired,
         setMapLayers,
-        changeSidebar,
+        setDefaultMapLayers,
+        setFullWidthSideBar,
       }}
     >
       {children}
@@ -374,13 +388,14 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
 
 const getQueryParams = (filter: IPropertyFilter): IGeoSearchParams => {
   // The map will search for either identifier.
-  const pinOrPidValue = filter.pinOrPid ? filter.pinOrPid?.replace(/-/g, '') : undefined;
+  const pinOrPidValue = filter.pinOrPid ? filter.pinOrPid?.replaceAll(/-/g, '') : undefined;
   return {
     PID_PADDED: pinOrPidValue,
     PID: pinOrPidValue,
     PIN: pinOrPidValue,
     STREET_ADDRESS_1: filter.address,
     SURVEY_PLAN_NUMBER: filter.planNumber,
+    HISTORICAL_FILE_NUMBER_STR: filter.historical,
     latitude: filter.latitude,
     longitude: filter.longitude,
     forceExactMatch: true,

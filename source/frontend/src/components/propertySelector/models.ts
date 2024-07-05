@@ -1,4 +1,4 @@
-import { Polygon } from 'geojson';
+import { MultiPolygon, Polygon } from 'geojson';
 
 import { AreaUnitTypes } from '@/constants';
 
@@ -8,9 +8,10 @@ export interface IMapProperty {
   pin?: string;
   latitude?: number;
   longitude?: number;
-  polygon?: Polygon;
+  polygon?: Polygon | MultiPolygon;
   planNumber?: string;
   address?: string;
+  legalDescription?: string;
   region?: number;
   regionName?: string;
   district?: number;
@@ -32,6 +33,8 @@ export interface ILayerSearchCriteria {
   pid?: string;
   pin?: string;
   planNumber?: string;
+  legalDescription?: string;
   searchBy?: string;
   address?: string;
+  historical?: string;
 }

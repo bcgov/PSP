@@ -20,11 +20,11 @@ const AreaView: React.FunctionComponent<IAreaViewProps> = props => {
       <Col>
         <StyledGreenCol>
           <Row>
-            <Col className="text-right">{formatNumber(meters, 0, 2)}</Col>
+            <Col className="text-right">{meters === 0 ? 0 : formatNumber(meters, 4, 4)}</Col>
             <Col>sq. metres</Col>
           </Row>
           <Row>
-            <Col className="text-right">{formatNumber(hectares, 0, 2)}</Col>
+            <Col className="text-right">{hectares === 0 ? 0 : formatNumber(hectares, 4, 4)}</Col>
             <Col>hectares</Col>
           </Row>
         </StyledGreenCol>
@@ -32,11 +32,11 @@ const AreaView: React.FunctionComponent<IAreaViewProps> = props => {
       <Col>
         <StyledGreenGrey>
           <Row>
-            <Col className="text-right">{formatNumber(feet, 0, 2)}</Col>
+            <Col className="text-right">{feet === 0 ? 0 : formatNumber(feet, 4, 4)}</Col>
             <Col>sq. feet</Col>
           </Row>
           <Row>
-            <Col className="text-right">{formatNumber(acres, 0, 2)}</Col>
+            <Col className="text-right">{acres === 0 ? 0 : formatNumber(acres, 4, 4)}</Col>
             <Col>acres</Col>
           </Row>
         </StyledGreenGrey>

@@ -6,142 +6,7 @@ exports[`DepositsReceivedContainer component > renders as expected 1`] = `
     class="Toastify"
   />
   <div />
-  .c2.btn {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  padding: 0.4rem 1.2rem;
-  min-height: 3rem;
-  border: 0.2rem solid transparent;
-  border-radius: 0.4rem;
-  text-align: center;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  font-size: 1.8rem;
-  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
-  font-weight: 700;
-  -webkit-letter-spacing: 0.1rem;
-  -moz-letter-spacing: 0.1rem;
-  -ms-letter-spacing: 0.1rem;
-  letter-spacing: 0.1rem;
-  cursor: pointer;
-  height: 3.8rem;
-}
-
-.c2.btn:hover {
-  -webkit-text-decoration: underline;
-  text-decoration: underline;
-  opacity: 0.8;
-}
-
-.c2.btn:focus {
-  outline-width: 0.4rem;
-  outline-style: solid;
-  outline-offset: 1px;
-  box-shadow: none;
-}
-
-.c2.btn.btn-primary {
-  border: none;
-}
-
-.c2.btn.btn-secondary {
-  background: none;
-}
-
-.c2.btn.btn-info {
-  border: none;
-  background: none;
-  padding-left: 0.6rem;
-  padding-right: 0.6rem;
-}
-
-.c2.btn.btn-info:hover,
-.c2.btn.btn-info:active,
-.c2.btn.btn-info:focus {
-  background: none;
-}
-
-.c2.btn.btn-light {
-  border: none;
-}
-
-.c2.btn.btn-dark {
-  border: none;
-}
-
-.c2.btn.btn-link {
-  font-size: 1.6rem;
-  font-weight: 400;
-  background: none;
-  border: none;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  min-height: 2.5rem;
-  line-height: 3rem;
-  -webkit-box-pack: left;
-  -webkit-justify-content: left;
-  -ms-flex-pack: left;
-  justify-content: left;
-  -webkit-letter-spacing: unset;
-  -moz-letter-spacing: unset;
-  -ms-letter-spacing: unset;
-  letter-spacing: unset;
-  text-align: left;
-  padding: 0;
-}
-
-.c2.btn.btn-link:hover,
-.c2.btn.btn-link:active,
-.c2.btn.btn-link:focus {
-  -webkit-text-decoration: underline;
-  text-decoration: underline;
-  border: none;
-  background: none;
-  box-shadow: none;
-  outline: none;
-}
-
-.c2.btn.btn-link:disabled,
-.c2.btn.btn-link.disabled {
-  background: none;
-  pointer-events: none;
-}
-
-.c2.btn:disabled,
-.c2.btn:disabled:hover {
-  box-shadow: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  pointer-events: none;
-  cursor: not-allowed;
-  opacity: 0.65;
-}
-
-.c2.Button .Button__icon {
-  margin-right: 1.6rem;
-}
-
-.c2.Button--icon-only:focus {
-  outline: none;
-}
-
-.c2.Button--icon-only .Button__icon {
-  margin-right: 0;
-}
-
-.c1 {
+  .c1 {
   font-weight: bold;
   border-bottom: 0.2rem solid;
   margin-bottom: 2rem;
@@ -165,16 +30,20 @@ exports[`DepositsReceivedContainer component > renders as expected 1`] = `
   flex-wrap: nowrap;
 }
 
-.c4 {
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+.c2 {
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-align-items: end;
+  -webkit-box-align: end;
+  -ms-flex-align: end;
+  align-items: end;
+  min-height: 4.5rem;
 }
 
-.c4 .btn.btn-primary {
-  background-color: transparent;
-  padding: 0;
+.c2 .btn {
+  margin: 0;
 }
 
 <div
@@ -189,24 +58,24 @@ exports[`DepositsReceivedContainer component > renders as expected 1`] = `
         <div
           class="col"
         >
-          Deposits Received
+          <div
+            class="c2 no-gutters row"
+          >
+            <div
+              class="px-2 my-1 col-auto"
+            >
+              Deposits Received
+            </div>
+            <div
+              class="my-1 col-auto"
+            />
+          </div>
         </div>
       </div>
     </h2>
     <div
       class="collapse show"
     >
-      <button
-        class="c2 Button Button--disabled mb-4 px-5 btn btn-secondary"
-        disabled=""
-        type="button"
-      >
-        <div
-          class="Button__value"
-        >
-          Add a deposit
-        </div>
-      </button>
       <div
         class="table"
         data-testid="securityDepositsTable"
@@ -355,7 +224,7 @@ exports[`DepositsReceivedContainer component > renders as expected 1`] = `
                 title=""
               >
                 <div
-                  class="c3 c4"
+                  class="c3"
                 />
               </div>
             </div>
@@ -419,7 +288,7 @@ Integer nec odio.
                 title=""
               >
                 <div
-                  class="c3 c4"
+                  class="c3"
                 />
               </div>
             </div>

@@ -35,11 +35,11 @@ $link-color: #{'var(--surface-color-primary-button-default)'};
 $link-hover-color: #{'var(--surface-color-primary-button-hover)'};
 
 $completed-color: $pims-green-80;
-$selected-color: $pims-green-20;
+$completed-background-color: $pims-green-20;
 
-$disabled-color: $pims-grey-20;
-$disabled-field-background-color: $pims-grey-10;
+$file-status-grey-color: $pims-grey-80;
+$file-status-grey-background-color: $pims-grey-10;
 
-$slide-out-blue: $pims-blue-80;
+$file-status-blue-color: $pims-blue-80;
 
 $font-danger-color: $pims-red-80;

@@ -4,6 +4,8 @@ import { GrDocumentMissing } from 'react-icons/gr';
 import Lightbox from 'yet-another-react-lightbox';
 import { Captions, Counter, Download, Fullscreen, Zoom } from 'yet-another-react-lightbox/plugins';
 
+import TooltipIcon from '@/components/common/TooltipIcon';
+
 import { LoadedPage } from './DocumentPreviewContainer';
 
 export interface IDocumentPreviewViewProps {
@@ -29,6 +31,21 @@ export const DocumentPreviewView: React.FunctionComponent<IDocumentPreviewViewPr
       open={pages.length > 0 && showDocumentPreview}
       slides={pages.map(page => ({
         src: page.loadedDocumentImageDataUrl,
+        description: (
+          <TooltipIcon
+            toolTipId="document-preview-tip"
+            innerClassName="text-white"
+            toolTip={
+              <>
+                <p>
+                  You are viewing a preview of the selected document, with a limited number of
+                  pages.
+                </p>
+                <p>To view the full document, please download it.</p>
+              </>
+            }
+          />
+        ),
       }))}
       animation={{ fade: 500, swipe: 750 }}
       render={{

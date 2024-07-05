@@ -182,9 +182,9 @@ namespace Pims.Dal.Repositories
             return this.Context.PimsLeaseInitiatorTypes.AsNoTracking().OrderBy(a => a.LeaseInitiatorTypeCode).ToArray();
         }
 
-        public IEnumerable<PimsLeaseTermStatusType> GetAllLeaseTermStatusTypes()
+        public IEnumerable<PimsLeasePeriodStatusType> GetAllLeasePeriodStatusTypes()
         {
-            return this.Context.PimsLeaseTermStatusTypes.AsNoTracking().OrderBy(a => a.LeaseTermStatusTypeCode).ToArray();
+            return this.Context.PimsLeasePeriodStatusTypes.AsNoTracking().OrderBy(a => a.LeasePeriodStatusTypeCode).ToArray();
         }
 
         public IEnumerable<PimsLeasePmtFreqType> GetAllLeasePmtFreqTypes()
@@ -333,11 +333,6 @@ namespace Pims.Dal.Repositories
             return Context.PimsAcqChklstSectionTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ToArray();
         }
 
-        public IEnumerable<PimsAcqChklstItemStatusType> GetAllAcquisitionChecklistItemStatusTypes()
-        {
-            return Context.PimsAcqChklstItemStatusTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ToArray();
-        }
-
         public IEnumerable<PimsAgreementType> GetAllAgreementTypes()
         {
             return Context.PimsAgreementTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ToArray();
@@ -423,9 +418,9 @@ namespace Pims.Dal.Repositories
             return Context.PimsDispositionOfferStatusTypes.AsNoTracking().ToArray();
         }
 
-        public IEnumerable<PimsDspChklstItemStatusType> GetAllDispositionChecklistItemStatusTypes()
+        public IEnumerable<PimsChklstItemStatusType> GetAllChecklistItemStatusTypes()
         {
-            return Context.PimsDspChklstItemStatusTypes.AsNoTracking().ToArray();
+            return Context.PimsChklstItemStatusTypes.AsNoTracking().ToArray();
         }
 
         public IEnumerable<PimsDspChklstItemType> GetAllDispositionChecklistItemTypes()
@@ -441,6 +436,11 @@ namespace Pims.Dal.Repositories
         public IEnumerable<PimsHistoricalFileNumberType> GetAllHistoricalNumberTypes()
         {
             return Context.PimsHistoricalFileNumberTypes.AsNoTracking().ToArray();
+        }
+
+        public IEnumerable<PimsLeaseChklstSectionType> GetAllLeaseChecklistSectionTypes()
+        {
+            return Context.PimsLeaseChklstSectionTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ToArray();
         }
 
         #endregion

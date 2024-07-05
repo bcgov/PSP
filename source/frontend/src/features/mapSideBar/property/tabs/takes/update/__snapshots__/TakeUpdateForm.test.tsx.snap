@@ -171,7 +171,7 @@ exports[`TakeUpdateForm component > renders as expected 1`] = `
             Update Take
           </div>
           <div
-            class="col-1"
+            class="pl-8 col-auto"
           >
             <svg
               class="c3"
@@ -596,7 +596,7 @@ exports[`TakeUpdateForm component > renders as expected 1`] = `
                                 name="area-sq-meters"
                                 step=".01"
                                 type="number"
-                                value="4046.86"
+                                value="4046.8564"
                               />
                             </div>
                             <div
@@ -617,7 +617,7 @@ exports[`TakeUpdateForm component > renders as expected 1`] = `
                                 name="area-hectares"
                                 step=".01"
                                 type="number"
-                                value="0.4"
+                                value="0.4047"
                               />
                             </div>
                             <div
@@ -646,7 +646,7 @@ exports[`TakeUpdateForm component > renders as expected 1`] = `
                                 name="area-sq-feet"
                                 step=".01"
                                 type="number"
-                                value="43560"
+                                value="43559.9998"
                               />
                             </div>
                             <div
@@ -889,7 +889,7 @@ exports[`TakeUpdateForm component > renders as expected 1`] = `
                                 name="area-sq-meters"
                                 step=".01"
                                 type="number"
-                                value="8093.71"
+                                value="8093.713"
                               />
                             </div>
                             <div
@@ -910,7 +910,7 @@ exports[`TakeUpdateForm component > renders as expected 1`] = `
                                 name="area-hectares"
                                 step=".01"
                                 type="number"
-                                value="0.81"
+                                value="0.8094"
                               />
                             </div>
                             <div
@@ -939,7 +939,7 @@ exports[`TakeUpdateForm component > renders as expected 1`] = `
                                 name="area-sq-feet"
                                 step=".01"
                                 type="number"
-                                value="87120"
+                                value="87120.0017"
                               />
                             </div>
                             <div
@@ -1209,7 +1209,7 @@ exports[`TakeUpdateForm component > renders as expected 1`] = `
                                 name="area-sq-meters"
                                 step=".01"
                                 type="number"
-                                value="12140.57"
+                                value="12140.569"
                               />
                             </div>
                             <div
@@ -1230,7 +1230,7 @@ exports[`TakeUpdateForm component > renders as expected 1`] = `
                                 name="area-hectares"
                                 step=".01"
                                 type="number"
-                                value="1.21"
+                                value="1.2141"
                               />
                             </div>
                             <div
@@ -1259,7 +1259,7 @@ exports[`TakeUpdateForm component > renders as expected 1`] = `
                                 name="area-sq-feet"
                                 step=".01"
                                 type="number"
-                                value="130680"
+                                value="130679.9971"
                               />
                             </div>
                             <div
@@ -1358,7 +1358,7 @@ exports[`TakeUpdateForm component > renders as expected 1`] = `
                     <label
                       class="c4"
                     >
-                      Is there a new License for Construction Access (TLCA/LTC)? *:
+                      Is there a new Licence for Construction Access (TLCA/LTC)? *:
                     </label>
                   </div>
                   <div
@@ -1455,7 +1455,7 @@ exports[`TakeUpdateForm component > renders as expected 1`] = `
                                 name="area-sq-meters"
                                 step=".01"
                                 type="number"
-                                value="16187.43"
+                                value="16187.426"
                               />
                             </div>
                             <div
@@ -1476,7 +1476,7 @@ exports[`TakeUpdateForm component > renders as expected 1`] = `
                                 name="area-hectares"
                                 step=".01"
                                 type="number"
-                                value="1.62"
+                                value="1.6187"
                               />
                             </div>
                             <div
@@ -1505,7 +1505,7 @@ exports[`TakeUpdateForm component > renders as expected 1`] = `
                                 name="area-sq-feet"
                                 step=".01"
                                 type="number"
-                                value="174240"
+                                value="174240.0033"
                               />
                             </div>
                             <div
@@ -1701,7 +1701,7 @@ exports[`TakeUpdateForm component > renders as expected 1`] = `
                                 name="area-sq-meters"
                                 step=".01"
                                 type="number"
-                                value="20231.28"
+                                value="20231.281"
                               />
                             </div>
                             <div
@@ -1722,7 +1722,7 @@ exports[`TakeUpdateForm component > renders as expected 1`] = `
                                 name="area-hectares"
                                 step=".01"
                                 type="number"
-                                value="2.02"
+                                value="2.0231"
                               />
                             </div>
                             <div
@@ -1751,7 +1751,7 @@ exports[`TakeUpdateForm component > renders as expected 1`] = `
                                 name="area-sq-feet"
                                 step=".01"
                                 type="number"
-                                value="217767.7"
+                                value="217767.6963"
                               />
                             </div>
                             <div
@@ -1772,7 +1772,7 @@ exports[`TakeUpdateForm component > renders as expected 1`] = `
                                 name="area-acres"
                                 step=".01"
                                 type="number"
-                                value="5"
+                                value="4.9993"
                               />
                             </div>
                             <div
@@ -1968,7 +1968,7 @@ exports[`TakeUpdateForm component > renders as expected 1`] = `
                                 name="area-sq-meters"
                                 step=".01"
                                 type="number"
-                                value="20234.28"
+                                value="20234.281"
                               />
                             </div>
                             <div
@@ -1989,7 +1989,7 @@ exports[`TakeUpdateForm component > renders as expected 1`] = `
                                 name="area-hectares"
                                 step=".01"
                                 type="number"
-                                value="2.02"
+                                value="2.0234"
                               />
                             </div>
                             <div
@@ -2018,7 +2018,7 @@ exports[`TakeUpdateForm component > renders as expected 1`] = `
                                 name="area-sq-feet"
                                 step=".01"
                                 type="number"
-                                value="217799.99"
+                                value="217799.988"
                               />
                             </div>
                             <div

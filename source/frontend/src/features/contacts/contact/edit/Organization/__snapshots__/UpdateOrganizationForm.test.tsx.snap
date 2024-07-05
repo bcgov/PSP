@@ -753,7 +753,7 @@ exports[`UpdateOrganizationForm > renders as expected 1`] = `
               class="pb-2 row"
             >
               <div
-                class="pr-0 text-left col-4"
+                class="pr-0 text-left col-3"
               >
                 <label
                   class="c4"
@@ -806,7 +806,7 @@ exports[`UpdateOrganizationForm > renders as expected 1`] = `
                 Mailing Address
               </div>
               <div
-                class="col-1"
+                class="pl-8 col-auto"
               >
                 <svg
                   class="c10"
@@ -1060,7 +1060,7 @@ exports[`UpdateOrganizationForm > renders as expected 1`] = `
                 Property Address
               </div>
               <div
-                class="col-1"
+                class="pl-8 col-auto"
               >
                 <svg
                   class="c10"
@@ -1314,7 +1314,7 @@ exports[`UpdateOrganizationForm > renders as expected 1`] = `
                 Billing Address
               </div>
               <div
-                class="col-1"
+                class="pl-8 col-auto"
               >
                 <svg
                   class="c10"

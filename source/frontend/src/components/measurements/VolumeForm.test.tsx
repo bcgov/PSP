@@ -51,6 +51,6 @@ describe('VolumeForm component', () => {
       onChange: () => {},
     });
     await fillInput(container, 'volume-cubic-meters', 15000);
-    await waitFor(() => expect(getCubicFeetInput().valueAsNumber).toBe(535714.29));
+    await waitFor(() => expect(getCubicFeetInput().valueAsNumber).toBe(535714.2857));
   });
 });

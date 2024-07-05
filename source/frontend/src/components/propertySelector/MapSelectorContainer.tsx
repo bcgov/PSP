@@ -1,19 +1,25 @@
-import { FunctionComponent, useState } from 'react';
+import { FunctionComponent, useCallback, useState } from 'react';
 import { toast } from 'react-toastify';
 
 import { Button } from '@/components/common/buttons';
-import { IMapProperty } from '@/components/propertySelector/models';
-import { PropertyForm } from '@/features/mapSideBar/shared/models';
+import { useMapProperties } from '@/hooks/repositories/useMapProperties';
 import { isValidId } from '@/utils';
-import { getPropertyName, NameSourceType } from '@/utils/mapPropertyUtils';
+import {
+  featuresetToMapProperty,
+  getPropertyName,
+  NameSourceType,
+  pidFromFeatureSet,
+  pinFromFeatureSet,
+} from '@/utils/mapPropertyUtils';
 
+import { LocationFeatureDataset } from '../common/mapFSM/useLocationFeatureLoader';
 import PropertyMapSelectorFormView from './map/PropertyMapSelectorFormView';
 import { PropertySelectorTabsView, SelectorTabNames } from './PropertySelectorTabsView';
 import PropertySelectorSearchContainer from './search/PropertySelectorSearchContainer';
 
 export interface IMapSelectorContainerProps {
-  addSelectedProperties: (properties: IMapProperty[]) => void; // TODO: This component should be providing the featureDataset instead of the IMapProperty.
-  modifiedProperties: PropertyForm[]; // TODO: Figure out if this component really needs the entire propertyForm. It could be that only the lat long are needed.
+  addSelectedProperties: (properties: LocationFeatureDataset[]) => void; // TODO: This component should be providing the featureDataset instead of the IMapProperty.
+  modifiedProperties: LocationFeatureDataset[]; // TODO: Figure out if this component really needs the entire propertyForm. It could be that only the lat long are needed.
   selectedComponentId?: string;
 }
 
@@ -22,15 +28,46 @@ export const MapSelectorContainer: FunctionComponent<IMapSelectorContainerProps>
   modifiedProperties,
   selectedComponentId,
 }) => {
-  const [searchSelectedProperties, setSearchSelectedProperties] = useState<IMapProperty[]>([]);
+  const [searchSelectedProperties, setSearchSelectedProperties] = useState<
+    LocationFeatureDataset[]
+  >([]);
   const [activeSelectorTab, setActiveSelectorTab] = useState<SelectorTabNames>(
     SelectorTabNames.map,
   );
-  const modifiedMapProperties = modifiedProperties.map(mp => mp.toMapProperty());
-  const [lastSelectedProperty, setLastSelectedProperty] = useState<IMapProperty | undefined>(
-    modifiedProperties?.length === 1 && isValidId(modifiedProperties[0].apiId) // why? Because create from map needs to show the info differently
+  const modifiedMapProperties = modifiedProperties.map(mp => mp);
+  const [lastSelectedProperty, setLastSelectedProperty] = useState<
+    LocationFeatureDataset | undefined
+  >(
+    modifiedProperties?.length === 1 &&
+      isValidId(+modifiedProperties[0]?.pimsFeature?.properties?.PROPERTY_ID) // why? Because create from map needs to show the info differently
       ? modifiedMapProperties[0]
       : undefined,
+  );
+  const {
+    loadProperties: { execute: loadProperties },
+  } = useMapProperties();
+
+  const addWithPimsFeature = useCallback(
+    async (properties: LocationFeatureDataset[]) => {
+      const updatedPropertiesPromises = properties.map(async property => {
+        if (property.pimsFeature?.properties?.PROPERTY_ID) {
+          return property;
+        }
+        const pid = pidFromFeatureSet(property);
+        const pin = pinFromFeatureSet(property);
+        if (!pid || !pin) {
+          return property;
+        }
+        const pimsProperty = await loadProperties({ PID: pid, PIN: pin });
+        if (pimsProperty.features.length > 0) {
+          property.pimsFeature = pimsProperty.features[0];
+        }
+        return property;
+      });
+      const updatedProperties = await Promise.all(updatedPropertiesPromises);
+      addSelectedProperties(updatedProperties);
+    },
+    [addSelectedProperties, loadProperties],
   );
 
   return (
@@ -40,16 +77,18 @@ export const MapSelectorContainer: FunctionComponent<IMapSelectorContainerProps>
         setActiveTab={setActiveSelectorTab}
         MapSelectorView={
           <PropertyMapSelectorFormView
-            onSelectedProperty={(property: IMapProperty) => {
+            onSelectedProperty={(property: LocationFeatureDataset) => {
               setLastSelectedProperty(property);
-              addProperties([property], modifiedMapProperties, addSelectedProperties);
+              addProperties([property], modifiedMapProperties, addWithPimsFeature);
             }}
             selectedProperties={modifiedMapProperties}
             selectedComponentId={selectedComponentId}
             lastSelectedProperty={
               lastSelectedProperty
                 ? modifiedMapProperties.find(
-                    p => getPropertyName(p).value === getPropertyName(lastSelectedProperty).value,
+                    p =>
+                      getPropertyName(featuresetToMapProperty(p)).value ===
+                      getPropertyName(featuresetToMapProperty(lastSelectedProperty)).value,
                   )
                 : undefined // use the property from the modified properties list from the parent, for consistency.
             }
@@ -66,7 +105,7 @@ export const MapSelectorContainer: FunctionComponent<IMapSelectorContainerProps>
         <Button
           variant="secondary"
           onClick={() => {
-            addProperties(searchSelectedProperties, modifiedMapProperties, addSelectedProperties);
+            addProperties(searchSelectedProperties, modifiedMapProperties, addWithPimsFeature);
             setSearchSelectedProperties([]);
           }}
         >
@@ -78,12 +117,12 @@ export const MapSelectorContainer: FunctionComponent<IMapSelectorContainerProps>
 };
 
 const addProperties = (
-  newProperties: IMapProperty[],
-  selectedProperties: IMapProperty[],
-  addCallback: (properties: IMapProperty[]) => void,
+  newProperties: LocationFeatureDataset[],
+  selectedProperties: LocationFeatureDataset[],
+  addCallback: (properties: LocationFeatureDataset[]) => void,
 ) => {
-  const propertiesToAdd: IMapProperty[] = [];
-  newProperties.forEach((property: IMapProperty) => {
+  const propertiesToAdd: LocationFeatureDataset[] = [];
+  newProperties.forEach((property: LocationFeatureDataset) => {
     if (!selectedProperties.some(selectedProperty => isSameProperty(selectedProperty, property))) {
       propertiesToAdd.push(property);
     } else {
@@ -99,10 +138,17 @@ const addProperties = (
   }
 };
 
-const isSameProperty = (lhs: IMapProperty, rhs: IMapProperty) => {
-  const lhsName = getPropertyName(lhs);
-  const rhsName = getPropertyName(rhs);
-  if (lhsName.label === rhsName.label && lhsName.label !== NameSourceType.NONE) {
+const isSameProperty = (lhs: LocationFeatureDataset, rhs: LocationFeatureDataset) => {
+  const lhsName = getPropertyName(featuresetToMapProperty(lhs));
+  const rhsName = getPropertyName(featuresetToMapProperty(rhs));
+  if (
+    (lhsName.label === rhsName.label &&
+      lhsName.label !== NameSourceType.NONE &&
+      lhsName.label !== NameSourceType.PLAN) ||
+    (lhsName.label === NameSourceType.PLAN &&
+      lhs.location.lat === rhs.location.lat &&
+      lhs.location.lng === rhs.location.lng)
+  ) {
     return lhsName.value === rhsName.value;
   }
   return false;

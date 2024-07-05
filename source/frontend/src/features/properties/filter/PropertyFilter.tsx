@@ -1,5 +1,5 @@
 import { Formik } from 'formik';
-import React, { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import Col from 'react-bootstrap/Col';
 import { useHistory } from 'react-router';
 import { toast } from 'react-toastify';
@@ -23,6 +23,8 @@ import PropertySearchToggle, { SearchToggleOption } from './PropertySearchToggle
 export interface IPropertyFilterProps {
   /** The default filter to apply if a different one hasn't been set in the URL or stored in redux. */
   defaultFilter: IPropertyFilter;
+  /** The current property filter */
+  propertyFilter: IPropertyFilter;
   /** Callback event when the filter is changed during Mount. */
   onChange: (filter: IPropertyFilter) => void;
   /** Comma separated list of column names to sort by. */
@@ -41,12 +43,11 @@ export interface IPropertyFilterProps {
  */
 export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterProps>> = ({
   defaultFilter,
+  propertyFilter,
   onChange,
   toggle = SearchToggleOption.Map,
   useGeocoder,
 }) => {
-  const [propertyFilter, setPropertyFilter] = useState<IPropertyFilter>(defaultFilter);
-
   const { getSitePids } = useGeocoderRepository();
 
   const history = useHistory();
@@ -56,7 +57,6 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
   }, [defaultFilter, propertyFilter]);
 
   const changeFilter = (values: IPropertyFilter) => {
-    setPropertyFilter({ ...values });
     onChange?.({ ...values });
   };
 
@@ -126,7 +126,10 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
                   placeholder="Enter an address"
                   onSelectionChanged={async val => {
                     const geocoderPidResponse = await getSitePids(val.siteId);
-                    if (geocoderPidResponse?.pids?.length === 1) {
+                    if (
+                      geocoderPidResponse?.pids?.length === 1 &&
+                      geocoderPidResponse?.pids[0] !== ''
+                    ) {
                       setFieldValue('pinOrPid', geocoderPidResponse?.pids[0]);
                     } else {
                       if (geocoderPidResponse?.pids?.length > 1) {
@@ -155,7 +158,10 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
                 <Input field="planNumber" placeholder="Enter a plan number"></Input>
               )}
               {values.searchBy === 'historical' && (
-                <Input field="historical" placeholder="Enter a LIS or PS file Number"></Input>
+                <Input
+                  field="historical"
+                  placeholder="Enter a historical file# (LIS, PS, etc.)"
+                ></Input>
               )}
             </StyledCol>
             <Col xs="auto">

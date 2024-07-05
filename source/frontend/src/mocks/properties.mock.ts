@@ -108,6 +108,7 @@ export const getEmptyPropertyView = (): ApiGen_Concepts_PropertyView => ({
   isActivePayableLease: false,
   isReceivableLease: false,
   isActiveReceivableLease: false,
+  historicalFileNumberStr: '',
 });
 
 export const getMockProperties: () => IProperty[] = () => [

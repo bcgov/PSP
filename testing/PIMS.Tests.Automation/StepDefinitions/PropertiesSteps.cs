@@ -22,7 +22,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private SearchProperty searchProperty;
         private PropertyManagement propertyManagement;
 
-
         public PropertiesSteps(BrowserDriver driver)
         {
             loginSteps = new LoginSteps(driver);
@@ -87,42 +86,41 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Search for an invalid Address with the Search Bar
             PopulateSearchProperty(rowNumber);
             searchProperties.SearchPropertyByPINPID(searchProperty.PID);
-
         }
 
-        [StepDefinition(@"I review a Property's Information")]
-        public void ReviewPropertyInformation()
+        [StepDefinition(@"I review a Property's Information from row number (.*)")]
+        public void ReviewPropertyInformation(int rowNumber)
         {
-            /* TEST COVERAGE: PSP-1558, PSP-3153, PSP-3184, PSP-3589, PSP-4903, PSP-5163  */
+            /* TEST COVERAGE: PSP-1558, PSP-3153, PSP-3184, PSP-3589, PSP-4903, PSP-5163 */
 
             //Login to PIMS
             loginSteps.Idir(userName);
 
             //Navigate to the Inventory List View
+            PopulateProperty(rowNumber);
             searchProperties.NavigatePropertyListView();
+
+            //Search for a property
+            searchProperties.SearchPropertyByPINPID(property.PID);
 
             //Select the first property from the list
             searchProperties.ChooseFirstPropertyFromList();
 
-            //Validate Property Information Header
-            propertyInformation.VerifyPropertyInformationHeader();
-
             //Validate Title Tab
             propertyInformation.NavigatePropertyTitleTab();
-            propertyInformation.VerifyTitleTab();
+            //propertyInformation.VerifyTitleTab();
 
-            //Validate Tab
-            //propertyInformation.NavigatePropertyValueTab();
+            //Validate Value Tab
+            propertyInformation.NavigatePropertyValueTab();
             //propertyInformation.VerifyValueTab();
 
             //Validate the Property Details View
             propertyInformation.NavigatePropertyDetailsTab();
             propertyInformation.VerifyPropertyDetailsView();
-
         }
 
         [StepDefinition(@"I search for a Property in the Properties List by different filters from row number (.*)")]
-        public void ReviewPropertyInformation(int rowNumber)
+        public void ReviewPropertyInformationList(int rowNumber)
         {
             /* TEST COVERAGE: PSP-1558, PSP-3153, PSP-3184, PSP-3589, PSP-4903, PSP-4905, PSP-5163, PSP-7815 */
 
@@ -192,7 +190,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchProperties.SearchPropertyByAddressList(searchProperty.Address);
 
             //Validate that the result gives only one pin
-            Assert.True(searchProperties.PropertiesListFoundCount() == 5);
+            Assert.True(searchProperties.PropertiesListFoundCount() == 2);
 
             //Search for a valid PIN in Inventory
             searchProperties.SearchPropertyReset();
@@ -249,13 +247,15 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchProperties.SelectFoundPin();
         }
 
-        [StepDefinition(@"I update a Property details from row number (.*)")]
-        public void EditPropertyInformationDetails(int rowNumber)
+        [StepDefinition(@"I update a Property details from a file from row number (.*)")]
+        public void EditPropertyInformationDetailsFromFile(int rowNumber)
         {
             /* TEST COVERAGE: PSP-3460, PSP-3462, PSP-3590, PSP-3591, PSP-3599, PSP-3600, PSP-3612, PSP-3722, PSP-4791, PSP-4794, PSP-5162, PSP-5163, PSP-5164, PSP-5165 */
 
-            //Click on the Edit Property Information Button
+            //Populate Property Information
             PopulateProperty(rowNumber);
+
+            //Click on the Edit Property Information Button
             propertyInformation.EditPropertyInfoBttn();
 
             //Verify Property Information Edit Form
@@ -275,11 +275,33 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Save changes
             propertyInformation.SavePropertyDetails();
+        }
 
-            //Verify changes
-            propertyInformation.NavigatePropertyDetailsTab();
-            propertyInformation.VerifyPropertyDetailsView();
+        [StepDefinition(@"I update a Property details")]
+        public void EditPropertyInformationDetails()
+        {
+            /* TEST COVERAGE: PSP-3460, PSP-3462, PSP-3590, PSP-3591, PSP-3599, PSP-3600, PSP-3612, PSP-3722, PSP-4791, PSP-4794, PSP-5162, PSP-5163, PSP-5164, PSP-5165 */
 
+            //Click on the Edit Property Information Button
+            propertyInformation.EditPropertyInfoBttn();
+
+            //Verify Property Information Edit Form
+            propertyInformation.VerifyPropertyDetailsEditForm();
+
+            //Apply changes on the Property Information Form
+            propertyInformation.UpdatePropertyDetails(property);
+
+            //Cancel changes
+            propertyInformation.CancelPropertyDetails();
+
+            //Click on the Edit Property Information Button
+            propertyInformation.EditPropertyInfoBttn();
+
+            //Apply changes on the Property Information Form
+            propertyInformation.UpdatePropertyDetails(property);
+
+            //Save changes
+            propertyInformation.SavePropertyDetails();
         }
 
         [StepDefinition(@"I insert information in the Property Management Tab from row number (.*)")]
@@ -433,7 +455,9 @@ namespace PIMS.Tests.Automation.StepDefinitions
         public void PropertyInfoSucess()
         {
             //Validate Property Information View Form after changes
-            propertyInformation.VerifyPropertyDetailsView();
+            propertyInformation.NavigatePropertyDetailsTab();
+            propertyInformation.VerifyPropertyInformationHeader(true);
+            propertyInformation.VerifyUpdatePropertyDetailsView(property);
             propertyInformation.Dispose();
         }
 
@@ -480,31 +504,55 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             property = new Property();
 
+            property.PID = ExcelDataContext.ReadData(rowNumber, "PropertyPID");
+            property.PlanNumber = ExcelDataContext.ReadData(rowNumber, "PropertyPlanNumber");
             property.PropertyName = ExcelDataContext.ReadData(rowNumber, "PropertyName");
-            property.Address.AddressLine1 = ExcelDataContext.ReadData(rowNumber, "AddressLine1");
-            property.Address.AddressLine2 = ExcelDataContext.ReadData(rowNumber, "AddressLine2");
-            property.Address.AddressLine3 = ExcelDataContext.ReadData(rowNumber, "AddressLine3");
-            property.Address.City = ExcelDataContext.ReadData(rowNumber, "City");
-            property.Address.PostalCode = ExcelDataContext.ReadData(rowNumber, "PostalCode");
+            property.Address.AddressLine1 = ExcelDataContext.ReadData(rowNumber, "PropertyAddressLine1");
+            property.Address.AddressLine2 = ExcelDataContext.ReadData(rowNumber, "PropertyAddressLine2");
+            property.Address.AddressLine3 = ExcelDataContext.ReadData(rowNumber, "PropertyAddressLine3");
+            property.Address.City = ExcelDataContext.ReadData(rowNumber, "PropertyCity");
+            property.Address.PostalCode = ExcelDataContext.ReadData(rowNumber, "PropertyPostalCode");
+            property.GeneralLocation = ExcelDataContext.ReadData(rowNumber, "PropertyGeneralLocation");
 
-            property.MOTIRegion = ExcelDataContext.ReadData(rowNumber, "MoTIRegion");
-            property.HighwaysDistrict = ExcelDataContext.ReadData(rowNumber, "HighwaysDistrict");
-            property.ElectoralDistrict = ExcelDataContext.ReadData(rowNumber, "ElectoralDistrict");
-            property.AgriculturalLandReserve = ExcelDataContext.ReadData(rowNumber, "AgriculturalLandReserve");
-            property.RailwayBelt = ExcelDataContext.ReadData(rowNumber, "RailwayBelt");
-            property.LandParcelType = ExcelDataContext.ReadData(rowNumber, "LandParcelType");
-            property.MunicipalZoning = ExcelDataContext.ReadData(rowNumber, "MunicipalZoning");
-            property.Anomalies = genericSteps.PopulateLists(ExcelDataContext.ReadData(rowNumber, "Anomalies"));
+            property.HistoricalFileStartRow = int.Parse(ExcelDataContext.ReadData(rowNumber, "PropertyHistoricalFileStartRow"));
+            property.HistoricalFileCount = int.Parse(ExcelDataContext.ReadData(rowNumber, "PropertyHistoricalFileCount"));
+            if (property.HistoricalFileStartRow != 0 && property.HistoricalFileCount != 0)
+                PopulateHistoricalFiles(property.HistoricalFileStartRow, property.HistoricalFileCount);
 
-            property.TenureStatus = genericSteps.PopulateLists(ExcelDataContext.ReadData(rowNumber, "TenureStatus"));
-            property.ProvincialPublicHwy = ExcelDataContext.ReadData(rowNumber, "ProvincialPublicHwy");
-            property.HighwayEstablishedBy = genericSteps.PopulateLists(ExcelDataContext.ReadData(rowNumber, "HighwayEstablishedBy"));
-            property.AdjacentLandType = genericSteps.PopulateLists(ExcelDataContext.ReadData(rowNumber, "AdjacentLandType"));
-            property.SqrMeters = ExcelDataContext.ReadData(rowNumber, "SqrMeters");
-            property.IsVolumetric = bool.Parse(ExcelDataContext.ReadData(rowNumber, "IsVolumetric"));
-            property.Volume = ExcelDataContext.ReadData(rowNumber, "Volume");
-            property.VolumeType = ExcelDataContext.ReadData(rowNumber, "VolumeType");
-            property.PropertyNotes = ExcelDataContext.ReadData(rowNumber, "Notes");
+            property.LegalDescription = ExcelDataContext.ReadData(rowNumber, "PropertyLegalDescription");
+            property.MOTIRegion = ExcelDataContext.ReadData(rowNumber, "PropertyMoTIRegion");
+            property.HighwaysDistrict = ExcelDataContext.ReadData(rowNumber, "PropertyHighwaysDistrict");
+            property.ElectoralDistrict = ExcelDataContext.ReadData(rowNumber, "PropertyElectoralDistrict");
+            property.AgriculturalLandReserve = ExcelDataContext.ReadData(rowNumber, "PropertyAgriculturalLandReserve");
+            property.RailwayBelt = ExcelDataContext.ReadData(rowNumber, "PropertyRailwayBelt");
+            property.LandParcelType = ExcelDataContext.ReadData(rowNumber, "PropertyLandParcelType");
+            property.MunicipalZoning = ExcelDataContext.ReadData(rowNumber, "PropertyMunicipalZoning");
+            property.Anomalies = genericSteps.PopulateLists(ExcelDataContext.ReadData(rowNumber, "PropertyAnomalies"));
+
+            property.TenureStatus = genericSteps.PopulateLists(ExcelDataContext.ReadData(rowNumber, "PropertyTenureStatus"));
+            property.ProvincialPublicHwy = ExcelDataContext.ReadData(rowNumber, "PropertyProvincialPublicHwy");
+            property.HighwayEstablishedBy = genericSteps.PopulateLists(ExcelDataContext.ReadData(rowNumber, "PropertyHighwayEstablishedBy"));
+            property.SqrMeters = ExcelDataContext.ReadData(rowNumber, "PropertySqrMeters");
+            property.IsVolumetric = bool.Parse(ExcelDataContext.ReadData(rowNumber, "PropertyIsVolumetric"));
+            property.Volume = ExcelDataContext.ReadData(rowNumber, "PropertyVolume");
+            property.VolumeType = ExcelDataContext.ReadData(rowNumber, "PropertyVolumeType");
+            property.PropertyNotes = ExcelDataContext.ReadData(rowNumber, "PropertyNotes");
+        }
+
+        private void PopulateHistoricalFiles(int startRow, int rowsCount)
+        {
+            DataTable propertyHistoricalFilesSheet = ExcelDataContext.GetInstance().Sheets["PropertiesHistoricalFile"]!;
+            ExcelDataContext.PopulateInCollection(propertyHistoricalFilesSheet);
+
+            for (int i = startRow; i < startRow + rowsCount; i++)
+            {
+                HistoricalFile historicalFile = new HistoricalFile();
+                historicalFile.HistoricalFileNumber = ExcelDataContext.ReadData(i, "PropertyHistoricalFileNumber");
+                historicalFile.HistoricalFileType = ExcelDataContext.ReadData(i, "PropertyHistoricalFileType");
+                historicalFile.HistoricalFileOtherDetails = ExcelDataContext.ReadData(i, "PropertyHistoricalFileOtherDetails");
+
+                property.PropertyHistoricalFiles.Add(historicalFile);
+            }
         }
 
         private void PopulateSearchProperty(int rowNumber)

@@ -152,7 +152,7 @@ describe('AddLeaseTenantForm component', () => {
       selectedTenants: [new FormTenant(undefined, getMockContactOrganizationWithOnePerson())],
     });
 
-    const number = screen.getByText('1 Tenants associated with this Lease/License');
+    const number = screen.getByText('1 Tenants associated with this Lease/Licence');
 
     expect(number).toBeVisible();
   });

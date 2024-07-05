@@ -1,7 +1,6 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
-using System.Globalization;
 
 namespace PIMS.Tests.Automation.PageObjects
 {
@@ -21,7 +20,7 @@ namespace PIMS.Tests.Automation.PageObjects
             wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(120));
         }
 
-        protected virtual void Wait(int milliseconds = 3000) => Thread.Sleep(milliseconds);
+        protected virtual void Wait(int milliseconds = 2000) => Thread.Sleep(milliseconds);
 
         protected void WaitUntilSpinnerDisappear()
         {
@@ -59,13 +58,13 @@ namespace PIMS.Tests.Automation.PageObjects
             {
                 wait.Until(ExpectedConditions.ElementExists(saveButton));
                 wait.Until(ExpectedConditions.ElementToBeClickable(saveButton));
-                webDriver.FindElement(saveButton).Click();
+                FocusAndClick(saveButton);
             }
             else
             {
                 wait.Until(ExpectedConditions.ElementExists(cancelButton));
                 wait.Until(ExpectedConditions.ElementToBeClickable(cancelButton));
-                webDriver.FindElement(cancelButton).Click();
+                FocusAndClick(cancelButton);
             }
         }
 
@@ -179,16 +178,22 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(webDriver.FindElement(elementBy).Displayed);
         }
 
-        protected void AssertTrueContentEquals(By elementBy, string text)
+        protected void AssertTrueContentEquals(By elementBy, string text = "")
         {
             WaitUntilVisible(elementBy);
             Assert.Equal(text, webDriver.FindElement(elementBy).Text);
         }
 
-        protected void AssertTrueElementValueEquals(By elementBy, string text)
+        protected void AssertTrueElementValueEquals(By elementBy, string text = "")
         {
             WaitUntilVisible(elementBy);
             Assert.Equal(text, webDriver.FindElement(elementBy).GetAttribute("Value"));
+        }
+
+        protected void AssertTrueContentNotEquals(By elementBy, string text)
+        {
+            WaitUntilVisible(elementBy);
+            Assert.True(webDriver.FindElement(elementBy).Text != text);
         }
 
         protected void AssertTrueDoublesEquals(By elementBy, double number2)
@@ -198,12 +203,6 @@ namespace PIMS.Tests.Automation.PageObjects
             var number1 = double.Parse(numberFromElement);
 
             Assert.True(number1.Equals(number2));
-        }
-
-        protected void AssertTrueContentNotEquals(By elementBy, string text)
-        {
-            WaitUntilVisible(elementBy);
-            Assert.True(webDriver.FindElement(elementBy).Text != text);
         }
 
         protected void AssertTrueElementContains(By elementBy, string text)
@@ -240,17 +239,23 @@ namespace PIMS.Tests.Automation.PageObjects
 
         protected string TransformNumberFormat(string amount)
         {
-            NumberFormatInfo nfi = new CultureInfo("en-US", false).NumberFormat;
-            
-
             if (amount == "")
-            {
                 return "";
-            }
             else
             {
                 decimal value = decimal.Parse(amount);
-                return value.ToString("#,##0.##");        
+                return value.ToString("#,##0.0000");        
+            }
+        }
+
+        protected string TranformSqMtsFormat(string area)
+        {
+            if (area == "")
+                return "";
+            else
+            {
+                decimal value = decimal.Parse(area);
+                return value.ToString("#,##0.####") + " m\r\n2";
             }
         }
 
@@ -327,7 +332,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         protected string GetSubstring(string input, int startIndex, int endIndex)
         {
-            return input.Substring(startIndex, endIndex);
+            return input.Substring(startIndex, endIndex - startIndex);
         }
 
         public void Dispose()

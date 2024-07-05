@@ -34,6 +34,7 @@ const MapSearch: React.FC<React.PropsWithChildren<MapSearchProps>> = () => {
   return (
     <StyledFilterContainer fluid className="px-0">
       <PropertyFilter
+        propertyFilter={propertySearchFilter}
         useGeocoder={true}
         defaultFilter={{
           ...defaultPropertyFilter,

@@ -6,86 +6,158 @@ exports[`DispositionView component > renders as expected 1`] = `
     class="Toastify"
   />
   <div />
-  .c0 {
-  font-family: 'BCSans-Bold';
-  font-size: 3.2rem;
-  border-bottom: solid 0.5rem;
-  width: 100%;
-  text-align: left;
-  margin-bottom: 2.4rem;
-}
-
-.c2 {
-  width: 100%;
-  border-bottom: solid 0.5rem;
-}
-
-.c1 {
-  font-size: 2.4rem;
+  .c3.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  min-height: 3rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
   cursor: pointer;
+  height: 3.8rem;
 }
 
-<div
-    class=""
-  >
-    <div
-      class="row"
-    >
-      <div
-        class="col"
-      >
-        <h1
-          class="c0 mr-auto"
-        >
-          <svg
-            class="mr-2"
-            enable-background="new 0 0 24 24"
-            fill="currentColor"
-            height="2.6rem"
-            title="Disposition file Icon"
-            viewBox="0 0 24 24"
-            width="2.6rem"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <rect
-              fill="none"
-              height="24"
-              width="24"
-            />
-            <path
-              d="M21,6.5V14h-2V7.5L14,4L9,7.5V9H7V6.5l7-5L21,6.5z M15.5,7h-1v1h1V7z M13.5,7h-1v1h1V7z M15.5,9h-1v1h1V9z M13.5,9h-1v1h1V9 z M19,16h-2c0-1.2-0.75-2.28-1.87-2.7L8.97,11H1v11h6v-1.44l7,1.94l8-2.5v-1C22,17.34,20.66,16,19,16z M3,20v-7h2v7H3z M13.97,20.41 L7,18.48V13h1.61l5.82,2.17C14.77,15.3,15,15.63,15,16c0,0-1.99-0.05-2.3-0.15l-2.38-0.79l-0.63,1.9l2.38,0.79 c0.51,0.17,1.04,0.26,1.58,0.26H19c0.39,0,0.74,0.23,0.9,0.56L13.97,20.41z"
-            />
-          </svg>
-          Disposition File
-        </h1>
-      </div>
-      <div
-        class="col-auto"
-      >
-        <svg
-          class="c1"
-          fill="currentColor"
-          height="1em"
-          stroke="currentColor"
-          stroke-width="0"
-          viewBox="0 0 512 512"
-          width="1em"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <title>
-            close
-          </title>
-          <path
-            d="M464 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-83.6 290.5c4.8 4.8 4.8 12.6 0 17.4l-40.5 40.5c-4.8 4.8-12.6 4.8-17.4 0L256 313.3l-66.5 67.1c-4.8 4.8-12.6 4.8-17.4 0l-40.5-40.5c-4.8-4.8-4.8-12.6 0-17.4l67.1-66.5-67.1-66.5c-4.8-4.8-4.8-12.6 0-17.4l40.5-40.5c4.8-4.8 12.6-4.8 17.4 0l66.5 67.1 66.5-67.1c4.8-4.8 12.6-4.8 17.4 0l40.5 40.5c4.8 4.8 4.8 12.6 0 17.4L313.3 256l67.1 66.5z"
-          />
-        </svg>
-      </div>
-    </div>
-    <div
-      class="c2"
-    />
-  </div>
-  .c5 {
+.c3.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c3.btn:focus {
+  outline-width: 0.4rem;
+  outline-style: solid;
+  outline-offset: 1px;
+  box-shadow: none;
+}
+
+.c3.btn.btn-primary {
+  border: none;
+}
+
+.c3.btn.btn-secondary {
+  background: none;
+}
+
+.c3.btn.btn-info {
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c3.btn.btn-info:hover,
+.c3.btn.btn-info:active,
+.c3.btn.btn-info:focus {
+  background: none;
+}
+
+.c3.btn.btn-light {
+  border: none;
+}
+
+.c3.btn.btn-dark {
+  border: none;
+}
+
+.c3.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  text-align: left;
+  padding: 0;
+}
+
+.c3.btn.btn-link:hover,
+.c3.btn.btn-link:active,
+.c3.btn.btn-link:focus {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.c3.btn.btn-link:disabled,
+.c3.btn.btn-link.disabled {
+  background: none;
+  pointer-events: none;
+}
+
+.c3.btn:disabled,
+.c3.btn:disabled:hover {
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.c3.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c3.Button--icon-only:focus {
+  outline: none;
+}
+
+.c3.Button--icon-only .Button__icon {
+  margin-right: 0;
+}
+
+.c17 {
+  height: 100%;
+}
+
+.c18 {
+  overflow: auto;
+  height: 100%;
+  width: 100%;
+}
+
+.c24 {
+  overflow: auto;
+  height: 100%;
+  width: 100%;
+}
+
+.c13 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -95,49 +167,48 @@ exports[`DispositionView component > renders as expected 1`] = `
   flex-wrap: nowrap;
 }
 
-.c0 {
-  position: relative;
-}
-
-.c3 {
-  font-size: 0.87em;
-  line-height: 1.9;
-}
-
-.c6 {
-  font-family: 'BCSans-Bold';
-  font-size: 1.4rem;
-  border-radius: 0.4rem;
-  -webkit-letter-spacing: 0.1rem;
-  -moz-letter-spacing: 0.1rem;
-  -ms-letter-spacing: 0.1rem;
-  letter-spacing: 0.1rem;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  padding: 0.2rem 0.5rem;
-  gap: 0.5rem;
-  color: undefined;
-  background-color: undefined;
-}
-
-.c4 {
-  margin-top: auto;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-}
-
 .c1 {
-  margin-top: 0.5rem;
-  margin-bottom: 1.5rem;
-  border-bottom-style: solid;
-  border-bottom-color: grey;
-  border-bottom-width: 0.1rem;
+  font-family: 'BCSans-Bold';
+  font-size: 3.2rem;
+  border-bottom: solid 0.5rem;
+  width: 100%;
+  text-align: left;
+  margin-bottom: 2.4rem;
 }
 
-.c2 {
+.c5 {
+  border-left: 0.1rem solid;
+  width: 0.1rem;
+  height: 80%;
+  margin: auto;
+}
+
+.c4.btn.btn-light.Button {
+  padding: 0;
+  border: 0.1rem solid;
+  background-color: white;
+}
+
+.c4.btn.btn-light.Button:focus,
+.c4.btn.btn-light.Button:active {
+  background-color: white;
+}
+
+.c4.btn,
+.c4 .Button__icon,
+.c4 svg {
+  max-width: 2.4rem;
+  min-width: 2.4rem;
+  max-height: 2.4rem;
+  min-height: 2.4rem;
+  font-size: 1.4rem;
+}
+
+.c0 {
+  min-width: 90rem;
   height: 100%;
+  position: relative;
+  padding: 1.6rem;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -145,164 +216,18 @@ exports[`DispositionView component > renders as expected 1`] = `
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
+  overflow: hidden;
 }
 
-<div
-    class="c0"
-  >
-    <div
-      class="c1 no-gutters row"
-    >
-      <div
-        class="col-7"
-      >
-        <div
-          class="row"
-        >
-          <div
-            class="pr-0 text-left col-3"
-          >
-            <strong>
-              <label>
-                File:
-              </label>
-            </strong>
-          </div>
-          <div
-            class="pl-1 text-left col-9"
-          >
-            D-FILE_NUMBER 3A8F46B
-          </div>
-        </div>
-        <div
-          class="row"
-        >
-          <div
-            class="pr-0 text-left col-3"
-          >
-            <strong>
-              <label>
-                Historical File #:
-              </label>
-            </strong>
-          </div>
-          <div
-            class="pl-1 text-left col-9"
-          >
-            <div />
-          </div>
-        </div>
-      </div>
-      <div
-        class="col-5"
-      >
-        <div
-          class="c2"
-        >
-          <div
-            class="no-gutters row"
-          >
-            <div
-              class="text-right col"
-            >
-              <span
-                class="c3"
-              >
-                <strong>
-                  Created: 
-                </strong>
-                Nov 25, 2023 by 
-                <span
-                  class="tooltip-icon"
-                  data-testid="tooltip-icon-userNameTooltip"
-                  id="userNameTooltip"
-                >
-                  <strong>
-                    FOUGSTER
-                  </strong>
-                </span>
-              </span>
-            </div>
-          </div>
-          <div
-            class="no-gutters row"
-          >
-            <div
-              class="text-right col"
-            >
-              <span
-                class="c3"
-              >
-                <strong>
-                  Updated: 
-                </strong>
-                Nov 24, 2023 by 
-                <span
-                  class="tooltip-icon"
-                  data-testid="tooltip-icon-userNameTooltip"
-                  id="userNameTooltip"
-                >
-                  <strong>
-                    FOUGSTER
-                  </strong>
-                </span>
-              </span>
-            </div>
-          </div>
-          <div
-            class="c4 no-gutters justify-content-end align-items-end row"
-          >
-            <div
-              class="col"
-            />
-            <div
-              class="align-self-end col-auto"
-            >
-              <div
-                class="c5 c6"
-              >
-                <svg
-                  fill="currentColor"
-                  height="16"
-                  stroke="currentColor"
-                  stroke-width="0"
-                  viewBox="0 0 24 24"
-                  width="16"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M0 0h24v24H0z"
-                    fill="none"
-                  />
-                  <path
-                    d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a.996.996 0 0 0 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
-                  />
-                </svg>
-                DRAFT
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  .c2 {
-  height: 100%;
+.c2 {
+  gap: 1.5rem;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
 }
 
-.c3 {
-  overflow: auto;
-  height: 100%;
-  width: 100%;
-}
-
-.c9 {
-  overflow: auto;
-  height: 100%;
-  width: 100%;
-}
-
-.c0 {
+.c15 {
   width: 100%;
   position: relative;
   overflow: auto;
@@ -311,52 +236,66 @@ exports[`DispositionView component > renders as expected 1`] = `
   flex: 1;
 }
 
-.c1 {
+.c16 {
   height: 100%;
   width: 100%;
 }
 
-.c11 {
+.c8 {
+  position: relative;
+}
+
+.c7 {
+  width: 100%;
+  border-bottom: solid 0.5rem;
+}
+
+.c6 {
+  font-size: 2.4rem;
+  cursor: pointer;
+}
+
+.c26 {
   height: 100%;
 }
 
-.c11 .tab-content {
+.c26 .tab-content {
   border-radius: 0 0.4rem 0.4rem 0.4rem;
   height: calc(100% - 2.5rem);
   overflow-y: auto;
 }
 
-.c11 .tab-content .tab-pane {
+.c26 .tab-content .tab-pane {
   position: relative;
 }
 
-.c12 {
+.c27 {
   background-color: white;
   font-size: 1.4rem;
   border-color: transparent;
 }
 
-.c12 .nav-tabs {
+.c27 .nav-tabs {
   height: auto;
 }
 
-.c12 .nav-item {
+.c27 .nav-item {
   min-width: 5rem;
   padding: 0.1rem 1.2rem;
 }
 
-.c12 .nav-item:hover {
+.c27 .nav-item:hover {
   border-color: transparent;
   -webkit-text-decoration: underline;
   text-decoration: underline;
 }
 
-.c12 .nav-item.active {
+.c27 .nav-item.active {
   font-family: 'BCSans-Bold';
   border-color: transparent;
 }
 
-.c10 {
+.c25 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -373,21 +312,21 @@ exports[`DispositionView component > renders as expected 1`] = `
   overflow-y: auto;
 }
 
-.c13 {
+.c28 {
   padding-top: 1rem;
 }
 
-.c14 {
+.c29 {
   text-align: right;
 }
 
-.c18 {
+.c33 {
   font-weight: bold;
   border-bottom: 0.2rem solid;
   margin-bottom: 2rem;
 }
 
-.c15 {
+.c30 {
   margin: 1.6rem;
   padding: 1.6rem;
   background-color: white;
@@ -395,41 +334,90 @@ exports[`DispositionView component > renders as expected 1`] = `
   border-radius: 0.5rem;
 }
 
-.c17.required::before {
+.c32.required::before {
   content: '*';
   position: absolute;
   top: 0.75rem;
   left: 0rem;
 }
 
-.c16 {
+.c31 {
   font-weight: bold;
 }
 
-.c19 {
+.c34 {
   padding: 0 0.4rem;
   display: block;
 }
 
-.c4 {
+.c11 {
+  font-size: 0.87em;
+  line-height: 1.9;
+}
+
+.c14 {
+  font-family: 'BCSans-Bold';
+  font-size: 1.4rem;
+  border-radius: 0.4rem;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding: 0.2rem 0.5rem;
+  margin-left: 0.4rem;
+  gap: 0.5rem;
+  color: undefined;
+  background-color: undefined;
+}
+
+.c12 {
+  margin-top: auto;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.c9 {
+  margin-top: 0.5rem;
+  margin-bottom: 1.5rem;
+  border-bottom-style: solid;
+  border-bottom-color: grey;
+  border-bottom-width: 0.1rem;
+}
+
+.c10 {
+  height: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.c19 {
   text-align: left;
   padding: 0px;
   margin: 0px;
   width: 100%;
 }
 
-.c5 {
+.c20 {
   font-weight: normal;
   cursor: pointer;
   padding-bottom: 0.5rem;
 }
 
-.c5.selected {
+.c20.selected {
   font-weight: bold;
   cursor: default;
 }
 
-.c8 {
+.c23 {
   font-size: 1.5rem;
   border-radius: 50%;
   opacity: 0.8;
@@ -450,7 +438,7 @@ exports[`DispositionView component > renders as expected 1`] = `
   align-items: center;
 }
 
-.c6 {
+.c21 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -467,7 +455,7 @@ exports[`DispositionView component > renders as expected 1`] = `
   border-bottom: 1px solid;
 }
 
-.c7 {
+.c22 {
   font-size: 1.4rem;
   line-height: 2.2rem;
 }
@@ -476,642 +464,892 @@ exports[`DispositionView component > renders as expected 1`] = `
     class="c0"
   >
     <div
-      class="c1"
+      class="row"
     >
       <div
-        class="c2 no-gutters row"
+        class="col"
       >
-        <div
-          class="c3 d-flex flex-column col-3"
+        <h1
+          class="c1 mr-auto"
         >
-          <div
-            class="c4"
+          <span
+            class="mr-2"
+          >
+            <svg
+              fill="none"
+              height="26"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="26"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <title>
+                Disposition file Icon
+              </title>
+              <path
+                d="M10 18h4"
+              />
+              <path
+                d="M3 8a9 9 0 0 1 9 9v1l1.428 -4.285a12 12 0 0 1 6.018 -6.938l.554 -.277"
+              />
+              <path
+                d="M15 6h5v5"
+              />
+            </svg>
+          </span>
+          Disposition File
+        </h1>
+      </div>
+      <div
+        class="c2 d-flex col-auto"
+      >
+        <span>
+          <button
+            class="c3 Button Button--icon-only c4 btn btn-light"
+            title="collapse"
+            type="button"
           >
             <div
-              class="c5 no-gutters selected row"
-              data-testid="menu-item-row-0"
+              class="Button__icon"
             >
-              <div
-                class="col-1"
+              <svg
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                <svg
-                  fill="currentColor"
-                  height="1em"
-                  stroke="currentColor"
-                  stroke-width="0"
-                  viewBox="0 0 192 512"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M0 384.662V127.338c0-17.818 21.543-26.741 34.142-14.142l128.662 128.662c7.81 7.81 7.81 20.474 0 28.284L34.142 398.804C21.543 411.404 0 402.48 0 384.662z"
-                  />
-                </svg>
-              </div>
-              <div
-                class="col"
-              >
-                File Summary
-              </div>
-              <div
-                class="c6"
-              >
-                <span
-                  class="c7"
-                >
-                  Properties
-                </span>
-              </div>
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M17.59 18 19 16.59 14.42 12 19 7.41 17.59 6l-6 6z"
+                />
+                <path
+                  d="m11 18 1.41-1.41L7.83 12l4.58-4.59L11 6l-6 6z"
+                />
+              </svg>
+            </div>
+          </button>
+        </span>
+        <div
+          class="c5"
+        />
+        <svg
+          class="c6"
+          fill="currentColor"
+          height="1em"
+          stroke="currentColor"
+          stroke-width="0"
+          viewBox="0 0 512 512"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <title>
+            close
+          </title>
+          <path
+            d="M464 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-83.6 290.5c4.8 4.8 4.8 12.6 0 17.4l-40.5 40.5c-4.8 4.8-12.6 4.8-17.4 0L256 313.3l-66.5 67.1c-4.8 4.8-12.6 4.8-17.4 0l-40.5-40.5c-4.8-4.8-4.8-12.6 0-17.4l67.1-66.5-67.1-66.5c-4.8-4.8-4.8-12.6 0-17.4l40.5-40.5c4.8-4.8 12.6-4.8 17.4 0l66.5 67.1 66.5-67.1c4.8-4.8 12.6-4.8 17.4 0l40.5 40.5c4.8 4.8 4.8 12.6 0 17.4L313.3 256l67.1 66.5z"
+          />
+        </svg>
+      </div>
+    </div>
+    <div
+      class="c7"
+    />
+    <div
+      class="c8"
+    >
+      <div
+        class="c9 no-gutters row"
+      >
+        <div
+          class="col-7"
+        >
+          <div
+            class="row"
+          >
+            <div
+              class="pr-0 text-left col-3"
+            >
+              <strong>
+                <label>
+                  File:
+                </label>
+              </strong>
             </div>
             <div
-              class="c5 no-gutters row"
-              data-testid="menu-item-row-1"
+              class="pl-1 text-left col-9"
             >
-              <div
-                class="col-1"
-              />
-              <div
-                class="pr-2 col-auto"
-              >
-                <div
-                  class="c8"
-                >
-                  1
-                </div>
-              </div>
-              <div
-                class="col"
-              >
-                013-852-752
-              </div>
+              D-FILE_NUMBER 3A8F46B
+            </div>
+          </div>
+          <div
+            class="row"
+          >
+            <div
+              class="pr-0 text-left col-3"
+            >
+              <strong>
+                <label>
+                  Historical File #:
+                </label>
+              </strong>
+            </div>
+            <div
+              class="pl-1 text-left col-9"
+            >
+              <div />
             </div>
           </div>
         </div>
         <div
-          class="c9 col-9"
+          class="col-5"
         >
           <div
             class="c10"
           >
             <div
-              class="c11"
+              class="no-gutters row"
             >
-              <nav
-                class="c12 nav nav-tabs"
-                role="tablist"
-              >
-                <a
-                  aria-selected="true"
-                  class="nav-item nav-link active"
-                  data-rb-event-key="fileDetails"
-                  href="#"
-                  role="tab"
-                >
-                  File details
-                </a>
-                <a
-                  aria-selected="false"
-                  class="nav-item nav-link"
-                  data-rb-event-key="offersAndSale"
-                  href="#"
-                  role="tab"
-                >
-                  Offers & Sale
-                </a>
-                <a
-                  aria-selected="false"
-                  class="nav-item nav-link"
-                  data-rb-event-key="checklist"
-                  href="#"
-                  role="tab"
-                >
-                  Checklist
-                </a>
-              </nav>
               <div
-                class="tab-content"
+                class="text-right col"
+              >
+                <span
+                  class="c11"
+                >
+                  <strong>
+                    Created: 
+                  </strong>
+                  Nov 25, 2023 by 
+                  <span
+                    class="tooltip-icon"
+                    data-testid="tooltip-icon-userNameTooltip"
+                    id="userNameTooltip"
+                  >
+                    <strong>
+                      FOUGSTER
+                    </strong>
+                  </span>
+                </span>
+              </div>
+            </div>
+            <div
+              class="no-gutters row"
+            >
+              <div
+                class="text-right col"
+              >
+                <span
+                  class="c11"
+                >
+                  <strong>
+                    Updated: 
+                  </strong>
+                  Nov 24, 2023 by 
+                  <span
+                    class="tooltip-icon"
+                    data-testid="tooltip-icon-userNameTooltip"
+                    id="userNameTooltip"
+                  >
+                    <strong>
+                      FOUGSTER
+                    </strong>
+                  </span>
+                </span>
+              </div>
+            </div>
+            <div
+              class="c12 no-gutters justify-content-end align-items-end row"
+            >
+              <div
+                class="col"
+              />
+              <div
+                class="align-self-end d-flex col-auto"
+              >
+                <span
+                  class="c11"
+                >
+                  <b>
+                    File:
+                  </b>
+                </span>
+                <div
+                  class="c13 c14"
+                >
+                  <svg
+                    fill="currentColor"
+                    height="16"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 24 24"
+                    width="16"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a.996.996 0 0 0 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
+                    />
+                  </svg>
+                  DRAFT
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c15"
+    >
+      <div
+        class="c16"
+      >
+        <div
+          class="c17 no-gutters row"
+        >
+          <div
+            class="c18 d-flex flex-column col-3"
+          >
+            <div
+              class="c19"
+            >
+              <div
+                class="c20 no-gutters selected row"
+                data-testid="menu-item-row-0"
               >
                 <div
-                  aria-hidden="false"
-                  class="fade tab-pane active show"
-                  role="tabpanel"
+                  class="col-1"
+                >
+                  <svg
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 192 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M0 384.662V127.338c0-17.818 21.543-26.741 34.142-14.142l128.662 128.662c7.81 7.81 7.81 20.474 0 28.284L34.142 398.804C21.543 411.404 0 402.48 0 384.662z"
+                    />
+                  </svg>
+                </div>
+                <div
+                  class="col"
+                >
+                  File Summary
+                </div>
+                <div
+                  class="c21"
+                >
+                  <span
+                    class="c22"
+                  >
+                    Properties
+                  </span>
+                </div>
+              </div>
+              <div
+                class="c20 no-gutters row"
+                data-testid="menu-item-row-1"
+              >
+                <div
+                  class="col-1"
+                />
+                <div
+                  class="pr-2 col-auto"
                 >
                   <div
-                    class="c13"
+                    class="c23"
+                  >
+                    1
+                  </div>
+                </div>
+                <div
+                  class="col"
+                >
+                  013-852-752
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="c24 col-9"
+          >
+            <div
+              class="c25"
+            >
+              <div
+                class="c26"
+              >
+                <nav
+                  class="c27 nav nav-tabs"
+                  role="tablist"
+                >
+                  <a
+                    aria-selected="true"
+                    class="nav-item nav-link active"
+                    data-rb-event-key="fileDetails"
+                    href="#"
+                    role="tab"
+                  >
+                    File details
+                  </a>
+                  <a
+                    aria-selected="false"
+                    class="nav-item nav-link"
+                    data-rb-event-key="offersAndSale"
+                    href="#"
+                    role="tab"
+                  >
+                    Offers & Sale
+                  </a>
+                  <a
+                    aria-selected="false"
+                    class="nav-item nav-link"
+                    data-rb-event-key="checklist"
+                    href="#"
+                    role="tab"
+                  >
+                    Checklist
+                  </a>
+                </nav>
+                <div
+                  class="tab-content"
+                >
+                  <div
+                    aria-hidden="false"
+                    class="fade tab-pane active show"
+                    role="tabpanel"
                   >
                     <div
-                      class="c14 mr-3 my-1"
-                    />
-                    <div
-                      class="c15 form-section"
+                      class="c28"
                     >
                       <div
-                        class="collapse show"
-                      >
-                        <div
-                          class="pb-2 row"
-                        >
-                          <div
-                            class="pr-0 text-left col-5"
-                          >
-                            <label
-                              class="c16"
-                            >
-                              Status:
-                            </label>
-                          </div>
-                          <div
-                            class="c17 text-left col"
-                          >
-                            Draft
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div
-                      class="c15 form-section"
-                    >
-                      <h2
-                        class="c18"
-                      >
-                        <div
-                          class="no-gutters row"
-                        >
-                          <div
-                            class="col"
-                          >
-                            Project
-                          </div>
-                        </div>
-                      </h2>
+                        class="c29 mr-3 my-1"
+                      />
                       <div
-                        class="collapse show"
+                        class="c30 form-section"
                       >
                         <div
-                          class="pb-2 row"
+                          class="collapse show"
                         >
                           <div
-                            class="pr-0 text-left col-5"
+                            class="pb-2 row"
                           >
-                            <label
-                              class="c16"
+                            <div
+                              class="pr-0 text-left col-5"
                             >
-                              Ministry project:
-                            </label>
-                          </div>
-                          <div
-                            class="c17 text-left col"
-                            data-testid="dsp-project"
-                          >
-                            00048 - CLAIMS
-                          </div>
-                        </div>
-                        <div
-                          class="pb-2 row"
-                        >
-                          <div
-                            class="pr-0 text-left col-5"
-                          >
-                            <label
-                              class="c16"
-                            >
-                              Product:
-                            </label>
-                          </div>
-                          <div
-                            class="c17 text-left col"
-                            data-testid="dsp-product"
-                          >
-                            00055 AVALANCHE  &  PROGRAM REVIEW
-                          </div>
-                        </div>
-                        <div
-                          class="pb-2 row"
-                        >
-                          <div
-                            class="pr-0 text-left col-5"
-                          >
-                            <label
-                              class="c16"
-                            >
-                              Funding:
-                            </label>
-                          </div>
-                          <div
-                            class="c17 text-left col"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                    <div
-                      class="c15 form-section"
-                    >
-                      <h2
-                        class="c18"
-                      >
-                        <div
-                          class="no-gutters row"
-                        >
-                          <div
-                            class="col"
-                          >
-                            Schedule
-                          </div>
-                        </div>
-                      </h2>
-                      <div
-                        class="collapse show"
-                      >
-                        <div
-                          class="pb-2 row"
-                        >
-                          <div
-                            class="pr-0 text-left col-5"
-                          >
-                            <label
-                              class="c16"
-                            >
-                              Assigned date:
-                            </label>
-                          </div>
-                          <div
-                            class="c17 text-left col"
-                          >
-                            Apr 26, 2025
-                          </div>
-                        </div>
-                        <div
-                          class="pb-2 row"
-                        >
-                          <div
-                            class="pr-0 text-left col-5"
-                          >
-                            <label
-                              class="c16"
-                            >
-                              Disposition completed date:
-                            </label>
-                          </div>
-                          <div
-                            class="c17 text-left col"
-                          >
-                            May 28, 1956
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div
-                      class="c15 form-section"
-                    >
-                      <h2
-                        class="c18"
-                      >
-                        <div
-                          class="no-gutters row"
-                        >
-                          <div
-                            class="col"
-                          >
-                            Disposition Details
-                          </div>
-                        </div>
-                      </h2>
-                      <div
-                        class="collapse show"
-                      >
-                        <div
-                          class="pb-2 row"
-                        >
-                          <div
-                            class="pr-0 text-left col-5"
-                          >
-                            <label
-                              class="c16"
-                            >
-                              Disposition file name:
-                            </label>
-                          </div>
-                          <div
-                            class="c17 text-left col"
-                          >
-                            Test Disposition File
-                          </div>
-                        </div>
-                        <div
-                          class="pb-2 row"
-                        >
-                          <div
-                            class="pr-0 text-left col-5"
-                          >
-                            <label
-                              class="c16"
-                            >
-                              Reference number:
-                              <span
-                                class="ml-2"
+                              <label
+                                class="c31"
                               >
+                                Status:
+                              </label>
+                            </div>
+                            <div
+                              class="c32 text-left col"
+                            >
+                              Draft
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="c30 form-section"
+                      >
+                        <h2
+                          class="c33"
+                        >
+                          <div
+                            class="no-gutters row"
+                          >
+                            <div
+                              class="col"
+                            >
+                              Project
+                            </div>
+                          </div>
+                        </h2>
+                        <div
+                          class="collapse show"
+                        >
+                          <div
+                            class="pb-2 row"
+                          >
+                            <div
+                              class="pr-0 text-left col-5"
+                            >
+                              <label
+                                class="c31"
+                              >
+                                Ministry project:
+                              </label>
+                            </div>
+                            <div
+                              class="c32 text-left col"
+                              data-testid="dsp-project"
+                            >
+                              00048 - CLAIMS
+                            </div>
+                          </div>
+                          <div
+                            class="pb-2 row"
+                          >
+                            <div
+                              class="pr-0 text-left col-5"
+                            >
+                              <label
+                                class="c31"
+                              >
+                                Product:
+                              </label>
+                            </div>
+                            <div
+                              class="c32 text-left col"
+                              data-testid="dsp-product"
+                            >
+                              00055 AVALANCHE  &  PROGRAM REVIEW
+                            </div>
+                          </div>
+                          <div
+                            class="pb-2 row"
+                          >
+                            <div
+                              class="pr-0 text-left col-5"
+                            >
+                              <label
+                                class="c31"
+                              >
+                                Funding:
+                              </label>
+                            </div>
+                            <div
+                              class="c32 text-left col"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="c30 form-section"
+                      >
+                        <h2
+                          class="c33"
+                        >
+                          <div
+                            class="no-gutters row"
+                          >
+                            <div
+                              class="col"
+                            >
+                              Schedule
+                            </div>
+                          </div>
+                        </h2>
+                        <div
+                          class="collapse show"
+                        >
+                          <div
+                            class="pb-2 row"
+                          >
+                            <div
+                              class="pr-0 text-left col-5"
+                            >
+                              <label
+                                class="c31"
+                              >
+                                Assigned date:
+                              </label>
+                            </div>
+                            <div
+                              class="c32 text-left col"
+                            >
+                              Apr 26, 2025
+                            </div>
+                          </div>
+                          <div
+                            class="pb-2 row"
+                          >
+                            <div
+                              class="pr-0 text-left col-5"
+                            >
+                              <label
+                                class="c31"
+                              >
+                                Disposition completed date:
+                              </label>
+                            </div>
+                            <div
+                              class="c32 text-left col"
+                            >
+                              May 28, 1956
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="c30 form-section"
+                      >
+                        <h2
+                          class="c33"
+                        >
+                          <div
+                            class="no-gutters row"
+                          >
+                            <div
+                              class="col"
+                            >
+                              Disposition Details
+                            </div>
+                          </div>
+                        </h2>
+                        <div
+                          class="collapse show"
+                        >
+                          <div
+                            class="pb-2 row"
+                          >
+                            <div
+                              class="pr-0 text-left col-5"
+                            >
+                              <label
+                                class="c31"
+                              >
+                                Disposition file name:
+                              </label>
+                            </div>
+                            <div
+                              class="c32 text-left col"
+                            >
+                              Test Disposition File
+                            </div>
+                          </div>
+                          <div
+                            class="pb-2 row"
+                          >
+                            <div
+                              class="pr-0 text-left col-5"
+                            >
+                              <label
+                                class="c31"
+                              >
+                                Reference number:
                                 <span
-                                  class="tooltip-icon"
-                                  data-testid="tooltip-icon-section-field-tooltip"
-                                  id="section-field-tooltip"
+                                  class="ml-2"
                                 >
-                                  <svg
+                                  <span
                                     class="tooltip-icon"
-                                    fill="currentColor"
-                                    height="1em"
-                                    stroke="currentColor"
-                                    stroke-width="0"
-                                    viewBox="0 0 512 512"
-                                    width="1em"
-                                    xmlns="http://www.w3.org/2000/svg"
+                                    data-testid="tooltip-icon-section-field-tooltip"
+                                    id="section-field-tooltip"
                                   >
-                                    <path
-                                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
-                                    />
-                                  </svg>
+                                    <svg
+                                      class="tooltip-icon"
+                                      fill="currentColor"
+                                      height="1em"
+                                      stroke="currentColor"
+                                      stroke-width="0"
+                                      viewBox="0 0 512 512"
+                                      width="1em"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <path
+                                        d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                                      />
+                                    </svg>
+                                  </span>
                                 </span>
-                              </span>
-                            </label>
-                          </div>
-                          <div
-                            class="c17 text-left col"
-                          >
-                            FILE_REFERENCE 8128827 3EAD56A
-                          </div>
-                        </div>
-                        <div
-                          class="pb-2 row"
-                        >
-                          <div
-                            class="pr-0 text-left col-5"
-                          >
-                            <label
-                              class="c16"
+                              </label>
+                            </div>
+                            <div
+                              class="c32 text-left col"
                             >
-                              Disposition status:
-                            </label>
+                              FILE_REFERENCE 8128827 3EAD56A
+                            </div>
                           </div>
                           <div
-                            class="c17 text-left col"
-                          />
-                        </div>
-                        <div
-                          class="pb-2 row"
-                        >
-                          <div
-                            class="pr-0 text-left col-5"
+                            class="pb-2 row"
                           >
-                            <label
-                              class="c16"
+                            <div
+                              class="pr-0 text-left col-5"
                             >
-                              Disposition type:
-                            </label>
-                          </div>
-                          <div
-                            class="c17 text-left col"
-                          >
-                            Road Closure
-                          </div>
-                        </div>
-                        <div
-                          class="pb-2 row"
-                        >
-                          <div
-                            class="pr-0 text-left col-5"
-                          >
-                            <label
-                              class="c16"
-                            >
-                              Initiating document:
-                              <span
-                                class="ml-2"
+                              <label
+                                class="c31"
                               >
-                                <span
-                                  class="tooltip-icon"
-                                  data-testid="tooltip-icon-section-field-tooltip"
-                                  id="section-field-tooltip"
-                                >
-                                  <svg
-                                    class="tooltip-icon"
-                                    fill="currentColor"
-                                    height="1em"
-                                    stroke="currentColor"
-                                    stroke-width="0"
-                                    viewBox="0 0 512 512"
-                                    width="1em"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                  >
-                                    <path
-                                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
-                                    />
-                                  </svg>
-                                </span>
-                              </span>
-                            </label>
+                                Disposition status:
+                              </label>
+                            </div>
+                            <div
+                              class="c32 text-left col"
+                            />
                           </div>
                           <div
-                            class="c17 text-left col"
+                            class="pb-2 row"
                           >
-                            Surplus Declaration
-                          </div>
-                        </div>
-                        <div
-                          class="pb-2 row"
-                        >
-                          <div
-                            class="pr-0 text-left col-5"
-                          >
-                            <label
-                              class="c16"
+                            <div
+                              class="pr-0 text-left col-5"
                             >
-                              Initiating document date:
-                              <span
-                                class="ml-2"
+                              <label
+                                class="c31"
                               >
+                                Disposition type:
+                              </label>
+                            </div>
+                            <div
+                              class="c32 text-left col"
+                            >
+                              Road Closure
+                            </div>
+                          </div>
+                          <div
+                            class="pb-2 row"
+                          >
+                            <div
+                              class="pr-0 text-left col-5"
+                            >
+                              <label
+                                class="c31"
+                              >
+                                Initiating document:
                                 <span
-                                  class="tooltip-icon"
-                                  data-testid="tooltip-icon-section-field-tooltip"
-                                  id="section-field-tooltip"
+                                  class="ml-2"
                                 >
-                                  <svg
+                                  <span
                                     class="tooltip-icon"
-                                    fill="currentColor"
-                                    height="1em"
-                                    stroke="currentColor"
-                                    stroke-width="0"
-                                    viewBox="0 0 512 512"
-                                    width="1em"
-                                    xmlns="http://www.w3.org/2000/svg"
+                                    data-testid="tooltip-icon-section-field-tooltip"
+                                    id="section-field-tooltip"
                                   >
-                                    <path
-                                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
-                                    />
-                                  </svg>
+                                    <svg
+                                      class="tooltip-icon"
+                                      fill="currentColor"
+                                      height="1em"
+                                      stroke="currentColor"
+                                      stroke-width="0"
+                                      viewBox="0 0 512 512"
+                                      width="1em"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <path
+                                        d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                                      />
+                                    </svg>
+                                  </span>
                                 </span>
-                              </span>
-                            </label>
-                          </div>
-                          <div
-                            class="c17 text-left col"
-                          >
-                            Jun 29, 1917
-                          </div>
-                        </div>
-                        <div
-                          class="pb-2 row"
-                        >
-                          <div
-                            class="pr-0 text-left col-5"
-                          >
-                            <label
-                              class="c16"
+                              </label>
+                            </div>
+                            <div
+                              class="c32 text-left col"
                             >
-                              Physical file status:
-                            </label>
+                              Surplus Declaration
+                            </div>
                           </div>
                           <div
-                            class="c17 text-left col"
+                            class="pb-2 row"
                           >
-                            Pending Litigation
-                          </div>
-                        </div>
-                        <div
-                          class="pb-2 row"
-                        >
-                          <div
-                            class="pr-0 text-left col-5"
-                          >
-                            <label
-                              class="c16"
+                            <div
+                              class="pr-0 text-left col-5"
                             >
-                              Initiating branch:
-                            </label>
-                          </div>
-                          <div
-                            class="c17 text-left col"
-                          >
-                            PLMB
-                          </div>
-                        </div>
-                        <div
-                          class="pb-2 row"
-                        >
-                          <div
-                            class="pr-0 text-left col-5"
-                          >
-                            <label
-                              class="c16"
+                              <label
+                                class="c31"
+                              >
+                                Initiating document date:
+                                <span
+                                  class="ml-2"
+                                >
+                                  <span
+                                    class="tooltip-icon"
+                                    data-testid="tooltip-icon-section-field-tooltip"
+                                    id="section-field-tooltip"
+                                  >
+                                    <svg
+                                      class="tooltip-icon"
+                                      fill="currentColor"
+                                      height="1em"
+                                      stroke="currentColor"
+                                      stroke-width="0"
+                                      viewBox="0 0 512 512"
+                                      width="1em"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <path
+                                        d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                                      />
+                                    </svg>
+                                  </span>
+                                </span>
+                              </label>
+                            </div>
+                            <div
+                              class="c32 text-left col"
                             >
-                              Ministry region:
-                            </label>
+                              Jun 29, 1917
+                            </div>
                           </div>
                           <div
-                            class="c17 text-left col"
+                            class="pb-2 row"
                           >
-                            Cannot determine
+                            <div
+                              class="pr-0 text-left col-5"
+                            >
+                              <label
+                                class="c31"
+                              >
+                                Physical file status:
+                              </label>
+                            </div>
+                            <div
+                              class="c32 text-left col"
+                            >
+                              Pending Litigation
+                            </div>
+                          </div>
+                          <div
+                            class="pb-2 row"
+                          >
+                            <div
+                              class="pr-0 text-left col-5"
+                            >
+                              <label
+                                class="c31"
+                              >
+                                Initiating branch:
+                              </label>
+                            </div>
+                            <div
+                              class="c32 text-left col"
+                            >
+                              PLMB
+                            </div>
+                          </div>
+                          <div
+                            class="pb-2 row"
+                          >
+                            <div
+                              class="pr-0 text-left col-5"
+                            >
+                              <label
+                                class="c31"
+                              >
+                                Ministry region:
+                              </label>
+                            </div>
+                            <div
+                              class="c32 text-left col"
+                            >
+                              Cannot determine
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                    <div
-                      class="c15 form-section"
-                    >
-                      <h2
-                        class="c18"
-                      >
-                        <div
-                          class="no-gutters row"
-                        >
-                          <div
-                            class="col"
-                          >
-                            Disposition Team
-                          </div>
-                        </div>
-                      </h2>
                       <div
-                        class="collapse show"
+                        class="c30 form-section"
                       >
-                        <div
-                          class="pb-2 row"
+                        <h2
+                          class="c33"
                         >
                           <div
-                            class="pr-0 text-left col-5"
+                            class="no-gutters row"
                           >
-                            <label
-                              class="c16"
+                            <div
+                              class="col"
                             >
-                              MoTI Solicitor:
-                            </label>
+                              Disposition Team
+                            </div>
                           </div>
-                          <div
-                            class="c17 text-left col"
-                          >
-                            <a
-                              class="c19"
-                              href="/contact/P6"
-                              rel="noopener noreferrer"
-                              target="_blank"
-                            >
-                              <span>
-                                Alejandro Sanchez
-                              </span>
-                              <svg
-                                class="ml-2"
-                                fill="currentColor"
-                                height="1rem"
-                                stroke="currentColor"
-                                stroke-width="0"
-                                viewBox="0 0 512 512"
-                                width="1rem"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"
-                                />
-                              </svg>
-                            </a>
-                          </div>
-                        </div>
+                        </h2>
                         <div
-                          class="pb-2 row"
+                          class="collapse show"
                         >
                           <div
-                            class="pr-0 text-left col-5"
+                            class="pb-2 row"
                           >
-                            <label
-                              class="c16"
+                            <div
+                              class="pr-0 text-left col-5"
                             >
-                              Negotiation agent:
-                            </label>
+                              <label
+                                class="c31"
+                              >
+                                MoTI Solicitor:
+                              </label>
+                            </div>
+                            <div
+                              class="c32 text-left col"
+                            >
+                              <a
+                                class="c34"
+                                href="/contact/P6"
+                                rel="noopener noreferrer"
+                                target="_blank"
+                              >
+                                <span>
+                                  Alejandro Sanchez
+                                </span>
+                                <svg
+                                  class="ml-2"
+                                  fill="currentColor"
+                                  height="1rem"
+                                  stroke="currentColor"
+                                  stroke-width="0"
+                                  viewBox="0 0 512 512"
+                                  width="1rem"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"
+                                  />
+                                </svg>
+                              </a>
+                            </div>
                           </div>
                           <div
-                            class="c17 text-left col"
+                            class="pb-2 row"
                           >
-                            <a
-                              class="c19"
-                              href="/contact/P9"
-                              rel="noopener noreferrer"
-                              target="_blank"
+                            <div
+                              class="pr-0 text-left col-5"
                             >
-                              <span>
-                                Aman Monga
-                              </span>
-                              <svg
-                                class="ml-2"
-                                fill="currentColor"
-                                height="1rem"
-                                stroke="currentColor"
-                                stroke-width="0"
-                                viewBox="0 0 512 512"
-                                width="1rem"
-                                xmlns="http://www.w3.org/2000/svg"
+                              <label
+                                class="c31"
                               >
-                                <path
-                                  d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"
-                                />
-                              </svg>
-                            </a>
+                                Negotiation agent:
+                              </label>
+                            </div>
+                            <div
+                              class="c32 text-left col"
+                            >
+                              <a
+                                class="c34"
+                                href="/contact/P9"
+                                rel="noopener noreferrer"
+                                target="_blank"
+                              >
+                                <span>
+                                  Aman Monga
+                                </span>
+                                <svg
+                                  class="ml-2"
+                                  fill="currentColor"
+                                  height="1rem"
+                                  stroke="currentColor"
+                                  stroke-width="0"
+                                  viewBox="0 0 512 512"
+                                  width="1rem"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"
+                                  />
+                                </svg>
+                              </a>
+                            </div>
                           </div>
                         </div>
                       </div>

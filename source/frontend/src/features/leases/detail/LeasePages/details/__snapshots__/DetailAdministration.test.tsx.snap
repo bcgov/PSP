@@ -55,7 +55,7 @@ exports[`DetailAdministration component > renders a complete lease as expected 1
           Administration
         </div>
         <div
-          class="col-1"
+          class="pl-8 col-auto"
         >
           <svg
             class="c2"
@@ -406,7 +406,7 @@ exports[`DetailAdministration component > renders minimally as expected 1`] = `
           Administration
         </div>
         <div
-          class="col-1"
+          class="pl-8 col-auto"
         >
           <svg
             class="c2"

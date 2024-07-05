@@ -27,6 +27,7 @@ import { ZoomOutButton } from './leaflet/Control/ZoomOut/ZoomOutButton';
 import { LayerPopupContainer } from './leaflet/LayerPopup/LayerPopupContainer';
 import { InventoryLayer } from './leaflet/Layers/InventoryLayer';
 import { LeafletLayerListener } from './leaflet/Layers/LeafletLayerListener';
+import { useConfiguredMapLayers } from './leaflet/Layers/useConfiguredMapLayers';
 import { MapEvents } from './leaflet/MapEvents/MapEvents';
 import * as Styled from './leaflet/styles';
 
@@ -55,6 +56,7 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
   const popupRef = useRef<LeafletPopup>(null);
 
   const mapRef = useRef<LeafletMap | null>(null);
+  const layers = useConfiguredMapLayers();
 
   const [activeFeatureLayer, setActiveFeatureLayer] = useState<L.GeoJSON>();
 
@@ -153,15 +155,8 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
     });
   }, []);
 
-  const fitMapBounds = () => {
-    if (mapRef.current) {
-      // TODO: Is this necessary?
-      //mapRef.current.fitBounds(defaultBounds);
-    }
-  };
-
   const handleMapReady = () => {
-    fitMapBounds();
+    mapMachine.setDefaultMapLayers(layers);
   };
 
   const handleMapCreated = (mapInstance: L.Map) => {

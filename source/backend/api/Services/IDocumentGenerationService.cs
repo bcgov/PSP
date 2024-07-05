@@ -17,6 +17,6 @@ namespace Pims.Api.Services
 
         Task<ExternalResponse<string>> UploadFileTemplate(IFormFile fileRaw);
 
-        Task<ExternalResponse<FileDownloadResponse>> GenerateDocument(FormDocumentType templateType, JsonElement templateData, ConvertToTypes? convertTo);
+        Task<ExternalResponse<FileDownloadResponse>> GenerateDocument(FormTypes templateType, JsonElement templateData, ConvertToTypes? convertTo);
     }
 }

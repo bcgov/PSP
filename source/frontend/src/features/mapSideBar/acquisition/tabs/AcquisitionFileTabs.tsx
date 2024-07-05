@@ -67,6 +67,7 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
     content: (
       <ChecklistView
         apiFile={acquisitionFile}
+        showEditButton={true}
         onEdit={() => setIsEditing(true)}
         sectionTypeName={API.ACQUISITION_CHECKLIST_SECTION_TYPES}
         editClaim={Claims.ACQUISITION_EDIT}

@@ -25,6 +25,7 @@ import MapSelectorContainer, {
 import { IMapProperty } from '@/components/propertySelector/models';
 import { getMockApiProperty } from '@/mocks/properties.mock';
 import { AreaUnitTypes } from '@/constants';
+import { PropertyForm } from '../shared/models';
 
 const history = createMemoryHistory();
 
@@ -119,15 +120,19 @@ describe('Add Subdivision View', () => {
   it('calls getPrimaryAddressByPid when destination property is activated', async () => {
     await setup();
     await act(async () => {
-      mapSelectorProps.addSelectedProperties([testProperty]);
+      mapSelectorProps.addSelectedProperties([
+        PropertyForm.fromMapProperty(testProperty).toFeatureDataset(),
+      ]);
     });
-    expect(getPrimaryAddressByPid).toHaveBeenCalledWith(testProperty.pid);
+    expect(getPrimaryAddressByPid).toHaveBeenCalledWith('123456789');
   });
 
   it('does not call for address if property has no pid', async () => {
     await setup();
     await act(async () => {
-      mapSelectorProps.addSelectedProperties([{ ...testProperty, pid: undefined }]);
+      mapSelectorProps.addSelectedProperties([
+        PropertyForm.fromMapProperty({ ...testProperty, pid: undefined }).toFeatureDataset(),
+      ]);
     });
     const text = await screen.findByText('Selected property must have a PID');
     expect(text).toBeVisible();
@@ -176,7 +181,7 @@ describe('Add Subdivision View', () => {
     expect(queryByText('111-111-111')).toBeNull();
   });
 
-  it('property area only has 3 digits', async () => {
+  it('property area only has at most 4 digits', async () => {
     const initialFormModel = new SubdivisionFormModel();
     getPrimaryAddressByPid.mockImplementation(() => Promise.resolve(undefined));
     const { queryByDisplayValue } = await setup({
@@ -199,13 +204,16 @@ describe('Add Subdivision View', () => {
     };
 
     await act(async () => {
-      mapSelectorProps.addSelectedProperties([mapProperty]);
+      mapSelectorProps.addSelectedProperties([
+        PropertyForm.fromMapProperty(mapProperty).toFeatureDataset(),
+      ]);
     });
 
-    expect(getPrimaryAddressByPid).toHaveBeenCalledWith(testProperty.pid);
+    expect(getPrimaryAddressByPid).toHaveBeenCalledWith(testProperty.pid.replaceAll('-', ''));
 
-    expect(queryByDisplayValue('1.1234')).toBeNull();
-    expect(queryByDisplayValue('1.123')).toBeVisible();
     expect(queryByDisplayValue('1.12')).toBeNull();
+    expect(queryByDisplayValue('1.123')).toBeNull();
+    expect(queryByDisplayValue('1.1235')).toBeVisible();
+    expect(queryByDisplayValue('1.12345')).toBeNull();
   });
 });

@@ -44,6 +44,7 @@ export interface IGeoSearchParams {
   PID_PADDED?: string;
   PIN?: string;
   SURVEY_PLAN_NUMBER?: string;
+  HISTORICAL_FILE_NUMBER_STR?: string;
   BBOX?: string;
   latitude?: number | string;
   longitude?: number | string;
@@ -67,7 +68,7 @@ export const LEASE_PROGRAM_TYPES = 'PimsLeaseProgramType';
 export const LEASE_PURPOSE_TYPES = 'PimsLeasePurposeType';
 export const LEASE_RESPONSIBILITY_TYPES = 'PimsLeaseResponsibilityType';
 export const LEASE_STATUS_TYPES = 'PimsLeaseStatusType';
-export const LEASE_TERM_STATUS_TYPES = 'PimsLeaseTermStatusType';
+export const LEASE_PERIOD_STATUS_TYPES = 'PimsLeasePeriodStatusType';
 export const LEASE_TYPES = 'PimsLeaseLicenseType';
 export const ORGANIZATION_TYPES = 'PimsOrganization';
 export const LEASE_PAYMENT_METHOD_TYPES = 'PimsLeasePaymentMethodType';
@@ -129,6 +130,8 @@ export const DISPOSITION_TEAM_PROFILE_TYPES = 'PimsDspFlTeamProfileType';
 export const DISPOSITION_FUNDING_TYPES = 'PimsDispositionFundingType';
 export const DISPOSITION_OFFER_STATUS_TYPES = 'PimsDispositionOfferStatusType';
 export const HISTORICAL_NUMBER_TYPES = 'PimsHistoricalFileNumberType';
+export const LEASE_CHECKLIST_SECTION_TYPES = 'PimsLeaseChklstSectionType';
+export const LEASE_CHECKLIST_ITEM_STATUS_TYPES = 'PimsLeaseChklstItemStatusType';
 
 // TODO: PSP-4395 This should all be removed from this and moved to the useApi* hooks.
 // Auth Service

@@ -3,15 +3,30 @@ import { useCallback } from 'react';
 
 import { useTenant } from '@/tenants';
 
-export const useRefreshSiteminder = () => {
-  const { parcelsLayerUrl } = useTenant();
+import { useModalContext } from './useModalContext';
 
-  const refresh = useCallback(() => {
-    axios.get(
-      parcelsLayerUrl +
-        '?outputFormat=application%2Fjson&request=GetFeature&maxFeatures=0&typeName=geo.allgov%3AWHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_FA_SVW&service=WFS&version=1.0.0',
+export const useRefreshSiteminder = () => {
+  const { parcelMapFullyAttributed } = useTenant();
+  const { setModalContent, setDisplayModal } = useModalContext();
+
+  const refresh = useCallback(async () => {
+    const response = await axios.get(
+      parcelMapFullyAttributed.url +
+        `?outputFormat=application%2Fjson&request=GetFeature&maxFeatures=0&typeName=${parcelMapFullyAttributed.name}&service=WFS&version=1.0.0`,
+      { withCredentials: true },
     );
-  }, [parcelsLayerUrl]);
+    if (response.status !== 200) {
+      setModalContent({
+        title: 'Session Expired',
+        message:
+          'Your SITEMINDER session has expired. Please save any in-progress work and log out of the PIMS application.',
+        okButtonText: 'OK',
+        variant: 'warning',
+      });
+      setDisplayModal(true);
+      console.error('Unable to refresh Siteminder cookie');
+    }
+  }, [parcelMapFullyAttributed, setModalContent, setDisplayModal]);
 
   return refresh;
 };

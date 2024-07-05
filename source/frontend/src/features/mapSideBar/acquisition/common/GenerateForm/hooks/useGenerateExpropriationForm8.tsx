@@ -2,9 +2,9 @@ import moment from 'moment';
 
 import { createFileDownload } from '@/features/documents/DownloadDocumentButton';
 import { useDocumentGenerationRepository } from '@/features/documents/hooks/useDocumentGenerationRepository';
-import { FormTemplateTypes } from '@/features/mapSideBar/shared/content/models';
 import { useForm8Repository } from '@/hooks/repositories/useForm8Repository';
 import { ApiGen_CodeTypes_ExternalResponseStatus } from '@/models/api/generated/ApiGen_CodeTypes_ExternalResponseStatus';
+import { ApiGen_CodeTypes_FormTypes } from '@/models/api/generated/ApiGen_CodeTypes_FormTypes';
 import { Api_GenerateExpropriationForm8 } from '@/models/generate/acquisition/GenerateExpropriationForm8';
 import { stringDate } from '@/models/layers/alcAgriculturalReserve';
 
@@ -20,7 +20,7 @@ export const useGenerateExpropriationForm8 = () => {
     if (form8Api) {
       const formData = new Api_GenerateExpropriationForm8(form8Api);
       const generatedFile = await generate({
-        templateType: FormTemplateTypes.EXPROP_FORM_8,
+        templateType: ApiGen_CodeTypes_FormTypes.FORM8.toString(),
         templateData: formData,
         convertToType: null,
       });

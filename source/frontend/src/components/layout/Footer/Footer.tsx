@@ -53,13 +53,14 @@ const FooterStyled = styled('div')`
   justify-content: flex-start;
   align-items: stretch;
   align-content: flex-start;
+  font-size: 1.2rem;
 
   a {
     color: #ffffff;
     display: inline;
     &:link,
     &:visited {
-      font-size: 1.6rem;
+      font-size: 1.2rem;
       font-family: 'BCSans', Fallback, sans-serif;
       padding: 0 1rem;
       border-right: 0.1rem solid #666;

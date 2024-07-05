@@ -469,6 +469,22 @@ exports[`AcquisitionProperties component > renders as expected 1`] = `
                         class="c9 text-left col"
                       />
                     </div>
+                    <div
+                      class="row"
+                    >
+                      <div
+                        class="col-md-12"
+                      >
+                        <label
+                          class="form-label"
+                        >
+                          Legal Description:
+                        </label>
+                      </div>
+                      <div
+                        class="col-md-12"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -544,6 +560,13 @@ exports[`AcquisitionProperties component > renders as expected 1`] = `
                                   value="planNumber"
                                 >
                                   Plan #
+                                </option>
+                                <option
+                                  class="option"
+                                  data-testid="select-option-legalDescription"
+                                  value="legalDescription"
+                                >
+                                  Legal Description
                                 </option>
                               </select>
                             </div>

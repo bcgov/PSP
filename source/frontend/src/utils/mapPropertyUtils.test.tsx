@@ -173,6 +173,8 @@ describe('mapPropertyUtils', () => {
           districtName: undefined,
           landArea: 29217,
           latitude: 48.76613749999999,
+          legalDescription:
+            'THAT PART OF SECTION 13, RANGE 1, SOUTH SALT SPRING ISLAND, COWICHAN DISTRICT',
           longitude: -123.46163749999998,
           name: undefined,
           pid: '9727493',
@@ -195,6 +197,8 @@ describe('mapPropertyUtils', () => {
           districtName: undefined,
           landArea: 29217,
           latitude: 48.76613749999999,
+          legalDescription:
+            'THAT PART OF SECTION 13, RANGE 1, SOUTH SALT SPRING ISLAND, COWICHAN DISTRICT',
           longitude: -123.46163749999998,
           name: undefined,
           pid: '9727493',

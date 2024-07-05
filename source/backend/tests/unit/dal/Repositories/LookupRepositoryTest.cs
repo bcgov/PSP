@@ -393,7 +393,7 @@ namespace Pims.Dal.Tests.Repositories
         }
 
         [Fact]
-        public void LookupRepository_GetAllLeaseTermStatusTypes_ReturnsCorrectType()
+        public void LookupRepository_GetAllLeasePeriodStatusTypes_ReturnsCorrectType()
         {
             // Arrange
             var helper = new TestHelper();
@@ -403,10 +403,10 @@ namespace Pims.Dal.Tests.Repositories
             var lookupRepository = helper.CreateRepository<LookupRepository>(user);
 
             // Act
-            var result = lookupRepository.GetAllLeaseTermStatusTypes();
+            var result = lookupRepository.GetAllLeasePeriodStatusTypes();
 
             // Assert
-            Assert.IsType<PimsLeaseTermStatusType[]>(result);
+            Assert.IsType<PimsLeasePeriodStatusType[]>(result);
         }
 
         [Fact]
@@ -896,10 +896,10 @@ namespace Pims.Dal.Tests.Repositories
             var lookupRepository = helper.CreateRepository<LookupRepository>(user);
 
             // Act
-            var result = lookupRepository.GetAllAcquisitionChecklistItemStatusTypes();
+            var result = lookupRepository.GetAllChecklistItemStatusTypes();
 
             // Assert
-            Assert.IsType<PimsAcqChklstItemStatusType[]>(result);
+            Assert.IsType<PimsChklstItemStatusType[]>(result);
         }
 
         [Fact]

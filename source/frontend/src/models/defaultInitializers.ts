@@ -56,7 +56,7 @@ export const getEmptyLease = (): ApiGen_Concepts_Lease => ({
   fileProperties: null,
   consultations: null,
   tenants: null,
-  terms: null,
+  periods: null,
   isResidential: false,
   isCommercialBuilding: false,
   isOtherImprovement: false,
@@ -70,6 +70,7 @@ export const getEmptyLease = (): ApiGen_Concepts_Lease => ({
   fileNumber: null,
   cancellationReason: null,
   terminationReason: null,
+  fileChecklistItems: [],
   ...getEmptyBaseAudit(),
 });
 
@@ -98,7 +99,7 @@ export const defaultApiLease = (): ApiGen_Concepts_Lease => ({
   returnNotes: '',
   consultations: [],
   tenants: [],
-  terms: [],
+  periods: [],
   otherCategoryType: null,
   otherProgramType: null,
   otherPurposeType: null,

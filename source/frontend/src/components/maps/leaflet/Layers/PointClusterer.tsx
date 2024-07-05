@@ -13,7 +13,7 @@ import useSupercluster from '@/components/maps/hooks/useSupercluster';
 import { useFilterContext } from '@/components/maps/providers/FilterProvider';
 import { ICluster } from '@/components/maps/types';
 import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
-import { PMBC_Feature_Properties } from '@/models/layers/parcelMapBC';
+import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
 import {
   PIMS_Property_Boundary_View,
   PIMS_Property_Location_View,
@@ -54,7 +54,9 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
   const spiderfierRef =
     useRef<
       Spiderfier<
-        PIMS_Property_Location_View | PIMS_Property_Boundary_View | PMBC_Feature_Properties
+        | PIMS_Property_Location_View
+        | PIMS_Property_Boundary_View
+        | PMBC_FullyAttributed_Feature_Properties
       >
     >();
   const featureGroupRef = useRef<L.FeatureGroup>(null);
@@ -79,15 +81,19 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
   const maxZoom = maxZoomProps ?? 18;
 
   const [spider, setSpider] = useState<
-    SpiderSet<PIMS_Property_Location_View | PIMS_Property_Boundary_View | PMBC_Feature_Properties>
+    SpiderSet<
+      | PIMS_Property_Location_View
+      | PIMS_Property_Boundary_View
+      | PMBC_FullyAttributed_Feature_Properties
+    >
   >({});
 
   const draftPoints = useMemo<LatLngLiteral[]>(() => {
     return mapMachine.filePropertyLocations.map(x => {
       // The values on the feature are rounded to the 4th decimal. Do the same to the draft points.
       return {
-        lat: parseFloat(x.lat.toFixed(4)),
-        lng: parseFloat(x.lng.toFixed(4)),
+        lat: x.lat,
+        lng: x.lng,
       };
     });
   }, [mapMachine.filePropertyLocations]);
@@ -132,17 +138,21 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
 
   const pimsBoundaryFeatures = mapMachine.mapFeatureData.pimsBoundaryFeatures;
 
-  const pmbcFeatures = mapMachine.mapFeatureData.pmbcFeatures;
+  const pmbcFeatures = mapMachine.mapFeatureData.fullyAttributedFeatures;
 
   const featurePoints: Supercluster.PointFeature<
-    PIMS_Property_Location_View | PIMS_Property_Boundary_View | PMBC_Feature_Properties
+    | PIMS_Property_Location_View
+    | PIMS_Property_Boundary_View
+    | PMBC_FullyAttributed_Feature_Properties
   >[] = useMemo(() => {
     const pimsLocationPoints =
       featureCollectionResponseToPointFeature<PIMS_Property_Location_View>(pimsLocationFeatures);
     const pimsBoundaryPoints =
       featureCollectionResponseToPointFeature<PIMS_Property_Boundary_View>(pimsBoundaryFeatures);
     const pmbcPoints =
-      featureCollectionResponseToPointFeature<PMBC_Feature_Properties>(pmbcFeatures);
+      featureCollectionResponseToPointFeature<PMBC_FullyAttributed_Feature_Properties>(
+        pmbcFeatures,
+      );
     return [...pimsLocationPoints, ...pimsBoundaryPoints, ...pmbcPoints];
   }, [pimsLocationFeatures, pimsBoundaryFeatures, pmbcFeatures]);
 
@@ -290,7 +300,9 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
             );
           } else {
             const clusterFeature = cluster as PointFeature<
-              PIMS_Property_Location_View | PIMS_Property_Boundary_View | PMBC_Feature_Properties
+              | PIMS_Property_Location_View
+              | PIMS_Property_Boundary_View
+              | PMBC_FullyAttributed_Feature_Properties
             >;
 
             const isSelected =
@@ -313,7 +325,9 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
          */}
         {spider.markers?.map((m, index: number) => {
           const clusterFeature = m as PointFeature<
-            PIMS_Property_Location_View | PIMS_Property_Boundary_View | PMBC_Feature_Properties
+            | PIMS_Property_Location_View
+            | PIMS_Property_Boundary_View
+            | PMBC_FullyAttributed_Feature_Properties
           >;
 
           return (
@@ -354,7 +368,7 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
                     latlng: draftPoint,
                     pimsLocationFeature: null,
                     pimsBoundaryFeature: null,
-                    pmbcFeature: null,
+                    fullyAttributedFeature: null,
                   });
                 },
               }}

@@ -4,7 +4,6 @@ using System.Security.Claims;
 using System.Text.RegularExpressions;
 using LinqKit;
 using Microsoft.EntityFrameworkCore;
-using Pims.Api.Models.CodeTypes;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 using Pims.Dal.Security;
@@ -90,12 +89,7 @@ namespace Pims.Dal.Helpers.Extensions
             if (!string.IsNullOrWhiteSpace(filter.Historical))
             {
                 var predicateBuilderHistorical = PredicateBuilder.New<PimsProperty>(p => true);
-                predicateBuilderHistorical = predicateBuilderHistorical.And(x => x.PimsHistoricalFileNumbers
-                                                     .Any(y => y.HistoricalFileNumberTypeCode == HistoricalFileNumberTypes.LISNO.ToString() && y.HistoricalFileNumber.Contains(filter.Historical)));
-                predicateBuilderHistorical = predicateBuilderHistorical.Or(x => x.PimsHistoricalFileNumbers
-                                                     .Any(y => y.HistoricalFileNumberTypeCode == HistoricalFileNumberTypes.PSNO.ToString() && y.HistoricalFileNumber.Contains(filter.Historical)));
-                predicateBuilderHistorical = predicateBuilderHistorical.Or(x => x.PimsHistoricalFileNumbers
-                                                     .Any(y => y.HistoricalFileNumberTypeCode == HistoricalFileNumberTypes.OTHER.ToString() && y.HistoricalFileNumber.Contains(filter.Historical)));
+                predicateBuilderHistorical = predicateBuilderHistorical.And(x => x.PimsHistoricalFileNumbers.Any(y => y.HistoricalFileNumber.Contains(filter.Historical)));
 
                 predicateBuilder = predicateBuilder.And(x => context.PimsProperties.Where(predicateBuilderHistorical).AsExpandable().Where(b => b.PropertyId == x.PropertyId).Any());
             }
@@ -104,7 +98,7 @@ namespace Pims.Dal.Helpers.Extensions
 
             ExpressionStarter<PimsPropertyVw> ownershipBuilder;
 
-            if (filter.Ownership.Count > 0)
+            if (filter.Ownership.Count > 0 && filter.Ownership.FirstOrDefault() != string.Empty)
             {
                 // Property ownership filters
                 ownershipBuilder = isRetired ? PredicateBuilder.New<PimsPropertyVw>(p => p.IsRetired == true) : PredicateBuilder.New<PimsPropertyVw>(p => false);

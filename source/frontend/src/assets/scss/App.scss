@@ -27,6 +27,7 @@
 .tooltip {
   pointer-events: none;
   font-size: 1.4rem;
+  z-index: 99999;
 }
 
 .dropdown-menu {

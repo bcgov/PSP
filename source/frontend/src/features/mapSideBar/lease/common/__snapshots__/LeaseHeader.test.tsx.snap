@@ -186,7 +186,7 @@ exports[`LeaseHeader component > renders as expected when no data is provided 1`
           >
             <strong>
               <label>
-                Lease/License #
+                Lease/Licence #
               </label>
             </strong>
           </div>

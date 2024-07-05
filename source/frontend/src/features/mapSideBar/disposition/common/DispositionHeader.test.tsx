@@ -83,12 +83,12 @@ describe('DispositionHeader component', () => {
 
   it('renders the file number and name concatenated', async () => {
     const testDispositionFile = mockDispositionFileResponse();
-    const { getByText } = await setup({
+    const { getByText, getAllByText } = await setup({
       dispositionFile: testDispositionFile,
       lastUpdatedBy: null,
     });
 
-    expect(getByText('File:')).toBeVisible();
+    expect(getAllByText('File:')[0]).toBeVisible();
     expect(getByText(/FILE_NUMBER 3A8F46B/)).toBeVisible();
   });
 

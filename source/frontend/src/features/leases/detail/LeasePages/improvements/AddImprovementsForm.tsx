@@ -1,5 +1,5 @@
 import { FieldArray, Formik, FormikProps } from 'formik';
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { Prompt } from 'react-router';
 import styled from 'styled-components';
 
@@ -7,6 +7,8 @@ import { Input } from '@/components/common/form';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
+import TooltipIcon from '@/components/common/TooltipIcon';
+import { PropertyImprovementTypes } from '@/constants/propertyImprovementTypes';
 import { withNameSpace } from '@/utils/formUtils';
 
 import { AddImprovementsYupSchema } from './AddImprovementsYupSchema';
@@ -50,23 +52,50 @@ export const AddImprovementsForm: React.FunctionComponent<
                         const title =
                           sectionTitles.get(improvement.propertyImprovementTypeId) ?? 'N/A';
                         const nameSpace = `improvements.${index}`;
+
+                        const HeaderDisplayNode = (typeId: string): ReactNode => {
+                          if (typeId === 'OTHER') {
+                            return (
+                              <div className="d-flex align-items-center">
+                                <span>{title}</span>
+                                <TooltipIcon
+                                  toolTipId="contactInfoToolTip"
+                                  innerClassName="ml-4 mb-1"
+                                  toolTip="This could include lighting, fencing, irrigation, parking etc."
+                                />
+                              </div>
+                            );
+                          }
+
+                          return title;
+                        };
+
                         return (
                           <React.Fragment key={nameSpace}>
-                            <Section header={title}>
+                            <Section
+                              header={HeaderDisplayNode(improvement.propertyImprovementTypeId)}
+                            >
                               <SectionField label="Unit #" labelWidth="3">
                                 <Input field={withNameSpace(nameSpace, 'address')} />{' '}
                               </SectionField>
-                              <SectionField label="Building size" labelWidth="3">
+                              <SectionField
+                                label={
+                                  improvement.propertyImprovementTypeId ===
+                                  PropertyImprovementTypes.Residential
+                                    ? 'House size'
+                                    : 'Building size'
+                                }
+                                labelWidth="3"
+                              >
                                 <Input field={withNameSpace(nameSpace, 'structureSize')} />
                               </SectionField>
-                              <SectionField label="Description" labelWidth="3">
-                                <Styled.FormDescriptionBody
-                                  innerClassName="description"
-                                  rows={5}
-                                  field={withNameSpace(nameSpace, 'description')}
-                                  placeholder="Reason for improvement and improvement details"
-                                />
-                              </SectionField>
+                              <SectionField label="Description" labelWidth="3"></SectionField>
+                              <Styled.FormDescriptionBody
+                                innerClassName="description"
+                                rows={5}
+                                field={withNameSpace(nameSpace, 'description')}
+                                placeholder="Reason for improvement and improvement details"
+                              />
                             </Section>
                           </React.Fragment>
                         );

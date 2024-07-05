@@ -2,10 +2,12 @@ import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { AiOutlineExclamationCircle } from 'react-icons/ai';
 import { FaSearchPlus } from 'react-icons/fa';
+import { HiCube } from 'react-icons/hi2';
 import styled from 'styled-components';
 
 import { StyledIconButton } from '@/components/common/buttons';
 import { HeaderField } from '@/components/common/HeaderField/HeaderField';
+import { StyledFiller } from '@/components/common/HeaderField/styles';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { InlineFlexDiv } from '@/components/common/styles';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
@@ -15,7 +17,7 @@ import { exists, formatApiAddress, pidFormatter } from '@/utils';
 import { mapFeatureToProperty } from '@/utils/mapPropertyUtils';
 
 import HistoricalNumbersContainer from '../shared/header/HistoricalNumberContainer';
-import HistoricalNumberFieldView from '../shared/header/HistoricalNumberSectionView';
+import { HistoricalNumberSectionView } from '../shared/header/HistoricalNumberSectionView';
 
 export interface IMotiInventoryHeaderProps {
   isLoading: boolean;
@@ -26,6 +28,7 @@ export interface IMotiInventoryHeaderProps {
 export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderProps> = props => {
   const pid = pidFormatter(props.composedProperty.pid);
   const parcelMapData = props.composedProperty.parcelMapFeatureCollection;
+  const geoserverMapData = props.composedProperty.geoserverFeatureCollection;
   const apiProperty = props.composedProperty.pimsProperty;
   let property: IMapProperty | null = null;
 
@@ -41,6 +44,17 @@ export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderPr
     }
     return false;
   }, [apiProperty]);
+
+  const isDisposed = React.useMemo(() => {
+    if (
+      geoserverMapData?.features?.length &&
+      exists(geoserverMapData?.features[0]) &&
+      geoserverMapData?.features[0]?.properties?.IS_DISPOSED
+    ) {
+      return true;
+    }
+    return false;
+  }, [geoserverMapData?.features]);
 
   let latitude: number | null = null;
   let longitude: number | null = null;
@@ -68,19 +82,29 @@ export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderPr
           </HeaderField>
           {exists(apiProperty) && (
             <HistoricalNumbersContainer
-              View={HistoricalNumberFieldView}
-              displayValuesOnly={false}
+              View={HistoricalNumberSectionView}
               propertyIds={[apiProperty?.id]}
             />
           )}
         </Col>
         <Col className="text-right">
-          <HeaderField className="justify-content-end" label="PID:">
-            {pid}
-          </HeaderField>
-          <HeaderField label="Land parcel type:" className="justify-content-end">
-            {apiProperty?.propertyType?.description}
-          </HeaderField>
+          <StyledFiller>
+            <HeaderField className="justify-content-end" label="PID:">
+              {pid}
+            </HeaderField>
+            <HeaderField label="Land parcel type:" className="justify-content-end">
+              {apiProperty?.propertyType?.description}
+            </HeaderField>
+            {(isRetired || isDisposed) && (
+              <HeaderField label="" className="justify-content-end align-items-end mt-auto">
+                <PropertyStyleStatus className={isRetired ? 'retired' : 'disposed'}>
+                  {isRetired && <AiOutlineExclamationCircle size={16} />}
+                  {isDisposed && <HiCube size={16} />}
+                  {isRetired ? 'RETIRED' : isDisposed ? 'DISPOSED' : 'UNKNOWN STATUS'}
+                </PropertyStyleStatus>
+              </HeaderField>
+            )}
+          </StyledFiller>
         </Col>
         <Col xs="auto" className="d-flex p-0 align-items-center justify-content-end">
           {hasLocation && (
@@ -96,12 +120,6 @@ export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderPr
             </TooltipWrapper>
           )}
         </Col>
-        {isRetired && (
-          <RetiredWarning>
-            <AiOutlineExclamationCircle size={16} />
-            RETIRED
-          </RetiredWarning>
-        )}
       </Row>
       <StyledDivider />
     </>
@@ -115,7 +133,7 @@ const StyledDivider = styled.div`
   border-bottom-width: 0.1rem;
 `;
 
-export const RetiredWarning = styled(InlineFlexDiv)`
+export const PropertyStyleStatus = styled(InlineFlexDiv)`
   text-transform: uppercase;
   color: ${props => props.theme.css.textWarningColor};
   background-color: ${props => props.theme.css.warningBackgroundColor};
@@ -127,4 +145,8 @@ export const RetiredWarning = styled(InlineFlexDiv)`
   font-size: 1.4rem;
   align-items: center;
   width: fit-content;
+  &.disposed {
+    color: ${props => props.theme.css.fileStatusGreyColor};
+    background-color: ${props => props.theme.css.fileStatusGreyBackgroundColor};
+  }
 `;

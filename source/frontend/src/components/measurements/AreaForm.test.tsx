@@ -63,8 +63,8 @@ describe('LandMeasurementTable component', () => {
     });
     await fillInput(container, 'area-sq-meters', 15000);
     // assert
-    await waitFor(() => expect(getSqFeetInput().valueAsNumber).toBe(161458.66));
+    await waitFor(() => expect(getSqFeetInput().valueAsNumber).toBe(161458.6563));
     await waitFor(() => expect(getHectaresInput().valueAsNumber).toBe(1.5));
-    await waitFor(() => expect(getAcresInput().valueAsNumber).toBe(3.71));
+    await waitFor(() => expect(getAcresInput().valueAsNumber).toBe(3.7066));
   });
 });

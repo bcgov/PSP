@@ -29,6 +29,7 @@ import { ApiGen_Concepts_PropertyView } from '@/models/api/generated/ApiGen_Conc
 import { useApiHistoricalNumbers } from '@/hooks/pims-api/useApiHistoricalNumbers';
 import { ApiGen_Concepts_HistoricalFileNumber } from '@/models/api/generated/ApiGen_Concepts_HistoricalFileNumber';
 import { ApiGen_CodeTypes_HistoricalFileNumberTypes } from '@/models/api/generated/ApiGen_CodeTypes_HistoricalFileNumberTypes';
+import { useHistoricalNumberRepository } from '@/hooks/repositories/useHistoricalNumberRepository';
 
 // Set all module functions to vi.fn
 
@@ -50,12 +51,25 @@ vi.mocked(useApiGeocoder).mockReturnValue({
   ) => Promise<AxiosResponse<IGeocoderPidsResponse, any>>,
 } as unknown as ReturnType<typeof useApiGeocoder>);
 
-const mockApiGetHistoricalFileNumbersApi = vi.fn();
-vi.mocked(useApiHistoricalNumbers).mockReturnValue({
-  getByPropertyId: mockApiGetHistoricalFileNumbersApi as (
-    propertyId: number,
-  ) => Promise<AxiosResponse<ApiGen_Concepts_HistoricalFileNumber[], any>>,
-} as unknown as ReturnType<typeof useApiHistoricalNumbers>);
+const mockGetPropertyHistoricalNumbersExecute = vi.fn().mockResolvedValue([]);
+
+vi.mock('@/hooks/repositories/useHistoricalNumberRepository');
+vi.mocked(useHistoricalNumberRepository).mockReturnValue({
+  getPropertyHistoricalNumbers: {
+    error: null,
+    response: [],
+    execute: mockGetPropertyHistoricalNumbersExecute,
+    loading: false,
+    status: 200,
+  },
+  updatePropertyHistoricalNumbers: {
+    error: null,
+    response: [],
+    execute: vi.fn().mockResolvedValue([]),
+    loading: false,
+    status: 200,
+  },
+});
 
 const mockAxios = new MockAdapter(axios);
 const history = createMemoryHistory();
@@ -97,15 +111,15 @@ const setupMockApi = (properties?: ApiGen_Concepts_PropertyView[]) => {
     },
   } as any);
 
-  mockApiGetHistoricalFileNumbersApi.mockResolvedValue({
-    data: [
+  for (let i = 0; i < mockProperties.length; i++) {
+    mockGetPropertyHistoricalNumbersExecute.mockResolvedValueOnce([
       {
-        id: 100,
-        propertyId: 1,
+        id: mockProperties[i].id * 100,
+        propertyId: mockProperties[i].id,
         property: null,
         historicalFileNumberTypeCode: {
           id: ApiGen_CodeTypes_HistoricalFileNumberTypes.LISNO.toString(),
-          description: 'LIS #',
+          description: 'LIS',
           isDisabled: false,
           displayOrder: 1,
         },
@@ -120,8 +134,8 @@ const setupMockApi = (properties?: ApiGen_Concepts_PropertyView[]) => {
         appCreateUserGuid: null,
         rowVersion: 1,
       },
-    ],
-  });
+    ]);
+  }
 };
 
 describe('Property list view', () => {
@@ -131,7 +145,7 @@ describe('Property list view', () => {
     mockAxios.onAny().reply(200, {});
 
     mockApiGetPropertiesPagedApi.mockClear();
-    mockApiGetHistoricalFileNumbersApi.mockClear();
+    mockGetPropertyHistoricalNumbersExecute.mockClear();
   });
 
   afterEach(() => {
@@ -267,5 +281,4 @@ describe('Property list view', () => {
     const results = await findByText(/301-9999/i);
     expect(results).toBeInTheDocument();
   });
-
 });

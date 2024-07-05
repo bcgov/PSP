@@ -223,7 +223,7 @@ describe('Lease and License List View', () => {
       }),
     );
 
-    expect(await findByText(/0309-001;/i)).toBeInTheDocument();
+    expect(await findByText(/0309-001/i)).toBeInTheDocument();
   });
 
   it('searches historical file number for PS', async () => {
@@ -253,7 +253,7 @@ describe('Lease and License List View', () => {
                   123,
                   '0309-000',
                   ApiGen_CodeTypes_HistoricalFileNumberTypes.PSNO.toString(),
-                  'PS #',
+                  'PS',
                 ),
               ],
             },
@@ -275,7 +275,7 @@ describe('Lease and License List View', () => {
       }),
     );
 
-    expect(await findByText(/0309-000;/i)).toBeInTheDocument();
+    expect(await findByText(/0309-000/i)).toBeInTheDocument();
   });
 
   it('searches historical file number for OTHER', async () => {
@@ -403,7 +403,7 @@ describe('Lease and License List View', () => {
         details: '',
       }),
     );
-    const toasts = await findAllByText('Lease / License details do not exist in PIMS inventory');
+    const toasts = await findAllByText('Lease / Licence details do not exist in PIMS inventory');
     expect(toasts[0]).toBeVisible();
   });
 

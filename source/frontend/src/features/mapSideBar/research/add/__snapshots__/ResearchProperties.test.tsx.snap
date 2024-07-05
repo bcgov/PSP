@@ -569,6 +569,22 @@ exports[`ResearchProperties component > renders as expected when provided no pro
                             class="c10 text-left col"
                           />
                         </div>
+                        <div
+                          class="row"
+                        >
+                          <div
+                            class="col-md-12"
+                          >
+                            <label
+                              class="form-label"
+                            >
+                              Legal Description:
+                            </label>
+                          </div>
+                          <div
+                            class="col-md-12"
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -644,6 +660,13 @@ exports[`ResearchProperties component > renders as expected when provided no pro
                                       value="planNumber"
                                     >
                                       Plan #
+                                    </option>
+                                    <option
+                                      class="option"
+                                      data-testid="select-option-legalDescription"
+                                      value="legalDescription"
+                                    >
+                                      Legal Description
                                     </option>
                                   </select>
                                 </div>

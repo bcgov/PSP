@@ -98,7 +98,7 @@ export const ReturnDepositForm: React.FunctionComponent<
                   formikProps={formikProps}
                   label="Interest paid ($):"
                   field="interestPaid"
-                  tooltip="This is the interest paid on the deposit, if any, for the entire term the deposit is held.​​​​​​​"
+                  tooltip="This is the interest paid on the deposit, if any, for the entire period the deposit is held.​​​​​​​"
                 />
               </Col>
               <Col>

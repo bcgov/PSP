@@ -11,7 +11,7 @@ import { exists } from '@/utils';
 import { formatMinistryProject } from '@/utils/formUtils';
 
 import HistoricalNumbersContainer from '../../shared/header/HistoricalNumberContainer';
-import HistoricalNumberFieldView from '../../shared/header/HistoricalNumberSectionView';
+import { HistoricalNumberSectionView } from '../../shared/header/HistoricalNumberSectionView';
 
 export interface IAcquisitionHeaderProps {
   acquisitionFile?: ApiGen_Concepts_AcquisitionFile;
@@ -49,17 +49,13 @@ export const AcquisitionHeader: React.FunctionComponent<
             </>
           )}
         </HeaderField>
-        <HistoricalNumbersContainer
-          propertyIds={propertyIds}
-          displayValuesOnly={false}
-          View={HistoricalNumberFieldView}
-        />
+        <HistoricalNumbersContainer propertyIds={propertyIds} View={HistoricalNumberSectionView} />
       </Col>
       <Col>
         <StyledFiller>
           <AuditSection lastUpdatedBy={lastUpdatedBy} baseAudit={acquisitionFile} />
           {exists(acquisitionFile?.fileStatusTypeCode) && (
-            <StatusField statusCodeType={acquisitionFile.fileStatusTypeCode} />
+            <StatusField preText="File:" statusCodeType={acquisitionFile.fileStatusTypeCode} />
           )}
         </StyledFiller>
       </Col>

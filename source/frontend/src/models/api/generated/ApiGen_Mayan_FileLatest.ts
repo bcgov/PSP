@@ -9,8 +9,10 @@ export interface ApiGen_Mayan_FileLatest {
   id: number;
   comment: string | null;
   encoding: string | null;
+  file: string | null;
   filename: string | null;
   mimetype: string | null;
-  size: number;
+  checksum: string | null;
+  size: number | null;
   timestamp: UtcIsoDateTime;
 }

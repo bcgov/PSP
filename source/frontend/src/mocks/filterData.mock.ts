@@ -900,6 +900,7 @@ export const mockPropertyLayerSearchResponse = {
         FEATURE_LENGTH_M: 297.5144,
         OBJECTID: 601307912,
         SE_ANNO_CAD_DATA: null,
+        HISTORICAL_FILE_NUMBER_STR: 'Other type: 9LcWp1ZJVj',
       },
     },
     {
@@ -977,6 +978,7 @@ export const mockPropertyLayerSearchResponse = {
         FEATURE_LENGTH_M: 879.3112,
         OBJECTID: 601811208,
         SE_ANNO_CAD_DATA: null,
+        HISTORICAL_FILE_NUMBER_STR: 'Other type: 9LcWp1ZJVj',
       },
     },
     {

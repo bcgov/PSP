@@ -323,6 +323,20 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = obje
       : [];
   }, [externalSort?.sort]);
 
+  const handleCheckboxSelect = (values: T[]) => {
+    const allPreviouslySelected = selectedRowsRef?.current ?? [];
+    const previouslySelected = allPreviouslySelected.find(
+      row => values.length === 1 && row.id === values[0].id,
+    );
+
+    if (previouslySelected) {
+      setExternalSelectedRows &&
+        setExternalSelectedRows(allPreviouslySelected.filter(row => row !== previouslySelected));
+    } else {
+      setExternalSelectedRows && setExternalSelectedRows([...allPreviouslySelected, ...values]);
+    }
+  };
+
   // Use the useTable hook to create your table configuration
   const instance = useTable<T>(
     {
@@ -366,7 +380,9 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = obje
                       <IndeterminateCheckbox
                         {...getToggleAllRowsSelectedProps()}
                         isSingleSelect={isSingleSelect}
-                        setSelected={setExternalSelectedRows}
+                        setSelected={(values: T[]) => {
+                          handleCheckboxSelect(values);
+                        }}
                         selectedRef={selectedRowsRef}
                         allDataRef={dataRef}
                         disableSelection={disableSelection}
@@ -385,20 +401,7 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = obje
                         if (isSingleSelect === true) {
                           setExternalSelectedRows && setExternalSelectedRows([...values]);
                         } else {
-                          const allPreviouslySelected = selectedRowsRef?.current ?? [];
-                          const previouslySelected = allPreviouslySelected.find(
-                            row => values.length === 1 && row.id === values[0].id,
-                          );
-
-                          if (previouslySelected) {
-                            setExternalSelectedRows &&
-                              setExternalSelectedRows(
-                                allPreviouslySelected.filter(row => row !== previouslySelected),
-                              );
-                          } else {
-                            setExternalSelectedRows &&
-                              setExternalSelectedRows([...allPreviouslySelected, ...values]);
-                          }
+                          handleCheckboxSelect(values);
                         }
                       }}
                       selectedRef={selectedRowsRef}

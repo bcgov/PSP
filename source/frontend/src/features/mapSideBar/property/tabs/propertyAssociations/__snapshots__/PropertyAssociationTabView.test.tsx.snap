@@ -118,7 +118,7 @@ exports[`PropertyAssociationTabView component > renders as expected when provide
             </div>
           </div>
           <div
-            class="col-1"
+            class="pl-8 col-auto"
           >
             <svg
               class="c4"
@@ -348,7 +348,7 @@ exports[`PropertyAssociationTabView component > renders as expected when provide
             </div>
           </div>
           <div
-            class="col-1"
+            class="pl-8 col-auto"
           >
             <svg
               class="c4"
@@ -550,7 +550,7 @@ exports[`PropertyAssociationTabView component > renders as expected when provide
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <title>
-                    Leases-Licenses
+                    Leases-Licences
                   </title>
                   <path
                     d="M0 0h24v24H0z"
@@ -564,7 +564,7 @@ exports[`PropertyAssociationTabView component > renders as expected when provide
               <div
                 class="px-2 my-1 col-auto"
               >
-                Leases/Licenses
+                Leases/Licences
               </div>
               <div
                 class="my-1 col-auto"
@@ -578,7 +578,7 @@ exports[`PropertyAssociationTabView component > renders as expected when provide
             </div>
           </div>
           <div
-            class="col-1"
+            class="pl-8 col-auto"
           >
             <svg
               class="c4"
@@ -806,7 +806,7 @@ exports[`PropertyAssociationTabView component > renders as expected when provide
             </div>
           </div>
           <div
-            class="col-1"
+            class="pl-8 col-auto"
           >
             <svg
               class="c4"

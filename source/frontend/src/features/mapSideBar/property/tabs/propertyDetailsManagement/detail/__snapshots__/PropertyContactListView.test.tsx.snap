@@ -197,6 +197,23 @@ exports[`PropertyContactListView component > renders as expected when provided v
   line-height: 2rem;
 }
 
+.c9 {
+  margin-top: 0.3rem;
+}
+
+.c10 {
+  min-width: 5rem;
+  max-width: 5rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  text-align: center;
+  padding: 0;
+}
+
+.c10:disabled {
+  background: white;
+}
+
 .c4.c4 {
   display: inline-block;
   margin-left: 1.5rem;
@@ -293,7 +310,7 @@ exports[`PropertyContactListView component > renders as expected when provided v
           </div>
         </div>
         <div
-          class="col-1"
+          class="pl-8 col-auto"
         >
           <svg
             class="c5"
@@ -492,6 +509,140 @@ exports[`PropertyContactListView component > renders as expected when provided v
               </div>
             </div>
           </div>
+        </div>
+      </div>
+      <div
+        class="row"
+      >
+        <div
+          class="align-self-center col-auto"
+        >
+          <span>
+            1 - 1 of 1
+          </span>
+        </div>
+        <div
+          class="ml-auto align-self-center col-auto"
+        />
+        <div
+          class="align-self-center col-auto"
+        >
+          <div
+            class="Menu-root"
+          >
+            <div
+              class="Menu-button"
+            >
+              <div
+                class="d-flex"
+              >
+                <span
+                  class="c9"
+                >
+                  Show
+                </span>
+                <input
+                  class="c10 form-control"
+                  type="number"
+                  value="10"
+                />
+                <span
+                  class="c9"
+                >
+                  Entries
+                </span>
+              </div>
+            </div>
+            <div
+              class="Menu-items"
+              style="width: 10.0rem;"
+            >
+              <div
+                class="Menu-options scrollable list-group"
+              >
+                <div
+                  class="Menu-item list-group-item"
+                  title="menu-item-5"
+                >
+                  5
+                </div>
+                <div
+                  class="Menu-item list-group-item"
+                  title="menu-item-10"
+                >
+                  10
+                </div>
+                <div
+                  class="Menu-item list-group-item"
+                  title="menu-item-20"
+                >
+                  20
+                </div>
+                <div
+                  class="Menu-item list-group-item"
+                  title="menu-item-50"
+                >
+                  50
+                </div>
+                <div
+                  class="Menu-item list-group-item"
+                  title="menu-item-100"
+                >
+                  100
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="align-self-center col-auto"
+        >
+          <ul
+            class="pagination"
+          >
+            <li
+              class="page-item disabled"
+            >
+              <a
+                aria-disabled="true"
+                aria-label="Previous page"
+                class="page-link "
+                rel="prev"
+                role="button"
+                tabindex="-1"
+              >
+                &lt;
+              </a>
+            </li>
+            <li
+              class="page-item active"
+            >
+              <a
+                aria-current="page"
+                aria-label="Page 1 is your current page"
+                class="page-link"
+                rel="canonical"
+                role="button"
+                tabindex="-1"
+              >
+                1
+              </a>
+            </li>
+            <li
+              class="page-item disabled"
+            >
+              <a
+                aria-disabled="true"
+                aria-label="Next page"
+                class="page-link "
+                rel="next"
+                role="button"
+                tabindex="-1"
+              >
+                &gt;
+              </a>
+            </li>
+          </ul>
         </div>
       </div>
     </div>

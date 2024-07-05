@@ -1,7 +1,142 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`ResearchContainer component > renders as expected 1`] = `
-.c8 {
+.c3.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  min-height: 3rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+  height: 3.8rem;
+}
+
+.c3.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c3.btn:focus {
+  outline-width: 0.4rem;
+  outline-style: solid;
+  outline-offset: 1px;
+  box-shadow: none;
+}
+
+.c3.btn.btn-primary {
+  border: none;
+}
+
+.c3.btn.btn-secondary {
+  background: none;
+}
+
+.c3.btn.btn-info {
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c3.btn.btn-info:hover,
+.c3.btn.btn-info:active,
+.c3.btn.btn-info:focus {
+  background: none;
+}
+
+.c3.btn.btn-light {
+  border: none;
+}
+
+.c3.btn.btn-dark {
+  border: none;
+}
+
+.c3.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  text-align: left;
+  padding: 0;
+}
+
+.c3.btn.btn-link:hover,
+.c3.btn.btn-link:active,
+.c3.btn.btn-link:focus {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.c3.btn.btn-link:disabled,
+.c3.btn.btn-link.disabled {
+  background: none;
+  pointer-events: none;
+}
+
+.c3.btn:disabled,
+.c3.btn:disabled:hover {
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.c3.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c3.Button--icon-only:focus {
+  outline: none;
+}
+
+.c3.Button--icon-only .Button__icon {
+  margin-right: 0;
+}
+
+.c13 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -11,7 +146,7 @@ exports[`ResearchContainer component > renders as expected 1`] = `
   flex-wrap: nowrap;
 }
 
-.c0 {
+.c1 {
   font-family: 'BCSans-Bold';
   font-size: 3.2rem;
   border-bottom: solid 0.5rem;
@@ -20,7 +155,14 @@ exports[`ResearchContainer component > renders as expected 1`] = `
   margin-bottom: 2.4rem;
 }
 
-.c20 {
+.c5 {
+  border-left: 0.1rem solid;
+  width: 0.1rem;
+  height: 80%;
+  margin: auto;
+}
+
+.c25 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -37,23 +179,67 @@ exports[`ResearchContainer component > renders as expected 1`] = `
   overflow-y: auto;
 }
 
-.c12 {
+.c17 {
   height: 100%;
 }
 
-.c13 {
+.c18 {
   overflow: auto;
   height: 100%;
   width: 100%;
 }
 
-.c19 {
+.c24 {
   overflow: auto;
   height: 100%;
   width: 100%;
 }
 
-.c10 {
+.c4.btn.btn-light.Button {
+  padding: 0;
+  border: 0.1rem solid;
+  background-color: white;
+}
+
+.c4.btn.btn-light.Button:focus,
+.c4.btn.btn-light.Button:active {
+  background-color: white;
+}
+
+.c4.btn,
+.c4 .Button__icon,
+.c4 svg {
+  max-width: 2.4rem;
+  min-width: 2.4rem;
+  max-height: 2.4rem;
+  min-height: 2.4rem;
+  font-size: 1.4rem;
+}
+
+.c0 {
+  min-width: 90rem;
+  height: 100%;
+  position: relative;
+  padding: 1.6rem;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.c2 {
+  gap: 1.5rem;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c15 {
   width: 100%;
   position: relative;
   overflow: auto;
@@ -62,80 +248,80 @@ exports[`ResearchContainer component > renders as expected 1`] = `
   flex: 1;
 }
 
-.c11 {
+.c16 {
   height: 100%;
   width: 100%;
 }
 
-.c3 {
+.c8 {
   position: relative;
 }
 
-.c2 {
+.c7 {
   width: 100%;
   border-bottom: solid 0.5rem;
 }
 
-.c1 {
+.c6 {
   font-size: 2.4rem;
   cursor: pointer;
 }
 
-.c21 {
+.c26 {
   height: 100%;
 }
 
-.c21 .tab-content {
+.c26 .tab-content {
   border-radius: 0 0.4rem 0.4rem 0.4rem;
   height: calc(100% - 2.5rem);
   overflow-y: auto;
 }
 
-.c21 .tab-content .tab-pane {
+.c26 .tab-content .tab-pane {
   position: relative;
 }
 
-.c22 {
+.c27 {
   background-color: white;
   font-size: 1.4rem;
   border-color: transparent;
 }
 
-.c22 .nav-tabs {
+.c27 .nav-tabs {
   height: auto;
 }
 
-.c22 .nav-item {
+.c27 .nav-item {
   min-width: 5rem;
   padding: 0.1rem 1.2rem;
 }
 
-.c22 .nav-item:hover {
+.c27 .nav-item:hover {
   border-color: transparent;
   -webkit-text-decoration: underline;
   text-decoration: underline;
 }
 
-.c22 .nav-item.active {
+.c27 .nav-item.active {
   font-family: 'BCSans-Bold';
   border-color: transparent;
 }
 
-.c23 {
+.c28 {
   padding-top: 1rem;
 }
 
-.c24 {
+.c29 {
   text-align: right;
 }
 
-.c26 {
+.c31 {
   font-weight: bold;
   border-bottom: 0.2rem solid;
   margin-bottom: 2rem;
 }
 
-.c25 {
+.c30 {
   margin: 1.6rem;
   padding: 1.6rem;
   background-color: white;
@@ -143,23 +329,23 @@ exports[`ResearchContainer component > renders as expected 1`] = `
   border-radius: 0.5rem;
 }
 
-.c28.required::before {
+.c33.required::before {
   content: '*';
   position: absolute;
   top: 0.75rem;
   left: 0rem;
 }
 
-.c27 {
+.c32 {
   font-weight: bold;
 }
 
-.c6 {
+.c11 {
   font-size: 0.87em;
   line-height: 1.9;
 }
 
-.c9 {
+.c14 {
   font-family: 'BCSans-Bold';
   font-size: 1.4rem;
   border-radius: 0.4rem;
@@ -172,18 +358,19 @@ exports[`ResearchContainer component > renders as expected 1`] = `
   -ms-flex-align: center;
   align-items: center;
   padding: 0.2rem 0.5rem;
+  margin-left: 0.4rem;
   gap: 0.5rem;
   color: undefined;
   background-color: undefined;
 }
 
-.c7 {
+.c12 {
   margin-top: auto;
   padding-top: 1rem;
   padding-bottom: 1rem;
 }
 
-.c4 {
+.c9 {
   margin-top: 0.5rem;
   margin-bottom: 1.5rem;
   border-bottom-style: solid;
@@ -191,7 +378,7 @@ exports[`ResearchContainer component > renders as expected 1`] = `
   border-bottom-width: 0.1rem;
 }
 
-.c5 {
+.c10 {
   height: 100%;
   display: -webkit-box;
   display: -webkit-flex;
@@ -202,25 +389,25 @@ exports[`ResearchContainer component > renders as expected 1`] = `
   flex-direction: column;
 }
 
-.c14 {
+.c19 {
   text-align: left;
   padding: 0px;
   margin: 0px;
   width: 100%;
 }
 
-.c15 {
+.c20 {
   font-weight: normal;
   cursor: pointer;
   padding-bottom: 0.5rem;
 }
 
-.c15.selected {
+.c20.selected {
   font-weight: bold;
   cursor: default;
 }
 
-.c18 {
+.c23 {
   font-size: 1.5rem;
   border-radius: 50%;
   opacity: 0.8;
@@ -241,7 +428,7 @@ exports[`ResearchContainer component > renders as expected 1`] = `
   align-items: center;
 }
 
-.c16 {
+.c21 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -258,7 +445,7 @@ exports[`ResearchContainer component > renders as expected 1`] = `
   border-bottom: 1px solid;
 }
 
-.c17 {
+.c22 {
   font-size: 1.4rem;
   line-height: 2.2rem;
 }
@@ -270,7 +457,7 @@ exports[`ResearchContainer component > renders as expected 1`] = `
     />
     <div />
     <div
-      class=""
+      class="c0"
     >
       <div
         class="row"
@@ -279,37 +466,75 @@ exports[`ResearchContainer component > renders as expected 1`] = `
           class="col"
         >
           <h1
-            class="c0 mr-auto"
+            class="c1 mr-auto"
           >
-            <svg
+            <span
               class="mr-2"
-              fill="currentColor"
-              height="2.5rem"
-              stroke="currentColor"
-              stroke-width="0"
-              viewBox="0 0 24 24"
-              width="2.5rem"
-              xmlns="http://www.w3.org/2000/svg"
             >
-              <title>
-                User Profile
-              </title>
-              <path
-                d="M0 0h24v24H0z"
-                fill="none"
-              />
-              <path
-                d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-6 10H6v-2h8v2zm4-4H6v-2h12v2z"
-              />
-            </svg>
+              <svg
+                fill="currentColor"
+                height="2.5rem"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 24 24"
+                width="2.5rem"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <title>
+                  User Profile
+                </title>
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-6 10H6v-2h8v2zm4-4H6v-2h12v2z"
+                />
+              </svg>
+            </span>
             Research File
           </h1>
         </div>
         <div
-          class="col-auto"
+          class="c2 d-flex col-auto"
         >
+          <span>
+            <button
+              class="c3 Button Button--icon-only c4 btn btn-light"
+              title="collapse"
+              type="button"
+            >
+              <div
+                class="Button__icon"
+              >
+                <svg
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path
+                    d="M17.59 18 19 16.59 14.42 12 19 7.41 17.59 6l-6 6z"
+                  />
+                  <path
+                    d="m11 18 1.41-1.41L7.83 12l4.58-4.59L11 6l-6 6z"
+                  />
+                </svg>
+              </div>
+            </button>
+          </span>
+          <div
+            class="c5"
+          />
           <svg
-            class="c1"
+            class="c6"
             fill="currentColor"
             height="1em"
             stroke="currentColor"
@@ -328,644 +553,651 @@ exports[`ResearchContainer component > renders as expected 1`] = `
         </div>
       </div>
       <div
-        class="c2"
+        class="c7"
       />
-    </div>
-    <div
-      class="c3"
-    >
       <div
-        class="c4 no-gutters row"
+        class="c8"
       >
         <div
-          class="col-7"
+          class="c9 no-gutters row"
         >
           <div
-            class="row"
+            class="col-7"
           >
             <div
-              class="pr-0 text-left col-3"
-            >
-              <strong>
-                <label>
-                  File #:
-                </label>
-              </strong>
-            </div>
-            <div
-              class="pl-1 text-left col-9"
-            >
-              R-109
-            </div>
-          </div>
-          <div
-            class="row"
-          >
-            <div
-              class="pr-0 text-left col-3"
-            >
-              <strong>
-                <label>
-                  File name:
-                </label>
-              </strong>
-            </div>
-            <div
-              class="pl-1 text-left col-9"
-            >
-              fsdgsdf
-            </div>
-          </div>
-          <div
-            class="row"
-          >
-            <div
-              class="pr-0 text-left col-3"
-            >
-              <strong>
-                <label>
-                  MoTI region:
-                </label>
-              </strong>
-            </div>
-            <div
-              class="pl-1 text-left col-9"
-            />
-          </div>
-          <div
-            class="row"
-          >
-            <div
-              class="pr-0 text-left col-3"
-            >
-              <strong>
-                <label>
-                  Ministry district:
-                </label>
-              </strong>
-            </div>
-            <div
-              class="pl-1 text-left col-9"
-            />
-          </div>
-          <div
-            class="row"
-          >
-            <div
-              class="pr-0 text-left col-3"
-            >
-              <strong>
-                <label>
-                  Historical File #:
-                </label>
-              </strong>
-            </div>
-            <div
-              class="pl-1 text-left col-9"
-            >
-              <div />
-            </div>
-          </div>
-        </div>
-        <div
-          class="col"
-        >
-          <div
-            class="c5"
-          >
-            <div
-              class="no-gutters row"
+              class="row"
             >
               <div
-                class="text-right col"
+                class="pr-0 text-left col-3"
               >
-                <span
-                  class="c6"
-                >
-                  <strong>
-                    Created: 
-                  </strong>
-                  Sep 2, 2022
-                   by
-                   
-                  <span
-                    class="tooltip-icon"
-                    data-testid="tooltip-icon-userNameTooltip"
-                    id="userNameTooltip"
-                  >
-                    <strong>
-                      admin
-                    </strong>
-                  </span>
-                </span>
+                <strong>
+                  <label>
+                    File #:
+                  </label>
+                </strong>
+              </div>
+              <div
+                class="pl-1 text-left col-9"
+              >
+                R-109
               </div>
             </div>
             <div
-              class="no-gutters row"
+              class="row"
             >
               <div
-                class="text-right col"
+                class="pr-0 text-left col-3"
               >
-                <span
-                  class="c6"
-                >
-                  <strong>
-                    Updated: 
-                  </strong>
-                  Sep 2, 2022
-                   
-                  by
-                   
-                  <span
-                    class="tooltip-icon"
-                    data-testid="tooltip-icon-userNameTooltip"
-                    id="userNameTooltip"
-                  >
-                    <strong>
-                      admin
-                    </strong>
-                  </span>
-                </span>
+                <strong>
+                  <label>
+                    File name:
+                  </label>
+                </strong>
+              </div>
+              <div
+                class="pl-1 text-left col-9"
+              >
+                fsdgsdf
               </div>
             </div>
             <div
-              class="c7 no-gutters justify-content-end align-items-end row"
+              class="row"
             >
               <div
-                class="col"
+                class="pr-0 text-left col-3"
+              >
+                <strong>
+                  <label>
+                    MoTI region:
+                  </label>
+                </strong>
+              </div>
+              <div
+                class="pl-1 text-left col-9"
               />
+            </div>
+            <div
+              class="row"
+            >
               <div
-                class="align-self-end col-auto"
+                class="pr-0 text-left col-3"
+              >
+                <strong>
+                  <label>
+                    Ministry district:
+                  </label>
+                </strong>
+              </div>
+              <div
+                class="pl-1 text-left col-9"
+              />
+            </div>
+            <div
+              class="row"
+            >
+              <div
+                class="pr-0 text-left col-3"
+              >
+                <strong>
+                  <label>
+                    Historical File #:
+                  </label>
+                </strong>
+              </div>
+              <div
+                class="pl-1 text-left col-9"
+              >
+                <div />
+              </div>
+            </div>
+          </div>
+          <div
+            class="col"
+          >
+            <div
+              class="c10"
+            >
+              <div
+                class="no-gutters row"
               >
                 <div
-                  class="c8 c9"
+                  class="text-right col"
                 >
-                  <svg
-                    fill="currentColor"
-                    height="16"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    viewBox="0 0 24 24"
-                    width="16"
-                    xmlns="http://www.w3.org/2000/svg"
+                  <span
+                    class="c11"
                   >
-                    <path
-                      d="M0 0h24v24H0z"
-                      fill="none"
-                    />
-                    <path
-                      d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2z"
-                    />
-                  </svg>
-                  ACTIVE
+                    <strong>
+                      Created: 
+                    </strong>
+                    Sep 2, 2022
+                     by
+                     
+                    <span
+                      class="tooltip-icon"
+                      data-testid="tooltip-icon-userNameTooltip"
+                      id="userNameTooltip"
+                    >
+                      <strong>
+                        admin
+                      </strong>
+                    </span>
+                  </span>
+                </div>
+              </div>
+              <div
+                class="no-gutters row"
+              >
+                <div
+                  class="text-right col"
+                >
+                  <span
+                    class="c11"
+                  >
+                    <strong>
+                      Updated: 
+                    </strong>
+                    Sep 2, 2022
+                     
+                    by
+                     
+                    <span
+                      class="tooltip-icon"
+                      data-testid="tooltip-icon-userNameTooltip"
+                      id="userNameTooltip"
+                    >
+                      <strong>
+                        admin
+                      </strong>
+                    </span>
+                  </span>
+                </div>
+              </div>
+              <div
+                class="c12 no-gutters justify-content-end align-items-end row"
+              >
+                <div
+                  class="col"
+                />
+                <div
+                  class="align-self-end d-flex col-auto"
+                >
+                  <span
+                    class="c11"
+                  >
+                    <b>
+                      File:
+                    </b>
+                  </span>
+                  <div
+                    class="c13 c14"
+                  >
+                    <svg
+                      fill="currentColor"
+                      height="16"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      width="16"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M0 0h24v24H0z"
+                        fill="none"
+                      />
+                      <path
+                        d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2z"
+                      />
+                    </svg>
+                    ACTIVE
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <div
-      class="c10"
-    >
       <div
-        class="c11"
+        class="c15"
       >
         <div
-          class="c12 no-gutters row"
+          class="c16"
         >
           <div
-            class="c13 d-flex flex-column col-3"
+            class="c17 no-gutters row"
           >
             <div
-              class="c14"
+              class="c18 d-flex flex-column col-3"
             >
               <div
-                class="c15 no-gutters selected row"
-                data-testid="menu-item-row-0"
+                class="c19"
               >
                 <div
-                  class="col-1"
-                >
-                  <svg
-                    fill="currentColor"
-                    height="1em"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    viewBox="0 0 192 512"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M0 384.662V127.338c0-17.818 21.543-26.741 34.142-14.142l128.662 128.662c7.81 7.81 7.81 20.474 0 28.284L34.142 398.804C21.543 411.404 0 402.48 0 384.662z"
-                    />
-                  </svg>
-                </div>
-                <div
-                  class="col"
-                >
-                  File Summary
-                </div>
-                <div
-                  class="c16"
-                >
-                  <span
-                    class="c17"
-                  >
-                    Properties
-                  </span>
-                </div>
-              </div>
-              <div
-                class="c15 no-gutters  row"
-                data-testid="menu-item-row-1"
-              >
-                <div
-                  class="col-1"
-                />
-                <div
-                  class="pr-2 col-auto"
+                  class="c20 no-gutters selected row"
+                  data-testid="menu-item-row-0"
                 >
                   <div
-                    class="c18"
+                    class="col-1"
                   >
-                    1
+                    <svg
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 192 512"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M0 384.662V127.338c0-17.818 21.543-26.741 34.142-14.142l128.662 128.662c7.81 7.81 7.81 20.474 0 28.284L34.142 398.804C21.543 411.404 0 402.48 0 384.662z"
+                      />
+                    </svg>
+                  </div>
+                  <div
+                    class="col"
+                  >
+                    File Summary
+                  </div>
+                  <div
+                    class="c21"
+                  >
+                    <span
+                      class="c22"
+                    >
+                      Properties
+                    </span>
                   </div>
                 </div>
                 <div
-                  class="col"
-                >
-                  123-456-789
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            class="c19 col-9"
-          >
-            <div
-              class="c20"
-            >
-              <div
-                class="c21"
-              >
-                <nav
-                  class="c22 nav nav-tabs"
-                  role="tablist"
-                >
-                  <a
-                    aria-selected="true"
-                    class="nav-item nav-link active"
-                    data-rb-event-key="fileDetails"
-                    href="#"
-                    role="tab"
-                  >
-                    File Details
-                  </a>
-                </nav>
-                <div
-                  class="tab-content"
+                  class="c20 no-gutters  row"
+                  data-testid="menu-item-row-1"
                 >
                   <div
-                    aria-hidden="false"
-                    class="fade tab-pane active show"
-                    role="tabpanel"
+                    class="col-1"
+                  />
+                  <div
+                    class="pr-2 col-auto"
                   >
                     <div
                       class="c23"
                     >
+                      1
+                    </div>
+                  </div>
+                  <div
+                    class="col"
+                  >
+                    123-456-789
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="c24 col-9"
+            >
+              <div
+                class="c25"
+              >
+                <div
+                  class="c26"
+                >
+                  <nav
+                    class="c27 nav nav-tabs"
+                    role="tablist"
+                  >
+                    <a
+                      aria-selected="true"
+                      class="nav-item nav-link active"
+                      data-rb-event-key="fileDetails"
+                      href="#"
+                      role="tab"
+                    >
+                      File Details
+                    </a>
+                  </nav>
+                  <div
+                    class="tab-content"
+                  >
+                    <div
+                      aria-hidden="false"
+                      class="fade tab-pane active show"
+                      role="tabpanel"
+                    >
                       <div
-                        class="c24 mr-3 my-1"
-                      />
-                      <div
-                        class="c25 form-section"
+                        class="c28"
                       >
-                        <h2
-                          class="c26"
-                        >
-                          <div
-                            class="no-gutters row"
-                          >
-                            <div
-                              class="col"
-                            >
-                              Project
-                            </div>
-                          </div>
-                        </h2>
                         <div
-                          class="collapse show"
+                          class="c29 mr-3 my-1"
+                        />
+                        <div
+                          class="c30 form-section"
                         >
-                          <div
-                            class="pb-2 row"
+                          <h2
+                            class="c31"
                           >
                             <div
-                              class="pr-0 text-left col-4"
+                              class="no-gutters row"
                             >
-                              <label
-                                class="c27"
+                              <div
+                                class="col"
                               >
-                                Ministry project
-                                :
-                              </label>
+                                Project
+                              </div>
                             </div>
+                          </h2>
+                          <div
+                            class="collapse show"
+                          >
                             <div
-                              class="c28 text-left col"
+                              class="pb-2 row"
                             >
-                              <div>
-                                00048 CLAIMS
+                              <div
+                                class="pr-0 text-left col-4"
+                              >
+                                <label
+                                  class="c32"
+                                >
+                                  Ministry project
+                                  :
+                                </label>
+                              </div>
+                              <div
+                                class="c33 text-left col"
+                              >
+                                <div>
+                                  00048 CLAIMS
+                                </div>
                               </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                      <div
-                        class="c25 form-section"
-                      >
-                        <h2
-                          class="c26"
-                        >
-                          <div
-                            class="no-gutters row"
-                          >
-                            <div
-                              class="col"
-                            >
-                              Roads
-                            </div>
-                          </div>
-                        </h2>
                         <div
-                          class="collapse show"
+                          class="c30 form-section"
                         >
-                          <div
-                            class="pb-2 row"
+                          <h2
+                            class="c31"
                           >
                             <div
-                              class="pr-0 text-left col-4"
+                              class="no-gutters row"
                             >
-                              <label
-                                class="c27"
+                              <div
+                                class="col"
                               >
-                                Road name
-                                :
-                              </label>
+                                Roads
+                              </div>
                             </div>
-                            <div
-                              class="c28 text-left col"
-                            >
-                              Test road name
-                            </div>
-                          </div>
+                          </h2>
                           <div
-                            class="pb-2 row"
+                            class="collapse show"
                           >
                             <div
-                              class="pr-0 text-left col-4"
+                              class="pb-2 row"
                             >
-                              <label
-                                class="c27"
+                              <div
+                                class="pr-0 text-left col-4"
                               >
-                                Road alias
-                                :
-                              </label>
+                                <label
+                                  class="c32"
+                                >
+                                  Road name
+                                  :
+                                </label>
+                              </div>
+                              <div
+                                class="c33 text-left col"
+                              >
+                                Test road name
+                              </div>
                             </div>
                             <div
-                              class="c28 text-left col"
+                              class="pb-2 row"
                             >
-                              Test road alias
+                              <div
+                                class="pr-0 text-left col-4"
+                              >
+                                <label
+                                  class="c32"
+                                >
+                                  Road alias
+                                  :
+                                </label>
+                              </div>
+                              <div
+                                class="c33 text-left col"
+                              >
+                                Test road alias
+                              </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                      <div
-                        class="c25 form-section"
-                      >
-                        <h2
-                          class="c26"
-                        >
-                          <div
-                            class="no-gutters row"
-                          >
-                            <div
-                              class="col"
-                            >
-                              Research Request
-                            </div>
-                          </div>
-                        </h2>
                         <div
-                          class="collapse show"
+                          class="c30 form-section"
                         >
-                          <div
-                            class="pb-2 row"
+                          <h2
+                            class="c31"
                           >
                             <div
-                              class="pr-0 text-left col-4"
+                              class="no-gutters row"
                             >
-                              <label
-                                class="c27"
+                              <div
+                                class="col"
                               >
-                                Research purpose
-                                :
-                              </label>
+                                Research Request
+                              </div>
                             </div>
-                            <div
-                              class="c28 text-left col"
-                            />
-                          </div>
+                          </h2>
                           <div
-                            class="pb-2 row"
+                            class="collapse show"
                           >
                             <div
-                              class="pr-0 text-left col-4"
+                              class="pb-2 row"
                             >
-                              <label
-                                class="c27"
+                              <div
+                                class="pr-0 text-left col-4"
                               >
-                                Request date
-                                :
-                              </label>
+                                <label
+                                  class="c32"
+                                >
+                                  Research purpose
+                                  :
+                                </label>
+                              </div>
+                              <div
+                                class="c33 text-left col"
+                              />
                             </div>
                             <div
-                              class="c28 text-left col"
+                              class="pb-2 row"
                             >
-                               
-                              Apr 14, 2022
-                            </div>
-                          </div>
-                          <div
-                            class="pb-2 row"
-                          >
-                            <div
-                              class="pr-0 text-left col-4"
-                            >
-                              <label
-                                class="c27"
+                              <div
+                                class="pr-0 text-left col-4"
                               >
-                                Source of request
-                                :
-                              </label>
-                            </div>
-                            <div
-                              class="c28 text-left col"
-                            >
-                              Headquarters (HQ)
-                            </div>
-                          </div>
-                          <div
-                            class="pb-2 row"
-                          >
-                            <div
-                              class="pr-0 text-left col-4"
-                            >
-                              <label
-                                class="c27"
+                                <label
+                                  class="c32"
+                                >
+                                  Request date
+                                  :
+                                </label>
+                              </div>
+                              <div
+                                class="c33 text-left col"
                               >
-                                Requester
-                                :
-                              </label>
+                                 
+                                Apr 14, 2022
+                              </div>
                             </div>
                             <div
-                              class="c28 text-left col"
+                              class="pb-2 row"
                             >
-                              Dairy Queen Forever! Property Management
-                            </div>
-                          </div>
-                          <div
-                            class="pb-2 row"
-                          >
-                            <div
-                              class="pr-0 text-left col-4"
-                            >
-                              <label
-                                class="c27"
+                              <div
+                                class="pr-0 text-left col-4"
                               >
-                                Description of request
-                                :
-                              </label>
+                                <label
+                                  class="c32"
+                                >
+                                  Source of request
+                                  :
+                                </label>
+                              </div>
+                              <div
+                                class="c33 text-left col"
+                              >
+                                Headquarters (HQ)
+                              </div>
                             </div>
                             <div
-                              class="c28 text-left col"
-                            />
+                              class="pb-2 row"
+                            >
+                              <div
+                                class="pr-0 text-left col-4"
+                              >
+                                <label
+                                  class="c32"
+                                >
+                                  Requester
+                                  :
+                                </label>
+                              </div>
+                              <div
+                                class="c33 text-left col"
+                              >
+                                Dairy Queen Forever! Property Management
+                              </div>
+                            </div>
+                            <div
+                              class="pb-2 row"
+                            >
+                              <div
+                                class="pr-0 text-left col-4"
+                              >
+                                <label
+                                  class="c32"
+                                >
+                                  Description of request
+                                  :
+                                </label>
+                              </div>
+                              <div
+                                class="c33 text-left col"
+                              />
+                            </div>
+                            a request description
                           </div>
-                          a request description
                         </div>
-                      </div>
-                      <div
-                        class="c25 form-section"
-                      >
-                        <h2
-                          class="c26"
-                        >
-                          <div
-                            class="no-gutters row"
-                          >
-                            <div
-                              class="col"
-                            >
-                              Result
-                            </div>
-                          </div>
-                        </h2>
                         <div
-                          class="collapse show"
+                          class="c30 form-section"
                         >
-                          <div
-                            class="pb-2 row"
+                          <h2
+                            class="c31"
                           >
                             <div
-                              class="pr-0 text-left col-4"
+                              class="no-gutters row"
                             >
-                              <label
-                                class="c27"
+                              <div
+                                class="col"
                               >
-                                Research completed on
-                                :
-                              </label>
+                                Result
+                              </div>
                             </div>
-                            <div
-                              class="c28 text-left col"
-                            >
-                              Mar 30, 2022
-                            </div>
-                          </div>
+                          </h2>
                           <div
-                            class="pb-2 row"
+                            class="collapse show"
                           >
                             <div
-                              class="pr-0 text-left col-4"
+                              class="pb-2 row"
                             >
-                              <label
-                                class="c27"
+                              <div
+                                class="pr-0 text-left col-4"
                               >
-                                Result of request
-                                :
-                              </label>
+                                <label
+                                  class="c32"
+                                >
+                                  Research completed on
+                                  :
+                                </label>
+                              </div>
+                              <div
+                                class="c33 text-left col"
+                              >
+                                Mar 30, 2022
+                              </div>
                             </div>
                             <div
-                              class="c28 text-left col"
-                            />
+                              class="pb-2 row"
+                            >
+                              <div
+                                class="pr-0 text-left col-4"
+                              >
+                                <label
+                                  class="c32"
+                                >
+                                  Result of request
+                                  :
+                                </label>
+                              </div>
+                              <div
+                                class="c33 text-left col"
+                              />
+                            </div>
+                            A research result
                           </div>
-                          A research result
                         </div>
-                      </div>
-                      <div
-                        class="c25 form-section"
-                      >
-                        <h2
-                          class="c26"
-                        >
-                          <div
-                            class="no-gutters row"
-                          >
-                            <div
-                              class="col"
-                            >
-                              Expropriation
-                            </div>
-                          </div>
-                        </h2>
                         <div
-                          class="collapse show"
+                          class="c30 form-section"
                         >
-                          <div
-                            class="pb-2 row"
+                          <h2
+                            class="c31"
                           >
                             <div
-                              class="pr-0 text-left col-4"
+                              class="no-gutters row"
                             >
-                              <label
-                                class="c27"
+                              <div
+                                class="col"
                               >
-                                Expropriation?
-                                :
-                              </label>
+                                Expropriation
+                              </div>
                             </div>
-                            <div
-                              class="c28 text-left col"
-                            >
-                              No
-                            </div>
-                          </div>
+                          </h2>
                           <div
-                            class="pb-2 row"
+                            class="collapse show"
                           >
                             <div
-                              class="pr-0 text-left col-4"
+                              class="pb-2 row"
                             >
-                              <label
-                                class="c27"
+                              <div
+                                class="pr-0 text-left col-4"
                               >
-                                Expropriation notes
-                                :
-                              </label>
+                                <label
+                                  class="c32"
+                                >
+                                  Expropriation?
+                                  :
+                                </label>
+                              </div>
+                              <div
+                                class="c33 text-left col"
+                              >
+                                No
+                              </div>
                             </div>
                             <div
-                              class="c28 text-left col"
-                            />
+                              class="pb-2 row"
+                            >
+                              <div
+                                class="pr-0 text-left col-4"
+                              >
+                                <label
+                                  class="c32"
+                                >
+                                  Expropriation notes
+                                  :
+                                </label>
+                              </div>
+                              <div
+                                class="c33 text-left col"
+                              />
+                            </div>
+                            An expropriation note
                           </div>
-                          An expropriation note
                         </div>
                       </div>
                     </div>

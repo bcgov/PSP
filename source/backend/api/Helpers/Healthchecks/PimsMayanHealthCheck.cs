@@ -27,7 +27,7 @@ namespace Pims.Api.Helpers.Healthchecks
             }
             catch (Exception e)
             {
-                return new HealthCheckResult(HealthStatus.Degraded, $"Mayan error response: {e.Message}");
+                return new HealthCheckResult(context.Registration.FailureStatus, $"Mayan error response: {e.Message}");
             }
             return HealthCheckResult.Healthy();
         }

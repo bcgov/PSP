@@ -6,7 +6,18 @@ exports[`MotiInventoryHeader component > renders as expected 1`] = `
     class="Toastify"
   />
   <div />
-  <div
+  .c0 {
+  height: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+<div
     class="no-gutters row"
   >
     <div
@@ -51,36 +62,40 @@ exports[`MotiInventoryHeader component > renders as expected 1`] = `
       class="text-right col"
     >
       <div
-        class="justify-content-end row"
+        class="c0"
       >
         <div
-          class="pr-0 text-left col-auto"
+          class="justify-content-end row"
         >
-          <strong>
-            <label>
-              PID:
-            </label>
-          </strong>
+          <div
+            class="pr-0 text-left col-auto"
+          >
+            <strong>
+              <label>
+                PID:
+              </label>
+            </strong>
+          </div>
+          <div
+            class="pl-1 text-left col-auto"
+          />
         </div>
         <div
-          class="pl-1 text-left col-auto"
-        />
-      </div>
-      <div
-        class="justify-content-end row"
-      >
-        <div
-          class="pr-0 text-left col-auto"
+          class="justify-content-end row"
         >
-          <strong>
-            <label>
-              Land parcel type:
-            </label>
-          </strong>
+          <div
+            class="pr-0 text-left col-auto"
+          >
+            <strong>
+              <label>
+                Land parcel type:
+              </label>
+            </strong>
+          </div>
+          <div
+            class="pl-1 text-left col-auto"
+          />
         </div>
-        <div
-          class="pl-1 text-left col-auto"
-        />
       </div>
     </div>
     <div

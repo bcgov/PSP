@@ -2,9 +2,9 @@ import { useCallback, useContext, useEffect } from 'react';
 
 import { SideBarContext } from '@/features/mapSideBar/context/sidebarContext';
 import { useApiLeases } from '@/hooks/pims-api/useApiLeases';
+import { useLeasePeriodRepository } from '@/hooks/repositories/useLeasePeriodRepository';
 import { useLeaseRepository } from '@/hooks/repositories/useLeaseRepository';
 import { useLeaseTenantRepository } from '@/hooks/repositories/useLeaseTenantRepository';
-import { useLeaseTermRepository } from '@/hooks/repositories/useLeaseTermRepository';
 import { usePropertyLeaseRepository } from '@/hooks/repositories/usePropertyLeaseRepository';
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
@@ -27,11 +27,12 @@ export function useLeaseDetail(leaseId?: number) {
     getLeaseTenants: { execute: getLeaseTenants, loading: leaseTenantsLoading },
   } = useLeaseTenantRepository();
   const {
-    getLeaseTerms: { execute: getLeaseTerms, loading: leaseTermsLoading },
-  } = useLeaseTermRepository();
+    getLeasePeriods: { execute: getLeasePeriods, loading: leasePeriodsLoading },
+  } = useLeasePeriodRepository();
 
   const {
     getLastUpdatedBy: { execute: getLastUpdatedBy, loading: getLastUpdatedByLoading },
+    getLeaseChecklist: { execute: getLeaseChecklist, loading: getLeaseChecklistLoading },
   } = useLeaseRepository();
 
   const getApiLeaseById = useApiRequestWrapper({
@@ -47,26 +48,39 @@ export function useLeaseDetail(leaseId?: number) {
       const leasePromise = getApiLeaseByIdFunc(leaseId);
       const leaseTenantsPromise = getLeaseTenants(leaseId);
       const propertyLeasesPromise = getPropertyLeases(leaseId);
-      const leaseTermsPromise = getLeaseTerms(leaseId);
-      const [lease, leaseTenants, propertyLeases, leaseTerms] = await Promise.all([
-        leasePromise,
-        leaseTenantsPromise,
-        propertyLeasesPromise,
-        leaseTermsPromise,
-      ]);
+      const leasePeriodsPromise = getLeasePeriods(leaseId);
+      const leaseChecklistPromise = getLeaseChecklist(leaseId);
+
+      const [lease, leaseTenants, propertyLeases, leasePeriods, leaseChecklistItems] =
+        await Promise.all([
+          leasePromise,
+          leaseTenantsPromise,
+          propertyLeasesPromise,
+          leasePeriodsPromise,
+          leaseChecklistPromise,
+        ]);
       if (lease) {
         const mergedLeases: ApiGen_Concepts_Lease = {
           ...lease,
           tenants: leaseTenants ?? [],
           fileProperties: propertyLeases ?? [],
-          terms: leaseTerms ?? [],
+          periods: leasePeriods ?? [],
+          fileChecklistItems: leaseChecklistItems ?? [],
         };
         setLease(mergedLeases);
         return mergedLeases;
       }
       return undefined;
     }
-  }, [leaseId, getApiLeaseByIdFunc, setLease, getLeaseTenants, getPropertyLeases, getLeaseTerms]);
+  }, [
+    leaseId,
+    getApiLeaseByIdFunc,
+    getLeaseTenants,
+    getPropertyLeases,
+    getLeasePeriods,
+    getLeaseChecklist,
+    setLease,
+  ]);
 
   const fetchLastUpdatedBy = useCallback(async () => {
     if (leaseId) {
@@ -89,8 +103,9 @@ export function useLeaseDetail(leaseId?: number) {
     getApiLeaseById.loading ||
     propertyLeasesLoading ||
     leaseTenantsLoading ||
-    leaseTermsLoading ||
-    getLastUpdatedByLoading;
+    leasePeriodsLoading ||
+    getLastUpdatedByLoading ||
+    getLeaseChecklistLoading;
 
   useDeepCompareEffect(() => {
     if (!lease) {
