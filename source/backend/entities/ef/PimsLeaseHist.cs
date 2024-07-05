@@ -115,9 +115,6 @@ public partial class PimsLeaseHist
     [Column("ORIG_EXPIRY_DATE", TypeName = "datetime")]
     public DateTime? OrigExpiryDate { get; set; }
 
-    [Column("TERMINATION_DATE", TypeName = "datetime")]
-    public DateTime? TerminationDate { get; set; }
-
     [Column("LEASE_AMOUNT", TypeName = "money")]
     public decimal? LeaseAmount { get; set; }
 
@@ -158,20 +155,6 @@ public partial class PimsLeaseHist
     [Column("TERMINATION_REASON")]
     [StringLength(500)]
     public string TerminationReason { get; set; }
-
-    [Column("IS_PUBLIC_BENEFIT")]
-    public bool? IsPublicBenefit { get; set; }
-
-    [Column("IS_FINANCIAL_GAIN")]
-    public bool? IsFinancialGain { get; set; }
-
-    [Column("FEE_DETERMINATION_NOTE")]
-    [StringLength(1000)]
-    public string FeeDeterminationNote { get; set; }
-
-    [Column("PRIMARY_ARBITRATION_CITY")]
-    [StringLength(200)]
-    public string PrimaryArbitrationCity { get; set; }
 
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }
@@ -223,4 +206,21 @@ public partial class PimsLeaseHist
     [Column("DB_LAST_UPDATE_USERID")]
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
+
+    [Column("TERMINATION_DATE", TypeName = "datetime")]
+    public DateTime? TerminationDate { get; set; }
+
+    [Column("IS_PUBLIC_BENEFIT")]
+    public bool? IsPublicBenefit { get; set; }
+
+    [Column("IS_FINANCIAL_GAIN")]
+    public bool? IsFinancialGain { get; set; }
+
+    [Column("FEE_DETERMINATION_NOTE")]
+    [StringLength(1000)]
+    public string FeeDeterminationNote { get; set; }
+
+    [Column("PRIMARY_ARBITRATION_CITY")]
+    [StringLength(200)]
+    public string PrimaryArbitrationCity { get; set; }
 }
