@@ -8,7 +8,7 @@ import { ApiGen_Concepts_AcquisitionFileProperty } from './ApiGen_Concepts_Acqui
 // LINK: @backend/apimodels/Models/Concepts/CompensationRequisition/CompensationRequisitionPropertyModel.cs
 export interface ApiGen_Concepts_CompensationRequisitionProperty extends ApiGen_Base_BaseAudit {
   compensationRequisitionPropertyId: number | null;
-  compensationRequisitionId: number;
+  compensationRequisitionId: number | null;
   propertyAcquisitionFileId: number | null;
   acquisitionFileProperty: ApiGen_Concepts_AcquisitionFileProperty | null;
 }

@@ -5,6 +5,7 @@ import { Roles } from '@/constants/index';
 import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
 import {
   emptyCompensationFinancial,
+  getMockApiCompensationWithProperty,
   getMockApiDefaultCompensation,
 } from '@/mocks/compensations.mock';
 import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
@@ -184,6 +185,38 @@ describe('Compensation Detail View Component', () => {
 
     const editButton = queryByTitle('Edit compensation requisition');
     expect(editButton).toBeInTheDocument();
+  });
+
+  it('displays the acquisition files properties for selection', async () => {
+    const { findByText, findByTestId } = await setup({
+      claims: [Claims.COMPENSATION_REQUISITION_EDIT],
+      props: {
+        compensation: getMockApiDefaultCompensation(),
+        acquisitionFile: mockAcquisitionFileResponse(),
+      },
+    });
+
+    expect(await findByTestId("selectrow-1")).not.toBeChecked();
+    expect(await findByText(/PID: 023-214-937/)).toBeVisible();
+
+    expect(await findByTestId("selectrow-2")).not.toBeChecked();
+    expect(await findByText(/PID: 024-996-777/)).toBeVisible();
+  });
+
+  it('displays the acquisition files properties selected', async () => {
+    const { findByText, findByTestId } = await setup({
+      claims: [Claims.COMPENSATION_REQUISITION_EDIT],
+      props: {
+        compensation: getMockApiCompensationWithProperty(),
+        acquisitionFile: mockAcquisitionFileResponse(),
+      },
+    });
+
+    expect(await findByTestId("selectrow-1")).toBeChecked();
+    expect(await findByText(/PID: 023-214-937/)).toBeVisible();
+
+    expect(await findByTestId("selectrow-2")).not.toBeChecked();
+    expect(await findByText(/PID: 024-996-777/)).toBeVisible();
   });
 
   it('displays the compensation finalized date', async () => {

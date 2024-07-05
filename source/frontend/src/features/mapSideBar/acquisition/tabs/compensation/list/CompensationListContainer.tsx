@@ -121,14 +121,15 @@ export const CompensationListContainer: React.FC<ICompensationListContainerProps
       legacyPayee: null,
       isPaymentInTrust: null,
       gstNumber: null,
-      compensationRequisitionProperties: fileProperties.map(x => {
-        return {
-          compensationRequisitionPropertyId: null,
-          compensationRequisitionId: null,
-          propertyAcquisitionFileId: x.id,
-          acquisitionFileProperty: null,
-        } as ApiGen_Concepts_CompensationRequisitionProperty;
-      }),
+      compensationRequisitionProperties:
+        fileProperties?.map(x => {
+          return {
+            compensationRequisitionPropertyId: null,
+            compensationRequisitionId: null,
+            propertyAcquisitionFileId: x.id,
+            acquisitionFileProperty: null,
+          } as ApiGen_Concepts_CompensationRequisitionProperty;
+        }) || [],
       ...getEmptyBaseAudit(),
     };
 

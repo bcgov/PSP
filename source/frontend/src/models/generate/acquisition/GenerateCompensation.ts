@@ -45,7 +45,7 @@ export class Api_GenerateCompensation {
     client = '',
     interestHolders?: ApiGen_Concepts_InterestHolder[],
   ) {
-    const allInterestHoldersPropertes = interestHolders.flatMap(
+    const allInterestHoldersPropertes = interestHolders?.flatMap(
       ih => ih?.interestHolderProperties ?? [],
     );
 
