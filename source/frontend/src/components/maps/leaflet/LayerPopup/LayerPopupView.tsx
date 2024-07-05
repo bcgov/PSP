@@ -177,4 +177,5 @@ const StyledFlyoutContainer = styled.div`
   border: 2px solid #bcbec5;
   box-shadow: 6px 6px 12px rgb(0 0 0 / 40%);
   min-width: 25rem;
+  background-color: ${props => props.theme.css.highlightBackgroundColor};
 `;

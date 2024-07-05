@@ -92,10 +92,10 @@ const AddSubdivisionContainer: React.FC<IAddSubdivisionContainerProps> = ({ onCl
     }
   }, [initialForm]);
 
-  const changeSidebar = mapMachine.changeSidebar;
+  const setFilePropertyLocations = mapMachine.setFilePropertyLocations;
   useEffect(() => {
-    return () => changeSidebar();
-  }, [changeSidebar]);
+    return () => setFilePropertyLocations([]);
+  }, [setFilePropertyLocations]);
 
   const withUserOverride = useApiUserOverride<
     (userOverrideCodes: UserOverrideCode[]) => Promise<ApiGen_Concepts_DispositionFile | void>

@@ -499,7 +499,7 @@ namespace Pims.Api
             services.AddScoped<IAcquisitionFileService, AcquisitionFileService>();
             services.AddScoped<ILeaseService, LeaseService>();
             services.AddScoped<ILeaseReportsService, LeaseReportsService>();
-            services.AddScoped<ILeaseTermService, LeaseTermService>();
+            services.AddScoped<ILeasePeriodService, LeasePeriodService>();
             services.AddScoped<ILeasePaymentService, LeasePaymentService>();
             services.AddScoped<ISecurityDepositService, SecurityDepositService>();
             services.AddScoped<ISecurityDepositReturnService, SecurityDepositReturnService>();

@@ -88,7 +88,7 @@ exports[`PaymentForm component > renders as expected 1`] = `
   font-family: 'BcSans';
 }
 
-.c0 .required .form-label:after {
+.c0 .required .datepicker-label:after {
   content: ' *';
 }
 
@@ -130,7 +130,12 @@ exports[`PaymentForm component > renders as expected 1`] = `
         class="form-label"
         for="datepicker-receivedDate"
       >
-        Sent date:
+        <span
+          class="datepicker-label"
+        >
+          Sent date:
+        </span>
+         
       </label>
       <div
         class="react-datepicker-wrapper d-block"
@@ -167,7 +172,12 @@ exports[`PaymentForm component > renders as expected 1`] = `
         class="form-label"
         for="input-leasePaymentMethodType.id"
       >
-        Method: 
+        <span
+          class="control-label"
+        >
+          Method:
+        </span>
+         
       </label>
       <select
         class="form-select form-control"
@@ -418,7 +428,7 @@ exports[`PaymentForm component > renders with data as expected 1`] = `
   font-family: 'BcSans';
 }
 
-.c0 .required .form-label:after {
+.c0 .required .datepicker-label:after {
   content: ' *';
 }
 
@@ -460,7 +470,12 @@ exports[`PaymentForm component > renders with data as expected 1`] = `
         class="form-label"
         for="datepicker-receivedDate"
       >
-        Sent date:
+        <span
+          class="datepicker-label"
+        >
+          Sent date:
+        </span>
+         
       </label>
       <div
         class="react-datepicker-wrapper d-block"
@@ -497,7 +512,12 @@ exports[`PaymentForm component > renders with data as expected 1`] = `
         class="form-label"
         for="input-leasePaymentMethodType.id"
       >
-        Method: 
+        <span
+          class="control-label"
+        >
+          Method:
+        </span>
+         
       </label>
       <select
         class="form-select form-control"

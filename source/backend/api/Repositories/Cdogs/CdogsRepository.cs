@@ -41,6 +41,19 @@ namespace Pims.Api.Repositories.Cdogs
             _authRepository = authRepository;
         }
 
+        public async Task<HttpResponseMessage> TryGetHealthAsync()
+        {
+            _logger.LogDebug("Checking health of cdogs service");
+            string authenticationToken = await _authRepository.GetTokenAsync();
+
+            Uri endpoint = new(this._config.CDogsHost, "/api/v2/health");
+
+            Task<HttpResponseMessage> result = GetRawAsync(endpoint, authenticationToken);
+
+            _logger.LogDebug($"Finished checking health of cdogs service");
+            return await result;
+        }
+
         public async Task<ExternalResponse<FileTypes>> TryGetFileTypesAsync()
         {
             _logger.LogDebug("Retrieving supported file types...");
